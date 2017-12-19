@@ -113,8 +113,7 @@ class ElggUser extends \ElggEntity
 		$this->ban_reason = $reason;
 		$this->banned = 'yes';
 				
-		_elgg_invalidate_cache_for_entity($this->guid);
-		_elgg_invalidate_memcache_for_entity($this->guid);
+		$this->invalidateCache();
 
 		return true;
 	}
@@ -137,8 +136,7 @@ class ElggUser extends \ElggEntity
 		unset($this->ban_reason);
 		$this->banned = 'yes';
 				
-		_elgg_invalidate_cache_for_entity($this->guid);
-		_elgg_invalidate_memcache_for_entity($this->guid);
+		$this->invalidateCache();
 
 		return true;
 	}
@@ -182,8 +180,7 @@ class ElggUser extends \ElggEntity
 
 		$this->admin = 'yes';
 
-		_elgg_invalidate_cache_for_entity($this->guid);
-		_elgg_invalidate_memcache_for_entity($this->guid);
+		$this->invalidateCache();
 		
 		return true;
 	}
@@ -205,8 +202,7 @@ class ElggUser extends \ElggEntity
 
 		$this->admin = 'no';
 
-		_elgg_invalidate_cache_for_entity($this->guid);
-		_elgg_invalidate_memcache_for_entity($this->guid);
+		$this->invalidateCache();
 		
 		return true;
 	}
@@ -499,5 +495,43 @@ class ElggUser extends \ElggEntity
 
 		return $settings;
 	
+	}
+
+	/**
+	 * Cache the entity in a session and persisted caches
+	 *
+	 * @param bool $persist Store in persistent cache
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public function cache($persist = true) {
+		if ($persist && $this->username) {
+			$tmp = $this->volatile;
+
+			// don't store volatile data
+			$this->volatile = [];
+
+			_elgg_services()->dataCache->usernames->save($this->username, $this);
+
+			$this->volatile = $tmp;
+		}
+
+		parent::cache($persist);
+	}
+
+	/**
+	 * Invalidate cache for entity
+	 *
+	 * @return void
+	 * @internal
+	 */
+	public function invalidateCache() {
+		if ($this->username) {
+			_elgg_services()->dataCache->usernames->delete($this->username);
+		}
+
+		parent::invalidateCache();
 	}
 }

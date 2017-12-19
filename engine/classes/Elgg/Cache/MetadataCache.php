@@ -3,7 +3,8 @@ namespace Elgg\Cache;
 
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Values;
-use ElggSharedMemoryCache;
+use ElggCache;
+use ElggMetadata;
 
 /**
  * In memory cache of known metadata values stored by entity.
@@ -13,31 +14,16 @@ use ElggSharedMemoryCache;
 class MetadataCache {
 
 	/**
-	 * The cached values (or null for known to be empty).
-	 *
-	 * @var array
-	 */
-	protected $values = [];
-
-	/**
-	 * @var array
-	 */
-	protected $ids = [];
-
-	/**
-	 * @var ElggSharedMemoryCache
+	 * @var ElggCache
 	 */
 	protected $cache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param ElggSharedMemoryCache $cache Cache
+	 * @param ElggCache $cache Cache
 	 */
-	public function __construct(ElggSharedMemoryCache $cache = null) {
-		if (!$cache) {
-			$cache = new NullCache();
-		}
+	public function __construct(ElggCache $cache) {
 		$this->cache = $cache;
 	}
 
@@ -48,14 +34,27 @@ class MetadataCache {
 	 *
 	 * @param int   $entity_guid The GUID of the entity
 	 * @param array $values      The metadata values to cache
-	 * @param array $ids         The metadata ids
+	 *
 	 * @return void
 	 *
-	 * @access private For testing only
+	 * @interal For testing only
 	 */
-	public function inject($entity_guid, array $values, array $ids = []) {
-		$this->values[$entity_guid] = $values;
-		$this->ids[$entity_guid] = $ids;
+	public function inject($entity_guid, array $values = []) {
+		$metadata = [];
+		foreach ($values as $key => $value) {
+			if ($value instanceof ElggMetadata) {
+				$md = $value;
+			} else {
+				$md = new ElggMetadata();
+				$md->name = $key;
+				$md->value = $value;
+				$md->entity_guid = $entity_guid;
+			}
+
+			$metadata[] = $md->toObject();
+		}
+
+		$this->cache->save($entity_guid, $metadata);
 	}
 
 	/**
@@ -72,12 +71,27 @@ class MetadataCache {
 	 * @return array|string|int|null null = value does not exist
 	 */
 	public function getSingle($entity_guid, $name) {
-		if (isset($this->values[$entity_guid])
-				&& array_key_exists($name, $this->values[$entity_guid])) {
-			return $this->values[$entity_guid][$name];
-		} else {
+		$metadata = $this->cache->load($entity_guid);
+		if (!$metadata) {
 			return null;
 		}
+
+		$values = [];
+
+		foreach ($metadata as $md) {
+			if ($md->name !== $name) {
+				continue;
+			}
+
+			$values[] = $md->value;
+		}
+
+		if (empty($values)) {
+			return null;
+		}
+
+		return count($values) > 1 ? $values : $values[0];
+
 	}
 
 	/**
@@ -94,34 +108,50 @@ class MetadataCache {
 	 * @return int[]|int|null
 	 */
 	public function getSingleId($entity_guid, $name) {
-		if (isset($this->ids[$entity_guid])
-			&& array_key_exists($name, $this->ids[$entity_guid])) {
-			return $this->ids[$entity_guid][$name];
-		} else {
+		$metadata = $this->cache->load($entity_guid);
+		if (!$metadata) {
 			return null;
 		}
+
+		$ids = [];
+
+		foreach ($metadata as $md) {
+			if ($md->name !== $name) {
+				continue;
+			}
+
+			$ids[] = $md->id;
+		}
+
+		if (empty($ids)) {
+			return null;
+		}
+
+		return count($ids) > 1 ? $ids : $ids[0];
 	}
 
 	/**
 	 * Forget about all metadata for an entity.
 	 *
 	 * @param int $entity_guid The GUID of the entity
+	 *
 	 * @return void
 	 */
 	public function clear($entity_guid) {
-		unset($this->values[$entity_guid]);
-		unset($this->ids[$entity_guid]);
-		$this->cache->delete($entity_guid);
+		$this->invalidateByOptions([
+			'guid' => $entity_guid,
+		]);
 	}
 
 	/**
 	 * If true, getSingle() will return an accurate values from the DB
 	 *
 	 * @param int $entity_guid The GUID of the entity
+	 *
 	 * @return bool
 	 */
 	public function isLoaded($entity_guid) {
-		return array_key_exists($entity_guid, $this->values) && array_key_exists($entity_guid, $this->ids);
+		return $this->cache->load($entity_guid) !== null;
 	}
 
 	/**
@@ -130,18 +160,15 @@ class MetadataCache {
 	 * @return void
 	 */
 	public function clearAll() {
-		foreach (array_keys($this->values) as $guid) {
-			$this->cache->delete($guid);
-		}
-		$this->values = [];
-		$this->ids = [];
+		$this->invalidateByOptions([]);
 	}
 
 	/**
 	 * Returns loaded entity metadata
 	 *
 	 * @param int $entity_guid Entity guid
-	 * @return array|null
+	 *
+	 * @return \stdClass[]|null
 	 */
 	public function getEntityMetadata($entity_guid) {
 		if (!$this->isLoaded($entity_guid)) {
@@ -149,10 +176,7 @@ class MetadataCache {
 		}
 
 		if ($this->isLoaded($entity_guid)) {
-			return [
-				'values' => $this->values[$entity_guid],
-				'ids' => $this->ids[$entity_guid],
-			];
+			return $this->cache->load($entity_guid);
 		}
 
 		return null;
@@ -167,11 +191,10 @@ class MetadataCache {
 	 */
 	public function invalidateByOptions(array $options) {
 		if (empty($options['guid'])) {
-			$this->clearAll();
-			_elgg_services()->entityCache->clear();
+			_elgg_services()->sessionCache->clear();
+			_elgg_services()->dataCache->clear();
 		} else {
-			$this->clear($options['guid']);
-			_elgg_services()->entityCache->remove($options['guid']);
+			_elgg_services()->entityTable->invalidateCache($options['guid']);
 		}
 	}
 
@@ -182,7 +205,12 @@ class MetadataCache {
 	 * @return void
 	 */
 	public function populateFromEntities(...$guids) {
-		$guids = Values::normalizeGuids($guids);
+		try {
+			$guids = Values::normalizeGuids($guids);
+		} catch (\DataFormatException $e) {
+			return null;
+		}
+
 		if (empty($guids)) {
 			return;
 		}
@@ -195,10 +223,7 @@ class MetadataCache {
 
 		foreach ($guids as $i => $guid) {
 			$value = $this->cache->load($guid);
-			if ($value !== false) {
-				$data = unserialize($value);
-				$this->values[$guid] = $data['values'];
-				$this->ids[$guid] = $data['ids'];
+			if ($value !== null) {
 				unset($guids[$i]);
 			}
 		}
@@ -227,39 +252,15 @@ class MetadataCache {
 		$data = _elgg_services()->metadataTable->getAll($options);
 		elgg_set_ignore_access($ia);
 
-		// make sure we show all entities as loaded
-		foreach ($guids as $guid) {
-			$this->values[$guid] = null;
-			$this->ids[$guid] = null;
-		}
+		$values = [];
 
-		// build up metadata for each entity, save when GUID changes (or data ends)
 		foreach ($data as $i => $row) {
-			$id = $row->id;
-			$name = $row->name;
-			$value = ($row->value_type === 'text') ? $row->value : (int) $row->value;
-			$guid = $row->entity_guid;
-
-			if (isset($this->values[$guid][$name])) {
-				$this->values[$guid][$name] = (array) $this->values[$guid][$name];
-				$this->values[$guid][$name][] = $value;
-			} else {
-				$this->values[$guid][$name] = $value;
-			}
-
-			if (isset($this->ids[$guid][$name])) {
-				$this->ids[$guid][$name] = (array) $this->ids[$guid][$name];
-				$this->ids[$guid][$name][] = $id;
-			} else {
-				$this->ids[$guid][$name] = $id;
-			}
+			$row->value = ($row->value_type === 'text') ? $row->value : (int) $row->value;
+			$values[$row->entity_guid][] = $row;
 		}
 
-		foreach ($guids as $guid) {
-			$this->cache->save($guid, serialize([
-				'values' => $this->values[$guid],
-				'ids' => $this->ids[$guid],
-			]));
+		foreach ($values as $guid => $row) {
+			$this->cache->save($guid, $row);
 		}
 	}
 
@@ -270,25 +271,25 @@ class MetadataCache {
 	 *
 	 * @param array $guids GUIDs of entities to examine
 	 * @param int   $limit Limit in characters of all metadata (with ints casted to strings)
+	 *
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
 
-		$data = _elgg_services()->metadataTable->getAll([
+		$guids = _elgg_services()->metadataTable->getAll([
 			'guids' => $guids,
 			'limit' => 0,
-			'callback' => false,
+			'callback' => function($e) {
+				return (int) $e->entity_guid;
+			},
 			'selects' => ['SUM(LENGTH(n_table.value)) AS bytes'],
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
 			'group_by' => 'n_table.entity_guid',
+			'having' => [
+				"bytes < $limit",
+			]
 		]);
 
-		// don't cache if metadata for entity is over 10MB (or rolled INT)
-		foreach ($data as $row) {
-			if ($row->bytes > $limit || $row->bytes < 0) {
-				array_splice($guids, array_search($row->entity_guid, $guids), 1);
-			}
-		}
-		return $guids;
+		return $guids ? : [];
 	}
 }

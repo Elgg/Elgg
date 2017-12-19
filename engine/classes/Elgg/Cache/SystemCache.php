@@ -1,9 +1,9 @@
 <?php
 namespace Elgg\Cache;
 
-use Elgg\Profilable;
 use Elgg\Config;
-use ElggFileCache;
+use Elgg\Profilable;
+use ElggCache;
 
 /**
  * System Cache
@@ -21,17 +21,17 @@ class SystemCache {
 	private $config;
 
 	/**
-	 * @var ElggFileCache
+	 * @var ElggCache
 	 */
 	private $cache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param ElggFileCache $cache  Elgg disk cache
-	 * @param Config        $config Elgg config
+	 * @param ElggCache $cache  Elgg disk cache
+	 * @param Config    $config Elgg config
 	 */
-	public function __construct(ElggFileCache $cache, Config $config) {
+	public function __construct(ElggCache $cache, Config $config) {
 		$this->cache = $cache;
 		$this->config = $config;
 	}

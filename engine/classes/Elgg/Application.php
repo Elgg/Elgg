@@ -653,7 +653,7 @@ class Application {
 		]);
 		$log = $wrapper->getMigrate();
 
-		if (in_array('--verbose', $_SERVER['argv'])) {
+		if (!empty($_SERVER['argv']) && in_array('--verbose', $_SERVER['argv'])) {
 			error_log($log);
 		}
 
@@ -903,7 +903,6 @@ class Application {
 			'input.php',
 			'languages.php',
 			'mb_wrapper.php',
-			'memcache.php',
 			'metadata.php',
 			'metastrings.php',
 			'navigation.php',

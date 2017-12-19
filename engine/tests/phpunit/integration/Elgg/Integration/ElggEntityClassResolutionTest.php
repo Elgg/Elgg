@@ -26,8 +26,7 @@ class ElggEntityClassResolutionTest extends IntegrationTestCase {
 			'subtype' => $subtype,
 		]);
 
-		_elgg_invalidate_cache_for_entity($entity->guid);
-		_elgg_invalidate_memcache_for_entity($entity->guid);
+		$entity->invalidateCache();
 
 		$entity = get_entity($entity->guid);
 

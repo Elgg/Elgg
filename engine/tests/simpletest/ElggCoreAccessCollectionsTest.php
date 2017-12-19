@@ -172,28 +172,6 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		delete_access_collection($acl_id);
 	}
 
-	public function testAccessCaching() {
-		// create a new user to check against
-		$user = $this->createUser();
-
-		foreach ([
-					 'get_access_list',
-					 'get_access_array'
-				 ] as $func) {
-			_elgg_services()->accessCache->clear();
-
-			// admin users run tests, so disable access
-			$ia = elgg_set_ignore_access(true);
-			$access = $func($user->getGUID());
-
-			elgg_set_ignore_access($ia);
-			$access2 = $func($user->getGUID());
-			$this->assertNotEqual($access, $access2, "Access test for $func");
-		}
-
-		$user->delete();
-	}
-
 	public function testAddMemberToACLRemoveMember() {
 		// create a new user to check against
 		$user = $this->createUser();

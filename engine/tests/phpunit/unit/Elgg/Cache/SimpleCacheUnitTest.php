@@ -4,6 +4,7 @@ namespace Elgg\Cache;
 
 /**
  * @group UnitTests
+ * @group Cache
  */
 class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
@@ -45,6 +46,24 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
 	public function testRespectsViewAliases() {
 		$this->markTestIncomplete();
+	}
+
+	public function testCanEnableSimplecache() {
+
+		$is_enabled = _elgg_config()->simplecache_enabled;
+
+		_elgg_config()->save('simplecache_enabled', false);
+
+		elgg_disable_simplecache();
+
+		$this->assertFalse(elgg_is_simplecache_enabled());
+
+		elgg_enable_simplecache();
+
+		$this->assertTrue(elgg_is_simplecache_enabled());
+
+		_elgg_config()->save('simplecache_enabled', $is_enabled);
+
 	}
 
 }

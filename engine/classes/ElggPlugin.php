@@ -112,19 +112,6 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public function delete($recursive = true) {
-		$id = $this->getID();
-		$result = parent::delete($recursive);
-		if ($result) {
-			_elgg_services()->plugins->invalidateCache($id);
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Returns the ID (dir name) of this plugin
 	 *
 	 * @return string
@@ -236,7 +223,7 @@ class ElggPlugin extends ElggObject {
 		$name = _elgg_services()->plugins->namespacePrivateSetting('internal', 'priority');
 
 		$priority = $this->getSetting($name);
-		if ($priority) {
+		if (isset($priority)) {
 			return (int) $priority;
 		}
 
@@ -359,9 +346,6 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
-		_elgg_services()->pluginSettingsCache->clear($this->guid);
-		_elgg_services()->boot->invalidateCache();
-
 		return $this->setPrivateSetting($name, $value);
 	}
 
@@ -373,9 +357,6 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function unsetSetting($name) {
-		_elgg_services()->pluginSettingsCache->clear($this->guid);
-		_elgg_services()->boot->invalidateCache();
-
 		return $this->removePrivateSetting($name);
 	}
 
@@ -1155,8 +1136,7 @@ class ElggPlugin extends ElggObject {
 			$result = remove_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		}
 
-		_elgg_services()->plugins->invalidateProvidesCache();
-		_elgg_services()->boot->invalidateCache();
+		$this->invalidateCache();
 
 		return $result;
 	}
@@ -1212,5 +1192,30 @@ class ElggPlugin extends ElggObject {
 			_elgg_services()->logger->warn("Failed to load package for $this->guid. " . $e->getMessage());
 			$this->errorMsg = $e->getmessage();
 		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isCacheable() {
+		return true;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function cache($persist = true) {
+		_elgg_services()->plugins->cache($this);
+
+		return parent::cache($persist);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function invalidateCache() {
+		_elgg_services()->plugins->invalidateCache($this->getID());
+
+		return parent::invalidateCache();
 	}
 }

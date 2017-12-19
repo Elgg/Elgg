@@ -136,6 +136,7 @@ class River extends Repository {
 	 * @param callable $callback Custom callback
 	 *
 	 * @return ElggEntity[]
+	 * @throws \DatabaseException
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
 
@@ -169,7 +170,15 @@ class River extends Repository {
 		$items = _elgg_services()->db->getData($qb, $callback);
 
 		if ($items) {
-			_elgg_prefetch_river_entities($items);
+			$preload = array_filter($items, function($e) {
+				return $e instanceof ElggRiverItem;
+			});
+
+			_elgg_services()->entityPreloader->preload($preload, [
+				'subject_guid',
+				'object_guid',
+				'target_guid',
+			]);
 		}
 
 		return $items;

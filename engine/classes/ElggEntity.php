@@ -5,9 +5,9 @@ use Elgg\EntityIcon;
 /**
  * The parent class for all Elgg Entities.
  *
- * An \ElggEntity is one of the basic data models in Elgg.  It is the primary
- * means of storing and retrieving data from the database.  An \ElggEntity
- * represents one row of the entities table.
+ * An \ElggEntity is one of the basic data models in Elgg.
+ * It is the primary means of storing and retrieving data from the database.
+ * An \ElggEntity represents one row of the entities table.
  *
  * The \ElggEntity class handles CRUD operations for the entities table.
  * \ElggEntity should always be extended by another class to handle CRUD
@@ -19,8 +19,7 @@ use Elgg\EntityIcon;
  * properties are columns of the type table or they will be assumed
  * to be metadata.  See \ElggObject::initializeAttributes() for examples.
  *
- * Core supports 4 types of entities: \ElggObject, \ElggUser, \ElggGroup, and
- * \ElggSite.
+ * Core supports 4 types of entities: \ElggObject, \ElggUser, \ElggGroup, and \ElggSite.
  *
  * @tip Plugin authors will want to extend the \ElggObject class, not this class.
  *
@@ -72,31 +71,41 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Holds metadata until entity is saved.  Once the entity is saved,
 	 * metadata are written immediately to the database.
+	 * @var array
 	 */
 	protected $temp_metadata = [];
 
 	/**
 	 * Holds annotations until entity is saved.  Once the entity is saved,
 	 * annotations are written immediately to the database.
+	 * @var array
 	 */
 	protected $temp_annotations = [];
 
 	/**
 	 * Holds private settings until entity is saved. Once the entity is saved,
 	 * private settings are written immediately to the database.
+	 * @var array
 	 */
 	protected $temp_private_settings = [];
 
 	/**
 	 * Volatile data structure for this object, allows for storage of data
 	 * in-memory that isn't sync'd back to the metadata table.
+	 * @var array
 	 */
 	protected $volatile = [];
 
 	/**
 	 * Holds the original (persisted) attribute values that have been changed but not yet saved.
+	 * @var array
 	 */
 	protected $orig_attributes = [];
+
+	/**
+	 * @var bool
+	 */
+	protected $_is_cacheable = true;
 
 	/**
 	 * Create a new entity.
@@ -410,7 +419,7 @@ abstract class ElggEntity extends \ElggData implements
 		} else {
 			$value = [$value];
 		}
-		
+
 		// strip null values from array
 		$value = array_filter($value, function($var) {
 			return !is_null($var);
@@ -441,7 +450,7 @@ abstract class ElggEntity extends \ElggData implements
 					return false;
 				}
 			}
-			
+
 			if (count($value) > 1) {
 				// new value is a multiple valued metadata
 				$multiple = true;
@@ -555,29 +564,6 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function setVolatileData($name, $value) {
 		$this->volatile[$name] = $value;
-	}
-
-	/**
-	 * Cache the entity in a persisted cache
-	 *
-	 * @param ElggSharedMemoryCache $cache       Memcache or null cache
-	 * @param int                   $last_action Last action time
-	 *
-	 * @return void
-	 * @access private
-	 * @internal
-	 */
-	public function storeInPersistedCache(\ElggSharedMemoryCache $cache, $last_action = 0) {
-		$tmp = $this->volatile;
-
-		// don't store volatile data
-		$this->volatile = [];
-		if ($last_action) {
-			$this->last_action = (int) $last_action;
-		}
-		$cache->save($this->guid, $this);
-
-		$this->volatile = $tmp;
 	}
 
 	/**
@@ -1296,8 +1282,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		if ($guid) {
-			_elgg_services()->entityCache->set($this);
-			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+			$this->cache();
 		}
 
 		return $guid;
@@ -1397,18 +1382,17 @@ abstract class ElggEntity extends \ElggData implements
 			throw new \IOException("Unable to save new object's base entity information!");
 		}
 
-		// We are writing this new entity to cache to make sure subsequent calls
-		// to get_entity() load the entity from cache and not from the DB. This
-		// MUST come before the metadata and annotation writes below!
-		_elgg_services()->entityCache->set($this);
-
-		// for BC with 1.8, ->subtype always returns ID, ->getSubtype() the string
 		$this->attributes['subtype'] = $subtype;
 		$this->attributes['guid'] = (int) $guid;
 		$this->attributes['time_created'] = (int) $time_created;
 		$this->attributes['time_updated'] = (int) $now;
 		$this->attributes['last_action'] = (int) $now;
 		$this->attributes['container_guid'] = (int) $container_guid;
+
+		// We are writing this new entity to cache to make sure subsequent calls
+		// to get_entity() load the entity from cache and not from the DB. This
+		// MUST come before the metadata and annotation writes below!
+		$this->cache();
 
 		// Save any unsaved metadata
 		if (sizeof($this->temp_metadata) > 0) {
@@ -1454,8 +1438,6 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	protected function update() {
 
-		_elgg_services()->boot->invalidateCache();
-
 		if (!$this->canEdit()) {
 			return false;
 		}
@@ -1464,6 +1446,8 @@ abstract class ElggEntity extends \ElggData implements
 		if (!_elgg_services()->hooks->getEvents()->trigger('update', $this->type, $this)) {
 			return false;
 		}
+
+		$this->invalidateCache();
 
 		// See #6225. We copy these after the update event in case a handler changed one of them.
 		$guid = (int) $this->guid;
@@ -1501,6 +1485,8 @@ abstract class ElggEntity extends \ElggData implements
 
 		$this->orig_attributes = [];
 
+		$this->cache();
+
 		// Handle cases where there was no error BUT no rows were updated!
 		return true;
 	}
@@ -1534,7 +1520,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$this->attributes = $attributes;
 
-		_elgg_services()->entityCache->set($this);
+		$this->cache();
 
 		return true;
 	}
@@ -1643,9 +1629,6 @@ abstract class ElggEntity extends \ElggData implements
 
 		$this->disableAnnotations();
 
-		_elgg_services()->entityCache->remove($guid);
-		_elgg_get_memcache('new_entity_cache')->delete($guid);
-
 		$sql = "
 			UPDATE {$dbprefix}entities
 			SET enabled = 'no'
@@ -1661,6 +1644,8 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		if ($disabled) {
+			$this->invalidateCache();
+
 			$this->attributes['enabled'] = 'no';
 			_elgg_services()->hooks->getEvents()->trigger('disable:after', $this->type, $this);
 		}
@@ -1757,12 +1742,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function delete($recursive = true) {
-
-		$guid = $this->guid;
-		if (!$guid) {
-			return false;
-		}
-
 		// first check if we can delete this entity
 		// NOTE: in Elgg <= 1.10.3 this was after the delete event,
 		// which could potentially remove some content if the user didn't have access
@@ -1770,103 +1749,12 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		// now trigger an event to let others know this entity is about to be deleted
-		// so they can prevent it or take their own actions
-		if (!_elgg_services()->hooks->getEvents()->trigger('delete', $this->type, $this)) {
+		try {
+			return _elgg_services()->entityTable->delete($this, $recursive);
+		} catch (DatabaseException $ex) {
+			elgg_log($ex->getMessage(), 'ERROR');
 			return false;
 		}
-
-		if ($this instanceof ElggUser) {
-			// ban to prevent using the site during delete
-			$this->ban();
-		}
-
-		// Delete contained owned and otherwise releated objects (depth first)
-		if ($recursive) {
-			// Temporarily overriding access controls
-			$entity_disable_override = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
-			$ia = elgg_set_ignore_access(true);
-
-			// @todo there was logic in the original code that ignored
-			// entities with owner or container guids of themselves.
-			// this should probably be prevented in \ElggEntity instead of checked for here
-			$base_options = [
-				'wheres' => [
-					"e.guid != $guid",
-				],
-				'limit' => false,
-			];
-
-			foreach (['owner_guid', 'container_guid'] as $db_column) {
-				$options = $base_options;
-				$options[$db_column] = $guid;
-
-				$batch = new \ElggBatch('elgg_get_entities', $options);
-				$batch->setIncrementOffset(false);
-
-				/* @var $e \ElggEntity */
-				foreach ($batch as $e) {
-					$e->delete(true);
-				}
-			}
-
-			access_show_hidden_entities($entity_disable_override);
-			elgg_set_ignore_access($ia);
-		}
-
-		$entity_disable_override = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$ia = elgg_set_ignore_access(true);
-
-		// Now delete the entity itself
-		$this->deleteMetadata();
-		$this->deleteAnnotations();
-		$this->deleteOwnedAnnotations();
-		$this->deleteRelationships();
-		$this->deleteAccessCollectionMemberships();
-		$this->deleteOwnedAccessCollections();
-
-		access_show_hidden_entities($entity_disable_override);
-		elgg_set_ignore_access($ia);
-
-		elgg_delete_river(['subject_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
-
-		remove_all_private_settings($guid);
-
-		_elgg_invalidate_cache_for_entity($guid);
-		_elgg_invalidate_memcache_for_entity($guid);
-
-		$dbprefix = _elgg_config()->dbprefix;
-
-		$sql = "
-			DELETE FROM {$dbprefix}entities
-			WHERE guid = :guid
-		";
-		$params = [
-			':guid' => $guid,
-		];
-
-		$deleted = $this->getDatabase()->deleteData($sql, $params);
-
-		$this->clearAllFiles();
-
-		return (bool) $deleted;
-	}
-
-	/**
-	 * Removes all entity files in the dataroot
-	 *
-	 * @warning This only deletes the physical files and not their entities.
-	 *
-	 * @return bool
-	 */
-	protected function clearAllFiles() {
-		$dir = new \Elgg\EntityDirLocator($this->guid);
-		$file_path = _elgg_config()->dataroot . $dir;
-		return delete_directory($file_path);
 	}
 
 	/**
@@ -2087,9 +1975,97 @@ abstract class ElggEntity extends \ElggData implements
 		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);
 		if ($posted) {
 			$this->attributes['last_action'] = $posted;
-			_elgg_services()->entityCache->set($this);
-			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+			$this->cache();
 		}
 		return $posted;
+	}
+
+	/**
+	 * Disable runtime caching for entity
+	 *
+	 * @return void
+	 * @internal
+	 */
+	public function disableCaching() {
+		$this->_is_cacheable = false;
+		if ($this->guid) {
+			_elgg_services()->entityCache->delete($this->guid);
+		}
+	}
+
+	/**
+	 * Enable runtime caching for entity
+	 *
+	 * @return void
+	 * @internal
+	 */
+	public function enableCaching() {
+		$this->_is_cacheable = true;
+	}
+
+	/**
+	 * Is entity cacheable in the runtime cache
+	 *
+	 * @return bool
+	 * @internal
+	 */
+	public function isCacheable() {
+		if (_elgg_services()->session->getIgnoreAccess()) {
+			return false;
+		}
+		return $this->_is_cacheable;
+	}
+
+	/**
+	 * Cache the entity in a session and persisted caches
+	 *
+	 * @param bool $persist Store in persistent cache
+	 *
+	 * @return void
+	 * @internal
+	 */
+	public function cache($persist = true) {
+		if (!$this->isCacheable()) {
+			return;
+		}
+
+		_elgg_services()->entityCache->save($this);
+
+		if ($persist) {
+			$tmp = $this->volatile;
+
+			// don't store volatile data
+			$this->volatile = [];
+
+			_elgg_services()->dataCache->entities->save($this->guid, $this);
+
+			$this->volatile = $tmp;
+		}
+	}
+
+	/**
+	 * Invalidate cache for entity
+	 *
+	 * @return void
+	 * @internal
+	 */
+	public function invalidateCache() {
+		if (!$this->guid) {
+			return;
+		}
+
+		_elgg_services()->boot->invalidateCache();
+
+		_elgg_services()->entityCache->delete($this->guid);
+
+		$namespaces = [
+			'entities',
+			'metadata',
+			'private_settings',
+		];
+
+		foreach ($namespaces as $namespace) {
+			_elgg_services()->dataCache->get($namespace)->delete($this->guid);
+		}
 	}
 }

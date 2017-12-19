@@ -2,7 +2,11 @@
 
 namespace Elgg\Mocks\Database;
 
+use Elgg\Database\Delete;
+use Elgg\Database\Insert;
 use Elgg\Database\PrivateSettingsTable as DbPrivateSettingsTable;
+use Elgg\Database\Select;
+use Elgg\Database\Update;
 use stdClass;
 
 /**
@@ -25,7 +29,7 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	/**
 	 * @var int
 	 */
-	public $iterator = 100;
+	static $iterator = 100;
 
 	/**
 	 * {@inheritdoc}
@@ -40,14 +44,14 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 			return false;
 		}
 
-		$this->iterator++;
-		$id = $this->iterator;
+		static::$iterator++;
+		$id = static::$iterator;
 
 		$row = (object) [
 			'id' => $id,
 			'entity_guid' => $entity->guid,
-			'name' => (string) $name,
-			'value' => (string) $value,
+			'name' => $name,
+			'value' => $value,
 		];
 
 		$this->rows[$id] = $row;
@@ -64,9 +68,10 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 		$rows = [];
 		foreach ($this->rows as $id => $row) {
 			if ($row->entity_guid == $entity_guid) {
-				$rows[] = new ElggMetadata($row);
+				$rows[] = $row;
 			}
 		}
+
 		return $rows;
 	}
 
@@ -82,13 +87,15 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 				unset($this->rows[$id]);
 			}
 		}
+
 		return $deleted;
 	}
 
 	/**
 	 * Clear query specs
-	 * 
+	 *
 	 * @param stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	public function clearQuerySpecs(stdClass $row) {
@@ -102,78 +109,74 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 
 	/**
 	 * Add query query_specs for a metadata object
-	 * 
+	 *
 	 * @param stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	public function addQuerySpecs(stdClass $row) {
 
 		$this->clearQuerySpecs($row);
 
-		// Set a new setting
-		$query = "
-			INSERT into {$this->table}
-			(entity_guid, name, value) VALUES
-			(:entity_guid, :name, :value)
-			ON DUPLICATE KEY UPDATE value = :value
-		";
-		$params = [
-			':entity_guid' => (int) $row->entity_guid,
-			':name' => (string) $row->name,
-			':value' => (string) $row->value,
-		];
-		
+		$qb = Update::table('private_settings');
+		$qb->set('value', $qb->param($row->value, ELGG_VALUE_STRING))
+			->where($qb->compare('id', '=', $row->id, ELGG_VALUE_INTEGER));
+
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $query,
-			'params' => $params,
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
+			'results' => true,
+		]);
+
+		$qb = Insert::intoTable('private_settings');
+		$qb->values([
+			'entity_guid' => $qb->param($row->entity_guid, ELGG_VALUE_INTEGER),
+			'name' => $qb->param($row->name, ELGG_VALUE_STRING),
+			'value' => $qb->param($row->value, ELGG_VALUE_STRING),
+		]);
+
+		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'insert_id' => $row->id,
 		]);
 
-		// Get setting by its value
-		$query = "
-			SELECT value FROM {$this->table}
-			WHERE name = :name
-			AND entity_guid = :entity_guid
-		";
-		$params = [
-			':entity_guid' => (int) $row->entity_guid,
-			':name' => (string) $row->name,
-		];
-		
+		$qb = Select::fromTable('private_settings');
+		$qb->select('name')
+			->addSelect('value')
+			->where($qb->compare('name', '=', $row->name, ELGG_VALUE_STRING))
+			->andWhere($qb->compare('entity_guid', '=', $row->entity_guid, ELGG_VALUE_INTEGER));
+
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $query,
-			'params' => $params,
-			'results' => function() use ($row) {
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return [$this->rows[$row->id]];
 				}
+
 				return [];
 			},
 		]);
 
-		$query = "
-			DELETE FROM {$this->table}
-			WHERE name = :name
-			AND entity_guid = :entity_guid
-		";
-		$params = [
-			':entity_guid' => (int) $row->entity_guid,
-			':name' => (string) $row->name,
-		];
+		$qb = Delete::fromTable('private_settings');
+		$qb->where($qb->compare('name', '=', $row->name, ELGG_VALUE_STRING))
+			->andWhere($qb->compare('entity_guid', '=', $row->entity_guid, ELGG_VALUE_INTEGER));
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $query,
-			'params' => $params,
-			'results' => function() use ($row) {
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->id])) {
 					unset($this->rows[$row->id]);
 					$this->clearQuerySpecs($row);
+
 					return [$row->id];
 				}
+
 				return [];
 			}
 		]);
-
 	}
 
 	/**
@@ -181,8 +184,9 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	 * @return int
 	 */
 	public function iterate() {
-		$this->iterator++;
-		return $this->iterator;
+		static::$iterator++;
+
+		return static::$iterator;
 	}
 
 }

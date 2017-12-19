@@ -4,11 +4,8 @@ namespace Elgg;
 
 use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
-use Stash\Driver\BlackHole;
-use Stash\Driver\FileSystem;
-use Stash\Driver\Memcache;
+use ElggCache;
 use Stash\Invalidation;
-use Stash\Pool;
 
 /**
  * Boots Elgg and manages a cache of data needed during boot
@@ -35,10 +32,30 @@ class BootService {
 	private $was_cleared = false;
 
 	/**
+	 * @var ElggCache
+	 */
+	protected $cache;
+
+	/**
+	 * Cache
+	 *
+	 * @param ElggCache $cache Cache
+	 */
+	public function __construct(ElggCache $cache) {
+		$this->cache = $cache;
+	}
+
+	/**
 	 * Boots the engine
 	 *
 	 * @param ServiceProvider $services Services
+	 *
 	 * @return void
+	 * @throws \ClassException
+	 * @throws \DatabaseException
+	 * @throws \InstallationException
+	 * @throws \InvalidParameterException
+	 * @throws \SecurityException
 	 */
 	public function boot(ServiceProvider $services) {
 		$db = $services->db;
@@ -111,12 +128,13 @@ class BootService {
 
 		$services->plugins->setBootPlugins($data->getActivePlugins());
 
-		$services->pluginSettingsCache->setCachedValues($data->getPluginSettings());
+		$settings = $data->getPluginSettings();
+		foreach ($settings as $guid => $entity_settings) {
+			$services->privateSettingsCache->save($guid, $entity_settings);
+		}
+
 		foreach ($data->getPluginMetadata() as $guid => $metadata) {
-			if (!$metadata) {
-				continue;
-			}
-			$services->metadataCache->inject($guid, $metadata['values'], $metadata['ids']);
+			$services->dataCache->metadata->save($guid, $metadata);
 		}
 
 		$services->logger->setLevel($config->debug);
@@ -153,7 +171,7 @@ class BootService {
 	 */
 	public function invalidateCache() {
 		if (!$this->was_cleared) {
-			$this->getStashItem(_elgg_config())->clear();
+			$this->cache->clear();
 			$this->was_cleared = true;
 		}
 	}
@@ -167,26 +185,21 @@ class BootService {
 	 *
 	 * @return BootData
 	 *
+	 * @throws \ClassException
+	 * @throws \DatabaseException
 	 * @throws \InstallationException
+	 * @throws \InvalidParameterException
 	 */
 	private function getBootData(Config $config, Database $db, $installed) {
 		$config->_boot_cache_hit = false;
 
-		if (!$config->boot_cache_ttl) {
+		$data = $this->cache->load('boot_data');
+		if (!isset($data)) {
 			$data = new BootData();
 			$data->populate($db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);
-			return $data;
-		}
-
-		$item = $this->getStashItem($config);
-		$item->setInvalidationMethod(Invalidation::NONE);
-		$data = $item->get();
-		if ($item->isMiss()) {
-			$data = new BootData();
-			$data->populate($db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);
-			$item->set($data);
-			$item->expiresAfter($config->boot_cache_ttl);
-			$item->save();
+			if ($config->boot_cache_ttl) {
+				$this->cache->save('boot_data', $data, $config->boot_cache_ttl, [Invalidation::NONE]);
+			}
 		} else {
 			$config->_boot_cache_hit = true;
 		}
@@ -194,32 +207,4 @@ class BootService {
 		return $data;
 	}
 
-	/**
-	 * Get a Stash cache item
-	 *
-	 * @param Config $config Elgg config
-	 *
-	 * @return \Stash\Interfaces\ItemInterface
-	 */
-	private function getStashItem(Config $config) {
-		$has_class = class_exists('Memcache') || class_exists('Memcached');
-
-		if ($config->memcache && $has_class) {
-			$options = [];
-			if ($config->memcache_servers) {
-				$options['servers'] = $config->memcache_servers;
-			}
-			$driver = new Memcache($options);
-		} else {
-			if (!$config->dataroot) {
-				// we're in the installer
-				$driver = new BlackHole();
-			} else {
-				$driver = new FileSystem([
-					'path' => $config->dataroot,
-				]);
-			}
-		}
-		return (new Pool($driver))->getItem("boot_data");
-	}
 }

@@ -287,7 +287,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertTrue($group->save() !== false);
 
 		// entity cache interferes with our test
-		_elgg_services()->entityCache->clear();
+		$group->invalidateCache();
 
 		foreach ([
 					 'site',
@@ -398,7 +398,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 			'handleUpdateForIssue6225test'
 		]);
 
-		_elgg_services()->entityCache->remove($guid);
+		$object->invalidateCache();
 
 		$object = get_entity($guid);
 		$this->assertEqual($object->access_id, ACCESS_PRIVATE);

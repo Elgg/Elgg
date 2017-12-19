@@ -15,6 +15,11 @@ use Elgg\Upgrade\Batch;
  *
  * @package Elgg.Admin
  * @access private
+ *
+ * @property int $is_completed
+ * @property int $processed
+ * @property int $offset
+ * @property int $has_errors
  */
 class ElggUpgrade extends ElggObject {
 
@@ -48,8 +53,6 @@ class ElggUpgrade extends ElggObject {
 		// unowned
 		$this->attributes['container_guid'] = 0;
 		$this->attributes['owner_guid'] = 0;
-
-		$this->is_completed = 0;
 	}
 
 	/**
@@ -130,6 +133,10 @@ class ElggUpgrade extends ElggObject {
 	 * @throws UnexpectedValueException
 	 */
 	public function save() {
+		if (!isset($this->is_completed)) {
+			$this->is_completed = 0;
+		}
+
 		foreach ($this->requiredProperties as $prop) {
 			if (!$this->$prop) {
 				throw new UnexpectedValueException("ElggUpgrade objects must have a value for the $prop property.");

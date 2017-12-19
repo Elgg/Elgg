@@ -10,10 +10,7 @@
 /**
  * Returns an \ElggCache object suitable for caching system information
  *
- * @todo Can this be done in a cleaner way?
- * @todo Swap to memcache etc?
- *
- * @return \ElggFileCache
+ * @return ElggCache
  */
 function elgg_get_system_cache() {
 	return _elgg_services()->fileCache;
@@ -285,18 +282,6 @@ function _elgg_symlink_cache() {
 	}
 	
 	return false;
-}
-
-/**
- * Invalidate entity cache
- *
- * @param int $entity_guid The GUID of the entity to invalidate
- *
- * @return void
- * @access private
- */
-function _elgg_invalidate_cache_for_entity($entity_guid) {
-	_elgg_services()->entityCache->remove($entity_guid);
 }
 
 /**

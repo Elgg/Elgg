@@ -26,9 +26,15 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	public static function createApplication($isolate = false) {
 
 		if (isset(self::$_testing_app) && !$isolate) {
-			Application::setInstance(self::$_testing_app);
+			$app = self::$_testing_app;
 
-			return self::$_testing_app;
+			Application::setInstance($app);
+
+			// Invalidate caches
+			$app->_services->dataCache->clear();
+			$app->_services->sessionCache->clear();
+
+			return $app;
 		}
 
 		Application::setInstance(null);
@@ -69,15 +75,17 @@ abstract class IntegrationTestCase extends BaseTestCase {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
 		}
 
+		// Invalidate caches
+		$app->_services->dataCache->clear();
+		$app->_services->sessionCache->clear();
+
 		// turn off system log
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
 		$app->bootCore();
 
-		if (!$isolate) {
-			self::$_testing_app = $app;
-		}
+		self::$_testing_app = $app;
 
 		return $app;
 	}

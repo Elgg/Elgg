@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use Elgg\Cache\EntityCache;
 use Elgg\Config as Conf;
 use Elgg\Database;
 use ElggUser;
@@ -37,28 +36,16 @@ class UsersTable {
 	protected $metadata;
 
 	/**
-	 * @var EntityCache
-	 */
-	protected $entity_cache;
-
-	/**
-	 * @var string
-	 */
-	protected $table;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Conf          $config   Config
 	 * @param Database      $db       Database
 	 * @param MetadataTable $metadata Metadata table
-	 * @param EntityCache   $cache    Entity cache
 	 */
-	public function __construct(Conf $config, Database $db, MetadataTable $metadata, EntityCache $cache) {
+	public function __construct(Conf $config, Database $db, MetadataTable $metadata) {
 		$this->config = $config;
 		$this->db = $db;
 		$this->metadata = $metadata;
-		$this->entity_cache = $cache;
 	}
 
 	/**
@@ -79,8 +66,8 @@ class UsersTable {
 			return false;
 		}
 
-		$entity = $this->entity_cache->getByUsername($username);
-		if ($entity) {
+		$entity =_elgg_services()->dataCache->usernames->load($username);
+		if ($entity instanceof ElggUser) {
 			return $entity;
 		}
 

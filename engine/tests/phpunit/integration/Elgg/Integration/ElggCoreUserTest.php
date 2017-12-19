@@ -1,13 +1,15 @@
 <?php
 
 namespace Elgg\Integration;
+use Elgg\Database\Select;
 
 /**
  * Elgg Test \ElggUser
  *
  * @group IntegrationTests
+ * @group ElggUser
  */
-class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
+class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 	/**
 	 * @var ElggUserWithExposableAttributes
@@ -15,23 +17,31 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 	private $user;
 
 	public function up() {
+		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+
 		$this->user = new ElggUserWithExposableAttributes();
 		$this->user->username = $this->getRandomUsername();
 		$this->user->subtype = $this->getRandomSubtype();
+		$this->user->owner_guid = 0;
+		$this->user->container_guid = 0;
 	}
 
 	public function down() {
-		$this->user->delete();
+		if ($this->user) {
+			$this->user->delete();
+		}
 		unset($this->user);
+
+		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testElggUserLoad() {
 		// new object
 		$object = new \ElggObject();
 		$object->subtype = $this->getRandomSubtype();
-		$this->AssertEqual($object->getGUID(), 0);
+		$this->assertEquals(0, $object->getGUID());
 		$guid = $object->save();
-		$this->AssertNotEqual($guid, 0);
+		$this->assertNotEquals(0, $guid);
 
 		// fail on wrong type
 		$this->assertFalse(get_user($guid));
@@ -42,9 +52,9 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 
 	public function testElggUserSave() {
 		// new object
-		$this->AssertEqual($this->user->getGUID(), 0);
+		$this->assertEquals(0, $this->user->getGUID());
 		$guid = $this->user->save();
-		$this->AssertNotEqual($guid, 0);
+		$this->assertNotEquals(0, $guid);
 
 		// clean up
 		$this->user->delete();
@@ -54,20 +64,23 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 		$guid = $this->user->save();
 
 		// delete object
-		$this->assertIdentical(true, $this->user->delete());
+		$this->assertTrue($this->user->delete());
 
 		// check GUID not in database
-		$this->assertFalse($this->fetchUser($guid));
+		$this->assertEmpty($this->fetchUser($guid));
 	}
-
+	
 	public function testElggUserNameCache() {
 		// issue https://github.com/elgg/elgg/issues/1305
 
 		// very unlikely a user would have this username
-		$name = (string)time();
+		$name = "user_" . time();
 		$this->user->username = $name;
 
 		$guid = $this->user->save();
+
+		$db_user = $this->fetchUser($guid);
+		$this->assertNotEmpty($db_user);
 
 		$user = get_user_by_username($name);
 
@@ -90,7 +103,7 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$user = get_user_by_username($username);
 		$this->assertTrue((bool) $user);
-		$this->assertEqual($guid, $user->guid);
+		$this->assertEquals($user->guid, $guid);
 
 		$this->user->delete();
 	}
@@ -166,10 +179,38 @@ class ElggCoreUserTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->user->delete();
 	}
 
-	protected function fetchUser($guid) {
-		$CONFIG = _elgg_config();
+	public function testCanDisableUserEntities() {
 
-		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '$guid'");
+		$user = $this->createUser();
+		$this->createObject([
+			'owner_guid' => $user->guid,
+		]);
+		$this->createObject([
+			'container_guid' => $user->guid,
+		]);
+
+		disable_user_entities($user->guid);
+
+		$ha = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+
+		$objects = elgg_get_entities([
+			'owner_guid' => $user->guid,
+		]);
+
+		foreach ($objects as $object) {
+			$this->assertFalse($object->isEnabled());
+		}
+
+		access_show_hidden_entities($ha);
+	}
+
+	protected function fetchUser($guid) {
+		$qb = Select::fromTable('entities');
+		$qb->select('*');
+		$qb->where($qb->compare('guid', '=', $guid, ELGG_VALUE_INTEGER));
+
+		return _elgg_services()->db->getDataRow($qb);
 	}
 }
 

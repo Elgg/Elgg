@@ -2,9 +2,6 @@
 
 namespace Elgg\Plugins;
 
-use Elgg\Cache\Pool\InMemory;
-use Elgg\Mocks\Database\Plugins;
-
 /**
  * Common operations during plugin testing
  */
@@ -56,6 +53,8 @@ trait PluginTesting {
 	 *
 	 * @param null $flags Start flags
 	 *
+	 * @return \ElggPlugin|null
+	 *
 	 * @return \ElggPlugin|null|void
 	 * @throws \InvalidParameterException
 	 * @throws \PluginException
@@ -63,12 +62,12 @@ trait PluginTesting {
 	public function startPlugin($flags = null) {
 		$plugin_id = $this->getPluginID();
 		if (!$plugin_id) {
-			return;
+			return null;
 		}
 
 		$plugin = \ElggPlugin::fromId($plugin_id);
 		if (!$plugin) {
-			return;
+			return null;
 		}
 
 		if (!isset($flags)) {

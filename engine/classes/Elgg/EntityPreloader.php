@@ -2,7 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Cache\EntityCache;
 use Elgg\Database\EntityTable;
 
 /**
@@ -27,12 +26,11 @@ class EntityPreloader {
 	/**
 	 * Constructor
 	 *
-	 * @param EntityCache $entity_cache Entity cache
 	 * @param EntityTable $entity_table Entity service
 	 */
-	public function __construct(EntityCache $entity_cache, EntityTable $entity_table) {
-		$this->_callable_cache_checker = function ($guid) use ($entity_cache) {
-			return $entity_cache->get($guid);
+	public function __construct(EntityTable $entity_table) {
+		$this->_callable_cache_checker = function ($guid) use ($entity_table) {
+			return $entity_table->getFromCache($guid);
 		};
 		$this->_callable_entity_loader = function ($options) use ($entity_table) {
 			return $entity_table->get($options);

@@ -165,6 +165,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggEntity::getSites``
  * ``ElggEntity::removeFromSite``
  * ``ElggEntity::isFullyLoaded``
+ * ``ElggEntity::clearAllFiles``
  * ``ElggPlugin::getFriendlyName``: Use ``ElggPlugin::getDisplayName()``
  * ``ElggPlugin::setID``
  * ``ElggPlugin::unsetAllUsersSettings``
@@ -175,7 +176,6 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``ElggData::getClassName``: Use ``get_class()``
  * ``ElggData::set``: Usually can be replaced by property write
  * ``ElggEntity::setURL``: See ``getURL`` for details on the plugin hook
- * ``ElggFileCache::sanitise_filename``: Use ``sanitizeFilename``
  * ``ElggMenuBuilder::compareByWeight``: Use ``compareByPriority``
  * ``ElggMenuItem::getWeight``: Use ``getPriority``
  * ``ElggMenuItem::getContent``: Use ``elgg_view_menu_item()``
@@ -246,6 +246,16 @@ All functions around entity subtypes table:
  * ``get_subtype_from_id``
  * ``get_subtype_class``: Use ``elgg_get_entity_class``
  * ``get_subtype_class_from_id``
+
+All caches have been consolidated into a single API layer. The following functions and methods have been removed:
+ * ``is_memcache_available``
+ * ``_elgg_get_memcache``
+ * ``_elgg_invalidate_memcache_for_entity``
+ * ``ElggMemcache``
+ * ``ElggFileCache``
+ * ``ElggStaticVariableCache``
+ * ``ElggSharedMemoryCache``
+ * ``Elgg\Cache\Pool`` interface and all extending classes
 
 Deprecated APIs
 ---------------

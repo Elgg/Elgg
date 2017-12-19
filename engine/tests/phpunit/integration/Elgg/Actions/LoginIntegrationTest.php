@@ -19,6 +19,10 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		self::createApplication(true);
 	}
 
+	public function down() {
+		parent::down();
+	}
+
 	public function testLoginWithUsernameAndPassword() {
 
 		$user = $this->createOne('user', [], [
@@ -134,10 +138,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testCanPreventLoginWithHook() {
 
-		elgg_register_event_handler('login:before', 'user', [
-			Values::class,
-			'getFalse'
-		]);
+		$handler = function() {
+			return false;
+		};
+
+		_elgg_services()->hooks->getEvents()->registerHandler('login:before', 'user', $handler);
 
 		$user = $this->createOne('user', [], [
 			'password' => 123456,
@@ -157,10 +162,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertEmpty(_elgg_services()->session->getLoggedInUser());
 
-		elgg_unregister_event_handler('before:login', 'user', [
-			Values::class,
-			'getFalse'
-		]);
+		_elgg_services()->hooks->getEvents()->unregisterHandler('before:login', 'user', $handler);
 	}
 
 	public function testCanPersistLogin() {
@@ -169,6 +171,9 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->markTestIncomplete();
 	}
 
+	/**
+	 * @group Current
+	 */
 	public function testRespectsLastForwardFrom() {
 
 		$user = $this->createOne('user', [], [
@@ -180,10 +185,13 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$last_forward_form = elgg_normalize_site_url('where_i_came_from');
 		$forward_to = elgg_normalize_site_url('where_i_want_to_be');
 
-		$forward_handler = function (\Elgg\Hook $hook) use ($user, $last_forward_form, $forward_to) {
+		$hook_calls = 0;
+
+		$forward_handler = function (\Elgg\Hook $hook) use ($user, $last_forward_form, $forward_to, &$hook_calls) {
 			$this->assertEquals($last_forward_form, $hook->getValue());
 			$this->assertEquals('last_forward_from', $hook->getParam('source'));
 			$this->assertEquals($user, $hook->getParam('user'));
+			$hook_calls++;
 			return $forward_to;
 		};
 
@@ -196,6 +204,8 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 			'password' => 123456,
 			'persistent' => false,
 		]);
+
+		$this->assertEquals(1, $hook_calls);
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 		$this->assertEquals($forward_to, $response->getForwardURL());

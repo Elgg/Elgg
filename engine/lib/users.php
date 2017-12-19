@@ -15,7 +15,17 @@
  * @return bool Depending on success
  */
 function disable_user_entities($owner_guid) {
-	return _elgg_services()->usersTable->disableEntities($owner_guid);
+	try {
+		$entity = get_entity($owner_guid);
+		if (!$entity) {
+			return false;
+		}
+		return _elgg_services()->entityTable->disableEntities($entity);
+	} catch (DatabaseException $ex) {
+		elgg_log($ex->getMessage(), 'ERROR');
+
+		return false;
+	}
 }
 
 /**
@@ -28,7 +38,17 @@ function disable_user_entities($owner_guid) {
  * @return \ElggUser|false
  */
 function get_user($guid) {
-	return _elgg_services()->entityTable->get($guid, 'user');
+	try {
+		return _elgg_services()->entityTable->get($guid, 'user');
+	} catch (InvalidParameterException $ex) {
+		elgg_log($ex->getMessage(), 'ERROR');
+
+		return false;
+	} catch (ClassException $ex) {
+		elgg_log($ex->getMessage(), 'ERROR');
+
+		return false;
+	}
 }
 
 /**
@@ -187,6 +207,7 @@ function validate_username($username) {
 	}
 
 	$result = true;
+
 	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
 		['username' => $username], $result);
 }
@@ -212,6 +233,7 @@ function validate_password($password) {
 	}
 
 	$result = true;
+
 	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
 		['password' => $password], $result);
 }
@@ -231,6 +253,7 @@ function validate_email_address($address) {
 
 	// Got here, so lets try a hook (defaulting to ok)
 	$result = true;
+
 	return elgg_trigger_plugin_hook('registeruser:validate:email', 'all',
 		['email' => $address], $result);
 }
@@ -272,7 +295,7 @@ function generate_invite_code($username) {
  * @param string $code     The invite code
  *
  * @return bool
- * @see generate_invite_code()
+ * @see   generate_invite_code()
  * @since 1.10
  */
 function elgg_validate_invite_code($username, $code) {
@@ -367,7 +390,7 @@ function user_avatar_hook($hook, $type, $return, $params) {
 	if (!$user->hasIcon($size, 'icon')) {
 		return;
 	}
-	
+
 	$icon = $user->getIcon($size, 'icon');
 	return elgg_get_inline_url($icon, false);
 }
@@ -395,7 +418,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	if (!elgg_is_logged_in()) {
 		return;
 	}
-	
+
 	if ($user->canEdit()) {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'avatar:edit',
@@ -414,7 +437,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 	if (!elgg_is_admin_logged_in()) {
 		return $return;
 	}
-	
+
 	// following items are admin only
 	if (!$user->isBanned()) {
 		$return[] = ElggMenuItem::factory([
@@ -435,7 +458,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			'section' => 'admin',
 		]);
 	}
-	
+
 	$return[] = ElggMenuItem::factory([
 		'name' => 'delete',
 		'text' => elgg_echo('delete'),
@@ -444,7 +467,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		'confirm' => true,
 		'section' => 'admin',
 	]);
-	
+
 	$return[] = ElggMenuItem::factory([
 		'name' => 'resetpassword',
 		'text' => elgg_echo('resetpassword'),
@@ -453,7 +476,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		'confirm' => true,
 		'section' => 'admin',
 	]);
-	
+
 	if (!$user->isAdmin()) {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'makeadmin',
@@ -473,7 +496,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			'section' => 'admin',
 		]);
 	}
-	
+
 	$return[] = ElggMenuItem::factory([
 		'name' => 'settings:edit',
 		'text' => elgg_echo('settings:edit'),
@@ -536,7 +559,7 @@ function _elgg_user_page_handler($page) {
  * @since 3.0
  */
 function _elgg_user_page_menu($hook, $type, $return, $params) {
-	
+
 	$owner = elgg_get_page_owner_entity();
 	if (!$owner) {
 		return;
@@ -549,7 +572,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 		'section' => '1_profile',
 		'contexts' => ['settings'],
 	]);
-	
+
 	return $return;
 }
 
@@ -567,7 +590,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
  * @since 3.0
  */
 function _elgg_user_topbar_menu($hook, $type, $return, $params) {
-	
+
 	$viewer = elgg_get_logged_in_user_entity();
 	if (!$viewer) {
 		return;
@@ -585,7 +608,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'priority' => 800,
 		'section' => 'alt',
 	]);
-	
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'usersettings',
 		'parent_name' => 'account',
@@ -595,7 +618,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'priority' => 300,
 		'section' => 'alt',
 	]);
-	
+
 	if ($viewer->isAdmin()) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'administration',
@@ -607,7 +630,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 			'section' => 'alt',
 		]);
 	}
-	
+
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'logout',
 		'parent_name' => 'account',
@@ -618,7 +641,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'priority' => 900,
 		'section' => 'alt',
 	]);
-	
+
 	return $return;
 }
 
@@ -638,7 +661,7 @@ function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
 
 	$icon->owner_guid = $entity->guid;
 	$icon->setFilename("profile/{$entity->guid}{$size}.jpg");
-	
+
 	return $icon;
 }
 
@@ -653,27 +676,27 @@ function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
  * @return void|array
  */
 function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $params) {
-	
+
 	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
-	
+
 	$event = elgg_extract('event', $params);
 	if (!($event instanceof \Elgg\Notifications\Event)) {
 		return;
 	}
-	
+
 	if ($event->getAction() !== 'unban') {
 		return;
 	}
-	
+
 	$user = $event->getObject();
 	if (!($user instanceof \ElggUser)) {
 		return;
 	}
-	
+
 	$return_value[$user->getGUID()] = ['email'];
-	
+
 	return $return_value;
 }
 
@@ -689,30 +712,30 @@ function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $pa
  * @return void
  */
 function _elgg_user_ban_notification($event, $type, $user) {
-	
+
 	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
-	
+
 	if (!($user instanceof \ElggUser)) {
 		return;
 	}
-	
+
 	$site = elgg_get_site_entity();
 	$language = $user->getLanguage();
-	
+
 	$subject = elgg_echo('user:notification:ban:subject', [$site->name], $language);
 	$body = elgg_echo('user:notification:ban:body', [
 		$user->name,
 		$site->name,
 		$site->getURL(),
 	], $language);
-	
+
 	$params = [
 		'action' => 'ban',
 		'object' => $user,
 	];
-	
+
 	notify_user($user->getGUID(), $site->getGUID(), $subject, $body, $params, ['email']);
 }
 
@@ -727,25 +750,25 @@ function _elgg_user_ban_notification($event, $type, $user) {
  * @return void|\Elgg\Notifications\Notification
  */
 function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $params) {
-	
+
 	if (!($return_value instanceof \Elgg\Notifications\Notification)) {
 		return;
 	}
-	
+
 	$recipient = elgg_extract('recipient', $params);
 	$object = elgg_extract('object', $params);
 	$language = elgg_extract('language', $params);
-	
+
 	if (!($recipient instanceof ElggUser) || !($object instanceof ElggUser)) {
 		return;
 	}
-	
+
 	if ($recipient->getGUID() !== $object->getGUID()) {
 		return;
 	}
-	
+
 	$site = elgg_get_site_entity();
-	
+
 	$return_value->subject = elgg_echo('user:notification:unban:subject', [$site->name], $language);
 	$return_value->body = elgg_echo('user:notification:unban:body', [
 		$recipient->name,
@@ -754,7 +777,7 @@ function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $par
 	], $language);
 
 	$return_value->url = $recipient->getURL();
-	
+
 	return $return_value;
 }
 
@@ -794,29 +817,12 @@ function users_init() {
 	elgg_register_entity_type('user', '');
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
-	
+
 	elgg_register_notification_event('user', '', ['unban']);
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_unban_action');
 	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
 	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:', '_elgg_user_prepare_unban_notification');
-	
-}
 
-/**
- * Runs unit tests for \ElggUser
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function users_test($hook, $type, $value, $params) {
-	$value[] = ElggCoreUserTest::class;
-	return $value;
 }
 
 /**
@@ -824,5 +830,4 @@ function users_test($hook, $type, $value, $params) {
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', 'users_init', 0);
-	$hooks->registerHandler('unit_test', 'system', 'users_test');
 };

@@ -32,7 +32,7 @@ class MetadataTable extends DbMetadataTabe {
 	/**
 	 * @var int
 	 */
-	public $iterator = 100;
+	static $iterator = 100;
 
 	public function __construct(MetadataCache $metadata_cache, Database $db, Events $events) {
 		$this->setCurrentTime();
@@ -43,8 +43,8 @@ class MetadataTable extends DbMetadataTabe {
 	 * {@inheritdoc}
 	 */
 	public function create(ElggMetadata $metadata, $allow_multiple = false) {
-		$this->iterator++;
-		$id = $this->iterator;
+		static::$iterator++;
+		$id = static::$iterator;
 
 		$row = (object) [
 			'type' => 'metadata',
@@ -93,7 +93,7 @@ class MetadataTable extends DbMetadataTabe {
 		$rows = [];
 		foreach ($this->rows as $id => $row) {
 			if (empty($guids) || in_array($row->entity_guid, $guids)) {
-				$rows[] = new ElggMetadata($row);
+				$rows[] = $row;
 			}
 		}
 		
@@ -215,8 +215,8 @@ class MetadataTable extends DbMetadataTabe {
 	 * @return int
 	 */
 	public function iterate() {
-		$this->iterator++;
-		return $this->iterator;
+		static::$iterator++;
+		return static::$iterator;
 	}
 
 }

@@ -19,19 +19,6 @@ function _elgg_generate_plugin_entities() {
 }
 
 /**
- * Cache a reference to this plugin by its ID
- *
- * @param \ElggPlugin $plugin the plugin to cache
- *
- * @return void
- *
- * @access private
- */
-function _elgg_cache_plugin_by_id(\ElggPlugin $plugin) {
-	_elgg_services()->plugins->cache($plugin);
-}
-
-/**
  * Returns an \ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.

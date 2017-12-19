@@ -7,7 +7,7 @@
 class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
-
+		_elgg_services()->boot->invalidateCache();
 	}
 
 	public function down() {
@@ -41,6 +41,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$constructed = new ElggPlugin($row);
 
 		$this->assertEquals($row->guid, $constructed->guid);
+
+		$plugin->delete();
 	}
 
 	public function testAttributesAreInitialized() {
@@ -51,6 +53,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('test_plugin', $plugin->getID());
 		$this->assertEquals(\Elgg\Project\Paths::sanitize(elgg_get_plugins_path() . 'test_plugin'), $plugin->getPath());
 
+		$plugin->delete();
 	}
 
 	public function testCanConstructWithCustomPath() {
@@ -60,6 +63,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('test_plugin', $plugin->getID());
 		$this->assertEquals($this->normalizeTestFilePath('mod/test_plugin/'), $plugin->getPath());
 
+		$plugin->delete();
 	}
 
 	public function testCanLoadStaticConfig() {
@@ -89,6 +93,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($config['entities'], $plugin->getStaticConfig('entities'));
 		$this->assertEquals($config['actions'], $plugin->getStaticConfig('actions'));
 		$this->assertEquals($config['widgets'], $plugin->getStaticConfig('widgets'));
+
+		$plugin->delete();
 	}
 
 	public function testCanGetTextFiles() {
@@ -100,6 +106,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 			'CHANGES.txt' => $this->normalizeTestFilePath('mod/test_plugin/CHANGES.txt'),
 			'README' => $this->normalizeTestFilePath('mod/test_plugin/README'),
 		], $files);
+
+		$plugin->delete();
 	}
 
 	public function testCanReadManifest() {
@@ -110,6 +118,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(ElggPluginManifest::class, $manifest);
 
 		$this->assertEquals('Test Plugin', $plugin->getDisplayName());
+
+		$plugin->delete();
 	}
 
 }

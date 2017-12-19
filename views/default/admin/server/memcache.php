@@ -3,13 +3,17 @@
  * Memcache info
  */
 $servers = elgg_get_config('memcache_servers');
-if (!elgg_get_config('memcache') || empty($servers) || !is_memcache_available()) {
+$has_class = class_exists('Memcached') || class_exists('Memcache');
+if (!elgg_get_config('memcache') || empty($servers) || !$has_class) {
 	echo '<p>' . elgg_echo('admin:server:memcache:inactive') . '</p>';
 	return;
 }
 
-$memcache = new Memcached();
-
+if (class_exists('Memcached')) {
+	$memcache = new Memcached();
+} else {
+	$memcache = new Memcache();
+}
 foreach ($servers as $server) {
 	$title = "{$server[0]}:{$server[1]}";
 

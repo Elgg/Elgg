@@ -47,6 +47,7 @@ class BootData {
 	 * @throws \InstallationException
 	 * @throws \InvalidParameterException
 	 * @throws \DatabaseException
+	 * @throws \ClassException
 	 */
 	public function populate(Database $db, EntityTable $entities, Plugins $plugins, $installed) {
 

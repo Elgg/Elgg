@@ -28,6 +28,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->setId("test_plugin:2016101900");
 		$upgrade->title = 'test_plugin:upgrade:2016101900:title';
 		$upgrade->description = 'test_plugin:upgrade:2016101900:title';
+		$upgrade->access_id = ACCESS_PUBLIC;
 		$upgrade->save();
 
 		$upgrader = new BatchUpgrader(_elgg_config());
@@ -52,6 +53,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->setId("test_plugin:2016101903");
 		$upgrade->title = 'test_plugin:upgrade:2016101903:title';
 		$upgrade->description = 'test_plugin:upgrade:2016101903:title';
+		$upgrade->access_id = ACCESS_PUBLIC;
 		$upgrade->save();
 
 		$upgrade->processed = 50;
@@ -80,6 +82,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->setId("test_plugin:2016101901");
 		$upgrade->title = 'test_plugin:upgrade:2016101901:title';
 		$upgrade->description = 'test_plugin:upgrade:2016101901:title';
+		$upgrade->access_id = ACCESS_PUBLIC;
 		$upgrade->save();
 
 		$upgrader = new BatchUpgrader(_elgg_config());
@@ -104,6 +107,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->setId("test_plugin:2016101902");
 		$upgrade->title = 'test_plugin:upgrade:2016101902:title';
 		$upgrade->description = 'test_plugin:upgrade:2016101902:title';
+		$upgrade->access_id = ACCESS_PUBLIC;
 		$upgrade->save();
 
 		$upgrader = new BatchUpgrader(_elgg_config());

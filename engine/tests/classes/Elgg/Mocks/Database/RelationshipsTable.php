@@ -24,7 +24,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	/**
 	 * @var int
 	 */
-	private $iterator = 100;
+	static $iterator = 100;
 
 	/**
 	 *
@@ -41,8 +41,8 @@ class RelationshipsTable extends DbRelationshipsTable {
 			return false;
 		}
 
-		$this->iterator++;
-		$id = $this->iterator;
+		static::$iterator++;
+		$id = static::$iterator;
 
 		$row = (object) [
 			'id' => $id,

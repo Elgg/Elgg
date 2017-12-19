@@ -597,6 +597,8 @@ class Database {
 				}
 			}
 		}
+
+		$this->delayed_queries = [];
 	}
 
 	/**
