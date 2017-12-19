@@ -107,6 +107,7 @@ Removed views
  * ``search/object/comment/entity``
  * ``search/css``: Moved to ``search/search.css``
  * ``search/startblurb``
+ * ``bookmarks/bookmarklet.gif``
 
 
 Removed functions/methods
@@ -473,6 +474,7 @@ The Entity and River menu now shows all the items in a dropdown. Social actions 
 Removed libraries
 -----------------
 
+ * ``elgg:bookmarks``
  * ``elgg:discussion``
  * ``elgg:pages``
 
