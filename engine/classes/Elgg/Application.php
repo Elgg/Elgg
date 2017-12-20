@@ -918,7 +918,6 @@ class Application {
 			'search.php',
 			'sessions.php',
 			'statistics.php',
-			'system_log.php',
 			'tags.php',
 			'upgrade.php',
 			'user_settings.php',

@@ -19,7 +19,6 @@ class UserViewsRenderingTest extends ViewRenderingTestCase {
 			'core/settings/account/notifications',
 			'core/settings/account/password',
 			'core/settings/account/username',
-			'core/settings/statistics/login_history',
 			'core/settings/statistics/numentities',
 			'core/settings/statistics/online',
 			'core/settings/account',

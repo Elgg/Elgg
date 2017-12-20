@@ -34,8 +34,6 @@
 !/mod/invitefriends/
 !/mod/legacy_urls/
 !/mod/likes/
-!/mod/logbrowser/
-!/mod/logrotate/
 !/mod/members/
 !/mod/messageboard/
 !/mod/messages/
@@ -45,6 +43,7 @@
 !/mod/reportedcontent/
 !/mod/search/
 !/mod/site_notifications/
+!/mod/system_log/
 !/mod/tagcloud/
 !/mod/thewire/
 !/mod/uservalidationbyemail/

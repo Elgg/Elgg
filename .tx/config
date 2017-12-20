@@ -109,18 +109,6 @@ source_file = mod/likes/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
-[elgg-core-2.logbrowser]
-file_filter = mod/logbrowser/languages/<lang>.php
-source_file = mod/logbrowser/languages/en.php
-source_lang = en
-type = PHP_ARRAY
-
-[elgg-core-2.logrotate]
-file_filter = mod/logrotate/languages/<lang>.php
-source_file = mod/logrotate/languages/en.php
-source_lang = en
-type = PHP_ARRAY
-
 [elgg-core-2.members]
 file_filter = mod/members/languages/<lang>.php
 source_file = mod/members/languages/en.php
@@ -171,7 +159,13 @@ type = PHP_ARRAY
 
 [elgg-core-2.site_notifications]
 file_filter = mod/site_notifications/languages/<lang>.php
-source_file = mod/web_services/languages/en.php
+source_file = mod/site_notifications/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core-2.system_log]
+file_filter = mod/system_log/languages/<lang>.php
+source_file = mod/system_log/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 

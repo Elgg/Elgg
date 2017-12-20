@@ -261,6 +261,20 @@ All caches have been consolidated into a single API layer. The following functio
  * ``ElggSharedMemoryCache``
  * ``Elgg\Cache\Pool`` interface and all extending classes
 
+As a result of system log changes:
+ * ``system_log_default_logger``: moved to ``system_log`` plugin
+ * ``system_log_listener``: moved to ``system_log`` plugin
+ * ``system_log``: moved to ``system_log`` plugin
+ * ``get_system_log``: renamed to ``system_log_get_log`` and moved to ``system_log`` plugin
+ * ``get_log_entry``: renamed to ``system_log_get_log_entry`` and moved to ``system_log`` plugin
+ * ``get_object_from_log_entry``: renamed to ``system_log_get_object_from_log_entry`` and moved to ``system_log`` plugin
+ * ``archive_log``: renamed to ``system_log_archive_log`` and moved to ``system_log`` plugin
+ * ``logbrowser_user_hover_menu``: renamed to ``system_log_user_hover_menu`` and moved to ``system_log`` plugin
+ * ``logrotate_archive_cron``: renamed to ``system_log_archive_cron`` and moved to ``system_log`` plugin
+ * ``logrotate_delete_cron``: renamed to ``system_log_delete_cron`` and moved to ``system_log`` plugin
+ * ``logrotate_get_seconds_in_period``: renamed to ``system_log_get_seconds_in_period`` and moved to ``system_log`` plugin
+ * ``log_browser_delete_log``: renamed to ``system_log_browser_delete_log`` and moved to ``system_log`` plugin
+
 Deprecated APIs
 ---------------
 
@@ -948,3 +962,9 @@ Translations cleanup
 
 All plugins have been scanned for unused translation keys. The unused keys have been removed.
 If there was a generic translation available for the custom translation key, these have also been updated.
+
+System Log
+----------
+
+System log API has been moved out of core into a ``system_log`` plugin.
+``logbrowser`` and ``logrotate`` plugins have been merged into the ``system_log`` plugin.

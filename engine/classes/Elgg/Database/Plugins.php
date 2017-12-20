@@ -241,8 +241,14 @@ class Plugins {
 	 * @return void
 	 */
 	public function invalidateCache($plugin_id) {
-		$this->cache->delete($plugin_id);
-		$this->invalidateProvidesCache();
+		try {
+			$this->cache->delete($plugin_id);
+			$this->invalidateProvidesCache();
+		} catch (\InvalidArgumentException $ex) {
+			// A plugin must have been deactivated due to missing folder
+			// without proper cleanup
+			elgg_flush_caches();
+		}
 	}
 
 	/**

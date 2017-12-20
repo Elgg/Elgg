@@ -12,6 +12,8 @@ require_once "$root/autoloader.php";
 
 \Elgg\Application::start();
 
+_elgg_generate_plugin_entities();
+
 $core_upgrades = (require \Elgg\Application::elggDir()->getPath('engine/lib/upgrades/async-upgrades.php'));
 $pending_upgrades = _elgg_services()->upgradeLocator->run($core_upgrades);
 
