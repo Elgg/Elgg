@@ -17,8 +17,7 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\LegacyIntegrationTestCase
 	public function up() {
 		$this->realPreloader = _elgg_services()->entityPreloader;
 
-		$this->mockPreloader = new MockEntityPreloader20140623(
-			_elgg_services()->entityCache, _elgg_services()->entityTable);
+		$this->mockPreloader = new MockEntityPreloader20140623(_elgg_services()->entityTable);
 
 		_elgg_services()->setValue('entityPreloader', $this->mockPreloader);
 	}

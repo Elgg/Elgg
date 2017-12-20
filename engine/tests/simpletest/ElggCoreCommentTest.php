@@ -37,8 +37,8 @@ class ElggCoreCommentTest extends \ElggCoreUnitTest {
 
 	public function testCommentAccessSync() {
 
-		_elgg_services()->entityCache->disableCachingForEntity($this->comment->guid);
-		_elgg_services()->entityCache->disableCachingForEntity($this->container->guid);
+		$this->comment->disableCaching();
+		$this->container->disableCaching();
 
 		$this->assertEqual($this->comment->access_id, $this->container->access_id);
 

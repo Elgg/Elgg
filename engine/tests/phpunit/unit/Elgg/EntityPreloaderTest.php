@@ -18,7 +18,7 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 	public $obj;
 
 	public function up() {
-		$this->obj = new EntityPreloader(\_elgg_services()->entityCache, \_elgg_services()->entityTable);
+		$this->obj = new EntityPreloader(_elgg_services()->entityTable);
 		$dependency = new PreloaderMock_20140623();
 		$this->obj->_callable_cache_checker = array($dependency, 'isCached');
 		$this->obj->_callable_entity_loader = array($dependency, 'load');

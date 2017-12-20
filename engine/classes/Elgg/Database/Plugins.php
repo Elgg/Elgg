@@ -3,8 +3,7 @@
 namespace Elgg\Database;
 
 use DatabaseException;
-use Elgg\Cache\PluginSettingsCache;
-use Elgg\Cache\Pool;
+use ElggCache;
 use Elgg\Database;
 use Elgg\Profilable;
 use ElggPlugin;
@@ -45,14 +44,9 @@ class Plugins {
 	protected $active_guids_known = false;
 
 	/**
-	 * @var Pool
+	 * @var ElggCache
 	 */
-	protected $plugins_by_id;
-
-	/**
-	 * @var PluginSettingsCache
-	 */
-	protected $settings_cache;
+	protected $cache;
 
 	/**
 	 * @var Database
@@ -62,13 +56,11 @@ class Plugins {
 	/**
 	 * Constructor
 	 *
-	 * @param Pool                $pool  Cache for referencing plugins by ID
-	 * @param PluginSettingsCache $cache Plugin settings cache
-	 * @param Database            $db    Database
+	 * @param ElggCache $cache Cache for referencing plugins by ID
+	 * @param Database  $db    Database
 	 */
-	public function __construct(Pool $pool, PluginSettingsCache $cache, Database $db) {
-		$this->plugins_by_id = $pool;
-		$this->settings_cache = $cache;
+	public function __construct(ElggCache $cache, Database $db) {
+		$this->cache = $cache;
 		$this->db = $db;
 	}
 
@@ -86,9 +78,19 @@ class Plugins {
 				if (!$plugin instanceof ElggPlugin || !$plugin->getID()) {
 					continue;
 				}
-				$this->plugins_by_id->put($plugin->getID(), $plugin);
+				$this->cache->save($plugin->getID(), $plugin);
 			}
 		}
+	}
+
+	/**
+	 * Clear plugin caches
+	 * @return void
+	 */
+	public function clear() {
+		$this->cache->clear();
+		$this->invalidateProvidesCache();
+		$this->invalidateIsActiveCache();
 	}
 
 	/**
@@ -129,6 +131,8 @@ class Plugins {
 	 * The \ElggPlugin object holds config data, so don't delete.
 	 *
 	 * @return bool
+	 * @throws DatabaseException
+	 * @throws \PluginException
 	 * @access private
 	 */
 	public function generateEntities() {
@@ -159,7 +163,7 @@ class Plugins {
 				continue;
 			}
 			$id_map[$plugin->getID()] = $i;
-			$this->cache($plugin);
+			$plugin->cache();
 		}
 
 		$physical_plugins = $this->getDirsInDir($mod_dir);
@@ -188,7 +192,7 @@ class Plugins {
 				// create new plugin
 				// priority is forced to last in save() if not set.
 				$plugin = ElggPlugin::fromId($plugin_id);
-				$this->cache($plugin);
+				$plugin->cache();
 			}
 		}
 
@@ -223,7 +227,10 @@ class Plugins {
 	 * @access private
 	 */
 	public function cache(ElggPlugin $plugin) {
-		$this->plugins_by_id->put($plugin->getID(), $plugin);
+		if (!$plugin->getID()) {
+			return;
+		}
+		$this->cache->save($plugin->getID(), $plugin);
 	}
 
 	/**
@@ -234,7 +241,8 @@ class Plugins {
 	 * @return void
 	 */
 	public function invalidateCache($plugin_id) {
-		$this->plugins_by_id->invalidate($plugin_id);
+		$this->cache->delete($plugin_id);
+		$this->invalidateProvidesCache();
 	}
 
 	/**
@@ -268,7 +276,15 @@ class Plugins {
 			return null;
 		};
 
-		return $this->plugins_by_id->get($plugin_id, $fallback);
+		$plugin = $this->cache->load($plugin_id);
+		if (!isset($plugin)) {
+			$plugin = $fallback();
+			if ($plugin instanceof ElggPlugin) {
+				$plugin->cache();
+			}
+		}
+
+		return $plugin;
 	}
 
 	/**
@@ -291,6 +307,7 @@ class Plugins {
 	 *
 	 * @return int
 	 * @access private
+	 * @throws DatabaseException
 	 */
 	public function getMaxPriority() {
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
@@ -336,7 +353,7 @@ class Plugins {
 			return false;
 		}
 
-		return $plugin->isActive($site->guid);
+		return $plugin->isActive();
 	}
 
 	/**
@@ -348,6 +365,7 @@ class Plugins {
 	 *
 	 * @return bool
 	 * @access private
+	 * @throws \PluginException
 	 */
 	function load() {
 		if ($this->timer) {
@@ -858,7 +876,7 @@ class Plugins {
 			return [];
 		}
 
-		$values = _elgg_services()->pluginSettingsCache->getAll($plugin->guid);
+		$values = _elgg_services()->privateSettingsCache->load($plugin->guid);
 		if (isset($values)) {
 			return $values;
 		}
@@ -882,7 +900,7 @@ class Plugins {
 			}
 		}
 
-		_elgg_services()->pluginSettingsCache->set($plugin->guid, $settings);
+		_elgg_services()->privateSettingsCache->save($plugin->guid, $settings);
 
 		return $settings;
 	}
@@ -1140,24 +1158,26 @@ class Plugins {
 
 		$name = $this->namespacePrivateSetting('internal', 'priority');
 
-		if ($plugin->guid) {
-			$qb = Update::table('private_settings');
-			$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
-				->andwhere($qb->between('CAST(value AS UNSIGNED)', $old_priority, $priority, ELGG_VALUE_INTEGER))
-				->andWhere($qb->compare('entity_guid', '!=', $plugin->guid, ELGG_VALUE_INTEGER));
-
-			if ($priority > $old_priority) {
-				$qb->set('value', "CAST(value AS UNSIGNED) - 1");
-			} else {
-				$qb->set('value', "CAST(value AS UNSIGNED) + 1");
-			}
-
-			if (!$this->db->updateData($qb)) {
-				return false;
-			}
+		if (!$plugin->guid) {
+			return false;
 		}
 
 		if (!$plugin->setPrivateSetting($name, $priority)) {
+			return false;
+		}
+
+		$qb = Update::table('private_settings');
+		$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
+			->andWhere($qb->between('CAST(value AS UNSIGNED)', $old_priority, $priority, ELGG_VALUE_INTEGER))
+			->andWhere($qb->compare('entity_guid', '!=', $plugin->guid, ELGG_VALUE_INTEGER));
+
+		if ($priority > $old_priority) {
+			$qb->set('value', "CAST(value AS UNSIGNED) - 1");
+		} else {
+			$qb->set('value', "CAST(value AS UNSIGNED) + 1");
+		}
+
+		if (!$this->db->updateData($qb)) {
 			return false;
 		}
 

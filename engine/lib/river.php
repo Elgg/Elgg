@@ -255,68 +255,6 @@ function elgg_delete_river(array $options = []) {
 }
 
 /**
- * Prefetch entities that will be displayed in the river.
- *
- * @param \ElggRiverItem[] $river_items the river items to prefetch for
- *
- * @return void
- *
- * @access private
- */
-function _elgg_prefetch_river_entities(array $river_items) {
-	$river_items = array_filter($river_items, function($e) {
-		return $e instanceof ElggRiverItem;
-	});
-
-	// prefetch objects, subjects and targets
-	$guids = [];
-	foreach ($river_items as $item) {
-		if ($item->subject_guid && !_elgg_services()->entityCache->get($item->subject_guid)) {
-			$guids[$item->subject_guid] = true;
-		}
-		if ($item->object_guid && !_elgg_services()->entityCache->get($item->object_guid)) {
-			$guids[$item->object_guid] = true;
-		}
-		if ($item->target_guid && !_elgg_services()->entityCache->get($item->target_guid)) {
-			$guids[$item->target_guid] = true;
-		}
-	}
-	if ($guids) {
-		// The entity cache only holds 256. We don't want to bump out any plugins.
-		$guids = array_slice($guids, 0, 200, true);
-		// return value unneeded, just priming cache
-		elgg_get_entities([
-			'guids' => array_keys($guids),
-			'limit' => 0,
-			'distinct' => false,
-		]);
-	}
-
-	// prefetch object containers, in case they were not in the targets
-	$guids = [];
-	foreach ($river_items as $item) {
-		$object = $item->getObjectEntity();
-		if ($object->container_guid && !_elgg_services()->entityCache->get($object->container_guid)) {
-			$guids[$object->container_guid] = true;
-		}
-	}
-	if ($guids) {
-		$guids = array_slice($guids, 0, 200, true);
-		elgg_get_entities([
-			'guids' => array_keys($guids),
-			'limit' => 0,
-			'distinct' => false,
-
-			// Why specify? user containers are likely already loaded via the owners
-			'type' => 'group',
-		]);
-	}
-
-	// Note: We've tried combining the above ege() calls into one (pulling containers at the same time).
-	// Although it seems like it would reduce queries, it added some. o_O
-}
-
-/**
  * List river items
  *
  * @param array $options Any options from elgg_get_river() plus:

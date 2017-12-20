@@ -21,9 +21,15 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 	public static function createApplication() {
 
 		if (isset(self::$_testing_app)) {
-			Application::setInstance(self::$_testing_app);
+			$app = self::$_testing_app;
+			
+			Application::setInstance($app);
 
-			return self::$_testing_app;
+			// Invalidate caches
+			$app->_services->dataCache->clear();
+			$app->_services->sessionCache->clear();
+
+			return $app;
 		}
 
 		Application::setInstance(null);

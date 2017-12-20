@@ -1,12 +1,12 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-use Elgg\Http\DatabaseSessionHandler;
 use Elgg\Config;
 use Elgg\Database;
+use Elgg\Http\DatabaseSessionHandler;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 
 /**
  * Elgg Session Management
@@ -79,6 +79,7 @@ class ElggSession {
 		$this->logged_in_user = null;
 		$result = $this->migrate(true);
 		$this->generateSessionToken();
+		_elgg_services()->sessionCache->clear();
 		return $result;
 	}
 
@@ -190,7 +191,7 @@ class ElggSession {
 		if ($current_user != $user) {
 			$this->set('guid', $user->guid);
 			$this->logged_in_user = $user;
-			_elgg_services()->entityCache->clear();
+			_elgg_services()->sessionCache->clear();
 			_elgg_services()->translator->setCurrentLanguage($user->language);
 		}
 	}
@@ -245,7 +246,7 @@ class ElggSession {
 	public function removeLoggedInUser() {
 		$this->logged_in_user = null;
 		$this->remove('guid');
-		_elgg_services()->entityCache->clear();
+		_elgg_services()->sessionCache->clear();
 	}
 
 	/**
@@ -265,8 +266,6 @@ class ElggSession {
 	 * @return bool Previous setting
 	 */
 	public function setIgnoreAccess($ignore = true) {
-		_elgg_services()->accessCache->clear();
-
 		$prev = $this->ignore_access;
 		$this->ignore_access = $ignore;
 

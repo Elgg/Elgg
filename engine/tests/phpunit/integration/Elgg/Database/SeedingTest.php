@@ -62,8 +62,7 @@ class SeedingTest extends IntegrationTestCase {
 		$this->assertTrue($user->isAdmin());
 		$this->assertTrue(get_entity($user->guid)->isAdmin());
 
-		_elgg_invalidate_cache_for_entity($user->guid);
-		_elgg_invalidate_memcache_for_entity($user->guid);
+		$user->invalidateCache();
 
 		$this->assertTrue(get_entity($user->guid)->isAdmin());
 
@@ -79,8 +78,7 @@ class SeedingTest extends IntegrationTestCase {
 		$this->assertTrue($user->isBanned());
 		$this->assertTrue(get_entity($user->guid)->isBanned());
 
-		_elgg_invalidate_cache_for_entity($user->guid);
-		_elgg_invalidate_memcache_for_entity($user->guid);
+		$user->invalidateCache();
 
 		$this->assertTrue(get_entity($user->guid)->isBanned());
 
@@ -106,8 +104,7 @@ class SeedingTest extends IntegrationTestCase {
 		$this->assertEquals('af', $user->getLanguage());
 		$this->assertEquals('af', get_entity($user->guid)->getLanguage());
 
-		_elgg_invalidate_cache_for_entity($user->guid);
-		_elgg_invalidate_memcache_for_entity($user->guid);
+		$user->invalidateCache();
 
 		$this->assertEquals('af', get_entity($user->guid)->getLanguage());
 

@@ -19,12 +19,13 @@ class ElggHMACCache extends ElggCache {
 	/**
 	 * Save a key
 	 *
-	 * @param string $key  Name
-	 * @param string $data Value
+	 * @param string $key          Name
+	 * @param string $data         Value
+	 * @param int    $expire_after Number of seconds to expire cache after
 	 *
 	 * @return boolean
 	 */
-	public function save($key, $data) {
+	public function save($key, $data, $expire_after = null) {
 		$dbprefix = elgg_get_config('dbprefix');
 		$key = sanitise_string($key);
 		$time = time();

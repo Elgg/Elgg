@@ -3,6 +3,7 @@
 namespace Elgg\Mocks\Database;
 
 use Elgg\Database\Clauses\EntityWhereClause;
+use Elgg\Database\Delete;
 use Elgg\Database\EntityTable as DbEntityTable;
 use Elgg\Database\Select;
 use ElggEntity;
@@ -27,7 +28,7 @@ class EntityTable extends DbEntityTable {
 	/**
 	 * @var int
 	 */
-	private $iterator = 100;
+	static $iterator = 100;
 
 	/**
 	 * @var array
@@ -120,9 +121,9 @@ class EntityTable extends DbEntityTable {
 			if ($type === 'site') {
 				$guid = 1;
 			} else {
-				$this->iterator++;
-				if (!isset($this->row[$this->iterator])) {
-					$guid = $this->iterator;
+				static::$iterator++;
+				if (!isset($this->row[static::$iterator])) {
+					$guid = static::$iterator;
 				}
 			}
 		}
@@ -173,9 +174,7 @@ class EntityTable extends DbEntityTable {
 			$entity->$name = $value;
 		}
 
-		if ($entity instanceof \ElggPlugin && $entity->getID()) {
-			_elgg_services()->plugins->cache($entity);
-		}
+		//$entity->cache();
 
 		return $entity;
 	}
@@ -185,9 +184,9 @@ class EntityTable extends DbEntityTable {
 	 * @return int
 	 */
 	public function iterate() {
-		$this->iterator++;
+		static::$iterator++;
 
-		return $this->iterator;
+		return static::$iterator;
 	}
 
 	/**
@@ -530,16 +529,12 @@ class EntityTable extends DbEntityTable {
 
 		$dbprefix = _elgg_config()->dbprefix;
 
-		$sql = "
-			DELETE FROM {$dbprefix}entities
-			WHERE guid = :guid
-		";
+		$qb = Delete::fromTable('entities');
+		$qb->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_INTEGER));
 
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':guid' => $row->guid,
-			],
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			// We are using results instead of 'row_count' to give an accurate
 			// count of deleted rows
 			'results' => function () use ($row) {

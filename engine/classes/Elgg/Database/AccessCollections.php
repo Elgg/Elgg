@@ -8,9 +8,9 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
 use Elgg\I18n\Translator;
 use Elgg\PluginHooksService;
 use Elgg\UserCapabilities;
+use ElggCache;
 use ElggEntity;
 use ElggSession;
-use ElggStaticVariableCache;
 use ElggUser;
 
 /**
@@ -35,7 +35,7 @@ class AccessCollections {
 	protected $db;
 
 	/**
-	 * @vars \ElggStateVariableCache
+	 * @vars ElggCache
 	 */
 	protected $access_cache;
 
@@ -82,21 +82,21 @@ class AccessCollections {
 	/**
 	 * Constructor
 	 *
-	 * @param Config                  $config       Config
-	 * @param Database                $db           Database
-	 * @param EntityTable             $entities     Entity table
-	 * @param UserCapabilities        $capabilities User capabilities
-	 * @param ElggStaticVariableCache $cache        Access cache
-	 * @param PluginHooksService      $hooks        Hooks
-	 * @param ElggSession             $session      Session
-	 * @param Translator              $translator   Translator
+	 * @param Config             $config       Config
+	 * @param Database           $db           Database
+	 * @param EntityTable        $entities     Entity table
+	 * @param UserCapabilities   $capabilities User capabilities
+	 * @param ElggCache          $cache        Access cache
+	 * @param PluginHooksService $hooks        Hooks
+	 * @param ElggSession        $session      Session
+	 * @param Translator         $translator   Translator
 	 */
 	public function __construct(
 		Config $config,
 		Database $db,
 		EntityTable $entities,
 		UserCapabilities $capabilities,
-		ElggStaticVariableCache $cache,
+		ElggCache $cache,
 		PluginHooksService $hooks,
 		ElggSession $session,
 		Translator $translator) {
@@ -412,7 +412,7 @@ class AccessCollections {
 		if (empty($name)) {
 			return false;
 		}
-		
+
 		if (isset($subtype)) {
 			$subtype = trim($subtype);
 			if (strlen($subtype) > 255) {
@@ -508,7 +508,7 @@ class AccessCollections {
 		if (!$acl) {
 			return false;
 		}
-		
+
 		$to_guid = function($elem) {
 			if (empty($elem)) {
 				return 0;
@@ -518,7 +518,7 @@ class AccessCollections {
 			}
 			return (int) $elem;
 		};
-		
+
 		$current_members = [];
 		$new_members = array_map($to_guid, $new_members);
 
@@ -585,7 +585,7 @@ class AccessCollections {
 		]);
 
 		$this->access_cache->clear();
-		
+
 		return (bool) $result;
 	}
 
@@ -622,11 +622,11 @@ class AccessCollections {
 		$result = $this->db->getDataRow($query, $callback, [
 			':id' => (int) $collection_id,
 		]);
-		
+
 		if (empty($result)) {
 			return false;
 		}
-		
+
 		return $result;
 	}
 
@@ -690,7 +690,7 @@ class AccessCollections {
 		]);
 
 		$this->access_cache->clear();
-		
+
 		return $result !== false;
 	}
 
@@ -740,7 +740,7 @@ class AccessCollections {
 		$callback = [$this, 'rowToElggAccessCollection'];
 
 		$supported_options = ['owner_guid', 'subtype'];
-		
+
 		$wheres = [];
 		$params = [];
 		foreach ($supported_options as $option) {
@@ -751,7 +751,7 @@ class AccessCollections {
 			$wheres[] = "{$option} = :{$option}";
 			$params[":{$option}"] = $option_value;
 		}
-		
+
 		$query = "SELECT * FROM {$this->table}";
 		if (!empty($wheres)) {
 			$query .= ' WHERE ' . implode(' AND ', $wheres);
@@ -841,7 +841,7 @@ class AccessCollections {
 		$collection = $this->get($access);
 
 		$user_guid = $this->session->getLoggedInUserGuid();
-		
+
 		if (!$collection || !$user_guid) {
 			// return 'Limited' if there is no logged in user or collection can not be loaded
 			return $translator->translate('access:limited:label');

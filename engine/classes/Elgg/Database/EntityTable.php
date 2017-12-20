@@ -15,13 +15,13 @@ use Elgg\EntityPreloader;
 use Elgg\EventsService;
 use Elgg\I18n\Translator;
 use Elgg\Logger;
+use ElggBatch;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
 use ElggSession;
 use ElggSite;
 use ElggUser;
-use InstallationException;
 use InvalidParameterException;
 use stdClass;
 
@@ -315,26 +315,44 @@ class EntityTable {
 	 *
 	 * @return \ElggEntity|false
 	 */
-	protected function getFromCache($guid) {
-		$entity = $this->entity_cache->get($guid);
+	public function getFromCache($guid) {
+		$entity = $this->entity_cache->load($guid);
 		if ($entity) {
 			return $entity;
 		}
 
-		$memcache = _elgg_get_memcache('new_entity_cache');
-		$entity = $memcache->load($guid);
+		$cache = _elgg_services()->dataCache->entities;
+		$entity = $cache->load($guid);
 		if (!$entity instanceof ElggEntity) {
 			return false;
 		}
 
-		// Validate accessibility if from memcache
+		// Validate accessibility if from cache
 		if (!elgg_get_ignore_access() && !has_access_to_entity($entity)) {
 			return false;
 		}
 
-		$this->entity_cache->set($entity);
+		$entity->cache(false);
 
 		return $entity;
+	}
+
+	/**
+	 * Invalidate cache for entity
+	 *
+	 * @param int $guid GUID
+	 * @return void
+	 */
+	public function invalidateCache($guid) {
+		$ia = $this->session->setIgnoreAccess(true);
+		$ha = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$entity = $this->get($guid);
+		if ($entity) {
+			$entity->invalidateCache();
+		}
+		access_show_hidden_entities($ha);
+		$this->session->setIgnoreAccess($ia);
 	}
 
 	/**
@@ -378,7 +396,7 @@ class EntityTable {
 			$entity = $this->rowToElggStar($entity);
 		}
 
-		$entity->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
+		$entity->cache();
 
 		return $entity;
 	}
@@ -455,9 +473,10 @@ class EntityTable {
 			return [];
 		}
 
-		$preload = array_filter($results, function($e) {
+		$preload = array_filter($results, function ($e) {
 			return $e instanceof ElggEntity;
 		});
+		/* @var $preload ElggEntity[] */
 
 		$this->metadata_cache->populateFromEntities($preload);
 
@@ -558,7 +577,8 @@ class EntityTable {
 	 * @param int $guid User GUID. Default is logged in user
 	 *
 	 * @return ElggUser|false
-	 * @throws UserFetchFailureException
+	 * @throws ClassException
+	 * @throws InvalidParameterException
 	 * @access private
 	 */
 	public function getUserForPermissionsCheck($guid = 0) {
@@ -572,7 +592,7 @@ class EntityTable {
 
 		$user = $this->get($guid, 'user');
 		if ($user) {
-			_elgg_services()->metadataCache->populateFromEntities([$user->guid]);
+			$this->metadata_cache->populateFromEntities([$user->guid]);
 		}
 
 		$this->session->setIgnoreAccess($ia);
@@ -593,13 +613,13 @@ class EntityTable {
 	/**
 	 * Disables all entities owned and contained by a user (or another entity)
 	 *
-	 * @param int $owner_guid The owner GUID
+	 * @param ElggEntity $entity Owner/container entity
 	 *
 	 * @return bool
+	 * @throws DatabaseException
 	 */
-	public function disableEntities($owner_guid) {
-		$entity = get_entity($owner_guid);
-		if (!$entity || !$entity->canEdit()) {
+	public function disableEntities(ElggEntity $entity) {
+		if (!$entity->canEdit()) {
 			return false;
 		}
 
@@ -607,24 +627,138 @@ class EntityTable {
 			return false;
 		}
 
-		$query = "
-			UPDATE {$this->table}entities
-			SET enabled='no'
-			WHERE owner_guid = :owner_guid
-			OR container_guid = :owner_guid";
+		$qb = Update::table('entities');
+		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
+			->where($qb->compare('owner_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
+			->orWhere($qb->compare('container_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
-		$params = [
-			':owner_guid' => (int) $owner_guid,
-		];
+		$this->db->updateData($qb, true);
 
-		_elgg_invalidate_cache_for_entity($entity->guid);
-		_elgg_invalidate_memcache_for_entity($entity->guid);
+		$entity->invalidateCache();
 
-		if ($this->db->updateData($query, true, $params)) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
+	/**
+	 * Delete entity and all of its properties
+	 *
+	 * @param ElggEntity $entity    Entity
+	 * @param bool       $recursive Delete all owned and contained entities
+	 *
+	 * @return bool
+	 * @throws DatabaseException
+	 */
+	public function delete(\ElggEntity $entity, $recursive = true) {
+		$guid = $entity->guid;
+		if (!$guid) {
+			return false;
+		}
+
+		if (!_elgg_services()->hooks->getEvents()->triggerBefore('delete', $entity->type, $entity)) {
+			return false;
+		}
+
+		// now trigger an event to let others know this entity is about to be deleted
+		// so they can prevent it or take their own actions
+		if (!_elgg_services()->hooks->getEvents()->triggerDeprecated('delete', $entity->type, $entity)) {
+			return false;
+		}
+
+		if ($entity instanceof ElggUser) {
+			// ban to prevent using the site during delete
+			$entity->ban();
+		}
+
+		if ($recursive) {
+			$this->deleteRelatedEntities($entity);
+		}
+
+		$this->deleteEntityProperties($entity);
+
+		$qb = Delete::fromTable('entities');
+		$qb->where($qb->compare('guid', '=', $guid, ELGG_VALUE_INTEGER));
+
+		$this->db->deleteData($qb);
+
+		_elgg_services()->hooks->getEvents()->triggerAfter('delete', $entity->type, $entity);
+
+		return true;
+	}
+
+	/**
+	 * Deletes entities owned or contained by the entity being deletes
+	 *
+	 * @param ElggEntity $entity Entity
+	 *
+	 * @return void
+	 * @throws DatabaseException
+	 */
+	protected function deleteRelatedEntities(ElggEntity $entity) {
+		// Temporarily overriding access controls
+		$entity_disable_override = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$ia = elgg_set_ignore_access(true);
+
+		$options = [
+			'wheres' => function (QueryBuilder $qb) use ($entity) {
+				$ors = $qb->merge([
+					$qb->compare('e.owner_guid', '=', $entity->guid, ELGG_VALUE_INTEGER),
+					$qb->compare('e.container_guid', '=', $entity->guid, ELGG_VALUE_INTEGER),
+				]);
+
+				return $qb->merge([
+					$ors,
+					$qb->compare('e.guid', 'neq', $entity->guid, ELGG_VALUE_INTEGER),
+				]);
+			},
+			'limit' => false,
+		];
+
+		$batch = new ElggBatch('elgg_get_entities', $options);
+		$batch->setIncrementOffset(false);
+
+		/* @var $e \ElggEntity */
+		foreach ($batch as $e) {
+			$this->delete($e, true);
+		}
+
+		access_show_hidden_entities($entity_disable_override);
+		elgg_set_ignore_access($ia);
+	}
+
+	/**
+	 * Clear data from secondary tables
+	 *
+	 * @param ElggEntity $entity Entity
+	 *
+	 * @return void
+	 */
+	protected function deleteEntityProperties(ElggEntity $entity) {
+
+		$guid = $entity->guid;
+
+		$entity_disable_override = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$ia = elgg_set_ignore_access(true);
+
+		elgg_delete_river(['subject_guid' => $guid, 'limit' => false]);
+		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
+		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
+
+		remove_all_private_settings($guid);
+		$entity->deleteOwnedAccessCollections();
+		$entity->deleteAccessCollectionMemberships();
+		$entity->deleteRelationships();
+		$entity->deleteOwnedAnnotations();
+		$entity->deleteAnnotations();
+		$entity->deleteMetadata();
+
+		access_show_hidden_entities($entity_disable_override);
+		elgg_set_ignore_access($ia);
+
+		$dir = new \Elgg\EntityDirLocator($guid);
+		$file_path = _elgg_config()->dataroot . $dir;
+		delete_directory($file_path);
+
+	}
 }

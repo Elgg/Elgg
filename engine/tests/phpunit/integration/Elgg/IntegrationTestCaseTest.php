@@ -16,6 +16,8 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	private $entity;
 
 	public function up() {
+		_elgg_services()->boot->invalidateCache();
+		
 		$this->entity = $this->createOne('object', [
 			'access_id' => ACCESS_PUBLIC,
 		]);
@@ -41,7 +43,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	 * are identical after multiple bootstraps, which will indicate
 	 * that plugins can start multiple times
 	 */
-	public function testCanResetTestingApplicationAfterMultipleInstatiations() {
+	public function testCanResetTestingApplicationAfterMultipleInstantiations() {
 		$app1 = self::createApplication(true);
 		$dbConfig = $app1->getDbConfig();
 
@@ -53,28 +55,22 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		$this->assertEquals($dbConfig, $app2->getDbConfig());
 	}
 
-	/**
-	 * @group Current
-	 */
 	public function testCanResetTestingApplicationAfterPluginStackChanges() {
 
 		$map = function($plugins) {
 			$mapped = [];
 			foreach ($plugins as $plugin) {
-				$mapped[$plugin->getID()] = $plugin->getPriority();
+				$mapped[] = $plugin->getPriority();
 			}
+			sort($plugins);
 			return $mapped;
 		};
+
+		self::createApplication(true);
 
 		$plugins = elgg_get_plugins('active');
 		if (!$plugins) {
 			$this->markTestSkipped("Test requires at least one active plugin");
-		}
-
-		$i = 0;
-		foreach ($plugins as $plugin) {
-			$i++;
-			$plugin->setPriority('new');
 		}
 
 		$plugin = $plugins[0];
@@ -87,23 +83,20 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		$actions = $inspector->getActions();
 		$entity_types = get_registered_entity_types();
 		$widget_types = elgg_get_widget_types();
-
-		$priority = $plugin->getPriority();
-
+		
 		$this->assertTrue($plugin->deactivate());
 		$this->assertFalse($plugin->isActive());
 		$this->assertFalse(elgg_is_active_plugin($plugin->getID()));
 
 		$this->assertNotEquals($map($plugins), $map(elgg_get_plugins('active')));
 
-		self::createApplication();
+		self::createApplication(true);
 
 		$this->assertTrue($plugin->activate());
 		$this->assertTrue($plugin->isActive());
 		$this->assertTrue(elgg_is_active_plugin($plugin->getID()));
-		$this->assertEquals($priority, $plugin->setPriority($priority));
 
-		self::createApplication();
+		self::createApplication(true);
 
 		$this->assertEquals($map($plugins), $map(elgg_get_plugins('active')));
 

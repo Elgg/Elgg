@@ -148,6 +148,17 @@ $CONFIG->dbencoding = 'utf8mb4';
 // $CONFIG->memcache_namespace_prefix = '';
 
 /**
+ * Redis setup (optional)
+ * This is where you may optionally set up Redis.
+ */
+//$CONFIG->redis = true;
+//
+//$CONFIG->redis_servers = array (
+//	array('server1', 11211),
+//	array('server2', 11211)
+//);
+
+/**
  * Better caching performance
  *
  * Configuring simplecache in the settings.php file improves caching performance.

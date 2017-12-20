@@ -74,7 +74,7 @@ abstract class ElggData implements
 	 * @return bool
 	 */
 	abstract public function save();
-	
+
 	/**
 	 * Delete this data.
 	 *
@@ -88,7 +88,7 @@ abstract class ElggData implements
 	 * @return int UNIX epoch time
 	 */
 	public function getTimeCreated() {
-		return $this->time_created;
+		return $this->attributes['time_created'];
 	}
 
 	/**

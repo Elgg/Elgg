@@ -5,6 +5,9 @@
 !/autop/
 !/class_scanner/
 !/commit_messages
+!/dataroot
+!/dataroot/1
+!/dataroot/1/1
 !/dataroot/1/1/75x125.jpg
 !/dataroot/1/1/300x300.jpg
 !/dataroot/1/1/300x600.jpg

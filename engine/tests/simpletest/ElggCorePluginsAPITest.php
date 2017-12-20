@@ -419,15 +419,13 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 			return;
 		}
 
-		$cache = _elgg_services()->pluginSettingsCache;
-		$cache->setCachedValues([
-			$plugin->guid => [
-				__METHOD__ => 'foo',
-			],
+		$cache = _elgg_services()->privateSettingsCache;
+		$cache->save($plugin->guid, [
+			__METHOD__ => 'foo',
 		]);
 
 		$this->assertEqual('foo', $plugin->getSetting(__METHOD__, 'bar'));
-		$cache->clearAll();
+		$cache->clear();
 		$this->assertEqual('bar', $plugin->getSetting(__METHOD__, 'bar'));
 	}
 }

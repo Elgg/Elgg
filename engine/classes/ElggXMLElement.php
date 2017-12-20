@@ -9,7 +9,7 @@
  * @see        \Elgg\Integration\ElggCoreRegressionBugsTest
  * @see        \Elgg\Integration\ElggCorePluginsAPITest
  */
-class ElggXMLElement {
+class ElggXMLElement implements Serializable {
 	/**
 	 * @var SimpleXMLElement
 	 */
@@ -134,5 +134,20 @@ class ElggXMLElement {
 		}
 
 		return false;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function serialize() {
+		return serialize($this->getContent());
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function unserialize($serialized) {
+		$element = $this->unserialize($serialized);
+		return new static($element);
 	}
 }

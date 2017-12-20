@@ -10,6 +10,7 @@ use ElggAccessCollection;
  *
  * @group IntegrationTests
  * @group AccessCollections
+ * @group Cache
  */
 class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
@@ -180,22 +181,33 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 		// create a new user to check against
 		$user = $this->createOne('user');
 
+		$backup_user = _elgg_services()->session->getLoggedInUser();
+		_elgg_services()->session->setLoggedInUser($user);
+
+		$id = create_access_collection('custom', $user->guid);
+
 		foreach ([
 					 'get_access_list',
 					 'get_access_array'
 				 ] as $func) {
+
 			_elgg_services()->accessCache->clear();
 
-			// admin users run tests, so disable access
-			$ia = elgg_set_ignore_access(true);
-			$access = $func($user->getGUID());
+			$expected = [
+				ACCESS_PUBLIC,
+				ACCESS_LOGGED_IN,
+				ACCESS_PRIVATE,
+				$id,
+			];
 
-			elgg_set_ignore_access($ia);
-			$access2 = $func($user->getGUID());
-			$this->assertNotEqual($access, $access2, "Access test for $func");
+			$actual = $func($user->getGUID());
+			$this->assertNotEqual($expected, $actual);
 		}
 
+		_elgg_services()->session->setLoggedInUser($backup_user);
+
 		$user->delete();
+
 	}
 
 	public function testAddMemberToACLRemoveMember() {

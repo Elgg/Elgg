@@ -1815,6 +1815,9 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 
 	$events->registerHandler('cache:flush', 'system', function () {
 		_elgg_services()->boot->invalidateCache();
+		_elgg_services()->plugins->clear();
+		_elgg_services()->sessionCache->clear();
+		_elgg_services()->dataCache->clear();
 	});
 
 	$events->registerHandler('init', 'system', '_elgg_init');

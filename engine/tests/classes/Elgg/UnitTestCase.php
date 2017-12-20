@@ -46,6 +46,10 @@ abstract class UnitTestCase extends BaseTestCase {
 			'guid' => 1,
 		]);
 
+		// Invalidate caches
+		$app->_services->dataCache->clear();
+		$app->_services->sessionCache->clear();
+
 		// turn off system log
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
@@ -80,6 +84,8 @@ abstract class UnitTestCase extends BaseTestCase {
 	 */
 	final protected function tearDown() {
 		$this->down();
+
+		_elgg_services()->db->clearQuerySpecs();
 
 		parent::tearDown();
 	}

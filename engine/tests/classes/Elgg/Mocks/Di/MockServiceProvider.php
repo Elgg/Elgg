@@ -21,6 +21,8 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 	 * Constructor
 	 *
 	 * @param \Elgg\Config $config Config
+	 *
+	 * @throws \ConfigurationException
 	 */
 	public function __construct(\Elgg\Config $config) {
 
@@ -80,7 +82,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 			return new \Elgg\Mocks\Database\PrivateSettingsTable(
 				$sp->db,
 				$sp->entityTable,
-				$sp->pluginSettingsCache
+				$sp->privateSettingsCache
 			);
 		});
 
@@ -93,9 +95,8 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('plugins', function (MockServiceProvider $sp) {
-			$pool = new \Elgg\Cache\Pool\InMemory();
-
-			return new \Elgg\Mocks\Database\Plugins($pool, $sp->pluginSettingsCache, $this->db);
+			$cache = $sp->dataCache->plugins;
+			return new \Elgg\Mocks\Database\Plugins($cache, $this->db);
 		});
 
 		$this->setFactory('siteSecret', function (MockServiceProvider $sp) {

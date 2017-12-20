@@ -58,6 +58,7 @@ use Elgg\Project\Paths;
  * @property \ElggLogCache $log_cache
  * @property array         $libraries
  * @property bool          $memcache
+ * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers
  * @property array         $menus
  * @property int           $min_password_length
@@ -70,6 +71,8 @@ use Elgg\Project\Paths;
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
  * @property array         $processed_upgrades
+ * @property bool          $redis
+ * @property array         $redis_servers
  * @property string[]      $registered_entities
  * @property bool          $remove_branding Is Elgg branding disabled
  * @property bool          $security_disable_password_autocomplete

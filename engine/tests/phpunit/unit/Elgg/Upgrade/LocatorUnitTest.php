@@ -39,6 +39,8 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 	public function testCanGetPluginUpgrade() {
 		$class = TestBatch::class;
 
+		$ia = elgg_set_ignore_access(true);
+
 		$upgrade = _elgg_services()->upgradeLocator->getUpgrade($class, 'test_plugin');
 		/* @var $upgrade ElggUpgrade */
 
@@ -49,6 +51,7 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals("test_plugin:upgrade:2016101900:title", $upgrade->title);
 		$this->assertEquals("test_plugin:upgrade:2016101900:description", $upgrade->description);
 
+		elgg_set_ignore_access($ia);
 	}
 
 	public function testCanGetExistingUpgrade() {

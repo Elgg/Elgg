@@ -26,7 +26,7 @@ class AnnotationsTable extends DbAnnotations {
 	/**
 	 * @var int
 	 */
-	public $iterator = 100;
+	static $iterator = 100;
 
 	/**
 	 * {@inheritdoc}
@@ -66,8 +66,8 @@ class AnnotationsTable extends DbAnnotations {
 	 * {@inheritdoc}
 	 */
 	public function create(ElggAnnotation $annotation, \ElggEntity $entity) {
-		$this->iterator++;
-		$id = $this->iterator;
+		static::$iterator++;
+		$id = static::$iterator;
 
 		$row = (object) [
 			'type' => 'annotation',
@@ -249,8 +249,8 @@ class AnnotationsTable extends DbAnnotations {
 	 * @return int
 	 */
 	public function iterate() {
-		$this->iterator++;
+		static::$iterator++;
 
-		return $this->iterator;
+		return static::$iterator;
 	}
 }
