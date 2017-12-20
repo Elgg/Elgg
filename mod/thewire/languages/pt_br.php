@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -56,4 +56,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Número máximo de caracteres para mensagens no micro-blog:",
 	'thewire:settings:limit:none' => "Sem limite",
-];
+);

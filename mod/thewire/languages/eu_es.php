@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -55,4 +55,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Hariko mezurako karaktere kopuru maximoa:",
 	'thewire:settings:limit:none' => "Muga gabe",
-];
+);

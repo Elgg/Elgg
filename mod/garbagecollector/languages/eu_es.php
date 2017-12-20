@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'garbagecollector:period' => 'Zenbat bider exekutatu behar du Ellg-ek zabor-biltzailea?',
 
 	'garbagecollector:weekly' => 'Astean behin',
@@ -14,4 +14,4 @@ return [
 	'garbagecollector:ok' => "OK",
 
 	'garbagecollector:gc:metastrings' => 'Desestekatutako metakateen garbiketa:',
-];
+);

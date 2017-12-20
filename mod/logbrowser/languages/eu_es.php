@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'admin:administer_utilities:logbrowser' => 'Log arakatzailea',
 	'logbrowser' => 'Log arakatzailea',
 	'logbrowser:browse' => 'Log arakatzaile sistema',
@@ -17,4 +17,4 @@ return [
 	'logbrowser:object' => 'Objektu mota',
 	'logbrowser:object:guid' => 'Objektu GUID',
 	'logbrowser:action' => 'Akzioa',
-];
+);

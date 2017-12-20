@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'blog' => 'Bloguri',
 	'blog:blogs' => 'Bloguri',
 	'blog:revisions' => 'Revizii',
@@ -63,4 +63,4 @@ Vezi și comentează la postarea de blog:
 	'blog:moreblogs' => 'Mai multe postări de blog',
 	'blog:numbertodisplay' => 'Numărul de postări de blog pentru afișare',
 	'blog:noblogs' => 'Nu există postări de blog'
-];
+);

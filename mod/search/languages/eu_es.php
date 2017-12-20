@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 	'search:enter_term' => 'Sartu bilaketaren terminoa:',
 	'search:no_results' => 'Ez dago emaitzarik.',
 	'search:matched' => 'Bilatuta:',
@@ -17,4 +17,4 @@ return [
 	'search:comment_by' => 'nork',
 	'search:unavailable_entity' => 'Entitate erabilezina',
 	'search:unknown_entity' => 'Entitate mota ezezaguna',
-];
+);

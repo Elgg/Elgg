@@ -1,11 +1,12 @@
 <?php
-return [
+return array(
 	// menu
 	'admin:develop_tools' => 'Tresnak',
 	'admin:develop_tools:sandbox' => 'Sandbox gaia',
 	'admin:develop_tools:inspect' => 'Ikuskatu',
 	'admin:inspect' => 'Ikuskatu',
 	'admin:develop_tools:unit_tests' => 'Unitate frogak',
+	'admin:develop_tools:entity_explorer' => 'Entity Explorer',
 	'admin:developers' => 'Garatzaileak',
 	'admin:developers:settings' => 'Ezarpenak',
 
@@ -23,17 +24,32 @@ return [
 	'developers:help:screen_log' => "Honek elgg_log(), elgg_dump() eta DB kontsulta kontaketak erakusten ditu.",
 	'developers:label:show_strings' => "Itzulpen kate gordinak erakutsi",
 	'developers:help:show_strings' => "elgg_echo() erabilitako Itzulpen kateak erakutsi.",
+	'developers:label:show_modules' => "Show AMD modules loaded in console",
+	'developers:help:show_modules' => "Streams loaded modules and values to your JavaScript console.",
 	'developers:label:wrap_views' => "Egokitutako bistak",
 	'developers:help:wrap_views' => "Honek HTML iruzkinekin ia bista guztiak biltzen ditu. Erabilgarria bistak bilatzen sortutako HTML partikularrekin.
 									Honek ez-HTML bistak apurtu ditzake bista motean. Ikusi developers_wrap_views() xehetasun gehiagorako.",
 	'developers:label:log_events' => "Log gertakariak eta plugin kakoak",
 	'developers:help:log_events' => "Gertakariak eta plugin kakoak logean idatzi. Abisua: orriko hauetariko asko egon daitezke.",
+	'developers:label:show_gear' => "Use %s outside admin area",
+	'developers:help:show_gear' => "An icon on the bottom right of the viewport that gives admins access to developer settings and links.",
+	'developers:label:submit' => "Save and flush caches",
 
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Errorea',
 	'developers:debug:warning' => 'Abisua',
 	'developers:debug:notice' => 'Oharra',
 	'developers:debug:info' => 'Informazioa',
+	
+	// entity explorer
+	'developers:entity_explorer:help' => 'View information about entities and perform some basic actions on them.',
+	'developers:entity_explorer:guid:label' => 'Enter the guid of the entity to inspect',
+	'developers:entity_explorer:info' => 'Entity Information',
+	'developers:entity_explorer:info:attributes' => 'Attributes',
+	'developers:entity_explorer:info:metadata' => 'Metadata',
+	'developers:entity_explorer:info:relationships' => 'Relationships',
+	'developers:entity_explorer:info:private_settings' => 'Private Settings',
+	'developers:entity_explorer:delete_entity' => 'Remove this entity',
 	
 	// inspection
 	'developers:inspect:help' => 'Elgg esparruko ikuskatze konfigurazioa.',
@@ -44,7 +60,8 @@ return [
 	'developers:inspect:priority' => 'Prioritatea',
 	'developers:inspect:simplecache' => 'Katxe sinplea',
 	'developers:inspect:views' => 'Bistak',
-	'developers:inspect:views:all_filtered' => "<b>Oharra!</b> Bista irteera guziak Plugin Kako hauen bitartez iragazten dira:",
+	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view input/output is filtered through these Plugin Hooks:",
+	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(plugin kako hauen bitartez iragazita: %s)",
 	'developers:inspect:widgets' => 'Widgetak',
 	'developers:inspect:webservices' => 'Web zerbitzuak',
@@ -53,8 +70,11 @@ return [
 	'developers:inspect:file_location' => 'Elgg errotik fitxategi bidea',
 
 	// event logging
+	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
 	'developers:event_log_msg' => "%s: '%s, %s hemen %s",
-	'developers:log_queries' => "%s DB kontsultak (ez daude ixte gertakariak barne)",
+	'developers:log_queries' => "DB queries: %s",
+	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
+	'developers:elapsed_time' => "Elapsed time (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Sarrera',
@@ -79,4 +99,6 @@ return [
 
 	// status messages
 	'developers:settings:success' => 'Ezarpenak gordeta',
-];
+
+	'developers:amd' => 'AMD',
+);

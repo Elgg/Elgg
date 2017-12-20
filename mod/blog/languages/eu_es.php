@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'blog' => 'Blogak',
 	'blog:blogs' => 'Blogak',
 	'blog:revisions' => 'Berrikuspenak',
@@ -63,4 +63,4 @@ Ikusi eta iruzkina idatzi bidalketan:
 	'blog:moreblogs' => 'Blog bidalketa gehiago',
 	'blog:numbertodisplay' => 'Erakusteko blog bidalketa kopurua',
 	'blog:noblogs' => 'Ez dago blog bidalketarik'
-];
+);

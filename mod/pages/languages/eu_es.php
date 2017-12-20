@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ Ikusi eta iruzkindu orri honetan:
 
 	'pages:newchild' => "Azpi-orria bat sortu",
 	'pages:backtoparent' => "'%s'-ra bueltatu",
-];
+);

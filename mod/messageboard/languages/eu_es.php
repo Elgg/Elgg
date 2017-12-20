@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -67,4 +67,4 @@ Ezin duzu email hau erantzun.",
 
 	'messageboard:failure' => "Ustekabeko errore bat gertatu da zure mezua gehitzean. Mesedez saiatu berriz.",
 
-];
+);

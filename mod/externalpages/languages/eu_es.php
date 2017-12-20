@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Zure orrialdea arrakastaz eguneratu da.",
 	'expages:error' => "Ezinezkoa da orrialdea gordetzea.",
-];
+);

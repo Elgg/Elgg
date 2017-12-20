@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'admin:administer_utilities:diagnostics' => 'Diagnóstico do sistema',
 	'diagnostics' => 'Diagnóstico do sistema',
 	'diagnostics:report' => 'Relatório do diagnóstico',
@@ -28,4 +28,4 @@ Relatório de Diagnóstico do Elgg
 
 %s
 ------------------------------------------------------------------------',
-];
+);

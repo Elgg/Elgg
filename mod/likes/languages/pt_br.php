@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'Curtiu isso',
 	'likes:deleted' => 'Sua curtida foi removida',
 	'likes:see' => 'Veja quem curtiu isso',
@@ -36,4 +36,4 @@ Obrigado,
 %4$s
 ',
 	
-];
+);

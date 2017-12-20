@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Lagunak gonbidatu',
 	
@@ -30,4 +30,4 @@ Batzeko, klikatu hurrengo estekan:
 
 Automatikoki gehituko zara bertara lagun bezala zure kontua sortzen duzunean.',
 	
-];
+);

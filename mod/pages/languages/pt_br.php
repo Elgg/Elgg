@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -110,4 +110,4 @@ Veja e comente a página:
 
 	'pages:newchild' => "Criar uma sub-página colaborativa (wiki)",
 	'pages:backtoparent' => "Voltar para '%s'",
-];
+);

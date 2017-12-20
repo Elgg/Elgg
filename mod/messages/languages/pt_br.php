@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	/**
 	* Menu items and titles
 	*/
@@ -82,4 +82,4 @@ Não responda este email.",
 
 	'messages:deleted_sender' => 'Usuário apagado',
 
-];
+);
