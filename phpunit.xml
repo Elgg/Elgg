@@ -58,8 +58,15 @@
             <directory suffix=".php">*/docs/*</directory>
             <directory suffix=".php">*/grunt/*</directory>
             <directory suffix=".php">*/engine/schema/*</directory>
+            <directory suffix=".php">*/engine/lib/upgrades/*</directory>
+            <directory suffix=".php">./languages</directory>
+            <directory suffix=".php">./views</directory>
+            <directory suffix=".php">./mod/*/languages</directory>
+            <directory suffix=".php">./mod/*/views</directory>
             <file>*/engine/lib/deprecated-2.3.php</file>
             <file>*/engine/lib/deprecated-3.0.php</file>
+            <file>*/engine/lib/constants.php</file>
+
         </blacklist>
 
         <!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
@@ -67,13 +74,9 @@
             <directory suffix=".php">./actions</directory>
             <directory suffix=".php">./engine/classes</directory>
             <directory suffix=".php">./engine/lib</directory>
-            <directory suffix=".php">./languages</directory>
-            <directory suffix=".php">./views</directory>
             <directory suffix=".php">./mod/*/actions</directory>
-            <directory suffix=".php">./mod/*/languages</directory>
             <directory suffix=".php">./mod/*/lib</directory>
             <directory suffix=".php">./mod/*/classes</directory>
-            <directory suffix=".php">./mod/*/views</directory>
             <directory>./mod/*.php</directory>
 
             <exclude>
@@ -87,8 +90,14 @@
                 <directory suffix=".php">*/docs/*</directory>
                 <directory suffix=".php">*/grunt/*</directory>
                 <directory suffix=".php">*/engine/schema/*</directory>
+                <directory suffix=".php">*/engine/lib/upgrades/*</directory>
+                <directory suffix=".php">./languages</directory>
+                <directory suffix=".php">./views</directory>
+                <directory suffix=".php">./mod/*/languages</directory>
+                <directory suffix=".php">./mod/*/views</directory>
                 <file>*/engine/lib/deprecated-2.3.php</file>
                 <file>*/engine/lib/deprecated-3.0.php</file>
+                <file>*/engine/lib/constants.php</file>
             </exclude>
         </whitelist>
     </filter>
