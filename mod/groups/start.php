@@ -11,9 +11,6 @@
  * @return void
  */
 function groups_init() {
-
-	elgg_register_library('elgg:groups', __DIR__ . '/lib/groups.php');
-	elgg_load_library('elgg:groups');
 	
 	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/member_count');
 	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/membership_type');
@@ -935,12 +932,7 @@ function groups_prepare_profile_buttons($hook, $type, $items, $params) {
 	}
 
 	$user = elgg_get_logged_in_user_entity();
-	if ($user && $group->isMember($user)) {
-		if ($group->owner_guid != $user->guid) {
-			// a member can leave a group if he/she doesn't own it
-			$actions['groups:leave'] = "action/groups/leave?group_guid={$group->guid}";
-		}
-	} else if ($user) {
+	if ($user && !$group->isMember($user)) {
 		$url = "action/groups/join?group_guid={$group->guid}";
 		if ($group->isPublicMembership() || $group->canEdit()) {
 			// admins can always join
@@ -960,6 +952,31 @@ function groups_prepare_profile_buttons($hook, $type, $items, $params) {
 			'is_action' => 0 === strpos($url, 'action'),
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
+	}
+
+	if ($group->isMember($user)) {
+		$is_owner = ($group->owner_guid === $user->guid);
+
+		$joined = ElggMenuItem::factory([
+			'name' => 'group-dropdown',
+			'href' => '#',
+			'text' => elgg_echo($is_owner ? 'groups:button:owned' : 'groups:button:joined'),
+			'icon_alt' => 'angle-down',
+			'link_class' => 'elgg-button elgg-button-action-done',
+			'child_menu' => [
+				'display' => 'dropdown',
+			]
+		]);
+
+		$joined->addChild(ElggMenuItem::factory([
+			'name' => 'groups:leave',
+			'href' => "action/groups/leave?group_guid={$group->guid}",
+			'text' => elgg_echo('groups:leave'),
+			'is_action' => true,
+			'confirm' => true,
+		]));
+
+		$items[] = $joined;
 	}
 
 	return $items;
@@ -1108,6 +1125,101 @@ function _groups_get_group_acl(\ElggGroup $group) {
 	}
 	
 	return elgg_extract(0, $group->getOwnedAccessCollections(['subtype' => 'group_acl']), false);
+}
+
+/**
+ * Registers the buttons for title area of the group profile page
+ *
+ * @param ElggGroup $group group to register for
+ * @return void
+ */
+function groups_register_profile_buttons($group) {
+
+	$params = [
+		'entity' => $group,
+	];
+
+	$items = elgg_trigger_plugin_hook('profile_buttons', 'group', $params, []);
+
+	if (!empty($items)) {
+		foreach ($items as $item) {
+			elgg_register_menu_item('title', $item);
+		}
+	}
+}
+
+/**
+ * Prepares variables for the group edit form view.
+ *
+ * @param mixed $group ElggGroup or null. If a group, uses values from the group.
+ * @return array
+ */
+function groups_prepare_form_vars($group = null) {
+	$values = [
+		'name' => '',
+		'membership' => ACCESS_PUBLIC,
+		'vis' => ACCESS_PUBLIC,
+		'guid' => null,
+		'entity' => null,
+		'owner_guid' => elgg_get_logged_in_user_guid(),
+		'content_access_mode' => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED
+	];
+
+	// handle customizable profile fields
+	$fields = elgg_get_config('group');
+
+	if ($fields) {
+		foreach ($fields as $name => $type) {
+			$values[$name] = '';
+		}
+	}
+
+	// get current group settings
+	if ($group) {
+		foreach (array_keys($values) as $field) {
+			if (isset($group->$field)) {
+				$values[$field] = $group->$field;
+			}
+		}
+
+		if ($group->access_id != ACCESS_PUBLIC && $group->access_id != ACCESS_LOGGED_IN) {
+			// group only access - this is done to handle access not created when group is created
+			$values['vis'] = ACCESS_PRIVATE;
+		} else {
+			$values['vis'] = $group->access_id;
+		}
+
+		// The content_access_mode was introduced in 1.9. This method must be
+		// used for backwards compatibility with groups created before 1.9.
+		$values['content_access_mode'] = $group->getContentAccessMode();
+
+		$values['entity'] = $group;
+	}
+
+	// handle tool options
+	$entity = ($group instanceof \ElggGroup) ? $group : null;
+	$tools = elgg_get_group_tool_options($entity);
+	foreach ($tools as $group_option) {
+		$option_name = $group_option->name . "_enable";
+
+		$enabled = $group_option->default_on;
+		if ($entity) {
+			$enabled = $entity->isToolEnabled($group_option->name);
+		}
+		$values[$option_name] = $enabled ? 'yes' : 'no';
+	}
+
+	// get any sticky form settings
+	if (elgg_is_sticky_form('groups')) {
+		$sticky_values = elgg_get_sticky_values('groups');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
+		}
+	}
+
+	elgg_clear_sticky_form('groups');
+
+	return $values;
 }
 
 return function() {

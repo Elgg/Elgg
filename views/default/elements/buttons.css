@@ -59,6 +59,13 @@ button:focus {
 	color: #ffffff;
 }
 
+.elgg-button-action-done,
+.elgg-button-action-done:hover,
+.elgg-button-action-done:focus {
+	background: #009ade;
+	color: #ffffff;
+}
+
 .elgg-button-delete {
 	background: #e6e6ea;
 }

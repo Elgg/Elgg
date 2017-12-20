@@ -117,6 +117,8 @@ return [
 	'groups:joinrequestnotmade' => 'Could not request to join group',
 	'groups:joinrequestmade' => 'Requested to join group',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:button:joined' => 'Joined',
+	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Successfully joined group!',
 	'groups:left' => 'Successfully left group',
 	'groups:userinvited' => 'User has been invited.',
