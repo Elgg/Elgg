@@ -13,13 +13,13 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			}
 		}
 	});
-	
+
 	$(document).on('submit', '.elgg-form-comment-save', function (event) {
 		var $form = $(this);
 
 		require(['elgg/Ajax'], function(Ajax) {
 			var ajax = new Ajax();
-			
+
 			ajax.action($form.attr('action'), {
 				data: ajax.objectify($form),
 				success: function(result) {
@@ -28,8 +28,9 @@ define(['jquery', 'elgg'], function ($, elgg) {
 					var comment_guid = result.guid;
 					var data = {
 						guid: $form.find('input[name="entity_guid"]').val(),
-						id: $form.attr('id')
-					}
+						id: $form.attr('id'),
+						show_guid: comment_guid
+					};
 						
 					if (!$container.length) {
 						$container = $form.closest('.elgg-river-responses');
@@ -40,12 +41,31 @@ define(['jquery', 'elgg'], function ($, elgg) {
 					if (!$container.length) {
 						return;
 					}
+
+					// the pagination returned will have a non-functional link that points to the current URL,
+					// but we want the the link to reload the page.
+					function fix_pagination($container) {
+						function normalize(url) {
+							return url.replace(/#.*/, '');
+						}
+
+						var base_url = normalize(location.href);
+
+						$container.find('.elgg-pagination a').each(function () {
+							if (normalize(this.href) === base_url) {
+								$(this).on('click', function () {
+									location.reload(true);
+								});
+							}
+						});
+					}
 					
 					ajax.view(view_name, {
 						data: data,
 						success: function(result) {
 							$container.html(result);
 							$container.find('#elgg-object-' + comment_guid).addClass('elgg-state-highlight');
+							fix_pagination($container);
 						}
 					});
 				}
@@ -77,7 +97,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 	function Comment(guid, item) {
 		this.guid = guid;
 		this.$item = item;
-	};
+	}
 	
 	Comment.prototype = {
 		/**
