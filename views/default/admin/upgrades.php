@@ -10,7 +10,7 @@ $upgrades = elgg_get_entities([
 	'subtype' => 'elgg_upgrade',
 	'limit' => false,
 	'private_setting_name' => 'is_completed',
-	'private_setting_value' => false,
+	'private_setting_value' => 0,
 ]);
 
 if ($upgrades) {

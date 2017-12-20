@@ -926,6 +926,27 @@ abstract class ElggEntity extends \ElggData implements
 		$options['owner_guid'] = $this->guid;
 		return _elgg_services()->accessCollections->getEntityCollections($options);
 	}
+	
+	/**
+	 * Returns the first ACL owned by the entity with a given subtype
+	 *
+	 * @param string $subtype subtype of the ACL
+	 *
+	 * @return \ElggAccessCollection|false
+	 *
+	 * @since 3.0
+	 */
+	public function getOwnedAccessCollection($subtype) {
+		if (!is_string($subtype) || $subtype === '') {
+			return false;
+		}
+		
+		$acls = $this->getOwnedAccessCollections([
+			'subtype' => $subtype,
+		]);
+		
+		return elgg_extract(0, $acls, false);
+	}
 
 	/**
 	 * Gets an array of entities with a relationship to this entity.
@@ -1327,7 +1348,11 @@ abstract class ElggEntity extends \ElggData implements
 		$container_guid = (int) $container_guid;
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
+			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
+		}
+		
+		if ($access_id == ACCESS_FRIENDS) {
+			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		$user_guid = elgg_get_logged_in_user_guid();
@@ -1458,7 +1483,11 @@ abstract class ElggEntity extends \ElggData implements
 		$time = $this->getCurrentTime()->getTimestamp();
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
+			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
+		}
+	
+		if ($access_id == ACCESS_FRIENDS) {
+			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		// Update primary table

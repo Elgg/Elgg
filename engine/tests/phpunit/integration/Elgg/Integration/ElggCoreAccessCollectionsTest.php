@@ -298,9 +298,6 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 		$actual = get_write_access_array($this->user->guid, null, true);
 
-		// remove ACCESS_FRIENDS in case it's added by an enabled plugin
-		unset($actual[ACCESS_FRIENDS]);
-
 		$actual = array_keys($actual);
 
 		sort($expected);

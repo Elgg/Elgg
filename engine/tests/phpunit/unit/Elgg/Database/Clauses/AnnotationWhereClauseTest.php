@@ -239,7 +239,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$access->viewer_guid = 5;
 		$parts[] = $access->prepare($this->qb, 'alias');
 
-		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb7');
+		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb4');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 
 		$expected = $this->qb->merge($parts);
@@ -266,7 +266,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
 		$parts[] = $access->prepare($this->qb, 'alias');
-		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb7');
+		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb4');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 		$expr = $this->qb->merge($parts);
 		$this->qb->andWhere($expr);
@@ -308,7 +308,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
 		$parts[] = $access->prepare($this->qb, 'alias');
-		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb7');
+		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb4');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 		$expr = $this->qb->merge($parts);
 		$this->qb->andWhere($expr);
@@ -334,7 +334,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$access = new AccessWhereClause();
 		$access->viewer_guid = 5;
 		$parts[] = $access->prepare($this->qb, 'alias');
-		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb7');
+		$parts[] = $this->qb->expr()->eq('alias.entity_guid', ':qb4');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 		$expr = $this->qb->merge($parts);
 		$this->qb->andWhere($expr);
