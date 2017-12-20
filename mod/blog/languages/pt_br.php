@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'blog' => 'Blogs',
 	'blog:blogs' => 'Blogs',
 	'blog:revisions' => 'Revisões',
@@ -63,4 +63,4 @@ Ver e comentar sobre postagem do blog:
 	'blog:moreblogs' => 'Mais postagens do blog',
 	'blog:numbertodisplay' => 'Número de postagens para exibir',
 	'blog:noblogs' => 'Não existem postagens do blog'
-];
+);

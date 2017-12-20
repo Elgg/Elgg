@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'admin:users:unvalidated' => 'Ez balidatua',
 	
 	'email:validate:subject' => "%s mesedez konfirmatu zure email helbidea %s-rentzat!",
@@ -51,4 +51,4 @@ Ezin baduzu estekan klikatu, kopiatu eta itsatsi eskuz zure nabigatzailean.
 	'uservalidationbyemail:messages:resent_validation' => 'Balidazio eskaera berbidalita.',
 	'uservalidationbyemail:messages:resent_validations' => 'Markatutako erabiltzaile guztiei balidazio eskaera berbidalita.'
 
-];
+);

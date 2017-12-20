@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Convidar amigos',
 	
@@ -31,4 +31,4 @@ Para participar, click no seguinte endereço:
 
 Você os adicionará automaticamente como amgios quando você criar sua conta.',
 	
-];
+);

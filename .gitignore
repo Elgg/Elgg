@@ -75,3 +75,4 @@ startup.sh
 !.gitignore
 !.scripts
 !.tx
+/.transifexrc

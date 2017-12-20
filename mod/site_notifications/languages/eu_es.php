@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'site_notifications' => 'Guneko jakinarazpenak',
 	'notification:method:site' => 'Gunea',
 	'site_notifications:topbar' => 'Jakinarazpenak',
@@ -11,4 +11,4 @@ return [
 	'site_notifications:toggle_all' => 'Aldizkatu dena',
 	'site_notifications:error:notifications_not_selected' => 'Ez dago jakinarazpenik aukeratuta',
 	'site_notifications:success:delete' => 'Jakinarazpenak ezabatuta'
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'admin:administer_utilities:diagnostics' => 'Sistemako diagnostikoak',
 	'diagnostics' => 'Sistemako diagnostikoak',
 	'diagnostics:report' => 'Diagnostikoen txostenak',
@@ -33,4 +33,4 @@ Aldagai orokorrak:
 
 %s
 ------------------------------------------------------------------------',
-];
+);

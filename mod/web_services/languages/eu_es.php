@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'APIException:ApiResultUnknown' => "APIaren emaitza mota ezezaguna da, hau ez zen inoiz gertatu behar.",
 	'APIException:MissingParameterInMethod' => "%s parametroa faltan %s metodoan",
 	'APIException:ParameterNotArray' => "%s ematen du ez dela array bat.",
@@ -39,4 +39,4 @@ return [
 
 	'system.api.list' => "Sistema eskuragarri dauden API dei guztiak zerrendatu",
 	'auth.gettoken' => "API dei honek erabiltzaileari autentifikazio tokena lortzen uzten dio non etorkizuneko API deiak autentifikatzen erabiltzeko. auth_token parametro bezala pasatu",
-];
+);

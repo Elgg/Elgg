@@ -20,13 +20,14 @@ return array(
 	'logout' => "Sair",
 	'logoutok' => "Você se desconectou com sucesso.",
 	'logouterror' => "Não foi possível desconectar com sucesso. Por favor, tente novamente.",
-	'session_expired' => "Sua sessão expirou. Por favor, atualize sua página para realizar novamente o login.",
+	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Você deve estar conectado para ver esta página.",
 	'adminrequired' => "Você deve ser um administrador para ver esta página.",
 	'membershiprequired' => "Você deve fazer parte da comunidade para ver está página.",
 	'limited_access' => "Você não possui permiss�o para ver esta página.",
-
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -58,7 +59,10 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'O manifesto contem um tipo de dependência inválida %s',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'O manifesto contem tipos fornecidos inválidos %s',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Existe uma dependência %s inválida "%s" no plugin %s. Plugins não podem ter conflito ou requerer algo que eles proveem!',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Não foi possível incluir %s para o plugin %s (guid: %s) em %s.',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Não foi possível abrir visões do diretório %s para o plugin %s (guid: %s) em %s. Verifique permissões!',
 	'ElggPlugin:Exception:NoID' => 'Sem identificador (ID) para o plugin guid %s!',
 	'PluginException:NoPluginName' => "O nome do plugin não foi encontrado",
@@ -66,6 +70,8 @@ return array(
 	'PluginException:NoAvailableParser' => 'Não foi possível encontrar um analisador <i>(parser)</i> para o manifesto da API versão %s no plugin %s.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Perda do atributo '%s' requerido no manifesto do plugin %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s representa um plugin invalido e foi desativado.',
+	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Requisitos',
 	'ElggPlugin:Dependencies:Suggests' => 'Sugestões',
@@ -130,6 +136,32 @@ return array(
 	'upload:error:extension' => 'Não foi possivel salvar o arquivo recebido.',
 	'upload:error:unknown' => 'O envio do arquivo falhou.',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Admin',
+	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:excerpt' => 'Description',
+	'table_columns:fromView:link' => 'Name/Title',
+	'table_columns:fromView:icon' => 'Icon',
+	'table_columns:fromView:item' => 'Item',
+	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:time_created' => 'Time Created',
+	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:user' => 'User',
+
+	'table_columns:fromProperty:description' => 'Description',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Name',
+	'table_columns:fromProperty:type' => 'Type',
+	'table_columns:fromProperty:username' => 'Username',
+
+	'table_columns:fromMethod:getSubtype' => 'Subtype',
+	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
+	'table_columns:fromMethod:getMimeType' => 'MIME Type',
+	'table_columns:fromMethod:getSimpleType' => 'Type',
 
 /**
  * User details
@@ -142,6 +174,7 @@ return array(
 	'password' => "Senha",
 	'passwordagain' => "Senha (para verificação)",
 	'admin_option' => "Fazer deste usuário um administrador?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -333,8 +366,10 @@ return array(
 	'river:none' => 'Sem atividades.',
 	'river:update' => 'Atualizado para %s',
 	'river:delete' => 'Retira este item de atividade',
-	'river:delete:success' => 'Item do fluxo foi removido',
-	'river:delete:fail' => 'Item do fluxo nao pode ser removido',
+	'river:delete:success' => 'Activity item has been deleted',
+	'river:delete:fail' => 'Activity item could not be deleted',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Usuario invalido',
 	'activity:owner' => 'Visualiza atividade',
 
@@ -477,6 +512,9 @@ return array(
 	'admin:cron:period' => 'Periodo de atividades programadas',
 	'admin:cron:friendly' => 'Ultimos completos',
 	'admin:cron:date' => 'Data e tempo',
+	'admin:cron:msg' => 'Message',
+	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
+	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => 'Aparência',
 	'admin:administer_utilities' => 'Utilidades',
@@ -637,6 +675,7 @@ return array(
 	'admin:plugins:warning:invalid' => ' Este plugin não é válido: %s.',
 	'admin:plugins:warning:invalid:check_docs' => 'Verifiqye  <a href="http://docs.elgg.org/Invalid_Plugin">a documentacao do Elgg</a> para dicas de solu��o de problemas.',
 	'admin:plugins:cannot_activate' => 'não foi possível ativar',
+	'admin:plugins:cannot_deactivate' => 'cannot deactivate',
 	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
 	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
@@ -688,6 +727,11 @@ return array(
 	'admin:server:label:post_max_size' => 'Tamanho máximo dos emails (POST)',
 	'admin:server:label:upload_max_filesize' => 'Tamanho máximo dos arquivos enviados (UPLOAD)',
 	'admin:server:warning:post_max_too_small' => '(Nota: tamanho máximo dos emails deve ser maior que este valor para suportar envio de arquivos deste tamanho)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure memcache.
+	',
 
 	'admin:user:label:search' => "Encontrar usuários:",
 	'admin:user:label:searchbutton' => "Pesquisar",
@@ -746,6 +790,10 @@ return array(
 	'usersettings:statistics' => "Suas estatísticas.",
 	'usersettings:statistics:opt:description' => "Ver informações estatísticas sobre usuários e objetos em seu site.",
 	'usersettings:statistics:opt:linktext' => "Estatisticas de conta",
+	
+	'usersettings:statistics:login_history' => "Login History",
+	'usersettings:statistics:login_history:date' => "Date",
+	'usersettings:statistics:login_history:ip' => "IP Address",
 
 	'usersettings:user' => "Configurações de %s",
 	'usersettings:user:opt:description' => "Isto permite a você controlar as configurações de usuários.",
@@ -1107,6 +1155,12 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 	'installation:simplecache:description' => "O 'cache' simples aumenta a performance por armazenar conteúdos estáticos como os arquivos CSS e JavaScript.",
 	'installation:simplecache:label' => "Usar 'cache' simples (recomendado)",
 
+	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
+	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
+	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
+	'installation:cache_symlink:paths' => 'Correctly configured symbolic link must link <i>%s</i> to <i>%s</i>',
+	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+
 	'installation:minify:description' => "O cache simples pode aumentar a performance por comprimir os arquivos CSS e JavaScript (requer que o cache simples esteja ativado)",
 	'installation:minify_js:label' => "JavaScript comprimido (recomendado)",
 	'installation:minify_css:label' => "CSS comprimido (recommendado)",
@@ -1156,18 +1210,9 @@ Assim que você se conectar, nós recomendamos fortemente que você altere sua s
 	'upgrade:finished' => 'Atualizacao finalizada',
 	'upgrade:finished_with_errors' => '<p>Atualizacao finalizada com erros. Renove (refresh) a pagina e tente atualizar novamente.</p></p><br />Se ocorrer erros, verifique registro de erros (error log) do servidor para identificar as causas possiveis. Voce pode procurar ajuda para correcao dos erros em <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support"> Grupo de suporte tecnico</a> na comunidade Elgg.</p>',
 
-	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'Comentarios de atualizacao',
-	'upgrade:comment:create_failed' => 'Falha para converter um comentario id %s para uma entidade.',
-	'admin:upgrades:commentaccess' => 'Comments Access Upgrade',
-
-	// Strings specific for the datadir upgrade
-	'admin:upgrades:datadirs' => 'Atualiza diretorio de dados',
-
-	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Atualiza resposta a discussoes',
-	'discussion:upgrade:replies:create_failed' => 'Falha para converter respostas a discussoes id %s para uma entidade.',
-
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	
 /**
  * Welcome
  */
@@ -1282,8 +1327,11 @@ Não responda a este email.",
 	'entity:default:strapline' => 'Criado %s por %s',
 	'entity:default:missingsupport:popup' => 'Esta entidade não pôde ser exibida corretamente. Isto deve ter ocorrido pois requer o suporte de um plugin que não está mais instalado.',
 
-	'entity:delete:success' => 'Entidade %s foi apagada',
-	'entity:delete:fail' => 'Entidade %s não pode ser apagada',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
@@ -1357,6 +1405,7 @@ Não responda a este email.",
 	"es" => "Espanhol",
 	"et" => "Estoniano",
 	"eu" => "Basco",
+	"eu_es" => "Basque (Spain)",
 	"fa" => "Persa",
 	"fi" => "Finlandesa",
 	"fj" => "Fiji ",
@@ -1421,11 +1470,12 @@ Não responda a este email.",
 	"pl" => "Polonês",
 	"ps" => "Pashto / Pushto ",
 	"pt" => "Português",
-	"pt_br" => 'Portugues Brasileiro',
+	"pt_br" => "Portuguese (Brazil)",
 	"qu" => "Quechua ",
 	"rm" => "Rhaeto-Romance ",
 	"rn" => "Kirundi ",
 	"ro" => "Romeno",
+	"ro_ro" => "Romanian (Romania)",
 	"ru" => "Russo",
 	"rw" => "Kinyarwanda ",
 	"sa" => "Sânscrito",
@@ -1440,6 +1490,7 @@ Não responda a este email.",
 	"so" => "Somalis",
 	"sq" => "Albanesa",
 	"sr" => "Sérvio",
+	"sr_latin" => "Serbian (Latin)",
 	"ss" => "Siswati ",
 	"st" => "Sesotho ",
 	"su" => "Sundanês",
@@ -1471,6 +1522,7 @@ Não responda a este email.",
 	"yo" => "Iorubá",
 	"za" => "Zuang ",
 	"zh" => "Chinês",
+	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu ",
 
 	"field:required" => 'Required',

@@ -1,11 +1,12 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Páginas externas",
 	'admin:appearance:expages' => "Páginas externas",
+	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "Sobre",
 	'expages:terms' => "Termos",
 	'expages:privacy' => "Privacidade",
@@ -18,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Sua página foi enviada com sucesso.",
 	'expages:error' => "Ocorreu um erro, por favor tente novamente e se o problema persistir contate o administrador",
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Salatutako elementuak',
 	'admin:administer_utilities:reportedcontent' => 'Salatutako edukia',
@@ -32,4 +32,4 @@ return [
 
 	'reportedcontent:failed' => 'Bakartu, eduki hau salatzeko ahaleginak huts egin du.',
 	'reportedcontent:notarchived' => 'Ezinezkoa dugu salaketa hori artxibatzea',
-];
+);

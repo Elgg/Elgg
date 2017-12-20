@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'admin:users:unvalidated' => 'Sem validação',
 	
 	'email:validate:subject' => "%s por favor, confirme seu endereço de email para %s!",
@@ -51,4 +51,4 @@ Se você não conseguir clicar no link, copie e cole o endereço para o navegado
 	'uservalidationbyemail:messages:resent_validation' => 'Solicitação de validação re-enviada.',
 	'uservalidationbyemail:messages:resent_validations' => 'Solicitação de validação re-enviada para todos usuários marcados.'
 
-];
+);

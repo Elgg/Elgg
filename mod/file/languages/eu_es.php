@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -97,4 +97,4 @@ Ikusi eta iruzkindu orri honetan:
 	'file:noaccess' => "Ez duzu baimenik fitxategi hau aldatzeko",
 	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "Fitxategi bat aukeratu behar duzu",
-];
+);

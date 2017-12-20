@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'members:label:online' => 'Linean',
 	'members:search' => 'Kideak bilatu',
 	'members:title:search' => '%s-erako kide bilaketa',
@@ -7,5 +7,6 @@ return [
 	'members:title:newest' => 'Kide berrienak',
 	'members:title:popular' => 'Kide ospetsuenak',
 	'members:title:online' => 'Linean dauden kideak',
+	'members:title:alpha' => 'All members',
 	'members:list:popular:none' => 'Kide batek ere ez du lagunik.',
-];
+);
