@@ -533,7 +533,7 @@ function access_friends_acl_get_name(\Elgg\Hook $hook) {
 		return;
 	}
 	
-	return elgg_echo('access:friends:label');
+	return elgg_echo('access:label:friends');
 }
 
 /**
