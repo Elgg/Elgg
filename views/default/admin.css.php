@@ -295,6 +295,8 @@ echo elgg_view('elements/helpers.css', $vars);
 }
 
 #elgg-plugin-list {
+	position: relative;
+	
 	.elgg-plugin {
 		.elgg-state-error, .elgg-state-warning {
 			display: inline-block;
