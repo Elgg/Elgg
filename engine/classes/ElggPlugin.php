@@ -2,6 +2,7 @@
 
 use Elgg\Application;
 use Elgg\Includer;
+use Elgg\Di\ServiceProvider;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -620,7 +621,9 @@ class ElggPlugin extends ElggObject {
 
 			if ($this->canReadFile('activate.php')) {
 				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
-					ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_WIDGETS | ELGG_PLUGIN_REGISTER_ACTIONS;
+					ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS |
+					ELGG_PLUGIN_REGISTER_WIDGETS | ELGG_PLUGIN_REGISTER_ACTIONS |
+					ELGG_PLUGIN_REGISTER_SERVICES;
 
 				$this->start($flags);
 
@@ -785,6 +788,11 @@ class ElggPlugin extends ElggObject {
 			$this->registerEntities();
 		}
 
+		// include services
+		if ($flags & ELGG_PLUGIN_REGISTER_SERVICES) {
+			$this->registerServices();
+		}
+
 		// include views
 		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
 			$this->registerViews();
@@ -922,6 +930,39 @@ class ElggPlugin extends ElggObject {
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['searchable']) && $entity['searchable']) {
 				elgg_register_entity_type($entity['type'], $entity['subtype']);
+			}
+		}
+	}
+
+	/**
+	 * Registers the plugin's services provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerServices() {
+		$services = _elgg_services();
+
+		$spec = (array) $this->getStaticConfig('services', []);
+
+		foreach ($spec as $service_name => $definition) {
+			if (!is_array($definition)) {
+				continue;
+			}
+
+			if (isset($definition['arguments'])) {
+				$services->setFactory($service_name, function(ServiceProvider $c) use ($service_name, $definition) {
+					$class_name = $definition['class'];
+
+					$arguments = [];
+					foreach ($definition['arguments'] as $arg) {
+						$arguments[] = $c->$arg;
+					}
+
+					$r = new ReflectionClass($class_name);
+					return $r->newInstanceArgs($arguments);
+				});
+			} else {
+				$services->setClassName($service_name, $definition['class']);
 			}
 		}
 	}

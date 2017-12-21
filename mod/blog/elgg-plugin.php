@@ -20,4 +20,18 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 	],
+	'services' => [
+		'blog.foo' => [
+			'class' => '\Elgg\Blog\Foo',
+			'arguments' => [
+				'systemMessages',
+			]
+		],
+		'blog.bar' => [
+			'class' => '\Elgg\Blog\Bar',
+			'arguments' => [
+				'blog.foo',
+			]
+		]
+	],
 ];
