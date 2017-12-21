@@ -71,7 +71,7 @@ $breadcrumbs = elgg_view('page/layouts/elements/breadcrumbs', $vars);
 $header = elgg_view('page/layouts/elements/header', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
 
-$layout .= $breadcrumbs;
+$layout = $breadcrumbs;
 $layout .= $header;
 $layout .= elgg_format_element('div', [
 	'class' => 'elgg-layout-columns',

@@ -26,7 +26,7 @@ $header = elgg_view('page/layouts/elements/header', $vars);
 $sidebar = elgg_view('page/layouts/elements/sidebar', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
 
-$layout .= elgg_format_element('div', [
+$layout = elgg_format_element('div', [
 	'class' => 'elgg-layout-columns',
 ], $sidebar . $body);
 
