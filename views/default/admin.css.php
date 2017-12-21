@@ -45,6 +45,12 @@ echo elgg_view('elements/helpers.css', $vars);
 		right: 0;
 	}
 
+	.elgg-admin-notices-dismiss-all {
+		font-weight: 600;
+		margin: 1rem;
+		display: block;
+	}
+
 	.elgg-admin-notices > li {
 		padding: 0;
 		border: none;

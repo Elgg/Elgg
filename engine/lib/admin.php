@@ -50,7 +50,7 @@ function elgg_get_admins(array $options = []) {
  * @param string $id      A unique ID that your plugin can remember
  * @param string $message Body of the message
  *
- * @return bool
+ * @return ElggObject|bool
  * @since 1.8.0
  */
 function elgg_add_admin_notice($id, $message) {
@@ -171,6 +171,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/menu/save', '', 'admin');
 
 	elgg_register_action('admin/delete_admin_notice', '', 'admin');
+	elgg_register_action('admin/delete_admin_notices', '', 'admin');
 	
 	elgg_register_action('admin/security/settings', '', 'admin');
 	elgg_register_action('admin/security/regenerate_site_secret', '', 'admin');

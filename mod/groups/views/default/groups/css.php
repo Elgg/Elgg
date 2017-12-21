@@ -57,7 +57,6 @@
 }
 
 .groups-widget-viewall {
-	float: right;
 	font-size: 85%;
 }
 
