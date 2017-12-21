@@ -35,17 +35,15 @@ class SearchPluginTest extends UnitTestCase {
 
 		$this->assertEquals([
 			'query' => 'literal needle',
-			'query_parts' => ['literal needle'],
 			'offset' => 0,
 			'limit' => 10,
 			'sort' => 'time_created',
 			'order' => 'desc',
 			'search_type' => 'custom',
 			'fields' => [
-				'metadata' => [],
-				'annotations' => [],
-				'private_settings' => [],
-				'attributes' => [],
+				'metadata' => [
+					'private'
+				],
 			],
 			'partial_match' => true,
 			'tokenize' => false,

@@ -46,7 +46,7 @@ class Highlighter {
 			'search-highlight-color' => rand(10000, 99999)
 		];
 
-		$parts = elgg_extract('query_parts', $this->params);
+		$parts = (array) elgg_extract('query_parts', $this->params, []);
 
 		foreach ($parts as $part) {
 			// remove any boolean mode operators
@@ -97,7 +97,7 @@ class Highlighter {
 		$haystack_length = elgg_strlen($text);
 		$haystack_lc = elgg_strtolower($text);
 
-		$parts = elgg_extract('query_parts', $this->params);
+		$parts = (array) elgg_extract('query_parts', $this->params, []);
 
 		// if haystack < $max_length return the entire haystack w/formatting immediately
 		if ($haystack_length <= $max_length) {

@@ -297,8 +297,6 @@ class Search {
 			'pagination' => $pagination,
 		];
 
-		$params = array_merge($current_params, $params);
-
-		$this->params = _elgg_services()->search->normalizeOptions($params);
+		$this->params = array_merge($current_params, $params);
 	}
 }
