@@ -234,12 +234,12 @@ class SearchService {
 		} else {
 			// only allow known fields
 			foreach ($fields as $property_type => $property_type_fields) {
-				if (empty($options['fields'][$property_type])) {
+				if (empty($property_type_fields) || empty($options['fields'][$property_type])) {
 					$options['fields'][$property_type] = [];
 					continue;
 				}
 
-				$allowed = array_intersect($property_type_fields, (array) $options['fields'][$property_type]);
+				$allowed = array_intersect((array) $options['fields'][$property_type], $property_type_fields);
 				$options['fields'][$property_type] = array_values(array_unique($allowed));
 			}
 		}
