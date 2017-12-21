@@ -1142,6 +1142,7 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'installation:sitename' => "The name of your site:",
 	'installation:sitedescription' => "Short description of your site (optional):",
+	'installation:sitedescription:help' => "With bundled plugins this appears only in the description meta tag for search engine results.",
 	'installation:wwwroot' => "The site URL:",
 	'installation:path' => "The full path of the Elgg installation:",
 	'installation:dataroot' => "The full path of the data directory:",
