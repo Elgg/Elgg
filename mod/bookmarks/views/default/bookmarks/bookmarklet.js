@@ -1,0 +1,1 @@
+location.href=BASEURL+'?address='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title);

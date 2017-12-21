@@ -12,9 +12,6 @@
  */
 function bookmarks_init() {
 
-	$root = dirname(__FILE__);
-	elgg_register_library('elgg:bookmarks', "$root/lib/bookmarks.php");
-
 	// menus
 	elgg_register_menu_item('site', [
 		'name' => 'bookmarks',
@@ -27,8 +24,7 @@ function bookmarks_init() {
 
 	elgg_register_page_handler('bookmarks', 'bookmarks_page_handler');
 
-	elgg_extend_view('elgg.css', 'bookmarks/css');
-	elgg_extend_view('elgg.js', 'bookmarks/js');
+	elgg_extend_view('elgg.js', 'bookmarks.js');
 
 	// Register for notifications
 	elgg_register_notification_event('object', 'bookmarks', ['create']);
@@ -67,8 +63,6 @@ function bookmarks_init() {
  * @return bool
  */
 function bookmarks_page_handler($page) {
-
-	elgg_load_library('elgg:bookmarks');
 
 	if (!isset($page[0])) {
 		$page[0] = 'all';
@@ -140,7 +134,7 @@ function bookmark_set_url($hook, $type, $url, $params) {
 	}
 	
 	$title = elgg_get_friendly_title($entity->title);
-	return "bookmarks/view/{$entity->getGUID()}/{$title}";
+	return "bookmarks/view/{$entity->guid}/{$title}";
 }
 
 /**
@@ -256,6 +250,45 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 function bookmarks_ecml_views_hook($hook, $type, $return, $params) {
 	$return['object/bookmarks'] = elgg_echo('item:object:bookmarks');
 	return $return;
+}
+
+/**
+ * Prepare the add/edit form variables
+ *
+ * @param ElggObject $bookmark A bookmark object.
+ * @return array
+ */
+function bookmarks_prepare_form_vars($bookmark = null) {
+	// input names => defaults
+	$values = [
+		'title' => get_input('title', ''), // bookmarklet support
+		'address' => get_input('address', ''),
+		'description' => '',
+		'access_id' => ACCESS_DEFAULT,
+		'tags' => '',
+		'container_guid' => elgg_get_page_owner_guid(),
+		'guid' => null,
+		'entity' => $bookmark,
+	];
+
+	if ($bookmark) {
+		foreach (array_keys($values) as $field) {
+			if (isset($bookmark->$field)) {
+				$values[$field] = $bookmark->$field;
+			}
+		}
+	}
+
+	if (elgg_is_sticky_form('bookmarks')) {
+		$sticky_values = elgg_get_sticky_values('bookmarks');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
+		}
+	}
+
+	elgg_clear_sticky_form('bookmarks');
+
+	return $values;
 }
 
 return function() {
