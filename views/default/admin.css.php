@@ -32,7 +32,7 @@ echo elgg_view('elements/helpers.css', $vars);
 	background: #f7f7f8;
 
 	.elgg-page-section > .elgg-inner {
-		max-width: 80rem;
+		max-width: 100rem;
 		margin: 0 auto;
 	}
 
