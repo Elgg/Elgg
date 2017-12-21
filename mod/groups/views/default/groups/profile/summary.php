@@ -10,7 +10,7 @@
 $group = elgg_extract('entity', $vars);
 if (!($group instanceof \ElggGroup)) {
 	echo elgg_echo('groups:notfound');
-	return true;
+	return;
 }
 
 // we don't force icons to be square so don't set width/height
@@ -21,10 +21,6 @@ $icon = elgg_format_element('div', [
 	'width' => '',
 	'height' => '',
 ]));
-
-$icon .= elgg_format_element('div', [
-	'class' => 'groups-stats',
-], elgg_view('groups/profile/stats', $vars));
 
 $body = elgg_format_element('div', [
 	'class' => 'groups-profile-fields',

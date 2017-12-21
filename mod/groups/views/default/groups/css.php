@@ -10,12 +10,7 @@
 .groups-profile > .elgg-image {
 	margin-right: 20px;
 }
-.groups-stats {
-	margin-top: 10px;
-}
-.groups-stats p {
-	margin-bottom: 2px;
-}
+
 .groups-profile-fields div:first-child {
 	padding-top: 0;
 }

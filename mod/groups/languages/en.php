@@ -25,7 +25,6 @@ return [
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',
 	'groups:members' => 'Group members',
-	'groups:my_status:group_member' => 'You are in this group',
 
 	'groups:members:title' => 'Members of %s',
 	'groups:members:more' => "View all members",
