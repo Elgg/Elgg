@@ -392,7 +392,6 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
-	$vars['admin_notices'] = elgg_is_admin_logged_in() ? elgg_get_admin_notices() : [];
 	$vars['page_shell'] = $page_shell;
 
 	// head has keys 'title', 'metas', 'links'

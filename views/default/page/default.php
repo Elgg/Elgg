@@ -11,7 +11,6 @@
  * @uses $vars['title']         Title of the page
  * @uses $vars['body']          The main content of the page
  * @uses $vars['sysmessages']   A 2d array of various message registers, passed from system_messages()
- * @uses $vars['admin_notices'] Array of ElggObject admin notices
  */
 
 $sections = elgg_extract('sections', $vars);

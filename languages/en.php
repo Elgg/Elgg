@@ -541,6 +541,7 @@ three sections:
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
 
+	'admin:notices:delete_all' => 'Dismiss all %s notices',
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
 	'item:object:admin_notice' => 'Admin notice',
 

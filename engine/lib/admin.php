@@ -171,6 +171,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/menu/save', '', 'admin');
 
 	elgg_register_action('admin/delete_admin_notice', '', 'admin');
+	elgg_register_action('admin/delete_admin_notices', '', 'admin');
 	
 	elgg_register_action('admin/security/settings', '', 'admin');
 	elgg_register_action('admin/security/regenerate_site_secret', '', 'admin');
