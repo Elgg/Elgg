@@ -48,8 +48,12 @@
 
 #groups-tools > li {
 	width: 48%;
-	min-height: 200px;
 	margin-bottom: 40px;
+	display: flex;
+}
+
+#groups-tools > li > .elgg-module {
+	flex-grow: 1;
 }
 
 #groups-tools > li:nth-child(odd) {
