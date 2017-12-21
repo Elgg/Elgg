@@ -17,6 +17,16 @@ function members_init() {
 		'href' => 'members',
 	]);
 
+	if (elgg_is_admin_logged_in()) {
+		elgg_register_menu_item('title', [
+			'name' => 'add_user',
+			'text' => elgg_echo('admin:users:add'),
+			'href' => 'admin/users/add',
+			'context' => 'members',
+			'link_class' => 'elgg-button elgg-button-action',
+		]);
+	}
+	
 	elgg_register_plugin_hook_handler('register', 'menu:filter:members', 'members_register_filter_menu');
 }
 
