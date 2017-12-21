@@ -11,17 +11,18 @@
 	margin-right: 20px;
 }
 
-.groups-profile-fields div:first-child {
-	padding-top: 0;
+/*** group profile details ***/
+.group-profile-field {
+	border-bottom: 1px solid #ebebeb;
+	margin: 0;
+	padding: 0.5rem;
+}
+.group-profile-field:last-child {
+	border-bottom: none;
 }
 
-.groups-profile-fields > div {
-	border-bottom: 1px solid #DCDCDC;
-	padding: 5px 0;
-	margin-bottom: 0;
-}
-
-.groups-profile-fields .elgg-output {
+/* fix for about me field */
+.group-profile-field .elgg-output {
 	margin: 0;
 }
 
