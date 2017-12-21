@@ -5,6 +5,7 @@
  *
  * @uses $vars['type']         The type of module (main, info, popup, aside, etc.)
  * @uses $vars['title']        Optional title text (do not pass header with this option)
+ * @uses $vars['menu']         Module menu do display in the header
  * @uses $vars['header']       Optional HTML content of the header
  * @uses $vars['body']         HTML content of the body
  * @uses $vars['footer']       Optional HTML content of the footer
@@ -33,8 +34,14 @@ if ($title) {
 }
 
 if ($header !== null) {
+	$menu = elgg_extract('menu', $vars);
+	if ($menu) {
+		$header .= elgg_format_element('div', ['class' => 'elgg-module-menu'], $menu);
+	}
+
 	$header = elgg_format_element('div', ['class' => 'elgg-head'], $header);
 }
+
 $body = elgg_format_element('div', ['class' => 'elgg-body'], $body);
 if ($footer) {
 	$footer = elgg_format_element('div', ['class' => 'elgg-foot'], $footer);
