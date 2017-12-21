@@ -81,6 +81,14 @@
 	width: 100%;
 }
 
+.elgg-module-widget .elgg-menu-widget-container {
+	display: none;
+}
+
+.elgg-module-widget:hover .elgg-menu-widget-container {
+	display: inline-block;
+}
+
 .elgg-widget-edit {
 	display: none;
 	width: auto;
