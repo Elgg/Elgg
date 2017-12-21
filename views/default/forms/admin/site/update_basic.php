@@ -11,6 +11,7 @@ echo elgg_view_field([
 	'#type' => 'text',
 	'name' => 'sitedescription',
 	'#label' => elgg_echo('installation:sitedescription'),
+	'#help' => elgg_echo('installation:sitedescription:help'),
 	'value' => elgg_get_config('sitedescription'),
 ]);
 
