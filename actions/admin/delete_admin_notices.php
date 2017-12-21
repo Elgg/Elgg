@@ -3,9 +3,8 @@
 $batch = elgg_get_admin_notices([
 	'limit' => 0,
 	'batch' => true,
+	'batch_inc_offset' => false,
 ]);
-
-$batch->setIncrementOffset(false);
 
 foreach ($batch as $notice) {
 	$notice->delete();

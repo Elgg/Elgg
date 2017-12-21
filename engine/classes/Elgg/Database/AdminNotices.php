@@ -26,9 +26,9 @@ class AdminNotices {
 	 * @param string $id      A unique ID that your plugin can remember
 	 * @param string $message Body of the message
 	 *
-	 * @return bool
+	 * @return \ElggObject|bool
 	 */
-	function add($id, $message) {
+	public function add($id, $message) {
 		if (!$id || !$message) {
 			return false;
 		}
@@ -51,7 +51,11 @@ class AdminNotices {
 
 		elgg_set_ignore_access($old_ia);
 
-		return (bool) $result;
+		if (!$result) {
+			return false;
+		}
+
+		return $admin_notice;
 	}
 	
 	/**
@@ -61,16 +65,10 @@ class AdminNotices {
 	 *
 	 * @return bool
 	 */
-	function delete($id) {
-		if (!$id) {
-			return false;
-		}
-		
+	public function delete($id = '') {
 		$result = true;
 		
-		$notices = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'admin_notice',
+		$notices = $this->find([
 			'metadata_name' => 'admin_notice_id',
 			'metadata_value' => $id,
 			'limit' => false,
@@ -78,10 +76,15 @@ class AdminNotices {
 			'batch_inc_offset' => false,
 		]);
 
+		$ia = elgg_set_ignore_access(true);
+
 		// in case a bad plugin adds many, let it remove them all at once.
 		foreach ($notices as $notice) {
 			$result = ($result && $notice->delete());
 		}
+
+		elgg_set_ignore_access($ia);
+
 		return $result;
 	}
 	
@@ -92,7 +95,7 @@ class AdminNotices {
 	 *
 	 * @return \ElggObject[] Admin notices
 	 */
-	function find(array $options = []) {
+	public function find(array $options = []) {
 		$options = array_merge($options, [
 			'type' => 'object',
 			'subtype' => 'admin_notice',
@@ -109,7 +112,7 @@ class AdminNotices {
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	function exists($id) {
+	public function exists($id) {
 		$old_ia = elgg_set_ignore_access(true);
 		$notice = elgg_get_entities([
 			'type' => 'object',
