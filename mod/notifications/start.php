@@ -19,7 +19,6 @@ function notifications_plugin_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_notification_groups_title_menu');
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_page_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_groups_subscription_page_menu');
 
 	// Unset the default notification settings
 	elgg_unregister_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
@@ -139,73 +138,31 @@ function _notification_groups_title_menu(\Elgg\Hook $hook) {
 	}
 
 	$items = $hook->getValue();
-	/* @var ElggMenuItem[] $items */
-
-	foreach ($items as $item) {
-		if ($item->getName() === 'group-dropdown') {
-			$item->addChild(ElggMenuItem::factory([
-				'name' => 'notifications',
-				'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
-				'href' => "notifications/group/{$user->username}",
-			]));
-		}
-	}
-}
-
-/**
- * Register menu items for the page menu on group profiles
- *
- * @param \Elgg\Hook $hook 'register' 'menu:page'
- *
- * @return void|ElggMenuItem[]
- *
- * @access private
- * @since 3.0
- */
-function _notifications_groups_subscription_page_menu(\Elgg\Hook $hook) {
 	
-	if (!elgg_is_active_plugin('groups')) {
-		return;
-	}
-	
-	if (!elgg_in_context('group_profile') || !elgg_get_logged_in_user_guid()) {
-		return;
-	}
-
-	$user = elgg_get_logged_in_user_entity();
-	$group = elgg_get_page_owner_entity();
+	$group = $hook->getEntityParam();
 	if (!($group instanceof \ElggGroup)) {
 		return;
 	}
 	
 	$subscribed = false;
-	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-		$relationship = check_entity_relationship($user->guid, 'notify' . $method, $group->guid);
-
-		if ($relationship) {
-			$subscribed = true;
+	$methods = elgg_get_notification_methods();
+	foreach ($methods as $method) {
+		$subscribed = check_entity_relationship($user->guid, 'notify' . $method, $group->guid);
+		if ($subscribed) {
 			break;
 		}
 	}
 		
-	$return = $hook->getValue();
+	$items[] = \ElggMenuItem::factory([
+		'name' => 'notifications',
+		'parent_name' => 'group-dropdown',
+		'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
+		'href' => "notifications/group/{$user->username}",
+		'badge' => $subscribed ? elgg_echo('on') : elgg_echo('off'),
+		'icon' => $subscribed ? 'bell' : 'bell-slash',
+	]);
 	
-	if ($subscribed) {
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'subscription_status',
-			'text' => elgg_echo('notifications:groups:subscribed'),
-			'href' => "notifications/group/$user->username",
-		]);
-	} else {
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'subscription_status',
-			'text' => elgg_echo('notifications:groups:unsubscribed'),
-			'href' => "notifications/group/$user->username"
-		]);
-	}
-			
-	return $return;
+	return $items;
 }
 
 /**

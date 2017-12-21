@@ -8,17 +8,22 @@
  * @uses $vars['limit']  The number of members to display
  */
 
+$entity = elgg_extract('entity', $vars);
+if (!($entity instanceof \ElggGroup)) {
+	return;
+}
+
 $limit = elgg_extract('limit', $vars, 14);
 
 $all_link = elgg_view('output/url', [
-	'href' => 'groups/members/' . $vars['entity']->guid,
+	'href' => "groups/members/{$entity->guid}",
 	'text' => elgg_echo('groups:members:more'),
 	'is_trusted' => true,
 ]);
 
 $body = elgg_list_entities([
 	'relationship' => 'member',
-	'relationship_guid' => $vars['entity']->guid,
+	'relationship_guid' => $entity->guid,
 	'inverse_relationship' => true,
 	'type' => 'user',
 	'limit' => $limit,
@@ -30,4 +35,6 @@ $body = elgg_list_entities([
 
 $body .= "<div class='center mts'>$all_link</div>";
 
-echo elgg_view_module('aside', elgg_echo('groups:members'), $body);
+$count = $entity->getMembers(['count' => true]);
+
+echo elgg_view_module('aside', elgg_echo('groups:members') . " ({$count})", $body);

@@ -10,23 +10,19 @@
 .groups-profile > .elgg-image {
 	margin-right: 20px;
 }
-.groups-stats {
-	margin-top: 10px;
+
+/*** group profile details ***/
+.group-profile-field {
+	border-bottom: 1px solid #ebebeb;
+	margin: 0;
+	padding: 0.5rem;
 }
-.groups-stats p {
-	margin-bottom: 2px;
-}
-.groups-profile-fields div:first-child {
-	padding-top: 0;
+.group-profile-field:last-child {
+	border-bottom: none;
 }
 
-.groups-profile-fields > div {
-	border-bottom: 1px solid #DCDCDC;
-	padding: 5px 0;
-	margin-bottom: 0;
-}
-
-.groups-profile-fields .elgg-output {
+/* fix for about me field */
+.group-profile-field .elgg-output {
 	margin: 0;
 }
 

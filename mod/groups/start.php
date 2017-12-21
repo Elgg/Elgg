@@ -71,9 +71,6 @@ function groups_init() {
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'group:', 'Elgg\Values::getTrue');
 
-	// prepare profile buttons to be registered in the title menu
-	elgg_register_plugin_hook_handler('profile_buttons', 'group', 'groups_prepare_profile_buttons');
-
 	// Help core resolve page owner guids from group routes
 	// Registered with an earlier priority to be called before default_page_owner_handler()
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
@@ -83,6 +80,7 @@ function groups_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu_group_profile');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
 }
 
 /**
@@ -358,6 +356,88 @@ function groups_activity_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
+ * Returns a menu item for leaving a group
+ *
+ * @param \ElggGroup $group Group to leave
+ * @param \ElggUser  $user  User to check leave action for
+ *
+ * @return \ElggMenuItem|false
+ */
+function groups_get_group_leave_menu_item(\ElggGroup $group, $user = null) {
+	if (!$group instanceof \ElggGroup) {
+		return false;
+	}
+	
+	if (!$user instanceof ElggUser) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+	
+	if (!$user instanceof ElggUser) {
+		return false;
+	}
+	
+	if (!$group->isMember($user) || ($group->owner_guid === $user->guid)) {
+		// a member can leave a group if he/she doesn't own it
+		return false;
+	}
+	
+	return \ElggMenuItem::factory([
+		'name' => 'groups:leave',
+		'icon' => 'sign-out',
+		'text' => elgg_echo('groups:leave'),
+		'href' => elgg_http_add_url_query_elements('action/groups/leave', [
+			'group_guid' => $group->guid,
+			'user_guid' => $user->guid,
+		]),
+		'is_action' => true,
+	]);
+}
+
+/**
+ * Returns a menu item for joining a group
+ *
+ * @param \ElggGroup $group Group to leave
+ * @param \ElggUser  $user  User to check leave action for
+ *
+ * @return \ElggMenuItem|false
+ */
+function groups_get_group_join_menu_item(\ElggGroup $group, $user = null) {
+	if (!$group instanceof \ElggGroup) {
+		return false;
+	}
+	
+	if (!$user instanceof ElggUser) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+	
+	if (!$user instanceof ElggUser) {
+		return false;
+	}
+	
+	if ($group->isMember($user)) {
+		return false;
+	}
+	
+	$menu_name = 'groups:joinrequest';
+	if ($group->isPublicMembership() || $group->canEdit()) {
+		// admins can always join
+		// non-admins can join if membership is public
+		$menu_name = 'groups:join';
+	}
+	
+	return \ElggMenuItem::factory([
+		'name' => $menu_name,
+		'icon' => 'sign-in',
+		'text' => elgg_echo($menu_name),
+		'href' => elgg_http_add_url_query_elements('action/groups/join', [
+			'group_guid' => $group->guid,
+			'user_guid' => $user->guid,
+		]),
+		'is_action' => true,
+	]);
+}
+
+/**
  * Add links/info to entity menu particular to group entities
  *
  * @param string         $hook   'register'
@@ -373,32 +453,45 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 		return;
 	}
 	
-	if (!elgg_is_admin_logged_in()) {
+	$user = elgg_get_logged_in_user_entity();
+	if (empty($user)) {
 		return;
 	}
 	
-	$isFeatured = $entity->featured_group === "yes";
-
-	$return[] = ElggMenuItem::factory([
-		'name' => 'feature',
-		'icon' => 'arrow-up',
-		'text' => elgg_echo('groups:makefeatured'),
-		'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=feature",
-		'is_action' => true,
-		'item_class' => $isFeatured ? 'hidden' : '',
-		'data-toggle' => 'unfeature',
-	]);
-
-	$return[] = ElggMenuItem::factory([
-		'name' => 'unfeature',
-		'icon' => 'arrow-down',
-		'text' => elgg_echo('groups:makeunfeatured'),
-		'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=unfeature",
-		'is_action' => true,
-		'item_class' => $isFeatured ? '' : 'hidden',
-		'data-toggle' => 'feature',
-	]);
-
+	$group_join = groups_get_group_join_menu_item($entity, $user);
+	if (!empty($group_join)) {
+		$return[] = $group_join;
+	}
+	
+	$group_leave = groups_get_group_leave_menu_item($entity, $user);
+	if (!empty($group_leave)) {
+		$return[] = $group_leave;
+	}
+		
+	if ($user->isAdmin()) {
+		$isFeatured = $entity->featured_group === "yes";
+	
+		$return[] = ElggMenuItem::factory([
+			'name' => 'feature',
+			'icon' => 'arrow-up',
+			'text' => elgg_echo('groups:makefeatured'),
+			'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=feature",
+			'is_action' => true,
+			'item_class' => $isFeatured ? 'hidden' : '',
+			'data-toggle' => 'unfeature',
+		]);
+	
+		$return[] = ElggMenuItem::factory([
+			'name' => 'unfeature',
+			'icon' => 'arrow-down',
+			'text' => elgg_echo('groups:makeunfeatured'),
+			'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=unfeature",
+			'is_action' => true,
+			'item_class' => $isFeatured ? '' : 'hidden',
+			'data-toggle' => 'feature',
+		]);
+	}
+	
 	return $return;
 }
 
@@ -908,78 +1001,70 @@ function _groups_topbar_menu_setup(\Elgg\Hook $hook) {
 }
 
 /**
- * Returns menu items to be registered in the title menu of the group profile
+ * Registers title menu items for group
  *
- * @param string         $hook   "profile_buttons"
- * @param string         $type   "group"
- * @param ElggMenuItem[] $items  Buttons
- * @param array          $params Hook params
- * @return ElggMenuItem[]
+ * @elgg_plugin_hook register menu:title
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return \ElggMenuItem[]
+ *
+ * @internal
  */
-function groups_prepare_profile_buttons($hook, $type, $items, $params) {
-
-	$group = elgg_extract('entity', $params);
+function _groups_title_menu(\Elgg\Hook $hook) {
+	$group = $hook->getEntityParam();
 	if (!$group instanceof ElggGroup) {
 		return;
 	}
-
-	$actions = [];
-
+	
+	$user = elgg_get_logged_in_user_entity();
+	if (empty($user)) {
+		return;
+	}
+	
+	$result = $hook->getValue();
 	if ($group->canEdit()) {
 		// group owners can edit the group and invite new members
-		$actions['groups:edit'] = "groups/edit/{$group->guid}";
-		$actions['groups:invite'] = "groups/invite/{$group->guid}";
-	}
-
-	$user = elgg_get_logged_in_user_entity();
-	if ($user && !$group->isMember($user)) {
-		$url = "action/groups/join?group_guid={$group->guid}";
-		if ($group->isPublicMembership() || $group->canEdit()) {
-			// admins can always join
-			// non-admins can join if membership is public
-			$actions['groups:join'] = $url;
-		} else {
-			// request membership
-			$actions['groups:joinrequest'] = $url;
-		}
-	}
-
-	foreach ($actions as $action => $url) {
-		$items[] = ElggMenuItem::factory([
-			'name' => $action,
-			'href' => elgg_normalize_url($url),
-			'text' => elgg_echo($action),
-			'is_action' => 0 === strpos($url, 'action'),
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'groups:edit',
+			'href' => "groups/edit/{$group->guid}",
+			'text' => elgg_echo('groups:edit'),
+			'link_class' => 'elgg-button elgg-button-action',
+		]);
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'groups:invite',
+			'href' => "groups/invite/{$group->guid}",
+			'text' => elgg_echo('groups:invite'),
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
 	}
-
+	
 	if ($group->isMember($user)) {
 		$is_owner = ($group->owner_guid === $user->guid);
-
-		$joined = ElggMenuItem::factory([
+		$result[] = ElggMenuItem::factory([
 			'name' => 'group-dropdown',
-			'href' => '#',
+			'href' => false,
 			'text' => elgg_echo($is_owner ? 'groups:button:owned' : 'groups:button:joined'),
 			'icon_alt' => 'angle-down',
 			'link_class' => 'elgg-button elgg-button-action-done',
 			'child_menu' => [
 				'display' => 'dropdown',
-			]
+			],
 		]);
-
-		$joined->addChild(ElggMenuItem::factory([
-			'name' => 'groups:leave',
-			'href' => "action/groups/leave?group_guid={$group->guid}",
-			'text' => elgg_echo('groups:leave'),
-			'is_action' => true,
-			'confirm' => true,
-		]));
-
-		$items[] = $joined;
+		
+		$leave_group = groups_get_group_leave_menu_item($group, $user);
+		if ($leave_group) {
+			$leave_group->setParentName('group-dropdown');
+			$result[] = $leave_group;
+		}
+	} else {
+		$join_group = groups_get_group_join_menu_item($group, $user);
+		if ($join_group) {
+			$join_group->setLinkClass('elgg-button elgg-button-action');
+			$result[] = $join_group;
+		}
 	}
-
-	return $items;
+	
+	return $result;
 }
 
 /**
@@ -1125,27 +1210,6 @@ function _groups_get_group_acl(\ElggGroup $group) {
 	}
 	
 	return elgg_extract(0, $group->getOwnedAccessCollections(['subtype' => 'group_acl']), false);
-}
-
-/**
- * Registers the buttons for title area of the group profile page
- *
- * @param ElggGroup $group group to register for
- * @return void
- */
-function groups_register_profile_buttons($group) {
-
-	$params = [
-		'entity' => $group,
-	];
-
-	$items = elgg_trigger_plugin_hook('profile_buttons', 'group', $params, []);
-
-	if (!empty($items)) {
-		foreach ($items as $item) {
-			elgg_register_menu_item('title', $item);
-		}
-	}
 }
 
 /**
