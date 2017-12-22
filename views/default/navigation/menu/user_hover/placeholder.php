@@ -3,7 +3,7 @@
 $menus_present = (array) elgg_get_config("elgg_lazy_hover_menus");
 
 $user = elgg_extract("entity", $vars);
-if (!elgg_instanceof($user, "user")) {
+if (!$user instanceof ElggUser) {
 	return;
 }
 

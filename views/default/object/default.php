@@ -18,7 +18,7 @@ if (!$title) {
 	$title = get_class($vars['entity']);
 }
 
-if (elgg_instanceof($vars['entity'], 'object')) {
+if ($vars['entity'] instanceof ElggObject) {
 	$metadata = elgg_view('navigation/menu/metadata', $vars);
 }
 

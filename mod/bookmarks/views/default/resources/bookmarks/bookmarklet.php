@@ -11,7 +11,7 @@ $container_guid = elgg_extract('container_guid', $vars);
 $container = get_entity($container_guid);
 $page_owner = $container;
 
-if (elgg_instanceof($container, 'object')) {
+if ($container instanceof ElggObject) {
 	$page_owner = $container->getContainerEntity();
 }
 

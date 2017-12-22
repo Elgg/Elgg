@@ -25,7 +25,7 @@ class FormatComentEntityHook {
 
 		$entity = $hook->getValue();
 
-		if (!elgg_instanceof($entity, 'object', 'comment')) {
+		if (!$entity instanceof \ElggComment) {
 			return;
 		}
 

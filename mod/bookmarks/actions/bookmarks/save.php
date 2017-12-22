@@ -30,13 +30,12 @@ if (!filter_var($address, FILTER_VALIDATE_URL)) {
 }
 
 if ($guid == 0) {
-	$bookmark = new \ElggObject;
-	$bookmark->subtype = "bookmarks";
+	$bookmark = new ElggBookmark;
 	$bookmark->container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 	$new = true;
 } else {
 	$bookmark = get_entity($guid);
-	if (!$bookmark->canEdit()) {
+	if (!$bookmark instanceof ElggBookmark || !$bookmark->canEdit()) {
 		return elgg_error_response(elgg_echo('bookmarks:save:failed'));
 	}
 }

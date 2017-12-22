@@ -12,7 +12,7 @@ $delete_flag = (bool) get_input('delete', false);
 if ($delete_flag) {
 	foreach ($message_guids as $guid) {
 		$message = get_entity($guid);
-		if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
+		if ($message instanceof ElggMessage && $message->canEdit()) {
 			$message->delete();
 		}
 	}
@@ -22,7 +22,7 @@ if ($delete_flag) {
 // mark as read
 foreach ($message_guids as $guid) {
 	$message = get_entity($guid);
-	if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
+	if ($message instanceof ElggMessage && $message->canEdit()) {
 		$message->readYet = 1;
 	}
 }

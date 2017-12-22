@@ -22,7 +22,7 @@ $error = false;
 if ($title && $description) {
 	if ($guid) {
 		$entity = get_entity($guid);
-		if (elgg_instanceof($entity, 'object', 'blog') && $entity->canEdit()) {
+		if ($entity instanceof ElggBlog && $entity->canEdit()) {
 			$blog = $entity;
 		} else {
 			$error = elgg_echo('blog:error:post_not_found');

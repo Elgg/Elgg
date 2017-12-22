@@ -17,7 +17,7 @@ if (!$parent_guid) {
 	$parent = get_entity($parent_guid);
 	if ($parent instanceof ElggPage) {
 		$container = $parent->getContainerEntity();
-	} else if (elgg_instanceof($parent)) {
+	} else if ($parent instanceof ElggEntity) {
 		$container = $parent;
 		$parent = null;
 		$parent_guid = 0;

@@ -16,7 +16,7 @@ $title = elgg_echo('file:add');
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
-if (elgg_instanceof($owner, 'user')) {
+if ($owner instanceof ElggUser) {
 	elgg_push_breadcrumb($owner->getDisplayName(), "file/owner/$owner->username");
 } else {
 	elgg_push_breadcrumb($owner->getDisplayName(), "file/group/$owner->guid/all");

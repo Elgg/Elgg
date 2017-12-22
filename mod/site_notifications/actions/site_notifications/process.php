@@ -11,7 +11,7 @@ if (!$notification_guids) {
 
 foreach ($notification_guids as $guid) {
 	$notification = get_entity($guid);
-	if (elgg_instanceof($notification, 'object', 'site_notification') && $notification->canDelete()) {
+	if ($notification instanceof SiteNotification && $notification->canDelete()) {
 		$notification->delete();
 	}
 }

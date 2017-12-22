@@ -5,6 +5,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'bookmarks',
+			'class' => 'ElggBookmark',
 			'searchable' => true,
 		],
 	],

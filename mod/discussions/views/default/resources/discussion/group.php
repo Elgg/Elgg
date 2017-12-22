@@ -9,7 +9,7 @@ elgg_set_page_owner_guid($guid);
 elgg_group_gatekeeper();
 
 $group = get_entity($guid);
-if (!elgg_instanceof($group, 'group')) {
+if (!$group instanceof ElggGroup) {
 	forward('', '404');
 }
 elgg_push_breadcrumb($group->name, $group->getURL());

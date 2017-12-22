@@ -129,7 +129,7 @@ function bookmarks_page_handler($page) {
  */
 function bookmark_set_url($hook, $type, $url, $params) {
 	$entity = elgg_extract('entity', $params);
-	if (!elgg_instanceof($entity, 'object', 'bookmarks')) {
+	if (!$entity instanceof ElggBookmark) {
 		return;
 	}
 	

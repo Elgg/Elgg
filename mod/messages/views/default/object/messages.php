@@ -8,7 +8,7 @@
 $full = elgg_extract('full_view', $vars, false);
 $message = elgg_extract('entity', $vars, false);
 
-if (!$message) {
+if (!$message instanceof ElggMessage) {
 	return;
 }
 

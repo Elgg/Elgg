@@ -6,7 +6,7 @@ $guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($guid);
 
 $group = get_entity($guid);
-if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
+if (!$group instanceof ElggGroup || !$group->canEdit()) {
 	register_error(elgg_echo('groups:noaccess'));
 	forward(REFERER);
 }

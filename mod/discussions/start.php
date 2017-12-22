@@ -106,7 +106,7 @@ function discussion_page_handler($page) {
 function discussion_set_topic_url($hook, $type, $url, $params) {
 	
 	$entity = elgg_extract('entity', $params);
-	if (!elgg_instanceof($entity, 'object', 'discussion')) {
+	if (!$entity instanceof ElggDiscussion) {
 		return;
 	}
 
@@ -197,7 +197,7 @@ function discussion_prepare_comment_notification($hook, $type, $notification, $p
 	}
 	
 	$discussion = $comment->getContainerEntity();
-	if (!elgg_instanceof($discussion, 'object', 'discussion')) {
+	if (!$discussion instanceof ElggDiscussion) {
 		return;
 	}
 	
@@ -242,7 +242,7 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 	}
 	
 	$discussion = $comment->getContainerEntity();
-	if (!elgg_instanceof($discussion, 'object', 'discussion')) {
+	if (!$discussion instanceof ElggDiscussion) {
 		return;
 	}
 	
@@ -269,7 +269,7 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 function discussion_comment_permissions($hook, $type, $return, $params) {
 	
 	$discussion = elgg_extract('entity', $params);
-	if (!elgg_instanceof($discussion, 'object', 'discussion')) {
+	if (!$discussion instanceof ElggDiscussion) {
 		return;
 	}
 

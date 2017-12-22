@@ -12,6 +12,7 @@ $guid = elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid, 'object', 'messages');
 
 $message = get_entity($guid);
+/* @var ElggMessage $message */
 
 // mark the message as read
 $message->readYet = true;

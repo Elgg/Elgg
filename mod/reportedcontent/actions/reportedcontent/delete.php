@@ -6,7 +6,7 @@
 $guid = (int) get_input('guid');
 
 $report = get_entity($guid);
-if (!$report || $report->getSubtype() !== "reported_content" || !$report->canDelete()) {
+if (!$report instanceof ElggReportedContent || !$report->canDelete()) {
 	return elgg_error_response(elgg_echo("reportedcontent:notdeleted"));
 }
 

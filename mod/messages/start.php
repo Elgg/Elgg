@@ -249,12 +249,8 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$sender_guid = (int) elgg_get_logged_in_user_guid();
 	}
 
-	// Initialise 2 new ElggObject
-	$message_to = new ElggObject();
-	$message_sent = new ElggObject();
-
-	$message_to->subtype = "messages";
-	$message_sent->subtype = "messages";
+	$message_to = new ElggMessage();
+	$message_sent = new ElggMessage();
 
 	$message_to->owner_guid = $recipient_guid;
 	$message_to->container_guid = $recipient_guid;

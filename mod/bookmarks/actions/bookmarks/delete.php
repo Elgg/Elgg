@@ -8,7 +8,7 @@
 $guid = (int) get_input('guid');
 $bookmark = get_entity($guid);
 
-if (!elgg_instanceof($bookmark, 'object', 'bookmarks') || !$bookmark->canDelete()) {
+if (!$bookmark instanceof ElggBookmark || !$bookmark->canDelete()) {
 	return elgg_error_response(elgg_echo('bookmarks:delete:failed'));
 }
 

@@ -120,7 +120,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
 	$container = $params['container'];
 	$user = $params['user'];
 
-	if (elgg_instanceof($container, 'group') && $user) {
+	if ($container instanceof ElggGroup && $user) {
 		/* @var \ElggGroup $container */
 		if ($container->isMember($user)) {
 			return true;

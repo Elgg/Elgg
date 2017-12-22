@@ -5,6 +5,7 @@ return [
 		[
 			'type' => 'object',
 			'subtype' => 'discussion',
+			'class' => 'ElggDiscussion',
 			'searchable' => true,
 		],
 	],

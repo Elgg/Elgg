@@ -27,12 +27,11 @@ if (!$container || !$container->canWriteToContainer(0, 'object', 'discussion')) 
 $new_topic = !($guid > 0);
 
 if ($new_topic) {
-	$topic = new ElggObject();
-	$topic->subtype = 'discussion';
+	$topic = new ElggDiscussion();
 } else {
 	// load original file object
 	$topic = get_entity($guid);
-	if (!elgg_instanceof($topic, 'object', 'discussion') || !$topic->canEdit()) {
+	if (!$topic instanceof ElggDiscussion || !$topic->canEdit()) {
 		return elgg_error_response(elgg_echo('discussion:topic:notfound'));
 	}
 }

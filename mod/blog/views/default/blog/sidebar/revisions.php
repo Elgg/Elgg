@@ -8,7 +8,7 @@
 //If editing a post, show the previous revisions and drafts.
 $blog = elgg_extract('entity', $vars, false);
 
-if (!elgg_instanceof($blog, 'object', 'blog')) {
+if (!$blog instanceof ElggBlog) {
 	return;
 }
 
@@ -34,6 +34,7 @@ $saved_revisions = $blog->getAnnotations([
 ]);
 
 $revisions = array_merge($revisions, $saved_revisions);
+/* @var ElggAnnotation[] $revisions */
 
 if (empty($revisions)) {
 	return;

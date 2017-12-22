@@ -19,7 +19,7 @@ $params = [
 $container = $blog->getContainerEntity();
 $crumbs_title = $container->name;
 
-if (elgg_instanceof($container, 'group')) {
+if ($container instanceof ElggGroup) {
 	elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
 } else {
 	elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
