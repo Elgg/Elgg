@@ -63,9 +63,9 @@
             <directory suffix=".php">./views</directory>
             <directory suffix=".php">./mod/*/languages</directory>
             <directory suffix=".php">./mod/*/views</directory>
-            <file>*/engine/lib/deprecated-2.3.php</file>
-            <file>*/engine/lib/deprecated-3.0.php</file>
-            <file>*/engine/lib/constants.php</file>
+            <file>./engine/lib/deprecated-2.3.php</file>
+            <file>./engine/lib/deprecated-3.0.php</file>
+            <file>./engine/lib/constants.php</file>
 
         </blacklist>
 
@@ -77,7 +77,7 @@
             <directory suffix=".php">./mod/*/actions</directory>
             <directory suffix=".php">./mod/*/lib</directory>
             <directory suffix=".php">./mod/*/classes</directory>
-            <directory>./mod/*.php</directory>
+            <directory suffix="start.php">./mod/*</directory>
 
             <exclude>
                 <directory suffix=".php">./elgg-config</directory>
@@ -95,9 +95,9 @@
                 <directory suffix=".php">./views</directory>
                 <directory suffix=".php">./mod/*/languages</directory>
                 <directory suffix=".php">./mod/*/views</directory>
-                <file>*/engine/lib/deprecated-2.3.php</file>
-                <file>*/engine/lib/deprecated-3.0.php</file>
-                <file>*/engine/lib/constants.php</file>
+                <file>./engine/lib/deprecated-2.3.php</file>
+                <file>./engine/lib/deprecated-3.0.php</file>
+                <file>./engine/lib/constants.php</file>
             </exclude>
         </whitelist>
     </filter>

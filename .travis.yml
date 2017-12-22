@@ -84,6 +84,7 @@ matrix:
         - git checkout -
         - composer install --prefer-dist
         - php -f ./.scripts/travis/upgrade.php
+        - php -f ./.scripts/travis/enable_plugins.php
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
 

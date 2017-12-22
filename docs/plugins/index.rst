@@ -33,13 +33,12 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - invitefriends
 - legacy_urls
 - likes
-- logbrowser
-- logrotate
 - members
 - notifications
 - reportedcontent
 - search
 - site_notifications
+- system_log
 - tagcloud
 - uservalidationbyemail
 - web_services

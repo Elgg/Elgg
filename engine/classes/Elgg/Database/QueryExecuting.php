@@ -21,7 +21,7 @@ interface QueryExecuting {
 	 *
 	 * @param string $function      Calculation, e.g. max, min, avg
 	 * @param string $property      Property name
-	 * @param strign $property_type Property type
+	 * @param string $property_type Property type
 	 *
 	 * @return int|float
 	 */
@@ -30,9 +30,9 @@ interface QueryExecuting {
 	/**
 	 * Fetch rows
 	 *
-	 * @param int             $limit    Number of rows to fetch
-	 * @param int             $offset   Index of the first row
-	 * @param callabale|false $callback Callback function to run database rows through
+	 * @param int            $limit    Number of rows to fetch
+	 * @param int            $offset   Index of the first row
+	 * @param callable|false $callback Callback function to run database rows through
 	 *
 	 * @return \ElggData[]|false
 	 */
@@ -41,9 +41,9 @@ interface QueryExecuting {
 	/**
 	 * Fetch rows as an ElggBatch
 	 *
-	 * @param int             $limit    Number of rows to fetch
-	 * @param int             $offset   Index of the first row
-	 * @param callabale|false $callback Callback function to run database rows through
+	 * @param int            $limit    Number of rows to fetch
+	 * @param int            $offset   Index of the first row
+	 * @param callable|false $callback Callback function to run database rows through
 	 *
 	 * @return ElggBatch
 	 */
