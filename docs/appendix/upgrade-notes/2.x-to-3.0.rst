@@ -759,7 +759,12 @@ All pages have a metadata value for ``parent_guid``, for top pages this contains
 Profile plugin
 --------------
 
-All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data. 
+All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data.
+
+Data Views plugin
+-----------------
+
+The Data Views plugin no longer comes bundled. 
 
 Twitter API plugin
 ------------------
