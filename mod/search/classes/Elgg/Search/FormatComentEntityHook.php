@@ -29,10 +29,12 @@ class FormatComentEntityHook {
 			return;
 		}
 
+		$icon = '';
 		$owner = $entity->getOwnerEntity();
-		$size = $hook->getParam('size', 'small');
-		$icon = elgg_view_entity_icon($owner, $size);
-
+		if ($owner) {
+			$size = $hook->getParam('size', 'small');
+			$icon = elgg_view_entity_icon($owner, $size);
+		}
 		$container = $entity->getContainerEntity();
 		if (!$container instanceof ElggEntity) {
 			return;
