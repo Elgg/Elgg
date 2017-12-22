@@ -2,23 +2,31 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 
 /**
  * Elgg Test annotation api
  *
  * @group IntegrationTests
+ * @group EntityAnnotations
+ * @group Annotations
  */
-class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
+class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 
 	public function up() {
+		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+
 		$this->object = new \ElggObject();
 		$this->object->subtype = $this->getRandomSubtype();
 	}
 
 	public function down() {
-		unset($this->object);
+		if ($this->object instanceof \ElggEntity) {
+			$this->object->delete();
+		}
+
+		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testElggGetAnnotationsCount() {
@@ -35,7 +43,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 			'count' => true,
 		]);
 
-		$this->assertIdentical($count, 2);
+		$this->assertEquals(2, $count);
 
 		$this->object->delete();
 	}
@@ -55,7 +63,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 		];
 
 		$annotations = elgg_get_annotations($options);
-		$this->assertIdentical(30, count($annotations));
+		$this->assertEquals(30, count($annotations));
 
 		$this->assertTrue(elgg_delete_annotations($options));
 
@@ -89,7 +97,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 
 		access_show_hidden_entities(true);
 		$annotations = elgg_get_annotations($options);
-		$this->assertIdentical(30, count($annotations));
+		$this->assertEquals(30, count($annotations));
 		access_show_hidden_entities(false);
 
 		$this->assertTrue($e->delete());
@@ -119,7 +127,7 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 		access_show_hidden_entities(false);
 
 		$annotations = elgg_get_annotations($options);
-		$this->assertIdentical(30, count($annotations));
+		$this->assertEquals(30, count($annotations));
 
 		$this->assertTrue($e->delete());
 	}
@@ -149,4 +157,70 @@ class ElggCoreAnnotationAPITest extends LegacyIntegrationTestCase {
 		$this->assertTrue($e->delete());
 		$this->assertFalse(elgg_annotation_exists($guid, 'test_annotation'));
 	}
+
+	/**
+	 * @dataProvider booleanPairsProvider
+	 */
+	public function testElggGetEntitiesFromBooleanAnnotation($value, $query, $type) {
+
+		$object = $this->createObject();
+		$this->assertNotEmpty($object->annotate('annotation', $value));
+
+		$options = [
+			'type' => 'object',
+			'subtype' => $object->subtype,
+			'annotation_name_value_pairs' => [
+				[
+					'name' => 'annotation',
+					'value' => $query,
+					'operand' => '=',
+					'type' => $type,
+				]
+			],
+			'count' => true,
+		];
+
+		$result = elgg_get_entities($options);
+
+		$this->assertEquals(1, $result);
+
+		$object->delete();
+	}
+
+	public function booleanPairsProvider() {
+		return [
+			[true, true, null],
+			[true, 1, null],
+			[true, '1', ELGG_VALUE_INTEGER],
+			[false, false, null],
+			[false, 0, null],
+			[false, '0', ELGG_VALUE_INTEGER],
+			[1, true, null],
+			[0, false, null],
+		];
+	}
+
+	/**
+	 * @group Current
+	 */
+	public function testCanDeleteAnnotationById() {
+
+		$entity = $this->createObject();
+		$this->assertNotEmpty($entity->annotate('foo', 'bar'));
+		$this->assertNotEmpty($entity->annotate('bar', 'baz'));
+
+		$annotations = elgg_get_annotations([
+			'guid' => $entity->guid,
+			'annotations_names' => ['foo', 'bar'],
+		]);
+
+		foreach ($annotations as $annotation) {
+			$this->assertTrue(elgg_delete_annotation_by_id($annotation->id));
+		}
+
+		$this->assertEmpty($entity->getAnnotations([
+			'annotations_names' => ['foo', 'bar'],
+		]));
+	}
+
 }

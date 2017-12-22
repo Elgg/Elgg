@@ -48,40 +48,7 @@ function string_to_tag_array($string) {
  * @since 1.7.1
  */
 function elgg_get_tags(array $options = []) {
-	$defaults = [
-		'threshold' => 1,
-		'tag_names' => [],
-	];
-
-	$options = array_merge($defaults, $options);
-
-	$singulars = ['tag_name'];
-	$options = _elgg_normalize_plural_options_array($options, $singulars);
-
-	$tag_names = elgg_extract('tag_names', $options);
-	if (empty($tag_names)) {
-		$tag_names = elgg_get_registered_tag_metadata_names();
-	}
-
-	$threshold = elgg_extract('threshold', $options, 1, false);
-
-	unset($options['tag_names']);
-	unset($options['threshold']);
-
-	$qb = \Elgg\Database\Select::fromTable('metadata', 'md');
-	$qb->select('md.value AS tag')
-		->addSelect('COUNT(md.id) AS total')
-		->where($qb->compare('md.name', 'IN', $tag_names, ELGG_VALUE_STRING))
-		->andWhere($qb->compare('md.value', '!=', '', ELGG_VALUE_STRING))
-		->groupBy('md.value')
-		->having($qb->compare('total', '>=', $threshold, ELGG_VALUE_INTEGER))
-		->orderBy('total', 'desc');
-
-	$options = new \Elgg\Database\QueryOptions($options);
-	$alias = $qb->joinEntitiesTable('md', 'entity_guid', 'inner', 'e');
-	$qb->addClause(\Elgg\Database\Clauses\EntityWhereClause::factory($options), $alias);
-
-	return _elgg_services()->db->getData($qb);
+	return _elgg_services()->metadataTable->getTags($options);
 }
 
 /**

@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\IntegrationTestCase;
 use ElggAnnotation;
 
 /**
@@ -11,7 +12,7 @@ use ElggAnnotation;
  * @group Metadata
  * @group Annotations
  */
-class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
+class ElggCoreMetastringsTest extends IntegrationTestCase {
 
 	public $metastringTypes = [
 		'metadata',
@@ -23,6 +24,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 	];
 
 	public function up() {
+		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 		$this->object = $this->createOne('object');
 	}
 
@@ -34,6 +36,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 			'guid' => $this->object->guid,
 		]);
 		access_show_hidden_entities(false);
+		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function createAnnotations($max = 1) {
@@ -74,24 +77,30 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 			$q = "SELECT * FROM $table WHERE id = $id";
 			$test = get_data($q);
 
-			$this->assertEqual($test[0]->id, $id);
+			$this->assertEquals($id, $test[0]->id);
 			$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
-			$this->assertIdentical([], get_data($q));
+			$this->assertEquals([], get_data($q));
 		}
 	}
 
-	public function testGetMetastringObjectFromID() {
-		$db_prefix = _elgg_config()->dbprefix;
-		$annotation = $this->createAnnotations(1);
+	public function testGetAnnotationObjectFromID() {
+		$annotations = $this->createAnnotations(1);
+		$id = array_shift($annotations);
+
+		$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
+
+		$this->assertEquals($id, $test->id);
+		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, 'annotation'));
+	}
+
+	public function testGetMetadataObjectFromID() {
 		$metadata = $this->createMetadata(1);
+		$id = array_shift($metadata);
 
-		foreach ($this->metastringTypes as $type) {
-			$id = ${$type}[0];
-			$test = _elgg_get_metastring_based_object_from_id($id, $type);
+		$test = _elgg_get_metastring_based_object_from_id($id, 'metadata');
 
-			$this->assertEqual($id, $test->id);
-			$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
-		}
+		$this->assertEquals($id, $test->id);
+		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, 'metadata'));
 	}
 
 	public function testGetMetastringObjectFromIDWithDisabledAnnotation() {
@@ -112,7 +121,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertTrue($annotation->disable());
 
 		$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
-		$this->assertEqual(false, $test);
+		$this->assertFalse($test);
 
 		$prev = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
@@ -133,7 +142,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 		$test = elgg_get_annotations([
 			'guid' => $this->object->guid,
 		]);
-		$this->assertEqual([], $test);
+		$this->assertEquals([], $test);
 
 		$prev = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
@@ -153,11 +162,11 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 		$test = get_data($q);
 
 		// disable
-		$this->assertEqual($test[0]->enabled, 'yes');
+		$this->assertEquals('yes', $test[0]->enabled);
 		$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'no', $type));
 
 		$test = get_data($q);
-		$this->assertEqual($test[0]->enabled, 'no');
+		$this->assertEquals('no', $test[0]->enabled);
 
 		// enable
 		$ashe = access_get_show_hidden_status();
@@ -165,7 +174,7 @@ class ElggCoreMetastringsTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
 
 		$test = get_data($q);
-		$this->assertEqual($test[0]->enabled, 'yes');
+		$this->assertEquals('yes', $test[0]->enabled);
 
 		access_show_hidden_entities($ashe);
 		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));

@@ -1334,42 +1334,6 @@ function _elgg_services() {
 }
 
 /**
- * Normalise the singular keys in an options array to plural keys.
- *
- * Used in elgg_get_entities*() functions to support shortcutting plural
- * names by singular names.
- *
- * @param array $options   The options array. $options['keys'] = 'values';
- * @param array $singulars A list of singular words to pluralize by adding 's'.
- *
- * @return array
- * @since 1.7.0
- * @access private
- */
-function _elgg_normalize_plural_options_array($options, $singulars) {
-	foreach ($singulars as $singular) {
-		$plural = $singular . 's';
-
-		if (array_key_exists($singular, $options)) {
-			if ($options[$singular] === ELGG_ENTITIES_ANY_VALUE) {
-				$options[$plural] = $options[$singular];
-			} else {
-				// Test for array refs #2641
-				if (!is_array($options[$singular])) {
-					$options[$plural] = [$options[$singular]];
-				} else {
-					$options[$plural] = $options[$singular];
-				}
-			}
-		}
-
-		unset($options[$singular]);
-	}
-
-	return $options;
-}
-
-/**
  * Emits a shutdown:system event upon PHP shutdown, but before database connections are dropped.
  *
  * @tip Register for the shutdown:system event to perform functions at the end of page loads.
@@ -1517,36 +1481,6 @@ function _elgg_favicon_page_handler($segments) {
 	echo elgg_view('graphics/favicon.ico');
 
 	return true;
-}
-
-/**
- * Enable objects with an enable() method.
- *
- * Used as a callback for \ElggBatch.
- *
- * @todo why aren't these static methods on \ElggBatch?
- *
- * @param object $object The object to enable
- * @return bool
- * @access private
- */
-function elgg_batch_enable_callback($object) {
-	// our db functions return the number of rows affected...
-	return $object->enable() ? true : false;
-}
-
-/**
- * Disable objects with a disable() method.
- *
- * Used as a callback for \ElggBatch.
- *
- * @param object $object The object to disable
- * @return bool
- * @access private
- */
-function elgg_batch_disable_callback($object) {
-	// our db functions return the number of rows affected...
-	return $object->disable() ? true : false;
 }
 
 /**

@@ -7,6 +7,7 @@ use Elgg\Database\Insert;
 use Elgg\Database\PrivateSettingsTable as DbPrivateSettingsTable;
 use Elgg\Database\Select;
 use Elgg\Database\Update;
+use ElggEntity;
 use stdClass;
 
 /**
@@ -34,12 +35,7 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set($entity_guid, $name, $value) {
-		$entity = get_entity((int) $entity_guid);
-		if (!$entity) {
-			return false;
-		}
-
+	public function set(ElggEntity $entity, $name, $value) {
 		if (!isset($value)) {
 			return false;
 		}
@@ -58,16 +54,16 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 
 		$this->addQuerySpecs($row);
 
-		return parent::set($entity_guid, $name, $value);
+		return parent::set($entity, $name, $value);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getAll($entity_guid) {
+	public function getAllForEntity(ElggEntity $entity) {
 		$rows = [];
 		foreach ($this->rows as $id => $row) {
-			if ($row->entity_guid == $entity_guid) {
+			if ($row->entity_guid == $entity->guid) {
 				$rows[] = $row;
 			}
 		}
@@ -78,10 +74,10 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function removeAllForEntity($entity_guid) {
+	public function removeAllForEntity(ElggEntity $entity) {
 		$deleted = false;
 		foreach ($this->rows as $id => $row) {
-			if ($row->entity_guid == $entity_guid) {
+			if ($row->entity_guid == $entity->guid) {
 				$this->clearQuerySpecs($this->rows[$id]);
 				$deleted = true;
 				unset($this->rows[$id]);

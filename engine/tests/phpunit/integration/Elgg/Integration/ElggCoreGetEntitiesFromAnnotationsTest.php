@@ -643,5 +643,4 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 			$this->assertEqual($a_e_map[$a->id], $a->owner_guid);
 		}
 	}
-
 }
