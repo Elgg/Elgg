@@ -222,9 +222,9 @@ class UpgradeService {
 			$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 		}
 		$upgrade_path = \Elgg\Project\Paths::sanitize($upgrade_path);
+		
 		$handle = opendir($upgrade_path);
-
-		if (!$handle) {
+		if ($handle === false) {
 			return false;
 		}
 
@@ -241,6 +241,7 @@ class UpgradeService {
 			}
 			$upgrade_files[] = $upgrade_file;
 		}
+		closedir($handle);
 
 		sort($upgrade_files);
 

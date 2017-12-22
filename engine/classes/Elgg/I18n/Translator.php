@@ -403,7 +403,7 @@ class Translator {
 		}
 
 		$handle = opendir($path);
-		if (!$handle) {
+		if ($handle === false) {
 			_elgg_services()->logger->error("Could not open language path: $path");
 			return false;
 		}
@@ -425,6 +425,7 @@ class Translator {
 				}
 			}
 		}
+		closedir($handle);
 
 		return $return;
 	}

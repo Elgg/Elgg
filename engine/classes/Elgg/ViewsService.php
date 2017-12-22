@@ -231,7 +231,7 @@ class ViewsService {
 		$view_base = rtrim($view_base, '/\\');
 
 		$handle = opendir($folder);
-		if (!$handle) {
+		if ($handle === false) {
 			return false;
 		}
 		
@@ -255,6 +255,7 @@ class ViewsService {
 				$this->setViewLocation($view, $viewtype, $path);
 			}
 		}
+		closedir($handle);
 
 		return true;
 	}
@@ -730,7 +731,7 @@ class ViewsService {
 
 		// but if they do, they have to be readable
 		$handle = opendir($view_dir);
-		if (!$handle) {
+		if ($handle === false) {
 			$failed_dir = $view_dir;
 			return false;
 		}
@@ -741,10 +742,12 @@ class ViewsService {
 			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
 				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
 					$failed_dir = $view_type_dir;
+					closedir($handle);
 					return false;
 				}
 			}
 		}
+		closedir($handle);
 
 		return true;
 	}
