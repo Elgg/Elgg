@@ -6,6 +6,9 @@ use Elgg\Mocks\Di\MockServiceProvider;
 use Elgg\Project\Paths;
 
 /**
+ * Note that this is a unit test case, but it needs the database table,
+ * so putting it with integration tests
+ *
  * @group Installer
  */
 class ElggInstallerTest extends \Elgg\UnitTestCase {
