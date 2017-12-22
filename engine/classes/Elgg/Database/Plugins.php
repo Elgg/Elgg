@@ -109,15 +109,17 @@ class Plugins {
 
 		$plugin_dirs = [];
 		$handle = opendir($dir);
-
-		if ($handle) {
-			while ($plugin_dir = readdir($handle)) {
-				// must be directory and not begin with a .
-				if (substr($plugin_dir, 0, 1) !== '.' && is_dir($dir . $plugin_dir)) {
-					$plugin_dirs[] = $plugin_dir;
-				}
+		if ($handle === false) {
+			return [];
+		}
+		
+		while ($plugin_dir = readdir($handle)) {
+			// must be directory and not begin with a .
+			if (substr($plugin_dir, 0, 1) !== '.' && is_dir($dir . $plugin_dir)) {
+				$plugin_dirs[] = $plugin_dir;
 			}
 		}
+		closedir($handle);
 
 		sort($plugin_dirs);
 
