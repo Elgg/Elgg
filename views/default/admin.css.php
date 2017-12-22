@@ -32,7 +32,7 @@ echo elgg_view('elements/helpers.css', $vars);
 	background: #f7f7f8;
 
 	.elgg-page-section > .elgg-inner {
-		max-width: 80rem;
+		max-width: 100rem;
 		margin: 0 auto;
 	}
 
@@ -301,6 +301,8 @@ echo elgg_view('elements/helpers.css', $vars);
 }
 
 #elgg-plugin-list {
+	position: relative;
+	
 	.elgg-plugin {
 		.elgg-state-error, .elgg-state-warning {
 			display: inline-block;

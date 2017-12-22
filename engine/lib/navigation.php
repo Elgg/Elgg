@@ -252,6 +252,7 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 	// register the title menu item
 	elgg_register_menu_item('title', [
 		'name' => $name,
+		'icon' => $name === 'add' ? 'plus' : '',
 		'href' => "$handler/$name/$owner->guid",
 		'text' => elgg_echo("$handler:$name"),
 		'link_class' => 'elgg-button elgg-button-action',
