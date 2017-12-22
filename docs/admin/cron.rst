@@ -49,7 +49,7 @@ Two commonly available programs for this are `GET` and `wget`. You will need
 to determine the location of one of these on your server. Your crontab also needs
 to specify the location of your website.
 
-.. literalinclude:: ../examples/crontab.example
+.. literalinclude:: ./crontab.example
 
 In the above example, change the ``ELGG`` and ``GET`` variables to match you server setup.
 If you have SSH access to your Linux servers, type ``crontab -e`` and add
