@@ -25,10 +25,6 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 			
 			Application::setInstance($app);
 
-			// Invalidate caches
-			$app->_services->dataCache->clear();
-			$app->_services->sessionCache->clear();
-
 			return $app;
 		}
 

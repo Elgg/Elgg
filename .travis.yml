@@ -1,8 +1,4 @@
 language: php
-php:
- - 7.0
- - 7.1
- - 7.2
 
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
@@ -23,10 +19,94 @@ branches:
 
 matrix:
   fast_finish: true
-  allow_failures:
-    - env: JOB_NAME=code_coverage
-  
   include:
+    # Lint and code style
+    - php: 7.0
+      env: JOB_NAME=lint VARIA=true
+      before_script:
+      after_script:
+      install:
+        - composer travis:install
+      script:
+        - bash .scripts/travis/check_commit_msgs.sh
+        - composer lint
+
+    # Build docs and check for errors
+    # Flags used here, not in `make html`:
+    #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
+    #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
+    - php: 7.0
+      env: JOB_NAME=docs_build VARIA=true
+      before_script:
+      after_script:
+      install:
+        - pip install --user "Sphinx==1.3.1"
+        - pip install --user "sphinx-intl"
+        - export PATH=$PATH:$HOME/.local/bin
+      script:
+        - composer docs:build
+
+    - php: 7.0
+      env:
+        - JOB_NAME=code_coverage_unit
+        - TEST_SUITE=unit
+      install:
+        - composer travis:install
+      before_script:
+      after_script:
+      script:
+        - phpdbg -qrr ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --testsuite $TEST_SUITE --coverage-clover $JOB_NAME.clover
+        - wget https://scrutinizer-ci.com/ocular.phar
+        - php ocular.phar code-coverage:upload --format=php-clover $JOB_NAME.clover
+
+    - php: 7.0
+      env:
+        - JOB_NAME=code_coverage_integration
+        - TEST_SUITE=integration
+      script:
+        - phpdbg -qrr ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --testsuite $TEST_SUITE --coverage-clover $JOB_NAME.clover
+        - wget https://scrutinizer-ci.com/ocular.phar
+        - php ocular.phar code-coverage:upload --format=php-clover $JOB_NAME.clover
+
+    - php: 7.0
+      env:
+        - JOB_NAME=code_coverage_plugins
+        - TEST_SUITE=plugins
+      script:
+        - phpdbg -qrr ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --testsuite $TEST_SUITE --coverage-clover $JOB_NAME.clover
+        - wget https://scrutinizer-ci.com/ocular.phar
+        - php ocular.phar code-coverage:upload --format=php-clover $JOB_NAME.clover
+
+    - php: 7.1
+      env: TEST_SUITE=unit
+      install:
+        - composer travis:install
+      before_script:
+      after_script:
+      script:
+        - ./vendor/bin/phpunit --testsuite $TEST_SUITE
+
+    - php: 7.2
+      env: TEST_SUITE=unit
+      install:
+        - composer travis:install
+      before_script:
+      after_script:
+      script:
+        - ./vendor/bin/phpunit --testsuite $TEST_SUITE
+
+    - php: 7.1
+      env: TEST_SUITE=integration
+
+    - php: 7.2
+      env: TEST_SUITE=integration
+
+    - php: 7.1
+      env: TEST_SUITE=plugins
+
+    - php: 7.2
+      env: TEST_SUITE=plugins
+
     # Build and test javascript
     - php: 7.0
       env: JOB_NAME=js_tests VARIA=true
@@ -35,46 +115,28 @@ matrix:
         - npm install -g yarn && yarn
       before_script:
         - composer travis:install
+      after_script:
       script:
         - yarn test
 
-    # Build docs and check for errors
-    # Flags used here, not in `make html`:
-    #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
-    #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
-    - php: 7.0
-      env: JOB_NAME=docs_build VARIA=true
-      install:
-        - pip install --user "Sphinx==1.3.1"
-        - pip install --user "sphinx-intl"
-        - export PATH=$PATH:$HOME/.local/bin
-      script:
-        - composer docs:build
-
-    # Memcached enabled
+    # Simpletests
     - php: 7.0
       env:
-        - JOB_NAME=memcache_php56 VARIA=true
-        - ELGG_MEMCACHE=1
-        - ELGG_MEMCACHE_SERVER1_HOST=127.0.0.1
-        - ELGG_MEMCACHE_SERVER1_PORT=11211
-        - ELGG_MEMCACHE_NAMESPACE_PREFIX=elgg_
-      before_install:
-        - phpenv config-rm xdebug.ini
-        - phpenv config-add ./.scripts/travis/memcached.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-        - composer travis:install-with-mysql
-        - php -f ./.scripts/travis/enable_plugins.php
-        - php ./elgg-cli database:seed --limit=5 -vv
+        - JOB_NAME=simpletests
+      script:
+        - php ./elgg-cli simpletest -p all -v
+
+    # Server
+    - php: 7.0
+      env: JOB_NAME=server
+      script:
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
-      before_script:
-        - php -f ./.scripts/is_memcached_enabled.php
+        - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
 
     # Test upgrade path from 2.3
     - php: 7.0
-      env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
+      env: JOB_NAME=upgrade_from_Elgg2
       install:
         - git fetch origin 2.3
         - git checkout FETCH_HEAD
@@ -87,30 +149,14 @@ matrix:
         - php -f ./.scripts/travis/enable_plugins.php
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
-
-    # Code coverage build for Scrutinizer
-    - php: 7.0
-      env: JOB_NAME=code_coverage
-      before_install:
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-        - composer travis:install-with-mysql
-        - php -f ./.scripts/travis/enable_plugins.php
-        - php ./elgg-cli database:seed --limit=5 -vv
-        - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
-        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
-        - ./vendor/bin/phpunit --coverage-clover=coverage.clover
-      after_script:
-        - php ./elgg-cli database:unseed -vv
-        - wget https://scrutinizer-ci.com/ocular.phar
-        - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+        - ./vendor/bin/phpunit
 
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
-  - memcached
   - mysql
+  - memcached
 
 before_install:
   - phpenv config-rm xdebug.ini
@@ -118,21 +164,14 @@ before_install:
 
 install:
   - composer travis:install-with-mysql
-  - bash .scripts/travis/check_commit_msgs.sh
-  - composer lint
   - php -f ./.scripts/travis/enable_plugins.php
-  - php ./elgg-cli database:seed --limit=5 -vv
-  - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
-  - sleep 3 # give Web server some time to bind to sockets, etc
+
+before_script:
+  - phpenv config-add ./.scripts/travis/memcached.ini
+  - php ./elgg-cli database:seed --limit=2 -vv
 
 script:
-  - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
-  - php ./elgg-cli simpletest -p all -v
-  # in this build, we want to make sure the test suites can bootstrap on their own
-  # combined test runner is executed in e2e builds
-  - ./vendor/bin/phpunit --testsuite unit
-  - ./vendor/bin/phpunit --testsuite integration
-  - ./vendor/bin/phpunit --testsuite plugins
+  - ./vendor/bin/phpunit --testsuite $TEST_SUITE
 
 after_script:
   - php ./elgg-cli database:unseed -vv
@@ -157,6 +196,10 @@ env:
     - ELGG_DB_USER=root
     - ELGG_DB_PASS=password
     - ELGG_WWWROOT=http://localhost:8888/
+    - ELGG_MEMCACHE=1
+    - ELGG_MEMCACHE_SERVER1_HOST=127.0.0.1
+    - ELGG_MEMCACHE_SERVER1_PORT=11211
+    - ELGG_MEMCACHE_NAMESPACE_PREFIX=elgg_
   secure: "fdpCjdC0Qp/ZJqtrCHE4I/tHXWF1sORftm6khd6geqK7d4qWzIh6HzNN2BlF+2m4nyuyxo2wzPm/oGoqogVpBgrzpQ7SZl7h2/wzgs2C/k39sFGyDisLesTM5DhBDJWcomyqtcnQmKn340Z9KOxiHAt4FOj2FZVN5+tIO5j3Cks="
 
 ## Cache dependencies

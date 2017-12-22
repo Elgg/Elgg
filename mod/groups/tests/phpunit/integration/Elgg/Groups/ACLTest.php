@@ -18,9 +18,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	protected $user;
 	
 	public function up() {
-		if (!elgg_is_active_plugin('groups')) {
-			$this->markTestSkipped();
-		}
+		self::createApplication(true);
 
 		$this->user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($this->user);
