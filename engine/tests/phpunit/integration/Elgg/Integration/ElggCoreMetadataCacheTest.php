@@ -36,6 +36,9 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 	}
 
 	public function testHas() {
+		$this->cache->clear(1);
+		$this->cache->clear(2);
+		$this->cache->clear(3);
 
 		$this->cache->inject(1, ['foo1' => 'bar']);
 		$this->cache->inject(2, []);
@@ -47,6 +50,9 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 
 	public function testLoad() {
 
+		$this->cache->clear(1);
+		$this->cache->clear(2);
+
 		$this->cache->inject(1, ['foo1' => 'bar']);
 		$this->cache->inject(2, []);
 
@@ -56,6 +62,9 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 	}
 
 	public function testDirectInvalidation() {
+
+		$this->cache->clear(1);
+		$this->cache->clear(2);
 
 		$this->cache->inject(1, ['foo1' => 'bar']);
 		$this->cache->inject(2, ['foo2' => 'bar']);
@@ -87,7 +96,7 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		$object2 = $this->createObject();
 		$guid1 = $object1->guid;
 		$guid2 = $object2->guid;
-		
+
 		// elgg_delete_metadata
 		$this->cache->inject($guid1, ['foo' => 'bar']);
 		$this->cache->inject($guid2, ['bing' => 'bar']);

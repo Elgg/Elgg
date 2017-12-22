@@ -22,6 +22,8 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 	protected $entities;
 
 	public function up() {
+		self::createApplication(true);
+
 		$this->entity = $this->createObject();
 		
 		$this->unsaved_entity = new ElggObject();
