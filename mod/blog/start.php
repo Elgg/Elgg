@@ -212,7 +212,7 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 
 	$dates = array_reverse($dates);
 
-	if (elgg_instanceof($page_owner, 'user')) {
+	if ($page_owner instanceof ElggUser) {
 		$url_segment = 'blog/archive/' . $page_owner->username;
 	} else {
 		$url_segment = 'blog/group/' . $page_owner->getGUID() . '/archive';

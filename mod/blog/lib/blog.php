@@ -45,7 +45,7 @@ function blog_get_page_content_list($container_guid = null) {
 
 		if ($current_user && ($container_guid == $current_user->guid)) {
 			$return['filter_context'] = 'mine';
-		} else if (elgg_instanceof($container, 'group')) {
+		} else if ($container instanceof ElggGroup) {
 			$return['filter'] = false;
 		} else {
 			// do not show button or select a tab when viewing someone else's posts
@@ -80,7 +80,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	elgg_set_page_owner_guid($owner_guid);
 
 	$crumbs_title = $owner->name;
-	if (elgg_instanceof($owner, 'user')) {
+	if ($owner instanceof ElggUser) {
 		$url = "blog/owner/{$owner->username}";
 	} else {
 		$url = "blog/group/$owner->guid/all";
@@ -156,7 +156,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = null) {
 
 		$title = elgg_echo('blog:edit');
 
-		if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
+		if ($blog instanceof ElggBlog && $blog->canEdit()) {
 			$vars['entity'] = $blog;
 
 			$title .= ": \"$blog->title\"";

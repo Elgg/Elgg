@@ -6,7 +6,7 @@
 $guid = (int) get_input('guid');
 
 $report = get_entity($guid);
-if (!$report || $report->getSubtype() !== 'reported_content' || !$report->canEdit()) {
+if (!$report instanceof ElggReportedContent || !$report->canEdit()) {
 	return elgg_error_response(elgg_echo('reportedcontent:notarchived'));
 }
 

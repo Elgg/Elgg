@@ -6,7 +6,7 @@ if (elgg_in_context('default_widgets')) {
 }
 
 $widget = elgg_extract('entity', $vars);
-if (!elgg_instanceof($widget, 'object', 'widget')) {
+if (!$widget instanceof ElggWidget) {
 	return;
 }
 

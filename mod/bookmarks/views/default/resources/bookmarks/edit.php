@@ -9,7 +9,7 @@ elgg_gatekeeper();
 $bookmark_guid = elgg_extract('guid', $vars);
 $bookmark = get_entity($bookmark_guid);
 
-if (!elgg_instanceof($bookmark, 'object', 'bookmarks') || !$bookmark->canEdit()) {
+if (!$bookmark instanceof ElggBookmark || !$bookmark->canEdit()) {
 	register_error(elgg_echo('bookmarks:unknown_bookmark'));
 	forward(REFERRER);
 }

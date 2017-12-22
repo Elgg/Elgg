@@ -8,7 +8,7 @@ $upper = elgg_extract('upper', $vars);
 
 $group = get_entity($group_guid);
 
-if (!elgg_instanceof($group, 'group')) {
+if (!$group instanceof ElggGroup) {
 	forward('', '404');
 }
 

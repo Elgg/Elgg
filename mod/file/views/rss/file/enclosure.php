@@ -5,7 +5,7 @@
  * @uses $vars['entity']
  */
 
-if (elgg_instanceof($vars['entity'], 'object', 'file') && $vars['entity']->canDownload()) {
+if ($vars['entity'] instanceof ElggFile && $vars['entity']->canDownload()) {
 	$download_url = $vars['entity']->getDownloadURL();
 	$size = $vars['entity']->getSize();
 	$mime_type = $vars['entity']->getMimeType();

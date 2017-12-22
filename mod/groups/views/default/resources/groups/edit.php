@@ -8,7 +8,7 @@ $guid = elgg_extract('guid', $vars);
 $title = elgg_echo("groups:edit");
 $group = get_entity($guid);
 
-if (elgg_instanceof($group, 'group') && $group->canEdit()) {
+if ($group instanceof ElggGroup && $group->canEdit()) {
 	elgg_set_page_owner_guid($group->getGUID());
 	elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 	$content = elgg_view("groups/edit", ['entity' => $group]);

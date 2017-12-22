@@ -18,7 +18,7 @@ elgg_group_gatekeeper();
 elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
 $crumbs_title = $owner->getDisplayName();
-if (elgg_instanceof($owner, 'group')) {
+if ($owner instanceof ElggGroup) {
 	elgg_push_breadcrumb($crumbs_title, "file/group/$owner->guid/all");
 } else {
 	elgg_push_breadcrumb($crumbs_title, "file/owner/$owner->username");

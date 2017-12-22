@@ -352,7 +352,7 @@ function _elgg_river_test($hook, $type, $value) {
  */
 function _elgg_river_disable($event, $type, $entity) {
 
-	if (!elgg_instanceof($entity)) {
+	if (!$entity instanceof ElggEntity) {
 		return;
 	}
 
@@ -381,7 +381,7 @@ QUERY;
  */
 function _elgg_river_enable($event, $type, $entity) {
 
-	if (!elgg_instanceof($entity)) {
+	if (!$entity instanceof ElggEntity) {
 		return;
 	}
 

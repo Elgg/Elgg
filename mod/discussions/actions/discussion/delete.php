@@ -6,7 +6,7 @@
 $topic_guid = (int) get_input('guid');
 $topic = get_entity($topic_guid);
 
-if (!elgg_instanceof($topic, 'object', 'discussion')) {
+if (!$topic instanceof ElggDiscussion) {
 	return elgg_error_response(elgg_echo('discussion:error:notdeleted'));
 }
 

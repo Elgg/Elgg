@@ -24,7 +24,7 @@ $guid = (int) get_input('guid');
 
 if ($guid) {
 	$entity = get_entity($guid);
-	if (elgg_instanceof($entity, 'object', 'blog') && $entity->canEdit()) {
+	if ($entity instanceof ElggBlog && $entity->canEdit()) {
 		$blog = $entity;
 	} else {
 		return elgg_error_response(elgg_echo('blog:error:post_not_found'));
@@ -32,7 +32,7 @@ if ($guid) {
 
 	// save some data for revisions once we save the new edit
 	$revision_text = $blog->description;
-	$new_post = $blog->new_post;
+	$new_post = (bool) $blog->new_post;
 } else {
 	$blog = new \ElggBlog();
 	$new_post = true;

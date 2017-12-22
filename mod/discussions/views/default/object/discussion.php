@@ -5,9 +5,8 @@
 
 $full = elgg_extract('full_view', $vars, false);
 
-/* @var $topic ElggObject */
 $topic = elgg_extract('entity', $vars, false);
-if (!elgg_instanceof($topic, 'object', 'discussion')) {
+if (!$topic instanceof ElggDiscussion) {
 	return;
 }
 

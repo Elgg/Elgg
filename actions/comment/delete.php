@@ -6,7 +6,7 @@
 $comment_guid = (int) get_input('guid');
 $comment = get_entity($comment_guid);
 
-if (!elgg_instanceof($comment, 'object', 'comment') || !$comment->canEdit()) {
+if (!$comment instanceof ElggComment || !$comment->canEdit()) {
 	return elgg_error_response(elgg_echo('generic_comment:notfound'));
 }
 

@@ -99,7 +99,7 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 		forward($fallback->getURL());
 	}
 
-	if (!elgg_instanceof($comment, 'object', 'comment')) {
+	if (!$comment instanceof ElggComment) {
 		$fail();
 	}
 
@@ -154,7 +154,7 @@ function _elgg_comment_url_handler($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var \ElggObject $entity */
 
-	if (!elgg_instanceof($entity, 'object', 'comment') || !$entity->getOwnerEntity()) {
+	if (!$entity instanceof ElggComment || !$entity->getOwnerEntity()) {
 		// not a comment or has no owner
 
 		// @todo handle anonymous comments
@@ -209,7 +209,7 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	$user = $params['user'];
 	
-	if (elgg_instanceof($entity, 'object', 'comment') && $user) {
+	if ($entity instanceof ElggComment && $user) {
 		return $entity->getOwnerGUID() == $user->getGUID();
 	}
 	
@@ -359,8 +359,7 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 function _elgg_comments_prepare_content_owner_notification($hook, $type, $returnvalue, $params) {
 	
 	$comment = elgg_extract('object', $params);
-	if (!elgg_instanceof($comment, 'object', 'comment')) {
-		// can't use instanceof ElggComment as discussion replies inherit
+	if (!$comment instanceof ElggComment) {
 		return;
 	}
 	
@@ -405,8 +404,7 @@ function _elgg_comments_prepare_content_owner_notification($hook, $type, $return
 function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params) {
 	
 	$comment = elgg_extract('object', $params);
-	if (!elgg_instanceof($comment, 'object', 'comment')) {
-		// can't use instanceof ElggComment as discussion replies inherit
+	if (!$comment instanceof ElggComment) {
 		return;
 	}
 	

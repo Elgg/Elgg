@@ -88,7 +88,7 @@ function pages_prepare_parent_breadcrumbs($page) {
  * @return array
  */
 function pages_get_navigation_tree($container) {
-	if (!elgg_instanceof($container)) {
+	if (!$container instanceof ElggEntity) {
 		return;
 	}
 

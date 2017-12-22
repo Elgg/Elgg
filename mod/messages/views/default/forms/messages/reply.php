@@ -6,7 +6,7 @@
  */
 
 $message = elgg_extract('message', $vars);
-if (empty($message)) {
+if (!$message instanceof ElggMessage) {
 	return;
 }
 

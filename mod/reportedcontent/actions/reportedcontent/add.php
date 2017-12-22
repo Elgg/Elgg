@@ -15,8 +15,7 @@ if (!$title || !$address) {
 	$fail();
 }
 
-$report = new ElggObject;
-$report->subtype = 'reported_content';
+$report = new ElggReportedContent();
 $report->owner_guid = elgg_get_logged_in_user_guid();
 $report->title = $title;
 $report->address = $address;

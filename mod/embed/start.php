@@ -49,7 +49,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	$url = 'embed';
 
 	$page_owner = elgg_get_page_owner_entity();
-	if (elgg_instanceof($page_owner, 'group') && $page_owner->isMember()) {
+	if ($page_owner instanceof ElggGroup && $page_owner->isMember()) {
 		$url = elgg_http_add_url_query_elements($url, [
 			'container_guid' => $page_owner->guid,
 		]);
@@ -116,7 +116,7 @@ function embed_page_handler($page) {
 	if ($container_guid) {
 		$container = get_entity($container_guid);
 
-		if (elgg_instanceof($container, 'group') && $container->isMember()) {
+		if ($container instanceof ElggGroup && $container->isMember()) {
 			// embedding inside a group so save file to group files
 			elgg_set_page_owner_guid($container_guid);
 		}

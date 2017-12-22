@@ -243,7 +243,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 function file_set_url($hook, $type, $url, $params) {
 	
 	$entity = elgg_extract('entity', $params);
-	if (!elgg_instanceof($entity, 'object', 'file')) {
+	if (!$entity instanceof ElggFile) {
 		return;
 	}
 	
@@ -266,7 +266,7 @@ function file_set_url($hook, $type, $url, $params) {
 function file_set_icon_url($hook, $type, $url, $params) {
 	
 	$file = elgg_extract('entity', $params);
-	if (!elgg_instanceof($file, 'object', 'file')) {
+	if (!$file instanceof ElggFile) {
 		return;
 	}
 	
