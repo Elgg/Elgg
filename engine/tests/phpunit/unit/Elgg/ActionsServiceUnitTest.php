@@ -268,6 +268,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testActionGatekeeper() {
 
+		$this->createService();
+
 		$dt = new \DateTime();
 		$this->actions->setCurrentTime($dt);
 

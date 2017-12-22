@@ -234,7 +234,7 @@ class ViewsService {
 		if (!$handle) {
 			return false;
 		}
-		
+
 		while ($entry = readdir($handle)) {
 			if ($entry[0] === '.') {
 				continue;

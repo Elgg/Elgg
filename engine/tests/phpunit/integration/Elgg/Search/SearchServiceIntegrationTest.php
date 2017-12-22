@@ -10,6 +10,8 @@ use Elgg\IntegrationTestCase;
 class SearchServiceIntegrationTest extends IntegrationTestCase {
 
 	public function up() {
+		self::createApplication(true);
+
 		elgg_register_plugin_hook_handler('search:fields', 'entities', [$this, 'setupFields']);
 	}
 

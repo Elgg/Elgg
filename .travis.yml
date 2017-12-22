@@ -25,7 +25,7 @@ matrix:
   fast_finish: true
   allow_failures:
     - env: JOB_NAME=code_coverage
-  
+
   include:
     # Build and test javascript
     - php: 7.0
