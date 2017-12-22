@@ -18,7 +18,7 @@
         "mrclay/minify": "~2.0",
         "tedivm/stash": "0.14.*",
         "roave/security-advisories": "dev-master",
-        "elgg/login_as": "~1.9",
+        "elgg/login_as": "~2.0.0",
         "elgg/data_views": "~1.0",
         "zendframework/zend-mail": "~2.4",
         "league/flysystem": "~1.0",

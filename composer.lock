@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bdbb613ebd0adfb277fcf906899862b6",
+    "content-hash": "294ec47f8c6f1d03a917c80164f4218c",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -213,7 +213,7 @@
                 "MIT"
             ],
             "description": "A modern alternative to CSS resets",
-            "time": "2017-05-02T18:14:41+00:00"
+            "time": "2017-05-02 18:14:41"
         },
         {
             "name": "bower-asset/requirejs",
@@ -1043,20 +1043,23 @@
         },
         {
             "name": "elgg/login_as",
-            "version": "1.9.2",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/login_as.git",
-                "reference": "6cade385000e726875aba74498c28e0121222a1c"
+                "reference": "5ae8c4f1a347eb3c9c8913fbb7afad254c2c2c3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/login_as/zipball/6cade385000e726875aba74498c28e0121222a1c",
-                "reference": "6cade385000e726875aba74498c28e0121222a1c",
+                "url": "https://api.github.com/repos/Elgg/login_as/zipball/5ae8c4f1a347eb3c9c8913fbb7afad254c2c2c3a",
+                "reference": "5ae8c4f1a347eb3c9c8913fbb7afad254c2c2c3a",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": ">=1.0.8"
+                "composer/installers": "^1.0.8"
+            },
+            "conflict": {
+                "elgg/elgg": "<3.0"
             },
             "type": "elgg-plugin",
             "notification-url": "https://packagist.org/downloads/",
@@ -1074,7 +1077,7 @@
                 "elgg",
                 "plugin"
             ],
-            "time": "2015-09-03T12:18:17+00:00"
+            "time": "2017-12-21T16:35:04+00:00"
         },
         {
             "name": "fortawesome/font-awesome",
