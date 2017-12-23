@@ -188,3 +188,11 @@ define('ELGG_CACHE_BLACK_HOLE', 1);
 define('ELGG_CACHE_RUNTIME', 2);
 define('ELGG_CACHE_FILESYSTEM', 4);
 define('ELGG_CACHE_PERSISTENT', 8);
+
+/**
+ * elgg_call() flags
+ */
+define('ELGG_IGNORE_ACCESS', 1);
+define('ELGG_ENFORCE_ACCESS', 2);
+define('ELGG_SHOW_DISABLED_ENTITIES', 4);
+define('ELGG_HIDE_DISABLED_ENTITIES', 8);

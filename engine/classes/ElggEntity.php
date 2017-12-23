@@ -438,13 +438,13 @@ abstract class ElggEntity extends \ElggData implements
 				// remove current metadata if needed
 				// need to remove access restrictions right now to delete
 				// because this is the expected behavior
-				$ia = elgg_set_ignore_access(true);
-				$delete_result = elgg_delete_metadata([
-					'guid' => $this->guid,
-					'metadata_name' => $name,
-					'limit' => false,
-				]);
-				elgg_set_ignore_access($ia);
+				$delete_result = elgg_call(ELGG_IGNORE_ACCESS, function() use ($name) {
+					return elgg_delete_metadata([
+						'guid' => $this->guid,
+						'metadata_name' => $name,
+						'limit' => false,
+					]);
+				});
 
 				if (false === $delete_result) {
 					return false;
@@ -696,19 +696,18 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function deleteOwnedAnnotations($name = null) {
 		// access is turned off for this because they might
-		// no longer have access to an entity they created annotations on.
-		$ia = elgg_set_ignore_access(true);
-		$options = [
-			'annotation_owner_guid' => $this->guid,
-			'limit' => 0
-		];
-		if ($name) {
-			$options['annotation_name'] = $name;
-		}
+		// no longer have access to an entity they created annotations on
 
-		$r = elgg_delete_annotations($options);
-		elgg_set_ignore_access($ia);
-		return $r;
+		$flags = ELGG_IGNORE_ACCESS;
+		$callback = function() use ($name) {
+			return elgg_delete_annotations([
+				'annotation_owner_guid' => $this->guid,
+				'limit' => 0,
+				'annotation_name' => $name,
+			]);
+		};
+
+		return elgg_call($flags, $callback);
 	}
 
 	/**
@@ -1295,9 +1294,9 @@ abstract class ElggEntity extends \ElggData implements
 			$guid = $this->create();
 			if ($guid && !_elgg_services()->hooks->getEvents()->trigger('create', $this->type, $this)) {
 				// plugins that return false to event don't need to override the access system
-				$ia = elgg_set_ignore_access(true);
-				$this->delete();
-				elgg_set_ignore_access($ia);
+				elgg_call(ELGG_IGNORE_ACCESS, function() {
+					return $this->delete();
+				});
 				return false;
 			}
 		}
@@ -1622,38 +1621,34 @@ abstract class ElggEntity extends \ElggData implements
 		$guid = (int) $this->guid;
 
 		if ($recursive) {
-			// Only disable enabled subentities
-			$hidden = access_get_show_hidden_status();
-			access_show_hidden_entities(false);
+			$flags = ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES;
+			$callback = function () use ($guid, $reason) {
+				$base_options = [
+					'wheres' => [
+						"e.guid != $guid",
+					],
+					'limit' => false,
+				];
 
-			$ia = elgg_set_ignore_access(true);
+				foreach (['owner_guid', 'container_guid'] as $db_column) {
+					$options = $base_options;
+					$options[$db_column] = $guid;
 
-			$base_options = [
-				'wheres' => [
-					"e.guid != $guid",
-				],
-				'limit' => false,
-			];
+					$subentities = new \ElggBatch('elgg_get_entities', $options);
+					$subentities->setIncrementOffset(false);
 
-			foreach (['owner_guid', 'container_guid'] as $db_column) {
-				$options = $base_options;
-				$options[$db_column] = $guid;
-
-				$subentities = new \ElggBatch('elgg_get_entities', $options);
-				$subentities->setIncrementOffset(false);
-
-				foreach ($subentities as $subentity) {
-					/* @var $subentity \ElggEntity */
-					if (!$subentity->isEnabled()) {
-						continue;
+					foreach ($subentities as $subentity) {
+						/* @var $subentity \ElggEntity */
+						if (!$subentity->isEnabled()) {
+							continue;
+						}
+						add_entity_relationship($subentity->guid, 'disabled_with', $guid);
+						$subentity->disable($reason);
 					}
-					add_entity_relationship($subentity->guid, 'disabled_with', $guid);
-					$subentity->disable($reason);
 				}
-			}
+			};
 
-			access_show_hidden_entities($hidden);
-			elgg_set_ignore_access($ia);
+			elgg_call($flags, $callback);
 		}
 
 		$this->disableAnnotations();
@@ -1706,35 +1701,36 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		// Override access only visible entities
-		$old_access_status = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$flags = ELGG_SHOW_DISABLED_ENTITIES;
+		$callback = function() use ($guid, $recursive) {
+			$db = $this->getDatabase();
+			$result = $db->updateData("
+				UPDATE {$db->prefix}entities
+				SET enabled = 'yes'
+				WHERE guid = $guid
+			");
 
-		$db = $this->getDatabase();
-		$result = $db->updateData("
-			UPDATE {$db->prefix}entities
-			SET enabled = 'yes'
-			WHERE guid = $guid
-		");
+			$this->deleteMetadata('disable_reason');
+			$this->enableAnnotations();
 
-		$this->deleteMetadata('disable_reason');
-		$this->enableAnnotations();
+			if ($recursive) {
+				$disabled_with_it = elgg_get_entities([
+					'relationship' => 'disabled_with',
+					'relationship_guid' => $guid,
+					'inverse_relationship' => true,
+					'limit' => 0,
+				]);
 
-		if ($recursive) {
-			$disabled_with_it = elgg_get_entities([
-				'relationship' => 'disabled_with',
-				'relationship_guid' => $guid,
-				'inverse_relationship' => true,
-				'limit' => 0,
-			]);
-
-			foreach ($disabled_with_it as $e) {
-				$e->enable();
-				remove_entity_relationship($e->guid, 'disabled_with', $guid);
+				foreach ($disabled_with_it as $e) {
+					$e->enable();
+					remove_entity_relationship($e->guid, 'disabled_with', $guid);
+				}
 			}
-		}
 
-		access_show_hidden_entities($old_access_status);
+			return $result;
+		};
+
+		$result = elgg_call($flags, $callback);
 
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
