@@ -7,6 +7,8 @@
  * @subpackage Logging
  */
 
+use Elgg\SystemLog\SystemLogInsert;
+
 /**
  * Retrieve the system log based on a number of parameters.
  *
@@ -73,7 +75,7 @@ function system_log_get_log_entry($entry_id) {
 	$qb->select('*');
 	$qb->where($qb->compare('id', '=', $entry_id, ELGG_VALUE_INTEGER));
 
-	return _elgg_services()->db->getDataRow($qb);
+	return get_data_row($qb);
 }
 
 /**
@@ -137,8 +139,11 @@ function system_log_get_object_from_log_entry($entry) {
  * @return void
  */
 function system_log($object, $event) {
-	$insert = new \Elgg\SystemLog\SystemLogInsert();
-	return $insert->insert($object, $event);
+	// PHPDI creates the shared cache if not exists already
+	// PHPDI creates new insert (passing in cache), calls our function
+	elgg()->dic->call(function (SystemLogInsert $insert) use ($object, $event) {
+		$insert->insert($object, $event);
+	});
 }
 
 /**

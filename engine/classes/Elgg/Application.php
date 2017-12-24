@@ -3,6 +3,8 @@
 namespace Elgg;
 
 use ConfigurationException;
+use DI\ContainerBuilder;
+use Doctrine\Common\Cache\ApcuCache;
 use Doctrine\DBAL\Connection;
 use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
@@ -26,8 +28,9 @@ use SecurityException;
  *
  * @since 2.0.0
  *
- * @property-read \Elgg\Menu\Service $menus
- * @property-read \Elgg\Views\TableColumn\ColumnFactory $table_columns
+ * @property-read \DI\Container $dic Service container
+ * @property-read \Elgg\Menu\Service $menus Menu service
+ * @property-read \Elgg\Views\TableColumn\ColumnFactory $table_columns Table columns service
  */
 class Application {
 
@@ -56,6 +59,7 @@ class Application {
 	 */
 	private static $public_services = [
 		//'config' => true,
+		'dic' => true,
 		'menus' => true,
 		'table_columns' => true,
 	];
@@ -73,6 +77,7 @@ class Application {
 	 * Get the global Application instance. If not set, it's auto-created and wired to $CONFIG.
 	 *
 	 * @return Application|null
+	 * @throws ConfigurationException
 	 */
 	public static function getInstance() {
 		if (self::$_instance === null) {
@@ -152,6 +157,7 @@ class Application {
 	 * Start and boot the core
 	 *
 	 * @return self
+	 * @throws ConfigurationException
 	 */
 	public static function start() {
 		$app = self::getInstance();
@@ -181,6 +187,11 @@ class Application {
 	 *
 	 * @return void
 	 * @throws InstallationException
+	 * @throws \ClassException
+	 * @throws \DatabaseException
+	 * @throws \InvalidParameterException
+	 * @throws \PluginException
+	 * @throws \SecurityException
 	 */
 	public function bootCore() {
 		$config = $this->_services->config;
@@ -218,26 +229,44 @@ class Application {
 		// Connect to database, load language files, load configuration, init session
 		$this->_services->boot->boot($this->_services);
 
+		$dic_builder = new ContainerBuilder();
+		$dic_builder->useAnnotations(false);
+		if (is_callable('apcu_fetch')) {
+			$dic_cache = new ApcuCache();
+			$dic_builder->setDefinitionCache($dic_cache);
+			$events->registerHandler('cache:flush', 'system', function () use ($dic_cache) {
+				$dic_cache->flushAll();
+			});
+		}
+
+		// add core services
+		$dic_builder->addDefinitions(Paths::elgg() . 'engine/elgg-services.php');
+
 		elgg_views_boot();
 
 		// Load the plugins that are active
-		$this->_services->plugins->load();
+		$this->_services->plugins->load($dic_builder);
 
 		if (Paths::project() != Paths::elgg()) {
 			// Elgg is installed as a composer dep, so try to treat the root directory
 			// as a custom plugin that is always loaded last and can't be disabled...
 			if (!$config->system_cache_loaded) {
 				// configure view locations for the custom plugin (not Elgg core)
-				$viewsFile = Paths::project() . 'views.php';
-				if (is_file($viewsFile)) {
-					$viewsSpec = Includer::includeFile($viewsFile);
-					if (is_array($viewsSpec)) {
-						$this->_services->views->mergeViewsSpec($viewsSpec);
+				$file = Paths::project() . 'views.php';
+				if (is_file($file)) {
+					$spec = Includer::includeFile($file);
+					if (is_array($spec)) {
+						$this->_services->views->mergeViewsSpec($spec);
 					}
 				}
 
 				// find views for the custom plugin (not Elgg core)
 				$this->_services->views->registerPluginViews(Paths::project());
+			}
+
+			$file = Paths::project() . 'elgg-services.php';
+			if (is_file($file)) {
+				$dic_builder->addDefinitions($file);
 			}
 
 			if (!$config->i18n_loaded_from_cache) {
@@ -255,6 +284,8 @@ class Application {
 		$this->_services->views->clampViewtypeToPopulatedViews();
 
 		$this->allowPathRewrite();
+
+		$this->_services->setValue('dic', $dic_builder->build());
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->trigger('plugins_boot', 'system');

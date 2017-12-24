@@ -57,6 +57,7 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 
 		$skipped_names = [
 				//'service' => 'reason can't be loaded in phpunit',
+			'dic' => 'Gets built after plugins start',
 		];
 
 		if (isset($skipped_names[$name])) {
