@@ -814,15 +814,13 @@ function elgg_get_ordered_event_handlers($event, $type) {
 }
 
 /**
- * Display or log a message.
+ * Log a message.
  *
  * If $level is >= to the debug setting in {@link $CONFIG->debug}, the
  * message will be sent to {@link elgg_dump()}.  Messages with lower
  * priority than {@link $CONFIG->debug} are ignored.
  *
- * Outputs all levels but NOTICE to screen by default.
- *
- * @note No messages will be displayed unless debugging has been enabled.
+ * @note Use the developers plugin to display logs
  *
  * @param string $message User message
  * @param string $level   NOTICE | WARNING | ERROR
@@ -847,21 +845,19 @@ function elgg_log($message, $level = 'NOTICE') {
 }
 
 /**
- * Logs or displays $value.
- *
- * If $to_screen is true, $value is displayed to screen.  Else,
- * it is handled by PHP's {@link error_log()} function.
+ * Logs $value to PHP's {@link error_log()}
  *
  * A {@elgg_plugin_hook debug log} is called.  If a handler returns
  * false, it will stop the default logging method.
  *
- * @param mixed $value     The value
- * @param bool  $to_screen Display to screen?
+ * @note Use the developers plugin to display logs
+ *
+ * @param mixed $value The value
  * @return void
  * @since 1.7.0
  */
-function elgg_dump($value, $to_screen = true) {
-	_elgg_services()->logger->dump($value, $to_screen);
+function elgg_dump($value) {
+	_elgg_services()->logger->dump($value);
 }
 
 /**
@@ -1384,7 +1380,6 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  */
 function _elgg_shutdown_hook() {
 	try {
-		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);

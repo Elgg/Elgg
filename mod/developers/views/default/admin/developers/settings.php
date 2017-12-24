@@ -3,6 +3,14 @@
  * Developer settings
  */
 
+$config = _elgg_config();
+$debug_value = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
+
+$debug_help = elgg_echo('developers:help:debug_level');
+if ($config->hasInitialValue('debug')) {
+	$debug_help .= '<br>' . elgg_echo('admin:settings:in_settings_file');
+}
+
 $data = [
 	'simple_cache' => [
 		'#type' => 'checkbox',
@@ -28,7 +36,9 @@ $data = [
 
 	'debug_level' => [
 		'#type' => 'select',
-		'value' => elgg_get_config('debug'),
+		'#help' => $debug_help,
+		'value' => $debug_value,
+		'disabled' => $config->hasInitialValue('debug'),
 		'options_values' => [
 			'' => elgg_echo('developers:debug:off'),
 			'ERROR' => elgg_echo('developers:debug:error'),

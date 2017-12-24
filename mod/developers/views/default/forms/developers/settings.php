@@ -23,7 +23,9 @@ foreach ($vars['data'] as $name => $info) {
 		$info['#label'] = elgg_echo("developers:label:$name", $echo_vars);
 	}
 	
-	$info['#help'] = elgg_echo("developers:help:$name");
+	if (empty($info['#help'])) {
+		$info['#help'] = elgg_echo("developers:help:$name");
+	}
 	echo elgg_view_field($info);
 }
 

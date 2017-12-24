@@ -3,8 +3,11 @@
  * Advanced site settings, debugging section.
  */
 
+$config = _elgg_config();
+$value = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
+
 $help = elgg_echo('installation:debug');
-if (_elgg_config()->hasInitialValue('debug')) {
+if ($config->hasInitialValue('debug')) {
 	$help .= '<br>' . elgg_echo('admin:settings:in_settings_file');
 }
 
@@ -20,8 +23,8 @@ $body = elgg_view_field([
 	'name' => 'debug',
 	'#label' => elgg_echo('installation:debug:label'),
 	'#help' => $help,
-	'value' => elgg_get_config('debug'),
-	'disabled' => _elgg_config()->hasInitialValue('debug'),
+	'value' => $value,
+	'disabled' => $config->hasInitialValue('debug'),
 ]);
 
 echo elgg_view_module('inline', elgg_echo('admin:legend:debug'), $body, ['id' => 'elgg-settings-advanced-debugging']);
