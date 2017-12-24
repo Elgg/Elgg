@@ -1,6 +1,8 @@
 <?php
 
 namespace Elgg\Application;
+use Elgg\Application;
+use Elgg\Di\ApplicationContainer;
 
 /**
  * @group UnitTests
@@ -14,7 +16,7 @@ class CacheHandlerUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		$request = _elgg_services()->request;
-		$this->handler = new CacheHandler(_elgg_config(), $request, true);
+		$this->handler = new CacheHandler(ApplicationContainer::getInstance()->application);
 	}
 
 	public function down() {

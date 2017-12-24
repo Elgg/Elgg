@@ -7,10 +7,10 @@ use Elgg\Application;
 use Elgg\Config;
 use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Http\Request;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Elgg\Security\Base64Url;
 use Elgg\Security\HmacFactory;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * File server handler
@@ -32,14 +32,17 @@ class ServeFileHandler {
 	private $config;
 
 	/**
+	 * @var Application
+	 */
+	protected $application;
+
+	/**
 	 * Constructor
 	 *
-	 * @param HmacFactory $hmac   HMAC service
-	 * @param Config      $config Config service
+	 * @param Application $application Application
 	 */
-	public function __construct(HmacFactory $hmac, Config $config) {
-		$this->hmac = $hmac;
-		$this->config = $config;
+	public function __construct(Application $application) {
+		$this->application = $application;
 	}
 
 	/**
@@ -76,7 +79,7 @@ class ServeFileHandler {
 		}
 		ksort($hmac_data);
 
-		$hmac = $this->hmac->getHmac($hmac_data);
+		$hmac = $this->application->_services->hmac->getHmac($hmac_data);
 		if (!$hmac->matchesToken($mac)) {
 			return $response->setStatusCode(403)->setContent('HMAC mistmatch');
 		}
@@ -86,7 +89,7 @@ class ServeFileHandler {
 			$path_from_dataroot = Base64Url::decode(substr($path_from_dataroot, 1));
 		}
 
-		$filenameonfilestore = "{$this->config->dataroot}{$path_from_dataroot}";
+		$filenameonfilestore = "{$this->application->_services->config->dataroot}{$path_from_dataroot}";
 
 		if (!is_readable($filenameonfilestore)) {
 			return $response->setStatusCode(404)->setContent('File not found');
@@ -116,17 +119,17 @@ class ServeFileHandler {
 			'Content-Type' => (new MimeTypeDetector())->getType($filenameonfilestore),
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
-		
-		$sendfile_type = $this->config->x_sendfile_type;
+
+		$sendfile_type = $this->application->_services->config->x_sendfile_type;
 		if ($sendfile_type) {
 			$request->headers->set('X-Sendfile-Type', $sendfile_type);
 
-			$mapping = (string) $this->config->x_accel_mapping;
+			$mapping = (string) $this->application->_services->config->x_accel_mapping;
 			$request->headers->set('X-Accel-Mapping', $mapping);
 
 			$response->trustXSendfileTypeHeader();
 		}
-		
+
 		$response->prepare($request);
 
 		if (empty($expires)) {
@@ -146,7 +149,7 @@ class ServeFileHandler {
 	 * @return string
 	 */
 	private function getCookieValue(Request $request) {
-		$config = $this->config->getCookieConfig();
+		$config = $this->application->_services->config->getCookieConfig();
 		$session_name = $config['session']['name'];
 		return $request->cookies->get($session_name, '');
 	}

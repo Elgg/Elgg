@@ -5,6 +5,7 @@ use Elgg\Config\DatarootSettingMigrator;
 use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Database\ConfigTable;
 use ConfigurationException;
+use Elgg\Database\DbConfig;
 use Elgg\Project\Paths;
 
 /**
@@ -349,9 +350,47 @@ class Config {
 	}
 
 	/**
+	 * Prepares migration settings for Phinx
+	 *
+	 * @return array
+	 * @throws ConfigurationException
+	 */
+	public static function getMigrationSettings() {
+
+		$config = self::factory();
+		$db_config = DbConfig::fromElggConfig($config);
+
+		if ($db_config->isDatabaseSplit()) {
+			$conn = $db_config->getConnectionConfig(DbConfig::WRITE);
+		} else {
+			$conn = $db_config->getConnectionConfig();
+		}
+
+		return [
+			"paths" => [
+				"migrations" => Paths::elgg() . 'engine/schema/migrations/',
+			],
+			"environments" => [
+				"default_migration_table" => "{$conn['prefix']}migrations",
+				"default_database" => "prod",
+				"prod" => [
+					"adapter" => "mysql",
+					"host" => $conn['host'],
+					"name" => $conn['database'],
+					"user" => $conn['user'],
+					"pass" => $conn['password'],
+					"charset" => $conn['encoding'],
+					"table_prefix" => $conn['prefix'],
+				],
+			],
+		];
+
+	}
+
+	/**
 	 * Get an Elgg configuration value if it's been set or loaded during the boot process.
 	 *
-	 * Before \Elgg\BootService::boot, values from the database will not be present.
+	 * Before \Elgg\Application\BootHandler::boot, values from the database will not be present.
 	 *
 	 * @param string $name Name
 	 *
@@ -395,6 +434,14 @@ class Config {
 	 */
 	public function hasInitialValue($name) {
 		return isset($this->initial_values[$name]);
+	}
+
+	/**
+	 * Get settings path
+	 * @return string
+	 */
+	public function getPath() {
+		return $this->settings_path;
 	}
 
 	/**

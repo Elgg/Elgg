@@ -130,7 +130,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 */
 	protected function setUp() {
 
-		Application::setInstance(null);
+		Application::destroy();
 
 		$app = static::createApplication();
 		if (!$app) {

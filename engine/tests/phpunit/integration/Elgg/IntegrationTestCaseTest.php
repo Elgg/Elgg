@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Debug\Inspector;
+use Elgg\Di\ApplicationContainer;
 
 /**
  * @group IntegrationTests
@@ -16,7 +17,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	private $entity;
 
 	public function up() {
-		_elgg_services()->boot->invalidateCache();
+		_elgg_delete_boot_cache();
 		
 		$this->entity = $this->createOne('object', [
 			'access_id' => ACCESS_PUBLIC,
@@ -50,7 +51,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		$app2 = self::createApplication(true);
 
 		$this->assertNotSame($app1, $app2);
-		$this->assertSame(Application::$_instance, $app2);
+		$this->assertSame(ApplicationContainer::getInstance()->application, $app2);
 
 		$this->assertEquals($dbConfig, $app2->getDbConfig());
 	}

@@ -87,7 +87,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('configTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\ConfigTable($sp->db, $sp->boot, $sp->logger);
+			return new \Elgg\Mocks\Database\ConfigTable($sp->db, $sp->logger);
 		});
 
 		$this->setFactory('mailer', function (MockServiceProvider $sp) {

@@ -4,6 +4,7 @@ namespace Elgg\Di;
 
 use ConfigurationException;
 use Elgg\Application;
+use Elgg\BootHandler;
 use Elgg\Cache\CompositeCache;
 use Elgg\Cache\DataCache;
 use Elgg\Cache\SessionCache;
@@ -32,8 +33,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
- * @property-read \Elgg\BootService                        $boot
- * @property-read \Elgg\Application\CacheHandler           $cacheHandler
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\Cli                                $cli
  * @property-read \ElggCrypto                              $crypto
@@ -79,7 +78,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Database\Seeder                    $seeder
- * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SessionCache                 $sessionCache
  * @property-read \Elgg\Search\SearchService               $search
@@ -162,26 +160,8 @@ class ServiceProvider extends DiContainer {
 
 		$this->setClassName('autoP', \ElggAutoP::class);
 
-		$this->setFactory('boot', function (ServiceProvider $c) {
-			$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
-			$cache = new CompositeCache("elgg_boot", $c->config, $flags);
-			$boot = new \Elgg\BootService($cache);
-			if ($c->config->enable_profiling) {
-				$boot->setTimer($c->timer);
-			}
-			return $boot;
-		});
-
 		$this->setFactory('batchUpgrader', function(ServiceProvider $c) {
 			return new \Elgg\BatchUpgrader($c->config);
-		});
-
-		$this->setFactory('cacheHandler', function(ServiceProvider $c) {
-			$simplecache_enabled = $c->config->simplecache_enabled;
-			if ($simplecache_enabled === null) {
-				$simplecache_enabled = $c->configTable->get('simplecache_enabled');
-			}
-			return new \Elgg\Application\CacheHandler($c->config, $c->request, $simplecache_enabled);
 		});
 
 		$this->setFactory('classLoader', function(ServiceProvider $c) {
@@ -202,7 +182,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('configTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\ConfigTable($c->db, $c->boot, $c->logger);
+			return new \Elgg\Database\ConfigTable($c->db, $c->logger);
 		});
 
 		$this->setFactory('context', function(ServiceProvider $c) {
@@ -439,10 +419,6 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('seeder', function(ServiceProvider $c) {
 			return new \Elgg\Database\Seeder($c->hooks);
-		});
-
-		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
-			return new \Elgg\Application\ServeFileHandler($c->hmac, $c->config);
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {

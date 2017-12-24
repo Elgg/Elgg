@@ -7,7 +7,7 @@
 class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
-		_elgg_services()->boot->invalidateCache();
+		_elgg_delete_boot_cache();
 	}
 
 	public function down() {

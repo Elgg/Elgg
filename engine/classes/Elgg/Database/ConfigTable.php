@@ -17,11 +17,6 @@ class ConfigTable {
 	protected $db;
 	
 	/**
-	 * @var \Elgg\BootService
-	 */
-	protected $boot;
-	
-	/**
 	 * @var \Elgg\Logger
 	 */
 	protected $logger;
@@ -29,13 +24,11 @@ class ConfigTable {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database    $db     Database
-	 * @param \Elgg\BootService $boot   BootService
-	 * @param \Elgg\Logger      $logger Logger
+	 * @param \Elgg\Database $db     Database
+	 * @param \Elgg\Logger   $logger Logger
 	 */
-	public function __construct(\Elgg\Database $db, \Elgg\BootService $boot, \Elgg\Logger $logger) {
+	public function __construct(\Elgg\Database $db, \Elgg\Logger $logger) {
 		$this->db = $db;
-		$this->boot = $boot;
 		$this->logger = $logger;
 	}
 
@@ -55,9 +48,9 @@ class ConfigTable {
 		$params = [
 			':name' => $name,
 		];
-		
-		$this->boot->invalidateCache();
-	
+
+		_elgg_delete_boot_cache();
+
 		return $this->db->deleteData($query, $params) !== false;
 	}
 	
@@ -99,7 +92,7 @@ class ConfigTable {
 				
 		$result = $this->db->insertData($sql, $params);
 
-		$this->boot->invalidateCache();
+		_elgg_delete_boot_cache();
 	
 		return $result !== false;
 	}

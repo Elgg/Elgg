@@ -17,11 +17,11 @@ use Elgg\Http\ResponseBuilder;
  * @since 2.0.0
  */
 function elgg() {
-	if (!isset(Elgg\Application::$_instance)) {
+	if (!isset(Elgg\Di\ApplicationContainer::$_instance)) {
 		throw new \RuntimeException(__FUNCTION__ . ' should not be called before an instanceof ' . \Elgg\Application::class . ' is bootstrapped');
 	}
 
-	return Elgg\Application::$_instance;
+	return Elgg\Di\ApplicationContainer::$_instance->application;
 }
 
 /**
@@ -97,8 +97,7 @@ function forward($location = "", $reason = 'system') {
 			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
 	}
 
-	_elgg_services()->responseFactory->redirect($location, $reason);
-	exit;
+	\Elgg\Application::getContainer()->kernel->redirect($location, $reason);
 }
 
 /**
@@ -1158,6 +1157,10 @@ function elgg_http_validate_signed_url($url) {
  * @return void
  */
 function elgg_signed_request_gatekeeper() {
+	if (Elgg\Application::getContainer()->kernel instanceof \Elgg\CliKernel) {
+		return;
+	}
+
 	if (!elgg_http_validate_signed_url(current_page_url())) {
 		register_error(elgg_echo('invalid_request_signature'));
 		forward('', '403');
@@ -1326,7 +1329,7 @@ function is_not_null($string) {
 function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
-	return Elgg\Application::$_instance->_services;
+	return \Elgg\Di\ApplicationContainer::$_instance->services;
 }
 
 /**
@@ -1363,43 +1366,6 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
 	}
 
 	return $options;
-}
-
-/**
- * Emits a shutdown:system event upon PHP shutdown, but before database connections are dropped.
- *
- * @tip Register for the shutdown:system event to perform functions at the end of page loads.
- *
- * @warning Using this event to perform long-running functions is not very
- * useful.  Servers will hold pages until processing is done before sending
- * them out to the browser.
- *
- * @see http://www.php.net/register-shutdown-function
- *
- * @internal This is registered in \Elgg\Application::create()
- *
- * @return void
- * @see register_shutdown_hook()
- * @access private
- */
-function _elgg_shutdown_hook() {
-	try {
-		_elgg_services()->logger->setDisplay(false);
-		elgg_trigger_event('shutdown', 'system');
-
-		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);
-		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
-		// demoted to NOTICE from DEBUG so javascript is not corrupted
-		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
-	} catch (Exception $e) {
-		$message = 'Error: ' . get_class($e) . ' thrown within the shutdown handler. ';
-		$message .= "Message: '{$e->getMessage()}' in file {$e->getFile()} (line {$e->getLine()})";
-		error_log($message);
-		error_log("Exception trace stack: {$e->getTraceAsString()}");
-	}
-
-	// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
-	session_write_close();
 }
 
 /**
@@ -1762,6 +1728,7 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 		\Elgg\Cli\SimpletestCommand::class,
 		\Elgg\Cli\DatabaseSeedCommand::class,
 		\Elgg\Cli\DatabaseUnseedCommand::class,
+
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());
@@ -1776,6 +1743,16 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
  */
 function _elgg_delete_autoload_cache() {
 	_elgg_services()->autoloadManager->deleteCache();
+}
+
+/**
+ * Delete boot cache
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_delete_boot_cache() {
+	\Elgg\Application::getContainer()->boot->invalidateCache();
 }
 
 /**
@@ -1800,7 +1777,7 @@ function _elgg_api_test($hook, $type, $value, $params) {
 }
 
 /**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ * @see \Elgg\Application\Bootstrap::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 
@@ -1814,7 +1791,7 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
 
 	$events->registerHandler('cache:flush', 'system', function () {
-		_elgg_services()->boot->invalidateCache();
+		_elgg_delete_boot_cache();
 		_elgg_services()->plugins->clear();
 		_elgg_services()->sessionCache->clear();
 		_elgg_services()->dataCache->clear();

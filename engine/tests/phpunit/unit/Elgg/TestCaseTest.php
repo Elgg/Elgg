@@ -16,9 +16,6 @@ class TestCaseTest extends TestCase {
 	 */
 	public function testIsBoostrapped() {
 		$this->assertInstanceOf(Di\ServiceProvider::class, _elgg_services());
-		$this->assertInstanceOf(Application::class, _elgg_testing_application());
-		$this->assertInstanceof(Config::class, _elgg_testing_config());
-		$this->assertInstanceOf(Http\Request::class, _elgg_testing_request());
 	}
 
 }

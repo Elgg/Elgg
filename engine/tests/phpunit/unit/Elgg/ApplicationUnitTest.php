@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Mocks\Di\MockServiceProvider;
+
 /**
  * @group UnitTests
  */
@@ -20,12 +22,20 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testStartsTimer() {
+		global $GLOBALS;
+
 		unset($GLOBALS['START_MICROTIME']);
 
+		$config = self::getTestingConfig();
+		$sp = new MockServiceProvider($config);
+
 		Application::factory([
-			'handle_shutdown' => false,
+			'service_provider' => $sp,
 			'handle_exceptions' => false,
-			'config' => _elgg_config(),
+			'handle_shutdown' => false,
+			'kernel' => function (ApplicationContainer $c) {
+				return new TestingKernel($c->application, $c->cacheHandler, $c->serveFileHandler);
+			},
 		]);
 
 		$this->assertTrue(is_float($GLOBALS['START_MICROTIME']));
@@ -36,7 +46,8 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$app = new Application($services);
 
 		$names = [
-				//'config',
+			'menus',
+			'table_columns',
 		];
 
 		foreach ($names as $name) {

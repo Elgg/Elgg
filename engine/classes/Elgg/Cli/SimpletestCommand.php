@@ -65,9 +65,7 @@ class SimpletestCommand extends Command {
 			'handle_shutdown' => false,
 		]);
 
-		Application::setInstance($app);
-
-		$app->bootCore();
+		$app->boot();
 
 		// turn off system log
 		_elgg_services()->hooks->unregisterHandler('all', 'all', 'system_log_listener');
