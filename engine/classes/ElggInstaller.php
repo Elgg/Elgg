@@ -115,10 +115,8 @@ class ElggInstaller {
 			$config->installer_running = true;
 			$config->dbencoding = 'utf8mb4';
 
-			$services = new ServiceProvider($config);
-
 			$app = Application::factory([
-				'service_provider' => $services,
+				'config' => $config,
 				'handle_exceptions' => false,
 				'handle_shutdown' => false,
 			]);
@@ -128,8 +126,6 @@ class ElggInstaller {
 			// the config service.
 			//$app->setGlobalConfig();
 
-			Application::setInstance($app);
-			$app->loadCore();
 			$this->app = $app;
 
 			$app->_services->setValue('session', \ElggSession::getMock());
@@ -833,7 +829,7 @@ class ElggInstaller {
 			// dummy site needed to boot
 			$app->_services->config->site = new ElggSite();
 
-			$app->bootCore();
+			$app->boot();
 		}
 	}
 

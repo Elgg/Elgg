@@ -2,6 +2,8 @@
 
 namespace Elgg\Application;
 
+use Elgg\Application;
+
 /**
  * @group UnitTests
  */
@@ -22,7 +24,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('session', $session);
 		_elgg_services()->session->start();
 
-		$this->handler = _elgg_services()->serveFileHandler;
+		$this->handler = Application::getContainer()->serveFileHandler;
 
 		$file = new \ElggFile();
 		$file->owner_guid = 1;

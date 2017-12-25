@@ -4,4 +4,4 @@
  * Phinx configration for DB migrations
  */
 
-return \Elgg\Application::getMigrationSettings();
+return \Elgg\Config::getMigrationSettings();

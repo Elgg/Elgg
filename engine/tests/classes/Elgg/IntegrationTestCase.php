@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Di\ApplicationContainer;
 use Elgg\Di\ServiceProvider;
 use Elgg\Plugins\PluginTesting;
 use ElggSession;
@@ -28,16 +29,16 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		if (isset(self::$_testing_app) && !$isolate) {
 			$app = self::$_testing_app;
 
-			Application::setInstance($app);
+			ApplicationContainer::setInstance($app);
 
 			// Invalidate caches
-			$app->_services->dataCache->clear();
-			$app->_services->sessionCache->clear();
+			$app->application->_services->dataCache->clear();
+			$app->application->_services->sessionCache->clear();
 
-			return $app;
+			return $app->application;
 		}
 
-		Application::setInstance(null);
+		Application::destroy();
 
 		$config = self::getTestingConfig();
 		$sp = new ServiceProvider($config);
@@ -61,13 +62,14 @@ abstract class IntegrationTestCase extends BaseTestCase {
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
+			'kernel' => function(ApplicationContainer $c) {
+				return new TestingKernel($c->application, $c->cacheHandler, $c->serveFileHandler);
+			},
 		]);
 
 		if (!$app->getDbConnection()) {
 			return false;
 		}
-
-		Application::setInstance($app);
 
 		if (in_array('--verbose', $_SERVER['argv'])) {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_VERY_VERBOSE;
@@ -83,9 +85,9 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
-		$app->bootCore();
+		$app->boot();
 
-		self::$_testing_app = $app;
+		self::$_testing_app = ApplicationContainer::getInstance();
 
 		return $app;
 	}
@@ -111,7 +113,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		parent::setUp();
 
-		$app = Application::getInstance();
+		$app = ApplicationContainer::getInstance()->application;
 
 		$plugin_id = $this->getPluginID();
 		if (!empty($plugin_id)) {
@@ -142,7 +144,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		 */
 		//$this->clearSeeds();
 
-		$app = Application::getInstance();
+		$app = ApplicationContainer::getInstance()->application;
 
 		if ($this instanceof LegacyIntegrationTestCase) {
 			$app->_services->session->removeLoggedInUser();

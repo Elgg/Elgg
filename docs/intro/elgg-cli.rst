@@ -44,6 +44,9 @@ Available commands
     # Remove seeded faked entities
     elgg-cli database:unseed
 
+    # Run upgrade
+    elgg-cli upgrade
+
 
 Adding custom commands
 ======================

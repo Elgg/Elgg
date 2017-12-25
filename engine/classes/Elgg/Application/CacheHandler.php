@@ -2,11 +2,9 @@
 namespace Elgg\Application;
 
 use Elgg\Application;
-use Elgg\Config;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Simplecache handler
@@ -14,7 +12,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * @access private
  */
 class CacheHandler {
-	
+
 	public static $extensions = [
 		'bmp' => "image/bmp",
 		'css' => "text/css",
@@ -47,43 +45,50 @@ class CacheHandler {
 		"text/xml",
 	];
 
-	/** @var Config */
-	private $config;
-
-	/** @var Request */
-	private $request;
-	
-	/** @var bool */
-	protected $simplecache_enabled;
+	/**
+	 * @var Application
+	 */
+	protected $application;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Config  $config              Elgg configuration
-	 * @param Request $request             HTTP request
-	 * @param bool    $simplecache_enabled Is the simplecache enabled?
+	 * @param Application $application Application
 	 */
-	public function __construct(Config $config, Request $request, $simplecache_enabled) {
-		$this->config = $config;
-		$this->request = $request;
-		$this->simplecache_enabled = $simplecache_enabled;
+	public function __construct(Application $application) {
+		$this->application = $application;
+	}
+
+	/**
+	 * Check if simplecache is enabled
+	 * @return bool
+	 */
+	public function isSimplecacheEnabled() {
+		$simplecache_enabled = $this->application->_services->config->simplecache_enabled;
+		if ($simplecache_enabled === null) {
+			$simplecache_enabled = $this->application->_services->configTable->get('simplecache_enabled');
+		}
+
+		return $simplecache_enabled;
 	}
 
 	/**
 	 * Handle a request for a cached view
 	 *
-	 * @param Request     $request Elgg request
-	 * @param Application $app     Elgg application
+	 * @param Request $request Elgg request
+	 *
 	 * @return Response (unprepared)
+	 * @throws \InstallationException
 	 */
-	public function handleRequest(Request $request, Application $app) {
-		$config = $this->config;
+	public function handleRequest(Request $request) {
+		$app = $this->application;
+		$config = $this->application->_services->config;
 
 		$parsed = $this->parsePath($request->getElggPath());
 		if (!$parsed) {
 			return $this->send403();
 		}
-		
+
 		$ts = $parsed['ts'];
 		$view = $parsed['view'];
 		$viewtype = $parsed['viewtype'];
@@ -100,12 +105,12 @@ class CacheHandler {
 			$response->headers->set('Content-Type', $content_type, true);
 		}
 
-		if (!$this->simplecache_enabled) {
-			$app->bootCore();
+		if (!$this->isSimplecacheEnabled()) {
+			$app->boot();
 			header_remove('Cache-Control');
 			header_remove('Pragma');
 			header_remove('Expires');
-			
+
 			if (!$this->isCacheableView($view)) {
 				return $this->send403("Requested view ({$view}) is not an asset");
 			}
@@ -137,7 +142,7 @@ class CacheHandler {
 		}
 
 		// the hard way
-		$app->bootCore();
+		$app->boot();
 		header_remove('Cache-Control');
 		header_remove('Pragma');
 		header_remove('Expires');
@@ -251,7 +256,7 @@ class CacheHandler {
 	 * @return bool
 	 */
 	protected function is304($etag) {
-		$if_none_match = $this->request->headers->get('If-None-Match');
+		$if_none_match = $this->application->_services->request->headers->get('If-None-Match');
 		if ($if_none_match === null) {
 			return false;
 		}
@@ -276,14 +281,14 @@ class CacheHandler {
 	 */
 	public function getContentType($view) {
 		$extension = $this->getViewFileType($view);
-		
+
 		if (isset(self::$extensions[$extension])) {
 			return self::$extensions[$extension];
 		} else {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Returns the type of output expected from the view.
 	 *
@@ -303,11 +308,11 @@ class CacheHandler {
 		if ($hasValidExtension) {
 			return $extension;
 		}
-		
+
 		if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
 			return $m[1];
 		}
-		
+
 		return 'unknown';
 	}
 
@@ -325,7 +330,7 @@ class CacheHandler {
 			return false;
 		}
 
-		if ($this->simplecache_enabled) {
+		if ($this->isSimplecacheEnabled()) {
 			$hook_name = 'simplecache:generate';
 		} else {
 			$hook_name = 'cache:generate';
@@ -361,7 +366,7 @@ class CacheHandler {
 		}
 
 		// disable error reporting so we don't cache problems
-		$this->config->debug = null;
+		$this->application->_services->config->debug = null;
 
 		return elgg_view($view, $vars);
 	}

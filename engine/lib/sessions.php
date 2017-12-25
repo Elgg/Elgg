@@ -371,7 +371,7 @@ function _elgg_session_boot(ServiceProvider $services) {
 }
 
 /**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ * @see \Elgg\Application\Bootstrap::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	register_pam_handler('pam_auth_userpass');

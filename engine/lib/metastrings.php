@@ -63,7 +63,7 @@ function _elgg_metastrings_test($hook, $type, $value) {
 }
 
 /**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ * @see \Elgg\Application\Bootstrap::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$hooks->registerHandler('unit_test', 'system', '_elgg_metastrings_test');

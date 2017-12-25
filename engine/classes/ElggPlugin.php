@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Application;
+use Elgg\Application\Bootstrap;
 use Elgg\Includer;
 
 /**
@@ -291,6 +292,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function getSetting($name, $default = null) {
 		$values = $this->getAllSettings();
+
 		return elgg_extract($name, $values, $default);
 	}
 
@@ -760,7 +762,7 @@ class ElggPlugin extends ElggObject {
 
 			$autoload_file = 'vendor/autoload.php';
 			if ($this->canReadFile($autoload_file)) {
-				Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+				Bootstrap::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
 			}
 		}
 
@@ -776,7 +778,7 @@ class ElggPlugin extends ElggObject {
 			$this->activateEntities();
 
 			if ($this->canReadFile('start.php')) {
-				$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
+				$result = Bootstrap::requireSetupFileOnce("{$this->getPath()}start.php");
 				if ($result instanceof \Closure) {
 					$result();
 				}

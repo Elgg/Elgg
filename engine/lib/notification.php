@@ -627,7 +627,7 @@ function _elgg_notifications_test($hook, $type, $tests) {
 }
 
 /**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ * @see \Elgg\Application\Bootstrap::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_notifications_init');

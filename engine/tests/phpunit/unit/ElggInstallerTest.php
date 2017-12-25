@@ -70,7 +70,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			return $this->app;
 		}
 
-		Application::setInstance(null);
+		Application::destroy();
 
 		$config = new Config();
 		$config->elgg_config_locks = false;
@@ -90,10 +90,11 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'service_provider' => $services,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
+			'kernel' => function(\Elgg\Di\ApplicationContainer $c) {
+				return new \Elgg\TestingKernel($c->application, $c->cacheHandler, $c->serveFileHandler);
+			},
 		]);
 
-		Application::setInstance($app);
-		$app->loadCore();
 		$this->app = $app;
 
 		$this->app->_services->views->setViewtype('installation');

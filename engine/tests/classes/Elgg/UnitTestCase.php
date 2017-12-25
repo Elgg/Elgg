@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Di\ApplicationContainer;
 use Elgg\Mocks\Di\MockServiceProvider;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -17,7 +18,7 @@ abstract class UnitTestCase extends BaseTestCase {
 	 */
 	public static function createApplication() {
 
-		Application::setInstance(null);
+		Application::destroy();
 
 		$config = self::getTestingConfig();
 		$sp = new MockServiceProvider($config);
@@ -32,9 +33,10 @@ abstract class UnitTestCase extends BaseTestCase {
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
+			'kernel' => function (ApplicationContainer $c) {
+				return new TestingKernel($c->application, $c->cacheHandler, $c->serveFileHandler);
+			},
 		]);
-
-		Application::setInstance($app);
 
 		if (in_array('--verbose', $_SERVER['argv'])) {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_VERY_VERBOSE;
@@ -72,7 +74,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		elgg_set_entity_class('object', 'comment', \ElggComment::class);
 		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
 
-		_elgg_services()->boot->boot(_elgg_services());
+		ApplicationContainer::$_instance->boot->bootstrap();
 
 		self::$_instance = $this;
 

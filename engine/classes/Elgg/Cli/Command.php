@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Application;
 use Elgg\Logger;
 use Error;
 use Exception;
@@ -23,14 +24,8 @@ abstract class Command extends SymfonyCommand {
 	 */
 	final public function execute(InputInterface $input, OutputInterface $output) {
 
-		set_error_handler([
-			$this,
-			'handleErrors'
-		]);
-		set_exception_handler([
-			$this,
-			'handleException'
-		]);
+		Application::getContainer()->kernel->setErrorHandler([$this, 'handleErrors']);
+		Application::getContainer()->kernel->setExceptionHandler([$this, 'handleException']);
 
 		Logger::$verbosity = $output->getVerbosity();
 

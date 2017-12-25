@@ -1058,7 +1058,7 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
 }
 
 /**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ * @see \Elgg\Application\Bootstrap::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_admin_init');

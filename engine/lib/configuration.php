@@ -191,7 +191,7 @@ function elgg_get_icon_sizes($entity_type = null, $entity_subtype = null, $type 
 }
 
 /**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
+ * @see \Elgg\Application\Bootstrap::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$hooks->registerHandler('unit_test', 'system', '_elgg_config_test');
