@@ -51,7 +51,7 @@ if ($global_hooks) {
 echo "<table class='elgg-table-alt'>";
 echo "<tr>";
 echo "<th>" . elgg_echo('developers:inspect:views') . "</th>";
-echo "<th width='1%'>" . elgg_echo('developers:inspect:priority') . "</th>";
+echo "<th>" . elgg_echo('developers:inspect:priority') . "</th>";
 echo "<th>" . elgg_echo('developers:inspect:file_location') . "</th>";
 echo "</tr>";
 

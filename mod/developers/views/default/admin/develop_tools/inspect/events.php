@@ -18,7 +18,7 @@ $make_id = function ($name) {
 echo "<table class='elgg-table-alt'>";
 echo "<tr>";
 echo "<th>$header</th>";
-echo "<th width='1%'>" . elgg_echo('developers:inspect:priority') . "</th>";
+echo "<th>" . elgg_echo('developers:inspect:priority') . "</th>";
 echo "<th>" . elgg_echo('developers:inspect:functions') . "</th>";
 echo "</tr>";
 
