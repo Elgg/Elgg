@@ -21,16 +21,19 @@ $header = elgg_view_entity($owner, [
 	'item_view' => 'object/elements/chip',
 ]);
 
+$extra_class = '';
 $body = '';
 if (elgg_extract('show_owner_block_menu', $vars, true)) {
 	$body .= elgg_view_menu('owner_block', ['entity' => $owner]);
+} else {
+	$extra_class = 'elgg-owner-block-empty';
 }
 
 $body .= elgg_view('page/elements/owner_block/extend', $vars);
 
 echo elgg_view_module('info', '', $body, [
 	'header' => $header,
-	'class' => 'elgg-owner-block',
+	'class' => ['elgg-owner-block', $extra_class],
 ]);
 
 elgg_pop_context();
