@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Http\Input;
 use Elgg\Http\ResponseBuilder;
 
 abstract class ActionResponseTestCase extends IntegrationTestCase {
@@ -26,6 +27,7 @@ abstract class ActionResponseTestCase extends IntegrationTestCase {
 	public function executeAction($name, array $params = [], $ajax = false) {
 		$request = BaseTestCase::prepareHttpRequest("action/{$name}", 'POST', $params, $ajax, true);
 		_elgg_services()->setValue('request', $request);
+		_elgg_services()->setValue('input', new Input($request, _elgg_services()->context));
 		return _elgg_services()->actions->execute($name);
 	}
 }

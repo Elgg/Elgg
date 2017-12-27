@@ -78,16 +78,16 @@ function action($action, $forwarder = "") {
  *
  * @tip You don't need to use Elgg\Application in your action files.
  *
- * @param string $action   The name of the action (eg "register", "account/settings/save")
- * @param string $filename Optionally, the filename where this action is located. If not specified,
- *                         will assume the action is in elgg/actions/<action>.php
- * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
- *                         (default: logged_in)
+ * @param string          $action  The name of the action (eg "register", "account/settings/save")
+ * @param callable|string $handler Action callback or filename of the action file
+ *                                 If not specified, will assume the action is in elgg/actions/<action>.php
+ * @param string          $access  Who is allowed to execute this action: public, logged_in, admin.
+ *                                 (default: logged_in)
  *
  * @return bool
  */
-function elgg_register_action($action, $filename = "", $access = 'logged_in') {
-	return _elgg_services()->actions->register($action, $filename, $access);
+function elgg_register_action($action, $handler = "", $access = 'logged_in') {
+	return _elgg_services()->actions->register($action, $handler, $access);
 }
 
 /**

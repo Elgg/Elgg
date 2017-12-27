@@ -155,8 +155,12 @@ class Inspector {
 		];
 		$start = strlen(elgg_get_root_path());
 		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
-			$info['file'] = substr($info['file'], $start);
-			$tree[$action] = [$info['file'], $access[$info['access']]];
+			if ($file = elgg_extract('file', $info)) {
+				$file = substr($file, $start);
+				$tree[$action] = [$file, $access[$info['access']]];
+			} else if ($callback = elgg_extract('callback', $info)) {
+				$tree[$action] = [$this->describeCallable($callback), $access[$info['access']]];
+			}
 		}
 		ksort($tree);
 		return $tree;
@@ -206,7 +210,7 @@ class Inspector {
 				$params = 'none';
 			}
 			$tree[$method] = [
-				$info['function'],
+				$this->describeCallable($info['function']),
 				"params: $params",
 				$info['call_method'],
 				($info['require_api_auth']) ? 'API authentication required' : 'No API authentication required',

@@ -1,6 +1,7 @@
 <?php
 namespace Elgg;
 
+use Elgg\Http\Input;
 use Elgg\Http\ResponseBuilder;
 use ElggCrypto;
 use ElggSession;
@@ -36,6 +37,16 @@ class ActionsService {
 	private $crypto;
 
 	/**
+	 * @var HandlersService
+	 */
+	private $handlers;
+
+	/**
+	 * @var Input
+	 */
+	private $input;
+
+	/**
 	 * Registered actions storage
 	 *
 	 * Each element has keys:
@@ -64,10 +75,18 @@ class ActionsService {
 	 * @param ElggSession $session Session
 	 * @param ElggCrypto  $crypto  Crypto service
 	 */
-	public function __construct(Config $config, ElggSession $session, ElggCrypto $crypto) {
+	public function __construct(
+		Config $config,
+		ElggSession $session,
+		ElggCrypto $crypto,
+		HandlersService $handlers,
+		Input $input
+	) {
 		$this->config = $config;
 		$this->session = $session;
 		$this->crypto = $crypto;
+		$this->handlers = $handlers;
+		$this->input = $input;
 	}
 
 	/**
@@ -161,20 +180,19 @@ class ActionsService {
 			return $forward('', ELGG_HTTP_OK);
 		}
 
-		$file = $this->actions[$action]['file'];
-
-		if (!is_file($file) || !is_readable($file)) {
-			ob_end_clean();
-			return $forward('actionnotfound', ELGG_HTTP_NOT_IMPLEMENTED);
-		}
-
 		// set the maximum execution time for actions
 		$action_timeout = $this->config->action_time_limit;
 		if (isset($action_timeout)) {
 			set_time_limit($action_timeout);
 		}
 
-		$result = Includer::includeFile($file);
+		$callback = $this->actions[$action]['callback'];
+		if ($callback) {
+			list($success, $result, $object) = $this->handlers->call($callback, 'action', [$action, $this->input]);
+		} else {
+			$result = Includer::includeFile($this->actions[$action]['file']);
+		}
+
 		if ($result instanceof ResponseBuilder) {
 			ob_end_clean();
 			return $result;
@@ -182,40 +200,60 @@ class ActionsService {
 
 		return $forward('', ELGG_HTTP_OK);
 	}
-	
+
 	/**
 	 * Registers an action
 	 *
-	 * @param string $action   The name of the action (eg "register", "account/settings/save")
-	 * @param string $filename Optionally, the filename where this action is located. If not specified,
-	 *                         will assume the action is in elgg/actions/<action>.php
-	 * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
-	 *                         (default: logged_in)
+	 * @param string          $action  The name of the action (eg "register", "account/settings/save")
+	 * @param callable|string $handler Action callback or filename of the action file
+	 *                                 If not specified, will assume the action is in elgg/actions/<action>.php
+	 * @param string          $access  Who is allowed to execute this action: public, logged_in, admin.
+	 *                                 (default: logged_in)
 	 *
 	 * @return bool
 	 *
-	 * @see elgg_register_action()
+	 * @see    elgg_register_action()
 	 * @access private
 	 */
-	public function register($action, $filename = "", $access = 'logged_in') {
+	public function register($action, $handler = "", $access = 'logged_in') {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
 		// redirects but we store the actions without it
 		$action = rtrim($action, '/');
-	
-		if (empty($filename)) {
+
+		if (empty($handler)) {
 			$path = __DIR__ . '/../../../actions';
-			$filename = realpath("$path/$action.php");
+			$handler = realpath("$path/$action.php");
+		}
+
+		$file = false;
+		$callback = false;
+
+		if (is_string($handler) && substr($handler, -4, 4) === '.php') {
+			if (!is_file($handler) || !is_readable($handler)) {
+				elgg_log("File $handler for action $action is not readable", 'ERROR');
+				return false;
+			}
+			$file = $handler;
+		} else {
+			$handler = $this->handlers->resolveCallable($handler);
+			if (!is_callable($handler)) {
+				elgg_log("Handler $handler for action $action is not callable", 'ERROR');
+				return false;
+			}
+			$callback = $handler;
 		}
 
 		if (!in_array($access, self::$access_levels)) {
 			_elgg_services()->logger->error("Unrecognized value '$access' for \$access in " . __METHOD__);
 			$access = 'admin';
 		}
-	
+
 		$this->actions[$action] = [
-			'file' => $filename,
+			'file' => $file,
+			'callback' => $callback,
 			'access' => $access,
 		];
+
 		return true;
 	}
 	

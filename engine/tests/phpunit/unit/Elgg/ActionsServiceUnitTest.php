@@ -48,14 +48,14 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$config = _elgg_config();
 
-		$this->input = new Input();
-		_elgg_services()->setValue('input', $this->input);
-
-		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto);
-		_elgg_services()->setValue('actions', $this->actions);
-
 		$this->request = $this->prepareHttpRequest();
 		_elgg_services()->setValue('request', $this->request);
+
+		$this->input = new Input($this->request, _elgg_services()->context);
+		_elgg_services()->setValue('input', $this->input);
+
+		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto, _elgg_services()->handlers, $this->input);
+		_elgg_services()->setValue('actions', $this->actions);
 
 		$this->translator = new Translator($config);
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
@@ -76,6 +76,9 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('request', $this->request);
 		_elgg_services()->setValue('translator', $this->translator);
 
+		$this->input = new Input($this->request, _elgg_services()->context);
+		_elgg_services()->setValue('input', $this->input);
+		
 		$this->amd_config = _elgg_services()->amdConfig;
 		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
 		_elgg_services()->setValue('ajax', $this->ajax);

@@ -10,6 +10,8 @@ use Elgg\Cache\SessionCache;
 use Elgg\Config;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Http\Input;
+use Elgg\Http\Request;
 use Elgg\Printer\CliPrinter;
 use Elgg\Printer\HtmlPrinter;
 use Elgg\Project\Paths;
@@ -141,7 +143,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
-			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto);
+			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto, $c->handlers, $c->input);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
@@ -304,7 +306,9 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable, $c->uploads);
 		});
 
-		$this->setClassName('input', \Elgg\Http\Input::class);
+		$this->setFactory('input', function(ServiceProvider $c) {
+			return new Input($c->request, $c->context);
+		});
 
 		$this->setFactory('imageService', function(ServiceProvider $c) {
 			switch ($c->config->image_processor) {
