@@ -106,8 +106,20 @@
 }
 
 /* ***************************************
-	OWNER BLOCK
+	SIDEBAR OWNER BLOCK AND PAGE MENU
 *************************************** */
-.elgg-owner-block > .elgg-head {
+.elgg-owner-block,
+.elgg-page-menu {
+	border: none;
+	margin: 0;
+}
+
+.elgg-owner-block > .elgg-head,
+.elgg-page-menu > .elgg-body {
 	padding: 1.5rem;
+}
+
+.elgg-owner-block > .elgg-body,
+.elgg-page-menu > .elgg-body {
+	padding: 0;
 }

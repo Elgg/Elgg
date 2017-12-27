@@ -99,50 +99,66 @@
 *************************************** */
 .elgg-menu-page-container .elgg-menu-section-header {
 	font-size: 1.2rem;
-	margin-bottom: 0.5rem;
 	padding: 0.5rem;
-	border-bottom: 1px solid #e6e6ea;
 }
 
-.elgg-menu-page-container > ul + ul {
-	margin-top: 1rem;
-}
+.elgg-menu-page,
+.elgg-menu-owner-block {
+	background: #ffffff;
+	border: 1px solid #e6e6ea;
+	margin-bottom: 2rem;
 
-.elgg-menu-owner-block li > a,
-.elgg-menu-page li > a {
-	padding: 0.5rem 1rem;
-	color: #2d3047;
-}
+	li:not(:last-child) {
+		border-bottom: 1px solid #f7f7f8;
+	}
 
-.elgg-menu-owner-block li > a:hover,
-.elgg-menu-page li > a:hover {
-	background: #fafafa;
-	text-decoration: none;
-	color: #333;
-}
+	.elgg-child-menu {
+		border-top: #f7f7f8;
+	}
 
-.elgg-menu-owner-block li.elgg-state-selected > a,
-.elgg-menu-page li.elgg-state-selected > a {
-	color: #333;
-	background: #e6e6ea;
-}
+	.elgg-menu-item-has-toggle > .elgg-child-menu {
+		margin: 0;
+		border-top: 1px solid #f7f7f8;
+	}
 
-.elgg-menu-page .elgg-menu-closed:before,
-.elgg-menu-page .elgg-menu-opened:before {
-	display: inline-block;
-	padding-right: 4px;
-}
+	.elgg-menu-item-has-toggle > .elgg-child-menu > li > a {
+		padding-left: 2rem;
+	}
 
-.elgg-menu-page .elgg-menu-closed:before {
-	content: "\25B8";
-}
+	li > a,
+	li > a {
+		padding: 0.5rem 1rem;
+		color: #2d3047;
+		&:hover {
+			background: #fafafa;
+			text-decoration: none;
+			color: #333;
+		}
+	}
 
-.elgg-menu-page .elgg-menu-opened:before {
-	content: "\25BE";
-}
+	li.elgg-state-selected > a,
+	li.elgg-state-selected > a {
+		color: #333;
+		background: #e6e6ea;
+	}
 
-.elgg-menu-page .elgg-badge {
-	float: right;
+	.elgg-menu-closed:before,
+	.elgg-menu-opened:before {
+		display: inline-block;
+		padding-right: 4px;
+	}
+
+	.elgg-menu-closed:before {
+		content: "\25B8";
+	}
+
+	.elgg-menu-opened:before {
+		content: "\25BE";
+	}
+
+	.elgg-badge {
+		float: right;
+	}
 }
 
 /* ***************************************
