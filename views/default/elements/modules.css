@@ -46,9 +46,12 @@
 	color: #2d3047;
 }
 
-.elgg-module-info > .elgg-body,
+.elgg-module-info > .elgg-body {
+	padding: 1rem;
+}
+
 .elgg-module-info > .elgg-foot {
-	padding: 0.5rem;
+	padding: 0.5rem 1rem;
 }
 
 /* ***************************************
