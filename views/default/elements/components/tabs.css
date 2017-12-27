@@ -5,14 +5,14 @@
 .elgg-tabs {
 	margin-bottom: 0.5rem;
 	border-bottom: 1px solid #e6e6ea;
-	width: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .elgg-menu-filter > li,
 .elgg-tabs > li {
-	float: left;
 	border: 1px solid #e6e6ea;
-	border-bottom: 0;
+	border-bottom-width: 0;
 	background: #fafafa;
 }
 
@@ -50,16 +50,19 @@
 	background: #ffffff;
 }
 
-@media screen and (min-width: 80rem) {
+@media screen and (min-width: 50rem) {
 	.elgg-menu-filter,
 	.elgg-tabs {
-		display: table;
+		flex-direction: row;
+		flex-wrap: wrap;
 	}
 
 	.elgg-menu-filter > li,
 	.elgg-tabs > li {
+		border-bottom-width: 1px;
 		margin: 0 0 0 0.5rem;
 		border-radius: 3px 3px 0 0;
+		position: relative;
+		top: 1px;
 	}
-
 }

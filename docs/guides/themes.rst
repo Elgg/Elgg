@@ -66,31 +66,31 @@ Theming Principles and Best Practices
 
 **Mobile first**
 	We write mobile-first CSS.
-	We use one breakpoint, which is ``1280px`` = ``80rem * 16px/rem``
+	We use two breakpoints: ``50rem`` and ``80rem`` (800px and 1280px at 16px/rem).
 
 .. code::css
 
-	/* BAD */
+	/* BAD: mobile defined in media blocks, different display types */
+
 	.menu > li {
 		display: inline-block;
 	}
-
 	@media screen and (max-width: 820px) {
 		.menu > li {
-		 display: block;
-		 width: 100%;
+			display: block;
+			width: 100%;
 		}
 	}
 
-	/* GOOD */
+	/* GOOD: mobile by default. Media blocks style larger viewports. */
+
 	.menu {
 		display: flex;
 		flex-direction: column;
 	}
-
-	@media screen and (min-width: 80rem) {
+	@media screen and (min-width: 50rem) {
 		.menu {
-		 flex-direction: row;
+			flex-direction: row;
 		}
 	}
 
