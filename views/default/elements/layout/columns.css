@@ -62,4 +62,8 @@
 		width: 18rem;
 		margin-right: 2rem;
 	}
+
+	.elgg-layout-body {
+		padding: 0;
+	}
 }
