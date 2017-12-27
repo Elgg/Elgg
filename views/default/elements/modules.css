@@ -114,6 +114,10 @@
 	margin: 0;
 }
 
+.elgg-owner-block-empty {
+	margin-bottom: 2rem;
+}
+
 .elgg-owner-block > .elgg-head,
 .elgg-page-menu > .elgg-body {
 	padding: 1.5rem;
