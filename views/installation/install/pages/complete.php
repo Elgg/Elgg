@@ -12,5 +12,6 @@ echo elgg_autop(elgg_echo('install:complete:instructions'));
 	'#tag_name' => 'a',
 	'#text' => elgg_echo('install:complete:gotosite'),
 	'href' => elgg_get_site_url(),
+	'class' => 'elgg-button elgg-button-action',
 ]) ?>
 </div>

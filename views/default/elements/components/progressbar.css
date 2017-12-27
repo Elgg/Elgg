@@ -2,12 +2,15 @@
 	  PROGRESS BAR
 **************************************** */
 .elgg-progressbar {
-	height: 20px;
-	border: 1px solid #e6e6ea;
+	height: 1rem;
+	border: 1px solid #dcdcdc;
+	border-radius: 0.5rem;
 }
 .ui-progressbar-value {
-	height: 20px;
-	background: green;
+	height: 1rem;
+	background: #0078ac;
+	border-radius: 0.5rem;
+	margin: -1px 0 0 -1px;
 }
 .elgg-progressbar-counter {
 	float: left;

@@ -22,34 +22,40 @@ $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="icon" href="<?php echo elgg_get_site_url() . $elggSubdir; ?>views/default/graphics/favicon.ico" />
-		<link rel="stylesheet" href="<?php echo elgg_get_site_url() . $elggSubdir; ?>install/css/install.css" type="text/css" />
 		<script src="<?php echo elgg_get_site_url(); ?>vendor/bower-asset/jquery/dist/jquery.min.js"></script>
-		<script src="<?php echo elgg_get_site_url() . $elggSubdir; ?>install/js/install.js"></script>
 	</head>
 	<body>
 		<div class="elgg-page">
-			<header class="elgg-page-header" role="banner">
-				<img src="<?= elgg_get_site_url() . $elggSubdir; ?>views/default/graphics/elgg_logo.png" alt="Elgg" />
-			</header>
 			<div class="elgg-page-body">
 				<div class="elgg-layout">
-					<aside class="elgg-sidebar" role="complementary">
-						<?php echo elgg_view('page/elements/sidebar', $vars); ?>
-					</aside>
-					<main class="elgg-body" role="main">
-						<h1><?php echo $vars['title']; ?></h1>
-						<?php echo elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]); ?>
-						<?php echo $vars['body']; ?>
-					</main>
+					<div class="elgg-layout-columns">
+						<aside class="elgg-sidebar-alt" role="complementary">
+							<header class="elgg-page-header" role="banner">
+								<img src="<?= elgg_get_site_url() . $elggSubdir; ?>views/default/graphics/elgg_logo.png" alt="Elgg" />
+							</header>
+							<?php echo elgg_view('page/elements/sidebar', $vars); ?>
+						</aside>
+						<main class="elgg-body" role="main">
+							<h1><?php echo $vars['title']; ?></h1>
+							<?php echo elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]); ?>
+							<?php echo $vars['body']; ?>
+						</main>
+					</div>
 				</div>
 			</div>
 			<footer class="elgg-page-footer" role="contentinfo">
-				<ul>
+				<ul class="elgg-menu elgg-menu-footer">
 					<li><a href="http://learn.elgg.org/en/2.x/intro/install.html" target="_blank">Install instructions</a></li>
 					<li><a href="http://learn.elgg.org/en/2.x/intro/install.html#troubleshooting" target="_blank">Install troubleshooting</a></li>
 					<li><a href="http://community.elgg.org/discussion/all" target="_blank">Elgg community forums</a></li>
 				</ul>
 			</footer>
 		</div>
+		<style>
+			<?= elgg_view('install.css') ?>
+		</style>
+		<script>
+			<?= elgg_view('install.js') ?>
+		</script>
 	</body>
 </html>

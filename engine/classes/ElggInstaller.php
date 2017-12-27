@@ -134,6 +134,7 @@ class ElggInstaller {
 
 			$app->_services->setValue('session', \ElggSession::getMock());
 			$app->_services->views->setViewtype('installation');
+			$app->_services->views->registerViewtypeFallback('installation');
 			$app->_services->views->registerPluginViews(Paths::elgg());
 			$app->_services->translator->registerTranslations(Paths::elgg() . "install/languages/", true);
 
