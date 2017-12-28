@@ -1,4 +1,4 @@
-<table class="theme-sandbox-table">
+<table class="elgg-table">
 	<thead>
 		<tr>
 			<th>Anchor links</th>
@@ -40,7 +40,7 @@
 	</tbody>
 </table>
 
-<table class="theme-sandbox-table mtl">
+<table class="elgg-table mtl">
 	<thead>
 		<tr>
 			<th>Input type="submit"</th>

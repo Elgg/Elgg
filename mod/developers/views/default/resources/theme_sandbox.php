@@ -29,9 +29,14 @@ elgg_require_js('elgg/dev/theme_sandbox');
 $title = elgg_echo("theme_sandbox:{$page}");
 $body =  elgg_view("theme_sandbox/{$page}");
 
-$layout = elgg_view_layout('theme_sandbox', [
-	'title' => $title,
-	'content' => $body,
+$menu = elgg_view_menu('theme_sandbox', [
+	'class' => 'elgg-menu-page',
 ]);
 
-echo elgg_view_page("Theme Sandbox : $title", $layout, 'theme_sandbox');
+$layout = elgg_view_layout('default', [
+	'title' => $title,
+	'content' => $body,
+	'sidebar' => $menu,
+]);
+
+echo elgg_view_page("Theme Sandbox : $title", $layout);
