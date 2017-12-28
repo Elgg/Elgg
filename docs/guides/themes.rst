@@ -128,7 +128,7 @@ Theming Principles and Best Practices
 		order: 2;
 	}
 
-**Symmetry**
+**Symmetrical**
 	We maintain symmetry.
 
 .. code::css
@@ -145,6 +145,11 @@ Theming Principles and Best Practices
 	.row .column {
 		margin: 0.5rem;
 	}
+
+**Simple color transitions**
+	We maintain 4 sets of colors for text, background and border: ``soft``, ``mild``, ``strong`` and ``highlight``.
+	When transitioning to hover or active state, we go one level up, e.g. from ``soft`` to ``mild``, or use ``highlight``.
+	When transition to inactive or disabled state, we go one level down.
 
 **Increase the click area**
 	When working with nested anchors, we increase the click area of the anchor, rather than the parent
@@ -239,6 +244,19 @@ Here is a list of the existing CSS views:
  * elements/core.css: Contains base styles for the more complicated “css objects”. If you find yourself wanting to override this, you probably need to report a bug to Elgg core instead (DO NOT OVERRIDE).
  * elements/reset.css: Contains a reset stylesheet that forces elements to have the same default
 
+CSS variables
+-------------
+
+Elgg uses CssCrush for preprocessing CSS files. This gives us the flexibility of using global CSS variables.
+Plugins should, wherever possible, use global CSS variables, and extend the core theme with their plugin variables, so they
+can be simply altered by other plugins.
+
+To add or alter variables, use the ``vars:compiler, css`` hook. Note that you may need to flush the cache to see your
+changes in action.
+
+For a list of default core variables, see ``engine/theme.php``.
+
+.. _guides/theming#css-vars:
 
 View extension
 --------------

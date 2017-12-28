@@ -87,7 +87,7 @@ th {
 
 html {
 	background-color: white;
-	font-size: 16px;
+	font-size: $(font-size);
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
 	min-width: 300px;
@@ -115,7 +115,8 @@ button,
 input,
 select,
 textarea {
-	font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	font-family: $(font-family);
+
 }
 
 code,
@@ -126,7 +127,7 @@ pre {
 }
 
 body {
-	color: #2d3047;
+	color: $(text-color-strong);
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -141,12 +142,8 @@ a strong {
 	color: currentColor;
 }
 
-a:hover {
-	color: #363636;
-}
-
 code {
-	background-color: whitesmoke;
+	background-color: $(background-color-soft);
 	color: #ff3860;
 	font-size: 0.875em;
 	font-weight: normal;
@@ -154,7 +151,7 @@ code {
 }
 
 hr {
-	background-color: #dbdbdb;
+	background-color: $(border-color-mild);
 	border: none;
 	display: block;
 	height: 1px;
@@ -180,15 +177,10 @@ span {
 	font-weight: inherit;
 }
 
-strong {
-	color: #363636;
-	font-weight: 700;
-}
-
 pre {
 	-webkit-overflow-scrolling: touch;
-	background-color: whitesmoke;
-	color: #2d3047;
+	background-color: $(background-color-soft);
+	color: $(text-color-strong);
 	font-size: 0.875em;
 	overflow-x: auto;
 	padding: 1.25rem 1.5rem;
@@ -231,7 +223,7 @@ strike, del {
 }
 
 strong, b {
-	font-weight: 600;
+	font-weight: $(font-bold-weight);
 }
 
 table {

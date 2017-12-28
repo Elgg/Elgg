@@ -2,13 +2,13 @@
 	USER PICKER
 *************************************** */
 .elgg-user-picker-list > li:first-child {
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 	margin-top: 0.5rem;
 }
 
 .elgg-user-picker-list > li {
 	padding: 0 1rem;
-	border-bottom: 1px solid #e6e6ea;
+	border-bottom: 1px solid $(border-color-soft);
 }
 
 .elgg-user-picker.elgg-state-disabled > input,

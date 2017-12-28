@@ -23,7 +23,7 @@
 *************************************** */
 .elgg-module-aside > .elgg-head {
 	padding: 0.5rem 1rem;
-	border-bottom: 1px solid #e6e6ea;
+	border-bottom: 1px solid $(border-color-soft);
 }
 
 .elgg-module-aside > .elgg-body {
@@ -34,16 +34,16 @@
 	INFO
 *************************************** */
 .elgg-module-info {
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 }
 
 .elgg-module-info > .elgg-head {
-	background-color: #e6e6ea;
+	background-color: $(background-color-mild);
 	padding: 0.5rem 1rem;
 }
 
 .elgg-module-info > .elgg-head * {
-	color: #2d3047;
+	color: $(text-color-strong);
 }
 
 .elgg-module-info > .elgg-body {
@@ -63,7 +63,7 @@
 	margin-bottom: 0;
 	padding: 0.5rem;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 }
 
 .elgg-module-popup > .elgg-head {
@@ -71,7 +71,7 @@
 }
 
 .elgg-module-popup > .elgg-head * {
-	color: #2d3047;
+	color: $(text-color-strong);
 }
 
 /* ***************************************
@@ -94,11 +94,12 @@
 	FEATURED MODULE
 *************************************** */
 .elgg-module-featured {
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-highlight);
 }
 
 .elgg-module-featured > .elgg-head {
-	background-color: #e6e6ea;
+	background-color: $(background-color-highlight);
+	color: #ffffff;
 	padding: 0.5rem 1rem;
 	height: auto;
 	overflow: hidden;

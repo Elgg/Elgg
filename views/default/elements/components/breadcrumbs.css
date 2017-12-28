@@ -3,7 +3,7 @@
 *************************************** */
 .elgg-breadcrumbs {
 	padding: 0.5rem;
-	color: #969696;
+	color: $(text-color-soft);
 	font-size: 0.9rem;
 }
 
@@ -19,10 +19,10 @@
 
 .elgg-breadcrumbs > li > a {
 	display: inline-block;
-	color: #969696;
+	color: $(text-color-soft);
 }
 
 .elgg-breadcrumbs > li > a:hover {
-	color: #646464;
+	color: $(text-color-mild);
 }
 

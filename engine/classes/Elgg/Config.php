@@ -21,8 +21,9 @@ use Elgg\Project\Paths;
  * @property bool          $boot_complete
  * @property int           $boot_cache_ttl
  * @property array         $breadcrumbs
- * @property string        $cacheroot         Path of cache storage with trailing "/"
- * @property string        $dataroot          Path of data storage with trailing "/"
+ * @property string        $cacheroot            Path of cache storage with trailing "/"
+ * @property array         $css_compiler_options Options passed to CssCrush during CSS compilation
+ * @property string        $dataroot             Path of data storage with trailing "/"
  * @property bool          $data_dir_override
  * @property array         $db
  * @property string        $dbencoding

@@ -11,7 +11,7 @@
 	th {
 		border-style: solid;
 		border-width: 0 0 1px;
-		border-color: #e6e6ea;
+		border-color: $(border-color-soft);
 		padding: 0.5em 0.75em;
 		vertical-align: top;
 		background-color: white;
@@ -22,7 +22,7 @@
 	tr.elgg-state-selected th,
 	tr:hover td,
 	tr:hover th {
-		background-color: #f5f5f6;
+		background-color: $(background-color-soft);
 	}
 
 	thead th {

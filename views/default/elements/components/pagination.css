@@ -11,7 +11,7 @@
 	display: inline-block;
 	text-align: center;
 	margin-left: -1px;
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 }
 
 .elgg-pagination li:first-child,
@@ -40,18 +40,18 @@
 .elgg-pagination li > span {
 	display: inline-block;
 	padding: 0.5rem 1rem;
-	color: #2d3047;
+	color: $(text-color-strong);
 }
 
 .elgg-pagination li > a:hover {
-	background: #f5f5f6;
+	background: $(background-color-mild);
 	text-decoration: none;
 }
 
 .elgg-pagination .elgg-state-disabled > span {
-	color: #cccccc;
+	color: $(text-color-mild);
 }
 
 .elgg-pagination .elgg-state-selected > span {
-	color: #969696;
+	color: $(text-color-soft);
 }

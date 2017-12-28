@@ -25,8 +25,8 @@
 
 .elgg-badge {
 	display: inline-block;
-	color: #2d3047;
-	background-color: #fafafa;
+	color: $(text-color-strong);
+	background-color: $(background-color-soft);
 	padding: 3px 5px;
 	text-align: center;
 	white-space: nowrap;
