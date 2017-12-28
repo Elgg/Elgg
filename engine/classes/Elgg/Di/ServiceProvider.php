@@ -4,6 +4,7 @@ namespace Elgg\Di;
 
 use ConfigurationException;
 use Elgg\Application;
+use Elgg\Assets\CssCompiler;
 use Elgg\Cache\CompositeCache;
 use Elgg\Cache\DataCache;
 use Elgg\Cache\SessionCache;
@@ -34,6 +35,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\Application\CacheHandler           $cacheHandler
+ * @property-read \Elgg\Assets\CssCompiler                 $cssCompiler
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\Cli                                $cli
  * @property-read \ElggCrypto                              $crypto
@@ -182,6 +184,10 @@ class ServiceProvider extends DiContainer {
 				$simplecache_enabled = $c->configTable->get('simplecache_enabled');
 			}
 			return new \Elgg\Application\CacheHandler($c->config, $c->request, $simplecache_enabled);
+		});
+
+		$this->setFactory('cssCompiler', function(ServiceProvider $c) {
+			return new CssCompiler($c->config, $c->hooks);
 		});
 
 		$this->setFactory('classLoader', function(ServiceProvider $c) {

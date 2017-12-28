@@ -105,7 +105,7 @@
 .elgg-menu-page,
 .elgg-menu-owner-block {
 	background: #ffffff;
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 	margin-bottom: 2rem;
 
 	li:not(:last-child) {
@@ -128,9 +128,9 @@
 	li > a,
 	li > a {
 		padding: 0.5rem 1rem;
-		color: #2d3047;
+		color: $(text-color-strong);
 		&:hover {
-			background: #fafafa;
+			background: $(background-color-soft);
 			text-decoration: none;
 			color: #333;
 		}
@@ -139,7 +139,7 @@
 	li.elgg-state-selected > a,
 	li.elgg-state-selected > a {
 		color: #333;
-		background: #e6e6ea;
+		background-color: $(background-color-mild);
 	}
 
 	.elgg-menu-closed:before,
@@ -169,7 +169,7 @@
 	position: absolute;
 	z-index: 4;
 	overflow: hidden;
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 	background-color: #ffffff;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 	min-width: 10rem;
@@ -190,13 +190,13 @@
 .elgg-menu-hover > li,
 .elgg-menu-hover-actions > li,
 .elgg-menu-hover-admin > li {
-	border-bottom: 1px solid #e6e6ea;
+	border-bottom: 1px solid $(border-color-soft);
 }
 
 .elgg-menu-hover > li > a,
 .elgg-menu-hover-actions > li > a,
 .elgg-menu-hover-admin > li > a {
-	color: #2d3047;
+	color: $(text-color-strong);
 	font-size: 0.9rem;
 	transition: background-color 0.5s;
 	text-decoration: none;
@@ -209,7 +209,7 @@
 .elgg-menu-hover > li > a:hover,
 .elgg-menu-hover-actions > li > a:hover,
 .elgg-menu-hover-admin > li > a:hover {
-	background: #fafafa;
+	background: $(background-color-soft);
 	color: #333;
 }
 
@@ -221,13 +221,13 @@
 
 .elgg-menu-hover-actions,
 .elgg-menu-hover-default {
-	border-left: 1px solid #e6e6ea;
+	border-left: 1px solid $(border-color-soft);
 	flex: 1;
 	min-width: 10rem;
 }
 
 .elgg-menu-hover-admin {
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 }
 
 .elgg-menu-hover .elgg-menu-hover-admin a {
@@ -240,7 +240,7 @@
 .elgg-menu-general > li,
 .elgg-menu-general > li > a {
 	display: inline-block;
-	color: #969696;
+	color: $(text-color-soft);
 }
 
 .elgg-menu-general > li:after {
@@ -265,7 +265,7 @@
 .elgg-menu-annotation,
 .elgg-menu-widget {
 	font-size: 0.9rem;
-	color: #7d7d7d;
+	color: $(text-color-mild);
 	height: auto;
 	vertical-align: middle;
 
@@ -310,7 +310,7 @@
 *************************************** */
 .elgg-menu-login-container {
 	margin-top: 1rem;
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 }
 
 .elgg-menu-login > li {
@@ -325,7 +325,7 @@
 }
 
 .elgg-menu-login > li > a:hover {
-	background: #fafafa;
+	background: $(background-color-soft);
 	text-decoration: none;
 }
 

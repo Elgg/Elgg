@@ -149,7 +149,6 @@ echo elgg_view('elements/helpers.css', $vars);
 .elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
 	display: block;
 	margin: 0;
-	padding: 3px 10px;
 }
 
 .elgg-plugin > .elgg-image-block > .elgg-body {
