@@ -13,6 +13,12 @@ source_file = install/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
+[elgg-core-3.activity]
+file_filter = mod/activity/languages/<lang>.php
+source_file = mod/activity/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
 [elgg-core-3.blog]
 file_filter = mod/blog/languages/<lang>.php
 source_file = mod/blog/languages/en.php
@@ -64,6 +70,12 @@ type = PHP_ARRAY
 [elgg-core-3.externalpages]
 file_filter = mod/externalpages/languages/<lang>.php
 source_file = mod/externalpages/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core-3.friends]
+file_filter = mod/friends/languages/<lang>.php
+source_file = mod/friends/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
