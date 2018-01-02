@@ -1,6 +1,7 @@
 <?php
 namespace Elgg;
 
+use Elgg\ActionsService\Action;
 use Elgg\Di\DiContainer;
 use Elgg\HooksRegistrationService\Event;
 use Elgg\HooksRegistrationService\Hook;
@@ -40,13 +41,16 @@ class HandlersService {
 			return [false, null, $object];
 		}
 
+		$result = null;
 		$use_object = $this->acceptsObject($callable);
 		if ($use_object) {
 			if (is_string($object)) {
 				if ($object === 'hook') {
 					$object = new Hook(elgg(), $args[0], $args[1], $args[2], $args[3]);
-				} else {
+				} else if ($object === 'event') {
 					$object = new Event(elgg(), $args[0], $args[1], $args[2]);
+				} else if ($object === 'action') {
+					$object = new Action(elgg(), $args[0], $args[1]);
 				}
 			}
 
@@ -95,7 +99,7 @@ class HandlersService {
 	 *
 	 * @return callable|null
 	 */
-	private function resolveCallable($callable) {
+	public function resolveCallable($callable) {
 		if (is_callable($callable)) {
 			return $callable;
 		}

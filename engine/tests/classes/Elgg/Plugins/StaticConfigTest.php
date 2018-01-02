@@ -2,6 +2,7 @@
 
 namespace Elgg\Plugins;
 
+use Elgg\HandlersService;
 use Elgg\UnitTestCase;
 
 class StaticConfigTest extends UnitTestCase {
@@ -46,8 +47,14 @@ class StaticConfigTest extends UnitTestCase {
 		foreach ($actions as $action => $action_spec) {
 			$this->assertInternalType('array', $action_spec);
 
-			$filename = elgg_extract('filename', $action_spec, "$root_path/actions/{$action}.php");
-			$this->assertFileExists($filename);
+			if (!empty($action_spec['callback'])) {
+				$handlers = new HandlersService();
+				$this->assertTrue(is_callable($handlers->resolveCallable($action_spec['callback'])));
+			} else {
+				$filename = elgg_extract('filename', $action_spec, "$root_path/actions/{$action}.php");
+				$this->assertFileExists($filename);
+			}
+
 		}
 	}
 

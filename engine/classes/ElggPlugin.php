@@ -959,16 +959,20 @@ class ElggPlugin extends ElggObject {
 			$options = [
 				'access' => 'logged_in',
 				'filename' => '', // assuming core action is registered
+				'callback' => false,
 			];
 
 			$options = array_merge($options, $action_spec);
 
-			$filename = "$root_path/actions/{$action}.php";
-			if (is_file($filename)) {
-				$options['filename'] = $filename;
-			}
+			if ($options['callback']) {
+				$actions->register($action, $options['callback'], $options['access']);
+			} else {
+				if (!$options['filename']) {
+					$options['filename'] = "$root_path/actions/{$action}.php";
+				}
 
-			$actions->register($action, $options['filename'], $options['access']);
+				$actions->register($action, $options['filename'], $options['access']);
+			}
 		}
 	}
 

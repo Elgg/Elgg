@@ -800,7 +800,7 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
 
-	elgg_register_action('login', '', 'public');
+	elgg_register_action('login', \Elgg\Actions\LoginAction::class, 'public');
 	elgg_register_action('logout');
 	elgg_register_action('register', '', 'public');
 	elgg_register_action('useradd', '', 'admin');

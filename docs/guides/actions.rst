@@ -18,15 +18,43 @@ This guide assumes basic familiarity with:
 Registering actions
 ===================
 
-Actions must be registered before use. Use ``elgg_register_action`` for this:
+Actions must be registered before use. Use ``elgg_register_action`` for this.
+
+To register an action using a callable that accepts an instance of ``\Elgg\Action``:
+
+.. code-block:: php
+
+   elgg_register_action("example", MyActionHandler::class);
+
+   class MyActionHandler {
+
+      public function __invoke(\Elgg\Action $action) {
+
+         $entity = $action->getEntityParam();
+         $entity->name = $action->getParam('name');
+
+         return elgg_ok_response('', 'Name has been updated successfully', $entity->getURL());
+      }
+   }
+
+
+To register an action using legacy approach (with action files):
 
 .. code-block:: php
 
    elgg_register_action("example", __DIR__ . "/actions/example.php");
 
-The ``mod/example/actions/example.php`` script will now be run whenever a form is submitted to ``http://localhost/elgg/action/example``.
+   // in /my_plugin/actions/example.php
+   $guid = get_input('guid');
+   $entity = get_entity($guid);
 
-.. warning:: A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension.
+   $name = get_input('name');
+
+   return elgg_ok_response('', 'Name has been updated successfully', $entity->getURL());
+
+
+.. warning:: A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural).
+However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension.
 
 Registering actions using plugin config file
 --------------------------------------------
@@ -45,6 +73,9 @@ The location of the action files are assumed to be in the plugin folder  ``/acti
 		          'access' => 'admin',
 		          'filename' => __DIR__ . 'actions/blog/remove.php',
 		    ],
+            'blog/update' => [
+                  'callback' => \Elgg\Blog\Actions\UpdateAction::class,
+            ],
 		],
 	];
 
