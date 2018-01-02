@@ -25,6 +25,10 @@ Search plugin
 	background-color: #08A7E7;
 }
 
+.elgg-form-search [type="submit"] {
+	display: none;
+}
+
 .elgg-page-topbar {
 
 	.elgg-form-search {
@@ -57,6 +61,7 @@ Search plugin
 		top: 0;
 		margin: 0.5rem;
 		background: transparent;
+		display: block;
 	}
 
 	.elgg-form-search [type="text"]::-webkit-input-placeholder { /* Chrome/Opera/Safari */

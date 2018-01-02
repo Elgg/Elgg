@@ -18,6 +18,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	use Testing;
 	use PluginTesting;
+	use HookTesting;
 
 	static $_instance;
 	static $_settings;
