@@ -24,5 +24,11 @@ return [
 	],
 	'user_settings' => [
 		'user_default1' => 'set1',
+	],
+	'routes' => [
+		'plugin:foo' => [
+			'path' => '/plugin/{foo?}',
+			'resource' => 'plugin/foo',
+		],
 	]
 ];

@@ -1,6 +1,11 @@
 <?php
 
-$page_type = elgg_extract('page_type', $vars);
+elgg_load_library('elgg:blog');
+
+// push all blogs breadcrumb
+elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('collection:object:blog:all'));
+
+$page_type = 'archive';
 $username = elgg_extract('username', $vars);
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);

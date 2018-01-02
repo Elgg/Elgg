@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
+use Elgg\Project\Paths;
 use ElggCache;
 use Stash\Invalidation;
 

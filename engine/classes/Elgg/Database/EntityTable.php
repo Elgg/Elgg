@@ -185,7 +185,7 @@ class EntityTable {
 		}
 
 		$where = new EntityWhereClause();
-		$where->guids = $guid;
+		$where->guids = (int) $guid;
 		$where->viewer_guid = $user_guid;
 
 		$select = Select::fromTable('entities');

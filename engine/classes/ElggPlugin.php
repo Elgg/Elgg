@@ -619,8 +619,15 @@ class ElggPlugin extends ElggObject {
 			$this->activateEntities();
 
 			if ($this->canReadFile('activate.php')) {
-				$flags = ELGG_PLUGIN_INCLUDE_START | ELGG_PLUGIN_REGISTER_CLASSES |
-					ELGG_PLUGIN_REGISTER_LANGUAGES | ELGG_PLUGIN_REGISTER_VIEWS | ELGG_PLUGIN_REGISTER_WIDGETS | ELGG_PLUGIN_REGISTER_ACTIONS;
+				_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+
+				$flags = ELGG_PLUGIN_INCLUDE_START |
+						ELGG_PLUGIN_REGISTER_CLASSES |
+						ELGG_PLUGIN_REGISTER_LANGUAGES |
+						ELGG_PLUGIN_REGISTER_VIEWS |
+						ELGG_PLUGIN_REGISTER_WIDGETS |
+						ELGG_PLUGIN_REGISTER_ACTIONS |
+						ELGG_PLUGIN_REGISTER_ROUTES;
 
 				$this->start($flags);
 
@@ -631,8 +638,6 @@ class ElggPlugin extends ElggObject {
 		if ($return === false) {
 			$this->deactivate();
 		}
-
-		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
 
 		_elgg_services()->plugins->setBootPlugins(null);
 
@@ -793,6 +798,11 @@ class ElggPlugin extends ElggObject {
 		// include actions
 		if ($flags & ELGG_PLUGIN_REGISTER_ACTIONS) {
 			$this->registerActions();
+		}
+
+		// include routes
+		if ($flags & ELGG_PLUGIN_REGISTER_ROUTES) {
+			$this->registerRoutes();
 		}
 
 		// include widgets
@@ -969,6 +979,26 @@ class ElggPlugin extends ElggObject {
 			}
 
 			$actions->register($action, $options['filename'], $options['access']);
+		}
+	}
+
+	/**
+	 * Registers the plugin's routes provided in the plugin config file
+	 *
+	 * @throws PluginException
+	 * @return void
+	 */
+	protected function registerRoutes() {
+		$router = _elgg_services()->router;
+
+		$spec = (array) $this->getStaticConfig('routes', []);
+
+		foreach ($spec as $name => $route_spec) {
+			if (!is_array($route_spec)) {
+				continue;
+			}
+
+			$router->registerRoute($name, $route_spec);
 		}
 	}
 

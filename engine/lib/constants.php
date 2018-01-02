@@ -156,6 +156,11 @@ define('ELGG_PLUGIN_REGISTER_WIDGETS', 32);
 define('ELGG_PLUGIN_IGNORE_MANIFEST', 64);
 
 /**
+ * Tells \ElggPlugin::start() to automatically register the plugin's routes.
+ */
+define('ELGG_PLUGIN_REGISTER_ROUTES', 128);
+
+/**
  * Prefix for plugin user setting names
  */
 define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');

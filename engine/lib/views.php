@@ -419,7 +419,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
  * @param array  $vars Arguments passed to the view
  *
  * @return string
- * @throws SecurityException
+ * @throws \Elgg\PageNotFoundException
  */
 function elgg_view_resource($name, array $vars = []) {
 	$view = "resources/$name";
@@ -434,13 +434,8 @@ function elgg_view_resource($name, array $vars = []) {
 
 	_elgg_services()->logger->error("The view $view is missing.");
 
-	if (elgg_get_viewtype() === 'default') {
-		// only works for default viewtype
-		forward('', '404');
-	} else {
-		register_error(elgg_echo('error:404:content'));
-		forward('');
-	}
+	// only works for default viewtype
+	throw new \Elgg\PageNotFoundException();
 }
 
 /**

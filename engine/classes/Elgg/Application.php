@@ -8,10 +8,13 @@ use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
+use Elgg\Http\ErrorResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
 use InstallationException;
 use InvalidArgumentException;
+use InvalidParameterException;
+use SecurityException;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -441,40 +444,63 @@ class Application {
 	 * Routes the request, booting core if not yet booted
 	 *
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
+	 * @throws InstallationException
+	 * @throws InvalidParameterException
+	 * @throws SecurityException
 	 */
 	public function run() {
-		$config = $this->_services->config;
-		$request = $this->_services->request;
+		try {
+			$config = $this->_services->config;
+			$request = $this->_services->request;
 
-		if ($request->isCliServer()) {
-			if ($request->isCliServable(Paths::project())) {
-				return false;
+			if ($request->isCliServer()) {
+				if ($request->isCliServable(Paths::project())) {
+					return false;
+				}
+
+				// overwrite value from settings
+				$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
+				$config->wwwroot = $www_root;
+				$config->wwwroot_cli_server = $www_root;
 			}
 
-			// overwrite value from settings
-			$www_root = rtrim($request->getSchemeAndHttpHost() . $request->getBaseUrl(), '/') . '/';
-			$config->wwwroot = $www_root;
-			$config->wwwroot_cli_server = $www_root;
+			if (0 === strpos($request->getElggPath(), '/cache/')) {
+				$this->_services->cacheHandler->handleRequest($request, $this)->prepare($request)->send();
+
+				return true;
+			}
+
+			if (0 === strpos($request->getElggPath(), '/serve-file/')) {
+				$this->_services->serveFileHandler->getResponse($request)->send();
+
+				return true;
+			}
+
+			$this->bootCore();
+
+			// re-fetch new request from services in case it was replaced by route:rewrite
+			$request = $this->_services->request;
+
+			if (!$this->_services->router->route($request)) {
+				throw new PageNotFoundException();
+			}
+		} catch (HttpException $ex) {
+			$forward_url = REFERRER;
+			if ($ex instanceof GatekeeperException) {
+				$forward_url = elgg_is_logged_in() ? '' : '/login';
+			}
+
+			$hook_params = [
+				'exception' => $ex,
+			];
+			
+			$this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
+
+			$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
+			$this->_services->responseFactory->respond($response);
 		}
 
-		if (0 === strpos($request->getElggPath(), '/cache/')) {
-			$this->_services->cacheHandler->handleRequest($request, $this)->prepare($request)->send();
-			return true;
-		}
-
-		if (0 === strpos($request->getElggPath(), '/serve-file/')) {
-			$this->_services->serveFileHandler->getResponse($request)->send();
-			return true;
-		}
-
-		$this->bootCore();
-
-		// re-fetch new request from services in case it was replaced by route:rewrite
-		$request = $this->_services->request;
-
-		if (!$this->_services->router->route($request)) {
-			forward('', '404');
-		}
+		return true;
 	}
 
 	/**
@@ -518,7 +544,7 @@ class Application {
 
 			_elgg_services()->responseFactory->respond($response);
 			return headers_sent();
-		} catch (\InvalidParameterException $ex) {
+		} catch (InvalidParameterException $ex) {
 			throw new InstallationException($ex->getMessage());
 		}
 	}
