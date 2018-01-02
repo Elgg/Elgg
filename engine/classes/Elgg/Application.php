@@ -321,6 +321,13 @@ class Application {
 	}
 
 	/**
+	 *
+	 */
+	public function service($name) {
+		return $this->_services->{$name};
+	}
+
+	/**
 	 * Make the global $CONFIG a reference to this application's config service
 	 *
 	 * @param Application $application The Application

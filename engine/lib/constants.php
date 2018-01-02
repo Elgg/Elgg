@@ -155,6 +155,12 @@ define('ELGG_PLUGIN_REGISTER_WIDGETS', 32);
  */
 define('ELGG_PLUGIN_IGNORE_MANIFEST', 64);
 
+
+/**
+ * Tells \ElggPlugin::start() to automatically register the plugin's services.
+ */
+define('ELGG_PLUGIN_REGISTER_SERVICES', 123);
+
 /**
  * Prefix for plugin user setting names
  */

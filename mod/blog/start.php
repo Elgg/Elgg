@@ -11,6 +11,7 @@
  * @return void
  */
 function blog_init() {
+	elgg()->service('blog.bar')->test('bar');
 
 	elgg_register_library('elgg:blog', __DIR__ . '/lib/blog.php');
 
