@@ -30,10 +30,8 @@ elgg = {
 elgg.installer.rewriteTest = function(url, success_msg, nextURL) {
 	$.ajax(url, {
 		success: function(data, status, xhr) {
-			console.log(data);
-
 			if (data == 'success') {
-				$('.elgg-require-rewrite li').attr('class', 'pass');
+				$('.elgg-require-rewrite li').attr('class', 'pass elgg-message elgg-message-success');
 				$('.elgg-require-rewrite li').html('<p>' + success_msg + '</p>');
 				$('.elgg-install-nav a.elgg-state-disabled')
 					.removeClass('elgg-state-disabled')
