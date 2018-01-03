@@ -3,19 +3,19 @@
 *************************************** */
 .elgg-page-footer {
 	position: relative;
-	background: #f5f5f6;
-	border-top: 1px solid #e6e6ea;
-	color: #969696;
+	background: $(background-color-soft);
+	border-top: 1px solid $(border-color-soft);
+	color: $(text-color-soft);
 	font-size: 0.9rem;
 	min-height: 4rem;
 }
 
 .elgg-page-footer a {
-	color: #969696;
+	color: $(text-color-soft);
 }
 
 .elgg-page-footer a:hover {
-	color: #646464;
+	color: $(text-color-highlight);
 }
 
 /* ***************************************
@@ -36,7 +36,7 @@
 	padding: 0.5rem 1rem;
 }
 
-@media screen and (min-width: 80rem) {
+@media $(media-desktop-up) {
 	.elgg-page-footer .elgg-menu-container {
 		flex-direction: row;
 		justify-content: flex-end;

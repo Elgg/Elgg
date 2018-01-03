@@ -1636,14 +1636,8 @@ function _elgg_views_minify($hook, $type, $content, $params) {
  * @access private
  */
 function _elgg_views_preprocess_css($hook, $type, $content, $params) {
-	$options = [
-		'minify' => false, // minify handled by _elgg_views_minify
-		'formatter' => 'single-line', // shows lowest byte size
-		'versioning' => false, // versioning done by Elgg
-		'rewrite_import_urls' => false,
-	];
-	
-	return csscrush_string($content, $options);
+	$options = elgg_extract('compiler_options', $params, []);
+	return _elgg_services()->cssCompiler->compile($content, $options);
 }
 
 /**

@@ -629,6 +629,11 @@ Views
     ``$params['arguments']`` and should return an instance of ``Elgg\Views\TableColumn`` if they
     wish to specify the column directly.
 
+**vars:compiler, css**
+    Allows plugins to alter CSS variables passed to CssCrush during compilation.
+    See `CSS variables <_guides/theming#css-vars>`.
+
+
 Files
 =====
 
