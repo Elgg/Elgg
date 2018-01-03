@@ -1437,12 +1437,12 @@ function _elgg_ajax_page_handler($segments) {
 
 		$ajax_api = _elgg_services()->ajax;
 		$allowed_views = $ajax_api->getViews();
-		
+
 		// cacheable views are always allowed
 		if (!in_array($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
 			return elgg_error_response("Ajax view '$view' was not registered", REFERRER, ELGG_HTTP_FORBIDDEN);
 		}
-		
+
 		if (!elgg_view_exists($view)) {
 			return elgg_error_response("Ajax view '$view' was not found", REFERRER, ELGG_HTTP_NOT_FOUND);
 		}
@@ -1488,7 +1488,7 @@ function _elgg_ajax_page_handler($segments) {
 		if ($content_type) {
 			elgg_set_http_header("Content-Type: $content_type");
 		}
-		
+
 		return elgg_ok_response($output);
 	}
 
@@ -1614,16 +1614,6 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
 }
 
 /**
- * Intercepts the index page when Walled Garden mode is enabled.
- *
- * @return ResponseBuilder
- * @access private
- */
-function _elgg_walled_garden_index() {
-	return elgg_ok_response(elgg_view_resource('walled_garden'));
-}
-
-/**
  * Checks the status of the Walled Garden and forwards to a login page
  * if required.
  *
@@ -1645,8 +1635,6 @@ function _elgg_walled_garden_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:walled_garden', '_elgg_walled_garden_menu');
 
-	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
-
 	if (_elgg_config()->default_access == ACCESS_PUBLIC) {
 		elgg_set_config('default_access', ACCESS_LOGGED_IN);
 	}
@@ -1655,7 +1643,10 @@ function _elgg_walled_garden_init() {
 
 	if (!elgg_is_logged_in()) {
 		// override the front page
-		elgg_register_page_handler('', '_elgg_walled_garden_index');
+		elgg_register_route('index', [
+			'path' => '/',
+			'resource' => 'walled_garden',
+		]);
 	}
 }
 
@@ -1717,17 +1708,6 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
 function _elgg_init() {
 	elgg_register_action('entity/delete');
 
-	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
-	elgg_register_page_handler('favicon.ico', '_elgg_favicon_page_handler');
-
-	elgg_register_page_handler('manifest.json', function() {
-		$site = elgg_get_site_entity();
-		$resource = new \Elgg\Http\WebAppManifestResource($site);
-		header('Content-Type: application/json;charset=utf-8');
-		echo json_encode($resource->get());
-		return true;
-	});
-
 	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
 		$result['links']['manifest'] = [
 			'rel' => 'manifest',
@@ -1779,6 +1759,20 @@ function _elgg_delete_autoload_cache() {
 }
 
 /**
+ * Register core routes
+ * @return void
+ * @internal
+ */
+function _elgg_register_routes() {
+	$conf = \Elgg\Project\Paths::elgg() . 'engine/routes.php';
+	$routes = \Elgg\Includer::includeFile($conf);
+
+	foreach ($routes as $name => $def) {
+		elgg_register_route($name, $def);
+	}
+}
+
+/**
  * Adds unit tests for the general API.
  *
  * @param string $hook   unit_test
@@ -1803,6 +1797,8 @@ function _elgg_api_test($hook, $type, $value, $params) {
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+
+	_elgg_register_routes();
 
 	elgg_set_entity_class('user', 'user', \ElggUser::class);
 	elgg_set_entity_class('group', 'group', \ElggGroup::class);

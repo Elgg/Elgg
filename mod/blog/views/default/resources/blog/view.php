@@ -20,9 +20,9 @@ $container = $blog->getContainerEntity();
 $crumbs_title = $container->name;
 
 if ($container instanceof ElggGroup) {
-	elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
+	elgg_push_breadcrumb($crumbs_title, elgg_generate_url('collection:object:blog:group', ['group_guid' => $container->guid]));
 } else {
-	elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
+	elgg_push_breadcrumb($crumbs_title, elgg_generate_url('collection:object:blog:owner', ['username' => $container->username]));
 }
 
 elgg_push_breadcrumb($blog->title);

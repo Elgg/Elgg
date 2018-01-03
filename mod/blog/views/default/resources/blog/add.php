@@ -2,7 +2,12 @@
 
 elgg_gatekeeper();
 
-$page_type = elgg_extract('page_type', $vars);
+elgg_load_library('elgg:blog');
+
+// push all blogs breadcrumb
+elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('collection:object:blog:all'));
+
+$page_type = 'add';
 $guid = elgg_extract('guid', $vars);
 
 $params = blog_get_page_content_edit('add', $guid);

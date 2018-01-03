@@ -6,27 +6,30 @@
  * @subpackage Core
  */
 
-// Only logged in users
 elgg_gatekeeper();
 
-// Make sure we don't open a security hole ...
-if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit())) {
-	register_error(elgg_echo('noaccess'));
-	forward('/');
+$username = elgg_extract('username', $vars);
+if (!$username) {
+	$username = elgg_get_logged_in_user_entity()->username;
 }
+
+$user = get_user_by_username($username);
+if (!$user || !$user->canEdit()) {
+	throw new \Elgg\EntityPermissionsException();
+}
+
+elgg_set_page_owner_guid($user->guid);
 
 $plugin_id = elgg_extract("plugin_id", $vars);
 
 if (empty($plugin_id)) {
-	register_error(elgg_echo('ElggPlugin:MissingID'));
-	forward(REFERER);
+	throw new \Elgg\PageNotFoundException(elgg_echo('ElggPlugin:MissingID'));
 }
 
 $plugin = elgg_get_plugin_from_id($plugin_id);
 
 if (!$plugin) {
-	register_error(elgg_echo('PluginException:InvalidID', [$plugin_id]));
-	forward(REFERER);
+	throw new \Elgg\PageNotFoundException(elgg_echo('PluginException:InvalidID', [$plugin_id]));
 }
 
 if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {

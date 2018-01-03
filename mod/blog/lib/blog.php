@@ -81,9 +81,14 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 
 	$crumbs_title = $owner->name;
 	if ($owner instanceof ElggUser) {
-		$url = "blog/owner/{$owner->username}";
+		$url = elgg_generate_url('collection:object:blog:owner', [
+			'username' => $owner->username,
+		]);
 	} else {
-		$url = "blog/group/$owner->guid/all";
+		$url = elgg_generate_url('collection:object:blog:group', [
+			'group_guid' => $owner->guid,
+			'subpage' => 'all',
+		]);
 	}
 	elgg_push_breadcrumb($crumbs_title, $url);
 	elgg_push_breadcrumb(elgg_echo('blog:archives'));

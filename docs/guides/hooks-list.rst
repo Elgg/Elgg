@@ -250,6 +250,7 @@ Action hooks
 
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
+	In certain cases, the ``params`` array will contain an instance of ``HttpException`` that triggered the error.
 
 **response, action:<action>**
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.

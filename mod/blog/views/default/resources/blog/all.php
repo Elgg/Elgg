@@ -1,6 +1,11 @@
 <?php
 
-$page_type = elgg_extract('page_type', $vars);
+$page_type = 'all';
+
+elgg_load_library('elgg:blog');
+
+// push all blogs breadcrumb
+elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('collection:object:blog:all'));
 
 $params = blog_get_page_content_list();
 

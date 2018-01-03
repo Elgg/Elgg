@@ -190,37 +190,6 @@ function elgg_clear_sticky_value($form_name, $variable) {
 }
 
 /**
- * Page handler for autocomplete endpoint.
- *
- * @todo split this into functions/objects, this is way too big
- *
- * /livesearch?q=<query>
- *
- * Other options include:
- *     match_on	   string all or array(groups|users|friends)
- *     match_owner int    0/1
- *     limit       int    default is 10
- *     name        string default "members"
- *
- * @param array $page URL segments
- * @return string JSON string is returned and then exit
- * @access private
- */
-function input_livesearch_page_handler($page) {
-	$match_on = array_shift($page);
-	if (!$match_on) {
-		$match_on = get_input('match_on');
-	}
-	elgg_set_viewtype('json');
-	if (elgg_view_exists("resources/livesearch/$match_on")) {
-		$output = elgg_view_resource("livesearch/$match_on");
-		return elgg_ok_response($output);
-	} else {
-		return elgg_error_response('', REFERRER, ELGG_HTTP_NOT_FOUND);
-	}
-}
-
-/**
  * htmLawed filtering of data
  *
  * Called on the 'validate', 'input' plugin hook
@@ -396,8 +365,6 @@ function _elgg_disable_password_autocomplete($hook, $type, $return_value, $param
  * @access private
  */
 function _elgg_input_init() {
-	// register an endpoint for live search / autocomplete.
-	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
 
 	elgg_register_plugin_hook_handler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
 
