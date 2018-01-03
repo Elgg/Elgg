@@ -25,10 +25,10 @@
 	}
 	&.elgg-message-help,
 	&.elgg-message-notice {
-	    @include elgg-message($(state-notice-font-color), $(state-notice-background-color), $(state-notice-border-color));
+		@include elgg-message($(state-notice-font-color), $(state-notice-background-color), $(state-notice-border-color));
 	}
 	&.elgg-message-warning {
-	    @include elgg-message($(state-warning-font-color), $(state-warning-background-color), $(state-warning-border-color));
+		@include elgg-message($(state-warning-font-color), $(state-warning-background-color), $(state-warning-border-color));
 	}
 	
 	> .elgg-inner {
