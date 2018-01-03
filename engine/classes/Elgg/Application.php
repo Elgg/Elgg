@@ -828,11 +828,16 @@ class Application {
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 		$log = function ($message, $level) {
-			if (self::isCoreLoaded()) {
-				return elgg_log($message, $level);
+			if (!self::isCoreLoaded()) {
+				return false;
 			}
 
-			return false;
+			if (!self::$_instance) {
+				// can occur during tests
+				return false;
+			}
+
+			return elgg_log($message, $level);
 		};
 
 		switch ($errno) {
