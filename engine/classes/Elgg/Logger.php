@@ -1,7 +1,7 @@
 <?php
 namespace Elgg;
 
-use Elgg\Printer\HtmlPrinter;
+use Elgg\Printer\ErrorLogPrinter;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -41,11 +41,6 @@ class Logger {
 	protected $level = self::ERROR;
 
 	/**
-	 * @var bool Display to user?
-	 */
-	protected $display = false;
-
-	/**
 	 * @var PluginHooksService
 	 */
 	protected $hooks;
@@ -82,16 +77,22 @@ class Logger {
 		$this->hooks = $hooks;
 		$this->context = $context;
 		if (!isset($printer)) {
-			$printer = new HtmlPrinter();
+			$printer = new ErrorLogPrinter();
 		}
 		$this->printer = $printer;
 		$this->config = $config;
 		
 		$php_error_level = error_reporting();
-		
-		if (($php_error_level & E_ALL) == E_ALL) {
-			$this->level = self::INFO;
-		} elseif (($php_error_level & E_NOTICE) == E_NOTICE) {
+
+		// value is in settings.php, use until boot values are available
+		if ($this->config->hasInitialValue('debug')) {
+			$this->setLevel($this->config->debug);
+			return;
+		}
+
+		$this->level = self::OFF;
+
+		if (($php_error_level & E_NOTICE) == E_NOTICE) {
 			$this->level = self::NOTICE;
 		} elseif (($php_error_level & E_WARNING) == E_WARNING) {
 			$this->level = self::WARNING;
@@ -143,20 +144,6 @@ class Logger {
 	}
 
 	/**
-	 * Set whether the logging should be displayed to the user
-	 *
-	 * Whether data is actually displayed to the user depends on this setting
-	 * and other factors such as whether we are generating a JavaScript or CSS
-	 * file.
-	 *
-	 * @param bool $display Whether to display logging
-	 * @return void
-	 */
-	public function setDisplay($display) {
-		$this->display = $display;
-	}
-
-	/**
 	 * Set custom printer
 	 *
 	 * @param Printer $printer Printer
@@ -199,10 +186,7 @@ class Logger {
 
 		$levelString = self::$levels[$level];
 
-		// notices and below never displayed to user
-		$display = $this->display && $level > self::NOTICE;
-
-		$this->process("$levelString: $message", $display, $level);
+		$this->process("$levelString: $message", $level);
 
 		return true;
 	}
@@ -248,52 +232,35 @@ class Logger {
 	}
 
 	/**
-	 * Dump data to log or screen
+	 * Dump data to log
 	 *
-	 * @param mixed $data    The data to log
-	 * @param bool  $display Whether to include this in the HTML page
+	 * @param mixed $data The data to log
 	 * @return void
 	 */
-	public function dump($data, $display = true) {
-		$this->process($data, $display, self::ERROR);
+	public function dump($data) {
+		$this->process($data, self::ERROR);
 	}
 
 	/**
 	 * Process logging data
 	 *
-	 * @param mixed $data    The data to process
-	 * @param bool  $display Whether to display the data to the user. Otherwise log it.
-	 * @param int   $level   The logging level for this data
+	 * @param mixed $data  The data to process
+	 * @param int   $level The logging level for this data
 	 * @return void
 	 */
-	protected function process($data, $display, $level) {
+	protected function process($data, $level) {
 		
 		// plugin can return false to stop the default logging method
 		$params = [
 			'level' => $level,
 			'msg' => $data,
-			'display' => $display,
-			'to_screen' => $display,
 		];
 
 		if (!$this->hooks->trigger('debug', 'log', $params, true)) {
 			return;
 		}
 
-		// Do not want to write to JS or CSS pages
-		if ($this->context->contains('js') || $this->context->contains('css')) {
-			$display = false;
-		}
-
-		// don't display in simplecache requests
-		if ($this->config->bootcomplete) {
-			$path = substr(current_page_url(), strlen(elgg_get_site_url()));
-			if (preg_match('~^(cache|action|serve-file)/~', $path)) {
-				$display = false;
-			}
-		}
-
-		$this->printer->write($data, $display, $level);
+		$this->printer->write($data, $level);
 	}
 
 	/**

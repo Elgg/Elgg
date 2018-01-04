@@ -11,7 +11,7 @@ use Elgg\Config;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
 use Elgg\Printer\CliPrinter;
-use Elgg\Printer\HtmlPrinter;
+use Elgg\Printer\ErrorLogPrinter;
 use Elgg\Project\Paths;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 
@@ -391,7 +391,7 @@ class ServiceProvider extends DiContainer {
 			if (php_sapi_name() === 'cli') {
 				return new CliPrinter();
 			} else {
-				return new HtmlPrinter();
+				return new ErrorLogPrinter();
 			}
 		});
 

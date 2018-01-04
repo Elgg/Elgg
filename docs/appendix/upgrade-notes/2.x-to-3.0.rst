@@ -646,6 +646,7 @@ Miscellaneous API changes
  * ``elgg_list_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``
  * ``elgg_log`` no longer accepts the level ``"DEBUG"``
+ * ``elgg_dump`` no longer accepts a ``$to_screen`` argument.
  * ``elgg_gatekeeper`` and ``elgg_admin_gatekeeper`` no longer report ``login`` or ``admin`` as forward reason, but ``403``
  * ``Application::getDb()`` no longer returns an instance of ``Elgg\Database``, but rather a ``Elgg\Application\Database``
  * ``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files.
@@ -973,3 +974,8 @@ System Log
 
 System log API has been moved out of core into a ``system_log`` plugin.
 ``logbrowser`` and ``logrotate`` plugins have been merged into the ``system_log`` plugin.
+
+Error logging
+-------------
+
+Sending ``elgg_log()`` and PHP error messages to page output is now only possible via the developers plugin "Log to the screen" setting. See the ``settings.example.php`` file for more information on using ``$CONFIG->debug`` in your ``settings.php`` file. Debugging should generally be done via the ``xdebug`` extension or ``tail -f /path/to/error.log`` on your server.
