@@ -17,3 +17,50 @@ https://www.transifex.com/organization/elgg
 Plugin authors are encouraged to coordinate translations via Transifex as well
 so the whole community can be unified and make it really easy for translators
 to contribute to any plugin in the Elgg ecosystem.
+
+Pulling translations
+--------------------
+
+The translations made in Transifex need to be periodically pulled into the
+Elgg code repository. This can be done with the script ``.scripts/languages.php``
+bundled within Elgg's source code.
+
+Prerequisites for running the script are:
+ - Access to command line
+ - `Git`_
+ - `Transifex CLI tool`_
+
+.. _Git: https://git-scm.com/
+.. _Transifex CLI tool: https://docs.transifex.com/client/introduction
+
+The script will do the following steps:
+ 1. Create a new git branch named ``{branch}_i18n_{timestamp}``
+ 2. Pull translations for all languages that have 95% of the strings translated
+ 3. Remove possible invalid language codes
+ 4. Commit the changes to the branch
+
+After this you must push the branch to Github and make a new Pull request.
+
+For example if you want to pull the translations for the ``3.x`` branch,
+run the following commands:
+
+.. code-block:: sh
+
+    php .scripts/languages.php 3.x
+    git push -u your_fork 3.x_i18n_1515151617
+
+Run the command without parameters to get more detailed information of the usage.
+
+Transifex configuration
+-----------------------
+
+The configuration for Transifex can be found from Elgg's source code in the
+file ``.tx/config``.
+
+This file defines:
+ - The Transifex project associated with Elgg's major version
+ - The location of all the files that have translatable content
+
+Read the `Transifex documentation`_ for further details.
+
+.. _Transifex documentation: https://docs.transifex.com/
