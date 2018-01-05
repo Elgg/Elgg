@@ -65,10 +65,10 @@ $content = elgg_view('river/filter', ['selector' => $selector]);
 
 $sidebar = elgg_view('river/sidebar');
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' =>  $content . $activity,
-	'sidebar' => $sidebar,
+	'sidebar' => $sidebar ? : false,
 	'filter_context' => $page_filter,
 	'class' => 'elgg-river-layout',
 ]);

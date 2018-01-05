@@ -1,33 +1,34 @@
 /* ***************************************
 	Messages
 *************************************** */
+@mixin elgg-message {
+	color: #(0);
+	background-color: #(1);
+	border-color: #(2);
+}
 
 .elgg-message {
-	border: 1px solid #CCC;
+	border-width: 1px;
+	border-style: solid;
+	@include elgg-message($(text-color-strong), $(background-color-soft), $(border-color-strong));
+
 	border-radius: 3px;
 	
 	margin-bottom: 1rem;
 	
 	&.elgg-message-success {
-		color: #397F2E;
-		background-color: #EAF8E8;
-		border-color: #AADEA2;
+		@include elgg-message($(state-success-font-color), $(state-success-background-color), $(state-success-border-color));
 	}
+
 	&.elgg-message-error {
-		color: #B94A48;
-		background-color: #F8E8E8;
-		border-color: #E5B7B5;
+		@include elgg-message($(state-danger-font-color), $(state-danger-background-color), $(state-danger-border-color));
 	}
 	&.elgg-message-help,
 	&.elgg-message-notice {
-		color: #3B8BC9;
-		background-color: #E7F1F9;
-		border-color: #B1D1E9;
+		@include elgg-message($(state-notice-font-color), $(state-notice-background-color), $(state-notice-border-color));
 	}
 	&.elgg-message-warning {
-		color: #6B420F;
-		background-color: #FCF8E4;
-		border-color: #EDDC7D;
+		@include elgg-message($(state-warning-font-color), $(state-warning-background-color), $(state-warning-border-color));
 	}
 	
 	> .elgg-inner {

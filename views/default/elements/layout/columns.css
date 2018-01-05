@@ -9,7 +9,7 @@
 
 .elgg-layout-sidebar,
 .elgg-layout-sidebar-alt {
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 }
 
 .elgg-layout-columns,
@@ -37,7 +37,7 @@
 	order: 0;
 }
 
-@media screen and (min-width: 80rem) {
+@media $(media-desktop-up) {
 	.elgg-layout-columns,
 	.elgg-layout-columns {
 		flex-direction: row;
@@ -61,5 +61,9 @@
 		border-top: none;
 		width: 18rem;
 		margin-right: 2rem;
+	}
+
+	.elgg-layout-body {
+		padding: 0;
 	}
 }

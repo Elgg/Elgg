@@ -52,7 +52,7 @@
 	margin: 0 -0.5rem;
 }
 
-@media screen and (max-width: 80rem) {
+@media $(media-desktop-down) {
 	.elgg-grid > * {
 		width: 100%;
 	}

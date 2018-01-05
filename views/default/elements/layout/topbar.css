@@ -1,5 +1,5 @@
 .elgg-page-topbar {
-	background: #0078ac;
+	background: $(topbar-background-color, $(background-color-highlight));
 }
 
 .elgg-page-topbar a {
@@ -73,7 +73,7 @@
 	margin-right: 1.5rem;
 }
 
-@media only screen and (min-width: 80rem) {
+@media only $(media-desktop-up) {
 	.elgg-nav-logo {
 		flex-grow: 0;
 	}
@@ -96,7 +96,7 @@
 	flex-direction: column;
 }
 
-@media only screen and (min-width: 80rem) {
+@media only $(media-desktop-up) {
 	.elgg-nav-collapse {
 		position: relative;
 		top: auto;
@@ -126,7 +126,7 @@
 	flex-grow: 0;
 }
 
-@media only screen and (min-width: 80rem) {
+@media only $(media-desktop-up) {
 	.elgg-nav-button {
 		display: none;
 	}
@@ -234,10 +234,10 @@
 }
 
 .elgg-menu-topbar .elgg-badge {
-	background-color: #faa51a;
+	background-color: $(topbar-indicator);
 }
 
-@media only screen and (min-width: 80rem) {
+@media only $(media-desktop-up) {
 	.elgg-nav-collapse {
 		align-items: center;
 	}
@@ -286,7 +286,7 @@
 		top: 4rem;
 		right: 0;
 		width: 12rem;
-		background: #0078ac;
+		background: $(topbar-background-color, $(background-color-highlight));
 		align-items: flex-start;
 		z-index: 1;
 		box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
@@ -298,7 +298,7 @@
 
 	.elgg-page-topbar .elgg-menu li:hover .elgg-child-menu:before {
 		content: "\25b2";
-		color: #0078ac;
+		color: $(topbar-background-color, $(background-color-highlight));
 		position: absolute;
 		text-shadow: 0px -2px 0px rgba(0, 0, 0, 0.05);
 		font-size: 1rem;

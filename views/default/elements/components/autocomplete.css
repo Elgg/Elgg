@@ -13,7 +13,7 @@
 
 .ui-autocomplete {
 	background-color: #ffffff;
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 	overflow: hidden;
 	border-radius: 3px;
 }
@@ -24,7 +24,7 @@
 }
 
 .ui-autocomplete .ui-menu-item:hover {
-	background-color: #fafafa;
+	background-color: $(background-color-soft);
 }
 
 .ui-autocomplete a:hover {
@@ -33,7 +33,7 @@
 }
 
 .ui-autocomplete a.ui-state-hover {
-	background-color: #fafafa;
+	background-color: $(background-color-soft);
 	display: block;
 }
 

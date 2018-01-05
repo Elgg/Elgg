@@ -56,34 +56,6 @@ echo elgg_view('core.css');
 		margin-right: 0;
 		margin-left: auto;
 	}
-
-	.elgg-menu-page {
-		background: #ffffff;
-		border: 1px solid #e6e6ea;
-		margin-bottom: 2rem;
-	}
-
-	.elgg-menu-page-container .elgg-menu-section-header {
-		margin: 0;
-		border: none;
-	}
-
-	.elgg-menu-page li:not(:last-child) {
-		border-bottom: 1px solid #f7f7f8;
-	}
-
-	.elgg-menu-page .elgg-child-menu {
-		border-top: #f7f7f8;
-	}
-
-	.elgg-menu-page .elgg-menu-item-has-toggle > .elgg-child-menu {
-		margin: 0;
-		border-top: 1px solid #f7f7f8;
-	}
-
-	.elgg-menu-page .elgg-menu-item-has-toggle > .elgg-child-menu > li > a {
-		padding-left: 2rem;
-	}
 }
 /* ***************************************
 	PLUGINS FILTER
@@ -162,7 +134,6 @@ echo elgg_view('core.css');
 .elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
 	display: block;
 	margin: 0;
-	padding: 3px 10px;
 }
 
 .elgg-plugin > .elgg-image-block > .elgg-body {

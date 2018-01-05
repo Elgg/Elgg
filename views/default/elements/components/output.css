@@ -42,7 +42,7 @@ p iframe {
 }
 
 .elgg-output table {
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 }
 
 .elgg-output table td {
