@@ -20,7 +20,7 @@ Most common examples of cron jobs in Elgg include:
  * rotating the system log in the database
  * collecting garbage in the database (compacting the database by removing entries that are no longer required)
 
-Currently, Elgg supports the following hooks:
+Plugins can add jobs by registering a plugin hook handler for one of the following cron intervals:
 
  * ``minute`` - Run every minute
  * ``fiveminute`` - Run every 5 minutes
@@ -32,55 +32,42 @@ Currently, Elgg supports the following hooks:
  * ``monthly`` - Run every month
  * ``yearly`` - Run every year
 
+.. code::php
+
+   elgg_register_plugin_hook_handler('cron', 'hourly', function() {
+
+      $events = my_plugin_get_upcoming_events();
+
+      foreach ($events as $event) {
+         $attendees = $event->getAttendees();
+
+         // notify
+      }
+   });
+
+
 How does it work?
 =================
 
-Elgg activates its cron handler when particular cron pages are loaded.
-As an example, loading http://example.com/cron/hourly/ in a web browser 
-activates the hourly hook. To automate this, cron jobs are setup to hit those
-pages at certain times. This is done by setting up a ``crontab`` which is a
-configuration file that determines what cron jobs do and at what interval.
+``crontab`` must be setup in such a way as to activate Elgg cron handler every minute, or at a specific interval.
+Once cron tab activates the cron job, Elgg executes all hook handlers attached to that interval.
 
-Installation
-============
+If you have SSH access to your Linux servers, type ``crontab -e`` and add your crontab configuration.
 
-The ``crontab`` needs to specify a script or command that will hit the Elgg cron pages.
-Two commonly available programs for this are `GET` and `wget`. You will need
-to determine the location of one of these on your server. Your crontab also needs
-to specify the location of your website.
+.. code::
 
-.. literalinclude:: ./crontab.example
+   * * * * * path/to/phpbin path/to/elgg/elgg-cli cron -q
 
-In the above example, change the ``ELGG`` and ``GET`` variables to match you server setup.
-If you have SSH access to your Linux servers, type ``crontab -e`` and add
-your crontab configuration. If you already have a crontab configured, you will have to
-merge Elgg information into it. If you don't have SSH access, you will have to use
-a web-based configuration tool. This will vary depending on hosting provider.
+The above command will run every minute and activate all due cron jobs.
 
-If you choose the ``wget`` utility, you might want to consider these flags:
+Optionally you can activate handlers for a specific interval:
 
- * ``--output-document`` or ``-O`` to specify the location of the concatenated output file.
-   For example, under Debian: ``/usr/bin/wget --output-document=/dev/null``. If you don't do
-   that, a new file will be created for each cron page load in the home directory of the cron user.
- * ``--spider`` to prevent the cron page from being downloaded.
+.. code::
 
-On Windows servers, there is a number of cron emulators available.
+   0 * * * * path/to/phpbin path/to/elgg/elgg-cli cron -i hourly -q
 
-.. seealso::
 
-    For information on setting up cron jobs using cPanel see `cPanel Docs`_.
-    
-    In the ``command`` field, enter the appropriate link of the cron page.
-    For example, for a ``weekly`` cron job, enter the command as http://www.example.com/cron/weekly/.
-
-To see if your cron jobs are running, visit Statistics > Cron in your Elgg admin panel.
-
-Easier installation
--------------------
-
-Configuring all the different intervals can be some work. An alternative is to configure *only one* endpoint namely
-http://example.com/cron/run. This endpoint needs to be called *every* minute, the system will then take care of calling all 
-the internal intervals at the correct time.
+More information about cron can be found at:
 
 .. _Cron: http://en.wikipedia.org/wiki/Cron
 .. _cPanel Docs: https://docs.cpanel.net/display/ALD/Cron+Jobs

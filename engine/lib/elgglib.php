@@ -1154,9 +1154,17 @@ function elgg_http_validate_signed_url($url) {
  * @return void
  */
 function elgg_signed_request_gatekeeper() {
-	if (!elgg_http_validate_signed_url(current_page_url())) {
-		register_error(elgg_echo('invalid_request_signature'));
-		forward('', '403');
+
+	switch (php_sapi_name()) {
+		case 'cli' :
+		case 'phpdbg' :
+			return;
+
+		default :
+			if (!elgg_http_validate_signed_url(current_page_url())) {
+				register_error(elgg_echo('invalid_request_signature'));
+				forward('', '403');
+			}
 	}
 }
 
@@ -1737,6 +1745,7 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 		\Elgg\Cli\SimpletestCommand::class,
 		\Elgg\Cli\DatabaseSeedCommand::class,
 		\Elgg\Cli\DatabaseUnseedCommand::class,
+		\Elgg\Cli\CronCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());

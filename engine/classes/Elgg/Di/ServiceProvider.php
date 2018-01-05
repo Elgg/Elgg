@@ -9,6 +9,7 @@ use Elgg\Cache\CompositeCache;
 use Elgg\Cache\DataCache;
 use Elgg\Cache\SessionCache;
 use Elgg\Config;
+use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
 use Elgg\Printer\CliPrinter;
@@ -38,6 +39,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Assets\CssCompiler                 $cssCompiler
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\Cli                                $cli
+ * @property-read \Elgg\Cron                               $cron
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
@@ -219,6 +221,10 @@ class ServiceProvider extends DiContainer {
 			$context = new \Elgg\Context();
 			$context->initialize($c->request);
 			return $context;
+		});
+
+		$this->setFactory('cron', function(ServiceProvider $c) {
+			return new Cron($c->hooks, $c->printer);
 		});
 
 		$this->setClassName('crypto', \ElggCrypto::class);

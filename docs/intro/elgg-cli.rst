@@ -44,6 +44,9 @@ Available commands
     # Remove seeded faked entities
     elgg-cli database:unseed
 
+    # Run cron jobs
+    elgg-cli cron [-i|--interval INTERVAL] [-q|--quiet]
+
 
 Adding custom commands
 ======================
