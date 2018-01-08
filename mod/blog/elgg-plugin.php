@@ -62,6 +62,10 @@ return [
 			'path' => '/blog/all',
 			'resource' => 'blog/all',
 		],
+		'collection:object:blog' => [
+			'path' => '/blog',
+			'resource' => 'blog/all',
+		],
 	],
 	'widgets' => [
 		'blog' => [
