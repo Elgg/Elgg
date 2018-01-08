@@ -322,7 +322,7 @@ class Router {
 	 */
 	public function generateUrl($name, array $parameters = []) {
 		try {
-			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_PATH);
+			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
 		} catch (RouteNotFoundException $exception) {
 			elgg_log($exception->getMessage(), 'ERROR');
 			return '';
