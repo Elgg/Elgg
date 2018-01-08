@@ -59,6 +59,111 @@ function elgg_generate_url($name, array $parameters = []) {
 }
 
 /**
+ * Generate entity URL from a named route
+ *
+ * This function is intended to generate URLs from registered named routes that depend on entity type and subtype.
+ * It will first try to detect routes that contain both type and subtype in the name, and will then fallback to
+ * route names without the subtype, e.g. 'view:object:blog:attachments' and 'view:object:attachments'
+ *
+ * @tip Route segments will be automatically resolved from entity attributes and metadata,
+ *      so given the path `/blog/view/{guid}/{title}/{status}` the path will be
+ *      be resolved from entity guid, URL-friendly title and status metadata.
+ *
+ * @tip Parameters that do not have matching segment names in the route path, will be added to the URL as query elements.
+ *
+ *
+ * @param ElggEntity $entity      Entity
+ * @param string     $resource    Resource name
+ * @param string     $subresource Subresource name
+ * @param array      $parameters  URL query elements
+ *
+ * @return string
+ */
+function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subresource = null, $parameters = []) {
+
+	$make_route_name = function ($type, $subtype) use ($resource, $subresource) {
+		$route_parts = [
+			$resource,
+			$type,
+			$subtype,
+			$subresource,
+		];
+
+		return implode(':', array_filter($route_parts));
+	};
+
+	$pairs = [
+		[$entity->type, $entity->subtype],
+		[$entity->type, null],
+	];
+
+	$route = false;
+	$route_name = '';
+
+	foreach ($pairs as $pair) {
+		$route_name = $make_route_name($pair[0], $pair[1]);
+		$route = _elgg_services()->routeCollection->get($route_name);
+		if ($route) {
+			break;
+		}
+	}
+
+	if (!$route) {
+		return;
+	}
+
+	$requirements = $route->getRequirements();
+	$defaults = $route->getDefaults();
+
+	$props = array_merge(array_keys($requirements), array_keys($defaults));
+
+	foreach ($props as $prop) {
+		if (substr($prop, 0, 1) === '_') {
+			continue;
+		}
+
+		if (isset($parameters[$prop])) {
+			continue;
+		}
+
+		switch ($prop) {
+			case 'title' :
+			case 'name' :
+				$parameters[$prop] = elgg_get_friendly_title($entity->getDisplayName());
+				break;
+
+			default :
+				$parameters[$prop] = $entity->$prop;
+				break;
+		}
+	}
+
+	return elgg_generate_url($route_name, $parameters);
+}
+
+/**
+ * Generate an action URL
+ *
+ * @param string $action          Action name
+ * @param array  $query           Query elements
+ * @param bool   $add_csrf_tokens Add tokens
+ *
+ * @return string
+ */
+function elgg_generate_action_url($action, array $query = [], $add_csrf_tokens = true) {
+
+	$url = "action/$action";
+	$url = elgg_http_add_url_query_elements($url, $query);
+	$url = elgg_normalize_url($url);
+
+	if ($add_csrf_tokens) {
+		$url = elgg_add_action_tokens_to_url($url);
+	}
+
+	return $url;
+}
+
+/**
  * Used at the top of a page to mark it as logged in users only.
  *
  * @return void

@@ -13,8 +13,6 @@
  * @access private
  */
 function _elgg_cron_init() {
-	elgg_register_page_handler('cron', '_elgg_cron_page_handler');
-
 	elgg_set_config('elgg_cron_periods', array_keys(\Elgg\Cron::$intervals));
 
 	elgg_register_menu_item('page', [

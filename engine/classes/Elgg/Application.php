@@ -487,7 +487,7 @@ class Application {
 		} catch (HttpException $ex) {
 			$forward_url = REFERRER;
 			if ($ex instanceof GatekeeperException) {
-				$forward_url = elgg_is_logged_in() ? '' : '/login';
+				$forward_url = elgg_is_logged_in() ? '' : elgg_get_login_url();
 			}
 
 			$hook_params = [

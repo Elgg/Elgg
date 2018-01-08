@@ -17,9 +17,10 @@ if ($vars['entity']->icontime) {
 	$remove_button = elgg_view('output/url', [
 		'text' => elgg_echo('remove'),
 		'title' => elgg_echo('avatar:remove'),
-		'href' => 'action/avatar/remove?guid=' . elgg_get_page_owner_guid(),
-		'is_action' => true,
-		'class' => 'elgg-button elgg-button-cancel mll',
+		'href' => elgg_generate_action_url('avatar/remove', [
+			'guid' => elgg_get_page_owner_guid(),
+		]),
+		'class' => 'elgg-button elgg-button-cancel',
 	]);
 }
 
@@ -35,17 +36,17 @@ $upload_form = elgg_view_form('avatar/upload', $form_params, $vars);
 <?php
 
 $image = <<<HTML
-<div id="current-user-avatar" class="mrl prl">
+<div id="current-user-avatar" class="elgg-justify-center pam">
 	<label>$current_label</label><br />
-	$user_avatar
+	<div>$user_avatar</div>
+	<div>$remove_button</div>
 </div>
-$remove_button
 HTML;
 
 $body = <<<HTML
-<div id="avatar-upload">
+<div id="avatar-upload" class="pam">
 	$upload_form
 </div>
 HTML;
 
-echo elgg_view_image_block($image, $upload_form);
+echo elgg_view_image_block($image, $body);

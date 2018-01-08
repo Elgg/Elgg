@@ -1,5 +1,7 @@
 <?php
 
+elgg_set_context('admin');
+
 $plugin_id = elgg_extract('plugin_id', $vars);
 $plugin = elgg_get_plugin_from_id($plugin_id);
 

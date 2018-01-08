@@ -21,4 +21,14 @@ return [
 			'access' => 'admin',
 		],
 	],
+	'routes' => [
+		'view:user' => [
+			'path' => '/profile/{username?}',
+			'resource' => 'profile/view',
+		],
+		'edit:user' => [
+			'path' => '/profile/{username}/edit',
+			'resource' => 'profile/edit',
+		],
+	]
 ];

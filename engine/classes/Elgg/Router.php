@@ -282,8 +282,12 @@ class Router {
 				$defaults[$wildcard] = ''; // make it optional
 			}
 
-			if (array_key_exists($wildcard, $patterns) && !isset($requirements[$wildcard])) {
-				$requirements[$wildcard] = $patterns[$wildcard];
+			if (!isset($requirements[$wildcard])) {
+				if (array_key_exists($wildcard, $patterns)) {
+					$requirements[$wildcard] = $patterns[$wildcard];
+				} else {
+					$requirements[$wildcard] = '.+';
+				}
 			}
 
 			$segment = '{' . $wildcard . '}';

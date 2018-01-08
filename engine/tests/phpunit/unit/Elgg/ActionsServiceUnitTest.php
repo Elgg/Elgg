@@ -85,7 +85,13 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('responseFactory', $this->response_factory);
 
 		// register page handlers
-		elgg_register_page_handler('action', '_elgg_action_handler');
+		elgg_register_route('action', [
+			'path' => '/action/{segments}',
+			'handler' => '_elgg_action_handler',
+			'requirements' => [
+				'segments' => '.+',
+			],
+		]);
 	}
 
 	function route() {
@@ -1117,7 +1123,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	 * @group AjaxService
 	 */
 	public function testCanRefreshTokens() {
-		elgg_register_page_handler('refresh_token', [$this->actions, 'handleTokenRefreshRequest']);
+		elgg_register_route('action:token', [
+			'path' => '/refresh_token',
+			'handler' => [$this->actions, 'handleTokenRefreshRequest'],
+		]);
 
 		$dt = new \DateTime();
 		$this->actions->setCurrentTime($dt);

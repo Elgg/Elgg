@@ -76,9 +76,12 @@ final class PasswordService {
 		$user->setPrivateSetting('passwd_conf_time', time());
 
 		// generate link
-		$link = _elgg_config()->wwwroot . "changepassword?u=$user_guid&c=$code";
+		$link = elgg_generate_url('account:password:change', [
+			'u' => $user_guid,
+			'c' => $code,
+		]);
 		$link = _elgg_services()->urlSigner->sign($link, '+1 day');
-		
+
 		// generate email
 		$ip_address = _elgg_services()->request->getClientIp();
 		$message = _elgg_services()->translator->translate(

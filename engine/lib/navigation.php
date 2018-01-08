@@ -627,39 +627,49 @@ function _elgg_page_menu_setup(\Elgg\Hook $hook) {
  */
 function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
-	if (!($entity instanceof \ElggEntity)) {
+	if (!($entity instanceof \ElggObject)) {
 		return;
 	}
 
 	$handler = elgg_extract('handler', $params, false);
-	if (!$handler) {
-		return;
+	if ($handler) {
+		elgg_deprecated_notice("Using 'handler' in entity menu parameters is deprecated. Use named routes instead.", '3.0');
+
+		$edit_url = "$handler/edit/{$entity->guid}";
+
+		if (elgg_action_exists("$handler/delete")) {
+			$action = "$handler/delete";
+		} else {
+			$action = "entity/delete";
+		}
+		$delete_url = elgg_generate_action_url($action, [
+			'guid' => $entity->guid,
+		]);
+	} else {
+		$edit_url = elgg_generate_entity_url($entity, 'edit');
+		$delete_url = elgg_generate_action_url('entity/delete', [
+			'guid' => $entity->guid,
+		]);
 	}
-	
-	if ($entity->canEdit()) {
+
+	if ($entity->canEdit() && $edit_url) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'edit',
 			'icon' => 'edit',
 			'text' => elgg_echo('edit'),
 			'title' => elgg_echo('edit:this'),
-			'href' => "$handler/edit/{$entity->getGUID()}",
+			'href' => $edit_url,
 			'priority' => 900,
 		]);
 	}
 
-	if ($entity->canDelete()) {
-		if (elgg_action_exists("$handler/delete")) {
-			$action = "action/$handler/delete";
-		} else {
-			$action = "action/entity/delete";
-		}
-		
+	if ($entity->canDelete() && $delete_url) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
 			'icon' => 'delete',
 			'text' => elgg_echo('delete'),
 			'title' => elgg_echo('delete:this'),
-			'href' => "$action?guid={$entity->getGUID()}",
+			'href' => $delete_url,
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 950,
 		]);
@@ -845,7 +855,7 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'forgotpassword',
-		'href' => 'forgotpassword',
+		'href' => elgg_generate_url('account:password:reset'),
 		'text' => elgg_echo('user:password:lost'),
 		'link_class' => 'forgot_link',
 	]);

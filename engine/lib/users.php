@@ -303,37 +303,6 @@ function elgg_validate_invite_code($username, $code) {
 }
 
 /**
- * Page handler for account related pages
- *
- * @param array  $page_elements Page elements
- * @param string $handler       The handler string
- *
- * @return bool
- * @access private
- */
-function elgg_user_account_page_handler($page_elements, $handler) {
-
-	switch ($handler) {
-		case 'login':
-			echo elgg_view_resource("account/login");
-			break;
-		case 'forgotpassword':
-			echo elgg_view_resource("account/forgotten_password");
-			break;
-		case 'changepassword':
-			echo elgg_view_resource("account/change_password");
-			break;
-		case 'register':
-			echo elgg_view_resource("account/register");
-			break;
-		default:
-			return false;
-	}
-
-	return true;
-}
-
-/**
  * Returns site's registration URL
  * Triggers a 'registration_url', 'site' plugin hook that can be used by
  * plugins to alter the default registration URL and append query elements, such as
@@ -344,7 +313,7 @@ function elgg_user_account_page_handler($page_elements, $handler) {
  * @return string
  */
 function elgg_get_registration_url(array $query = [], $fragment = '') {
-	$url = elgg_normalize_url('register');
+	$url = elgg_normalize_url(elgg_generate_url('account:register'));
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('registration_url', 'site', $query, $url);
 }
@@ -359,7 +328,7 @@ function elgg_get_registration_url(array $query = [], $fragment = '') {
  * @return string
  */
 function elgg_get_login_url(array $query = [], $fragment = '') {
-	$url = elgg_normalize_url('login');
+	$url = elgg_normalize_url(elgg_generate_url('account:login'));
 	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
 	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
 }
@@ -424,7 +393,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			'name' => 'avatar:edit',
 			'text' => elgg_echo('avatar:edit'),
 			'icon' => 'image',
-			'href' => "avatar/edit/$user->username",
+			'href' => elgg_generate_entity_url($user, 'edit', 'avatar'),
 			'section' => (elgg_get_logged_in_user_guid() == $user->guid)? 'action' : 'admin',
 		]);
 	}
@@ -509,43 +478,6 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Avatar page handler
- *
- * /avatar/edit/<username>
- *
- * @param array $page URL segments
- * @return bool
- * @access private
- */
-function elgg_avatar_page_handler($page) {
-	$user = get_user_by_username(elgg_extract(1, $page));
-	if ($user) {
-		elgg_set_page_owner_guid($user->getGUID());
-	}
-
-	if ($page[0] == 'edit') {
-		echo elgg_view_resource("avatar/edit");
-		return true;
-	}
-}
-
-/**
- * user page handler
- *
- * /user/view/<userguid>
- *
- * @param array $page url elements
- * @return bool
- * @access private
- */
-function _elgg_user_page_handler($page) {
-	echo elgg_view_resource('user/view', [
-		'guid' => (int) elgg_extract(1, $page),
-	]);
-	return true;
-}
-
-/**
  * Register menu items for the page menu
  *
  * @param string         $hook   'register'
@@ -567,7 +499,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'edit_avatar',
-		'href' => "avatar/edit/{$owner->username}",
+		'href' => elgg_generate_entity_url($owner, 'edit', 'avatar'),
 		'text' => elgg_echo('avatar:edit'),
 		'section' => '1_profile',
 		'contexts' => ['settings'],
@@ -836,13 +768,6 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
  * @access private
  */
 function users_init() {
-
-	elgg_register_page_handler('register', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('forgotpassword', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('changepassword', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('login', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
-	elgg_register_page_handler('user', '_elgg_user_page_handler');
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');

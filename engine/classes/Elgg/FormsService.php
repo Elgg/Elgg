@@ -80,7 +80,7 @@ class FormsService {
 	public function render($action, $form_vars = [], $body_vars = []) {
 
 		$defaults = [
-			'action' => elgg_normalize_url("action/$action"),
+			'action' => elgg_generate_action_url($action, [], false),
 		];
 
 		// append elgg-form class to any class options set

@@ -138,9 +138,6 @@ function _elgg_filestore_init() {
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
 
-	// Handler for serving embedded icons
-	elgg_register_page_handler('serve-icon', '_elgg_filestore_serve_icon_handler');
-
 	// Touch entity icons if entity access id has changed
 	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
 	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_touch_icons');
@@ -263,7 +260,10 @@ function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = ''
  * @since 2.2
  */
 function elgg_get_embed_url(\ElggEntity $entity, $size) {
-	return elgg_normalize_url("serve-icon/$entity->guid/$size");
+	return elgg_normalize_url(elgg_generate_url('serve-icon', [
+		'guid' => $entity->guid,
+		'size' => $size,
+	]));
 }
 
 /**

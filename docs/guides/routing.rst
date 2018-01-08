@@ -24,7 +24,7 @@ Page Handling
 =============
 
 Elgg offers a facility to manage your plugin pages via custom routes, enabling URLs like ``http://yoursite/my_plugin/section``.
-You can register a new route using ``elgg_register_route()`, or via ``routes`` config in ``elgg-plugin.php``.
+You can register a new route using ``elgg_register_route()``, or via ``routes`` config in ``elgg-plugin.php``.
 Routes map to resource views, where you can render page contents.
 
 .. code-block:: php
@@ -96,6 +96,29 @@ The following conventions are used in core and recommended for plugins:
 	Maps to the default page for a resource, e.g. the path ``/blog``. Elgg happens to use the "all" collection for these routes.
 
 		- ``default:object:blog``: handle the generic path ``/blog``.
+
+``<entity_subtype>`` can be omitted from route names to register global routes applicable to all entities of a given type.
+URL generator will first try to generate a URL using the subtype, and will then fallback to a route name without a subtype.
+For example, user profiles are routed to the same resource view regardless of user subtype.
+
+.. code::php
+
+	elgg_register_route('view:object:attachments', [
+		'path' => '/attachments/{guid}',
+		'resource' => 'attachments',
+	]);
+
+	elgg_register_route('view:object:blog:attachments', [
+		'path' => '/blog/view/{guid}/attachments',
+		'resource' => 'blog/attachments',
+	]);
+
+	$blog = get_entity($blog_guid);
+	$url = elgg_generate_entity_url($blog, 'view', 'attachments'); // /blog/view/$blog_guid/attachments
+
+	$other = get_entity($other_guid);
+	$url = elgg_generate_entity_url($other, 'view', 'attachments'); // /attachments/$other_guid
+
 
 Route configuration
 -------------------

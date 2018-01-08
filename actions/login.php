@@ -43,9 +43,9 @@ if ($result !== true) {
 		// they provided.
 		elgg_get_session()->set('forgotpassword:hash_missing', get_input('username'));
 		$output = [
-			'forward' => 'forgotpassword',
+			'forward' => elgg_generate_url('account:password:reset'),
 		];
-		return elgg_ok_response($output, '', 'forgotpassword');
+		return elgg_ok_response($output, '', elgg_generate_url('account:password:reset'));
 	}
 
 	return elgg_error_response($result);

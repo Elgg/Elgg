@@ -5,7 +5,7 @@
 
 if (elgg_get_config('allow_phpinfo') !== true) {
 	// page is not allowed in elgg-config/settings.php
-	forward('', '404');
+	throw new \Elgg\PageNotFoundException();
 }
 
 // this page is only for admins
