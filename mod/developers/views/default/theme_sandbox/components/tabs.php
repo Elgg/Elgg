@@ -34,7 +34,7 @@ echo elgg_view('page/components/tabs', [
 		],
 		'ajax3' => [
 			'text' => 'Ajax [data-ajax-href]',
-			'href' => 'activity',
+			'href' => elgg_generate_url('default:river'),
 			'data-ajax-href' => 'ajax/view/theme_sandbox/components/tabs/ajax',
 			'data-ajax-reload' => false,
 			'data-ajax-query' => json_encode([

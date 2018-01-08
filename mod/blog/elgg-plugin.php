@@ -62,6 +62,10 @@ return [
 			'path' => '/blog/all',
 			'resource' => 'blog/all',
 		],
+		'default:object:blog' => [
+			'path' => '/blog',
+			'resource' => 'blog/all',
+		],
 	],
 	'widgets' => [
 		'blog' => [

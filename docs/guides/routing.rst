@@ -31,7 +31,7 @@ Routes map to resource views, where you can render page contents.
 
 	// in your 'init', 'system' handler
 	elgg_register_route('my_plugin:section' [
-		'path' => 'my_plugin/section/{guid}/{subsection?}',
+		'path' => '/my_plugin/section/{guid}/{subsection?}',
 		'resource' => 'my_plugin/section',
 		'requirements' => [
 			'guid' => '\d+',
@@ -56,7 +56,7 @@ Routes names
 
 Route names can then be used to generate a URL:
 
-.. code::php
+.. code-block:: php
 
 	$url = elgg_generate_url('my_plugin:section', [
 		'guid' => $entity->guid,
@@ -92,6 +92,10 @@ The following conventions are used in core and recommended for plugins:
 		- ``collection:object:blog:friends``: list blogs owned by friends of the logged in user (or user with a given username)
 		- ``collection:object:blog:group``: list blogs in a group
 
+**default:<entity_type>:<entity_subtype>**
+	Maps to the default page for a resource, e.g. the path ``/blog``. Elgg happens to use the "all" collection for these routes.
+
+		- ``default:object:blog``: handle the generic path ``/blog``.
 
 Route configuration
 -------------------
@@ -110,7 +114,7 @@ You can further constrain segments using regex requirements:
 	return [
 		'routes' => [
 			'profile' => [
-				'path' => 'profile/{username}/{section?}',
+				'path' => '/profile/{username}/{section?}',
 				'resource' => 'profile',
 				'requirements' => [
 					'username' => '[\p{L}\p{Nd}._-]+', // only allow valid usernames
