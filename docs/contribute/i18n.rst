@@ -64,3 +64,44 @@ This file defines:
 Read the `Transifex documentation`_ for further details.
 
 .. _Transifex documentation: https://docs.transifex.com/
+
+New major Elgg version
+----------------------
+
+Every major version of Elgg must have its own project in Transifex. This way
+we can make sure that strings added and removed between versions do not conflict
+with each other. For example a translation key removed in Elgg 3 should not get
+removed from translations made for Elgg 2. Respectfully a new string added only
+to Elgg 3 should not be included in the translations meant for Elgg 2.
+
+The process of setting up a new major version is:
+
+ 1. Pull latest translations from Transifex to the previous major version
+ 2. Merge the git branch of the previous version to the new to make sure all the
+    latest translation keys are present
+ 3. Create a new Transifex project to https://www.transifex.com/elgg/
+ 4. Update ``.tx/config`` file in the development branch of the new major version
+
+    - Update the configuration to point to the new Transifex project
+    - Remove configuration of removed plugins
+    - Add configuration for new plugins
+
+ 5. Push the translation sources to the new Transifex project with the command:
+    ::
+
+      tx push -s
+
+ 6. Copy the new configuration file temporarily (do not commit) to the previous
+    major version, and push the existing translations from it to the new project:
+    ::
+
+      tx push -t -f --no-interactive
+
+Later, once the dedicated branch (e.g. ``3.x`` has been created for the major version,
+configure Transifex to fetch new translation keys from it automatically in
+https://www.transifex.com/elgg/elgg-core-3/content/. This way you don't have to
+repeat step 5 manually every time new translation keys are added.
+
+It is important to always have a ``n.x`` branch besides the branches meant for
+specific minor versions (``n.1``, ``n.2``, etc.). This way the URLs of the auto-update
+sources do not have to be updated every time a new minor branch is created.
