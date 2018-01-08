@@ -1,7 +1,7 @@
 <?php
 
 if (elgg_is_logged_in()) {
-	forward('activity');
+	forward(elgg_generate_url('default:river'));
 }
 
 $title = elgg_echo('content:latest');
