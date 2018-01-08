@@ -62,7 +62,7 @@ return [
 			'path' => '/blog/all',
 			'resource' => 'blog/all',
 		],
-		'collection:object:blog' => [
+		'default:object:blog' => [
 			'path' => '/blog',
 			'resource' => 'blog/all',
 		],
