@@ -1,17 +1,20 @@
 <?php
 /**
- * Date
- * Displays a properly formatted date
+ * Displays a formatted date
  *
- * @package Elgg
- * @subpackage Core
- *
- * @uses $vars['value'] Date as text or a Unix timestamp in seconds
+ * @uses $vars['value'] Date as DateTime, text or a Unix timestamp
+ * @uses $vars['format'] Date format
  */
 
-// convert timestamps to text for display
-if (is_numeric($vars['value'])) {
-	$vars['value'] = gmdate('Y-m-d', $vars['value']);
+$format = elgg_extract('format', $vars, elgg_echo('input:date_format'), false);
+
+$value = elgg_extract('value', $vars);
+if (!$value) {
+	return;
 }
 
-echo $vars['value'];
+try {
+	$dt = \Elgg\Values::normalizeTime($value);
+	echo $dt->format($format);
+} catch (DataFormatException $ex) {
+}

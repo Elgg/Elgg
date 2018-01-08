@@ -2,6 +2,12 @@
 
 namespace Elgg;
 
+use DataFormatException;
+use DateTime;
+use DateTimeZone;
+use Exception;
+
+
 /**
  * Functions for use as plugin hook/event handlers or other situations where you need a
  * globally accessible callable.
@@ -53,22 +59,35 @@ class Values {
 	 * @param DateTime|string|int $time Time
 	 *
 	 * @return int
-	 * @throws \DataFormatException
+	 * @throws DataFormatException
 	 */
 	public static function normalizeTimestamp($time) {
-		try {
-			if ($time instanceof \DateTime) {
-				return $time->getTimestamp();
-			} else if (is_string($time)) {
-				$dt = new \DateTime($time);
+		return self::normalizeTime($time)->getTimestamp();
+	}
 
-				return $dt->getTimestamp();
+	/**
+	 * Returns DateTime object based on time representation
+	 *
+	 * @param DateTime|string|int $time Time
+	 *
+	 * @return DateTime
+	 * @throws DataFormatException
+	 */
+	public static function normalizeTime($time) {
+		try {
+			if ($time instanceof DateTime) {
+				$dt = $time;
+			} else if (is_numeric($time)) {
+				$dt = new DateTime(null, new DateTimeZone('UTC'));
+				$dt->setTimestamp((int) $time);
+			} else {
+				$dt = new DateTime($time);
 			}
-		} catch (\Exception $e) {
-			throw new \DataFormatException($e->getMessage());
+		} catch (Exception $e) {
+			throw new DataFormatException($e->getMessage());
 		}
 
-		return (int) $time;
+		return $dt;
 	}
 
 	/**
@@ -77,7 +96,7 @@ class Values {
 	 * @param array ...$args IDs
 	 *
 	 * @return int[]
-	 * @throws \DataFormatException
+	 * @throws DataFormatException
 	 */
 	public static function normalizeIds(...$args) {
 		if (empty($args)) {
@@ -100,7 +119,7 @@ class Values {
 				$ids[] = (int) $arg;
 			} else {
 				$arg = print_r($arg, true);
-				throw new \DataFormatException("Parameter '$arg' can not be resolved to a valid ID'");
+				throw new DataFormatException("Parameter '$arg' can not be resolved to a valid ID'");
 			}
 		}
 
@@ -113,7 +132,7 @@ class Values {
 	 * @param mixed ...$args Elements to normalize
 	 *
 	 * @return int[]|null
-	 * @throws \DataFormatException
+	 * @throws DataFormatException
 	 */
 	public static function normalizeGuids(...$args) {
 		if (empty($args)) {
@@ -136,7 +155,7 @@ class Values {
 				$guids[] = (int) $arg;
 			} else {
 				$arg = print_r($arg, true);
-				throw new \DataFormatException("Parameter '$arg' can not be resolved to a valid GUID'");
+				throw new DataFormatException("Parameter '$arg' can not be resolved to a valid GUID'");
 			}
 		}
 
