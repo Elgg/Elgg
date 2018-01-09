@@ -594,31 +594,55 @@ trait LegacyQueryOptionsAdapter {
 				'comparison' => '=',
 			];
 		}
-
+		
 		foreach ($options["{$type}_name_value_pairs"] as $key => $value) {
 			if ($value instanceof Clause) {
 				continue;
 			}
-
+			
 			if (!isset($value['case_sensitive'])) {
 				$options["{$type}_name_value_pairs"][$key]['case_sensitive'] = elgg_extract("{$type}_case_sensitive", $options, true);
 			}
-			if (!isset($value['type'])) {
-				if (is_bool($value['value'])) {
-					$value['value'] = (int) $value['value'];
-				}
-				if (is_int($value['value'])) {
-					$options["{$type}_name_value_pairs"][$key]['type'] = ELGG_VALUE_INTEGER;
-				} else {
-					$options["{$type}_name_value_pairs"][$key]['type'] = ELGG_VALUE_STRING;
+			
+			if (isset($value['value'])) {
+				if (is_array($value['value'])) {
+					foreach ($value['value'] as $value_key => $subvalue) {
+						if ($type === 'private_setting') {
+							if (!$subvalue) {
+								$subvalue = 0;
+							}
+							$options["{$type}_name_value_pairs"][$key]['value'][$value_key] = (string) $subvalue;
+						} elseif (is_bool($subvalue)) {
+							$options["{$type}_name_value_pairs"][$key]['value'][$value_key] = (int) $subvalue;
+						}
+					}
+				} elseif ($type === 'private_setting') {
+					if (!$value['value']) {
+						$value['value'] = 0;
+					}
+					$options["{$type}_name_value_pairs"][$key]['value'] = (string) $value['value'];
+				} elseif (is_bool($value['value'])) {
+					$options["{$type}_name_value_pairs"][$key]['value'] = (int) $value['value'];
 				}
 			}
+			
+			if (!isset($value['type'])) {
+				$options["{$type}_name_value_pairs"][$key]['type'] = ELGG_VALUE_STRING;
+				
+				if (isset($options["{$type}_name_value_pairs"][$key]['value']) && ($type !== 'private_setting')) {
+					$value_tmp = $options["{$type}_name_value_pairs"][$key]['value'];
+					if ((is_int($value_tmp) || (is_array($value_tmp) && is_int($value_tmp[0])))) {
+						$options["{$type}_name_value_pairs"][$key]['type'] = ELGG_VALUE_INTEGER;
+					}
+				}
+			}
+			
 			if (!isset($value['comparison']) && isset($value['operand'])) {
 				$options["{$type}_name_value_pairs"][$key]['comparison'] = $options["{$type}_name_value_pairs"][$key]['operand'];
 				unset($options["{$type}_name_value_pairs"][$key]['operand']);
 			}
 		}
-
+		
 		unset($options["{$type}_names"]);
 		unset($options["{$type}_values"]);
 		unset($options["{$type}_case_sensitive"]);
