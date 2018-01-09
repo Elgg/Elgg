@@ -57,10 +57,6 @@ Forward a user to the front page if they are not logged in with ``elgg_gatekeepe
     
     echo "Information for logged-in users only";
 
-.. note::
-
-   In Elgg 1.8 and below this function was called ``gatekeeper()``
-
 Forward a user to the front page unless they are an admin with ``elgg_admin_gatekeeper()``:
 
 .. code-block:: php
@@ -68,29 +64,6 @@ Forward a user to the front page unless they are an admin with ``elgg_admin_gate
     elgg_admin_gatekeeper();
     
     echo "Information for admins only";
-
-.. note::
-
-   In Elgg 1.8 and below this function was called ``admin_gatekeeper()``
-
-
-Prevent CSRF attacks with ``action_gatekeeper()``.
-
-.. code-block:: php
-
-    action_gatekeeper();
-    
-    // Mutate some state in the database on behalf of the logged in user...
-
-This function should be used in :doc:`actions` prior to Elgg 1.8.
-
-.. note::
-
-   As of Elgg version 1.8 this function is called for all registered actions.
-   There is no longer a need to call this function in your own actions.
-   If you wish to protect other pages with action tokens then you can call this function.
-
-
 
 Pluggable Authentication Modules 
 --------------------------------

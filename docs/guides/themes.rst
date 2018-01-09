@@ -222,7 +222,7 @@ Create your plugin as described in the :doc:`developer guide </guides/index>`.
 Customize the CSS
 =================
 
-As of Elgg 1.8, the css is split into several files based on what
+The css is split into several files based on what
 aspects of the site you're theming. This allows you to tackle them one
 at a time, giving you a chance to make real progress without getting
 overwhelmed.
@@ -315,7 +315,7 @@ You can use any of these icons by calling:
 Tools
 =====
 
-Starting in Elgg 1.8, we've provided you with some development tools to help you
+We've provided you with some development tools to help you
 with theming: Turn on the “Developers” plugin and go to the “Theme
 Preview” page to start tracking your theme's progress.
 

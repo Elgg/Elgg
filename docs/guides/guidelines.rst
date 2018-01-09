@@ -44,7 +44,6 @@ Use standardized routing with page handlers
 - Call ``elgg_gatekeeper()`` and ``elgg_admin_gatekeeper()`` in the page handler function if required.
 - The group URL should use views like ``resources/groups/*.php`` to render pages.
 - Page handlers should not contain HTML.
-- If upgrading a 1.7 plugin, update the URLs throughout the plugin. (Don’t forget to remove ``/pg/``!)
 
 Use standardized page handlers and scripts
 ------------------------------------------
@@ -78,7 +77,6 @@ The object/<subtype> view
    | Delete  | action/plugin/delete |
    +---------+----------------------+
 - Make the delete action accept ``action/<handler>/delete?guid=<guid>`` so the metadata entity menu has the correct URL by default
-- If updating a 1.7 plugin, replace calls to functions deprecated in 1.7 because these will produce visible errors on every load in 1.8
 
 Actions
 -------
@@ -116,9 +114,5 @@ These points are good ideas, but are not yet in the official guidelines. Followi
 - Clean up CSS/HTML
    - Should be able to remove almost all CSS (look for patterns that can be moved into core if you need CSS)
 - Use hyphens rather than underscores in classes/ids
-- Update the ``manifest.xml`` file to the 1.8 format. Use http://el.gg/manifest17to18 to automate this
 - Do not use the ``bundled`` category with your plugins. That is for plugins distributed with Elgg
-- Update functions deprecated in 1.8.
-   - Many registration functions simply added an ``elgg_`` prefix for consistency
-   - See ``/engine/lib/deprecated-1.8.php`` for the full list. You can also set the debug level to warning to get visual reminders of deprecated functions
 - Don't use ``register_shutdown_function`` as you may not have access to certain Elgg parts anymore (eg database). Instead use the ``shutdown`` ``system`` event

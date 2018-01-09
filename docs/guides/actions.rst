@@ -363,12 +363,12 @@ In your action file, use the ``$_FILES`` global to access the uploaded file:
 Sticky forms
 ============
 
-Sticky forms are forms that retain user input if saving fails. They are "sticky" because the user's data "sticks" in the form after submitting, though it was never saved to the database. This greatly improves the user experience by minimizing data loss. Elgg 1.8 includes helper functions so you can make any form sticky.
+Sticky forms are forms that retain user input if saving fails. They are "sticky" because the user's data "sticks" in the form after submitting, though it was never saved to the database. This greatly improves the user experience by minimizing data loss. Elgg includes helper functions so you can make any form sticky.
 
 Helper functions
 ----------------
 
-Sticky forms are implemented in Elgg 1.8 by the following functions:
+Sticky forms are implemented in Elgg by the following functions:
 
 ``elgg_make_sticky_form($name)``
 Tells the engine to make all input on a form sticky.

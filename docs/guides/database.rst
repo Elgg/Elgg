@@ -339,21 +339,6 @@ Entity loading performance
 
 The internals of Elgg entity queries is a complex subject and it's recommended to seek help on the Elgg Community site before using the ``distinct`` option.
 
-Pre-1.8 Notes
--------------
-
-update\_subtype(): This function is new in 1.8. In prior versions, you
-would need to edit the database by hand if you updated the class name
-associated with a given subtype.
-
-elgg\_register\_entity\_url\_handler(): This function is new in 1.8. It
-deprecates register\_entity\_url\_handler(), which you should use if
-developing for a pre-1.8 version of Elgg.
-
-elgg\_get\_entities\_from\_metadata(): This function is new in 1.8. It
-deprecates get\_entities\_from\_metadata(), which you should use if
-developing for a pre-1.8 version of Elgg.
-
 Custom database functionality
 =============================
 

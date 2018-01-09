@@ -113,9 +113,3 @@ Some general rules for ordering plugins:
 
 - A theme plugin should be last or at least near the bottom
 - A plugin that modifies the behavior of another plugin should be lower in the plugin list
-
-Pre-1.8 notes
-=============
-
-In Elgg 1.7 and below, the interface for managing installed plugins is located at
-Administration -> Tool Administration.
