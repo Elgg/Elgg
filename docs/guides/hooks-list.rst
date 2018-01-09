@@ -740,7 +740,12 @@ Other
 =====
 
 **config, comments_per_page**
-	Filters the number of comments displayed per page. Default is 25.
+	Filters the number of comments displayed per page. Default is 25. ``$params['entity']`` will hold
+	the containing entity or null if not provided.
+
+**config, comments_latest_first**
+	Filters the order of comments. Default is ``true`` for latest first. ``$params['entity']`` will hold
+	the containing entity or null if not provided.
 
 **default, access**
 	In get_default_access(), this hook filters the return value, so it can be used to alter

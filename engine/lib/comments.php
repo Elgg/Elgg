@@ -7,6 +7,8 @@
  * @since 1.9
  */
 
+use Elgg\Database\QueryBuilder;
+
 /**
  * Comments initialization function
  *
@@ -73,6 +75,34 @@ function _elgg_comments_page_handler($segments) {
 }
 
 /**
+ * Are comments displayed with latest first?
+ *
+ * @param ElggEntity $container Entity containing comments
+ * @return bool False means oldest first.
+ * @since 3.0
+ */
+function elgg_comments_are_latest_first(ElggEntity $container = null) {
+	$params = [
+		'entity' => $container,
+	];
+	return (bool) elgg_trigger_plugin_hook('config', 'comments_latest_first', $params, true);
+}
+
+/**
+ * How many comments appear per page.
+ *
+ * @param ElggEntity $container Entity containing comments
+ * @return int
+ * @since 3.0
+ */
+function elgg_comments_per_page(ElggEntity $container = null) {
+	$params = [
+		'entity' => $container,
+	];
+	return (int) elgg_trigger_plugin_hook('config', 'comments_per_page', $params, 25);
+}
+
+/**
  * Redirect to the comment in context of the containing page
  *
  * @param int $comment_guid  GUID of the comment
@@ -108,17 +138,22 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 		$fail();
 	}
 
+	$operator = elgg_comments_are_latest_first($container) ? '>' : '<';
+
 	// this won't work with threaded comments, but core doesn't support that yet
+	$condition = function(QueryBuilder $qb) use ($comment, $operator) {
+		return $qb->compare('e.guid', $operator, $comment->guid, ELGG_VALUE_INTEGER);
+	};
 	$count = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $container->guid,
 		'count' => true,
-		'wheres' => ["e.guid < " . (int) $comment->guid],
+		'wheres' => [$condition],
 	]);
 	$limit = (int) get_input('limit');
 	if (!$limit) {
-		$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
+		$limit = elgg_comments_per_page($container);
 	}
 	$offset = floor($count / $limit) * $limit;
 	if (!$offset) {

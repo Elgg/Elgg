@@ -27,7 +27,7 @@ use Elgg\EntityIcon;
  * @subpackage DataModel.Entities
  *
  * @property       string $type           object, user, group, or site (read-only after save)
- * @property       string $subtype        Further clarifies the nature of the entity (this should not be read)
+ * @property       string $subtype        Further clarifies the nature of the entity
  * @property-read  int    $guid           The unique identifier for this entity (read only)
  * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property       int    $container_guid The GUID of the entity containing this entity
