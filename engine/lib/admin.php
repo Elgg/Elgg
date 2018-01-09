@@ -211,12 +211,6 @@ function _elgg_admin_init() {
 	
 	// Add notice about pending upgrades
 	elgg_register_event_handler('create', 'object', '_elgg_create_notice_of_pending_upgrade');
-
-	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
-	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
-	elgg_register_page_handler('robots.txt', '_elgg_robots_page_handler');
-	elgg_register_page_handler('phpinfo', '_elgg_phpinfo_page_handler');
-	elgg_register_page_handler('admin_plugins_refresh', '_elgg_ajax_plugins_update');
 }
 
 /**
@@ -678,56 +672,6 @@ function _elgg_admin_page_handler($page) {
 
 	$body = elgg_view_layout('admin', ['content' => $content, 'title' => $title]);
 	echo elgg_view_page($title, $body, 'admin');
-	return true;
-}
-
-/**
- * Formats and serves out markdown files from plugins.
- *
- * URLs in format like admin_plugin_text_file/<plugin_id>/filename.ext
- *
- * The only valid files are:
- *	* README.txt
- *	* CHANGES.txt
- *	* INSTALL.txt
- *	* COPYRIGHT.txt
- *	* LICENSE.txt
- *
- * @param array $pages URL segments
- * @return bool
- * @access private
- */
-function _elgg_admin_markdown_page_handler($pages) {
-	elgg_set_context('admin');
-
-	echo elgg_view_resource('admin/plugin_text_file', [
-		'plugin_id' => elgg_extract(0, $pages),
-		'filename' => elgg_extract(1, $pages),
-	]);
-	return true;
-}
-
-/**
- * Handle request for robots.txt
- *
- * @return true
- *
- * @access private
- */
-function _elgg_robots_page_handler() {
-	echo elgg_view_resource('robots.txt');
-	return true;
-}
-
-/**
- * Handle request for phpinfo
- *
- * @return true
- *
- * @access private
- */
-function _elgg_phpinfo_page_handler() {
-	echo elgg_view_resource('phpinfo');
 	return true;
 }
 

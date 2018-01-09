@@ -1,7 +1,7 @@
 <?php
 
 namespace Elgg;
-use Elgg\Http\OkResponse;
+
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -226,4 +226,62 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 
 	}
 
+	public function testCanGenerateEntityUrl() {
+
+		$entity = $this->createObject([
+			'title' => 'My object',
+			'foo' => 'bar',
+			'foo2' => 'wrong',
+		]);
+
+		elgg_register_route("view:object:$entity->subtype", [
+			'path' => '/view/{guid}/{title}/{foo?}/{foo2?}',
+			'handler' => function() {},
+		]);
+
+		elgg_register_route("view:object:$entity->subtype:sub", [
+			'path' => '/view/sub/{guid}/{title}/{foo?}/{foo2?}',
+			'handler' => function() {},
+		]);
+
+		$url = elgg_generate_entity_url($entity, 'view', null, [
+			'baz' => 'bam',
+			'foo2' => 'right',
+		]);
+
+		$this->assertEquals("/view/$entity->guid/my-object/bar/right?baz=bam", $url);
+
+		$url = elgg_generate_entity_url($entity, 'view', 'sub', [
+			'baz' => 'bam',
+			'foo2' => 'right',
+		]);
+
+		$this->assertEquals("/view/sub/$entity->guid/my-object/bar/right?baz=bam", $url);
+
+	}
+
+	public function testCanGenerateActionUrl() {
+
+		$dt = new \DateTime();
+		_elgg_services()->actions->setCurrentTime($dt);
+
+		$url = elgg_generate_action_url('test', [
+			'foo' => [
+				'bar1',
+				'bar2',
+			],
+		]);
+
+		$expected = elgg_http_add_url_query_elements('action/test', [
+			'foo' => [
+				'bar1',
+				'bar2',
+			],
+		]);
+
+		$expected = elgg_normalize_url($expected);
+		$expected = elgg_add_action_tokens_to_url($expected);
+
+		$this->assertEquals($expected, $url);
+	}
 }

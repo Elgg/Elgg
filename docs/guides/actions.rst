@@ -26,7 +26,7 @@ Actions must be registered before use. Use ``elgg_register_action`` for this:
 
 The ``mod/example/actions/example.php`` script will now be run whenever a form is submitted to ``http://localhost/elgg/action/example``.
 
-.. warning:: A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension.
+.. warning:: A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension. Use ``elgg_generate_action_url()`` to avoid confusion.
 
 Registering actions using plugin config file
 --------------------------------------------

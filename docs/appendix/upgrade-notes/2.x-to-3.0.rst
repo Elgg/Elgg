@@ -540,10 +540,11 @@ Removed actions
  * ``import/opendd``
  * ``discussion/reply/save``: See :ref:`upgrade-discussion-replies`
  * ``discussion/reply/delete``: See :ref:`upgrade-discussion-replies`
+ * ``comment/delete``: Use ``entity/delete`` action
  * ``uservalidationbyemail/bulk_action``: use ``admin/user/bulk/validate`` or ``admin/user/bulk/delete``
  * ``uservalidationbyemail/delete``: use ``admin/user/bulk/delete``
  * ``uservalidationbyemail/validate``: use ``admin/user/bulk/validate``
- 
+
 Inheritance changes
 -------------------
 
@@ -715,6 +716,24 @@ are no widgets in the layout, you can now pass a special ``no_widgets`` paramete
 
 When registering widgets you can no longer omit passing a context as the ``all`` context is no longer supported. You need
 to explicitely pass the contexts for which the widget is intended. 
+
+Routing
+-------
+
+Page handling using ``elgg_register_page_handler()`` has been deprecated.
+
+We have added new routing API using ``elgg_register_route()``, which allows plugins to define
+named routes, subsequently using route names to generate URLs using ``elgg_generate_url()``.
+
+See :doc:`routing </guides/routing>` docs for details.
+
+As a result of this change all core page handlers have been removed, and any logic contained
+within these page handlers has been moved to respective resource views.
+
+``elgg_generate_entity_url()`` has been added as shortcut way to generate URLs from named
+routes that depend on entity type and subtype.
+
+Use of ``handler`` parameter in entity menus has been deprecated in favour of named entity routes.
 
 Action responses
 ----------------

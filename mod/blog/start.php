@@ -23,9 +23,6 @@ function blog_init() {
 
 	elgg_extend_view('object/elements/imprint/contents', 'blog/imprint/status');
 
-	// override the default url to view a blog object
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'blog_set_url');
-
 	// notifications
 	elgg_register_notification_event('object', 'blog', ['publish']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:blog', 'blog_prepare_notification');
@@ -48,28 +45,6 @@ function blog_init() {
 
 	// register database seed
 	elgg_register_plugin_hook_handler('seeds', 'database', 'blog_register_db_seeds');
-}
-
-/**
- * Format and return the URL for blogs.
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $url    current value
- * @param array  $params supplied params
- *
- * @return string URL of blog
- */
-function blog_set_url($hook, $type, $url, $params) {
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggBlog) {
-		return;
-	}
-	
-	return elgg_generate_url('view:object:blog', [
-		'guid' => $entity->guid,
-		'title' => elgg_get_friendly_title($entity->title),
-	]);
 }
 
 /**

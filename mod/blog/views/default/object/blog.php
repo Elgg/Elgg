@@ -24,7 +24,6 @@ if ($full) {
 	$params = [
 		'entity' => $blog,
 		'title' => false,
-		'handler' => 'blog',
 	];
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
@@ -45,7 +44,6 @@ if ($full) {
 
 	$params = [
 		'entity' => $blog,
-		'handler' => 'blog',
 		'content' => $excerpt,
 		'icon' => $owner_icon,
 	];

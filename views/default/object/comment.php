@@ -42,7 +42,6 @@ if ($full_view) {
 		'time_href' => $comment->getURL(),
 		'access' => false,
 		'title' => false,
-		'handler' => 'comment',
 		'content' => $body,
 	];
 	$params = $params + $vars;

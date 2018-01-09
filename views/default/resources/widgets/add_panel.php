@@ -6,11 +6,23 @@
  * @uses $vars['owner_guid']  Container limit widgets for
  */
 
+elgg_ajax_gatekeeper();
+
+// restoring context stack
+$context_stack = get_input('context_stack');
+if (!empty($context_stack) && is_array($context_stack)) {
+	elgg_set_context_stack($context_stack);
+}
+
 elgg_require_js('resources/widgets/add_panel');
 
-$context = elgg_extract('context', $vars);
-$owner_guid = (int) elgg_extract('owner_guid', $vars);
+$context = elgg_extract('context', $vars, get_input('context'));
+$owner_guid = (int) elgg_extract('owner_guid', $vars, (int) get_input('owner_guid'));
+elgg_entity_gatekeeper($owner_guid);
+
 $owner = get_entity($owner_guid);
+
+elgg_set_page_owner_guid($owner->guid);
 
 $widgets = elgg_get_widgets($owner->guid, $context);
 $widget_types = elgg_get_widget_types([

@@ -11,15 +11,6 @@
  * @return void
  */
 function profile_init() {
-
-	// Register a URL handler for users
-	elgg_register_plugin_hook_handler('entity:url', 'user', 'profile_set_url');
-
-	elgg_register_page_handler('profile', 'profile_page_handler');
-	
-	// unregister default core page handler for displaying users
-	elgg_unregister_page_handler('user');
-
 	elgg_extend_view('elgg.css', 'profile/css');
 	
 	elgg_register_ajax_view('forms/profile/fields/add');
@@ -35,65 +26,6 @@ function profile_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_profile_admin_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_profile_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_profile_user_hover_menu');
-}
-
-/**
- * Profile page handler
- *
- * @param array $page Array of URL segments passed by the page handling mechanism
- * @return bool
- */
-function profile_page_handler($page) {
-
-	if (isset($page[0])) {
-		$username = $page[0];
-		$user = get_user_by_username($username);
-		elgg_set_page_owner_guid($user->guid);
-	} elseif (elgg_is_logged_in()) {
-		forward(elgg_get_logged_in_user_entity()->getURL());
-	}
-
-	// short circuit if invalid or banned username
-	if (!$user || ($user->isBanned() && !elgg_is_admin_logged_in())) {
-		register_error(elgg_echo('profile:notfound'));
-		forward();
-	}
-
-	$action = null;
-	if (isset($page[1])) {
-		$action = $page[1];
-	}
-	
-	if ($action == 'edit') {
-		// use the core profile edit page
-		echo elgg_view_resource('profile/edit');
-		return true;
-	}
-
-	echo elgg_view_resource('profile/view', [
-		'username' => $page[0],
-	]);
-	return true;
-}
-
-/**
- * Profile URL generator for $user->getUrl();
- *
- * @param string $hook   'entity:url'
- * @param string $type   'user'
- * @param string $url    current return value
- * @param array  $params supplied params
- *
- * @return void|string
- */
-function profile_set_url($hook, $type, $url, $params) {
-	
-	$user = elgg_extract('entity', $params);
-	if (!$user instanceof ElggUser) {
-		return;
-	}
-	
-	return "profile/{$user->username}";
 }
 
 /**
@@ -247,8 +179,8 @@ function _profile_user_hover_menu(\Elgg\Hook $hook) {
 		'name' => 'profile:edit',
 		'text' => elgg_echo('profile:edit'),
 		'icon' => 'address-card',
-		'href' => "profile/$user->username/edit",
-		'section' => (elgg_get_logged_in_user_guid() == $user->guid)? 'action' : 'admin',
+		'href' => elgg_generate_entity_url($user, 'edit'),
+		'section' => (elgg_get_logged_in_user_guid() == $user->guid) ? 'action' : 'admin',
 	]);
 	
 	return $return;
@@ -304,7 +236,7 @@ function _profile_user_page_menu(\Elgg\Hook $hook) {
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'edit_profile',
-		'href' => "profile/{$owner->username}/edit",
+		'href' => elgg_generate_entity_url($owner, 'edit'),
 		'text' => elgg_echo('profile:edit'),
 		'section' => '1_profile',
 		'contexts' => ['settings'],

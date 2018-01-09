@@ -5,17 +5,19 @@
 
 elgg_gatekeeper();
 
-$user = elgg_get_page_owner_entity();
-if (!$user) {
-	register_error(elgg_echo("profile:notfound"));
-	forward();
+$username = elgg_extract('username', $vars);
+$user = get_user_by_username($username);
+
+if (!$user instanceof ElggUser) {
+	throw new \Elgg\EntityNotFoundException(elgg_echo("profile:notfound"));
 }
 
 // check if logged in user can edit this profile
 if (!$user->canEdit()) {
-	register_error(elgg_echo("profile:noaccess"));
-	forward();
+	throw new \Elgg\EntityPermissionsException(elgg_echo("profile:noaccess"));
 }
+
+elgg_set_page_owner_guid($user->guid);
 
 elgg_push_context('settings');
 elgg_push_context('profile_edit');

@@ -19,9 +19,7 @@ function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
 	
 	elgg_register_action('comment/save');
-	elgg_register_action('comment/delete');
-	
-	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
+
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
@@ -29,8 +27,6 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:social', '_elgg_comments_social_menu_setup');
 	
 	elgg_register_event_handler('update:after', 'all', '_elgg_comments_access_sync', 600);
-
-	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 
 	elgg_register_ajax_view('core/ajax/edit_comment');
 	elgg_register_ajax_view('page/elements/comments');
@@ -42,36 +38,6 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_comments_add_content_owner_to_subscriptions');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:comment', '_elgg_comments_prepare_content_owner_notification');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:comment', '_elgg_comments_prepare_notification');
-}
-
-/**
- * Page handler for generic comments manipulation.
- *
- * @param array $segments URL segments
- *
- * @return bool
- *
- * @access private
- */
-function _elgg_comments_page_handler($segments) {
-
-	$page = elgg_extract(0, $segments);
-	switch ($page) {
-		case 'edit':
-			echo elgg_view_resource('comments/edit', [
-				'guid' => elgg_extract(1, $segments),
-			]);
-			return true;
-			break;
-
-		case 'view':
-			_elgg_comment_redirect(elgg_extract(1, $segments), elgg_extract(2, $segments));
-			break;
-
-		default:
-			return false;
-			break;
-	}
 }
 
 /**
@@ -170,38 +136,6 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$url = elgg_http_build_url($parts, false);
 	
 	forward($url);
-}
-
-/**
- * Format and return the URL for a comment.
- *
- * This is the container's URL because comments don't have their own page.
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $return URL for entity
- * @param array  $params Array with the elgg entity passed in as 'entity'
- *
- * @return string
- * @access private
- */
-function _elgg_comment_url_handler($hook, $type, $return, $params) {
-	$entity = $params['entity'];
-	/* @var \ElggObject $entity */
-
-	if (!$entity instanceof ElggComment || !$entity->getOwnerEntity()) {
-		// not a comment or has no owner
-
-		// @todo handle anonymous comments
-		return $return;
-	}
-
-	$container = $entity->getContainerEntity();
-	if (!$container) {
-		return $return;
-	}
-
-	return "comment/view/{$entity->guid}/{$container->guid}";
 }
 
 /**

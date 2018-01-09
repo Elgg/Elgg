@@ -11,7 +11,13 @@ use Elgg\UnitTestCase;
 class CronServiceTest extends UnitTestCase {
 
 	public function up() {
-
+		elgg_register_route('cron', [
+			'path' => '/cron/{segments}',
+			'handler' => '_elgg_cron_page_handler',
+			'requirements' => [
+				'segments' => '.+',
+			],
+		]);
 	}
 
 	public function down() {

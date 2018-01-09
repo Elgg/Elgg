@@ -1204,9 +1204,11 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return string The URL of the entity
 	 */
 	public function getURL() {
-		$url = _elgg_services()->hooks->trigger('entity:url', $this->getType(), ['entity' => $this]);
+		$url = elgg_generate_entity_url($this, 'view');
 
-		if ($url === null || $url === '' || $url === false) {
+		$url = _elgg_services()->hooks->trigger('entity:url', $this->getType(), ['entity' => $this], $url);
+
+		if (empty($url)) {
 			return '';
 		}
 
