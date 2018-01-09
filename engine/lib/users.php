@@ -782,6 +782,54 @@ function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $par
 }
 
 /**
+ * Register menu items to the user:unvalidated menu
+ *
+ * @elgg_plugin_hook register menu:user:unvalidated
+ *
+ * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @since 3.0
+ * @internal
+ */
+function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
+	
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof ElggUser) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'validate',
+		'text' => elgg_echo('validate'),
+		'href' => elgg_http_add_url_query_elements('action/admin/user/validate', [
+			'user_guid' => $entity->guid,
+		]),
+		'confirm' => true,
+		'priority' => 400,
+	]);
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'delete',
+		'text' => elgg_echo('delete'),
+		'href' => elgg_http_add_url_query_elements('action/admin/user/delete', [
+			'guid' => $entity->guid,
+		]),
+		'confirm' => elgg_echo('deleteconfirm'),
+		'priority' => 500,
+	]);
+	
+	return $return;
+}
+
+/**
  * Users initialisation function, which establishes the page handler
  *
  * @return void
@@ -799,6 +847,7 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
 
 	elgg_register_action('login', '', 'public');
 	elgg_register_action('logout');

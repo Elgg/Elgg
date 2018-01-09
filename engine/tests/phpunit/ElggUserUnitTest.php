@@ -47,5 +47,31 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($user_settings['registered2']);
 		$this->assertArrayNotHasKey('unregistered', $user_settings);
 	}
+	
+	public function testBanUser() {
+		$user = $this->createUser();
+		
+		// should not be banned
+		$this->assertFalse($user->isBanned());
+		
+		// ban the user
+		$this->assertTrue($user->ban());
+		$this->assertTrue($user->isBanned());
+	}
+	
+	public function testUnbanUser() {
+		$user = $this->createUser();
+		
+		// should not be banned
+		$this->assertFalse($user->isBanned());
+		
+		// ban the user
+		$this->assertTrue($user->ban());
+		$this->assertTrue($user->isBanned());
+		
+		// now unban
+		$this->assertTrue($user->unban());
+		$this->assertFalse($user->isBanned());
+	}
 
 }

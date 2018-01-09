@@ -21,9 +21,13 @@ elgg_pop_context();
 try {
 	login($user);
 } catch (LoginException $e) {
-	return elgg_error_response($e->getMessage());
+	access_show_hidden_entities($access_status);
+	
+	register_error($e->getMessage());
+	forward();
 }
 
 access_show_hidden_entities($access_status);
 
-return elgg_ok_response('', elgg_echo('email:confirm:success'));
+system_message(elgg_echo('email:confirm:success'));
+forward();
