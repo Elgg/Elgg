@@ -5,6 +5,7 @@ namespace Elgg\Database;
 use DatabaseException;
 use Elgg\Database;
 use ElggCache;
+use ElggEntity;
 
 /**
  * Private settings for entities
@@ -15,7 +16,7 @@ use ElggCache;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * @since 2.0.0
+ * @since  2.0.0
  */
 class PrivateSettingsTable {
 
@@ -28,11 +29,6 @@ class PrivateSettingsTable {
 	 * @var EntityTable
 	 */
 	protected $entities;
-
-	/**
-	 * @var string
-	 */
-	protected $table;
 
 	/**
 	 * @var ElggCache
@@ -50,7 +46,6 @@ class PrivateSettingsTable {
 		$this->db = $db;
 		$this->entities = $entities;
 		$this->cache = $cache;
-		$this->table = $this->db->prefix . 'private_settings';
 	}
 
 	/**
@@ -59,28 +54,24 @@ class PrivateSettingsTable {
 	 * Plugin authors can set private data on entities. By default private
 	 * data will not be searched or exported.
 	 *
-	 * @param int    $entity_guid The entity GUID
-	 * @param string $name        The name of the setting
+	 * @param ElggEntity $entity The entity GUID
+	 * @param string     $name   The name of the setting
 	 *
 	 * @return mixed The setting value, or null if does not exist
 	 * @throws DatabaseException
 	 */
-	public function get($entity_guid, $name) {
-		$values = $this->cache->load($entity_guid);
+	public function get(ElggEntity $entity, $name) {
+		$values = $this->cache->load($entity->guid);
 
 		if (isset($values[$name])) {
 			return $values[$name];
-		}
-
-		if (!$this->entities->exists($entity_guid)) {
-			return false;
 		}
 
 		$qb = Select::fromTable('private_settings');
 		$qb->select('name')
 			->addSelect('value')
 			->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
-			->andWhere($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER));
+			->andWhere($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
 		$setting = $this->db->getDataRow($qb);
 		if ($setting) {
@@ -91,19 +82,15 @@ class PrivateSettingsTable {
 	}
 
 	/**
-	 * Return an array of all private settings.
+	 * Return an array of all private settings
 	 *
-	 * @param int $entity_guid The entity GUID
+	 * @param ElggEntity $entity Entity
 	 *
 	 * @return string[] empty array if no settings
 	 * @throws DatabaseException
 	 */
-	public function getAll($entity_guid) {
-		if (!$this->entities->exists($entity_guid)) {
-			return [];
-		}
-
-		$values = $this->cache->load($entity_guid);
+	public function getAllForEntity(ElggEntity $entity) {
+		$values = $this->cache->load($entity->guid);
 		if (isset($values)) {
 			return $values;
 		}
@@ -111,7 +98,7 @@ class PrivateSettingsTable {
 		$qb = Select::fromTable('private_settings');
 		$qb->select('name')
 			->addSelect('value')
-			->where($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER));
+			->where($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
 		$result = $this->db->getData($qb);
 
@@ -123,7 +110,7 @@ class PrivateSettingsTable {
 			}
 		}
 
-		$this->cache->save($entity_guid, $return);
+		$this->cache->save($entity->guid, $return);
 
 		return $return;
 	}
@@ -131,39 +118,37 @@ class PrivateSettingsTable {
 	/**
 	 * Sets a private setting for an entity.
 	 *
-	 * @param int    $entity_guid The entity GUID
-	 * @param string $name        The name of the setting
-	 * @param string $value       The value of the setting
+	 * @param ElggEntity $entity Entity
+	 * @param string     $name   The name of the setting
+	 * @param string     $value  The value of the setting
 	 *
 	 * @return bool
 	 * @throws DatabaseException
 	 */
-	public function set($entity_guid, $name, $value) {
-		if (!$this->entities->exists($entity_guid)) {
-			return false;
-		}
+	public function set(ElggEntity $entity, $name, $value) {
+		$entity->invalidateCache();
 
-		$this->entities->invalidateCache($entity_guid);
+		$value_type = is_int($value) ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING;
 
 		$qb = Select::fromTable('private_settings');
 		$qb->select('id')
 			->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
-			->andWhere($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER));
+			->andWhere($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
 		$row = $this->db->getDataRow($qb);
 
 		if ($row) {
 			$qb = Update::table('private_settings');
-			$qb->set('value', $qb->param($value, ELGG_VALUE_STRING))
+			$qb->set('value', $qb->param($value, $value_type))
 				->where($qb->compare('id', '=', $row->id, ELGG_VALUE_INTEGER));
 
 			$result = $this->db->updateData($qb);
 		} else {
 			$qb = Insert::intoTable('private_settings');
 			$qb->values([
-				'entity_guid' => $qb->param($entity_guid, ELGG_VALUE_INTEGER),
+				'entity_guid' => $qb->param($entity->guid, ELGG_VALUE_INTEGER),
 				'name' => $qb->param($name, ELGG_VALUE_STRING),
-				'value' => $qb->param($value, ELGG_VALUE_STRING),
+				'value' => $qb->param($value, $value_type),
 			]);
 
 			$result = $this->db->insertData($qb);
@@ -175,18 +160,18 @@ class PrivateSettingsTable {
 	/**
 	 * Deletes a private setting for an entity.
 	 *
-	 * @param int    $entity_guid The Entity GUID
-	 * @param string $name        The name of the setting
+	 * @param ElggEntity $entity Entity
+	 * @param string     $name   The name of the setting
 	 *
 	 * @return bool
 	 * @throws DatabaseException
 	 */
-	public function remove($entity_guid, $name) {
-		$this->entities->invalidateCache($entity_guid);
+	public function remove(ElggEntity $entity, $name) {
+		$entity->invalidateCache();
 
 		$qb = Delete::fromTable('private_settings');
 		$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
-			->andWhere($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER));
+			->andWhere($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
 		return $this->db->deleteData($qb);
 	}
@@ -194,16 +179,16 @@ class PrivateSettingsTable {
 	/**
 	 * Deletes all private settings for an entity
 	 *
-	 * @param int $entity_guid The Entity GUID
+	 * @param ElggEntity $entity Entity
 	 *
 	 * @return bool
 	 * @throws DatabaseException
 	 */
-	public function removeAllForEntity($entity_guid) {
-		$this->entities->invalidateCache($entity_guid);
+	public function removeAllForEntity(ElggEntity $entity) {
+		$entity->invalidateCache();
 
 		$qb = Delete::fromTable('private_settings');
-		$qb->where($qb->compare('entity_guid', '=', $entity_guid, ELGG_VALUE_INTEGER));
+		$qb->where($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
 		return $this->db->deleteData($qb);
 	}

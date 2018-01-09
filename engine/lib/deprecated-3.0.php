@@ -933,7 +933,7 @@ function _elgg_get_metastring_based_object_from_id($id, $type) {
  * @return bool
  * @access private
  *
- * @deprected
+ * @deprecated 3.0
  */
 function _elgg_delete_metastring_based_object_by_id($id, $type) {
 
@@ -1079,6 +1079,194 @@ function sanitise_filepath($path, $append_slash = true) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \\Elgg\\Project\\Paths::sanitize().', 3.0);
 
 	return \Elgg\Project\Paths::sanitize($path, $append_slash);
+}
+
+/**
+ * Gets a private setting for an entity.
+ *
+ * Plugin authors can set private data on entities.  By default
+ * private data will not be searched or exported.
+ *
+ * @note Internal: Private data is used to store settings for plugins
+ * and user settings.
+ *
+ * @param int    $entity_guid The entity GUID
+ * @param string $name        The name of the setting
+ *
+ * @return mixed The setting value, or null if does not exist
+ * @see set_private_setting()
+ * @see get_all_private_settings()
+ * @see remove_private_setting()
+ * @see remove_all_private_settings()
+ */
+function get_private_setting($entity_guid, $name) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggEntity::getPrivateSetting()
+	', '3.0');
+
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($entity_guid);
+	elgg_set_ignore_access($ia);
+
+	if (!$entity) {
+		return null;
+	}
+
+	return $entity->getPrivateSetting($name);
+}
+
+/**
+ * Return an array of all private settings.
+ *
+ * @param int $entity_guid The entity GUID
+ *
+ * @return string[] empty array if no settings
+ * @see set_private_setting()
+ * @see get_private_settings()
+ * @see remove_private_setting()
+ * @see remove_all_private_settings()
+ */
+function get_all_private_settings($entity_guid) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggEntity::getAllPrivateSettings()
+	', '3.0');
+
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($entity_guid);
+	elgg_set_ignore_access($ia);
+
+	if (!$entity) {
+		return null;
+	}
+
+	return $entity->getAllPrivateSettings();
+}
+
+/**
+ * Sets a private setting for an entity.
+ *
+ * @param int    $entity_guid The entity GUID
+ * @param string $name        The name of the setting
+ * @param string $value       The value of the setting
+ *
+ * @return bool
+ * @see get_private_setting()
+ * @see get_all_private_settings()
+ * @see remove_private_setting()
+ * @see remove_all_private_settings()
+ */
+function set_private_setting($entity_guid, $name, $value) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggEntity::setPrivateSetting()
+	', '3.0');
+
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($entity_guid);
+	elgg_set_ignore_access($ia);
+
+	if (!$entity) {
+		return false;
+	}
+
+	return $entity->setPrivateSetting($name, $value);
+}
+
+/**
+ * Deletes a private setting for an entity.
+ *
+ * @param int    $entity_guid The Entity GUID
+ * @param string $name        The name of the setting
+ *
+ * @return bool
+ * @see get_private_setting()
+ * @see get_all_private_settings()
+ * @see set_private_setting()
+ * @see remove_all_private_settings()
+ */
+function remove_private_setting($entity_guid, $name) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggEntity::removePrivateSetting()
+	', '3.0');
+
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($entity_guid);
+	elgg_set_ignore_access($ia);
+
+	if (!$entity) {
+		return null;
+	}
+
+	return $entity->removePrivateSetting($name);
+}
+
+/**
+ * Deletes all private settings for an entity.
+ *
+ * @param int $entity_guid The Entity GUID
+ *
+ * @return bool
+ * @see get_private_setting()
+ * @see get_all_private_settings()
+ * @see set_private_setting()
+ * @see remove_private_settings()
+ */
+function remove_all_private_settings($entity_guid) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Use ElggEntity::removeAllPrivateSettings()
+	', '3.0');
+
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($entity_guid);
+	elgg_set_ignore_access($ia);
+
+	if (!$entity) {
+		return null;
+	}
+
+	return $entity->removeAllPrivateSettings();
+}
+
+/**
+ * Enable objects with an enable() method.
+ *
+ * Used as a callback for \ElggBatch.
+ *
+ * @todo why aren't these static methods on \ElggBatch?
+ *
+ * @param object $object The object to enable
+ * @return bool
+ * @access private
+ */
+function elgg_batch_enable_callback($object) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Perform batch operations on members of the batch.
+	', '3.0');
+	// our db functions return the number of rows affected...
+	return $object->enable() ? true : false;
+}
+
+/**
+ * Disable objects with a disable() method.
+ *
+ * Used as a callback for \ElggBatch.
+ *
+ * @param object $object The object to disable
+ * @return bool
+ * @access private
+ */
+function elgg_batch_disable_callback($object) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated.
+		Perform batch operations on members of the batch.
+	', '3.0');
+	// our db functions return the number of rows affected...
+	return $object->disable() ? true : false;
 }
 
 /**

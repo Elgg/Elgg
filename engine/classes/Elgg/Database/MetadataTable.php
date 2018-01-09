@@ -103,6 +103,62 @@ class MetadataTable {
 	}
 
 	/**
+	 * Get popular tags and their frequencies
+	 *
+	 * Accepts all options supported by {@link elgg_get_entities()}
+	 *
+	 * Returns an array of objects that include "tag" and "total" properties
+	 *
+	 * @todo   When updating this function for 3.0, I have noticed that docs explicitly mention
+	 *       that tags must be registered, but it was not really checked anywhere in code
+	 *       So, either update the docs or decide what the behavior should be
+	 *
+	 * @param array $options Options
+	 *
+	 * @return    object[]|false
+	 * @throws \DatabaseException
+	 * @option int      $threshold Minimum number of tag occurrences
+	 * @option string[] $tag_names Names of registered tag names to include in search
+	 *
+	 */
+	public function getTags(array $options = []) {
+		$defaults = [
+			'threshold' => 1,
+			'tag_names' => [],
+		];
+
+		$options = array_merge($defaults, $options);
+
+		$singulars = ['tag_name'];
+		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
+
+		$tag_names = elgg_extract('tag_names', $options);
+		if (empty($tag_names)) {
+			$tag_names = elgg_get_registered_tag_metadata_names();
+		}
+
+		$threshold = elgg_extract('threshold', $options, 1, false);
+
+		unset($options['tag_names']);
+		unset($options['threshold']);
+
+		$qb = \Elgg\Database\Select::fromTable('metadata', 'md');
+		$qb->select('md.value AS tag')
+			->addSelect('COUNT(md.id) AS total')
+			->where($qb->compare('md.name', 'IN', $tag_names, ELGG_VALUE_STRING))
+			->andWhere($qb->compare('md.value', '!=', '', ELGG_VALUE_STRING))
+			->groupBy('md.value')
+			->having($qb->compare('total', '>=', $threshold, ELGG_VALUE_INTEGER))
+			->orderBy('total', 'desc');
+
+		$options = new \Elgg\Database\QueryOptions($options);
+		$alias = $qb->joinEntitiesTable('md', 'entity_guid', 'inner', 'e');
+		$qb->addClause(\Elgg\Database\Clauses\EntityWhereClause::factory($options), $alias);
+
+		return _elgg_services()->db->getData($qb);
+	}
+
+	/**
 	 * Get a specific metadata object by its id
 	 *
 	 * @see MetadataTable::getAll()
@@ -110,6 +166,7 @@ class MetadataTable {
 	 * @param int $id The id of the metadata object being retrieved.
 	 *
 	 * @return ElggMetadata|false  false if not found
+	 * @throws \DatabaseException
 	 */
 	public function get($id) {
 		$qb = Select::fromTable('metadata');
@@ -133,6 +190,7 @@ class MetadataTable {
 	 * @param ElggMetadata $metadata Metadata
 	 *
 	 * @return bool
+	 * @throws \DatabaseException
 	 */
 	public function delete(ElggMetadata $metadata) {
 		if (!$metadata->id || !$metadata->canEdit()) {
@@ -152,7 +210,7 @@ class MetadataTable {
 			$this->metadata_cache->clear($metadata->entity_guid);
 		}
 
-		return $deleted;
+		return $deleted !== false;
 	}
 
 	/**
@@ -165,6 +223,7 @@ class MetadataTable {
 	 * @param bool         $allow_multiple Allow multiple values for one key. Default is false
 	 *
 	 * @return int|false id of metadata or false if failure
+	 * @throws \DatabaseException
 	 */
 	public function create(ElggMetadata $metadata, $allow_multiple = false) {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
@@ -191,7 +250,10 @@ class MetadataTable {
 			$id = $this->getIdsByName($metadata->entity_guid, $metadata->name);
 
 			if (is_array($id)) {
-				throw new \LogicException("Multiple '{$metadata->name}' metadata values exist for entity [guid: {$metadata->entity_guid}]. Use ElggEntity::setMetadata()");
+				throw new \LogicException("
+					Multiple '{$metadata->name}' metadata values exist for entity [guid: {$metadata->entity_guid}]. 
+					Use ElggEntity::setMetadata()
+				");
 			}
 
 			if ($id) {
@@ -246,6 +308,7 @@ class MetadataTable {
 	 * @param ElggMetadata $metadata Updated metadata
 	 *
 	 * @return bool
+	 * @throws \DatabaseException
 	 */
 	public function update(ElggMetadata $metadata) {
 		if (!$metadata->canEdit()) {
@@ -294,7 +357,7 @@ class MetadataTable {
 	public function getAll(array $options = []) {
 
 		$options['metastring_type'] = 'metadata';
-		$options = _elgg_normalize_metastrings_options($options);
+		$options = LegacyQueryOptionsAdapter::normalizeMetastringOptions($options);
 
 		return Metadata::find($options);
 	}

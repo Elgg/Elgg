@@ -167,7 +167,7 @@ trait LegacyQueryOptionsAdapter {
 	 */
 	protected function normalizeAccessOptions(array $options = []) {
 
-		$options = _elgg_normalize_plural_options_array($options, ['access_id']);
+		$options = self::normalizePluralOptions($options, ['access_id']);
 
 		return $options;
 	}
@@ -187,7 +187,7 @@ trait LegacyQueryOptionsAdapter {
 			'subtype',
 		];
 
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
+		$options = self::normalizePluralOptions($options, $singulars);
 
 		// can't use helper function with type_subtype_pair because
 		// it's already an array...just need to merge it
@@ -239,7 +239,7 @@ trait LegacyQueryOptionsAdapter {
 			'metadata_name_value_pair',
 		];
 
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
+		$options = self::normalizePluralOptions($options, $singulars);
 
 		$options = $this->normalizePairedOptions('metadata', $options);
 		$options = $this->normalizePairedOptions('search', $options);
@@ -357,7 +357,7 @@ trait LegacyQueryOptionsAdapter {
 			'annotation_name_value_pair',
 		];
 
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
+		$options = self::normalizePluralOptions($options, $singulars);
 
 		$options = $this->normalizePairedOptions('annotation', $options);
 
@@ -474,7 +474,7 @@ trait LegacyQueryOptionsAdapter {
 			'private_setting_name_value_pair',
 		];
 
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
+		$options = self::normalizePluralOptions($options, $singulars);
 
 		if (isset($options['private_setting_name_prefix'])) {
 			$prefix = $options['private_setting_name_prefix'];
@@ -601,22 +601,24 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			if (!isset($value['case_sensitive'])) {
-				$options["{$type}_name_value_pairs"][$key]['case_sensitive'] = elgg_extract("{$type}_case_sensitive", $options, true);
+				$value['case_sensitive'] = elgg_extract("{$type}_case_sensitive", $options, true);
 			}
 			if (!isset($value['type'])) {
 				if (is_bool($value['value'])) {
 					$value['value'] = (int) $value['value'];
 				}
 				if (is_int($value['value'])) {
-					$options["{$type}_name_value_pairs"][$key]['type'] = ELGG_VALUE_INTEGER;
+					$value['type'] = ELGG_VALUE_INTEGER;
 				} else {
-					$options["{$type}_name_value_pairs"][$key]['type'] = ELGG_VALUE_STRING;
+					$value['type'] = ELGG_VALUE_STRING;
 				}
 			}
 			if (!isset($value['comparison']) && isset($value['operand'])) {
-				$options["{$type}_name_value_pairs"][$key]['comparison'] = $options["{$type}_name_value_pairs"][$key]['operand'];
-				unset($options["{$type}_name_value_pairs"][$key]['operand']);
+				$value['comparison'] = $value['operand'];
+				unset($value['operand']);
 			}
+
+			$options["{$type}_name_value_pairs"][$key] = $value;
 		}
 
 		unset($options["{$type}_names"]);
@@ -716,7 +718,7 @@ trait LegacyQueryOptionsAdapter {
 			'annotation_owner_guid',
 		];
 
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
+		$options = self::normalizePluralOptions($options, $singulars);
 
 		$names = [
 			'guids',
@@ -814,7 +816,7 @@ trait LegacyQueryOptionsAdapter {
 	 */
 	protected function normalizeSelectClauses(array $options = []) {
 
-		$options = _elgg_normalize_plural_options_array($options, ['select']);
+		$options = self::normalizePluralOptions($options, ['select']);
 
 		foreach ($options['selects'] as $key => $clause) {
 			if (empty($clause)) {
@@ -841,7 +843,7 @@ trait LegacyQueryOptionsAdapter {
 	 */
 	protected function normalizeWhereClauses(array $options = []) {
 
-		$options = _elgg_normalize_plural_options_array($options, ['where']);
+		$options = self::normalizePluralOptions($options, ['where']);
 
 		foreach ($options['wheres'] as $key => $clause) {
 			if (empty($clause)) {
@@ -879,7 +881,7 @@ trait LegacyQueryOptionsAdapter {
 	 */
 	protected function normalizeJoinClauses(array $options = []) {
 
-		$options = _elgg_normalize_plural_options_array($options, ['join']);
+		$options = self::normalizePluralOptions($options, ['join']);
 
 		foreach ($options['joins'] as $key => $join) {
 			if (empty($join)) {
@@ -1038,6 +1040,87 @@ trait LegacyQueryOptionsAdapter {
 
 			return $e;
 		}, $options['group_by']);
+
+		return $options;
+	}
+
+	/**
+	 * Normalizes metadata / annotation option names to their corresponding metastrings name.
+	 *
+	 * @param array $options An options array
+	 * @return array
+	 * @access private
+	 */
+	public static function normalizeMetastringOptions(array $options = []) {
+
+		// support either metastrings_type or metastring_type
+		// because I've made this mistake many times and hunting it down is a pain...
+		$type = elgg_extract('metastring_type', $options, null);
+		$type = elgg_extract('metastrings_type', $options, $type);
+
+		$options['metastring_type'] = $type;
+
+		// support annotation_ and annotations_ because they're way too easy to confuse
+		$prefixes = ['metadata_', 'annotation_', 'annotations_'];
+
+		// map the metadata_* options to metastring_* options
+		$map = [
+			'names'                 => 'metastring_names',
+			'values'                => 'metastring_values',
+			'case_sensitive'        => 'metastring_case_sensitive',
+			'owner_guids'           => 'metastring_owner_guids',
+			'created_time_lower'    => 'metastring_created_time_lower',
+			'created_time_upper'    => 'metastring_created_time_upper',
+			'calculation'           => 'metastring_calculation',
+			'ids'                   => 'metastring_ids',
+		];
+
+		foreach ($prefixes as $prefix) {
+			$singulars = ["{$prefix}name", "{$prefix}value", "{$prefix}owner_guid", "{$prefix}id"];
+			$options = self::normalizePluralOptions($options, $singulars);
+
+			foreach ($map as $specific => $normalized) {
+				$key = $prefix . $specific;
+				if (isset($options[$key])) {
+					$options[$normalized] = $options[$key];
+				}
+			}
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Normalise the singular keys in an options array to plural keys.
+	 *
+	 * Used in elgg_get_entities*() functions to support shortcutting plural
+	 * names by singular names.
+	 *
+	 * @param array $options   The options array. $options['keys'] = 'values';
+	 * @param array $singulars A list of singular words to pluralize by adding 's'.
+	 *
+	 * @return array
+	 * @access private
+	 */
+	public static function normalizePluralOptions($options, $singulars) {
+		foreach ($singulars as $singular) {
+			$plural = $singular . 's';
+
+			if (array_key_exists($singular, $options)) {
+				if ($options[$singular] === ELGG_ENTITIES_ANY_VALUE) {
+					$options[$plural] = $options[$singular];
+				} else {
+					// Test for array refs #2641
+					if (!is_array($options[$singular])) {
+						$options[$plural] = [$options[$singular]];
+					} else {
+						$options[$plural] = $options[$singular];
+					}
+				}
+			}
+
+			unset($options[$singular]);
+		}
 
 		return $options;
 	}

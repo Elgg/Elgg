@@ -120,6 +120,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``activity_profile_menu``
  * ``can_write_to_container``: Use ``ElggEntity->canWriteToContainer()``
  * ``create_metadata_from_array``
+ * ``metadata_array_to_values``
  * ``datalist_get``
  * ``datalist_set``
  * ``detect_extender_valuetype``
@@ -385,6 +386,18 @@ Note that all of the private API around building raw SQL strings has also been r
 be advised that anything marked as ``@access private`` and ``@internal`` in core can be modified and removed at any time, and we do not guarantee
 any backward compatibility for those functions. DO NOT USE THEM. If you find yourself needing to use them, open an issue
 on Github and we will consider adding a public equivalent.
+
+Boolean entity properties
+-------------------------
+
+Storage of metadata, annotation and private setting values has been aligned.
+
+**Boolean values are cast to integers when saved**: ``false`` is stored as ``0`` and ``true`` is stored as ``1``.
+This has breaking implications for private settings, which were previously stored as empty strings for ``false`` values.
+Plugins should write their own migration scripts to alter DB values from empty strings to ``0`` (for private settings that
+are expected to store boolean values) to ensure that ``elgg_get_entities()`` can retrieve these values
+with ``private_setting_name_value_pairs`` containing ``false`` values. This applies to plugin settings, as well as
+any private settings added to entities.
 
 Metadata Changes
 ----------------

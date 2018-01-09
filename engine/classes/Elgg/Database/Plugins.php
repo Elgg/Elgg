@@ -1118,7 +1118,7 @@ class Plugins {
 			'plugin_user_setting_name_value_pair'
 		];
 
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
+		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
 
 		// rewrite plugin_user_setting_name_* to the right PS ones.
 		$map = [

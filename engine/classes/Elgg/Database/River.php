@@ -36,7 +36,7 @@ class River extends Repository {
 			'subtype'
 		];
 
-		$options = _elgg_normalize_plural_options_array($options, $singulars);
+		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
 
 		$defaults = [
 			'ids' => null,

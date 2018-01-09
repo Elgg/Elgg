@@ -137,58 +137,8 @@ function elgg_annotation_exists($entity_guid, $name, $owner_guid = null) {
 }
 
 /**
- * Set the URL for a comment when called from a plugin hook
- *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param string $url    URL string
- * @param array  $params Parameters of the hook
- * @return string
- * @access private
- */
-function _elgg_set_comment_url($hook, $type, $url, $params) {
-	$annotation = $params['extender'];
-	/* @var \ElggExtender $annotation */
-	if ($annotation->getSubtype() == 'generic_comment') {
-		$entity = $annotation->getEntity();
-		if ($entity) {
-			return $entity->getURL() . '#item-annotation-' . $annotation->id;
-		}
-	}
-}
-
-/**
- * Register annotation unit tests
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $tests current return value
- *
- * @return array
- *
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_annotations_test($hook, $type, $tests) {
-	$tests[] = ElggCoreAnnotationAPITest::class;
-	return $tests;
-}
-
-/**
- * Initialize the annotation library
- *
- * @return void
- *
- * @access private
- */
-function _elgg_annotations_init() {
-	elgg_register_plugin_hook_handler('extender:url', 'annotation', '_elgg_set_comment_url');
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_annotations_test');
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_annotations_init');
+
 };

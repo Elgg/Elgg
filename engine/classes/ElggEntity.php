@@ -354,26 +354,9 @@ abstract class ElggEntity extends \ElggData implements
 			if ($cache->isLoaded($guid)) {
 				return $cache->getSingle($guid, $name);
 			}
+
+			return null;
 		}
-
-		$md = elgg_get_metadata([
-			'guid' => $guid,
-			'metadata_name' => $name,
-			'limit' => 0,
-			'distinct' => false,
-		]);
-
-		$value = null;
-
-		if ($md && !is_array($md)) {
-			$value = $md->value;
-		} elseif (count($md) == 1) {
-			$value = $md[0]->value;
-		} else if ($md && is_array($md)) {
-			$value = metadata_array_to_values($md);
-		}
-
-		return $value;
 	}
 
 	/**
@@ -618,39 +601,62 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Adds a private setting to this entity.
 	 *
-	 * Private settings are similar to metadata but will not
-	 * be searched and there are fewer helper functions for them.
+	 * @warning Private settings are stored as strings
+	 *          Unlike metadata and annotations there is no reverse casting when you retrieve the setting
+	 *          When saving integers, they will be cast to strings
+	 *          Booleans will be cast to '0' and '1'
 	 *
 	 * @param string $name  Name of private setting
 	 * @param mixed  $value Value of private setting
 	 *
 	 * @return bool
+	 * @throws DatabaseException
 	 */
 	public function setPrivateSetting($name, $value) {
-		if ((int) $this->guid > 0) {
-			return set_private_setting($this->getGUID(), $name, $value);
-		} else {
+		if (is_bool($value)) {
+			$value = (int) $value;
+		}
+
+		if (!$this->guid) {
 			$this->temp_private_settings[$name] = $value;
+
 			return true;
 		}
+
+		return _elgg_services()->privateSettings->set($this, $name, $value);
 	}
 
 	/**
 	 * Returns a private setting value
 	 *
+	 * @warning Private settings are always returned as strings
+	 *          Make sure you can your values back to expected type
+	 *
 	 * @param string $name Name of the private setting
 	 *
-	 * @return mixed Null if the setting does not exist
+	 * @return string|null
+	 * @throws DatabaseException
 	 */
 	public function getPrivateSetting($name) {
-		if ((int) ($this->guid) > 0) {
-			return get_private_setting($this->getGUID(), $name);
-		} else {
-			if (isset($this->temp_private_settings[$name])) {
-				return $this->temp_private_settings[$name];
-			}
+		if (!$this->guid) {
+			return elgg_extract($name, $this->temp_private_settings);
 		}
-		return null;
+
+		return _elgg_services()->privateSettings->get($this, $name);
+	}
+
+	/**
+	 * Returns all private settings
+	 *
+	 * @return array
+	 * @throws DatabaseException
+	 */
+	public function getAllPrivateSettings() {
+		if (!$this->guid) {
+			return $this->temp_private_settings;
+		}
+
+		return _elgg_services()->privateSettings->getAllForEntity($this);
 	}
 
 	/**
@@ -659,9 +665,30 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param string $name Name of the private setting
 	 *
 	 * @return bool
+	 * @throws DatabaseException
 	 */
 	public function removePrivateSetting($name) {
-		return remove_private_setting($this->getGUID(), $name);
+		if (!$this->guid) {
+			unset($this->temp_private_settings[$name]);
+			return true;
+		}
+
+		return _elgg_services()->privateSettings->remove($this, $name);
+	}
+
+	/**
+	 * Removes all private settings
+	 *
+	 * @return bool
+	 * @throws DatabaseException
+	 */
+	public function removeAllPrivateSettings() {
+		if (!$this->guid) {
+			$this->temp_private_settings = [];
+			return true;
+		}
+
+		return _elgg_services()->privateSettings->removeAllForEntity($this);
 	}
 
 	/**

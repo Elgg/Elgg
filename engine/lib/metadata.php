@@ -29,7 +29,7 @@ function elgg_get_metadata_from_id($id) {
 function elgg_delete_metadata_by_id($id) {
 	$metadata = elgg_get_metadata_from_id($id);
 	if (!$metadata) {
-		return;
+		return false;
 	}
 	return $metadata->delete();
 }
@@ -63,60 +63,6 @@ function elgg_get_metadata(array $options = []) {
  */
 function elgg_delete_metadata(array $options) {
 	return _elgg_services()->metadataTable->deleteAll($options);
-}
-
-/**
- * \ElggEntities interfaces
- */
-
-/**
- * Takes a metadata array (which has all kinds of properties)
- * and turns it into a simple array of strings
- *
- * @param array $array Metadata array
- *
- * @return array Array of strings
- */
-function metadata_array_to_values($array) {
-	$valuearray = [];
-
-	if (is_array($array)) {
-		foreach ($array as $element) {
-			$valuearray[] = $element->value;
-		}
-	}
-
-	return $valuearray;
-}
-
-/**
- * Invalidate the metadata cache based on options passed to various *_metadata functions
- *
- * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
- * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
- * @return void
- * @access private
- * @todo not used
- */
-function _elgg_invalidate_metadata_cache($action, array $options) {
-	_elgg_services()->metadataCache->invalidateByOptions($options);
-}
-
-/**
- * Metadata unit test
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of other tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_metadata_test($hook, $type, $value, $params) {
-	$value[] = ElggCoreMetadataAPITest::class;
-	return $value;
 }
 
 /**

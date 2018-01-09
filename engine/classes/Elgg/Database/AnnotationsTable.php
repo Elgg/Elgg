@@ -90,7 +90,7 @@ class AnnotationsTable {
 			]);
 		}
 
-		return $deleted;
+		return $deleted !== false;
 	}
 
 	/**
@@ -278,7 +278,7 @@ class AnnotationsTable {
 	 */
 	public function find(array $options = []) {
 		$options['metastring_type'] = 'annotations';
-		$options = _elgg_normalize_metastrings_options($options);
+		$options = LegacyQueryOptionsAdapter::normalizeMetastringOptions($options);
 
 		return Annotations::find($options);
 	}
