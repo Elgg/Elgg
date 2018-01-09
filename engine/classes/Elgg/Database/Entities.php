@@ -58,7 +58,7 @@ class Entities extends Repository {
 	 * @param string $property      Property name
 	 * @param string $property_type 'attribute'|'metadata'|'annotation'|'private_setting'
 	 *
-	 * @return int|float
+	 * @return string
 	 * @throws InvalidParameterException
 	 */
 	public function calculate($function, $property, $property_type = null) {
@@ -106,7 +106,8 @@ class Entities extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		return (int) $result->calculation;
+		// do not cast data as calculations could be used as int, float or string
+		return $result->calculation;
 	}
 
 	/**

@@ -175,7 +175,6 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 		$num_entities = 5;
 
 		// these are chosen to avoid the sums, means, mins, maxs being the same
-		// note that the calculation is cast to an int in SQL
 		$numbers = [
 			[
 				0,
