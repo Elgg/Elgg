@@ -2,7 +2,7 @@
 	List
 *************************************** */
 .elgg-list > li {
-	border-bottom: 1px solid #e6e6ea;
+	border-bottom: 1px solid $(border-color-soft);
 	padding: 1rem;
 }
 

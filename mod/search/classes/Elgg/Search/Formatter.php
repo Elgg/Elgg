@@ -144,43 +144,45 @@ class Formatter {
 		}
 
 		$matches = [];
-		foreach ($fields as $property_type => $property_type_fields) {
-			foreach ($property_type_fields as $field) {
-				if (!empty($exclude[$property_type]) && in_array($field, $exclude[$property_type])) {
-					continue;
-				}
-
-				switch ($property_type) {
-					case 'attributes' :
-					case 'metadata' :
-						$property_values = $this->entity->$field;
-						break;
-
-					case 'annotations' :
-						$property_values = [];
-						$annotations = $this->entity->getAnnotations([
-							'annotation_names' => $field,
-							'limit' => 0,
-						]);
-						foreach ($annotations as $annotation) {
-							$property_values[] = $annotation->value;
-						}
-						break;
-
-					case 'private_settings' :
-						$property_values = $this->entity->getPrivateSetting($field);
-						break;
-				}
-
-				if (is_array($property_values)) {
-					foreach ($property_values as $text) {
-						if (stristr($text, $query)) {
-							$matches[$property_type][$field][] = $this->highlighter->highlight($text, 1, 300);
-						}
+		if (!empty($fields)) {
+			foreach ($fields as $property_type => $property_type_fields) {
+				foreach ($property_type_fields as $field) {
+					if (!empty($exclude[$property_type]) && in_array($field, $exclude[$property_type])) {
+						continue;
 					}
-				} else {
-					if (stristr($property_values, $query)) {
-						$matches[$property_type][$field][] = $this->highlighter->highlight($property_values, 1, 300);
+
+					switch ($property_type) {
+						case 'attributes' :
+						case 'metadata' :
+							$property_values = $this->entity->$field;
+							break;
+
+						case 'annotations' :
+							$property_values = [];
+							$annotations = $this->entity->getAnnotations([
+								'annotation_names' => $field,
+								'limit' => 0,
+							]);
+							foreach ($annotations as $annotation) {
+								$property_values[] = $annotation->value;
+							}
+							break;
+
+						case 'private_settings' :
+							$property_values = $this->entity->getPrivateSetting($field);
+							break;
+					}
+
+					if (is_array($property_values)) {
+						foreach ($property_values as $text) {
+							if (stristr($text, $query)) {
+								$matches[$property_type][$field][] = $this->highlighter->highlight($text, 1, 300);
+							}
+						}
+					} else {
+						if (stristr($property_values, $query)) {
+							$matches[$property_type][$field][] = $this->highlighter->highlight($property_values, 1, 300);
+						}
 					}
 				}
 			}

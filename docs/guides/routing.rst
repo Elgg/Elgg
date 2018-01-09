@@ -20,47 +20,124 @@ an empty segments array.
 
 .. warning:: URL identifier/segments should be considered potentially dangerous user input. Elgg uses ``htmlspecialchars`` to escapes HTML entities in them.
 
-Page Handler
-============
+Page Handling
+=============
 
-To handle all URLs that begin with a particular identifier, you can register a function to
-act as a :doc:`/guides/pagehandler`. When the handler is called, the segments array is
-passed in as the first argument.
-
-The following code registers a page handler for "blog" URLs and shows how one might route
-the request to a resource view.
+Elgg offers a facility to manage your plugin pages via custom routes, enabling URLs like ``http://yoursite/my_plugin/section``.
+You can register a new route using ``elgg_register_route()`, or via ``routes`` config in ``elgg-plugin.php``.
+Routes map to resource views, where you can render page contents.
 
 .. code-block:: php
 
-   elgg_register_page_handler('blog', 'blog_page_handler');
+	// in your 'init', 'system' handler
+	elgg_register_route('my_plugin:section' [
+		'path' => '/my_plugin/section/{guid}/{subsection?}',
+		'resource' => 'my_plugin/section',
+		'requirements' => [
+			'guid' => '\d+',
+			'subsection' => '\w+',
+		],
+	]);
 
-   function blog_page_handler(array $segments) {
-        // if the URL is http://example.com/elgg/blog/view/123/my-blog-post
-        // $segments contains: ['view', '123', 'my-blog-post']
+	// in my_plugin/views/default/resources/my_plugin/section.php
+	$guid = elgg_extract('guid', $vars);
+	$subsection = elgg_extract('subsection', $vars);
 
-        $subpage = elgg_extract(0, $segments);
-        if ($subpage === 'view') {
+	// render content
 
-            // use a view for the page logic to allow other plugins to easily change it
-            $resource = elgg_view_resource('blog/view', [
-                'guid' => (int)elgg_extract(1, $segments);
-            ]);
+In the example above, we have registered a new route that is accessible via ``http://yoursite/my_plugin/section/<guid>/<subsection>``.
+Whenever that route is accessed with a required ``guid`` segment and an optional ``subsection`` segment, the router
+will render the specified ``my_plugin/section`` resource view and pass the parameters extracted from the URL to your
+resource view with ``$vars``.
 
-            return elgg_ok_response($resource);
-        }
 
-        // redirect to a different location
-        if ($subpage === '') {
-            return elgg_redirect_response('blog/all');
-        }
+Routes names
+------------
 
-        // send an error page
-        if ($subpage === 'owner' && !elgg_entity_exists($segments[1])) {
-            return elgg_error_response('User not found', 'blog/all', ELGG_HTTP_NOT_FOUND);
-        }
-        
-        // ... handle other subpages
-   }
+Route names can then be used to generate a URL:
+
+.. code-block:: php
+
+	$url = elgg_generate_url('my_plugin:section', [
+		'guid' => $entity->guid,
+		'subsection' => 'assets',
+	]);
+
+
+The route names are unique across all plugins and core, so another plugin can override the route by registering different
+parameters to the same route name.
+
+Route names follow a certain convention and in certain cases will be used to automatically resolve URLs, e.g. to display an entity.
+
+The following conventions are used in core and recommended for plugins:
+
+**view:<entity_type>:<entity_subtype>**
+	Maps to the entity profile page, e.g. ``view:user:user`` or ``view:object:blog``
+	The path must contain a ``guid``, or ``username`` for users
+
+**edit:<entity_type>:<entity_subtype>**
+	Maps to the form to edit the entity, e.g. ``edit:user:user`` or ``edit:object:blog``
+	The path must contain a ``guid``, or ``username`` for users
+	If you need to add subresources, use suffixes, e.g. ``edit:object:blog:images``, keeping at least one subresource as a default without suffix.
+
+**add:<entity_type>:<entity_subtype>**
+	Maps to the form to add a new entity of a given type, e.g. ``add:object:blog``
+	The path, as a rule, contains ``container_guid`` parameter
+
+**collection:<entity_type>:<entity_subtype>:<collection_type>**
+	Maps to listing pages. Common route names used in core are, as follows:
+
+		- ``collection:object:blog:all``: list all blogs
+		- ``collection:object:blog:owner``: list blogs owned by a user with a given username
+		- ``collection:object:blog:friends``: list blogs owned by friends of the logged in user (or user with a given username)
+		- ``collection:object:blog:group``: list blogs in a group
+
+**default:<entity_type>:<entity_subtype>**
+	Maps to the default page for a resource, e.g. the path ``/blog``. Elgg happens to use the "all" collection for these routes.
+
+		- ``default:object:blog``: handle the generic path ``/blog``.
+
+Route configuration
+-------------------
+
+Segments can be defined using wildcards, e.g. ``profile/{username}``, which will match all URLs that contain ``profile/`` followed by
+and arbitrary username.
+
+To make a segment optional you can add a ``?`` (question mark) to the wildcard name, e.g. ``profile/{username}/{section?}``.
+In this case the URL will be matched even if the ``section`` segment is not provided.
+
+You can further constrain segments using regex requirements:
+
+.. php::code
+
+	// elgg-plugin.php
+	return [
+		'routes' => [
+			'profile' => [
+				'path' => '/profile/{username}/{section?}',
+				'resource' => 'profile',
+				'requirements' => [
+					'username' => '[\p{L}\p{Nd}._-]+', // only allow valid usernames
+					'section' => '\w+', // can only contain alphanumeric characters
+				],
+				'defaults' => [
+					'section' => 'index',
+				],
+			],
+		]
+	];
+
+By default, Elgg will set the following requirements for named URL segments:
+
+.. php::code
+
+	$patterns = [
+		'guid' => '\d+', // only digits
+		'group_guid' => '\d+', // only digits
+		'container_guid' => '\d+', // only digits
+		'owner_guid' => '\d+', // only digits
+		'username' => '[\p{L}\p{Nd}._-]+', // letters, digits, underscores, dashes
+	];
 
 
 The ``route`` Plugin Hook
@@ -130,13 +207,10 @@ For regular pages, Elgg's program flow is something like this:
 #. Elgg parses the URL to identifier ``news`` and segments ``['owner', 'jane']``.
 #. Elgg triggers the plugin hook ``route:rewrite, news`` (see above).
 #. Elgg triggers the plugin hook ``route, blog`` (was rewritten in the rewrite hook).
-#. Elgg finds a registered page handler (see above) for ``blog``, and calls the function, passing in
-   the segments.
-#. The page handler function determines it needs to render a single user's blog. It calls
-   ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username.
+#. Elgg finds a registered route that matches the final route path, and renders a resource view associated with it.
+   It calls ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username.
 #. The ``resources/blog/owner`` view gets the username via ``$vars['username']``, and uses many other views and
    formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page.
-#. The page handler echos the view HTML and returns ``true`` to indicate it handled the request.
 #. PHP invokes Elgg's shutdown sequence.
 #. The user receives a fully rendered page.
 

@@ -15,4 +15,4 @@ $body = '<div style="width: 200px;">';
 $body .= elgg_view('output/tagcloud', ['value' => $tags]);
 $body .= '</div>';
 
-echo elgg_view_module('theme-sandbox-demo', 'Tag cloud (.elgg-tagcloud)', $body);
+echo elgg_view_module('aside', 'Tag cloud (.elgg-tagcloud)', $body);

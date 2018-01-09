@@ -31,7 +31,7 @@
 	Image-related
 *************************************** */
 .elgg-photo {
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 	padding: 2px;
 	background-color: #ffffff;
 	max-width: 100%;

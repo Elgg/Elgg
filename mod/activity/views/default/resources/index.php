@@ -1,7 +1,7 @@
 <?php
 
 if (elgg_is_logged_in()) {
-	forward('activity');
+	forward(elgg_generate_url('default:river'));
 }
 
 $title = elgg_echo('content:latest');
@@ -11,10 +11,10 @@ $content = elgg_list_river([
 
 $login_box = elgg_view('core/account/login_box');
 
-$body = elgg_view_layout('one_sidebar', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
-	'sidebar' => $login_box,
+	'sidebar' => $login_box ? : false,
 ]);
 
 echo elgg_view_page(null, $body);

@@ -6,12 +6,12 @@ body {
 }
 
 a {
-	color: #0078ac;
+	color: $(anchor-color);
 }
 
 a:hover,
-a.selected { /* @todo rremove .selected */
-	color: #2d3047;
+a.selected {
+	color: $(anchor-color-hover);
 	text-decoration: underline;
 }
 
@@ -47,40 +47,42 @@ code {
 blockquote {
 	padding: 0.5rem 1rem;
 	margin: 0 0 1rem 0;
-	background: #E2F2FE;
-	border: 1px solid #A1CBEA;
+	background-color: $(state-notice-background-color);
+	border: 1px solid $(state-notice-border-color);
+	color: $(state-notice-font-color);
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-weight: 500;
+	font-family: $(h-font-family, $(font-family));
 }
 
 h1 {
-	font-size: 1.8rem;
+	font-size: $(h1-font-size);
 }
 
 h2 {
-	font-size: 1.5rem;
+	font-size: $(h2-font-size);
 }
 
 h3 {
-	font-size: 1.2rem;
+	font-size: $(h3-font-size);
 }
 
 h4 {
-	font-size: 1.0rem;
+	font-size: $(h4-font-size);
 }
 
 h5 {
-	font-size: 0.9rem;
+	font-size: $(h5-font-size);
 }
 
 h6 {
-	font-size: 0.8rem;
+	font-size: $(h6-font-size);
 }
 
 .elgg-subtext {
-	color: #7d7d7d;
+	color: $(text-color-mild);
 	font-size: 0.75rem;
 }
 
@@ -90,7 +92,7 @@ time,
 .elgg-quiet,
 .elgg-tags {
 	display: inline-block;
-	color: #969696;
+	color: $(text-color-soft);
 	font-size: 0.75rem;
 	line-height: normal;
 }
@@ -101,13 +103,13 @@ time,
 }
 
 .elgg-loud {
-	font-weight: 500;
+	font-weight: $(font-bold-weight);
 }
 
 .elgg-more,
 .elgg-widget-more {
 	padding: 0.5rem;
 	font-size: 0.85rem;
-	font-weight: 600;
+	font-weight: $(font-bold-weight);
 }
 

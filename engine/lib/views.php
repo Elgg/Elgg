@@ -419,7 +419,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
  * @param array  $vars Arguments passed to the view
  *
  * @return string
- * @throws SecurityException
+ * @throws \Elgg\PageNotFoundException
  */
 function elgg_view_resource($name, array $vars = []) {
 	$view = "resources/$name";
@@ -434,13 +434,8 @@ function elgg_view_resource($name, array $vars = []) {
 
 	_elgg_services()->logger->error("The view $view is missing.");
 
-	if (elgg_get_viewtype() === 'default') {
-		// only works for default viewtype
-		forward('', '404');
-	} else {
-		register_error(elgg_echo('error:404:content'));
-		forward('');
-	}
+	// only works for default viewtype
+	throw new \Elgg\PageNotFoundException();
 }
 
 /**
@@ -1641,14 +1636,8 @@ function _elgg_views_minify($hook, $type, $content, $params) {
  * @access private
  */
 function _elgg_views_preprocess_css($hook, $type, $content, $params) {
-	$options = [
-		'minify' => false, // minify handled by _elgg_views_minify
-		'formatter' => 'single-line', // shows lowest byte size
-		'versioning' => false, // versioning done by Elgg
-		'rewrite_import_urls' => false,
-	];
-	
-	return csscrush_string($content, $options);
+	$options = elgg_extract('compiler_options', $params, []);
+	return _elgg_services()->cssCompiler->compile($content, $options);
 }
 
 /**

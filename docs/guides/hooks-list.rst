@@ -250,6 +250,7 @@ Action hooks
 
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
+	In certain cases, the ``params`` array will contain an instance of ``HttpException`` that triggered the error.
 
 **response, action:<action>**
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
@@ -627,6 +628,11 @@ Views
     plugins to override or provide an implementation. Handlers receive the method arguments via
     ``$params['arguments']`` and should return an instance of ``Elgg\Views\TableColumn`` if they
     wish to specify the column directly.
+
+**vars:compiler, css**
+    Allows plugins to alter CSS variables passed to CssCrush during compilation.
+    See `CSS variables <_guides/theming#css-vars>`.
+
 
 Files
 =====

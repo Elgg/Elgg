@@ -28,7 +28,7 @@ if (get_input('friends_only', false)) {
 	}
 
 	if (!$target || !$target->canEdit()) {
-		forward('', '403');
+		throw new \Elgg\EntityPermissionsException();
 	}
 
 	$dbprefix = elgg_get_config('dbprefix');

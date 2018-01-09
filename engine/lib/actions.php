@@ -226,20 +226,8 @@ function _elgg_csrf_token_refresh() {
 }
 
 /**
- * Initialize some ajaxy actions features
- *
- * @return void
- *
- * @access private
- */
-function actions_init() {
-	elgg_register_page_handler('action', '_elgg_action_handler');
-	elgg_register_page_handler('refresh_token', '_elgg_csrf_token_refresh');
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', 'actions_init');
+
 };

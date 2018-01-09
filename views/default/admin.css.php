@@ -9,22 +9,7 @@
  * @subpackage UI
  */
 
-echo elgg_view('elements/reset.css', $vars);
-echo elgg_view('elements/core.css', $vars);
-echo elgg_view('elements/grid.css', $vars);
-echo elgg_view('elements/typography.css', $vars);
-echo elgg_view('elements/forms.css', $vars);
-echo elgg_view('elements/buttons.css', $vars);
-echo elgg_view('elements/icons.css', $vars);
-echo elgg_view('elements/navigation.css', $vars);
-echo elgg_view('elements/modules.css', $vars);
-echo elgg_view('elements/widgets.css', $vars);
-echo elgg_view('elements/components.css', $vars);
-echo elgg_view('elements/layout.css', $vars);
-echo elgg_view('elements/misc.css', $vars);
-echo elgg_view('elements/misc/spinner.css', $vars);
-echo elgg_view('elements/fa.css', $vars);
-echo elgg_view('elements/helpers.css', $vars);
+echo elgg_view('core.css');
 
 ?>
 
@@ -70,34 +55,6 @@ echo elgg_view('elements/helpers.css', $vars);
 	.elgg-page-topbar .elgg-menu-container {
 		margin-right: 0;
 		margin-left: auto;
-	}
-
-	.elgg-menu-page {
-		background: #ffffff;
-		border: 1px solid #e6e6ea;
-		margin-bottom: 2rem;
-	}
-
-	.elgg-menu-page-container .elgg-menu-section-header {
-		margin: 0;
-		border: none;
-	}
-
-	.elgg-menu-page li:not(:last-child) {
-		border-bottom: 1px solid #f7f7f8;
-	}
-
-	.elgg-menu-page .elgg-child-menu {
-		border-top: #f7f7f8;
-	}
-
-	.elgg-menu-page .elgg-menu-item-has-toggle > .elgg-child-menu {
-		margin: 0;
-		border-top: 1px solid #f7f7f8;
-	}
-
-	.elgg-menu-page .elgg-menu-item-has-toggle > .elgg-child-menu > li > a {
-		padding-left: 2rem;
 	}
 }
 /* ***************************************
@@ -177,7 +134,6 @@ echo elgg_view('elements/helpers.css', $vars);
 .elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
 	display: block;
 	margin: 0;
-	padding: 3px 10px;
 }
 
 .elgg-plugin > .elgg-image-block > .elgg-body {

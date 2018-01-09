@@ -1080,3 +1080,104 @@ function sanitise_filepath($path, $append_slash = true) {
 
 	return \Elgg\Project\Paths::sanitize($path, $append_slash);
 }
+
+/**
+ * Registers a page handler for a particular identifier
+ *
+ * For example, you can register a function called 'blog_page_handler' for the identifier 'blog'
+ * For all URLs  http://yoururl/blog/*, the blog_page_handler() function will be called.
+ * The part of the URL marked with * above will be exploded on '/' characters and passed as an
+ * array to that function.
+ * For example, the URL http://yoururl/blog/username/friends/ would result in the call:
+ * blog_page_handler(array('username','friends'), blog);
+ *
+ * A request to register a page handler with the same identifier as previously registered
+ * handler will replace the previous one.
+ *
+ * The context is set to the identifier before the registered
+ * page handler function is called. For the above example, the context is set to 'blog'.
+ *
+ * Page handlers should return true to indicate that they handled the request.
+ * Requests not handled are forwarded to the front page with a reason of 404.
+ * Plugins can register for the 'forward', '404' plugin hook. @see forward()
+ *
+ * @param string $identifier The page type identifier
+ * @param string $function   Your function name
+ *
+ * @return bool Depending on success
+ * @deprecated 3.0
+ */
+function elgg_register_page_handler($identifier, callable $function) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated. 
+		Use elgg_register_route() to register a named route or define it in elgg-plugin.php',
+		'3.0'
+	);
+	return _elgg_services()->router->registerPageHandler($identifier, $function);
+}
+
+/**
+ * Unregister a page handler for an identifier
+ *
+ * Note: to replace a page handler, call elgg_register_page_handler()
+ *
+ * @param string $identifier The page type identifier
+ *
+ * @since 1.7.2
+ * @return void
+ * @deprecated
+ */
+function elgg_unregister_page_handler($identifier) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated. 
+		Use new routing API to register and unregister routes.',
+		'3.0'
+	);
+	_elgg_services()->router->unregisterPageHandler($identifier);
+}
+
+/**
+ * Alias of elgg_gatekeeper()
+ *
+ * Used at the top of a page to mark it as logged in users only.
+ *
+ * @return void
+ * @throws \Elgg\GatekeeperException
+ * @deprecated 3.0
+ */
+function gatekeeper() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_gatekeeper()', '3.0');
+	elgg_gatekeeper();
+}
+
+/**
+ * Alias of elgg_admin_gatekeeper()
+ *
+ * Used at the top of a page to mark it as logged in admin or siteadmin only.
+ *
+ * @return void
+ * @throws \Elgg\GatekeeperException
+ * @deprecated 3.0
+ */
+function admin_gatekeeper() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_admin_gatekeeper()', '3.0');
+	elgg_admin_gatekeeper();
+}
+
+/**
+ * May the current user access item(s) on this page? If the page owner is a group,
+ * membership, visibility, and logged in status are taken into account.
+ *
+ * @param bool $forward         If set to true (default), will forward the page;
+ *                              if set to false, will return true or false.
+ *
+ * @param int  $page_owner_guid The current page owner guid. If not set, this
+ *                              will be pulled from elgg_get_page_owner_guid().
+ *
+ * @return bool Will return if $forward is set to false.
+ * @deprecated 3.0
+ */
+function group_gatekeeper($forward = true, $page_owner_guid = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_group_gatekeeper()', '3.0');
+	return elgg_group_gatekeeper($forward, $page_owner_guid);
+}

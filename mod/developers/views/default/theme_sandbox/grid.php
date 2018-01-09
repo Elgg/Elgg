@@ -51,88 +51,94 @@ for ($den = 1; $den <= count($units); $den++) {
 
 ?>
 
-<div class="theme-sandbox-grid-demo">
-	<h3 class="theme-sandbox-section-heading">6 Column Grid</h3>
-<?php foreach ($rows as $row) : ?>
-<div class="elgg-grid theme-sandbox-grid-demo-solid">
-	<?php foreach ($row as $col) :
-		$class = "elgg-col elgg-col-" . str_replace('/', 'of', $col);
-		$text = str_replace(' ', '<br/>', $class);
-	?>
-	<div class="<?php echo $class ?>"><div class="elgg-inner"><?php echo $text ?></div></div>
+<div class="elgg-module elgg-module-aside theme-sandbox-grid-demo">
+	<div class="elgg-head">
+		<h3 class="theme-sandbox-section-heading">6 Column Grid</h3>
+	</div>
+	<?php foreach ($rows as $row) : ?>
+		<div class="elgg-grid theme-sandbox-grid-demo-solid">
+			<?php foreach ($row as $col) :
+				$class = "elgg-col elgg-col-" . str_replace('/', 'of', $col);
+				$text = str_replace(' ', '<br/>', $class);
+				?>
+				<div class="<?php echo $class ?>">
+					<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl"><?php echo $text ?></div>
+				</div>
+			<?php endforeach; ?>
+		</div>
 	<?php endforeach; ?>
 </div>
-<?php endforeach; ?>
-</div>
 
-<div class="theme-sandbox-grid-demo">
-	<h3 class="theme-sandbox-section-heading">Nested Grids</h3>
-<div class="elgg-grid theme-sandbox-grid-demo-outline">
-	<div class="elgg-col elgg-col-1of5">
-		<div class="elgg-inner">
-			<h3>1/5</h3>
-			<?php echo str_repeat($filler, 3) ?>
-		</div>
+<div class="elgg-module elgg-module-aside theme-sandbox-grid-demo">
+	<div class="elgg-head">
+		<h3 class="theme-sandbox-section-heading">Nested Grids</h3>
 	</div>
-	<div class="elgg-col elgg-col-3of5">
-		<div class="elgg-inner clearfix">
-			<h3>3/5</h3>
-			<div class="elgg-grid theme-sandbox-grid-demo-outline">
-				<div class="elgg-col elgg-col-1of2">
-					<div class="elgg-inner">
-						<h3>1/2</h3>
-						<?php echo $filler ?>
-					</div>
-				</div>
-				<div class="elgg-col elgg-col-1of2 elgg-col-last">
-					<div class="elgg-inner">
-						<h3>1/2</h3>
-						<?php echo $filler ?>
-					</div>
-				</div>
+	<div class="elgg-grid theme-sandbox-grid-demo-outline">
+		<div class="elgg-col elgg-col-1of5">
+			<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+				<h3>1/5</h3>
+				<?php echo str_repeat($filler, 3) ?>
 			</div>
-			<div class="elgg-grid theme-sandbox-grid-demo-outline">
-				<div class="elgg-col elgg-col-1of3">
-					<div class="elgg-inner">
-						<h3>1/3</h3>
-						<?php echo str_repeat($filler, 2) ?>
-					</div>
-				</div>
-				<div class="elgg-col elgg-col-2of3 elgg-col-last">
-					<div class="elgg-inner">
-						<h3>2/3</h3>
-						<div class="elgg-grid theme-sandbox-grid-demo-outline">
-							<div class="elgg-col elgg-col-1of2">
-								<div class="elgg-inner">
-									<h3>1/2</h3>
-									<?php echo $filler ?>
-								</div>
-							</div>
-							<div class="elgg-col elgg-col-1of2 elgg-col-last">
-								<div class="elgg-inner">
-									<h3>1/2</h3>
-									<?php echo $filler ?>
-								</div>
-							</div>
+		</div>
+		<div class="elgg-col elgg-col-3of5">
+			<div class="elgg-inner clearfix elgg-border-plain elgg-justify-center pam mtl">
+				<h3>3/5</h3>
+				<div class="elgg-grid theme-sandbox-grid-demo-outline">
+					<div class="elgg-col elgg-col-1of2">
+						<div class="elgg-inner  elgg-border-plain elgg-justify-center pam mtl">
+							<h3>1/2</h3>
+							<?php echo $filler ?>
 						</div>
-						<div class="elgg-grid theme-sandbox-grid-demo-outline">
-							<div class="elgg-col elgg-col-1of1">
-								<div class="elgg-inner">
-									<h3>1</h3>
-									<?php echo $filler ?>
-								</div>
-							</div>
+					</div>
+					<div class="elgg-col elgg-col-1of2 elgg-col-last">
+						<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+							<h3>1/2</h3>
+							<?php echo $filler ?>
 						</div>
 					</div>
 				</div>
+				<div class="elgg-grid theme-sandbox-grid-demo-outline">
+					<div class="elgg-col elgg-col-1of3">
+						<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+							<h3>1/3</h3>
+							<?php echo str_repeat($filler, 2) ?>
+						</div>
+					</div>
+					<div class="elgg-col elgg-col-2of3 elgg-col-last">
+						<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+							<h3>2/3</h3>
+							<div class="elgg-grid theme-sandbox-grid-demo-outline">
+								<div class="elgg-col elgg-col-1of2">
+									<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+										<h3>1/2</h3>
+										<?php echo $filler ?>
+									</div>
+								</div>
+								<div class="elgg-col elgg-col-1of2 elgg-col-last">
+									<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+										<h3>1/2</h3>
+										<?php echo $filler ?>
+									</div>
+								</div>
+							</div>
+							<div class="elgg-grid theme-sandbox-grid-demo-outline">
+								<div class="elgg-col elgg-col-1of1">
+									<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+										<h3>1</h3>
+										<?php echo $filler ?>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="elgg-col elgg-col-1of5 elgg-col-last">
+			<div class="elgg-inner elgg-border-plain elgg-justify-center pam mtl">
+				<h3>1/5</h3>
+				<?php echo str_repeat($filler, 3) ?>
 			</div>
 		</div>
 	</div>
-	<div class="elgg-col elgg-col-1of5 elgg-col-last">
-		<div class="elgg-inner">
-			<h3>1/5</h3>
-			<?php echo str_repeat($filler, 3) ?>
-		</div>
-	</div>
-</div>
 </div>

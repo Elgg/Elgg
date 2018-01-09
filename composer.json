@@ -19,7 +19,6 @@
         "tedivm/stash": "0.14.*",
         "roave/security-advisories": "dev-master",
         "elgg/login_as": "~2.0.0",
-        "elgg/data_views": "~1.0",
         "zendframework/zend-mail": "~2.4",
         "league/flysystem": "~1.0",
         "bower-asset/jquery": "^2.1.4",
@@ -43,7 +42,8 @@
         "symfony/var-dumper": "~3.3",
         "fzaninotto/faker": "^1.6",
         "peppeocchi/php-cron-scheduler": "2.*",
-        "bower-asset/normalize-css": "dev-master"
+        "bower-asset/normalize-css": "dev-master",
+        "symfony/routing": "^3.3"
     },
     "config": {
         "process-timeout": 0,

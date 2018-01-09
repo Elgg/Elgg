@@ -18,7 +18,7 @@ class CliPrinter implements Printer {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function write($data, $display, $level) {
+	public function write($data, $level) {
 		if (!is_string($data)) {
 			VarDumper::dump($data);
 			return;

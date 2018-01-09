@@ -18,13 +18,10 @@ function blog_init() {
 	elgg_register_menu_item('site', [
 		'name' => 'blog',
 		'text' => elgg_echo('blog:blogs'),
-		'href' => 'blog/all',
+		'href' => elgg_generate_url('collection:object:blog:all'),
 	]);
 
 	elgg_extend_view('object/elements/imprint/contents', 'blog/imprint/status');
-
-	// routing of urls
-	elgg_register_page_handler('blog', 'blog_page_handler');
 
 	// override the default url to view a blog object
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'blog_set_url');
@@ -54,90 +51,6 @@ function blog_init() {
 }
 
 /**
- * Dispatches blog pages.
- * URLs take the form of
- *  All blogs:       blog/all
- *  User's blogs:    blog/owner/<username>
- *  Friends' blog:   blog/friends/<username>
- *  User's archives: blog/archives/<username>/<time_start>/<time_stop>
- *  Blog post:       blog/view/<guid>/<title>
- *  New post:        blog/add/<guid>
- *  Edit post:       blog/edit/<guid>/<revision>
- *  Preview post:    blog/preview/<guid>
- *  Group blog:      blog/group/<guid>/all
- *
- * Title is ignored
- *
- * @todo no archives for all blogs or friends
- *
- * @param array $page URL segments
- * @return bool
- */
-function blog_page_handler($page) {
-
-	elgg_load_library('elgg:blog');
-
-	// push all blogs breadcrumb
-	elgg_push_breadcrumb(elgg_echo('blog:blogs'), 'blog/all');
-
-	$page_type = elgg_extract(0, $page, 'all');
-	$resource_vars = [
-		'page_type' => $page_type,
-	];
-
-	switch ($page_type) {
-		case 'owner':
-			$resource_vars['username'] = elgg_extract(1, $page);
-
-			echo elgg_view_resource('blog/owner', $resource_vars);
-			break;
-		case 'friends':
-			$resource_vars['username'] = elgg_extract(1, $page);
-
-			echo elgg_view_resource('blog/friends', $resource_vars);
-			break;
-		case 'archive':
-			$resource_vars['username'] = elgg_extract(1, $page);
-			$resource_vars['lower'] = elgg_extract(2, $page);
-			$resource_vars['upper'] = elgg_extract(3, $page);
-
-			echo elgg_view_resource('blog/archive', $resource_vars);
-			break;
-		case 'view':
-			$resource_vars['guid'] = elgg_extract(1, $page);
-
-			echo elgg_view_resource('blog/view', $resource_vars);
-			break;
-		case 'add':
-			$resource_vars['guid'] = elgg_extract(1, $page);
-
-			echo elgg_view_resource('blog/add', $resource_vars);
-			break;
-		case 'edit':
-			$resource_vars['guid'] = elgg_extract(1, $page);
-			$resource_vars['revision'] = elgg_extract(2, $page);
-
-			echo elgg_view_resource('blog/edit', $resource_vars);
-			break;
-		case 'group':
-			$resource_vars['group_guid'] = elgg_extract(1, $page);
-			$resource_vars['subpage'] = elgg_extract(2, $page);
-			$resource_vars['lower'] = elgg_extract(3, $page);
-			$resource_vars['upper'] = elgg_extract(4, $page);
-
-			echo elgg_view_resource('blog/group', $resource_vars);
-			break;
-		case 'all':
-			echo elgg_view_resource('blog/all', $resource_vars);
-			break;
-		default:
-			return false;
-	}
-
-	return true;
-}
-
-/**
  * Format and return the URL for blogs.
  *
  * @param string $hook   'entity:url'
@@ -152,9 +65,11 @@ function blog_set_url($hook, $type, $url, $params) {
 	if (!$entity instanceof ElggBlog) {
 		return;
 	}
-
-	$friendly_title = elgg_get_friendly_title($entity->title);
-	return "blog/view/{$entity->guid}/$friendly_title";
+	
+	return elgg_generate_url('view:object:blog', [
+		'guid' => $entity->guid,
+		'title' => elgg_get_friendly_title($entity->title),
+	]);
 }
 
 /**
@@ -171,16 +86,21 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
 		$return[] = ElggMenuItem::factory([
-			'name' => 'blog',
-			'text' => elgg_echo('blog'),
-			'href' => "blog/owner/{$entity->username}",
+					'name' => 'blog',
+					'text' => elgg_echo('blog'),
+					'href' => elgg_generate_url('collection:object:blog:owner', [
+						'username' => $entity->username,
+					]),
 		]);
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('blog')) {
 			$return[] = ElggMenuItem::factory([
-				'name' => 'blog',
-				'text' => elgg_echo('blog:group'),
-				'href' => "blog/group/{$entity->guid}/all",
+						'name' => 'blog',
+						'text' => elgg_echo('blog:group'),
+						'href' => elgg_generate_url('collection:object:blog:group', [
+							'group_guid' => $entity->guid,
+							'subpage' => 'all',
+						]),
 			]);
 		}
 	}
@@ -211,13 +131,26 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 	}
 
 	$dates = array_reverse($dates);
+	
+	$generate_url = function($lower = null, $upper = null) use ($page_owner) {
+		if ($page_owner instanceof ElggUser) {
+			$url_segment = elgg_generate_url('collection:object:blog:archive', [
+				'username' => $page_owner->username,
+				'lower' => $lower,
+				'upper' => $upper,
+			]);
+		} else {
+			$url_segment = elgg_generate_url('collection:object:blog:group', [
+				'group_guid' => $page_owner->guid,
+				'subpage' => 'archive',
+				'lower' => $lower,
+				'upper' => $upper,
+			]);
+		}
 
-	if ($page_owner instanceof ElggUser) {
-		$url_segment = 'blog/archive/' . $page_owner->username;
-	} else {
-		$url_segment = 'blog/group/' . $page_owner->getGUID() . '/archive';
-	}
-
+		return $url_segment;
+	};
+	
 	$years = [];
 	foreach ($dates as $date) {
 		$timestamplow = mktime(0, 0, 0, substr($date, 4, 2), 1, substr($date, 0, 4));
@@ -235,13 +168,12 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 			]);
 		}
 
-		$link = $url_segment . '/' . $timestamplow . '/' . $timestamphigh;
 		$month = trim(elgg_echo('date:month:' . substr($date, 4, 2), ['']));
 
 		$return[] = ElggMenuItem::factory([
 			'name' => $date,
 			'text' => $month,
-			'href' => $link,
+			'href' => $generate_url($timestamplow, $timestamphigh),
 			'parent_name' => $year,
 		]);
 	}

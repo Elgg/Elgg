@@ -4,16 +4,16 @@
 .elgg-menu-filter,
 .elgg-tabs {
 	margin-bottom: 0.5rem;
-	border-bottom: 1px solid #e6e6ea;
-	width: 100%;
+	border-bottom: 1px solid $(border-color-soft);
+	display: flex;
+	flex-direction: column;
 }
 
 .elgg-menu-filter > li,
 .elgg-tabs > li {
-	float: left;
-	border: 1px solid #e6e6ea;
-	border-bottom: 0;
-	background: #fafafa;
+	border: 1px solid $(border-color-soft);
+	border-bottom-width: 0;
+	background: $(background-color-soft);
 }
 
 .elgg-menu-filter > li.elgg-state-selected a:hover,
@@ -33,13 +33,13 @@
 
 .elgg-menu-filter > li > a:hover,
 .elgg-tabs > li > a:hover {
-	background: #e6e6ea;
+	background-color: $(background-color-mild);
 	color: #333;
 }
 
 .elgg-menu-filter > .elgg-state-selected,
 .elgg-tabs > .elgg-state-selected {
-	border-color: #e6e6ea;
+	border-color: $(border-color-soft);
 	background: #ffffff;
 }
 
@@ -50,16 +50,19 @@
 	background: #ffffff;
 }
 
-@media screen and (min-width: 80rem) {
+@media $(media-tablet-up) {
 	.elgg-menu-filter,
 	.elgg-tabs {
-		display: table;
+		flex-direction: row;
+		flex-wrap: wrap;
 	}
 
 	.elgg-menu-filter > li,
 	.elgg-tabs > li {
+		border-bottom-width: 1px;
 		margin: 0 0 0 0.5rem;
 		border-radius: 3px 3px 0 0;
+		position: relative;
+		top: 1px;
 	}
-
 }

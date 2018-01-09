@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
+use Elgg\Project\Paths;
 use ElggCache;
 use Stash\Invalidation;
 
@@ -137,10 +138,9 @@ class BootService {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}
 
-		$services->logger->setLevel($config->debug);
-		if ($config->debug) {
-			$services->logger->setDisplay(true);
-		}
+		// use value in settings.php if available
+		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
+		$services->logger->setLevel($debug);
 
 		// finish boot sequence
 		_elgg_session_boot($services);

@@ -6,18 +6,20 @@
 
 .cke.cke_chrome {
 	box-shadow: none;
-	border-color: #CCC;
+	border-color: $(border-color-mild);
+	border-radius: 3px;
+	overflow: hidden;
 }
 
 .cke .cke_top,
 .cke .cke_bottom {
 	background: transparent;
-	border-color: #CCC;
+	border-color: $(border-color-mild);
 }
 
 .cke .cke_toolgroup {
 	border-radius: 0px;
-	border-color: #CCC;
+	border-color: $(border-color-mild);
 	background: transparent;
 }
 

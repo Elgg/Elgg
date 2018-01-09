@@ -351,3 +351,15 @@ $CONFIG->allow_phpinfo = false;
  * @global string $CONFIG->image_processor
  */
 //$CONFIG->image_processor = 'imagick';
+
+/**
+ * Logging level
+ *
+ * By default, the logging level at boot-time is calculated from PHP's error_reporting(), and during boot
+ * it is changed to the value specified on the Advanced Settings page. INFO-level events like DB queries
+ * will not be logged during the initial boot.
+ *
+ * However, if the level is set here, it will be used during the entire request. It can be set to one of
+ * the string levels in Elgg\Logger or ''. E.g., use 'INFO' to log all DB queries during boot up.
+ */
+//$CONFIG->debug = 'INFO';

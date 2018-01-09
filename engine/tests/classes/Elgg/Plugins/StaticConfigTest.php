@@ -14,10 +14,12 @@ class StaticConfigTest extends UnitTestCase {
 	private $plugin;
 
 	public function up() {
-       $this->plugin = $this->startPlugin(
-       	ELGG_PLUGIN_INCLUDE_START |
-		   ELGG_PLUGIN_IGNORE_MANIFEST |
-		   ELGG_PLUGIN_REGISTER_CLASSES);
+		$this->plugin = $this->startPlugin(
+			ELGG_PLUGIN_INCLUDE_START |
+			ELGG_PLUGIN_IGNORE_MANIFEST |
+			ELGG_PLUGIN_REGISTER_CLASSES |
+			ELGG_PLUGIN_REGISTER_VIEWS
+		);
 	}
 
 	public function down() {
@@ -51,4 +53,22 @@ class StaticConfigTest extends UnitTestCase {
 		}
 	}
 
+	/**
+	 * @group Routing
+	 */
+	public function testRouteRegistrations() {
+
+		$routes = $this->plugin->getStaticConfig('routes', []);
+		
+		foreach ($routes as $name => $conf) {
+			if (elgg_extract('handler', $conf)) {
+				$this->assertTrue(is_callable($conf['handler']));
+			} else if (elgg_extract('resource', $conf)) {
+				$this->assertTrue(elgg_view_exists("resources/{$conf['resource']}"));
+			}
+
+			elgg_register_route($name, $conf);
+			elgg_unregister_route($name);
+		}
+	}
 }

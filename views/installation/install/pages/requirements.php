@@ -22,9 +22,26 @@ foreach ($report as $category => $checks) {
 	echo "<h3>$title</h3>";
 	echo "<ul class=\"elgg-require-$category\">";
 	foreach ($checks as $check) {
-		echo "<li class=\"{$check['severity']}\">";
-		echo elgg_autop($check['message']);
-		echo "</li>";
+		switch ($check['severity']) {
+			case 'failure' :
+				$type = 'error';
+				break;
+
+			case 'pass' :
+				$type = 'success';
+				break;
+
+			case 'info' :
+				$type = 'notice';
+				break;
+		}
+
+
+		echo '<li>';
+		echo elgg_view_message($type, elgg_autop($check['message']), [
+			'class' => $check['severity'],
+		]);
+		echo '</li>';
 	}
 	echo "</ul>";
 }

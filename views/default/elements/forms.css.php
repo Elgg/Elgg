@@ -15,7 +15,7 @@ fieldset > div:last-child {
 }
 
 .elgg-form-alt > fieldset > .elgg-foot {
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 	padding: 10px 0;
 }
 
@@ -37,14 +37,14 @@ label.elgg-state-disabled, .elgg-field-label.elgg-state-disabled {
 .elgg-required-indicator {
 	font-size: 110%;
 	font-weight: bold;
-	color: #C24000;
+	color: $(state-danger-font-color);
 	display: inline;
 	padding: 0 5px;
 }
 
 input, textarea {
-	border: 1px solid #dcdcdc;
-	color: #333;
+	border: 1px solid $(border-color-mild);
+	color: $(text-color-strong);
 	font-size: 1rem;
 	padding: 0.25rem 0.5rem;
 	line-height: normal;
@@ -70,8 +70,8 @@ input[type=text]:focus,
 input[type=number]:focus,
 input[type=url]:focus,
 textarea:focus {
-	border: solid 1px #C2C2C2;
-	background: #e6e6ea;
+	border: solid 1px $(border-color-strong);
+	background-color: $(background-color-soft);
 	/* We remove outlines from specific input types so we can leave the browser
 	   defaults (like glows) for everything else */
 	outline: 0 none;
@@ -114,8 +114,8 @@ echo elgg_view('elements/misc/checkbox_switch.css');
 
 select {
 	max-width: 100%;
-	border: 1px solid #dcdcdc;
-	color: #333;
+	border: 1px solid $(border-color-mild);
+	color: $(text-color-strong);
 	padding: 0.25rem 0.5rem;
 	line-height: 1.75rem;
 	vertical-align: middle;
@@ -148,7 +148,7 @@ select:not([multiple]) {
 }
 
 .elgg-fieldset-has-legend {
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 	padding: 1rem;
 }
 

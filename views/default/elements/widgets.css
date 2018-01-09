@@ -11,7 +11,7 @@
 	flex-basis: 100%;
 }
 
-@media screen and (min-width: 80rem) {
+@media $(media-desktop-up) {
 	.elgg-widgets-grid {
 		flex-direction: row-reverse;
 		align-items: stretch;
@@ -30,18 +30,18 @@
 }
 
 .elgg-widgets-add-panel ul {
-	border-top: 1px solid #e6e6ea;
+	border-top: 1px solid $(border-color-soft);
 	margin-top: 0.5rem;
 }
 
 .elgg-widgets-add-panel ul > li {
 	padding: 0.5rem;
 	transition: background 0.2s linear;
-	border-bottom: 1px solid #e6e6ea;
+	border-bottom: 1px solid $(border-color-soft);
 }
 
 .elgg-widgets-add-panel ul > li:hover {
-	background: #f5f5f6;
+	background: $(background-color-mild);
 }
 
 .elgg-widgets-add-actions {
@@ -55,7 +55,7 @@
 }
 
 .elgg-module-widget {
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-soft);
 	margin: 0 0 1rem 0;
 	position: relative;
 }
@@ -65,7 +65,7 @@
 }
 
 .elgg-module-widget > .elgg-head {
-	background-color: #e6e6ea;
+	background-color: $(background-color-mild);
 	padding: 0.5rem 1rem;
 	height: auto;
 	overflow: hidden;
@@ -93,8 +93,8 @@
 	display: none;
 	width: auto;
 	padding: 10px;
-	border-bottom: 1px solid #e6e6ea;
-	background-color: #f5f5f6;
+	border-bottom: 1px solid $(border-color-soft);
+	background-color: $(background-color-mild);
 }
 
 .elgg-widget-content {

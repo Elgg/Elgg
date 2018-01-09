@@ -814,15 +814,13 @@ function elgg_get_ordered_event_handlers($event, $type) {
 }
 
 /**
- * Display or log a message.
+ * Log a message.
  *
  * If $level is >= to the debug setting in {@link $CONFIG->debug}, the
  * message will be sent to {@link elgg_dump()}.  Messages with lower
  * priority than {@link $CONFIG->debug} are ignored.
  *
- * Outputs all levels but NOTICE to screen by default.
- *
- * @note No messages will be displayed unless debugging has been enabled.
+ * @note Use the developers plugin to display logs
  *
  * @param string $message User message
  * @param string $level   NOTICE | WARNING | ERROR
@@ -847,21 +845,19 @@ function elgg_log($message, $level = 'NOTICE') {
 }
 
 /**
- * Logs or displays $value.
- *
- * If $to_screen is true, $value is displayed to screen.  Else,
- * it is handled by PHP's {@link error_log()} function.
+ * Logs $value to PHP's {@link error_log()}
  *
  * A {@elgg_plugin_hook debug log} is called.  If a handler returns
  * false, it will stop the default logging method.
  *
- * @param mixed $value     The value
- * @param bool  $to_screen Display to screen?
+ * @note Use the developers plugin to display logs
+ *
+ * @param mixed $value The value
  * @return void
  * @since 1.7.0
  */
-function elgg_dump($value, $to_screen = true) {
-	_elgg_services()->logger->dump($value, $to_screen);
+function elgg_dump($value) {
+	_elgg_services()->logger->dump($value);
 }
 
 /**
@@ -1158,9 +1154,17 @@ function elgg_http_validate_signed_url($url) {
  * @return void
  */
 function elgg_signed_request_gatekeeper() {
-	if (!elgg_http_validate_signed_url(current_page_url())) {
-		register_error(elgg_echo('invalid_request_signature'));
-		forward('', '403');
+
+	switch (php_sapi_name()) {
+		case 'cli' :
+		case 'phpdbg' :
+			return;
+
+		default :
+			if (!elgg_http_validate_signed_url(current_page_url())) {
+				register_error(elgg_echo('invalid_request_signature'));
+				forward('', '403');
+			}
 	}
 }
 
@@ -1384,7 +1388,6 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  */
 function _elgg_shutdown_hook() {
 	try {
-		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);
@@ -1437,12 +1440,12 @@ function _elgg_ajax_page_handler($segments) {
 
 		$ajax_api = _elgg_services()->ajax;
 		$allowed_views = $ajax_api->getViews();
-		
+
 		// cacheable views are always allowed
 		if (!in_array($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
 			return elgg_error_response("Ajax view '$view' was not registered", REFERRER, ELGG_HTTP_FORBIDDEN);
 		}
-		
+
 		if (!elgg_view_exists($view)) {
 			return elgg_error_response("Ajax view '$view' was not found", REFERRER, ELGG_HTTP_NOT_FOUND);
 		}
@@ -1488,7 +1491,7 @@ function _elgg_ajax_page_handler($segments) {
 		if ($content_type) {
 			elgg_set_http_header("Content-Type: $content_type");
 		}
-		
+
 		return elgg_ok_response($output);
 	}
 
@@ -1614,16 +1617,6 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
 }
 
 /**
- * Intercepts the index page when Walled Garden mode is enabled.
- *
- * @return ResponseBuilder
- * @access private
- */
-function _elgg_walled_garden_index() {
-	return elgg_ok_response(elgg_view_resource('walled_garden'));
-}
-
-/**
  * Checks the status of the Walled Garden and forwards to a login page
  * if required.
  *
@@ -1645,8 +1638,6 @@ function _elgg_walled_garden_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:walled_garden', '_elgg_walled_garden_menu');
 
-	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
-
 	if (_elgg_config()->default_access == ACCESS_PUBLIC) {
 		elgg_set_config('default_access', ACCESS_LOGGED_IN);
 	}
@@ -1655,7 +1646,10 @@ function _elgg_walled_garden_init() {
 
 	if (!elgg_is_logged_in()) {
 		// override the front page
-		elgg_register_page_handler('', '_elgg_walled_garden_index');
+		elgg_register_route('index', [
+			'path' => '/',
+			'resource' => 'walled_garden',
+		]);
 	}
 }
 
@@ -1717,17 +1711,6 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
 function _elgg_init() {
 	elgg_register_action('entity/delete');
 
-	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
-	elgg_register_page_handler('favicon.ico', '_elgg_favicon_page_handler');
-
-	elgg_register_page_handler('manifest.json', function() {
-		$site = elgg_get_site_entity();
-		$resource = new \Elgg\Http\WebAppManifestResource($site);
-		header('Content-Type: application/json;charset=utf-8');
-		echo json_encode($resource->get());
-		return true;
-	});
-
 	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
 		$result['links']['manifest'] = [
 			'rel' => 'manifest',
@@ -1762,6 +1745,7 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 		\Elgg\Cli\SimpletestCommand::class,
 		\Elgg\Cli\DatabaseSeedCommand::class,
 		\Elgg\Cli\DatabaseUnseedCommand::class,
+		\Elgg\Cli\CronCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());
@@ -1776,6 +1760,20 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
  */
 function _elgg_delete_autoload_cache() {
 	_elgg_services()->autoloadManager->deleteCache();
+}
+
+/**
+ * Register core routes
+ * @return void
+ * @internal
+ */
+function _elgg_register_routes() {
+	$conf = \Elgg\Project\Paths::elgg() . 'engine/routes.php';
+	$routes = \Elgg\Includer::includeFile($conf);
+
+	foreach ($routes as $name => $def) {
+		elgg_register_route($name, $def);
+	}
 }
 
 /**
@@ -1803,6 +1801,8 @@ function _elgg_api_test($hook, $type, $value, $params) {
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+
+	_elgg_register_routes();
 
 	elgg_set_entity_class('user', 'user', \ElggUser::class);
 	elgg_set_entity_class('group', 'group', \ElggGroup::class);

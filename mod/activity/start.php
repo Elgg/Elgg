@@ -1,34 +1,6 @@
 <?php
 
 /**
- * Page handler for activity
- *
- * @param array $segments URL segments
- * @return \Elgg\Http\ResponseBuilder
- * @access private
- */
-function elgg_activity_page_handler($segments) {
-	
-	// make a URL segment available in page handler script
-	$page_type = elgg_extract(0, $segments, 'all');
-	$page_type = preg_replace('[\W]', '', $page_type);
-
-	if ($page_type == 'owner') {
-		elgg_gatekeeper();
-		$page_username = elgg_extract(1, $segments, '');
-		if ($page_username == elgg_get_logged_in_user_entity()->username) {
-			$page_type = 'mine';
-		} else {
-			$vars['subject_username'] = $page_username;
-		}
-	}
-
-	$vars['page_type'] = $page_type;
-
-	return elgg_ok_response(elgg_view_resource("river", $vars));
-}
-
-/**
  * Register menu items for the title menu
  *
  * @param string $hook   Hook
@@ -49,7 +21,7 @@ function _elgg_activity_owner_block_menu($hook, $type, $return, $params) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'activity:owner',
 			'text' => elgg_echo('activity:owner'),
-			'href' => "activity/owner/{$entity->username}",
+			'href' => elgg_generate_url('collections:river:owner', ['username' => $entity->username]),
 		]);
 	}
 	
@@ -65,12 +37,10 @@ function elgg_activity_init() {
 	
 	elgg_extend_view('css/elgg', 'river/filter.css');
 	
-	elgg_register_page_handler('activity', 'elgg_activity_page_handler');
-
 	elgg_register_menu_item('site', [
 		'name' => 'activity',
 		'text' => elgg_echo('activity'),
-		'href' => 'activity',
+		'href' => elgg_generate_url('default:river'),
 	]);
 	
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '_elgg_activity_owner_block_menu');

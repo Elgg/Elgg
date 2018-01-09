@@ -300,5 +300,11 @@ class Search {
 		$params = array_merge($current_params, $params);
 
 		$this->params = _elgg_services()->search->normalizeOptions($params);
+
+		if ($search_type == 'all' && empty(array_filter($this->params['fields']))) {
+			// Plugin hooks did not provide a specific set of fields to use
+			// We will let params to repopulate the fields for type specific searches
+			unset($this->params['fields']);
+		}
 	}
 }

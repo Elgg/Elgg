@@ -12,11 +12,10 @@ interface Printer {
 	/**
 	 * Prints data
 	 *
-	 * @param mixed  $data    Data to print
-	 * @param bool   $display If display is expected by the logger
-	 * @param string $level   Logging level
+	 * @param mixed  $data  Data to print
+	 * @param string $level Logging level
 	 *
 	 * @return mixed
 	 */
-	public function write($data, $display, $level);
+	public function write($data, $level);
 }

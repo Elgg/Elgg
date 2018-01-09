@@ -4,7 +4,7 @@
 .elgg-button,
 button {
 	display: inline-block;
-	color: #2d3047;
+	color: $(text-color-strong);
 	width: auto;
 	height: 2.5rem;
 	line-height: 1.75rem;
@@ -20,7 +20,7 @@ button {
 .elgg-button:focus,
 button:hover,
 button:focus {
-	background-color: #e6e6ea;
+	background-color: $(background-color-mild);
 	text-decoration: none;
 }
 
@@ -29,55 +29,58 @@ button:focus {
 }
 
 .elgg-button-submit {
-	background: #2d3047;
-	color: #ffffff;
+	background: $(button-submit-background-color);
+	color: $(button-submit-font-color);
 }
 
 .elgg-button-submit:hover,
 .elgg-button-submit:focus {
-	background: #424242;
-	color: #ffffff;
+	background: $(button-submit-background-color-hover);
+	color: $(button-submit-font-color-hover);
 }
 
 .elgg-button-cancel {
-	background: #e6e6ea;
+	background: $(button-cancel-background-color);
+	color: $(button-cancel-font-color);
 }
 
 .elgg-button-cancel:hover,
 .elgg-button-cancel:focus {
-	background: #e6e6ea;
+	background: $(button-cancel-background-color-hover);
+	color: $(button-cancel-font-color-hover);
 }
 
 .elgg-button-action {
-	background: #0078ac;
-	color: #ffffff;
+	background: $(button-action-background-color);
+	color: $(button-action-font-color);
 }
 
 .elgg-button-action:hover,
 .elgg-button-action:focus {
-	background: #009ade;
-	color: #ffffff;
+	background: $(button-action-background-color-hover);
+	color: $(button-action-font-color-hover);
 }
 
 .elgg-button-action-done,
 .elgg-button-action-done:hover,
 .elgg-button-action-done:focus {
-	background: #009ade;
-	color: #ffffff;
+	background: $(button-action-background-color-hover);
+	color: $(button-action-font-color-hover);
 }
 
 .elgg-button-delete {
-	background: #e6e6ea;
+	background: $(button-delete-background-color);
+	color: $(button-delete-font-color);
 }
 
 .elgg-button-delete:hover,
 .elgg-button-delete:focus {
-	background: #d33f49;
-	color: #ffffff;
+	background: $(button-delete-background-color-hover);
+	color: $(button-delete-font-color-hover);
 }
 
 .elgg-button-outline {
-	border: 1px solid #e6e6ea;
+	border: 1px solid $(border-color-mild);
 }
 
 .elgg-button-dropdown {
@@ -111,9 +114,9 @@ button:focus {
 
 .elgg-button:disabled,
 .elgg-button.elgg-state-disabled {
-	background: #DEDEDE;
+	background: $(background-color-mild);
+	color: $(text-color-mild);
 	cursor: default;
-	color: white;
 }
 
 /* Use .elgg-size-small or .elgg-size-large for additional sizes */

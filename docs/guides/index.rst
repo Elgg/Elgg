@@ -23,7 +23,6 @@ Customize Elgg's behavior with plugins.
    javascript
    menus
    notifications
-   pagehandler
    routing
    services
    search
