@@ -3,6 +3,7 @@
 namespace Elgg\I18n;
 
 use Elgg\Config;
+use Elgg\Includer;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -402,31 +403,50 @@ class Translator {
 			$load_language_files = array_unique($load_language_files);
 		}
 
-		$handle = opendir($path);
-		if (!$handle) {
-			_elgg_services()->logger->error("Could not open language path: $path");
-			return false;
-		}
-
 		$return = true;
-		while (false !== ($language_file = readdir($handle))) {
-			// ignore bad files
-			if (substr($language_file, 0, 1) == '.' || substr($language_file, -4) !== '.php') {
-				continue;
+		if (!$load_all) {
+			foreach ($load_language_files as $language_file) {
+				$return = $return && $this->includeLanguageFile($path . $language_file);
 			}
-
-			if (in_array($language_file, $load_language_files) || $load_all) {
-				$result = (include $path . $language_file);
-				if ($result === false) {
-					$return = false;
+		} else if ($handle = opendir($path)) {
+			while (false !== ($language_file = readdir($handle))) {
+				// ignore bad files
+				if (substr($language_file, 0, 1) == '.' || substr($language_file, -4) !== '.php') {
 					continue;
-				} elseif (is_array($result)) {
-					$this->addTranslation(basename($language_file, '.php'), $result);
+				}
+
+				if (in_array($language_file, $load_language_files) || $load_all) {
+					$return = $return && $this->includeLanguageFile($path . $language_file);
 				}
 			}
+			closedir($handle);
+		} else {
+			_elgg_services()->logger->error("Could not open language path: $path");
+			$return = false;
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Load cached or include a language file by its path
+	 *
+	 * @param string $path Path to file
+	 * @return bool
+	 */
+	protected function includeLanguageFile($path) {
+		$cache_key = "lang/" . sha1($path);
+		$result = elgg_get_system_cache()->load($cache_key);
+		if (!isset($result)) {
+			$result = Includer::includeFile($path);
+			elgg_get_system_cache()->save($cache_key, $result);
+		}
+		if (is_array($result)) {
+			$this->addTranslation(basename($path, '.php'), $result);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -464,7 +484,7 @@ class Translator {
 				$this->registerTranslations($path, true);
 			}
 		}
-		
+
 		_elgg_services()->hooks->getEvents()->triggerAfter('reload', 'translations');
 
 		$this->was_reloaded = true;
@@ -490,13 +510,13 @@ class Translator {
 			} else {
 				$lang = $this->translate($k);
 			}
-			
+
 			$installed[$k] = $lang;
-			
+
 			if (!$admin_logged_in || ($k === 'en')) {
 				continue;
 			}
-			
+
 			$completeness = $this->getLanguageCompleteness($k);
 			if ($completeness < 100) {
 				$installed[$k] .= " (" . $completeness . "% " . $this->translate('complete') . ")";
@@ -556,7 +576,7 @@ class Translator {
 
 		foreach ($this->translations['en'] as $k => $v) {
 			if ((!isset($this->translations[$language][$k]))
-			|| ($this->translations[$language][$k] == $this->translations['en'][$k])) {
+				|| ($this->translations[$language][$k] == $this->translations['en'][$k])) {
 				$missing[] = $k;
 			}
 		}
