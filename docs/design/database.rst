@@ -275,8 +275,7 @@ Annotations
 
 Annotations are pieces of data attached to an entity that allow users
 to leave ratings, or other relevant feedback. A poll plugin might
-register votes as annotations. Before Elgg 1.9, comments and group
-discussion replies were stored as annotations.
+register votes as annotations.
 
 Annotations are stored as instances of the ``ElggAnnotation`` class.
 
@@ -607,7 +606,7 @@ be ``false``.
 Other useful functions:
 
 - ``delete_relationship()`` : delete by ID
-- ``remove_entity_relationships()`` : delete those relating to an entity (*note:* in versions before Elgg 1.9, this did not trigger delete events)
+- ``remove_entity_relationships()`` : delete those relating to an entity
 
 Finding relationships and related entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

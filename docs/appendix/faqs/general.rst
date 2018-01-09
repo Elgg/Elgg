@@ -371,23 +371,6 @@ Wrong permissions on the data directory
 
 Check the permissions for the data directory. The data directory should be readable and writeable by the web server user.
 
-Different timezone
-^^^^^^^^^^^^^^^^^^
-
-.. note::
-
-   This only applies to Elgg versions before 1.9
-
-If you migrated servers or upgraded PHP, check that PHP's timezone settings are the same between the old and the new. If you cannot or don't want to change the system-wide ``php.ini`` file, you can put the following at the top of ``settings.php``:
-
-.. code-block:: php
-
-   date_default_timezone_set('MY_TIME_ZONE');
-   
-Where ``MY_TIME_ZONE`` is a valid `PHP timezone`_.
-
-.. _PHP timezone: http://php.net/manual/en/timezones.php
-
 Migrated installation with new data directory location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

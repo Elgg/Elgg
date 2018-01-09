@@ -342,7 +342,7 @@ Altering view input
 
 It may be useful to alter a view's ``$vars`` array before the view is rendered.
 
-Since 1.11, before each view rendering the ``$vars`` array is filtered by the
+Before each view rendering the ``$vars`` array is filtered by the
 :ref:`plugin hook <guides/hooks-list#views>` ``["view_vars", $view_name]``.
 Each registered handler function is passed these arguments:
 
@@ -531,7 +531,7 @@ can also pass a Closure (an anonymous function).
 Rendering a list with an alternate view
 ---------------------------------------
 
-Since 1.11, you can define an alternative view to render list items using ``'item_view'`` parameter.
+You can define an alternative view to render list items using ``'item_view'`` parameter.
 
 In some cases, default entity views may be unsuitable for your needs.
 Using ``item_view`` allows you to customize the look, while preserving pagination, list's HTML markup etc.

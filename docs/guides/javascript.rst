@@ -380,8 +380,6 @@ Force a refresh of all XSRF tokens on the page.
 
 This is automatically called every 5 minutes by default.
 
-This requires a valid security token in 1.8, but not in 1.9.
-
 The user will be warned if their session has expired.
 
 

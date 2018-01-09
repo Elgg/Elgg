@@ -84,7 +84,7 @@ Plugins *should* place scripts for actions an ``actions/`` directory, and furthe
 
 For example, the action ``my/example/action`` would go in ``my_plugin/actions/my/example/action.php``. This makes it very obvious which script is associated with which action.
 
-Similarly, the body of the form that submits to this action should be located in ``forms/my/example/action.php``. Not only does this make the connection b/w action handler, form code, and action name obvious, but it allows you to use the new (as of Elgg 1.8) ``elgg_view_form()`` function easily.
+Similarly, the body of the form that submits to this action should be located in ``forms/my/example/action.php``. Not only does this make the connection b/w action handler, form code, and action name obvious, but it allows you to use the ``elgg_view_form()`` function easily.
 
 Text Files
 ----------

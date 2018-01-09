@@ -1,7 +1,7 @@
 Plugin Dependencies
 ###################
 
-In Elgg 1.8 a plugin dependencies system was introduced to prevent plugins from being used on incompatible systems.
+In Elgg the plugin dependencies system is there to prevent plugins from being used on incompatible systems.
 
 .. contents:: Contents
    :local:
