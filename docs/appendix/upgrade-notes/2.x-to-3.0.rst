@@ -142,6 +142,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``get_group_entity_as_row``
  * ``get_object_entity_as_row``
  * ``get_user_entity_as_row``
+ * ``update_river_access_by_object``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_access_collection_override``
  * ``groups_get_group_tool_options``: Use ``elgg_get_group_tool_options``
@@ -347,6 +348,10 @@ The ``geocode_cache`` table has been removed as it was no longer used.
 
 ``subtype`` column in ``entities`` table no longer holds a subtype ID, but a subtype string
 ``entity_subtypes`` table has been dropped.
+
+``type``, ``subtype`` and ``access_id`` columns in ``river`` table have been dropped.
+For queries without ``elgg_get_river()`` join the ``entities`` table on ``object_guid`` to check the type and the subtype of the entity.
+Access column hasn't been in use for some time: queries are built to ensure access to all three entities (subject, object and target).
 
 Changes in ``elgg_get_entities``, ``elgg_get_metadata`` and ``elgg_get_annotations`` getter functions
 -----------------------------------------------------------------------------------------------------

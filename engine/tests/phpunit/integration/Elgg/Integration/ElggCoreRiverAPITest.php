@@ -119,10 +119,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		elgg_unregister_event_handler('created', 'river', $event_handler);
 
 		$expected_values = [
-			'type' => $this->entity->getType(),
-			'subtype' => $this->entity->getSubtype(),
 			'action_type' => $params['action_type'],
-			'access_id' => $this->entity->access_id,
 			'view' => $params['view'],
 			'subject_guid' => $params['subject_guid'],
 			'object_guid' => $params['object_guid'],

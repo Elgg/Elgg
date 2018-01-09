@@ -10,31 +10,23 @@
 /**
  * Adds an item to the river.
  *
- * @tip Read the item like "Lisa (subject) posted (action)
+ * @tip    Read the item like "Lisa (subject) posted (action)
  * a comment (object) on John's blog (target)".
  *
  * @param array $options Array in format:
  *
- * 	view => STR The view that will handle the river item
- *
- * 	action_type => STR An arbitrary string to define the action (eg 'comment', 'create')
- *
- *  subject_guid => INT The GUID of the entity doing the action (default: current logged in user guid)
- *
- *  object_guid => INT The GUID of the entity being acted upon
- *
- *  target_guid => INT The GUID of the the object entity's container
- *
- *  access_id => INT The access ID of the river item (default: same as the object)
- *
- *  posted => INT The UNIX epoch timestamp of the river item (default: now)
- *
- *  annotation_id INT The annotation ID associated with this river entry
- *
- *  return_item => BOOL set to true to return the ElggRiverItem created
+ * @option string $view The view that will handle the river item
+ * @option string $action_type   An arbitrary string to define the action (eg 'comment', 'create')
+ * @option int    $subject_guid  The GUID of the entity doing the action (default: current logged in user guid)
+ * @option int    $object_guid   The GUID of the entity being acted upon
+ * @option int    $target_guid   The GUID of the the object entity's container
+ * @option int    $posted        The UNIX epoch timestamp of the river item (default: now)
+ * @option int    $annotation_id The annotation ID associated with this river entry
+ * @option bool   $return_item   set to true to return the ElggRiverItem created
  *
  * @return int|ElggRiverItem|bool River ID/item or false on failure
- * @since 1.9
+ * @since  1.9
+ * @throws DatabaseException
  */
 function elgg_create_river_item(array $options = []) {
 
@@ -68,8 +60,6 @@ function elgg_create_river_item(array $options = []) {
 		}
 	}
 
-	$access_id = elgg_extract('access_id', $options, $object->access_id);
-
 	$posted = elgg_extract('posted', $options, time());
 
 	$annotation_id = elgg_extract('annotation_id', $options, 0);
@@ -82,10 +72,7 @@ function elgg_create_river_item(array $options = []) {
 	$return_item = elgg_extract('return_item', $options, false);
 
 	$values = [
-		'type' => $object->getType(),
-		'subtype' => $object->getSubtype(),
 		'action_type' => $action_type,
-		'access_id' => $access_id,
 		'view' => $view,
 		'subject_guid' => $subject_guid,
 		'object_guid' => $object_guid,
@@ -94,10 +81,7 @@ function elgg_create_river_item(array $options = []) {
 		'posted' => $posted,
 	];
 	$col_types = [
-		'type' => ELGG_VALUE_STRING,
-		'subtype' => ELGG_VALUE_STRING,
 		'action_type' => ELGG_VALUE_STRING,
-		'access_id' => ELGG_VALUE_INTEGER,
 		'view' => ELGG_VALUE_STRING,
 		'subject_guid' => ELGG_VALUE_INTEGER,
 		'object_guid' => ELGG_VALUE_INTEGER,
@@ -297,31 +281,6 @@ function elgg_list_river(array $options = []) {
 	$options['items'] = $items;
 
 	return elgg_view('page/components/list', $options);
-}
-
-/**
- * Sets the access ID on river items for a particular object
- *
- * @param int $object_guid The GUID of the entity
- * @param int $access_id   The access ID
- *
- * @return bool Depending on success
- */
-function update_river_access_by_object($object_guid, $access_id) {
-
-	$dbprefix = _elgg_config()->dbprefix;
-	$query = "
-		UPDATE {$dbprefix}river
-		SET access_id = :access_id
-		WHERE object_guid = :object_guid
-	";
-
-	$params = [
-		':access_id' => (int) $access_id,
-		':object_guid' => (int) $object_guid,
-	];
-
-	return update_data($query, $params);
 }
 
 /**

@@ -33,7 +33,6 @@ class RiverRepositoryTest extends UnitTestCase {
 		$where->subject_guids = elgg_extract('subject_guids', $options);
 		$where->object_guids = elgg_extract('object_guids', $options);
 		$where->target_guids = elgg_extract('target_guids', $options);
-		$where->type_subtype_pairs = elgg_extract('type_subtype_pairs', $options);
 		$where->created_after = elgg_extract('created_after', $options);
 		$where->created_before = elgg_extract('created_before', $options);
 
@@ -46,6 +45,7 @@ class RiverRepositoryTest extends UnitTestCase {
 
 		$qb->joinEntitiesTable('rv', 'object_guid', 'inner', 'oe');
 		$object = new EntityWhereClause();
+		$object->type_subtype_pairs = elgg_extract('type_subtype_pairs', $options);
 		$object->guids = elgg_extract('object_guids', $options);
 		$ands[] = $object->prepare($qb, 'oe');
 
