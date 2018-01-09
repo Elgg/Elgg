@@ -1216,6 +1216,52 @@ function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'
 }
 
 /**
+ * Calls a callable passing arguments and applying logic based on flags
+ *
+ * @param int     $flags   Bitwise flags
+ *                         ELGG_IGNORE_ACCESS
+ *                         ELGG_ENFORCE_ACCESS
+ *                         ELGG_SHOW_DISABLED_ENTITIES
+ *                         ELGG_HIDE_DISABLED_ENTITIES
+ * @param Closure $closure Callable to call
+ *
+ * @return mixed
+ * @throws Exception
+ */
+function elgg_call(int $flags, Closure $closure) {
+
+	$ia = elgg_get_ignore_access();
+	if ($flags & ELGG_IGNORE_ACCESS) {
+		elgg_set_ignore_access(true);
+	} else if ($flags & ELGG_ENFORCE_ACCESS) {
+		elgg_set_ignore_access(false);
+	}
+
+	$ha = access_get_show_hidden_status();
+	if ($flags & ELGG_SHOW_DISABLED_ENTITIES) {
+		access_show_hidden_entities(true);
+	} else if ($flags & ELGG_HIDE_DISABLED_ENTITIES) {
+		access_show_hidden_entities(false);
+	}
+
+	$restore = function () use ($ia, $ha) {
+		elgg_set_ignore_access($ia);
+		access_show_hidden_entities($ha);
+	};
+
+	try {
+		$result = $closure();
+	} catch (\Exception $e) {
+		$restore();
+		throw $e;
+	}
+
+	$restore();
+
+	return $result;
+}
+
+/**
  * Sorts a 3d array by specific element.
  *
  * @warning Will re-index numeric indexes.
