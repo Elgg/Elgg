@@ -22,6 +22,5 @@ return [
 	],
 	'upgrades' => [
 		'\Elgg\Pages\Upgrades\MigratePageTop',
-		'\Elgg\Pages\Upgrades\MigratePageTopRiver',
 	],
 ];

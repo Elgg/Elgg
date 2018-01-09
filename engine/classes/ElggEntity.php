@@ -1507,11 +1507,6 @@ abstract class ElggEntity extends \ElggData implements
 
 		elgg_trigger_after_event('update', $this->type, $this);
 
-		// TODO(evan): Move this to \ElggObject?
-		if ($this instanceof \ElggObject && isset($this->orig_attributes['access_id'])) {
-			update_river_access_by_object($guid, $access_id);
-		}
-
 		$this->orig_attributes = [];
 
 		$this->cache();

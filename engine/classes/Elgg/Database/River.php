@@ -258,7 +258,6 @@ class River extends Repository {
 		$where->subject_guids = $this->options->subject_guids;
 		$where->object_guids = $this->options->object_guids;
 		$where->target_guids = $this->options->target_guids;
-		$where->type_subtype_pairs = $this->options->type_subtype_pairs;
 		$where->created_after = $this->options->created_after;
 		$where->created_before = $this->options->created_before;
 
@@ -286,10 +285,11 @@ class River extends Repository {
 			$ands[] = $subject->prepare($qb, 'se');
 		}
 
-		if ($this->options->object_guids || $use_access_clause) {
+		if ($this->options->object_guids || $use_access_clause || $this->options->type_subtype_pairs) {
 			$qb->joinEntitiesTable('rv', 'object_guid', 'inner', 'oe');
 			$object = new EntityWhereClause();
 			$object->guids = $this->options->object_guids;
+			$object->type_subtype_pairs = $this->options->type_subtype_pairs;
 			$ands[] = $object->prepare($qb, 'oe');
 		}
 
