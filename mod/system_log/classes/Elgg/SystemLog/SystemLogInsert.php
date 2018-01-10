@@ -2,7 +2,6 @@
 
 namespace Elgg\SystemLog;
 
-use Elgg\Cache\CompositeCache;
 use Elgg\Database\Insert;
 
 /**
@@ -11,28 +10,17 @@ use Elgg\Database\Insert;
 class SystemLogInsert {
 
 	/**
-	 * @var CompositeCache
+	 * @var LogEventCache
 	 */
-	protected static $cache;
+	protected $cache;
 
 	/**
-	 * Returns a cache of logged system events
+	 * Constructor
 	 *
-	 * @return CompositeCache
+	 * @param LogEventCache $cache Log events cache
 	 */
-	protected function getCache() {
-		if (!isset(self::$cache)) {
-			$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_FILESYSTEM | ELGG_CACHE_RUNTIME;
-			$cache = new CompositeCache('system_log', _elgg_config(), $flags);
-
-			register_shutdown_function(function () use ($cache) {
-				$cache->clear();
-			});
-
-			self::$cache = $cache;
-		}
-
-		return self::$cache;
+	public function __construct(LogEventCache $cache) {
+		$this->cache = $cache;
 	}
 
 	/**
@@ -90,7 +78,7 @@ class SystemLogInsert {
 
 		$object = $this->prepareObjectForInsert($object);
 
-		$logged = $this->getCache()->load("$object->object_id/$event");
+		$logged = $this->cache->load("$object->object_id/$event");
 
 		if ($logged == $object) {
 			return;
@@ -115,7 +103,6 @@ class SystemLogInsert {
 
 		// The only purpose of the cache is to prevent the same event from writing to the database twice
 		// Setting early expiration to avoid cache from taking up too much memory
-		$this->getCache()->save("$object->object_id/$event", $object, 3600);
+		$this->cache->save("$object->object_id/$event", $object, 3600);
 	}
-
 }

@@ -48,6 +48,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\Database\DbConfig                  $dbConfig
  * @property-read \Elgg\DeprecationService                 $deprecation
+ * @property-read \DI\Container                            $dic
  * @property-read \Elgg\EmailService                       $emails
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
@@ -260,6 +261,11 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
 			return new \Elgg\DeprecationService($c->logger);
+		});
+
+		$this->setFactory('dic', function (ServiceProvider $c) {
+			$msg = "The service container is not available until the plugins_boot event.";
+			throw new MissingValueException($msg);
 		});
 
 		$this->setFactory('emails', function(ServiceProvider $c) {
@@ -480,8 +486,6 @@ class ServiceProvider extends DiContainer {
 
 		$this->initSiteSecret($config);
 
-		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
-
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
 			return new \Elgg\Cache\SimpleCache($c->config);
 		});
@@ -537,6 +541,8 @@ class ServiceProvider extends DiContainer {
 				$c->requestContext
 			);
 		});
+
+		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
 
 		$this->setFactory('userCapabilities', function(ServiceProvider $c) {
 			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);

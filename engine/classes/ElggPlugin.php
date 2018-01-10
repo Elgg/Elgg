@@ -2,6 +2,7 @@
 
 use Elgg\Application;
 use Elgg\Includer;
+use DI\ContainerBuilder;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -744,13 +745,13 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Start the plugin.
 	 *
-	 * @param int $flags Start flags for the plugin. See the constants in lib/plugins.php for details.
-	 *
+	 * @param int              $flags       Start flags for the plugin. See the constants in lib/plugins.php.
+	 * @param ContainerBuilder $dic_builder Receives container definitions
 	 * @return true
 	 * @throws PluginException
 	 * @throws InvalidParameterException
 	 */
-	public function start($flags) {
+	public function start($flags, ContainerBuilder $dic_builder = null) {
 
 		if (!($flags & ELGG_PLUGIN_IGNORE_MANIFEST)) {
 			// Detect plugins errors early and throw so that plugins service can disable the plugin
@@ -774,6 +775,14 @@ class ElggPlugin extends ElggObject {
 			// should be loaded before the first function that touches the static config (elgg-plugin.php)
 			// so translations can be used... for example in registering widgets
 			$this->registerLanguages();
+		}
+
+		// add plugin service definitions to DIC builder
+		if ($dic_builder) {
+			$file = "{$this->getPath()}elgg-services.php";
+			if (is_file($file)) {
+				$dic_builder->addDefinitions($file);
+			}
 		}
 
 		// include start file if it exists

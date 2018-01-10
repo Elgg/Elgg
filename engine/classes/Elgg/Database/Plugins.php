@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use DatabaseException;
+use DI\ContainerBuilder;
 use ElggCache;
 use Elgg\Database;
 use Elgg\Profilable;
@@ -369,11 +370,13 @@ class Plugins {
 	 * will be disabled and a visible error emitted. This does not check the deps system because
 	 * that was too slow.
 	 *
+	 * @param ContainerBuilder $dic_builder The DI container builder
+	 *
 	 * @return bool
 	 * @access private
 	 * @throws \PluginException
 	 */
-	function load() {
+	function load(ContainerBuilder $dic_builder) {
 		if ($this->timer) {
 			$this->timer->begin([__METHOD__]);
 		}
@@ -421,7 +424,7 @@ class Plugins {
 		foreach ($plugins as $plugin) {
 			$id = $plugin->getID();
 			try {
-				$plugin->start($start_flags);
+				$plugin->start($start_flags, $dic_builder);
 				$this->active_guids[$id] = $plugin->guid;
 			} catch (Exception $e) {
 				$disable_plugins = _elgg_config()->auto_disable_plugins;
