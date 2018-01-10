@@ -9,6 +9,7 @@ namespace Elgg\Database\Seeds;
  * add use 'seeds','database' plugin hook to add their seed to the sequence.
  */
 abstract class Seed implements Seedable {
+
 	/**
 	 * @var int Max number of items to be created by the seed
 	 */
@@ -49,7 +50,12 @@ abstract class Seed implements Seedable {
 
 	/**
 	 * Create a new faker user
-	 * @return ElggUser|false
+	 *
+	 * @param array $attributes Attributes
+	 * @param array $metadata   Metadata
+	 *
+	 * @return bool|\ElggUser|false
+	 * @throws \Exception
 	 */
 	public function createUser(array $attributes = [], array $metadata = []) {
 
@@ -79,17 +85,15 @@ abstract class Seed implements Seedable {
 
 		try {
 			$guid = register_user($attributes['username'], $attributes['password'], $attributes['name'], $attributes['email']);
-			$user = get_entity($guid);
-			/* @var $user ElggUser */
+			$user = get_user($guid);
 
-			elgg_set_user_validation_status($guid, $this->faker->boolean(), 'seeder');
+			$user->setValidationStatus($this->faker->boolean(), 'seeder');
 
 			$user->setNotificationSetting('email', false);
 			$user->setNotificationSetting('site', true);
 
-			$profile_fields = elgg_get_config('profile_fields');
-
-			$user = $this->populateMetadata($user, $profile_fields, $metadata);
+			$this->populateMetadata($user, [], $metadata);
+			$this->populateUserFields($user, elgg_get_config('profile_fields'));
 
 			$user->save();
 
@@ -100,7 +104,7 @@ abstract class Seed implements Seedable {
 			$this->log("Created new user $user->name [guid: $user->guid]");
 
 			return $user;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			if ($user && $user->guid) {
 				$user->delete();
 			}
@@ -114,7 +118,12 @@ abstract class Seed implements Seedable {
 
 	/**
 	 * Create a new faker group
-	 * @return ElggGroup|false
+	 *
+	 * @param array $attributes Attributes
+	 * @param array $metadata   Metadata
+	 *
+	 * @return bool|\ElggGroup
+	 * @throws \Exception
 	 */
 	public function createGroup(array $attributes = [], array $metadata = []) {
 
@@ -125,7 +134,7 @@ abstract class Seed implements Seedable {
 		}
 
 		if (empty($metadata['content_access_mode'])) {
-			$metadata['content_access_mode'] = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
+			$metadata['content_access_mode'] = \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
 		}
 
 		if (empty($metadata['membership'])) {
@@ -176,16 +185,14 @@ abstract class Seed implements Seedable {
 			$metadata['featured_group'] = 'yes';
 		}
 
-		$group = false;
-
 		try {
 
-			$group = new ElggGroup();
+			$group = new \ElggGroup();
 			foreach ($attributes as $name => $value) {
 				$group->$name = $value;
 			}
 
-			$group = $this->populateMetadata($group, elgg_get_config('group'), $metadata);
+			$this->populateMetadata($group, elgg_get_config('group'), $metadata);
 
 			$group->save();
 
@@ -194,7 +201,7 @@ abstract class Seed implements Seedable {
 				$group->save();
 			}
 
-			$group->join(get_entity($attributes['owner_guid']));
+			$group->join(get_user($attributes['owner_guid']));
 
 			$this->createIcon($group);
 
@@ -212,7 +219,7 @@ abstract class Seed implements Seedable {
 			$this->log("Created new group $group->name [guid: $group->guid]");
 
 			return $group;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			if ($group && $group->guid) {
 				$group->delete();
 			}
@@ -226,7 +233,11 @@ abstract class Seed implements Seedable {
 
 	/**
 	 * Create a new faker object
-	 * @return ElggObject|false
+	 *
+	 * @param array $attributes Attributes
+	 * @param array $metadata   Metadata
+	 *
+	 * @return bool|\ElggObject
 	 */
 	public function createObject(array $attributes = [], array $metadata = []) {
 
@@ -259,8 +270,8 @@ abstract class Seed implements Seedable {
 		}
 
 		if (empty($attributes['owner_guid'])) {
-			if ($container instanceof ElggGroup) {
-				$members = elgg_get_entities_from_relationship([
+			if ($container instanceof \ElggGroup) {
+				$members = elgg_get_entities([
 					'types' => 'user',
 					'relationship' => 'member',
 					'relationship_guid' => $container->guid,
@@ -294,17 +305,18 @@ abstract class Seed implements Seedable {
 		$object = false;
 
 		try {
-			$class = get_subtype_class('object', $attributes['subtype']);
+			$class = elgg_get_entity_class('object', $attributes['subtype']);
 			if ($class && class_exists($class)) {
 				$object = new $class();
+				/* @var \ElggObject $object */
 			} else {
-				$object = new ElggObject();
+				$object = new \ElggObject();
 			}
 			foreach ($attributes as $name => $value) {
 				$object->$name = $value;
 			}
 
-			$object = $this->populateMetadata($object, [], $metadata);
+			$this->populateMetadata($object, [], $metadata);
 
 			$object->save();
 
@@ -316,7 +328,7 @@ abstract class Seed implements Seedable {
 			$this->log("Created new item in $type_str $object->title [guid: $object->guid]");
 
 			return $object;
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			if ($object && $object->guid) {
 				$object->delete();
 			}
@@ -333,7 +345,7 @@ abstract class Seed implements Seedable {
 	 *
 	 * @param int[] $exclude GUIDs to exclude
 	 *
-	 * @return ElggUser|false
+	 * @return \ElggUser|false
 	 */
 	public function getRandomUser(array $exclude = []) {
 
@@ -342,7 +354,7 @@ abstract class Seed implements Seedable {
 			return (int) $e;
 		}, $exclude));
 
-		$users = elgg_get_entities_from_metadata([
+		$users = elgg_get_entities([
 			'types' => 'user',
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
@@ -360,7 +372,7 @@ abstract class Seed implements Seedable {
 	 *
 	 * @param int[] $exclude GUIDs to exclude
 	 *
-	 * @return ElggGroup|false
+	 * @return \ElggGroup|false
 	 */
 	public function getRandomGroup(array $exclude = []) {
 
@@ -369,7 +381,7 @@ abstract class Seed implements Seedable {
 			return (int) $e;
 		}, $exclude));
 
-		$groups = elgg_get_entities_from_metadata([
+		$groups = elgg_get_entities([
 			'types' => 'group',
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
@@ -385,12 +397,12 @@ abstract class Seed implements Seedable {
 	/**
 	 * Get random access id
 	 *
-	 * @param ElggUser   $user      User
-	 * @param ElggEntity $container Container
+	 * @param \ElggUser   $user      User
+	 * @param \ElggEntity $container Container
 	 *
 	 * @return int
 	 */
-	public function getRandomAccessId(\ElggUser $user = null, ElggEntity $container = null) {
+	public function getRandomAccessId(\ElggUser $user = null, \ElggEntity $container = null) {
 
 		$params = [
 			'container_guid' => $container->guid,
@@ -409,6 +421,7 @@ abstract class Seed implements Seedable {
 	 * @param string $base_name Display name, email or other prefix to use as basis
 	 *
 	 * @return string
+	 * @throws \Exception
 	 */
 	public function getRandomUsername($base_name = 'user') {
 
@@ -466,7 +479,7 @@ abstract class Seed implements Seedable {
 		$separator = '.';
 
 		if ($fill > 0) {
-			$suffix = (new ElggCrypto())->getRandomString($fill);
+			$suffix = (new \ElggCrypto())->getRandomString($fill);
 			$base_name = "$base_name$separator$suffix";
 		}
 
@@ -484,7 +497,7 @@ abstract class Seed implements Seedable {
 			} catch (\Exception $e) {
 				if ($iterator >= 10) {
 					// too many failed attempts
-					$base_name = (new ElggCrypto())->getRandomString(8);
+					$base_name = (new \ElggCrypto())->getRandomString(8);
 				}
 			}
 
@@ -500,15 +513,15 @@ abstract class Seed implements Seedable {
 	/**
 	 * Set random metadata
 	 *
-	 * @param ElggEntity $entity   Entity
-	 * @param array      $fields   An array of profile fields in $name => $input_type format
-	 * @param array      $metadata Other metadata $name => $value pairs to set
+	 * @param \ElggEntity $entity       Entity
+	 * @param array       $group_fields An array of group profile fields in $name => $input_type format
+	 * @param array       $metadata     Other metadata $name => $value pairs to set
 	 *
-	 * @return ElggEntity
+	 * @return void
 	 */
-	public function populateMetadata(ElggEntity $entity, array $fields = [], array $metadata = []) {
+	public function populateMetadata(\ElggEntity $entity, array $group_fields = [], array $metadata = []) {
 
-		foreach ($fields as $name => $type) {
+		foreach ($group_fields as $name => $type) {
 			if (isset($metadata[$name])) {
 				continue;
 			}
@@ -572,18 +585,80 @@ abstract class Seed implements Seedable {
 		foreach ($metadata as $key => $value) {
 			$entity->$key = $value;
 		}
+	}
 
-		return $entity;
+	/**
+	 * Set random user fields
+	 *
+	 * @param \ElggUser $user   User entity
+	 * @param array     $fields An array of profile fields in $name => $input_type format
+	 *
+	 * @return void
+	 */
+	public function populateUserFields(\ElggUser $user, array $fields = []) {
+		$annotations = [];
+
+		foreach ($fields as $name => $type) {
+			switch ($name) {
+				case 'phone' :
+				case 'mobile' :
+					$annotations[$name] = $this->faker->phoneNumber;
+					break;
+
+				default :
+					switch ($type) {
+						case 'plaintext' :
+						case 'longtext' :
+							$annotations[$name] = $this->faker->text($this->faker->numberBetween(500, 1000));
+							break;
+
+						case 'text' :
+							$annotations[$name] = $this->faker->sentence;
+							break;
+
+						case 'url' :
+							$annotations[$name] = $this->faker->url;
+							break;
+
+						case 'email' :
+							$annotations[$name] = $this->faker->email;
+							break;
+
+						case 'number' :
+							$annotations[$name] = $this->faker->randomNumber();
+							break;
+
+						case 'date' :
+							$annotations[$name] = $this->faker->unixTime;
+							break;
+
+						case 'location' :
+							$annotations[$name] = $this->faker->address;
+							$annotations['geo:lat'] = $this->faker->latitude;
+							$annotations['geo:long'] = $this->faker->longitude;
+							break;
+
+						default :
+							$annotations[$name] = '';
+							break;
+					}
+					break;
+			}
+		}
+
+		foreach ($annotations as $key => $value) {
+			$user->annotate($key, $value, ACCESS_PUBLIC);
+		}
 	}
 
 	/**
 	 * Create an icon for an entity
 	 *
-	 * @param ElggEntity $entity Entity
+	 * @param \ElggEntity $entity Entity
 	 *
 	 * @return bool
 	 */
-	public function createIcon(ElggEntity $entity) {
+	public function createIcon(\ElggEntity $entity) {
 
 		$icon_location = $this->faker->image();
 		if (empty($icon_location)) {
@@ -592,7 +667,7 @@ abstract class Seed implements Seedable {
 
 		$result = $entity->saveIconFromLocalFile($icon_location);
 
-		if ($result && $entity instanceof ElggUser) {
+		if ($result && $entity instanceof \ElggUser) {
 			elgg_create_river_item([
 				'view' => 'river/user/default/profileiconupdate',
 				'action_type' => 'update',
@@ -607,12 +682,12 @@ abstract class Seed implements Seedable {
 	/**
 	 * Create comments/replies
 	 *
-	 * @param ElggEntity $entity Entity to comment on
-	 * @param int        $limit  Number of comments to create
+	 * @param \ElggEntity $entity Entity to comment on
+	 * @param int         $limit  Number of comments to create
 	 *
 	 * @return int Number of generated comments
 	 */
-	public function createComments(ElggEntity $entity, $limit = null) {
+	public function createComments(\ElggEntity $entity, $limit = null) {
 
 		$success = 0;
 
@@ -621,9 +696,7 @@ abstract class Seed implements Seedable {
 		}
 
 		while ($success < $limit) {
-
-			$comment = new ElggObject();
-			$comment->subtype = $entity->getSubtype() == 'discussion' ? 'discussion_reply' : 'comment';
+			$comment = new \ElggComment();
 			$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;
 			$comment->container_guid = $entity->guid;
 			$comment->description = $this->faker->paragraph;
@@ -640,12 +713,12 @@ abstract class Seed implements Seedable {
 	/**
 	 * Create likes
 	 *
-	 * @param ElggEntity $entity Entity to like
-	 * @param int        $limit  Number of likes to create
+	 * @param \ElggEntity $entity Entity to like
+	 * @param int         $limit  Number of likes to create
 	 *
 	 * @return int
 	 */
-	public function createLikes(ElggEntity $entity, $limit = null) {
+	public function createLikes(\ElggEntity $entity, $limit = null) {
 
 		$success = 0;
 
@@ -665,7 +738,8 @@ abstract class Seed implements Seedable {
 	/**
 	 * Log a message
 	 *
-	 * @param string $msg Message to log
+	 * @param string $msg   Message to log
+	 * @param string $level Log level
 	 *
 	 * @return void
 	 */

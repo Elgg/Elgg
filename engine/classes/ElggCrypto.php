@@ -35,6 +35,8 @@ class ElggCrypto {
 	 * @license   http://framework.zend.com/license/new-bsd New BSD License
 	 *
 	 * @see https://github.com/zendframework/zf2/blob/master/library/Zend/Math/Rand.php#L179
+	 *
+	 * @throws Exception
 	 */
 	public function getRandomString($length, $chars = null) {
 		if ($length < 1) {
