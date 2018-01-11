@@ -7,22 +7,16 @@
 
 $guid = elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($guid, 'object', 'file');
+elgg_entity_gatekeeper($guid);
 
 $file = get_entity($guid);
+if (!$file instanceof ElggFile) {
+	throw new \Elgg\EntityNotFoundException();
+}
 
 $owner = elgg_get_page_owner_entity();
 
-elgg_group_gatekeeper();
-
-elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
-
-$crumbs_title = $owner->getDisplayName();
-if ($owner instanceof ElggGroup) {
-	elgg_push_breadcrumb($crumbs_title, "file/group/$owner->guid/all");
-} else {
-	elgg_push_breadcrumb($crumbs_title, "file/owner/$owner->username");
-}
+elgg_push_entity_breadcrumbs($file, false);
 
 $title = $file->getDisplayName();
 

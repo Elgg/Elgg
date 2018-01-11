@@ -5,20 +5,17 @@
  * @package ElggFile
  */
 
-$owner = elgg_get_page_owner_entity();
-
 elgg_gatekeeper();
-elgg_group_gatekeeper();
+
+$guid = elgg_extract('guid', $vars);
+elgg_entity_gatekeeper($guid);
+
+$entity = get_entity($guid);
 
 $title = elgg_echo('file:add');
 
-// set up breadcrumbs
-elgg_push_breadcrumb(elgg_echo('file'), "file/all");
-if ($owner instanceof ElggUser) {
-	elgg_push_breadcrumb($owner->getDisplayName(), "file/owner/$owner->username");
-} else {
-	elgg_push_breadcrumb($owner->getDisplayName(), "file/group/$owner->guid/all");
-}
+elgg_push_collection_breadcrumbs('object', 'file', $entity);
+elgg_push_breadcrumb($title);
 
 // create form
 $form_vars = ['enctype' => 'multipart/form-data'];

@@ -543,6 +543,7 @@ Removed actions
 ---------------
 
  * ``file/download``: Use ``elgg_get_inline_url`` or ``elgg_get_download_url``
+ * ``file/delete``: Use ``entity/delete`` action
  * ``import/opendd``
  * ``discussion/reply/save``: See :ref:`upgrade-discussion-replies`
  * ``discussion/reply/delete``: See :ref:`upgrade-discussion-replies`

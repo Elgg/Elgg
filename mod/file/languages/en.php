@@ -73,7 +73,7 @@ View and comment on the file:
 	 */
 
 	'file:saved' => "Your file was successfully saved.",
-	'file:deleted' => "Your file was successfully deleted.",
+	'entity:delete:object:file:success' => "Your file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -81,7 +81,6 @@ View and comment on the file:
 
 	'file:none' => "No files.",
 	'file:uploadfailed' => "Sorry; we could not save your file.",
-	'file:deletefailed' => "Your file could not be deleted at this time.",
 	'file:noaccess' => "You do not have permissions to change this file",
 	'file:cannotload' => "There was an error uploading the file",
 ];

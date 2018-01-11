@@ -8,18 +8,8 @@
 elgg_register_title_button('file', 'add', 'object', 'file');
 
 $title = elgg_echo('file:all');
-
-$content = elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'file',
-	'full_view' => false,
-	'no_results' => elgg_echo("file:none"),
-	'preload_owners' => true,
-	'preload_containers' => true,
-	'distinct' => false,
-]);
-
-$sidebar = elgg_view('file/sidebar');
+$content = elgg_view('file/listing/all', $vars);
+$sidebar = elgg_view('file/sidebar', $vars);
 
 $body = elgg_view_layout('content', [
 	'filter_context' => 'all',
