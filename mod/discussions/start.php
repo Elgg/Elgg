@@ -10,15 +10,13 @@
  */
 function discussion_init() {
 
-	elgg_register_page_handler('discussion', 'discussion_page_handler');
-
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'discussion_set_topic_url');
-
 	// prevent comments on closed discussions
 	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_permissions');
 
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
+
+	elgg_extend_view('object/elements/imprint/contents', 'discussion/imprint/status');
 
 	// add the forum tool option
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
@@ -35,84 +33,9 @@ function discussion_init() {
 
 	// Add latest discussions tab to /groups/all page
 	elgg_register_plugin_hook_handler('register', 'menu:filter:groups/all', 'discussion_setup_groups_filter_tabs');
-}
 
-/**
- * Discussion page handler
- *
- * URLs take the form of
- *  All topics in site:    discussion/all
- *  List topics in forum:  discussion/owner/<guid>
- *  View discussion topic: discussion/view/<guid>
- *  Add discussion topic:  discussion/add/<guid>
- *  Edit discussion topic: discussion/edit/<guid>
- *
- * @param array $page Array of url segments for routing
- * @return bool
- */
-function discussion_page_handler($page) {
-
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
-
-	elgg_push_breadcrumb(elgg_echo('discussion'), 'discussion/all');
-
-	switch ($page[0]) {
-		case 'all':
-			echo elgg_view_resource('discussion/all');
-			break;
-		case 'owner':
-			echo elgg_view_resource('discussion/owner', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-		case 'group':
-			echo elgg_view_resource('discussion/group', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-		case 'add':
-			echo elgg_view_resource('discussion/add', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-		case 'edit':
-			echo elgg_view_resource('discussion/edit', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-		case 'view':
-			echo elgg_view_resource('discussion/view', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-		default:
-			return false;
-	}
-	return true;
-}
-
-/**
- * Override the url for discussion topics
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $url    current value
- * @param array  $params supplied params
- *
- * @return void|string
- */
-function discussion_set_topic_url($hook, $type, $url, $params) {
-	
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggDiscussion) {
-		return;
-	}
-
-	
-	$title = elgg_get_friendly_title($entity->getDisplayName());
-	return "discussion/view/{$entity->guid}/{$title}";
+	// register database seed
+	elgg_register_plugin_hook_handler('seeds', 'database', 'discussion_register_db_seeds');
 }
 
 /**
@@ -136,7 +59,9 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 		return;
 	}
 	
-	$url = "discussion/group/{$entity->guid}";
+	$url = elgg_generate_url('collection:object:discussion:group', [
+		'guid' => $entity->guid,
+	]);
 	$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
 	$return[] = $item;
 	
@@ -341,6 +266,24 @@ function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
 	]);
 
 	return $return;
+}
+
+
+/**
+ * Register database seed
+ *
+ * @elgg_plugin_hook seeds database
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function discussion_register_db_seeds(\Elgg\Hook $hook) {
+
+	$seeds = $hook->getValue();
+
+	$seeds[] = \Elgg\Discussions\Seeder::class;
+
+	return $seeds;
 }
 
 return function() {

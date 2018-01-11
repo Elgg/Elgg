@@ -15,7 +15,7 @@ if (!$group->isToolEnabled('forum')) {
 }
 
 $all_link = elgg_view('output/url', [
-	'href' => "discussion/owner/$group->guid",
+	'href' => elgg_generate_url('collection:object:discussion:group', ['guid' => $group->guid]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
@@ -24,7 +24,7 @@ elgg_push_context('widgets');
 $options = [
 	'type' => 'object',
 	'subtype' => 'discussion',
-	'container_guid' => $group->getGUID(),
+	'container_guid' => $group->guid,
 	'limit' => 6,
 	'full_view' => false,
 	'pagination' => false,
@@ -34,7 +34,7 @@ $content = elgg_list_entities($options);
 elgg_pop_context();
 
 $new_link = elgg_view('output/url', [
-	'href' => "discussion/add/" . $group->getGUID(),
+	'href' => elgg_generate_url('add:object:discussion', ['guid' => $group->guid]),
 	'text' => elgg_echo('discussion:addtopic'),
 	'is_trusted' => true,
 ]);

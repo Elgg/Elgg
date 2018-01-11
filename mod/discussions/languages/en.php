@@ -10,13 +10,12 @@ return [
 
 	'discussion:topic:created' => 'The discussion topic was created.',
 	'discussion:topic:updated' => 'The discussion topic was updated.',
-	'discussion:topic:deleted' => 'Discussion topic has been deleted.',
+	'entity:delete:object:discussion:success' => 'Discussion topic has been deleted.',
 
 	'discussion:topic:notfound' => 'Discussion topic not found',
 	'discussion:error:notsaved' => 'Unable to save this topic',
 	'discussion:error:missing' => 'Both title and message are required fields',
 	'discussion:error:permissions' => 'You do not have permissions to perform this action',
-	'discussion:error:notdeleted' => 'Could not delete the discussion topic',
 
 	/**
 	 * River

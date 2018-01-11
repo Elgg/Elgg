@@ -49,7 +49,6 @@ if ($full) {
 	$params = [
 		'entity' => $topic,
 		'title' => false,
-		'handler' => 'discussion',
 	];
 
 	$params = $params + $vars;
@@ -84,7 +83,6 @@ if ($full) {
 
 	$params = [
 		'entity' => $topic,
-		'handler' => 'discussion',
 		'subtitle' => $subtitle,
 		'content' => elgg_get_excerpt($topic->description),
 		'icon' => $poster_icon,

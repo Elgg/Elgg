@@ -1,6 +1,15 @@
 <?php
 
-$guid = elgg_extract('guid', $vars);
+$username = elgg_extract('username', $vars);
+if ($username) {
+	$user = get_user_by_username($username);
+	$guid = $user->guid;
+} else {
+	// Backward compatibility
+	$guid = elgg_extract('guid', $vars);
+}
+
+elgg_entity_gatekeeper($guid);
 
 $target = get_entity($guid);
 
@@ -10,36 +19,20 @@ if ($target instanceof ElggGroup) {
 	// "discussion/owner/<guid>". Now that any entity can be used as a
 	// container, we use the standard "<content type>/group/<guid>" URL
 	// also with discussions.
-	forward("discussion/group/$guid", '301');
+	forward(elgg_generate_url('collection:object:discussion:group', [
+		'guid' => $guid,
+	]), '301');
 }
 
-elgg_set_page_owner_guid($guid);
-
-elgg_push_breadcrumb(elgg_echo('item:object:discussion'));
+elgg_push_collection_breadcrumbs('object', 'discussion', $target);
 
 elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
 $title = elgg_echo('item:object:discussion');
 
-$options = [
-	'type' => 'object',
-	'subtype' => 'discussion',
-	'limit' => max(20, elgg_get_config('default_limit')),
-	'order_by' => 'e.last_action desc',
-	'full_view' => false,
-	'no_results' => elgg_echo('discussion:none'),
-	'preload_owners' => true,
-];
-
-if ($target instanceof ElggUser) {
-	// Display all discussions started by the user regardless of
-	// the entity that is working as a container. See #4878.
-	$options['owner_guid'] = $guid;
-} else {
-	$options['container_guid'] = $guid;
-}
-
-$content = elgg_list_entities($options);
+$content = elgg_view('discussion/listing/owner', [
+	'entity' => $target,
+]);
 
 $params = [
 	'content' => $content,
