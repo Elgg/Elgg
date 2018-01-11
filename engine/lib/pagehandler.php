@@ -79,7 +79,7 @@ function elgg_generate_url($name, array $parameters = []) {
  *
  * @return string
  */
-function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subresource = null, $parameters = []) {
+function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subresource = null, array $parameters = []) {
 
 	$make_route_name = function ($type, $subtype) use ($resource, $subresource) {
 		$route_parts = [
@@ -97,48 +97,15 @@ function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subre
 		[$entity->type, null],
 	];
 
-	$route = false;
-	$route_name = '';
-
 	foreach ($pairs as $pair) {
 		$route_name = $make_route_name($pair[0], $pair[1]);
-		$route = _elgg_services()->routeCollection->get($route_name);
-		if ($route) {
-			break;
+		$params = _elgg_services()->router->resolveRouteParameters($route_name, $entity, $parameters);
+		if ($params !== false) {
+			return elgg_generate_url($route_name, $params);
 		}
 	}
 
-	if (!$route) {
-		return;
-	}
-
-	$requirements = $route->getRequirements();
-	$defaults = $route->getDefaults();
-
-	$props = array_merge(array_keys($requirements), array_keys($defaults));
-
-	foreach ($props as $prop) {
-		if (substr($prop, 0, 1) === '_') {
-			continue;
-		}
-
-		if (isset($parameters[$prop])) {
-			continue;
-		}
-
-		switch ($prop) {
-			case 'title' :
-			case 'name' :
-				$parameters[$prop] = elgg_get_friendly_title($entity->getDisplayName());
-				break;
-
-			default :
-				$parameters[$prop] = $entity->$prop;
-				break;
-		}
-	}
-
-	return elgg_generate_url($route_name, $parameters);
+	return '';
 }
 
 /**
@@ -299,12 +266,25 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 		}
 	}
 
+	$group_access = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
+		if ($entity instanceof ElggGroup) {
+			return elgg_group_gatekeeper(false, $entity->guid);
+		}
+
+		$container = $entity->getContainerEntity();
+		if ($container instanceof ElggGroup) {
+			return elgg_group_gatekeeper(false, $container->guid);
+		}
+
+		return true;
+	});
+
 	$hook_type = "{$entity->getType()}:{$entity->getSubtype()}";
 	$hook_params = [
 		'entity' => $entity,
 		'forward' => $forward,
 	];
-	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, true)) {
+	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, $group_access)) {
 		if ($forward) {
 			throw new \Elgg\EntityPermissionsException();
 		} else {

@@ -248,6 +248,7 @@ return array(
 	'item:user' => "Users",
 
 	'friends' => "Friends",
+	'collection:friends' => 'Friends\' %s',
 
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "You're not allowed to edit this user's avatar",

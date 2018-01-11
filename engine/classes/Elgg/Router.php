@@ -8,6 +8,7 @@ use Elgg\Router\Route;
 use Elgg\Router\RouteCollection;
 use Elgg\Router\UrlGenerator;
 use Elgg\Router\UrlMatcher;
+use ElggEntity;
 use InvalidParameterException;
 use RuntimeException;
 use SecurityException;
@@ -152,13 +153,14 @@ class Router {
 			try {
 				$parameters = $this->matcher->match($path);
 
-				$this->current_route = $this->routes->get($parameters['_route']);
-
 				$resource = elgg_extract('_resource', $parameters);
 				unset($parameters['_resource']);
 
 				$handler = elgg_extract('_handler', $parameters);
 				unset($parameters['_handler']);
+
+				$this->current_route = $this->routes->get($parameters['_route']);
+				$this->current_route->setMatchedParameters($parameters);
 
 				if ($handler) {
 					if (is_callable($handler)) {
@@ -192,6 +194,14 @@ class Router {
 		_elgg_services()->responseFactory->respond($response);
 
 		return headers_sent();
+	}
+
+	/**
+	 * Returns current route
+	 * @return Route
+	 */
+	public function getCurrentRoute() {
+		return $this->current_route;
 	}
 
 	/**
@@ -286,7 +296,7 @@ class Router {
 				if (array_key_exists($wildcard, $patterns)) {
 					$requirements[$wildcard] = $patterns[$wildcard];
 				} else {
-					$requirements[$wildcard] = '.+';
+					$requirements[$wildcard] = '.+?';
 				}
 			}
 
@@ -331,6 +341,54 @@ class Router {
 			elgg_log($exception->getMessage(), 'ERROR');
 			return '';
 		}
+	}
+
+	/**
+	 * Populates route parameters from entity properties
+	 *
+	 * @param string          $name       Route name
+	 * @param ElggEntity|null $entity     Entity
+	 * @param array 		  $parameters Preset parameters
+	 *
+	 * @return array|false
+	 */
+	public function resolveRouteParameters($name, ElggEntity $entity = null, array $parameters = []) {
+		$route = $this->routes->get($name);
+		if (!$route) {
+			return false;
+		}
+
+		$requirements = $route->getRequirements();
+		$defaults = $route->getDefaults();
+		$props = array_merge(array_keys($requirements), array_keys($defaults));
+
+		foreach ($props as $prop) {
+			if (substr($prop, 0, 1) === '_') {
+				continue;
+			}
+
+			if (isset($parameters[$prop])) {
+				continue;
+			}
+
+			if (!$entity) {
+				$parameters[$prop] = '';
+				continue;
+			}
+
+			switch ($prop) {
+				case 'title' :
+				case 'name' :
+					$parameters[$prop] = elgg_get_friendly_title($entity->getDisplayName());
+					break;
+
+				default :
+					$parameters[$prop] = $entity->$prop;
+					break;
+			}
+		}
+
+		return $parameters;
 	}
 
 	/**
