@@ -19,7 +19,7 @@ if (!$blog->delete()) {
 
 if ($container instanceof \ElggGroup) {
 	$forward_url = elgg_generate_url('collection:object:blog:group', [
-		'group_guid' => $container->guid,
+		'guid' => $container->guid,
 		'subpage' => 'all',
 	]);
 } else {

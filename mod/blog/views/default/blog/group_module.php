@@ -14,7 +14,7 @@ if (!$group->isToolEnabled('blog')) {
 
 $all_link = elgg_view('output/url', [
 	'href' => elgg_generate_url('collection:object:blog:group', [
-		'group_guid' => $group->guid,
+		'guid' => $group->guid,
 		'subpage' => 'all',
 	]),
 	'text' => elgg_echo('link:view:all'),

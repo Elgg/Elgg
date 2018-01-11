@@ -10,4 +10,7 @@ if ($entity->status == 'published') {
 }
 $icon = elgg_view_icon('warning');
 $status_text = $icon . elgg_echo("status:{$entity->status}");
-echo "<span class='elgg-listing-blog-status'>$status_text</span>";
+
+echo elgg_format_element('span', [
+	'class' => 'elgg-listing-blog-status',
+], $status_text);
