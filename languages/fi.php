@@ -20,14 +20,14 @@ return array(
 	'logout' => "Kirjaudu ulos",
 	'logoutok' => "Olet kirjautunut ulos.",
 	'logouterror' => "Uloskirjautuminen epäonnistui. Yritä uudelleen.",
-	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
-	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
+	'session_expired' => "Sessiosi on vanhentunut. <a href='javascript:location.reload(true)'>Lataa sivu uudelleen</a> kirjautuaksesi sisään.",
+	'session_changed_user' => "Olet kirjautunut toisena käyttäjänä, joten sinun täytyy <a href='javascript:location.reload(true)'>ladata sivu uudelleen</a>.",
 
 	'loggedinrequired' => "Tämän sivun näkyminen edellyttää, että olet kirjautuneena sisään.",
 	'adminrequired' => "Tämän sivun näkyminen edellyttää ylläpitäjän oikeuksia.",
 	'membershiprequired' => "Sinun pitää olla ryhmän jäsen nähdäksesi tämän sivun.",
 	'limited_access' => "Sinulla ei ole oikeuksia tämän sivun tarkasteluun.",
-	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
+	'invalid_request_signature' => "Osoite, johon koitat päästä käsiksi, on virheellinen tai vanhentunut.",
 
 /**
  * Errors
@@ -59,7 +59,10 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Manifestissa on virheellinen riippuvuustyyppi "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Manifestissa on virheellinen "tarjoaa" tyyppi "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Virheellinen %s riippuvuus "%s" pluginissa %s. Pluginit eivät voi vaatia toimintoa tai olla konfliktissa toiminnon kanssa, jonka ne itse tarjoavat!',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Konfliktissa pluginin %s kanssa.',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Tiedosto "elgg-plugin.php" löytyi, mutta sitä ei pystytä lukemaan,',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Ei voida lisätä toiminnallisuutta %s pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Ei voida avata näkymähakemistoa pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
 	'ElggPlugin:Exception:NoID' => 'Ei löydetty ID:tä pluginille guid %s!',
 	'PluginException:NoPluginName' => "Liitännäisen nimeä ei löytynyt",
@@ -67,6 +70,8 @@ return array(
 	'PluginException:NoAvailableParser' => 'Ei löydetty käsittelijää infotiedoston API-versiolle %s pluginissa %s.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Pakollinen '%s' attribuutti puuttuu pluginin %s infotiedostosta.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s on virheellinen liitännäinen, joten se poistettiin käytöstä.',
+	'ElggPlugin:activate:BadConfigFormat' => 'Tiedoston "elgg-plugin.php" sisältö on virheellinen.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Luettiin konfiguraatio tiedostosta "elgg-plugin.php".',
 
 	'ElggPlugin:Dependencies:Requires' => 'Vaatimus',
 	'ElggPlugin:Dependencies:Suggests' => 'Suositus',
@@ -131,6 +136,32 @@ return array(
 	'upload:error:extension' => 'Tiedoston lisääminen ei onnistu.',
 	'upload:error:unknown' => 'Tiedoston lisääminen epäonnistui.',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Ylläpitäjä',
+	'table_columns:fromView:banned' => 'Bannattu',
+	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:excerpt' => 'Kuvaus',
+	'table_columns:fromView:link' => 'Nimi/Otsikko',
+	'table_columns:fromView:icon' => 'Kuvake',
+	'table_columns:fromView:item' => 'Kohde',
+	'table_columns:fromView:language' => 'Kieli',
+	'table_columns:fromView:owner' => 'Omistaja',
+	'table_columns:fromView:time_created' => 'Luomisaika',
+	'table_columns:fromView:time_updated' => 'Päivitysaika',
+	'table_columns:fromView:user' => 'Käyttäjä',
+
+	'table_columns:fromProperty:description' => 'Kuvaus',
+	'table_columns:fromProperty:email' => 'Sähköposti',
+	'table_columns:fromProperty:name' => 'Nimi',
+	'table_columns:fromProperty:type' => 'Tyyppi',
+	'table_columns:fromProperty:username' => 'Käyttäjätunnus',
+
+	'table_columns:fromMethod:getSubtype' => 'Alatyyppi',
+	'table_columns:fromMethod:getDisplayName' => 'Nimi/Otsikko',
+	'table_columns:fromMethod:getMimeType' => 'MIME-tyyppi',
+	'table_columns:fromMethod:getSimpleType' => 'Tyyppi',
 
 /**
  * User details
@@ -143,7 +174,7 @@ return array(
 	'password' => "Salasana",
 	'passwordagain' => "Salasana (uudelleen)",
 	'admin_option' => "Tee tästä käyttäjästä ylläpitäjä?",
-	'autogen_password_option' => "Automatically generate a secure password?",
+	'autogen_password_option' => "Luo salasana automaattisesti?",
 
 /**
  * Access
@@ -337,8 +368,8 @@ return array(
 	'river:delete' => 'Poista tämä kohde listasta',
 	'river:delete:success' => 'Kohde poistettu',
 	'river:delete:fail' => 'Kohteen poistaminen epäonnistui',
-	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
-	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
+	'river:delete:lack_permission' => 'Sinulla ei ole oikeuksia poistaa tätä kohdetta',
+	'river:can_delete:invaliduser' => 'Ei pystytty tarkistamaan oikeuksia poistamiseen, koska käyttäjää ID:llä [%s] ei löytynyt.',
 	'river:subject:invalid_subject' => 'Virheellinen käyttäjä',
 	'activity:owner' => 'Näytä toiminta',
 
@@ -481,9 +512,9 @@ return array(
 	'admin:cron:period' => 'Cron-aikaväli',
 	'admin:cron:friendly' => 'Suoritettu viimeksi',
 	'admin:cron:date' => 'Päivä ja aika',
-	'admin:cron:msg' => 'Message',
-	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
-	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
+	'admin:cron:msg' => 'Viesti',
+	'admin:cron:started' => '%s ajettava Cron aloitettu %s',
+	'admin:cron:complete' => '%s ajettava Cron suoritettu %s',
 
 	'admin:appearance' => 'Ulkoasu',
 	'admin:administer_utilities' => 'Apuohjelmat',
@@ -642,6 +673,7 @@ kolmeen osioon:
 	'admin:plugins:warning:invalid' => 'Pluginissa on virhe: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Voit yrittää etsiä apua <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elggin dokumentaatiosta</a>.',
 	'admin:plugins:cannot_activate' => 'ei voi aktivoida',
+	'admin:plugins:cannot_deactivate' => 'ei voida aktivoida',
 	'admin:plugins:already:active' => 'Valitut liitännäiset ovat jo aktiivisia',
 	'admin:plugins:already:inactive' => 'Valitut liitännäiset ovat jo deaktivoituja',
 
@@ -693,6 +725,11 @@ kolmeen osioon:
 	'admin:server:label:post_max_size' => 'POST-datan maksimikoko',
 	'admin:server:label:upload_max_filesize' => 'Palvelimelle lähetettävien tiedostojen maksimikoko',
 	'admin:server:warning:post_max_too_small' => '(Huom: post_max_size pitää olla isompi kuin tämä.)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcachea ei ole otettu käyttöön palvelimella, tai sitä ei ole konfiguroitu Elggiin.
+		Memcachen käyttö on suositeltua, koska se parantaa suorituskykyä.
+',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
@@ -752,6 +789,10 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'usersettings:statistics' => "Tilastotietosi",
 	'usersettings:statistics:opt:description' => "Katsele tilastotietoja käyttäjistä ja sivuston objekteista.",
 	'usersettings:statistics:opt:linktext' => "Tilin tilastotiedot",
+	
+	'usersettings:statistics:login_history' => "Kirjautumishistoria",
+	'usersettings:statistics:login_history:date' => "Päivämäärä",
+	'usersettings:statistics:login_history:ip' => "IP-osoite",
 
 	'usersettings:user' => "Käyttäjän %s asetukset",
 	'usersettings:user:opt:description' => "Voit muuttaa käyttäjäkohtaisia asetuksia.",
@@ -1113,10 +1154,11 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:simplecache:description' => "Yksinkertainen välimuisti nopeuttaa sivustoa tallentamalla muistiin staattista sisältöä kuten CSS ja JavaScript-tiedostoja.",
 	'installation:simplecache:label' => "Käytä yksinkertaista välimuistia (suositus)",
 
-	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
-	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
-	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
-	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+	'installation:cache_symlink:description' => "Symbolinen linkki sallii palvelimen tarjota staattisia resursseja suoraan levyltä sen sijaan, että ne tarjottaisiin Elggin kautta. Tämä parantaa huomattavasti suorituskykyä ja vähentää palvelimen kuormaa.",
+	'installation:cache_symlink:label' => "Käytä symbolista linkkiä välimuistin sisältävään hakemistoon (suositus).",
+	'installation:cache_symlink:warning' => "Symbolinen linkki on lisätty. Sen voi tarvittaessa ottaa pois käytöstä poistamalla linkin palvelimelta.",
+	'installation:cache_symlink:paths' => 'Symbolisen linkin tulee linkittää polku <i>%s</i> hakemistoon <i>%s</i>',
+	'installation:cache_symlink:error' => "Käytössäsi oleva palvelin ei salli symbolisen linkin luomista automaattisesti. Lue dokumentaatiosta, miten voit luoda linkin manuaalisesti.",
 
 	'installation:minify:description' => "Välimuisti voi parantaa suorituskykyä myös pakkamalla JavaScript- and CSS-tiedostot. (Tämä vaatii, että välimuisti on käytössä.)",
 	'installation:minify_js:label' => "Pakkaa JavaScript (suositus)",
@@ -1169,18 +1211,9 @@ Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/ad
 	'upgrade:finished' => 'Päivitys on valmis',
 	'upgrade:finished_with_errors' => '<p>Päivityksen aikana ilmeni virheitä. Päivitä sivu ja yritä ajaa päivitys uudelleen.<br /></p><p>Jos virheet toistuvat, yritä selvittää niiden syy palvelimen virhelokeista. Tarvittaessa voit pyytää apua Elggin yhteisön <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">teknisen tuen ryhmästä</a>.</p>',
 
-	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'Kommenttien päivitys',
-	'upgrade:comment:create_failed' => 'Kommentin %s päivittäminen epäonnistui.',
-	'admin:upgrades:commentaccess' => 'Kommenttien lukuoikeuden päivitys',
-
-	// Strings specific for the datadir upgrade
-	'admin:upgrades:datadirs' => 'Datahakemiston päivitys',
-
-	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Keskustelujen päivitys',
-	'discussion:upgrade:replies:create_failed' => 'Keskusteluviestin %s päivittäminen epäonnistui.',
-
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	
 /**
  * Welcome
  */
@@ -1297,7 +1330,7 @@ Tähän viestiin ei voi vastata.",
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'Tätä kohdetta ei voida näyttää oikein. Tämä voi johtua puuttuvasta liitännäisestä.',
 
-	'entity:delete:item' => 'Item',
+	'entity:delete:item' => 'Kohde',
 	'entity:delete:item_not_found' => 'Kohdetta ei löytynyt.',
 	'entity:delete:permission_denied' => 'Sinulla ei ole oikeuksia tämän kohteen poistamiseen.',
 	'entity:delete:success' => 'Poistettiin %s',

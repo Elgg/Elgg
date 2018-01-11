@@ -6,6 +6,7 @@ return array(
 	'admin:develop_tools:inspect' => 'Prüfen',
 	'admin:inspect' => 'Prüfen',
 	'admin:develop_tools:unit_tests' => 'Modultests',
+	'admin:develop_tools:entity_explorer' => 'Entitäten-Explorer',
 	'admin:developers' => 'Entwickler',
 	'admin:developers:settings' => 'Einstellungen',
 
@@ -39,6 +40,16 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:debug:warning' => 'Warnung',
 	'developers:debug:notice' => 'Hinweis',
 	'developers:debug:info' => 'Info',
+	
+	// entity explorer
+	'developers:entity_explorer:help' => 'Detailinformationen einer Entität anzeigen und (optional) die Anwendung von Datenbank-Operationen auf den Datenbankeintrag der Entität.',
+	'developers:entity_explorer:guid:label' => 'Gebe die GUID der Entität ein, für die Detailinformationen angezeigt werden sollen:',
+	'developers:entity_explorer:info' => 'Detailinformationen',
+	'developers:entity_explorer:info:attributes' => 'Attribute',
+	'developers:entity_explorer:info:metadata' => 'Metadaten',
+	'developers:entity_explorer:info:relationships' => 'Beziehungen',
+	'developers:entity_explorer:info:private_settings' => 'Entitäts-spezifische Konfigurations-Daten',
+	'developers:entity_explorer:delete_entity' => 'Entität löschen',
 	
 	// inspection
 	'developers:inspect:help' => 'Konfiguration des Elgg-Frameworks prüfen.',

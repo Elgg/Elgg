@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "Hanki sovelluskirjanmerkki",
 	'bookmarks:bookmarklet:group' => "Hanki ryhmän sovelluskirjanmerkki",
 	'bookmarks:inbox' => "Bookmarks inbox",
-	'bookmarks:with' => "Share with",
-	'bookmarks:new' => "Uusi kirjanmerkki",
 	'bookmarks:address' => "Kirjanmerkin osoite",
 	'bookmarks:none' => 'Ei kirjanmerkkejä',
 
@@ -37,10 +35,6 @@ Lue ja kommentoi kirjanmerkkiä:
 
 	'bookmarks:numbertodisplay' => 'Näytettävien kohteiden määrä',
 
-	'bookmarks:shared' => "Bookmarked",
-	'bookmarks:visit' => "Visit resource",
-	'bookmarks:recent' => "Viimeisimmät kirjanmerkit",
-
 	'river:create:object:bookmarks' => '%s lisäsi kirjanmerkin kohteelle %s',
 	'river:comment:object:bookmarks' => '%s kommentoi kirjanmerkkiä %s',
 	'bookmarks:river:annotate' => 'kommentin kirjanmerkille',
@@ -58,7 +52,7 @@ Lue ja kommentoi kirjanmerkkiä:
 	'bookmarks:widget:description' => "Näytä viimeisimmät kirjanmerkkisi.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Sovelluskirjanmerkki on selaimen kirjanmerkkipalkkiin tallennettava painike. Sen avulla voit tallentaa nettisivuja ja halutessasi myös jakaa ne ystäviesi kanssa. Käyttääksesi toimintoa, raahaa painike selaimesi kirjanmerkkiriville:",
+			"Sovelluskirjanmerkki on painike, jonka avulla voit helposti tallentaa nettisivuja kirjanmerkkeihisi. Tallenna painike selaimeesi raahaamalla se selaimen kirjanmerkkeihin.",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Jos käytät Internet Explorer -selainta, klikkaa painiketta hiiren oikealla painikkeella, valitse \"Lisää Suosikit-kansioon...\" ja lisää painike suosikkeihisi.",

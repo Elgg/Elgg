@@ -3,7 +3,7 @@ return array(
 	'admin:administer_utilities:diagnostics' => 'Diagnostica di sistema',
 	'diagnostics' => 'Diagnostica di sistema',
 	'diagnostics:report' => 'Rapporto di diagnostica',
-	'diagnostics:description' => 'Il rapporto di diagnostica seguente può essere utile per diagnosticare problemi con Elgg. Gli sviluppatori di elg possono richiederlo come allegato alla segnalazione di bug.',
+	'diagnostics:description' => 'Il seguente rapporto di diagnostica può essere utile per diagnosticare problemi con Elgg. Gli sviluppatori di Elgg potrebbero richiederlo come allegato a seguito di una segnalazione di bug.',
 	'diagnostics:header' => '========================================================================
 Rapporto di diagnostica Elgg
 Generato %s da %s
@@ -12,7 +12,7 @@ Generato %s da %s
 ',
 	'diagnostics:report:basic' => '
 
-Elgg rlascio %s, versione %s
+Elgg versione %s, rilasciata il %s
 
 ------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
@@ -25,12 +25,12 @@ Plugin installati e dettagli:
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:md5' => '
-Files installati e checksums:
+Files installati e loro checksums:
 
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:globals' => '
-Variabili Globali:
+Variabili globali:
 
 %s
 ------------------------------------------------------------------------',

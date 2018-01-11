@@ -132,6 +132,7 @@ return array(
 	'groups:addedtogroup' => 'Engadiuse o usuario ao grupo.',
 	'groups:joinrequestnotmade' => 'Non foi posíbel solicitar unirse ao grupo.',
 	'groups:joinrequestmade' => 'Solicitouse unirse ao grupo.',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Uniuse ao grupo.',
 	'groups:left' => 'Deixou o grupo.',
 	'groups:notowner' => 'Non é o administrador do grupo.',

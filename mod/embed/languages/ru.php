@@ -4,7 +4,7 @@ return array(
 	'embed:media' => 'Вставить',
 	'embed:instructions' => 'Для вставки нажмите на файл',
 	'embed:upload' => 'Загрузить:',
-	'embed:upload_type' => 'Upload type: ',
+	'embed:upload_type' => 'Тип загрузки: ',
 
 	// messages
 	'embed:no_upload_content' => 'Не загружен контент!',

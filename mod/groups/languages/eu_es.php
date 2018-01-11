@@ -132,6 +132,7 @@ return array(
 	'groups:addedtogroup' => 'Arrakastaz gehitu da erabiltzailea taldera',
 	'groups:joinrequestnotmade' => 'Ezin da taldera batzeko eskaera egin',
 	'groups:joinrequestmade' => 'Taldera batzeko eskaera eginda',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Arrakastaz batu da taldera!',
 	'groups:left' => 'Arrakastaz utzi da taldea',
 	'groups:notowner' => 'Barkatu, ez zara talde honetako jabea.',

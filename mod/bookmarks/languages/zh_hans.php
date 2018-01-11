@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "获取书签小工具",
 	'bookmarks:bookmarklet:group' => "获取群组书签小工具",
 	'bookmarks:inbox' => "书签收件箱",
-	'bookmarks:with' => "共享给",
-	'bookmarks:new' => "新书签",
 	'bookmarks:address' => "书签地址",
 	'bookmarks:none' => '没有书签',
 
@@ -37,10 +35,6 @@ return array(
 
 	'bookmarks:numbertodisplay' => '要显示的书签个数',
 
-	'bookmarks:shared' => "已添加书签",
-	'bookmarks:visit' => "访问资源",
-	'bookmarks:recent' => "近期的书签",
-
 	'river:create:object:bookmarks' => '%s 将 %s 添加为书签。',
 	'river:comment:object:bookmarks' => '%s 评论了书签 %s',
 	'bookmarks:river:annotate' => '此书签的一条评论',
@@ -58,7 +52,7 @@ return array(
 	'bookmarks:widget:description' => "显示你最近的书签",
 
 	'bookmarks:bookmarklet:description' =>
-			"书签小工具是你添加到浏览器链接栏的一种特殊按钮，可以让你将在网络上发现的资源保存到你的书签里，也可以与朋友分享。想要设置书签小工具，将下面的按钮拖动到你的浏览器链接栏。",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"如果你使用IE浏览器，你需要右击书签小工具图标，选择'添加到收藏'，然后选择链接栏。",

@@ -34,7 +34,7 @@ return array(
 	'discussion:reply:missing' => 'Et voi tallentaa tyhjää vastausta',
 	'discussion:reply:topic_not_found' => 'Keskustelua ei löytynyt',
 	'discussion:reply:error:cannot_edit' => 'Sinulla ei ole oikeuksia tämän vastauksen muokkaamiseen',
-	'discussion:reply:error:permissions' => 'You are not allowed to reply to this topic',
+	'discussion:reply:error:permissions' => 'Sinulla ei ole oikeutta vastata tähän keskusteluun.',
 
 	/**
 	 * River

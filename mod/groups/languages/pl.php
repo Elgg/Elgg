@@ -132,6 +132,7 @@ return array(
 	'groups:addedtogroup' => 'Użytkownik został pomyślnie dodany do tej grupy.',
 	'groups:joinrequestnotmade' => 'Dołączenie do grupy nie powiodło się.',
 	'groups:joinrequestmade' => 'Prośba o dołączenie do grupy wysłana pomyślnie',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Pomyślnie dołączyłeś do grupy!',
 	'groups:left' => 'Pomyślnie opuściłeś grupę',
 	'groups:notowner' => 'Niestety, nie jesteś właścicielem tej grupy.',

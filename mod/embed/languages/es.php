@@ -10,5 +10,5 @@ return array(
 	'embed:no_upload_content' => 'No hay contenidos subidos',
 	'embed:no_section_content' => 'No hay elementos encontrados.',
 
-	'embed:no_sections' => 'No se han encontrado plugins de contenido incrustado admitido. Pregunte al administrador del sitio para habilitar un plugin con el soporte de contenido incrustado apropiado.',
+	'embed:no_sections' => 'No se han encontrado plugins de contenido incrustado. Pregunte al administrador del sitio para habilitar un plugin con soporte de contenido incrustado.',
 );

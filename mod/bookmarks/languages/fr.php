@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "Installer le \"bookmarklet\"",
 	'bookmarks:bookmarklet:group' => "Installer le \"bookmarklet\" du groupe",
 	'bookmarks:inbox' => "Boîte de réception des signets",
-	'bookmarks:with' => "Partager avec",
-	'bookmarks:new' => "Un nouveau signet",
 	'bookmarks:address' => "Adresse web (URL) de la ressource à ajouter à vos signets",
 	'bookmarks:none' => 'Aucun signet',
 
@@ -37,10 +35,6 @@ Voir et commenter ce signet:
 
 	'bookmarks:numbertodisplay' => 'Nombre de signets à afficher',
 
-	'bookmarks:shared' => "Mis en signet",
-	'bookmarks:visit' => "Visiter la ressource",
-	'bookmarks:recent' => "Signets récents",
-
 	'river:create:object:bookmarks' => '%s a mis en signet %s',
 	'river:comment:object:bookmarks' => '%s a commenté le signet %s',
 	'bookmarks:river:annotate' => 'un commentaire sur ce signet',
@@ -58,7 +52,7 @@ Voir et commenter ce signet:
 	'bookmarks:widget:description' => "Ce widget affiche vos derniers signets.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Le \"bookmarklet\" vous permet de partager ce que vous trouvez sur le web avec vos contacts, vos groupes, ou pour vous-même. Pour l'utiliser, glissez simplement le bouton ci-dessous dans la barre de liens de votre navigateur.",
+			"Un \"bookmarklet\" est un type de bouton ou de lien spécial que vous enregistrez dans la barre de liens de votre navigateur. Il vous permet d'enregistrer rapidement tout type de ressource que vous trouvez sur internet dans vos signets. Pour le mettre en place, faites glisser le bouton ci-dessous dans la barre de liens de votre navigateur :",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Si vous utilisez Internet Explorer, faites un clic droit sur le bouton et ajoutez-le dans vos favoris, puis dans votre barre de liens.",

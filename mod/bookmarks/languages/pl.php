@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "Pobierz skryptozakładkę",
 	'bookmarks:bookmarklet:group' => "Pobierz skryptozakładkę grupy",
 	'bookmarks:inbox' => "Skrzynka odbiorcza zakładek",
-	'bookmarks:with' => "Podziel się z",
-	'bookmarks:new' => "Dodaj nową zakładkę",
 	'bookmarks:address' => "Adres zakładki",
 	'bookmarks:none' => 'Brak zakładek',
 
@@ -37,10 +35,6 @@ Zobacz i skomentuj nową zakładkę:
 
 	'bookmarks:numbertodisplay' => 'Ilość zakładek do wyświetlenia',
 
-	'bookmarks:shared' => "Dodano zakładkę",
-	'bookmarks:visit' => "Odwiedź zasób",
-	'bookmarks:recent' => "Najnowsze zakładki",
-
 	'river:create:object:bookmarks' => '%s dodał zakładkę %s',
 	'river:comment:object:bookmarks' => '%s skomentował zakładkę %s',
 	'bookmarks:river:annotate' => 'komentarz dotyczący zakładki',
@@ -58,7 +52,7 @@ Zobacz i skomentuj nową zakładkę:
 	'bookmarks:widget:description' => "Wyświetl swoje ostatnie zakładki.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Skryptozakładka jest specjalnym rodzajem przycisku na pasku zakładek twojej przeglądarki. Pozwala ona zapisać dowolny zasób, który znajdziesz w sieci, w twoich zakładkach, a także udostępnić go swoim znajomym. Aby ją użyć, przeciągnij przycisk poniżej na pasek zakładek twojej przeglądarki:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Jeśli korzystasz z programu Internet Explorer, będziesz musiał kliknąć prawym przyciskiem myszy na ikonę skryptozakładki, a naspępnie kliknąć 'dodaj do ulubionych'.",

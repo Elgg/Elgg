@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "Добавить закладки",
 	'bookmarks:bookmarklet:group' => "Добавить закладки группы",
 	'bookmarks:inbox' => "Ваши закладки",
-	'bookmarks:with' => "Поделиться",
-	'bookmarks:new' => "Новая закладка",
 	'bookmarks:address' => "Адрес сайта",
 	'bookmarks:none' => '---',
 
@@ -37,10 +35,6 @@ return array(
 
 	'bookmarks:numbertodisplay' => 'Число отображаемых закладок',
 
-	'bookmarks:shared' => "Закладки",
-	'bookmarks:visit' => "Зайти на сайт",
-	'bookmarks:recent' => "Recent bookmarks",
-
 	'river:create:object:bookmarks' => 'Пользователь %s добавил закладку',
 	'river:comment:object:bookmarks' => 'Пользователь %s оставил комментарий к закладке %s',
 	'bookmarks:river:annotate' => 'Пользователь %s сделал',
@@ -58,7 +52,7 @@ return array(
 	'bookmarks:widget:description' => "Этот элемент показывает Ваши закладки.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Закладки позволяют добавлять адреса понравившихся сайтов, советовать друзьям или просто отмечать для себя. Чтобы использовать элемент, перетащите кнопку в адресную строку Вашего браузера:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Если Вы используете Internet Explorer, Вам нужно нажать правой кнопкой мыши на значок закладок, выбрать 'Добавить в избранное', а затем на адресную строку.",

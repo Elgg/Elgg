@@ -94,7 +94,7 @@ return array(
 	'file:uploadfailed' => "Извините, нисмо могли да сачувамо ваш фајл.",
 	'file:downloadfailed' => "Извинте,  овај фајл није доступан тренутно.",
 	'file:deletefailed' => "Нисмо могли да обришемо ваш фајл.",
-	'file:noaccess' => "Немте дозволе да мењате овај фајл",
-	'file:cannotload' => "There was an error uploading the file",
+	'file:noaccess' => "Немате дозволе да мењате овај фајл",
+	'file:cannotload' => "Дошло је до грешке приликом слања фајла",
 	'file:nofile' => "Морате да означите фајл",
 );

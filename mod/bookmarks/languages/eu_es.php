@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "Laster-markatzailea lortu",
 	'bookmarks:bookmarklet:group' => "Talde laster-marka lortu",
 	'bookmarks:inbox' => "Laster-marken sarrera-ontzia",
-	'bookmarks:with' => "Honekin partekatu",
-	'bookmarks:new' => "Laster-marka berria",
 	'bookmarks:address' => "Laster-markaren helbidea",
 	'bookmarks:none' => 'Ez dago laster-markarik',
 
@@ -37,10 +35,6 @@ Ikusi eta iruzkina idatzi laster-markan:
 
 	'bookmarks:numbertodisplay' => 'Erakutsiko den laster-marka kopurua',
 
-	'bookmarks:shared' => "Laster-marka eginda",
-	'bookmarks:visit' => "Baliabidea bisitatu",
-	'bookmarks:recent' => "Azken laster-markak",
-
 	'river:create:object:bookmarks' => '%s-ek %s laster-marka egin du',
 	'river:comment:object:bookmarks' => '%s-ek %s laster-markan iruzkina idatzi du',
 	'bookmarks:river:annotate' => 'iruzkin bat laster-marka honetan',
@@ -58,7 +52,7 @@ Ikusi eta iruzkina idatzi laster-markan:
 	'bookmarks:widget:description' => "Zure azken laster-markak erakutsi.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Laster-markatzailea zure nabigatzaileko url barran gordetzen den botoi berezia da. Honekin webean aurkitzen duzun edozein baliabide zure laster-markan gordetzea ahalbidetzen du eta zure lagunekin partekatu, hau aukerazkoa izanik. Hau konfiguratzeko, arrastratu beheko botoia zure nabigatzailearen url barran:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Internet Explorer erabiltzen ari bazara, laster-markatzaile ikonoan eskuineko botoiarekin klik egin beharko duzu, \"gehitu gogokoetara\" aukeratu eta ondoren url barra.",
