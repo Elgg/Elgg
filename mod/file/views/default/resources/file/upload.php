@@ -5,8 +5,6 @@
  * @package ElggFile
  */
 
-elgg_load_library('elgg:file');
-
 $owner = elgg_get_page_owner_entity();
 
 elgg_gatekeeper();

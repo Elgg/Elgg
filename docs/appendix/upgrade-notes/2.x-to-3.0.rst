@@ -527,6 +527,7 @@ Removed libraries
  * ``elgg:bookmarks``
  * ``elgg:discussion``
  * ``elgg:pages``
+ * ``elgg:file``
 
 Removed pagehandling
 --------------------

@@ -5,8 +5,6 @@
  * @package ElggFile
  */
 
-elgg_load_library('elgg:file');
-
 elgg_gatekeeper();
 
 $file_guid = (int) elgg_extract('guid', $vars);
