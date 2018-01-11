@@ -20,6 +20,7 @@ The global ``$CONFIG`` is now a proxy for Elgg's configuration container, and mo
 Removed views
 -------------
 
+ * ``forms/account/settings``: usersettings extension can now extend the view ``forms/usersettings/save``
  * ``forms/admin/site/advanced/system``
  * ``resources/file/download``
  * ``output/checkboxes``: use ``output/tags`` if you want the same behaviour

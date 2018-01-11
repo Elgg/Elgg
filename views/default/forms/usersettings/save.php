@@ -2,15 +2,13 @@
 /**
  * User account settings.
  *
- * Plugins should extend "forms/account/settings" to add to the settings.
+ * Plugins should extend this form to add to the settings.
  */
 
 $user = elgg_get_page_owner_entity();
 if (!$user instanceof ElggUser) {
 	return;
 }
-
-echo elgg_view('forms/account/settings', $vars);
 
 if ($user) {
 	// we need to include the user GUID so that admins can edit the settings of other users

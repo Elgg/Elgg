@@ -474,12 +474,12 @@ function _elgg_user_settings_init() {
 	elgg_register_action("usersettings/save");
 
 	// extend the account settings form
-	elgg_extend_view('forms/account/settings', 'core/settings/account/username', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/name', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/password', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/email', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/language', 100);
-	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
 }
 
 /**

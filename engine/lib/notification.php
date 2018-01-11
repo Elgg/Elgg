@@ -353,7 +353,7 @@ function _elgg_notifications_init() {
 	elgg_register_plugin_hook_handler('prepare', 'system:email', '_elgg_notifications_smtp_thread_headers');
 
 	// add ability to set personal notification method
-	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/notifications');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
 }
 
