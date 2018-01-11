@@ -20,7 +20,7 @@ echo elgg_view_field([
 	'name' => 'language',
 	'#label' => elgg_echo('installation:language'),
 	'value' => elgg_get_config('language'),
-	'options_values' => get_installed_translations(),
+	'options_values' => get_installed_translations(true),
 ]);
 
 echo elgg_view_field([

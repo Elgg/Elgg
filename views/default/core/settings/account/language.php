@@ -17,8 +17,8 @@ $content = elgg_view_field([
 	'#type' => 'select',
 	'name' => 'language',
 	'value' => $user->language,
-	'options_values' => get_installed_translations(),
+	'options_values' => get_installed_translations(true),
 	'#label' => elgg_echo('user:language:label'),
-		]);
+]);
 
 echo elgg_view_module('info', $title, $content);

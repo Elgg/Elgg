@@ -241,7 +241,7 @@ class Application {
 			}
 
 			if (!$config->i18n_loaded_from_cache) {
-				$this->_services->translator->registerPluginTranslations(Paths::project());
+				$this->_services->translator->registerTranslations(Paths::project() . 'languages');
 			}
 
 			// This is root directory start.php
