@@ -7,7 +7,7 @@
 
 $widget = elgg_extract('widget', $vars);
 if (!$widget instanceof ElggWidget) {
-    return;
+	return;
 }
 
 $additional_class = preg_replace('/[^a-z0-9-]/i', '-', "elgg-form-widgets-save-{$widget->handler}");

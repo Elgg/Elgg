@@ -48,7 +48,6 @@ if ($value) {
 		$value_date = $dt->format($format);
 		$value_timestamp = $dt->getTimestamp();
 	} catch (DataFormatException $ex) {
-
 	}
 }
 
