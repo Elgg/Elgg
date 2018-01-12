@@ -7,8 +7,10 @@
  * @uses $vars['type']      The item type or ""
  */
 
-$item = $vars['item'];
-/* @var ElggEntity $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggEntity) {
+	return;
+}
 
 echo elgg_view('output/url', [
 	'href' => $item->getURL(),

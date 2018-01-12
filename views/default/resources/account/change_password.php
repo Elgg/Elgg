@@ -6,9 +6,7 @@
  * @subpackage Registration
  */
 
-if (elgg_is_logged_in()) {
-	forward();
-}
+elgg_gatekeeper();
 
 elgg_signed_request_gatekeeper();
 
@@ -19,8 +17,7 @@ $user = get_user($user_guid);
 
 // don't check code here to avoid automated attacks
 if (!$user instanceof ElggUser) {
-	register_error(elgg_echo('user:resetpassword:unknown_user'));
-	forward();
+	throw new \Elgg\EntityNotFoundException(elgg_echo('user:resetpassword:unknown_user'));
 }
 
 $title = elgg_echo('changepassword');

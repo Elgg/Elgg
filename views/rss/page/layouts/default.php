@@ -2,4 +2,4 @@
 /**
  * RSS layout shell
  */
-echo $vars['content'];
+echo elgg_extract('content', $vars);

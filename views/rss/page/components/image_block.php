@@ -4,4 +4,4 @@
  *
  * Only display the body
  */
-echo $vars['body'];
+echo elgg_extract('body', $vars, '');

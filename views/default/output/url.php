@@ -52,7 +52,7 @@ if (isset($vars['text'])) {
 	if (elgg_extract('encode_text', $vars, false)) {
 		$text = htmlspecialchars($vars['text'], ENT_QUOTES, 'UTF-8', false);
 	} else {
-		$text = $vars['text'];
+		$text = elgg_extract('text', $vars);
 	}
 	unset($vars['text']);
 } else {
@@ -89,7 +89,7 @@ if ($url) {
 }
 
 if (!isset($vars['title']) && isset($vars['data-confirm'])) {
-	$vars['title'] = $vars['data-confirm'];
+	$vars['title'] = elgg_extract('data-confirm', $vars);
 }
 
 unset($vars['is_action']);

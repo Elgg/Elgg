@@ -12,8 +12,10 @@
  * @uses $vars['link_class'] Optional CSS class for the link
  */
 
-$entity = $vars['entity'];
-/* @var ElggEntity $entity */
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
+}
 
 $icon_sizes = elgg_get_icon_sizes($entity->type, $entity->getSubtype());
 // Get size
@@ -34,7 +36,7 @@ $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8', false);
 
 $url = $entity->getURL();
 if (isset($vars['href'])) {
-	$url = $vars['href'];
+	$url = elgg_extract('href', $vars);
 }
 
 if (!isset($vars['width'])) {
@@ -54,11 +56,11 @@ if (!empty($class)) {
 }
 
 if (!empty($vars['width'])) {
-	$img_params['width'] = $vars['width'];
+	$img_params['width'] = elgg_extract('width', $vars);
 }
 
 if (!empty($vars['height'])) {
-	$img_params['height'] = $vars['height'];
+	$img_params['height'] = elgg_extract('height', $vars);
 }
 
 $img = elgg_view('output/img', $img_params);

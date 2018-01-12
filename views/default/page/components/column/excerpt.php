@@ -8,11 +8,13 @@
  * @uses $vars['length']    The excerpt length
  */
 
-$item = $vars['item'];
-/* @var ElggEntity $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggEntity) {
+	return;
+}
 
 $length = elgg_extract('length', $vars, 250);
 
 $description = $item->description;
 
-echo elgg_get_excerpt($description, $excerpt_length);
+echo elgg_get_excerpt($description, $length);

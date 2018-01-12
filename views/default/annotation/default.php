@@ -7,7 +7,7 @@
  * @uses $vars['annotation']
  */
 
-$annotation = $vars['annotation'];
+$annotation = elgg_extract('annotation', $vars);
 
 $owner = get_entity($annotation->owner_guid);
 if (!$owner) {

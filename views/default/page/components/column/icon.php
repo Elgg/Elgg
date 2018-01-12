@@ -8,8 +8,10 @@
  * @uses $vars['size']      The icon size
  */
 
-$item = $vars['item'];
-/* @var ElggEntity $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggEntity) {
+	return;
+}
 
 $size = elgg_extract('size', $vars, 'small');
 

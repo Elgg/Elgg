@@ -23,7 +23,7 @@ if (elgg_get_config('security_protect_upgrade')) {
 // render content before head so that JavaScript and CSS can be loaded. See #4032
 $body = "<div style='margin-top:200px'>" . elgg_view('graphics/ajax_loader', ['hidden' => false]) . "</div>";
 
-$head = elgg_view('page/elements/head', $vars['head']);
+$head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
 $head .= elgg_format_element([
 	'#tag_name' => 'meta',
 	'#options' => ['is_xml' => true],

@@ -48,7 +48,7 @@ unset($vars['value']);
 echo elgg_view_menu('longtext', [
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
-	'textarea_id' => $vars['id'],
+	'textarea_id' => elgg_extract('id', $vars),
 ]);
 
 echo elgg_format_element('textarea', $vars, $value);

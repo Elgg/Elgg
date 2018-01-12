@@ -12,7 +12,7 @@
 $metas = elgg_extract('metas', $vars, []);
 $links = elgg_extract('links', $vars, []);
 
-echo elgg_format_element('title', [], $vars['title'], ['encode_text' => true]);
+echo elgg_format_element('title', [], elgg_extract('title', $vars), ['encode_text' => true]);
 foreach ($metas as $attributes) {
 	echo elgg_format_element('meta', $attributes);
 }

@@ -13,7 +13,7 @@
 if (!empty($vars['value'])) {
 	echo elgg_view('output/url', [
 		'href' => 'mailto:' . $vars['value'],
-		'text' => $vars['value'],
+		'text' => elgg_extract('value', $vars),
 		'encode_text' => true,
 	]);
 }

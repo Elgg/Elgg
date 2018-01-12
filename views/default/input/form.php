@@ -30,7 +30,7 @@ $vars['method'] = strtolower($vars['method']);
 $ignore_empty_body = (bool) elgg_extract('ignore_empty_body', $vars, true);
 unset($vars['ignore_empty_body']);
 
-$body = $vars['body'];
+$body = elgg_extract('body', $vars);
 unset($vars['body']);
 
 if (!$ignore_empty_body && empty($body)) {

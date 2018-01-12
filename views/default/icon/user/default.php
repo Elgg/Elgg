@@ -49,14 +49,14 @@ if (!$icontime) {
 
 $img_class = '';
 if (isset($vars['img_class'])) {
-	$img_class = $vars['img_class'];
+	$img_class = elgg_extract('img_class', $vars);
 }
 
 
 $use_hover = elgg_extract('use_hover', $vars, true);
 if (isset($vars['hover'])) {
 	// only 1.8.0 was released with 'hover' as the key
-	$use_hover = $vars['hover'];
+	$use_hover = elgg_extract('hover', $vars);
 }
 
 $icon = elgg_view('output/img', [

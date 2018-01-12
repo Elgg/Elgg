@@ -5,7 +5,10 @@
  * @uses $vars['item']
  */
 
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
 
 $output = elgg_view($item->getView(), $vars);
 

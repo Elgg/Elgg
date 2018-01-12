@@ -17,6 +17,6 @@
 	<span title="Unrecoverable Error">
 		<?php echo elgg_echo('exception:contact_admin'); ?>
 		<br /><br />
-		Exception at time <?php echo $vars['ts']; ?>.
+		Exception at time <?php echo elgg_extract('ts', $vars); ?>.
 	</span>
 </p>

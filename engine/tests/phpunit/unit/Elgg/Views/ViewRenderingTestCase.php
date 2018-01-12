@@ -2,6 +2,7 @@
 
 namespace Elgg\Views;
 
+use Elgg\HttpException;
 use Elgg\IntegratedUnitTestCase;
 use Elgg\Plugins\PluginTesting;
 
@@ -78,15 +79,11 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 	 * @dataProvider viewListProvider
 	 */
 	public function testCanRenderViewWithEmptyVars($view, $viewtype) {
-		if (!elgg_view_exists($view, $viewtype)) {
-			$this->markTestSkipped("View '$view' does not exist");
-		}
 		try {
 			$output = $this->view($view, [], $viewtype);
 			$this->assertInternalType('string', $output);
-		} catch (\Exception $e) {
-			$msg = "View '$view' in '$viewtype' viewtype must be updated to validate parameters it reads from \$vars array";
-			$this->markTestIncomplete($msg);
+		} catch (HttpException $e) {
+
 		}
 	}
 
@@ -94,15 +91,11 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 	 * @dataProvider viewListProvider
 	 */
 	public function testCanRenderViewWithVars($view, $viewtype) {
-		if (!elgg_view_exists($view, $viewtype)) {
-			$this->markTestSkipped("View '$view' does not exist");
-		}
 		try {
 			$output = $this->view($view, $this->getDefaultViewVars(), $viewtype);
 			$this->assertInternalType('string', $output);
-		} catch (\Exception $e) {
-			$msg = "View '$view' in '$viewtype' viewtype must be updated to validate parameters it reads from \$vars array";
-			$this->markTestIncomplete($msg);
+		} catch (HttpException $e) {
+
 		}
 	}
 

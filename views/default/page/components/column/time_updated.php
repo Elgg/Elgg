@@ -8,8 +8,10 @@
  * @uses $vars['format']    Date format. Use "friendly" for output/friendlytime view.
  */
 
-$entity = $vars['item'];
-/* @var ElggEntity $entity */
+$entity = elgg_extract('item', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
+}
 
 $format = elgg_extract('format', $vars, 'M d, Y H:i');
 

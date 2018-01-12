@@ -8,8 +8,10 @@
  * @uses $vars['link']      Set to false to not use an anchor
  */
 
-$item = $vars['item'];
-/* @var ElggEntity $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggEntity) {
+	return;
+}
 
 $link = elgg_extract('link', $vars, true);
 

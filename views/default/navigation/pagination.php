@@ -34,7 +34,7 @@ $url_fragment = elgg_extract('url_fragment', $vars, '');
 
 // some views pass an empty string for base_url
 if (isset($vars['base_url']) && $vars['base_url']) {
-	$base_url = $vars['base_url'];
+	$base_url = elgg_extract('base_url', $vars);
 } elseif (elgg_is_xhr() && !empty($_SERVER['HTTP_REFERER'])) {
 	$base_url = $_SERVER['HTTP_REFERER'];
 } else {

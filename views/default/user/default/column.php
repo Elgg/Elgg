@@ -7,7 +7,11 @@
  * @uses $vars['title']  Optional override for the title
  */
 
-$entity = $vars['entity'];
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
+}
+
 $size = elgg_extract('size', $vars, 'small');
 
 $icon = elgg_view_entity_icon($entity, $size, $vars);

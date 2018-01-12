@@ -7,7 +7,7 @@
  */
 
 
-$title = $vars['title'];
+$title = elgg_extract('title', $vars);
 
 //$title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
 $title = preg_replace("/[^\w ]/", "", $title);

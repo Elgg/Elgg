@@ -6,12 +6,17 @@
  * @subpackage Core
  */
 
-$permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
-$pubdate = date('r', $vars['entity']->getTimeCreated());
-$title = htmlspecialchars($vars['entity']->name, ENT_NOQUOTES, 'UTF-8');
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
+}
 
-if ($vars['entity']->description) {
-	$description = elgg_autop($vars['entity']->description);
+$permalink = htmlspecialchars($entity->getURL(), ENT_NOQUOTES, 'UTF-8');
+$pubdate = date('r', $entity->getTimeCreated());
+$title = htmlspecialchars($entity->name, ENT_NOQUOTES, 'UTF-8');
+
+if ($entity->description) {
+	$description = elgg_autop($entity->description);
 } else {
 	$description = '';
 }

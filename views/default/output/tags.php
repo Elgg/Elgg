@@ -14,7 +14,7 @@
  * @uses $vars['separator']  Optional. HTML to place between tags. (default: ", ")
  */
 if (isset($vars['entity'])) {
-	$vars['tags'] = $vars['entity']->tags;
+	$vars['tags'] = elgg_extract('entity', $vars)->tags;
 	unset($vars['entity']);
 }
 
@@ -28,7 +28,7 @@ if (empty($vars['tags']) && $value !== 0 && $value !== '0') {
 	return;
 }
 
-$tags = $vars['tags'];
+$tags = elgg_extract('tags', $vars);
 unset($vars['tags']);
 
 if (!is_array($tags)) {

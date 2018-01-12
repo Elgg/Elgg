@@ -79,25 +79,25 @@ unset($vars['class']);
 $id = elgg_extract('id', $vars, '');
 unset($vars['id']);
 
-if (is_array($vars['value'])) {
-	$values = array_map('elgg_strtolower', $vars['value']);
+if (is_array(elgg_extract('value', $vars))) {
+	$values = array_map('elgg_strtolower', elgg_extract('value', $vars));
 } else {
-	$values = [elgg_strtolower($vars['value'])];
+	$values = [elgg_strtolower(elgg_extract('value', $vars))];
 }
 
 // include a default value so if nothing is checked 0 will be passed.
 if ($vars['name'] && $vars['default'] !== false) {
 	echo elgg_view('input/hidden', [
-		'name' => $vars['name'],
-		'value' => $vars['default'],
-		'disabled' => $vars['disabled'],
+		'name' => elgg_extract('name', $vars),
+		'value' => elgg_extract('default', $vars),
+		'disabled' => elgg_extract('disabled', $vars),
 	]);
 }
 
 // prepare checkbox vars
 $input_vars = $vars;
 $input_vars['default'] = false;
-if ($vars['name']) {
+if (elgg_extract('name', $vars)) {
 	$input_vars['name'] = "{$vars['name']}[]";
 }
 unset($input_vars['align']);

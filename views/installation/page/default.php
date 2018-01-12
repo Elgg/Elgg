@@ -9,7 +9,7 @@
 use Elgg\Filesystem\Directory;
 
 $title = elgg_echo('install:title');
-$title .= " : {$vars['title']}";
+$title .= " : " . elgg_extract('title', $vars);
 
 $isElggAtRoot = Elgg\Application::elggDir()->getPath() === Directory\Local::projectRoot()->getPath();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
@@ -36,9 +36,9 @@ $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 							<?php echo elgg_view('page/elements/sidebar', $vars); ?>
 						</aside>
 						<main class="elgg-body" role="main">
-							<h1><?php echo $vars['title']; ?></h1>
-							<?php echo elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]); ?>
-							<?php echo $vars['body']; ?>
+							<h1><?php echo elgg_extract('title', $vars); ?></h1>
+							<?php echo elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]); ?>
+							<?php echo elgg_extract('body', $vars); ?>
 						</main>
 					</div>
 				</div>

@@ -9,7 +9,7 @@
  * @uses $vars['object'] An exception
  */
 
-$exception = $vars['object'];
+$exception = elgg_extract('object', $vars);
 $result = new stdClass();
 $result->error = get_class($exception);
 echo json_encode($result);

@@ -10,8 +10,8 @@
  */
 
 /* @var ElggEntity $entity */
-$entity = $vars['entity'];
-$input_name = $vars['input_name'];
+$entity = elgg_extract('entity', $vars);
+$input_name = elgg_extract('input_name', $vars);
 
 
 $icon = elgg_view_entity_icon($entity, 'tiny', ['use_hover' => false]);
