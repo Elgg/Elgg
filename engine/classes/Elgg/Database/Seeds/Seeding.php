@@ -596,15 +596,15 @@ trait Seeding {
 	/**
 	 * Set random metadata
 	 *
-	 * @param ElggEntity $entity   Entity
-	 * @param array      $fields   An array of profile fields in $name => $input_type format
-	 * @param array      $metadata Other metadata $name => $value pairs to set
+	 * @param ElggEntity $entity       Entity
+	 * @param array      $group_fields An array of profile fields in $name => $input_type format
+	 * @param array      $metadata     Other metadata $name => $value pairs to set
 	 *
 	 * @return ElggEntity
 	 */
-	public function populateMetadata(ElggEntity $entity, array $fields = [], array $metadata = []) {
+	public function populateMetadata(ElggEntity $entity, array $group_fields = [], array $metadata = []) {
 
-		foreach ($fields as $name => $type) {
+		foreach ($group_fields as $name => $type) {
 			if (isset($metadata[$name])) {
 				continue;
 			}
@@ -666,7 +666,7 @@ trait Seeding {
 		}
 
 		foreach ($metadata as $key => $value) {
-			if (array_key_exists($key, $fields) && $entity instanceof ElggUser) {
+			if (array_key_exists($key, $group_fields) && $entity instanceof ElggUser) {
 				$entity->deleteAnnotations("profile:$key");
 				$value = (array) $value;
 				foreach ($value as $val) {
