@@ -85,7 +85,7 @@ class AccessWhereClause extends WhereClause {
 		}
 
 		$hook_params = [
-			'table_alias' => $alias,
+			'table_alias' => $table_alias,
 			'user_guid' => $this->viewer_guid,
 			'ignore_access' => $this->ignore_access,
 			'use_enabled_clause' => $this->use_enabled_clause,
