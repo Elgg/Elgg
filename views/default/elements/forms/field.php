@@ -8,9 +8,18 @@
  * @uses $vars['required'] Required or optional input
  * @uses $vars['label'] HTML content of the label element
  * @uses $vars['help'] HTML content of the help element
+ * @uses $vars['view'] View to use to render the field
  */
 $input = elgg_extract('input', $vars);
 if (!$input) {
+	return;
+}
+
+$view = elgg_extract('view', $vars);
+unset($vars['view']);
+
+if ($view && elgg_view_exists($view)) {
+	echo elgg_view($view, $vars);
 	return;
 }
 

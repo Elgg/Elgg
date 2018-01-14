@@ -1379,6 +1379,8 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
  *                       - #label: field label HTML
  *                       - #help: field help HTML
  *                       - #class: field class name
+ *                       - #view: custom view to use to render the field
+ *                       - #html: can be used to render custom HTML instead of in put field, helpful when you need to add a help paragraph or similar
  *                      Note: Both #label and #help are printed unescaped within their wrapper element.
  *                      Note: Some fields (like input/checkbox) need special attention because #label and label serve different purposes
  *                      "#label" will be used as a label in the field wrapper but "label" will be used in the input view
