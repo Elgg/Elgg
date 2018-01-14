@@ -154,7 +154,7 @@ function elgg_unregister_ajax_view($view) {
  * @since 1.9.0
  */
 function elgg_register_external_view($view, $cacheable = false) {
-	
+
 	_elgg_services()->ajax->registerView($view);
 
 	if ($cacheable) {
@@ -480,7 +480,7 @@ function _elgg_views_prepare_head($title) {
 		'name' => 'apple-mobile-web-app-capable',
 		'content' => 'yes',
 	];
-	
+
 	// RSS feed link
 	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
@@ -496,7 +496,7 @@ function _elgg_views_prepare_head($title) {
 			'href' => $url,
 		];
 	}
-	
+
 	return $params;
 }
 
@@ -684,7 +684,7 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
 		$vars['filter_id'] = $context;
 		$vars['filter_value'] = $selected;
 	}
-	
+
 	return $vars;
 }
 
@@ -786,7 +786,7 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
 
 	$vars = array_merge($item->getValues(), $vars);
 	$vars['class'] = elgg_extract_class($vars, ['elgg-menu-content']);
-	
+
 	if ($item->getLinkClass()) {
 		$vars['class'][] = $item->getLinkClass();
 	}
@@ -1233,28 +1233,28 @@ function elgg_view_message($type, $body, array $vars = []) {
  * @return string returns empty string if could not be rendered
  */
 function elgg_view_river_item($item, array $vars = []) {
-	
+
 	if (!($item instanceof \ElggRiverItem)) {
 		return '';
 	}
-	
+
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
 	$view = $item->getView();
-	
+
 	$subject = $item->getSubjectEntity();
 	$object = $item->getObjectEntity();
 	if (!$subject || !$object) {
 		// subject is disabled or subject/object deleted
 		return '';
 	}
-	
+
 	$vars['item'] = $item;
 
 	// create river view logic
 	$type = $object->getType();
 	$subtype = $object->getSubtype();
 	$action = $item->action_type;
-	
+
 	$river_views = [
 		elgg_extract('item_view', $vars, ''),
 		'river/item', // important for other viewtypes, e.g. "rss"
@@ -1337,6 +1337,39 @@ function elgg_get_form_footer() {
 }
 
 /**
+ * Split array of vars into subarrays based on property prefixes
+ *
+ * @see elgg_view_field()
+ *
+ * @param array $vars     Vars to split
+ * @param array $prefixes Prefixes to split
+ *
+ * @return array
+ */
+function _elgg_split_vars(array $vars = [], array $prefixes = null) {
+
+	if (!isset($prefixes)) {
+		$prefixes = ['#'];
+	}
+
+	$return = [];
+
+	foreach ($vars as $key => $value) {
+		foreach ($prefixes as $prefix) {
+			if (substr($key, 0, 1) === $prefix) {
+				$key = substr($key, 1);
+				$return[$prefix][$key] = $value;
+				break;
+			} else {
+				$return[''][$key] = $value;
+			}
+		}
+	}
+
+	return $return;
+}
+
+/**
  * Renders a form field, usually with a wrapper element, a label, help text, etc.
  *
  * @param array $params Field parameters and variables for the input view.
@@ -1367,11 +1400,8 @@ function elgg_view_field(array $params = []) {
 
 	$hidden_types = ['hidden', 'securitytoken'];
 	if (in_array($input_type, $hidden_types)) {
-		unset($params['#type']);
-		unset($params['#label']);
-		unset($params['#help']);
-		unset($params['#class']);
-		return elgg_view("input/$input_type", $params);
+		$params = _elgg_split_vars($params);
+		return elgg_view("input/$input_type", $params['']);
 	}
 
 	$id = elgg_extract('id', $params);
@@ -1380,12 +1410,6 @@ function elgg_view_field(array $params = []) {
 		$params['id'] = $id;
 	}
 
-	// $vars passed to label, help and field wrapper views
-	$element_vars = [];
-
-	// $vars passed to input/$input_name
-	$input_vars = [];
-	
 	$make_special_checkbox_label = false;
 	if ($input_type == 'checkbox' && (isset($params['label']) || isset($params['#label']))) {
 		if (isset($params['#label']) && isset($params['label'])) {
@@ -1393,7 +1417,7 @@ function elgg_view_field(array $params = []) {
 		} else {
 			$label = elgg_extract('label', $params);
 			$label = elgg_extract('#label', $params, $label);
-			
+
 			$params['#label'] = $label;
 			unset($params['label']);
 
@@ -1404,32 +1428,20 @@ function elgg_view_field(array $params = []) {
 	}
 
 	// first pass non-hash keys into both
-	foreach ($params as $key => $value) {
-		if ($key[0] !== '#') {
-			$element_vars[$key] = $value;
-			$input_vars[$key] = $value;
-		}
-	}
+	$split_params = _elgg_split_vars($params);
+
+	// $vars passed to input/$input_name
+	$input_vars = $split_params[''];
+
+	// $vars passed to label, help and field wrapper views
+	$element_vars = array_merge($split_params[''], $split_params['#']);
 
 	// field input view needs this
 	$input_vars['input_type'] = $input_type;
 
 	// field views get more data
 	$element_vars['input_type'] = $input_type;
-	
-	unset($element_vars['class']);
-	if (isset($params['#class'])) {
-		$element_vars['class'] = $params['#class'];
-	}
-	unset($element_vars['help']);
-	if (isset($params['#help'])) {
-		$element_vars['help'] = $params['#help'];
-	}
-	unset($element_vars['label']);
-	if (isset($params['#label'])) {
-		$element_vars['label'] = $params['#label'];
-	}
-	
+
 	// wrap if present
 	$element_vars['label'] = elgg_view('elements/forms/label', $element_vars);
 	$element_vars['help'] = elgg_view('elements/forms/help', $element_vars);
@@ -1713,7 +1725,7 @@ function _elgg_view_may_be_altered($view, $path) {
 	}
 
 	$view_path = $views->findViewFile($view, $viewtype);
-	
+
 	return realpath($view_path) !== realpath($expected_path);
 }
 
@@ -1743,7 +1755,7 @@ function elgg_views_boot() {
 
 	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_js('elgg');
-	
+
 	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/font-awesome.css'));
 	elgg_load_css('font-awesome');
 
@@ -1784,7 +1796,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
 	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
-	
+
 	elgg_register_plugin_hook_handler('view_vars', 'elements/forms/help', '_elgg_views_file_help_upload_limit');
 
 	// registered with high priority for BC
@@ -1950,28 +1962,28 @@ function _elgg_set_lightbox_config($hook, $type, $return, $params) {
  * @access private
  */
 function _elgg_views_file_help_upload_limit(\Elgg\Hook $hook) {
-	
+
 	$return = $hook->getValue();
 	if (elgg_extract('input_type', $return) !== 'file') {
 		return;
 	}
-	
+
 	if (!elgg_extract('show_upload_limit', $return, true)) {
 		return;
 	}
-	
+
 	$help = elgg_extract('help', $return, '');
-	
+
 	// Get post_max_size and upload_max_filesize
 	$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
 	$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
-	
+
 	// Determine the correct value
 	$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
-	
+
 	$help .= ' ' . elgg_echo('input:file:upload_limit', [elgg_format_bytes($max_upload)]);
-	
+
 	$return['help'] = trim($help);
-	
+
 	return $return;
 }
