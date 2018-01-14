@@ -1390,6 +1390,10 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
  */
 function elgg_view_field(array $params = []) {
 
+	if (!empty($params['#html'])) {
+		return $params['#html'];
+	}
+	
 	if (empty($params['#type'])) {
 		_elgg_services()->logger->error(__FUNCTION__ . '(): $params["#type"] is required.');
 		return '';
