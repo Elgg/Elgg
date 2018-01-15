@@ -46,8 +46,11 @@ class UploadService {
 	 */
 	public function getFiles($input_name) {
 		$files = $this->request->getFiles($input_name);
+
 		foreach ($files as $file) {
-			$this->prepareFile($file);
+			if ($file instanceof UploadedFile) {
+				$this->prepareFile($file);
+			}
 		}
 		
 		return $files;
