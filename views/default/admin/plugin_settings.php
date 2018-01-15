@@ -8,7 +8,7 @@
  * @subpackage Plugins.Settings
  */
 
-$plugin = $vars['plugin'];
+$plugin = elgg_extract('plugin', $vars);
 $plugin_id = $plugin->getID();
 
 if (!elgg_view_exists("plugins/$plugin_id/settings")) {

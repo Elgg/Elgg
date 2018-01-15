@@ -13,7 +13,7 @@
 $attributes = [];
 
 if (isset($vars['id'])) {
-	$attributes['id'] = $vars['id'];
+	$attributes['id'] = elgg_extract('id', $vars);
 }
 
 $attributes['class'] = elgg_extract_class($vars, 'elgg-ajax-loader');

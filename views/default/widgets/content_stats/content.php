@@ -9,16 +9,18 @@ $entity_stats = get_entity_statistics();
 
 $registered_entity_types = get_registered_entity_types();
 
+$stats = [];
+
 foreach ($registered_entity_types as $type => $subtypes) {
 	if (!empty($subtypes)) {
 		foreach ($subtypes as $subtype) {
-			$value = elgg_extract($subtype, $entity_stats[$type], false);
+			$value = elgg_extract($subtype, elgg_extract($type, $entity_stats), false);
 			if ($value !== false) {
 				$stats[elgg_echo("item:$type:$subtype")] = $value;
 			}
 		}
 	} else {
-		$value = elgg_extract('__base__', $entity_stats[$type], false);
+		$value = elgg_extract('__base__', elgg_extract($type, $entity_stats), false);
 		if ($value !== false) {
 			$stats[elgg_echo("item:$type")] = $value;
 		}

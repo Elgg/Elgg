@@ -6,8 +6,11 @@
  * @uses $vars['steps'] Array of steps
  */
 
-$current_step = $vars['step'];
-$steps = $vars['steps'];
+$current_step = elgg_extract('step', $vars);
+$steps = elgg_extract('steps', $vars);
+if (empty($steps)) {
+	return;
+}
 
 $current_step_index = array_search($current_step, $steps);
 

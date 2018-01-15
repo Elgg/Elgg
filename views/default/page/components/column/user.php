@@ -7,7 +7,10 @@
  * @uses $vars['type']      The item type or ""
  */
 
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggUser) {
+	return;
+}
 
 $vars['item_view'] = 'user/default/column';
 $vars['full_view'] = false;

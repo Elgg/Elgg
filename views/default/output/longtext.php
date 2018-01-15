@@ -24,7 +24,7 @@ unset($vars['sanitize']);
 $autop = elgg_extract('autop', $vars, true);
 unset($vars['autop']);
 
-$text = $vars['value'];
+$text = elgg_extract('value', $vars);
 unset($vars['value']);
 
 if ($parse_urls) {

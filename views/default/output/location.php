@@ -7,7 +7,7 @@
  */
 
 if (isset($vars['entity'])) {
-	$vars['value'] = $vars['entity']->location;
+	$vars['value'] = elgg_extract('entity', $vars)->location;
 	unset($vars['entity']);
 }
 

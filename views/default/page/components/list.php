@@ -19,7 +19,7 @@
  * @uses $vars['item_view']    Alternative view to render list items
  * @uses $vars['no_results']   Message to display if no results (string|Closure)
  */
-$items = $vars['items'];
+$items = elgg_extract('items', $vars);
 $count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');

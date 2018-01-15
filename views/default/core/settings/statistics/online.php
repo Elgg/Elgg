@@ -7,6 +7,9 @@
  */
 
 $user = elgg_get_page_owner_entity();
+if (!$user instanceof ElggUser) {
+	return;
+}
 
 $label_name = elgg_echo('usersettings:statistics:label:name');
 $label_email = elgg_echo('usersettings:statistics:label:email');

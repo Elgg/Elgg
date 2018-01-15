@@ -29,12 +29,13 @@ $defaults = [
 
 $vars = array_merge($defaults, $vars);
 
-$timestamp = $vars['timestamp'];
+$timestamp = elgg_extract('timestamp', $vars);
 unset($vars['timestamp']);
 
 $format = elgg_extract('format', $vars, $defaults['format'], false);
 unset($vars['format']);
 
+$name = elgg_extract('name', $vars);
 $value = elgg_extract('value', $vars);
 
 $value_date = '';
@@ -42,7 +43,7 @@ $value_timestamp = '';
 
 if ($value) {
 	try {
-		$value = \Elgg\Values::normalizeTime($value);
+		$dt = \Elgg\Values::normalizeTime($value);
 
 		$value_date = $dt->format($format);
 		$value_timestamp = $dt->getTimestamp();
@@ -52,12 +53,12 @@ if ($value) {
 
 if ($timestamp) {
 	if (!isset($vars['id'])) {
-		$vars['id'] = $vars['name'];
+		$vars['id'] = $name;
 	}
 	echo elgg_view('input/hidden', [
-		'name' => $vars['name'],
+		'name' => $name,
 		'value' => $value_timestamp,
-		'rel' => $vars['id'],
+		'rel' => elgg_extract('id', $vars),
 	]);
 	$vars['class'][] = 'elgg-input-timestamp';
 	unset($vars['name']);
@@ -79,7 +80,7 @@ echo elgg_format_element('input', $vars);
 if (isset($vars['id'])) {
 	$selector = "#{$vars['id']}";
 } else {
-	$selector = ".elgg-input-date[name='{$vars['name']}']";
+	$selector = ".elgg-input-date[name='{$name}']";
 }
 ?>
 <script>

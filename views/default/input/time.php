@@ -24,7 +24,7 @@ $defaults = [
 
 $vars = array_merge($defaults, $vars);
 
-$timestamp = $vars['timestamp'];
+$timestamp = elgg_extract('timestamp', $vars);
 unset($vars['timestamp']);
 
 $format = elgg_extract('format', $vars, $defaults['format'], false);

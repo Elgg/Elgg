@@ -4,7 +4,10 @@
  *
  * @uses $vars['item']
  */
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggRiverItem) {
+	return;
+}
 
 $name = $item->getSubjectEntity()->name;
 $name = htmlspecialchars($name, ENT_NOQUOTES, 'UTF-8');

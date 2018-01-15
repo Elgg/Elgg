@@ -22,7 +22,7 @@
 if (empty($vars['name'])) {
 	$vars['name'] = 'members';
 }
-$name = $vars['name'];
+$name = elgg_extract('name', $vars);
 
 $guids = (array) elgg_extract('values', $vars, []);
 
@@ -57,7 +57,7 @@ $attrs = [
 ?>
 <div <?= elgg_format_attributes($attrs) ?>>
 	<input type="text" class="elgg-input-user-picker" size="30"/>
-	<?php echo elgg_view('input/hidden', ['name' => $vars['name']]); ?>
+	<?php echo elgg_view('input/hidden', ['name' => elgg_extract('name', $vars)]); ?>
 	<?php
 	if (!elgg_extract('only_friends', $vars, false)) {
 		?>
@@ -73,7 +73,7 @@ $attrs = [
 			if ($entity) {
 				echo elgg_view('input/userpicker/item', [
 					'entity' => $entity,
-					'input_name' => $vars['name'],
+					'input_name' => elgg_extract('name', $vars),
 				]);
 			}
 		}

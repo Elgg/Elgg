@@ -6,7 +6,10 @@
  * @subpackage Core
  */
 
-$annotation = $vars['annotation'];
+$annotation = elgg_extract('annotation', $vars);
+if (!$annotation instanceof ElggAnnotation) {
+	return;
+}
 
 $poster = $annotation->getOwnerEntity();
 $poster_name = htmlspecialchars($poster->name, ENT_NOQUOTES, 'UTF-8');
@@ -24,7 +27,7 @@ $item = <<<__HTML
 	<pubDate>$pubdate</pubDate>
 	<link>$permalink</link>
 	<title><![CDATA[$title]]></title>
-	<description><![CDATA[{$vars['annotation']->value}]]></description>
+	<description><![CDATA[{$annotation->value}]]></description>
 	$creator$extensions
 </item>
 

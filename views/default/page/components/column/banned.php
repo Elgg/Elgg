@@ -7,8 +7,10 @@
  * @uses $vars['type']      The item type or ""
  */
 
-$item = $vars['item'];
-/* @var ElggUser $item */
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggUser) {
+	return;
+}
 
 if ($item->banned === 'yes') {
 	echo elgg_echo('option:yes');

@@ -5,7 +5,7 @@
  * @uses $vars['items']
  */
 
-$items = $vars['items'];
+$items = elgg_extract('items', $vars);
 
 $list = '[';
 if (is_array($items) && sizeof($items) > 0) {

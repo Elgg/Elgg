@@ -8,8 +8,8 @@
  */
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
-$messages = elgg_view('page/elements/messages', ['object' => $vars['sysmessages']]);
-$content = $vars['body'];
+$messages = elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
+$content = elgg_extract('body', $vars);
 
 $title = elgg_extract('title', $vars, elgg_get_site_entity()->name);
 $favicon = elgg_view('page/elements/shortcut_icon', $vars);

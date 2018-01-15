@@ -32,14 +32,14 @@ $defaults = [
 
 $vars = array_merge($defaults, $vars);
 
-$default = $vars['default'];
+$default = elgg_extract('default', $vars);
 unset($vars['default']);
 
 if (isset($vars['name']) && $default !== false) {
 	echo elgg_view('input/hidden', [
-		'name' => $vars['name'],
+		'name' => elgg_extract('name', $vars),
 		'value' => $default,
-		'disabled' => $vars['disabled'],
+		'disabled' => elgg_extract('disabled', $vars),
 	]);
 }
 

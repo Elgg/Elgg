@@ -5,6 +5,7 @@ namespace Elgg\Views;
 /**
  * @group ViewRendering
  * @group ViewsService
+ * @group DateTime
  */
 class DateOutputTest extends ViewRenderingTestCase {
 
@@ -18,6 +19,8 @@ class DateOutputTest extends ViewRenderingTestCase {
 
 	public function getViewNames() {
 		return [
+			'input/date',
+			'input/time',
 			'output/date',
 			'output/time',
 		];

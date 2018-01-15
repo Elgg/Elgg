@@ -5,15 +5,20 @@
  * @uses $vars['entity']
  */
 
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
+}
+
 $user_avatar = elgg_view('output/img', [
-	'src' => $vars['entity']->getIconUrl('medium'),
+	'src' => $entity->getIconUrl('medium'),
 	'alt' => elgg_echo('avatar'),
 ]);
 
 $current_label = elgg_echo('avatar:current');
 
 $remove_button = '';
-if ($vars['entity']->icontime) {
+if ($entity->icontime) {
 	$remove_button = elgg_view('output/url', [
 		'text' => elgg_echo('remove'),
 		'title' => elgg_echo('avatar:remove'),

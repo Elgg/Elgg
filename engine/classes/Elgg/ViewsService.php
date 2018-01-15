@@ -507,10 +507,15 @@ class ViewsService {
 		if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
 			ob_start();
 
-			// don't isolate, scripts use the local $vars
-			include $file;
+			try {
+				// don't isolate, scripts use the local $vars
+				include $file;
 
-			return ob_get_clean();
+				return ob_get_clean();
+			} catch (\Exception $e) {
+				ob_get_clean();
+				throw $e;
+			}
 		}
 
 		return file_get_contents($file);

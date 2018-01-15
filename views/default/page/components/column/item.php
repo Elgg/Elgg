@@ -7,9 +7,12 @@
  * @uses $vars['type']      The item type or ""
  */
 
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+if (!$item instanceof ElggEntity) {
+	return;
+}
 
-if ($vars['type']) {
+if (elgg_extract('type', $vars)) {
 	// recognized type
-	echo elgg_view_list_item($item, $vars['item_vars']);
+	echo elgg_view_list_item($item, elgg_extract('item_vars', $vars));
 }

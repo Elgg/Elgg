@@ -3,6 +3,9 @@
  * Banned users admin widget
  */
 $widget = elgg_extract('entity', $vars);
+if (!$widget instanceof ElggWidget) {
+	return;
+}
 
 $num_display = (int) $widget->num_display ?: 4;
 

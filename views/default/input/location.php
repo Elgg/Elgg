@@ -14,7 +14,7 @@ $defaults = [
 ];
 
 if (isset($vars['entity'])) {
-	$defaults['value'] = $vars['entity']->location;
+	$defaults['value'] = elgg_extract('entity', $vars)->location;
 	unset($vars['entity']);
 }
 

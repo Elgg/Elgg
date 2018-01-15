@@ -6,8 +6,12 @@
  * @subpackage Core
  */
 
-// Get entity statistics
-$entity_stats = get_entity_statistics(elgg_get_page_owner_guid());
+$user = elgg_get_page_owner_guid();
+if (!$user instanceof ElggUser) {
+	return;
+}
+
+$entity_stats = get_entity_statistics($user);
 
 if ($entity_stats) {
 	$rows = '';

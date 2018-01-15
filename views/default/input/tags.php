@@ -19,7 +19,7 @@ $defaults = [
 ];
 
 if (isset($vars['entity'])) {
-	$defaults['value'] = $vars['entity']->tags;
+	$defaults['value'] = elgg_extract('entity', $vars)->tags;
 	unset($vars['entity']);
 }
 

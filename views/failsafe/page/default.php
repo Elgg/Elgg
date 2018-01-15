@@ -18,7 +18,7 @@ elgg_set_http_header('Content-type: text/html; charset=utf-8');
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?php echo $vars['title']; ?></title>
+		<title><?php echo elgg_extract('title', $vars); ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 		<style type="text/css">
@@ -54,8 +54,8 @@ elgg_set_http_header('Content-type: text/html; charset=utf-8');
 	</head>
 	<body>
 	<div id="elgg-wrapper">
-		<h1><?php echo $vars['title']; ?></h1>
-		<?php echo $vars['body']; ?>
+		<h1><?php echo elgg_extract('title', $vars); ?></h1>
+		<?php echo elgg_extract('body', $vars); ?>
 	</div>
 	</body>
 </html>

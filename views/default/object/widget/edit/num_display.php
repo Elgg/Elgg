@@ -23,7 +23,7 @@ $vars['name'] = "params[{$name}]";
 if (!isset($vars['label'])) {
 	$vars['label'] = elgg_echo('widget:numbertodisplay');
 }
-$vars['#label'] = $vars['label'];
+$vars['#label'] = elgg_extract('label', $vars);
 unset($vars['label']);
 
 $value = sanitize_int($widget->$name, false);

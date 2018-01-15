@@ -6,16 +6,21 @@
  * @subpackage Core
  */
 
-$title = $vars['entity']->title;
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof ElggEntity) {
+	return;
+}
+
+$title = elgg_extract('entity', $vars)->title;
 if (empty($title)) {
-	$title = strip_tags($vars['entity']->description);
+	$title = strip_tags($entity->description);
 	$title = elgg_get_excerpt($title, 32);
 }
 
-$permalink = htmlspecialchars($vars['entity']->getURL(), ENT_NOQUOTES, 'UTF-8');
-$pubdate = date('r', $vars['entity']->getTimeCreated());
+$permalink = htmlspecialchars($entity->getURL(), ENT_NOQUOTES, 'UTF-8');
+$pubdate = date('r', $entity->getTimeCreated());
 
-$description = elgg_autop($vars['entity']->description);
+$description = elgg_autop($entity->description);
 
 $creator = elgg_view('page/components/creator', $vars);
 $georss = elgg_view('page/components/georss', $vars);

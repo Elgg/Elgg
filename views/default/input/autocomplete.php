@@ -64,12 +64,12 @@ $params['match_on'] = $match_on;
 unset($vars['match_on']);
 
 if (isset($vars['match_owner'])) {
-	$params['match_owner'] = $vars['match_owner'];
+	$params['match_owner'] = elgg_extract('match_owner', $vars);
 	unset($vars['match_owner']);
 }
 
 if (isset($vars['match_membership'])) {
-	$params['match_membership'] = $vars['match_membership'];
+	$params['match_membership'] = elgg_extract('match_membership', $vars);
 	unset($vars['match_membership']);
 }
 

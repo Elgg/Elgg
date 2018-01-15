@@ -19,7 +19,7 @@ if (empty($sections)) {
 	// render content before head so that JavaScript and CSS can be loaded. See #4032
 	$sections = [
 		'messages' => elgg_view('page/elements/messages', [
-			'object' => $vars['sysmessages'],
+			'object' => elgg_extract('sysmessages', $vars),
 		]),
 		'topbar' => elgg_view('page/elements/topbar', $vars),
 		'header' => elgg_view('page/elements/header', $vars),
@@ -46,7 +46,7 @@ $body = elgg_format_element('div', $page_vars, $page);
 
 $body .= elgg_view('page/elements/foot');
 
-$head = elgg_view('page/elements/head', $vars['head']);
+$head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
 
 $params = [
 	'head' => $head,

@@ -13,7 +13,7 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-button');
 
 if (!isset($vars['text']) && isset($vars['value'])) {
 	// Keeping this to ease the transition to 3.0
-	$vars['text'] = $vars['value'];
+	$vars['text'] = elgg_extract('value', $vars);
 }
 
 $type = elgg_extract('type', $vars, 'button', false);

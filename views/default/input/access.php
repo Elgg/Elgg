@@ -70,12 +70,12 @@ if (!isset($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
 	} else if (empty($vars['options_values']) || !is_array($vars['options_values'])) {
 		$vars['value'] = get_default_access(null, $params);
 	} else {
-		$options_values_ids = array_keys($vars['options_values']);
+		$options_values_ids = array_keys(elgg_extract('options_values', $vars));
 		$vars['value'] = $options_values_ids[0];
 	}
 }
 
-$params['value'] = $vars['value'];
+$params['value'] = elgg_extract('value', $vars);
 
 // don't call get_write_access_array() unless we need it
 if (!isset($vars['options_values'])) {
