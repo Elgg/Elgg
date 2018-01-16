@@ -2,12 +2,9 @@
 
 elgg_load_library('elgg:blog');
 
-// push all blogs breadcrumb
-elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('collection:object:blog:all'));
-
 $subpage = elgg_extract('subpage', $vars);
 $page_type = 'group';
-$group_guid = elgg_extract('group_guid', $vars);
+$group_guid = elgg_extract('guid', $vars, elgg_extract('group_guid', $vars)); // group_guid for BC
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 
@@ -23,7 +20,9 @@ if (!isset($subpage) || $subpage == 'all') {
 	$params = blog_get_page_content_archive($group_guid, $lower, $upper);
 }
 
-$params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
+$sidebar = elgg_extract('sidebar', $params, '');
+$sidebar .= elgg_view('blog/sidebar', ['page' => $page_type]);
+$params['sidebar'] = $sidebar;
 
 $body = elgg_view_layout('content', $params);
 

@@ -27,7 +27,6 @@ if ($full && !elgg_in_context('gallery')) {
 
 	$params = [
 		'title' => false,
-		'handler' => 'file',
 	];
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
@@ -52,7 +51,6 @@ if ($full && !elgg_in_context('gallery')) {
 	// brief view
 	$params = [
 		'entity' => $file,
-		'handler' => 'file',
 		'content' => elgg_get_excerpt($file->description),
 		'icon' => elgg_view_entity_icon($file, 'small'),
 	];

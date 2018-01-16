@@ -2,9 +2,6 @@
 
 elgg_load_library('elgg:blog');
 
-// push all blogs breadcrumb
-elgg_push_breadcrumb(elgg_echo('blog:blogs'), elgg_generate_url('collection:object:blog:all'));
-
 $page_type = 'friends';
 $username = elgg_extract('username', $vars);
 
@@ -18,9 +15,7 @@ $params = [
 	'title' => elgg_echo('blog:title:friends'),
 ];
 
-$crumbs_title = $user->name;
-elgg_push_breadcrumb($crumbs_title, elgg_generate_url('collection:object:blog:owner', ['username' => $user->username]));
-elgg_push_breadcrumb(elgg_echo('friends'));
+elgg_push_collection_breadcrumbs('object', 'blog', $user, true);
 
 elgg_register_title_button('blog', 'add', 'object', 'blog');
 
@@ -38,7 +33,9 @@ $options = [
 
 $params['content'] = elgg_list_entities($options);
 
-$params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
+$sidebar = elgg_extract('sidebar', $params, '');
+$sidebar .= elgg_view('blog/sidebar', ['page' => $page_type]);
+$params['sidebar'] = $sidebar;
 
 $body = elgg_view_layout('content', $params);
 

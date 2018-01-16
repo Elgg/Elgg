@@ -12,11 +12,8 @@
  */
 function file_init() {
 
-	// register a library of helper functions
-	elgg_register_library('elgg:file', __DIR__ . '/lib/file.php');
-
 	// Site navigation
-	$item = new ElggMenuItem('file', elgg_echo('file'), 'file/all');
+	$item = new ElggMenuItem('file', elgg_echo('file'), elgg_generate_url('default:object:file'));
 	elgg_register_menu_item('site', $item);
 
 	// Extend CSS
@@ -28,11 +25,7 @@ function file_init() {
 	// extend group main page
 	elgg_extend_view('groups/tool_latest', 'file/group_module');
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('file', 'file_page_handler');
-
 	// Register URL handlers for files
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'file_set_url');
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_set_icon_url');
 
 	// Register for notifications
@@ -83,66 +76,6 @@ function file_init() {
 	elgg_register_plugin_hook_handler('entity:icon:file', 'object', 'file_set_icon_file');
 
 	elgg_register_plugin_hook_handler('seeds', 'database', 'file_register_db_seeds');
-}
-
-/**
- * Dispatches file pages.
- * URLs take the form of
- *  All files:       file/all
- *  User's files:    file/owner/<username>
- *  Friends' files:  file/friends/<username>
- *  View file:       file/view/<guid>/<title>
- *  New file:        file/add/<guid>
- *  Edit file:       file/edit/<guid>
- *  Group files:     file/group/<guid>/all
- *
- * Title is ignored
- *
- * @param array $page URL segments
- *
- * @return bool
- */
-function file_page_handler($page) {
-
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
-
-	$page_type = $page[0];
-	switch ($page_type) {
-		case 'owner':
-			file_register_toggle();
-			echo elgg_view_resource('file/owner');
-			break;
-		case 'friends':
-			file_register_toggle();
-			echo elgg_view_resource('file/friends');
-			break;
-		case 'view':
-			echo elgg_view_resource('file/view', [
-				'guid' => $page[1],
-			]);
-			break;
-		case 'add':
-			echo elgg_view_resource('file/upload');
-			break;
-		case 'edit':
-			echo elgg_view_resource('file/edit', [
-				'guid' => $page[1],
-			]);
-			break;
-		case 'group':
-			file_register_toggle();
-			echo elgg_view_resource('file/owner');
-			break;
-		case 'all':
-			file_register_toggle();
-			echo elgg_view_resource('file/all');
-			break;
-		default:
-			return false;
-	}
-	return true;
 }
 
 /**
@@ -216,39 +149,18 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
-		$url = "file/owner/{$entity->username}";
+		$url = elgg_generate_url('collection:object:file:owner', ['username' => $entity->username]);
 		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('file')) {
-			$url = "file/group/{$entity->guid}/all";
+			$url = elgg_generate_url('collection:object:file:group', ['guid' => $entity->guid]);
 			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
 			$return[] = $item;
 		}
 	}
 	
 	return $return;
-}
-
-/**
- * Populates the ->getUrl() method for file objects
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $url    current return value
- * @param array  $params supplied params
- *
- * @return void|string
- */
-function file_set_url($hook, $type, $url, $params) {
-	
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggFile) {
-		return;
-	}
-	
-	$title = elgg_get_friendly_title($entity->getDisplayName());
-	return "file/view/{$entity->getGUID()}/{$title}";
 }
 
 /**
@@ -449,6 +361,47 @@ function file_register_db_seeds(\Elgg\Hook $hook) {
 
 	return $seeds;
 }
+
+/**
+ * Prepare the upload/edit form variables
+ *
+ * @param ElggFile $file the file to edit
+ *
+ * @return array
+ */
+function file_prepare_form_vars($file = null) {
+
+	// input names => defaults
+	$values = [
+		'title' => '',
+		'description' => '',
+		'access_id' => ACCESS_DEFAULT,
+		'tags' => '',
+		'container_guid' => elgg_get_page_owner_guid(),
+		'guid' => null,
+		'entity' => $file,
+	];
+
+	if ($file) {
+		foreach (array_keys($values) as $field) {
+			if (isset($file->$field)) {
+				$values[$field] = $file->$field;
+			}
+		}
+	}
+
+	if (elgg_is_sticky_form('file')) {
+		$sticky_values = elgg_get_sticky_values('file');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
+		}
+	}
+
+	elgg_clear_sticky_form('file');
+
+	return $values;
+}
+
 
 return function() {
 	elgg_register_event_handler('init', 'system', 'file_init');

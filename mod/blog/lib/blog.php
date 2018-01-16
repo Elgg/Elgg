@@ -40,8 +40,7 @@ function blog_get_page_content_list($container_guid = null) {
 		}
 		$return['title'] = elgg_echo('blog:title:user_blogs', [$container->name]);
 
-		$crumbs_title = $container->name;
-		elgg_push_breadcrumb($crumbs_title);
+		elgg_push_collection_breadcrumbs('object', 'blog', $container);
 
 		if ($current_user && ($container_guid == $current_user->guid)) {
 			$return['filter_context'] = 'mine';
@@ -55,8 +54,7 @@ function blog_get_page_content_list($container_guid = null) {
 		$options['preload_containers'] = true;
 		$return['filter_context'] = 'all';
 		$return['title'] = elgg_echo('blog:title:all_blogs');
-		elgg_pop_breadcrumb();
-		elgg_push_breadcrumb(elgg_echo('blog:blogs'));
+		elgg_push_collection_breadcrumbs('object', 'blog');
 	}
 
 	elgg_register_title_button('blog', 'add', 'object', 'blog');
@@ -79,18 +77,8 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	$owner = get_entity($owner_guid);
 	elgg_set_page_owner_guid($owner_guid);
 
-	$crumbs_title = $owner->name;
-	if ($owner instanceof ElggUser) {
-		$url = elgg_generate_url('collection:object:blog:owner', [
-			'username' => $owner->username,
-		]);
-	} else {
-		$url = elgg_generate_url('collection:object:blog:group', [
-			'group_guid' => $owner->guid,
-			'subpage' => 'all',
-		]);
-	}
-	elgg_push_breadcrumb($crumbs_title, $url);
+	elgg_push_collection_breadcrumbs('object', 'blog', $owner);
+
 	elgg_push_breadcrumb(elgg_echo('blog:archives'));
 
 	if ($lower) {
@@ -181,7 +169,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = null) {
 
 			$body_vars = blog_prepare_form_vars($blog, $revision);
 
-			elgg_push_breadcrumb($blog->title, $blog->getURL());
+			elgg_push_entity_breadcrumbs($blog);
 			elgg_push_breadcrumb(elgg_echo('edit'));
 			
 			elgg_require_js('elgg/blog/save_draft');
@@ -192,6 +180,12 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = null) {
 			$content = elgg_echo('blog:error:cannot_edit_post');
 		}
 	} else {
+		if (!$guid) {
+			$guid = elgg_get_logged_in_user_guid();
+		}
+
+		$container = get_entity($guid) ? : null;
+		elgg_push_collection_breadcrumbs('object', 'blog', $container);
 		elgg_push_breadcrumb(elgg_echo('blog:add'));
 		$body_vars = blog_prepare_form_vars(null);
 

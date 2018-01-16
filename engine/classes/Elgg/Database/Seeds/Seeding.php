@@ -729,7 +729,6 @@ trait Seeding {
 
 		while ($tries < $limit) {
 			$comment = new \ElggComment();
-			$comment->subtype = $entity->getSubtype() == 'discussion' ? 'discussion_reply' : 'comment';
 			$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;
 			$comment->container_guid = $entity->guid;
 			$comment->description = $this->faker()->paragraph;

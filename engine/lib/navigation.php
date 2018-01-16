@@ -398,6 +398,64 @@ function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
 }
 
 /**
+ * Resolves and pushes entity breadcrumbs based on named routes
+ *
+ * @param ElggEntity $entity    Entity
+ * @param bool       $link_self Use entity link in the last crumb
+ *
+ * @return void
+ */
+function elgg_push_entity_breadcrumbs(ElggEntity $entity, $link_self = true) {
+
+	$container = $entity->getContainerEntity() ? : null;
+	elgg_push_collection_breadcrumbs($entity->type, $entity->subtype, $container);
+
+	$entity_url = $link_self ? $entity->getURL() : null;
+	elgg_push_breadcrumb($entity->getDisplayName(), $entity_url);
+}
+
+/**
+ * Resolves and pushes collection breadcrumbs for a container
+ *
+ * @param string          $entity_type    Entity type in the collection
+ * @param string          $entity_subtype Entity subtype in the collection
+ * @param ElggEntity|null $container      Container/page owner entity
+ * @param bool            $friends        Collection belongs to container's friends?
+ *
+ * @return void
+ */
+function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEntity $container = null, $friends = false) {
+
+	if ($container) {
+		elgg_push_breadcrumb($container->getDisplayName(), $container->getURL());
+
+		if ($friends) {
+			$collection_route = "collection:$entity_type:$entity_subtype:friends";
+		} else if ($container instanceof ElggUser) {
+			$collection_route = "collection:$entity_type:$entity_subtype:owner";
+		} else if ($container instanceof ElggGroup) {
+			$collection_route = "collection:$entity_type:$entity_subtype:group";
+		} else {
+			$collection_route = "collection:$entity_type:$entity_subtype:container";
+		}
+
+		$parameters = _elgg_services()->router->resolveRouteParameters($collection_route, $container);
+		if ($parameters) {
+			$label = elgg_echo("item:$entity_type:$entity_subtype");
+			if ($friends) {
+				$label = elgg_echo('collection:friends', [$label]);
+			}
+			$collection_url = elgg_generate_url($collection_route, $parameters);
+			elgg_push_breadcrumb($label, $collection_url);
+		}
+	} else {
+		$label = elgg_echo("item:$entity_type:$entity_subtype");
+		$collection_url = elgg_generate_url("collection:$entity_type:$entity_subtype:all");
+		elgg_push_breadcrumb($label, $collection_url);
+	}
+}
+
+/**
  * Returns default filter tabs (All, Mine, Friends) for the user
  *
  * @param string   $context  Context to be used to prefix tab URLs

@@ -1,4 +1,4 @@
-<?php
+-<?php
 /**
  * Elgg file widget view
  */
@@ -25,7 +25,7 @@ if (empty($content)) {
 echo $content;
 
 $more_link = elgg_view('output/url', [
-	'href' => 'file/owner/' . $widget->getOwnerEntity()->username,
+	'href' => elgg_generate_url('collection:object:file:owner', ['username' => $widget->getOwnerEntity()->username]),
 	'text' => elgg_echo('file:more'),
 	'is_trusted' => true,
 ]);

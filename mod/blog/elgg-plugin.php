@@ -47,7 +47,7 @@ return [
 			],
 		],
 		'collection:object:blog:group' => [
-			'path' => '/blog/group/{group_guid}/{subpage?}/{lower?}/{upper?}',
+			'path' => '/blog/group/{guid}/{subpage?}/{lower?}/{upper?}',
 			'resource' => 'blog/group',
 			'defaults' => [
 				'subpage' => 'all',

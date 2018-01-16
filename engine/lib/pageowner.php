@@ -33,6 +33,14 @@ function elgg_get_page_owner_guid($guid = 0) {
 		return $page_owner_guid;
 	}
 
+	$route = _elgg_services()->router->getCurrentRoute();
+	if ($route) {
+		$page_owner = $route->resolvePageOwner();
+		if ($page_owner) {
+			return $page_owner->guid;
+		}
+	}
+
 	// return guid of page owner entity
 	// Note: core registers default_page_owner_handler() to handle this hook.
 	$guid = (int) elgg_trigger_plugin_hook('page_owner', 'system', null, 0);

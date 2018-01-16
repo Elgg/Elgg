@@ -4,32 +4,20 @@
  */
 
 $guid = elgg_extract('guid', $vars);
-elgg_set_page_owner_guid($guid);
 
-elgg_group_gatekeeper();
+elgg_entity_gatekeeper($guid, 'group');
 
 $group = get_entity($guid);
-if (!$group instanceof ElggGroup) {
-	forward('', '404');
-}
-elgg_push_breadcrumb($group->name, $group->getURL());
-elgg_push_breadcrumb(elgg_echo('item:object:discussion'));
+
+elgg_push_collection_breadcrumbs('object', 'discussion', $group);
 
 elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
 $title = elgg_echo('item:object:discussion');
 
-$options = [
-	'type' => 'object',
-	'subtype' => 'discussion',
-	'limit' => max(20, elgg_get_config('default_limit')),
-	'order_by' => 'e.last_action desc',
-	'container_guid' => $guid,
-	'full_view' => false,
-	'no_results' => elgg_echo('discussion:none'),
-	'preload_owners' => true,
-];
-$content = elgg_list_entities($options);
+$content = elgg_view('discussion/listing/group', [
+	'entity' => $group,
+]);
 
 $params = [
 	'content' => $content,

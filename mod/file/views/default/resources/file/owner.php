@@ -5,15 +5,20 @@
  * @package ElggFile
  */
 
-// access check for closed groups
-elgg_group_gatekeeper();
-
-$owner = elgg_get_page_owner_entity();
-if (!$owner) {
-	forward('', '404');
+$username = elgg_extract('username', $vars);
+if ($username) {
+	$user = get_user_by_username($username);
+	$guid = $user->guid;
+} else {
+	// Backward compatibility
+	$guid = elgg_extract('guid', $vars);
 }
 
-elgg_push_breadcrumb(elgg_echo('file'), "file/all");
+elgg_entity_gatekeeper($guid);
+
+$owner = get_entity($guid);
+
+elgg_push_collection_breadcrumbs('object', 'file', $owner);
 
 elgg_register_title_button('file', 'add', 'object', 'file');
 
@@ -30,23 +35,9 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 
 $title = elgg_echo("file:user", [$owner->getDisplayName()]);
 
-// List files
-$options = [
-	'type' => 'object',
-	'subtype' => 'file',
-	'full_view' => false,
-	'no_results' => elgg_echo("file:none"),
-	'preload_owners' => true,
-	'distinct' => false,
-];
-
-if ($owner instanceof ElggGroup) {
-	$options['container_guid'] = $owner->guid;
-} else {
-	$options['owner_guid'] = $owner->guid;
-}
-
-$content = elgg_list_entities($options);
+$listing_params = $vars;
+$listing_params['entity'] = $owner;
+$content = elgg_view('file/listing/owner', $listing_params);
 
 $sidebar = elgg_view('file/sidebar');
 

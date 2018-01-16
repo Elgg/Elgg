@@ -73,7 +73,7 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 						'name' => 'blog',
 						'text' => elgg_echo('blog:group'),
 						'href' => elgg_generate_url('collection:object:blog:group', [
-							'group_guid' => $entity->guid,
+							'guid' => $entity->guid,
 							'subpage' => 'all',
 						]),
 			]);
@@ -116,7 +116,7 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 			]);
 		} else {
 			$url_segment = elgg_generate_url('collection:object:blog:group', [
-				'group_guid' => $page_owner->guid,
+				'guid' => $page_owner->guid,
 				'subpage' => 'archive',
 				'lower' => $lower,
 				'upper' => $upper,

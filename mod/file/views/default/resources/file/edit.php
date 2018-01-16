@@ -5,28 +5,24 @@
  * @package ElggFile
  */
 
-elgg_load_library('elgg:file');
-
 elgg_gatekeeper();
 
 $file_guid = (int) elgg_extract('guid', $vars);
 
 $file = get_entity($file_guid);
+
 if (!$file instanceof ElggFile) {
-	forward();
+	throw new \Elgg\EntityNotFoundException();
 }
-/* @var ElggFile $file */
 
 if (!$file->canEdit()) {
-	forward();
+	throw new \Elgg\EntityPermissionsException();
 }
 
 $title = elgg_echo('file:edit');
 
-elgg_push_breadcrumb(elgg_echo('file'), "file/all");
-elgg_push_breadcrumb($file->getDisplayName(), $file->getURL());
-
-elgg_set_page_owner_guid($file->getContainerGUID());
+elgg_push_entity_breadcrumbs($file);
+elgg_push_breadcrumb($title);
 
 $form_vars = ['enctype' => 'multipart/form-data'];
 $body_vars = file_prepare_form_vars($file);
