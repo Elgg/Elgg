@@ -40,11 +40,11 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:check:php:register_globals' => 'Debe desactivarse el registro de globales.',
 	'install:check:php:session.auto_start' => "session.auto_start debe desactivarse para que Elgg funcione. Modifique la configuración de su servidor o agregue la directiva al archivo .htaccess de Elgg.",
 
-	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
+	'install:check:installdir' => 'Su servidor web no tiene permiso para crear el archivo settings.php en su directorio de instalación. Tiene dos opciones:
 
-		1. Change the permissions on the elgg-config directory of your Elgg installation
+		1. Cambie los permisos en el directorio elgg-config de su instalación de Elgg.
 
-		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+		2. Copiar el archivo %s/settings.example.php a elgg-config/settings.php y siga las instrucciones que contiene para configurar los parámetros de la base de datos.',
 	'install:check:readsettings' => 'Existe un archivo settings en el directorio engine pero el servidor no puede leerlo. Puede eliminar el archivo o modificar los permisos sobre el mismo.',
 
 	'install:check:php:success' => "El PHP de su servidor satisface todos los requerimientos de Elgg.",
@@ -59,14 +59,14 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:database:label:dbname' => 'Nombre de la Base de Datos',
 	'install:database:label:dbhost' => 'Host de Base de Datos',
 	'install:database:label:dbprefix' => 'Prefijo de Tablas de la Base de Datos',
-	'install:database:label:timezone' => "Timezone",
+	'install:database:label:timezone' => "Zona horaria",
 
 	'install:database:help:dbuser' => 'Usuario que posee todos los privilegios sobre la base de datos MySql que creó para Elgg',
 	'install:database:help:dbpassword' => 'Contraseña para la cuenta del usuario anterior',
 	'install:database:help:dbname' => 'Nombre de la base de datos Elgg',
 	'install:database:help:dbhost' => 'Nombre del Host para el servidor MySQL (normalmente localhost)',
 	'install:database:help:dbprefix' => "Prefijo para todas las tablas de Elgg (normalmente elgg_)",
-	'install:database:help:timezone' => "The default timezone in which the site will operate",
+	'install:database:help:timezone' => "La zona horaria predeterminada en la que el sitio funcionará",
 
 	'install:settings:instructions' => 'Durante la configuración de Elgg será necesaria cierta información sobre el sitio. Si no ha <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">creado una carpeta de datos</a> para Elgg, hágalo ahora.',
 
@@ -126,8 +126,8 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:error:nodatabase' => 'No se pudo acceder a la base de datos %s. Puede que no exista.',
 	'install:error:cannotloadtables' => 'No se pueden cargar las tablas de la base de datos',
 	'install:error:tables_exist' => 'Se encontraron tablas de Elgg preexistentes en la base de datos. Debe eliminarlas o reiniciar el instalador para intentar utilizarlas. Para reiniciar el instalador, quite \'?step=database\' de la URL en la barra de direcciones de su explorador y presione ENTER.',
-	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
+	'install:error:readsettingsphp' => 'No se puede leer /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'No se puede escribir /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s es requerido',
 	'install:error:relative_path' => 'We don\'t think "%s" is an absolute path for your data directory',
 	'install:error:datadirectoryexists' => 'El directorio de datos (data) %s no existe.',

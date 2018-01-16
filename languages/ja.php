@@ -59,7 +59,10 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'マニフェストに記述されている依存関係のタイプ "%s" が正しくありません。',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'マニフェストに記述されているプロバイドのタイプ "%s" が正しくありません。',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'プラグイン %3$s で依存関係のタイプ %2$s の 「%1$s」 が正しくありません。依存関係が循環しています。',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
 	'ElggPlugin:Exception:CannotIncludeFile' => '%s (プラグイン %s (guid: %s))が %s に含まれていません。パーミッションを調べてください！',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'プラグイン %s (guid: %s)のViewディレクトリを %s で開くことができません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:NoID' => 'プラグイン guid %s のIDがありません！',
 	'PluginException:NoPluginName' => "プラグイン名を見つけることができませんでした。",
@@ -67,6 +70,8 @@ return array(
 	'PluginException:NoAvailableParser' => 'マニフェストAPI(Ver. %s)のパーサをプラグイン%sの中で見つけることができません。',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "マニフェストファイル内で'%s'属性が必要なのですがプラグイン%sの中ではありませんでした。",
 	'ElggPlugin:InvalidAndDeactivated' => '%s は不正なプラグインですので起動されませんでした。',
+	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
 
 	'ElggPlugin:Dependencies:Requires' => '必須',
 	'ElggPlugin:Dependencies:Suggests' => '示唆',
@@ -131,6 +136,32 @@ return array(
 	'upload:error:extension' => 'アップロードされたファイルを保存出来ませんでした。',
 	'upload:error:unknown' => 'ファイルアップロードに失敗しました。',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Admin',
+	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:excerpt' => 'Description',
+	'table_columns:fromView:link' => 'Name/Title',
+	'table_columns:fromView:icon' => 'Icon',
+	'table_columns:fromView:item' => 'Item',
+	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:time_created' => 'Time Created',
+	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:user' => 'User',
+
+	'table_columns:fromProperty:description' => 'Description',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Name',
+	'table_columns:fromProperty:type' => 'Type',
+	'table_columns:fromProperty:username' => 'Username',
+
+	'table_columns:fromMethod:getSubtype' => 'Subtype',
+	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
+	'table_columns:fromMethod:getMimeType' => 'MIME Type',
+	'table_columns:fromMethod:getSimpleType' => 'Type',
 
 /**
  * User details
@@ -335,8 +366,8 @@ return array(
 	'river:none' => '近況報告はありません',
 	'river:update' => '%s さんの更新',
 	'river:delete' => 'このアクティビティ項目を削除しました',
-	'river:delete:success' => 'River 項目を削除しました',
-	'river:delete:fail' => 'River 項目は削除できませんでした',
+	'river:delete:success' => 'Activity item has been deleted',
+	'river:delete:fail' => 'Activity item could not be deleted',
 	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
 	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => '正しいユーザではありません',
@@ -640,6 +671,7 @@ return array(
 	'admin:plugins:warning:invalid' => 'このプラグインは正しくありません: %s',
 	'admin:plugins:warning:invalid:check_docs' => '問題解決のヒントは、 <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> にあるかもしれません。',
 	'admin:plugins:cannot_activate' => '起動できません',
+	'admin:plugins:cannot_deactivate' => 'cannot deactivate',
 	'admin:plugins:already:active' => '選択されたプラグインは、すでに起動しています。',
 	'admin:plugins:already:inactive' => '選択されたプラグインはすでに停止しています。',
 
@@ -691,6 +723,11 @@ return array(
 	'admin:server:label:post_max_size' => '最大 POST サイズ',
 	'admin:server:label:upload_max_filesize' => '最大アップロードサイズ',
 	'admin:server:warning:post_max_too_small' => '(注: このサイズは、post_max_size よりも小さくなければなりません。)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure memcache.
+	',
 
 	'admin:user:label:search' => "ユーザ検索",
 	'admin:user:label:searchbutton' => "検索",
@@ -749,6 +786,10 @@ return array(
 	'usersettings:statistics' => "あなたの統計情報",
 	'usersettings:statistics:opt:description' => "サイト上のユーザとオブジェクトに関する統計情報を表示します。",
 	'usersettings:statistics:opt:linktext' => "アカウントの統計情報",
+	
+	'usersettings:statistics:login_history' => "Login History",
+	'usersettings:statistics:login_history:date' => "Date",
+	'usersettings:statistics:login_history:ip' => "IP Address",
 
 	'usersettings:user' => "%s さんの設定",
 	'usersettings:user:opt:description' => "ユーザ設定の管理を行います。",
@@ -1113,6 +1154,7 @@ return array(
 	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
 	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
 	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
+	'installation:cache_symlink:paths' => 'Correctly configured symbolic link must link <i>%s</i> to <i>%s</i>',
 	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
 
 	'installation:minify:description' => "Simple cache は JavaScripte と CSS ファイルを圧縮することでパフォーマンスも改善することができます。（simple cacheを「有効」にする必要があります。）",
@@ -1166,18 +1208,9 @@ return array(
 	'upgrade:finished' => 'アプグレードを完了しました',
 	'upgrade:finished_with_errors' => '<p>アップグレードはエラーが出て終了してしまいました。 ページをリフレッシュして、もう一度アップグレードを実行してください。</p></p><br />再びエラーが起こったなら、原因を究明するためサーバのエラーログをチェックしてみてください。Elgg community の <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> にエラーを修正するための答えがあるかもしれません。</p>',
 
-	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'コメントのアップグレード',
-	'upgrade:comment:create_failed' => 'Comment id %s を entity に変換するのに失敗しました。',
-	'admin:upgrades:commentaccess' => 'コメント・アクセスのアップグレード',
-
-	// Strings specific for the datadir upgrade
-	'admin:upgrades:datadirs' => 'データディレクトリのアップグレード',
-
-	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Discussion repryのアップグレード',
-	'discussion:upgrade:replies:create_failed' => 'Discussion reply id %s を entity に変換するのに失敗しました。',
-
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	
 /**
  * Welcome
  */

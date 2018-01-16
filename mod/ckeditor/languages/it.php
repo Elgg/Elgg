@@ -2,5 +2,5 @@
 return array(
 	'ckeditor:html' => "Modifica HTML",
 	'ckeditor:visual' => "Interfaccia di modifica",
-	'ckeditor:blockimagepaste' => "Incollare le immagini non è permesso.",
+	'ckeditor:blockimagepaste' => "Non è possibile incollare le immagini.",
 );

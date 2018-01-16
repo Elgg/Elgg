@@ -15,8 +15,6 @@ return array(
 	'bookmarks:bookmarklet' => "Obter Marcador de favoritos",
 	'bookmarks:bookmarklet:group' => "Obter Marcador de Favoritos da Comunidade",
 	'bookmarks:inbox' => "Caixa de entrada dos favoritos",
-	'bookmarks:with' => "Compartilhar com",
-	'bookmarks:new' => "Um novo item adicionado aos favoritos",
 	'bookmarks:address' => "hiperlink a ser marcado como favorito",
 	'bookmarks:none' => 'Sem favoritos',
 
@@ -37,10 +35,6 @@ Visualizado e comentado no favorito:
 
 	'bookmarks:numbertodisplay' => 'Número de favoritos a serem exibidos',
 
-	'bookmarks:shared' => "Compartilhados",
-	'bookmarks:visit' => "Visitar o link",
-	'bookmarks:recent' => "Adicionados recentemente",
-
 	'river:create:object:bookmarks' => '%s adicionou como favorito %s',
 	'river:comment:object:bookmarks' => '%s comentou no favorito %s',
 	'bookmarks:river:annotate' => 'adicionado um comentário neste link marcado como favorito',
@@ -58,7 +52,7 @@ Visualizado e comentado no favorito:
 	'bookmarks:widget:description' => "Este dispositivo demonstra seus últimos itens favoritos.",
 
 	'bookmarks:bookmarklet:description' =>
-			"O marcador de favoritos permite que você compartilhe qualquer link que você encontrar na Internet com seus amigos, ou apenas marcá-lo como favorito para você mesmo. Para usar este recurso, apenas arraste o seguinte botão para a barra de links do seu navegador:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Se você está usando o Internet Explorer, você precisará clicar com o botão direito no ícone do marcador de favoritos, selecionar 'adicionar em favoritos', e então selecionar a barra de links.",

@@ -20,14 +20,14 @@ return array(
 	'logout' => "Déconnexion",
 	'logoutok' => "Vous avez été déconnecté(e).",
 	'logouterror' => "Impossible de vous déconnecter. Veuillez réessayer.",
-	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
-	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
+	'session_expired' => "Suite à une inactivité prolongée, votre session de connexion a expiré. Veuillez <a href='javascript:location.reload(true)'>recharger</a> la page pour vous connecter.",
+	'session_changed_user' => "Vous êtes connecté(e) avec un autre compte utilisateur. Vous devriez <a href='javascript:location.reload(true)'>recharger</a> la page.",
 
 	'loggedinrequired' => "Vous devez être connecté(e) pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
 	'membershiprequired' => "Vous devez être membre de ce groupe pour voir cette page.",
 	'limited_access' => "Vous n'avez pas la permission de consulter cette page.",
-	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
+	'invalid_request_signature' => "L'URL de la page à laquelle vous essayez d'accéder est invalide ou a expiré",
 
 /**
  * Errors
@@ -59,7 +59,10 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Le fichier manifest.xml contient un type de dépendance invalide : "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Le fichier manifest.xml contient un type de fournisseur "%s" invalide.',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Dépendance %s invalide "%s" dans le plugin %s. Les plugins ne peuvent pas être en conflit avec, ni avoir besoin de quelque chose qu\'ils fournissent eux-même !',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflit avec le plugin : %s',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Le fichier du plugin "elgg-plugin.php" est présent mais illisible.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Impossible d\'inclure %s pour le plugin %s (GUID : %s) sur %s. Vérifiez les autorisations !',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Envoi d\'une exception comprenant %s pour le plugin %s (guid: %s) à %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Impossible d\'ouvrir le répertoire des vues du plugin %s (GUID : %s) sur %s. Vérifiez les autorisations !',
 	'ElggPlugin:Exception:NoID' => 'Aucun ID pour le plugin de GUID %s !',
 	'PluginException:NoPluginName' => "Le nom du plugin n'a pas pu être trouvé",
@@ -67,6 +70,8 @@ return array(
 	'PluginException:NoAvailableParser' => 'Impossible de trouver un analyseur syntaxique du fichier manifest.xml pour l\'API version %s dans le plugin %s.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "L'attribut requis \"%s\" est manquant dans le fichier manifest.xml pour le plugin %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s est un plugin invalide et a été désactivé.',
+	'ElggPlugin:activate:BadConfigFormat' => 'Le fichier du plugin "elgg-plugin.php" n\'a pas renvoyé un tableau sérialisable.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Le fichier du plugin "elgg-plugin.php" a retourné une valeur de sortie.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Requiert',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggère',
@@ -131,6 +136,32 @@ return array(
 	'upload:error:extension' => 'Impossible d\'enregistrer le fichier chargé (extension).',
 	'upload:error:unknown' => 'Le chargement du fichier a échoué.',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Admin',
+	'table_columns:fromView:banned' => 'Banni',
+	'table_columns:fromView:container' => 'Conteneur (container)',
+	'table_columns:fromView:excerpt' => 'Description',
+	'table_columns:fromView:link' => 'Nom/Titre',
+	'table_columns:fromView:icon' => 'Icône',
+	'table_columns:fromView:item' => 'Élément',
+	'table_columns:fromView:language' => 'Langue',
+	'table_columns:fromView:owner' => 'Propriétaire',
+	'table_columns:fromView:time_created' => 'Date de création',
+	'table_columns:fromView:time_updated' => 'Date de mise à jour',
+	'table_columns:fromView:user' => 'Utilisateur',
+
+	'table_columns:fromProperty:description' => 'Description',
+	'table_columns:fromProperty:email' => 'E-mail',
+	'table_columns:fromProperty:name' => 'Nom',
+	'table_columns:fromProperty:type' => 'Type',
+	'table_columns:fromProperty:username' => 'Identifiant',
+
+	'table_columns:fromMethod:getSubtype' => 'Sous-type (subtype)',
+	'table_columns:fromMethod:getDisplayName' => 'Nom/Titre',
+	'table_columns:fromMethod:getMimeType' => 'Type MIME',
+	'table_columns:fromMethod:getSimpleType' => 'Type',
 
 /**
  * User details
@@ -143,7 +174,7 @@ return array(
 	'password' => "Mot de passe",
 	'passwordagain' => "Mot de passe (confirmation)",
 	'admin_option' => "Définir comme administrateur ?",
-	'autogen_password_option' => "Automatically generate a secure password?",
+	'autogen_password_option' => "Générer automatiquement un mot de passe sécurisé ?",
 
 /**
  * Access
@@ -335,10 +366,10 @@ return array(
 	'river:none' => 'Aucune activité',
 	'river:update' => 'Mise à jour pour %s',
 	'river:delete' => 'Retirer cet élément du flux d\'activité',
-	'river:delete:success' => 'L\'élément a été supprimé du flux d\'activité',
-	'river:delete:fail' => 'L\'élément n\'a pas pu être supprimé du flux d\'activité',
-	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
-	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
+	'river:delete:success' => 'L\'élément d\'activité a été supprimé',
+	'river:delete:fail' => 'L\'élément d\'activité n\'a pas pu être supprimé',
+	'river:delete:lack_permission' => 'Vous n\'avez pas les permissions nécessaires pour supprimer cet élément d\'activité',
+	'river:can_delete:invaliduser' => 'Impossible de vérifier canDelete pour le user_guid [%s] car l\'utilisateur n\'existe pas.',
 	'river:subject:invalid_subject' => 'Utilisateur invalide',
 	'activity:owner' => 'Voir le flux d\'activité',
 
@@ -641,6 +672,7 @@ return array(
 	'admin:plugins:warning:invalid' => '%s n\'est pas un plugin d\'Elgg valide. Vérifiez <a href="http://docs.elgg.org/Invalid_Plugin">la documentation d\'Elgg</a> les conseils de dépannage.',
 	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/fr/stable/appendix/faqs.html">la documentation d\'Elgg</a> pour des astuces de débogage. Vous pouvez également consulter <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">version anglophone</a>, qui peut être plus complète / récente.',
 	'admin:plugins:cannot_activate' => 'Activation impossible',
+	'admin:plugins:cannot_deactivate' => 'impossible de désactiver',
 	'admin:plugins:already:active' => 'Plugin(s) déjà activé(s).',
 	'admin:plugins:already:inactive' => 'Plugin(s) déjà désactivé(s).',
 
@@ -692,6 +724,11 @@ return array(
 	'admin:server:label:post_max_size' => 'Taille maximum d\'un envoi POST',
 	'admin:server:label:upload_max_filesize' => 'Taille maximale d\'envoi',
 	'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour supporter des envois de cette taille)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration d\'Elgg.
+		Pour des performances améliorées, il est recommandé que vous activiez et configuriez memcache.
+	',
 
 	'admin:user:label:search' => "Trouver des utilisateurs :",
 	'admin:user:label:searchbutton' => "Chercher",
@@ -750,6 +787,10 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'usersettings:statistics' => "Vos statistiques",
 	'usersettings:statistics:opt:description' => "Visualiser les statistiques des utilisateurs et des objets sur le site.",
 	'usersettings:statistics:opt:linktext' => "Statistiques du compte.",
+	
+	'usersettings:statistics:login_history' => "Historique de connexion",
+	'usersettings:statistics:login_history:date' => "Date",
+	'usersettings:statistics:login_history:ip' => "Adresse IP",
 
 	'usersettings:user' => "Paramètres de %s",
 	'usersettings:user:opt:description' => "Ceci vous permet de contrôler les paramètres de votre compte.",
@@ -1111,10 +1152,11 @@ Après connexion, nous vous recommandons de changer votre mot de passe.
 	'installation:simplecache:description' => "Le cache simple augmente les performances en mettant en cache du contenu statique comme des fichiers CSS et Javascript.",
 	'installation:simplecache:label' => "Utiliser le cache simple (recommandé)",
 
-	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
-	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
-	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
-	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+	'installation:cache_symlink:description' => "Le lien symbolique vers le répertoire du cache simple (simplecache) permet au serveur de servir des vues statiques en passant outre le moteur, ce qui améliore considérablement les performances et réduit la charge du serveur",
+	'installation:cache_symlink:label' => "Utiliser un lien symbolique vers le répertoire du cache simple (recommandé)",
+	'installation:cache_symlink:warning' => "Le lien symbolique a été établi. Si, pour quelque raison que ce soit, vous souhaitez supprimer le lien, effacez le lien symbolique vers le répertoire de votre serveur.",
+	'installation:cache_symlink:paths' => 'Un lien symbolique correctement configuré doit lier <i>%s</i> vers <i>%s</i>',
+	'installation:cache_symlink:error' => "EN raison de la configuration de votre serveur, le lien symbolique ne peut pas être créé automatiquement. Veuillez vous référer à la document pour créer le lien symbolique manuellement.",
 
 	'installation:minify:description' => "Le cache simple peut également améliorer les performances en compressant les fichiers JavaScript et CSS. (Le cache simple doit être activé.)",
 	'installation:minify_js:label' => "Compresser le JavaScript (recommandé)",
@@ -1165,18 +1207,9 @@ Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="h
 	'upgrade:finished' => 'Mise à jour terminée',
 	'upgrade:finished_with_errors' => '<p>La mise à niveau s\'est terminée avec des erreurs. Rafraîchissez la page et tentez de relancer la mise à niveau.</p><p>Si l\'erreur se produit à nouveau, vérifiez les journaux d\'erreur du serveur web pour identifier une cause possible. Vous pouvez demander de l\'aide pour résoudre cette erreur dans le <a href="https://community.elgg.org/groups/profile/179063/elgg-technical-support">groupe de support technique</a> de la communauté Elgg.</p>',
 
-	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'Mise à jour des commentaires',
-	'upgrade:comment:create_failed' => 'Impossible de convertir le commentaire d\'id %s en une entité.',
-	'admin:upgrades:commentaccess' => 'Mise à jour du niveau d\'accès des commentaires',
-
-	// Strings specific for the datadir upgrade
-	'admin:upgrades:datadirs' => 'Répertoire de données mis à jour',
-
-	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Réponses aux discussions mises à jour',
-	'discussion:upgrade:replies:create_failed' => 'Impossible de convertir la réponse à la discussion d\'id %s en une entité.',
-
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Aligner les colonnes GUID de la base de données',
+	
 /**
  * Welcome
  */
