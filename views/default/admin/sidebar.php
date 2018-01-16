@@ -4,7 +4,6 @@
  */
 
 $menu = elgg_view_menu('page', [
-	'sort_by' => 'priority',
 	'show_section_headers' => true,
 ]);
 

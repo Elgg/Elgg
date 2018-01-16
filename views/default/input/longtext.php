@@ -46,7 +46,6 @@ $value = htmlspecialchars($vars['value'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 unset($vars['value']);
 
 echo elgg_view_menu('longtext', [
-	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 	'textarea_id' => elgg_extract('id', $vars),
 ]);

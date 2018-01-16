@@ -72,7 +72,7 @@ class Service {
 		$params = $this->hooks->trigger('parameters', "menu:$name", $params, $params);
 
 		if (!isset($params['sort_by'])) {
-			$params['sort_by'] = 'text';
+			$params['sort_by'] = 'priority';
 		}
 
 		$items = $this->hooks->trigger('register', "menu:$name", $params, $items);

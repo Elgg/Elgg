@@ -175,7 +175,7 @@ in alphapetical order:
 .. code-block:: php
 
 	// in a resource view
-	echo elgg_view_menu('my_menu', array('sort_by' => 'title'));
+	echo elgg_view_menu('my_menu', array('sort_by' => 'text'));
 
 You can now add new items to the menu like this:
 

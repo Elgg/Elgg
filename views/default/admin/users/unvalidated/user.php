@@ -14,7 +14,6 @@ $checkbox = elgg_view('input/checkbox', [
 
 $menu = elgg_view_menu('user:unvalidated', [
 	'entity' => $user,
-	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
 ]);
 

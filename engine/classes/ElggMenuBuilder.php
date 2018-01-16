@@ -30,7 +30,7 @@ class ElggMenuBuilder {
 	 * @param mixed $sort_by Method to sort the menu by. @see \ElggMenuBuilder::sort()
 	 * @return array
 	 */
-	public function getMenu($sort_by = 'text') {
+	public function getMenu($sort_by = 'priority') {
 
 		$this->selectFromContext();
 

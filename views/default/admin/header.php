@@ -23,6 +23,6 @@ elgg_require_js('page/elements/topbar');
 
 <div class="elgg-nav-collapse">
 	<?php
-	echo elgg_view_menu('admin_header', ['sort_by' => 'priority']);
+	echo elgg_view_menu('admin_header');
 	?>
 </div>

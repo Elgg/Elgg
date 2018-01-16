@@ -8,6 +8,4 @@
  *
  */
 
-echo elgg_view_menu('footer', [
-	'sort_by' => 'priority',
-]);
+echo elgg_view_menu('footer');
