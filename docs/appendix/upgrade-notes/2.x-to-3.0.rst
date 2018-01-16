@@ -903,6 +903,8 @@ Object listing views
 Menu changes
 ------------
 
+Default sorting of menu items has been changed from ``text`` to ``priority``.
+
 Support for ``icon`` and ``badge`` parameters was added. Plugins should start using these parameters and prefer them to a single ``text`` parameter. CSS should be used to control visibility of the label, icon and badge, instead of conditionals in preparing menu items.
 
 All menus are now wrapped with ``nav.elgg-menu-container`` to ensure that multiple menu sections have a single parent element, and can be styled using flexbox or floats.

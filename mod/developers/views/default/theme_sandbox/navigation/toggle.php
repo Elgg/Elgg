@@ -26,7 +26,6 @@ foreach (['anchor', 'binoculars', 'building', 'birthday-cake'] as $icon) {
 }
 
 echo elgg_view_menu('theme_sandbox:dropdown_menu', [
-	'sort_by' => 'priority',
 	'items' => $items,
 	'class' => 'elgg-menu-hz',
 ]);

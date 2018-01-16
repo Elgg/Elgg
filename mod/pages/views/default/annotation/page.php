@@ -42,7 +42,6 @@ if (!elgg_in_context('widgets')) {
 	// only show annotation menu outside of widgets
 	$menu = elgg_view_menu('annotation', [
 		'annotation' => $annotation,
-		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
 	]);
 }

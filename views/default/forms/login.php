@@ -48,9 +48,7 @@ ob_start();
 			?>
 		</div>
 		<?php
-		echo elgg_view_menu('login', [
-			'sort_by' => 'priority',
-		]);
+		echo elgg_view_menu('login');
 		?>
 	</div>
 <?php

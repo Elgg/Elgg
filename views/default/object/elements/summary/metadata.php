@@ -12,14 +12,12 @@ if (!isset($metadata)) {
 	$metadata .= elgg_view_menu('entity', [
 		'entity' => elgg_extract('entity', $vars),
 		'handler' => elgg_extract('handler', $vars),
-		'sort_by' => 'priority',
 	]);
 	
 	if (!elgg_in_context('admin')) {
 		$metadata .= elgg_view_menu('social', [
 			'entity' => elgg_extract('entity', $vars),
 			'handler' => elgg_extract('handler', $vars),
-			'sort_by' => 'priority',
 			'class' => 'elgg-menu-hz',
 		]);
 	}

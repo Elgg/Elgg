@@ -57,7 +57,7 @@ class UnpreparedMenu {
 	 * @return string|callable
 	 */
 	public function getSortBy() {
-		return elgg_extract('sort_by', $this->params, 'text');
+		return elgg_extract('sort_by', $this->params, 'priority');
 	}
 
 	/**

@@ -27,8 +27,6 @@ elgg_require_js('page/elements/topbar');
 	], elgg_view('search/search_box'));
 
 	echo elgg_view_menu('site');
-	echo elgg_view_menu('topbar', [
-		'sort_by' => 'priority',
-	]);
+	echo elgg_view_menu('topbar');
 	?>
 </div>

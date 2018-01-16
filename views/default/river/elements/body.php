@@ -19,7 +19,6 @@ $metadata = elgg_extract('metadata', $vars);
 if (!isset($metadata)) {
 	$metadata = elgg_view_menu('river', [
 		'item' => $item,
-		'sort_by' => 'priority',
 	]);
 	
 	$object = $item->getObjectEntity();
@@ -27,7 +26,6 @@ if (!isset($metadata)) {
 		$metadata .= elgg_view_menu('social', [
 			'entity' => $object,
 			'item' => $item,
-			'sort_by' => 'priority',
 			'class' => 'elgg-menu-hz',
 		]);
 	}

@@ -39,7 +39,6 @@ $title = elgg_echo('groups:members:title', [$group->getDisplayName()]);
 
 $tabs = elgg_view_menu('groups_members', [
 	'entity' => $group,
-	'sort_by' => 'priority',
 	'class' => 'elgg-tabs'
 ]);
 

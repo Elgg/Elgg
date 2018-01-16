@@ -7,7 +7,6 @@ elgg_push_context('developers_gear');
 
 // requires "admin" and "developers_gear" in context
 $menu = elgg_view_menu('page', [
-	'sort_by' => 'priority',
 	'show_section_headers' => true,
 	'class' => 'elgg-developers-gear',
 ]);

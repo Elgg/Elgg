@@ -22,7 +22,6 @@ elgg_load_css('admin/users/unvalidated');
 // add header
 $header = elgg_view_menu('user:unvalidated:bulk', [
 	'class' => 'elgg-menu-hz',
-	'sort_by' => 'priority',
 ]);
 
 // show list

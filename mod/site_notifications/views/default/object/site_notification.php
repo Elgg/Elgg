@@ -36,7 +36,6 @@ $params = [
 	'metadata' => elgg_view_menu('entity', [
 		'entity' => $entity,
 		'handler' => 'site_notifications',
-		'sort_by' => 'priority',
 	]),
 	'icon' => $checkbox . $icon,
 	'content' => $text,
