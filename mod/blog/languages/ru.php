@@ -34,11 +34,11 @@ return [
 	'blog:edit_revision_notice' => '(Старая версия)',
 	'blog:message:deleted_post' => 'Сообщение удалено.',
 	'blog:error:cannot_delete_post' => 'Не могу удалить сообщение.',
-	'blog:none' => '---',
+	'blog:none' => 'Нет записей в блоге',
 	'blog:error:missing:title' => 'Пожалуйста, введите название!',
 	'blog:error:missing:description' => 'Пожалуйста, заполните сообщение!',
 	'blog:error:cannot_edit_post' => 'Извините, сообщение не существует или Вы не имеете прав для его редактирования.',
-	'blog:error:post_not_found' => 'Cannot find specified blog post.',
+	'blog:error:post_not_found' => 'Не удается найти указанную запись в блоге.',
 	'blog:error:revision_not_found' => 'Cannot find this revision.',
 
 	// river

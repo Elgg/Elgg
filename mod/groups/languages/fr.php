@@ -13,7 +13,7 @@ return [
 	'groups:add' => "Créer un nouveau groupe",
 	'groups:edit' => "Modifier le groupe",
 	'groups:delete' => 'Supprimer le groupe',
-	'groups:membershiprequests' => 'Gérer les demandes à rejoindre le groupe',
+	'groups:membershiprequests' => 'Gérer les demandes d\'adhésion au groupe',
 	'groups:membershiprequests:pending' => 'Gérer les demandes à rejoindre le groupe (%s)',
 	'groups:invitations' => 'Invitations du groupe',
 	'groups:invitations:pending' => 'Invitations du groupe (%s)',
@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Ajout de l\'utilisateur au groupe réussi',
 	'groups:joinrequestnotmade' => 'Impossible de demander à rejoindre le groupe',
 	'groups:joinrequestmade' => 'La demande à rejoindre le groupe a bien été effectuée',
+	'groups:joinrequest:exists' => 'Vous avez déjà fait une demande d\'adhésion pour ce groupe.',
 	'groups:joined' => 'Vous avez bien rejoint le groupe !',
 	'groups:left' => 'Vous avez bien quitté le groupe',
 	'groups:notowner' => 'Désolé, vous n\'êtes pas le propriétaire du groupe.',
@@ -146,13 +147,13 @@ return [
 	'groups:invite:remove:check' => 'Confirmez-vous vouloir supprimer cette invitation ?',
 	'groups:invite:body' => "Bonjour %s,
 
-Vous avez été invité(e) à rejoindre le groupe '%s' cliquez sur le lien ci-dessous pour confirmer:
+%s vous a invité(e) à rejoindre le groupe \"%s\". Cliquez sur le lien ci-dessous pour confirmer :
 
 %s",
 
 	'groups:welcome:subject' => "Bienvenue dans le groupe %s !",
 	'groups:welcome:body' => "Bonjour %s !
-		
+
 Vous êtes maintenant membre du groupe \"%s\" ! Cliquez le lien ci-dessous pour commencer à participer !
 
 %s",

@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "Obter o miniaplicativo ligado",
 	'bookmarks:bookmarklet:group' => "Obter o miniaplicativo ligado do grupo",
 	'bookmarks:inbox' => "Caixa de entrada dos marcadores",
-	'bookmarks:with' => "Compartir co",
-	'bookmarks:new' => "Novo marcador",
 	'bookmarks:address' => "Enderezo do marcador",
 	'bookmarks:none' => 'Non hai marcadores',
 
@@ -37,10 +35,6 @@ Vexa e deixe un comentario no marcador:
 
 	'bookmarks:numbertodisplay' => 'Número de marcadores para mostrar',
 
-	'bookmarks:shared' => "Nos marcadores",
-	'bookmarks:visit' => "Visitar o recurso",
-	'bookmarks:recent' => "Últimos marcadores",
-
 	'river:create:object:bookmarks' => '%s engadiu %s aos seus marcadores',
 	'river:comment:object:bookmarks' => '%s deixou un comentario nun marcador %s',
 	'bookmarks:river:annotate' => 'un comentario neste marcador',
@@ -58,7 +52,7 @@ Vexa e deixe un comentario no marcador:
 	'bookmarks:widget:description' => "Mostrar os seus últimos marcadores.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Un «miniaplicativo ligado» é un botón especial que se garda na barra de ligazóns do navegador. O botón permite gardar calquera recurso que atope por internet nos marcadores, e opcionalmente compartilo cos seus contactos. Para configuralo, arrastre o seguinte botón á barra de ligazóns do navegador:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Se está a usar Internet Explorer, terá que premer a icona do miniaplicativo ligado co botón secundario, seleccionar «Engadir aos favoritos», e entón seleccionar a barra de ligazóns.",

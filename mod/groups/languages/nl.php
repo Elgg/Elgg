@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Gebruiker succesvol toegevoegd aan de groep',
 	'groups:joinrequestnotmade' => 'Lidmaatschapsverzoek kon niet worden gedaan',
 	'groups:joinrequestmade' => 'Lidmaatschapsverzoek succesvol gedaan',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Je bent lid geworden van de groep!',
 	'groups:left' => 'De groep succesvol verlaten',
 	'groups:notowner' => 'Helaas, je bent geen eigenaar/beheerder van deze groep.',

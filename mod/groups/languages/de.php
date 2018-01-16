@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Der Benutzer wurde als Mitglied der Gruppe hinzugefügt.',
 	'groups:joinrequestnotmade' => 'Die Anfrage zum Beitritt zur Gruppe ist fehlgeschlagen.',
 	'groups:joinrequestmade' => 'Die Anfrage zum Beitritt zur Gruppe wurde gesendet.',
+	'groups:joinrequest:exists' => 'Du hast bereits eine Anfrage zum Beitritt zu dieser Gruppe gestellt.',
 	'groups:joined' => 'Du bist der Gruppe beigetreten!',
 	'groups:left' => 'Du hast die Gruppe verlassen.',
 	'groups:notowner' => 'Entschuldigung, aber Du bist nicht der Gründer dieser Gruppe.',

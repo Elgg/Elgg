@@ -59,7 +59,10 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Die Manifest-Datei enthält den ungültigen Requires-Typ "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Die Manifest-Datei enthält den ungültigen Provides-Typ "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Nicht auflösbare %s-Abhängigkeit "%s" im Plugin %s. Plugins können nicht mit etwas in Konflikt stehen oder etwas voraussetzen, das sie selbst bereitstellen!',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Plugin-Konflikt mit Plugin: %s.',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Die Plugin-Datei "elgg-plugin.php" ist vorhanden aber sie kann nicht gelesen werden.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Einbindung von %s für Plugin %s (GUID: %s) an %s gescheitert.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Öffnen des Views-Verzeichnis für Plugin %s (GUID: %s) an %s gescheitert.',
 	'ElggPlugin:Exception:NoID' => 'Keine ID für Plugin-GUID %s!',
 	'PluginException:NoPluginName' => "Der Name des Plugins kann nicht ermittelt werden.",
@@ -67,6 +70,8 @@ return array(
 	'PluginException:NoAvailableParser' => 'Es steht kein Parser für die Manifest-API-Version %s des Plugins %s zur Verfügung.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Fehlendes Required-'%s'-Attribut in der Manifest-Datei des Plugins %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s ist kein gültiges Plugin und wurde deshalb deaktiviert.',
+	'ElggPlugin:activate:BadConfigFormat' => 'Die Plugin-Datei "elgg-plugin.php" hat keine serialisierbares Array zurückgegeben.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Die Plugin-Datei "elgg-plugin.php" hat eine Ausgabe erzeugt.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Benötigt',
 	'ElggPlugin:Dependencies:Suggests' => 'Schlägt vor',
@@ -131,6 +136,32 @@ return array(
 	'upload:error:extension' => 'Das Speichern der hochgeladenen Datei ist fehlgeschlagen.',
 	'upload:error:unknown' => 'Das Hochladen der Datei ist fehlgeschlagen.',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Admin',
+	'table_columns:fromView:banned' => 'Gesperrt',
+	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:excerpt' => 'Beschreibung',
+	'table_columns:fromView:link' => 'Name/Titel',
+	'table_columns:fromView:icon' => 'Icon',
+	'table_columns:fromView:item' => 'Eintrag',
+	'table_columns:fromView:language' => 'Sprache',
+	'table_columns:fromView:owner' => 'Besitzer',
+	'table_columns:fromView:time_created' => 'Erstellungszeitpunkt',
+	'table_columns:fromView:time_updated' => 'Aktualisierungszeitpunkt',
+	'table_columns:fromView:user' => 'Benutzer',
+
+	'table_columns:fromProperty:description' => 'Beschreibung',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Name',
+	'table_columns:fromProperty:type' => 'Typ',
+	'table_columns:fromProperty:username' => 'Benutzername',
+
+	'table_columns:fromMethod:getSubtype' => 'Subtyp',
+	'table_columns:fromMethod:getDisplayName' => 'Name/Titel',
+	'table_columns:fromMethod:getMimeType' => 'MIME-Typ',
+	'table_columns:fromMethod:getSimpleType' => 'Typ',
 
 /**
  * User details
@@ -642,6 +673,7 @@ return array(
 	'admin:plugins:warning:invalid' => 'Dieses Plugin ist nicht standardkonform: %s.',
 	'admin:plugins:warning:invalid:check_docs' => 'Bitte schau in der <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elgg-Dokumentation</a> nach, um weitere Hinweise zur Problemlösung zu erhalten.',
 	'admin:plugins:cannot_activate' => 'Aktivierung nicht möglich.',
+	'admin:plugins:cannot_deactivate' => 'Deaktivierung nicht möglich.',
 	'admin:plugins:already:active' => 'Das ausgewählte Plugin bzw. die ausgewählten Plugins sind bereits aktiviert.',
 	'admin:plugins:already:inactive' => 'Das ausgewählte Plugin bzw. die ausgewählten Plugins sind bereits deaktiviert.',
 
@@ -693,6 +725,11 @@ return array(
 	'admin:server:label:post_max_size' => 'Php-Einstellung von post_max_size',
 	'admin:server:label:upload_max_filesize' => 'Php-Einstellung von upload_max_filesize',
 	'admin:server:warning:post_max_too_small' => '(Bemerkung: Der Wert von post_max_size muss größer als dieser Wert sein, damit Uploads dieser Größe möglich sind)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, Memcache auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
+	',
 
 	'admin:user:label:search' => "Suche Benutzeraccount:",
 	'admin:user:label:searchbutton' => "Suche",
@@ -752,6 +789,10 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'usersettings:statistics' => "Deine persönliche Statistik",
 	'usersettings:statistics:opt:description' => "Überblick über Statistiken zu Benutzern und Objekten Deiner Community-Seite.",
 	'usersettings:statistics:opt:linktext' => "Account-Statistik",
+	
+	'usersettings:statistics:login_history' => "Login-Übersicht",
+	'usersettings:statistics:login_history:date' => "Datum",
+	'usersettings:statistics:login_history:ip' => "IP-Adresse",
 
 	'usersettings:user' => "Einstellungen von %s",
 	'usersettings:user:opt:description' => "Hier kannst Du Benutzereinstellungen konfigurieren.",
@@ -1116,6 +1157,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'installation:cache_symlink:description' => "Der symbolische Link zum Simple Cache-Verzeichnis ermöglicht es dem Server, statische Views ohne Zuhilfenahme der Elgg-Engine anzuzeigen. Dies verbessert die Performance und reduziert die Serverlast.",
 	'installation:cache_symlink:label' => "Symbolischen Link zum Simple Cache-Verzeichnis verwenden (empfohlen)",
 	'installation:cache_symlink:warning' => "Der symbolische Link wurde erstellt. Wenn Du zu einem späteren Zeitpunkt keinen Link zum Simple Cache-Verzeichnis mehr verwenden möchtest, lösche bitte den symbolischen Link zum Simple Cache-Verzeichnis aus dem Hauptverzeichnis Deiner Elgg-Installation.",
+	'installation:cache_symlink:paths' => 'Damit der symbolische Link richtig funktioniert, muss er <i>%s</i> auf <i>%s</i> verlinken.',
 	'installation:cache_symlink:error' => "Die automatische Erstellung des symbolischen Links ist fehlgeschlagen. Bitte schau in der Elgg-Dokumentation nach, wie Du den Link manuell erstellen kannst.",
 
 	'installation:minify:description' => "Der Simple-Cache kann die Performance auch zusätzlich noch durch Komprimierung der CSS- und JavaScript-Dateien verbessern. (Voraussetzung ist, das der Simple-Cache aktiviert ist.)",
@@ -1175,18 +1217,9 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'upgrade:finished' => 'Die Aktualisierung ist abgeschlossen.',
 	'upgrade:finished_with_errors' => '<p>Die Aktualisierung wurde beendet. Allerdings sind dabei Fehler aufgetreten. Lade die Seite erneut und versuche, die Aktualisierung nochmals durchzuführen.</p></p><br />Wenn dabei wieder Fehler auftreten, schaue in der Logdatei Deines Servers nach, ob es dort Einträge gibt, die eventuell weitere Informationen zur Ursache der Fehler liefern. Du kannst auch in der <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support-Gruppe</a> auf der Elgg-Community-Seite um Hilfe bei Deinem Problem bitten.</p>',
 
-	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'Aktualisierung der Kommentare',
-	'upgrade:comment:create_failed' => 'Die Konvertierung des Kommentars mit ID %s in eine Entität ist fehlgeschlagen.',
-	'admin:upgrades:commentaccess' => 'Aktualisierung der Zugangslevel von Kommentar-Entitäten',
-
-	// Strings specific for the datadir upgrade
-	'admin:upgrades:datadirs' => 'Aktualisierung des Datenverzeichnisses',
-
-	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Aktualisierung der Antworten in Diskussionsbeiträgen',
-	'discussion:upgrade:replies:create_failed' => 'Die Konvertierung des Diskussions-Antwort-Eintrags mit ID %s in eine Entität ist fehlgeschlagen..',
-
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Datentyp-Angleichung der GUID-Spalten in der Datenbank',
+	
 /**
  * Welcome
  */

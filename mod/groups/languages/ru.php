@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Пользователь добавлен в группу.',
 	'groups:joinrequestnotmade' => 'Простите, запрос не может быть осуществлен.',
 	'groups:joinrequestmade' => 'Запрос осуществлен.',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Вы вступили в группу!',
 	'groups:left' => 'Вы покинули группу',
 	'groups:notowner' => 'Простите, но вы не вледелец этой группы.',

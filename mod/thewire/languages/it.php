@@ -4,56 +4,55 @@ return [
 	/**
 	 * Menu items and titles
 	 */
-	'thewire' => "Agg.ti di stato",
-	'thewire:everyone' => "Tutti gli Aggiornamenti di stato",
-	'thewire:user' => "Aggiornamenti di stato di %s",
-	'thewire:friends' => "Aggiornamenti di stato dei tuoi amici",
+	'thewire' => "Messaggi brevi",
+	'thewire:everyone' => "Tutti i messaggi",
+	'thewire:user' => "Messaggi di %s",
+	'thewire:friends' => "Messaggi dei tuoi amici",
 	'thewire:replying' => "Stai rispondendo a %s (@%s) che ha scritto",
-	'thewire:thread' => "Conversazione",
-	'thewire:charleft' => "restanti (settings->configura i tuoi strumenti per integrazione con Twitter)",
-	'thewire:tags' => "Aggiornamenti di stato taggati con '%s'",
-	'thewire:noposts' => "Ancora nessun aggiornamento di stato",
-	'item:object:thewire' => "Messaggi in Aggiornamenti di stato",
-	'thewire:by' => 'Post in Aggiornamenti di stato di %s',
-	'thewire:previous:help' => "Leggi i post precedenti",
-	'thewire:hide:help' => "Nascondi i post precedenti",
+	'thewire:thread' => "Argomento",
+	'thewire:charleft' => "caratteri rimanenti",
+	'thewire:tags' => "Messaggi con tag '%s'",
+	'thewire:noposts' => "Ancora nessun messaggio",
+	'item:object:thewire' => "Messaggi",
+	'thewire:by' => 'Messaggi da %s',
+	'thewire:previous:help' => "Leggi i precedenti",
+	'thewire:hide:help' => "Nascondi i precedenti",
 
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s ha postato su %s",
-	'thewire:wire' => 'aggiornamento di stato',
+	'river:create:object:thewire' => "%s ha inviato a %s",
+	'thewire:wire' => 'messaggio',
 
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Visualizza i tuoi post di aggiornamento di stato più recenti',
+	'thewire:widget:desc' => 'Visualizza i tuoi ultimi messaggi',
 	'thewire:num' => 'Numero di elementi da visualizzare',
-	'thewire:moreposts' => 'Tutti i messaggi in Aggiornamenti di stato',
+	'thewire:moreposts' => 'Più messaggi',
 
 	/**
 	 * Status messages
 	 */
-	'thewire:posted' => "Il tuo messaggio è stato correttamente pubblicato in Aggiornamenti di stato.",
-	'thewire:deleted' => "Il tuo messaggio è stato correttamente cancellato.",
-	'thewire:blank' => "Spiacenti: devi scrivere qualcosa prima di poter salvare.",
-	'thewire:notfound' => "Spiacenti: non abbiamo trovato il messaggio cercato.",
-	'thewire:notsaved' => "Spiacenti, non abbiamo potuto salvare questo aggiornamento di stato",
-	'thewire:notdeleted' => "Spiacenti: non possiamo eliminare questo messaggio.",
+	'thewire:posted' => "Il tuo messaggio è stato inviato.",
+	'thewire:deleted' => "Il tuo messaggio è stato eliminato.",
+	'thewire:blank' => "Devi scrivere qualcosa prima di poterlo inviare.",
+	'thewire:notfound' => "Impossibile trovare il messaggio cercato.",
+	'thewire:notsaved' => "Impossibile salvare questo messaggio.",
+	'thewire:notdeleted' => "Impossibile eliminare questo messaggio.",
 
 	/**
 	 * Notifications
 	 */
-	'thewire:notify:summary' => 'Nuovo aggiornamento di stato: %s',
-	'thewire:notify:subject' => "Nuovo post in aggiornamenti di stato",
-	'thewire:notify:reply' => '%s ha risposto a %s in aggiornamenti di stato:',
-	'thewire:notify:post' => '%s ha postato in aggiornamenti di stato:',
-	'thewire:notify:footer' => "Visualizza e rispondi:
-%s",
+	'thewire:notify:summary' => 'Nuovo messaggio: %s',
+	'thewire:notify:subject' => "Nuovo messaggio da %s",
+	'thewire:notify:reply' => '%s ha risposto a %s con un messaggio:',
+	'thewire:notify:post' => '%s ha inviato un messaggio:',
+	'thewire:notify:footer' => "Visualizza e rispondi:\n%s",
 
 	/**
 	 * Settings
 	 */
-	'thewire:settings:limit' => "Numero massimo di caratteri per gli aggiornamenti di stato:",
+	'thewire:settings:limit' => "Numero massimo di caratteri per un messaggio:",
 	'thewire:settings:limit:none' => "Nessun limite",
 ];

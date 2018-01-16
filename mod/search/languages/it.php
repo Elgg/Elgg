@@ -1,7 +1,7 @@
 <?php
 
 return [
-	'search:enter_term' => 'Inserisci il testo da cercare:',
+	'search:enter_term' => 'Inserisci un termine di ricerca:',
 	'search:no_results' => 'Nessun risultato.',
 	'search:matched' => 'Corrispondenze:',
 	'search:results' => 'Risultati per %s',

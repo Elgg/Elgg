@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Usuário adicionado com sucesso na Comunidade',
 	'groups:joinrequestnotmade' => 'Não foi possível solicitar a participação na Comunidade',
 	'groups:joinrequestmade' => 'Foi solicitada a entrada na Comunidade',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Participação na Comunidade realizada com sucesso!',
 	'groups:left' => 'Você deixou a Comunidade com sucesso!',
 	'groups:notowner' => 'Desculpe, mas você não é o proprietário desta Comunidade.',

@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "Browser-plugin",
 	'bookmarks:bookmarklet:group' => "Verkrijg groeps-bookmarklet",
 	'bookmarks:inbox' => "Favorieteninbox",
-	'bookmarks:with' => "Deel met",
-	'bookmarks:new' => "Een nieuwe favoriet",
 	'bookmarks:address' => "Adres van de favoriet",
 	'bookmarks:none' => 'Geen favorieten',
 
@@ -42,10 +40,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.',
 
 	'bookmarks:numbertodisplay' => 'Aantal favorieten om weer te geven',
 
-	'bookmarks:shared' => "Favoriet",
-	'bookmarks:visit' => "Ga naar de pagina",
-	'bookmarks:recent' => "Recente favorieten",
-
 	'river:create:object:bookmarks' => '%s maakte %s aan als favoriet',
 	'river:comment:object:bookmarks' => '%s reageerde op een favoriet %s',
 	'bookmarks:river:annotate' => 'een reactie op deze favoriet',
@@ -63,7 +57,7 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.',
 	'bookmarks:widget:description' => "Deze widget is ontworpen voor je Dashboard en laat je de laatste favorieten in de Inbox zien.",
 
 	'bookmarks:bookmarklet:description' =>
-			"De favorieten browser-plugin maakt het mogelijk om iedere willekeurige pagina te delen met je vrienden, of om gewoon voor jezelf om te onthouden. Om hem te gebruiken sleep je de browser-plugin naar de favorietenbalk van je browser (deze kan ook de bladwijzerbalk heten):",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Als je Internet Explorer gebruikt moet je met de rechter muisknop op de browser-plugin klikken. Kies daarna voor 'toevoegen aan favorieten', en vervolgens de \"Links-balk\".",

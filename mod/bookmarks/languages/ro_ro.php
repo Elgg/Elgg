@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "Folosește marcatorul",
 	'bookmarks:bookmarklet:group' => "Folosește marcatorul de grup",
 	'bookmarks:inbox' => "Intrări de marcaje",
-	'bookmarks:with' => "Împărtășește cu",
-	'bookmarks:new' => "Un nou marcaj",
 	'bookmarks:address' => "Adresa marcajului",
 	'bookmarks:none' => 'Nu există marcaje',
 
@@ -37,10 +35,6 @@ Vezi și comentează marcajul:
 
 	'bookmarks:numbertodisplay' => 'Numărul de marcaje de afișat',
 
-	'bookmarks:shared' => "Marcat",
-	'bookmarks:visit' => "Vizitează resursa",
-	'bookmarks:recent' => "Marcaje recente",
-
 	'river:create:object:bookmarks' => '%s a marcat %s',
 	'river:comment:object:bookmarks' => '%s a adăugat un comentariu la un marcaj %s',
 	'bookmarks:river:annotate' => 'un comentariu la acest marcaj',
@@ -58,7 +52,7 @@ Vezi și comentează marcajul:
 	'bookmarks:widget:description' => "Afișează-ți ultimele marcaje.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Un marcator este un buton special pe care îl salvezi în bara de favorite a navigatorului tău. Acest lucru îți va permite să salvezi orice resursă găsită de tine pe internet la marcajele tale. Pentru a-l seta, trage butonul de mai jos în bara de favorite a navigatorului tău:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Dacă folosești Internet Explorer, va trebui să dai clic dreapta pe butonul de marcat, selectează 'adaugă la favorite', și apoi bara de favorite.",

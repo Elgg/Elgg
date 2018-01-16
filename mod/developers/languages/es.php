@@ -6,6 +6,7 @@ return [
 	'admin:develop_tools:inspect' => 'Inspecciona',
 	'admin:inspect' => 'Inspecciona',
 	'admin:develop_tools:unit_tests' => 'Tests unitarios',
+	'admin:develop_tools:entity_explorer' => 'Explorador de entidades',
 	'admin:developers' => 'Desarrolladores',
 	'admin:developers:settings' => 'Configuraci&oacute;n',
 
@@ -23,18 +24,33 @@ return [
 	'developers:help:screen_log' => "Se muestra la salida de elgg_log() y elgg_dump() y el contador de consultas a la Base de Datos",
 	'developers:label:show_strings' => "Mostrar strings de traducciones extrañas",
 	'developers:help:show_strings' => "Esto muestra las traducciones utilizadas por elgg_echo().",
+	'developers:label:show_modules' => "Mostrar los módulos AMD cargados en la consola",
+	'developers:help:show_modules' => "Flujos de módulos cargados y valores a su consola de JavaScript. ",
 	'developers:label:wrap_views' => "Wrap de vistas",
 	'developers:help:wrap_views' => "Esto envuelve casi todas las vistas con comentarios HTML. Muy útil para encontrar la vista creando HTML particular
          Esto puede dañar vistas no HTML en viewtype por defecto. Ver developers_wrap_views() para más detalles",
 	'developers:label:log_events' => "Eventos de Logs y Hooks de plugins",
 	'developers:help:log_events' => "Escribir eventos y hooks de plugins en el log. Precaución: hay varios de estos por página.",
+	'developers:label:show_gear' => "Usar %s fuera de la zona de administración",
+	'developers:help:show_gear' => "Un icono en la parte inferior derecha de la ventana que permite el acceso de los administradores a la configuración y enlaces de desarrollo.",
+	'developers:label:submit' => "Guardar y liberar cachés",
 
 	'developers:debug:off' => 'Apagado',
 	'developers:debug:error' => 'Error',
 	'developers:debug:warning' => 'Precaución',
 	'developers:debug:notice' => 'Información',
 	'developers:debug:info' => 'Información',
-	
+
+	// entity explorer
+	'developers:entity_explorer:help' => 'Ver información sobre entidades y realizar algunas acciones básicas en ellas.',
+	'developers:entity_explorer:guid:label' => 'Introduzca el guid de la entidad para inspeccionar',
+	'developers:entity_explorer:info' => 'Información de la Entidad',
+	'developers:entity_explorer:info:attributes' => 'Atributos',
+	'developers:entity_explorer:info:metadata' => 'Metadatos',
+	'developers:entity_explorer:info:relationships' => 'Relaciones',
+	'developers:entity_explorer:info:private_settings' => 'Configuración privada',
+	'developers:entity_explorer:delete_entity' => 'Eliminar esta entidad',
+
 	// inspection
 	'developers:inspect:help' => 'Inspección de configuration del framework Elgg.',
 	'developers:inspect:actions' => 'Acciones',
@@ -45,6 +61,7 @@ return [
 	'developers:inspect:simplecache' => 'Caché Simple',
 	'developers:inspect:views' => 'Vistas',
 	'developers:inspect:views:all_filtered' => "<b>¡Nota!</b> Todas las salidas devueltas por las vistas son filtradas mediante Hooks de los plugins:",
+	'developers:inspect:views:input_filtered' => "(Entrada filtrada por el hook del plugin: %s)",
 	'developers:inspect:views:filtered' => "(filtrador por el hook del plugin: %s)",
 	'developers:inspect:widgets' => 'Artilugios',
 	'developers:inspect:webservices' => 'Servicios web',
@@ -53,8 +70,11 @@ return [
 	'developers:inspect:file_location' => 'Ruta de fichero de la raíz de Elgg',
 
 	// event logging
+	'developers:request_stats' => "Solicitar estadísticas (No se incluye el evento shutdown)",
 	'developers:event_log_msg' => "%s: '%s, %s' en %s",
-	'developers:log_queries' => "%s consultas de Base de Datos (no se incluye el evento shutdown)",
+	'developers:log_queries' => "%s consultas de Base de Datos",
+	'developers:boot_cache_rebuilt' => "El caché de arranque se reconstruyó para esta solicitud",
+	'developers:elapsed_time' => "Tiempo transcurrido (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introducción',
@@ -79,4 +99,5 @@ return [
 
 	// status messages
 	'developers:settings:success' => 'Configuraciones almacenadas',
+	'developers:amd' => 'AMD',
 ];

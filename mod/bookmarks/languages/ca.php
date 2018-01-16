@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "Descarrega els marcadors dinàmics",
 	'bookmarks:bookmarklet:group' => "Descarrega un grup de marcadors dinàmics",
 	'bookmarks:inbox' => "Safata d'entrada de les adreces d'interès",
-	'bookmarks:with' => "Compartir amb",
-	'bookmarks:new' => "Nou element marcat com adreça d'interès",
 	'bookmarks:address' => "URL del recurs a marcar com adreça d'interès",
 	'bookmarks:none' => 'No hi ha enllaços',
 
@@ -37,10 +35,6 @@ Veure i afegir comentaris a l\'enllaç:
 
 	'bookmarks:numbertodisplay' => 'Nombre d\'elements marcats com adreces d\'interès a mostrar',
 
-	'bookmarks:shared' => "Afegit com adreça d'interès",
-	'bookmarks:visit' => "Visitar el recurs",
-	'bookmarks:recent' => "Adreces d'interès recents",
-
 	'river:create:object:bookmarks' => '%s ha enllaçat %s',
 	'river:comment:object:bookmarks' => '%s ha comentat l\'enllaç %s',
 	'bookmarks:river:annotate' => 'un comentari per aquest element marcat com adreça d\'interés',
@@ -58,7 +52,7 @@ Veure i afegir comentaris a l\'enllaç:
 	'bookmarks:widget:description' => "Aquest giny mostra les darreres adreces d'interés",
 
 	'bookmarks:bookmarklet:description' =>
-			"El marcador dinàmic de les adreces d'interès et permet compartir qualsevol recurs que trobis a la xarxa amb les teves amistats, o simplement marcar-los per a tu mateix/a. Utilitza'ls, simplement arrossega el botó a la teva barra de direcció:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Si estàs fent servir Internet Explorer, hauràs de fer botó dret sobre la icona del marcador dinàmic, escollir 'afegir a adreces d'interès' i aleshores a la barra d'enllaços.",

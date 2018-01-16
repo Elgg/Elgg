@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "Obtener marcadores",
 	'bookmarks:bookmarklet:group' => "Obtener widget de marcadores del grupo",
 	'bookmarks:inbox' => "Bandeja de entrada de marcadores",
-	'bookmarks:with' => "Compartir con",
-	'bookmarks:new' => "Un nuevo marcador",
 	'bookmarks:address' => "Direcciones del marcador",
 	'bookmarks:none' => 'No hay marcadores',
 
@@ -37,10 +35,6 @@ Ver y comentar en el marcador:
 
 	'bookmarks:numbertodisplay' => 'N&uacute;mero de marcadores a mostrar',
 
-	'bookmarks:shared' => "Marcado",
-	'bookmarks:visit' => "Visitar fuente",
-	'bookmarks:recent' => "Marcadores recientes",
-
 	'river:create:object:bookmarks' => '%s ha marcado %s',
 	'river:comment:object:bookmarks' => '%s ha comentado en el marcador %s',
 	'bookmarks:river:annotate' => 'ha comentado este marcador',
@@ -58,7 +52,7 @@ Ver y comentar en el marcador:
 	'bookmarks:widget:description' => "Mostrar los &uacute;ltimo0s marcadores.",
 
 	'bookmarks:bookmarklet:description' =>
-			"El widget de marcadores permite compartir cualquier recurso de la Web con tus amigos, o sinmplemente para ti mismo. Para usarlo, simplemente arrastra el enlace a la barra de marcadores de tu navegador:",
+			"Un bookmarklet es un tipo especial de botón que guardas en la barra de enlaces de tu navegador. Esto le permite guardar cualquier recurso que encuentre en la web a sus marcadores. Para configurarlo, arrastre el botón de abajo a la barra de vínculos de su navegador:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Si usas Internet Explorer, necesitas hacer click con el bot&oacute;n derecho del rat&oacute;n al enlace, select 'add to favorites', y entonces a la barra de marcadores.",
