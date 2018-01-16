@@ -739,6 +739,8 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 /**
  * Moves default menu items into a dropdown
  *
+ * @tip    Pass 'dropdown' => false to entity menu options to render the menu inline without a dropdown
+ *
  * @param \Elgg\Hook $hook 'prepare', 'menu:entity'|'menu:river'
  *
  * @return void|ElggMenuItem[]
@@ -747,12 +749,17 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
  */
 function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 	$result = $hook->getValue();
-	
+
+	$is_dropdown = $hook->getParam('dropdown', true);
+	if ($is_dropdown === false) {
+		return;
+	}
+
 	$items = elgg_extract('default', $result);
 	if (empty($items)) {
 		return;
 	}
-		
+
 	$result['default'] = [
 		\ElggMenuItem::factory([
 			'name' => 'entity-menu-toggle',
@@ -771,7 +778,7 @@ function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 			'children' => $items,
 		]),
 	];
-	
+
 	return $result;
 }
 
