@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'El usuario ha sido agregado con &eacute;xito',
 	'groups:joinrequestnotmade' => 'No se pudo enviar la solicitud de membres&iacute;a del grupo',
 	'groups:joinrequestmade' => 'Solicitar unirse al grupo',
+	'groups:joinrequest:exists' => 'Ya eres miembro de este grupo',
 	'groups:joined' => 'Te has unido al grupo',
 	'groups:left' => 'Has abandonado el grupo',
 	'groups:notowner' => 'No eres el propietario del grupo.',

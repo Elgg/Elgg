@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "ブックマークレットの取得",
 	'bookmarks:bookmarklet:group' => "グループのブックマークレットの取得",
 	'bookmarks:inbox' => "Bookmarks inbox",
-	'bookmarks:with' => "共有するメンバーの選択",
-	'bookmarks:new' => "新しいブックマークが追加されました",
 	'bookmarks:address' => "ブックマークのアドレス",
 	'bookmarks:none' => 'ブックマークはひとつも登録されていません',
 
@@ -37,10 +35,6 @@ return [
 
 	'bookmarks:numbertodisplay' => '表示するブックマークの件数',
 
-	'bookmarks:shared' => "ブックマーク済み",
-	'bookmarks:visit' => "ブックマーク先へ",
-	'bookmarks:recent' => "最近のブックマーク",
-
 	'river:create:object:bookmarks' => '%s さんは、%s をブックマークに登録しました。',
 	'river:comment:object:bookmarks' => '%s さんは、ブックマーク %s にコメントしました。',
 	'bookmarks:river:annotate' => 'このブックマークへのコメント',
@@ -58,7 +52,7 @@ return [
 	'bookmarks:widget:description' => "あなたが最近つけたブックマークを表示します。",
 
 	'bookmarks:bookmarklet:description' =>
-			"ブックマークレットは特殊なボタンで、ブラウザのリンクバーに保存することができます。Webで見つけたリソースを自分のブックマークに保存したり、オプションとして友だちと共有したりすることもできます。この機能を使用するには、ボタンをあなたのブラウザのリンクバーまでドラッグしてください:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Internet Explorerをお使いの方はブックマークレットアイコンを右クリックしてから「お気に入りに保存」を選択していただき、その後、リンクバーに登録してください。",

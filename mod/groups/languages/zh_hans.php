@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => '成功添加用户到圈子',
 	'groups:joinrequestnotmade' => '不能发出加入圈子申请',
 	'groups:joinrequestmade' => '申请了加入该圈子',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => '成功加入',
 	'groups:left' => '成功离开',
 	'groups:notowner' => '对不起，你不是该圈子的圈主',

@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 	'bookmarks:inbox' => "Bookmarks inbox",
-	'bookmarks:with' => "Μοιραστείτε με",
-	'bookmarks:new' => "Νέος σύνδεσμος",
 	'bookmarks:address' => "Διεύθυνση συνδέσμου",
 	'bookmarks:none' => 'Δεν υπάρχουν σύνδεσμοι',
 
@@ -36,10 +34,6 @@ return [
 
 	'bookmarks:numbertodisplay' => 'Αριθμός συνδέσμων για εμφάνιση',
 
-	'bookmarks:shared' => "Bookmarked",
-	'bookmarks:visit' => "Επισκευθείτε",
-	'bookmarks:recent' => "Πρόσφατοι σύνδεσμοι",
-
 	'river:create:object:bookmarks' => '%s ανέβασε το σύνδεσμο %s',
 	'river:comment:object:bookmarks' => '%s σχολίασε το σύνδεσμο %s',
 	'bookmarks:river:annotate' => 'ένα σχόλιο σε αυτό το σύνδεσμο',
@@ -57,7 +51,7 @@ return [
 	'bookmarks:widget:description' => "Προβολή των πιο πρόσφατων συνδέσμων σας.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Το εργαλείο bookmarklet σας επιτρέπει να μοιραστείτε οποιαδήποτε πηγή από το διαδίκτυο με τους φίλους σας, ή απλά να το κρατήσετε για τον εαυτό σας. Για να το χρησιμοποιήσετε, απλά σύρετε το παρακάτω κουμπί στη μπάρα διευθύνσεων του προγράμματος περιήγησής σας:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Εάν χρησιμοποιείτε τον Internet Explorer, θα πρέπει να κάντε δεξί κλικ στο εικονίδιο του σελιδοδείκτη, επιλέξτε «προσθήκη στα αγαπημένα».",

@@ -34,22 +34,22 @@ return [
 	'discussion:reply:missing' => 'Non si può inviare una risposta vuota',
 	'discussion:reply:topic_not_found' => 'Argomento non trovato',
 	'discussion:reply:error:cannot_edit' => 'Permessi insufficienti per modificare questa risposta',
-	'discussion:reply:error:permissions' => 'You are not allowed to reply to this topic',
+	'discussion:reply:error:permissions' => 'Permessi insufficienti per rispondere a questo argomento',
 
 	/**
 	 * River
 	 */
-	'river:create:object:discussion' => '%s ha aggiunto il nuovo argomento di discussione: %s',
-	'river:reply:object:discussion' => '%s ha risposto alla discussione: %s',
+	'river:create:object:discussion' => '%s ha aggiunto un nuovo argomento: %s',
+	'river:reply:object:discussion' => '%s ha risposto all\'argomento: %s',
 	'river:reply:view' => 'visualizza risposta',
 
 	/**
 	 * Notifications
 	 */
-	'discussion:topic:notify:summary' => 'Nuovo argomento di discussione: %s',
-	'discussion:topic:notify:subject' => 'Nuovo argomento di discussione: %s',
+	'discussion:topic:notify:summary' => 'Nuovo argomento intitolato %s',
+	'discussion:topic:notify:subject' => 'Nuovo argomento: %s',
 	'discussion:topic:notify:body' =>
-'%s ha aggiunto un nuovo argomento di discussione: %s
+'%s ha aggiunto un nuovo argomento: %s
 
 %s
 
@@ -92,9 +92,9 @@ Visualizza e rispondi qui:
 	'discussion:replies' => 'Risposte',
 	'discussion:addtopic' => 'Aggiungi un argomento',
 	'discussion:post:success' => 'La tua risposta è stata pubblicata',
-	'discussion:post:failure' => 'Si è verificato un problema durante il salvataggio della tua risposta',
+	'discussion:post:failure' => 'Si è verificato un problema durante l\'invio della tua risposta',
 	'discussion:topic:edit' => 'Modifica argomento',
-	'discussion:topic:description' => 'Messaggio dell\'argomento',
+	'discussion:topic:description' => 'Contenuti dell\'argomento',
 
 	'discussion:reply:edited' => "Hai modificato con successo il post",
 	'discussion:reply:error' => "Problema durante la modifica del post",

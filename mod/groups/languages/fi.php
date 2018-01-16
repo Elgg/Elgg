@@ -29,8 +29,8 @@ return [
 	'groups:my_status' => 'Oma jäsenyytesi',
 	'groups:my_status:group_owner' => 'Olet ryhmän omistaja',
 	'groups:my_status:group_member' => 'Olet ryhmän jäsen',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
+	'groups:subscribed' => 'Ilmoitukset ovat päällä',
+	'groups:unsubscribed' => 'Ilmoitukset ovat pois päältä',
 
 	'groups:members:title' => 'Jäsenet ryhmässä: %s',
 	'groups:members:more' => "Näytä kaikki jäsenet",
@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Käyttäjä lisättiin ryhmään',
 	'groups:joinrequestnotmade' => 'Ryhmän jäsenyyden anominen epäonnistui',
 	'groups:joinrequestmade' => 'Lähetettiin pyyntö päästä ryhmän jäseneksi',
+	'groups:joinrequest:exists' => 'Olet jo anonut jäsenyyttä tähän ryhmään',
 	'groups:joined' => 'Olet nyt ryhmän jäsen!',
 	'groups:left' => 'Olet nyt eronnut ryhmästä',
 	'groups:notowner' => 'Et ole ryhmän omistaja.',

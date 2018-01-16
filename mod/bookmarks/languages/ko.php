@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "책갈피 도구 얻기",
 	'bookmarks:bookmarklet:group' => "모둠책갈피도구 얻기",
 	'bookmarks:inbox' => "받은 책갈피 ",
-	'bookmarks:with' => "공유하기",
-	'bookmarks:new' => "새 책갈피",
 	'bookmarks:address' => "책갈피 주소",
 	'bookmarks:none' => '책갈피 없슴',
 
@@ -37,10 +35,6 @@ return [
 
 	'bookmarks:numbertodisplay' => '표시할 책갈피의 수',
 
-	'bookmarks:shared' => "책갈피에 추가됨",
-	'bookmarks:visit' => "내용 보기",
-	'bookmarks:recent' => "최근 책갈피",
-
 	'river:create:object:bookmarks' => '%s 책갈피에 추가함 %s',
 	'river:comment:object:bookmarks' => '%s가 책갈피 %s 에 댓글을 남겼습니다.',
 	'bookmarks:river:annotate' => '이 책갈피의 댓글',
@@ -58,7 +52,7 @@ return [
 	'bookmarks:widget:description' => "최신의 책갈피를 표시합니다.",
 
 	'bookmarks:bookmarklet:description' =>
-			"책갈피도구는 웹브라우져의 즐겨찾기막대에 추가할 수 있는 특별한 형태의 단추입니다. 이것은 웹서핑 중 발견한 어떠한 내용도 당신의 책갈피에 저장할 수 있도록해주고, 또한 친구와 공유할 수도 있습니다. 이것을 설정하려면, 아래의 단추를 웹브라우져의 즐겨찾기막대에 끌어서 넣으세요.",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"만약 인터넷익스플로러를 사용중이라면, 책갈피도구를 우클릭하고 \"즐겨찾기에 추가하기\"를 선택하고,  즐겨찾기막대를 선택하세요.",

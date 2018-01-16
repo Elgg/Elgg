@@ -15,8 +15,6 @@ return [
 	'bookmarks:bookmarklet' => "Hent \"Bookmarklet\"",
 	'bookmarks:bookmarklet:group' => "Hent gruppe \"Bookmarklet\"",
 	'bookmarks:inbox' => "Bogmærke indbakke",
-	'bookmarks:with' => "Del med",
-	'bookmarks:new' => "Et nyt bogmærke",
 	'bookmarks:address' => "Adresse på ressourcen der skal bogmærkes",
 	'bookmarks:none' => 'Ingen bogmærker',
 
@@ -37,10 +35,6 @@ Se og kommenter på bogmærket:
 
 	'bookmarks:numbertodisplay' => 'Antal bogmærker, der skal vises',
 
-	'bookmarks:shared' => "Bogmærket",
-	'bookmarks:visit' => "Besøg ressource",
-	'bookmarks:recent' => "Seneste bogmærker",
-
 	'river:create:object:bookmarks' => '%s bookmærkede %s',
 	'river:comment:object:bookmarks' => '%s kommenterede bookmærket %s',
 	'bookmarks:river:annotate' => '%s kommenterede på',
@@ -58,7 +52,7 @@ Se og kommenter på bogmærket:
 	'bookmarks:widget:description' => "Vis dine nyeste bogmærker.",
 
 	'bookmarks:bookmarklet:description' =>
-			"\"Bookmarklet\" bogmærket gør dig i stand til at dele enhver ressource, du finder på nettet med dine venner eller bare lave et privat bogmærke. For at bruge det skal du blot trække knappen herunder op i din browsers linkbar:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Hvis du bruger Internet Explorer, er du nødt til at højreklikke på \"Bookmarklet\" ikonet og vælge \"Føj til Favoritter\" og derefter \"Linkbar\".",

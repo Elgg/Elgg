@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'グループにユーザーを追加しました。',
 	'groups:joinrequestnotmade' => 'グループ参加の申請に失敗しました。',
 	'groups:joinrequestmade' => 'グループ参加希望を申請しました。',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'グループに参加しました！',
 	'groups:left' => 'グループから脱退しました。',
 	'groups:notowner' => '申し訳ありません。あなたはこのグループの班長ではありません。',

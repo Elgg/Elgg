@@ -20,14 +20,14 @@ return array(
 	'logout' => "Cerrar sesi&oacute;n",
 	'logoutok' => "Se ha cerrado la sesi&oacute;n",
 	'logouterror' => "No se pudo cerrar la sesi&oacute;n, por favor intente nuevamente",
-	'session_expired' => "Your session has expired. Please <a href='javascript:location.reload(true)'>reload</a> the page to log in.",
-	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
+	'session_expired' => "Su sesión ha expirado. Por favor <a href='javascript:location.reload(true)'>refresca</a> la página para ingresar nuevamente.",
+	'session_changed_user' => "Has ingresado como otro usuario. Deberías <a href='javascript:location.reload(true)'>recargar</a> la página.",
 
 	'loggedinrequired' => "Debe estar autenticado para poder visualizar esta p&aacute;gina",
 	'adminrequired' => "Debe ser un administrador para poder visualizar esta p&aacute;gina",
 	'membershiprequired' => "Debe ser miembro del grupo para poder visualizar esta p&aacute;gina",
 	'limited_access' => "No tienes permiso para ver la página solicitada",
-	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
+	'invalid_request_signature' => "La URL de la página a la que intenta acceder no es válida o ha caducado",
 
 /**
  * Errors
@@ -59,7 +59,10 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Tipo de dependencia "%s" inv&aacute;lida',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Tipo "%s" provisto inv&aacute;lido',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Dependencia %s inv&aacute;lida "%s" en plugin %s. Los plugins no pueden entrar en conlicto con otros requeridos!',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicto con el plugin: %s',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'El archivo  "elgg-plugin.php" del complemento está presente, pero ilegible.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'No puede incluirse %s para el plugin %s (guid: %s) en %s. Verifique los permisos!',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Se lanzó la excepción incluyendo %s para el complemento %s (guid: %s) en %s. ',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'No puede cargarse el directorio "views" para el plugin %s (guid: %s) en %s. Verifique los permisos!',
 	'ElggPlugin:Exception:NoID' => 'No se encontr&oacute; el ID para el plugin con guid %s!',
 	'PluginException:NoPluginName' => "No se pudo encontrar el nombre del plugin",
@@ -67,6 +70,8 @@ return array(
 	'PluginException:NoAvailableParser' => 'No se encuentra un procesador para el manifiesto de la versi&oacute;n de la API %s en plugin %s',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Atributo '%s' faltante en manifiesto del el plugin %s",
 	'ElggPlugin:InvalidAndDeactivated' => '%s no es un plugin v&aacute;lido y se ha deshabilitado',
+	'ElggPlugin:activate:BadConfigFormat' => 'El archivo "elgg-plugin.php" del complemento no devolvió una matriz serializable. ',
+	'ElggPlugin:activate:ConfigSentOutput' => 'El archivo "elgg-plugin.php" del complemento envió una salida.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Requiere',
 	'ElggPlugin:Dependencies:Suggests' => 'Sugiere',
@@ -131,6 +136,32 @@ return array(
 	'upload:error:extension' => 'No se puede guardar el archivo subido',
 	'upload:error:unknown' => 'La subida ha fallado',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Administrador',
+	'table_columns:fromView:banned' => 'Bloqueado',
+	'table_columns:fromView:container' => 'Contenedor',
+	'table_columns:fromView:excerpt' => 'Descripción',
+	'table_columns:fromView:link' => 'Nombre/Título',
+	'table_columns:fromView:icon' => 'Icono',
+	'table_columns:fromView:item' => 'Elemento',
+	'table_columns:fromView:language' => 'Idioma',
+	'table_columns:fromView:owner' => 'Propietario',
+	'table_columns:fromView:time_created' => 'Tiempo de creación',
+	'table_columns:fromView:time_updated' => 'Tiempo de actualización',
+	'table_columns:fromView:user' => 'Usuario',
+
+	'table_columns:fromProperty:description' => 'Descripción',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Nombre',
+	'table_columns:fromProperty:type' => 'Tipo',
+	'table_columns:fromProperty:username' => 'Nombre de usuario',
+
+	'table_columns:fromMethod:getSubtype' => 'Subtipo',
+	'table_columns:fromMethod:getDisplayName' => 'Nombre/Título',
+	'table_columns:fromMethod:getMimeType' => 'Tipo MIME',
+	'table_columns:fromMethod:getSimpleType' => 'Tipo',
 
 /**
  * User details
@@ -143,7 +174,7 @@ return array(
 	'password' => "Contrase&ntilde;a",
 	'passwordagain' => "Contrase&ntilde;a (nuevamente, para verificaci&oacute;n)",
 	'admin_option' => "Hacer administrador a este usuario?",
-	'autogen_password_option' => "Automatically generate a secure password?",
+	'autogen_password_option' => "¿Generar automáticamente una contraseña segura? ",
 
 /**
  * Access
@@ -337,8 +368,8 @@ return array(
 	'river:delete' => 'Eliminar este elemento de la actividad',
 	'river:delete:success' => 'El item en el River ha sido borrado',
 	'river:delete:fail' => 'El item en el River no pudo ser borrado',
-	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
-	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
+	'river:delete:lack_permission' => 'No tienes permiso para eliminar este elemento de la actividad.',
+	'river:can_delete:invaliduser' => 'No se puede chequear canDelete para el usuario [%s] porque el usuario no existe.',
 	'river:subject:invalid_subject' => 'Usuario inválido',
 	'activity:owner' => 'Ver Actividad',
 
@@ -635,6 +666,7 @@ return array(
 	'admin:plugins:warning:invalid' => '%s no es un plugin Elgg v&aacute;lido. Visite <a href="http://docs.elgg.org/Invalid_Plugin">la Documentaci&oacute;n Elgg</a> para consejos de soluci&oacute;n de problemas',
 	'admin:plugins:warning:invalid:check_docs' => 'Mira <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">la documentación de Elgg</a> donde encontrarás consejos de resolución de problemas.',
 	'admin:plugins:cannot_activate' => 'no se puede activar',
+	'admin:plugins:cannot_deactivate' => 'no se puede desactivar',
 	'admin:plugins:already:active' => 'Los plugins seleccionados ya están activos.',
 	'admin:plugins:already:inactive' => 'Los plugins seleccionados ya no están activos',
 
@@ -686,6 +718,11 @@ return array(
 	'admin:server:label:post_max_size' => 'Tama&ntilde;o m&aacute;ximo de las peticiones POST',
 	'admin:server:label:upload_max_filesize' => 'Tama&ntilde; m&aacute;ximo de las subidas',
 	'admin:server:warning:post_max_too_small' => '(Nota: post_max_size debe ser mayor que el tama&ntilde; indicado aqu&iacute; para habilitar las subidas)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache no está configurado en este servidor o aún no ha sido configurado en Elgg config.
+		Para mejorar el rendimiento, se recomienda activar y configurar memcache.
+	',
 
 	'admin:user:label:search' => "Encontrar usuarios:",
 	'admin:user:label:searchbutton' => "Buscar",
@@ -744,6 +781,10 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 	'usersettings:statistics' => "Sus estad&iacute;sticas",
 	'usersettings:statistics:opt:description' => "Ver informaci&oacute;n estad&iacute;stica de usuarios y objectos en la red",
 	'usersettings:statistics:opt:linktext' => "Estad&iacute;sticas de la cuenta",
+	
+	'usersettings:statistics:login_history' => "Historial de inicio de sesión",
+	'usersettings:statistics:login_history:date' => "Fecha",
+	'usersettings:statistics:login_history:ip' => "Dirección IP",
 
 	'usersettings:user' => "Sus preferencias",
 	'usersettings:user:opt:description' => "Esto le permite establecer sus preferencias",
@@ -1108,6 +1149,7 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'installation:cache_symlink:description' => "El enlace simbólico al directorio de caché simple permite que el servidor sirva vistas estáticas sin pasar por el motor, lo que mejora considerablemente el rendimiento y reduce la carga del servidor",
 	'installation:cache_symlink:label' => "Usar un enlace simbólico para el directorio de caché simple (recomendado)",
 	'installation:cache_symlink:warning' => "Se ha creado el enlace simbólico. Si, por alguna razón, quieres quitar el enlace, borra el enlace simbólico al directorio de tu servidor",
+	'installation:cache_symlink:paths' => 'El enlace simbólico correctamente configurado debe vincularse desde <i>%s</i> a <i>%s</i>',
 	'installation:cache_symlink:error' => "No se puede generar el enlace simbólico por la configuración de tu servidor. Por favor consulta el manual para crear manualmente el enlace simbólico",
 
 	'installation:minify:description' => "El simple cache puede también mejorar el rendimiento por que comprime los archivos JavaScript y CSS. (Requiere que simple cache este habilitado.)",
@@ -1162,18 +1204,9 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'upgrade:finished_with_errors' => '<p>Ocurrieron errores durante la actualización. Actualice la página y pruebe a ejecutar la actualización de nuevo.</p></p><br />
 Si el error se repite, busque la causa en el registro de errores del servidor. Puede buscar ayuda para solucionar el problema en el <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">grupo de asistencia técnica</a> de la comunidad de Elgg.</p>',
 
-	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'Actualización de comentarios',
-	'upgrade:comment:create_failed' => 'No fue posible convertir el comentario con identificador «%s» en una entidad.',
-	'admin:upgrades:commentaccess' => 'Actualizar el acceso a comentarios',
-
-	// Strings specific for the datadir upgrade
-	'admin:upgrades:datadirs' => 'Actualización de la carpeta de datos',
-
-	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Actualización de las respuestas de discusiones',
-	'discussion:upgrade:replies:create_failed' => 'No fue posible convertir la respuesta de discusión con identificador «%s» en una entidad.',
-
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Alinear columnas GUID de la base de datos',
+	
 /**
  * Welcome
  */

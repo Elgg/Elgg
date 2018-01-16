@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Επιτυχής προσθήκη χρήστη στην ομάδα',
 	'groups:joinrequestnotmade' => 'Δεν είναι δυνατή η αίτηση εγγραφής στην ομάδα',
 	'groups:joinrequestmade' => 'Αίτηση εγγραφής στην ομάδα',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Συνδεθήκατε στην ομάδα με επιτυχία!',
 	'groups:left' => 'Εγκαταλλείψατε την ομάδα με επιτυχία!',
 	'groups:notowner' => 'Λυπούμαστε, δεν είστε ο ιδιοκτήτης αυτής της ομάδας.',

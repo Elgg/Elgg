@@ -1,8 +1,9 @@
 <?php
+
 return [
-	'custom:bookmarks' => "Ultimi segnalibri",
-	'custom:groups' => "Ultimi gruppi",
-	'custom:files' => "Ultimi file",
-	'custom:blogs' => "Ultimi articoli blog",
-	'custom:members' => "Ultimi membri",
+	'custom:bookmarks' => "Nuovi segnalibri",
+	'custom:groups' => "Nuovi gruppi",
+	'custom:files' => "Nuovi file",
+	'custom:blogs' => "Nuovi articoli nel blog",
+	'custom:members' => "Nuovi membri",
 ];

@@ -132,6 +132,7 @@ return [
 	'groups:addedtogroup' => 'Brugeren blev tilføjet til gruppen',
 	'groups:joinrequestnotmade' => 'Kunne ikke ansøge om at blive medlem',
 	'groups:joinrequestmade' => 'Ansøgning om at blive medlem af gruppen er gennemført',
+	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:joined' => 'Du er blevet medlem af gruppen!',
 	'groups:left' => 'Du er frameldt gruppen!',
 	'groups:notowner' => 'Beklager, du ejer ikke denne gruppe.',
