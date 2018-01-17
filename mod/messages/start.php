@@ -31,9 +31,6 @@ function messages_init() {
 	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('elgg.css', 'messages/css');
 	elgg_extend_view('elgg.js', 'messages/js');
-	
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('messages', 'messages_page_handler');
 
 	// Register a URL handler
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'messages_set_url');
@@ -55,61 +52,6 @@ function messages_init() {
 	// Topbar menu. We assume this menu will render *after* a message is rendered. If a refactor/plugin
 	// causes it to render first, the unread count notification will not update until the next page.
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', 'messages_register_topbar');
-}
-
-/**
- * Messages page handler
- *
- * @param array $page Array of URL components for routing
- *
- * @return bool
- */
-function messages_page_handler($page) {
-
-	elgg_gatekeeper();
-	$current_user = elgg_get_logged_in_user_entity();
-
-	elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $current_user->username);
-
-	if (!isset($page[0])) {
-		$page[0] = 'inbox';
-	}
-
-	// Support the old inbox url /messages/<username>, but only if it matches the logged in user.
-	// Otherwise having a username like "read" on the system could confuse this function.
-	if ($current_user->username === $page[0]) {
-		$page[1] = $page[0];
-		$page[0] = 'inbox';
-	}
-
-	if (!isset($page[1])) {
-		$page[1] = $current_user->username;
-	}
-
-	switch ($page[0]) {
-		case 'inbox':
-			echo elgg_view_resource('messages/inbox', [
-				'username' => $page[1],
-			]);
-			break;
-		case 'sent':
-			echo elgg_view_resource('messages/sent', [
-				'username' => $page[1],
-			]);
-			break;
-		case 'read':
-			echo elgg_view_resource('messages/read', [
-				'guid' => $page[1],
-			]);
-			break;
-		case 'compose':
-		case 'add':
-			echo elgg_view_resource('messages/send');
-			break;
-		default:
-			return false;
-	}
-	return true;
 }
 
 /**
@@ -311,7 +253,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 				$message_contents,
 				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
 				$sender->name,
-				elgg_get_site_url() . "messages/compose?send_to=" . $sender_guid
+				elgg_get_site_url() . "messages/add?send_to=" . $sender_guid
 			],
 			$recipient->language
 		);
@@ -442,7 +384,7 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 		'name' => 'send',
 		'text' => elgg_echo('messages:sendmessage'),
 		'icon' => 'mail',
-		'href' => "messages/compose?send_to={$user->guid}",
+		'href' => "messages/add?send_to={$user->guid}",
 		'section' => 'action',
 	]);
 

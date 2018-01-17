@@ -549,6 +549,7 @@ Removed pagehandling
  * ``discussion/reply``: See :ref:`upgrade-discussion-replies`
  * ``expages``
  * ``invitefriends``: Use ``friends/invite``
+ * ``messages/compose``: Use ``messages/add``
 
 Removed actions
 ---------------

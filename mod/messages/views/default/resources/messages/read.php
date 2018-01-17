@@ -22,10 +22,11 @@ $page_owner = elgg_get_page_owner_entity();
 
 $title = $message->title;
 
+elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
+
 $inbox = false;
 if ($page_owner->getGUID() == $message->toId) {
 	$inbox = true;
-	elgg_push_breadcrumb(elgg_echo('messages:inbox'), 'messages/inbox/' . $page_owner->username);
 } else {
 	elgg_push_breadcrumb(elgg_echo('messages:sent'), 'messages/sent/' . $page_owner->username);
 }

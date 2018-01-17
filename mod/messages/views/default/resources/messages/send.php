@@ -12,6 +12,7 @@ elgg_set_page_owner_guid($page_owner->getGUID());
 
 $title = elgg_echo('messages:add');
 
+elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
 elgg_push_breadcrumb($title);
 
 $params = messages_prepare_form_vars((int) get_input('send_to'));
