@@ -3,20 +3,18 @@
  * Elgg web services API plugin
  */
 
+
 /**
  * Web services init
  *
  * @return void
  */
 function ws_init() {
-	$lib_dir = __DIR__ . "/lib";
-	elgg_register_library('elgg:ws', "$lib_dir/web_services.php");
-	elgg_register_library('elgg:ws:api_user', "$lib_dir/api_user.php");
-	elgg_register_library('elgg:ws:client', "$lib_dir/client.php");
-	elgg_register_library('elgg:ws:tokens', "$lib_dir/tokens.php");
 
-	elgg_load_library('elgg:ws:api_user');
-	elgg_load_library('elgg:ws:tokens');
+	\Elgg\Includer::requireFileOnce(__DIR__ . "/lib/web_services.php");
+	\Elgg\Includer::requireFileOnce(__DIR__ . "/lib/api_user.php");
+	\Elgg\Includer::requireFileOnce(__DIR__ . "/lib/client.php");
+	\Elgg\Includer::requireFileOnce(__DIR__ . "/lib/tokens.php");
 
 	elgg_register_page_handler('services', 'ws_page_handler');
 
@@ -64,8 +62,6 @@ function ws_init() {
  * @return bool
  */
 function ws_page_handler($segments) {
-	elgg_load_library('elgg:ws');
-
 	if (!isset($segments[0]) || $segments[0] != 'api') {
 		return false;
 	}
@@ -306,8 +302,6 @@ function ws_rest_handler() {
 		}
 		exit;
 	}
-
-	elgg_load_library('elgg:ws');
 
 	// Register the error handler
 	error_reporting(E_ALL);

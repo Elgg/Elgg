@@ -1,15 +1,28 @@
 <?php
 
-$page_type = 'all';
+$lower = elgg_extract('lower', $vars);
+$upper = elgg_extract('upper', $vars);
 
-elgg_load_library('elgg:blog');
+elgg_register_title_button('blog', 'add', 'object', 'blog');
 
-$params = blog_get_page_content_list();
+elgg_push_collection_breadcrumbs('object', 'blog');
 
-$sidebar = elgg_extract('sidebar', $params, '');
-$sidebar .= elgg_view('blog/sidebar', ['page' => $page_type]);
-$params['sidebar'] = $sidebar;
+if ($lower) {
+	$title = elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
+} else {
+	$title = elgg_echo('collection:object:blog:all');
+}
 
-$body = elgg_view_layout('content', $params);
+$content = elgg_view('blog/listing/all', [
+	'created_after' => $lower,
+	'created_before' => $upper,
+]);
 
-echo elgg_view_page($params['title'], $body);
+$layout = elgg_view_layout('default', [
+	'title' => $title,
+	'content' => $content,
+	'sidebar' => elgg_view('blog/sidebar', ['page' => 'all']),
+	'filter_value' => 'all',
+]);
+
+echo elgg_view_page($title, $layout);

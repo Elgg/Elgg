@@ -13,7 +13,7 @@ require_once(dirname(__FILE__) . '/lib/pages.php');
 function pages_init() {
 
 	// register a library of helper functions
-	elgg_register_library('elgg:pages', __DIR__ . '/lib/pages.php');
+	\Elgg\Includer::requireFileOnce(__DIR__ . '/lib/pages.php');
 
 	$item = new ElggMenuItem('pages', elgg_echo('collection:object:page:all'), 'pages/all');
 	elgg_register_menu_item('site', $item);

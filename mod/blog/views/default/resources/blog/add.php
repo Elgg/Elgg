@@ -2,17 +2,25 @@
 
 elgg_gatekeeper();
 
-elgg_load_library('elgg:blog');
-
-$page_type = 'add';
 $guid = elgg_extract('guid', $vars);
+if (!$guid) {
+	$guid = elgg_get_logged_in_user_guid();
+}
 
-$params = blog_get_page_content_edit('add', $guid);
+elgg_entity_gatekeeper($guid);
 
-$sidebar = elgg_extract('sidebar', $params, '');
-$sidebar .= elgg_view('blog/sidebar', ['page' => $page_type]);
-$params['sidebar'] = $sidebar;
+$container = get_entity($guid);
 
-$body = elgg_view_layout('content', $params);
+elgg_push_collection_breadcrumbs('object', 'blog', $container);
+elgg_push_breadcrumb(elgg_echo('add:object:blog'));
 
-echo elgg_view_page($params['title'], $body);
+$title = elgg_echo('add:object:blog');
+$content = elgg_view_form('blog/save', $vars, blog_prepare_form_vars());
+
+$layout = elgg_view_layout('default', [
+	'title' => $title,
+	'content' => $content,
+	'filter_id' => 'blog/edit',
+]);
+
+echo elgg_view_page($params['title'], $layout);
