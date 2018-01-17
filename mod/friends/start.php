@@ -10,9 +10,6 @@ function elgg_friends_plugin_init() {
 
 	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
 
-	elgg_register_page_handler('friends', '_elgg_friends_page_handler');
-	elgg_register_page_handler('friendsof', '_elgg_friends_page_handler');
-
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_friends_widget_urls');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_friends_page_menu');
@@ -69,39 +66,6 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 	]);
 
 	return $return;
-}
-
-/**
- * Page handler for friends-related pages
- *
- * @param array  $segments URL segments
- * @param string $handler  The first segment in URL used for routing
- *
- * @return bool
- * @access private
- */
-function _elgg_friends_page_handler($segments, $handler) {
-	elgg_set_context('friends'); // needed because pagehandler friendsof is also using this handler
-
-	if (isset($segments[0]) && $user = get_user_by_username($segments[0])) {
-		elgg_set_page_owner_guid($user->getGUID());
-	}
-
-	if (!elgg_get_page_owner_guid()) {
-		return false;
-	}
-
-	switch ($handler) {
-		case 'friends':
-			echo elgg_view_resource("friends/index");
-			break;
-		case 'friendsof':
-			echo elgg_view_resource("friends/of");
-			break;
-		default:
-			return false;
-	}
-	return true;
 }
 
 /**
