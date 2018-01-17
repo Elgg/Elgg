@@ -13,56 +13,8 @@
  * @return void
  */
 function messageboard_init() {
-	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
-
 	// delete annotations for posts
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'messageboard_annotation_menu_setup');
-}
-
-/**
- * Messageboard dispatcher for flat message board.
- * Profile (and eventually group) widgets handle their own.
- *
- * URLs take the form of
- *  User's messageboard:               messageboard/owner/<username>
- *  Y's history of posts on X's board: messageboard/owner/<X>/history/<Y>
- *  New post:                          messageboard/add/<guid> (container: user or group)
- *  Group messageboard:                messageboard/group/<guid>/all (not implemented)
- *
- * @param array $page Array of page elements
- *
- * @return bool
- */
-function messageboard_page_handler($page) {
-
-	$vars = [];
-	switch ($page[0]) {
-		case 'owner':
-			//@todo if they have the widget disabled, don't allow this.
-			$owner_name = elgg_extract(1, $page);
-			$owner = get_user_by_username($owner_name);
-			$vars['page_owner_guid'] = $owner->guid;
-			$history = elgg_extract(2, $page);
-			$username = elgg_extract(3, $page);
-
-			if ($history && $username) {
-				$vars['history_username'] = $username;
-			}
-
-			echo elgg_view_resource('messageboard/owner', $vars);
-			break;
-
-		case 'group':
-			elgg_group_gatekeeper();
-			$owner_guid = elgg_extract(1, $page);
-			$vars['page_owner_guid'] = $owner_guid;
-			echo elgg_view_resource('messageboard/owner', $vars);
-			break;
-
-		default:
-			return false;
-	}
-	return true;
 }
 
 /**
