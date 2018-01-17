@@ -1,5 +1,6 @@
 <?php
 
+elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb(elgg_echo('search'));
 
 $tag = get_input('tag');

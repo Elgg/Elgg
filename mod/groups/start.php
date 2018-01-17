@@ -19,9 +19,6 @@ function groups_init() {
 	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/all');
 	elgg_register_menu_item('site', $item);
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('groups', 'groups_page_handler');
-
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
 	elgg_register_plugin_hook_handler('entity:icon:sizes', 'group', 'groups_set_icon_sizes');
@@ -237,73 +234,6 @@ function _groups_page_menu($hook, $type, $return, $params) {
 	]);
 
 	return $return;
-}
-
-/**
- * Groups page handler
- *
- * URLs take the form of
- *  All groups:           groups/all
- *  User's owned groups:  groups/owner/<username>
- *  User's member groups: groups/member/<username>
- *  Group profile:        groups/profile/<guid>/<title>
- *  New group:            groups/add/<guid>
- *  Edit group:           groups/edit/<guid>
- *  Group invitations:    groups/invitations/<username>
- *  Invite to group:      groups/invite/<guid>
- *  Membership requests:  groups/requests/<guid>
- *  Group activity:       groups/activity/<guid>
- *  Group members:        groups/members/<guid>
- *
- * @param array $page Array of url segments for routing
- * @return bool
- */
-function groups_page_handler($page) {
-
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
-
-	elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
-
-	$vars = [];
-	switch ($page[0]) {
-		case 'all':
-			// all groups doesn't get link to self
-			elgg_pop_breadcrumb();
-		case 'add':
-		case 'owner':
-		case 'search':
-			echo elgg_view_resource("groups/{$page[0]}");
-			break;
-		case 'invitations':
-		case 'member':
-			echo elgg_view_resource("groups/{$page[0]}", [
-				'username' => $page[1],
-			]);
-			break;
-		case 'members':
-			$vars['sort'] = elgg_extract('2', $page, 'alpha');
-			$vars['guid'] = elgg_extract('1', $page);
-			if (elgg_view_exists("resources/groups/members/{$vars['sort']}")) {
-				echo elgg_view_resource("groups/members/{$vars['sort']}", $vars);
-			} else {
-				echo elgg_view_resource('groups/members', $vars);
-			}
-			break;
-		case 'profile':
-		case 'activity':
-		case 'edit':
-		case 'invite':
-		case 'requests':
-			echo elgg_view_resource("groups/{$page[0]}", [
-				'guid' => $page[1],
-			]);
-			break;
-		default:
-			return false;
-	}
-	return true;
 }
 
 /**
