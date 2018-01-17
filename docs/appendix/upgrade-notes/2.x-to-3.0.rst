@@ -110,6 +110,9 @@ Removed views
  * ``search/css``: Moved to ``search/search.css``
  * ``search/startblurb``
  * ``bookmarks/bookmarklet.gif``
+ * ``blog_get_page_content_list``
+ * ``blog_get_page_content_archive``
+ * ``blog_get_page_content_edit``
 
 
 Removed functions/methods

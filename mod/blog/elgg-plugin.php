@@ -16,16 +16,24 @@ return [
 	],
 	'routes' => [
 		'collection:object:blog:owner' => [
-			'path' => '/blog/owner/{username?}',
+			'path' => '/blog/owner/{username?}/{lower?}/{upper?}',
 			'resource' => 'blog/owner',
+			'requirements' => [
+				'lower' => '\d+',
+				'upper' => '\d+',
+			],
 		],
 		'collection:object:blog:friends' => [
-			'path' => '/blog/friends/{username?}',
+			'path' => '/blog/friends/{username?}/{lower?}/{upper?}',
 			'resource' => 'blog/friends',
+			'requirements' => [
+				'lower' => '\d+',
+				'upper' => '\d+',
+			],
 		],
 		'collection:object:blog:archive' => [
 			'path' => '/blog/archive/{username?}/{lower?}/{upper?}',
-			'resource' => 'blog/archive',
+			'resource' => 'blog/owner',
 			'requirements' => [
 				'lower' => '\d+',
 				'upper' => '\d+',
@@ -59,8 +67,12 @@ return [
 			],
 		],
 		'collection:object:blog:all' => [
-			'path' => '/blog/all',
+			'path' => '/blog/all/{lower?}/{upper?}',
 			'resource' => 'blog/all',
+			'requirements' => [
+				'lower' => '\d+',
+				'upper' => '\d+',
+			],
 		],
 		'default:object:blog' => [
 			'path' => '/blog',

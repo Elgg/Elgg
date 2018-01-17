@@ -224,10 +224,6 @@ function elgg_get_menu_item($menu_name, $item_name) {
  * @since 1.8.0
  */
 function elgg_register_title_button($handler = null, $name = 'add', $entity_type = 'all', $entity_subtype = 'all') {
-	
-	if (!$handler) {
-		$handler = elgg_get_context();
-	}
 
 	$owner = elgg_get_page_owner_entity();
 	if (!$owner) {
@@ -249,12 +245,25 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 		return;
 	}
 
+	$href = elgg_generate_url("$name:$entity_type:$entity_subtype", [
+		'guid' => $owner->guid,
+	]);
+	if (!$href) {
+		if (!$handler) {
+			$handler = elgg_get_context();
+		}
+		$href = "$handler/$name/$owner->guid";
+		$label = elgg_echo("$handler:$name");
+	} else {
+		$label = elgg_echo("$name:$entity_type:$entity_subtype");
+	}
+
 	// register the title menu item
 	elgg_register_menu_item('title', [
 		'name' => $name,
 		'icon' => $name === 'add' ? 'plus' : '',
-		'href' => "$handler/$name/$owner->guid",
-		'text' => elgg_echo("$handler:$name"),
+		'href' => $href,
+		'text' => $label,
 		'link_class' => 'elgg-button elgg-button-action',
 	]);
 }
