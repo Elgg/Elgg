@@ -117,6 +117,7 @@ Removed views
  * ``resources/invitefriends/invite``: use ``resources/friends/invite`` 
  * ``resources/reportedcontent/add``
  * ``resources/reportedcontent/add_form``
+ * ``resources/site_notifications/view``: Use ``resources/site_notifications/owner``
 
 Removed functions/methods
 -------------------------

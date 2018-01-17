@@ -18,42 +18,12 @@ function site_notifications_init() {
 	
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'site_notifications_register_entity_menu');
 
-	elgg_register_page_handler('site_notifications', 'site_notifications_page_handler');
-
 	elgg_extend_view('elgg.css', 'site_notifications/css');
 
 	$js = elgg_get_simplecache_url('site_notifications.js');
 	elgg_register_js('elgg.site_notifications', $js, 'footer');
 
 	site_notifications_set_topbar();
-}
-
-/**
- * Page handler
- *
- * /site_notifications/view/<username>
- *
- * @param array $segments URL segments
- *
- * @return bool
- */
-function site_notifications_page_handler($segments) {
-	elgg_gatekeeper();
-
-	if (!isset($segments[1])) {
-		$segments[1] = elgg_get_logged_in_user_entity()->username;
-	}
-
-	$user = get_user_by_username($segments[1]);
-	if (!$user) {
-		return false;
-	}
-
-	elgg_set_page_owner_guid($user->guid);
-
-	echo elgg_view_resource('site_notifications/view');
-
-	return true;
 }
 
 /**
@@ -69,7 +39,7 @@ function site_notifications_set_topbar() {
 	
 	elgg_register_menu_item('topbar', [
 		'name' => 'site_notifications',
-		'href' => 'site_notifications/view/' . elgg_get_logged_in_user_entity()->username,
+		'href' => 'site_notifications/owner/' . elgg_get_logged_in_user_entity()->username,
 		'text' => elgg_echo('site_notifications:topbar'),
 		'icon' => 'bell',
 		'priority' => 100,
