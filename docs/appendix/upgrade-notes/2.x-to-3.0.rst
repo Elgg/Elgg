@@ -115,6 +115,8 @@ Removed views
  * ``blog_get_page_content_edit``
  * ``forms/invitefriends/invite``: use ``forms/friends/invite`` 
  * ``resources/invitefriends/invite``: use ``resources/friends/invite`` 
+ * ``resources/reportedcontent/add``
+ * ``resources/reportedcontent/add_form``
 
 Removed functions/methods
 -------------------------
@@ -550,6 +552,7 @@ Removed pagehandling
  * ``expages``
  * ``invitefriends``: Use ``friends/invite``
  * ``messages/compose``: Use ``messages/add``
+ * ``reportedcontent``
 
 Removed actions
 ---------------

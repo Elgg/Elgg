@@ -12,19 +12,17 @@
  */
 function reportedcontent_init() {
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('reportedcontent', 'reportedcontent_page_handler');
-
 	// Extend CSS
 	elgg_extend_view('elgg.css', 'reportedcontent/css');
 	elgg_extend_view('admin.css', 'reportedcontent/admin_css');
 
+	elgg_register_ajax_view('forms/reportedcontent/add');
 
 	if (elgg_is_logged_in()) {
 		// Extend footer with report content link
 		elgg_register_menu_item('footer', [
 			'name' => 'report_this',
-			'href' => 'reportedcontent/add',
+			'href' => 'ajax/form/reportedcontent/add',
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
 			'text' => elgg_echo('reportedcontent:this'),
 			'icon' => 'exclamation-triangle',
@@ -45,27 +43,6 @@ function reportedcontent_init() {
 		'parent_name' => 'administer_utilities',
 		'context' => 'admin',
 	]);
-}
-
-/**
- * Reported content page handler
- *
- * Serves the add report page
- *
- * @param array $page Array of page routing elements
- * @return bool
- */
-function reportedcontent_page_handler($page) {
-	// only logged in users can report things
-	elgg_gatekeeper();
-
-	if (elgg_extract(0, $page) === 'add' && elgg_is_xhr()) {
-		echo elgg_view_resource('reportedcontent/add_form');
-		return true;
-	}
-
-	echo elgg_view_resource('reportedcontent/add');
-	return true;
 }
 
 /**
@@ -93,7 +70,7 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 		return;
 	}
 	
-	$href = elgg_http_add_url_query_elements('reportedcontent/add', [
+	$href = elgg_http_add_url_query_elements('ajax/form/reportedcontent/add', [
 		'address' => $user->getURL(),
 		'title' => $user->name,
 	]);
