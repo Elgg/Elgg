@@ -9,8 +9,7 @@
  * @return void
  */
 function members_init() {
-	elgg_register_page_handler('members', 'members_page_handler');
-
+	
 	elgg_register_menu_item('site', [
 		'name' => 'members',
 		'text' => elgg_echo('members'),
@@ -65,24 +64,6 @@ function members_register_filter_menu(\Elgg\Hook $hook) {
 	]);
 	
 	return $result;
-}
-
-/**
- * Members page handler
- *
- * @param array $page url segments
- * @return void|true
- */
-function members_page_handler($page) {
-	if (empty($page[0])) {
-		$page[0] = 'newest';
-	}
-	
-	$resource = "members/{$page[0]}";
-	if (elgg_view_exists("resources/{$resource}")) {
-		echo elgg_view_resource($resource);
-		return true;
-	}
 }
 
 return function() {
