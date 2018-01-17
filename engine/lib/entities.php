@@ -628,7 +628,7 @@ function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignor
  *
  * @warning Entities that aren't registered here will not show up in search.
  *
- * @tip Add a language string item:type:subtype to make sure the items are display properly.
+ * @tip Add a language string item:type:subtype and collection:type:subtype to make sure the items are display properly.
  *
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)

@@ -19,7 +19,7 @@ if (!$file->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();
 }
 
-$title = elgg_echo('file:edit');
+$title = elgg_echo('edit:object:file');
 
 elgg_push_entity_breadcrumbs($file);
 elgg_push_breadcrumb($title);

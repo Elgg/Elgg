@@ -13,7 +13,7 @@ elgg_push_collection_breadcrumbs('object', 'discussion', $group);
 
 elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
-$title = elgg_echo('item:object:discussion');
+$title = elgg_echo('collection:object:discussion');
 
 $content = elgg_view('discussion/listing/group', [
 	'entity' => $group,

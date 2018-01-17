@@ -8,7 +8,7 @@ elgg_gatekeeper();
 
 $page_owner = elgg_get_page_owner_entity();
 
-$title = elgg_echo('bookmarks:add');
+$title = elgg_echo('add:object:bookmarks');
 elgg_push_breadcrumb($title);
 
 $vars = bookmarks_prepare_form_vars();

@@ -13,7 +13,7 @@ if (!$container->canWriteToContainer(0, 'object', 'discussion')) {
 	throw new \Elgg\EntityPermissionsException();
 }
 
-$title = elgg_echo('discussion:addtopic');
+$title = elgg_echo('add:object:discussion');
 
 elgg_push_collection_breadcrumbs('object', 'discussion', $container);
 elgg_push_breadcrumb($title);

@@ -7,7 +7,7 @@
 
 elgg_register_title_button('file', 'add', 'object', 'file');
 
-$title = elgg_echo('file:all');
+$title = elgg_echo('collection:object:file:all');
 $content = elgg_view('file/listing/all', $vars);
 $sidebar = elgg_view('file/sidebar', $vars);
 

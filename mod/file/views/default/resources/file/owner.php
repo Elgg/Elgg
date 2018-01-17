@@ -33,7 +33,7 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	$params['filter_context'] = 'none';
 }
 
-$title = elgg_echo("file:user", [$owner->getDisplayName()]);
+$title = elgg_echo("collection:object:file:owner", [$owner->getDisplayName()]);
 
 $listing_params = $vars;
 $listing_params['entity'] = $owner;

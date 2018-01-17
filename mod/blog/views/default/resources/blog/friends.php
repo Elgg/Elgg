@@ -12,7 +12,7 @@ if (!$user) {
 
 $params = [
 	'filter_context' => 'friends',
-	'title' => elgg_echo('blog:title:friends'),
+	'title' => elgg_echo('collection:object:blog:friends'),
 ];
 
 elgg_push_collection_breadcrumbs('object', 'blog', $user, true);

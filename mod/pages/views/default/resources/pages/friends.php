@@ -13,7 +13,7 @@ elgg_push_breadcrumb(elgg_echo('friends'));
 
 elgg_register_title_button('pages', 'add', 'object', 'page');
 
-$title = elgg_echo('pages:friends');
+$title = elgg_echo('collection:object:page:friends');
 
 $content = elgg_list_entities([
 	'type' => 'object',

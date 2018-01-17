@@ -70,7 +70,7 @@ return [
 	'groups:acl:in_context' => 'Group members',
 
 	'groups:activity' => "Group activity",
-	'groups:enableactivity' => 'Enable group activity',
+	'groups:tool:activity' => 'Enable group activity',
 	'groups:activity:none' => "There is no group activity yet",
 
 	'groups:notfound' => "Group not found",

@@ -44,7 +44,7 @@ $new_link = elgg_view('output/url', [
 ]);
 
 echo elgg_view('groups/profile/module', [
-	'title' => elgg_echo('blog:group'),
+	'title' => elgg_echo('collection:object:blog:group'),
 	'content' => $content,
 	'all_link' => $all_link,
 	'add_link' => $new_link,

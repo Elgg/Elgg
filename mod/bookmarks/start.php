@@ -15,7 +15,7 @@ function bookmarks_init() {
 	// menus
 	elgg_register_menu_item('site', [
 		'name' => 'bookmarks',
-		'text' => elgg_echo('bookmarks'),
+		'text' => elgg_echo('collection:object:bookmarks'),
 		'href' => 'bookmarks/all',
 	]);
 
@@ -37,7 +37,7 @@ function bookmarks_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'bookmark_set_url');
 
 	// Groups
-	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
+	add_group_tool_option('bookmarks', null, true);
 	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
 
 	// allow to be liked
@@ -68,7 +68,7 @@ function bookmarks_page_handler($page) {
 		$page[0] = 'all';
 	}
 
-	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
+	elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'), 'bookmarks/all');
 
 	switch ($page[0]) {
 		case "all":
@@ -153,12 +153,12 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 	
 	if ($entity instanceof ElggUser) {
 		$url = "bookmarks/owner/{$entity->username}";
-		$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), $url);
+		$item = new ElggMenuItem('bookmarks', elgg_echo('collection:object:bookmarks'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('bookmarks')) {
 			$url = "bookmarks/group/{$entity->guid}/all";
-			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
+			$item = new ElggMenuItem('bookmarks', elgg_echo('collection:object:bookmarks:group'), $url);
 			$return[] = $item;
 		}
 	}

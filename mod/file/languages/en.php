@@ -1,24 +1,22 @@
 <?php
 return [
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Files",
-	'file:user' => "%s's files",
-	'file:friends' => "Friends' files",
-	'file:all' => "All site files",
-	'file:edit' => "Edit file",
+	'item:object:file' => 'File',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "More files",
 	'file:list' => "list view",
-	'file:group' => "Group files",
+
 	'file:num_files' => "Number of files to display",
-	'file:upload' => "Upload a file",
 	'file:replace' => 'Replace file content (leave blank to not change file)',
 	'file:list:title' => "%s's %s %s",
 	'file:title:friends' => "Friends'",
-
-	'file:add' => 'Upload a file',
 
 	'file:file' => "File",
 
@@ -50,12 +48,10 @@ return [
 	'file:widget' => "File widget",
 	'file:widget:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Enable group files',
+	'groups:tool:files' => 'Enable group files',
 
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',
-
-	'item:object:file' => 'Files',
 
 	'file:notify:summary' => 'New file called %s',
 	'file:notify:subject' => 'New file: %s',

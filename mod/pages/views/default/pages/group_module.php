@@ -37,12 +37,12 @@ elgg_pop_context();
 
 $new_link = elgg_view('output/url', [
 	'href' => "pages/add/{$group->guid}",
-	'text' => elgg_echo('pages:add'),
+	'text' => elgg_echo('add:object:page'),
 	'is_trusted' => true,
 ]);
 
 echo elgg_view('groups/profile/module', [
-	'title' => elgg_echo('pages:group'),
+	'title' => elgg_echo('collection:object:page:group'),
 	'content' => $content,
 	'all_link' => $all_link,
 	'add_link' => $new_link,

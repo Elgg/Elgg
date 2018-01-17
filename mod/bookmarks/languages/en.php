@@ -4,12 +4,15 @@ return [
 	/**
 	 * Menu items and titles
 	 */
-	'bookmarks' => "Bookmarks",
-	'bookmarks:add' => "Add a bookmark",
-	'bookmarks:edit' => "Edit bookmark",
-	'bookmarks:owner' => "%s's bookmarks",
-	'bookmarks:friends' => "Friends' bookmarks",
-	'bookmarks:everyone' => "All site bookmarks",
+	'item:object:bookmarks' => 'Bookmark',
+	'collection:object:bookmarks' => 'Bookmarks',
+	'collection:object:bookmarks:group' => 'Group bookmarks',
+	'collection:object:bookmarks:all' => "All site bookmarks",
+	'collection:object:bookmarks:owner' => "%s's bookmarks",
+	'collection:object:bookmarks:friends' => "Friends' bookmarks",
+	'add:object:bookmarks' => "Add a bookmark",
+	'edit:object:bookmarks' => "Edit bookmark",
+
 	'bookmarks:this' => "Bookmark this page",
 	'bookmarks:this:group' => "Bookmark in %s",
 	'bookmarks:bookmarklet' => "Get bookmarklet",
@@ -35,10 +38,7 @@ View and comment on the bookmark:
 	'river:object:bookmarks:create' => '%s bookmarked %s',
 	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
 
-	'item:object:bookmarks' => 'Bookmarks',
-
-	'bookmarks:group' => 'Group bookmarks',
-	'bookmarks:enablebookmarks' => 'Enable group bookmarks',
+	'groups:tool:bookmarks' => 'Enable group bookmarks',
 	
 	/**
 	 * Widget and bookmarklet

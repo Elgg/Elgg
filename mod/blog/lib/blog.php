@@ -38,7 +38,7 @@ function blog_get_page_content_list($container_guid = null) {
 		} else {
 			$options['owner_guid'] = $container_guid;
 		}
-		$return['title'] = elgg_echo('blog:title:user_blogs', [$container->name]);
+		$return['title'] = elgg_echo('collection:object:blog:owner', [$container->name]);
 
 		elgg_push_collection_breadcrumbs('object', 'blog', $container);
 
@@ -53,7 +53,7 @@ function blog_get_page_content_list($container_guid = null) {
 	} else {
 		$options['preload_containers'] = true;
 		$return['filter_context'] = 'all';
-		$return['title'] = elgg_echo('blog:title:all_blogs');
+		$return['title'] = elgg_echo('collection:object:blog:all');
 		elgg_push_collection_breadcrumbs('object', 'blog');
 	}
 
@@ -147,7 +147,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = null) {
 	if ($page == 'edit') {
 		$blog = get_entity((int) $guid);
 
-		$title = elgg_echo('blog:edit');
+		$title = elgg_echo('edit:object:blog');
 
 		if ($blog instanceof ElggBlog && $blog->canEdit()) {
 			$vars['entity'] = $blog;
@@ -186,10 +186,10 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = null) {
 
 		$container = get_entity($guid) ? : null;
 		elgg_push_collection_breadcrumbs('object', 'blog', $container);
-		elgg_push_breadcrumb(elgg_echo('blog:add'));
+		elgg_push_breadcrumb(elgg_echo('add:object:blog'));
 		$body_vars = blog_prepare_form_vars(null);
 
-		$title = elgg_echo('blog:add');
+		$title = elgg_echo('add:object:blog');
 		$content = elgg_view_form('blog/save', $vars, $body_vars);
 	}
 

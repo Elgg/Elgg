@@ -1,23 +1,21 @@
 <?php
 return [
-	'blog' => 'Blogs',
-	'blog:blogs' => 'Blogs',
+	'item:object:blog' => 'Blog',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Archives',
-	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Blogs',
 
-	'blog:title:user_blogs' => '%s\'s blogs',
-	'blog:title:all_blogs' => 'All site blogs',
-	'blog:title:friends' => 'Friends\' blogs',
-
-	'blog:group' => 'Group blog',
-	'blog:enableblog' => 'Enable group blog',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Write a blog post',
 
 	// Editing
-	'blog:add' => 'Add blog post',
-	'blog:edit' => 'Edit blog post',
 	'blog:excerpt' => 'Excerpt',
 	'blog:body' => 'Body',
 	'blog:save_status' => 'Last saved: ',
@@ -62,5 +60,4 @@ View and comment on the blog post:
 	'blog:widget:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'More blog posts',
 	'blog:numbertodisplay' => 'Number of blog posts to display',
-	'blog:noblogs' => 'No blog posts',
 ];

@@ -15,7 +15,7 @@ function pages_init() {
 	// register a library of helper functions
 	elgg_register_library('elgg:pages', __DIR__ . '/lib/pages.php');
 
-	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'pages/all');
+	$item = new ElggMenuItem('pages', elgg_echo('collection:object:page:all'), 'pages/all');
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs
@@ -33,7 +33,7 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page', 'pages_prepare_notification');
 
 	// add to groups
-	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
+	add_group_tool_option('pages', null, true);
 	elgg_extend_view('groups/tool_latest', 'pages/group_module');
 	
 	// Language short codes must be of the form "pages:key"
@@ -92,7 +92,7 @@ function pages_init() {
  */
 function pages_page_handler($page) {
 
-	elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
+	elgg_push_breadcrumb(elgg_echo('collection:object:page'), 'pages/all');
 
 	switch (elgg_extract(0, $page, 'all')) {
 		case 'owner':
@@ -210,12 +210,12 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
 		$url = "pages/owner/{$entity->username}";
-		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
+		$item = new ElggMenuItem('pages', elgg_echo('collection:object:page'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('pages')) {
 			$url = "pages/group/{$entity->guid}/all";
-			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
+			$item = new ElggMenuItem('pages', elgg_echo('collection:object:page:group'), $url);
 			$return[] = $item;
 		}
 	}

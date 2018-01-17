@@ -12,7 +12,7 @@ elgg_entity_gatekeeper($guid);
 
 $entity = get_entity($guid);
 
-$title = elgg_echo('file:add');
+$title = elgg_echo('add:object:file');
 
 elgg_push_collection_breadcrumbs('object', 'file', $entity);
 elgg_push_breadcrumb($title);

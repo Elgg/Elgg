@@ -1,10 +1,11 @@
 <?php
 
 return [
-	'discussion' => 'Discussions',
-	'discussion:add' => 'Add discussion topic',
+	'add:object:discussion' => 'Add discussion topic',
+	'edit:object:discussion' => 'Edit topic',
+
 	'discussion:latest' => 'Latest discussions',
-	'discussion:group' => 'Group discussions',
+	'collection:object:discussion:group' => 'Group discussions',
 	'discussion:none' => 'No discussions',
 	'discussion:updated' => "Last comment by %s %s",
 
@@ -48,9 +49,10 @@ View and comment on the discussion:
 %s
 ',
 
-	'item:object:discussion' => "Discussion topics",
+	'item:object:discussion' => "Discussion topic",
+	'collection:object:discussions' => 'Discussion topics',
 
-	'groups:enableforum' => 'Enable group discussions',
+	'groups:tool:forum' => 'Enable group discussions',
 
 	/**
 	 * Discussion status
@@ -59,8 +61,6 @@ View and comment on the discussion:
 	'discussion:topic:closed:title' => 'This discussion is closed.',
 	'discussion:topic:closed:desc' => 'This discussion is closed and is not accepting new comments.',
 
-	'discussion:addtopic' => 'Add a topic',
-	'discussion:topic:edit' => 'Edit topic',
 	'discussion:topic:description' => 'Topic message',
 
 	// upgrades
