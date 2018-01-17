@@ -13,7 +13,7 @@ if ($username) {
 }
 
 if (!$user instanceof ElggUser || !$user->canEdit()) {
-	forward('', '404');
+	throw new \Elgg\EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($user->guid);
@@ -22,7 +22,7 @@ $title = elgg_echo('friends:collections:add');
 
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
 elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
-elgg_push_breadcrumb(elgg_echo('friends:collections'), "collections/owner/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends:collections'), "friends/collections/owner/{$user->username}");
 
 $form_name = 'friends/collections/edit';
 $form_vars = [];

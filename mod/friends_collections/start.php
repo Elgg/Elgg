@@ -19,7 +19,6 @@ use Elgg\Friends\Collections\UrlHandler;
 function friends_collections_init() {
 
 	// Setup /collections controller and collection URLs
-	elgg_register_page_handler('collections', [Router::class, 'collectionsPageHandler']);
 	elgg_register_plugin_hook_handler('access_collection:url', 'access_collection', UrlHandler::class);
 
 	// Add Collections page menu item
