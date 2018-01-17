@@ -37,9 +37,6 @@ function thewire_init() {
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('elgg.css', 'thewire/css');
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('thewire', 'thewire_page_handler');
-
 	// Register a URL handler for thewire posts
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'thewire_set_url');
 
@@ -52,77 +49,6 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:thewire', 'Elgg\Values::getTrue');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
-}
-
-/**
- * The wire page handler
- *
- * Supports:
- * thewire/all                  View site wire posts
- * thewire/owner/<username>     View this user's wire posts
- * thewire/following/<username> View the posts of those this user follows
- * thewire/reply/<guid>         Reply to a post
- * thewire/view/<guid>          View a post
- * thewire/thread/<id>          View a conversation thread
- * thewire/tag/<tag>            View wire posts tagged with <tag>
- *
- * @param array $page From the page_handler function
- *
- * @return bool
- */
-function thewire_page_handler($page) {
-
-	if (!isset($page[0])) {
-		$page = ['all'];
-	}
-
-	switch ($page[0]) {
-		case "all":
-			echo elgg_view_resource('thewire/everyone');
-			break;
-
-		case "friends":
-			echo elgg_view_resource('thewire/friends');
-			break;
-
-		case "owner":
-			echo elgg_view_resource('thewire/owner');
-			break;
-
-		case "view":
-			echo elgg_view_resource('thewire/view', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-
-		case "thread":
-			echo elgg_view_resource('thewire/thread', [
-				'thread_id' => elgg_extract(1, $page),
-			]);
-			break;
-
-		case "reply":
-			echo elgg_view_resource('thewire/reply', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-
-		case "tag":
-			echo elgg_view_resource('thewire/tag', [
-				'tag' => elgg_extract(1, $page),
-			]);
-			break;
-
-		case "previous":
-			echo elgg_view_resource('thewire/previous', [
-				'guid' => elgg_extract(1, $page),
-			]);
-			break;
-
-		default:
-			return false;
-	}
-	return true;
 }
 
 /**

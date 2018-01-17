@@ -118,6 +118,7 @@ Removed views
  * ``resources/reportedcontent/add``
  * ``resources/reportedcontent/add_form``
  * ``resources/site_notifications/view``: Use ``resources/site_notifications/owner``
+ * ``resources/site_notifications/everyone``: Use ``resources/site_notifications/all``
 
 Removed functions/methods
 -------------------------
