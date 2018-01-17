@@ -35,7 +35,7 @@ elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 
 elgg_push_breadcrumb(elgg_echo('edit'));
 
-$title = elgg_echo('pages:edit');
+$title = elgg_echo('edit:object:page');
 
 $vars = pages_prepare_form_vars($page, $page->getParentGUID());
 $content = elgg_view_form('pages/edit', [], $vars);

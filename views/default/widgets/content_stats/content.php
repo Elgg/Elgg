@@ -16,13 +16,13 @@ foreach ($registered_entity_types as $type => $subtypes) {
 		foreach ($subtypes as $subtype) {
 			$value = elgg_extract($subtype, elgg_extract($type, $entity_stats), false);
 			if ($value !== false) {
-				$stats[elgg_echo("item:$type:$subtype")] = $value;
+				$stats[elgg_echo("collection:$type:$subtype")] = $value;
 			}
 		}
 	} else {
 		$value = elgg_extract('__base__', elgg_extract($type, $entity_stats), false);
 		if ($value !== false) {
-			$stats[elgg_echo("item:$type")] = $value;
+			$stats[elgg_echo("collection:$type")] = $value;
 		}
 	}
 }

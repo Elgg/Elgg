@@ -441,15 +441,19 @@ function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEnt
 
 		$parameters = _elgg_services()->router->resolveRouteParameters($collection_route, $container);
 		if ($parameters) {
-			$label = elgg_echo("item:$entity_type:$entity_subtype");
+			$label = elgg_echo("collection:$entity_type:$entity_subtype");
 			if ($friends) {
-				$label = elgg_echo('collection:friends', [$label]);
+				if (elgg_language_key_exists("collection:$entity_type:$entity_subtype:friends")) {
+					$label = elgg_echo("collection:$entity_type:$entity_subtype:friends");
+				} else {
+					$label = elgg_echo('collection:friends', [$label]);
+				}
 			}
 			$collection_url = elgg_generate_url($collection_route, $parameters);
 			elgg_push_breadcrumb($label, $collection_url);
 		}
 	} else {
-		$label = elgg_echo("item:$entity_type:$entity_subtype");
+		$label = elgg_echo("collection:$entity_type:$entity_subtype");
 		$collection_url = elgg_generate_url("collection:$entity_type:$entity_subtype:all");
 		elgg_push_breadcrumb($label, $collection_url);
 	}

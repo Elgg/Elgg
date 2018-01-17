@@ -742,6 +742,26 @@ routes that depend on entity type and subtype.
 
 Use of ``handler`` parameter in entity menus has been deprecated in favour of named entity routes.
 
+Labelling
+---------
+
+Entity and collection labelling conventions have changed to comply with the new routing patterns:
+
+.. code-block::php
+
+   return [
+      'item:object:blog' => 'Blog',
+      'collection:object:blog' => 'Blogs',
+      'collection:object:blog:all' => 'All site blogs',
+      'collection:object:blog:owner' => '%s\'s blogs',
+      'collection:object:blog:group' => 'Group blogs',
+      'collection:object:blog:friends' => 'Friends\' blogs',
+      'add:object:blog' => 'Add blog post',
+      'edit:object:blog' => 'Edit blog post',
+   ];
+
+These conventions are used across the routing and navigation systems, so plugins are advised to follow them.
+
 Action responses
 ----------------
 

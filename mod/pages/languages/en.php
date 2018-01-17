@@ -5,17 +5,17 @@ return [
 	 * Menu items and titles
 	 */
 
-	'pages' => "Pages",
-	'pages:owner' => "%s's pages",
-	'pages:friends' => "Friends' pages",
-	'pages:all' => "All site pages",
-	'pages:add' => "Add a page",
+	'item:object:page' => 'Page',
+	'collection:object:pages' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "Group pages",
-	'groups:enablepages' => 'Enable group pages',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "A new page",
-	'pages:edit' => "Edit this page",
 	'pages:delete' => "Delete this page",
 	'pages:history' => "History",
 	'pages:view' => "View page",
@@ -33,7 +33,7 @@ return [
 View and comment on the page:
 %s
 ',
-	'item:object:page' => 'Pages',
+
 	'pages:more' => 'More pages',
 	'pages:none' => 'No pages created yet',
 

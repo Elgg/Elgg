@@ -28,7 +28,7 @@ function groups_init() {
 
 	// add group activity tool option
 	if (elgg_get_plugin_setting('allow_activity', 'groups') === 'yes') {
-		add_group_tool_option('activity', elgg_echo('groups:enableactivity'), true);
+		add_group_tool_option('activity', null, true);
 		elgg_extend_view('groups/tool_latest', 'groups/profile/activity_module');
 	}
 

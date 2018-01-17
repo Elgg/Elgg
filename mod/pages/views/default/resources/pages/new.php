@@ -47,7 +47,7 @@ if ($parent instanceof ElggPage) {
 	elgg_push_breadcrumb($parent->getDisplayName(), $parent->getURL());
 }
 
-$title = elgg_echo('pages:add');
+$title = elgg_echo('add:object:page');
 elgg_push_breadcrumb($title);
 
 $vars = pages_prepare_form_vars(null, $parent_guid);

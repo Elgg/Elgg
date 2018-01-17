@@ -36,12 +36,12 @@ elgg_pop_context();
 
 $new_link = elgg_view('output/url', [
 	'href' => "bookmarks/add/$group->guid",
-	'text' => elgg_echo('bookmarks:add'),
+	'text' => elgg_echo('add:object:bookmarks'),
 	'is_trusted' => true,
 ]);
 
 echo elgg_view('groups/profile/module', [
-	'title' => elgg_echo('bookmarks:group'),
+	'title' => elgg_echo('collection:object:bookmarks:group'),
 	'content' => $content,
 	'all_link' => $all_link,
 	'add_link' => $new_link,

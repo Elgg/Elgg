@@ -20,12 +20,16 @@
  * @return void
  * @since 1.5.0
  */
-function add_group_tool_option($name, $label, $default_on = true) {
+function add_group_tool_option($name, $label = null, $default_on = true) {
 	$options = _elgg_config()->group_tool_options;
 	if (!$options) {
 		$options = [];
 	}
-	
+
+	if (!$label) {
+		$label = elgg_echo("groups:tool:$name");
+	}
+
 	$options[$name] = (object) [
 		'name' => $name,
 		'label' => $label,

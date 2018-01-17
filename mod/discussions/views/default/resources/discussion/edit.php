@@ -12,7 +12,7 @@ if (!$topic->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();
 }
 
-$title = elgg_echo('discussion:topic:edit');
+$title = elgg_echo('edit:object:discussion');
 
 elgg_push_entity_breadcrumbs($topic);
 elgg_push_breadcrumb($title);

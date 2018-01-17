@@ -17,7 +17,7 @@ $content = elgg_list_entities([
 ]);
 
 if (empty($content)) {
-	echo elgg_echo('blog:noblogs');
+	echo elgg_echo('blog:none');
 	return;
 }
 

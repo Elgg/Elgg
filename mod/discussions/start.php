@@ -19,7 +19,7 @@ function discussion_init() {
 	elgg_extend_view('object/elements/imprint/contents', 'discussion/imprint/status');
 
 	// add the forum tool option
-	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
+	add_group_tool_option('forum', null, true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
 
 	// notifications
@@ -62,7 +62,7 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 	$url = elgg_generate_url('collection:object:discussion:group', [
 		'guid' => $entity->guid,
 	]);
-	$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
+	$item = new ElggMenuItem('discussion', elgg_echo('collection:object:discussion:group'), $url);
 	$return[] = $item;
 	
 	return $return;

@@ -19,12 +19,12 @@ if ($entity_stats) {
 	foreach ($entity_stats as $k => $entry) {
 		foreach ($entry as $a => $b) {
 			if ($a == "__base__") {
-				$a = elgg_echo("item:{$k}");
+				$a = elgg_echo("collection:{$k}");
 				if (empty($a)) {
 					$a = $k;
 				}
 			} else {
-				$a = elgg_echo("item:{$k}:{$a}");
+				$a = elgg_echo("collection:{$k}:{$a}");
 				if (empty($a)) {
 					$a = "$k $a";
 				}

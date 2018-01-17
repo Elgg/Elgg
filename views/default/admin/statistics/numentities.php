@@ -12,10 +12,10 @@ foreach ($entity_stats as $type => $subtypes) {
 		$is_registered = false;
 		if ($subtype == '__base__') {
 			$is_registered = array_key_exists($type, $registered_entity_types);
-			$name = elgg_echo("item:$type");
+			$name = elgg_echo("collection:$type");
 		} else {
 			$is_registered = in_array($subtype, $registered_entity_types[$type]);
-			$name = elgg_echo("item:$type:$subtype");
+			$name = elgg_echo("collection:$type:$subtype");
 		}
 		
 		if ($is_registered) {

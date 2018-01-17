@@ -20,12 +20,12 @@ $options = [
 foreach ($registered_entities as $type => $subtypes) {
 	// subtype will always be an array.
 	if (empty($subtypes)) {
-		$options["type=$type"] = elgg_echo('river:select', [elgg_echo("item:$type")]);
+		$options["type=$type"] = elgg_echo('river:select', [elgg_echo("collection:$type")]);
 		continue;
 	}
 	
 	foreach ($subtypes as $subtype) {
-		$options["type=$type&subtype=$subtype"] = elgg_echo('river:select', [elgg_echo("item:$type:$subtype")]);
+		$options["type=$type&subtype=$subtype"] = elgg_echo('river:select', [elgg_echo("collection:$type:$subtype")]);
 	}
 }
 

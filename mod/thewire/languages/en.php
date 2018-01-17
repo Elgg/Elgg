@@ -5,15 +5,19 @@ return [
 	 * Menu items and titles
 	 */
 	'thewire' => "The Wire",
-	'thewire:everyone' => "All wire posts",
-	'thewire:user' => "%s's wire posts",
-	'thewire:friends' => "Friends' wire posts",
+
+	'item:object:thewire' => "Wire post",
+	'collection:object:thewire' => 'Wire posts',
+	'collection:object:thewire:all' => "All wire posts",
+	'collection:object:thewire:owner' => "%s's wire posts",
+	'collection:object:thewire:friends' => "Friends' wire posts",
+
 	'thewire:replying' => "Replying to %s (@%s) who wrote",
 	'thewire:thread' => "Thread",
 	'thewire:charleft' => "characters remaining",
 	'thewire:tags' => "Wire posts tagged with '%s'",
 	'thewire:noposts' => "No wire posts yet",
-	'item:object:thewire' => "Wire posts",
+
 	'thewire:by' => 'Wire post by %s',
 	'thewire:previous:help' => "View previous post",
 	'thewire:hide:help' => "Hide previous post",

@@ -5,10 +5,10 @@
  * @package ElggPages
  */
 
-$title = elgg_echo('pages:all');
+$title = elgg_echo('collection:object:page:all');
 
 elgg_pop_breadcrumb();
-elgg_push_breadcrumb(elgg_echo('pages'));
+elgg_push_breadcrumb(elgg_echo('collection:object:page'));
 
 elgg_register_title_button('pages', 'add', 'object', 'page');
 

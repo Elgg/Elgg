@@ -5,7 +5,8 @@ return array(
  * Sites
  */
 
-	'item:site' => 'Sites',
+	'item:site:site' => 'Site',
+	'collection:site:site' => 'Sites',
 	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
@@ -223,7 +224,8 @@ return array(
 
 	'widgets' => "Widgets",
 	'widget' => "Widget",
-	'item:object:widget' => "Widgets",
+	'item:object:widget' => "Widget",
+	'collection:object:widget' => 'Widgets',
 	'widgets:save:success' => "The widget was successfully saved.",
 	'widgets:save:failure' => "We could not save your widget.",
 	'widgets:add:success' => "The widget was successfully added.",
@@ -236,8 +238,10 @@ return array(
  */
 
 	'group' => "Group",
-	'item:group' => "Groups",
-	'item:group:group' => "Groups",
+	'item:group' => "Group",
+	'collection:group' => 'Groups',
+	'item:group:group' => "Group",
+	'collection:group:group' => 'Groups',
 	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
@@ -245,7 +249,10 @@ return array(
  */
 
 	'user' => "User",
-	'item:user' => "Users",
+	'item:user' => "User",
+	'collection:user' => 'Users',
+	'item:user:user' => 'User',
+	'collection:user:user' => 'Users',
 
 	'friends' => "Friends",
 	'collection:friends' => 'Friends\' %s',
@@ -558,6 +565,7 @@ three sections:
 	'admin:notices:delete_all' => 'Dismiss all %s notices',
 	'admin:notices:could_not_delete' => 'Could not delete notice.',
 	'item:object:admin_notice' => 'Admin notice',
+	'collection:object:admin_notice' => 'Admin notices',
 
 	'admin:options' => 'Admin options',
 
@@ -660,7 +668,8 @@ To go to the site, click here:
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
 	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
 	'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
-	'item:object:plugin' => 'Plugins',
+	'item:object:plugin' => 'Plugin',
+	'collection:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "Plugins",
 	'admin:plugins:activate_all' => 'Activate All',
@@ -1249,7 +1258,8 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'admin:pending_upgrades' => 'The site has pending upgrades that require your immediate attention.',
 	'admin:view_upgrades' => 'View pending upgrades.',
-	'item:object:elgg_upgrade' => 'Site upgrades',
+	'item:object:elgg_upgrade' => 'Site upgrade',
+	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Your installation is up to date!',
 
 	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
@@ -1330,7 +1340,8 @@ If you requested this, click on the link below. Otherwise ignore this email.
  */
 
 	'comments:count' => "%s comments",
-	'item:object:comment' => 'Comments',
+	'item:object:comment' => 'Comment',
+	'collection:object:comment' => 'Comments',
 
 	'river:object:default:comment' => '%s commented on %s',
 

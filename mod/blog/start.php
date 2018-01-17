@@ -17,7 +17,7 @@ function blog_init() {
 	// add a site navigation item
 	elgg_register_menu_item('site', [
 		'name' => 'blog',
-		'text' => elgg_echo('blog:blogs'),
+		'text' => elgg_echo('collection:object:blog'),
 		'href' => elgg_generate_url('collection:object:blog:all'),
 	]);
 
@@ -31,7 +31,7 @@ function blog_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
 	// Add group option
-	add_group_tool_option('blog', elgg_echo('blog:enableblog'), true);
+	add_group_tool_option('blog', null, true);
 	elgg_extend_view('groups/tool_latest', 'blog/group_module');
 
 	// archive menu
@@ -62,7 +62,7 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 	if ($entity instanceof ElggUser) {
 		$return[] = ElggMenuItem::factory([
 					'name' => 'blog',
-					'text' => elgg_echo('blog'),
+					'text' => elgg_echo('collection:object:blog'),
 					'href' => elgg_generate_url('collection:object:blog:owner', [
 						'username' => $entity->username,
 					]),
@@ -71,7 +71,7 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 		if ($entity->isToolEnabled('blog')) {
 			$return[] = ElggMenuItem::factory([
 						'name' => 'blog',
-						'text' => elgg_echo('blog:group'),
+						'text' => elgg_echo('collection:object:blog:group'),
 						'href' => elgg_generate_url('collection:object:blog:group', [
 							'guid' => $entity->guid,
 							'subpage' => 'all',
@@ -196,7 +196,7 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
  * @return array
  */
 function blog_ecml_views_hook($hook, $type, $return_value, $params) {
-	$return_value['object/blog'] = elgg_echo('blog:blogs');
+	$return_value['object/blog'] = elgg_echo('item:object:blog');
 
 	return $return_value;
 }

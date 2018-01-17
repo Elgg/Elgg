@@ -13,7 +13,7 @@
 function file_init() {
 
 	// Site navigation
-	$item = new ElggMenuItem('file', elgg_echo('file'), elgg_generate_url('default:object:file'));
+	$item = new ElggMenuItem('file', elgg_echo('collection:object:file'), elgg_generate_url('default:object:file'));
 	elgg_register_menu_item('site', $item);
 
 	// Extend CSS
@@ -33,7 +33,7 @@ function file_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:file', 'file_prepare_notification');
 
 	// add the group files tool option
-	add_group_tool_option('file', elgg_echo('groups:enablefiles'), true);
+	add_group_tool_option('file', null, true);
 
 	// add a file link to owner blocks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
@@ -45,7 +45,7 @@ function file_init() {
 	// embed support
 	$item = ElggMenuItem::factory([
 		'name' => 'file',
-		'text' => elgg_echo('file'),
+		'text' => elgg_echo('collection:object:file'),
 		'priority' => 10,
 		'data' => [
 			'options' => [
@@ -58,7 +58,7 @@ function file_init() {
 
 	$item = ElggMenuItem::factory([
 		'name' => 'file_upload',
-		'text' => elgg_echo('file:upload'),
+		'text' => elgg_echo('add:object:file'),
 		'priority' => 100,
 		'data' => [
 			'view' => 'embed/file_upload/content',
@@ -150,12 +150,12 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
 		$url = elgg_generate_url('collection:object:file:owner', ['username' => $entity->username]);
-		$item = new ElggMenuItem('file', elgg_echo('file'), $url);
+		$item = new ElggMenuItem('file', elgg_echo('collection:object:file'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('file')) {
 			$url = elgg_generate_url('collection:object:file:group', ['guid' => $entity->guid]);
-			$item = new ElggMenuItem('file', elgg_echo('file:group'), $url);
+			$item = new ElggMenuItem('file', elgg_echo('collection:object:file:group'), $url);
 			$return[] = $item;
 		}
 	}

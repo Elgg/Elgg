@@ -16,7 +16,7 @@ elgg_push_collection_breadcrumbs('object', 'file', $owner, true);
 
 elgg_register_title_button('file', 'add', 'object', 'file');
 
-$title = elgg_echo("file:friends");
+$title = elgg_echo("collection:object:file:friends");
 
 $params = $vars;
 $params['entity'] = $owner;

@@ -11,7 +11,7 @@ if (!$owner) {
 // access check for closed groups
 elgg_group_gatekeeper();
 
-$title = elgg_echo('pages:owner', [$owner->getDisplayName()]);
+$title = elgg_echo('collection:object:page:owner', [$owner->getDisplayName()]);
 
 elgg_push_breadcrumb($owner->getDisplayName());
 

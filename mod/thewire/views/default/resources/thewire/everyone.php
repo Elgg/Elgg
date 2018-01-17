@@ -6,7 +6,7 @@
 
 elgg_push_breadcrumb(elgg_echo('thewire'));
 
-$title = elgg_echo('thewire:everyone');
+$title = elgg_echo('collection:object:thewire:all');
 
 $content = '';
 if (elgg_is_logged_in()) {

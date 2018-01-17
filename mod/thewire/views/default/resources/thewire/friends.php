@@ -8,7 +8,7 @@ if (!$owner) {
 	forward('', '404');
 }
 
-$title = elgg_echo('thewire:friends');
+$title = elgg_echo('collection:object:thewire:friends');
 
 elgg_push_breadcrumb(elgg_echo('thewire'), "thewire/all");
 elgg_push_breadcrumb($owner->name, "thewire/owner/$owner->username");

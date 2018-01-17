@@ -6,7 +6,7 @@
  */
 
 elgg_pop_breadcrumb();
-elgg_push_breadcrumb(elgg_echo('bookmarks'));
+elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'));
 
 elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
@@ -21,7 +21,7 @@ $content = elgg_list_entities([
 	'distinct' => false,
 ]);
 
-$title = elgg_echo('bookmarks:everyone');
+$title = elgg_echo('collections:object:bookmarks:all');
 
 $body = elgg_view_layout('content', [
 	'filter_context' => 'all',
