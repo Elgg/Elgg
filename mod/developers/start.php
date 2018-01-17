@@ -17,9 +17,6 @@ function developers_init() {
 	elgg_extend_view('admin.css', 'developers/css');
 	elgg_extend_view('elgg.css', 'developers/css');
 
-	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
-	elgg_register_page_handler('developers_ajax_demo', 'developers_ajax_demo_controller');
-
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
 	elgg_register_ajax_view('developers/ajax_demo.html');
 
@@ -307,34 +304,6 @@ function developers_log_events($name, $type) {
 	elgg_dump($msg, false);
 
 	unset($stack);
-}
-
-/**
- * Serve the theme sandbox pages
- *
- * @param array $page URL segments
- *
- * @return bool
- */
-function developers_theme_sandbox_controller($page) {
-	if (!isset($page[0])) {
-		forward('theme_sandbox/intro');
-	}
-
-	echo elgg_view_resource('theme_sandbox', [
-		'page' => $page[0],
-	]);
-	return true;
-}
-
-/**
- * Page handler for /developers_ajax_demo
- *
- * @return true
- */
-function developers_ajax_demo_controller() {
-	echo elgg_view_resource('developers/ajax_demo');
-	return true;
 }
 
 /**

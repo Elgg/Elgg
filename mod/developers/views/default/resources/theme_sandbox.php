@@ -1,6 +1,10 @@
 <?php
 
 $page = elgg_extract('page', $vars);
+if (!elgg_view_exists("theme_sandbox/{$page}")) {
+	throw new \Elgg\EntityNotFoundException();
+}
+
 elgg_load_css('dev.theme_sandbox');
 
 $pages = [
