@@ -113,7 +113,8 @@ Removed views
  * ``blog_get_page_content_list``
  * ``blog_get_page_content_archive``
  * ``blog_get_page_content_edit``
-
+ * ``forms/invitefriends/invite``: use ``forms/friends/invite`` 
+ * ``resources/invitefriends/invite``: use ``resources/friends/invite`` 
 
 Removed functions/methods
 -------------------------
@@ -547,6 +548,7 @@ Removed pagehandling
  * ``collections/pickercallback``
  * ``discussion/reply``: See :ref:`upgrade-discussion-replies`
  * ``expages``
+ * ``invitefriends``: Use ``friends/invite``
 
 Removed actions
 ---------------
@@ -560,6 +562,7 @@ Removed actions
  * ``uservalidationbyemail/bulk_action``: use ``admin/user/bulk/validate`` or ``admin/user/bulk/delete``
  * ``uservalidationbyemail/delete``: use ``admin/user/bulk/delete``
  * ``uservalidationbyemail/validate``: use ``admin/user/bulk/validate``
+ * ``invitefriends/invite``: use ``friends/invite``
 
 Inheritance changes
 -------------------

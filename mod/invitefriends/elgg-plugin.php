@@ -2,6 +2,12 @@
 
 return [
 	'actions' => [
-		'invitefriends/invite' => [],
+		'friends/invite' => [],
+	],
+	'routes' => [
+		'default:user:user:invite' => [
+			'path' => '/friends/invite',
+			'resource' => 'friends/invite',
+		],
 	],
 ];
