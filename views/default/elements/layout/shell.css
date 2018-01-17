@@ -3,3 +3,7 @@
 	margin: 0 auto;
 	position: relative;
 }
+
+.elgg-page-default .elgg-page-body > .elgg-inner {
+	padding-top: 1rem;
+}
