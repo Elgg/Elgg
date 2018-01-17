@@ -277,7 +277,7 @@ class Translator {
 			}
 
 			foreach ($languages as $language) {
-				$data = elgg_load_system_cache("$language.lang");
+				$data = elgg_load_system_cache("{$language}.lang");
 				if ($data) {
 					$this->addTranslation($language, unserialize($data));
 				} else {
@@ -287,7 +287,7 @@ class Translator {
 
 			if ($loaded) {
 				$this->loaded_from_cache = true;
-				$this->language_paths[$this->defaultPath] = true;
+				$this->registerLanguagePath($this->defaultPath);
 				$this->is_initialized = true;
 				return;
 			}
@@ -352,24 +352,6 @@ class Translator {
 	}
 
 	/**
-	 * Registers translations in a directory assuming the standard plugin layout.
-	 *
-	 * @param string $path Without the trailing slash.
-	 *
-	 * @return bool Success
-	 */
-	public function registerPluginTranslations($path) {
-		$languages_path = rtrim($path, "\\/") . "/languages";
-
-		// don't need to have translations
-		if (!is_dir($languages_path)) {
-			return true;
-		}
-
-		return $this->registerTranslations($languages_path);
-	}
-
-	/**
 	 * When given a full path, finds translation files and loads them
 	 *
 	 * @param string $path     Full path
@@ -381,9 +363,15 @@ class Translator {
 	 */
 	public function registerTranslations($path, $load_all = false, $language = null) {
 		$path = \Elgg\Project\Paths::sanitize($path);
+		
+		// don't need to register translations as the folder is missing
+		if (!is_dir($path)) {
+			_elgg_services()->logger->info("No translations could be loaded from: $path");
+			return true;
+		}
 
 		// Make a note of this path just in case we need to register this language later
-		$this->language_paths[$path] = true;
+		$this->registerLanguagePath($path);
 		$this->is_initialized = true;
 
 		_elgg_services()->logger->info("Translations loaded from: $path");
@@ -404,11 +392,7 @@ class Translator {
 		}
 
 		$return = true;
-		if (!$load_all) {
-			foreach ($load_language_files as $language_file) {
-				$return = $return && $this->includeLanguageFile($path . $language_file);
-			}
-		} else if ($handle = opendir($path)) {
+		if ($handle = opendir($path)) {
 			while (false !== ($language_file = readdir($handle))) {
 				// ignore bad files
 				if (substr($language_file, 0, 1) == '.' || substr($language_file, -4) !== '.php') {
@@ -462,29 +446,22 @@ class Translator {
 		if ($this->was_reloaded) {
 			return;
 		}
-
-		if ($this->loaded_from_cache) {
-			$cache = elgg_get_system_cache();
-			$cache_dir = $cache->getVariable("cache_path");
-			$filenames = elgg_get_file_list($cache_dir, [], [], [".lang"]);
-			foreach ($filenames as $filename) {
-				// Look for files matching for example 'en.lang', 'cmn.lang' or 'pt_br.lang'.
-				// Note that this regex is just for the system cache. The original language
-				// files are allowed to have uppercase letters (e.g. pt_BR.php).
-				if (preg_match('/(([a-z]{2,3})(_[a-z]{2})?)\.lang$/', $filename, $matches)) {
-					$language = $matches[1];
-					$data = elgg_load_system_cache("$language.lang");
-					if ($data) {
-						$this->addTranslation($language, unserialize($data));
-					}
+		
+		$languages = $this->getAvailableLanguages();
+		
+		foreach ($languages as $language) {
+			if ($this->loaded_from_cache) {
+				$data = elgg_load_system_cache("{$language}.lang");
+				if ($data) {
+					$this->addTranslation($language, unserialize($data));
+				}
+			} else {
+				foreach ($this->getLanguagePaths() as $path) {
+					$this->registerTranslations($path, false, $language);
 				}
 			}
-		} else {
-			foreach (array_keys($this->language_paths) as $path) {
-				$this->registerTranslations($path, true);
-			}
 		}
-
+		
 		_elgg_services()->hooks->getEvents()->triggerAfter('reload', 'translations');
 
 		$this->was_reloaded = true;
@@ -494,36 +471,37 @@ class Translator {
 	 * Return an array of installed translations as an associative
 	 * array "two letter code" => "native language name".
 	 *
+	 * @param boolean $calculate_completeness Set to true if you want a completeness postfix added to the language text
+	 *
 	 * @return array
 	 */
-	public function getInstalledTranslations() {
-		// Ensure that all possible translations are loaded
-		$this->reloadAllTranslations();
-
-		$installed = [];
-
-		$admin_logged_in = _elgg_services()->session->isAdminLoggedIn();
-
-		foreach ($this->translations as $k => $v) {
-			if ($this->languageKeyExists($k, $k)) {
-				$lang = $this->translate($k, [], $k);
-			} else {
-				$lang = $this->translate($k);
-			}
-
-			$installed[$k] = $lang;
-
-			if (!$admin_logged_in || ($k === 'en')) {
-				continue;
-			}
-
-			$completeness = $this->getLanguageCompleteness($k);
-			if ($completeness < 100) {
-				$installed[$k] .= " (" . $completeness . "% " . $this->translate('complete') . ")";
-			}
+	public function getInstalledTranslations($calculate_completeness = false) {
+		if ($calculate_completeness) {
+			// Ensure that all possible translations are loaded
+			$this->reloadAllTranslations();
 		}
+		
+		$result = [];
 
-		return $installed;
+		$languages = $this->getAvailableLanguages();
+		foreach ($languages as $language) {
+			if ($this->languageKeyExists($language, $language)) {
+				$value = $this->translate($language, [], $language);
+			} else {
+				$value = $this->translate($language);
+			}
+			
+			if (($language !== 'en') && $calculate_completeness) {
+				$completeness = $this->getLanguageCompleteness($language);
+				$value .= " (" . $completeness . "% " . $this->translate('complete') . ")";
+			}
+			
+			$result[$language] = $value;
+		}
+		
+		natcasesort($result);
+			
+		return $result;
 	}
 
 	/**
@@ -597,7 +575,7 @@ class Translator {
 	 * @return bool
 	 * @since 1.11
 	 */
-	function languageKeyExists($key, $language = 'en') {
+	public function languageKeyExists($key, $language = 'en') {
 		if (empty($key)) {
 			return false;
 		}
@@ -609,6 +587,67 @@ class Translator {
 		}
 
 		return array_key_exists($key, $this->translations[$language]);
+	}
+	
+	/**
+	 * Returns an array of all available language keys. Triggers a hook to allow plugins to add/remove languages
+	 *
+	 * @return array
+	 * @since 3.0
+	 */
+	public function getAvailableLanguages() {
+		$languages = [];
+		
+		$allowed_languages = $this->getAllLanguageCodes();
+		
+		foreach ($this->getLanguagePaths() as $path) {
+			try {
+				$iterator = new \DirectoryIterator($path);
+			} catch (Exception $e) {
+				continue;
+			}
+			
+			foreach ($iterator as $file) {
+				if ($file->isDir()) {
+					continue;
+				}
+				
+				if ($file->getExtension() !== 'php') {
+					continue;
+				}
+				
+				$language = $file->getBasename('.php');
+				if (empty($language) || !in_array($language, $allowed_languages)) {
+					continue;
+				}
+				
+				$languages[$language] = true;
+			}
+		}
+		
+		$languages = array_keys($languages);
+				
+		return _elgg_services()->hooks->trigger('languages', 'translations', [], $languages);
+	}
+	
+	/**
+	 * Registers a path for potential translation files
+	 *
+	 * @param string $path path to a folder that contains translation files
+	 *
+	 * @return void
+	 */
+	public function registerLanguagePath($path) {
+		$this->language_paths[$path] = true;
+	}
+	
+	/**
+	 * Returns a unique array with locations of translation files
+	 *
+	 * @return array
+	 */
+	protected function getLanguagePaths() {
+		return array_keys($this->language_paths);
 	}
 
 	/**

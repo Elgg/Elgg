@@ -88,10 +88,12 @@ function reload_all_translations() {
  * Return an array of installed translations as an associative
  * array "two letter code" => "native language name".
  *
+ * @param boolean $calculate_completeness Set to true if you want a completeness postfix added to the language text
+ *
  * @return array
  */
-function get_installed_translations() {
-	return _elgg_services()->translator->getInstalledTranslations();
+function get_installed_translations($calculate_completeness = false) {
+	return _elgg_services()->translator->getInstalledTranslations($calculate_completeness);
 }
 
 /**
@@ -103,18 +105,6 @@ function get_installed_translations() {
  */
 function get_language_completeness($language) {
 	return _elgg_services()->translator->getLanguageCompleteness($language);
-}
-
-/**
- * Return the translation keys missing from a given language,
- * or those that are identical to the english version.
- *
- * @param string $language The language
- *
- * @return mixed
- */
-function get_missing_language_keys($language) {
-	return _elgg_services()->translator->getMissingLanguageKeys($language);
 }
 
 /**
@@ -132,4 +122,14 @@ function get_missing_language_keys($language) {
  */
 function elgg_language_key_exists($key, $language = 'en') {
 	return _elgg_services()->translator->languageKeyExists($key, $language);
+}
+
+/**
+ * Returns an array of available languages
+ *
+ * @return array
+ * @since 3.0
+ */
+function elgg_get_available_languages() {
+	return _elgg_services()->translator->getAvailableLanguages();
 }

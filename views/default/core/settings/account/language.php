@@ -12,13 +12,24 @@ if (!$user instanceof ElggUser) {
 	return;
 }
 
-$title = elgg_echo('user:set:language');
+$options = get_installed_translations(true);
+
+if (count($options) < 2) {
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'language',
+		'value' => $user->language,
+	]);
+	
+	return;
+}
+
 $content = elgg_view_field([
 	'#type' => 'select',
 	'name' => 'language',
 	'value' => $user->language,
-	'options_values' => get_installed_translations(),
+	'options_values' => $options,
 	'#label' => elgg_echo('user:language:label'),
-		]);
+]);
 
-echo elgg_view_module('info', $title, $content);
+echo elgg_view_module('info', elgg_echo('user:set:language'), $content);

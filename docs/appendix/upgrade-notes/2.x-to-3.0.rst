@@ -20,6 +20,7 @@ The global ``$CONFIG`` is now a proxy for Elgg's configuration container, and mo
 Removed views
 -------------
 
+ * ``forms/account/settings``: usersettings extension can now extend the view ``forms/usersettings/save``
  * ``forms/admin/site/advanced/system``
  * ``resources/file/download``
  * ``output/checkboxes``: use ``output/tags`` if you want the same behaviour
@@ -140,6 +141,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``get_default_filestore``
  * ``get_site_entity_as_row``
  * ``get_group_entity_as_row``
+ * ``get_missing_language_keys``
  * ``get_object_entity_as_row``
  * ``get_user_entity_as_row``
  * ``update_river_access_by_object``

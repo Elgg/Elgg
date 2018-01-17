@@ -24,7 +24,6 @@ class UserViewsRenderingTest extends ViewRenderingTestCase {
 			'core/settings/account',
 			'core/settings/statistics',
 			'icon/user/default',
-			'forms/account/settings',
 			'forms/avatar/crop',
 			'forms/avatar/edit',
 			'forms/user/changepassword',

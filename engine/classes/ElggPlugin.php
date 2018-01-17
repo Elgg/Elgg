@@ -770,12 +770,10 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// include languages
-		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
-			// should be loaded before the first function that touches the static config (elgg-plugin.php)
-			// so translations can be used... for example in registering widgets
-			$this->registerLanguages();
-		}
-
+		// should be loaded before the first function that touches the static config (elgg-plugin.php)
+		// so translations can be used... for example in registering widgets
+		$this->registerLanguages($flags & ELGG_PLUGIN_REGISTER_LANGUAGES);
+		
 		// include start file if it exists
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->activateEntities();
@@ -1029,10 +1027,21 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Registers the plugin's languages
 	 *
+	 * @param boolean $path_only we need to register the path only
+	 *
 	 * @return true
 	 */
-	protected function registerLanguages() {
-		return _elgg_services()->translator->registerPluginTranslations($this->getPath());
+	protected function registerLanguages($path_only = false) {
+		$languages_path = $this->getPath() . 'languages';
+		if (!is_dir($languages_path)) {
+			return true;
+		}
+		
+		if ($path_only) {
+			return _elgg_services()->translator->registerLanguagePath($languages_path);
+		}
+		
+		return _elgg_services()->translator->registerTranslations($languages_path);
 	}
 
 	/**

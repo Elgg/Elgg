@@ -132,6 +132,9 @@ System hooks
    Allows plugins to register their own database seeds. Seeds populate the database with fake entities for testing purposes.
    Seeds must extend ``\Elgg\Database\Seeds\Seed`` class to be executable via ``elgg-cli database:seed``.
 
+**languages, translations**
+   Allows plugins to add/remove languages from the configurable languages in the system.
+
 
 User hooks
 ==========
