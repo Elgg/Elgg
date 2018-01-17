@@ -107,7 +107,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 	public function checkRewriteRules(&$report) {
 		$report['rewrite'] = [
 			[
-				'severity' => 'pass',
+				'severity' => 'success',
 				'message' => elgg_echo('install:check:rewrite:success'),
 			]
 		];
@@ -187,19 +187,19 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		$vars['report'] = [
 			'php' => [
 				[
-					'severity' => 'pass',
+					'severity' => 'success',
 					'message' => elgg_echo('install:check:php:success')
 				]
 			],
 			'rewrite' => [
 				[
-					'severity' => 'pass',
+					'severity' => 'success',
 					'message' => elgg_echo('install:check:rewrite:success'),
 				]
 			],
 			'database' => [
 				[
-					'severity' => 'info',
+					'severity' => 'notice',
 					'message' => elgg_echo('install:check:database')
 				],
 			]

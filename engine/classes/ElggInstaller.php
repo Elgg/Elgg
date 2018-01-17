@@ -334,13 +334,13 @@ class ElggInstaller {
 		// check the database later
 		$report['database'] = [
 			[
-				'severity' => 'info',
+				'severity' => 'notice',
 				'message' => elgg_echo('install:check:database')
 			]
 		];
 
 		// any failures?
-		$numFailures = $this->countNumConditions($report, 'failure');
+		$numFailures = $this->countNumConditions($report, 'error');
 
 		// any warnings
 		$numWarnings = $this->countNumConditions($report, 'warning');
@@ -893,7 +893,7 @@ class ElggInstaller {
 			$msg = elgg_echo('install:check:installdir', [Paths::PATH_TO_CONFIG]);
 			$report['settings'] = [
 				[
-					'severity' => 'failure',
+					'severity' => 'error',
 					'message' => $msg,
 				]
 			];
@@ -919,7 +919,7 @@ class ElggInstaller {
 		if (!is_readable(Config::resolvePath())) {
 			$report['settings'] = [
 				[
-					'severity' => 'failure',
+					'severity' => 'error',
 					'message' => elgg_echo('install:check:readsettings'),
 				]
 			];
@@ -941,7 +941,7 @@ class ElggInstaller {
 		$min_php_version = '7.0.0';
 		if (version_compare(PHP_VERSION, $min_php_version, '<')) {
 			$phpReport[] = [
-				'severity' => 'failure',
+				'severity' => 'error',
 				'message' => elgg_echo('install:check:php:version', [$min_php_version, PHP_VERSION])
 			];
 		}
@@ -952,7 +952,7 @@ class ElggInstaller {
 
 		if (count($phpReport) == 0) {
 			$phpReport[] = [
-				'severity' => 'pass',
+				'severity' => 'success',
 				'message' => elgg_echo('install:check:php:success')
 			];
 		}
@@ -978,7 +978,7 @@ class ElggInstaller {
 		foreach ($requiredExtensions as $extension) {
 			if (!in_array($extension, $extensions)) {
 				$phpReport[] = [
-					'severity' => 'failure',
+					'severity' => 'error',
 					'message' => elgg_echo('install:check:php:extension', [$extension])
 				];
 			}
@@ -1023,21 +1023,21 @@ class ElggInstaller {
 			$separator = htmlspecialchars(ini_get('arg_separator.output'));
 			$msg = elgg_echo("install:check:php:arg_separator", [$separator]);
 			$phpReport[] = [
-				'severity' => 'failure',
+				'severity' => 'error',
 				'message' => $msg,
 			];
 		}
 
 		if (ini_get('register_globals')) {
 			$phpReport[] = [
-				'severity' => 'failure',
+				'severity' => 'error',
 				'message' => elgg_echo("install:check:php:register_globals")
 			];
 		}
 
 		if (ini_get('session.auto_start')) {
 			$phpReport[] = [
-				'severity' => 'failure',
+				'severity' => 'error',
 				'message' => elgg_echo("install:check:php:session.auto_start")
 			];
 		}
