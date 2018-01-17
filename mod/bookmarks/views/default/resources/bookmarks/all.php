@@ -20,7 +20,7 @@ $content = elgg_list_entities([
 	'distinct' => false,
 ]);
 
-$title = elgg_echo('collections:object:bookmarks:all');
+$title = elgg_echo('collection:object:bookmarks:all');
 
 $body = elgg_view_layout('content', [
 	'filter_context' => 'all',
