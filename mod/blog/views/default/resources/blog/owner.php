@@ -1,7 +1,5 @@
 <?php
 
-elgg_load_library('elgg:blog');
-
 $page_type = 'owner';
 $username = elgg_extract('username', $vars);
 

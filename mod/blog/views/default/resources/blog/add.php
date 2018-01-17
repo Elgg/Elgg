@@ -2,8 +2,6 @@
 
 elgg_gatekeeper();
 
-elgg_load_library('elgg:blog');
-
 $page_type = 'add';
 $guid = elgg_extract('guid', $vars);
 

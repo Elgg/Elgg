@@ -1,7 +1,5 @@
 <?php
 
-elgg_load_library('elgg:blog');
-
 $page_type = 'friends';
 $username = elgg_extract('username', $vars);
 

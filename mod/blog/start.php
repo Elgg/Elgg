@@ -12,7 +12,7 @@
  */
 function blog_init() {
 
-	elgg_register_library('elgg:blog', __DIR__ . '/lib/blog.php');
+	\Elgg\Includer::requireFileOnce(__DIR__ . '/lib/blog.php');
 
 	// add a site navigation item
 	elgg_register_menu_item('site', [

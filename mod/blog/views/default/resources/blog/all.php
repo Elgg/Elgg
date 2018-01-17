@@ -2,8 +2,6 @@
 
 $page_type = 'all';
 
-elgg_load_library('elgg:blog');
-
 $params = blog_get_page_content_list();
 
 $sidebar = elgg_extract('sidebar', $params, '');

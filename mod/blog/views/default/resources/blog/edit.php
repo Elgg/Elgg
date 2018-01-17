@@ -2,8 +2,6 @@
 
 elgg_gatekeeper();
 
-elgg_load_library('elgg:blog');
-
 $page_type = 'edit';
 $guid = elgg_extract('guid', $vars);
 $revision = elgg_extract('revision', $vars);

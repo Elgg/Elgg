@@ -118,6 +118,8 @@ Removed functions/methods
 All the functions in ``engine/lib/deprecated-1.9.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.9.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https://github.com/Elgg/Elgg/blob/2.0/engine/lib/deprecated-1.10.php for these functions. Each ``@deprecated`` declaration includes instructions on what to use instead.
 
+ * ``elgg_register_library``: require your library files so they are available globally to other plugins
+ * ``elgg_load_library``
  * ``activity_profile_menu``
  * ``can_write_to_container``: Use ``ElggEntity->canWriteToContainer()``
  * ``create_metadata_from_array``
@@ -526,10 +528,11 @@ The Entity and River menu now shows all the items in a dropdown. Social actions 
 Removed libraries
 -----------------
 
- * ``elgg:bookmarks``
- * ``elgg:discussion``
- * ``elgg:pages``
- * ``elgg:file``
+``elgg_register_library`` and ``elgg_load_library`` have been removed.
+These functions had little impact on performance (especially with OPCache enabled), and made it difficult for other plugins to work with APIs contained in libraries.
+Additionally it was difficult for developers to know that APIs were contained in a library while there being autocompleted by IDE.
+
+If you are concerned with performance, move the logic to classes and let PHP autoload them as necessary, otherwise use ``require_once`` and require your libraries.
 
 Removed pagehandling
 --------------------

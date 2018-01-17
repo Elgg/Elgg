@@ -1,7 +1,5 @@
 <?php
 
-elgg_load_library('elgg:blog');
-
 $subpage = elgg_extract('subpage', $vars);
 $page_type = 'group';
 $group_guid = elgg_extract('guid', $vars, elgg_extract('group_guid', $vars)); // group_guid for BC

@@ -25,59 +25,6 @@ function elgg() {
 }
 
 /**
- * Register a PHP file as a library.
- *
- * @see elgg_load_library()
- *
- * @param string $name     The name of the library
- * @param string $location The location of the file
- *
- * @return void
- * @since 1.8.0
- */
-function elgg_register_library($name, $location) {
-	$libraries = _elgg_config()->libraries;
-	if ($libraries === null) {
-		$libraries = [];
-	}
-	$libraries[$name] = $location;
-	_elgg_config()->libraries = $libraries;
-}
-
-/**
- * Load a PHP library.
- *
- * @see elgg_register_library()
- *
- * @param string $name The name of the library
- *
- * @return void
- * @throws InvalidParameterException
- * @since 1.8.0
- */
-function elgg_load_library($name) {
-	static $loaded_libraries = [];
-
-	if (in_array($name, $loaded_libraries)) {
-		return;
-	}
-
-	$libraries = _elgg_config()->libraries;
-
-	if (!isset($libraries[$name])) {
-		$error = "$name is not a registered library";
-		throw new \InvalidParameterException($error);
-	}
-
-	if (!include_once($libraries[$name])) {
-		$error = "Could not load the $name library from {$libraries[$name]}";
-		throw new \InvalidParameterException($error);
-	}
-
-	$loaded_libraries[] = $name;
-}
-
-/**
  * Forward to $location.
  *
  * Sends a 'Location: $location' header and exits.  If headers have already been sent, throws an exception.
