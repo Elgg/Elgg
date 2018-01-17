@@ -15,6 +15,11 @@ if (!$value) {
 
 try {
 	$dt = \Elgg\Values::normalizeTime($value);
-	echo $dt->format($format);
+	
+	$attributes = [
+		'datetime' => $dt->format('c'),
+	];
+	
+	echo elgg_format_element('time', $attributes, $dt->format($format));
 } catch (DataFormatException $ex) {
 }
