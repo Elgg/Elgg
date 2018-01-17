@@ -546,6 +546,7 @@ Removed pagehandling
  * ``twitterservice``
  * ``collections/pickercallback``
  * ``discussion/reply``: See :ref:`upgrade-discussion-replies`
+ * ``expages``
 
 Removed actions
 ---------------

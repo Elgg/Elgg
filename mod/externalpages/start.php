@@ -10,12 +10,6 @@
  */
 function expages_init() {
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('about', 'expages_page_handler');
-	elgg_register_page_handler('terms', 'expages_page_handler');
-	elgg_register_page_handler('privacy', 'expages_page_handler');
-	elgg_register_page_handler('expages', 'expages_page_handler');
-
 	// Register public external pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'expages_public');
 
@@ -71,57 +65,6 @@ function expages_setup_footer_menu() {
 			'section' => 'meta',
 		]);
 	}
-}
-
-/**
- * External pages page handler
- *
- * @param array  $page    URL segements
- * @param string $handler Handler identifier
- * @return bool
- */
-function expages_page_handler($page, $handler) {
-	if ($handler == 'expages') {
-		forward($page[1]);
-	}
-	$type = strtolower($handler);
-
-	$title = elgg_echo("expages:$type");
-
-	$object = elgg_get_entities([
-		'type' => 'object',
-		'subtype' => $type,
-		'limit' => 1,
-	]);
-	
-	$description = $object ? $object[0]->description : elgg_echo('expages:notset');
-	$description = elgg_view('output/longtext', ['value' => $description]);
-	
-	$content = elgg_view('expages/wrapper', [
-		'content' => $description,
-	]);
-	
-	if (elgg_is_admin_logged_in()) {
-		elgg_register_menu_item('title', [
-			'name' => 'edit',
-			'text' => elgg_echo('edit'),
-			'href' => "admin/configure_utilities/expages?type=$type",
-			'link_class' => 'elgg-button elgg-button-action',
-		]);
-	}
-	
-	$shell = 'default';
-	if (elgg_get_config('walled_garden') && !elgg_is_logged_in()) {
-		$shell = 'walled_garden';
-	}
-	$body = elgg_view_layout('default', [
-		'content' => $content,
-		'title' => $title,
-		'sidebar' => false,
-	]);
-	echo elgg_view_page($title, $body, $shell);
-	
-	return true;
 }
 
 /**
