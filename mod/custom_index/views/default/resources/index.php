@@ -7,67 +7,9 @@
  *
  */
 
-elgg_load_css('resources/index.css');
-
-elgg_push_context('front');
-
-elgg_push_context('widgets');
-
-$list_params = [
-	'type' => 'object',
-	'limit' => 4,
-	'full_view' => false,
-	'list_type_toggle' => false,
-	'pagination' => false,
-];
-
-//grab the latest 4 blog posts
-$list_params['subtype'] = 'blog';
-$blogs = elgg_list_entities($list_params);
-
-//grab the latest bookmarks
-$list_params['subtype'] = 'bookmarks';
-$bookmarks = elgg_list_entities($list_params);
-
-//grab the latest files
-$list_params['subtype'] = 'file';
-$files = elgg_list_entities($list_params);
-
-//get the newest members who have an avatar
-$newest_members = elgg_list_entities([
-	'metadata_names' => 'icontime',
-	'type' => 'user',
-	'limit' => 10,
-	'full_view' => false,
-	'pagination' => false,
-	'list_type' => 'gallery',
-	'gallery_class' => 'elgg-gallery-users',
-	'size' => 'small',
+$body = elgg_view_layout('default', [
+	'content' => elgg_view('custom_index/content', $vars),
+	'sidebar' => false,
 ]);
-
-//newest groups
-$list_params['type'] = 'group';
-unset($list_params['subtype']);
-$groups = elgg_list_entities($list_params);
-
-//grab the login form
-$login = elgg_view("core/account/login_box");
-
-elgg_pop_context();
-
-// lay out the content
-$vars = [
-	'blogs' => $blogs,
-	'bookmarks' => $bookmarks,
-	'files' => $files,
-	'groups' => $groups,
-	'login' => $login,
-	'members' => $newest_members,
-];
-
-$body = elgg_view('custom_index/content', $vars);
-
-// no RSS feed with a "widget" front page
-elgg_unregister_rss_link();
 
 echo elgg_view_page('', $body);
