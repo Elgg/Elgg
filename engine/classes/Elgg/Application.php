@@ -567,6 +567,9 @@ class Application {
 	public static function upgrade() {
 		// we want to know if an error occurs
 		ini_set('display_errors', 1);
+		
+		set_time_limit(0);
+		
 		$is_cli = (php_sapi_name() === 'cli');
 
 		$forward = function ($url) use ($is_cli) {
