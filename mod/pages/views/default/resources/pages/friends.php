@@ -5,9 +5,10 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner instanceof ElggUser) {
-	forward('', '404');
+	throw new \Elgg\EntityNotFoundException();
 }
 
+elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 elgg_push_breadcrumb($owner->getDisplayName(), "pages/owner/{$owner->username}");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
