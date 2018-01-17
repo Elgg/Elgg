@@ -638,6 +638,8 @@ class ElggPlugin extends ElggObject {
 		if ($return === false) {
 			$this->deactivate();
 		}
+		
+		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
 
 		_elgg_services()->plugins->setBootPlugins(null);
 

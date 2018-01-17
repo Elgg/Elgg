@@ -213,7 +213,7 @@ class ElggRewriteTester {
 	protected function returnStatus($url) {
 		if ($this->rewriteTestPassed) {
 			return [
-				'severity' => 'pass',
+				'severity' => 'success',
 				'message' => _elgg_services()->translator->translate('install:check:rewrite:success'),
 			];
 		}

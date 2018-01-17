@@ -118,6 +118,9 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 		$config = _elgg_services()->dbConfig->getConnectionConfig();
 
 		try {
+			// required to allow bigger index sizes required for utf8mb4
+			update_data("SET GLOBAL innodb_large_prefix = 'ON'");
+			
 			update_data("
 				ALTER DATABASE
     			`{$config['database']}`
@@ -143,6 +146,11 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 						}
 					}
 				}
+
+				update_data("
+					ALTER TABLE {$config['prefix']}{$table}
+					ROW_FORMAT=DYNAMIC
+				");
 
 				update_data("
 					ALTER TABLE {$config['prefix']}{$table}
