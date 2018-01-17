@@ -11,9 +11,6 @@
  */
 function search_init() {
 
-	// page handler for search actions and results
-	elgg_register_page_handler('search', 'search_page_handler');
-
 	// exclude /search routes from indexing
 	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
 
@@ -23,24 +20,6 @@ function search_init() {
 	elgg_register_plugin_hook_handler('search:format', 'entity', \Elgg\Search\FormatComentEntityHook::class);
 
 	elgg_register_plugin_hook_handler('view_vars', 'output/tag', 'search_output_tag');
-}
-
-/**
- * Page handler for /search routes
- *
- * @param array $segments URL segments
- *
- * @return \Elgg\Http\OkResponse
- * @throws SecurityException
- */
-function search_page_handler($segments) {
-
-	if (!get_input('q') && isset($segments[0])) {
-		set_input('q', $segments[0]);
-	}
-
-	$output = elgg_view_resource('search/index');
-	return elgg_ok_response($output);
 }
 
 /**
