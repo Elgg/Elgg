@@ -9,6 +9,12 @@ elgg_gatekeeper();
 $page_owner = elgg_get_page_owner_entity();
 
 $title = elgg_echo('add:object:bookmarks');
+elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'), 'bookmarks/all');
+if ($page_owner instanceof ElggGroup) {
+	elgg_push_breadcrumb($page_owner->getDisplayName(), "bookmarks/group/{$page_owner->guid}/all");
+} else {
+	elgg_push_breadcrumb($page_owner->getDisplayName(), "bookmarks/owner/{$page_owner->username}");
+}
 elgg_push_breadcrumb($title);
 
 $vars = bookmarks_prepare_form_vars();

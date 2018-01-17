@@ -11,6 +11,7 @@ if (!$page_owner) {
 	forward('', '404');
 }
 
+elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'), 'bookmarks/all');
 elgg_push_breadcrumb($page_owner->name);
 
 elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');

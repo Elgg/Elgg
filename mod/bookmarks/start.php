@@ -22,8 +22,6 @@ function bookmarks_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
 
-	elgg_register_page_handler('bookmarks', 'bookmarks_page_handler');
-
 	elgg_extend_view('elgg.js', 'bookmarks.js');
 
 	// Register for notifications
@@ -42,79 +40,6 @@ function bookmarks_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:bookmarks', 'Elgg\Values::getTrue');
-}
-
-/**
- * Dispatcher for bookmarks.
- *
- * URLs take the form of
- *  All bookmarks:        bookmarks/all
- *  User's bookmarks:     bookmarks/owner/<username>
- *  Friends' bookmarks:   bookmarks/friends/<username>
- *  View bookmark:        bookmarks/view/<guid>/<title>
- *  New bookmark:         bookmarks/add/<guid> (container: user, group, parent)
- *  Edit bookmark:        bookmarks/edit/<guid>
- *  Group bookmarks:      bookmarks/group/<guid>/all
- *  Bookmarklet:          bookmarks/bookmarklet/<guid> (user)
- *
- * Title is ignored
- *
- * @param array $page URL segments
- * @return bool
- */
-function bookmarks_page_handler($page) {
-
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
-
-	elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'), 'bookmarks/all');
-
-	switch ($page[0]) {
-		case "all":
-			echo elgg_view_resource('bookmarks/all');
-			break;
-
-		case "owner":
-			echo elgg_view_resource('bookmarks/owner');
-			break;
-
-		case "friends":
-			echo elgg_view_resource('bookmarks/friends');
-			break;
-
-		case "view":
-			echo elgg_view_resource('bookmarks/view', [
-				'guid' => $page[1],
-			]);
-			break;
-
-		case "add":
-			echo elgg_view_resource('bookmarks/add');
-			break;
-
-		case "edit":
-			echo elgg_view_resource('bookmarks/edit', [
-				'guid' => $page[1],
-			]);
-			break;
-
-		case 'group':
-			echo elgg_view_resource('bookmarks/owner');
-			break;
-
-		case "bookmarklet":
-			echo elgg_view_resource('bookmarks/bookmarklet', [
-				'container_guid' => $page[1],
-			]);
-			break;
-
-		default:
-			return false;
-	}
-
-	elgg_pop_context();
-	return true;
 }
 
 /**
