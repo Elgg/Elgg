@@ -8,19 +8,19 @@ return [
 	],
 	'routes' => [
 		'collection:river:owner' => [
-			'path' => 'activity/owner/{username}',
+			'path' => '/activity/owner/{username}',
 			'resource' => 'river',
 		],
 		'collection:river:friends' => [
-			'path' => 'activity/friends',
+			'path' => '/activity/friends',
 			'resource' => 'river',
 		],
 		'collection:river:all' => [
-			'path' => 'activity/all',
+			'path' => '/activity/all',
 			'resource' => 'river',
 		],
 		'default:river' => [
-			'path' => 'activity',
+			'path' => '/activity',
 			'resource' => 'river',
 		],
 	],
