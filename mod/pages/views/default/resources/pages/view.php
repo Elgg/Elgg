@@ -15,18 +15,7 @@ if (!$container) {
 	throw new \Elgg\EntityNotFoundException();
 }
 
-elgg_set_page_owner_guid($container->guid);
-
-elgg_group_gatekeeper();
-
-elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
-
-if ($container instanceof ElggUser) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");
-} else if ($container instanceof ElggGroup) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/group/{$container->guid}");
-}
-
+elgg_push_collection_breadcrumbs('object', 'page', $container);
 pages_prepare_parent_breadcrumbs($page);
 
 $title = $page->getDisplayName();
@@ -40,14 +29,15 @@ $content = elgg_view_entity($page, [
 if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
 	elgg_register_menu_item('title', [
 		'name' => 'subpage',
-		'href' => "pages/add/{$page->guid}",
+		'href' => elgg_generate_url('add:object:page', [
+			'guid' => $page->guid,
+		]),
 		'text' => elgg_echo('pages:newchild'),
 		'link_class' => 'elgg-button elgg-button-action',
 	]);
 }
 
-$body = elgg_view_layout('content', [
-	'filter' => '',
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar/navigation', [
@@ -56,4 +46,6 @@ $body = elgg_view_layout('content', [
 	'entity' => $page,
 ]);
 
-echo elgg_view_page($title, $body);
+echo elgg_view_page($title, $body, 'default', [
+	'entity' => $page,
+]);

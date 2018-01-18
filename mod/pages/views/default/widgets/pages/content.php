@@ -26,7 +26,7 @@ if (empty($content)) {
 echo $content;
 
 $more_link = elgg_view('output/url', [
-	'href' => 'pages/owner/' . $widget->getOwnerEntity()->username,
+	'href' => elgg_generate_url('collection:object:page:owner', ['username' => $widget->getOwnerEntity()->username]),
 	'text' => elgg_echo('pages:more'),
 	'is_trusted' => true,
 ]);

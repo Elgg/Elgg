@@ -21,17 +21,10 @@ if (!$container) {
 
 elgg_set_page_owner_guid($container->guid);
 
-elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
-
-if ($container instanceof ElggUser) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");
-} else if ($container instanceof ElggGroup) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/group/{$container->guid}");
-}
-
+elgg_push_collection_breadcrumbs('object', 'page', $container);
 pages_prepare_parent_breadcrumbs($page);
-elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 
+elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 elgg_push_breadcrumb(elgg_echo('edit'));
 
 $title = elgg_echo('edit:object:page');

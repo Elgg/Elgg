@@ -32,8 +32,8 @@ return [
 			'resource' => 'pages/friends',
 		],
 		'collection:object:page:group' => [
-			'path' => '/pages/group/{guid}',
-			'resource' => 'pages/owner',
+			'path' => '/pages/group/{guid}/{subpage?}',
+			'resource' => 'pages/group',
 		],
 		'add:object:page' => [
 			'path' => '/pages/add/{guid}',

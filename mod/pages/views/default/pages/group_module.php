@@ -13,7 +13,7 @@ if (!$group->isToolEnabled('pages')) {
 }
 
 $all_link = elgg_view('output/url', [
-	'href' => "pages/group/{$group->guid}/all",
+	'href' => elgg_generate_url('collection:object:page:group', ['guid' => $group->guid]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
@@ -36,7 +36,7 @@ $content = elgg_list_entities([
 elgg_pop_context();
 
 $new_link = elgg_view('output/url', [
-	'href' => "pages/add/{$group->guid}",
+	'href' => elgg_generate_url('add:object:page', ['guid' => $group->guid]),
 	'text' => elgg_echo('add:object:page'),
 	'is_trusted' => true,
 ]);

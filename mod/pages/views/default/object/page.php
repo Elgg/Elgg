@@ -37,8 +37,15 @@ if ($revision) {
 	}
 }
 
+if (!$annotation instanceof ElggAnnotation) {
+	return;
+}
+
 $owner = $annotation->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'small');
+$owner_icon = '';
+if ($owner) {
+	$owner_icon = elgg_view_entity_icon($owner, 'small');
+}
 
 $metadata = null;
 // If we're looking at a revision, display annotation menu

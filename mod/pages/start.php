@@ -15,11 +15,10 @@ function pages_init() {
 	// register a library of helper functions
 	\Elgg\Includer::requireFileOnce(__DIR__ . '/lib/pages.php');
 
-	$item = new ElggMenuItem('pages', elgg_echo('collection:object:page:all'), 'pages/all');
+	$item = new ElggMenuItem('pages', elgg_echo('collection:object:page'), elgg_generate_url('default:object:page'));
 	elgg_register_menu_item('site', $item);
 
 	// Register a url handler
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'pages_set_url');
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
 
 	// Extend the main css view
@@ -66,26 +65,9 @@ function pages_init() {
 	
 	// prevent public write access
 	elgg_register_plugin_hook_handler('view_vars', 'input/access', 'pages_write_access_vars');
-}
 
-/**
- * Override the page url
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $url    current return value
- * @param array  $params supplied params
- *
- * @return void|string
- */
-function pages_set_url($hook, $type, $url, $params) {
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggPage) {
-		return;
-	}
-	
-	$title = elgg_get_friendly_title($entity->getDisplayName());
-	return "pages/view/{$entity->guid}/{$title}";
+	// register database seed
+	elgg_register_plugin_hook_handler('seeds', 'database', 'pages_register_db_seeds');
 }
 
 /**
@@ -102,7 +84,9 @@ function pages_set_revision_url($hook, $type, $url, $params) {
 	
 	$annotation = elgg_extract('extender', $params);
 	if ($annotation->getSubtype() == 'page') {
-		return "pages/revision/{$annotation->id}";
+		return elgg_generate_url('revision:object:page', [
+			'id' => $annotation->id,
+		]);
 	}
 }
 
@@ -138,12 +122,17 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 	
 	$entity = elgg_extract('entity', $params);
 	if ($entity instanceof ElggUser) {
-		$url = "pages/owner/{$entity->username}";
+		$url = elgg_generate_url('collection:object:page:owner', [
+			'username' => $entity->username,
+		]);
 		$item = new ElggMenuItem('pages', elgg_echo('collection:object:page'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('pages')) {
-			$url = "pages/group/{$entity->guid}/all";
+			$url = elgg_generate_url('collection:object:page:group', [
+				'guid' => $entity->guid,
+				'subpage' => 'all',
+			]);
 			$item = new ElggMenuItem('pages', elgg_echo('collection:object:page:group'), $url);
 			$return[] = $item;
 		}
@@ -177,7 +166,9 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 		'name' => 'history',
 		'icon' => 'history',
 		'text' => elgg_echo('pages:history'),
-		'href' => "pages/history/{$entity->guid}",
+		'href' => elgg_generate_url('history:object:page', [
+			'guid' => $entity->guid,
+		]),
 	]);
 
 	return $return;
@@ -409,6 +400,25 @@ function pages_write_access_vars($hook, $type, $return, $params) {
 	
 	return $return;
 }
+
+
+/**
+ * Register database seed
+ *
+ * @elgg_plugin_hook seeds database
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function pages_register_db_seeds(\Elgg\Hook $hook) {
+
+	$seeds = $hook->getValue();
+
+	$seeds[] = \Elgg\Pages\Seeder::class;
+
+	return $seeds;
+}
+
 
 return function() {
 	elgg_register_event_handler('init', 'system', 'pages_init');
