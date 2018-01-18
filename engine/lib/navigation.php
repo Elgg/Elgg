@@ -244,26 +244,30 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 	if (!$owner || !$owner->canWriteToContainer(0, $entity_type, $entity_subtype)) {
 		return;
 	}
-
+	
 	$href = elgg_generate_url("$name:$entity_type:$entity_subtype", [
 		'guid' => $owner->guid,
 	]);
+		
 	if (!$href) {
 		if (!$handler) {
 			$handler = elgg_get_context();
 		}
 		$href = "$handler/$name/$owner->guid";
-		$label = elgg_echo("$handler:$name");
-	} else {
-		$label = elgg_echo("$name:$entity_type:$entity_subtype");
 	}
-
+	
+	if (elgg_language_key_exists("$name:$entity_type:$entity_subtype")) {
+		$text = elgg_echo("$name:$entity_type:$entity_subtype");
+	} else {
+		$text = elgg_echo("$handler:$name");
+	}
+	
 	// register the title menu item
 	elgg_register_menu_item('title', [
 		'name' => $name,
 		'icon' => $name === 'add' ? 'plus' : '',
 		'href' => $href,
-		'text' => $label,
+		'text' => $text,
 		'link_class' => 'elgg-button elgg-button-action',
 	]);
 }

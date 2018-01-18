@@ -146,10 +146,11 @@ function _developers_page_menu($hook, $type, $return, $params) {
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'develop_tools:sandbox',
-		'href' => 'admin/develop_tools/sandbox',
+		'href' => 'theme_sandbox/intro',
 		'text' => elgg_echo('admin:develop_tools:sandbox'),
 		'parent_name' => 'develop_tools',
 		'section' => 'develop',
+		'target' => '_blank',
 	]);
 	
 	$return[] = \ElggMenuItem::factory([

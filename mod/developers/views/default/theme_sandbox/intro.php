@@ -30,16 +30,5 @@ if ($simple_cache || $system_cache) {
 	always recommended to disable caches while developing themes and plugins. To
 	disable caches, visit the $advanced or $developers pages.";
 
-	echo elgg_view_module('info', 'Warning', $body);
+	echo elgg_view_message('warning', $body);
 }
-?>
-<p>
-<?php
-	echo elgg_view('output/url', [
-		'text' => elgg_echo('theme_sandbox:breakout'),
-		'href' => current_page_url(),
-		'target' => '_parent',
-		'is_trusted' => true,
-	]);
-?>
-</p>

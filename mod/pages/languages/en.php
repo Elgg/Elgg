@@ -6,7 +6,7 @@ return [
 	 */
 
 	'item:object:page' => 'Page',
-	'collection:object:pages' => 'Pages',
+	'collection:object:page' => 'Pages',
 	'collection:object:page:all' => "All site pages",
 	'collection:object:page:owner' => "%s's pages",
 	'collection:object:page:friends' => "Friends' pages",

@@ -35,23 +35,28 @@ class DateOutputTest extends ViewRenderingTestCase {
 
 	public function testCanRenderDate() {
 
-		$output = $this->date->format($this->format);
+		$output = elgg_format_element('time', [
+			'datetime' => $this->date->format('c'),
+		], $this->date->format($this->format));
 
-		$this->assertEquals($output, elgg_view('output/date', [
+		$this->assertViewOutput($output, 'output/date', [
 			'value' => $this->date,
 			'format' => $this->format,
-		]));
+		]);
 	}
 
 	public function testCanRenderTime() {
 
 		$format = 'g:ia';
-		$output = $this->date->format($format);
+		
+		$output = elgg_format_element('time', [
+			'datetime' => $this->date->format('c'),
+		], $this->date->format($format));
 
-		$this->assertEquals($output, elgg_view('output/time', [
+		$this->assertViewOutput($output, 'output/time', [
 			'value' => $this->date,
 			'format' => $format,
-		]));
+		]);
 	}
 
 

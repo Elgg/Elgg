@@ -37,12 +37,6 @@ source_file = mod/ckeditor/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
-[elgg-core-3.custom_index]
-file_filter = mod/custom_index/languages/<lang>.php
-source_file = mod/custom_index/languages/en.php
-source_lang = en
-type = PHP_ARRAY
-
 [elgg-core-3.developers]
 file_filter = mod/developers/languages/<lang>.php
 source_file = mod/developers/languages/en.php
