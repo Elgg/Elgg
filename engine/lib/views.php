@@ -622,6 +622,17 @@ function elgg_view_layout($layout_name, $vars = []) {
 			$vars['sidebar'] = elgg_extract('sidebar', $vars, '', false);
 			$vars['sidebar_alt'] = elgg_extract('sidebar_alt', $vars, '', false);
 			break;
+
+		case 'default' :
+			$filter_id = elgg_extract('filter_id', $vars, 'filter');
+			$filter_context = elgg_extract('filter_value', $vars);
+			if (isset($filter_context) && $filter_id === 'filter') {
+				$context = elgg_extract('context', $vars, elgg_get_context());
+				$vars['filter'] = elgg_get_filter_tabs($context, $filter_context, null, $vars);
+				$vars['filter_id'] = $filter_id;
+				$vars['filter_value'] = $filter_context;
+			}
+			break;
 	}
 
 	if (isset($vars['nav'])) {
