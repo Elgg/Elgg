@@ -60,13 +60,12 @@ View and comment on the bookmark:
 	 */
 
 	'bookmarks:save:success' => "Your item was successfully bookmarked.",
-	'bookmarks:delete:success' => "Your bookmark was deleted.",
+	'entity:delete:object:bookmarks:success' => "The bookmark was deleted.",
 
 	/**
 	 * Error messages
 	 */
 
 	'bookmarks:save:failed' => "Your bookmark could not be saved. Make sure you've entered a title and address and then try again.",
-	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
 	'bookmarks:unknown_bookmark' => 'Cannot find specified bookmark',
 ];

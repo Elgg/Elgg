@@ -11,30 +11,25 @@ elgg_entity_gatekeeper($guid, 'object', 'bookmarks');
 
 $bookmark = get_entity($guid);
 
-$page_owner = elgg_get_page_owner_entity();
+elgg_push_entity_breadcrumbs($bookmark, flase);
 
-elgg_group_gatekeeper();
-
-elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'), 'bookmarks/all');
-if ($page_owner instanceof ElggGroup) {
-	elgg_push_breadcrumb($page_owner->getDisplayName(), "bookmarks/group/{$page_owner->guid}/all");
-} else {
-	elgg_push_breadcrumb($page_owner->getDisplayName(), "bookmarks/owner/{$page_owner->username}");
-}
-
-$title = $bookmark->title;
-
-elgg_push_breadcrumb($title);
+$title = $bookmark->getDisplayName();
 
 $content = elgg_view_entity($bookmark, [
 	'full_view' => true,
 	'show_responses' => true,
 ]);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
+	'entity' => $entity,
+	'sidebar' => elgg_view('object/bookmarks/elements/sidebar', [
+		'entity' => $entity,
+	]),
 ]);
 
-echo elgg_view_page($title, $body);
+echo elgg_view_page($title, $body, 'default', [
+	'entity' => $entity,
+]);

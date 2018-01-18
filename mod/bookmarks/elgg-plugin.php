@@ -11,7 +11,6 @@ return [
 	],
 	'actions' => [
 		'bookmarks/save' => [],
-		'bookmarks/delete' => [],
 	],
 	'routes' => [
 		'default:object:bookmarks' => [
@@ -32,7 +31,7 @@ return [
 		],
 		'collection:object:bookmarks:group' => [
 			'path' => '/bookmarks/group/{guid}/{subpage?}',
-			'resource' => 'bookmarks/owner',
+			'resource' => 'bookmarks/group',
 			'defaults' => [
 				'subpage' => 'all',
 			],

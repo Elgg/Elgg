@@ -19,12 +19,7 @@ elgg_set_page_owner_guid($page_owner->getGUID());
 
 $title = elgg_echo('bookmarks:bookmarklet');
 
-elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'), 'bookmarks/all');
-if ($page_owner instanceof ElggGroup) {
-	elgg_push_breadcrumb($page_owner->getDisplayName(), "bookmarks/group/{$page_owner->guid}/all");
-} else {
-	elgg_push_breadcrumb($page_owner->getDisplayName(), "bookmarks/owner/{$page_owner->username}");
-}
+elgg_push_collection_breadcrumbs('object', 'bookmarks', $page_owner);
 elgg_push_breadcrumb($title);
 
 $content = elgg_view('bookmarks/bookmarklet');

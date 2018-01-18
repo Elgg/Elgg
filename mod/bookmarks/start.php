@@ -40,6 +40,9 @@ function bookmarks_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:bookmarks', 'Elgg\Values::getTrue');
+
+	// register database seed
+	elgg_register_plugin_hook_handler('seeds', 'database', 'bookmarks_register_db_seeds');
 }
 
 /**
@@ -215,6 +218,24 @@ function bookmarks_prepare_form_vars($bookmark = null) {
 
 	return $values;
 }
+
+/**
+ * Register database seed
+ *
+ * @elgg_plugin_hook seeds database
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function bookmarks_register_db_seeds(\Elgg\Hook $hook) {
+
+	$seeds = $hook->getValue();
+
+	$seeds[] = \Elgg\Bookmarks\Seeder::class;
+
+	return $seeds;
+}
+
 
 return function() {
 	elgg_register_event_handler('init', 'system', 'bookmarks_init');

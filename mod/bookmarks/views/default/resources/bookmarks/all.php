@@ -5,28 +5,20 @@
  * @package ElggBookmarks
  */
 
-elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'));
+elgg_push_collection_breadcrumbs('object', 'bookmarks');
 
 elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
-$content = elgg_list_entities([
-	'type' => 'object',
-	'subtype' => 'bookmarks',
-	'full_view' => false,
-	'view_toggle_type' => false,
-	'no_results' => elgg_echo('bookmarks:none'),
-	'preload_owners' => true,
-	'preload_containers' => true,
-	'distinct' => false,
-]);
+$content = elgg_view('bookmarks/listing/all', $vars);
 
 $title = elgg_echo('collection:object:bookmarks:all');
 
-$body = elgg_view_layout('content', [
-	'filter_context' => 'all',
+$body = elgg_view_layout('default', [
+	'filter_id' => 'filter',
+	'filter_value' => 'all',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('bookmarks/sidebar'),
+	'sidebar' => elgg_view('bookmarks/sidebar', $vars),
 ]);
 
 echo elgg_view_page($title, $body);
