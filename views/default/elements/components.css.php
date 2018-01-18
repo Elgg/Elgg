@@ -16,3 +16,4 @@ echo elgg_view('elements/components/comments.css', $vars);
 echo elgg_view('elements/components/tags.css', $vars);
 echo elgg_view('elements/components/level.css', $vars);
 echo elgg_view('elements/components/progressbar.css', $vars);
+echo elgg_view('elements/components/profile.css', $vars);
