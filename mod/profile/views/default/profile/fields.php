@@ -65,4 +65,7 @@ foreach ($fields as $shortname => $valtype) {
 	]);
 }
 
-echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);
+if ($output) {
+	echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);
+}
+

@@ -29,7 +29,7 @@ foreach ($profile_fields as $key => $valtype) {
 	if ($valtype == 'tags') {
 		$options['tag_names'] = $key;
 	}
-	
+
 	$field_title = elgg_echo("groups:{$key}");
 	$field_value = elgg_view("output/$valtype", $options);
 	$field_value = elgg_format_element('span', [], $field_value);
