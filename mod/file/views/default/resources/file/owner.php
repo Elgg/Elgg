@@ -22,7 +22,7 @@ elgg_push_collection_breadcrumbs('object', 'file', $owner);
 
 elgg_register_title_button('file', 'add', 'object', 'file');
 
-$params = ['filter' => ''];
+$params = [];
 
 if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// user looking at own files
