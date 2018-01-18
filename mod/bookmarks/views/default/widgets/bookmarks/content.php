@@ -25,9 +25,9 @@ echo $content;
 
 $owner = $widget->getOwnerEntity();
 if ($owner instanceof ElggGroup) {
-	$url = "bookmarks/group/{$owner->guid}/all";
+	$url = elgg_generate_url('collection:object:bookmarks:group', ['guid' => $owner->guid]);
 } else {
-	$url = "bookmarks/owner/{$owner->username}";
+	$url = elgg_generate_url('collection:object:bookmarks:owner', ['username' => $owner->username]);
 }
 
 $more_link = elgg_view('output/url', [

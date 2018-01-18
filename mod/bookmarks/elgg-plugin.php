@@ -49,11 +49,8 @@ return [
 			'resource' => 'bookmarks/edit',
 		],
 		'bookmarklet:object:bookmarks' => [
-			'path' => '/bookmarks/bookmarklet/{container_guid}',
+			'path' => '/bookmarks/bookmarklet/{guid}',
 			'resource' => 'bookmarks/bookmarklet',
-			'requirements' => [
-				'container_guid' => '\d+',
-			],
 		],
 	],
 	'widgets' => [

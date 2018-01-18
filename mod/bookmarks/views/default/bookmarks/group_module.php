@@ -15,7 +15,7 @@ if (!$group->isToolEnabled('bookmarks')) {
 }
 
 $all_link = elgg_view('output/url', [
-	'href' => "bookmarks/group/$group->guid/all",
+	'href' => elgg_generate_url('collection:object:bookmarks:group', ['guid' => $group->guid]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
@@ -35,7 +35,7 @@ $content = elgg_list_entities($options);
 elgg_pop_context();
 
 $new_link = elgg_view('output/url', [
-	'href' => "bookmarks/add/$group->guid",
+	'href' => elgg_generate_url('add:object:bookmarks', ['guid' => $group->guid]),
 	'text' => elgg_echo('add:object:bookmarks'),
 	'is_trusted' => true,
 ]);

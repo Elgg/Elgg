@@ -21,7 +21,7 @@ if (!$name && ($user = elgg_get_logged_in_user_entity())) {
 
 $code = elgg_view('bookmarks/bookmarklet.js');
 
-$base_url = elgg_normalize_url("bookmarks/add/$guid");
+$base_url = elgg_generate_url('add:object:bookmarks', ['guid' => $guid]);
 $base_url_str = json_encode($base_url, JSON_UNESCAPED_SLASHES);
 $code = str_replace('BASEURL', $base_url_str, $code);
 
