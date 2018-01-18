@@ -14,10 +14,4 @@ if ($user->isBanned()) {
 	]);
 }
 
-?>
-<div class="profile">
-	<div class="elgg-inner clearfix h-card vcard">
-		<?php echo elgg_view('profile/owner_block', $vars); ?>
-		<?php echo elgg_view('profile/details', $vars); ?>
-	</div>
-</div>
+echo elgg_view('profile/details', $vars);

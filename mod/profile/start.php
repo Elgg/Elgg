@@ -11,7 +11,7 @@
  * @return void
  */
 function profile_init() {
-	elgg_extend_view('elgg.css', 'profile/css');
+	elgg_extend_view('elgg.css', 'profile/profile.css');
 	
 	elgg_register_ajax_view('forms/profile/fields/add');
 

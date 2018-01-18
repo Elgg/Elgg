@@ -30,6 +30,8 @@ if (isset($fields['description'])) {
 	$fields['description'] = $temp;
 }
 
+$output = '';
+
 foreach ($fields as $shortname => $valtype) {
 	$annotations = $user->getAnnotations([
 		'annotation_names' => "profile:$shortname",
@@ -52,21 +54,15 @@ foreach ($fields as $shortname => $valtype) {
 
 	$class = elgg_extract($shortname, $microformats, '');
 
-	$field_title = elgg_echo("profile:{$shortname}");
-	$field_value = elgg_format_element('span', [
-		'class' => $class,
-	], elgg_view("output/{$valtype}", [
-		'value' => $value,
-	]));
-
-	echo <<<___FIELD
-	<div class='clearfix profile-field'>
-		<div class='elgg-col elgg-col-1of5'>
-			<b>{$field_title}:</b>
-		</div>
-		<div class='elgg-col elgg-col-4of5'>
-			{$field_value}
-		</div>
-	</div>
-___FIELD;
+	$output .= elgg_view('object/elements/field', [
+		'label' => elgg_echo("profile:{$shortname}"),
+		'value' => elgg_format_element('span', [
+			'class' => $class,
+		], elgg_view("output/{$valtype}", [
+			'value' => $value,
+		])),
+		'name' => $shortname,
+	]);
 }
+
+echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);
