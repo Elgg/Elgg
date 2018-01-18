@@ -13,9 +13,6 @@ return [
 	'upgrades' => [
 		\Elgg\Groups\Upgrades\GroupIconTransfer::class,
 	],
-	'settings' => [
-		'allow_activity' => 'yes',
-	],
 	'actions' => [
 		'groups/edit' => [],
 		'groups/delete' => [],
@@ -70,10 +67,6 @@ return [
 		'collection:group:group:search' => [
 			'path' => '/groups/search',
 			'resource' => 'groups/search',
-		],
-		'collection:river:item:group' => [
-			'path' => '/groups/activity/{guid}',
-			'resource' => 'groups/activity',
 		],
 		'collection:user:user:group_members' => [
 			'path' => '/groups/members/{guid}/{sort?}',

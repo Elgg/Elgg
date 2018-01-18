@@ -69,10 +69,6 @@ return [
 	'groups:acl' => "Group: %s",
 	'groups:acl:in_context' => 'Group members',
 
-	'groups:activity' => "Group activity",
-	'groups:tool:activity' => 'Enable group activity',
-	'groups:activity:none' => "There is no group activity yet",
-
 	'groups:notfound' => "Group not found",
 	
 	'groups:requests:none' => 'There are no current membership requests.',
@@ -155,7 +151,6 @@ or click below to view the group's join requests:
 
 	'groups:allowhiddengroups' => 'Allow private (invisible) groups?',
 	'groups:whocancreate' => 'Who can create new groups?',
-	'groups:allow_activity' => 'Allow activity pages in groups?',
 
 	/**
 	 * Action messages
