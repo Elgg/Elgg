@@ -13,6 +13,7 @@ if (empty($profile_fields) || !is_array($profile_fields)) {
 	return;
 }
 
+$output = '';
 foreach ($profile_fields as $key => $valtype) {
 	// do not show the name
 	if ($key == 'name') {
@@ -31,15 +32,18 @@ foreach ($profile_fields as $key => $valtype) {
 	
 	$field_title = elgg_echo("groups:{$key}");
 	$field_value = elgg_view("output/$valtype", $options);
-	
-	echo <<<___FIELD
-	<div class='clearfix group-profile-field'>
-		<div class='elgg-col elgg-col-1of5'>
-			<b>{$field_title}:</b>
-		</div>
-		<div class='elgg-col elgg-col-4of5'>
-			{$field_value}
-		</div>
-	</div>
-___FIELD;
+	$field_value = elgg_format_element('span', [], $field_value);
+
+	$output .= elgg_view('object/elements/field', [
+		'label' => $field_title,
+		'value' => $field_value,
+		'class' => 'group-profile-field',
+		'name' => $key,
+	]);
+}
+
+if ($output) {
+	echo elgg_format_element('div', [
+		'class' => 'elgg-profile-fields',
+	], $output);
 }
