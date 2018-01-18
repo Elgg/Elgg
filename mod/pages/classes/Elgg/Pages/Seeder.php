@@ -55,7 +55,6 @@ class Seeder extends Seed {
 		};
 
 		while ($count_pages() < $this->limit) {
-
 			$page = $create_page();
 			if ($page instanceof \ElggPage) {
 				for ($i = 0; $i < 3; $i++) {
