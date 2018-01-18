@@ -5,6 +5,8 @@
  * @package ElggFile
  */
 
+elgg_push_collection_breadcrumbs('object', 'file');
+
 elgg_register_title_button('file', 'add', 'object', 'file');
 
 $title = elgg_echo('collection:object:file:all');
