@@ -16,7 +16,7 @@ if ($username) {
 }
 
 if (!$user instanceof ElggUser || !$user->canEdit()) {
-	forward('', '404');
+	throw new \Elgg\EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($user->guid);
@@ -28,7 +28,7 @@ elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
 
 elgg_register_menu_item('title', [
 	'name' => 'add',
-	'href' => 'collections/add',
+	'href' => 'friends/collections/add',
 	'text' => elgg_echo('friends:collections:add'),
 	'link_class' => 'elgg-button elgg-button-action',
 ]);

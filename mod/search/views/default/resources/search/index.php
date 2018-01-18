@@ -7,6 +7,10 @@
 // Search supports RSS
 elgg_register_rss_link();
 
+// This magic is needed to support /search/<query>
+// but have /search/<query1>?q=<query2> as <query2> be the main search query
+set_input('q', get_input('q', elgg_extract('route_query', $vars, null, false)));
+
 $service = new \Elgg\Search\Search();
 $params = $service->getParams();
 

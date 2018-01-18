@@ -10,21 +10,21 @@ $collection = get_access_collection($collection_id);
 
 if (!$collection || !$collection->canEdit()) {
 	// We don't want to leak friendship/collection information
-	forward('', '403');
+	throw new \Elgg\EntityPermissionsException();
 }
 
-$user = get_entity($collection->owner_guid);
-if (!$user) {
-	forward('', '404');
+$user = $collection->getOwnerEntity();
+if (!$user instanceof ElggUser) {
+	throw new \Elgg\EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($user->guid);
 
-$title = $collection->name;
+$title = $collection->getDisplayName();
 
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
 elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
-elgg_push_breadcrumb(elgg_echo('friends:collections'), "collections/owner/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends:collections'), "friends/collections/owner/{$user->username}");
 
 $content = elgg_view('collections/collection', [
 	'full_view' => true,

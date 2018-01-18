@@ -6,12 +6,17 @@
  * @subpackage Social.Friends
  */
 
+// needed for correct registration of menu items
+elgg_set_context('friends');
+
 $owner = elgg_get_page_owner_entity();
+if (!$owner instanceof ElggUser) {
+	throw new \Elgg\EntityNotFoundException;
+}
 
 $title = elgg_echo("friends:of:owned", [$owner->name]);
 
-$dbprefix = elgg_get_config('dbprefix');
-$options = [
+$content = elgg_list_entities([
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->getGUID(),
 	'inverse_relationship' => true,
@@ -24,11 +29,7 @@ $options = [
 	],
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
-];
-$content = elgg_list_entities($options);
-if (!$content) {
-	$content = elgg_echo('friends:none');
-}
+]);
 
 $params = [
 	'content' => $content,

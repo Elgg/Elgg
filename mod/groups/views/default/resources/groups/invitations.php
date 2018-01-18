@@ -10,9 +10,10 @@ if ($username) {
 }
 
 if (!$user || !$user->canEdit()) {
-	register_error(elgg_echo('noaccess'));
-	forward('');
+	throw new \Elgg\EntityPermissionsException();
 }
+
+elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
 elgg_set_page_owner_guid($user->guid);
 

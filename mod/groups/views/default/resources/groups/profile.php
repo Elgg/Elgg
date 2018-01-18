@@ -10,6 +10,7 @@ $group = get_entity($guid);
 
 elgg_push_context('group_profile');
 
+elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($group->getDisplayName());
 
 $content = elgg_view('groups/profile/layout', ['entity' => $group]);

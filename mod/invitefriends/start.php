@@ -11,22 +11,9 @@
  * @return void
  */
 function invitefriends_init() {
-	elgg_register_page_handler('invite', 'invitefriends_page_handler');
-
 	elgg_register_plugin_hook_handler('register', 'user', 'invitefriends_add_friends');
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'invitefriends_register_page_menu');
-}
-
-/**
- * Page handler function
- *
- * @param array $page Page URL segments
- * @return bool
- */
-function invitefriends_page_handler($page) {
-	echo elgg_view_resource('invitefriends/invite');
-	return true;
 }
 
 /**
@@ -51,7 +38,7 @@ function invitefriends_register_page_menu($hook, $type, $result, $params) {
 	$result[] = \ElggMenuItem::factory([
 		'name' => 'invite',
 		'text' => elgg_echo('friends:invite'),
-		'href' => 'invite',
+		'href' => 'friends/invite',
 		'contexts' => ['friends'],
 	]);
 	

@@ -7,6 +7,9 @@
  */
 
 $owner = elgg_get_page_owner_entity();
+if (!$owner instanceof ElggUser) {
+	throw new \Elgg\EntityNotFoundException;
+}
 
 $title = elgg_echo("friends:owned", [$owner->name]);
 

@@ -18,9 +18,6 @@ function pages_init() {
 	$item = new ElggMenuItem('pages', elgg_echo('collection:object:page:all'), 'pages/all');
 	elgg_register_menu_item('site', $item);
 
-	// Register a page handler, so we can have nice URLs
-	elgg_register_page_handler('pages', 'pages_page_handler');
-
 	// Register a url handler
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'pages_set_url');
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
@@ -69,74 +66,6 @@ function pages_init() {
 	
 	// prevent public write access
 	elgg_register_plugin_hook_handler('view_vars', 'input/access', 'pages_write_access_vars');
-}
-
-/**
- * Dispatcher for pages.
- * URLs take the form of
- *  All pages:        pages/all
- *  User's pages:     pages/owner/<username>
- *  Friends' pages:   pages/friends/<username>
- *  View page:        pages/view/<guid>/<title>
- *  New page:         pages/add/<guid> (container: user, group, parent)
- *  Edit page:        pages/edit/<guid>
- *  History of page:  pages/history/<guid>
- *  Revision of page: pages/revision/<id>
- *  Group pages:      pages/group/<guid>/all
- *
- * Title is ignored
- *
- * @param array $page URL segments
- *
- * @return bool
- */
-function pages_page_handler($page) {
-
-	elgg_push_breadcrumb(elgg_echo('collection:object:page'), 'pages/all');
-
-	switch (elgg_extract(0, $page, 'all')) {
-		case 'owner':
-			echo elgg_view_resource('pages/owner');
-			break;
-		case 'friends':
-			echo elgg_view_resource('pages/friends');
-			break;
-		case 'view':
-			echo elgg_view_resource('pages/view', [
-				'guid' => (int) elgg_extract(1, $page),
-			]);
-			break;
-		case 'add':
-			echo elgg_view_resource('pages/new', [
-				'guid' => (int) elgg_extract(1, $page),
-			]);
-			break;
-		case 'edit':
-			echo elgg_view_resource('pages/edit', [
-				'guid' => (int) elgg_extract(1, $page),
-			]);
-			break;
-		case 'group':
-			echo elgg_view_resource('pages/owner');
-			break;
-		case 'history':
-			echo elgg_view_resource('pages/history', [
-				'guid' => (int) elgg_extract(1, $page),
-			]);
-			break;
-		case 'revision':
-			echo elgg_view_resource('pages/revision', [
-				'id' => (int) elgg_extract(1, $page),
-			]);
-			break;
-		case 'all':
-			echo elgg_view_resource('pages/all');
-			break;
-		default:
-			return false;
-	}
-	
-	return true;
 }
 
 /**

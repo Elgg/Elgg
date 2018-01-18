@@ -33,7 +33,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:blank'), $response->getContent());
-		$this->assertEquals('messages/compose', $response->getForwardURL());
+		$this->assertEquals('messages/add', $response->getForwardURL());
 
 		_elgg_services()->session->removeLoggedInUser();
 	}
@@ -54,7 +54,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:self'), $response->getContent());
-		$this->assertEquals('messages/compose', $response->getForwardURL());
+		$this->assertEquals('messages/add', $response->getForwardURL());
 
 		_elgg_services()->session->removeLoggedInUser();
 	}
@@ -75,7 +75,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:user:nonexist'), $response->getContent());
-		$this->assertEquals('messages/compose', $response->getForwardURL());
+		$this->assertEquals('messages/add', $response->getForwardURL());
 
 		_elgg_services()->session->removeLoggedInUser();
 	}
@@ -99,7 +99,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:blank'), $response->getContent());
-		$this->assertEquals('messages/compose', $response->getForwardURL());
+		$this->assertEquals('messages/add', $response->getForwardURL());
 
 		_elgg_services()->session->removeLoggedInUser();
 	}
@@ -123,7 +123,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('messages:blank'), $response->getContent());
-		$this->assertEquals('messages/compose', $response->getForwardURL());
+		$this->assertEquals('messages/add', $response->getForwardURL());
 
 		_elgg_services()->session->removeLoggedInUser();
 	}
@@ -178,7 +178,7 @@ class SendActionTest extends ActionResponseTestCase {
 			'Message Body',
 			elgg_get_site_url() . "messages/inbox/" . $recipient->username,
 			$user->name,
-			elgg_get_site_url() . "messages/compose?send_to=" . $user->guid,
+			elgg_get_site_url() . "messages/add?send_to=" . $user->guid,
 		],
 			$recipient->language
 		);

@@ -5,7 +5,7 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-	forward('', '404');
+	throw new \Elgg\EntityNotFoundException();
 }
 
 // access check for closed groups
@@ -13,6 +13,7 @@ elgg_group_gatekeeper();
 
 $title = elgg_echo('collection:object:page:owner', [$owner->getDisplayName()]);
 
+elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 elgg_push_breadcrumb($owner->getDisplayName());
 
 elgg_register_title_button('pages', 'add', 'object', 'page');

@@ -34,7 +34,7 @@ class CollectionMenuHandler {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
-			'href' => "collections/edit/$collection->id",
+			'href' => "friends/collections/edit/$collection->id",
 			'priority' => 500,
 		]);
 

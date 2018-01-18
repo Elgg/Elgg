@@ -9,8 +9,6 @@
  * @return void
  */
 function dashboard_init() {
-	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
-
 	if (elgg_is_logged_in()) {
 		elgg_register_menu_item('topbar', [
 			'name' => 'dashboard',
@@ -24,16 +22,6 @@ function dashboard_init() {
 	}
 	
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
-}
-
-/**
- * Dashboard page handler
- *
- * @return bool
- */
-function dashboard_page_handler() {
-	echo elgg_view_resource('dashboard');
-	return true;
 }
 
 /**

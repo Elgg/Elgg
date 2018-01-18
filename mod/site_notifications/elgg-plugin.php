@@ -12,4 +12,10 @@ return [
 		'site_notifications/delete' => [],
 		'site_notifications/process' => [],
 	],
+	'routes' => [
+		'collection:object:site_notification:owner' => [
+			'path' => '/site_notifications/owner/{username}',
+			'resource' => 'site_notifications/owner',
+		],
+	],
 ];

@@ -21,6 +21,6 @@ class UrlHandler {
 			return;
 		}
 
-		return elgg_normalize_url("collections/view/{$collection->id}");
+		return elgg_normalize_url("friends/collections/view/{$collection->id}");
 	}
 }

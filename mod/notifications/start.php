@@ -14,8 +14,6 @@ function notifications_plugin_init() {
 
 	elgg_extend_view('elgg.css', 'notifications.css');
 
-	elgg_register_page_handler('notifications', 'notifications_page_handler');
-
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_notification_groups_title_menu');
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_notifications_page_menu');
@@ -33,45 +31,6 @@ function notifications_plugin_init() {
 
 	// register unit tests
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'notifications_register_tests');
-}
-
-/**
- * Route page requests
- *
- * @param array $page Array of url parameters
- * @return bool
- */
-function notifications_page_handler($page) {
-
-	elgg_gatekeeper();
-
-	// Set the context to settings
-	elgg_set_context('settings');
-
-	$current_user = elgg_get_logged_in_user_entity();
-
-	// default to personal notifications
-	if (!isset($page[0])) {
-		$page[0] = 'personal';
-	}
-	if (!isset($page[1])) {
-		forward("notifications/{$page[0]}/{$current_user->username}");
-	}
-
-	$vars['username'] = $page[1];
-
-	// note: $user passed in
-	switch ($page[0]) {
-		case 'group':
-			echo elgg_view_resource('notifications/groups', $vars);
-			break;
-		case 'personal':
-			echo elgg_view_resource('notifications/index', $vars);
-			break;
-		default:
-			return false;
-	}
-	return true;
 }
 
 /**

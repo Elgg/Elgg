@@ -7,20 +7,9 @@
 
 elgg_gatekeeper();
 
-$username = elgg_extract('username', $vars);
-$page_owner = get_user_by_username($username);
-if (!$page_owner) {
-	$page_owner = elgg_get_logged_in_user_entity();
-}
-elgg_set_page_owner_guid($page_owner->guid);
-
-if (!$page_owner || !$page_owner->canEdit()) {
-	$guid = 0;
-	if ($page_owner) {
-		$guid = $page_owner->getGUID();
-	}
-	register_error(elgg_echo("pageownerunavailable", [$guid]));
-	forward();
+$page_owner = elgg_get_page_owner_entity();
+if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
+	throw new \Elgg\EntityPermissionsException();
 }
 
 elgg_push_breadcrumb(elgg_echo('messages:inbox'));

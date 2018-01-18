@@ -5,6 +5,8 @@
  * @package ElggReportContent
  */
 
+elgg_gatekeeper();
+
 $guid = 0;
 $title = get_input('title', "");
 $address = get_input('address', "");

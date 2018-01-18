@@ -7,19 +7,19 @@
  * @uses $user ElggUser
  */
 
-$current_user = elgg_get_logged_in_user_entity();
-$username = elgg_extract('username', $vars);
-$user = get_user_by_username($username);
-if (($user->guid != $current_user->guid) && !$current_user->isAdmin()) {
-	forward();
+$user = elgg_get_page_owner_entity();
+if (!$user instanceof ElggUser) {
+	$user = elgg_get_logged_in_user_entity();
 }
 
-if (!isset($user) || !($user instanceof ElggUser)) {
-	$url = 'notifications/personal/' . elgg_get_logged_in_user_entity()->username;
-	forward($url);
+if (!$user instanceof ElggUser || !$user->canEdit()) {
+	throw new \Elgg\EntityPermissionsException();
 }
 
 elgg_set_page_owner_guid($user->guid);
+
+// Set the context to settings
+elgg_set_context('settings');
 
 $title = elgg_echo('notifications:subscriptions:changesettings');
 

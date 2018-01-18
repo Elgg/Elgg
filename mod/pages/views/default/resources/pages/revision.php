@@ -6,12 +6,12 @@
 $id = elgg_extract('id', $vars);
 $annotation = elgg_get_annotation_from_id($id);
 if (!$annotation instanceof ElggAnnotation) {
-	forward();
+	throw new \Elgg\EntityNotFoundException();
 }
 
 $page = get_entity($annotation->entity_guid);
 if (!$page instanceof ElggPage) {
-	forward(REFERER);
+	throw new \Elgg\EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($page->getContainerGUID());
@@ -20,10 +20,12 @@ elgg_group_gatekeeper();
 
 $container = elgg_get_page_owner_entity();
 if (!$container) {
-	forward(REFERER);
+	throw new \Elgg\EntityNotFoundException();
 }
 
 $title = "{$page->getDisplayName()}: " . elgg_echo('pages:revision');
+
+elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
 if ($container instanceof ElggUser) {
 	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");

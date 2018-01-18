@@ -25,16 +25,16 @@ if (!$parent_guid) {
 }
 
 if ($parent && !$parent->canEdit()) {
-	register_error(elgg_echo('noaccess'));
-	forward('', '403');
+	throw new \Elgg\EntityPermissionsException();
 }
 
 if (!$container || !$container->canWriteToContainer(0, 'object', 'page')) {
-	register_error(elgg_echo('noaccess'));
-	forward('', '403');
+	throw new \Elgg\EntityPermissionsException();
 }
 
 elgg_set_page_owner_guid($container->guid);
+
+elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
 if ($container instanceof ElggUser) {
 	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");

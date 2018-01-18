@@ -5,7 +5,6 @@
  * @package ElggBookmarks
  */
 
-elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'));
 
 elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');

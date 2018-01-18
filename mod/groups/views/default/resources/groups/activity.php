@@ -17,6 +17,7 @@ elgg_group_tool_gatekeeper('activity');
 
 $title = elgg_echo('groups:activity');
 
+elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $db_prefix = elgg_get_config('dbprefix');

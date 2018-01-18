@@ -63,7 +63,7 @@ class MessagesPluginTest extends IntegrationTestCase {
 			$body,
 			elgg_get_site_url() . "messages/inbox/" . $recipient->username,
 			$sender->name,
-			elgg_get_site_url() . "messages/compose?send_to=" . $sender->guid,
+			elgg_get_site_url() . "messages/add?send_to=" . $sender->guid,
 		],
 			$recipient->language
 		);

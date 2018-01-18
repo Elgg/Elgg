@@ -16,10 +16,6 @@ function uservalidationbyemail_init() {
 
 	require_once dirname(__FILE__) . '/lib/functions.php';
 
-	// Register page handler to validate users
-	// This doesn't need to be an action because security is handled by the validation codes.
-	elgg_register_page_handler('uservalidationbyemail', 'uservalidationbyemail_page_handler');
-
 	// mark users as unvalidated and disable when they register
 	elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');
 
@@ -173,28 +169,6 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 	}
 
 	access_show_hidden_entities($access_status);
-}
-
-/**
- * Checks sent passed validation code and user guids and validates the user.
- *
- * @param array $page URL segments
- *
- * @return bool
- */
-function uservalidationbyemail_page_handler($page) {
-	
-	switch ($page[0]) {
-		case 'confirm':
-			echo elgg_view_resource("uservalidationbyemail/confirm");
-			return true;
-		case 'emailsent':
-			echo elgg_view_resource("uservalidationbyemail/emailsent");
-			return true;
-		default:
-			forward('', '404');
-			return false;
-	}
 }
 
 /**

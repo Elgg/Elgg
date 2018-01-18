@@ -12,12 +12,14 @@ $page = get_entity($guid);
 
 $container = $page->getContainerEntity();
 if (!$container) {
-	forward('', '404');
+	throw new \Elgg\EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($container->guid);
 
 elgg_group_gatekeeper();
+
+elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
 if ($container instanceof ElggUser) {
 	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");

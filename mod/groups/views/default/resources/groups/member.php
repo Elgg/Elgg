@@ -16,6 +16,8 @@ if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
 } else {
 	$title = elgg_echo('groups:user', [$page_owner->getDisplayName()]);
 }
+
+elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($title);
 
 if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {

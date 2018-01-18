@@ -9,12 +9,12 @@ $collection_id = elgg_extract('collection_id', $vars);
 $collection = get_access_collection($collection_id);
 
 if (!$collection || !$collection->canEdit()) {
-	forward('', '403');
+	throw new \Elgg\EntityPermissionsException();
 }
 
-$user = get_entity($collection->owner_guid);
-if (!$user) {
-	forward('', '404');
+$user = $collection->getOwnerEntity();
+if (!$user instanceof ElggUser) {
+	throw new \Elgg\EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($user->guid);
@@ -23,7 +23,7 @@ $title = elgg_echo('friends:collections:edit');
 
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
 elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
-elgg_push_breadcrumb(elgg_echo('friends:collections'), "collections/owner/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends:collections'), "friends/collections/owner/{$user->username}");
 elgg_push_breadcrumb($collection->name, $collection->getURL());
 
 $form_name = 'friends/collections/edit';
