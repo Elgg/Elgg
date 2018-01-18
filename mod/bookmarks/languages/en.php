@@ -43,7 +43,8 @@ View and comment on the bookmark:
 	/**
 	 * Widget and bookmarklet
 	 */
-	'bookmarks:widget:description' => "Display your latest bookmarks.",
+	'widgets:bookmarks:name' => 'Bookmarks',
+	'widgets:bookmarks:description' => "Display your latest bookmarks.",
 
 	'bookmarks:bookmarklet:description' =>
 			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",

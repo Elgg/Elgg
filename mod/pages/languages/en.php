@@ -78,7 +78,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Number of pages to display',
-	'pages:widget:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
