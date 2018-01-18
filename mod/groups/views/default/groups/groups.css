@@ -3,8 +3,8 @@
 }
 
 .groups-profile-fields {
-    border: 1px solid $(border-color-soft);
-    background: #fff;
+	border: 1px solid $(border-color-soft);
+	background: #fff;
 }
 
 .elgg-listing-summary-subtitle {
