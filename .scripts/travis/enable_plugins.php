@@ -25,7 +25,6 @@ $ordered_plugins = [
 	'garbagecollector',
 	'groups',
 	'invitefriends',
-	'legacy_urls',
 	'likes',
 	'members',
 	'messageboard',

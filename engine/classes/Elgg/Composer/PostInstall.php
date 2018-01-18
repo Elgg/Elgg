@@ -40,7 +40,6 @@ class PostInstall {
 			'garbagecollector',
 			'groups',
 			'invitefriends',
-			'legacy_urls',
 			'likes',
 			'members',
 			'messageboard',

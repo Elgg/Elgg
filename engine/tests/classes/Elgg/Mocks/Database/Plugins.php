@@ -32,7 +32,6 @@ class Plugins extends DbPlugins {
 		'garbagecollector',
 		'groups',
 		'invitefriends',
-		'legacy_urls',
 		'likes',
 		'members',
 		'messageboard',

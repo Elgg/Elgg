@@ -865,12 +865,24 @@ The Data Views plugin no longer comes bundled.
 Twitter API plugin
 ------------------
 
-The ``twitter_api`` plugin has been removed from the Elgg core. The plugin is still available as a `Composer package <https://packagist.org/packages/elgg/twitter_api>`_, in order to install it
-add the following to you ``composer.json`` ``require`` section:
+The ``twitter_api`` plugin has been removed from the Elgg core. The plugin is still available as the Composer package 
+`elgg/twitter_api <https://packagist.org/packages/elgg/twitter_api>`_, in order to install it add the following to you 
+``composer.json`` ``require`` section:
 
 .. code-block:: json
 	
 	"elgg/twitter_api": "~1.9"
+
+Legacy URLs plugin
+------------------
+
+The ``legacy_urls`` plugin has been removed from the Elgg core. The plugin is still available as the Composer package 
+`elgg/legacy_urls <https://packagist.org/packages/elgg/legacy_urls>`_, in order to install it add the following to you 
+``composer.json`` ``require`` section:
+
+.. code-block:: json
+	
+	"elgg/legacy_urls": "~2.3"
 
 User validation by email plugin
 -------------------------------

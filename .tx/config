@@ -103,12 +103,6 @@ source_file = mod/invitefriends/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
-[elgg-core-3.legacy_urls]
-file_filter = mod/legacy_urls/languages/<lang>.php
-source_file = mod/legacy_urls/languages/en.php
-source_lang = en
-type = PHP_ARRAY
-
 [elgg-core-3.likes]
 file_filter = mod/likes/languages/<lang>.php
 source_file = mod/likes/languages/en.php
