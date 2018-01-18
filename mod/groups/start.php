@@ -48,7 +48,7 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_groups_topbar_menu_setup');
 
 	//extend some views
-	elgg_extend_view('elgg.css', 'groups/css');
+	elgg_extend_view('elgg.css', 'groups/groups.css');
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);

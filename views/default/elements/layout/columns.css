@@ -59,7 +59,7 @@
 	.elgg-layout-sidebar-alt {
 		padding: 0;
 		border-top: none;
-		width: 18rem;
+		max-width: 18rem;
 		margin-right: 2rem;
 	}
 

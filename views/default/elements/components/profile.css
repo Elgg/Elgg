@@ -1,0 +1,23 @@
+.elgg-profile-fields {
+	padding: 1rem;
+}
+
+.elgg-profile-field {
+	display: flex;
+	flex-direction: column;
+	padding: 1rem 0.5rem;
+}
+
+.elgg-profile-field.elgg-profile-field-horizontal {
+	flex-direction: row;
+}
+
+.elgg-profile-field > * {
+	padding: 0 0.5rem;
+}
+
+.elgg-profile-field-label {
+	font-weight: $(font-bold-weight);
+	font-size: 0.85rem;
+	color: $(text-color-mild);
+}

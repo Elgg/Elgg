@@ -266,6 +266,22 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 		}
 	}
 
+	$user_access = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
+		$checks = [
+			$entity,
+			$entity->getOwnerEntity(),
+			$entity->getContainerEntity(),
+		];
+
+		foreach ($checks as $check) {
+			if ($check instanceof ElggUser && ($check->isBanned() && !elgg_is_admin_logged_in())) {
+				return false;
+			}
+		}
+
+		return true;
+	});
+
 	$group_access = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
 		if ($entity instanceof ElggGroup) {
 			return elgg_group_gatekeeper(false, $entity->guid);
@@ -284,7 +300,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 		'entity' => $entity,
 		'forward' => $forward,
 	];
-	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, $group_access)) {
+	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, $group_access && $user_access)) {
 		if ($forward) {
 			throw new \Elgg\EntityPermissionsException();
 		} else {

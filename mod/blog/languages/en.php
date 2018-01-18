@@ -57,7 +57,8 @@ View and comment on the blog post:
 ',
 
 	// widget
-	'blog:widget:description' => 'Display your latest blog posts',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'More blog posts',
 	'blog:numbertodisplay' => 'Number of blog posts to display',
 ];

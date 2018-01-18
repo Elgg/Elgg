@@ -29,10 +29,16 @@ $admin = $menu->getSection('admin', []);
 // if admin, display admin links
 $admin_links = '';
 if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) {
-	$text = elgg_echo('admin:options');
+	$text = elgg_format_element('span', [], elgg_echo('admin:options'));
+
+	$toggle_icons = elgg_view_icon('angle-right', ['class' => 'elgg-action-expand']);
+	$toggle_icons .= elgg_view_icon('angle-down', ['class' => 'elgg-action-collapse']);
+	$toggle_icons = elgg_format_element('span', [
+		'class' => 'profile-admin-menu-toggle-icons',
+	], $toggle_icons);
 
 	$admin_links = '<ul class="profile-admin-menu-wrapper elgg-menu-owner-block">';
-	$admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\">$text&hellip;</a>";
+	$admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\" class=\"profile-admin-menu-toggle\">$text$toggle_icons</a>";
 	$admin_links .= '<ul class="elgg-menu elgg-menu-owner-block profile-admin-menu hidden" id="profile-menu-admin">';
 	foreach ($admin as $menu_item) {
 		$admin_links .= elgg_view('navigation/menu/elements/item', ['item' => $menu_item]);

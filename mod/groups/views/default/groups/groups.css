@@ -1,0 +1,39 @@
+.groups-profile > .elgg-image {
+	margin-right: 1rem;
+}
+
+.groups-profile-fields {
+	border: 1px solid $(border-color-soft);
+	background: #fff;
+}
+
+.elgg-listing-summary-subtitle {
+	.groups-membership, .groups-members {
+		margin-right: 10px;
+
+		.elgg-icon {
+			margin-right: 5px;
+		}
+	}
+}
+
+.elgg-sidebar .elgg-listing-summary-subtitle {
+	.groups-membership, .groups-members {
+		display: block;
+	}
+}
+
+.groups-widget-viewall {
+	font-size: 85%;
+}
+
+#groups-tools {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+	grid-gap: 1rem;
+	margin: 1rem 0 0;
+}
+
+.elgg-module-group {
+	margin-bottom: 0;
+}

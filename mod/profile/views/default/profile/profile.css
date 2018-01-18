@@ -1,0 +1,81 @@
+/* ***************************************
+	Profile
+*************************************** */
+#profile-owner-block {
+	display: flex;
+	flex-direction: column;
+}
+
+#profile-owner-block .elgg-avatar-large {
+	margin-bottom: 0.5rem;
+	border: 1px solid $(border-color-soft);
+	border-radius: 3px;
+	max-width: 12rem;
+}
+
+#profile-owner-block .profile-content-menu {
+	margin-bottom: 0.5rem;
+}
+
+.profile-admin-menu-wrapper > li > a,
+.profile-admin-menu > li > a {
+	color: $(state-danger-font-color);
+	display: block;
+}
+
+.profile-admin-menu > li .elgg-icon {
+	width: 1.5rem;
+	display: inline-block;
+	text-align: center;
+}
+
+.profile-admin-menu-wrapper {
+	margin-bottom: 0.5rem;
+}
+
+.profile-admin-menu-wrapper > li > .profile-admin-menu-toggle {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.profile-admin-menu-toggle-icons {
+	margin-left: auto;
+	display: inline-block;
+}
+
+.profile-admin-menu-toggle .elgg-action-collapse {
+	display: none;
+}
+
+.profile-admin-menu-toggle.elgg-state-active .elgg-action-collapse {
+	display: block;
+}
+
+.profile-admin-menu-toggle.elgg-state-active .elgg-action-expand {
+	display: none;
+}
+
+.profile-admin-menu-wrapper .profile-admin-menu {
+	border-width: 1px 0 0;
+	margin: 0;
+}
+
+#profile-details {
+	border: 1px solid $(border-color-soft);
+	background: white;
+}
+
+@media $(media-tablet-up) {
+	#profile-owner-block {
+		width: 12rem;
+	}
+	.profile .elgg-layout-columns {
+		flex-direction: row;
+	}
+
+	.profile .elgg-layout-sidebar,
+	.profile .elgg-layout-sidebar-alt {
+		border-top: none;
+	}
+}
