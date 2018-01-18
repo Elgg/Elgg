@@ -1,12 +1,13 @@
 <?php
-
-file_register_toggle();
+/**
+ * Display bookmarks listing
+ */
 
 echo elgg_list_entities([
 	'type' => 'object',
-	'subtype' => 'file',
+	'subtype' => 'bookmarks',
 	'full_view' => false,
-	'no_results' => elgg_echo("file:none"),
+	'no_results' => elgg_echo('bookmarks:none'),
 	'preload_owners' => true,
 	'preload_containers' => true,
 	'distinct' => false,

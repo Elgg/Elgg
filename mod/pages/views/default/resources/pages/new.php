@@ -34,13 +34,7 @@ if (!$container || !$container->canWriteToContainer(0, 'object', 'page')) {
 
 elgg_set_page_owner_guid($container->guid);
 
-elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
-
-if ($container instanceof ElggUser) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");
-} else if ($container instanceof ElggGroup) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/group/{$container->guid}");
-}
+elgg_push_collection_breadcrumbs('object', 'page', $container);
 
 if ($parent instanceof ElggPage) {
 	pages_prepare_parent_breadcrumbs($parent);

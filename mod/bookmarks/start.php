@@ -16,7 +16,7 @@ function bookmarks_init() {
 	elgg_register_menu_item('site', [
 		'name' => 'bookmarks',
 		'text' => elgg_echo('collection:object:bookmarks'),
-		'href' => 'bookmarks/all',
+		'href' => elgg_generate_url('default:object:bookmarks'),
 	]);
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
@@ -31,35 +31,15 @@ function bookmarks_init() {
 	// Register bookmarks view for ecml parsing
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'bookmarks_ecml_views_hook');
 
-	// Register a URL handler for bookmarks
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'bookmark_set_url');
-
 	// Groups
 	add_group_tool_option('bookmarks', null, true);
 	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:bookmarks', 'Elgg\Values::getTrue');
-}
 
-/**
- * Populates the ->getUrl() method for bookmarked objects
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $url    current return value
- * @param array  $params supplied params
- *
- * @return void|string bookmarked item URL
- */
-function bookmark_set_url($hook, $type, $url, $params) {
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggBookmark) {
-		return;
-	}
-	
-	$title = elgg_get_friendly_title($entity->title);
-	return "bookmarks/view/{$entity->guid}/{$title}";
+	// register database seed
+	elgg_register_plugin_hook_handler('seeds', 'database', 'bookmarks_register_db_seeds');
 }
 
 /**
@@ -77,12 +57,12 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
 	
 	if ($entity instanceof ElggUser) {
-		$url = "bookmarks/owner/{$entity->username}";
+		$url = elgg_generate_url('collection:object:bookmarks:owner', ['username' => $entity->username]);
 		$item = new ElggMenuItem('bookmarks', elgg_echo('collection:object:bookmarks'), $url);
 		$return[] = $item;
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('bookmarks')) {
-			$url = "bookmarks/group/{$entity->guid}/all";
+			$url = elgg_generate_url('collection:object:bookmarks:group', ['guid' => $entity->guid]);
 			$item = new ElggMenuItem('bookmarks', elgg_echo('collection:object:bookmarks:group'), $url);
 			$return[] = $item;
 		}
@@ -156,7 +136,7 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'bookmarklet',
 		'text' => $title,
-		'href' => 'bookmarks/bookmarklet/' . $page_owner->getGUID(),
+		'href' => elgg_generate_url('bookmarklet:object:bookmarks', ['guid' => $page_owner->getGUID()]),
 	]);
 
 	return $return;
@@ -215,6 +195,24 @@ function bookmarks_prepare_form_vars($bookmark = null) {
 
 	return $values;
 }
+
+/**
+ * Register database seed
+ *
+ * @elgg_plugin_hook seeds database
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function bookmarks_register_db_seeds(\Elgg\Hook $hook) {
+
+	$seeds = $hook->getValue();
+
+	$seeds[] = \Elgg\Bookmarks\Seeder::class;
+
+	return $seeds;
+}
+
 
 return function() {
 	elgg_register_event_handler('init', 'system', 'bookmarks_init');

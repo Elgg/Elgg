@@ -16,13 +16,7 @@ if (!$container) {
 
 elgg_set_page_owner_guid($container->getGUID());
 
-elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
-
-if ($container instanceof ElggUser) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/owner/{$container->username}");
-} else if ($container instanceof ElggGroup) {
-	elgg_push_breadcrumb($container->getDisplayName(), "pages/group/{$container->guid}");
-}
+elgg_push_collection_breadcrumbs('object', 'page', $container);
 
 pages_prepare_parent_breadcrumbs($page);
 
@@ -36,10 +30,10 @@ $content = elgg_list_annotations([
 	'annotation_name' => 'page',
 	'limit' => max(20, elgg_get_config('default_limit')),
 	'order_by' => "n_table.time_created desc",
+	'no_results' => elgg_echo('pages:none'),
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter' => '',
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar/navigation', [

@@ -25,8 +25,6 @@ class ElggRiverItem {
 	public $object_guid;
 	public $target_guid;
 	public $annotation_id;
-	public $type;
-	public $subtype;
 	public $action_type;
 	public $access_id;
 	public $view;
@@ -51,6 +49,21 @@ class ElggRiverItem {
 			} else {
 				$this->$key = $value;
 			}
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __get($name) {
+		switch ($name) {
+			case 'type' :
+			case 'subtype' :
+				$object = get_entity($this->object_guid);
+				if ($object) {
+					return $object->$name;
+				}
+				break;
 		}
 	}
 

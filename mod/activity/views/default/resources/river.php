@@ -70,7 +70,7 @@ $body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' =>  $content . $activity,
 	'sidebar' => $sidebar ? : false,
-	'filter_context' => $page_filter,
+	'filter_value' => $page_filter,
 	'class' => 'elgg-river-layout',
 ]);
 

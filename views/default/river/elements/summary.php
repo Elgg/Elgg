@@ -11,30 +11,33 @@ if (!$item instanceof ElggRiverItem) {
 }
 
 $subject = $item->getSubjectEntity();
-$subject_link = '';
-if ($subject instanceof ElggEntity) {
-	$subject_link = elgg_view('output/url', [
-		'href' => $subject->getURL(),
-		'text' => $subject->getDisplayName(),
-		'class' => 'elgg-river-subject',
-		'is_trusted' => true,
-	]);
+if (!$subject instanceof ElggEntity) {
+	return;
 }
 
 $object = $item->getObjectEntity();
-$object_link = '';
-if ($object instanceof ElggEntity) {
-	$object_link = elgg_view('output/url', [
-		'href' => $object->getURL(),
-		'text' => elgg_get_excerpt($object->getDisplayName(), 100),
-		'class' => 'elgg-river-object',
-		'is_trusted' => true,
-	]);
+if (!$object instanceof ElggEntity) {
+	return;
 }
+
+$subject_link = elgg_view('output/url', [
+	'href' => $subject->getURL(),
+	'text' => $subject->getDisplayName(),
+	'class' => 'elgg-river-subject',
+	'is_trusted' => true,
+]);
+
+
+$object_link = elgg_view('output/url', [
+	'href' => $object->getURL(),
+	'text' => elgg_get_excerpt($object->getDisplayName(), 100),
+	'class' => 'elgg-river-object',
+	'is_trusted' => true,
+]);
 
 $action = $item->action_type;
 $type = $item->type;
-$subtype = $item->subtype ? $item->subtype : 'default';
+$subtype = $item->subtype;
 
 // if activity happened in a group
 $group_string = '';
@@ -71,7 +74,7 @@ if ($key === false) {
 	foreach ($deprecated_keys as $try_key) {
 		if (elgg_language_key_exists($try_key)) {
 			$key = $try_key;
-			
+
 			$notice = "Please update your river language key: '{$try_key}', suggested new key 'river:{$type}:{$subtype}:{$action}'.";
 			$notice .= " See views/default/river/elements/summary";
 			elgg_deprecated_notice($notice, '3.0');

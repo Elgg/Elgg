@@ -12,7 +12,7 @@ return [
 			'resource' => 'river',
 		],
 		'collection:river:friends' => [
-			'path' => '/activity/friends',
+			'path' => '/activity/friends/{username?}',
 			'resource' => 'river',
 		],
 		'collection:river:all' => [

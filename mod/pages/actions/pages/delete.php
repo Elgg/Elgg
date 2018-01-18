@@ -49,9 +49,9 @@ if (!empty($parent_guid)) {
 
 if (empty($forward_url)) {
 	if ($container instanceof ElggGroup) {
-		$forward_url = "pages/group/{$container->guid}/all";
+		$forward_url = elgg_generate_url('collection:object:page:group', ['guid' => $container->guid]);
 	} else {
-		$forward_url = "pages/owner/{$container->username}";
+		$forward_url = elgg_generate_url('collection:object:page:owner', ['username' => $container->username]);
 	}
 }
 

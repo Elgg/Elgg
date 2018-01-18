@@ -4,55 +4,28 @@
  *
  * @package Bookmarks
  */
-elgg_group_gatekeeper();
+$username = elgg_extract('username', $vars);
 
-$page_owner = elgg_get_page_owner_entity();
-if (!$page_owner) {
-	forward('', '404');
+$user = get_user_by_username($username);
+if (!$user) {
+	throw new \Elgg\EntityNotFoundException();
 }
 
-elgg_push_breadcrumb(elgg_echo('collection:object:bookmarks'), 'bookmarks/all');
-elgg_push_breadcrumb($page_owner->name);
+elgg_push_collection_breadcrumbs('object', 'bookmarks', $user);
 
 elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
-$options = [
-	'type' => 'object',
-	'subtype' => 'bookmarks',
-	'full_view' => false,
-	'view_toggle_type' => false,
-	'no_results' => elgg_echo('bookmarks:none'),
-	'preload_owners' => true,
-	'distinct' => false,
-];
+$vars['entity'] = $user;
 
-if ($page_owner instanceof ElggGroup) {
-	$options['container_guid'] = $page_owner->guid;
-} else {
-	$options['owner_guid'] = $page_owner->guid;
-}
+$content = elgg_view('bookmarks/listing/owner', $vars);
 
-$content .= elgg_list_entities($options);
+$title = elgg_echo('collection:object:bookmarks');
 
-$title = elgg_echo('collection:object:bookmarks:owner', [$page_owner->name]);
-
-$filter_context = '';
-if ($page_owner->getGUID() == elgg_get_logged_in_user_guid()) {
-	$filter_context = 'mine';
-}
-
-$vars = [
-	'filter_context' => $filter_context,
+$body = elgg_view_layout('default', [
+	'filter_value' => $user->guid == elgg_get_logged_in_user_guid() ? 'mine' : 'none',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('bookmarks/sidebar'),
-];
-
-// don't show filter if out of filter context
-if ($page_owner instanceof ElggGroup) {
-	$vars['filter'] = false;
-}
-
-$body = elgg_view_layout('content', $vars);
+	'sidebar' => elgg_view('bookmarks/sidebar', $vars),
+]);
 
 echo elgg_view_page($title, $body);

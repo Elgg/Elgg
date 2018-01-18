@@ -19,4 +19,8 @@ if (!$annotation->delete()) {
 	return elgg_error_response(elgg_echo('pages:revision:delete:failure'));
 }
 
-return elgg_ok_response('', elgg_echo('pages:revision:delete:success'), "pages/history/{$entity->guid}");
+return elgg_ok_response(
+	'',
+	elgg_echo('pages:revision:delete:success'),
+	elgg_generate_url('history:object:page', ['guid' => $entity->guid])
+);
