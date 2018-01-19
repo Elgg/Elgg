@@ -50,7 +50,7 @@ View and comment on the discussion:
 ',
 
 	'item:object:discussion' => "Discussion topic",
-	'collection:object:discussions' => 'Discussion topics',
+	'collection:object:discussion' => 'Discussion topics',
 
 	'groups:tool:forum' => 'Enable group discussions',
 
