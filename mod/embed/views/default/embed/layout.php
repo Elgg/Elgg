@@ -5,7 +5,7 @@
 
 $title =  elgg_view_title(elgg_echo('embed:media'));
 
-$menu = elgg_view_menu('embed');
+$menu = elgg_view_menu('embed', $vars);
 
 $selected = elgg_get_config('embed_tab');
 if ($selected->getData('view')) {
