@@ -1,19 +1,17 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2013, Various
 # This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
-# Translators:
-# Doriano Cometto, 2016
-# Giuseppe Mariniello, 2014
-# Tassoman, 2015
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Elgg Core 2\n"
+"Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-06 10:03+0100\n"
-"PO-Revision-Date: 2017-09-23 21:30+0000\n"
-"Last-Translator: Doriano Cometto\n"
-"Language-Team: Italian (http://www.transifex.com/elgg/elgg-core-2/language/it/)\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2017\n"
+"Language-Team: Italian (https://www.transifex.com/elgg/teams/11337/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"

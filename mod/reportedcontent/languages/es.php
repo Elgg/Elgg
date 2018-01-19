@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Elementos reportados',
 	'admin:administer_utilities:reportedcontent' => 'Contenido reportado',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'El contenido reportado ha sido borrado',
 	'reportedcontent:notdeleted' => 'No se pudo borrar el contenido reportado',
 	'reportedcontent:delete' => 'Borrar reporte',
-	'reportedcontent:areyousure' => '&iquest;Estás seguro que deseas borrar?',
 	'reportedcontent:archive' => 'Reportes archivados',
 	'reportedcontent:archived' => 'El reporta ha sido archivado',
-	'reportedcontent:visit' => 'Visitar el elemento reportado',
 	'reportedcontent:by' => 'Reportado por',
 	'reportedcontent:objecttitle' => 'T&iacute;tulo',
 	'reportedcontent:objecturl' => 'URL',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => '&iquest;Por qu&eacute; deseas reportar esto?',
 	'reportedcontent:address' => 'Ubicaci&oacute;n del elemento',
 	'reportedcontent:success' => 'Tu reporte ha sido enviado',
-	'reportedcontent:failing' => 'Tu reporte no pudo ser enviado',
 	'reportedcontent:refresh' => 'Actualizar el listado',
 	'reportedcontent:report' => 'Reportar',
 	'reportedcontent:instructions' => 'Este reporte ha sido enviado para su revisi&oacute;n.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'No se pudo enviar el reporte.',
 	'reportedcontent:notarchived' => 'No se pudo archivar el reporte',
-];
+);

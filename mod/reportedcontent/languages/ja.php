@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => '報告された対象',
 	'admin:administer_utilities:reportedcontent' => '報告されたコンテント',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => '報告されたコンテントは削除されました。',
 	'reportedcontent:notdeleted' => 'この報告を削除することはできませんでした。',
 	'reportedcontent:delete' => '報告を削除',
-	'reportedcontent:areyousure' => '削除してもよろしいですか？',
 	'reportedcontent:archive' => '報告を書庫に',
 	'reportedcontent:archived' => '報告を書庫に保存しました',
-	'reportedcontent:visit' => 'レポートされた対象を見る',
 	'reportedcontent:by' => '報告者',
 	'reportedcontent:objecttitle' => 'ページタイトル',
 	'reportedcontent:objecturl' => 'ページ url',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'なぜこれを管理者に報告するのですか？',
 	'reportedcontent:address' => '報告対象の場所',
 	'reportedcontent:success' => 'あなたの報告をサイト管理者に送信しました。',
-	'reportedcontent:failing' => 'あなたの報告を送信できませんでした。',
 	'reportedcontent:refresh' => 'このリストをリフレッシュする',
 	'reportedcontent:report' => '管理者に報告',
 	'reportedcontent:instructions' => 'この報告はサイトの管理者に監査してもらうために送られます。',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => '申し訳ありません、このコンテントを報告しようとしましたが、失敗しました。もう一度お試しください。',
 	'reportedcontent:notarchived' => 'この報告を書庫に保存することができませんでした。',
-];
+);

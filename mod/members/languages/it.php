@@ -1,6 +1,5 @@
 <?php
-
-return [
+return array(
 	'members:label:online' => 'Online',
 	'members:search' => 'Cerca iscritti',
 	'members:title:search' => 'Ricerca iscritti per %s',
@@ -10,4 +9,4 @@ return [
 	'members:title:online' => 'Iscritti online',
 	'members:title:alpha' => 'Tutti gli iscritti',
 	'members:list:popular:none' => 'Nessun iscritto ha amici',
-];
+);

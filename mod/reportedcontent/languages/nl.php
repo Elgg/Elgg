@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Gemelde items',
 	'admin:administer_utilities:reportedcontent' => 'Gemelde inhoud',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'De gemelde inhoud is verwijderd',
 	'reportedcontent:notdeleted' => 'We konden de gemelde inhoud niet verwijderen',
 	'reportedcontent:delete' => 'Verwijder de melding',
-	'reportedcontent:areyousure' => 'Weet je zeker dat je dit wilt verwijderen?',
 	'reportedcontent:archive' => 'Archiveer de melding',
 	'reportedcontent:archived' => 'De melding is gearchiveerd',
-	'reportedcontent:visit' => 'Bekijk gemelde inhoud',
 	'reportedcontent:by' => 'Gemeld door',
 	'reportedcontent:objecttitle' => 'Paginatitel',
 	'reportedcontent:objecturl' => 'Pagina-URL',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Om welke reden wil je dit melden?',
 	'reportedcontent:address' => 'Locatie van het item',
 	'reportedcontent:success' => 'Je melding is verstuurd naar de sitebeheerder',
-	'reportedcontent:failing' => 'Je melding kon niet worden verzonden',
 	'reportedcontent:refresh' => 'Ververs deze lijst',
 	'reportedcontent:report' => 'Meld aan beheerder',
 	'reportedcontent:instructions' => 'De melding zal worden verstuurd aan de beheerders van deze site ter controle.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Sorry, de poging om deze inhoud te melden is mislukt.',
 	'reportedcontent:notarchived' => 'Het was niet mogelijk om deze melding te archiveren',
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Ilmiannetut kohteet',
 	'admin:administer_utilities:reportedcontent' => 'Asiaton sisältö',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'Ilmoitus poistettu',
 	'reportedcontent:notdeleted' => 'Ilmoituksen poistaminen epäonnistui',
 	'reportedcontent:delete' => 'Poista ilmoitus',
-	'reportedcontent:areyousure' => 'Haluatko varmasti poistaa tämän kohteen?',
 	'reportedcontent:archive' => 'Arkistoi ilmoitus',
 	'reportedcontent:archived' => 'Ilmoitus arkistoitiin',
-	'reportedcontent:visit' => 'Siirry ilmiannettuun kohteeseen',
 	'reportedcontent:by' => 'Ilmoitus käyttäjältä',
 	'reportedcontent:objecttitle' => 'Kohteen otsikko',
 	'reportedcontent:objecturl' => 'Kohteen sijainti',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Miksi ilmoitat tästä',
 	'reportedcontent:address' => 'Kohteen sijainti',
 	'reportedcontent:success' => 'Ilmoitus lähetettiin sivuston ylläpitäjälle',
-	'reportedcontent:failing' => 'Ilmoituksen lähettäminen epäonnistui',
 	'reportedcontent:refresh' => 'Päivitä lista',
 	'reportedcontent:report' => 'Ilmoita ylläpitäjälle',
 	'reportedcontent:instructions' => 'Tämä ilmoitus lähetetään sivuston ylläpitäjälle tarkistettavaksi.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Ilmoituksen tekeminen epäonnistui.',
 	'reportedcontent:notarchived' => 'Ilmoituksen arkistoiminen epäonnistui',
-];
+);

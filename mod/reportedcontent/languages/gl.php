@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Elementos denunciados',
 	'admin:administer_utilities:reportedcontent' => 'Contido denunciado',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'Eliminouse o contido denunciado.',
 	'reportedcontent:notdeleted' => 'Non foi posíbel eliminar a denuncia.',
 	'reportedcontent:delete' => 'Eliminar a denuncia',
-	'reportedcontent:areyousure' => 'Está seguro de que quere eliminar?',
 	'reportedcontent:archive' => 'Arquivar a denuncia',
 	'reportedcontent:archived' => 'Arquivouse a denuncia.',
-	'reportedcontent:visit' => 'Visitar o elemento denuciado',
 	'reportedcontent:by' => 'Denuncia de',
 	'reportedcontent:objecttitle' => 'Título',
 	'reportedcontent:objecturl' => 'URL',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Por que está a denunciar isto?',
 	'reportedcontent:address' => 'Lugar onde se atopa o elemento.',
 	'reportedcontent:success' => 'Enviouse a denuncia ao administrador do sitio.',
-	'reportedcontent:failing' => 'Non foi posíbel enviar o informe.',
 	'reportedcontent:refresh' => 'Actualizar a lista',
 	'reportedcontent:report' => 'Denunciar ante un administrador',
 	'reportedcontent:instructions' => 'A denuncia enviarase aos administradores do sitio para que a revisen.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Non foi posíbel denunciar este contido.',
 	'reportedcontent:notarchived' => 'Non foi posíbel arquivar a denuncia.',
-];
+);

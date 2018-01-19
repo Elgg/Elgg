@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'На что жалуются',
 	'admin:administer_utilities:reportedcontent' => 'Пожаловаться',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'Удалено.',
 	'reportedcontent:notdeleted' => 'Простите, но удаление невозможно.',
 	'reportedcontent:delete' => 'Удалить',
-	'reportedcontent:areyousure' => 'Вы уверены?',
 	'reportedcontent:archive' => 'Архивировать',
 	'reportedcontent:archived' => 'Жалоба заархивирована',
-	'reportedcontent:visit' => 'Посмотреть, на что жалуются',
 	'reportedcontent:by' => 'Жалоба от',
 	'reportedcontent:objecttitle' => 'Тема',
 	'reportedcontent:objecturl' => 'Ссылка на страницу',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'На что жалуетесь?',
 	'reportedcontent:address' => 'Адрес',
 	'reportedcontent:success' => 'Спасибо, Вы помогли сделать сайт лучше! Ваша жалоба отправлена администратору.',
-	'reportedcontent:failing' => 'Простите, Ваша жалоба не может быть отправлена.',
 	'reportedcontent:refresh' => 'Обновить этот список',
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:instructions' => 'Этот отчет будет отправлен на администраторов этого сайта для просмотра.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Простите, пожаловаться не получилось. Пожалуйтесь на эту ошибку.',
 	'reportedcontent:notarchived' => 'Простите, невозможно заархивировать жалобу.',
-];
+);

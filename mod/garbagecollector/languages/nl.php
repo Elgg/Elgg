@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'garbagecollector:period' => 'Hoe vaak wil je dat Elgg de garbage collector draait?',
 
 	'garbagecollector:weekly' => 'Eens per week',
@@ -9,9 +9,4 @@ return [
 	'garbagecollector' => "GARBAGE COLLECTOR\n",
 	'garbagecollector:done' => "KLAAR\n",
 	'garbagecollector:optimize' => "Optimaliseren %s ",
-
-	'garbagecollector:error' => "FOUT",
-	'garbagecollector:ok' => "OK",
-
-	'garbagecollector:gc:metastrings' => 'Opruimen van niet-gelinkte metastrings:',
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Invita amici',
 	
@@ -30,4 +30,4 @@ Per iscriverti segui il link sottostante:
 
 Chi ti ha invitato, verrà automaticamente aggiunto come tuo amico quando creerai il tuo account.',
 	
-];
+);

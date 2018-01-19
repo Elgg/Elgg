@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'members:label:online' => 'En ligne',
 	'members:search' => 'Rechercher des membres',
 	'members:title:search' => 'Recherche de membres pour %s',
@@ -9,4 +9,4 @@ return [
 	'members:title:online' => 'Membres en ligne',
 	'members:title:alpha' => 'Tous les membres',
 	'members:list:popular:none' => 'Aucun membre n\'a de contact.',
-];
+);

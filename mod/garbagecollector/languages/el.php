@@ -9,9 +9,4 @@ return array(
 	'garbagecollector' => "Συλλέκτης αχρήστων",
 	'garbagecollector:done' => "Έγινε\n",
 	'garbagecollector:optimize' => "Βελτιστοποίηση %s",
-
-	'garbagecollector:error' => "Σφάλμα",
-	'garbagecollector:ok' => "ΟΚ",
-
-	'garbagecollector:gc:metastrings' => 'Εκκαθάριση μη αντιστοιχισμένων μεταδεδομένων',
 );

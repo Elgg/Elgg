@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'garbagecollector:period' => 'ガベージコレクションをする頻度',
 
 	'garbagecollector:weekly' => '１週間に１回',
@@ -9,9 +9,4 @@ return [
 	'garbagecollector' => "ガベージコレクター\n",
 	'garbagecollector:done' => "完了\n",
 	'garbagecollector:optimize' => "%s の最適化中",
-
-	'garbagecollector:error' => "エラー",
-	'garbagecollector:ok' => "OK",
-
-	'garbagecollector:gc:metastrings' => 'どこからもリンクされていないメタ文字を削除中',
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Vrienden uitnodigen',
 	
@@ -36,4 +36,4 @@ Je zult degene die je uitnodigde direct als vriend hebben zodra je je account he
 
 Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.',
 	
-];
+);

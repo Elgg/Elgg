@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Pagine del sito",
-	'admin:appearance:expages' => "Pagine del sito",
+	'admin:configure_utilities:expages' => "Pagine del sito",
 	'expages:edit:viewpage' => "Visualizza pagina nel sito",
 	'expages:about' => "Informazioni",
 	'expages:terms' => "Termini",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "La tua pagina è stata aggiornata.",
 	'expages:error' => "Impossibile salvare questa pagina.",
-];
+);
