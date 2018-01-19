@@ -16,8 +16,6 @@ function ws_init() {
 	\Elgg\Includer::requireFileOnce(__DIR__ . "/lib/client.php");
 	\Elgg\Includer::requireFileOnce(__DIR__ . "/lib/tokens.php");
 
-	elgg_register_page_handler('services', 'ws_page_handler');
-
 	// Register a service handler for the default web services
 	// The name rest is a misnomer as they are not RESTful
 	elgg_ws_register_service_handler('rest', 'ws_rest_handler');
