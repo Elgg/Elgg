@@ -426,6 +426,7 @@ Do not read or write to the ``access_id`` property on ElggMetadata objects.
 Metadata is no longer enabled or disabled. You can no longer perform the ``enable`` and ``disable`` API calls on metadata.
 
 Metadata no longer has an ``owner_guid``. It is no longer possible to query metadata based on ``owner_guids``.
+Subsequently, ``ElggMetadata::canEdit()`` will always return ``true`` regardless of the logged in user, unless explicitly overriden by a plugin hook.
 
 Permissions and Access
 ----------------------

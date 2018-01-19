@@ -101,23 +101,6 @@ class MetadataTable extends DbMetadataTabe {
 	}
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public function delete(ElggMetadata $metadata) {
-		parent::delete($metadata);
-
-		if (!isset($this->rows[$metadata->id])) {
-			return false;
-		}
-		$row = $this->rows[$metadata->id];
-		$this->clearQuerySpecs($row);
-		
-		unset($this->rows[$metadata->id]);
-		
-		return true;
-	}
-
-	/**
 	 * Clear query specs
 	 *
 	 * @param \stdClass $row Data row

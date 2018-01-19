@@ -44,7 +44,7 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame('elgg_upgrade', $this->obj->subtype);
 		$this->assertSame(0, $this->obj->container_guid);
 		$this->assertSame(0, $this->obj->owner_guid);
-		$this->assertSame(0, $this->obj->is_completed);
+		$this->assertSame(null, $this->obj->is_completed);
 	}
 
 	/**
@@ -92,6 +92,8 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanInstantiateBatchRunner() {
+		_elgg_services()->logger->disable();
+
 		$this->obj->setClass('\InvalidClass');
 		$this->assertFalse($this->obj->getBatch());
 
@@ -100,5 +102,7 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 
 		$this->obj->setClass(\Elgg\Upgrade\TestBatch::class);
 		$this->assertInstanceOf(\Elgg\Upgrade\TestBatch::class, $this->obj->getBatch());
+
+		_elgg_services()->logger->enable();
 	}
 }
