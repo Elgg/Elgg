@@ -32,7 +32,6 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - friends_collections
 - garbagecollector
 - invitefriends
-- legacy_urls
 - likes
 - members
 - notifications
