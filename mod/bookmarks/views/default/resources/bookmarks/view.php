@@ -11,7 +11,7 @@ elgg_entity_gatekeeper($guid, 'object', 'bookmarks');
 
 $bookmark = get_entity($guid);
 
-elgg_push_entity_breadcrumbs($bookmark, flase);
+elgg_push_entity_breadcrumbs($bookmark, false);
 
 $title = $bookmark->getDisplayName();
 

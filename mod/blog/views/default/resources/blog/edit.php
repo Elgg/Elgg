@@ -39,4 +39,4 @@ $body = elgg_view_layout('default', [
 	'filter_id' => 'blog/edit',
 ]);
 
-echo elgg_view_page($params['title'], $body);
+echo elgg_view_page($title, $body);
