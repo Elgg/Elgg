@@ -9,13 +9,13 @@ $guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'object', 'bookmarks');
 
-$bookmark = get_entity($guid);
+$entity = get_entity($guid);
 
-elgg_push_entity_breadcrumbs($bookmark, false);
+elgg_push_entity_breadcrumbs($entity, false);
 
-$title = $bookmark->getDisplayName();
+$title = $entity->getDisplayName();
 
-$content = elgg_view_entity($bookmark, [
+$content = elgg_view_entity($entity, [
 	'full_view' => true,
 	'show_responses' => true,
 ]);
