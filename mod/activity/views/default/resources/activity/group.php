@@ -1,21 +1,16 @@
 <?php
 
-$guid = elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid, 'group');
-
-elgg_set_page_owner_guid($guid);
-
 elgg_group_gatekeeper();
 
-$group = get_entity($guid);
+$group = elgg_get_page_owner_entity();
 
-if (elgg_get_plugin_setting('allow_activity', 'groups') === 'no') {
-	forward($group->getURL(), '404');
+if (!$group instanceof \ElggGroup) {
+	throw new \Elgg\EntityNotFoundException();
 }
 
 elgg_group_tool_gatekeeper('activity');
 
-$title = elgg_echo('groups:activity');
+$title = elgg_echo('collection:river:group');
 
 elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
@@ -30,7 +25,7 @@ $options = [
 	'wheres' => [
 		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
 	],
-	'no_results' => elgg_echo('groups:activity:none'),
+	'no_results' => elgg_echo('river:none'),
 ];
 
 $type = preg_replace('[\W]', '', get_input('type', 'all'));

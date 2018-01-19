@@ -15,6 +15,10 @@ return [
 			'path' => '/activity/friends/{username?}',
 			'resource' => 'river',
 		],
+		'collection:river:group' => [
+			'path' => '/activity/group/{guid}',
+			'resource' => 'activity/group',
+		],
 		'collection:river:all' => [
 			'path' => '/activity/all',
 			'resource' => 'river',

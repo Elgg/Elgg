@@ -3,8 +3,6 @@
  * Groups latest activity
  *
  * @todo add people joining group to activity
- *
- * @package Groups
  */
 
 $group = elgg_extract('entity', $vars);
@@ -34,12 +32,12 @@ $content = elgg_list_river([
 	'wheres' => [
 		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
 	],
-	'no_results' => elgg_echo('groups:activity:none'),
+	'no_results' => elgg_echo('river:none'),
 ]);
 elgg_pop_context();
 
 echo elgg_view('groups/profile/module', [
-	'title' => elgg_echo('groups:activity'),
+	'title' => elgg_echo('collection:river:group'),
 	'content' => $content,
 	'all_link' => $all_link,
 ]);

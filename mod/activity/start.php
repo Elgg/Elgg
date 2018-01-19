@@ -3,25 +3,32 @@
 /**
  * Register menu items for the title menu
  *
- * @param string $hook   Hook
- * @param string $type   Type
- * @param array  $return Current return value
- * @param array  $params Hook parameters
+ * @param \Elgg\Hook $hook Hook
+ *
  * @return array
  *
  * @access private
  *
  * @since 3.0
  */
-function _elgg_activity_owner_block_menu($hook, $type, $return, $params) {
+function _elgg_activity_owner_block_menu(\Elgg\Hook $hook) {
 
-	$entity = elgg_extract('entity', $params);
+	$entity = $hook->getEntityParam();
+	$return = $hook->getValue();
 	
 	if ($entity instanceof \ElggUser) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'activity:owner',
 			'text' => elgg_echo('activity:owner'),
 			'href' => elgg_generate_url('collections:river:owner', ['username' => $entity->username]),
+		]);
+	}
+	
+	if ($entity instanceof \ElggGroup && $entity->isToolEnabled('activity')) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'collection:river:group',
+			'text' => elgg_echo('collection:river:group'),
+			'href' => elgg_generate_url('collection:river:group', ['guid' => $entity->guid]),
 		]);
 	}
 	
@@ -42,6 +49,9 @@ function elgg_activity_init() {
 		'text' => elgg_echo('activity'),
 		'href' => elgg_generate_url('default:river'),
 	]);
+	
+	add_group_tool_option('activity', null, true);
+	elgg_extend_view('groups/tool_latest', 'activity/group_module');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '_elgg_activity_owner_block_menu');
 }

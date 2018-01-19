@@ -16,11 +16,6 @@ if (!isset($plugin->limited_groups)) {
 	$plugin->limited_groups = 'no';
 }
 
-// set default value
-if (!isset($plugin->allow_activity)) {
-	$plugin->allow_activity = 'yes';
-}
-
 $fields = [
 	[
 		'#type' => 'checkbox',
@@ -40,15 +35,6 @@ $fields = [
 			'yes' => elgg_echo('admin')
 		],
 		'value' => $plugin->limited_groups,
-	],
-	[
-		'#type' => 'checkbox',
-		'#label' => elgg_echo('groups:allow_activity'),
-		'name' => 'params[allow_activity]',
-		'default' => 'no',
-		'value' => 'yes',
-		'checked' => ($plugin->allow_activity === 'yes'),
-		'switch' => true,
 	],
 ];
 

@@ -23,15 +23,6 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
 	elgg_register_plugin_hook_handler('entity:icon:sizes', 'group', 'groups_set_icon_sizes');
 
-	// add group activity tool option
-	if (elgg_get_plugin_setting('allow_activity', 'groups') === 'yes') {
-		add_group_tool_option('activity', null, true);
-		elgg_extend_view('groups/tool_latest', 'groups/profile/activity_module');
-	}
-
-	// add link to owner block
-	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'groups_activity_owner_block_menu');
-
 	// group entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
 
@@ -255,34 +246,6 @@ function groups_set_url($hook, $type, $url, $params) {
 	
 	$title = elgg_get_friendly_title($entity->getDisplayName());
 	return "groups/profile/{$entity->guid}/$title";
-}
-
-/**
- * Add owner block link
- *
- * @param string         $hook   'register'
- * @param string         $type   'menu:owner_block'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
- *
- * @return void|ElggMenuItem[]
- */
-function groups_activity_owner_block_menu($hook, $type, $return, $params) {
-	
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggGroup) {
-		return;
-	}
-	
-	if (!$entity->isToolEnabled('activity')) {
-		return;
-	}
-	
-	$url = "groups/activity/{$entity->guid}";
-	$item = new ElggMenuItem('activity', elgg_echo('groups:activity'), $url);
-	$return[] = $item;
-	
-	return $return;
 }
 
 /**
@@ -1033,7 +996,6 @@ function groups_default_page_owner_handler($hook, $type, $return, $params) {
 
 		case 'edit':
 		case 'profile' :
-		case 'activity' :
 		case 'invite' :
 		case 'requests' :
 		case 'members' :
