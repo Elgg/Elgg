@@ -43,7 +43,7 @@ function file_init() {
 	elgg_register_event_handler('delete', 'object', 'file_handle_object_delete', 999);
 
 	// embed support
-	$item = ElggMenuItem::factory([
+	elgg_register_menu_item('embed', [
 		'name' => 'file',
 		'text' => elgg_echo('collection:object:file'),
 		'priority' => 10,
@@ -54,9 +54,8 @@ function file_init() {
 			],
 		],
 	]);
-	elgg_register_menu_item('embed', $item);
 
-	$item = ElggMenuItem::factory([
+	elgg_register_menu_item('embed', [
 		'name' => 'file_upload',
 		'text' => elgg_echo('add:object:file'),
 		'priority' => 100,
@@ -64,8 +63,6 @@ function file_init() {
 			'view' => 'embed/file_upload/content',
 		],
 	]);
-
-	elgg_register_menu_item('embed', $item);
 
 	elgg_extend_view('theme_sandbox/icons', 'file/theme_sandbox/icons/files');
 

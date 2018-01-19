@@ -9,7 +9,7 @@ $tabs = [];
 foreach ($vars['menu']['default'] as $menu_item) {
 	$tabs[] = [
 		'title' => $menu_item->getText(),
-		'url' => 'embed/tab/' . $menu_item->getName(),
+		'url' => 'embed/' . $menu_item->getName(),
 		'link_class' => 'embed-section',
 		'selected' => $menu_item->getSelected(),
 	];

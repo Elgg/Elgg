@@ -19,9 +19,6 @@ function embed_init() {
 	}
 	elgg_register_plugin_hook_handler('register', 'menu:embed', 'embed_select_tab', 1000);
 
-	// Page handler for the modal media embed
-	elgg_register_page_handler('embed', 'embed_page_handler');
-
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'embed_set_thumbnail_url', 1000);
 }
 
@@ -82,10 +79,8 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
  * @return ElggMenuItem[]
  */
 function embed_select_tab($hook, $type, $items, $vars) {
-
-	// can this ba called from page handler instead?
-	$page = get_input('page');
-	$tab_name = array_pop(explode('/', $page));
+	$tab_name = elgg_extract('tab', $vars);
+		
 	foreach ($items as $item) {
 		if ($item->getName() == $tab_name) {
 			$item->setSelected();
@@ -99,33 +94,6 @@ function embed_select_tab($hook, $type, $items, $vars) {
 	}
 	
 	return $items;
-}
-
-/**
- * Serves the content for the embed lightbox
- *
- * @param array $page URL segments
- *
- * @return true
- */
-function embed_page_handler($page) {
-
-	elgg_ajax_gatekeeper();
-
-	$container_guid = (int) get_input('container_guid');
-	if ($container_guid) {
-		$container = get_entity($container_guid);
-
-		if ($container instanceof ElggGroup && $container->isMember()) {
-			// embedding inside a group so save file to group files
-			elgg_set_page_owner_guid($container_guid);
-		}
-	}
-
-	set_input('page', $page[1]);
-
-	echo elgg_view('embed/layout');
-	return true;
 }
 
 /**
