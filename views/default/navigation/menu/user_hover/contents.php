@@ -34,7 +34,7 @@ elgg_set_page_owner_guid($page_owner_guid);
 $menu = elgg_view_menu('user_hover', [
 	'entity' => $user,
 	'username' => $user->username,
-	'name' => $user->name,
+	'name' => $user->getDisplayName(),
 ]);
 
 // wrapping in a li as it is inject into a ul via javascript

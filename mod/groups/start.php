@@ -444,7 +444,7 @@ function groups_create_event_listener($event, $type, $object) {
 	// prior to joining the group
 	$ia = elgg_set_ignore_access(true);
 
-	$ac_name = elgg_echo('groups:group') . ": " . $object->name;
+	$ac_name = elgg_echo('groups:group') . ": " . $object->getDisplayName();
 	$ac_id = create_access_collection($ac_name, $object->guid, 'group_acl');
 	
 	elgg_set_ignore_access($ia);
@@ -493,7 +493,7 @@ function groups_update_event_listener($event, $type, $group) {
 
 	if (!empty($original_attributes['name'])) {
 		// update access collection name if group name changes
-		$group_name = html_entity_decode($group->name, ENT_QUOTES, 'UTF-8');
+		$group_name = html_entity_decode($group->getDisplayName(), ENT_QUOTES, 'UTF-8');
 		$ac_name = elgg_echo('groups:group') . ": " . $group_name;
 		$acl = _groups_get_group_acl($group);
 		if ($acl) {

@@ -17,7 +17,7 @@ if (!$widget->group_guid) {
 	$mygroups[0] = '';
 }
 foreach ($groups as $group) {
-	$mygroups[$group->guid] = $group->name;
+	$mygroups[$group->guid] = $group->getDisplayName();
 }
 
 echo elgg_view_field([

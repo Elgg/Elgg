@@ -20,7 +20,7 @@ $message->readYet = true;
 elgg_set_page_owner_guid($message->getOwnerGUID());
 $page_owner = elgg_get_page_owner_entity();
 
-$title = $message->title;
+$title = $message->getDisplayName();
 
 elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
 

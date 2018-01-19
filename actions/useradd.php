@@ -60,8 +60,8 @@ try {
 	$subject = elgg_echo('useradd:subject', [], $new_user->language);
 	$body = elgg_echo('useradd:body', [
 		$name,
-		elgg_get_site_entity()->name,
-		elgg_get_site_entity()->url,
+		elgg_get_site_entity()->getDisplayName(),
+		elgg_get_site_entity()->getURL(),
 		$username,
 		$password,
 	], $new_user->language);
@@ -72,7 +72,7 @@ try {
 		'password' => $password,
 	]);
 
-	return elgg_ok_response('', elgg_echo('adduser:ok', [elgg_get_site_entity()->name]));
+	return elgg_ok_response('', elgg_echo('adduser:ok', [elgg_get_site_entity()->getDisplayName()]));
 } catch (RegistrationException $r) {
 	return elgg_error_response($r->getMessage());
 }

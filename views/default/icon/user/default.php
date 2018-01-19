@@ -27,7 +27,7 @@ if (!array_key_exists($size, $icon_sizes)) {
 	$size = 'medium';
 }
 
-$name = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8', false);
+$name = htmlspecialchars($user->getDisplayName(), ENT_QUOTES, 'UTF-8', false);
 $username = $user->username;
 
 $class = "elgg-avatar elgg-avatar-$size";

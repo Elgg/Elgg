@@ -22,7 +22,7 @@ elgg_set_page_owner_guid($user->guid);
 
 elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
 
-$title = elgg_echo('usersettings:user', [elgg_get_page_owner_entity()->name]);
+$title = elgg_echo('usersettings:user', [$user->getDisplayName()]);
 
 $content = elgg_view('core/settings/account');
 

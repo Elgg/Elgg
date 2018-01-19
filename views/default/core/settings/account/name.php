@@ -6,9 +6,8 @@
  * @package Elgg
  * @subpackage Core
  */
+
 $user = elgg_get_page_owner_entity();
-
-
 if (!$user instanceof ElggUser) {
 	return;
 }
@@ -19,7 +18,6 @@ $content = elgg_view_field([
 	'name' => 'name',
 	'value' => $user->name,
 	'#label' => elgg_echo('name'),
-		]);
+]);
 
 echo elgg_view_module('info', $title, $content);
-

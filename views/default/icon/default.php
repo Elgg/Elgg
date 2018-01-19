@@ -27,12 +27,7 @@ $vars['size'] = $size;
 
 $class = elgg_extract('img_class', $vars, '');
 
-if (isset($entity->name)) {
-	$title = $entity->name;
-} else {
-	$title = $entity->title;
-}
-$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8', false);
+$title = htmlspecialchars($entity->getDisplayName(), ENT_QUOTES, 'UTF-8', false);
 
 $url = $entity->getURL();
 if (isset($vars['href'])) {

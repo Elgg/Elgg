@@ -29,11 +29,11 @@ if (!isset($byline_str)) {
 		if ($show_links) {
 			$owner_text = elgg_view('output/url', [
 				'href' => $owner->getURL(),
-				'text' => $owner->name,
+				'text' => $owner->getDisplayName(),
 				'is_trusted' => true,
 			]);
 		} else {
-			$owner_text = $owner->name;
+			$owner_text = $owner->getDisplayName();
 		}
 
 		$parts[] = elgg_echo('byline', [$owner_text]);
@@ -44,11 +44,11 @@ if (!isset($byline_str)) {
 		if ($show_links) {
 			$group_text = elgg_view('output/url', [
 				'href' => $container_entity->getURL(),
-				'text' => $container_entity->name,
+				'text' => $container_entity->getDisplayName(),
 				'is_trusted' => true,
 			]);
 		} else {
-			$group_text = $container_entity->name;
+			$group_text = $container_entity->getDisplayName();
 		}
 
 		$parts[] = elgg_echo('byline:ingroup', [$group_text]);

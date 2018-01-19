@@ -9,10 +9,10 @@ if (!$owner) {
 	forward('', '404');
 }
 
-$title = elgg_echo('collection:object:thewire:owner', [$owner->name]);
+$title = elgg_echo('collection:object:thewire:owner', [$owner->getDisplayName()]);
 
 elgg_push_breadcrumb(elgg_echo('thewire'), "thewire/all");
-elgg_push_breadcrumb($owner->name);
+elgg_push_breadcrumb($owner->getDisplayName());
 
 $context = '';
 if (elgg_get_logged_in_user_guid() == $owner->guid) {

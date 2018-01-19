@@ -297,15 +297,15 @@ Create the file ``/mod/my_blog/views/default/resources/my_blog/view.php``:
     // get the content of the post
     $content = elgg_view_entity($my_blog, array('full_view' => true));
 
-    $params = array(
-        'title' => $my_blog->title,
+    $params = [
+        'title' => $my_blog->getDisplayName(),
         'content' => $content,
         'filter' => '',
-    );
+    ];
 
     $body = elgg_view_layout('content', $params);
 
-    echo elgg_view_page($my_blog->title, $body);
+    echo elgg_view_page($my_blog->getDisplayName(), $body);
 
 This page has much in common with the ``add.php`` page. The biggest differences
 are that some information is extracted from the my_blog entity, and instead of
@@ -442,8 +442,8 @@ Change ``/mod/my_blog/views/default/object/my_blog.php`` to look like this:
         echo elgg_view_title(
             elgg_view('output/url', array(
                 'href' => $vars['entity']->getURL(),
-                'text' => $vars['entity']->title,
-                'is_trusted' => true
+                'text' => $vars['entity']->getDisplayName(),
+                'is_trusted' => true,
         )));
         echo elgg_view('output/tags', array('tags' => $vars['entity']->tags));
     }

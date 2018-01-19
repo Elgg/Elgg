@@ -11,7 +11,7 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$title = elgg_extract('entity', $vars)->title;
+$title = $entity->getDisplayName();
 if (empty($title)) {
 	$title = strip_tags($entity->description);
 	$title = elgg_get_excerpt($title, 32);

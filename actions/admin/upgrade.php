@@ -9,7 +9,7 @@ $upgrade = get_entity($guid);
 
 try {
 	if (!$upgrade instanceof \ElggUpgrade) {
-		throw new RuntimeException(elgg_echo('admin:upgrades:error:invalid_upgrade', [$entity->title, $guid]));
+		throw new RuntimeException(elgg_echo('admin:upgrades:error:invalid_upgrade', [$upgrade->getDisplayName(), $guid]));
 	}
 
 	$result = _elgg_services()->batchUpgrader->run($upgrade);

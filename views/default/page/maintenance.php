@@ -11,7 +11,7 @@
 $messages = elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
 $content = elgg_extract('body', $vars);
 
-$title = elgg_extract('title', $vars, elgg_get_site_entity()->name);
+$title = elgg_extract('title', $vars, elgg_get_site_entity()->getDisplayName());
 $favicon = elgg_view('page/elements/shortcut_icon', $vars);
 $css = elgg_get_simplecache_url('maintenance.css');
 $head = <<<__HEAD

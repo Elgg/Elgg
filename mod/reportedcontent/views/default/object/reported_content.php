@@ -48,7 +48,7 @@ if ($report->state != 'archived') {
 		</div>
 		<h3 class="mbm">
 			<?php echo elgg_view('output/url', [
-				'text' => $report->title,
+				'text' => $report->getDisplayName(),
 				'href' => $report->address,
 				'is_trusted' => true,
 				'class' => 'elgg-reported-content-address elgg-lightbox',
@@ -63,7 +63,7 @@ if ($report->state != 'archived') {
 		<p><b><?php echo elgg_echo('reportedcontent:by') ?></b>
 			<?php echo elgg_view('output/url', [
 				'href' => $reporter->getURL(),
-				'text' => $reporter->name,
+				'text' => $reporter->getDisplayName(),
 				'is_trusted' => true,
 			]);
 			echo " " . elgg_view_friendly_time($report->time_created);

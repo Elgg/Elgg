@@ -12,7 +12,7 @@ if (!$annotation instanceof ElggAnnotation) {
 }
 
 $poster = $annotation->getOwnerEntity();
-$poster_name = htmlspecialchars($poster->name, ENT_NOQUOTES, 'UTF-8');
+$poster_name = htmlspecialchars($poster->getDisplayName(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $annotation->getTimeCreated());
 $permalink = $annotation->getURL();
 

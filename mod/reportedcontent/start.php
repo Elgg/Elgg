@@ -72,7 +72,7 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 	
 	$href = elgg_http_add_url_query_elements('ajax/form/reportedcontent/add', [
 		'address' => $user->getURL(),
-		'title' => $user->name,
+		'title' => $user->getDisplayName(),
 	]);
 	
 	$return[] = \ElggMenuItem::factory([

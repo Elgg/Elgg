@@ -59,10 +59,10 @@ class MessagesPluginTest extends IntegrationTestCase {
 
 		$expected_subject = elgg_echo('messages:email:subject', [], $recipient->language);
 		$expected_body = elgg_echo('messages:email:body', [
-			$sender->name,
+			$sender->getDisplayName(),
 			$body,
 			elgg_get_site_url() . "messages/inbox/" . $recipient->username,
-			$sender->name,
+			$sender->getDisplayName(),
 			elgg_get_site_url() . "messages/add?send_to=" . $sender->guid,
 		],
 			$recipient->language

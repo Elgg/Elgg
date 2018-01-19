@@ -13,10 +13,10 @@ if (!$owner) {
 	forward();
 }
 
-$title = elgg_echo('thewire:by', [$owner->name]);
+$title = elgg_echo('thewire:by', [$owner->getDisplayName()]);
 
 elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
-elgg_push_breadcrumb($owner->name, 'thewire/owner/' . $owner->username);
+elgg_push_breadcrumb($owner->getDisplayName(), 'thewire/owner/' . $owner->username);
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($post);

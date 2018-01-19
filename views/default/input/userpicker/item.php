@@ -16,10 +16,7 @@ $input_name = elgg_extract('input_name', $vars);
 
 $icon = elgg_view_entity_icon($entity, 'tiny', ['use_hover' => false]);
 
-$name = $entity->name;
-if ($name == '') {
-	$name = $entity->title;
-}
+$name = $entity->getDisplayName();
 
 ?>
 <li class="elgg-item" data-guid='<?php echo $entity->guid ?>'>

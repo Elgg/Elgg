@@ -6,7 +6,7 @@
 $post = $vars['post'];
 $poster = $post->getOwnerEntity();
 $poster_details = [
-	htmlspecialchars($poster->name,  ENT_QUOTES, 'UTF-8'),
+	htmlspecialchars($poster->getDisplayName(),  ENT_QUOTES, 'UTF-8'),
 	htmlspecialchars($poster->username,  ENT_QUOTES, 'UTF-8'),
 ];
 ?>

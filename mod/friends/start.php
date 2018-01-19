@@ -166,12 +166,12 @@ function _elgg_send_friend_notification($event, $type, $object) {
 
 	// Notification subject
 	$subject = elgg_echo('friend:newfriend:subject', [
-		$user_one->name
+		$user_one->getDisplayName(),
 	], $user_two->language);
 
 	// Notification body
 	$body = elgg_echo("friend:newfriend:body", [
-		$user_one->name,
+		$user_one->getDisplayName(),
 		$user_one->getURL()
 	], $user_two->language);
 

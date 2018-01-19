@@ -55,10 +55,10 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		$url = elgg_normalize_url("messageboard/owner/{$owner->username}");
 
 		$body = elgg_echo('messageboard:email:body', [
-			$poster->name,
+			$poster->getDisplayName(),
 			$message,
 			$url,
-			$poster->name,
+			$poster->getDisplayName(),
 			$poster->getURL(),
 		], $owner->language);
 
