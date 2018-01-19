@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'APIException:ApiResultUnknown' => "API resultaat is van een ongekend type, dit zou nooit moeten gebeuren.",
 	'APIException:MissingParameterInMethod' => "Ontbrekende parameter %s in de methode %s",
 	'APIException:ParameterNotArray' => "%s lijkt geen array te zijn.",
@@ -39,4 +39,4 @@ return [
 
 	'system.api.list' => "Toont een lijst van alle beschikbare API calls in het systeem",
 	'auth.gettoken' => "Deze API call levert een user authenticatie token op waarmee men in de toekomst API calls kan authentiseren. Gebruik het dan als de auth_token parameter.",
-];
+);

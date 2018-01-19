@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'members:label:online' => 'Онлајн',
 	'members:search' => 'Претражи чланове',
 	'members:title:search' => 'Чретрага члана за %s',
@@ -9,4 +9,4 @@ return [
 	'members:title:online' => 'Онлајн чланови',
 	'members:title:alpha' => 'Сви чланови',
 	'members:list:popular:none' => 'Нема чланова без иједног пријатеља',
-];
+);

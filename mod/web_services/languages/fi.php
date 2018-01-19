@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
 	'APIException:MissingParameterInMethod' => "Puuttuva parametri %s metodissa %s",
 	'APIException:ParameterNotArray' => "%s ei ole array.",
@@ -39,4 +39,4 @@ return [
 
 	'system.api.list' => "Listaa kaikki käytettävissä olevat API-kutsut.",
 	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",
-];
+);

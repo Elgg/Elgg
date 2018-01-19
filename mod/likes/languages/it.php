@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'piace questo',
 	'likes:deleted' => 'Il tuo "mi piace" è stato rimosso',
 	'likes:see' => 'Guarda a chi piace',
@@ -20,20 +20,22 @@ return [
 	// notifications. yikes.
 	'likes:notifications:subject' => 'a %s piace il tuo post "%s"',
 	'likes:notifications:body' =>
-'Ciao %1$s,
+'Hi %1$s,
 
-a %2$s piace il tuo commento "%3$s" su %4$s
+%2$s likes your post "%3$s" on %4$s
 
-Guarda il tuo commento originale qui:
+See your original post here:
 
 %5$s
 
-o guarda il profilo di %2$s qui:
+or view %2$s\'s profile here:
 
 %6$s
 
-Grazie,
+Thanks,
 %4$s
 ',
+	'likes:upgrade:2017120700:title' => "Annotazioni pubbliche dei like",
+	'likes:upgrade:2017120700:description' => "Questo aggiorna l'id di accesso delle annotazioni dei like in pubbliche",
 	
-];
+);

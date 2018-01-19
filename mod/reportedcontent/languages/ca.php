@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Elements denunciats',
 	'admin:administer_utilities:reportedcontent' => 'Contingut denunciat',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'El contingut denunciat ha estat eliminat',
 	'reportedcontent:notdeleted' => 'No s&acute;ha pogut eliminar la denúncia',
 	'reportedcontent:delete' => 'Eliminar denúncia',
-	'reportedcontent:areyousure' => 'Vol eliminar aix&ograve;?',
 	'reportedcontent:archive' => 'Desar denúncia',
 	'reportedcontent:archived' => 'La denúncia ha quedat desada',
-	'reportedcontent:visit' => 'Visitar element denunciat',
 	'reportedcontent:by' => 'Denunciat per',
 	'reportedcontent:objecttitle' => 'Títol de la p&agrave;gina',
 	'reportedcontent:objecturl' => 'URL de la p&agrave;gina',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Per qu&egrave; denuncies aix&ograve;?',
 	'reportedcontent:address' => 'Ubicació de l&acute;element',
 	'reportedcontent:success' => 'La seva denúncia ha estat enviada als administradors',
-	'reportedcontent:failing' => 'No s&acute;ha pogut enviar la seva denúncia',
 	'reportedcontent:refresh' => 'Refresh this listing',
 	'reportedcontent:report' => 'Denunciar aix&ograve;',
 	'reportedcontent:instructions' => 'La denúncia serà enviada als administradors del lloc perquè puguin moderar.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Ens sap greu, hi ha hagut una errada a l&acute;hora d&acute;intentar denunciar el contingut.',
 	'reportedcontent:notarchived' => 'No s&acute;ha pogut arxivar la denúncia',
-];
+);

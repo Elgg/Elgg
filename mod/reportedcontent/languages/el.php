@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Τα στοιχεία που αναφέρθηκαν',
 	'admin:administer_utilities:reportedcontent' => 'Περιεχόμενο που έχει αναφερθεί',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'Το περιεχόμενο που έχει αναφερθεί διαγράφηκε',
 	'reportedcontent:notdeleted' => 'Δεν ήταν δυνατή η διαγραφή αυτής της αναφοράς',
 	'reportedcontent:delete' => 'Διαγραφή αναφοράς',
-	'reportedcontent:areyousure' => 'Θέλετε σίγουρα να κάνετε τη διαγραφή;',
 	'reportedcontent:archive' => 'Αρχειοθέτηση αναφοράς',
 	'reportedcontent:archived' => 'Η αναφορά μπήκε στο αρχείο',
-	'reportedcontent:visit' => 'Επισκευθείτε το στοιχείο που έχει αναφερθεί',
 	'reportedcontent:by' => 'Αναφορά από',
 	'reportedcontent:objecttitle' => 'Τίτλος σελίδας',
 	'reportedcontent:objecturl' => 'Διεύθυνση σελίδας',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Γιατί αναφέρετε αυτό;',
 	'reportedcontent:address' => 'Τοποθεσία στοιχείου',
 	'reportedcontent:success' => 'Η αναφορά σας στάλθηκε στο διαχειριστή του ιστότοπου',
-	'reportedcontent:failing' => 'Δεν ήταν δυνατή η αποστολή της αναφοράς σας',
 	'reportedcontent:refresh' => 'Ανανέωση λίστας',
 	'reportedcontent:report' => 'Αναφέρατε αυτό',
 	'reportedcontent:instructions' => 'Η αναφορά στάλθηκε στους διαχειριστές του ιστότοπου για έλεγχο.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Λυπούμαστε, η προσπάθεια αναφοράς αυτού του περιεχομένου απέτυχε',
 	'reportedcontent:notarchived' => 'Δεν ήταν δυνατή η αρχειοθέτηση αυτής της αναφοράς',
-];
+);

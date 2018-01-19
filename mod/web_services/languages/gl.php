@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'APIException:ApiResultUnknown' => "Non se coñece o tipo do resultado da API, isto non debería acontecer nunca.",
 	'APIException:MissingParameterInMethod' => "Falta o parámetro «%s» do método «%s».",
 	'APIException:ParameterNotArray' => "«%s» non parece ser un vector",
@@ -39,4 +39,4 @@ return [
 
 	'system.api.list' => "Listar todas as chamadas á API dispoñíbeis no sistema.",
 	'auth.gettoken' => "Esta chamada á API permite ao usuario obter un código de autenticación que pode usarse para autenticar chamadas futuras á API. Pasa o código como valor do parámetro «auth_token».",
-];
+);

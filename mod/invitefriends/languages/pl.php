@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Zaproś znajomych',
 	
@@ -30,4 +30,4 @@ Aby dołączyć, kliknij link poniżej:
 
 Zapraszający zostanie automatycznie dodany do Twoich znajomych gdy już utworzysz konto.',
 	
-];
+);

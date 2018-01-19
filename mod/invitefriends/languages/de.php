@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Freunde einladen',
 	
@@ -30,4 +30,4 @@ Um der Community-Seite beizutreten, folge dem folgenden Link:
 
 Nachdem Du einen Account auf der Community-Seite erstellt hast, wirst das Mitglied, das Dich eingeladen hat, automatisch in Deine Freundesliste aufgenommen.',
 	
-];
+);

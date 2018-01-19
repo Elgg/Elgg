@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Rapporterede poster',
 	'admin:administer_utilities:reportedcontent' => 'Rapporteret indhold',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'Det rapporterede indhold er blevet slettet',
 	'reportedcontent:notdeleted' => 'Vi kunne ikke slette denne rapport',
 	'reportedcontent:delete' => 'Slet den',
-	'reportedcontent:areyousure' => 'Er du sikker på at du vil slette?',
 	'reportedcontent:archive' => 'Arkiver den',
 	'reportedcontent:archived' => 'Rapporten er blevet arkiveret',
-	'reportedcontent:visit' => 'Se rapporteret post',
 	'reportedcontent:by' => 'Rapport af',
 	'reportedcontent:objecttitle' => 'Side titel',
 	'reportedcontent:objecturl' => 'Side Url',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Hvorfor rapporterer du dette?',
 	'reportedcontent:address' => 'Placering af emnet',
 	'reportedcontent:success' => 'Din rapport er blevet sendt til administrationen',
-	'reportedcontent:failing' => 'Din rapport kunne ikke sendes',
 	'reportedcontent:refresh' => 'Refresh this listing',
 	'reportedcontent:report' => 'Rapporter til administrationen',
 	'reportedcontent:instructions' => 'Denne rapport vil blive sendt til administratorer af dette websted til gennemsyn.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Beklager, forsøget på at rapportere dette indhold fejlede.',
 	'reportedcontent:notarchived' => 'Vi kunne ikke arkivere denne rapport',
-];
+);

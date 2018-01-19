@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Zgłoszone elementy',
 	'admin:administer_utilities:reportedcontent' => 'Zgłoszona treść',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'Zgłoszona treść została skasowana',
 	'reportedcontent:notdeleted' => 'Nie powiodło się usuwanie zgłoszenia',
 	'reportedcontent:delete' => 'Usuń zgłoszenie',
-	'reportedcontent:areyousure' => 'Czy na pewno chcesz usunąć?',
 	'reportedcontent:archive' => 'Archiwizuj zgłoszenie',
 	'reportedcontent:archived' => 'Zgłoszenie zostało zarchiwizowane',
-	'reportedcontent:visit' => 'Zobacz zgłoszony element',
 	'reportedcontent:by' => 'Zgłoszone przez',
 	'reportedcontent:objecttitle' => 'Tytuł strony',
 	'reportedcontent:objecturl' => 'Adres strony',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Dlaczego chcesz to zgłosić?',
 	'reportedcontent:address' => 'Lokalizacja elementu',
 	'reportedcontent:success' => 'Zgłoszenie zostało wysłane do administratora strony',
-	'reportedcontent:failing' => 'Zgłoszenie nie mogło zostać wysłane',
 	'reportedcontent:refresh' => 'Odśwież listę',
 	'reportedcontent:report' => 'Zgłoś administratorowi',
 	'reportedcontent:instructions' => 'To zgłoszenie zostanie przesłane administratorom strony do weryfikacji.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Przykro nam, próba zgłoszenia tej treści zakończyła się niepowodzeniem.',
 	'reportedcontent:notarchived' => 'Nie powiodła się archiwizacja tego zgłoszenia',
-];
+);

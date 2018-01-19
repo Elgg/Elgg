@@ -9,9 +9,4 @@ return array(
 	'garbagecollector' => "POPELÁŘ\n",
 	'garbagecollector:done' => "HOTOVO\n",
 	'garbagecollector:optimize' => "Optimalizuji %s",
-
-	'garbagecollector:error' => "CHYBA",
-	'garbagecollector:ok' => "OK",
-
-	'garbagecollector:gc:metastrings' => 'Čistím nezapojené metařetězce:',
 );

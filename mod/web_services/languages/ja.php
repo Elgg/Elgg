@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'APIException:ApiResultUnknown' => "API Result は不明な型です。このようなことは起きないはずなのですが。。。",
 	'APIException:MissingParameterInMethod' => "メソッド「 %2\$s 」のパラメタ「 %1\$s 」が欠落しています",
 	'APIException:ParameterNotArray' => "%s は、配列ではないようです。",
@@ -39,4 +39,4 @@ return [
 
 	'system.api.list' => "このシステムでの利用可能な全APIコール一覧。",
 	'auth.gettoken' => "このAPIコールはユーザ認証トークンをユーザに渡します。このトークンは今後のAPIコールの時に使用されます。 パラメータ auth_token として渡してください。",
-];
+);

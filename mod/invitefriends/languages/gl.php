@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Invitar amigos',
 	
@@ -30,4 +30,4 @@ Para unirse, siga esta ligazón:
 
 Cando cree a súa conta, a persoa que lle enviou a invitación convertirase automaticamente no seu contacto.',
 	
-];
+);

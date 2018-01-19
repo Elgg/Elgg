@@ -9,9 +9,4 @@ return array(
 	'garbagecollector' => "زباله روب\n",
 	'garbagecollector:done' => "انجام شد\n",
 	'garbagecollector:optimize' => "در حال بهینه سازی%s ",
-
-	'garbagecollector:error' => "خطا",
-	'garbagecollector:ok' => "تایید",
-
-	'garbagecollector:gc:metastrings' => 'در حال پاک کردن متن های اضافی',
 );

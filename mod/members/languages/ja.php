@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'members:label:online' => 'オンライン',
 	'members:search' => 'メンバを検索',
 	'members:title:search' => 'メンバを検索: %s',
@@ -9,4 +9,4 @@ return [
 	'members:title:online' => 'オンライン中',
 	'members:title:alpha' => '全メンバ',
 	'members:list:popular:none' => '友達がいるメンバが居ません',
-];
+);

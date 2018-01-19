@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Inviter des contacts',
 	
@@ -29,4 +29,4 @@ Pour vous inscrire, cliquez sur le lien suivant :
 
 Vous serez automatiquement ajouté(e) comme contact lorsque vous créez votre compte via ce lien.',
 	
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => '友達を招待する',
 	
@@ -34,4 +34,4 @@ return [
 
 アカウントを作成すると自動的に友達として登録されます。',
 	
-];
+);

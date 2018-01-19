@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:reported_content' => 'Eléments signalés',
 	'admin:administer_utilities:reportedcontent' => 'Contenu signalé',
@@ -11,10 +11,8 @@ return [
 	'reportedcontent:deleted' => 'Le contenu signalé a été supprimé',
 	'reportedcontent:notdeleted' => 'Impossible de supprimer ce signalement',
 	'reportedcontent:delete' => 'Supprimer le signalement',
-	'reportedcontent:areyousure' => 'Confirmez-vous vouloir le supprimer ?',
 	'reportedcontent:archive' => 'Archiver le signalement',
 	'reportedcontent:archived' => 'Le signalement a bien été archivé',
-	'reportedcontent:visit' => 'Visiter l\'élément signalé',
 	'reportedcontent:by' => 'Signalé par ',
 	'reportedcontent:objecttitle' => 'Titre de la page',
 	'reportedcontent:objecturl' => 'URL de la page',
@@ -22,7 +20,6 @@ return [
 	'reportedcontent:description' => 'Pourquoi souhaitez-vous signaler ceci ?',
 	'reportedcontent:address' => 'Adresse de l\'élément',
 	'reportedcontent:success' => 'Votre signalement a bien été envoyé à l\'administrateur du site',
-	'reportedcontent:failing' => 'Votre signalement n\'a pas pu être envoyé',
 	'reportedcontent:refresh' => 'Actualiser la liste',
 	'reportedcontent:report' => 'Signaler à l\'administrateur',
 	'reportedcontent:instructions' => 'Ce signalement sera envoyé aux administrateurs du site pour examen.',
@@ -32,4 +29,4 @@ return [
 
 	'reportedcontent:failed' => 'Désolé, la tentative de signaler ce contenu a échoué.',
 	'reportedcontent:notarchived' => 'Il a été impossible d\'archiver ce signalement',
-];
+);

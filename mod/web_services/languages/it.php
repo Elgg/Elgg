@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'APIException:ApiResultUnknown' => "Il risultato dell'API è di un tipo sconosciuto, ciò non dovrebbe mai accadere.",
 	'APIException:MissingParameterInMethod' => "Parametro %s mancante nel metodo %s",
 	'APIException:ParameterNotArray' => "%s non sembra essere una matrice.",
@@ -39,4 +39,4 @@ return [
 
 	'system.api.list' => "Elenca tutte le chiamate API disponibili nel sistema.",
 	'auth.gettoken' => "Questa chiamata API permette a un utente di ottenere un token di autenticazione che può essere utilizzato per autenticare successive chiamate API. Passarlo come parametro auth_token",
-];
+);

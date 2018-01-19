@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'members:label:online' => 'Im Moment aktiv',
 	'members:search' => 'Mitgliedersuche',
 	'members:title:search' => 'Mitgliedersuche nach %s',
@@ -9,4 +9,4 @@ return [
 	'members:title:online' => 'Gerade aktive Mitglieder',
 	'members:title:alpha' => 'Alle Mitglieder',
 	'members:list:popular:none' => 'Es gibt keine Mitglieder, die bereits Freunde haben.',
-];
+);
