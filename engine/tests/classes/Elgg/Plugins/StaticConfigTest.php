@@ -2,6 +2,7 @@
 
 namespace Elgg\Plugins;
 
+use Elgg\Router\Route;
 use Elgg\UnitTestCase;
 
 class StaticConfigTest extends UnitTestCase {
@@ -18,7 +19,8 @@ class StaticConfigTest extends UnitTestCase {
 			ELGG_PLUGIN_INCLUDE_START |
 			ELGG_PLUGIN_IGNORE_MANIFEST |
 			ELGG_PLUGIN_REGISTER_CLASSES |
-			ELGG_PLUGIN_REGISTER_VIEWS
+			ELGG_PLUGIN_REGISTER_VIEWS |
+			ELGG_PLUGIN_REGISTER_ROUTES
 		);
 	}
 
@@ -34,7 +36,6 @@ class StaticConfigTest extends UnitTestCase {
 			$this->assertNotEmpty($entity['type']);
 			$this->assertNotEmpty($entity['subtype']);
 			if (isset($entity['class'])) {
-				$this->startPlugin();
 				$this->assertTrue(class_exists($entity['class']));
 			}
 		}
@@ -68,6 +69,7 @@ class StaticConfigTest extends UnitTestCase {
 			}
 
 			elgg_register_route($name, $conf);
+			$this->assertInstanceOf(Route::class, _elgg_services()->routeCollection->get($name));
 			elgg_unregister_route($name);
 		}
 	}
