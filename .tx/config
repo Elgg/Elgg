@@ -67,6 +67,12 @@ source_file = mod/externalpages/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
+[elgg-core-3.file]
+file_filter = mod/file/languages/<lang>.php
+source_file = mod/file/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
 [elgg-core-3.friends]
 file_filter = mod/friends/languages/<lang>.php
 source_file = mod/friends/languages/en.php
@@ -76,12 +82,6 @@ type = PHP_ARRAY
 [elgg-core-3.friends_collections]
 file_filter = mod/friends_collections/languages/<lang>.php
 source_file = mod/friends_collections/languages/en.php
-source_lang = en
-type = PHP_ARRAY
-
-[elgg-core-3.file]
-file_filter = mod/file/languages/<lang>.php
-source_file = mod/file/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
@@ -193,15 +193,9 @@ source_file = mod/web_services/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
-[elgg-core-3.docs-design]
-file_filter = docs/locale/<lang>/LC_MESSAGES/design.po
-source_file = docs/locale/pot/design.pot
-source_lang = en
-type = PO
-
-[elgg-core-3.docs-tutorials]
-file_filter = docs/locale/<lang>/LC_MESSAGES/tutorials.po
-source_file = docs/locale/pot/tutorials.pot
+[elgg-core-3.docs-index]
+file_filter = docs/locale/<lang>/LC_MESSAGES/index.po
+source_file = docs/locale/pot/index.pot
 source_lang = en
 type = PO
 
@@ -211,21 +205,9 @@ source_file = docs/locale/pot/about.pot
 source_lang = en
 type = PO
 
-[elgg-core-3.docs-index]
-file_filter = docs/locale/<lang>/LC_MESSAGES/index.po
-source_file = docs/locale/pot/index.pot
-source_lang = en
-type = PO
-
 [elgg-core-3.docs-admin]
 file_filter = docs/locale/<lang>/LC_MESSAGES/admin.po
 source_file = docs/locale/pot/admin.pot
-source_lang = en
-type = PO
-
-[elgg-core-3.docs-contribute]
-file_filter = docs/locale/<lang>/LC_MESSAGES/contribute.po
-source_file = docs/locale/pot/contribute.pot
 source_lang = en
 type = PO
 
@@ -235,14 +217,38 @@ source_file = docs/locale/pot/appendix.pot
 source_lang = en
 type = PO
 
-[elgg-core-3.docs-intro]
-file_filter = docs/locale/<lang>/LC_MESSAGES/intro.po
-source_file = docs/locale/pot/intro.pot
+[elgg-core-3.docs-contribute]
+file_filter = docs/locale/<lang>/LC_MESSAGES/contribute.po
+source_file = docs/locale/pot/contribute.pot
+source_lang = en
+type = PO
+
+[elgg-core-3.docs-design]
+file_filter = docs/locale/<lang>/LC_MESSAGES/design.po
+source_file = docs/locale/pot/design.pot
 source_lang = en
 type = PO
 
 [elgg-core-3.docs-guides]
 file_filter = docs/locale/<lang>/LC_MESSAGES/guides.po
 source_file = docs/locale/pot/guides.pot
+source_lang = en
+type = PO
+
+[elgg-core-3.docs-intro]
+file_filter = docs/locale/<lang>/LC_MESSAGES/intro.po
+source_file = docs/locale/pot/intro.pot
+source_lang = en
+type = PO
+
+[elgg-core-3.docs-plugins]
+file_filter = docs/locale/<lang>/LC_MESSAGES/plugins.po
+source_file = docs/locale/pot/plugins.pot
+source_lang = en
+type = PO
+
+[elgg-core-3.docs-tutorials]
+file_filter = docs/locale/<lang>/LC_MESSAGES/tutorials.po
+source_file = docs/locale/pot/tutorials.pot
 source_lang = en
 type = PO
