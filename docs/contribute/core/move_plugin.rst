@@ -64,7 +64,7 @@ Make sure the ``composer.json`` of the plugin contains all the relevant informat
 		"description": "<a description of the plugin>",
 		"type": "elgg-plugin",
 		"keywords": ["elgg", "plugin"],
-		"license": "GPL-2.0",
+		"license": "GPL-2.0-only",
 		"support": {
 			"source": "https://github.com/elgg/<name of the repository>",
 			"issues": "https://github.com/elgg/<name of the repository>/issues"
