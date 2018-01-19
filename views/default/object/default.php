@@ -13,42 +13,19 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$icon = elgg_view_entity_icon($entity, 'small');
-
-$title = $entity->title;
-if (!$title) {
-	$title = elgg_extract('entity', $vars)->name;
-}
-if (!$title) {
-	$title = get_class($entity);
-}
-
-$metadata = '';
-if ($entity instanceof ElggObject) {
-	$metadata = elgg_view('navigation/menu/metadata', $vars);
+if (!isset($vars['icon'])) {
+	if ($entity->hasIcon('small')) {
+		$vars['icon'] = elgg_view_entity_icon($entity, 'small');
+	} else {
+		$owner = $entity->getOwnerEntity();
+		if ($owner instanceof ElggEntity) {
+			$vars['icon'] = elgg_view_entity_icon($owner, 'small');
+		}
+	}
 }
 
-$owner_link = '';
-$owner = $entity->getOwnerEntity();
-if ($owner) {
-	$owner_link = elgg_view('output/url', [
-		'href' => $owner->getURL(),
-		'text' => $owner->name,
-		'is_trusted' => true,
-	]);
+if (!isset($vars['title']) && empty($entity->getDisplayName())) {
+	$vars['title'] = get_class($entity);
 }
 
-$date = elgg_view_friendly_time($entity->getTimeCreated());
-
-$subtitle = "$owner_link $date";
-
-$params = [
-	'entity' => elgg_extract('entity', $vars),
-	'title' => $title,
-	'metadata' => $metadata,
-	'subtitle' => $subtitle,
-];
-$params = $params + $vars;
-$body = elgg_view('object/elements/summary', $params);
-
-echo elgg_view_image_block($icon, $body, $vars);
+echo elgg_view('object/elements/summary', $vars);
