@@ -20,7 +20,7 @@ if (!$user) {
 $user_icon = elgg_view_entity_icon($user, 'tiny', ['use_hover' => false]);
 $user_link = elgg_view('output/url', [
 	'href' => $user->getURL(),
-	'text' => $user->name,
+	'text' => $user->getDisplayName(),
 	'is_trusted' => true,
 ]);
 

@@ -7,13 +7,8 @@
 
 $entity = elgg_extract('entity', $vars);
 
-$title = $entity->title;
-if (!$title) {
-	$title = $entity->name;
-}
+$title = $entity->getDisplayName();
 
-// different entity types have different title attribute names.
-$title = isset($entity->name) ? $entity->name : $entity->title;
 // don't let it be too long
 $title = elgg_get_excerpt($title);
 

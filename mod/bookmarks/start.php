@@ -88,17 +88,17 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$method = $params['method'];
 
 	$descr = $entity->description;
-	$title = $entity->title;
+	$title = $entity->getDisplayName();
 
 	$notification->subject = elgg_echo('bookmarks:notify:subject', [$title], $language);
 	$notification->body = elgg_echo('bookmarks:notify:body', [
-		$owner->name,
+		$owner->getDisplayName(),
 		$title,
 		$entity->address,
 		$descr,
 		$entity->getURL()
 	], $language);
-	$notification->summary = elgg_echo('bookmarks:notify:summary', [$entity->title], $language);
+	$notification->summary = elgg_echo('bookmarks:notify:summary', [$title], $language);
 	$notification->url = $entity->getURL();
 	return $notification;
 }

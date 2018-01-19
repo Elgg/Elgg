@@ -11,7 +11,7 @@ if (!$message instanceof ElggMessage) {
 }
 
 // fix for RE: RE: RE: that builds on replies
-$reply_title = $vars['message']->title;
+$reply_title = $message->getDisplayName();
 if (strncmp($reply_title, "RE:", 3) != 0) {
 	$reply_title = "RE: " . $reply_title;
 }

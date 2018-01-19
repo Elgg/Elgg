@@ -173,14 +173,14 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
 	$language = $params['language'];
 	$method = $params['method'];
 
-	$notification->subject = elgg_echo('blog:notify:subject', [$entity->title], $language);
+	$notification->subject = elgg_echo('blog:notify:subject', [$entity->getDisplayName()], $language);
 	$notification->body = elgg_echo('blog:notify:body', [
-		$owner->name,
-		$entity->title,
+		$owner->getDisplayName(),
+		$entity->getDisplayName(),
 		$entity->getExcerpt(),
 		$entity->getURL()
 	], $language);
-	$notification->summary = elgg_echo('blog:notify:summary', [$entity->title], $language);
+	$notification->summary = elgg_echo('blog:notify:summary', [$entity->getDisplayName()], $language);
 	$notification->url = $entity->getURL();
 
 	return $notification;

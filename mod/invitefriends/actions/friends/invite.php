@@ -59,8 +59,8 @@ foreach ($emails as $email) {
 	]);
 	
 	$message = elgg_echo('invitefriends:email', [
-		$site->name,
-		$current_user->name,
+		$site->getDisplayName(),
+		$current_user->getDisplayName(),
 		$emailmessage,
 		$link,
 	]);

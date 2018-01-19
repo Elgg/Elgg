@@ -90,15 +90,15 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 	$method = $params['method'];
 	$descr = $entity->description;
 
-	$subject = elgg_echo('thewire:notify:subject', [$owner->name], $language);
+	$subject = elgg_echo('thewire:notify:subject', [$owner->getDisplayName()], $language);
 	if ($entity->reply) {
 		$parent = thewire_get_parent($entity->guid);
 		if ($parent) {
 			$parent_owner = $parent->getOwnerEntity();
-			$body = elgg_echo('thewire:notify:reply', [$owner->name, $parent_owner->name], $language);
+			$body = elgg_echo('thewire:notify:reply', [$owner->getDisplayName(), $parent_owner->getDisplayName()], $language);
 		}
 	} else {
-		$body = elgg_echo('thewire:notify:post', [$owner->name], $language);
+		$body = elgg_echo('thewire:notify:post', [$owner->getDisplayName()], $language);
 	}
 	$body .= "\n\n" . $descr . "\n\n";
 	$body .= elgg_echo('thewire:notify:footer', [$entity->getURL()], $language);

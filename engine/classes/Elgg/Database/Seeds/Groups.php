@@ -93,7 +93,7 @@ class Groups extends Seed {
 				$members_exclude[] = $member->guid;
 
 				if ($group->join($member)) {
-					$this->log("User $member->name [guid: $member->guid] joined group $group->name [guid: $group->guid]");
+					$this->log("User {$member->getDisplayName()} [guid: {$member->guid}] joined group {$group->getDisplayName()} [guid: {$group->guid}]");
 				}
 
 				if (!$group->isPublicMembership()) {
@@ -105,7 +105,7 @@ class Groups extends Seed {
 						$members_exclude[] = $invitee->guid;
 						if (!check_entity_relationship($invitee->guid, 'member', $group->guid)) {
 							add_entity_relationship($group->guid, 'invited', $invitee->guid);
-							$this->log("User $invitee->name [guid: $invitee->guid] was invited to $group->name [guid: $group->guid]");
+							$this->log("User {$invitee->getDisplayName()} [guid: {$invitee->guid}] was invited to {$group->getDisplayName()} [guid: {$group->guid}]");
 						}
 					}
 
@@ -119,7 +119,7 @@ class Groups extends Seed {
 							&& !check_entity_relationship($requestor->guid, 'member', $group->guid)
 						) {
 							add_entity_relationship($requestor->guid, 'membership_request', $group->guid);
-							$this->log("User $invitee->name [guid: $invitee->guid] requested to join $group->name [guid: $group->guid]");
+							$this->log("User {$invitee->getDisplayName()} [guid: {$invitee->guid}] requested to join {$group->getDisplayName()} [guid: {$group->guid}]");
 						}
 					}
 				}

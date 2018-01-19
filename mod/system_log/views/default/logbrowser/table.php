@@ -31,7 +31,7 @@ foreach ($log_entries as $entry) {
 	if ($user) {
 		$user_link = elgg_view('output/url', [
 			'href' => $user->getURL(),
-			'text' => $user->name,
+			'text' => $user->getDisplayName(),
 			'is_trusted' => true,
 		]);
 		$user_guid_link = elgg_view('output/url', [

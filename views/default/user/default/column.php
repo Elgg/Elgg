@@ -18,11 +18,10 @@ $icon = elgg_view_entity_icon($entity, $size, $vars);
 
 $title = elgg_extract('title', $vars);
 if (!$title) {
-	$link_params = [
+	$title = elgg_view('output/url', [
 		'href' => $entity->getUrl(),
-		'text' => $entity->name,
-	];
-	$title = elgg_view('output/url', $link_params);
+		'text' => $entity->getDisplayName(),
+	]);
 }
 
 $params = [

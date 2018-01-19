@@ -11,7 +11,7 @@ if (!$owner) {
 $title = elgg_echo('collection:object:thewire:friends');
 
 elgg_push_breadcrumb(elgg_echo('thewire'), "thewire/all");
-elgg_push_breadcrumb($owner->name, "thewire/owner/$owner->username");
+elgg_push_breadcrumb($owner->getDisplayName(), "thewire/owner/$owner->username");
 elgg_push_breadcrumb(elgg_echo('friends'));
 
 if (elgg_get_logged_in_user_guid() == $owner->guid) {

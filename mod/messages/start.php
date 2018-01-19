@@ -249,11 +249,11 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		
 		$subject = elgg_echo('messages:email:subject', [], $recipient->language);
 		$body = elgg_echo('messages:email:body', [
-				$sender->name,
+				$sender->getDisplayName(),
 				$message_contents,
 				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
-				$sender->name,
-				elgg_get_site_url() . "messages/add?send_to=" . $sender_guid
+				$sender->getDisplayName(),
+				elgg_get_site_url() . "messages/add?send_to=" . $sender_guid,
 			],
 			$recipient->language
 		);

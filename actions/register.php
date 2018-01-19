@@ -78,7 +78,7 @@ try {
 				'source' => $forward_source,
 			];
 			$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
-			return elgg_ok_response('', elgg_echo('registerok', [elgg_get_site_entity()->name]), $forward_url);
+			return elgg_ok_response('', elgg_echo('registerok', [elgg_get_site_entity()->getDisplayName()]), $forward_url);
 		} catch (LoginException $e) {
 			return elgg_error_response($e->getMessage());
 		}

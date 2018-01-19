@@ -656,10 +656,10 @@ function _elgg_user_ban_notification($event, $type, $user) {
 	$site = elgg_get_site_entity();
 	$language = $user->getLanguage();
 
-	$subject = elgg_echo('user:notification:ban:subject', [$site->name], $language);
+	$subject = elgg_echo('user:notification:ban:subject', [$site->getDisplayName()], $language);
 	$body = elgg_echo('user:notification:ban:body', [
-		$user->name,
-		$site->name,
+		$user->getDisplayName(),
+		$site->getDisplayName(),
 		$site->getURL(),
 	], $language);
 
@@ -701,10 +701,10 @@ function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $par
 
 	$site = elgg_get_site_entity();
 
-	$return_value->subject = elgg_echo('user:notification:unban:subject', [$site->name], $language);
+	$return_value->subject = elgg_echo('user:notification:unban:subject', [$site->getDisplayName()], $language);
 	$return_value->body = elgg_echo('user:notification:unban:body', [
-		$recipient->name,
-		$site->name,
+		$recipient->getDisplayName(),
+		$site->getDisplayName(),
 		$site->getURL(),
 	], $language);
 

@@ -8,7 +8,7 @@
 $page_owner = elgg_get_page_owner_entity();
 
 if ($page_owner instanceof ElggGroup) {
-	$title = elgg_echo("bookmarks:this:group", [$page_owner->name]);
+	$title = elgg_echo("bookmarks:this:group", [$page_owner->getDisplayName()]);
 } else {
 	$title = elgg_echo("bookmarks:this");
 }

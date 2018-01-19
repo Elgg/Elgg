@@ -17,4 +17,4 @@ $body = elgg_view_layout('maintenance', [
 	'site' => $site,
 ]);
 
-echo elgg_view_page($site->name, $body, 'maintenance');
+echo elgg_view_page($site->getDisplayName(), $body, 'maintenance');

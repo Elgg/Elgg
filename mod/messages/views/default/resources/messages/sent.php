@@ -17,7 +17,7 @@ elgg_push_breadcrumb(elgg_echo('messages:sent'));
 
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 
-$title = elgg_echo('messages:sentmessages', [$page_owner->name]);
+$title = elgg_echo('messages:sentmessages', [$page_owner->getDisplayName()]);
 
 $list = elgg_list_entities([
 	'type' => 'object',

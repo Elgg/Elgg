@@ -34,12 +34,12 @@ rating to the owner.
 	$subject = elgg_echo('ratings:notification:subject', array(), $owner->language);
 
 	// Summary of the notification
-	$summary = elgg_echo('ratings:notification:summary', array($user->name), $owner->language);
+	$summary = elgg_echo('ratings:notification:summary', array($user->getDisplayName()), $owner->language);
 
 	// Body of the notification message
 	$body = elgg_echo('ratings:notification:body', array(
-		$user->name,
-		$owner->name,
+		$user->getDisplayName(),
+		$owner->getDisplayName(),
 		$rating->getValue() // A value between 1-5
 	), $owner->language);
 
@@ -152,18 +152,18 @@ the contents of the notification when a new objects of subtype 'photo' is create
 	    $method = $params['method'];
 
 	    // Title for the notification
-	    $notification->subject = elgg_echo('photos:notify:subject', array($entity->title), $language);
+	    $notification->subject = elgg_echo('photos:notify:subject', [$entity->getDisplayName()], $language);
 
 	    // Message body for the notification
 	    $notification->body = elgg_echo('photos:notify:body', array(
-	        $owner->name,
-	        $entity->title,
+	        $owner->getDisplayName(),
+	        $entity->getDisplayName(),
 	        $entity->getExcerpt(),
 	        $entity->getURL()
 	    ), $language);
 
 	    // Short summary about the notification
-	    $notification->summary = elgg_echo('photos:notify:summary', array($entity->title), $language);
+	    $notification->summary = elgg_echo('photos:notify:summary', [$entity->getDisplayName()], $language);
 
 	    return $notification;
 	}

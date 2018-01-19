@@ -174,10 +174,10 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$expected_subject = elgg_echo('messages:email:subject', [], $recipient->language);
 		$expected_body = elgg_echo('messages:email:body', [
-			$user->name,
+			$user->getDisplayName(),
 			'Message Body',
 			elgg_get_site_url() . "messages/inbox/" . $recipient->username,
-			$user->name,
+			$user->getDisplayName(),
 			elgg_get_site_url() . "messages/add?send_to=" . $user->guid,
 		],
 			$recipient->language

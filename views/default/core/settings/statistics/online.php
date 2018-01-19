@@ -25,7 +25,7 @@ $content = <<<__HTML
 <table class="elgg-table-alt">
 	<tr>
 		<td class="column-one">$label_name</td>
-		<td>$user->name</td>
+		<td>{$user->getDisplayName()}</td>
 	</tr>
 	<tr>
 		<td class="column-one">$label_email</td>

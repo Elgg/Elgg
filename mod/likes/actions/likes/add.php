@@ -50,8 +50,8 @@ $site = elgg_get_site_entity();
 
 // summary for site_notifications
 $summary = elgg_echo('likes:notifications:subject', [
-		$user->name,
-		$title_str
+		$user->getDisplayName(),
+		$title_str,
 	],
 	$owner->language
 );
@@ -60,7 +60,7 @@ $summary = elgg_echo('likes:notifications:subject', [
 $title_str = elgg_get_excerpt($title_str, 80);
 $subject = elgg_echo('likes:notifications:subject', [
 		$user->getDisplayName(),
-		$title_str
+		$title_str,
 	],
 	$owner->language
 );
@@ -71,7 +71,7 @@ $body = elgg_echo('likes:notifications:body', [
 		$title_str,
 		$site->getDisplayName(),
 		$entity->getURL(),
-		$user->getURL()
+		$user->getURL(),
 	],
 	$owner->language
 );

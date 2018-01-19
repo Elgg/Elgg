@@ -11,7 +11,7 @@ if (!$owner instanceof ElggUser) {
 	throw new \Elgg\EntityNotFoundException;
 }
 
-$title = elgg_echo("friends:owned", [$owner->name]);
+$title = elgg_echo("friends:owned", [$owner->getDisplayName()]);
 
 $dbprefix = elgg_get_config('dbprefix');
 $options = [

@@ -41,7 +41,7 @@ switch ($vars['_route']) {
 				forward();
 			}
 			elgg_set_page_owner_guid($subject->guid);
-			$title = elgg_echo('river:owner', [htmlspecialchars($subject->name, ENT_QUOTES, 'UTF-8', false)]);
+			$title = elgg_echo('river:owner', [htmlspecialchars($subject->getDisplayName(), ENT_QUOTES, 'UTF-8', false)]);
 			$page_filter = 'subject';
 			$options['subject_guid'] = $subject->guid;
 			break;

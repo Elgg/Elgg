@@ -12,7 +12,7 @@ if (!array_key_exists('entity', $vars)) {
 
 $owner = $vars['entity']->getOwnerEntity();
 if ($owner) {
-	$title = elgg_echo('thewire:by', [$owner->name]);
+	$title = elgg_echo('thewire:by', [$owner->getDisplayName()]);
 }
 $description = $vars['entity']->getVolatileData('search_matched_description');
 

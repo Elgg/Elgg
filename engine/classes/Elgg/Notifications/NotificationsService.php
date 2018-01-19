@@ -573,13 +573,13 @@ class NotificationsService {
 				$display_name = '';
 			}
 			return $this->translator->translate($subject_key, [
-						$actor->name,
-						$display_name,
-							], $language);
+				$actor->getDisplayName(),
+				$display_name,
+			], $language);
 		}
 
 		// Fall back to default subject
-		return $this->translator->translate('notification:subject', [$actor->name], $language);
+		return $this->translator->translate('notification:subject', [$actor->getDisplayName()], $language);
 	}
 
 	/**
@@ -640,13 +640,13 @@ class NotificationsService {
 			}
 
 			return $this->translator->translate($body_key, [
-						$recipient->name,
-						$actor->name,
-						$display_name,
-						$container_name,
-						$object->description,
-						$object->getURL(),
-							], $language);
+				$recipient->getDisplayName(),
+				$actor->getDisplayName(),
+				$display_name,
+				$container_name,
+				$object->description,
+				$object->getURL(),
+			], $language);
 		}
 
 		// Fall back to default body

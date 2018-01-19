@@ -889,12 +889,12 @@ function _elgg_admin_prepare_admin_notification_make_admin($hook, $type, $return
 	
 	$site = elgg_get_site_entity();
 	
-	$return_value->subject = elgg_echo('admin:notification:make_admin:admin:subject', [$site->name], $language);
+	$return_value->subject = elgg_echo('admin:notification:make_admin:admin:subject', [$site->getDisplayName()], $language);
 	$return_value->body = elgg_echo('admin:notification:make_admin:admin:body', [
-		$recipient->name,
-		$actor->name,
-		$object->name,
-		$site->name,
+		$recipient->getDisplayName(),
+		$actor->getDisplayName(),
+		$object->getDisplayName(),
+		$site->getDisplayName(),
 		$object->getURL(),
 		$site->getURL(),
 	], $language);
@@ -936,12 +936,12 @@ function _elgg_admin_prepare_admin_notification_remove_admin($hook, $type, $retu
 	
 	$site = elgg_get_site_entity();
 	
-	$return_value->subject = elgg_echo('admin:notification:remove_admin:admin:subject', [$site->name], $language);
+	$return_value->subject = elgg_echo('admin:notification:remove_admin:admin:subject', [$site->getDisplayName()], $language);
 	$return_value->body = elgg_echo('admin:notification:remove_admin:admin:body', [
-		$recipient->name,
-		$actor->name,
-		$object->name,
-		$site->name,
+		$recipient->getDisplayName(),
+		$actor->getDisplayName(),
+		$object->getDisplayName(),
+		$site->getDisplayName(),
 		$object->getURL(),
 		$site->getURL(),
 	], $language);
@@ -1018,11 +1018,11 @@ function _elgg_admin_prepare_user_notification_make_admin($hook, $type, $return_
 	
 	$site = elgg_get_site_entity();
 	
-	$return_value->subject = elgg_echo('admin:notification:make_admin:user:subject', [$site->name], $language);
+	$return_value->subject = elgg_echo('admin:notification:make_admin:user:subject', [$site->getDisplayName()], $language);
 	$return_value->body = elgg_echo('admin:notification:make_admin:user:body', [
-		$recipient->name,
-		$actor->name,
-		$site->name,
+		$recipient->getDisplayName(),
+		$actor->getDisplayName(),
+		$site->getDisplayName(),
 		$site->getURL(),
 	], $language);
 
@@ -1063,11 +1063,11 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
 	
 	$site = elgg_get_site_entity();
 	
-	$return_value->subject = elgg_echo('admin:notification:remove_admin:user:subject', [$site->name], $language);
+	$return_value->subject = elgg_echo('admin:notification:remove_admin:user:subject', [$site->getDisplayName()], $language);
 	$return_value->body = elgg_echo('admin:notification:remove_admin:user:body', [
-		$recipient->name,
-		$actor->name,
-		$site->name,
+		$recipient->getDisplayName(),
+		$actor->getDisplayName(),
+		$site->getDisplayName(),
 		$site->getURL(),
 	], $language);
 

@@ -19,7 +19,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 		$icon = elgg_view_entity_icon($user, 'small');
 		$user_link = elgg_view('output/url', [
 			'href' => "messages/add?send_to=$user->guid",
-			'text' => $user->name,
+			'text' => $user->getDisplayName(),
 			'is_trusted' => true,
 		]);
 	} else {
@@ -40,7 +40,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 		$icon = elgg_view_entity_icon($user, 'small');
 		$user_link = elgg_view('output/url', [
 			'href' => "messages/add?send_to=$user->guid",
-			'text' => elgg_echo('messages:to_user', [$user->name]),
+			'text' => elgg_echo('messages:to_user', [$user->getDisplayName()]),
 			'is_trusted' => true,
 		]);
 	} else {
@@ -55,7 +55,7 @@ $timestamp = elgg_view_friendly_time($message->time_created);
 
 $subject_info = elgg_view('output/url', [
 	'href' => $message->getURL(),
-	'text' => $message->title,
+	'text' => $message->getDisplayName(),
 	'is_trusted' => true,
 ]);
 

@@ -14,7 +14,11 @@ if (!$owner) {
 	return true;
 }
 $icon = elgg_view_entity_icon($owner, 'tiny');
-$owner_link = "<a href=\"{$owner->getURL()}\">$owner->name</a>";
+$owner_link = elgg_view('output/url', [
+	'text' => $owner->getDisplayName(),
+	'href' => $owner->getURL(),
+	'is_trusted' => true,
+]);
 
 $menu = elgg_view_menu('annotation', [
 	'annotation' => $annotation,

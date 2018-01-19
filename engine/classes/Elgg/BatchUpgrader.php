@@ -55,7 +55,7 @@ class BatchUpgrader {
 		$batch = $upgrade->getBatch();
 			
 		if (!$batch) {
-			throw new \RuntimeException(elgg_echo('admin:upgrades:error:invalid_batch', [$upgrade->title, $upgrade->guid]));
+			throw new \RuntimeException(elgg_echo('admin:upgrades:error:invalid_batch', [$upgrade->getDisplayName(), $upgrade->guid]));
 		}
 
 		$count = $batch->countItems();

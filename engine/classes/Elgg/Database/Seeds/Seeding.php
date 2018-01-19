@@ -158,7 +158,7 @@ trait Seeding {
 
 				$user->save();
 
-				$this->log("Created new user $user->name [guid: $user->guid]");
+				$this->log("Created new user {$user->getDisplayName()} [guid: {$user->guid}]");
 
 				return $user;
 			} catch (\RegistrationException $e) {
@@ -291,7 +291,7 @@ trait Seeding {
 				'target_guid' => $container->guid,
 			]);
 
-			$this->log("Created new group $group->name [guid: $group->guid]");
+			$this->log("Created new group {$group->getDisplayName()} [guid: {$group->guid}]");
 
 			return $group;
 		};
@@ -392,7 +392,7 @@ trait Seeding {
 
 			$type_str = elgg_echo("item:object:{$object->getSubtype()}");
 
-			$this->log("Created new item in $type_str $object->title [guid: $object->guid]");
+			$this->log("Created new item in {$type_str} {$object->getDisplayName()} [guid: {$object->guid}]");
 
 			return $object;
 		};

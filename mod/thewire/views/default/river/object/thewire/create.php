@@ -14,7 +14,7 @@ $vars['message'] = thewire_filter($object->description);
 $subject = $item->getSubjectEntity();
 $subject_link = elgg_view('output/url', [
 	'href' => $subject->getURL(),
-	'text' => $subject->name,
+	'text' => $subject->getDisplayName(),
 	'class' => 'elgg-river-subject',
 	'is_trusted' => true,
 ]);
