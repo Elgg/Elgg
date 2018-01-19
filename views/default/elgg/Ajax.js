@@ -70,6 +70,9 @@ define(function (require) {
 					deps && deps.length && Ajax._require(deps);
 					delete data._elgg_deps;
 
+					require_css(data._elgg_css);
+					delete data._elgg_css;
+
 					metadata_extracted = true;
 				}
 			}
@@ -367,6 +370,28 @@ define(function (require) {
 		if (/^https?:/.test(arg)) {
 			throw new Error('elgg/Ajax cannot be used with external URLs');
 		}
+	}
+
+	/**
+	 * Add any missing CSS to the HEAD
+	 *
+	 * @param {Object} obj URLs keyed by name
+	 */
+	function require_css(obj) {
+		if (!obj) {
+			return;
+		}
+
+		$.each(obj, function (name, url) {
+			if ($('link[rel="stylesheet"][data-name="' + name + '"]').length) {
+				return;
+			}
+
+			$('<link rel="stylesheet" />')
+				.attr('url', url)
+				.attr('data-name', name)
+				.appendTo('head');
+		});
 	}
 
 	/**

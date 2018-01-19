@@ -3,6 +3,7 @@
 namespace Elgg\Ajax;
 
 use Elgg\Amd\Config;
+use Elgg\Assets\ExternalFiles;
 use Elgg\Http\Input;
 use Elgg\PluginHooksService;
 use Elgg\Services\AjaxResponse;
@@ -40,6 +41,11 @@ class Service {
 	private $amd_config;
 
 	/**
+	 * @var ExternalFiles
+	 */
+	private $externals;
+
+	/**
 	 * @var bool
 	 */
 	private $response_sent = false;
@@ -56,12 +62,14 @@ class Service {
 	 * @param SystemMessagesService $msgs      System messages service
 	 * @param Input                 $input     Input service
 	 * @param Config                $amdConfig AMD config
+	 * @param ExternalFiles         $externals External files
 	 */
-	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Input $input, Config $amdConfig) {
+	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Input $input, Config $amdConfig, ExternalFiles $externals) {
 		$this->hooks = $hooks;
 		$this->msgs = $msgs;
 		$this->input = $input;
 		$this->amd_config = $amdConfig;
+		$this->externals = $externals;
 
 		$message_filter = [$this, 'prepareResponse'];
 		$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $message_filter, 999);
@@ -240,6 +248,8 @@ class Service {
 		if ($this->input->get('elgg_fetch_deps', true)) {
 			$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
 		}
+
+		$response->getData()->_elgg_css = $this->externals->getLoadedFiles('css', 'head');
 
 		return $response;
 	}

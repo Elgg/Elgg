@@ -70,6 +70,7 @@ class ExternalFiles {
 				'loaded' => false,
 				'url' => $url,
 				'location' => $location,
+				'name' => $name,
 			];
 			$priority = $this->externals[$type]->add($item, $priority);
 		}
@@ -179,12 +180,13 @@ class ExternalFiles {
 		$items = array_filter($items, function($v) use ($location) {
 			return $v->loaded == true && $v->location == $location;
 		});
-		if ($items) {
-			array_walk($items, function(&$v, $k){
-				$v = $v->url;
-			});
+
+		$ret = [];
+		foreach ($items as $item) {
+			$ret[$item->name] = $item->url;
 		}
-		return $items;
+
+		return $ret;
 	}
 
 	/**
