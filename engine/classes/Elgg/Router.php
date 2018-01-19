@@ -118,73 +118,78 @@ class Router {
 			$this->timer->begin(['build page']);
 		}
 
-		ob_start();
-		$result = $this->hooks->trigger('route', $identifier, $old, $old);
+		try {
+			ob_start();
+			$result = $this->hooks->trigger('route', $identifier, $old, $old);
 
-		// false: request was handled, stop processing.
-		// array: compare to old params.
+			// false: request was handled, stop processing.
+			// array: compare to old params.
 
-		if ($result === false) {
-			$output = ob_get_clean();
-			$response = elgg_ok_response($output);
-		} else {
-			$response = false;
+			if ($result === false) {
+				$output = ob_get_clean();
+				$response = elgg_ok_response($output);
+			} else {
+				$response = false;
 
-			if ($result !== $old) {
-				_elgg_services()->logger->warn('Use the route:rewrite hook to modify routes.');
-			}
-
-			if ($identifier != $result['identifier']) {
-				$identifier = $result['identifier'];
-			} else if ($identifier != $result['handler']) {
-				$identifier = $result['handler'];
-			}
-
-			$segments = $result['segments'];
-
-			$path = '/';
-			if ($identifier) {
-				$path .= $identifier;
-				if (!empty($segments)) {
-					$path .= '/' . implode('/', $segments);
+				if ($result !== $old) {
+					_elgg_services()->logger->warn('Use the route:rewrite hook to modify routes.');
 				}
-			}
 
-			try {
-				$parameters = $this->matcher->match($path);
+				if ($identifier != $result['identifier']) {
+					$identifier = $result['identifier'];
+				} else if ($identifier != $result['handler']) {
+					$identifier = $result['handler'];
+				}
 
-				$resource = elgg_extract('_resource', $parameters);
-				unset($parameters['_resource']);
+				$segments = $result['segments'];
 
-				$handler = elgg_extract('_handler', $parameters);
-				unset($parameters['_handler']);
-
-				$this->current_route = $this->routes->get($parameters['_route']);
-				$this->current_route->setMatchedParameters($parameters);
-
-				if ($handler) {
-					if (is_callable($handler)) {
-						$response = call_user_func($handler, $segments, $identifier);
+				$path = '/';
+				if ($identifier) {
+					$path .= $identifier;
+					if (!empty($segments)) {
+						$path .= '/' . implode('/', $segments);
 					}
-				} else {
-					$output = elgg_view_resource($resource, $parameters);
+				}
+
+				try {
+					$parameters = $this->matcher->match($path);
+
+					$resource = elgg_extract('_resource', $parameters);
+					unset($parameters['_resource']);
+
+					$handler = elgg_extract('_handler', $parameters);
+					unset($parameters['_handler']);
+
+					$this->current_route = $this->routes->get($parameters['_route']);
+					$this->current_route->setMatchedParameters($parameters);
+
+					if ($handler) {
+						if (is_callable($handler)) {
+							$response = call_user_func($handler, $segments, $identifier);
+						}
+					} else {
+						$output = elgg_view_resource($resource, $parameters);
+						$response = elgg_ok_response($output);
+					}
+				} catch (ResourceNotFoundException $ex) {
+					// continue with the legacy logic
+				} catch (MethodNotAllowedException $ex) {
+					$response = elgg_error_response($ex->getMessage(), REFERRER, ELGG_HTTP_METHOD_NOT_ALLOWED);
+				}
+
+				$output = ob_get_clean();
+
+				if ($response === false) {
+					return headers_sent();
+				}
+
+				if (!$response instanceof ResponseBuilder) {
 					$response = elgg_ok_response($output);
 				}
-			} catch (ResourceNotFoundException $ex) {
-				// continue with the legacy logic
-			} catch (MethodNotAllowedException $ex) {
-				$response = elgg_error_response($ex->getMessage(), REFERRER, ELGG_HTTP_METHOD_NOT_ALLOWED);
 			}
-
-			$output = ob_get_clean();
-
-			if ($response === false) {
-				return headers_sent();
-			}
-
-			if (!$response instanceof ResponseBuilder) {
-				$response = elgg_ok_response($output);
-			}
+		} catch (\Exception $ex) {
+			ob_get_clean();
+			throw $ex;
 		}
 
 		if (_elgg_services()->responseFactory->getSentResponse()) {
