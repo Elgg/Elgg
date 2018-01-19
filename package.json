@@ -6,7 +6,7 @@
     "type": "git",
     "url": "https://github.com/Elgg/Elgg.git"
   },
-  "license": "GPLv2",
+  "license": "GPL-2.0-only",
   "bugs": {
     "url": "https://github.com/Elgg/Elgg/issues"
   },
