@@ -1444,12 +1444,21 @@ function elgg_view_field(array $params = []) {
 		}
 	}
 
+	// Need to set defaults to prevent input keys with same name ending up in element vars if not provided
+	$defaults = [
+		'#class' => ELGG_ENTITIES_ANY_VALUE,
+		'#help' => ELGG_ENTITIES_ANY_VALUE,
+		'#label' => ELGG_ENTITIES_ANY_VALUE,
+		'#view' => ELGG_ENTITIES_ANY_VALUE,
+	];
+	$params = array_merge($defaults, $params);
+	
 	// first pass non-hash keys into both
 	$split_params = _elgg_split_vars($params);
 
 	// $vars passed to input/$input_name
 	$input_vars = $split_params[''];
-
+	
 	// $vars passed to label, help and field wrapper views
 	$element_vars = array_merge($split_params[''], $split_params['#']);
 
