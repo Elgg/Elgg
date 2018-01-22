@@ -85,7 +85,7 @@ class Seeder extends Seed {
 		$files->setIncrementOffset(false);
 
 		foreach ($files as $file) {
-			if ($this->delete($file)) {
+			if ($file->delete()) {
 				$this->log("Deleted file $file->guid");
 			} else {
 				$this->log("Failed to delete file $file->guid");

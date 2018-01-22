@@ -507,6 +507,7 @@ return array(
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 	'admin:widget:cron_status' => 'Cron status',
 	'admin:widget:cron_status:help' => 'Shows the status of the last time cron jobs finished',
+	'admin:statistics:numentities' => 'Content Statistics',
 	'admin:statistics:numentities:type' => 'Content type',
 	'admin:statistics:numentities:number' => 'Number',
 	'admin:statistics:numentities:searchable' => 'Searchable',

@@ -4,6 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\Config as Conf;
 use Elgg\Database;
+use Elgg\Database\Clauses\OrderByClause;
 use ElggUser;
 use RegistrationException;
 
@@ -155,8 +156,10 @@ class UsersTable {
 			'limit' => $options['limit'],
 			'offset' => $options['offset'],
 			'count' => $options['count'],
-			'wheres' => ["e.last_action >= {$time}"],
-			'order_by' => "e.last_action desc",
+			'wheres' => function(QueryBuilder $qb) use ($time) {
+				return $qb->compare('e.last_action', '>=', $time, ELGG_VALUE_INTEGER);
+			},
+			'order_by' => new OrderByClause('e.last_action', 'DESC'),
 		]);
 	}
 

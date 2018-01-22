@@ -48,7 +48,7 @@ return [
 	'file:widget' => "File widget",
 	'file:widget:description' => "Showcase your latest files",
 
-	'groups:tool:files' => 'Enable group files',
+	'groups:tool:file' => 'Enable group files',
 
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',

@@ -10,7 +10,8 @@
 	border-bottom: 0;
 }
 .elgg-module .elgg-list + .elgg-pagination {
-	border-top: 1px solid;
+	border-top: 1px solid $(border-color-soft);
+	padding-top: 1rem;
 }
 
 .elgg-item h3 a {

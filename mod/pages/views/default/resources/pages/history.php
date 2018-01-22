@@ -29,7 +29,10 @@ $content = elgg_list_annotations([
 	'guid' => $page_guid,
 	'annotation_name' => 'page',
 	'limit' => max(20, elgg_get_config('default_limit')),
-	'order_by' => "n_table.time_created desc",
+	'order_by' => [
+		new \Elgg\Database\Clauses\OrderByClause('n_table.time_created', 'desc'),
+		new \Elgg\Database\Clauses\OrderByClause('n_table.id', 'desc'),
+	],
 	'no_results' => elgg_echo('pages:none'),
 ]);
 
