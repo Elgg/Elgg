@@ -14,8 +14,7 @@
 
 // check new registration allowed
 if (elgg_get_config('allow_registration') == false) {
-	register_error(elgg_echo('registerdisabled'));
-	forward();
+	throw new \Elgg\GatekeeperException(elgg_echo('registerdisabled'));
 }
 
 $friend_guid = (int) get_input('friend_guid', 0);
@@ -23,7 +22,7 @@ $invitecode = get_input('invitecode');
 
 // only logged out people need to register
 if (elgg_is_logged_in()) {
-	forward();
+	throw new \Elgg\GatekeeperException();
 }
 
 $title = elgg_echo('register');

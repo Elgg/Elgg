@@ -9,7 +9,7 @@
  */
 
 if (elgg_is_logged_in()) {
-	forward();
+	throw new \Elgg\GatekeeperException();
 }
 
 $title = elgg_echo('login');

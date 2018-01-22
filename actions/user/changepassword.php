@@ -28,4 +28,4 @@ try {
 	return elgg_error_response($e->getMessage());
 }
 
-return elgg_ok_response('', elgg_echo('user:password:success'));
+return elgg_ok_response('', elgg_echo('user:password:success'), '');

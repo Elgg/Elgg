@@ -19,4 +19,4 @@ if (!send_new_password_request($user->guid)) {
 	return elgg_error_response(elgg_echo('user:password:changereq:fail'));
 }
 
-return elgg_ok_response('', elgg_echo('user:password:changereq:success'));
+return elgg_ok_response('', elgg_echo('user:password:changereq:success'), '');
