@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Отравленые сообщения",
 	'messages:toggle' => 'Отметить все',
 	'messages:markread' => 'Отметить как прочитаные',
-	'messages:to_user' => 'Для: %s',
-
-	'messages:new' => 'Новое сообщение',
 
 	'notification:method:site' => 'Сообщения',
 

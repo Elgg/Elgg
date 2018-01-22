@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "送信済みメッセージ",
 	'messages:toggle' => '全てを選択',
 	'messages:markread' => '既読マーク',
-	'messages:to_user' => '宛先: %s',
-
-	'messages:new' => '新しいメッセージ',
 
 	'notification:method:site' => 'サイト',
 

@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Odeslané zprávy",
 	'messages:toggle' => 'Přepnout vše',
 	'messages:markread' => 'Označit jako přečteno',
-	'messages:to_user' => 'Komu: %s',
-
-	'messages:new' => 'Nová zpráva',
 
 	'notification:method:site' => 'Stránky',
 

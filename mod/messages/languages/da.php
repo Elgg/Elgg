@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Sendte beskeder",
 	'messages:toggle' => 'Marker alle',
 	'messages:markread' => 'Marker som læst',
-	'messages:to_user' => 'To: %s',
-
-	'messages:new' => 'Ny besked',
 
 	'notification:method:site' => 'Beskeder',
 

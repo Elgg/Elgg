@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Gesendete Nachrichten",
 	'messages:toggle' => 'Alle auswählen',
 	'messages:markread' => 'Als gelesen markieren',
-	'messages:to_user' => 'An: %s',
-
-	'messages:new' => 'Neue Nachricht',
 
 	'notification:method:site' => 'Seite',
 

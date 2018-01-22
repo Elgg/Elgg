@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Απεσταλμένα μηνύματα",
 	'messages:toggle' => 'Εναλλαγή όλων',
 	'messages:markread' => 'Σημειώστε το ως διαβασμένο',
-	'messages:to_user' => 'Προς: %s',
-
-	'messages:new' => 'Νέο μήνυμα',
 
 	'notification:method:site' => 'Ιστότοπος',
 
