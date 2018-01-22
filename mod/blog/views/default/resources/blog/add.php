@@ -11,6 +11,10 @@ elgg_entity_gatekeeper($guid);
 
 $container = get_entity($guid);
 
+if (!$container->canWriteToContainer(0, 'object', 'blog')) {
+	throw new \Elgg\EntityPermissionsException();
+}
+
 elgg_push_collection_breadcrumbs('object', 'blog', $container);
 elgg_push_breadcrumb(elgg_echo('add:object:blog'));
 
@@ -23,4 +27,4 @@ $layout = elgg_view_layout('default', [
 	'filter_id' => 'blog/edit',
 ]);
 
-echo elgg_view_page($params['title'], $layout);
+echo elgg_view_page($title, $layout);

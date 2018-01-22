@@ -12,6 +12,10 @@ elgg_entity_gatekeeper($guid);
 
 $entity = get_entity($guid);
 
+if (!$entity->canWriteToContainer(0, 'object', 'file')) {
+	throw new \Elgg\EntityPermissionsException();
+}
+
 $title = elgg_echo('add:object:file');
 
 elgg_push_collection_breadcrumbs('object', 'file', $entity);

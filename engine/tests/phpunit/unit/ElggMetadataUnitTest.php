@@ -29,9 +29,11 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
+		$name = 'test_metadata_' . rand();
+
 		$metadata = new ElggMetadata();
 		$metadata->entity_guid = $object->guid;
-		$metadata->name = 'test_metadata_' . rand();
+		$metadata->name = $name;
 		$metadata->value = 'test_value_' . rand();
 		$id = $metadata->save();
 
@@ -40,7 +42,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
 		$this->assertEquals('metadata', $metadata->getType());
-		$this->assertEquals('foo', $metadata->getSubtype());
+		$this->assertEquals($name, $metadata->getSubtype());
 		$this->assertInstanceOf(stdClass::class, $metadata->toObject());
 		$this->assertEquals($object, $metadata->getEntity());
 		$this->assertEquals($metadata->id, $metadata->getSystemLogID());
@@ -62,9 +64,10 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
+		$name = 'test_metadata_' . rand();
 		$metadata = new ElggMetadata();
 		$metadata->entity_guid = $object->guid;
-		$metadata->name = 'test_metadata_' . rand();
+		$metadata->name = $name;
 		$metadata->value = 'test_value_' . rand();
 		$id = $metadata->save();
 
@@ -74,9 +77,9 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function($hook, $type, $return, $params) use ($metadata) {
+		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function($hook, $type, $return, $params) use ($metadata, $name) {
 			$this->assertEquals($metadata, $params['extender']);
-			if ($params['extender']->getSubtype() == 'foo') {
+			if ($params['extender']->getSubtype() == $name) {
 				return 'foo';
 			}
 		});
@@ -106,7 +109,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
 		// Default access level is private
-		$this->assertFalse($metadata->canEdit($other->guid));
+		$this->assertTrue($metadata->canEdit($other->guid));
 	}
 
 	public function testCanSaveMetadata() {
@@ -123,8 +126,8 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->name = 'foo';
 		$metadata->value = 'bar';
 		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
-		
-		$id = _elgg_services()->metadataTable->iterator + 1;
+
+		$id = \Elgg\Mocks\Database\MetadataTable::$iterator + 1;
 
 		// Insert
 		$dbprefix = _elgg_config()->dbprefix;

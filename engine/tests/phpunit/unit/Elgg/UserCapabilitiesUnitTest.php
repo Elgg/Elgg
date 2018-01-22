@@ -275,7 +275,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
 
 		$viewer = $this->createUser();
-		$this->assertFalse($entity->canEditMetadata($metadata, $viewer->guid));
+		$this->assertTrue($entity->canEditMetadata($metadata, $viewer->guid));
 	}
 
 	/**

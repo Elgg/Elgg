@@ -15,8 +15,8 @@ if (empty($tagcloud)) {
 	return;
 }
 
-unset($params['tagcloud']);
-unset($params['value']);
+unset($vars['tagcloud']);
+unset($vars['value']);
 
 $max = 0;
 foreach ($tagcloud as $tag) {

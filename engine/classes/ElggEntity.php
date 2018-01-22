@@ -193,7 +193,7 @@ abstract class ElggEntity extends \ElggData implements
 			// create list of metadata names
 			$metadata_names = [];
 			foreach ($metadata_array as $metadata) {
-				$metadata_names[] = $metadata['name'];
+				$metadata_names[] = $metadata->name;
 			}
 			// arrays are stored with multiple enties per name
 			$metadata_names = array_unique($metadata_names);

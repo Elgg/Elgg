@@ -204,8 +204,13 @@ class UserCapabilities {
 	 * If no specific metadata is passed, it returns whether the user can
 	 * edit any metadata on the entity.
 	 *
-	 * @tip Can be overridden by by registering for the permissions_check:metadata
-	 * plugin hook.
+	 * Since 3.0, metadata is not owned and can in priciple be updated by any user,
+	 * who has access to the entity. You can still use the hook to prevent the metadata from being
+	 * written to the database, however it may propagate in ElggEntity properties.
+	 * Use ElggEntity::canEdit() before setting metadata, if you want to ensure that only
+	 * owners/admins can update metadata.
+	 *
+	 * @tip Can be overridden by by registering for the permissions_check:metadata plugin hook.
 	 *
 	 * @param ElggEntity   $entity    Object entity
 	 * @param int          $user_guid The user GUID, optionally (default: logged in user)
@@ -213,6 +218,7 @@ class UserCapabilities {
 	 *
 	 * @return bool
 	 * @see elgg_set_ignore_access()
+	 * @deprecated 3.0
 	 */
 	public function canEditMetadata(ElggEntity $entity, $user_guid = 0, ElggMetadata $metadata = null) {
 		if (!$entity->guid) {
@@ -230,24 +236,16 @@ class UserCapabilities {
 			return false;
 		}
 
-		if ($user) {
-			$user_guid = $user->guid;
-		}
-
-		// if metadata is not owned or owned by the user, then can edit
-		if ($metadata && ($metadata->owner_guid == 0 || $metadata->owner_guid == $user_guid)) {
-			$return = true;
-		} else {
-			$return = $entity->canEdit($user_guid);
-		}
-
 		// metadata and user may be null
 		$params = [
 			'entity' => $entity,
 			'user' => $user,
 			'metadata' => $metadata
 		];
-		return $this->hooks->trigger('permissions_check:metadata', $entity->getType(), $params, $return);
+
+		$default = $metadata ? true : $entity->canEdit($user->guid);
+
+		return $this->hooks->trigger('permissions_check:metadata', $entity->getType(), $params, $default);
 	}
 
 	/**

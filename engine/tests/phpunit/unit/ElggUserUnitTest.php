@@ -18,14 +18,6 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNotNull(new \ElggUser());
 	}
 
-	public function testSettingUnsettableAttributes() {
-		$obj = new \ElggUser();
-		foreach (array('prev_last_action', 'last_login', 'prev_last_login') as $name) {
-			$obj->$name = 'foo';
-			$this->assertNotEquals('foo', $obj->$name);
-		}
-	}
-
 	public function testCanSetNotificationSettings() {
 
 		$obj = $this->getMockBuilder(ElggUser::class)
@@ -46,32 +38,6 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($user_settings['registered1']);
 		$this->assertFalse($user_settings['registered2']);
 		$this->assertArrayNotHasKey('unregistered', $user_settings);
-	}
-	
-	public function testBanUser() {
-		$user = $this->createUser();
-		
-		// should not be banned
-		$this->assertFalse($user->isBanned());
-		
-		// ban the user
-		$this->assertTrue($user->ban());
-		$this->assertTrue($user->isBanned());
-	}
-	
-	public function testUnbanUser() {
-		$user = $this->createUser();
-		
-		// should not be banned
-		$this->assertFalse($user->isBanned());
-		
-		// ban the user
-		$this->assertTrue($user->ban());
-		$this->assertTrue($user->isBanned());
-		
-		// now unban
-		$this->assertTrue($user->unban());
-		$this->assertFalse($user->isBanned());
 	}
 
 }
