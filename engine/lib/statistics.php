@@ -10,6 +10,8 @@
  * @subpackage Statistics
  */
 
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * Return an array reporting the number of various entities in the system.
  *
@@ -25,9 +27,9 @@ function get_entity_statistics($owner_guid = 0) {
 	$grouped_entities = elgg_get_entities([
 		'selects' => ['COUNT(*) as cnt'],
 		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
-		'group_by' => 'e.type, e.subtype',
+		'group_by' => ['e.type', 'e.subtype'],
 		'limit' => 0,
-		'order_by' => 'cnt DESC',
+		'order_by' => new OrderByClause('cnt', 'DESC'),
 	]);
 	
 	if (!empty($grouped_entities)) {
