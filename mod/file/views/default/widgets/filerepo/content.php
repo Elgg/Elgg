@@ -1,4 +1,4 @@
--<?php
+<?php
 /**
  * Elgg file widget view
  */
