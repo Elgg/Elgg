@@ -1,7 +1,6 @@
 <?php
 
 use Elgg\Database;
-use Elgg\Filesystem\Directory;
 use Elgg\Application;
 use Elgg\Config;
 use Elgg\Database\DbConfig;
@@ -1238,6 +1237,13 @@ class ElggInstaller {
 		}
 
 		foreach ($params as $k => $v) {
+			// do some sanitization
+			switch ($k) {
+				case 'dataroot':
+					$v = Paths::sanitize($v);
+					break;
+			}
+			
 			$template = str_replace("{{" . $k . "}}", $v, $template);
 		}
 
