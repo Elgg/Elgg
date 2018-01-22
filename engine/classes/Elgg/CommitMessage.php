@@ -148,7 +148,7 @@ class CommitMessage {
 	public function setMsg($msg) {
 		$this->originalMsg = $msg;
 
-		$msg = str_replace(["\r", "\n"], "\n", $msg);
+		$msg = str_replace(["\r\n", "\r"], "\n", $msg);
 		$this->msg = $this->removeComments($msg);
 		$this->processMsg();
 	}
