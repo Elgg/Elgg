@@ -18,9 +18,6 @@ return [
 	'messages:sentmessages' => "Sent messages",
 	'messages:toggle' => 'Toggle all',
 	'messages:markread' => 'Mark read',
-	'messages:to_user' => 'To: %s',
-
-	'messages:new' => 'New message',
 
 	'notification:method:site' => 'Site',
 
