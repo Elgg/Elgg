@@ -27,7 +27,10 @@ if ($revision) {
 	$annotation = $page->getAnnotations([
 		'annotation_name' => 'page',
 		'limit' => 1,
-		'order_by' => 'n_table.time_created desc, n_table.id desc',
+		'order_by' => [
+			new \Elgg\Database\Clauses\OrderByClause('n_table.time_created', 'desc'),
+			new \Elgg\Database\Clauses\OrderByClause('n_table.id', 'desc'),
+		],
 	]);
 	if ($annotation) {
 		$annotation = $annotation[0];

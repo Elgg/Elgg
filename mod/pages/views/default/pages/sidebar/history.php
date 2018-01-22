@@ -16,7 +16,10 @@ if ($page instanceof ElggPage) {
 		'guid' => $page->guid,
 		'annotation_name' => 'page',
 		'limit' => max(20, elgg_get_config('default_limit')),
-		'order_by' => 'n_table.time_created desc, n_table.id desc',
+		'order_by' => [
+			new \Elgg\Database\Clauses\OrderByClause('n_table.time_created', 'desc'),
+			new \Elgg\Database\Clauses\OrderByClause('n_table.id', 'desc'),
+		],
 	]);
 	
 	elgg_pop_context();

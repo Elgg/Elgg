@@ -23,34 +23,31 @@ $owner_guid = elgg_extract('owner_guid', $vars);
 $container_guid = elgg_extract('container_guid', $vars);
 $subtypes = elgg_extract('subtypes', $vars);
 
-if ($owner_guid || $container_guid || $subtypes) {
-	$db_prefix = elgg_get_config('dbprefix');
-
-	// Join on the entities table to check container subtype and/or owner
-	$options['joins'] = ["JOIN {$db_prefix}entities ce ON e.container_guid = ce.guid"];
-}
-
 // If owner is defined, view only the comments that have
 // been posted on objects owned by that user
 if ($owner_guid) {
-	$options['wheres'][] = "ce.owner_guid = $owner_guid";
+	$options['wheres'][] = function(\Elgg\Database\QueryBuilder $qb) use ($owner_guid) {
+		$qb->joinEntitiesTable('e', 'container_guid', 'inner', 'ce');
+		return $qb->compare('ce.owner_guid', '=', $owner_guid, ELGG_VALUE_INTEGER);
+	};
 }
 
 // If container is defined, view only the comments that have
 // been posted on objects placed inside that container
 if ($container_guid) {
-	$options['wheres'][] = "ce.container_guid = $container_guid";
+	$options['wheres'][] = function(\Elgg\Database\QueryBuilder $qb) use ($container_guid) {
+		$qb->joinEntitiesTable('e', 'container_guid', 'inner', 'ce');
+		return $qb->compare('ce.container_guid', '=', $container_guid, ELGG_VALUE_INTEGER);
+	};
 }
 
 // If subtypes are defined, view only the comments that have been
 // posted on objects that belong to any of those subtypes
 if ($subtypes) {
-	if (is_array($subtypes)) {
-		$subtype_string = "'" . implode("' ,'", $subtypes) . "'";
-		$options['wheres'][] = "ce.subtype IN ($subtype_string)";
-	} else {
-		$options['wheres'][] = "ce.subtype = '$subtypes'";
-	}
+	$options['wheres'][] = function(\Elgg\Database\QueryBuilder $qb) use ($subtypes) {
+		$qb->joinEntitiesTable('e', 'container_guid', 'inner', 'ce');
+		return $qb->compare('ce.subtype', 'IN', $subtypes, ELGG_VALUE_STRING);
+	};
 }
 
 $title = elgg_echo('generic_comments:latest');
