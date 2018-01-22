@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 	'activity:widgets:river_widget:title' => "Activity",
 	'activity:widgets:river_widget:description' => "Display latest activity",
 	'activity:widgets:river_widget:type' => "Type of activity",
@@ -16,4 +16,4 @@ return [
 	'collection:river:group' => "Group activity",
 	'groups:tool:activity' => 'Enable group activity',
 	
-];
+);

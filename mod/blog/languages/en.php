@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogs',
 	'collection:object:blog:all' => 'All site blogs',
@@ -61,4 +61,4 @@ View and comment on the blog post:
 	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'More blog posts',
 	'blog:numbertodisplay' => 'Number of blog posts to display',
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -98,4 +98,4 @@ View and comment on the page:
 	
 	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
 	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
-];
+);

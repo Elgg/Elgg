@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'garbagecollector:period' => 'How often should the Elgg garbage collector run?',
 
 	'garbagecollector:weekly' => 'Once a week',
@@ -9,4 +9,4 @@ return [
 	'garbagecollector' => "GARBAGE COLLECTOR\n",
 	'garbagecollector:done' => "DONE\n",
 	'garbagecollector:optimize' => "Optimizing %s ",
-];
+);

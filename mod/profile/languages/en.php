@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 	'profile' => 'Profile',
 	'profile:notfound' => 'Sorry. We could not find the requested profile.',
 	'profile:upgrade:2017040700:title' => 'Migrate schema of profile fields',
@@ -48,4 +48,4 @@ At any time you can revert back to the default profile set up, but you will lose
 	'profile:editdefault:fail' => 'Default profile could not be saved',
 	'profile:noaccess' => "You do not have permission to edit this profile.",
 	'profile:invalid_email' => '%s must be a valid email address.',
-];
+);

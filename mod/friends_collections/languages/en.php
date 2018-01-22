@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 	'friends:collections' => 'Collections',
 	'friends:collections:no_results' => 'You haven\'t created any collections yet',
 	'friends:collection:members:no_results' => 'This collection doesn\'t have any members yet',
@@ -28,4 +28,4 @@ return [
 	'friends:collections:remove_member:success' => 'Member was successfully removed from the collection',
 	'friends:collections:remove_member:fail' => 'Member could not be removed from the collection',
 
-];
+);

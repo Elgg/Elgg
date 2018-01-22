@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'liked this',
 	'likes:deleted' => 'Your like has been removed',
 	'likes:see' => 'See who liked this',
@@ -38,4 +38,4 @@ Thanks,
 	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
 	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

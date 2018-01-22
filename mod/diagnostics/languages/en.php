@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'admin:diagnostics' => 'System Diagnostics',
 	'diagnostics' => 'System diagnostics',
 	'diagnostics:report' => 'Diagnostics Report',
@@ -28,4 +28,4 @@ Global variables:
 
 %s
 ------------------------------------------------------------------------',
-];
+);

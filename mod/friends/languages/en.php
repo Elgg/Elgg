@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 	'friends:owned' => "%s's friends",
 	'friend:add' => "Add friend",
 	'friend:remove' => "Remove friend",
@@ -19,4 +19,4 @@ return [
 	'friends:widget:description' => "Displays some of your friends.",
 	'friends:num_display' => "Number of friends to display",
 
-];
+);

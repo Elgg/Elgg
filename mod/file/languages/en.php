@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'item:object:file' => 'File',
 	'collection:object:file' => 'Files',
@@ -79,4 +79,4 @@ View and comment on the file:
 	'file:uploadfailed' => "Sorry; we could not save your file.",
 	'file:noaccess' => "You do not have permissions to change this file",
 	'file:cannotload' => "There was an error uploading the file",
-];
+);
