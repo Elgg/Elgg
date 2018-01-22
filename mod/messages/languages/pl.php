@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Wysłane wiadomości",
 	'messages:toggle' => 'Przełącz wszystkie',
 	'messages:markread' => 'Oznacz jako przeczytane',
-	'messages:to_user' => 'Do: %s',
-
-	'messages:new' => 'Nowa wiadomość',
 
 	'notification:method:site' => 'Strona',
 

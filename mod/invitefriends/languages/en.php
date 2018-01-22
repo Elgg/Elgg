@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	'friends:invite' => 'Invite friends',
 	
@@ -30,4 +30,4 @@ To join, click the following link:
 
 You will automatically add them as a friend when you create your account.',
 	
-];
+);

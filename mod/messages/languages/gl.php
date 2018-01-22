@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Mensaxes enviadas",
 	'messages:toggle' => 'Alternalo todo',
 	'messages:markread' => 'Marcar como lida',
-	'messages:to_user' => 'Para: %s',
-
-	'messages:new' => 'Nova mensaxe',
 
 	'notification:method:site' => 'Siti',
 

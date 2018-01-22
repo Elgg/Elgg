@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Messages envoyés",
 	'messages:toggle' => 'Inverser la sélection',
 	'messages:markread' => 'Marquer comme lu',
-	'messages:to_user' => 'Pour : %s',
-
-	'messages:new' => 'Nouveau message',
 
 	'notification:method:site' => 'Messages',
 

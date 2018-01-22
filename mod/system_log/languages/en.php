@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 	'admin:administer_utilities:logbrowser' => 'Log browser',
 	'logbrowser' => 'Log browser',
 	'logbrowser:search' => 'Refine results',
@@ -32,4 +32,4 @@ return [
 	'logrotate:logdeleted' => "Log deleted\n",
 	'logrotate:lognotdeleted' => "No logs deleted\n",
 	
-];
+);

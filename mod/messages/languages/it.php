@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Messaggi inviati",
 	'messages:toggle' => 'Inverti selezione a tutti',
 	'messages:markread' => 'Segna come già letto',
-	'messages:to_user' => 'A: %s',
-
-	'messages:new' => 'Nuovo messaggio',
 
 	'notification:method:site' => 'Sito',
 

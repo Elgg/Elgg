@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -178,4 +178,4 @@ or click below to view the group's join requests:
 		relative to the entity\'s filestore directory. This upgrade aligns
 		will align group plugin with the requirements of the new API.
 	',
-];
+);

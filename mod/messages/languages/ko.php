@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "쪽지 보내기",
 	'messages:toggle' => '모두 선택',
 	'messages:markread' => '읽은 것으로 표시',
-	'messages:to_user' => '대상: %s',
-
-	'messages:new' => '새 쪽지',
 
 	'notification:method:site' => '누리집',
 

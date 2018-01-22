@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Verstuurde berichten",
 	'messages:toggle' => 'Selecteer alles',
 	'messages:markread' => 'Markeer als gelezen',
-	'messages:to_user' => 'Aan: %s',
-
-	'messages:new' => 'Nieuw bericht',
 
 	'notification:method:site' => 'Site',
 

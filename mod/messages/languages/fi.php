@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Lähetetyt",
 	'messages:toggle' => 'Valitse kaikki',
 	'messages:markread' => 'Merkitse luetuksi',
-	'messages:to_user' => 'Käyttäjälle: %s',
-
-	'messages:new' => 'Uusi viesti',
 
 	'notification:method:site' => 'Viestit',
 

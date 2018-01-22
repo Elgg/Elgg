@@ -18,9 +18,6 @@ return array(
 	'messages:sentmessages' => "Mensajes enviados",
 	'messages:toggle' => 'Activar/desactivar todos',
 	'messages:markread' => 'Marcar como leido',
-	'messages:to_user' => 'para: %s',
-
-	'messages:new' => 'Mensajes nuevos',
 
 	'notification:method:site' => 'Sitio',
 

@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Settings to use by default for notifications about actions performed on your content and other updates from the site',
 	'notifications:subscriptions:personal:title' => 'Personal notifications',
@@ -23,4 +23,4 @@ return [
 	'notifications:groups:subscribed' => 'Group notifications are on',
 	'notifications:groups:unsubscribed' => 'Group notifications are off',
 
-];
+);
