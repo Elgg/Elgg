@@ -63,8 +63,7 @@ View and comment on the page:
 	'pages:saved' => 'Page saved',
 	'pages:notsaved' => 'Page could not be saved',
 	'pages:error:no_title' => 'You must specify a title for this page.',
-	'pages:delete:success' => 'The page was successfully deleted.',
-	'pages:delete:failure' => 'The page could not be deleted.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'The page revision was successfully deleted.',
 	'pages:revision:delete:failure' => 'The page revision could not be deleted.',
 

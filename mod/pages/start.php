@@ -401,7 +401,6 @@ function pages_write_access_vars($hook, $type, $return, $params) {
 	return $return;
 }
 
-
 /**
  * Register database seed
  *
@@ -418,7 +417,6 @@ function pages_register_db_seeds(\Elgg\Hook $hook) {
 
 	return $seeds;
 }
-
 
 return function() {
 	elgg_register_event_handler('init', 'system', 'pages_init');

@@ -104,4 +104,41 @@ class ElggPage extends ElggObject {
 		$this->parent_guid = $entity->guid;
 		return true;
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function delete($recursive = true) {
+		$parent_guid = $this->getParentGUID();
+		$guid = $this->guid;
+
+		$move_children = function () use ($parent_guid, $guid) {
+			// Move all children one level up
+			elgg_call(ELGG_IGNORE_ACCESS, function () use ($parent_guid, $guid) {
+				$children = elgg_get_entities([
+					'type' => 'object',
+					'subtype' => 'page',
+					'metadata_name_value_pairs' => [
+						'parent_guid' => $guid,
+					],
+					'limit' => false,
+					'batch' => true,
+					'batch_inc_offset' => false,
+				]);
+
+				/* @var $child ElggPage */
+				foreach ($children as $child) {
+					$child->setParentByGUID($parent_guid);
+				}
+			});
+		};
+
+		$result = parent::delete($recursive);
+
+		if ($result) {
+			$move_children();
+		}
+
+		return $result;
+	}
 }

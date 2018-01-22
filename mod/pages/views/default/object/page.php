@@ -62,7 +62,6 @@ if ($full) {
 	$params = [
 		'entity' => $page,
 		'metadata' => $metadata,
-		'handler' => 'pages',
 		'title' => false,
 	];
 
@@ -81,7 +80,6 @@ if ($full) {
 	$params = [
 		'entity' => $page,
 		'metadata' => $metadata,
-		'handler' => 'pages',
 		'content' => elgg_get_excerpt($page->description),
 		'icon' => $owner_icon,
 	];
