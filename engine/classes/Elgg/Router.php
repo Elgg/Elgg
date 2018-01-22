@@ -313,7 +313,9 @@ class Router {
 		$defaults['_resource'] = $resource;
 		$defaults['_handler'] = $handler;
 
-		$route = new Route($path, $defaults, $requirements, [], '', [], $methods);
+		$route = new Route($path, $defaults, $requirements, [
+			'utf8' => true,
+		], '', [], $methods);
 
 		$this->routes->add($name, $route);
 
