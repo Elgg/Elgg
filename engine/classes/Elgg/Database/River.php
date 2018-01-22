@@ -33,7 +33,8 @@ class River extends Repository {
 			'annotation_id',
 			'action_type',
 			'type',
-			'subtype'
+			'subtype',
+			'view',
 		];
 
 		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
