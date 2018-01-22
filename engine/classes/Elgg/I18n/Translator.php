@@ -345,7 +345,7 @@ class Translator {
 
 			// Register translations from the plugin languages directory
 			if (!$this->registerTranslations($languages_path, false, $language)) {
-				throw new \PluginException(sprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
+				throw new \PluginException(vsprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
 					[$plugin->getID(), $plugin->guid, $languages_path]));
 			}
 		}
