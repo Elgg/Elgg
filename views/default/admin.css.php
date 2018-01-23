@@ -101,6 +101,7 @@ echo elgg_view('core.css');
 	border: 1px solid #CCC;
 	padding: 0.5rem;
 	border-radius: 3px;
+	position: relative;
 }
 
 .elgg-plugin > .elgg-image-block {
@@ -149,6 +150,10 @@ echo elgg_view('core.css');
 	padding-bottom: 10px;
 }
 
+.elgg-plugin .ui-sortable-handle {
+	cursor: move;
+}
+
 .elgg-plugin-list-description {
 	display: inline-block;
 	margin-left: 0.5rem;
@@ -175,10 +180,19 @@ echo elgg_view('core.css');
 	text-decoration: none;
 }
 
+.elgg-plugin-placeholder {
+	display: block;
+	min-height: 5rem;
+	border: 1px dashed $(border-color-highlight) !important;
+}
+
 .elgg-plugin-list-reordering {
-	float: right;
 	display: none;
-	position: relative;
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0.25rem;
+	font-size: 0.75rem;
 }
 
 .elgg-plugin:hover .elgg-plugin-list-reordering {

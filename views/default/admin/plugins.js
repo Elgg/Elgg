@@ -36,7 +36,7 @@ define(function(require) {
 			items:                'li:has(> .elgg-state-draggable)',
 			handle:               '.elgg-body',
 			forcePlaceholderSize: true,
-			placeholder:          'elgg-widget-placeholder',
+			placeholder:          'elgg-plugin-placeholder',
 			opacity:              0.8,
 			revert:               500,
 			stop:                 movePlugin
