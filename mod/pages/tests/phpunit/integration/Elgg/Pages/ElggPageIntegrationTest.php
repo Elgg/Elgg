@@ -28,8 +28,6 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 	 * {@inheritDoc}
 	 */
 	public function up() {
-		$this->startPlugin();
-
 		$this->user = $this->createUser();
 		
 		$session = elgg_get_session();
@@ -119,7 +117,7 @@ public function testIsTopPage() {
 		$this->assertInstanceOf(ElggPage::class, $page);
 		
 		$this->assertFalse($top_page->getParentEntity());
-		$this->assertSame($page->getParentEntity(), $top_page);
+		$this->assertEquals($page->getParentEntity()->guid, $top_page->guid);
 		
 		// invalid parent page (non ElggPage guid)
 		$page->parent_guid = $this->user->guid;
