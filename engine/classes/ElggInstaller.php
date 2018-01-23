@@ -209,9 +209,12 @@ class ElggInstaller {
 			}
 		}
 
-		if (!empty($params['wwwroot']) && !_elgg_sane_validate_url($params['wwwroot'])) {
+		if (!_elgg_sane_validate_url($params['wwwroot'])) {
 			throw new InstallationException(elgg_echo('install:error:wwwroot', [$params['wwwroot']]));
 		}
+		
+		// sanitize dataroot path
+		$params['dataroot'] = Paths::sanitize($params['dataroot']);
 
 		$this->determineInstallStatus();
 
