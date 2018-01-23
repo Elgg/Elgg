@@ -56,7 +56,7 @@ class InstallCommand extends \Symfony\Component\Console\Command\Command {
 				 */
 				'sitename' => $this->ask('Enter site name: '),
 				'siteemail' => $this->ask("Enter site email [$email]: ", $email),
-				'wwwroot' => $this->ask('Enter site URL: '),
+				'wwwroot' => $this->ask('Enter site URL (including protocol http|https and a trailing /): '),
 				'dataroot' => $this->ask('Enter data directory path: '),
 				'timezone' => 'UTC',
 			];
