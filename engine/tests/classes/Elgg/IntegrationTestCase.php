@@ -18,24 +18,10 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 	use TestSeeding;
 
-	static $_testing_app;
-
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function createApplication($isolate = false) {
-
-		if (isset(self::$_testing_app) && !$isolate) {
-			$app = self::$_testing_app;
-
-			Application::setInstance($app);
-
-			// Invalidate caches
-			$app->_services->dataCache->clear();
-			$app->_services->sessionCache->clear();
-
-			return $app;
-		}
 
 		Application::setInstance(null);
 
@@ -84,8 +70,6 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
 		$app->bootCore();
-
-		self::$_testing_app = $app;
 
 		return $app;
 	}
