@@ -761,13 +761,18 @@ class ElggPlugin extends ElggObject {
 			}
 		}
 
+		// For testing purposes, we only want to repeatedly execute setup files for active plugins
+		$condition = function() {
+			return elgg_is_active_plugin($this->getID());
+		};
+
 		// include classes
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
 			$this->registerClasses();
 
 			$autoload_file = 'vendor/autoload.php';
 			if ($this->canReadFile($autoload_file)) {
-				Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+				Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}", $condition);
 			}
 		}
 
@@ -781,7 +786,7 @@ class ElggPlugin extends ElggObject {
 			$this->activateEntities();
 
 			if ($this->canReadFile('start.php')) {
-				$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
+				$result = Application::requireSetupFileOnce("{$this->getPath()}start.php", $condition);
 				if ($result instanceof \Closure) {
 					$result();
 				}

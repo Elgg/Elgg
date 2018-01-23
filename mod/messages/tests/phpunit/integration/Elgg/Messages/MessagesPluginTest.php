@@ -12,8 +12,7 @@ use Zend\Mail\Transport\InMemory;
 class MessagesPluginTest extends IntegrationTestCase {
 
 	public function up() {
-		self::createApplication(true);
-		$this->startPlugin();
+		
 	}
 
 	public function down() {

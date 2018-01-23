@@ -7,15 +7,12 @@ use Elgg\IntegrationTestCase;
 
 /**
  * @group Router
- * @group BlogRoutes
  */
 abstract class RouteResponseTest extends IntegrationTestCase {
 
 	use PluginTesting;
 
 	public function up() {
-		$this->startPlugin();
-
 		_elgg_services()->logger->disable();
 	}
 

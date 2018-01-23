@@ -576,7 +576,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 
 	$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));
 
-	$registered = $return['default'];
+	$registered = elgg_extract('default', $return, []);
 	/* @var ElggMenuItem[] $registered */
 
 	$has_selected = false;

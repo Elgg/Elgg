@@ -17,7 +17,7 @@ if ($items) {
 }
 
 // Add request info at top
-$elapsed = microtime(true) - $GLOBALS['START_MICROTIME'];
+$elapsed = microtime(true) - elgg_extract('START_MICROTIME', $GLOBALS);
 $query_count = _elgg_services()->db->getQueryCount();
 $boot_cache_rebuilt = !elgg_get_config('_boot_cache_hit');
 $system_cache = elgg_is_system_cache_enabled();

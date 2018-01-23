@@ -135,15 +135,23 @@ class Application {
 	/**
 	 * Require a library/plugin file once and capture returned anonymous functions
 	 *
-	 * @param string $file File to require
+	 * @param string   $file      File to require
+	 * @param \Closure $condition Condition that must be met for the setup file to be executable
 	 * @return mixed
 	 * @internal
 	 * @access private
 	 */
-	public static function requireSetupFileOnce($file) {
+	public static function requireSetupFileOnce($file, \Closure $condition = null) {
 		$return = Includer::requireFileOnce($file);
 		if ($return instanceof \Closure) {
-			self::$_setups[] = $return;
+			if ($condition) {
+				$setup = function() use ($condition, $return) {
+					return $condition() ? $return : null;
+				};
+			} else {
+				$setup = $return;
+			}
+			self::$_setups[] = $setup;
 		}
 		return $return;
 	}
