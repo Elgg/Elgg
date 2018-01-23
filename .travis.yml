@@ -26,6 +26,15 @@ matrix:
   include:
     # Build and test javascript
     - php: 7.0
+      env: JOB_NAME=lint VARIA=true
+      install:
+        - composer travis:install
+      script:
+        - bash .scripts/travis/check_commit_msgs.sh
+        - composer lint
+
+    # Build and test javascript
+    - php: 7.0
       env: JOB_NAME=js_tests VARIA=true
       dist: trusty
       install:
@@ -50,6 +59,9 @@ matrix:
 
     # Memcached enabled
     - php: 7.0
+      services:
+        - memcached
+        - mysql
       env:
         - JOB_NAME=memcache_php56 VARIA=true
         - ELGG_MEMCACHE=1
@@ -85,10 +97,17 @@ matrix:
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
 
+    # Coverage
+    - php: 7.0
+      env: JOB_NAME=coverage VARIA=true
+      script:
+        - phpdbg -qrr ./vendor/phpunit/phpunit/phpunit --configuration ./phpunit.xml --coverage-clover coverage.clover
+        - wget https://scrutinizer-ci.com/ocular.phar
+        - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
-  - memcached
   - mysql
 
 before_install:
@@ -97,8 +116,6 @@ before_install:
 
 install:
   - composer travis:install-with-mysql
-  - bash .scripts/travis/check_commit_msgs.sh
-  - composer lint
   - php -f ./.scripts/travis/enable_plugins.php
   - php ./elgg-cli database:seed --limit=5 -vv
   - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &

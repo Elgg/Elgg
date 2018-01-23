@@ -62,6 +62,7 @@
         ],
         "test": "phpunit",
         "travis:install": [
+            "ulimit -c unlimited",
             "composer self-update",
             "composer global require \"fxp/composer-asset-plugin:~1.4.2\" --prefer-dist",
             "composer install --prefer-dist"
