@@ -76,7 +76,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
 
-		if ($ex) {
+		if ($ex instanceof \Exception) {
 			throw $ex;
 		}
 	}
@@ -170,7 +170,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
 
-		if ($ex) {
+		if ($ex instanceof \Exception) {
 			throw $ex;
 		}
 	}
@@ -292,7 +292,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
-		if ($ex) {
+		if ($ex instanceof \Exception) {
 			throw $ex;
 		}
 	}
@@ -325,7 +325,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 
-		if ($ex) {
+		if ($ex instanceof \Exception) {
 			throw $ex;
 		}
 	}
