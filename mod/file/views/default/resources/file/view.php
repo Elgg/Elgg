@@ -7,12 +7,9 @@
 
 $guid = elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($guid);
+elgg_entity_gatekeeper($guid, 'object', 'file');
 
 $file = get_entity($guid);
-if (!$file instanceof ElggFile) {
-	throw new \Elgg\EntityNotFoundException();
-}
 
 $owner = elgg_get_page_owner_entity();
 
