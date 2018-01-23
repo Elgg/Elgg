@@ -13,24 +13,10 @@ use Symfony\Component\Console\Output\ConsoleOutput;
  */
 abstract class IntegratedUnitTestCase extends UnitTestCase {
 
-	static $_testing_app;
-
 	/**
 	 * {@inheritdoc}
 	 */
 	public static function createApplication() {
-
-		if (isset(self::$_testing_app)) {
-			$app = self::$_testing_app;
-			
-			Application::setInstance($app);
-
-			// Invalidate caches
-			$app->_services->dataCache->clear();
-			$app->_services->sessionCache->clear();
-
-			return $app;
-		}
 
 		Application::setInstance(null);
 
@@ -65,8 +51,6 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
 		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
-
-		self::$_testing_app = $app;
 
 		return $app;
 	}
