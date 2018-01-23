@@ -183,7 +183,7 @@ class Plugins {
 				if (!$plugin->isEnabled()) {
 					$plugin->enable();
 					$plugin->deactivate();
-					$plugin->setPriority('last');
+					$plugin->setPriority('new');
 				}
 
 				// remove from the list of plugins to disable
@@ -210,6 +210,8 @@ class Plugins {
 				$plugin->disable();
 			}
 		}
+
+		$this->reindexPriorities();
 
 		access_show_hidden_entities($old_access);
 		elgg_set_ignore_access($old_ia);
@@ -1165,17 +1167,21 @@ class Plugins {
 
 		$name = $this->namespacePrivateSetting('internal', 'priority');
 
-		if (!$plugin->guid) {
-			return false;
-		}
-
 		if (!$plugin->setPrivateSetting($name, $priority)) {
 			return false;
 		}
 
+		if (!$plugin->guid) {
+			return false;
+		}
+
 		$qb = Update::table('private_settings');
+
+		$param_old = $qb->param($old_priority, ELGG_VALUE_INTEGER);
+		$param_new = $qb->param($priority, ELGG_VALUE_INTEGER);
+
 		$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
-			->andWhere($qb->between('CAST(value AS UNSIGNED)', $old_priority, $priority, ELGG_VALUE_INTEGER))
+			->andWhere("CAST(value AS UNSIGNED) BETWEEN $param_old AND $param_new")
 			->andWhere($qb->compare('entity_guid', '!=', $plugin->guid, ELGG_VALUE_INTEGER));
 
 		if ($priority > $old_priority) {
