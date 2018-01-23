@@ -69,16 +69,16 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 			_elgg_services()->router->route($request);
 
 		} catch (\Exception $ex) {
+			_elgg_services()->session->removeLoggedInUser();
 
+			elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
+			
+			throw $ex;
 		}
 
 		_elgg_services()->session->removeLoggedInUser();
 
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
-
-		if ($ex instanceof \Exception) {
-			throw $ex;
-		}
 	}
 
 	public function testAddRouteRespondsOk() {
@@ -163,16 +163,16 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 		try {
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
+			_elgg_services()->session->removeLoggedInUser();
 
+			elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
+			
+			throw $ex;
 		}
 
 		_elgg_services()->session->removeLoggedInUser();
 
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
-
-		if ($ex instanceof \Exception) {
-			throw $ex;
-		}
 	}
 
 	public function testEditRouteRespondsOk() {
@@ -287,14 +287,12 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
-
+			_elgg_services()->session->removeLoggedInUser();
+			
+			throw $ex;
 		}
 
 		_elgg_services()->session->removeLoggedInUser();
-
-		if ($ex instanceof \Exception) {
-			throw $ex;
-		}
 	}
 
 	/**
@@ -320,14 +318,12 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
-
+			_elgg_services()->session->removeLoggedInUser();
+			
+			throw $ex;
 		}
 
 		_elgg_services()->session->removeLoggedInUser();
-
-		if ($ex instanceof \Exception) {
-			throw $ex;
-		}
 	}
 
 	public function testViewRouteRespondsOk() {
