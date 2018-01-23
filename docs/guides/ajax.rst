@@ -101,19 +101,25 @@ Consider this PHP script that runs at ``http://example.org/myplugin_time``.
 
 .. code-block:: php
 
-    // in myplugin/start.php
-    elgg_register_page_handler('myplugin_time', 'myplugin_get_time');
+    // in myplugin/elgg-plugin.php
+    return [
+		'routes' => [
+			'default:myplugin:time' => [
+				'path' => '/myplugin_time',
+				'resource' => 'myplugin/time',
+			],
+		],
+	];
+   
+	// in myplugin/views/default/resources/myplugin/time.php
+    elgg_ajax_gatekeeper();
 
-    function myplugin_get_time() {
-        elgg_ajax_gatekeeper();
+    echo json_encode([
+        'rfc2822' => date(DATE_RFC2822),
+        'day' => date('l'),
+    ]);
 
-        echo json_encode([
-            'rfc2822' => date(DATE_RFC2822),
-            'day' => date('l'),
-        ]);
-
-        return true;
-    }
+    return true;
 
 To fetch its output, use ``ajax.path('<url_path>', options)``.
 

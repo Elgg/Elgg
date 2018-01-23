@@ -19,9 +19,7 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 /**
  * Delegates requests to controllers based on the registered configuration.
  *
- * Plugin devs should use these wrapper functions:
- *  * elgg_register_page_handler
- *  * elgg_unregister_page_handler
+ * Plugin devs should use elgg_register_route() to register a named route or define it in elgg-plugin.php
  *
  * @package    Elgg.Core
  * @subpackage Router
@@ -513,5 +511,4 @@ class Router {
 		// non-public page
 		return false;
 	}
-
 }
