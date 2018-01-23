@@ -39,27 +39,25 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 		$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 	}
 	$upgrade_path = \Elgg\Project\Paths::sanitize($upgrade_path);
-	$handle = opendir($upgrade_path);
 
-	if (!$handle) {
-		return false;
-	}
+	$upgrade_files = false;
+	if ($handle = opendir($upgrade_path)) {
+		$upgrade_files = [];
 
-	$upgrade_files = [];
-
-	while ($upgrade_file = readdir($handle)) {
-		// make sure this is a well formed upgrade.
-		if (is_dir($upgrade_path . '$upgrade_file')) {
-			continue;
+		while ($upgrade_file = readdir($handle)) {
+			// make sure this is a well formed upgrade.
+			if (is_dir($upgrade_path . '$upgrade_file')) {
+				continue;
+			}
+			$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
+			if (!$upgrade_version) {
+				continue;
+			}
+			$upgrade_files[] = $upgrade_file;
 		}
-		$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
-		if (!$upgrade_version) {
-			continue;
-		}
-		$upgrade_files[] = $upgrade_file;
-	}
 
-	sort($upgrade_files);
+		sort($upgrade_files);
+	}
 
 	return $upgrade_files;
 }

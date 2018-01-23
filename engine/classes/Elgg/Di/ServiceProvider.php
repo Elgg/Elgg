@@ -400,10 +400,12 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('printer', function(ServiceProvider $c) {
-			if (php_sapi_name() === 'cli') {
-				return new CliPrinter();
-			} else {
-				return new ErrorLogPrinter();
+			switch (php_sapi_name()) {
+				case 'cli':
+				case 'phpdbg':
+					return new CliPrinter();
+				default:
+					return new ErrorLogPrinter();
 			}
 		});
 

@@ -230,30 +230,30 @@ class ViewsService {
 		$folder = rtrim($folder, '/\\');
 		$view_base = rtrim($view_base, '/\\');
 
-		$handle = opendir($folder);
-		if (!$handle) {
+		if ($handle = opendir($folder)) {
+			while ($entry = readdir($handle)) {
+				if ($entry[0] === '.') {
+					continue;
+				}
+
+				$path = "$folder/$entry";
+
+				if (!empty($view_base)) {
+					$view_base_new = $view_base . "/";
+				} else {
+					$view_base_new = "";
+				}
+
+				if (is_dir($path)) {
+					$this->autoregisterViews($view_base_new . $entry, $path, $viewtype);
+				} else {
+					$view = $view_base_new . basename($entry, '.php');
+					$this->setViewLocation($view, $viewtype, $path);
+				}
+			}
+			closedir($handle);
+		} else {
 			return false;
-		}
-		
-		while ($entry = readdir($handle)) {
-			if ($entry[0] === '.') {
-				continue;
-			}
-
-			$path = "$folder/$entry";
-
-			if (!empty($view_base)) {
-				$view_base_new = $view_base . "/";
-			} else {
-				$view_base_new = "";
-			}
-
-			if (is_dir($path)) {
-				$this->autoregisterViews($view_base_new . $entry, $path, $viewtype);
-			} else {
-				$view = $view_base_new . basename($entry, '.php');
-				$this->setViewLocation($view, $viewtype, $path);
-			}
 		}
 
 		return true;
@@ -733,25 +733,28 @@ class ViewsService {
 			return true;
 		}
 
-		// but if they do, they have to be readable
-		$handle = opendir($view_dir);
-		if (!$handle) {
-			$failed_dir = $view_dir;
-			return false;
-		}
 
-		while (false !== ($view_type = readdir($handle))) {
-			$view_type_dir = $view_dir . $view_type;
+		$return = true;
+		if ($handle = opendir($view_dir)) {
+			while (false !== ($view_type = readdir($handle))) {
+				$view_type_dir = $view_dir . $view_type;
 
-			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
-				if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
-					$failed_dir = $view_type_dir;
-					return false;
+				if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
+					if (!$this->autoregisterViews('', $view_type_dir, $view_type)) {
+						$failed_dir = $view_type_dir;
+
+						$return = false;
+						break;
+					}
 				}
 			}
+			closedir($handle);
+		} else {
+			$failed_dir = $view_dir;
+			$return = false;
 		}
 
-		return true;
+		return $return;
 	}
 
 	/**
