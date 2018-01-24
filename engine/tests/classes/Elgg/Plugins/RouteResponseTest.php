@@ -14,9 +14,13 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 	public function up() {
 		_elgg_services()->logger->disable();
+		_elgg_services()->hooks->backup();
+		_elgg_services()->hooks->getEvents()->backup();
 	}
 
 	public function down() {
+		_elgg_services()->hooks->restore();
+		_elgg_services()->hooks->getEvents()->restore();
 		_elgg_services()->logger->enable();
 	}
 

@@ -110,49 +110,43 @@ class Application {
 	 * This includes all the .php files in engine/lib (not upgrades). If a script returns a function,
 	 * it is queued and executed at the end.
 	 *
-	 * @return void
+	 * @return array
 	 * @access private
 	 * @internal
 	 * @throws \InstallationException
 	 */
 	public static function loadCore() {
-		if (self::isCoreLoaded()) {
-			return;
-		}
+		$setups = [];
 
 		$path = Paths::elgg() . 'engine/lib';
 
 		// include library files, capturing setup functions
 		foreach (self::getEngineLibs() as $file) {
 			try {
-				self::requireSetupFileOnce("$path/$file");
+				$setups[] = self::requireSetupFileOnce("$path/$file");
 			} catch (\Error $e) {
 				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
 			}
 		}
+
+		return $setups;
 	}
 
 	/**
 	 * Require a library/plugin file once and capture returned anonymous functions
 	 *
-	 * @param string   $file      File to require
-	 * @param \Closure $condition Condition that must be met for the setup file to be executable
+	 * @param string $file File to require
 	 * @return mixed
 	 * @internal
 	 * @access private
 	 */
-	public static function requireSetupFileOnce($file, \Closure $condition = null) {
-		$return = Includer::requireFileOnce($file);
-		if ($return instanceof \Closure) {
-			if ($condition) {
-				$setup = function() use ($condition, $return) {
-					return $condition() ? $return : null;
-				};
-			} else {
-				$setup = $return;
-			}
-			self::$_setups[] = $setup;
+	public static function requireSetupFileOnce($file) {
+		if (isset(self::$_setups[$file])) {
+			return self::$_setups[$file];
 		}
+
+		$return = Includer::requireFileOnce($file);
+		self::$_setups[$file] = $return;
 		return $return;
 	}
 
@@ -198,13 +192,15 @@ class Application {
 		}
 
 		// in case not loaded already
-		$this->loadCore();
+		$setups = $this->loadCore();
 
 		$hooks = $this->_services->hooks;
 		$events = $hooks->getEvents();
 
-		foreach (self::$_setups as $setup) {
-			$setup($events, $hooks);
+		foreach ($setups as $setup) {
+			if ($setup instanceof \Closure) {
+				$setup($events, $hooks);
+			}
 		}
 
 		if (!$this->_services->db) {
@@ -232,49 +228,56 @@ class Application {
 		$this->_services->plugins->load();
 
 		if (Paths::project() != Paths::elgg()) {
-			// Elgg is installed as a composer dep, so try to treat the root directory
-			// as a custom plugin that is always loaded last and can't be disabled...
-			if (!$config->system_cache_loaded) {
-				// configure view locations for the custom plugin (not Elgg core)
-				$viewsFile = Paths::project() . 'views.php';
-				if (is_file($viewsFile)) {
-					$viewsSpec = Includer::includeFile($viewsFile);
-					if (is_array($viewsSpec)) {
-						$this->_services->views->mergeViewsSpec($viewsSpec);
+			$this->_services->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', function() use ($config) {
+				// This is root directory start.php
+				$root_start = Paths::project() . "start.php";
+				if (is_file($root_start)) {
+					$setup = self::requireSetupFileOnce($root_start);
+					if ($setup instanceof \Closure) {
+						$setup();
 					}
 				}
 
-				// find views for the custom plugin (not Elgg core)
-				$this->_services->views->registerPluginViews(Paths::project());
-			}
+				// Elgg is installed as a composer dep, so try to treat the root directory
+				// as a custom plugin that is always loaded last and can't be disabled...
+				if (!$config->system_cache_loaded) {
+					// configure view locations for the custom plugin (not Elgg core)
+					$viewsFile = Paths::project() . 'views.php';
+					if (is_file($viewsFile)) {
+						$viewsSpec = Includer::includeFile($viewsFile);
+						if (is_array($viewsSpec)) {
+							$this->_services->views->mergeViewsSpec($viewsSpec);
+						}
+					}
 
-			if (!$config->i18n_loaded_from_cache) {
-				$this->_services->translator->registerTranslations(Paths::project() . 'languages');
-			}
+					// find views for the custom plugin (not Elgg core)
+					$this->_services->views->registerPluginViews(Paths::project());
+				}
 
-			// This is root directory start.php
-			$root_start = Paths::project() . "start.php";
-			if (is_file($root_start)) {
-				require $root_start;
-			}
+				if (!$config->i18n_loaded_from_cache) {
+					$this->_services->translator->registerTranslations(Paths::project() . 'languages');
+				}
+			});
 		}
 
-		// after plugins are started we know which viewtypes are populated
-		$this->_services->views->clampViewtypeToPopulatedViews();
+		$events->registerHandler('plugins_boot:after', 'system', function () {
+			// after plugins are started we know which viewtypes are populated
+			$this->_services->views->clampViewtypeToPopulatedViews();
 
-		$this->allowPathRewrite();
+			$this->allowPathRewrite();
+		});
 
 		// Allows registering handlers strictly before all init, system handlers
-		$events->trigger('plugins_boot', 'system');
+		$events->triggerSequence('plugins_boot', 'system');
 
 		// Complete the boot process for both engine and plugins
-		$events->trigger('init', 'system');
+		$events->triggerSequence('init', 'system');
 
 		$config->boot_complete = true;
 		$config->lock('boot_complete');
 
 		// System loaded and ready
-		$events->trigger('ready', 'system');
+		$events->triggerSequence('ready', 'system');
 	}
 
 	/**

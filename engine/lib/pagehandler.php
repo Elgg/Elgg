@@ -300,6 +300,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
 		'entity' => $entity,
 		'forward' => $forward,
 	];
+
 	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, $group_access && $user_access)) {
 		if ($forward) {
 			throw new \Elgg\EntityPermissionsException();

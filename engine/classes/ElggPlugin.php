@@ -616,23 +616,18 @@ class ElggPlugin extends ElggObject {
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
-			$this->activateEntities();
+			_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+
+			$setup = $this->boot();
+			if ($setup instanceof Closure) {
+				$setup();
+			}
 
 			if ($this->canReadFile('activate.php')) {
-				_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
-
-				$flags = ELGG_PLUGIN_INCLUDE_START |
-						ELGG_PLUGIN_REGISTER_CLASSES |
-						ELGG_PLUGIN_REGISTER_LANGUAGES |
-						ELGG_PLUGIN_REGISTER_VIEWS |
-						ELGG_PLUGIN_REGISTER_WIDGETS |
-						ELGG_PLUGIN_REGISTER_ACTIONS |
-						ELGG_PLUGIN_REGISTER_ROUTES;
-
-				$this->start($flags);
-
 				$return = $this->includeFile('activate.php');
 			}
+
+			$this->init();
 		}
 
 		if ($return === false) {
@@ -744,81 +739,53 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Start the plugin.
+	 * Boot the plugin by autoloading files, classes etc
 	 *
-	 * @param int $flags Start flags for the plugin. See the constants in lib/plugins.php for details.
-	 *
-	 * @return true
 	 * @throws PluginException
-	 * @throws InvalidParameterException
+	 * @return \Closure|null
 	 */
-	public function start($flags) {
-
-		if (!($flags & ELGG_PLUGIN_IGNORE_MANIFEST)) {
-			// Detect plugins errors early and throw so that plugins service can disable the plugin
-			if (!$this->getManifest()) {
-				throw new PluginException($this->getError());
-			}
+	public function boot() {
+		// Detect plugins errors early and throw so that plugins service can disable the plugin
+		if (!$this->getManifest()) {
+			throw new PluginException($this->getError());
 		}
 
-		// For testing purposes, we only want to repeatedly execute setup files for active plugins
-		$condition = function() {
-			return elgg_is_active_plugin($this->getID());
-		};
+		$this->registerClasses();
 
-		// include classes
-		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
-			$this->registerClasses();
-
-			$autoload_file = 'vendor/autoload.php';
-			if ($this->canReadFile($autoload_file)) {
-				Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}", $condition);
-			}
+		$autoload_file = 'vendor/autoload.php';
+		if ($this->canReadFile($autoload_file)) {
+			Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
 		}
 
-		// include languages
-		// should be loaded before the first function that touches the static config (elgg-plugin.php)
-		// so translations can be used... for example in registering widgets
-		$this->registerLanguages($flags & ELGG_PLUGIN_REGISTER_LANGUAGES);
-		
-		// include start file if it exists
-		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
-			$this->activateEntities();
+		$this->activateEntities();
 
-			if ($this->canReadFile('start.php')) {
-				$result = Application::requireSetupFileOnce("{$this->getPath()}start.php", $condition);
-				if ($result instanceof \Closure) {
-					$result();
-				}
-			}
-
-			$this->registerEntities();
+		$result = null;
+		if ($this->canReadFile('start.php')) {
+			$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
 		}
 
-		// include views
-		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
-			$this->registerViews();
-		}
+		$this->registerLanguages();
+		$this->registerViews();
 
-		// include actions
-		if ($flags & ELGG_PLUGIN_REGISTER_ACTIONS) {
-			$this->registerActions();
-		}
-
-		// include routes
-		if ($flags & ELGG_PLUGIN_REGISTER_ROUTES) {
-			$this->registerRoutes();
-		}
-
-		// include widgets
-		if ($flags & ELGG_PLUGIN_REGISTER_WIDGETS) {
-			// should load after views because those are used during registration
-			$this->registerWidgets();
-		}
-
-		return true;
+		return $result;
 	}
 
+	/**
+	 * Init the plugin
+	 * @return void
+	 * @throws InvalidParameterException
+	 * @throws PluginException
+	 */
+	public function init() {
+		$this->registerRoutes();
+		$this->registerActions();
+		$this->registerEntities();
+		$this->registerWidgets();
+	}
+
+	public function start() {
+
+	}
 	/**
 	 * Includes one of the plugins files
 	 *
@@ -897,6 +864,10 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 */
 	protected function registerViews() {
+		if (_elgg_config()->system_cache_loaded) {
+			return;
+		}
+
 		$views = _elgg_services()->views;
 
 		// Declared views first
@@ -1033,17 +1004,15 @@ class ElggPlugin extends ElggObject {
 
 	/**
 	 * Registers the plugin's languages
-	 *
-	 * @param boolean $path_only we need to register the path only
-	 *
 	 * @return true
 	 */
-	protected function registerLanguages($path_only = false) {
+	protected function registerLanguages() {
 		$languages_path = $this->getPath() . 'languages';
 		if (!is_dir($languages_path)) {
 			return true;
 		}
-		
+
+		$path_only = !_elgg_services()->translator->wasLoadedFromCache();
 		if ($path_only) {
 			return _elgg_services()->translator->registerLanguagePath($languages_path);
 		}

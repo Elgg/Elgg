@@ -342,15 +342,19 @@ trait Seeding {
 			}
 
 			if (empty($properties['container_guid'])) {
-				$container = elgg_get_logged_in_user_entity();
-				if (!$container) {
-					$container = $this->getRandomUser();
-				}
-				if (!$container) {
-					$container = $this->createUser();
-				}
+				if (isset($properties['owner_guid'])) {
+					$properties['container_guid'] = $properties['owner_guid'];
+				} else {
+					$container = elgg_get_logged_in_user_entity();
+					if (!$container) {
+						$container = $this->getRandomUser();
+					}
+					if (!$container) {
+						$container = $this->createUser();
+					}
 
-				$properties['container_guid'] = $container->guid;
+					$properties['container_guid'] = $container->guid;
+				}
 			}
 
 			$container = get_entity($properties['container_guid']);
