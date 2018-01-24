@@ -446,7 +446,7 @@ class Translator {
 		if ($this->was_reloaded) {
 			return;
 		}
-		
+
 		$languages = $this->getAvailableLanguages();
 		
 		foreach ($languages as $language) {

@@ -18,6 +18,8 @@ class ViewStackTest extends \Elgg\UnitTestCase {
 	}
 
 	public function viewsProvider() {
+		self::createApplication();
+
 		$provides = [];
 
 		$path = $this->getPath();

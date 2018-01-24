@@ -107,6 +107,8 @@ class ElggViewHelpersUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function providerElggGetFriendlyTime() {
+		self::createApplication();
+
 		return [
 			['0', elgg_echo('friendlytime:justnow')],
 			['-120', elgg_echo('friendlytime:minutes', array('2'))],

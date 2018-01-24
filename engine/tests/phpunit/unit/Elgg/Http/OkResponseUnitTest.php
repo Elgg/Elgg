@@ -83,10 +83,11 @@ class OkResponseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function invalidContentValuesProvider() {
+		self::createApplication();
+
 		return [
 			[new stdClass()],
 			[(object) ['foo' => 'bar']],
-			[new ElggObject()],
 			[
 				function () {
 

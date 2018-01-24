@@ -8,8 +8,8 @@
  * @subpackage Actions
  */
 
-use Elgg\Http\ResponseBuilder;
 use Elgg\Database\SiteSecret;
+use Elgg\Http\ResponseBuilder;
 
 /**
  * Handle a request for an action
@@ -225,9 +225,3 @@ function _elgg_csrf_token_refresh() {
 	return _elgg_services()->actions->handleTokenRefreshRequest();
 }
 
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-};

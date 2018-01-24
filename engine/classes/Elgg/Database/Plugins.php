@@ -2,7 +2,12 @@
 
 namespace Elgg\Database;
 
+use Closure;
 use DatabaseException;
+use Elgg\Application;
+use Elgg\Includer;
+use Elgg\PluginHooksService;
+use Elgg\Project\Paths;
 use ElggCache;
 use Elgg\Database;
 use Elgg\Profilable;
@@ -32,16 +37,6 @@ class Plugins {
 	 * @var array|null
 	 */
 	protected $provides_cache;
-
-	/**
-	 * @var string[] Active plugins, with plugin ID => GUID. Missing keys imply inactive plugins.
-	 */
-	protected $active_guids = [];
-
-	/**
-	 * @var bool Has $active_guids been populated?
-	 */
-	protected $active_guids_known = false;
 
 	/**
 	 * @var ElggCache
@@ -90,7 +85,6 @@ class Plugins {
 	public function clear() {
 		$this->cache->clear();
 		$this->invalidateProvidesCache();
-		$this->invalidateIsActiveCache();
 	}
 
 	/**
@@ -262,7 +256,7 @@ class Plugins {
 	 */
 	public function get($plugin_id) {
 		if (!$plugin_id) {
-			return;
+			return null;
 		}
 
 		$fallback = function () use ($plugin_id) {
@@ -306,8 +300,8 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	function exists($id) {
-		return (bool) $this->get($id);
+	public function exists($id) {
+		return $this->get($id) instanceof ElggPlugin;
 	}
 
 	/**
@@ -344,17 +338,7 @@ class Plugins {
 	 *
 	 * @return bool
 	 */
-	function isActive($plugin_id) {
-		if ($this->active_guids_known) {
-			return isset($this->active_guids[$plugin_id]);
-		}
-
-		$site = elgg_get_site_entity();
-
-		if (!($site instanceof \ElggSite)) {
-			return false;
-		}
-
+	public function isActive($plugin_id) {
 		$plugin = $this->get($plugin_id);
 
 		if (!$plugin) {
@@ -373,25 +357,10 @@ class Plugins {
 	 *
 	 * @return bool
 	 * @access private
-	 * @throws \PluginException
 	 */
-	function load() {
-		if ($this->timer) {
-			$this->timer->begin([__METHOD__]);
-		}
+	public function load() {
 
 		$plugins_path = elgg_get_plugins_path();
-		$start_flags = ELGG_PLUGIN_INCLUDE_START |
-						ELGG_PLUGIN_REGISTER_VIEWS |
-						ELGG_PLUGIN_REGISTER_ACTIONS |
-						ELGG_PLUGIN_REGISTER_ROUTES |
-						ELGG_PLUGIN_REGISTER_LANGUAGES |
-						ELGG_PLUGIN_REGISTER_WIDGETS |
-						ELGG_PLUGIN_REGISTER_CLASSES;
-	
-		if (!$plugins_path) {
-			return false;
-		}
 
 		// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
 		if (file_exists("$plugins_path/disabled")) {
@@ -402,52 +371,146 @@ class Plugins {
 			return false;
 		}
 
-		$config = _elgg_config();
+		_elgg_services()->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
+		_elgg_services()->hooks->getEvents()->registerHandler('init', 'system', [$this, 'init']);
 
-		if ($config->system_cache_loaded) {
-			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_VIEWS;
+		return true;
+	}
+
+	/**
+	 * Boot the plugins
+	 *
+	 * @elgg_event plugins_boot:before system
+	 * @return void
+	 *
+	 * @access     private
+	 * @internal
+	 */
+	public function boot() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
 		}
 
-		if (_elgg_services()->translator->wasLoadedFromCache()) {
-			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_LANGUAGES;
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
 		}
 
-		$plugins = $this->boot_plugins;
-		if (!$plugins) {
-			$this->active_guids_known = true;
-
-			return true;
-		}
-
-		$return = true;
 		foreach ($plugins as $plugin) {
-			$id = $plugin->getID();
 			try {
-				$plugin->start($start_flags);
-				$this->active_guids[$id] = $plugin->guid;
-			} catch (Exception $e) {
-				$disable_plugins = _elgg_config()->auto_disable_plugins;
-				if ($disable_plugins === null) {
-					$disable_plugins = true;
+				$setup = $plugin->boot();
+				if ($setup instanceof Closure) {
+					$setup();
 				}
-				if ($disable_plugins) {
-					$plugin->deactivate();
-
-					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-						[$id, $plugin->guid, $e->getMessage()]);
-					elgg_add_admin_notice("cannot_start $id", $msg);
-					$return = false;
-				}
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
 			}
 		}
 
-		$this->active_guids_known = true;
+		$this->bootRoot();
 
 		if ($this->timer) {
 			$this->timer->end([__METHOD__]);
 		}
+	}
 
-		return $return;
+	/**
+	 * Boot root level custom plugin for starter-project installation
+	 * @return void
+	 */
+	protected function bootRoot() {
+		if (Paths::project() === Paths::elgg()) {
+			return;
+		}
+
+		// This is root directory start.php
+		$root_start = Paths::project() . "start.php";
+		if (is_file($root_start)) {
+			$setup = Application::requireSetupFileOnce($root_start);
+			if ($setup instanceof \Closure) {
+				$setup();
+			}
+		}
+
+		// Elgg is installed as a composer dep, so try to treat the root directory
+		// as a custom plugin that is always loaded last and can't be disabled...
+		if (!_elgg_config()->system_cache_loaded) {
+			// configure view locations for the custom plugin (not Elgg core)
+			$viewsFile = Paths::project() . 'views.php';
+			if (is_file($viewsFile)) {
+				$viewsSpec = Includer::includeFile($viewsFile);
+				if (is_array($viewsSpec)) {
+					_elgg_services()->views->mergeViewsSpec($viewsSpec);
+				}
+			}
+
+			// find views for the custom plugin (not Elgg core)
+			_elgg_services()->views->registerPluginViews(Paths::project());
+		}
+
+		if (!_elgg_config()->i18n_loaded_from_cache) {
+			_elgg_services()->translator->registerTranslations(Paths::project() . 'languages');
+		}
+	}
+
+	/**
+	 * Initialize plugins
+	 *
+	 * @elgg_event init system
+	 * @return void
+	 */
+	public function init() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$plugin->init();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+	}
+
+
+	/**
+	 * Disable a plugin upon exception
+	 *
+	 * @param ElggPlugin $plugin   Plugin entity to disable
+	 * @param Exception  $previous Exception thrown
+	 *
+	 * @return void
+	 */
+	protected function disable(ElggPlugin $plugin, Exception $previous) {
+		$disable_plugins = _elgg_config()->auto_disable_plugins;
+		if ($disable_plugins === null) {
+			$disable_plugins = true;
+		}
+
+		if (!$disable_plugins) {
+			return;
+		}
+
+		try {
+			$id = $plugin->getID();
+			$plugin->deactivate();
+
+			$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
+				[$id, $plugin->guid, $previous->getMessage()]);
+			elgg_add_admin_notice("cannot_start $id", $msg);
+		} catch (\PluginException $ex) {
+			elgg_log("Unable to disable plugin {$id}", 'ERROR');
+		}
 	}
 
 	/**
@@ -643,7 +706,7 @@ class Plugins {
 	 * @return array|false
 	 * @access private
 	 */
-	function getProvides($type = null, $name = null) {
+	public function getProvides($type = null, $name = null) {
 		if ($this->provides_cache === null) {
 			$active_plugins = $this->find('active');
 
@@ -691,21 +754,10 @@ class Plugins {
 	 * @return boolean
 	 * @access private
 	 */
-	function invalidateProvidesCache() {
+	public function invalidateProvidesCache() {
 		$this->provides_cache = null;
 
 		return true;
-	}
-
-	/**
-	 * Delete the cache holding whether plugins are active or not
-	 *
-	 * @return void
-	 * @access private
-	 */
-	public function invalidateIsActiveCache() {
-		$this->active_guids = [];
-		$this->active_guids_known = false;
 	}
 
 	/**
@@ -723,7 +775,7 @@ class Plugins {
 	 * )
 	 * @access private
 	 */
-	function checkProvides($type, $name, $version = null, $comparison = 'ge') {
+	public function checkProvides($type, $name, $version = null, $comparison = 'ge') {
 		$provided = $this->getProvides($type, $name);
 		if (!$provided) {
 			return [
@@ -759,7 +811,7 @@ class Plugins {
 	 * @return array
 	 * @access private
 	 */
-	function getDependencyStrings($dep) {
+	public function getDependencyStrings($dep) {
 		$translator = _elgg_services()->translator;
 		$dep_system = elgg_extract('type', $dep);
 		$info = elgg_extract('dep', $dep);

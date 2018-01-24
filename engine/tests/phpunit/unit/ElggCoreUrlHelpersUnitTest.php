@@ -139,6 +139,8 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function providerHttpUrlIsIdentical() {
+		self::createApplication();
+
 		$data = [
 			'http://example.com' => 'http://example.com',
 			'https://example.com' => 'https://example.com',
@@ -186,6 +188,8 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function providerHttpUrlIsIdenticalIgnoreParamsHandling() {
+		self::createApplication();
+
 		return [
 			array('page/handler', elgg_get_site_url() . 'page/handler', array('p', 'p2'), true),
 			array('page/handler?p=v&p2=q2', elgg_get_site_url() . 'page/handler?p=q&p2=v2', array('p', 'p2'), true),

@@ -26,8 +26,19 @@ class ElggSite extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
-		parent::initializeAttributes();
+		ElggData::initializeAttributes();
+
+		$this->attributes['guid'] = null;
+		$this->attributes['type'] = 'site';
 		$this->attributes['subtype'] = 'site';
+
+		$this->attributes['owner_guid'] = 0;
+		$this->attributes['container_guid'] = 0;
+
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
+		$this->attributes['time_updated'] = null;
+		$this->attributes['last_action'] = null;
+		$this->attributes['enabled'] = "yes";
 	}
 
 	/**
@@ -123,6 +134,13 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function getURL() {
 		return _elgg_config()->wwwroot;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isCacheable() {
+		return false;
 	}
 
 	/**

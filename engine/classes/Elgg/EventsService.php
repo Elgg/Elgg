@@ -155,6 +155,37 @@ class EventsService extends HooksRegistrationService {
 	}
 
 	/**
+	 * Trigger an sequence of <event>:before, <event>, and <event>:after handlers.
+	 * Allows <event>:before to terminate the sequence by returning false from a handler
+	 * Allows running a callable on successful <event> before <event>:after is triggered
+	 * Returns the result of the callable or bool
+	 *
+	 * @param string   $event       The event type
+	 * @param string   $object_type The object type
+	 * @param string   $object      The object involved in the event
+	 * @param callable $callable    Callable to run on successful event, before event:after
+	 * @return mixed
+	 */
+	public function triggerSequence($event, $object_type, $object = null, callable $callable = null) {
+		if (!$this->triggerBefore($event, $object_type, $object)) {
+			return false;
+		}
+
+		$result = $this->trigger($event, $object_type, $object);
+		if (!$result) {
+			return false;
+		}
+
+		if ($callable) {
+			$result = call_user_func($callable, $object);
+		}
+
+		$this->triggerAfter($event, $object_type, $object);
+
+		return $result;
+	}
+
+	/**
 	 * Trigger an event normally, but send a notice about deprecated use if any handlers are registered.
 	 *
 	 * @param string $event       The event type

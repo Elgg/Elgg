@@ -13,6 +13,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	use PluginTesting;
 
 	public function up() {
+		self::createApplication(true);
 		_elgg_services()->logger->disable();
 	}
 
@@ -375,7 +376,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	}
 
 	public function collectionRoutes() {
-
+		self::createApplication();
 		return [
 			[
 				'route' => "default:object:{$this->getSubtype()}",
