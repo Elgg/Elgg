@@ -684,6 +684,9 @@ class Application {
 			throw new InstallationException('Settings file is required to run database migrations.');
 		}
 
+		// setting timeout because some database migrations can take a long time
+		set_time_limit(0);
+		
 		$app = new \Phinx\Console\PhinxApplication();
 		$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
 			'configuration' => $conf,

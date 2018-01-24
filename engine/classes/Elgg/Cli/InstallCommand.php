@@ -40,12 +40,13 @@ class InstallCommand extends \Symfony\Component\Console\Command\Command {
 				 * Admin account
 				 */
 				'displayname' => 'Administrator',
-				'username' => $this->ask('Enter admin username: ', 'admin'),
+				'username' => $this->ask('Enter admin username [admin]: ', 'admin'),
 				'password' => $this->ask('Enter admin password: ', null, true),
 				'email' => $email = $this->ask('Enter admin email: '),
 				/**
 				 * Database parameters
 				 */
+				'dbhost' => $this->ask('Enter database host [localhost]: ', 'localhost'),
 				'dbuser' => $this->ask('Enter database username: '),
 				'dbpassword' => $this->ask('Enter database password: ', null, true),
 				'dbname' => $this->ask('Enter database name: '),
@@ -55,9 +56,9 @@ class InstallCommand extends \Symfony\Component\Console\Command\Command {
 				 */
 				'sitename' => $this->ask('Enter site name: '),
 				'siteemail' => $this->ask("Enter site email [$email]: ", $email),
-				'wwwroot' => $this->ask('Enter site URL: '),
+				'wwwroot' => $this->ask('Enter site URL (including protocol http|https and a trailing /): '),
 				'dataroot' => $this->ask('Enter data directory path: '),
-				'timezone' => 'UTC'
+				'timezone' => 'UTC',
 			];
 		}
 
