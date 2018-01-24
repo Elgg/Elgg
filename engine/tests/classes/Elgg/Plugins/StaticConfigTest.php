@@ -15,13 +15,7 @@ class StaticConfigTest extends UnitTestCase {
 	private $plugin;
 
 	public function up() {
-		$this->plugin = $this->startPlugin(
-			ELGG_PLUGIN_INCLUDE_START |
-			ELGG_PLUGIN_IGNORE_MANIFEST |
-			ELGG_PLUGIN_REGISTER_CLASSES |
-			ELGG_PLUGIN_REGISTER_VIEWS |
-			ELGG_PLUGIN_REGISTER_ROUTES
-		);
+		$this->plugin = $this->startPlugin();
 	}
 
 	public function down() {
@@ -65,7 +59,8 @@ class StaticConfigTest extends UnitTestCase {
 			if (elgg_extract('handler', $conf)) {
 				$this->assertTrue(is_callable($conf['handler']));
 			} else if (elgg_extract('resource', $conf)) {
-				$this->assertTrue(elgg_view_exists("resources/{$conf['resource']}"));
+				$view = "resources/{$conf['resource']}";
+				$this->assertTrue(elgg_view_exists($view), "Resource $view for route $name does not exist");
 			}
 
 			elgg_register_route($name, $conf);

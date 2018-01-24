@@ -2,7 +2,9 @@
 
 namespace Elgg\Database;
 
+use Closure;
 use DatabaseException;
+use Elgg\PluginHooksService;
 use ElggCache;
 use Elgg\Database;
 use Elgg\Profilable;
@@ -381,13 +383,6 @@ class Plugins {
 		}
 
 		$plugins_path = elgg_get_plugins_path();
-		$start_flags = ELGG_PLUGIN_INCLUDE_START |
-						ELGG_PLUGIN_REGISTER_VIEWS |
-						ELGG_PLUGIN_REGISTER_ACTIONS |
-						ELGG_PLUGIN_REGISTER_ROUTES |
-						ELGG_PLUGIN_REGISTER_LANGUAGES |
-						ELGG_PLUGIN_REGISTER_WIDGETS |
-						ELGG_PLUGIN_REGISTER_CLASSES;
 	
 		if (!$plugins_path) {
 			return false;
@@ -402,16 +397,6 @@ class Plugins {
 			return false;
 		}
 
-		$config = _elgg_config();
-
-		if ($config->system_cache_loaded) {
-			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_VIEWS;
-		}
-
-		if (_elgg_services()->translator->wasLoadedFromCache()) {
-			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_LANGUAGES;
-		}
-
 		$plugins = $this->boot_plugins;
 		if (!$plugins) {
 			$this->active_guids_known = true;
@@ -419,27 +404,60 @@ class Plugins {
 			return true;
 		}
 
-		$return = true;
+		$disable = function(ElggPlugin $plugin, Exception $e) {
+			$id = $plugin->getID();
+			$disable_plugins = _elgg_config()->auto_disable_plugins;
+			if ($disable_plugins === null) {
+				$disable_plugins = true;
+			}
+			if ($disable_plugins) {
+				$plugin->deactivate();
+
+				$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
+					[$id, $plugin->guid, $e->getMessage()]);
+				elgg_add_admin_notice("cannot_start $id", $msg);
+
+				unset($this->active_guids[$id]);
+			}
+		};
+
 		foreach ($plugins as $plugin) {
 			$id = $plugin->getID();
-			try {
-				$plugin->start($start_flags);
-				$this->active_guids[$id] = $plugin->guid;
-			} catch (Exception $e) {
-				$disable_plugins = _elgg_config()->auto_disable_plugins;
-				if ($disable_plugins === null) {
-					$disable_plugins = true;
-				}
-				if ($disable_plugins) {
-					$plugin->deactivate();
+			$this->active_guids[$id] = $plugin->guid;
+		}
 
-					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-						[$id, $plugin->guid, $e->getMessage()]);
-					elgg_add_admin_notice("cannot_start $id", $msg);
-					$return = false;
+		$boot = function() use ($plugins, $disable) {
+			foreach ($plugins as $plugin) {
+				if (!$plugin instanceof ElggPlugin || !$plugin->isActive()) {
+					continue;
+				}
+				try {
+					$setup = $plugin->boot();
+					if ($setup instanceof Closure) {
+						$setup();
+					}
+				} catch (Exception $ex) {
+					$disable($plugin, $ex);
 				}
 			}
-		}
+		};
+
+		$init = function() use ($plugins, $disable) {
+			foreach ($plugins as $plugin) {
+				if (!$plugin instanceof ElggPlugin || !$plugin->isActive()) {
+					continue;
+				}
+
+				try {
+					$plugin->init();
+				} catch (Exception $ex) {
+					$disable($plugin, $ex);
+				}
+			}
+		};
+
+		_elgg_services()->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', $boot);
+		_elgg_services()->hooks->getEvents()->registerHandler('init', 'system', $init);
 
 		$this->active_guids_known = true;
 
@@ -447,7 +465,7 @@ class Plugins {
 			$this->timer->end([__METHOD__]);
 		}
 
-		return $return;
+		return true;
 	}
 
 	/**

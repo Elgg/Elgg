@@ -13,6 +13,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	use PluginTesting;
 
 	public function up() {
+		self::createApplication(true);
 		_elgg_services()->logger->disable();
 	}
 

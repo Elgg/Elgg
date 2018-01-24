@@ -121,46 +121,6 @@ define('ELGG_HTTP_NETWORK_AUTHENTICATION_REQUIRED', 511); // RFC6585
 define('ELGG_JSON_ENCODING', JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT);
 
 /**
- * Tells \ElggPlugin::start() to include the start.php file.
- */
-define('ELGG_PLUGIN_INCLUDE_START', 1);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's views.
- */
-define('ELGG_PLUGIN_REGISTER_VIEWS', 2);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's languages.
- */
-define('ELGG_PLUGIN_REGISTER_LANGUAGES', 4);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's classes.
- */
-define('ELGG_PLUGIN_REGISTER_CLASSES', 8);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's actions.
- */
-define('ELGG_PLUGIN_REGISTER_ACTIONS', 16);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's widgets.
- */
-define('ELGG_PLUGIN_REGISTER_WIDGETS', 32);
-
-/**
- * Tells \ElggPlugin::start() to ignore manifest when starting.
- */
-define('ELGG_PLUGIN_IGNORE_MANIFEST', 64);
-
-/**
- * Tells \ElggPlugin::start() to automatically register the plugin's routes.
- */
-define('ELGG_PLUGIN_REGISTER_ROUTES', 128);
-
-/**
  * Prefix for plugin user setting names
  */
 define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');

@@ -172,6 +172,8 @@ class BootService {
 	public function invalidateCache() {
 		if (!$this->was_cleared) {
 			$this->cache->clear();
+			_elgg_config()->system_cache_loaded = false;
+			_elgg_config()->_boot_cache_hit = false;
 			$this->was_cleared = true;
 		}
 	}

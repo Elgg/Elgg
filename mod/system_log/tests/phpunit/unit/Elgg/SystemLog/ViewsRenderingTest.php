@@ -11,10 +11,7 @@ namespace Elgg\Views;
 class ViewsRenderingTest extends ViewRenderingTestCase {
 
 	public function up() {
-		$this->startPlugin(
-			ELGG_PLUGIN_IGNORE_MANIFEST |
-			ELGG_PLUGIN_REGISTER_CLASSES
-		);
+		$this->startPlugin();
 
 		parent::up();
 	}
