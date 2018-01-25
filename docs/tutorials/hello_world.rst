@@ -54,33 +54,29 @@ Next, create ``start.php`` in the ``mod/hello/`` directory and copy this code in
 The above code tells Elgg that it should call the function
 ``hello_world_init()`` once the Elgg core system is initiated.
 
-Registering a page handler
-==========================
+Registering a route
+===================
 
-The next step is to register a page handler which has the purpose of handling
+The next step is to register a route which has the purpose of handling
 request that users make to the URL ``https://elgg.example.com/hello``.
 
-Update ``start.php`` to look like this:
+Update ``elgg-plugin.php`` to look like this:
 
 .. code-block:: php
 
     <?php
 
-    elgg_register_event_handler('init', 'system', 'hello_world_init');
-    
-    function hello_world_init() {
-        elgg_register_page_handler('hello', 'hello_world_page_handler');
-    }
-    
-    function hello_world_page_handler() {
-    	echo elgg_view_resource('hello');
-    }
+	return [
+	    'routes' => [
+			'default:hello' => [
+				'path' => '/hello',
+				'resource' => 'hello',
+			],
+		],
+	];
 
-The call to ``elgg_register_page_handler()`` tells Elgg that it should
-call the function ``hello_world_page_handler()`` when a user navigates to 
-``https://elgg.example.com/hello/*``.
-
-The ``hello_world_page_handler()`` passes off rendering the actual page to a view file called ``hello.php``.
+This registration tells Elgg that it should call the resource view ``hello`` when a user navigates to 
+``https://elgg.example.com/hello``.
 
 View file
 =========
@@ -91,13 +87,11 @@ Create ``mod/hello/views/default/resources/hello.php`` with this content:
 
     <?php
 
-    $params = array(
-        'title' => 'Hello world!',
+    $body = elgg_view_layout('content', [
+    	'title' => 'Hello world!',
         'content' => 'My first page!',
         'filter' => '',
-    );
-
-    $body = elgg_view_layout('content', $params);
+    ]);
 
     echo elgg_view_page('Hello', $body);
 

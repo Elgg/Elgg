@@ -199,25 +199,57 @@ The ``getURL`` method fetches the URL of the new post. It is recommended
 that you override this method. The overriding will be done in the
 ``start.php`` file.
 
+Create elgg-plugin.php
+======================
+
+The ``/mod/my_blog/elgg-plugin.php`` file is used to declare various functionalities of the plugin.
+It can, for example, be used to configure entities, actions, widgets and routes.
+
+.. code-block:: php
+
+    <?php
+    
+	return [
+		'entities' => [
+			[
+				'type' => 'object',
+				'subtype' => 'my_blog',
+				'searchable' => true,
+			],
+		],
+		'actions' => [
+			'my_blog/save' => [],
+		],
+		'routes' => [
+			'view:object:blog' => [
+				'path' => '/my_blog/view/{guid}/{title?}',
+				'resource' => 'my_blog/view',
+			],
+			'add:object:blog' => [
+				'path' => '/my_blog/add/{guid?}',
+				'resource' => 'my_blog/add',
+			],
+			'edit:object:blog' => [
+				'path' => '/my_blog/edit/{guid}/{revision?}',
+				'resource' => 'my_blog/edit',
+				'requirements' => [
+					'revision' => '\d+',
+				],
+			],
+		],
+	];
+
+
 Create start.php
 ================
 
-The ``/mod/my_blog/start.php`` file needs to
-register the save action you created earlier,
-register a page handler and
-override the URL generation.
+The ``/mod/my_blog/start.php`` file needs to register a hook to override the URL generation.
 
 .. code-block:: php
 
     <?php
 
     function my_blog_init() {
-        // register the save action
-	    elgg_register_action("my_blog/save", __DIR__ . "/actions/my_blog/save.php");
-
-        // register the page handler
-        elgg_register_page_handler('my_blog', 'my_blog_page_handler');
-
         // register a hook handler to override urls
         elgg_register_plugin_hook_handler('entity:url', 'object', 'my_blog_set_url');
     }
