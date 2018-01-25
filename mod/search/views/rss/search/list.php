@@ -6,7 +6,8 @@
  * @uses $vars['params']
  */
 
-$entities = $vars['results']['entities'];
+$results = elgg_extract('results', $vars);
+$entities = elgg_extract('entities', $results);
 
 if (empty($entities)) {
 	return;
@@ -17,12 +18,10 @@ $service = new \Elgg\Search\Search($params);
 
 foreach ($entities as $entity) {
 	if ($view = $service->getSearchView()) {
-		$body .= elgg_view($view, [
+		echo elgg_view($view, [
 			'entity' => $entity,
 			'params' => $service->getParams(),
-			'results' => $vars['results']
+			'results' => $results,
 		]);
 	}
 }
-
-echo $body;

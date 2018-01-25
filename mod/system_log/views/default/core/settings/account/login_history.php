@@ -1,6 +1,9 @@
 <?php
 
 $user = elgg_get_page_owner_entity();
+if (!$user instanceof ElggUser) {
+	return;
+}
 
 $log = system_log_get_log($user->guid, 'login', '', 'user', '', 20);
 if (empty($log)) {
