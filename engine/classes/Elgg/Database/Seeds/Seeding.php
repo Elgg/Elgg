@@ -137,7 +137,7 @@ trait Seeding {
 					if ($metadata['banned']) {
 						$user->ban('Banned by seeder');
 					} else {
-						$user->unban('Unbanned by seeder');
+						$user->unban();
 					}
 				}
 
@@ -177,7 +177,11 @@ trait Seeding {
 
 		$user = false;
 		while (!$user instanceof \ElggUser) {
-			$user = $create();
+			try {
+				$user = $create();
+			} catch (Exception $ex) {
+				// try again
+			}
 		}
 
 		elgg_set_ignore_access($ia);
@@ -198,29 +202,32 @@ trait Seeding {
 	public function createGroup(array $attributes = [], array $metadata = [], array $options = []) {
 
 		$create = function () use ($attributes, $metadata, $options) {
-			$metadata['__faker'] = true;
 
-			if (empty($attributes['access_id'])) {
-				$attributes['access_id'] = ACCESS_PUBLIC;
+			$properties = array_merge($metadata, $attributes);
+
+			$properties['__faker'] = true;
+
+			if (!isset($properties['access_id'])) {
+				$properties['access_id'] = ACCESS_PUBLIC;
 			}
 
-			if (empty($metadata['content_access_mode'])) {
-				$metadata['content_access_mode'] = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
+			if (!isset($properties['content_access_mode'])) {
+				$properties['content_access_mode'] = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
 			}
 
-			if (empty($metadata['membership'])) {
-				$metadata['membership'] = ACCESS_PUBLIC;
+			if (!isset($properties['membership'])) {
+				$properties['membership'] = ACCESS_PUBLIC;
 			}
 
-			if (empty($metadata['name'])) {
-				$metadata['name'] = $this->faker()->sentence();
+			if (empty($properties['name'])) {
+				$properties['name'] = $this->faker()->sentence();
 			}
 
-			if (empty($metadata['description'])) {
-				$metadata['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
+			if (empty($properties['description'])) {
+				$properties['description'] = $this->faker()->text($this->faker()->numberBetween(500, 1000));
 			}
 
-			if (empty($attributes['owner_guid'])) {
+			if (!isset($properties['owner_guid'])) {
 				$user = elgg_get_logged_in_user_entity();
 				if (!$user) {
 					$user = $this->getRandomUser();
@@ -229,23 +236,23 @@ trait Seeding {
 					$user = $this->createUser();
 				}
 
-				$attributes['owner_guid'] = $user->guid;
+				$properties['owner_guid'] = $user->guid;
 			}
 
-			if (empty($attributes['container_guid'])) {
-				$attributes['container_guid'] = $attributes['owner_guid'];
+			if (!isset($properties['container_guid'])) {
+				$properties['container_guid'] = $properties['owner_guid'];
 			}
 
-			if (empty($attributes['subtype'])) {
-				$attributes['subtype'] = 'group';
+			if (empty($properties['subtype'])) {
+				$properties['subtype'] = 'group';
 			}
 
-			$owner = get_entity($attributes['owner_guid']);
+			$owner = get_entity($properties['owner_guid']);
 			if (!$owner) {
 				return false;
 			}
 
-			$container = get_entity($attributes['container_guid']);
+			$container = get_entity($properties['container_guid']);
 			if (!$container) {
 				return false;
 			}
@@ -255,21 +262,21 @@ trait Seeding {
 				foreach ($tool_options as $group_option) {
 					$option_toggle_name = $group_option->name . "_enable";
 					$option_default = $group_option->default_on ? 'yes' : 'no';
-					$metadata[$option_toggle_name] = $option_default;
+					$properties[$option_toggle_name] = $option_default;
 				}
 			}
 
 			if ($this->faker()->boolean(20)) {
-				$metadata['featured_group'] = 'yes';
+				$properties['featured_group'] = 'yes';
 			}
 
 			$group = new ElggGroup();
-			foreach ($attributes as $name => $value) {
+			foreach ($properties as $name => $value) {
 				$group->$name = $value;
 			}
 
 			$profile_fields = elgg_extract('profile_fields', $options, []);
-			$group = $this->populateMetadata($group, $profile_fields, $metadata);
+			$group = $this->populateMetadata($group, $profile_fields, $properties);
 
 			$group->save();
 
@@ -281,7 +288,7 @@ trait Seeding {
 				}
 			}
 
-			$group->join(get_entity($attributes['owner_guid']));
+			$group->join(get_entity($properties['owner_guid']));
 
 			elgg_create_river_item([
 				'view' => 'river/group/create',
@@ -341,16 +348,20 @@ trait Seeding {
 				$properties['tags'] = $this->faker()->words(10);
 			}
 
-			if (empty($properties['container_guid'])) {
-				$container = elgg_get_logged_in_user_entity();
-				if (!$container) {
-					$container = $this->getRandomUser();
-				}
-				if (!$container) {
-					$container = $this->createUser();
-				}
+			if (!isset($properties['container_guid'])) {
+				if (isset($properties['owner_guid'])) {
+					$properties['container_guid'] = $properties['owner_guid'];
+				} else {
+					$container = elgg_get_logged_in_user_entity();
+					if (!$container) {
+						$container = $this->getRandomUser();
+					}
+					if (!$container) {
+						$container = $this->createUser();
+					}
 
-				$properties['container_guid'] = $container->guid;
+					$properties['container_guid'] = $container->guid;
+				}
 			}
 
 			$container = get_entity($properties['container_guid']);
@@ -358,7 +369,7 @@ trait Seeding {
 				return false;
 			}
 
-			if (empty($properties['owner_guid'])) {
+			if (!isset($properties['owner_guid'])) {
 				$owner = $container;
 				$properties['owner_guid'] = $owner->guid;
 			}

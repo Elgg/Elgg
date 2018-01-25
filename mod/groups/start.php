@@ -69,6 +69,8 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu_group_profile');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
+
+	elgg_register_plugin_hook_handler('forward', '403', '_groups_gatekeeper_redirect');
 }
 
 /**
@@ -1176,6 +1178,23 @@ function groups_prepare_form_vars($group = null) {
 	elgg_clear_sticky_form('groups');
 
 	return $values;
+}
+
+/**
+ * Redirect unsuccessful attempts to view group content to group's profile
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return string|void
+ */
+function _groups_gatekeeper_redirect(\Elgg\Hook $hook) {
+
+	$exception = $hook->getParam('exception');
+	if ($exception instanceof \Elgg\GroupGatekeeperException) {
+		$page_owner = elgg_get_page_owner_entity();
+		if ($page_owner instanceof ElggGroup) {
+			return $page_owner->getURL();
+		}
+	}
 }
 
 return function() {

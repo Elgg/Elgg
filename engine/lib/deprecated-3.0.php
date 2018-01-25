@@ -1369,3 +1369,41 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_group_gatekeeper()', '3.0');
 	return elgg_group_gatekeeper($forward, $page_owner_guid);
 }
+
+
+/**
+ * May the current user access item(s) on this page? If the page owner is a group,
+ * membership, visibility, and logged in status are taken into account.
+ *
+ * @param bool $forward    If set to true (default), will forward the page;
+ *                         if set to false, will return true or false.
+ *
+ * @param int  $group_guid The group that owns the page. If not set, this
+ *                         will be pulled from elgg_get_page_owner_guid().
+ *
+ * @return bool Will return if $forward is set to false.
+ * @throws InvalidParameterException
+ * @throws SecurityException
+ * @since 1.9.0
+ * @deprecated 3.0 Use elgg_entity_gatekeeper()
+ */
+function elgg_group_gatekeeper($forward = true, $group_guid = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Use elgg_entity_gatekeeper()', '3.0');
+	if (null === $group_guid) {
+		$group_guid = elgg_get_page_owner_guid();
+	}
+
+	if (!$group_guid) {
+		return true;
+	}
+
+	try {
+		return elgg_entity_gatekeeper($group_guid);
+	} catch (Exception $ex) {
+		if ($forward) {
+			throw $ex;
+		} else {
+			return false;
+		}
+	}
+}

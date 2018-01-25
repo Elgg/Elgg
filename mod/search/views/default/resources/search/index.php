@@ -16,8 +16,9 @@ $params = $service->getParams();
 
 $container_guid = elgg_extract('container_guid', $params);
 if ($container_guid && !is_array($container_guid)) {
+	elgg_entity_gatekeeper($container_guid);
+	
 	elgg_set_page_owner_guid($container_guid);
-	elgg_group_gatekeeper(true);
 }
 
 $query = elgg_extract('query', $params);
