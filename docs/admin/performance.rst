@@ -129,15 +129,15 @@ The system cache can be disabled via the administration menu, and it is
 recommended that you do this on your development platform if you are
 writing Elgg plugins.
 
-Boot cache (experimental)
--------------------------
+Boot cache
+----------
 
 Elgg has the ability to cache numerous resources created and fetched during
-the boot process. To enable this cache you must set a TTL in your ``settings.php``
-file: ``$CONFIG->boot_cache_ttl = 10;``
+the boot process. To configure how long this cache is valid you must set a TTL in your ``settings.php``
+file: ``$CONFIG->boot_cache_ttl = 3600;``
 
-A small TTL is recommended because it brings all the benefits of caching under load
-while reducing the harm if Elgg's cache invalidation strategy should miss something.
+Look at the `Stash <http://www.stashphp.com/index.html>`_ documentation for more info about the TTL. 
+
 
 Database query cache
 --------------------
