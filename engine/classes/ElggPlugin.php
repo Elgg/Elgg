@@ -1260,6 +1260,8 @@ class ElggPlugin extends ElggObject {
 	 * {@inheritdoc}
 	 */
 	public function invalidateCache() {
+		
+		_elgg_services()->boot->invalidateCache();
 		_elgg_services()->plugins->invalidateCache($this->getID());
 
 		return parent::invalidateCache();

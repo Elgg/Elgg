@@ -2103,8 +2103,6 @@ abstract class ElggEntity extends \ElggData implements
 			return;
 		}
 
-		_elgg_services()->boot->invalidateCache();
-
 		_elgg_services()->entityCache->delete($this->guid);
 
 		$namespaces = [
