@@ -24,6 +24,17 @@ branches:
 matrix:
   fast_finish: true
   include:
+    # Lint checks
+    - php: 7.0
+      env: JOB_NAME=lint VARIA=true
+      dist: trusty
+      install:
+        - composer travis:install
+        - npm install -g yarn && yarn
+      script:
+        - bash .scripts/travis/check_commit_msgs.sh
+        - composer lint
+
     # Build and test javascript
     - php: 7.0
       env: JOB_NAME=js_tests VARIA=true
@@ -97,8 +108,6 @@ before_install:
 
 install:
   - composer travis:install-with-mysql
-  - bash .scripts/travis/check_commit_msgs.sh
-  - composer lint
   - php -f ./.scripts/travis/enable_plugins.php
   - php ./elgg-cli database:seed --limit=5 -vv
   - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
