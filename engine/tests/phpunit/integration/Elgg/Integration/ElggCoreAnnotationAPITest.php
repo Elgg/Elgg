@@ -200,9 +200,6 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		];
 	}
 
-	/**
-	 * @group Current
-	 */
 	public function testCanDeleteAnnotationById() {
 
 		$entity = $this->createObject();

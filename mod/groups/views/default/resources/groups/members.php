@@ -8,8 +8,6 @@ $group = get_entity($guid);
 
 elgg_set_page_owner_guid($guid);
 
-elgg_group_gatekeeper();
-
 elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 

@@ -171,9 +171,6 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		$this->markTestIncomplete();
 	}
 
-	/**
-	 * @group Current
-	 */
 	public function testRespectsLastForwardFrom() {
 
 		$user = $this->createOne('user', [], [

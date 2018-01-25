@@ -14,14 +14,9 @@ if (!$page instanceof ElggPage) {
 	throw new \Elgg\EntityNotFoundException();
 }
 
+elgg_entity_gatekeeper($page->container_guid);
+
 elgg_set_page_owner_guid($page->getContainerGUID());
-
-elgg_group_gatekeeper();
-
-$container = elgg_get_page_owner_entity();
-if (!$container) {
-	throw new \Elgg\EntityNotFoundException();
-}
 
 $title = "{$page->getDisplayName()}: " . elgg_echo('pages:revision');
 

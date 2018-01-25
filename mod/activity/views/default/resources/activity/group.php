@@ -1,12 +1,8 @@
 <?php
 
-elgg_group_gatekeeper();
-
 $group = elgg_get_page_owner_entity();
 
-if (!$group instanceof \ElggGroup) {
-	throw new \Elgg\EntityNotFoundException();
-}
+elgg_entity_gatekeeper($group->guid, 'group');
 
 elgg_group_tool_gatekeeper('activity');
 

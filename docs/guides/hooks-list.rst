@@ -374,7 +374,16 @@ Permission hooks
 	Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated.
 
 **gatekeeper, <entity_type>:<entity_subtype>**
-    Filters the result of ``elgg_entity_gatekeeper()`` to prevent access to an entity that user would otherwise have access to. A handler should return false to deny access to an entity.
+    Filters the result of ``elgg_entity_gatekeeper()`` to prevent or allow access to an entity that user would otherwise have or not have access to.
+    A handler can return ``false`` or an instance of ``HttpException`` to prevent access to an entity.
+    A handler can return ``true`` to override the result of the gatekeeper.
+    **Important** that the entity received by this hook is fetched with ignored access and including disabled entities,
+    so you have to be careful to not bypass the access system.
+
+    ``$params`` array includes:
+
+	 * ``entity`` - Entity that is being accessed
+	 * ``user`` - User accessing the entity (``null`` implies logged in user)
 
 
 Notifications

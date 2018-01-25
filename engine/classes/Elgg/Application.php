@@ -9,6 +9,7 @@ use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
+use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
 use InstallationException;
@@ -493,18 +494,26 @@ class Application {
 				throw new PageNotFoundException();
 			}
 		} catch (HttpException $ex) {
-			$forward_url = REFERRER;
+			$forward_url = null;
 			if ($ex instanceof GatekeeperException) {
-				$forward_url = elgg_is_logged_in() ? '' : elgg_get_login_url();
+				$forward_url = elgg_is_logged_in() ? null : elgg_get_login_url();
 			}
 
 			$hook_params = [
 				'exception' => $ex,
 			];
 			
-			$this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
+			$forward_url = $this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
-			$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
+			if (isset($forward_url)) {
+				if ($ex->getMessage()) {
+					register_error($ex->getMessage());
+				}
+				$response = new RedirectResponse($forward_url);
+			} else {
+				$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
+			}
+
 			$this->_services->responseFactory->respond($response);
 		}
 

@@ -314,6 +314,7 @@ Deprecated APIs
  * ``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``
  * ``elgg_batch_delete_callback``
  * ``\Elgg\Project\Paths::sanitize``: Use ``\Elgg\Project\Paths::sanitize()``
+ * ``elgg_group_gatekeeper``: Use ``elgg_entity_gatekeeper()``
 
 Removed global vars
 -------------------
@@ -760,6 +761,10 @@ within these page handlers has been moved to respective resource views.
 routes that depend on entity type and subtype.
 
 Use of ``handler`` parameter in entity menus has been deprecated in favour of named entity routes.
+
+Gatekeeper function have been refactored to serve as middleware in the routing process, and as such they no longer
+return values. These functions throw HTTP exceptions that are then routed to error pages and can be redirected
+to other pages via hooks.
 
 Labelling
 ---------
