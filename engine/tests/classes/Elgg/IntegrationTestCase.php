@@ -42,7 +42,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$config = self::getTestingConfig();
 		$sp = new ServiceProvider($config);
 		$config->system_cache_enabled = true;
-		$config->boot_cache_ttl = 10;
+		$config->boot_cache_ttl = 600;
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();

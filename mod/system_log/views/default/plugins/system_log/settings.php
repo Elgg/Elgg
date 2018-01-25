@@ -6,6 +6,9 @@
  */
 
 $plugin = elgg_extract('entity', $vars);
+if (!$plugin instanceof ElggPlugin) {
+	return;
+}
 
 echo elgg_view_field([
 	'#type' => 'select',
