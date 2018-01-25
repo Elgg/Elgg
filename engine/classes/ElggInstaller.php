@@ -614,7 +614,7 @@ class ElggInstaller {
 		]);
 		$notice = elgg_echo('install:complete:admin_notice', [$link]);
 		elgg_add_admin_notice('fresh_install', $notice);
-
+		
 		return $this->render('complete');
 	}
 

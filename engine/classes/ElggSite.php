@@ -53,9 +53,12 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function save() {
 		$db = $this->getDatabase();
-		$row = $db->getDataRow("
-			SELECT guid FROM {$db->prefix}entities WHERE type = '{$this->getType()}'
-		");
+		$qb = \Elgg\Database\Select::fromTable('entities');
+		$qb->select('*')
+			->where($qb->compare('type', '=', 'site', ELGG_VALUE_STRING));
+
+		$row = $db->getDataRow($qb);
+
 		if ($row) {
 			if ($row->guid == $this->attributes['guid']) {
 				// can save active site

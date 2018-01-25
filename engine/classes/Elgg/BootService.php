@@ -18,12 +18,9 @@ class BootService {
 	use Profilable;
 
 	/**
-	 * Under load, a short TTL gives nearly all of the benefits of a longer TTL, but it also ensures
-	 * that, should cache invalidation fail for some reason, it'll be rebuilt quickly anyway.
-	 *
-	 * In 2.x we do not cache by default. This will likely change to 10 in 3.0.
+	 * The default TTL if not set in settings.php
 	 */
-	const DEFAULT_BOOT_CACHE_TTL = 0;
+	const DEFAULT_BOOT_CACHE_TTL = 3600;
 
 	/**
 	 * Has the cache already been invalidated this request? Avoids thrashing
@@ -123,6 +120,7 @@ class BootService {
 				throw new \RuntimeException('Before installation, config->site must have an unsaved ElggSite.');
 			}
 		}
+
 		$config->site = $site;
 		$config->sitename = $site->name;
 		$config->sitedescription = $site->description;
@@ -200,8 +198,8 @@ class BootService {
 		if (!isset($data)) {
 			$data = new BootData();
 			$data->populate($db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);
-			if ($config->boot_cache_ttl) {
-				$this->cache->save('boot_data', $data, $config->boot_cache_ttl, [Invalidation::NONE]);
+			if ($config->boot_cache_ttl && $installed) {
+				$this->cache->save('boot_data', $data, $config->boot_cache_ttl);
 			}
 		} else {
 			$config->_boot_cache_hit = true;
