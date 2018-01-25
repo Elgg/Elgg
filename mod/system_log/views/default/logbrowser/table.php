@@ -5,7 +5,13 @@
  * @package ElggLogBrowser
  */
 
-$log_entries = $vars['log_entries'];
+$log_entries = elgg_extract('log_entries', $vars);
+
+if (empty($log_entries)) {
+	echo elgg_echo('notfound');
+	return true;
+}
+
 ?>
 
 <table class="elgg-table">
@@ -84,7 +90,3 @@ $alt = $alt ? '' : 'class="alt"';
 ?>
 </table>
 <?php
-if (!$log_entries) {
-	echo elgg_echo('notfound');
-	return true;
-}
