@@ -124,6 +124,16 @@ class ElggSite extends \ElggEntity {
 	public function getURL() {
 		return _elgg_config()->wwwroot;
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function invalidateCache() {
+		
+		_elgg_services()->boot->invalidateCache();
+
+		return parent::invalidateCache();
+	}
 
 	/**
 	 * {@inheritdoc}
