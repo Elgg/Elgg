@@ -9,6 +9,8 @@ namespace Elgg;
  * @subpackage Groups
  *
  * @access private
+ * @deprecated 3.0 Use ElggGroup::canAccessContent or Gatekeeper::assertAccessibleGroup
+ *
  */
 class GroupItemVisibility {
 
@@ -34,7 +36,7 @@ class GroupItemVisibility {
 	 *
 	 * @return \Elgg\GroupItemVisibility
 	 *
-	 * @todo Make this faster, considering it must run for every river item.
+	 * @deprecated 3.0 Use ElggGroup::canAccessContent
 	 */
 	static public function factory($container_guid, $use_cache = true) {
 		// cache because this may be called repeatedly during river display, and
