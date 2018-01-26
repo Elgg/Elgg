@@ -230,9 +230,6 @@ trait Seeding {
 			if (!isset($properties['owner_guid'])) {
 				$user = elgg_get_logged_in_user_entity();
 				if (!$user) {
-					$user = $this->getRandomUser();
-				}
-				if (!$user) {
 					$user = $this->createUser();
 				}
 
@@ -353,9 +350,6 @@ trait Seeding {
 					$properties['container_guid'] = $properties['owner_guid'];
 				} else {
 					$container = elgg_get_logged_in_user_entity();
-					if (!$container) {
-						$container = $this->getRandomUser();
-					}
 					if (!$container) {
 						$container = $this->createUser();
 					}
