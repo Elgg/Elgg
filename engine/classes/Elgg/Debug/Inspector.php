@@ -192,6 +192,36 @@ class Inspector {
 	}
 
 	/**
+	 * Get Elgg route information
+	 *
+	 * returns [route] => array(path, resource)
+	 *
+	 * @return array
+	 */
+	public function getRoutes() {
+		$tree = [];
+		foreach (_elgg_services()->routeCollection->all() as $name => $route) {
+			$handler = $route->getDefault('_handler') ? : '';
+			if ($handler) {
+				$this->describeCallable($handler);
+			}
+
+			$resource = $route->getDefault('_resource') ? : '';
+
+			$tree[$name] = [
+				$route->getPath(),
+				$resource,
+				$handler,
+			];
+		}
+		uasort($tree, function($e1, $e2) {
+			return strcmp($e1[0], $e2[0]);
+		});
+
+		return $tree;
+	}
+
+	/**
 	 * Get Elgg web services API methods
 	 *
 	 * @return array [method] => array(function, parameters, call_method, api auth, user auth)

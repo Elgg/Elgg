@@ -318,6 +318,7 @@ function developers_get_inspect_options() {
 		'Events' => elgg_echo('developers:inspect:events'),
 		'Menus' => elgg_echo('developers:inspect:menus'),
 		'Plugin Hooks' => elgg_echo('developers:inspect:pluginhooks'),
+		'Routes' => elgg_echo('developers:inspect:routes'),
 		'Simple Cache' => elgg_echo('developers:inspect:simplecache'),
 		'Views' => elgg_echo('developers:inspect:views'),
 		'Widgets' => elgg_echo('developers:inspect:widgets'),

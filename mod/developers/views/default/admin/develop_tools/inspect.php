@@ -30,6 +30,7 @@ switch ($inspect_type) {
 			"viewtype" => $viewtype,
 		]);
 		break;
+
 	default:
 		$data = $inspector->$method();
 		$page = elgg_view($view_name, [
