@@ -24,6 +24,15 @@ branches:
 matrix:
   fast_finish: true
   include:
+    # Commit message and lint
+    - php: 7.0
+      env: JOB_NAME=lint VARIA=true
+      install:
+        - composer travis:install
+      script:
+        - bash .scripts/travis/check_commit_msgs.sh
+        - composer lint
+
     # Build and test javascript
     - php: 7.0
       env: JOB_NAME=js_tests VARIA=true
@@ -50,6 +59,9 @@ matrix:
 
     # Memcached enabled
     - php: 7.0
+      services:
+        - memcached
+        - mysql
       env:
         - JOB_NAME=memcache_php56 VARIA=true
         - ELGG_MEMCACHE=1
@@ -60,14 +72,11 @@ matrix:
         - phpenv config-rm xdebug.ini
         - phpenv config-add ./.scripts/travis/memcached.ini
         - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
-      install:
-        - composer travis:install-with-mysql
-        - php -f ./.scripts/travis/enable_plugins.php
-        - php ./elgg-cli database:seed --limit=5 -vv
-        - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
-        - sleep 3 # give Web server some time to bind to sockets, etc
       before_script:
         - php -f ./.scripts/is_memcached_enabled.php
+      script:
+        - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
+        - ./vendor/bin/phpunit
 
     # Test upgrade path from 2.3
     - php: 7.0
@@ -84,11 +93,13 @@ matrix:
         - php -f ./.scripts/travis/enable_plugins.php
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
+      script:
+        - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
+        - ./vendor/bin/phpunit
 
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
-  - memcached
   - mysql
 
 before_install:
@@ -97,8 +108,6 @@ before_install:
 
 install:
   - composer travis:install-with-mysql
-  - bash .scripts/travis/check_commit_msgs.sh
-  - composer lint
   - php -f ./.scripts/travis/enable_plugins.php
   - php ./elgg-cli database:seed --limit=5 -vv
   - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
