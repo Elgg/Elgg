@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg\Search;
+
 use Elgg\IntegratedUnitTestCase;
 
 /**

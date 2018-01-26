@@ -15,15 +15,11 @@ if (!$page->canEdit()) {
 }
 
 $container = $page->getContainerEntity();
-if (!$container) {
-	throw new \Elgg\EntityNotFoundException();
+if ($container) {
+	elgg_push_collection_breadcrumbs('object', 'page', $container);
 }
 
-elgg_set_page_owner_guid($container->guid);
-
-elgg_push_collection_breadcrumbs('object', 'page', $container);
 pages_prepare_parent_breadcrumbs($page);
-
 elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 elgg_push_breadcrumb(elgg_echo('edit'));
 
