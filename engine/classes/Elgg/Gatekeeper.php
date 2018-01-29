@@ -176,7 +176,7 @@ class Gatekeeper {
 				}
 
 				$parent = $this->assertExists($entity->$prop);
-				$this->assertAccessibleEntity($parent);
+				$this->assertAccessibleEntity($parent, $user);
 			}
 		} catch (HttpException $ex) {
 			$result = $ex;
