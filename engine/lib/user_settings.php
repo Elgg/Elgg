@@ -403,7 +403,10 @@ function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => $plugin_id,
 			'text' => $title,
-			'href' => "settings/plugins/{$user->username}/$plugin_id",
+			'href' => elgg_generate_url('settings:tools', [
+				'username' => $user->username,
+				'plugin_id' => $plugin_id,
+			]),
 			'parent_name' => '1_plugins',
 			'section' => 'configure',
 		]);
