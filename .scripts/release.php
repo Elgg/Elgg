@@ -37,7 +37,7 @@ $branch = "release-$version";
 // Setup. Version checks are here so we fail early if any deps are missing
 run_commands([
 	"git --version",
-	"yarn version",
+	"yarn --version",
 	"node --version",
 	"sphinx-build --version",
 
