@@ -68,6 +68,7 @@ return array(
 	'developers:inspect:pluginhooks' => 'Plugin Hooks',
 	'developers:inspect:priority' => 'Priority',
 	'developers:inspect:simplecache' => 'Simple Cache',
+	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Views',
 	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view input/output is filtered through these Plugin Hooks:",
 	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
@@ -77,6 +78,10 @@ return array(
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functions',
 	'developers:inspect:file_location' => 'File path from Elgg root',
+	'developers:inspect:route' => 'Route Name',
+	'developers:inspect:path' => 'Path Pattern',
+	'developers:inspect:resource' => 'Resource View',
+	'developers:inspect:handler' => 'Handler',
 
 	// event logging
 	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
