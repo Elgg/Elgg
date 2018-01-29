@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 10:03+0100\n"
+"POT-Creation-Date: 2018-01-29 16:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -216,64 +216,60 @@ msgstr ""
 msgid "Elgg comes with a set of plugins. These provide the basic functionality for your social network."
 msgstr ""
 
-#: ../../plugins/index.rst:20
+#: ../../plugins/index.rst:21
 msgid "The following plugins are also bundled with Elgg, but are not (yet) documented"
 msgstr ""
 
-#: ../../plugins/index.rst:22
-msgid "aalborg_theme"
-msgstr ""
-
 #: ../../plugins/index.rst:23
-msgid "bookmarks"
+msgid "activity"
 msgstr ""
 
 #: ../../plugins/index.rst:24
-msgid "ckeditor"
+msgid "bookmarks"
 msgstr ""
 
 #: ../../plugins/index.rst:25
-msgid "custom_index"
+msgid "ckeditor"
 msgstr ""
 
 #: ../../plugins/index.rst:26
-msgid "developers"
+msgid "custom_index"
 msgstr ""
 
 #: ../../plugins/index.rst:27
-msgid "embed"
+msgid "developers"
 msgstr ""
 
 #: ../../plugins/index.rst:28
-msgid "externalpages"
+msgid "discussions"
 msgstr ""
 
 #: ../../plugins/index.rst:29
-msgid "garbagecollector"
+msgid "embed"
 msgstr ""
 
 #: ../../plugins/index.rst:30
-msgid "htmlawed"
+msgid "externalpages"
 msgstr ""
 
 #: ../../plugins/index.rst:31
-msgid "invitefriends"
+msgid "friends"
 msgstr ""
 
 #: ../../plugins/index.rst:32
-msgid "legacy_urls"
+msgid "friends_collections"
 msgstr ""
 
 #: ../../plugins/index.rst:33
-msgid "likes"
+msgid "garbagecollector"
 msgstr ""
 
 #: ../../plugins/index.rst:34
-msgid "logbrowser"
+msgid "invitefriends"
 msgstr ""
 
 #: ../../plugins/index.rst:35
-msgid "logrotate"
+msgid "likes"
 msgstr ""
 
 #: ../../plugins/index.rst:36
@@ -297,18 +293,14 @@ msgid "site_notifications"
 msgstr ""
 
 #: ../../plugins/index.rst:41
-msgid "tagcloud"
+msgid "system_log"
 msgstr ""
 
 #: ../../plugins/index.rst:42
-msgid "twitter_api"
+msgid "tagcloud"
 msgstr ""
 
 #: ../../plugins/index.rst:43
-msgid "uservalidationbyemail"
-msgstr ""
-
-#: ../../plugins/index.rst:44
 msgid "web_services"
 msgstr ""
 
@@ -442,5 +434,49 @@ msgstr ""
 
 #: ../../plugins/thewire.rst:4
 msgid "Elgg wire plugin \"The Wire\" is Twitter-style microblogging plugin that allows users to post notes to the wire."
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:2
+msgid "User validation by e-mail"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:4
+msgid "The uservalidationbyemail plugin adds a step to the user registration process. After the user registered on the site, an e-mail is sent to their e-mail address in order to validate that the e-mail address belongs to the user. In the e-mail is an verification link, only after the user clicked on the link will the account of the user be able to login to the site."
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:9
+msgid "The process for the user"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:11
+msgid "The user creates an account by going to the registration page of your site"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:12
+msgid "After the account is created the user lands on a page with instructions to check their e-mail account for the validation e-mail"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:13
+msgid "In the validation e-mail is a link to confirm their e-mail address"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:14
+msgid "After clicking on the link, the account is validated"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:15
+msgid "If possible the user gets logged in"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:17
+msgid "If the user tries to login before validating their account an error is shown to indicate that the user needs to check their e-mail account. Also the validation e-mail is sent again."
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:21
+msgid "Options for site administrators"
+msgstr ""
+
+#: ../../plugins/uservalidationbyemail.rst:23
+msgid "A site administrator can take some actions on unvalidated accounts. Under Administration -> Users -> Unvalidated is a list of unvalidated users. The administrator can manualy validate or delete the user. Also the option to resend the validation e-mail is present."
 msgstr ""
 

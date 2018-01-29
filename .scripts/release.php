@@ -37,7 +37,7 @@ $branch = "release-$version";
 // Setup. Version checks are here so we fail early if any deps are missing
 run_commands([
 	"git --version",
-	"yarn version",
+	"yarn --version",
 	"node --version",
 	"sphinx-build --version",
 
@@ -61,7 +61,7 @@ run_commands(array(
 	// Generate changelog
 	"sphinx-build -b gettext docs docs/locale/pot",
 	"sphinx-intl build --locale-dir=docs/locale/",
-	"yarn install && yarn update",
+	"yarn install",
 	"node .scripts/write-changelog.js",
 	// commit everything to github
 	"git add .",
