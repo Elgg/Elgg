@@ -61,7 +61,7 @@ run_commands(array(
 	// Generate changelog
 	"sphinx-build -b gettext docs docs/locale/pot",
 	"sphinx-intl build --locale-dir=docs/locale/",
-	"yarn install && yarn update",
+	"yarn install",
 	"node .scripts/write-changelog.js",
 	// commit everything to github
 	"git add .",
