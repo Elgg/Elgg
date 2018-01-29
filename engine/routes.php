@@ -104,7 +104,7 @@ return [
 		'resource' => 'settings/statistics',
 	],
 	'settings:tools' => [
-		'path' => '/settings/tools/{username?}/{plugin_id}',
+		'path' => '/settings/plugins/{username?}/{plugin_id}',
 		'resource' => 'settings/tools',
 	],
 	'widgets:add_panel' => [
