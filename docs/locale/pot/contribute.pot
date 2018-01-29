@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 10:03+0100\n"
+"POT-Creation-Date: 2018-01-29 16:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,12 +22,6 @@ msgstr ""
 
 #: ../../contribute/code.rst:4
 msgid "Understand Elgg's standards and processes to get your changes accepted as quickly as possible."
-msgstr ""
-
-#: ../../contribute/code.rst:0
-#: ../../contribute/docs.rst:0
-#: ../../contribute/releases.rst:0
-msgid "Contents"
 msgstr ""
 
 #: ../../contribute/code.rst:11
@@ -334,529 +328,1041 @@ msgstr ""
 msgid "``git push -f your_remote your_branch`` to force push the branch (updating your PR)."
 msgstr ""
 
-#: ../../contribute/code.rst:187
-msgid "Testing"
+#: ../../contribute/code.rst:188
+msgid "Coding Standards"
 msgstr ""
 
-#: ../../contribute/code.rst:189
-msgid "Elgg has automated tests for both PHP and JavaScript functionality. All new contributions are required to come with appropriate tests."
+#: ../../contribute/code.rst:190
+msgid "Elgg uses set of standards that are based partially on PEAR and PSR2 standards. You can view the ruleset in ``vendor/elgg/sniffs/elgg.xml``."
 msgstr ""
 
 #: ../../contribute/code.rst:192
-msgid "General guidelines"
+msgid "To check your code for standard violations (provided you have installed Elgg with dev dependencies), run:"
 msgstr ""
 
-#: ../../contribute/code.rst:194
-msgid "Break tests up by the behaviors you want to test and use names that describe the behavior. E.g.:"
+#: ../../contribute/code.rst:199
+msgid "To automatically fix fixable violations, run:"
 msgstr ""
 
-#: ../../contribute/code.rst:196
-msgid "Not so good: One big method ``testAdd()``."
-msgstr ""
-
-#: ../../contribute/code.rst:198
-msgid "Better: Methods ``testAddingZeroChangesNothing`` and ``testAddingNegativeNumberSubtracts``"
-msgstr ""
-
-#: ../../contribute/code.rst:200
-msgid "Strive for :ref:`componentized designs <contribute/code#solid>` that allow testing in isolation, without large dependency graphs or DB access. Injecting dependencies is key here."
-msgstr ""
-
-#: ../../contribute/code.rst:203
-msgid "PHP Tests"
-msgstr ""
-
-#: ../../contribute/code.rst:206
-msgid "PHPUnit"
-msgstr ""
-
-#: ../../contribute/code.rst:208
-msgid "Located in ``engine/tests/phpunit``, this is our preferred test suite. It uses no DB access, and has only superficial access to the entities API."
-msgstr ""
-
-#: ../../contribute/code.rst:210
-msgid "We encourage you to create components that are testable in this suite if possible."
+#: ../../contribute/code.rst:205
+msgid "To check core directories, you can use shortcut ``composer lint`` and ``composer lint-fixer``."
 msgstr ""
 
 #: ../../contribute/code.rst:211
-msgid "Consider separating storage from your component so at least business logic can be tested here."
+msgid "Testing"
 msgstr ""
 
-#: ../../contribute/code.rst:212
-msgid "Depend on the ``Elgg\\Filesystem\\*`` classes rather than using PHP filesystem functions."
-msgstr ""
-
-#: ../../contribute/code.rst:215
-msgid "SimpleTest"
+#: ../../contribute/code.rst:213
+msgid "Elgg has automated tests for both PHP and JavaScript functionality. All new contributions are required to come with appropriate tests."
 msgstr ""
 
 #: ../../contribute/code.rst:217
-msgid "The rest of the files in ``engine/tests`` form our integration suite, for anything that needs access to the DB or entity APIs."
+msgid ":doc:`tests`"
 msgstr ""
 
-#: ../../contribute/code.rst:219
-msgid "Our long-term goals are to minimize these and convert them to PHPUnit"
+#: ../../contribute/code.rst:220
+msgid "General guidelines"
 msgstr ""
 
 #: ../../contribute/code.rst:222
-msgid "Testing interactions between services"
+msgid "Break tests up by the behaviors you want to test and use names that describe the behavior. E.g.:"
 msgstr ""
 
 #: ../../contribute/code.rst:224
-msgid "Ideally your tests would construct your own isolated object graphs for direct manipulation, but this isn't always possible."
+msgid "Not so good: One big method ``testAdd()``."
 msgstr ""
 
 #: ../../contribute/code.rst:226
-msgid "If your test relies on Elgg's Service Provider (``_elgg_services()`` returns a ``Elgg\\Di\\ServiceProvider``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well."
+msgid "Better: Methods ``testAddingZeroChangesNothing`` and ``testAddingNegativeNumberSubtracts``"
 msgstr ""
 
 #: ../../contribute/code.rst:228
-msgid "Due to these local references, replacing services on the SP within a test often will not have the desired effect. Instead, you may need to use functionality baked into the services themselves:"
-msgstr ""
-
-#: ../../contribute/code.rst:230
-msgid "The ``events`` and ``hooks`` services have methods ``backup()`` and ``restore()``."
+msgid "Strive for :ref:`componentized designs <contribute/code#solid>` that allow testing in isolation, without large dependency graphs or DB access. Injecting dependencies is key here."
 msgstr ""
 
 #: ../../contribute/code.rst:231
-msgid "The ``logger`` service has methods ``disable()`` and ``enable()``."
+msgid "PHP Tests"
 msgstr ""
 
 #: ../../contribute/code.rst:234
-msgid "Jasmine Tests"
+msgid "PHPUnit"
 msgstr ""
 
 #: ../../contribute/code.rst:236
-msgid "Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next to their source files in ``views/default/**.js``. Karma will automatically pick up on new ``*Test.js`` files and run those tests."
+msgid "Located in ``engine/tests/phpunit``, this is our preferred test suite. It uses no DB access, and has only superficial access to the entities API."
 msgstr ""
 
-#: ../../contribute/code.rst:241
-msgid "Test boilerplate"
+#: ../../contribute/code.rst:238
+msgid "We encourage you to create components that are testable in this suite if possible."
+msgstr ""
+
+#: ../../contribute/code.rst:239
+msgid "Consider separating storage from your component so at least business logic can be tested here."
+msgstr ""
+
+#: ../../contribute/code.rst:240
+msgid "Depend on the ``Elgg\\Filesystem\\*`` classes rather than using PHP filesystem functions."
+msgstr ""
+
+#: ../../contribute/code.rst:243
+msgid "SimpleTest"
+msgstr ""
+
+#: ../../contribute/code.rst:245
+msgid "The rest of the files in ``engine/tests`` form our integration suite, for anything that needs access to the DB or entity APIs."
+msgstr ""
+
+#: ../../contribute/code.rst:247
+msgid "Our long-term goals are to minimize these and convert them to PHPUnit"
+msgstr ""
+
+#: ../../contribute/code.rst:250
+msgid "Testing interactions between services"
+msgstr ""
+
+#: ../../contribute/code.rst:252
+msgid "Ideally your tests would construct your own isolated object graphs for direct manipulation, but this isn't always possible."
+msgstr ""
+
+#: ../../contribute/code.rst:254
+msgid "If your test relies on Elgg's Service Provider (``_elgg_services()`` returns a ``Elgg\\Di\\ServiceProvider``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well."
 msgstr ""
 
 #: ../../contribute/code.rst:256
-msgid "Running the tests"
+msgid "Due to these local references, replacing services on the SP within a test often will not have the desired effect. Instead, you may need to use functionality baked into the services themselves:"
 msgstr ""
 
-#: ../../contribute/code.rst:257
-msgid "Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests."
+#: ../../contribute/code.rst:258
+msgid "The ``events`` and ``hooks`` services have methods ``backup()`` and ``restore()``."
+msgstr ""
+
+#: ../../contribute/code.rst:259
+msgid "The ``logger`` service has methods ``disable()`` and ``enable()``."
 msgstr ""
 
 #: ../../contribute/code.rst:262
-msgid "You will need to have nodejs and npm installed."
+msgid "Jasmine Tests"
 msgstr ""
 
 #: ../../contribute/code.rst:264
-msgid "First install all the development dependencies:"
+msgid "Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next to their source files in ``views/default/**.js``. Karma will automatically pick up on new ``*Test.js`` files and run those tests."
 msgstr ""
 
-#: ../../contribute/code.rst:270
-msgid "Run through the tests just once and then quit:"
+#: ../../contribute/code.rst:269
+msgid "Test boilerplate"
 msgstr ""
 
-#: ../../contribute/code.rst:276
-msgid "You can also run tests continuously during development so they run on each save:"
-msgstr ""
-
-#: ../../contribute/code.rst:283
-msgid "Debugging JS tests"
+#: ../../contribute/code.rst:284
+msgid "Running the tests"
 msgstr ""
 
 #: ../../contribute/code.rst:285
-msgid "You can run the test suite inside Chrome dev tools:"
+msgid "Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests."
 msgstr ""
 
-#: ../../contribute/code.rst:291
-msgid "This will output a URL like ``http://localhost:9876/``."
+#: ../../contribute/code.rst:290
+msgid "You will need to have nodejs and yarn installed."
 msgstr ""
 
-#: ../../contribute/code.rst:293
-msgid "Open the URL in Chrome, and click \"Debug\"."
+#: ../../contribute/code.rst:292
+msgid "First install all the development dependencies:"
 msgstr ""
 
-#: ../../contribute/code.rst:294
-msgid "Open Chrome dev tools and the Console tab."
+#: ../../contribute/code.rst:298
+msgid "Run through the tests just once and then quit:"
 msgstr ""
 
-#: ../../contribute/code.rst:295
-msgid "Reload the page."
-msgstr ""
-
-#: ../../contribute/code.rst:297
-msgid "If you alter a test you'll have to quit Karma with ``Ctrl-c`` and restart it."
-msgstr ""
-
-#: ../../contribute/code.rst:300
-msgid "Coding best practices"
-msgstr ""
-
-#: ../../contribute/code.rst:302
-msgid "Make your code easier to read, easier to maintain, and easier to debug. Consistent use of these guidelines means less guess work for developers, which means happier, more productive developers."
-msgstr ""
-
-#: ../../contribute/code.rst:308
-msgid "General coding"
+#: ../../contribute/code.rst:304
+msgid "You can also run tests continuously during development so they run on each save:"
 msgstr ""
 
 #: ../../contribute/code.rst:311
-msgid "Don't Repeat Yourself"
+msgid "Debugging JS tests"
 msgstr ""
 
 #: ../../contribute/code.rst:313
-msgid "If you are copy-pasting code a significant amount of code, consider whether there's an opportunity to reduce duplication by introducing a function, an additional argument, a view, or a new component class."
-msgstr ""
-
-#: ../../contribute/code.rst:316
-msgid "E.g. If you find views that are identical except for a single value, refactor into a single view that takes an option."
+msgid "You can run the test suite inside Chrome dev tools:"
 msgstr ""
 
 #: ../../contribute/code.rst:319
-msgid "**Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest way possible and refactor to reduce duplication in the next minor release branch."
+msgid "This will output a URL like ``http://localhost:9876/``."
+msgstr ""
+
+#: ../../contribute/code.rst:321
+msgid "Open the URL in Chrome, and click \"Debug\"."
+msgstr ""
+
+#: ../../contribute/code.rst:322
+msgid "Open Chrome dev tools and the Console tab."
+msgstr ""
+
+#: ../../contribute/code.rst:323
+msgid "Reload the page."
 msgstr ""
 
 #: ../../contribute/code.rst:325
-msgid "Embrace SOLID and GRASP"
+msgid "If you alter a test you'll have to quit Karma with ``Ctrl-c`` and restart it."
 msgstr ""
 
-#: ../../contribute/code.rst:327
-msgid "Use these `principles for OO design`__ to solve problems using loosely coupled components, and try to make all components and integration code testable."
+#: ../../contribute/code.rst:328
+msgid "Coding best practices"
 msgstr ""
 
-#: ../../contribute/code.rst:333
-msgid "Whitespace is free"
+#: ../../contribute/code.rst:330
+msgid "Make your code easier to read, easier to maintain, and easier to debug. Consistent use of these guidelines means less guess work for developers, which means happier, more productive developers."
 msgstr ""
 
-#: ../../contribute/code.rst:335
-msgid "Don't be afraid to use it to separate blocks of code. Use a single space to separate function params and string concatenation."
+#: ../../contribute/code.rst:336
+msgid "General coding"
 msgstr ""
 
 #: ../../contribute/code.rst:339
-msgid "Variable names"
+msgid "Don't Repeat Yourself"
 msgstr ""
 
 #: ../../contribute/code.rst:341
-msgid "Use self-documenting variable names.  ``$group_guids`` is better than ``$array``."
+msgid "If you are copy-pasting code a significant amount of code, consider whether there's an opportunity to reduce duplication by introducing a function, an additional argument, a view, or a new component class."
 msgstr ""
 
-#: ../../contribute/code.rst:343
-msgid "Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``."
+#: ../../contribute/code.rst:344
+msgid "E.g. If you find views that are identical except for a single value, refactor into a single view that takes an option."
 msgstr ""
 
-#: ../../contribute/code.rst:346
-msgid "Interface names"
+#: ../../contribute/code.rst:347
+msgid "**Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest way possible and refactor to reduce duplication in the next minor release branch."
 msgstr ""
 
-#: ../../contribute/code.rst:348
-msgid "Use the pattern ``Elgg\\{Namespace}\\{Name}``."
-msgstr ""
-
-#: ../../contribute/code.rst:350
-msgid "Do not include an ``I`` prefix or an ``Interface`` suffix."
-msgstr ""
-
-#: ../../contribute/code.rst:352
-msgid "We do not include any prefix or suffix so that we're encouraged to:"
-msgstr ""
-
-#: ../../contribute/code.rst:354
-msgid "name implementation classes more descriptively (the \"default\" name is taken)."
+#: ../../contribute/code.rst:353
+msgid "Embrace SOLID and GRASP"
 msgstr ""
 
 #: ../../contribute/code.rst:355
-msgid "type-hint on interfaces, because that is the shortest, easiest thing to do."
+msgid "Use these `principles for OO design`__ to solve problems using loosely coupled components, and try to make all components and integration code testable."
 msgstr ""
 
-#: ../../contribute/code.rst:357
-msgid "Name implementations like ``Elgg\\{Namespace}\\{Interface}\\{Implementation}``."
+#: ../../contribute/code.rst:361
+msgid "Whitespace is free"
 msgstr ""
 
-#: ../../contribute/code.rst:360
-msgid "Functions"
-msgstr ""
-
-#: ../../contribute/code.rst:362
-msgid "Where possible, have functions/methods return a single type. Use empty values such as ``array()``, ``\"\"``, or ``0`` to indicate no results."
-msgstr ""
-
-#: ../../contribute/code.rst:365
-msgid "Be careful where valid return values (like ``\"0\"``) could be interpreted as empty."
+#: ../../contribute/code.rst:363
+msgid "Don't be afraid to use it to separate blocks of code. Use a single space to separate function params and string concatenation."
 msgstr ""
 
 #: ../../contribute/code.rst:367
-msgid "Functions not throwing an exception on error should return ``false`` upon failure."
+msgid "Variable names"
 msgstr ""
 
 #: ../../contribute/code.rst:369
-msgid "Functions returning only boolean should be prefaced with ``is_`` or ``has_`` (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
+msgid "Use self-documenting variable names.  ``$group_guids`` is better than ``$array``."
 msgstr ""
 
-#: ../../contribute/code.rst:373
-msgid "Ternary syntax"
+#: ../../contribute/code.rst:371
+msgid "Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``."
 msgstr ""
 
-#: ../../contribute/code.rst:375
-msgid "Acceptable only for single-line, non-embedded statements."
+#: ../../contribute/code.rst:374
+msgid "Interface names"
+msgstr ""
+
+#: ../../contribute/code.rst:376
+msgid "Use the pattern ``Elgg\\{Namespace}\\{Name}``."
 msgstr ""
 
 #: ../../contribute/code.rst:378
-msgid "Minimize complexity"
+msgid "Do not include an ``I`` prefix or an ``Interface`` suffix."
 msgstr ""
 
 #: ../../contribute/code.rst:380
-msgid "Minimize nested blocks and distinct execution paths through code. Use `Return Early`__ to reduce nesting levels and cognitive load when reading code."
+msgid "We do not include any prefix or suffix so that we're encouraged to:"
 msgstr ""
 
-#: ../../contribute/code.rst:386
-msgid "Use comments effectively"
+#: ../../contribute/code.rst:382
+msgid "name implementation classes more descriptively (the \"default\" name is taken)."
+msgstr ""
+
+#: ../../contribute/code.rst:383
+msgid "type-hint on interfaces, because that is the shortest, easiest thing to do."
+msgstr ""
+
+#: ../../contribute/code.rst:385
+msgid "Name implementations like ``Elgg\\{Namespace}\\{Interface}\\{Implementation}``."
 msgstr ""
 
 #: ../../contribute/code.rst:388
-msgid "Good comments describe the \"why.\"  Good code describes the \"how.\" E.g.:"
+msgid "Functions"
 msgstr ""
 
 #: ../../contribute/code.rst:390
-#: ../../contribute/code.rst:528
-#: ../../contribute/code.rst:548
-#: ../../contribute/code.rst:563
-#: ../../contribute/code.rst:581
-#: ../../contribute/code.rst:603
-#: ../../contribute/code.rst:627
-msgid "Bad:"
+msgid "Where possible, have functions/methods return a single type. Use empty values such as ``array()``, ``\"\"``, or ``0`` to indicate no results."
+msgstr ""
+
+#: ../../contribute/code.rst:393
+msgid "Be careful where valid return values (like ``\"0\"``) could be interpreted as empty."
+msgstr ""
+
+#: ../../contribute/code.rst:395
+msgid "Functions not throwing an exception on error should return ``false`` upon failure."
+msgstr ""
+
+#: ../../contribute/code.rst:397
+msgid "Functions returning only boolean should be prefaced with ``is_`` or ``has_`` (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
 msgstr ""
 
 #: ../../contribute/code.rst:401
-#: ../../contribute/code.rst:513
-#: ../../contribute/code.rst:538
-#: ../../contribute/code.rst:554
-#: ../../contribute/code.rst:569
-#: ../../contribute/code.rst:589
-#: ../../contribute/code.rst:612
-#: ../../contribute/code.rst:635
-msgid "Good:"
+msgid "Ternary syntax"
 msgstr ""
 
-#: ../../contribute/code.rst:412
-msgid "Always include a comment if it's not obvious that something must be done in a certain way. Other developers looking at the code should be discouraged from refactoring in a way that would break the code."
+#: ../../contribute/code.rst:403
+msgid "Acceptable only for single-line, non-embedded statements."
 msgstr ""
 
-#: ../../contribute/code.rst:424
-msgid "Commit effectively"
+#: ../../contribute/code.rst:406
+msgid "Minimize complexity"
 msgstr ""
 
-#: ../../contribute/code.rst:426
-msgid "Err on the side of `atomic commits`__ which are highly focused on changing one aspect of the system."
+#: ../../contribute/code.rst:408
+msgid "Minimize nested blocks and distinct execution paths through code. Use `Return Early`__ to reduce nesting levels and cognitive load when reading code."
 msgstr ""
 
-#: ../../contribute/code.rst:427
-msgid "Avoid mixing in unrelated changes or extensive whitespace changes. Commits with many changes are scary and make pull requests difficult to review."
+#: ../../contribute/code.rst:414
+msgid "Use comments effectively"
+msgstr ""
+
+#: ../../contribute/code.rst:416
+msgid "Good comments describe the \"why.\"  Good code describes the \"how.\" E.g.:"
+msgstr ""
+
+#: ../../contribute/code.rst:418
+#: ../../contribute/code.rst:556
+#: ../../contribute/code.rst:576
+#: ../../contribute/code.rst:591
+#: ../../contribute/code.rst:609
+#: ../../contribute/code.rst:631
+#: ../../contribute/code.rst:655
+msgid "Bad:"
 msgstr ""
 
 #: ../../contribute/code.rst:429
-msgid "Use visual git tools to craft `highly precise and readable diffs`__."
-msgstr ""
-
-#: ../../contribute/code.rst:435
-msgid "Include tests"
-msgstr ""
-
-#: ../../contribute/code.rst:437
-msgid "When at all possible :ref:`include unit tests <contribute/code#testing>` for code you add or alter."
+#: ../../contribute/code.rst:541
+#: ../../contribute/code.rst:566
+#: ../../contribute/code.rst:582
+#: ../../contribute/code.rst:597
+#: ../../contribute/code.rst:617
+#: ../../contribute/code.rst:640
+#: ../../contribute/code.rst:663
+msgid "Good:"
 msgstr ""
 
 #: ../../contribute/code.rst:440
-msgid "Keep bugfixes simple"
+msgid "Always include a comment if it's not obvious that something must be done in a certain way. Other developers looking at the code should be discouraged from refactoring in a way that would break the code."
 msgstr ""
 
-#: ../../contribute/code.rst:442
-msgid "Avoid the temptation to refactor code for a bugfix release. Doing so tends to introduce regressions, breaking functionality in what should be a stable release."
+#: ../../contribute/code.rst:452
+msgid "Commit effectively"
 msgstr ""
 
-#: ../../contribute/code.rst:446
-msgid "PHP guidelines"
-msgstr ""
-
-#: ../../contribute/code.rst:448
-msgid "These are the required coding standards for Elgg core and all bundled plugins. Plugin developers are strongly encouraged to adopt these standards."
-msgstr ""
-
-#: ../../contribute/code.rst:451
-msgid "Developers should first read the `PSR-2 Coding Standard Guide`__."
+#: ../../contribute/code.rst:454
+msgid "Err on the side of `atomic commits`__ which are highly focused on changing one aspect of the system."
 msgstr ""
 
 #: ../../contribute/code.rst:455
-msgid "Elgg's standards extend PSR-2, but differ in the following ways:"
+msgid "Avoid mixing in unrelated changes or extensive whitespace changes. Commits with many changes are scary and make pull requests difficult to review."
 msgstr ""
 
 #: ../../contribute/code.rst:457
-msgid "Indent using one tab character, not spaces."
+msgid "Use visual git tools to craft `highly precise and readable diffs`__."
 msgstr ""
 
-#: ../../contribute/code.rst:458
-msgid "Opening braces for classes, methods, and functions must go on the same line."
-msgstr ""
-
-#: ../../contribute/code.rst:459
-msgid "If a line reaches over 100 characters, consider refactoring (e.g. introduce variables)."
-msgstr ""
-
-#: ../../contribute/code.rst:460
-msgid "Compliance with `PSR-1`__ is encouraged, but not strictly required."
+#: ../../contribute/code.rst:463
+msgid "Include tests"
 msgstr ""
 
 #: ../../contribute/code.rst:465
-msgid "Documentation"
+msgid "When at all possible :ref:`include unit tests <contribute/code#testing>` for code you add or alter."
 msgstr ""
 
-#: ../../contribute/code.rst:467
-msgid "Include PHPDoc comments on functions and classes (all methods; declared properties when appropriate), including types and descriptions of all parameters."
+#: ../../contribute/code.rst:468
+msgid "Keep bugfixes simple"
 msgstr ""
 
-#: ../../contribute/code.rst:471
-msgid "In lists of ``@param`` declarations, the beginnings of variable names and descriptions must line up."
+#: ../../contribute/code.rst:470
+msgid "Avoid the temptation to refactor code for a bugfix release. Doing so tends to introduce regressions, breaking functionality in what should be a stable release."
 msgstr ""
 
 #: ../../contribute/code.rst:474
-msgid "Annotate classes, methods, properties, and functions with ``@access private`` unless they are intended for public use, are already of limited visibility, or are within a class already marked as private."
+msgid "PHP guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:478
-msgid "Use ``//`` or ``/* */`` when commenting."
+#: ../../contribute/code.rst:476
+msgid "These are the required coding standards for Elgg core and all bundled plugins. Plugin developers are strongly encouraged to adopt these standards."
 msgstr ""
 
-#: ../../contribute/code.rst:480
-msgid "Use only ``//`` comments inside function/method bodies."
+#: ../../contribute/code.rst:479
+msgid "Developers should first read the `PSR-2 Coding Standard Guide`__."
 msgstr ""
 
 #: ../../contribute/code.rst:483
-msgid "Naming"
+msgid "Elgg's standards extend PSR-2, but differ in the following ways:"
 msgstr ""
 
 #: ../../contribute/code.rst:485
-msgid "Use underscores to separate words in the names of functions, variables, and properties. Method names are camelCase."
+msgid "Indent using one tab character, not spaces."
+msgstr ""
+
+#: ../../contribute/code.rst:486
+msgid "Opening braces for classes, methods, and functions must go on the same line."
+msgstr ""
+
+#: ../../contribute/code.rst:487
+msgid "If a line reaches over 100 characters, consider refactoring (e.g. introduce variables)."
 msgstr ""
 
 #: ../../contribute/code.rst:488
-msgid "Names of functions for public use must begin with ``elgg_``."
+msgid "Compliance with `PSR-1`__ is encouraged, but not strictly required."
 msgstr ""
 
-#: ../../contribute/code.rst:490
-msgid "All other function names must begin with ``_elgg_``."
-msgstr ""
-
-#: ../../contribute/code.rst:492
-msgid "Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``)."
+#: ../../contribute/code.rst:493
+#: ../../contribute/core/move_plugin.rst:124
+msgid "Documentation"
 msgstr ""
 
 #: ../../contribute/code.rst:495
-msgid "Miscellaneous"
-msgstr ""
-
-#: ../../contribute/code.rst:497
-msgid "For PHP requirements, see ``composer.json``."
+msgid "Include PHPDoc comments on functions and classes (all methods; declared properties when appropriate), including types and descriptions of all parameters."
 msgstr ""
 
 #: ../../contribute/code.rst:499
-msgid "Do not use PHP shortcut tags ``<?`` or ``<%``. It is OK to use ``<?=`` since it is always enabled as of PHP 5.4."
+msgid "In lists of ``@param`` declarations, the beginnings of variable names and descriptions must line up."
 msgstr ""
 
 #: ../../contribute/code.rst:502
-msgid "When creating strings with variables:"
+msgid "Annotate classes, methods, properties, and functions with ``@access private`` unless they are intended for public use, are already of limited visibility, or are within a class already marked as private."
 msgstr ""
 
-#: ../../contribute/code.rst:504
-msgid "use double-quoted strings"
+#: ../../contribute/code.rst:506
+msgid "Use ``//`` or ``/* */`` when commenting."
 msgstr ""
 
-#: ../../contribute/code.rst:505
-msgid "wrap variables with braces only when necessary."
+#: ../../contribute/code.rst:508
+msgid "Use only ``//`` comments inside function/method bodies."
 msgstr ""
 
-#: ../../contribute/code.rst:507
-msgid "Bad (hard to read, misuse of quotes and {}s):"
+#: ../../contribute/code.rst:511
+msgid "Naming"
 msgstr ""
 
-#: ../../contribute/code.rst:519
-msgid "Remove trailing whitespace at the end of lines. An easy way to do this before you commit is to run ``php .scripts/fix_style.php`` from the installation root."
+#: ../../contribute/code.rst:513
+msgid "Use underscores to separate words in the names of functions, variables, and properties. Method names are camelCase."
+msgstr ""
+
+#: ../../contribute/code.rst:516
+msgid "Names of functions for public use must begin with ``elgg_``."
+msgstr ""
+
+#: ../../contribute/code.rst:518
+msgid "All other function names must begin with ``_elgg_``."
+msgstr ""
+
+#: ../../contribute/code.rst:520
+msgid "Name globals and constants in ``ALL_CAPS`` (``ACCESS_PUBLIC``, ``$CONFIG``)."
 msgstr ""
 
 #: ../../contribute/code.rst:523
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../../contribute/code.rst:525
+msgid "For PHP requirements, see ``composer.json``."
+msgstr ""
+
+#: ../../contribute/code.rst:527
+msgid "Do not use PHP shortcut tags ``<?`` or ``<%``. It is OK to use ``<?=`` since it is always enabled as of PHP 5.4."
+msgstr ""
+
+#: ../../contribute/code.rst:530
+msgid "When creating strings with variables:"
+msgstr ""
+
+#: ../../contribute/code.rst:532
+msgid "use double-quoted strings"
+msgstr ""
+
+#: ../../contribute/code.rst:533
+msgid "wrap variables with braces only when necessary."
+msgstr ""
+
+#: ../../contribute/code.rst:535
+msgid "Bad (hard to read, misuse of quotes and {}s):"
+msgstr ""
+
+#: ../../contribute/code.rst:547
+msgid "Remove trailing whitespace at the end of lines. An easy way to do this before you commit is to run ``php .scripts/fix_style.php`` from the installation root."
+msgstr ""
+
+#: ../../contribute/code.rst:551
 msgid "CSS guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:526
+#: ../../contribute/code.rst:554
 msgid "Use shorthand where possible"
 msgstr ""
 
-#: ../../contribute/code.rst:546
+#: ../../contribute/code.rst:574
 msgid "Use hyphens, not underscores"
 msgstr ""
 
-#: ../../contribute/code.rst:561
+#: ../../contribute/code.rst:589
 msgid "One property per line"
 msgstr ""
 
-#: ../../contribute/code.rst:577
+#: ../../contribute/code.rst:605
 msgid "Property declarations"
 msgstr ""
 
-#: ../../contribute/code.rst:579
+#: ../../contribute/code.rst:607
 msgid "These should be spaced like so: ``property: value;``"
 msgstr ""
 
-#: ../../contribute/code.rst:596
+#: ../../contribute/code.rst:624
 msgid "Vendor prefixes"
 msgstr ""
 
-#: ../../contribute/code.rst:598
+#: ../../contribute/code.rst:626
 msgid "Group vendor-prefixes for the same property together"
 msgstr ""
 
-#: ../../contribute/code.rst:599
+#: ../../contribute/code.rst:627
 msgid "Longest vendor-prefixed version first"
 msgstr ""
 
-#: ../../contribute/code.rst:600
+#: ../../contribute/code.rst:628
 msgid "Always include non-vendor-prefixed version"
 msgstr ""
 
-#: ../../contribute/code.rst:601
+#: ../../contribute/code.rst:629
 msgid "Put an extra newline between vendor-prefixed groups and other properties"
 msgstr ""
 
-#: ../../contribute/code.rst:625
+#: ../../contribute/code.rst:653
 msgid "Group subproperties"
 msgstr ""
 
-#: ../../contribute/code.rst:644
+#: ../../contribute/code.rst:672
 msgid "Javascript guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:646
+#: ../../contribute/code.rst:674
 msgid "Same formatting standards as PHP apply."
 msgstr ""
 
-#: ../../contribute/code.rst:648
+#: ../../contribute/code.rst:676
 msgid "All functions should be in the ``elgg`` namespace."
 msgstr ""
 
-#: ../../contribute/code.rst:650
+#: ../../contribute/code.rst:678
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 
-#: ../../contribute/code.rst:661
+#: ../../contribute/code.rst:689
 msgid "Deprecating APIs"
 msgstr ""
 
-#: ../../contribute/code.rst:663
+#: ../../contribute/code.rst:691
 msgid "Occasionally functions and classes must be deprecated in favor of newer replacements. Since 3rd party plugin authors rely on a consistent API, backward compatibility must be maintained, but will not be maintained indefinitely as plugin authors are expected to properly update their plugins. In order to maintain backward compatibility, deprecated APIs will follow these guidelines:"
 msgstr ""
 
-#: ../../contribute/code.rst:670
+#: ../../contribute/code.rst:698
 msgid "Minor version (1.x) that deprecates an API must include a wrapper function/class (or otherwise appropriate means) to maintain backward compatibility, including any bugs in the original function/class. This compatibility layer uses ``elgg_deprecated_notice('...', '1.11')`` to log that the function is deprecated."
 msgstr ""
 
-#: ../../contribute/code.rst:676
+#: ../../contribute/code.rst:704
 msgid "The next major revision (2.0) removes the compatibility layer. Any use of the deprecated API should be corrected before this."
+msgstr ""
+
+#: ../../contribute/core/index.rst:2
+msgid "Core tasks"
+msgstr ""
+
+#: ../../contribute/core/index.rst:4
+msgid "Certain tasks surrounding Elgg are reserved for the core developer as they require special permissions. The guides below show the workflow for these actions."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:2
+msgid "Moving a plugin to its own repository"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:9
+msgid "Plugin extraction steps"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:12
+msgid "Move the code to its own repository"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:14
+msgid "Follow the GitHub guide `Splitting a subfolder out into a new repository`_. This will make sure that the commit history is preserved."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:18
+msgid "Dependencies"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:20
+msgid "If the plugin has dependencies on any external libraries, make sure these dependencies are managed. For example if a PHP library is required which comes bundled with Elgg core, make sure to add it to the ``composer.json`` of this plugin as you can't rely on Elgg core keeping the library."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:25
+msgid "Commit the code"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:27
+msgid "During the GitHub guide a new repository is created for the plugin you're trying to move."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:29
+msgid "Since an attemp was already made to extract some of the plugins to their own repository maybe the repository already exists."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:31
+msgid "If the repository didn't exist for the plugin, make sure you create it under the `Elgg organisation`_."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:33
+msgid "If the repository already exists, the best way to update the code would be by a Pull Request. This will however probably fail because of a difference in how the repository was first created (as discussed in this `GitHub issue`_)."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:36
+msgid "The initial repositories where created with"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:42
+msgid "and the guide calls for"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:48
+msgid "This will leave a difference in the commits which GitHub is unable to resolve. In that case you'll have to force push the changes to the existing Elgg plugin repository."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:53
+msgid "Since this will override all the history in the plugin repository, make sure you know this is what you want to do."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:56
+msgid "Packagist"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:58
+msgid "Make sure the ``composer.json`` of the plugin contains all the relevant information. Here is an example:"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:80
+msgid "The ``conflict`` rule is there to help prevent the installation of this plugin in an unsupported Elgg version."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:82
+msgid "Add the repository to `Packagist`_, for the existing repositories this was already done. Make sure `Packagist`_ is updated correctly with all the commits."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:86
+msgid "Tag a release"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:88
+msgid "In order for Composer to be able to cache the plugin for faster installation, a release has to be made on the repository. Probably the first version that needs to be tagged is the same version as mentioned in the ``manifest.xml``. After this development can begin, following the `Semver`_ versioning scheme."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:93
+#: ../../contribute/core/move_plugin.rst:109
+#: ../../contribute/i18n.rst:2
+msgid "Translations"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:95
+msgid "If the translations for the plugin need to be managed by `Transifex`_, add the plugin to `Transifex`_."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:98
+msgid "Elgg core cleanup"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:100
+msgid "Now that the plugin has been moved to it's own repository, it's time to make a Pull Request on Elgg core to remove the original code."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:103
+msgid "Remove the plugin"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:105
+msgid "Delete the ``mod`` folder for the plugin"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:106
+msgid "Search for the plugin name in core to find any references which also need to be removed (eg. old docs, special tests, etc.)"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:111
+msgid "Since the plugin no longer is part of Elgg core, make sure the configuration of `Transifex`_ no longer contains the plugin."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:114
+msgid "Bundled"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:116
+msgid "If the plugin still comes bundled with the release of a new Elgg version, make sure to add the plugin to the ``composer.json``."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:119
+msgid "Composer"
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:121
+msgid "Check the core composer dependencies if requirements that were specific for the removed plugin can also be removed in the core dependencies."
+msgstr ""
+
+#: ../../contribute/core/move_plugin.rst:126
+msgid "Add a mention in the :doc:`/appendix/upgrade-notes` documentation that the plugin was removed from Elgg core."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:2
+msgid "Release Process Workflow"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:4
+msgid "Release a new version of Elgg."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:6
+msgid "This is the process the core team follows for making a new Elgg release. We have published this information in the spirit of openness, and to streamline onboarding of new team members."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:15
+msgid "Requirements"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:17
+msgid "SSH access to elgg.org"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:18
+msgid "Commit access to http://github.com/Elgg/Elgg"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:19
+msgid "Admin access to https://elgg.org/"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:20
+msgid "Access to `Twitter account`_"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:21
+msgid "Node.js and Yarn installed"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:22
+msgid "Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:23
+msgid "Transifex client installed (``easy_install transifex-client``)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:24
+msgid "Transifex account with access to Elgg project"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:27
+msgid "Merge commits up from lower branches"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:29
+msgid "Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other branches."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:33
+msgid "For each branch"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:35
+msgid "Check out the branch, make sure it's up to date, and make a new work branch with the merge. E.g. here we're merging 1.12 commits into 2.0:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:45
+msgid "If already up-to-date (no commits to merge), we can stop here for this branch."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:47
+msgid "If there are conflicts, resolve them, ``git add .``, and ``git merge``."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:49
+msgid "Make a PR for the branch and wait for automated tests and approval by other dev(s)."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:55
+msgid "Once merged, we would repeat the process to merge 2.0 commits into 2.1."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:58
+msgid "First new stable minor/major release"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:60
+msgid "Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:63
+msgid "Prepare the release"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:65
+msgid "Bring your local git clone up to date."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:67
+msgid "Merge latest commits up from lowest supported branch."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:69
+msgid "Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR if there is anything that needs to be merged up."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:71
+msgid "Install the prerequisites:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:80
+msgid "On Windows you need to run these command in a console with admin privileges"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:82
+msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:89
+msgid "This creates a ``release-1.12.5`` branch in your local repo."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:91
+msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:99
+msgid "Next, submit a PR via GitHub for automated testing and approval by another developer:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:106
+msgid "Tag the release"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:108
+msgid "Once approved and merged, tag the release:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:116
+msgid "Or create a release on GitHub"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:118
+msgid "Goto releases"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:119
+msgid "Click 'Draft a new release'"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:120
+msgid "Enter the version"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:121
+msgid "Select the correct branch (eg 1.12 for a 1.12.x release, 2.3 for a 2.3.x release, etc)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:122
+msgid "Set the release title as 'Elgg {version}'"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:123
+msgid "Paste the CHANGELOG.md part related to this release in the description"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:125
+msgid "Some final administration"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:127
+msgid "Mark GitHub release milestones as completed"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:128
+msgid "Move unresolved tickets in released milestones to later milestones"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:131
+msgid "Update the website"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:133
+msgid "ssh to elgg.org"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:134
+msgid "Clone https://github.com/Elgg/elgg-scripts"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:137
+msgid "Build zip package"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:139
+msgid "Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:143
+msgid "If this is your first time on the server building a release run ``composer global require \"fxp/composer-asset-plugin:^1.2.0\"``. This will make sure you can download bower-assets during the build process."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:158
+msgid "Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:159
+msgid "If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg`` item in the composer requires list."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:163
+msgid "Building 1.x zip packages"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:165
+msgid "Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:176
+msgid "Update elgg.org download page"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:178
+msgid "Clone https://github.com/Elgg/community"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:179
+msgid "Add the new version to ``classes/Elgg/Releases.php``"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:180
+#: ../../contribute/core/releases.rst:198
+msgid "Commit and push the changes"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:181
+msgid "Update the plugin on www.elgg.org"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:188
+msgid "Update elgg.org"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:190
+msgid "Clone https://github.com/Elgg/www.elgg.org"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:191
+msgid "Change the required Elgg version in ``composer.json``"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:192
+msgid "Update vendors"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:199
+msgid "Pull to live site"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:205
+msgid "Update dependencies"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:213
+msgid "Go to community admin panel"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:212
+msgid "Flush APC cache"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:213
+msgid "Run upgrade"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:216
+msgid "Make the announcement"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:218
+msgid "This should be the very last thing you do."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:220
+msgid "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:221
+msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:222
+msgid "Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:223
+msgid "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:224
+msgid "Tweet from the elgg `Twitter account`_"
+msgstr ""
+
+#: ../../contribute/database.rst:2
+msgid "Database"
+msgstr ""
+
+#: ../../contribute/database.rst:4
+msgid "Contributing database schema changes"
+msgstr ""
+
+#: ../../contribute/database.rst:11
+msgid "Database Migrations"
+msgstr ""
+
+#: ../../contribute/database.rst:13
+msgid "Elgg uses `Phinx`_ to manage the database migrations."
+msgstr ""
+
+#: ../../contribute/database.rst:19
+msgid "Create a migration"
+msgstr ""
+
+#: ../../contribute/database.rst:21
+msgid "To create a new migration run the following in your console:"
+msgstr ""
+
+#: ../../contribute/database.rst:28
+msgid "This will generate a timestamped skeleton migration in ``engine/schema/migrations/``. Follow Phinx documentation to call the necessary methods to modify the database tables."
+msgstr ""
+
+#: ../../contribute/database.rst:33
+msgid "Executing a migration"
+msgstr ""
+
+#: ../../contribute/database.rst:35
+msgid "Migrations are executed every time your run ``upgrade.php``. If you would like to execute migrations manually, you can do so via the command line:"
+msgstr ""
+
+#: ../../contribute/database.rst:42
+msgid "Check Phinx documentation for additional flags that allow you to run a single migration or a set of migrations within a time range."
 msgstr ""
 
 #: ../../contribute/docs.rst:2
@@ -872,7 +1378,7 @@ msgid "Testing docs locally"
 msgstr ""
 
 #: ../../contribute/docs.rst:12
-msgid "Elgg has a `grunt`_ script that automatically builds the docs, opens them in a browser window, and automatically reloads as you make changes (the reload takes just a few seconds). You need `npm`_ and `sphinx`_ installed to be able to use these scripts."
+msgid "Elgg has a `grunt`_ script that automatically builds the docs, opens them in a browser window, and automatically reloads as you make changes (the reload takes just a few seconds). You need `yarn`_ and `sphinx`_ installed to be able to use these scripts."
 msgstr ""
 
 #: ../../contribute/docs.rst:22
@@ -1061,10 +1567,6 @@ msgstr ""
 msgid "For more information, see http://sphinx-doc.org/latest/intl.html#translating-with-sphinx-intl"
 msgstr ""
 
-#: ../../contribute/i18n.rst:2
-msgid "Translations"
-msgstr ""
-
 #: ../../contribute/i18n.rst:4
 msgid "Translations multiply the impact that Elgg can have by making it accessible to a larger percentage of the world."
 msgstr ""
@@ -1087,6 +1589,142 @@ msgstr ""
 
 #: ../../contribute/i18n.rst:17
 msgid "Plugin authors are encouraged to coordinate translations via Transifex as well so the whole community can be unified and make it really easy for translators to contribute to any plugin in the Elgg ecosystem."
+msgstr ""
+
+#: ../../contribute/i18n.rst:22
+msgid "Pulling translations"
+msgstr ""
+
+#: ../../contribute/i18n.rst:24
+msgid "The translations made in Transifex need to be periodically pulled into the Elgg code repository. This can be done with the script ``.scripts/languages.php`` bundled within Elgg's source code."
+msgstr ""
+
+#: ../../contribute/i18n.rst:31
+msgid "Prerequisites for running the script are:"
+msgstr ""
+
+#: ../../contribute/i18n.rst:29
+msgid "Access to command line"
+msgstr ""
+
+#: ../../contribute/i18n.rst:30
+msgid "`Git`_"
+msgstr ""
+
+#: ../../contribute/i18n.rst:31
+msgid "`Transifex CLI tool`_"
+msgstr ""
+
+#: ../../contribute/i18n.rst:40
+msgid "The script will do the following steps:"
+msgstr ""
+
+#: ../../contribute/i18n.rst:37
+msgid "Create a new git branch named ``{branch}_i18n_{timestamp}``"
+msgstr ""
+
+#: ../../contribute/i18n.rst:38
+msgid "Pull translations for all languages that have 95% of the strings translated"
+msgstr ""
+
+#: ../../contribute/i18n.rst:39
+msgid "Remove possible invalid language codes"
+msgstr ""
+
+#: ../../contribute/i18n.rst:40
+msgid "Commit the changes to the branch"
+msgstr ""
+
+#: ../../contribute/i18n.rst:42
+msgid "After this you must push the branch to Github and make a new Pull request."
+msgstr ""
+
+#: ../../contribute/i18n.rst:44
+msgid "For example if you want to pull the translations for the ``3.x`` branch, run the following commands:"
+msgstr ""
+
+#: ../../contribute/i18n.rst:52
+msgid "Run the command without parameters to get more detailed information of the usage."
+msgstr ""
+
+#: ../../contribute/i18n.rst:55
+msgid "Transifex configuration"
+msgstr ""
+
+#: ../../contribute/i18n.rst:57
+msgid "The configuration for Transifex can be found from Elgg's source code in the file ``.tx/config``."
+msgstr ""
+
+#: ../../contribute/i18n.rst:62
+msgid "This file defines:"
+msgstr ""
+
+#: ../../contribute/i18n.rst:61
+msgid "The Transifex project associated with Elgg's major version"
+msgstr ""
+
+#: ../../contribute/i18n.rst:62
+msgid "The location of all the files that have translatable content"
+msgstr ""
+
+#: ../../contribute/i18n.rst:64
+msgid "Read the `Transifex documentation`_ for further details."
+msgstr ""
+
+#: ../../contribute/i18n.rst:69
+msgid "New major Elgg version"
+msgstr ""
+
+#: ../../contribute/i18n.rst:71
+msgid "Every major version of Elgg must have its own project in Transifex. This way we can make sure that strings added and removed between versions do not conflict with each other. For example a translation key removed in Elgg 3 should not get removed from translations made for Elgg 2. Respectfully a new string added only to Elgg 3 should not be included in the translations meant for Elgg 2."
+msgstr ""
+
+#: ../../contribute/i18n.rst:77
+msgid "The process of setting up a new major version is:"
+msgstr ""
+
+#: ../../contribute/i18n.rst:79
+msgid "Pull latest translations from Transifex to the previous major version"
+msgstr ""
+
+#: ../../contribute/i18n.rst:80
+msgid "Merge the git branch of the previous version to the new to make sure all the latest translation keys are present"
+msgstr ""
+
+#: ../../contribute/i18n.rst:82
+msgid "Create a new Transifex project to https://www.transifex.com/elgg/"
+msgstr ""
+
+#: ../../contribute/i18n.rst:83
+msgid "Update ``.tx/config`` file in the development branch of the new major version"
+msgstr ""
+
+#: ../../contribute/i18n.rst:85
+msgid "Update the configuration to point to the new Transifex project"
+msgstr ""
+
+#: ../../contribute/i18n.rst:86
+msgid "Remove configuration of removed plugins"
+msgstr ""
+
+#: ../../contribute/i18n.rst:87
+msgid "Add configuration for new plugins"
+msgstr ""
+
+#: ../../contribute/i18n.rst:89
+msgid "Push the translation sources to the new Transifex project with the command: ::"
+msgstr ""
+
+#: ../../contribute/i18n.rst:94
+msgid "Copy the new configuration file temporarily (do not commit) to the previous major version, and push the existing translations from it to the new project: ::"
+msgstr ""
+
+#: ../../contribute/i18n.rst:100
+msgid "Later, once the dedicated branch (e.g. ``3.x`` has been created for the major version, configure Transifex to fetch new translation keys from it automatically in https://www.transifex.com/elgg/elgg-core-3/content/. This way you don't have to repeat step 5 manually every time new translation keys are added."
+msgstr ""
+
+#: ../../contribute/i18n.rst:105
+msgid "It is important to always have a ``n.x`` branch besides the branches meant for specific minor versions (``n.1``, ``n.2``, etc.). This way the URLs of the auto-update sources do not have to be updated every time a new minor branch is created."
 msgstr ""
 
 #: ../../contribute/index.rst:2
@@ -1301,266 +1939,6 @@ msgstr ""
 msgid "Once all the details have been received, we will add you to the appropriate list. Thanks for your support!"
 msgstr ""
 
-#: ../../contribute/releases.rst:2
-msgid "Release Process Workflow"
-msgstr ""
-
-#: ../../contribute/releases.rst:4
-msgid "Release a new version of Elgg."
-msgstr ""
-
-#: ../../contribute/releases.rst:6
-msgid "This is the process the core team follows for making a new Elgg release. We have published this information in the spirit of openness, and to streamline onboarding of new team members."
-msgstr ""
-
-#: ../../contribute/releases.rst:15
-msgid "Requirements"
-msgstr ""
-
-#: ../../contribute/releases.rst:17
-msgid "SSH access to elgg.org"
-msgstr ""
-
-#: ../../contribute/releases.rst:18
-msgid "Commit access to http://github.com/Elgg/Elgg"
-msgstr ""
-
-#: ../../contribute/releases.rst:19
-msgid "Admin access to https://elgg.org/"
-msgstr ""
-
-#: ../../contribute/releases.rst:20
-msgid "Access to `Twitter account`_"
-msgstr ""
-
-#: ../../contribute/releases.rst:21
-msgid "Access to `G+ page`_"
-msgstr ""
-
-#: ../../contribute/releases.rst:22
-msgid "Node.js and NPM installed"
-msgstr ""
-
-#: ../../contribute/releases.rst:23
-msgid "Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)"
-msgstr ""
-
-#: ../../contribute/releases.rst:24
-msgid "Transifex client installed (``easy_install transifex-client``)"
-msgstr ""
-
-#: ../../contribute/releases.rst:25
-msgid "Transifex account with access to Elgg project"
-msgstr ""
-
-#: ../../contribute/releases.rst:28
-msgid "Update composer dependencies"
-msgstr ""
-
-#: ../../contribute/releases.rst:29
-msgid "Since Elgg 2.3, ``composer.lock`` is committed to the repository. Therefore, if any of the composer dependencies require an update, run ``composer update`` on the corresponding branch and make a pull request with an updated ``composer.lock`` file. This will run the test suite and ensure that new dependencies do not break the build."
-msgstr ""
-
-#: ../../contribute/releases.rst:35
-msgid "Merge commits up from lower branches"
-msgstr ""
-
-#: ../../contribute/releases.rst:37
-msgid "Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other branches."
-msgstr ""
-
-#: ../../contribute/releases.rst:41
-msgid "For each branch"
-msgstr ""
-
-#: ../../contribute/releases.rst:43
-msgid "Check out the branch, make sure it's up to date, and make a new work branch with the merge. E.g. here we're merging 1.12 commits into 2.0:"
-msgstr ""
-
-#: ../../contribute/releases.rst:53
-msgid "If already up-to-date (no commits to merge), we can stop here for this branch."
-msgstr ""
-
-#: ../../contribute/releases.rst:55
-msgid "If there are conflicts, resolve them, ``git add .``, and ``git merge``."
-msgstr ""
-
-#: ../../contribute/releases.rst:57
-msgid "Make a PR for the branch and wait for automated tests and approval by other dev(s)."
-msgstr ""
-
-#: ../../contribute/releases.rst:63
-msgid "Once merged, we would repeat the process to merge 2.0 commits into 2.1."
-msgstr ""
-
-#: ../../contribute/releases.rst:66
-msgid "First new stable minor/major release"
-msgstr ""
-
-#: ../../contribute/releases.rst:68
-msgid "Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release."
-msgstr ""
-
-#: ../../contribute/releases.rst:71
-msgid "Prepare the release"
-msgstr ""
-
-#: ../../contribute/releases.rst:73
-msgid "Bring your local git clone up to date."
-msgstr ""
-
-#: ../../contribute/releases.rst:75
-msgid "Merge latest commits up from lowest supported branch."
-msgstr ""
-
-#: ../../contribute/releases.rst:77
-msgid "Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR if there is anything that needs to be merged up."
-msgstr ""
-
-#: ../../contribute/releases.rst:79
-msgid "Install the prerequisites:"
-msgstr ""
-
-#: ../../contribute/releases.rst:88
-msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
-msgstr ""
-
-#: ../../contribute/releases.rst:95
-msgid "This creates a ``release-1.12.5`` branch in your local repo."
-msgstr ""
-
-#: ../../contribute/releases.rst:97
-msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
-msgstr ""
-
-#: ../../contribute/releases.rst:105
-msgid "Next, submit a PR via GitHub for automated testing and approval by another developer:"
-msgstr ""
-
-#: ../../contribute/releases.rst:112
-msgid "Tag the release"
-msgstr ""
-
-#: ../../contribute/releases.rst:114
-msgid "Once approved and merged, tag the release:"
-msgstr ""
-
-#: ../../contribute/releases.rst:122
-msgid "Mark GitHub release milestones as completed"
-msgstr ""
-
-#: ../../contribute/releases.rst:123
-msgid "Move unresolved tickets in released milestones to later milestones"
-msgstr ""
-
-#: ../../contribute/releases.rst:126
-msgid "Update the website"
-msgstr ""
-
-#: ../../contribute/releases.rst:128
-msgid "ssh to elgg.org"
-msgstr ""
-
-#: ../../contribute/releases.rst:129
-msgid "Clone https://github.com/Elgg/elgg-scripts"
-msgstr ""
-
-#: ../../contribute/releases.rst:132
-msgid "Build zip package"
-msgstr ""
-
-#: ../../contribute/releases.rst:134
-msgid "Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage."
-msgstr ""
-
-#: ../../contribute/releases.rst:145
-msgid "Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version."
-msgstr ""
-
-#: ../../contribute/releases.rst:146
-msgid "If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg`` item in the composer requires list."
-msgstr ""
-
-#: ../../contribute/releases.rst:150
-msgid "Building 1.x zip packages"
-msgstr ""
-
-#: ../../contribute/releases.rst:152
-msgid "Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage."
-msgstr ""
-
-#: ../../contribute/releases.rst:163
-msgid "Update elgg.org"
-msgstr ""
-
-#: ../../contribute/releases.rst:165
-msgid "Clone https://github.com/Elgg/www.elgg.org"
-msgstr ""
-
-#: ../../contribute/releases.rst:166
-msgid "Add the new versions to ``src/Elgg/Releases.php``"
-msgstr ""
-
-#: ../../contribute/releases.rst:167
-msgid "Update vendors"
-msgstr ""
-
-#: ../../contribute/releases.rst:173
-msgid "Commit and push the changes"
-msgstr ""
-
-#: ../../contribute/releases.rst:174
-msgid "Pull to live site"
-msgstr ""
-
-#: ../../contribute/releases.rst:180
-msgid "Update dependencies"
-msgstr ""
-
-#: ../../contribute/releases.rst:188
-msgid "Go to community admin panel"
-msgstr ""
-
-#: ../../contribute/releases.rst:187
-msgid "Flush APC cache"
-msgstr ""
-
-#: ../../contribute/releases.rst:188
-msgid "Run upgrade"
-msgstr ""
-
-#: ../../contribute/releases.rst:191
-msgid "Make the announcement"
-msgstr ""
-
-#: ../../contribute/releases.rst:193
-msgid "This should be the very last thing you do."
-msgstr ""
-
-#: ../../contribute/releases.rst:195
-msgid "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version"
-msgstr ""
-
-#: ../../contribute/releases.rst:196
-msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
-msgstr ""
-
-#: ../../contribute/releases.rst:197
-msgid "Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors"
-msgstr ""
-
-#: ../../contribute/releases.rst:198
-msgid "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released"
-msgstr ""
-
-#: ../../contribute/releases.rst:199
-msgid "Tweet from the elgg `Twitter account`_"
-msgstr ""
-
-#: ../../contribute/releases.rst:200
-msgid "Post from the `G+ page`_"
-msgstr ""
-
 #: ../../contribute/services.rst:2
 msgid "Adding a Service to Elgg"
 msgstr ""
@@ -1638,7 +2016,7 @@ msgid "Document your service in ``docs/guides/services.rst`` (this file)."
 msgstr ""
 
 #: ../../contribute/services.rst:53
-msgid "Open the PHPUnit test ``Elgg\\ApplicationUnitTest`` and add your service key to the ``$names`` array in ``testServices()``."
+msgid "Open the PHPUnit test ``Elgg\\ApplicationTest`` and add your service key to the ``$names`` array in ``testServices()``."
 msgstr ""
 
 #: ../../contribute/services.rst:55
@@ -1671,5 +2049,169 @@ msgstr ""
 
 #: ../../contribute/services.rst:79
 msgid "If you need developers to be able to construct objects that are pre-wired to Elgg services, you may need to add a public factory method to ``Elgg\\Application``. Here's an example that returns a new instance using internal Elgg services:"
+msgstr ""
+
+#: ../../contribute/tests.rst:2
+msgid "Writing tests"
+msgstr ""
+
+#: ../../contribute/tests.rst:9
+msgid "Vision"
+msgstr ""
+
+#: ../../contribute/tests.rst:11
+msgid "We want to *make manual testing unnecessary* for core developers, plugin authors, and site administrators by promoting and enabling fast, automated testing at every level of the Elgg stack."
+msgstr ""
+
+#: ../../contribute/tests.rst:14
+msgid "We look forward to a world where the core developers do not need to do any manual testing to verify the correctness of code contributed to Elgg. Similarly, we envision a world where site administrators can upgrade and install new plugins with confidence that everything works well together."
+msgstr ""
+
+#: ../../contribute/tests.rst:18
+msgid "Running Tests"
+msgstr ""
+
+#: ../../contribute/tests.rst:21
+msgid "Elgg Core Test Suite"
+msgstr ""
+
+#: ../../contribute/tests.rst:26
+msgid "Currently our tests are split in two pieces:"
+msgstr ""
+
+#: ../../contribute/tests.rst:24
+msgid "PHPUnit tests are located in ``/tests/phpunit`` -- these are strictly unit tests for now. No integration or end to end tests."
+msgstr ""
+
+#: ../../contribute/tests.rst:25
+msgid "SimpleTest tests are located in ``/tests/`` -- These are supported but we strongly encourage writing new tests in PHPUnit and plan to migrate these to PHPUnit at our earliest convenience."
+msgstr ""
+
+#: ../../contribute/tests.rst:28
+msgid "Since we have a ``phpunit.xml`` configuration at the root of Elgg, testing should be as easy as:"
+msgstr ""
+
+#: ../../contribute/tests.rst:37
+msgid "Plugin tests"
+msgstr ""
+
+#: ../../contribute/tests.rst:39
+msgid "Ideally plugins are configured in such a way that they can be unit-tested much like Elgg core. Plugin developers are free to implement their own methods for unit testing, but we encourage everyone to make it as easy as Elgg core:"
+msgstr ""
+
+#: ../../contribute/tests.rst:49
+msgid "End-to-end tests"
+msgstr ""
+
+#: ../../contribute/tests.rst:51
+msgid "Since Elgg plugins have so much power to override, filter, and modify Elgg's and other plugins' behavior, it's important to be able to run end-to-end tests on a staging server with your final configuration before deploying to production."
+msgstr ""
+
+#: ../../contribute/tests.rst:56
+msgid "ToDo: Make it easy to run all Elgg integration and acceptance tests from the admin area given the current plugin configuration. (without worrying about database corruption!)"
+msgstr ""
+
+#: ../../contribute/tests.rst:60
+msgid "Motivation"
+msgstr ""
+
+#: ../../contribute/tests.rst:65
+msgid "Briefly, the wins we expect from testing are:"
+msgstr ""
+
+#: ../../contribute/tests.rst:63
+msgid "Increased confidence in the system."
+msgstr ""
+
+#: ../../contribute/tests.rst:64
+msgid "More freedom to refactor."
+msgstr ""
+
+#: ../../contribute/tests.rst:65
+msgid "Built-in, up-to-date documentation."
+msgstr ""
+
+#: ../../contribute/tests.rst:67
+msgid "We love community contributions, but in order to maintain stability we cannot accept outside contributions without first verifying their correctness. By promoting automated testing, the core developers can avoid the hassle of manual verification before accepting patches. It also means that external developers don't have to spend time earning trust with the core team. If a patch comes in and has tests to verify it, then we can be confident it works without worrying about the reputation of the contributor."
+msgstr ""
+
+#: ../../contribute/tests.rst:72
+msgid "Note that these benefits can also extend to the plugins repository. Site owners are encouraged to \"test plugins thoroughly\" before deploying them on a production site. As of March 2013, this translates to manually verifying all the features that the plugin promises to offer. But Elgg provides a huge number of features, and it's not reasonable to test for *all* of them on *every browser* you want to support on *every device* you want to support. But what if plugin developers could write tests for their plugins and site owners could just run the tests for all installed plugins to verify the functionality is maintained? Then they wouldn't be limited to just picking plugins from \"trusted\" developers or \"stable\" releases. They could see that, indeed, nothing broke when they upgraded that critical plugin from 1.3 to 2.5, and push the upgrade to production with confidence."
+msgstr ""
+
+#: ../../contribute/tests.rst:80
+msgid "The reason this isn't happening today is because Elgg itself is not easily testable at this level yet. We want to change that."
+msgstr ""
+
+#: ../../contribute/tests.rst:83
+msgid "Strategy"
+msgstr ""
+
+#: ../../contribute/tests.rst:85
+msgid "We have several guiding principles that we think will be helpful in bringing our vision into reality."
+msgstr ""
+
+#: ../../contribute/tests.rst:90
+msgid "In short, we are advocating:"
+msgstr ""
+
+#: ../../contribute/tests.rst:88
+msgid "Continuous integration -- if Travis isn't happy, we're not happy"
+msgstr ""
+
+#: ../../contribute/tests.rst:89
+msgid "Dependency injection -- For creating highly testable, modular code"
+msgstr ""
+
+#: ../../contribute/tests.rst:90
+msgid "BDD -- Tests should verify features and provide documentation, not rehash the Class API"
+msgstr ""
+
+#: ../../contribute/tests.rst:93
+msgid "Continuous Integration"
+msgstr ""
+
+#: ../../contribute/tests.rst:95
+msgid "We run all of our tests on Travis CI so that we can get real time feedback on the correctness of incoming pull requests and development as it progresses. **If Travis isn't happy, we don't commit to the repo.** This empowers us to merge pull requests in at a rapid pace, so long as they pass the tests. It also allows us to reject pull requests without detailed investigation if they do not pass the tests. We can get past the \"does it work or not\" question and talk about the things that humans need to talk about: API design, usefulness to the project, whether it belongs in core or a plugin, etc. We want as many features as possible provided by Elgg core to be verified automatically by tests running on Travis."
+msgstr ""
+
+#: ../../contribute/tests.rst:102
+msgid "Dependency Injection"
+msgstr ""
+
+#: ../../contribute/tests.rst:104
+msgid "In order to maximize testability, **all dependencies need to be explicit**. Global functions, Singletons, and service locators are death for testability because it's impossible to tell what dependencies are hiding under the covers, and it's even harder to mock out those dependencies. Mocking is critical because you want your unit tests to test only one class at a time. Test failures in a TestCase should not result due to brokenness in a dependency; test failures should only indicate brokenness in the class under test. This makes everything much easier to debug. As of March 2013, most of Elgg still assumes and uses global state, and that has made Elgg and Elgg plugins historically very difficult to test. Fortunately we are moving in the opposite direction now, and a lot of work in Elgg 1.9 has gone into refactoring core components to be more dependency injectable. We are already reaping the benefits from that effort."
+msgstr ""
+
+#: ../../contribute/tests.rst:113
+msgid "Behavior-Driven Development"
+msgstr ""
+
+#: ../../contribute/tests.rst:115
+msgid "For us this means **we name tests for features rather than methods**. When you test for features, you are encouraged to write fewer, smaller, logical tests. When a test fails, we can know exactly what feature is compromised. Furthermore, when naming your tests for features, the list of tests provides documentation on what features the system supports. Documentation is something that is typically very troublesome to keep up to date, but when documentation and verification are one and the same, it becomes very easy to keep the documentation up to date."
+msgstr ""
+
+#: ../../contribute/tests.rst:122
+msgid "Consider these two test methods:"
+msgstr ""
+
+#: ../../contribute/tests.rst:121
+msgid "``testRegister()``"
+msgstr ""
+
+#: ../../contribute/tests.rst:122
+msgid "``testCanRegisterFilesAsActionHandlers()``"
+msgstr ""
+
+#: ../../contribute/tests.rst:124
+msgid "From just looking at the names, ``testRegister`` tells you that the class under test probably has a method named register. If this test passes, it presumably verifies that it is behaving correctly, but doesn't tell you what correct behavior entails, or what the original author of the test was intending to verify. If that method has multiple correct uses that you need to test for, this terse naming convention also encourages you to write a very long test which tests for all conditions and features of said method. Test failure could be caused by any one of those uses being compromised, and it will take more time to figure out where the true problem lies."
+msgstr ""
+
+#: ../../contribute/tests.rst:130
+msgid "On the other hand, ``testCanRegisterFilesAsActionHandlers`` tells you that there are these things called \"actions\" that need to be \"handled\" and that files can be registered as valid handlers for actions. This introduces newcomers to project terminology and communicates clearly the intent of the test to those already familiar with the terminology."
+msgstr ""
+
+#: ../../contribute/tests.rst:134
+msgid "For a good example of what we're looking for, check out ``/tests/phpunit/Elgg/ViewServiceTest.php``"
 msgstr ""
 

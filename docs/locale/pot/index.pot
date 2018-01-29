@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 10:03+0100\n"
+"POT-Creation-Date: 2018-01-29 16:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,42 +17,174 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../index.rst:2
-msgid "Elgg |version| Documentation"
+msgid "Elgg Documentation (|version|)"
 msgstr ""
 
 #: ../../index.rst:4
-msgid "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a rapid development framework with built-in social features. It is a great fit for building any app where users log in and share information."
+msgid "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is an open source rapid development framework for socially aware web applications. It is a great fit for building any app where users log in and share information."
 msgstr ""
 
-#: ../../index.rst:7
-msgid "It has been used to build `all kinds of social apps`__:"
+#: ../../index.rst:8
+msgid "Features"
+msgstr ""
+
+#: ../../index.rst:10
+msgid "**Well-documented core API** that allows developers to kick start their new project with a simple learning curve"
 msgstr ""
 
 #: ../../index.rst:11
-msgid "open networks (similar to Facebook)"
+msgid "**Composer** is the package manager of choice that greatly simplifes installation and maintenance of Elgg core and plugins"
 msgstr ""
 
 #: ../../index.rst:12
-msgid "topical (like the Elgg Community)"
+msgid "**Flexible system of hooks and events** that allows plugins to extend and modify most aspects of application's functionality and behavior"
 msgstr ""
 
 #: ../../index.rst:13
-msgid "private intranets"
+msgid "**Extendable system of views** that allows plugins to collaborate on application's presentation layer and built out complex custom themes"
 msgstr ""
 
 #: ../../index.rst:14
-msgid "dating"
+msgid "**Cacheable system of static assets** that allows themes and plugins to serve images, stylesheets, fonts and scripts bypassing the engine"
 msgstr ""
 
 #: ../../index.rst:15
-msgid "educational"
+msgid "**User authentication** is powered by pluggable auth modules, which allow applications to implement custom authentication protocols"
 msgstr ""
 
 #: ../../index.rst:16
-msgid "company blog"
+msgid "**Security** is ensured by built-in anti CSRF validation, strict XSS filters, HMAC signatures, latest cryptographic approaches to password hashing"
+msgstr ""
+
+#: ../../index.rst:17
+msgid "**Client-side API** powered by asynchronous JavaScript modules via RequireJS and a build-in Ajax service for easy communication with the server"
 msgstr ""
 
 #: ../../index.rst:18
+msgid "**Flexible entity system** that allows applications to prototype new types of content and user interactions"
+msgstr ""
+
+#: ../../index.rst:19
+msgid "**Opinionated data model** with a consolidated API layer that allows the developers to easily interface with the database"
+msgstr ""
+
+#: ../../index.rst:20
+msgid "**Access control system** that allows applications to build granular content access policies, as well as create private networks and intranets"
+msgstr ""
+
+#: ../../index.rst:21
+msgid "**Groups** - out of the box support for user groups"
+msgstr ""
+
+#: ../../index.rst:22
+msgid "**File storage** powered by flexible API that allows plugins to store user-generated files and serve/stream them without booting the engine"
+msgstr ""
+
+#: ../../index.rst:23
+msgid "**Notifications service** that allows applications to subscribe users to on-site and email notifications and implement integrations with other their-party services"
+msgstr ""
+
+#: ../../index.rst:24
+msgid "**RPC web services** that can be used for complex integrations with external applications and mobile clients"
+msgstr ""
+
+#: ../../index.rst:25
+msgid "**Internationalization** and localization of Elgg applications is simple and can be integrated with third-party services such as Transifex"
+msgstr ""
+
+#: ../../index.rst:26
+msgid "**Elgg community** that can help with any arising issues and hosts a repository of **1000+ open source plugins**"
+msgstr ""
+
+#: ../../index.rst:28
+msgid "Under the hood:"
+msgstr ""
+
+#: ../../index.rst:30
+msgid "Elgg is a modular OOP framework that is driven by DI services"
+msgstr ""
+
+#: ../../index.rst:31
+msgid "NGINX or Apache compatible"
+msgstr ""
+
+#: ../../index.rst:32
+msgid "Symfony2 HTTP Foundation handles requests and responses"
+msgstr ""
+
+#: ../../index.rst:33
+msgid "RequireJS handles AMD"
+msgstr ""
+
+#: ../../index.rst:34
+msgid "Zend Mail handles outgoing email"
+msgstr ""
+
+#: ../../index.rst:35
+msgid "htmLawed XSS filters"
+msgstr ""
+
+#: ../../index.rst:36
+msgid "Composer asset plugin for NPM/Bower dependencies"
+msgstr ""
+
+#: ../../index.rst:37
+msgid "DBAL"
+msgstr ""
+
+#: ../../index.rst:38
+msgid "Phinx database migrations"
+msgstr ""
+
+#: ../../index.rst:39
+msgid "CSS-Crush for CSS preprocessing"
+msgstr ""
+
+#: ../../index.rst:40
+msgid "Imagine for image manipulation"
+msgstr ""
+
+#: ../../index.rst:41
+msgid "Memcached support"
+msgstr ""
+
+#: ../../index.rst:44
+msgid "Examples"
+msgstr ""
+
+#: ../../index.rst:46
+msgid "It has been used to build `all kinds of social apps`__:"
+msgstr ""
+
+#: ../../index.rst:50
+msgid "open networks (similar to Facebook)"
+msgstr ""
+
+#: ../../index.rst:51
+msgid "topical (like the Elgg Community)"
+msgstr ""
+
+#: ../../index.rst:52
+msgid "private/corporate intranets"
+msgstr ""
+
+#: ../../index.rst:53
+msgid "dating"
+msgstr ""
+
+#: ../../index.rst:54
+msgid "educational"
+msgstr ""
+
+#: ../../index.rst:55
+msgid "company blog"
+msgstr ""
+
+#: ../../index.rst:57
 msgid "This is the canonical documentation for the Elgg_ project."
+msgstr ""
+
+#: ../../index.rst:62
+msgid "Continue Reading"
 msgstr ""
 
