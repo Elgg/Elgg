@@ -70,6 +70,7 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
 
+	elgg_register_plugin_hook_handler('gatekeeper', 'group:group', '_groups_gatekeeper_allow_profile_page');
 	elgg_register_plugin_hook_handler('forward', '403', '_groups_gatekeeper_redirect');
 }
 
@@ -1195,6 +1196,32 @@ function _groups_gatekeeper_redirect(\Elgg\Hook $hook) {
 			return $page_owner->getURL();
 		}
 	}
+}
+
+/**
+ * Allow users to visit the group profile page even if group content access mode is set to group members only
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return void|true
+ */
+function _groups_gatekeeper_allow_profile_page(\Elgg\Hook $hook) {
+
+	$exception = $hook->getValue();
+	if (!$exception instanceof \Elgg\GroupGatekeeperException) {
+		return;
+	}
+	
+	$group = $hook->getEntityParam();
+	if (!$group instanceof ElggGroup) {
+		return;
+	}
+	
+	// check current URL with the group URL
+	if (strpos(current_page_url(), $group->getURL()) === false) {
+		return;
+	}
+	
+	return true;
 }
 
 return function() {
