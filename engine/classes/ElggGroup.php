@@ -302,4 +302,27 @@ class ElggGroup extends \ElggEntity {
 		
 		return false;
 	}
+
+	/**
+	 * Check if current user can access group content based on his/her membership status
+	 * and group's content access policy
+	 *
+	 * @param ElggUser|null $user User
+	 * @return bool
+	 */
+	public function canAccessContent(ElggUser $user = null) {
+		if (!isset($user)) {
+			$user = elgg_get_logged_in_user_entity();
+		}
+
+		if ($this->getContentAccessMode() == self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+			if (!$user) {
+				return false;
+			}
+
+			return $this->isMember($user) || $user->isAdmin();
+		}
+
+		return true;
+	}
 }

@@ -12,6 +12,7 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database\RelationshipsTable   $relationshipsTable      Annotation mocks
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections       ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings         Private settings table mock
+ * @property-read \Elgg\Mocks\Database\UsersTable           $usersTable              Users table
  *
  * @since 2.3
  */
@@ -96,11 +97,16 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 
 		$this->setFactory('plugins', function (MockServiceProvider $sp) {
 			$cache = $sp->dataCache->plugins;
+
 			return new \Elgg\Mocks\Database\Plugins($cache, $this->db);
 		});
 
 		$this->setFactory('siteSecret', function (MockServiceProvider $sp) {
 			return new \Elgg\Database\SiteSecret('z1234567890123456789012345678901');
+		});
+
+		$this->setFactory('usersTable', function(MockServiceProvider $sp) {
+			return new \Elgg\Mocks\Database\UsersTable($sp->config, $sp->db, $sp->metadataTable);
 		});
 
 	}

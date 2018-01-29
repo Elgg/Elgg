@@ -358,15 +358,19 @@ class EntityTable {
 	/**
 	 * Loads and returns an entity object from a guid.
 	 *
-	 * @param int    $guid The GUID of the entity
-	 * @param string $type The type of the entity. If given, even an existing entity with the given GUID
-	 *                     will not be returned unless its type matches.
+	 * @param int    $guid    The GUID of the entity
+	 * @param string $type    The type of the entity
+	 *                        If given, even an existing entity with the given GUID
+	 *                        will not be returned unless its type matches
+	 * @param string $subtype The subtype of the entity
+	 *                        If given, even an existing entity with the given GUID
+	 *                        will not be returned unless its subtype matches
 	 *
 	 * @return ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
 	 * @throws ClassException
 	 * @throws InvalidParameterException
 	 */
-	public function get($guid, $type = '') {
+	public function get($guid, $type = null, $subtype = null) {
 		// We could also use: if (!(int) $guid) { return false },
 		// but that evaluates to a false positive for $guid = true.
 		// This is a bit slower, but more thorough.
@@ -377,7 +381,7 @@ class EntityTable {
 		$guid = (int) $guid;
 
 		$entity = $this->getFromCache($guid);
-		if ($entity && (!$type || elgg_instanceof($entity, $type))) {
+		if ($entity && elgg_instanceof($entity, $type, $subtype)) {
 			return $entity;
 		}
 
@@ -387,6 +391,10 @@ class EntityTable {
 		}
 
 		if ($type && $row->type != $type) {
+			return false;
+		}
+
+		if ($subtype && $row->subtype !== $subtype) {
 			return false;
 		}
 

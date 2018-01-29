@@ -17,9 +17,7 @@ if (!$bookmark->canEdit()) {
 
 $title = elgg_echo('edit:object:bookmarks');
 
-$page_owner = elgg_get_page_owner_entity();
-
-elgg_push_collection_breadcrumbs('object', 'bookmarks', $page_owner);
+elgg_push_entity_breadcrumbs($bookmark);
 elgg_push_breadcrumb($title);
 
 $vars = bookmarks_prepare_form_vars($bookmark);

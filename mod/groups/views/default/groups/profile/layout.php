@@ -5,12 +5,15 @@
  * @uses $vars['entity']
  */
 
-/* @var ElggGroup $group */
 $group = elgg_extract('entity', $vars);
+
+if (!$group instanceof ElggGroup) {
+	return;
+}
 
 echo elgg_view('groups/profile/summary', $vars);
 
-if (elgg_group_gatekeeper(false)) {
+if ($group->canAccessContent()) {
 	if (!$group->isPublicMembership() && !$group->isMember()) {
 		echo elgg_view('groups/profile/closed_membership');
 	}

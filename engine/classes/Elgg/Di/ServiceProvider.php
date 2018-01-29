@@ -56,6 +56,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggCache                               $fileCache
  * @property-read \ElggDiskFilestore                       $filestore
  * @property-read \Elgg\FormsService                       $forms
+ * @property-read \Elgg\Gatekeeper                         $gatekeeper
  * @property-read \Elgg\HandlersService                    $handlers
  * @property-read \Elgg\Security\HmacFactory               $hmac
  * @property-read \Elgg\PluginHooksService                 $hooks
@@ -300,6 +301,17 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('forms', function(ServiceProvider $c) {
 			return new \Elgg\FormsService($c->views, $c->logger);
+		});
+
+		$this->setFactory('gatekeeper', function(ServiceProvider $c) {
+			return new \Elgg\Gatekeeper(
+				$c->session,
+				$c->request,
+				$c->redirects,
+				$c->entityTable,
+				$c->accessCollections,
+				$c->translator
+			);
 		});
 
 		$this->setClassName('handlers', \Elgg\HandlersService::class);

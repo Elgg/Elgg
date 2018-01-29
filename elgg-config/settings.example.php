@@ -169,14 +169,13 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->simplecache_enabled = true;
 
 /**
- * Enable the boot cache
+ * Configure the boot cache TTL
  *
  * Elgg can store most non-user-specific boot up data in a cache. If you want to
- * enable this, uncomment the next line to set it to 10. Although Elgg has a built-
- * in invalidation strategy for this cache, you should consider a small TTL to
- * minimize the damage if the cache should grow stale.
+ * configure how long Elgg takes before invalidating this cache, uncomment the next line
+ * and set it to a number of seconds. If not set Elgg will default to 3600 seconds.
  */
-//$CONFIG->boot_cache_ttl = 10;
+//$CONFIG->boot_cache_ttl = 3600;
 
 /**
  * Set cache directory

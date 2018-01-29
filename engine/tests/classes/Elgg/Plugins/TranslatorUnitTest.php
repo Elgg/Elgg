@@ -14,11 +14,8 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	public $translator;
 
 	public function up() {
-		$this->translator = new Translator(_elgg_config());
-		$this->translator->loadTranslations('en');
-		$this->translator->registerTranslations($this->getPath() . 'languages/', false, 'en');
-
-		_elgg_services()->setValue('translator', $this->translator);
+		$this->translator = _elgg_services()->translator;
+		$this->translator->reloadAllTranslations();
 	}
 
 	public function down() {
@@ -30,6 +27,8 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	 * @return array
 	 */
 	public function languageProvider() {
+		self::createApplication();
+
 		$provides = [];
 
 		$codes = Translator::getAllLanguageCodes();

@@ -2,13 +2,16 @@
 
 namespace Elgg;
 
+use ClassException;
 use ConfigurationException;
+use DatabaseException;
 use Doctrine\DBAL\Connection;
 use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
+use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
 use InstallationException;
@@ -110,49 +113,43 @@ class Application {
 	 * This includes all the .php files in engine/lib (not upgrades). If a script returns a function,
 	 * it is queued and executed at the end.
 	 *
-	 * @return void
+	 * @return array
 	 * @access private
 	 * @internal
 	 * @throws \InstallationException
 	 */
 	public static function loadCore() {
-		if (self::isCoreLoaded()) {
-			return;
-		}
+		$setups = [];
 
 		$path = Paths::elgg() . 'engine/lib';
 
 		// include library files, capturing setup functions
 		foreach (self::getEngineLibs() as $file) {
 			try {
-				self::requireSetupFileOnce("$path/$file");
+				$setups[] = self::requireSetupFileOnce("$path/$file");
 			} catch (\Error $e) {
 				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
 			}
 		}
+
+		return $setups;
 	}
 
 	/**
 	 * Require a library/plugin file once and capture returned anonymous functions
 	 *
-	 * @param string   $file      File to require
-	 * @param \Closure $condition Condition that must be met for the setup file to be executable
+	 * @param string $file File to require
 	 * @return mixed
 	 * @internal
 	 * @access private
 	 */
-	public static function requireSetupFileOnce($file, \Closure $condition = null) {
-		$return = Includer::requireFileOnce($file);
-		if ($return instanceof \Closure) {
-			if ($condition) {
-				$setup = function() use ($condition, $return) {
-					return $condition() ? $return : null;
-				};
-			} else {
-				$setup = $return;
-			}
-			self::$_setups[] = $setup;
+	public static function requireSetupFileOnce($file) {
+		if (isset(self::$_setups[$file])) {
+			return self::$_setups[$file];
 		}
+
+		$return = Includer::requireFileOnce($file);
+		self::$_setups[$file] = $return;
 		return $return;
 	}
 
@@ -181,14 +178,22 @@ class Application {
 	 *
 	 * This method loads the full Elgg engine, checks the installation
 	 * state, and triggers a series of events to finish booting Elgg:
-	 * 	- {@elgg_event boot system}
-	 * 	- {@elgg_event init system}
-	 * 	- {@elgg_event ready system}
+	 *    - {@elgg_event boot system}
+	 *    - {@elgg_event init system}
+	 *    - {@elgg_event ready system}
 	 *
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
 	 * @return void
+	 *
 	 * @throws InstallationException
+	 * @throws InvalidParameterException
+	 * @throws SecurityException
+	 * @throws ClassException
+	 * @throws DatabaseException
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public function bootCore() {
 		$config = $this->_services->config;
@@ -198,13 +203,15 @@ class Application {
 		}
 
 		// in case not loaded already
-		$this->loadCore();
+		$setups = $this->loadCore();
 
 		$hooks = $this->_services->hooks;
 		$events = $hooks->getEvents();
 
-		foreach (self::$_setups as $setup) {
-			$setup($events, $hooks);
+		foreach ($setups as $setup) {
+			if ($setup instanceof \Closure) {
+				$setup($events, $hooks);
+			}
 		}
 
 		if (!$this->_services->db) {
@@ -213,7 +220,6 @@ class Application {
 			$this->_services->session->start();
 			$this->_services->translator->loadTranslations();
 
-			actions_init();
 			_elgg_init();
 			_elgg_input_init();
 			_elgg_nav_init();
@@ -226,55 +232,25 @@ class Application {
 		// Connect to database, load language files, load configuration, init session
 		$this->_services->boot->boot($this->_services);
 
-		elgg_views_boot();
+		$events->registerHandler('plugins_boot:before', 'system', 'elgg_views_boot');
 
 		// Load the plugins that are active
 		$this->_services->plugins->load();
 
-		if (Paths::project() != Paths::elgg()) {
-			// Elgg is installed as a composer dep, so try to treat the root directory
-			// as a custom plugin that is always loaded last and can't be disabled...
-			if (!$config->system_cache_loaded) {
-				// configure view locations for the custom plugin (not Elgg core)
-				$viewsFile = Paths::project() . 'views.php';
-				if (is_file($viewsFile)) {
-					$viewsSpec = Includer::includeFile($viewsFile);
-					if (is_array($viewsSpec)) {
-						$this->_services->views->mergeViewsSpec($viewsSpec);
-					}
-				}
+		// Allows registering handlers strictly before all init, system handlers
+		$events->triggerSequence('plugins_boot', 'system');
 
-				// find views for the custom plugin (not Elgg core)
-				$this->_services->views->registerPluginViews(Paths::project());
-			}
-
-			if (!$config->i18n_loaded_from_cache) {
-				$this->_services->translator->registerTranslations(Paths::project() . 'languages');
-			}
-
-			// This is root directory start.php
-			$root_start = Paths::project() . "start.php";
-			if (is_file($root_start)) {
-				require $root_start;
-			}
-		}
-
-		// after plugins are started we know which viewtypes are populated
 		$this->_services->views->clampViewtypeToPopulatedViews();
-
 		$this->allowPathRewrite();
 
-		// Allows registering handlers strictly before all init, system handlers
-		$events->trigger('plugins_boot', 'system');
-
 		// Complete the boot process for both engine and plugins
-		$events->trigger('init', 'system');
+		$events->triggerSequence('init', 'system');
 
 		$config->boot_complete = true;
 		$config->lock('boot_complete');
 
 		// System loaded and ready
-		$events->trigger('ready', 'system');
+		$events->triggerSequence('ready', 'system');
 	}
 
 	/**
@@ -312,7 +288,7 @@ class Application {
 	public function getDbConnection($type = 'readwrite') {
 		try {
 			return $this->getDb()->getConnection($type);
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			return false;
 		}
 	}
@@ -493,18 +469,26 @@ class Application {
 				throw new PageNotFoundException();
 			}
 		} catch (HttpException $ex) {
-			$forward_url = REFERRER;
+			$forward_url = null;
 			if ($ex instanceof GatekeeperException) {
-				$forward_url = elgg_is_logged_in() ? '' : elgg_get_login_url();
+				$forward_url = elgg_is_logged_in() ? null : elgg_get_login_url();
 			}
 
 			$hook_params = [
 				'exception' => $ex,
 			];
 			
-			$this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
+			$forward_url = $this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
-			$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
+			if (isset($forward_url)) {
+				if ($ex->getMessage()) {
+					register_error($ex->getMessage());
+				}
+				$response = new RedirectResponse($forward_url);
+			} else {
+				$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
+			}
+
 			$this->_services->responseFactory->respond($response);
 		}
 

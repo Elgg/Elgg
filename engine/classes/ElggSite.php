@@ -26,8 +26,19 @@ class ElggSite extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
-		parent::initializeAttributes();
+		ElggData::initializeAttributes();
+
+		$this->attributes['guid'] = null;
+		$this->attributes['type'] = 'site';
 		$this->attributes['subtype'] = 'site';
+
+		$this->attributes['owner_guid'] = 0;
+		$this->attributes['container_guid'] = 0;
+
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
+		$this->attributes['time_updated'] = null;
+		$this->attributes['last_action'] = null;
+		$this->attributes['enabled'] = "yes";
 	}
 
 	/**
@@ -42,9 +53,12 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function save() {
 		$db = $this->getDatabase();
-		$row = $db->getDataRow("
-			SELECT guid FROM {$db->prefix}entities WHERE type = '{$this->getType()}'
-		");
+		$qb = \Elgg\Database\Select::fromTable('entities');
+		$qb->select('*')
+			->where($qb->compare('type', '=', 'site', ELGG_VALUE_STRING));
+
+		$row = $db->getDataRow($qb);
+
 		if ($row) {
 			if ($row->guid == $this->attributes['guid']) {
 				// can save active site
@@ -123,6 +137,13 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function getURL() {
 		return _elgg_config()->wwwroot;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isCacheable() {
+		return false;
 	}
 
 	/**

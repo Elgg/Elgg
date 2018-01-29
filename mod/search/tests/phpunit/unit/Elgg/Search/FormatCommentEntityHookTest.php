@@ -1,15 +1,17 @@
 <?php
 
 namespace Elgg\Search;
-use Elgg\IntegratedUnitTestCase;
+
+use Elgg\UnitTestCase;
 
 /**
  * @group Search
  * @group Hooks
  */
-class FormatCommentEntityHookTest extends IntegratedUnitTestCase {
+class FormatCommentEntityHookTest extends UnitTestCase {
 
 	public function up() {
+		$this->startPlugin();
 		_elgg_services()->hooks->backup();
 	}
 

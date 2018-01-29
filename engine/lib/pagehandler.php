@@ -30,6 +30,7 @@
  *                       - methods : HTTP methods
  *
  * @return \Elgg\Router\Route
+ * @throws InvalidParameterException
  */
 function elgg_register_route($name, array $params = []) {
 	return _elgg_services()->router->registerRoute($name, $params);
@@ -69,7 +70,8 @@ function elgg_generate_url($name, array $parameters = []) {
  *      so given the path `/blog/view/{guid}/{title}/{status}` the path will be
  *      be resolved from entity guid, URL-friendly title and status metadata.
  *
- * @tip Parameters that do not have matching segment names in the route path, will be added to the URL as query elements.
+ * @tip Parameters that do not have matching segment names in the route path, will be added to the URL as query
+ *      elements.
  *
  *
  * @param ElggEntity $entity      Entity
@@ -138,12 +140,7 @@ function elgg_generate_action_url($action, array $query = [], $add_csrf_tokens =
  * @since 1.9.0
  */
 function elgg_gatekeeper() {
-	if (!elgg_is_logged_in()) {
-		_elgg_services()->redirects->setLastForwardFrom();
-
-		$msg = elgg_echo('loggedinrequired');
-		throw new \Elgg\GatekeeperException($msg);
-	}
+	_elgg_services()->gatekeeper->assertAuthenticatedUser();
 }
 
 /**
@@ -154,69 +151,7 @@ function elgg_gatekeeper() {
  * @since 1.9.0
  */
 function elgg_admin_gatekeeper() {
-	elgg_gatekeeper();
-
-	if (!elgg_is_admin_logged_in()) {
-		_elgg_services()->redirects->setLastForwardFrom();
-
-		$msg = elgg_echo('adminrequired');
-		throw new \Elgg\GatekeeperException($msg);
-	}
-}
-
-
-/**
- * May the current user access item(s) on this page? If the page owner is a group,
- * membership, visibility, and logged in status are taken into account.
- *
- * @param bool $forward    If set to true (default), will forward the page;
- *                         if set to false, will return true or false.
- *
- * @param int  $group_guid The group that owns the page. If not set, this
- *                         will be pulled from elgg_get_page_owner_guid().
- *
- * @return bool Will return if $forward is set to false.
- * @throws InvalidParameterException
- * @throws SecurityException
- * @since 1.9.0
- */
-function elgg_group_gatekeeper($forward = true, $group_guid = null) {
-	if (null === $group_guid) {
-		$group_guid = elgg_get_page_owner_guid();
-	}
-
-	if (!$group_guid) {
-		return true;
-	}
-
-	// this handles non-groups and invisible groups
-	$visibility = \Elgg\GroupItemVisibility::factory($group_guid);
-
-	if (!$visibility->shouldHideItems) {
-		return true;
-	}
-	if ($forward) {
-		// only forward to group if user can see it
-		$group = get_entity($group_guid);
-		$forward_url = $group ? $group->getURL() : '';
-
-		if (!elgg_is_logged_in()) {
-			_elgg_services()->redirects->setLastForwardFrom();
-			$forward_reason = 'login';
-		} else {
-			$forward_reason = 'member';
-		}
-
-		$msg_keys = [
-			'non_member' => 'membershiprequired',
-			'logged_out' => 'loggedinrequired',
-			'no_access' => 'noaccess',
-		];
-		register_error(elgg_echo($msg_keys[$visibility->reasonHidden]));
-		forward($forward_url, $forward_reason);
-	}
-
-	return false;
+	_elgg_services()->gatekeeper->assertAuthenticatedAdmin();
 }
 
 /**
@@ -229,86 +164,17 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
  * @param int    $guid    Entity GUID
  * @param string $type    Optional required entity type
  * @param string $subtype Optional required entity subtype
- * @param bool   $forward If set to true (default), will forward the page;
- *                        if set to false, will return true or false.
  *
- * @return bool Will return if $forward is set to false.
- * @throws \Elgg\BadRequestException
+ * @return void
+ *
+ * @throws Exception
  * @throws \Elgg\EntityNotFoundException
- * @throws \Elgg\EntityPermissionsException
- * @throws \Elgg\GatekeeperException
+ * @throws \Elgg\HttpException
  * @since 1.9.0
  */
-function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward = true) {
-	$entity = get_entity($guid);
-	if (!$entity && $forward) {
-		if (!elgg_entity_exists($guid)) {
-			// entity doesn't exist
-			throw new \Elgg\EntityNotFoundException();
-		} else if (!elgg_is_logged_in()) {
-			// entity requires at least a logged in user
-			elgg_gatekeeper();
-		} else {
-			// user is logged in but still does not have access to it
-			$msg = elgg_echo('limited_access');
-			throw new \Elgg\GatekeeperException($msg);
-		}
-	} else if (!$entity) {
-		return false;
-	}
-
-	if ($type && !elgg_instanceof($entity, $type, $subtype)) {
-		// entity is of wrong type/subtype
-		if ($forward) {
-			throw new \Elgg\BadRequestException();
-		} else {
-			return false;
-		}
-	}
-
-	$user_access = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
-		$checks = [
-			$entity,
-			$entity->getOwnerEntity(),
-			$entity->getContainerEntity(),
-		];
-
-		foreach ($checks as $check) {
-			if ($check instanceof ElggUser && ($check->isBanned() && !elgg_is_admin_logged_in())) {
-				return false;
-			}
-		}
-
-		return true;
-	});
-
-	$group_access = elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
-		if ($entity instanceof ElggGroup) {
-			return elgg_group_gatekeeper(false, $entity->guid);
-		}
-
-		$container = $entity->getContainerEntity();
-		if ($container instanceof ElggGroup) {
-			return elgg_group_gatekeeper(false, $container->guid);
-		}
-
-		return true;
-	});
-
-	$hook_type = "{$entity->getType()}:{$entity->getSubtype()}";
-	$hook_params = [
-		'entity' => $entity,
-		'forward' => $forward,
-	];
-	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, $group_access && $user_access)) {
-		if ($forward) {
-			throw new \Elgg\EntityPermissionsException();
-		} else {
-			return false;
-		}
-	}
-
-	return true;
+function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+	$entity = _elgg_services()->gatekeeper->assertExists($guid, $type, $subtype);
+	_elgg_services()->gatekeeper->assertAccessibleEntity($entity);
 }
 
 /**
@@ -320,10 +186,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward =
  * @since 1.12.0
  */
 function elgg_ajax_gatekeeper() {
-	if (!elgg_is_xhr()) {
-		$msg = elgg_echo('ajax:not_is_xhr');
-		throw new \Elgg\BadRequestException($msg);
-	}
+	_elgg_services()->gatekeeper->assertXmlHttpRequest();
 }
 
 /**
@@ -391,11 +254,3 @@ function elgg_error_response($error = '', $forward_url = REFERRER, $status_code 
 function elgg_redirect_response($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }
-
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-};

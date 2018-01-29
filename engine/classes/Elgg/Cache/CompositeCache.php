@@ -74,14 +74,13 @@ class CompositeCache extends ElggCache {
 	/**
 	 * Save data in a cache.
 	 *
-	 * @param string       $key                 Name
-	 * @param string       $data                Value
-	 * @param int|DateTime $expire_after        Expire value after
-	 * @param array        $invalidation_method Stash invalidation method arguments
+	 * @param string       $key  Name
+	 * @param string       $data Value
+	 * @param int|DateTime $ttl  Expire value after
 	 *
 	 * @return bool
 	 */
-	public function save($key, $data, $expire_after = null, $invalidation_method = null) {
+	public function save($key, $data, $ttl = null) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new \InvalidArgumentException('key must be string or integer');
 		}
@@ -89,11 +88,7 @@ class CompositeCache extends ElggCache {
 		$item = $this->pool->getItem($this->namespaceKey($key));
 		$item->lock();
 
-		if (is_array($invalidation_method)) {
-			call_user_func_array([$item, 'setInvalidationMethod'], $invalidation_method);
-		}
-
-		$item->expiresAfter($expire_after ? : $this->ttl);
+		$item->setTTL($ttl ? : $this->ttl);
 
 		return $item->set($data)->save();
 	}
@@ -101,17 +96,22 @@ class CompositeCache extends ElggCache {
 	/**
 	 * Load data from the cache using a given key.
 	 *
-	 * @param string $key Name
+	 * @param string $key                 Name
+	 * @param array  $invalidation_method Stash invalidation method arguments
 	 *
 	 * @return mixed The stored data or false.
 	 */
-	public function load($key) {
+	public function load($key, $invalidation_method = null) {
 		if (!is_string($key) && !is_int($key)) {
 			throw new \InvalidArgumentException('key must be string or integer');
 		}
 
 		$item = $this->pool->getItem($this->namespaceKey($key));
-
+	
+		if (is_array($invalidation_method)) {
+			call_user_func_array([$item, 'setInvalidationMethod'], $invalidation_method);
+		}
+		
 		if ($item->isMiss()) {
 			return null;
 		}

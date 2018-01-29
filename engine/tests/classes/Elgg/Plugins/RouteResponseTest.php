@@ -4,15 +4,17 @@ namespace Elgg\Plugins;
 
 use Elgg\BaseTestCase;
 use Elgg\IntegrationTestCase;
+use Elgg\UnitTestCase;
 
 /**
  * @group Router
  */
-abstract class RouteResponseTest extends IntegrationTestCase {
+abstract class RouteResponseTest extends UnitTestCase {
 
 	use PluginTesting;
 
 	public function up() {
+		$this->startPlugin();
 		_elgg_services()->logger->disable();
 	}
 
@@ -48,6 +50,8 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	 */
 	public function testAddRouteRespondsWithErrorIfUserIsNotPermittedToWriteToContainer() {
 
+	    $ex = null;
+
 		try {
 			$user = $this->createUser();
 
@@ -69,16 +73,16 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 			_elgg_services()->router->route($request);
 
 		} catch (\Exception $ex) {
-			_elgg_services()->session->removeLoggedInUser();
 
-			elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
-			
-			throw $ex;
 		}
 
 		_elgg_services()->session->removeLoggedInUser();
 
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
+
+		if ($ex) {
+			throw $ex;
+		}
 	}
 
 	public function testAddRouteRespondsOk() {
@@ -139,6 +143,8 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	 */
 	public function testEditRouteRespondsWithErrorIfUserIsNotPermittedToWriteToContainer() {
 
+	    $ex = null;
+
 		$user = $this->createUser();
 		$object = $this->createObject([
 			'subtype' => $this->getSubtype(),
@@ -163,16 +169,16 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 		try {
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
-			_elgg_services()->session->removeLoggedInUser();
 
-			elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
-			
-			throw $ex;
 		}
 
 		_elgg_services()->session->removeLoggedInUser();
 
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
+
+		if ($ex) {
+			throw $ex;
+		}
 	}
 
 	public function testEditRouteRespondsOk() {
@@ -213,7 +219,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\GatekeeperException
+	 * @expectedException \Elgg\EntityNotFoundException
 	 */
 	public function testViewRouteRespondsWithErrorIfEntityIsNotFound() {
 
@@ -237,7 +243,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 		}
 
 	/**
-	 * @expectedException \Elgg\BadRequestException
+	 * @expectedException \Elgg\EntityNotFoundException
 	 */
 	public function testViewRouteRespondsWithErrorIfEntityIsOfIncorrectSubtype() {
 
@@ -259,13 +265,14 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\EntityPermissionsException
-	 * @group Current
+	 * @expectedException \Elgg\GroupGatekeeperException
 	 */
 	public function testViewRouteRespondsWithErrorIfGroupPermissionsAreNotFulfilled() {
 
 		$user = $this->createUser();
-		$group = $this->createGroup([], [
+		$group = $this->createGroup([
+			'access_id' => ACCESS_PUBLIC,
+			'membership' => ACCESS_PUBLIC,
 			'content_access_mode' => \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY,
 		]);
 
@@ -277,6 +284,10 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 		_elgg_services()->session->setLoggedInUser($user);
 
+		_elgg_services()->hooks->backup();
+
+		$ex = null;
+
 		try {
 			$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
 				'guid' => $object->guid,
@@ -287,26 +298,35 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
-			_elgg_services()->session->removeLoggedInUser();
-			
-			throw $ex;
+
 		}
 
+		_elgg_services()->hooks->restore();
 		_elgg_services()->session->removeLoggedInUser();
+
+		if ($ex) {
+			throw $ex;
+		}
 	}
 
 	/**
-	 * @expectedException \Elgg\EntityPermissionsException
-	 * @group Current
+	 * @expectedException \Elgg\GroupGatekeeperException
 	 */
 	public function testGroupCollectionRouteRespondsWithErrorIfGroupPermissionsAreNotFulfilled() {
 
 		$user = $this->createUser();
-		$group = $this->createGroup([], [
+
+		$group = $this->createGroup([
+			'access_id' => ACCESS_PUBLIC,
+			'membership' => ACCESS_PUBLIC,
 			'content_access_mode' => \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY,
 		]);
 
 		_elgg_services()->session->setLoggedInUser($user);
+
+		$ex = null;
+
+		_elgg_services()->hooks->backup();
 
 		try {
 			$url = elgg_generate_url("collection:object:{$this->getSubtype()}:group", [
@@ -318,12 +338,15 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 
 			_elgg_services()->router->route($request);
 		} catch (\Exception $ex) {
-			_elgg_services()->session->removeLoggedInUser();
-			
-			throw $ex;
+
 		}
 
+		_elgg_services()->hooks->restore();
 		_elgg_services()->session->removeLoggedInUser();
+
+		if ($ex) {
+			throw $ex;
+		}
 	}
 
 	public function testViewRouteRespondsOk() {
@@ -333,6 +356,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 		$object = $this->createObject([
 			'subtype' => $this->getSubtype(),
 			'owner_guid' => $user->guid,
+			'container_guid' => $user->guid,
 			'access_id' => ACCESS_PUBLIC,
 		]);
 
@@ -375,7 +399,7 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 	}
 
 	public function collectionRoutes() {
-
+		self::createApplication();
 		return [
 			[
 				'route' => "default:object:{$this->getSubtype()}",
@@ -397,7 +421,11 @@ abstract class RouteResponseTest extends IntegrationTestCase {
 				'route' => "collection:object:{$this->getSubtype()}:group",
 				'params' => function () {
 					return [
-						'guid' => $this->createGroup()->guid,
+						'guid' => $this->createGroup([
+							'access_id' => ACCESS_PUBLIC,
+							'membership' => ACCESS_PUBLIC,
+							'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+						])->guid,
 					];
 				},
 			],

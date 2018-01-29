@@ -49,7 +49,7 @@ trait PluginTesting {
 
 	/**
 	 * Start a plugin that extending test belongs to
-	 * It may sometimes be necessary to autoload plugin classes and libs
+	 * Calling this method should only be required in unit test cases
 	 *
 	 * @param null $flags Start flags
 	 *
@@ -59,7 +59,7 @@ trait PluginTesting {
 	 * @throws \InvalidParameterException
 	 * @throws \PluginException
 	 */
-	public function startPlugin($flags = null) {
+	public function startPlugin() {
 		$plugin_id = $this->getPluginID();
 		if (!$plugin_id) {
 			return null;
@@ -70,18 +70,15 @@ trait PluginTesting {
 			return null;
 		}
 
-		if (!isset($flags)) {
-			$flags = ELGG_PLUGIN_INCLUDE_START |
-				ELGG_PLUGIN_REGISTER_CLASSES |
-				ELGG_PLUGIN_REGISTER_LANGUAGES |
-				ELGG_PLUGIN_REGISTER_VIEWS |
-				ELGG_PLUGIN_REGISTER_WIDGETS |
-				ELGG_PLUGIN_REGISTER_ACTIONS |
-				ELGG_PLUGIN_REGISTER_ROUTES;
+		// @todo Resolve plugin dependencies and activate required plugins
+
+		$setup = $plugin->boot();
+		if ($setup instanceof \Closure) {
+			$setup();
 		}
 
-		$plugin->start($flags);
-
+		$plugin->init();
+		
 		return $plugin;
 	}
 

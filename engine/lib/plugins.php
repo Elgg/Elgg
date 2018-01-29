@@ -268,13 +268,6 @@ function _elgg_plugins_init() {
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_plugins_test');
 
-	/**
-	 * @see \Elgg\Database\Plugins::invalidateIsActiveCache
-	 */
-	$svc = _elgg_services()->plugins;
-	elgg_register_event_handler('deactivate', 'plugin', [$svc, 'invalidateIsActiveCache']);
-	elgg_register_event_handler('activate', 'plugin', [$svc, 'invalidateIsActiveCache']);
-
 	elgg_register_action("plugins/settings/save", '', 'admin');
 	elgg_register_action("plugins/usersettings/save");
 

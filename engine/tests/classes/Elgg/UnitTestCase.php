@@ -26,6 +26,9 @@ abstract class UnitTestCase extends BaseTestCase {
 		$sp->config->getCookieConfig();
 		$sp->config->boot_complete = false;
 		$sp->config->system_cache_enabled = true;
+		$sp->config->site = new \ElggSite((object) [
+			'guid' => 1,
+		]);
 
 		$app = Application::factory([
 			'service_provider' => $sp,
@@ -41,10 +44,6 @@ abstract class UnitTestCase extends BaseTestCase {
 		} else {
 			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
 		}
-
-		_elgg_services()->config->site = new \ElggSite((object) [
-			'guid' => 1,
-		]);
 
 		// Invalidate caches
 		$app->_services->dataCache->clear();
