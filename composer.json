@@ -43,7 +43,9 @@
         "fzaninotto/faker": "^1.6",
         "peppeocchi/php-cron-scheduler": "2.*",
         "bower-asset/normalize-css": "dev-master",
-        "symfony/routing": "^3.3"
+        "symfony/routing": "^3.3",
+        "php-di/php-di": "^5.4",
+        "doctrine/cache": "^1.6"
     },
     "config": {
         "process-timeout": 0,

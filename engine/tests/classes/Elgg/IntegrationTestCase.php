@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use Elgg\Plugins\PluginTesting;
 use ElggSession;
@@ -63,7 +64,9 @@ abstract class IntegrationTestCase extends BaseTestCase {
 			'set_start_time' => false,
 		]);
 
-		if (!$app->getDbConnection()) {
+		try {
+			$app->_services->db->getConnection(DbConfig::WRITE);
+		} catch (\Exception $ex) {
 			return false;
 		}
 

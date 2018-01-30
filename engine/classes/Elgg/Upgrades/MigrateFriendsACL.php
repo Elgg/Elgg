@@ -36,7 +36,7 @@ class MigrateFriendsACL implements Batch {
 	 */
 	public function countItems() {
 		// users without a friends acl
-		$db = elgg()->getDb();
+		$db = elgg()->db;
 		
 		return elgg_get_entities([
 			'type' => 'user',
@@ -54,7 +54,7 @@ class MigrateFriendsACL implements Batch {
 	 */
 	public function run(Result $result, $offset) {
 		
-		$db = elgg()->getDb();
+		$db = elgg()->db;
 		
 		$users = elgg_get_entities([
 			'type' => 'user',

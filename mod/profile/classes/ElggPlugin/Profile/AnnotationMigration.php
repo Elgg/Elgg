@@ -44,7 +44,7 @@ class AnnotationMigration implements Batch {
 	public function run(Result $result, $offset) {
 		$name = $this->getFieldNames()[$offset];
 
-		$db = elgg()->getDb();
+		$db = elgg()->db;
 		$sql = "
 			INSERT INTO {$db->prefix}annotations
 				  (entity_guid, `name`,    `value`, value_type, owner_guid, access_id, time_created, enabled)

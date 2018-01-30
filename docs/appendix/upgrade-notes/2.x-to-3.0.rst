@@ -511,6 +511,14 @@ The following class registration related functions have been removed:
  * ``elgg_register_class``
  * ``elgg_register_classes``
 
+Dependency Injection Container
+------------------------------
+
+Plugins can now define their services and attach them to Elgg's public DI container by providing definitions in
+``elgg-services.php`` in the root of the plugin directory.
+
+``elgg()`` no longer returns an instance of Elgg application, but a DI container instance.
+
 Search changes
 --------------
 

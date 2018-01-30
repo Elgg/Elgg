@@ -148,6 +148,7 @@ define('ELGG_CACHE_BLACK_HOLE', 1);
 define('ELGG_CACHE_RUNTIME', 2);
 define('ELGG_CACHE_FILESYSTEM', 4);
 define('ELGG_CACHE_PERSISTENT', 8);
+define('ELGG_CACHE_APC', 16);
 
 /**
  * elgg_call() flags

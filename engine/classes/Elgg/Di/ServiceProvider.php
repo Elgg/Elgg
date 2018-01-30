@@ -3,6 +3,9 @@
 namespace Elgg\Di;
 
 use ConfigurationException;
+use DI\ContainerBuilder;
+use Doctrine\Common\Cache\ApcuCache;
+use Elgg\Ajax\Service;
 use Elgg\Application;
 use Elgg\Assets\CssCompiler;
 use Elgg\Cache\CompositeCache;
@@ -48,6 +51,10 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\Database\DbConfig                  $dbConfig
  * @property-read \Elgg\DeprecationService                 $deprecation
+ * @property-read \Elgg\DI\PublicContainer                 $dic
+ * @property-read \Di\ContainerBuilder                     $dic_builder
+ * @property-read \Elgg\Di\DefinitionCache                 $dic_cache
+ * @property-read \Elgg\Di\DefinitionLoader                $dic_loader
  * @property-read \Elgg\EmailService                       $emails
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
@@ -261,6 +268,39 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
 			return new \Elgg\DeprecationService($c->logger);
+		});
+
+		$this->setFactory('dic', function (ServiceProvider $c) {
+			$definitions = $c->dic_loader->getDefinitions();
+			foreach ($definitions as $definition) {
+				$c->dic_builder->addDefinitions($definition);
+			}
+			return $c->dic_builder->build();
+		});
+
+		$this->setFactory('dic_builder', function(ServiceProvider $c) {
+			$dic_builder = new ContainerBuilder(PublicContainer::class);
+			$dic_builder->useAnnotations(false);
+			$dic_builder->setDefinitionCache($c->dic_cache);
+
+			return $dic_builder;
+		});
+
+		$this->setFactory('dic_cache', function (ServiceProvider $c) {
+			$cache = new CompositeCache(
+				'dic',
+				$c->config,
+				ELGG_CACHE_APC |
+				ELGG_CACHE_PERSISTENT |
+				ELGG_CACHE_FILESYSTEM |
+				ELGG_CACHE_RUNTIME
+			);
+
+			return new \Elgg\Di\DefinitionCache($cache);
+		});
+
+		$this->setFactory('dic_loader', function(ServiceProvider $c) {
+			return new \Elgg\Di\DefinitionLoader($c->plugins);
 		});
 
 		$this->setFactory('emails', function(ServiceProvider $c) {
@@ -492,8 +532,6 @@ class ServiceProvider extends DiContainer {
 
 		$this->initSiteSecret($config);
 
-		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
-
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
 			return new \Elgg\Cache\SimpleCache($c->config);
 		});
@@ -549,6 +587,8 @@ class ServiceProvider extends DiContainer {
 				$c->requestContext
 			);
 		});
+
+		$this->setClassName('urlSigner', \Elgg\Security\UrlSigner::class);
 
 		$this->setFactory('userCapabilities', function(ServiceProvider $c) {
 			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
