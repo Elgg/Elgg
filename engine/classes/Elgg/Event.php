@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Di\PublicContainer;
+
 /**
  * Models an event passed to event handlers
  *
@@ -30,9 +32,9 @@ interface Event {
 	public function getObject();
 
 	/**
-	 * Get the Elgg application
+	 * Get the DI container
 	 *
-	 * @return \Elgg\Application
+	 * @return PublicContainer
 	 */
 	public function elgg();
 }

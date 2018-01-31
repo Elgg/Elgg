@@ -41,23 +41,22 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	private $translator;
 
 	public function up() {
+		$svc = _elgg_services();
+		
 		$this->actionsDir = $this->normalizeTestFilePath('actions');
 
-		$session = _elgg_services()->session;
-		_elgg_services()->session->start();
+		$session = $svc->session;
+		$svc->session->start();
 
 		$config = _elgg_config();
 
-		$this->input = new Input();
-		_elgg_services()->setValue('input', $this->input);
-
 		$this->system_messages = new SystemMessagesService(elgg_get_session());
 
-		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto, _elgg_services()->systemMessages);
-		_elgg_services()->setValue('actions', $this->actions);
+		$this->actions = new ActionsService($config, $session, $svc->crypto, $svc->systemMessages);
+		$svc->setValue('actions', $this->actions);
 
 		$this->request = $this->prepareHttpRequest();
-		_elgg_services()->setValue('request', $this->request);
+		$svc->setValue('request', $this->request);
 
 		$this->translator = new Translator($config);
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
@@ -78,21 +77,14 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->setValue('translator', $this->translator);
 
 		$this->amd_config = _elgg_services()->amdConfig;
-		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
+		$this->ajax = new Service($this->hooks, $this->system_messages, $this->request->getInputStack(), $this->amd_config);
 		_elgg_services()->setValue('ajax', $this->ajax);
 
 		$transport = new \Elgg\Http\OutputBufferTransport();
 		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport);
 		_elgg_services()->setValue('responseFactory', $this->response_factory);
 
-		// register page handlers
-		elgg_register_route('action', [
-			'path' => '/action/{segments}',
-			'handler' => '_elgg_action_handler',
-			'requirements' => [
-				'segments' => '.+',
-			],
-		]);
+		_elgg_register_routes();
 	}
 
 	function route() {

@@ -131,7 +131,7 @@ In this case the URL will be matched even if the ``section`` segment is not prov
 
 You can further constrain segments using regex requirements:
 
-.. php::code
+.. code-block::php
 
 	// elgg-plugin.php
 	return [
@@ -152,7 +152,7 @@ You can further constrain segments using regex requirements:
 
 By default, Elgg will set the following requirements for named URL segments:
 
-.. php::code
+.. code-block::php
 
 	$patterns = [
 		'guid' => '\d+', // only digits

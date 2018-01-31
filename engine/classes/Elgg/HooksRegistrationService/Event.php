@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg\HooksRegistrationService;
 
-use DI\Container;
-use Elgg\Application;
+use Elgg\Di\PublicContainer;
 
 /**
  * The object passed to invokable class name handlers
@@ -16,7 +16,7 @@ class Event implements
 
 	const EVENT_TYPE = 'event';
 
-	private $elgg;
+	private $dic;
 	private $name;
 	private $type;
 	private $object;
@@ -24,13 +24,15 @@ class Event implements
 	/**
 	 * Constructor
 	 *
-	 * @param Container $elgg   Elgg application
-	 * @param string    $name   Event name
-	 * @param string    $type   Event type
-	 * @param mixed     $object Object of the event
+	 * @param PublicContainer $dic    DI container
+	 * @param string          $name   Event name
+	 * @param string          $type   Event type
+	 * @param mixed           $object Object of the event
+	 * @access private
+	 * @internal
 	 */
-	public function __construct(Container $elgg, $name, $type, $object) {
-		$this->elgg = $elgg;
+	public function __construct(PublicContainer $dic, $name, $type, $object) {
+		$this->dic = $dic;
 		$this->name = $name;
 		$this->type = $type;
 		$this->object = $object;
@@ -61,7 +63,7 @@ class Event implements
 	 * {@inheritdoc}
 	 */
 	public function elgg() {
-		return $this->elgg;
+		return $this->dic;
 	}
 
 	/**

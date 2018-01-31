@@ -191,6 +191,8 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(serialize([
 			'bar' => 'baz',
 			'_route' => 'foo:bar',
+			'_url' => elgg_normalize_url('foo/baz'),
+			'_path' => '/foo/baz',
 		]), $response->getContent());
 
 	}

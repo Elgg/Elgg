@@ -108,7 +108,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$this->privateSettingsCache,
 				$this->config,
 				$this->systemMessages,
-				$this->context
+				$this->request->getContextStack()
 			);
 		});
 

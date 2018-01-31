@@ -11,6 +11,7 @@ use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
+use Elgg\Http\Input;
 use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
@@ -692,7 +693,6 @@ class Application {
 		}
 
 		$this->_services->setValue('request', $new);
-		$this->_services->context->initialize($new);
 	}
 
 	/**

@@ -4,11 +4,13 @@ namespace Elgg;
 
 use Elgg\Http\Request;
 use Elgg\Http\ResponseBuilder;
+use Elgg\Router\Middleware\WalledGarden;
 use Elgg\Router\Route;
 use Elgg\Router\RouteCollection;
 use Elgg\Router\UrlGenerator;
 use Elgg\Router\UrlMatcher;
 use ElggEntity;
+use Exception;
 use InvalidParameterException;
 use RuntimeException;
 use SecurityException;
@@ -51,6 +53,11 @@ class Router {
 	protected $generator;
 
 	/**
+	 * @var HandlersService
+	 */
+	protected $handlers;
+
+	/**
 	 * @var Route
 	 */
 	protected $current_route;
@@ -62,12 +69,20 @@ class Router {
 	 * @param RouteCollection    $routes    Route collection
 	 * @param UrlMatcher         $matcher   URL Matcher
 	 * @param UrlGenerator       $generator URL Generator
+	 * @param HandlersService    $handlers  Handlers service
 	 */
-	public function __construct(PluginHooksService $hooks, RouteCollection $routes, UrlMatcher $matcher, UrlGenerator $generator) {
+	public function __construct(
+		PluginHooksService $hooks,
+		RouteCollection $routes,
+		UrlMatcher $matcher,
+		UrlGenerator $generator,
+		HandlersService $handlers
+	) {
 		$this->hooks = $hooks;
 		$this->routes = $routes;
 		$this->matcher = $matcher;
 		$this->generator = $generator;
+		$this->handlers = $handlers;
 	}
 
 	/**
@@ -80,7 +95,7 @@ class Router {
 	 *
 	 * @return boolean Whether the request was routed successfully.
 	 * @throws InvalidParameterException
-	 * @throws SecurityException
+	 * @throws Exception
 	 * @access private
 	 */
 	public function route(Request $request) {
@@ -92,19 +107,7 @@ class Router {
 			$segments = [];
 		}
 
-		$is_walled_garden = _elgg_config()->walled_garden;
-		$is_logged_in = _elgg_services()->session->isLoggedIn();
 		$url = elgg_normalize_url($identifier . '/' . implode('/', $segments));
-
-		if ($is_walled_garden && !$is_logged_in && !$this->isPublicPage($url)) {
-			if (!elgg_is_xhr()) {
-				_elgg_services()->session->set('last_forward_from', current_page_url());
-			}
-			_elgg_services()->systemMessages->addErrorMessage(_elgg_services()->translator->translate('loggedinrequired'));
-			_elgg_services()->responseFactory->redirect('', 'walled_garden');
-
-			return false;
-		}
 
 		$old = [
 			'identifier' => $identifier,
@@ -117,8 +120,15 @@ class Router {
 		}
 
 		try {
+			$result = $old;
+
 			ob_start();
-			$result = $this->hooks->trigger('route', $identifier, $old, $old);
+			if ($this->hooks->hasHandler('route', $identifier) ||
+				$this->hooks->hasHandler('route', 'all')) {
+				elgg_deprecated_notice('"route" hook has been deprecated. Use named routes instead', '3.0');
+
+				$result = $this->hooks->trigger('route', $identifier, $old, $old);
+			}
 
 			// false: request was handled, stop processing.
 			// array: compare to old params.
@@ -128,10 +138,6 @@ class Router {
 				$response = elgg_ok_response($output);
 			} else {
 				$response = false;
-
-				if ($result !== $old) {
-					_elgg_services()->logger->warn('Use the route:rewrite hook to modify routes.');
-				}
 
 				if ($identifier != $result['identifier']) {
 					$identifier = $result['identifier'];
@@ -158,12 +164,30 @@ class Router {
 					$handler = elgg_extract('_handler', $parameters);
 					unset($parameters['_handler']);
 
+					$middleware = elgg_extract('_middleware', $parameters, []);
+					unset($parameters['_middleware']);
+
 					$this->current_route = $this->routes->get($parameters['_route']);
+
+					$parameters['_url'] = $url;
+					$parameters['_path'] = $path;
+					
 					$this->current_route->setMatchedParameters($parameters);
+
+					foreach ($parameters as $key => $value) {
+						$request->getInputStack()->set($key, $value);
+					}
+
+					$envelope = new \Elgg\Request(elgg(), $this->current_route, $request);
+					$parameters['request'] = $envelope;
+
+					foreach ($middleware as $callable) {
+						$this->handlers->call($callable, $envelope, null);
+					}
 
 					if ($handler) {
 						if (is_callable($handler)) {
-							$response = call_user_func($handler, $segments, $identifier);
+							$response = call_user_func($handler, $segments, $identifier, $envelope);
 						}
 					} else {
 						$output = elgg_view_resource($resource, $parameters);
@@ -185,7 +209,7 @@ class Router {
 					$response = elgg_ok_response($output);
 				}
 			}
-		} catch (\Exception $ex) {
+		} catch (Exception $ex) {
 			ob_get_clean();
 			throw $ex;
 		}
@@ -260,9 +284,13 @@ class Router {
 	 */
 	public function registerRoute($name, array $params = []) {
 
+		$params = $this->hooks->trigger('route:config', $name, $params, $params);
+
 		$path = elgg_extract('path', $params);
 		$resource = elgg_extract('resource', $params);
 		$handler = elgg_extract('handler', $params);
+		$middleware = elgg_extract('middleware', $params, []);
+		$protected = elgg_extract('walled', $params, true);
 
 		if (!$path || (!$resource && !$handler)) {
 			throw new InvalidParameterException(__METHOD__ . ' requires "path" and "resource" parameters to be set');
@@ -308,8 +336,13 @@ class Router {
 
 		$path = '/' . implode('/', $segments);
 
+		if ($protected !== false) {
+			$middleware[] = WalledGarden::class;
+		}
+
 		$defaults['_resource'] = $resource;
 		$defaults['_handler'] = $handler;
+		$defaults['_middleware'] = $middleware;
 
 		$route = new Route($path, $defaults, $requirements, [
 			'utf8' => true,
@@ -344,6 +377,7 @@ class Router {
 			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
 		} catch (RouteNotFoundException $exception) {
 			elgg_log($exception->getMessage(), 'ERROR');
+
 			return '';
 		}
 	}
@@ -353,7 +387,7 @@ class Router {
 	 *
 	 * @param string          $name       Route name
 	 * @param ElggEntity|null $entity     Entity
-	 * @param array 		  $parameters Preset parameters
+	 * @param array           $parameters Preset parameters
 	 *
 	 * @return array|false
 	 */
@@ -443,72 +477,5 @@ class Router {
 		array_unshift($segments, $new['identifier']);
 
 		return $request->setUrlSegments($segments);
-	}
-
-	/**
-	 * Checks if the page should be allowed to be served in a walled garden mode
-	 *
-	 * Pages are registered to be public by {@elgg_plugin_hook public_pages walled_garden}.
-	 *
-	 * @param string $url Defaults to the current URL
-	 *
-	 * @return bool
-	 * @since 3.0
-	 */
-	public function isPublicPage($url = '') {
-		if (empty($url)) {
-			$url = current_page_url();
-		}
-
-		$parts = parse_url($url);
-		unset($parts['query']);
-		unset($parts['fragment']);
-		$url = elgg_http_build_url($parts);
-		$url = rtrim($url, '/') . '/';
-
-		$site_url = _elgg_config()->wwwroot;
-
-		if ($url == $site_url) {
-			// always allow index page
-			return true;
-		}
-
-		// default public pages
-		$defaults = [
-			'walled_garden/.*',
-			'action/.*',
-			'login',
-			'register',
-			'forgotpassword',
-			'changepassword',
-			'refresh_token',
-			'ajax/view/languages.js',
-			'upgrade\.php',
-			'css/.*',
-			'js/.*',
-			'cache/[0-9]+/\w+/.*',
-			'cron/.*',
-			'services/.*',
-			'serve-file/.*',
-			'robots.txt',
-			'favicon.ico',
-		];
-
-		$params = [
-			'url' => $url,
-		];
-
-		$public_routes = _elgg_services()->hooks->trigger('public_pages', 'walled_garden', $params, $defaults);
-
-		$site_url = preg_quote($site_url);
-		foreach ($public_routes as $public_route) {
-			$pattern = "`^{$site_url}{$public_route}/*$`i";
-			if (preg_match($pattern, $url)) {
-				return true;
-			}
-		}
-
-		// non-public page
-		return false;
 	}
 }

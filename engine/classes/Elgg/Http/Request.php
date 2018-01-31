@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Http;
 
+use Elgg\Context;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 use Elgg\Application;
 
@@ -13,6 +14,83 @@ class Request extends SymfonyRequest {
 
 	const REWRITE_TEST_TOKEN = '__testing_rewrite';
 	const REWRITE_TEST_OUTPUT = 'success';
+
+	/**
+	 * @var Context
+	 */
+	protected $context_stack;
+
+	/**
+	 * @var Input
+	 */
+	protected $input_stack;
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+		parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
+
+		$this->initializeContext();
+		$this->initializeInput();
+	}
+
+	/**
+	 * Initialize context stack
+	 * @return static
+	 */
+	public function initializeContext() {
+		$context = new Context($this);
+		$this->context_stack = $context;
+		return $this;
+	}
+
+	/**
+	 * Returns context stack
+	 * @return Context
+	 */
+	public function getContextStack() {
+		return $this->context_stack;
+	}
+
+	/**
+	 * Initialize input stack
+	 * @return static
+	 */
+	public function initializeInput() {
+		$input = new Input($this);
+		$this->input_stack = $input;
+		return $this;
+	}
+
+	/**
+	 * Returns input stack
+	 * @return Input
+	 */
+	public function getInputStack() {
+		return $this->input_stack;
+	}
+
+	/**
+	 * Returns current page URL
+	 *
+	 * @return string
+	 */
+	public function getCurrentURL() {
+		$url = parse_url(elgg_get_site_url());
+
+		$page = $url['scheme'] . "://" . $url['host'];
+
+		if (isset($url['port']) && $url['port']) {
+			$page .= ":" . $url['port'];
+		}
+
+		$page = trim($page, "/");
+
+		$page .= $this->getRequestUri();
+
+		return $page;
+	}
 
 	/**
 	 * Get the Elgg URL segments

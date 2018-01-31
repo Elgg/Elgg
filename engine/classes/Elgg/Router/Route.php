@@ -30,10 +30,33 @@ class Route extends \Symfony\Component\Routing\Route {
 	 * Get matched parameters
 	 *
 	 * @return array
-	 * @internal
 	 */
 	public function getMatchedParameters() {
 		return $this->parameters;
+	}
+
+	/**
+	 * Get matched route name
+	 * @return string
+	 */
+	public function getName() {
+		return elgg_extract('_route', $this->parameters);
+	}
+
+	/**
+	 * Get url that was matched against this route
+	 * @return string
+	 */
+	public function getUri() {
+		return elgg_extract('_url', $this->parameters);
+	}
+
+	/**
+	 * Get url relative to site root
+	 * @return string
+	 */
+	public function getRelativeUri() {
+		return elgg_extract('_path', $this->parameters);
 	}
 
 	/**
@@ -45,9 +68,9 @@ class Route extends \Symfony\Component\Routing\Route {
 	public function resolvePageOwner() {
 
 		$params = $this->getMatchedParameters();
-		$route = $params['_route'];
+		$route_name = $this->getName();
 
-		$route_parts = explode(':', $route);
+		$route_parts = explode(':', $route_name);
 
 		$from_guid = function ($guid) {
 			$entity = get_entity($guid);

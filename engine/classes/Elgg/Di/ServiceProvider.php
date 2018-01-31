@@ -15,6 +15,7 @@ use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Http\Input;
 use Elgg\Invoker;
 use Elgg\Printer\CliPrinter;
 use Elgg\Printer\ErrorLogPrinter;
@@ -47,7 +48,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
- * @property-read \Elgg\Context                            $context
  * @property-read \Elgg\Cache\DataCache                    $dataCache
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\Database\DbConfig                  $dbConfig
@@ -70,7 +70,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Security\HmacFactory               $hmac
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\EntityIconService                  $iconService
- * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\ImageService                       $imageService
  * @property-read \Elgg\Invoker                            $invoker
  * @property-read \Elgg\Logger                             $logger
@@ -166,7 +165,7 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
 
 		$this->setFactory('ajax', function(ServiceProvider $c) {
-			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input, $c->amdConfig);
+			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->request->getInputStack(), $c->amdConfig);
 		});
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {
@@ -226,12 +225,6 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('configTable', function(ServiceProvider $c) {
 			return new \Elgg\Database\ConfigTable($c->db, $c->boot, $c->logger);
-		});
-
-		$this->setFactory('context', function(ServiceProvider $c) {
-			$context = new \Elgg\Context();
-			$context->initialize($c->request);
-			return $context;
 		});
 
 		$this->setFactory('cron', function(ServiceProvider $c) {
@@ -379,8 +372,6 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable, $c->uploads);
 		});
 
-		$this->setClassName('input', \Elgg\Http\Input::class);
-
 		$this->setFactory('imageService', function(ServiceProvider $c) {
 			switch ($c->config->image_processor) {
 				case 'imagick':
@@ -402,7 +393,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
-			$logger = new \Elgg\Logger($c->hooks, $c->context, $c->config, $c->printer);
+			$logger = new \Elgg\Logger($c->hooks, $c->request->getContextStack(), $c->config, $c->printer);
 			return $logger;
 		});
 
@@ -461,7 +452,7 @@ class ServiceProvider extends DiContainer {
 				$this->privateSettingsCache,
 				$this->config,
 				$this->systemMessages,
-				$this->context
+				$this->request->getContextStack()
 			);
 			if ($c->config->enable_profiling) {
 				$plugins->setTimer($c->timer);
@@ -524,11 +515,18 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Router\RouteCollection();
 		});
 
-		$this->setFactory('router', function(ServiceProvider $c) {
-			$router = new \Elgg\Router($c->hooks, $c->routeCollection, $c->urlMatcher, $c->urlGenerator);
+		$this->setFactory('router', function (ServiceProvider $c) {
+			$router = new \Elgg\Router(
+				$c->hooks,
+				$c->routeCollection,
+				$c->urlMatcher,
+				$c->urlGenerator,
+				$c->handlers
+			);
 			if ($c->config->enable_profiling) {
 				$router->setTimer($c->timer);
 			}
+
 			return $router;
 		});
 
@@ -634,7 +632,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('views', function(ServiceProvider $c) {
-			return new \Elgg\ViewsService($c->hooks, $c->logger, $c->input);
+			return new \Elgg\ViewsService($c->hooks, $c->logger, $c->request->getInputStack());
 		});
 
 		$this->setFactory('viewCacher', function(ServiceProvider $c) {

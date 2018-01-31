@@ -8,7 +8,9 @@ use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Elgg\Http\ResponseFactory;
 use Elgg\I18n\Translator;
+use Elgg\Router\Middleware\WalledGarden;
 use ElggSession;
+use Flintstone\Exception;
 use stdClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,27 +58,33 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	protected $fooHandlerCalls = 0;
 
 	public function up() {
+		$svc = _elgg_services();
+
 		$this->pages = $this->normalizeTestFilePath('pages');
 		$this->fooHandlerCalls = 0;
 
 		$session = ElggSession::getMock();
-		_elgg_services()->setValue('session', $session);
-		_elgg_services()->session->start();
+		$svc->setValue('session', $session);
+		$svc->session->start();
 
 		$config = _elgg_config();
-		_elgg_services()->setValue('config', $config);
-
-		$this->input = new Input();
-		_elgg_services()->setValue('input', $this->input);
+		$svc->setValue('config', $config);
 
 		$this->request = $this->prepareHttpRequest('', 'GET');
-		_elgg_services()->setValue('request', $this->request);
+		$svc->setValue('request', $this->request);
 
 		$this->translator = new Translator($config);
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
 
 		$this->hooks = new PluginHooksService();
-		$this->router = new Router($this->hooks, _elgg_services()->routeCollection, _elgg_services()->urlMatcher, _elgg_services()->urlGenerator);
+
+		$this->router = new Router(
+			$this->hooks,
+			$svc->routeCollection,
+			$svc->urlMatcher,
+			$svc->urlGenerator,
+			$svc->handlers
+		);
 
 		$this->system_messages = new SystemMessagesService(elgg_get_session());
 
@@ -84,8 +92,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->createService();
 
-		_elgg_services()->logger->disable();
-		_elgg_services()->views->setViewtype('');
+		$svc->logger->disable();
+		$svc->views->setViewtype('');
 	}
 
 	public function down() {
@@ -94,35 +102,56 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	function createService() {
 
-		_elgg_services()->setValue('systemMessages', $this->system_messages); // we don't want system messages propagating across tests
-		_elgg_services()->setValue('hooks', $this->hooks);
-		_elgg_services()->setValue('request', $this->request);
-		_elgg_services()->setValue('translator', $this->translator);
-		_elgg_services()->setValue('router', new Router($this->hooks, _elgg_services()->routeCollection, _elgg_services()->urlMatcher, _elgg_services()->urlGenerator));
-		$this->amd_config = _elgg_services()->amdConfig;
-		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
-		_elgg_services()->setValue('ajax', $this->ajax);
+		$svc = _elgg_services();
+
+		$svc->setValue('systemMessages', $this->system_messages); // we don't want system messages propagating across tests
+		$svc->setValue('hooks', $this->hooks);
+		$svc->setValue('request', $this->request);
+		$svc->setValue('translator', $this->translator);
+		$svc->setValue('router', new Router(
+			$this->hooks,
+			$svc->routeCollection,
+			$svc->urlMatcher,
+			$svc->urlGenerator,
+			$svc->handlers
+		));
+
+		$this->amd_config = $svc->amdConfig;
+
+		$this->ajax = new Service($this->hooks, $this->system_messages, $this->request->getInputStack(), $this->amd_config);
+		$svc->setValue('ajax', $this->ajax);
+
+		$this->views = new ViewsService($this->hooks, $svc->logger, $this->request->getInputStack());
+		$svc->setValue('views', $this->views);
 
 		$transport = new \Elgg\Http\OutputBufferTransport();
+
 		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport);
-		_elgg_services()->setValue('responseFactory', $this->response_factory);
+		$svc->setValue('responseFactory', $this->response_factory);
 
-		elgg_register_route('ajax', [
-			'path' => '/ajax/{segments}',
-			'handler' => '_elgg_ajax_page_handler',
-			'requirements' => [
-				'segments' => '.+',
-			],
-		]);
+		$svc->views->autoregisterViews('', "$this->viewsDir/default", 'default');
+		$svc->views->autoregisterViews('', "$this->viewsDir/json", 'json');
 
-		_elgg_services()->views->autoregisterViews('', "$this->viewsDir/default", 'default');
-		_elgg_services()->views->autoregisterViews('', "$this->viewsDir/json", 'json');
+		_elgg_register_routes();
 	}
 
 	function route() {
+		$ex = false;
+
 		ob_start();
-		$ret = _elgg_services()->router->route($this->request);
+
+		try {
+			$ret = _elgg_services()->router->route($this->request);
+		} catch (\Exception $ex) {
+
+		}
+
 		ob_end_clean();
+
+		if ($ex) {
+			throw $ex;
+		}
+
 		return $ret;
 	}
 
@@ -133,7 +162,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanRegisterFunctionsAsPageHandlers() {
-		$registered = $this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
+		$registered = $this->router->registerPageHandler('hello', [$this, 'hello_page_handler']);
 
 		$this->assertTrue($registered);
 
@@ -157,7 +186,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanUnregisterPageHandlers() {
-		$this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
+		$this->router->registerPageHandler('hello', [$this, 'hello_page_handler']);
 		$this->router->unregisterPageHandler('hello');
 
 		ob_start();
@@ -183,8 +212,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 * 4. Check that the `/foo` handler was called.
 	 */
 	function testRouteSupportsSettingHandlerInHookResultForBackwardsCompatibility() {
-		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
-		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_handler'));
+		$this->router->registerPageHandler('foo', [$this, 'foo_page_handler']);
+		$this->hooks->registerHandler('route', 'bar', [$this, 'bar_route_handler']);
 
 		ob_start();
 		$this->router->route($this->prepareHttpRequest('bar/baz'));
@@ -204,8 +233,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 * 4. Check that the `/foo` handler was called.
 	 */
 	function testRouteSupportsSettingIdentifierInHookResultForBackwardsCompatibility() {
-		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
-		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_identifier'));
+		$this->router->registerPageHandler('foo', [$this, 'foo_page_handler']);
+		$this->hooks->registerHandler('route', 'bar', [$this, 'bar_route_identifier']);
 
 		ob_start();
 		$this->router->route($this->prepareHttpRequest('bar/baz'));
@@ -218,8 +247,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testRouteOverridenFromHook() {
-		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
-		$this->hooks->registerHandler('route', 'foo', array($this, 'bar_route_override'));
+		$this->router->registerPageHandler('foo', [$this, 'foo_page_handler']);
+		$this->hooks->registerHandler('route', 'foo', [$this, 'bar_route_override']);
 
 		ob_start();
 		$this->router->route($this->prepareHttpRequest('foo'));
@@ -236,27 +265,31 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	function foo_page_handler() {
 		$this->fooHandlerCalls++;
+
 		return true;
 	}
 
 	function bar_route_handler($hook, $type, $value, $params) {
 		$value['handler'] = 'foo';
+
 		return $value;
 	}
 
 	function bar_route_identifier($hook, $type, $value, $params) {
 		$value['identifier'] = 'foo';
+
 		return $value;
 	}
 
 	function bar_route_override($hook, $type, $value, $params) {
 		echo "Page handler override from hook";
+
 		return false;
 	}
 
 	public function testCanAllowRewrite() {
 
-		$this->hooks->registerHandler('route:rewrite', 'foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('route:rewrite', 'foo', function ($hook, $type, $return, $params) {
 			$this->assertEquals('route:rewrite', $hook);
 			$this->assertEquals('foo', $type);
 			$this->assertEquals($return, $params);
@@ -289,11 +322,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanRespondToNonAjaxRequestThroughRouteHook() {
 
-		$this->hooks->registerHandler('route', 'foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
 			$this->assertEquals($return, $params);
 			$this->assertEquals('foo', $return['identifier']);
 			$this->assertEquals(['bar', 'baz'], $return['segments']);
 			echo 'good bye';
+
 			return false;
 		});
 
@@ -310,11 +344,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanRedirectNonAjaxRequestFromRouteHook() {
 
-		$this->hooks->registerHandler('route', 'foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
 			$this->assertEquals($return, $params);
 			$this->assertEquals('foo', $return['identifier']);
 			$this->assertEquals(['bar', 'baz'], $return['segments']);
 			_elgg_services()->responseFactory->redirect('foo2/bar2/baz2');
+
 			return false;
 		});
 
@@ -331,19 +366,21 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanFilterResponse() {
 
-		$this->hooks->registerHandler('response', 'path:foo/bar', function($hook, $type, $response, $params) {
+		$this->hooks->registerHandler('response', 'path:foo/bar', function ($hook, $type, $response, $params) {
 			$this->assertEquals('response', $hook);
 			$this->assertEquals('path:foo/bar', $type);
 			$this->assertEquals($response, $params);
 			$this->assertInstanceOf(OkResponse::class, $response);
+
 			return elgg_error_response('', REFERRER, ELGG_HTTP_BAD_REQUEST);
 		});
 
 		$this->request = $this->prepareHttpRequest('foo/bar', 'GET');
 		$this->createService();
 
-		elgg_register_page_handler('foo', function() {
+		elgg_register_page_handler('foo', function () {
 			echo 'hello';
+
 			return true;
 		});
 
@@ -360,9 +397,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_ok_response('hello');
 		});
 
@@ -379,9 +417,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
 		});
 
@@ -401,9 +440,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_redirect_response('foo2/bar2/baz2');
 		});
 
@@ -420,8 +460,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json']);
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			$output = elgg_view('response');
+
 			return elgg_ok_response($output);
 		});
 
@@ -440,8 +481,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			_elgg_services()->responseFactory->redirect('index');
+
 			return elgg_ok_response('foo');
 		});
 
@@ -456,8 +498,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+
 			return elgg_ok_response('foo');
 		});
 
@@ -474,12 +517,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanSafelyRedirectWithinRedirect() {
 
-		$this->hooks->registerHandler('forward', (string) ELGG_HTTP_NOT_FOUND, function() {
+		$this->hooks->registerHandler('forward', (string) ELGG_HTTP_NOT_FOUND, function () {
 			$this->fooHandlerCalls++;
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_BAD_REQUEST);
 		});
 
-		$this->hooks->registerHandler('forward', (string) ELGG_HTTP_BAD_REQUEST, function() {
+		$this->hooks->registerHandler('forward', (string) ELGG_HTTP_BAD_REQUEST, function () {
 			$this->fooHandlerCalls++;
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_INTERNAL_SERVER_ERROR);
 		});
@@ -487,8 +530,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+
 			return elgg_ok_response('foo');
 		});
 
@@ -508,11 +552,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanRespondToAjaxRequestThroughRouteHook() {
 
-		$this->hooks->registerHandler('route', 'foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
 			$this->assertEquals($return, $params);
 			$this->assertEquals('foo', $return['identifier']);
 			$this->assertEquals(['bar', 'baz'], $return['segments']);
 			echo 'good bye';
+
 			return false;
 		});
 
@@ -534,11 +579,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanRedirectAjaxRequestFromRouteHook() {
 
-		$this->hooks->registerHandler('route', 'foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
 			$this->assertEquals($return, $params);
 			$this->assertEquals('foo', $return['identifier']);
 			$this->assertEquals(['bar', 'baz'], $return['segments']);
 			_elgg_services()->responseFactory->redirect('foo2/bar2/baz2');
+
 			return false;
 		});
 
@@ -563,7 +609,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			],
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -576,9 +622,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_ok_response('hello');
 		});
 
@@ -600,9 +647,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
 		});
 
@@ -624,9 +672,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_redirect_response('foo2/bar2/baz2');
 		});
 
@@ -648,7 +697,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			],
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -661,8 +710,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json'], 1);
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			$output = elgg_view('response');
+
 			return elgg_ok_response($output);
 		});
 
@@ -684,8 +734,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 1);
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			_elgg_services()->responseFactory->redirect('index');
+
 			return elgg_ok_response('foo');
 		});
 
@@ -707,7 +758,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			],
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('index'),
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -719,8 +770,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 1);
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+
 			return elgg_ok_response('foo');
 		});
 
@@ -742,7 +794,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			],
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('error'),
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -752,11 +804,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanRespondToAjax2RequestThroughRouteHook() {
 
-		$this->hooks->registerHandler('route', 'foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
 			$this->assertEquals($return, $params);
 			$this->assertEquals('foo', $return['identifier']);
 			$this->assertEquals(['bar', 'baz'], $return['segments']);
 			echo 'good bye';
+
 			return false;
 		});
 
@@ -775,18 +828,19 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => 'good bye',
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
 
 	public function testCanRedirectAjax2RequestFromRouteHook() {
 
-		$this->hooks->registerHandler('route', 'foo', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
 			$this->assertEquals($return, $params);
 			$this->assertEquals('foo', $return['identifier']);
 			$this->assertEquals(['bar', 'baz'], $return['segments']);
 			_elgg_services()->responseFactory->redirect('foo2/bar2/baz2');
+
 			return false;
 		});
 
@@ -805,7 +859,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => '',
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -818,9 +872,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_ok_response('hello');
 		});
 
@@ -836,7 +891,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => 'hello',
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -846,9 +901,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
 		});
 
@@ -862,7 +918,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'error' => '',
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -872,9 +928,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService();
 
-		elgg_register_page_handler('foo', function($segments, $identifier) {
+		elgg_register_page_handler('foo', function ($segments, $identifier) {
 			$this->assertEquals(['bar', 'baz'], $segments);
 			$this->assertEquals('foo', $identifier);
+
 			return elgg_redirect_response('foo2/bar2/baz2');
 		});
 
@@ -890,7 +947,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => '',
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -903,8 +960,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json'], 2);
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			$output = elgg_view('response');
+
 			return elgg_ok_response($output);
 		});
 
@@ -922,7 +980,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			],
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -932,8 +990,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 2);
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			_elgg_services()->responseFactory->redirect('index');
+
 			return elgg_ok_response('foo');
 		});
 
@@ -949,7 +1008,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => '',
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -961,8 +1020,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->request = $this->prepareHttpRequest('phpunit', 'GET', [], 2);
 		$this->createService();
 
-		elgg_register_page_handler('phpunit', function() {
+		elgg_register_page_handler('phpunit', function () {
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+
 			return elgg_ok_response('foo');
 		});
 
@@ -976,7 +1036,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'error' => ''
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -1101,7 +1161,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanFilterResponseToAjaxViewRequestForARegisteredView() {
 
-		$this->hooks->registerHandler('response', 'view:query_view', function($hook, $type, $response, $params) {
+		$this->hooks->registerHandler('response', 'view:query_view', function ($hook, $type, $response, $params) {
 			$this->assertEquals('response', $hook);
 			$this->assertEquals('view:query_view', $type);
 			$this->assertEquals($response, $params);
@@ -1160,7 +1220,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			],
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('forwards'),
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -1184,14 +1244,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'error' => "Ajax view 'unallowed' was not registered",
-				], ELGG_JSON_ENCODING); // Symfony JsonResponse
+		], ELGG_JSON_ENCODING); // Symfony JsonResponse
 
 		$this->assertEquals($output, $response->getContent());
 	}
 
 	/**
 	 * @group AjaxService
-	 * @see #9797
+	 * @see   #9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForCacheableView() {
 
@@ -1211,14 +1271,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => file_get_contents($this->viewsDir . '/default/cacheable.xml'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
 
 	/**
 	 * @group AjaxService
-	 * @see #9797
+	 * @see   #9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForCSS() {
 
@@ -1236,14 +1296,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => file_get_contents($this->viewsDir . '/default/styles.css'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
 
 	/**
 	 * @group AjaxService
-	 * @see #9797
+	 * @see   #9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForJS() {
 
@@ -1261,7 +1321,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => file_get_contents($this->viewsDir . '/default/javascript.js'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -1291,7 +1351,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => 'hello',
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -1301,7 +1361,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testCanFilterResponseToAjax2ViewRequestForARegisteredView() {
 
-		$this->hooks->registerHandler('response', 'view:query_view', function($hook, $type, $response, $params) {
+		$this->hooks->registerHandler('response', 'view:query_view', function ($hook, $type, $response, $params) {
 			$this->assertEquals('response', $hook);
 			$this->assertEquals('view:query_view', $type);
 			$this->assertEquals($response, $params);
@@ -1328,7 +1388,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'error' => 'good bye',
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -1364,7 +1424,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		 */
 		$output = json_encode([
 			'error' => 'hello',
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 
@@ -1394,7 +1454,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanFilterResponseToAjaxViewRequestForARegisteredFormView() {
 
-		$this->hooks->registerHandler('response', 'form:query_view', function($hook, $type, $response, $params) {
+		$this->hooks->registerHandler('response', 'form:query_view', function ($hook, $type, $response, $params) {
 			$this->assertEquals('response', $hook);
 			$this->assertEquals('form:query_view', $type);
 			$this->assertEquals($response, $params);
@@ -1447,7 +1507,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => elgg_view_form('query_view', [], $vars),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
@@ -1457,7 +1517,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testCanFilterResponseToAjax2ViewRequestForARegisteredFormView() {
 
-		$this->hooks->registerHandler('response', 'form:query_view', function($hook, $type, $response, $params) {
+		$this->hooks->registerHandler('response', 'form:query_view', function ($hook, $type, $response, $params) {
 			$this->assertEquals('response', $hook);
 			$this->assertEquals('form:query_view', $type);
 			$this->assertEquals($response, $params);
@@ -1484,17 +1544,17 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'error' => 'good bye',
-				], ELGG_JSON_ENCODING);
+		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
 	}
 
 	/**
 	 * @dataProvider publicPagesProvider
-	 * @group WalledGarden
+	 * @group        WalledGarden
 	 */
 	public function testCanDetectPublicPage($path, $expected) {
-		$this->assertEquals($expected, $this->router->isPublicPage(elgg_normalize_url($path)));
+		$this->assertEquals($expected, WalledGarden::isPublicPage(elgg_normalize_url($path)));
 	}
 
 	function publicPagesProvider() {
@@ -1528,12 +1588,13 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->hooks->backup();
 
-		$this->hooks->registerHandler('public_pages', 'walled_garden', function($hook, $type, $return) {
+		$this->hooks->registerHandler('public_pages', 'walled_garden', function ($hook, $type, $return) {
 			$return[] = 'allowed/.*';
+
 			return $return;
 		});
 
-		$this->assertTrue($this->router->isPublicPage(elgg_normalize_url('allowed/foo/bar')));
+		$this->assertTrue(WalledGarden::isPublicPage(elgg_normalize_url('allowed/foo/bar')));
 
 		$this->hooks->restore();
 	}
@@ -1548,13 +1609,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->hooks->backup();
 
-		$this->hooks->registerHandler('route', 'foo', function() {
+		$this->hooks->registerHandler('route', 'foo', function () {
 			echo 'foo';
+
 			return false;
 		});
 
-		$this->hooks->registerHandler('public_pages', 'walled_garden', function($hook, $type, $return) {
+		$this->hooks->registerHandler('public_pages', 'walled_garden', function ($hook, $type, $return) {
 			$return[] = 'foo/.*';
+
 			return $return;
 		});
 
@@ -1571,27 +1634,35 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @group WalledGarden
+	 * @expectedException \Elgg\WalledGardenException
 	 */
 	public function testCanRouteNonPublicPageInWalledGardenMode() {
+
+		elgg_register_route('foo', [
+			'path' => '/bar/foo',
+			'handler' => function () {
+				//		echo 'hello';
+			}
+		]);
+
+		elgg_set_config('walled_garden', true);
 
 		$this->request = $this->prepareHttpRequest('bar/foo');
 		$this->createService();
 
 		$this->hooks->backup();
-		$this->hooks->registerHandler('route', 'bar', function() {
-			echo 'bar';
-			return false;
-		});
 
-		elgg_set_config('walled_garden', true);
+		$ex = new \Exception();
 
-		$this->assertFalse($this->route());
+		try {
+			$this->route();
+		} catch (\Exception $ex) {
 
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_SEE_OTHER, $response->getStatusCode());
-		
+		}
+
 		$this->hooks->restore();
+
+		throw $ex;
 	}
 
 	/**
@@ -1607,8 +1678,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->createService();
 
 		$this->hooks->backup();
-		$this->hooks->registerHandler('route', 'bar', function() {
+		$this->hooks->registerHandler('route', 'bar', function () {
 			echo 'bar';
+
 			return false;
 		});
 
@@ -1623,5 +1695,48 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->hooks->restore();
 
 		_elgg_services()->session->removeLoggedInUser($user);
+	}
+
+	/**
+	 * @group Middleware
+	 */
+	public function testCanUseRouteMiddleware() {
+
+		$calls = 0;
+
+		elgg_register_route('foo', [
+			'path' => '/bar/foo/{baz}',
+			'handler' => function ($segments, $identifier, \Elgg\Request $request) {
+				$this->assertEquals('altered', $request->getParam('baz'));
+			},
+			'middleware' => [
+				function (\Elgg\Request $request) use (&$calls) {
+					$this->assertEquals('baz', $request->getParam('baz'));
+					$this->assertEquals('v1', $request->getParam('q1'));
+					$this->assertEquals('GET', $request->getMethod());
+					$this->assertEquals(elgg_normalize_url('bar/foo/baz'), $request->getURL());
+					$this->assertEquals('/bar/foo/baz', $request->getPath());
+					$this->assertNull($request->getEntityParam());
+					$this->assertNull($request->getUserParam());
+					$this->assertFalse($request->isXhr());
+
+					$request->setParam('baz', 'altered');
+					$calls++;
+				}
+			]
+		]);
+
+		$this->request = $this->prepareHttpRequest('bar/foo/baz', 'GET', [
+			'q1' => 'v1',
+		]);
+		$this->createService();
+
+		$this->hooks->backup();
+
+		$this->route();
+
+		$this->hooks->restore();
+
+		$this->assertEquals(1, $calls);
 	}
 }

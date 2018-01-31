@@ -33,11 +33,11 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testSetLanguageFromGetParameter() {
-		_elgg_services()->input->set('hl', 'es');
+		_elgg_services()->request->getInputStack()->set('hl', 'es');
 
 		$this->assertEquals('es', $this->translator->detectLanguage());
 
-		_elgg_services()->input->set('hl', null);
+		_elgg_services()->request->getInputStack()->set('hl', null);
 	}
 
 	public function testCheckLanguageKeyExists() {
@@ -148,7 +148,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanDetectCurrentLanguageFromInput() {
 		$this->translator->setCurrentLanguage(null);
-		_elgg_services()->input->set('hl', 'aa');
+		_elgg_services()->request->getInputStack()->set('hl', 'aa');
 		$this->assertEquals('aa', $this->translator->getCurrentLanguage());
 	}
 
