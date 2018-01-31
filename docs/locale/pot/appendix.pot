@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 16:32+0100\n"
+"POT-Creation-Date: 2018-01-31 13:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2524,12 +2524,12 @@ msgid "When registering for events/hooks, the ``all`` keyword for wildcard match
 msgstr ""
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:356
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:732
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:740
 msgid "If handlers were registered with the same priority, these are called in the order they were registered."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:358
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:734
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:742
 msgid "To emulate prior behavior, Elgg core handlers registered with the ``all`` keyword have been raised in priority. Some of these handlers will most likely be called in a different order."
 msgstr ""
 
@@ -3107,7 +3107,7 @@ msgid "Set ``$vars['id']`` instead of ``$vars['internalid']``."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/1.x-to-2.0.rst:594
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:539
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:547
 msgid "Removed libraries"
 msgstr ""
 
@@ -3850,7 +3850,7 @@ msgid "``river/user/default/profileupdate``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:56
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:588
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:596
 msgid "``admin.js``"
 msgstr ""
 
@@ -5139,1262 +5139,1274 @@ msgid "The following class registration related functions have been removed:"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:515
-msgid "Search changes"
+msgid "Dependency Injection Container"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:517
-msgid "We have added a search service into core, consequently the ``search`` plugin now only provides a user interface for displaying forms and listing search results. Many of the views in the search plugin have been affected by this change."
+msgid "Plugins can now define their services and attach them to Elgg's public DI container by providing definitions in ``elgg-services.php`` in the root of the plugin directory."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:520
-msgid "The FULLTEXT indices have been removed on various tables. The search plugin will now always use a like query when performing a search."
+msgid "``elgg()`` no longer returns an instance of Elgg application, but a DI container instance."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:522
-msgid "See :doc:`Search Service </guides/search>` and :ref:`Search hooks <guides/hooks-list#search>` documentation for detailed information about new search capabilities."
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:523
+msgid "Search changes"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:525
-msgid "Form and field related changes"
-msgstr ""
-
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:527
-msgid "``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false"
+msgid "We have added a search service into core, consequently the ``search`` plugin now only provides a user interface for displaying forms and listing search results. Many of the views in the search plugin have been affected by this change."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:528
-msgid "``input/submit``, ``input/reset`` and ``input/button`` are now rendered with a ``<button>`` instead of the ``<input>`` tag. These input view also accept ``text`` and ``icon`` parameters."
-msgstr ""
-
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:529
-msgid "``output/url`` now sets ``.elgg-anchor`` class on anchor elements and accepts ``icon`` parameter. If no ``text`` is set, the ``href`` parameter used as a label will be restricted to 100 characters."
+msgid "The FULLTEXT indices have been removed on various tables. The search plugin will now always use a like query when performing a search."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:530
-msgid "``output/url`` now supports a ``badge`` parameter, which can be used where a counter, a badge, or similar is required as a postfix (mainly in menu items that have counters)."
+msgid "See :doc:`Search Service </guides/search>` and :ref:`Search hooks <guides/hooks-list#search>` documentation for detailed information about new search capabilities."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:531
-msgid "``output/tags`` no longer uses ``<ul>`` tags with floats and instead it relies on inherently inline elements such as ``<span>`` and ``<a>``"
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:533
+msgid "Form and field related changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:534
-msgid "Entity and River Menu Changes"
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:535
+msgid "``input/password``: by default this field will no longer show a value passed to it, this can be overridden by passing the view var ``always_empty`` and set it to false"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:536
+msgid "``input/submit``, ``input/reset`` and ``input/button`` are now rendered with a ``<button>`` instead of the ``<input>`` tag. These input view also accept ``text`` and ``icon`` parameters."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:537
+msgid "``output/url`` now sets ``.elgg-anchor`` class on anchor elements and accepts ``icon`` parameter. If no ``text`` is set, the ``href`` parameter used as a label will be restricted to 100 characters."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:538
+msgid "``output/url`` now supports a ``badge`` parameter, which can be used where a counter, a badge, or similar is required as a postfix (mainly in menu items that have counters)."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:539
+msgid "``output/tags`` no longer uses ``<ul>`` tags with floats and instead it relies on inherently inline elements such as ``<span>`` and ``<a>``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:542
+msgid "Entity and River Menu Changes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:544
 msgid "The Entity and River menu now shows all the items in a dropdown. Social actions like liking or commenting are moved to an alternate menu called the social menu, which is meant for social actions."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:541
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:549
 msgid "``elgg_register_library`` and ``elgg_load_library`` have been removed. These functions had little impact on performance (especially with OPCache enabled), and made it difficult for other plugins to work with APIs contained in libraries. Additionally it was difficult for developers to know that APIs were contained in a library while there being autocompleted by IDE."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:545
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:553
 msgid "If you are concerned with performance, move the logic to classes and let PHP autoload them as necessary, otherwise use ``require_once`` and require your libraries."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:548
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:556
 msgid "Removed pagehandling"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:550
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:558
 msgid "``file/download``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:551
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:559
 msgid "``file/search``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:552
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:560
 msgid "``groupicon``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:553
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:561
 msgid "``twitterservice``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:554
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:562
 msgid "``collections/pickercallback``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:555
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:563
 msgid "``discussion/reply``: See :ref:`upgrade-discussion-replies`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:556
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:564
 msgid "``expages``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:557
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:565
 msgid "``invitefriends``: Use ``friends/invite``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:558
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:566
 msgid "``messages/compose``: Use ``messages/add``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:559
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:567
 msgid "``reportedcontent``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:562
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:570
 msgid "Removed actions"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:564
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:572
 msgid "``file/download``: Use ``elgg_get_inline_url`` or ``elgg_get_download_url``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:565
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:573
 msgid "``file/delete``: Use ``entity/delete`` action"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:566
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:574
 msgid "``import/opendd``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:567
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:575
 msgid "``discussion/reply/save``: See :ref:`upgrade-discussion-replies`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:568
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:576
 msgid "``discussion/reply/delete``: See :ref:`upgrade-discussion-replies`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:569
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:577
 msgid "``comment/delete``: Use ``entity/delete`` action"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:570
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:578
 msgid "``uservalidationbyemail/bulk_action``: use ``admin/user/bulk/validate`` or ``admin/user/bulk/delete``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:571
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:579
 msgid "``uservalidationbyemail/delete``: use ``admin/user/bulk/delete``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:572
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:580
 msgid "``uservalidationbyemail/validate``: use ``admin/user/bulk/validate``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:573
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:581
 msgid "``invitefriends/invite``: use ``friends/invite``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:576
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:584
 msgid "Inheritance changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:578
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:586
 msgid "``ElggData`` (and hence most Elgg domain objects) no longer implements ``Exportable``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:579
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:587
 msgid "``ElggEntity`` no longer implements ``Importable``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:580
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:588
 msgid "``ElggGroup`` no longer implements ``Friendable``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:581
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:589
 msgid "``ElggRelationship`` no longer implements ``Importable``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:582
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:590
 msgid "``ElggSession`` no longer implements ``ArrayAccess``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:583
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:591
 msgid "``Elgg\\Application\\Database`` no longer extends ``Elgg\\Database``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:586
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:594
 msgid "Removed JavaScript APIs"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:589
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:597
 msgid "``elgg.widgets``: Use the ``elgg/widgets`` module. The \"widgets\" layouts do this module automatically"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:590
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:598
 msgid "``lightbox.js``: Use the ``elgg/lightbox`` module as needed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:591
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:599
 msgid "``lightbox/settings.js``: Use the ``getOptions, ui.lightbox`` JS hook or the ``data-colorbox-opts`` attribute"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:592
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:600
 msgid "``elgg.ui.popupClose``: Use the ``elgg/popup`` module"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:593
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:601
 msgid "``elgg.ui.popupOpen``: Use the ``elgg/popup`` module"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:594
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:602
 msgid "``elgg.ui.initAccessInputs``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:595
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:603
 msgid "``elgg.ui.river``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:596
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:604
 msgid "``elgg.ui.initDatePicker``: Use the ``input/date`` module"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:597
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:605
 msgid "``elgg.ui.likesPopupHandler``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:598
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:606
 msgid "``elgg.embed``: Use the ``elgg/embed`` module"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:599
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:607
 msgid "``elgg.discussion``: Use the ``elgg/discussion`` module"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:600
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:608
 msgid "``embed/custom_insert_js``: Use the ``embed, editor`` JS hook"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:601
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:609
 msgid "``elgg/ckeditor.js``: replaced by ``elgg-ckeditor.js``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:602
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:610
 msgid "``elgg/ckeditor/set-basepath.js``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:603
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:611
 msgid "``elgg/ckeditor/insert.js``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:604
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:612
 msgid "``jQuery.cookie``: Use ``elgg.session.cookie``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:605
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:613
 msgid "``jquery.jeditable``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:606
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:614
 msgid "``likes.js``: The ``elgg/likes`` module is loaded automatically"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:607
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:615
 msgid "``messageboard.js``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:608
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:616
 msgid "``elgg.autocomplete`` is no longer defined."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:609
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:617
 msgid "``elgg.messageboard`` is no longer defined."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:610
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:618
 msgid "``jQuery.fn.friendsPicker``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:611
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:619
 msgid "``elgg.ui.toggleMenu`` is no longer defined"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:612
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:620
 msgid "``elgg.ui.toggleMenuItems``: Use ``data-toggle`` attribute when registering toggleable menu items"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:613
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:621
 msgid "``uservalidationbyemail/js.php``: Use the ``elgg/uservalidationbyemail`` module"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:614
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:622
 msgid "``discussion.js``: See :ref:`upgrade-discussion-replies`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:617
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:625
 msgid "Removed hooks/events"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:619
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:627
 msgid "Event **login, user**: Use **login:before** or **login:after**. Note the user is not logged in during the **login:before** event"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:620
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:628
 msgid "Event **delete, annotations**: Use **delete, annotation**"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:621
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:629
 msgid "Event **pagesetup, system**: Use the menu or page shell hooks instead"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:622
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:630
 msgid "Event **upgrade, upgrade**: Use **upgrade, system** instead"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:623
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:631
 msgid "Hook **index, system**: Override the ``resources/index`` view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:624
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:632
 msgid "Hook **object:notifications, <type>**: Use the hook **send:before, notifications**"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:625
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:633
 msgid "Hook **output:before, layout**: Use **view_vars, page/layout/<layout_name>**"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:626
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:634
 msgid "Hook **output:after, layout**: Use **view, page/layout/<layout_name>**"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:627
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:635
 msgid "Hook **email, system**: Use more granular **<hook>, system:email** hooks"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:628
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:636
 msgid "Hook **email:message, system**: Use **zend:message, system:email** hook"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:629
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:637
 msgid "Hook **members:list, <page>**: Use your own pagehandler or route hook"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:630
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:638
 msgid "Hook **members:config, <page>**: Use **register, menu:filter:members**"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:631
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:639
 msgid "Hook **profile_buttons, group**: Use **register, menu:title**"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:634
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:642
 msgid "Removed forms/actions"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:636
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:644
 msgid "``notificationsettings/save`` form and action"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:637
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:645
 msgid "``notificationsettings/groupsave`` form and action"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:638
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:646
 msgid "``discussion/reply/save`` form and action"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:641
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:649
 msgid "APIs that now accept only an ``$options`` array"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:643
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:651
 msgid "``ElggEntity::getAnnotations``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:644
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:652
 msgid "``ElggEntity::getEntitiesFromRelationship``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:645
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:653
 msgid "``ElggGroup::getMembers``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:646
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:654
 msgid "``ElggUser::getGroups``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:647
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:655
 msgid "``ElggUser::getFriends`` (as part of ``Friendable``)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:648
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:656
 msgid "``ElggUser::getFriendsOf`` (as part of ``Friendable``)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:649
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:657
 msgid "``ElggUser::getFriendsObjects`` (as part of ``Friendable``)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:650
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:658
 msgid "``ElggUser::getObjects`` (as part of ``Friendable``)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:651
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:659
 msgid "``find_active_users``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:652
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:660
 msgid "``elgg_get_admin_notices``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:655
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:663
 msgid "Plugin functions that now require an explicit ``$plugin_id``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:657
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:665
 msgid "``elgg_get_all_plugin_user_settings``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:658
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:666
 msgid "``elgg_set_plugin_user_setting``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:659
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:667
 msgid "``elgg_unset_plugin_user_setting``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:660
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:668
 msgid "``elgg_get_plugin_user_setting``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:661
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:669
 msgid "``elgg_set_plugin_setting``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:662
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:670
 msgid "``elgg_get_plugin_setting``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:663
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:671
 msgid "``elgg_unset_plugin_setting``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:664
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:672
 msgid "``elgg_unset_all_plugin_settings``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:667
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:675
 msgid "Class constructors that now accept only a ``stdClass`` object or ``null``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:669
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:677
 msgid "``ElggAnnotation``: No longer accepts an annotation ID"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:670
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:678
 msgid "``ElggGroup``: No longer accepts a GUID"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:671
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:679
 msgid "``ElggMetadata``: No longer accepts a metadata ID"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:672
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:680
 msgid "``ElggObject``: No longer accepts a GUID"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:673
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:681
 msgid "``ElggRelationship``: No longer accepts a relationship ID or ``null``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:674
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:682
 msgid "``ElggSite``: No longer accepts a GUID or URL"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:675
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:683
 msgid "``ElggUser``: No longer accepts a GUID or username"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:676
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:684
 msgid "``ElggPlugin``: No longer accepts a GUID or path. Use ``ElggPlugin::fromId`` to construct a plugin from its path"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:679
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:687
 msgid "Miscellaneous API changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:681
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:689
 msgid "``ElggBatch``: You may only access public properties"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:682
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:690
 msgid "``ElggEntity``: The ``tables_split`` and ``tables_loaded`` properties were removed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:683
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:691
 msgid "``ElggEntity``: Empty URLs will no longer be normalized. This means entities without URLs will no longer result in the site URL"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:684
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:692
 msgid "``ElggGroup::removeObjectFromGroup`` requires passing in an ``ElggObject`` (no longer accepts a GUID)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:685
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:693
 msgid "``ElggUser::$salt`` no longer exists as an attribute, nor is it used for authentication"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:686
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:694
 msgid "``ElggUser::$password`` no longer exists as an attribute, nor is it used for authentication"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:687
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:695
 msgid "``elgg_get_widget_types`` no longer supports ``$exact`` as the 2nd argument"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:688
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:696
 msgid "``elgg_instanceof`` no longer supports the fourth ``class`` argument"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:689
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:697
 msgid "``elgg_view``: The 3rd and 4th (unused) arguments have been removed. If you use the ``$viewtype`` argument, you must update your usage."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:690
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:698
 msgid "``elgg_view_icon`` no longer supports ``true`` as the 2nd argument"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:691
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:699
 msgid "``elgg_list_entities`` no longer supports the option ``view_type_toggle``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:692
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:700
 msgid "``elgg_list_registered_entities`` no longer supports the option ``view_type_toggle``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:693
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:701
 msgid "``elgg_log`` no longer accepts the level ``\"DEBUG\"``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:694
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:702
 msgid "``elgg_dump`` no longer accepts a ``$to_screen`` argument."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:695
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:703
 msgid "``elgg_gatekeeper`` and ``elgg_admin_gatekeeper`` no longer report ``login`` or ``admin`` as forward reason, but ``403``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:696
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:704
 msgid "``Application::getDb()`` no longer returns an instance of ``Elgg\\Database``, but rather a ``Elgg\\Application\\Database``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:697
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:705
 msgid "``$CONFIG`` is no longer available as a local variable inside plugin ``start.php`` files."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:698
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:706
 msgid "``elgg_get_config('siteemail')`` is no longer available. Use ``elgg_get_site_entity()->email``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:699
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:707
 msgid "``ElggEntity::saveIconFromUploadedFile`` only saves `master` size, the other sizes are created when requested by ``ElggEntity::getIcon()`` based on the `master` size"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:700
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:708
 msgid "``ElggEntity::saveIconFromLocalFile`` only saves `master` size, the other sizes are created when requested by ``ElggEntity::getIcon()`` based on the `master` size"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:701
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:709
 msgid "``ElggEntity::saveIconFromElggFile`` only saves `master` size, the other sizes are created when requested by ``ElggEntity::getIcon()`` based on the `master` size"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:702
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:710
 msgid "Group entities do no longer have the magic ``username`` attribute."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:703
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:711
 msgid "Pagehandling will no longer detect ``group:<guid>`` in the URL"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:704
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:712
 msgid "The CRON interval ``reboot`` is removed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:705
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:713
 msgid "The URL endpoints ``js/`` and ``css/`` are no longer supported. Use ``elgg_get_simplecache_url()``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:706
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:714
 msgid "The generic comment save action no longer sends the notification directly, this has been offloaded to the notification system."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:707
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:715
 msgid "The script ``engine/start.php`` is removed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:708
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:716
 msgid "The functions ``set_config``, ``unset_config`` and ``get_config`` have been deprecated and replaced by ``elgg_set_config``, ``elgg_remove_config`` and ``elgg_get_config``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:709
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:717
 msgid "Config values ``path``, ``wwwroot``, and ``dataroot`` are not read from the database. The settings.php file values are always used."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:710
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:718
 msgid "Config functions like ``elgg_get_config`` no longer trim keys."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:711
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:719
 msgid "If you override the view ``navigation/menu/user_hover/placeholder``, you must change the config key ``lazy_hover:menus`` to ``elgg_lazy_hover_menus``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:712
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:720
 msgid "The config value ``entity_types`` is no longer present or used."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:713
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:721
 msgid "Uploaded images are autorotated based on their orientation metadata."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:714
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:722
 msgid "The view ``object/widget/edit/num_display`` now uses an ``input/number`` field instead of ``input/select``; you might need to update your widget edit views accordingly."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:715
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:723
 msgid "Annotation names are no longer trimmed during save"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:718
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:726
 msgid "View extension behaviour changed"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:720
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:728
 msgid "An extended view now will receive all the regular hooks (like the `view_vars` hook). It now is also possible to extend view extensions. With this change in behaviour all view rendering will behave the same. It no longer matters if it was used as an extension or not."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:725
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:733
 msgid "JavaScript hook calling order may change"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:727
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:735
 msgid "When registering for hooks, the ``all`` keyword for wildcard matching no longer has any effect on the order that handlers are called. To ensure your handler is called last, you must give it the highest priority of all matching handlers, or to ensure your handler is called first, you must give it the lowest priority of all matching handlers."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:738
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:746
 msgid "Widget layout related changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:740
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:748
 msgid "The widget layout usage has been changed. Content is no longer drawn as part of the layout. You need to wrap you content in another layout and use the widgets layout as part of your content. If you want some special content to show if there are no widgets in the layout, you can now pass a special ``no_widgets`` parameter (as String or as a Closure)."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:744
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:752
 msgid "When registering widgets you can no longer omit passing a context as the ``all`` context is no longer supported. You need to explicitely pass the contexts for which the widget is intended."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:748
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:756
 msgid "Routing"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:750
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:758
 msgid "Page handling using ``elgg_register_page_handler()`` has been deprecated."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:752
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:760
 msgid "We have added new routing API using ``elgg_register_route()``, which allows plugins to define named routes, subsequently using route names to generate URLs using ``elgg_generate_url()``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:755
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:763
 msgid "See :doc:`routing </guides/routing>` docs for details."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:757
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:765
 msgid "As a result of this change all core page handlers have been removed, and any logic contained within these page handlers has been moved to respective resource views."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:760
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:768
 msgid "``elgg_generate_entity_url()`` has been added as shortcut way to generate URLs from named routes that depend on entity type and subtype."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:763
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:771
 msgid "Use of ``handler`` parameter in entity menus has been deprecated in favour of named entity routes."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:765
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:773
 msgid "Gatekeeper function have been refactored to serve as middleware in the routing process, and as such they no longer return values. These functions throw HTTP exceptions that are then routed to error pages and can be redirected to other pages via hooks."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:770
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:778
 msgid "Labelling"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:772
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:780
 msgid "Entity and collection labelling conventions have changed to comply with the new routing patterns:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:787
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:795
 msgid "These conventions are used across the routing and navigation systems, so plugins are advised to follow them."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:790
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:798
 msgid "Action responses"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:792
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:800
 msgid "All core and core plugin actions now all use the new Http Response functions like `elgg_ok_response` and `elgg_error_response` instead of `forward()`. The effect of this change is that is most cases the `'forward', 'system'` hook is no longer triggered. If you like to influence the responses you now can use the `'response', 'action:<name/of/action>'` hook. This gives you more control over the response and allows to target a specific action very easily."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:798
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:806
 msgid "HtmLawed is no longer a plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:800
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:808
 msgid "Do not call ``elgg_load_library('htmlawed')``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:801
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:809
 msgid "In the hook params for ``'config', 'htmlawed'``, the ``hook_tag`` function name changed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:804
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:812
 msgid "New approach to page layouts"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:806
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:814
 msgid "``one_column``, ``one_sidebar``, ``two_sidebar`` and ``content`` layouts have been removed - instead layout rendering has been centralized in the ``default``. Updated ``default`` layout provides full control over the layout elements via ``$vars``. For maximum backwards compatibility, calls to ``elgg_view_layout()`` with these layout names will still yield expected output, but the plugins should start using the ``default`` layout with an updated set of parameters."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:809
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:817
 msgid "Page layouts have been decomposed into smaller elements, which should make it easier for themes to target specific layout elements without having to override layouts at large."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:811
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:819
 msgid "As a result of these changes:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:813
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:821
 msgid "all layouts are consistent in how they handle title and filter menus, breadcrumbs and layout subviews"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:814
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:822
 msgid "all layouts can now be easily extended to have multiple tabs. Plugins can pass ``filter_id`` parameter that will allow other plugins to hook into ``register, menu:filter:<filter_id>`` hook and add new tabs. If no ``filter_id`` is provided, default ``register, menu:filter`` hook can be used."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:815
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:823
 msgid "layout views and subviews now receive ``identifier`` and ``segments`` of the page being rendered"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:816
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:824
 msgid "layout parameters are available to title and filter menu hooks, which allows resources to provide additional context information, for example, an ``$entity`` in case of a profile resource"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:818
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:826
 msgid "Plugins and themes should:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:820
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:828
 msgid "Update calls to ``elgg_view_layout()`` to use ``default`` layout"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:821
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:829
 msgid "Update replace ``nav`` parameter in layout views with ``breadcrumbs`` parameter"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:822
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:830
 msgid "Update their use of ``filter`` parameter in layout views by either providing a default set of filter tabs, or setting a ``filter_id`` parameter and using hooks"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:823
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:831
 msgid "Remove ``page/layouts/one_column`` view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:824
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:832
 msgid "Remove ``page/layouts/one_sidebar`` view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:825
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:833
 msgid "Remove ``page/layouts/two_sidebar`` view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:826
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:834
 msgid "Remove ``page/layouts/content`` view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:827
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:835
 msgid "Update their use of ``page/layouts/default``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:828
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:836
 msgid "Update their use of ``page/layouts/error``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:829
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:837
 msgid "Update their use of ``page/layouts/elements/filter``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:830
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:838
 msgid "Update their use of ``page/layouts/elements/header``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:831
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:839
 msgid "Update their use of ``page/layouts/elements/footer``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:832
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:840
 msgid "Update their use of ``page/elements/title``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:833
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:841
 msgid "Update their use of ``navigation/breadcrumbs`` to pass ``$vars['breadcrumbs']`` to ``elgg_get_breadcrumbs()``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:834
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:842
 msgid "Update hook registrations for ``output:before, layout`` to ``view_vars, page/layout/<layout_name>``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:835
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:843
 msgid "Update hook registrations for ``output:after, layout`` to ``view, page/layout/<layout_name>``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:838
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:846
 msgid "Likes plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:840
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:848
 msgid "Likes no longer uses Elgg's toggle API, so only a single ``likes`` menu item is used. The add/remove actions no longer return Ajax values directly, as likes status data is now returned with *every* Ajax request that sends a \"guid\". When the number of likes is zero, the ``likes_count`` menu item is now hidden by adding `.hidden` to the LI element, instead of the anchor. Also the ``likes_count`` menu item is a regular link, and is no longer created by the ``likes/count`` view."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:843
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:851
 msgid "Notifications plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:845
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:853
 msgid "Notifications plugin has been rewritten dropping many views and actions. The purpose of this rewrite was to implement a more efficient, extendable and scalable interface for managing notifications preferences. We have implemented a much simpler markup and removed excessive styling and javascript that was required to make the old interface work."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:850
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:858
 msgid "If your plugin is extending any of the views or relies on any actions in the notifications plugin, it has to be updated."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:854
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:862
 msgid "Pages plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:856
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:864
 msgid "The suptype ``page_top`` has been migrated into the subtype ``page``. The subtype ``page`` has it's own class namely ``ElggPage``. In order to check if an ``ElggPage`` is a top page the class function ``ElggPage->isTopPage()`` was added."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:859
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:867
 msgid "All pages have a metadata value for ``parent_guid``, for top pages this contains ``0``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:862
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:870
 msgid "Profile plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:864
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:872
 msgid "All profile related functionality has been moved out of core into this plugin. Most noteable are the profile field admin utility and the hook to set up the profile fields config data."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:867
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:875
 msgid "Data Views plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:869
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:877
 msgid "The Data Views plugin no longer comes bundled."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:872
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:880
 msgid "Twitter API plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:874
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:882
 msgid "The ``twitter_api`` plugin has been removed from the Elgg core. The plugin is still available as the Composer package `elgg/twitter_api <https://packagist.org/packages/elgg/twitter_api>`_, in order to install it add the following to you ``composer.json`` ``require`` section:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:883
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:891
 msgid "Legacy URLs plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:885
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:893
 msgid "The ``legacy_urls`` plugin has been removed from the Elgg core. The plugin is still available as the Composer package `elgg/legacy_urls <https://packagist.org/packages/elgg/legacy_urls>`_, in order to install it add the following to you ``composer.json`` ``require`` section:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:894
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:902
 msgid "User validation by email plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:896
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:904
 msgid "The listing view of unvalidated users has been moved from the plugin to Elgg core. Some generic action (eg. validate and delete) have also been moved to Elgg core."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:900
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:908
 msgid "Email delivery"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:902
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:910
 msgid "To provide for more granularity in email handling and delivery, **email, system** hook has been removed. New email service provides for several other replacement hooks that allow plugins to control email content, format, and transport used for delivery."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:906
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:914
 msgid "``elgg_set_email_transport()`` can now be used to replace the default Sendmail transport with another instance of ``\\Zend\\Mail\\Transport\\TransportInterface``, e.g. SMTP, in-memory, or file transport. Note that this function must be called early in the boot process. Note that if you call this function on each request, using plugin settings to determine transport config may not be very efficient - store these settings in as datalist or site config values, so they are loaded from boot cache."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:913
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:921
 msgid "Theme and styling changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:915
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:923
 msgid "Aalborg theme is no longer bundled with Elgg. Default core theme is now based on Aalboard, but it has undergone major changes."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:918
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:926
 msgid "Notable changes in plugins:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:920
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:928
 msgid "Topbar, navbar and header have been combined into a single responsive topbar component"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:921
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:929
 msgid "Default inner width is now 1280px (80rem * 16px/1rem)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:922
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:930
 msgid "Preferred unit of measurement is now `rem` and not `px`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:923
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:931
 msgid "The theme uses `8-point grid system <https://builttoadapt.io/intro-to-the-8-point-grid-system-d2573cde8632>`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:924
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:932
 msgid "Menus, layout elements and other components now use flexbox"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:925
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:933
 msgid "Reset is done using `8-point grid system <https://necolas.github.io/normalize.css/>`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:926
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:934
 msgid "Media queries have been rewritten for mobile-first experience"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:927
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:935
 msgid "Form elements (text inputs, buttons and selects) now have an equal height of 2.5rem"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:928
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:936
 msgid "Layout header is now positioned outside of the layout columns, which have been wrapped into ``elgg-layout-columns``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:929
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:937
 msgid "z-index properties have been reviewed and stacked with simple iteration instead of `9999999 <https://hackernoon.com/my-approach-to-using-z-index-eca67feb079c>`."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:930
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:938
 msgid "Color scheme has been changed to highlight actionable elements and reduce abundance of gray shades"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:931
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:939
 msgid "search plugin no longer extends ``page/elements/header`` and instead ``page/elements/topbar`` renders ``search/search_box`` view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:932
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:940
 msgid "``.elgg-icon`` no longer has a global ``font-size``, ``line-height`` or ``color``: these values will be inherited from parent items"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:933
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:941
 msgid "Support for ``.elgg-icon-hover`` has been dropped"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:934
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:942
 msgid "User \"hover\" icons are no longer covered with a \"caret\" icon"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:936
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:944
 msgid "Read more about :doc:`Theming Principles </guides/themes>`"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:938
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:946
 msgid "Also note, CSS views served via ``/cache`` URLs are pre-processed using `CSS Crush <http://the-echoplex.net/csscrush/>`. If you make references to CSS variables or other elements, the definition must be located within the same view output. E.g. A variable defined in ``elgg.css`` cannot be referenced in a separate CSS file like ``colorbox.css``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:941
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:949
 msgid "Comments"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:943
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:951
 msgid "Submitting comments is now AJAXed. After a succesful submission the comment list will be updated automatically."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:945
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:953
 msgid "The following changes have been made to the comment notifications."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:947
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:955
 msgid "The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:948
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:956
 msgid "The action for creating a comment (``action/comment/save``) was changed. If your plugin overruled this action you should have a look at it in order to prevent double notifications"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:951
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:959
 msgid "Object listing views"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:953
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:961
 msgid "``object/elements/full/body`` now wraps the full listing body in a ``.elgg-listing-full-body`` wrapper"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:954
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:962
 msgid "``object/elements/full`` now supports ``attachments`` and ``responses`` which are rendered after listing body"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:955
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:963
 msgid "In core plugins, resource views no longer render comments/replies - instead they pass a ``show_responses`` flag to the entity view, which renders the responses and passes them to the full listing view. Third party plugins will need to update their uses of ``object/<subtype>`` and ``resources/<handler>/view`` views."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:956
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:964
 msgid "Full discussion view is now rendered using ``object/elements/full`` view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:957
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:965
 msgid "``object/file`` now passes image (specialcontent) view as an ``attachment`` to the full listing view"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:960
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:968
 msgid "Menu changes"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:962
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:970
 msgid "Default sorting of menu items has been changed from ``text`` to ``priority``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:964
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:972
 msgid "Support for ``icon`` and ``badge`` parameters was added. Plugins should start using these parameters and prefer them to a single ``text`` parameter. CSS should be used to control visibility of the label, icon and badge, instead of conditionals in preparing menu items."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:966
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:974
 msgid "All menus are now wrapped with ``nav.elgg-menu-container`` to ensure that multiple menu sections have a single parent element, and can be styled using flexbox or floats."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:968
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:976
 msgid "All menu items are now identified with with ``data-menu-item`` attribute, sections - with ``data-menu-section``, containers with - ``data-menu-name`` attributes."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:970
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:978
 msgid "``topbar`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:972
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:980
 msgid "``account`` menu item with priority ``800`` added to ``alt`` section"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:973
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:981
 msgid "``site_notifications`` menu item is now a child of ``account`` with priority ``100``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:974
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:982
 msgid "``usersettings`` menu item is now a child of ``account`` with priority ``300``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:975
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:983
 msgid "``administration`` menu item is now a child of ``account`` with priority ``800``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:976
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:984
 msgid "``logout`` menu item is now a child of ``account`` with priority ``900``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:977
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:985
 msgid "``dashboard`` menu item now is now a child of ``acount`` has priority of ``100``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:978
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:986
 msgid "In ``default`` section (``profile``, ``friends``, ``messages``), core menu items now use ``icon`` parameter and use CSS to hide the label. Plugins that register items to this section and expect a visible label need to update their CSS."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:979
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:987
 msgid "``profile`` menu item is now a child of ``account``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:980
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:988
 msgid "``friends`` menu item is now a child of ``account``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:982
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:990
 msgid "``entity`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:984
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:992
 msgid "``access`` menu item has been removed. Access information is now rendered in the entity byline."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:986
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:994
 msgid "``user_hover`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:988
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:996
 msgid "All items use the ``icon`` parameter."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:989
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:997
 msgid "The layout of the dropdown has been changed. If you have modified the look and feel of this dropdown, you might need to update your HTML/CSS."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:991
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:999
 msgid "``widget`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:993
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1001
 msgid "``collapse`` menu item has been removed and CSS updated accordingly"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:995
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1003
 msgid "``extras`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:997
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1005
 msgid "This menu has been removed from the page layout. Menu items that registered for this menu have been moved to other menus."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:999
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1007
 msgid "``groups:my_status`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1001
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1009
 msgid "This menu has been removed from the group profile page."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1003
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1011
 msgid "``site_notifications`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1005
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1013
 msgid "This menu has been removed. Site Notification objects now use the entity menu for actions."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1007
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1015
 msgid "``site`` menu:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1009
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1017
 msgid "Registration of custom menu item defined in admin interface has been moved to ``register, menu:site`` hook. ``navigation/menu/site`` view has been removed. Site menu now adds a ``more` menu item directly to the ``default`` section."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1013
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1021
 msgid "Entity icons"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1015
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1023
 msgid "Default icon image files have been moved and re-mapped as follows:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1017
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1025
 msgid "Default icons: ``views/default/icon/default/$size.png``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1018
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1026
 msgid "User icons: ``views/default/icon/user/default/$size.gif``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1019
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1027
 msgid "Group icons: ``views/default/icon/group/default/$size.gif`` in the groups plugin"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1021
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1029
 msgid "Groups icon files have been moved from ``groups/<guid><size>.jpg`` relative to group owner's directory on filestore to a location prescribed by the entity icon service. Plugins should stop accessing files on the filestore directly and use the entity icon API. Upgrade script is available via admin interface."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1023
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1031
 msgid "The generation of entity icons has ben changed. No longer will all the configured sizes be generated when calling one of the entity icon functions (``ElggEntity::saveIconFromUploadedFile``, ``ElggEntity::saveIconFromLocalFile`` or ``ElggEntity::saveIconFromElggFile``), but only the `master` size. The other configured sizes will be generated when requesting that size based of the `master` icon."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1028
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1036
 msgid "Autocomplete (user and friends pickers)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1030
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1038
 msgid "Friends Picker input is now rendered using ``input/userpicker``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1032
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1040
 msgid "Plugins should:"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1034
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1042
 msgid "Update overriden ``input/userpicker`` to support new ``only_friends`` parameter"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1035
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1043
 msgid "Remove friends picker CSS from their stylesheets"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1038
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1046
 msgid "Friends collections"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1040
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1048
 msgid "Friends collections UI has been moved to its own plugins - ``friends_collections``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1043
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1051
 msgid "Layout of ``.elgg-body`` elements"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1045
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1053
 msgid "In 3.0, these elements by default no longer stretch to fill available space in a block context. They still clear floats and allow breaking words to wrap text."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1048
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1056
 msgid "Core modules and layouts that relied on space-filling have been reworked for Flexbox and we encourage devs to do the same, rather than use the problematic ``overflow: hidden``."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1052
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1060
 msgid "Delete river items"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1054
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1062
 msgid "The function ``elgg_delete_river()`` which was deprecated in 2.3, has been reinstated. Notable changes between the internals of this function are;"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1056
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1064
 msgid "It accepts all ``$options`` from ``elgg_get_river()`` but requires at least one of the following params to be set id(s), annotation_id(s), subject_guid(s), object_guid(s), target_guid(s) or view(s)"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1057
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1065
 msgid "Since ``elgg_get_river`` by default has a limit on the number of river items it fetches, if you wish to remove all river items you need to set ``limit`` to ``false``"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1058
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1066
 msgid "A hook is fired for each river item which checks the delete permissions"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1059
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1067
 msgid "Events are fired just before and after a river item has been deleted"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1064
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1072
 msgid "Discussion replies moved to comments"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1066
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1074
 msgid "Since discussion replies where mostly a carbon copy of comments, all discussion replies have been migrated to comments. All related action, hooks, event, language keys etc. have been removed."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1071
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1079
 msgid "Discussion comments will now show up in the Comments section of Search, no longer under the Discussion section."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1074
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1082
 msgid "Translations cleanup"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1076
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1084
 msgid "All plugins have been scanned for unused translation keys. The unused keys have been removed. If there was a generic translation available for the custom translation key, these have also been updated."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1080
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1088
 msgid "System Log"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1082
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1090
 msgid "System log API has been moved out of core into a ``system_log`` plugin. ``logbrowser`` and ``logrotate`` plugins have been merged into the ``system_log`` plugin."
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1086
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1094
 msgid "Error logging"
 msgstr ""
 
-#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1088
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1096
 msgid "Sending ``elgg_log()`` and PHP error messages to page output is now only possible via the developers plugin \"Log to the screen\" setting. See the ``settings.example.php`` file for more information on using ``$CONFIG->debug`` in your ``settings.php`` file. Debugging should generally be done via the ``xdebug`` extension or ``tail -f /path/to/error.log`` on your server."
 msgstr ""
 

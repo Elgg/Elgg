@@ -1,3 +1,29 @@
+<a name="3.0.0-beta.2"></a>
+### 3.0.0-beta.2  (2018-01-31)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Ismayil Khayredinov (2)
+
+#### Features
+
+* **db:** use public service container for database operations ([4015b8ce](https://github.com/Elgg/Elgg/commit/4015b8ceafbf0cb4c7a7c05323f032b188d13356))
+* **di:** plugins now have access to DI container ([8cdff630](https://github.com/Elgg/Elgg/commit/8cdff63092788fbb9d2527c9e155cf46d7fe1555))
+
+
+#### Documentation
+
+* **release:** updated release docs ([d035c9d6](https://github.com/Elgg/Elgg/commit/d035c9d6ea4a68849cd2ecfd6692c15082677a21))
+
+
+#### Bug Fixes
+
+* **activity:** use correct route name for owner_block menu item ([989eb5b2](https://github.com/Elgg/Elgg/commit/989eb5b24ef3a0421589eda8c9968e4fa8b994c2))
+* **cli:** correcly load Elgg in cli ([aecd6df7](https://github.com/Elgg/Elgg/commit/aecd6df7644a39f1087cfef0877bcea5ac87b088))
+* **views:** correctly register core views ([82423b30](https://github.com/Elgg/Elgg/commit/82423b30f2b2275eacada157b63642b233da964a))
+
+
 <a name="3.0.0-beta.1"></a>
 ### 3.0.0-beta.1  (2018-01-29)
 
