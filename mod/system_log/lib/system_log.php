@@ -75,7 +75,7 @@ function system_log_get_log_entry($entry_id) {
 	$qb->select('*');
 	$qb->where($qb->compare('id', '=', $entry_id, ELGG_VALUE_INTEGER));
 
-	return get_data_row($qb);
+	return elgg()->db->getDataRow($qb);
 }
 
 /**
@@ -167,18 +167,18 @@ function system_log_archive_log($offset = 0) {
 			WHERE time_created < $ts
 	";
 
-	if (!update_data($query)) {
+	if (!elgg()->db->updateData($query)) {
 		return false;
 	}
 
 	// delete
 	// Don't delete on time since we are running in a concurrent environment
-	if (delete_data("DELETE from {$prefix}system_log WHERE time_created < $ts") === false) {
+	if (elgg()->db->deleteData("DELETE from {$prefix}system_log WHERE time_created < $ts") === false) {
 		return false;
 	}
 
 	// alter table to engine
-	if (!update_data("ALTER TABLE {$prefix}system_log_$now engine=archive")) {
+	if (!elgg()->db->updateData("ALTER TABLE {$prefix}system_log_$now engine=archive")) {
 		return false;
 	}
 
@@ -222,7 +222,7 @@ function system_log_browser_delete_log($time_of_delete) {
 	$cutoff = time() - (int) $time_of_delete;
 
 	$deleted_tables = false;
-	$results = get_data("SHOW TABLES like '{$dbprefix}system_log_%'");
+	$results = elgg()->db->getData("SHOW TABLES like '{$dbprefix}system_log_%'");
 	if ($results) {
 		foreach ($results as $result) {
 			$data = (array) $result;
@@ -230,8 +230,8 @@ function system_log_browser_delete_log($time_of_delete) {
 			// extract log table rotation time
 			$log_time = str_replace("{$dbprefix}system_log_", '', $table_name);
 			if ($log_time < $cutoff) {
-				if (delete_data("DROP TABLE $table_name") !== false) {
-					// delete_data returns 0 when dropping a table (false for failure)
+				if (elgg()->db->deleteData("DROP TABLE $table_name") !== false) {
+					// elgg()->db->deleteData returns 0 when dropping a table (false for failure)
 					$deleted_tables = true;
 				} else {
 					elgg_log("Failed to delete the log table $table_name", 'ERROR');

@@ -31,7 +31,7 @@ class ElggHMACCache extends ElggCache {
 		$time = time();
 
 		$query = "INSERT into {$dbprefix}hmac_cache (hmac, ts) VALUES ('$key', '$time')";
-		return insert_data($query);
+		return elgg()->db->insertData($query);
 	}
 
 	/**
@@ -47,7 +47,7 @@ class ElggHMACCache extends ElggCache {
 		$dbprefix = elgg_get_config('dbprefix');
 		$key = sanitise_string($key);
 
-		$row = get_data_row("SELECT * from {$dbprefix}hmac_cache where hmac='$key'");
+		$row = elgg()->db->getDataRow("SELECT * from {$dbprefix}hmac_cache where hmac='$key'");
 		if ($row) {
 			return $row->hmac;
 		}
@@ -66,7 +66,7 @@ class ElggHMACCache extends ElggCache {
 		$dbprefix = elgg_get_config('dbprefix');
 		$key = sanitise_string($key);
 
-		return delete_data("DELETE from {$dbprefix}hmac_cache where hmac='$key'");
+		return elgg()->db->deleteData("DELETE from {$dbprefix}hmac_cache where hmac='$key'");
 	}
 
 	/**
@@ -91,6 +91,6 @@ class ElggHMACCache extends ElggCache {
 
 		$expires = $time - $age;
 
-		delete_data("DELETE from {$dbprefix}hmac_cache where ts<$expires");
+		elgg()->db->deleteData("DELETE from {$dbprefix}hmac_cache where ts<$expires");
 	}
 }
