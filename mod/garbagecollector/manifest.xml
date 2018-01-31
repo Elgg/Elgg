@@ -3,7 +3,7 @@
 	<name>Garbage Collector</name>
 	<id>garbagecollector</id>
 	<author>Core developers</author>
-	<version>1.9</version>
+	<version>3.0</version>
 	<category>bundled</category>
 	<category>admin</category>
 	<description>Perform database cleanup tasks</description>
@@ -12,7 +12,7 @@
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>1.9</version>
+		<version>3.0</version>
 	</requires>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

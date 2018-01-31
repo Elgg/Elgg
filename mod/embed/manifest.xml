@@ -3,7 +3,7 @@
 	<name>Embed</name>
 	<id>embed</id>
 	<author>Core developers</author>
-	<version>1.9</version>
+	<version>3.0</version>
 	<category>bundled</category>
 	<category>enhancement</category>
 	<description>Allows users to easily upload and embed media into text areas. Requires a plugin for uploading files.</description>
@@ -12,7 +12,7 @@
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>1.9</version>
+		<version>3.0</version>
 	</requires>
 	<requires>
 		<type>plugin</type>
