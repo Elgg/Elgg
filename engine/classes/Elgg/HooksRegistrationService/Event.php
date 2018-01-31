@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\HooksRegistrationService;
 
+use DI\Container;
 use Elgg\Application;
 
 /**
@@ -23,12 +24,12 @@ class Event implements
 	/**
 	 * Constructor
 	 *
-	 * @param Application $elgg   Elgg application
-	 * @param string      $name   Event name
-	 * @param string      $type   Event type
-	 * @param mixed       $object Object of the event
+	 * @param Container $elgg   Elgg application
+	 * @param string    $name   Event name
+	 * @param string    $type   Event type
+	 * @param mixed     $object Object of the event
 	 */
-	public function __construct(Application $elgg, $name, $type, $object) {
+	public function __construct(Container $elgg, $name, $type, $object) {
 		$this->elgg = $elgg;
 		$this->name = $name;
 		$this->type = $type;

@@ -153,7 +153,7 @@ function elgg_remove_config($name) {
  * @access private
  */
 function _elgg_config() {
-	$config = elgg()->_services->config;
+	$config = _elgg_services()->config;
 	if (!$config) {
 		throw new \RuntimeException(__FUNCTION__ . ' can not be called before an instance of ' . \Elgg\Application::class . ' is bootstrapped');
 	}

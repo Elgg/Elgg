@@ -74,7 +74,7 @@ function garbagecollector_get_tables() {
 	}
 
 	$table_prefix = elgg_get_config('dbprefix');
-	$result = get_data("SHOW TABLES LIKE '$table_prefix%'");
+	$result = elgg()->db->getData("SHOW TABLES LIKE '$table_prefix%'");
 
 	$tables = [];
 	if (is_array($result) && !empty($result)) {
@@ -99,7 +99,7 @@ function garbagecollector_get_tables() {
  */
 function garbagecollector_optimize_table($table) {
 	$table = sanitise_string($table);
-	return update_data("OPTIMIZE TABLE $table");
+	return elgg()->db->updateData("OPTIMIZE TABLE $table");
 }
 
 return function() {

@@ -6,9 +6,7 @@ use Elgg\Database as ElggDb;
 /**
  * Elgg 3.0 public database API
  *
- * This is returned by elgg()->getDb() or Application::start()->getDb().
- *
- * @see \Elgg\Application::getDb for more details.
+ * This is returned by elgg()->db or Application::start()->getDb().
  *
  * @property-read string $prefix Elgg table prefix (read only)
  */

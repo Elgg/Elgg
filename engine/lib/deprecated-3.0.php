@@ -1407,3 +1407,99 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
 		}
 	}
 }
+
+/**
+ * Retrieve rows from the database.
+ *
+ * Queries are executed with {@link \Elgg\Database::getResults} and results
+ * are retrieved with {@link \PDO::fetchObject()}.  If a callback
+ * function $callback is defined, each row will be passed as the single
+ * argument to $callback.  If no callback function is defined, the
+ * entire result set is returned as an array.
+ *
+ * @param string   $query    The query being passed.
+ * @param callable $callback Optionally, the name of a function to call back to on each row
+ * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+ *
+ * @return array An array of database result objects or callback function results. If the query
+ *               returned nothing, an empty array.
+ * @throws DatabaseException
+ * @deprecated 3.0
+ */
+function get_data($query, $callback = null, array $params = []) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->db', '3.0');
+	return elgg()->db->getData($query, $callback, $params);
+}
+
+/**
+ * Retrieve a single row from the database.
+ *
+ * Similar to {@link get_data()} but returns only the first row
+ * matched.  If a callback function $callback is specified, the row will be passed
+ * as the only argument to $callback.
+ *
+ * @param string   $query    The query to execute.
+ * @param callable $callback A callback function to apply to the row
+ * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+ *
+ * @return mixed A single database result object or the result of the callback function.
+ * @throws DatabaseException
+ * @deprecated 3.0
+ */
+function get_data_row($query, $callback = null, array $params = []) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->db', '3.0');
+	return elgg()->db->getDataRow($query, $callback, $params);
+}
+
+/**
+ * Insert a row into the database.
+ *
+ * @note       Altering the DB invalidates all queries in the query cache
+ *
+ * @param string $query  The query to execute.
+ * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+ *
+ * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
+ *                   defined, 0 if not, and false on failure.
+ * @throws DatabaseException
+ * @deprecated 3.0
+ */
+function insert_data($query, array $params = []) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->db', '3.0');
+	return elgg()->db->insertData($query, $params);
+}
+
+/**
+ * Update a row in the database.
+ *
+ * @note       Altering the DB invalidates all queries in the query cache
+ *
+ * @param string $query        The query to run.
+ * @param array  $params       Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+ * @param bool   $get_num_rows Return the number of rows affected (default: false).
+ *
+ * @return bool
+ * @throws DatabaseException
+ * @deprecated 3.0
+ */
+function update_data($query, array $params = [], $get_num_rows = false) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->db', '3.0');
+	return elgg()->db->updateData($query, $get_num_rows, $params);
+}
+
+/**
+ * Remove a row from the database.
+ *
+ * @note       Altering the DB invalidates all queries in the query cache
+ *
+ * @param string $query  The SQL query to run
+ * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+ *
+ * @return int|false The number of affected rows or false on failure
+ * @throws DatabaseException
+ * @deprecated 3.0
+ */
+function delete_data($query, array $params = []) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->db', '3.0');
+	return elgg()->db->deleteData($query, $params);
+}

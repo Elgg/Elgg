@@ -2,8 +2,15 @@
 
 namespace Elgg;
 
+use DI\Container;
+use Elgg\Application\Database;
+use Elgg\Database\Select;
+use Elgg\Menu\Service;
+use Elgg\Views\TableColumn\ColumnFactory;
+
 /**
  * @group UnitTests
+ * @group Application
  */
 class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
@@ -15,8 +22,45 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	function testElggReturnsApp() {
-		$this->assertInstanceOf(Application::class, elgg());
+	function testElggReturnsContainer() {
+		$this->assertInstanceOf(Container::class, elgg());
+	}
+
+	/**
+	 * @dataProvider publicServiceProvider
+	 */
+	function testCanAccessDiServices($svc, $class) {
+		$this->assertNotNull(elgg()->$svc);
+		$this->assertInstanceOf($class, elgg()->$svc);
+		$this->assertEquals(elgg()->$svc, elgg()->get($svc));
+	}
+
+	function publicServiceProvider() {
+		return [
+			['db', Database::class],
+			['menus', Service::class],
+			['table_columns', ColumnFactory::class],
+		];
+	}
+
+	function testPublicServiceReferencesCoreService() {
+		$this->assertSame(elgg()->db, _elgg_services()->publicDb);
+	}
+
+	function testCanCallService() {
+		$qb = Select::fromTable('entities');
+		$qb->select('1');
+
+		_elgg_services()->db->addQuerySpec([
+			'sql' => $qb->getSQL(),
+			'results' => [1],
+		]);
+
+		$result = elgg()->call(function(Database $db) use ($qb) {
+			return $db->getDataRow($qb);
+		});
+
+		$this->assertEquals(1, $result);
 	}
 
 	function testStartsTimer() {

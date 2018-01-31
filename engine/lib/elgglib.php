@@ -13,15 +13,11 @@ use Elgg\Http\ResponseBuilder;
 /**
  * Get a reference to the global Application object
  *
- * @return Elgg\Application
+ * @return \Elgg\Di\PublicContainer
  * @since 2.0.0
  */
 function elgg() {
-	if (!isset(Elgg\Application::$_instance)) {
-		throw new \RuntimeException(__FUNCTION__ . ' should not be called before an instanceof ' . \Elgg\Application::class . ' is bootstrapped');
-	}
-
-	return Elgg\Application::$_instance;
+	return _elgg_services()->dic;
 }
 
 /**
@@ -1745,6 +1741,7 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 		_elgg_services()->plugins->clear();
 		_elgg_services()->sessionCache->clear();
 		_elgg_services()->dataCache->clear();
+		_elgg_services()->dic_cache->flushAll();
 	});
 
 	$events->registerHandler('init', 'system', '_elgg_init');

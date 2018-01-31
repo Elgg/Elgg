@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use DI\Container;
+
 /**
  * Models an event passed to hook handlers
  *
@@ -64,7 +66,7 @@ interface Hook {
 	/**
 	 * Get the Elgg application
 	 *
-	 * @return \Elgg\Application
+	 * @return Container
 	 */
 	public function elgg();
 }

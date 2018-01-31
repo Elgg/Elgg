@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\HooksRegistrationService;
 
+use DI\Container;
 use Elgg\Application;
 
 /**
@@ -21,13 +22,13 @@ class Hook implements \Elgg\Hook {
 	/**
 	 * Constructor
 	 *
-	 * @param Application $elgg   Elgg application
-	 * @param string      $name   Hook name
-	 * @param string      $type   Hook type
-	 * @param mixed       $value  Hook value
-	 * @param mixed       $params Hook params
+	 * @param Container $elgg   Elgg application
+	 * @param string    $name   Hook name
+	 * @param string    $type   Hook type
+	 * @param mixed     $value  Hook value
+	 * @param mixed     $params Hook params
 	 */
-	public function __construct(Application $elgg, $name, $type, $value, $params) {
+	public function __construct(Container $elgg, $name, $type, $value, $params) {
 		$this->elgg = $elgg;
 		$this->name = $name;
 		$this->type = $type;

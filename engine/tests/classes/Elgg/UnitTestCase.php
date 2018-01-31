@@ -48,6 +48,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		// Invalidate caches
 		$app->_services->dataCache->clear();
 		$app->_services->sessionCache->clear();
+		$app->_services->dic_cache->flushAll();
 
 		// turn off system log
 		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');

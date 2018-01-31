@@ -151,7 +151,6 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		access_show_hidden_entities(false);
 
 		// Make sure the application has been bootstrapped correctly
-		$this->assertInstanceOf(Application::class, elgg(), __METHOD__ . ': Elgg not bootstrapped');
 		$this->assertInstanceOf(ServiceProvider::class, $app->_services, __METHOD__ . ': ServiceProvider not bootstrapped');
 		$this->assertInstanceOf(Config::class, $app->_services->config, __METHOD__ . ': Config not bootstrapped');
 	}

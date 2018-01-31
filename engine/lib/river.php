@@ -322,7 +322,7 @@ function _elgg_river_disable($event, $type, $entity) {
 	WHERE (rv.subject_guid = {$entity->guid} OR rv.object_guid = {$entity->guid} OR rv.target_guid = {$entity->guid});
 QUERY;
 
-	update_data($query);
+	elgg()->db->updateData($query);
 	return;
 }
 
@@ -359,7 +359,7 @@ function _elgg_river_enable($event, $type, $entity) {
 		AND (se.guid = {$entity->guid} OR oe.guid = {$entity->guid} OR te.guid = {$entity->guid});
 QUERY;
 
-	update_data($query);
+	elgg()->db->updateData($query);
 	return;
 }
 

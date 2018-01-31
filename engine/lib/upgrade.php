@@ -75,6 +75,6 @@ function elgg_get_upgrade_files($upgrade_path = null) {
  */
 function _elgg_upgrade_unlock() {
 	$prefix = _elgg_config()->dbprefix;
-	delete_data("drop table {$prefix}upgrade_lock");
+	elgg()->db->deleteData("drop table {$prefix}upgrade_lock");
 	elgg_log('Upgrade unlocked.', 'NOTICE');
 }
