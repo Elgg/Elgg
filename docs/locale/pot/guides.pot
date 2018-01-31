@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 16:32+0100\n"
+"POT-Creation-Date: 2018-01-31 13:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -6011,163 +6011,183 @@ msgid "``widgets``"
 msgstr ""
 
 #: ../../guides/plugins.rst:53
-#: ../../guides/plugins.rst:84
-msgid "Syntax"
+msgid "elgg-services.php"
 msgstr ""
 
 #: ../../guides/plugins.rst:55
+msgid "Plugins can attach their services to Elgg's public DI container by providing PHP-DI definitions in ``elgg-services.php`` in the root of the plugin directory."
+msgstr ""
+
+#: ../../guides/plugins.rst:58
+msgid "This file must return an array of PHP-DI definitions. Services will by available via ``elgg()``."
+msgstr ""
+
+#: ../../guides/plugins.rst:66
+msgid "Plugins can then use PHP-DI API to autowire and call the service:"
+msgstr ""
+
+#: ../../guides/plugins.rst:72
+msgid "See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of definition and invokation possibilities."
+msgstr ""
+
+#: ../../guides/plugins.rst:75
+#: ../../guides/plugins.rst:106
+msgid "Syntax"
+msgstr ""
+
+#: ../../guides/plugins.rst:77
 msgid "Here's a trivial example configuring view locations via the ``views`` key:"
 msgstr ""
 
-#: ../../guides/plugins.rst:68
+#: ../../guides/plugins.rst:90
 msgid "activate.php, deactivate.php"
 msgstr ""
 
-#: ../../guides/plugins.rst:70
+#: ../../guides/plugins.rst:92
 msgid "The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run upon plugin activation and deactivation. Use these files to perform one-time events such as registering a persistent admin notice, registering subtypes, or performing garbage collection when deactivated."
 msgstr ""
 
-#: ../../guides/plugins.rst:76
+#: ../../guides/plugins.rst:98
 msgid "manifest.xml"
 msgstr ""
 
-#: ../../guides/plugins.rst:78
+#: ../../guides/plugins.rst:100
 msgid "Elgg plugins are required to have a ``manifest.xml`` file in the root of a plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:80
+#: ../../guides/plugins.rst:102
 msgid "The ``manifest.xml`` file includes information about the plugin itself, requirements to run the plugin, and optional information including where to display the plugin in the admin area and what APIs the plugin provides."
 msgstr ""
 
-#: ../../guides/plugins.rst:86
+#: ../../guides/plugins.rst:108
 msgid "The manifest file is a standard XML file in UTF-8. Everything is a child of the ``<plugin_manifest>`` element."
 msgstr ""
 
-#: ../../guides/plugins.rst:93
+#: ../../guides/plugins.rst:115
 msgid "The manifest syntax is as follows:"
 msgstr ""
 
-#: ../../guides/plugins.rst:99
+#: ../../guides/plugins.rst:121
 msgid "Many elements can contain children attributes:"
 msgstr ""
 
-#: ../../guides/plugins.rst:109
+#: ../../guides/plugins.rst:131
 msgid "Required Elements"
 msgstr ""
 
-#: ../../guides/plugins.rst:111
+#: ../../guides/plugins.rst:133
 msgid "All plugins are required to define the following elements in their manifest files:"
 msgstr ""
 
-#: ../../guides/plugins.rst:113
+#: ../../guides/plugins.rst:135
 msgid "id - This has the name as the directory that the plugin uses."
 msgstr ""
 
-#: ../../guides/plugins.rst:114
+#: ../../guides/plugins.rst:136
 msgid "name - The display name of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:115
+#: ../../guides/plugins.rst:137
 msgid "author - The name of the author who wrote the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:116
+#: ../../guides/plugins.rst:138
 msgid "version - The version of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:117
+#: ../../guides/plugins.rst:139
 msgid "description - A description of the what the plugin provides, its features, and other relevant information"
 msgstr ""
 
-#: ../../guides/plugins.rst:118
+#: ../../guides/plugins.rst:140
 msgid "requires - Each plugin must specify the release of Elgg it was developed for. See the plugin Dependencies page for more information."
 msgstr ""
 
-#: ../../guides/plugins.rst:121
+#: ../../guides/plugins.rst:143
 msgid "Available Elements"
 msgstr ""
 
-#: ../../guides/plugins.rst:123
+#: ../../guides/plugins.rst:145
 msgid "In addition to the require elements above, the follow elements are available to use:"
 msgstr ""
 
-#: ../../guides/plugins.rst:125
+#: ../../guides/plugins.rst:147
 msgid "blurb - A short description of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:126
+#: ../../guides/plugins.rst:148
 msgid "category - The category of the plugin. It is recommended to follow the :doc:`guidelines` and use one of the defined categories. There can be multiple entries."
 msgstr ""
 
-#: ../../guides/plugins.rst:128
+#: ../../guides/plugins.rst:150
 msgid "conflicts - Specifies that the plugin conflicts with a certain system configuration."
 msgstr ""
 
-#: ../../guides/plugins.rst:129
+#: ../../guides/plugins.rst:151
 msgid "copyright - The plugin's copyright information."
 msgstr ""
 
-#: ../../guides/plugins.rst:130
+#: ../../guides/plugins.rst:152
 msgid "license - The plugin's license information."
 msgstr ""
 
-#: ../../guides/plugins.rst:131
+#: ../../guides/plugins.rst:153
 msgid "provides - Specifies that this plugin provides the same functionality as another Elgg plugin or a PHP extension."
 msgstr ""
 
-#: ../../guides/plugins.rst:132
+#: ../../guides/plugins.rst:154
 msgid "screenshot - Screenshots of the plugin. There can be multiple entries. See the advanced example for syntax."
 msgstr ""
 
-#: ../../guides/plugins.rst:133
+#: ../../guides/plugins.rst:155
 msgid "suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build on the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:135
+#: ../../guides/plugins.rst:157
 msgid "website - A link to the website for the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:139
+#: ../../guides/plugins.rst:161
 msgid ":doc:`plugins/dependencies`"
 msgstr ""
 
-#: ../../guides/plugins.rst:142
+#: ../../guides/plugins.rst:164
 msgid "Simple Example"
 msgstr ""
 
-#: ../../guides/plugins.rst:144
+#: ../../guides/plugins.rst:166
 msgid "This manifest file is the bare minimum a plugin must have."
 msgstr ""
 
-#: ../../guides/plugins.rst:162
+#: ../../guides/plugins.rst:184
 msgid "Advanced example"
 msgstr ""
 
-#: ../../guides/plugins.rst:164
+#: ../../guides/plugins.rst:186
 msgid "This example uses all of the available elements:"
 msgstr ""
 
-#: ../../guides/plugins.rst:206
+#: ../../guides/plugins.rst:228
 msgid "Tests"
 msgstr ""
 
-#: ../../guides/plugins.rst:208
+#: ../../guides/plugins.rst:230
 msgid "It's encouraged to create PHPUnit test for your plugin. All tests should be located in ``tests/phpunit/unit`` for unit tests and ``tests/phpunit/integration`` for integration tests."
 msgstr ""
 
-#: ../../guides/plugins.rst:211
+#: ../../guides/plugins.rst:233
 msgid "An easy example of adding test is the ``ViewStackTest``, this will test that the views in your plugin are registered correctly and have no syntax errors. To add this test create a file ``ViewStackTest.php`` in the folder ``tests/phpunit/unit/<YourNameSpace>/<YourPluginName>/`` with the content:"
 msgstr ""
 
-#: ../../guides/plugins.rst:228
+#: ../../guides/plugins.rst:250
 msgid "If you wish to see a better example, look in any of the Elgg core plugins."
 msgstr ""
 
-#: ../../guides/plugins.rst:232
+#: ../../guides/plugins.rst:254
 msgid ":doc:`/contribute/tests`"
 msgstr ""
 
-#: ../../guides/plugins.rst:235
+#: ../../guides/plugins.rst:257
 #: ../../guides/views.rst:652
 #: ../../guides/web-services.rst:388
 msgid "Related"

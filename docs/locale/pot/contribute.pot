@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-29 16:32+0100\n"
+"POT-Creation-Date: 2018-01-31 13:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1077,74 +1077,74 @@ msgid "Merge commits up from lower branches"
 msgstr ""
 
 #: ../../contribute/core/releases.rst:29
-msgid "Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other branches."
+msgid "Determine the LTS branch. We need to merge any new commits there up through the other branches."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:33
+#: ../../contribute/core/releases.rst:32
 msgid "For each branch"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:35
+#: ../../contribute/core/releases.rst:34
 msgid "Check out the branch, make sure it's up to date, and make a new work branch with the merge. E.g. here we're merging 1.12 commits into 2.0:"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:45
+#: ../../contribute/core/releases.rst:44
 msgid "If already up-to-date (no commits to merge), we can stop here for this branch."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:47
+#: ../../contribute/core/releases.rst:46
 msgid "If there are conflicts, resolve them, ``git add .``, and ``git merge``."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:49
+#: ../../contribute/core/releases.rst:48
 msgid "Make a PR for the branch and wait for automated tests and approval by other dev(s)."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:55
+#: ../../contribute/core/releases.rst:54
 msgid "Once merged, we would repeat the process to merge 2.0 commits into 2.1."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:58
+#: ../../contribute/core/releases.rst:57
 msgid "First new stable minor/major release"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:60
+#: ../../contribute/core/releases.rst:59
 msgid "Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:63
+#: ../../contribute/core/releases.rst:62
 msgid "Prepare the release"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:65
+#: ../../contribute/core/releases.rst:64
 msgid "Bring your local git clone up to date."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:67
+#: ../../contribute/core/releases.rst:66
 msgid "Merge latest commits up from lowest supported branch."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:69
+#: ../../contribute/core/releases.rst:68
 msgid "Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the PR if there is anything that needs to be merged up."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:71
+#: ../../contribute/core/releases.rst:70
 msgid "Install the prerequisites:"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:80
+#: ../../contribute/core/releases.rst:79
 msgid "On Windows you need to run these command in a console with admin privileges"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:82
+#: ../../contribute/core/releases.rst:81
 msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:89
+#: ../../contribute/core/releases.rst:88
 msgid "This creates a ``release-1.12.5`` branch in your local repo."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:91
+#: ../../contribute/core/releases.rst:90
 msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
 msgstr ""
 
@@ -1224,104 +1224,108 @@ msgstr ""
 msgid "If this is your first time on the server building a release run ``composer global require \"fxp/composer-asset-plugin:^1.2.0\"``. This will make sure you can download bower-assets during the build process."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:158
+#: ../../contribute/core/releases.rst:159
+msgid "For Elgg 2.x releases use the ``2.x`` branch of the starter-project (eg. ``./elgg-starter-project.sh 2.x 2.0.4 /var/www/www.elgg.org/download/``)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:161
 msgid "Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:159
+#: ../../contribute/core/releases.rst:162
 msgid "If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg`` item in the composer requires list."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:163
+#: ../../contribute/core/releases.rst:166
 msgid "Building 1.x zip packages"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:165
+#: ../../contribute/core/releases.rst:168
 msgid "Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:176
+#: ../../contribute/core/releases.rst:179
 msgid "Update elgg.org download page"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:178
+#: ../../contribute/core/releases.rst:181
 msgid "Clone https://github.com/Elgg/community"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:179
+#: ../../contribute/core/releases.rst:182
 msgid "Add the new version to ``classes/Elgg/Releases.php``"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:180
-#: ../../contribute/core/releases.rst:198
+#: ../../contribute/core/releases.rst:183
+#: ../../contribute/core/releases.rst:201
 msgid "Commit and push the changes"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:181
+#: ../../contribute/core/releases.rst:184
 msgid "Update the plugin on www.elgg.org"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:188
+#: ../../contribute/core/releases.rst:191
 msgid "Update elgg.org"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:190
+#: ../../contribute/core/releases.rst:193
 msgid "Clone https://github.com/Elgg/www.elgg.org"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:191
+#: ../../contribute/core/releases.rst:194
 msgid "Change the required Elgg version in ``composer.json``"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:192
+#: ../../contribute/core/releases.rst:195
 msgid "Update vendors"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:199
+#: ../../contribute/core/releases.rst:202
 msgid "Pull to live site"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:205
+#: ../../contribute/core/releases.rst:208
 msgid "Update dependencies"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:213
+#: ../../contribute/core/releases.rst:216
 msgid "Go to community admin panel"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:212
+#: ../../contribute/core/releases.rst:215
 msgid "Flush APC cache"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:213
+#: ../../contribute/core/releases.rst:216
 msgid "Run upgrade"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:216
+#: ../../contribute/core/releases.rst:219
 msgid "Make the announcement"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:218
+#: ../../contribute/core/releases.rst:221
 msgid "This should be the very last thing you do."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:220
+#: ../../contribute/core/releases.rst:223
 msgid "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the contents for that version"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:221
+#: ../../contribute/core/releases.rst:224
 msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:222
+#: ../../contribute/core/releases.rst:225
 msgid "Copy in the CHANGELOG contents, clear formatting, and manually remove the SVG anchors"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:223
+#: ../../contribute/core/releases.rst:226
 msgid "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being released"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:224
+#: ../../contribute/core/releases.rst:227
 msgid "Tweet from the elgg `Twitter account`_"
 msgstr ""
 
