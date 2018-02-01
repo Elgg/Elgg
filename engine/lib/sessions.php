@@ -18,7 +18,7 @@ use Elgg\Di\ServiceProvider;
  * @since 1.9
  */
 function elgg_get_session() {
-	return _elgg_services()->session;
+	return elgg()->session;
 }
 
 /**
@@ -27,7 +27,7 @@ function elgg_get_session() {
  * @return \ElggUser|null
  */
 function elgg_get_logged_in_user_entity() {
-	return _elgg_services()->session->getLoggedInUser();
+	return elgg()->session->getLoggedInUser();
 }
 
 /**
@@ -37,7 +37,7 @@ function elgg_get_logged_in_user_entity() {
  * @return int
  */
 function elgg_get_logged_in_user_guid() {
-	return _elgg_services()->session->getLoggedInUserGuid();
+	return elgg()->session->getLoggedInUserGuid();
 }
 
 /**
@@ -46,7 +46,7 @@ function elgg_get_logged_in_user_guid() {
  * @return bool
  */
 function elgg_is_logged_in() {
-	return _elgg_services()->session->isLoggedIn();
+	return elgg()->session->isLoggedIn();
 }
 
 /**
@@ -55,7 +55,7 @@ function elgg_is_logged_in() {
  * @return bool
  */
 function elgg_is_admin_logged_in() {
-	return _elgg_services()->session->isAdminLoggedIn();
+	return elgg()->session->isAdminLoggedIn();
 }
 
 /**
@@ -271,7 +271,7 @@ function login(\ElggUser $user, $persistent = false) {
 		throw new \LoginException(elgg_echo('LoginException:BannedUser'));
 	}
 
-	$session = _elgg_services()->session;
+	$session = elgg()->session;
 
 	// give plugins a chance to reject the login of this user (no user in session!)
 	if (!elgg_trigger_before_event('login', 'user', $user)) {
@@ -304,7 +304,7 @@ function login(\ElggUser $user, $persistent = false) {
  * @return bool
  */
 function logout() {
-	$session = _elgg_services()->session;
+	$session = elgg()->session;
 	$user = $session->getLoggedInUser();
 	if (!$user) {
 		return false;

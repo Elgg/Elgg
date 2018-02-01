@@ -817,7 +817,7 @@ abstract class ElggEntity extends \ElggData implements
 	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $value_type = "") {
 		if ($this->guid) {
 			if (!$owner_guid) {
-				$owner_guid = elgg_get_logged_in_user_guid();
+				$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
 			}
 			$annotation = new ElggAnnotation();
 			$annotation->entity_guid = $this->guid;
@@ -1383,7 +1383,7 @@ abstract class ElggEntity extends \ElggData implements
 			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
-		$user_guid = elgg_get_logged_in_user_guid();
+		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 
 		// If given an owner, verify it can be loaded
 		if ($owner_guid) {

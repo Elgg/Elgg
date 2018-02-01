@@ -345,13 +345,13 @@ class EntityTable {
 	 */
 	public function invalidateCache($guid) {
 		$ia = $this->session->setIgnoreAccess(true);
-		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$ha = $this->session->getDisabledEntityVisibility();
+		$this->session->setDisabledEntityVisibility(true);
 		$entity = $this->get($guid);
 		if ($entity) {
 			$entity->invalidateCache();
 		}
-		access_show_hidden_entities($ha);
+		$this->session->setDisabledEntityVisibility($ha);
 		$this->session->setIgnoreAccess($ia);
 	}
 
@@ -425,12 +425,12 @@ class EntityTable {
 
 		// need to ignore access and show hidden entities to check existence
 		$ia = $this->session->setIgnoreAccess(true);
-		$show_hidden = access_show_hidden_entities(true);
+		$show_hidden = $this->session->setDisabledEntityVisibility(true);
 
 		$result = $this->getRow($guid);
 
 		$this->session->setIgnoreAccess($ia);
-		access_show_hidden_entities($show_hidden);
+		$this->session->setDisabledEntityVisibility($show_hidden);
 
 		return !empty($result);
 	}
@@ -446,8 +446,8 @@ class EntityTable {
 	public function enable($guid, $recursive = true) {
 
 		// Override access only visible entities
-		$old_access_status = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$old_access_status = $this->session->getDisabledEntityVisibility();
+		$this->session->setDisabledEntityVisibility(true);
 
 		$result = false;
 		$entity = get_entity($guid);
@@ -455,7 +455,7 @@ class EntityTable {
 			$result = $entity->enable($recursive);
 		}
 
-		access_show_hidden_entities($old_access_status);
+		$this->session->setDisabledEntityVisibility($old_access_status);
 
 		return $result;
 	}
@@ -596,7 +596,7 @@ class EntityTable {
 
 		// need to ignore access and show hidden entities for potential hidden/disabled users
 		$ia = $this->session->setIgnoreAccess(true);
-		$show_hidden = access_show_hidden_entities(true);
+		$show_hidden = $this->session->setDisabledEntityVisibility(true);
 
 		$user = $this->get($guid, 'user');
 		if ($user) {
@@ -604,7 +604,7 @@ class EntityTable {
 		}
 
 		$this->session->setIgnoreAccess($ia);
-		access_show_hidden_entities($show_hidden);
+		$this->session->setDisabledEntityVisibility($show_hidden);
 
 		if (!$user) {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller
@@ -703,9 +703,9 @@ class EntityTable {
 	 */
 	protected function deleteRelatedEntities(ElggEntity $entity) {
 		// Temporarily overriding access controls
-		$entity_disable_override = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$ia = elgg_set_ignore_access(true);
+		$entity_disable_override = $this->session->getDisabledEntityVisibility();
+		$this->session->setDisabledEntityVisibility(true);
+		$ia = $this->session->setIgnoreAccess(true);
 
 		$options = [
 			'wheres' => function (QueryBuilder $qb) use ($entity) {
@@ -730,8 +730,8 @@ class EntityTable {
 			$this->delete($e, true);
 		}
 
-		access_show_hidden_entities($entity_disable_override);
-		elgg_set_ignore_access($ia);
+		$this->session->setDisabledEntityVisibility($entity_disable_override);
+		$this->session->setIgnoreAccess($ia);
 	}
 
 	/**
@@ -745,9 +745,9 @@ class EntityTable {
 
 		$guid = $entity->guid;
 
-		$entity_disable_override = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$ia = elgg_set_ignore_access(true);
+		$entity_disable_override = $this->session->getDisabledEntityVisibility();
+		$this->session->setDisabledEntityVisibility(true);
+		$ia = $this->session->setIgnoreAccess(true);
 
 		elgg_delete_river(['subject_guid' => $guid, 'limit' => false]);
 		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
@@ -761,8 +761,8 @@ class EntityTable {
 		$entity->deleteAnnotations();
 		$entity->deleteMetadata();
 
-		access_show_hidden_entities($entity_disable_override);
-		elgg_set_ignore_access($ia);
+		$this->session->setDisabledEntityVisibility($entity_disable_override);
+		$this->session->setIgnoreAccess($ia);
 
 		$dir = new \Elgg\EntityDirLocator($guid);
 		$file_path = _elgg_config()->dataroot . $dir;

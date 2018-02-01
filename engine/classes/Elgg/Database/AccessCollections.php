@@ -265,7 +265,7 @@ class AccessCollections {
 			return true;
 		}
 
-		$user_guid = isset($user) ? (int) $user->guid : elgg_get_logged_in_user_guid();
+		$user_guid = isset($user) ? (int) $user->guid : _elgg_services()->session->getLoggedInUserGuid();
 
 		if ($user_guid && $user_guid == $entity->owner_guid) {
 			// Owners have access to their own content
@@ -278,11 +278,11 @@ class AccessCollections {
 		}
 
 		// See #7159. Must not allow ignore access to affect query
-		$ia = elgg_set_ignore_access(false);
+		$ia = _elgg_services()->session->setIgnoreAccess(false);
 
 		$row = $this->entities->getRow($entity->guid, $user_guid);
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return !empty($row);
 	}

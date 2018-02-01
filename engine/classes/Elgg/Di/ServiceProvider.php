@@ -15,6 +15,7 @@ use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Invoker;
 use Elgg\Printer\CliPrinter;
 use Elgg\Printer\ErrorLogPrinter;
 use Elgg\Project\Paths;
@@ -70,6 +71,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\ImageService                       $imageService
+ * @property-read \Elgg\Invoker                            $invoker
  * @property-read \Elgg\Logger                             $logger
  * @property-read Mailer                                   $mailer
  * @property-read \Elgg\Menu\Service                       $menus
@@ -390,6 +392,10 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\ImageService($imagine, $c->config);
 		});
 
+		$this->setFactory('invoker', function(ServiceProvider $c) {
+			return new Invoker($c->session, $c->dic);
+		});
+
 		$this->setFactory('logger', function (ServiceProvider $c) {
 			$logger = new \Elgg\Logger($c->hooks, $c->context, $c->config, $c->printer);
 			return $logger;
@@ -440,7 +446,18 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
 			$cache = new CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
-			$plugins = new \Elgg\Database\Plugins($cache, $this->db);
+			$plugins = new \Elgg\Database\Plugins(
+				$cache,
+				$this->db,
+				$this->session,
+				$this->hooks,
+				$this->translator,
+				$this->views,
+				$this->privateSettingsCache,
+				$this->config,
+				$this->systemMessages,
+				$this->context
+			);
 			if ($c->config->enable_profiling) {
 				$plugins->setTimer($c->timer);
 			}

@@ -156,9 +156,9 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isAdmin() {
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 		$is_admin = ($this->admin == 'yes');
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 		
 		return $is_admin;
 	}

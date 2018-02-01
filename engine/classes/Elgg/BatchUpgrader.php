@@ -46,8 +46,8 @@ class BatchUpgrader {
 	public function run(ElggUpgrade $upgrade) {
 		// Upgrade also disabled data, so the compatibility is
 		// preserved in case the data ever gets enabled again
-		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$ha = _elgg_services()->session->getDisabledEntityVisibility();
+		_elgg_services()->session->setDisabledEntityVisibility(true);
 
 		$started = microtime(true);
 
@@ -113,7 +113,7 @@ class BatchUpgrader {
 			$errors = array_merge($errors, $result->getErrors());
 		}
 
-		access_show_hidden_entities($ha);
+		_elgg_services()->session->setDisabledEntityVisibility($ha);
 
 		$upgrade->processed = $processed;
 		$upgrade->offset = $offset;

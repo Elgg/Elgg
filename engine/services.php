@@ -11,5 +11,6 @@ use Elgg\Views\TableColumn\ColumnFactory;
 return [
 	'db' => new PhpDiResolver(Database::class, 'publicDb'),
 	'menus' => new PhpDiResolver(MenuService::class, 'menus'),
+	'session' => new PhpDiResolver(ElggSession::class, 'session'),
 	'table_columns' => new PhpDiResolver(ColumnFactory::class, 'table_columns'),
 ];
