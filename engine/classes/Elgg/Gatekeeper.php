@@ -188,7 +188,7 @@ class Gatekeeper {
 			'user' => $user,
 		];
 
-		$result = elgg_trigger_plugin_hook('gatekeeper', "{$entity->type}:{$entity->subtype}", $hook_params, $result);
+		$result = _elgg_services()->hooks->trigger('gatekeeper', "{$entity->type}:{$entity->subtype}", $hook_params, $result);
 
 		if ($result instanceof HttpException) {
 			throw $result;

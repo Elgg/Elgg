@@ -96,7 +96,7 @@ class AccessWhereClause extends WhereClause {
 			'query_builder' => $qb,
 		];
 
-		$clauses = elgg_trigger_plugin_hook('get_sql', 'access', $hook_params, [
+		$clauses = _elgg_services()->hooks->trigger('get_sql', 'access', $hook_params, [
 			'ors' => $ors,
 			'ands' => $ands,
 		]);
