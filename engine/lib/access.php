@@ -11,6 +11,15 @@
  */
 
 /**
+ * Allow disabled entities and metadata to be returned by getter functions
+ *
+ * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
+ * @access private
+ * @deprecated 3.0
+ */
+global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+
+/**
  * Set if Elgg's access system should be ignored.
  *
  * The access system will not return entities in any getter functions if the
@@ -41,7 +50,7 @@
  * @see elgg_get_ignore_access()
  */
 function elgg_set_ignore_access($ignore = true) {
-	return _elgg_services()->session->setIgnoreAccess($ignore);
+	return elgg()->session->setIgnoreAccess($ignore);
 }
 
 /**
@@ -52,7 +61,7 @@ function elgg_set_ignore_access($ignore = true) {
  * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
-	return _elgg_services()->session->getIgnoreAccess();
+	return elgg()->session->getIgnoreAccess();
 }
 
 /**
@@ -121,7 +130,7 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
 
 	// user default access if enabled
 	if (_elgg_config()->allow_user_default_access) {
-		$user = $user ? $user : _elgg_services()->session->getLoggedInUser();
+		$user = $user ? $user : elgg()->session->getLoggedInUser();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
 			if ($user_access !== null) {
@@ -139,25 +148,13 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
 }
 
 /**
- * Allow disabled entities and metadata to be returned by getter functions
- *
- * @todo Replace this with query object!
- * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
- * @access private
- */
-$ENTITY_SHOW_HIDDEN_OVERRIDE = false;
-
-/**
  * Show or hide disabled entities.
  *
  * @param bool $show_hidden Show disabled entities.
  * @return bool
  */
 function access_show_hidden_entities($show_hidden) {
-	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
-	$current_value = $ENTITY_SHOW_HIDDEN_OVERRIDE;
-	$ENTITY_SHOW_HIDDEN_OVERRIDE = $show_hidden;
-	return $current_value;
+	elgg()->session->setDisabledEntityVisibility($show_hidden);
 }
 
 /**
@@ -166,8 +163,7 @@ function access_show_hidden_entities($show_hidden) {
  * @return bool
  */
 function access_get_show_hidden_status() {
-	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
-	return $ENTITY_SHOW_HIDDEN_OVERRIDE;
+	return elgg()->session->getDisabledEntityVisibility();
 }
 
 /**

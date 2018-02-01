@@ -98,7 +98,18 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		$this->setFactory('plugins', function (MockServiceProvider $sp) {
 			$cache = $sp->dataCache->plugins;
 
-			return new \Elgg\Mocks\Database\Plugins($cache, $this->db);
+			return new \Elgg\Mocks\Database\Plugins(
+				$cache,
+				$this->db,
+				$this->session,
+				$this->hooks,
+				$this->translator,
+				$this->views,
+				$this->privateSettingsCache,
+				$this->config,
+				$this->systemMessages,
+				$this->context
+			);
 		});
 
 		$this->setFactory('siteSecret', function (MockServiceProvider $sp) {

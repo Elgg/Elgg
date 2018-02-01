@@ -84,7 +84,7 @@ class RiverWhereClause extends WhereClause {
 		$wheres[] = parent::prepare($qb, $table_alias);
 
 		if (!isset($this->use_enabled_clause)) {
-			$this->use_enabled_clause = !access_get_show_hidden_status();
+			$this->use_enabled_clause = !_elgg_services()->session->getDisabledEntityVisibility();
 		}
 
 		if (!isset($this->enabled) && $this->use_enabled_clause) {

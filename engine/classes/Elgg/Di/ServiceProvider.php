@@ -15,6 +15,7 @@ use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Invoker;
 use Elgg\Printer\CliPrinter;
 use Elgg\Printer\ErrorLogPrinter;
 use Elgg\Project\Paths;
@@ -59,6 +60,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
+ * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \ElggCache                               $fileCache
  * @property-read \ElggDiskFilestore                       $filestore
@@ -70,6 +72,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\ImageService                       $imageService
+ * @property-read \Elgg\Invoker                            $invoker
  * @property-read \Elgg\Logger                             $logger
  * @property-read Mailer                                   $mailer
  * @property-read \Elgg\Menu\Service                       $menus
@@ -157,7 +160,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
-			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto);
+			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto, $c->systemMessages);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
@@ -328,6 +331,10 @@ class ServiceProvider extends DiContainer {
 			);
 		});
 
+		$this->setFactory('events', function(ServiceProvider $c) {
+			return $c->hooks->getEvents();
+		});
+
 		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);
 
 		$this->setFactory('fileCache', function(ServiceProvider $c) {
@@ -390,6 +397,10 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\ImageService($imagine, $c->config);
 		});
 
+		$this->setFactory('invoker', function(ServiceProvider $c) {
+			return new Invoker($c->session, $c->dic);
+		});
+
 		$this->setFactory('logger', function (ServiceProvider $c) {
 			$logger = new \Elgg\Logger($c->hooks, $c->context, $c->config, $c->printer);
 			return $logger;
@@ -440,7 +451,18 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
 			$cache = new CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
-			$plugins = new \Elgg\Database\Plugins($cache, $this->db);
+			$plugins = new \Elgg\Database\Plugins(
+				$cache,
+				$this->db,
+				$this->session,
+				$this->hooks,
+				$this->translator,
+				$this->views,
+				$this->privateSettingsCache,
+				$this->config,
+				$this->systemMessages,
+				$this->context
+			);
 			if ($c->config->enable_profiling) {
 				$plugins->setTimer($c->timer);
 			}
@@ -570,7 +592,8 @@ class ServiceProvider extends DiContainer {
 				$c->hooks,
 				$c->config,
 				$c->logger,
-				$c->mutex
+				$c->mutex,
+				$c->systemMessages
 			);
 		});
 

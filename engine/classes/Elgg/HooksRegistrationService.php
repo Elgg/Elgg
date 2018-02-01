@@ -40,7 +40,6 @@ abstract class HooksRegistrationService {
 	 * @warning This doesn't check if a callback is valid to be called, only if it is in the
 	 *          correct format as a callable.
 	 * @see elgg_register_plugin_hook_handler()
-	 * @access private
 	 */
 	public function registerHandler($name, $type, $callback, $priority = 500) {
 		if (empty($name) || empty($type) || !is_callable($callback, true)) {

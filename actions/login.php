@@ -57,8 +57,6 @@ if (!$user) {
 
 try {
 	login($user, $persistent);
-	// re-register at least the core language file for users with language other than site default
-	register_translations(dirname(dirname(__FILE__)) . "/languages/");
 } catch (LoginException $e) {
 	return elgg_error_response($e->getMessage());
 }

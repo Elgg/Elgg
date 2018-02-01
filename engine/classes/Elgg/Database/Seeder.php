@@ -40,10 +40,10 @@ class Seeder {
 			$limit = max(elgg_get_config('default_limit'), 20);
 		}
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
-		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$ha = _elgg_services()->session->getDisabledEntityVisibility();
+		_elgg_services()->session->setDisabledEntityVisibility(true);
 
 		$seeds = $this->hooks->trigger('seeds', 'database', null, []);
 
@@ -62,8 +62,8 @@ class Seeder {
 			elgg_log('Finished seeding with ' . get_class($seeder));
 		}
 
-		access_show_hidden_entities($ha);
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setDisabledEntityVisibility($ha);
+		_elgg_services()->session->setIgnoreAccess($ia);
 	}
 
 	/**
@@ -72,10 +72,10 @@ class Seeder {
 	 */
 	public function unseed() {
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
-		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$ha = _elgg_services()->session->getDisabledEntityVisibility();
+		_elgg_services()->session->setDisabledEntityVisibility(true);
 
 		$seeds = $this->hooks->trigger('seeds', 'database', null, []);
 
@@ -94,7 +94,7 @@ class Seeder {
 			elgg_log('Finished unseeding with ' . get_class($seeder));
 		}
 
-		access_show_hidden_entities($ha);
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setDisabledEntityVisibility($ha);
+		_elgg_services()->session->setIgnoreAccess($ia);
 	}
 }

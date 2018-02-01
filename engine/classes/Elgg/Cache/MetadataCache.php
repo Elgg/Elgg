@@ -248,9 +248,9 @@ class MetadataCache {
 		];
 
 		// We already have a loaded entity, so we can ignore entity access clauses
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 		$data = _elgg_services()->metadataTable->getAll($options);
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		$values = [];
 

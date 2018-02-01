@@ -301,7 +301,7 @@ class Inspector {
 				default:
 					break;
 			}
-			$menus[$type] = elgg_trigger_plugin_hook('register', "menu:$type", $params, []);
+			$menus[$type] = _elgg_services()->hooks->trigger('register', "menu:$type", $params, []);
 		}
 
 		// put the menus in tree form for inspection
