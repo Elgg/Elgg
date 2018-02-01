@@ -60,6 +60,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\EntityCache                  $entityCache
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
+ * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \ElggCache                               $fileCache
  * @property-read \ElggDiskFilestore                       $filestore
@@ -328,6 +329,10 @@ class ServiceProvider extends DiContainer {
 				$c->translator,
 				$c->logger
 			);
+		});
+
+		$this->setFactory('events', function(ServiceProvider $c) {
+			return $c->hooks->getEvents();
 		});
 
 		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);

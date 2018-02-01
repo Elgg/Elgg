@@ -333,7 +333,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function setSetting($name, $value) {
 
-		$value = elgg_trigger_plugin_hook('setting', 'plugin', [
+		$value = _elgg_services()->hooks->trigger('setting', 'plugin', [
 			'plugin_id' => $this->getID(),
 			'plugin' => $this,
 			'name' => $name,

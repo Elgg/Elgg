@@ -1533,7 +1533,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$this->attributes['time_updated'] = $time;
 
-		elgg_trigger_after_event('update', $this->type, $this);
+		_elgg_services()->hooks->getEvents()->triggerAfter('update', $this->type, $this);
 
 		$this->orig_attributes = [];
 

@@ -212,7 +212,7 @@ class AnnotationsTable {
 			return false;
 		}
 
-		if (!elgg_trigger_event('disable', $annotation->getType(), $annotation)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('disable', $annotation->getType(), $annotation)) {
 			return false;
 		}
 
