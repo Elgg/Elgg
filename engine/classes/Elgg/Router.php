@@ -100,7 +100,7 @@ class Router {
 			if (!elgg_is_xhr()) {
 				_elgg_services()->session->set('last_forward_from', current_page_url());
 			}
-			register_error(_elgg_services()->translator->translate('loggedinrequired'));
+			_elgg_services()->systemMessages->addErrorMessage(_elgg_services()->translator->translate('loggedinrequired'));
 			_elgg_services()->responseFactory->redirect('', 'walled_garden');
 
 			return false;

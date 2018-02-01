@@ -350,7 +350,7 @@ function elgg_get_file_list($directory, $exceptions = [], $list = [], $extension
  * @return integer The number of messages
  */
 function count_messages($register = "") {
-	return _elgg_services()->systemMessages->count($register);
+	return elgg()->system_messages->count($register);
 }
 
 /**
@@ -361,7 +361,7 @@ function count_messages($register = "") {
  * @return bool
  */
 function system_message($message) {
-	_elgg_services()->systemMessages->addSuccessMessage($message);
+	elgg()->system_messages->addSuccessMessage($message);
 	return true;
 }
 
@@ -373,7 +373,7 @@ function system_message($message) {
  * @return bool
  */
 function register_error($error) {
-	_elgg_services()->systemMessages->addErrorMessage($error);
+	elgg()->system_messages->addErrorMessage($error);
 	return true;
 }
 
@@ -384,7 +384,7 @@ function register_error($error) {
  * @since 2.1
  */
 function elgg_get_system_messages() {
-	return _elgg_services()->systemMessages->loadRegisters();
+	return elgg()->system_messages->loadRegisters();
 }
 
 /**
@@ -395,7 +395,7 @@ function elgg_get_system_messages() {
  * @since 2.1
  */
 function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
-	_elgg_services()->systemMessages->saveRegisters($set);
+	elgg()->system_messages->saveRegisters($set);
 }
 
 /**

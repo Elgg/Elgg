@@ -160,7 +160,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
-			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto);
+			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto, $c->systemMessages);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
@@ -592,7 +592,8 @@ class ServiceProvider extends DiContainer {
 				$c->hooks,
 				$c->config,
 				$c->logger,
-				$c->mutex
+				$c->mutex,
+				$c->systemMessages
 			);
 		});
 
