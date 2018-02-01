@@ -15,9 +15,7 @@ use Exception;
 /**
  * Gatekeeper
  *
- * API in flux. Use elgg_* functions intead
- *
- * @access private
+ * Use elgg()->gatekeeper
  */
 class Gatekeeper {
 
@@ -60,6 +58,9 @@ class Gatekeeper {
 	 * @param EntityTable       $entities   Entity table
 	 * @param AccessCollections $access     Access collection table
 	 * @param Translator        $translator Translator
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public function __construct(
 		ElggSession $session,
