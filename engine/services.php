@@ -10,6 +10,7 @@ use Elgg\Gatekeeper;
 use Elgg\I18n\Translator;
 use Elgg\Menu\Service as MenuService;
 use Elgg\PluginHooksService;
+use Elgg\SystemMessagesService;
 use Elgg\Views\TableColumn\ColumnFactory;
 
 return [
@@ -19,6 +20,7 @@ return [
 	'hooks' => new PhpDiResolver(PluginHooksService::class, 'hooks'),
 	'menus' => new PhpDiResolver(MenuService::class, 'menus'),
 	'session' => new PhpDiResolver(ElggSession::class, 'session'),
+	'system_messages' => new PhpDiResolver(SystemMessagesService::class, 'systemMessages'),
 	'table_columns' => new PhpDiResolver(ColumnFactory::class, 'table_columns'),
 	'translator' => new PhpDiResolver(Translator::class, 'translator'),
 ];

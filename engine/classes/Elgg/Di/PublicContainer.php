@@ -9,20 +9,22 @@ use Elgg\Gatekeeper;
 use Elgg\I18n\Translator;
 use Elgg\Menu\Service;
 use Elgg\PluginHooksService;
+use Elgg\SystemMessagesService;
 use Elgg\Views\TableColumn\ColumnFactory;
 use ElggSession;
 
 /**
  * Public service container
  *
- * @property-read Database           $db            Public database
- * @property-read EventsService      $events        Event service
- * @property-read Gatekeeper         $gatekeeper    Gatekeeper
- * @property-read PluginHooksService $hooks         Hooks service
- * @property-read Service            $menus         Menus
- * @property-read ElggSession        $session       Session
- * @property-read ColumnFactory      $table_columns Table columns
- * @property-read Translator         $translator    Translator
+ * @property-read Database              $db              Public database
+ * @property-read EventsService         $events          Event service
+ * @property-read Gatekeeper            $gatekeeper      Gatekeeper
+ * @property-read PluginHooksService    $hooks           Hooks service
+ * @property-read Service               $menus           Menus
+ * @property-read ElggSession           $session         Session
+ * @property-read SystemMessagesService $system_messages System messages
+ * @property-read ColumnFactory         $table_columns   Table columns
+ * @property-read Translator            $translator      Translator
  *
  * @method string echo (string $message_key, array $args, string $language) Outputs a translated string
  */

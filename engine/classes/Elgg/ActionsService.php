@@ -36,6 +36,11 @@ class ActionsService {
 	private $crypto;
 
 	/**
+	 * @var SystemMessagesService
+	 */
+	private $system_messages;
+
+	/**
 	 * Registered actions storage
 	 *
 	 * Each element has keys:
@@ -60,14 +65,21 @@ class ActionsService {
 	/**
 	 * Constructor
 	 *
-	 * @param Config      $config  Config
-	 * @param ElggSession $session Session
-	 * @param ElggCrypto  $crypto  Crypto service
+	 * @param Config                $config          Config
+	 * @param ElggSession           $session         Session
+	 * @param ElggCrypto            $crypto          Crypto service
+	 * @param SystemMessagesService $system_messages System messages
 	 */
-	public function __construct(Config $config, ElggSession $session, ElggCrypto $crypto) {
+	public function __construct(
+		Config $config,
+		ElggSession $session,
+		ElggCrypto $crypto,
+		SystemMessagesService $system_messages
+	) {
 		$this->config = $config;
 		$this->session = $session;
 		$this->crypto = $crypto;
+		$this->system_messages = $system_messages;
 	}
 
 	/**
@@ -279,25 +291,25 @@ class ActionsService {
 					if ($returnval) {
 						return true;
 					} else if ($visible_errors) {
-						register_error(_elgg_services()->translator->translate('actiongatekeeper:pluginprevents'));
+						$this->system_messages->addErrorMessage(_elgg_services()->translator->translate('actiongatekeeper:pluginprevents'));
 					}
 				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
-						register_error(_elgg_services()->translator->translate(
+						$this->system_messages->addErrorMessage(_elgg_services()->translator->translate(
 							'js:security:token_refresh_failed',
 							[$this->config->wwwroot]
 						));
 					} else {
-						register_error(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
+						$this->system_messages->addErrorMessage(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
 					}
 				}
 			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
-					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', [$this->config->wwwroot]));
+					$this->system_messages->addErrorMessage(_elgg_services()->translator->translate('js:security:token_refresh_failed', [$this->config->wwwroot]));
 				} else {
-					register_error(_elgg_services()->translator->translate('actiongatekeeper:tokeninvalid'));
+					$this->system_messages->addErrorMessage(_elgg_services()->translator->translate('actiongatekeeper:tokeninvalid'));
 				}
 			}
 		} else {
@@ -314,7 +326,7 @@ class ActionsService {
 				$error_msg = _elgg_services()->translator->translate('actiongatekeeper:missingfields');
 			}
 			if ($visible_errors) {
-				register_error($error_msg);
+				$this->system_messages->addErrorMessage($error_msg);
 			}
 		}
 
@@ -379,7 +391,7 @@ class ActionsService {
 			if ($token && $this->validateTokenTimestamp($ts)) {
 				// The tokens are present and the time looks valid: this is probably a mismatch due to the
 				// login form being on a different domain.
-				register_error(_elgg_services()->translator->translate('actiongatekeeper:crosssitelogin'));
+				$this->system_messages->addErrorMessage(_elgg_services()->translator->translate('actiongatekeeper:crosssitelogin'));
 				_elgg_services()->responseFactory->redirect('login', 'csrf');
 				return false;
 			}

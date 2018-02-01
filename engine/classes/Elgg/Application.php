@@ -442,7 +442,7 @@ class Application {
 
 			if (isset($forward_url)) {
 				if ($ex->getMessage()) {
-					register_error($ex->getMessage());
+					$this->_services->systemMessages->addErrorMessage($ex->getMessage());
 				}
 				$response = new RedirectResponse($forward_url);
 			} else {
@@ -563,7 +563,7 @@ class Application {
 			$result = $upgrader->run();
 
 			if ($result['failure'] == true) {
-				register_error($result['reason']);
+				_elgg_services()->systemMessages->addErrorMessage($result['reason']);
 				$forward($forward_url);
 			}
 
@@ -830,7 +830,7 @@ class Application {
 					error_log("PHP ERROR: $error");
 				}
 				if (self::isCoreLoaded()) {
-					register_error("ERROR: $error");
+					$this->_services->systemMessages->addErrorMessage("ERROR: $error");
 				}
 
 				// Since this is a fatal error, we want to stop any further execution but do so gracefully.

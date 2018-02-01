@@ -51,7 +51,9 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->input = new Input();
 		_elgg_services()->setValue('input', $this->input);
 
-		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto);
+		$this->system_messages = new SystemMessagesService(elgg_get_session());
+
+		$this->actions = new ActionsService($config, $session, _elgg_services()->crypto, _elgg_services()->systemMessages);
 		_elgg_services()->setValue('actions', $this->actions);
 
 		$this->request = $this->prepareHttpRequest();
@@ -61,7 +63,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
 
 		$this->hooks = new PluginHooksService();
-		$this->system_messages = new SystemMessagesService(elgg_get_session());
 	}
 
 	public function down() {
