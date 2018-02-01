@@ -12,6 +12,7 @@ use Elgg\Views\TableColumn\ColumnFactory;
  *
  * @property-read Database      $db            Public database
  * @property-read Service       $menus         Menus
+ * @property-read \ElggSession  $session       Session
  * @property-read ColumnFactory $table_columns Table columns
  */
 class PublicContainer extends Container {

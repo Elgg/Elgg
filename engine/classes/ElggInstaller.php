@@ -1533,13 +1533,13 @@ class ElggInstaller {
 
 		$app = $this->getApp();
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 		if ($user->makeAdmin() == false) {
 			register_error(elgg_echo('install:error:adminaccess'));
 		} else {
 			$app->_services->configTable->set('admin_registered', 1);
 		}
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		// add validation data to satisfy user validation plugins
 		$user->validated = 1;

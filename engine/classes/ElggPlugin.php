@@ -65,12 +65,12 @@ class ElggPlugin extends ElggObject {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 
 		if (!$plugin) {
-			$ia = elgg_set_ignore_access(true);
+			$ia = _elgg_services()->session->setIgnoreAccess(true);
 			$plugin = new ElggPlugin();
 			$plugin->title = $plugin_id;
 			$plugin->save();
 
-			elgg_set_ignore_access($ia);
+			_elgg_services()->session->setIgnoreAccess($ia);
 		}
 
 		if (!$path) {

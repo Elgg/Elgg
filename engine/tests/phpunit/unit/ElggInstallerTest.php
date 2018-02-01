@@ -566,7 +566,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(ElggUser::class, elgg_get_logged_in_user_entity());
 
-		_elgg_services()->session->removeLoggedInUser();
+		$this->getApp()->_services->session->removeLoggedInUser();
 	}
 
 	public function testBatchInstall() {

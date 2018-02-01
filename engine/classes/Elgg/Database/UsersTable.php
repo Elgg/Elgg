@@ -190,8 +190,8 @@ class UsersTable {
 		}
 
 		// Make sure a user with conflicting details hasn't registered and been disabled
-		$access_status = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$access_status = _elgg_services()->session->getDisabledEntityVisibility();
+		_elgg_services()->session->setDisabledEntityVisibility(true);
 
 		if (!validate_email_address($email)) {
 			throw new RegistrationException(_elgg_services()->translator->translate('registration:emailnotvalid'));
@@ -213,7 +213,7 @@ class UsersTable {
 			throw new RegistrationException(_elgg_services()->translator->translate('registration:dupeemail'));
 		}
 
-		access_show_hidden_entities($access_status);
+		_elgg_services()->session->setDisabledEntityVisibility($access_status);
 
 		// Create user
 		$constructor = ElggUser::class;
