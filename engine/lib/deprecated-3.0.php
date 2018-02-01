@@ -1503,3 +1503,36 @@ function delete_data($query, array $params = []) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->db', '3.0');
 	return elgg()->db->deleteData($query, $params);
 }
+
+/**
+ * When given a full path, finds translation files and loads them
+ *
+ * @param string $path     Full path
+ * @param bool   $load_all If true all languages are loaded, if
+ *                         false only the current language + en are loaded
+ * @param string $language Language code if other than current + en
+ *
+ * @return bool success
+ * @deprecated 3.0
+ */
+function register_translations($path, $load_all = false, $language = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and should not be used', '3.0');
+
+	return elgg()->translator->registerTranslations($path, $load_all, $language);
+}
+
+/**
+ * Reload all translations from all registered paths.
+ *
+ * This is only called by functions which need to know all possible translations.
+ *
+ * @todo Better on demand loading based on language_paths array
+ *
+ * @return void
+ * @deprecated 3.0
+ */
+function reload_all_translations() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and should not be used', '3.0');
+
+	return elgg()->translator->reloadAllTranslations();
+}

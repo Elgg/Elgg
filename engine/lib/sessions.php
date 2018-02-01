@@ -282,6 +282,9 @@ function login(\ElggUser $user, $persistent = false) {
 	// use elgg_get_logged_in_user_entity().
 	$session->setLoggedInUser($user);
 
+	// re-register at least the core language file for users with language other than site default
+	elgg()->translator->registerTranslations(\Elgg\Project\Paths::elgg() . 'languages/');
+
 	// if remember me checked, set cookie with token and store hash(token) for user
 	if ($persistent) {
 		_elgg_services()->persistentLogin->makeLoginPersistent($user);
