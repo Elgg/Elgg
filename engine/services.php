@@ -4,6 +4,7 @@
  */
 
 use Elgg\Application\Database;
+use Elgg\Config;
 use Elgg\Di\PhpDiResolver;
 use Elgg\EventsService;
 use Elgg\Gatekeeper;
@@ -14,6 +15,7 @@ use Elgg\SystemMessagesService;
 use Elgg\Views\TableColumn\ColumnFactory;
 
 return [
+	'config' => new PhpDiResolver(Config::class, 'config'),
 	'db' => new PhpDiResolver(Database::class, 'publicDb'),
 	'events' => new PhpDiResolver(EventsService::class, 'events'),
 	'gatekeeper' => new PhpDiResolver(Gatekeeper::class, 'gatekeeper'),

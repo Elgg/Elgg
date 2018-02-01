@@ -4,6 +4,7 @@ namespace Elgg\Di;
 
 use DI\Container;
 use Elgg\Application\Database;
+use Elgg\Config;
 use Elgg\EventsService;
 use Elgg\Gatekeeper;
 use Elgg\I18n\Translator;
@@ -16,6 +17,7 @@ use ElggSession;
 /**
  * Public service container
  *
+ * @property-read Config                $config          Config
  * @property-read Database              $db              Public database
  * @property-read EventsService         $events          Event service
  * @property-read Gatekeeper            $gatekeeper      Gatekeeper
