@@ -91,9 +91,9 @@ class RouteRegistrationService {
 		$middleware = elgg_extract('middleware', $params, []);
 		$protected = elgg_extract('walled', $params, true);
 
-		if (!$path || (!$controller && !$resource && !$handler)) {
+		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
 			throw new InvalidParameterException(
-				__METHOD__ . ' requires "path" and one of controller parameters ("resource", "controller" or "handler") to be set'
+				__METHOD__ . ' requires "path" and one of controller parameters ("resource", "controller", "file" or "handler") to be set'
 			);
 		}
 

@@ -214,6 +214,9 @@ class Router {
 			$controller = elgg_extract('_controller', $parameters);
 			unset($parameters['_controller']);
 
+			$file = elgg_extract('_file', $parameters);
+			unset($parameters['_file']);
+
 			$middleware = elgg_extract('_middleware', $parameters, []);
 			unset($parameters['_middleware']);
 
@@ -239,6 +242,8 @@ class Router {
 				$response = $this->getResponseFromHandler($handler, $envelope);
 			} else if ($controller) {
 				$response = $this->handlers->call($controller, $envelope, null);
+			} else if ($file) {
+				$response = $this->getResponseFromFile($file, $envelope);
 			} else {
 				$output = elgg_view_resource($resource, $parameters);
 				$response = elgg_ok_response($output);
@@ -261,8 +266,7 @@ class Router {
 	 * @return ResponseBuilder|null
 	 * @deprecated 3.0
 	 */
-	protected
-	function getResponseFromHandler($handler, \Elgg\Request $request) {
+	protected function getResponseFromHandler($handler, \Elgg\Request $request) {
 		if (!is_callable($handler)) {
 			return null;
 		}
@@ -291,11 +295,37 @@ class Router {
 	}
 
 	/**
+	 * Get response from file
+	 *
+	 * @param string        $file    File
+	 * @param \Elgg\Request $request Request envelope
+	 *
+	 * @return ResponseBuilder|null
+	 * @deprecated 3.0
+	 */
+	protected function getResponseFromFile($file, \Elgg\Request $request) {
+		if (!is_file($file) || !is_readable($file)) {
+			throw new PageNotFoundException(elgg_echo('actionnotfound'), ELGG_HTTP_NOT_IMPLEMENTED);
+		}
+
+		ob_start();
+
+		$response = include $file;
+
+		$output = ob_get_clean();
+
+		if ($response instanceof ResponseBuilder) {
+			return $response;
+		}
+
+		return elgg_ok_response($output);
+	}
+
+	/**
 	 * Returns current route
 	 * @return Route
 	 */
-	public
-	function getCurrentRoute() {
+	public function getCurrentRoute() {
 		return $this->current_route;
 	}
 
@@ -307,8 +337,7 @@ class Router {
 	 * @return Request
 	 * @access private
 	 */
-	public
-	function allowRewrite(Request $request) {
+	public function allowRewrite(Request $request) {
 		$segments = $request->getUrlSegments();
 		if ($segments) {
 			$identifier = array_shift($segments);

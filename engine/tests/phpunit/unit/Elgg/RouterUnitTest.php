@@ -1695,7 +1695,40 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(1, $calls);
 	}
 
-	public function testCanUseRouterController() {
+	public function testCanUseRouteFile() {
+
+		$request = $this->prepareHttpRequest('bar/foo/baz', 'POST', [
+			'q1' => 'v1',
+		]);
+
+		$this->createService($request);
+
+		$calls = 0;
+
+		elgg_register_route('foo', [
+			'path' => '/bar/foo/{baz}',
+			'file' => $this->normalizeTestFilePath('actions/route.php'),
+		]);
+
+		_elgg_services()->hooks->backup();
+
+		$this->route($request);
+
+		_elgg_services()->hooks->restore();
+
+		$response = _elgg_services()->responseFactory->getSentResponse();
+		$this->assertInstanceOf(Response::class, $response);
+		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+		$this->assertEquals(json_encode([
+			'q1' => 'v1',
+			'baz' => 'baz',
+			'_route' => 'foo',
+			'_url' => elgg_normalize_url('bar/foo/baz'),
+			'_path' => '/bar/foo/baz',
+		]), $response->getContent());
+	}
+
+	public function testCanUseRouteController() {
 
 		$request = $this->prepareHttpRequest('bar/foo/baz', 'GET', [
 			'q1' => 'v1',
@@ -1727,5 +1760,4 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(1, $calls);
 	}
-
 }
