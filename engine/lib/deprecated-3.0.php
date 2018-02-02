@@ -1301,7 +1301,7 @@ function elgg_register_page_handler($identifier, callable $function) {
 		Use elgg_register_route() to register a named route or define it in elgg-plugin.php',
 		'3.0'
 	);
-	return _elgg_services()->router->registerPageHandler($identifier, $function);
+	return _elgg_services()->routes->registerPageHandler($identifier, $function);
 }
 
 /**
@@ -1321,7 +1321,7 @@ function elgg_unregister_page_handler($identifier) {
 		Use new routing API to register and unregister routes.',
 		'3.0'
 	);
-	_elgg_services()->router->unregisterPageHandler($identifier);
+	_elgg_services()->routes->unregisterPageHandler($identifier);
 }
 
 /**

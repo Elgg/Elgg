@@ -9,6 +9,7 @@ use Elgg\Http\Request;
 use Elgg\Http\ResponseFactory;
 use Elgg\I18n\Translator;
 use Elgg\Router\Middleware\WalledGarden;
+use Elgg\Router\RouteRegistrationService;
 use ElggSession;
 use Flintstone\Exception;
 use stdClass;
@@ -38,6 +39,11 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	protected $router;
 
 	/**
+	 * @var RouteRegistrationService
+	 */
+	protected $routes;
+
+	/**
 	 * @var string
 	 */
 	protected $pages;
@@ -63,40 +69,28 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->pages = $this->normalizeTestFilePath('pages');
 		$this->fooHandlerCalls = 0;
 
-		$session = ElggSession::getMock();
-		$svc->setValue('session', $session);
-		$svc->session->start();
-
-		$config = _elgg_config();
-		$svc->setValue('config', $config);
-
 		$this->request = $this->prepareHttpRequest('', 'GET');
 		$svc->setValue('request', $this->request);
 
-		$this->translator = new Translator($config);
+		$this->translator = $svc->translator;
 		$this->translator->addTranslation('en', ['__test__' => 'Test']);
 
-		$this->hooks = new PluginHooksService();
-
-		$this->router = new Router(
-			$this->hooks,
-			$svc->routeCollection,
-			$svc->urlMatcher,
-			$svc->urlGenerator,
-			$svc->handlers
-		);
-
-		$this->system_messages = new SystemMessagesService(elgg_get_session());
+		$this->hooks = $svc->hooks;
+		$this->router = $svc->router;
+		$this->routes = $svc->routes;
+		$this->system_messages = $svc->systemMessages;
 
 		$this->viewsDir = $this->normalizeTestFilePath('views');
 
 		$this->createService();
 
-		$svc->logger->disable();
 		$svc->views->setViewtype('');
+
+		$this->hooks->backup();
 	}
 
 	public function down() {
+		$this->hooks->restore();
 		_elgg_services()->logger->enable();
 	}
 
@@ -108,13 +102,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$svc->setValue('hooks', $this->hooks);
 		$svc->setValue('request', $this->request);
 		$svc->setValue('translator', $this->translator);
-		$svc->setValue('router', new Router(
-			$this->hooks,
-			$svc->routeCollection,
-			$svc->urlMatcher,
-			$svc->urlGenerator,
-			$svc->handlers
-		));
+		$svc->setValue('router', $this->router);
+		$svc->setValue('routes', $this->routes);
 
 		$this->amd_config = $svc->amdConfig;
 
@@ -133,6 +122,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$svc->views->autoregisterViews('', "$this->viewsDir/json", 'json');
 
 		_elgg_register_routes();
+
+		$svc->logger->disable();
 	}
 
 	function route() {
@@ -162,7 +153,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanRegisterFunctionsAsPageHandlers() {
-		$registered = $this->router->registerPageHandler('hello', [$this, 'hello_page_handler']);
+		$registered = $this->routes->registerPageHandler('hello', [$this, 'hello_page_handler']);
 
 		$this->assertTrue($registered);
 
@@ -180,14 +171,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testFailToRegisterInvalidCallback() {
-		$registered = $this->router->registerPageHandler('hello', new stdClass());
+		$registered = $this->routes->registerPageHandler('hello', new stdClass());
 
 		$this->assertFalse($registered);
 	}
 
 	function testCanUnregisterPageHandlers() {
-		$this->router->registerPageHandler('hello', [$this, 'hello_page_handler']);
-		$this->router->unregisterPageHandler('hello');
+		$this->routes->registerPageHandler('hello', [$this, 'hello_page_handler']);
+		$this->routes->unregisterPageHandler('hello');
 
 		ob_start();
 		$this->router->route($this->prepareHttpRequest('hello'));
@@ -212,7 +203,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 * 4. Check that the `/foo` handler was called.
 	 */
 	function testRouteSupportsSettingHandlerInHookResultForBackwardsCompatibility() {
-		$this->router->registerPageHandler('foo', [$this, 'foo_page_handler']);
+		$this->routes->registerPageHandler('foo', [$this, 'foo_page_handler']);
 		$this->hooks->registerHandler('route', 'bar', [$this, 'bar_route_handler']);
 
 		ob_start();
@@ -233,7 +224,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	 * 4. Check that the `/foo` handler was called.
 	 */
 	function testRouteSupportsSettingIdentifierInHookResultForBackwardsCompatibility() {
-		$this->router->registerPageHandler('foo', [$this, 'foo_page_handler']);
+		$this->routes->registerPageHandler('foo', [$this, 'foo_page_handler']);
 		$this->hooks->registerHandler('route', 'bar', [$this, 'bar_route_identifier']);
 
 		ob_start();
@@ -247,7 +238,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testRouteOverridenFromHook() {
-		$this->router->registerPageHandler('foo', [$this, 'foo_page_handler']);
+		$this->routes->registerPageHandler('foo', [$this, 'foo_page_handler']);
 		$this->hooks->registerHandler('route', 'foo', [$this, 'bar_route_override']);
 
 		ob_start();

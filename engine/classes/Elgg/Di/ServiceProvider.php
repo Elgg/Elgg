@@ -20,6 +20,7 @@ use Elgg\Invoker;
 use Elgg\Printer\CliPrinter;
 use Elgg\Printer\ErrorLogPrinter;
 use Elgg\Project\Paths;
+use Elgg\Router\RouteRegistrationService;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 
 /**
@@ -93,6 +94,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Http\ResponseFactory               $responseFactory
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router\RouteCollection             $routeCollection
+ * @property-read \Elgg\Router\RouteRegistrationService    $routes
  * @property-read \Elgg\Router                             $router
  * @property-read \Elgg\Database\Seeder                    $seeder
  * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
@@ -515,13 +517,22 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Router\RouteCollection();
 		});
 
+		$this->setFactory('routes', function(ServiceProvider $c) {
+			return new RouteRegistrationService(
+				$c->hooks,
+				$c->logger,
+				$c->routeCollection,
+				$c->urlGenerator
+			);
+		});
+
 		$this->setFactory('router', function (ServiceProvider $c) {
 			$router = new \Elgg\Router(
 				$c->hooks,
 				$c->routeCollection,
 				$c->urlMatcher,
-				$c->urlGenerator,
-				$c->handlers
+				$c->handlers,
+				$c->responseFactory
 			);
 			if ($c->config->enable_profiling) {
 				$router->setTimer($c->timer);

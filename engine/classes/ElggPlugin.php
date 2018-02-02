@@ -962,7 +962,7 @@ class ElggPlugin extends ElggObject {
 	 * @throws InvalidParameterException
 	 */
 	protected function registerRoutes() {
-		$router = _elgg_services()->router;
+		$routes = _elgg_services()->routes;
 
 		$spec = (array) $this->getStaticConfig('routes', []);
 
@@ -971,7 +971,7 @@ class ElggPlugin extends ElggObject {
 				continue;
 			}
 
-			$router->registerRoute($name, $route_spec);
+			$routes->register($name, $route_spec);
 		}
 	}
 
