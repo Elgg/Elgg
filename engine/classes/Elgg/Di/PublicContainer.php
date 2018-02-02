@@ -10,6 +10,7 @@ use Elgg\Gatekeeper;
 use Elgg\I18n\Translator;
 use Elgg\Menu\Service;
 use Elgg\PluginHooksService;
+use Elgg\Security\Csrf;
 use Elgg\SystemMessagesService;
 use Elgg\Views\TableColumn\ColumnFactory;
 use ElggSession;
@@ -18,6 +19,7 @@ use ElggSession;
  * Public service container
  *
  * @property-read Config                $config          Config
+ * @property-read Csrf                  $csrf            CSRF protection
  * @property-read Database              $db              Public database
  * @property-read EventsService         $events          Event service
  * @property-read Gatekeeper            $gatekeeper      Gatekeeper
@@ -28,7 +30,7 @@ use ElggSession;
  * @property-read ColumnFactory         $table_columns   Table columns
  * @property-read Translator            $translator      Translator
  *
- * @method string echo (string $message_key, array $args, string $language) Outputs a translated string
+ * @method string echo (string $message_key, array $args = [], string $language = null) Outputs a translated string
  */
 class PublicContainer extends Container {
 

@@ -44,22 +44,6 @@ class Route extends \Symfony\Component\Routing\Route {
 	}
 
 	/**
-	 * Get url that was matched against this route
-	 * @return string
-	 */
-	public function getUri() {
-		return elgg_extract('_url', $this->parameters);
-	}
-
-	/**
-	 * Get url relative to site root
-	 * @return string
-	 */
-	public function getRelativeUri() {
-		return elgg_extract('_path', $this->parameters);
-	}
-
-	/**
 	 * Attemps to resolve page owner from route parameters
 	 *
 	 * @return \ElggEntity|null

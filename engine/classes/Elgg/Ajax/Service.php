@@ -4,6 +4,7 @@ namespace Elgg\Ajax;
 
 use Elgg\Amd\Config;
 use Elgg\Http\Input;
+use Elgg\Http\Request;
 use Elgg\PluginHooksService;
 use Elgg\Services\AjaxResponse;
 use Elgg\SystemMessagesService;
@@ -30,9 +31,9 @@ class Service {
 	private $msgs;
 
 	/**
-	 * @var Input
+	 * @var Request
 	 */
-	private $input;
+	private $request;
 
 	/**
 	 * @var Config
@@ -54,13 +55,13 @@ class Service {
 	 *
 	 * @param PluginHooksService    $hooks     Hooks service
 	 * @param SystemMessagesService $msgs      System messages service
-	 * @param Input                 $input     Input service
+	 * @param Request                 $request   Http Request
 	 * @param Config                $amdConfig AMD config
 	 */
-	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Input $input, Config $amdConfig) {
+	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Request $request, Config $amdConfig) {
 		$this->hooks = $hooks;
 		$this->msgs = $msgs;
-		$this->input = $input;
+		$this->request = $request;
 		$this->amd_config = $amdConfig;
 
 		$message_filter = [$this, 'prepareResponse'];
@@ -73,7 +74,7 @@ class Service {
 	 * @return bool
 	 */
 	public function isAjax2Request() {
-		$version = _elgg_services()->request->headers->get('X-Elgg-Ajax-API');
+		$version = $this->request->headers->get('X-Elgg-Ajax-API');
 		return ($version === '2');
 	}
 
@@ -166,7 +167,7 @@ class Service {
 	 * @return AjaxResponse
 	 */
 	private function filterApiResponse(AjaxResponse $api_response, $hook_type = '') {
-		$api_response->setTtl($this->input->get('elgg_response_ttl', 0, false));
+		$api_response->setTtl($this->request->getParam('elgg_response_ttl', 0, false));
 
 		if ($hook_type) {
 			$hook = AjaxResponse::RESPONSE_HOOK;
@@ -233,11 +234,11 @@ class Service {
 			return;
 		}
 
-		if ($this->input->get('elgg_fetch_messages', true)) {
+		if ($this->request->getParam('elgg_fetch_messages', true)) {
 			$response->getData()->_elgg_msgs = (object) $this->msgs->dumpRegister();
 		}
 
-		if ($this->input->get('elgg_fetch_deps', true)) {
+		if ($this->request->getParam('elgg_fetch_deps', true)) {
 			$response->getData()->_elgg_deps = (array) $this->amd_config->getDependencies();
 		}
 

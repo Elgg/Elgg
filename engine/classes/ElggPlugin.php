@@ -939,19 +939,16 @@ class ElggPlugin extends ElggObject {
 				continue;
 			}
 
-			$options = [
-				'access' => 'logged_in',
-				'filename' => '', // assuming core action is registered
-			];
-
-			$options = array_merge($options, $action_spec);
-
-			$filename = "$root_path/actions/{$action}.php";
-			if (is_file($filename)) {
-				$options['filename'] = $filename;
+			$access = elgg_extract('access', $action_spec, 'logged_in');
+			$handler = elgg_extract('contoller', $action_spec);
+			if (!$handler) {
+				$handler = elgg_extract('filename', $action_spec);
+				if (!$handler) {
+					$handler = "$root_path/actions/{$action}.php";
+				}
 			}
 
-			$actions->register($action, $options['filename'], $options['access']);
+			$actions->register($action, $handler, $access);
 		}
 	}
 

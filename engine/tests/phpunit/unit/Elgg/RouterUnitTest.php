@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @group HttpService
  * @group RouterService
+ * @group Routing
  * @group UnitTests
  */
 class RouterUnitTest extends \Elgg\UnitTestCase {
@@ -149,6 +150,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($registered);
 	}
 
+	/**
+	 * @expectedException \Elgg\PageNotFoundException
+	 */
 	function testCanUnregisterPageHandlers() {
 		$request = $this->prepareHttpRequest('hello');
 		$this->createService($request);
@@ -156,19 +160,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->routes->registerPageHandler('hello', [$this, 'hello_page_handler']);
 		_elgg_services()->routes->unregisterPageHandler('hello');
 
-		ob_start();
 		_elgg_services()->router->route($request);
-		$output = ob_get_clean();
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertFalse($response);
-
-		// Normally we would expect the router to return false for this request,
-		// but since it checks for headers_sent() and PHPUnit issues output before
-		// this test runs, the headers have already been sent. It's enough to verify
-		// that the output we buffered is empty.
-		// $this->assertFalse($handled);
-		$this->assertEmpty($output);
 	}
 
 	/**
@@ -1009,37 +1001,25 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * See #9796
+	 * @expectedException \Elgg\PageNotFoundException
 	 */
 	public function testCanRespondToUnregisteredRoute() {
 
 		$request = $this->prepareHttpRequest('unknown', 'GET');
 		$this->createService($request);
 
-		// Normally we would assert that this is false, but since PHPUnit is sending it's own headers
-		// we will just make sure the response is not sent
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertFalse($response);
-
-		$this->markTestIncomplete();
+		$this->route($request);
 	}
 
+	/**
+	 * @expectedException \Elgg\BadRequestException
+	 */
 	public function testRespondsWithErrorToNonAjaxRequestForAjaxView() {
-
-		/**
-		 * @todo: revisit once gatekeepers have been refactored in a service
-		 */
-		$this->markTestSkipped();
 
 		$request = $this->prepareHttpRequest('ajax/view/unallowed', 'GET');
 		$this->createService($request);
 
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(RedirectResponse::class, $response);
-		$this->assertEquals($request->headers->get('Referer'), $response->getTargetUrl());
+		$this->route($request);
 	}
 
 	public function testCanRespondWithErrorToAjaxViewRequestForUnallowedView() {
@@ -1674,8 +1654,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 					$this->assertEquals('baz', $request->getParam('baz'));
 					$this->assertEquals('v1', $request->getParam('q1'));
 					$this->assertEquals('GET', $request->getMethod());
-					$this->assertEquals(elgg_normalize_url('bar/foo/baz'), $request->getURL());
-					$this->assertEquals('/bar/foo/baz', $request->getPath());
+					$this->assertEquals(elgg_normalize_url('bar/foo/baz?q1=v1'), $request->getURL());
+					$this->assertEquals('bar/foo/baz', $request->getPath());
 					$this->assertNull($request->getEntityParam());
 					$this->assertNull($request->getUserParam());
 					$this->assertFalse($request->isXhr());
@@ -1723,8 +1703,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'q1' => 'v1',
 			'baz' => 'baz',
 			'_route' => 'foo',
-			'_url' => elgg_normalize_url('bar/foo/baz'),
-			'_path' => '/bar/foo/baz',
 		]), $response->getContent());
 	}
 
@@ -1743,12 +1721,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 				$this->assertEquals('baz', $request->getParam('baz'));
 				$this->assertEquals('v1', $request->getParam('q1'));
 				$this->assertEquals('GET', $request->getMethod());
-				$this->assertEquals(elgg_normalize_url('bar/foo/baz'), $request->getURL());
-				$this->assertEquals('/bar/foo/baz', $request->getPath());
+				$this->assertEquals(elgg_normalize_url('bar/foo/baz?q1=v1'), $request->getURL());
+				$this->assertEquals('bar/foo/baz', $request->getPath());
 				$this->assertNull($request->getEntityParam());
 				$this->assertNull($request->getUserParam());
 				$this->assertFalse($request->isXhr());
 				$calls++;
+
+				return elgg_ok_response('');
 			}
 		]);
 

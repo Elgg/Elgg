@@ -1,14 +1,19 @@
 <?php
+
 namespace Elgg\Http;
 
+use Elgg\BadRequestException;
 use Elgg\Context;
+use Elgg\HttpException;
+use Elgg\Router\Route;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
-use Elgg\Application;
 
 /**
  * Elgg HTTP request.
  *
  * @access private
+ * @internal
  */
 class Request extends SymfonyRequest {
 
@@ -21,18 +26,25 @@ class Request extends SymfonyRequest {
 	protected $context_stack;
 
 	/**
-	 * @var Input
+	 * @var Route
 	 */
-	protected $input_stack;
+	protected $route;
 
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+	public function __construct(
+		array $query = [],
+		array $request = [],
+		array $attributes = [],
+		array $cookies = [],
+		array $files = [],
+		array $server = [],
+		$content = null
+	) {
 		parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
 
 		$this->initializeContext();
-		$this->initializeInput();
 	}
 
 	/**
@@ -42,6 +54,7 @@ class Request extends SymfonyRequest {
 	public function initializeContext() {
 		$context = new Context($this);
 		$this->context_stack = $context;
+
 		return $this;
 	}
 
@@ -54,21 +67,99 @@ class Request extends SymfonyRequest {
 	}
 
 	/**
-	 * Initialize input stack
+	 * Sets the route matched for this request by the router
+	 *
+	 * @param Route $route Route
+	 *
 	 * @return static
 	 */
-	public function initializeInput() {
-		$input = new Input($this);
-		$this->input_stack = $input;
+	public function setRoute(Route $route) {
+		$this->route = $route;
+		foreach ($route->getMatchedParameters() as $key => $value) {
+			$this->setParam($key, $value);
+		}
+
 		return $this;
 	}
 
 	/**
-	 * Returns input stack
-	 * @return Input
+	 * Returns the route matched for this request by the router
+	 * @return Route|null
 	 */
-	public function getInputStack() {
-		return $this->input_stack;
+	public function getRoute() {
+		return $this->route;
+	}
+
+	/**
+	 * Sets an input value that may later be retrieved by get_input
+	 *
+	 * Note: this function does not handle nested arrays (ex: form input of param[m][n])
+	 *
+	 * @param string          $key   The name of the variable
+	 * @param string|string[] $value The value of the variable
+	 *
+	 * @return static
+	 */
+	public function setParam($key, $value) {
+		$this->request->set($key, $value);
+
+		return $this;
+	}
+
+	/**
+	 * Get some input from variables passed submitted through GET or POST.
+	 *
+	 * If using any data obtained from get_input() in a web page, please be aware that
+	 * it is a possible vector for a reflected XSS attack. If you are expecting an
+	 * integer, cast it to an int. If it is a string, escape quotes.
+	 *
+	 * Note: this function does not handle nested arrays (ex: form input of param[m][n])
+	 * because of the filtering done in htmlawed from the filter_tags call.
+	 * @todo Is this ^ still true?
+	 *
+	 * @param string $key           The variable name we want.
+	 * @param mixed  $default       A default value for the variable if it is not found.
+	 * @param bool   $filter_result If true, then the result is filtered for bad tags.
+	 *
+	 * @return mixed
+	 */
+	public function getParam($key, $default = null, $filter_result = true) {
+		$result = $default;
+
+		$this->getContextStack()->push('input');
+
+		$value = $this->get($key);
+		if ($value !== null) {
+			$result = $value;
+			if ($filter_result) {
+				$result = filter_tags($result);
+			}
+		}
+
+		$this->getContextStack()->pop();
+
+		return $result;
+	}
+
+	/**
+	 * Returns all values parsed from the request
+	 *
+	 * @param bool $filter_result Sanitize input values
+	 *
+	 * @return array
+	 */
+	public function getParams($filter_result = true) {
+		$query = $this->query->all();
+		$attributes = $this->attributes->all();
+		$post = $this->request->all();
+
+		$result = array_merge($query, $attributes, $post);
+
+		if ($filter_result) {
+			$result = filter_tags($result);
+		}
+
+		return $result;
 	}
 
 	/**
@@ -153,6 +244,7 @@ class Request extends SymfonyRequest {
 		} else {
 			$path = $this->getPathInfo();
 		}
+
 		return preg_replace('~(\?.*)$~', '', $path);
 	}
 
@@ -167,6 +259,7 @@ class Request extends SymfonyRequest {
 			$ip_addresses = $this->server->get('HTTP_X_REAL_IP');
 			if ($ip_addresses) {
 				$ip_addresses = explode(',', $ip_addresses);
+
 				return array_pop($ip_addresses);
 			}
 		}
@@ -251,13 +344,15 @@ class Request extends SymfonyRequest {
 		}
 
 		$ext = preg_quote($ext, '~');
+
 		return (bool) preg_match("~\\.{$ext}[,$]~", $extensions);
 	}
-	
+
 	/**
 	 * Returns an array of uploaded file objects regardless of upload status/errors
 	 *
 	 * @param string $input_name Form input name
+	 *
 	 * @return UploadedFile[]
 	 */
 	public function getFiles($input_name) {
@@ -265,9 +360,10 @@ class Request extends SymfonyRequest {
 		if (!is_array($files)) {
 			$files = [$files];
 		}
+
 		return $files;
 	}
-	
+
 	/**
 	 * Returns the first file found based on the input name
 	 *
@@ -281,16 +377,37 @@ class Request extends SymfonyRequest {
 		if (empty($files)) {
 			return false;
 		}
-		
+
 		$file = $files[0];
 		if (empty($file)) {
 			return false;
 		}
-		
+
 		if ($check_for_validity && !$file->isValid()) {
 			return false;
 		}
-		
+
 		return $file;
+	}
+
+	/**
+	 * Validate the request
+	 *
+	 * @return void
+	 * @throws HttpException
+	 */
+	public function validate() {
+		$length = $this->server->get('CONTENT_LENGTH');
+		$post_count = count($this->request);
+
+		if ($length && $post_count < 1) {
+			// The size of $_POST or uploaded file has exceed the size limit
+			$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
+				'post_size' => $length,
+				'visible_errors' => true,
+			], elgg_echo('actiongatekeeper:uploadexceeded'));
+
+			throw new BadRequestException($error_msg);
+		}
 	}
 }

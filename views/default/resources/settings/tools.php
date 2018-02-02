@@ -43,7 +43,13 @@ $username = elgg_extract('username', $vars);
 elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
 elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
 
-$content = elgg_view_form('plugins/usersettings/save', [], ['entity' => $plugin]);
+$form_vars = [];
+
+if (elgg_action_exists("{$plugin->getID()}/usersettings/save")) {
+	$form_vars['action'] = "{$plugin->getID()}/usersettings/save";
+}
+
+$content = elgg_view_form('plugins/usersettings/save', $form_vars, ['entity' => $plugin]);
 
 $params = [
 	'content' => $content,

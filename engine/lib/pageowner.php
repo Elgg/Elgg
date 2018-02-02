@@ -33,7 +33,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 		return $page_owner_guid;
 	}
 
-	$route = _elgg_services()->router->getCurrentRoute();
+	$route = _elgg_services()->request->getRoute();
 	if ($route) {
 		$page_owner = $route->resolvePageOwner();
 		if ($page_owner) {

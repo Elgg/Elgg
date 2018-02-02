@@ -25,7 +25,7 @@
  * @return mixed
  */
 function get_input($variable, $default = null, $filter_result = true) {
-	return _elgg_services()->request->getInputStack()->get($variable, $default, $filter_result);
+	return _elgg_services()->request->getParam($variable, $default, $filter_result);
 }
 
 /**
@@ -39,7 +39,7 @@ function get_input($variable, $default = null, $filter_result = true) {
  * @return void
  */
 function set_input($variable, $value) {
-	_elgg_services()->request->getInputStack()->set($variable, $value);
+	_elgg_services()->request->setParam($variable, $value);
 }
 
 /**

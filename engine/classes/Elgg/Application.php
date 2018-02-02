@@ -394,10 +394,10 @@ class Application {
 	 * @throws SecurityException
 	 */
 	public function run() {
-		try {
-			$config = $this->_services->config;
-			$request = $this->_services->request;
+		$config = $this->_services->config;
+		$request = $this->_services->request;
 
+		try {
 			if ($request->isCliServer()) {
 				if ($request->isCliServable(Paths::project())) {
 					return false;
@@ -433,6 +433,8 @@ class Application {
 			$forward_url = null;
 			if ($ex instanceof GatekeeperException) {
 				$forward_url = elgg_is_logged_in() ? null : elgg_get_login_url();
+			} else if ($request->getFirstUrlSegment() == 'action') {
+				$forward_url = REFERRER;
 			}
 
 			$hook_params = [

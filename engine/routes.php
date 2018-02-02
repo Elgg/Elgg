@@ -32,6 +32,9 @@ return [
 		'requirements' => [
 			'segments' => '.+',
 		],
+		'middleware' => [
+			\Elgg\Router\Middleware\AjaxGatekeeper::class,
+		]
 	],
 	'robots.txt' => [
 		'path' => '/robots.txt',
@@ -48,18 +51,13 @@ return [
 		'resource' => 'manifest.json',
 		'walled' => false,
 	],
-	'action' => [
-		'path' => '/action/{segments}',
-		'handler' => '_elgg_action_handler',
-		'requirements' => [
-			'segments' => '.+',
-		],
-		'walled' => false,
-	],
 	'action:token' => [
 		'path' => '/refresh_token',
-		'handler' => '_elgg_csrf_token_refresh',
+		'controller' => \Elgg\Controllers\RefreshCsrfToken::class,
 		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\AjaxGatekeeper::class,
+		]
 	],
 	'admin' => [
 		'path' => '/admin/{segments?}',

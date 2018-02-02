@@ -203,15 +203,30 @@ class Inspector {
 		foreach (_elgg_services()->routeCollection->all() as $name => $route) {
 			$handler = $route->getDefault('_handler') ? : '';
 			if ($handler) {
-				$this->describeCallable($handler);
+				$handler = $this->describeCallable($handler);
+			}
+
+			$controller = $route->getDefault('_controller') ? : '';
+			if ($controller) {
+				$controller = $this->describeCallable($controller);
 			}
 
 			$resource = $route->getDefault('_resource') ? : '';
+
+			$file = $route->getDefault('_file') ? : '';
+
+			$middleware = $route->getDefault('_middleware') ? : '';
+			$middleware = array_map(function($e) {
+				return $this->describeCallable($e);
+			}, $middleware);
 
 			$tree[$name] = [
 				$route->getPath(),
 				$resource,
 				$handler,
+				$controller,
+				$file,
+				$middleware,
 			];
 		}
 		uasort($tree, function($e1, $e2) {

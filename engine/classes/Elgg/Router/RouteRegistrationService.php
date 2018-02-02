@@ -168,6 +168,29 @@ class RouteRegistrationService {
 	}
 
 	/**
+	 * Get route config from its name
+	 *
+	 * @param string $name
+	 *
+	 * @return Route|null
+	 */
+	public function get($name) {
+		try {
+			return $this->routes->get($name);
+		} catch (RouteNotFoundException $ex) {
+			return null;
+		}
+	}
+
+	/**
+	 * Get all registered routes
+	 * @return Route[]
+	 */
+	public function all() {
+		return $this->routes->all();
+	}
+
+	/**
 	 * Generate a relative URL for a named route
 	 *
 	 * @param string $name       Route name

@@ -12,11 +12,6 @@ use Elgg\Router\Route;
 class Request {
 
 	/**
-	 * @var Route
-	 */
-	private $route;
-
-	/**
 	 * @var HttpRequest
 	 */
 	private $http_request;
@@ -30,14 +25,12 @@ class Request {
 	 * Constructor
 	 *
 	 * @param PublicContainer $dic          DI container
-	 * @param Route           $route        Current route
 	 * @param HttpRequest     $http_request Request
 	 *
 	 * @access private
 	 * @internal
 	 */
-	public function __construct(PublicContainer $dic, Route $route, HttpRequest $http_request) {
-		$this->route = $route;
+	public function __construct(PublicContainer $dic, HttpRequest $http_request) {
 		$this->http_request = $http_request;
 		$this->dic = $dic;
 	}
@@ -48,7 +41,7 @@ class Request {
 	 * @return string
 	 */
 	public function getRoute() {
-		return $this->route->getName();
+		return $this->getParam('_route');
 	}
 
 	/**
@@ -59,7 +52,7 @@ class Request {
 	 * @return array
 	 */
 	public function getParams($filter = true) {
-		return $this->http_request->getInputStack()->all($filter);
+		return $this->http_request->getParams($filter);
 	}
 
 	/**
@@ -73,7 +66,7 @@ class Request {
 	 * @return mixed
 	 */
 	public function getParam($key, $default = null, $filter = true) {
-		return $this->http_request->getInputStack()->get($key, $default, $filter);
+		return $this->http_request->getParam($key, $default, $filter);
 	}
 
 	/**
@@ -86,7 +79,7 @@ class Request {
 	 * @return void
 	 */
 	public function setParam($key, $value = null) {
-		$this->http_request->getInputStack()->set($key, $value);
+		$this->http_request->setParam($key, $value);
 	}
 
 	/**
@@ -97,7 +90,7 @@ class Request {
 	 * @return \ElggEntity|null
 	 */
 	public function getEntityParam($key = 'guid') {
-		$guid = $this->http_request->getInputStack()->get($key);
+		$guid = $this->http_request->getParam($key);
 		if ($guid) {
 			$entity = get_entity($guid);
 			if ($entity instanceof \ElggEntity) {
@@ -116,7 +109,7 @@ class Request {
 	 * @return \ElggUser|null
 	 */
 	public function getUserParam($key = 'user_guid') {
-		$prop = $this->http_request->getInputStack()->get($key);
+		$prop = $this->http_request->getParam($key);
 		if ($key === 'username') {
 			$entity = get_user_by_username($prop);
 
@@ -147,7 +140,7 @@ class Request {
 	 * @return string
 	 */
 	public function getURL() {
-		return $this->route->getUri();
+		return $this->http_request->getCurrentURL();
 	}
 
 	/**
@@ -155,7 +148,7 @@ class Request {
 	 * @return string
 	 */
 	public function getPath() {
-		return $this->route->getRelativeUri();
+		return implode('/', $this->http_request->getUrlSegments());
 	}
 
 	/**
@@ -173,4 +166,5 @@ class Request {
 	public function getMethod() {
 		return $this->http_request->getMethod();
 	}
+
 }

@@ -82,6 +82,10 @@ return array(
 	'developers:inspect:path' => 'Path Pattern',
 	'developers:inspect:resource' => 'Resource View',
 	'developers:inspect:handler' => 'Handler',
+	'developers:inspect:controller' => 'Controller',
+	'developers:inspect:file' => 'File',
+	'developers:inspect:middleware' => 'File',
+	'developers:inspect:handler_type' => 'Handled by',
 
 	// event logging
 	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",

@@ -4,8 +4,6 @@ namespace Elgg\Di;
 
 use ConfigurationException;
 use DI\ContainerBuilder;
-use Doctrine\Common\Cache\ApcuCache;
-use Elgg\Ajax\Service;
 use Elgg\Application;
 use Elgg\Assets\CssCompiler;
 use Elgg\Cache\CompositeCache;
@@ -15,12 +13,12 @@ use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
-use Elgg\Http\Input;
 use Elgg\Invoker;
 use Elgg\Printer\CliPrinter;
 use Elgg\Printer\ErrorLogPrinter;
 use Elgg\Project\Paths;
 use Elgg\Router\RouteRegistrationService;
+use Elgg\Security\Csrf;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 
 /**
@@ -36,13 +34,14 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\AdminNotices              $adminNotices
  * @property-read \Elgg\Ajax\Service                       $ajax
  * @property-read \Elgg\Amd\Config                         $amdConfig
- * @property-read \Elgg\Database\AnnotationsTable          $annotationsTable
+ * @property-read \Elgg\Database\AnnotationsTable $annotationsTable
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\Application\CacheHandler           $cacheHandler
  * @property-read \Elgg\Assets\CssCompiler                 $cssCompiler
+ * @property-read \Elgg\Security\Csrf                      $csrf
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\Cli                                $cli
  * @property-read \Elgg\Cron                               $cron
@@ -161,13 +160,13 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
-			return new \Elgg\ActionsService($c->config, $c->session, $c->crypto, $c->systemMessages);
+			return new \Elgg\ActionsService($c->routes);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
 
 		$this->setFactory('ajax', function(ServiceProvider $c) {
-			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->request->getInputStack(), $c->amdConfig);
+			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->request, $c->amdConfig);
 		});
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {
@@ -206,6 +205,15 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('cssCompiler', function(ServiceProvider $c) {
 			return new CssCompiler($c->config, $c->hooks);
+		});
+
+		$this->setFactory('csrf', function(ServiceProvider $c) {
+			return new Csrf(
+				$c->config,
+				$c->session,
+				$c->crypto,
+				$c->hmac
+			);
 		});
 
 		$this->setFactory('classLoader', function(ServiceProvider $c) {
@@ -643,7 +651,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('views', function(ServiceProvider $c) {
-			return new \Elgg\ViewsService($c->hooks, $c->logger, $c->request->getInputStack());
+			return new \Elgg\ViewsService($c->hooks, $c->logger, $c->request);
 		});
 
 		$this->setFactory('viewCacher', function(ServiceProvider $c) {

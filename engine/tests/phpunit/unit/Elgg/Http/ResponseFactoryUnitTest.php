@@ -78,7 +78,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 
 		$this->amd_config = new Config($this->hooks);
 		$this->system_messages = new SystemMessagesService($this->session);
-		$this->ajax = new Service($this->hooks, $this->system_messages, $this->request->getInputStack(), $this->amd_config);
+		$this->ajax = new Service($this->hooks, $this->system_messages, $this->request, $this->amd_config);
 
 		_elgg_services()->logger->disable();
 	}

@@ -240,7 +240,7 @@ class Translator {
 	 */
 	public function detectLanguage() {
 		// detect from URL
-		$url_lang = _elgg_services()->request->getInputStack()->get('hl');
+		$url_lang = _elgg_services()->request->getParam('hl');
 		if (!empty($url_lang)) {
 			return $url_lang;
 		}

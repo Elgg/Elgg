@@ -11,11 +11,13 @@ use Elgg\Gatekeeper;
 use Elgg\I18n\Translator;
 use Elgg\Menu\Service as MenuService;
 use Elgg\PluginHooksService;
+use Elgg\Security\Csrf;
 use Elgg\SystemMessagesService;
 use Elgg\Views\TableColumn\ColumnFactory;
 
 return [
 	'config' => new PhpDiResolver(Config::class, 'config'),
+	'csrf' => new PhpDiResolver(Csrf::class, 'csrf'),
 	'db' => new PhpDiResolver(Database::class, 'publicDb'),
 	'events' => new PhpDiResolver(EventsService::class, 'events'),
 	'gatekeeper' => new PhpDiResolver(Gatekeeper::class, 'gatekeeper'),

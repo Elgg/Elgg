@@ -12,55 +12,6 @@ use Elgg\Database\SiteSecret;
 use Elgg\Http\ResponseBuilder;
 
 /**
- * Handle a request for an action
- *
- * @param array $segments URL segments that make up action name
- *
- * @return ResponseBuilder|null
- * @access private
- */
-function _elgg_action_handler(array $segments) {
-	return _elgg_services()->actions->execute(implode('/', $segments));
-}
-
-/**
- * Perform an action.
- *
- * This function executes the action with name $action as registered
- * by {@link elgg_register_action()}.
- *
- * The plugin hook 'action', $action_name will be triggered before the action
- * is executed.  If a handler returns false, it will prevent the action script
- * from being called.
- *
- * @note If an action isn't registered in the system or is registered
- * to an unavailable file the user will be forwarded to the site front
- * page and an error will be emitted via {@link register_error()}.
- *
- * @warning All actions require CSRF tokens.
- *
- * @param string $action    The requested action
- *                          Name of the registered action
- * @param string $forwarder The location to forward to
- *                          Forwarding to this location will only take place if
- *                          action script file is not calling forward()
- *                          Defaults to index URL
- *                          Use REFERRER to forward to the referring page
- * @see elgg_register_action()
- *
- * @return void
- * @access private
- */
-function action($action, $forwarder = "") {
-	$response = _elgg_services()->actions->execute($action, $forwarder);
-	if ($response instanceof ResponseBuilder) {
-		// in case forward() wasn't called in the action
-		_elgg_services()->responseFactory->respond($response);
-	}
-	_elgg_services()->responseFactory->redirect(REFERRER, 'csrf');
-}
-
-/**
  * Registers an action.
  *
  * Actions are registered to a script in the system and are executed
@@ -113,44 +64,6 @@ function elgg_build_hmac($data) {
 }
 
 /**
- * Validate an action token.
- *
- * Calls to actions will automatically validate tokens. If tokens are not
- * present or invalid, the action will be denied and the user will be redirected.
- *
- * Plugin authors should never have to manually validate action tokens.
- *
- * @param bool  $visible_errors Emit {@link register_error()} errors on failure?
- * @param mixed $token          The token to test against. Default: $_REQUEST['__elgg_token']
- * @param mixed $ts             The time stamp to test against. Default: $_REQUEST['__elgg_ts']
- *
- * @return bool
- * @see generate_action_token()
- * @access private
- */
-function validate_action_token($visible_errors = true, $token = null, $ts = null) {
-	return _elgg_services()->actions->validateActionToken($visible_errors, $token, $ts);
-}
-
-/**
- * Validates the presence of action tokens.
- *
- * This function is called for all actions.  If action tokens are missing,
- * the user will be forwarded to the site front page and an error emitted.
- *
- * This function verifies form input for security features (like a generated token),
- * and forwards if they are invalid.
- *
- * @param string $action The action being performed
- *
- * @return mixed True if valid or redirects.
- * @access private
- */
-function action_gatekeeper($action) {
-	return _elgg_services()->actions->gatekeeper($action);
-}
-
-/**
  * Generate an action token.
  *
  * Action tokens are based on timestamps as returned by {@link time()}.
@@ -168,7 +81,7 @@ function action_gatekeeper($action) {
  * @return string|false
  */
 function generate_action_token($timestamp) {
-	return _elgg_services()->actions->generateActionToken($timestamp);
+	return elgg()->csrf->generateActionToken($timestamp);
 }
 
 /**

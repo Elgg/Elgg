@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Http\ResponseBuilder;
+use Exception;
 
 abstract class ActionResponseTestCase extends IntegrationTestCase {
 
@@ -22,10 +23,12 @@ abstract class ActionResponseTestCase extends IntegrationTestCase {
 	 * @param bool   $ajax   Ajax version
 	 *
 	 * @return ResponseBuilder
+	 * @throws PageNotFoundException
+	 * @throws Exception
 	 */
 	public function executeAction($name, array $params = [], $ajax = false) {
 		$request = BaseTestCase::prepareHttpRequest("action/{$name}", 'POST', $params, $ajax, true);
 		_elgg_services()->setValue('request', $request);
-		return _elgg_services()->actions->execute($name);
+		return _elgg_services()->router->getResponse($request);
 	}
 }
