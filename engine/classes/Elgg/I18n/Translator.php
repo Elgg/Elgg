@@ -4,11 +4,12 @@ namespace Elgg\I18n;
 
 use Elgg\Config;
 use Elgg\Includer;
+use PluginException;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Translator
  *
- * @access private
+ * Use elgg()->translator
  *
  * @since 1.10.0
  */
@@ -69,6 +70,9 @@ class Translator {
 	 * Constructor
 	 *
 	 * @param Config $config Elgg config
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public function __construct(Config $config) {
 		$this->config = $config;
@@ -76,7 +80,11 @@ class Translator {
 	}
 
 	/**
+	 * Check if translations were loaded from cache
+	 *
 	 * @return bool
+	 * @access private
+	 * @internal
 	 */
 	public function wasLoadedFromCache() {
 		return $this->loaded_from_cache;
@@ -227,10 +235,12 @@ class Translator {
 	 * Detect the current system/user language or false.
 	 *
 	 * @return false|string The language code (eg "en") or false if not set
+	 * @access private
+	 * @internal
 	 */
 	public function detectLanguage() {
 		// detect from URL
-		$url_lang = _elgg_services()->input->get('hl');
+		$url_lang = _elgg_services()->request->getInputStack()->get('hl');
 		if (!empty($url_lang)) {
 			return $url_lang;
 		}
@@ -265,6 +275,7 @@ class Translator {
 	 * @return void
 	 *
 	 * @access private
+	 * @internal
 	 */
 	public function loadTranslations($language = null) {
 		if (elgg_is_system_cache_enabled()) {
@@ -312,8 +323,11 @@ class Translator {
 	 * logged in user.
 	 *
 	 * @param string $language Language code
+	 *
 	 * @return void
-	 * @throws \PluginException
+	 * @throws PluginException
+	 * @access private
+	 * @internal
 	 */
 	private function loadPluginTranslations($language) {
 		// Get active plugins
@@ -345,7 +359,7 @@ class Translator {
 
 			// Register translations from the plugin languages directory
 			if (!$this->registerTranslations($languages_path, false, $language)) {
-				throw new \PluginException(vsprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
+				throw new PluginException(vsprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
 					[$plugin->getID(), $plugin->guid, $languages_path]));
 			}
 		}
@@ -360,6 +374,9 @@ class Translator {
 	 * @param string $language Language code
 	 *
 	 * @return bool success
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public function registerTranslations($path, $load_all = false, $language = null) {
 		$path = \Elgg\Project\Paths::sanitize($path);
@@ -417,6 +434,8 @@ class Translator {
 	 *
 	 * @param string $path Path to file
 	 * @return bool
+	 * @access private
+	 * @internal
 	 */
 	protected function includeLanguageFile($path) {
 		$cache_key = "lang/" . sha1($path);
@@ -441,6 +460,8 @@ class Translator {
 	 * @todo Better on demand loading based on language_paths array
 	 *
 	 * @return void
+	 * @access private
+	 * @internal
 	 */
 	public function reloadAllTranslations() {
 		if ($this->was_reloaded) {
@@ -543,9 +564,10 @@ class Translator {
 	 * @param string $language The language
 	 *
 	 * @return mixed
+	 * @access private
+	 * @internal
 	 */
 	public function getMissingLanguageKeys($language) {
-
 
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
@@ -603,7 +625,7 @@ class Translator {
 		foreach ($this->getLanguagePaths() as $path) {
 			try {
 				$iterator = new \DirectoryIterator($path);
-			} catch (Exception $e) {
+			} catch (\Exception $e) {
 				continue;
 			}
 			
@@ -636,6 +658,8 @@ class Translator {
 	 * @param string $path path to a folder that contains translation files
 	 *
 	 * @return void
+	 * @access private
+	 * @internal
 	 */
 	public function registerLanguagePath($path) {
 		$this->language_paths[$path] = true;
@@ -645,6 +669,8 @@ class Translator {
 	 * Returns a unique array with locations of translation files
 	 *
 	 * @return array
+	 * @access private
+	 * @internal
 	 */
 	protected function getLanguagePaths() {
 		return array_keys($this->language_paths);
@@ -655,6 +681,8 @@ class Translator {
 	 *
 	 * @param string $language Language
 	 * @return void
+	 * @access private
+	 * @internal
 	 */
 	private function ensureTranslationsLoaded($language) {
 		if (!$this->is_initialized) {
@@ -675,6 +703,8 @@ class Translator {
 	 * Returns an array of language codes.
 	 *
 	 * @return array
+	 * @access private
+	 * @internal
 	 */
 	public static function getAllLanguageCodes() {
 		return [
@@ -834,6 +864,8 @@ class Translator {
 	 * @param string $code Language code
 	 *
 	 * @return string
+	 * @access private
+	 * @internal
 	 */
 	public static function normalizeLanguageCode($code) {
 		$code = strtolower($code);

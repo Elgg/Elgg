@@ -540,15 +540,12 @@ Emails
 Routing
 =======
 
-**route, <identifier>**
-    Allows applying logic or returning a response before the page handler is called. See :doc:`routing`
-    for details.
-    Note that plugins using this hook to rewrite paths, will not be able to filter the response object by
-    its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for
-    the original path.
+**route:config, <route_name>**
+	Allows altering the route configuration before it is registered.
+	This hook can be used to alter the path, default values, requirements, as well as to set/remove middleware.
 
 **route:rewrite, <identifier>**
-	Allows altering the site-relative URL path. See :doc:`routing` for details.
+	Allows altering the site-relative URL path for an incoming request. See :doc:`routing` for details.
 
 **response, path:<path>**
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.

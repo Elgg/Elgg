@@ -16,7 +16,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 	public function up() {
 		parent::up();
 
-		self::createApplication(true);
+		self::createApplication(['isolate'=> true]);
 	}
 
 	public function down() {

@@ -175,7 +175,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 	public function testRequirements() {
 
-		$this->getApp()->_services->input->set('step', 'requirements');
+		$this->getApp()->_services->request->getInputStack()->set('step', 'requirements');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -236,7 +236,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 	public function testDatabase() {
 
-		$this->getApp()->_services->input->set('step', 'database');
+		$this->getApp()->_services->request->getInputStack()->set('step', 'database');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -361,7 +361,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSettingsFile();
 
-		$this->getApp()->_services->input->set('step', 'settings');
+		$this->getApp()->_services->request->getInputStack()->set('step', 'settings');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -428,7 +428,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSettingsFile();
 
-		$this->getApp()->_services->input->set('step', 'settings');
+		$this->getApp()->_services->request->getInputStack()->set('step', 'settings');
 
 		$request = $this->prepareHttpRequest('install.php?step=settings', 'POST', [
 			'sitename' => 'Test Site',
@@ -464,7 +464,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSite();
 
-		$this->getApp()->_services->input->set('step', 'admin');
+		$this->getApp()->_services->request->getInputStack()->set('step', 'admin');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -544,7 +544,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSite();
 
-		$this->getApp()->_services->input->set('step', 'admin');
+		$this->getApp()->_services->request->getInputStack()->set('step', 'admin');
 
 		$request = $this->prepareHttpRequest('install.php?step=admin', 'POST', [
 			'displayname' => 'admin user',
@@ -566,7 +566,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(ElggUser::class, elgg_get_logged_in_user_entity());
 
-		_elgg_services()->session->removeLoggedInUser();
+		$this->getApp()->_services->session->removeLoggedInUser();
 	}
 
 	public function testBatchInstall() {

@@ -106,7 +106,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 		
-		if (!elgg_trigger_event('ban', 'user', $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('ban', 'user', $this)) {
 			return false;
 		}
 
@@ -129,7 +129,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 
-		if (!elgg_trigger_event('unban', 'user', $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('unban', 'user', $this)) {
 			return false;
 		}
 
@@ -156,9 +156,9 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isAdmin() {
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 		$is_admin = ($this->admin == 'yes');
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 		
 		return $is_admin;
 	}
@@ -174,7 +174,7 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		if (!elgg_trigger_event('make_admin', 'user', $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('make_admin', 'user', $this)) {
 			return false;
 		}
 
@@ -196,7 +196,7 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		if (!elgg_trigger_event('remove_admin', 'user', $this)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('remove_admin', 'user', $this)) {
 			return false;
 		}
 
@@ -279,9 +279,9 @@ class ElggUser extends \ElggEntity
 			}
 			
 			// let the system know the user is validated
-			elgg_trigger_after_event('validate', 'user', $this);
+			_elgg_services()->hooks->getEvents()->triggerAfter('validate', 'user', $this);
 		} else {
-			elgg_trigger_after_event('invalidate', 'user', $this);
+			_elgg_services()->hooks->getEvents()->triggerAfter('invalidate', 'user', $this);
 		}
 	}
 

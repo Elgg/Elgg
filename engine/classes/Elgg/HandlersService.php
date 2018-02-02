@@ -4,6 +4,7 @@ namespace Elgg;
 use Elgg\Di\DiContainer;
 use Elgg\HooksRegistrationService\Event;
 use Elgg\HooksRegistrationService\Hook;
+use Elgg\Request;
 
 /**
  * Helpers for providing callable-based APIs
@@ -43,10 +44,20 @@ class HandlersService {
 		$use_object = $this->acceptsObject($callable);
 		if ($use_object) {
 			if (is_string($object)) {
-				if ($object === 'hook') {
-					$object = new Hook(elgg(), $args[0], $args[1], $args[2], $args[3]);
-				} else {
-					$object = new Event(elgg(), $args[0], $args[1], $args[2]);
+				switch ($object) {
+					case 'hook' :
+						$object = new Hook(elgg(), $args[0], $args[1], $args[2], $args[3]);
+						break;
+
+					case 'event' :
+						$object = new Event(elgg(), $args[0], $args[1], $args[2]);
+						break;
+
+					case 'middleware' :
+					case 'controller' :
+					case 'action' :
+						$object = new Request(elgg(), $args[0], $args[1]);
+						break;
 				}
 			}
 

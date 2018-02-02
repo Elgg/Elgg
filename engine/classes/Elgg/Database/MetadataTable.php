@@ -197,7 +197,7 @@ class MetadataTable {
 			return false;
 		}
 
-		if (!elgg_trigger_event('delete', 'metadata', $metadata)) {
+		if (!_elgg_services()->hooks->getEvents()->trigger('delete', 'metadata', $metadata)) {
 			return false;
 		}
 

@@ -6,9 +6,7 @@ use Elgg\HooksRegistrationService\Hook;
 /**
  * Plugin Hooks (and Events)
  *
- * @tip Use ->hooks from the service provider.
- *
- * @access private
+ * Use elgg()->hooks
  */
 class PluginHooksService extends HooksRegistrationService {
 
@@ -21,6 +19,9 @@ class PluginHooksService extends HooksRegistrationService {
 	 * Constructor
 	 *
 	 * @param EventsService $events Events
+	 *
+	 * @access private
+	 * @inernal
 	 */
 	public function __construct(EventsService $events = null) {
 		if ($events === null) {
@@ -44,7 +45,6 @@ class PluginHooksService extends HooksRegistrationService {
 	 * Triggers a plugin hook
 	 *
 	 * @see elgg_trigger_plugin_hook
-	 * @access private
 	 */
 	public function trigger($name, $type, $params = null, $value = null) {
 

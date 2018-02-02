@@ -15,9 +15,7 @@ use Exception;
 /**
  * Gatekeeper
  *
- * API in flux. Use elgg_* functions intead
- *
- * @access private
+ * Use elgg()->gatekeeper
  */
 class Gatekeeper {
 
@@ -60,6 +58,9 @@ class Gatekeeper {
 	 * @param EntityTable       $entities   Entity table
 	 * @param AccessCollections $access     Access collection table
 	 * @param Translator        $translator Translator
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public function __construct(
 		ElggSession $session,
@@ -158,7 +159,7 @@ class Gatekeeper {
 				throw new EntityNotFoundException($msg);
 			}
 
-			if (!$entity->isEnabled() && !access_get_show_hidden_status()) {
+			if (!$entity->isEnabled() && !_elgg_services()->session->getDisabledEntityVisibility()) {
 				throw new EntityNotFoundException();
 			}
 
@@ -187,7 +188,7 @@ class Gatekeeper {
 			'user' => $user,
 		];
 
-		$result = elgg_trigger_plugin_hook('gatekeeper', "{$entity->type}:{$entity->subtype}", $hook_params, $result);
+		$result = _elgg_services()->hooks->trigger('gatekeeper', "{$entity->type}:{$entity->subtype}", $hook_params, $result);
 
 		if ($result instanceof HttpException) {
 			throw $result;

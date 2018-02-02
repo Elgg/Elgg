@@ -8,7 +8,4 @@ if (elgg_get_config('allow_phpinfo') !== true) {
 	throw new \Elgg\PageNotFoundException();
 }
 
-// this page is only for admins
-elgg_admin_gatekeeper();
-
 phpinfo();

@@ -35,9 +35,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * Build a new testing application
+	 *
+	 * @param array $params Application factory parameters
 	 * @return Application|false
 	 */
-	public static function createApplication() {
+	public static function createApplication(array $params = []) {
 		return false;
 	}
 
@@ -161,13 +163,13 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	protected function tearDown() {
 
 		// We do not want overflowing ignored access
-		$this->assertFalse((bool) elgg_get_ignore_access(), __METHOD__ . ': ignore acces not reset');
+		$this->assertFalse((bool) _elgg_services()->session->getIgnoreAccess(), __METHOD__ . ': ignored access not reset');
 
 		// We do not want overflowing show hidden status
-		$this->assertFalse((bool) access_get_show_hidden_status(), __METHOD__ . ': hidden entities not reset');
+		$this->assertFalse((bool) _elgg_services()->session->getDisabledEntityVisibility(), __METHOD__ . ': hidden entities not reset');
 
 		// Tests should run without a logged in user
-		$this->assertFalse((bool) elgg_is_logged_in(), __METHOD__ . ': there should be no logged in user');
+		$this->assertFalse((bool) _elgg_services()->session->isLoggedIn(), __METHOD__ . ': there should be no logged in user');
 	}
 
 	/**

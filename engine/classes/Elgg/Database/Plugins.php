@@ -5,13 +5,19 @@ namespace Elgg\Database;
 use Closure;
 use DatabaseException;
 use Elgg\Application;
+use Elgg\Config;
+use Elgg\Context;
+use Elgg\Database;
+use Elgg\I18n\Translator;
 use Elgg\Includer;
 use Elgg\PluginHooksService;
-use Elgg\Project\Paths;
-use ElggCache;
-use Elgg\Database;
 use Elgg\Profilable;
+use Elgg\Project\Paths;
+use Elgg\SystemMessagesService;
+use Elgg\ViewsService;
+use ElggCache;
 use ElggPlugin;
+use ElggSession;
 use ElggUser;
 use Exception;
 
@@ -49,14 +55,95 @@ class Plugins {
 	protected $db;
 
 	/**
+	 * @var ElggSession
+	 */
+	protected $session;
+
+	/**
+	 * @var PluginHooksService
+	 */
+	protected $hooks;
+
+	/**
+	 * @var Translator
+	 */
+	protected $translator;
+
+	/**
+	 * @var ViewsService
+	 */
+	protected $views;
+
+	/**
+	 * @var ElggCache
+	 */
+	protected $private_settings_cache;
+
+	/**
+	 * @var Config
+	 */
+	protected $config;
+
+	/**
+	 * @var SystemMessagesService
+	 */
+	protected $system_messages;
+
+	/**
+	 * @var Context
+	 */
+	protected $context;
+
+
+	/**
 	 * Constructor
 	 *
-	 * @param ElggCache $cache Cache for referencing plugins by ID
-	 * @param Database  $db    Database
+	 * @param ElggCache             $cache                  Cache for referencing plugins by ID
+	 * @param Database              $db                     Database
+	 * @param ElggSession           $session                Session
+	 * @param PluginHooksService    $hooks                  Hooks
+	 * @param Translator            $translator             Translator
+	 * @param ViewsService          $views                  Views service
+	 * @param ElggCache             $private_settings_cache Settings cache
+	 * @param Config                $config                 Config
+	 * @param SystemMessagesService $system_messages        System messages
+	 * @param Context               $context                Context
 	 */
-	public function __construct(ElggCache $cache, Database $db) {
+	public function __construct(
+		ElggCache $cache,
+		Database $db,
+		ElggSession $session,
+		PluginHooksService $hooks,
+		Translator $translator,
+		ViewsService $views,
+		ElggCache $private_settings_cache,
+		Config $config,
+		SystemMessagesService $system_messages,
+		Context $context
+	) {
 		$this->cache = $cache;
 		$this->db = $db;
+		$this->session = $session;
+		$this->hooks = $hooks;
+		$this->translator = $translator;
+		$this->views = $views;
+		$this->private_settings_cache = $private_settings_cache;
+		$this->config = $config;
+		$this->system_messages = $system_messages;
+		$this->context = $context;
+	}
+
+	/**
+	 * Get the plugin path for this installation, ending with slash.
+	 *
+	 * @return string
+	 */
+	public function getPath() {
+		$path = $this->config->plugins_path;
+		if (!$path) {
+			$path = Paths::project() . 'mod/';
+		}
+		return $path;
 	}
 
 	/**
@@ -98,7 +185,7 @@ class Plugins {
 	 */
 	public function getDirsInDir($dir = null) {
 		if (!$dir) {
-			$dir = elgg_get_plugins_path();
+			$dir = $this->getPath();
 		}
 
 		$plugin_dirs = [];
@@ -131,13 +218,13 @@ class Plugins {
 	 */
 	public function generateEntities() {
 
-		$mod_dir = elgg_get_plugins_path();
+		$mod_dir = $this->getPath();
 
 		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
-		$old_ia = elgg_set_ignore_access(true);
+		$old_ia = $this->session->setIgnoreAccess(true);
 
 		// show hidden entities so that we can enable them if appropriate
-		$old_access = access_show_hidden_entities(true);
+		$old_access = $this->session->setDisabledEntityVisibility(true);
 
 		$known_plugins = $this->find('all');
 		/* @var \ElggPlugin[] $known_plugins */
@@ -162,7 +249,8 @@ class Plugins {
 
 		$physical_plugins = $this->getDirsInDir($mod_dir);
 		if (!$physical_plugins) {
-			elgg_set_ignore_access($old_ia);
+			$this->session->setIgnoreAccess($old_ia);
+			$this->session->setDisabledEntityVisibility($old_access);
 
 			return false;
 		}
@@ -207,8 +295,8 @@ class Plugins {
 
 		$this->reindexPriorities();
 
-		access_show_hidden_entities($old_access);
-		elgg_set_ignore_access($old_ia);
+		$this->session->setIgnoreAccess($old_ia);
+		$this->session->setDisabledEntityVisibility($old_access);
 
 		return true;
 	}
@@ -321,7 +409,7 @@ class Plugins {
 			->andWhere($qb->compare('e.type', '=', 'object', ELGG_VALUE_STRING))
 			->andWhere($qb->compare('e.subtype', '=', 'plugin', ELGG_VALUE_STRING));
 
-		$data = _elgg_services()->db->getDataRow($qb);
+		$data = $this->db->getDataRow($qb);
 
 		$max = 1;
 		if ($data) {
@@ -360,19 +448,19 @@ class Plugins {
 	 */
 	public function load() {
 
-		$plugins_path = elgg_get_plugins_path();
+		$plugins_path = $this->getPath();
 
 		// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
 		if (file_exists("$plugins_path/disabled")) {
-			if (elgg_is_admin_logged_in() && elgg_in_context('admin')) {
-				system_message(_elgg_services()->translator->translate('plugins:disabled'));
+			if ($this->session->isAdminLoggedIn() && $this->context->contains('admin')) {
+				$this->system_messages->addSuccessMessage($this->translator->translate('plugins:disabled'));
 			}
 
 			return false;
 		}
 
-		_elgg_services()->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
-		_elgg_services()->hooks->getEvents()->registerHandler('init', 'system', [$this, 'init']);
+		$this->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
+		$this->hooks->getEvents()->registerHandler('init', 'system', [$this, 'init']);
 
 		return true;
 	}
@@ -434,22 +522,22 @@ class Plugins {
 
 		// Elgg is installed as a composer dep, so try to treat the root directory
 		// as a custom plugin that is always loaded last and can't be disabled...
-		if (!_elgg_config()->system_cache_loaded) {
+		if (!$this->config->system_cache_loaded) {
 			// configure view locations for the custom plugin (not Elgg core)
 			$viewsFile = Paths::project() . 'views.php';
 			if (is_file($viewsFile)) {
 				$viewsSpec = Includer::includeFile($viewsFile);
 				if (is_array($viewsSpec)) {
-					_elgg_services()->views->mergeViewsSpec($viewsSpec);
+					$this->views->mergeViewsSpec($viewsSpec);
 				}
 			}
 
 			// find views for the custom plugin (not Elgg core)
-			_elgg_services()->views->registerPluginViews(Paths::project());
+			$this->views->registerPluginViews(Paths::project());
 		}
 
-		if (!_elgg_config()->i18n_loaded_from_cache) {
-			_elgg_services()->translator->registerTranslations(Paths::project() . 'languages');
+		if (!$this->config->i18n_loaded_from_cache) {
+			$this->translator->registerTranslations(Paths::project() . 'languages');
 		}
 	}
 
@@ -492,7 +580,7 @@ class Plugins {
 	 * @return void
 	 */
 	protected function disable(ElggPlugin $plugin, Exception $previous) {
-		$disable_plugins = _elgg_config()->auto_disable_plugins;
+		$disable_plugins = $this->config->auto_disable_plugins;
 		if ($disable_plugins === null) {
 			$disable_plugins = true;
 		}
@@ -505,7 +593,7 @@ class Plugins {
 			$id = $plugin->getID();
 			$plugin->deactivate();
 
-			$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
+			$msg = $this->translator->translate('PluginException:CannotStart',
 				[$id, $plugin->guid, $previous->getMessage()]);
 			elgg_add_admin_notice("cannot_start $id", $msg);
 		} catch (\PluginException $ex) {
@@ -521,7 +609,7 @@ class Plugins {
 	 * @return ElggPlugin[]
 	 */
 	public function find($status = 'active') {
-		if (!_elgg_services()->db) {
+		if (!$this->db) {
 			return [];
 		}
 
@@ -566,9 +654,9 @@ class Plugins {
 					break;
 			}
 
-			$old_ia = elgg_set_ignore_access(true);
+			$old_ia = $this->session->setIgnoreAccess(true);
 			$plugins = elgg_get_entities($options) ? : [];
-			elgg_set_ignore_access($old_ia);
+			$this->session->setIgnoreAccess($old_ia);
 		}
 
 		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) {
@@ -812,7 +900,7 @@ class Plugins {
 	 * @access private
 	 */
 	public function getDependencyStrings($dep) {
-		$translator = _elgg_services()->translator;
+		$translator = $this->translator;
 		$dep_system = elgg_extract('type', $dep);
 		$info = elgg_extract('dep', $dep);
 		$type = elgg_extract('type', $info);
@@ -937,7 +1025,7 @@ class Plugins {
 			return [];
 		}
 
-		$values = _elgg_services()->privateSettingsCache->load($plugin->guid);
+		$values = $this->private_settings_cache->load($plugin->guid);
 		if (isset($values)) {
 			return $values;
 		}
@@ -961,7 +1049,7 @@ class Plugins {
 			}
 		}
 
-		_elgg_services()->privateSettingsCache->save($plugin->guid, $settings);
+		$this->private_settings_cache->save($plugin->guid, $settings);
 
 		return $settings;
 	}

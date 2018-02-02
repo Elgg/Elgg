@@ -62,9 +62,9 @@ class GroupItemVisibility {
 
 			if (!$is_visible) {
 				// see if it *really* exists...
-				$prev_access = elgg_set_ignore_access();
+				$prev_access = _elgg_services()->session->setIgnoreAccess();
 				$container = get_entity($container_guid);
-				elgg_set_ignore_access($prev_access);
+				_elgg_services()->session->setIgnoreAccess($prev_access);
 			}
 
 			$ret = new \Elgg\GroupItemVisibility();

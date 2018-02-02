@@ -794,6 +794,11 @@ Entity and collection labelling conventions have changed to comply with the new 
 
 These conventions are used across the routing and navigation systems, so plugins are advised to follow them.
 
+Request value filtering
+-----------------------
+
+``set_input()`` and ``get_input()`` no longer trim values.
+
 Action responses
 ----------------
 

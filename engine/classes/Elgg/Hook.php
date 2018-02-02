@@ -2,6 +2,7 @@
 namespace Elgg;
 
 use DI\Container;
+use Elgg\Di\PublicContainer;
 
 /**
  * Models an event passed to hook handlers
@@ -64,9 +65,9 @@ interface Hook {
 	public function getUserParam();
 
 	/**
-	 * Get the Elgg application
+	 * Get the DI container
 	 *
-	 * @return Container
+	 * @return PublicContainer
 	 */
 	public function elgg();
 }
