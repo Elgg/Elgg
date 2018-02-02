@@ -35,9 +35,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * Build a new testing application
+	 *
+	 * @param array $params Application factory parameters
 	 * @return Application|false
 	 */
-	public static function createApplication() {
+	public static function createApplication(array $params = []) {
 		return false;
 	}
 

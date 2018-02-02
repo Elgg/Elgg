@@ -54,6 +54,8 @@ class HandlersService {
 						break;
 
 					case 'middleware' :
+					case 'controller' :
+					case 'action' :
 						$object = new Request(elgg(), $args[0], $args[1]);
 						break;
 				}

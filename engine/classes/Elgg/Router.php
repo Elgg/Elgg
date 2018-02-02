@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Http\ResponseFactory;
@@ -104,6 +105,33 @@ class Router {
 			$this->timer->begin(['build page']);
 		}
 
+		$response = $this->prepareLegacyResponse($request);
+
+		if (!$response) {
+			$response = $this->prepareResponse($request);
+		}
+
+		if ($this->response->getSentResponse()) {
+			return true;
+		}
+
+		if ($response instanceof ResponseBuilder) {
+			$this->response->respond($response);
+		}
+
+		return headers_sent();
+	}
+
+	/**
+	 * Prepare legacy response by listening to "route" hook
+	 *
+	 * @param Request $request Request
+	 *
+	 * @return ResponseBuilder|null
+	 * @throws Exception
+	 */
+	protected function prepareLegacyResponse(Request $request) {
+
 		$segments = $request->getUrlSegments();
 		if ($segments) {
 			$identifier = array_shift($segments);
@@ -112,33 +140,31 @@ class Router {
 			$segments = [];
 		}
 
-		$url = elgg_normalize_url($identifier . '/' . implode('/', $segments));
-
 		$old = [
 			'identifier' => $identifier,
 			'handler' => $identifier, // backward compatibility
 			'segments' => $segments,
 		];
 
+		if (!$this->hooks->hasHandler('route', $identifier) && !$this->hooks->hasHandler('route', 'all')) {
+			return null;
+		}
+
+		elgg_deprecated_notice('"route" hook has been deprecated. Use named routes instead', '3.0');
+
 		try {
-			$result = $old;
-
 			ob_start();
-			if ($this->hooks->hasHandler('route', $identifier) ||
-				$this->hooks->hasHandler('route', 'all')) {
-				elgg_deprecated_notice('"route" hook has been deprecated. Use named routes instead', '3.0');
 
-				$result = $this->hooks->trigger('route', $identifier, $old, $old);
-			}
+			$result = $this->hooks->trigger('route', $identifier, $old, $old);
 
-			// false: request was handled, stop processing.
-			// array: compare to old params.
+			$output = ob_get_clean();
 
-			if ($result === false) {
-				$output = ob_get_clean();
-				$response = elgg_ok_response($output);
-			} else {
-				$response = false;
+			if ($result instanceof ResponseBuilder) {
+				return $result;
+			} else if ($result === false) {
+				return elgg_ok_response($output);
+			} else if ($result !== $old) {
+				elgg_log("'route' hook should not be used to rewrite routing path. Use 'route:rewrite' hook instead", 'ERROR');
 
 				if ($identifier != $result['identifier']) {
 					$identifier = $result['identifier'];
@@ -146,89 +172,130 @@ class Router {
 					$identifier = $result['handler'];
 				}
 
-				$segments = $result['segments'];
+				$segments = elgg_extract('segments', $result, [], false);
 
-				$path = '/';
-				if ($identifier) {
-					$path .= $identifier;
-					if (!empty($segments)) {
-						$path .= '/' . implode('/', $segments);
-					}
-				}
+				array_unshift($segments, $identifier);
 
-				try {
-					$parameters = $this->matcher->match($path);
+				$forward_url = implode('/', $segments);
 
-					$resource = elgg_extract('_resource', $parameters);
-					unset($parameters['_resource']);
-
-					$handler = elgg_extract('_handler', $parameters);
-					unset($parameters['_handler']);
-
-					$middleware = elgg_extract('_middleware', $parameters, []);
-					unset($parameters['_middleware']);
-
-					$this->current_route = $this->routes->get($parameters['_route']);
-
-					$parameters['_url'] = $url;
-					$parameters['_path'] = $path;
-
-					$this->current_route->setMatchedParameters($parameters);
-
-					foreach ($parameters as $key => $value) {
-						$request->getInputStack()->set($key, $value);
-					}
-
-					$envelope = new \Elgg\Request(elgg(), $this->current_route, $request);
-					$parameters['request'] = $envelope;
-
-					foreach ($middleware as $callable) {
-						$this->handlers->call($callable, $envelope, null);
-					}
-
-					if ($handler) {
-						if (is_callable($handler)) {
-							$response = call_user_func($handler, $segments, $identifier, $envelope);
-						}
-					} else {
-						$output = elgg_view_resource($resource, $parameters);
-						$response = elgg_ok_response($output);
-					}
-				} catch (ResourceNotFoundException $ex) {
-					// continue with the legacy logic
-				} catch (MethodNotAllowedException $ex) {
-					$response = elgg_error_response($ex->getMessage(), REFERRER, ELGG_HTTP_METHOD_NOT_ALLOWED);
-				}
-
-				$output = ob_get_clean();
-
-				if ($response === false) {
-					return headers_sent();
-				}
-
-				if (!$response instanceof ResponseBuilder) {
-					$response = elgg_ok_response($output);
-				}
+				return elgg_redirect_response($forward_url, ELGG_HTTP_PERMANENTLY_REDIRECT);
 			}
 		} catch (Exception $ex) {
-			ob_get_clean();
+			ob_end_clean();
+			throw $ex;
+		}
+	}
+
+	/**
+	 * Prepare response
+	 *
+	 * @param Request $request Request
+	 *
+	 * @return bool|Http\ErrorResponse|Http\OkResponse|mixed
+	 * @throws Exception
+	 * @throws PageNotFoundException
+	 */
+	protected function prepareResponse(Request $request) {
+		$response = false;
+
+		$segments = $request->getUrlSegments();
+		$path = '/' . implode('/', $segments);
+		$url = elgg_normalize_url($path);
+
+		try {
+			$parameters = $this->matcher->match($path);
+
+			$resource = elgg_extract('_resource', $parameters);
+			unset($parameters['_resource']);
+
+			$handler = elgg_extract('_handler', $parameters);
+			unset($parameters['_handler']);
+
+			$controller = elgg_extract('_controller', $parameters);
+			unset($parameters['_controller']);
+
+			$middleware = elgg_extract('_middleware', $parameters, []);
+			unset($parameters['_middleware']);
+
+			$this->current_route = $this->routes->get($parameters['_route']);
+
+			$parameters['_url'] = $url;
+			$parameters['_path'] = $path;
+
+			$this->current_route->setMatchedParameters($parameters);
+
+			foreach ($parameters as $key => $value) {
+				$request->getInputStack()->set($key, $value);
+			}
+
+			$envelope = new \Elgg\Request(elgg(), $this->current_route, $request);
+			$parameters['request'] = $envelope;
+
+			foreach ($middleware as $callable) {
+				$this->handlers->call($callable, $envelope, null);
+			}
+
+			if ($handler) {
+				$response = $this->getResponseFromHandler($handler, $envelope);
+			} else if ($controller) {
+				$response = $this->handlers->call($controller, $envelope, null);
+			} else {
+				$output = elgg_view_resource($resource, $parameters);
+				$response = elgg_ok_response($output);
+			}
+		} catch (ResourceNotFoundException $ex) {
+			// continue with the legacy logic
+		} catch (MethodNotAllowedException $ex) {
+			$response = elgg_error_response($ex->getMessage(), REFERRER, ELGG_HTTP_METHOD_NOT_ALLOWED);
+		}
+
+		return $response;
+	}
+
+	/**
+	 * Get response from handler function
+	 *
+	 * @param callable      $handler Legacy page handler function
+	 * @param \Elgg\Request $request Request envelope
+	 *
+	 * @return ResponseBuilder|null
+	 * @deprecated 3.0
+	 */
+	protected
+	function getResponseFromHandler($handler, \Elgg\Request $request) {
+		if (!is_callable($handler)) {
+			return null;
+		}
+
+		$path = trim($request->getPath(), '/');
+		$segments = explode('/', $path);
+		$identifier = array_shift($segments) ? : '';
+
+		ob_start();
+		try {
+			$response = call_user_func($handler, $segments, $identifier, $request);
+		} catch (Exception $ex) {
+			ob_end_clean();
 			throw $ex;
 		}
 
-		if (_elgg_services()->responseFactory->getSentResponse()) {
-			return true;
+		$output = ob_get_clean();
+
+		if ($response instanceof ResponseBuilder) {
+			return $response;
+		} else if ($response === false) {
+			return null;
 		}
 
-		_elgg_services()->responseFactory->respond($response);
-
-		return headers_sent();
+		return elgg_ok_response($output);
 	}
 
 	/**
 	 * Returns current route
 	 * @return Route
 	 */
-	public function getCurrentRoute() {
+	public
+	function getCurrentRoute() {
 		return $this->current_route;
 	}
 
@@ -240,7 +307,8 @@ class Router {
 	 * @return Request
 	 * @access private
 	 */
-	public function allowRewrite(Request $request) {
+	public
+	function allowRewrite(Request $request) {
 		$segments = $request->getUrlSegments();
 		if ($segments) {
 			$identifier = array_shift($segments);

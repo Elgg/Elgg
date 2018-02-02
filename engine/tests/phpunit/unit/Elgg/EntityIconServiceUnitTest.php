@@ -58,7 +58,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->hooks = new \Elgg\PluginHooksService();
 		$this->request = \Elgg\Http\Request::create("/action/upload");
-		$this->logger = new \Elgg\Logger($this->hooks, _elgg_services()->request->getContextStack(), _elgg_services()->config);
+		$this->logger = new \Elgg\Logger($this->hooks, _elgg_services()->config);
 
 		$this->entities = _elgg_services()->entityTable;
 		$this->uploads = new \Elgg\UploadService($this->request, _elgg_services()->imageService);

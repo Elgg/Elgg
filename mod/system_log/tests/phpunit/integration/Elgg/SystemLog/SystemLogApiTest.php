@@ -11,7 +11,7 @@ use Elgg\IntegrationTestCase;
 class SystemLogApiTest extends IntegrationTestCase {
 
 	public function up() {
-		self::createApplication(true);
+		self::createApplication(['isolate' => true]);
 	}
 
 	public function down() {

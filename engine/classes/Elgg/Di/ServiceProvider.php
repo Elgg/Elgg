@@ -395,7 +395,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
-			$logger = new \Elgg\Logger($c->hooks, $c->request->getContextStack(), $c->config, $c->printer);
+			$logger = new \Elgg\Logger($c->hooks, $c->config, $c->printer);
 			return $logger;
 		});
 

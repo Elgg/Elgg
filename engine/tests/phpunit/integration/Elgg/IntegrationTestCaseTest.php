@@ -44,10 +44,10 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	 * that plugins can start multiple times
 	 */
 	public function testCanResetTestingApplicationAfterMultipleInstantiations() {
-		$app1 = self::createApplication(true);
+		$app1 = self::createApplication(['isolate' => true]);
 		$dbConfig = $app1->getDbConfig();
 
-		$app2 = self::createApplication(true);
+		$app2 = self::createApplication(['isolate' => true]);
 
 		$this->assertNotSame($app1, $app2);
 		$this->assertSame(Application::$_instance, $app2);
@@ -66,7 +66,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 			return $mapped;
 		};
 
-		self::createApplication(true);
+		self::createApplication(['isolate' => true]);
 
 		$plugins = elgg_get_plugins('active');
 		if (!$plugins) {
@@ -90,13 +90,13 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 
 		$this->assertNotEquals($map($plugins), $map(elgg_get_plugins('active')));
 
-		self::createApplication(true);
+		self::createApplication(['isolate' => true]);
 
 		$this->assertTrue($plugin->activate());
 		$this->assertTrue($plugin->isActive());
 		$this->assertTrue(elgg_is_active_plugin($plugin->getID()));
 
-		self::createApplication(true);
+		self::createApplication(['isolate' => true]);
 
 		$this->assertEquals($map($plugins), $map(elgg_get_plugins('active')));
 

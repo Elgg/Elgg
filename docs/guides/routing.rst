@@ -163,40 +163,71 @@ By default, Elgg will set the following requirements for named URL segments:
 	];
 
 
-The ``route`` Plugin Hook
-=========================
+Route middleware
+----------------
 
-The ``route`` plugin hook is triggered before page handlers are called. The URL
-identifier is given as the type of the hook. This hook can be used to add some logic before the
-request is handled elsewhere, or take over page rendering completely.
+Route middleware can be used to prevent access to a certain route, or to perform some business logic before
+the route is rendered. Middleware can be used, e.g. to implement a paywall, or to log analytics,
+or to set open graph metatags.
 
-Generally devs should instead use a page handler unless they need to affect a single page or a wider
-variety of URLs.
+Elgg core implements several middleware handlers, including:
 
-The following code results in ``/blog/all`` requests being completely handled by the plugin hook handler.
-For these requests the ``blog`` page handler is never called.
+ * ``\Elgg\Router\Middleware\Gatekeeper`` - prevent access by non-authenticated users
+ * ``\Elgg\Router\Middleware\AdminGatekeeper`` - prevent access by non-admin users
 
-.. code-block:: php
+Middleware handlers can be set to any callable that receives an instance of ``\Elgg\Request``:
+The handler should throw an instanceof ``HttpException`` to prevent route access.
+The handler return value will be ignored.
 
-    function myplugin_blog_all_handler($hook, $type, $returnvalue, $params) {
-        $segments = elgg_extract('segments', $returnvalue, array());
+.. code-block::php
 
-        if (isset($segments[0]) && $segments[0] === 'all') {
-            $title = "We're taking over!";
-            $content = elgg_view_layout('one_column', array(
-                'title' => $title,
-                'content' => "We can take over page rendering completely"
-            ));
-            echo elgg_view_page($title, $content);
+	class MyMiddleware {
 
-            // in the route hook, return false says, "stop rendering, we've handled this request"
-            return false;
-        }
-    }
+		public function __invoke(\Elgg\Request $request) {
+			$entity = $request->getEntityParam();
+			if ($entity) {
+				// do stuff
+			} else {
+				throw new EntityNotFoundException();
+			}
+		}
+	}
 
-    elgg_register_plugin_hook_handler('route', 'blog', 'myplugin_blog_all_handler');
+	elgg_register_route('myroute', [
+		'path' => '/myroute/{guid?}',
+		'resource' => 'myroute',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+			MyMiddleware::class,
+		]
+	]);
 
-.. note:: As of 2.1, route modification should be done in the ``route:rewrite`` hook.
+
+Route controllers
+-----------------
+
+In certain cases, using resource views is not appropriate. In these cases you can use a controller - any callable
+that receives an instance of ``\Elgg\Request``:
+
+.. code-block::php
+
+	class MyController {
+
+		public function handleFoo(\Elgg\Request $request) {
+			elgg_set_http_header('Content-Type: application/json');
+			$data = [
+				'entity' => $request->getEntityParam(),
+			];
+			return elgg_ok_response($data);
+		}
+
+	}
+
+	elgg_register_route('myroute', [
+		'path' => '/myroute/{guid?}',
+		'controller' => [MyController::class, 'handleFoo'],
+	]);
+
 
 The ``route:rewrite`` Plugin Hook
 =================================

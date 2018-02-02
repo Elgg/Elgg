@@ -84,13 +84,17 @@ class RouteRegistrationService {
 		$params = $this->hooks->trigger('route:config', $name, $params, $params);
 
 		$path = elgg_extract('path', $params);
+		$controller = elgg_extract('controller', $params);
+		$file = elgg_extract('file', $params);
 		$resource = elgg_extract('resource', $params);
 		$handler = elgg_extract('handler', $params);
 		$middleware = elgg_extract('middleware', $params, []);
 		$protected = elgg_extract('walled', $params, true);
 
-		if (!$path || (!$resource && !$handler)) {
-			throw new InvalidParameterException(__METHOD__ . ' requires "path" and "resource" parameters to be set');
+		if (!$path || (!$controller && !$resource && !$handler)) {
+			throw new InvalidParameterException(
+				__METHOD__ . ' requires "path" and one of controller parameters ("resource", "controller" or "handler") to be set'
+			);
 		}
 
 		$defaults = elgg_extract('defaults', $params, []);
@@ -137,6 +141,8 @@ class RouteRegistrationService {
 			$middleware[] = WalledGarden::class;
 		}
 
+		$defaults['_controller'] = $controller;
+		$defaults['_file'] = $file;
 		$defaults['_resource'] = $resource;
 		$defaults['_handler'] = $handler;
 		$defaults['_middleware'] = $middleware;

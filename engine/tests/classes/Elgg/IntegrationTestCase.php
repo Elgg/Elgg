@@ -24,7 +24,10 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function createApplication($isolate = false) {
+	public static function createApplication(array $params = []) {
+
+		$isolate = elgg_extract('isolate', $params, false);
+		unset($params['isolate']);
 
 		if (isset(self::$_testing_app) && !$isolate) {
 			$app = self::$_testing_app;
@@ -56,13 +59,13 @@ abstract class IntegrationTestCase extends BaseTestCase {
 			return new InMemory();
 		});
 
-		$app = Application::factory([
+		$app = Application::factory(array_merge([
 			'config' => $config,
 			'service_provider' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
-		]);
+		], $params));
 
 		try {
 			$app->_services->db->getConnection(DbConfig::WRITE);
