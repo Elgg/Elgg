@@ -77,7 +77,7 @@ return array(
 	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functions',
-	'developers:inspect:file_location' => 'File path from Elgg root',
+	'developers:inspect:file_location' => 'File path from Elgg root or controller',
 	'developers:inspect:route' => 'Route Name',
 	'developers:inspect:path' => 'Path Pattern',
 	'developers:inspect:resource' => 'Resource View',

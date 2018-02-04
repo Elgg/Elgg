@@ -36,6 +36,14 @@ class Csrf {
 	 */
 	protected $hmac;
 
+	/**
+	 * Constructor
+	 *
+	 * @param Config      $config  Elgg config
+	 * @param ElggSession $session Session
+	 * @param ElggCrypto  $crypto  Crypto service
+	 * @param HmacFactory $hmac    HMAC service
+	 */
 	public function __construct(
 		Config $config,
 		ElggSession $session,

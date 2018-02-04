@@ -179,7 +179,7 @@ Elgg core implements several middleware handlers, including:
 
 Middleware handlers can be set to any callable that receives an instance of ``\Elgg\Request``:
 The handler should throw an instance of ``HttpException`` to prevent route access.
-The handler can return an instance of ``\Elgg\Http\ResponseBuilder`` to prevent further of the routing sequence.
+The handler can return an instance of ``\Elgg\Http\ResponseBuilder`` to prevent further implementation of the routing sequence (a redirect response can be returned to re-route the request).
 
 .. code-block::php
 

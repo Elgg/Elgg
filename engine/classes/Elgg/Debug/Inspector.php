@@ -155,7 +155,11 @@ class Inspector {
 		];
 		$start = strlen(elgg_get_root_path());
 		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
-			$info['file'] = substr($info['file'], $start);
+			if (isset($info['file'])) {
+				$info['file'] = substr($info['file'], $start);
+			} else if ($info['controller']) {
+				$info['file'] = $this->describeCallable($info['controller']);
+			}
 			$tree[$action] = [$info['file'], $access[$info['access']]];
 		}
 		ksort($tree);

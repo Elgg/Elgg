@@ -159,7 +159,7 @@ class Gatekeeper {
 				throw new EntityNotFoundException($msg);
 			}
 
-			if (!$entity->isEnabled() && !_elgg_services()->session->getDisabledEntityVisibility()) {
+			if (!$entity->isEnabled() && !$this->session->getDisabledEntityVisibility()) {
 				throw new EntityNotFoundException();
 			}
 

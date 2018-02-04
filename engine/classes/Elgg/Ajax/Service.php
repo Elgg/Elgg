@@ -55,7 +55,7 @@ class Service {
 	 *
 	 * @param PluginHooksService    $hooks     Hooks service
 	 * @param SystemMessagesService $msgs      System messages service
-	 * @param Request                 $request   Http Request
+	 * @param Request               $request   Http Request
 	 * @param Config                $amdConfig AMD config
 	 */
 	public function __construct(PluginHooksService $hooks, SystemMessagesService $msgs, Request $request, Config $amdConfig) {

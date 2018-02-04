@@ -15,6 +15,7 @@ class CsrfFirewall {
 	 *
 	 * @param Request $request Request
 	 *
+	 * @return void
 	 * @throws CsrfException
 	 */
 	public function __invoke(Request $request) {

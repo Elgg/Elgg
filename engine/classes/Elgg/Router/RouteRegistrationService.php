@@ -170,7 +170,7 @@ class RouteRegistrationService {
 	/**
 	 * Get route config from its name
 	 *
-	 * @param string $name
+	 * @param string $name Route name
 	 *
 	 * @return Route|null
 	 */
