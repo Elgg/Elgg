@@ -23,7 +23,9 @@ if ($type != 'all') {
 	}
 }
 
-switch ($vars['_route']) {
+$request = elgg_extract('request', $vars);
+/* @var $request \Elgg\Request */
+switch ($request->getRoute()) {
 	case 'collection:river:owner':
 		elgg_gatekeeper();
 		if ($vars['username'] === elgg_get_logged_in_user_entity()->username) {

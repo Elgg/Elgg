@@ -38,7 +38,7 @@ class AdminNotices {
 		}
 
 		// need to handle when no one is logged in
-		$old_ia = elgg_set_ignore_access(true);
+		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
 
 		$admin_notice = new \ElggObject();
 		$admin_notice->subtype = 'admin_notice';
@@ -49,7 +49,7 @@ class AdminNotices {
 
 		$result = $admin_notice->save();
 
-		elgg_set_ignore_access($old_ia);
+		_elgg_services()->session->setIgnoreAccess($old_ia);
 
 		if (!$result) {
 			return false;
@@ -76,14 +76,14 @@ class AdminNotices {
 			'batch_inc_offset' => false,
 		]);
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
 		// in case a bad plugin adds many, let it remove them all at once.
 		foreach ($notices as $notice) {
 			$result = ($result && $notice->delete());
 		}
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $result;
 	}
@@ -113,14 +113,14 @@ class AdminNotices {
 	 * @since 1.8.0
 	 */
 	public function exists($id) {
-		$old_ia = elgg_set_ignore_access(true);
+		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
 		$notice = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name_value_pair' => ['name' => 'admin_notice_id', 'value' => $id],
 			'count' => true,
 		]);
-		elgg_set_ignore_access($old_ia);
+		_elgg_services()->session->setIgnoreAccess($old_ia);
 	
 		return ($notice) ? true : false;
 	}

@@ -6,9 +6,7 @@ use Elgg\HooksRegistrationService\Event;
 /**
  * Events service
  *
- * @tip Use ->hooks->getEvents() from the service provider.
- *
- * @access private
+ * Use elgg()->events
  */
 class EventsService extends HooksRegistrationService {
 	use Profilable;
@@ -26,6 +24,8 @@ class EventsService extends HooksRegistrationService {
 	 * Constructor
 	 *
 	 * @param HandlersService $handlers Handlers
+	 * @access private
+	 * @inernal
 	 */
 	public function __construct(HandlersService $handlers) {
 		$this->handlers = $handlers;
@@ -35,6 +35,8 @@ class EventsService extends HooksRegistrationService {
 	 * Get the handlers service in use
 	 *
 	 * @return HandlersService
+	 * @access private
+	 * @inernal
 	 */
 	public function getHandlersService() {
 		return $this->handlers;
@@ -58,7 +60,6 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @see elgg_trigger_event
 	 * @see elgg_trigger_after_event
-	 * @access private
 	 */
 	public function trigger($name, $type, $object = null, array $options = []) {
 		$options = array_merge([
@@ -197,6 +198,8 @@ class EventsService extends HooksRegistrationService {
 	 * @return bool
 	 *
 	 * @see trigger
+	 * @access private
+	 * @inernal
 	 */
 	function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
 		$options = [

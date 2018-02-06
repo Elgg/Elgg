@@ -1301,7 +1301,7 @@ function elgg_register_page_handler($identifier, callable $function) {
 		Use elgg_register_route() to register a named route or define it in elgg-plugin.php',
 		'3.0'
 	);
-	return _elgg_services()->router->registerPageHandler($identifier, $function);
+	return _elgg_services()->routes->registerPageHandler($identifier, $function);
 }
 
 /**
@@ -1321,7 +1321,7 @@ function elgg_unregister_page_handler($identifier) {
 		Use new routing API to register and unregister routes.',
 		'3.0'
 	);
-	_elgg_services()->router->unregisterPageHandler($identifier);
+	_elgg_services()->routes->unregisterPageHandler($identifier);
 }
 
 /**
@@ -1502,4 +1502,37 @@ function update_data($query, array $params = [], $get_num_rows = false) {
 function delete_data($query, array $params = []) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->db', '3.0');
 	return elgg()->db->deleteData($query, $params);
+}
+
+/**
+ * When given a full path, finds translation files and loads them
+ *
+ * @param string $path     Full path
+ * @param bool   $load_all If true all languages are loaded, if
+ *                         false only the current language + en are loaded
+ * @param string $language Language code if other than current + en
+ *
+ * @return bool success
+ * @deprecated 3.0
+ */
+function register_translations($path, $load_all = false, $language = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and should not be used', '3.0');
+
+	return elgg()->translator->registerTranslations($path, $load_all, $language);
+}
+
+/**
+ * Reload all translations from all registered paths.
+ *
+ * This is only called by functions which need to know all possible translations.
+ *
+ * @todo Better on demand loading based on language_paths array
+ *
+ * @return void
+ * @deprecated 3.0
+ */
+function reload_all_translations() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated and should not be used', '3.0');
+
+	return elgg()->translator->reloadAllTranslations();
 }

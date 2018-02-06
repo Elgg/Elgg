@@ -28,6 +28,23 @@ final class Context {
 	private $stack = [];
 
 	/**
+	 * Initialize the context from the request
+	 *
+	 * @param Request $request Elgg request
+	 */
+	public function __construct(Request $request) {
+		// don't do this for *_handler.php, etc.
+		if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
+			$context = $request->getFirstUrlSegment();
+			if (!$context) {
+				$context = 'main';
+			}
+
+			$this->stack = [$context];
+		}
+	}
+
+	/**
 	 * Get the most recently pushed context value.
 	 *
 	 * @return string|null
@@ -109,23 +126,5 @@ final class Context {
 	 */
 	public function fromArray(array $stack) {
 		$this->stack = array_map('strval', $stack);
-	}
-
-	/**
-	 * Initialize the context from the request
-	 *
-	 * @param Request $request Elgg request
-	 * @return void
-	 */
-	public function initialize(Request $request) {
-		// don't do this for *_handler.php, etc.
-		if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
-			$context = $request->getFirstUrlSegment();
-			if (!$context) {
-				$context = 'main';
-			}
-
-			$this->stack = [$context];
-		}
 	}
 }

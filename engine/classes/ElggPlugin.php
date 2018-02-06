@@ -65,12 +65,12 @@ class ElggPlugin extends ElggObject {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 
 		if (!$plugin) {
-			$ia = elgg_set_ignore_access(true);
+			$ia = _elgg_services()->session->setIgnoreAccess(true);
 			$plugin = new ElggPlugin();
 			$plugin->title = $plugin_id;
 			$plugin->save();
 
-			elgg_set_ignore_access($ia);
+			_elgg_services()->session->setIgnoreAccess($ia);
 		}
 
 		if (!$path) {
@@ -333,7 +333,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function setSetting($name, $value) {
 
-		$value = elgg_trigger_plugin_hook('setting', 'plugin', [
+		$value = _elgg_services()->hooks->trigger('setting', 'plugin', [
 			'plugin_id' => $this->getID(),
 			'plugin' => $this,
 			'name' => $name,
@@ -939,19 +939,16 @@ class ElggPlugin extends ElggObject {
 				continue;
 			}
 
-			$options = [
-				'access' => 'logged_in',
-				'filename' => '', // assuming core action is registered
-			];
-
-			$options = array_merge($options, $action_spec);
-
-			$filename = "$root_path/actions/{$action}.php";
-			if (is_file($filename)) {
-				$options['filename'] = $filename;
+			$access = elgg_extract('access', $action_spec, 'logged_in');
+			$handler = elgg_extract('contoller', $action_spec);
+			if (!$handler) {
+				$handler = elgg_extract('filename', $action_spec);
+				if (!$handler) {
+					$handler = "$root_path/actions/{$action}.php";
+				}
 			}
 
-			$actions->register($action, $options['filename'], $options['access']);
+			$actions->register($action, $handler, $access);
 		}
 	}
 
@@ -962,7 +959,7 @@ class ElggPlugin extends ElggObject {
 	 * @throws InvalidParameterException
 	 */
 	protected function registerRoutes() {
-		$router = _elgg_services()->router;
+		$routes = _elgg_services()->routes;
 
 		$spec = (array) $this->getStaticConfig('routes', []);
 
@@ -971,7 +968,7 @@ class ElggPlugin extends ElggObject {
 				continue;
 			}
 
-			$router->registerRoute($name, $route_spec);
+			$routes->register($name, $route_spec);
 		}
 	}
 

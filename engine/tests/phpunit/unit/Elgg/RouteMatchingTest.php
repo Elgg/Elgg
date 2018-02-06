@@ -68,12 +68,18 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 		elgg_register_route('foo', $route);
 
 		$request = $this->prepareHttpRequest($match_path);
-		_elgg_services()->router->route($request);
+
+		$ex = false;
+		try {
+			_elgg_services()->router->route($request);
+		} catch (\Exception $ex) {
+
+		}
 
 		if ($is_match) {
 			$this->assertEquals(1, $calls);
 		} else {
-			$this->assertEquals(0, $calls);
+			$this->assertInstanceOf(PageNotFoundException::class, $ex);
 		}
 
 		elgg_unregister_route('foo');
@@ -263,7 +269,7 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 	public function testCanGenerateActionUrl() {
 
 		$dt = new \DateTime();
-		_elgg_services()->actions->setCurrentTime($dt);
+		_elgg_services()->csrf->setCurrentTime($dt);
 
 		$url = elgg_generate_action_url('test', [
 			'foo' => [

@@ -18,9 +18,15 @@ if (!elgg_view_exists("plugins/$plugin_id/settings")) {
 // required for plugin settings backward compatibility
 $vars['entity'] = $plugin;
 
-$body = elgg_view_form('plugins/settings/save', [
+$form_vars = [
 	'id' => "$plugin_id-settings",
 	'class' => 'elgg-form-settings',
-], $vars);
+];
+
+if (elgg_action_exists("$plugin_id/settings/save")) {
+	$form_vars['action'] = "$plugin_id/settings/save";
+}
+
+$body = elgg_view_form('plugins/settings/save', $form_vars, $vars);
 
 echo elgg_view_module('info', $plugin->getDisplayName(), $body);

@@ -15,7 +15,7 @@ abstract class UnitTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function createApplication() {
+	public static function createApplication(array $params = []) {
 
 		Application::setInstance(null);
 
@@ -30,12 +30,12 @@ abstract class UnitTestCase extends BaseTestCase {
 			'guid' => 1,
 		]);
 
-		$app = Application::factory([
+		$app = Application::factory(array_merge([
 			'service_provider' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
-		]);
+		], $params));
 
 		Application::setInstance($app);
 

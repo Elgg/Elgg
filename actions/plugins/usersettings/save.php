@@ -24,14 +24,10 @@ $plugin_name = $plugin->getDisplayName();
 
 $result = false;
 
-if (elgg_action_exists("$plugin_id/usersettings/save")) {
-	action("$plugin_id/usersettings/save");
-} else {
-	foreach ($params as $k => $v) {
-		$result = $plugin->setUserSetting($k, $v, $user->guid);
-		if (!$result) {
-			return elgg_error_response(elgg_echo('plugins:usersettings:save:fail', [$plugin_name]));
-		}
+foreach ($params as $k => $v) {
+	$result = $plugin->setUserSetting($k, $v, $user->guid);
+	if (!$result) {
+		return elgg_error_response(elgg_echo('plugins:usersettings:save:fail', [$plugin_name]));
 	}
 }
 

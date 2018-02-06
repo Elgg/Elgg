@@ -10,10 +10,13 @@ class ContextUnitTest extends \Elgg\UnitTestCase {
 	protected $context;
 	
 	public function up() {
-		$this->context = new Context();
-		
+		$request = $this->prepareHttpRequest('');
+
+		$this->context = new Context($request);
+		$this->context->pop();
+
 		// resetting global state
-		_elgg_services()->setValue('context', new Context());
+		_elgg_services()->setValue('context', $this->context);
 	}
 
 	public function down() {

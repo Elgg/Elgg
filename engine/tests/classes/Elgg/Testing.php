@@ -52,7 +52,7 @@ trait Testing {
 		if ($add_csrf_tokens) {
 			$ts = time();
 			$parameters['__elgg_ts'] = $ts;
-			$parameters['__elgg_token'] = _elgg_services()->actions->generateActionToken($ts);
+			$parameters['__elgg_token'] = _elgg_services()->csrf->generateActionToken($ts);
 		}
 
 		$request = Request::create($path, $method, $parameters);

@@ -173,7 +173,7 @@ trait Seeding {
 			}
 		};
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
 		$user = false;
 		while (!$user instanceof \ElggUser) {
@@ -184,7 +184,7 @@ trait Seeding {
 			}
 		}
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $user;
 
@@ -228,7 +228,7 @@ trait Seeding {
 			}
 
 			if (!isset($properties['owner_guid'])) {
-				$user = elgg_get_logged_in_user_entity();
+				$user = _elgg_services()->session->getLoggedInUser();
 				if (!$user) {
 					$user = $this->createUser();
 				}
@@ -300,14 +300,14 @@ trait Seeding {
 			return $group;
 		};
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
 		$group = false;
 		while (!$group instanceof \ElggGroup) {
 			$group = $create();
 		}
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $group;
 	}
@@ -349,7 +349,7 @@ trait Seeding {
 				if (isset($properties['owner_guid'])) {
 					$properties['container_guid'] = $properties['owner_guid'];
 				} else {
-					$container = elgg_get_logged_in_user_entity();
+					$container = _elgg_services()->session->getLoggedInUser();
 					if (!$container) {
 						$container = $this->createUser();
 					}
@@ -402,14 +402,14 @@ trait Seeding {
 			return $object;
 		};
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
 		$object = false;
 		while (!$object instanceof \ElggObject) {
 			$object = $create();
 		}
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $object;
 
@@ -552,10 +552,10 @@ trait Seeding {
 		$base_name = str_replace($blacklist2, '', $base_name);
 		$base_name = str_replace('.', '_', $base_name);
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
-		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$ha = _elgg_services()->session->getDisabledEntityVisibility();
+		_elgg_services()->session->setDisabledEntityVisibility(true);
 
 		$minlength = elgg_get_config('minusername') ? : 8;
 		if ($base_name) {
@@ -592,8 +592,8 @@ trait Seeding {
 			$iterator++;
 		}
 
-		access_show_hidden_entities($ha);
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setDisabledEntityVisibility($ha);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return strtolower($base_name);
 	}
@@ -723,7 +723,7 @@ trait Seeding {
 	 */
 	public function createComments(ElggEntity $entity, $limit = null) {
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
 		$tries = 0;
 		$success = 0;
@@ -744,7 +744,7 @@ trait Seeding {
 			}
 		}
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $success;
 
@@ -760,7 +760,7 @@ trait Seeding {
 	 */
 	public function createLikes(ElggEntity $entity, $limit = null) {
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
 		$success = 0;
 
@@ -774,7 +774,7 @@ trait Seeding {
 			}
 		}
 
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $success;
 	}

@@ -18,7 +18,7 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function createApplication() {
+	public static function createApplication(array $params = []) {
 
 		if (isset(self::$_testing_app)) {
 			$app = self::$_testing_app;
@@ -42,12 +42,12 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 		$sp->config->boot_complete = false;
 		$sp->config->system_cache_enabled = true;
 
-		$app = Application::factory([
+		$app = Application::factory(array_merge([
 			'service_provider' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 			'set_start_time' => false,
-		]);
+		], $params));
 
 		Application::setInstance($app);
 

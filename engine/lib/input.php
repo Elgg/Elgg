@@ -25,7 +25,7 @@
  * @return mixed
  */
 function get_input($variable, $default = null, $filter_result = true) {
-	return _elgg_services()->input->get($variable, $default, $filter_result);
+	return _elgg_services()->request->getParam($variable, $default, $filter_result);
 }
 
 /**
@@ -39,7 +39,7 @@ function get_input($variable, $default = null, $filter_result = true) {
  * @return void
  */
 function set_input($variable, $value) {
-	_elgg_services()->input->set($variable, $value);
+	_elgg_services()->request->setParam($variable, $value);
 }
 
 /**
@@ -77,19 +77,7 @@ function filter_tags($var) {
  * @return string The current page URL.
  */
 function current_page_url() {
-	$url = parse_url(elgg_get_site_url());
-
-	$page = $url['scheme'] . "://" . $url['host'];
-
-	if (isset($url['port']) && $url['port']) {
-		$page .= ":" . $url['port'];
-	}
-
-	$page = trim($page, "/");
-
-	$page .= _elgg_services()->request->getRequestUri();
-
-	return $page;
+	return _elgg_services()->request->getCurrentURL();
 }
 
 /**

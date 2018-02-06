@@ -74,11 +74,11 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 
 		$this->config = _elgg_config();
 		$this->hooks = new PluginHooksService();
-		$this->input = new Input();
 		$this->request = $this->createRequest('', 'GET');
+
 		$this->amd_config = new Config($this->hooks);
 		$this->system_messages = new SystemMessagesService($this->session);
-		$this->ajax = new Service($this->hooks, $this->system_messages, $this->input, $this->amd_config);
+		$this->ajax = new Service($this->hooks, $this->system_messages, $this->request, $this->amd_config);
 
 		_elgg_services()->logger->disable();
 	}
@@ -88,18 +88,19 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function createService() {
-		_elgg_services()->setValue('session', $this->session);
-		_elgg_services()->setValue('config', $this->config);
-		_elgg_services()->setValue('hooks', $this->hooks);
-		_elgg_services()->setValue('request', $this->request);
-		_elgg_services()->setValue('input', $this->input);
-		_elgg_services()->setValue('amd_config', $this->amd_config);
-		_elgg_services()->setValue('system_messages', $this->system_messages);
-		_elgg_services()->setValue('ajax', $this->ajax);
+		$svc = _elgg_services();
+		
+		$svc->setValue('session', $this->session);
+		$svc->setValue('config', $this->config);
+		$svc->setValue('hooks', $this->hooks);
+		$svc->setValue('request', $this->request);
+		$svc->setValue('amd_config', $this->amd_config);
+		$svc->setValue('system_messages', $this->system_messages);
+		$svc->setValue('ajax', $this->ajax);
 
 		$transport = new \Elgg\Http\OutputBufferTransport();
 		$this->response_factory = new ResponseFactory($this->request, $this->hooks, $this->ajax, $transport);
-		_elgg_services()->setValue('responseFactory', $this->response_factory);
+		$svc->setValue('responseFactory', $this->response_factory);
 		return $this->response_factory;
 	}
 

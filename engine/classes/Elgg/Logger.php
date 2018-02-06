@@ -46,11 +46,6 @@ class Logger {
 	protected $hooks;
 
 	/**
-	 * @var Context
-	 */
-	private $context;
-
-	/**
 	 * @var array
 	 */
 	private $disabled_stack;
@@ -69,13 +64,11 @@ class Logger {
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   Hooks service
-	 * @param Context            $context Context service
 	 * @param Config             $config  Config
 	 * @param Printer            $printer Printer
 	 */
-	public function __construct(PluginHooksService $hooks, Context $context, Config $config, Printer $printer = null) {
+	public function __construct(PluginHooksService $hooks, Config $config, Printer $printer = null) {
 		$this->hooks = $hooks;
-		$this->context = $context;
 		if (!isset($printer)) {
 			$printer = new ErrorLogPrinter();
 		}

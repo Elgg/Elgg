@@ -1,8 +1,8 @@
 <?php
+
 namespace Elgg\HooksRegistrationService;
 
-use DI\Container;
-use Elgg\Application;
+use Elgg\Di\PublicContainer;
 
 /**
  * The object passed to invokable class name handlers
@@ -11,7 +11,7 @@ use Elgg\Application;
  */
 class Hook implements \Elgg\Hook {
 
-	private $elgg;
+	private $dic;
 	private $name;
 	private $type;
 	private $value;
@@ -22,14 +22,17 @@ class Hook implements \Elgg\Hook {
 	/**
 	 * Constructor
 	 *
-	 * @param Container $elgg   Elgg application
-	 * @param string    $name   Hook name
-	 * @param string    $type   Hook type
-	 * @param mixed     $value  Hook value
-	 * @param mixed     $params Hook params
+	 * @param PublicContainer $dic    DI container
+	 * @param string          $name   Hook name
+	 * @param string          $type   Hook type
+	 * @param mixed           $value  Hook value
+	 * @param mixed           $params Hook params
+	 *
+	 * @access private
+	 * @internal
 	 */
-	public function __construct(Container $elgg, $name, $type, $value, $params) {
-		$this->elgg = $elgg;
+	public function __construct(PublicContainer $dic, $name, $type, $value, $params) {
+		$this->dic = $dic;
 		$this->name = $name;
 		$this->type = $type;
 		$this->value = $value;
@@ -61,6 +64,7 @@ class Hook implements \Elgg\Hook {
 	 * Update the value
 	 *
 	 * @param mixed $value The new value
+	 *
 	 * @return void
 	 * @internal
 	 */
@@ -82,6 +86,7 @@ class Hook implements \Elgg\Hook {
 		if (!is_array($this->params)) {
 			return $default;
 		}
+
 		return array_key_exists($key, $this->params) ? $this->params[$key] : $default;
 	}
 
@@ -92,6 +97,7 @@ class Hook implements \Elgg\Hook {
 		if (isset($this->params['entity']) && $this->params['entity'] instanceof \ElggEntity) {
 			return $this->params['entity'];
 		}
+
 		return null;
 	}
 
@@ -102,6 +108,7 @@ class Hook implements \Elgg\Hook {
 		if (isset($this->params['user']) && $this->params['user'] instanceof \ElggUser) {
 			return $this->params['user'];
 		}
+
 		return null;
 	}
 
@@ -109,7 +116,7 @@ class Hook implements \Elgg\Hook {
 	 * {@inheritdoc}
 	 */
 	public function elgg() {
-		return $this->elgg;
+		return $this->dic;
 	}
 
 	/**

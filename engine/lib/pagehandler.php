@@ -33,7 +33,7 @@
  * @throws InvalidParameterException
  */
 function elgg_register_route($name, array $params = []) {
-	return _elgg_services()->router->registerRoute($name, $params);
+	return _elgg_services()->routes->register($name, $params);
 }
 
 /**
@@ -44,7 +44,7 @@ function elgg_register_route($name, array $params = []) {
  * @return void
  */
 function elgg_unregister_route($name) {
-	_elgg_services()->router->unregisterRoute($name);
+	_elgg_services()->routes->unregister($name);
 }
 
 /**
@@ -56,7 +56,7 @@ function elgg_unregister_route($name) {
  * @return string
  */
 function elgg_generate_url($name, array $parameters = []) {
-	return _elgg_services()->router->generateUrl($name, $parameters);
+	return _elgg_services()->routes->generateUrl($name, $parameters);
 }
 
 /**
@@ -101,7 +101,7 @@ function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subre
 
 	foreach ($pairs as $pair) {
 		$route_name = $make_route_name($pair[0], $pair[1]);
-		$params = _elgg_services()->router->resolveRouteParameters($route_name, $entity, $parameters);
+		$params = _elgg_services()->routes->resolveRouteParameters($route_name, $entity, $parameters);
 		if ($params !== false) {
 			return elgg_generate_url($route_name, $params);
 		}

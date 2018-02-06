@@ -452,7 +452,7 @@ function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEnt
 			$collection_route = "collection:$entity_type:$entity_subtype:container";
 		}
 
-		$parameters = _elgg_services()->router->resolveRouteParameters($collection_route, $container);
+		$parameters = _elgg_services()->routes->resolveRouteParameters($collection_route, $container);
 		if ($parameters) {
 			$label = elgg_echo("collection:$entity_type:$entity_subtype");
 			if ($friends) {

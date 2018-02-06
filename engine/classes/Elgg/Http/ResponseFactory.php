@@ -151,7 +151,7 @@ class ResponseFactory {
 						. (string) $this->response_sent);
 			}
 		} else {
-			if (!elgg_trigger_before_event('send', 'http_response', $response)) {
+			if (!_elgg_services()->hooks->getEvents()->triggerBefore('send', 'http_response', $response)) {
 				return false;
 			}
 
@@ -164,7 +164,7 @@ class ResponseFactory {
 				return false;
 			}
 
-			elgg_trigger_after_event('send', 'http_response', $response);
+			_elgg_services()->hooks->getEvents()->triggerAfter('send', 'http_response', $response);
 			$this->response_sent = $response;
 		}
 

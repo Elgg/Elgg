@@ -33,6 +33,11 @@ class ElggSession {
 	protected $ignore_access = false;
 
 	/**
+	 * @var bool
+	 */
+	protected $show_disabled_entities = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param SessionInterface $storage The underlying Session implementation
@@ -273,6 +278,37 @@ class ElggSession {
 	}
 
 	/**
+	 * Are disabled entities shown?
+	 *
+	 * @return bool
+	 */
+	public function getDisabledEntityVisibility() {
+		global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+		if (isset($ENTITY_SHOW_HIDDEN_OVERRIDE)) {
+			return $ENTITY_SHOW_HIDDEN_OVERRIDE;
+		}
+
+		return $this->show_disabled_entities;
+	}
+
+	/**
+	 * Include disabled entities in queries
+	 *
+	 * @param bool $show Visibility status
+	 *
+	 * @return bool Previous setting
+	 */
+	public function setDisabledEntityVisibility($show = true) {
+		global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+		$ENTITY_SHOW_HIDDEN_OVERRIDE = $show;
+
+		$prev = $this->show_disabled_entities;
+		$this->show_disabled_entities = $show;
+
+		return $prev;
+	}
+
+	/**
 	 * Adds a token to the session
 	 *
 	 * This is used in creation of CSRF token, and is passed to the client to allow validating tokens
@@ -291,6 +327,9 @@ class ElggSession {
 	 * Get an isolated ElggSession that does not persist between requests
 	 *
 	 * @return self
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public static function getMock() {
 		$storage = new MockArraySessionStorage();
@@ -305,6 +344,9 @@ class ElggSession {
 	 * @param Database $db     Database
 	 *
 	 * @return ElggSession
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public static function fromDatabase(Config $config, Database $db) {
 		$params = $config->getCookieConfig()['session'];
@@ -333,6 +375,9 @@ class ElggSession {
 	 * @param Config $config Config
 	 *
 	 * @return ElggSession
+	 *
+	 * @access private
+	 * @internal
 	 */
 	public static function fromFiles(Config $config) {
 		$params = $config->getCookieConfig()['session'];
