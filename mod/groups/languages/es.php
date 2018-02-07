@@ -16,7 +16,7 @@ return [
 	'groups:membershiprequests' => 'Administrar solicitudes de uni&oacute;n a grupos',
 	'groups:membershiprequests:pending' => 'Administrar solicitudes de uni&oacute;n (%s)',
 	'groups:invitations' => 'Invitaciones de grupo',
-	'groups:invitations:pending' => 'Invitaciones de (%s)',
+	'groups:invitations:pending' => 'Invitaciones de grupo (%s)',
 
 	'groups:icon' => 'Icono de grupo (dejar en blanco para no hacer cambios)',
 	'groups:name' => 'Nombre del grupo',
