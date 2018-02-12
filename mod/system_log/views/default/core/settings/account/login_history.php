@@ -5,7 +5,13 @@ if (!$user instanceof ElggUser) {
 	return;
 }
 
-$log = system_log_get_log($user->guid, 'login', '', 'user', '', 20);
+$log = system_log_get_log([
+	'performed_by_guid' => $user->guid,
+	'event' => 'login',
+	'object_type' => 'user',
+	'limit' => 20,
+]);
+
 if (empty($log)) {
 	return;
 }
