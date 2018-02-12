@@ -886,7 +886,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete-alt'),
-			'title' => elgg_echo('widget:delete', [$widget->getTitle()]),
+			'title' => elgg_echo('widget:delete', [$widget->getDisplayName()]),
 			'href' => "action/widgets/delete?widget_guid=$widget->guid",
 			'is_action' => true,
 			'link_class' => 'elgg-widget-delete-button',

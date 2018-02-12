@@ -152,12 +152,21 @@ class ElggWidget extends \ElggObject {
 	 * @since 1.8.0
 	 */
 	public function getTitle() {
-		$title = $this->title;
-		if (!$title) {
+		_elgg_services()->deprecation->sendNotice(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated. '
+					. 'Use getDisplayName() instead', '3.0');
+		return $this->getDisplayName();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function getDisplayName() {
+		$result = parent::getDisplayName();
+		if (!$result) {
 			$container = $this->getContainerEntity() ? : null;
-			$title = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $container);
+			$result = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $container);
 		}
-		return $title;
+		return $result;
 	}
 
 	/**
