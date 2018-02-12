@@ -584,7 +584,7 @@ three sections:
 	'admin:security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
 	'admin:security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
 	
-	'admin:security:settings:notify_user_ban' => 'Notify the user when thier account gets (un)banned',
+	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
 	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
 	
 	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
