@@ -34,7 +34,7 @@ function system_log_init() {
 		'context' => 'admin',
 	]);
 
-	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/login_history');
+	elgg_extend_view('core/settings/statistics', 'core/settings/account/login_history');
 }
 
 /**
