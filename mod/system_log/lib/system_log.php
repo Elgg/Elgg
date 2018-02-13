@@ -49,7 +49,10 @@ function system_log_get_log($options = null) {
 		$options['count'] = $arguments[7];
 		$options['created_before'] = $arguments[8];
 		$options['created_after'] = $arguments[9];
-		$options['object_id'] = $arguments[10];
+		if ($arguments[10]) {
+			// legacy usage of function uses 0 to signify all
+			$options['object_id'] = $arguments[10];
+		}
 		$options['ip_address'] = $arguments[11];
 	}
 

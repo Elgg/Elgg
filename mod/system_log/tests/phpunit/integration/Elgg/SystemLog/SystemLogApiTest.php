@@ -64,8 +64,6 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 	public function testCanDeleteArchivedLog() {
 
-		$time = time();
-
 		$object = $this->createObject();
 
 		$event = 'SystemLogApiTest' . rand();
@@ -86,10 +84,10 @@ class SystemLogApiTest extends IntegrationTestCase {
 			$this->markTestSkipped();
 		}
 
-		system_log_archive_log(time() - $time);
-		system_log_browser_delete_log($time);
+		$this->assertTrue(system_log_archive_log());
+		$this->assertTrue(system_log_browser_delete_log(0));
 
-		$entries = system_log_get_log('', '', '', '', '', null, 0, true, $time);
+		$entries = system_log_get_log();
 
 		$this->assertEmpty($entries);
 
