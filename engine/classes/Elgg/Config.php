@@ -25,6 +25,8 @@ use Elgg\Project\Paths;
  * @property array         $css_compiler_options Options passed to CssCrush during CSS compilation
  * @property string        $dataroot             Path of data storage with trailing "/"
  * @property bool          $data_dir_override
+ * @property string        $date_format          Preferred PHP date format
+ * @property string        $date_format_datepicker Preferred jQuery datepicker date format
  * @property array         $db
  * @property string        $dbencoding
  * @property string        $dbname
@@ -95,6 +97,7 @@ use Elgg\Project\Paths;
  * @property-read int      $site_guid
  * @property bool          $system_cache_enabled
  * @property bool          $system_cache_loaded
+ * @property string        $time_format  Preferred PHP time format
  * @property string        $url          Alias of "wwwroot"
  * @property int           $version
  * @property string        $view         Default viewtype (usually not set)
