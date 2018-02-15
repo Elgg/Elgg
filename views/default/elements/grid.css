@@ -52,7 +52,7 @@
 	margin: 0 -0.5rem;
 }
 
-@media $(media-desktop-down) {
+@media $(media-mobile-only) {
 	.elgg-grid > * {
 		width: 100%;
 	}
