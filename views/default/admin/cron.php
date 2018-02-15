@@ -51,4 +51,4 @@ $table = <<<HTML
 </table>
 HTML;
 
-echo elgg_view_module('inline', elgg_echo('admin:cron:record'), $table);
+echo elgg_view_module('info', elgg_echo('admin:cron:record'), $table);

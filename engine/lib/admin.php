@@ -650,9 +650,10 @@ function _elgg_admin_page_handler($page) {
 		if (isset($page[1]) && (elgg_view_exists("plugins/{$page[1]}/settings"))) {
 			$view = 'admin/plugin_settings';
 			$plugin = elgg_get_plugin_from_id($page[1]);
-			$vars['plugin'] = $plugin;
+			$vars['plugin'] = $plugin; // required for plugin settings backward compatibility
+			$vars['entity'] = $plugin;
 
-			$title = elgg_echo("admin:{$page[0]}");
+			$title = elgg_echo("admin:{$page[0]}") . ': ' . $plugin->getDisplayName();
 		} else {
 			forward('', '404');
 		}
