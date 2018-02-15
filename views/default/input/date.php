@@ -24,7 +24,7 @@ $defaults = [
 	'disabled' => false,
 	'timestamp' => false,
 	'type' => 'text',
-	'format' => elgg_echo('input:date_format'),
+	'format' => elgg_get_config('date_format', elgg_echo('input:date_format')),
 ];
 
 $vars = array_merge($defaults, $vars);
@@ -70,7 +70,7 @@ $datepicker_options = (array) elgg_extract('datepicker_options', $vars, []);
 unset($vars['datepicker_options']);
 
 if (empty($datepicker_options['dateFormat'])) {
-	$datepicker_options['dateFormat'] = elgg_echo('input:date_format:datepicker');
+	$datepicker_options['dateFormat'] = elgg_get_config('date_format_datepicker', elgg_echo('input:date_format:datepicker'));
 }
 
 $vars['data-datepicker-opts'] = $datepicker_options ? json_encode($datepicker_options) : '';

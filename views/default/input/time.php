@@ -19,7 +19,7 @@ $defaults = [
 	'value' => '',
 	'timestamp' => false,
 	'type' => 'select',
-	'format' => elgg_echo('input:time_format'),
+	'format' => elgg_get_config('time_format', elgg_echo('input:time_format')),
 ];
 
 $vars = array_merge($defaults, $vars);
