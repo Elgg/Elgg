@@ -37,17 +37,14 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 	<ul <?php echo $attributes; ?>>
 		<?php
 		foreach ($vars['tabs'] as $info) {
-			$class = elgg_extract('class', $info, '');
-			$id = elgg_extract('id', $info, '');
+			$class = elgg_extract_class($info);
+			$id = elgg_extract('id', $info);
 
 			$selected = elgg_extract('selected', $info, false);
 			if ($selected) {
-				$class .= ' elgg-state-selected';
+				$class[] = 'elgg-state-selected';
 			}
-
-			$class_str = ($class) ? "class=\"$class\"" : '';
-			$id_str = ($id) ? "id=\"$id\"" : '';
-
+			
 			$options = $info;
 			unset($options['class']);
 			unset($options['id']);
@@ -73,7 +70,10 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 
 			$link = elgg_view('output/url', $options);
 
-			echo "<li $id_str $class_str>$link</li>";
+			echo elgg_format_element('li', [
+				'id' => $id,
+				'class' => $class,
+			], $link);
 		}
 		?>
 	</ul>
