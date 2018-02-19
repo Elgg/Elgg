@@ -1,11 +1,6 @@
 <?php
 
 return [
-	'actions' => [
-		'river/delete' => [
-			'access' => 'admin',
-		],
-	],
 	'routes' => [
 		'collection:river:owner' => [
 			'path' => '/activity/owner/{username}',
