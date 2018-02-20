@@ -9,6 +9,7 @@
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
+elgg_unregister_css('elgg');
 elgg_load_css('elgg.walled_garden');
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
@@ -20,22 +21,25 @@ $footer = elgg_view('page/elements/walled_garden/footer', $vars);
 
 $body = <<<__BODY
 <div class="elgg-page elgg-page-walled-garden">
+	<div class="elgg-page-walled-garden-background"></div>
 	<div class="elgg-page-messages">
 		$messages
 	</div>
-	<div class="elgg-page-header">
-		<div class="elgg-inner">
-			$header
+	<div class="elgg-inner">
+		<div class="elgg-page-header">
+			<div class="elgg-inner">
+				$header
+			</div>
 		</div>
-	</div>
-	<div class="elgg-page-body">
-		<div class="elgg-inner">
-			$content
+		<div class="elgg-page-body">
+			<div class="elgg-inner">
+				$content
+			</div>
 		</div>
-	</div>
-	<div class="elgg-page-footer">
-		<div class="elgg-inner">
-			$footer
+		<div class="elgg-page-footer">
+			<div class="elgg-inner">
+				$footer
+			</div>
 		</div>
 	</div>
 </div>
