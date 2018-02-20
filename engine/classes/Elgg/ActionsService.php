@@ -26,6 +26,14 @@ class ActionsService {
 	private static $access_levels = ['public', 'logged_in', 'admin'];
 
 	/**
+	 * Actions for which CSRF firewall should be bypassed
+	 * @var array
+	 */
+	private static $bypass_csrf = [
+		'logout',
+	];
+
+	/**
 	 * Constructor
 	 *
 	 * @param RouteRegistrationService $routes Routes
@@ -73,16 +81,19 @@ class ActionsService {
 			$access = 'admin';
 		}
 
-		$middleware = [
-			CsrfFirewall::class,
-			ActionMiddleware::class,
-		];
+		$middleware = [];
+
+		if (!in_array($action, self::$bypass_csrf)) {
+			$middleware[] = CsrfFirewall::class;
+		}
 
 		if ($access == 'admin') {
 			$middleware[] = AdminGatekeeper::class;
 		} else if ($access == 'logged_in') {
 			$middleware[] = Gatekeeper::class;
 		}
+
+		$middleware[] = ActionMiddleware::class;
 
 		$this->routes->register("action:$action", [
 			'path' => "/action/$action",
