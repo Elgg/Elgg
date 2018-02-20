@@ -86,6 +86,11 @@ class SystemLogQuery extends Repository {
 	public $offset;
 
 	/**
+	 * @var callable
+	 */
+	public $callback;
+
+	/**
 	 * Count rows
 	 * @return int
 	 */
@@ -147,7 +152,7 @@ class SystemLogQuery extends Repository {
 
 		$qb->orderBy('time_created', 'DESC');
 
-		return _elgg_services()->db->getData($qb);
+		return _elgg_services()->db->getData($qb, $this->callback);
 	}
 
 	/**
@@ -203,6 +208,7 @@ class SystemLogQuery extends Repository {
 	 * Build where clauses
 	 *
 	 * @param QueryBuilder $qb Query builder
+	 *
 	 * @return CompositeExpression
 	 */
 	protected function buildQuery(QueryBuilder $qb) {
@@ -242,6 +248,18 @@ class SystemLogQuery extends Repository {
 		if ($this->created_before || $this->created_after) {
 			$wheres[] = $qb->between('time_created', $this->created_after, $this->created_before, ELGG_VALUE_INTEGER);
 		}
+
 		return $qb->merge($wheres);
+	}
+
+	/**
+	 * Set callback to use on DB rows after fetch
+	 *
+	 * @param callable $callback Callback
+	 *
+	 * @return void
+	 */
+	public function setCallback(callable $callback) {
+		$this->callback = $callback;
 	}
 }
