@@ -828,6 +828,7 @@ Available hooks
 
 **ajax_request_data, \***
     This filters request data sent by the ``elgg/Ajax`` module. See :doc:`ajax` for details.
+    The hook must check if the data is a plain object or an instanceof ``FormData`` to piggyback the values using correct API.
 
 **ajax_response_data, \***
     This filters the response data returned to users of the ``elgg/Ajax`` module. See :doc:`ajax` for details.

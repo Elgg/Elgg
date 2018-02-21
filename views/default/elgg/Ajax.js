@@ -99,6 +99,9 @@ define(function (require) {
 			}
 			if ($.isPlainObject(options.data)) {
 				options.data = options.data || {};
+			} else if (options.data instanceof FormData) {
+				options.processData = false;
+				options.contentType = false;
 			} else {
 				if (typeof options.data !== 'string') {
 					throw new Error('if defined, options.data must be a plain object or string');
@@ -336,25 +339,17 @@ define(function (require) {
 		 * to alter the request by plugin hook.
 		 *
 		 * @param {*} el HTML element or CSS selector
-		 * @returns {Object}
+		 * @returns {FormData}
 		 */
 		this.objectify = function (el) {
-			// http://stackoverflow.com/a/1186309/3779
-			var o = {};
-			var a = $(el).serializeArray();
+			$(el).one('submit', function (e) {
+				// Let other plugins, e.g. CKEditor populate the fields
+				// with actual values
+				e.preventDefault();
+				return false;
+			}).trigger('submit');
 
-			$.each(a, function() {
-				if (o[this.name] !== undefined) {
-					if (!o[this.name].push) {
-						o[this.name] = [o[this.name]];
-					}
-					o[this.name].push(this.value || '');
-				} else {
-					o[this.name] = this.value || '';
-				}
-			});
-
-			return o;
+			return new FormData($(el)[0]);
 		};
 	}
 

@@ -39,5 +39,9 @@ return [
 
 		// CSS Reset
 		"normalize.css" => "vendor/bower-asset/normalize-css/normalize.css",
+
+		// Polyfills
+		"weakmap-polyfill.js" => "vendor/npm-asset/weakmap-polyfill/weakmap-polyfill.min.js",
+		"formdata-polyfill.js" => "vendor/npm-asset/formdata-polyfill/formdata.min.js",
 	],
 ];
