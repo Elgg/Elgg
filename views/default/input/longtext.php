@@ -34,6 +34,7 @@ $vars = array_merge($defaults, $vars);
 $editor_opts = (array) elgg_extract('editor_options', $vars, []);
 $editor_opts['disabled'] = !elgg_extract('editor', $vars, true);
 $editor_opts['state'] = elgg_extract('visual', $vars, true) ? 'visual' : 'html';
+$editor_opts['required'] = elgg_extract('required', $vars);
 
 unset($vars['editor']);
 unset($vars['editor_options']);
