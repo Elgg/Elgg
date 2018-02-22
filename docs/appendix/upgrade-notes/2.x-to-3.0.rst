@@ -1004,6 +1004,10 @@ All menu items are now identified with with ``data-menu-item`` attribute, sectio
 ``widget`` menu:
 
  * ``collapse`` menu item has been removed and CSS updated accordingly
+ 
+``title`` menu:
+
+The ``profile`` plugin no longer uses the actions section of the ``user_hover`` menu, but registers regulare ``title`` menu items.
 
 ``extras`` menu:
 

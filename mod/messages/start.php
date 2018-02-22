@@ -37,6 +37,7 @@ function messages_init() {
 
 	// Extend avatar hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:title', 'messages_user_hover_menu');
 
 	// delete messages sent by a user when user is deleted
 	elgg_register_event_handler('delete', 'user', 'messages_purge');
@@ -363,7 +364,7 @@ function messages_prepare_form_vars($recipient_guid = 0) {
  * Add to the user hover menu
  *
  * @param string         $hook   'register'
- * @param string         $type   'menu:user_hover'
+ * @param string         $type   'menu:user_hover' or 'menu:title'
  * @param ElggMenuItem[] $return current return value
  * @param array          $params supplied params
  *
@@ -380,13 +381,22 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 		return;
 	}
 	
-	$return[] = ElggMenuItem::factory([
+	$menu_options = [
 		'name' => 'send',
 		'text' => elgg_echo('messages:sendmessage'),
 		'icon' => 'mail',
 		'href' => "messages/add?send_to={$user->guid}",
-		'section' => 'action',
-	]);
+	];
+	
+	if ($type == 'menu:user_hover') {
+		$menu_options['section'] = 'action';
+	}
+	
+	if ($type == 'menu:title') {
+		$menu_options['class'] = ['elgg-button', 'elgg-button-action'];
+	}
+	
+	$return[] = ElggMenuItem::factory($menu_options);
 
 	return $return;
 }

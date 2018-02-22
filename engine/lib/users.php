@@ -478,6 +478,44 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 }
 
 /**
+ * Adds avatar edit button to title menu
+ *
+ * @param \Elgg\Hook $hook hook 'register', 'menu:title'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @access private
+ * @since 3.0
+ */
+function _elgg_user_title_menu(\Elgg\Hook $hook) {
+	$user = $hook->getEntityParam();
+	/* @var \ElggUser $user */
+
+	if (!$user instanceof \ElggUser) {
+		return;
+	}
+
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+
+	if (!$user->canEdit()) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	$return[] = ElggMenuItem::factory([
+		'name' => 'avatar:edit',
+		'text' => elgg_echo('avatar:edit'),
+		'icon' => 'image',
+		'class' => ['elgg-button', 'elgg-button-action'],
+		'href' => elgg_generate_entity_url($user, 'edit', 'avatar'),
+	]);
+	
+	return $return;
+}
+
+/**
  * Register menu items for the page menu
  *
  * @param string         $hook   'register'
@@ -770,6 +808,7 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 function users_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '_elgg_user_title_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
