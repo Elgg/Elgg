@@ -80,6 +80,9 @@ define(function (require) {
 			$(document)
 				.off('click.lightbox', selector)
 				.on('click.lightbox', selector, function (e) {
+					// trigger a click event on document to close open menus / dropdowns like the entity menu #11748
+					$(document).click();
+					
 					e.preventDefault();
 					var $this = $(this),
 							href = $this.prop('href') || $this.prop('src'),
