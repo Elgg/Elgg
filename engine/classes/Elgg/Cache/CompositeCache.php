@@ -220,7 +220,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		if (!is_callable('apcu_fetch')) {
+		if (!extension_loaded('apc') || !ini_get('apc.enabled')) {
 			return null;
 		}
 
