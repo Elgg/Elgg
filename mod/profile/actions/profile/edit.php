@@ -101,7 +101,7 @@ foreach ($input as $shortname => $value) {
 			$value = [$value];
 		}
 		foreach ($value as $interval) {
-			create_annotation($owner->guid, "profile:$shortname", $interval, 'text', $owner->guid, $access_id);
+			$owner->annotate("profile:$shortname", $interval, $access_id, $owner->guid, 'text');
 		}
 
 		// for BC, keep storing fields in MD, but we'll read annotations only

@@ -256,7 +256,12 @@
 .elgg-menu-annotation-container {
 	float: right;
 	margin-left: 1rem;
-	display: inline-block;
+	display: flex;
+	flex-direction: row;
+	
+	> .elgg-menu + .elgg-menu {
+		margin-left: 1rem;
+	}
 }
 
 .elgg-menu-river,
@@ -287,7 +292,9 @@
 
 .elgg-menu-entity-default,
 .elgg-menu-river-default {
-	font-size: 100%;
+	.elgg-menu-item-has-dropdown {
+		font-size: 100%;
+	}
 }
 
 .elgg-menu-social .elgg-anchor > span:not(:first-child).elgg-anchor-label {

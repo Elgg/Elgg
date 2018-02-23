@@ -248,35 +248,30 @@ function _profile_user_page_menu(\Elgg\Hook $hook) {
 /**
  * Register menu items for the title menu
  *
- * @param string $hook   'register'
- * @param string $type   'menu:title'
- * @param array  $return Current return value
- * @param array  $params Hook parameters
+ * @param \Elgg\Hook $hook 'register' 'menu:title'
  *
  * @return void|ElggMenuItem[]
  *
  * @access private
  * @since 3.0
  */
-function _profile_title_menu($hook, $type, $return, $params) {
+function _profile_title_menu(\Elgg\Hook $hook) {
 
-	if (!elgg_in_context('profile') || elgg_in_context('profile_edit')) {
+	$user = $hook->getEntityParam();
+	if (!($user instanceof \ElggUser) || !$user->canEdit()) {
 		return;
 	}
 	
-	$user = elgg_get_page_owner_entity();
+	$return = $hook->getValue();
 	
-	// grab the actions and admin menu items from user hover
-	$menu = elgg()->menus->getMenu('user_hover', [
-		'entity' => $user,
-		'username' => $user->username,
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'edit_profile',
+		'href' => elgg_generate_entity_url($user, 'edit'),
+		'text' => elgg_echo('profile:edit'),
+		'icon' => 'address-card',
+		'class' => ['elgg-button', 'elgg-button-action'],
+		'contexts' => ['profile', 'profile_edit'],
 	]);
-	
-	$actions = $menu->getSection('action', []);
-	foreach ($actions as $action) {
-		$action->addLinkClass('elgg-button elgg-button-action');
-		$return[] = $action;
-	}
 	
 	return $return;
 }
