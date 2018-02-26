@@ -583,11 +583,11 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->mock->batchInstall([
 			// database settings
-			'dbuser' => getenv('ELGG_DB_USER'),
-			'dbpassword' => getenv('ELGG_DB_PASS'),
-			'dbname' => getenv('ELGG_DB_NAME'),
-			'dbprefix' => getenv('ELGG_DB_PREFIX'),
-			'dbencoding' => getenv('ELGG_DB_ENCODING'),
+			'dbuser' => getenv('ELGG_DB_USER') ? : 't_i_elgg_dbuser',
+			'dbpassword' => getenv('ELGG_DB_PASS') ? : 't_i_elgg_dbpwd',
+			'dbname' => getenv('ELGG_DB_NAME') ? : 't_i_elgg_dbname',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
 
 			// site settings
 			'sitename' => 'Elgg Travis Site',
@@ -602,7 +602,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'password' => 'fancypassword',
 
 			// timezone
-			'timezone' => 'UTC'
+			'timezone' => 'UTC',
 		]);
 
 		$this->assertNull($this->getApp()->_services->config->installer_running);

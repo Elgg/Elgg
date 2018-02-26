@@ -32,7 +32,7 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 		if (is_dir($vendor_path)) {
 			$project_path = dirname($engine_path);
 		} else {
-			$project_path = dirname(dirname(dirname($engine_path)));
+			$project_path = dirname(dirname(dirname(dirname($engine_path))));
 		}
 		$this->assertEquals(realpath(elgg_get_root_path()), $project_path);
 	}
