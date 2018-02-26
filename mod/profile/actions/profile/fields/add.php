@@ -12,21 +12,17 @@ if (!$label || !$type) {
 }
 
 if ($id === '') {
-	$fieldlist = elgg_get_config('profile_custom_fields');
-	if (!$fieldlist && $fieldlist !== '0') {
-		$fieldlist = '';
-	} else {
-		$fieldlistarray = explode(',', $fieldlist);
-		foreach ($fieldlistarray as $key => $value) {
-			$fieldlistarray[$key] = (int) $value;
-		}
-		$id = max($fieldlistarray) + 1;
+	$custom_fields = elgg_get_config('profile_custom_fields');
+	$fieldlist = [];
+	if (!empty($custom_fields) || ($custom_fields === '0')) {
+		$fieldlist = explode(',', $custom_fields);
 	}
-	
-	if ($fieldlist !== '') {
-		$fieldlist .= ',';
-	}
-	$fieldlist .= "$id";
+
+	$id = (int) count($fieldlist) ? ((int) max($fieldlist) + 1) : 0;
+
+	$fieldlist[] = $id;
+
+	$fieldlist = implode(',', $fieldlist);
 	
 	if (!elgg_save_config('profile_custom_fields', $fieldlist)) {
 		return elgg_error_response(elgg_echo('profile:editdefault:fail'));
