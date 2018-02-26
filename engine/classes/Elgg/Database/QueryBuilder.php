@@ -96,6 +96,10 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 */
 	public function prefix($table) {
 		$prefix = _elgg_services()->db->prefix;
+		if ($prefix === '') {
+			return $table;
+		}
+		
 		if (strpos($table, $prefix) !== 0) {
 			return "{$prefix}{$table}";
 		}
