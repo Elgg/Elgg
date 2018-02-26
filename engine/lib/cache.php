@@ -47,6 +47,17 @@ function elgg_load_system_cache($type) {
 }
 
 /**
+ * Deletes the contents of a system cache.
+ *
+ * @param string $type The type of cache to delete
+ * @return bool
+ * @since 3.0
+ */
+function elgg_delete_system_cache($type) {
+	return _elgg_services()->systemCache->delete($type);
+}
+
+/**
  * Is system cache enabled
  *
  * @return bool
