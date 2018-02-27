@@ -120,8 +120,6 @@ select {
 	line-height: 1.75rem;
 	vertical-align: middle;
 	border-radius: 3px;
-	dislay: inline-block;
-	margint-top: 1px;
 }
 
 select:not([multiple]) {
