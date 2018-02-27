@@ -15,7 +15,7 @@
 		padding: 0.5em 0.75em;
 		vertical-align: top;
 		background-color: white;
-		word-break: break-all;
+		word-break: break-word;
 	}
 
 	tr.elgg-state-selected td,
@@ -27,16 +27,13 @@
 
 	thead th {
 		font-weight: bold;
-		text-align: left;
 		border-width: 0 0 2px;
 	}
 
-	tfoot td,
 	tfoot th {
 		border-width: 2px 0 0;
 		font-weight: bold;
 	}
-
 }
 
 .elgg-table-alt th:first-child,
