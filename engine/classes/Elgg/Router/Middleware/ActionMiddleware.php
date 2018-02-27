@@ -3,7 +3,6 @@
 namespace Elgg\Router\Middleware;
 
 use Elgg\Http\ResponseBuilder;
-use Elgg\HttpException;
 
 /**
  * Some logic implemented before action is executed
@@ -24,6 +23,11 @@ class ActionMiddleware {
 		$result = $request->elgg()->hooks->trigger('action', $action, null, true);
 		$output = ob_get_clean();
 
+		//  this allows you to return a ok or error response in the hook
+		if ($result instanceof ResponseBuilder) {
+			return $result;
+		}
+		
 		// To quietly cancel the file, return a falsey value in the "action" hook.
 		if (!$result) {
 			return elgg_ok_response($output);
