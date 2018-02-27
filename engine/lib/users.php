@@ -160,11 +160,6 @@ function generate_random_cleartext_password() {
 function validate_username($username) {
 	$config = _elgg_config();
 
-	// Basic, check length
-	if (!isset($config->minusername)) {
-		$config->minusername = 4;
-	}
-
 	if (strlen($username) < $config->minusername) {
 		$msg = elgg_echo('registration:usernametooshort', [$config->minusername]);
 		throw new \RegistrationException($msg);
@@ -222,10 +217,6 @@ function validate_username($username) {
  */
 function validate_password($password) {
 	$config = _elgg_config();
-
-	if (!isset($config->min_password_length)) {
-		$config->min_password_length = 6;
-	}
 
 	if (strlen($password) < $config->min_password_length) {
 		$msg = elgg_echo('registration:passwordtooshort', [$config->min_password_length]);
