@@ -10,12 +10,10 @@
 
 .elgg-module > .elgg-head {
 	display: flex;
-	justify-content: flex-end;
-	align-items: center;
 }
 
-.elgg-module > .elgg-head > *:first-child {
-	margin-right: auto;
+.elgg-module > .elgg-head > .elgg-module-menu {
+	margin-left: auto;
 }
 
 /* ***************************************

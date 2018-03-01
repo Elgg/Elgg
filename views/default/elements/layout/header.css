@@ -29,7 +29,8 @@
 	.elgg-layout-header {
 		padding: 1rem;
 		flex-direction: row;
-		justify-content: flex-end;
+		align-items: flex-start;
+		justify-content: flex-start;
 	}
 
 	.elgg-layout-header > h1,
@@ -37,11 +38,11 @@
 	.elgg-layout-header > h3 {
 		padding: 0;
 		text-align: left;
-		margin-right: auto; /* force flexblox to justify to the right */
 	}
 
 	.elgg-layout-header > .elgg-menu-container {
 		padding: 0;
+		margin-left: auto;
 	}
 }
 

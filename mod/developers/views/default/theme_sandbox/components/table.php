@@ -1,16 +1,23 @@
 <?php
 
-$attrs['class'] = $vars['class'];
-?>
-<table <?= elgg_format_attributes($attrs) ?>>
-<?php
-	echo "<thead><tr><th>column 1</th><th>column 2</th></tr></thead>";
+$attrs['class'] = elgg_extract_class($vars);
+
+$table = "<thead>";
+$table .= "<tr><th>column 1</th><th>column 2</th></tr>";
+$table .= "<tr><td>head cell 1</td><td>head cell 2</td></tr>";
+$table .= "</thead>";
+	
 for ($i = 1; $i < 5; $i++) {
-	echo '<tr>';
+	$table .= '<tr>';
 	for ($j = 1; $j < 3; $j++) {
-		echo "<td>value $j</td>";
+		$table .= "<td>value $j</td>";
 	}
-	echo '</tr>';
+	$table .= '</tr>';
 }
-?>
-</table>
+	
+$table .= "<tfoot>";
+$table .= "<tr><td>foot cell 1</td><td>foot cell 2</td></tr>";
+$table .= "<tr><th>foot 1</th><th>foot 2</th></tr>";
+$table .= "</tfoot>";
+
+echo elgg_format_element('table', $attrs, $table);

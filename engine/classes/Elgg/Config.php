@@ -65,6 +65,7 @@ use Elgg\Project\Paths;
  * @property array         $memcache_servers
  * @property array         $menus
  * @property int           $min_password_length
+ * @property int           $minusername
  * @property string[]      $pages
  * @property-read string   $path         Path of composer install with trailing "/"
  * @property-read string   $pluginspath  Alias of plugins_path
