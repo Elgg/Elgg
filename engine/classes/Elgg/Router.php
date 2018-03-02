@@ -317,7 +317,8 @@ class Router {
 	 */
 	protected function getResponseFromFile($file, \Elgg\Request $request) {
 		if (!is_file($file) || !is_readable($file)) {
-			throw new PageNotFoundException(elgg_echo('actionnotfound'), ELGG_HTTP_NOT_IMPLEMENTED);
+			$path = $request->getPath();
+			throw new PageNotFoundException(elgg_echo('actionnotfound', [$path]), ELGG_HTTP_NOT_IMPLEMENTED);
 		}
 
 		ob_start();
