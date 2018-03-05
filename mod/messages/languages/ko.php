@@ -41,21 +41,21 @@ return array(
 	*/
 
 	'messages:email:subject' => '새 쪽지가 있습니다.',
-	'messages:email:body' => "You have a new message from %s. It reads:
+	'messages:email:body' => "%s에게서 새 쪽지가 왔습니다. 내용은:
 
 
 	%s
 
 
-	To view your messages, click here:
+	쪽지를 보려면 누르세요:
 
 	%s
 
-	To send %s a message, click here:
+	 %s 에게 쪽지를 보내려면 누르세요:
 
 	%s
 
-	Please do not reply to this email.",
+	이 이메일에 답장하지 마세요.",
 
 	/**
 	* Error messages

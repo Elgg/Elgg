@@ -52,7 +52,7 @@ return array(
 
 %s
 
-Bekijk en reageer op de blog:
+Bekijk en reageer hier op de blog:
 %s
 ',
 
