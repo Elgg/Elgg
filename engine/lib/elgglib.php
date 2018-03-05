@@ -1313,7 +1313,7 @@ function _elgg_services() {
  */
 function _elgg_shutdown_hook() {
 	try {
-		elgg_trigger_event('shutdown', 'system');
+		_elgg_services()->events->trigger('shutdown', 'system');
 
 		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);
 		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
