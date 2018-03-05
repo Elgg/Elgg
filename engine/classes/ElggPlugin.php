@@ -940,7 +940,7 @@ class ElggPlugin extends ElggObject {
 			}
 
 			$access = elgg_extract('access', $action_spec, 'logged_in');
-			$handler = elgg_extract('contoller', $action_spec);
+			$handler = elgg_extract('controller', $action_spec);
 			if (!$handler) {
 				$handler = elgg_extract('filename', $action_spec);
 				if (!$handler) {
