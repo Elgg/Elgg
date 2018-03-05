@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "файлы",
-	'file:user' => "Файлы пользователя %s'",
-	'file:friends' => "Файлы друзей",
-	'file:all' => "Все файлы",
-	'file:edit' => "Редактировать файл",
+	'item:object:file' => 'Файл',
+	'collection:object:file' => 'Файлы',
+	'collection:object:file:all' => "Файлы всего сайта",
+	'collection:object:file:owner' => "Файлы %s",
+	'collection:object:file:friends' => "Файлы друга",
+	'collection:object:file:group' => "Сгруппировать файлы",
+	'add:object:file' => "Загрузить файл",
+	'edit:object:file' => "Редактировать файл",
+
 	'file:more' => "Еще файлы",
 	'file:list' => "в виде списка",
-	'file:group' => "Файлы группы",
-	'file:gallery' => "в виде галереи",
-	'file:gallery_list' => "В виде галереи или списка",
+
 	'file:num_files' => "Число отображаемых файлов",
-	'file:user:gallery'=>'Просмотреть галерею %s',
-	'file:upload' => "Загрузить файл",
 	'file:replace' => 'Заменить файл (оставьте пустым чтобы не менять файл)',
 	'file:list:title' => "%s's %s %s",
 	'file:title:friends' => "Friends'",
-
-	'file:add' => 'Загрузить файл',
 
 	'file:file' => "Файл",
 
@@ -53,29 +48,19 @@ return [
 	'file:widget' => "Файлы",
 	'file:widget:description' => "Ваши последние файлы",
 
-	'groups:enablefiles' => 'Включить файлы в группе',
+	'groups:tool:file' => 'Разрешить группировку файлов',
 
-	'file:delete:confirm' => "Удалить этот файл?",
-
-	'file:upload_limit' => 'Максимальный допустимый размер файла %s',
-
-	'file:tagcloud' => "Облако тегов",
-
-	'file:display:number' => "Число отображаемых файлов",
-
-	'river:create:object:file' => '%s загрузил(а) файл %s',
-	'river:comment:object:file' => '%s комментировал(а) файл %s',
-
-	'item:object:file' => 'Файлы',
+	'river:object:file:create' => '%sзагрузил файл %s',
+	'river:object:file:comment' => '%sпрокомментировал файл %s',
 
 	'file:notify:summary' => 'Новый файл: %s',
 	'file:notify:subject' => 'Новый файл: %s',
 	'file:notify:body' =>
-'%s загрузил[а] новый файл: %s
+'%s загрузил новый файл: %s
 
 %s
 
-Для просмотра и комментирования перейдите по ссылке:
+Смотреть и комментировать файл:
 %s
 ',
 
@@ -84,7 +69,7 @@ return [
 	 */
 
 	'file:saved' => "Ваш файл успешно сохранен.",
-	'file:deleted' => "Ваш файл успешно удален.",
+	'entity:delete:object:file:success' => "Ваш файл был успешно удалён.",
 
 	/**
 	 * Error messages
@@ -92,9 +77,6 @@ return [
 
 	'file:none' => "---",
 	'file:uploadfailed' => "Простите, файл не сохранен.",
-	'file:downloadfailed' => "Простите, файл сейчас недоступен.",
-	'file:deletefailed' => "Простите, файл не удален.",
 	'file:noaccess' => "У Вас нет прав для изменения этого файла.",
-	'file:cannotload' => "There was an error uploading the file",
-	'file:nofile' => "Вам нужно выбрать файл",
-];
+	'file:cannotload' => "Ошибка загрузки файла",
+);
