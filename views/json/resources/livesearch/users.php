@@ -32,7 +32,7 @@ if (get_input('friends_only', false)) {
 	}
 
 	$dbprefix = elgg_get_config('dbprefix');
-	$options['wheres'][] = function(QueryBuilder $qb) use ($target) {
+	$options['wheres'][] = function(\Elgg\Database\QueryBuilder $qb) use ($target) {
 		$subquery = $qb->subquery('entity_relationships', 'er');
 		$subquery->select('1')
 			->where($qb->compare('er.guid_two', '=', 'e.guid'))

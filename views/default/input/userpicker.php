@@ -24,21 +24,23 @@ if (empty($vars['name'])) {
 }
 $name = elgg_extract('name', $vars);
 
-$guids = (array) elgg_extract('values', $vars, []);
+$guids = (array) elgg_extract('values', $vars, elgg_extract('value', $vars, []));
 
 $params = elgg_extract('options', $vars, []);
+
+$friends_only = elgg_extract('only_friends', $vars);
+
+if ($friends_only) {
+	$params['friends_only'] = true;
+}
 
 if (!empty($params)) {
 	ksort($params);
 
-// We sign custom parameters, so that plugins can validate
-// that the request is unaltered, if needed
+	// We sign custom parameters, so that plugins can validate
+	// that the request is unaltered, if needed
 	$mac = elgg_build_hmac($params);
 	$params['mac'] = $mac->getToken();
-}
-
-if ($friends_only) {
-	$params['friends_only'] = true;
 }
 
 $handler = elgg_extract('handler', $vars, "livesearch");
@@ -59,9 +61,9 @@ $attrs = [
 	<input type="text" class="elgg-input-user-picker" size="30"/>
 	<?php echo elgg_view('input/hidden', ['name' => elgg_extract('name', $vars)]); ?>
 	<?php
-	if (!elgg_extract('only_friends', $vars, false)) {
+	if (!$friends_only) {
 		?>
-		<input type="checkbox" name="match_on" value="true" />
+		<input type="checkbox" name="match_on" value="true"/>
 		<label><?php echo elgg_echo('userpicker:only_friends'); ?></label>
 		<?php
 	}

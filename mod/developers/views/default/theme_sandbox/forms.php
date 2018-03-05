@@ -312,12 +312,35 @@ $ipsum = elgg_view('developers/ipsum');
 			'#label' => 'Groups autocomplete input (.elgg-input-autocomplete):',
 		]);
 
+		$groups = elgg_get_entities([
+			'types' => 'group',
+			'limit' => 1,
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'autocomplete',
+			'name' => 'f11c',
+			'id' => 'f11c',
+			'match_on' => 'groups',
+			'value' => ($groups) ? $groups[0]->guid : null,
+			'#label' => 'Groups autocomplete input (.elgg-input-autocomplete) with initial value:',
+		]);
+
 		echo elgg_view_field([
 			'#type' => 'autocomplete',
 			'name' => 'f11b',
 			'id' => 'f11b',
 			'match_on' => 'users',
 			'#label' => 'Users autocomplete input (.elgg-input-autocomplete):',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'autocomplete',
+			'name' => 'f11d',
+			'id' => 'f11d',
+			'match_on' => 'users',
+			'value' => elgg_get_logged_in_user_entity()->username,
+			'#label' => 'Users autocomplete input (.elgg-input-autocomplete) with initial value:',
 		]);
 
 		echo elgg_view_field([
@@ -375,10 +398,27 @@ $ipsum = elgg_view('developers/ipsum');
 
 		echo elgg_view_field([
 			'#type' => 'userpicker',
+			'name' => 'f13',
+			'id' => 'f13',
+			'value' => array_map(function ($e) {
+				return $e->guid;
+			}, elgg_get_entities(['types' => 'user', 'limit' => 5])),
+			'#label' => 'User picker input (.elgg-user-picker) with values:',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'userpicker',
 			'name' => 'f16',
 			'id' => 'f16',
 			'limit' => 1,
 			'#label' => 'User picker input (with max 1 results) (.elgg-user-picker):',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'friendspicker',
+			'name' => 'f13a',
+			'id' => 'f13a',
+			'#label' => 'Friend picker input (.elgg-user-picker):',
 		]);
 
 		echo elgg_view_field([
