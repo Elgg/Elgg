@@ -169,6 +169,10 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 
 		elgg_unregister_route('foo');
 	}
+	
+	public function testGenerateURLForUnknownRoute() {
+		$this->assertFalse(elgg_generate_url('unknown:route'));
+	}
 
 	public function testResourceParameterIsNotReplaceableByQueryElements() {
 
@@ -240,30 +244,41 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 			'foo2' => 'wrong',
 		]);
 
-		elgg_register_route("view:object:$entity->subtype", [
+		// register view route
+		elgg_register_route("view:object:{$entity->subtype}", [
 			'path' => '/view/{guid}/{title}/{foo?}/{foo2?}',
 			'handler' => function() {},
 		]);
 
-		elgg_register_route("view:object:$entity->subtype:sub", [
+		// register view route with subview
+		elgg_register_route("view:object:{$entity->subtype}:sub", [
 			'path' => '/view/sub/{guid}/{title}/{foo?}/{foo2?}',
 			'handler' => function() {},
 		]);
 
+		// test view route
 		$url = elgg_generate_entity_url($entity, 'view', null, [
 			'baz' => 'bam',
 			'foo2' => 'right',
 		]);
 
-		$this->assertEquals("/view/$entity->guid/my-object/bar/right?baz=bam", $url);
+		$this->assertEquals("/view/{$entity->guid}/my-object/bar/right?baz=bam", $url);
 
+		// test view route with subview
 		$url = elgg_generate_entity_url($entity, 'view', 'sub', [
 			'baz' => 'bam',
 			'foo2' => 'right',
 		]);
 
-		$this->assertEquals("/view/sub/$entity->guid/my-object/bar/right?baz=bam", $url);
+		$this->assertEquals("/view/sub/{$entity->guid}/my-object/bar/right?baz=bam", $url);
 
+		// test unknown route for entity
+		$url = elgg_generate_entity_url($entity, 'unknown', null, [
+			'baz' => 'bam',
+			'foo2' => 'right',
+		]);
+		
+		$this->assertFalse($url);
 	}
 
 	public function testCanGenerateActionUrl() {

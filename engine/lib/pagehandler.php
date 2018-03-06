@@ -53,7 +53,7 @@ function elgg_unregister_route($name) {
  * @param string $name       Route name
  * @param array  $parameters Parameters
  *
- * @return string
+ * @return false|string
  */
 function elgg_generate_url($name, array $parameters = []) {
 	return _elgg_services()->routes->generateUrl($name, $parameters);
@@ -79,7 +79,7 @@ function elgg_generate_url($name, array $parameters = []) {
  * @param string     $subresource Subresource name
  * @param array      $parameters  URL query elements
  *
- * @return string
+ * @return false|string
  */
 function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subresource = null, array $parameters = []) {
 
@@ -107,7 +107,7 @@ function elgg_generate_entity_url(ElggEntity $entity, $resource = 'view', $subre
 		}
 	}
 
-	return '';
+	return false;
 }
 
 /**
