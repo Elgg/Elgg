@@ -35,7 +35,10 @@ input:checked ~ .elgg-input-checkbox-switch:after {
 	margin-left: 1.8em;
 }
 
+input:disabled ~ .elgg-input-checkbox-switch {
+	cursor: not-allowed;
+}
+
 .elgg-input-single-checkbox label + .elgg-field-label {
 	display: inline-block;
 }
-

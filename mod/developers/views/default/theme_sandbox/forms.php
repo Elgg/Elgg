@@ -105,6 +105,18 @@ $ipsum = elgg_view('developers/ipsum');
 			'required' => true,
 			'#help' => 'Switch styled checkbox without a label',
 		]);
+		echo elgg_view_field([
+			'#type' => 'checkbox',
+			'name' => 'f4s1b',
+			'id' => 'f4s1b',
+			'value' => 1,
+			'switch' => true,
+			'disabled' => true,
+			'default' => false,
+			'required' => true,
+			'#label' => 'a (.elgg-input-checkbox) with disabled switch style',
+			'#help' => 'Single checkbox .elgg-input-checkbox ',
+		]);
 
 		echo elgg_view_field([
 			'#type' => 'checkbox',
