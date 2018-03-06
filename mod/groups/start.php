@@ -945,6 +945,10 @@ function _groups_title_menu(\Elgg\Hook $hook) {
 			'child_menu' => [
 				'display' => 'dropdown',
 			],
+			'data-position' => json_encode([
+				'my' => 'right top',
+				'at' => 'right bottom',
+			]),
 		]);
 		
 		$leave_group = groups_get_group_leave_menu_item($group, $user);

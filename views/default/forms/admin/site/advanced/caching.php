@@ -93,4 +93,4 @@ $body = <<<BODY
 	$system_cache_input
 BODY;
 
-echo elgg_view_module('inline', elgg_echo('admin:legend:caching'), $body, ['id' => 'elgg-settings-advanced-caching']);
+echo elgg_view_module('info', elgg_echo('admin:legend:caching'), $body, ['id' => 'elgg-settings-advanced-caching']);
