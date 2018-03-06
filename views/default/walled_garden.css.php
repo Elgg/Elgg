@@ -17,6 +17,8 @@ echo elgg_view('core.css');
 
 .elgg-page-walled-garden-background {
 	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
 	background-image: url('graphics/walled_garden.jpg');
