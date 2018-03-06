@@ -102,7 +102,7 @@ $hardening .= elgg_view_field([
 // allow others to extend this section
 $hardening .= elgg_view('admin/security/settings/extend/hardening');
 
-echo elgg_view_module('inline', elgg_echo('admin:security:settings:label:hardening'), $hardening);
+echo elgg_view_module('info', elgg_echo('admin:security:settings:label:hardening'), $hardening);
 
 // notifications
 $notifications = '';
@@ -145,7 +145,7 @@ $notifications .= elgg_view_field([
 // allow others to extend this section
 $notifications .= elgg_view('admin/security/settings/extend/notification');
 
-echo elgg_view_module('inline', elgg_echo('admin:security:settings:label:notifications'), $notifications);
+echo elgg_view_module('info', elgg_echo('admin:security:settings:label:notifications'), $notifications);
 
 // site secret
 $strength = _elgg_get_site_secret_strength();
@@ -175,7 +175,7 @@ $site_secret_link .= elgg_view('output/longtext', [
 
 $site_secret .= elgg_format_element('div', ['class' => 'mtm'], $site_secret_link);
 
-echo elgg_view_module('inline', elgg_echo('admin:security:settings:label:site_secret'), $site_secret);
+echo elgg_view_module('info', elgg_echo('admin:security:settings:label:site_secret'), $site_secret);
 
 // footer
 $footer = elgg_view_field([
