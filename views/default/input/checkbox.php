@@ -59,6 +59,10 @@ if ($switch) {
 $input = elgg_format_element('input', $vars);
 if ($switch) {
 	$input .= elgg_format_element('span', ['class' => 'elgg-input-checkbox-switch']);
+	
+	if (empty($label)) {
+		$label = '&nbsp;';
+	}
 }
 
 if (!empty($label)) {
