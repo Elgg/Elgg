@@ -52,6 +52,13 @@ input, textarea {
 	border-radius: 3px;
 }
 
+input:disabled,
+textarea:disabled,
+select:disabled,
+option:disabled {
+	cursor: not-allowed;
+}
+
 textarea {
 	padding: 0.5rem;
 }

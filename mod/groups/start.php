@@ -69,6 +69,7 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu_group_profile');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
+	elgg_register_plugin_hook_handler('prepare', 'menu:title', '_groups_title_menu_prepare');
 
 	elgg_register_plugin_hook_handler('gatekeeper', 'group:group', '_groups_gatekeeper_allow_profile_page');
 	elgg_register_plugin_hook_handler('forward', '403', '_groups_gatekeeper_redirect');
@@ -940,7 +941,6 @@ function _groups_title_menu(\Elgg\Hook $hook) {
 			'name' => 'group-dropdown',
 			'href' => false,
 			'text' => elgg_echo($is_owner ? 'groups:button:owned' : 'groups:button:joined'),
-			'icon_alt' => 'angle-down',
 			'link_class' => 'elgg-button elgg-button-action-done',
 			'child_menu' => [
 				'display' => 'dropdown',
@@ -961,6 +961,44 @@ function _groups_title_menu(\Elgg\Hook $hook) {
 	}
 	
 	return $result;
+}
+
+/**
+ * Prepares the group dropdown menu item with a toggle indicator
+ *
+ * @elgg_plugin_hook prepare menu:title
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return \ElggMenuItem[]
+ *
+ * @internal
+ */
+function _groups_title_menu_prepare(\Elgg\Hook $hook) {
+	$group = $hook->getEntityParam();
+	if (!$group instanceof ElggGroup) {
+		return;
+	}
+	
+	$result = $hook->getValue();
+	if (!is_array($result)) {
+		return;
+	}
+	
+	foreach ($result as $section) {
+		foreach ($section as $item) {
+			if ($item->getName() !== 'group-dropdown') {
+				continue;
+			}
+			
+			if (empty($item->getChildren())) {
+				return;
+			}
+			
+			$item->icon_alt = 'angle-down';
+			
+			return $result;
+		}
+	}
 }
 
 /**
