@@ -822,10 +822,10 @@ function users_init() {
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 
-	elgg_register_notification_event('user', '', ['unban']);
+	elgg_register_notification_event('user', 'user', ['unban']);
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_unban_action');
 	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
-	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:', '_elgg_user_prepare_unban_notification');
+	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:user', '_elgg_user_prepare_unban_notification');
 
 }
 

@@ -630,7 +630,7 @@ To go to the site, click here:
 	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
 	'admin:notification:remove_admin:admin:body' => 'Hi %s,
 
-%s removed %s a site administrator of %s.
+%s removed %s as a site administrator of %s.
 
 To view the profile of the old administrator, click here:
 %s

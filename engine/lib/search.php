@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Basic Elgg search hooks.
  */
@@ -9,15 +8,18 @@
  * depending on parameters given.
  *
  * @param array $options Search parameters
- *                       Accepts all
- *                       options supported
- *                       by {@link
- *                       elgg_get_entities()}
+ *                       Accepts all options supported by {@link elgg_get_entities()}
  *
  * @option string $query         Search query
  * @option string $type          Entity type. Required if no search type is set
  * @option string $search_type   Custom search type. Required if no type is set
- * @option array  $fields        An array of fields to search in
+ * @option array  $fields        An array of fields to search in, supported keys are
+ * 		[
+ * 			'attributes' => ['some attribute', 'some other attribute'],
+ *	 		'metadata' => ['some metadata name', 'some other metadata name'],
+ * 			'annotations' => ['some annotation name', 'some other annotation name'],
+ * 			'private_settings' => ['some private_setting name', 'some other private_setting name'],
+ * 		]
  * @option string $sort          An array containing 'property', 'property_type', 'direction' and 'signed'
  * @option bool   $partial_match Allow partial matches, e.g. find 'elgg' when search for 'el'
  * @option bool   $tokenize      Break down search query into tokens,
@@ -25,7 +27,7 @@
  *
  * @return ElggBatch|ElggEntity[]|int|false
  *
- * @see    elgg_get_entities()
+ * @see elgg_get_entities()
  */
 function elgg_search(array $options = []) {
 	try {

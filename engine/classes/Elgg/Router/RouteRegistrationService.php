@@ -196,16 +196,16 @@ class RouteRegistrationService {
 	 * @param string $name       Route name
 	 * @param array  $parameters Query parameters
 	 *
-	 * @return string
+	 * @return false|string
 	 */
 	public function generateUrl($name, array $parameters = []) {
 		try {
 			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
 		} catch (RouteNotFoundException $exception) {
-			$this->logger->error($exception->getMessage());
-
-			return '';
+			$this->logger->notice($exception->getMessage());
 		}
+		
+		return false;
 	}
 
 	/**
