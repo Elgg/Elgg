@@ -80,7 +80,7 @@ function get_config($name) {
  * @return bool
  * @since 1.8.0
  *
- * @deprecated Use elgg_remove_config()
+ * @deprecated Use elgg_register_menu_item()
  */
 function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $priority = 100) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_register_menu_item().', '3.0');
@@ -396,7 +396,7 @@ function update_metadata($id, $name, $value, $value_type) {
 function create_metadata($entity_guid, $name, $value, $value_type = '', $ignored1 = null,
 						 $ignored2 = null, $allow_multiple = false) {
 	elgg_deprecated_notice(
-		__FUNCTION__ . ' is deprecated. 
+		__FUNCTION__ . ' is deprecated.
 		Use ElggEntity setter or ElggEntity::setMetadata()',
 		'3.0');
 
@@ -1297,7 +1297,7 @@ function elgg_batch_disable_callback($object) {
  */
 function elgg_register_page_handler($identifier, callable $function) {
 	elgg_deprecated_notice(
-		__FUNCTION__ . ' has been deprecated. 
+		__FUNCTION__ . ' has been deprecated.
 		Use elgg_register_route() to register a named route or define it in elgg-plugin.php',
 		'3.0'
 	);
@@ -1317,7 +1317,7 @@ function elgg_register_page_handler($identifier, callable $function) {
  */
 function elgg_unregister_page_handler($identifier) {
 	elgg_deprecated_notice(
-		__FUNCTION__ . ' has been deprecated. 
+		__FUNCTION__ . ' has been deprecated.
 		Use new routing API to register and unregister routes.',
 		'3.0'
 	);
