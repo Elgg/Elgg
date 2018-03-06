@@ -33,23 +33,23 @@
 *************************************** */
 .elgg-module-info {
 	border: 1px solid $(border-color-soft);
-}
-
-.elgg-module-info > .elgg-head {
-	background-color: $(background-color-mild);
-	padding: 0.5rem 1rem;
-}
-
-.elgg-module-info > .elgg-head * {
-	color: $(text-color-strong);
-}
-
-.elgg-module-info > .elgg-body {
-	padding: 1rem;
-}
-
-.elgg-module-info > .elgg-foot {
-	padding: 0.5rem 1rem;
+	
+	> .elgg-head {
+		background-color: $(background-color-mild);
+		padding: 0.5rem 1rem;
+		
+		> * {
+			color: $(text-color-strong);
+		}
+	}
+	
+	> .elgg-body {
+		padding: 1rem;
+	}
+	
+	> .elgg-foot {
+		padding: 0.5rem 1rem;
+	}
 }
 
 /* ***************************************
@@ -62,14 +62,14 @@
 	padding: 0.5rem;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 	border-top: 1px solid $(border-color-soft);
-}
-
-.elgg-module-popup > .elgg-head {
-	margin-bottom: 0.5rem;
-}
-
-.elgg-module-popup > .elgg-head * {
-	color: $(text-color-strong);
+	
+	> .elgg-head {
+		margin-bottom: 0.5rem;
+		
+		> * {
+			color: $(text-color-strong);
+		}
+	}
 }
 
 /* ***************************************
