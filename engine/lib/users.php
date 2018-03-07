@@ -804,18 +804,7 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
 
-	elgg_register_action('login', '', 'public');
-	elgg_register_action('logout');
-	elgg_register_action('register', '', 'public');
-	elgg_register_action('useradd', '', 'admin');
-	elgg_register_action('avatar/upload');
-	elgg_register_action('avatar/crop');
-	elgg_register_action('avatar/remove');
-
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
-
-	elgg_register_action('user/changepassword', '', 'public');
-	elgg_register_action('user/requestnewpassword', '', 'public');
 
 	// Register the user type
 	elgg_register_entity_type('user', '');

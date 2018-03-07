@@ -1604,8 +1604,7 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
  * @access private
  */
 function _elgg_init() {
-	elgg_register_action('entity/delete');
-
+	
 	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
 		$result['links']['manifest'] = [
 			'rel' => 'manifest',
@@ -1672,6 +1671,35 @@ function _elgg_register_routes() {
 }
 
 /**
+ * Register core actions
+ * @return void
+ * @internal
+ */
+function _elgg_register_actions() {
+	$conf = \Elgg\Project\Paths::elgg() . 'engine/actions.php';
+	$actions = \Elgg\Includer::includeFile($conf);
+	
+	$root_path = \Elgg\Project\Paths::elgg();
+
+	foreach ($actions as $action => $action_spec) {
+		if (!is_array($action_spec)) {
+			continue;
+		}
+		
+		$access = elgg_extract('access', $action_spec, 'logged_in');
+		$handler = elgg_extract('controller', $action_spec);
+		if (!$handler) {
+			$handler = elgg_extract('filename', $action_spec);
+			if (!$handler) {
+				$handler = "$root_path/actions/{$action}.php";
+			}
+		}
+		
+		elgg_register_action($action, $handler, $access);
+	}
+}
+
+/**
  * Adds unit tests for the general API.
  *
  * @param string $hook   unit_test
@@ -1698,6 +1726,7 @@ function _elgg_api_test($hook, $type, $value, $params) {
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 
 	_elgg_register_routes();
+	_elgg_register_actions();
 
 	elgg_set_entity_class('user', 'user', \ElggUser::class);
 	elgg_set_entity_class('group', 'group', \ElggGroup::class);

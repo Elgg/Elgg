@@ -157,34 +157,6 @@ function _elgg_admin_init() {
 		]);
 	}
 
-	elgg_register_action('admin/user/ban', '', 'admin');
-	elgg_register_action('admin/user/unban', '', 'admin');
-	elgg_register_action('admin/user/delete', '', 'admin');
-	elgg_register_action('admin/user/resetpassword', '', 'admin');
-	elgg_register_action('admin/user/makeadmin', '', 'admin');
-	elgg_register_action('admin/user/removeadmin', '', 'admin');
-	elgg_register_action('admin/user/validate', '', 'admin');
-	elgg_register_action('admin/user/bulk/delete', '', 'admin');
-	elgg_register_action('admin/user/bulk/validate', '', 'admin');
-
-	elgg_register_action('admin/site/update_basic', '', 'admin');
-	elgg_register_action('admin/site/update_advanced', '', 'admin');
-	elgg_register_action('admin/site/flush_cache', '', 'admin');
-	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
-	elgg_register_action('admin/site/set_robots', '', 'admin');
-	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
-
-	elgg_register_action('admin/upgrades/upgrade_database_guid_columns', '', 'admin');
-	elgg_register_action('admin/upgrade', '', 'admin');
-
-	elgg_register_action('admin/menu/save', '', 'admin');
-
-	elgg_register_action('admin/delete_admin_notice', '', 'admin');
-	elgg_register_action('admin/delete_admin_notices', '', 'admin');
-	
-	elgg_register_action('admin/security/settings', '', 'admin');
-	elgg_register_action('admin/security/regenerate_site_secret', '', 'admin');
-	
 	elgg_register_simplecache_view('admin.css');
 	
 	// widgets
