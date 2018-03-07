@@ -258,7 +258,11 @@ final class Email {
 	 * @throws InvalidParameterException
 	 */
 	protected static function prepareFrom($from) {
-		if ($from instanceof ElggEntity) {
+		if (empty($from)) {
+			// get the site email address
+			$site = elgg_get_site_entity();
+			$from = new Address($site->getEmailAddress(), $site->getDisplayName());
+		} else if ($from instanceof ElggEntity) {
 			// If there's an email address, use it - but only if it's not from a user.
 			if (!$from instanceof ElggUser && $from->email) {
 				$from = new Address($from->email, $from->getDisplayName());
