@@ -22,7 +22,7 @@ $form_vars = [
 ];
 
 if (elgg_action_exists("{$plugin_id}/settings/save")) {
-	$form_vars['action'] = "{$plugin_id}/settings/save";
+	$form_vars['action'] = "action/{$plugin_id}/settings/save";
 }
 
 echo elgg_view_form('plugins/settings/save', $form_vars, $vars);

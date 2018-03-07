@@ -46,7 +46,7 @@ elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
 $form_vars = [];
 
 if (elgg_action_exists("{$plugin->getID()}/usersettings/save")) {
-	$form_vars['action'] = "{$plugin->getID()}/usersettings/save";
+	$form_vars['action'] = "action/{$plugin->getID()}/usersettings/save";
 }
 
 $content = elgg_view_form('plugins/usersettings/save', $form_vars, ['entity' => $plugin]);
