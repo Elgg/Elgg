@@ -20,11 +20,17 @@ define(function(require) {
 				return;
 			}
 
-			if (json && (typeof json.forward === 'string')) {
-				elgg.forward(json.forward);
-			} else {
-				elgg.forward();
+			if (json) {
+				if (typeof json.forward === 'string') {
+					elgg.forward(json.forward);
+					return;
+				} else if (json.forward === -1) {
+					elgg.forward(location.href);
+					return;
+				}
 			}
+			
+			elgg.forward();
 		});
 
 		e.preventDefault();
