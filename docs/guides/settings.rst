@@ -30,6 +30,16 @@ An example ``settings.php`` would look like:
 
    You cannot use form components that send no value when "off." These include radio inputs and check boxes.
 
+If your plugin settings require a cache flush you can add a (hidden) input on the form with the name 'flush_cache' and value '1'
+  
+.. code-block:: php
+
+	elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'flush_cache',
+		'value' => 1,
+	]);
+
 User settings
 -------------
 
