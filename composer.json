@@ -45,7 +45,9 @@
         "bower-asset/normalize-css": "dev-master",
         "symfony/routing": "^3.3",
         "php-di/php-di": "^5.4",
-        "doctrine/cache": "^1.6"
+        "doctrine/cache": "^1.6",
+        "npm-asset/formdata-polyfill": "^3.0",
+        "npm-asset/weakmap-polyfill": "^2.0"
     },
     "config": {
         "process-timeout": 0,

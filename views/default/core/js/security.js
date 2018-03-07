@@ -11,11 +11,11 @@ elgg.security.tokenRefreshTimer = null;
  *
  * @param {Object} token_object Value to replace elgg.security.token
  * @param {Object} valid_tokens Map of valid tokens (as keys) in the current page
- * @return {Void}
+ * @return {void}
  *
  * @private
  */
-elgg.security.setToken = function(token_object, valid_tokens) {
+elgg.security.setToken = function (token_object, valid_tokens) {
 	// update the convenience object
 	elgg.security.token = token_object;
 
@@ -28,7 +28,7 @@ elgg.security.setToken = function(token_object, valid_tokens) {
 	});
 
 	// also update all links that contain tokens and time stamps
-	$('[href*="__elgg_ts"][href*="__elgg_token"]').each(function() {
+	$('[href*="__elgg_ts"][href*="__elgg_token"]').each(function () {
 		var token = this.href.match(/__elgg_token=([0-9a-z_-]+)/i)[1];
 		if (valid_tokens[token]) {
 			this.href = this.href
@@ -46,7 +46,7 @@ elgg.security.setToken = function(token_object, valid_tokens) {
  *
  * @private
  */
-elgg.security.refreshToken = function() {
+elgg.security.refreshToken = function () {
 	// round up token pairs present
 	var pairs = {};
 
@@ -62,13 +62,13 @@ elgg.security.refreshToken = function() {
 		}
 	});
 
-	$('[href*="__elgg_ts"][href*="__elgg_token"]').each(function() {
+	$('[href*="__elgg_ts"][href*="__elgg_token"]').each(function () {
 		var ts = this.href.match(/__elgg_ts=(\d+)/i)[1];
 		var token = this.href.match(/__elgg_token=([0-9a-z_-]+)/i)[1];
 		pairs[ts + ',' + token] = 1;
 	});
 
-	pairs = $.map(pairs, function(val, key) {
+	pairs = $.map(pairs, function (val, key) {
 		return key;
 	});
 
@@ -79,7 +79,7 @@ elgg.security.refreshToken = function() {
 		},
 		dataType: 'json',
 		method: 'POST',
-		success: function(data) {
+		success: function (data) {
 			if (data) {
 				elgg.session.token = data.session_token;
 				elgg.security.setToken(data.token, data.valid_tokens);
@@ -94,18 +94,19 @@ elgg.security.refreshToken = function() {
 				}
 			}
 		},
-		error: function() {}
+		error: function () {
+		}
 	});
 };
 
 /**
  * Add elgg action tokens to an object, URL, or query string (with a ?).
  *
- * @param {Object|string} data
- * @return {Object} The new data object including action tokens
+ * @param {FormData|Object|string} data
+ * @return {FormData|Object|string} The new data object including action tokens
  * @private
  */
-elgg.security.addToken = function(data) {
+elgg.security.addToken = function (data) {
 
 	// 'http://example.com?data=sofar'
 	if (elgg.isString(data)) {
@@ -113,7 +114,7 @@ elgg.security.addToken = function(data) {
 		var parts = elgg.parse_url(data),
 			args = {},
 			base = '';
-		
+
 		if (parts['host'] === undefined) {
 			if (data.indexOf('?') === 0) {
 				// query string
@@ -146,6 +147,12 @@ elgg.security.addToken = function(data) {
 		return elgg.extend(data, elgg.security.token);
 	}
 
+	if (data instanceof FormData) {
+		data.set('__elgg_ts', elgg.security.token.__elgg_ts);
+		data.set('__elgg_token', elgg.security.token.__elgg_token);
+		return data;
+	}
+
 	// oops, don't recognize that!
 	throw new TypeError("elgg.security.addToken not implemented for " + (typeof data) + "s");
 };
@@ -153,7 +160,7 @@ elgg.security.addToken = function(data) {
 /**
  * @private
  */
-elgg.security.init = function() {
+elgg.security.init = function () {
 	// elgg.security.interval is set in the `elgg.js` view.
 	elgg.security.tokenRefreshTimer = setInterval(elgg.security.refreshToken, elgg.security.interval);
 };
