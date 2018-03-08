@@ -474,8 +474,6 @@ function _elgg_user_settings_init() {
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_username');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_email');
 
-	elgg_register_action("usersettings/save");
-
 	// extend the account settings form
 	elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
 	elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);

@@ -174,11 +174,6 @@ function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
  * @access private
  */
 function _elgg_widgets_init() {
-	elgg_register_action('widgets/save');
-	elgg_register_action('widgets/add');
-	elgg_register_action('widgets/move');
-	elgg_register_action('widgets/delete');
-
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_widgets_widget_urls');
 }
 

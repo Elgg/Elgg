@@ -409,7 +409,6 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
  * @access private
  */
 function _elgg_river_init() {
-	elgg_register_action('river/delete');
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
