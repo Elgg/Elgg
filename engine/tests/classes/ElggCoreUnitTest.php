@@ -27,7 +27,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 	final public function setUp() {
 
 		// Make sure the application has been bootstrapped correctly
-		$this->assertIsA(elgg(), Application::class);
+		$this->assertIsA(elgg(), \DI\Container::class);
 		$this->assertIsA(_elgg_services(), ServiceProvider::class);
 		$this->assertIsA(_elgg_services()->config, Config::class);
 

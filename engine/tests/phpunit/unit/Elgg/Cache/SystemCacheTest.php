@@ -90,6 +90,21 @@ class SystemCacheTest extends UnitTestCase {
 
 		elgg_reset_system_cache();
 	}
+	
+	public function testCanDeleteSingleKeyFromCache() {
+		elgg_enable_system_cache();
+		elgg_reset_system_cache();
+		
+		elgg_save_system_cache('foo', 'bar');
+		elgg_save_system_cache('foo2', 'bar2');
+		
+		$this->assertTrue(elgg_delete_system_cache('foo'));
+		$this->assertNull(elgg_load_system_cache('foo'));
+		
+		$this->assertEquals('bar2', elgg_load_system_cache('foo2'));
+		
+		elgg_reset_system_cache();
+	}
 
 
 }

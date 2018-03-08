@@ -49,7 +49,7 @@ echo elgg_view('core.css');
 		padding: 2rem;
 		background: #ffffff;
 		border: 1px solid #e6e6ea;
-		margin: 1rem auto;
+		margin: 1rem 0.5rem;
 	}
 
 	.elgg-page-topbar .elgg-menu-container {

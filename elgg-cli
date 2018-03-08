@@ -1,16 +1,17 @@
 #!/usr/bin/env php
 <?php
 if (PHP_SAPI !== 'cli') {
-	echo "You must use the command line to run this script.\n";
+	echo "You must use the command line to run this script." . PHP_EOL;
 	die(1);
 }
 
 // Load dependencies
 // Check various installation paths, which may vary depending on how Elgg was installed
 $files = [
-	__DIR__ . '/../../autoload.php',
+	__DIR__ . '/../../autoload.php', // Elgg in Composer project
 	__DIR__ . '/../vendor/autoload.php',
-	__DIR__ . '/vendor/autoload.php',
+	__DIR__ . '/vendor/autoload.php', // Elgg as base path
+	__DIR__ . '/../autoload.php', // from Composer bin directory
 ];
 
 foreach ($files as $file) {
@@ -21,14 +22,13 @@ foreach ($files as $file) {
 
 if (!class_exists('\Elgg\Application')) {
 	fwrite(STDERR, "Composer dependencies are not installed "
-			. "or you are trying to run the script outside of an Elgg installation's root directory.\n");
+			. "or you are trying to run the script outside of an Elgg installation's root directory." . PHP_EOL);
 	die(2);
 }
 
-$path = \Elgg\Application::elggDir()->getPath('elgg-config/settings.php');
+$settings_file = \Elgg\Project\Paths::settingsFile();
 
-$installed = is_file($path);
-
+$installed = is_file($settings_file);
 if ($installed) {
     \Elgg\Application::start();
     _elgg_services()->cli->run();

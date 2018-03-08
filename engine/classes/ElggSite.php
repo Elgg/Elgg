@@ -184,4 +184,13 @@ class ElggSite extends \ElggEntity {
 
 		return $email;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggEntity::canComment()
+	 * @since 3.0
+	 */
+	public function canComment($user_guid = 0, $default = null) {
+		return false;
+	}
 }

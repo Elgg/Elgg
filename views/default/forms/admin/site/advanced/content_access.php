@@ -27,4 +27,4 @@ $body .= elgg_view_field([
 	'switch' => true,
 ]);
 
-echo elgg_view_module('inline', elgg_echo('admin:legend:content_access'), $body, ['id' => 'elgg-settings-advanced-content-access']);
+echo elgg_view_module('info', elgg_echo('admin:legend:content_access'), $body, ['id' => 'elgg-settings-advanced-content-access']);

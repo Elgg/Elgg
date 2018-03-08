@@ -77,11 +77,15 @@ return array(
 	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functions',
-	'developers:inspect:file_location' => 'File path from Elgg root',
+	'developers:inspect:file_location' => 'File path from Elgg root or controller',
 	'developers:inspect:route' => 'Route Name',
 	'developers:inspect:path' => 'Path Pattern',
 	'developers:inspect:resource' => 'Resource View',
 	'developers:inspect:handler' => 'Handler',
+	'developers:inspect:controller' => 'Controller',
+	'developers:inspect:file' => 'File',
+	'developers:inspect:middleware' => 'File',
+	'developers:inspect:handler_type' => 'Handled by',
 
 	// event logging
 	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",

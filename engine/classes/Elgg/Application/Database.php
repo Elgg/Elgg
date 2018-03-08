@@ -1,14 +1,14 @@
 <?php
 namespace Elgg\Application;
 
+use DatabaseException;
+use Doctrine\DBAL\Connection;
 use Elgg\Database as ElggDb;
 
 /**
  * Elgg 3.0 public database API
  *
- * This is returned by elgg()->getDb() or Application::start()->getDb().
- *
- * @see \Elgg\Application::getDb for more details.
+ * This is returned by elgg()->db or Application::start()->getDb().
  *
  * @property-read string $prefix Elgg table prefix (read only)
  */
@@ -46,7 +46,7 @@ class Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function getData($query, $callback = '', array $params = []) {
 		return $this->db->getData($query, $callback, $params);
@@ -64,7 +64,7 @@ class Database {
 	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function getDataRow($query, $callback = '', array $params = []) {
 		return $this->db->getDataRow($query, $callback, $params);
@@ -80,7 +80,7 @@ class Database {
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function insertData($query, array $params = []) {
 		return $this->db->insertData($query, $params);
@@ -98,7 +98,7 @@ class Database {
 	 * @param array  $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return bool|int
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function updateData($query, $getNumRows = false, array $params = []) {
 		return $this->db->updateData($query, $getNumRows, $params);
@@ -113,7 +113,7 @@ class Database {
 	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return int The number of affected rows
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function deleteData($query, array $params = []) {
 		return $this->db->deleteData($query, $params);
@@ -136,7 +136,7 @@ class Database {
 	 *
 	 * @param string $value Value to escape
 	 * @return string
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 * @deprecated Use query parameters where possible
 	 */
 	public function sanitizeString($value) {
@@ -149,11 +149,29 @@ class Database {
 	 * @param string $type The type of link we want: "read", "write" or "readwrite".
 	 *
 	 * @return Connection
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 * @access private
 	 */
 	public function getConnection($type) {
 		return $this->db->getConnection($type);
+	}
+
+	/**
+	 * Queue a query for execution upon shutdown.
+	 *
+	 * You can specify a callback if you care about the result. This function will always
+	 * be passed a \Doctrine\DBAL\Driver\Statement.
+	 *
+	 * @param string   $query    The query to execute
+	 * @param string   $type     The query type ('read' or 'write')
+	 * @param callable $callback A callback function to pass the results array to
+	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
+	 *
+	 * @return boolean Whether registering was successful.
+	 * @access private
+	 */
+	public function registerDelayedQuery($query, $type, $callback = null, array $params = []) {
+		return $this->db->registerDelayedQuery($query, $type, $callback, $params);
 	}
 
 	/**

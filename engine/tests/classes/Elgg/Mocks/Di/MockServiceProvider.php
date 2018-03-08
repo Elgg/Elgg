@@ -13,6 +13,7 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections       ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings         Private settings table mock
  * @property-read \Elgg\Mocks\Database\UsersTable           $usersTable              Users table
+ * @property-read \Elgg\Notifications\NotificationsService  $notifications           Notification service (with memory queue)
  *
  * @since 2.3
  */
@@ -98,7 +99,18 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		$this->setFactory('plugins', function (MockServiceProvider $sp) {
 			$cache = $sp->dataCache->plugins;
 
-			return new \Elgg\Mocks\Database\Plugins($cache, $this->db);
+			return new \Elgg\Mocks\Database\Plugins(
+				$cache,
+				$this->db,
+				$this->session,
+				$this->hooks,
+				$this->translator,
+				$this->views,
+				$this->privateSettingsCache,
+				$this->config,
+				$this->systemMessages,
+				$this->request->getContextStack()
+			);
 		});
 
 		$this->setFactory('siteSecret', function (MockServiceProvider $sp) {
@@ -109,5 +121,10 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 			return new \Elgg\Mocks\Database\UsersTable($sp->config, $sp->db, $sp->metadataTable);
 		});
 
+		$this->setFactory('notifications', function(MockServiceProvider $c) {
+			$queue = new \Elgg\Queue\MemoryQueue();
+			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
+			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
+		});
 	}
 }

@@ -7,6 +7,9 @@
  * @subpackage Logging
  */
 
+use Elgg\SystemLog\SystemLog;
+use Elgg\SystemLog\SystemLogEntry;
+
 /**
  * Retrieve the system log based on a number of parameters.
  *
@@ -25,7 +28,7 @@
  * @option int       $created_after     Upper time limit
  * @option string    $ip_address        The IP address.
  *
- * @return int|stdClass[]
+ * @return int|SystemLogEntry[]
  */
 function system_log_get_log($options = null) {
 
@@ -47,16 +50,18 @@ function system_log_get_log($options = null) {
 		$options['count'] = $arguments[7];
 		$options['created_before'] = $arguments[8];
 		$options['created_after'] = $arguments[9];
-		$options['object_id'] = $arguments[10];
+		if ($arguments[10]) {
+			// legacy usage of function uses 0 to signify all
+			$options['object_id'] = $arguments[10];
+		}
 		$options['ip_address'] = $arguments[11];
 	}
 
-	$query = new \Elgg\SystemLog\SystemLogQuery();
-	foreach ($options as $key => $value) {
-		$query->$key = $value;
-	}
+	$log = elgg()->system_log;
 
-	return $query->execute();
+	/* @var $log SystemLog */
+
+	return $log->getAll($options);
 }
 
 /**
@@ -64,24 +69,24 @@ function system_log_get_log($options = null) {
  *
  * @param int $entry_id The log entry
  *
- * @return stdClass|false
+ * @return SystemLogEntry|false
+ * @throws DatabaseException
  */
 function system_log_get_log_entry($entry_id) {
-	$entry_id = (int) $entry_id;
+	$log = elgg()->system_log;
 
-	$qb = \Elgg\Database\Select::fromTable('system_log');
-	$qb->select('*');
-	$qb->where($qb->compare('id', '=', $entry_id, ELGG_VALUE_INTEGER));
+	/* @var $log SystemLog */
 
-	return _elgg_services()->db->getDataRow($qb);
+	return $log->get($entry_id);
 }
 
 /**
  * Return the object referred to by a given log entry
  *
- * @param \stdClass|int $entry The log entry row or its ID
+ * @param stdClass|int $entry The log entry row or its ID
  *
- * @return mixed
+ * @return ElggData|false
+ * @throws DatabaseException
  */
 function system_log_get_object_from_log_entry($entry) {
 	if (is_numeric($entry)) {
@@ -91,39 +96,7 @@ function system_log_get_object_from_log_entry($entry) {
 		}
 	}
 
-	$class = $entry->object_class;
-	$id = $entry->object_id;
-
-	if (!class_exists($class)) {
-		// failed autoload
-		return false;
-	}
-
-	$getters = [
-		ElggAnnotation::class => 'elgg_get_annotation_from_id',
-		ElggMetadata::class => 'elgg_get_metadata_from_id',
-		ElggRelationship::class => 'get_relationship',
-	];
-
-	if (isset($getters[$class]) && is_callable($getters[$class])) {
-		$object = call_user_func($getters[$class], $id);
-	} else if (preg_match('~^Elgg[A-Z]~', $class)) {
-		$object = get_entity($id);
-	} else {
-		// surround with try/catch because object could be disabled
-		try {
-			$object = new $class($entry->object_id);
-
-			return $object;
-		} catch (Exception $e) {
-		}
-	}
-
-	if (!is_object($object) || get_class($object) !== $class) {
-		return false;
-	}
-
-	return $object;
+	return $entry->getObject();
 }
 
 /**
@@ -137,47 +110,33 @@ function system_log_get_object_from_log_entry($entry) {
  * @return void
  */
 function system_log($object, $event) {
-	$insert = new \Elgg\SystemLog\SystemLogInsert();
-	return $insert->insert($object, $event);
+	$log = elgg()->system_log;
+	/* @var $log SystemLog */
+
+	$log->insert($object, $event);
 }
 
 /**
  * This function creates an archive copy of the system log.
  *
- * @param int $offset An offset in seconds from now to archive (useful for log rotation)
+ * @param int $offset An offset in seconds that has passed since the time of log entry
  *
  * @return bool
+ * @throws DatabaseException
  */
 function system_log_archive_log($offset = 0) {
-	$offset = (int) $offset;
-	$now = time(); // Take a snapshot of now
-	$prefix = _elgg_config()->dbprefix;
 
-	$ts = $now - $offset;
+	$log = elgg()->system_log;
+	/* @var $log SystemLog */
 
-	// create table
-	$query = "
-		CREATE TABLE {$prefix}system_log_$now as
-			SELECT * FROM {$prefix}system_log 
-			WHERE time_created < $ts
-	";
+	$time = $log->getCurrentTime()->getTimestamp();
 
-	if (!update_data($query)) {
-		return false;
-	}
+	$cutoff = $time - (int) $offset;
 
-	// delete
-	// Don't delete on time since we are running in a concurrent environment
-	if (delete_data("DELETE from {$prefix}system_log WHERE time_created < $ts") === false) {
-		return false;
-	}
+	$created_before = new DateTime();
+	$created_before->setTimestamp($cutoff);
 
-	// alter table to engine
-	if (!update_data("ALTER TABLE {$prefix}system_log_$now engine=archive")) {
-		return false;
-	}
-
-	return true;
+	return $log->archive($created_before);
 }
 
 /**
@@ -189,13 +148,16 @@ function system_log_archive_log($offset = 0) {
  */
 function system_log_get_seconds_in_period($period) {
 	$seconds_in_day = 86400;
+
 	switch ($period) {
 		case 'weekly':
 			$offset = $seconds_in_day * 7;
 			break;
+
 		case 'yearly':
 			$offset = $seconds_in_day * 365;
 			break;
+
 		case 'monthly':
 		default:
 			// assume 28 days even if a month is longer. Won't cause data loss.
@@ -206,34 +168,24 @@ function system_log_get_seconds_in_period($period) {
 }
 
 /**
- * This function deletes archived copies of the system logs that are older than specified
+ * This function deletes archived copies of the system logs that are older than specified offset
  *
- * @param int $time_of_delete An offset in seconds from now to delete log tables
+ * @param int $offset An offset in seconds that has passed since the time of archival
  *
  * @return bool
+ * @throws DatabaseException
  */
-function system_log_browser_delete_log($time_of_delete) {
-	$dbprefix = elgg_get_config('dbprefix');
-	$cutoff = time() - (int) $time_of_delete;
+function system_log_browser_delete_log($offset) {
 
-	$deleted_tables = false;
-	$results = get_data("SHOW TABLES like '{$dbprefix}system_log_%'");
-	if ($results) {
-		foreach ($results as $result) {
-			$data = (array) $result;
-			$table_name = array_shift($data);
-			// extract log table rotation time
-			$log_time = str_replace("{$dbprefix}system_log_", '', $table_name);
-			if ($log_time < $cutoff) {
-				if (delete_data("DROP TABLE $table_name") !== false) {
-					// delete_data returns 0 when dropping a table (false for failure)
-					$deleted_tables = true;
-				} else {
-					elgg_log("Failed to delete the log table $table_name", 'ERROR');
-				}
-			}
-		}
-	}
+	$log = elgg()->system_log;
+	/* @var $log SystemLog */
 
-	return $deleted_tables;
+	$time = $log->getCurrentTime()->getTimestamp();
+
+	$cutoff = $time - (int) $offset;
+
+	$archived_before = new DateTime();
+	$archived_before->setTimestamp($cutoff);
+
+	return $log->deleteArchive($archived_before);
 }

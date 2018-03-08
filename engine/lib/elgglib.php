@@ -13,15 +13,11 @@ use Elgg\Http\ResponseBuilder;
 /**
  * Get a reference to the global Application object
  *
- * @return Elgg\Application
+ * @return \Elgg\Di\PublicContainer
  * @since 2.0.0
  */
 function elgg() {
-	if (!isset(Elgg\Application::$_instance)) {
-		throw new \RuntimeException(__FUNCTION__ . ' should not be called before an instanceof ' . \Elgg\Application::class . ' is bootstrapped');
-	}
-
-	return Elgg\Application::$_instance;
+	return _elgg_services()->dic;
 }
 
 /**
@@ -354,7 +350,7 @@ function elgg_get_file_list($directory, $exceptions = [], $list = [], $extension
  * @return integer The number of messages
  */
 function count_messages($register = "") {
-	return _elgg_services()->systemMessages->count($register);
+	return elgg()->system_messages->count($register);
 }
 
 /**
@@ -365,7 +361,7 @@ function count_messages($register = "") {
  * @return bool
  */
 function system_message($message) {
-	_elgg_services()->systemMessages->addSuccessMessage($message);
+	elgg()->system_messages->addSuccessMessage($message);
 	return true;
 }
 
@@ -377,7 +373,7 @@ function system_message($message) {
  * @return bool
  */
 function register_error($error) {
-	_elgg_services()->systemMessages->addErrorMessage($error);
+	elgg()->system_messages->addErrorMessage($error);
 	return true;
 }
 
@@ -388,7 +384,7 @@ function register_error($error) {
  * @since 2.1
  */
 function elgg_get_system_messages() {
-	return _elgg_services()->systemMessages->loadRegisters();
+	return elgg()->system_messages->loadRegisters();
 }
 
 /**
@@ -399,7 +395,7 @@ function elgg_get_system_messages() {
  * @since 2.1
  */
 function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
-	_elgg_services()->systemMessages->saveRegisters($set);
+	elgg()->system_messages->saveRegisters($set);
 }
 
 /**
@@ -522,7 +518,7 @@ function elgg_clear_event_handlers($event, $object_type) {
  * @example documentation/examples/events/trigger.php
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
-	return _elgg_services()->hooks->getEvents()->trigger($event, $object_type, $object);
+	return elgg()->events->trigger($event, $object_type, $object);
 }
 
 /**
@@ -543,7 +539,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @see elgg_trigger_after_event()
  */
 function elgg_trigger_before_event($event, $object_type, $object = null) {
-	return _elgg_services()->hooks->getEvents()->triggerBefore($event, $object_type, $object);
+	return elgg()->events->triggerBefore($event, $object_type, $object);
 }
 
 /**
@@ -562,7 +558,7 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  * @see elgg_trigger_before_event()
  */
 function elgg_trigger_after_event($event, $object_type, $object = null) {
-	return _elgg_services()->hooks->getEvents()->triggerAfter($event, $object_type, $object);
+	return elgg()->events->triggerAfter($event, $object_type, $object);
 }
 
 /**
@@ -579,7 +575,7 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  * @see elgg_trigger_event()
  */
 function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message = null, $version = null) {
-	return _elgg_services()->hooks->getEvents()->triggerDeprecated($event, $object_type, $object, $message, $version);
+	return elgg()->events->triggerDeprecated($event, $object_type, $object, $message, $version);
 }
 
 /**
@@ -643,7 +639,7 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
  * @since 1.8.0
  */
 function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 500) {
-	return _elgg_services()->hooks->registerHandler($hook, $type, $callback, $priority);
+	return elgg()->hooks->registerHandler($hook, $type, $callback, $priority);
 }
 
 /**
@@ -658,7 +654,7 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
  * @since 1.8.0
  */
 function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
-	_elgg_services()->hooks->unregisterHandler($hook, $entity_type, $callback);
+	elgg()->hooks->unregisterHandler($hook, $entity_type, $callback);
 }
 
 /**
@@ -671,7 +667,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @since 2.0
  */
 function elgg_clear_plugin_hook_handlers($hook, $type) {
-	_elgg_services()->hooks->clearHandlers($hook, $type);
+	elgg()->hooks->clearHandlers($hook, $type);
 }
 
 /**
@@ -729,7 +725,7 @@ function elgg_clear_plugin_hook_handlers($hook, $type) {
  * @since 1.8.0
  */
 function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = null) {
-	return _elgg_services()->hooks->trigger($hook, $type, $params, $returnvalue);
+	return elgg()->hooks->trigger($hook, $type, $params, $returnvalue);
 }
 
 /**
@@ -743,7 +739,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
  * @since 2.0.0
  */
 function elgg_get_ordered_hook_handlers($hook, $type) {
-	return _elgg_services()->hooks->getOrderedHandlers($hook, $type);
+	return elgg()->hooks->getOrderedHandlers($hook, $type);
 }
 
 /**
@@ -757,7 +753,7 @@ function elgg_get_ordered_hook_handlers($hook, $type) {
  * @since 2.0.0
  */
 function elgg_get_ordered_event_handlers($event, $type) {
-	return _elgg_services()->hooks->getEvents()->getOrderedHandlers($event, $type);
+	return elgg()->hooks->getEvents()->getOrderedHandlers($event, $type);
 }
 
 /**
@@ -1163,7 +1159,8 @@ function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'
 }
 
 /**
- * Calls a callable passing arguments and applying logic based on flags
+ * Calls a callable autowiring the arguments using public DI services
+ * and applying logic based on flags
  *
  * @param int     $flags   Bitwise flags
  *                         ELGG_IGNORE_ACCESS
@@ -1176,36 +1173,7 @@ function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'
  * @throws Exception
  */
 function elgg_call(int $flags, Closure $closure) {
-
-	$ia = elgg_get_ignore_access();
-	if ($flags & ELGG_IGNORE_ACCESS) {
-		elgg_set_ignore_access(true);
-	} else if ($flags & ELGG_ENFORCE_ACCESS) {
-		elgg_set_ignore_access(false);
-	}
-
-	$ha = access_get_show_hidden_status();
-	if ($flags & ELGG_SHOW_DISABLED_ENTITIES) {
-		access_show_hidden_entities(true);
-	} else if ($flags & ELGG_HIDE_DISABLED_ENTITIES) {
-		access_show_hidden_entities(false);
-	}
-
-	$restore = function () use ($ia, $ha) {
-		elgg_set_ignore_access($ia);
-		access_show_hidden_entities($ha);
-	};
-
-	try {
-		$result = $closure();
-	} catch (\Exception $e) {
-		$restore();
-		throw $e;
-	}
-
-	$restore();
-
-	return $result;
+	return _elgg_services()->invoker->call($flags, $closure);
 }
 
 /**
@@ -1345,7 +1313,7 @@ function _elgg_services() {
  */
 function _elgg_shutdown_hook() {
 	try {
-		elgg_trigger_event('shutdown', 'system');
+		_elgg_services()->events->trigger('shutdown', 'system');
 
 		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);
 		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
@@ -1636,8 +1604,7 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
  * @access private
  */
 function _elgg_init() {
-	elgg_register_action('entity/delete');
-
+	
 	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
 		$result['links']['manifest'] = [
 			'rel' => 'manifest',
@@ -1704,6 +1671,35 @@ function _elgg_register_routes() {
 }
 
 /**
+ * Register core actions
+ * @return void
+ * @internal
+ */
+function _elgg_register_actions() {
+	$conf = \Elgg\Project\Paths::elgg() . 'engine/actions.php';
+	$actions = \Elgg\Includer::includeFile($conf);
+	
+	$root_path = \Elgg\Project\Paths::elgg();
+
+	foreach ($actions as $action => $action_spec) {
+		if (!is_array($action_spec)) {
+			continue;
+		}
+		
+		$access = elgg_extract('access', $action_spec, 'logged_in');
+		$handler = elgg_extract('controller', $action_spec);
+		if (!$handler) {
+			$handler = elgg_extract('filename', $action_spec);
+			if (!$handler) {
+				$handler = "$root_path/actions/{$action}.php";
+			}
+		}
+		
+		elgg_register_action($action, $handler, $access);
+	}
+}
+
+/**
  * Adds unit tests for the general API.
  *
  * @param string $hook   unit_test
@@ -1730,6 +1726,7 @@ function _elgg_api_test($hook, $type, $value, $params) {
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 
 	_elgg_register_routes();
+	_elgg_register_actions();
 
 	elgg_set_entity_class('user', 'user', \ElggUser::class);
 	elgg_set_entity_class('group', 'group', \ElggGroup::class);
@@ -1745,6 +1742,7 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 		_elgg_services()->plugins->clear();
 		_elgg_services()->sessionCache->clear();
 		_elgg_services()->dataCache->clear();
+		_elgg_services()->dic_cache->flushAll();
 	});
 
 	$events->registerHandler('init', 'system', '_elgg_init');

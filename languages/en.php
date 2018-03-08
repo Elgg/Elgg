@@ -522,8 +522,9 @@ return array(
 "Navigation for the administration area is provided by the menu to the right. It is organized into
 three sections:
 	<dl>
-		<dt>Administer</dt><dd>Everyday tasks like monitoring reported content, checking who is online, and viewing statistics.</dd>
-		<dt>Configure</dt><dd>Occasional tasks like setting the site name or activating a plugin.</dd>
+		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
+		<dt>Information</dt><dd>Information about your site like statistics.</dd>
 		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
 	</dl>
 	",
@@ -583,7 +584,7 @@ three sections:
 	'admin:security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
 	'admin:security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
 	
-	'admin:security:settings:notify_user_ban' => 'Notify the user when thier account gets (un)banned',
+	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
 	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
 	
 	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
@@ -629,7 +630,7 @@ To go to the site, click here:
 	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
 	'admin:notification:remove_admin:admin:body' => 'Hi %s,
 
-%s removed %s a site administrator of %s.
+%s removed %s as a site administrator of %s.
 
 To view the profile of the old administrator, click here:
 %s

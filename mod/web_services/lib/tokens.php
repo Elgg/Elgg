@@ -22,7 +22,7 @@ function create_user_token($username, $expire = 60) {
 		return false;
 	}
 
-	if (insert_data("INSERT into {$dbprefix}users_apisessions
+	if (elgg()->db->insertData("INSERT into {$dbprefix}users_apisessions
 				(user_guid, token, expires) values
 				({$user->guid}, '$token', '$time')
 				on duplicate key update token='$token', expires='$time'")) {
@@ -45,7 +45,7 @@ function get_user_tokens($user_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$user_guid = (int) $user_guid;
 
-	$tokens = get_data("SELECT * from {$dbprefix}users_apisessions
+	$tokens = elgg()->db->getData("SELECT * from {$dbprefix}users_apisessions
 		where user_guid=$user_guid");
 
 	return $tokens;
@@ -66,7 +66,7 @@ function validate_user_token($token) {
 	$token = sanitise_string($token);
 	$time = time();
 
-	$user = get_data_row("SELECT * from {$dbprefix}users_apisessions
+	$user = elgg()->db->getDataRow("SELECT * from {$dbprefix}users_apisessions
 		where token='$token' and $time < expires");
 
 	if ($user) {
@@ -88,7 +88,7 @@ function remove_user_token($token) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$token = sanitise_string($token);
 
-	return delete_data("DELETE from {$dbprefix}users_apisessions
+	return elgg()->db->deleteData("DELETE from {$dbprefix}users_apisessions
 		where token='$token'");
 }
 
@@ -102,7 +102,7 @@ function remove_expired_user_tokens() {
 	$dbprefix = elgg_get_config('dbprefix');
 	$time = time();
 
-	return delete_data("DELETE from {$dbprefix}users_apisessions
+	return elgg()->db->deleteData("DELETE from {$dbprefix}users_apisessions
 		where expires < $time");
 }
 

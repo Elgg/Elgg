@@ -6,12 +6,12 @@
  * @subpackage Core
  */
 
-$user = elgg_get_page_owner_guid();
+$user = elgg_get_page_owner_entity();
 if (!$user instanceof ElggUser) {
 	return;
 }
 
-$entity_stats = get_entity_statistics($user);
+$entity_stats = get_entity_statistics($user->guid);
 
 if ($entity_stats) {
 	$rows = '';

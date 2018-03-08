@@ -1,7 +1,5 @@
 <?php
 
-elgg_gatekeeper();
-
 $guid = elgg_extract('guid', $vars);
 if (!$guid) {
 	$guid = elgg_get_logged_in_user_guid();

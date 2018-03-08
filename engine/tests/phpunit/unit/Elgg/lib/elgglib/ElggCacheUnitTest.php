@@ -26,7 +26,7 @@ class ElggCacheUnitTest extends \Elgg\UnitTestCase {
 
 		if (is_dir($simplecache_path)) {
 			// Removing to make sure it's recreated
-			unlink($simplecache_path);
+			_elgg_rmdir($simplecache_path);
 		}
 
 		if (is_dir($symlink_path)) {

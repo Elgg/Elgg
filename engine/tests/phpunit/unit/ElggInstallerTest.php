@@ -175,7 +175,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 	public function testRequirements() {
 
-		$this->getApp()->_services->input->set('step', 'requirements');
+		$this->getApp()->_services->request->setParam('step', 'requirements');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -236,7 +236,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 	public function testDatabase() {
 
-		$this->getApp()->_services->input->set('step', 'database');
+		$this->getApp()->_services->request->setParam('step', 'database');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -361,7 +361,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSettingsFile();
 
-		$this->getApp()->_services->input->set('step', 'settings');
+		$this->getApp()->_services->request->setParam('step', 'settings');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -428,7 +428,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSettingsFile();
 
-		$this->getApp()->_services->input->set('step', 'settings');
+		$this->getApp()->_services->request->setParam('step', 'settings');
 
 		$request = $this->prepareHttpRequest('install.php?step=settings', 'POST', [
 			'sitename' => 'Test Site',
@@ -464,7 +464,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSite();
 
-		$this->getApp()->_services->input->set('step', 'admin');
+		$this->getApp()->_services->request->setParam('step', 'admin');
 
 		$mock = $this->mock;
 		/* @var $mock ElggInstaller */
@@ -544,7 +544,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->createSite();
 
-		$this->getApp()->_services->input->set('step', 'admin');
+		$this->getApp()->_services->request->setParam('step', 'admin');
 
 		$request = $this->prepareHttpRequest('install.php?step=admin', 'POST', [
 			'displayname' => 'admin user',
@@ -566,7 +566,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(ElggUser::class, elgg_get_logged_in_user_entity());
 
-		_elgg_services()->session->removeLoggedInUser();
+		$this->getApp()->_services->session->removeLoggedInUser();
 	}
 
 	public function testBatchInstall() {
@@ -583,11 +583,11 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->mock->batchInstall([
 			// database settings
-			'dbuser' => getenv('ELGG_DB_USER'),
-			'dbpassword' => getenv('ELGG_DB_PASS'),
-			'dbname' => getenv('ELGG_DB_NAME'),
-			'dbprefix' => getenv('ELGG_DB_PREFIX'),
-			'dbencoding' => getenv('ELGG_DB_ENCODING'),
+			'dbuser' => getenv('ELGG_DB_USER') ? : 't_i_elgg_dbuser',
+			'dbpassword' => getenv('ELGG_DB_PASS') ? : 't_i_elgg_dbpwd',
+			'dbname' => getenv('ELGG_DB_NAME') ? : 't_i_elgg_dbname',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
 
 			// site settings
 			'sitename' => 'Elgg Travis Site',
@@ -602,7 +602,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'password' => 'fancypassword',
 
 			// timezone
-			'timezone' => 'UTC'
+			'timezone' => 'UTC',
 		]);
 
 		$this->assertNull($this->getApp()->_services->config->installer_running);

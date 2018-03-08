@@ -49,6 +49,28 @@ constants like ``__DIR__``, its return value should not change. The currently su
  * ``user_settings``
  * ``widgets``
 
+elgg-services.php
+=================
+
+Plugins can attach their services to Elgg's public DI container by providing PHP-DI definitions in ``elgg-services.php``
+in the root of the plugin directory.
+
+This file must return an array of PHP-DI definitions. Services will by available via ``elgg()``.
+
+.. code-block::php
+
+   return [
+      PluginService::class => \DI\object()->constructor(\DI\get(DependencyService::class)),
+   ];
+
+Plugins can then use PHP-DI API to autowire and call the service:
+
+.. code-block::php
+
+   $service = elgg()->get(PluginService::class);
+
+See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of definition and invokation possibilities.
+
 Syntax
 ------
 

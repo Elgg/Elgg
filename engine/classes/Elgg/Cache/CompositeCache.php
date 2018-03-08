@@ -5,6 +5,7 @@ namespace Elgg\Cache;
 use DateTime;
 use Elgg\Config;
 use ElggCache;
+use Stash\Driver\Apc;
 use Stash\Driver\BlackHole;
 use Stash\Driver\Composite;
 use Stash\Driver\Ephemeral;
@@ -187,12 +188,12 @@ class CompositeCache extends ElggCache {
 	 */
 	protected function createPool() {
 		$drivers = [];
+		$drivers[] = $this->buildApcDriver();
 		$drivers[] = $this->buildRedisDriver();
 		$drivers[] = $this->buildMemcachedDriver();
 		$drivers[] = $this->buildFileSystemDriver();
 		$drivers[] = $this->buildEphemeralDriver();
 		$drivers[] = $this->buildBlackHoleDriver();
-
 		$drivers = array_filter($drivers);
 
 		if (empty($drivers)) {
@@ -208,6 +209,22 @@ class CompositeCache extends ElggCache {
 		}
 
 		return new Pool($driver);
+	}
+
+	/**
+	 * Builds APC driver
+	 * @return null|Apc
+	 */
+	protected function buildApcDriver() {
+		if (!($this->flags & ELGG_CACHE_APC)) {
+			return null;
+		}
+
+		if (!extension_loaded('apc') || !ini_get('apc.enabled')) {
+			return null;
+		}
+
+		return new Apc();
 	}
 
 	/**

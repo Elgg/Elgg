@@ -75,6 +75,12 @@ class BootService {
 		if ($config->simplecache_lastupdate === null) {
 			$config->simplecache_lastupdate = 0;
 		}
+		if ($config->min_password_length === null) {
+			$config->min_password_length = 6;
+		}
+		if ($config->minusername === null) {
+			$config->minusername = 4;
+		}
 
 		// we were using NOTICE temporarily so we can't just check for null
 		if (!$config->hasInitialValue('debug') && !$config->debug) {

@@ -10,7 +10,7 @@ if (!($widget instanceof \ElggWidget)) {
 	return;
 }
 
-$title_text = $widget->getTitle();
+$title_text = $widget->getDisplayName();
 $url = $widget->getURL();
 if (!empty($url)) {
 	$title_text = elgg_view('output/url', [

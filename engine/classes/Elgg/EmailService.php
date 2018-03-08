@@ -102,6 +102,7 @@ class EmailService {
 		// create the e-mail message
 		$message = new MailMessage();
 		$message->setEncoding('UTF-8');
+		$message->setSender($email->getFrom());
 		$message->addFrom($email->getFrom());
 		$message->addTo($email->getTo());
 		

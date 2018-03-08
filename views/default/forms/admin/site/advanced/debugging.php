@@ -27,4 +27,4 @@ $body = elgg_view_field([
 	'disabled' => $config->hasInitialValue('debug'),
 ]);
 
-echo elgg_view_module('inline', elgg_echo('admin:legend:debug'), $body, ['id' => 'elgg-settings-advanced-debugging']);
+echo elgg_view_module('info', elgg_echo('admin:legend:debug'), $body, ['id' => 'elgg-settings-advanced-debugging']);

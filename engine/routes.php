@@ -4,22 +4,27 @@ return [
 	'index' => [
 		'path' => '/',
 		'resource' => 'index',
+		'walled' => false,
 	],
 	'account:register' => [
 		'path' => '/register',
 		'resource' => 'account/register',
+		'walled' => false,
 	],
 	'account:login' => [
 		'path' => '/login',
 		'resource' => 'account/login',
+		'walled' => false,
 	],
 	'account:password:reset' => [
 		'path' => '/forgotpassword',
 		'resource' => 'account/forgotten_password',
+		'walled' => false,
 	],
 	'account:password:change' => [
 		'path' => '/changepassword',
 		'resource' => 'account/change_password',
+		'walled' => false,
 	],
 	'ajax' => [
 		'path' => '/ajax/{segments}',
@@ -27,29 +32,32 @@ return [
 		'requirements' => [
 			'segments' => '.+',
 		],
+		'middleware' => [
+			\Elgg\Router\Middleware\AjaxGatekeeper::class,
+		]
 	],
 	'robots.txt' => [
 		'path' => '/robots.txt',
 		'resource' => 'robots.txt',
+		'walled' => false,
 	],
 	'favicon.ico' => [
 		'path' => '/favicon.ico',
 		'resource' => 'favicon.ico',
+		'walled' => false,
 	],
 	'manifest.json' => [
 		'path' => '/manifest.json',
 		'resource' => 'manifest.json',
-	],
-	'action' => [
-		'path' => '/action/{segments}',
-		'handler' => '_elgg_action_handler',
-		'requirements' => [
-			'segments' => '.+',
-		],
+		'walled' => false,
 	],
 	'action:token' => [
 		'path' => '/refresh_token',
-		'handler' => '_elgg_csrf_token_refresh',
+		'controller' => \Elgg\Controllers\RefreshCsrfToken::class,
+		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\AjaxGatekeeper::class,
+		]
 	],
 	'admin' => [
 		'path' => '/admin/{segments?}',
@@ -57,18 +65,30 @@ return [
 		'requirements' => [
 			'segments' => '.+',
 		],
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
 	],
 	'admin_plugins_refresh' => [
 		'path' => '/admin_plugins_refresh',
 		'handler' => '_elgg_ajax_plugins_update',
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
 	],
 	'admin_plugin_text_file' => [
 		'path' => '/admin_plugin_text_file/{plugin_id}/{filename}',
 		'resource' => 'admin/plugin_text_file',
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
 	],
 	'phpinfo' => [
 		'path' => '/phpinfo',
 		'resource' => 'phpinfo',
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
 	],
 	'cron' => [
 		'path' => '/cron/{segments}',
@@ -76,6 +96,7 @@ return [
 		'requirements' => [
 			'segments' => '.+',
 		],
+		'walled' => false,
 	],
 	'serve-icon' => [
 		'path' => '/serve-icon/{guid}/{size}',
@@ -83,6 +104,7 @@ return [
 		'requirements' => [
 			'segments' => '.+',
 		],
+		'walled' => false,
 	],
 	'livesearch' => [
 		'path' => '/livesearch/{match_on?}',
@@ -94,22 +116,37 @@ return [
 	'settings:index' => [
 		'path' => '/settings',
 		'resource' => 'settings/account',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+		],
 	],
 	'settings:account' => [
 		'path' => '/settings/user/{username?}',
 		'resource' => 'settings/account',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+		],
 	],
 	'settings:statistics' => [
 		'path' => '/settings/statistics/{username?}',
 		'resource' => 'settings/statistics',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+		],
 	],
 	'settings:tools' => [
 		'path' => '/settings/plugins/{username?}/{plugin_id}',
 		'resource' => 'settings/tools',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+		],
 	],
 	'widgets:add_panel' => [
 		'path' => '/widgets/add_panel',
 		'resource' => 'widgets/add_panel',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+		],
 	],
 	'view:object:comment' => [
 		'path' => '/comment/view/{guid}/{container_guid?}',
@@ -118,6 +155,9 @@ return [
 	'edit:object:comment' => [
 		'path' => '/comment/edit/{guid}',
 		'resource' => 'comments/edit',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+		],
 	],
 	'view:user' => [
 		'path' => '/user/{guid}',
@@ -126,5 +166,8 @@ return [
 	'edit:user:avatar' => [
 		'path' => '/avatar/edit/{username}',
 		'resource' => 'avatar/edit',
+		'middleware' => [
+			\Elgg\Router\Middleware\Gatekeeper::class,
+		],
 	],
 ];

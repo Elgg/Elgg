@@ -7,6 +7,7 @@ use Elgg\PluginHooksService;
 use ElggEntity;
 use InvalidArgumentException;
 use InvalidParameterException;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -75,6 +76,33 @@ class ResponseFactory {
 	 */
 	public function setHeader($name, $value, $replace = true) {
 		$this->headers->set($name, $value, $replace);
+	}
+
+	/**
+	 * Set a cookie, but allow plugins to customize it first.
+	 *
+	 * To customize all cookies, register for the 'init:cookie', 'all' event.
+	 *
+	 * @param \ElggCookie $cookie The cookie that is being set
+	 * @return bool
+	 */
+	public function setCookie(\ElggCookie $cookie) {
+		if (!$this->hooks->getEvents()->trigger('init:cookie', $cookie->name, $cookie)) {
+			return false;
+		}
+
+		$symfony_cookie = new Cookie(
+			$cookie->name,
+			$cookie->value,
+			$cookie->expire,
+			$cookie->path,
+			$cookie->domain,
+			$cookie->secure,
+			$cookie->httpOnly
+		);
+
+		$this->headers->setCookie($symfony_cookie);
+		return true;
 	}
 
 	/**
@@ -151,7 +179,7 @@ class ResponseFactory {
 						. (string) $this->response_sent);
 			}
 		} else {
-			if (!elgg_trigger_before_event('send', 'http_response', $response)) {
+			if (!_elgg_services()->hooks->getEvents()->triggerBefore('send', 'http_response', $response)) {
 				return false;
 			}
 
@@ -164,7 +192,7 @@ class ResponseFactory {
 				return false;
 			}
 
-			elgg_trigger_after_event('send', 'http_response', $response);
+			_elgg_services()->hooks->getEvents()->triggerAfter('send', 'http_response', $response);
 			$this->response_sent = $response;
 		}
 

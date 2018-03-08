@@ -40,7 +40,10 @@ module.exports = function(config) {
 			{pattern:'vendor/bower-asset/**/*.js',included:false},
 			{pattern:'node_modules/**/*.js',included:false},
 
-			'engine/tests/js/requirejs.config.js'
+			'engine/tests/js/requirejs.config.js',
+
+			'vendor/npm-asset/weakmap-polyfill/weakmap-polyfill.min.js',
+			'vendor/npm-asset/formdata-polyfill/formdata.min.js'
 		],
 
 

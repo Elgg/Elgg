@@ -26,8 +26,7 @@ Requirements
 Merge commits up from lower branches
 ====================================
 
-Determine the LTS branch (currently 1.12). We need to merge any new commits there up through the other
-branches.
+Determine the LTS branch. We need to merge any new commits there up through the other branches.
 
 For each branch
 ---------------
@@ -88,7 +87,8 @@ Run the ``release.php`` script. For example, to release 1.12.5:
 
 This creates a ``release-1.12.5`` branch in your local repo.
 
-Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:
+Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may 
+have a PHP syntax error. Fix the error and amend your commit with the new file:
 
 .. code-block:: sh
 
@@ -149,11 +149,14 @@ Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Ru
 	sudo -su deploy
 	
 	# regular release
-	./elgg-starter-project.sh master 2.0.4 /var/www/www.elgg.org/download/
+	./elgg-starter-project.sh master 3.0.0 /var/www/www.elgg.org/download/
 	
 	# MIT release
-	./elgg-starter-project.sh master 2.0.4-mit /var/www/www.elgg.org/download/
+	./elgg-starter-project.sh master 3.0.0-mit /var/www/www.elgg.org/download/
 
+.. note::
+
+	For Elgg 2.x releases use the ``2.x`` branch of the starter-project (eg. ``./elgg-starter-project.sh 2.x 2.0.4 /var/www/www.elgg.org/download/``)
 
 * Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version.
 * If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg``

@@ -157,34 +157,6 @@ function _elgg_admin_init() {
 		]);
 	}
 
-	elgg_register_action('admin/user/ban', '', 'admin');
-	elgg_register_action('admin/user/unban', '', 'admin');
-	elgg_register_action('admin/user/delete', '', 'admin');
-	elgg_register_action('admin/user/resetpassword', '', 'admin');
-	elgg_register_action('admin/user/makeadmin', '', 'admin');
-	elgg_register_action('admin/user/removeadmin', '', 'admin');
-	elgg_register_action('admin/user/validate', '', 'admin');
-	elgg_register_action('admin/user/bulk/delete', '', 'admin');
-	elgg_register_action('admin/user/bulk/validate', '', 'admin');
-
-	elgg_register_action('admin/site/update_basic', '', 'admin');
-	elgg_register_action('admin/site/update_advanced', '', 'admin');
-	elgg_register_action('admin/site/flush_cache', '', 'admin');
-	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
-	elgg_register_action('admin/site/set_robots', '', 'admin');
-	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
-
-	elgg_register_action('admin/upgrades/upgrade_database_guid_columns', '', 'admin');
-	elgg_register_action('admin/upgrade', '', 'admin');
-
-	elgg_register_action('admin/menu/save', '', 'admin');
-
-	elgg_register_action('admin/delete_admin_notice', '', 'admin');
-	elgg_register_action('admin/delete_admin_notices', '', 'admin');
-	
-	elgg_register_action('admin/security/settings', '', 'admin');
-	elgg_register_action('admin/security/regenerate_site_secret', '', 'admin');
-	
 	elgg_register_simplecache_view('admin.css');
 	
 	// widgets
@@ -201,13 +173,13 @@ function _elgg_admin_init() {
 	// automatic adding of widgets for admin
 	elgg_register_event_handler('make_admin', 'user', '_elgg_add_admin_widgets');
 	
-	elgg_register_notification_event('user', '', ['make_admin', 'remove_admin']);
+	elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_admin_get_admin_subscribers_admin_action');
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_admin_get_user_subscriber_admin_action');
-	elgg_register_plugin_hook_handler('prepare', 'notification:make_admin:user:', '_elgg_admin_prepare_admin_notification_make_admin');
-	elgg_register_plugin_hook_handler('prepare', 'notification:make_admin:user:', '_elgg_admin_prepare_user_notification_make_admin');
-	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:', '_elgg_admin_prepare_admin_notification_remove_admin');
-	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:', '_elgg_admin_prepare_user_notification_remove_admin');
+	elgg_register_plugin_hook_handler('prepare', 'notification:make_admin:user:user', '_elgg_admin_prepare_admin_notification_make_admin');
+	elgg_register_plugin_hook_handler('prepare', 'notification:make_admin:user:user', '_elgg_admin_prepare_user_notification_make_admin');
+	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:user', '_elgg_admin_prepare_admin_notification_remove_admin');
+	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:user', '_elgg_admin_prepare_user_notification_remove_admin');
 	
 	// Add notice about pending upgrades
 	elgg_register_event_handler('create', 'object', '_elgg_create_notice_of_pending_upgrade');
@@ -650,9 +622,10 @@ function _elgg_admin_page_handler($page) {
 		if (isset($page[1]) && (elgg_view_exists("plugins/{$page[1]}/settings"))) {
 			$view = 'admin/plugin_settings';
 			$plugin = elgg_get_plugin_from_id($page[1]);
-			$vars['plugin'] = $plugin;
+			$vars['plugin'] = $plugin; // required for plugin settings backward compatibility
+			$vars['entity'] = $plugin;
 
-			$title = elgg_echo("admin:{$page[0]}");
+			$title = elgg_echo("admin:{$page[0]}") . ': ' . $plugin->getDisplayName();
 		} else {
 			forward('', '404');
 		}

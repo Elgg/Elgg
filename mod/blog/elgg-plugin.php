@@ -46,12 +46,18 @@ return [
 		'add:object:blog' => [
 			'path' => '/blog/add/{guid?}',
 			'resource' => 'blog/add',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'edit:object:blog' => [
 			'path' => '/blog/edit/{guid}/{revision?}',
 			'resource' => 'blog/edit',
 			'requirements' => [
 				'revision' => '\d+',
+			],
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
 			],
 		],
 		'collection:object:blog:group' => [

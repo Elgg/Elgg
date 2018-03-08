@@ -160,11 +160,6 @@ function generate_random_cleartext_password() {
 function validate_username($username) {
 	$config = _elgg_config();
 
-	// Basic, check length
-	if (!isset($config->minusername)) {
-		$config->minusername = 4;
-	}
-
 	if (strlen($username) < $config->minusername) {
 		$msg = elgg_echo('registration:usernametooshort', [$config->minusername]);
 		throw new \RegistrationException($msg);
@@ -222,10 +217,6 @@ function validate_username($username) {
  */
 function validate_password($password) {
 	$config = _elgg_config();
-
-	if (!isset($config->min_password_length)) {
-		$config->min_password_length = 6;
-	}
 
 	if (strlen($password) < $config->min_password_length) {
 		$msg = elgg_echo('registration:passwordtooshort', [$config->min_password_length]);
@@ -474,6 +465,44 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		'section' => 'admin',
 	]);
 
+	return $return;
+}
+
+/**
+ * Adds avatar edit button to title menu
+ *
+ * @param \Elgg\Hook $hook hook 'register', 'menu:title'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @access private
+ * @since 3.0
+ */
+function _elgg_user_title_menu(\Elgg\Hook $hook) {
+	$user = $hook->getEntityParam();
+	/* @var \ElggUser $user */
+
+	if (!$user instanceof \ElggUser) {
+		return;
+	}
+
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+
+	if (!$user->canEdit()) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	$return[] = ElggMenuItem::factory([
+		'name' => 'avatar:edit',
+		'text' => elgg_echo('avatar:edit'),
+		'icon' => 'image',
+		'class' => ['elgg-button', 'elgg-button-action'],
+		'href' => elgg_generate_entity_url($user, 'edit', 'avatar'),
+	]);
+	
 	return $return;
 }
 
@@ -770,32 +799,22 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 function users_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '_elgg_user_title_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
 
-	elgg_register_action('login', '', 'public');
-	elgg_register_action('logout');
-	elgg_register_action('register', '', 'public');
-	elgg_register_action('useradd', '', 'admin');
-	elgg_register_action('avatar/upload');
-	elgg_register_action('avatar/crop');
-	elgg_register_action('avatar/remove');
-
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
-
-	elgg_register_action('user/changepassword', '', 'public');
-	elgg_register_action('user/requestnewpassword', '', 'public');
 
 	// Register the user type
 	elgg_register_entity_type('user', '');
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 
-	elgg_register_notification_event('user', '', ['unban']);
+	elgg_register_notification_event('user', 'user', ['unban']);
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_unban_action');
 	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
-	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:', '_elgg_user_prepare_unban_notification');
+	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:user', '_elgg_user_prepare_unban_notification');
 
 }
 

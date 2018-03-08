@@ -33,23 +33,27 @@ class ViewCacher {
 	}
 
 	/**
-	 * Discover the views if the system cache did not load
+	 * Discover the core views if the system cache did not load
 	 *
 	 * @return void
 	 */
 	public function registerCoreViews() {
-		if (!$this->config->system_cache_loaded) {
-			// Core view files in /views
-			$this->views->registerPluginViews(Paths::project());
+		if ($this->config->system_cache_loaded) {
+			return;
+		}
+		
+		// Core view files in /views
+		$this->views->registerPluginViews(Paths::elgg());
 
-			// Core view definitions in /engine/views.php
-			$file = Paths::elgg() . 'engine/views.php';
-			if (is_file($file)) {
-				$spec = Includer::includeFile($file);
-				if (is_array($spec)) {
-					$this->views->mergeViewsSpec($spec);
-				}
-			}
+		// Core view definitions in /engine/views.php
+		$file = Paths::elgg() . 'engine/views.php';
+		if (!is_file($file)) {
+			return;
+		}
+		
+		$spec = Includer::includeFile($file);
+		if (is_array($spec)) {
+			$this->views->mergeViewsSpec($spec);
 		}
 	}
 }

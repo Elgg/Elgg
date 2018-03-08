@@ -89,7 +89,7 @@ class MigratePageTop implements Batch {
 			WHERE guid = {$page_top->guid}
 		";
 		
-		if (!update_data($query)) {
+		if (!elgg()->db->updateData($query)) {
 			return false;
 		}
 		

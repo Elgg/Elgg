@@ -20,7 +20,7 @@ function _elgg_activity_owner_block_menu(\Elgg\Hook $hook) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'activity:owner',
 			'text' => elgg_echo('activity:owner'),
-			'href' => elgg_generate_url('collections:river:owner', ['username' => $entity->username]),
+			'href' => elgg_generate_url('collection:river:owner', ['username' => $entity->username]),
 		]);
 	}
 	

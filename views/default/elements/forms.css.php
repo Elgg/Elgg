@@ -52,6 +52,13 @@ input, textarea {
 	border-radius: 3px;
 }
 
+input:disabled,
+textarea:disabled,
+select:disabled,
+option:disabled {
+	cursor: not-allowed;
+}
+
 textarea {
 	padding: 0.5rem;
 }
@@ -120,8 +127,6 @@ select {
 	line-height: 1.75rem;
 	vertical-align: middle;
 	border-radius: 3px;
-	dislay: inline-block;
-	margint-top: 1px;
 }
 
 select:not([multiple]) {

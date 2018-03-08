@@ -452,7 +452,7 @@ function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEnt
 			$collection_route = "collection:$entity_type:$entity_subtype:container";
 		}
 
-		$parameters = _elgg_services()->router->resolveRouteParameters($collection_route, $container);
+		$parameters = _elgg_services()->routes->resolveRouteParameters($collection_route, $container);
 		if ($parameters) {
 			$label = elgg_echo("collection:$entity_type:$entity_subtype");
 			if ($friends) {
@@ -886,7 +886,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete-alt'),
-			'title' => elgg_echo('widget:delete', [$widget->getTitle()]),
+			'title' => elgg_echo('widget:delete', [$widget->getDisplayName()]),
 			'href' => "action/widgets/delete?widget_guid=$widget->guid",
 			'is_action' => true,
 			'link_class' => 'elgg-widget-delete-button',

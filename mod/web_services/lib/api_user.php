@@ -15,7 +15,7 @@ function create_api_user() {
 	$public = _elgg_services()->crypto->getRandomString(40, ElggCrypto::CHARS_HEX);
 	$secret = _elgg_services()->crypto->getRandomString(40, ElggCrypto::CHARS_HEX);
 
-	$insert = insert_data("INSERT into {$dbprefix}api_users
+	$insert = elgg()->db->insertData("INSERT into {$dbprefix}api_users
 		(api_key, secret) values
 		('$public', '$secret')");
 
@@ -41,7 +41,7 @@ function get_api_user($api_key) {
 	$query = "SELECT * from {$dbprefix}api_users"
 	. " where api_key='$api_key' and active=1";
 
-	return get_data_row($query);
+	return elgg()->db->getDataRow($query);
 }
 
 /**
@@ -55,7 +55,7 @@ function remove_api_user($api_key) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$keypair = get_api_user($api_key);
 	if ($keypair) {
-		return delete_data("DELETE from {$dbprefix}api_users where id={$keypair->id}");
+		return elgg()->db->deleteData("DELETE from {$dbprefix}api_users where id={$keypair->id}");
 	}
 
 	return false;

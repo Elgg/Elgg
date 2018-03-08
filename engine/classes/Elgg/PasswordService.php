@@ -119,9 +119,9 @@ final class PasswordService {
 
 		$user->setPassword($password);
 
-		$ia = elgg_set_ignore_access(true);
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
 		$result = (bool) $user->save();
-		elgg_set_ignore_access($ia);
+		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $result;
 	}

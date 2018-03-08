@@ -43,7 +43,7 @@ class ElggAnnotation extends \ElggExtender {
 		}
 
 		if (!isset($this->owner_guid)) {
-			$this->owner_guid = elgg_get_logged_in_user_guid();
+			$this->owner_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 
 		if ($this->id) {

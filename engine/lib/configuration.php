@@ -33,11 +33,7 @@ function elgg_get_site_url() {
  * @since 1.8.0
  */
 function elgg_get_plugins_path() {
-	$path = _elgg_config()->plugins_path;
-	if (!$path) {
-		$path = Paths::project() . 'mod/';
-	}
-	return $path;
+	return _elgg_services()->plugins->getPath();
 }
 
 /**
@@ -153,7 +149,7 @@ function elgg_remove_config($name) {
  * @access private
  */
 function _elgg_config() {
-	$config = elgg()->_services->config;
+	$config = _elgg_services()->config;
 	if (!$config) {
 		throw new \RuntimeException(__FUNCTION__ . ' can not be called before an instance of ' . \Elgg\Application::class . ' is bootstrapped');
 	}

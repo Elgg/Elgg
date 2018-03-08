@@ -136,7 +136,7 @@ class ColumnFactory {
 	 */
 	public function __call($name, $arguments) {
 		// allow hook to hijack magic methods
-		$column = elgg_trigger_plugin_hook('table_columns:call', $name, [
+		$column = _elgg_services()->hooks->trigger('table_columns:call', $name, [
 			'arguments' => $arguments,
 		]);
 		if ($column instanceof TableColumn) {

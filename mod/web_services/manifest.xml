@@ -3,7 +3,7 @@
 	<name>Web services</name>
 	<id>web_services</id>
 	<author>Core developers</author>
-	<version>1.9</version>
+	<version>3.0</version>
 	<description>Provides a framework for building RPC web services.</description>
 	<website>http://www.elgg.org/</website>
 	<copyright>(C) Elgg Foundation 2013</copyright>
@@ -11,7 +11,7 @@
 
 	<requires>
 		<type>elgg_release</type>
-		<version>1.9</version>
+		<version>3.0</version>
 	</requires>
 
 	<category>web_services</category>

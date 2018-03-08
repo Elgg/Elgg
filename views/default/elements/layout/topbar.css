@@ -60,6 +60,7 @@
 	width: auto;
 	max-width: 300px;
 	z-index: 2;
+	position: relative;
 }
 
 #login-dropdown-box:before {

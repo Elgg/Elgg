@@ -11,7 +11,12 @@ use Elgg\IntegrationTestCase;
 class SystemLogApiTest extends IntegrationTestCase {
 
 	public function up() {
-		self::createApplication(true);
+		self::createApplication(['isolate' => true]);
+
+		$log = elgg()->system_log;
+		/* @var $log SystemLog */
+
+		$log->setCurrentTime();
 	}
 
 	public function down() {
@@ -41,8 +46,9 @@ class SystemLogApiTest extends IntegrationTestCase {
 		}
 
 		$entry = array_shift($log);
+		/* @var $entry \Elgg\SystemLog\SystemLogEntry */
 
-		$this->assertInstanceOf(\stdClass::class, $entry);
+		$this->assertInstanceOf(SystemLogEntry::class, $entry);
 
 		$this->assertEquals($object->guid, $entry->object_id);
 		$this->assertEquals(\ElggObject::class, $entry->object_class);
@@ -50,7 +56,9 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$this->assertEquals($object->getSubtype(), $entry->object_subtype);
 		$this->assertEquals($event, $entry->event);
 		$this->assertEquals($object->owner_guid, $entry->owner_guid);
-
+		$this->assertRegExp('/\d+\.\d+\.\d+\.\d+/', $entry->ip_address);
+		$this->assertEquals(elgg()->system_log->getCurrentTime()->getTimestamp(), $entry->time_created);
+		
 		$loaded_entry = system_log_get_log_entry($entry->id);
 
 		$this->assertEquals($entry, $loaded_entry);
@@ -63,8 +71,6 @@ class SystemLogApiTest extends IntegrationTestCase {
 	}
 
 	public function testCanDeleteArchivedLog() {
-
-		$time = time();
 
 		$object = $this->createObject();
 
@@ -86,10 +92,10 @@ class SystemLogApiTest extends IntegrationTestCase {
 			$this->markTestSkipped();
 		}
 
-		system_log_archive_log(time() - $time);
-		system_log_browser_delete_log($time);
+		$this->assertTrue(system_log_archive_log());
+		$this->assertTrue(system_log_browser_delete_log(0));
 
-		$entries = system_log_get_log('', '', '', '', '', null, 0, true, $time);
+		$entries = system_log_get_log();
 
 		$this->assertEmpty($entries);
 

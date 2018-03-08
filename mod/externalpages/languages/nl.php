@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Externe pagina's",
-	'admin:appearance:expages' => "Externe pagina's",
+	'admin:configure_utilities:expages' => "Externe pagina's",
 	'expages:edit:viewpage' => "Bekijk pagina op de site",
 	'expages:about' => "Over ons",
 	'expages:terms' => "Algemene voorwaarden",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Je pagina is succesvol bijgewerkt.",
 	'expages:error' => "De pagina kon niet worden opgeslagen.",
-];
+);

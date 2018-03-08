@@ -435,22 +435,27 @@ define(function(require) {
 
 		describe("ajax.objectify", function() {
 
-			/**
-			 * this is from the $.serialize() test suite
-			 * @link https://github.com/jquery/jquery/blob/master/test/index.html#L73
-			 */
-			var $form = $("<form id=\"form\" action=\"formaction\"><label for=\"action\" id=\"label-for\">Action:<\/label><input type=\"text\" name=\"action\" value=\"Test\" id=\"text1\" maxlength=\"30\"\/><input type=\"text\" name=\"text2\" value=\"Test\" id=\"text2\" disabled=\"disabled\"\/><input type=\"radio\" name=\"radio1\" id=\"radio1\" value=\"on\"\/><input type=\"radio\" name=\"radio2\" id=\"radio2\" checked=\"checked\"\/><input type=\"checkbox\" name=\"check\" id=\"check1\" checked=\"checked\"\/><input type=\"checkbox\" id=\"check2\" value=\"on\"\/><input type=\"hidden\" name=\"hidden\" id=\"hidden1\"\/><input type=\"text\" style=\"display:none;\" name=\"foo[bar]\" id=\"hidden2\"\/><input type=\"text\" id=\"name\" name=\"name\" value=\"name\" \/><input type=\"search\" id=\"search\" name=\"search\" value=\"search\" \/><button id=\"button\" name=\"button\" type=\"button\">Button<\/button><textarea id=\"area1\" maxlength=\"30\">foobar<\/textarea><select name=\"select1\" id=\"select1\"><option id=\"option1a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option1b\" value=\"1\">1<\/option><option id=\"option1c\" value=\"2\">2<\/option><option id=\"option1d\" value=\"3\">3<\/option><\/select><select name=\"select2\" id=\"select2\"><option id=\"option2a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option2b\" value=\"1\">1<\/option><option id=\"option2c\" value=\"2\">2<\/option><option id=\"option2d\" selected=\"selected\" value=\"3\">3<\/option><\/select><select name=\"select3\" id=\"select3\" multiple=\"multiple\"><option id=\"option3a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option3b\" selected=\"selected\" value=\"1\">1<\/option><option id=\"option3c\" selected=\"selected\" value=\"2\">2<\/option><option id=\"option3d\" value=\"3\">3<\/option><option id=\"option3e\">no value<\/option><\/select><select name=\"select4\" id=\"select4\" multiple=\"multiple\"><optgroup disabled=\"disabled\"><option id=\"option4a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option4b\" disabled=\"disabled\" selected=\"selected\" value=\"1\">1<\/option><option id=\"option4c\" selected=\"selected\" value=\"2\">2<\/option><\/optgroup><option selected=\"selected\" disabled=\"disabled\" id=\"option4d\" value=\"3\">3<\/option><option id=\"option4e\">no value<\/option><\/select><select name=\"select5\" id=\"select5\"><option id=\"option5a\" value=\"3\">1<\/option><option id=\"option5b\" value=\"2\">2<\/option><option id=\"option5c\" value=\"1\" data-attr=\"\">3<\/option><\/select><object id=\"object1\" codebase=\"stupid\"><param name=\"p1\" value=\"x1\" \/><param name=\"p2\" value=\"x2\" \/><\/object><span id=\"\u53F0\u5317Ta\u0301ibe\u030Ci\"><\/span><span id=\"\u53F0\u5317\" lang=\"\u4E2D\u6587\"><\/span><span id=\"utf8class1\" class=\"\u53F0\u5317Ta\u0301ibe\u030Ci \u53F0\u5317\"><\/span><span id=\"utf8class2\" class=\"\u53F0\u5317\"><\/span><span id=\"foo:bar\" class=\"foo:bar\"><\/span><span id=\"test.foo[5]bar\" class=\"test.foo[5]bar\"><\/span><foo_bar id=\"foobar\">test element<\/foo_bar><\/form>");
+			var $form = $("<form id=\"form\" action=\"formaction\"><label for=\"action\" id=\"label-for\">Action:<\/label><input type=\"text\" name=\"action\" value=\"Test\" id=\"text1\" maxlength=\"30\"\/><input type=\"text\" name=\"text2\" value=\"Test\" id=\"text2\" disabled=\"disabled\"\/><input type=\"radio\" name=\"radio1\" id=\"radio1\" value=\"on\"\/><input type=\"radio\" name=\"radio2\" id=\"radio2\" checked=\"checked\"\/><input type=\"checkbox\" name=\"check\" id=\"check1\" checked=\"checked\"\/><input type=\"checkbox\" id=\"check2\" value=\"on\"\/><input type=\"hidden\" name=\"hidden\" id=\"hidden1\"\/><input type=\"text\" style=\"display:none;\" name=\"foo[bar]\" value=\"baz\" id=\"hidden2\"\/><input type=\"text\" id=\"name\" name=\"name\" value=\"name\" \/><input type=\"search\" id=\"search\" name=\"search\" value=\"search\" \/><button id=\"button\" name=\"button\" type=\"button\">Button<\/button><textarea id=\"area1\" maxlength=\"30\">foobar<\/textarea><select name=\"select1\" id=\"select1\"><option id=\"option1a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option1b\" value=\"1\">1<\/option><option id=\"option1c\" value=\"2\">2<\/option><option id=\"option1d\" value=\"3\">3<\/option><\/select><select name=\"select2\" id=\"select2\"><option id=\"option2a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option2b\" value=\"1\">1<\/option><option id=\"option2c\" value=\"2\">2<\/option><option id=\"option2d\" selected=\"selected\" value=\"3\">3<\/option><\/select><select name=\"select3\" id=\"select3\" multiple=\"multiple\"><option id=\"option3a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option3b\" selected=\"selected\" value=\"1\">1<\/option><option id=\"option3c\" selected=\"selected\" value=\"2\">2<\/option><option id=\"option3d\" value=\"3\">3<\/option><option id=\"option3e\">no value<\/option><\/select><select name=\"select4\" id=\"select4\" multiple=\"multiple\"><optgroup disabled=\"disabled\"><option id=\"option4a\" class=\"emptyopt\" value=\"\">Nothing<\/option><option id=\"option4b\" disabled=\"disabled\" selected=\"selected\" value=\"1\">1<\/option><option id=\"option4c\" selected=\"selected\" value=\"2\">2<\/option><\/optgroup><option selected=\"selected\" disabled=\"disabled\" id=\"option4d\" value=\"3\">3<\/option><option id=\"option4e\">no value<\/option><\/select><select name=\"select5\" id=\"select5\"><option id=\"option5a\" value=\"3\">1<\/option><option id=\"option5b\" value=\"2\">2<\/option><option id=\"option5c\" value=\"1\" data-attr=\"\">3<\/option><\/select><object id=\"object1\" codebase=\"stupid\"><param name=\"p1\" value=\"x1\" \/><param name=\"p2\" value=\"x2\" \/><\/object><span id=\"\u53F0\u5317Ta\u0301ibe\u030Ci\"><\/span><span id=\"\u53F0\u5317\" lang=\"\u4E2D\u6587\"><\/span><span id=\"utf8class1\" class=\"\u53F0\u5317Ta\u0301ibe\u030Ci \u53F0\u5317\"><\/span><span id=\"utf8class2\" class=\"\u53F0\u5317\"><\/span><span id=\"foo:bar\" class=\"foo:bar\"><\/span><span id=\"test.foo[5]bar\" class=\"test.foo[5]bar\"><\/span><foo_bar id=\"foobar\">test element<\/foo_bar><\/form>");
 
-			it("returns an object equivalent to $.serialize()", function() {
+			it("objectifies a form into a FormData object", function() {
 				var obj = ajax.objectify($form);
-				var jquery_serialized = $form.serialize();
-				var obj_serialized = $.param(obj);
 
-				expect($.isPlainObject(obj)).toBeTruthy();
+				expect(obj instanceof FormData).toBeTruthy();
 
-				// $.serialize() does not automatically append "[]" to the name of input with multiple
-				// values. It's OK that $.param(obj) does because PHP requires the brackets anyway.
-				expect(obj_serialized).toBe(jquery_serialized.replace(/select3=/g, 'select3%5B%5D='));
+				expect(obj.get('action')).toBe('Test');
+				expect(obj.get('text2')).toBe(null); // disabled
+				expect(obj.get('radio1')).toBe(null); // not checked
+				expect(obj.get('radio2')).toBe('on');
+				expect(obj.get('check')).toBe('on');
+				expect(obj.get('hidden')).toBe('');
+				expect(obj.get('name')).toBe('name');
+				expect(obj.get('search')).toBe('search');
+				expect(obj.get('foo[bar]')).toBe('baz');
+				expect(obj.get('button')).toBe(''); // no value attr
+				expect(obj.get('select1')).toBe('');
+				expect(obj.get('select2')).toBe('3');
+				expect(obj.getAll('select3')).toEqual(['1', '2']);
+
 			});
 		});
 	});

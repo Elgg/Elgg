@@ -1,5 +1,12 @@
 <?php
+
 namespace Elgg;
+
+use Elgg\Config;
+use Elgg\Database\Mutex;
+use Elgg\i18n\Translator;
+use Elgg\Logger;
+use Elgg\PluginHooksService;
 
 /**
  * Upgrade service for Elgg
@@ -9,7 +16,7 @@ namespace Elgg;
 class UpgradeService {
 
 	/**
-	 * @var \Elgg\i18n\Translator
+	 * @var Translator
 	 */
 	private $translator;
 
@@ -19,45 +26,54 @@ class UpgradeService {
 	private $events;
 
 	/**
-	 * @var \Elgg\PluginHooksService
+	 * @var PluginHooksService
 	 */
 	private $hooks;
 
 	/**
-	 * @var \Elgg\Config
+	 * @var Config
 	 */
 	private $config;
 
 	/**
-	 * @var \Elgg\Logger
+	 * @var Logger
 	 */
 	private $logger;
 
 	/**
-	 * @var \Elgg\Database\Mutex
+	 * @var Mutex
 	 */
 	private $mutex;
 
 	/**
+	 * @var SystemMessagesService
+	 */
+	private $system_messages;
+
+	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\i18n\Translator    $translator Translation service
-	 * @param \Elgg\PluginHooksService $hooks      Plugin hook service
-	 * @param \Elgg\Config             $config     Config
-	 * @param \Elgg\Logger             $logger     Logger
-	 * @param \Elgg\Database\Mutex     $mutex      Database mutex service
+	 * @param Translator            $translator      Translation service
+	 * @param PluginHooksService    $hooks           Plugin hook service
+	 * @param Config                $config          Config
+	 * @param Logger                $logger          Logger
+	 * @param Mutex                 $mutex           Database mutex service
+	 * @param SystemMessagesService $system_messages System messages
 	 */
 	public function __construct(
-			\Elgg\i18n\Translator $translator,
-			\Elgg\PluginHooksService $hooks,
-			\Elgg\Config $config,
-			\Elgg\Logger $logger,
-			\Elgg\Database\Mutex $mutex) {
+		Translator $translator,
+		PluginHooksService $hooks,
+		Config $config,
+		Logger $logger,
+		Mutex $mutex,
+		SystemMessagesService $system_messages
+	) {
 		$this->translator = $translator;
 		$this->hooks = $hooks;
 		$this->config = $config;
 		$this->logger = $logger;
 		$this->mutex = $mutex;
+		$this->system_messages = $system_messages;
 	}
 
 	/**
@@ -75,6 +91,7 @@ class UpgradeService {
 		if (!$this->mutex->lock('upgrade')) {
 			$result['failure'] = true;
 			$result['reason'] = $this->translator->translate('upgrade:locked');
+
 			return $result;
 		}
 
@@ -173,12 +190,14 @@ class UpgradeService {
 	 *
 	 * @param string $upgrade Filename of the processed upgrade
 	 *                        (not the path, just the file)
+	 *
 	 * @return bool
 	 */
 	protected function setProcessedUpgrade($upgrade) {
 		$processed_upgrades = $this->getProcessedUpgrades();
 		$processed_upgrades[] = $upgrade;
 		$processed_upgrades = array_unique($processed_upgrades);
+
 		return $this->config->save('processed_upgrades', $processed_upgrades);
 	}
 
@@ -195,6 +214,7 @@ class UpgradeService {
 	 * Returns the version of the upgrade filename.
 	 *
 	 * @param string $filename The upgrade filename. No full path.
+	 *
 	 * @return int|false
 	 * @since 1.8.0
 	 */
@@ -212,6 +232,7 @@ class UpgradeService {
 	 * Returns a list of upgrade files relative to the $upgrade_path dir.
 	 *
 	 * @param string $upgrade_path The up
+	 *
 	 * @return array|false
 	 */
 	protected function getUpgradeFiles($upgrade_path = null) {
@@ -265,6 +286,7 @@ class UpgradeService {
 		}
 
 		$unprocessed = array_diff($upgrade_files, $processed_upgrades);
+
 		return $unprocessed;
 	}
 
@@ -277,8 +299,8 @@ class UpgradeService {
 		$dbversion = (int) $this->config->version;
 
 		if ($this->upgradeCode($dbversion)) {
-			system_message($this->translator->translate('upgrade:core'));
-			
+			$this->system_messages->addSuccessMessage($this->translator->translate('upgrade:core'));
+
 			return true;
 		}
 

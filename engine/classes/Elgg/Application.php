@@ -11,6 +11,7 @@ use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
+use Elgg\Http\Input;
 use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
@@ -28,9 +29,6 @@ use SecurityException;
  * The full path is necessary to work around this: https://bugs.php.net/bug.php?id=55726
  *
  * @since 2.0.0
- *
- * @property-read \Elgg\Menu\Service $menus
- * @property-read \Elgg\Views\TableColumn\ColumnFactory $table_columns
  */
 class Application {
 
@@ -50,23 +48,9 @@ class Application {
 	private static $_setups = [];
 
 	/**
-	 * Property names of the service provider to be exposed via __get()
+	 * Reference to the loaded Application
 	 *
-	 * E.g. the presence of `'foo' => true` in the list would allow _elgg_services()->foo to
-	 * be accessed via elgg()->foo.
-	 *
-	 * @var string[]
-	 */
-	private static $public_services = [
-		//'config' => true,
-		'menus' => true,
-		'table_columns' => true,
-	];
-
-	/**
-	 * Reference to the loaded Application returned by elgg()
-	 *
-	 * @internal Do not use this. use elgg() to access the application
+	 * @internal Do not use this
 	 * @access private
 	 * @var Application
 	 */
@@ -76,6 +60,7 @@ class Application {
 	 * Get the global Application instance. If not set, it's auto-created and wired to $CONFIG.
 	 *
 	 * @return Application|null
+	 * @throws ConfigurationException
 	 */
 	public static function getInstance() {
 		if (self::$_instance === null) {
@@ -157,6 +142,12 @@ class Application {
 	 * Start and boot the core
 	 *
 	 * @return self
+	 * @throws ClassException
+	 * @throws ConfigurationException
+	 * @throws DatabaseException
+	 * @throws InstallationException
+	 * @throws InvalidParameterException
+	 * @throws SecurityException
 	 */
 	public static function start() {
 		$app = self::getInstance();
@@ -275,36 +266,6 @@ class Application {
 	 */
 	public function getDb() {
 		return $this->_services->publicDb;
-	}
-
-	/**
-	 * Get database connection
-	 *
-	 * @param string $type Connection type
-	 * @return Connection|false
-	 *
-	 * @access private
-	 */
-	public function getDbConnection($type = 'readwrite') {
-		try {
-			return $this->getDb()->getConnection($type);
-		} catch (DatabaseException $e) {
-			return false;
-		}
-	}
-
-	/**
-	 * Get an undefined property
-	 *
-	 * @param string $name The property name accessed
-	 *
-	 * @return mixed
-	 */
-	public function __get($name) {
-		if (isset(self::$public_services[$name])) {
-			return $this->_services->{$name};
-		}
-		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
 	}
 
 	/**
@@ -433,10 +394,10 @@ class Application {
 	 * @throws SecurityException
 	 */
 	public function run() {
-		try {
-			$config = $this->_services->config;
-			$request = $this->_services->request;
+		$config = $this->_services->config;
+		$request = $this->_services->request;
 
+		try {
 			if ($request->isCliServer()) {
 				if ($request->isCliServable(Paths::project())) {
 					return false;
@@ -472,6 +433,8 @@ class Application {
 			$forward_url = null;
 			if ($ex instanceof GatekeeperException) {
 				$forward_url = elgg_is_logged_in() ? null : elgg_get_login_url();
+			} else if ($request->getFirstUrlSegment() == 'action') {
+				$forward_url = REFERRER;
 			}
 
 			$hook_params = [
@@ -482,7 +445,7 @@ class Application {
 
 			if (isset($forward_url)) {
 				if ($ex->getMessage()) {
-					register_error($ex->getMessage());
+					$this->_services->systemMessages->addErrorMessage($ex->getMessage());
 				}
 				$response = new RedirectResponse($forward_url);
 			} else {
@@ -603,7 +566,7 @@ class Application {
 			$result = $upgrader->run();
 
 			if ($result['failure'] == true) {
-				register_error($result['reason']);
+				_elgg_services()->systemMessages->addErrorMessage($result['reason']);
 				$forward($forward_url);
 			}
 
@@ -732,7 +695,6 @@ class Application {
 		}
 
 		$this->_services->setValue('request', $new);
-		$this->_services->context->initialize($new);
 	}
 
 	/**
@@ -870,7 +832,7 @@ class Application {
 					error_log("PHP ERROR: $error");
 				}
 				if (self::isCoreLoaded()) {
-					register_error("ERROR: $error");
+					$this->_services->systemMessages->addErrorMessage("ERROR: $error");
 				}
 
 				// Since this is a fatal error, we want to stop any further execution but do so gracefully.

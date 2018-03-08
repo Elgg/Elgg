@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => '모든 친구',
+return array(
 
 	'notifications:subscriptions:personal:description' => '당신의 글에 어떤 행동이 취해지면 알림을 받습니다.',
 	'notifications:subscriptions:personal:title' => '개인적인 알림',
 
-	'notifications:subscriptions:friends:title' => '친구',
-	'notifications:subscriptions:friends:description' => '아래는 당신 친구들의 모음입니다.  구성원에게 알림 기능을 사용하려는 모음을 선택하세요.',
-	'notifications:subscriptions:collections:edit' => '당신의 공유 접근 알림을 수정하려면, 이곳을 누르세요.',
+	'notifications:subscriptions:collections:friends' => '친구로 사용자를 추가할 때 사용할 설정',
+	'notifications:subscriptions:collections:custom' => '새 친구를 컬렉션 %s에 추가할 때 사용할 설정',
 
 	'notifications:subscriptions:changesettings' => '알림',
 	'notifications:subscriptions:changesettings:groups' => '모둠 알림',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => '알림 설정이 저장되었습니다.',
 
-];
+	'notifications:subscriptions:no_results' => '아직 구독 기록이 없습니다',
+	
+	'notifications:groups:subscribed' => '모둠 알림 켜짐',
+	'notifications:groups:unsubscribed' => '모둠 알림 꺼짐',
+
+);

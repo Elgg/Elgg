@@ -3,7 +3,7 @@
 	<name>CKEditor</name>
 	<id>ckeditor</id>
 	<author>Lorea developers and core developers</author>
-	<version>1.9</version>
+	<version>3.0</version>
 	<category>bundled</category>
 	<category>enhancement</category>
 	<description>Integrates the popular rich text editor CKEditor.</description>
@@ -12,7 +12,7 @@
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>1.9</version>
+		<version>3.0</version>
 	</requires>
 	<conflicts>
 		<type>plugin</type>

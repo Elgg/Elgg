@@ -30,4 +30,4 @@ $body .= elgg_view_field([
 	'min' => 0,
 ]);
 
-echo elgg_view_module('inline', elgg_echo('other'), $body, ['id' => 'elgg-settings-advanced-other']);
+echo elgg_view_module('info', elgg_echo('other'), $body, ['id' => 'elgg-settings-advanced-other']);

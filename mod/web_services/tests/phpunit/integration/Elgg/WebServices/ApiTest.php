@@ -420,8 +420,8 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 						" bar"
 					],
 					[
-						2,
-						"bar"
+						"2 ",
+						" bar"
 					]
 				],
 				[

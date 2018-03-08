@@ -33,7 +33,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 		return $page_owner_guid;
 	}
 
-	$route = _elgg_services()->router->getCurrentRoute();
+	$route = _elgg_services()->request->getRoute();
 	if ($route) {
 		$page_owner = $route->resolvePageOwner();
 		if ($page_owner) {
@@ -184,7 +184,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
  * @since 1.8.0
  */
 function elgg_set_context($context) {
-	return _elgg_services()->context->set($context);
+	return _elgg_services()->request->getContextStack()->set($context);
 }
 
 /**
@@ -196,7 +196,7 @@ function elgg_set_context($context) {
  * @since 1.8.0
  */
 function elgg_get_context() {
-	return _elgg_services()->context->peek();
+	return _elgg_services()->request->getContextStack()->peek();
 }
 
 /**
@@ -207,7 +207,7 @@ function elgg_get_context() {
  * @since 1.8.0
  */
 function elgg_push_context($context) {
-	_elgg_services()->context->push($context);
+	_elgg_services()->request->getContextStack()->push($context);
 }
 
 /**
@@ -217,7 +217,7 @@ function elgg_push_context($context) {
  * @since 1.8.0
  */
 function elgg_pop_context() {
-	return _elgg_services()->context->pop();
+	return _elgg_services()->request->getContextStack()->pop();
 }
 
 /**
@@ -233,7 +233,7 @@ function elgg_pop_context() {
  * @since 1.8.0
  */
 function elgg_in_context($context) {
-	return _elgg_services()->context->contains($context);
+	return _elgg_services()->request->getContextStack()->contains($context);
 }
 
 /**
@@ -243,7 +243,7 @@ function elgg_in_context($context) {
  * @since 1.11
  */
 function elgg_get_context_stack() {
-	return _elgg_services()->context->toArray();
+	return _elgg_services()->request->getContextStack()->toArray();
 }
 
 /**
@@ -254,7 +254,7 @@ function elgg_get_context_stack() {
  * @since 1.11
  */
 function elgg_set_context_stack(array $stack) {
-	_elgg_services()->context->fromArray($stack);
+	_elgg_services()->request->getContextStack()->fromArray($stack);
 }
 
 /**

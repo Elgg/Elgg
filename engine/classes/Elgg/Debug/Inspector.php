@@ -155,7 +155,11 @@ class Inspector {
 		];
 		$start = strlen(elgg_get_root_path());
 		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
-			$info['file'] = substr($info['file'], $start);
+			if (isset($info['file'])) {
+				$info['file'] = substr($info['file'], $start);
+			} else if ($info['controller']) {
+				$info['file'] = $this->describeCallable($info['controller']);
+			}
 			$tree[$action] = [$info['file'], $access[$info['access']]];
 		}
 		ksort($tree);
@@ -203,15 +207,30 @@ class Inspector {
 		foreach (_elgg_services()->routeCollection->all() as $name => $route) {
 			$handler = $route->getDefault('_handler') ? : '';
 			if ($handler) {
-				$this->describeCallable($handler);
+				$handler = $this->describeCallable($handler);
+			}
+
+			$controller = $route->getDefault('_controller') ? : '';
+			if ($controller) {
+				$controller = $this->describeCallable($controller);
 			}
 
 			$resource = $route->getDefault('_resource') ? : '';
+
+			$file = $route->getDefault('_file') ? : '';
+
+			$middleware = $route->getDefault('_middleware') ? : '';
+			$middleware = array_map(function($e) {
+				return $this->describeCallable($e);
+			}, $middleware);
 
 			$tree[$name] = [
 				$route->getPath(),
 				$resource,
 				$handler,
+				$controller,
+				$file,
+				$middleware,
 			];
 		}
 		uasort($tree, function($e1, $e2) {
@@ -301,7 +320,7 @@ class Inspector {
 				default:
 					break;
 			}
-			$menus[$type] = elgg_trigger_plugin_hook('register', "menu:$type", $params, []);
+			$menus[$type] = _elgg_services()->hooks->trigger('register', "menu:$type", $params, []);
 		}
 
 		// put the menus in tree form for inspection

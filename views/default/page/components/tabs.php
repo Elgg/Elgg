@@ -83,7 +83,7 @@ $content = elgg_format_element('div', [
 
 $module = elgg_extract('module', $vars, 'tabs');
 unset($vars['module']);
-$vars['header'] = $tabs;
-echo elgg_view_module($module, null, $content, $vars);
+
+echo elgg_view_module($module, elgg_extract('title', $vars), $tabs . $content, $vars);
 
 elgg_require_js('page/components/tabs');

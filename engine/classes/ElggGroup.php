@@ -312,7 +312,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function canAccessContent(ElggUser $user = null) {
 		if (!isset($user)) {
-			$user = elgg_get_logged_in_user_entity();
+			$user = _elgg_services()->session->getLoggedInUser();
 		}
 
 		if ($this->getContentAccessMode() == self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
