@@ -1,3 +1,78 @@
+<a name="3.0.0-beta.3"></a>
+### 3.0.0-beta.3  (2018-03-08)
+
+#### Contributors
+
+* Jeroen Dalsem (38)
+* Ismayil Khayredinov (29)
+* Jerôme Bakker (14)
+
+#### Features
+
+* **actions:**
+  * it is possible to return a response in the action hook ([562eb031](https://github.com/Elgg/Elgg/commit/562eb031945c8df9c4f781d96411e6b2de8f4235))
+  * individual actions are now routes, support controllers ([32a07bc0](https://github.com/Elgg/Elgg/commit/32a07bc0f32353293e06e20a015964df217b5e9a))
+* **ajax:** add support for FormData and multipart form data requests ([46590359](https://github.com/Elgg/Elgg/commit/46590359b9a93aebcc078927407a9c0fc64994f6))
+* **cache:** added api to remove single item from systemcache ([7da2f561](https://github.com/Elgg/Elgg/commit/7da2f561d7e62dbae0c4add84ca64b9f938b7c72))
+* **di:**
+  * add config to public services ([6d1bd17b](https://github.com/Elgg/Elgg/commit/6d1bd17b1355e65cb425ff97b1cc0ffc445e1c72))
+  * add system messages to public services ([65b8140f](https://github.com/Elgg/Elgg/commit/65b8140f5b2d3c02aade559712b8c258c34aadf0))
+  * add hooks and events to public services ([a9fbebca](https://github.com/Elgg/Elgg/commit/a9fbebcaaa75a40851e377a3d1c81353e6f7555c))
+  * add translator to public services ([b46e11f1](https://github.com/Elgg/Elgg/commit/b46e11f19b7d1351d610f7178ccb76bbd0c902d5))
+  * make gatekeeper a public service ([8d19fc42](https://github.com/Elgg/Elgg/commit/8d19fc42655a47e799f68bd4a34f609131e7b39c))
+  * make session a public service ([5ca2ff8b](https://github.com/Elgg/Elgg/commit/5ca2ff8b9bbc7e363dc069d9e0991c9434a32455))
+* **forms:** added not-allowed cursor to disable input elements ([cc09c77d](https://github.com/Elgg/Elgg/commit/cc09c77dbe58487f340106589a7b5e8c8cce3cbc))
+* **input:** longtext editor opts now store required status ([fae01474](https://github.com/Elgg/Elgg/commit/fae01474a111c94160f1c1c3f25e256774033352))
+* **plugins:** added a settings field that triggers cache flush ([d18c0310](https://github.com/Elgg/Elgg/commit/d18c0310d413a04ae91f833e1fcea3ba7988ca7a))
+* **profile:** the user profile page now uses a regular title menu ([57efaa5f](https://github.com/Elgg/Elgg/commit/57efaa5fa7178a8c335b64e9ca1f76cad33584d1))
+* **route:** add support for handling routes using files ([c4fafb3b](https://github.com/Elgg/Elgg/commit/c4fafb3bcfad2b7d0e675d7cbb61c0dc7d819249))
+* **router:** add support for controllers ([11f84355](https://github.com/Elgg/Elgg/commit/11f84355166e7ab808d36af9c6f041dbcc7d5fce))
+* **routes:**
+  * elgg_generate_url returns false for unknown routes ([6421c422](https://github.com/Elgg/Elgg/commit/6421c422669d818ca533af5ae3cca4adbc024401))
+  * add support for route middleware ([0f199324](https://github.com/Elgg/Elgg/commit/0f199324dd3ccd041cc3628b1cc806b610246ac3))
+* **system_log:** refactor system log API into a service ([c5846aa8](https://github.com/Elgg/Elgg/commit/c5846aa8d6cf48836d136e8b9af2cd956d285eeb))
+* **widgets:** ElggWidget now has getDisplayName instead of getTitle ([12455356](https://github.com/Elgg/Elgg/commit/12455356afa2ea8ecb69608afdbd2790da56c87e))
+
+
+#### Bug Fixes
+
+* **actions:**
+  * fixes error message on missing action file ([554c2e2e](https://github.com/Elgg/Elgg/commit/554c2e2edac27e8ce603f5a1fabfc6927a544834))
+  * defining controller in static config works again ([2622fd1e](https://github.com/Elgg/Elgg/commit/2622fd1e08390e67c2d4611188ecd7db5021fbf0))
+* **admin:** correctly set action path for settings forms ([5a021d7d](https://github.com/Elgg/Elgg/commit/5a021d7d4449dec5ac484b5c478802c03cc98f3e))
+* **core:**
+  * canComment now returns false for ElggSite entities ([6f2a2edb](https://github.com/Elgg/Elgg/commit/6f2a2edb9686eddd13f96b8f96aaa011320d745d))
+  * directly call EventsService in shutdown function ([48d74a65](https://github.com/Elgg/Elgg/commit/48d74a65ab630feaf2578b77e9543af11d8417f3))
+  * make sure minusername and passwordlength are always in config ([ec3b4e94](https://github.com/Elgg/Elgg/commit/ec3b4e944379ab2f8ce9fa0d6591bd480681321d))
+* **css:**
+  * make sure jquery positioning has correct information ([290aeee3](https://github.com/Elgg/Elgg/commit/290aeee3873ea363a4a04e2a3280b4a2b0e8b74b))
+  * correct behaviour of elgg-level in all browsers ([258e9d36](https://github.com/Elgg/Elgg/commit/258e9d36a3ce6f428019a95c392881bfe3bd688e))
+  * walled garden background correctly positioned in IE ([a527ebdd](https://github.com/Elgg/Elgg/commit/a527ebdd3d0b6ae52726f9b5386ea5f2cb41646f))
+  * set correct margin on admin content layout ([5accfeaf](https://github.com/Elgg/Elgg/commit/5accfeafe25675387b9eda6c9f491de60f0fb557))
+  * only apply module header font color to first level elements ([c180b203](https://github.com/Elgg/Elgg/commit/c180b2038807d4c648923aa4d1aabdb0ed509421))
+  * correct alignment of pageheader and module header elements ([5fe78207](https://github.com/Elgg/Elgg/commit/5fe78207dadfdc8ec6e8d11b2ce1dca00d33a003))
+* **email:**
+  * add sender to Zend mail message envelope ([58c1fdea](https://github.com/Elgg/Elgg/commit/58c1fdea52889d20cae4f68c9d4337e0447aae16))
+  * always default to site email ([23ffef3d](https://github.com/Elgg/Elgg/commit/23ffef3d0e9a2b9cefd0727afc727c1eb5b06283))
+* **embed:** make embed route pattern greedy ([4346ea9b](https://github.com/Elgg/Elgg/commit/4346ea9b4ff1ee34637c22f60fc664a0774fda1c))
+* **forms:**
+  * switched styled checkbox without label now is clickable ([2d2c79c5](https://github.com/Elgg/Elgg/commit/2d2c79c58eeb8f7ac63363755c7eb36102cafa08))
+  * select alues are now correctly selected with array elements ([d2dcb978](https://github.com/Elgg/Elgg/commit/d2dcb978dd11831493ba8eb732f66e79321da6df))
+  * userpicker works again when friends constraint is set ([a4d80c58](https://github.com/Elgg/Elgg/commit/a4d80c582fab3a4a93956f044f5606159e7fd7ce), closes [#11697](https://github.com/Elgg/Elgg/issues/11697))
+* **groups:**
+  * show group dropdown at correct position ([a781f1dc](https://github.com/Elgg/Elgg/commit/a781f1dcc3253a15787aa0f989151d6fe5d4ff99))
+  * only show toggle indicator if there is a submenu ([6aa05764](https://github.com/Elgg/Elgg/commit/6aa057646c021df736dadc1a445c541c3ca26812))
+* **js:**
+  * ajaxed login form now correctly returns to REFERER ([605089af](https://github.com/Elgg/Elgg/commit/605089af991d4e5e7f639960e70bc1e4444ee4b8))
+  * close system messages when opening a lightbox ([67ed9a1e](https://github.com/Elgg/Elgg/commit/67ed9a1edc06a5a7947f173fcdf80af93fafd10f))
+* **navigation:** metadata and river menu sections are positioned inline ([30b90d00](https://github.com/Elgg/Elgg/commit/30b90d00e56a290790a37a9d68e5db1e3903d89e))
+* **notifications:** set correct subtype for user notifications ([6e30ceac](https://github.com/Elgg/Elgg/commit/6e30ceac9d2b47e412a8b7668cc7e65e8a91282a))
+* **profile:** custom profile fields can be saved again ([2d773027](https://github.com/Elgg/Elgg/commit/2d7730271a16d12231852e0dafa63cd6b99a66ce))
+* **river:** core should register the river/delete action ([0a4956a4](https://github.com/Elgg/Elgg/commit/0a4956a4a0d38cc562b02d66a5711182b9a73ac6))
+* **system_log:** correctly extend login_history view to settings ([1543c201](https://github.com/Elgg/Elgg/commit/1543c20178dc21fcacc97c6ac82ff74b4ef79cb2))
+* **views:** numentities statistics view correctly gets user entity ([3de7dca2](https://github.com/Elgg/Elgg/commit/3de7dca2c3b4d5c0cebaf8ca353db60b0ddc26b5))
+
+
 <a name="3.0.0-beta.2"></a>
 ### 3.0.0-beta.2  (2018-01-31)
 
