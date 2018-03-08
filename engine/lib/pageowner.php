@@ -18,38 +18,17 @@
  * @since 1.8.0
  */
 function elgg_get_page_owner_guid($guid = 0) {
-	static $page_owner_guid;
 
-	if ($guid === false || $guid === null) {
-		$page_owner_guid = 0;
-		return $page_owner_guid;
-	}
-	
-	if ($guid) {
-		$page_owner_guid = (int) $guid;
+	if (isset($guid)) {
+		elgg_set_page_owner_guid($guid);
 	}
 
-	if (isset($page_owner_guid)) {
-		return $page_owner_guid;
+	$owner = _elgg_services()->request->getRouteOwner();
+	if ($owner) {
+		return $owner->guid;
 	}
 
-	$route = _elgg_services()->request->getRoute();
-	if ($route) {
-		$page_owner = $route->resolvePageOwner();
-		if ($page_owner) {
-			return $page_owner->guid;
-		}
-	}
-
-	// return guid of page owner entity
-	// Note: core registers default_page_owner_handler() to handle this hook.
-	$guid = (int) elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
-
-	if ($guid) {
-		$page_owner_guid = $guid;
-	}
-
-	return $guid;
+	return 0;
 }
 
 /**
@@ -60,12 +39,7 @@ function elgg_get_page_owner_guid($guid = 0) {
  * @since 1.8.0
  */
 function elgg_get_page_owner_entity() {
-	$guid = elgg_get_page_owner_guid();
-	if (!$guid) {
-		return false;
-	}
-
-	return get_entity($guid);
+	return _elgg_services()->request->getRouteOwner();
 }
 
 /**
@@ -76,7 +50,15 @@ function elgg_get_page_owner_entity() {
  * @since 1.8.0
  */
 function elgg_set_page_owner_guid($guid) {
-	elgg_get_page_owner_guid($guid);
+	if (isset($guid)) {
+		$entity = get_entity($guid);
+		if ($entity) {
+			_elgg_services()->request->setRouteOwner($entity);
+			return;
+		}
+	}
+
+	_elgg_services()->request->setRouteOwner(null);
 }
 
 /**

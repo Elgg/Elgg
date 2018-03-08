@@ -6,6 +6,7 @@ use Elgg\BadRequestException;
 use Elgg\Context;
 use Elgg\HttpException;
 use Elgg\Router\Route;
+use ElggEntity;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
@@ -29,6 +30,11 @@ class Request extends SymfonyRequest {
 	 * @var Route
 	 */
 	protected $route;
+
+	/**
+	 * @var ElggEntity|false
+	 */
+	protected $route_owner;
 
 	/**
 	 * {@inheritdoc}
@@ -88,6 +94,45 @@ class Request extends SymfonyRequest {
 	 */
 	public function getRoute() {
 		return $this->route;
+	}
+
+	/**
+	 * Returns an entity that owns the current route
+	 * @return ElggEntity|false
+	 */
+	public function getRouteOwner() {
+		if (isset($this->route_owner)) {
+			return $this->route_owner;
+		}
+
+		$route = $this->getRoute();
+		if ($route) {
+			$page_owner = $route->resolvePageOwner();
+			if ($page_owner) {
+				return $page_owner;
+			}
+		}
+
+		// return guid of page owner entity
+		// Note: core registers default_page_owner_handler() to handle this hook.
+		$guid = (int) _elgg_services()->hooks->trigger('page_owner', 'system', null, 0);
+
+		if ($guid) {
+			return get_entity($guid);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Set the owner of the current route
+	 *
+	 * @param ElggEntity $route_owner Owner entity
+	 *
+	 * @return void
+	 */
+	public function setRouteOwner(ElggEntity $route_owner = null) {
+		$this->route_owner = $route_owner ? : false;
 	}
 
 	/**
