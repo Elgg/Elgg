@@ -43,4 +43,8 @@ if ($autop) {
 	$text = elgg_autop($text);
 }
 
+if (empty($text)) {
+	return;
+}
+
 echo elgg_format_element('div', $vars, $text);
