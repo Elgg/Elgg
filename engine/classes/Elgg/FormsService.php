@@ -81,6 +81,7 @@ class FormsService {
 
 		$defaults = [
 			'action' => elgg_generate_action_url($action, [], false),
+			'method' => 'post',
 		];
 
 		// append elgg-form class to any class options set
@@ -88,6 +89,10 @@ class FormsService {
 		$form_vars['class'][] = 'elgg-form-' . preg_replace('/[^a-z0-9]/i', '-', $action);
 
 		$form_vars = array_merge($defaults, $form_vars);
+
+		if (!isset($form_vars['enctype']) && strtolower($form_vars['method']) == 'post') {
+			$form_vars['enctype'] = 'multipart/form-data';
+		}
 
 		$form_vars['action_name'] = $action;
 		
