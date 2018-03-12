@@ -1,5 +1,7 @@
 <?php
 	$user = new ElggUser();
+	$user->username = 'theme_sandbox';
+
 	$group = new ElggGroup();
 	
 	$sizes = ['large', 'medium', 'small', 'tiny'];
