@@ -397,13 +397,29 @@ class Request extends SymfonyRequest {
 	 * @throws HttpException
 	 */
 	public function validate() {
-		$length = $this->server->get('CONTENT_LENGTH');
-		$post_count = count($this->request);
 
-		if ($length && $post_count < 1) {
-			// The size of $_POST or uploaded file has exceed the size limit
+		$reported_bytes = $this->server->get('CONTENT_LENGTH');
+		$actual_bytes = strlen($this->getContent());
+		$query_elements = count($this->request->all());
+
+		$is_valid = function() use ($reported_bytes, $actual_bytes, $query_elements) {
+			if (empty($reported_bytes)) {
+				// Content length is set for POST requests only
+				return true;
+			}
+
+			if (empty($actual_bytes) && empty($query_elements)) {
+				// The size of $_POST or uploaded file has exceed the size limit
+				// and the request body/query has been truncated
+				return false;
+			}
+
+			return true;
+		};
+
+		if (!$is_valid) {
 			$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
-				'post_size' => $length,
+				'post_size' => $reported_bytes,
 				'visible_errors' => true,
 			], elgg_echo('actiongatekeeper:uploadexceeded'));
 
