@@ -430,11 +430,13 @@ class Application {
 				throw new PageNotFoundException();
 			}
 		} catch (HttpException $ex) {
-			$forward_url = null;
-			if ($ex instanceof GatekeeperException) {
-				$forward_url = elgg_is_logged_in() ? null : elgg_get_login_url();
-			} else if ($request->getFirstUrlSegment() == 'action') {
-				$forward_url = REFERRER;
+			$forward_url = $ex->getRedirectUrl();
+			if (!$forward_url) {
+				if ($ex instanceof GatekeeperException) {
+					$forward_url = elgg_is_logged_in() ? null : elgg_get_login_url();
+				} else if ($request->getFirstUrlSegment() == 'action') {
+					$forward_url = REFERRER;
+				}
 			}
 
 			$hook_params = [
@@ -443,7 +445,7 @@ class Application {
 			
 			$forward_url = $this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
-			if (isset($forward_url)) {
+			if ($forward_url) {
 				if ($ex->getMessage()) {
 					$this->_services->systemMessages->addErrorMessage($ex->getMessage());
 				}
