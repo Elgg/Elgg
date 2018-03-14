@@ -264,6 +264,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			if (!$servers) {
 				return null;
 			}
+			
+			if (!\Stash\Driver\Memcache::isAvailable()) {
+				return null;
+			}
+			
 			$driver = new \Stash\Driver\Memcache([
 				'servers' => $servers,
 			]);
