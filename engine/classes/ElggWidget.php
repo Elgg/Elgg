@@ -132,7 +132,8 @@ class ElggWidget extends \ElggObject {
 	 * @since 1.8.0
 	 */
 	public function setContext($context) {
-		return $this->setPrivateSetting('context', $context);
+		$this->context = $context;
+		return true;
 	}
 
 	/**
@@ -142,7 +143,7 @@ class ElggWidget extends \ElggObject {
 	 * @since 1.8.0
 	 */
 	public function getContext() {
-		return (string) $this->getPrivateSetting('context');
+		return (string) $this->context;
 	}
 
 	/**
