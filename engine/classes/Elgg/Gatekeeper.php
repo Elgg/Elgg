@@ -4,7 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\AccessCollections;
 use Elgg\Database\EntityTable;
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use Elgg\I18n\Translator;
 use ElggEntity;
 use ElggGroup;
@@ -25,7 +25,7 @@ class Gatekeeper {
 	protected $session;
 
 	/**
-	 * @var Request
+	 * @var HttpRequest
 	 */
 	protected $request;
 
@@ -53,7 +53,7 @@ class Gatekeeper {
 	 * Constructor
 	 *
 	 * @param ElggSession       $session    Session
-	 * @param Request           $request    HTTP Request
+	 * @param HttpRequest       $request    HTTP Request
 	 * @param RedirectService   $redirects  Redirects Service
 	 * @param EntityTable       $entities   Entity table
 	 * @param AccessCollections $access     Access collection table
@@ -64,7 +64,7 @@ class Gatekeeper {
 	 */
 	public function __construct(
 		ElggSession $session,
-		Request $request,
+		HttpRequest $request,
 		RedirectService $redirects,
 		EntityTable $entities,
 		AccessCollections $access,
@@ -156,23 +156,11 @@ class Gatekeeper {
 			if (!$this->session->getIgnoreAccess() && !$this->access->hasAccessToEntity($entity, $user)) {
 				// user is logged in but still does not have access to it
 				$msg = $this->translator->translate('limited_access');
-				$exception = new EntityNotFoundException($msg);
-				$exception->setParams([
-					'entity' => $entity,
-					'user' => $user,
-					'route' => $this->request->get('_route'),
-				]);
-				throw $exception;
+				throw new EntityNotFoundException($msg);
 			}
 
 			if (!$entity->isEnabled() && !$this->session->getDisabledEntityVisibility()) {
-				$exception = new EntityNotFoundException();
-				$exception->setParams([
-					'entity' => $entity,
-					'user' => $user,
-					'route' => $this->request->get('_route'),
-				]);
-				throw $exception;
+				throw new EntityNotFoundException();
 			}
 
 			if ($entity instanceof ElggUser) {
@@ -198,7 +186,6 @@ class Gatekeeper {
 		$hook_params = [
 			'entity' => $entity,
 			'user' => $user,
-			'route' => $this->request->get('_route'),
 		];
 
 		$result = _elgg_services()->hooks->trigger('gatekeeper', "{$entity->type}:{$entity->subtype}", $hook_params, $result);
@@ -226,13 +213,7 @@ class Gatekeeper {
 			}
 
 			if (!$viewer || !$viewer->isAdmin()) {
-				$exception = new EntityNotFoundException();
-				$exception->setParams([
-					'entity' => $user,
-					'user' => $viewer,
-					'route' => $this->request->get('_route'),
-				]);
-				throw $exception;
+				throw new EntityNotFoundException();
 			}
 		}
 	}
@@ -253,14 +234,7 @@ class Gatekeeper {
 
 			$this->redirects->setLastForwardFrom();
 
-			$exception = new GroupGatekeeperException();
-			$exception->setParams([
-				'entity' => $group,
-				'user' => $user,
-				'route' => $this->request->get('_route'),
-			]);
-			$exception->setRedirectUrl($group->getURL());
-			throw $exception;
+			throw new GroupGatekeeperException();
 		}
 	}
 
