@@ -2,10 +2,9 @@
 
 namespace Elgg;
 
-use Elgg\Http\Request;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Elgg\Filesystem\MimeTypeDetector;
-use Elgg\ImageService;
+use Elgg\Http\Request as HttpRequest;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -18,7 +17,7 @@ use Elgg\ImageService;
 class UploadService {
 
 	/**
-	 * @var Request
+	 * @var HttpRequest
 	 */
 	private $request;
 
@@ -30,10 +29,10 @@ class UploadService {
 	/**
 	 * Constructor
 	 *
-	 * @param Request      $request Http request
+	 * @param HttpRequest  $request Http request
 	 * @param ImageService $images  The image service
 	 */
-	public function __construct(Request $request, ImageService $images) {
+	public function __construct(HttpRequest $request, ImageService $images) {
 		$this->request = $request;
 		$this->images = $images;
 	}
