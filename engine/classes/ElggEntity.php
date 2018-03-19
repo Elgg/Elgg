@@ -1396,7 +1396,7 @@ abstract class ElggEntity extends \ElggData implements
 
 			// If different owner than logged in, verify can write to container.
 
-			if ($user_guid != $owner_guid && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
+			if ($user_guid != $owner_guid && !$owner->canEdit() && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
 				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype) with owner"
 					. " $owner_guid, but the user wasn't permitted to write to the owner's container.");
 				return false;
