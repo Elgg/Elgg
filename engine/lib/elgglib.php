@@ -1983,16 +1983,23 @@ function _elgg_walled_garden_init() {
 /**
  * Remove public access for walled gardens
  *
- * @param string $hook
- * @param string $type
- * @param array $accesses
- * @return array
+ * @param string $hook     'access:collections:write'
+ * @param string $type     'all'
+ * @param array  $accesses current access list
+ *
+ * @return void|array
  * @access private
  */
 function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
+	
+	if (!elgg_get_config('walled_garden')) {
+		return;
+	}
+	
 	if (isset($accesses[ACCESS_PUBLIC])) {
 		unset($accesses[ACCESS_PUBLIC]);
 	}
+	
 	return $accesses;
 }
 
@@ -2031,6 +2038,8 @@ function _elgg_init() {
 
 		return $result;
 	});
+	
+	elgg_register_plugin_hook_handler('access:collections:write', 'all', '_elgg_walled_garden_remove_public_access', 9999);
 
 	if (_elgg_services()->config->getVolatile('enable_profiling')) {
 		/**
