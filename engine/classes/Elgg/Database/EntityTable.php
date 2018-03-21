@@ -135,7 +135,7 @@ class EntityTable {
 	 * Returns a database row from the entities table.
 	 *
 	 * @see entity_row_to_elggstar()
-	 * 
+	 *
 	 * @tip Use get_entity() to return the fully loaded entity.
 	 *
 	 * @warning This will only return results if a) it exists, b) you have access to it.
@@ -199,7 +199,7 @@ class EntityTable {
 
 	/**
 	 * Update entity table row
-	 * 
+	 *
 	 * @param int      $guid Entity guid
 	 * @param stdClass $row  Updated data
 	 * @return int|false
@@ -235,7 +235,7 @@ class EntityTable {
 	 * @see get_entity_as_row()
 	 * @see add_subtype()
 	 * @see get_entity()
-	 * 
+	 *
 	 * @access private
 	 *
 	 * @param stdClass $row The row of the entry in the entities table.
@@ -881,15 +881,15 @@ class EntityTable {
 	/**
 	 * Returns SQL where clause for type and subtype on main entity table
 	 *
-	 * @param string     $table    Entity table prefix as defined in SELECT...FROM entities $table
-	 * @param null|array $types    Array of types or null if none.
-	 * @param null|array $subtypes Array of subtypes or null if none
-	 * @param null|array $pairs    Array of pairs of types and subtypes
+	 * @param string $table    Entity table prefix as defined in SELECT...FROM entities $table
+	 * @param array  $types    Array of types
+	 * @param array  $subtypes Array of subtypes
+	 * @param array  $pairs    Array of pairs of types and subtypes
 	 *
 	 * @return false|string
 	 * @access private
 	 */
-	public function getEntityTypeSubtypeWhereSql($table, $types, $subtypes, $pairs) {
+	public function getEntityTypeSubtypeWhereSql($table, $types = [], $subtypes = [], $pairs = []) {
 		// subtype depends upon type.
 		if ($subtypes && !$types) {
 			$this->logger->warn("Cannot set subtypes without type.");
@@ -911,7 +911,7 @@ class EntityTable {
 				$types = array($types);
 			}
 
-			if ($subtypes && !is_array($subtypes)) {
+			if (!is_array($subtypes)) {
 				$subtypes = array($subtypes);
 			}
 
