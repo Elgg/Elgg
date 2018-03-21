@@ -461,32 +461,27 @@ class ElggSite extends \ElggEntity {
 	 * @since 1.8.0
 	 */
 	public function checkWalledGarden() {
-		global $CONFIG;
-
 		// command line calls should not invoke the walled garden check
 		if (PHP_SAPI === 'cli') {
 			return;
 		}
 
-		if ($CONFIG->walled_garden) {
-			if ($CONFIG->default_access == ACCESS_PUBLIC) {
-				$CONFIG->default_access = ACCESS_LOGGED_IN;
-			}
-			_elgg_services()->hooks->registerHandler(
-					'access:collections:write',
-					'all',
-					'_elgg_walled_garden_remove_public_access',
-					9999);
+		if (!elgg_get_config('walled_garden')) {
+			return;
+		}
+		
+		if (elgg_get_config('default_access') == ACCESS_PUBLIC) {
+			elgg_set_config('default_access', ACCESS_LOGGED_IN);
+		}
+		
+		if (!_elgg_services()->session->isLoggedIn()) {
+			// override the front page
+			elgg_register_page_handler('', '_elgg_walled_garden_index');
 
-			if (!_elgg_services()->session->isLoggedIn()) {
-				// override the front page
-				elgg_register_page_handler('', '_elgg_walled_garden_index');
-
-				if (!$this->isPublicPage()) {
-					_elgg_services()->redirects->setLastForwardFrom();
-					register_error(_elgg_services()->translator->translate('loggedinrequired'));
-					forward('', 'walled_garden');
-				}
+			if (!$this->isPublicPage()) {
+				_elgg_services()->redirects->setLastForwardFrom();
+				register_error(_elgg_services()->translator->translate('loggedinrequired'));
+				forward('', 'walled_garden');
 			}
 		}
 	}
