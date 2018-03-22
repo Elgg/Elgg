@@ -11,10 +11,7 @@
  * @return void
  */
 function groups_init() {
-	
-	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/member_count');
-	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/membership_type');
-	
+
 	// Set up the menu
 	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/all');
 	elgg_register_menu_item('site', $item);
