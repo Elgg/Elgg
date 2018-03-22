@@ -1725,9 +1725,6 @@ function _elgg_api_test($hook, $type, $value, $params) {
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 
-	_elgg_register_routes();
-	_elgg_register_actions();
-
 	elgg_set_entity_class('user', 'user', \ElggUser::class);
 	elgg_set_entity_class('group', 'group', \ElggGroup::class);
 	elgg_set_entity_class('site', 'site', \ElggSite::class);

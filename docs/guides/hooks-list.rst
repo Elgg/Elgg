@@ -543,9 +543,11 @@ Routing
 **route:config, <route_name>**
 	Allows altering the route configuration before it is registered.
 	This hook can be used to alter the path, default values, requirements, as well as to set/remove middleware.
+	Please note that the handler for this hook should be registered outside of the ``init`` event handler, as core routes are registered during ``plugins_boot`` event.
 
 **route:rewrite, <identifier>**
 	Allows altering the site-relative URL path for an incoming request. See :doc:`routing` for details.
+	Please note that the handler for this hook should be registered outside of the ``init`` event handler, as route rewrites take place after ``plugins_boot`` event has completed.
 
 **response, path:<path>**
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
