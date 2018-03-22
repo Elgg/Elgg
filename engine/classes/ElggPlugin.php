@@ -37,6 +37,11 @@ class ElggPlugin extends ElggObject {
 	 * @var string
 	 */
 	protected $errorMsg = '';
+	
+	/**
+	 * @var bool
+	 */
+	protected $activated;
 
 	/**
 	 * {@inheritdoc}
@@ -539,17 +544,12 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function isActive() {
-		if (!$this->guid) {
-			return false;
+		if (isset($this->activated)) {
+			return $this->activated;
 		}
 
-		$site = elgg_get_site_entity();
-
-		if (!($site instanceof \ElggSite)) {
-			return false;
-		}
-
-		return check_entity_relationship($this->guid, 'active_plugin', $site->guid) instanceof ElggRelationship;
+		$this->activated = elgg_is_active_plugin($this->getID());
+		return $this->activated;
 	}
 
 	/**
@@ -736,6 +736,17 @@ class ElggPlugin extends ElggObject {
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
 
 		return $this->setStatus(false);
+	}
+	
+	/**
+	 * Function to set the activated state. Used when booting plugins.
+	 *
+	 * @see \Elgg\Database\Plugins->setBootPlugins()
+	 * @return void
+	 * @internal
+	 */
+	public function setAsActivated() {
+		$this->activated = true;
 	}
 
 	/**
@@ -1143,6 +1154,10 @@ class ElggPlugin extends ElggObject {
 			$result = add_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		} else {
 			$result = remove_entity_relationship($this->guid, 'active_plugin', $site->guid);
+		}
+		
+		if ($result) {
+			$this->activated = $active;
 		}
 
 		$this->invalidateCache();
