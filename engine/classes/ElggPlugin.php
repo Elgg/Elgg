@@ -625,6 +625,8 @@ class ElggPlugin extends ElggObject {
 					$setup();
 				}
 
+				$this->getBootstrap()->activate();
+
 				if ($this->canReadFile('activate.php')) {
 					$return = $this->includeFile('activate.php');
 				}
@@ -721,6 +723,8 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
+		$this->getBootstrap()->deactivate();
+
 		// run any deactivate code
 		if ($this->canReadFile('deactivate.php')) {
 			// allows you to prevent disabling a plugin by returning false in a deactivate.php file
@@ -750,6 +754,26 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
+	 * Bootstrap object
+	 * @return \Elgg\PluginBootstrapInterface
+	 * @throws PluginException
+	 * @access private
+	 * @internal
+	 */
+	public function getBootstrap() {
+		$bootstrap = $this->getStaticConfig('bootstrap');
+		if ($bootstrap) {
+			if (!is_subclass_of($bootstrap, \Elgg\PluginBootstrapInterface::class)) {
+				throw new PluginException($bootstrap . ' must implement ' . \Elgg\PluginBootstrapInterface::class);
+			}
+
+			return new $bootstrap($this, _elgg_services()->dic);
+		}
+
+		return new \Elgg\DefaultPluginBootstrap($this, _elgg_services()->dic);
+	}
+
+	/**
 	 * Boot the plugin by autoloading files, classes etc
 	 *
 	 * @throws PluginException
@@ -770,6 +794,8 @@ class ElggPlugin extends ElggObject {
 
 		$this->activateEntities();
 
+		$this->getBootstrap()->load();
+
 		$result = null;
 		if ($this->canReadFile('start.php')) {
 			$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
@@ -777,6 +803,8 @@ class ElggPlugin extends ElggObject {
 
 		$this->registerLanguages();
 		$this->registerViews();
+
+		$this->getBootstrap()->boot();
 
 		return $result;
 	}
@@ -792,6 +820,8 @@ class ElggPlugin extends ElggObject {
 		$this->registerActions();
 		$this->registerEntities();
 		$this->registerWidgets();
+
+		$this->getBootstrap()->init();
 	}
 
 	/**

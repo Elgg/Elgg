@@ -168,7 +168,7 @@ class Plugins {
 			if (!$plugin_id) {
 				continue;
 			}
-			
+
 			$this->boot_plugins[$plugin_id] = $plugin;
 			$this->cache->save($plugin_id, $plugin);
 		}
@@ -473,6 +473,9 @@ class Plugins {
 
 		$this->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
 		$this->hooks->getEvents()->registerHandler('init', 'system', [$this, 'init']);
+		$this->hooks->getEvents()->registerHandler('ready', 'system', [$this, 'ready']);
+		$this->hooks->getEvents()->registerHandler('upgrade', 'system', [$this, 'upgrade']);
+		$this->hooks->getEvents()->registerHandler('shutdown', 'system', [$this, 'shutdown']);
 
 		return true;
 	}
@@ -582,6 +585,92 @@ class Plugins {
 		}
 	}
 
+	/**
+	 * Run plugin ready handlers
+	 *
+	 * @elgg_event ready system
+	 * @return void
+	 */
+	public function ready() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$plugin->getBootstrap()->ready();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+	}
+
+	/**
+	 * Run plugin upgrade handlers
+	 *
+	 * @elgg_event upgrade system
+	 * @return void
+	 */
+	public function upgrade() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$plugin->getBootstrap()->upgrade();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+	}
+
+	/**
+	 * Run plugin shutdown handlers
+	 *
+	 * @elgg_event shutdown system
+	 * @return void
+	 */
+	public function shutdown() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$plugin->getBootstrap()->shutdown();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+	}
 
 	/**
 	 * Disable a plugin upon exception
