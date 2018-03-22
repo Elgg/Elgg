@@ -154,14 +154,23 @@ class Plugins {
 	 * @return void
 	 */
 	public function setBootPlugins($plugins) {
-		$this->boot_plugins = $plugins;
-		if (is_array($plugins)) {
-			foreach ($plugins as $plugin) {
-				if (!$plugin instanceof ElggPlugin || !$plugin->getID()) {
-					continue;
-				}
-				$this->cache->save($plugin->getID(), $plugin);
+		if (!is_array($plugins)) {
+			unset($this->boot_plugins);
+			return;
+		}
+		
+		foreach ($plugins as $plugin) {
+			if (!$plugin instanceof ElggPlugin) {
+				continue;
 			}
+			
+			$plugin_id = $plugin->getID();
+			if (!$plugin_id) {
+				continue;
+			}
+			
+			$this->boot_plugins[$plugin_id] = $plugin;
+			$this->cache->save($plugin_id, $plugin);
 		}
 	}
 
@@ -427,13 +436,16 @@ class Plugins {
 	 * @return bool
 	 */
 	public function isActive($plugin_id) {
+		if (isset($this->boot_plugins) && is_array($this->boot_plugins)) {
+			return array_key_exists($plugin_id, $this->boot_plugins);
+		}
+		
 		$plugin = $this->get($plugin_id);
-
 		if (!$plugin) {
 			return false;
 		}
-
-		return $plugin->isActive();
+		
+		return check_entity_relationship($plugin->guid, 'active_plugin', 1) instanceof \ElggRelationship;
 	}
 
 	/**
