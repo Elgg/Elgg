@@ -224,6 +224,8 @@ class Application {
 		$this->_services->boot->boot($this->_services);
 
 		$events->registerHandler('plugins_boot:before', 'system', 'elgg_views_boot');
+		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');
+		$events->registerHandler('plugins_boot', 'system', '_elgg_register_actions');
 
 		// Load the plugins that are active
 		$this->_services->plugins->load();
