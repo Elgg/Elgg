@@ -571,6 +571,8 @@ $ipsum = elgg_view('developers/ipsum');
 				],
 			]
 		]);
+
+		echo elgg_view('theme_sandbox/forms/extend');
 		?>
 	</fieldset>
 </form>
