@@ -11,7 +11,9 @@
  */
 
 if (!empty($vars['value'])) {
-	echo elgg_echo('fileexists') . "<br />";
+	echo elgg_format_element('div', [
+		'class' => 'elgg-state elgg-state-warning',
+	], elgg_echo('fileexists'));
 }
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-file');
