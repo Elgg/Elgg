@@ -71,6 +71,20 @@ class HandlersService {
 	}
 
 	/**
+	 * Test is callback is callable
+	 * Unlike is_callable(), this function also tests invokable classes
+	 *
+	 * @see is_callable()
+	 *
+	 * @param mixed $callback Callable
+	 * @return bool
+	 */
+	public function isCallable($callback) {
+		$callback = $this->resolveCallable($callback);
+		return $callback && is_callable($callback);
+	}
+
+	/**
 	 * Get the reflection interface for a callable
 	 *
 	 * @param callable $callable Callable

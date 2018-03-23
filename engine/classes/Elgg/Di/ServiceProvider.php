@@ -160,7 +160,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
-			return new \Elgg\ActionsService($c->routes);
+			return new \Elgg\ActionsService($c->routes, $c->handlers);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);

@@ -34,12 +34,24 @@ class ActionsService {
 	];
 
 	/**
+	 * @var RouteRegistrationService
+	 */
+	protected $routes;
+
+	/**
+	 * @var HandlersService
+	 */
+	protected $handlers;
+
+	/**
 	 * Constructor
 	 *
-	 * @param RouteRegistrationService $routes Routes
+	 * @param RouteRegistrationService $routes   Routes
+	 * @param HandlersService          $handlers Handlers service
 	 */
-	public function __construct(RouteRegistrationService $routes) {
+	public function __construct(RouteRegistrationService $routes, HandlersService $handlers) {
 		$this->routes = $routes;
+		$this->handlers = $handlers;
 	}
 
 	/**
@@ -156,7 +168,7 @@ class ActionsService {
 			return false;
 		}
 
-		if ($controller && !is_callable($controller)) {
+		if ($controller && !$this->handlers->isCallable($controller)) {
 			return false;
 		}
 
