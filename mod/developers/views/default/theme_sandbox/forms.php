@@ -314,6 +314,14 @@ $ipsum = elgg_view('developers/ipsum');
 		]);
 
 		echo elgg_view_field([
+			'#type' => 'file',
+			'name' => 'f7-with-value',
+			'id' => 'f7-withe-value',
+			'value' => true,
+			'#label' => 'File input with value .elgg-input-file):',
+		]);
+
+		echo elgg_view_field([
 			'#type' => 'url',
 			'name' => 'f8',
 			'id' => 'f8',
