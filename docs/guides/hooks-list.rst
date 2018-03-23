@@ -1026,6 +1026,15 @@ Groups
 **tool_options, group**
 	Use this hook to influence the available group tool options
 
+**fields:profile, group**
+	Allows plugins to alter profile fields displayed on the group edit form
+
+**fields:access, group**
+	Allows plugins to alter access fields displayed on the group edit form
+
+**fields:tools, group**
+	Allows plugins to alter tool fields displayed on the group edit form
+
 HTMLawed
 --------
 
