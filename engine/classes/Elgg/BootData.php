@@ -108,22 +108,24 @@ class BootData {
 		}, $this->active_plugins);
 
 		// find plugin GUIDs with not too many settings
-		$limit = 40;
-		$set = implode(',', $guids);
-		$sql = "
-			SELECT entity_guid
-			FROM {$db->prefix}private_settings
-			WHERE entity_guid IN ($set)
-			  AND name NOT LIKE 'plugin:user_setting:%'
-			  AND name NOT LIKE 'elgg:internal:%'
-			GROUP BY entity_guid
-			HAVING COUNT(*) > $limit
-		";
-		$unsuitable_guids = $db->getData($sql, function ($row) {
-			return (int)$row->entity_guid;
-		});
-		$guids = array_values($guids);
-		$guids = array_diff($guids, $unsuitable_guids);
+		$limit = isset($config->bootdata_plugin_settings_limit) ? (int) $config->bootdata_plugin_settings_limit : 40;
+		if ($limit > 0) {
+			$set = implode(',', $guids);
+			$sql = "
+				SELECT entity_guid
+				FROM {$db->prefix}private_settings
+				WHERE entity_guid IN ($set)
+				  AND name NOT LIKE 'plugin:user_setting:%'
+				  AND name NOT LIKE 'elgg:internal:%'
+				GROUP BY entity_guid
+				HAVING COUNT(*) > $limit
+			";
+			$unsuitable_guids = $db->getData($sql, function ($row) {
+				return (int)$row->entity_guid;
+			});
+			$guids = array_values($guids);
+			$guids = array_diff($guids, $unsuitable_guids);
+		}
 
 		if ($guids) {
 			// get the settings
