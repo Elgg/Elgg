@@ -1,12 +1,9 @@
 <?php
 
-$toggle = elgg_view_icon('chevron-up', ['class' => 'elgg-state-closed']);
-$toggle .= elgg_view_icon('chevron-down', ['class' => 'elgg-state-opened']);
-
 $items = [
 	[
 		'name' => 'parent',
-		'text' => 'Show Submenu' . $toggle,
+		'text' => 'Show Submenu',
 		'href' => '#',
 		'child_menu' => [
 			'display' => 'dropdown',
@@ -26,7 +23,32 @@ foreach (['bell', 'bank', 'coffee', 'car'] as $icon) {
 		'text' => "Menu item",
 		'href' => '#',
 		'parent_name' => 'parent',
+		'child_menu' => [
+			'display' => 'toggle',
+		],
 	];
+
+
+	foreach (['A', 'B', 'C'] as $letter) {
+		$items[] = [
+			'name' => "$icon:$letter",
+			'href' => '#',
+			'text' => "Child $letter",
+			'parent_name' => $icon,
+			'child_menu' => [
+				'display' => 'toggle',
+			],
+		];
+
+		foreach (['AA', 'BB', 'CC'] as $subletter) {
+			$items[] = [
+				'name' => "$icon:$letter:$subletter",
+				'href' => '#',
+				'text' => "Child $subletter",
+				'parent_name' => "$icon:$letter",
+			];
+		}
+	}
 }
 
 echo elgg_view_menu('theme_sandbox:dropdown_menu', [
