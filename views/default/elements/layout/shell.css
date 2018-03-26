@@ -7,10 +7,12 @@
 
 .elgg-page-default .elgg-page-body > .elgg-inner {
 	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 @media $(media-desktop-up) {
 	.elgg-page-default .elgg-page-section > .elgg-inner {
-		padding: 0 1rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
 	}
 }
