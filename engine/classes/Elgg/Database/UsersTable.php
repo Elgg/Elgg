@@ -78,6 +78,7 @@ class UsersTable {
 				[
 					'name' => 'username',
 					'value' => $username,
+					'case_sensitive' => false,
 				],
 			],
 			'limit' => 1,
@@ -103,6 +104,7 @@ class UsersTable {
 				[
 					'name' => 'email',
 					'value' => $email,
+					'case_sensitive' => false,
 				],
 			],
 			'limit' => 1,
