@@ -10,14 +10,13 @@
 .elgg-page-topbar > .elgg-inner {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: flex-end;
+	justify-content: flex-start;
 	align-items: center;
 }
 
 .elgg-nav-logo {
 	left: 0;
 	flex-grow: 1;
-	order: 1;
 }
 
 .elgg-nav-logo h1 {
