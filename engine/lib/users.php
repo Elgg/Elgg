@@ -561,6 +561,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'name' => 'account',
 		'text' => elgg_echo('account'),
 		'href' => $viewer->getURL(),
+		'link_class' => 'elgg-avatar-small',
 		'icon' => elgg_view('output/img', [
 			'src' => $viewer->getIconURL('small'),
 			'alt' => $viewer->getDisplayName(),
