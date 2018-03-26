@@ -107,6 +107,42 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 		$this->user->delete();
 	}
+	
+	public function testGetUserByUsernameCaseInsensitivity() {
+
+		$username = $this->getRandomUsername();
+		$this->user->username = $username;
+		$guid = $this->user->save();
+
+		$uc_username = strtoupper($username);
+		
+		$user = get_user_by_username($uc_username);
+		$this->assertTrue((bool) $user);
+		$this->assertEquals($user->guid, $guid);
+
+		$this->user->delete();
+	}
+	
+	public function testGetUserByEmailCaseInsensitivity() {
+
+		$email = 'Example.User@elgg.org';
+		$this->user->email = $email;
+		$guid = $this->user->save();
+
+		$users = get_user_by_email($email);
+		
+		$this->assertCount(1, $users);
+		$this->assertEquals($users[0]->guid, $guid);
+		
+		// lower case
+		$email = strtolower($email);
+		$users = get_user_by_email($email);
+		
+		$this->assertCount(1, $users);
+		$this->assertEquals($users[0]->guid, $guid);
+
+		$this->user->delete();
+	}
 
 	public function testElggUserMakeAdmin() {
 		$CONFIG = _elgg_config();
