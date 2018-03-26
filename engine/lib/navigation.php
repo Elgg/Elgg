@@ -651,7 +651,8 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Prepare page menu
+ * Prepare vertically stacked menu
+ *
  * Sets the display child menu option to "toggle" if not set
  * Recursively marks parents of the selected item as selected (expanded)
  *
@@ -661,17 +662,25 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
  *
  * @access private
  */
-function _elgg_page_menu_setup(\Elgg\Hook $hook) {
+function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 	$menu = $hook->getValue();
+
+	$prepare = function(ElggMenuItem $menu_item) use (&$prepare) {
+		$child_menu_vars = $menu_item->getChildMenuOptions();
+		if (empty($child_menu_vars['display'])) {
+			$child_menu_vars['display'] = 'toggle';
+		}
+		$menu_item->setChildMenuOptions($child_menu_vars);
+
+		foreach ($menu_item->getChildren() as $child_menu_item) {
+			$prepare($child_menu_item);
+		}
+	};
 
 	foreach ($menu as $section => $menu_items) {
 		foreach ($menu_items as $menu_item) {
 			if ($menu_item instanceof ElggMenuItem) {
-				$child_menu_vars = $menu_item->getChildMenuOptions();
-				if (empty($child_menu_vars['display'])) {
-					$child_menu_vars['display'] = 'toggle';
-				}
-				$menu_item->setChildMenuOptions($child_menu_vars);
+				$prepare($menu_item);
 			}
 		}
 	}
@@ -997,7 +1006,8 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup', 999);
 	elgg_register_plugin_hook_handler('register', 'menu:site', '_elgg_site_menu_init');
 
-	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_page_menu_setup', 999);
+	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_setup_vertical_menu', 999);
+	elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '_elgg_setup_vertical_menu', 999);
 
 	elgg_register_plugin_hook_handler('prepare', 'menu:entity', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('prepare', 'menu:river', '_elgg_menu_transform_to_dropdown');
