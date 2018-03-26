@@ -249,6 +249,17 @@ Notes for forms:
 	In ajax views and forms, note that ``$vars`` can be populated by client input. The data is filtered like
 	``get_input()``, but may not be the type you're expecting or may have unexpected keys.
 
+Redirects
+---------
+
+Use ``ajax.forward()`` to start a spinner and redirect the user to a new destination.
+
+.. code-block:: js
+
+    var Ajax = require('elgg/Ajax');
+    var ajax = new Ajax();
+	ajax.forward('/activity');
+
 
 Piggybacking on an Ajax request
 -------------------------------
