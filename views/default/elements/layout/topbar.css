@@ -216,6 +216,10 @@
 	order: 3;
 }
 
+.elgg-page-topbar .elgg-menu-site-container .elgg-menu-site .elgg-anchor-icon {
+	display: none;
+}
+
 .elgg-page-topbar .elgg-menu-site .elgg-menu-item-more > .elgg-menu-parent,
 .elgg-page-topbar .elgg-menu-topbar .elgg-menu-item-account > .elgg-menu-parent {
 	display: none;

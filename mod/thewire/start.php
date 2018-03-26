@@ -24,6 +24,7 @@ function thewire_init() {
 	// add a site navigation item
 	elgg_register_menu_item('site', [
 		'name' => 'thewire',
+		'icon' => 'comments-o',
 		'text' => elgg_echo('thewire'),
 		'href' => 'thewire/all',
 	]);

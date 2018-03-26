@@ -13,8 +13,12 @@
 function groups_init() {
 
 	// Set up the menu
-	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/all');
-	elgg_register_menu_item('site', $item);
+	elgg_register_menu_item('site', [
+		'name' => 'groups',
+		'icon' => 'users',
+		'text' => elgg_echo('groups'),
+		'href' => elgg_generate_url('groups/all'),
+	]);
 
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
