@@ -1,9 +1,16 @@
 .elgg-page-default .elgg-page-section > .elgg-inner {
 	max-width: $(desktop);
 	margin: 0 auto;
+	padding: 0 0.5rem;
 	position: relative;
 }
 
 .elgg-page-default .elgg-page-body > .elgg-inner {
 	padding-top: 1rem;
+}
+
+@media $(media-desktop-up) {
+	.elgg-page-default .elgg-page-section > .elgg-inner {
+		padding: 0 1rem;
+	}
 }
