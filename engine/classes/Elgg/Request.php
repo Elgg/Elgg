@@ -4,7 +4,6 @@ namespace Elgg;
 
 use Elgg\Di\PublicContainer;
 use Elgg\Http\Request as HttpRequest;
-use Elgg\Router\Route;
 
 /**
  * Request container
@@ -42,6 +41,16 @@ class Request {
 	 */
 	public function getRoute() {
 		return $this->getParam('_route');
+	}
+
+	/**
+	 * Returns route owner
+	 * @see elgg_get_page_owner_entity()
+	 *
+	 * @return \ElggEntity|false
+	 */
+	public function getRouteOwner() {
+		return $this->http_request->getRouteOwner();
 	}
 
 	/**
