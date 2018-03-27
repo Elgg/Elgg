@@ -414,18 +414,27 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		$options['list_type_toggle'] = $options['view_type_toggle'];
 	}
 
-	$options['count'] = true;
-	$count = call_user_func($getter, $options);
-
-	if ($count > 0) {
-		$options['count'] = false;
-		$entities = call_user_func($getter, $options);
-	} else {
-		$entities = array();
+	$options['count'] = false;
+	$entities = call_user_func($getter, $options);
+	$options['count'] = is_array($entities) ? count($entities) : 0;
+	
+	if (!empty($entities)) {
+		$count_needed = true;
+		if (!$options['pagination']) {
+			$count_needed = false;
+		} elseif (!$options['offset'] && !$options['limit']) {
+			$count_needed = false;
+		} elseif (($options['count'] < (int) $options['limit']) && !$options['offset']) {
+			$count_needed = false;
+		}
+		
+		if ($count_needed) {
+			$options['count'] = true;
+		
+			$options['count'] = (int) call_user_func($getter, $options);
+		}
 	}
-
-	$options['count'] = $count;
-
+	
 	return call_user_func($viewer, $entities, $options);
 }
 
