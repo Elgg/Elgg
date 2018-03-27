@@ -5,6 +5,9 @@
  */
 
 return [
+	// layout and shell
+	'body-background-color' => '#FFF',
+	
 	// Typography
 	'font-size' => '16px', // global font size
 	'font-bold-weight' => '600', // weight of <strong> and <b> elements
@@ -20,6 +23,7 @@ return [
 	'h4-font-size' => '1.0rem',
 	'h5-font-size' => '0.9rem',
 	'h6-font-size' => '0.8rem',
+	
 
 	// element colors
 	'text-color-soft' => '#969696',

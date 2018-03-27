@@ -547,14 +547,6 @@ function _elgg_site_menu_init($hook, $type, $return, $params) {
 		}
 	}
 
-	if (elgg_is_logged_in() && elgg_is_active_plugin('dashboard')) {
-		$return[] = ElggMenuItem::factory([
-			'name' => 'dashboard',
-			'text' => elgg_echo('dashboard'),
-			'href' => 'dashboard',
-		]);
-	}
-
 	return $return;
 }
 

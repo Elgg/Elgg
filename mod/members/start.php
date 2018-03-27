@@ -12,6 +12,7 @@ function members_init() {
 	
 	elgg_register_menu_item('site', [
 		'name' => 'members',
+		'icon' => 'address-book-o',
 		'text' => elgg_echo('members'),
 		'href' => 'members',
 	]);
@@ -19,6 +20,7 @@ function members_init() {
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_menu_item('title', [
 			'name' => 'add_user',
+			'icon' => 'user-plus',
 			'text' => elgg_echo('admin:users:add'),
 			'href' => 'admin/users/add',
 			'context' => 'members',

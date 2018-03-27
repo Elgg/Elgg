@@ -13,8 +13,12 @@
 function file_init() {
 
 	// Site navigation
-	$item = new ElggMenuItem('file', elgg_echo('collection:object:file'), elgg_generate_url('default:object:file'));
-	elgg_register_menu_item('site', $item);
+	elgg_register_menu_item('site', [
+		'name' => 'file',
+		'icon' => 'files-o',
+		'text' => elgg_echo('collection:object:file'),
+		'href' => elgg_generate_url('default:object:file'),
+	]);
 
 	// Extend CSS
 	elgg_extend_view('elgg.css', 'file/file.css');
