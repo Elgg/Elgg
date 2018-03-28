@@ -30,7 +30,6 @@
         "bower-asset/sprintf": "~1.0.3",
         "bower-asset/jquery.imgareaselect": "~0.9.10",
         "css-crush/css-crush": "^2.4.0",
-        "FortAwesome/Font-Awesome": "^4.3",
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "league/flysystem-memory": "^1.0",
@@ -47,7 +46,8 @@
         "php-di/php-di": "^5.4",
         "doctrine/cache": "^1.6",
         "npm-asset/formdata-polyfill": "^3.0",
-        "npm-asset/weakmap-polyfill": "^2.0"
+        "npm-asset/weakmap-polyfill": "^2.0",
+        "bower-asset/fontawesome": "~5.0"
     },
     "config": {
         "process-timeout": 0,

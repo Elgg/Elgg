@@ -1041,6 +1041,11 @@ The generation of entity icons has ben changed. No longer will all the configure
 (``ElggEntity::saveIconFromUploadedFile``, ``ElggEntity::saveIconFromLocalFile`` or ``ElggEntity::saveIconFromElggFile``), but only the `master` size.
 The other configured sizes will be generated when requesting that size based of the `master` icon.
 
+Icon glyphs
+-----------
+
+FontAwesome has been upgraded to version 5.0+. There were certain changes to how FontAwesome glyphs are rendered. The core will take care of most changes (e.g. mapping old icon names to new ones, and using the correct prefix for brand and solid icons).
+
 Autocomplete (user and friends pickers)
 ---------------------------------------
 

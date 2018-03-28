@@ -72,7 +72,8 @@
 .elgg-menu:not(.elgg-menu-hz) .elgg-menu-item-has-toggle {
 	.elgg-menu-closed:after,
 	.elgg-menu-opened:after {
-		font-family: 'FontAwesome';
+		font-family: 'Font Awesome\ 5 Free';
+		font-weight: 900;
 		display: inline-block;
 		float: right;
 		font-size: 0.5rem;
@@ -82,11 +83,11 @@
 	}
 
 	.elgg-menu-closed:after {
-		content: "\f054";
+		content: "\f105";
 	}
 
 	.elgg-menu-opened:after {
-		content: "\f078";
+		content: "\f107";
 	}
 }
 
@@ -94,7 +95,8 @@
 .elgg-menu.elgg-menu-filter .elgg-menu-item-has-dropdown {
 	.elgg-menu-closed:after,
 	.elgg-menu-opened:after {
-		font-family: 'FontAwesome';
+		font-family: 'Font Awesome\ 5 Free';
+		font-weight: 900;
 		display: inline-block;
 		font-size: 0.5rem;
 		text-align: center;
@@ -103,12 +105,13 @@
 	}
 
 	.elgg-menu-closed:after {
-		content: "\f078";
+		content: "\f107";
 	}
 
 	.elgg-menu-opened:after {
-		content: "\f077";
+		content: "\f106";
 	}
+
 }
 
 .elgg-menu .elgg-anchor-icon,

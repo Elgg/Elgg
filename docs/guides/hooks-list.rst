@@ -765,6 +765,10 @@ Other
 	"container_guid" (int) are provided. An empty entity value generally means the form is to
 	create a new object.
 
+**classes, icon**
+	Can be used to filter CSS classes applied to icon glyphs. By default, Elgg uses FontAwesome. Plugins can use this
+	hook to switch to a different font family and remap icon classes.
+
 **entity:icon:sizes, <entity_type>**
 	Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes.
 	``entity_subtype`` will be passed with the ``$params`` array to the callback.
