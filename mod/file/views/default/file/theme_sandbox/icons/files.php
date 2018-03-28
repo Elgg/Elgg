@@ -38,7 +38,7 @@ $sizes = ['large', 'medium', 'small', 'tiny'];
 			<?php
 			foreach ($sizes as $size) {
 				echo '<td>';
-				echo elgg_view_entity_icon($file, $size);
+				echo elgg_view_entity_icon($file, $size, ['use_link' => false]);
 				echo '</td>';
 			}
 			?>

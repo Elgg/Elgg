@@ -11,8 +11,8 @@ foreach (['heart-o', 'star-o', 'bell-o'] as $icon) {
 		'child_menu' => [
 			'display' => 'dropdown',
 			'data-position' => json_encode([
-				'at' => 'left top',
-				'my' => 'left bottom+8px',
+				'my' => 'left top',
+				'at' => 'left bottom+8px',
 				'collision' => 'fit fit',
 			]),
 		],

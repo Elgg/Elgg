@@ -7,6 +7,7 @@
  *
  * @uses $vars['entity']     The entity the icon represents - uses getIconURL() method
  * @uses $vars['size']       topbar, tiny, small, medium (default), large, master
+ * @uses $vars['use_link']   Hyperlink the icon
  * @uses $vars['href']       Optional override for link
  * @uses $vars['img_class']  Optional CSS class added to img
  * @uses $vars['link_class'] Optional CSS class for the link
@@ -29,9 +30,9 @@ $class = elgg_extract('img_class', $vars, '');
 
 $title = htmlspecialchars($entity->getDisplayName(), ENT_QUOTES, 'UTF-8', false);
 
-$url = $entity->getURL();
-if (isset($vars['href'])) {
-	$url = elgg_extract('href', $vars);
+$url = false;
+if (elgg_extract('use_link', $vars, true)) {
+	$url = elgg_extract('href', $vars, $entity->getURL());
 }
 
 if (!isset($vars['width'])) {
