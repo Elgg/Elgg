@@ -402,6 +402,23 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
+	 * @expectedException \Elgg\ValidationException
+	 */
+	public function testValidateHookIsTriggered() {
+		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
+		$this->createService($request);
+		$this->addCsrfTokens($request);
+
+		_elgg_services()->hooks->registerHandler('action:validate', 'output3', function ($hook, $type, $return, $params) {
+			throw new ValidationException('Invalid');
+		});
+
+		$this->assertTrue(_elgg_services()->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
+
+		_elgg_services()->router->route($request);
+	}
+
+	/**
 	 * @expectedException \Elgg\PageNotFoundException
 	 */
 	public function testCanNotExecuteActionWithoutActionFile() {

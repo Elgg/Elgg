@@ -814,8 +814,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => '',
-			'current_url' => elgg_normalize_url('foo/bar/baz'),
-			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -909,8 +907,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => '',
-			'current_url' => elgg_normalize_url('foo/bar/baz'),
-			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -976,8 +972,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => '',
-			'current_url' => elgg_normalize_url('phpunit'),
-			'forward_url' => elgg_normalize_url('index'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
