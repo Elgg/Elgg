@@ -3,6 +3,8 @@
  * Elgg registration action
  */
 
+/* @var $request \Elgg\Request */
+
 elgg_make_sticky_form('register');
 
 if (!elgg_get_config('allow_registration')) {
@@ -10,13 +12,11 @@ if (!elgg_get_config('allow_registration')) {
 }
 
 // Get variables
-$username = get_input('username');
-$password = get_input('password', null, false);
-$password2 = get_input('password2', null, false);
-$email = get_input('email');
-$name = get_input('name');
-$friend_guid = (int) get_input('friend_guid', 0);
-$invitecode = get_input('invitecode');
+$username = $request->getParam('username');
+$password = $request->getParam('password', null, false);
+$password2 = $request->getParam('password2', null, false);
+$email = $request->getParam('email');
+$name = $request->getParam('name');
 
 try {
 	if (trim($password) == "" || trim($password2) == "") {
@@ -45,12 +45,8 @@ try {
 		// note: To catch all new users, even those created by an admin,
 		// register for the create, user event instead.
 		// only passing vars that aren't in ElggUser.
-		$params = [
-			'user' => $new_user,
-			'password' => $password,
-			'friend_guid' => $friend_guid,
-			'invitecode' => $invitecode
-		];
+		$params = $request->getParams();
+		$params['user'] = $new_user;
 
 		if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
 			throw new RegistrationException(elgg_echo('registerbad'));
