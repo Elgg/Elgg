@@ -280,11 +280,13 @@
 	display: inline-block;
 }
 
-.elgg-menu-hover-actions,
-.elgg-menu-hover-default {
-	border-left: 1px solid $(border-color-soft);
+.elgg-menu-hover .elgg-menu {
 	flex: 1;
 	min-width: 10rem;
+	
+	&.elgg-menu-hover-actions {
+		border-left: 1px solid $(border-color-soft);
+	}
 }
 
 .elgg-menu-hover-admin {
