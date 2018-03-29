@@ -242,7 +242,18 @@ Action hooks
 ============
 
 **action, <action>**
+	Deprecated. Use ``'action:validate', <action>`` hook instead.
 	Triggered before executing action scripts. Return false to abort action.
+
+**action:validate, <action>**
+	Trigger before action script/controller is executed.
+	This hook should be used to validate/alter user input, before proceeding with the action.
+	The hook handler can throw an instance of ``\Elgg\ValidationException`` or return ``false``
+	to terminate further execution.
+
+    ``$params`` array includes:
+
+     * ``request`` - instance of ``\Elgg\Request``
 
 **action_gatekeeper:permissions:check, all**
 	Triggered after a CSRF token is validated. Return false to prevent validation.

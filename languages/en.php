@@ -115,6 +115,7 @@ return array(
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
 	'BadRequestException' => 'Bad request',
+	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
