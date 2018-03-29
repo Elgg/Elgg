@@ -21,6 +21,13 @@ class BootService {
 	 * The default TTL if not set in settings.php
 	 */
 	const DEFAULT_BOOT_CACHE_TTL = 3600;
+	
+	/**
+	 * The default limit for the number of plugin settings a plugin can have before it won't be loaded into bootdata
+	 *
+	 * Can be set in settings.php
+	 */
+	const DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT = 40;
 
 	/**
 	 * Has the cache already been invalidated this request? Avoids thrashing
@@ -65,6 +72,9 @@ class BootService {
 		// defaults in case these aren't in config table
 		if ($config->boot_cache_ttl === null) {
 			$config->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
+		}
+		if ($config->bootdata_plugin_settings_limit === null) {
+			$config->bootdata_plugin_settings_limit = self::DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT;
 		}
 		if ($config->simplecache_enabled === null) {
 			$config->simplecache_enabled = 0;
@@ -203,7 +213,7 @@ class BootService {
 		$data = $this->cache->load('boot_data');
 		if (!isset($data)) {
 			$data = new BootData();
-			$data->populate($db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);
+			$data->populate($config, $db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);
 			if ($config->boot_cache_ttl && $installed) {
 				$this->cache->save('boot_data', $data, $config->boot_cache_ttl);
 			}
