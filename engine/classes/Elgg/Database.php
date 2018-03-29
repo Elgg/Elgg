@@ -378,10 +378,6 @@ class Database {
 			$query_id .= $this->fingerprintCallback($callback);
 		}
 
-		if ($this->logger) {
-			$this->logger->info("DB select query $sql (params: " . print_r($params, true) . ")");
-		}
-
 		// MD5 yields smaller mem usage for cache and cleaner logs
 		$hash = md5($query_id);
 
@@ -394,7 +390,11 @@ class Database {
 				return $this->query_cache[$hash];
 			}
 		}
-
+		
+		if ($this->logger) {
+			$this->logger->info("DB select query $sql (params: " . print_r($params, true) . ")");
+		}
+		
 		$return = [];
 
 		if ($query instanceof QueryBuilder) {
