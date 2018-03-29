@@ -12,6 +12,7 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database\RelationshipsTable   $relationshipsTable      Annotation mocks
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections       ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings         Private settings table mock
+ * @property-read \Elgg\Mocks\I18n\Translator				$translator              Translator
  * @property-read \Elgg\Mocks\Database\UsersTable           $usersTable              Users table
  * @property-read \Elgg\Notifications\NotificationsService  $notifications           Notification service (with memory queue)
  *
@@ -115,6 +116,10 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 
 		$this->setFactory('siteSecret', function (MockServiceProvider $sp) {
 			return new \Elgg\Database\SiteSecret('z1234567890123456789012345678901');
+		});
+		
+		$this->setFactory('translator', function(MockServiceProvider $sp) {
+			return new \Elgg\Mocks\I18n\Translator($sp->config);
 		});
 
 		$this->setFactory('usersTable', function(MockServiceProvider $sp) {

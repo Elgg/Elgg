@@ -438,12 +438,8 @@ class Translator {
 	 * @internal
 	 */
 	protected function includeLanguageFile($path) {
-		$cache_key = "lang/" . sha1($path);
-		$result = elgg_get_system_cache()->load($cache_key);
-		if (!isset($result)) {
-			$result = Includer::includeFile($path);
-			elgg_get_system_cache()->save($cache_key, $result);
-		}
+		$result = Includer::includeFile($path);
+		
 		if (is_array($result)) {
 			$this->addTranslation(basename($path, '.php'), $result);
 			return true;
