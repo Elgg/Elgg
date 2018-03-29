@@ -512,6 +512,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => 'output3',
+			'current_url' => elgg_normalize_url('action/output3'),
+			'forward_url' => elgg_normalize_url('phpunit'),
 			'_elgg_msgs' => [
 				'success' => [
 					'success',
@@ -702,6 +704,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'output3',
+			'current_url' => elgg_normalize_url('action/output3'),
+			'forward_url' => elgg_normalize_url('phpunit'),
 			'_elgg_msgs' => [
 				'error' => ['error']
 			],
@@ -901,6 +905,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => ['foo', 'bar'],
+			'current_url' => elgg_normalize_url('action/output4'),
+			'forward_url' => elgg_normalize_url('index'),
 			'_elgg_msgs' => [
 				'success' => ['success']
 			],
@@ -935,6 +941,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'error',
+			'current_url' => elgg_normalize_url('action/output4'),
+			'forward_url' => elgg_normalize_url('index'),
 			'_elgg_msgs' => [
 				'error' => ['error'],
 			],
@@ -997,6 +1005,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => '',
+			'current_url' => elgg_normalize_url('action/output4'),
+			'forward_url' => elgg_normalize_url('index'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		]);
@@ -1076,6 +1086,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'foo',
+			'current_url' => elgg_normalize_url('action/output5'),
+			'forward_url' => elgg_normalize_url('phpunit'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => []
 		]);

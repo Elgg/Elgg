@@ -119,9 +119,13 @@ class Service {
 		}
 
 		$api_response = new Response();
-		$api_response->setData((object) [
-					'value' => $output,
-		]);
+		if (is_object($output) && isset($output->value)) {
+			$api_response->setData($output);
+		} else if (is_array($output) && isset($output['value'])) {
+			$api_response->setData((object) $output);
+		} else {
+			$api_response->setData((object) ['value' => $output]);
+		}
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
 		$response = $this->buildHttpResponse($api_response);
 

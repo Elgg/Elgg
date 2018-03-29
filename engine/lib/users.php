@@ -203,8 +203,12 @@ function validate_username($username) {
 
 	$result = true;
 
-	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
-		['username' => $username], $result);
+	return elgg_trigger_plugin_hook(
+		'registeruser:validate:username',
+		'all',
+		['username' => $username],
+		$result
+	);
 }
 
 /**
@@ -225,8 +229,12 @@ function validate_password($password) {
 
 	$result = true;
 
-	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
-		['password' => $password], $result);
+	return elgg_trigger_plugin_hook(
+		'registeruser:validate:password',
+		'all',
+		['password' => $password],
+		$result
+	);
 }
 
 /**

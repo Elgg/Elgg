@@ -70,7 +70,7 @@ $params = ['user' => $user, 'source' => $forward_source];
 $forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 
 $output = [
-	'forward' => $forward_url,
+	'user' => $user,
 ];
 
 if (elgg_is_xhr()) {
