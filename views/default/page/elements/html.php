@@ -2,7 +2,7 @@
 /**
  * Page shell for all HTML pages
  *
- * @uses $vars['body_attrs'] Attributes of the <html> tag
+ * @uses $vars['html_attrs'] Attributes of the <html> tag
  * @uses $vars['head']       Parameters for the <head> element
  * @uses $vars['body_attrs'] Attributes of the <body> tag
  * @uses $vars['body']       The main content of the page

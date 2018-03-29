@@ -312,6 +312,7 @@ Deprecated APIs
  * ``elgg_list_entities_from_relationship``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_private_settings``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``
+ * ``elgg_list_registered_entities``: Use ``elgg_list_entities()``
  * ``elgg_batch_delete_callback``
  * ``\Elgg\Project\Paths::sanitize``: Use ``\Elgg\Project\Paths::sanitize()``
  * ``elgg_group_gatekeeper``: Use ``elgg_entity_gatekeeper()``
