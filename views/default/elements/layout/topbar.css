@@ -42,7 +42,6 @@
 	border-radius: 0;
 	width: auto;
 	max-width: 300px;
-	z-index: 2;
 	position: relative;
 }
 
@@ -52,7 +51,6 @@
 	position: absolute;
 	font-size: 1rem;
 	top: -1rem;
-	z-index: 3;
 	right: 0;
 	margin-right: 1.5rem;
 }
@@ -306,7 +304,6 @@
 		width: 12rem;
 		background: $(topbar-background-color, $(background-color-highlight));
 		align-items: flex-start;
-		z-index: 1;
 		box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
 	}
 
@@ -335,7 +332,6 @@
 		text-shadow: 0px -2px 0px rgba(0, 0, 0, 0.05);
 		font-size: 1rem;
 		top: -1rem;
-		z-index: 2;
 		right: 0;
 		margin-right: 1.5rem;
 		line-height: 1rem;

@@ -212,7 +212,6 @@
 .elgg-menu-hover {
 	display: none;
 	position: absolute;
-	z-index: 4;
 	overflow: hidden;
 	border-top: 1px solid $(border-color-soft);
 	background-color: #ffffff;
