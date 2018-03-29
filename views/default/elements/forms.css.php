@@ -155,6 +155,7 @@ select:not([multiple]) {
 .elgg-fieldset-has-legend {
 	border: 1px solid $(border-color-soft);
 	padding: 1rem;
+	margin-bottom: 1rem;
 }
 
 .elgg-fieldset-horizontal .elgg-field {
