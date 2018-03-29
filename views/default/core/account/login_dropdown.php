@@ -7,7 +7,11 @@ if (elgg_is_logged_in()) {
 	return true;
 }
 
-$body = elgg_view_form('login', [], ['returntoreferer' => true]);
+$body = elgg_view_form('login', [
+	'ajax' => true,
+], [
+	'returntoreferer' => true,
+]);
 ?>
 <div id="login-dropdown">
 	<?php

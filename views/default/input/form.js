@@ -2,18 +2,23 @@ define(function (require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 	var Ajax = require('elgg/Ajax');
-	var spinner = require('elgg/spinner');
 
-	$(document).on('submit', '.elgg-form-login', function (e) {
+	$(document).on('submit', '.elgg-js-ajax-form', function (e) {
 		var $form = $(this);
 
 		var ajax = new Ajax();
 
 		ajax.action($form.prop('action'), {
-			data: ajax.objectify($form)
+			data: ajax.objectify($form),
+			beforeSend: function() {
+				$form.find('[type="submit"]').prop('disabled', true);
+			}
 		}).done(function (json, status, jqXHR) {
 			if (jqXHR.AjaxData.status === -1) {
-				$('input[name=password]', $form).val('').focus();
+				$form.find('[type="submit"]').prop('disabled', false);
+				if ($form.is('.elgg-form-login')) {
+					$('input[name=password]', $form).val('').focus();
+				}
 				return;
 			}
 
@@ -26,6 +31,8 @@ define(function (require) {
 			}
 
 			ajax.forward();
+		}).fail(function() {
+			$form.find('[type="submit"]').prop('disabled', false);
 		});
 
 		e.preventDefault();
