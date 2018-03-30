@@ -73,6 +73,7 @@ class FormsService {
 	 * @param string $action    The name of the action. An action name does not include
 	 *                          the leading "action/". For example, "login" is an action name.
 	 * @param array  $form_vars $vars passed to the "input/form" view
+	 *                           - 'ajax' bool If true, the form will be submitted with an ajax request
 	 * @param array  $body_vars $vars passed to the "forms/<action>" view
 	 *
 	 * @return string The complete form
@@ -82,6 +83,7 @@ class FormsService {
 		$defaults = [
 			'action' => elgg_generate_action_url($action, [], false),
 			'method' => 'post',
+			'ajax' => false,
 		];
 
 		// append elgg-form class to any class options set
@@ -92,6 +94,11 @@ class FormsService {
 
 		if (!isset($form_vars['enctype']) && strtolower($form_vars['method']) == 'post') {
 			$form_vars['enctype'] = 'multipart/form-data';
+		}
+
+		if (elgg_extract('ajax', $form_vars)) {
+			$form_vars['class'][] = 'elgg-js-ajax-form';
+			unset($form_vars['ajax']);
 		}
 
 		$form_vars['action_name'] = $action;

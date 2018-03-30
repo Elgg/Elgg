@@ -782,6 +782,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => 'good bye',
+			'current_url' => elgg_normalize_url('foo/bar/baz'),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -812,6 +814,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => '',
+			'current_url' => elgg_normalize_url('foo/bar/baz'),
+			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -822,6 +826,9 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		ob_start();
 	}
 
+	/**
+	 * @group Current
+	 */
 	public function testCanRespondToAjax2RequestFromOkResponseBuilder() {
 
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
@@ -844,6 +851,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => 'hello',
+			'current_url' => elgg_normalize_url('foo/bar/baz'),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -900,6 +909,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => '',
+			'current_url' => elgg_normalize_url('foo/bar/baz'),
+			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -933,6 +944,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'value' => [
 				'foo' => 'bar',
 			],
+			'current_url' => elgg_http_add_url_query_elements(elgg_normalize_url('phpunit'), [
+				'view' => 'json',
+			]),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -961,6 +976,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => '',
+			'current_url' => elgg_normalize_url('phpunit'),
+			'forward_url' => elgg_normalize_url('index'),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -1211,6 +1228,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/cacheable.xml'),
+			'current_url' => elgg_normalize_url('ajax/view/cacheable.xml'),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -1236,6 +1255,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/styles.css'),
+			'current_url' => elgg_normalize_url('ajax/view/css/styles.css'),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -1261,6 +1282,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/javascript.js'),
+			'current_url' => elgg_normalize_url('ajax/view/js/javascript.js'),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -1291,6 +1314,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => 'hello',
+			'current_url' => elgg_http_add_url_query_elements(elgg_normalize_url('ajax/view/query_view'), [
+				'query_value' => 'hello',
+			]),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
@@ -1445,6 +1472,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$output = json_encode([
 			'value' => elgg_view_form('query_view', [], $vars),
+			'current_url' => elgg_http_add_url_query_elements(elgg_normalize_url('ajax/form/query_view'), [
+				'query_value' => 'hello',
+			]),
+			'forward_url' => elgg_normalize_url(''),
 			'_elgg_msgs' => (object) [],
 			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
