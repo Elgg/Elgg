@@ -27,6 +27,16 @@ try {
 		throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
 	}
 
+	$validation = elgg_validate_registration_data($username, $password, $name, $email);
+	$failures = $validation->getFailures();
+	if ($failures) {
+		$messages = array_map(function(\Elgg\Validation\ValidationResult $e) {
+			return $e->getError();
+		}, $failures);
+
+		throw new RegistrationException(implode(PHP_EOL, $messages));
+	}
+
 	$guid = register_user($username, $password, $name, $email);
 	if (!$guid) {
 		throw new RegistrationException(elgg_echo('registerbad'));
@@ -93,8 +103,8 @@ try {
 
 		return elgg_ok_response($response_data, $response_message, $forward_url);
 	} catch (LoginException $e) {
-		return elgg_error_response($e->getMessage());
+		return elgg_error_response($e->getMessage(), REFERRER, $e->getCode() ? : ELGG_HTTP_UNAUTHORIZED);
 	}
 } catch (RegistrationException $r) {
-	return elgg_error_response($r->getMessage());
+	return elgg_error_response($r->getMessage(), REFERRER, $r->getCode() ? : ELGG_HTTP_BAD_REQUEST);
 }

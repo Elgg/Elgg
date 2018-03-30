@@ -557,7 +557,8 @@ trait Seeding {
 		$ha = _elgg_services()->session->getDisabledEntityVisibility();
 		_elgg_services()->session->setDisabledEntityVisibility(true);
 
-		$minlength = elgg_get_config('minusername') ? : 8;
+		$minlength = 8;
+
 		if ($base_name) {
 			$fill = $minlength - strlen($base_name);
 		} else {
@@ -573,14 +574,15 @@ trait Seeding {
 
 		$iterator = 0;
 		while (!$available) {
+			$test_name = $base_name;
 			if ($iterator > 0) {
-				$base_name = "$base_name$separator$iterator";
+				$test_name = "$base_name$separator$iterator";
 			}
-			$user = get_user_by_username($base_name);
+			$user = get_user_by_username($test_name);
 			$available = !$user;
 			try {
 				if ($available) {
-					validate_username($base_name);
+					validate_username($test_name);
 				}
 			} catch (\Exception $e) {
 				if ($iterator >= 10) {

@@ -36,11 +36,13 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	public function testRegistrationFailsWithShortPassword() {
 
 		$username = $this->getRandomUsername();
+		$email = "$username@example.com";
+
 		$response = $this->executeAction('register', [
 			'username' => $username,
 			'password' => '12',
 			'password2' => '12',
-			'email' => 'username@example.com',
+			'email' => $email,
 			'name' => 'Test User',
 		]);
 
@@ -61,11 +63,12 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		});
 
 		$username = $this->getRandomUsername();
+		$email = "$username@example.com";
 		$response = $this->executeAction('register', [
 			'username' => $username,
 			'password' => '123X',
 			'password2' => '123X',
-			'email' => 'username@example.com',
+			'email' => $email,
 			'name' => 'Test User',
 		]);
 
@@ -97,12 +100,13 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithMismatchingPassword() {
 		$username = $this->getRandomUsername();
+		$email = "$username@example.com";
+
 		$response = $this->executeAction('register', [
 			'username' => $username,
-			'username' => 'username',
 			'password' => '1111111111111',
 			'password2' => '1111111111111 ',
-			'email' => 'username@example.com',
+			'email' => $email,
 			'name' => 'Test User',
 		]);
 
@@ -114,11 +118,14 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithInvalidUsername() {
 
+		$username = $this->getRandomUsername();
+		$email = "$username@example.com";
+
 		$response = $this->executeAction('register', [
 			'username' => 'username\r\n',
 			'password' => '1111111111111',
 			'password2' => '1111111111111',
-			'email' => 'username@example.com',
+			'email' => $email,
 			'name' => 'Test User',
 		]);
 
@@ -130,11 +137,14 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithInvalidUsernameContainingBlacklistChar() {
 
+		$username = $this->getRandomUsername();
+		$email = "$username@example.com";
+
 		$response = $this->executeAction('register', [
 			'username' => 'username?#',
 			'password' => '1111111111111',
 			'password2' => '1111111111111',
-			'email' => 'username@example.com',
+			'email' => $email,
 			'name' => 'Test User',
 		]);
 
@@ -146,11 +156,14 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithShortUsername() {
 
+		$username = $this->getRandomUsername();
+		$email = "$username@example.com";
+
 		$response = $this->executeAction('register', [
 			'username' => 'abc',
 			'password' => '1111111111111',
 			'password2' => '1111111111111',
-			'email' => 'username@example.com',
+			'email' => $email,
 			'name' => 'Test User',
 		]);
 
@@ -161,13 +174,15 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testRegistrationFailsWithLongUsername() {
+		$username = $this->getRandomUsername();
+		$email = "$username@example.com";
 
 		$username = str_repeat('a', 150);
 		$response = $this->executeAction('register', [
 			'username' => $username,
 			'password' => '1111111111111',
 			'password2' => '1111111111111',
-			'email' => 'username@example.com',
+			'email' => $email,
 			'name' => 'Test User',
 		]);
 
@@ -180,6 +195,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	public function testRegistrationFailsWithInvalidEmail() {
 
 		$username = $this->getRandomUsername();
+
 		$response = $this->executeAction('register', [
 			'username' => $username,
 			'password' => '1111111111111',
@@ -212,7 +228,6 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('registration:dupeemail'), $response->getContent());
-
 	}
 
 	public function testRegistrationFailsWithExistingUsername() {

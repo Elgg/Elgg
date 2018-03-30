@@ -88,7 +88,7 @@ function current_page_url() {
  * @return bool
  */
 function is_email_address($address) {
-	return filter_var($address, FILTER_VALIDATE_EMAIL) === $address;
+	return elgg()->accounts->isValidEmail($address);
 }
 
 /**

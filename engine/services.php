@@ -13,9 +13,11 @@ use Elgg\Menu\Service as MenuService;
 use Elgg\PluginHooksService;
 use Elgg\Security\Csrf;
 use Elgg\SystemMessagesService;
+use Elgg\Users\Accounts;
 use Elgg\Views\TableColumn\ColumnFactory;
 
 return [
+	'accounts' => new PhpDiResolver(Accounts::class, 'accounts'),
 	'config' => new PhpDiResolver(Config::class, 'config'),
 	'csrf' => new PhpDiResolver(Csrf::class, 'csrf'),
 	'db' => new PhpDiResolver(Database::class, 'publicDb'),

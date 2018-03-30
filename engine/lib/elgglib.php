@@ -1170,7 +1170,6 @@ function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'
  * @param Closure $closure Callable to call
  *
  * @return mixed
- * @throws Exception
  */
 function elgg_call(int $flags, Closure $closure) {
 	return _elgg_services()->invoker->call($flags, $closure);
