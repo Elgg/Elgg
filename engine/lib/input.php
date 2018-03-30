@@ -43,6 +43,21 @@ function set_input($variable, $value) {
 }
 
 /**
+ * Returns all values parsed from the current request, including $_GET and $_POST values,
+ * as well as any values set with set_input()
+ *
+ * @see get_input()
+ * @see set_input()
+ *
+ * @param bool $filter_result Sanitize input values
+ *
+ * @return array
+ */
+function elgg_get_request_data($filter_result = true) {
+	return _elgg_services()->request->getParams($filter_result);
+}
+
+/**
  * Get an HTML-escaped title from input. E.g. "How to use &lt;b&gt; tags"
  *
  * @param string $variable The desired variable name

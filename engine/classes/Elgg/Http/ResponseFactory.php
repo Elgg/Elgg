@@ -174,9 +174,9 @@ class ResponseFactory {
 		if ($this->response_sent) {
 			if ($this->response_sent !== $response) {
 				_elgg_services()->logger->error('Unable to send the following response: ' . PHP_EOL
-						. (string) $response . PHP_EOL
-						. 'because another response has already been sent: ' . PHP_EOL
-						. (string) $this->response_sent);
+					. (string) $response . PHP_EOL
+					. 'because another response has already been sent: ' . PHP_EOL
+					. (string) $this->response_sent);
 			}
 		} else {
 			if (!_elgg_services()->hooks->getEvents()->triggerBefore('send', 'http_response', $response)) {
@@ -222,7 +222,7 @@ class ResponseFactory {
 		$response = $this->hooks->trigger('response', $response_type, $response, $response);
 		if (!$response instanceof ResponseBuilder) {
 			throw new InvalidParameterException("Handlers for 'response','$response_type' plugin hook must "
-			. "return an instanceof " . ResponseBuilder::class);
+				. "return an instanceof " . ResponseBuilder::class);
 		}
 
 		if ($response->isNotModified()) {
@@ -253,17 +253,20 @@ class ResponseFactory {
 			}
 		}
 
-		if ($is_xhr && $is_action && !$this->ajax->isAjax2Request()) {
-			// xhr actions using legacy ajax API should return 200 with wrapped data
-			$response->setStatusCode(ELGG_HTTP_OK);
-			$response->setContent($this->wrapLegacyAjaxResponse($response->getContent(), $response->getForwardURL()));
-		}
+		if ($is_xhr && ($is_action || $this->ajax->isAjax2Request())) {
+			if (!$this->ajax->isAjax2Request()) {
+				// xhr actions using legacy ajax API should return 200 with wrapped data
+				$response->setStatusCode(ELGG_HTTP_OK);
+			}
 
-		if ($is_xhr && $is_action) {
 			// Actions always respond with JSON on xhr calls
 			$headers = $response->getHeaders();
 			$headers['Content-Type'] = 'application/json; charset=UTF-8';
 			$response->setHeaders($headers);
+
+			if ($response->isOk()) {
+				$response->setContent($this->wrapAjaxResponse($response->getContent(), $response->getForwardURL()));
+			}
 		}
 
 		$content = $this->stringify($response->getContent());
@@ -351,6 +354,36 @@ class ResponseFactory {
 		}
 
 		return $this->send($this->prepareResponse($content, $status_code, $headers));
+	}
+
+	/**
+	 * Wraps response content in an Ajax2 compatible format
+	 *
+	 * @param string $content     Response content
+	 * @param string $forward_url Forward URL
+	 * @return string
+	 */
+	public function wrapAjaxResponse($content = '', $forward_url = null) {
+
+		if (!$this->ajax->isAjax2Request()) {
+			return $this->wrapLegacyAjaxResponse($content, $forward_url);
+		}
+
+		$content = $this->stringify($content);
+
+		if ($forward_url === REFERRER) {
+			$forward_url = $this->request->headers->get('Referer');
+		}
+
+		$params = [
+			'value' => '',
+			'current_url' => current_page_url(),
+			'forward_url' => elgg_normalize_url($forward_url),
+		];
+
+		$params['value'] = $this->ajax->decodeJson($content);
+
+		return $this->stringify($params);
 	}
 
 	/**
@@ -472,10 +505,10 @@ class ResponseFactory {
 			}
 			$output = ob_get_clean();
 			if (!$this->isAction() && !$this->ajax->isAjax2Request()) {
-				// legacy ajax calls are always OK
-				// actions are wrapped by ResponseFactory::respond()
-				$status_code = ELGG_HTTP_OK;
-				$output = $this->wrapLegacyAjaxResponse($output, $forward_url);
+					// legacy ajax calls are always OK
+					// actions are wrapped by ResponseFactory::respond()
+					$status_code = ELGG_HTTP_OK;
+					$output = $this->wrapAjaxResponse($output, $forward_url);
 			}
 
 			$response = new OkResponse($output, $status_code, $forward_url);

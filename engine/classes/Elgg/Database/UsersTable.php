@@ -191,31 +191,27 @@ class UsersTable {
 			return false;
 		}
 
-		// Make sure a user with conflicting details hasn't registered and been disabled
-		$access_status = _elgg_services()->session->getDisabledEntityVisibility();
-		_elgg_services()->session->setDisabledEntityVisibility(true);
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username, $email, $password, $name, $allow_multiple_emails) {
+			if (!validate_email_address($email)) {
+				throw new RegistrationException(_elgg_services()->translator->translate('registration:emailnotvalid'));
+			}
 
-		if (!validate_email_address($email)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:emailnotvalid'));
-		}
+			if (!validate_password($password)) {
+				throw new RegistrationException(_elgg_services()->translator->translate('registration:passwordnotvalid'));
+			}
 
-		if (!validate_password($password)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:passwordnotvalid'));
-		}
+			if (!validate_username($username)) {
+				throw new RegistrationException(_elgg_services()->translator->translate('registration:usernamenotvalid'));
+			}
 
-		if (!validate_username($username)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:usernamenotvalid'));
-		}
+			if (get_user_by_username($username)) {
+				throw new RegistrationException(_elgg_services()->translator->translate('registration:userexists'));
+			}
 
-		if (get_user_by_username($username)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:userexists'));
-		}
-
-		if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:dupeemail'));
-		}
-
-		_elgg_services()->session->setDisabledEntityVisibility($access_status);
+			if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
+				throw new RegistrationException(_elgg_services()->translator->translate('registration:dupeemail'));
+			}
+		});
 
 		// Create user
 		$constructor = ElggUser::class;
@@ -227,6 +223,8 @@ class UsersTable {
 		}
 
 		$user = new $constructor();
+		/* @var $user ElggUser */
+
 		if (isset($subtype)) {
 			$user->subtype = $subtype;
 		}

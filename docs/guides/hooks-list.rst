@@ -159,6 +159,12 @@ User hooks
 **register, user**
 	Triggered by the ``register`` action after the user registers. Return ``false`` to delete the user.
 	Note the function ``register_user`` does *not* trigger this hook.
+	Hook handlers can throw ``\RegistrationException`` with an error message to be displayed to the user.
+
+	The ``$params`` array will contain:
+
+	 * ``user`` - Newly registered user entity
+	 * All parameters sent with the request to the action (incl. ``password``, ``friend_guid``, ``invitecode`` etc)
 
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login.
@@ -242,7 +248,18 @@ Action hooks
 ============
 
 **action, <action>**
+	Deprecated. Use ``'action:validate', <action>`` hook instead.
 	Triggered before executing action scripts. Return false to abort action.
+
+**action:validate, <action>**
+	Trigger before action script/controller is executed.
+	This hook should be used to validate/alter user input, before proceeding with the action.
+	The hook handler can throw an instance of ``\Elgg\ValidationException`` or return ``false``
+	to terminate further execution.
+
+    ``$params`` array includes:
+
+     * ``request`` - instance of ``\Elgg\Request``
 
 **action_gatekeeper:permissions:check, all**
 	Triggered after a CSRF token is validated. Return false to prevent validation.

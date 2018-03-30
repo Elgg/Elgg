@@ -29,6 +29,7 @@ $title = elgg_echo('register');
 
 $form_params = [
 	'class' => 'elgg-form-account',
+	'ajax' => true,
 ];
 
 $body_params = [

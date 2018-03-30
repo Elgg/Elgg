@@ -4,7 +4,6 @@ namespace Elgg\Http;
 
 use Elgg\Ajax\Service;
 use Elgg\Amd\Config;
-use Elgg\Application;
 use Elgg\Config as Config2;
 use Elgg\PluginHooksService;
 use Elgg\SystemMessagesService;

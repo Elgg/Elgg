@@ -249,6 +249,17 @@ Notes for forms:
 	In ajax views and forms, note that ``$vars`` can be populated by client input. The data is filtered like
 	``get_input()``, but may not be the type you're expecting or may have unexpected keys.
 
+
+Submitting forms
+----------------
+
+To submit a form using Ajax, simply pass ``ajax`` parameter with form variables:
+
+.. code-block:: php
+
+    echo elgg_view_form('login', ['ajax' => true]);
+
+
 Redirects
 ---------
 
@@ -256,9 +267,9 @@ Use ``ajax.forward()`` to start a spinner and redirect the user to a new destina
 
 .. code-block:: js
 
-    var Ajax = require('elgg/Ajax');
+	var Ajax = require('elgg/Ajax');
     var ajax = new Ajax();
-	ajax.forward('/activity');
+    ajax.forward('/activity');
 
 
 Piggybacking on an Ajax request
