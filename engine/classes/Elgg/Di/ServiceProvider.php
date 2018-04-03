@@ -31,10 +31,11 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\AccessCollections         $accessCollections
  * @property-read \ElggCache                               $accessCache
  * @property-read \Elgg\ActionsService                     $actions
+ * @property-read \Elgg\Users\Accounts                     $accounts
  * @property-read \Elgg\Database\AdminNotices              $adminNotices
  * @property-read \Elgg\Ajax\Service                       $ajax
  * @property-read \Elgg\Amd\Config                         $amdConfig
- * @property-read \Elgg\Database\AnnotationsTable $annotationsTable
+ * @property-read \Elgg\Database\AnnotationsTable          $annotationsTable
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
@@ -161,6 +162,10 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
 			return new \Elgg\ActionsService($c->routes, $c->handlers);
+		});
+
+		$this->setFactory('accounts', function(ServiceProvider $c) {
+			return new \Elgg\Users\Accounts($c->config, $c->translator, $c->passwords, $c->usersTable, $c->hooks);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);

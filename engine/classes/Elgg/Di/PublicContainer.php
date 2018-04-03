@@ -12,12 +12,14 @@ use Elgg\Menu\Service;
 use Elgg\PluginHooksService;
 use Elgg\Security\Csrf;
 use Elgg\SystemMessagesService;
+use Elgg\Users\Accounts;
 use Elgg\Views\TableColumn\ColumnFactory;
 use ElggSession;
 
 /**
  * Public service container
  *
+ * @property-read Accounts              $accounts        User accounts service
  * @property-read Config                $config          Config
  * @property-read Csrf                  $csrf            CSRF protection
  * @property-read Database              $db              Public database

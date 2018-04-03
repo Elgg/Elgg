@@ -5,7 +5,9 @@ namespace Elgg\Database;
 use Elgg\Config as Conf;
 use Elgg\Database;
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Validation\ValidationResults;
 use ElggUser;
+use Exception;
 use RegistrationException;
 
 /**
@@ -83,7 +85,7 @@ class UsersTable {
 			],
 			'limit' => 1,
 		]);
-		
+
 		return $users ? $users[0] : false;
 	}
 
@@ -97,7 +99,7 @@ class UsersTable {
 		if (!$email) {
 			return [];
 		}
-		
+
 		$users = elgg_get_entities([
 			'types' => 'user',
 			'metadata_name_value_pairs' => [
@@ -126,7 +128,7 @@ class UsersTable {
 	 * @return \ElggUser[]|int
 	 */
 	public function findActive(array $options = []) {
-	
+
 		$options = array_merge([
 			'seconds' => 600,
 			'limit' => $this->config->default_limit,
@@ -178,76 +180,10 @@ class UsersTable {
 	 *
 	 * @return int|false The new user's GUID; false on failure
 	 * @throws RegistrationException
+	 * @deprecated 3.0 Use elgg()->accounts->register()
 	 */
 	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
-
-		// no need to trim password
-		$username = trim($username);
-		$name = trim(strip_tags($name));
-		$email = trim($email);
-
-		// A little sanity checking
-		if (empty($username) || empty($password) || empty($name) || empty($email)) {
-			return false;
-		}
-
-		// Make sure a user with conflicting details hasn't registered and been disabled
-		$access_status = _elgg_services()->session->getDisabledEntityVisibility();
-		_elgg_services()->session->setDisabledEntityVisibility(true);
-
-		if (!validate_email_address($email)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:emailnotvalid'));
-		}
-
-		if (!validate_password($password)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:passwordnotvalid'));
-		}
-
-		if (!validate_username($username)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:usernamenotvalid'));
-		}
-
-		if (get_user_by_username($username)) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:userexists'));
-		}
-
-		if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
-			throw new RegistrationException(_elgg_services()->translator->translate('registration:dupeemail'));
-		}
-
-		_elgg_services()->session->setDisabledEntityVisibility($access_status);
-
-		// Create user
-		$constructor = ElggUser::class;
-		if (isset($subtype)) {
-			$class = elgg_get_entity_class('user', $subtype);
-			if ($class && class_exists($class) && is_subclass_of($class, ElggUser::class)) {
-				$constructor = $class;
-			}
-		}
-
-		$user = new $constructor();
-		if (isset($subtype)) {
-			$user->subtype = $subtype;
-		}
-		$user->username = $username;
-		$user->email = $email;
-		$user->name = $name;
-		$user->access_id = ACCESS_PUBLIC;
-		$user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
-		$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
-		$user->language = _elgg_services()->translator->getCurrentLanguage();
-		if ($user->save() === false) {
-			return false;
-		}
-		
-		// doing this after save to prevent metadata save notices on unwritable metadata password_hash
-		$user->setPassword($password);
-
-		// Turn on email notifications by default
-		$user->setNotificationSetting('email', true);
-	
-		return $user->getGUID();
+		_elgg_services()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype);
 	}
 
 	/**

@@ -62,17 +62,21 @@ class ElggUser extends \ElggEntity
 				_elgg_services()->logger->error("password_hash is a readonly attribute.");
 				return;
 			case 'email':
-				if (!validate_email_address($value)) {
-					throw new \InvalidParameterException("Email is not a valid email address");
+				try {
+					elgg()->accounts->assertValidEmail($value);
+				} catch (RegistrationException $ex) {
+					throw new InvalidParameterException($ex->getCode());
 				}
 				break;
 			case 'username':
-				if (!validate_username($value)) {
-					throw new \InvalidParameterException("Username is not a valid username");
+				try {
+					elgg()->accounts->assertValidUsername($value);
+				} catch (RegistrationException $ex) {
+					throw new InvalidParameterException($ex->getCode());
 				}
 				$existing_user = get_user_by_username($value);
 				if ($existing_user && ($existing_user->guid !== $this->guid)) {
-					throw new \InvalidParameterException("{$name} is supposed to be unique for ElggUser");
+					throw new InvalidParameterException("{$name} is supposed to be unique for ElggUser");
 				}
 				break;
 		}

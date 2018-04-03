@@ -149,16 +149,25 @@ User hooks
 
 **registeruser:validate:username, all**
 	Return boolean for if the string in ``$params['username']`` is valid for a username.
+	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
 
 **registeruser:validate:password, all**
 	Return boolean for if the string in ``$params['password']`` is valid for a password.
+	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
 
 **registeruser:validate:email, all**
 	Return boolean for if the string in ``$params['email']`` is valid for an email address.
+	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
 
 **register, user**
 	Triggered by the ``register`` action after the user registers. Return ``false`` to delete the user.
 	Note the function ``register_user`` does *not* trigger this hook.
+	Hook handlers can throw ``\RegistrationException`` with an error message to be displayed to the user.
+
+	The ``$params`` array will contain:
+
+	 * ``user`` - Newly registered user entity
+	 * All parameters sent with the request to the action (incl. ``password``, ``friend_guid``, ``invitecode`` etc)
 
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login.

@@ -3,6 +3,8 @@
  * Elgg registration action
  */
 
+/* @var $request \Elgg\Request */
+
 elgg_make_sticky_form('register');
 
 if (!elgg_get_config('allow_registration')) {
@@ -10,13 +12,11 @@ if (!elgg_get_config('allow_registration')) {
 }
 
 // Get variables
-$username = get_input('username');
-$password = get_input('password', null, false);
-$password2 = get_input('password2', null, false);
-$email = get_input('email');
-$name = get_input('name');
-$friend_guid = (int) get_input('friend_guid', 0);
-$invitecode = get_input('invitecode');
+$username = $request->getParam('username');
+$password = $request->getParam('password', null, false);
+$password2 = $request->getParam('password2', null, false);
+$email = $request->getParam('email');
+$name = $request->getParam('name');
 
 try {
 	if (trim($password) == "" || trim($password2) == "") {
@@ -27,66 +27,84 @@ try {
 		throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
 	}
 
+	$validation = elgg_validate_registration_data($username, $password, $name, $email);
+	$failures = $validation->getFailures();
+	if ($failures) {
+		$messages = array_map(function(\Elgg\Validation\ValidationResult $e) {
+			return $e->getError();
+		}, $failures);
+
+		throw new RegistrationException(implode(PHP_EOL, $messages));
+	}
+
 	$guid = register_user($username, $password, $name, $email);
 	if (!$guid) {
-		return elgg_error_response(elgg_echo('registerbad'));
+		throw new RegistrationException(elgg_echo('registerbad'));
 	}
 
 	$new_user = get_user($guid);
 
-	// allow plugins to respond to self registration
-	// note: To catch all new users, even those created by an admin,
-	// register for the create, user event instead.
-	// only passing vars that aren't in ElggUser.
-	$params = [
-		'user' => $new_user,
-		'password' => $password,
-		'friend_guid' => $friend_guid,
-		'invitecode' => $invitecode
-	];
+	$fail = function () use ($new_user) {
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($new_user) {
+			$new_user->delete();
+		});
+	};
 
-	// @todo should registration be allowed no matter what the plugins return?
-	if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
-		$ia = elgg_set_ignore_access(true);
-		$new_user->delete();
-		elgg_set_ignore_access($ia);
-		// @todo this is a generic messages. We could have plugins
-		// throw a RegistrationException, but that is very odd
-		// for the plugin hooks system.
-		throw new RegistrationException(elgg_echo('registerbad'));
+	try {
+		// allow plugins to respond to self registration
+		// note: To catch all new users, even those created by an admin,
+		// register for the create, user event instead.
+		// only passing vars that aren't in ElggUser.
+		$params = $request->getParams();
+		$params['user'] = $new_user;
+
+		if (!elgg_trigger_plugin_hook('register', 'user', $params, true)) {
+			throw new RegistrationException(elgg_echo('registerbad'));
+		}
+	} catch (\Exception $e) {
+		// Catch all exception to make sure there are no incomplete user entities left behind
+		$fail();
+		throw $e;
 	}
 
 	elgg_clear_sticky_form('register');
 
-	if ($new_user->isEnabled()) {
-		// if exception thrown, this probably means there is a validation
-		// plugin that has disabled the user
-		try {
-			login($new_user);
-			// set forward url
-			$session = elgg_get_session();
-			if ($session->has('last_forward_from')) {
-				$forward_url = $session->get('last_forward_from');
-				$forward_source = 'last_forward_from';
-			} else {
-				// forward to main index page
-				$forward_url = '';
-				$forward_source = null;
-			}
-			$params = [
-				'user' => $new_user,
-				'source' => $forward_source,
-			];
-			$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
-			return elgg_ok_response('', elgg_echo('registerok', [elgg_get_site_entity()->getDisplayName()]), $forward_url);
-		} catch (LoginException $e) {
-			return elgg_error_response($e->getMessage());
-		}
+	$response_data = [
+		'user' => $new_user,
+	];
+
+	if (!$new_user->isEnabled()) {
+		// Plugins can alter forwarding URL by registering for 'response', 'action:register' hook
+		return elgg_ok_response($response_data);
 	}
 
-	return elgg_ok_response();
-} catch (RegistrationException $r) {
-	return elgg_error_response($r->getMessage());
-}
+	// if exception thrown, this probably means there is a validation
+	// plugin that has disabled the user
+	try {
+		login($new_user);
 
-return elgg_ok_response();
+		// set forward url
+		$session = elgg_get_session();
+		if ($session->has('last_forward_from')) {
+			$forward_url = $session->get('last_forward_from');
+			$forward_source = 'last_forward_from';
+		} else {
+			// forward to main index page
+			$forward_url = '';
+			$forward_source = null;
+		}
+		$params = [
+			'user' => $new_user,
+			'source' => $forward_source,
+		];
+
+		$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
+		$response_message = elgg_echo('registerok', [elgg_get_site_entity()->getDisplayName()]);
+
+		return elgg_ok_response($response_data, $response_message, $forward_url);
+	} catch (LoginException $e) {
+		return elgg_error_response($e->getMessage(), REFERRER, $e->getCode() ? : ELGG_HTTP_UNAUTHORIZED);
+	}
+} catch (RegistrationException $r) {
+	return elgg_error_response($r->getMessage(), REFERRER, $r->getCode() ? : ELGG_HTTP_BAD_REQUEST);
+}
