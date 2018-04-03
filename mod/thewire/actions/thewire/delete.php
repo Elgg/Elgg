@@ -10,7 +10,7 @@ elgg_entity_gatekeeper($guid, 'object', 'thewire');
 
 // Make sure we actually have permission to edit
 $thewire = get_entity($guid);
-if ($thewire->canEdit()) {
+if (!$thewire->canEdit()) {
 	return elgg_error_response();
 }
 
