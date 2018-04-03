@@ -263,4 +263,5 @@ input::-moz-focus-inner {
 
 fieldset {
 	border: none;
+	min-width: 0; /* override -webkit-min-content */
 }
