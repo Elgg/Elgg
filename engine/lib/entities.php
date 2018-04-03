@@ -580,22 +580,25 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 
 	$options = array_merge($defaults, $options);
 
-	$entities = [];
+	$options['count'] = false;
+	$entities = call_user_func($getter, $options);
+	$options['count'] = is_array($entities) ? count($entities) : 0;
 	
-	if (!$options['pagination']) {
-		$options['count'] = false;
-		$entities = call_user_func($getter, $options);
-		unset($options['count']);
-	} else {
-		$options['count'] = true;
-		$count = call_user_func($getter, $options);
-	
-		if ($count > 0) {
-			$options['count'] = false;
-			$entities = call_user_func($getter, $options);
+	if (!empty($entities)) {
+		$count_needed = true;
+		if (!$options['pagination']) {
+			$count_needed = false;
+		} elseif (!$options['offset'] && !$options['limit']) {
+			$count_needed = false;
+		} elseif (($options['count'] < (int) $options['limit']) && !$options['offset']) {
+			$count_needed = false;
 		}
-
-		$options['count'] = $count;
+		
+		if ($count_needed) {
+			$options['count'] = true;
+		
+			$options['count'] = (int) call_user_func($getter, $options);
+		}
 	}
 	
 	return call_user_func($viewer, $entities, $options);

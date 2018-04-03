@@ -2,10 +2,8 @@
 
 namespace Elgg;
 
-use Elgg\Database;
 use Elgg\Database\EntityTable;
 use Elgg\Database\Plugins;
-use Elgg\Database\SiteSecret;
 
 /**
  * Serializable collection of data used to boot Elgg
@@ -38,6 +36,7 @@ class BootData {
 	/**
 	 * Populate the boot data
 	 *
+	 * @param Config      $config    Elgg config
 	 * @param Database    $db        Elgg database
 	 * @param EntityTable $entities  Entities service
 	 * @param Plugins     $plugins   Plugins service
@@ -49,7 +48,7 @@ class BootData {
 	 * @throws \DatabaseException
 	 * @throws \ClassException
 	 */
-	public function populate(Database $db, EntityTable $entities, Plugins $plugins, $installed) {
+	public function populate(Config $config, Database $db, EntityTable $entities, Plugins $plugins, $installed) {
 
 		// get site entity
 		$this->site = $entities->get(1, 'site');
@@ -77,21 +76,23 @@ class BootData {
 		}
 
 		// find plugin GUIDs with not too many settings
-		$limit = 40;
-		$set = implode(',', $guids);
-		$sql = "
-			SELECT entity_guid
-			FROM {$db->prefix}private_settings
-			WHERE entity_guid IN ($set)
-			  AND name NOT LIKE 'plugin:user_setting:%'
-			GROUP BY entity_guid
-			HAVING COUNT(*) > $limit
-		";
-		$unsuitable_guids = $db->getData($sql, function ($row) {
-			return (int) $row->entity_guid;
-		});
-		$guids = array_values($guids);
-		$guids = array_diff($guids, $unsuitable_guids);
+		$limit = $config->bootdata_plugin_settings_limit;
+		if ($limit > 0) {
+			$set = implode(',', $guids);
+			$sql = "
+				SELECT entity_guid
+				FROM {$db->prefix}private_settings
+				WHERE entity_guid IN ($set)
+				  AND name NOT LIKE 'plugin:user_setting:%'
+				GROUP BY entity_guid
+				HAVING COUNT(*) > $limit
+			";
+			$unsuitable_guids = $db->getData($sql, function ($row) {
+				return (int) $row->entity_guid;
+			});
+			$guids = array_values($guids);
+			$guids = array_diff($guids, $unsuitable_guids);
+		}
 
 		if ($guids) {
 			// get the settings
