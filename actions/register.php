@@ -30,7 +30,7 @@ try {
 	$validation = elgg_validate_registration_data($username, $password, $name, $email);
 	$failures = $validation->getFailures();
 	if ($failures) {
-		$messages = array_map(function(\Elgg\Validation\ValidationResult $e) {
+		$messages = array_map(function (\Elgg\Validation\ValidationResult $e) {
 			return $e->getError();
 		}, $failures);
 
@@ -78,31 +78,16 @@ try {
 		return elgg_ok_response($response_data);
 	}
 
-	// if exception thrown, this probably means there is a validation
-	// plugin that has disabled the user
 	try {
 		login($new_user);
-
 		// set forward url
-		$session = elgg_get_session();
-		if ($session->has('last_forward_from')) {
-			$forward_url = $session->get('last_forward_from');
-			$forward_source = 'last_forward_from';
-		} else {
-			// forward to main index page
-			$forward_url = '';
-			$forward_source = null;
-		}
-		$params = [
-			'user' => $new_user,
-			'source' => $forward_source,
-		];
-
-		$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
+		$forward_url = _elgg_get_login_forward_url($request, $new_user);
 		$response_message = elgg_echo('registerok', [elgg_get_site_entity()->getDisplayName()]);
 
 		return elgg_ok_response($response_data, $response_message, $forward_url);
 	} catch (LoginException $e) {
+		// if exception thrown, this probably means there is a validation
+		// plugin that has disabled the user
 		return elgg_error_response($e->getMessage(), REFERRER, $e->getCode() ? : ELGG_HTTP_UNAUTHORIZED);
 	}
 } catch (RegistrationException $r) {

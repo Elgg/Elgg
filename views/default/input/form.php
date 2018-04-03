@@ -16,6 +16,8 @@
  * @uses $vars['ignore_empty_body'] Boolean (default true) to determine if an empty body should return continue
  */
 
+elgg_require_js('input/form');
+
 $defaults = [
 	'method' => 'post',
 	'disable_security' => false,

@@ -1318,6 +1318,7 @@ function elgg_view_river_item($item, array $vars = []) {
  * @param string $action    The name of the action. An action name does not include
  *                          the leading "action/". For example, "login" is an action name.
  * @param array  $form_vars $vars environment passed to the "input/form" view
+ *                           - 'ajax' bool If true, the form will be submitted with an Ajax request
  * @param array  $body_vars $vars environment passed to the "forms/$action" view
  *
  * @return string The complete form

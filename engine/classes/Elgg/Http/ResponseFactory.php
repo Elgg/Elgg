@@ -253,17 +253,20 @@ class ResponseFactory {
 			}
 		}
 
-		if ($is_xhr && $is_action && !$this->ajax->isAjax2Request()) {
-			// xhr actions using legacy ajax API should return 200 with wrapped data
-			$response->setStatusCode(ELGG_HTTP_OK);
-			$response->setContent($this->wrapLegacyAjaxResponse($response->getContent(), $response->getForwardURL()));
-		}
+		if ($is_xhr && ($is_action || $this->ajax->isAjax2Request())) {
+			if (!$this->ajax->isAjax2Request()) {
+				// xhr actions using legacy ajax API should return 200 with wrapped data
+				$response->setStatusCode(ELGG_HTTP_OK);
+			}
 
-		if ($is_xhr && $is_action) {
 			// Actions always respond with JSON on xhr calls
 			$headers = $response->getHeaders();
 			$headers['Content-Type'] = 'application/json; charset=UTF-8';
 			$response->setHeaders($headers);
+
+			if ($response->isOk()) {
+				$response->setContent($this->wrapAjaxResponse($response->getContent(), $response->getForwardURL()));
+			}
 		}
 
 		$content = $this->stringify($response->getContent());
@@ -351,6 +354,36 @@ class ResponseFactory {
 		}
 
 		return $this->send($this->prepareResponse($content, $status_code, $headers));
+	}
+
+	/**
+	 * Wraps response content in an Ajax2 compatible format
+	 *
+	 * @param string $content     Response content
+	 * @param string $forward_url Forward URL
+	 * @return string
+	 */
+	public function wrapAjaxResponse($content = '', $forward_url = null) {
+
+		if (!$this->ajax->isAjax2Request()) {
+			return $this->wrapLegacyAjaxResponse($content, $forward_url);
+		}
+
+		$content = $this->stringify($content);
+
+		if ($forward_url === REFERRER) {
+			$forward_url = $this->request->headers->get('Referer');
+		}
+
+		$params = [
+			'value' => '',
+			'current_url' => current_page_url(),
+			'forward_url' => elgg_normalize_url($forward_url),
+		];
+
+		$params['value'] = $this->ajax->decodeJson($content);
+
+		return $this->stringify($params);
 	}
 
 	/**
