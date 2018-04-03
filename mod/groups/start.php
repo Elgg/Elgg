@@ -17,7 +17,7 @@ function groups_init() {
 		'name' => 'groups',
 		'icon' => 'users',
 		'text' => elgg_echo('groups'),
-		'href' => elgg_generate_url('groups/all'),
+		'href' => elgg_generate_url('collection:group:group:all'),
 	]);
 
 	// Register URL handlers for groups
