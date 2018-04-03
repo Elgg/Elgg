@@ -121,10 +121,22 @@
 	bottom: -35px;
 }
 
-#cboxLoadingOverlay {
-	/* note: due to extension, this path is computed relative to elgg.css/admin.css */
-	background: transparent url(graphics/ajax_loader_bw.gif) no-repeat center center;
-	background-size: 30px;
+#cboxLoadingOverlay:after {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-left: -1.25rem;
+	margin-top: -1.25rem;
+	background-color: #fff;
+	height: 2.5rem;
+	width: 2.5rem;
+	animation: infinite-spinning 1s infinite linear;
+	border-radius: 50%;
+	border-width: 5px;
+	border-color: $(border-color-highlight) $(border-color-soft) $(border-color-soft);
+	border-style: solid;
+	display: block;
 }
 
 #cboxPrevious,
