@@ -1194,6 +1194,11 @@ function groups_prepare_form_vars($group = null) {
  */
 function _groups_gatekeeper_allow_profile_page(\Elgg\Hook $hook) {
 
+	$entity = $hook->getEntityParam();
+	if (!has_access_to_entity($entity)) {
+		return;
+	}
+
 	$route = $hook->getParam('route');
 
 	if ($route === 'view:group' || $route === 'view:group:group') {
