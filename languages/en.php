@@ -512,8 +512,8 @@ return array(
 	'admin:statistics:numentities' => 'Content Statistics',
 	'admin:statistics:numentities:type' => 'Content type',
 	'admin:statistics:numentities:number' => 'Number',
-	'admin:statistics:numentities:searchable' => 'Searchable',
-	'admin:statistics:numentities:other' => 'Other',
+	'admin:statistics:numentities:searchable' => 'Searchable entities',
+	'admin:statistics:numentities:other' => 'Other entities',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
