@@ -2,6 +2,7 @@
 
 namespace Elgg\Database\Seeds;
 
+use ElggCrypto;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
