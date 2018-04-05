@@ -66,17 +66,37 @@ System hooks
 **parameters, menu:<menu_name>**
 	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before rendering.
 
+	The ``$params`` array will contain:
+
+	 * ``name`` - name of the menu
+	 * ``sort_by`` - preferring sorting parameter
+	 * other parameters passed to ``elgg_view_menu()``
+
 **register, menu:<menu_name>**
 	Filters the initial list of menu items pulled from configuration, before the menu has been split into
 	sections. Triggered by ``elgg_view_menu()`` and ``elgg()->menus->getMenu()``.
+
+	The ``$params`` array will contain parameters returned by ``parameters, menu:<menu_name>`` hook.
+
+	The return value is an instance of ``\Elgg\Collections\Collection`` containing ``\ElggMenuItem`` objects.
+
+	Hook handlers can add/remove items to the collection using the collection API, as well as array access operations.
 
 **prepare, menu:<menu_name>**
 	Filters the array of menu sections before they're displayed. Each section is a string key mapping to
 	an area of menu items. This is a good hook to sort, add, remove, and modify menu items. Triggered by
 	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
+	The ``$params`` array will contain:
+
+	 * ``selected_item`` - ``ElggMenuItem`` selected in the menu, if any
+
+	The return value is an instance of ``\Elgg\Menu\PreparedMenu``. The prepared menu is a collection of ``\Elgg\Menu\MenuSection``,
+	which in turn are collections of ``\ElggMenuItem`` objects.
+
 **register, menu:filter:<filter_id>**
-	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter.
+	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter. Parameters and return values
+	are same as in ``register, menu:<menu_name>`` hook.
 
 **filter_tabs, <context>**
 	Filters the array of ``ElggMenuItem`` used to display the All/Mine/Friends tabs. The ``$params``

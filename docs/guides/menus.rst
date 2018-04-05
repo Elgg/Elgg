@@ -104,12 +104,8 @@ Examples
 				break;
 		}
 
-		foreach ($items as $key => $item) {
-			if ($item->getName() == 'albums') {
-				// Set the new URL
-				$item->setURL($url);
-				break;
-			}
+		if ($items->has('albums')) {
+			$items->get('albums')->setURL($url);
 		}
 
 		return $items;
@@ -142,17 +138,11 @@ Examples
 			return $menu;
 		}
 
-		foreach ($items as $key => $item) {
-			switch ($item->getName()) {
-				case 'likes':
-					// Remove the "likes" menu item
-					unset($items[$key]);
-					break;
-				case 'edit':
-					// Change the "Edit" text into a custom icon
-					$item->setText(elgg_view_icon('pencil'));
-					break;
-			}
+		$items->remove('likes');
+
+		if ($items->has('edit')) {
+			$items->get('edit')->setText('Modify');
+			$items->get('edit')->icon = 'pencil';
 		}
 
 		return $items;

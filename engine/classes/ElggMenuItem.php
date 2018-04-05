@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Collections\Collection;
+
 /**
  * Elgg Menu Item
  *
@@ -12,7 +15,7 @@
  * @subpackage Navigation
  * @since      1.8.0
  */
-class ElggMenuItem {
+class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 
 	/**
 	 * @var array Non-rendered data about the menu item
@@ -311,6 +314,7 @@ class ElggMenuItem {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -330,7 +334,11 @@ class ElggMenuItem {
 	 * @return bool
 	 */
 	public function getSelected() {
-		return $this->data['selected'];
+		if (isset($this->data['selected'])) {
+			return $this->data['selected'];
+		}
+
+		return elgg_http_url_is_identical(current_page_url(), $this->getHref());
 	}
 
 	/**
@@ -662,5 +670,13 @@ class ElggMenuItem {
 		unset($values['data']);
 
 		return $values;
+	}
+
+	/**
+	 * Get unique item identifier within a collection
+	 * @return string|int
+	 */
+	public function getId() {
+		return $this->getName();
 	}
 }

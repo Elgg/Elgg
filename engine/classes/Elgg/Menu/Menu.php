@@ -1,8 +1,6 @@
 <?php
 namespace Elgg\Menu;
 
-use ElggMenuItem;
-
 /**
  * A complete menu, sorted, filtered by the "prepare" hook, and split into sections.
  *
@@ -31,7 +29,7 @@ class Menu {
 	/**
 	 * Get all menu sections
 	 *
-	 * @return ElggMenuItem[][]
+	 * @return PreparedMenu
 	 */
 	public function getSections() {
 		return $this->params['menu'];
@@ -43,7 +41,7 @@ class Menu {
 	 * @param string $name    Section name
 	 * @param mixed  $default Value to return if section is not found
 	 *
-	 * @return ElggMenuItem[]|null
+	 * @return MenuSection|null
 	 */
 	public function getSection($name, $default = null) {
 		return isset($this->params['menu'][$name]) ? $this->params['menu'][$name] : $default;
