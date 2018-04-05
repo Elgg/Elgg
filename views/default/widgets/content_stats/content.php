@@ -29,9 +29,9 @@ foreach ($registered_entity_types as $type => $subtypes) {
 
 arsort($stats);
 
-echo '<table class="elgg-table-alt">';
-echo '<tr><th>' . elgg_echo('admin:statistics:numentities:type') . '</th>';
-echo '<th>' . elgg_echo('admin:statistics:numentities:number') . '</th></tr>';
+echo '<table class="elgg-table">';
+echo '<thead><tr><th>' . elgg_echo('admin:statistics:numentities:type') . '</th>';
+echo '<th>' . elgg_echo('admin:statistics:numentities:number') . '</th></tr></thead>';
 foreach ($stats as $name => $num) {
 	echo "<tr><td>$name</td><td>$num</td></tr>";
 }
