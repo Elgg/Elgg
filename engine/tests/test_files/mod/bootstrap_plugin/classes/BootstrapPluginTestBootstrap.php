@@ -3,7 +3,7 @@
 class BootstrapPluginTestBootstrap extends \Elgg\PluginBootstrap {
 
 	/**
-	 * Executed during 'plugin_boot:before', 'system' event
+	 * Executed during 'plugins_boot:before', 'system' event
 	 *
 	 * Allows the plugin to require additional files, as well as configure services prior to booting the plugin
 	 *
@@ -15,9 +15,9 @@ class BootstrapPluginTestBootstrap extends \Elgg\PluginBootstrap {
 	}
 
 	/**
-	 * Executed during 'plugin_boot:before', 'system' event
+	 * Executed during 'plugins_boot:before', 'system' event
 	 *
-	 * Allows the plugin to register handlers for 'plugin_boot', 'system' and 'init', 'system' events,
+	 * Allows the plugin to register handlers for 'plugins_boot', 'system' and 'init', 'system' events,
 	 * as well as implement boot time logic
 	 *
 	 * @return void
