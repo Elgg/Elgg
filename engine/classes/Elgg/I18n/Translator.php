@@ -188,17 +188,16 @@ class Translator {
 		$country_code = strtolower($country_code);
 		$country_code = trim($country_code);
 
-		if (!is_array($language_array) || $country_code === "") {
+		if (!is_array($language_array) || empty($language_array) || $country_code === "") {
 			return false;
 		}
 
-		if (count($language_array) > 0) {
-			if (!isset($this->translations[$country_code])) {
-				$this->translations[$country_code] = $language_array;
-			} else {
-				$this->translations[$country_code] = $language_array + $this->translations[$country_code];
-			}
+		if (!isset($this->translations[$country_code])) {
+			$this->translations[$country_code] = [];
 		}
+
+		// Note that we are using union operator instead of array_merge() due to performance implications
+		$this->translations[$country_code] = $language_array + $this->translations[$country_code];
 
 		return true;
 	}
