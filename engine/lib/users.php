@@ -476,8 +476,17 @@ function _elgg_user_title_menu(\Elgg\Hook $hook) {
  */
 function _elgg_user_page_menu($hook, $type, $return, $params) {
 
-	$owner = elgg_get_page_owner_entity();
-	if (!$owner) {
+	$owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
+
+	if (!$owner instanceof ElggUser) {
+		return;
+	}
+
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+
+	if (!$owner->canEdit()) {
 		return;
 	}
 
@@ -717,7 +726,7 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 	}
 	
 	$entity = $hook->getEntityParam();
-	if (!$entity instanceof ElggUser) {
+	if (!$entity instanceof ElggUser || $entity->isValidated()) {
 		return;
 	}
 	
