@@ -140,8 +140,25 @@ User hooks
 ==========
 
 **usersettings:save, user**
-	Triggered in the aggregate action to save user settings. Return false prevent sticky
-	forms from being cleared.
+	Triggered in the aggregate action to save user settings.
+	The hook handler must return ``false`` to prevent sticky forms from being cleared (i.e. to indicate that some of the values were not saved).
+	Do not return ``true`` from your hook handler, as you will override other hooks' output, instead return ``null`` to indicate successful operation.
+
+	The ``$params`` array will contain:
+
+	 * ``user`` - ``\ElggUser``, whose settings are being saved
+	 * ``request`` - ``\Elgg\Request`` to the action controller
+
+**change:email, user**
+	Triggered before the user email is changed.
+	Allows plugins to implement additional logic required to change email, e.g. additional email validation.
+	The hook handler must return false to prevent the email from being changed right away.
+
+	The ``$params`` array will contain:
+
+	 * ``user`` - ``\ElggUser``, whose settings are being saved
+	 * ``email`` - Email address that passes sanity checks
+	 * ``request`` - ``\Elgg\Request`` to the action controller
 
 **access:collections:write, user**
 	Filters an array of access permissions that the user ``$params['user_id']`` is allowed to save

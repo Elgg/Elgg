@@ -108,7 +108,7 @@ trait Seeding {
 			}
 
 			if (empty($metadata['email'])) {
-				$metadata['email'] = "{$metadata['username']}@{$this->getEmailDomain()}";
+				$metadata['email'] = $this->getRandomEmail($metadata['username']);
 			}
 
 			if (empty($attributes['subtype'])) {
@@ -506,98 +506,65 @@ trait Seeding {
 	/**
 	 * Generates a unique available and valid username
 	 *
-	 * @param string $base_name Display name, email or other prefix to use as basis
+	 * @param string $name Display name or other prefix to use as basis
 	 *
 	 * @return string
 	 */
-	public function getRandomUsername($base_name = 'user') {
+	public function getRandomUsername($name = null) {
 
-		$available = false;
-
-		$base_name = iconv('UTF-8', 'ASCII//TRANSLIT', $base_name);
-		$blacklist = '/[\x{0080}-\x{009f}\x{00a0}\x{2000}-\x{200f}\x{2028}-\x{202f}\x{3000}\x{e000}-\x{f8ff}]/u';
-		$blacklist2 = [
-			' ',
-			'\'',
-			'/',
-			'\\',
-			'"',
-			'*',
-			'&',
-			'?',
-			'#',
-			'%',
-			'^',
-			'(',
-			')',
-			'{',
-			'}',
-			'[',
-			']',
-			'~',
-			'?',
-			'<',
-			'>',
-			';',
-			'|',
-			'¬',
-			'`',
-			'@',
-			'-',
-			'+',
-			'='
-		];
-
-		$base_name = preg_replace($blacklist, '', $base_name);
-		$base_name = str_replace($blacklist2, '', $base_name);
-		$base_name = str_replace('.', '_', $base_name);
-
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-
-		$ha = _elgg_services()->session->getDisabledEntityVisibility();
-		_elgg_services()->session->setDisabledEntityVisibility(true);
-
-		$minlength = 8;
-
-		if ($base_name) {
-			$fill = $minlength - strlen($base_name);
-		} else {
-			$fill = 8;
-		}
-
-		$separator = '';
-
-		if ($fill > 0) {
-			$suffix = (new \ElggCrypto())->getRandomString($fill);
-			$base_name = "$base_name$separator$suffix";
-		}
-
-		$iterator = 0;
-		while (!$available) {
-			$test_name = $base_name;
-			if ($iterator > 0) {
-				$test_name = "$base_name$separator$iterator";
+		$make = function($name = null)  {
+			if (!$name) {
+				return strtolower($this->faker()->firstName . '.' . $this->faker()->lastName);
 			}
-			$user = get_user_by_username($test_name);
-			$available = !$user;
+
+			return implode('.', preg_split('/\W/', $name));
+		};
+
+		$validate = function($username) {
 			try {
-				if ($available) {
-					validate_username($test_name);
-				}
-			} catch (\Exception $e) {
-				if ($iterator >= 10) {
-					// too many failed attempts
-					$base_name = (new \ElggCrypto())->getRandomString(8);
-				}
+				elgg()->accounts->assertValidUsername($username, true);
+				return true;
+			} catch (\RegistrationException $e) {
+				return false;
 			}
+		};
 
-			$iterator++;
+		$username = $make($name);
+		while (!$validate($username)) {
+			$username = $make();
 		}
 
-		_elgg_services()->session->setDisabledEntityVisibility($ha);
-		_elgg_services()->session->setIgnoreAccess($ia);
+		return $username;
+	}
 
-		return strtolower($base_name);
+	/**
+	 * Generate a random valid email
+	 *
+	 * @param string $base Email username part
+	 * @return string
+	 */
+	public function getRandomEmail($base = null) {
+
+		$make = function($base = null) {
+			$base = $this->getRandomUsername($base);
+			return $base . '@' . $this->getEmailDomain();
+		};
+
+		$validate = function($email) {
+			try {
+				elgg()->accounts->assertValidEmail($email, true);
+				return true;
+			} catch (\RegistrationException $e) {
+				return false;
+			}
+		};
+
+		$email = $make($base);
+		while (!$validate($email)) {
+			$email = $make();
+		}
+
+		return $email;
 	}
 
 	/**

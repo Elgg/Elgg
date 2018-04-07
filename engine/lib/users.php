@@ -209,12 +209,13 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 /**
  * Assert that given registration details are valid and can be used to register the user
  *
- * @param string $username              The username of the new user
- * @param string $password              The password
- * @param string $name                  The user's display name
- * @param string $email                 The user's email address
- * @param bool   $allow_multiple_emails Allow the same email address to be
- *                                      registered multiple times?
+ * @param string       $username              The username of the new user
+ * @param string|array $password              The password
+ *                                            Can be an array [$password, $confirm_password]
+ * @param string       $name                  The user's display name
+ * @param string       $email                 The user's email address
+ * @param bool         $allow_multiple_emails Allow the same email address to be
+ *                                            registered multiple times?
  *
  * @return \Elgg\Validation\ValidationResults
  */
