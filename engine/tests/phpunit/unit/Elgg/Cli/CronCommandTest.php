@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\unit\Elgg\Cli;
+namespace Elgg\Cli;
 
 use Elgg\Cli\CronCommand;
 use Elgg\UnitTestCase;
@@ -14,11 +14,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 class CronCommandTest extends UnitTestCase {
 
 	public function up() {
-		/**
-		 * @todo: \Elgg\Cli\Command sets error and exception handlers, which it shouldn't do
-		 *    as it messes with the testing application
-		 */
-		$this->markTestSkipped();
+
 	}
 
 	public function down() {

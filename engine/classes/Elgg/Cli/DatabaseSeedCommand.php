@@ -5,7 +5,7 @@ namespace Elgg\Cli;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * elgg-cli database:seed
+ * elgg-cli database:seed [--limit]
  */
 class DatabaseSeedCommand extends Command {
 
@@ -47,6 +47,8 @@ class DatabaseSeedCommand extends Command {
 
 			return $e->getCode() ? : 3;
 		}
+
+		return 0;
 	}
 
 }

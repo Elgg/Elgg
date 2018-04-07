@@ -91,6 +91,9 @@ class BootService {
 		if ($config->minusername === null) {
 			$config->minusername = 4;
 		}
+		if ($config->batch_run_time_in_secs === null) {
+			$config->batch_run_time_in_secs = 4;
+		}
 
 		// we were using NOTICE temporarily so we can't just check for null
 		if (!$config->hasInitialValue('debug') && !$config->debug) {

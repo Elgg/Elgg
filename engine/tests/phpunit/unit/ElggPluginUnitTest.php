@@ -192,6 +192,9 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		}
 	}
 
+	/**
+	 * @group UpgradeService
+	 */
 	public function testUsesBootstrapOnUpgrade() {
 
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));

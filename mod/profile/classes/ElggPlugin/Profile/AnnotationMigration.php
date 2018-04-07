@@ -2,6 +2,7 @@
 
 namespace ElggPlugin\Profile;
 
+use Elgg\Database\QueryBuilder;
 use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Result;
 
@@ -21,7 +22,22 @@ class AnnotationMigration implements Batch {
 	 * {@inheritdoc}
 	 */
 	public function shouldBeSkipped() {
-		return false;
+		// @todo We need somehow restrict this upgrade to users created before upgrade 3.x was performed
+
+		// Because we are not really checking against real entities and metadata/annotation values
+		// this upgrade gets regenerated whenever upgrade locator runs
+		// so let's make sure it hasn't completed before
+		$upgrades = elgg_get_entities([
+			'types' => 'object',
+			'subtypes' => 'elgg_upgrade',
+			'private_setting_name_value_pairs' => [
+				'id' => "profile:{$this->getVersion()}",
+				'is_completed' => true,
+			],
+			'count' => true,
+		]);
+
+		return $upgrades;
 	}
 
 	/**
@@ -55,6 +71,7 @@ class AnnotationMigration implements Batch {
 				SELECT guid FROM {$db->prefix}entities WHERE type = 'user'
 			)
 		";
+
 		try {
 			$db->updateData($sql, false, [
 				':old_name' => $name,
@@ -63,6 +80,7 @@ class AnnotationMigration implements Batch {
 			$result->addSuccesses(1);
 		} catch (\DatabaseException $e) {
 			$result->addError("Profile field '$name' could not be migrated: " . $e->getMessage());
+			$result->addFailures(1);
 		}
 
 		return $result;

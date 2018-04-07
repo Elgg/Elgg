@@ -30,7 +30,12 @@ $settings_file = \Elgg\Project\Paths::settingsFile();
 
 $installed = is_file($settings_file);
 if ($installed) {
-    \Elgg\Application::start();
+    try {
+		\Elgg\Application::start();
+	} catch (RuntimeException $ex) {
+        // Try to recover by running a system upgrade
+        \Elgg\Application::upgrade();
+    }
     _elgg_services()->cli->run();
 } else {
     $cli = new Symfony\Component\Console\Application();

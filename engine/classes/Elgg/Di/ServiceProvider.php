@@ -38,7 +38,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\AnnotationsTable          $annotationsTable
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\Application\CacheHandler           $cacheHandler
  * @property-read \Elgg\Assets\CssCompiler                 $cssCompiler
@@ -194,10 +193,6 @@ class ServiceProvider extends DiContainer {
 				$boot->setTimer($c->timer);
 			}
 			return $boot;
-		});
-
-		$this->setFactory('batchUpgrader', function(ServiceProvider $c) {
-			return new \Elgg\BatchUpgrader($c->config);
 		});
 
 		$this->setFactory('cacheHandler', function(ServiceProvider $c) {
@@ -611,6 +606,7 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('upgrades', function(ServiceProvider $c) {
 			return new \Elgg\UpgradeService(
+				$c->upgradeLocator,
 				$c->translator,
 				$c->events,
 				$c->config,

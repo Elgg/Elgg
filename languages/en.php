@@ -482,6 +482,8 @@ return array(
 	'admin:upgrades:run' => 'Run upgrades now',
 	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s) is not an instance of ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
+	'admin:upgrades:completed' => 'Async upgrade %s completed at %s',
+	'admin:upgrades:completed:errors' => 'Async upgrade %s completed at %s but encountered errors: %s',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
