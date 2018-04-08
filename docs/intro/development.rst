@@ -79,10 +79,10 @@ You can run the following commands to seed and unseed the database.
 .. code-block:: sh
 
     # seed the database
-    php ./elgg-cli database:seed
+    vendor/bin/elgg-cli database:seed
 
     # unseed the database
-    php ./elgg-cli database:unseed
+    vendor/bin/elgg-cli database:unseed
 
 
 Plugins can register their own seeds via ``'seeds', 'database'`` hook. The handler must return the class name of the seed,

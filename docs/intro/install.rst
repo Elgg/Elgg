@@ -73,10 +73,10 @@ With Composer (recommended if comfortable with CLI):
 
 .. code-block:: sh
 
-    cd /path/to/wwwroot/
     composer self-update
-    composer global require "fxp/composer-asset-plugin:~1.4.2"
-    composer create-project elgg/starter-project:dev-master .
+    composer global require fxp/composer-asset-plugin
+    composer create-project elgg/starter-project:dev-master ./path/to/project/root
+    cd ./path/to/project/root
     composer install
     composer install # 2nd call is currently required
     vendor/bin/elgg-cli install # follow the questions to provide installation details
