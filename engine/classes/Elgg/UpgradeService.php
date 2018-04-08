@@ -111,7 +111,9 @@ class UpgradeService {
 		$upgrades = $this->locator->locate();
 		if ($async) {
 			foreach ($upgrades as $upgrade) {
-				$upgrade_name = $upgrade->getDisplayName();
+				/* @var $upgrade ElggUpgrade */
+
+				$upgrade_name = $this->translator->translate($upgrade->title);
 
 				$this->logger->log("Starting upgrade {$upgrade_name}", Logger::NOTICE);
 
@@ -356,112 +358,107 @@ class UpgradeService {
 	public function executeAsyncUpgrade(ElggUpgrade $upgrade, $max_duration = null) {
 		// Upgrade also disabled data, so the compatibility is
 		// preserved in case the data ever gets enabled again
-		$ha = _elgg_services()->session->getDisabledEntityVisibility();
-		_elgg_services()->session->setDisabledEntityVisibility(true);
+		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($upgrade, $max_duration) {
 
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
+			$started = microtime(true);
 
-		$started = microtime(true);
+			// Get the class taking care of the actual upgrading
+			$batch = $upgrade->getBatch();
 
-		// Get the class taking care of the actual upgrading
-		$batch = $upgrade->getBatch();
-
-		if (!$batch) {
-			throw new RuntimeException(elgg_echo('admin:upgrades:error:invalid_batch', [
-				$upgrade->getDisplayName(),
-				$upgrade->guid
-			]));
-		}
-
-		$count = $batch->countItems();
-
-		$batch_failure_count = 0;
-		$batch_success_count = 0;
-		$errors = [];
-
-		$processed = (int) $upgrade->processed;
-		$offset = (int) $upgrade->offset;
-		$has_errors = (bool) $upgrade->has_errors;
-
-		/** @var Result $result */
-		$result = null;
-
-		if (!isset($max_duration)) {
-			$max_duration = $this->config->batch_run_time_in_secs;
-		}
-
-		$condition = function () use (&$count, &$processed, &$result, $started, $max_duration) {
-			if ($max_duration && (microtime(true) - $started) >= $max_duration) {
-				return false;
-			}
-			if ($result && $result->wasMarkedComplete()) {
-				return false;
+			if (!$batch) {
+				throw new RuntimeException(elgg_echo('admin:upgrades:error:invalid_batch', [
+					$upgrade->getDisplayName(),
+					$upgrade->guid
+				]));
 			}
 
-			return ($count === Batch::UNKNOWN_COUNT || ($count > $processed));
-		};
+			$count = $batch->countItems();
 
-		while ($condition()) {
-			$result = $batch->run(new Result(), $offset);
+			$batch_failure_count = 0;
+			$batch_success_count = 0;
+			$errors = [];
 
-			$failure_count = $result->getFailureCount();
-			$success_count = $result->getSuccessCount();
+			$processed = (int) $upgrade->processed;
+			$offset = (int) $upgrade->offset;
+			$has_errors = (bool) $upgrade->has_errors;
 
-			$batch_failure_count += $failure_count;
-			$batch_success_count += $success_count;
+			/** @var Result $result */
+			$result = null;
 
-			$total = $failure_count + $success_count;
-
-			if ($batch->needsIncrementOffset()) {
-				// Offset needs to incremented by the total amount of processed
-				// items so the upgrade we won't get stuck upgrading the same
-				// items over and over.
-				$offset += $total;
-			} else {
-				// Offset doesn't need to be incremented, so we mark only
-				// the items that caused a failure.
-				$offset += $failure_count;
+			if (!isset($max_duration)) {
+				$max_duration = $this->config->batch_run_time_in_secs;
 			}
 
-			if ($failure_count > 0) {
-				$has_errors = true;
+			$condition = function () use (&$count, &$processed, &$result, $started, $max_duration) {
+				if ($max_duration && (microtime(true) - $started) >= $max_duration) {
+					return false;
+				}
+				if ($result && $result->wasMarkedComplete()) {
+					return false;
+				}
+
+				return ($count === Batch::UNKNOWN_COUNT || ($count > $processed));
+			};
+
+			while ($condition()) {
+				$result = $batch->run(new Result(), $offset);
+
+				$failure_count = $result->getFailureCount();
+				$success_count = $result->getSuccessCount();
+
+				$batch_failure_count += $failure_count;
+				$batch_success_count += $success_count;
+
+				$total = $failure_count + $success_count;
+
+				if ($batch->needsIncrementOffset()) {
+					// Offset needs to incremented by the total amount of processed
+					// items so the upgrade we won't get stuck upgrading the same
+					// items over and over.
+					$offset += $total;
+				} else {
+					// Offset doesn't need to be incremented, so we mark only
+					// the items that caused a failure.
+					$offset += $failure_count;
+				}
+
+				if ($failure_count > 0) {
+					$has_errors = true;
+				}
+
+				$processed += $total;
+
+				$errors = array_merge($errors, $result->getErrors());
 			}
 
-			$processed += $total;
+			$upgrade->processed = $processed;
+			$upgrade->offset = $offset;
+			$upgrade->has_errors = $has_errors;
 
-			$errors = array_merge($errors, $result->getErrors());
-		}
-
-		_elgg_services()->session->setIgnoreAccess($ia);
-		_elgg_services()->session->setDisabledEntityVisibility($ha);
-
-		$upgrade->processed = $processed;
-		$upgrade->offset = $offset;
-		$upgrade->has_errors = $has_errors;
-
-		$completed = ($result && $result->wasMarkedComplete()) || ($processed >= $count);
-		if ($completed) {
-			// Upgrade is finished
-			if ($has_errors) {
-				// The upgrade was finished with errors. Reset offset
-				// and errors so the upgrade can start from a scratch
-				// if attempted to run again.
-				$upgrade->processed = 0;
-				$upgrade->offset = 0;
-				$upgrade->has_errors = false;
-			} else {
-				// Everything has been processed without errors
-				// so the upgrade can be marked as completed.
-				$upgrade->setCompleted();
+			$completed = ($result && $result->wasMarkedComplete()) || ($processed >= $count);
+			if ($completed) {
+				// Upgrade is finished
+				if ($has_errors) {
+					// The upgrade was finished with errors. Reset offset
+					// and errors so the upgrade can start from a scratch
+					// if attempted to run again.
+					$upgrade->processed = 0;
+					$upgrade->offset = 0;
+					$upgrade->has_errors = false;
+				} else {
+					// Everything has been processed without errors
+					// so the upgrade can be marked as completed.
+					$upgrade->setCompleted();
+				}
 			}
-		}
 
-		// Give feedback to the user interface about the current batch.
-		return [
-			'errors' => $errors,
-			'numErrors' => $batch_failure_count,
-			'numSuccess' => $batch_success_count,
-			'isComplete' => $result && $result->wasMarkedComplete(),
-		];
+			// Give feedback to the user interface about the current batch.
+			return [
+				'errors' => $errors,
+				'numErrors' => $batch_failure_count,
+				'numSuccess' => $batch_success_count,
+				'isComplete' => $result && $result->wasMarkedComplete(),
+			];
+		});
 	}
 }

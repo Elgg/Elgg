@@ -774,10 +774,28 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
+	 * Register plugin classes and require composer autoloader
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public function autoload() {
+		$this->registerClasses();
+
+		$autoload_file = 'vendor/autoload.php';
+		if ($this->canReadFile($autoload_file)) {
+			Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+		}
+	}
+
+	/**
 	 * Boot the plugin by autoloading files, classes etc
 	 *
 	 * @throws PluginException
 	 * @return \Closure|null
+	 * @access private
+	 * @internal
 	 */
 	public function boot() {
 		// Detect plugins errors early and throw so that plugins service can disable the plugin
@@ -785,12 +803,7 @@ class ElggPlugin extends ElggObject {
 			throw new PluginException($this->getError());
 		}
 
-		$this->registerClasses();
-
-		$autoload_file = 'vendor/autoload.php';
-		if ($this->canReadFile($autoload_file)) {
-			Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
-		}
+		$this->autoload();
 
 		$this->activateEntities();
 
@@ -814,6 +827,8 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @throws InvalidParameterException
 	 * @throws PluginException
+	 * @access private
+	 * @internal
 	 */
 	public function init() {
 		$this->registerRoutes();

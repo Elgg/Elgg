@@ -22,22 +22,7 @@ class AnnotationMigration implements Batch {
 	 * {@inheritdoc}
 	 */
 	public function shouldBeSkipped() {
-		// @todo We need somehow restrict this upgrade to users created before upgrade 3.x was performed
-
-		// Because we are not really checking against real entities and metadata/annotation values
-		// this upgrade gets regenerated whenever upgrade locator runs
-		// so let's make sure it hasn't completed before
-		$upgrades = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'elgg_upgrade',
-			'private_setting_name_value_pairs' => [
-				'id' => "profile:{$this->getVersion()}",
-				'is_completed' => true,
-			],
-			'count' => true,
-		]);
-
-		return $upgrades;
+		return false;
 	}
 
 	/**

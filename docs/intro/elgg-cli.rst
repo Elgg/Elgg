@@ -44,6 +44,10 @@ Available commands
     # Remove seeded faked entities
     vendor/bin/elgg-cli database:unseed
 
+    # Optimize database tables
+    # Request garbagecollector plugin
+    vendor/bin/elgg-cli database:optimize
+
     # Run cron jobs
     vendor/bin/elgg-cli cron [-i|--interval INTERVAL] [-q|--quiet]
 
