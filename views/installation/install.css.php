@@ -15,6 +15,10 @@ html {
 	background: #0078ac;
 }
 
+body {
+	background: transparent;
+}
+
 .elgg-page {
 	max-width: 50rem;
 	margin: 5rem auto;

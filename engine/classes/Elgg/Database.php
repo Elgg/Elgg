@@ -6,7 +6,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Elgg\Database\DbConfig as DbConfig;
+use Elgg\Database\DbConfig;
 
 /**
  * The Elgg database

@@ -710,7 +710,7 @@ class Plugins {
 	 * @return ElggPlugin[]
 	 */
 	public function find($status = 'active') {
-		if (!$this->db) {
+		if (!$this->db || !$this->config->installed) {
 			return [];
 		}
 
