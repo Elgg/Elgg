@@ -2,6 +2,8 @@
 namespace Elgg\Debug;
 
 use Elgg\Debug\Inspector\ViewComponent;
+use Elgg\Includer;
+use Elgg\Project\Paths;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -412,5 +414,28 @@ class Inspector {
 			$data = _elgg_services()->views->getInspectorData();
 		}
 		return $data;
+	}
+
+	/**
+	 * Returns public DI services
+	 *
+	 * returns [service_name => [class, path]]
+	 *
+	 * @return array
+	 */
+	public function getServices() {
+		$tree = [];
+
+		foreach (_elgg_services()->dic_loader->getDefinitions() as $definition) {
+			$services = Includer::includeFile($definition);
+
+			foreach ($services as $name => $service) {
+				$tree[$name] = [get_class(elgg()->$name), Paths::sanitize($definition, false)];
+			}
+		}
+
+		ksort($tree);
+
+		return $tree;
 	}
 }

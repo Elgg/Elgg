@@ -86,6 +86,10 @@ return array(
 	'developers:inspect:file' => 'File',
 	'developers:inspect:middleware' => 'File',
 	'developers:inspect:handler_type' => 'Handled by',
+	'developers:inspect:services' => 'Services',
+	'developers:inspect:service:name' => 'Name',
+	'developers:inspect:service:path' => 'Definition',
+	'developers:inspect:service:class' => 'Class',
 
 	// event logging
 	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
