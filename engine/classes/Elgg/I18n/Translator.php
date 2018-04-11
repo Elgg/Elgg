@@ -849,7 +849,7 @@ class Translator {
 			"yo", // "Yoruba"
 			"za", // "Zuang"
 			"zh", // "Chinese"
-			"zh_hans", // "Chinese Simplified"
+			"zh-cn", // "Chinese Simplified"
 			"zu", // "Zulu"
 		];
 	}
