@@ -25,6 +25,7 @@ return [
 			'defaults' => [
 				'expage' => 'about',
 			],
+			'walled' => false,
 		],
 		'view:object:privacy' => [
 			'path' => '/privacy',
@@ -32,6 +33,7 @@ return [
 			'defaults' => [
 				'expage' => 'privacy',
 			],
+			'walled' => false,
 		],
 		'view:object:terms' => [
 			'path' => '/terms',
@@ -39,6 +41,7 @@ return [
 			'defaults' => [
 				'expage' => 'terms',
 			],
+			'walled' => false,
 		],
 	],
 	'actions' => [
