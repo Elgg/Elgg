@@ -1439,15 +1439,22 @@ class ElggInstaller {
 			elgg_save_config($key, $value);
 		}
 
+		_elgg_services()->reset('plugins');
+
 		// Enable a set of default plugins
 		_elgg_generate_plugin_entities();
 
 		foreach (elgg_get_plugins('any') as $plugin) {
-			if ($plugin->getManifest()) {
-				if ($plugin->getManifest()->getActivateOnInstall()) {
-					$plugin->activate();
-				}
+			$manifest = $plugin->getManifest();
+			if (!$manifest instanceof \ElggPluginManifest) {
+				continue;
 			}
+			
+			if (!$manifest->getActivateOnInstall()) {
+				continue;
+			}
+			
+			$plugin->activate();
 		}
 
 		return true;
