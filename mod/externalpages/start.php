@@ -10,9 +10,6 @@
  */
 function expages_init() {
 
-	// Register public external pages
-	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'expages_public');
-
 	elgg_register_plugin_hook_handler('register', 'menu:expages', 'expages_menu_register_hook');
 
 	// add a menu item for the admin edit page
@@ -27,21 +24,6 @@ function expages_init() {
 
 	// add footer links
 	expages_setup_footer_menu();
-}
-
-/**
- * Extend the public pages range
- *
- * @param string $hook    'public_pages'
- * @param string $handler 'walled_garden'
- * @param array  $return  current return value
- * @param mixed  $params  supplied params
- *
- * @return array
- */
-function expages_public($hook, $handler, $return, $params) {
-	$pages = ['about', 'terms', 'privacy'];
-	return array_merge($pages, $return);
 }
 
 /**

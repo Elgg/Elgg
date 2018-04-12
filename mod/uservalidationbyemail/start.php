@@ -37,9 +37,6 @@ function uservalidationbyemail_init() {
 
 	// make admin users always validated
 	elgg_register_event_handler('make_admin', 'user', 'uservalidationbyemail_validate_new_admin_user');
-
-	// register Walled Garden public pages
-	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'uservalidationbyemail_public_pages');
 }
 
 /**
@@ -184,22 +181,6 @@ function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 	if ($user instanceof ElggUser && !$user->isValidated()) {
 		$user->setValidationStatus(true, 'admin_user');
 	}
-}
-
-/**
- * Registers public pages to allow in the case walled garden has been enabled
- *
- * @param string $hook         'public_pages'
- * @param string $type         'walled_garden'
- * @param array  $return_value current return value
- * @param mixed  $params       supplied params
- *
- * @return array
- */
-function uservalidationbyemail_public_pages($hook, $type, $return_value, $params) {
-	$return_value[] = 'uservalidationbyemail/confirm';
-	$return_value[] = 'uservalidationbyemail/emailsent';
-	return $return_value;
 }
 
 /**
