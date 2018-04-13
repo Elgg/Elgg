@@ -842,6 +842,7 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'previous',
 			'text' => elgg_echo('previous'),
+			'entity' => $previous,
 			'href' => $previous->getUrl(),
 			'title' => $previous->getDisplayName(),
 			'icon' => 'angle-double-left',
@@ -863,6 +864,7 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'next',
 			'text' => elgg_echo('next'),
+			'entity' => $next,
 			'href' => $next->getUrl(),
 			'title' => $next->getDisplayName(),
 			'icon_alt' => 'angle-double-right',
