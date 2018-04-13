@@ -29,5 +29,5 @@ if ($exception instanceof \DatabaseException) {
 ?>
 
 <p class="elgg-messages-exception">
-	<?= nl2br(htmlentities(print_r($exception, true), ENT_QUOTES, 'UTF-8')); ?>
+	<?= nl2br(htmlentities($exception->getTraceAsString(), ENT_QUOTES, 'UTF-8')); ?>
 </p>
