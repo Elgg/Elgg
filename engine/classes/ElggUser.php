@@ -110,7 +110,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 		
-		if (!_elgg_services()->hooks->getEvents()->trigger('ban', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('ban', 'user', $this)) {
 			return false;
 		}
 
@@ -133,7 +133,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('unban', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('unban', 'user', $this)) {
 			return false;
 		}
 
@@ -178,7 +178,7 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('make_admin', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('make_admin', 'user', $this)) {
 			return false;
 		}
 
@@ -200,7 +200,7 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('remove_admin', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('remove_admin', 'user', $this)) {
 			return false;
 		}
 
@@ -233,7 +233,7 @@ class ElggUser extends \ElggEntity
 	/**
 	 * Sets the last action time of the given user to right now.
 	 *
-	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
+	 * @see _elgg_session_boot() The session boot calls this at the beginning of every request
 	 *
 	 * @return void
 	 */
@@ -283,9 +283,9 @@ class ElggUser extends \ElggEntity
 			}
 			
 			// let the system know the user is validated
-			_elgg_services()->hooks->getEvents()->triggerAfter('validate', 'user', $this);
+			_elgg_services()->events->triggerAfter('validate', 'user', $this);
 		} else {
-			_elgg_services()->hooks->getEvents()->triggerAfter('invalidate', 'user', $this);
+			_elgg_services()->events->triggerAfter('invalidate', 'user', $this);
 		}
 	}
 

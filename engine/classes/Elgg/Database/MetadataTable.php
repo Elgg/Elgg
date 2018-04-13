@@ -8,7 +8,6 @@ use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\EventsService as Events;
 use Elgg\TimeUsing;
 use ElggMetadata;
-use ElggEntity;
 
 /**
  * This class interfaces with the database to perform CRUD operations on metadata
@@ -197,7 +196,7 @@ class MetadataTable {
 			return false;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('delete', 'metadata', $metadata)) {
+		if (!_elgg_services()->events->trigger('delete', 'metadata', $metadata)) {
 			return false;
 		}
 
@@ -251,7 +250,7 @@ class MetadataTable {
 
 			if (is_array($id)) {
 				throw new \LogicException("
-					Multiple '{$metadata->name}' metadata values exist for entity [guid: {$metadata->entity_guid}]. 
+					Multiple '{$metadata->name}' metadata values exist for entity [guid: {$metadata->entity_guid}].
 					Use ElggEntity::setMetadata()
 				");
 			}

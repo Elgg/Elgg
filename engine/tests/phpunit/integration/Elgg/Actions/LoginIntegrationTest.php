@@ -142,7 +142,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 			return false;
 		};
 
-		_elgg_services()->hooks->getEvents()->registerHandler('login:before', 'user', $handler);
+		_elgg_services()->events->registerHandler('login:before', 'user', $handler);
 
 		$user = $this->createOne('user', [], [
 			'password' => 123456,
@@ -162,7 +162,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertEmpty(_elgg_services()->session->getLoggedInUser());
 
-		_elgg_services()->hooks->getEvents()->unregisterHandler('before:login', 'user', $handler);
+		_elgg_services()->events->unregisterHandler('before:login', 'user', $handler);
 	}
 
 	public function testCanPersistLogin() {
@@ -214,6 +214,4 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		elgg_unregister_plugin_hook_handler('login:forward', 'user', $forward_handler);
 
 	}
-
-
 }

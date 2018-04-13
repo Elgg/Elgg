@@ -23,7 +23,7 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	public function up() {
 		$this->viewsDir = $this->normalizeTestFilePath("views");
 
-		$this->hooks = new PluginHooksService();
+		$this->hooks = new PluginHooksService(_elgg_services()->events);
 		$logger = $this->createMock('\Elgg\Logger', array(), array(), '', false);
 
 		$this->views = new ViewsService($this->hooks, $logger);

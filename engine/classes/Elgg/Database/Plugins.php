@@ -10,7 +10,7 @@ use Elgg\Context;
 use Elgg\Database;
 use Elgg\I18n\Translator;
 use Elgg\Includer;
-use Elgg\PluginHooksService;
+use Elgg\EventsService;
 use Elgg\Profilable;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
@@ -60,9 +60,9 @@ class Plugins {
 	protected $session;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var Translator
@@ -101,7 +101,7 @@ class Plugins {
 	 * @param ElggCache             $cache                  Cache for referencing plugins by ID
 	 * @param Database              $db                     Database
 	 * @param ElggSession           $session                Session
-	 * @param PluginHooksService    $hooks                  Hooks
+	 * @param EventsService         $events                 Events
 	 * @param Translator            $translator             Translator
 	 * @param ViewsService          $views                  Views service
 	 * @param ElggCache             $private_settings_cache Settings cache
@@ -113,7 +113,7 @@ class Plugins {
 		ElggCache $cache,
 		Database $db,
 		ElggSession $session,
-		PluginHooksService $hooks,
+		EventsService $events,
 		Translator $translator,
 		ViewsService $views,
 		ElggCache $private_settings_cache,
@@ -124,7 +124,7 @@ class Plugins {
 		$this->cache = $cache;
 		$this->db = $db;
 		$this->session = $session;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->translator = $translator;
 		$this->views = $views;
 		$this->private_settings_cache = $private_settings_cache;
@@ -471,11 +471,11 @@ class Plugins {
 			return false;
 		}
 
-		$this->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
-		$this->hooks->getEvents()->registerHandler('init', 'system', [$this, 'init']);
-		$this->hooks->getEvents()->registerHandler('ready', 'system', [$this, 'ready']);
-		$this->hooks->getEvents()->registerHandler('upgrade', 'system', [$this, 'upgrade']);
-		$this->hooks->getEvents()->registerHandler('shutdown', 'system', [$this, 'shutdown']);
+		$this->events->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
+		$this->events->registerHandler('init', 'system', [$this, 'init']);
+		$this->events->registerHandler('ready', 'system', [$this, 'ready']);
+		$this->events->registerHandler('upgrade', 'system', [$this, 'upgrade']);
+		$this->events->registerHandler('shutdown', 'system', [$this, 'shutdown']);
 
 		return true;
 	}

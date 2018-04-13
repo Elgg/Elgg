@@ -49,7 +49,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$sp->db,
 				$sp->entityCache,
 				$sp->metadataCache,
-				$sp->hooks->getEvents(),
+				$sp->events,
 				$sp->session,
 				$sp->translator,
 				$sp->logger
@@ -57,15 +57,15 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('metadataTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $sp->db, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $sp->db, $sp->events);
 		});
 
 		$this->setFactory('annotationsTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\AnnotationsTable($sp->db, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\AnnotationsTable($sp->db, $sp->events);
 		});
 
 		$this->setFactory('relationshipsTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\RelationshipsTable($sp->db, $sp->entityTable, $sp->metadataTable, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\RelationshipsTable($sp->db, $sp->entityTable, $sp->metadataTable, $sp->events);
 		});
 
 		$this->setFactory('accessCollections', function (MockServiceProvider $sp) {
@@ -102,15 +102,15 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 
 			return new \Elgg\Mocks\Database\Plugins(
 				$cache,
-				$this->db,
-				$this->session,
-				$this->hooks,
-				$this->translator,
-				$this->views,
-				$this->privateSettingsCache,
-				$this->config,
-				$this->systemMessages,
-				$this->request->getContextStack()
+				$sp->db,
+				$sp->session,
+				$sp->events,
+				$sp->translator,
+				$sp->views,
+				$sp->privateSettingsCache,
+				$sp->config,
+				$sp->systemMessages,
+				$sp->request->getContextStack()
 			);
 		});
 

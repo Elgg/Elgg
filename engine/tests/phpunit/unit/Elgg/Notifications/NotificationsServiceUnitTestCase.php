@@ -74,7 +74,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->hooks = _elgg_services()->hooks;
 		$this->hooks->backup();
 
-		$this->events = $this->hooks->getEvents();
+		$this->events = _elgg_services()->events;
 		$this->events->backup();
 
 		$this->queue = new DatabaseQueueMock();

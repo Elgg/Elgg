@@ -63,8 +63,8 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 
 		$app->bootCore();
 
-		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
-		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		$app->_services->events->unregisterHandler('all', 'all', 'system_log_listener');
+		$app->_services->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
 		self::$_testing_app = $app;
 

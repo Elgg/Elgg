@@ -4,7 +4,7 @@ namespace Elgg;
 use Elgg\HooksRegistrationService\Hook;
 
 /**
- * Plugin Hooks (and Events)
+ * Plugin Hooks
  *
  * Use elgg()->hooks
  */
@@ -21,14 +21,9 @@ class PluginHooksService extends HooksRegistrationService {
 	 * @param EventsService $events Events
 	 *
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
-	public function __construct(EventsService $events = null) {
-		if ($events === null) {
-			// for unit tests
-			$events = new EventsService(new HandlersService());
-		}
-
+	public function __construct(EventsService $events) {
 		$this->events = $events;
 	}
 
@@ -36,15 +31,18 @@ class PluginHooksService extends HooksRegistrationService {
 	 * Get the events API
 	 *
 	 * @return EventsService
+	 * @deprecated 3.0
 	 */
 	public function getEvents() {
+		_elgg_services()->deprecation->sendNotice(__METHOD__ . " has been deprecated, please use elgg()->events", '3.0');
+		
 		return $this->events;
 	}
 
 	/**
 	 * Triggers a plugin hook
 	 *
-	 * @see elgg_trigger_plugin_hook
+	 * @see elgg_trigger_plugin_hook()
 	 */
 	public function trigger($name, $type, $params = null, $value = null) {
 

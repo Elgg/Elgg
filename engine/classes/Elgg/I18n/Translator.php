@@ -479,7 +479,7 @@ class Translator {
 			}
 		}
 		
-		_elgg_services()->hooks->getEvents()->triggerAfter('reload', 'translations');
+		_elgg_services()->events->triggerAfter('reload', 'translations');
 
 		$this->was_reloaded = true;
 	}
