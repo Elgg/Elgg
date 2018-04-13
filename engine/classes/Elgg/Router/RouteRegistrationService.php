@@ -6,8 +6,8 @@ use Elgg\Logger;
 use Elgg\PluginHooksService;
 use Elgg\Router\Middleware\WalledGarden;
 use ElggEntity;
+use Exception;
 use InvalidParameterException;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 /**
  * Route registration service
@@ -175,11 +175,7 @@ class RouteRegistrationService {
 	 * @return Route|null
 	 */
 	public function get($name) {
-		try {
-			return $this->routes->get($name);
-		} catch (RouteNotFoundException $ex) {
-			return null;
-		}
+		return $this->routes->get($name);
 	}
 
 	/**
@@ -201,7 +197,7 @@ class RouteRegistrationService {
 	public function generateUrl($name, array $parameters = []) {
 		try {
 			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
-		} catch (RouteNotFoundException $exception) {
+		} catch (Exception $exception) {
 			$this->logger->notice($exception->getMessage());
 		}
 		
