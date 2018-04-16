@@ -42,6 +42,13 @@ class PluginHooksService extends HooksRegistrationService {
 	/**
 	 * Triggers a plugin hook
 	 *
+	 * @param string $name   The name of the plugin hook
+	 * @param string $type   The type of the plugin hook
+	 * @param mixed  $params Supplied params for the hook
+	 * @param mixed  $value  The value of the hook, this can be altered by registered callbacks
+	 *
+	 * @return mixed
+	 *
 	 * @see elgg_trigger_plugin_hook()
 	 */
 	public function trigger($name, $type, $params = null, $value = null) {
