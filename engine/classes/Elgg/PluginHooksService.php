@@ -101,4 +101,15 @@ class PluginHooksService extends HooksRegistrationService {
 
 		return parent::registerHandler($name, $type, $callback, $priority);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function unregisterHandler($name, $type, $callback) {
+		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
+			$type = ViewsService::canonicalizeViewName($type);
+		}
+		
+		return parent::unregisterHandler($name, $type, $callback);
+	}
 }
