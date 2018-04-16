@@ -347,7 +347,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	public function testElggRiverDisableEnable() {
 
-		$this->assertTrue(_elgg_services()->hooks->getEvents()->hasHandler('disable:after', 'all', '_elgg_river_disable'));
+		$this->assertTrue(_elgg_services()->events->hasHandler('disable:after', 'all', '_elgg_river_disable'));
 
 		$user = $this->createOne('user');
 		$this->entity = $this->createOne('object');

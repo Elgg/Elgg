@@ -1,8 +1,6 @@
 <?php
 namespace Elgg;
 
-use Elgg\HooksRegistrationService\Event;
-
 /**
  * Events service
  *
@@ -25,7 +23,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param HandlersService $handlers Handlers
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
 	public function __construct(HandlersService $handlers) {
 		$this->handlers = $handlers;
@@ -36,7 +34,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return HandlersService
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
 	public function getHandlersService() {
 		return $this->handlers;
@@ -56,10 +54,16 @@ class EventsService extends HooksRegistrationService {
 	}
 
 	/**
-	 * Triggers an Elgg event.
+	 * Triggers an Elgg event
 	 *
-	 * @see elgg_trigger_event
-	 * @see elgg_trigger_after_event
+	 * @param string $event       The event type
+	 * @param string $object_type The object type
+	 * @param string $object      The object involved in the event
+	 * @param array  $object      (internal) options for triggering the event
+	 *
+	 * @see elgg_trigger_event()
+	 * @see elgg_trigger_after_event()
+	 * @see elgg_trigger_before_event()
 	 */
 	public function trigger($name, $type, $object = null, array $options = []) {
 		$options = array_merge([
@@ -124,8 +128,8 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return bool False if any handler returned false, otherwise true
 	 *
-	 * @see trigger
-	 * @see triggerAfter
+	 * @see EventsService::trigger()
+	 * @see EventsService::triggerAfter()
 	 * @since 2.0.0
 	 */
 	function triggerBefore($event, $object_type, $object = null) {
@@ -145,7 +149,8 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return true
 	 *
-	 * @see triggerBefore
+	 * @see EventsService::trigger()
+	 * @see EventsService::triggerBefore()
 	 * @since 2.0.0
 	 */
 	public function triggerAfter($event, $object_type, $object = null) {
@@ -197,9 +202,9 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return bool
 	 *
-	 * @see trigger
+	 * @see EventsService::trigger()
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
 	function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
 		$options = [

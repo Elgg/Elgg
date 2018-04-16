@@ -454,7 +454,7 @@ function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
  * @example documentation/events/all.php
  */
 function elgg_register_event_handler($event, $object_type, $callback, $priority = 500) {
-	return _elgg_services()->hooks->getEvents()->registerHandler($event, $object_type, $callback, $priority);
+	return _elgg_services()->events->registerHandler($event, $object_type, $callback, $priority);
 }
 
 /**
@@ -468,7 +468,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  * @since 1.7
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
-	return _elgg_services()->hooks->getEvents()->unregisterHandler($event, $object_type, $callback);
+	return _elgg_services()->events->unregisterHandler($event, $object_type, $callback);
 }
 
 /**
@@ -481,7 +481,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @since 2.3
  */
 function elgg_clear_event_handlers($event, $object_type) {
-	_elgg_services()->hooks->getEvents()->clearHandlers($event, $object_type);
+	_elgg_services()->events->clearHandlers($event, $object_type);
 }
 
 /**
@@ -753,7 +753,7 @@ function elgg_get_ordered_hook_handlers($hook, $type) {
  * @since 2.0.0
  */
 function elgg_get_ordered_event_handlers($event, $type) {
-	return elgg()->hooks->getEvents()->getOrderedHandlers($event, $type);
+	return elgg()->events->getOrderedHandlers($event, $type);
 }
 
 /**

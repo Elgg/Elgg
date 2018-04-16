@@ -54,9 +54,12 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	private $owner_dir_path;
 
 	public function up() {
-		_elgg_filestore_init(); // we will need simpletype hook to work
 
-		$this->hooks = new \Elgg\PluginHooksService();
+		$this->hooks = new PluginHooksService(_elgg_services()->events);
+		
+		// we will need simpletype hook to work
+		_elgg_filestore_init();
+		
 		$this->request = \Elgg\Http\Request::create("/action/upload");
 		$this->logger = new \Elgg\Logger($this->hooks, _elgg_services()->config);
 

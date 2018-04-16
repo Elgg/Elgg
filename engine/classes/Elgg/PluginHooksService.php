@@ -4,7 +4,7 @@ namespace Elgg;
 use Elgg\HooksRegistrationService\Hook;
 
 /**
- * Plugin Hooks (and Events)
+ * Plugin Hooks
  *
  * Use elgg()->hooks
  */
@@ -21,14 +21,9 @@ class PluginHooksService extends HooksRegistrationService {
 	 * @param EventsService $events Events
 	 *
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
-	public function __construct(EventsService $events = null) {
-		if ($events === null) {
-			// for unit tests
-			$events = new EventsService(new HandlersService());
-		}
-
+	public function __construct(EventsService $events) {
 		$this->events = $events;
 	}
 
@@ -36,15 +31,25 @@ class PluginHooksService extends HooksRegistrationService {
 	 * Get the events API
 	 *
 	 * @return EventsService
+	 * @deprecated 3.0
 	 */
 	public function getEvents() {
+		_elgg_services()->deprecation->sendNotice(__METHOD__ . " has been deprecated, please use elgg()->events", '3.0');
+		
 		return $this->events;
 	}
 
 	/**
 	 * Triggers a plugin hook
 	 *
-	 * @see elgg_trigger_plugin_hook
+	 * @param string $name   The name of the plugin hook
+	 * @param string $type   The type of the plugin hook
+	 * @param mixed  $params Supplied params for the hook
+	 * @param mixed  $value  The value of the hook, this can be altered by registered callbacks
+	 *
+	 * @return mixed
+	 *
+	 * @see elgg_trigger_plugin_hook()
 	 */
 	public function trigger($name, $type, $params = null, $value = null) {
 
@@ -102,5 +107,16 @@ class PluginHooksService extends HooksRegistrationService {
 		}
 
 		return parent::registerHandler($name, $type, $callback, $priority);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function unregisterHandler($name, $type, $callback) {
+		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
+			$type = ViewsService::canonicalizeViewName($type);
+		}
+		
+		return parent::unregisterHandler($name, $type, $callback);
 	}
 }

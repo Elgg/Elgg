@@ -612,13 +612,13 @@ class ElggPlugin extends ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->hooks->getEvents()->trigger('activate', 'plugin', $params);
+		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
 
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
 			try {
-				_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+				_elgg_services()->events->trigger('cache:flush', 'system');
 
 				$setup = $this->boot();
 				if ($setup instanceof Closure) {
@@ -640,7 +640,7 @@ class ElggPlugin extends ElggObject {
 		if ($return === false) {
 			$this->deactivate();
 		} else {
-			_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+			_elgg_services()->events->trigger('cache:flush', 'system');
 			_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
 		}
 
@@ -718,7 +718,7 @@ class ElggPlugin extends ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->hooks->getEvents()->trigger('deactivate', 'plugin', $params);
+		$return = _elgg_services()->events->trigger('deactivate', 'plugin', $params);
 		if ($return === false) {
 			return false;
 		}
@@ -735,7 +735,7 @@ class ElggPlugin extends ElggObject {
 
 		$this->deactivateEntities();
 
-		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+		_elgg_services()->events->trigger('cache:flush', 'system');
 
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
 

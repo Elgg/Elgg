@@ -27,7 +27,7 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 	protected $entity3;
 
 	public function up() {
-		_elgg_services()->hooks->getEvents()->backup();
+		_elgg_services()->events->backup();
 
 		$this->entity1 = new ElggObject();
 		$this->entity1->subtype = 'elgg_relationship_test';
@@ -58,7 +58,7 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 			$this->entity3->delete();
 		}
 
-		_elgg_services()->hooks->getEvents()->restore();
+		_elgg_services()->events->restore();
 	}
 
 	/**

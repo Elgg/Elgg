@@ -57,9 +57,9 @@ abstract class HooksRegistrationService {
 	}
 	
 	/**
-	 * Unregister a callback as a plugin hook.
+	 * Unregister a callback as a plugin hook of event handler.
 	 *
-	 * @param string   $name     The name of the hook
+	 * @param string   $name     The name of the hook/event
 	 * @param string   $type     The name of the type of entity (eg "user", "object" etc)
 	 * @param callable $callback The PHP callback to be removed. Since 1.11, static method
 	 *                           callbacks will match dynamic methods
@@ -67,13 +67,10 @@ abstract class HooksRegistrationService {
 	 * @return bool
 	 *
 	 * @see elgg_unregister_plugin_hook_handler()
+	 * @see elgg_unregister_event_handler()
 	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {
-		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
-			$type = ViewsService::canonicalizeViewName($type);
-		}
-
 		if (empty($this->registrations[$name][$type])) {
 			return false;
 		}

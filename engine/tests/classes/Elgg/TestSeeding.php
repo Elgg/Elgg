@@ -20,14 +20,14 @@ trait TestSeeding {
 	public function clearSeeds() {
 
 		_elgg_services()->hooks->backup();
-		_elgg_services()->hooks->getEvents()->backup();
+		_elgg_services()->events->backup();
 
 		foreach ($this->_seeds as $seed) {
 			$seed->delete();
 		}
 
 		_elgg_services()->hooks->restore();
-		_elgg_services()->hooks->getEvents()->restore();
+		_elgg_services()->events->restore();
 	}
 
 	/**
@@ -56,7 +56,7 @@ trait TestSeeding {
 	public function createMany($types = 'object', $limit = 2, array $attributes = [], array $metadata = []) {
 
 		_elgg_services()->hooks->backup();
-		_elgg_services()->hooks->getEvents()->backup();
+		_elgg_services()->events->backup();
 
 		$types = (array) $types;
 
@@ -89,10 +89,8 @@ trait TestSeeding {
 		$this->_seeds = array_merge($this->_seeds, $seeds);
 
 		_elgg_services()->hooks->restore();
-		_elgg_services()->hooks->getEvents()->restore();
+		_elgg_services()->events->restore();
 
 		return $seeds;
 	}
-
-
 }

@@ -2,11 +2,8 @@
 
 namespace Elgg;
 
-use Elgg\Config;
 use Elgg\Database\Mutex;
 use Elgg\i18n\Translator;
-use Elgg\Logger;
-use Elgg\PluginHooksService;
 
 /**
  * Upgrade service for Elgg
@@ -21,14 +18,9 @@ class UpgradeService {
 	private $translator;
 
 	/**
-	 * @var \Elgg\EventsService
+	 * @var EventsService
 	 */
 	private $events;
-
-	/**
-	 * @var PluginHooksService
-	 */
-	private $hooks;
 
 	/**
 	 * @var Config
@@ -54,7 +46,7 @@ class UpgradeService {
 	 * Constructor
 	 *
 	 * @param Translator            $translator      Translation service
-	 * @param PluginHooksService    $hooks           Plugin hook service
+	 * @param EventsService         $events          Events service
 	 * @param Config                $config          Config
 	 * @param Logger                $logger          Logger
 	 * @param Mutex                 $mutex           Database mutex service
@@ -62,14 +54,14 @@ class UpgradeService {
 	 */
 	public function __construct(
 		Translator $translator,
-		PluginHooksService $hooks,
+		EventsService $events,
 		Config $config,
 		Logger $logger,
 		Mutex $mutex,
 		SystemMessagesService $system_messages
 	) {
 		$this->translator = $translator;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->config = $config;
 		$this->logger = $logger;
 		$this->mutex = $mutex;
@@ -96,8 +88,8 @@ class UpgradeService {
 		}
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
-		$this->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
-		$this->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
+		$this->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		$this->events->unregisterHandler('all', 'all', 'system_log_listener');
 
 		// turn off time limit
 		set_time_limit(0);
@@ -106,7 +98,7 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
-		$this->hooks->getEvents()->trigger('upgrade', 'system', null);
+		$this->events->trigger('upgrade', 'system', null);
 		elgg_flush_caches();
 
 		$this->mutex->unlock('upgrade');

@@ -5,13 +5,11 @@ namespace Elgg;
 use ClassException;
 use ConfigurationException;
 use DatabaseException;
-use Doctrine\DBAL\Connection;
 use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
-use Elgg\Http\Input;
 use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
@@ -197,7 +195,7 @@ class Application {
 		$setups = $this->loadCore();
 
 		$hooks = $this->_services->hooks;
-		$events = $hooks->getEvents();
+		$events = $this->_services->events;
 
 		foreach ($setups as $setup) {
 			if ($setup instanceof \Closure) {
