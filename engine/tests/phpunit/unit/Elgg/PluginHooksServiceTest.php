@@ -97,6 +97,36 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 
 		TestHookHandler::$invocations = [];
 	}
+	
+	public function testDeprecatedWithoutRegisteredHandlers() {
+		
+		_elgg_services()->logger->disable();
+		
+		$this->assertEquals(2, $this->hooks->triggerDeprecated('foo', 'bar', ['foo' => 1], 2, 'The plugin hook "foo":"bar" has been deprecated', '1.0'));
+		
+		$logged = _elgg_services()->logger->enable();
+		
+		$this->assertEquals([], $logged);
+	}
+	
+	public function testDeprecatedWithRegisteredHandlers() {
+		$handler = new TestHookHandler();
+		$this->hooks->registerHandler('foo', 'bar', $handler);
+		
+		_elgg_services()->logger->disable();
+		
+		$this->assertEquals(3, $this->hooks->triggerDeprecated('foo', 'bar', ['foo' => 1], 2, 'The plugin hook "foo":"bar" has been deprecated', '1.0'));
+		
+		$logged = _elgg_services()->logger->enable();
+		$this->assertCount(1, $logged);
+		
+		$message_details = $logged[0];
+		
+		$this->assertArrayHasKey('message', $message_details);
+		$this->assertArrayHasKey('level', $message_details);
+		$this->assertStringStartsWith('Deprecated in 1.0: The plugin hook "foo":"bar" has been deprecated Called from', $message_details['message']);
+		$this->assertEquals(Logger::WARNING, $message_details['level']);
+	}
 
 	public static function returnTwo() {
 		return 2;

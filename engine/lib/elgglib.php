@@ -729,6 +729,25 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 }
 
 /**
+ * Trigger an plugin hook normally, but send a notice about deprecated use if any handlers are registered.
+ *
+ * @param string $hook        The name of the plugin hook
+ * @param string $type        The type of the plugin hook
+ * @param mixed  $params      Supplied params for the hook
+ * @param mixed  $returnvalue The value of the hook, this can be altered by registered callbacks
+ * @param string $message     The deprecation message
+ * @param string $version     Human-readable *release* version: 1.9, 1.10, ...
+ *
+ * @return mixed
+ *
+ * @see elgg_trigger_plugin_hook()
+ * @since 3.0
+ */
+function elgg_trigger_deprecated_plugin_hook($hook, $type, $params = null, $returnvalue = null, $message = null, $version = null) {
+	return elgg()->hooks->triggerDeprecated($hook, $type, $params, $returnvalue, $message, $version);
+}
+
+/**
  * Returns an ordered array of hook handlers registered for $hook and $type.
  *
  * @param string $hook Hook name

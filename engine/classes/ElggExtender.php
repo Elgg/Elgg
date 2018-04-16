@@ -170,11 +170,12 @@ abstract class ElggExtender extends \ElggData {
 			$this->getSubtype() => $this, // deprecated use
 			$this->getType() => $this,
 		];
-		if (_elgg_services()->hooks->hasHandler('to:object', $this->getSubtype())) {
-			_elgg_services()->deprecation->sendNotice("Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
-			. "Use the generic 'to:object','{$this->getType()}' hook instead.", '2.3');
-			$object = _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
-		}
+		
+		// deprecated toObject hook
+		$deprecated_msg = "Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
+			. "Use the generic 'to:object','{$this->getType()}' hook instead.";
+		$object = _elgg_services()->hooks->triggerDeprecated('to:object', $this->getSubtype(), $params, $object, $deprecated_msg, '2.3');
+		
 		return _elgg_services()->hooks->trigger('to:object', $this->getType(), $params, $object);
 	}
 
