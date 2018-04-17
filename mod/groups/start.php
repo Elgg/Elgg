@@ -1103,7 +1103,7 @@ function groups_set_icon_sizes(\Elgg\Hook $hook) {
  * @since 3.0
  */
 function _groups_get_group_acl(\ElggGroup $group) {
-	if (!$group instanceof \ElggGroup) {
+	if (!$group instanceof \ElggGroup || !$group->guid) {
 		return false;
 	}
 	
