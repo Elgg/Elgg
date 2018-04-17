@@ -52,17 +52,29 @@ define(function (require) {
 			 * Show messages and require dependencies
 			 *
 			 * @param {Object} data
+			 * @param {Number} status_code HTTP status code
 			 */
-			function extract_metadata(data) {
+			function extract_metadata(data, status_code) {
+
+				status_code = status_code || 200;
+
 				if (!metadata_extracted) {
 					var m = data._elgg_msgs;
 					if (m && m.error) {
-						elgg.register_error(m.error);
+						data.error = m.error;
+					}
+
+					if (data.error) {
+						elgg.register_error(data.error);
 						error_displayed = true;
+					}
+
+					if (data.error || status_code !== 200) {
 						data.status = -1;
 					} else {
 						data.status = 0;
 					}
+
 					m && m.success && elgg.system_message(m.success);
 					delete data._elgg_msgs;
 
@@ -154,7 +166,7 @@ define(function (require) {
 					try {
 						var data = $.parseJSON(jqXHR.responseText);
 						if ($.isPlainObject(data)) {
-							extract_metadata(data);
+							extract_metadata(data, jqXHR.status);
 						}
 					} catch (e) {
 						if (window.console) {
@@ -175,7 +187,7 @@ define(function (require) {
 
 				data = $.parseJSON(data);
 
-				extract_metadata(data);
+				extract_metadata(data, 200);
 
 				var params = {
 					options: orig_options
