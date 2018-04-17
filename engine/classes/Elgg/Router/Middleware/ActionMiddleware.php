@@ -22,26 +22,21 @@ class ActionMiddleware {
 		$route = $request->getRoute();
 		list($prefix, $action) = explode(':', $route, 2);
 
-		if ($request->elgg()->hooks->hasHandler('action', $action)) {
-			elgg_deprecated_notice(
-				"'action', '$action' hook has been deprecated. 
-				Please use route middleware or 'action:validate','$action' hook",
-				'3.0'
-			);
+		// deprecated action handling
+		$deprecated_msg = "'action', '$action' hook has been deprecated.
+			Please use route middleware or 'action:validate','$action' hook";
+		ob_start();
+		$result = $request->elgg()->hooks->triggerDeprecated('action', $action, null, true, $deprecated_msg, '3.0');
+		$output = ob_get_clean();
+		
+		//  this allows you to return a ok or error response in the hook
+		if ($result instanceof ResponseBuilder) {
+			return $result;
+		}
 
-			ob_start();
-			$result = $request->elgg()->hooks->trigger('action', $action, null, true);
-			$output = ob_get_clean();
-
-			//  this allows you to return a ok or error response in the hook
-			if ($result instanceof ResponseBuilder) {
-				return $result;
-			}
-
-			// To quietly cancel the file, return a falsey value in the "action" hook.
-			if (!$result) {
-				return elgg_ok_response($output);
-			}
+		// To quietly cancel the file, return a falsey value in the "action" hook.
+		if (!$result) {
+			return elgg_ok_response($output);
 		}
 
 		$hook_params = ['request' => $request];
