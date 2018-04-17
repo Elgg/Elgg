@@ -5,6 +5,7 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Values;
 use ElggCache;
 use ElggMetadata;
+use Elgg\Database\Clauses\GroupByClause;
 
 /**
  * In memory cache of known metadata values stored by entity.
@@ -283,8 +284,13 @@ class MetadataCache {
 				return (int) $e->entity_guid;
 			},
 			'selects' => ['SUM(LENGTH(n_table.value)) AS bytes'],
-			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
-			'group_by' => 'n_table.entity_guid',
+			'order_by' => [
+				new OrderByClause('n_table.entity_guid'),
+				new OrderByClause('n_table.time_created'),
+			],
+			'group_by' => [
+				new GroupByClause('n_table.entity_guid'),
+			],
 			'having' => [
 				"bytes < $limit",
 			]

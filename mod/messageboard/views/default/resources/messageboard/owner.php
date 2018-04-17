@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * Elgg Message board index page
  *
@@ -20,7 +22,10 @@ elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
 $options = [
 	'annotations_name' => 'messageboard',
 	'guid' => $page_owner->guid,
-	'order_by' => 'n_table.time_created desc, n_table.id desc',
+	'order_by' => [
+		new OrderByClause('n_table.time_created', 'DESC'),
+		new OrderByClause('n_table.id', 'DESC'),
+	],
 	'preload_owners' => true,
 	'no_results' => elgg_echo('messageboard:none'),
 ];
