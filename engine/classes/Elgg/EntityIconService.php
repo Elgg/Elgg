@@ -482,7 +482,7 @@ class EntityIconService {
 		if ($url == null) {
 			if ($this->hasIcon($entity, $size, $type)) {
 				$icon = $this->getIcon($entity, $size, $type);
-				$url = $icon->getInlineURL(true);
+				$url = $icon->getInlineURL((bool) elgg_extract('use_cookie', $params, true));
 			} else {
 				$url = $this->getFallbackIconUrl($entity, $params);
 			}
