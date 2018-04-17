@@ -31,8 +31,8 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->access_id = ACCESS_PUBLIC;
 		$upgrade->save();
 
-		$upgrader = new BatchUpgrader(_elgg_config());
-		$result = $upgrader->run($upgrade);
+		$upgrader = _elgg_services()->upgrades;
+		$result = $upgrader->executeAsyncUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [0, 25, 50, 75],
@@ -60,8 +60,8 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->offset = 50;
 		$upgrade->has_errors = false;
 
-		$upgrader = new BatchUpgrader(_elgg_config());
-		$result = $upgrader->run($upgrade);
+		$upgrader = _elgg_services()->upgrades;
+		$result = $upgrader->executeAsyncUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [50, 75],
@@ -85,8 +85,8 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->access_id = ACCESS_PUBLIC;
 		$upgrade->save();
 
-		$upgrader = new BatchUpgrader(_elgg_config());
-		$result = $upgrader->run($upgrade);
+		$upgrader = _elgg_services()->upgrades;
+		$result = $upgrader->executeAsyncUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [0, 10, 20, 30],
@@ -110,8 +110,8 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->access_id = ACCESS_PUBLIC;
 		$upgrade->save();
 
-		$upgrader = new BatchUpgrader(_elgg_config());
-		$result = $upgrader->run($upgrade);
+		$upgrader = _elgg_services()->upgrades;
+		$result = $upgrader->executeAsyncUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [],

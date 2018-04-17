@@ -22,7 +22,7 @@ foreach ($files as $file) {
 
 if (!class_exists('\Elgg\Application')) {
 	fwrite(STDERR, "Composer dependencies are not installed "
-			. "or you are trying to run the script outside of an Elgg installation's root directory." . PHP_EOL);
+		. "or you are trying to run the script outside of an Elgg installation's root directory." . PHP_EOL);
 	die(2);
 }
 
@@ -30,10 +30,15 @@ $settings_file = \Elgg\Project\Paths::settingsFile();
 
 $installed = is_file($settings_file);
 if ($installed) {
-    \Elgg\Application::start();
-    _elgg_services()->cli->run();
+	try {
+		\Elgg\Application::start();
+	} catch (RuntimeException $ex) {
+		// Try to recover by running a system upgrade
+		\Elgg\Application::upgrade();
+	}
+	_elgg_services()->cli->run();
 } else {
-    $cli = new Symfony\Component\Console\Application();
-    $cli->add(new \Elgg\Cli\InstallCommand());
-    $cli->run();
+	$cli = new Symfony\Component\Console\Application();
+	$cli->add(new \Elgg\Cli\InstallCommand());
+	$cli->run();
 }

@@ -16,6 +16,7 @@ use Elgg\Project\Paths;
 use InstallationException;
 use InvalidArgumentException;
 use InvalidParameterException;
+use RuntimeException;
 use SecurityException;
 
 /**
@@ -518,10 +519,11 @@ class Application {
 	 * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
 	 * to a relative URL.
 	 *
+	 * @param bool $async Execute pending async upgrades
 	 * @return void
 	 * @throws InstallationException
 	 */
-	public static function upgrade() {
+	public static function upgrade($async = false) {
 		// we want to know if an error occurs
 		ini_set('display_errors', 1);
 		
@@ -531,20 +533,22 @@ class Application {
 
 		$forward = function ($url) use ($is_cli) {
 			if ($is_cli) {
-				fwrite(STDOUT, "Open $url in your browser to continue." . PHP_EOL);
+				_elgg_services()->printer->write("Open $url in your browser to continue.", Logger::NOTICE);
 				return;
 			}
 
 			forward($url);
 		};
 
-		define('UPGRADING', 'upgrading');
+		if (!defined('UPGRADING')) {
+			// @todo This is really bad. Once set, it affects the global state for the entire script lifetime
+			// which has unwanted side effects during testing
+			// A better way would be to use a global or better yet set Application::$upgrading
+			define('UPGRADING', 'upgrading');
+		}
 
 		self::migrate();
 		self::start();
-
-		// clear autoload cache so plugin classes can be reregistered and used during upgrade
-		_elgg_services()->autoloadManager->deleteCache();
 
 		// check security settings
 		if (!$is_cli && _elgg_config()->security_protect_upgrade && !elgg_is_admin_logged_in()) {
@@ -564,21 +568,11 @@ class Application {
 		}
 
 		if ($is_cli || (get_input('upgrade') == 'upgrade')) {
-			$upgrader = _elgg_services()->upgrades;
-			$result = $upgrader->run();
-
-			if ($result['failure'] == true) {
-				_elgg_services()->systemMessages->addErrorMessage($result['reason']);
+			try {
+				_elgg_services()->upgrades->run($async);
+			} catch (RuntimeException $ex) {
+				_elgg_services()->systemMessages->addErrorMessage($ex->getMessage());
 				$forward($forward_url);
-			}
-
-			// Find unprocessed batch upgrade classes and save them as ElggUpgrade objects
-			$core_upgrades = (require self::elggDir()->getPath('engine/lib/upgrades/async-upgrades.php'));
-			$has_pending_upgrades = _elgg_services()->upgradeLocator->run($core_upgrades);
-
-			if ($has_pending_upgrades) {
-				// Forward to the list of pending upgrades
-				$forward_url = '/admin/upgrades';
 			}
 		} else {
 			$rewriteTester = new \ElggRewriteTester();
@@ -825,7 +819,7 @@ class Application {
 				return false;
 			}
 
-			return elgg_log($message, $level);
+			return self::$_instance->_services->printer->write($message, $level);
 		};
 
 		switch ($errno) {

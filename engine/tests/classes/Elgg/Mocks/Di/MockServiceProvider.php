@@ -15,6 +15,7 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\I18n\Translator				$translator              Translator
  * @property-read \Elgg\Mocks\Database\UsersTable           $usersTable              Users table
  * @property-read \Elgg\Notifications\NotificationsService  $notifications           Notification service (with memory queue)
+ * @property-read \Elgg\Mocks\Database\Mutex                $mutex                   Mutex
  *
  * @since 2.3
  */
@@ -130,6 +131,10 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 			$queue = new \Elgg\Queue\MemoryQueue();
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
 			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
+		});
+
+		$this->setFactory('mutex', function(MockServiceProvider $sp) {
+			return new \Elgg\Mocks\Database\Mutex($sp->db, $sp->logger);
 		});
 	}
 }

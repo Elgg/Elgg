@@ -57,11 +57,7 @@ function system_log_get_log($options = null) {
 		$options['ip_address'] = $arguments[11];
 	}
 
-	$log = elgg()->system_log;
-
-	/* @var $log SystemLog */
-
-	return $log->getAll($options);
+	return SystemLog::instance()->getAll($options);
 }
 
 /**
@@ -73,11 +69,7 @@ function system_log_get_log($options = null) {
  * @throws DatabaseException
  */
 function system_log_get_log_entry($entry_id) {
-	$log = elgg()->system_log;
-
-	/* @var $log SystemLog */
-
-	return $log->get($entry_id);
+	return SystemLog::instance()->get($entry_id);
 }
 
 /**
@@ -110,10 +102,7 @@ function system_log_get_object_from_log_entry($entry) {
  * @return void
  */
 function system_log($object, $event) {
-	$log = elgg()->system_log;
-	/* @var $log SystemLog */
-
-	$log->insert($object, $event);
+	SystemLog::instance()->insert($object, $event);
 }
 
 /**
@@ -126,8 +115,7 @@ function system_log($object, $event) {
  */
 function system_log_archive_log($offset = 0) {
 
-	$log = elgg()->system_log;
-	/* @var $log SystemLog */
+	$log = SystemLog::instance();
 
 	$time = $log->getCurrentTime()->getTimestamp();
 
@@ -177,8 +165,7 @@ function system_log_get_seconds_in_period($period) {
  */
 function system_log_browser_delete_log($offset) {
 
-	$log = elgg()->system_log;
-	/* @var $log SystemLog */
+	$log = SystemLog::instance();
 
 	$time = $log->getCurrentTime()->getTimestamp();
 

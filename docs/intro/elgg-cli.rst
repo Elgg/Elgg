@@ -27,25 +27,29 @@ Available commands
     cd /path/to/elgg/
 
     # Get help
-    elgg-cli --help
+    vendor/bin/elgg-cli --help
 
     # List all commands
-    elgg-cli list
+    vendor/bin/elgg-cli list
 
     # Install Elgg
-    elgg-cli install [-c|--config CONFIG]
+    vendor/bin/elgg-cli install [-c|--config CONFIG]
 
     # Run Simpletest test suite
-    elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS] [-f|--filter FILTER]
+    vendor/bin/elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS] [-f|--filter FILTER]
 
     # Seed the database with fake entities
-    elgg-cli database:seed [-l|--limit LIMIT]
+    vendor/bin/elgg-cli database:seed [-l|--limit LIMIT]
 
     # Remove seeded faked entities
-    elgg-cli database:unseed
+    vendor/bin/elgg-cli database:unseed
+
+    # Optimize database tables
+    # Request garbagecollector plugin
+    vendor/bin/elgg-cli database:optimize
 
     # Run cron jobs
-    elgg-cli cron [-i|--interval INTERVAL] [-q|--quiet]
+    vendor/bin/elgg-cli cron [-i|--interval INTERVAL] [-q|--quiet]
 
 
 Adding custom commands

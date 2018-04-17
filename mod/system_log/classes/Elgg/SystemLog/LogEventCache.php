@@ -3,11 +3,14 @@
 namespace Elgg\SystemLog;
 
 use Elgg\Cache\CompositeCache;
+use Elgg\Di\ServiceFacade;
 
 /**
  * System log cache
  */
 class LogEventCache extends CompositeCache {
+
+	use ServiceFacade;
 
 	/**
 	 * Constructor
@@ -30,5 +33,13 @@ class LogEventCache extends CompositeCache {
 		register_shutdown_function(function () {
 			$this->clear();
 		});
+	}
+
+	/**
+	 * Returns registered service name
+	 * @return string
+	 */
+	public static function name() {
+		return 'system_log.cache';
 	}
 }

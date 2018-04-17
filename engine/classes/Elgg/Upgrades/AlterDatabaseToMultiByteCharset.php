@@ -66,6 +66,34 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 				'unique' => false,
 			],
 		],
+		'system_log' => [
+			'object_class' => [
+				'primary' => false,
+				'name' => 'object_class',
+				'unique' => false,
+			],
+			'object_type' => [
+				'primary' => false,
+				'name' => 'object_type',
+				'unique' => false,
+			],
+			'object_subtype' => [
+				'primary' => false,
+				'name' => 'object_subtype',
+				'unique' => false,
+			],
+			'event' => [
+				'primary' => false,
+				'name' => 'event',
+				'unique' => false,
+			],
+			'river_key' => [
+				'primary' => false,
+				'name' => 'river_key',
+				'unique' => false,
+				'columns' => ['object_type', 'object_subtype', 'event']
+			],
+		]
 	];
 
 	/**
@@ -160,12 +188,15 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 
 				if (!empty($this->non_mb4_columns[$table])) {
 					foreach ($this->non_mb4_columns[$table] as $column => $index) {
-						update_data("
-							ALTER TABLE {$config['prefix']}{$table}
-							MODIFY $column VARCHAR(255)
-							CHARACTER SET utf8
-							COLLATE utf8_unicode_ci
-						");
+						if (empty($index['columns'])) {
+							// Alter table only if the key is not composite
+							update_data("
+								ALTER TABLE {$config['prefix']}{$table}
+								MODIFY $column VARCHAR(255)
+								CHARACTER SET utf8
+								COLLATE utf8_unicode_ci
+							");
+						}
 
 						if (!$index) {
 							continue;
@@ -177,7 +208,9 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 						} else if ($index['primary']) {
 							$sql .= " PRIMARY KEY ({$index['name']})";
 						} else {
-							$sql .= " KEY {$index['name']} ($column)";
+							$key_columns = elgg_extract('columns', $index, [$column]);
+							$key_columns = implode(',', $key_columns);
+							$sql .= " KEY {$index['name']} ($key_columns)";
 						}
 
 						update_data("
