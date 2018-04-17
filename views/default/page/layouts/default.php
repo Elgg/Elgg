@@ -3,6 +3,7 @@
 /**
  * Elgg default layout
  *
+ * @uses $vars['layout_attrs'] Additional attributes to apply to the layout
  * @uses $vars['class']        Additional CSS classes to apply to the layout
  *
  * @uses $vars['breadcrumbs']  Breadcrumbs
@@ -32,6 +33,10 @@
  * @uses $vars['filter_value'] Optional name of the selected filter tab
  *                             If not provided, will be determined by the current page's URL
  */
+
+$layout_attrs = elgg_extract('layout_attrs', $vars, []);
+unset($vars['layout_attrs']);
+
 $class = elgg_extract_class($vars, [
 	'elgg-layout',
 	'clearfix'
@@ -64,6 +69,8 @@ if ($sidebar && $sidebar_alt) {
 	$class[] = 'elgg-layout-one-column';
 }
 
+$layout_attrs['class'] = elgg_extract_class($layout_attrs, $class);
+
 $breadcrumbs = elgg_view('page/layouts/elements/breadcrumbs', $vars);
 $header = elgg_view('page/layouts/elements/header', $vars);
 $body = elgg_view('page/layouts/elements/body', $vars);
@@ -74,6 +81,4 @@ $layout .= elgg_format_element('div', [
 	'class' => 'elgg-layout-columns',
 ], $sidebar_alt . $body . $sidebar);
 
-echo elgg_format_element('div', [
-	'class' => $class,
-], $layout);
+echo elgg_format_element('div', $layout_attrs, $layout);
