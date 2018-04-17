@@ -182,4 +182,31 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('af', $this->translator->getCurrentLanguage());
 	}
 
+	public function testCanOverrideExistingTranslation() {
+
+		$this->assertEquals('Dummy', $this->translator->translate('__elgg_php_unit:test_key', [], 'en'));
+		$this->assertEquals('__elgg_php_unit:test_key2', $this->translator->translate('__elgg_php_unit:test_key2', [], 'en'));
+
+		$this->assertEquals('Dummy', $this->translator->translate('__elgg_php_unit:test_key', [], 'new_lang_code'));
+		$this->assertEquals('__elgg_php_unit:test_key2', $this->translator->translate('__elgg_php_unit:test_key2', [], 'new_lang_code'));
+
+		$this->translator->addTranslation('en', [
+			'__elgg_php_unit:test_key' => 'Not So Dummy',
+			'__elgg_php_unit:test_key2' => 'Still Dummy',
+		]);
+
+		$this->translator->addTranslation('new_lang_code', [
+			'__elgg_php_unit:test_key' => 'Карамель',
+			'__elgg_php_unit:test_key2' => 'Карамель в шоколаде',
+		]);
+
+		$this->assertEquals('Not So Dummy', $this->translator->translate('__elgg_php_unit:test_key', [], 'en'));
+		$this->assertEquals('Still Dummy', $this->translator->translate('__elgg_php_unit:test_key2', [], 'en'));
+
+		$this->assertEquals('Карамель', $this->translator->translate('__elgg_php_unit:test_key', [], 'new_lang_code'));
+		$this->assertEquals('Карамель в шоколаде', $this->translator->translate('__elgg_php_unit:test_key2', [], 'new_lang_code'));
+
+		$this->assertFalse($this->translator->addTranslation('en', []));
+	}
+
 }
