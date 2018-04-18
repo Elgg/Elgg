@@ -2,6 +2,7 @@
 
 namespace ElggPlugin\Profile;
 
+use Elgg\Database\QueryBuilder;
 use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Result;
 
@@ -55,6 +56,7 @@ class AnnotationMigration implements Batch {
 				SELECT guid FROM {$db->prefix}entities WHERE type = 'user'
 			)
 		";
+
 		try {
 			$db->updateData($sql, false, [
 				':old_name' => $name,
@@ -63,6 +65,7 @@ class AnnotationMigration implements Batch {
 			$result->addSuccesses(1);
 		} catch (\DatabaseException $e) {
 			$result->addError("Profile field '$name' could not be migrated: " . $e->getMessage());
+			$result->addFailures(1);
 		}
 
 		return $result;

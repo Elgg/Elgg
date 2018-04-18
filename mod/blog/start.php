@@ -15,6 +15,7 @@ function blog_init() {
 	// add a site navigation item
 	elgg_register_menu_item('site', [
 		'name' => 'blog',
+		'icon' => 'pencil-square-o',
 		'text' => elgg_echo('collection:object:blog'),
 		'href' => elgg_generate_url('collection:object:blog:all'),
 	]);

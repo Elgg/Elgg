@@ -14,7 +14,7 @@ class Plugins extends DbPlugins {
 	/**
 	 * @var ElggPlugin[]
 	 */
-	protected $_plugins;
+	protected $_plugins = [];
 
 	public static $managed_plugins = [
 		'activity',
@@ -70,7 +70,11 @@ class Plugins extends DbPlugins {
 	}
 
 	public function find($status = 'active') {
-		return [];
+		return $this->_plugins;
+	}
+
+	public function addTestingPlugin(ElggPlugin $plugin) {
+		$this->_plugins[] = $plugin;
 	}
 
 	public function setPriority(ElggPlugin $plugin, $priority) {

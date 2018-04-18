@@ -1321,7 +1321,7 @@ abstract class ElggEntity extends \ElggData implements
 			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid && !_elgg_services()->hooks->getEvents()->trigger('create', $this->type, $this)) {
+			if ($guid && !_elgg_services()->events->trigger('create', $this->type, $this)) {
 				// plugins that return false to event don't need to override the access system
 				elgg_call(ELGG_IGNORE_ACCESS, function() {
 					return $this->delete();
@@ -1396,7 +1396,7 @@ abstract class ElggEntity extends \ElggData implements
 
 			// If different owner than logged in, verify can write to container.
 
-			if ($user_guid != $owner_guid && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
+			if ($user_guid != $owner_guid && !$owner->canEdit() && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
 				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype) with owner"
 					. " $owner_guid, but the user wasn't permitted to write to the owner's container.");
 				return false;
@@ -1496,7 +1496,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		// give old update event a chance to stop the update
-		if (!_elgg_services()->hooks->getEvents()->trigger('update', $this->type, $this)) {
+		if (!_elgg_services()->events->trigger('update', $this->type, $this)) {
 			return false;
 		}
 
@@ -1533,7 +1533,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$this->attributes['time_updated'] = $time;
 
-		_elgg_services()->hooks->getEvents()->triggerAfter('update', $this->type, $this);
+		_elgg_services()->events->triggerAfter('update', $this->type, $this);
 
 		$this->orig_attributes = [];
 
@@ -1620,7 +1620,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('disable', $this->type, $this)) {
+		if (!_elgg_services()->events->trigger('disable', $this->type, $this)) {
 			return false;
 		}
 
@@ -1695,7 +1695,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->invalidateCache();
 
 			$this->attributes['enabled'] = 'no';
-			_elgg_services()->hooks->getEvents()->trigger('disable:after', $this->type, $this);
+			_elgg_services()->events->triggerAfter('disable', $this->type, $this);
 		}
 
 		return (bool) $disabled;
@@ -1717,7 +1717,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('enable', $this->type, $this)) {
+		if (!_elgg_services()->events->trigger('enable', $this->type, $this)) {
 			return false;
 		}
 
@@ -1758,7 +1758,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
-			_elgg_services()->hooks->getEvents()->trigger('enable:after', $this->type, $this);
+			_elgg_services()->events->triggerAfter('enable', $this->type, $this);
 		}
 
 		return $result;

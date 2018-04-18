@@ -12,8 +12,10 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database\RelationshipsTable   $relationshipsTable      Annotation mocks
  * @property-read \Elgg\Mocks\Database\AccessCollections    $accessCollections       ACL table mock
  * @property-read \Elgg\Mocks\Database\PrivateSettingsTable $privateSettings         Private settings table mock
+ * @property-read \Elgg\Mocks\I18n\Translator				$translator              Translator
  * @property-read \Elgg\Mocks\Database\UsersTable           $usersTable              Users table
  * @property-read \Elgg\Notifications\NotificationsService  $notifications           Notification service (with memory queue)
+ * @property-read \Elgg\Mocks\Database\Mutex                $mutex                   Mutex
  *
  * @since 2.3
  */
@@ -48,7 +50,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$sp->db,
 				$sp->entityCache,
 				$sp->metadataCache,
-				$sp->hooks->getEvents(),
+				$sp->events,
 				$sp->session,
 				$sp->translator,
 				$sp->logger
@@ -56,15 +58,15 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('metadataTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $sp->db, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $sp->db, $sp->events);
 		});
 
 		$this->setFactory('annotationsTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\AnnotationsTable($sp->db, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\AnnotationsTable($sp->db, $sp->events);
 		});
 
 		$this->setFactory('relationshipsTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\RelationshipsTable($sp->db, $sp->entityTable, $sp->metadataTable, $sp->hooks->getEvents());
+			return new \Elgg\Mocks\Database\RelationshipsTable($sp->db, $sp->entityTable, $sp->metadataTable, $sp->events);
 		});
 
 		$this->setFactory('accessCollections', function (MockServiceProvider $sp) {
@@ -101,20 +103,24 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 
 			return new \Elgg\Mocks\Database\Plugins(
 				$cache,
-				$this->db,
-				$this->session,
-				$this->hooks,
-				$this->translator,
-				$this->views,
-				$this->privateSettingsCache,
-				$this->config,
-				$this->systemMessages,
-				$this->request->getContextStack()
+				$sp->db,
+				$sp->session,
+				$sp->events,
+				$sp->translator,
+				$sp->views,
+				$sp->privateSettingsCache,
+				$sp->config,
+				$sp->systemMessages,
+				$sp->request->getContextStack()
 			);
 		});
 
 		$this->setFactory('siteSecret', function (MockServiceProvider $sp) {
 			return new \Elgg\Database\SiteSecret('z1234567890123456789012345678901');
+		});
+		
+		$this->setFactory('translator', function(MockServiceProvider $sp) {
+			return new \Elgg\Mocks\I18n\Translator($sp->config);
 		});
 
 		$this->setFactory('usersTable', function(MockServiceProvider $sp) {
@@ -125,6 +131,10 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 			$queue = new \Elgg\Queue\MemoryQueue();
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
 			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
+		});
+
+		$this->setFactory('mutex', function(MockServiceProvider $sp) {
+			return new \Elgg\Mocks\Database\Mutex($sp->db, $sp->logger);
 		});
 	}
 }

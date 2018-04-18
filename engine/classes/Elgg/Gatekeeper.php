@@ -156,11 +156,23 @@ class Gatekeeper {
 			if (!$this->session->getIgnoreAccess() && !$this->access->hasAccessToEntity($entity, $user)) {
 				// user is logged in but still does not have access to it
 				$msg = $this->translator->translate('limited_access');
-				throw new EntityNotFoundException($msg);
+				$exception = new EntityNotFoundException($msg);
+				$exception->setParams([
+					'entity' => $entity,
+					'user' => $user,
+					'route' => $this->request->get('_route'),
+				]);
+				throw $exception;
 			}
 
 			if (!$entity->isEnabled() && !$this->session->getDisabledEntityVisibility()) {
-				throw new EntityNotFoundException();
+				$exception = new EntityNotFoundException();
+				$exception->setParams([
+					'entity' => $entity,
+					'user' => $user,
+					'route' => $this->request->get('_route'),
+				]);
+				throw $exception;
 			}
 
 			if ($entity instanceof ElggUser) {
@@ -186,6 +198,7 @@ class Gatekeeper {
 		$hook_params = [
 			'entity' => $entity,
 			'user' => $user,
+			'route' => $this->request->get('_route'),
 		];
 
 		$result = _elgg_services()->hooks->trigger('gatekeeper', "{$entity->type}:{$entity->subtype}", $hook_params, $result);
@@ -213,7 +226,13 @@ class Gatekeeper {
 			}
 
 			if (!$viewer || !$viewer->isAdmin()) {
-				throw new EntityNotFoundException();
+				$exception = new EntityNotFoundException();
+				$exception->setParams([
+					'entity' => $user,
+					'user' => $viewer,
+					'route' => $this->request->get('_route'),
+				]);
+				throw $exception;
 			}
 		}
 	}
@@ -234,7 +253,14 @@ class Gatekeeper {
 
 			$this->redirects->setLastForwardFrom();
 
-			throw new GroupGatekeeperException();
+			$exception = new GroupGatekeeperException();
+			$exception->setParams([
+				'entity' => $group,
+				'user' => $user,
+				'route' => $this->request->get('_route'),
+			]);
+			$exception->setRedirectUrl($group->getURL());
+			throw $exception;
 		}
 	}
 

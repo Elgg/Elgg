@@ -14,6 +14,12 @@ $params = $vars;
 $params['class'] = elgg_extract_class($params, 'elgg-menu-hz');
 $params['sort_by'] = 'priority';
 
+$menu = elgg_view_menu('entity_navigation', $params);
+
+if (!$menu) {
+	return;
+}
+
 echo elgg_format_element('div', [
 	'class' => 'elgg-listing-full-navigation',
-], elgg_view_menu('entity_navigation', $params));
+], $menu);

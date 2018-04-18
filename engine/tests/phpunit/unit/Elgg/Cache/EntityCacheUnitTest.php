@@ -62,6 +62,28 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
 		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
 	}
+	
+	public function testCacheUserByUsernameCaseInsensitive() {
+		$user = $this->createUser([
+			'username' => 'CaseInsensitiveTestUser',
+		]);
+		
+		$user->invalidateCache();
+		
+		$user->cache();
+		
+		$this->assertEquals($user, _elgg_services()->entityCache->load($user->guid));
+		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load($user->username));
+		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load(strtolower($user->username)));
+		
+		$user->invalidateCache();
+
+		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
+		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
+		$this->assertNull(_elgg_services()->dataCache->usernames->load(strtolower($user->username)));
+		
+		$user->delete();
+	}
 
 	public function testCanDisableCacheForEntity() {
 

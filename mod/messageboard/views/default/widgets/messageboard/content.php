@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * Messageboard widget view
  */
@@ -17,7 +19,10 @@ echo elgg_list_annotations([
 	'guid' => $owner->guid,
 	'limit' => $num_display,
 	'pagination' => false,
-	'order_by' => 'n_table.time_created desc, n_table.id desc',
+	'order_by' => [
+		new OrderByClause('n_table.time_created', 'DESC'),
+		new OrderByClause('n_table.id', 'DESC'),
+	],
 ]);
 
 if ($owner instanceof ElggGroup) {

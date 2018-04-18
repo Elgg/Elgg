@@ -4,7 +4,6 @@
 .ui-autocomplete {
 	position: absolute;
 	cursor: default;
-	z-index: 5;
 }
 
 .elgg-autocomplete-item .elgg-body {

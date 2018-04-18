@@ -12,68 +12,55 @@
  * Returns null if no change is required
  * Returns true or false indicating success or failure if change was needed
  *
- * @return bool|void
+ * @elgg_plugin_hook usersettings:save user
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return bool|null
  * @since 1.8.0
  * @access private
  */
-function _elgg_set_user_password() {
-	$current_password = get_input('current_password', null, false);
-	$password = get_input('password', null, false);
-	$password2 = get_input('password2', null, false);
-	$user_guid = get_input('guid');
+function _elgg_set_user_password(\Elgg\Hook $hook) {
 
-	if ($user_guid) {
-		$user = get_user($user_guid);
-	} else {
-		$user = elgg_get_logged_in_user_entity();
+	$actor = elgg_get_logged_in_user_entity();
+
+	$user = $hook->getUserParam();
+	$request = $hook->getParam('request');
+	/* @var $request \Elgg\Request */
+
+	$password = $request->getParam('password', null, false);
+	$password2 = $request->getParam('password2', null, false);
+
+	if (!$password) {
+		return null;
 	}
 
-	if ($user && $password) {
+	if (!$actor->isAdmin() || $user->guid == $actor->guid) {
 		// let admin user change anyone's password without knowing it except his own.
-		if (!elgg_is_admin_logged_in() || elgg_is_admin_logged_in() && $user->guid == elgg_get_logged_in_user_guid()) {
-			$credentials = [
-				'username' => $user->username,
-				'password' => $current_password
-			];
 
-			try {
-				pam_auth_userpass($credentials);
-			} catch (LoginException $e) {
-				register_error(elgg_echo('LoginException:ChangePasswordFailure'));
-				return false;
-			}
-		}
+		$current_password = $request->getParam('current_password', null, false);
 
 		try {
-			$result = validate_password($password);
+			elgg()->accounts->assertCurrentPassword($user, $current_password);
 		} catch (RegistrationException $e) {
-			register_error($e->getMessage());
+			$request->validation()->fail('password', '', elgg_echo('LoginException:ChangePasswordFailure'));
+
 			return false;
 		}
-
-		if ($result) {
-			if ($password == $password2) {
-				$user->setPassword($password);
-				_elgg_services()->persistentLogin->handlePasswordChange($user, elgg_get_logged_in_user_entity());
-
-				if ($user->save()) {
-					system_message(elgg_echo('user:password:success'));
-					return true;
-				} else {
-					register_error(elgg_echo('user:password:fail'));
-				}
-			} else {
-				register_error(elgg_echo('user:password:fail:notsame'));
-			}
-		} else {
-			register_error(elgg_echo('user:password:fail:tooshort'));
-		}
-	} else {
-		// no change
-		return;
 	}
 
-	return false;
+	try {
+		elgg()->accounts->assertValidPassword([$password, $password2]);
+	} catch (RegistrationException $e) {
+		$request->validation()->fail('password', '', $e->getMessage());
+
+		return false;
+	}
+
+	$user->setPassword($password);
+	_elgg_services()->persistentLogin->handlePasswordChange($user, $actor);
+
+	$request->validation()->pass('password', '', elgg_echo('user:password:success'));
 }
 
 /**
@@ -81,47 +68,40 @@ function _elgg_set_user_password() {
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
  *
- * @return bool|void
+ * @elgg_plugin_hook usersettings:save user
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return bool|null
  * @since 1.8.0
  * @access private
  */
-function _elgg_set_user_name() {
-	$name = get_input('name');
-	$user_guid = get_input('guid');
+function _elgg_set_user_name(\Elgg\Hook $hook) {
 
+	$user = $hook->getUserParam();
+	$request = $hook->getParam('request');
+	/* @var $request \Elgg\Request */
+
+	$name = $request->getParam('name');
 	if (!isset($name)) {
-		return;
+		return null;
 	}
 
 	$name = strip_tags($name);
-	if ($user_guid) {
-		$user = get_user($user_guid);
-	} else {
-		$user = elgg_get_logged_in_user_entity();
-	}
+	if (empty($name)) {
+		$request->validation()->fail('name', $request->getParam('name'), elgg_echo('user:name:fail'));
 
-	if (elgg_strlen($name) > 50) {
-		register_error(elgg_echo('user:name:fail'));
 		return false;
 	}
 
-	if ($user && $user->canEdit() && $name) {
-		if ($name != $user->name) {
-			$user->name = $name;
-			if ($user->save()) {
-				system_message(elgg_echo('user:name:success'));
-				return true;
-			} else {
-				register_error(elgg_echo('user:name:fail'));
-			}
-		} else {
-			// no change
-			return;
-		}
-	} else {
-		register_error(elgg_echo('user:name:fail'));
+	if ($name === $user->name) {
+		return null;
 	}
-	return false;
+
+	$request->validation()->pass('name', $name, elgg_echo('user:name:success'));
+
+	$user->name = $name;
+
 }
 
 /**
@@ -129,67 +109,60 @@ function _elgg_set_user_name() {
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
  *
- * @return bool|void
+ * @elgg_plugin_hook usersettings:save user
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return bool|null
  *
  * @since 3.0
- *
  * @access private
  */
-function _elgg_set_user_username() {
-	$username = get_input('username');
-	$user_guid = get_input('guid');
+function _elgg_set_user_username(\Elgg\Hook $hook) {
 
+	$user = $hook->getUserParam();
+	$request = $hook->getParam('request');
+	/* @var $request \Elgg\Request */
+
+	$username = $request->getParam('username');
 	if (!isset($username)) {
-		return;
+		return null;
 	}
 
 	if (!elgg_is_admin_logged_in()) {
-		return;
-	}
-
-	$user = get_user($user_guid);
-	if (empty($user)) {
-		return;
+		return null;
 	}
 
 	if ($user->username === $username) {
-		return;
+		return null;
 	}
 
 	// check if username is valid and does not exist
 	try {
-		if (validate_username($username)) {
-			$found = false;
-			// make sure we can check every user (even unvalidated)
-			$hidden = access_show_hidden_entities(true);
-			if (get_user_by_username($username)) {
-				$found = true;
-			}
-			// restore access settings
-			access_show_hidden_entities($hidden);
+		elgg()->accounts->assertValidUsername($username, true);
+	} catch (RegistrationException $ex) {
+		$request->validation()->fail('username', $username, $ex->getMessage());
 
-			if ($found) {
-				register_error(elgg_echo('registration:userexists'));
-				return false;
-			}
-		}
-	} catch (Exception $e) {
-		register_error($e->getMessage());
 		return false;
 	}
 
 	$user->username = $username;
-	if ($user->save()) {
-		// correctly forward after after a username change
-		elgg_register_plugin_hook_handler('forward', 'all', function() use ($username) {
-			return "settings/user/$username";
-		});
-		system_message(elgg_echo('user:username:success'));
-		return true;
-	}
 
-	register_error(elgg_echo('user:username:fail'));
-	return false;
+	$request->validation()->pass('username', $username, elgg_echo('user:username:success'));
+
+	// correctly forward after after a username change
+	elgg_register_plugin_hook_handler('response', 'action:usersettings/save', function (\Elgg\Hook $hook) use ($username) {
+		$response = $hook->getValue();
+		/* @var $response \Elgg\Http\ResponseBuilder */
+
+		if ($response->getForwardURL() === REFERRER) {
+			$response->setForwardURL(elgg_generate_url('settings:account', [
+				'username' => $username,
+			]));
+		}
+
+		return $response;
+	});
 }
 
 /**
@@ -197,41 +170,32 @@ function _elgg_set_user_username() {
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
  *
- * @return bool|void
+ * @elgg_plugin_hook usersettings:save user
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return bool|null
  * @since 1.8.0
  * @access private
  */
-function _elgg_set_user_language() {
-	$language = get_input('language');
-	$user_guid = get_input('guid');
+function _elgg_set_user_language(\Elgg\Hook $hook) {
 
+	$user = $hook->getUserParam();
+	$request = $hook->getParam('request');
+	/* @var $request \Elgg\Request */
+
+	$language = $request->getParam('language');
 	if (!isset($language)) {
-		return;
+		return null;
 	}
 
-	if ($user_guid) {
-		$user = get_user($user_guid);
-	} else {
-		$user = elgg_get_logged_in_user_entity();
+	if ($language === $user->language) {
+		return null;
 	}
 
-	if ($user && $language) {
-		if (strcmp($language, $user->language) != 0) {
-			$user->language = $language;
-			if ($user->save()) {
-				system_message(elgg_echo('user:language:success'));
-				return true;
-			} else {
-				register_error(elgg_echo('user:language:fail'));
-			}
-		} else {
-			// no change
-			return;
-		}
-	} else {
-		register_error(elgg_echo('user:language:fail'));
-	}
-	return false;
+	$user->language = $language;
+
+	$request->validation()->pass('language', $language, elgg_echo('user:language:success'));
 }
 
 /**
@@ -239,62 +203,56 @@ function _elgg_set_user_language() {
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
  *
- * @return bool|void
+ * @elgg_plugin_hook usersettings:save user
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return bool|null
  * @since 1.8.0
  * @access private
  */
-function _elgg_set_user_email() {
-	$email = get_input('email');
-	$user_guid = get_input('guid');
+function _elgg_set_user_email(\Elgg\Hook $hook) {
+	$actor = elgg_get_logged_in_user_entity();
 
+	$user = $hook->getUserParam();
+	$request = $hook->getParam('request');
+	/* @var $request \Elgg\Request */
+
+	$email = $request->getParam('email');
 	if (!isset($email)) {
-		return;
-	}
-
-	if ($user_guid) {
-		$user = get_user($user_guid);
-	} else {
-		$user = elgg_get_logged_in_user_entity();
-	}
-
-	if (!is_email_address($email)) {
-		register_error(elgg_echo('email:save:fail'));
-		return false;
-	}
-
-	if (!($user instanceof ElggUser)) {
-		register_error(elgg_echo('email:save:fail'));
-		return false;
+		return null;
 	}
 
 	if (strcmp($email, $user->email) === 0) {
 		// no change
-		return;
+		return null;
 	}
 
-	if (_elgg_config()->security_email_require_password && ($user->getGUID() === elgg_get_logged_in_user_guid())) {
-		// validate password
-		$pwd = get_input('email_password');
-		$auth = elgg_authenticate($user->username, $pwd);
-		if ($auth !== true) {
-			register_error(elgg_echo('email:save:fail:password'));
+	try {
+		elgg()->accounts->assertValidEmail($email, true);
+	} catch (RegistrationException $ex) {
+		$request->validation()->fail('email', $email, $ex->getMessage());
+
+		return false;
+	}
+
+	if (elgg()->config->security_email_require_password && $user->guid === $actor->guid) {
+		try {
+			// validate password
+			elgg()->accounts->assertCurrentPassword($user, $request->getParam('email_password'));
+		} catch (RegistrationException $e) {
+			$request->validation()->fail('email', $email, elgg_echo('email:save:fail:password'));
 			return false;
 		}
 	}
 
-	if (!get_user_by_email($email)) {
-		$user->email = $email;
-		if ($user->save()) {
-			system_message(elgg_echo('email:save:success'));
-			return true;
-		} else {
-			register_error(elgg_echo('email:save:fail'));
-		}
-	} else {
-		register_error(elgg_echo('registration:dupeemail'));
-	}
+	$hook_params = $hook->getParams();
+	$hook_params['email'] = $email;
 
-	return false;
+	if (elgg_trigger_plugin_hook('change:email', 'user', $hook_params, true)) {
+		$user->email = $email;
+		$request->validation()->pass('email', $email, elgg_echo('email:save:success'));
+	}
 }
 
 /**
@@ -302,43 +260,35 @@ function _elgg_set_user_email() {
  * Returns null if no change is required or input is not present in the form
  * Returns true or false indicating success or failure if change was needed
  *
- * @return bool|void
+ * @elgg_plugin_hook usersettings:save user
+ *
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return bool|null
  * @since 1.8.0
  * @access private
+ * @throws DatabaseException
  */
-function _elgg_set_user_default_access() {
+function _elgg_set_user_default_access(\Elgg\Hook $hook) {
 
-	if (!_elgg_config()->allow_user_default_access) {
-		return;
+	if (!elgg()->config->allow_user_default_access) {
+		return null;
 	}
 
-	$default_access = get_input('default_access');
-	$user_guid = get_input('guid');
+	$user = $hook->getUserParam();
+	$request = $hook->getParam('request');
+	/* @var $request \Elgg\Request */
 
-	if ($user_guid) {
-		$user = get_user($user_guid);
+	$default_access = $request->getParam('default_access');
+	if (!isset($default_access)) {
+		return null;
+	}
+
+	if ($user->setPrivateSetting('elgg_default_access', $default_access)) {
+		$request->validation()->pass('default_access', $default_access, elgg_echo('user:default_access:success'));
 	} else {
-		$user = elgg_get_logged_in_user_entity();
+		$request->validation()->fail('default_access', $default_access, elgg_echo(elgg_echo('user:default_access:failure')));
 	}
-
-	if ($user) {
-		$current_default_access = $user->getPrivateSetting('elgg_default_access');
-		if ($default_access !== $current_default_access) {
-			if ($user->setPrivateSetting('elgg_default_access', $default_access)) {
-				system_message(elgg_echo('user:default_access:success'));
-				return true;
-			} else {
-				register_error(elgg_echo('user:default_access:failure'));
-			}
-		} else {
-			// no change
-			return;
-		}
-	} else {
-		register_error(elgg_echo('user:default_access:failure'));
-	}
-
-	return false;
 }
 
 /**
@@ -486,6 +436,6 @@ function _elgg_user_settings_init() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_user_settings_init');
 };

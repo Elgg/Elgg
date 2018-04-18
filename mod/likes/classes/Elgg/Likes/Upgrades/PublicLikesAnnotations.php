@@ -61,7 +61,7 @@ class PublicLikesAnnotations implements Batch {
 			AND access_id != {$public}
 		";
 		
-		$count = elgg()->db->updateData($query, [], true);
+		$count = elgg()->db->updateData($query, true, []);
 		
 		$result->addSuccesses($count);
 		

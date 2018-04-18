@@ -99,6 +99,37 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		TestEventHandler::$invocations = [];
 	}
+	
+	public function testDeprecatedWithoutRegisteredHandlers() {
+		
+		_elgg_services()->logger->disable();
+		
+		$this->assertTrue($this->events->triggerDeprecated('foo', 'bar', null, 'The event "foo":"bar" has been deprecated', '1.0'));
+		
+		$logged = _elgg_services()->logger->enable();
+		
+		$this->assertEquals([], $logged);
+	}
+	
+	public function testDeprecatedWithRegisteredHandlers() {
+		
+		$this->events->registerHandler('foo', 'bar', [$this, 'incrementCounter']);
+		
+		_elgg_services()->logger->disable();
+		
+		$this->assertTrue($this->events->triggerDeprecated('foo', 'bar', null, 'The event "foo":"bar" has been deprecated', '1.0'));
+		$this->assertEquals(1, $this->counter);
+		
+		$logged = _elgg_services()->logger->enable();
+		$this->assertCount(1, $logged);
+		
+		$message_details = $logged[0];
+		
+		$this->assertArrayHasKey('message', $message_details);
+		$this->assertArrayHasKey('level', $message_details);
+		$this->assertStringStartsWith('Deprecated in 1.0: The event "foo":"bar" has been deprecated Called from', $message_details['message']);
+		$this->assertEquals(Logger::WARNING, $message_details['level']);
+	}
 
 	public function incrementCounter() {
 		$this->counter++;

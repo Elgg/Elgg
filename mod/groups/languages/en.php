@@ -26,6 +26,8 @@ return array(
 	'groups:website' => 'Website',
 	'groups:members' => 'Group members',
 
+	'groups:members_count' => '%s members',
+
 	'groups:members:title' => 'Members of %s',
 	'groups:members:more' => "View all members",
 	'groups:membership' => "Group membership permissions",

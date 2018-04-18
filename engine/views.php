@@ -25,8 +25,8 @@ return [
 		"jquery-treeview/" => "vendor/bower-asset/jquery-treeview/",
 
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
-		"font-awesome/css/font-awesome.css" => "vendor/fortawesome/font-awesome/css/font-awesome.min.css",
-		"font-awesome/fonts/" => "vendor/fortawesome/font-awesome/fonts",
+		"font-awesome/css/font-awesome.css" => "vendor/bower-asset/fontawesome/web-fonts-with-css/css/fontawesome-all.min.css",
+		"font-awesome/webfonts/" => "vendor/bower-asset/fontawesome/web-fonts-with-css/webfonts/",
 
 		// For datepicker. More info in the jquery-ui.js view
 		"jquery-ui/i18n/" => "vendor/bower-asset/jquery-ui/ui/minified/i18n",

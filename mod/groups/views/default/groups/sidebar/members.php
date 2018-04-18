@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * Group members sidebar
  *
@@ -27,7 +29,9 @@ $body = elgg_list_entities([
 	'inverse_relationship' => true,
 	'type' => 'user',
 	'limit' => $limit,
-	'order_by' => 'r.time_created DESC',
+	'order_by' => [
+		new OrderByClause('r.time_created', 'DESC'),
+	],
 	'pagination' => false,
 	'list_type' => 'gallery',
 	'gallery_class' => 'elgg-gallery-users',

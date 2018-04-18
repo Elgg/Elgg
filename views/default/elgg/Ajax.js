@@ -351,6 +351,18 @@ define(function (require) {
 
 			return new FormData($(el)[0]);
 		};
+
+		/**
+		 * Issue a redirect and display a spinner
+		 *
+		 * @param destination String URL to forward to
+		 * @returns {void}
+		 */
+		this.forward = function(destination) {
+			spinner_starts++;
+			spinner.start();
+			elgg.forward(destination);
+		};
 	}
 
 	/**

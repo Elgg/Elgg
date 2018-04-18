@@ -326,6 +326,42 @@ function logout() {
 }
 
 /**
+ * Determine which URL the user should be forwarded to upon successful login
+ *
+ * @param \Elgg\Request $request Request object
+ * @param \ElggUser     $user    Logged in user
+ * @return string
+ *
+ * @access private
+ * @internal
+ */
+function _elgg_get_login_forward_url(\Elgg\Request $request, \ElggUser $user) {
+
+	$session = elgg_get_session();
+	if ($session->has('last_forward_from')) {
+		$forward_url = $session->get('last_forward_from');
+		$session->remove('last_forward_from');
+		$forward_source = 'last_forward_from';
+	} elseif ($request->getParam('returntoreferer')) {
+		$forward_url = REFERER;
+		$forward_source = 'return_to_referer';
+	} else {
+		// forward to main index page
+		$forward_url = '';
+		$forward_source = null;
+	}
+
+	$params = [
+		'request' => $request,
+		'user' => $user,
+		'source' => $forward_source,
+	];
+
+	return elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
+
+}
+
+/**
  * Initializes the session and checks for the remember me cookie
  *
  * @param ServiceProvider $services Services

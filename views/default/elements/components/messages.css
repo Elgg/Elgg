@@ -50,13 +50,13 @@
 		> div:last-child {
 			border-bottom: 0px;
 		}
-	}
-	.elgg-body {
-		padding: 1rem;
 		
-		p {
-			margin: 0;
+		> .elgg-body {
+			padding: 1rem;
+			
+			p {
+				margin: 0;
+			}
 		}
 	}
-	
 }

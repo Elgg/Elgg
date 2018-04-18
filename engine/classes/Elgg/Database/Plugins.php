@@ -10,7 +10,7 @@ use Elgg\Context;
 use Elgg\Database;
 use Elgg\I18n\Translator;
 use Elgg\Includer;
-use Elgg\PluginHooksService;
+use Elgg\EventsService;
 use Elgg\Profilable;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
@@ -60,9 +60,9 @@ class Plugins {
 	protected $session;
 
 	/**
-	 * @var PluginHooksService
+	 * @var EventsService
 	 */
-	protected $hooks;
+	protected $events;
 
 	/**
 	 * @var Translator
@@ -101,7 +101,7 @@ class Plugins {
 	 * @param ElggCache             $cache                  Cache for referencing plugins by ID
 	 * @param Database              $db                     Database
 	 * @param ElggSession           $session                Session
-	 * @param PluginHooksService    $hooks                  Hooks
+	 * @param EventsService         $events                 Events
 	 * @param Translator            $translator             Translator
 	 * @param ViewsService          $views                  Views service
 	 * @param ElggCache             $private_settings_cache Settings cache
@@ -113,7 +113,7 @@ class Plugins {
 		ElggCache $cache,
 		Database $db,
 		ElggSession $session,
-		PluginHooksService $hooks,
+		EventsService $events,
 		Translator $translator,
 		ViewsService $views,
 		ElggCache $private_settings_cache,
@@ -124,7 +124,7 @@ class Plugins {
 		$this->cache = $cache;
 		$this->db = $db;
 		$this->session = $session;
-		$this->hooks = $hooks;
+		$this->events = $events;
 		$this->translator = $translator;
 		$this->views = $views;
 		$this->private_settings_cache = $private_settings_cache;
@@ -154,14 +154,23 @@ class Plugins {
 	 * @return void
 	 */
 	public function setBootPlugins($plugins) {
-		$this->boot_plugins = $plugins;
-		if (is_array($plugins)) {
-			foreach ($plugins as $plugin) {
-				if (!$plugin instanceof ElggPlugin || !$plugin->getID()) {
-					continue;
-				}
-				$this->cache->save($plugin->getID(), $plugin);
+		if (!is_array($plugins)) {
+			unset($this->boot_plugins);
+			return;
+		}
+		
+		foreach ($plugins as $plugin) {
+			if (!$plugin instanceof ElggPlugin) {
+				continue;
 			}
+			
+			$plugin_id = $plugin->getID();
+			if (!$plugin_id) {
+				continue;
+			}
+
+			$this->boot_plugins[$plugin_id] = $plugin;
+			$this->cache->save($plugin_id, $plugin);
 		}
 	}
 
@@ -427,13 +436,16 @@ class Plugins {
 	 * @return bool
 	 */
 	public function isActive($plugin_id) {
+		if (isset($this->boot_plugins) && is_array($this->boot_plugins)) {
+			return array_key_exists($plugin_id, $this->boot_plugins);
+		}
+		
 		$plugin = $this->get($plugin_id);
-
 		if (!$plugin) {
 			return false;
 		}
-
-		return $plugin->isActive();
+		
+		return check_entity_relationship($plugin->guid, 'active_plugin', 1) instanceof \ElggRelationship;
 	}
 
 	/**
@@ -459,8 +471,11 @@ class Plugins {
 			return false;
 		}
 
-		$this->hooks->getEvents()->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
-		$this->hooks->getEvents()->registerHandler('init', 'system', [$this, 'init']);
+		$this->events->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
+		$this->events->registerHandler('init', 'system', [$this, 'init']);
+		$this->events->registerHandler('ready', 'system', [$this, 'ready']);
+		$this->events->registerHandler('upgrade', 'system', [$this, 'upgrade']);
+		$this->events->registerHandler('shutdown', 'system', [$this, 'shutdown']);
 
 		return true;
 	}
@@ -570,6 +585,92 @@ class Plugins {
 		}
 	}
 
+	/**
+	 * Run plugin ready handlers
+	 *
+	 * @elgg_event ready system
+	 * @return void
+	 */
+	public function ready() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$plugin->getBootstrap()->ready();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+	}
+
+	/**
+	 * Run plugin upgrade handlers
+	 *
+	 * @elgg_event upgrade system
+	 * @return void
+	 */
+	public function upgrade() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$plugin->getBootstrap()->upgrade();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+	}
+
+	/**
+	 * Run plugin shutdown handlers
+	 *
+	 * @elgg_event shutdown system
+	 * @return void
+	 */
+	public function shutdown() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$plugin->getBootstrap()->shutdown();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+	}
 
 	/**
 	 * Disable a plugin upon exception
@@ -609,7 +710,7 @@ class Plugins {
 	 * @return ElggPlugin[]
 	 */
 	public function find($status = 'active') {
-		if (!$this->db) {
+		if (!$this->db || !$this->config->installed) {
 			return [];
 		}
 

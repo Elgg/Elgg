@@ -21,6 +21,7 @@ define(function (require) {
 
 				$target.slideToggle(duration, function () {
 					if ($target.is(':visible')) {
+						$target.css('display', 'flex');
 						$trigger.addClass('elgg-menu-opened')
 								.removeClass('elgg-menu-closed');
 						$trigger.parent().addClass('elgg-state-selected');

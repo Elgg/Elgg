@@ -9,7 +9,7 @@ echo elgg_view_module('aside', "Tabs (.elgg-tabs)", elgg_view('theme_sandbox/nav
 
 echo elgg_view_module('aside', "Pagination (.elgg-pagination)", elgg_view('theme_sandbox/navigation/pagination'));
 
-echo elgg_view_module('aside', "Site Menu (.elgg-menu-site)", elgg_view('theme_sandbox/navigation/site'));
+echo elgg_view_module('aside', "Site Navbar", elgg_view('theme_sandbox/navigation/site'));
 
 echo elgg_view_module('aside', "Breadcrumbs (.elgg-breadcrumbs)", elgg_view('theme_sandbox/navigation/breadcrumbs'));
 

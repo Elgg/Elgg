@@ -3,6 +3,7 @@
 namespace Elgg\Http;
 
 use Elgg\Ajax\Service as AjaxService;
+use Elgg\EventsService;
 use Elgg\PluginHooksService;
 use ElggEntity;
 use InvalidArgumentException;
@@ -49,6 +50,11 @@ class ResponseFactory {
 	 * @var ResponseHeaderBag
 	 */
 	private $headers;
+	
+	/**
+	 * @var EventsService
+	 */
+	private $events;
 
 	/**
 	 * Constructor
@@ -57,12 +63,15 @@ class ResponseFactory {
 	 * @param PluginHooksService $hooks     Plugin hooks service
 	 * @param AjaxService        $ajax      AJAX service
 	 * @param ResponseTransport  $transport Response transport
+	 * @param EventsService      $events    Events service
 	 */
-	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, ResponseTransport $transport) {
+	public function __construct(Request $request, PluginHooksService $hooks, AjaxService $ajax, ResponseTransport $transport, EventsService $events) {
 		$this->request = $request;
 		$this->hooks = $hooks;
 		$this->ajax = $ajax;
 		$this->transport = $transport;
+		$this->events = $events;
+		
 		$this->headers = new ResponseHeaderBag();
 	}
 
@@ -87,7 +96,7 @@ class ResponseFactory {
 	 * @return bool
 	 */
 	public function setCookie(\ElggCookie $cookie) {
-		if (!$this->hooks->getEvents()->trigger('init:cookie', $cookie->name, $cookie)) {
+		if (!$this->events->trigger('init:cookie', $cookie->name, $cookie)) {
 			return false;
 		}
 
@@ -179,7 +188,7 @@ class ResponseFactory {
 						. (string) $this->response_sent);
 			}
 		} else {
-			if (!_elgg_services()->hooks->getEvents()->triggerBefore('send', 'http_response', $response)) {
+			if (!$this->events->triggerBefore('send', 'http_response', $response)) {
 				return false;
 			}
 
@@ -192,7 +201,7 @@ class ResponseFactory {
 				return false;
 			}
 
-			_elgg_services()->hooks->getEvents()->triggerAfter('send', 'http_response', $response);
+			$this->events->triggerAfter('send', 'http_response', $response);
 			$this->response_sent = $response;
 		}
 
@@ -253,17 +262,20 @@ class ResponseFactory {
 			}
 		}
 
-		if ($is_xhr && $is_action && !$this->ajax->isAjax2Request()) {
-			// xhr actions using legacy ajax API should return 200 with wrapped data
-			$response->setStatusCode(ELGG_HTTP_OK);
-			$response->setContent($this->wrapLegacyAjaxResponse($response->getContent(), $response->getForwardURL()));
-		}
+		if ($is_xhr && ($is_action || $this->ajax->isAjax2Request())) {
+			if (!$this->ajax->isAjax2Request()) {
+				// xhr actions using legacy ajax API should return 200 with wrapped data
+				$response->setStatusCode(ELGG_HTTP_OK);
+			}
 
-		if ($is_xhr && $is_action) {
 			// Actions always respond with JSON on xhr calls
 			$headers = $response->getHeaders();
 			$headers['Content-Type'] = 'application/json; charset=UTF-8';
 			$response->setHeaders($headers);
+
+			if ($response->isOk()) {
+				$response->setContent($this->wrapAjaxResponse($response->getContent(), $response->getForwardURL()));
+			}
 		}
 
 		$content = $this->stringify($response->getContent());
@@ -351,6 +363,36 @@ class ResponseFactory {
 		}
 
 		return $this->send($this->prepareResponse($content, $status_code, $headers));
+	}
+
+	/**
+	 * Wraps response content in an Ajax2 compatible format
+	 *
+	 * @param string $content     Response content
+	 * @param string $forward_url Forward URL
+	 * @return string
+	 */
+	public function wrapAjaxResponse($content = '', $forward_url = null) {
+
+		if (!$this->ajax->isAjax2Request()) {
+			return $this->wrapLegacyAjaxResponse($content, $forward_url);
+		}
+
+		$content = $this->stringify($content);
+
+		if ($forward_url === REFERRER) {
+			$forward_url = $this->request->headers->get('Referer');
+		}
+
+		$params = [
+			'value' => '',
+			'current_url' => current_page_url(),
+			'forward_url' => elgg_normalize_url($forward_url),
+		];
+
+		$params['value'] = $this->ajax->decodeJson($content);
+
+		return $this->stringify($params);
 	}
 
 	/**

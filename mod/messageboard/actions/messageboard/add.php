@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * Elgg Message board: add message action
  *
@@ -23,7 +25,10 @@ $output = elgg_list_annotations([
 	'annotations_name' => 'messageboard',
 	'guid' => $owner->guid,
 	'pagination' => false,
-	'order_by' => 'n_table.time_created desc, n_table.id desc',
+	'order_by' => [
+		new OrderByClause('n_table.time_created', 'DESC'),
+		new OrderByClause('n_table.id', 'DESC'),
+	],
 	'limit' => 1,
 ]);
 

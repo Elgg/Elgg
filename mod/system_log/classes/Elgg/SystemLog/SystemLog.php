@@ -7,6 +7,7 @@ use Elgg\Application\Database;
 use Elgg\Database\Delete;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
+use Elgg\Di\ServiceFacade;
 use Elgg\TimeUsing;
 
 /**
@@ -15,6 +16,7 @@ use Elgg\TimeUsing;
 class SystemLog {
 
 	use TimeUsing;
+	use ServiceFacade;
 
 	/**
 	 * @var LogEventCache
@@ -256,5 +258,13 @@ class SystemLog {
 		}
 
 		return $deleted_tables;
+	}
+
+	/**
+	 * Returns registered service name
+	 * @return string
+	 */
+	public static function name() {
+		return 'system_log';
 	}
 }

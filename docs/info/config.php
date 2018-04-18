@@ -277,3 +277,15 @@ $CONFIG->action_time_limit;
  * @global bool $CONFIG->allow_phpinfo
  */
 $CONFIG->allow_phpinfo = false;
+
+/**
+ * Plugins with more than the configured number of plugin settings won't be loaded into
+ * bootdata cache. This is done to prevent memory issues.
+ *
+ * If set to < 1 all plugins will be loaded into the bootdata cache
+ *
+ * Default: 40
+ *
+ * @global int $CONFIG->bootdata_plugin_settings_limit
+ */
+$CONFIG->bootdata_plugin_settings_limit;

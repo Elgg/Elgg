@@ -35,6 +35,8 @@ class DatabaseUnseedCommand extends Command {
 			elgg_log($e->getMessage(), 'ERROR');
 			return $e->getCode() ? : 3;
 		}
+
+		return 0;
 	}
 
 }

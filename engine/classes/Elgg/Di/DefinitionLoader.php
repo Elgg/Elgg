@@ -40,6 +40,7 @@ class DefinitionLoader {
 		$plugins = $this->plugins->find('active');
 
 		foreach ($plugins as $plugin) {
+			$plugin->autoload(); // make sure all classes are loaded
 			$sources[] = $plugin->getPath() . 'elgg-services.php';
 		}
 

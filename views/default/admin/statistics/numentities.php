@@ -14,7 +14,7 @@ foreach ($entity_stats as $type => $subtypes) {
 			$is_registered = array_key_exists($type, $registered_entity_types);
 			$name = elgg_echo("collection:$type");
 		} else {
-			$is_registered = in_array($subtype, $registered_entity_types[$type]);
+			$is_registered = in_array($subtype, elgg_extract($type, $registered_entity_types, []));
 			$name = elgg_echo("collection:$type:$subtype");
 		}
 		
@@ -37,14 +37,15 @@ $rows = '';
 foreach ($searchable as $name => $value) {
 	$rows .= "<tr><td>{$name}</td><td>{$value}</td></tr>";
 }
-echo '<h4>' . elgg_echo('admin:statistics:numentities:searchable') . '</h4>';
-echo "<table class='elgg-table-alt'>{$header}{$rows}</table>";
-echo '<br />';
+
+$body = "<table class='elgg-table'><thead>{$header}</thead><tbody>{$rows}</tbody></table>";
+echo elgg_view_module('info', elgg_echo('admin:statistics:numentities:searchable'), $body);
 
 
 $rows = '';
 foreach ($other as $name => $value) {
 	$rows .= "<tr><td>{$name}</td><td>{$value}</td></tr>";
 }
-echo '<h4>' . elgg_echo('admin:statistics:numentities:other') . '</h4>';
-echo "<table class='elgg-table-alt'>{$header}{$rows}</table>";
+
+$body = "<table class='elgg-table'><thead>{$header}</thead><tbody>{$rows}</tbody></table>";
+echo elgg_view_module('info', elgg_echo('admin:statistics:numentities:other'), $body);

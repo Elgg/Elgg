@@ -6,7 +6,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Elgg\Database\DbConfig as DbConfig;
+use Elgg\Database\DbConfig;
 
 /**
  * The Elgg database
@@ -378,10 +378,6 @@ class Database {
 			$query_id .= $this->fingerprintCallback($callback);
 		}
 
-		if ($this->logger) {
-			$this->logger->info("DB select query $sql (params: " . print_r($params, true) . ")");
-		}
-
 		// MD5 yields smaller mem usage for cache and cleaner logs
 		$hash = md5($query_id);
 
@@ -394,15 +390,19 @@ class Database {
 				return $this->query_cache[$hash];
 			}
 		}
-
+		
+		if ($this->logger) {
+			$this->logger->info("DB select query $sql (params: " . print_r($params, true) . ")");
+		}
+		
 		$return = [];
 
 		if ($query instanceof QueryBuilder) {
-			$stmt = $query->execute();
+			$stmt = $this->executeQuery($query, $query->getConnection());
 		} else {
-			$stmt = $this->executeQuery($sql, $this->getConnection('read'), $params);
+			$stmt = $this->executeQuery($query, $this->getConnection('read'), $params);
 		}
-
+		
 		while ($row = $stmt->fetch()) {
 			if ($callback) {
 				$row = call_user_func($callback, $row);
@@ -445,28 +445,31 @@ class Database {
 			throw new \DatabaseException("Query cannot be null");
 		}
 
+		$sql = $query;
 		if ($query instanceof QueryBuilder) {
 			$params = $query->getParameters();
-			$query = $query->getSQL();
+			$sql = $query->getSQL();
 		}
 
 		$this->query_count++;
 
 		if ($this->timer) {
-			$timer_key = preg_replace('~\\s+~', ' ', trim($query . '|' . serialize($params)));
+			$timer_key = preg_replace('~\\s+~', ' ', trim($sql . '|' . serialize($params)));
 			$this->timer->begin(['SQL', $timer_key]);
 		}
 
 		try {
-			if ($params) {
-				$value = $connection->executeQuery($query, $params);
+			if ($query instanceof QueryBuilder) {
+				$value = $query->execute();
+			} elseif ($params) {
+				$value = $connection->executeQuery($sql, $params);
 			} else {
 				// faster
-				$value = $connection->query($query);
+				$value = $connection->query($sql);
 			}
 		} catch (\Exception $e) {
 			throw new \DatabaseException($e->getMessage() . "\n\n"
-			. "QUERY: $query \n\n"
+			. "QUERY: $sql \n\n"
 			. "PARAMS: " . print_r($params, true));
 		}
 

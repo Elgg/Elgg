@@ -86,8 +86,8 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$app->_services->sessionCache->clear();
 
 		// turn off system log
-		$app->_services->hooks->getEvents()->unregisterHandler('all', 'all', 'system_log_listener');
-		$app->_services->hooks->getEvents()->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		$app->_services->events->unregisterHandler('all', 'all', 'system_log_listener');
+		$app->_services->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 
 		$app->bootCore();
 

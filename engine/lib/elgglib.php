@@ -454,7 +454,7 @@ function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
  * @example documentation/events/all.php
  */
 function elgg_register_event_handler($event, $object_type, $callback, $priority = 500) {
-	return _elgg_services()->hooks->getEvents()->registerHandler($event, $object_type, $callback, $priority);
+	return _elgg_services()->events->registerHandler($event, $object_type, $callback, $priority);
 }
 
 /**
@@ -468,7 +468,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  * @since 1.7
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
-	return _elgg_services()->hooks->getEvents()->unregisterHandler($event, $object_type, $callback);
+	return _elgg_services()->events->unregisterHandler($event, $object_type, $callback);
 }
 
 /**
@@ -481,7 +481,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @since 2.3
  */
 function elgg_clear_event_handlers($event, $object_type) {
-	_elgg_services()->hooks->getEvents()->clearHandlers($event, $object_type);
+	_elgg_services()->events->clearHandlers($event, $object_type);
 }
 
 /**
@@ -729,6 +729,25 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 }
 
 /**
+ * Trigger an plugin hook normally, but send a notice about deprecated use if any handlers are registered.
+ *
+ * @param string $hook        The name of the plugin hook
+ * @param string $type        The type of the plugin hook
+ * @param mixed  $params      Supplied params for the hook
+ * @param mixed  $returnvalue The value of the hook, this can be altered by registered callbacks
+ * @param string $message     The deprecation message
+ * @param string $version     Human-readable *release* version: 1.9, 1.10, ...
+ *
+ * @return mixed
+ *
+ * @see elgg_trigger_plugin_hook()
+ * @since 3.0
+ */
+function elgg_trigger_deprecated_plugin_hook($hook, $type, $params = null, $returnvalue = null, $message = null, $version = null) {
+	return elgg()->hooks->triggerDeprecated($hook, $type, $params, $returnvalue, $message, $version);
+}
+
+/**
  * Returns an ordered array of hook handlers registered for $hook and $type.
  *
  * @param string $hook Hook name
@@ -753,7 +772,7 @@ function elgg_get_ordered_hook_handlers($hook, $type) {
  * @since 2.0.0
  */
 function elgg_get_ordered_event_handlers($event, $type) {
-	return elgg()->hooks->getEvents()->getOrderedHandlers($event, $type);
+	return elgg()->events->getOrderedHandlers($event, $type);
 }
 
 /**
@@ -1170,7 +1189,6 @@ function elgg_extract_class(array $array, $existing = [], $extract_key = 'class'
  * @param Closure $closure Callable to call
  *
  * @return mixed
- * @throws Exception
  */
 function elgg_call(int $flags, Closure $closure) {
 	return _elgg_services()->invoker->call($flags, $closure);
@@ -1640,6 +1658,8 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 		\Elgg\Cli\DatabaseSeedCommand::class,
 		\Elgg\Cli\DatabaseUnseedCommand::class,
 		\Elgg\Cli\CronCommand::class,
+		\Elgg\Cli\FlushCommand::class,
+		\Elgg\Cli\UpgradeCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());
@@ -1724,9 +1744,6 @@ function _elgg_api_test($hook, $type, $value, $params) {
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-	_elgg_register_routes();
-	_elgg_register_actions();
 
 	elgg_set_entity_class('user', 'user', \ElggUser::class);
 	elgg_set_entity_class('group', 'group', \ElggGroup::class);

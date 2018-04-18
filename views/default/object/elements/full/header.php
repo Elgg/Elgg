@@ -11,6 +11,10 @@
 $icon = elgg_extract('icon', $vars);
 $summary = elgg_extract('summary', $vars);
 
+if (!$icon && !$summary) {
+	return;
+}
+
 $header_params = (array) elgg_extract('header_params', $vars, []);
 $header_params['class'] = elgg_extract_class($header_params, 'elgg-listing-full-header');
 

@@ -140,8 +140,25 @@ User hooks
 ==========
 
 **usersettings:save, user**
-	Triggered in the aggregate action to save user settings. Return false prevent sticky
-	forms from being cleared.
+	Triggered in the aggregate action to save user settings.
+	The hook handler must return ``false`` to prevent sticky forms from being cleared (i.e. to indicate that some of the values were not saved).
+	Do not return ``true`` from your hook handler, as you will override other hooks' output, instead return ``null`` to indicate successful operation.
+
+	The ``$params`` array will contain:
+
+	 * ``user`` - ``\ElggUser``, whose settings are being saved
+	 * ``request`` - ``\Elgg\Request`` to the action controller
+
+**change:email, user**
+	Triggered before the user email is changed.
+	Allows plugins to implement additional logic required to change email, e.g. additional email validation.
+	The hook handler must return false to prevent the email from being changed right away.
+
+	The ``$params`` array will contain:
+
+	 * ``user`` - ``\ElggUser``, whose settings are being saved
+	 * ``email`` - Email address that passes sanity checks
+	 * ``request`` - ``\Elgg\Request`` to the action controller
 
 **access:collections:write, user**
 	Filters an array of access permissions that the user ``$params['user_id']`` is allowed to save
@@ -149,16 +166,25 @@ User hooks
 
 **registeruser:validate:username, all**
 	Return boolean for if the string in ``$params['username']`` is valid for a username.
+	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
 
 **registeruser:validate:password, all**
 	Return boolean for if the string in ``$params['password']`` is valid for a password.
+	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
 
 **registeruser:validate:email, all**
 	Return boolean for if the string in ``$params['email']`` is valid for an email address.
+	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
 
 **register, user**
 	Triggered by the ``register`` action after the user registers. Return ``false`` to delete the user.
 	Note the function ``register_user`` does *not* trigger this hook.
+	Hook handlers can throw ``\RegistrationException`` with an error message to be displayed to the user.
+
+	The ``$params`` array will contain:
+
+	 * ``user`` - Newly registered user entity
+	 * All parameters sent with the request to the action (incl. ``password``, ``friend_guid``, ``invitecode`` etc)
 
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login.
@@ -242,7 +268,18 @@ Action hooks
 ============
 
 **action, <action>**
+	Deprecated. Use ``'action:validate', <action>`` hook instead.
 	Triggered before executing action scripts. Return false to abort action.
+
+**action:validate, <action>**
+	Trigger before action script/controller is executed.
+	This hook should be used to validate/alter user input, before proceeding with the action.
+	The hook handler can throw an instance of ``\Elgg\ValidationException`` or return ``false``
+	to terminate further execution.
+
+    ``$params`` array includes:
+
+     * ``request`` - instance of ``\Elgg\Request``
 
 **action_gatekeeper:permissions:check, all**
 	Triggered after a CSRF token is validated. Return false to prevent validation.
@@ -543,9 +580,11 @@ Routing
 **route:config, <route_name>**
 	Allows altering the route configuration before it is registered.
 	This hook can be used to alter the path, default values, requirements, as well as to set/remove middleware.
+	Please note that the handler for this hook should be registered outside of the ``init`` event handler, as core routes are registered during ``plugins_boot`` event.
 
 **route:rewrite, <identifier>**
 	Allows altering the site-relative URL path for an incoming request. See :doc:`routing` for details.
+	Please note that the handler for this hook should be registered outside of the ``init`` event handler, as route rewrites take place after ``plugins_boot`` event has completed.
 
 **response, path:<path>**
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
@@ -762,6 +801,10 @@ Other
 	the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
 	"container_guid" (int) are provided. An empty entity value generally means the form is to
 	create a new object.
+
+**classes, icon**
+	Can be used to filter CSS classes applied to icon glyphs. By default, Elgg uses FontAwesome. Plugins can use this
+	hook to switch to a different font family and remap icon classes.
 
 **entity:icon:sizes, <entity_type>**
 	Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes.

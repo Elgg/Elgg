@@ -547,14 +547,6 @@ function _elgg_site_menu_init($hook, $type, $return, $params) {
 		}
 	}
 
-	if (elgg_is_logged_in() && elgg_is_active_plugin('dashboard')) {
-		$return[] = ElggMenuItem::factory([
-			'name' => 'dashboard',
-			'text' => elgg_echo('dashboard'),
-			'href' => 'dashboard',
-		]);
-	}
-
 	return $return;
 }
 
@@ -651,7 +643,8 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Prepare page menu
+ * Prepare vertically stacked menu
+ *
  * Sets the display child menu option to "toggle" if not set
  * Recursively marks parents of the selected item as selected (expanded)
  *
@@ -661,17 +654,25 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
  *
  * @access private
  */
-function _elgg_page_menu_setup(\Elgg\Hook $hook) {
+function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 	$menu = $hook->getValue();
+
+	$prepare = function(ElggMenuItem $menu_item) use (&$prepare) {
+		$child_menu_vars = $menu_item->getChildMenuOptions();
+		if (empty($child_menu_vars['display'])) {
+			$child_menu_vars['display'] = 'toggle';
+		}
+		$menu_item->setChildMenuOptions($child_menu_vars);
+
+		foreach ($menu_item->getChildren() as $child_menu_item) {
+			$prepare($child_menu_item);
+		}
+	};
 
 	foreach ($menu as $section => $menu_items) {
 		foreach ($menu_items as $menu_item) {
 			if ($menu_item instanceof ElggMenuItem) {
-				$child_menu_vars = $menu_item->getChildMenuOptions();
-				if (empty($child_menu_vars['display'])) {
-					$child_menu_vars['display'] = 'toggle';
-				}
-				$menu_item->setChildMenuOptions($child_menu_vars);
+				$prepare($menu_item);
 			}
 		}
 	}
@@ -820,13 +821,20 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		'type' => $entity->getType(),
 		'subtype' => $entity->getSubtype(),
 		'container_guid' => $entity->container_guid,
-		'wheres' => ["e.guid != {$entity->guid}"],
+		'wheres' => [
+			function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+				return $qb->compare("{$main_alias}.guid", '!=', $entity->guid, ELGG_VALUE_INTEGER);
+			},
+		],
 		'limit' => 1,
 	];
 
 	$previous_options = $options;
-	$previous_options['created_time_upper'] = $entity->time_created;
-	$previous_options['order_by'] = 'e.time_created DESC, e.guid DESC';
+	$previous_options['created_before'] = $entity->time_created;
+	$previous_options['order_by'] = [
+		new \Elgg\Database\Clauses\OrderByClause('time_created', 'DESC'),
+		new \Elgg\Database\Clauses\OrderByClause('guid', 'DESC'),
+	];
 
 	$previous = elgg_get_entities($previous_options);
 	if ($previous) {
@@ -834,6 +842,7 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'previous',
 			'text' => elgg_echo('previous'),
+			'entity' => $previous,
 			'href' => $previous->getUrl(),
 			'title' => $previous->getDisplayName(),
 			'icon' => 'angle-double-left',
@@ -843,8 +852,11 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 	}
 	
 	$next_options = $options;
-	$next_options['created_time_lower'] = $entity->time_created;
-	$next_options['order_by'] = 'e.time_created ASC, e.guid ASC';
+	$next_options['created_after'] = $entity->time_created;
+	$next_options['order_by'] = [
+		new \Elgg\Database\Clauses\OrderByClause('time_created', 'ASC'),
+		new \Elgg\Database\Clauses\OrderByClause('guid', 'ASC'),
+	];
 	
 	$next = elgg_get_entities($next_options);
 	if ($next) {
@@ -852,6 +864,7 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'next',
 			'text' => elgg_echo('next'),
+			'entity' => $next,
 			'href' => $next->getUrl(),
 			'title' => $next->getDisplayName(),
 			'icon_alt' => 'angle-double-right',
@@ -997,7 +1010,8 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup', 999);
 	elgg_register_plugin_hook_handler('register', 'menu:site', '_elgg_site_menu_init');
 
-	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_page_menu_setup', 999);
+	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_setup_vertical_menu', 999);
+	elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '_elgg_setup_vertical_menu', 999);
 
 	elgg_register_plugin_hook_handler('prepare', 'menu:entity', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('prepare', 'menu:river', '_elgg_menu_transform_to_dropdown');

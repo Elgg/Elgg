@@ -312,6 +312,7 @@ Deprecated APIs
  * ``elgg_list_entities_from_relationship``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_private_settings``: Use ``elgg_list_entities()``
  * ``elgg_list_entities_from_access_id``: Use ``elgg_list_entities()``
+ * ``elgg_list_registered_entities``: Use ``elgg_list_entities()``
  * ``elgg_batch_delete_callback``
  * ``\Elgg\Project\Paths::sanitize``: Use ``\Elgg\Project\Paths::sanitize()``
  * ``elgg_group_gatekeeper``: Use ``elgg_entity_gatekeeper()``
@@ -1040,6 +1041,11 @@ Groups icon files have been moved from ``groups/<guid><size>.jpg`` relative to g
 The generation of entity icons has ben changed. No longer will all the configured sizes be generated when calling one of the entity icon functions
 (``ElggEntity::saveIconFromUploadedFile``, ``ElggEntity::saveIconFromLocalFile`` or ``ElggEntity::saveIconFromElggFile``), but only the `master` size.
 The other configured sizes will be generated when requesting that size based of the `master` icon.
+
+Icon glyphs
+-----------
+
+FontAwesome has been upgraded to version 5.0+. There were certain changes to how FontAwesome glyphs are rendered. The core will take care of most changes (e.g. mapping old icon names to new ones, and using the correct prefix for brand and solid icons).
 
 Autocomplete (user and friends pickers)
 ---------------------------------------

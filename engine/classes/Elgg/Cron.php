@@ -5,7 +5,6 @@ namespace Elgg;
 use DateTime;
 use GO\Job;
 use GO\Scheduler;
-use Zend\Validator\Date;
 
 /**
  * Cron
@@ -37,27 +36,34 @@ class Cron {
 	 * @var Printer
 	 */
 	protected $printer;
+	
+	/**
+	 * @var EventsService
+	 */
+	protected $events;
 
 	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   Hooks service
 	 * @param Printer            $printer Printer
+	 * @param EventsService      $events  Events service
 	 */
-	public function __construct(PluginHooksService $hooks, Printer $printer) {
+	public function __construct(PluginHooksService $hooks, Printer $printer, EventsService $events) {
 		$this->hooks = $hooks;
 		$this->printer = $printer;
+		$this->events = $events;
 	}
 
 	/**
 	 * Executes handlers for periods that have elapsed since last cron
 	 *
 	 * @param array $intervals Interval names to run
-	 *
+	 * @param bool  $force     Force cron jobs to run even they are not yet due
 	 * @return Job[]
 	 * @throws \CronException
 	 */
-	public function run(array $intervals = null) {
+	public function run(array $intervals = null, $force = false) {
 
 		if (!isset($intervals)) {
 			$intervals = array_keys(self::$intervals);
@@ -72,11 +78,13 @@ class Cron {
 				throw new \CronException("$interval is not a recognized cron interval");
 			}
 
+			$cron_interval = $force ? self::$intervals['minute'] : self::$intervals[$interval];
+
 			$scheduler
 				->call(function () use ($interval, $time) {
 					return $this->execute($interval, $time);
 				})
-				->at(self::$intervals[$interval])
+				->at($cron_interval)
 				->before(function () use ($interval, $time) {
 					$this->before($interval, $time);
 				})
@@ -102,7 +110,7 @@ class Cron {
 			$time = $this->getCurrentTime();
 		}
 
-		$this->hooks->getEvents()->triggerBefore('cron', $interval, $time);
+		$this->events->triggerBefore('cron', $interval, $time);
 
 		// give every period at least 'max_execution_time' (PHP ini setting)
 		set_time_limit((int) ini_get('max_execution_time'));
@@ -166,7 +174,7 @@ class Cron {
 
 		$this->printer->write($output, null, Logger::$verbosity);
 
-		$this->hooks->getEvents()->triggerAfter('cron', $interval, $time);
+		$this->events->triggerAfter('cron', $interval, $time);
 	}
 
 	/**

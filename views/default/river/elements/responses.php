@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * River item footer
  *
@@ -33,7 +35,7 @@ if ($comment_count) {
 		'subtype' => 'comment',
 		'container_guid' => $object->getGUID(),
 		'limit' => 3,
-		'order_by' => 'e.time_created desc',
+		'order_by' => [new OrderByClause('time_created', 'DESC')],
 		'distinct' => false,
 	]);
 

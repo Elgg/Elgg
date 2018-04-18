@@ -4,7 +4,9 @@ namespace Elgg\Upgrade;
 
 use Elgg\Database\PrivateSettingsTable;
 use Elgg\Database\Plugins;
+use Elgg\Includer;
 use Elgg\Logger;
+use Elgg\Project\Paths;
 use ElggUpgrade;
 
 /**
@@ -12,7 +14,7 @@ use ElggUpgrade;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @since 3.0.0
+ * @since  3.0.0
  *
  * @access private
  */
@@ -49,18 +51,18 @@ class Locator {
 	/**
 	 * Looks for upgrades and saves them as ElggUpgrade entities
 	 *
-	 * @param string[] $core_upgrades Class names of core upgrades
-	 *
-	 * @return int[]|boolean $pending_upgrades Are there pending upgrades
+	 * @return ElggUpgrade[]
 	 */
-	public function run(array $core_upgrades) {
+	public function locate() {
 		$pending_upgrades = [];
 
 		// Check for core upgrades
+		$core_upgrades = Includer::includeFile(Paths::elgg() . 'engine/upgrades.php');
+
 		foreach ($core_upgrades as $class) {
 			$upgrade = $this->getUpgrade($class, 'core');
 			if ($upgrade) {
-				$pending_upgrades[] = $upgrade->guid;
+				$pending_upgrades[] = $upgrade;
 			}
 		}
 
@@ -79,12 +81,12 @@ class Locator {
 			foreach ($batches as $class) {
 				$upgrade = $this->getUpgrade($class, $plugin_id);
 				if ($upgrade) {
-					$pending_upgrades[] = $upgrade->guid;
+					$pending_upgrades[] = $upgrade;
 				}
 			}
 		}
 
-		return $pending_upgrades ? : false;
+		return $pending_upgrades;
 	}
 
 	/**
@@ -92,6 +94,7 @@ class Locator {
 	 *
 	 * @param string $class Class implementing Elgg\Upgrade\Batch
 	 * @param string $id    Either plugin_id or "core"
+	 *
 	 * @return ElggUpgrade|null
 	 */
 	public function getUpgrade($class, $id) {
@@ -107,6 +110,7 @@ class Locator {
 		// Database holds the information of which upgrades have been processed
 		if ($this->upgradeExists($upgrade_id)) {
 			$this->logger->info("Upgrade $id has already been processed");
+
 			return;
 		}
 
@@ -120,6 +124,7 @@ class Locator {
 
 		try {
 			$object->save();
+
 			return $object;
 		} catch (\UnexpectedValueException $ex) {
 			$this->logger->error($ex->getMessage());
@@ -130,27 +135,31 @@ class Locator {
 	 * Validates class and returns an instance of batch
 	 *
 	 * @param string $class The fully qualified class name
+	 *
 	 * @return Batch|false if invalid upgrade
 	 */
 	public function getBatch($class) {
 		if (!class_exists($class)) {
 			$this->logger->error("Upgrade class $class was not found");
+
 			return false;
 		}
 
 		$batch = new $class;
 		if (!$batch instanceof Batch) {
 			$this->logger->error("Upgrade class $class should implement " . Batch::class);
+
 			return false;
 		}
 
 		// check version before shouldBeSkipped() so authors can get immediate feedback on an
 		// invalid batch.
 		$version = $batch->getVersion();
-		
+
 		// Version must be in format yyyymmddnn
 		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
 			$this->logger->error("Upgrade $class returned an invalid version: $version");
+
 			return false;
 		}
 
@@ -165,6 +174,7 @@ class Locator {
 	 * Check if there already is an ElggUpgrade for this upgrade
 	 *
 	 * @param string $upgrade_id Id in format <plugin_id>:<yyymmddnn>
+	 *
 	 * @return boolean
 	 */
 	public function upgradeExists($upgrade_id) {

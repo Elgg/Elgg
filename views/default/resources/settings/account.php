@@ -24,7 +24,9 @@ elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
 
 $title = elgg_echo('usersettings:user', [$user->getDisplayName()]);
 
-$content = elgg_view('core/settings/account');
+$content = elgg_view('core/settings/account', [
+	'entity' => $user,
+]);
 
 $params = [
 	'content' => $content,

@@ -129,4 +129,114 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$plugin->delete();
 	}
 
+	public function testUsesBootstrapOnActivate() {
+
+		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$plugin->activate();
+
+		$methods = [
+			'load',
+			'boot',
+			'init',
+			'activate',
+		];
+
+		foreach ($methods as $method) {
+			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
+			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+		}
+	}
+
+	public function testUsesBootstrapOnDeactivate() {
+
+		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$plugin->activate();
+		$plugin->deactivate();
+
+		$methods = [
+			'activate',
+			'deactivate',
+		];
+
+		foreach ($methods as $method) {
+			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
+			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+		}
+	}
+
+	public function testUsesBootstrapOnBoot() {
+
+		$app = $this->createApplication();
+
+		elgg_set_entity_class('object', 'plugin', ElggPlugin::class);
+
+		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$app->_services->config->boot_cache_ttl = 0;
+		$app->_services->plugins->addTestingPlugin($plugin);
+
+		$app->bootCore();
+
+		$methods = [
+			'load',
+			'boot',
+			'init',
+			'ready',
+		];
+
+		foreach ($methods as $method) {
+			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
+			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+		}
+	}
+
+	/**
+	 * @group UpgradeService
+	 */
+	public function testUsesBootstrapOnUpgrade() {
+
+		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$prefix = _elgg_config()->dbprefix;
+
+		_elgg_services()->db->addQuerySpec([
+			'sql' => "SHOW TABLES LIKE '{$prefix}upgrade_lock'",
+			'results' => null,
+		]);
+
+		_elgg_services()->db->addQuerySpec([
+			'sql' => "CREATE TABLE {$prefix}upgrade_lock (id INT)",
+		]);
+
+		_elgg_services()->db->addQuerySpec([
+			'sql' => "DROP TABLE {$prefix}upgrade_lock",
+		]);
+
+		$config = _elgg_services()->dbConfig->getConnectionConfig(\Elgg\Database\DbConfig::READ_WRITE);
+
+		_elgg_services()->db->addQuerySpec([
+			'sql' => "SHOW TABLE STATUS FROM `{$config['database']}`",
+		]);
+
+		_elgg_services()->plugins->addTestingPlugin($plugin);
+
+		\Elgg\Application::upgrade();
+
+		$methods = [
+			'upgrade',
+		];
+
+		foreach ($methods as $method) {
+			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
+			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+		}
+	}
+
+	public function testUsesBootstrapOnShutdown() {
+		/* @todo Test that bootstrap handlers are called during the shutdown event */
+
+		$this->markTestIncomplete();
+	}
 }

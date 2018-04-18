@@ -2,7 +2,7 @@
 	Typography
 *************************************** */
 body {
-	font-family: BlinkMacSystremFont, -apple-systrem, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	font-family: $(font-family);
 }
 
 a {
@@ -113,3 +113,18 @@ time,
 	font-weight: $(font-bold-weight);
 }
 
+.elgg-state {
+	&.elgg-state-success {
+		 color: $(state-success-font-color);
+	}
+	&.elgg-state-error,
+	&.elgg-state-danger {
+		 color: $(state-danger-font-color);
+	}
+	&.elgg-state-notice {
+		 color: $(state-notice-font-color);
+	}
+	&.elgg-state-warning {
+		 color: $(state-warning-font-color);
+	}
+}

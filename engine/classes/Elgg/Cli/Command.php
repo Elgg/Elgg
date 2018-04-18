@@ -23,15 +23,6 @@ abstract class Command extends SymfonyCommand {
 	 */
 	final public function execute(InputInterface $input, OutputInterface $output) {
 
-		set_error_handler([
-			$this,
-			'handleErrors'
-		]);
-		set_exception_handler([
-			$this,
-			'handleException'
-		]);
-
 		Logger::$verbosity = $output->getVerbosity();
 
 		$this->input = $input;
@@ -99,56 +90,4 @@ abstract class Command extends SymfonyCommand {
 			logout();
 		}
 	}
-
-	/**
-	 * Handler errors
-	 *
-	 * @param int    $errno    The level of the error raised
-	 * @param string $errmsg   The error message
-	 * @param string $filename The filename the error was raised in
-	 * @param int    $linenum  The line number the error was raised at
-	 * @param array  $vars     An array that points to the active symbol table where error occurred
-	 *
-	 * @return true
-	 * @throws \Exception
-	 * @access private
-	 */
-	public function handleErrors($errno, $errmsg, $filename, $linenum, $vars) {
-		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
-
-		switch ($errno) {
-			case E_USER_ERROR:
-				throw new Exception($error);
-
-			default:
-				$formatter = new FormatterHelper();
-				$message = $formatter->formatBlock($error, 'error');
-				$this->output->writeln($message);
-				break;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Handle exceptions
-	 *
-	 * @param Exception|Error $exception
-	 *
-	 * @return void
-	 * @throws Exception
-	 */
-	public function handleException($exception) {
-		$this->setCode(function () use ($exception) {
-			return $exception->getCode() ? : 1;
-		});
-
-		$timestamp = time();
-		$error = "Exception at time $timestamp: $exception";
-
-		$formatter = new FormatterHelper();
-		$message = $formatter->formatBlock($error, 'error');
-		$this->output->writeln($message);
-	}
-
 }

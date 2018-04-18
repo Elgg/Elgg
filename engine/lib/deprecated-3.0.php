@@ -1544,3 +1544,75 @@ function reload_all_translations() {
 
 	return elgg()->translator->reloadAllTranslations();
 }
+
+/**
+ * Returns a viewable list of entities based on the registered types.
+ *
+ * @see elgg_view_entity_list()
+ *
+ * @param array $options Any elgg_get_entity() options plus:
+ *
+ * 	full_view => BOOL Display full view entities
+ *
+ * 	list_type_toggle => BOOL Display gallery / list switch
+ *
+ * 	allowed_types => true|ARRAY True to show all types or an array of valid types.
+ *
+ * 	pagination => BOOL Display pagination links
+ *
+ * @return string A viewable list of entities
+ * @since 1.7.0
+ *
+ * @deprecated 3.0 Use elgg_list_entities()
+ */
+function elgg_list_registered_entities(array $options = []) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_list_entities()', '3.0');
+	
+	elgg_register_rss_link();
+	
+	$defaults = [
+		'full_view' => false,
+		'allowed_types' => true,
+		'list_type_toggle' => false,
+		'pagination' => true,
+		'offset' => 0,
+		'types' => [],
+		'type_subtype_pairs' => [],
+	];
+	
+	$options = array_merge($defaults, $options);
+	
+	$types = get_registered_entity_types();
+	
+	foreach ($types as $type => $subtype_array) {
+		if (in_array($type, $options['allowed_types']) || $options['allowed_types'] === true) {
+			// you must explicitly register types to show up in here and in search for objects
+			if ($type == 'object') {
+				if (is_array($subtype_array) && count($subtype_array)) {
+					$options['type_subtype_pairs'][$type] = $subtype_array;
+				}
+			} else {
+				if (is_array($subtype_array) && count($subtype_array)) {
+					$options['type_subtype_pairs'][$type] = $subtype_array;
+				} else {
+					$options['type_subtype_pairs'][$type] = ELGG_ENTITIES_ANY_VALUE;
+				}
+			}
+		}
+	}
+	
+	if (!empty($options['type_subtype_pairs'])) {
+		$count = elgg_get_entities(array_merge(['count' => true], $options));
+		if ($count > 0) {
+			$entities = elgg_get_entities($options);
+		} else {
+			$entities = [];
+		}
+	} else {
+		$count = 0;
+		$entities = [];
+	}
+	
+	$options['count'] = $count;
+	return elgg_view_entity_list($entities, $options);
+}

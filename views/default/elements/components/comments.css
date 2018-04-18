@@ -48,7 +48,6 @@
 	text-shadow: 0 -2px 0 $(border-color-soft);
 	font-size: 1rem;
 	top: -1rem;
-	z-index: 2;
 	left: 2rem;
 	margin-right: 1.5rem;
 	line-height: 1rem;

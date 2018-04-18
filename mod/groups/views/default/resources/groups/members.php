@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Database\Clauses\OrderByClause;
+
 $guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'group');
@@ -22,7 +24,9 @@ $options = [
 $sort = elgg_extract('sort', $vars);
 switch ($sort) {
 	case 'newest':
-		$options['order_by'] = 'r.time_created DESC';
+		$options['order_by'] = [
+			new OrderByClause('r.time_created', 'DESC'),
+		];
 		break;
 	default:
 		$options['order_by_metadata'] = [

@@ -230,7 +230,7 @@ function elgg_invalidate_simplecache() {
  * @since 1.11
  */
 function elgg_flush_caches() {
-	_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+	_elgg_services()->events->trigger('cache:flush', 'system');
 }
 
 /**

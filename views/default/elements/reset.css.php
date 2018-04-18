@@ -128,6 +128,7 @@ pre {
 
 body {
 	color: $(text-color-strong);
+	background: $(body-background-color);
 	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.5;
@@ -262,4 +263,5 @@ input::-moz-focus-inner {
 
 fieldset {
 	border: none;
+	min-width: 0; /* override -webkit-min-content */
 }

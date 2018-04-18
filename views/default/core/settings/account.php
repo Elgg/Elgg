@@ -8,4 +8,5 @@
 
 echo elgg_view_form('usersettings/save', [
 	'class' => 'elgg-form-alt',
-]);
+	'ajax' => true,
+], $vars);

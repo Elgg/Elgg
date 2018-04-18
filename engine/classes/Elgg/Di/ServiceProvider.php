@@ -31,13 +31,13 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\AccessCollections         $accessCollections
  * @property-read \ElggCache                               $accessCache
  * @property-read \Elgg\ActionsService                     $actions
+ * @property-read \Elgg\Users\Accounts                     $accounts
  * @property-read \Elgg\Database\AdminNotices              $adminNotices
  * @property-read \Elgg\Ajax\Service                       $ajax
  * @property-read \Elgg\Amd\Config                         $amdConfig
- * @property-read \Elgg\Database\AnnotationsTable $annotationsTable
+ * @property-read \Elgg\Database\AnnotationsTable          $annotationsTable
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
- * @property-read \Elgg\BatchUpgrader                      $batchUpgrader
  * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\Application\CacheHandler           $cacheHandler
  * @property-read \Elgg\Assets\CssCompiler                 $cssCompiler
@@ -160,7 +160,11 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('actions', function(ServiceProvider $c) {
-			return new \Elgg\ActionsService($c->routes);
+			return new \Elgg\ActionsService($c->routes, $c->handlers);
+		});
+
+		$this->setFactory('accounts', function(ServiceProvider $c) {
+			return new \Elgg\Users\Accounts($c->config, $c->translator, $c->passwords, $c->usersTable, $c->hooks);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
@@ -176,7 +180,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('annotationsTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\AnnotationsTable($c->db, $c->hooks->getEvents());
+			return new \Elgg\Database\AnnotationsTable($c->db, $c->events);
 		});
 
 		$this->setClassName('autoP', \ElggAutoP::class);
@@ -189,10 +193,6 @@ class ServiceProvider extends DiContainer {
 				$boot->setTimer($c->timer);
 			}
 			return $boot;
-		});
-
-		$this->setFactory('batchUpgrader', function(ServiceProvider $c) {
-			return new \Elgg\BatchUpgrader($c->config);
 		});
 
 		$this->setFactory('cacheHandler', function(ServiceProvider $c) {
@@ -238,7 +238,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('cron', function(ServiceProvider $c) {
-			return new Cron($c->hooks, $c->printer);
+			return new Cron($c->hooks, $c->printer, $c->events);
 		});
 
 		$this->setClassName('crypto', \ElggCrypto::class);
@@ -327,7 +327,7 @@ class ServiceProvider extends DiContainer {
 				$c->db,
 				$c->entityCache,
 				$c->metadataCache,
-				$c->hooks->getEvents(),
+				$c->events,
 				$c->session,
 				$c->translator,
 				$c->logger
@@ -335,7 +335,12 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('events', function(ServiceProvider $c) {
-			return $c->hooks->getEvents();
+			$events = new \Elgg\EventsService($c->handlers);
+			if ($c->config->enable_profiling) {
+				$events->setTimer($c->timer);
+			}
+			
+			return $events;
 		});
 
 		$this->setClassName('externalFiles', \Elgg\Assets\ExternalFiles::class);
@@ -371,11 +376,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
-			$events = new \Elgg\EventsService($c->handlers);
-			if ($c->config->enable_profiling) {
-				$events->setTimer($c->timer);
-			}
-			return new \Elgg\PluginHooksService($events);
+			return new \Elgg\PluginHooksService($c->events);
 		});
 
 		$this->setFactory('iconService', function(ServiceProvider $c) {
@@ -421,7 +422,7 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
-			return new \Elgg\Database\MetadataTable($c->metadataCache, $c->db, $c->hooks->getEvents());
+			return new \Elgg\Database\MetadataTable($c->metadataCache, $c->db, $c->events);
 		});
 
 		$this->setFactory('mutex', function(ServiceProvider $c) {
@@ -454,15 +455,15 @@ class ServiceProvider extends DiContainer {
 			$cache = new CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
 			$plugins = new \Elgg\Database\Plugins(
 				$cache,
-				$this->db,
-				$this->session,
-				$this->hooks,
-				$this->translator,
-				$this->views,
-				$this->privateSettingsCache,
-				$this->config,
-				$this->systemMessages,
-				$this->request->getContextStack()
+				$c->db,
+				$c->session,
+				$c->events,
+				$c->translator,
+				$c->views,
+				$c->privateSettingsCache,
+				$c->config,
+				$c->systemMessages,
+				$c->request->getContextStack()
 			);
 			if ($c->config->enable_profiling) {
 				$plugins->setTimer($c->timer);
@@ -501,7 +502,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('relationshipsTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->hooks->getEvents());
+			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
 		});
 
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
@@ -518,7 +519,7 @@ class ServiceProvider extends DiContainer {
 			} else {
 				$transport = new \Elgg\Http\HttpProtocolTransport();
 			}
-			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport);
+			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport, $c->events);
 		});
 
 		$this->setFactory('routeCollection', function(ServiceProvider $c) {
@@ -605,8 +606,9 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('upgrades', function(ServiceProvider $c) {
 			return new \Elgg\UpgradeService(
+				$c->upgradeLocator,
 				$c->translator,
-				$c->hooks,
+				$c->events,
 				$c->config,
 				$c->logger,
 				$c->mutex,

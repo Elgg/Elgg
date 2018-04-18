@@ -39,15 +39,99 @@ This allows for consistency in Application bootstrapping, especially for testing
 elgg-plugin.php
 ===============
 
-This optional file is read by Elgg to configure various services, and must return an array if present.
-It should not be included by plugins and is not guaranteed to run at any particular time. Besides magic
-constants like ``__DIR__``, its return value should not change. The currently supported sections are: 
+``elgg-plugin.php`` is a static plugin configuration file. It is read by Elgg to configure various services,
+and must return an array if present. It should not be included by plugins and is not guaranteed to run at any particular time.
+Besides magic constants like ``__DIR__``, its return value should not change. The currently supported sections are:
 
- * ``views``
- * ``actions``
- * ``settings``
- * ``user_settings``
- * ``widgets``
+ * ``bootstrap`` - defines a class used to bootstrap the plugin
+ * ``entities`` - defines entity types and classes, and optionally registers them for search
+ * ``actions`` - eliminates the need for calling ``elgg_register_action()``
+ * ``routes`` - eliminates the need for calling ``elgg_register_route()``
+ * ``settings`` - eliminates the need for setting default values on each call to ``elgg_get_plugin_setting()``
+ * ``user_settings`` - eliminates the need for setting default values on each call to ``elgg_get_plugin_user_setting()``
+ * ``views`` - allows plugins to alias vendor assets to a path within the Elgg's view system
+ * ``widgets`` - eliminates the need for calling ``elgg_register_widget_type()``
+
+
+.. code-block:: php
+
+    return [
+		// Bootstrap must implement \Elgg\PluginBootstrapInterface
+		'bootstrap' => MyPluginBootstrap::class,
+
+		'entities' => [
+			[
+                // Register a new object subtype and tell Elgg to use a specific class to instantiate it
+				'type' => 'object',
+				'subtype' => 'my_object_subtype',
+				'class' => MyObjectClass::class,
+
+				// Register this subtype for search
+				'searchable' => true,
+			],
+		],
+
+		'actions' => [
+			// Registers an action
+			// By default, action is registered with 'logged_in' access
+			// By default, Elgg will look for file in plugin's actions/ directory: actions/my_plugin/action.php
+			'my_plugin/action/default' => [],
+
+			'my_plugin/action/custom_access' => [
+				'access' => 'public', // supports 'public', 'logged_in', 'admin'
+			],
+
+			// you can use action controllers instead of action files by setting the controller parameters
+			// controller must be a callable that receives \Elgg\Request as the first and only argument
+			// in example below, MyActionController::__invoke(\Elgg\Request $request) will be called
+			'my_plugin/action/controller' => [
+				'controller' => MyActionController::class,
+			],
+		],
+
+		'routes' => [
+			// routes can be associated with resource views or controllers
+			'collection:object:my_object_subtype:all' => [
+				'path' => '/my_stuff/all',
+				'resource' => 'my_stuff/all', // view file is in resources/my_stuff/all
+			],
+
+			// similar to actions, routes can be associated with a callable controller that receives an instance of \Elgg\Request
+			'collection:object:my_object_subtype:json' => [
+				'path' => '/my_stuff/json',
+				'controller' => JsonDumpController::class,
+			],
+
+			// route definitions support other parameters, such as 'middleware', 'requirements', 'defaults'
+			// see elgg_register_route() for all options
+		],
+
+		'widgets' => [
+			// register a new widget
+			// corresponds to a view in widgets/my_stuff/content
+			'my_stuff' => [
+				'description' => elgg_echo('widgets:my_stuff'),
+				'context' => ['profile', 'dashboard'],
+			],
+		],
+
+		'settings' => [
+			'plugin_setting_name' => 'plugin_setting_value',
+		],
+
+		'user_settings' => [
+			'user_setting_name' => 'user_setting_value',
+		],
+
+		// this is identical to using views.php in Elgg 2.x series
+		'views' => [
+			'default' => [
+				'cool_lib/' => __DIR__ . '/vendors/cool_lib/dist/',
+			],
+		],
+	];
+
+
 
 elgg-services.php
 =================

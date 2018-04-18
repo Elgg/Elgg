@@ -15,8 +15,12 @@ function pages_init() {
 	// register a library of helper functions
 	\Elgg\Includer::requireFileOnce(__DIR__ . '/lib/pages.php');
 
-	$item = new ElggMenuItem('pages', elgg_echo('collection:object:page'), elgg_generate_url('default:object:page'));
-	elgg_register_menu_item('site', $item);
+	elgg_register_menu_item('site', [
+		'name' => 'pages',
+		'icon' => 'file-text-o',
+		'text' => elgg_echo('collection:object:page'),
+		'href' => elgg_generate_url('default:object:page'),
+	]);
 
 	// Register a url handler
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');

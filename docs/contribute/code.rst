@@ -547,6 +547,120 @@ Good:
 Remove trailing whitespace at the end of lines. An easy way to do this before you commit is to run
 ``php .scripts/fix_style.php`` from the installation root.
 
+Value validation
+^^^^^^^^^^^^^^^^
+
+When working with user input prepare the input outside of the validation method.
+
+Bad:
+
+.. code-block:: php
+
+	function validate_email($email) {
+		$email = trim($email);
+
+		// validate
+	}
+
+	$email = get_input($email);
+
+	if (validate_email($email)) {
+		// the validated email value is now out of sync with an actual input
+	}
+
+Good:
+
+.. code-block:: php
+
+	function validate_email($email) {
+		// validate
+	}
+
+	$email = get_input($email);
+	$email = trim($email);
+
+	if (validate_email($email)) {
+		// green light
+	}
+
+Use exceptions
+^^^^^^^^^^^^^^
+
+Do not be afraid to use exceptions. They are easier to deal with than mixed function output:
+
+Bad:
+
+.. code-block:: php
+
+	/**
+	* @return string|bool
+	*/
+	function validate_email($email) {
+		if (empty($email)) {
+			return 'Email is empty';
+		}
+
+		// validate
+
+		return true;
+	}
+
+Good:
+
+.. code-block:: php
+
+	/**
+	* @return void
+	* @throw InvalidArgumentException
+	*/
+	function validate_email($email) {
+		if (empty($email)) {
+			throw new InvalidArgumentException('Email is empty');
+		}
+
+		// validate and throw if invalid
+	}
+
+Documenting return values
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Do not use ``@return void`` on methods that return a value or null.
+
+Bad:
+
+.. code-block:: php
+
+	/**
+	* @return bool|void
+	*/
+	function validate_email($email) {
+		if (empty($email)) {
+			return;
+		}
+
+		// validate
+
+		return true;
+	}
+
+Good:
+
+.. code-block:: php
+
+	/**
+	* @return bool|null
+	*/
+	function validate_email($email) {
+		if (empty($email)) {
+			return null;
+		}
+
+		// validate
+
+		return true;
+	}
+
+
 CSS guidelines
 --------------
 

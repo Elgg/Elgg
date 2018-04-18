@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Di\PublicContainer;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Router\Route;
+use Elgg\Validation\ValidationResults;
 
 /**
  * Request container
@@ -22,6 +23,11 @@ class Request {
 	private $dic;
 
 	/**
+	 * @var ValidationResults
+	 */
+	private $validation;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PublicContainer $dic          DI container
@@ -33,6 +39,15 @@ class Request {
 	public function __construct(PublicContainer $dic, HttpRequest $http_request) {
 		$this->http_request = $http_request;
 		$this->dic = $dic;
+		$this->validation = new ValidationResults();
+	}
+
+	/**
+	 * Access validation results bag
+	 * @return ValidationResults
+	 */
+	public function validation() {
+		return $this->validation;
 	}
 
 	/**

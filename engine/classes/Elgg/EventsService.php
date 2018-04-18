@@ -1,8 +1,6 @@
 <?php
 namespace Elgg;
 
-use Elgg\HooksRegistrationService\Event;
-
 /**
  * Events service
  *
@@ -12,8 +10,6 @@ class EventsService extends HooksRegistrationService {
 	use Profilable;
 
 	const OPTION_STOPPABLE = 'stoppable';
-	const OPTION_DEPRECATION_MESSAGE = 'deprecation_message';
-	const OPTION_DEPRECATION_VERSION = 'deprecation_version';
 
 	/**
 	 * @var HandlersService
@@ -25,7 +21,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param HandlersService $handlers Handlers
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
 	public function __construct(HandlersService $handlers) {
 		$this->handlers = $handlers;
@@ -36,7 +32,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return HandlersService
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
 	public function getHandlersService() {
 		return $this->handlers;
@@ -56,27 +52,26 @@ class EventsService extends HooksRegistrationService {
 	}
 
 	/**
-	 * Triggers an Elgg event.
+	 * Triggers an Elgg event
 	 *
-	 * @see elgg_trigger_event
-	 * @see elgg_trigger_after_event
+	 * @param string $event       The event type
+	 * @param string $object_type The object type
+	 * @param string $object      The object involved in the event
+	 * @param array  $options     (internal) options for triggering the event
+	 *
+	 * @see elgg_trigger_event()
+	 * @see elgg_trigger_after_event()
+	 * @see elgg_trigger_before_event()
 	 */
 	public function trigger($name, $type, $object = null, array $options = []) {
 		$options = array_merge([
 			self::OPTION_STOPPABLE => true,
-			self::OPTION_DEPRECATION_MESSAGE => '',
-			self::OPTION_DEPRECATION_VERSION => '',
 		], $options);
 
-		$handlers = $this->hasHandler($name, $type);
-		if ($handlers && $options[self::OPTION_DEPRECATION_MESSAGE]) {
-			_elgg_services()->deprecation->sendNotice(
-				$options[self::OPTION_DEPRECATION_MESSAGE],
-				$options[self::OPTION_DEPRECATION_VERSION],
-				2
-			);
-		}
+		// check for deprecation
+		$this->checkDeprecation($name, $type, $options);
 
+		// get registered handlers
 		$handlers = $this->getOrderedHandlers($name, $type);
 
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
@@ -124,8 +119,8 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return bool False if any handler returned false, otherwise true
 	 *
-	 * @see trigger
-	 * @see triggerAfter
+	 * @see EventsService::trigger()
+	 * @see EventsService::triggerAfter()
 	 * @since 2.0.0
 	 */
 	function triggerBefore($event, $object_type, $object = null) {
@@ -145,7 +140,8 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return true
 	 *
-	 * @see triggerBefore
+	 * @see EventsService::trigger()
+	 * @see EventsService::triggerBefore()
 	 * @since 2.0.0
 	 */
 	public function triggerAfter($event, $object_type, $object = null) {
@@ -197,9 +193,8 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @return bool
 	 *
-	 * @see trigger
-	 * @access private
-	 * @inernal
+	 * @see EventsService::trigger()
+	 * @see elgg_trigger_deprecated_event()
 	 */
 	function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
 		$options = [
