@@ -1,10 +1,10 @@
 <?php
 namespace Elgg\Likes\Upgrades;
 
-use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
-class PublicLikesAnnotations implements Batch {
+class PublicLikesAnnotations implements AsynchronousUpgrade {
 	
 	/**
 	 * {@inheritdoc}
@@ -64,7 +64,5 @@ class PublicLikesAnnotations implements Batch {
 		$count = elgg()->db->updateData($query, true, []);
 		
 		$result->addSuccesses($count);
-		
-		return $result;
 	}
 }

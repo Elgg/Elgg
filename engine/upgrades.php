@@ -7,6 +7,7 @@
  */
 
 return [
+	\Elgg\Upgrades\ActivateNewPlugins::class,
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
 	\Elgg\Upgrades\SetSecurityConfigDefaults::class,
 	\Elgg\Upgrades\MigrateFriendsACL::class,

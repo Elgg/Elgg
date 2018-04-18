@@ -1,29 +1,13 @@
-<?php
+-<?php
 /**
  * Lists pending upgrades
  */
 
 elgg_require_js('core/js/upgrader');
 
-$upgrades = elgg_get_entities([
-	'type' => 'object',
-	'subtype' => 'elgg_upgrade',
-	'limit' => false,
-	'private_setting_name' => 'is_completed',
-	'private_setting_value' => 0,
-]);
+$upgrades = _elgg_services()->upgrades->getPendingUpgrades();
 
-if ($upgrades) {
-	foreach ($upgrades as $key => $upgrade) {
-		// unsupported upgrade objects could still exist in the database and not be marked as completed
-		// don't know what to do with them, so skipping if they are not supported by the output view
-		if (!isset($upgrade->class)) {
-			unset($upgrades[$key]);
-		}
-	}
-}
-
-if (!$upgrades) {
+if (empty($upgrades)) {
 	echo elgg_echo('admin:upgrades:none');
 	return;
 }
