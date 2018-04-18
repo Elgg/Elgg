@@ -4,7 +4,7 @@ namespace Elgg;
 use Elgg\HooksRegistrationService\Hook;
 
 /**
- * Plugin Hooks (and Events)
+ * Plugin Hooks
  *
  * Use elgg()->hooks
  */
@@ -21,14 +21,9 @@ class PluginHooksService extends HooksRegistrationService {
 	 * @param EventsService $events Events
 	 *
 	 * @access private
-	 * @inernal
+	 * @internal
 	 */
-	public function __construct(EventsService $events = null) {
-		if ($events === null) {
-			// for unit tests
-			$events = new EventsService(new HandlersService());
-		}
-
+	public function __construct(EventsService $events) {
 		$this->events = $events;
 	}
 
@@ -36,18 +31,32 @@ class PluginHooksService extends HooksRegistrationService {
 	 * Get the events API
 	 *
 	 * @return EventsService
+	 * @deprecated 3.0
 	 */
 	public function getEvents() {
+		_elgg_services()->deprecation->sendNotice(__METHOD__ . " has been deprecated, please use elgg()->events", '3.0');
+		
 		return $this->events;
 	}
 
 	/**
 	 * Triggers a plugin hook
 	 *
-	 * @see elgg_trigger_plugin_hook
+	 * @param string $name    The name of the plugin hook
+	 * @param string $type    The type of the plugin hook
+	 * @param mixed  $params  Supplied params for the hook
+	 * @param mixed  $value   The value of the hook, this can be altered by registered callbacks
+	 * @param array  $options (internal) options for triggering the plugin hook
+	 *
+	 * @return mixed
+	 *
+	 * @see elgg_trigger_plugin_hook()
 	 */
-	public function trigger($name, $type, $params = null, $value = null) {
+	public function trigger($name, $type, $params = null, $value = null, array $options = []) {
 
+		// check for deprecation
+		$this->checkDeprecation($name, $type, $options);
+		
 		// This starts as a string, but if a handler type-hints an object we convert it on-demand inside
 		// \Elgg\HandlersService::call and keep it alive during all handler calls. We do this because
 		// creating objects for every triggering is expensive.
@@ -92,6 +101,30 @@ class PluginHooksService extends HooksRegistrationService {
 
 		return $value;
 	}
+	
+	/**
+	 * Trigger an plugin hook normally, but send a notice about deprecated use if any handlers are registered.
+	 *
+	 * @param string $name    The name of the plugin hook
+	 * @param string $type    The type of the plugin hook
+	 * @param mixed  $params  Supplied params for the hook
+	 * @param mixed  $value   The value of the hook, this can be altered by registered callbacks
+	 * @param string $message The deprecation message
+	 * @param string $version Human-readable *release* version: 1.9, 1.10, ...
+	 *
+	 * @return mixed
+	 *
+	 * @see PluginHooksService::trigger()
+	 * @see elgg_trigger_deprecated_plugin_hook()
+	 */
+	public function triggerDeprecated($name, $type, $params = null, $value = null, $message = null, $version = null) {
+		$options = [
+			self::OPTION_DEPRECATION_MESSAGE => $message,
+			self::OPTION_DEPRECATION_VERSION => $version,
+		];
+		
+		return $this->trigger($name, $type, $params, $value, $options);
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -102,5 +135,16 @@ class PluginHooksService extends HooksRegistrationService {
 		}
 
 		return parent::registerHandler($name, $type, $callback, $priority);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function unregisterHandler($name, $type, $callback) {
+		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
+			$type = ViewsService::canonicalizeViewName($type);
+		}
+		
+		return parent::unregisterHandler($name, $type, $callback);
 	}
 }

@@ -45,7 +45,7 @@ class ElggCoreCommentTest extends LegacyIntegrationTestCase {
 
 	public function testCommentAccessSync() {
 
-		$this->assertTrue(_elgg_services()->hooks->getEvents()->hasHandler('update:after', 'all', '_elgg_comments_access_sync'));
+		$this->assertTrue(_elgg_services()->events->hasHandler('update:after', 'all', '_elgg_comments_access_sync'));
 
 		$this->comment->disableCaching();
 		$this->container->disableCaching();

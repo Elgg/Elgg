@@ -188,17 +188,16 @@ class Translator {
 		$country_code = strtolower($country_code);
 		$country_code = trim($country_code);
 
-		if (!is_array($language_array) || $country_code === "") {
+		if (!is_array($language_array) || empty($language_array) || $country_code === "") {
 			return false;
 		}
 
-		if (count($language_array) > 0) {
-			if (!isset($this->translations[$country_code])) {
-				$this->translations[$country_code] = $language_array;
-			} else {
-				$this->translations[$country_code] = $language_array + $this->translations[$country_code];
-			}
+		if (!isset($this->translations[$country_code])) {
+			$this->translations[$country_code] = [];
 		}
+
+		// Note that we are using union operator instead of array_merge() due to performance implications
+		$this->translations[$country_code] = $language_array + $this->translations[$country_code];
 
 		return true;
 	}
@@ -438,12 +437,8 @@ class Translator {
 	 * @internal
 	 */
 	protected function includeLanguageFile($path) {
-		$cache_key = "lang/" . sha1($path);
-		$result = elgg_get_system_cache()->load($cache_key);
-		if (!isset($result)) {
-			$result = Includer::includeFile($path);
-			elgg_get_system_cache()->save($cache_key, $result);
-		}
+		$result = Includer::includeFile($path);
+		
 		if (is_array($result)) {
 			$this->addTranslation(basename($path, '.php'), $result);
 			return true;
@@ -483,7 +478,7 @@ class Translator {
 			}
 		}
 		
-		_elgg_services()->hooks->getEvents()->triggerAfter('reload', 'translations');
+		_elgg_services()->events->triggerAfter('reload', 'translations');
 
 		$this->was_reloaded = true;
 	}

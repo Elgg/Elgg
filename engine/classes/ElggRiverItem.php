@@ -169,7 +169,7 @@ class ElggRiverItem {
 			return false;
 		}
 
-		$events = _elgg_services()->hooks->getEvents();
+		$events = _elgg_services()->events;
 		if (!$events->triggerBefore('delete', 'river', $this)) {
 			return false;
 		}

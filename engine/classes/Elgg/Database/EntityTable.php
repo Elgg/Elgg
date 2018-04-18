@@ -662,13 +662,13 @@ class EntityTable {
 			return false;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->triggerBefore('delete', $entity->type, $entity)) {
+		if (!_elgg_services()->events->triggerBefore('delete', $entity->type, $entity)) {
 			return false;
 		}
 
 		// now trigger an event to let others know this entity is about to be deleted
 		// so they can prevent it or take their own actions
-		if (!_elgg_services()->hooks->getEvents()->triggerDeprecated('delete', $entity->type, $entity)) {
+		if (!_elgg_services()->events->triggerDeprecated('delete', $entity->type, $entity)) {
 			return false;
 		}
 
@@ -688,7 +688,7 @@ class EntityTable {
 
 		$this->db->deleteData($qb);
 
-		_elgg_services()->hooks->getEvents()->triggerAfter('delete', $entity->type, $entity);
+		_elgg_services()->events->triggerAfter('delete', $entity->type, $entity);
 
 		return true;
 	}

@@ -11,6 +11,9 @@ abstract class HooksRegistrationService {
 	const REG_KEY_PRIORITY = 0;
 	const REG_KEY_INDEX = 1;
 	const REG_KEY_HANDLER = 2;
+	
+	const OPTION_DEPRECATION_MESSAGE = 'deprecation_message';
+	const OPTION_DEPRECATION_VERSION = 'deprecation_version';
 
 	/**
 	 * @var int
@@ -57,9 +60,9 @@ abstract class HooksRegistrationService {
 	}
 	
 	/**
-	 * Unregister a callback as a plugin hook.
+	 * Unregister a callback as a plugin hook of event handler.
 	 *
-	 * @param string   $name     The name of the hook
+	 * @param string   $name     The name of the hook/event
 	 * @param string   $type     The name of the type of entity (eg "user", "object" etc)
 	 * @param callable $callback The PHP callback to be removed. Since 1.11, static method
 	 *                           callbacks will match dynamic methods
@@ -67,13 +70,10 @@ abstract class HooksRegistrationService {
 	 * @return bool
 	 *
 	 * @see elgg_unregister_plugin_hook_handler()
+	 * @see elgg_unregister_event_handler()
 	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {
-		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
-			$type = ViewsService::canonicalizeViewName($type);
-		}
-
 		if (empty($this->registrations[$name][$type])) {
 			return false;
 		}
@@ -244,7 +244,7 @@ abstract class HooksRegistrationService {
 	 * @note This behaves like a stack. You must call restore() for each backup() call.
 	 *
 	 * @return void
-	 * @see restore
+	 * @see HooksRegistrationService::restore()
 	 * @access private
 	 * @internal
 	 */
@@ -257,7 +257,7 @@ abstract class HooksRegistrationService {
 	 * Restore backed up event/hook registrations (after tests)
 	 *
 	 * @return void
-	 * @see backup
+	 * @see HooksRegistrationService::backup()
 	 * @access private
 	 * @internal
 	 */
@@ -266,5 +266,32 @@ abstract class HooksRegistrationService {
 		if (is_array($backup)) {
 			$this->registrations = $backup;
 		}
+	}
+	
+	/**
+	 * Check if handlers are registered on a deprecated hook/event. If so Display a message
+	 *
+	 * @param string $name    the name of the hook/event
+	 * @param string $type    the type of the hook/event
+	 * @param array  $options deprecation options
+	 *
+	 * @return void
+	 */
+	protected function checkDeprecation($name, $type, array $options = []) {
+		$options = array_merge([
+			self::OPTION_DEPRECATION_MESSAGE => '',
+			self::OPTION_DEPRECATION_VERSION => '',
+		], $options);
+		
+		$handlers = $this->hasHandler($name, $type);
+		if (!$handlers || !$options[self::OPTION_DEPRECATION_MESSAGE]) {
+			return;
+		}
+		
+		_elgg_services()->deprecation->sendNotice(
+			$options[self::OPTION_DEPRECATION_MESSAGE],
+			$options[self::OPTION_DEPRECATION_VERSION],
+			4
+		);
 	}
 }

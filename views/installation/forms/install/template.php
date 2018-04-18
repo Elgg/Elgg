@@ -11,7 +11,7 @@ $type = elgg_extract('type', $vars);
 $form_body = '';
 
 foreach ($variables as $name => $params) {
-	$params['#type'] = elgg_extract('type', $params);
+	$params['#type'] = elgg_extract('type', $params, 'text');
 	$params['#label'] = elgg_echo("install:$type:label:$name");
 	$params['#help'] = elgg_echo("install:$type:help:$name");
 	$params['name'] = $name;

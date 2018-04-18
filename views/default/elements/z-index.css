@@ -1,0 +1,61 @@
+/* ***************************************
+	z-index
+*************************************** */
+
+.elgg-page-walled-garden-background {
+	z-index: 10;
+}
+
+
+.elgg-page-walled-garden > .elgg-inner {
+	z-index: 20;
+}
+
+.elgg-comments .elgg-list:before,
+.elgg-river-comments:before {
+	
+	z-index: 30;
+}
+
+#login-dropdown-box {
+	z-index: 40;
+}
+
+#login-dropdown-box:before {
+	z-index: 50;
+}
+
+.elgg-module-popup,
+.elgg-module-dropdown {
+	z-index: 60;
+}
+
+
+@media only $(media-desktop-up) {
+	.elgg-page-topbar .elgg-menu li .elgg-child-menu {
+		z-index: 70;
+	}
+	
+	.elgg-page-topbar .elgg-menu li:hover > .elgg-child-menu:before {
+		z-index: 80;
+	}
+}
+
+#colorbox,
+#cboxOverlay,
+#cboxWrapper {
+	z-index: 90;
+}
+
+.ui-autocomplete,
+.ui-datepicker {
+	z-index: 100;
+}
+
+.elgg-system-messages {
+	z-index: 1000;
+}
+
+.elgg-spinner {
+	z-index: 2000;
+}

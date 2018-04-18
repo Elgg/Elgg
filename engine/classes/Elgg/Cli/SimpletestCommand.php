@@ -121,7 +121,12 @@ class SimpletestCommand extends Command {
 
 		$start_time = microtime(true);
 
-		$reporter = new TextReporter();
+		if (!$this->option('quiet')) {
+			$reporter = new TextReporter();
+		} else {
+			$reporter = new \SimpleReporter();
+		}
+
 		$result = $suite->Run($reporter);
 
 		// deactivate plugins that were activated for test suite
@@ -135,6 +140,7 @@ class SimpletestCommand extends Command {
 			microtime(true) - $start_time,
 			memory_get_peak_usage() / 1048576.0 // in megabytes
 		), 'info');
+
 		$this->output->writeln($message);
 
 		return $result ? 0 : 1;

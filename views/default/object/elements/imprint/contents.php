@@ -19,6 +19,8 @@
  * @uses $vars['access_icon'] Icon name to be used with the access info
  *                            Set to false to not render an icon
  *                            Default is determined by access level ('user', 'globe', 'lock', or 'cog')
+ * @uses $vars['imprint']     An array of imprint elements
+ *            				  ['icon_name' => 'calendar', 'content' => 'Starts on Jan 12']
  */
 
 $entity = elgg_extract('entity', $vars);
@@ -29,3 +31,10 @@ if (!$entity instanceof ElggEntity) {
 echo elgg_view('object/elements/imprint/byline', $vars);
 echo elgg_view('object/elements/imprint/time', $vars);
 echo elgg_view('object/elements/imprint/access', $vars);
+
+$imprint = elgg_extract('imprint', $vars);
+if (!empty($imprint)) {
+	foreach ($imprint as $item) {
+		echo elgg_view('object/elements/imprint/element', $item);
+	}
+}

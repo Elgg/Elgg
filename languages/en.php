@@ -115,6 +115,7 @@ return array(
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
 	'BadRequestException' => 'Bad request',
+	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -368,6 +369,7 @@ return array(
 	'registerdisabled' => "Registration has been disabled by the system administrator",
 	'register:fields' => 'All fields are required',
 
+	'registration:noname' => 'Display name is required.',
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
 	'registration:userexists' => 'That username already exists',
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
@@ -480,6 +482,8 @@ return array(
 	'admin:upgrades:run' => 'Run upgrades now',
 	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s) is not an instance of ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
+	'admin:upgrades:completed' => 'Async upgrade %s completed at %s',
+	'admin:upgrades:completed:errors' => 'Async upgrade %s completed at %s but encountered errors: %s',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -510,8 +514,8 @@ return array(
 	'admin:statistics:numentities' => 'Content Statistics',
 	'admin:statistics:numentities:type' => 'Content type',
 	'admin:statistics:numentities:number' => 'Number',
-	'admin:statistics:numentities:searchable' => 'Searchable',
-	'admin:statistics:numentities:other' => 'Other',
+	'admin:statistics:numentities:searchable' => 'Searchable entities',
+	'admin:statistics:numentities:other' => 'Other entities',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
@@ -1043,7 +1047,7 @@ These changes will only affect new users on the site.',
 
 	'deleteconfirm' => "Are you sure you want to delete this item?",
 	'deleteconfirm:plural' => "Are you sure you want to delete these items?",
-	'fileexists' => "A file has already been uploaded. To replace it, select it below:",
+	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
 	'input:file:upload_limit' => 'Maximum allowed file size is %s',
 
 /**

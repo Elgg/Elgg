@@ -25,7 +25,6 @@ echo elgg_view('core.css');
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: 50%;
-	z-index: 1;
 	filter: blur(4px);
 }
 
@@ -40,7 +39,6 @@ echo elgg_view('core.css');
 .elgg-page-walled-garden > .elgg-inner {
 	width: 30rem;
 	min-height: 100%;
-	z-index: 2;
 }
 
 .elgg-page-walled-garden > .elgg-inner > div {

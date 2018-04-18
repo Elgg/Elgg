@@ -10,10 +10,12 @@ return [
 		'account:validation:email:confirm' => [
 			'path' => '/uservalidationbyemail/confirm',
 			'resource' => 'uservalidationbyemail/confirm',
+			'walled' => false,
 		],
 		'account:validation:email:sent' => [
 			'path' => '/uservalidationbyemail/emailsent',
 			'resource' => 'uservalidationbyemail/emailsent',
+			'walled' => false,
 		],
 	],
 ];

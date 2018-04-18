@@ -157,7 +157,7 @@ function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
 	
 	switch ($widget->handler) {
 		case 'content_stats':
-			return 'admin/statistics/numentities';
+			return 'admin/statistics';
 		case 'cron_status':
 			return 'admin/cron';
 		case 'new_users':

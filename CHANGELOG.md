@@ -638,6 +638,23 @@ var `$DEFAULT_FILE_STORE`.
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
 
 
+<a name="2.3.6"></a>
+### 2.3.6  (2018-03-27)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **config:** control bootdata plugin cache ([60b15b76](https://github.com/Elgg/Elgg/commit/60b15b768de84ffde58a35374f766f0e4a1e6606))
+* **db:** correctly default subtypes to prevent PHP warning ([c10a6a4f](https://github.com/Elgg/Elgg/commit/c10a6a4fdc78f0474c7ca026c057e89071773838))
+* **memcache:** use correct Memcache class ([8b073aad](https://github.com/Elgg/Elgg/commit/8b073aad1a78365d8633ee329607f7218c9b2b65))
+* **rss:** correctly list comments ([892672cf](https://github.com/Elgg/Elgg/commit/892672cf590fef47f3f740ed932c3328ad76da57))
+* **views:** listing of entities and river no longer count if not needed ([ee6a043e](https://github.com/Elgg/Elgg/commit/ee6a043eb57abb4e93594643b5b484ebe55a239f))
+* **walled_garden:** register plugin hook during init ([f9880cbf](https://github.com/Elgg/Elgg/commit/f9880cbf0ace53c27688830ead0bdec531f5c405))
+
 <a name="2.3.5"></a>
 ### 2.3.5  (2017-12-06)
 

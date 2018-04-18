@@ -1,12 +1,24 @@
 /* ***************************************
 	AJAX LOADER
 *************************************** */
+@keyframes infinite-spinning {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 .elgg-ajax-loader {
-	background-image: url('graphics/ajax_loader_bw.gif');
-	background-position: 50%;
-	background-repeat: no-repeat;
 	background-color: #fff;
-	background-size: 31px;
-	min-height: 3rem;
-	min-width: 3rem;
+	height: 2.5rem;
+	width: 2.5rem;
+	animation: infinite-spinning 1s infinite linear;
+	border-radius: 50%;
+	border-width: 5px;
+	border-color: $(border-color-highlight) $(border-color-soft) $(border-color-soft);
+	border-style: solid;
+	display: block;
+	margin: 0.75rem auto;
 }

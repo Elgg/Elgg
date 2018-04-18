@@ -82,6 +82,7 @@ class InstallCommand extends \Symfony\Component\Console\Command\Command {
 		$this->write("dataroot: " . elgg_get_config('dataroot'));
 		$this->write("cacheroot: " . elgg_get_config('cacheroot'));
 
+		return 0;
 	}
 
 }

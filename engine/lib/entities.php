@@ -580,22 +580,25 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 
 	$options = array_merge($defaults, $options);
 
-	$entities = [];
+	$options['count'] = false;
+	$entities = call_user_func($getter, $options);
+	$options['count'] = is_array($entities) ? count($entities) : 0;
 	
-	if (!$options['pagination']) {
-		$options['count'] = false;
-		$entities = call_user_func($getter, $options);
-		unset($options['count']);
-	} else {
-		$options['count'] = true;
-		$count = call_user_func($getter, $options);
-	
-		if ($count > 0) {
-			$options['count'] = false;
-			$entities = call_user_func($getter, $options);
+	if (!empty($entities)) {
+		$count_needed = true;
+		if (!$options['pagination']) {
+			$count_needed = false;
+		} elseif (!$options['offset'] && !$options['limit']) {
+			$count_needed = false;
+		} elseif (($options['count'] < (int) $options['limit']) && !$options['offset']) {
+			$count_needed = false;
 		}
-
-		$options['count'] = $count;
+		
+		if ($count_needed) {
+			$options['count'] = true;
+		
+			$options['count'] = (int) call_user_func($getter, $options);
+		}
 	}
 	
 	return call_user_func($viewer, $entities, $options);
@@ -757,74 +760,6 @@ function is_registered_entity_type($type, $subtype = null) {
 		return false;
 	}
 	return true;
-}
-
-/**
- * Returns a viewable list of entities based on the registered types.
- *
- * @see elgg_view_entity_list()
- *
- * @param array $options Any elgg_get_entity() options plus:
- *
- * 	full_view => BOOL Display full view entities
- *
- * 	list_type_toggle => BOOL Display gallery / list switch
- *
- * 	allowed_types => true|ARRAY True to show all types or an array of valid types.
- *
- * 	pagination => BOOL Display pagination links
- *
- * @return string A viewable list of entities
- * @since 1.7.0
- */
-function elgg_list_registered_entities(array $options = []) {
-	elgg_register_rss_link();
-
-	$defaults = [
-		'full_view' => false,
-		'allowed_types' => true,
-		'list_type_toggle' => false,
-		'pagination' => true,
-		'offset' => 0,
-		'types' => [],
-		'type_subtype_pairs' => [],
-	];
-
-	$options = array_merge($defaults, $options);
-
-	$types = get_registered_entity_types();
-
-	foreach ($types as $type => $subtype_array) {
-		if (in_array($type, $options['allowed_types']) || $options['allowed_types'] === true) {
-			// you must explicitly register types to show up in here and in search for objects
-			if ($type == 'object') {
-				if (is_array($subtype_array) && count($subtype_array)) {
-					$options['type_subtype_pairs'][$type] = $subtype_array;
-				}
-			} else {
-				if (is_array($subtype_array) && count($subtype_array)) {
-					$options['type_subtype_pairs'][$type] = $subtype_array;
-				} else {
-					$options['type_subtype_pairs'][$type] = ELGG_ENTITIES_ANY_VALUE;
-				}
-			}
-		}
-	}
-
-	if (!empty($options['type_subtype_pairs'])) {
-		$count = elgg_get_entities(array_merge(['count' => true], $options));
-		if ($count > 0) {
-			$entities = elgg_get_entities($options);
-		} else {
-			$entities = [];
-		}
-	} else {
-		$count = 0;
-		$entities = [];
-	}
-
-	$options['count'] = $count;
-	return elgg_view_entity_list($entities, $options);
 }
 
 /**

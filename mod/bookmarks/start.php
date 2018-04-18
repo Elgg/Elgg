@@ -15,6 +15,7 @@ function bookmarks_init() {
 	// menus
 	elgg_register_menu_item('site', [
 		'name' => 'bookmarks',
+		'icon' => 'bookmark-o',
 		'text' => elgg_echo('collection:object:bookmarks'),
 		'href' => elgg_generate_url('default:object:bookmarks'),
 	]);

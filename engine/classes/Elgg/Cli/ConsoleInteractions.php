@@ -5,6 +5,7 @@
 
 namespace Elgg\Cli;
 
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -37,6 +38,7 @@ trait ConsoleInteractions {
 	public function ask($question, $default = null, $hidden = false, $required = true) {
 
 		$helper = $this->getHelper('question');
+		/* @var $helper QuestionHelper */
 
 		$q = new Question($question, $default);
 

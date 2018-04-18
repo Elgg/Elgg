@@ -46,6 +46,7 @@ function elgg_activity_init() {
 	
 	elgg_register_menu_item('site', [
 		'name' => 'activity',
+		'icon' => 'clock-o',
 		'text' => elgg_echo('activity'),
 		'href' => elgg_generate_url('default:river'),
 	]);

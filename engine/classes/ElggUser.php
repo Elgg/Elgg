@@ -62,17 +62,21 @@ class ElggUser extends \ElggEntity
 				_elgg_services()->logger->error("password_hash is a readonly attribute.");
 				return;
 			case 'email':
-				if (!validate_email_address($value)) {
-					throw new \InvalidParameterException("Email is not a valid email address");
+				try {
+					elgg()->accounts->assertValidEmail($value);
+				} catch (RegistrationException $ex) {
+					throw new InvalidParameterException($ex->getCode());
 				}
 				break;
 			case 'username':
-				if (!validate_username($value)) {
-					throw new \InvalidParameterException("Username is not a valid username");
+				try {
+					elgg()->accounts->assertValidUsername($value);
+				} catch (RegistrationException $ex) {
+					throw new InvalidParameterException($ex->getCode());
 				}
 				$existing_user = get_user_by_username($value);
 				if ($existing_user && ($existing_user->guid !== $this->guid)) {
-					throw new \InvalidParameterException("{$name} is supposed to be unique for ElggUser");
+					throw new InvalidParameterException("{$name} is supposed to be unique for ElggUser");
 				}
 				break;
 		}
@@ -106,7 +110,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 		
-		if (!_elgg_services()->hooks->getEvents()->trigger('ban', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('ban', 'user', $this)) {
 			return false;
 		}
 
@@ -129,7 +133,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('unban', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('unban', 'user', $this)) {
 			return false;
 		}
 
@@ -174,7 +178,7 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('make_admin', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('make_admin', 'user', $this)) {
 			return false;
 		}
 
@@ -196,7 +200,7 @@ class ElggUser extends \ElggEntity
 			return true;
 		}
 
-		if (!_elgg_services()->hooks->getEvents()->trigger('remove_admin', 'user', $this)) {
+		if (!_elgg_services()->events->trigger('remove_admin', 'user', $this)) {
 			return false;
 		}
 
@@ -229,7 +233,7 @@ class ElggUser extends \ElggEntity
 	/**
 	 * Sets the last action time of the given user to right now.
 	 *
-	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
+	 * @see _elgg_session_boot() The session boot calls this at the beginning of every request
 	 *
 	 * @return void
 	 */
@@ -279,9 +283,9 @@ class ElggUser extends \ElggEntity
 			}
 			
 			// let the system know the user is validated
-			_elgg_services()->hooks->getEvents()->triggerAfter('validate', 'user', $this);
+			_elgg_services()->events->triggerAfter('validate', 'user', $this);
 		} else {
-			_elgg_services()->hooks->getEvents()->triggerAfter('invalidate', 'user', $this);
+			_elgg_services()->events->triggerAfter('invalidate', 'user', $this);
 		}
 	}
 

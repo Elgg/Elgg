@@ -155,56 +155,11 @@ function generate_random_cleartext_password() {
  * @param string $username Username
  *
  * @return bool
- * @throws RegistrationException on invalid
+ * @throws RegistrationException
  */
 function validate_username($username) {
-	$config = _elgg_config();
-
-	if (strlen($username) < $config->minusername) {
-		$msg = elgg_echo('registration:usernametooshort', [$config->minusername]);
-		throw new \RegistrationException($msg);
-	}
-
-	// username in the database has a limit of 128 characters
-	if (strlen($username) > 128) {
-		$msg = elgg_echo('registration:usernametoolong', [128]);
-		throw new \RegistrationException($msg);
-	}
-
-	// Blacklist for bad characters (partially nicked from mediawiki)
-	$blacklist = '/[' .
-		'\x{0080}-\x{009f}' . // iso-8859-1 control chars
-		'\x{00a0}' .          // non-breaking space
-		'\x{2000}-\x{200f}' . // various whitespace
-		'\x{2028}-\x{202f}' . // breaks and control chars
-		'\x{3000}' .          // ideographic space
-		'\x{e000}-\x{f8ff}' . // private use
-		']/u';
-
-	if (preg_match($blacklist, $username)) {
-		// @todo error message needs work
-		throw new \RegistrationException(elgg_echo('registration:invalidchars'));
-	}
-
-	// Belts and braces
-	// @todo Tidy into main unicode
-	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=';
-
-	$blacklist2 = elgg_trigger_plugin_hook('username:character_blacklist', 'user',
-		['blacklist' => $blacklist2], $blacklist2);
-
-	for ($n = 0; $n < strlen($blacklist2); $n++) {
-		if (strpos($username, $blacklist2[$n]) !== false) {
-			$msg = elgg_echo('registration:invalidchars', [$blacklist2[$n], $blacklist2]);
-			$msg = htmlspecialchars($msg, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-			throw new \RegistrationException($msg);
-		}
-	}
-
-	$result = true;
-
-	return elgg_trigger_plugin_hook('registeruser:validate:username', 'all',
-		['username' => $username], $result);
+	elgg()->accounts->assertValidUsername($username);
+	return true;
 }
 
 /**
@@ -213,20 +168,11 @@ function validate_username($username) {
  * @param string $password Clear text password
  *
  * @return bool
- * @throws RegistrationException on invalid
+ * @throws RegistrationException
  */
 function validate_password($password) {
-	$config = _elgg_config();
-
-	if (strlen($password) < $config->min_password_length) {
-		$msg = elgg_echo('registration:passwordtooshort', [$config->min_password_length]);
-		throw new \RegistrationException($msg);
-	}
-
-	$result = true;
-
-	return elgg_trigger_plugin_hook('registeruser:validate:password', 'all',
-		['password' => $password], $result);
+	elgg()->accounts->assertValidPassword($password);
+	return true;
 }
 
 /**
@@ -234,19 +180,12 @@ function validate_password($password) {
  *
  * @param string $address Email address
  *
- * @throws RegistrationException on invalid
  * @return bool
+ * @throws RegistrationException
  */
 function validate_email_address($address) {
-	if (!is_email_address($address)) {
-		throw new \RegistrationException(elgg_echo('registration:notemail'));
-	}
-
-	// Got here, so lets try a hook (defaulting to ok)
-	$result = true;
-
-	return elgg_trigger_plugin_hook('registeruser:validate:email', 'all',
-		['email' => $address], $result);
+	elgg()->accounts->assertValidEmail($address);
+	return true;
 }
 
 /**
@@ -264,7 +203,24 @@ function validate_email_address($address) {
  * @throws RegistrationException
  */
 function register_user($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
-	return _elgg_services()->usersTable->register($username, $password, $name, $email, $allow_multiple_emails, $subtype);
+	return elgg()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype);
+}
+
+/**
+ * Assert that given registration details are valid and can be used to register the user
+ *
+ * @param string       $username              The username of the new user
+ * @param string|array $password              The password
+ *                                            Can be an array [$password, $confirm_password]
+ * @param string       $name                  The user's display name
+ * @param string       $email                 The user's email address
+ * @param bool         $allow_multiple_emails Allow the same email address to be
+ *                                            registered multiple times?
+ *
+ * @return \Elgg\Validation\ValidationResults
+ */
+function elgg_validate_registration_data($username, $password, $name, $email, $allow_multiple_emails = false) {
+	return elgg()->accounts->validateAccountData($username, $password, $name, $email, $allow_multiple_emails);
 }
 
 /**
@@ -561,6 +517,7 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 		'name' => 'account',
 		'text' => elgg_echo('account'),
 		'href' => $viewer->getURL(),
+		'link_class' => 'elgg-avatar-small',
 		'icon' => elgg_view('output/img', [
 			'src' => $viewer->getIconURL('small'),
 			'alt' => $viewer->getDisplayName(),

@@ -18,6 +18,9 @@ class CronCommand extends Command {
 			->addOption('interval', 'i', InputOption::VALUE_OPTIONAL,
 				'Name of the interval (e.g. hourly)'
 			)
+			->addOption('force', 'f', InputOption::VALUE_NONE,
+				'Force cron commands to run even if they are not yet due'
+			)
 			->addOption('time', 't', InputOption::VALUE_OPTIONAL,
 				'Time of the cron initialization'
 			);
@@ -42,7 +45,7 @@ class CronCommand extends Command {
 		$time = new \DateTime($time);
 
 		_elgg_services()->cron->setCurrentTime($time);
-		$jobs = _elgg_services()->cron->run($intervals);
+		$jobs = _elgg_services()->cron->run($intervals, $this->option('force'));
 
 		if (!$this->option('quiet')) {
 			foreach ($jobs as $job) {
@@ -50,7 +53,7 @@ class CronCommand extends Command {
 			}
 		}
 
-		return 1;
+		return 0;
 	}
 
 }

@@ -37,6 +37,11 @@ class ElggPlugin extends ElggObject {
 	 * @var string
 	 */
 	protected $errorMsg = '';
+	
+	/**
+	 * @var bool
+	 */
+	protected $activated;
 
 	/**
 	 * {@inheritdoc}
@@ -539,17 +544,12 @@ class ElggPlugin extends ElggObject {
 	 * @return bool
 	 */
 	public function isActive() {
-		if (!$this->guid) {
-			return false;
+		if (isset($this->activated)) {
+			return $this->activated;
 		}
 
-		$site = elgg_get_site_entity();
-
-		if (!($site instanceof \ElggSite)) {
-			return false;
-		}
-
-		return check_entity_relationship($this->guid, 'active_plugin', $site->guid) instanceof ElggRelationship;
+		$this->activated = elgg_is_active_plugin($this->getID());
+		return $this->activated;
 	}
 
 	/**
@@ -612,18 +612,20 @@ class ElggPlugin extends ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->hooks->getEvents()->trigger('activate', 'plugin', $params);
+		$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
 
 		// if there are any on_enable functions, start the plugin now and run them
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
 			try {
-				_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+				_elgg_services()->events->trigger('cache:flush', 'system');
 
 				$setup = $this->boot();
 				if ($setup instanceof Closure) {
 					$setup();
 				}
+
+				$this->getBootstrap()->activate();
 
 				if ($this->canReadFile('activate.php')) {
 					$return = $this->includeFile('activate.php');
@@ -638,7 +640,7 @@ class ElggPlugin extends ElggObject {
 		if ($return === false) {
 			$this->deactivate();
 		} else {
-			_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+			_elgg_services()->events->trigger('cache:flush', 'system');
 			_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
 		}
 
@@ -716,10 +718,12 @@ class ElggPlugin extends ElggObject {
 			'plugin_entity' => $this,
 		];
 
-		$return = _elgg_services()->hooks->getEvents()->trigger('deactivate', 'plugin', $params);
+		$return = _elgg_services()->events->trigger('deactivate', 'plugin', $params);
 		if ($return === false) {
 			return false;
 		}
+
+		$this->getBootstrap()->deactivate();
 
 		// run any deactivate code
 		if ($this->canReadFile('deactivate.php')) {
@@ -731,11 +735,58 @@ class ElggPlugin extends ElggObject {
 
 		$this->deactivateEntities();
 
-		_elgg_services()->hooks->getEvents()->trigger('cache:flush', 'system');
+		_elgg_services()->events->trigger('cache:flush', 'system');
 
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
 
 		return $this->setStatus(false);
+	}
+	
+	/**
+	 * Function to set the activated state. Used when booting plugins.
+	 *
+	 * @see \Elgg\Database\Plugins->setBootPlugins()
+	 * @return void
+	 * @internal
+	 */
+	public function setAsActivated() {
+		$this->activated = true;
+	}
+
+	/**
+	 * Bootstrap object
+	 * @return \Elgg\PluginBootstrapInterface
+	 * @throws PluginException
+	 * @access private
+	 * @internal
+	 */
+	public function getBootstrap() {
+		$bootstrap = $this->getStaticConfig('bootstrap');
+		if ($bootstrap) {
+			if (!is_subclass_of($bootstrap, \Elgg\PluginBootstrapInterface::class)) {
+				throw new PluginException($bootstrap . ' must implement ' . \Elgg\PluginBootstrapInterface::class);
+			}
+
+			return new $bootstrap($this, _elgg_services()->dic);
+		}
+
+		return new \Elgg\DefaultPluginBootstrap($this, _elgg_services()->dic);
+	}
+
+	/**
+	 * Register plugin classes and require composer autoloader
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public function autoload() {
+		$this->registerClasses();
+
+		$autoload_file = 'vendor/autoload.php';
+		if ($this->canReadFile($autoload_file)) {
+			Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+		}
 	}
 
 	/**
@@ -743,6 +794,8 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @throws PluginException
 	 * @return \Closure|null
+	 * @access private
+	 * @internal
 	 */
 	public function boot() {
 		// Detect plugins errors early and throw so that plugins service can disable the plugin
@@ -750,14 +803,11 @@ class ElggPlugin extends ElggObject {
 			throw new PluginException($this->getError());
 		}
 
-		$this->registerClasses();
-
-		$autoload_file = 'vendor/autoload.php';
-		if ($this->canReadFile($autoload_file)) {
-			Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
-		}
+		$this->autoload();
 
 		$this->activateEntities();
+
+		$this->getBootstrap()->load();
 
 		$result = null;
 		if ($this->canReadFile('start.php')) {
@@ -767,6 +817,8 @@ class ElggPlugin extends ElggObject {
 		$this->registerLanguages();
 		$this->registerViews();
 
+		$this->getBootstrap()->boot();
+
 		return $result;
 	}
 
@@ -775,12 +827,16 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @throws InvalidParameterException
 	 * @throws PluginException
+	 * @access private
+	 * @internal
 	 */
 	public function init() {
 		$this->registerRoutes();
 		$this->registerActions();
 		$this->registerEntities();
 		$this->registerWidgets();
+
+		$this->getBootstrap()->init();
 	}
 
 	/**
@@ -1143,6 +1199,10 @@ class ElggPlugin extends ElggObject {
 			$result = add_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		} else {
 			$result = remove_entity_relationship($this->guid, 'active_plugin', $site->guid);
+		}
+		
+		if ($result) {
+			$this->activated = $active;
 		}
 
 		$this->invalidateCache();

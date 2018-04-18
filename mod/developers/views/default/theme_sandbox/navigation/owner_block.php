@@ -1,13 +1,37 @@
 <?php
-$params = [];
-$params['menu'] = [];
-$params['menu']['default'] = [];
-for ($i=1; $i<=5; $i++) {
-	$params['menu']['default'][] = new ElggMenuItem($i, "Page $i", "#");
-}
-$params['menu']['default'][2]->setSelected(true);
-$params['name'] = 'owner-block';
 
-echo '<div class="theme-sandbox-demo-sidebar">';
-echo elgg_view('navigation/menu/default', $params);
-echo '</div>';
+$items = [];
+
+foreach (['bell', 'bank', 'coffee', 'trash'] as $icon) {
+	$items[] = [
+		'name' => $icon,
+		'icon' => $icon,
+		'text' => "Menu item",
+		'href' => '#',
+		'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',
+	];
+
+	foreach (['A', 'B', 'C'] as $letter) {
+		$items[] = [
+			'name' => "$icon:$letter",
+			'href' => '#',
+			'text' => "Child $letter",
+			'parent_name' => $icon,
+			'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',
+		];
+
+		foreach (['AA', 'BB', 'CC'] as $subletter) {
+			$items[] = [
+				'name' => "$icon:$letter:$subletter",
+				'href' => '#',
+				'text' => "Child $subletter",
+				'parent_name' => "$icon:$letter",
+				'link_class' => $icon == 'trash' ? 'elgg-state elgg-state-danger' : '',
+			];
+		}
+	}
+}
+
+echo elgg_view_menu('owner_block', [
+	'items' => $items,
+]);

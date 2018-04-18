@@ -184,6 +184,9 @@ elgg.ui.initHoverMenu = function(parent) {
 elgg.ui.requiresConfirmation = function(e) {
 	var confirmText = $(this).data('confirm') || elgg.echo('question:areyousure');
 	if (!confirm(confirmText)) {
+		e.preventDefault();
+		e.stopPropagation();
+		e.stopImmediatePropagation();
 		return false;
 	}
 };

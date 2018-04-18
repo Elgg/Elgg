@@ -57,6 +57,8 @@ class Seeder {
 				continue;
 			}
 			$seeder = new $seed($limit);
+			/* @var $seeder Seed */
+
 			elgg_log('Starting seeding with ' . get_class($seeder));
 			$seeder->seed();
 			elgg_log('Finished seeding with ' . get_class($seeder));

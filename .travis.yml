@@ -89,8 +89,9 @@ matrix:
         - php -f ./.scripts/seeder/seed.php # can't use elgg-cli because it's a 2.3 install
         - git checkout -
         - composer install --prefer-dist
-        - php -f ./.scripts/travis/upgrade.php
+        - php ./elgg-cli upgrade async
         - php -f ./.scripts/travis/enable_plugins.php
+        - php ./elgg-cli upgrade async
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
       script:

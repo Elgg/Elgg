@@ -11,13 +11,14 @@
  * @return void
  */
 function groups_init() {
-	
-	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/member_count');
-	elgg_extend_view('object/elements/imprint/contents', 'groups/imprint/membership_type');
-	
+
 	// Set up the menu
-	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/all');
-	elgg_register_menu_item('site', $item);
+	elgg_register_menu_item('site', [
+		'name' => 'groups',
+		'icon' => 'users',
+		'text' => elgg_echo('groups'),
+		'href' => elgg_generate_url('collection:group:group:all'),
+	]);
 
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
@@ -69,10 +70,8 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu_group_profile');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
-	elgg_register_plugin_hook_handler('prepare', 'menu:title', '_groups_title_menu_prepare');
 
 	elgg_register_plugin_hook_handler('gatekeeper', 'group:group', '_groups_gatekeeper_allow_profile_page');
-	elgg_register_plugin_hook_handler('forward', '403', '_groups_gatekeeper_redirect');
 }
 
 /**
@@ -968,44 +967,6 @@ function _groups_title_menu(\Elgg\Hook $hook) {
 }
 
 /**
- * Prepares the group dropdown menu item with a toggle indicator
- *
- * @elgg_plugin_hook prepare menu:title
- *
- * @param \Elgg\Hook $hook Hook
- * @return \ElggMenuItem[]
- *
- * @internal
- */
-function _groups_title_menu_prepare(\Elgg\Hook $hook) {
-	$group = $hook->getEntityParam();
-	if (!$group instanceof ElggGroup) {
-		return;
-	}
-	
-	$result = $hook->getValue();
-	if (!is_array($result)) {
-		return;
-	}
-	
-	foreach ($result as $section) {
-		foreach ($section as $item) {
-			if ($item->getName() !== 'group-dropdown') {
-				continue;
-			}
-			
-			if (empty($item->getChildren())) {
-				return;
-			}
-			
-			$item->icon_alt = 'angle-down';
-			
-			return $result;
-		}
-	}
-}
-
-/**
  * Helper handler to correctly resolve page owners on group routes
  *
  * @see default_page_owner_handler()
@@ -1224,46 +1185,25 @@ function groups_prepare_form_vars($group = null) {
 }
 
 /**
- * Redirect unsuccessful attempts to view group content to group's profile
- *
- * @param \Elgg\Hook $hook Hook
- * @return string|void
- */
-function _groups_gatekeeper_redirect(\Elgg\Hook $hook) {
-
-	$exception = $hook->getParam('exception');
-	if ($exception instanceof \Elgg\GroupGatekeeperException) {
-		$page_owner = elgg_get_page_owner_entity();
-		if ($page_owner instanceof ElggGroup) {
-			return $page_owner->getURL();
-		}
-	}
-}
-
-/**
  * Allow users to visit the group profile page even if group content access mode is set to group members only
+ *
+ * @elgg_plugin_hook gatekeeper group:group
  *
  * @param \Elgg\Hook $hook Hook
  * @return void|true
  */
 function _groups_gatekeeper_allow_profile_page(\Elgg\Hook $hook) {
 
-	$exception = $hook->getValue();
-	if (!$exception instanceof \Elgg\GroupGatekeeperException) {
+	$entity = $hook->getEntityParam();
+	if (!has_access_to_entity($entity)) {
 		return;
 	}
-	
-	$group = $hook->getEntityParam();
-	if (!$group instanceof ElggGroup) {
-		return;
+
+	$route = $hook->getParam('route');
+
+	if ($route === 'view:group' || $route === 'view:group:group') {
+		return true;
 	}
-	
-	// check current URL with the group URL
-	if (strpos(current_page_url(), $group->getURL()) === false) {
-		return;
-	}
-	
-	return true;
 }
 
 return function() {

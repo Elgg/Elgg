@@ -47,7 +47,8 @@ function _elgg_cron_page_handler($segments) {
 
 	$output = '';
 	try {
-		$jobs = _elgg_services()->cron->run($intervals);
+		$force = (bool) get_input('force');
+		$jobs = _elgg_services()->cron->run($intervals, $force);
 		foreach ($jobs as $job) {
 			$output .= $job->getOutput() . PHP_EOL;
 		}

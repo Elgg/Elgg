@@ -266,18 +266,28 @@ function elgg_list_river(array $options = []) {
 		// no need for pagination if listing is unlimited
 		$options["pagination"] = false;
 	}
-
-	$options['count'] = true;
-	$count = elgg_get_river($options);
-
-	if ($count > 0) {
-		$options['count'] = false;
-		$items = elgg_get_river($options);
-	} else {
-		$items = [];
+	
+	$options['count'] = false;
+	$items = elgg_get_river($options);
+	$options['count'] = is_array($items) ? count($items) : 0;
+	
+	if (!empty($items)) {
+		$count_needed = true;
+		if (!$options['pagination']) {
+			$count_needed = false;
+		} elseif (!$options['offset'] && !$options['limit']) {
+			$count_needed = false;
+		} elseif (($options['count'] < (int) $options['limit']) && !$options['offset']) {
+			$count_needed = false;
+		}
+		
+		if ($count_needed) {
+			$options['count'] = true;
+		
+			$options['count'] = (int) elgg_get_river($options);
+		}
 	}
-
-	$options['count'] = $count;
+	
 	$options['items'] = $items;
 
 	return elgg_view('page/components/list', $options);

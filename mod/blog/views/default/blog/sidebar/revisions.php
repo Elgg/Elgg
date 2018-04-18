@@ -1,4 +1,6 @@
 <?php
+use Elgg\Database\Clauses\OrderByClause;
+
 /**
  * Blog sidebar menu showing revisions
  *
@@ -29,8 +31,11 @@ if ($auto_save_annotations) {
 
 $saved_revisions = $blog->getAnnotations([
 	'annotation_name' => 'blog_revision',
-	'order_by' => 'n_table.time_created desc, n_table.id desc',
-	'limit' => false
+	'order_by' => [
+		new OrderByClause('n_table.time_created', 'DESC'),
+		new OrderByClause('n_table.id', 'DESC'),
+	],
+	'limit' => false,
 ]);
 
 $revisions = array_merge($revisions, $saved_revisions);
