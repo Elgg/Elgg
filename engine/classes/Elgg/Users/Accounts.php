@@ -67,12 +67,13 @@ class Accounts {
 	/**
 	 * Validate registration details to ensure they can be used to register a new user account
 	 *
-	 * @param string $username              The username of the new user
-	 * @param string $password              The password
-	 * @param string $name                  The user's display name
-	 * @param string $email                 The user's email address
-	 * @param bool   $allow_multiple_emails Allow the same email address to be
-	 *                                      registered multiple times?
+	 * @param string       $username              The username of the new user
+	 * @param string|array $password              The password
+	 *                                            Can be an array [$password, $oonfirm_password]
+	 * @param string       $name                  The user's display name
+	 * @param string       $email                 The user's email address
+	 * @param bool         $allow_multiple_emails Allow the same email address to be
+	 *                                            registered multiple times?
 	 *
 	 * @return ValidationResults
 	 */
@@ -89,11 +90,7 @@ class Accounts {
 			}
 
 			try {
-				$this->assertValidEmail($email);
-
-				if (!$allow_multiple_emails && $this->users->getByEmail($email)) {
-					throw new RegistrationException($this->translator->translate('registration:dupeemail'));
-				}
+				$this->assertValidEmail($email, !$allow_multiple_emails);
 
 				$results->pass('email', $email);
 			} catch (RegistrationException $ex) {
@@ -109,11 +106,7 @@ class Accounts {
 			}
 
 			try {
-				$this->assertValidUsername($username);
-
-				if ($this->users->getByUsername($username)) {
-					throw new RegistrationException($this->translator->translate('registration:userexists'));
-				}
+				$this->assertValidUsername($username, true);
 
 				$results->pass('username', $username);
 			} catch (RegistrationException $ex) {
@@ -164,10 +157,6 @@ class Accounts {
 	 * @throws RegistrationException
 	 */
 	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
-		// no need to trim password
-		$username = trim($username);
-		$name = trim(strip_tags($name));
-		$email = trim($email);
 
 		$this->assertValidAccountData($username, $password, $name, $email, $allow_multiple_emails);
 
@@ -213,12 +202,13 @@ class Accounts {
 	 *
 	 * This should only permit chars that are valid on the file system as well.
 	 *
-	 * @param string $username Username
+	 * @param string $username            Username
+	 * @param bool   $assert_unregistered Also assert that the username has not yet been registered
 	 *
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertValidUsername($username) {
+	public function assertValidUsername($username, $assert_unregistered = false) {
 
 		if (strlen($username) < $this->config->minusername) {
 			$msg = $this->translator->translate('registration:usernametooshort', [$this->config->minusername]);
@@ -275,17 +265,40 @@ class Accounts {
 		if (!$result) {
 			throw new RegistrationException($this->translator->translate('registration:usernamenotvalid'));
 		}
+
+		if ($assert_unregistered) {
+			$exists = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
+				return $this->users->getByUsername($username);
+			});
+
+			if ($exists) {
+				throw new RegistrationException($this->translator->translate('registration:userexists'));
+			}
+		}
 	}
 
 	/**
 	 * Simple validation of a password
 	 *
-	 * @param string $password Clear text password
+	 * @param string|array $password Clear text password
+	 *                               Can be an array [$password, $confirm_password]
 	 *
 	 * @return void
 	 * @throws RegistrationException
 	 */
 	public function assertValidPassword($password) {
+
+		if (is_array($password)) {
+			list($password, $password2) = $password;
+
+			if (empty($password) || empty($password2)) {
+				throw new RegistrationException(elgg_echo('RegistrationException:EmptyPassword'));
+			}
+
+			if (strcmp($password, $password2) != 0) {
+				throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
+			}
+		}
 
 		if (strlen($password) < $this->config->min_password_length) {
 			$msg = $this->translator->translate('registration:passwordtooshort', [$this->config->min_password_length]);
@@ -305,14 +318,30 @@ class Accounts {
 	}
 
 	/**
-	 * Simple validation of a email.
+	 * Assert that user can authenticate with the given password
 	 *
-	 * @param string $address Email address
+	 * @param ElggUser $user     User entity
+	 * @param string   $password Password
 	 *
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertValidEmail($address) {
+	public function assertCurrentPassword(ElggUser $user, $password) {
+		if (!$this->passwords->verify($password, $user->password_hash)) {
+			throw new RegistrationException($this->translator->translate('LoginException:PasswordFailure'));
+		}
+	}
+
+	/**
+	 * Simple validation of a email.
+	 *
+	 * @param string $address             Email address
+	 * @param bool   $assert_unregistered Also assert that the email address has not yet been used for a user account
+	 *
+	 * @return void
+	 * @throws RegistrationException
+	 */
+	public function assertValidEmail($address, $assert_unregistered = false) {
 		if (!$this->isValidEmail($address)) {
 			throw new RegistrationException($this->translator->translate('registration:notemail'));
 		}
@@ -326,6 +355,16 @@ class Accounts {
 
 		if (!$result) {
 			throw new RegistrationException($this->translator->translate('registration:emailnotvalid'));
+		}
+
+		if ($assert_unregistered) {
+			$exists = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($address) {
+				return $this->users->getByEmail($address);
+			});
+
+			if ($exists) {
+				throw new RegistrationException($this->translator->translate('registration:dupeemail'));
+			}
 		}
 	}
 

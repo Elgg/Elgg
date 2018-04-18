@@ -18,16 +18,12 @@ $password2 = $request->getParam('password2', null, false);
 $email = $request->getParam('email');
 $name = $request->getParam('name');
 
+$username = trim($username);
+$name = trim(strip_tags($name));
+$email = trim($email);
+
 try {
-	if (trim($password) == "" || trim($password2) == "") {
-		throw new RegistrationException(elgg_echo('RegistrationException:EmptyPassword'));
-	}
-
-	if (strcmp($password, $password2) != 0) {
-		throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
-	}
-
-	$validation = elgg_validate_registration_data($username, $password, $name, $email);
+	$validation = elgg_validate_registration_data($username, [$password, $password2], $name, $email);
 	$failures = $validation->getFailures();
 	if ($failures) {
 		$messages = array_map(function (\Elgg\Validation\ValidationResult $e) {
