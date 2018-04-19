@@ -1146,7 +1146,7 @@ function elgg_signed_request_gatekeeper() {
  * @since 1.8.0
  */
 function elgg_extract($key, $array, $default = null, $strict = true) {
-	if (!is_array($array)) {
+	if (!is_array($array) && !$array instanceof ArrayAccess) {
 		return $default;
 	}
 

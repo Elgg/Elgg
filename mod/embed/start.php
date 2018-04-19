@@ -5,6 +5,8 @@
  * @package ElggEmbed
  */
 
+use Elgg\Collections\Collection;
+
 /**
  * Init function
  *
@@ -71,12 +73,12 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 /**
  * Select the correct embed tab for display
  *
- * @param string         $hook  'register'
- * @param string         $type  'menu:embed'
- * @param ElggMenuItem[] $items current return value
- * @param array          $vars  supplied params
+ * @param string     $hook  'register'
+ * @param string     $type  'menu:embed'
+ * @param Collection $items current return value
+ * @param array      $vars  supplied params
  *
- * @return ElggMenuItem[]
+ * @return Collection
  */
 function embed_select_tab($hook, $type, $items, $vars) {
 	$tab_name = elgg_extract('tab', $vars);
@@ -89,7 +91,8 @@ function embed_select_tab($hook, $type, $items, $vars) {
 	}
 
 	if (!elgg_get_config('embed_tab') && count($items) > 0) {
-		$items[0]->setSelected();
+		$keys = array_keys($items->all());
+		$items->get($keys[0])->setSelected();
 		elgg_set_config('embed_tab', $items[0]);
 	}
 	

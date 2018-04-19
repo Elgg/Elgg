@@ -1,4 +1,9 @@
 <?php
+
+use Elgg\Collections\Collection;
+use Elgg\Menu\MenuItems;
+use Elgg\Menu\PreparedMenu;
+
 /**
  * Elgg Menu Builder
  *
@@ -9,148 +14,176 @@
 class ElggMenuBuilder {
 
 	/**
-	 * @var \ElggMenuItem[]
+	 * @var MenuItems
 	 */
-	protected $menu = [];
+	protected $items;
 
-	protected $selected = null;
+	/**
+	 * @var ElggMenuItem
+	 */
+	protected $selected_item = null;
 
 	/**
 	 * \ElggMenuBuilder constructor
 	 *
-	 * @param \ElggMenuItem[] $menu Array of \ElggMenuItem objects
+	 * @param ElggMenuItem[]|MenuItems $items Array of \ElggMenuItem objects
+	 *
+	 * @throws InvalidParameterException
 	 */
-	public function __construct(array $menu) {
-		$this->menu = $menu;
+	public function __construct($items) {
+		if (is_array($items)) {
+			$items = new MenuItems($items);
+		}
+
+		if (!$items instanceof MenuItems) {
+			throw new InvalidParameterException(__CLASS__ . ' expects an instanceof of ' . MenuItems::class);
+		}
+
+		$this->items = $items;
 	}
 
 	/**
-	 * Get a prepared menu array
+	 * Get a prepared menu
 	 *
 	 * @param mixed $sort_by Method to sort the menu by. @see \ElggMenuBuilder::sort()
-	 * @return array
+	 *
+	 * @return PreparedMenu
 	 */
 	public function getMenu($sort_by = 'priority') {
 
-		$this->selectFromContext();
+		$this->selected_item = $this->findSelected();
 
-		$this->selected = $this->findSelected();
-
-		$this->setupSections();
-
-		$this->setupTrees();
-
-		$this->sort($sort_by);
-
-		return $this->menu;
+		return $this->prepare($this->filterByContext(), $sort_by);
 	}
 
 	/**
 	 * Get the selected menu item
 	 *
-	 * @return \ElggMenuItem
+	 * @return ElggMenuItem|null
 	 */
 	public function getSelected() {
-		return $this->selected;
+		return $this->selected_item;
 	}
 
 	/**
 	 * Select menu items for the current context
 	 *
-	 * @return void
+	 * @return MenuItems
 	 */
-	protected function selectFromContext() {
-		if (!isset($this->menu)) {
-			$this->menu = [];
-			return;
-		}
+	protected function filterByContext() {
+		return $this->items->filter(function (ElggMenuItem $item) {
+			return $item->inContext();
+		});
+	}
 
-		// get menu items for this context
-		$selected_menu = [];
-		foreach ($this->menu as $menu_item) {
-			if (!is_object($menu_item)) {
-				_elgg_services()->logger->error("A non-object was passed to \ElggMenuBuilder");
-				continue;
-			}
-			if ($menu_item->inContext()) {
-				$selected_menu[] = $menu_item;
-			}
-		}
+	/**
+	 * Prepare a menu
+	 *
+	 * @param MenuItems $items   Menu items
+	 * @param string    $sort_by Sorting parameter
+	 *
+	 * @return PreparedMenu
+	 */
+	protected function prepare(MenuItems $items, $sort_by = 'priority') {
+		$menu = $this->setupSections($items);
+		$menu = $this->setupTrees($menu);
+		$menu = $this->sort($menu, $sort_by);
 
-		$this->menu = $selected_menu;
+		return $menu;
 	}
 
 	/**
 	 * Group the menu items into sections
 	 *
-	 * @return void
+	 * @param MenuItems $items Items
+	 *
+	 * @return PreparedMenu
 	 */
-	protected function setupSections() {
-		$sectioned_menu = [];
-		foreach ($this->menu as $menu_item) {
-			if (!isset($sectioned_menu[$menu_item->getSection()])) {
-				$sectioned_menu[$menu_item->getSection()] = [];
-			}
-			$sectioned_menu[$menu_item->getSection()][] = $menu_item;
+	protected function setupSections(MenuItems $items) {
+		$menu = new PreparedMenu();
+
+		$section_ids = $items->map(function (ElggMenuItem $item) {
+			return $item->getSection();
+		});
+
+		$section_ids = array_unique(array_values($section_ids));
+
+		foreach ($section_ids as $index => $section_id) {
+			$section_items = $items->filter(function (ElggMenuItem $item) use ($section_id) {
+				return $item->getSection() == $section_id;
+			});
+
+			$section = new \Elgg\Menu\MenuSection();
+
+			$section->setId($section_id);
+			$section->setPriority($index);
+			$section->fill($section_items);
+
+			$menu->add($section);
 		}
-		$this->menu = $sectioned_menu;
+
+		return $menu;
 	}
 
 	/**
 	 * Create trees for each menu section
 	 *
-	 * @internal The tree is doubly linked (parent and children links)
-	 * @return void
+	 * @param PreparedMenu $menu Prepared menu
+	 *
+	 * @return PreparedMenu
 	 */
-	protected function setupTrees() {
-		$menu_tree = [];
+	protected function setupTrees(PreparedMenu $menu) {
 
-		foreach ($this->menu as $key => $section) {
+		return $menu->walk(function (\Elgg\Menu\MenuSection $section) {
+
 			$parents = [];
 			$children = [];
 			$all_menu_items = [];
-			
+
 			// divide base nodes from children
 			foreach ($section as $menu_item) {
 				/* @var \ElggMenuItem $menu_item */
 				$parent_name = $menu_item->getParentName();
 				$menu_item_name = $menu_item->getName();
-				
+
 				if (!$parent_name) {
 					// no parents so top level menu items
 					$parents[$menu_item_name] = $menu_item;
 				} else {
 					$children[$menu_item_name] = $menu_item;
 				}
-				
+
 				$all_menu_items[$menu_item_name] = $menu_item;
 			}
-			
+
 			if (empty($all_menu_items)) {
 				// empty sections can be skipped
-				continue;
+				return;
 			}
-						
+
 			if (empty($parents)) {
 				// menu items without parents? That is sad.. report to the log
 				$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:NoParents');
 				_elgg_services()->logger->notice($message);
-				
+
 				// skip section as without parents menu can not be drawn
-				continue;
+				return;
 			}
-						
+
 			foreach ($children as $menu_item_name => $menu_item) {
 				$parent_name = $menu_item->getParentName();
-								
+
 				if (!array_key_exists($parent_name, $all_menu_items)) {
 					// orphaned child, inform authorities and skip to next item
-					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:OrphanedChild', [$menu_item_name, $parent_name]);
+					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:OrphanedChild', [
+						$menu_item_name,
+						$parent_name
+					]);
 					_elgg_services()->logger->notice($message);
-					
+
 					continue;
 				}
-				
+
 				if (!in_array($menu_item, $all_menu_items[$parent_name]->getData('children'))) {
 					$all_menu_items[$parent_name]->addChild($menu_item);
 					$menu_item->setParent($all_menu_items[$parent_name]);
@@ -158,112 +191,91 @@ class ElggMenuBuilder {
 					// menu item already existed in parents children, report the duplicate registration
 					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:DuplicateChild', [$menu_item_name]);
 					_elgg_services()->logger->notice($message);
-					
+
 					continue;
 				}
 			}
-
 			// convert keys to indexes for first level of tree
 			$parents = array_values($parents);
 
-			$menu_tree[$key] = $parents;
-		}
-
-		$this->menu = $menu_tree;
+			$section->fill($parents);
+		});
 	}
 
 	/**
 	 * Find the menu item that is currently selected
 	 *
-	 * @return \ElggMenuItem
+	 * @return ElggMenuItem|null
 	 */
 	protected function findSelected() {
-
-		// do we have a selected menu item already
-		foreach ($this->menu as $menu_item) {
+		foreach ($this->items as $menu_item) {
 			if ($menu_item->getSelected()) {
 				return $menu_item;
 			}
 		}
-
-		// scan looking for a selected item
-		foreach ($this->menu as $menu_item) {
-			if ($menu_item->getHref()) {
-				if (elgg_http_url_is_identical(current_page_url(), $menu_item->getHref())) {
-					$menu_item->setSelected(true);
-					return $menu_item;
-				}
-			}
-		}
-
-		return null;
 	}
 
 	/**
 	 * Sort the menu sections and trees
 	 *
-	 * @param mixed $sort_by Sort type as string or php callback
-	 * @return void
+	 * @param PreparedMenu $menu    Prepared menu
+	 * @param mixed        $sort_by Sort type as string or php callback
+	 *
+	 * @return PreparedMenu
 	 */
-	protected function sort($sort_by) {
+	protected function sort(PreparedMenu $menu, $sort_by) {
 
-		// sort sections
-		ksort($this->menu);
+		$menu->sort(function (\Elgg\Menu\MenuSection $s1, \Elgg\Menu\MenuSection $s2) {
+			return strnatcmp($s1->getId(), $s2->getId());
+		});
 
+		$sorter = $this->getSortCallback($sort_by);
+
+		if (!$sorter) {
+			return $menu;
+		}
+
+		return $menu->walk(function (\Elgg\Menu\MenuSection $section) use ($sorter) {
+			$indices = array_keys($section->all());
+
+			$section->walk(function (\ElggMenuItem $item) use ($indices, $sorter) {
+				$item->setData('original_order', array_search($item->getId(), $indices));
+				$item->sortChildren($sorter);
+			});
+
+			$section->sort($sorter);
+		});
+	}
+
+	/**
+	 * Get callback function for sorting
+	 *
+	 * @param string $sort_by Sort name
+	 *
+	 * @return callable|null
+	 */
+	protected function getSortCallback($sort_by = null) {
 		switch ($sort_by) {
 			case 'text':
-				$sort_callback = [\ElggMenuBuilder::class, 'compareByText'];
-				break;
+				return [\ElggMenuBuilder::class, 'compareByText'];
+
 			case 'name':
-				$sort_callback = [\ElggMenuBuilder::class, 'compareByName'];
-				break;
+				return [\ElggMenuBuilder::class, 'compareByName'];
+
 			case 'priority':
-				$sort_callback = [\ElggMenuBuilder::class, 'compareByPriority'];
-				break;
-			case 'register':
-				// use registration order - usort breaks this
-				return;
-				break;
-			default:
-				if (is_callable($sort_by)) {
-					$sort_callback = $sort_by;
-				} else {
-					return;
-				}
-				break;
+				return [\ElggMenuBuilder::class, 'compareByPriority'];
 		}
 
-		// sort each section
-		foreach ($this->menu as $index => $section) {
-			foreach ($section as $key => $node) {
-				$section[$key]->setData('original_order', $key);
-			}
-			usort($section, $sort_callback);
-			$this->menu[$index] = $section;
-
-			// depth first traversal of tree
-			foreach ($section as $root) {
-				$stack = [];
-				array_push($stack, $root);
-				while (!empty($stack)) {
-					$node = array_pop($stack);
-					/* @var \ElggMenuItem $node */
-					$node->sortChildren($sort_callback);
-					$children = $node->getChildren();
-					if ($children) {
-						$stack = array_merge($stack, $children);
-					}
-				}
-			}
-		}
+		return $sort_by && is_callable($sort_by) ? $sort_by : null;
 	}
 
 	/**
 	 * Compare two menu items by their display text
 	 * HTML tags are stripped before comparison
 	 *
-	 * @param \ElggMenuItem $a Menu item
-	 * @param \ElggMenuItem $b Menu item
+	 * @param ElggMenuItem $a Menu item
+	 * @param ElggMenuItem $b Menu item
+	 *
 	 * @return bool
 	 */
 	public static function compareByText($a, $b) {
@@ -274,14 +286,16 @@ class ElggMenuBuilder {
 		if ($result === 0) {
 			return $a->getData('original_order') - $b->getData('original_order');
 		}
+
 		return $result;
 	}
 
 	/**
 	 * Compare two menu items by their identifiers
 	 *
-	 * @param \ElggMenuItem $a Menu item
-	 * @param \ElggMenuItem $b Menu item
+	 * @param ElggMenuItem $a Menu item
+	 * @param ElggMenuItem $b Menu item
+	 *
 	 * @return bool
 	 */
 	public static function compareByName($a, $b) {
@@ -292,14 +306,16 @@ class ElggMenuBuilder {
 		if ($result === 0) {
 			return $a->getData('original_order') - $b->getData('original_order');
 		}
+
 		return $result;
 	}
 
 	/**
 	 * Compare two menu items by their priority
 	 *
-	 * @param \ElggMenuItem $a Menu item
-	 * @param \ElggMenuItem $b Menu item
+	 * @param ElggMenuItem $a Menu item
+	 * @param ElggMenuItem $b Menu item
+	 *
 	 * @return bool
 	 * @since 1.9.0
 	 */
@@ -310,6 +326,7 @@ class ElggMenuBuilder {
 		if ($aw == $bw) {
 			return $a->getData('original_order') - $b->getData('original_order');
 		}
+
 		return $aw - $bw;
 	}
 }

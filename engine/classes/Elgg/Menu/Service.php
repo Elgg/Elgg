@@ -1,6 +1,8 @@
 <?php
+
 namespace Elgg\Menu;
 
+use Elgg\Collections\Collection;
 use Elgg\PluginHooksService;
 use Elgg\Config;
 use ElggMenuBuilder;
@@ -26,7 +28,8 @@ class Service {
 	 *
 	 * @param PluginHooksService $hooks  Plugin hooks
 	 * @param Config             $config Elgg config
-	 * @access private
+	 *
+	 * @access   private
 	 * @internal Do not use. Use `elgg()->menus`.
 	 */
 	public function __construct(PluginHooksService $hooks, Config $config) {
@@ -61,10 +64,10 @@ class Service {
 
 		$items = $this->prepareMenuItems(elgg_extract('items', $params, []));
 		unset($params['items']);
-		
+
 		if ($menus && isset($menus[$name])) {
 			$registered_items = elgg_extract($name, $menus, []);
-			$items = array_merge($items, $registered_items);
+			$items->merge($registered_items);
 		}
 
 		$params['name'] = $name;
@@ -113,12 +116,13 @@ class Service {
 	 *
 	 * @return UnpreparedMenu
 	 */
-	function combineMenus(array $names = [], array $params = [], $new_name = '') {
+	public function combineMenus(array $names = [], array $params = [], $new_name = '') {
 		if (!$new_name) {
 			$new_name = implode('__', $names);
 		}
 
-		$all_items = [];
+		$all_items = new MenuItems();
+
 		foreach ($names as $name) {
 			$items = $this->getUnpreparedMenu($name, $params)->getItems();
 
@@ -128,7 +132,8 @@ class Service {
 					$item->setSection($name);
 				}
 				$item->setData('menu_name', $name);
-				$all_items[] = $item;
+
+				$all_items->add($item);
 			}
 		}
 
@@ -141,11 +146,12 @@ class Service {
 	 * Prepare menu items
 	 *
 	 * @param array $items An array of ElggMenuItem instances or menu item factory options
-	 * @return ElggMenuItem[]
+	 *
+	 * @return MenuItems
 	 */
-	public function prepareMenuItems(array $items = []) {
-		$prepared_items = [];
-		
+	public function prepareMenuItems($items = []) {
+		$prepared_items = new MenuItems();
+
 		foreach ($items as $item) {
 			if (is_array($item)) {
 				$options = $item;
@@ -155,8 +161,8 @@ class Service {
 			if (!$item instanceof ElggMenuItem) {
 				continue;
 			}
-			
-			$prepared_items[] = $item;
+
+			$prepared_items->add($item);
 		}
 
 		return $prepared_items;

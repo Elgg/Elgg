@@ -10,6 +10,14 @@
  * @uses $vars['show_section_headers'] Do we show headers for each section?
  */
 
+use Elgg\Menu\MenuSection;
+use Elgg\Menu\PreparedMenu;
+
+$menu = elgg_extract('menu', $vars);
+if (!$menu instanceof PreparedMenu) {
+	return;
+}
+
 // we want css classes to use dashes
 $name = elgg_extract('name', $vars, '');
 
@@ -22,15 +30,19 @@ $class = elgg_extract_class($vars, ["elgg-menu", "elgg-menu-{$name_class_selecto
 
 $menu_view = '';
 
-foreach ($vars['menu'] as $section => $menu_items) {
+foreach ($menu as $section) {
+	if (!$section instanceof MenuSection) {
+		continue;
+	}
+
 	$section_class = $class;
-	$section_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($section));
+	$section_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($section->getId()));
 	$section_class[] = "elgg-menu-{$name_class_selector}-{$section_class_selector}";
 	
 	$menu_view .= elgg_view('navigation/menu/elements/section', [
-		'items' => $menu_items,
+		'items' => $section->all(),
 		'class' => $section_class,
-		'section' => $section,
+		'section' => $section->getId(),
 		'name' => $name,
 		'show_section_headers' => $show_section_headers,
 		'item_class' => $item_class,
