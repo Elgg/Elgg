@@ -369,14 +369,40 @@ define(function(require) {
 			$.mockjax({
 				url: elgg.normalize_url("foo"),
 				status: 500,
-				responseText: {
-					error: 'not seen by user'
-				}
+				responseText: {}
 			});
 
 			ajax.path('foo').fail(function () {
 				expect(captured).toEqual({
 					error: elgg.echo('ajax:error')
+				});
+
+				elgg.register_error = tmp_register_error;
+
+				done();
+			});
+		});
+
+		it("outputs the error message of the non-200 response", function (done) {
+			var tmp_register_error = elgg.register_error;
+			var captured = {};
+
+			elgg.register_error = function (arg) {
+				captured.error = arg;
+			};
+
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				status: 500,
+				responseText: {
+					error: 'Server throws'
+				}
+			});
+
+			ajax.path('foo').fail(function () {
+				expect(captured).toEqual({
+					error: 'Server throws'
 				});
 
 				elgg.register_error = tmp_register_error;
