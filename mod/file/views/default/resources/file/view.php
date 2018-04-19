@@ -27,6 +27,7 @@ if ($file->canDownload()) {
 		'name' => 'download',
 		'text' => elgg_echo('download'),
 		'href' => $file->getDownloadURL(),
+		'icon' => 'download',
 		'link_class' => 'elgg-button elgg-button-action',
 	]);
 }
