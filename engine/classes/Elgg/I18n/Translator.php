@@ -299,6 +299,7 @@ class Translator {
 				$this->loaded_from_cache = true;
 				$this->registerLanguagePath($this->defaultPath);
 				$this->is_initialized = true;
+
 				return;
 			}
 		}
