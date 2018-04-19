@@ -1611,4 +1611,7 @@ To view %s's profile, click here:
 
 	"core:upgrade:2018041800:title" => "Activate new plugins",
 	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
+
+	"core:upgrade:2018041801:title" => "Delete old plugin entities",
+	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
 );
