@@ -7,7 +7,6 @@ use Elgg\i18n\Translator;
 use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Locator;
 use Elgg\Upgrade\Result;
-use Elgg\Upgrades\ActivateNewPlugins;
 use ElggUpgrade;
 use RuntimeException;
 

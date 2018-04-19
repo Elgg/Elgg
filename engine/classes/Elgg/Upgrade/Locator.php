@@ -3,12 +3,11 @@
 namespace Elgg\Upgrade;
 
 use Elgg\Database\Plugins;
-use Elgg\Database\PrivateSettingsTable;
 use Elgg\Includer;
 use Elgg\Logger;
 use Elgg\Project\Paths;
 use ElggUpgrade;
-use Psr\Log\InvalidArgumentException;
+use InvalidArgumentException;
 
 /**
  * Locates and registers both core and plugin upgrades
@@ -32,21 +31,14 @@ class Locator {
 	private $logger;
 
 	/**
-	 * @var PrivateSettingsTable $privateSettings
-	 */
-	private $privateSettings;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Plugins              $plugins          Plugins
-	 * @param Logger               $logger           Logger
-	 * @param PrivateSettingsTable $private_settings PrivateSettingsTable
+	 * @param Plugins $plugins Plugins
+	 * @param Logger  $logger  Logger
 	 */
-	public function __construct(Plugins $plugins, Logger $logger, PrivateSettingsTable $private_settings) {
+	public function __construct(Plugins $plugins, Logger $logger) {
 		$this->plugins = $plugins;
 		$this->logger = $logger;
-		$this->privateSettings = $private_settings;
 	}
 
 	/**
@@ -108,7 +100,7 @@ class Locator {
 		$upgrade = $this->upgradeExists($upgrade_id);
 
 		if (!$upgrade) {
-			$upgrade = elgg_call(ELGG_IGNORE_ACCESS, function() use ($upgrade_id, $class, $component_id, $version) {
+			$upgrade = elgg_call(ELGG_IGNORE_ACCESS, function () use ($upgrade_id, $class, $component_id, $version) {
 				$site = elgg_get_site_entity();
 
 				// Create a new ElggUpgrade to represent the upgrade in the database

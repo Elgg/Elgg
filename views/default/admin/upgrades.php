@@ -1,4 +1,4 @@
--<?php
+<?php
 /**
  * Lists pending upgrades
  */

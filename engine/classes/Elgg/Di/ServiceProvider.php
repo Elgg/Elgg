@@ -647,8 +647,7 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('upgradeLocator', function(ServiceProvider $c) {
 			return new \Elgg\Upgrade\Locator(
 				$c->plugins,
-				$c->logger,
-				$c->privateSettings
+				$c->logger
 			);
 		});
 
