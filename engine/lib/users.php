@@ -22,7 +22,7 @@ function disable_user_entities($owner_guid) {
 		}
 		return _elgg_services()->entityTable->disableEntities($entity);
 	} catch (DatabaseException $ex) {
-		elgg_log($ex->getMessage(), 'ERROR');
+		elgg_log($ex, 'ERROR');
 
 		return false;
 	}
@@ -41,11 +41,11 @@ function get_user($guid) {
 	try {
 		return _elgg_services()->entityTable->get($guid, 'user');
 	} catch (InvalidParameterException $ex) {
-		elgg_log($ex->getMessage(), 'ERROR');
+		elgg_log($ex, 'ERROR');
 
 		return false;
 	} catch (ClassException $ex) {
-		elgg_log($ex->getMessage(), 'ERROR');
+		elgg_log($ex, 'ERROR');
 
 		return false;
 	}

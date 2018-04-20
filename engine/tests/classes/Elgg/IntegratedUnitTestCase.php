@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Mocks\Database\Plugins;
 use Elgg\Mocks\Di\MockServiceProvider;
+use Psr\Log\LogLevel;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
@@ -52,9 +53,9 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 		Application::setInstance($app);
 
 		if (in_array('--verbose', $_SERVER['argv'])) {
-			Logger::$verbosity = ConsoleOutput::VERBOSITY_VERY_VERBOSE;
+			$app->_services->logger->setLevel(LogLevel::DEBUG);
 		} else {
-			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
+			$app->_services->logger->setLevel(LogLevel::ERROR);
 		}
 
 		_elgg_services()->config->site = new \ElggSite((object) [

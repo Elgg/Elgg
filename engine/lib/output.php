@@ -47,7 +47,7 @@ function elgg_autop($string) {
 	try {
 		return _elgg_services()->autoP->process($string);
 	} catch (\RuntimeException $e) {
-		_elgg_services()->logger->warn('ElggAutoP failed to process the string: ' . $e->getMessage());
+		_elgg_services()->logger->warning('ElggAutoP failed to process the string: ' . $e->getMessage());
 		return $string;
 	}
 }

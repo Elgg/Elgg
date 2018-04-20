@@ -5,11 +5,11 @@ namespace Elgg;
 use Elgg\Database\EntityTable;
 use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Http\Request;
-use Elgg\UploadService;
 use ElggEntity;
 use ElggFile;
 use ElggIcon;
 use InvalidParameterException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
  * @since 2.2
  */
 class EntityIconService {
+
+	use Loggable;
 	use TimeUsing;
 
 	/**
@@ -40,11 +42,6 @@ class EntityIconService {
 	private $request;
 
 	/**
-	 * @var Logger
-	 */
-	private $logger;
-
-	/**
 	 * @var EntityTable
 	 */
 	private $entities;
@@ -60,11 +57,18 @@ class EntityIconService {
 	 * @param Config             $config   Config
 	 * @param PluginHooksService $hooks    Hook registration service
 	 * @param Request            $request  Http request
-	 * @param Logger             $logger   Logger
+	 * @param LoggerInterface    $logger   Logger
 	 * @param EntityTable        $entities Entity table
 	 * @param UploadService      $uploads  Upload service
 	 */
-	public function __construct(Config $config, PluginHooksService $hooks, Request $request, Logger $logger, EntityTable $entities, UploadService $uploads) {
+	public function __construct(
+		Config $config,
+		PluginHooksService $hooks,
+		Request $request,
+		LoggerInterface $logger,
+		EntityTable $entities,
+		UploadService $uploads
+	) {
 		$this->config = $config;
 		$this->hooks = $hooks;
 		$this->request = $request;
@@ -289,7 +293,7 @@ class EntityIconService {
 		$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
 		
 		if (!empty($icon_size) && !isset($sizes[$icon_size])) {
-			$this->logger->warn("The provided icon size '{$icon_size}' doesn't exist for icon type '{$type}'");
+			$this->logger->warning("The provided icon size '{$icon_size}' doesn't exist for icon type '{$type}'");
 			return false;
 		}
 		

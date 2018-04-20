@@ -6,7 +6,7 @@ use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Elgg\BaseTestCase;
 use Elgg\Database as DbDatabase;
 use Elgg\Database\DbConfig;
-use Elgg\Logger;
+use Psr\Log\LoggerInterface;
 
 class Database extends DbDatabase {
 
@@ -29,7 +29,7 @@ class Database extends DbDatabase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(DbConfig $config, Logger $logger = null) {
+	public function __construct(DbConfig $config, LoggerInterface $logger = null) {
 		parent::__construct($config);
 		$this->setLogger($logger);
 	}

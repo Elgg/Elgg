@@ -1801,7 +1801,7 @@ abstract class ElggEntity extends \ElggData implements
 		try {
 			return _elgg_services()->entityTable->delete($this, $recursive);
 		} catch (DatabaseException $ex) {
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex, 'ERROR');
 			return false;
 		}
 	}

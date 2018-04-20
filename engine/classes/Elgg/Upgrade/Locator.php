@@ -4,10 +4,10 @@ namespace Elgg\Upgrade;
 
 use Elgg\Database\Plugins;
 use Elgg\Includer;
-use Elgg\Logger;
+use Elgg\Loggable;
 use Elgg\Project\Paths;
 use ElggUpgrade;
-use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 
 /**
  * Locates and registers both core and plugin upgrades
@@ -20,23 +20,25 @@ use InvalidArgumentException;
  */
 class Locator {
 
+	use Loggable;
+
 	/**
 	 * @var Plugins $plugins
 	 */
 	private $plugins;
 
 	/**
-	 * @var Logger $logger
+	 * @var LoggerInterface $logger
 	 */
 	private $logger;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Plugins $plugins Plugins
-	 * @param Logger  $logger  Logger
+	 * @param Plugins         $plugins Plugins
+	 * @param LoggerInterface $logger  Logger
 	 */
-	public function __construct(Plugins $plugins, Logger $logger) {
+	public function __construct(Plugins $plugins, LoggerInterface $logger) {
 		$this->plugins = $plugins;
 		$this->logger = $logger;
 	}
@@ -128,15 +130,14 @@ class Locator {
 	 * @param string $class The fully qualified class name
 	 *
 	 * @return Batch
-	 * @throws InvalidArgumentException
 	 */
 	public function getBatch($class) {
 		if (!class_exists($class)) {
-			throw new InvalidArgumentException("Upgrade class $class was not found");
+			throw new \InvalidArgumentException("Upgrade class $class was not found");
 		}
 
 		if (!is_subclass_of($class, Batch::class)) {
-			throw new InvalidArgumentException("Upgrade class $class should implement " . Batch::class);
+			throw new \InvalidArgumentException("Upgrade class $class should implement " . Batch::class);
 		}
 
 		return new $class;

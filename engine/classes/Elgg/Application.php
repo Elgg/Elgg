@@ -6,6 +6,7 @@ use ClassException;
 use ConfigurationException;
 use DatabaseException;
 use Elgg\Database\DbConfig;
+use Elgg\Database\Select;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
@@ -16,6 +17,7 @@ use Elgg\Project\Paths;
 use InstallationException;
 use InvalidArgumentException;
 use InvalidParameterException;
+use Psr\Log\LogLevel;
 use RuntimeException;
 use SecurityException;
 
@@ -30,6 +32,8 @@ use SecurityException;
  * @since 2.0.0
  */
 class Application {
+
+	use Loggable;
 
 	const DEFAULT_LANG = 'en';
 	const DEFAULT_LIMIT = 10;
@@ -443,7 +447,7 @@ class Application {
 			$hook_params = [
 				'exception' => $ex,
 			];
-			
+
 			$forward_url = $this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
 			if ($forward_url) {
@@ -526,14 +530,15 @@ class Application {
 	public static function upgrade($async = false) {
 		// we want to know if an error occurs
 		ini_set('display_errors', 1);
-		
+
 		set_time_limit(0);
-		
+
 		$is_cli = (php_sapi_name() === 'cli');
 
 		$forward = function ($url) use ($is_cli) {
 			if ($is_cli) {
-				_elgg_services()->printer->write("Open $url in your browser to continue.", Logger::NOTICE);
+				_elgg_services()->logger->notice("Open $url in your browser to continue.");
+
 				return;
 			}
 
@@ -585,8 +590,8 @@ class Application {
 					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
 					if ($msg === "installation:htaccess:localhost:connectionfailed") {
 						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
-								. "that curl is working and there are no IP restrictions preventing "
-								. "localhost connections.";
+							. "that curl is working and there are no IP restrictions preventing "
+							. "localhost connections.";
 					}
 					echo $msg;
 					exit;
@@ -629,7 +634,7 @@ class Application {
 
 		// setting timeout because some database migrations can take a long time
 		set_time_limit(0);
-		
+
 		$app = new \Phinx\Console\PhinxApplication();
 		$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
 			'configuration' => $conf,
@@ -711,8 +716,10 @@ class Application {
 	 * @access private
 	 */
 	public function handleExceptions($exception) {
-		$timestamp = time();
-		error_log("Exception at time $timestamp: $exception");
+		$exception->timestamp = time();
+		$exception->uncaught = true;
+
+		$this->log(LogLevel::CRITICAL, $exception);
 
 		// Wipe any existing output buffer
 		ob_end_clean();
@@ -727,7 +734,7 @@ class Application {
 
 		if (!self::isCoreLoaded()) {
 			http_response_code(500);
-			echo "Exception loading Elgg core. Check log at time $timestamp";
+			echo "Exception loading Elgg core. Check log at time {$exception->timestamp}";
 			return;
 		}
 
@@ -763,12 +770,12 @@ class Application {
 			if (elgg_is_admin_logged_in()) {
 				$body = elgg_view("messages/exceptions/admin_exception", [
 					'object' => $exception,
-					'ts' => $timestamp
+					'ts' => $exception->timestamp,
 				]);
 			} else {
 				$body = elgg_view("messages/exceptions/exception", [
 					'object' => $exception,
-					'ts' => $timestamp
+					'ts' => $exception->timestamp,
 				]);
 			}
 
@@ -779,7 +786,7 @@ class Application {
 			$message = $e->getMessage();
 			http_response_code(500);
 			echo "Fatal error in exception handler. Check log for Exception at time $timestamp";
-			error_log("Exception at time $timestamp : fatal error in exception handler : $message");
+			$this->log(LogLevel::CRITICAL, $e);
 		}
 	}
 
@@ -809,24 +816,10 @@ class Application {
 	public function handleErrors($errno, $errmsg, $filename, $linenum, $vars) {
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
-		$log = function ($message, $level) {
-			if (!self::isCoreLoaded()) {
-				return false;
-			}
-
-			if (!self::$_instance) {
-				// can occur during tests
-				return false;
-			}
-
-			return self::$_instance->_services->printer->write($message, $level);
-		};
-
 		switch ($errno) {
 			case E_USER_ERROR:
-				if (!$log("PHP: $error", 'ERROR')) {
-					error_log("PHP ERROR: $error");
-				}
+				$this->log(LogLevel::ERROR, "PHP ERROR: $error");
+
 				if (self::isCoreLoaded()) {
 					$this->_services->systemMessages->addErrorMessage("ERROR: $error");
 				}
@@ -839,24 +832,14 @@ class Application {
 			case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 
 				// check if the error wasn't suppressed by the error control operator (@)
-				if (error_reporting() && !$log("PHP: $error", 'WARNING')) {
-					error_log("PHP WARNING: $error");
+				if (error_reporting()) {
+					$this->log(LogLevel::WARNING, "PHP: $error");
 				}
 				break;
 
 			default:
-				if (function_exists('_elgg_config')) {
-					$debug = _elgg_config()->debug;
-				} else {
-					$debug = isset($GLOBALS['CONFIG']->debug) ? $GLOBALS['CONFIG']->debug : null;
-				}
-				if ($debug !== 'NOTICE') {
-					return true;
-				}
-
-				if (!$log("PHP (errno $errno): $error", 'NOTICE')) {
-					error_log("PHP NOTICE: $error");
-				}
+				$this->log(LogLevel::NOTICE, "PHP NOTICE: $error");
+				break;
 		}
 
 		return true;

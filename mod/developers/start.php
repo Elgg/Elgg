@@ -15,6 +15,7 @@ function developers_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_developers_page_menu');
 		
 	elgg_extend_view('admin.css', 'developers/css');
+	elgg_extend_view('admin.css', 'admin/develop_tools/error_log.css');
 	elgg_extend_view('elgg.css', 'developers/css');
 
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
@@ -91,6 +92,25 @@ function developers_process_settings() {
 			elgg_register_plugin_hook_handler('prepare', 'system:email', $handler);
 		}
 	}
+
+	if (!empty($settings['enable_error_log'])) {
+		$handler = new \Monolog\Handler\RotatingFileHandler(
+			\Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . 'logs/errors.html', false),
+			elgg_extract('error_log_max_files', $settings, 60),
+			elgg_get_config('debug', \Psr\Log\LogLevel::ERROR)
+		);
+
+		$formatter = new \Elgg\DevelopersPlugin\ErrorLogHtmlFormatter();
+		$handler->setFormatter($formatter);
+
+		$handler->pushProcessor(new \Monolog\Processor\PsrLogMessageProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\MemoryUsageProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\MemoryPeakUsageProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\ProcessIdProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\WebProcessor());
+
+		elgg()->logger->pushHandler($handler);
+	}
 }
 
 /**
@@ -118,13 +138,20 @@ function _developers_page_menu($hook, $type, $return, $params) {
 		'priority' => 10,
 		'section' => 'develop',
 	]);
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'error_log',
+		'href' => 'admin/develop_tools/error_log',
+		'text' => elgg_echo('admin:develop_tools:error_log'),
+		'section' => 'develop',
+	]);
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'inspect',
 		'text' => elgg_echo('admin:inspect'),
 		'section' => 'develop',
 	]);
-	
+
 	$inspect_options = developers_get_inspect_options();
 	foreach ($inspect_options as $key => $value) {
 		$return[] = \ElggMenuItem::factory([

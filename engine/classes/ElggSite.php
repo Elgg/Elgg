@@ -114,7 +114,7 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function __set($name, $value) {
 		if ($name === 'url') {
-			_elgg_services()->logger->warn("ElggSite::url cannot be set");
+			_elgg_services()->logger->warning("ElggSite::url cannot be set");
 			return;
 		}
 		parent::__set($name, $value);

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\HooksRegistrationService\Event;
+use Psr\Log\LogLevel;
 
 /**
  * @group UnitTests
@@ -69,7 +70,7 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$expected = [
 			[
 				'message' => 'Handler for event [foo, bar] is not callable: (stdClass)->uncallableMethod',
-				'level' => 300,
+				'level' => 'warning',
 			]
 		];
 		$this->assertSame($expected, $logged);
@@ -128,7 +129,7 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertArrayHasKey('message', $message_details);
 		$this->assertArrayHasKey('level', $message_details);
 		$this->assertStringStartsWith('Deprecated in 1.0: The event "foo":"bar" has been deprecated Called from', $message_details['message']);
-		$this->assertEquals(Logger::WARNING, $message_details['level']);
+		$this->assertEquals(LogLevel::WARNING, $message_details['level']);
 	}
 
 	public function incrementCounter() {

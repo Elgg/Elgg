@@ -8,6 +8,7 @@ use Elgg\Config;
 use Elgg\EventsService;
 use Elgg\Gatekeeper;
 use Elgg\I18n\Translator;
+use Elgg\Logger;
 use Elgg\Menu\Service;
 use Elgg\PluginHooksService;
 use Elgg\Security\Csrf;
@@ -26,6 +27,7 @@ use ElggSession;
  * @property-read EventsService         $events          Event service
  * @property-read Gatekeeper            $gatekeeper      Gatekeeper
  * @property-read PluginHooksService    $hooks           Hooks service
+ * @property-read Logger                $logger          Logger
  * @property-read Service               $menus           Menus
  * @property-read ElggSession           $session         Session
  * @property-read SystemMessagesService $system_messages System messages

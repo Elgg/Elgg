@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg;
+use Psr\Log\LogLevel;
 
 /**
  * @group FormsService
@@ -42,7 +43,7 @@ class FormsServiceTest extends \Elgg\UnitTestCase {
 		$expected = [
 			[
 				'message' => 'Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)',
-				'level' => Logger::ERROR,
+				'level' => LogLevel::ERROR,
 			],
 		];
 		$this->assertEquals($expected, $logs);
@@ -55,7 +56,7 @@ class FormsServiceTest extends \Elgg\UnitTestCase {
 		$expected = [
 			[
 				'message' => 'Form footer can only be set and retrieved during form rendering, anywhere in elgg_view_form() call stack (e.g. form view, extending views, or view hooks)',
-				'level' => Logger::ERROR,
+				'level' => LogLevel::ERROR,
 			]
 		];
 		$logs = _elgg_services()->logger->enable();

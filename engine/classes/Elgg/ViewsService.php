@@ -5,8 +5,8 @@ namespace Elgg;
 use Elgg\Application\CacheHandler;
 use Elgg\Cache\SystemCache;
 use Elgg\Filesystem\Directory;
-use Elgg\Http\Input;
 use Elgg\Http\Request;
+use Psr\Log\LoggerInterface;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -18,6 +18,8 @@ use Elgg\Http\Request;
  * @since  1.9.0
  */
 class ViewsService {
+
+	use Loggable;
 
 	const VIEW_HOOK = 'view';
 	const VIEW_VARS_HOOK = 'view_vars';
@@ -69,11 +71,6 @@ class ViewsService {
 	private $hooks;
 
 	/**
-	 * @var Logger
-	 */
-	private $logger;
-
-	/**
 	 * @var SystemCache|null This is set if the views are configured via cache
 	 */
 	private $cache;
@@ -92,10 +89,10 @@ class ViewsService {
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   The hooks service
-	 * @param Logger             $logger  Logger
+	 * @param LoggerInterface    $logger  Logger
 	 * @param Request            $request Http Request
 	 */
-	public function __construct(PluginHooksService $hooks, Logger $logger, Request $request = null) {
+	public function __construct(PluginHooksService $hooks, LoggerInterface $logger, Request $request = null) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 		$this->request = $request;
@@ -404,7 +401,7 @@ class ViewsService {
 		$view = self::canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
-			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
+			$this->logger->notice("View and Viewtype in views must be a strings: $view");
 
 			return '';
 		}
@@ -415,14 +412,14 @@ class ViewsService {
 
 		// check for extension deadloops
 		if (in_array($view, $extensions_tree)) {
-			$this->logger->log("View $view is detected as an extension of itself. This is not allowed", 'ERROR');
+			$this->logger->error("View $view is detected as an extension of itself. This is not allowed");
 
 			return '';
 		}
 		$extensions_tree[] = $view;
 
 		if (!is_array($vars)) {
-			$this->logger->log("Vars in views must be an array: $view", 'ERROR');
+			$this->logger->error("Vars in views must be an array: $view");
 			$vars = [];
 		}
 
@@ -511,7 +508,7 @@ class ViewsService {
 		$file = $this->findViewFile($view, $viewtype);
 		if (!$file) {
 			if ($issue_missing_notice) {
-				$this->logger->log("$viewtype/$view view does not exist.", 'NOTICE');
+				$this->logger->notice("$viewtype/$view view does not exist.");
 			}
 
 			return false;

@@ -557,7 +557,7 @@ class Config {
 		}
 
 		if ($this->logger) {
-			$this->logger->warn("The property $name is read-only.");
+			$this->logger->warning("The property $name is read-only.");
 		}
 		return true;
 	}

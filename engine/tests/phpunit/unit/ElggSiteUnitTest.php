@@ -30,7 +30,7 @@ class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 		$errors = _elgg_services()->logger->enable();
 		$expected_error = [
 			'message' => 'ElggSite::url cannot be set',
-			'level' => 300,
+			'level' => 'warning',
 		];
 		$this->assertEquals($errors[0], $expected_error);
 	}

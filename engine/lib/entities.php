@@ -819,7 +819,7 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
 		$warning .= "Please update your usage of the function.";
 	}
 
-	_elgg_services()->logger->warn($warning);
+	_elgg_services()->logger->warning($warning);
 }
 
 /**

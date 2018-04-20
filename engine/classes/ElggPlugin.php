@@ -188,7 +188,7 @@ class ElggPlugin extends ElggObject {
 					$this->static_config = $this->includeFile(ElggPluginPackage::STATIC_CONFIG_FILENAME);
 				}
 			} catch (PluginException $ex) {
-				elgg_log($ex->getMessage(), 'WARNING');
+				elgg_log($ex, 'WARNING');
 			}
 		}
 
@@ -1238,7 +1238,7 @@ class ElggPlugin extends ElggObject {
 
 			return $this->manifest;
 		} catch (PluginException $e) {
-			_elgg_services()->logger->warn("Failed to load manifest for plugin $this->guid. " . $e->getMessage());
+			_elgg_services()->logger->warning("Failed to load manifest for plugin $this->guid. " . $e->getMessage());
 			$this->errorMsg = $e->getmessage();
 		}
 	}
@@ -1258,7 +1258,7 @@ class ElggPlugin extends ElggObject {
 
 			return $this->package;
 		} catch (Exception $e) {
-			_elgg_services()->logger->warn("Failed to load package for $this->guid. " . $e->getMessage());
+			_elgg_services()->logger->warning("Failed to load package for $this->guid. " . $e->getMessage());
 			$this->errorMsg = $e->getmessage();
 		}
 	}
