@@ -17,6 +17,7 @@ function developers_init() {
 	elgg_extend_view('admin.css', 'developers/css');
 	elgg_extend_view('admin.css', 'admin/develop_tools/error_log.css');
 	elgg_extend_view('elgg.css', 'developers/css');
+	elgg_extend_view('elgg.css', 'admin/develop_tools/error_log.css');
 
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
 	elgg_register_ajax_view('developers/ajax_demo.html');
@@ -39,13 +40,36 @@ function developers_process_settings() {
 		// don't show in action/simplecache
 		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
 		if (!preg_match('~^(cache|action)/~', $path)) {
-			$cache = new ElggLogCache();
-			elgg_set_config('log_cache', $cache);
-			elgg_register_plugin_hook_handler('debug', 'log', [$cache, 'insertDump']);
-			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
+			// Write to JSON file to not take up memory See #11886
+			$uid = substr(hash('md5', uniqid('', true)), 0, 10);
+			$log_file = \Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . "logs/screen/$uid.html", false);
+			elgg()->config->log_cache = $log_file;
+
+			$handler = new \Monolog\Handler\StreamHandler(
+				$log_file,
+				elgg()->logger->getLevel()
+			);
+
+			$formatter = new \Elgg\DevelopersPlugin\ErrorLogHtmlFormatter();
+			$handler->setFormatter($formatter);
+
+			elgg()->logger->pushHandler($handler);
+
+			$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
+
+			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params)  use ($handler) {
+				$handler->close();
+
 				$vars['body'] .= elgg_view('developers/log');
 				return $vars;
 			});
+
+			elgg_register_event_handler('shutdown', 'system', function() {
+				$log_file = elgg()->config->log_cache;
+				if (is_file($log_file)) {
+					unlink($log_file);
+				}
+			}, 1000);
 		}
 	}
 
@@ -95,9 +119,9 @@ function developers_process_settings() {
 
 	if (!empty($settings['enable_error_log'])) {
 		$handler = new \Monolog\Handler\RotatingFileHandler(
-			\Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . 'logs/errors.html', false),
+			\Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . 'logs/html/errors.html', false),
 			elgg_extract('error_log_max_files', $settings, 60),
-			elgg_get_config('debug', \Psr\Log\LogLevel::ERROR)
+			\Psr\Log\LogLevel::ERROR
 		);
 
 		$formatter = new \Elgg\DevelopersPlugin\ErrorLogHtmlFormatter();
@@ -108,6 +132,7 @@ function developers_process_settings() {
 		$handler->pushProcessor(new \Monolog\Processor\MemoryPeakUsageProcessor());
 		$handler->pushProcessor(new \Monolog\Processor\ProcessIdProcessor());
 		$handler->pushProcessor(new \Monolog\Processor\WebProcessor());
+		$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
 
 		elgg()->logger->pushHandler($handler);
 	}

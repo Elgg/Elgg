@@ -10,17 +10,6 @@ use Monolog\Logger;
  */
 class ErrorLogHtmlFormatter extends HtmlFormatter {
 
-	protected $logLevels = [
-		Logger::DEBUG => '#cccccc',
-		Logger::INFO => '#468847',
-		Logger::NOTICE => '#3a87ad',
-		Logger::WARNING => '#c09853',
-		Logger::ERROR => '#f0ad4e',
-		Logger::CRITICAL => '#FF7708',
-		Logger::ALERT => '#C12A19',
-		Logger::EMERGENCY => '#000000',
-	];
-
 	/**
 	 * Creates an HTML table row
 	 *
@@ -69,6 +58,8 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	 */
 	public function format(array $record) {
 
+		$title = $record['level_name'];
+
 		$context = elgg_extract('context', $record, []);
 		$exception = elgg_extract('exception', $context);
 
@@ -87,9 +78,11 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 				$record['context']['sql'] = $exception->getQuery();
 				$record['context']['params'] = $exception->getParameters();
 			}
+
+			$title = "EXCEPTION $timestamp";
 		}
 
-		$output = $this->addTitle($record['level_name'], $record['level']);
+		$output = $this->addTitle($title, $record['level']);
 		$output .= '<table class="elgg-table elgg-table-alt">';
 
 		$output .= $this->addRow('Message', (string) $record['message']);
