@@ -9,4 +9,9 @@
  * @uses $vars['value'] The text to display
  */
 
-echo htmlspecialchars($vars['value'], ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+$value = elgg_extract('value', $vars);
+if (!is_string($value)) {
+	return;
+}
+
+echo htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
