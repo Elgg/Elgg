@@ -144,8 +144,6 @@ class BootService {
 		$config->sitename = $site->name;
 		$config->sitedescription = $site->description;
 
-		$services->plugins->setBootPlugins($data->getActivePlugins());
-
 		$settings = $data->getPluginSettings();
 		foreach ($settings as $guid => $entity_settings) {
 			$services->privateSettingsCache->save($guid, $entity_settings);
@@ -154,7 +152,9 @@ class BootService {
 		foreach ($data->getPluginMetadata() as $guid => $metadata) {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}
-
+		
+		$services->plugins->setBootPlugins($data->getActivePlugins());
+		
 		// use value in settings.php if available
 		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
 		$services->logger->setLevel($debug);
