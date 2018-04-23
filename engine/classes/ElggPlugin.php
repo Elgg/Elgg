@@ -1062,12 +1062,12 @@ class ElggPlugin extends ElggObject {
 			return;
 		}
 
-		$path_only = !_elgg_services()->translator->wasLoadedFromCache();
+		$path_only = _elgg_services()->translator->wasLoadedFromCache();
 		if ($path_only) {
 			_elgg_services()->translator->registerLanguagePath($languages_path);
 			return;
 		}
-		
+
 		_elgg_services()->translator->registerTranslations($languages_path);
 	}
 

@@ -209,4 +209,37 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($this->translator->addTranslation('en', []));
 	}
 
+	public function testCanLoadPluginTranslations() {
+
+		$app = $this->createApplication();
+
+		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
+
+		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$app->_services->config->boot_cache_ttl = 0;
+		$app->_services->plugins->addTestingPlugin($plugin);
+
+		$plugin->activate();
+
+		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
+	}
+
+	public function testCanLoadPluginTranslationsWithCacheDisabled() {
+
+		$app = $this->createApplication([
+			'system_cache_enabled' => false,
+		]);
+
+		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
+
+		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$app->_services->config->boot_cache_ttl = 0;
+		$app->_services->plugins->addTestingPlugin($plugin);
+
+		$plugin->activate();
+
+		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
+	}
 }

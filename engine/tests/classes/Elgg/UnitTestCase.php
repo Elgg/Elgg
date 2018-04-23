@@ -25,7 +25,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
 		$sp->config->boot_complete = false;
-		$sp->config->system_cache_enabled = true;
+		$sp->config->system_cache_enabled = elgg_extract('system_cache_enabled', $params, true);
 		$sp->config->site = new \ElggSite((object) [
 			'guid' => 1,
 		]);
