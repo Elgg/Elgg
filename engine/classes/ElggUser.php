@@ -246,10 +246,14 @@ class ElggUser extends \ElggEntity
 			return;
 		}
 		
-		// these writes actually work, we just type hint read-only.
-		$this->prev_last_action = $this->last_action;
+		$user = $this;
 		
-		$this->updateLastAction($time);
+		elgg_register_event_handler('shutdown', 'system', function () use ($user, $time) {
+			// these writes actually work, we just type hint read-only.
+			$user->prev_last_action = $user->last_action;
+		
+			$user->updateLastAction($time);
+		});
 	}
 	
 	/**
