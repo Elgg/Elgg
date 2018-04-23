@@ -573,7 +573,10 @@ function _elgg_site_menu_setup($hook, $type, $menu, $params) {
 	$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));
 
 	$registered = $menu->getItems('default');
-
+	if (empty($registered)) {
+		return;
+	}
+	
 	$has_selected = false;
 	$priority = 500;
 
