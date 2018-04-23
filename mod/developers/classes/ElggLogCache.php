@@ -33,11 +33,10 @@ class ElggLogCache {
 	 * @param bool   $result current return value
 	 * @param array  $params Must have the data at $params['msg']
 	 *
-	 * @return false
+	 * @return void
 	 */
 	public function insertDump($hook, $type, $result, $params) {
 		$this->insert($params['msg']);
-		return false;
 	}
 
 	/**
