@@ -20,16 +20,10 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$tags = elgg_extract('tags', $vars, '');
-if ($tags === '') {
-	$tags = elgg_view('output/tags', [
-		'entity' => $entity,
-	]);
-}
-
 $metadata = elgg_view('object/elements/summary/metadata', $vars);
 $title = elgg_view('object/elements/summary/title', $vars);
 $subtitle = elgg_view('object/elements/summary/subtitle', $vars);
+$tags = elgg_view('object/elements/summary/tags', $vars);
 $extensions = elgg_view('object/summary/extend', $vars);
 $content = elgg_view('object/elements/summary/content', $vars);
 
