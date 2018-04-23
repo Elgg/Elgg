@@ -4,7 +4,6 @@ namespace Elgg\Messages;
 
 use Elgg\IntegrationTestCase;
 use Zend\Mail\Message;
-use Zend\Mail\Transport\InMemory;
 
 /**
  * @group MessagesPlugin
@@ -40,11 +39,18 @@ class MessagesPluginTest extends IntegrationTestCase {
 		$count = messages_count_unread($sender->guid);
 		$this->assertEquals(0, $count);
 
+		/* @var $message \ElggMessage */
 		$message = get_entity($sent_guid);
-		$this->assertInstanceOf(\ElggObject::class, $message);
+		$this->assertInstanceOf(\ElggMessage::class, $message);
 
 		$this->assertEquals($subject, $message->title);
 		$this->assertEquals($body, $message->description);
+		
+		$this->assertEquals($recipient->guid, $message->toId);
+		$this->assertEquals($recipient, $message->getRecipient());
+		
+		$this->assertEquals($sender->guid, $message->fromId);
+		$this->assertEquals($sender, $message->getSender());
 
 		elgg_set_ignore_access(false);
 
@@ -74,6 +80,4 @@ class MessagesPluginTest extends IntegrationTestCase {
 		$this->assertEquals($expected_body, $notification_body);
 
 	}
-
-
 }

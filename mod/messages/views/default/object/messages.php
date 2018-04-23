@@ -18,7 +18,7 @@ $user_link = elgg_echo('messages:deleted_sender');
 $class = ['message'];
 if ($entity->toId == elgg_get_page_owner_guid()) {
 	// received
-	$user = get_user($entity->fromId);
+	$user = $entity->getSender();
 	if ($user) {
 		$icon_entity = $user;
 		$user_link = elgg_view('output/url', [
@@ -35,7 +35,7 @@ if ($entity->toId == elgg_get_page_owner_guid()) {
 	$class[] = $entity->readYet ? 'read': 'unread';
 } else {
 	// sent
-	$user = get_user($entity->toId);
+	$user = $entity->getRecipient();
 	if ($user) {
 		$icon_entity = $user;
 		$user_link = elgg_view('output/url', [
