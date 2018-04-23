@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Object summary
  * Passing an 'icon' with the variables will wrap the listing in an image block. In that case,
@@ -15,17 +14,10 @@
  * @uses $vars['class']     Class selector for the image block
  * @uses $vars['image_block_vars'] Attributes for the image block wrapper
  */
+
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
 	return;
-}
-
-$title = elgg_extract('title', $vars, '');
-if ($title === '' && $entity instanceof ElggEntity) {
-	$vars['title'] = elgg_view('output/url', [
-		'text' => elgg_get_excerpt($entity->getDisplayName(), 100),
-		'href' => $entity->getURL(),
-	]);
 }
 
 $tags = elgg_extract('tags', $vars, '');
