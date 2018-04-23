@@ -141,7 +141,7 @@ function embed_get_list_options($options = []) {
 		'limit' => 6,
 		'container_guids' => $container_guids,
 		'item_class' => 'embed-item',
-		'no_results' => elgg_echo('notfound'),
+		'no_results' => true,
 	];
 
 	$options = array_merge($defaults, $options);
