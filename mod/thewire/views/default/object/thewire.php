@@ -2,39 +2,37 @@
 /**
  * View a wire post
  *
- * @uses $vars['entity']
+ * @uses $vars['entity'] ElggWire to show
  */
 
-$post = elgg_extract('entity', $vars);
-if (!$post instanceof \ElggWire) {
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggWire) {
 	return;
 }
 
 elgg_require_js('elgg/thewire');
 
 // make compatible with posts created with original Curverider plugin
-$thread_id = $post->wire_thread;
+$thread_id = $entity->wire_thread;
 if (!$thread_id) {
-	$post->wire_thread = $post->guid;
+	$entity->wire_thread = $entity->guid;
 }
 
 $params = [
-	'entity' => $post,
 	'title' => false,
-	'handler' => 'thewire',
-	'content' => thewire_filter($post->description),
+	'content' => thewire_filter($entity->description),
 	'tags' => false,
-	'icon' => elgg_view_entity_icon($post->getOwnerEntity(), 'small'),
+	'icon_entity' => $entity->getOwnerEntity(),
 	'class' => 'thewire-post',
 ];
 $params = $params + $vars;
 echo elgg_view('object/elements/summary', $params);
 
-if (!$post->reply) {
+if (!$entity->reply) {
 	return;
 }
 
 echo elgg_format_element('div', [
 	'class' => 'thewire-parent hidden',
-	'id' => "thewire-previous-{$post->guid}",
+	'id' => "thewire-previous-{$entity->guid}",
 ]);
