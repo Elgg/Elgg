@@ -20,6 +20,7 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
+// build image block content
 $metadata = elgg_view('object/elements/summary/metadata', $vars);
 $title = elgg_view('object/elements/summary/title', $vars);
 $subtitle = elgg_view('object/elements/summary/subtitle', $vars);
@@ -29,15 +30,14 @@ $content = elgg_view('object/elements/summary/content', $vars);
 
 $summary = $metadata . $title . $subtitle . $tags . $extensions . $content;
 
-$icon = elgg_extract('icon', $vars);
-if (isset($icon)) {
-	$params = (array) elgg_extract('image_block_vars', $vars, []);
-	$class = elgg_extract_class($params);
-	$class = elgg_extract_class($vars, $class);
-	$params['class'] = $class;
-	$params['data-guid'] = $entity->guid;
+// image block image
+$icon = elgg_view('object/elements/summary/icon', $vars);
 
-	echo elgg_view_image_block($icon, $summary, $params);
-} else {
-	echo $summary;
-}
+// image block params
+$params = (array) elgg_extract('image_block_vars', $vars, []);
+$class = elgg_extract_class($params);
+$class = elgg_extract_class($vars, $class);
+$params['class'] = $class;
+$params['data-guid'] = $entity->guid;
+
+echo elgg_view_image_block($icon, $summary, $params);
