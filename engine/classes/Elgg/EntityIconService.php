@@ -506,16 +506,18 @@ class EntityIconService {
 		$size = elgg_extract('size', $params) ? : 'medium';
 		
 		$entity_type = $entity->getType();
-		$entity_subtype = $entity->getSubtype() ? : 'default';
+		$entity_subtype = $entity->getSubtype();
 
 		$exts = ['svg', 'gif', 'png', 'jpg'];
-		
+
 		foreach ($exts as $ext) {
-			if ($ext == 'svg' && elgg_view_exists("$type/$entity_type/$entity_subtype.svg")) {
-				return elgg_get_simplecache_url("$type/$entity_type/$entity_subtype.svg");
-			}
-			if (elgg_view_exists("$type/$entity_type/$entity_subtype/$size.$ext")) {
-				return elgg_get_simplecache_url("$type/$entity_type/$entity_subtype/$size.$ext");
+			foreach ([$entity_subtype, 'default'] as $subtype) {
+				if ($ext == 'svg' && elgg_view_exists("$type/$entity_type/$subtype.svg")) {
+					return elgg_get_simplecache_url("$type/$entity_type/$subtype.svg");
+				}
+				if (elgg_view_exists("$type/$entity_type/$subtype/$size.$ext")) {
+					return elgg_get_simplecache_url("$type/$entity_type/$subtype/$size.$ext");
+				}
 			}
 		}
 
