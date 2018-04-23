@@ -24,7 +24,7 @@ class ElggObject extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function prepareObject($object) {
+	protected function prepareObject(\Elgg\Export\Entity $object) {
 		$object = parent::prepareObject($object);
 		$object->title = $this->getDisplayName();
 		$object->description = $this->description;

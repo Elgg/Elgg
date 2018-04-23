@@ -437,7 +437,7 @@ class ElggUser extends \ElggEntity
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function prepareObject($object) {
+	protected function prepareObject(\Elgg\Export\Entity $object) {
 		$object = parent::prepareObject($object);
 		$object->name = $this->getDisplayName();
 		$object->username = $this->username;

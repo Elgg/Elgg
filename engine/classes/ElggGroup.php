@@ -195,7 +195,7 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function prepareObject($object) {
+	protected function prepareObject(\Elgg\Export\Entity $object) {
 		$object = parent::prepareObject($object);
 		$object->name = $this->getDisplayName();
 		$object->description = $this->description;
