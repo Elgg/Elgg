@@ -1,8 +1,11 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
 
-$private_settings = get_all_private_settings($entity->guid);
+$private_settings = $entity->getAllPrivateSettings();
 if (empty($private_settings)) {
 	$private_settings_info = elgg_echo('notfound');
 } else {
