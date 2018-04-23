@@ -30,6 +30,14 @@ System hooks
 **validate, input**
 	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
 
+**prepare, html**
+	Triggered by ``elgg_format_html()`` and used to prepare untrusted HTML.
+
+	The ``$return`` value is an array:
+
+	 * ``html`` - HTML string being prepared
+	 * ``options`` - Preparation options
+
 **diagnostics:report, system**
 	Filters the output for a diagnostic report.
 

@@ -15,6 +15,7 @@ use Elgg\PluginHooksService;
 use Elgg\Security\Csrf;
 use Elgg\SystemMessagesService;
 use Elgg\Users\Accounts;
+use Elgg\Views\HtmlFormatter;
 use Elgg\Views\TableColumn\ColumnFactory;
 
 return [
@@ -24,6 +25,7 @@ return [
 	'db' => new PhpDiResolver(Database::class, 'publicDb'),
 	'events' => new PhpDiResolver(EventsService::class, 'events'),
 	'gatekeeper' => new PhpDiResolver(Gatekeeper::class, 'gatekeeper'),
+	'html_formatter' => new PhpDiResolver(HtmlFormatter::class, 'html_formatter'),
 	'hooks' => new PhpDiResolver(PluginHooksService::class, 'hooks'),
 	'logger' => new PhpDiResolver(Logger::class, 'logger'),
 	'menus' => new PhpDiResolver(MenuService::class, 'menus'),
