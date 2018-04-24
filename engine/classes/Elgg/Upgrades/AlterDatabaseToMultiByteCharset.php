@@ -2,14 +2,13 @@
 
 namespace Elgg\Upgrades;
 
-use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
-use League\Flysystem\Exception;
 
 /**
  * Updates database charset to utf8mb4
  */
-class AlterDatabaseToMultiByteCharset implements Batch {
+class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 
 	private $utf8mb4_tables = [
 		// InnoDB
@@ -228,8 +227,6 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 		}
 
 		$result->addSuccesses();
-
-		return $result;
 
 	}
 

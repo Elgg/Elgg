@@ -2,12 +2,12 @@
 
 namespace Elgg\Upgrade;
 
-use Elgg\Database\PrivateSettingsTable;
 use Elgg\Database\Plugins;
 use Elgg\Includer;
 use Elgg\Logger;
 use Elgg\Project\Paths;
 use ElggUpgrade;
+use InvalidArgumentException;
 
 /**
  * Locates and registers both core and plugin upgrades
@@ -31,21 +31,14 @@ class Locator {
 	private $logger;
 
 	/**
-	 * @var PrivateSettingsTable $privateSettings
-	 */
-	private $privateSettings;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Plugins              $plugins          Plugins
-	 * @param Logger               $logger           Logger
-	 * @param PrivateSettingsTable $private_settings PrivateSettingsTable
+	 * @param Plugins $plugins Plugins
+	 * @param Logger  $logger  Logger
 	 */
-	public function __construct(Plugins $plugins, Logger $logger, PrivateSettingsTable $private_settings) {
+	public function __construct(Plugins $plugins, Logger $logger) {
 		$this->plugins = $plugins;
 		$this->logger = $logger;
-		$this->privateSettings = $private_settings;
 	}
 
 	/**
@@ -92,43 +85,41 @@ class Locator {
 	/**
 	 * Gets intance of an ElggUpgrade based on the given class and id
 	 *
-	 * @param string $class Class implementing Elgg\Upgrade\Batch
-	 * @param string $id    Either plugin_id or "core"
+	 * @param string $class        Class implementing Elgg\Upgrade\Batch
+	 * @param string $component_id Either plugin_id or "core"
 	 *
-	 * @return ElggUpgrade|null
+	 * @return ElggUpgrade
 	 */
-	public function getUpgrade($class, $id) {
+	public function getUpgrade($class, $component_id) {
+
 		$batch = $this->getBatch($class);
 
-		if (!$batch) {
-			return;
-		}
-
 		$version = $batch->getVersion();
-		$upgrade_id = "{$id}:{$version}";
+		$upgrade_id = "{$component_id}:{$version}";
 
-		// Database holds the information of which upgrades have been processed
-		if ($this->upgradeExists($upgrade_id)) {
-			$this->logger->info("Upgrade $id has already been processed");
+		$upgrade = $this->upgradeExists($upgrade_id);
 
-			return;
+		if (!$upgrade) {
+			$upgrade = elgg_call(ELGG_IGNORE_ACCESS, function () use ($upgrade_id, $class, $component_id, $version) {
+				$site = elgg_get_site_entity();
+
+				// Create a new ElggUpgrade to represent the upgrade in the database
+				$upgrade = new ElggUpgrade();
+				$upgrade->owner_guid = $site->guid;
+				$upgrade->container_guid = $site->guid;
+
+				$upgrade->setId($upgrade_id);
+				$upgrade->setClass($class);
+				$upgrade->title = "{$component_id}:upgrade:{$version}:title";
+				$upgrade->description = "{$component_id}:upgrade:{$version}:description";
+				$upgrade->offset = 0;
+				$upgrade->save();
+
+				return $upgrade;
+			});
 		}
 
-		// Create a new ElggUpgrade to represent the upgrade in the database
-		$object = new ElggUpgrade();
-		$object->setId($upgrade_id);
-		$object->setClass($class);
-		$object->title = "{$id}:upgrade:{$version}:title";
-		$object->description = "{$id}:upgrade:{$version}:description";
-		$object->offset = 0;
-
-		try {
-			$object->save();
-
-			return $object;
-		} catch (\UnexpectedValueException $ex) {
-			$this->logger->error($ex->getMessage());
-		}
+		return $upgrade;
 	}
 
 	/**
@@ -136,38 +127,19 @@ class Locator {
 	 *
 	 * @param string $class The fully qualified class name
 	 *
-	 * @return Batch|false if invalid upgrade
+	 * @return Batch
+	 * @throws InvalidArgumentException
 	 */
 	public function getBatch($class) {
 		if (!class_exists($class)) {
-			$this->logger->error("Upgrade class $class was not found");
-
-			return false;
+			throw new InvalidArgumentException("Upgrade class $class was not found");
 		}
 
-		$batch = new $class;
-		if (!$batch instanceof Batch) {
-			$this->logger->error("Upgrade class $class should implement " . Batch::class);
-
-			return false;
+		if (!is_subclass_of($class, Batch::class)) {
+			throw new InvalidArgumentException("Upgrade class $class should implement " . Batch::class);
 		}
 
-		// check version before shouldBeSkipped() so authors can get immediate feedback on an
-		// invalid batch.
-		$version = $batch->getVersion();
-
-		// Version must be in format yyyymmddnn
-		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
-			$this->logger->error("Upgrade $class returned an invalid version: $version");
-
-			return false;
-		}
-
-		if ($batch->shouldBeSkipped()) {
-			return false;
-		}
-
-		return $batch;
+		return new $class;
 	}
 
 	/**
@@ -175,20 +147,22 @@ class Locator {
 	 *
 	 * @param string $upgrade_id Id in format <plugin_id>:<yyymmddnn>
 	 *
-	 * @return boolean
+	 * @return ElggUpgrade|false
 	 */
 	public function upgradeExists($upgrade_id) {
-		$upgrade = \Elgg\Database\Entities::find([
-			'type' => 'object',
-			'subtype' => 'elgg_upgrade',
-			'private_setting_name_value_pairs' => [
-				[
-					'name' => 'id',
-					'value' => (string) $upgrade_id,
+		return elgg_call(ELGG_IGNORE_ACCESS, function () use ($upgrade_id) {
+			$upgrades = \Elgg\Database\Entities::find([
+				'type' => 'object',
+				'subtype' => 'elgg_upgrade',
+				'private_setting_name_value_pairs' => [
+					[
+						'name' => 'id',
+						'value' => (string) $upgrade_id,
+					],
 				],
-			],
-		]);
+			]);
 
-		return !empty($upgrade);
+			return $upgrades ? $upgrades[0] : false;
+		});
 	}
 }

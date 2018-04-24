@@ -32,7 +32,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [0, 25, 50, 75],
@@ -61,7 +61,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->has_errors = false;
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [50, 75],
@@ -86,7 +86,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [0, 10, 20, 30],
@@ -111,7 +111,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [],

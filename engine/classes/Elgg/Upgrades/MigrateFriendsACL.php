@@ -2,13 +2,13 @@
 
 namespace Elgg\Upgrades;
 
-use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
 /**
  * Creates user friends access collection and migrates entity access_id
  */
-class MigrateFriendsACL implements Batch {
+class MigrateFriendsACL implements AsynchronousUpgrade {
 
 	/**
 	 * {@inheritdoc}
@@ -89,8 +89,6 @@ class MigrateFriendsACL implements Batch {
 		$this->updateAnnotations($user, $acl);
 		
 		$result->addSuccesses(1);
-		
-		return $result;
 	}
 	
 	protected function addFriendsToACL(\ElggUser $user, \ElggAccessCollection $acl) {

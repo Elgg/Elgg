@@ -95,12 +95,40 @@ class ElggUpgrade extends ElggObject {
 	}
 
 	/**
+	 * Check if the upgrade should be run asynchronously
+	 * @return bool
+	 */
+	public function isAsynchronous() {
+		return !is_subclass_of($this->class, \Elgg\Upgrade\SystemUpgrade::class);
+	}
+
+	/**
 	 * Return instance of the class that processes the data
 	 *
 	 * @return Batch|false
 	 */
 	public function getBatch() {
-		return _elgg_services()->upgradeLocator->getBatch($this->class);
+		try {
+			$batch = _elgg_services()->upgradeLocator->getBatch($this->class);
+		} catch (InvalidArgumentException $ex) {
+			elgg_log($ex->getMessage(), 'ERROR');
+			return false;
+		}
+
+		// check version before shouldBeSkipped() so authors can get immediate feedback on an invalid batch.
+		$version = $batch->getVersion();
+
+		// Version must be in format yyyymmddnn
+		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
+			elgg_log("Upgrade $this->class returned an invalid version: $version");
+			return false;
+		}
+
+		if ($batch->shouldBeSkipped()) {
+			return false;
+		}
+
+		return $batch;
 	}
 
 	/**
@@ -178,4 +206,10 @@ class ElggUpgrade extends ElggObject {
 		return $this->getPrivateSetting($name);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDisplayName() {
+		return elgg_echo($this->title);
+	}
 }

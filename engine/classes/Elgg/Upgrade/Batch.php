@@ -73,7 +73,7 @@ interface Batch {
 	 * @param Result $result Result of the batch (this must be returned)
 	 * @param int    $offset Number to skip when processing
 	 *
-	 * @return Result Instance of \Elgg\Upgrade\Result
+	 * @return void
 	 */
 	public function run(Result $result, $offset);
 }

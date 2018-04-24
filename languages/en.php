@@ -482,8 +482,8 @@ return array(
 	'admin:upgrades:run' => 'Run upgrades now',
 	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s) is not an instance of ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
-	'admin:upgrades:completed' => 'Async upgrade %s completed at %s',
-	'admin:upgrades:completed:errors' => 'Async upgrade %s completed at %s but encountered errors: %s',
+	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
+	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered errors: %s',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -1609,4 +1609,9 @@ To view %s's profile, click here:
 	"core:upgrade:2017121200:title" => "Create friends access collections",
 	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
 
+	"core:upgrade:2018041800:title" => "Activate new plugins",
+	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
+
+	"core:upgrade:2018041801:title" => "Delete old plugin entities",
+	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
 );
