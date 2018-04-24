@@ -1,19 +1,24 @@
 <?php
-/**
- *
- */
 
 namespace Elgg\Cli;
 
+use Elgg\Loggable;
+use Psr\Log\LogLevel;
+use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * Adds interaction to a console command
  */
-trait ConsoleInteractions {
+abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
+
+	use Loggable;
+
+	const DEFAULT_VERBOSITY = OutputInterface::VERBOSITY_NORMAL;
 
 	/**
 	 * @var InputInterface
@@ -59,14 +64,72 @@ trait ConsoleInteractions {
 	}
 
 	/**
-	 * Write messages to output buffer
+	 * Dump a variable
 	 *
-	 * @param string|array $messages Messages
+	 * @param mixed $data Data to dump
 	 *
 	 * @return void
 	 */
-	public function write($messages) {
-		$this->output->writeln($messages);
+	final public function dump($data) {
+		VarDumper::dump($data);
+	}
+
+	/**
+	 * Write messages to output buffer
+	 *
+	 * @param string|array $messages Data or messages
+	 * @param string       $level    Logging level/servity
+	 *
+	 * @return void
+	 */
+	final public function write($messages, $level = LogLevel::INFO) {
+		$formatter = new FormatterHelper();
+
+		switch ($level) {
+			case LogLevel::EMERGENCY :
+			case LogLevel::CRITICAL :
+			case LogLevel::ALERT :
+			case LogLevel::ERROR :
+				$style = 'error';
+				break;
+
+			case LogLevel::WARNING :
+				$style = 'comment';
+				break;
+
+			default :
+				$style = 'info';
+				break;
+		}
+
+		$message = $formatter->formatBlock($messages, $style);
+		$this->output->writeln($message);
+	}
+
+	/**
+	 * Print an error
+	 *
+	 * @param string $message Error message
+	 *
+	 * @return void
+	 */
+	public function error($message) {
+		if (!$this->log(LogLevel::ERROR, $message)) {
+			$this->write($message, LogLevel::ERROR);
+		}
+	}
+
+	/**
+	 * Print a notce
+	 *
+	 * @param string $message Error message
+	 *
+	 * @return void
+	 */
+	public function notice($message) {
+		if (!$this->log(LogLevel::NOTICE, $message)) {
+			$this->write($message, LogLevel::NOTICE);
+		}
 	}
 
 	/**
@@ -110,14 +173,13 @@ trait ConsoleInteractions {
 	 * Dump and output system and error messages
 	 * @return void
 	 */
-	protected function dumpRegisters() {
+	final protected function dumpRegisters() {
 		$registers = _elgg_services()->systemMessages->loadRegisters();
 
 		foreach ($registers as $prop => $values) {
 			if (!empty($values)) {
 				foreach ($values as $msg) {
-					$tag = $prop == 'error' ? 'error' : 'info';
-					$this->write(elgg_format_element($tag, [], $msg));
+					$prop == 'error' ? $this->error($msg) : $this->notice($msg);
 				}
 			}
 		}

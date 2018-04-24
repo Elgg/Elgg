@@ -93,7 +93,7 @@ class WidgetDefinition {
 			$context[] = 'profile';
 			$context[] = 'dashboard';
 			
-			_elgg_services()->logger->warn("The widget '{$id}' need to be registered for explicit contexts");
+			_elgg_services()->logger->warning("The widget '{$id}' need to be registered for explicit contexts");
 			$pos = array_search('all', $context);
 			unset($context[$pos]);
 			

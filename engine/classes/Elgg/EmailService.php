@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Zend\Mail\Message as MailMessage;
 use Zend\Mail\Transport\TransportInterface;
@@ -19,6 +20,8 @@ use Zend\Mime\Part;
  */
 class EmailService {
 
+	use Loggable;
+
 	/**
 	 * @var Config
 	 */
@@ -35,19 +38,14 @@ class EmailService {
 	private $mailer;
 
 	/**
-	 * @var Logger
-	 */
-	private $logger;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config             $config Config
 	 * @param PluginHooksService $hooks  Hook registration service
 	 * @param TransportInterface $mailer Mailer
-	 * @param Logger             $logger Logger
+	 * @param LoggerInterface    $logger Logger
 	 */
-	public function __construct(Config $config, PluginHooksService $hooks, TransportInterface $mailer, Logger $logger) {
+	public function __construct(Config $config, PluginHooksService $hooks, TransportInterface $mailer, LoggerInterface $logger) {
 		$this->config = $config;
 		$this->hooks = $hooks;
 		$this->mailer = $mailer;

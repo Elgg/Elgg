@@ -6,6 +6,8 @@ use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use Elgg\Plugins\PluginTesting;
 use ElggSession;
+use Psr\Log\LogLevel;
+use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Zend\Mail\Transport\InMemory;
 
@@ -75,10 +77,12 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		Application::setInstance($app);
 
+		$app->_services->setValue('logger', Logger::factory());
+
 		if (in_array('--verbose', $_SERVER['argv'])) {
-			Logger::$verbosity = ConsoleOutput::VERBOSITY_VERY_VERBOSE;
+			$app->_services->logger->setLevel(LogLevel::DEBUG);
 		} else {
-			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
+			$app->_services->logger->setLevel(LogLevel::ERROR);
 		}
 
 		// Invalidate caches
@@ -107,6 +111,11 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	 * {@inheritdoc}
 	 */
 	public static function tearDownAfterClass() {
+		foreach (_elgg_services()->logger->getHandlers() as $handler) {
+			if (is_callable([$handler, 'close'])) {
+				$handler->close();
+			}
+		}
 		parent::tearDownAfterClass();
 	}
 

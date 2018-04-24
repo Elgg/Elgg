@@ -36,7 +36,11 @@ if ($installed) {
 		// Try to recover by running a system upgrade
 		\Elgg\Application::upgrade();
 	}
-	_elgg_services()->cli->run();
+
+	$cli = _elgg_services()->cli;
+	$logger = _elgg_services()->logger;
+	$cli->setLogger($logger);
+	$cli->run();
 } else {
 	$cli = new Symfony\Component\Console\Application();
 	$cli->add(new \Elgg\Cli\InstallCommand());

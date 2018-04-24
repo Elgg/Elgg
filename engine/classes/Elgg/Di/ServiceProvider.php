@@ -14,11 +14,12 @@ use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
 use Elgg\Invoker;
-use Elgg\Printer\CliPrinter;
-use Elgg\Printer\ErrorLogPrinter;
+use Elgg\Logger;
 use Elgg\Project\Paths;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 
 /**
@@ -44,6 +45,8 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Security\Csrf                      $csrf
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\Cli                                $cli
+ * @property-read \Symfony\Component\Console\Input\ArgvInput $cli_input
+ * @property-read \Symfony\Component\Console\Output\ConsoleOutput $cli_output
  * @property-read \Elgg\Cron                               $cron
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
@@ -83,7 +86,6 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
  * @property-read \ElggCache                               $privateSettingsCache
- * @property-read \Elgg\Printer                            $printer
  * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
  * @property-read \Elgg\Application\Database               $publicDb
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
@@ -224,8 +226,24 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('cli', function(ServiceProvider $c) {
 			$version = elgg_get_version(true);
+
 			$console = new \Symfony\Component\Console\Application('Elgg', $version);
-			return new \Elgg\Cli($console, $c->hooks);
+
+			return new \Elgg\Cli(
+				$console,
+				$c->hooks,
+				$c->cli_input,
+				$c->cli_output
+			);
+		});
+
+		$this->setFactory('cli_input', function(ServiceProvider $c) {
+			$argv = $c->request->server->get('argv') ? : [];
+			return new ArgvInput($argv);
+		});
+
+		$this->setFactory('cli_output', function(ServiceProvider $c) {
+			return new ConsoleOutput();
 		});
 
 		$this->setFactory('config', function (ServiceProvider $sp) use ($config) {
@@ -238,7 +256,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('cron', function(ServiceProvider $c) {
-			return new Cron($c->hooks, $c->printer, $c->events);
+			return new Cron($c->hooks, $c->logger, $c->events);
 		});
 
 		$this->setClassName('crypto', \ElggCrypto::class);
@@ -339,7 +357,7 @@ class ServiceProvider extends DiContainer {
 			if ($c->config->enable_profiling) {
 				$events->setTimer($c->timer);
 			}
-			
+
 			return $events;
 		});
 
@@ -404,11 +422,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
-			$logger = new \Elgg\Logger($c->hooks, $c->config, $c->printer);
+			$logger = Logger::factory($c->cli_output);
+
+			$logger->setLevel($c->config->debug);
+			$logger->setHooks($c->hooks);
+
 			return $logger;
 		});
 
-		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
 		$this->setFactory('menus', function(ServiceProvider $c) {
@@ -475,15 +496,7 @@ class ServiceProvider extends DiContainer {
 			return $c->dataCache->private_settings;
 		});
 
-		$this->setFactory('printer', function(ServiceProvider $c) {
-			if (php_sapi_name() === 'cli') {
-				return new CliPrinter();
-			} else {
-				return new ErrorLogPrinter();
-			}
-		});
-
-		$this->setFactory('privateSettings', function(ServiceProvider $c) {
+		$this->setFactory('privateSettings', function (ServiceProvider $c) {
 			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->privateSettingsCache);
 		});
 

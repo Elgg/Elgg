@@ -1,17 +1,14 @@
 <?php
-/**
- *
- */
 
 namespace Elgg\Database\Seeds;
 
-use Elgg\Project\Paths;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
 use ElggUser;
 use Exception;
 use Faker\Factory;
+use Psr\Log\LogLevel;
 
 /**
  * Seeding trait
@@ -757,7 +754,7 @@ trait Seeding {
 	 *
 	 * @return void
 	 */
-	public function log($msg, $level = 'NOTICE') {
+	public function log($msg, $level = LogLevel::NOTICE) {
 		elgg_log($msg, $level);
 	}
 

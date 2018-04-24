@@ -2,6 +2,10 @@
 
 namespace Elgg\Database;
 
+use Elgg\Database;
+use Elgg\Loggable;
+use Psr\Log\LoggerInterface;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -13,8 +17,10 @@ namespace Elgg\Database;
  */
 class Mutex {
 
+	use Loggable;
+
 	/**
-	 * @var \Elgg\Database
+	 * @var Database
 	 */
 	private $db;
 
@@ -26,10 +32,10 @@ class Mutex {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database $db     Database
-	 * @param \Elgg\Logger   $logger Logger
+	 * @param Database        $db     Database
+	 * @param LoggerInterface $logger Logger
 	 */
-	public function __construct(\Elgg\Database $db, \Elgg\Logger $logger) {
+	public function __construct(Database $db, LoggerInterface $logger) {
 		$this->db = $db;
 		$this->logger = $logger;
 	}
@@ -50,7 +56,7 @@ class Mutex {
 			return true;
 		}
 
-		$this->logger->warn("Cannot lock mutex for {$namespace}: already locked.");
+		$this->logger->warning("Cannot lock mutex for {$namespace}: already locked.");
 		return false;
 	}
 
@@ -83,12 +89,12 @@ class Mutex {
 	 * Assert that the namespace contains only characters [A-Za-z]
 	 *
 	 * @param string $namespace Namespace to use for the database table
-	 * @throws InvalidParameterException
+	 * @throws \InvalidParameterException
 	 * @return void
 	 */
 	private function assertNamespace($namespace) {
 		if (!ctype_alpha($namespace)) {
-			throw new InvalidParameterException("Mutex namespace can only have characters [A-Za-z].");
+			throw new \InvalidParameterException("Mutex namespace can only have characters [A-Za-z].");
 		}
 	}
 }

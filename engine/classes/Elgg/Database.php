@@ -468,9 +468,11 @@ class Database {
 				$value = $connection->query($sql);
 			}
 		} catch (\Exception $e) {
-			throw new \DatabaseException($e->getMessage() . "\n\n"
-			. "QUERY: $sql \n\n"
-			. "PARAMS: " . print_r($params, true));
+			$ex = new \DatabaseException($e->getMessage());
+			$ex->setParameters($params);
+			$ex->setQuery($sql);
+
+			throw $ex;
 		}
 
 		if ($this->timer) {

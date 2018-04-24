@@ -105,7 +105,7 @@ class ImageService {
 			unset($thumbnail);
 		} catch (Exception $ex) {
 			$logger = $this->logger ? $this->logger : _elgg_services()->logger;
-			$logger->error($ex->getMessage());
+			$logger->error($ex);
 			return false;
 		}
 
@@ -133,7 +133,7 @@ class ImageService {
 			return true;
 		} catch (Exception $ex) {
 			$logger = $this->logger ? $this->logger : _elgg_services()->logger;
-			$logger->notice($ex->getMessage());
+			$logger->notice($ex);
 		}
 		return false;
 	}

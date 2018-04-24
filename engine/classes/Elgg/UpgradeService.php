@@ -17,6 +17,8 @@ use RuntimeException;
  */
 class UpgradeService {
 
+	use Loggable;
+
 	/**
 	 * @var Locator
 	 */
@@ -36,11 +38,6 @@ class UpgradeService {
 	 * @var Config
 	 */
 	private $config;
-
-	/**
-	 * @var Logger
-	 */
-	private $logger;
 
 	/**
 	 * @var Mutex
@@ -176,7 +173,7 @@ class UpgradeService {
 					}
 				} catch (\Exception $e) {
 					$success = false;
-					$this->logger->error($e->getMessage());
+					$this->logger->error($e);
 				}
 			} else {
 				if (!Includer::includeFile("$upgrade_path/$upgrade")) {

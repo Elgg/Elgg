@@ -38,6 +38,7 @@ $simple_settings = [
 	'show_modules',
 	'block_email',
 	'forward_email',
+	'enable_error_log',
 ];
 foreach ($simple_settings as $setting) {
 	elgg_set_plugin_setting($setting, get_input($setting), 'developers');

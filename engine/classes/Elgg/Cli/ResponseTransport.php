@@ -30,7 +30,7 @@ class ResponseTransport implements \Elgg\Http\ResponseTransport {
 		$content = $response->getContent();
 		$json = @json_decode($content);
 		$this->command->write("Response: " . PHP_EOL);
-		$json ? dump($json) : dump($content);
+		$this->command->dump($json ? $json : $content);
 
 		return true;
 	}

@@ -39,6 +39,8 @@ Under the hood:
 - CSS-Crush for CSS preprocessing
 - Imagine for image manipulation
 - Memcached support
+- Redis support (not CI-tested)
+- Error handling with Monolog
 
 Elgg Foundation
 ---------------

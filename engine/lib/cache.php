@@ -188,7 +188,7 @@ function elgg_disable_simplecache() {
 function _elgg_rmdir($dir, $empty = false) {
 	if (!$dir) {
 		// realpath can return false
-		_elgg_services()->logger->warn(__FUNCTION__ . ' called with empty $dir');
+		_elgg_services()->logger->warning(__FUNCTION__ . ' called with empty $dir');
 		return true;
 	}
 	if (!is_dir($dir)) {
