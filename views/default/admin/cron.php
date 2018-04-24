@@ -46,7 +46,7 @@ $msg_hd = elgg_echo('admin:cron:msg');
 
 $table = <<<HTML
 <table class="elgg-table">
-	<tr><th>$period_hd</th><th>$friendly_hd</th><th>$date_hd</th><th>$msg_hd</th></tr>
+	<thead><tr><th>$period_hd</th><th>$friendly_hd</th><th>$date_hd</th><th>$msg_hd</th></tr></thead>
 	$table_content
 </table>
 HTML;

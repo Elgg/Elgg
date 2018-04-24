@@ -66,7 +66,6 @@ function elgg_list_annotations($options) {
 	$defaults = [
 		'limit' => 25,
 		'offset' => (int) max(get_input('annoff', 0), 0),
-		'no_results' => '',
 	];
 
 	$options = array_merge($defaults, $options);
