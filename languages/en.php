@@ -1595,7 +1595,7 @@ To view %s's profile, click here:
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinese",
-	"zh_hans" => "Chinese Simplified",
+	"zh-cn" => "Chinese Simplified",
 	"zu" => "Zulu",
 
 	"field:required" => 'Required',
