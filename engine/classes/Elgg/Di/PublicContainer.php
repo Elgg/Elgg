@@ -14,6 +14,7 @@ use Elgg\PluginHooksService;
 use Elgg\Security\Csrf;
 use Elgg\SystemMessagesService;
 use Elgg\Users\Accounts;
+use Elgg\Views\HtmlFormatter;
 use Elgg\Views\TableColumn\ColumnFactory;
 use ElggSession;
 
@@ -26,6 +27,7 @@ use ElggSession;
  * @property-read Database              $db              Public database
  * @property-read EventsService         $events          Event service
  * @property-read Gatekeeper            $gatekeeper      Gatekeeper
+ * @property-read HtmlFormatter         $html_formatter  HTML formatter
  * @property-read PluginHooksService    $hooks           Hooks service
  * @property-read Logger                $logger          Logger
  * @property-read Service               $menus           Menus
