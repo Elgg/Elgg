@@ -11,6 +11,7 @@ use Elgg\UnitTestCase;
  *
  * @group ElggMetadata
  * @group UnitTests
+ * @group ElggData
  */
 class ElggMetadataUnitTest extends UnitTestCase {
 
@@ -43,7 +44,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		
 		$this->assertEquals('metadata', $metadata->getType());
 		$this->assertEquals($name, $metadata->getSubtype());
-		$this->assertInstanceOf(stdClass::class, $metadata->toObject());
+		$this->assertInstanceOf(\Elgg\Export\Data::class, $metadata->toObject());
 		$this->assertEquals($object, $metadata->getEntity());
 		$this->assertEquals($metadata->id, $metadata->getSystemLogID());
 
@@ -184,5 +185,72 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$this->assertTrue($metadata->delete());
 
 		_elgg_services()->session->removeLoggedInUser();
+	}
+
+	public function testCanExport() {
+
+		$object = $this->createObject();
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'foo';
+		$metadata->value = 'bar';
+		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
+		$metadata->save();
+
+		$export = $metadata->toObject();
+
+		$this->assertEquals($metadata->id, $export->id);
+		$this->assertEquals($metadata->owner_guid, $export->owner_guid);
+		$this->assertEquals($metadata->entity_guid, $export->entity_guid);
+		$this->assertEquals($metadata->time_created, $export->getTimeCreated()->getTimestamp());
+		$this->assertEquals($metadata->name, $export->name);
+		$this->assertEquals($metadata->value, $export->value);
+	}
+
+	public function testCanSerialize() {
+		$object = $this->createObject();
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'foo';
+		$metadata->value = 'bar';
+		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
+		$metadata->save();
+
+		$data = serialize($metadata);
+
+		$unserialized = unserialize($data);
+
+		$this->assertEquals($metadata, $unserialized);
+	}
+
+	public function testCanArrayAccessAttributes() {
+		$object = $this->createObject();
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'foo';
+		$metadata->value = 'bar';
+		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
+		$metadata->save();
+
+		$this->assertEquals($metadata->id, $metadata['id']);
+
+		foreach ($metadata as $attr => $value) {
+			$this->assertEquals($metadata->$attr, $metadata[$attr]);
+		}
+
+		unset($metadata['access_id']);
+	}
+
+	public function testIsLoggable() {
+		$object = $this->createObject();
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = $object->guid;
+		$metadata->name = 'foo';
+		$metadata->value = 'bar';
+		$metadata->time_created = _elgg_services()->metadataTable->getCurrentTime()->getTimestamp();
+		$metadata->save();
+
+		$this->assertEquals($metadata->id, $metadata->getSystemLogID());
+		$this->assertEquals($metadata, $metadata->getObjectFromID($metadata->id));
 	}
 }

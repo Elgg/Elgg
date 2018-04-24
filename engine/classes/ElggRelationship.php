@@ -148,14 +148,16 @@ class ElggRelationship extends \ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function toObject() {
-		$object = new \stdClass();
+	public function toObject(array $params = []) {
+		$object = new \Elgg\Export\Relationship();
 		$object->id = $this->id;
 		$object->subject_guid = $this->guid_one;
 		$object->relationship = $this->relationship;
 		$object->object_guid = $this->guid_two;
 		$object->time_created = date('c', $this->getTimeCreated());
-		$params = ['relationship' => $this];
+
+		$params['relationship'] = $this;
+
 		return _elgg_services()->hooks->trigger('to:object', 'relationship', $params, $object);
 	}
 

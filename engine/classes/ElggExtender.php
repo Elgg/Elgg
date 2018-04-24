@@ -157,8 +157,9 @@ abstract class ElggExtender extends \ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function toObject() {
-		$object = new \stdClass();
+	public function toObject(array $params = []) {
+
+		$object = new \Elgg\Export\Extender();
 		$object->id = $this->id;
 		$object->entity_guid = $this->entity_guid;
 		$object->owner_guid = $this->owner_guid;
@@ -166,10 +167,9 @@ abstract class ElggExtender extends \ElggData {
 		$object->value = $this->value;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
-		$params = [
-			$this->getSubtype() => $this, // deprecated use
-			$this->getType() => $this,
-		];
+
+		$params[$this->getSubtype()] = $this; // deprecated use
+		$params[$this->getType()] = $this;
 		
 		// deprecated toObject hook
 		$deprecated_msg = "Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
