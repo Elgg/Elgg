@@ -14,14 +14,7 @@ if (!$entity instanceof ElggEntity) {
 }
 
 if (!isset($vars['icon'])) {
-	if ($entity->hasIcon('small')) {
-		$vars['icon'] = elgg_view_entity_icon($entity, 'small');
-	} else {
-		$owner = $entity->getOwnerEntity();
-		if ($owner instanceof ElggEntity) {
-			$vars['icon'] = elgg_view_entity_icon($owner, 'small');
-		}
-	}
+	$vars['icon'] = true;
 }
 
 if (!isset($vars['title']) && empty($entity->getDisplayName())) {

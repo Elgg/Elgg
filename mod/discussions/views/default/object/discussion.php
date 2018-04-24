@@ -1,91 +1,83 @@
 <?php
 /**
  * Forum topic entity view
+ *
+ * @uses $vars['entity'] ElggDiscussion to show
  */
 
-$full = elgg_extract('full_view', $vars, false);
-
-$topic = elgg_extract('entity', $vars, false);
-if (!$topic instanceof ElggDiscussion) {
+$full_view = (bool) elgg_extract('full_view', $vars, false);
+$entity = elgg_extract('entity', $vars, false);
+if (!$entity instanceof ElggDiscussion) {
 	return;
 }
 
-$poster = $topic->getOwnerEntity();
-if (!$poster) {
-	elgg_log("User {$topic->owner_guid} could not be loaded, and is needed to display entity {$topic->guid}", 'WARNING');
-	if ($full) {
+$poster = $entity->getOwnerEntity();
+if (!$poster instanceof ElggEntity) {
+	elgg_log("User {$entity->owner_guid} could not be loaded, and is needed to display entity {$entity->guid}", 'WARNING');
+	if ($full_view) {
 		forward('', '404');
 	}
 	return;
 }
 
-$poster_icon = elgg_view_entity_icon($poster, 'small');
-
-$comment_text = '';
-$num_comments = $topic->countComments();
-if ($num_comments != 0) {
-	$comments = elgg_get_entities([
-		'type' => 'object',
-		'subtype' => 'comment',
-		'container_guid' => $topic->getGUID(),
-		'limit' => 1,
-		'distinct' => false,
-	]);
-	
-	/* @var ElggComment $last_comment */
-	$last_comment = $comments[0];
-	
-	$poster = $last_comment->getOwnerEntity();
-	$comment_time = elgg_view_friendly_time($last_comment->time_created);
-
-	$comment_text = elgg_view('output/url', [
-		'text' => elgg_echo('discussion:updated', [$poster->getDisplayName(), $comment_time]),
-		'href' => $last_comment->getURL(),
-		'is_trusted' => true,
-	]);
-}
-
-if ($full) {
-	$params = [
-		'entity' => $topic,
-		'title' => false,
-	];
-
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
-
+if ($full_view) {
 	$body = elgg_view('output/longtext', [
-		'value' => $topic->description,
+		'value' => $entity->description,
 		'class' => 'clearfix',
 	]);
 
 	$responses = null;
-	if ($topic->status == 'closed') {
+	if ($entity->status == 'closed') {
 		$body .= elgg_view('discussion/closed');
 		
 		// need to provide the comments as we can't disable the add form
-		$responses = elgg_view_comments($topic, false);
+		$responses = elgg_view_comments($entity, false);
 	}
-
-	echo elgg_view('object/elements/full', [
-		'entity' => $topic,
-		'icon' => $poster_icon,
-		'summary' => $summary,
+	
+	$params = [
+		'icon' => true,
+		'show_summary' => true,
 		'body' => $body,
 		'responses' => $responses,
 		'show_navigation' => true,
-	]);
+	];
+
+	$params = $params + $vars;
+	echo elgg_view('object/elements/full', $params);
 } else {
+	$comment_text = '';
+	if ($entity->countComments() > 0) {
+		$comments = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'comment',
+			'container_guid' => $entity->guid,
+			'limit' => 1,
+			'distinct' => false,
+		]);
+		
+		/* @var ElggComment $last_comment */
+		$last_comment = $comments[0];
+		
+		$poster = $last_comment->getOwnerEntity();
+		$comment_time = elgg_view_friendly_time($last_comment->time_created);
+		
+		$comment_text = elgg_view('output/url', [
+			'text' => elgg_echo('discussion:updated', [$poster->getDisplayName(), $comment_time]),
+			'href' => $last_comment->getURL(),
+			'is_trusted' => true,
+		]);
+		$comment_text = elgg_format_element('span', ['class' => 'float-alt'], $comment_text);
+	}
+	
 	// brief view
 	$by_line = elgg_view('object/elements/imprint', $vars);
 	
-	$subtitle = "$by_line <span class=\"float-alt\">$comment_text</span>";
+	$subtitle = "$by_line $comment_text";
 
 	$params = [
-		'entity' => $topic,
 		'subtitle' => $subtitle,
-		'content' => elgg_get_excerpt($topic->description),
-		'icon' => $poster_icon,
+		'content' => elgg_get_excerpt($entity->description),
+		'icon' => true,
 	];
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);

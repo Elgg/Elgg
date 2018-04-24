@@ -2,21 +2,18 @@
 /**
  * Elgg bookmark view
  *
- * @package ElggBookmarks
+ * @uses $vars['entity'] ElggBookmark to show
  */
 
-$full = elgg_extract('full_view', $vars, false);
-$bookmark = elgg_extract('entity', $vars, false);
-
-if (! $bookmark instanceof ElggObject) {
+$entity = elgg_extract('entity', $vars, false);
+if (!$entity instanceof ElggBookmark) {
 	return;
 }
 
-$owner = $bookmark->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'small');
+$owner = $entity->getOwnerEntity();
 
 $link = elgg_view('output/url', [
-	'href' => $bookmark->address,
+	'href' => $entity->address,
 	'icon' => 'push-pin-alt',
 ]);
 
@@ -25,11 +22,11 @@ if (elgg_in_context('gallery')) {
 		'href' => $owner->getURL(),
 		'text' => $owner->getDisplayName(),
 	]);
-	$date = elgg_view_friendly_time($bookmark->time_created);
+	$date = elgg_view_friendly_time($entity->time_created);
 
 	echo <<<HTML
 <div class="bookmarks-gallery-item">
-	<h3>{$bookmark->getDisplayName()}</h3>
+	<h3>{$entity->getDisplayName()}</h3>
 	<p class='subtitle'>$owner_link $date</p>
 </div>
 HTML;
@@ -37,15 +34,11 @@ HTML;
 	return;
 }
 
-if ($full) {
-	$description = elgg_view('output/longtext', ['value' => $bookmark->description, 'class' => 'pbl']);
-
-	$params = [
-		'title' => false,
-		'handler' => 'bookmarks',
-	];
-	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
+if (elgg_extract('full_view', $vars)) {
+	$description = elgg_view('output/longtext', [
+		'value' => $entity->description,
+		'class' => 'pbl',
+	]);
 
 	$body = <<<HTML
 <div class="bookmark elgg-content mts">
@@ -53,23 +46,24 @@ if ($full) {
 	$description
 </div>
 HTML;
-
-	echo elgg_view('object/elements/full', [
-		'entity' => $bookmark,
-		'icon' => $owner_icon,
-		'summary' => $summary,
+	
+	$params = [
+		'icon' => true,
+		'show_summary' => true,
 		'body' => $body,
 		'show_responses' => elgg_extract('show_responses', $vars, false),
 		'show_navigation' => true,
-	]);
+	];
+	$params = $params + $vars;
 
+	echo elgg_view('object/elements/full', $params);
 	return;
 }
 
 // brief view
-$url = $bookmark->address;
+$url = $entity->address;
 $display_text = $url;
-$excerpt = elgg_get_excerpt($bookmark->description);
+$excerpt = elgg_get_excerpt($entity->description);
 if ($excerpt) {
 	$excerpt = " - $excerpt";
 }
@@ -84,7 +78,7 @@ if (strlen($url) > 25) {
 }
 
 $link = elgg_view('output/url', [
-	'href' => $bookmark->address,
+	'href' => $entity->address,
 	'text' => $display_text,
 	'icon' => 'push-pin-alt',
 ]);
@@ -93,8 +87,7 @@ $content = "$link{$excerpt}";
 
 $params = [
 	'content' => $content,
-	'icon' => $owner_icon,
-	'handler' => 'bookmarks',
+	'icon' => true,
 ];
 $params = $params + $vars;
 echo elgg_view('object/elements/summary', $params);
