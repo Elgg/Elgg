@@ -28,26 +28,17 @@ unset($vars['image']);
 $alt_image = elgg_extract('image_alt', $vars, '');
 unset($vars['image_alt']);
 
-$class = elgg_extract_class($vars, ['elgg-image-block', 'clearfix']);
-unset($vars['class']);
-
-$body = elgg_format_element('div', [
-	'class' => 'elgg-body',
-], $body);
+$image_block = new \Elgg\Markup\Block(null, $vars);
+$image_block->addClass('elgg-image-block', 'clearfix');
 
 if ($image) {
-	$image = elgg_format_element('div', [
-		'class' => 'elgg-image',
-	], $image);
+	$image_block->append(new \Elgg\Markup\Block($image, ['class' => 'elgg-image']));
 }
 
 if ($alt_image) {
-	$alt_image = elgg_format_element('div', [
-		'class' => 'elgg-image-alt',
-	], $alt_image);
+	$image_block->append(new \Elgg\Markup\Block($alt_image, ['class' => 'elgg-image-alt']));
 }
 
-$params = $vars;
-$params['class'] = $class;
+$image_block->append(new \Elgg\Markup\Block($body, ['class' => 'elgg-body']));
 
-echo elgg_format_element('div', $params, $image . $alt_image . $body);
+echo $image_block;

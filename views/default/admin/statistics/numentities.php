@@ -17,7 +17,7 @@ foreach ($entity_stats as $type => $subtypes) {
 			$is_registered = in_array($subtype, elgg_extract($type, $registered_entity_types, []));
 			$name = elgg_echo("collection:$type:$subtype");
 		}
-		
+
 		if ($is_registered) {
 			$searchable[$name] = $value;
 		} else {
@@ -29,23 +29,34 @@ foreach ($entity_stats as $type => $subtypes) {
 arsort($searchable);
 arsort($other);
 
-$header = '<tr><th>' . elgg_echo('admin:statistics:numentities:type') . '</th>';
-$header .= '<th>' . elgg_echo('admin:statistics:numentities:number') . '</th></tr>';
-
-$rows = '';
+$table = new \Elgg\Markup\Table();
+$table->addClass('elgg-table-alt')
+	->setHeadings(
+		elgg_echo('admin:statistics:numentities:type'),
+		elgg_echo('admin:statistics:numentities:number')
+	);
 
 foreach ($searchable as $name => $value) {
-	$rows .= "<tr><td>{$name}</td><td>{$value}</td></tr>";
+	$table->addRow([
+		$name,
+		$value,
+	]);
 }
 
-$body = "<table class='elgg-table'><thead>{$header}</thead><tbody>{$rows}</tbody></table>";
-echo elgg_view_module('info', elgg_echo('admin:statistics:numentities:searchable'), $body);
+echo elgg_view_module('info', elgg_echo('admin:statistics:numentities:searchable'), $table->render());
 
+$table = new \Elgg\Markup\Table();
+$table->addClass('elgg-table-alt')
+	->setHeadings(
+		elgg_echo('admin:statistics:numentities:type'),
+		elgg_echo('admin:statistics:numentities:number')
+	);
 
-$rows = '';
 foreach ($other as $name => $value) {
-	$rows .= "<tr><td>{$name}</td><td>{$value}</td></tr>";
+	$table->addRow([
+		$name,
+		$value,
+	]);
 }
 
-$body = "<table class='elgg-table'><thead>{$header}</thead><tbody>{$rows}</tbody></table>";
-echo elgg_view_module('info', elgg_echo('admin:statistics:numentities:other'), $body);
+echo elgg_view_module('info', elgg_echo('admin:statistics:numentities:other'), $table->render());
