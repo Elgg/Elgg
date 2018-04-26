@@ -29,27 +29,6 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	}
 
 	/**
-	 * Create a HTML h1 tag
-	 *
-	 * @param  string $title Text to be in the h1
-	 * @param  int    $level Error level
-	 *
-	 * @return string
-	 */
-	protected function addTitle($title, $level) {
-		$title = htmlspecialchars($title, ENT_NOQUOTES, 'UTF-8');
-
-		$level = strtolower(\Elgg\Logger::getLevelName($level));
-
-		return elgg_format_element('h3', [
-			'class' => [
-				'developers-error-log-title',
-				"elgg-state-{$level}",
-			]
-		], $title);
-	}
-
-	/**
 	 * Formats a log record.
 	 *
 	 * @param  array $record A record to format
@@ -58,11 +37,11 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	 */
 	public function format(array $record) {
 
-		$title = $record['level_name'];
-
 		$context = elgg_extract('context', $record, []);
 		$exception = elgg_extract('exception', $context);
-
+		
+		$message_vars = [];
+		
 		if ($exception instanceof \Throwable) {
 			$timestamp = isset($exception->timestamp) ? (int) $exception->timestamp : time();
 
@@ -79,11 +58,11 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 				$record['context']['params'] = $exception->getParameters();
 			}
 
-			$title = "EXCEPTION $timestamp";
+			$message_vars['title'] = "EXCEPTION $timestamp";
 		}
-
-		$output = $this->addTitle($title, $record['level']);
-		$output .= '<table class="elgg-table elgg-table-alt">';
+		
+		$level = strtolower(\Elgg\Logger::getLevelName($record['level']));
+		$output = '<table class="elgg-table elgg-table-alt">';
 
 		$output .= $this->addRow('Message', (string) $record['message']);
 		$output .= $this->addRow('Time', $record['datetime']->format($this->dateFormat));
@@ -99,8 +78,10 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 				$output .= $this->addRow($key, $this->convertToString($value));
 			}
 		}
-
-		return $output . '</table>';
+		
+		$output .= '</table>';
+		
+		return elgg_view_message($level, $output, $message_vars);
 	}
 
 }
