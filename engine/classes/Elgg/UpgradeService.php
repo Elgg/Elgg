@@ -356,26 +356,39 @@ class UpgradeService {
 	protected function executeBatchUpgrade(ElggUpgrade $upgrade) {
 		$upgrade_name = $upgrade->getDisplayName();
 
-		$this->logger->log("Starting upgrade {$upgrade_name}", Logger::NOTICE);
+		$this->logger->notice("Starting upgrade {$upgrade_name}");
 
 		$result = $this->executeUpgrade($upgrade, false);
 
-		if (!empty($result['errors'])) {
-			$msg = $this->translator->translate('admin:upgrades:completed:errors', [
-				$upgrade_name,
-				$upgrade->getCompletedTime(),
-				implode(PHP_EOL, $result['errors']),
-			]);
+		$errors = elgg_extract('errors', $result, []);
+
+		if ($upgrade->isCompleted()) {
+			$ts = $upgrade->getCompletedTime();
+			$dt = new \DateTime();
+			$dt->setTimestamp((int) $ts);
+			$format = $this->config->date_format ? : DATE_ISO8601;
+
+			if (!empty($errors)) {
+				$msg = $this->translator->translate('admin:upgrades:completed:errors', [
+					$upgrade_name,
+					$dt->format($format),
+					$result['numErrors'],
+				]);
+			} else {
+				$msg = $this->translator->translate('admin:upgrades:completed', [
+					$upgrade_name,
+					$dt->format($format),
+				]);
+			}
 		} else {
-			$msg = $this->translator->translate('admin:upgrades:completed', [
-				$upgrade_name,
-				$upgrade->getCompletedTime(),
+			$msg = $this->translator->translate('admin:upgrades:failed', [
+				$upgrade_name
 			]);
 		}
 
 		$this->system_messages->addSuccessMessage($msg);
 
-		$this->logger->log("Finished upgrade {$upgrade_name}", Logger::NOTICE);
+		$this->logger->notice("Finished upgrade {$upgrade_name}");
 	}
 
 	/**
@@ -434,11 +447,15 @@ class UpgradeService {
 			};
 
 			while ($condition()) {
+				$this->logger->notice("Starting batch (offset: $offset)");
+
 				$result = new Result();
 
 				try {
 					$batch->run($result, $offset);
 				} catch (\Exception $e) {
+					$this->logger->error($e);
+
 					$result->addError($e->getMessage());
 					$result->addFailures(1);
 				}
@@ -464,6 +481,12 @@ class UpgradeService {
 
 				if ($failure_count > 0) {
 					$has_errors = true;
+					$this->logger->notice("Processed $total records, encountered $failure_count errors");
+					foreach ($errors as $error) {
+						$this->logger->error($error);
+					}
+				} else {
+					$this->logger->notice("Processed $total records without errors");
 				}
 
 				$processed += $total;
