@@ -28,13 +28,9 @@ $table_data = elgg_format_element('tr', [], $top_row);
 
 $fields = '';
 $i = 0;
+$notification_settings = $user->getNotificationSettings();
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
-	$checked = false;
-	if ($notification_settings = get_user_notification_settings($user->guid)) {
-		if (isset($notification_settings->$method) && $notification_settings->$method) {
-			$checked = true;
-		}
-	}
+	$checked = elgg_extract($method, $notification_settings, false);
 	
 	if ($i > 0) {
 		$fields .= elgg_format_element('td', ['class' => 'spacercolumn'], '&nbsp;');

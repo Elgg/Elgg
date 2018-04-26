@@ -332,28 +332,44 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 	$event = $params['event'];
 	$entity = $event->getObject();
-	if ($entity && elgg_instanceof($entity, 'object', 'thewire')) {
-		$parent = $entity->getEntitiesFromRelationship(array('relationship' => 'parent'));
-		if ($parent) {
-			$parent = $parent[0];
-			// do not add a subscription if reply was to self
-			if ($parent->getOwnerGUID() !== $entity->getOwnerGUID()) {
-				if (!array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
-					$personal_methods = (array)get_user_notification_settings($parent->getOwnerGUID());
-					$methods = array();
-					foreach ($personal_methods as $method => $state) {
-						if ($state) {
-							$methods[] = $method;
-						}
-					}
-					if ($methods) {
-						$subscriptions[$parent->getOwnerGUID()] = $methods;
-						return $subscriptions;
-					}
-				}
-			}
+	if (!$entity || !elgg_instanceof($entity, 'object', 'thewire')) {
+		return;
+	}
+	
+	$parent = $entity->getEntitiesFromRelationship(array('relationship' => 'parent'));
+	if (empty($parent)) {
+		return;
+	}
+	
+	$parent = $parent[0];
+	// do not add a subscription if reply was to self
+	if ($parent->getOwnerGUID() === $entity->getOwnerGUID()) {
+		return;
+	}
+	
+	if (array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
+		return;
+	}
+	
+	$owner = $parent->getOwnerEntity();
+	if (!$owner instanceof ElggUser) {
+		return;
+	}
+	
+	$personal_methods = $owner->getNotificationSettings();
+	$methods = array();
+	foreach ($personal_methods as $method => $state) {
+		if ($state) {
+			$methods[] = $method;
 		}
 	}
+	if (empty($methods)) {
+		return;
+	}
+	
+	$subscriptions[$owner->getGUID()] = $methods;
+	
+	return $subscriptions;
 }
 
 /**
