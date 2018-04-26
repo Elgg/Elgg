@@ -17,8 +17,8 @@ class Cli {
 	use Loggable;
 
 	static $verbosityLevelMap = [
-		OutputInterface::VERBOSITY_NORMAL => Logger::ERROR,
-		OutputInterface::VERBOSITY_VERBOSE => Logger::WARNING,
+		OutputInterface::VERBOSITY_NORMAL => Logger::WARNING,
+		OutputInterface::VERBOSITY_VERBOSE => Logger::NOTICE,
 		OutputInterface::VERBOSITY_VERY_VERBOSE => Logger::INFO,
 		OutputInterface::VERBOSITY_DEBUG => Logger::DEBUG,
 	];

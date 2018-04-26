@@ -36,7 +36,7 @@ If you had your Elgg 2.3 project installed using composer, you can follow this s
     cd ./path/to/project/root
     composer require elgg/elgg:~3.0
     composer update
-    vendor/bin/elgg-cli upgrade async
+    vendor/bin/elgg-cli upgrade async -v
 
 
 Manual Upgrade

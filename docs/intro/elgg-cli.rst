@@ -51,6 +51,14 @@ Available commands
     # Run cron jobs
     vendor/bin/elgg-cli cron [-i|--interval INTERVAL] [-q|--quiet]
 
+	# Flush caches
+	vendor/bin/elgg-cli flush
+
+	# System upgrade
+	vendor/bin/elgg-cli upgrade [-v]
+
+	# Upgrade and execute all async upgrades
+	vendor/bin/elgg-cli upgrade async [-v]
 
 Adding custom commands
 ======================

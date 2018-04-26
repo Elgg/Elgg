@@ -11,6 +11,7 @@ use Monolog\Processor\ProcessIdProcessor;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
 use Psr\Log\LogLevel;
+use Symfony\Bridge\Monolog\Formatter\ConsoleFormatter;
 use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -85,24 +86,32 @@ class Logger extends \Monolog\Logger {
 				true,
 				Cli::$verbosityLevelMap
 			);
+
+			$formatter = new ConsoleFormatter();
+			$formatter->allowInlineLineBreaks();
+			$formatter->ignoreEmptyContextAndExtra();
+
+			$handler->setFormatter($formatter);
+
+			$handler->pushProcessor(new BacktraceProcessor(self::ERROR));
 		} else {
 			$handler = new ErrorLogHandler();
 
 			$handler->pushProcessor(new WebProcessor());
+
+			$formatter = new ElggLogFormatter();
+			$formatter->allowInlineLineBreaks();
+			$formatter->ignoreEmptyContextAndExtra();
+
+			$handler->setFormatter($formatter);
+
+			$handler->pushProcessor(new MemoryUsageProcessor());
+			$handler->pushProcessor(new MemoryPeakUsageProcessor());
+			$handler->pushProcessor(new ProcessIdProcessor());
+			$handler->pushProcessor(new BacktraceProcessor(self::WARNING));
 		}
 
-		$formatter = new ElggLogFormatter();
-		//$formatter->includeStacktraces();
-		$formatter->allowInlineLineBreaks();
-		$formatter->ignoreEmptyContextAndExtra();
-
-		$handler->setFormatter($formatter);
-
 		$handler->pushProcessor(new PsrLogMessageProcessor());
-		$handler->pushProcessor(new MemoryUsageProcessor());
-		$handler->pushProcessor(new MemoryPeakUsageProcessor());
-		$handler->pushProcessor(new ProcessIdProcessor());
-		$handler->pushProcessor(new BacktraceProcessor(self::WARNING));
 
 		$logger->pushHandler($handler);
 
