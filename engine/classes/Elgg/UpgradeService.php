@@ -92,8 +92,9 @@ class UpgradeService {
 			throw new RuntimeException($this->translator->translate('upgrade:locked'));
 		}
 
-		// clear autoload cache so plugin classes can be reregistered and used during upgrade
-		_elgg_services()->autoloadManager->deleteCache();
+		// Clear system caches
+		_elgg_disable_caches();
+		_elgg_clear_caches();
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
 		$this->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
@@ -123,6 +124,7 @@ class UpgradeService {
 		}
 
 		$this->events->trigger('upgrade', 'system', null);
+
 		elgg_flush_caches();
 
 		$this->mutex->unlock('upgrade');

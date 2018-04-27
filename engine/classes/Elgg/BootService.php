@@ -15,7 +15,9 @@ use Stash\Invalidation;
  * @since 2.1
  */
 class BootService {
+
 	use Profilable;
+	use Cacheable;
 
 	/**
 	 * The default TTL if not set in settings.php
@@ -35,11 +37,6 @@ class BootService {
 	 * @var bool
 	 */
 	private $was_cleared = false;
-
-	/**
-	 * @var ElggCache
-	 */
-	protected $cache;
 
 	/**
 	 * Cache

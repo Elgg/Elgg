@@ -82,6 +82,10 @@ class CompositeCache extends ElggCache {
 	 * @return bool
 	 */
 	public function save($key, $data, $ttl = null) {
+		if ($this->disabled) {
+			return false;
+		}
+
 		if (!is_string($key) && !is_int($key)) {
 			throw new \InvalidArgumentException('key must be string or integer');
 		}
@@ -103,6 +107,10 @@ class CompositeCache extends ElggCache {
 	 * @return mixed The stored data or false.
 	 */
 	public function load($key, $invalidation_method = null) {
+		if ($this->disabled) {
+			return null;
+		}
+
 		if (!is_string($key) && !is_int($key)) {
 			throw new \InvalidArgumentException('key must be string or integer');
 		}
@@ -128,6 +136,10 @@ class CompositeCache extends ElggCache {
 	 * @return bool
 	 */
 	public function delete($key) {
+		if ($this->disabled) {
+			return false;
+		}
+
 		if (!is_string($key) && !is_int($key)) {
 			throw new \InvalidArgumentException('key must be string or integer');
 		}
