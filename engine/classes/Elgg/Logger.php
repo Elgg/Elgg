@@ -115,6 +115,8 @@ class Logger extends \Monolog\Logger {
 
 		$logger->pushHandler($handler);
 
+		$logger->setLevel();
+
 		return $logger;
 	}
 

@@ -3,31 +3,38 @@
  * Elgg exception (failsafe mode)
  * Displays a single exception
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Core
  *
- * @uses $vars['object'] An exception
+ * @uses       $vars['object'] An exception
  */
 
 $exception = $vars['object'];
 /* @var \Exception $exception */
 ?>
 
-<p class="elgg-messages-exception">
-	<span title="<?= get_class($exception); ?>">
-	<?= nl2br($exception->getMessage()); ?>
-		<br /><br />
+<div class="elgg-messages-exception">
+	<div title="<?= get_class($exception); ?>">
+	    <?= nl2br($exception->getMessage()); ?>
+        <br/><br/>
 		Log at time <?= $vars['ts']; ?> may have more data.
-	</span>
-</p>
-
+	</div>
+</div>
+<br/>
 <?php
 if ($exception instanceof \DatabaseException) {
-	// likely contains credentials
+	?>
+    <div class="elgg-messages-exception">
+        <pre><?= $exception->getQuery() ?></pre>
+        <pre><?= var_export($exception->getParameters()) ?></pre>
+    </div>
+    <br/>
+	<?php
 	return;
 }
 ?>
 
-<p class="elgg-messages-exception">
+<div class="elgg-messages-exception">
 	<?= nl2br(htmlentities($exception->getTraceAsString(), ENT_QUOTES, 'UTF-8')); ?>
-</p>
+</div>
+<br/>
