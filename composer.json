@@ -49,8 +49,6 @@
         "npm-asset/weakmap-polyfill": "^2.0",
         "bower-asset/fontawesome": "~5.0",
         "monolog/monolog": "^1.23",
-        "symfony/monolog-bridge": "~2.8",
-        "symfony/event-dispatcher": "^3.3",
         "symfony/polyfill-php72": "^1.7",
         "symfony/polyfill-php71": "^1.7"
     },

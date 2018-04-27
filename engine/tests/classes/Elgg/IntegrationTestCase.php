@@ -4,11 +4,8 @@ namespace Elgg;
 
 use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
-use Elgg\Plugins\PluginTesting;
 use ElggSession;
 use Psr\Log\LogLevel;
-use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Zend\Mail\Transport\InMemory;
 
 /**

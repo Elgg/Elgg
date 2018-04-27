@@ -19,7 +19,7 @@ if (!$exception instanceof Throwable) {
 <div class="elgg-messages-exception">
 	<span title="Unrecoverable Error">
 		<?php echo elgg_echo('exception:contact_admin'); ?>
-        <br/><br/>
+		<br/><br/>
 		Exception at time <?php echo elgg_extract('ts', $vars); ?>.
 	</span>
 </div>

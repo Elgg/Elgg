@@ -15,8 +15,8 @@ $exception = $vars['object'];
 
 <div class="elgg-messages-exception">
 	<div title="<?= get_class($exception); ?>">
-	    <?= nl2br($exception->getMessage()); ?>
-        <br/><br/>
+		<?= nl2br($exception->getMessage()); ?>
+		<br/><br/>
 		Log at time <?= $vars['ts']; ?> may have more data.
 	</div>
 </div>
@@ -24,11 +24,11 @@ $exception = $vars['object'];
 <?php
 if ($exception instanceof \DatabaseException) {
 	?>
-    <div class="elgg-messages-exception">
-        <pre><?= $exception->getQuery() ?></pre>
-        <pre><?= var_export($exception->getParameters()) ?></pre>
-    </div>
-    <br/>
+	<div class="elgg-messages-exception">
+		<pre><?= $exception->getQuery() ?></pre>
+		<pre><?= var_export($exception->getParameters()) ?></pre>
+	</div>
+	<br/>
 	<?php
 	return;
 }

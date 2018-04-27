@@ -14,7 +14,7 @@ use ElggUpgrade;
 class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function up() {
-
+		_elgg_services()->setValue('logger', new Logger('testing'));
 	}
 
 	public function down() {

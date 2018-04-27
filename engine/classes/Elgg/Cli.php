@@ -2,9 +2,9 @@
 
 namespace Elgg;
 
+use Elgg\Cli\Application;
 use Elgg\Cli\BaseCommand;
 use Exception;
-use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,15 +16,8 @@ class Cli {
 
 	use Loggable;
 
-	static $verbosityLevelMap = [
-		OutputInterface::VERBOSITY_NORMAL => Logger::WARNING,
-		OutputInterface::VERBOSITY_VERBOSE => Logger::NOTICE,
-		OutputInterface::VERBOSITY_VERY_VERBOSE => Logger::INFO,
-		OutputInterface::VERBOSITY_DEBUG => Logger::DEBUG,
-	];
-
 	/**
-	 * @var ConsoleApplication
+	 * @var Application
 	 */
 	protected $console;
 
@@ -46,13 +39,13 @@ class Cli {
 	/**
 	 * Constructor
 	 *
-	 * @param ConsoleApplication $console Console application instance
+	 * @param Application        $console Console application instance
 	 * @param PluginHooksService $hooks   Hooks registration service
 	 * @param InputInterface     $input   Console input
 	 * @param OutputInterface    $output  Console output
 	 */
 	public function __construct(
-		ConsoleApplication $console,
+		Application $console,
 		PluginHooksService $hooks,
 		InputInterface $input,
 		OutputInterface $output

@@ -10,8 +10,8 @@
  */
 
 if (elgg_is_admin_logged_in()) {
-    echo elgg_view('messages/exceptions/admin_exception', $vars);
-    return;
+	echo elgg_view('messages/exceptions/admin_exception', $vars);
+	return;
 }
 ?>
 
