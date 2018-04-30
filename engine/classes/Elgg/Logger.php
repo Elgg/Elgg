@@ -2,6 +2,9 @@
 
 namespace Elgg;
 
+use Elgg\Cli\Application;
+use Elgg\Cli\ErrorFormatter;
+use Elgg\Cli\ErrorHandler;
 use Elgg\Logger\BacktraceProcessor;
 use Elgg\Logger\ElggLogFormatter;
 use Monolog\Handler\ErrorLogHandler;
@@ -11,8 +14,8 @@ use Monolog\Processor\ProcessIdProcessor;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
 use Psr\Log\LogLevel;
-use Symfony\Bridge\Monolog\Formatter\ConsoleFormatter;
-use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -73,21 +76,30 @@ class Logger extends \Monolog\Logger {
 	/**
 	 * Build a new logger
 	 *
+	 * @param $input  InputInterface  Console input
 	 * @param $output OutputInterface Console output
 	 *
 	 * @return static
 	 */
-	public static function factory(OutputInterface $output = null) {
+	public static function factory(InputInterface $input = null, OutputInterface $output = null) {
 		$logger = new static(self::CHANNEL);
 
 		if ('cli' == PHP_SAPI) {
-			$handler = new ConsoleHandler(
-				$output ? : new ConsoleOutput(),
-				true,
-				Cli::$verbosityLevelMap
+			if (is_null($input) || is_null($output)) {
+				$input = $input ? : new ArgvInput();
+				$output = $output ? : new ConsoleOutput();
+
+				$app = new Application();
+				$app->setup($input, $output);
+			}
+
+			$handler = new ErrorHandler(
+				$output,
+				$output->getErrorOutput(),
+				true
 			);
 
-			$formatter = new ConsoleFormatter();
+			$formatter = new ErrorFormatter();
 			$formatter->allowInlineLineBreaks();
 			$formatter->ignoreEmptyContextAndExtra();
 
@@ -114,6 +126,8 @@ class Logger extends \Monolog\Logger {
 		$handler->pushProcessor(new PsrLogMessageProcessor());
 
 		$logger->pushHandler($handler);
+
+		$logger->setLevel();
 
 		return $logger;
 	}
@@ -195,6 +209,7 @@ class Logger extends \Monolog\Logger {
 	 * Check if a level is loggable under current logging level
 	 *
 	 * @param mixed $level Level name or severity code
+	 *
 	 * @return bool
 	 */
 	public function isLoggable($level) {

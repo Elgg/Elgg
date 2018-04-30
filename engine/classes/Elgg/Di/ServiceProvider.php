@@ -228,7 +228,8 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('cli', function(ServiceProvider $c) {
 			$version = elgg_get_version(true);
 
-			$console = new \Symfony\Component\Console\Application('Elgg', $version);
+			$console = new \Elgg\Cli\Application('Elgg', $version);
+			$console->setup($c->cli_input, $c->cli_output);
 
 			return new \Elgg\Cli(
 				$console,
@@ -432,7 +433,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
-			$logger = Logger::factory($c->cli_output);
+			$logger = Logger::factory($c->cli_input, $c->cli_output);
 
 			$logger->setLevel($c->config->debug);
 			$logger->setHooks($c->hooks);

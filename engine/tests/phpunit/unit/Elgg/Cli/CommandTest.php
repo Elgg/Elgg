@@ -2,14 +2,10 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Cli\CronCommand;
 use Elgg\Logger;
 use Elgg\UnitTestCase;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\StreamHandler;
-use Psr\Log\LogLevel;
-use Symfony\Bridge\Monolog\Handler\ConsoleHandler;
-use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -31,11 +27,13 @@ class CommandTest extends UnitTestCase {
 		$command->setHandler($handler);
 
 		$logger = new Logger('PHPUNIT');
-		$logger->setLevel(LogLevel::NOTICE);
 
-		$handler = new ConsoleHandler();
+		$output = new NullOutput();
+		$output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
 
+		$handler = new ErrorHandler($output);
 		$logger->pushHandler($handler);
+
 		$command->setLogger($logger);
 
 		$application = new Application();
