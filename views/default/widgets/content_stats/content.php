@@ -29,18 +29,26 @@ foreach ($registered_entity_types as $type => $subtypes) {
 
 arsort($stats);
 
-echo '<table class="elgg-table">';
-echo '<thead><tr><th>' . elgg_echo('admin:statistics:numentities:type') . '</th>';
-echo '<th>' . elgg_echo('admin:statistics:numentities:number') . '</th></tr></thead>';
-foreach ($stats as $name => $num) {
-	echo "<tr><td>$name</td><td>$num</td></tr>";
-}
-echo '</table>';
+$table = new \Elgg\Markup\Table();
+$table->addClass('elgg-table');
 
-echo '<div class="mtm elgg-widget-more">';
-echo elgg_view('output/url', [
+$table->setHeadings(
+	elgg_echo('admin:statistics:numentities:type'),
+	elgg_echo('admin:statistics:numentities:number')
+);
+
+foreach ($stats as $name => $num) {
+	$table->addRow([$name, $num]);
+}
+
+echo $table;
+
+$more = new \Elgg\Markup\Block();
+$more->addClass('elgg-widget-more');
+$more->appendView('output/url', [
 	'href' => 'admin/statistics/numentities',
 	'text' => elgg_echo('more'),
 	'is_trusted' => true,
 ]);
-echo '</div>';
+
+echo $more;

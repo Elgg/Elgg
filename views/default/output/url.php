@@ -3,23 +3,24 @@
  * Elgg URL display
  * Displays a URL as a link
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Core
  *
- * @uses string $vars['text']        The HTML between the <a></a> tags.
- * @uses string $vars['href']        The raw, un-encoded URL.
+ * @uses       string $vars['text']        The HTML between the <a></a> tags.
+ * @uses       string $vars['href']        The raw, un-encoded URL.
  *                                   "" = current URL.
  *                                   "/" = site home page.
- * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
- * @uses bool   $vars['is_action']   Is this a link to an action (default: false, unless 'confirm' parameter is set)
- * @uses bool   $vars['is_trusted']  Is this link trusted (false)
- * @uses mixed  $vars['confirm']     Confirmation dialog text | (bool) true
+ * @uses       bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
+ * @uses       bool   $vars['is_action']   Is this a link to an action (default: false, unless 'confirm' parameter is
+ *             set)
+ * @uses       bool   $vars['is_trusted']  Is this link trusted (false)
+ * @uses       mixed  $vars['confirm']     Confirmation dialog text | (bool) true
  *                                   Note that if 'confirm' is set to true or a dialog text,
  *                                   'is_action' parameter will default to true
- * @uses string $vars['icon']        Name of the Elgg icon, or icon HTML, appended before the text label
- * @uses string $vars['icon_alt']        Name of the Elgg icon, or icon HTML, appended after the text label
- * @uses string $vars['badge']       HTML content of the badge appended after the text label
- * @uses int    $vars['excerpt_length'] Length of the URL excerpt if text is not given.
+ * @uses       string $vars['icon']        Name of the Elgg icon, or icon HTML, appended before the text label
+ * @uses       string $vars['icon_alt']        Name of the Elgg icon, or icon HTML, appended after the text label
+ * @uses       string $vars['badge']       HTML content of the badge appended after the text label
+ * @uses       int    $vars['excerpt_length'] Length of the URL excerpt if text is not given.
  */
 
 $excerpt_length = elgg_extract('excerpt_length', $vars, 100);
@@ -31,7 +32,7 @@ if (!empty($vars['confirm']) && !isset($vars['is_action'])) {
 
 if (!empty($vars['confirm'])) {
 	$vars['data-confirm'] = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
-	
+
 	// if (bool) true use defaults
 	if ($vars['data-confirm'] === true) {
 		$vars['data-confirm'] = elgg_echo('question:areyousure');
@@ -98,39 +99,47 @@ unset($vars['confirm']);
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-anchor');
 
-if ($text) {
-	$text = elgg_format_element('span', [
-		'class' => 'elgg-anchor-label',
-	], $text);
-}
-
 $icon = elgg_extract('icon', $vars, '');
 unset($vars['icon']);
+
+$icon_alt = elgg_extract('icon_alt', $vars, '');
+unset($vars['icon_alt']);
+
+$badge = elgg_extract('badge', $vars);
+unset($vars['badge']);
+
+$anchor = new \Elgg\Markup\Anchor(null, $vars);
 
 if ($icon && !preg_match('/^</', $icon)) {
 	$icon = elgg_view_icon($icon, [
 		'class' => 'elgg-anchor-icon',
 	]);
+
+	$anchor->append(new \Elgg\Markup\Html($icon));
 }
 
-$icon_alt = elgg_extract('icon_alt', $vars, '');
-unset($vars['icon_alt']);
+if ($text) {
+	$anchor->append(
+		new \Elgg\Markup\Span($text, [
+			'class' => 'elgg-anchor-label',
+		])
+	);
+}
 
 if ($icon_alt && !preg_match('/^</', $icon_alt)) {
 	$icon_alt = elgg_view_icon($icon_alt, [
 		'class' => 'elgg-anchor-icon-alt',
 	]);
-}
 
-$badge = elgg_extract('badge', $vars);
-unset($vars['badge']);
+	$anchor->append(new \Elgg\Markup\Html($icon_alt));
+}
 
 if (!is_null($badge)) {
-	$badge = elgg_format_element([
-		'#tag_name' => 'span',
-		'#text' => $badge,
-		'class' => 'elgg-badge',
-	]);
+	$badge = $anchor->append(
+		new \Elgg\Markup\Span($badge, [
+			'class' => 'elgg-badge',
+		])
+	);
 }
 
-echo elgg_format_element('a', $vars, $icon . $text . $icon_alt . $badge);
+echo $anchor;

@@ -19,37 +19,45 @@ $body = elgg_extract('body', $vars, '');
 $footer = elgg_extract('footer', $vars, '');
 $show_inner = elgg_extract('show_inner', $vars, false);
 
-$attrs = [
-	'id' => elgg_extract('id', $vars),
-	'class' => elgg_extract_class($vars, 'elgg-module'),
-];
+$module = new \Elgg\Markup\Block();
+
+$module->id = elgg_extract('id', $vars);
+$module->addClass(elgg_extract_class($vars), 'elgg-module');
 
 if ($type) {
-	$attrs['class'][] = "elgg-module-$type";
+	$module->addClass("elgg-module-$type");
 }
 
-$header = elgg_extract('header', $vars);
+$heading = null;
 if ($title) {
-	$header = elgg_format_element('h3', [], $title);
+	$heading = \Elgg\Markup\Heading::h3($title);
+} else {
+	$header = elgg_extract('header', $vars);
+
+	if ($header != null) {
+		$heading = new \Elgg\Markup\Html($header);
+	}
 }
 
-if ($header !== null) {
+if ($heading) {
+	$header = new \Elgg\Markup\Block($heading, ['class' => 'elgg-head']);
+
 	$menu = elgg_extract('menu', $vars);
 	if ($menu) {
-		$header .= elgg_format_element('div', ['class' => 'elgg-module-menu'], $menu);
+		$header->append($menu, ['class' => 'elgg-module-menu']);
 	}
 
-	$header = elgg_format_element('div', ['class' => 'elgg-head'], $header);
+	$module->append($header);
 }
 
-$body = elgg_format_element('div', ['class' => 'elgg-body'], $body);
+$module->append(new \Elgg\Markup\Block($body, ['class' => 'elgg-body']));
+
 if ($footer) {
-	$footer = elgg_format_element('div', ['class' => 'elgg-foot'], $footer);
+	$module->append(new \Elgg\Markup\Block($footer, ['class' => 'elgg-foot']));
 }
 
-$contents = $header . $body . $footer;
 if ($show_inner) {
-	$contents = elgg_format_element('div', ['class' => 'elgg-inner'], $contents);
+	$module->wrapChildren(\Elgg\Markup\Block::class, ['class' => 'elgg-inner']);
 }
 
-echo elgg_format_element('div', $attrs, $contents);
+echo $module;
