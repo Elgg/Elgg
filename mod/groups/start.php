@@ -562,18 +562,18 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
  * Return the write access for the current group if the user has write access to it
  *
  * @param \Elgg\Hook $hook 'access_collection:display_name' 'access_collection'
- * @return void|string
+ * @return string|null
  */
 function groups_set_access_collection_name(\Elgg\Hook $hook) {
 
 	$access_collection = $hook->getParam('access_collection');
 	if (!$access_collection instanceof ElggAccessCollection) {
-		return;
+		return null;
 	}
 
 	$owner = $access_collection->getOwnerEntity();
 	if (!$owner instanceof ElggGroup) {
-		return;
+		return null;
 	}
 	
 	$page_owner = elgg_get_page_owner_entity();
@@ -583,8 +583,15 @@ function groups_set_access_collection_name(\Elgg\Hook $hook) {
 	}
 
 	if ($owner->canWriteToContainer()) {
+		if ($owner->subtype !== 'group') {
+			$type_string = elgg_echo("item:$owner->type:$owner->subtype");
+			return elgg_echo('access:label:owned', [$type_string, $owner->getDisplayName()]);
+		}
+
 		return elgg_echo('groups:acl', [$owner->getDisplayName()]);
 	}
+
+	return elgg_echo('access:limited:label');
 }
 
 /**

@@ -1378,9 +1378,17 @@ abstract class ElggEntity extends \ElggData implements
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
-		
+
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			$owner = get_entity($owner_guid);
+			$acl = false;
+			if ($owner) {
+				$acl = $owner->getOwnedAccessCollection(ElggAccessCollection::FRIENDS);
+			}
+			if (!$acl) {
+				throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			}
+			$access_id = $acl->id;
 		}
 
 		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
@@ -1513,9 +1521,17 @@ abstract class ElggEntity extends \ElggData implements
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
-	
+
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			$owner = get_entity($owner_guid);
+			$acl = false;
+			if ($owner) {
+				$acl = $owner->getOwnedAccessCollection(ElggAccessCollection::FRIENDS);
+			}
+			if (!$acl) {
+				throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			}
+			$access_id = $acl->id;
 		}
 
 		// Update primary table

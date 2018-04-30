@@ -7,6 +7,7 @@ use Elgg\Database;
 use Elgg\Database\EntityTable\UserFetchFailureException;
 use Elgg\I18n\Translator;
 use Elgg\PluginHooksService;
+use Elgg\TempAccessCollection;
 use Elgg\UserCapabilities;
 use ElggCache;
 use ElggEntity;
@@ -623,20 +624,44 @@ class AccessCollections {
 	 * @see get_members_of_access_collection()
 	 *
 	 * @param int $collection_id The collection ID
+	 *
 	 * @return \ElggAccessCollection|false
 	 */
 	public function get($collection_id) {
 
+		switch ($collection_id) {
+			case ACCESS_PUBLIC :
+				return new TempAccessCollection((object) [
+					'id' => $collection_id,
+					'subtype' => TempAccessCollection::PUBLIC,
+					'owner_guid' => 0,
+					'name' => '',
+				]);
+
+			case ACCESS_LOGGED_IN :
+				return new TempAccessCollection((object) [
+					'id' => $collection_id,
+					'subtype' => TempAccessCollection::LOGGED_IN,
+					'owner_guid' => 0,
+					'name' => '',
+				]);
+
+			case ACCESS_PRIVATE :
+				return new TempAccessCollection((object) [
+					'id' => $collection_id,
+					'subtype' => TempAccessCollection::PRIVATE,
+					'owner_guid' => 0,
+					'name' => '',
+				]);
+		}
+
 		$callback = [$this, 'rowToElggAccessCollection'];
 
-		$query = "
-			SELECT * FROM {$this->table}
-			WHERE id = :id
-		";
+		$qb = Select::fromTable($this->table);
+		$qb->select('*')
+			->where($qb->compare('id', '=', $collection_id, ELGG_VALUE_INTEGER));
 
-		$result = $this->db->getDataRow($query, $callback, [
-			':id' => (int) $collection_id,
-		]);
+		$result = $this->db->getDataRow($qb, $callback);
 
 		if (empty($result)) {
 			return false;
@@ -838,26 +863,12 @@ class AccessCollections {
 
 		$translator = $this->translator;
 
-		// Check if entity access id is a defined global constant
-		$access_array = [
-			ACCESS_PRIVATE => $translator->translate('access:label:private'),
-			ACCESS_FRIENDS => $translator->translate('access:label:friends'),
-			ACCESS_LOGGED_IN => $translator->translate('access:label:logged_in'),
-			ACCESS_PUBLIC => $translator->translate('access:label:public'),
-		];
-
-		if (array_key_exists($access, $access_array)) {
-			return $access_array[$access];
-		}
-
 		// Entity access id is probably a custom access collection
 		// Check if the user has write access to it and can see it's label
 		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
-
-		$user_guid = $this->session->getLoggedInUserGuid();
 		
-		if (!$collection || !$collection->canEdit()) {
+		if (!$collection) {
 			// return 'Limited' if the collection can not be loaded or it can not be edited
 			return $translator->translate('access:limited:label');
 		}

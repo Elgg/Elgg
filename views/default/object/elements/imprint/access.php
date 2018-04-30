@@ -34,10 +34,11 @@ switch ($access) {
 		$icon_name = 'lock';
 		break;
 	default:
-		$icon_name = 'cog';
 		$collection = get_access_collection($access);
-		if ($collection && ($collection->getSubtype() == 'friends')) {
-			$icon_name = 'user';
+		if ($collection) {
+			$icon_name = $collection->getIconName();
+		} else {
+			$icon_name = 'cog';
 		}
 		break;
 }
