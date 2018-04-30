@@ -3,6 +3,7 @@
 namespace Elgg\Mocks\Database;
 
 use Elgg\Database\AccessCollections as DbAccessCollections;
+use Elgg\Database\Insert;
 use stdClass;
 
 class AccessCollections extends DbAccessCollections {
@@ -19,7 +20,7 @@ class AccessCollections extends DbAccessCollections {
 	
 	/**
 	 *
-	 * @var type@var array
+	 * @var array
 	 */
 	private $query_specs;
 	
@@ -69,22 +70,16 @@ class AccessCollections extends DbAccessCollections {
 
 		$this->clearQuerySpecs($row->id);
 
-		$query = "
-			INSERT INTO {$this->table}
-			SET name = :name,
-				subtype = :subtype,
-				owner_guid = :owner_guid
-		";
-
-		$params = [
-			':name' => $row->name,
-			':subtype' => $row->subtype,
-			':owner_guid' => (int) $row->owner_guid,
-		];
+		$qb = Insert::intoTable($this->table);
+		$qb->values([
+			'name' => $qb->param($row->name, ELGG_VALUE_STRING),
+			'subtype' => $qb->param($row->subtype, ELGG_VALUE_STRING),
+			'owner_guid' => $qb->param((int) $row->owner_guid, ELGG_VALUE_INTEGER),
+		]);
 		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $query,
-			'params' => $params,
+			'sql' => $qb->getSQL(),
+			'params' => $qb->getParameters(),
 			'insert_id' => $row->id,
 		]);
 	}

@@ -7,6 +7,7 @@ use Psr\Log\LogLevel;
 
 /**
  * @group UnitTests
+ * @group EventsService
  */
 class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 
@@ -42,9 +43,42 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->counter, 0);
 	}
 
-	public function testNullDoesNotStopPropagation() {
-		$this->events->registerHandler('foo', 'bar', 'Elgg\Values::getNull');
+	public function testFalseStopsPropagationAndReturnsFalseWithLegacyArguments() {
+		$this->events->registerHandler('foo', 'bar', function($event, $type, $object) {
+			return false;
+		});
+
 		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+
+		$this->assertFalse($this->events->trigger('foo', 'bar'));
+		$this->assertEquals($this->counter, 0);
+	}
+
+	public function testNullDoesNotStopPropagation() {
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+		$this->events->registerHandler('foo', 'bar', 'Elgg\Values::getNull');
+
+		$this->assertTrue($this->events->trigger('foo', 'bar'));
+		$this->assertEquals($this->counter, 1);
+	}
+
+	public function testNullDoesNotStopPropagationWithLegacyArguments() {
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+
+		$this->events->registerHandler('foo', 'bar', function($event, $type, $object) {
+			return null;
+		});
+
+		$this->assertTrue($this->events->trigger('foo', 'bar'));
+		$this->assertEquals($this->counter, 1);
+	}
+
+	public function testNullDoesNotStopPropagationWithLegacyArgumentsVoidReturn() {
+		$this->events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+
+		$this->events->registerHandler('foo', 'bar', function($event, $type, $object) {
+
+		});
 
 		$this->assertTrue($this->events->trigger('foo', 'bar'));
 		$this->assertEquals($this->counter, 1);

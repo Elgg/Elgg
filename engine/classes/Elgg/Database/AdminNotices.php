@@ -43,6 +43,8 @@ class AdminNotices {
 		$admin_notice = new \ElggObject();
 		$admin_notice->subtype = 'admin_notice';
 		// admins can see ACCESS_PRIVATE but no one else can.
+		$admin_notice->owner_guid = 0;
+		$admin_notice->container_guid = 0;
 		$admin_notice->access_id = ACCESS_PRIVATE;
 		$admin_notice->admin_notice_id = $id;
 		$admin_notice->description = $message;

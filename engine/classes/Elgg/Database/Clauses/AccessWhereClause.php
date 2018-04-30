@@ -70,14 +70,40 @@ class AccessWhereClause extends WhereClause {
 		$ands[] = parent::prepare($qb, $table_alias);
 
 		if (!$this->ignore_access) {
-			if ($this->viewer_guid) {
-				// include user's content
-				$ors['owner_access'] = $qb->compare($alias($this->owner_guid_column), '=', $this->viewer_guid, ELGG_VALUE_INTEGER);
-			}
+			// This hook has been deprecated, but the plugins may still be using it to add custom collection ids
+			$legacy_mode = _elgg_services()->hooks->hasHandler('access:collections:read', 'user');
 
-			// include standard accesses (public, logged in, access collections)
-			$access_list = _elgg_services()->accessCollections->getAccessArray($this->viewer_guid);
-			$ors['acl_access'] = $qb->compare($alias($this->access_column), '=', $access_list, ELGG_VALUE_INTEGER);
+			if ($this->viewer_guid) {
+				if ($this->owner_guid_column) {
+					// include user's content
+					$ors['owner_access'] = $qb->compare($alias($this->owner_guid_column), '=', $this->viewer_guid, ELGG_VALUE_INTEGER);
+				}
+
+				if ($legacy_mode) {
+					// Use deprecated hook in case plugins
+					$access_list = _elgg_services()->accessCollections->getAccessArray($this->viewer_guid);
+					$ors['acl_access'] = $qb->compare($alias($this->access_column), '=', $access_list, ELGG_VALUE_INTEGER);
+				} else {
+					$collections_subquery = $qb->subquery('access_collections');
+					$collections_subquery->select(1)
+						->where($qb->compare('owner_guid', '=', $this->viewer_guid, ELGG_VALUE_INTEGER))
+						->andWhere($qb->compare('id', '=', $alias($this->access_column)));
+
+					$membership_subquery = $qb->subquery('access_collection_membership');
+					$membership_subquery->select(1)
+						->where($qb->compare('user_guid', '=', $this->viewer_guid, ELGG_VALUE_INTEGER))
+						->andWhere($qb->compare('access_collection_id', '=', $alias($this->access_column)));
+
+					$ors['acl_access'] = $qb->merge([
+						$qb->compare($alias($this->access_column), '=', ACCESS_PUBLIC, ELGG_VALUE_INTEGER),
+						$qb->compare($alias($this->access_column), '=', ACCESS_LOGGED_IN, ELGG_VALUE_INTEGER),
+						"EXISTS ({$collections_subquery->getSQL()})",
+						"EXISTS ({$membership_subquery->getSQL()})",
+					], 'OR');
+				}
+			} else if (!$legacy_mode) {
+				$ors['acl_access'] = $qb->compare($alias($this->access_column), '=', ACCESS_PUBLIC, ELGG_VALUE_INTEGER);
+			}
 		}
 
 		if ($this->use_enabled_clause) {

@@ -623,10 +623,9 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 
 		// create test annotations on a few entities.
 		foreach ($es as $e) {
-			$annotations = $this->createRandomAnnotations($e);
-
 			// remove annotations left over from previous tests.
 			elgg_delete_annotations(['annotation_owner_guid' => $e->guid]);
+
 			$annotations = $this->createRandomAnnotations($e);
 
 			foreach ($annotations as $a) {

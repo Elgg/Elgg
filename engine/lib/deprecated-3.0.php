@@ -998,7 +998,7 @@ function get_metadata_url($id) {
  * @return int|bool id on success or false on failure
  * @deprecated 3.0 Use \ElggAnnotation::save() or \ElggEntity::annotate()
  */
-function create_annotation($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
+function create_annotation($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = null) {
 	elgg_deprecated_notice(
 		__FUNCTION__ . ' has been deprecated.
 		Use ElggAnnotation::save() or ElggEntity::annotate()
@@ -1615,4 +1615,64 @@ function elgg_list_registered_entities(array $options = []) {
 	
 	$options['count'] = $count;
 	return elgg_view_entity_list($entities, $options);
+}
+
+/**
+ * Return a string of access_ids for $user_guid appropriate for inserting into an SQL IN clause.
+ *
+ * @uses get_access_array
+ *
+ * @see get_access_array()
+ *
+ * @param int  $user_guid User ID; defaults to currently logged in user
+ * @param int  $ignored   Ignored parameter
+ * @param bool $flush     If set to true, will refresh the access list from the
+ *                        database rather than using this function's cache.
+ *
+ * @return string A list of access collections suitable for using in an SQL call
+ * @access private
+ * @deprecated 3.0 Use get_sql, access hook to append queries
+ */
+function get_access_list($user_guid = 0, $ignored = 0, $flush = false) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated. Use get_sql, access hook to append queries',
+		'3.0'
+	);
+
+	return _elgg_services()->accessCollections->getAccessList($user_guid, $flush);
+}
+
+/**
+ * Returns an array of access IDs a user is permitted to see.
+ *
+ * Can be overridden with the 'access:collections:read', 'user' plugin hook.
+ * @warning A callback for that plugin hook needs to either not retrieve data
+ * from the database that would use the access system (triggering the plugin again)
+ * or ignore the second call. Otherwise, an infinite loop will be created.
+ *
+ * This returns a list of all the collection ids a user owns or belongs
+ * to plus public and logged in access levels. If the user is an admin, it includes
+ * the private access level.
+ *
+ * @note Internal: this is only used in core for creating the SQL where clause when
+ * retrieving content from the database. The friends access level is handled by
+ * {@link \Elgg\Database\Clauses\AccessWhereClause}
+ *
+ * @see get_write_access_array() for the access levels that a user can write to.
+ *
+ * @param int  $user_guid User ID; defaults to currently logged in user
+ * @param int  $ignored   Ignored parameter
+ * @param bool $flush     If set to true, will refresh the access ids from the
+ *                        database rather than using this function's cache.
+ *
+ * @return array An array of access collections ids
+ * @deprecated 3.0 Use get_sql, access hook to append queries
+ */
+function get_access_array($user_guid = 0, $ignored = 0, $flush = false) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated. Use get_sql, access hook to append queries',
+		'3.0'
+	);
+
+	return _elgg_services()->accessCollections->getAccessArray($user_guid, $flush);
 }

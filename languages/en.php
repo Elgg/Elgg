@@ -197,6 +197,7 @@ return array(
 	'access:label:public' => "Public",
 	'access:label:logged_out' => "Logged out users",
 	'access:label:friends' => "Friends",
+	'access:label:owned' => '%s: %s',
 	'access' => "Who can see this",
 	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",
@@ -1615,4 +1616,7 @@ To view %s's profile, click here:
 
 	"core:upgrade:2018041801:title" => "Delete old plugin entities",
 	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
+
+	"core:upgrade:2018043000:title" => "Create private access collections",
+	"core:upgrade:2018043000:description" => "Migrates the private access id to an actual access collection",
 );

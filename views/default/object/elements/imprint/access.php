@@ -25,21 +25,11 @@ if ($access === false || !elgg_is_logged_in()) {
 	return;
 }
 
-switch ($access) {
-	case ACCESS_PUBLIC :
-	case ACCESS_LOGGED_IN :
-		$icon_name = 'globe';
-		break;
-	case ACCESS_PRIVATE :
-		$icon_name = 'lock';
-		break;
-	default:
-		$icon_name = 'cog';
-		$collection = get_access_collection($access);
-		if ($collection && ($collection->getSubtype() == 'friends')) {
-			$icon_name = 'user';
-		}
-		break;
+$collection = get_access_collection($access);
+if ($collection) {
+	$icon_name = $collection->getIconName();
+} else {
+	$icon_name = 'cog';
 }
 
 $content = elgg_view('output/access', [

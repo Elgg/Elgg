@@ -23,8 +23,6 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		}
 
 		$this->user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($this->user);
-		
 		$this->group = $this->createGroup();
 	}
 
@@ -49,48 +47,31 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($acl->owner_guid, $this->group->guid);
 
 		// removing group and acl
-		$this->assertTrue($this->group->delete());
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$this->assertTrue($this->group->delete());
+		});
 
 		$acl = get_access_collection($acl_id);
 		$this->assertFalse($acl);
 	}
 
 	public function testJoinLeaveGroupACL() {
-		
-		$group = new \ElggGroup();
-		$group->name = 'Test group';
-		$group->access_id = ACCESS_PUBLIC;
-		$group->save();
 
-		$result = $group->join($this->user);
+		$result = $this->group->join($this->user);
 		$this->assertTrue($result);
 
-		// disable security since we run as admin
-		$ia = elgg_set_ignore_access(false);
-
-		if ($result) {
-			// This can't be true because user doesn't own the group
-			//$can_edit = can_edit_access_collection($group->group_acl, $this->user->guid);
-			//$this->assertTrue($can_edit);
-		}
-
-		$result = $group->leave($this->user);
+		$result = $this->group->leave($this->user);
 		$this->assertTrue($result);
 
-		if ($result) {
-			$acl = _groups_get_group_acl($group);
-			$can_edit = true;
-			if ($acl) {
-				$can_edit = can_edit_access_collection($acl->id, $this->user->guid);
-			}
-			$this->assertFalse($can_edit);
-		}
+		$acl = _groups_get_group_acl($this->group);
 
-		elgg_set_ignore_access($ia);
+		// Members of the collection can't edit it
+		$can_edit = can_edit_access_collection($acl->id, $this->user->guid);
+		$this->assertFalse($can_edit);
 
-		$group->delete();
-
-		$this->markTestIncomplete("Verify what was the intention with editing access collections");
+		// Users that can edit collection's owner, can edit the collection
+		$can_edit = can_edit_access_collection($acl->id, $this->group->owner_guid);
+		$this->assertTrue($can_edit);
 	}
 	
 	/**
@@ -106,9 +87,6 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		elgg_set_page_owner_guid($this->group->guid);
 		
 		$new_user = $this->createUser();
-		$this->assertInstanceOf(\ElggUser::class, $new_user);
-
-		$ia = elgg_set_ignore_access(false);
 
 		// User is not a member of the group
 		// Member-only group
@@ -120,6 +98,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		$this->group->setContentAccessMode($membersonly);
 		$write_access = get_write_access_array($new_user->guid, true);
 		$this->assertArrayNotHasKey($acl_id, $write_access);
+
 		// Unrestricted group
 		$this->group->setContentAccessMode($unrestricted);
 		$write_access = get_write_access_array($new_user->guid, true);
@@ -132,17 +111,12 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		$this->group->setContentAccessMode($membersonly);
 		$write_access = get_write_access_array($new_user->guid, true);
 		$this->assertArrayHasKey($acl_id, $write_access);
+
 		// Unrestricted group
 		$this->group->setContentAccessMode($unrestricted);
 		$write_access = get_write_access_array($new_user->guid, true);
 		$this->assertArrayHasKey($acl_id, $write_access);
 
-		elgg_set_ignore_access($ia);
-
-		$this->group->leave($new_user);
-		$ia = elgg_set_ignore_access(true);
-		$this->assertTrue($new_user->delete());
-		elgg_set_ignore_access($ia);
 		$original_page_owner_guid = (elgg_instanceof($original_page_owner)) ? $original_page_owner->guid : 0;
 		elgg_set_page_owner_guid($original_page_owner_guid);
 

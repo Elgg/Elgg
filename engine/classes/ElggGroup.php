@@ -21,6 +21,19 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
+	public function __get($name) {
+		switch ($name) {
+			case 'group_acl' :
+				$this->log(\Psr\Log\LogLevel::NOTICE, 'Group ACL ID is no longer stored as metadata. See the documentation on owned access collections');
+				return $this->getOwnedAccessCollection('group_acl')->id;
+		}
+
+		return parent::__get($name);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getType() {
 		return 'group';
 	}

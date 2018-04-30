@@ -814,7 +814,7 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @return bool|int Returns int if an annotation is saved
 	 */
-	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $value_type = "") {
+	public function annotate($name, $value, $access_id = null, $owner_guid = 0, $value_type = "") {
 		if ($this->guid) {
 			if (!$owner_guid) {
 				$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
@@ -1311,30 +1311,42 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Save an entity.
+	 * Save an entity
 	 *
 	 * @return bool|int
+	 * @throws \Elgg\HttpException
 	 */
 	public function save() {
-		$guid = $this->guid;
-		if ($guid > 0) {
-			$guid = $this->update();
-		} else {
-			$guid = $this->create();
-			if ($guid && !_elgg_services()->events->trigger('create', $this->type, $this)) {
-				// plugins that return false to event don't need to override the access system
-				elgg_call(ELGG_IGNORE_ACCESS, function() {
-					return $this->delete();
-				});
-				return false;
+
+		try {
+			$guid = $this->guid;
+
+			if ($guid > 0) {
+				$guid = $this->update();
+
+				if (!$guid) {
+					// Restore original attributes
+					foreach ($this->orig_attributes as $key => $value) {
+						$this->attributes[$key] = $value;
+					}
+					$this->orig_attributes = [];
+				}
+			} else {
+				$guid = $this->create();
 			}
-		}
 
-		if ($guid) {
-			$this->cache();
-		}
+			if ($guid) {
+				$this->cache();
+			}
 
-		return $guid;
+			return $guid;
+		} catch (Exception $ex) {
+			// All kinds of exceptions are thrown all over the place,
+			// so let's just log and give generic feedback to the user via router
+			$this->log(\Psr\Log\LogLevel::ERROR, $ex);
+
+			throw new \Elgg\EntityPermissionsException(elgg_echo('save:fail'));
+		}
 	}
 
 	/**
@@ -1347,20 +1359,30 @@ abstract class ElggEntity extends \ElggData implements
 	 * or they will throw an exception when loaded.
 	 *
 	 * @return int The new entity's GUID
-	 * @throws InvalidParameterException If the entity's type has not been set.
+	 * @throws DatabaseException
 	 * @throws IOException If the new row fails to write to the DB.
+	 * @throws InvalidParameterException If the entity's type has not been set.
+	 * @throws \Elgg\EntityPermissionsException
+	 * @throws \Elgg\HttpException
 	 */
 	protected function create() {
 
+		if (!_elgg_services()->events->triggerBefore('create', $this->type, $this)) {
+			// Allow hooks to alter attributes and/or prevent further save
+			return false;
+		}
+
 		$type = $this->attributes['type'];
 		if (!in_array($type, \Elgg\Config::getEntityTypes())) {
-			throw new \InvalidParameterException('Entity type must be one of the allowed types: '
-					. implode(', ', \Elgg\Config::getEntityTypes()));
+			throw new InvalidParameterException(
+				'Entity type must be one of the allowed types: '
+					. implode(', ', \Elgg\Config::getEntityTypes())
+			);
 		}
 
 		$subtype = $this->attributes['subtype'];
 		if (!$subtype) {
-			throw new \InvalidParameterException("All entities must have a subtype");
+			throw new InvalidParameterException("All entities must have a subtype");
 		}
 
 		$owner_guid = (int) $this->attributes['owner_guid'];
@@ -1375,13 +1397,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 		$container_guid = (int) $container_guid;
 
-		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
-		}
-		
-		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
-		}
+		$access_id = $this->normalizeAccessId($access_id, $owner_guid);
 
 		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 
@@ -1389,17 +1405,19 @@ abstract class ElggEntity extends \ElggData implements
 		if ($owner_guid) {
 			$owner = $this->getOwnerEntity();
 			if (!$owner) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
-					. " owner $owner_guid could not be loaded.");
-				return false;
+				throw new \Elgg\EntityPermissionsException(
+					"User $user_guid tried to create a ($type, $subtype), but the given"
+					. " owner $owner_guid could not be loaded."
+				);
 			}
 
 			// If different owner than logged in, verify can write to container.
 
 			if ($user_guid != $owner_guid && !$owner->canEdit() && !$owner->canWriteToContainer($user_guid, $type, $subtype)) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype) with owner"
-					. " $owner_guid, but the user wasn't permitted to write to the owner's container.");
-				return false;
+				throw new \Elgg\EntityPermissionsException(
+					"User $user_guid tried to create a ($type, $subtype) with owner"
+					. " $owner_guid, but the user wasn't permitted to write to the owner's container."
+				);
 			}
 		}
 
@@ -1407,15 +1425,17 @@ abstract class ElggEntity extends \ElggData implements
 		if ($container_guid) {
 			$container = $this->getContainerEntity();
 			if (!$container) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
-					. " container $container_guid could not be loaded.");
-				return false;
+				throw new \Elgg\EntityPermissionsException(
+					"User $user_guid tried to create a ($type, $subtype), but the given"
+					. " container $container_guid could not be loaded."
+				);
 			}
 
 			if (!$container->canWriteToContainer($user_guid, $type, $subtype)) {
-				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but was not"
-					. " permitted to write to container $container_guid.");
-				return false;
+				throw new \Elgg\EntityPermissionsException(
+					"User $user_guid tried to create a ($type, $subtype), but was not"
+					. " permitted to write to container $container_guid."
+				);
 			}
 		}
 
@@ -1479,6 +1499,16 @@ abstract class ElggEntity extends \ElggData implements
 			$this->temp_private_settings = [];
 		}
 
+		if (!_elgg_services()->events->triggerDeprecated('create', $this->type, $this)) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+				$this->delete();
+			});
+
+			return false;
+		}
+
+		_elgg_services()->events->triggerAfter('create', $this->type, $this);
+
 		return $guid;
 	}
 
@@ -1490,13 +1520,22 @@ abstract class ElggEntity extends \ElggData implements
 	 * @throws InvalidParameterException
 	 */
 	protected function update() {
+		if ($this->owner_guid == $this->guid) {
+			throw new LogicException('An entity can not own itself');
+		}
+		if ($this->container_guid == $this->guid) {
+			throw new LogicException('An entity can not contain itself');
+		}
 
 		if (!$this->canEdit()) {
 			return false;
 		}
 
-		// give old update event a chance to stop the update
-		if (!_elgg_services()->events->trigger('update', $this->type, $this)) {
+		if (!_elgg_services()->events->triggerBefore('update', $this->type, $this)) {
+			return false;
+		}
+
+		if (!_elgg_services()->events->triggerDeprecated('update', $this->type, $this)) {
 			return false;
 		}
 
@@ -1510,13 +1549,7 @@ abstract class ElggEntity extends \ElggData implements
 		$time_created = (int) $this->time_created;
 		$time = $this->getCurrentTime()->getTimestamp();
 
-		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
-		}
-	
-		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
-		}
+		$access_id = $this->normalizeAccessId($access_id, $owner_guid);
 
 		// Update primary table
 		$ret = _elgg_services()->entityTable->updateRow($guid, (object) [

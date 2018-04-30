@@ -12,6 +12,12 @@
  */
 class ElggAccessCollection extends ElggData {
 
+	const PUBLIC = 'public';
+	const LOGGED_IN = 'logged_in';
+	const PRIVATE = 'private';
+	const FRIENDS = 'friends';
+	const GROUP_MEMBERS = 'group_acl';
+
 	/**
 	 * Create an access collection object
 	 *
@@ -22,7 +28,11 @@ class ElggAccessCollection extends ElggData {
 		$this->initializeAttributes();
 
 		foreach ((array) $row as $key => $value) {
-			$this->attributes[$key] = $value;
+			if (in_array($key, ['id', 'owner_guid'])) {
+				$this->attributes[$key] = (int) $value;
+			} else {
+				$this->attributes[$key] = $value;
+			}
 		}
 	}
 
@@ -94,19 +104,69 @@ class ElggAccessCollection extends ElggData {
 			return _elgg_services()->hooks->trigger('access_collection:name', $this->getType(), $params, $name);
 		};
 
+		switch ($this->getSubtype()) {
+			case self::PUBLIC :
+				return $filter(_elgg_services()->translator->translate('access:label:public'));
+
+			case self::LOGGED_IN :
+				return $filter(_elgg_services()->translator->translate('access:label:logged_in'));
+
+			case self::PRIVATE :
+				return $filter(_elgg_services()->translator->translate('access:label:private'));
+
+			case self::FRIENDS :
+				return $filter(_elgg_services()->translator->translate('access:label:friends'));
+		}
+
 		$user = _elgg_services()->session->getLoggedInUser();
 		$owner = $this->getOwnerEntity();
+
 		if (!$user || !$owner) {
-			// User is not logged in or does not access to the owner entity:
+			// User is not logged in or does not have access to the owner entity:
 			// return default 'Limited' label
 			return $filter();
 		}
 		
-		if ($user->isAdmin() || $owner->guid == $user->guid) {
+		if ($owner->canEdit()) {
 			return $filter($this->name);
 		}
 
 		return $filter();
+	}
+
+	/**
+	 * Get collection icon
+	 * @return string
+	 */
+	public function getIconName() {
+		switch ($this->getSubtype()) {
+			case self::PUBLIC :
+			case self::LOGGED_IN :
+				$icon = 'globe';
+				break;
+
+			case self::PRIVATE :
+				$icon = 'lock';
+				break;
+
+			case self::FRIENDS :
+				$icon = 'user';
+				break;
+
+			case self::GROUP_MEMBERS :
+				$icon = 'users';
+				break;
+
+			default :
+				$icon = 'cog';
+				break;
+		}
+
+		$params = [
+			'access_collection' => $this,
+		];
+
+		return _elgg_services()->hooks->trigger('access_collection:icon', $this->getType(), $params, $icon);
 	}
 
 	/**
@@ -160,7 +220,7 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * Adds a new member to access collection
 	 *
-	 * @param int $member_guid GUID of the user
+	 * @param ElggUser|int $member_guid User or GUID of the user
 	 * @return bool
 	 */
 	public function addMember($member_guid = 0) {
@@ -170,7 +230,7 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * Removes a user from access collection
 	 *
-	 * @param int $member_guid GUID of the user
+	 * @param ElggUser|int $member_guid User or GUID of the user
 	 * @return bool
 	 */
 	public function removeMember($member_guid = 0) {

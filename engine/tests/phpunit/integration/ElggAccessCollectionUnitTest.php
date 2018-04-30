@@ -89,4 +89,50 @@ class ElggAccessCollectionUnitTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($acl->id, $acl->getSystemLogID());
 		$this->assertEquals($acl, $acl->getObjectFromID($acl->id));
 	}
+
+	public function testCanResolvePublicAcl() {
+
+		$collection = get_access_collection(ACCESS_PUBLIC);
+
+		$this->assertEquals('globe', $collection->getIconName());
+		$this->assertEquals(elgg_echo('access:label:public'), $collection->getDisplayName());
+	}
+
+	public function testCanResolveLoggedInAcl() {
+
+		$collection = get_access_collection(ACCESS_LOGGED_IN);
+
+		$this->assertEquals('globe', $collection->getIconName());
+		$this->assertEquals(elgg_echo('access:label:logged_in'), $collection->getDisplayName());
+	}
+
+	public function testCanResolvePrivateAcl() {
+
+		$user = $this->createUser();
+
+		$id = create_access_collection('private', $user->guid, ElggAccessCollection::PRIVATE);
+		$collection = get_access_collection($id);
+
+		$this->assertEquals('lock', $collection->getIconName());
+		$this->assertEquals(elgg_echo('access:label:private'), $collection->getDisplayName());
+	}
+
+	public function testCanResolveFriendsCollection() {
+		$user = $this->createUser();
+
+		$id = create_access_collection('friends', $user->guid, ElggAccessCollection::FRIENDS);
+		$collection = get_access_collection($id);
+
+		$this->assertEquals('user', $collection->getIconName());
+		$this->assertEquals(elgg_echo('access:label:friends'), $collection->getDisplayName());
+	}
+
+	public function testCanResolveGroupCollectionIcon() {
+		$group = $this->createGroup();
+
+		$id = create_access_collection($group->getDisplayName(), $group->guid, ElggAccessCollection::GROUP_MEMBERS);
+		$collection = get_access_collection($id);
+
+		$this->assertEquals('users', $collection->getIconName());
+	}
 }
