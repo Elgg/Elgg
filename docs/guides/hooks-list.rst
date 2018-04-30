@@ -258,6 +258,13 @@ Access hooks
 
 	 * ``access_collection`` - `ElggAccessCollection`
 
+**access_collection:icon, access_collection**
+	Can be used to filter the icon of the access collection.
+
+	The ``$params`` array will contain:
+
+	 * ``access_collection`` - `ElggAccessCollection`
+
 **access:collections:read, user**
 	Filters an array of access IDs that the user ``$params['user_id']`` can see.
 
