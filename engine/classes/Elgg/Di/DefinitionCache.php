@@ -7,6 +7,7 @@ use Doctrine\Common\Cache\ClearableCache;
 use Doctrine\Common\Cache\FlushableCache;
 use Doctrine\Common\Cache\MultiGetCache;
 use Doctrine\Common\Cache\MultiPutCache;
+use Elgg\Cacheable;
 
 /**
  * DI cache
@@ -20,10 +21,7 @@ class DefinitionCache implements Cache,
 								 MultiGetCache,
 								 MultiPutCache {
 
-	/**
-	 * @var \ElggCache
-	 */
-	protected $cache;
+	use Cacheable;
 
 	/**
 	 * Constructor

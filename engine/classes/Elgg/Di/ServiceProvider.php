@@ -138,10 +138,12 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
+
 			if (!$c->config->AutoloaderManager_skip_storage) {
-				$manager->setStorage($c->fileCache);
+				$manager->setCache($c->fileCache);
 				$manager->loadCache();
 			}
+
 			return $manager;
 		});
 
@@ -745,7 +747,7 @@ class ServiceProvider extends DiContainer {
 		if ($config->cacheroot) {
 			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
 		} else {
-			$config->cacheroot = $config->dataroot;
+			$config->cacheroot = $config->dataroot . 'caches/';
 		}
 		$lock('cacheroot');
 

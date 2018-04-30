@@ -5,6 +5,7 @@ namespace Elgg\Database;
 use Closure;
 use DatabaseException;
 use Elgg\Application;
+use Elgg\Cacheable;
 use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
@@ -33,6 +34,7 @@ use Exception;
 class Plugins {
 
 	use Profilable;
+	use Cacheable;
 
 	/**
 	 * @var ElggPlugin[]
@@ -43,11 +45,6 @@ class Plugins {
 	 * @var array|null
 	 */
 	protected $provides_cache;
-
-	/**
-	 * @var ElggCache
-	 */
-	protected $cache;
 
 	/**
 	 * @var Database

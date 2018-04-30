@@ -1738,15 +1738,7 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	elgg_set_entity_class('object', 'widget', \ElggWidget::class);
 	elgg_set_entity_class('object', 'comment', \ElggComment::class);
 	elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
-
-	$events->registerHandler('cache:flush', 'system', function () {
-		_elgg_services()->boot->invalidateCache();
-		_elgg_services()->plugins->clear();
-		_elgg_services()->sessionCache->clear();
-		_elgg_services()->dataCache->clear();
-		_elgg_services()->dic_cache->flushAll();
-	});
-
+	
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
 
