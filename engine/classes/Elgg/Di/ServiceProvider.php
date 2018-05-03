@@ -81,6 +81,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Menu\Service                              $menus
  * @property-read \Elgg\Cache\MetadataCache                       $metadataCache
  * @property-read \Elgg\Database\MetadataTable                    $metadataTable
+ * @property-read \Mustache_Engine                                $mustache
  * @property-read \Elgg\Database\Mutex                            $mutex
  * @property-read \Elgg\Notifications\NotificationsService        $notifications
  * @property-read \Elgg\PasswordService                           $passwords
@@ -459,6 +460,10 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Database\MetadataTable($c->metadataCache, $c->db, $c->events);
 		});
 
+		$this->setFactory('mustache', function(ServiceProvider $c) {
+			return new \Mustache_Engine();
+		});
+
 		$this->setFactory('mutex', function(ServiceProvider $c) {
 			return new \Elgg\Database\Mutex(
 				$c->db,
@@ -623,7 +628,7 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('timer', \Elgg\Timer::class);
 
 		$this->setFactory('translator', function(ServiceProvider $c) {
-			return new \Elgg\I18n\Translator($c->config);
+			return new \Elgg\I18n\Translator($c->config, $c->mustache);
 		});
 
 		$this->setFactory('uploads', function(ServiceProvider $c) {

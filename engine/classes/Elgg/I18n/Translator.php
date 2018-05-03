@@ -4,7 +4,10 @@ namespace Elgg\I18n;
 
 use Elgg\Config;
 use Elgg\Includer;
+use Elgg\Loggable;
+use Mustache_Engine;
 use PluginException;
+use Psr\Log\LogLevel;
 
 /**
  * Translator
@@ -14,6 +17,8 @@ use PluginException;
  * @since 1.10.0
  */
 class Translator {
+
+	use Loggable;
 
 	/**
 	 * @var Config
@@ -67,16 +72,27 @@ class Translator {
 	private $loaded_from_cache = false;
 
 	/**
+	 * @var Mustache_Engine
+	 */
+	protected $mustache;
+
+	/**
 	 * Constructor
 	 *
-	 * @param Config $config Elgg config
+	 * @param Config          $config   Elgg config
+	 * @param Mustache_Engine $mustache Mustache driver
 	 *
 	 * @access private
 	 * @internal
 	 */
-	public function __construct(Config $config) {
+	public function __construct(
+		Config $config,
+		Mustache_Engine $mustache = null
+	) {
 		$this->config = $config;
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
+
+		$this->mustache = $mustache ? : new Mustache_Engine();
 	}
 
 	/**
@@ -112,7 +128,8 @@ class Translator {
 	 */
 	public function translate($message_key, array $args = [], $language = "") {
 		if (!is_string($message_key) || strlen($message_key) < 1) {
-			_elgg_services()->logger->warning(
+			$this->log(
+				LogLevel::WARNING,
 				'$message_key needs to be a string in ' . __METHOD__ . '(), ' . gettype($message_key) . ' provided'
 			);
 			return '';
@@ -142,33 +159,63 @@ class Translator {
 		$langs['en'] = true;
 
 		// try to translate
-		$notice = '';
 		$string = $message_key;
+
+		// separate into sprintf_args and kwargs
+		list($printf_args, $kwargs) = self::getStringReplacementsArgs($args);
+
 		foreach (array_keys($langs) as $try_lang) {
 			if (isset($this->translations[$try_lang][$message_key])) {
 				$string = $this->translations[$try_lang][$message_key];
 
-				// only pass through if we have arguments to allow backward compatibility
-				// with manual sprintf() calls.
-				if ($args) {
-					$string = vsprintf($string, $args);
+				if ($printf_args) {
+					try {
+						$string = vsprintf($string, $printf_args);
+					} catch (\Throwable $ex) {
+						$this->log(LogLevel::NOTICE, $ex);
+					}
+				}
+
+				if ($kwargs) {
+					$string = $this->mustache->render($string, $kwargs);
 				}
 
 				break;
 			} else {
-				$notice = sprintf(
-					'Missing %s translation for "%s" language key',
-					($try_lang === 'en') ? 'English' : $try_lang,
-					$message_key
+				$this->log(LogLevel::NOTICE,
+					sprintf(
+						'Missing %s translation for "%s" language key',
+						($try_lang === 'en') ? 'English' : $try_lang,
+						$message_key
+					)
 				);
 			}
 		}
 
-		if ($notice) {
-			_elgg_services()->logger->notice($notice);
+		return $string;
+	}
+
+	/**
+	 * Separates keyword args from sprintf / numeric args.
+	 * Maintains numeric args order.
+	 *
+	 * @param array $args Arguments
+	 *
+	 * @return array
+	 */
+	protected static function getStringReplacementsArgs($args) {
+		$printf_arguments = [];
+		$keyword_arguments = [];
+
+		foreach ($args as $k => $v) {
+			if (is_int($k)) {
+				$printf_arguments[] = $v;
+			} else {
+				$keyword_arguments[$k] = $v;
+			}
 		}
 
-		return $string;
+		return [$printf_arguments, $keyword_arguments];
 	}
 
 	/**
@@ -380,7 +427,7 @@ class Translator {
 	 */
 	public function registerTranslations($path, $load_all = false, $language = null) {
 		$path = \Elgg\Project\Paths::sanitize($path);
-		
+
 		// don't need to register translations as the folder is missing
 		if (!is_dir($path)) {
 			_elgg_services()->logger->info("No translations could be loaded from: $path");
@@ -439,7 +486,7 @@ class Translator {
 	 */
 	protected function includeLanguageFile($path) {
 		$result = Includer::includeFile($path);
-		
+
 		if (is_array($result)) {
 			$this->addTranslation(basename($path, '.php'), $result);
 			return true;
@@ -465,7 +512,7 @@ class Translator {
 		}
 
 		$languages = $this->getAvailableLanguages();
-		
+
 		foreach ($languages as $language) {
 			if ($this->loaded_from_cache) {
 				$data = elgg_load_system_cache("{$language}.lang");
@@ -478,7 +525,7 @@ class Translator {
 				}
 			}
 		}
-		
+
 		_elgg_services()->events->triggerAfter('reload', 'translations');
 
 		$this->was_reloaded = true;
@@ -497,7 +544,7 @@ class Translator {
 			// Ensure that all possible translations are loaded
 			$this->reloadAllTranslations();
 		}
-		
+
 		$result = [];
 
 		$languages = $this->getAvailableLanguages();
@@ -515,9 +562,9 @@ class Translator {
 			
 			$result[$language] = $value;
 		}
-		
+
 		natcasesort($result);
-			
+
 		return $result;
 	}
 
@@ -606,7 +653,7 @@ class Translator {
 
 		return array_key_exists($key, $this->translations[$language]);
 	}
-	
+
 	/**
 	 * Returns an array of all available language keys. Triggers a hook to allow plugins to add/remove languages
 	 *
@@ -615,39 +662,39 @@ class Translator {
 	 */
 	public function getAvailableLanguages() {
 		$languages = [];
-		
+
 		$allowed_languages = $this->getAllLanguageCodes();
-		
+
 		foreach ($this->getLanguagePaths() as $path) {
 			try {
 				$iterator = new \DirectoryIterator($path);
 			} catch (\Exception $e) {
 				continue;
 			}
-			
+
 			foreach ($iterator as $file) {
 				if ($file->isDir()) {
 					continue;
 				}
-				
+
 				if ($file->getExtension() !== 'php') {
 					continue;
 				}
-				
+
 				$language = $file->getBasename('.php');
 				if (empty($language) || !in_array($language, $allowed_languages)) {
 					continue;
 				}
-				
+
 				$languages[$language] = true;
 			}
 		}
-		
+
 		$languages = array_keys($languages);
-				
+
 		return _elgg_services()->hooks->trigger('languages', 'translations', [], $languages);
 	}
-	
+
 	/**
 	 * Registers a path for potential translation files
 	 *
@@ -660,7 +707,7 @@ class Translator {
 	public function registerLanguagePath($path) {
 		$this->language_paths[$path] = true;
 	}
-	
+
 	/**
 	 * Returns a unique array with locations of translation files
 	 *

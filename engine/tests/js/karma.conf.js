@@ -43,7 +43,9 @@ module.exports = function(config) {
 			'engine/tests/js/requirejs.config.js',
 
 			'vendor/npm-asset/weakmap-polyfill/weakmap-polyfill.min.js',
-			'vendor/npm-asset/formdata-polyfill/formdata.min.js'
+			'vendor/npm-asset/formdata-polyfill/formdata.min.js',
+
+			'vendor/bower-asset/mustache.js/mustache.min.js'
 		],
 
 

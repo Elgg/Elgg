@@ -7,7 +7,7 @@ elgg.config = elgg.config || {};
 elgg.config.wwwroot = 'http://www.elgg.org/';
 elgg.config.current_language = 'en';
 
-define('elgg', function() {
+define('elgg', ['mustache'], function() {
 	return elgg;
 });
 

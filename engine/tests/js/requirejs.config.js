@@ -12,6 +12,7 @@ requirejs.config({
         'vendor': '../../vendor',
         'node_modules': '../../node_modules',
         'jquery-mockjax': '../../node_modules/jquery-mockjax/dist/jquery.mockjax',
+	    'mustache': '../../vendor/bower-asset/mustache.js/mustache.min',
     },
 
     // ask Require.js to load these files (all our tests)

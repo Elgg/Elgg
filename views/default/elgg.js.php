@@ -10,12 +10,12 @@ echo elgg_view('elgg/popup.js');
 $core_js_views = [
 	// these must come first
 	'elgglib.js',
-	
+
 	// class definitions
 	'ElggEntity.js',
 	'ElggUser.js',
 	'ElggPriorityList.js',
-	
+
 	//libraries
 	'prototypes.js',
 	'hooks.js',
@@ -25,7 +25,7 @@ $core_js_views = [
 	'session.js',
 	'pageowner.js',
 	'configuration.js',
-	
+
 	//ui
 	'ui.js',
 ];
@@ -58,7 +58,7 @@ define('jquery-ui');
 // "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
 define('jquery-ui/datepicker', jQuery.datepicker);
 
-define('elgg', ['sprintf', 'jquery', 'languages/' + elgg.get_language(), 'weakmap-polyfill', 'formdata-polyfill'], function(vsprintf, $, translations) {
+define('elgg', ['sprintf', 'mustache', 'jquery', 'languages/' + elgg.get_language(), 'weakmap-polyfill', 'formdata-polyfill'], function(vsprintf, mustache, $, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 
 	return elgg;

@@ -54,7 +54,7 @@ Example:
 
 	echo elgg_echo('example:text');
 
-It also supports variable replacement using ``vsprintf`` syntax:
+It also supports variable replacement using ``vsprintf`` and ``mustache`` syntax:
 
 .. code-block:: php
 
@@ -62,6 +62,20 @@ It also supports variable replacement using ``vsprintf`` syntax:
 	echo elgg_echo('welcome', [
 		elgg_get_config('sitename'),
 		elgg_get_logged_in_user_entity()->getDisplayName(),
+	]);
+
+	// 'welcome' => 'Welcome to {{sitename}}, {{username}}!'
+	echo elgg_echo('welcome', [
+		'sitename' => elgg_get_config('sitename'),
+		'username' => elgg_get_logged_in_user_entity()->getDisplayName(),
+	]);
+
+	// 'welcome' => 'Welcome to {{greeting.target}}, {{greeting.subject}}!'
+	echo elgg_echo('welcome', [
+		'greeting' => [
+			'target' => elgg_get_config('sitename'),
+			'subject' => elgg_get_logged_in_user_entity()->getDisplayName(),
+		]
 	]);
 
 To force which language should be used for translation, set the third parameter:
@@ -93,6 +107,9 @@ Javascript API
 
 This function is like ``elgg_echo`` in PHP.
 
+For ``mustache`` (or mixed) syntax, arguments must be passed as an object;
+For ``sprintf`` syntax - as an array.
+
 Client-side translations are loaded asynchronously. Ensure translations are available by requiring the "elgg" AMD module:
 
 .. code-block:: javascript
@@ -101,6 +118,15 @@ Client-side translations are loaded asynchronously. Ensure translations are avai
 		var elgg = require("elgg");
 
 		alert(elgg.echo('my_key'));
+
+		// 'welcome' => 'Welcome to %s, %s!'
+		alert(elgg.echo('welcome', ['Site', 'Guest']));
+
+		// 'welcome' => 'Welcome to {{sitename}}, {{username}}!'
+		alert(elgg.echo('welcome', {
+			sitename: 'Site',
+			username: 'Guest'
+		}));
 	});
 
 Translations are also available after the ``init, system`` JavaScript event.
