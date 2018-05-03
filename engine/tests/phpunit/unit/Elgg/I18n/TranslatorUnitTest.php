@@ -243,4 +243,101 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
 	}
+
+	public function testCanUseKWArgs() {
+		$this->translator->addTranslation('en', [
+			$this->key => 'Dummy {{kwarg}}'
+		]);
+		$kwargs = [
+			'kwarg' => 'test kwarg'
+		];
+		$this->assertEquals('Dummy test kwarg', $this->translator->translate($this->key, $kwargs));
+		$this->assertEquals('Dummy {{kwarg}}', $this->translator->translate($this->key));
+	}
+
+	public function testKWArgDoesntEatPrintfArgs() {
+		$this->translator->addTranslation('en', [
+			$this->key => 'Dummy %s {{kwarg}} %s'
+		]);
+		$kwargs = [
+			'kwarg' => 'test kwarg'
+		];
+		$this->assertEquals('Dummy %s test kwarg %s', $this->translator->translate($this->key, $kwargs));
+		$this->assertEquals('Dummy %s {{kwarg}} %s', $this->translator->translate($this->key));
+		$this->assertEquals('Dummy 1 {{kwarg}} 2', $this->translator->translate($this->key, [1, 2]));
+	}
+
+	public function testIgnoresStringsWithTooFeeArguments() {
+		$this->translator->addTranslation('en', [
+			$this->key => 'Dummy %s {{kwarg}} %s'
+		]);
+
+		$this->assertEquals('Dummy %s {{kwarg}} %s', $this->translator->translate($this->key, [1]));
+	}
+
+	public function testCanTranslateWithMixedArguments() {
+		$this->translator->addTranslation('en', [
+			$this->key => 'Dummy %s {{kwarg}} %s %s {{kwarg2}}'
+		]);
+
+		$this->assertEquals('Dummy 1 some kwarg 2 kwarg2 other kwarg', $this->translator->translate($this->key, [
+			1, 'kwarg' => 'some kwarg', 2, 'kwarg2', 'kwarg2' => 'other kwarg'
+		]));
+	}
+
+
+	public function testCanTranslateDotNotation() {
+		$user = $this->createUser();
+
+		$this->translator->addTranslation('en', [
+			$this->key => '
+				Hello, {{ user.name }},
+				
+				Your email is {{ user.email }}.
+			',
+		]);
+
+		$this->assertEquals("
+				Hello, $user->name,
+				
+				Your email is $user->email.
+			",
+
+			$this->translator->translate($this->key, [
+				'user' => $user,
+			])
+		);
+	}
+
+	public function testCanUseSections() {
+		$user = $this->createUser();
+		$site = elgg_get_site_entity();
+
+		$this->translator->addTranslation('en', [
+			$this->key => '
+				Hello, {{ user.name }},
+				{{#password}}
+				
+  					Never shown!
+				{{/password}}
+				
+				Your email is {{ user.email }}.
+				{{ site.getEmailAddress }}
+			',
+		]);
+
+		$this->assertEquals("
+				Hello, $user->name,
+				
+				Your email is $user->email.
+				{$site->getEmailAddress()}
+			",
+
+			$this->translator->translate($this->key, [
+				'user' => $user,
+				'site' => $site,
+			])
+		);
+	}
+
 }

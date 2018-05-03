@@ -35,31 +35,57 @@ elgg.get_language = function() {
  *       used elgg.add_translation() to merge the language module ahead of time.
  *
  * @param {String} key      Message key
- * @param {Array}  argv     vsprintf() arguments
+ * @param {Array}  args     vsprintf() arguments
  * @param {String} language Requested language. Not recommended (see above).
  *
  * @return {String} The translation or the given key if no translation available
  */
-elgg.echo = function(key, argv, language) {
+elgg.echo = function(key, args, language) {
 	//elgg.echo('str', 'en')
-	if (elgg.isString(argv)) {
-		language = argv;
-		argv = [];
+	if (elgg.isString(args)) {
+		language = args;
+		args = [];
 	}
 
 	//elgg.echo('str', [...], 'en')
 	var translations = elgg.config.translations,
 		dlang = elgg.get_language(),
-		map;
+		map,
+		string;
 
 	language = language || dlang;
-	argv = argv || [];
+	args = args || {};
 
 	map = translations[language] || translations[dlang];
-	if (map && elgg.isString(map[key])) {
-		return vsprintf(map[key], argv);
+	if (!map) {
+		return key;
 	}
 
-	return key;
+	string = map[key];
+
+	if (!elgg.isString(string)) {
+		return key;
+	}
+
+	if (elgg.isArray(args)) {
+		return vsprintf(string, args);
+	}
+
+	var argv = [], kwarg = {};
+
+	for (var index in args) {
+		if (!isNaN(index)) {
+			argv.push(args[index]);
+		} else {
+			kwarg[index] = args[index];
+		}
+	}
+
+	string = vsprintf(string, argv);
+
+	var Mustache = require('mustache');
+	string = Mustache.render(string, kwarg);
+
+	return string;
 };
 

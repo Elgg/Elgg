@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2c34f6fdee34e0303b3451519d9c855",
+    "content-hash": "1b052c0e74006234f39639f905c05f34",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -199,6 +199,40 @@
                 "shasum": ""
             },
             "type": "bower-asset-library"
+        },
+        {
+            "name": "bower-asset/mustache.js",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/janl/mustache.js.git",
+                "reference": "23beb3a8805c9a857e3ea777431481599fab503e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/janl/mustache.js/zipball/23beb3a8805c9a857e3ea777431481599fab503e",
+                "reference": "23beb3a8805c9a857e3ea777431481599fab503e",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "mustache.js",
+                "bower-asset-ignore": [
+                    "**/.*",
+                    "test"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Logic-less {{mustache}} templates with JavaScript",
+            "keywords": [
+                "ejs",
+                "mustache",
+                "template",
+                "templates"
+            ],
+            "time": "2016-11-08T16:24:16+00:00"
         },
         {
             "name": "bower-asset/normalize-css",
@@ -1612,6 +1646,52 @@
                 "schedule"
             ],
             "time": "2017-01-23T04:29:33+00:00"
+        },
+        {
+            "name": "mustache/mustache",
+            "version": "v2.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bobthecow/mustache.php.git",
+                "reference": "fe8fe72e9d580591854de404cc59a1b83ca4d19e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bobthecow/mustache.php/zipball/fe8fe72e9d580591854de404cc59a1b83ca4d19e",
+                "reference": "fe8fe72e9d580591854de404cc59a1b83ca4d19e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~1.11",
+                "phpunit/phpunit": "~3.7|~4.0|~5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Mustache": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Justin Hileman",
+                    "email": "justin@justinhileman.info",
+                    "homepage": "http://justinhileman.com"
+                }
+            ],
+            "description": "A Mustache implementation in PHP.",
+            "homepage": "https://github.com/bobthecow/mustache.php",
+            "keywords": [
+                "mustache",
+                "templating"
+            ],
+            "time": "2017-07-11T12:54:05+00:00"
         },
         {
             "name": "npm-asset/formdata-polyfill",

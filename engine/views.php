@@ -18,6 +18,7 @@ return [
 		"require.js" => "vendor/bower-asset/requirejs/require.js",
 		"text.js" => "vendor/bower-asset/text/text.js",
 		"sprintf.js" => "vendor/bower-asset/sprintf/src/sprintf.js",
+		"mustache.js" => "vendor/bower-asset/mustache.js/mustache.min.js",
 		
 		"jquery.imgareaselect.css" => "vendor/bower-asset/jquery.imgareaselect/distfiles/css/imgareaselect-deprecated.css",
 		"jquery.imgareaselect.js" => "vendor/bower-asset/jquery.imgareaselect/jquery.imgareaselect.dev.js",
