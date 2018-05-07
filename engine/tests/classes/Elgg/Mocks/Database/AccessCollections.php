@@ -3,6 +3,7 @@
 namespace Elgg\Mocks\Database;
 
 use Elgg\Database\AccessCollections as DbAccessCollections;
+use Elgg\Database\Delete;
 use stdClass;
 
 class AccessCollections extends DbAccessCollections {
@@ -87,5 +88,28 @@ class AccessCollections extends DbAccessCollections {
 			'params' => $params,
 			'insert_id' => $row->id,
 		]);
+
+		foreach ([$row->owner_guid] as $guid) {
+			$qb = Delete::fromTable('access_collections');
+			$ors = [];
+			foreach (['owner_guid'] as $guid_column) {
+				$ors[] = $qb->compare($guid_column, '=', $guid, ELGG_VALUE_INTEGER);
+			}
+			$qb->where($qb->merge($ors, 'OR'));
+
+			$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+				'sql' => $qb->getSQL(),
+				'params' => $qb->getParameters(),
+				'results' => function () use ($row, $guid) {
+					if (isset($this->rows[$row->id])) {
+						$this->clearQuerySpecs($row->id);
+						unset($this->rows[$row->id]);
+						return [$row->id];
+					}
+					return [];
+				},
+				'times' => 1,
+			]);
+		}
 	}
 }

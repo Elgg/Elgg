@@ -69,6 +69,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	 * Clear query specs
 	 *
 	 * @param int $id Relationship ID
+	 *
 	 * @return void
 	 */
 	public function clearQuerySpecs($id) {
@@ -83,6 +84,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 	 * Add query specs for a relationship data row
 	 *
 	 * @param stdClass $row Data row
+	 *
 	 * @return void
 	 */
 	public function addQuerySpecs(stdClass $row) {
@@ -114,10 +116,11 @@ class RelationshipsTable extends DbRelationshipsTable {
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $qb->getSQL(),
 			'params' => $qb->getParameters(),
-			'results' => function() use ($row) {
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return [$this->rows[$row->id]];
 				}
+
 				return [];
 			},
 		]);
@@ -129,16 +132,41 @@ class RelationshipsTable extends DbRelationshipsTable {
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $qb->getSQL(),
 			'params' => $qb->getParameters(),
-			'results' => function() use ($row) {
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->id])) {
 					$this->clearQuerySpecs($row->id);
 					unset($this->rows[$row->id]);
+
 					return [$row->id];
 				}
+
 				return [];
 			},
 			'times' => 1,
 		]);
+
+		foreach ([$row->guid_one, $row->guid_two] as $guid) {
+			$qb = Delete::fromTable('entity_relationships');
+			$ors = [];
+			foreach (['guid_one', 'guid_two'] as $guid_column) {
+				$ors[] = $qb->compare($guid_column, '=', $guid, ELGG_VALUE_INTEGER);
+			}
+			$qb->where($qb->merge($ors, 'OR'));
+
+			$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+				'sql' => $qb->getSQL(),
+				'params' => $qb->getParameters(),
+				'results' => function () use ($row, $guid) {
+					if (isset($this->rows[$row->id])) {
+						$this->clearQuerySpecs($row->id);
+						unset($this->rows[$row->id]);
+						return [$row->id];
+					}
+					return [];
+				},
+				'times' => 1,
+			]);
+		}
 
 		// Check relationship between two GUIDs
 		$qb = Select::fromTable('entity_relationships');
@@ -152,10 +180,11 @@ class RelationshipsTable extends DbRelationshipsTable {
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
 			'sql' => $qb->getSQL(),
 			'params' => $qb->getParameters(),
-			'results' => function() use ($row) {
+			'results' => function () use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return [$this->rows[$row->id]];
 				}
+
 				return [];
 			},
 		]);

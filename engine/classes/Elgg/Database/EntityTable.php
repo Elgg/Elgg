@@ -673,6 +673,8 @@ class EntityTable {
 			return false;
 		}
 
+		$entity->invalidateCache();
+
 		if ($entity instanceof ElggUser) {
 			// ban to prevent using the site during delete
 			$entity->ban();
@@ -750,7 +752,7 @@ class EntityTable {
 		$this->session->setDisabledEntityVisibility(true);
 		$ia = $this->session->setIgnoreAccess(true);
 
-		$entity->removeAllPrivateSettings();
+		remove_all_private_settings($guid);
 		$entity->deleteOwnedAccessCollections();
 		$entity->deleteAccessCollectionMemberships();
 		$entity->deleteRelationships();

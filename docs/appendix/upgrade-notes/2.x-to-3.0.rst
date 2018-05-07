@@ -1131,3 +1131,12 @@ Error logging
 -------------
 
 Sending ``elgg_log()`` and PHP error messages to page output is now only possible via the developers plugin "Log to the screen" setting. See the ``settings.example.php`` file for more information on using ``$CONFIG->debug`` in your ``settings.php`` file. Debugging should generally be done via the ``xdebug`` extension or ``tail -f /path/to/error.log`` on your server.
+
+CRUD events
+-----------
+
+Entities, relationships, annotations, metadata and river items now all use before and after events for ``create``, ``update`` and ``delete``.
+Plugins should start using, e.g. ``create:before`` and ``create:after`` instead of the convoluted legacy ``create`` event.
+
+During entity delete operations, ``delete:before`` and ``delete:after`` events are no longer triggered for individual relationships, annotations, metadata and river items.
+Plugins that need to perform clean up bound to these entity properties, should instead listen to entity events.

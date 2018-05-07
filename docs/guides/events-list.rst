@@ -114,19 +114,29 @@ User events
 Relationship events
 ===================
 
-**create, relationship**
+**create:before, relationship**
+    Triggered before a relationship is written to the database.
+	Return ``false`` to prevent DB write.
+
+**create:after, relationship**
     Triggered after a relationship has been created. Returning false deletes
     the relationship that was just created.
 
-**delete, relationship**
-    Triggered before a relationship is deleted. Return false to prevent it
-    from being deleted.
+**delete:before, relationship**
+    Triggered before a relationship is deleted. Return ``false`` to prevent it from being deleted.
+	Note that this event is not triggered when either subject or object entity is deleted (listen to entity events if you need to perform additional cleanup).
+
+**delete:after, relationship**
+    Trigger after relationship is deleted.
+	Note that this event is not triggered when either subject or object entity is deleted (listen to entity events if you need to perform additional cleanup).
 
 **join, group**
-    Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.
+	Deprecated. Use ``create:after, relationship`` event instead.
+	Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.
 
 **leave, group**
-    Triggered before the user ``$params['user']`` has left the group ``$params['group']``.
+	Deprecated. Use ``delete:after, relationship`` event instead.
+	Triggered before the user ``$params['user']`` has left the group ``$params['group']``.
 
 Entity events
 =============
@@ -162,15 +172,25 @@ Entity events
 Metadata events
 ===============
 
-**create, metadata**
-    Called after the metadata has been created. Return false to delete the
-    metadata that was just created.
+**create:before, metadata**
+    Called before the metadata is written to the database. Return ``false`` to prevent DB write.
 
-**update, metadata**
-    Called after the metadata has been updated. Return false to *delete the metadata.*
+**create:after, metadata**
+    Called after the metadata has been created
 
-**delete, metadata**
-    Called before metadata is deleted. Return false to prevent deletion.
+**update:before, metadata**
+    Called before the metadata is updated in the database. Return ``false`` to prevent DB write.
+
+**update:after, metadata**
+    Called after the metadata has been updated
+
+**delete:before, metadata**
+    Called before metadata is deleted. Return ``false`` to prevent deletion.
+	Note that this event is not triggered when entity itself is deleted (listen to entity events if you need to perform additional cleanup).
+
+**delete:after, metadata**
+    Called after metadata is deleted
+	Note that this event is not triggered when entity itself is deleted (listen to entity events if you need to perform additional cleanup).
 
 **enable, metadata**
 	Called when enabling metadata. Return false to prevent enabling.
@@ -181,19 +201,25 @@ Metadata events
 Annotation events
 =================
 
-**annotate, <entity type>**
-    Called before the annotation has been created. Return false to prevent
-    annotation of this entity.
+**create:before, annotation**
+    Called before the annotation is written to the database. Return ``false`` to prevent DB write.
 
-**create, annotation**
-    Called after the annotation has been created. Return false to delete
-    the annotation.
+**create:after, annotation**
+    Called after the annotation has been created.
 
-**update, annotation**
-    Called after the annotation has been updated. Return false to *delete the annotation.*
+**update:before, annotation**
+    Called before the annotation is updated in the DB. Return ``false`` to prevent DB write.
 
-**delete, annotation**
-    Called before annotation is deleted. Return false to prevent deletion.
+**update:after, annotation**
+    Called after the annotation has been updated
+
+**delete:before, annotation**
+    Called before annotation is deleted. Return ``false`` to prevent deletion.
+	Note that this event is not triggered when either owner or entity is deleted (listen to entity events if you need to perform additional cleanup).
+
+**delete:after, annotation**
+    Called after annotation is deleted
+	Note that this event is not triggered when either owner or entity is deleted (listen to entity events if you need to perform additional cleanup).
 
 **enable, annotation**
 	Called when enabling annotations. Return false to prevent enabling.
@@ -212,9 +238,11 @@ River events
 
 **delete:before, river**
 	Triggered before a river item is deleted. Returning false cancels the deletion.
+	Note that this event is not triggered when either subject, object or target entity is deleted (listen to entity events if you need to perform additional cleanup).
 
 **delete:after, river**
 	Triggered after a river item was deleted.
+	Note that this event is not triggered when either subject, object or target entity is deleted (listen to entity events if you need to perform additional cleanup).
 
 File events
 ===========

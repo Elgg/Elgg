@@ -242,6 +242,29 @@ class AnnotationsTable extends DbAnnotations {
 				return [];
 			}
 		]);
+
+		foreach ([$row->entity_guid, $row->owner_guid] as $guid) {
+			$qb = Delete::fromTable('annotations');
+			$ors = [];
+			foreach (['entity_guid', 'owner_guid'] as $guid_column) {
+				$ors[] = $qb->compare($guid_column, '=', $guid, ELGG_VALUE_INTEGER);
+			}
+			$qb->where($qb->merge($ors, 'OR'));
+
+			$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+				'sql' => $qb->getSQL(),
+				'params' => $qb->getParameters(),
+				'results' => function () use ($row, $guid) {
+					if (isset($this->rows[$row->id])) {
+						$this->clearQuerySpecs($row->id);
+						unset($this->rows[$row->id]);
+						return [$row->id];
+					}
+					return [];
+				},
+				'times' => 1,
+			]);
+		}
 	}
 
 	/**
