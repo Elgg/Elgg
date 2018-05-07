@@ -4,7 +4,10 @@ namespace Elgg\Cli;
 
 use Elgg\Hook;
 use Elgg\IntegrationTestCase;
+use Elgg\Logger;
 use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -28,8 +31,20 @@ class SimpleTestCommandTest extends IntegrationTestCase {
 			];
 		});
 
+		$command = new SimpletestCommand();
+
+		$logger = new Logger('PHPUNIT');
+
+		$output = new NullOutput();
+		$output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+
+		$handler = new ErrorHandler($output);
+		$logger->pushHandler($handler);
+
+		$command->setLogger($logger);
+
 		$application = new Application();
-		$application->add(new SimpletestCommand());
+		$application->add($command);
 
 		$command = $application->find('simpletest');
 		$commandTester = new CommandTester($command);

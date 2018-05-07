@@ -156,6 +156,8 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		$app = Application::getInstance();
 
+		$app->_services->reset('logger');
+		
 		if ($this instanceof LegacyIntegrationTestCase) {
 			$app->_services->session->removeLoggedInUser();
 		}

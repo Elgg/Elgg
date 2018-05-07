@@ -2,7 +2,6 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Cli\CronCommand;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -22,7 +21,7 @@ class CronCommandTest extends UnitTestCase {
 	}
 
 	public function testExecuteWithoutOptions() {
-		$application = new Application();
+		$application = new \Elgg\Cli\Application();
 		$application->add(new CronCommand());
 
 		$command = $application->find('cron');
@@ -34,7 +33,7 @@ class CronCommandTest extends UnitTestCase {
 	}
 
 	public function testExecuteWithPeriod() {
-		$application = new Application();
+		$application = new \Elgg\Cli\Application();
 		$application->add(new CronCommand());
 
 		$command = $application->find('cron');

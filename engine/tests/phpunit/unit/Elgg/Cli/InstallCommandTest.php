@@ -2,10 +2,7 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Cli\InstallCommand;
-use Elgg\IntegrationTestCase;
 use Elgg\UnitTestCase;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -25,7 +22,7 @@ class InstallCommandTest extends UnitTestCase {
 
 		$this->markTestSkipped('Can\'t test the installer yet');
 
-		$application = new Application();
+		$application = new \Elgg\Cli\Application();
 		$application->add(new InstallCommand());
 
 		$command = $application->find('install');

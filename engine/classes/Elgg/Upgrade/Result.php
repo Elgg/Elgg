@@ -17,11 +17,12 @@ final class Result {
 	/**
 	 * Add new error message to the batch
 	 *
-	 * @param string $message Error message
+	 * @param string|string[] $message Error messages
 	 * @return void
 	 */
 	public function addError($message) {
-		$this->errors[] = $message;
+		$message = (array) $message;
+		$this->errors += $message;
 	}
 
 	/**
