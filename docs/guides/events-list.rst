@@ -204,10 +204,11 @@ Annotation events
 River events
 ============
 
-**created, river**
-	Called after a river item is created.
+**create:before, river**
+	Called before item is written to the database. Return ``false`` to prevent the item creation.
 
-	.. note:: Use the plugin hook ``creating, river`` to cancel creation (or alter options).
+**create:after, river**
+	Called after item is written to the database.
 
 **delete:before, river**
 	Triggered before a river item is deleted. Returning false cancels the deletion.

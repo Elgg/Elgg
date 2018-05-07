@@ -22,6 +22,8 @@ function blog_init() {
 
 	elgg_extend_view('object/elements/imprint/contents', 'blog/imprint/status');
 
+	elgg_register_river_event('publish', 'object', 'blog');
+
 	// notifications
 	elgg_register_notification_event('object', 'blog', ['publish']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:blog', 'blog_prepare_notification');

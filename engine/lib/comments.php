@@ -18,6 +18,8 @@ use Elgg\Database\QueryBuilder;
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
 
+	elgg_register_river_event('create', 'object', 'comment');
+	
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');

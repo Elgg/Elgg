@@ -34,4 +34,11 @@ class ElggWire extends ElggObject {
 	public function canComment($user_guid = 0, $default = null) {
 		return false;
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDisplayName() {
+		return elgg_echo('thewire:wire');
+	}
 }

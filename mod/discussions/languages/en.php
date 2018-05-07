@@ -21,8 +21,8 @@ return array(
 	/**
 	 * River
 	 */
-	'river:object:discussion:create' => '%s added a new discussion topic %s',
-	'river:object:discussion:comment' => '%s commented on the discussion topic %s',
+	'activity:create:object:discussion' => '%s added a new discussion topic %s',
+	'activity:comment:object:discussion' => '%s commented on the discussion topic %s',
 	
 	/**
 	 * Notifications

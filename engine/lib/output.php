@@ -67,15 +67,21 @@ function elgg_autop($string) {
  *
  * @param string $text      The full text to excerpt
  * @param int    $num_chars Return a string up to $num_chars long
+ * @param string $url       If set, will add a Read more link
  *
  * @return string
  * @since 1.7.2
  */
-function elgg_get_excerpt($text, $num_chars = 250) {
+function elgg_get_excerpt($text, $num_chars = null, $url = null) {
+	if (!isset($num_chars)) {
+		$num_chars = elgg()->config->excerpt_length ? : 250;
+	}
+
 	$view = 'output/excerpt';
 	$vars = [
 		'text' => $text,
 		'num_chars' => $num_chars,
+		'url' => $url,
 	];
 	$viewtype = elgg_view_exists($view) ? '' : 'default';
 

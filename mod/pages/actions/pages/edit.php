@@ -100,11 +100,4 @@ elgg_clear_sticky_form('page');
 // Now save description as an annotation
 $page->annotate('page', $page->description, $page->access_id);
 
-if ($new_page) {
-	elgg_create_river_item([
-		'action_type' => 'create',
-		'object_guid' => $page->guid,
-	]);
-}
-
 return elgg_ok_response('', elgg_echo('pages:saved'), $page->getURL());

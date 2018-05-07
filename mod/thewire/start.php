@@ -43,6 +43,8 @@ function thewire_init() {
 	// Register a URL handler for thewire posts
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'thewire_set_url');
 
+	elgg_register_river_event('create', 'object', 'thewire');
+
 	// Register for notifications
 	elgg_register_notification_event('object', 'thewire');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:thewire', 'thewire_prepare_notification');
@@ -218,13 +220,6 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		// first post in this thread
 		$post->wire_thread = $guid;
 	}
-
-	elgg_create_river_item([
-		'view' => 'river/object/thewire/create',
-		'action_type' => 'create',
-		'subject_guid' => $post->owner_guid,
-		'object_guid' => $post->guid,
-	]);
 
 	// let other plugins know we are setting a user status
 	$params = [

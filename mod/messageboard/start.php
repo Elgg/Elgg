@@ -15,6 +15,8 @@
 function messageboard_init() {
 	// delete annotations for posts
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'messageboard_annotation_menu_setup');
+
+	elgg_register_river_event('create', 'annotation', 'messageboard');
 }
 
 /**
@@ -39,15 +41,6 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	if (!$result_id) {
 		return false;
 	}
-
-	elgg_create_river_item([
-		'view' => 'river/object/messageboard/create',
-		'action_type' => 'messageboard',
-		'subject_guid' => $poster->guid,
-		'object_guid' => $owner->guid,
-		'access_id' => $access_id,
-		'annotation_id' => $result_id,
-	]);
 
 	// Send notification only if poster isn't the owner
 	if ($poster->guid != $owner->guid) {

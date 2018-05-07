@@ -22,6 +22,8 @@ function discussion_init() {
 	add_group_tool_option('forum', null, true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
 
+	elgg_register_river_event('create', 'object', 'discussion');
+
 	// notifications
 	elgg_register_plugin_hook_handler('get', 'subscriptions', 'discussion_get_subscriptions');
 	elgg_register_notification_event('object', 'discussion');

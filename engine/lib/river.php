@@ -8,121 +8,42 @@
  */
 
 /**
- * Adds an item to the river.
+ * Register a river event
  *
- * @tip    Read the item like "Lisa (subject) posted (action)
- * a comment (object) on John's blog (target)".
+ * @param string $action  Event name
+ *                        e.g. publish, create
+ * @param string $type    Event object type
+ *                        e.g. object, group, user, annotation or relationship
+ * @param string $subtype Event object subtype
+ *                        e.g. entity subtype, annotation name or relationship name
  *
- * @param array $options Array in format:
- *
- * @option string $view The view that will handle the river item
- * @option string $action_type   An arbitrary string to define the action (eg 'comment', 'create')
- * @option int    $subject_guid  The GUID of the entity doing the action (default: current logged in user guid)
- * @option int    $object_guid   The GUID of the entity being acted upon
- * @option int    $target_guid   The GUID of the the object entity's container
- * @option int    $posted        The UNIX epoch timestamp of the river item (default: now)
- * @option int    $annotation_id The annotation ID associated with this river entry
- * @option bool   $return_item   set to true to return the ElggRiverItem created
- *
- * @return int|ElggRiverItem|bool River ID/item or false on failure
- * @since  1.9
- * @throws DatabaseException
+ * @return void
  */
-function elgg_create_river_item(array $options = []) {
+function elgg_register_river_event($action, $type, $subtype = null) {
+	_elgg_services()->river->registerEvent($action, $type, $subtype);
+}
 
-	$view = elgg_extract('view', $options, '');
-	// use default viewtype for when called from web services api
-	if (!empty($view) && !elgg_view_exists($view, 'default')) {
-		return false;
-	}
+/**
+ * Unregister river event
+ *
+ * @param string $action  Event name
+ * @param string $type    Event object type
+ * @param string $subtype Event object subtype
+ *
+ * @return void
+ */
+function elgg_unregister_river_event($action, $type, $subtype = null) {
+	_elgg_services()->river->unregisterEvent($action, $type, $subtype);
+}
 
-	$action_type = elgg_extract('action_type', $options);
-	if (empty($action_type)) {
-		return false;
-	}
-
-	$subject_guid = elgg_extract('subject_guid', $options, elgg_get_logged_in_user_guid());
-	if (!($subject = get_entity($subject_guid))) {
-		return false;
-	}
-
-	$object_guid = elgg_extract('object_guid', $options, 0);
-	if (!($object = get_entity($object_guid))) {
-		return false;
-	}
-
-	$target_guid = elgg_extract('target_guid', $options, 0);
-	if ($target_guid) {
-		// target_guid is not a required parameter so check
-		// it only if it is included in the parameters
-		if (!($target = get_entity($target_guid))) {
-			return false;
-		}
-	}
-
-	$posted = elgg_extract('posted', $options, time());
-
-	$annotation_id = elgg_extract('annotation_id', $options, 0);
-	if ($annotation_id) {
-		if (!elgg_get_annotation_from_id($annotation_id)) {
-			return false;
-		}
-	}
-
-	$return_item = elgg_extract('return_item', $options, false);
-
-	$values = [
-		'action_type' => $action_type,
-		'view' => $view,
-		'subject_guid' => $subject_guid,
-		'object_guid' => $object_guid,
-		'target_guid' => $target_guid,
-		'annotation_id' => $annotation_id,
-		'posted' => $posted,
-	];
-	$col_types = [
-		'action_type' => ELGG_VALUE_STRING,
-		'view' => ELGG_VALUE_STRING,
-		'subject_guid' => ELGG_VALUE_INTEGER,
-		'object_guid' => ELGG_VALUE_INTEGER,
-		'target_guid' => ELGG_VALUE_INTEGER,
-		'annotation_id' => ELGG_VALUE_INTEGER,
-		'posted' => ELGG_VALUE_INTEGER,
-	];
-
-	// return false to stop insert
-	$values = elgg_trigger_plugin_hook('creating', 'river', null, $values);
-	if ($values == false) {
-		// inserting did not fail - it was just prevented
-		return true;
-	}
-
-	$qb = \Elgg\Database\Insert::intoTable('river');
-	foreach ($values as $name => $value) {
-		$query_params[$name] = $qb->param($value, $col_types[$name]);
-	}
-	$qb->values($query_params);
-
-	$id = _elgg_services()->db->insertData($qb);
-	if (!$id) {
-		return false;
-	}
-
-	if (!$return_item) {
-		return $id;
-	}
-
-	$ia = elgg_set_ignore_access(true);
-	$item = elgg_get_river_item_from_id($id);
-	elgg_set_ignore_access($ia);
-
-	if (!$item) {
-		return false;
-	}
-
-	elgg_trigger_event('created', 'river', $item);
-
-	return $item;
+/**
+ * Push items to river for registered events
+ *
+ * @param \Elgg\Event $event Event
+ * @return void
+ */
+function _elgg_river_event_listener(\Elgg\Event $event) {
+	_elgg_services()->river->handleEvent($event);
 }
 
 /**
@@ -141,6 +62,10 @@ function elgg_create_river_item(array $options = []) {
  *
  *   Additionally accepts all "annotation_*" options supported by {@link elgg_get_entities()}
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
+ *
+ *   result_ids           => INT|ARR IDs of result objects
+ *   result_types         => STR|ARR Types of result objects
+ *   result_subtypes      => STR|ARR Subtypes of result objects
  *
  *   types                => STR|ARR Entity type string(s)
  *   subtypes             => STR|ARR Entity subtype string(s)
@@ -293,18 +218,52 @@ function elgg_list_river(array $options = []) {
 }
 
 /**
- * Register river unit tests
+ * Delete river entries when object is deleted
  *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $value current return value
+ * @elgg_event delete:after all
  *
- * @return array
- * @codeCoverageIgnore
+ * @param \Elgg\Event $event Event
+ *
+ * @return void
+ * @access private
  */
-function _elgg_river_test($hook, $type, $value) {
-	$value[] = ElggCoreRiverAPITest::class;
-	return $value;
+function _elgg_river_delete(\Elgg\Event $event) {
+
+	$object = $event->getObject();
+
+	if (!$object instanceof ElggData) {
+		return;
+	}
+
+	if ($object instanceof ElggEntity) {
+		elgg_delete_river([
+			'subject_guid' => $object->guid,
+			'limit' => 0,
+		]);
+
+		elgg_delete_river([
+			'object_guid' => $object->guid,
+			'limit' => 0,
+		]);
+
+		elgg_delete_river([
+			'target_guid' => $object->guid,
+			'limit' => 0,
+		]);
+
+		elgg_delete_river([
+			'result_id' => $object->guid,
+			'result_type' => $object->type,
+			'limit' => 0,
+		]);
+	} else {
+		elgg_delete_river([
+			'result_id' => $object->id,
+			'result_type' => $object->getType(),
+			'limit' => 0,
+		]);
+	}
+
 }
 
 /**
@@ -324,15 +283,18 @@ function _elgg_river_disable($event, $type, $entity) {
 		return;
 	}
 
-	$dbprefix = _elgg_config()->dbprefix;
-	$query = <<<QUERY
-	UPDATE {$dbprefix}river AS rv
-	SET rv.enabled = 'no'
-	WHERE (rv.subject_guid = {$entity->guid} OR rv.object_guid = {$entity->guid} OR rv.target_guid = {$entity->guid});
-QUERY;
+	$qb = \Elgg\Database\Update::table('river');
+	$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING));
 
-	elgg()->db->updateData($query);
-	return;
+	$qb->where($qb->compare('subject_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
+		->orWhere($qb->compare('object_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
+		->orWhere($qb->compare('target_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
+		->orWhere($qb->merge([
+			$qb->compare('result_id', '=', $entity->guid, ELGG_VALUE_INTEGER),
+			$qb->compare('result_type', '=', $entity->type, ELGG_VALUE_STRING),
+		]));
+
+	elgg()->db->updateData($qb);
 }
 
 
@@ -375,9 +337,11 @@ QUERY;
 /**
  * Add the delete to river actions menu
  *
+ * @elgg_plugin_hook register menu:river
+ *
  * @param \Elgg\Hook $hook 'register' 'menu:river'
  *
- * @return void|ElggMenuItem[]
+ * @return void
  *
  * @access private
  */
@@ -387,7 +351,8 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
 	}
 
 	$item = $hook->getParam('item');
-	if (!($item instanceof ElggRiverItem)) {
+
+	if (!$item instanceof ElggRiverItem) {
 		return;
 	}
 
@@ -395,9 +360,10 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
 		return;
 	}
 
-	$return = $hook->getValue();
+	$menu = $hook->getValue();
+	/* @var $menu \Elgg\Menu\MenuItems */
 
-	$return[] = \ElggMenuItem::factory([
+	$menu->add(ElggMenuItem::factory([
 		'name' => 'delete',
 		'href' => "action/river/delete?id={$item->id}",
 		'is_action' => true,
@@ -405,9 +371,7 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
 		'text' => elgg_echo('river:delete'),
 		'confirm' => elgg_echo('deleteconfirm'),
 		'priority' => 999,
-	]);
-
-	return $return;
+	]));
 }
 
 /**
@@ -418,8 +382,6 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
  * @access private
  */
 function _elgg_river_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
-
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
 }
 
@@ -428,6 +390,10 @@ function _elgg_river_init() {
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_river_init');
+
+	$events->registerHandler('all', 'all', '_elgg_river_event_listener');
+
+	$events->registerHandler('delete:after', 'all', '_elgg_river_delete');
 	$events->registerHandler('disable:after', 'all', '_elgg_river_disable', 600);
 	$events->registerHandler('enable:after', 'all', '_elgg_river_enable', 600);
 };

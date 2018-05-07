@@ -25,6 +25,8 @@ function bookmarks_init() {
 
 	elgg_extend_view('elgg.js', 'bookmarks.js');
 
+	elgg_register_river_event('create', 'object', 'bookmarks');
+
 	// Register for notifications
 	elgg_register_notification_event('object', 'bookmarks', ['create']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:bookmarks', 'bookmarks_prepare_notification');

@@ -18,17 +18,13 @@ class RiverWhereClause extends WhereClause {
 	public $ids;
 
 	/**
-	 * @var array
-	 */
-	public $type_subtype_pairs;
-
-	/**
 	 * @var string[]
 	 */
 	public $action_types;
 
 	/**
 	 * @var string[]
+	 * @deprecated 3.0
 	 */
 	public $views;
 
@@ -49,8 +45,24 @@ class RiverWhereClause extends WhereClause {
 
 	/**
 	 * @var int[]|ElggAnnotation[]
+	 * @deprecated 3.0
 	 */
 	public $annotation_ids;
+
+	/**
+	 * @var int[]
+	 */
+	public $result_ids;
+
+	/**
+	 * @var string[]
+	 */
+	public $result_types;
+
+	/**
+	 * @var string[]
+	 */
+	public $result_subtypes;
 
 	/**
 	 * @var string
@@ -91,10 +103,6 @@ class RiverWhereClause extends WhereClause {
 			$this->enabled = 'yes';
 		}
 
-		$types = new TypeSubtypeWhereClause();
-		$types->type_subtype_pairs = $this->type_subtype_pairs;
-		$wheres[] = $types->prepare($qb, $table_alias);
-
 		$wheres[] = $qb->compare($alias('id'), '=', $this->ids, ELGG_VALUE_ID);
 		$wheres[] = $qb->compare($alias('annotation_id'), '=', $this->annotation_ids, ELGG_VALUE_ID);
 		$wheres[] = $qb->compare($alias('view'), '=', $this->views, ELGG_VALUE_STRING);
@@ -102,6 +110,9 @@ class RiverWhereClause extends WhereClause {
 		$wheres[] = $qb->compare($alias('subject_guid'), '=', $this->subject_guids, ELGG_VALUE_GUID);
 		$wheres[] = $qb->compare($alias('object_guid'), '=', $this->object_guids, ELGG_VALUE_GUID);
 		$wheres[] = $qb->compare($alias('target_guid'), '=', $this->target_guids, ELGG_VALUE_GUID);
+		$wheres[] = $qb->compare($alias('result_id'), '=', $this->result_ids, ELGG_VALUE_ID);
+		$wheres[] = $qb->compare($alias('result_type'), '=', $this->result_types, ELGG_VALUE_STRING);
+		$wheres[] = $qb->compare($alias('result_subtype'), '=', $this->result_subtypes, ELGG_VALUE_STRING);
 		$wheres[] = $qb->compare($alias('enabled'), '=', $this->enabled, ELGG_VALUE_STRING);
 		$wheres[] = $qb->between($alias('posted'), $this->created_after, $this->created_before, ELGG_VALUE_TIMESTAMP);
 

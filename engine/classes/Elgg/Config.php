@@ -49,6 +49,7 @@ use Elgg\Project\Paths;
  * @property bool          $enable_profiling
  * @property mixed         $embed_tab
  * @property string        $exception_include
+ * @property int           $excerpt_length Default length of the excerpt in elgg_get_excerpt()
  * @property string[]      $group
  * @property array         $group_tool_options
  * @property bool          $i18n_loaded_from_cache

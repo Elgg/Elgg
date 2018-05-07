@@ -16,6 +16,7 @@ use Elgg\Database\SiteSecret;
 use Elgg\Invoker;
 use Elgg\Logger;
 use Elgg\Project\Paths;
+use Elgg\RiverService;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -90,6 +91,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
  * @property-read \Elgg\Application\Database                      $publicDb
  * @property-read \Elgg\Database\QueryCounter                     $queryCounter
+ * @property-read \Elgg\RiverService                              $river
  * @property-read \Elgg\RedirectService                           $redirects
  * @property-read \Elgg\Http\Request                              $request
  * @property-read \Elgg\Router\RequestContext                     $requestContext
@@ -546,6 +548,10 @@ class ServiceProvider extends DiContainer {
 				$transport = new \Elgg\Http\HttpProtocolTransport();
 			}
 			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport, $c->events);
+		});
+
+		$this->setFactory('river', function(ServiceProvider $c) {
+			return new RiverService();
 		});
 
 		$this->setFactory('routeCollection', function(ServiceProvider $c) {

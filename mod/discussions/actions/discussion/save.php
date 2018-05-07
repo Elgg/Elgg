@@ -56,11 +56,5 @@ if (!$new_topic) {
 	return elgg_ok_response('', elgg_echo('discussion:topic:updated'), $topic->getURL());
 }
 
-elgg_create_river_item([
-	'action_type' => 'create',
-	'object_guid' => $topic->guid,
-	'target_guid' => $container_guid,
-]);
-
 return elgg_ok_response('', elgg_echo('discussion:topic:created'), $topic->getURL());
 	

@@ -5,8 +5,8 @@
  * @uses $vars[]
  */
 
-$registered_entities = elgg_extract('registered_entity_types', $vars, get_registered_entity_types());
-if (empty($registered_entities)) {
+$events = elgg_get_registered_river_events();
+if (empty($events)) {
 	return;
 }
 
@@ -17,15 +17,18 @@ $options = [
 	'type=all' => elgg_echo('river:select', [elgg_echo('all')]),
 ];
 
-foreach ($registered_entities as $type => $subtypes) {
-	// subtype will always be an array.
-	if (empty($subtypes)) {
-		$options["type=$type"] = elgg_echo('river:select', [elgg_echo("collection:$type")]);
-		continue;
-	}
-	
-	foreach ($subtypes as $subtype) {
-		$options["type=$type&subtype=$subtype"] = elgg_echo('river:select', [elgg_echo("collection:$type:$subtype")]);
+foreach ($events as $type => $subtypes) {
+	foreach ($subtypes as $subtype => $actions) {
+		if ($subtype == 'all') {
+			$options["type=$type"] = elgg_echo('river:select', [elgg_echo("collection:$type")]);
+			continue;
+		}
+
+		if ($type == 'object' && $subtype == 'comment') {
+			$options["type=all&action=comment"] = elgg_echo('river:select', [elgg_echo("collection:$type:$subtype")]);
+		} else {
+			$options["type=$type&subtype=$subtype"] = elgg_echo('river:select', [elgg_echo("collection:$type:$subtype")]);
+		}
 	}
 }
 

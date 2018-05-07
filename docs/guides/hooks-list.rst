@@ -114,9 +114,36 @@ System hooks
 	 * ``user``: the logged in ``ElggUser`` or ``null``
 	 * ``vars``: The ``$vars`` argument passed to ``elgg_get_filter_tabs``
 
-**creating, river**
-	The options for ``elgg_create_river_item`` are filtered through this hook. You may alter values
-	or return ``false`` to cancel the item creation.
+**prepare, river**
+	Suitable for filtering/customizing the river item properties before they are written to the database.
+
+	The ``$params`` array includes:
+
+	 * ``event`` - ``\Elgg\Event`` that triggered the river item creation
+
+	The ``$return`` value is an array:
+
+	 * ``action`` - name of the river action (verb), e.g. ``publish``, ``comment``, ``like`` etc
+	 * ``subject`` - subject entity
+	 * ``object`` - object entity
+	 * ``target`` - target entity
+	 * ``result`` - entity, annotation or relationship
+
+**format, river**
+	Suitable for overriding river item elements after they have been rendered in river action specific-views.
+
+	The ``$params`` array includes:
+
+	 * ``item`` - ``\ElggRiverItem``
+	 * ``vars`` - ``$vars`` being passed to the river layout and underlying views
+
+	The ``$return`` value is an array:
+
+	 * ``image`` - image view
+	 * ``summary`` - summary view
+	 * ``message`` - message view
+	 * ``responses`` - responses view
+	 * ``attachments`` - attachments view
 
 **simplecache:generate, <view>**
 	Filters the view output for a ``/cache`` URL when simplecache is enabled.
@@ -133,8 +160,6 @@ System hooks
       * ``breadcrumbs`` - an array of bredcrumbs, each with ``title`` and ``link`` keys
       * ``identifier`` - route identifier of the current page
       * ``segments`` - route segments of the current page
-
-**add, river**
 
 **elgg.data, site**
    Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`

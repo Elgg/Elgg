@@ -82,4 +82,21 @@ class ElggObject extends \ElggEntity {
 		// no checks on read access since a user cannot see entities outside his access
 		return true;
 	}
+
+	/**
+	 * Get the excerpt for this object
+	 *
+	 * @param int  $length Length of the excerpt (optional)
+	 * @param bool $add_link Add read more link
+	 *
+	 * @return string
+	 */
+	public function getExcerpt($length = 250, $add_link = true) {
+		if ($this->excerpt) {
+			return elgg_format_html($this->excerpt);
+		} else {
+			$url = $add_link ? $this->getURL() : null;
+			return elgg_get_excerpt($this->description, $length, $url);
+		}
+	}
 }

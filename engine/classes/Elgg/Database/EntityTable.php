@@ -750,10 +750,6 @@ class EntityTable {
 		$this->session->setDisabledEntityVisibility(true);
 		$ia = $this->session->setIgnoreAccess(true);
 
-		elgg_delete_river(['subject_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
-
 		$entity->removeAllPrivateSettings();
 		$entity->deleteOwnedAccessCollections();
 		$entity->deleteAccessCollectionMemberships();

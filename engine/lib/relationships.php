@@ -18,32 +18,25 @@ function get_relationship($id) {
 }
 
 /**
- * Delete a relationship by its ID
- *
- * @param int $id The relationship ID
- *
- * @return bool
- */
-function delete_relationship($id) {
-	return _elgg_services()->relationshipsTable->delete($id);
-
-}
-
-/**
  * Create a relationship between two entities. E.g. friendship, group membership, site membership.
  *
  * This function lets you make the statement "$guid_one is a $relationship of $guid_two". In the statement,
  * $guid_one is the subject of the relationship, $guid_two is the target, and $relationship is the type.
  *
- * @param int    $guid_one     GUID of the subject entity of the relationship
- * @param string $relationship Type of the relationship
- * @param int    $guid_two     GUID of the target entity of the relationship
+ * @param int    $guid_one GUID of the subject entity of the relationship
+ * @param string $name     Name of the relationship
+ * @param int    $guid_two GUID of the target entity of the relationship
  *
  * @return bool
- * @throws InvalidArgumentException
+ * @throws IOException
  */
-function add_entity_relationship($guid_one, $relationship, $guid_two) {
-	return _elgg_services()->relationshipsTable->add($guid_one, $relationship, $guid_two);
+function add_entity_relationship($guid_one, $name, $guid_two) {
+	$relationship = new ElggRelationship();
+	$relationship->guid_one = (int) $guid_one;
+	$relationship->relationship = (string) $name;
+	$relationship->guid_two = (int) $guid_two;
+
+	return $relationship->save();
 }
 
 /**

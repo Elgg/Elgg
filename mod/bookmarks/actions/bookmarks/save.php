@@ -52,13 +52,4 @@ if (!$bookmark->save()) {
 
 elgg_clear_sticky_form('bookmarks');
 
-//add to river only if new
-if ($new) {
-	elgg_create_river_item([
-		'view' => 'river/object/bookmarks/create',
-		'action_type' => 'create',
-		'object_guid' => $bookmark->getGUID(),
-	]);
-}
-
 return elgg_ok_response('', elgg_echo('bookmarks:save:success'), $bookmark->getURL());

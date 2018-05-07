@@ -51,8 +51,6 @@ Removed views
  * ``notifications/subscriptions/forminternals``
  * ``notifications/css``
  * ``pages/input/parent``
- * ``river/item``: use elgg_view_river_item() to render river items
- * ``river/user/default/profileupdate``
  * ``admin.js``
  * ``aalborg_theme/homepage.png``
  * ``aalborg_theme/css``
@@ -88,19 +86,21 @@ Removed views
  * ``navigation/menu/site``: now uses default view
  * ``page/elements/by_line``: Use ``object/elements/imprint``
  * ``forms/admin/site/advanced/security``: the site secret information has been moved to ``forms/admin/security/settings``
+ * ``river/item``: use elgg_view_river_item() to render river items
+ * ``river/user/default/profileupdate``
  * ``river/object/file/create``: check :doc:`/guides/river`
  * ``river/object/page/create``: check :doc:`/guides/river`
  * ``river/object/page_top/create``: check :doc:`/guides/river`
  * ``river/relationship/member``: check :doc:`/guides/river`
+ * ``resources/elements/discussion_replies``: See :ref:`upgrade-discussion-replies`
+ * ``river/elements/discussion_replies``: See :ref:`upgrade-discussion-replies`
+ * ``river/object/discussion/create``
+ * ``river/object/discussion_reply/create``: See :ref:`upgrade-discussion-replies`
  * ``object/page_top``: use ``object/page``
  * ``ajax/discussion/reply/edit``: See :ref:`upgrade-discussion-replies`
  * ``discussion/replies``: See :ref:`upgrade-discussion-replies`
  * ``object/discussion_reply``: See :ref:`upgrade-discussion-replies`
  * ``resources/discussion/reply/edit``: See :ref:`upgrade-discussion-replies`
- * ``resources/elements/discussion_replies``: See :ref:`upgrade-discussion-replies`
- * ``river/elements/discussion_replies``: See :ref:`upgrade-discussion-replies`
- * ``river/object/discussion/create``
- * ``river/object/discussion_reply/create``: See :ref:`upgrade-discussion-replies`
  * ``search/object/discussion_reply/entity``: See :ref:`upgrade-discussion-replies`
  * ``rss/discussion/replies``: See :ref:`upgrade-discussion-replies`
  * ``search/header``
@@ -1072,6 +1072,26 @@ context. They still clear floats and allow breaking words to wrap text.
 
 Core modules and layouts that relied on space-filling have been reworked for Flexbox and
 we encourage devs to do the same, rather than use the problematic ``overflow: hidden``.
+
+Create river items
+------------------
+``elgg_create_river_item()`` has been deprecated in favor of event-driven river creation.
+Plugins should no longer create items dynamically instead they should register for a specific entity, annotation or relationship
+event using ``elgg_register_river_event()``, this brings consistency to how river items are create and displayed.
+River items no longer use item-specific views, instead plugins should use hooks and partial views to override river elements.
+
+River table now holds information about the result of the event that triggered item creation, subsequently:
+
+* the object of the comment river item is no longer the comment but the item the comment was made on, and the result is the comment entity
+* ``annotation_id`` is no longer used, instead any instance of ``ElggData`` can represent the result of the river event
+* ``join`` river items renamed to ``member`` to match the relationship name
+* ``profileiconupdate`` event is now triggered on upload/crop
+
+These changes make it easier to work with river items:
+
+ * plugins can easily unregister the river event and not have to override action/do other complex things
+ * plugins can easily register a river event and easily customize parts of the river item they need to, without having to create a lot of boilerplate copy/paste
+ * plugins can export river items in a consistent form (e.g. for use via web services)
 
 Delete river items
 ------------------

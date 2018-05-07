@@ -296,27 +296,17 @@ class ElggUser extends \ElggEntity
 	/**
 	 * Adds a user as a friend
 	 *
-	 * @param int  $friend_guid       The GUID of the user to add
-	 * @param bool $create_river_item Create the river item announcing this friendship
+	 * @param int  $friend_guid The GUID of the user to add
 	 *
 	 * @return bool
 	 */
-	public function addFriend($friend_guid, $create_river_item = false) {
+	public function addFriend($friend_guid) {
 		if (!get_user($friend_guid)) {
 			return false;
 		}
 
 		if (!add_entity_relationship($this->guid, "friend", $friend_guid)) {
 			return false;
-		}
-
-		if ($create_river_item) {
-			elgg_create_river_item([
-				'view' => 'river/relationship/friend/create',
-				'action_type' => 'friend',
-				'subject_guid' => $this->guid,
-				'object_guid' => $friend_guid,
-			]);
 		}
 
 		return true;

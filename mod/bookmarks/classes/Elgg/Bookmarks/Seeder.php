@@ -42,14 +42,6 @@ class Seeder extends Seed {
 
 			$this->createComments($bookmark);
 			$this->createLikes($bookmark);
-
-			elgg_create_river_item([
-				'view' => 'river/object/bookmarks/create',
-				'action_type' => 'create',
-				'subject_guid' => $bookmark->owner_guid,
-				'object_guid' => $bookmark->guid,
-				'target_guid' => $bookmark->container_guid,
-			]);
 		}
 	}
 

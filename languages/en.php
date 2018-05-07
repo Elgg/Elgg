@@ -244,6 +244,7 @@ return array(
 	'item:group:group' => "Group",
 	'collection:group:group' => 'Groups',
 	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
+	'collection:relationship:member' => 'Memberships',
 
 /**
  * Users
@@ -257,6 +258,7 @@ return array(
 
 	'friends' => "Friends",
 	'collection:friends' => 'Friends\' %s',
+	'collection:relationship:friend' => 'Friendships',
 
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "You're not allowed to edit this user's avatar",
@@ -296,8 +298,8 @@ return array(
  * River
  */
 	'river' => "River",
-	'river:user:friend' => "%s is now a friend with %s",
-	'river:update:user:avatar' => '%s has a new avatar',
+	'activity:friend:user' => "%s is now a friend with %s",
+	'activity:profileiconupdate:user' => '%s has a new avatar',
 	'river:noaccess' => 'You do not have permission to view this item.',
 	'river:posted:generic' => '%s posted',
 	'riveritem:single:user' => 'a user',
@@ -1350,7 +1352,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'item:object:comment' => 'Comment',
 	'collection:object:comment' => 'Comments',
 
-	'river:object:default:comment' => '%s commented on %s',
+	'activity:comment:object:default' => '%s commented on %s',
 
 	'generic_comments:add' => "Leave a comment",
 	'generic_comments:edit' => "Edit comment",
@@ -1601,6 +1603,9 @@ To view %s's profile, click here:
 
 	"field:required" => 'Required',
 
+	'excerpt:suffix' => '...',
+	'excerpt:readmore' => 'Read more',
+
 	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
 	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
 
@@ -1615,4 +1620,8 @@ To view %s's profile, click here:
 
 	"core:upgrade:2018041801:title" => "Delete old plugin entities",
 	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
+
+	"core:upgrade:2018050501:title" => 'Migrate core river items',
+	"core:upgrade:2018050501:description" => 'River table now holds information about the result of the activity and is less reliant on view-driven river rendering. This upgrade populates new result object columns, as well as removes view information from core river items.',
+
 );

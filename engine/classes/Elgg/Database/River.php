@@ -25,6 +25,11 @@ class River extends Repository {
 	 * {@inheritdoc}
 	 */
 	public function __construct(array $options = []) {
+		if (isset($options['action'])) {
+			$options['action_type'] = $options['action'];
+			unset($options['action']);
+		}
+
 		$singulars = [
 			'id',
 			'subject_guid',
@@ -35,6 +40,9 @@ class River extends Repository {
 			'type',
 			'subtype',
 			'view',
+			'result_id',
+			'result_type',
+			'result_subtype',
 		];
 
 		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
@@ -44,6 +52,9 @@ class River extends Repository {
 			'subject_guids' => null,
 			'object_guids' => null,
 			'target_guids' => null,
+			'result_ids' => null,
+			'result_types' => null,
+			'result_subtypes' => null,
 			'annotation_ids' => null,
 			'views' => null,
 			'action_types' => null,
@@ -261,6 +272,9 @@ class River extends Repository {
 		$where->target_guids = $this->options->target_guids;
 		$where->created_after = $this->options->created_after;
 		$where->created_before = $this->options->created_before;
+		$where->result_ids = $this->options->result_ids;
+		$where->result_types = $this->options->result_types;
+		$where->result_subtypes = $this->options->result_subtypes;
 
 		return $where->prepare($qb, 'rv');
 	}

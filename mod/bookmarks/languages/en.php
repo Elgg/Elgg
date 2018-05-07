@@ -35,8 +35,8 @@ View and comment on the bookmark:
 
 	'bookmarks:numbertodisplay' => 'Number of bookmarks to display',
 
-	'river:object:bookmarks:create' => '%s bookmarked %s',
-	'river:object:bookmarks:comment' => '%s commented on a bookmark %s',
+	'activity:create:object:bookmarks' => '%s bookmarked %s',
+	'activity:comment:object:bookmarks' => '%s commented on a bookmark %s',
 
 	'groups:tool:bookmarks' => 'Enable group bookmarks',
 	

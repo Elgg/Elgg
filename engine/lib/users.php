@@ -764,6 +764,9 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
  */
 function users_init() {
 
+	elgg_register_river_event('profileiconupdate:after', 'user');
+	elgg_register_river_event('create', 'relationship', 'friend');
+
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_elgg_user_title_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');

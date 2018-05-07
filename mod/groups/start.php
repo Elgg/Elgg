@@ -72,6 +72,10 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
 
 	elgg_register_plugin_hook_handler('gatekeeper', 'group:group', '_groups_gatekeeper_allow_profile_page');
+
+	elgg_register_river_event('create', 'group');
+	elgg_register_river_event('create', 'relationship', 'member');
+	elgg_register_event_handler('create:before', 'river', '_groups_filter_river_items');
 }
 
 /**
@@ -606,14 +610,6 @@ function groups_user_join_event_listener($event, $object_type, $params) {
 	// Remove any invite or join request flags
 	remove_entity_relationship($group->guid, 'invited', $user->guid);
 	remove_entity_relationship($user->guid, 'membership_request', $group->guid);
-
-	if (elgg_extract('create_river_item', $params)) {
-		elgg_create_river_item([
-			'action_type' => 'join',
-			'subject_guid' => $user->guid,
-			'object_guid' => $group->guid,
-		]);
-	}
 	
 	// add a user to the group's access control
 	$collection = _groups_get_group_acl($group);
@@ -1203,6 +1199,27 @@ function _groups_gatekeeper_allow_profile_page(\Elgg\Hook $hook) {
 
 	if ($route === 'view:group' || $route === 'view:group:group') {
 		return true;
+	}
+}
+
+/**
+ * Do not create river items on some of river events
+ *
+ * @param \Elgg\Event $event Event
+ * @return bool|null
+ */
+function _groups_filter_river_items(\Elgg\Event $event) {
+	$item = $event->getObject();
+	/* @var $item ElggRiverItem */
+
+	$result = $item->getResult();
+
+	if ($result instanceof ElggRelationship && $result->relationship == 'member') {
+		// Do not create a river item when the group owner joins the group
+		$group = get_entity($result->guid_two);
+		if ($group->owner_guid == $item->subject_guid) {
+			return false;
+		}
 	}
 }
 

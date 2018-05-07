@@ -1,102 +1,70 @@
 River
 #####
 
-Elgg natively supports the "river", an activity stream containing descriptions
-of activities performed by site members. This page gives an overview of adding
-events to the river in an Elgg plugin. 
+Elgg natively supports an activity stream, also known as ``river``, 
+containing descriptions of activities performed by site members. 
+This page gives an overview of adding events to the river in an Elgg plugin. 
 
 Pushing river items
 ===================
 
-Items are pushed to the activity river through a function call, which you must
-include in your plugins for the items to appear.
-
-Here we add a river item telling that a user has created a new blog post:
+Items are pushed to the activity river when a river event occurs.
+You can register a river event by calling ``elgg_register_river_event()``
+River supports entity, annotation and relationship events.
 
 .. code-block:: php
 
-	<?php
+	// User X published a blog post Y
+	elgg_register_river_event('publish', 'object', 'blog');
 
-	elgg_create_river_item([
-		'view' => 'river/object/blog/create',
-		'action_type' => 'create',
-		'subject_guid' => $blog->owner_guid,
-		'object_guid' => $blog->getGUID(),
-	]);
+	// User X checked in at Y
+	// Custom plugin event
+	// In your plugin, you can trigger an event elgg_trigger_event('checkin', 'object', $place)
+	elgg_register_river_event('checkin', 'object', 'place');
+	elgg_register_river_event('poke', 'user');
 
-All available parameters:
+	// User X reviewed Y with 5-stars
+	// Annotation based event
+	elgg_register_river_event('create', 'annotation', 'rating');
 
-* ``view`` => STR The view that will handle the river item (must exist)
-* ``action_type`` => STR An arbitrary string to define the action (e.g. 'create', 'update', 'vote', 'review', etc)
-* ``subject_guid`` => INT The GUID of the entity doing the action (default: the logged in user guid)
-* ``object_guid`` => INT The GUID of the entity being acted upon
-* ``target_guid`` => INT The GUID of the the object entity's container (optional)
-* ``access_id`` => INT The access ID of the river item (default: same as the object)
-* ``posted`` => INT The UNIX epoch timestamp of the river item (default: now)
-* ``annotation_id`` => INT The annotation ID associated with this river entry (optional)
+	// User X invited user Y to a group
+	// Relationship based event
+	elgg_register_river_event('create', 'relationship', 'invite');
 
-When an item is deleted or changed, the river item will be updated automatically.
+When subject, object, target or result objects are deleted, the river item will be updated automatically.
 
 River views
 ===========
 
-As of Elgg 3.0 the ``view`` parameter is no longer required. A fallback logic has been created to check a series of views for you:
-
-1. ``/river/{$type}/{$subtype}/{$action_type}``: eg. ``river/object/blog/create`` only the ``create`` action will come to this view 
-2. ``river/{$type}/{$subtype}/default``: eg. ``river/object/blog/default`` all river activity for ``object`` ``blog`` will come here
-3. ``river/{$type}/{$action_type}``: eg. ``river/object/create`` all ``create`` actions for ``object`` will come here
-4. ``river/{$type}/default``: eg. ``river/object/default`` all actions for all ``object`` will come here
-5. ``river/elements/layout``: ultimate fall back view, this should always be called in any of the river views to make a consistent layout
-
-Both ``type`` and ``subtype`` are based on the ``type`` and ``subtype`` of the ``object_guid`` for which the river item was created.
-
 Summary
 -------
 
-If no ``summary`` parameter is provided to the ``river/elements/layout`` the view will try to create it for you. The basic result will be a text
-with the text `Somebody did something on Object`, where `Somebody` is based on ``subject_guid`` and `Object` is based on ``object_guid``. For both
-`Somebody` and `Object` links will be created. These links are passed to a series of language keys so you can create a meaningfull summary.
+If no action/type specific ``summary`` view is present, the summary will be determined automatically from granular language keys.
 
-The language keys are:
+The system will iterate through available translation strings to find the most precise match, so you can add your translation keys
+based on granularity you need. Translations can use ``sprintf`` interpolation variables. Translations will receive the subject and object
+of the activity, wrapped as anchor elements.
 
-1. ``river:{$type}:{$subtype}:{$action_type}``: eg. ``river:object:blog:create``
-2. ``river:{$type}:{$subtype}:default``: eg. ``river:object:blog:default``
-3. ``river:{$type}:{$action_type}``: eg. ``river:object:create``
-4. ``river:{$type}:default``: eg. ``river:object:default``
+ * ``activity:{$action}:{$type}:{$subtype}``: eg. ``activity:create:object:blog`` or ``activity:comment:object:blog``
+ * ``activity:{$action}:{$type}``: eg. ``activity:likes:object`` or ``activity:friend:user``
+ * ``activity:{$action}``: eg. ``activity:review``
 
-Custom river view
-=================
+River elements
+--------------
 
-If you wish to add some more information to the river view, like an attachment (image, YouTube embed, etc), you must specify the :doc:`view <views>` 
-when creating the river item. This view **MUST** exist.
+River items comprise of the following elements:
 
-We recommend ``/river/{type}/{subtype}/{action}``, where:
+ * ``image`` - subject user avatar
+ * ``summary`` - summary of the activity
+ * ``message`` - message of the activity (usually an excerpt)
+ * ``attachments`` - extended representation of the activity, which can include an object card, a media player, a file preview etc
+ * ``responses`` - comment block
 
-* ``{type}`` is the entity type of the content we're interested in (``object`` for objects, ``user`` for users, etc)
-* ``{subtype}`` is the entity subtype of the content we're interested in (``blog`` for blogs, ``photo_album`` for albums, etc)
-* ``{action}`` is the action that took place (``create``, ``update``, etc)
+You can customize an of these with the granularity you need. For each of the following, the system will iterate through a set of views,
+and default to core view, if none present.
 
-River item information will be passed in an object called ``$vars['item']``, which contains the following important parameters:
+ * ``river/<action>/<type>/<subtype>/<element>``
+ * ``river/<action>/<type>/<element>``
+ * ``river/<action>/<element>``
 
-* ``$vars['item']->subject_guid`` The GUID of the user performing the action
-* ``$vars['item']->object_guid`` The GUID of the entity being acted upon
-
-Timestamps etc will be generated for you.
-
-For example, the blog plugin uses the following code for its river view:
-
-.. code-block:: php
-
-	$item = elgg_extract('item', $vars);
-	if (!$item instanceof ElggRiverItem) {
-		return;
-	}
-	
-	$blog = $item->getObjectEntity();
-	if (!$blog instanceof ElggBlog) {
-		return;
-	}
-	
-	$vars['message'] = $blog->getExcerpt();
-	
-	echo elgg_view('river/elements/layout', $vars);
+Use can further use ``format, river`` hook to override any of the above elements for a specific river item.

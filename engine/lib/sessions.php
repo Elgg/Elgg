@@ -386,7 +386,12 @@ function _elgg_session_boot(ServiceProvider $services) {
 	// test whether we have a user session
 	if ($session->has('guid')) {
 		/** @var ElggUser $user */
-		$user = $services->entityTable->get($session->get('guid'), 'user');
+		$guid = $session->get('guid');
+
+		$user = elgg_call(ELGG_IGNORE_ACCESS, function() use ($services, $guid) {
+			return $services->entityTable->get($guid, 'user');
+		});
+
 		if (!$user) {
 			// OMG user has been deleted.
 			$session->invalidate();

@@ -4,6 +4,7 @@ namespace Elgg\Database;
 
 /**
  * @group UnitTests
+ * @group Relationships
  */
 class RelationshipsUnitTest extends \Elgg\UnitTestCase {
 

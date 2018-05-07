@@ -28,6 +28,8 @@ function pages_init() {
 	// Extend the main css view
 	elgg_extend_view('elgg.css', 'pages/css');
 
+	elgg_register_river_event('create', 'object', 'page');
+
 	// Register for notifications
 	elgg_register_notification_event('object', 'page');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page', 'pages_prepare_notification');

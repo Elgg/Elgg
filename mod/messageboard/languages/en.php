@@ -2,6 +2,8 @@
 
 return array(
 
+	'collection:annotation:messageboard' => 'Message board',
+
 	/**
 	 * Menu items and titles
 	 */
@@ -20,7 +22,7 @@ return array(
 	/**
 	 * Message board widget river
 	 */
-	'river:user:messageboard' => "%s posted on %s's message board",
+	'activity:messageboard:user' => "%s posted on %s's message board",
 
 	/**
 	 * Status messages

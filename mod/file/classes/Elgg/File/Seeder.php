@@ -57,13 +57,6 @@ class Seeder extends Seed {
 
 			$this->createComments($file);
 			$this->createLikes($file);
-
-			elgg_create_river_item([
-				'action_type' => 'create',
-				'subject_guid' => $file->owner_guid,
-				'object_guid' => $file->guid,
-				'target_guid' => $file->container_guid,
-			]);
 		}
 	}
 

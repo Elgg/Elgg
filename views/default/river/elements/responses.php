@@ -20,20 +20,24 @@ if (!$item instanceof ElggRiverItem) {
 	return;
 }
 
-$object = $item->getObjectEntity();
+$result = $item->getResult();
 
 // annotations and comments do not have responses
-if (!empty($item->annotation_id) || !$object instanceof ElggEntity || $object instanceof ElggComment) {
+if (!$result instanceof ElggEntity) {
 	return;
 }
 
-$comment_count = $object->countComments();
+if ($result instanceof ElggComment) {
+	return;
+}
+
+$comment_count = $result->countComments();
 
 if ($comment_count) {
 	$comments = elgg_get_entities([
 		'type' => 'object',
 		'subtype' => 'comment',
-		'container_guid' => $object->getGUID(),
+		'container_guid' => $result->guid,
 		'limit' => 3,
 		'order_by' => [new OrderByClause('time_created', 'DESC')],
 		'distinct' => false,
@@ -51,18 +55,18 @@ if ($comment_count) {
 	
 	if ($comment_count > count($comments)) {
 		echo elgg_format_element('div', ['class' => 'elgg-river-more'], elgg_view('output/url', [
-			'href' => $object->getURL(),
+			'href' => $result->getURL(),
 			'text' => elgg_echo('river:comments:all', [$comment_count]),
 			'is_trusted' => true,
 		]));
 	}
 }
 
-if (!$object->canComment()) {
+if (!$result->canComment()) {
 	return;
 }
 
 // inline comment form
-$form_vars = ['id' => "comments-add-{$object->guid}-{$item->id}", 'class' => 'hidden'];
-$body_vars = ['entity' => $object, 'inline' => true];
+$form_vars = ['id' => "comments-add-{$result->guid}-{$item->id}", 'class' => 'hidden'];
+$body_vars = ['entity' => $result, 'inline' => true];
 echo elgg_view_form('comment/save', $form_vars, $body_vars);

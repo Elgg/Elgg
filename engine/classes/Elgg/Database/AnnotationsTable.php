@@ -75,7 +75,11 @@ class AnnotationsTable {
 			return false;
 		}
 
-		if (!$this->events->trigger('delete', 'annotation', $annotation)) {
+		if (!$this->events->triggerBefore('delete', 'annotation', $annotation)) {
+			return false;
+		}
+
+		if (!$this->events->triggerDeprecated('delete', 'annotation', $annotation)) {
 			return false;
 		}
 
@@ -83,14 +87,12 @@ class AnnotationsTable {
 		$qb->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
 		$deleted = $this->db->deleteData($qb);
 
-		if ($deleted) {
-			elgg_delete_river([
-				'annotation_id' => $annotation->id,
-				'limit' => false,
-			]);
+		if ($deleted !== false) {
+			$this->events->triggerAfter('delete', 'annotation', $annotation);
+			return true;
 		}
 
-		return $deleted !== false;
+		return false;
 	}
 
 	/**
@@ -144,7 +146,7 @@ class AnnotationsTable {
 		$annotation->id = $result;
 		$annotation->time_created = $time_created;
 
-		if (!$this->events->trigger('create', 'annotation', $annotation)) {
+		if (!$this->events->triggerDeprecated('create', 'annotation', $annotation)) {
 			elgg_delete_annotation_by_id($result);
 
 			return false;

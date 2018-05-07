@@ -41,9 +41,9 @@ View and comment on the page:
 	* River
 	**/
 
-	'river:object:page:create' => '%s created a page %s',
-	'river:object:page:update' => '%s updated a page %s',
-	'river:object:page:comment' => '%s commented on a page titled %s',
+	'activity:create:object:page' => '%s created a page %s',
+	'activity:update:object:page' => '%s updated a page %s',
+	'activity:comment:object:page' => '%s commented on a page titled %s',
 	
 	/**
 	 * Form fields

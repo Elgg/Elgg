@@ -284,14 +284,6 @@ trait Seeding {
 
 			$group->join(get_entity($properties['owner_guid']));
 
-			elgg_create_river_item([
-				'view' => 'river/group/create',
-				'action_type' => 'create',
-				'subject_guid' => $owner->guid,
-				'object_guid' => $group->guid,
-				'target_guid' => $container->guid,
-			]);
-
 			$this->log("Created new group {$group->getDisplayName()} [guid: {$group->guid}]");
 
 			return $group;
