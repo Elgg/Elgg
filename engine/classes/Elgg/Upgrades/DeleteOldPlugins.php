@@ -26,7 +26,13 @@ class DeleteOldPlugins implements SystemUpgrade  {
 	 * {@inheritdoc}
 	 */
 	public function shouldBeSkipped() {
-		return false;
+		foreach ($this->plugins as $id) {
+			if (elgg_get_plugin_from_id($id)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

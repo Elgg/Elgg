@@ -2,7 +2,6 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Application;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -28,11 +27,27 @@ class UpgradeCommand extends Command {
 
 		$async = in_array('async', $this->argument('async'));
 
-		Application::upgrade($async);
+		$results = _elgg_services()->upgrades->run($async);
 
-		system_message('Your system has been upgraded');
+		$success = true;
 
-		return 0;
+		foreach ($results as $id => $result) {
+			/* @var $result \Elgg\Upgrade\Result */
+
+			if ($errors = $result->getErrors()) {
+				$success = false;
+			}
+		}
+
+		if ($success) {
+			$this->notice('Your system has been upgraded');
+
+			return 0;
+		} else {
+			$this->error('System upgrade failed');
+
+			return 1;
+		}
 	}
 
 }
