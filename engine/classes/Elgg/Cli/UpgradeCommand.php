@@ -3,6 +3,8 @@
 namespace Elgg\Cli;
 
 use Elgg\Application;
+use Elgg\Upgrade\Result;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -28,11 +30,31 @@ class UpgradeCommand extends Command {
 
 		$async = in_array('async', $this->argument('async'));
 
-		Application::upgrade($async);
+		if (_elgg_services()->mutex->isLocked('upgrade')) {
+			_elgg_services()->mutex->unlock('upgrade');
+		}
 
-		system_message('Your system has been upgraded');
+		$results = _elgg_services()->upgrades->run($async, $this->output);
 
-		return 0;
+		$success = true;
+
+		foreach ($results as $id => $result) {
+			/* @var $result Result */
+
+			if ($errors = $result->getErrors()) {
+				$success = false;
+			}
+		}
+
+		if ($success) {
+			$this->notice('Your system has been upgraded');
+
+			return 0;
+		} else {
+			$this->error('System upgrade failed');
+
+			return 1;
+		}
 	}
 
 }

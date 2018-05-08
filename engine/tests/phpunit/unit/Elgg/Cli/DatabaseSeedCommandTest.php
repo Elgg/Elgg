@@ -5,7 +5,6 @@ namespace Elgg\Cli;
 use Elgg\Database\Seeds\Seed;
 use Elgg\Hook;
 use Elgg\UnitTestCase;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -28,7 +27,7 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 			return $value;
 		});
 
-		$application = new Application();
+		$application = new \Elgg\Cli\Application();
 		$application->add(new DatabaseSeedCommand());
 		$application->add(new DatabaseUnseedCommand());
 
