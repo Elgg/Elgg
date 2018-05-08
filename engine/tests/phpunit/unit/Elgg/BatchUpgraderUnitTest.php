@@ -41,7 +41,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => false,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}
@@ -70,7 +70,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => false,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}
@@ -95,7 +95,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => false,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}
@@ -120,7 +120,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => true,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}

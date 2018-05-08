@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Collections\Collection;
 use Elgg\Database\Mutex;
 use Elgg\i18n\Translator;
 use Elgg\Upgrade\Batch;
@@ -83,7 +84,7 @@ class UpgradeService {
 	 *
 	 * @param bool $async Execute all async upgrades
 	 *
-	 * @return void
+	 * @return Collection
 	 * @throws RuntimeException
 	 */
 	public function run($async = false) {
@@ -107,11 +108,13 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
+		$results = new Collection([], Result::class);
+
 		$upgrades = $this->getPendingUpgrades();
 
 		foreach ($upgrades as $key => $upgrade) {
 			if (!$upgrade->isAsynchronous()) {
-				$this->executeBatchUpgrade($upgrade);
+				$results->add($this->executeBatchUpgrade($upgrade));
 			}
 		}
 
@@ -119,7 +122,7 @@ class UpgradeService {
 			$upgrades = $this->getPendingUpgrades();
 
 			foreach ($upgrades as $upgrade) {
-				$this->executeBatchUpgrade($upgrade);
+				$results->add($this->executeBatchUpgrade($upgrade));
 			}
 		}
 
@@ -128,6 +131,8 @@ class UpgradeService {
 		elgg_flush_caches();
 
 		$this->mutex->unlock('upgrade');
+
+		return $results;
 	}
 
 	/**
@@ -353,7 +358,7 @@ class UpgradeService {
 	 *
 	 * @param ElggUpgrade $upgrade Upgrade
 	 *
-	 * @return void
+	 * @return Result
 	 */
 	protected function executeBatchUpgrade(ElggUpgrade $upgrade) {
 		$upgrade_name = $upgrade->getDisplayName();
@@ -362,7 +367,7 @@ class UpgradeService {
 
 		$result = $this->executeUpgrade($upgrade, false);
 
-		$errors = elgg_extract('errors', $result, []);
+		$errors = $result->getErrors();
 
 		if ($upgrade->isCompleted()) {
 			$ts = $upgrade->getCompletedTime();
@@ -376,21 +381,33 @@ class UpgradeService {
 					$dt->format($format),
 					$result['numErrors'],
 				]);
+
+				$this->system_messages->addErrorMessage($msg);
 			} else {
 				$msg = $this->translator->translate('admin:upgrades:completed', [
 					$upgrade_name,
 					$dt->format($format),
 				]);
+
+				$this->system_messages->addSuccessMessage($msg);
 			}
 		} else {
 			$msg = $this->translator->translate('admin:upgrades:failed', [
 				$upgrade_name
 			]);
+
+			$this->system_messages->addErrorMessage($msg);
 		}
 
-		$this->system_messages->addSuccessMessage($msg);
+		if (!empty($errors)) {
+			foreach ($errors as $error) {
+				$this->logger->error($error);
+			}
+		}
 
 		$this->logger->notice("Finished upgrade {$upgrade_name}");
+
+		return $result;
 	}
 
 	/**
@@ -517,13 +534,15 @@ class UpgradeService {
 				}
 			}
 
-			// Give feedback to the user interface about the current batch.
-			return [
-				'errors' => $errors,
-				'numErrors' => $batch_failure_count,
-				'numSuccess' => $batch_success_count,
-				'isComplete' => $result && $result->wasMarkedComplete(),
-			];
+			$result = new Result();
+			$result->addFailures($batch_failure_count);
+			$result->addSuccesses($batch_success_count);
+			$result->addError($errors);
+			if ($upgrade->isCompleted()) {
+				$result->markComplete();
+			}
+
+			return $result;
 		});
 	}
 }
