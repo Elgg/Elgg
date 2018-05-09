@@ -210,7 +210,11 @@ class BootService {
 	private function getBootData(Config $config, Database $db, $installed) {
 		$config->_boot_cache_hit = false;
 
-		$data = $this->cache->load('boot_data');
+		$data = null;
+		if ($config->boot_cache_ttl > 0) {
+			$data = $this->cache->load('boot_data');
+		}
+
 		if (!isset($data)) {
 			$data = new BootData();
 			$data->populate($config, $db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);
