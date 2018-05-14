@@ -7,6 +7,7 @@ use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Database\DbConfig;
+use Psr\Log\LogLevel;
 
 /**
  * The Elgg database
@@ -166,6 +167,8 @@ class Database {
 			$this->connections[$type]->exec("SET SESSION sql_mode=($sub_query);");
 		} catch (\Exception $e) {
 			// http://dev.mysql.com/doc/refman/5.1/en/error-messages-server.html
+			$this->log(LogLevel::ERROR, $e);
+
 			if ($e->getCode() == 1102 || $e->getCode() == 1049) {
 				$msg = "Elgg couldn't select the database '{$conf['database']}'. "
 					. "Please check that the database is created and you have access to it.";

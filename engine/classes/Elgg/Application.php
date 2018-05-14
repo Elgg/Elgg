@@ -8,7 +8,6 @@ use DatabaseException;
 use Elgg\Application\ErrorHandler;
 use Elgg\Application\ExceptionHandler;
 use Elgg\Database\DbConfig;
-use Elgg\Database\Select;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
@@ -16,12 +15,15 @@ use Elgg\Http\ErrorResponse;
 use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
+use ElggInstaller;
+use Exception;
 use InstallationException;
 use InvalidArgumentException;
 use InvalidParameterException;
-use Psr\Log\LogLevel;
 use RuntimeException;
 use SecurityException;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirect;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -491,27 +493,36 @@ class Application {
 	 * Renders a web UI for installing Elgg.
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	public static function install() {
 		ini_set('display_errors', 1);
 
-		$installer = new \ElggInstaller();
-		$response = $installer->run();
 		try {
-			// we won't trust server configuration but specify utf-8
-			elgg_set_http_header('Content-type: text/html; charset=utf-8');
+			$installer = new ElggInstaller();
+			$builder = $installer->run();
 
-			// turn off browser caching
-			elgg_set_http_header('Pragma: public', true);
-			elgg_set_http_header("Cache-Control: no-cache, must-revalidate", true);
-			elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+			$content = $builder->getContent();
+			$status = $builder->getStatusCode();
+			$headers = $builder->getHeaders();
 
-			_elgg_services()->responseFactory->respond($response);
-			return headers_sent();
-		} catch (InvalidParameterException $ex) {
-			throw new InstallationException($ex->getMessage());
+			if ($builder->isRedirection()) {
+				$forward_url = $builder->getForwardURL();
+				$response = new SymfonyRedirect($forward_url, $status, $headers);
+			} else {
+				$response = new Response($content, $status, $headers);
+			}
+		} catch (Exception $ex) {
+			$response = new Response($ex->getMessage(), 500);
 		}
+
+		$response->headers->set('Content-Type', 'text/html; charset=utf-8');
+		$response->headers->set('Pragma', 'public');
+		$response->headers->set('Cache-Control', 'no-cache, must-revalidate');
+		$response->headers->set('Expires', 'Fri, 05 Feb 1982 00:00:00 -0500');
+
+		$response->send();
+
+		return headers_sent();
 	}
 
 	/**
