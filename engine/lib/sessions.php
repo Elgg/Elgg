@@ -156,19 +156,22 @@ function pam_auth_userpass(array $credentials = []) {
  * @return bool
  */
 function log_login_failure($user_guid) {
-	$user_guid = (int) $user_guid;
-	$user = get_entity($user_guid);
+	return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guid) {
+		$user_guid = (int) $user_guid;
+		$user = get_entity($user_guid);
 
-	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int) $user->getPrivateSetting("login_failures");
-		$fails++;
+		if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
+			$fails = (int) $user->getPrivateSetting("login_failures");
+			$fails++;
 
-		$user->setPrivateSetting("login_failures", $fails);
-		$user->setPrivateSetting("login_failure_$fails", time());
-		return true;
-	}
+			$user->setPrivateSetting("login_failures", $fails);
+			$user->setPrivateSetting("login_failure_$fails", time());
 
-	return false;
+			return true;
+		}
+
+		return false;
+	});
 }
 
 /**
@@ -179,27 +182,30 @@ function log_login_failure($user_guid) {
  * @return bool true on success (success = user has no logged failed attempts)
  */
 function reset_login_failure_count($user_guid) {
-	$user_guid = (int) $user_guid;
-	$user = get_entity($user_guid);
+	return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guid) {
+		$user_guid = (int) $user_guid;
 
-	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int) $user->getPrivateSetting("login_failures");
+		$user = get_entity($user_guid);
 
-		if ($fails) {
-			for ($n = 1; $n <= $fails; $n++) {
-				$user->removePrivateSetting("login_failure_$n");
+		if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
+			$fails = (int) $user->getPrivateSetting("login_failures");
+
+			if ($fails) {
+				for ($n = 1; $n <= $fails; $n++) {
+					$user->removePrivateSetting("login_failure_$n");
+				}
+
+				$user->removePrivateSetting("login_failures");
+
+				return true;
 			}
 
-			$user->removePrivateSetting("login_failures");
-
+			// nothing to reset
 			return true;
 		}
 
-		// nothing to reset
-		return true;
-	}
-
-	return false;
+		return false;
+	});
 }
 
 /**
@@ -210,31 +216,33 @@ function reset_login_failure_count($user_guid) {
  * @return bool on exceeded limit.
  */
 function check_rate_limit_exceeded($user_guid) {
-	// 5 failures in 5 minutes causes temporary block on logins
-	$limit = 5;
-	$user_guid = (int) $user_guid;
-	$user = get_entity($user_guid);
+	return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user_guid) {
+		// 5 failures in 5 minutes causes temporary block on logins
+		$limit = 5;
+		$user_guid = (int) $user_guid;
+		$user = get_entity($user_guid);
 
-	if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
-		$fails = (int) $user->getPrivateSetting("login_failures");
-		if ($fails >= $limit) {
-			$cnt = 0;
-			$time = time();
-			for ($n = $fails; $n > 0; $n--) {
-				$f = $user->getPrivateSetting("login_failure_$n");
-				if ($f > $time - (60 * 5)) {
-					$cnt++;
-				}
+		if (($user_guid) && ($user) && ($user instanceof \ElggUser)) {
+			$fails = (int) $user->getPrivateSetting("login_failures");
+			if ($fails >= $limit) {
+				$cnt = 0;
+				$time = time();
+				for ($n = $fails; $n > 0; $n--) {
+					$f = $user->getPrivateSetting("login_failure_$n");
+					if ($f > $time - (60 * 5)) {
+						$cnt++;
+					}
 
-				if ($cnt == $limit) {
-					// Limit reached
-					return true;
+					if ($cnt == $limit) {
+						// Limit reached
+						return true;
+					}
 				}
 			}
 		}
-	}
 
-	return false;
+		return false;
+	});
 }
 
 /**
