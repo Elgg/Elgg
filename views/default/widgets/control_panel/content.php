@@ -3,36 +3,37 @@
  * Admin control panel widget
  */
 
-elgg_register_menu_item('admin_control_panel', [
-	'name' => 'flush',
-	'text' => elgg_echo('admin:cache:flush'),
-	'href' => 'action/admin/site/flush_cache',
-	'is_action' => true,
-	'link_class' => 'elgg-button elgg-button-action',
-]);
+$items = [
+	[
+		'name' => 'flush',
+		'text' => elgg_echo('admin:cache:flush'),
+		'icon' => 'sync-alt',
+		'href' => elgg_generate_action_url('admin/site/flush_cache'),
+		'link_class' => 'elgg-button elgg-button-action',
+	],
+];
 
-$mutex = _elgg_services()->mutex;
-$is_locked = $mutex->isLocked('upgrade');
-
-if (!$is_locked) {
-	elgg_register_menu_item('admin_control_panel', [
+if (!_elgg_services()->mutex->isLocked('upgrade')) {
+	$items[] = [
 		'name' => 'upgrade',
 		'text' => elgg_echo('upgrade'),
+		'icon' => 'cogs',
 		'href' => 'upgrade.php',
 		'link_class' => 'elgg-button elgg-button-action',
-	]);
+	];
 } else {
-	elgg_register_menu_item('admin_control_panel', [
+	$items[] = [
 		'name' => 'unlock_upgrade',
 		'text' => elgg_echo('upgrade:unlock'),
-		'href' => 'action/admin/site/unlock_upgrade',
-		'is_action' => true,
+		'icon' => 'unlock',
+		'href' => elgg_generate_action_url('admin/site/unlock_upgrade'),
 		'link_class' => 'elgg-button elgg-button-action',
 		'confirm' => elgg_echo('upgrade:unlock:confirm'),
-	]);
+	];
 }
 
 echo elgg_view_menu('admin_control_panel', [
 	'class' => 'elgg-menu-hz',
 	'item_class' => 'mrm',
+	'items' => $items,
 ]);

@@ -33,6 +33,11 @@ class WidgetDefinition {
 	 * @var bool Can the widget be added multiple times
 	 */
 	public $multiple;
+
+	/**
+	 * @var array A list of optional required plugins that need to be activated for this definition to be available
+	 */
+	public $required_plugin;
 	
 	/**
 	 * WidgetDefinition constructor
@@ -103,7 +108,37 @@ class WidgetDefinition {
 		
 		$definition->multiple = (bool) elgg_extract('multiple', $options, false);
 		
+		$definition->required_plugin = (array) elgg_extract('required_plugin', $options, []);
+		
 		return $definition;
+	}
+	
+	/**
+	 * Checks if the widget definition meets all requirements
+	 *
+	 * @return boolean
+	 */
+	public function isValid() {
+		return $this->checkRequiredActivePlugins();
+	}
+	
+	/**
+	 * Checks if the required plugins are active. If none set this function will return true.
+	 *
+	 * @return boolean
+	 */
+	protected function checkRequiredActivePlugins() {
+		if (empty($this->required_plugin)) {
+			return true;
+		}
+		
+		foreach ($this->required_plugin as $plugin) {
+			if (!elgg_is_active_plugin($plugin)) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	/**

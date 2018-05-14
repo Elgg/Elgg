@@ -754,7 +754,7 @@ class EntityTable {
 		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
 		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
 
-		remove_all_private_settings($guid);
+		$entity->removeAllPrivateSettings();
 		$entity->deleteOwnedAccessCollections();
 		$entity->deleteAccessCollectionMemberships();
 		$entity->deleteRelationships();
