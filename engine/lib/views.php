@@ -1678,7 +1678,7 @@ function _elgg_views_preprocess_css($hook, $type, $content, $params) {
 }
 
 /**
- * Inserts module names into anonymous modules by handling the "simplecache:generate" hook.
+ * Inserts module names into anonymous modules by handling the "simplecache:generate" and "cache:generate" hook.
  *
  * @param string $hook    The name of the hook
  * @param string $type    View type (css, js, or unknown)
@@ -1817,6 +1817,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_preprocess_css');
 
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
+	elgg_register_plugin_hook_handler('cache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
