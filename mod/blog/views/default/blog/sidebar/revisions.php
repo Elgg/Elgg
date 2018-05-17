@@ -1,15 +1,14 @@
 <?php
-use Elgg\Database\Clauses\OrderByClause;
-
 /**
  * Blog sidebar menu showing revisions
  *
  * @package Blog
  */
 
+use Elgg\Database\Clauses\OrderByClause;
+
 //If editing a post, show the previous revisions and drafts.
 $blog = elgg_extract('entity', $vars, false);
-
 if (!$blog instanceof ElggBlog) {
 	return;
 }
