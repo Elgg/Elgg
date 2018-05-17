@@ -321,8 +321,7 @@ function _elgg_disable_caches() {
 	_elgg_services()->sessionCache->disable();
 	_elgg_services()->dataCache->disable();
 	_elgg_services()->dic_cache->getCache()->disable();
-	_elgg_services()->simpleCache->disable();
-	_elgg_services()->systemCache->disable();
+	_elgg_services()->systemCache->getCache()->disable();
 	_elgg_services()->autoloadManager->getCache()->disable();
 }
 
@@ -357,8 +356,7 @@ function _elgg_enable_caches() {
 	_elgg_services()->sessionCache->enable();
 	_elgg_services()->dataCache->enable();
 	_elgg_services()->dic_cache->getCache()->enable();
-	_elgg_services()->simpleCache->enable();
-	_elgg_services()->systemCache->enable();
+	_elgg_services()->systemCache->getCache()->enable();
 	_elgg_services()->autoloadManager->getCache()->enable();
 }
 
