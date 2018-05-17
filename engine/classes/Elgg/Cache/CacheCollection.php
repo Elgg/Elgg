@@ -2,6 +2,7 @@
 
 namespace Elgg\Cache;
 
+use Elgg\Cacheable;
 use Elgg\Config;
 
 /**
@@ -67,6 +68,26 @@ abstract class CacheCollection {
 	public function clear() {
 		foreach ($this->caches as $cache) {
 			$cache->clear();
+		}
+	}
+
+	/**
+	 * Disable all persistent caches
+	 * @return void
+	 */
+	public function disable() {
+		foreach ($this->caches as $cache) {
+			$cache->disable();
+		}
+	}
+
+	/**
+	 * Enable all persistent caches
+	 * @return void
+	 */
+	public function enable() {
+		foreach ($this->caches as $cache) {
+			$cache->enable();
 		}
 	}
 

@@ -50,8 +50,8 @@ return array(
 
 	'groups:tool:file' => 'Enable group files',
 
-	'river:object:file:create' => '%s uploaded the file %s',
-	'river:object:file:comment' => '%s commented on the file %s',
+	'activity:create:object:file' => '%s uploaded the file %s',
+	'activity:comment:object:file' => '%s commented on the file %s',
 
 	'file:notify:summary' => 'New file called %s',
 	'file:notify:subject' => 'New file: %s',

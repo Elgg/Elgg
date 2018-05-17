@@ -2,8 +2,10 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Event;
 use Elgg\Values;
 use ElggRiveritem;
+use DateTime;
 
 /**
  * Elgg Test river api
@@ -23,6 +25,11 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 	 */
 	protected $user;
 
+	/**
+	 * @var DateTime
+	 */
+	protected $dt;
+
 	public function up() {
 		$user = $this->createOne('user');
 		
@@ -41,6 +48,10 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			$this,
 			'allowDelete'
 		]);
+
+		$dt = new DateTime();
+		_elgg_services()->river->setCurrentTime($dt);
+		$this->dt = $dt;
 	}
 
 	public function down() {
@@ -89,13 +100,17 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$params['return_item'] = true;
 		$item = elgg_create_river_item($params);
 
+		$this->assertEquals('river', $item->getType());
+		$this->assertEquals('item', $item->getSubtype());
+
+		$this->assertInstanceOf(\stdClass::class, $item->toObject());
+
 		$this->assertInstanceOf(ElggRiverItem::class, $item);
 		$this->assertTrue(elgg_delete_river(['id' => $item->id]));
 	}
 
 	public function testRiverCreationEmitsHookAndEvent() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -119,13 +134,12 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		elgg_unregister_event_handler('created', 'river', $event_handler);
 
 		$expected_values = [
-			'action_type' => $params['action_type'],
-			'view' => $params['view'],
-			'subject_guid' => $params['subject_guid'],
-			'object_guid' => $params['object_guid'],
-			'target_guid' => 0,
+			'action_type' => 'create',
+			'subject_guid' => $this->user->guid,
+			'object_guid' => $this->entity->guid,
+			'target_guid' => $this->entity->container_guid,
 			'annotation_id' => 0,
-			'posted' => $params['posted'],
+			'posted' => $this->dt->getTimestamp(),
 		];
 		foreach ($expected_values as $key => $value) {
 			$this->assertEquals($captured['hook_value'][$key], $value);
@@ -137,7 +151,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	public function testCanCancelRiverItemViaHook() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -153,12 +166,11 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 			'getFalse'
 		]);
 
-		$this->assertTrue($id); // prevented
+		$this->assertFalse($id); // prevented
 	}
 
 	public function testCanCancelRiverDeleteByEvent() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -186,7 +198,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		// [delete:after, river]
 
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -208,7 +219,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	public function testRiverDeleteUsesPermissionHook() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -242,7 +252,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	public function testDeleteRiverFunctionTriggersEventsPerms() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -275,7 +284,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	public function testElggCreateRiverItemMissingRequiredParam() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -292,7 +300,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 	
 	public function testElggCreateRiverItemSubjectGuid() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -314,7 +321,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	public function testElggCreateRiverItemViewNotExist() {
 		$params = [
-			'view' => 'river/relationship/foo/create',
+			'view' => 'some/view/that/non/exists',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -325,7 +332,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 	public function testElggCreateRiverItemBadEntity() {
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $this->user->guid,
 			'object_guid' => $this->entity->guid,
@@ -353,7 +359,6 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->entity = $this->createOne('object');
 
 		$params = [
-			'view' => 'river/relationship/friend/create',
 			'action_type' => 'create',
 			'subject_guid' => $user->guid,
 			'object_guid' => $this->entity->guid,
@@ -390,4 +395,216 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->entity->delete();
 	}
 
+	/**
+	 * @group RiverEvents
+	 */
+	public function testCreatesRiverItemOnEntityEvent() {
+
+		$user = $this->createUser();
+
+		_elgg_services()->session->setLoggedInUser($user);
+
+		elgg_register_river_event('create', 'object', 'foo');
+
+		$object = $this->createObject([
+			'subtype' => 'foo',
+		]);
+
+		$river = elgg_get_river([
+			'object_guids' => $object->guid,
+		]);
+
+		$this->assertCount(1, $river);
+
+		$item = array_shift($river);
+		/* @var $item ElggRiverItem */
+
+		$this->assertInstanceOf(ElggRiverItem::class, $item);
+
+		$this->assertEquals('create', $item->action);
+		$this->assertEquals($object->owner_guid, $item->getSubjectEntity()->guid);
+		$this->assertEquals($object->guid, $item->getObjectEntity()->guid);
+		$this->assertEquals($object->container_guid, $item->getTargetEntity()->guid);
+		$this->assertEquals($object->guid, $item->result_id);
+		$this->assertEquals($object->type, $item->result_type);
+		$this->assertEquals($object->subtype, $item->result_subtype);
+		$this->assertEquals($object, $item->getResult());
+
+		elgg_unregister_river_event('create:after', 'object', 'foo');
+
+		_elgg_services()->session->removeLoggedInUser();
+	}
+
+	/**
+	 * @group RiverEvents
+	 */
+	public function testCreatesRiverItemOnUserEvent() {
+
+		$user = $this->createUser([
+			'subtype' => 'foo',
+		]);
+
+		_elgg_services()->session->setLoggedInUser($user);
+
+		elgg_register_river_event('custom:after', 'user');
+
+		elgg_trigger_after_event('custom', 'user', $user);
+
+		$river = elgg_get_river([
+			'object_guids' => $user->guid,
+		]);
+
+		$this->assertCount(1, $river);
+
+		$item = array_shift($river);
+		/* @var $item ElggRiverItem */
+
+		$this->assertInstanceOf(ElggRiverItem::class, $item);
+
+		$this->assertEquals('custom', $item->action);
+		$this->assertEquals($user->guid, $item->getSubjectEntity()->guid);
+		$this->assertEquals($user->guid, $item->getObjectEntity()->guid);
+		$this->assertFalse($item->getTargetEntity());
+		$this->assertEquals($user->guid, $item->result_id);
+		$this->assertEquals($user->type, $item->result_type);
+		$this->assertEquals($user->subtype, $item->result_subtype);
+
+		elgg_unregister_river_event('custom:after', 'user');
+
+		_elgg_services()->session->removeLoggedInUser();
+	}
+
+	/**
+	 * @group RiverEvents
+	 */
+	public function testCreatesRiverItemOnCommentEvent() {
+
+		$user = $this->createUser();
+
+		_elgg_services()->session->setLoggedInUser($user);
+
+		elgg_set_entity_class('object', 'foo_comment', \ElggComment::class);
+
+		elgg_register_river_event('create', 'object', 'foo_comment');
+
+		$object = $this->createObject();
+
+		$comment = $this->createObject([
+			'subtype' => 'foo_comment',
+			'container_guid' => $object->guid,
+		]);
+
+		$river = elgg_get_river([
+			'result_ids' => $comment->guid,
+			'result_types' => 'object',
+			'result_subtypes' => 'foo_comment',
+		]);
+
+		$this->assertCount(1, $river);
+
+		$item = array_shift($river);
+		/* @var $item ElggRiverItem */
+
+		$this->assertInstanceOf(ElggRiverItem::class, $item);
+
+		$this->assertEquals('foo_comment', $item->action);
+		$this->assertEquals($user->guid, $item->getSubjectEntity()->guid);
+		$this->assertEquals($object->guid, $item->getObjectEntity()->guid);
+		$this->assertEquals($object->container_guid, $item->getTargetEntity()->guid);
+		$this->assertEquals($comment->guid, $item->result_id);
+		$this->assertEquals($comment->type, $item->result_type);
+		$this->assertEquals($comment->subtype, $item->result_subtype);
+		$this->assertEquals($comment, $item->getResult());
+
+		elgg_unregister_river_event('create', 'object', 'foo_comment');
+
+		_elgg_services()->session->removeLoggedInUser();
+	}
+
+	/**
+	 * @group RiverEvents
+	 */
+	public function testCreatesRiverItemOnAnnotationEvent() {
+
+		$user = $this->createUser();
+
+		_elgg_services()->session->setLoggedInUser($user);
+
+		elgg_register_river_event('create:after', 'annotation', 'poke');
+
+		$object = $this->createObject();
+
+		$id = $object->annotate('poke', 1);
+
+		$annotation = elgg_get_annotation_from_id($id);
+
+		$river = elgg_get_river([
+			'result_ids' => $annotation->id,
+			'result_types' => 'annotation',
+		]);
+
+		$this->assertCount(1, $river);
+
+		$item = array_shift($river);
+		/* @var $item ElggRiverItem */
+
+		$this->assertInstanceOf(ElggRiverItem::class, $item);
+
+		$this->assertEquals('poke', $item->action);
+		$this->assertEquals($user->guid, $item->getSubjectEntity()->guid);
+		$this->assertEquals($object->guid, $item->getObjectEntity()->guid);
+		$this->assertEquals($object->container_guid, $item->getTargetEntity()->guid);
+		$this->assertEquals($annotation->id, $item->result_id);
+		$this->assertEquals('annotation', $item->result_type);
+		$this->assertEquals('poke', $item->result_subtype);
+		$this->assertEquals($annotation, $item->getResult());
+
+		elgg_unregister_river_event('create:after', 'annotation', 'poke');
+
+		_elgg_services()->session->removeLoggedInUser();
+	}
+
+	/**
+	 * @group RiverEvents
+	 */
+	public function testCreatesRiverItemOnRelationshipEvent() {
+
+		$user = $this->createUser();
+
+		_elgg_services()->session->setLoggedInUser($user);
+
+		elgg_register_river_event('create:after', 'relationship', 'connect');
+
+		$object = $this->createObject([
+			'subtype' => 'foo',
+		]);
+
+		$id = add_entity_relationship($user->guid, 'connect', $object->guid);
+		$relationship = get_relationship($id);
+
+		$river = elgg_get_river([
+			'result_id' => $relationship->id,
+			'result_type' => 'relationship',
+		]);
+
+		$this->assertCount(1, $river);
+
+		$item = array_shift($river);
+		/* @var $item ElggRiverItem */
+
+		$this->assertInstanceOf(ElggRiverItem::class, $item);
+
+		$this->assertEquals('connect', $item->action);
+		$this->assertEquals($user->guid, $item->getSubjectEntity()->guid);
+		$this->assertEquals($object->guid, $item->getObjectEntity()->guid);
+		$this->assertEquals($object->container_guid, $item->getTargetEntity()->guid);
+		$this->assertEquals($relationship->id, $item->result_id);
+		$this->assertEquals('relationship', $item->result_type);
+		$this->assertEquals('connect', $item->result_subtype);
+		$this->assertEquals($relationship, $item->getResult());
+
+		elgg_unregister_river_event('create:after', 'relationship', 'connection');
+
+		_elgg_services()->session->removeLoggedInUser();
+	}
 }

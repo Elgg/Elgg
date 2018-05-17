@@ -17,6 +17,8 @@ use RuntimeException;
  */
 class UpgradeService {
 
+	use Loggable;
+
 	/**
 	 * @var Locator
 	 */
@@ -36,11 +38,6 @@ class UpgradeService {
 	 * @var Config
 	 */
 	private $config;
-
-	/**
-	 * @var Logger
-	 */
-	private $logger;
 
 	/**
 	 * @var Mutex
@@ -85,6 +82,7 @@ class UpgradeService {
 	 * Run the upgrade process
 	 *
 	 * @param bool $async Execute all async upgrades
+	 *
 	 * @return void
 	 * @throws RuntimeException
 	 */
@@ -94,8 +92,9 @@ class UpgradeService {
 			throw new RuntimeException($this->translator->translate('upgrade:locked'));
 		}
 
-		// clear autoload cache so plugin classes can be reregistered and used during upgrade
-		_elgg_services()->autoloadManager->deleteCache();
+		// Clear system caches
+		_elgg_disable_caches();
+		_elgg_clear_caches();
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
 		$this->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
@@ -108,37 +107,24 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
-		$upgrades = $this->locator->locate();
+		$upgrades = $this->getPendingUpgrades();
+
+		foreach ($upgrades as $key => $upgrade) {
+			if (!$upgrade->isAsynchronous()) {
+				$this->executeBatchUpgrade($upgrade);
+			}
+		}
+
 		if ($async) {
+			$upgrades = $this->getPendingUpgrades();
+
 			foreach ($upgrades as $upgrade) {
-				/* @var $upgrade ElggUpgrade */
-
-				$upgrade_name = $this->translator->translate($upgrade->title);
-
-				$this->logger->log("Starting upgrade {$upgrade_name}", Logger::NOTICE);
-
-				$result = $this->executeAsyncUpgrade($upgrade, false);
-
-				if (!empty($result['errors'])) {
-					$msg = $this->translator->translate('admin:upgrades:completed:errors', [
-						$upgrade_name,
-						$upgrade->getCompletedTime(),
-						implode(PHP_EOL, $result['errors']),
-					]);
-				} else {
-					$msg = $this->translator->translate('admin:upgrades:completed', [
-						$upgrade_name,
-						$upgrade->getCompletedTime(),
-					]);
-				}
-
-				$this->system_messages->addSuccessMessage($msg);
-
-				$this->logger->log("Finished upgrade {$upgrade_name}", Logger::NOTICE);
+				$this->executeBatchUpgrade($upgrade);
 			}
 		}
 
 		$this->events->trigger('upgrade', 'system', null);
+
 		elgg_flush_caches();
 
 		$this->mutex->unlock('upgrade');
@@ -189,7 +175,7 @@ class UpgradeService {
 					}
 				} catch (\Exception $e) {
 					$success = false;
-					$this->logger->error($e->getMessage());
+					$this->logger->error($e);
 				}
 			} else {
 				if (!Includer::includeFile("$upgrade_path/$upgrade")) {
@@ -341,8 +327,70 @@ class UpgradeService {
 	 * Get pending async upgrades
 	 * @return ElggUpgrade[]
 	 */
-	public function getAsyncUpgrades() {
-		return $this->locator->locate();
+	public function getPendingUpgrades() {
+		$pending = [];
+
+		$upgrades = $this->locator->locate();
+
+		foreach ($upgrades as $upgrade) {
+			if ($upgrade->isCompleted()) {
+				continue;
+			}
+
+			$batch = $upgrade->getBatch();
+			if (!$batch) {
+				continue;
+			}
+
+			$pending[] = $upgrade;
+		}
+
+		return $pending;
+	}
+
+	/**
+	 * Execute upgrade without time limitation and provide feedback
+	 *
+	 * @param ElggUpgrade $upgrade Upgrade
+	 *
+	 * @return void
+	 */
+	protected function executeBatchUpgrade(ElggUpgrade $upgrade) {
+		$upgrade_name = $upgrade->getDisplayName();
+
+		$this->logger->notice("Starting upgrade {$upgrade_name}");
+
+		$result = $this->executeUpgrade($upgrade, false);
+
+		$errors = elgg_extract('errors', $result, []);
+
+		if ($upgrade->isCompleted()) {
+			$ts = $upgrade->getCompletedTime();
+			$dt = new \DateTime();
+			$dt->setTimestamp((int) $ts);
+			$format = $this->config->date_format ? : DATE_ISO8601;
+
+			if (!empty($errors)) {
+				$msg = $this->translator->translate('admin:upgrades:completed:errors', [
+					$upgrade_name,
+					$dt->format($format),
+					$result['numErrors'],
+				]);
+			} else {
+				$msg = $this->translator->translate('admin:upgrades:completed', [
+					$upgrade_name,
+					$dt->format($format),
+				]);
+			}
+		} else {
+			$msg = $this->translator->translate('admin:upgrades:failed', [
+				$upgrade_name
+			]);
+		}
+
+		$this->system_messages->addSuccessMessage($msg);
+
+		$this->logger->notice("Finished upgrade {$upgrade_name}");
 	}
 
 	/**
@@ -352,13 +400,13 @@ class UpgradeService {
 	 * @param int         $max_duration Maximum duration in seconds
 	 *                                  Set to false to execute an entire upgrade
 	 *
-	 * @return array
+	 * @return Result
 	 * @throws RuntimeException
 	 */
-	public function executeAsyncUpgrade(ElggUpgrade $upgrade, $max_duration = null) {
+	public function executeUpgrade(ElggUpgrade $upgrade, $max_duration = null) {
 		// Upgrade also disabled data, so the compatibility is
 		// preserved in case the data ever gets enabled again
-		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($upgrade, $max_duration) {
+		return elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($upgrade, $max_duration) {
 
 			$started = microtime(true);
 
@@ -401,7 +449,18 @@ class UpgradeService {
 			};
 
 			while ($condition()) {
-				$result = $batch->run(new Result(), $offset);
+				$this->logger->notice("Starting batch (offset: $offset)");
+
+				$result = new Result();
+
+				try {
+					$batch->run($result, $offset);
+				} catch (\Exception $e) {
+					$this->logger->error($e);
+
+					$result->addError($e->getMessage());
+					$result->addFailures(1);
+				}
 
 				$failure_count = $result->getFailureCount();
 				$success_count = $result->getSuccessCount();
@@ -424,6 +483,12 @@ class UpgradeService {
 
 				if ($failure_count > 0) {
 					$has_errors = true;
+					$this->logger->notice("Processed $total records, encountered $failure_count errors");
+					foreach ($errors as $error) {
+						$this->logger->error($error);
+					}
+				} else {
+					$this->logger->notice("Processed $total records without errors");
 				}
 
 				$processed += $total;

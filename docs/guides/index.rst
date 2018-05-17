@@ -39,3 +39,5 @@ Customize Elgg's behavior with plugins.
    upgrading-data
    events-list
    hooks-list
+   errors
+

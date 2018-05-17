@@ -89,14 +89,14 @@ class MetadataTable extends DbMetadataTabe {
 	 */
 	public function getAll(array $options = array()) {
 		$guids = elgg_extract('guids', $options, (array) elgg_extract('guid', $options));
-		
+
 		$rows = [];
 		foreach ($this->rows as $id => $row) {
 			if (empty($guids) || in_array($row->entity_guid, $guids)) {
 				$rows[] = $row;
 			}
 		}
-		
+
 		return $rows;
 	}
 
@@ -191,6 +191,29 @@ class MetadataTable extends DbMetadataTabe {
 				return [];
 			}
 		]);
+
+		foreach ([$row->entity_guid] as $guid) {
+			$qb = Delete::fromTable('metadata');
+			$ors = [];
+			foreach (['entity_guid'] as $guid_column) {
+				$ors[] = $qb->compare($guid_column, '=', $guid, ELGG_VALUE_INTEGER);
+			}
+			$qb->where($qb->merge($ors, 'OR'));
+
+			$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+				'sql' => $qb->getSQL(),
+				'params' => $qb->getParameters(),
+				'results' => function () use ($row, $guid) {
+					if (isset($this->rows[$row->id])) {
+						$this->clearQuerySpecs($row->id);
+						unset($this->rows[$row->id]);
+						return [$row->id];
+					}
+					return [];
+				},
+				'times' => 1,
+			]);
+		}
 	}
 
 	/**

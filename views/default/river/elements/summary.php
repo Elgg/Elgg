@@ -53,38 +53,47 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
 
 // check summary translation keys
 $key = false;
+
 $keys = [
-	"river:{$type}:{$subtype}:{$action}",
-	"river:{$type}:{$subtype}:default",
-	"river:{$type}:{$action}",
-	"river:{$type}:default",
+	"activity:{$action}:{$type}:{$subtype}",
+	"activity:{$action}:{$type}",
+	"activity:{$action}",
 ];
+
 foreach ($keys as $try_key) {
 	if (elgg_language_key_exists($try_key)) {
 		$key = $try_key;
 		break;
 	}
 }
+
 // try the old translation keys
 if ($key === false) {
 	$deprecated_keys = [
-		"river:$action:$type:$subtype",
-		"river:$action:$type:default",
+		"river:{$type}:{$subtype}:{$action}",
+		"river:{$type}:{$subtype}:default",
+		"river:{$type}:{$action}",
+		"river:{$type}:default",
+		"river:{$action}:{$type}:{$subtype}",
+		"river:{$action}:{$type}:default",
 	];
+
 	foreach ($deprecated_keys as $try_key) {
 		if (elgg_language_key_exists($try_key)) {
 			$key = $try_key;
 
-			$notice = "Please update your river language key: '{$try_key}', suggested new key 'river:{$type}:{$subtype}:{$action}'.";
-			$notice .= " See views/default/river/elements/summary";
+			$notice = "Please update your river language key: '{$try_key}', ";
+			$notice .= "suggested new key 'activity:{$action}:{$type}:{$subtype}'.";
 			elgg_deprecated_notice($notice, '3.0');
 			break;
 		}
 	}
 }
-$summary = '';
-if ($key !== false) {
-	$summary = elgg_echo($key, [$subject_link, $object_link]);
+
+if (!$key) {
+	$key = "activity:{$action}:{$type}:{$subtype}";
 }
+
+$summary = elgg_echo($key, [$subject_link, $object_link]);
 
 echo trim("$summary $group_string");

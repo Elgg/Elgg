@@ -12,39 +12,15 @@
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-output');
 
-$parse_urls = elgg_extract('parse_urls', $vars, true);
-unset($vars['parse_urls']);
-
-$parse_emails = elgg_extract('parse_emails', $vars, true);
-unset($vars['parse_emails']);
-
-$sanitize = elgg_extract('sanitize', $vars, true);
-unset($vars['sanitize']);
-
-$autop = elgg_extract('autop', $vars, true);
-unset($vars['autop']);
-
 $text = elgg_extract('value', $vars);
 unset($vars['value']);
 
-if ($parse_urls) {
-	$text = parse_urls($text);
-}
-
-if ($parse_emails) {
-	$text = elgg_parse_emails($text);
-}
-
-if ($sanitize) {
-	$text = filter_tags($text);
-}
-
-if ($autop) {
-	$text = elgg_autop($text);
-}
+$text = elgg_format_html($text, $vars);
 
 if (empty($text)) {
 	return;
 }
+
+unset($vars['parse_urls'], $vars['parse_emails'], $vars['sanitize'], $vars['autop']);
 
 echo elgg_format_element('div', $vars, $text);

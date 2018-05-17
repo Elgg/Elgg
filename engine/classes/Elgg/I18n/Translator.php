@@ -112,7 +112,7 @@ class Translator {
 	 */
 	public function translate($message_key, array $args = [], $language = "") {
 		if (!is_string($message_key) || strlen($message_key) < 1) {
-			_elgg_services()->logger->warn(
+			_elgg_services()->logger->warning(
 				'$message_key needs to be a string in ' . __METHOD__ . '(), ' . gettype($message_key) . ' provided'
 			);
 			return '';
@@ -299,6 +299,7 @@ class Translator {
 				$this->loaded_from_cache = true;
 				$this->registerLanguagePath($this->defaultPath);
 				$this->is_initialized = true;
+
 				return;
 			}
 		}

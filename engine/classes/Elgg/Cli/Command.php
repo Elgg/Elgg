@@ -2,41 +2,38 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Logger;
-use Error;
-use Exception;
 use RuntimeException;
-use Symfony\Component\Console\Command\Command as SymfonyCommand;
-use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Abstract command with some utility methods
  */
-abstract class Command extends SymfonyCommand {
-
-	use ConsoleInteractions;
+abstract class Command extends BaseCommand {
 
 	/**
 	 * {@inheritdoc}
 	 */
 	final public function execute(InputInterface $input, OutputInterface $output) {
 
-		Logger::$verbosity = $output->getVerbosity();
-
 		$this->input = $input;
 		$this->output = $output;
 
-		elgg_set_config('debug', 'INFO');
-
-		_elgg_services()->responseFactory->setTransport(new ResponseTransport($this));
+		$transport = new ResponseTransport($this);
+		_elgg_services()->responseFactory->setTransport($transport);
 
 		$this->login();
 
-		$result = $this->command();
-		if (is_callable($result)) {
-			$result = call_user_func($result, $this);
+		try {
+			$result = $this->command();
+
+			if (is_callable($result)) {
+				$result = call_user_func($result, $this);
+			}
+		} catch (\Exception $ex) {
+			$this->error($ex);
+
+			$result = $ex->getCode() ? : 1;
 		}
 
 		$this->dumpRegisters();

@@ -553,7 +553,7 @@ function elgg_get_entities(array $options = []) {
  *                   columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
- *                   no_results => STR|Closure Message to display when there are no entities
+ *                   no_results => STR|true for default notfound text|Closure Message to display when there are no entities
  *
  * @param callable $getter  The entity getter function to use to fetch the entities.
  * @param callable $viewer  The function to use to view the entity list.
@@ -579,6 +579,10 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 	];
 
 	$options = array_merge($defaults, $options);
+	
+	if ($options['no_results'] === true) {
+		$options['no_results'] = elgg_echo('notfound');
+	}
 
 	$options['count'] = false;
 	$entities = call_user_func($getter, $options);
@@ -815,7 +819,7 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
 		$warning .= "Please update your usage of the function.";
 	}
 
-	_elgg_services()->logger->warn($warning);
+	_elgg_services()->logger->warning($warning);
 }
 
 /**

@@ -2,16 +2,16 @@
 
 namespace Elgg\Discussions\Upgrades;
 
-use \Elgg\Upgrade\Batch;
-use \Elgg\Upgrade\Result;
-use \Elgg\Database\Update;
+use Elgg\Database\Update;
+use Elgg\Upgrade\AsynchronousUpgrade;
+use Elgg\Upgrade\Result;
 
 /**
  * Migrate river items related to discussion replies
  *
  * @since 3.0
  */
-class MigrateDiscussionReplyRiver implements Batch {
+class MigrateDiscussionReplyRiver implements AsynchronousUpgrade {
 	
 	/**
 	 * {@inheritDoc}
@@ -68,7 +68,5 @@ class MigrateDiscussionReplyRiver implements Batch {
 		$count = $qb->execute();
 		
 		$result->addSuccesses($count);
-		
-		return $result;
 	}
 }

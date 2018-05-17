@@ -2,7 +2,7 @@
 
 namespace Elgg\Groups\Upgrades;
 
-use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
 /**
@@ -11,7 +11,7 @@ use Elgg\Upgrade\Result;
  * BEFORE: /dataroot/<bucket>/<owner_guid>/groups/<group_guid><size>.jpg
  * AFTER:  /dataroot/<bucket>/<group_guid>/icons/icon/<size>.jpg
  */
-class GroupIconTransfer implements Batch {
+class GroupIconTransfer implements AsynchronousUpgrade {
 
 	public function getVersion() {
 		return 2016101900;
@@ -82,10 +82,8 @@ class GroupIconTransfer implements Batch {
 		]);
 
 		foreach ($groups as $group) {
-			$result = $this->transferIcons($group, $result);
+			$this->transferIcons($group, $result);
 		}
-
-		return $result;
 	}
 
 	/**
@@ -141,8 +139,6 @@ class GroupIconTransfer implements Batch {
 		} else {
 			$result->addSuccesses();
 		}
-
-		return $result;
 	}
 
 }

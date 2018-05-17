@@ -2,14 +2,14 @@
 
 namespace Elgg\Upgrades;
 
-use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
 /**
  * Set default security config values
  * We run this async to allow sites to upgrade without having to deal with tokens
  */
-class SetSecurityConfigDefaults implements Batch {
+class SetSecurityConfigDefaults implements AsynchronousUpgrade {
 
 	private $defaults = [
 		'security_protect_upgrade' => true,
@@ -67,9 +67,6 @@ class SetSecurityConfigDefaults implements Batch {
 
 			$result->addSuccesses();
 		}
-
-		return $result;
-
 	}
 
 }

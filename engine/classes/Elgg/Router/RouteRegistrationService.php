@@ -2,12 +2,14 @@
 
 namespace Elgg\Router;
 
+use Elgg\Loggable;
 use Elgg\Logger;
 use Elgg\PluginHooksService;
 use Elgg\Router\Middleware\WalledGarden;
 use ElggEntity;
 use Exception;
 use InvalidParameterException;
+use Psr\Log\LoggerInterface;
 
 /**
  * Route registration service
@@ -16,6 +18,8 @@ use InvalidParameterException;
  * @internal
  */
 class RouteRegistrationService {
+
+	use Loggable;
 
 	/**
 	 * @var PluginHooksService
@@ -33,21 +37,16 @@ class RouteRegistrationService {
 	protected $generator;
 
 	/**
-	 * @var Logger
-	 */
-	protected $logger;
-
-	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks     Hook service
-	 * @param Logger             $logger    Logger
+	 * @param LoggerInterface    $logger    Logger
 	 * @param RouteCollection    $routes    Route collection
 	 * @param UrlGenerator       $generator URL Generator
 	 */
 	public function __construct(
 		PluginHooksService $hooks,
-		Logger $logger,
+		LoggerInterface $logger,
 		RouteCollection $routes,
 		UrlGenerator $generator
 	) {

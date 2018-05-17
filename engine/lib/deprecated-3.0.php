@@ -1616,3 +1616,93 @@ function elgg_list_registered_entities(array $options = []) {
 	$options['count'] = $count;
 	return elgg_view_entity_list($entities, $options);
 }
+
+/**
+ * Delete a relationship by its ID
+ *
+ * @param int $id The relationship ID
+ *
+ * @return bool
+ * @deprecated 3.0 Use ElggRelationship::delete()
+ */
+function delete_relationship($id) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated. Use ElggRelationship::delete()',
+		'3.0'
+	);
+
+	$relationship = get_relationship($id);
+	if (!$relationship) {
+		return false;
+	}
+
+	return $relationship->delete();
+}
+
+/**
+ * Adds an item to the river.
+ *
+ * @tip    Read the item like "Lisa (subject) reviewed (action)
+ *         Elgg (object) with 5 stars (result) in the group Open Source (target)".
+ *
+ * @param array $options Array in format:
+ *
+ * @option string     $action  Verb describing an action (e.g. pushlish, like, comment)
+ * @option ElggEntity $subject Subject entity
+ *                             Entity that performed an action
+ *                             Defaults to logged in user
+ * @option ElggEntity $object  Object entity
+ *                             Entity that action was performed on
+ * @option ElggEntity $target  Target entity
+ *                             An entity in whose context the action is performed
+ *                             Usually user or group containing the object
+ * @option ElggData   $result  Result of the action
+ *                             e.g. when user comments on a post, the result is a comment entity
+ *                             when user friends another user, the result is a relationship
+ *                             when user rates a post, the result is the rating annotation
+ * @option int        $posted  The UNIX epoch timestamp of the river item (default: now)
+ * @option bool       $return_item set to true to return the ElggRiverItem created
+ *
+ * @return int|ElggRiverItem|bool River ID/item or false on failure
+ * @since  1.9
+ * @throws DatabaseException
+ * @deprecated Use elgg_register_river_event()
+ */
+function elgg_create_river_item(array $options = []) {
+	elgg_deprecated_notice(
+		__FUNCTION__ . ' has been deprecated. Use elgg_register_river_event()',
+		'3.0'
+	);
+
+	$action_type = elgg_extract('action_type', $options);
+	unset($options['action_type']);
+	$options['action'] = $action_type;
+
+	$subject_guid = elgg_extract('subject_guid', $options, elgg_get_logged_in_user_guid());
+	unset($options['subject_guid']);
+	$options['subject'] = get_entity($subject_guid);
+
+	$object_guid = elgg_extract('object_guid', $options, 0);
+	unset($options['object_guid']);
+	$options['object'] = get_entity($object_guid);
+
+	$target_guid = elgg_extract('target_guid', $options);
+	unset($options['target_guid']);
+	if (isset($target_guid)) {
+		$options['target'] = get_entity($target_guid);
+	}
+
+	$annotation_id = elgg_extract('annotation_id', $options);
+	if ($annotation_id) {
+		$options['result'] = elgg_get_annotation_from_id($annotation_id);
+	}
+
+	$return_item = elgg_extract('return_item', $options, false);
+
+	$item = _elgg_services()->river->create($options);
+	if (!$item instanceof ElggRiverItem) {
+		return false;
+	}
+
+	return $return_item ? $item : $item->id;
+}

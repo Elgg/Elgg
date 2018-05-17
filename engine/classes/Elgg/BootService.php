@@ -15,7 +15,9 @@ use Stash\Invalidation;
  * @since 2.1
  */
 class BootService {
+
 	use Profilable;
+	use Cacheable;
 
 	/**
 	 * The default TTL if not set in settings.php
@@ -35,11 +37,6 @@ class BootService {
 	 * @var bool
 	 */
 	private $was_cleared = false;
-
-	/**
-	 * @var ElggCache
-	 */
-	protected $cache;
 
 	/**
 	 * Cache
@@ -144,8 +141,6 @@ class BootService {
 		$config->sitename = $site->name;
 		$config->sitedescription = $site->description;
 
-		$services->plugins->setBootPlugins($data->getActivePlugins());
-
 		$settings = $data->getPluginSettings();
 		foreach ($settings as $guid => $entity_settings) {
 			$services->privateSettingsCache->save($guid, $entity_settings);
@@ -154,7 +149,9 @@ class BootService {
 		foreach ($data->getPluginMetadata() as $guid => $metadata) {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}
-
+		
+		$services->plugins->setBootPlugins($data->getActivePlugins());
+		
 		// use value in settings.php if available
 		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
 		$services->logger->setLevel($debug);
@@ -213,7 +210,11 @@ class BootService {
 	private function getBootData(Config $config, Database $db, $installed) {
 		$config->_boot_cache_hit = false;
 
-		$data = $this->cache->load('boot_data');
+		$data = null;
+		if ($config->boot_cache_ttl > 0) {
+			$data = $this->cache->load('boot_data');
+		}
+
 		if (!isset($data)) {
 			$data = new BootData();
 			$data->populate($config, $db, _elgg_services()->entityTable, _elgg_services()->plugins, $installed);

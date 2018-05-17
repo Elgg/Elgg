@@ -173,6 +173,31 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 				return [];
 			}
 		]);
+
+		foreach ([$row->entity_guid] as $guid) {
+			$qb = Delete::fromTable('private_settings');
+			$ors = [];
+			foreach (['entity_guid'] as $guid_column) {
+				$ors[] = $qb->compare($guid_column, '=', $guid, ELGG_VALUE_INTEGER);
+			}
+			$qb->where($qb->merge($ors, 'OR'));
+
+			$this->query_specs[$row->id][] = $this->db->addQuerySpec([
+				'sql' => $qb->getSQL(),
+				'params' => $qb->getParameters(),
+				'results' => function () use ($row, $guid) {
+					if (isset($this->rows[$row->id])) {
+						$this->clearQuerySpecs($row->id);
+						unset($this->rows[$row->id]);
+
+						return [$row->id];
+					}
+
+					return [];
+				},
+				'times' => 1,
+			]);
+		}
 	}
 
 	/**

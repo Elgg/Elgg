@@ -26,21 +26,13 @@ if (!$owner->saveIconFromElggFile($owner->getIcon('master'), 'icon', $coords)) {
 	return elgg_error_response(elgg_echo('avatar:crop:fail'));
 }
 
-// River
-$view = 'river/user/default/profileiconupdate';
-
 // remove old river items
 elgg_delete_river([
 	'subject_guid' => $owner->guid,
-	'view' => $view,
 	'limit' => false,
+	'action' => 'profileiconupdate',
 ]);
-// create new river entry
-elgg_create_river_item([
-	'view' => $view,
-	'action_type' => 'update',
-	'subject_guid' => $owner->guid,
-	'object_guid' => $owner->guid,
-]);
+
+elgg_trigger_after_event('profileiconupdate', 'user', $owner);
 
 return elgg_ok_response('', elgg_echo('avatar:crop:success'));

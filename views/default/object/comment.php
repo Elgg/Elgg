@@ -10,7 +10,7 @@
 $full_view = elgg_extract('full_view', $vars, true);
 
 $comment = elgg_extract('entity', $vars);
-if (!($comment instanceof \ElggComment)) {
+if (!$comment instanceof \ElggComment) {
 	return;
 }
 
@@ -24,8 +24,6 @@ if ($comment->canEdit()) {
 	elgg_require_js('elgg/comments');
 }
 
-$commenter_icon = elgg_view_entity_icon($commenter, 'small');
-
 if ($full_view) {
 	if (elgg_extract('show_excerpt', $vars)) {
 		$body = elgg_view('output/longtext', [
@@ -38,7 +36,7 @@ if ($full_view) {
 	}
 
 	$params = [
-		'icon' => $commenter_icon,
+		'icon_entity' => $commenter,
 		'time_href' => $comment->getURL(),
 		'access' => false,
 		'title' => false,
@@ -48,6 +46,8 @@ if ($full_view) {
 	echo elgg_view('object/elements/summary', $params);
 } else {
 	// brief view
+	$commenter_icon = elgg_view_entity_icon($commenter, 'small');
+
 	$friendlytime = elgg_view_friendly_time($comment->time_created);
 
 	$commenter_link = elgg_view('output/url', [

@@ -10,6 +10,7 @@ use Elgg\Di\ServiceProvider;
 use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 
 /**
  * Base test case abstraction
@@ -125,7 +126,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 					'upscale' => false
 				],
 			],
-			'debug' => 'NOTICE',
+			'debug' => LogLevel::ERROR,
 		]);
 	}
 

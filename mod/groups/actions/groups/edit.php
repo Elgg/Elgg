@@ -187,11 +187,6 @@ if ($is_new_group) {
 	elgg_set_page_owner_guid($group->guid);
 
 	$group->join($user);
-	elgg_create_river_item([
-		'view' => 'river/group/create',
-		'action_type' => 'create',
-		'object_guid' => $group->guid,
-	]);
 }
 
 $group->saveIconFromUploadedFile('icon');

@@ -148,8 +148,8 @@ or click below to view the group's join requests:
 
 %s",
 
-	'river:group:create' => '%s created the group %s',
-	'river:group:join' => '%s joined the group %s',
+	'activity:create:group' => '%s created the group %s',
+	'activity:member:group' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Allow private (invisible) groups?',
 	'groups:whocancreate' => 'Who can create new groups?',

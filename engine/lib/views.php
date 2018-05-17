@@ -999,7 +999,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *      'position'         Position of the pagination: before, after, or both
  *      'list_type'        List type: 'list' (default), 'gallery'
  *      'list_type_toggle' Display the list type toggle?
- *      'no_results'       Message to display if no results (string|Closure)
+ *      'no_results'       Message to display if no results (string|true|Closure)
  *
  * @return string The rendered list of entities
  */
@@ -1049,7 +1049,7 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *      'list_class' CSS Class applied to the list
  *      'item_view'  Alternative view to render list items
  *      'offset_key' The url parameter key used for offset
- *      'no_results' Message to display if no results (string|Closure)
+ *      'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of annotations
  * @access private
@@ -1245,35 +1245,77 @@ function elgg_view_message($type, $body, array $vars = []) {
  */
 function elgg_view_river_item($item, array $vars = []) {
 
-	if (!($item instanceof \ElggRiverItem)) {
+	if (!$item instanceof \ElggRiverItem) {
 		return '';
 	}
 
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
-	$view = $item->getView();
+	$view = $item->view;
+	if ($view) {
+		elgg_deprecated_notice(
+			"River items should no longer use views. 
+			Upgrade river table rows to eliminate '$view' view and set correct action type and result object",
+			'3.0'
+		);
+	}
 
 	$subject = $item->getSubjectEntity();
 	$object = $item->getObjectEntity();
+
 	if (!$subject || !$object) {
 		// subject is disabled or subject/object deleted
 		return '';
 	}
 
-	$vars['item'] = $item;
+	$action = $item->action;
+	$result = $item->getResult();
+	$target = $item->getTargetEntity();
 
-	// create river view logic
-	$type = $object->getType();
-	$subtype = $object->getSubtype();
-	$action = $item->action_type;
+	$vars['item'] = $item;
+	$vars['subject'] = $subject;
+	$vars['action'] = $action;
+	$vars['object'] = $object;
+	$vars['target'] = $target;
+	$vars['result'] = $result;
+
+	$prepare_element = function($element) use ($action, $object, $vars) {
+		$params = $vars;
+
+		$views = [
+			"river/$action/$object->type/$object->subtype/$element",
+			"river/$action/$object->type/$element",
+			"river/$action/$element",
+		];
+
+		foreach ($views as $view) {
+			if (elgg_view_exists($view)) {
+				return elgg_view($view, $params);
+			}
+		}
+
+		return;
+	};
+
+	$elements = [];
+	$elements['image'] = $prepare_element('image');
+	$elements['summary'] = $prepare_element('summary');
+	$elements['message'] = $prepare_element('message');
+	$elements['responses'] = $prepare_element('responses');
+	$elements['attachments'] = $prepare_element('attachments');
+
+	$hook_params = [
+		'item' => $item,
+		'vars' => $vars,
+	];
+
+	$elements = elgg_trigger_plugin_hook('format', 'river', $hook_params, $elements);
+
+	$vars = array_merge($elements, $vars);
 
 	$river_views = [
 		elgg_extract('item_view', $vars, ''),
 		'river/item', // important for other viewtypes, e.g. "rss"
 		$view,
-		"river/{$type}/{$subtype}/{$action}",
-		"river/{$type}/{$subtype}/default",
-		"river/{$type}/{$action}",
-		"river/{$type}/default",
 		'river/elements/layout',
 	];
 

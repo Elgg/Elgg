@@ -12,6 +12,8 @@
  * Nathan Koterba
  */
 
+use Elgg\Collections\Collection;
+
 /**
  * The Wire initialization
  *
@@ -40,6 +42,8 @@ function thewire_init() {
 
 	// Register a URL handler for thewire posts
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'thewire_set_url');
+
+	elgg_register_river_event('create', 'object', 'thewire');
 
 	// Register for notifications
 	elgg_register_notification_event('object', 'thewire');
@@ -217,13 +221,6 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		$post->wire_thread = $guid;
 	}
 
-	elgg_create_river_item([
-		'view' => 'river/object/thewire/create',
-		'action_type' => 'create',
-		'subject_guid' => $post->owner_guid,
-		'object_guid' => $post->guid,
-	]);
-
 	// let other plugins know we are setting a user status
 	$params = [
 		'entity' => $post,
@@ -335,54 +332,50 @@ function thewire_get_parent($post_guid) {
  *
  * Adds reply, thread, and view previous links. Removes edit and access.
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:entity'
- * @param ElggMenuItem[] $value  Array of menu items
- * @param array          $params Array with the entity
+ * @param string     $hook   'register'
+ * @param string     $type   'menu:entity'
+ * @param Collection $menu   Array of menu items
+ * @param array      $params Array with the entity
  *
- * @return void|ElggMenuItem[]
+ * @return void|Collection
  */
-function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
+function thewire_setup_entity_menu_items($hook, $type, $menu, $params) {
 	
 	$entity = elgg_extract('entity', $params);
 	if (!($entity instanceof \ElggWire)) {
 		return;
 	}
 	
-	foreach ($value as $index => $item) {
-		if ($item->getName() == 'edit') {
-			unset($value[$index]);
-		}
-	}
+	$menu->remove('edit');
 
 	if (elgg_is_logged_in()) {
-		$value[] = ElggMenuItem::factory([
+		$menu->add(ElggMenuItem::factory([
 			'name' => 'reply',
 			'icon' => 'reply',
 			'text' => elgg_echo('reply'),
 			'href' => "thewire/reply/{$entity->guid}",
-		]);
+		]));
 	}
 
 	if ($entity->reply) {
-		$value[] = ElggMenuItem::factory([
+		$menu->add(ElggMenuItem::factory([
 			'name' => 'previous',
 			'icon' => 'arrow-left',
 			'text' => elgg_echo('previous'),
 			'href' => "thewire/previous/{$entity->guid}",
 			'link_class' => 'thewire-previous',
 			'title' => elgg_echo('thewire:previous:help'),
-		]);
+		]));
 	}
 
-	$value[] = ElggMenuItem::factory([
+	$menu->add(ElggMenuItem::factory([
 		'name' => 'thread',
 		'icon' => 'comments-o',
 		'text' => elgg_echo('thewire:thread'),
 		'href' => "thewire/thread/{$entity->wire_thread}",
-	]);
+	]));
 
-	return $value;
+	return $menu;
 }
 
 /**

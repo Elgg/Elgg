@@ -10,8 +10,25 @@ if (!$item instanceof ElggRiverItem) {
 	return;
 }
 
-echo elgg_view('page/components/image_block', [
-	'image' => elgg_view('river/elements/image', $vars),
-	'body' => elgg_view('river/elements/body', $vars),
-	'class' => 'elgg-river-item',
-]);
+$action = $item->action;
+
+$classes = [
+	'elgg-river-item',
+	"elgg-river-action-$action",
+];
+
+$object = $item->getObjectEntity();
+if ($object) {
+	$classes[] = "elgg-river-object-{$object->type}-{$object->subtype}";
+}
+
+$result = $item->getResult();
+if ($result) {
+	$classes[] = "elgg-river-result-{$result->getType()}-{$result->getSubtype()}";
+}
+
+$vars['image'] = elgg_view('river/elements/image', $vars);
+$vars['body'] = elgg_view('river/elements/body', $vars);
+$vars['class'] = elgg_extract_class($vars, $classes);
+
+echo elgg_view('page/components/image_block', $vars);

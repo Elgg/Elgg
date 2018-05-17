@@ -8,6 +8,8 @@ $options = [
 	'no_results' => elgg_echo('river:none'),
 ];
 
+$selector = '';
+
 $type = preg_replace('[\W]', '', get_input('type', 'all'));
 $subtype = preg_replace('[\W]', '', get_input('subtype', ''));
 if ($subtype) {
@@ -17,9 +19,19 @@ if ($subtype) {
 }
 
 if ($type != 'all') {
-	$options['type'] = $type;
+	$options['result_type'] = $type;
 	if ($subtype) {
-		$options['subtype'] = $subtype;
+		$options['result_subtype'] = $subtype;
+	}
+}
+
+$action = get_input('action');
+if ($action) {
+	$options['action'] = $action;
+	if ($selector) {
+		$selector .= "&action=$action";
+	} else {
+		$selector .= "action=$action";
 	}
 }
 

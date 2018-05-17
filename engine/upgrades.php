@@ -7,7 +7,10 @@
  */
 
 return [
+	\Elgg\Upgrades\ActivateNewPlugins::class,
+	\Elgg\Upgrades\DeleteOldPlugins::class,
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
 	\Elgg\Upgrades\SetSecurityConfigDefaults::class,
 	\Elgg\Upgrades\MigrateFriendsACL::class,
+	\Elgg\Upgrades\MigrateCoreRiverItems::class,
 ];

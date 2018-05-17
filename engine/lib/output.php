@@ -8,6 +8,23 @@
  */
 
 /**
+ * Prepare HTML output
+ *
+ * @param string $html    HTML string
+ * @param array  $options Formatting options
+ *
+ * @option bool $parse_urls Replace URLs with anchor tags
+ * @option bool $parse_emails Replace email addresses with anchor tags
+ * @option bool $sanitize Sanitize HTML tags
+ * @option bool $autop Add paragraphs instead of new lines
+ *
+ * @return string
+ */
+function elgg_format_html($html, array $options = []) {
+	return _elgg_services()->html_formatter->formatBlock($html, $options);
+}
+
+/**
  * Takes a string and turns any URLs into formatted links
  *
  * @param string $text The input string
@@ -15,10 +32,7 @@
  * @return string The output string with formatted links
  */
 function parse_urls($text) {
-
-	$linkify = new \Misd\Linkify\Linkify();
-		
-	return $linkify->processUrls($text, ['attr' => ['rel' => 'nofollow']]);
+	return _elgg_services()->html_formatter->parseUrls($text);
 }
 
 /**
@@ -31,9 +45,7 @@ function parse_urls($text) {
  * @since 2.3
  */
 function elgg_parse_emails($text) {
-	$linkify = new \Misd\Linkify\Linkify();
-		
-	return $linkify->processEmails($text, ['attr' => ['rel' => 'nofollow']]);
+	return _elgg_services()->html_formatter->parseEmails($text);
 }
 
 /**
@@ -44,12 +56,7 @@ function elgg_parse_emails($text) {
  * @return string
  **/
 function elgg_autop($string) {
-	try {
-		return _elgg_services()->autoP->process($string);
-	} catch (\RuntimeException $e) {
-		_elgg_services()->logger->warn('ElggAutoP failed to process the string: ' . $e->getMessage());
-		return $string;
-	}
+	return _elgg_services()->html_formatter->addParagaraphs($string);
 }
 
 /**
@@ -60,15 +67,21 @@ function elgg_autop($string) {
  *
  * @param string $text      The full text to excerpt
  * @param int    $num_chars Return a string up to $num_chars long
+ * @param string $url       If set, will add a Read more link
  *
  * @return string
  * @since 1.7.2
  */
-function elgg_get_excerpt($text, $num_chars = 250) {
+function elgg_get_excerpt($text, $num_chars = null, $url = null) {
+	if (!isset($num_chars)) {
+		$num_chars = elgg()->config->excerpt_length ? : 250;
+	}
+
 	$view = 'output/excerpt';
 	$vars = [
 		'text' => $text,
 		'num_chars' => $num_chars,
+		'url' => $url,
 	];
 	$viewtype = elgg_view_exists($view) ? '' : 'default';
 
@@ -120,52 +133,7 @@ function elgg_format_bytes($size, $precision = 2) {
  * @see elgg_format_element()
  */
 function elgg_format_attributes(array $attrs = []) {
-	if (!is_array($attrs) || empty($attrs)) {
-		return '';
-	}
-
-	$attributes = [];
-
-	foreach ($attrs as $attr => $val) {
-		if (0 !== strpos($attr, 'data-') && false !== strpos($attr, '_')) {
-			// this is probably a view $vars variable not meant for output
-			continue;
-		}
-
-		$attr = strtolower($attr);
-
-		if (!isset($val) || $val === false) {
-			continue;
-		}
-
-		if ($val === true) {
-			$val = $attr; //e.g. checked => true ==> checked="checked"
-		}
-
-		if (is_scalar($val)) {
-			$val = [$val];
-		}
-
-		if (!is_array($val)) {
-			continue;
-		}
-
-		// Check if array contains non-scalar values and bail if so
-		$filtered_val = array_filter($val, function($e) {
-			return is_scalar($e);
-		});
-
-		if (count($val) != count($filtered_val)) {
-			continue;
-		}
-
-		$val = implode(' ', $val);
-
-		$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
-		$attributes[] = "$attr=\"$val\"";
-	}
-
-	return implode(' ', $attributes);
+	return _elgg_services()->html_formatter->formatAttributes($attrs);
 }
 
 /**
@@ -199,60 +167,7 @@ function elgg_format_attributes(array $attrs = []) {
  * @since 1.9.0
  */
 function elgg_format_element($tag_name, array $attributes = [], $text = '', array $options = []) {
-	if (is_array($tag_name)) {
-		$args = $tag_name;
-
-		if ($attributes !== [] || $text !== '' || $options !== []) {
-			throw new \InvalidArgumentException('If $tag_name is an array, the other arguments must not be set');
-		}
-
-		if (isset($args['#tag_name'])) {
-			$tag_name = $args['#tag_name'];
-		}
-		if (isset($args['#text'])) {
-			$text = $args['#text'];
-		}
-		if (isset($args['#options'])) {
-			$options = $args['#options'];
-		}
-
-		unset($args['#tag_name'], $args['#text'], $args['#options']);
-		$attributes = $args;
-	}
-
-	if (!is_string($tag_name) || $tag_name === '') {
-		throw new \InvalidArgumentException('$tag_name is required');
-	}
-
-	if (isset($options['is_void'])) {
-		$is_void = $options['is_void'];
-	} else {
-		// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
-		$is_void = in_array(strtolower($tag_name), [
-			'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
-			'meta', 'param', 'source', 'track', 'wbr'
-		]);
-	}
-
-	if (!empty($options['encode_text'])) {
-		$double_encode = empty($options['double_encode']) ? false : true;
-		$text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', $double_encode);
-	}
-
-	if ($attributes) {
-		$attrs = elgg_format_attributes($attributes);
-		if ($attrs !== '') {
-			$attrs = " $attrs";
-		}
-	} else {
-		$attrs = '';
-	}
-
-	if ($is_void) {
-		return empty($options['is_xml']) ? "<{$tag_name}{$attrs}>" : "<{$tag_name}{$attrs} />";
-	} else {
-		return "<{$tag_name}{$attrs}>$text</$tag_name>";
-	}
+	return _elgg_services()->html_formatter->formatElement($tag_name, $attributes, $text, $options);
 }
 
 /**
@@ -467,13 +382,7 @@ function elgg_get_friendly_upload_error($error_code) {
  * @return string String run through strip_tags() and any plugin hooks.
  */
 function elgg_strip_tags($string, $allowable_tags = null) {
-	$params['original_string'] = $string;
-	$params['allowable_tags'] = $allowable_tags;
-
-	$string = strip_tags($string, $allowable_tags);
-	$string = elgg_trigger_plugin_hook('format', 'strip_tags', $params, $string);
-
-	return $string;
+	return _elgg_services()->html_formatter->stripTags($string, $allowable_tags);
 }
 
 /**
@@ -504,18 +413,7 @@ function elgg_strip_tags($string, $allowable_tags = null) {
  * @license Released under dual-license GPL2/MIT by explicit permission of Pádraic Brady
  */
 function elgg_html_decode($string) {
-	$string = str_replace(
-		['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
-		['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],
-		$string
-	);
-	$string = html_entity_decode($string, ENT_NOQUOTES, 'UTF-8');
-	$string = str_replace(
-		['&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'],
-		['&gt;', '&lt;', '&amp;', '&quot;', '&#039;'],
-		$string
-	);
-	return $string;
+	return _elgg_services()->html_formatter->decode($string);
 }
 
 /**

@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg\Likes;
+use Elgg\Config;
 
 /**
  * Likes preloader
@@ -133,26 +134,22 @@ class Preloader {
 
 		foreach ($items as $item) {
 			if ($item instanceof \ElggRiverItem) {
-				// only like group creation #3958
-				if ($item->type == "group" && $item->view != "river/group/create") {
+				$type = $item->result_type;
+				$subtype = $item->result_subtype;
+
+				if (!in_array($type, Config::getEntityTypes())) {
 					continue;
 				}
 
-				$type = $item->type;
-				$subtype = $item->subtype;
 				$likable = (bool) elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
 				if (!$likable) {
 					continue;
 				}
 
-				if ($item->annotation_id != 0) {
-					continue;
+				if ($item->result_id) {
+					$guids[$item->result_id] = true;
 				}
-
-				if ($item->object_guid) {
-					$guids[$item->object_guid] = true;
-				}
-			} elseif ($item instanceof \ElggEntity) {
+			} else if ($item instanceof \ElggEntity) {
 				$type = $item->type;
 				$subtype = $item->getSubtype();
 				$likable = (bool) elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
@@ -161,6 +158,7 @@ class Preloader {
 				}
 			}
 		}
+
 		return array_keys($guids);
 	}
 

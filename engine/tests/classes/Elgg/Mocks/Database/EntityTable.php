@@ -523,8 +523,6 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addDeleteQuerySpecs(\stdClass $row) {
 
-		$dbprefix = _elgg_config()->dbprefix;
-
 		$qb = Delete::fromTable('entities');
 		$qb->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_INTEGER));
 
@@ -546,37 +544,35 @@ class EntityTable extends DbEntityTable {
 			'times' => 1,
 		]);
 
-		// Entity might not have any relationships, therefore adding the spec here
-		// and not in the relationships table mock
-		// @todo: figure out a way to remove this from relationships table
-		foreach (['guid_one', 'guid_two'] as $column) {
-			$sql = "DELETE er FROM {$dbprefix}entity_relationships AS er
-				WHERE $column = $row->guid";
+		$tables = [
+			'private_settings' => ['entity_guid'],
+			'access_collections' => ['owner_guid'],
+			'access_collection_membership' => ['user_guid'],
+			'entity_relationships' => ['guid_one', 'guid_two'],
+			'annotations' => ['entity_guid', 'owner_guid'],
+			'metadata' => ['entity_guid', 'owner_guid'],
+			'river' => ['subject_guid', 'object_guid', 'target_guid'],
+		];
+
+		foreach ($tables as $table => $guid_columns) {
+			$qb = Delete::fromTable($table);
+			$ors = [];
+			foreach ($guid_columns as $guid_column) {
+				$ors[] = $qb->compare($guid_column, '=', $row->guid, ELGG_VALUE_INTEGER);
+			}
+
+			if ($table === 'river') {
+				$ors[] = $qb->merge([
+					$qb->compare('result_id', '=', $row->guid, ELGG_VALUE_INTEGER),
+					$qb->compare('result_type', '=', $row->type, ELGG_VALUE_STRING),
+				]);
+			}
+
+			$qb->where($qb->merge($ors, 'OR'));
 
 			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
-				'row_count' => 0,
-				'times' => 1,
-			]);
-		}
-
-		// Private settings cleanup
-		$sql = "
-			DELETE FROM {$dbprefix}private_settings
-			WHERE entity_guid = $row->guid
-		";
-
-		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'row_count' => 0,
-			'times' => 1,
-		]);
-
-		// River table clean up
-		foreach (['subject_guid', 'object_guid', 'target_guid'] as $column) {
-			$sql = "DELETE rv.* FROM {$dbprefix}river rv  WHERE (rv.$column IN ($row->guid)) AND 1=1";
-			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
+				'sql' => $qb->getSQL(),
+				'params' => $qb->getParameters(),
 				'row_count' => 0,
 				'times' => 1,
 			]);

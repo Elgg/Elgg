@@ -36,6 +36,14 @@ function _elgg_activity_owner_block_menu(\Elgg\Hook $hook) {
 }
 
 /**
+ * Returns registered river events
+ * @return array
+ */
+function elgg_get_registered_river_events() {
+	return _elgg_services()->river->getEvents();
+}
+
+/**
  * Called during system init
  *
  * @return void

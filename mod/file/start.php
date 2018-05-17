@@ -32,6 +32,8 @@ function file_init() {
 	// Register URL handlers for files
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_set_icon_url');
 
+	elgg_register_river_event('create', 'object', 'file');
+
 	// Register for notifications
 	elgg_register_notification_event('object', 'file', ['create']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:file', 'file_prepare_notification');

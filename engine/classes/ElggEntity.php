@@ -1801,28 +1801,32 @@ abstract class ElggEntity extends \ElggData implements
 		try {
 			return _elgg_services()->entityTable->delete($this, $recursive);
 		} catch (DatabaseException $ex) {
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex, 'ERROR');
 			return false;
 		}
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Export an entity
+	 *
+	 * @param array $params Params to pass to the hook
+	 * @return \Elgg\Export\Entity
 	 */
-	public function toObject() {
-		$object = $this->prepareObject(new stdClass());
-		$params = ['entity' => $this];
-		$object = _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
-		return $object;
+	public function toObject(array $params = []) {
+		$object = $this->prepareObject(new \Elgg\Export\Entity());
+
+		$params['entity'] = $this;
+
+		return _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
 	}
 
 	/**
 	 * Prepare an object copy for toObject()
 	 *
-	 * @param stdClass $object Object representation of the entity
-	 * @return stdClass
+	 * @param \Elgg\Export\Entity $object Object representation of the entity
+	 * @return \Elgg\Export\Entity
 	 */
-	protected function prepareObject($object) {
+	protected function prepareObject(\Elgg\Export\Entity $object) {
 		$object->guid = $this->guid;
 		$object->type = $this->getType();
 		$object->subtype = $this->getSubtype();

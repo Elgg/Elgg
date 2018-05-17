@@ -23,6 +23,7 @@ use ElggSession;
 use ElggSite;
 use ElggUser;
 use InvalidParameterException;
+use Psr\Log\LoggerInterface;
 use stdClass;
 
 /**
@@ -96,14 +97,14 @@ class EntityTable {
 	/**
 	 * Constructor
 	 *
-	 * @param Config        $config         Config
-	 * @param Database      $db             Database
-	 * @param EntityCache   $entity_cache   Entity cache
-	 * @param MetadataCache $metadata_cache Metadata cache
-	 * @param EventsService $events         Events service
-	 * @param ElggSession   $session        Session
-	 * @param Translator    $translator     Translator
-	 * @param Logger        $logger         Logger
+	 * @param Config          $config         Config
+	 * @param Database        $db             Database
+	 * @param EntityCache     $entity_cache   Entity cache
+	 * @param MetadataCache   $metadata_cache Metadata cache
+	 * @param EventsService   $events         Events service
+	 * @param ElggSession     $session        Session
+	 * @param Translator      $translator     Translator
+	 * @param LoggerInterface $logger         Logger
 	 */
 	public function __construct(
 		Config $config,
@@ -113,7 +114,7 @@ class EntityTable {
 		EventsService $events,
 		ElggSession $session,
 		Translator $translator,
-		Logger $logger
+		LoggerInterface $logger
 	) {
 		$this->config = $config;
 		$this->db = $db;
@@ -672,6 +673,8 @@ class EntityTable {
 			return false;
 		}
 
+		$entity->invalidateCache();
+
 		if ($entity instanceof ElggUser) {
 			// ban to prevent using the site during delete
 			$entity->ban();
@@ -748,10 +751,6 @@ class EntityTable {
 		$entity_disable_override = $this->session->getDisabledEntityVisibility();
 		$this->session->setDisabledEntityVisibility(true);
 		$ia = $this->session->setIgnoreAccess(true);
-
-		elgg_delete_river(['subject_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
 
 		remove_all_private_settings($guid);
 		$entity->deleteOwnedAccessCollections();

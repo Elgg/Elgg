@@ -10,12 +10,12 @@ if (empty($entity_metadata)) {
 	$md_columns = ['id', 'name', 'value', 'value_type', 'access_id', 'time_created', 'enabled'];
 	
 	$metadata_info = '<table class="elgg-table">';
-	$metadata_info .= '<tr>';
+	$metadata_info .= '<thead><tr>';
 	foreach ($md_columns as $md_col) {
 		$metadata_info .= '<th>' . $md_col . '</th>';
 	}
 	$metadata_info .= '<th>&nbsp;</th>';
-	$metadata_info .= '</tr>';
+	$metadata_info .= '</tr></thead>';
 	
 	foreach ($entity_metadata as $md) {
 		$metadata_info .= '<tr>';
@@ -36,4 +36,4 @@ if (empty($entity_metadata)) {
 	}
 	$metadata_info .= '</table>';
 }
-echo elgg_view_module('inline', elgg_echo('developers:entity_explorer:info:metadata'), $metadata_info);
+echo elgg_view_module('info', elgg_echo('developers:entity_explorer:info:metadata'), $metadata_info);

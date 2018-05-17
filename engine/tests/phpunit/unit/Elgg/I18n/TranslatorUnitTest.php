@@ -4,6 +4,7 @@ namespace Elgg\I18n;
 
 use Elgg\Logger;
 use Elgg\Project\Paths;
+use Psr\Log\LogLevel;
 
 /**
  * @group Translator
@@ -115,7 +116,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$message = "Missing English translation for \"{$this->key}b\" language key";
 		$this->assertEquals($message, $logged[0]['message']);
-		$this->assertEquals(Logger::NOTICE, $logged[0]['level']);
+		$this->assertEquals(LogLevel::NOTICE, $logged[0]['level']);
 
 		// has fallback key
 		$this->translator->addTranslation('en', ["{$this->key}b" => 'Dummy']);
@@ -127,7 +128,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([
 			[
 				'message' => "Missing es translation for \"{$this->key}b\" language key",
-				'level' => Logger::NOTICE,
+				'level' => LogLevel::NOTICE,
 			]
 				], $logged);
 	}
@@ -209,4 +210,37 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($this->translator->addTranslation('en', []));
 	}
 
+	public function testCanLoadPluginTranslations() {
+
+		$app = $this->createApplication();
+
+		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
+
+		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$app->_services->config->boot_cache_ttl = 0;
+		$app->_services->plugins->addTestingPlugin($plugin);
+
+		$plugin->activate();
+
+		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
+	}
+
+	public function testCanLoadPluginTranslationsWithCacheDisabled() {
+
+		$app = $this->createApplication([
+			'system_cache_enabled' => false,
+		]);
+
+		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
+
+		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$app->_services->config->boot_cache_ttl = 0;
+		$app->_services->plugins->addTestingPlugin($plugin);
+
+		$plugin->activate();
+
+		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
+	}
 }

@@ -25,7 +25,7 @@ return array(
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
+	'activity:create:object:thewire' => "%s posted to %s",
 	'thewire:wire' => 'the wire',
 
 	/**

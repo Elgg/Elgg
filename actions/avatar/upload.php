@@ -23,22 +23,13 @@ if (!elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
 	return elgg_error_response();
 }
 
-// River
-$view = 'river/user/default/profileiconupdate';
-
 // remove old river items
 elgg_delete_river([
 	'subject_guid' => $owner->guid,
-	'view' => $view,
+	'action' => 'profileiconupdate',
 	'limit' => false,
 ]);
 
-// create new river entry
-elgg_create_river_item([
-	'view' => $view,
-	'action_type' => 'update',
-	'subject_guid' => $owner->guid,
-	'object_guid' => $owner->guid,
-]);
+elgg_trigger_after_event('profileiconupdate', 'user', $owner);
 
 return elgg_ok_response('', elgg_echo('avatar:upload:success'));

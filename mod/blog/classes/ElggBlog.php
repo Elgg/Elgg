@@ -43,19 +43,4 @@ class ElggBlog extends ElggObject {
 		return true;
 	}
 
-	/**
-	 * Get the excerpt for this blog post
-	 *
-	 * @param int $length Length of the excerpt (optional)
-	 * @return string
-	 * @since 1.9.0
-	 */
-	public function getExcerpt($length = 250) {
-		if ($this->excerpt) {
-			return $this->excerpt;
-		} else {
-			return elgg_get_excerpt($this->description, $length);
-		}
-	}
-
 }

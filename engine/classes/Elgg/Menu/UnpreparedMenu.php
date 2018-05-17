@@ -1,7 +1,9 @@
 <?php
+
 namespace Elgg\Menu;
 
 use ElggMenuItem;
+use InvalidArgumentException;
 
 /**
  * Linear set of menu items collected from configuration and the "register" hook.
@@ -11,7 +13,7 @@ use ElggMenuItem;
 class UnpreparedMenu {
 
 	/**
-	 * @var ElggMenuItem[]
+	 * @var MenuItems
 	 */
 	private $items;
 
@@ -23,15 +25,23 @@ class UnpreparedMenu {
 	/**
 	 * Constructor
 	 *
-	 * @param array          $params Parameters to be passed to the "prepare" hook and views.
-	 *                               Must include value for "name".
-	 * @param ElggMenuItem[] $items  Menu items
+	 * @param array                    $params Parameters to be passed to the "prepare" hook and views.
+	 *                                         Must include value for "name".
+	 * @param ElggMenuItem[]|MenuItems $items  Menu items
 	 *
-	 * @access private
+	 * @access   private
 	 * @internal Do not use. Use the `elgg()->menus` service methods instead.
 	 */
-	public function __construct(array $params, array $items) {
+	public function __construct(array $params, $items) {
 		$this->params = $params;
+
+		if (is_array($items)) {
+			$items = new MenuItems($items);
+		}
+
+		if (!$items instanceof MenuItems) {
+			throw new InvalidArgumentException("Items collection must implement " . MenuItems::class);
+		}
 		$this->items = $items;
 	}
 
@@ -72,7 +82,7 @@ class UnpreparedMenu {
 	/**
 	 * Get the menu items
 	 *
-	 * @return ElggMenuItem[]
+	 * @return MenuItems
 	 */
 	public function getItems() {
 		return $this->items;

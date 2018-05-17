@@ -229,6 +229,7 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 			'src' => $admin->getIconURL('small'),
 			'alt' => $admin->getDisplayName(),
 		]),
+		'link_class' => 'elgg-avatar-small',
 		'priority' => 1000,
 	]);
 

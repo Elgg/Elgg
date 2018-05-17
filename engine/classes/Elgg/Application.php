@@ -5,6 +5,8 @@ namespace Elgg;
 use ClassException;
 use ConfigurationException;
 use DatabaseException;
+use Elgg\Application\ErrorHandler;
+use Elgg\Application\ExceptionHandler;
 use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
@@ -13,11 +15,15 @@ use Elgg\Http\ErrorResponse;
 use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
 use Elgg\Project\Paths;
+use ElggInstaller;
+use Exception;
 use InstallationException;
 use InvalidArgumentException;
 use InvalidParameterException;
 use RuntimeException;
 use SecurityException;
+use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirect;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -30,6 +36,8 @@ use SecurityException;
  * @since 2.0.0
  */
 class Application {
+
+	use Loggable;
 
 	const DEFAULT_LANG = 'en';
 	const DEFAULT_LIMIT = 10;
@@ -294,7 +302,6 @@ class Application {
 	 * @throws InvalidArgumentException
 	 */
 	public static function factory(array $spec = []) {
-		self::loadCore();
 
 		$defaults = [
 			'config' => null,
@@ -318,6 +325,13 @@ class Application {
 			}
 		}
 
+		if ($spec['handle_exceptions']) {
+			set_error_handler(new ErrorHandler());
+			set_exception_handler(new ExceptionHandler());
+		}
+
+		self::loadCore();
+
 		if (!$spec['service_provider']) {
 			if (!$spec['config']) {
 				$spec['config'] = Config::factory($spec['settings_path']);
@@ -334,11 +348,6 @@ class Application {
 		}
 
 		$app = new self($spec['service_provider']);
-
-		if ($spec['handle_exceptions']) {
-			set_error_handler([$app, 'handleErrors']);
-			set_exception_handler([$app, 'handleExceptions']);
-		}
 
 		if ($spec['handle_shutdown']) {
 			register_shutdown_function('_elgg_db_run_delayed_queries');
@@ -443,7 +452,7 @@ class Application {
 			$hook_params = [
 				'exception' => $ex,
 			];
-			
+
 			$forward_url = $this->_services->hooks->trigger('forward', $ex->getCode(), $hook_params, $forward_url);
 
 			if ($forward_url) {
@@ -484,27 +493,36 @@ class Application {
 	 * Renders a web UI for installing Elgg.
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	public static function install() {
 		ini_set('display_errors', 1);
 
-		$installer = new \ElggInstaller();
-		$response = $installer->run();
 		try {
-			// we won't trust server configuration but specify utf-8
-			elgg_set_http_header('Content-type: text/html; charset=utf-8');
+			$installer = new ElggInstaller();
+			$builder = $installer->run();
 
-			// turn off browser caching
-			elgg_set_http_header('Pragma: public', true);
-			elgg_set_http_header("Cache-Control: no-cache, must-revalidate", true);
-			elgg_set_http_header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
+			$content = $builder->getContent();
+			$status = $builder->getStatusCode();
+			$headers = $builder->getHeaders();
 
-			_elgg_services()->responseFactory->respond($response);
-			return headers_sent();
-		} catch (InvalidParameterException $ex) {
-			throw new InstallationException($ex->getMessage());
+			if ($builder->isRedirection()) {
+				$forward_url = $builder->getForwardURL();
+				$response = new SymfonyRedirect($forward_url, $status, $headers);
+			} else {
+				$response = new Response($content, $status, $headers);
+			}
+		} catch (Exception $ex) {
+			$response = new Response($ex->getMessage(), 500);
 		}
+
+		$response->headers->set('Content-Type', 'text/html; charset=utf-8');
+		$response->headers->set('Pragma', 'public');
+		$response->headers->set('Cache-Control', 'no-cache, must-revalidate');
+		$response->headers->set('Expires', 'Fri, 05 Feb 1982 00:00:00 -0500');
+
+		$response->send();
+
+		return headers_sent();
 	}
 
 	/**
@@ -526,14 +544,15 @@ class Application {
 	public static function upgrade($async = false) {
 		// we want to know if an error occurs
 		ini_set('display_errors', 1);
-		
+
 		set_time_limit(0);
-		
+
 		$is_cli = (php_sapi_name() === 'cli');
 
 		$forward = function ($url) use ($is_cli) {
 			if ($is_cli) {
-				_elgg_services()->printer->write("Open $url in your browser to continue.", Logger::NOTICE);
+				_elgg_services()->logger->notice("Open $url in your browser to continue.");
+
 				return;
 			}
 
@@ -585,8 +604,8 @@ class Application {
 					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
 					if ($msg === "installation:htaccess:localhost:connectionfailed") {
 						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
-								. "that curl is working and there are no IP restrictions preventing "
-								. "localhost connections.";
+							. "that curl is working and there are no IP restrictions preventing "
+							. "localhost connections.";
 					}
 					echo $msg;
 					exit;
@@ -629,7 +648,7 @@ class Application {
 
 		// setting timeout because some database migrations can take a long time
 		set_time_limit(0);
-		
+
 		$app = new \Phinx\Console\PhinxApplication();
 		$wrapper = new \Phinx\Wrapper\TextWrapper($app, [
 			'configuration' => $conf,
@@ -691,175 +710,6 @@ class Application {
 		}
 
 		$this->_services->setValue('request', $new);
-	}
-
-	/**
-	 * Intercepts, logs, and displays uncaught exceptions.
-	 *
-	 * To use a viewtype other than failsafe, create the views:
-	 *  <viewtype>/messages/exceptions/admin_exception
-	 *  <viewtype>/messages/exceptions/exception
-	 * See the json viewtype for an example.
-	 *
-	 * @warning This function should never be called directly.
-	 *
-	 * @see http://www.php.net/set-exception-handler
-	 *
-	 * @param \Exception|\Error $exception The exception/error being handled
-	 *
-	 * @return void
-	 * @access private
-	 */
-	public function handleExceptions($exception) {
-		$timestamp = time();
-		error_log("Exception at time $timestamp: $exception");
-
-		// Wipe any existing output buffer
-		ob_end_clean();
-
-		// make sure the error isn't cached
-		header("Cache-Control: no-cache, must-revalidate", true);
-		header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
-
-		if ($exception instanceof \InstallationException) {
-			forward('/install.php');
-		}
-
-		if (!self::isCoreLoaded()) {
-			http_response_code(500);
-			echo "Exception loading Elgg core. Check log at time $timestamp";
-			return;
-		}
-
-		try {
-			// allow custom scripts to trigger on exception
-			// value in settings.php should be a system path to a file to include
-			$exception_include = $this->_services->config->exception_include;
-
-			if ($exception_include && is_file($exception_include)) {
-				ob_start();
-
-				// don't isolate, these scripts may use the local $exception var.
-				include $exception_include;
-
-				$exception_output = ob_get_clean();
-
-				// if content is returned from the custom handler we will output
-				// that instead of our default failsafe view
-				if (!empty($exception_output)) {
-					echo $exception_output;
-					exit;
-				}
-			}
-
-			if (elgg_is_xhr()) {
-				elgg_set_viewtype('json');
-				$response = new \Symfony\Component\HttpFoundation\JsonResponse(null, 500);
-			} else {
-				elgg_set_viewtype('failsafe');
-				$response = new \Symfony\Component\HttpFoundation\Response('', 500);
-			}
-
-			if (elgg_is_admin_logged_in()) {
-				$body = elgg_view("messages/exceptions/admin_exception", [
-					'object' => $exception,
-					'ts' => $timestamp
-				]);
-			} else {
-				$body = elgg_view("messages/exceptions/exception", [
-					'object' => $exception,
-					'ts' => $timestamp
-				]);
-			}
-
-			$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
-			$response->send();
-		} catch (\Exception $e) {
-			$timestamp = time();
-			$message = $e->getMessage();
-			http_response_code(500);
-			echo "Fatal error in exception handler. Check log for Exception at time $timestamp";
-			error_log("Exception at time $timestamp : fatal error in exception handler : $message");
-		}
-	}
-
-	/**
-	 * Intercepts catchable PHP errors.
-	 *
-	 * @warning This function should never be called directly.
-	 *
-	 * @internal
-	 * For catchable fatal errors, throws an Exception with the error.
-	 *
-	 * For non-fatal errors, depending upon the debug settings, either
-	 * log the error or ignore it.
-	 *
-	 * @see http://www.php.net/set-error-handler
-	 *
-	 * @param int    $errno    The level of the error raised
-	 * @param string $errmsg   The error message
-	 * @param string $filename The filename the error was raised in
-	 * @param int    $linenum  The line number the error was raised at
-	 * @param array  $vars     An array that points to the active symbol table where error occurred
-	 *
-	 * @return true
-	 * @throws \Exception
-	 * @access private
-	 */
-	public function handleErrors($errno, $errmsg, $filename, $linenum, $vars) {
-		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
-
-		$log = function ($message, $level) {
-			if (!self::isCoreLoaded()) {
-				return false;
-			}
-
-			if (!self::$_instance) {
-				// can occur during tests
-				return false;
-			}
-
-			return self::$_instance->_services->printer->write($message, $level);
-		};
-
-		switch ($errno) {
-			case E_USER_ERROR:
-				if (!$log("PHP: $error", 'ERROR')) {
-					error_log("PHP ERROR: $error");
-				}
-				if (self::isCoreLoaded()) {
-					$this->_services->systemMessages->addErrorMessage("ERROR: $error");
-				}
-
-				// Since this is a fatal error, we want to stop any further execution but do so gracefully.
-				throw new \Exception($error);
-
-			case E_WARNING :
-			case E_USER_WARNING :
-			case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
-
-				// check if the error wasn't suppressed by the error control operator (@)
-				if (error_reporting() && !$log("PHP: $error", 'WARNING')) {
-					error_log("PHP WARNING: $error");
-				}
-				break;
-
-			default:
-				if (function_exists('_elgg_config')) {
-					$debug = _elgg_config()->debug;
-				} else {
-					$debug = isset($GLOBALS['CONFIG']->debug) ? $GLOBALS['CONFIG']->debug : null;
-				}
-				if ($debug !== 'NOTICE') {
-					return true;
-				}
-
-				if (!$log("PHP (errno $errno): $error", 'NOTICE')) {
-					error_log("PHP NOTICE: $error");
-				}
-		}
-
-		return true;
 	}
 
 	/**

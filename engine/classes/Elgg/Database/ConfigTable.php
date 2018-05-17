@@ -1,6 +1,10 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\BootService;
+use Elgg\Database;
+use Psr\Log\LoggerInterface;
+
 /**
  * Manipulates values in the dbprefix_config table. Do not use to read/write $CONFIG.
  *
@@ -12,12 +16,12 @@ namespace Elgg\Database;
 class ConfigTable {
 		
 	/**
-	 * @var \Elgg\Database
+	 * @var Database
 	 */
 	protected $db;
 	
 	/**
-	 * @var \Elgg\BootService
+	 * @var BootService
 	 */
 	protected $boot;
 	
@@ -29,11 +33,15 @@ class ConfigTable {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database    $db     Database
-	 * @param \Elgg\BootService $boot   BootService
-	 * @param \Elgg\Logger      $logger Logger
+	 * @param Database        $db     Database
+	 * @param BootService     $boot   BootService
+	 * @param LoggerInterface $logger Logger
 	 */
-	public function __construct(\Elgg\Database $db, \Elgg\BootService $boot, \Elgg\Logger $logger) {
+	public function __construct(
+		Database $db,
+		BootService $boot,
+		LoggerInterface $logger
+	) {
 		$this->db = $db;
 		$this->boot = $boot;
 		$this->logger = $logger;

@@ -114,7 +114,7 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function __set($name, $value) {
 		if ($name === 'url') {
-			_elgg_services()->logger->warn("ElggSite::url cannot be set");
+			_elgg_services()->logger->warning("ElggSite::url cannot be set");
 			return;
 		}
 		parent::__set($name, $value);
@@ -149,7 +149,7 @@ class ElggSite extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function prepareObject($object) {
+	protected function prepareObject(\Elgg\Export\Entity $object) {
 		$object = parent::prepareObject($object);
 		$object->name = $this->getDisplayName();
 		$object->description = $this->description;

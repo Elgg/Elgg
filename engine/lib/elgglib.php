@@ -790,20 +790,8 @@ function elgg_get_ordered_event_handlers($event, $type) {
  * @return bool
  * @since 1.7.0
  */
-function elgg_log($message, $level = 'NOTICE') {
-	static $levels = [
-		'INFO' => 200,
-		'NOTICE' => 250,
-		'WARNING' => 300,
-		'ERROR' => 400,
-	];
-
-	if (!isset($levels[$level])) {
-		throw new \InvalidArgumentException("Invalid \$level value");
-	}
-
-	$level = $levels[$level];
-	return _elgg_services()->logger->log($message, $level);
+function elgg_log($message, $level = \Psr\Log\LogLevel::NOTICE) {
+	return _elgg_services()->logger->log($level, $message);
 }
 
 /**
@@ -1146,7 +1134,7 @@ function elgg_signed_request_gatekeeper() {
  * @since 1.8.0
  */
 function elgg_extract($key, $array, $default = null, $strict = true) {
-	if (!is_array($array)) {
+	if (!is_array($array) && !$array instanceof ArrayAccess) {
 		return $default;
 	}
 
@@ -1338,10 +1326,7 @@ function _elgg_shutdown_hook() {
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
 	} catch (Exception $e) {
-		$message = 'Error: ' . get_class($e) . ' thrown within the shutdown handler. ';
-		$message .= "Message: '{$e->getMessage()}' in file {$e->getFile()} (line {$e->getLine()})";
-		error_log($message);
-		error_log("Exception trace stack: {$e->getTraceAsString()}");
+		_elgg_services()->logger->log(\Psr\Log\LogLevel::CRITICAL, $e);
 	}
 
 	// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
@@ -1753,15 +1738,7 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	elgg_set_entity_class('object', 'widget', \ElggWidget::class);
 	elgg_set_entity_class('object', 'comment', \ElggComment::class);
 	elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
-
-	$events->registerHandler('cache:flush', 'system', function () {
-		_elgg_services()->boot->invalidateCache();
-		_elgg_services()->plugins->clear();
-		_elgg_services()->sessionCache->clear();
-		_elgg_services()->dataCache->clear();
-		_elgg_services()->dic_cache->flushAll();
-	});
-
+	
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
 

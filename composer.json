@@ -47,7 +47,10 @@
         "doctrine/cache": "^1.6",
         "npm-asset/formdata-polyfill": "^3.0",
         "npm-asset/weakmap-polyfill": "^2.0",
-        "bower-asset/fontawesome": "~5.0"
+        "bower-asset/fontawesome": "~5.0",
+        "monolog/monolog": "^1.23",
+        "symfony/polyfill-php72": "^1.7",
+        "symfony/polyfill-php71": "^1.7"
     },
     "config": {
         "process-timeout": 0,

@@ -21,10 +21,10 @@ if (!isset($metadata)) {
 		'item' => $item,
 	]);
 	
-	$object = $item->getObjectEntity();
-	if ($object) {
+	$result = $item->getResult();
+	if ($result instanceof ElggEntity) {
 		$metadata .= elgg_view_menu('social', [
-			'entity' => $object,
+			'entity' => $result,
 			'item' => $item,
 			'class' => 'elgg-menu-hz',
 		]);

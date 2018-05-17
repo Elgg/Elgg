@@ -10,12 +10,12 @@ if (empty($entity_relationships)) {
 	$relationship_columns = ['id', 'time_created', 'guid_one', 'relationship', 'guid_two'];
 
 	$relationship_info = '<table class="elgg-table">';
-	$relationship_info .= '<tr>';
+	$relationship_info .= '<thead><tr>';
 	foreach ($relationship_columns as $relationship_col) {
 		$relationship_info .= '<th>' . $relationship_col . '</th>';
 	}
 	$relationship_info .= '<th>&nbsp;</th>';
-	$relationship_info .= '</tr>';
+	$relationship_info .= '</tr></thead>';
 	
 	foreach ($entity_relationships as $relationship) {
 		$relationship_info .= '<tr>';
@@ -35,4 +35,4 @@ if (empty($entity_relationships)) {
 	}
 	$relationship_info .= '</table>';
 }
-echo elgg_view_module('inline', elgg_echo('developers:entity_explorer:info:relationships'), $relationship_info);
+echo elgg_view_module('info', elgg_echo('developers:entity_explorer:info:relationships'), $relationship_info);

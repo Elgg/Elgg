@@ -12,6 +12,7 @@ use Elgg\UnitTestCase;
 /**
  * @group QueryBuilder
  * @group QueryBuilderWhere
+ * @group Relationships
  */
 class RelationshipWhereClauseTest extends UnitTestCase {
 

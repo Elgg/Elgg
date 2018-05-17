@@ -37,7 +37,7 @@ if ($group->isPublicMembership() || $group->canEdit($user->guid)) {
 }
 
 if ($join) {
-	if (!$group->join($user, ['create_river_item' => true])) {
+	if (!$group->join($user)) {
 		return elgg_error_response(elgg_echo('groups:cantjoin'));
 	}
 	

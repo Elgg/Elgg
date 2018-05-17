@@ -47,11 +47,6 @@ class Seeder extends Seed {
 			$page->annotate('page', $this->faker()->paragraph(), $page->access_id, $page->owner_guid);
 
 			$page->annotate('page', $page->description, $page->access_id, $page->owner_guid);
-
-			elgg_create_river_item([
-				'action_type' => 'create',
-				'object_guid' => $page->guid,
-			]);
 		};
 
 		while ($count_pages() < $this->limit) {

@@ -40,6 +40,7 @@ class UpgradeCommandTest extends IntegrationTestCase {
 		$commandTester->execute([
 			'command' => $command->getName(),
 			'async' => ['async'],
+			'--quiet' => true,
 		]);
 
 		$this->assertRegExp('/Your system has been upgraded/im', $commandTester->getDisplay());

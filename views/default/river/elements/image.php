@@ -7,6 +7,14 @@
  * @uses $vars['item']
  */
 
+$image = elgg_extract('image', $vars);
+if (isset($image)) {
+	if ($image) {
+		echo $image;
+	}
+	return;
+}
+
 $item = elgg_extract('item', $vars);
 if (!$item instanceof ElggRiverItem) {
 	return;

@@ -6,7 +6,7 @@ use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Elgg\BaseTestCase;
 use Elgg\Database as DbDatabase;
 use Elgg\Database\DbConfig;
-use Elgg\Logger;
+use Psr\Log\LoggerInterface;
 
 class Database extends DbDatabase {
 
@@ -29,7 +29,7 @@ class Database extends DbDatabase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(DbConfig $config, Logger $logger = null) {
+	public function __construct(DbConfig $config, LoggerInterface $logger = null) {
 		parent::__construct($config);
 		$this->setLogger($logger);
 	}
@@ -188,7 +188,11 @@ class Database extends DbDatabase {
 		if (!$match && strpos($sql, 'select') !== 0) {
 			// We need to make sure all UPDATE, INSERT and DELETE queries are
 			// mocked, otherwise we will be getting incorrect test results
-			throw new \DatabaseException("No testing query spec was found");
+			throw new \DatabaseException(
+				"No testing query spec was found: " .
+				PHP_EOL . $sql . PHP_EOL .
+				var_export($params, true)
+			);
 		}
 
 		$statement = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\PDOStatement::class)
