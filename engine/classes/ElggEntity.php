@@ -2063,6 +2063,10 @@ abstract class ElggEntity extends \ElggData implements
 	 * @internal
 	 */
 	public function isCacheable() {
+		if (!$this->guid) {
+			return false;
+		}
+		
 		if (_elgg_services()->session->getIgnoreAccess()) {
 			return false;
 		}
