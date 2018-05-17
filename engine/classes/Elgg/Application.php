@@ -20,7 +20,6 @@ use Exception;
 use InstallationException;
 use InvalidArgumentException;
 use InvalidParameterException;
-use RuntimeException;
 use SecurityException;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirect;
 use Symfony\Component\HttpFoundation\Response;
@@ -62,6 +61,12 @@ class Application {
 	 * @var Application
 	 */
 	public static $_instance;
+
+	/**
+	 * Indicates that application is in upgrading state
+	 * @var bool
+	 */
+	public static $_upgrading = false;
 
 	/**
 	 * Get the global Application instance. If not set, it's auto-created and wired to $CONFIG.
@@ -537,101 +542,22 @@ class Application {
 	 * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
 	 * to a relative URL.
 	 *
-	 * @param bool $async Execute pending async upgrades
 	 * @return void
+	 * @throws ClassException
+	 * @throws ConfigurationException
+	 * @throws DatabaseException
 	 * @throws InstallationException
+	 * @throws InvalidParameterException
+	 * @throws SecurityException
 	 */
-	public static function upgrade($async = false) {
-		// we want to know if an error occurs
+	public static function upgrade() {
 		ini_set('display_errors', 1);
 
-		set_time_limit(0);
+		Application::migrate();
+		$app = Application::start();
 
-		$is_cli = (php_sapi_name() === 'cli');
-
-		$forward = function ($url) use ($is_cli) {
-			if ($is_cli) {
-				_elgg_services()->logger->notice("Open $url in your browser to continue.");
-
-				return;
-			}
-
-			forward($url);
-		};
-
-		if (!defined('UPGRADING')) {
-			// @todo This is really bad. Once set, it affects the global state for the entire script lifetime
-			// which has unwanted side effects during testing
-			// A better way would be to use a global or better yet set Application::$upgrading
-			define('UPGRADING', 'upgrading');
-		}
-
-		self::migrate();
-		self::start();
-
-		// check security settings
-		if (!$is_cli && _elgg_config()->security_protect_upgrade && !elgg_is_admin_logged_in()) {
-			// only admin's or users with a valid token can run upgrade.php
-			elgg_signed_request_gatekeeper();
-		}
-
-		$site_url = _elgg_config()->url;
-		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
-
-		// turn any full in-site URLs into absolute paths
-		$forward_url = get_input('forward', '/admin', false);
-		$forward_url = str_replace([$site_url, $site_host], '/', $forward_url);
-
-		if (strpos($forward_url, '/') !== 0) {
-			$forward_url = '/' . $forward_url;
-		}
-
-		if ($is_cli || (get_input('upgrade') == 'upgrade')) {
-			try {
-				_elgg_services()->upgrades->run($async);
-			} catch (RuntimeException $ex) {
-				_elgg_services()->systemMessages->addErrorMessage($ex->getMessage());
-				$forward($forward_url);
-			}
-		} else {
-			$rewriteTester = new \ElggRewriteTester();
-			$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
-			if (!$rewriteTester->runRewriteTest($url)) {
-				// see if there is a problem accessing the site at all
-				// due to ip restrictions for example
-				if (!$rewriteTester->runLocalhostAccessTest()) {
-					// note: translation may not be available until after upgrade
-					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
-					if ($msg === "installation:htaccess:localhost:connectionfailed") {
-						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
-							. "that curl is working and there are no IP restrictions preventing "
-							. "localhost connections.";
-					}
-					echo $msg;
-					exit;
-				}
-
-				// note: translation may not be available until after upgrade
-				$msg = elgg_echo("installation:htaccess:needs_upgrade");
-				if ($msg === "installation:htaccess:needs_upgrade") {
-					$msg = "You must update your .htaccess file (use install/config/htaccess.dist as a guide).";
-				}
-				echo $msg;
-				exit;
-			}
-
-			$vars = [
-				'forward' => $forward_url
-			];
-
-			// reset cache to have latest translations available during upgrade
-			elgg_reset_system_cache();
-
-			echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
-			exit;
-		}
-
-		$forward($forward_url);
+		$response = new RedirectResponse('upgrade/init');
+		$app->_services->responseFactory->respond($response);
 	}
 
 	/**
