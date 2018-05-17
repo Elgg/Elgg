@@ -34,7 +34,10 @@ if ($installed) {
 		\Elgg\Application::start();
 	} catch (RuntimeException $ex) {
 		// Try to recover by running a system upgrade
-		\Elgg\Application::upgrade();
+		$app = \Elgg\Application::factory();
+
+		$upgrade = new \Elgg\Application\UpgradeHandler($app);
+		$upgrade->run();
 	}
 
 	$cli = _elgg_services()->cli;

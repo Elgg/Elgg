@@ -101,7 +101,7 @@ class UpgradeService {
 		$this->events->unregisterHandler('all', 'all', 'system_log_listener');
 
 		// turn off time limit
-		set_time_limit(0);
+		set_time_limit(3600);
 
 		if ($this->getUnprocessedUpgrades()) {
 			$this->processUpgrades();
@@ -517,13 +517,14 @@ class UpgradeService {
 				}
 			}
 
-			// Give feedback to the user interface about the current batch.
-			return [
-				'errors' => $errors,
-				'numErrors' => $batch_failure_count,
-				'numSuccess' => $batch_success_count,
-				'isComplete' => $result && $result->wasMarkedComplete(),
-			];
+			$result = new Result();
+			$result->addFailures($batch_failure_count);
+			$result->addSuccesses($batch_success_count);
+			$result->addError($errors);
+			if ($upgrade->isCompleted()) {
+				$result->markComplete();
+			}
+			return $result;
 		});
 	}
 }
