@@ -65,51 +65,140 @@ function elgg_get_ignore_access() {
 }
 
 /**
- * Return a string of access_ids for $user_guid appropriate for inserting into an SQL IN clause.
+ * Creates a Private ACL for a user
  *
- * @uses get_access_array
+ * @elgg_event 'create', 'user'
  *
- * @see get_access_array()
+ * @param \Elgg\Event $event event
  *
- * @param int  $user_guid User ID; defaults to currently logged in user
- * @param int  $ignored   Ignored parameter
- * @param bool $flush     If set to true, will refresh the access list from the
- *                        database rather than using this function's cache.
+ * @return bool|null
  *
- * @return string A list of access collections suitable for using in an SQL call
+ * @since 3.0.0
+ *
+ * @internal
  * @access private
  */
-function get_access_list($user_guid = 0, $ignored = 0, $flush = false) {
-	return _elgg_services()->accessCollections->getAccessList($user_guid, $flush);
+function _access_private_acl_create(\Elgg\Event $event) {
+	$user = $event->getObject();
+	if (!$user instanceof \ElggUser) {
+		return null;
+	}
+
+	try {
+		elgg_get_private_access($user);
+	} catch (RuntimeException $ex) {
+		// Terminate user creation
+		elgg_log(\Psr\Log\LogLevel::ERROR, $ex);
+		return false;
+	}
 }
 
 /**
- * Returns an array of access IDs a user is permitted to see.
+ * Creates a Friends ACL for a user
  *
- * Can be overridden with the 'access:collections:read', 'user' plugin hook.
- * @warning A callback for that plugin hook needs to either not retrieve data
- * from the database that would use the access system (triggering the plugin again)
- * or ignore the second call. Otherwise, an infinite loop will be created.
+ * @elgg_event 'create', 'user'
  *
- * This returns a list of all the collection ids a user owns or belongs
- * to plus public and logged in access levels. If the user is an admin, it includes
- * the private access level.
+ * @param \Elgg\Event $event event
  *
- * @note Internal: this is only used in core for creating the SQL where clause when
- * retrieving content from the database. The friends access level is handled by
- * {@link \Elgg\Database\Clauses\AccessWhereClause}
+ * @return bool|null
  *
- * @see get_write_access_array() for the access levels that a user can write to.
+ * @since 3.0.0
  *
- * @param int  $user_guid User ID; defaults to currently logged in user
- * @param int  $ignored   Ignored parameter
- * @param bool $flush     If set to true, will refresh the access ids from the
- *                        database rather than using this function's cache.
- *
- * @return array An array of access collections ids
+ * @internal
+ * @access private
  */
-function get_access_array($user_guid = 0, $ignored = 0, $flush = false) {
-	return _elgg_services()->accessCollections->getAccessArray($user_guid, $flush);
+function _access_friends_acl_create(\Elgg\Event $event) {
+	$user = $event->getObject();
+	if (!$user instanceof \ElggUser) {
+		return null;
+	}
+
+	try {
+		elgg_get_friends_access($user);
+	} catch (RuntimeException $ex) {
+		// Terminate user creation
+		elgg_log(\Psr\Log\LogLevel::ERROR, $ex);
+		return false;
+	}
+}
+
+/**
+ * Get Private ACL for the entity/user
+ *
+ * @see create_access_collection()
+ *
+ * @param ElggEntity|null $entity         Entity
+ *                                        Defaults to logged in user
+ *
+ * @param bool            $create_if_none Create a new collection if one hasn't been created yet
+ * @return int|null
+ * @since 3.0
+ */
+function elgg_get_private_access(ElggEntity $entity = null, $create_if_none = true) {
+	if (!isset($entity)) {
+		$entity = elgg_get_logged_in_user_entity();
+	}
+
+	if (!$entity instanceof ElggEntity) {
+		return false;
+	}
+
+	if ($collection = $entity->getOwnedAccessCollection(ElggAccessCollection::PRIVATE)) {
+		return $collection->id;
+	}
+
+	if ($create_if_none) {
+		$id = create_access_collection('private', $entity->guid, ElggAccessCollection::PRIVATE);
+		if (!$id) {
+			throw new RuntimeException("Failed to create a private ACL [$entity->type: $entity->guid]");
+		}
+
+		return $id;
+	}
+}
+
+/**
+ * Get Friends ACL for the user
+ *
+ * @param ElggUser|null $user           User
+ *                                      Defaults to logged in user
+ * @param bool          $create_if_none Create a new collection if one hasn't been created yet
+ *
+ * @return int|null
+ * @since 3.0
+ */
+function elgg_get_friends_access(ElggUser $user = null, $create_if_none = true) {
+	if (!isset($user)) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+
+	if (!$user instanceof ElggUser) {
+		return null;
+	}
+
+	if ($collection = $user->getOwnedAccessCollection(ElggAccessCollection::FRIENDS)) {
+		return $collection->id;
+	}
+
+	if ($create_if_none) {
+		$id = create_access_collection('friends', $user->guid, ElggAccessCollection::FRIENDS);
+		if (!$id) {
+			throw new RuntimeException("Failed to create a friends ACL [$user->type: $user->guid]");
+		}
+
+		$acl = get_access_collection($id);
+
+		$friends = $user->getFriends([
+			'batch' => true,
+			'limit' => 0,
+		]);
+
+		foreach ($friends as $friend) {
+			$acl->addMember($friend);
+		}
+
+		return $acl;
+	}
 }
 
 /**
@@ -410,28 +499,6 @@ function access_init() {
 }
 
 /**
- * Creates a Friends ACL for a user
- *
- * @elgg_event 'create', 'user'
- *
- * @param \Elgg\Event $event event
- *
- * @return void
- *
- * @since 3.0.0
- *
- * @internal
- */
-function access_friends_acl_create(\Elgg\Event $event) {
-	$user = $event->getObject();
-	if (!($user instanceof \ElggUser)) {
-		return;
-	}
-	
-	create_access_collection('friends', $user->guid, 'friends');
-}
-
-/**
  * Adds the friend to the user friend ACL
  *
  * @elgg_event 'create', 'relationship'
@@ -507,62 +574,18 @@ function access_friends_acl_remove_friend(\Elgg\Event $event) {
 }
 
 /**
- * Return the name of a friends ACL
- *
- * @elgg_event 'access_collection:name', 'access_collection'
- *
- * @param \Elgg\Hook $hook hook
- *
- * @return string|void
- *
- * @since 3.0.0
- *
- * @internal
- */
-function access_friends_acl_get_name(\Elgg\Hook $hook) {
-	$access_collection = $hook->getParam('access_collection');
-	if (!($access_collection instanceof ElggAccessCollection)) {
-		return;
-	}
-	
-	if ($access_collection->getSubtype() !== 'friends') {
-		return;
-	}
-	
-	return elgg_echo('access:label:friends');
-}
-
-/**
- * Runs unit tests for the access library
- *
- * @param string $hook   'unit_test'
- * @param string $type   'system'
- * @param array  $value  current return value
- * @param array  $params supplied params
- *
- * @return array
- *
- * @access private
- * @codeCoverageIgnore
- */
-function access_test($hook, $type, $value, $params) {
-	$value[] = ElggCoreAccessCollectionsTest::class;
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	// Tell the access functions the system has booted, plugins are loaded,
 	// and the user is logged in so it can start caching
 	$events->registerHandler('ready', 'system', 'access_init');
-	
-	// friends ACL events
-	$events->registerHandler('create', 'user', 'access_friends_acl_create');
+
+	// Create a friends ACL when user is created
+	$events->registerHandler('create:after', 'user', '_access_private_acl_create', 1);
+	$events->registerHandler('create:after', 'user', '_access_friends_acl_create', 1);
+
+	// Synchronize friends ACL membership
 	$events->registerHandler('create', 'relationship', 'access_friends_acl_add_friend');
 	$events->registerHandler('delete', 'relationship', 'access_friends_acl_remove_friend');
-	$hooks->registerHandler('access_collection:name', 'access_collection', 'access_friends_acl_get_name');
-
-	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };

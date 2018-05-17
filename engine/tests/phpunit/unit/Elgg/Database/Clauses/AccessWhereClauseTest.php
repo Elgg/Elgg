@@ -70,13 +70,11 @@ class AccessWhereClauseTest extends UnitTestCase {
 	}
 
 	public function testCanBuildAccessSqlForLoggedInUser() {
-		$this->assertFalse(elgg_is_admin_logged_in());
-
 		$parts = [];
 
 		$ors = $this->qb->merge([
 			$this->getOwnerClause($this->user->guid, 'alias'),
-			$this->getLoggedInAccessListClause('alias'),
+			$this->getLoggedInAccessListClause($this->user->guid,'alias'),
 		], 'OR');
 
 		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
@@ -99,7 +97,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 
 		$ors = $this->qb->merge([
 			$this->getOwnerClause($this->user->guid, ''),
-			$this->getLoggedInAccessListClause(''),
+			$this->getLoggedInAccessListClause($this->user->guid,''),
 		], 'OR');
 
 		$parts[] = $this->qb->compare('enabled', '=', 'yes', ELGG_VALUE_STRING);
@@ -121,7 +119,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 
 		$ors = $this->qb->merge([
 			$this->getOwnerClause($this->user->guid, 'alias', 'unit_test'),
-			$this->getLoggedInAccessListClause('alias'),
+			$this->getLoggedInAccessListClause($this->user->guid,'alias'),
 		], 'OR');
 
 		$parts[] = $this->qb->compare('alias.enabled', '=', 'yes', ELGG_VALUE_STRING);
@@ -294,12 +292,27 @@ class AccessWhereClauseTest extends UnitTestCase {
 		return $this->qb->compare($alias($owner_guid), '=', $user_guid, ELGG_VALUE_INTEGER);
 	}
 
-	protected function getLoggedInAccessListClause($table_alias) {
+	protected function getLoggedInAccessListClause($user_guid, $table_alias) {
 		$alias = function ($column) use ($table_alias) {
 			return $table_alias ? "{$table_alias}.{$column}" : $column;
 		};
 
-		return $this->qb->compare($alias('access_id'), '=', [ACCESS_PUBLIC, ACCESS_LOGGED_IN], ELGG_VALUE_INTEGER);
+		$collections_subquery = $this->qb->subquery('access_collections');
+		$collections_subquery->select(1)
+			->where($this->qb->compare('owner_guid', '=', $user_guid, ELGG_VALUE_INTEGER))
+			->andWhere($this->qb->compare('id', '=', $alias('access_id')));
+
+		$membership_subquery = $this->qb->subquery('access_collection_membership');
+		$membership_subquery->select(1)
+			->where($this->qb->compare('user_guid', '=', $user_guid, ELGG_VALUE_INTEGER))
+			->andWhere($this->qb->compare('access_collection_id', '=', $alias('access_id')));
+
+		return $this->qb->merge([
+			$this->qb->compare($alias('access_id'), '=', ACCESS_PUBLIC, ELGG_VALUE_INTEGER),
+			$this->qb->compare($alias('access_id'), '=', ACCESS_LOGGED_IN, ELGG_VALUE_INTEGER),
+			"EXISTS ({$collections_subquery->getSQL()})",
+			"EXISTS ({$membership_subquery->getSQL()})",
+		], 'OR');
 	}
 
 	protected function getLoggedOutAccessListClause($table_alias) {
@@ -307,7 +320,7 @@ class AccessWhereClauseTest extends UnitTestCase {
 			return $table_alias ? "{$table_alias}.{$column}" : $column;
 		};
 
-		return $this->qb->compare($alias('access_id'), '=', [ACCESS_PUBLIC], ELGG_VALUE_INTEGER);
+		return $this->qb->compare($alias('access_id'), '=', ACCESS_PUBLIC, ELGG_VALUE_INTEGER);
 	}
 
 }

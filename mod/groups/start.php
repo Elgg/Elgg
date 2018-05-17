@@ -51,7 +51,7 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'groupprofile_ecml_views_hook');
 
 	// Register a handler for create groups
-	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
+	elgg_register_event_handler('create', 'group', 'groups_create_event_listener', 1);
 	elgg_register_event_handler('update:after', 'group', 'groups_update_event_listener');
 
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
@@ -525,15 +525,16 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 		return;
 	}
 
-	if (!$page_owner->canWriteToContainer($user_guid)) {
+	$input_params = $hook->getParam('input_params', []);
+	$entity_type = elgg_extract('entity_type', $input_params);
+	$entity_subtype = elgg_extract('entity_subtype', $input_params);
+
+	if (!$page_owner->canWriteToContainer($user_guid, $entity_type, $entity_subtype)) {
 		return;
 	}
 
 	$allowed_access = [ACCESS_PRIVATE];
-	$acl = _groups_get_group_acl($page_owner);
-	if ($acl) {
-		$allowed_access[] = $acl->id;
-	}
+	$allowed_access[] = elgg_get_member_access($page_owner);
 
 	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 		$allowed_access[] = ACCESS_LOGGED_IN;
@@ -545,8 +546,9 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 	$write_acls = $hook->getValue();
 
 	// add write access to the group
+	$acl = _groups_get_group_acl($page_owner);
 	if ($acl) {
-		$write_acls[$acl->id] = $acl->getDisplayName();
+		$write_acls = [$acl->id  => $acl->getDisplayName()] + $write_acls;
 	}
 
 	foreach (array_keys($write_acls) as $access_id) {
@@ -562,18 +564,18 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
  * Return the write access for the current group if the user has write access to it
  *
  * @param \Elgg\Hook $hook 'access_collection:display_name' 'access_collection'
- * @return void|string
+ * @return string|null
  */
 function groups_set_access_collection_name(\Elgg\Hook $hook) {
 
 	$access_collection = $hook->getParam('access_collection');
 	if (!$access_collection instanceof ElggAccessCollection) {
-		return;
+		return null;
 	}
 
 	$owner = $access_collection->getOwnerEntity();
 	if (!$owner instanceof ElggGroup) {
-		return;
+		return null;
 	}
 	
 	$page_owner = elgg_get_page_owner_entity();
@@ -583,8 +585,15 @@ function groups_set_access_collection_name(\Elgg\Hook $hook) {
 	}
 
 	if ($owner->canWriteToContainer()) {
+		if ($owner->subtype !== 'group') {
+			$type_string = elgg_echo("item:$owner->type:$owner->subtype");
+			return elgg_echo('access:label:owned', [$type_string, $owner->getDisplayName()]);
+		}
+
 		return elgg_echo('groups:acl', [$owner->getDisplayName()]);
 	}
+
+	return elgg_echo('access:limited:label');
 }
 
 /**
@@ -670,12 +679,7 @@ function groups_access_default_override($hook, $type, $access) {
 		return;
 	}
 	
-	$acl = _groups_get_group_acl($page_owner);
-	if (empty($acl)) {
-		return;
-	}
-	
-	return $acl->id;
+	return elgg_get_member_access($page_owner);
 }
 
 /**
@@ -1107,7 +1111,52 @@ function _groups_get_group_acl(\ElggGroup $group) {
 		return false;
 	}
 	
-	return elgg_extract(0, $group->getOwnedAccessCollections(['subtype' => 'group_acl']), false);
+	return elgg_extract(0, $group->getOwnedAccessCollections(['subtype' => ElggAccessCollection::GROUP_MEMBERS]), false);
+}
+
+/**
+ * Get the access collection id of the group member access level
+ *
+ * @param ElggGroup $group          Group entity
+ *                                  Defaults to page owner
+ * @param bool      $create_if_none Create a collection, if one hasn't been created yet
+ *
+ * @return int|null
+ */
+function elgg_get_member_access(ElggGroup $group = null, $create_if_none = true) {
+	if (!isset($group)) {
+		$group = elgg_get_page_owner_entity();
+	}
+
+	if (!$group instanceof ElggGroup) {
+		return null;
+	}
+
+	if ($collection = _groups_get_group_acl($group)) {
+		return $collection->id;
+	}
+
+	if ($create_if_none) {
+		$ac_name = elgg_echo('groups:group') . ": " . $group->getDisplayName();
+		$id = create_access_collection($ac_name, $group->guid, ElggAccessCollection::GROUP_MEMBERS);
+
+		if (!$id) {
+			throw new RuntimeException("Failed to create a member ACL [$group->type: $group->guid]");
+		}
+
+		$acl = get_access_collection($id);
+
+		$members = $group->getMembers([
+			'batch' => true,
+			'limit' => 0,
+		]);
+
+		foreach ($members as $member) {
+			$acl->addMember($member);
+		}
+
+		return $acl->id;
+	}
 }
 
 /**

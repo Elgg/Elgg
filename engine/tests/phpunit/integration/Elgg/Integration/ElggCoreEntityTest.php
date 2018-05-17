@@ -10,7 +10,7 @@ use ElggUser;
  * @group Entities
  * @group EntityPrivateSettings
  */
-class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
+class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 	/**
 	 * @var ElggObject
@@ -18,6 +18,8 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 	protected $entity;
 
 	public function up() {
+		_elgg_services()->session->setLoggedInUser($this->getAdmin());
+
 		// use \ElggObject since \ElggEntity is an abstract class
 		$this->entity = new ElggObject();
 		$this->entity->subtype = 'elgg_entity_test_subtype';
@@ -35,6 +37,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		if ($this->entity) {
 			$this->entity->delete();
 		}
+		_elgg_services()->session->removeLoggedInUser();
 	}
 
 	public function testSubtypePropertyReads() {
@@ -42,7 +45,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$guid = $this->entity->guid;
 
 		$subtype_prop = $this->entity->subtype;
-		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
+		$this->assertEquals('elgg_entity_test_subtype', $subtype_prop);
 
 		$this->entity->invalidateCache();
 
@@ -50,7 +53,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->entity = get_entity($guid);
 
 		$subtype_prop = $this->entity->subtype;
-		$this->assertEqual($subtype_prop, 'elgg_entity_test_subtype');
+		$this->assertEquals('elgg_entity_test_subtype', $subtype_prop);
 	}
 
 	public function testUnsavedEntitiesDontRecordAttributeSets() {
@@ -60,15 +63,15 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$entity->description = 'Bar';
 		$entity->container_guid = elgg_get_logged_in_user_guid();
 
-		$this->assertEqual($entity->getOriginalAttributes(), []);
+		$this->assertEquals([], $entity->getOriginalAttributes());
 	}
 
 	public function testAlreadyPersistedAttributeSetsAreRecorded() {
 		$this->entity->container_guid = elgg_get_site_entity()->guid;
 
-		$this->assertEqual($this->entity->getOriginalAttributes(), [
+		$this->assertEquals([
 			'container_guid' => elgg_get_logged_in_user_guid(),
-		]);
+		], $this->entity->getOriginalAttributes());
 	}
 
 	public function testModifiedAttributesAreAvailableDuringUpdateNotAfter() {
@@ -77,21 +80,21 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$calls = 0;
 		$handler = function ($event, $type, ElggObject $object) use (&$calls) {
 			$calls++;
-			$this->assertEqual($object->getOriginalAttributes(), [
+			$this->assertEquals([
 				'container_guid' => elgg_get_logged_in_user_guid(),
-			]);
+			], $object->getOriginalAttributes());
 		};
 
 		elgg_register_event_handler('update', 'object', $handler);
 		elgg_register_event_handler('update:after', 'object', $handler);
 		$this->entity->save();
 
-		$this->assertEqual($calls, 2);
+		$this->assertEquals(2, $calls);
 
 		elgg_unregister_event_handler('update', 'object', $handler);
 		elgg_unregister_event_handler('update:after', 'object', $handler);
 
-		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+		$this->assertEquals([], $this->entity->getOriginalAttributes());
 	}
 
 	public function testModifedAttributesSettingIntsAsStrings() {
@@ -99,53 +102,54 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->entity->save();
 
 		$this->entity->container_guid = (string) elgg_get_logged_in_user_guid();
-		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+		$this->assertEquals([], $this->entity->getOriginalAttributes());
 	}
 
 	public function testMultipleAttributeSetsDontOverwriteOriginals() {
 		$this->entity->container_guid = 1;
 		$this->entity->container_guid = 2;
 
-		$this->assertEqual($this->entity->getOriginalAttributes(), [
+		$this->assertEquals([
 			'container_guid' => elgg_get_logged_in_user_guid(),
-		]);
+		], $this->entity->getOriginalAttributes());
 	}
 
 	public function testGetSubtype() {
 		$guid = $this->entity->guid;
 
-		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
+		$this->assertEquals('elgg_entity_test_subtype', $this->entity->getSubtype());
 
 		$this->entity->invalidateCache();
 
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
-		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
+		$this->assertEquals('elgg_entity_test_subtype', $this->entity->getSubtype());
 	}
 
 	public function testElggEntityGetAndSetAnnotations() {
 
-		$this->assertIdentical($this->entity->getAnnotations(['annotation_name' => 'non_existent']), []);
+		$this->assertEquals([], $this->entity->getAnnotations(['annotation_name' => 'non_existent']));
 
 		// save entity and check for annotation
 		$this->entity->annotate('non_existent', 'foo');
 		$annotations = $this->entity->getAnnotations(['annotation_name' => 'non_existent']);
 		$this->assertInstanceOf(\ElggAnnotation::class, $annotations[0]);
-		$this->assertIdentical($annotations[0]->name, 'non_existent');
-		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
+		$this->assertEquals('non_existent', $annotations[0]->name);
+		$this->assertEquals(1, $this->entity->countAnnotations('non_existent'));
 
 		// @todo belongs in Annotations API test class
-		$this->assertEqual($annotations, elgg_get_annotations([
+		$this->assertEquals($annotations, elgg_get_annotations([
 			'guid' => $this->entity->getGUID(),
 			'annotation_name' => 'non_existent'
 		]));
-		$this->assertEqual($annotations, elgg_get_annotations([
+		
+		$this->assertEquals($annotations, elgg_get_annotations([
 			'guid' => $this->entity->getGUID(),
 			'annotation_name' => 'non_existent',
 			'type' => 'object'
 		]));
-		$this->assertEqual([], elgg_get_annotations([
+		$this->assertEquals([], elgg_get_annotations([
 			'guid' => $this->entity->getGUID(),
 			'type' => 'object',
 			'subtype' => 'fail'
@@ -153,11 +157,11 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		//  clear annotation
 		$this->assertTrue($this->entity->deleteAnnotations());
-		$this->assertEqual($this->entity->countAnnotations('non_existent'), 0);
+		$this->assertEquals(0, $this->entity->countAnnotations('non_existent'));
 
 		// @todo belongs in Annotations API test class
-		$this->assertIdentical([], elgg_get_annotations(['guid' => $this->entity->getGUID()]));
-		$this->assertIdentical([], elgg_get_annotations([
+		$this->assertEquals([], elgg_get_annotations(['guid' => $this->entity->getGUID()]));
+		$this->assertEquals([], elgg_get_annotations([
 			'guid' => $this->entity->getGUID(),
 			'type' => 'object'
 		]));
@@ -168,7 +172,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$time_minimum = time() - 5;
 		$this->assertTrue($this->entity->time_created > $time_minimum);
 		$this->assertTrue($this->entity->time_updated > $time_minimum);
-		$this->assertEqual($this->entity->container_guid, elgg_get_logged_in_user_guid());
+		$this->assertEquals(elgg_get_logged_in_user_guid(), $this->entity->container_guid);
 	}
 
 	public function testElggEntityDisableAndEnable() {
@@ -181,10 +185,10 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		// ensure disabled by comparing directly with database
 		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
-		$this->assertIdentical($entity->enabled, 'no');
+		$this->assertEquals('no', $entity->enabled);
 
 		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
-		$this->assertIdentical($annotation->enabled, 'no');
+		$this->assertEquals('no', $annotation->enabled);
 
 		// re-enable for deletion to work
 		$this->assertTrue($this->entity->enable());
@@ -192,10 +196,10 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		// check enabled
 		// check annotations and metadata enabled.
 		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
-		$this->assertIdentical($entity->enabled, 'yes');
+		$this->assertEquals('yes', $entity->enabled);
 
 		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
-		$this->assertIdentical($annotation->enabled, 'yes');
+		$this->assertEquals('yes', $annotation->enabled);
 
 		$this->assertTrue($this->entity->delete());
 		$this->entity = null;
@@ -219,14 +223,14 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		// disable entities container by $this->entity
 		$this->assertTrue($this->entity->disable());
 		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
-		$this->assertIdentical($entity->enabled, 'no');
+		$this->assertEquals('no', $entity->enabled);
 
 		// enable entities that were disabled with the container (but not $obj2)
 		$this->assertTrue($this->entity->enable());
 		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
-		$this->assertIdentical($entity->enabled, 'yes');
+		$this->assertEquals('yes', $entity->enabled);
 		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj2->guid}'");
-		$this->assertIdentical($entity->enabled, 'no');
+		$this->assertEquals('no', $entity->enabled);
 
 		// cleanup
 		$this->assertTrue($obj2->enable());
@@ -249,19 +253,19 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$obj->save();
 
 		// Test default size
-		$this->assertEqual($obj->getIconURL(), elgg_normalize_url('medium.jpg'));
+		$this->assertEquals(elgg_normalize_url('medium.jpg'), $obj->getIconURL());
 		// Test size
-		$this->assertEqual($obj->getIconURL('small'), elgg_normalize_url('small.jpg'));
+		$this->assertEquals(elgg_normalize_url('small.jpg'), $obj->getIconURL('small'));
 		// Test mixed params
-		$this->assertEqual($obj->getIconURL('small'), $obj->getIconURL(['size' => 'small']));
+		$this->assertEquals($obj->getIconURL(['size' => 'small']), $obj->getIconURL('small'));
 		// Test bad param
-		$this->assertEqual($obj->getIconURL(new \stdClass), elgg_normalize_url('medium.jpg'));
+		$this->assertEquals(elgg_normalize_url('medium.jpg'), $obj->getIconURL(new \stdClass));
 
-		elgg_unregister_plugin_hook_handler('entity:icon:url', 'object', $handler, 99999);
+		elgg_unregister_plugin_hook_handler('entity:icon:url', 'object', $handler);
 	}
 
 	public function testCreateWithContainerGuidEqualsZero() {
-		$user = $this->createOne('user');
+		$user = $this->createUser();
 
 		$object = new ElggObject();
 		$object->subtype = $this->getRandomSubtype();
@@ -271,9 +275,9 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		// If container_guid attribute is not updated with owner_guid attribute
 		// ElggEntity::getContainerEntity() would return false
 		// thus terminating save()
-		$this->assertTrue($object->save());
+		$this->assertGreaterThan(0, $object->save());
 
-		$this->assertEqual($user->guid, $object->getContainerGUID());
+		$this->assertEquals($object->getContainerGUID(), $user->guid);
 
 		$user->delete();
 	}
@@ -283,10 +287,11 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		$this->assertTrue($this->entity->save());
 
-		$user = $this->createOne('user');
+		$user = $this->createUser();
 
-		$old_user = $this->replaceSession($user);
-
+		$old_user = _elgg_services()->session->getLoggedInUser();
+		_elgg_services()->session->setLoggedInUser($user);
+		
 		// even owner can't bypass permissions
 		elgg_register_plugin_hook_handler('permissions_check', 'object', [
 			\Elgg\Values::class,
@@ -319,8 +324,9 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertTrue($this->entity->save());
 		elgg_set_ignore_access($ia);
 
-		$this->replaceSession($old_user);
 		$user->delete();
+
+		_elgg_services()->session->setLoggedInUser($old_user);
 	}
 
 	/**
@@ -342,7 +348,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$metadata_event_handler = function ($event, $type, $metadata) use (&$metadata_called) {
 			/* @var $metadata \ElggMetadata */
 			$entity = get_entity($metadata->entity_guid);
-			$this->assertEqual($metadata->entity_guid, $entity->guid);
+			$this->assertEquals($entity->guid, $metadata->entity_guid);
 			$metadata_called = true;
 		};
 
@@ -350,7 +356,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$annotation_event_handler = function ($event, $type, $annotation) use (&$annotation_called) {
 			/* @var $metadata \ElggAnnotation */
 			$entity = get_entity($annotation->entity_guid);
-			$this->assertEqual($annotation->entity_guid, $entity->guid);
+			$this->assertEquals($entity->guid, $annotation->entity_guid);
 			$annotation_called = true;
 		};
 
@@ -387,7 +393,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$metadata_event_handler = function ($event, $type, $metadata) use (&$metadata_called) {
 			/* @var $metadata \ElggMetadata */
 			$entity = get_entity($metadata->entity_guid);
-			$this->assertEqual($metadata->entity_guid, $entity->guid);
+			$this->assertEquals($entity->guid, $metadata->entity_guid);
 			$metadata_called = true;
 		};
 
@@ -395,7 +401,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$annotation_event_handler = function ($event, $type, $annotation) use (&$annotation_called) {
 			/* @var $metadata \ElggAnnotation */
 			$entity = get_entity($annotation->entity_guid);
-			$this->assertEqual($annotation->entity_guid, $entity->guid);
+			$this->assertEquals($entity->guid, $annotation->entity_guid);
 			$annotation_called = true;
 		};
 
@@ -432,7 +438,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$metadata_event_handler = function ($event, $type, $metadata) use (&$metadata_called) {
 			/* @var $metadata \ElggMetadata */
 			$entity = get_entity($metadata->entity_guid);
-			$this->assertEqual($metadata->entity_guid, $entity->guid);
+			$this->assertEquals($entity->guid, $metadata->entity_guid);
 			$metadata_called = true;
 		};
 
@@ -440,7 +446,7 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$annotation_event_handler = function ($event, $type, $annotation) use (&$annotation_called) {
 			/* @var $metadata \ElggAnnotation */
 			$entity = get_entity($annotation->entity_guid);
-			$this->assertEqual($annotation->entity_guid, $entity->guid);
+			$this->assertEquals($entity->guid, $annotation->entity_guid);
 			$annotation_called = true;
 		};
 

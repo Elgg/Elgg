@@ -401,7 +401,10 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		$object->invalidateCache();
 
 		$object = get_entity($guid);
-		$this->assertEqual($object->access_id, ACCESS_PRIVATE);
+		$this->assertEqual(
+			$object->getOwnerEntity()->getOwnedAccessCollection(\ElggAccessCollection::PRIVATE)->id,
+			$object->access_id
+		);
 
 		$object->delete();
 	}

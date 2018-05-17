@@ -131,30 +131,40 @@ Relationship events
 Entity events
 =============
 
-**create, <entity type>**
-    Triggered for user, group, object, and site entities after creation. Return false to delete entity.
+**create:before, <entity type>**
+	Triggered before entity is written to the database and attributes are validated.
+	Handlers can use this hook to alter entity attributes.
+	Handlers can return ``false`` to stop an entity from being written to the database.
 
-**update, <entity type>**
-    Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
-    The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
-    the entity was last saved.
+**create:after, <entity type>**
+	Triggered after an entity has been created.
+	Return from handlers is not honored.
+
+**update:before, <entity type>**
+	Triggered before updated entity properties have been written to the database.
+	Return ``false`` to prevent update.
+	The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
+	the entity was last saved.
 
 **update:after, <entity type>**
-    Triggered after an update for the user, group, object, and site entities.
-    The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
-    the entity was last saved.
+	Triggered after an update for the user, group, object, and site entities.
+	The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
+	the entity was last saved.
 
-**delete, <entity type>**
-    Triggered before entity deletion. Return false to prevent deletion.
+**delete:before, <entity type>**
+	Triggered before entity deletion. Return ``false`` to prevent deletion.
+
+**delete:after, <entity type>**
+	Triggered after the entity has been deleted.
 
 **disable, <entity type>**
-    Triggered before the entity is disabled. Return false to prevent disabling.
+	Triggered before the entity is disabled. Return false to prevent disabling.
 
 **disable:after, <entity type>**
 	Triggered after the entity is disabled.
 
 **enable, <entity type>**
-    Return false to prevent enabling.
+	Return false to prevent enabling.
 
 **enable:after, <entity type>**
 	Triggered after the entity is enabled.

@@ -834,13 +834,11 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
  * @codeCoverageIgnore
  */
 function _elgg_entities_test($hook, $type, $value) {
-	$value[] = ElggEntityUnitTest::class;
 	$value[] = ElggCoreGetEntitiesFromAnnotationsTest::class;
 	$value[] = ElggCoreGetEntitiesFromMetadataTest::class;
 	$value[] = ElggCoreGetEntitiesFromPrivateSettingsTest::class;
 	$value[] = ElggCoreGetEntitiesFromRelationshipTest::class;
 	$value[] = ElggEntityPreloaderIntegrationTest::class;
-	$value[] = ElggCoreObjectTest::class;
 	return $value;
 }
 

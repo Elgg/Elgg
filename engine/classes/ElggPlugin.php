@@ -50,6 +50,7 @@ class ElggPlugin extends ElggObject {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = "plugin";
+		$this->attributes['access_id'] = ACCESS_PUBLIC;
 	}
 
 	/**

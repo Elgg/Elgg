@@ -3,7 +3,7 @@
 /**
  * Controls access levels on \ElggEntity entities, metadata, and annotations.
  *
- * @warning ACCESS_DEFAULT and ACCESS_FRIENDS are placeholders for the input/access view.
+ * @warning ACCESS_DEFAULT, ACCESS_FRIENDS and ACCESS_PRIVATE are placeholders for the input/access view.
  * Do not use them when saving or updating an entity.
  *
  * @var int

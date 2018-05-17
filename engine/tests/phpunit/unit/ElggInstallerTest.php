@@ -96,6 +96,8 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		$app->loadCore();
 		$this->app = $app;
 
+		$app->_services->boot->getCache()->disable();
+
 		$this->app->_services->views->setViewtype('installation');
 		$this->app->_services->views->registerPluginViews(Paths::elgg());
 		$this->app->_services->translator->registerTranslations(Paths::elgg() . "install/languages/", true);

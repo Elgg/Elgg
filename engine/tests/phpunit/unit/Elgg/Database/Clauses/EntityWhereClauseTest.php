@@ -261,7 +261,7 @@ class EntityWhereClauseTest extends UnitTestCase {
 		$access->viewer_guid = 5;
 		$parts[] = $access->prepare($this->qb, 'alias');
 
-		$parts[] = $this->qb->expr()->eq('alias.guid', ':qb4');
+		$parts[] = $this->qb->expr()->eq('alias.guid', ':qb7');
 		$this->qb->param(1, ELGG_VALUE_INTEGER);
 
 		$expected = $this->qb->merge($parts);

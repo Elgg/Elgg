@@ -2,6 +2,7 @@
 
 namespace Elgg\Upgrades;
 
+use Elgg\HttpException;
 use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
@@ -78,21 +79,31 @@ class MigrateFriendsACL implements AsynchronousUpgrade {
 		// create acl
 		$acl_id = create_access_collection('friends', $user->guid, 'friends');
 		if (!$acl_id) {
-			$result->addError('Failed to create an ACL for user');
+			$result->addError("Failed to create a friends ACL for [user: $user->guid]");
+			$result->addFailures(1);
+
 			return $result;
 		}
 		
 		$acl = get_access_collection($acl_id);
-		
-		$this->addFriendsToACL($user, $acl);
-		$this->updateEntities($user, $acl);
-		$this->updateAnnotations($user, $acl);
-		
-		$result->addSuccesses(1);
+
+		try {
+			$this->addFriendsToACL($user, $acl);
+			$this->updateEntities($user, $acl);
+			$this->updateAnnotations($user, $acl);
+			$result->addSuccesses(1);
+		} catch (HttpException $ex) {
+			$result->addFailures(1);
+			$result->addError($ex->getMessage());
+		}
 	}
 	
 	protected function addFriendsToACL(\ElggUser $user, \ElggAccessCollection $acl) {
-		$friends = $user->getFriends(['batch' => true]);
+		$friends = $user->getFriends([
+			'batch' => true,
+			'limit' => 0,
+		]);
+
 		foreach ($friends as $friend) {
 			$acl->addMember($friend->guid);
 		}

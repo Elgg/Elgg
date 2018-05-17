@@ -188,10 +188,6 @@ User hooks
 	 * ``email`` - Email address that passes sanity checks
 	 * ``request`` - ``\Elgg\Request`` to the action controller
 
-**access:collections:write, user**
-	Filters an array of access permissions that the user ``$params['user_id']`` is allowed to save
-	content with. Permissions returned are of the form (id => 'Human Readable Name').
-
 **registeruser:validate:username, all**
 	Return boolean for if the string in ``$params['username']`` is valid for a username.
 	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
@@ -258,17 +254,19 @@ Access hooks
 
 	 * ``access_collection`` - `ElggAccessCollection`
 
-**access:collections:read, user**
-	Filters an array of access IDs that the user ``$params['user_id']`` can see.
+**access_collection:icon, access_collection**
+	Can be used to filter the icon of the access collection.
 
-	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
+	The ``$params`` array will contain:
+
+	 * ``access_collection`` - `ElggAccessCollection`
 
 **access:collections:write, user**
-	Filters an array of access IDs that the user ``$params['user_id']`` can write to. In
-	get_write_access_array(), this hook filters the return value, so it can be used to alter
-	the available options in the input/access view. For core plugins, the value "input_params"
-	has the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
-	"container_guid" (int) are provided. An empty entity value generally means the form is to
+	Filters an array of access IDs that the user ``$params['user_guid']`` can write to.
+	In ``get_write_access_array()`` this hook filters the return value, so it can be used to alter
+	the available options in the input/access view. For core plugins, the value ``$params['input_params']``
+	has the keys ``entity`` (ElggEntity|false), ``entity_type`` (string), ``entity_subtype`` (string),
+	``container_guid`` (int) are provided. An empty entity value generally means the form is to
 	create a new object.
 
 	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
@@ -289,8 +287,20 @@ Access hooks
 	Return false to prevent removal.
 
 **get_sql, access**
-    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
+	Filters SQL clauses restricting/allowing access to entities and annotations.
 
+	``$return`` value is a nested array of ``ands`` and ``ors``.
+
+	``$params`` includes:
+
+	 * ``table_alias`` - alias of the main table used in select clause
+	 * ``ignore_access`` - whether ignored access is enabled
+	 * ``use_enabled_clause`` - whether disabled entities are shown/hidden
+	 * ``access_column`` - column in the main table containing the access collection ID value
+	 * ``owner_guid_column`` - **is not always set**, column in the main table referencing the GUID of the owner
+	 * ``guid_column`` - **is not always set**, column in the main table referencing the GUID of the entity
+	 * ``enabled_column`` - **is not always set**, column in the main table referencing the enabled status of the entity
+	 * ``query_builder`` - an instance of the ``QueryBuilder``
 
 Action hooks
 ============

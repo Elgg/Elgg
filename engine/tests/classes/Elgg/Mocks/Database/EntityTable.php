@@ -347,11 +347,7 @@ class EntityTable extends DbEntityTable {
 			return true;
 		}
 
-		if ($row->access_id == ACCESS_PRIVATE && $row->owner_guid == $user->guid) {
-			return true;
-		}
-
-		$access_list = _elgg_services()->accessCollections->getAccessList($user->guid);
+		$access_list = _elgg_services()->accessCollections->getAccessArray($user->guid);
 		if (in_array($row->access_id, $access_list)) {
 			return true;
 		}

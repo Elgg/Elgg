@@ -142,4 +142,22 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->obj->getLongitude(), $long);
 	}
 
+	public function testFailedSaveDoesNotPropagateAttributes() {
+
+		$owner = $this->createUser();
+
+		$object = $this->createObject([
+			'owner_guid' => $owner->guid,
+		]);
+
+		$new_owner = $this->createUser();
+
+		$object->owner_guid = $new_owner->guid;
+
+		// Should fail because of permissions
+		$this->assertFalse($object->save());
+
+		$this->assertEquals($owner->guid, $object->owner_guid);
+	}
+
 }
