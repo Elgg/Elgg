@@ -347,10 +347,10 @@ define(function (require) {
 		};
 
 		/**
-		 * Convert a form/element to a data object. Use this instead of $.serialize to allow other plugins
+		 * Convert a form element to a FormData object. Use this instead of $.serialize to allow other plugins
 		 * to alter the request by plugin hook.
 		 *
-		 * @param {*} el HTML element or CSS selector
+		 * @param {*} el HTML form element or CSS selector (to a form element)
 		 * @returns {FormData}
 		 */
 		this.objectify = function (el) {
