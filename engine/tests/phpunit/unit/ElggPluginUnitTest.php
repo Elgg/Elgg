@@ -222,7 +222,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->plugins->addTestingPlugin($plugin);
 
-		\Elgg\Application::upgrade();
+		_elgg_services()->upgrades->run();
 
 		$methods = [
 			'upgrade',

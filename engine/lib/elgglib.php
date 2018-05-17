@@ -1100,8 +1100,10 @@ function elgg_http_validate_signed_url($url) {
 
 /**
  * Validates if the HMAC signature of the current request is valid
- * Issues 403 response if signature is inalid
+ * Issues 403 response if signature is invalid
+ *
  * @return void
+ * @throws \Elgg\HttpException
  */
 function elgg_signed_request_gatekeeper() {
 
@@ -1109,12 +1111,10 @@ function elgg_signed_request_gatekeeper() {
 		case 'cli' :
 		case 'phpdbg' :
 			return;
+	}
 
-		default :
-			if (!elgg_http_validate_signed_url(current_page_url())) {
-				register_error(elgg_echo('invalid_request_signature'));
-				forward('', '403');
-			}
+	if (!elgg_http_validate_signed_url(current_page_url())) {
+		throw new \Elgg\HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
 	}
 }
 
