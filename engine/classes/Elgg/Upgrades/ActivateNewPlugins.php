@@ -49,11 +49,16 @@ class ActivateNewPlugins implements SystemUpgrade  {
 	 * {@inheritdoc}
 	 */
 	public function run(Result $result, $offset) {
+		_elgg_generate_plugin_entities();
+
 		foreach ($this->plugins as $id) {
 			$plugin = elgg_get_plugin_from_id($id);
 
 			if (!$plugin) {
 				$result->addFailures(1);
+				$result->addError(elgg_echo('PluginException:InvalidPlugin', [
+					$id,
+				]));
 				continue;
 			}
 
@@ -66,7 +71,7 @@ class ActivateNewPlugins implements SystemUpgrade  {
 				if ($plugin->activate()) {
 					$result->addSuccesses(1);
 				} else {
-					$result->addError($plugin->getError());
+					$result->addError($plugin->getID() . ': ' . $plugin->getError());
 					$result->addFailures(1);
 				}
 			} catch (\Exception $ex) {

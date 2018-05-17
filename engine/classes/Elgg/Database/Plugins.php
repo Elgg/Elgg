@@ -22,6 +22,7 @@ use ElggPlugin;
 use ElggSession;
 use ElggUser;
 use Exception;
+use Psr\Log\LogLevel;
 
 /**
  * Persistent, installation-wide key-value storage.

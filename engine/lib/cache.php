@@ -304,7 +304,6 @@ function _elgg_symlink_cache() {
  * @access private
  */
 function _elgg_cache_init() {
-	_elgg_services()->simpleCache->init();
 	_elgg_services()->systemCache->init();
 }
 
@@ -361,6 +360,31 @@ function _elgg_enable_caches() {
 }
 
 /**
+ * Rebuild public service container
+ *
+ * @return void
+ * @internal
+ * @access private
+ */
+function _elgg_rebuild_public_container() {
+	$services = _elgg_services();
+
+	$dic_builder = new \DI\ContainerBuilder(\Elgg\Di\PublicContainer::class);
+	$dic_builder->useAnnotations(false);
+	$dic_builder->setDefinitionCache($services->dic_cache);
+
+	$definitions = $services->dic_loader->getDefinitions();
+	foreach ($definitions as $definition) {
+		$dic_builder->addDefinitions($definition);
+	}
+
+	$dic = $dic_builder->build();
+
+	_elgg_services()->setValue('dic_builder', $dic_builder);
+	_elgg_services()->setValue('dic', $dic);
+}
+
+/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
@@ -369,4 +393,5 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	$events->registerHandler('cache:flush:before', 'system', '_elgg_disable_caches');
 	$events->registerHandler('cache:flush', 'system', '_elgg_clear_caches');
 	$events->registerHandler('cache:flush:after', 'system', '_elgg_enable_caches');
+	$events->registerHandler('cache:flush:after', 'system', '_elgg_rebuild_public_container');
 };

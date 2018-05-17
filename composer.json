@@ -50,7 +50,8 @@
         "bower-asset/fontawesome": "~5.0",
         "monolog/monolog": "^1.23",
         "symfony/polyfill-php72": "^1.7",
-        "symfony/polyfill-php71": "^1.7"
+        "symfony/polyfill-php71": "^1.7",
+        "react/promise": "^2.5"
     },
     "config": {
         "process-timeout": 0,

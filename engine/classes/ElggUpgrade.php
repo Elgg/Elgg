@@ -124,10 +124,6 @@ class ElggUpgrade extends ElggObject {
 			return false;
 		}
 
-		if ($batch->shouldBeSkipped()) {
-			return false;
-		}
-
 		return $batch;
 	}
 

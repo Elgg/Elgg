@@ -357,6 +357,8 @@ class ElggPluginPackage {
 		try {
 			$this->manifest = new \ElggPluginManifest($file, $this->id);
 		} catch (Exception $e) {
+			elgg_log($e, \Psr\Log\LogLevel::ERROR);
+
 			$this->errorMsg = $e->getMessage();
 
 			return false;
@@ -495,7 +497,7 @@ class ElggPluginPackage {
 				if ($result !== null) {
 					// unless we're doing a full report, break as soon as we fail.
 					if (!$full_report && !$result['status']) {
-						$this->errorMsg = "Missing dependencies.";
+						$this->errorMsg = "Missing dependency [{$dep['type']}: {$dep['name']}].";
 
 						return $result['status'];
 					} else {

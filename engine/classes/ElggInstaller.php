@@ -1325,12 +1325,7 @@ class ElggInstaller {
 	 */
 	protected function installDatabase() {
 		try {
-			$ret = $this->getApp()->migrate();
-			if ($ret) {
-				init_site_secret();
-			}
-
-			return $ret;
+			return $this->getApp()->migrate();
 		} catch (\Exception $e) {
 			return false;
 		}

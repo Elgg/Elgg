@@ -64,21 +64,39 @@ class Cli {
 		$commands = $this->hooks->trigger('commands', 'cli', null, []);
 
 		foreach ($commands as $command) {
-			if (class_exists($command) && is_subclass_of($command, BaseCommand::class)) {
-				$command = new $command();
-				/* @var $command BaseCommand */
-
-				if ($this->logger) {
-					$command->setLogger($this->logger);
-				}
-
-				$command->addOption('as', 'u', InputOption::VALUE_OPTIONAL,
-					'Execute the command on behalf of a user with the given username'
-				);
-
-				$this->console->add($command);
-			}
+			$this->add($command);
 		}
+	}
+
+	/**
+	 * Add a new CLI command
+	 *
+	 * @param string $command Command class
+	 *                        Must extend \Elgg\Cli\BaseCommand
+	 *
+	 * @return void
+	 */
+	public function add($command) {
+		if (!class_exists($command)) {
+			return;
+		}
+
+		if (!is_subclass_of($command, BaseCommand::class)) {
+			return;
+		}
+
+		$command = new $command();
+		/* @var $command BaseCommand */
+
+		if ($this->logger) {
+			$command->setLogger($this->logger);
+		}
+
+		$command->addOption('as', 'u', InputOption::VALUE_OPTIONAL,
+			'Execute the command on behalf of a user with the given username'
+		);
+
+		$this->console->add($command);
 	}
 
 	/**

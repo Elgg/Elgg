@@ -3,12 +3,17 @@
 namespace Elgg\Cli;
 
 use Elgg\Application;
+use Elgg\Http\OkResponse;
+use function React\Promise\all;
+use React\Promise\Deferred;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * elgg-cli upgrade [async]
  */
-class UpgradeCommand extends Command {
+class UpgradeCommand extends BaseCommand {
 
 	/**
 	 * {@inheritdoc}
@@ -24,15 +29,69 @@ class UpgradeCommand extends Command {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function command() {
+	protected function execute(InputInterface $input, OutputInterface $output) {
+		$this->input = $input;
+		$this->output = $output;
 
 		$async = in_array('async', $this->argument('async'));
 
-		Application::upgrade($async);
+		$return = 0;
 
-		system_message('Your system has been upgraded');
+		Application::migrate();
 
-		return 0;
+		$app = Application::getInstance();
+		$initial_app = clone $app;
+
+		$boot = new Application\BootHandler($app);
+		$boot->bootServices();
+
+		$upgrades = _elgg_services()->upgrades->getPendingUpgrades(false);
+		$job = _elgg_services()->upgrades->run($upgrades);
+
+		$job->done(
+			function () {
+				$this->notice('System has been upgraded');
+			},
+			function ($errors) use (&$return) {
+				$this->error('System upgrade has failed');
+
+				if (!is_array($errors)) {
+					$errors = [$errors];
+				}
+
+				foreach ($errors as $error) {
+					$this->error($error);
+				}
+				$return = 1;
+			}
+		);
+
+		// We want to reboot the application, because some of the services (e.g. dic) can bootstrap themselves again
+		$app = $initial_app;
+		Application::setInstance($initial_app);
+		$app->start();
+
+		$upgrades = _elgg_services()->upgrades->getPendingUpgrades($async);
+		$job = _elgg_services()->upgrades->run($upgrades);
+
+		$job->done(
+			function () {
+				$this->notice('Plugins have been upgraded');
+			},
+			function ($errors) use (&$return) {
+				$this->error('Plugin upgrade has failed');
+
+				if (!is_array($errors)) {
+					$errors = [$errors];
+				}
+
+				foreach ($errors as $error) {
+					$this->error($error);
+				}
+				$return = 1;
+			}
+		);
+
+		return $return;
 	}
-
 }

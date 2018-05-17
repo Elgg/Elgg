@@ -9,6 +9,7 @@ use Elgg\Assets\CssCompiler;
 use Elgg\Cache\CompositeCache;
 use Elgg\Cache\DataCache;
 use Elgg\Cache\SessionCache;
+use Elgg\Cli\Progress;
 use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
@@ -20,6 +21,7 @@ use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\NullOutput;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 
 /**
@@ -46,7 +48,8 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\ClassLoader                               $classLoader
  * @property-read \Elgg\Cli                                       $cli
  * @property-read \Symfony\Component\Console\Input\ArgvInput      $cli_input
- * @property-read \Symfony\Component\Console\Output\ConsoleOutput $cli_output
+ * @property-read \Symfony\Component\Console\Output\OutputInterface $cli_output
+ * @property-read \Elgg\Cli\Progress                              $cli_progress
  * @property-read \Elgg\Cron                                      $cron
  * @property-read \ElggCrypto                                     $crypto
  * @property-read \Elgg\Config                                    $config
@@ -247,7 +250,15 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('cli_output', function(ServiceProvider $c) {
-			return new ConsoleOutput();
+			if ('cli' === PHP_SAPI) {
+				return new ConsoleOutput();
+			} else {
+				return new NullOutput();
+			}
+		});
+
+		$this->setFactory('cli_progress', function(ServiceProvider $c) {
+			return new Progress($c->cli_output);
 		});
 
 		$this->setFactory('config', function (ServiceProvider $sp) use ($config) {
@@ -638,7 +649,8 @@ class ServiceProvider extends DiContainer {
 				$c->config,
 				$c->logger,
 				$c->mutex,
-				$c->systemMessages
+				$c->systemMessages,
+				$c->cli_progress
 			);
 		});
 

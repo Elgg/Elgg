@@ -12,7 +12,7 @@ use Stash\Invalidation;
  * Boots Elgg and manages a cache of data needed during boot
  *
  * @access private
- * @since 2.1
+ * @since  2.1
  */
 class BootService {
 
@@ -23,20 +23,13 @@ class BootService {
 	 * The default TTL if not set in settings.php
 	 */
 	const DEFAULT_BOOT_CACHE_TTL = 3600;
-	
+
 	/**
 	 * The default limit for the number of plugin settings a plugin can have before it won't be loaded into bootdata
 	 *
 	 * Can be set in settings.php
 	 */
 	const DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT = 40;
-
-	/**
-	 * Has the cache already been invalidated this request? Avoids thrashing
-	 *
-	 * @var bool
-	 */
-	private $was_cleared = false;
 
 	/**
 	 * Cache
@@ -105,13 +98,6 @@ class BootService {
 
 		if (!$config->elgg_config_set_secret) {
 			$site_secret = SiteSecret::fromConfig($config);
-			if (!$site_secret) {
-				// The 2.3 installer doesn't create a site key (it's created on-demand on the first request)
-				// so for our Travis upgrade testing we need to check for this and create one on the spot.
-				if (defined('UPGRADING')) {
-					$site_secret = SiteSecret::regenerate($services->crypto, $services->configTable);
-				}
-			}
 			if ($site_secret) {
 				$services->setValue('siteSecret', $site_secret);
 			} else {
@@ -149,9 +135,9 @@ class BootService {
 		foreach ($data->getPluginMetadata() as $guid => $metadata) {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}
-		
+
 		$services->plugins->setBootPlugins($data->getActivePlugins());
-		
+
 		// use value in settings.php if available
 		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
 		$services->logger->setLevel($debug);
@@ -184,13 +170,10 @@ class BootService {
 	 * @return void
 	 */
 	public function invalidateCache() {
-		if (!$this->was_cleared) {
-			$this->cache->clear();
-			_elgg_services()->plugins->setBootPlugins(null);
-			_elgg_config()->system_cache_loaded = false;
-			_elgg_config()->_boot_cache_hit = false;
-			$this->was_cleared = true;
-		}
+		$this->cache->clear();
+		_elgg_services()->plugins->setBootPlugins(null);
+		_elgg_config()->system_cache_loaded = false;
+		_elgg_config()->_boot_cache_hit = false;
 	}
 
 	/**

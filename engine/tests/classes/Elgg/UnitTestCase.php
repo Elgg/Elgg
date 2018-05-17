@@ -4,7 +4,9 @@ namespace Elgg;
 
 use Elgg\Mocks\Di\MockServiceProvider;
 use Psr\Log\LogLevel;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Tests\Output\TestOutput;
 
 /**
  * Unit test abstraction class
@@ -39,6 +41,10 @@ abstract class UnitTestCase extends BaseTestCase {
 		], $params));
 
 		Application::setInstance($app);
+
+		$cli_output = new NullOutput();
+		$cli_output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+		$app->_services->setValue('cli_output', $cli_output);
 
 		if (in_array('--verbose', $_SERVER['argv'])) {
 			$app->_services->logger->setLevel(LogLevel::DEBUG);

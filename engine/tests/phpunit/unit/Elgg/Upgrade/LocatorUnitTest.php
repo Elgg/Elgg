@@ -66,6 +66,6 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 
 		$batch = $upgrade->getBatch();
 
-		$this->assertFalse($batch);
+		$this->assertTrue($batch->shouldBeSkipped());
 	}
 }

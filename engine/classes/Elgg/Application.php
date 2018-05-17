@@ -5,6 +5,7 @@ namespace Elgg;
 use ClassException;
 use ConfigurationException;
 use DatabaseException;
+use Elgg\Application\BootHandler;
 use Elgg\Application\ErrorHandler;
 use Elgg\Application\ExceptionHandler;
 use Elgg\Database\DbConfig;
@@ -20,7 +21,6 @@ use Exception;
 use InstallationException;
 use InvalidArgumentException;
 use InvalidParameterException;
-use RuntimeException;
 use SecurityException;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirect;
 use Symfony\Component\HttpFoundation\Response;
@@ -194,63 +194,8 @@ class Application {
 	 * @internal
 	 */
 	public function bootCore() {
-		$config = $this->_services->config;
-
-		if ($config->boot_complete) {
-			return;
-		}
-
-		// in case not loaded already
-		$setups = $this->loadCore();
-
-		$hooks = $this->_services->hooks;
-		$events = $this->_services->events;
-
-		foreach ($setups as $setup) {
-			if ($setup instanceof \Closure) {
-				$setup($events, $hooks);
-			}
-		}
-
-		if (!$this->_services->db) {
-			// no database boot!
-			elgg_views_boot();
-			$this->_services->session->start();
-			$this->_services->translator->loadTranslations();
-
-			_elgg_init();
-			_elgg_input_init();
-			_elgg_nav_init();
-
-			$config->boot_complete = true;
-			$config->lock('boot_complete');
-			return;
-		}
-
-		// Connect to database, load language files, load configuration, init session
-		$this->_services->boot->boot($this->_services);
-
-		$events->registerHandler('plugins_boot:before', 'system', 'elgg_views_boot');
-		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');
-		$events->registerHandler('plugins_boot', 'system', '_elgg_register_actions');
-
-		// Load the plugins that are active
-		$this->_services->plugins->load();
-
-		// Allows registering handlers strictly before all init, system handlers
-		$events->triggerSequence('plugins_boot', 'system');
-
-		$this->_services->views->clampViewtypeToPopulatedViews();
-		$this->allowPathRewrite();
-
-		// Complete the boot process for both engine and plugins
-		$events->triggerSequence('init', 'system');
-
-		$config->boot_complete = true;
-		$config->lock('boot_complete');
-
-		// System loaded and ready
-		$events->triggerSequence('ready', 'system');
+		$boot = new BootHandler($this);
+		$boot->init();
 	}
 
 	/**
@@ -537,101 +482,28 @@ class Application {
 	 * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
 	 * to a relative URL.
 	 *
-	 * @param bool $async Execute pending async upgrades
 	 * @return void
+	 * @throws ClassException
+	 * @throws ConfigurationException
+	 * @throws DatabaseException
 	 * @throws InstallationException
+	 * @throws InvalidParameterException
+	 * @throws SecurityException
 	 */
-	public static function upgrade($async = false) {
-		// we want to know if an error occurs
-		ini_set('display_errors', 1);
-
-		set_time_limit(0);
-
-		$is_cli = (php_sapi_name() === 'cli');
-
-		$forward = function ($url) use ($is_cli) {
-			if ($is_cli) {
-				_elgg_services()->logger->notice("Open $url in your browser to continue.");
-
-				return;
-			}
-
-			forward($url);
-		};
-
-		if (!defined('UPGRADING')) {
-			// @todo This is really bad. Once set, it affects the global state for the entire script lifetime
-			// which has unwanted side effects during testing
-			// A better way would be to use a global or better yet set Application::$upgrading
-			define('UPGRADING', 'upgrading');
-		}
+	public static function upgrade() {
 
 		self::migrate();
 		self::start();
 
-		// check security settings
-		if (!$is_cli && _elgg_config()->security_protect_upgrade && !elgg_is_admin_logged_in()) {
-			// only admin's or users with a valid token can run upgrade.php
-			elgg_signed_request_gatekeeper();
-		}
+		$request = self::$_instance->_services->request;
 
-		$site_url = _elgg_config()->url;
-		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
+		$query = $request->getParams();
+		$base_url = elgg_normalize_site_url('upgrade/init');
+		$url = elgg_http_add_url_query_elements($base_url, $query);
 
-		// turn any full in-site URLs into absolute paths
-		$forward_url = get_input('forward', '/admin', false);
-		$forward_url = str_replace([$site_url, $site_host], '/', $forward_url);
-
-		if (strpos($forward_url, '/') !== 0) {
-			$forward_url = '/' . $forward_url;
-		}
-
-		if ($is_cli || (get_input('upgrade') == 'upgrade')) {
-			try {
-				_elgg_services()->upgrades->run($async);
-			} catch (RuntimeException $ex) {
-				_elgg_services()->systemMessages->addErrorMessage($ex->getMessage());
-				$forward($forward_url);
-			}
-		} else {
-			$rewriteTester = new \ElggRewriteTester();
-			$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
-			if (!$rewriteTester->runRewriteTest($url)) {
-				// see if there is a problem accessing the site at all
-				// due to ip restrictions for example
-				if (!$rewriteTester->runLocalhostAccessTest()) {
-					// note: translation may not be available until after upgrade
-					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
-					if ($msg === "installation:htaccess:localhost:connectionfailed") {
-						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
-							. "that curl is working and there are no IP restrictions preventing "
-							. "localhost connections.";
-					}
-					echo $msg;
-					exit;
-				}
-
-				// note: translation may not be available until after upgrade
-				$msg = elgg_echo("installation:htaccess:needs_upgrade");
-				if ($msg === "installation:htaccess:needs_upgrade") {
-					$msg = "You must update your .htaccess file (use install/config/htaccess.dist as a guide).";
-				}
-				echo $msg;
-				exit;
-			}
-
-			$vars = [
-				'forward' => $forward_url
-			];
-
-			// reset cache to have latest translations available during upgrade
-			elgg_reset_system_cache();
-
-			echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
-			exit;
-		}
-
-		$forward($forward_url);
+		$response = new SymfonyRedirect($url);
+		$response->prepare(self::$_instance->_services->request);
+		$response->send();
 	}
 
 	/**
@@ -701,8 +573,10 @@ class Application {
 	 * Allow plugins to rewrite the path.
 	 *
 	 * @return void
+	 * @access private
+	 * @internal
 	 */
-	private function allowPathRewrite() {
+	public function allowPathRewrite() {
 		$request = $this->_services->request;
 		$new = $this->_services->router->allowRewrite($request);
 		if ($new === $request) {

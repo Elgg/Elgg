@@ -13,6 +13,10 @@ class DeleteOldPlugins implements SystemUpgrade  {
 	protected $plugins = [
 		'htmlawed',
 		'aalborg_theme',
+		'legacy_urls',
+		'logbrowser',
+		'logrotate',
+		'twitter_api',
 	];
 
 	/**
@@ -55,6 +59,7 @@ class DeleteOldPlugins implements SystemUpgrade  {
 				continue;
 			}
 
+			_elgg_services()->logger->disable();
 			if (!$plugin->isValid()) {
 				if ($plugin->delete()) {
 					$result->addSuccesses(1);
@@ -63,6 +68,7 @@ class DeleteOldPlugins implements SystemUpgrade  {
 					$result->addError($plugin->getError());
 				}
 			}
+			_elgg_services()->logger->enable();
 		}
 	}
 
