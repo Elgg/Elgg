@@ -19,7 +19,7 @@ try {
 		elgg_delete_admin_notice('pending_upgrades');
 	}
 
-	return elgg_ok_response($result);
+	return elgg_ok_response($result->toArray());
 } catch (RuntimeException $ex) {
 	return elgg_error_response($ex->getMessage(), REFERRER, ELGG_HTTP_INTERNAL_SERVER_ERROR);
 }

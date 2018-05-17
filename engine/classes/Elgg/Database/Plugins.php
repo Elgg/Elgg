@@ -21,6 +21,7 @@ use ElggPlugin;
 use ElggSession;
 use ElggUser;
 use Exception;
+use Psr\Log\LogLevel;
 
 /**
  * Persistent, installation-wide key-value storage.
@@ -678,6 +679,8 @@ class Plugins {
 	 * @return void
 	 */
 	protected function disable(ElggPlugin $plugin, Exception $previous) {
+		elgg_log($previous, LogLevel::ERROR);
+
 		$disable_plugins = $this->config->auto_disable_plugins;
 		if ($disable_plugins === null) {
 			$disable_plugins = true;
