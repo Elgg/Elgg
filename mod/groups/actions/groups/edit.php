@@ -124,8 +124,8 @@ if ($is_new_group) {
 
 $old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
 
-$value = get_input('owner_guid');
-$new_owner_guid = ($value === null) ? $old_owner_guid : (int) $value;
+$value = (array) get_input('owner_guid');
+$new_owner_guid = empty($value) ? $old_owner_guid : (int) $value[0];
 
 if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 	// verify new owner is member and old owner/admin is logged in

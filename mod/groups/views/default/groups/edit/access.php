@@ -80,38 +80,16 @@ if ($entity instanceof \ElggGroup) {
 echo elgg_view_field($access_mode_params);
 
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
-	$members = [];
-
-	$dbprefix = elgg_get_config('dbprefix');
-
-	$members_entities = elgg_get_entities([
-		'type' => 'user',
-		'relationship' => 'member',
-		'relationship_guid' => $entity->getGUID(),
-		'inverse_relationship' => true,
-		'limit' => false,
-		'order_by_metadata' => [
-			[
-				'name' => 'name',
-				'direction' => 'ASC',
-			],
-		],
-		'batch' => true,
-	]);
-	
-	foreach ($members_entities as $member) {
-		$option_text = "{$member->getDisplayName()} (@{$member->username})";
-		$members[$member->guid] = htmlspecialchars($option_text, ENT_QUOTES, "UTF-8", false);
-	}
-	
 	$owner_guid_options = [
-		'#type' => 'select',
+		'#type' => 'userpicker',
 		'#label' => elgg_echo('groups:owner'),
 		'name' => 'owner_guid',
-		'id' => 'groups-owner-guid',
 		'value' =>  $owner_guid,
-		'options_values' => $members,
-		'class' => 'groups-owner-input',
+		'limit' => 1,
+		'handler' => 'livesearch/group_members',
+		'options' => [
+			'group_guid' => $entity->guid,
+		],
 	];
 	
 	if ($owner_guid == elgg_get_logged_in_user_guid()) {
