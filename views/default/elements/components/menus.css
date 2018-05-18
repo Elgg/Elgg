@@ -38,6 +38,14 @@
 .elgg-menu.elgg-menu-hz {
 	flex-direction: row;
 	align-items: center;
+	
+	> li {
+		margin: 0 0.25rem 0 0;
+	}
+}
+
+.elgg-module-menu .elgg-menu-hz > li {
+	margin: 0 0 0 0.25rem;
 }
 
 .elgg-menu-item-has-dropdown .elgg-child-menu {
@@ -204,6 +212,7 @@
 
 	.elgg-badge {
 		float: right;
+		margin-top: 0;
 	}
 
 	.elgg-anchor-icon {

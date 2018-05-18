@@ -27,7 +27,8 @@
 	display: inline-block;
 	color: $(text-color-strong);
 	background-color: $(background-color-soft);
-	padding: 3px 5px;
+	padding: .15rem .25rem;
+	margin-top: -.15rem;
 	text-align: center;
 	white-space: nowrap;
 	vertical-align: middle;
