@@ -212,6 +212,7 @@
 
 	.elgg-badge {
 		float: right;
+		margin-top: 0;
 	}
 
 	.elgg-anchor-icon {
