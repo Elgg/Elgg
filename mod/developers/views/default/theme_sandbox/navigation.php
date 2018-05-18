@@ -28,3 +28,5 @@ echo elgg_view_module('aside', "Menu Item with AMD require", elgg_view('theme_sa
 echo elgg_view_module('aside', "Menu Item with a dropdown submenu", elgg_view('theme_sandbox/navigation/dropdown'));
 
 echo elgg_view_module('aside', "Menu Item with a toggled submenu", elgg_view('theme_sandbox/navigation/toggle'));
+
+echo elgg_view_module('aside', "Simple horizontal menu", elgg_view('theme_sandbox/navigation/horizontal'));
