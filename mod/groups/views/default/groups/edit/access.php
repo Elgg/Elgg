@@ -86,7 +86,8 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 		'name' => 'owner_guid',
 		'value' =>  $owner_guid,
 		'limit' => 1,
-		'handler' => 'livesearch/group_members',
+		'match_on' => 'group_members',
+		'show_friends' => false,
 		'options' => [
 			'group_guid' => $entity->guid,
 		],
