@@ -1,4 +1,7 @@
 <?php
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+
 /**
  * Group activity widget
  */
@@ -14,11 +17,18 @@ if (empty($guid)) {
 	return;
 }
 
-$db_prefix = elgg_get_config('dbprefix');
 echo elgg_list_river([
 	'limit' => $num,
 	'pagination' => false,
-	'joins' => ["JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid"],
-	'wheres' => ["(e1.container_guid = $guid)"],
+	'joins' => [
+		new JoinClause('entities', 'e1', function(QueryBuilder $qb, $joined_alias, $main_alias) {
+			return $qb->compare("$joined_alias.guid", '=', "$main_alias.object_guid");
+		}),
+	],
+	'wheres' => [
+		function(QueryBuilder $qb) use ($guid) {
+			return $qb->compare('e1.container_guid', '=', $guid, ELGG_VALUE_INTEGER);
+		}
+	],
 	'no_results' => elgg_echo('activity:widgets:group_activity:content:noactivity'),
 ]);
