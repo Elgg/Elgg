@@ -29,7 +29,9 @@ if (elgg_extract('show_owner_block_menu', $vars, true)) {
 	$extra_class = 'elgg-owner-block-empty';
 }
 
-$body .= elgg_view('page/elements/owner_block/extend', $vars);
+if (elgg_view_exists('page/elements/owner_block/extend')) {
+	$body .= elgg_view('page/elements/owner_block/extend', $vars);
+}
 
 echo elgg_view_module('info', '', $body, [
 	'header' => $header,
