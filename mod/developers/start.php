@@ -64,7 +64,10 @@ function developers_process_settings() {
 				return $vars;
 			});
 
-			elgg_register_event_handler('shutdown', 'system', function() {
+			elgg_register_event_handler('shutdown', 'system', function() use ($handler) {
+				// Prevent errors in cli
+				$handler->close();
+				
 				$log_file = elgg()->config->log_cache;
 				if (is_file($log_file)) {
 					unlink($log_file);
