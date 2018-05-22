@@ -36,7 +36,7 @@ function developers_process_settings() {
 
 	ini_set('display_errors', (int) !empty($settings['display_errors']));
 
-	if (!empty($settings['screen_log'])) {
+	if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default')) {
 		// don't show in action/simplecache
 		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
 		if (!preg_match('~^(cache|action)/~', $path)) {

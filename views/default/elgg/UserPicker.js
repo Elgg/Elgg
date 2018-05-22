@@ -142,11 +142,16 @@ define(function(require) {
 		 * Get search type
 		 */
 		getSearchType: function() {
-			if (this.$wrapper.has('[type="checkbox"][name=match_on]')) {
-				return $('[name=match_on]', UserPicker.$wrapper).prop('checked') ? 'friends' : 'users';
-			} else {
-				return 'friends';
+			var defaultType = 'users';
+			if (this.$wrapper.has('[type="hidden"][name="match_on"]')) {
+				defaultType = $('[type="hidden"][name="match_on"]', UserPicker.$wrapper).val();
 			}
+			
+			if (this.$wrapper.has('[type="checkbox"][name="match_on"]:checked')) {
+				return $('[type="checkbox"][name=match_on]:checked', UserPicker.$wrapper).val();
+			}
+			
+			return defaultType;
 		}
 	};
 
