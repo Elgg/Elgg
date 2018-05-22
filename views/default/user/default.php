@@ -48,7 +48,9 @@ if ($entity->isBanned()) {
 	$subtitle .= elgg_format_element('div', [], $entity->briefdescription);
 	
 	$params['subtitle'] = $subtitle;
-	$params['content'] = elgg_view('user/status', ['entity' => $entity]);
+	if (elgg_view_exists('user/status')) {
+		$params['content'] = elgg_view('user/status', ['entity' => $entity]);
+	}
 }
 
 $params = $params + $vars;
