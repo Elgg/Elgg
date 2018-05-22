@@ -23,7 +23,6 @@ if (empty($sections)) {
 		]),
 		'topbar' => elgg_view('page/elements/topbar', $vars),
 		'header' => elgg_view('page/elements/header', $vars),
-		'navbar' => elgg_view('page/elements/navbar', $vars),
 		'admin-notices' => elgg_view('page/elements/admin_notices', $vars),
 		'body' => elgg_view('page/elements/body', $vars),
 		'footer' => elgg_view('page/elements/footer', $vars),

@@ -21,14 +21,17 @@ if (!$entity instanceof ElggEntity) {
 }
 
 // build image block content
-$metadata = elgg_view('object/elements/summary/metadata', $vars);
-$title = elgg_view('object/elements/summary/title', $vars);
-$subtitle = elgg_view('object/elements/summary/subtitle', $vars);
-$tags = elgg_view('object/elements/summary/tags', $vars);
-$extensions = elgg_view('object/summary/extend', $vars);
-$content = elgg_view('object/elements/summary/content', $vars);
+$summary = '';
+$summary .= elgg_view('object/elements/summary/metadata', $vars);
+$summary .= elgg_view('object/elements/summary/title', $vars);
+$summary .= elgg_view('object/elements/summary/subtitle', $vars);
+$summary .= elgg_view('object/elements/summary/tags', $vars);
 
-$summary = $metadata . $title . $subtitle . $tags . $extensions . $content;
+if (elgg_view_exists('object/summary/extend')) {
+	$summary .= elgg_view('object/summary/extend', $vars);
+}
+
+$summary .= elgg_view('object/elements/summary/content', $vars);
 
 // image block image
 $icon = elgg_view('object/elements/summary/icon', $vars);
