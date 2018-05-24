@@ -20,11 +20,9 @@ $pages = pages_get_navigation_tree($container);
 $options = array();
 
 foreach ($pages as $page) {
-	$spacing = "";
-	for ($i = 0; $i < $page['depth']; $i++) {
-		$spacing .= "--";
-	}
-	$options[$page['guid']] = "$spacing " . $page['title'];
+	$spacing = str_repeat('--', $page['depth']);
+	
+	$options[$page['guid']] = trim("{$spacing} {$page['title']}");
 }
 
 $defaults = array(
