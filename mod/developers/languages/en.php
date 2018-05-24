@@ -95,6 +95,7 @@ return array(
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg has unit and integration tests for detecting bugs in its core classes and functions.',
 	'developers:unit_tests:warning' => 'Warning: Do Not Run These Tests on a Production Site. They can corrupt your database.',
+	'developers:unit_tests:warning:dependencies' => "Warning: Elgg isn't installed as a root project, make sure you've all the Elgg Composer dev-dependencies installed.",
 	'developers:unit_tests:run' => 'Run',
 
 	// status messages
