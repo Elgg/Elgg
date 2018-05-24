@@ -83,52 +83,49 @@ function pages_get_navigation_tree($container) {
 		return;
 	}
 
-	$top_pages = new ElggBatch('elgg_get_entities', array(
+	$top_pages = new ElggBatch('elgg_get_entities', [
 		'type' => 'object',
 		'subtype' => 'page_top',
 		'container_guid' => $container->getGUID(),
 		'limit' => false,
-	));
+	]);
 
-	/* @var ElggBatch $top_pages Batch of top level pages */
+	$tree = [];
 
-	$tree = array();
-	$depths = array();
-
+	$get_children = function($parent_guid, $depth = 0) use (&$tree, &$get_children) {
+		$children = new ElggBatch('elgg_get_entities_from_metadata', [
+			'type' => 'object',
+			'subtype' => 'page',
+			'metadata_name' => 'parent_guid',
+			'metadata_value' => $parent_guid,
+			'limit' => false,
+		]);
+		
+		foreach ($children as $child) {
+			$tree[] = [
+				'guid' => $child->guid,
+				'title' => $child->getDisplayName(),
+				'url' => $child->getURL(),
+				'parent_guid' => $parent_guid,
+				'depth' => $depth + 1,
+			];
+			
+			$get_children($child->guid, $depth + 1);
+		}
+	};
+	
+	/* @var $page \ElggObject */
 	foreach ($top_pages as $page) {
-		$tree[] = array(
-			'guid' => $page->getGUID(),
-			'title' => $page->title,
+		$tree[] = [
+			'guid' => $page->guid,
+			'title' => $page->getDisplayName(),
 			'url' => $page->getURL(),
 			'depth' => 0,
-		);
-		$depths[$page->guid] = 0;
-
-		$stack = array();
-		array_push($stack, $page);
-		while (count($stack) > 0) {
-			$parent = array_pop($stack);
-			$children = new ElggBatch('elgg_get_entities_from_metadata', array(
-				'type' => 'object',
-				'subtype' => 'page',
-				'metadata_name' => 'parent_guid',
-				'metadata_value' => $parent->getGUID(),
-				'limit' => false,
-			));
-
-			foreach ($children as $child) {
-				$tree[] = array(
-					'guid' => $child->getGUID(),
-					'title' => $child->title,
-					'url' => $child->getURL(),
-					'parent_guid' => $parent->getGUID(),
-					'depth' => $depths[$parent->guid] + 1,
-				);
-				$depths[$child->guid] = $depths[$parent->guid] + 1;
-				array_push($stack, $child);
-			}
-		}
+		];
+		
+		$get_children($page->guid);
 	}
+	
 	return $tree;
 }
 
