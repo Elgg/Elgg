@@ -5,19 +5,27 @@
 
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
-require_once __DIR__ . '/../../autoloader.php';
+$autoload_root = dirname(dirname(__DIR__));
+if (!is_file("$autoload_root/vendor/autoload.php")) {
+	$autoload_root = dirname(dirname(dirname($autoload_root)));
+}
+require_once "$autoload_root/vendor/autoload.php";
 
 \Elgg\Application::start();
 
-require_once __DIR__ . '/ElggCoreUnitTest.php';
-require_once __DIR__ . '/ElggCoreGetEntitiesBaseTest.php';
+elgg_register_classes(__DIR__);
+
+if (!class_exists('TextReporter') || !class_exists('TestSuite')) {
+	echo "Some required classes for testing aren't available, please make sure you've installed the Elgg Composer dev-dependencies.";
+	exit(1);
+}
 
 // plugins that contain unit tests
 $plugins = array(
 	'groups',
 	'htmlawed',
 	'thewire',
-	'web_services'
+	'web_services',
 );
 
 // don't expect admin session for CLI
