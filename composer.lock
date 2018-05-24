@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cbb12d2e44ba8401526df31794f27b4b",
+    "content-hash": "8d27944cf4d913e7d728d9e4a10ead8e",
     "packages": [
         {
             "name": "bower-asset/jquery",
