@@ -1,3 +1,19 @@
+<a name="2.3.7"></a>
+### 2.3.7  (2018-05-24)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+* Ismayil Khayredinov (1)
+
+#### Bug Fixes
+
+* **developers:** set correct link to simpletest suite ([b2b9c0b4](https://github.com/Elgg/Elgg/commit/b2b9c0b4ce4f0a18870f6b90a55fa926c7e2e66f))
+* **friends:** check friendship relationship before change ([ccd6fbbb](https://github.com/Elgg/Elgg/commit/ccd6fbbbb3efd628b871f2548263d0d9ff3ef7ae))
+* **pages:** order of parent page selector reflects tree ([1e22a581](https://github.com/Elgg/Elgg/commit/1e22a5811d2ea60da91d1e3a28cbe50d73f1cf57))
+* **views:** prevent unwanted information on user listing elements ([2c74c2ac](https://github.com/Elgg/Elgg/commit/2c74c2ac6e630150808fb1fc953bb06c2eeee3f0))
+
+
 <a name="2.3.6"></a>
 ### 2.3.6  (2018-03-27)
 
