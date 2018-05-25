@@ -630,7 +630,7 @@ function _elgg_site_menu_setup($hook, $type, $menu, $params) {
 	if (!empty($more)) {
 		$dropdown = ElggMenuItem::factory([
 			'name' => 'more',
-			'href' => 'javascript:void(0);',
+			'href' => false,
 			'text' => elgg_echo('more'),
 			'icon_alt' => 'angle-down',
 			'priority' => 999,

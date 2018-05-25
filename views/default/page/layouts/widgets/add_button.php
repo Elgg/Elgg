@@ -16,8 +16,9 @@ echo elgg_view_menu('title:widgets', [
 	'items' => [
 		[
 			'name' => 'widgets_add',
-			'href' => 'javascript: void(0)',
-			'text' => elgg_view_icon('cog') . ' ' . elgg_echo('widgets:add'),
+			'href' => false,
+			'text' => elgg_echo('widgets:add'),
+			'icon' => 'cog',
 			'link_class' => 'elgg-lightbox elgg-more',
 			'data-colorbox-opts' => json_encode([
 				'href' => $href,
