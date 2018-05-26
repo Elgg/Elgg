@@ -6,8 +6,6 @@ $limit = get_input('limit', elgg_get_config('default_limit'));
 $query = get_input('term', get_input('q'));
 $input_name = get_input('name');
 
-elgg_set_http_header("Content-Type: application/json;charset=utf-8");
-
 $options = [
 	'query' => $query,
 	'type' => 'user',
@@ -43,4 +41,6 @@ if (get_input('friends_only', false)) {
 	};
 }
 
-echo elgg_list_entities($options, 'elgg_search');
+$body = elgg_list_entities($options, 'elgg_search');
+
+echo elgg_view_page('', $body);

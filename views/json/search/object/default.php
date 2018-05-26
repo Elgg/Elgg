@@ -1,7 +1,7 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggGroup) {
+if (!$entity instanceof ElggObject) {
 	return;
 }
 
@@ -11,10 +11,13 @@ $input_name = elgg_extract('input_name', $vars);
 $viewtype = elgg_get_viewtype();
 elgg_set_viewtype('default');
 
-$icon = elgg_view_entity_icon($entity, 'tiny', [
-	'use_link' => false,
-	'href' => false,
-]);
+$icon = null;
+if ($entity->hasIcon('tiny')) {
+	$icon = elgg_view_entity_icon($entity, 'tiny', [
+		'use_link' => false,
+		'href' => false,
+	]);
+}
 
 $title = elgg_format_element('h3', [], $entity->getDisplayName());
 

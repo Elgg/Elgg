@@ -49,7 +49,7 @@ $handler = elgg_http_add_url_query_elements($handler, $params);
 $limit = (int) elgg_extract('limit', $vars, 0);
 
 $attrs = [
-	'class' => 'elgg-user-picker',
+	'class' => elgg_extract_class($vars, ['elgg-user-picker']),
 	'data-limit' => $limit,
 	'data-name' => $name,
 	'data-handler' => $handler,
@@ -86,7 +86,7 @@ $attrs = [
 		foreach ($guids as $guid) {
 			$entity = get_entity($guid);
 			if ($entity) {
-				echo elgg_view('input/userpicker/item', [
+				echo elgg_view('input/autocomplete/item', [
 					'entity' => $entity,
 					'input_name' => $name,
 				]);

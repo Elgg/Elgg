@@ -63,7 +63,7 @@ define(function(require) {
 			}
 		});
 
-		this.$wrapper.on('click', '.elgg-user-picker-remove', function(event) {
+		this.$wrapper.on('click', '.elgg-autocomplete-item-remove', function(event) {
 			UserPicker.removeUser(event);
 		});
 
