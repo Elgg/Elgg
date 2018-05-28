@@ -92,7 +92,10 @@ class MigrateFriendsACL implements AsynchronousUpgrade {
 	}
 	
 	protected function addFriendsToACL(\ElggUser $user, \ElggAccessCollection $acl) {
-		$friends = $user->getFriends(['batch' => true]);
+		$friends = $user->getFriends([
+			'batch' => true,
+			'limit' => false,
+		]);
 		foreach ($friends as $friend) {
 			$acl->addMember($friend->guid);
 		}
