@@ -93,7 +93,9 @@ class UpgradeService {
 			throw new RuntimeException($this->translator->translate('upgrade:locked'));
 		}
 
-		if ($this->logger->getLevel(true) > LogLevel::WARNING) {
+		$log_level = $this->logger->getLevel(true);
+
+		if ($log_level > LogLevel::WARNING) {
 			$this->logger->setLevel(LogLevel::WARNING);
 		}
 
@@ -131,6 +133,8 @@ class UpgradeService {
 		$this->events->trigger('upgrade', 'system', null);
 
 		elgg_flush_caches();
+
+		$this->logger->setLevel($log_level);
 
 		$this->mutex->unlock('upgrade');
 	}

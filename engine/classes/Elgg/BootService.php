@@ -32,13 +32,6 @@ class BootService {
 	const DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT = 40;
 
 	/**
-	 * Has the cache already been invalidated this request? Avoids thrashing
-	 *
-	 * @var bool
-	 */
-	private $was_cleared = false;
-
-	/**
 	 * Cache
 	 *
 	 * @param ElggCache $cache Cache
@@ -149,8 +142,26 @@ class BootService {
 		foreach ($data->getPluginMetadata() as $guid => $metadata) {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}
-		
-		$services->plugins->setBootPlugins($data->getActivePlugins());
+
+		$plugins = $data->getActivePlugins();
+
+		if (!empty($plugins)) {
+			foreach ($plugins as $plugin) {
+				if (!$plugin instanceof \ElggPlugin) {
+					continue;
+				}
+
+				$plugin_id = $plugin->getID();
+				if (!$plugin_id) {
+					continue;
+				}
+
+				$plugin->setAsActivated();
+				$plugin->cache();
+			}
+		}
+
+		$config->_active_plugins_set = true;
 		
 		// use value in settings.php if available
 		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
@@ -184,13 +195,10 @@ class BootService {
 	 * @return void
 	 */
 	public function invalidateCache() {
-		if (!$this->was_cleared) {
-			$this->cache->clear();
-			_elgg_services()->plugins->setBootPlugins(null);
-			_elgg_config()->system_cache_loaded = false;
-			_elgg_config()->_boot_cache_hit = false;
-			$this->was_cleared = true;
-		}
+		$this->cache->clear();
+
+		_elgg_config()->system_cache_loaded = false;
+		_elgg_config()->_boot_cache_hit = false;
 	}
 
 	/**

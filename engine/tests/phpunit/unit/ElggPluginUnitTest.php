@@ -174,8 +174,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
 
+		$plugin->setAsActivated();
+		$plugin->cache();
+
 		$app->_services->config->boot_cache_ttl = 0;
-		$app->_services->plugins->addTestingPlugin($plugin);
 
 		$app->bootCore();
 
@@ -193,11 +195,12 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
+	 * @group Current
 	 * @group UpgradeService
 	 */
 	public function testUsesBootstrapOnUpgrade() {
 
-		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+		$app = $this->createApplication();
 
 		$prefix = _elgg_config()->dbprefix;
 
@@ -220,7 +223,15 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 			'sql' => "SHOW TABLE STATUS FROM `{$config['database']}`",
 		]);
 
-		_elgg_services()->plugins->addTestingPlugin($plugin);
+		elgg_set_entity_class('object', 'plugin', ElggPlugin::class);
+
+		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+
+		$plugin->activate();
+
+		$app->_services->config->boot_cache_ttl = 0;
+
+		$app->bootCore();
 
 		_elgg_services()->upgrades->run();
 

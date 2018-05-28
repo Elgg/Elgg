@@ -99,10 +99,9 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('plugins', function (MockServiceProvider $sp) {
-			$cache = $sp->dataCache->plugins;
-
 			return new \Elgg\Mocks\Database\Plugins(
-				$cache,
+				$sp->knownPlugins,
+				$sp->runtimePlugins,
 				$sp->db,
 				$sp->session,
 				$sp->events,
