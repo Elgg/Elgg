@@ -11,6 +11,10 @@ class Select extends QueryBuilder {
 	 * {@inheritdoc}
 	 */
 	public static function fromTable($table, $alias = null) {
+		if (!$alias) {
+			$alias = 'master';
+		}
+		
 		$connection = _elgg_services()->db->getConnection('read');
 
 		$qb = new static($connection);
