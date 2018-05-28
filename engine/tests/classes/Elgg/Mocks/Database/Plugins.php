@@ -11,11 +11,6 @@ use ElggPlugin;
  */
 class Plugins extends DbPlugins {
 
-	/**
-	 * @var ElggPlugin[]
-	 */
-	protected $_plugins = [];
-
 	public static $managed_plugins = [
 		'activity',
 		'blog',
@@ -67,14 +62,6 @@ class Plugins extends DbPlugins {
 		]);
 
 		return $plugin;
-	}
-
-	public function find($status = 'active') {
-		return $this->_plugins;
-	}
-
-	public function addTestingPlugin(ElggPlugin $plugin) {
-		$this->_plugins[] = $plugin;
 	}
 
 	public function setPriority(ElggPlugin $plugin, $priority) {

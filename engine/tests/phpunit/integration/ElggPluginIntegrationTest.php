@@ -102,7 +102,12 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 		$site = elgg_get_site_entity();
 		$this->assertEquals('test_plugin', $plugin->getID());
+
+		// This tries to read the manifest and logs an error
+		_elgg_services()->logger->disable();
 		$this->assertEquals('test_plugin', $plugin->getDisplayName());
+		_elgg_services()->logger->enable();
+
 		$this->assertEquals($site->guid, $plugin->owner_guid);
 		$this->assertEquals($site->guid, $plugin->container_guid);
 		$this->assertEquals(ACCESS_PUBLIC, $plugin->access_id);

@@ -6,6 +6,7 @@ use Closure;
 use DatabaseException;
 use Elgg\Application;
 use Elgg\Cacheable;
+use Elgg\Collections\Collection;
 use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
@@ -40,9 +41,14 @@ class Plugins {
 	use Loggable;
 
 	/**
-	 * @var ElggPlugin[]
+	 * @var Collection
 	 */
-	protected $boot_plugins;
+	protected $known_plugins;
+
+	/**
+	 * @var Collection
+	 */
+	protected $runtime_plugins;
 
 	/**
 	 * @var array|null
@@ -98,7 +104,8 @@ class Plugins {
 	/**
 	 * Constructor
 	 *
-	 * @param ElggCache             $cache                  Cache for referencing plugins by ID
+	 * @param Collection            $known_plugins          Known plugin collection
+	 * @param Collection            $runtime_plugins        Action plugin collection
 	 * @param Database              $db                     Database
 	 * @param ElggSession           $session                Session
 	 * @param EventsService         $events                 Events
@@ -110,7 +117,8 @@ class Plugins {
 	 * @param Context               $context                Context
 	 */
 	public function __construct(
-		ElggCache $cache,
+		Collection $known_plugins,
+		Collection $runtime_plugins,
 		Database $db,
 		ElggSession $session,
 		EventsService $events,
@@ -121,7 +129,8 @@ class Plugins {
 		SystemMessagesService $system_messages,
 		Context $context
 	) {
-		$this->cache = $cache;
+		$this->known_plugins = $known_plugins;
+		$this->runtime_plugins = $runtime_plugins;
 		$this->db = $db;
 		$this->session = $session;
 		$this->events = $events;
@@ -144,43 +153,6 @@ class Plugins {
 			$path = Paths::project() . 'mod/';
 		}
 		return $path;
-	}
-
-	/**
-	 * Set the list of active plugins according to the boot data cache
-	 *
-	 * @param ElggPlugin[]|null $plugins Set of active plugins
-	 *
-	 * @return void
-	 */
-	public function setBootPlugins($plugins) {
-		if (!is_array($plugins)) {
-			unset($this->boot_plugins);
-			return;
-		}
-		
-		foreach ($plugins as $plugin) {
-			if (!$plugin instanceof ElggPlugin) {
-				continue;
-			}
-			
-			$plugin_id = $plugin->getID();
-			if (!$plugin_id) {
-				continue;
-			}
-
-			$this->boot_plugins[$plugin_id] = $plugin;
-			$this->cache->save($plugin_id, $plugin);
-		}
-	}
-
-	/**
-	 * Clear plugin caches
-	 * @return void
-	 */
-	public function clear() {
-		$this->cache->clear();
-		$this->invalidateProvidesCache();
 	}
 
 	/**
@@ -311,40 +283,6 @@ class Plugins {
 	}
 
 	/**
-	 * Cache a reference to this plugin by its ID
-	 *
-	 * @param ElggPlugin $plugin the plugin to cache
-	 *
-	 * @return void
-	 *
-	 * @access private
-	 */
-	public function cache(ElggPlugin $plugin) {
-		if (!$plugin->getID()) {
-			return;
-		}
-		$this->cache->save($plugin->getID(), $plugin);
-	}
-
-	/**
-	 * Remove plugin from cache
-	 *
-	 * @param string $plugin_id Plugin ID
-	 *
-	 * @return void
-	 */
-	public function invalidateCache($plugin_id) {
-		try {
-			$this->cache->delete($plugin_id);
-			$this->invalidateProvidesCache();
-		} catch (\InvalidArgumentException $ex) {
-			// A plugin must have been deactivated due to missing folder
-			// without proper cleanup
-			elgg_flush_caches();
-		}
-	}
-
-	/**
 	 * Returns an \ElggPlugin object with the path $path.
 	 *
 	 * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
@@ -375,7 +313,8 @@ class Plugins {
 			return null;
 		};
 
-		$plugin = $this->cache->load($plugin_id);
+		$plugin = $this->known_plugins->get($plugin_id);
+
 		if (!isset($plugin)) {
 			$plugin = $fallback();
 			if ($plugin instanceof ElggPlugin) {
@@ -436,16 +375,16 @@ class Plugins {
 	 * @return bool
 	 */
 	public function isActive($plugin_id) {
-		if (isset($this->boot_plugins) && is_array($this->boot_plugins)) {
-			return array_key_exists($plugin_id, $this->boot_plugins);
+		if ($this->runtime_plugins->has($plugin_id)) {
+			return true;
 		}
-		
+
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-		
-		return check_entity_relationship($plugin->guid, 'active_plugin', 1) instanceof \ElggRelationship;
+
+		return $plugin->isActive();
 	}
 
 	/**
@@ -727,8 +666,8 @@ class Plugins {
 			return [];
 		}
 
-		if ($status === 'active' && isset($this->boot_plugins)) {
-			$plugins = $this->boot_plugins;
+		if ($status === 'active' && $this->config->_active_plugins_set) {
+			$plugins = $this->runtime_plugins->all();
 		} else {
 			$priority = $this->namespacePrivateSetting('internal', 'priority');
 			$site_guid = 1;

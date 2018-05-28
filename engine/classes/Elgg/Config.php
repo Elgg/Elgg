@@ -105,6 +105,7 @@ use Elgg\Project\Paths;
  * @property string        $wwwroot      Site URL
  * @property string        $x_sendfile_type
  * @property string        $x_accel_mapping
+ * @property string        $_active_plugins_set
  * @property bool          $_boot_cache_hit
  * @property bool          $_elgg_autofeed
  *

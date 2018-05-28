@@ -10,6 +10,7 @@ use Elgg\Cache\CompositeCache;
 use Elgg\Cache\DataCache;
 use Elgg\Cache\SessionCache;
 use Elgg\Cli\Progress;
+use Elgg\Collections\Collection;
 use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
@@ -76,6 +77,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\EntityIconService                         $iconService
  * @property-read \Elgg\ImageService                              $imageService
  * @property-read \Elgg\Invoker                                   $invoker
+ * @property-read \Elgg\Collections\Collection                    $knownPlugins
  * @property-read \Elgg\Logger                                    $logger
  * @property-read Mailer                                          $mailer
  * @property-read \Elgg\Menu\Service                              $menus
@@ -98,6 +100,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Router\RouteCollection                    $routeCollection
  * @property-read \Elgg\Router\RouteRegistrationService           $routes
  * @property-read \Elgg\Router                                    $router
+ * @property-read \Elgg\Collections\Collection                    $runtimePlugins
  * @property-read \Elgg\Database\Seeder                           $seeder
  * @property-read \Elgg\Application\ServeFileHandler              $serveFileHandler
  * @property-read \ElggSession                                    $session
@@ -488,10 +491,14 @@ class ServiceProvider extends DiContainer {
 
 		$this->setClassName('passwords', \Elgg\PasswordService::class);
 
+		$this->setFactory('knownPlugins', function(ServiceProvider $c) {
+			return new Collection([], \ElggPlugin::class);
+		});
+
 		$this->setFactory('plugins', function(ServiceProvider $c) {
-			$cache = new CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
 			$plugins = new \Elgg\Database\Plugins(
-				$cache,
+				$c->knownPlugins,
+				$c->runtimePlugins,
 				$c->db,
 				$c->session,
 				$c->events,
@@ -545,6 +552,10 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
 			$transport = Application::getResponseTransport();
 			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport, $c->events);
+		});
+
+		$this->setFactory('runtimePlugins', function(ServiceProvider $c) {
+			return new Collection([], \ElggPlugin::class);
 		});
 
 		$this->setFactory('routeCollection', function(ServiceProvider $c) {
