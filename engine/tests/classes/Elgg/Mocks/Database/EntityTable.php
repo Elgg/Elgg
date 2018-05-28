@@ -287,7 +287,7 @@ class EntityTable extends DbEntityTable {
 			$where->guids = $row->guid;
 
 			$select = Select::fromTable('entities', 'e');
-			$select->select('*');
+			$select->select('e.*');
 			$select->addClause($where);
 
 			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
