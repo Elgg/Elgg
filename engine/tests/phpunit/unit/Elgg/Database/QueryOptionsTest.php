@@ -45,6 +45,54 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertNotEmpty($options);
 	}
 
+	public function testNormalizesEmptyGuidOptionsFromSingulars() {
+		$options = $this->options->normalizeOptions([
+			'guid' => '',
+			'container_guid' => false,
+			'owner_guid' => null,
+		]);
+
+		$this->assertEquals([], $options['guids']);
+		$this->assertEquals([], $options['container_guids']);
+		$this->assertEquals(null, $options['owner_guids']);
+	}
+
+	public function testNormalizesZeroGuidOptionsFromSingulars() {
+		$options = $this->options->normalizeOptions([
+			'guid' => 0,
+			'container_guid' => 0,
+			'owner_guid' => 0,
+		]);
+
+		$this->assertEquals([0], $options['guids']);
+		$this->assertEquals([0], $options['container_guids']);
+		$this->assertEquals([0], $options['owner_guids']);
+	}
+
+	public function testNormalizesEmptyGuidOptions() {
+		$options = $this->options->normalizeOptions([
+			'guids' => '',
+			'container_guids' => false,
+			'owner_guids' => null,
+		]);
+
+		$this->assertEquals([], $options['guids']);
+		$this->assertEquals([], $options['container_guids']);
+		$this->assertEquals(null, $options['owner_guids']);
+	}
+
+	public function testNormalizesZeroGuidOptions() {
+		$options = $this->options->normalizeOptions([
+			'guids' => 0,
+			'container_guids' => 0,
+			'owner_guids' => 0,
+		]);
+
+		$this->assertEquals([0], $options['guids']);
+		$this->assertEquals([0], $options['container_guids']);
+		$this->assertEquals([0], $options['owner_guids']);
+	}
+
 	public function testNormalizesAccessOptions() {
 		$options = $this->options->normalizeOptions([
 			'access_id' => ['1', 2],
