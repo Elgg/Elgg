@@ -90,7 +90,7 @@ class ElggAutoP {
 
 		// parse to DOM, suppressing loadHTML warnings
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
-		libxml_use_internal_errors(true);
+		$use_internal_errors = libxml_use_internal_errors(true);
 
 		// Do not load entities. May be unnecessary, better safe than sorry
 		$disable_load_entities = libxml_disable_entity_loader(true);
@@ -99,10 +99,12 @@ class ElggAutoP {
 				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
 				. "</html>")) {
 
+			libxml_use_internal_errors($use_internal_errors);
 			libxml_disable_entity_loader($disable_load_entities);
 			return false;
 		}
 
+		libxml_use_internal_errors($use_internal_errors);
 		libxml_disable_entity_loader($disable_load_entities);
 
 		$this->_xpath = new DOMXPath($this->_doc);
@@ -124,14 +126,20 @@ class ElggAutoP {
 
 		// re-parse so we can handle new AUTOP elements
 
+		// parse to DOM, suppressing loadHTML warnings
+		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
+		$use_internal_errors = libxml_use_internal_errors(true);
+
 		// Do not load entities. May be unnecessary, better safe than sorry
 		$disable_load_entities = libxml_disable_entity_loader(true);
 
 		if (!$this->_doc->loadHTML($html)) {
+			libxml_use_internal_errors($use_internal_errors);
 			libxml_disable_entity_loader($disable_load_entities);
 			return false;
 		}
 
+		libxml_use_internal_errors($use_internal_errors);
 		libxml_disable_entity_loader($disable_load_entities);
 
 		// must re-create XPath object after DOM load
