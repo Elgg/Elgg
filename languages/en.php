@@ -773,7 +773,13 @@ To go to the site, click here:
 	'admin:server:label:memcache' => 'Memcached',
 	'admin:server:memcache:inactive' => '
 		Memcache is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure memcache.
+		For improved performance, it is recommended that you enable and configure memcache (or redis).
+	',
+
+	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => '
+		Redis is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure redis (or memcached).
 	',
 
 	'admin:user:label:search' => "Find users:",
