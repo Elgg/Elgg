@@ -289,7 +289,22 @@ Access hooks
 	Return false to prevent removal.
 
 **get_sql, access**
-    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
+	Filters SQL clauses restricting/allowing access to entities and annotations.
+
+	**The hook is triggered regardless if the access is ignored**. The handlers may need to check if access is ignored and return early, if appended clauses should only apply to access controlled contexts.
+
+	``$return`` value is a nested array of ``ands`` and ``ors``.
+
+	``$params`` includes:
+
+	 * ``table_alias`` - alias of the main table used in select clause
+	 * ``ignore_access`` - whether ignored access is enabled
+	 * ``use_enabled_clause`` - whether disabled entities are shown/hidden
+	 * ``access_column`` - column in the main table containing the access collection ID value
+	 * ``owner_guid_column`` - column in the main table referencing the GUID of the owner
+	 * ``guid_column`` - column in the main table referencing the GUID of the entity
+	 * ``enabled_column`` - column in the main table referencing the enabled status of the entity
+	 * ``query_builder`` - an instance of the ``QueryBuilder``
 
 
 Action hooks
