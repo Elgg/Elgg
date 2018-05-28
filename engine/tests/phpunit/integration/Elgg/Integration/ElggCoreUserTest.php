@@ -242,9 +242,9 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	}
 
 	protected function fetchUser($guid) {
-		$qb = Select::fromTable('entities');
-		$qb->select('*');
-		$qb->where($qb->compare('guid', '=', $guid, ELGG_VALUE_INTEGER));
+		$qb = Select::fromTable('entities', 'e');
+		$qb->select('e.*');
+		$qb->where($qb->compare('e.guid', '=', $guid, ELGG_VALUE_INTEGER));
 
 		return _elgg_services()->db->getDataRow($qb);
 	}

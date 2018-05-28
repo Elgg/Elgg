@@ -190,7 +190,7 @@ class EntityTable {
 		$where->viewer_guid = $user_guid;
 
 		$select = Select::fromTable('entities', 'e');
-		$select->select('*');
+		$select->select('e.*');
 		$select->addClause($where);
 
 		return $this->db->getDataRow($select);
