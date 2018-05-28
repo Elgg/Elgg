@@ -317,7 +317,6 @@ function _elgg_cache_init() {
  */
 function _elgg_disable_caches() {
 	_elgg_services()->boot->getCache()->disable();
-	_elgg_services()->plugins->getCache()->disable();
 	_elgg_services()->sessionCache->disable();
 	_elgg_services()->dataCache->disable();
 	_elgg_services()->dic_cache->getCache()->disable();
@@ -334,7 +333,7 @@ function _elgg_disable_caches() {
  */
 function _elgg_clear_caches() {
 	_elgg_services()->boot->invalidateCache();
-	_elgg_services()->plugins->clear();
+	_elgg_services()->plugins->invalidateProvidesCache();
 	_elgg_services()->sessionCache->clear();
 	_elgg_services()->dataCache->clear();
 	_elgg_services()->dic_cache->flushAll();
@@ -352,7 +351,6 @@ function _elgg_clear_caches() {
  */
 function _elgg_enable_caches() {
 	_elgg_services()->boot->getCache()->enable();
-	_elgg_services()->plugins->getCache()->enable();
 	_elgg_services()->sessionCache->enable();
 	_elgg_services()->dataCache->enable();
 	_elgg_services()->dic_cache->getCache()->enable();

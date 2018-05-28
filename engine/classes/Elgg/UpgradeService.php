@@ -8,6 +8,7 @@ use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Locator;
 use Elgg\Upgrade\Result;
 use ElggUpgrade;
+use Psr\Log\LogLevel;
 use RuntimeException;
 
 /**
@@ -92,6 +93,15 @@ class UpgradeService {
 			throw new RuntimeException($this->translator->translate('upgrade:locked'));
 		}
 
+		$log_level = $this->logger->getLevel(true);
+
+		if ($log_level > LogLevel::WARNING) {
+			$this->logger->setLevel(LogLevel::WARNING);
+		}
+
+		Application::$_upgrading = true;
+		set_time_limit(3600);
+
 		// Clear system caches
 		_elgg_disable_caches();
 		_elgg_clear_caches();
@@ -99,9 +109,6 @@ class UpgradeService {
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
 		$this->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
 		$this->events->unregisterHandler('all', 'all', 'system_log_listener');
-
-		// turn off time limit
-		set_time_limit(0);
 
 		if ($this->getUnprocessedUpgrades()) {
 			$this->processUpgrades();
@@ -126,6 +133,8 @@ class UpgradeService {
 		$this->events->trigger('upgrade', 'system', null);
 
 		elgg_flush_caches();
+
+		$this->logger->setLevel($log_level);
 
 		$this->mutex->unlock('upgrade');
 	}
