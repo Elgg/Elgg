@@ -53,7 +53,7 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function save() {
 		$db = $this->getDatabase();
-		$qb = \Elgg\Database\Select::fromTable('entities');
+		$qb = \Elgg\Database\Select::fromTable('entities', 'e');
 		$qb->select('*')
 			->where($qb->compare('type', '=', 'site', ELGG_VALUE_STRING));
 

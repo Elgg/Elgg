@@ -48,7 +48,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function testCanCallService() {
-		$qb = Select::fromTable('entities');
+		$qb = Select::fromTable('entities', 'e');
 		$qb->select('1');
 
 		_elgg_services()->db->addQuerySpec([

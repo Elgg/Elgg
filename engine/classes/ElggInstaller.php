@@ -758,7 +758,7 @@ class ElggInstaller {
 			}
 
 			// check that the users entity table has an entry
-			$qb = \Elgg\Database\Select::fromTable('entities');
+			$qb = \Elgg\Database\Select::fromTable('entities', 'e');
 			$qb->select('COUNT(*) AS total')
 				->where($qb->compare('type', '=', 'user', ELGG_VALUE_STRING));
 
