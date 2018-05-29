@@ -9,6 +9,7 @@ use Elgg\Assets\CssCompiler;
 use Elgg\Cache\CompositeCache;
 use Elgg\Cache\DataCache;
 use Elgg\Cache\SessionCache;
+use Elgg\Cli\Progress;
 use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
@@ -47,6 +48,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cli                                       $cli
  * @property-read \Symfony\Component\Console\Input\ArgvInput      $cli_input
  * @property-read \Symfony\Component\Console\Output\ConsoleOutput $cli_output
+ * @property-read \Elgg\Cli\Progress                              $cli_progress
  * @property-read \Elgg\Cron                                      $cron
  * @property-read \ElggCrypto                                     $crypto
  * @property-read \Elgg\Config                                    $config
@@ -248,6 +250,10 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('cli_output', function(ServiceProvider $c) {
 			return new ConsoleOutput();
+		});
+
+		$this->setFactory('cli_progress', function(ServiceProvider $c) {
+			return new Progress($c->cli_output);
 		});
 
 		$this->setFactory('config', function (ServiceProvider $sp) use ($config) {
@@ -638,7 +644,8 @@ class ServiceProvider extends DiContainer {
 				$c->config,
 				$c->logger,
 				$c->mutex,
-				$c->systemMessages
+				$c->systemMessages,
+				$c->cli_progress
 			);
 		});
 
