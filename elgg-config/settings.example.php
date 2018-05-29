@@ -154,8 +154,8 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->redis = true;
 //
 //$CONFIG->redis_servers = array (
-//	array('server1', 11211),
-//	array('server2', 11211)
+//	array('server1', 6379),
+//	array('server2', 6379)
 //);
 
 /**

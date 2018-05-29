@@ -78,6 +78,26 @@ matrix:
         - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
         - ./vendor/bin/phpunit
 
+    # Redis enabled
+    - php: 7.0
+      services:
+        - redis-server
+        - mysql
+      env:
+        - JOB_NAME=redis VARIA=true
+        - ELGG_REDIS=1
+        - ELGG_REDIS_SERVER1_HOST=127.0.0.1
+        - ELGG_REDIS_SERVER1_PORT=6379
+      before_install:
+        - phpenv config-rm xdebug.ini
+        - phpenv config-add ./.scripts/travis/redis.ini
+        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+      before_script:
+        - php -f ./.scripts/is_redis_enabled.php
+      script:
+        - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
+        - ./vendor/bin/phpunit
+
     # Test upgrade path from 2.3
     - php: 7.0
       env: JOB_NAME=upgrade_from_Elgg2 VARIA=true

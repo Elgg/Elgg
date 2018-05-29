@@ -1651,14 +1651,14 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 }
 
 /**
- * Delete the autoload system cache
+ * Store autoload cache on system shutdown
  *
  * @return void
  *
  * @access private
  */
-function _elgg_delete_autoload_cache() {
-	_elgg_services()->autoloadManager->deleteCache();
+function _elgg_save_autoload_cache() {
+	_elgg_services()->autoloadManager->saveCache();
 }
 
 /**
@@ -1741,8 +1741,7 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
+	$events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
 
 	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
-
-	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache', 600);
 };
