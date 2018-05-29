@@ -172,6 +172,12 @@ class ComparisonClause implements Clause {
 			case 'is not null' :
 				return $qb->expr()->isNotNull($x);
 
+			case 'exists' :
+				return "EXISTS ($y)";
+
+			case 'not exists' :
+				return "NOT EXISTS ($y)";
+
 			default :
 				throw new \InvalidParameterException("'{$this->comparison}' is not a supported comparison operator");
 		}
