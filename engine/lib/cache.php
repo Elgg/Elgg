@@ -321,8 +321,8 @@ function _elgg_disable_caches() {
 	_elgg_services()->sessionCache->disable();
 	_elgg_services()->dataCache->disable();
 	_elgg_services()->dic_cache->getCache()->disable();
-	_elgg_services()->systemCache->getCache()->disable();
 	_elgg_services()->autoloadManager->getCache()->disable();
+	_elgg_services()->systemCache->getCache()->disable();
 }
 
 /**
@@ -339,8 +339,8 @@ function _elgg_clear_caches() {
 	_elgg_services()->dataCache->clear();
 	_elgg_services()->dic_cache->flushAll();
 	_elgg_services()->simpleCache->invalidate();
-	_elgg_services()->fileCache->clear();
 	_elgg_services()->autoloadManager->deleteCache();
+	_elgg_services()->fileCache->clear();
 }
 
 /**
@@ -356,8 +356,8 @@ function _elgg_enable_caches() {
 	_elgg_services()->sessionCache->enable();
 	_elgg_services()->dataCache->enable();
 	_elgg_services()->dic_cache->getCache()->enable();
-	_elgg_services()->systemCache->getCache()->enable();
 	_elgg_services()->autoloadManager->getCache()->enable();
+	_elgg_services()->systemCache->getCache()->enable();
 }
 
 /**
