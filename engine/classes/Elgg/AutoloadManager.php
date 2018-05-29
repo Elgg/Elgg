@@ -174,13 +174,4 @@ class AutoloadManager {
 	public function getLoader() {
 		return $this->loader;
 	}
-
-	/**
-	 * Save the cache on object destruction
-	 *
-	 * @return void
-	 */
-	public function __destruct() {
-		$this->saveCache();
-	}
 }
