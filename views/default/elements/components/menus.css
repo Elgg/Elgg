@@ -155,6 +155,7 @@
 }
 
 .elgg-menu-entity-navigation {
+	flex-direction: row;
 	justify-content: flex-end;
 }
 
