@@ -33,8 +33,8 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		// int Smaller priorities float to the top
 		'priority' => 100,
 
-		// bool Is this the currently selected menu item
-		'selected' => false,
+		// bool Is this the currently selected menu item (null for autodetection)
+		'selected' => null,
 
 		// string Identifier of this item's parent
 		'parent_name' => '',
@@ -171,7 +171,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 		}
 		
 		foreach ($options as $key => $value) {
-			if (isset($item->data[$key])) {
+			if (array_key_exists($key, $item->data)) {
 				$item->data[$key] = $value;
 			} else {
 				$item->$key = $value;
@@ -509,7 +509,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	// @codingStandardsIgnoreStart
 	/**
 	 * Add additional classes
-	 * 
+	 *
 	 * @param array $current    The current array of classes
 	 * @param mixed $additional Additional classes (either array of string)
 	 * @return void

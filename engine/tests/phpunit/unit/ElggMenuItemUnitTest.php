@@ -243,5 +243,24 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 			],
 				], $logged);
 	}
+	
+	public function testAutoDetectSelectedState() {
+		
+		$should_not_selected = \ElggMenuItem::factory([
+			'name' => 'test',
+			'text' => 'test',
+			'href' => 'invalid',
+		]);
+		
+		$this->assertFalse($should_not_selected->getSelected());
+		
+		$should_be_selected = \ElggMenuItem::factory([
+			'name' => 'test',
+			'text' => 'test',
+			'href' => current_page_url(),
+		]);
+		
+		$this->assertTrue($should_be_selected->getSelected());
+	}
 
 }
