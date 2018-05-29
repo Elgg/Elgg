@@ -47,7 +47,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\ClassLoader                               $classLoader
  * @property-read \Elgg\Cli                                       $cli
  * @property-read \Symfony\Component\Console\Input\ArgvInput      $cli_input
- * @property-read \Symfony\Component\Console\Output\ConsoleOutput $cli_output
+ * @property-read \Symfony\Component\Console\Output\OutputInterface $cli_output
  * @property-read \Elgg\Cli\Progress                              $cli_progress
  * @property-read \Elgg\Cron                                      $cron
  * @property-read \ElggCrypto                                     $crypto

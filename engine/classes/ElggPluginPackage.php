@@ -353,6 +353,8 @@ class ElggPluginPackage {
 		try {
 			$this->manifest = new \ElggPluginManifest($file, $this->id);
 		} catch (Exception $e) {
+			elgg_log($e, \Psr\Log\LogLevel::ERROR);
+
 			$this->errorMsg = $e->getMessage();
 
 			return false;
