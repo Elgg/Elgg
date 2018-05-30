@@ -12,6 +12,7 @@ use Elgg\Database;
 use Elgg\I18n\Translator;
 use Elgg\Includer;
 use Elgg\EventsService;
+use Elgg\Loggable;
 use Elgg\Profilable;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
@@ -36,6 +37,7 @@ class Plugins {
 
 	use Profilable;
 	use Cacheable;
+	use Loggable;
 
 	/**
 	 * @var ElggPlugin[]
@@ -679,7 +681,11 @@ class Plugins {
 	 * @return void
 	 */
 	protected function disable(ElggPlugin $plugin, Exception $previous) {
-		elgg_log($previous, LogLevel::ERROR);
+		$this->getLogger()->log(LogLevel::ERROR, $previous, [
+			'context' => [
+				'plugin' => $plugin,
+			],
+		]);
 
 		$disable_plugins = $this->config->auto_disable_plugins;
 		if ($disable_plugins === null) {
@@ -694,11 +700,18 @@ class Plugins {
 			$id = $plugin->getID();
 			$plugin->deactivate();
 
-			$msg = $this->translator->translate('PluginException:CannotStart',
-				[$id, $plugin->guid, $previous->getMessage()]);
+			$msg = $this->translator->translate(
+				'PluginException:CannotStart',
+				[$id, $plugin->guid, $previous->getMessage()]
+			);
+
 			elgg_add_admin_notice("cannot_start $id", $msg);
 		} catch (\PluginException $ex) {
-			elgg_log("Unable to disable plugin {$id}", 'ERROR');
+			$this->getLogger()->log(LogLevel::ERROR, $ex, [
+				'context' => [
+					'plugin' => $plugin,
+				],
+			]);
 		}
 	}
 
