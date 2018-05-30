@@ -47,25 +47,14 @@ class ElggSessionUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanSetLoggedInUser() {
 
-		$user = $this->getMockBuilder(\ElggUser::class)
-		->setMethods(['__get'])
-		->disableOriginalConstructor()
-		->getMock();
-
-		$user->expects($this->any())
-		->method('__get')
-		->will($this->returnCallback(function($name) {
-			if ($name == 'guid') {
-				return 123;
-			}
-		}));
+		$user = $this->createUser();
 
 		$session = \ElggSession::getMock();
 
 		$session->setLoggedInUser($user);
 
 		$this->assertEquals($user, $session->getLoggedInUser());
-		$this->assertEquals(123, $session->getLoggedInUserGuid());
+		$this->assertEquals($user->guid, $session->getLoggedInUserGuid());
 
 		$session->removeLoggedInUser();
 
