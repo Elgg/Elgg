@@ -125,7 +125,8 @@ class ElggPluginPackage {
 			// this is a plugin id
 			// strict plugin names
 			if (preg_match('/[^a-z0-9\.\-_]/i', $plugin)) {
-				throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidID', [$plugin]));
+				$msg = elgg_echo('PluginException:InvalidID', [$plugin]);
+				throw PluginException::factory('InvalidID', null, $msg);
 			}
 
 			$path = "{$plugin_path}$plugin/";
@@ -133,7 +134,8 @@ class ElggPluginPackage {
 		}
 
 		if (!is_dir($path)) {
-			throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidPath', [$path]));
+			$msg = elgg_echo('PluginException:InvalidPath', [$path]);
+			throw PluginException::factory('InvalidPath', null, $msg);
 		}
 
 		$this->path = $path;
@@ -141,10 +143,11 @@ class ElggPluginPackage {
 
 		if ($validate && !$this->isValid()) {
 			if ($this->errorMsg) {
-				throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidPlugin:Details',
-					[$plugin, $this->errorMsg]));
+				$msg = elgg_echo('PluginException:InvalidPlugin:Details', [$plugin, $this->errorMsg]);
+				throw PluginException::factory('InvalidPluginDetails', null, $msg);
 			} else {
-				throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidPlugin', [$plugin]));
+				$msg = elgg_echo('PluginException:InvalidPlugin', [$plugin]);
+				throw PluginException::factory('InvalidPlugin', null, $msg);
 			}
 		}
 	}
@@ -183,8 +186,7 @@ class ElggPluginPackage {
 		foreach ($this->requiredFiles as $file) {
 			if (!is_readable($this->path . $file)) {
 				$have_req_files = false;
-				$this->errorMsg =
-					_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:MissingFile', [$file]);
+				$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:MissingFile', [$file]);
 
 				return false;
 			}
@@ -233,8 +235,7 @@ class ElggPluginPackage {
 			return true;
 		}
 
-		$this->errorMsg =
-			_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:UnreadableConfig');
+		$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:UnreadableConfig');
 
 		return false;
 	}
@@ -250,8 +251,7 @@ class ElggPluginPackage {
 		if ($manifest) {
 			$required_id = $manifest->getID();
 			if (!empty($required_id) && ($required_id !== $this->id)) {
-				$this->errorMsg =
-					_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:InvalidId', [$required_id]);
+				$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:InvalidId', [$required_id]);
 
 				return false;
 			}
@@ -285,8 +285,9 @@ class ElggPluginPackage {
 		foreach ($provides as $provide) {
 			// only valid provide types
 			if (!in_array($provide['type'], $this->providesSupportedTypes)) {
-				$this->errorMsg =
-					_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:InvalidProvides', [$provide['type']]);
+				$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:InvalidProvides', [
+					$provide['type'],
+				]);
 
 				return false;
 			}
@@ -296,8 +297,9 @@ class ElggPluginPackage {
 			foreach (['conflicts', 'requires'] as $dep_type) {
 				foreach (${$dep_type} as $dep) {
 					if (!in_array($dep['type'], $this->depsSupportedTypes)) {
-						$this->errorMsg =
-							_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:InvalidDependency', [$dep['type']]);
+						$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:InvalidDependency', [
+							$dep['type'],
+						]);
 
 						return false;
 					}
@@ -307,9 +309,11 @@ class ElggPluginPackage {
 						$version_compare = version_compare($provide['version'], $dep['version'], $dep['comparison']);
 
 						if ($version_compare) {
-							$this->errorMsg =
-								_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:CircularDep',
-									[$dep['type'], $dep['name'], $this->id]);
+							$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:CircularDep', [
+								$dep['type'],
+								$dep['name'],
+								$this->id,
+							]);
 
 							return false;
 						}
@@ -362,7 +366,7 @@ class ElggPluginPackage {
 			return true;
 		}
 
-		$this->errorMsg = _elgg_services()->translator->translate('unknown_error');
+		$this->errorMsg = elgg_echo('unknown_error');
 
 		return false;
 	}
@@ -431,7 +435,7 @@ class ElggPluginPackage {
 						]);
 
 						$key = 'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin';
-						$this->errorMsg = _elgg_services()->translator->translate($key, [$link]);
+						$this->errorMsg = elgg_echo($key, [$link]);
 
 						return $result['status'];
 					} else {
