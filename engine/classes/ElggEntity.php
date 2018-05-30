@@ -163,9 +163,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * The owner and container guids come from the original entity. The clone
 	 * method copies metadata but does not copy annotations or private settings.
 	 *
-	 * @note metadata will have its owner and access id set when the entity is saved
-	 * and it will be the same as that of the entity.
-	 *
 	 * @return void
 	 */
 	public function __clone() {
@@ -210,8 +207,8 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * Anything that is not an attribute is saved as metadata.
 	 *
-	 * @warning Metadata set this way will inherit the entity's owner and
-	 * access ID. If you want more control over metadata, use \ElggEntity::setMetadata()
+	 * Be advised that metadata values are cast to integer or string.
+	 * You can save booleans, but they will be stored and returned as integers.
 	 *
 	 * @param string $name  Name of the attribute or metadata
 	 * @param mixed  $value The value to be set
