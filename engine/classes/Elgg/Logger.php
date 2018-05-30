@@ -95,7 +95,7 @@ class Logger extends \Monolog\Logger {
 
 			$handler = new ErrorHandler(
 				$output,
-				$output->getErrorOutput(),
+				is_callable([$output, 'getErrorOutput']) ? $output->getErrorOutput() : $output,
 				true
 			);
 

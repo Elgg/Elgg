@@ -319,10 +319,13 @@ function _elgg_disable_caches() {
 	_elgg_services()->boot->getCache()->disable();
 	_elgg_services()->plugins->getCache()->disable();
 	_elgg_services()->sessionCache->disable();
-	_elgg_services()->dataCache->disable();
 	_elgg_services()->dic_cache->getCache()->disable();
 	_elgg_services()->autoloadManager->getCache()->disable();
 	_elgg_services()->systemCache->getCache()->disable();
+
+	// Disabling data cache is not possible at this point,
+	// because metadata is always read from cache
+	// _elgg_services()->dataCache->disable();
 }
 
 /**
@@ -354,10 +357,12 @@ function _elgg_enable_caches() {
 	_elgg_services()->boot->getCache()->enable();
 	_elgg_services()->plugins->getCache()->enable();
 	_elgg_services()->sessionCache->enable();
-	_elgg_services()->dataCache->enable();
 	_elgg_services()->dic_cache->getCache()->enable();
 	_elgg_services()->autoloadManager->getCache()->enable();
 	_elgg_services()->systemCache->getCache()->enable();
+
+	// @see _elgg_disable_caches()
+	//_elgg_services()->dataCache->enable();
 }
 
 /**

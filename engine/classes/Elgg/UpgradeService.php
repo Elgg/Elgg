@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Cli\Progress;
 use Elgg\Database\Mutex;
 use Elgg\i18n\Translator;
 use Elgg\Upgrade\Batch;
@@ -50,6 +51,11 @@ class UpgradeService {
 	private $system_messages;
 
 	/**
+	 * @var Progress
+	 */
+	protected $progress;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Locator               $locator         Upgrade locator
@@ -59,6 +65,7 @@ class UpgradeService {
 	 * @param Logger                $logger          Logger
 	 * @param Mutex                 $mutex           Database mutex service
 	 * @param SystemMessagesService $system_messages System messages
+	 * @param Progress              $progress        Progress
 	 */
 	public function __construct(
 		Locator $locator,
@@ -67,7 +74,8 @@ class UpgradeService {
 		Config $config,
 		Logger $logger,
 		Mutex $mutex,
-		SystemMessagesService $system_messages
+		SystemMessagesService $system_messages,
+		Progress $progress
 	) {
 		$this->locator = $locator;
 		$this->translator = $translator;
@@ -76,6 +84,7 @@ class UpgradeService {
 		$this->logger = $logger;
 		$this->mutex = $mutex;
 		$this->system_messages = $system_messages;
+		$this->progress = $progress;
 	}
 
 	/**
@@ -101,7 +110,7 @@ class UpgradeService {
 		$this->events->unregisterHandler('all', 'all', 'system_log_listener');
 
 		// turn off time limit
-		set_time_limit(0);
+		set_time_limit(3600);
 
 		if ($this->getUnprocessedUpgrades()) {
 			$this->processUpgrades();
@@ -422,6 +431,8 @@ class UpgradeService {
 
 			$count = $batch->countItems();
 
+			$progress = $this->progress->start($upgrade->getDisplayName(), $count);
+
 			$batch_failure_count = 0;
 			$batch_success_count = 0;
 			$errors = [];
@@ -470,6 +481,8 @@ class UpgradeService {
 
 				$total = $failure_count + $success_count;
 
+				$progress->advance($total);
+
 				if ($batch->needsIncrementOffset()) {
 					// Offset needs to incremented by the total amount of processed
 					// items so the upgrade we won't get stuck upgrading the same
@@ -496,6 +509,8 @@ class UpgradeService {
 				$errors = array_merge($errors, $result->getErrors());
 			}
 
+			$progress->finish();
+
 			$upgrade->processed = $processed;
 			$upgrade->offset = $offset;
 			$upgrade->has_errors = $has_errors;
@@ -517,13 +532,14 @@ class UpgradeService {
 				}
 			}
 
-			// Give feedback to the user interface about the current batch.
-			return [
-				'errors' => $errors,
-				'numErrors' => $batch_failure_count,
-				'numSuccess' => $batch_success_count,
-				'isComplete' => $result && $result->wasMarkedComplete(),
-			];
+			$result = new Result();
+			$result->addFailures($batch_failure_count);
+			$result->addSuccesses($batch_success_count);
+			$result->addError($errors);
+			if ($upgrade->isCompleted()) {
+				$result->markComplete();
+			}
+			return $result;
 		});
 	}
 }

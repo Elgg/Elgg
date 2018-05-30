@@ -28,7 +28,14 @@ class ActivateNewPlugins implements SystemUpgrade  {
 	 * {@inheritdoc}
 	 */
 	public function shouldBeSkipped() {
-		return false;
+		foreach ($this->plugins as $id) {
+			$plugin = elgg_get_plugin_from_id($id);
+			if (!$plugin || !$plugin->isActive()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -49,6 +56,8 @@ class ActivateNewPlugins implements SystemUpgrade  {
 	 * {@inheritdoc}
 	 */
 	public function run(Result $result, $offset) {
+		_elgg_generate_plugin_entities();
+
 		foreach ($this->plugins as $id) {
 			$plugin = elgg_get_plugin_from_id($id);
 

@@ -15,7 +15,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @expectedException PluginException
+	 * @expectedException InvalidArgumentException
 	 * @expectedExceptionMessage Plugin ID must be set
 	 */
 	public function testConstructorThrowsWithEmptyId() {
@@ -197,8 +197,12 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testUsesBootstrapOnUpgrade() {
 
-		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+		$app = $this->createApplication();
+		$app->bootCore();
 
+		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+		$plugin->activate();
+		
 		$prefix = _elgg_config()->dbprefix;
 
 		_elgg_services()->db->addQuerySpec([
@@ -222,7 +226,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->plugins->addTestingPlugin($plugin);
 
-		\Elgg\Application::upgrade();
+		$upgrade = new \Elgg\Application\UpgradeHandler($app);
+		$upgrade->run();
 
 		$methods = [
 			'upgrade',
