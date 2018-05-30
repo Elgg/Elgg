@@ -64,11 +64,11 @@ More detailed/meta/background information about the project (history, roadmap, e
 
 Use "Elgg" in a grammatically correct way
 -----------------------------------------
-Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is incorrect. Please don’t do this.
+Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is incorrect. Please don't do this.
 
 In English, Elgg does not take an article when used as a noun. Here are some examples to emulate:
- * “I’m using Elgg to run my website”
- * “Install Elgg to get your community online”
+ * "I'm using Elgg to run my website"
+ * "Install Elgg to get your community online"
 
 When used as an adjective, the article applies to the main noun, so you should use one. For example:
  * "Go to the Elgg community website to get help."
@@ -79,15 +79,15 @@ This advice may not apply in languages other than English.
 
 Avoid first person pronouns
 ---------------------------
-Refer to the reader as “you.” Do not include yourself in the normal narrative.
+Refer to the reader as "you". Do not include yourself in the normal narrative.
 
 Before:
 
-    When we’re done installing Elgg, we’ll look for some plugins!
+    When we're done installing Elgg, we'll look for some plugins!
 
 After:
 
-    When you’re done installing Elgg, look for some plugins!
+    When you're done installing Elgg, look for some plugins!
 
 To refer to yourself (avoid this if possible), use your name and write in the third person.
 This clarifies to future readers/editors whose opinions are being expressed.
@@ -147,3 +147,23 @@ templates before you commit:
 
 For more information, see
 http://sphinx-doc.org/latest/intl.html#translating-with-sphinx-intl
+
+Special attention
+-----------------
+
+When translating the documentation be aware of special syntax in the documentation files.
+
+Translating links
+^^^^^^^^^^^^^^^^^
+
+ * Translate text in anonymous links (e.g., `pronunciation`__), but maintain the order of all anonymous links in a single block.
+ If there are two anonymous links within a single block for translation, they must not be rearranged relative to each other.
+
+ * Translate the text of named links (e.g., `demo site`_) but only if you maintain the name using the correct rST syntax.
+ In this case that would be `translation of "demo site" <demo site_>`_.
+
+Do NOT translate
+^^^^^^^^^^^^^^^^
+
+ * Anything between pipe characters should not be translated (e.g., |version|).
+ * Code, unless it's a comment in the code.
