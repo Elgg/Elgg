@@ -15,7 +15,7 @@ elgg_register_title_button('blog', 'add', 'object', 'blog');
 
 $title = elgg_echo('collection:friends', [elgg_echo('collection:object:blog')]);
 if ($lower) {
-	$title = ': ' . elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
+	$title .= ': ' . elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
 }
 
 $content = elgg_view('blog/listing/friends', [

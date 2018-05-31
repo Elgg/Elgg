@@ -95,22 +95,44 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 function blog_archive_menu_setup($hook, $type, $return, $params) {
 
 	$page_owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
-	$page_owner_guid = $page_owner ? $page_owner->guid : ELGG_ENTITIES_ANY_VALUE;
-
-	$dates = get_entity_dates('object', 'blog', $page_owner_guid);
+	$page = elgg_extract('page', $params);
+	
+	$options = [];
+	$container_guid = ELGG_ENTITIES_ANY_VALUE;
+	if ($page_owner instanceof ElggUser) {
+		if ($page === 'friends') {
+			$options['relationship'] = 'friend';
+			$options['relationship_guid'] = (int) $page_owner->guid;
+			$options['relationship_join_on'] = 'owner_guid';
+		} else {
+			$options['owner_guid'] = $page_owner->guid;
+		}
+	} elseif ($page_owner instanceof ElggEntity) {
+		$container_guid = $page_owner->guid;
+	}
+	
+	$dates = get_entity_dates('object', 'blog', $container_guid, 0, 'e.time_created', $options);
 	if (!$dates) {
 		return;
 	}
 
 	$dates = array_reverse($dates);
 	
-	$generate_url = function($lower = null, $upper = null) use ($page_owner) {
+	$generate_url = function($lower = null, $upper = null) use ($page_owner, $page) {
 		if ($page_owner instanceof ElggUser) {
-			$url_segment = elgg_generate_url('collection:object:blog:owner', [
-				'username' => $page_owner->username,
-				'lower' => $lower,
-				'upper' => $upper,
-			]);
+			if ($page === 'friends') {
+				$url_segment = elgg_generate_url('collection:object:blog:friends', [
+					'username' => $page_owner->username,
+					'lower' => $lower,
+					'upper' => $upper,
+				]);
+			} else {
+				$url_segment = elgg_generate_url('collection:object:blog:owner', [
+					'username' => $page_owner->username,
+					'lower' => $lower,
+					'upper' => $upper,
+				]);
+			}
 		} else if ($page_owner instanceof ElggGroup) {
 			$url_segment = elgg_generate_url('collection:object:blog:group', [
 				'guid' => $page_owner->guid,
