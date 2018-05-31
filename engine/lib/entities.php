@@ -3,6 +3,9 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\Entities;
+
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
  *
@@ -622,11 +625,23 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
  * @param int    $container_guid The container GUID that the entities belong to
  * @param int    $ignored        Ignored parameter
  * @param string $order_by       Order_by SQL order by clause
+ * @param array  $options        Additional options for ege
  *
  * @return array|false Either an array months as YYYYMM, or false on failure
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'time_created') {
-	return _elgg_services()->entityTable->getDates($type, $subtype, $container_guid, $order_by);
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'e.time_created', array $options = []) {
+	$defaults = [
+		'types' => $type,
+		'subtypes' => $subtype,
+		'container_guids' => $container_guid,
+		'order_by' => [
+			new OrderByClause($order_by),
+		],
+	];
+
+	$options = array_merge($options, $defaults);
+	
+	return Entities::with($options)->getDates();
 }
 
 /**
