@@ -308,6 +308,32 @@ This example uses all of the available elements:
 		</suggests>
 	</plugin_manifest>
 
+composer.json
+=============
+
+Since Elgg supports being installed as a `Composer`_ dependency, having your plugins also support Composer makes for easier installation by 
+site administrators. In order to make your plugin compatible with Composer you need to at least have a ``composer.json`` file in the root of your 
+plugin.
+
+Here is an example of a ``composer.json`` file:
+
+.. include:: /info/composer.json
+	:code: json
+	
+Read more about the ``composer.json`` format on the `Composer`_ website.
+
+Important parts in the ``composer.json`` file are:
+
+- ``name``: the name of your plugin, keep this inline with the name of your plugin folder to ensure correct installation
+- ``type``: this will tell Composer where to install your plugin, ALWAYS keep this as ``elgg-plugin``
+- ``require``: the ``composer/installers`` requirement is to make sure Composer knows where to install your plugin
+
+As a suggestion, include a ``conflict`` rule with any Elgg version below your mininal required version, this will help prevent the accidental 
+installation of your plugin on an incompatible Elgg version.
+
+After adding a ``composer.json`` file to your plugin project, you need to register your project on `Packagist`_ in order for other people to be able to 
+install your plugin.
+
 Tests
 =====
 
@@ -345,3 +371,6 @@ Related
 
 	plugins/plugin-skeleton
 	plugins/dependencies
+
+.. _Composer: https://getcomposer.org/
+.. _Packagist: https://packagist.org/
