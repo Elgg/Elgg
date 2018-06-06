@@ -1,0 +1,17 @@
+{
+	"name": "company/example_plugin",
+	"description": "Some description of the plugin",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin"],
+	"license": "GPL-2.0-only",
+	"support": {
+		"source": "URL to your code repository",
+		"issues": "URL to your issue tracker"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<3.0"
+	}
+}

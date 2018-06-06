@@ -64,6 +64,7 @@ The following files for plugin ``example`` would go in ``/mod/example/``
     manifest.xml
     README.txt
     start.php
+    composer.json
 
 Required Files
 --------------
