@@ -80,12 +80,13 @@ class Address extends ZendAddress {
 	 * This is not very sophisticated and only used to provide a light BC effort.
 	 *
 	 * @param string $contact e.g. "Evan <evan@elgg.org>"
+	 * @param string $ignored Ignored
 	 *
 	 * @return \Elgg\Email\Address
 	 * @throws \Zend\Mail\Exception\InvalidArgumentException
 	 * @since 3.0
 	 */
-	public static function fromString($contact) {
+	public static function fromString($contact, $ignored = null) {
 		$containsName = preg_match('/<(.*)>/', $contact, $matches) == 1;
 		if ($containsName) {
 			$name = trim(substr($contact, 0, strpos($contact, '<')));
