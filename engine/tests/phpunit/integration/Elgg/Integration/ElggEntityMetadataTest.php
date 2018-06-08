@@ -331,4 +331,21 @@ class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 			], $entity->foo);
 		}
 	}
+	
+	public function testCanGetAllEntityMetadata() {
+		foreach ($this->entities as $entity) {
+
+			$entity->foo1 = 'bar1';
+			$entity->foo2 = ['bar2', 'bar3', 'bar4', 5];
+			$entity->foo3 = false;
+
+			$metadata = $entity->getAllMetadata();
+
+			$this->assertEquals($metadata['foo1'], $entity->foo1);
+			$this->assertEquals($metadata['foo2'], $entity->foo2);
+			$this->assertEquals($metadata['foo3'], $entity->foo3);
+		}
+	}
+
+
 }

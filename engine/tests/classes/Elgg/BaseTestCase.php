@@ -298,4 +298,19 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		);
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+		if ($expected instanceof \ElggData) {
+			$expected = $expected->toObject();
+		}
+
+		if ($actual instanceof \ElggData) {
+			$actual = $actual->toObject();
+		}
+
+		parent::assertEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
+	}
+
 }

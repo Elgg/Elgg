@@ -108,6 +108,18 @@ abstract class ElggEntity extends \ElggData implements
 	protected $_is_cacheable = true;
 
 	/**
+	 * Holds metadata key/value pairs acquired from the metadata cache
+	 * Entity metadata may have mutated since last call to __get,
+	 * do not rely on this value for any business logic
+	 * This storage is intended to help with debugging objects during dump,
+	 * because otherwise it's hard to tell what the object is from it's attributes
+	 *
+	 * @var array
+	 * @internal
+	 */
+	protected $_cached_metadata;
+
+	/**
 	 * Create a new entity.
 	 *
 	 * Plugin developers should only use the constructor to create a new entity.
@@ -316,35 +328,25 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return mixed The value, or null if not found.
 	 */
 	public function getMetadata($name) {
-		$guid = $this->guid;
+		$metadata = $this->getAllMetadata();
+		return elgg_extract($name, $metadata);
+	}
 
-		if (!$guid) {
-			if (isset($this->temp_metadata[$name])) {
-				// md is returned as an array only if more than 1 entry
-				if (count($this->temp_metadata[$name]) == 1) {
-					return $this->temp_metadata[$name][0];
-				} else {
-					return $this->temp_metadata[$name];
-				}
-			} else {
-				return null;
-			}
+	/**
+	 * Get all entity metadata
+	 *
+	 * @return array
+	 */
+	public function getAllMetadata() {
+		if (!$this->guid) {
+			return array_map(function($values) {
+				return count($values) > 1 ? $values : $values[0];
+			}, $this->temp_metadata);
 		}
 
-		// upon first cache miss, just load/cache all the metadata and retry.
-		// if this works, the rest of this function may not be needed!
-		$cache = _elgg_services()->metadataCache;
-		if ($cache->isLoaded($guid)) {
-			return $cache->getSingle($guid, $name);
-		} else {
-			$cache->populateFromEntities([$guid]);
-			// in case ignore_access was on, we have to check again...
-			if ($cache->isLoaded($guid)) {
-				return $cache->getSingle($guid, $name);
-			}
+		$this->_cached_metadata = _elgg_services()->metadataCache->getAll($this->guid);
 
-			return null;
-		}
+		return $this->_cached_metadata;
 	}
 
 	/**
