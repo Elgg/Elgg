@@ -165,8 +165,7 @@ If you check your assets into source control, point to them like this:
         ],
     ];
 
-To point to assets installed with ``fxp/composer-asset-plugin``, use install-root-relative
-paths by leaving off the leading slash:
+To point to assets installed with composer, use install-root-relative paths by leaving off the leading slash:
 
 .. code-block:: php
 

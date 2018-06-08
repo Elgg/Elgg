@@ -113,9 +113,6 @@ This will allow yout to access your sites by domain name from the browser
     # SSH into your Vagrant box
     vagrant ssh
 
-    # install composer asset plugin
-    composer global require fxp/composer-asset-plugin
-
     # you can use the cli tool to also install Elgg without leaving the console
     # you can skip this if you want to install Elgg in your browser
     composer global require hypejunction/elgg-cli

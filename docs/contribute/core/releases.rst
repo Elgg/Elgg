@@ -138,11 +138,6 @@ Build zip package
 
 Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage.
 
-.. note::
-
-	If this is your first time on the server building a release run ``composer global require "fxp/composer-asset-plugin:^1.2.0"``.
-	This will make sure you can download bower-assets during the build process.
-
 .. code-block:: sh
 	
 	# login as user deploy
