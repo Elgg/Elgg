@@ -108,7 +108,7 @@ class BootService {
 			if (!$site_secret) {
 				// The 2.3 installer doesn't create a site key (it's created on-demand on the first request)
 				// so for our Travis upgrade testing we need to check for this and create one on the spot.
-				if (defined('UPGRADING')) {
+				if (Application::$_upgrading) {
 					$site_secret = SiteSecret::regenerate($services->crypto, $services->configTable);
 				}
 			}

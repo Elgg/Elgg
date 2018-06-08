@@ -28,11 +28,13 @@ class UpgradeCommand extends Command {
 
 		$async = in_array('async', $this->argument('async'));
 
-		Application::upgrade($async);
+		$app = Application::$_instance;
+
+		$upgrade = new Application\UpgradeHandler($app);
+		$upgrade->run($async);
 
 		system_message('Your system has been upgraded');
 
 		return 0;
 	}
-
 }

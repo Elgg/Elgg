@@ -6,6 +6,23 @@ return [
 		'resource' => 'index',
 		'walled' => false,
 	],
+	'upgrade:init' => [
+		'path' => '/upgrade/init',
+		'resource' => 'upgrade',
+		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\UpgradeGatekeeper::class,
+			\Elgg\Router\Middleware\RewriteTest::class,
+		],
+	],
+	'upgrade:run' => [
+		'path' => '/upgrade/run',
+		'controller' => \Elgg\Upgrade\UpgradeController::class,
+		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\UpgradeGatekeeper::class,
+		],
+	],
 	'account:register' => [
 		'path' => '/register',
 		'resource' => 'account/register',
