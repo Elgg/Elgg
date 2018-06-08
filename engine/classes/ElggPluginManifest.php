@@ -173,8 +173,8 @@ class ElggPluginManifest {
 		}
 
 		if (!$manifest_obj) {
-			throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidManifest',
-						[$this->getPluginID()]));
+			$msg = elgg_echo('PluginException:InvalidManifest', [$this->getPluginID()]);
+			throw PluginException::factory('InvalidManifest', null, $msg);
 		}
 
 		// set manifest api version
@@ -199,13 +199,13 @@ class ElggPluginManifest {
 		if ($class_exists) {
 			$this->parser = new $parser_class_name($manifest_obj, $this);
 		} else {
-			throw new \PluginException(_elgg_services()->translator->translate('PluginException:NoAvailableParser',
-							[$this->apiVersion, $this->getPluginID()]));
+			$msg = elgg_echo('PluginException:NoAvailableParser', [$this->apiVersion, $this->getPluginID()]);
+			throw PluginException::factory('NoAvailableParser', null, $msg);
 		}
 
 		if (!$this->parser->parse()) {
-			throw new \PluginException(_elgg_services()->translator->translate('PluginException:ParserError',
-						[$this->apiVersion, $this->getPluginID()]));
+			$msg = elgg_echo('PluginException:ParserError', [$this->apiVersion, $this->getPluginID()]);
+			throw PluginException::factory('ParseError', null, $msg);
 		}
 	}
 
@@ -227,7 +227,7 @@ class ElggPluginManifest {
 		if ($this->pluginID) {
 			return $this->pluginID;
 		} else {
-			return _elgg_services()->translator->translate('unknown');
+			return elgg_echo('unknown');
 		}
 	}
 
@@ -719,7 +719,7 @@ class ElggPluginManifest {
 	static public function getFriendlyCategory($category) {
 		$cat_raw_string = "admin:plugins:category:$category";
 		if (_elgg_services()->translator->languageKeyExists($cat_raw_string)) {
-			return _elgg_services()->translator->translate($cat_raw_string);
+			return elgg_echo($cat_raw_string);
 		}
 		
 		$category = str_replace(['-', '_'], ' ', $category);

@@ -15,7 +15,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @expectedException PluginException
+	 * @expectedException InvalidArgumentException
 	 * @expectedExceptionMessage Plugin ID must be set
 	 */
 	public function testConstructorThrowsWithEmptyId() {
