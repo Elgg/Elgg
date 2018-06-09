@@ -25,6 +25,8 @@ class Seeder extends Seed {
 			]);
 		};
 
+		$this->advance($count_pages());
+
 		$create_page = function () {
 			$metadata = [
 				'write_access_id' => ACCESS_LOGGED_IN,
@@ -52,6 +54,8 @@ class Seeder extends Seed {
 				'action_type' => 'create',
 				'object_guid' => $page->guid,
 			]);
+
+			$this->advance();
 		};
 
 		while ($count_pages() < $this->limit) {
@@ -91,6 +95,8 @@ class Seeder extends Seed {
 			} else {
 				$this->log("Failed to delete page $page->guid");
 			}
+
+			$this->advance();
 		}
 	}
 

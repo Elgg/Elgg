@@ -35,6 +35,8 @@ class Users extends Seed {
 
 		$exclude = [];
 
+		$this->advance($count_users());
+
 		while ($count_users() < $this->limit) {
 			$user = $this->getRandomUser($exclude);
 			if (!$user) {
@@ -83,6 +85,8 @@ class Users extends Seed {
 					}
 				}
 			}
+
+			$this->advance();
 		}
 
 	}
@@ -109,6 +113,8 @@ class Users extends Seed {
 			} else {
 				$this->log("Failed to delete user $user->guid");
 			}
+
+			$this->advance();
 		}
 	}
 
