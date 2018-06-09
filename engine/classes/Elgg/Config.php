@@ -58,7 +58,6 @@ use Elgg\Project\Paths;
  * @property bool          $installer_running
  * @property string        $language     Site language code
  * @property int           $lastcache
- * @property \ElggLogCache $log_cache
  * @property array         $libraries
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
