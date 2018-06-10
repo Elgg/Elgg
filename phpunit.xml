@@ -62,7 +62,7 @@
             <directory suffix=".php">*/docs/*</directory>
             <directory suffix=".php">*/grunt/*</directory>
             <directory suffix=".php">*/engine/schema/*</directory>
-            <directory suffix=".php">*/engine/lib/upgrades/*</directory>
+            <directory suffix=".php">*/engine/lib/upgrades/create_upgrade.php</directory>
             <directory suffix=".php">./languages</directory>
             <directory suffix=".php">./views</directory>
             <directory suffix=".php">./mod/*/languages</directory>

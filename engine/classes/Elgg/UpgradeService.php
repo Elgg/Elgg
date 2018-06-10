@@ -141,6 +141,8 @@ class UpgradeService {
 	/**
 	 * Run legacy upgrade scripts
 	 * @return Promise
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function runLegacyUpgrades() {
 		return new Promise(function ($resolve, $reject) {
@@ -246,6 +248,8 @@ class UpgradeService {
 	 * @param bool $quiet   Suppress errors.  Don't use this.
 	 *
 	 * @return bool
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function upgradeCode($version, $quiet = false) {
 		$version = (int) $version;
@@ -317,6 +321,8 @@ class UpgradeService {
 	 *                        (not the path, just the file)
 	 *
 	 * @return bool
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function setProcessedUpgrade($upgrade) {
 		$processed_upgrades = $this->getProcessedUpgrades();
@@ -330,6 +336,8 @@ class UpgradeService {
 	 * Gets a list of processes upgrades
 	 *
 	 * @return mixed Array of processed upgrade filenames or false
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function getProcessedUpgrades() {
 		return $this->config->processed_upgrades;
@@ -342,6 +350,8 @@ class UpgradeService {
 	 *
 	 * @return int|false
 	 * @since 1.8.0
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function getUpgradeFileVersion($filename) {
 		preg_match('/^([0-9]{10})([\.a-z0-9-_]+)?\.(php)$/i', $filename, $matches);
@@ -359,6 +369,8 @@ class UpgradeService {
 	 * @param string $upgrade_path The up
 	 *
 	 * @return array|false
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function getUpgradeFiles($upgrade_path = null) {
 		if (!$upgrade_path) {
@@ -397,6 +409,8 @@ class UpgradeService {
 	 * @param null|array $processed_upgrades Optional processed upgrades
 	 *
 	 * @return array
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function getUnprocessedUpgrades($upgrade_files = null, $processed_upgrades = null) {
 		if ($upgrade_files === null) {
@@ -419,6 +433,8 @@ class UpgradeService {
 	 * Upgrades Elgg Database and code
 	 *
 	 * @return bool
+	 * @deprecated 3.0
+	 * @codeCoverageIgnore
 	 */
 	protected function processUpgrades() {
 		$dbversion = (int) $this->config->version;
