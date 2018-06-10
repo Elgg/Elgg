@@ -3,9 +3,13 @@
 namespace Elgg\Application;
 
 use Elgg\Application;
+use Elgg\Event;
 
 /**
  * Handles application boot sequence
+ *
+ * @access private
+ * @internal
  */
 class BootHandler {
 
@@ -34,7 +38,7 @@ class BootHandler {
 	 * @throws \InvalidParameterException
 	 * @throws \SecurityException
 	 */
-	public function init() {
+	public function __invoke() {
 		$config = $this->app->_services->config;
 
 		if ($config->boot_complete) {
@@ -90,6 +94,8 @@ class BootHandler {
 			return;
 		}
 
+		$this->setEntityClasses();
+
 		// Connect to database, load language files, load configuration, init session
 		$this->app->_services->boot->boot($this->app->_services);
 
@@ -119,8 +125,6 @@ class BootHandler {
 
 		// Allows registering handlers strictly before all init, system handlers
 		$events->triggerSequence('plugins_boot', 'system');
-
-		$this->plugins_boot_complete = true;
 
 		$config->_plugins_boot_complete = true;
 		$config->lock('_plugins_boot_complete');
@@ -153,5 +157,20 @@ class BootHandler {
 
 		$config->_application_boot_complete = true;
 		$config->lock('_application_boot_complete');
+	}
+
+	/**
+	 * Set core entity classes
+	 * @return void
+	 */
+	public function setEntityClasses() {
+		elgg_set_entity_class('user', 'user', \ElggUser::class);
+		elgg_set_entity_class('group', 'group', \ElggGroup::class);
+		elgg_set_entity_class('site', 'site', \ElggSite::class);
+		elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
+		elgg_set_entity_class('object', 'file', \ElggFile::class);
+		elgg_set_entity_class('object', 'widget', \ElggWidget::class);
+		elgg_set_entity_class('object', 'comment', \ElggComment::class);
+		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
 	}
 }

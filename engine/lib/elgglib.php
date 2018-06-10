@@ -1719,16 +1719,6 @@ function _elgg_api_test($hook, $type, $value, $params) {
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-	elgg_set_entity_class('user', 'user', \ElggUser::class);
-	elgg_set_entity_class('group', 'group', \ElggGroup::class);
-	elgg_set_entity_class('site', 'site', \ElggSite::class);
-	elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
-	elgg_set_entity_class('object', 'file', \ElggFile::class);
-	elgg_set_entity_class('object', 'widget', \ElggWidget::class);
-	elgg_set_entity_class('object', 'comment', \ElggComment::class);
-	elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
-	
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
 	$events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);

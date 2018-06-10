@@ -210,7 +210,7 @@ class Application {
 	 */
 	public function bootCore() {
 		$boot = new BootHandler($this);
-		$boot->init();
+		$boot();
 	}
 
 	/**
