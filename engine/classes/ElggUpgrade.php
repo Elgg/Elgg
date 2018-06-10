@@ -62,7 +62,9 @@ class ElggUpgrade extends ElggObject {
 	 */
 	public function setCompleted() {
 		$this->setCompletedTime();
-		return $this->is_completed = true;
+		$this->is_completed = true;
+
+		elgg_trigger_event('complete', 'upgrade', $this);
 	}
 
 	/**

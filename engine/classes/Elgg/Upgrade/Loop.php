@@ -128,6 +128,7 @@ class Loop {
 			// Everything has been processed without errors
 			// so the upgrade can be marked as completed.
 			$this->upgrade->setCompleted();
+			$this->result->markComplete();
 		}
 
 		$this->report();
