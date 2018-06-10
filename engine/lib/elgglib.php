@@ -55,13 +55,6 @@ function forward($location = "", $reason = 'system') {
  * @since 2.3
  */
 function elgg_set_http_header($header, $replace = true) {
-	if (headers_sent($file, $line)) {
-		_elgg_services()->logger->error("Cannot modify header information - headers already sent by
-			(output started at $file:$line)");
-	} else {
-		header($header, $replace);
-	}
-
 	if (!preg_match('~^HTTP/\\d\\.\\d~', $header)) {
 		list($name, $value) = explode(':', $header, 2);
 		_elgg_services()->responseFactory->setHeader($name, ltrim($value), $replace);
@@ -1107,10 +1100,8 @@ function elgg_http_validate_signed_url($url) {
  */
 function elgg_signed_request_gatekeeper() {
 
-	switch (php_sapi_name()) {
-		case 'cli' :
-		case 'phpdbg' :
-			return;
+	if (\Elgg\Application::isCli()) {
+		return;
 	}
 
 	if (!elgg_http_validate_signed_url(current_page_url())) {

@@ -102,9 +102,11 @@ class CacheHandler {
 
 		if (!$this->simplecache_enabled) {
 			$app->bootCore();
-			header_remove('Cache-Control');
-			header_remove('Pragma');
-			header_remove('Expires');
+			if (!headers_sent()) {
+				header_remove('Cache-Control');
+				header_remove('Pragma');
+				header_remove('Expires');
+			}
 			
 			if (!$this->isCacheableView($view)) {
 				return $this->send403("Requested view ({$view}) is not an asset");

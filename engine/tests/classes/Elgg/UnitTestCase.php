@@ -92,7 +92,10 @@ abstract class UnitTestCase extends BaseTestCase {
 	final protected function tearDown() {
 		$this->down();
 
-		_elgg_services()->db->clearQuerySpecs();
+		$app = Application::getInstance();
+		if ($app && $app->_services instanceof MockServiceProvider) {
+			$app->_services->db->clearQuerySpecs();
+		}
 
 		parent::tearDown();
 	}

@@ -84,10 +84,10 @@ class Logger extends \Monolog\Logger {
 	public static function factory(InputInterface $input = null, OutputInterface $output = null) {
 		$logger = new static(self::CHANNEL);
 
-		if ('cli' == PHP_SAPI) {
+		if (\Elgg\Application::isCli()) {
 			if (is_null($input) || is_null($output)) {
-				$input = $input ? : new ArgvInput();
-				$output = $output ? : new ConsoleOutput();
+				$input = $input ? : \Elgg\Application::getStdIn();
+				$output = $output ? : \Elgg\Application::getStdOut();
 
 				$app = new Application();
 				$app->setup($input, $output);
@@ -95,7 +95,7 @@ class Logger extends \Monolog\Logger {
 
 			$handler = new ErrorHandler(
 				$output,
-				is_callable([$output, 'getErrorOutput']) ? $output->getErrorOutput() : $output,
+				\Elgg\Application::getStdErr(),
 				true
 			);
 

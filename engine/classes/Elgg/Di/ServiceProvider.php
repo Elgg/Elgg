@@ -19,9 +19,6 @@ use Elgg\Logger;
 use Elgg\Project\Paths;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\NullOutput;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 
 /**
@@ -47,7 +44,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Security\Csrf                             $csrf
  * @property-read \Elgg\ClassLoader                               $classLoader
  * @property-read \Elgg\Cli                                       $cli
- * @property-read \Symfony\Component\Console\Input\ArgvInput      $cli_input
+ * @property-read \Symfony\Component\Console\Input\InputInterface $cli_input
  * @property-read \Symfony\Component\Console\Output\OutputInterface $cli_output
  * @property-read \Elgg\Cli\Progress                              $cli_progress
  * @property-read \Elgg\Cron                                      $cron
@@ -245,16 +242,11 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('cli_input', function(ServiceProvider $c) {
-			$argv = $c->request->server->get('argv') ? : [];
-			return new ArgvInput($argv);
+			return Application::getStdIn();
 		});
 
 		$this->setFactory('cli_output', function(ServiceProvider $c) {
-			if ('cli' === PHP_SAPI) {
-				return new ConsoleOutput();
-			} else {
-				return new NullOutput();
-			}
+			return Application::getStdOut();
 		});
 
 		$this->setFactory('cli_progress', function(ServiceProvider $c) {
@@ -551,11 +543,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
-			if (php_sapi_name() === 'cli') {
-				$transport = new \Elgg\Http\OutputBufferTransport();
-			} else {
-				$transport = new \Elgg\Http\HttpProtocolTransport();
-			}
+			$transport = Application::getResponseTransport();
 			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport, $c->events);
 		});
 

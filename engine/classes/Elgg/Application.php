@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use ClassException;
+use Closure;
 use ConfigurationException;
 use DatabaseException;
 use Elgg\Application\BootHandler;
@@ -13,15 +14,25 @@ use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
+use Elgg\Http\OkResponse;
 use Elgg\Http\RedirectResponse;
 use Elgg\Http\Request;
+use Elgg\Http\ResponseBuilder;
+use Elgg\Http\ResponseTransport;
 use Elgg\Project\Paths;
+use Elgg\Security\UrlSigner;
 use ElggInstaller;
 use Exception;
 use InstallationException;
 use InvalidArgumentException;
 use InvalidParameterException;
 use SecurityException;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirect;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -50,7 +61,7 @@ class Application {
 	public $_services;
 
 	/**
-	 * @var \Closure[]
+	 * @var Closure[]
 	 */
 	private static $_setups = [];
 
@@ -74,6 +85,7 @@ class Application {
 			self::$_instance = self::factory();
 			self::setGlobalConfig(self::$_instance);
 		}
+
 		return self::$_instance;
 	}
 
@@ -81,6 +93,7 @@ class Application {
 	 * Set the global Application instance
 	 *
 	 * @param Application $application Global application
+	 *
 	 * @return void
 	 */
 	public static function setInstance(Application $application = null) {
@@ -93,7 +106,6 @@ class Application {
 	 * Upon construction, no actions are taken to load or boot Elgg.
 	 *
 	 * @param ServiceProvider $services Elgg services provider
-	 * @throws ConfigurationException
 	 */
 	public function __construct(ServiceProvider $services) {
 		$this->_services = $services;
@@ -108,7 +120,7 @@ class Application {
 	 * @return array
 	 * @access private
 	 * @internal
-	 * @throws \InstallationException
+	 * @throws InstallationException
 	 */
 	public static function loadCore() {
 		$setups = [];
@@ -120,7 +132,7 @@ class Application {
 			try {
 				$setups[] = self::requireSetupFileOnce("$path/$file");
 			} catch (\Error $e) {
-				throw new \InstallationException("Elgg lib file failed include: engine/lib/$file");
+				throw new \InstallationException("Elgg lib file failed include: $path/$file");
 			}
 		}
 
@@ -131,6 +143,7 @@ class Application {
 	 * Require a library/plugin file once and capture returned anonymous functions
 	 *
 	 * @param string $file File to require
+	 *
 	 * @return mixed
 	 * @internal
 	 * @access private
@@ -142,6 +155,7 @@ class Application {
 
 		$return = Includer::requireFileOnce($file);
 		self::$_setups[$file] = $return;
+
 		return $return;
 	}
 
@@ -159,6 +173,7 @@ class Application {
 	public static function start() {
 		$app = self::getInstance();
 		$app->bootCore();
+
 		return $app;
 	}
 
@@ -226,6 +241,7 @@ class Application {
 	 * Make the global $CONFIG a reference to this application's config service
 	 *
 	 * @param Application $application The Application
+	 *
 	 * @return void
 	 */
 	public static function setGlobalConfig(Application $application) {
@@ -242,6 +258,7 @@ class Application {
 	 * application to Elgg's global API.
 	 *
 	 * @param array $spec Specification for initial call.
+	 *
 	 * @return self
 	 * @throws ConfigurationException
 	 * @throws InvalidArgumentException
@@ -312,38 +329,106 @@ class Application {
 	}
 
 	/**
-	 * Elgg's front controller. Handles basically all incoming URL requests.
+	 * Route a request
 	 *
-	 * @return bool True if Elgg will handle the request, false if the server should (PHP-CLI server)
-	 * @throws ConfigurationException
+	 * @param Request $request Request
+	 *
+	 * @return Response|false
+	 * @throws ClassException
+	 * @throws DatabaseException
+	 * @throws InstallationException
+	 * @throws InvalidParameterException
+	 * @throws SecurityException
 	 */
-	public static function index() {
-		$req = Request::createFromGlobals();
-		/** @var Request $req */
+	public static function route(Request $request) {
+		self::loadCore();
 
-		if ($req->isRewriteCheck()) {
-			echo Request::REWRITE_TEST_OUTPUT;
-			return true;
+		if ($request->isRewriteCheck()) {
+			$response = new OkResponse(Request::REWRITE_TEST_OUTPUT);
+			return self::respond($response);
 		}
 
-		try {
-			$app = self::factory([
-				'request' => $req,
-			]);
-		} catch (ConfigurationException $ex) {
-			return self::install();
-		}
+		if (self::$_instance) {
+			$app = self::$_instance;
+			$app->_services->setValue('request', $request);
+		} else {
+			try {
+				$app = self::factory([
+					'request' => $request,
+				]);
 
-		self::setGlobalConfig($app);
-		self::setInstance($app);
+				self::setGlobalConfig($app);
+				self::setInstance($app);
+			} catch (ConfigurationException $ex) {
+				return self::install();
+			}
+		}
 
 		return $app->run();
 	}
 
 	/**
+	 * Build and send a response
+	 *
+	 * If application is booted, we will use the response factory service,
+	 * otherwise we will prepare a non-cacheable response
+	 *
+	 * @param ResponseBuilder $builder Response builder
+	 *
+	 * @return Response|false Sent response
+	 * @throws InvalidParameterException
+	 */
+	public static function respond(ResponseBuilder $builder) {
+		if (self::$_instance) {
+			self::$_instance->_services->responseFactory->respond($builder);
+
+			return self::$_instance->_services->responseFactory->getSentResponse();
+		}
+
+		try {
+			$content = $builder->getContent();
+			$status = $builder->getStatusCode();
+			$headers = $builder->getHeaders();
+
+			if ($builder->isRedirection()) {
+				$forward_url = $builder->getForwardURL();
+				$response = new SymfonyRedirect($forward_url, $status, $headers);
+			} else {
+				$response = new Response($content, $status, $headers);
+			}
+		} catch (Exception $ex) {
+			$response = new Response($ex->getMessage(), 500);
+		}
+
+		$response->headers->set('Pragma', 'public');
+		$response->headers->set('Cache-Control', 'no-cache, must-revalidate');
+		$response->headers->set('Expires', 'Fri, 05 Feb 1982 00:00:00 -0500');
+
+		self::getResponseTransport()->send($response);
+
+		return $response;
+	}
+
+	/**
+	 * Elgg's front controller. Handles basically all incoming URL requests.
+	 *
+	 * @return Response|false True if Elgg will handle the request, false if the server should (PHP-CLI server)
+	 * @throws ClassException
+	 * @throws DatabaseException
+	 * @throws InstallationException
+	 * @throws InvalidParameterException
+	 * @throws SecurityException
+	 */
+	public static function index() {
+		return self::route(self::getRequest());
+	}
+
+	/**
 	 * Routes the request, booting core if not yet booted
 	 *
-	 * @return bool False if Elgg wants the PHP CLI server to handle the request
+	 * @return Response|false False if Elgg wants the PHP CLI server to handle the request
+	 * @throws ClassException
+	 * @throws DatabaseException
 	 * @throws InstallationException
 	 * @throws InvalidParameterException
 	 * @throws SecurityException
@@ -365,15 +450,17 @@ class Application {
 			}
 
 			if (0 === strpos($request->getElggPath(), '/cache/')) {
-				$this->_services->cacheHandler->handleRequest($request, $this)->prepare($request)->send();
+				$response = $this->_services->cacheHandler->handleRequest($request, $this)->prepare($request);
+				self::getResponseTransport()->send($response);
 
-				return true;
+				return $response;
 			}
 
 			if (0 === strpos($request->getElggPath(), '/serve-file/')) {
-				$this->_services->serveFileHandler->getResponse($request)->send();
+				$response = $this->_services->serveFileHandler->getResponse($request);
+				self::getResponseTransport()->send($response);
 
-				return true;
+				return $response;
 			}
 
 			$this->bootCore();
@@ -409,10 +496,10 @@ class Application {
 				$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
 			}
 
-			$this->_services->responseFactory->respond($response);
+			self::respond($response);
 		}
 
-		return true;
+		return $this->_services->responseFactory->getSentResponse();
 	}
 
 	/**
@@ -437,37 +524,20 @@ class Application {
 	/**
 	 * Renders a web UI for installing Elgg.
 	 *
-	 * @return bool
+	 * @return Response|false
+	 * @throws InvalidParameterException
 	 */
 	public static function install() {
 		ini_set('display_errors', 1);
 
 		try {
 			$installer = new ElggInstaller();
-			$builder = $installer->run();
-
-			$content = $builder->getContent();
-			$status = $builder->getStatusCode();
-			$headers = $builder->getHeaders();
-
-			if ($builder->isRedirection()) {
-				$forward_url = $builder->getForwardURL();
-				$response = new SymfonyRedirect($forward_url, $status, $headers);
-			} else {
-				$response = new Response($content, $status, $headers);
-			}
+			$response = $installer->run();
 		} catch (Exception $ex) {
-			$response = new Response($ex->getMessage(), 500);
+			$response = new ErrorResponse($ex->getMessage(), 500);
 		}
 
-		$response->headers->set('Content-Type', 'text/html; charset=utf-8');
-		$response->headers->set('Pragma', 'public');
-		$response->headers->set('Cache-Control', 'no-cache, must-revalidate');
-		$response->headers->set('Expires', 'Fri, 05 Feb 1982 00:00:00 -0500');
-
-		$response->send();
-
-		return headers_sent();
+		return self::respond($response);
 	}
 
 	/**
@@ -482,7 +552,7 @@ class Application {
 	 * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
 	 * to a relative URL.
 	 *
-	 * @return void
+	 * @return Response|false
 	 * @throws ClassException
 	 * @throws ConfigurationException
 	 * @throws DatabaseException
@@ -492,18 +562,37 @@ class Application {
 	 */
 	public static function upgrade() {
 
-		self::migrate();
-		self::start();
+		try {
+			self::migrate();
+			self::start();
 
-		$request = self::$_instance->_services->request;
+			$request = self::$_instance->_services->request;
+			$signer = self::$_instance->_services->urlSigner;
 
-		$query = $request->getParams();
-		$base_url = elgg_normalize_site_url('upgrade/init');
-		$url = elgg_http_add_url_query_elements($base_url, $query);
+			$url = $request->getCurrentURL();
+			$query = $request->getParams();
 
-		$response = new SymfonyRedirect($url);
-		$response->prepare(self::$_instance->_services->request);
-		$response->send();
+			// We need to resign the URL because the path is different
+			$mac = elgg_extract(UrlSigner::KEY_MAC, $query);
+			if (isset($mac) && !$signer->isValid($url)) {
+				throw new \Elgg\HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
+			}
+
+			unset($query[UrlSigner::KEY_MAC]);
+
+			$base_url = elgg_normalize_site_url('upgrade/init');
+			$url = elgg_http_add_url_query_elements($base_url, $query);
+
+			if (isset($mac)) {
+				$url = self::$_instance->_services->urlSigner->sign($url);
+			}
+
+			$response = new RedirectResponse($url, ELGG_HTTP_PERMANENTLY_REDIRECT);
+		} catch (Exception $ex) {
+			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ? : 500);
+		}
+
+		return self::respond($response);
 	}
 
 	/**
@@ -584,6 +673,84 @@ class Application {
 		}
 
 		$this->_services->setValue('request', $new);
+	}
+
+	/**
+	 * Is application running in CLI
+	 * @return bool
+	 */
+	public static function isCli() {
+		switch (php_sapi_name()) {
+			case 'cli' :
+			case 'phpdbg' :
+				return true;
+
+			default:
+				return false;
+		}
+	}
+
+	/**
+	 * Build request object
+	 * @return Request
+	 */
+	public static function getRequest() {
+		if (self::$_instance) {
+			return self::$_instance->_services->request;
+		}
+
+		return Request::createFromGlobals();
+	}
+
+	/**
+	 * Load console input interface
+	 * @return InputInterface
+	 */
+	public static function getStdIn() {
+		if (self::isCli()) {
+			$request = self::getRequest();
+			$argv = $request->server->get('argv') ? : [];
+			return new ArgvInput($argv);
+		}
+
+		return new ArrayInput([]);
+	}
+
+	/**
+	 * Load console output interface
+	 * @return OutputInterface
+	 */
+	public static function getStdOut() {
+		if (self::isCli()) {
+			return new ConsoleOutput();
+		} else {
+			return new NullOutput();
+		}
+	}
+
+	/**
+	 * Load console error output interface
+	 * @return OutputInterface
+	 */
+	public static function getStdErr() {
+		$std_out = self::getStdOut();
+		if (is_callable([$std_out, 'getErrorOutput'])) {
+			return $std_out->getErrorOutput();
+		}
+
+		return $std_out;
+	}
+
+	/**
+	 * Build a transport for sending responses
+	 * @return ResponseTransport
+	 */
+	public static function getResponseTransport() {
+		if (self::isCli()) {
+			return new \Elgg\Http\OutputBufferTransport();
+		}
+
+		return new \Elgg\Http\HttpProtocolTransport();
 	}
 
 	/**
