@@ -1292,39 +1292,6 @@ function _elgg_services() {
 }
 
 /**
- * Emits a shutdown:system event upon PHP shutdown, but before database connections are dropped.
- *
- * @tip Register for the shutdown:system event to perform functions at the end of page loads.
- *
- * @warning Using this event to perform long-running functions is not very
- * useful.  Servers will hold pages until processing is done before sending
- * them out to the browser.
- *
- * @see http://www.php.net/register-shutdown-function
- *
- * @internal This is registered in \Elgg\Application::create()
- *
- * @return void
- * @see register_shutdown_hook()
- * @access private
- */
-function _elgg_shutdown_hook() {
-	try {
-		_elgg_services()->events->trigger('shutdown', 'system');
-
-		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);
-		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
-		// demoted to NOTICE from DEBUG so javascript is not corrupted
-		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
-	} catch (Exception $e) {
-		_elgg_services()->logger->log(\Psr\Log\LogLevel::CRITICAL, $e);
-	}
-
-	// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
-	session_write_close();
-}
-
-/**
  * Serve individual views for Ajax.
  *
  * /ajax/view/<view_name>?<key/value params>
@@ -1641,17 +1608,6 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 }
 
 /**
- * Store autoload cache on system shutdown
- *
- * @return void
- *
- * @access private
- */
-function _elgg_save_autoload_cache() {
-	_elgg_services()->autoloadManager->saveCache();
-}
-
-/**
  * Register core routes
  * @return void
  * @internal
@@ -1721,7 +1677,6 @@ function _elgg_api_test($hook, $type, $value, $params) {
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
-	$events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
 
 	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 };

@@ -85,23 +85,6 @@ function elgg_disable_query_cache() {
 }
 
 /**
- * Log db profiling information at NOTICE debug level upon shutdown.
- *
- * @return void
- * @access private
- */
-function _elgg_db_log_profiling_data() {
-	if (!_elgg_services()->db) {
-		return;
-	}
-
-	$db_calls = _elgg_services()->db->getQueryCount();
-
-	// demoted to NOTICE as it corrupts javascript at DEBUG
-	elgg_log("DB Queries for this page: $db_calls", 'INFO');
-}
-
-/**
  * Get a new query counter that will begin counting from 0. For profiling isolated
  * sections of code.
  *
@@ -118,20 +101,6 @@ function _elgg_db_log_profiling_data() {
  */
 function _elgg_db_get_query_counter() {
 	return _elgg_services()->queryCounter;
-}
-
-/**
- * Execute any delayed queries upon shutdown.
- *
- * @return void
- * @access private
- */
-function _elgg_db_run_delayed_queries() {
-	if (!_elgg_services()->db) {
-		return;
-	}
-
-	_elgg_services()->db->executeDelayedQueries();
 }
 
 /**

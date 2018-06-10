@@ -9,6 +9,7 @@ use DatabaseException;
 use Elgg\Application\BootHandler;
 use Elgg\Application\ErrorHandler;
 use Elgg\Application\ExceptionHandler;
+use Elgg\Application\ShutdownHandler;
 use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use Elgg\Filesystem\Directory;
@@ -312,17 +313,7 @@ class Application {
 		$app = new self($spec['service_provider']);
 
 		if ($spec['handle_shutdown']) {
-			register_shutdown_function('_elgg_db_run_delayed_queries');
-			register_shutdown_function('_elgg_db_log_profiling_data');
-
-			// we need to register for shutdown before Symfony registers the
-			// session_write_close() function. https://github.com/Elgg/Elgg/issues/9243
-			register_shutdown_function(function () {
-				// There are cases where we may exit before this function is defined
-				if (function_exists('_elgg_shutdown_hook')) {
-					_elgg_shutdown_hook();
-				}
-			});
+			register_shutdown_function(new ShutdownHandler($app));
 		}
 
 		return $app;

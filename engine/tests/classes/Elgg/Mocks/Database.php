@@ -239,4 +239,11 @@ class Database extends DbDatabase {
 		return $query;
 	}
 
+	/**
+	 * Get delayed query queue
+	 * @return array
+	 */
+	public function reflectDelayedQueries() {
+		return $this->delayed_queries;
+	}
 }
