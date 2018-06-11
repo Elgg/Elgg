@@ -150,7 +150,7 @@ There are 4 :doc:`Elgg events </design/events>` that are triggered on every page
 #. ready, system
 #. shutdown, system
 
-The first three are triggered in ``Elgg\Application::bootCore``. **shutdown, system** is triggered in ``_elgg_shutdown_hook`` after
+The first three are triggered in ``Elgg\Application::bootCore``. **shutdown, system** is triggered in ``\Elgg\Application\ShutdownHandler`` after
 the response has been sent to the client. They are all :doc:`documented </guides/events-list>`.
 
 There are other events triggered by Elgg occasionally (such as when a user logs in).

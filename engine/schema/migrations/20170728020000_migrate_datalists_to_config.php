@@ -45,13 +45,18 @@ class MigrateDatalistsToConfig extends AbstractMigration {
 		$prefix = $this->getAdapter()->getOption('table_prefix');
 		$rows = $this->fetchAll("
 			SELECT * FROM {$prefix}datalists
-			WHERE name NOT IN ('processed_upgrades', 'version')
+			WHERE name NOT IN ('version')
 		");
 
 		foreach ($rows as $row) {
+			$value = $row['value'];
+			if ($row['name'] !== 'processed_upgrades') {
+				$value = serialize($row['value']);
+			}
+
 			$this->insert('config', [
 				'name' => $row['name'],
-				'value' => serialize($row['value']),
+				'value' => $value,
 			]);
 		}
 

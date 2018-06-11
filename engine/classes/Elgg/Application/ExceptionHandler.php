@@ -98,7 +98,7 @@ class ExceptionHandler {
 				}
 			}
 
-			if (PHP_SAPI === 'cli') {
+			if (Application::isCli()) {
 				// An error has already been logged
 				return;
 			}

@@ -66,7 +66,7 @@ class Database {
 	 *
 	 * @var array $delayed_queries Queries to be run during shutdown
 	 */
-	private $delayed_queries = [];
+	protected $delayed_queries = [];
 
 	/**
 	 * @var \Elgg\Database\DbConfig $config Database configuration

@@ -31,6 +31,8 @@ class Seeder extends Seed {
 			]);
 		};
 
+		$this->advance($count_blogs());
+
 		while ($count_blogs() < $this->limit) {
 			$metadata = [
 				'status' => $this->getRandomStatus(),
@@ -78,6 +80,8 @@ class Seeder extends Seed {
 			}
 
 			$blog->save();
+
+			$this->advance();
 		}
 	}
 
@@ -104,6 +108,8 @@ class Seeder extends Seed {
 			} else {
 				$this->log("Failed to delete blog $blog->guid");
 			}
+
+			$this->advance();
 		}
 	}
 

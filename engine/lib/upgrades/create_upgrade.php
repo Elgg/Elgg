@@ -9,7 +9,7 @@
 error_reporting(E_ALL);
 
 // only allow from the command line.
-if (php_sapi_name() != 'cli') {
+if (!\Elgg\Application::isCli()) {
 	die('Upgrades can only be created from the command line.');
 }
 

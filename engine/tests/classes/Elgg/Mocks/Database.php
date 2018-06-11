@@ -188,7 +188,11 @@ class Database extends DbDatabase {
 		if (!$match && strpos($sql, 'select') !== 0) {
 			// We need to make sure all UPDATE, INSERT and DELETE queries are
 			// mocked, otherwise we will be getting incorrect test results
-			throw new \DatabaseException("No testing query spec was found");
+			throw new \DatabaseException(
+				"No testing query spec was found:" . PHP_EOL .
+				"Query: " . $sql . PHP_EOL .
+				"Params: " . var_export($params, true)
+			);
 		}
 
 		$statement = BaseTestCase::$_instance->getMockBuilder(\Doctrine\DBAL\PDOStatement::class)
@@ -235,4 +239,11 @@ class Database extends DbDatabase {
 		return $query;
 	}
 
+	/**
+	 * Get delayed query queue
+	 * @return array
+	 */
+	public function reflectDelayedQueries() {
+		return $this->delayed_queries;
+	}
 }

@@ -55,13 +55,6 @@ function forward($location = "", $reason = 'system') {
  * @since 2.3
  */
 function elgg_set_http_header($header, $replace = true) {
-	if (headers_sent($file, $line)) {
-		_elgg_services()->logger->error("Cannot modify header information - headers already sent by
-			(output started at $file:$line)");
-	} else {
-		header($header, $replace);
-	}
-
 	if (!preg_match('~^HTTP/\\d\\.\\d~', $header)) {
 		list($name, $value) = explode(':', $header, 2);
 		_elgg_services()->responseFactory->setHeader($name, ltrim($value), $replace);
@@ -1100,21 +1093,19 @@ function elgg_http_validate_signed_url($url) {
 
 /**
  * Validates if the HMAC signature of the current request is valid
- * Issues 403 response if signature is inalid
+ * Issues 403 response if signature is invalid
+ *
  * @return void
+ * @throws \Elgg\HttpException
  */
 function elgg_signed_request_gatekeeper() {
 
-	switch (php_sapi_name()) {
-		case 'cli' :
-		case 'phpdbg' :
-			return;
+	if (\Elgg\Application::isCli()) {
+		return;
+	}
 
-		default :
-			if (!elgg_http_validate_signed_url(current_page_url())) {
-				register_error(elgg_echo('invalid_request_signature'));
-				forward('', '403');
-			}
+	if (!elgg_http_validate_signed_url(current_page_url())) {
+		throw new \Elgg\HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
 	}
 }
 
@@ -1298,39 +1289,6 @@ function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
 	return Elgg\Application::$_instance->_services;
-}
-
-/**
- * Emits a shutdown:system event upon PHP shutdown, but before database connections are dropped.
- *
- * @tip Register for the shutdown:system event to perform functions at the end of page loads.
- *
- * @warning Using this event to perform long-running functions is not very
- * useful.  Servers will hold pages until processing is done before sending
- * them out to the browser.
- *
- * @see http://www.php.net/register-shutdown-function
- *
- * @internal This is registered in \Elgg\Application::create()
- *
- * @return void
- * @see register_shutdown_hook()
- * @access private
- */
-function _elgg_shutdown_hook() {
-	try {
-		_elgg_services()->events->trigger('shutdown', 'system');
-
-		$time = (float) (microtime(true) - $GLOBALS['START_MICROTIME']);
-		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
-		// demoted to NOTICE from DEBUG so javascript is not corrupted
-		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
-	} catch (Exception $e) {
-		_elgg_services()->logger->log(\Psr\Log\LogLevel::CRITICAL, $e);
-	}
-
-	// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
-	session_write_close();
 }
 
 /**
@@ -1644,21 +1602,9 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 		\Elgg\Cli\DatabaseUnseedCommand::class,
 		\Elgg\Cli\CronCommand::class,
 		\Elgg\Cli\FlushCommand::class,
-		\Elgg\Cli\UpgradeCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());
-}
-
-/**
- * Store autoload cache on system shutdown
- *
- * @return void
- *
- * @access private
- */
-function _elgg_save_autoload_cache() {
-	_elgg_services()->autoloadManager->saveCache();
 }
 
 /**
@@ -1729,19 +1675,8 @@ function _elgg_api_test($hook, $type, $value, $params) {
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-	elgg_set_entity_class('user', 'user', \ElggUser::class);
-	elgg_set_entity_class('group', 'group', \ElggGroup::class);
-	elgg_set_entity_class('site', 'site', \ElggSite::class);
-	elgg_set_entity_class('object', 'plugin', \ElggPlugin::class);
-	elgg_set_entity_class('object', 'file', \ElggFile::class);
-	elgg_set_entity_class('object', 'widget', \ElggWidget::class);
-	elgg_set_entity_class('object', 'comment', \ElggComment::class);
-	elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
-	
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
-	$events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
 
 	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 };

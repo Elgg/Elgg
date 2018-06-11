@@ -480,7 +480,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			$this->assertInstanceOf(Notification::class, $params['notification']);
 			$this->assertEquals($this->translator->translate('notification:subject', [$event->getActor()->name], $recipient->language), $params['notification']->subject);
 			$this->assertEquals($this->translator->translate('notification:body', [$event->getObject()->getURL()], $recipient->language), $params['notification']->body);
-			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($event->toObject(), $params['event']->toObject());
 
 			return true;
 		});
@@ -775,7 +775,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			$this->assertEquals($notification->subject, $subject);
 			$this->assertEquals($notification->body, $body);
 			$this->assertEquals($notification->summary, $subject);
-			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($event->toObject(), $params['event']->toObject());
 
 			$this->assertTrue($notification->prepare_hook);
 			$this->assertTrue($notification->granular_prepare_hook);
@@ -860,7 +860,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 			$this->assertInstanceOf(Notification::class, $notification);
 			$this->assertEquals($notification->subject, $subject);
 			$this->assertEquals($notification->body, $body);
-			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($event->toObject(), $params['event']->toObject());
 
 			$this->assertTrue($notification->prepare_hook);
 			$this->assertTrue($notification->granular_prepare_hook);
@@ -920,7 +920,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 		$this->hooks->registerHandler('send:before', 'notifications', function ($hook, $type, $return, $params) use (&$before_call_count, $event, $subscribers) {
 			$before_call_count++;
-			$this->assertEquals($event, $params['event']);
+			$this->assertEquals($event->toObject(), $params['event']->toObject());
 			$this->assertEquals($subscribers, $params['subscriptions']);
 
 			return false;

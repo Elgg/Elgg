@@ -6,6 +6,7 @@ namespace Elgg\Upgrade;
  * Result of a single BatchUpgrade run
  */
 final class Result {
+
 	private $errors = [];
 
 	private $failure_count = 0;
@@ -17,11 +18,15 @@ final class Result {
 	/**
 	 * Add new error message to the batch
 	 *
-	 * @param string $message Error message
+	 * @param string|string[] $message Error messages
 	 * @return void
 	 */
 	public function addError($message) {
-		$this->errors[] = $message;
+		if (is_array($message)) {
+			$this->errors = $this->errors + $message;
+		} else {
+			$this->errors[] = $message;
+		}
 	}
 
 	/**
@@ -91,5 +96,18 @@ final class Result {
 	 */
 	public function wasMarkedComplete() {
 		return $this->is_complete === true;
+	}
+
+	/**
+	 * Export to reports array
+	 * @return array
+	 */
+	public function toArray() {
+		return [
+			'errors' => $this->getErrors(),
+			'numErrors' => $this->getFailureCount(),
+			'numSuccess' => $this->getSuccessCount(),
+			'isComplete' => $this->wasMarkedComplete(),
+		];
 	}
 }

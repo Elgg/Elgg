@@ -107,6 +107,10 @@ use Elgg\Project\Paths;
  * @property string        $x_accel_mapping
  * @property bool          $_boot_cache_hit
  * @property bool          $_elgg_autofeed
+ *
+ * @property bool          $_service_boot_complete
+ * @property bool          $_plugins_boot_complete
+ * @property bool          $_application_boot_complete
  */
 class Config {
 	use Loggable;

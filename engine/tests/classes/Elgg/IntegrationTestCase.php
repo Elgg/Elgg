@@ -6,6 +6,8 @@ use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
 use ElggSession;
 use Psr\Log\LogLevel;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Zend\Mail\Transport\InMemory;
 
 /**
@@ -73,6 +75,10 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		}
 
 		Application::setInstance($app);
+
+		$cli_output = new NullOutput();
+		$cli_output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+		$app->_services->setValue('cli_output', $cli_output);
 
 		$app->_services->setValue('logger', Logger::factory());
 

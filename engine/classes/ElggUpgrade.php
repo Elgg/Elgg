@@ -62,7 +62,9 @@ class ElggUpgrade extends ElggObject {
 	 */
 	public function setCompleted() {
 		$this->setCompletedTime();
-		return $this->is_completed = true;
+		$this->is_completed = true;
+
+		elgg_trigger_event('complete', 'upgrade', $this);
 	}
 
 	/**
@@ -121,10 +123,6 @@ class ElggUpgrade extends ElggObject {
 		// Version must be in format yyyymmddnn
 		if (preg_match("/^[0-9]{10}$/", $version) == 0) {
 			elgg_log("Upgrade $this->class returned an invalid version: $version");
-			return false;
-		}
-
-		if ($batch->shouldBeSkipped()) {
 			return false;
 		}
 
