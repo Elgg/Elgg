@@ -4,6 +4,7 @@
  * @group ElggEntity
  * @group ElggObject
  * @group UnitTests
+ * @group ElggData
  */
 class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 
@@ -189,7 +190,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 			'description' => 'Bar',
 		]);
 
-		$prep = new \stdClass();
+		$prep = new \Elgg\Export\Entity();
 		$prep->title = 'Foo';
 		$prep->description = 'Bar';
 		$prep->tags = [];
@@ -239,4 +240,32 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse(check_entity_relationship($object->guid, 'related', $target->guid));
 	}
 
+	public function testCanSerialize() {
+		$object = $this->createObject();
+
+		$data = serialize($object);
+
+		$unserialized = unserialize($data);
+
+		$this->assertEquals($object, $unserialized);
+	}
+
+	public function testCanArrayAccessAttributes() {
+		$object = $this->createObject();
+
+		$this->assertEquals($object->guid, $object['guid']);
+
+		foreach ($object as $attr => $value) {
+			$this->assertEquals($object->$attr, $object[$attr]);
+		}
+
+		unset($object['access_id']);
+	}
+
+	public function testIsLoggable() {
+		$object = $this->createObject();
+
+		$this->assertEquals($object->guid, $object->getSystemLogID());
+		$this->assertEquals($object, $object->getObjectFromID($object->guid));
+	}
 }

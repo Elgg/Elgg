@@ -94,6 +94,7 @@ class ElggInstaller {
 		$params = $app->_services->request->request->all();
 
 		$method = "run" . ucwords($step);
+
 		return $this->$method($params);
 	}
 
@@ -113,6 +114,11 @@ class ElggInstaller {
 			$config->elgg_config_locks = false;
 			$config->installer_running = true;
 			$config->dbencoding = 'utf8mb4';
+			$config->boot_cache_ttl = 0;
+			$config->system_cache_enabled = false;
+			$config->simplecache_enabled = false;
+			$config->debug = \Psr\Log\LogLevel::WARNING;
+			$config->cacheroot = Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/';
 
 			$services = new ServiceProvider($config);
 
@@ -130,6 +136,13 @@ class ElggInstaller {
 			Application::setInstance($app);
 			$app->loadCore();
 			$this->app = $app;
+
+			$app->_services->boot->getCache()->disable();
+			$app->_services->plugins->getCache()->disable();
+			$app->_services->sessionCache->disable();
+			$app->_services->dic_cache->getCache()->disable();
+			$app->_services->dataCache->disable();
+			$app->_services->autoloadManager->getCache()->disable();
 
 			$app->_services->setValue('session', \ElggSession::getMock());
 			$app->_services->views->setViewtype('installation');
@@ -212,7 +225,7 @@ class ElggInstaller {
 		if (!_elgg_sane_validate_url($params['wwwroot'])) {
 			throw new InstallationException(elgg_echo('install:error:wwwroot', [$params['wwwroot']]));
 		}
-		
+
 		// sanitize dataroot path
 		$params['dataroot'] = Paths::sanitize($params['dataroot']);
 
@@ -619,8 +632,12 @@ class ElggInstaller {
 		]);
 		$notice = elgg_echo('install:complete:admin_notice', [$link]);
 		elgg_add_admin_notice('fresh_install', $notice);
-		
-		return $this->render('complete');
+
+		$result = $this->render('complete');
+
+		_elgg_rmdir(Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/');
+
+		return $result;
 	}
 
 	/**
@@ -741,7 +758,7 @@ class ElggInstaller {
 			}
 
 			// check that the users entity table has an entry
-			$qb = \Elgg\Database\Select::fromTable('entities');
+			$qb = \Elgg\Database\Select::fromTable('entities', 'e');
 			$qb->select('COUNT(*) AS total')
 				->where($qb->compare('type', '=', 'user', ELGG_VALUE_STRING));
 
@@ -1255,7 +1272,7 @@ class ElggInstaller {
 					$v = Paths::sanitize($v);
 					break;
 			}
-			
+
 			$template = str_replace("{{" . $k . "}}", $v, $template);
 		}
 
@@ -1277,6 +1294,7 @@ class ElggInstaller {
 
 		$dbConfig = new DbConfig($config);
 		$this->getApp()->_services->setValue('dbConfig', $dbConfig);
+		$this->getApp()->_services->db->resetConnections($dbConfig);
 
 		return true;
 	}
@@ -1307,12 +1325,7 @@ class ElggInstaller {
 	 */
 	protected function installDatabase() {
 		try {
-			$ret = $this->getApp()->migrate();
-			if ($ret) {
-				init_site_secret();
-			}
-
-			return $ret;
+			return $this->getApp()->migrate();
 		} catch (\Exception $e) {
 			return false;
 		}
@@ -1400,13 +1413,17 @@ class ElggInstaller {
 	protected function saveSiteSettings($submissionVars) {
 		$app = $this->getApp();
 
-		$site = new ElggSite();
-		$site->name = strip_tags($submissionVars['sitename']);
-		$site->access_id = ACCESS_PUBLIC;
-		$site->email = $submissionVars['siteemail'];
-		$guid = $site->save();
+		$site = elgg_get_site_entity();
 
-		if ($guid !== 1) {
+		if (!$site->guid) {
+			$site = new ElggSite();
+			$site->name = strip_tags($submissionVars['sitename']);
+			$site->access_id = ACCESS_PUBLIC;
+			$site->email = $submissionVars['siteemail'];
+			$site->save();
+		}
+
+		if ($site->guid !== 1) {
 			$app->_services->systemMessages->addErrorMessage(elgg_echo('install:error:createsite'));
 
 			return false;
@@ -1435,19 +1452,40 @@ class ElggInstaller {
 			'security_notify_user_password' => true,
 			'security_email_require_password' => true,
 		];
+
 		foreach ($sets as $key => $value) {
 			elgg_save_config($key, $value);
 		}
 
-		// Enable a set of default plugins
-		_elgg_generate_plugin_entities();
+		try {
+			// Plugins hold reference to non-existing DB
+			$app->_services->reset('plugins');
 
-		foreach (elgg_get_plugins('any') as $plugin) {
-			if ($plugin->getManifest()) {
-				if ($plugin->getManifest()->getActivateOnInstall()) {
-					$plugin->activate();
+			_elgg_generate_plugin_entities();
+
+			$plugins = $app->_services->plugins->find('any');
+
+			foreach ($plugins as $plugin) {
+				$manifest = $plugin->getManifest();
+				if (!$manifest instanceof ElggPluginManifest) {
+					continue;
 				}
+
+				if (!$manifest->getActivateOnInstall()) {
+					continue;
+				}
+
+				$plugin->activate();
 			}
+
+			// Wo don't need to run upgrades on new installations
+			$app->_services->events->unregisterHandler('create', 'object', '_elgg_create_notice_of_pending_upgrade');
+			$upgrades = $app->_services->upgradeLocator->locate();
+			foreach ($upgrades as $upgrade) {
+				$upgrade->setCompleted();
+			}
+		} catch (Exception $e) {
+			$app->_services->logger->log(\Psr\Log\LogLevel::ERROR, $e);
 		}
 
 		return true;

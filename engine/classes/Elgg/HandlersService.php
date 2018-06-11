@@ -36,7 +36,7 @@ class HandlersService {
 			$type = is_string($object) ? $object : $object::EVENT_TYPE;
 			$description = $type . " [{$args[0]}, {$args[1]}]";
 			$msg = "Handler for $description is not callable: " . $this->describeCallable($original);
-			_elgg_services()->logger->warn($msg);
+			_elgg_services()->logger->warning($msg);
 
 			return [false, null, $object];
 		}

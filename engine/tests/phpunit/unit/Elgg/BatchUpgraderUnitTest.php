@@ -14,7 +14,7 @@ use ElggUpgrade;
 class BatchUpgraderUnitTest extends UnitTestCase {
 
 	public function up() {
-
+		_elgg_services()->setValue('logger', new Logger('testing'));
 	}
 
 	public function down() {
@@ -32,7 +32,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [0, 25, 50, 75],
@@ -41,7 +41,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => false,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}
@@ -61,7 +61,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->has_errors = false;
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [50, 75],
@@ -70,7 +70,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => false,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}
@@ -86,7 +86,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [0, 10, 20, 30],
@@ -95,7 +95,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => false,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}
@@ -111,7 +111,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 		$upgrade->save();
 
 		$upgrader = _elgg_services()->upgrades;
-		$result = $upgrader->executeAsyncUpgrade($upgrade);
+		$result = $upgrader->executeUpgrade($upgrade);
 
 		$expected = [
 			'errors' => [],
@@ -120,7 +120,7 @@ class BatchUpgraderUnitTest extends UnitTestCase {
 			'isComplete' => true,
 		];
 
-		$this->assertEquals($expected, $result);
+		$this->assertEquals($expected, $result->toArray());
 
 		$upgrade->delete();
 	}

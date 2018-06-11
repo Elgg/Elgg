@@ -4,6 +4,7 @@ namespace Elgg\Notifications;
 
 use Elgg\Database\EntityTable;
 use Elgg\I18n\Translator;
+use Elgg\Loggable;
 use Elgg\Logger;
 use Elgg\PluginHooksService;
 use Elgg\Queue\Queue;
@@ -12,6 +13,8 @@ use ElggEntity;
 use ElggSession;
 use ElggUser;
 use InvalidArgumentException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 use RuntimeException;
 
 /**
@@ -24,6 +27,8 @@ use RuntimeException;
  * @since      1.9.0
  */
 class NotificationsService {
+
+	use Loggable;
 
 	const QUEUE_NAME = 'notifications';
 
@@ -44,9 +49,6 @@ class NotificationsService {
 
 	/** @var EntityTable */
 	protected $entities;
-
-	/** @var Logger */
-	protected $logger;
 	
 	/** @var array Registered notification events */
 	protected $events = [];
@@ -69,7 +71,7 @@ class NotificationsService {
 	 * @param ElggSession          $session       Session service
 	 * @param Translator           $translator    Translator
 	 * @param EntityTable          $entities      Entity table
-	 * @param Logger               $logger        Logger
+	 * @param LoggerInterface      $logger        Logger
 	 */
 	public function __construct(
 			SubscriptionsService $subscriptions,
@@ -77,7 +79,8 @@ class NotificationsService {
 			ElggSession $session,
 			Translator $translator,
 			EntityTable $entities,
-			Logger $logger) {
+			LoggerInterface $logger
+	) {
 
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
@@ -524,7 +527,7 @@ class NotificationsService {
 			];
 
 			$result = $this->hooks->trigger('send', "notification:$method", $params, false);
-			if ($this->logger->getLevel() == Logger::INFO) {
+			if ($this->logger->isLoggable(LogLevel::INFO)) {
 				$logger_data = print_r((array) $notification->toObject(), true);
 				if ($result) {
 					$this->logger->info("Notification sent: " . $logger_data);

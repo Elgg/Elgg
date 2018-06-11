@@ -290,14 +290,21 @@ class WidgetsService {
 		}
 		
 		$widgets = [];
+		/* @var $widget_definition \Elgg\WidgetDefinition */
 		foreach ($available_widgets as $widget_definition) {
 			if (!($widget_definition instanceof WidgetDefinition)) {
 				continue;
 			}
 
-			if (in_array($context, $widget_definition->context)) {
-				$widgets[$widget_definition->id] = $widget_definition;
+			if (!in_array($context, $widget_definition->context)) {
+				continue;
 			}
+			
+			if (!$widget_definition->isValid()) {
+				continue;
+			}
+			
+			$widgets[$widget_definition->id] = $widget_definition;
 		}
 
 		return $widgets;

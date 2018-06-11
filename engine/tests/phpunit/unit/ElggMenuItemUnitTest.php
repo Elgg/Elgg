@@ -16,8 +16,10 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testFactoryNoNameOrText() {
+		_elgg_services()->logger->disable();
 		$this->assertNull(\ElggMenuItem::factory(array('name' => 'test')));
 		$this->assertNull(\ElggMenuItem::factory(array('text' => 'test')));
+		_elgg_services()->logger->enable();
 	}
 
 	public function testFactoryNoHref() {
@@ -217,29 +219,48 @@ class ElggMenuItemUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([
 			[
 				'message' => 'ElggMenuItem::factory: $options "name" and "text" are required.',
-				'level' => 400,
+				'level' => 'error',
 			],
 			[
 				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',
-				'level' => 300,
+				'level' => 'warning',
 			],
 			[
 				'message' => 'ElggMenuItem::factory: $options "name" and "text" are required.',
-				'level' => 400,
+				'level' => 'error',
 			],
 			[
 				'message' => 'Unable to add menu item \'MISSING NAME\' to \'foo\' menu',
-				'level' => 300,
+				'level' => 'warning',
 			],
 			[
 				'message' => 'Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options',
-				'level' => 400,
+				'level' => 'error',
 			],
 			[
 				'message' => 'Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options',
-				'level' => 400,
+				'level' => 'error',
 			],
 				], $logged);
+	}
+	
+	public function testAutoDetectSelectedState() {
+		
+		$should_not_selected = \ElggMenuItem::factory([
+			'name' => 'test',
+			'text' => 'test',
+			'href' => 'invalid',
+		]);
+		
+		$this->assertFalse($should_not_selected->getSelected());
+		
+		$should_be_selected = \ElggMenuItem::factory([
+			'name' => 'test',
+			'text' => 'test',
+			'href' => current_page_url(),
+		]);
+		
+		$this->assertTrue($should_be_selected->getSelected());
 	}
 
 }

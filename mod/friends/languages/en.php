@@ -6,9 +6,11 @@ return array(
 	'friend:remove' => "Remove friend",
 
 	'friends:add:successful' => "You have successfully added %s as a friend.",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "We couldn't add %s as a friend.",
 
 	'friends:remove:successful' => "You have successfully removed %s from your friends.",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "We couldn't remove %s from your friends.",
 
 	'friends:none' => "No friends yet.",

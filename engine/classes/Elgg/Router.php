@@ -323,7 +323,12 @@ class Router {
 
 		ob_start();
 
-		$response = include $file;
+		try {
+			$response = include $file;
+		} catch (\Exception $ex) {
+			ob_get_clean();
+			throw $ex;
+		}
 
 		$output = ob_get_clean();
 

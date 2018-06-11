@@ -3,6 +3,9 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\Entities;
+
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
  *
@@ -553,7 +556,7 @@ function elgg_get_entities(array $options = []) {
  *                   columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
- *                   no_results => STR|Closure Message to display when there are no entities
+ *                   no_results => STR|true for default notfound text|Closure Message to display when there are no entities
  *
  * @param callable $getter  The entity getter function to use to fetch the entities.
  * @param callable $viewer  The function to use to view the entity list.
@@ -579,6 +582,10 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 	];
 
 	$options = array_merge($defaults, $options);
+	
+	if ($options['no_results'] === true) {
+		$options['no_results'] = elgg_echo('notfound');
+	}
 
 	$options['count'] = false;
 	$entities = call_user_func($getter, $options);
@@ -618,11 +625,23 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
  * @param int    $container_guid The container GUID that the entities belong to
  * @param int    $ignored        Ignored parameter
  * @param string $order_by       Order_by SQL order by clause
+ * @param array  $options        Additional options for ege
  *
  * @return array|false Either an array months as YYYYMM, or false on failure
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'time_created') {
-	return _elgg_services()->entityTable->getDates($type, $subtype, $container_guid, $order_by);
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'e.time_created', array $options = []) {
+	$defaults = [
+		'types' => $type,
+		'subtypes' => $subtype,
+		'container_guids' => $container_guid,
+		'order_by' => [
+			new OrderByClause($order_by),
+		],
+	];
+
+	$options = array_merge($options, $defaults);
+	
+	return Entities::with($options)->getDates();
 }
 
 /**
@@ -815,7 +834,7 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
 		$warning .= "Please update your usage of the function.";
 	}
 
-	_elgg_services()->logger->warn($warning);
+	_elgg_services()->logger->warning($warning);
 }
 
 /**

@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Psr\Log\LoggerInterface;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -12,15 +14,12 @@ namespace Elgg;
  */
 class FormsService {
 
+	use Loggable;
+
 	/**
 	 * @var ViewsService
 	 */
 	private $views;
-
-	/**
-	 * @var Logger
-	 */
-	private $logger;
 
 	/**
 	 * @var bool
@@ -35,10 +34,10 @@ class FormsService {
 	/**
 	 * Constructor
 	 *
-	 * @param ViewsService $views  Views service
-	 * @param Logger       $logger Logger service
+	 * @param ViewsService    $views  Views service
+	 * @param LoggerInterface $logger Logger service
 	 */
-	public function __construct(ViewsService $views, Logger $logger) {
+	public function __construct(ViewsService $views, LoggerInterface $logger) {
 		$this->views = $views;
 		$this->logger = $logger;
 	}

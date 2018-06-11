@@ -25,6 +25,10 @@
         <env name="ELGG_MEMCACHE_SERVER2_PORT" value=""/>
         <env name="ELGG_MEMCACHE_NAMESPACE_PREFIX" value="elgg_"/>
 
+        <env name="ELGG_REDIS" value="1"/>
+        <env name="ELGG_REDIS_SERVER1_HOST" value="127.0.0.1"/>
+        <env name="ELGG_REDIS_SERVER1_PORT" value="6379"/>
+
         <env name="ELGG_WWWROOT" value="http://localhost/"/>
         -->
 
@@ -58,7 +62,7 @@
             <directory suffix=".php">*/docs/*</directory>
             <directory suffix=".php">*/grunt/*</directory>
             <directory suffix=".php">*/engine/schema/*</directory>
-            <directory suffix=".php">*/engine/lib/upgrades/*</directory>
+            <directory suffix=".php">*/engine/lib/upgrades/create_upgrade.php</directory>
             <directory suffix=".php">./languages</directory>
             <directory suffix=".php">./views</directory>
             <directory suffix=".php">./mod/*/languages</directory>

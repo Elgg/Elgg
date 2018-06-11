@@ -2,14 +2,13 @@
 
 namespace ElggPlugin\Profile;
 
-use Elgg\Database\QueryBuilder;
-use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
 
 /**
  * Copy all profile field metadata to annotations, with each name prefixed with "profile:"
  */
-class AnnotationMigration implements Batch {
+class AnnotationMigration implements AsynchronousUpgrade {
 
 	/**
 	 * {@inheritdoc}
@@ -67,8 +66,6 @@ class AnnotationMigration implements Batch {
 			$result->addError("Profile field '$name' could not be migrated: " . $e->getMessage());
 			$result->addFailures(1);
 		}
-
-		return $result;
 	}
 
 	/**

@@ -3,20 +3,23 @@
  * Elgg exception (failsafe mode)
  * Displays a single exception
  *
- * @tip Enable "developers" to give admins a stacktrace view.
+ * @tip        Enable "developers" to give admins a stacktrace view.
  *
- * @package Elgg
+ * @package    Elgg
  * @subpackage Core
  *
- * @uses $vars['object'] An exception
+ * @uses       $vars['object'] An exception
  */
 
+if (!$exception instanceof Throwable) {
+	return;
+}
 ?>
 
-<p class="elgg-messages-exception">
+<div class="elgg-messages-exception">
 	<span title="Unrecoverable Error">
 		<?php echo elgg_echo('exception:contact_admin'); ?>
-		<br /><br />
+		<br/><br/>
 		Exception at time <?php echo elgg_extract('ts', $vars); ?>.
 	</span>
-</p>
+</div>

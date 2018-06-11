@@ -10,3 +10,5 @@ echo elgg_view_module('info', elgg_echo('admin:server:label:web_server'), elgg_v
 echo elgg_view_module('info', elgg_echo('admin:server:label:php'), elgg_view('admin/server/php'));
 
 echo elgg_view_module('info', elgg_echo('admin:server:label:memcache'), elgg_view('admin/server/memcache'));
+
+echo elgg_view_module('info', elgg_echo('admin:server:label:redis'), elgg_view('admin/server/redis'));

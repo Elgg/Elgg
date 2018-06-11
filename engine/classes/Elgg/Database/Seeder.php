@@ -2,6 +2,7 @@
 
 namespace Elgg\Database;
 
+use Elgg\Cli\Progress;
 use Elgg\Database\Seeds\Seed;
 use Elgg\PluginHooksService;
 
@@ -20,12 +21,22 @@ class Seeder {
 	protected $hooks;
 
 	/**
+	 * @var Progress
+	 */
+	protected $progress;
+
+	/**
 	 * Seeder constructor.
 	 *
-	 * @param PluginHooksService $hooks Hooks registration service
+	 * @param PluginHooksService $hooks    Hooks registration service
+	 * @param Progress           $progress Progress helper
 	 */
-	public function __construct(PluginHooksService $hooks) {
+	public function __construct(
+		PluginHooksService $hooks,
+		Progress $progress
+	) {
 		$this->hooks = $hooks;
+		$this->progress = $progress;
 	}
 
 	/**
@@ -56,12 +67,17 @@ class Seeder {
 				elgg_log("Seeding class $seed does not extend " . Seed::class, 'ERROR');
 				continue;
 			}
+
 			$seeder = new $seed($limit);
 			/* @var $seeder Seed */
 
-			elgg_log('Starting seeding with ' . get_class($seeder));
+			$progress_bar = $this->progress->start($seed, $limit);
+
+			$seeder->setProgressBar($progress_bar);
+
 			$seeder->seed();
-			elgg_log('Finished seeding with ' . get_class($seeder));
+
+			$this->progress->finish($progress_bar);
 		}
 
 		_elgg_services()->session->setDisabledEntityVisibility($ha);
@@ -91,9 +107,15 @@ class Seeder {
 				continue;
 			}
 			$seeder = new $seed();
-			elgg_log('Starting unseeding with ' . get_class($seeder));
+			/* @var $seeder Seed */
+
+			$progress_bar = $this->progress->start($seed);
+
+			$seeder->setProgressBar($progress_bar);
+
 			$seeder->unseed();
-			elgg_log('Finished unseeding with ' . get_class($seeder));
+
+			$this->progress->finish($progress_bar);
 		}
 
 		_elgg_services()->session->setDisabledEntityVisibility($ha);

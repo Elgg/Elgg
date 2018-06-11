@@ -45,16 +45,3 @@
 		margin-left: auto;
 	}
 }
-
-/* ***************************************
-	TITLE MENU
-*************************************** */
-.elgg-menu-title {
-	padding: 2.5px;
-}
-
-.elgg-menu-title > li {
-	display: inline-block;
-	padding: 2.5px;
-}
-

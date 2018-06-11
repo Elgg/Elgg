@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Object summary
  * Passing an 'icon' with the variables will wrap the listing in an image block. In that case,
@@ -15,43 +14,33 @@
  * @uses $vars['class']     Class selector for the image block
  * @uses $vars['image_block_vars'] Attributes for the image block wrapper
  */
+
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$title = elgg_extract('title', $vars, '');
-if ($title === '' && $entity instanceof ElggEntity) {
-	$vars['title'] = elgg_view('output/url', [
-		'text' => elgg_get_excerpt($entity->getDisplayName(), 100),
-		'href' => $entity->getURL(),
-	]);
+// build image block content
+$summary = '';
+$summary .= elgg_view('object/elements/summary/metadata', $vars);
+$summary .= elgg_view('object/elements/summary/title', $vars);
+$summary .= elgg_view('object/elements/summary/subtitle', $vars);
+$summary .= elgg_view('object/elements/summary/tags', $vars);
+
+if (elgg_view_exists('object/summary/extend')) {
+	$summary .= elgg_view('object/summary/extend', $vars);
 }
 
-$tags = elgg_extract('tags', $vars, '');
-if ($tags === '') {
-	$tags = elgg_view('output/tags', [
-		'entity' => $entity,
-	]);
-}
+$summary .= elgg_view('object/elements/summary/content', $vars);
 
-$metadata = elgg_view('object/elements/summary/metadata', $vars);
-$title = elgg_view('object/elements/summary/title', $vars);
-$subtitle = elgg_view('object/elements/summary/subtitle', $vars);
-$extensions = elgg_view('object/summary/extend', $vars);
-$content = elgg_view('object/elements/summary/content', $vars);
+// image block image
+$icon = elgg_view('object/elements/summary/icon', $vars);
 
-$summary = $metadata . $title . $subtitle . $tags . $extensions . $content;
+// image block params
+$params = (array) elgg_extract('image_block_vars', $vars, []);
+$class = elgg_extract_class($params);
+$class = elgg_extract_class($vars, $class);
+$params['class'] = $class;
+$params['data-guid'] = $entity->guid;
 
-$icon = elgg_extract('icon', $vars);
-if (isset($icon)) {
-	$params = (array) elgg_extract('image_block_vars', $vars, []);
-	$class = elgg_extract_class($params);
-	$class = elgg_extract_class($vars, $class);
-	$params['class'] = $class;
-	$params['data-guid'] = $entity->guid;
-
-	echo elgg_view_image_block($icon, $summary, $params);
-} else {
-	echo $summary;
-}
+echo elgg_view_image_block($icon, $summary, $params);

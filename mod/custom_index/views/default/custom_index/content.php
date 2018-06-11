@@ -11,7 +11,7 @@ $list_params = [
 	'limit' => 4,
 	'list_type_toggle' => false,
 	'pagination' => false,
-	'no_results' => elgg_echo('notfound'),
+	'no_results' => true,
 ];
 
 ?>
@@ -62,7 +62,7 @@ $newest_members = elgg_list_entities([
 	'type' => 'user',
 	'limit' => 10,
 	'pagination' => false,
-	'no_results' => elgg_echo('notfound'),
+	'no_results' => true,
 ]);
 echo elgg_view_module('featured',  elgg_echo('collection:user'), $newest_members);
 

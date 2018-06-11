@@ -10,6 +10,7 @@ use Elgg\Di\ServiceProvider;
 use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 
 /**
  * Base test case abstraction
@@ -70,6 +71,11 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			],
 			'memcache_namespace_prefix' => getenv('ELGG_MEMCACHE_NAMESPACE_PREFIX') ? : 'elgg_mc_prefix_',
 
+			'redis' => (bool) getenv('ELGG_REDIS'),
+			'redis_servers' => [
+				[getenv('ELGG_REDIS_SERVER1_HOST'), getenv('ELGG_REDIS_SERVER1_PORT')],
+			],
+
 			// These are fixed, because tests rely on specific location of the dataroot for source files
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 			'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',
@@ -125,7 +131,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 					'upscale' => false
 				],
 			],
-			'debug' => 'NOTICE',
+			'debug' => LogLevel::ERROR,
 		]);
 	}
 
@@ -290,6 +296,21 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			$methods,
 			false
 		);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+		if ($expected instanceof \ElggData) {
+			$expected = $expected->toObject();
+		}
+
+		if ($actual instanceof \ElggData) {
+			$actual = $actual->toObject();
+		}
+
+		parent::assertEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);
 	}
 
 }

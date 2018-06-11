@@ -38,7 +38,8 @@ Under the hood:
 - Phinx database migrations
 - CSS-Crush for CSS preprocessing
 - Imagine for image manipulation
-- Memcached support
+* Persistent caching with Memcached and/or Redis
+- Error handling with Monolog
 
 Elgg Foundation
 ---------------

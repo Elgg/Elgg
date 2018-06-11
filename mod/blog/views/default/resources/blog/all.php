@@ -7,10 +7,9 @@ elgg_register_title_button('blog', 'add', 'object', 'blog');
 
 elgg_push_collection_breadcrumbs('object', 'blog');
 
+$title = elgg_echo('collection:object:blog:all');
 if ($lower) {
-	$title = elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
-} else {
-	$title = elgg_echo('collection:object:blog:all');
+	$title .= ': ' . elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
 }
 
 $content = elgg_view('blog/listing/all', [

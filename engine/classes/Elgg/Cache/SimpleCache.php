@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Cache;
 
+use Elgg\Application;
 use Elgg\Config;
 use Elgg\ViewsService;
 
@@ -165,17 +166,5 @@ class SimpleCache {
 		$this->config->lastcache = $time;
 
 		return true;
-	}
-
-	/**
-	 * Set up config appropriately on engine boot.
-	 *
-	 * @return void
-	 */
-	function init() {
-		$lastcache = $this->config->lastcache;
-		if (!defined('UPGRADING') && empty($lastcache)) {
-			$this->config->lastcache = (int) $this->config->simplecache_lastupdate;
-		}
 	}
 }

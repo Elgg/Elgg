@@ -286,8 +286,8 @@ class EntityTable extends DbEntityTable {
 			$where->viewer_guid = $access_combination['user_guid'];
 			$where->guids = $row->guid;
 
-			$select = Select::fromTable('entities');
-			$select->select('*');
+			$select = Select::fromTable('entities', 'e');
+			$select->select('e.*');
 			$select->addClause($where);
 
 			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([

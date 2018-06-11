@@ -22,7 +22,7 @@ function disable_user_entities($owner_guid) {
 		}
 		return _elgg_services()->entityTable->disableEntities($entity);
 	} catch (DatabaseException $ex) {
-		elgg_log($ex->getMessage(), 'ERROR');
+		elgg_log($ex, 'ERROR');
 
 		return false;
 	}
@@ -41,11 +41,11 @@ function get_user($guid) {
 	try {
 		return _elgg_services()->entityTable->get($guid, 'user');
 	} catch (InvalidParameterException $ex) {
-		elgg_log($ex->getMessage(), 'ERROR');
+		elgg_log($ex, 'ERROR');
 
 		return false;
 	} catch (ClassException $ex) {
-		elgg_log($ex->getMessage(), 'ERROR');
+		elgg_log($ex, 'ERROR');
 
 		return false;
 	}
@@ -477,8 +477,17 @@ function _elgg_user_title_menu(\Elgg\Hook $hook) {
  */
 function _elgg_user_page_menu($hook, $type, $return, $params) {
 
-	$owner = elgg_get_page_owner_entity();
-	if (!$owner) {
+	$owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
+
+	if (!$owner instanceof ElggUser) {
+		return;
+	}
+
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+
+	if (!$owner->canEdit()) {
 		return;
 	}
 
@@ -718,7 +727,7 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 	}
 	
 	$entity = $hook->getEntityParam();
-	if (!$entity instanceof ElggUser) {
+	if (!$entity instanceof ElggUser || $entity->isValidated()) {
 		return;
 	}
 	

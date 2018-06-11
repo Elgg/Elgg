@@ -199,6 +199,9 @@
 		.elgg-menu-site {
 			.elgg-anchor-icon {
 				display: none;
+				& + .elgg-anchor-label {
+					margin-left: 0;
+				}
 			}
 		}
 	}

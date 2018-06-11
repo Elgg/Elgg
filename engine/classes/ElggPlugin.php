@@ -64,7 +64,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public static function fromId($plugin_id, $path = null) {
 		if (empty($plugin_id)) {
-			throw new PluginException('Plugin ID must be set');
+			throw new InvalidArgumentException('Plugin ID must be set');
 		}
 
 		$plugin = elgg_get_plugin_from_id($plugin_id);
@@ -188,7 +188,7 @@ class ElggPlugin extends ElggObject {
 					$this->static_config = $this->includeFile(ElggPluginPackage::STATIC_CONFIG_FILENAME);
 				}
 			} catch (PluginException $ex) {
-				elgg_log($ex->getMessage(), 'WARNING');
+				elgg_log($ex, \Psr\Log\LogLevel::ERROR);
 			}
 		}
 
@@ -515,13 +515,13 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function isValid() {
 		if (!$this->getID()) {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:MissingID', [$this->guid]);
+			$this->errorMsg = elgg_echo('ElggPlugin:MissingID', [$this->guid]);
 
 			return false;
 		}
 
 		if (!$this->getPackage() instanceof ElggPluginPackage) {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:NoPluginPackagePackage', [
+			$this->errorMsg = elgg_echo('ElggPlugin:NoPluginPackagePackage', [
 				$this->getID(),
 				$this->guid
 			]);
@@ -633,6 +633,8 @@ class ElggPlugin extends ElggObject {
 
 				$this->init();
 			} catch (PluginException $ex) {
+				elgg_log($ex, \Psr\Log\LogLevel::ERROR);
+
 				$return = false;
 			}
 		}
@@ -640,6 +642,8 @@ class ElggPlugin extends ElggObject {
 		if ($return === false) {
 			$this->deactivate();
 		} else {
+			elgg_delete_admin_notice("cannot_start {$this->getID()}");
+
 			_elgg_services()->events->trigger('cache:flush', 'system');
 			_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
 		}
@@ -764,7 +768,14 @@ class ElggPlugin extends ElggObject {
 		$bootstrap = $this->getStaticConfig('bootstrap');
 		if ($bootstrap) {
 			if (!is_subclass_of($bootstrap, \Elgg\PluginBootstrapInterface::class)) {
-				throw new PluginException($bootstrap . ' must implement ' . \Elgg\PluginBootstrapInterface::class);
+				throw PluginException::factory(
+					'InvalidBootstrap',
+					$this,
+					elgg_echo('LogicException:InterfaceNotImplemented', [
+						$bootstrap,
+						\Elgg\PluginBootstrapInterface::class
+					])
+				);
 			}
 
 			return new $bootstrap($this, _elgg_services()->dic);
@@ -800,7 +811,7 @@ class ElggPlugin extends ElggObject {
 	public function boot() {
 		// Detect plugins errors early and throw so that plugins service can disable the plugin
 		if (!$this->getManifest()) {
-			throw new PluginException($this->getError());
+			throw PluginException::factory('InvalidManifest', $this);
 		}
 
 		$this->autoload();
@@ -851,17 +862,23 @@ class ElggPlugin extends ElggObject {
 		$filepath = "{$this->getPath()}{$filename}";
 
 		if (!$this->canReadFile($filename)) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotIncludeFile',
-				[$filename, $this->getID(), $this->guid, $this->getPath()]);
-			throw new PluginException($msg);
+			$msg = elgg_echo(
+				'ElggPlugin:Exception:CannotIncludeFile',
+				[$filename, $this->getID(), $this->guid, $this->getPath()]
+			);
+
+			throw PluginException::factory('CannotIncludeFile', $this, $msg);
 		}
 
 		try {
 			$ret = Includer::includeFile($filepath);
 		} catch (Exception $e) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:IncludeFileThrew',
-				[$filename, $this->getID(), $this->guid, $this->getPath()]);
-			throw new PluginException($msg, 0, $e);
+			$msg = elgg_echo(
+				'ElggPlugin:Exception:IncludeFileThrew',
+				[$filename, $this->getID(), $this->guid, $this->getPath()]
+			);
+
+			throw PluginException::factory('IncludeFileThrew', $this, $msg, $e);
 		}
 
 		return $ret;
@@ -894,7 +911,7 @@ class ElggPlugin extends ElggObject {
 		ob_start();
 		$value = $this->includeFile(ElggPluginPackage::STATIC_CONFIG_FILENAME);
 		if (ob_get_clean() !== '') {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:activate:ConfigSentOutput');
+			$this->errorMsg = elgg_echo('ElggPlugin:activate:ConfigSentOutput');
 
 			return false;
 		}
@@ -902,7 +919,7 @@ class ElggPlugin extends ElggObject {
 		// make sure can serialize
 		$value = @unserialize(serialize($value));
 		if (!is_array($value)) {
-			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:activate:BadConfigFormat');
+			$this->errorMsg = elgg_echo('ElggPlugin:activate:BadConfigFormat');
 
 			return false;
 		}
@@ -941,8 +958,9 @@ class ElggPlugin extends ElggObject {
 		if (!$views->registerPluginViews($this->getPath(), $failed_dir)) {
 			$key = 'ElggPlugin:Exception:CannotRegisterViews';
 			$args = [$this->getID(), $this->guid, $failed_dir];
-			$msg = _elgg_services()->translator->translate($key, $args);
-			throw new PluginException($msg);
+			$msg = elgg_echo($key, $args);
+
+			throw PluginException::factory('CannotRegisterViews', $this, $msg);
 		}
 	}
 
@@ -1062,12 +1080,12 @@ class ElggPlugin extends ElggObject {
 			return;
 		}
 
-		$path_only = !_elgg_services()->translator->wasLoadedFromCache();
+		$path_only = _elgg_services()->translator->wasLoadedFromCache();
 		if ($path_only) {
 			_elgg_services()->translator->registerLanguagePath($languages_path);
 			return;
 		}
-		
+
 		_elgg_services()->translator->registerTranslations($languages_path);
 	}
 
@@ -1232,14 +1250,17 @@ class ElggPlugin extends ElggObject {
 		try {
 			$package = $this->getPackage();
 			if (!$package) {
-				throw new PluginException('Package cannot be loaded');
+				throw PluginException::factory('InvalidPackage', $this);
 			}
+
 			$this->manifest = $package->getManifest();
 
 			return $this->manifest;
 		} catch (PluginException $e) {
-			_elgg_services()->logger->warn("Failed to load manifest for plugin $this->guid. " . $e->getMessage());
-			$this->errorMsg = $e->getmessage();
+			_elgg_services()->logger->warning("Failed to load manifest for plugin $this->guid. " . $e->getMessage());
+			$this->errorMsg = $e->getMessage();
+
+			elgg_log($e, \Psr\Log\LogLevel::ERROR);
 		}
 	}
 
@@ -1258,8 +1279,10 @@ class ElggPlugin extends ElggObject {
 
 			return $this->package;
 		} catch (Exception $e) {
-			_elgg_services()->logger->warn("Failed to load package for $this->guid. " . $e->getMessage());
-			$this->errorMsg = $e->getmessage();
+			_elgg_services()->logger->warning("Failed to load package for $this->guid. " . $e->getMessage());
+			$this->errorMsg = $e->getMessage();
+
+			elgg_log($e, \Psr\Log\LogLevel::ERROR);
 		}
 	}
 

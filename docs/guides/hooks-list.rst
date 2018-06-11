@@ -30,6 +30,14 @@ System hooks
 **validate, input**
 	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
 
+**prepare, html**
+	Triggered by ``elgg_format_html()`` and used to prepare untrusted HTML.
+
+	The ``$return`` value is an array:
+
+	 * ``html`` - HTML string being prepared
+	 * ``options`` - Preparation options
+
 **diagnostics:report, system**
 	Filters the output for a diagnostic report.
 
@@ -66,17 +74,37 @@ System hooks
 **parameters, menu:<menu_name>**
 	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before rendering.
 
+	The ``$params`` array will contain:
+
+	 * ``name`` - name of the menu
+	 * ``sort_by`` - preferring sorting parameter
+	 * other parameters passed to ``elgg_view_menu()``
+
 **register, menu:<menu_name>**
 	Filters the initial list of menu items pulled from configuration, before the menu has been split into
 	sections. Triggered by ``elgg_view_menu()`` and ``elgg()->menus->getMenu()``.
+
+	The ``$params`` array will contain parameters returned by ``parameters, menu:<menu_name>`` hook.
+
+	The return value is an instance of ``\Elgg\Collections\Collection`` containing ``\ElggMenuItem`` objects.
+
+	Hook handlers can add/remove items to the collection using the collection API, as well as array access operations.
 
 **prepare, menu:<menu_name>**
 	Filters the array of menu sections before they're displayed. Each section is a string key mapping to
 	an area of menu items. This is a good hook to sort, add, remove, and modify menu items. Triggered by
 	``elgg_view_menu()`` and ``elgg()->menus->prepareMenu()``.
 
+	The ``$params`` array will contain:
+
+	 * ``selected_item`` - ``ElggMenuItem`` selected in the menu, if any
+
+	The return value is an instance of ``\Elgg\Menu\PreparedMenu``. The prepared menu is a collection of ``\Elgg\Menu\MenuSection``,
+	which in turn are collections of ``\ElggMenuItem`` objects.
+
 **register, menu:filter:<filter_id>**
-	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter.
+	Allows plugins to modify layout filter tabs on layouts that specify ``<filter_id>`` parameter. Parameters and return values
+	are same as in ``register, menu:<menu_name>`` hook.
 
 **filter_tabs, <context>**
 	Filters the array of ``ElggMenuItem`` used to display the All/Mine/Friends tabs. The ``$params``
@@ -261,7 +289,22 @@ Access hooks
 	Return false to prevent removal.
 
 **get_sql, access**
-    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
+	Filters SQL clauses restricting/allowing access to entities and annotations.
+
+	**The hook is triggered regardless if the access is ignored**. The handlers may need to check if access is ignored and return early, if appended clauses should only apply to access controlled contexts.
+
+	``$return`` value is a nested array of ``ands`` and ``ors``.
+
+	``$params`` includes:
+
+	 * ``table_alias`` - alias of the main table used in select clause
+	 * ``ignore_access`` - whether ignored access is enabled
+	 * ``use_enabled_clause`` - whether disabled entities are shown/hidden
+	 * ``access_column`` - column in the main table containing the access collection ID value
+	 * ``owner_guid_column`` - column in the main table referencing the GUID of the owner
+	 * ``guid_column`` - column in the main table referencing the GUID of the entity
+	 * ``enabled_column`` - column in the main table referencing the enabled status of the entity
+	 * ``query_builder`` - an instance of the ``QueryBuilder``
 
 
 Action hooks

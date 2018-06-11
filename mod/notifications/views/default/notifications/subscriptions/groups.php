@@ -1,4 +1,8 @@
 <?php
+
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+
 /**
  * Group subscription preferences
  *
@@ -11,17 +15,25 @@ if (!$user instanceof ElggUser) {
 
 // Returns a list of groups a user a member of, as well as any other groups
 // the user is subscribed to
-$dbprefix = elgg_get_config('dbprefix');
 
 echo elgg_list_entities([
 	'selects' => ['GROUP_CONCAT(ers.relationship) as relationships'],
 	'types' => 'group',
 	'joins' => [
-		"JOIN {$dbprefix}entity_relationships ers
-			ON e.guid = ers.guid_two AND ers.guid_one = $user->guid",
+		new JoinClause('entity_relationships', 'ers', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->merge([
+				$qb->compare("$joined_alias.guid_two", '=', "$main_alias.guid"),
+				$qb->compare("$joined_alias.guid_one", '=', $user->guid, ELGG_VALUE_INTEGER),
+			], 'AND');
+		}),
 	],
 	'wheres' => [
-		"ers.relationship = 'member' OR ers.relationship LIKE 'notify%'"
+		function(QueryBuilder $qb) {
+			return $qb->merge([
+				$qb->compare('ers.relationship', '=', 'member', ELGG_VALUE_STRING),
+				$qb->compare('ers.relationship', 'LIKE', 'notify%', ELGG_VALUE_STRING),
+			], 'OR');
+		},
 	],
 	'group_by' => 'e.guid',
 	'order_by_metadata' => [

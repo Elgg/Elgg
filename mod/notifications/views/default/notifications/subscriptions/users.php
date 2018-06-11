@@ -1,5 +1,8 @@
 <?php
 
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+
 /**
  * Friends preferences
  *
@@ -11,17 +14,24 @@ if (!$user instanceof ElggUser) {
 }
 
 // Returns a list of all friends, as well as anyone else who the user is subscribed to
-$dbprefix = elgg_get_config('dbprefix');
-
 echo elgg_list_entities([
 	'selects' => ['GROUP_CONCAT(ers.relationship) as relationships'],
 	'types' => 'user',
 	'joins' => [
-		"JOIN {$dbprefix}entity_relationships ers
-			ON e.guid = ers.guid_two AND ers.guid_one = $user->guid",
+		new JoinClause('entity_relationships', 'ers', function(QueryBuilder $qb, $joined_alias, $main_alias) use ($user) {
+			return $qb->merge([
+				$qb->compare("$joined_alias.guid_two", '=', "$main_alias.guid"),
+				$qb->compare("$joined_alias.guid_one", '=', $user->guid, ELGG_VALUE_INTEGER),
+			], 'AND');
+		}),
 	],
 	'wheres' => [
-		"ers.relationship = 'friend' OR ers.relationship LIKE 'notify%'"
+		function(QueryBuilder $qb) {
+			return $qb->merge([
+				$qb->compare('ers.relationship', '=', 'friend', ELGG_VALUE_STRING),
+				$qb->compare('ers.relationship', 'LIKE', 'notify%', ELGG_VALUE_STRING),
+			], 'OR');
+		},
 	],
 	'order_by_metadata' => [
 		[

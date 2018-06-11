@@ -101,8 +101,12 @@ class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 		// check we have all the required fields
 		foreach ($this->requiredAttributes as $attr) {
 			if (!array_key_exists($attr, $parsed)) {
-				throw new \PluginException(_elgg_services()->translator->translate('PluginException:ParserErrorMissingRequiredAttribute',
-							[$attr, $this->caller->getPluginID()]));
+				$msg = elgg_echo(
+					'PluginException:ParserErrorMissingRequiredAttribute',
+					[$attr, $this->caller->getPluginID()]
+				);
+					
+				throw PluginException::factory('ParserErrorMissingRequiredAttribute', null, $msg);
 			}
 		}
 

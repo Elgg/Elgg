@@ -127,14 +127,3 @@ function elgg_action_exists($action) {
 function elgg_is_xhr() {
 	return _elgg_services()->request->isXmlHttpRequest();
 }
-
-/**
- * Send an updated CSRF token, provided the page's current tokens were not fake.
- *
- * @return ResponseBuilder
- * @access private
- */
-function _elgg_csrf_token_refresh() {
-	return _elgg_services()->actions->handleTokenRefreshRequest();
-}
-

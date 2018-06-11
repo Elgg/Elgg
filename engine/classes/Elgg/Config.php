@@ -58,7 +58,6 @@ use Elgg\Project\Paths;
  * @property bool          $installer_running
  * @property string        $language     Site language code
  * @property int           $lastcache
- * @property \ElggLogCache $log_cache
  * @property array         $libraries
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
@@ -108,6 +107,10 @@ use Elgg\Project\Paths;
  * @property string        $x_accel_mapping
  * @property bool          $_boot_cache_hit
  * @property bool          $_elgg_autofeed
+ *
+ * @property bool          $_service_boot_complete
+ * @property bool          $_plugins_boot_complete
+ * @property bool          $_application_boot_complete
  */
 class Config {
 	use Loggable;
@@ -557,7 +560,7 @@ class Config {
 		}
 
 		if ($this->logger) {
-			$this->logger->warn("The property $name is read-only.");
+			$this->logger->warning("The property $name is read-only.");
 		}
 		return true;
 	}

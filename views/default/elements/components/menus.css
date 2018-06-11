@@ -4,6 +4,14 @@
 .elgg-menu-container {
 	display: flex;
 	flex-direction: column;
+	
+	&.elgg-menu-title-container {
+		flex-direction: row;
+		
+		.elgg-menu-hz > li {
+			margin: 0 0.25rem;
+		}
+	}
 }
 
 .elgg-menu,
@@ -30,6 +38,14 @@
 .elgg-menu.elgg-menu-hz {
 	flex-direction: row;
 	align-items: center;
+	
+	> li {
+		margin: 0 0.25rem 0 0;
+	}
+}
+
+.elgg-module-menu .elgg-menu-hz > li {
+	margin: 0 0 0 0.25rem;
 }
 
 .elgg-menu-item-has-dropdown .elgg-child-menu {
@@ -139,6 +155,7 @@
 }
 
 .elgg-menu-entity-navigation {
+	flex-direction: row;
 	justify-content: flex-end;
 }
 
@@ -196,6 +213,7 @@
 
 	.elgg-badge {
 		float: right;
+		margin-top: 0;
 	}
 
 	.elgg-anchor-icon {
@@ -394,4 +412,3 @@
 	background: $(background-color-soft);
 	text-decoration: none;
 }
-

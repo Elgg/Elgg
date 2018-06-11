@@ -33,15 +33,11 @@ if (!$entity->isPublicMembership()) {
 	];
 }
 
-$icon = elgg_view_entity_icon($entity, 'small', $vars);
-
 $vars['content'] = $entity->briefdescription;
-$vars['handler'] = 'groups';
 $vars['byline'] = false;
 $vars['access'] = false;
 $vars['time'] = false;
 $vars['imprint'] = $imprint;
+$vars['icon_entity'] = $entity;
 
-$list_body = elgg_view('group/elements/summary', $vars);
-
-echo elgg_view_image_block($icon, $list_body, $vars);
+echo elgg_view('group/elements/summary', $vars);

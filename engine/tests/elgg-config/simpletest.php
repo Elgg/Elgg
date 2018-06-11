@@ -26,6 +26,14 @@ $settings = [
 	],
 	'memcache_namespace_prefix' => getenv('ELGG_MEMCACHE_NAMESPACE_PREFIX') ? : 'elgg_mc_prefix_',
 
+	'redis' => (bool) getenv('ELGG_REDIS'),
+	'redis_servers' => [
+		[
+			getenv('ELGG_REDIS_SERVER1_HOST'),
+			getenv('ELGG_REDIS_SERVER1_PORT')
+		],
+	],
+
 	// These are fixed, because tests rely on specific location of the dataroot for source files
 	'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 	'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',

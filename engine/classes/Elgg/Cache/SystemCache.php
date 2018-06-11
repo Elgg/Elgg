@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Cache;
 
+use Elgg\Cacheable;
 use Elgg\Config;
 use Elgg\Profilable;
 use ElggCache;
@@ -14,16 +15,12 @@ use ElggCache;
 class SystemCache {
 
 	use Profilable;
+	use Cacheable;
 
 	/**
 	 * @var Config
 	 */
 	private $config;
-
-	/**
-	 * @var ElggCache
-	 */
-	private $cache;
 
 	/**
 	 * Constructor

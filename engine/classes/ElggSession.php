@@ -55,6 +55,10 @@ class ElggSession {
 	 * @since 1.9
 	 */
 	public function start() {
+		if ($this->storage->getId()) {
+			return true;
+		}
+
 		$result = $this->storage->start();
 		$this->generateSessionToken();
 		return $result;

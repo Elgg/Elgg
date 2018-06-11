@@ -7,13 +7,11 @@ $guid = (int) get_input('guid');
 
 $upgrade = get_entity($guid);
 
-try {
-	if (!$upgrade instanceof \ElggUpgrade) {
-		throw new RuntimeException(elgg_echo('admin:upgrades:error:invalid_upgrade', [$upgrade->getDisplayName(), $guid]));
-	}
-
-	$result = _elgg_services()->upgrades->executeAsyncUpgrade($upgrade);
-	return elgg_ok_response($result);
-} catch (RuntimeException $ex) {
-	return elgg_error_response($ex->getMessage(), REFERRER, ELGG_HTTP_INTERNAL_SERVER_ERROR);
+if (!$upgrade instanceof \ElggUpgrade) {
+	$msg = elgg_echo('admin:upgrades:error:invalid_upgrade', [$guid]);
+	throw new \Elgg\EntityNotFoundException($msg);
 }
+
+$result = _elgg_services()->upgrades->executeUpgrade($upgrade);
+
+return elgg_ok_response($result->toArray());

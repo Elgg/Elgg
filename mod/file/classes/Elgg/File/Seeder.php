@@ -64,6 +64,8 @@ class Seeder extends Seed {
 				'object_guid' => $file->guid,
 				'target_guid' => $file->container_guid,
 			]);
+
+			$this->advance();
 		}
 	}
 
@@ -90,6 +92,8 @@ class Seeder extends Seed {
 			} else {
 				$this->log("Failed to delete file $file->guid");
 			}
+
+			$this->advance();
 		}
 	}
 

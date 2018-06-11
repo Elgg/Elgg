@@ -729,7 +729,20 @@ trait LegacyQueryOptionsAdapter {
 		];
 
 		foreach ($names as $name) {
-			$options[$name] = !empty($options[$name]) ? $options[$name] : null;
+			if (!isset($options[$name])) {
+				continue;
+			}
+
+			if (!is_array($options[$name])) {
+				$options[$name] = [$options[$name]];
+			}
+
+			foreach ($options[$name] as $key => $value) {
+				if ($value === false || $value === '') {
+					unset($options[$name][$key]);
+					continue;
+				}
+			}
 		}
 
 		return $options;

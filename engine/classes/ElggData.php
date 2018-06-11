@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Collections\CollectionItemInterface;
+
 /**
  * A generic class that contains shared code among
  * \ElggExtender, \ElggEntity, and \ElggRelationship
@@ -6,14 +9,14 @@
  * @package    Elgg.Core
  * @subpackage DataModel
  */
-abstract class ElggData implements
-	Loggable,    // Can events related to this object class be logged
-	Iterator,    // Override foreach behaviour
-	\ArrayAccess // Override for array access
-{
+abstract class ElggData implements CollectionItemInterface,
+								   Serializable,
+								   Loggable,
+								   Iterator,
+								   ArrayAccess {
 
 	use \Elgg\TimeUsing;
-	
+
 	/**
 	 * The main attributes of an entity.
 	 * Holds attributes to save to database
@@ -94,9 +97,11 @@ abstract class ElggData implements
 	/**
 	 * Get a plain old object copy for public consumption
 	 *
-	 * @return \stdClass
+	 * @param array $params Export parameters
+	 *
+	 * @return \Elgg\Export\Data
 	 */
-	abstract public function toObject();
+	abstract public function toObject(array $params = []);
 
 	/*
 	 * ITERATOR INTERFACE
@@ -192,6 +197,7 @@ abstract class ElggData implements
 		if (array_key_exists($key, $this->attributes)) {
 			return $this->attributes[$key];
 		}
+
 		return null;
 	}
 
@@ -222,5 +228,33 @@ abstract class ElggData implements
 	 */
 	public function offsetExists($offset) {
 		return array_key_exists($offset, $this->attributes);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getId() {
+		return $this->getSystemLogID();
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getPriority() {
+		return $this->getTimeCreated();
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function serialize() {
+		return serialize($this->attributes);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function unserialize($serialized) {
+		$this->attributes = unserialize($serialized);
 	}
 }

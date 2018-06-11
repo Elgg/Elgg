@@ -999,7 +999,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *      'position'         Position of the pagination: before, after, or both
  *      'list_type'        List type: 'list' (default), 'gallery'
  *      'list_type_toggle' Display the list type toggle?
- *      'no_results'       Message to display if no results (string|Closure)
+ *      'no_results'       Message to display if no results (string|true|Closure)
  *
  * @return string The rendered list of entities
  */
@@ -1049,7 +1049,7 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *      'list_class' CSS Class applied to the list
  *      'item_view'  Alternative view to render list items
  *      'offset_key' The url parameter key used for offset
- *      'no_results' Message to display if no results (string|Closure)
+ *      'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of annotations
  * @access private
@@ -1678,7 +1678,7 @@ function _elgg_views_preprocess_css($hook, $type, $content, $params) {
 }
 
 /**
- * Inserts module names into anonymous modules by handling the "simplecache:generate" hook.
+ * Inserts module names into anonymous modules by handling the "simplecache:generate" and "cache:generate" hook.
  *
  * @param string $hook    The name of the hook
  * @param string $type    View type (css, js, or unknown)
@@ -1817,6 +1817,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_preprocess_css');
 
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
+	elgg_register_plugin_hook_handler('cache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 

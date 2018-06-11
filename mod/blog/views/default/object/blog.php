@@ -2,50 +2,34 @@
 /**
  * View for blog objects
  *
- * @package Blog
+ * @uses $vars['entity'] ElggBlog entity to show
  */
 
-$full = elgg_extract('full_view', $vars, false);
-$blog = elgg_extract('entity', $vars, false);
-
-if (!($blog instanceof \ElggBlog)) {
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggBlog) {
 	return;
 }
 
-$owner = $blog->getOwnerEntity();
-$owner_icon = elgg_view_entity_icon($owner, 'small');
-
-if ($full) {
+if (elgg_extract('full_view', $vars)) {
 	$body = elgg_view('output/longtext', [
-		'value' => $blog->description,
+		'value' => $entity->description,
 		'class' => 'blog-post',
 	]);
 
 	$params = [
-		'entity' => $blog,
-		'title' => false,
+		'icon' => true,
+		'body' => $body,
+		'show_summary' => true,
+		'show_navigation' => true,
 	];
 	$params = $params + $vars;
-	$summary = elgg_view('object/elements/summary', $params);
-
-	echo elgg_view('object/elements/full', [
-		'entity' => $blog,
-		'summary' => $summary,
-		'icon' => $owner_icon,
-		'body' => $body,
-		'show_navigation' => true,
-	]);
+	
+	echo elgg_view('object/elements/full', $params);
 } else {
 	// brief view
-	$excerpt = $blog->excerpt;
-	if (!$excerpt) {
-		$excerpt = elgg_get_excerpt($blog->description);
-	}
-
 	$params = [
-		'entity' => $blog,
-		'content' => $excerpt,
-		'icon' => $owner_icon,
+		'content' => $entity->getExcerpt(),
+		'icon' => true,
 	];
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);

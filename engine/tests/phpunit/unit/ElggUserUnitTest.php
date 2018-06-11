@@ -3,6 +3,7 @@
 /**
  * @group User
  * @group UnitTests
+ * @group ElggData
  */
 class ElggUserUnitTest extends \Elgg\UnitTestCase {
 
@@ -40,4 +41,47 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertArrayNotHasKey('unregistered', $user_settings);
 	}
 
+	public function testCanExport() {
+		$user = $this->createUser();
+
+		$export = $user->toObject();
+
+		$this->assertEquals($user->guid, $export->guid);
+		$this->assertEquals($user->type, $export->type);
+		$this->assertEquals($user->subtype, $export->subtype);
+		$this->assertEquals($user->guid, $export->owner_guid);
+		$this->assertEquals($user->time_created, $export->getTimeCreated()->getTimestamp());
+		$this->assertEquals($user->time_updated, $export->getTimeUpdated()->getTimestamp());
+		$this->assertEquals($user->getURL(), $export->url);
+		$this->assertEquals($user->language, $export->language);
+	}
+
+	public function testCanSerialize() {
+		$user = $this->createUser();
+
+		$data = serialize($user);
+
+		$unserialized = unserialize($data);
+
+		$this->assertEquals($user, $unserialized);
+	}
+
+	public function testCanArrayAccessAttributes() {
+		$user = $this->createUser();
+
+		$this->assertEquals($user->guid, $user['guid']);
+
+		foreach ($user as $attr => $value) {
+			$this->assertEquals($user->$attr, $user[$attr]);
+		}
+
+		unset($user['access_id']);
+	}
+
+	public function testIsLoggable() {
+		$user = $this->createUser();
+
+		$this->assertEquals($user->guid, $user->getSystemLogID());
+		$this->assertEquals($user, $user->getObjectFromID($user->guid));
+	}
 }

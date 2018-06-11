@@ -31,4 +31,22 @@ class ElggMessage extends ElggObject {
 		
 		return parent::canComment($user_guid, $default);
 	}
+	
+	/**
+	 * Get the recipient of the message
+	 *
+	 * @return ElggUser|false
+	 */
+	public function getRecipient() {
+		return get_user($this->toId);
+	}
+	
+	/**
+	 * Get the sender of the message
+	 *
+	 * @return ElggUser|false
+	 */
+	public function getSender() {
+		return get_user($this->fromId);
+	}
 }

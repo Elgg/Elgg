@@ -64,10 +64,16 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
+	'ElggPlugin:Error' => 'Plugin error',
+	'ElggPlugin:Error:ID' => 'Error in plugin "%s"',
+	'ElggPlugin:Error:Path' => 'Error in plugin path "%s"',
+	'ElggPlugin:Error:Unknown' => 'Undefined plugin error',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
+	'ElggPlugin:Exception:InvalidPackage' => 'Package cannot be loaded',
+	'ElggPlugin:Exception:InvalidManifest' => 'Plugin manifest is missing or invalid',
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
 	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
@@ -116,6 +122,8 @@ return array(
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
 	'BadRequestException' => 'Bad request',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
+	'LogicException:NotSubclass' => '%s must extend %s',
+	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -480,10 +488,11 @@ return array(
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
 	'admin:upgrades:run' => 'Run upgrades now',
-	'admin:upgrades:error:invalid_upgrade' => 'The upgrade %s (%s) is not an instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
-	'admin:upgrades:completed' => 'Async upgrade %s completed at %s',
-	'admin:upgrades:completed:errors' => 'Async upgrade %s completed at %s but encountered errors: %s',
+	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
+	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
+	'admin:upgrades:failed' => 'Upgrade "%s" failed',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -772,7 +781,13 @@ To go to the site, click here:
 	'admin:server:label:memcache' => 'Memcached',
 	'admin:server:memcache:inactive' => '
 		Memcache is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure memcache.
+		For improved performance, it is recommended that you enable and configure memcache (or redis).
+	',
+
+	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => '
+		Redis is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure redis (or memcached).
 	',
 
 	'admin:user:label:search' => "Find users:",
@@ -1242,6 +1257,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
 	'upgrade:unlock' => 'Unlock upgrade',
 	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
+	'upgrade:terminated' => 'Upgrade has been terminated by an event handler',
 	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
 	'upgrade:unlock:success' => "Upgrade unlocked successfully.",
 	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
@@ -1609,4 +1625,9 @@ To view %s's profile, click here:
 	"core:upgrade:2017121200:title" => "Create friends access collections",
 	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
 
+	"core:upgrade:2018041800:title" => "Activate new plugins",
+	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
+
+	"core:upgrade:2018041801:title" => "Delete old plugin entities",
+	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
 );

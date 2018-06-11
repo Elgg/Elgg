@@ -4,6 +4,7 @@ elgg_gatekeeper();
 
 $limit = get_input('limit', elgg_get_config('default_limit'));
 $query = get_input('term', get_input('q'));
+$input_name = get_input('name');
 
 $options = [
 	'query' => $query,
@@ -13,6 +14,7 @@ $options = [
 	'order' => 'ASC',
 	'fields' => ['metadata' => ['name', 'username']],
 	'item_view' => 'search/entity',
+	'input_name' => $input_name,
 ];
 
 $target_guid = get_input('match_target');
@@ -42,9 +44,6 @@ if (get_input('match_membership', false)) {
 	";
 }
 
-elgg_set_http_header("Content-Type: application/json;charset=utf-8");
+$body = elgg_list_entities($options, 'elgg_search');
 
-echo elgg_list_entities($options, 'elgg_search');
-
-
-
+echo elgg_view_page('', $body);

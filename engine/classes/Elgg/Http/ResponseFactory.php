@@ -335,9 +335,14 @@ class ResponseFactory {
 				return $this->response_sent;
 			}
 
-			$params['type'] = $forward_reason;
-			$params['params']['error'] = $error;
-			$error_page = elgg_view_resource('error', $params);
+			if (elgg_view_exists('resources/error')) {
+				$params['type'] = $forward_reason;
+				$params['params']['error'] = $error;
+				$error_page = elgg_view_resource('error', $params);
+			} else {
+				$error_page = $error;
+			}
+
 			return $this->send($this->prepareResponse($error_page, $status_code));
 		}
 

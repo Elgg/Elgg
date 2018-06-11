@@ -6,25 +6,55 @@
 	position: relative;
 	border-top: 1px solid $(border-color-soft);
 	margin-top: 2rem;
+	
+	> li {
+		border-color: $(border-color-soft);
+		border-style: solid;
+		border-width: 0 1px 1px 1px;
+		padding: 1rem;
+		
+		&:last-child {
+			border-bottom: 1px solid $(border-color-soft);
+		}
+		
+		/* Comment highlighting that automatically fades away */
+		&.elgg-state-highlight {
+			animation: comment-highlight 5s;
+		}
+	}
+	
+	/* Comments triangle */
+	&:before {
+		content: "\25b2";
+		color: #ffffff;
+		position: absolute;
+		text-shadow: 0 -2px 0 $(border-color-soft);
+		font-size: 1rem;
+		top: -1rem;
+		left: 2rem;
+		margin-right: 1.5rem;
+		line-height: 1rem;
+		padding-top: 3px;
+		pointer-events: none;
+	}
+	
+	&.comments-list {
+		margin-top: 1rem;
+	}
 }
 
-.elgg-comments .elgg-list > li,
-.elgg-river-comments > li {
-	border-color: $(border-color-soft);
-	border-style: solid;
-	border-width: 0 1px 1px 1px;
-	padding: 1rem;
-}
-
-.elgg-comments > form {
+.elgg-module-comments {
 	margin-top: 1rem;
-	margin-bottom: 1rem;
 }
-
-/* Comment highlighting that automatically fades away */
-.elgg-comments .elgg-state-highlight,
-.elgg-river-comments .elgg-state-highlight {
-	animation: comment-highlight 5s;
+	
+#comments {
+	.elgg-form-comment-save {
+		margin-top: 1rem;
+		
+		.elgg-field-label {
+			display: none;
+		}
+	}
 }
 
 /* Standard syntax */
@@ -35,22 +65,4 @@
 	to {
 		background: white;
 	}
-}
-
-/* **************************************
-	Comments triangle
-************************************** */
-.elgg-comments .elgg-list:before,
-.elgg-river-comments:before {
-	content: "\25b2";
-	color: #ffffff;
-	position: absolute;
-	text-shadow: 0 -2px 0 $(border-color-soft);
-	font-size: 1rem;
-	top: -1rem;
-	left: 2rem;
-	margin-right: 1.5rem;
-	line-height: 1rem;
-	padding-top: 3px;
-	pointer-events: none;
 }

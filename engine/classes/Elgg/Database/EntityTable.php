@@ -9,7 +9,6 @@ use Elgg\Cache\MetadataCache;
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\Clauses\EntityWhereClause;
-use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\EntityTable\UserFetchFailureException;
 use Elgg\EntityPreloader;
 use Elgg\EventsService;
@@ -23,6 +22,7 @@ use ElggSession;
 use ElggSite;
 use ElggUser;
 use InvalidParameterException;
+use Psr\Log\LoggerInterface;
 use stdClass;
 
 /**
@@ -96,14 +96,14 @@ class EntityTable {
 	/**
 	 * Constructor
 	 *
-	 * @param Config        $config         Config
-	 * @param Database      $db             Database
-	 * @param EntityCache   $entity_cache   Entity cache
-	 * @param MetadataCache $metadata_cache Metadata cache
-	 * @param EventsService $events         Events service
-	 * @param ElggSession   $session        Session
-	 * @param Translator    $translator     Translator
-	 * @param Logger        $logger         Logger
+	 * @param Config          $config         Config
+	 * @param Database        $db             Database
+	 * @param EntityCache     $entity_cache   Entity cache
+	 * @param MetadataCache   $metadata_cache Metadata cache
+	 * @param EventsService   $events         Events service
+	 * @param ElggSession     $session        Session
+	 * @param Translator      $translator     Translator
+	 * @param LoggerInterface $logger         Logger
 	 */
 	public function __construct(
 		Config $config,
@@ -113,7 +113,7 @@ class EntityTable {
 		EventsService $events,
 		ElggSession $session,
 		Translator $translator,
-		Logger $logger
+		LoggerInterface $logger
 	) {
 		$this->config = $config;
 		$this->db = $db;
@@ -188,8 +188,8 @@ class EntityTable {
 		$where->guids = (int) $guid;
 		$where->viewer_guid = $user_guid;
 
-		$select = Select::fromTable('entities');
-		$select->select('*');
+		$select = Select::fromTable('entities', 'e');
+		$select->select('e.*');
 		$select->addClause($where);
 
 		return $this->db->getDataRow($select);
@@ -504,48 +504,6 @@ class EntityTable {
 	}
 
 	/**
-	 * Returns a list of months in which entities were updated or created.
-	 *
-	 * @tip     Use this to generate a list of archives by month for when entities were added or updated.
-	 *
-	 * @warning Months are returned in the form YYYYMM.
-	 *
-	 * @param string $type           The type of entity
-	 * @param string $subtype        The subtype of entity
-	 * @param int    $container_guid The container GUID that the entities belong to
-	 * @param string $order_by       Order_by SQL order by clause
-	 *
-	 * @return array|false Either an array months as YYYYMM, or false on failure
-	 */
-	public function getDates($type = '', $subtype = '', $container_guid = 0, $order_by = 'time_created') {
-
-		$options = [
-			'types' => $type,
-			'subtypes' => $subtype,
-			'container_guids' => $container_guid,
-			'callback' => false,
-			'order_by' => [
-				new OrderByClause($order_by),
-			],
-		];
-
-		$options = new QueryOptions($options);
-
-		$qb = Select::fromTable('entities');
-		$qb->select("DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth");
-		$qb->addClause(EntityWhereClause::factory($options));
-
-		$results = _elgg_services()->db->getData($qb);
-		if (empty($results)) {
-			return false;
-		}
-
-		return array_map(function ($e) {
-			return $e->yearmonth;
-		}, $results);
-	}
-
-	/**
 	 * Update the last_action column in the entities table for $guid.
 	 *
 	 * @warning This is different to time_updated.  Time_updated is automatically set,
@@ -753,7 +711,7 @@ class EntityTable {
 		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
 		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
 
-		remove_all_private_settings($guid);
+		$entity->removeAllPrivateSettings();
 		$entity->deleteOwnedAccessCollections();
 		$entity->deleteAccessCollectionMemberships();
 		$entity->deleteRelationships();

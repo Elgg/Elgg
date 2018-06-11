@@ -17,6 +17,12 @@ function system_log_init() {
 	/** Register a default system log handler */
 	elgg_register_event_handler('log', 'systemlog', 'system_log_default_logger', 999);
 
+	elgg_register_event_handler('upgrade:before', 'system', function() {
+		// disable the system log for upgrades to avoid exceptions when the schema changes.
+		elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
+		elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+	});
+
 	// Register cron hook for archival of logs
 	elgg_register_plugin_hook_handler('cron', 'all', 'system_log_archive_cron');
 

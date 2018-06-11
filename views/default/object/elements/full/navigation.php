@@ -11,7 +11,6 @@ if (!($entity instanceof \ElggEntity)) {
 }
 
 $params = $vars;
-$params['class'] = elgg_extract_class($params, 'elgg-menu-hz');
 $params['sort_by'] = 'priority';
 
 $menu = elgg_view_menu('entity_navigation', $params);
