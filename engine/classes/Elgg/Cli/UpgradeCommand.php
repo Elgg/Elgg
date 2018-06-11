@@ -28,7 +28,10 @@ class UpgradeCommand extends Command {
 
 		$async = in_array('async', $this->argument('async'));
 
-		Application::upgrade($async);
+		Application::migrate();
+		$app = Application::start();
+
+		$app->_services->upgrades->run($async);
 
 		system_message('Your system has been upgraded');
 
