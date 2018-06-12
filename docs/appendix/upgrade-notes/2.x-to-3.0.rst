@@ -1111,3 +1111,8 @@ Error logging
 -------------
 
 Sending ``elgg_log()`` and PHP error messages to page output is now only possible via the developers plugin "Log to the screen" setting. See the ``settings.example.php`` file for more information on using ``$CONFIG->debug`` in your ``settings.php`` file. Debugging should generally be done via the ``xdebug`` extension or ``tail -f /path/to/error.log`` on your server.
+
+Composer asset plugin no longer required
+----------------------------------------
+
+Assets are now loaded from https://asset-packagist.org. FXP composer asset plugin is no longer required when installing Elgg or updating composer dependencies.

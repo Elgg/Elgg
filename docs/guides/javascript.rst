@@ -840,18 +840,37 @@ Third-party assets
 ==================
 
 We recommend managing third-party scripts and styles with Composer.
-Elgg core uses ``fxp/composer-asset-plugin`` for this purpose.
-This plugin allows you to pull dependencies from the Bower or Yarn package repositories,
-but using the Composer command-line tool.
+Elgg's composer.json is configured to install dependencies from the **Bower** or **Yarn** package repositories using
+Composer command-line tool. Core configuration installs the assets from `Asset Packagist <https://asset-packagist.org>`_
+(a repository managed by the Yii community).
+
+Alternatively, you can install ``fxp/composer-asset-plugin`` globally to achieve the same results, but the installation
+and update takes much longer.
 
 For example, to include jQuery, you could run the following Composer commands:
 
 .. code-block:: sh
 
-    composer global require fxp/composer-asset-plugin:~1.4.2
     composer require bower-asset/jquery:~2.0
 
-.. note::
 
-    ``fxp/composer-asset-plugin`` must be installed globally!
-    See https://github.com/francoispluchino/composer-asset-plugin for more info.
+If you are using a starter-project, or pulling in Elgg as a composer dependency via a custom composer project,
+update your ``composer.json`` with the following configuration:
+
+.. code-block:: json
+
+	{
+	    "repositories": [
+	        {
+	            "type": "composer",
+	            "url": "https://asset-packagist.org"
+	        }
+	    ],
+		"config": {
+	        "fxp-asset": {
+	            "enabled": false
+	        }
+	    },
+	}
+
+You can find additional information at `Asset Packagist <https://asset-packagist.org>`_ website.

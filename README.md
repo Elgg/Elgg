@@ -33,7 +33,6 @@ Under the hood:
 - RequireJS handles AMD
 - Zend Mail handles outgoing email
 - htmLawed XSS filters
-- Composer asset plugin for NPM/Bower dependencies
 - DBAL
 - Phinx database migrations
 - CSS-Crush for CSS preprocessing

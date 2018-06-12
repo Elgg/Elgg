@@ -74,7 +74,6 @@ With Composer (recommended if comfortable with CLI):
 .. code-block:: sh
 
     composer self-update
-    composer global require fxp/composer-asset-plugin
     composer create-project elgg/starter-project:dev-master ./path/to/project/root
     cd ./path/to/project/root
     composer install

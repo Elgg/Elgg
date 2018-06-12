@@ -19,7 +19,6 @@ Install Elgg as a Composer Project
 .. code-block:: sh
 
 	composer self-update
-	composer global require fxp/composer-asset-plugin:^1.4
 	composer create-project elgg/starter-project:dev-master ./path/to/my/project
 	cd ./path/to/my/project
 	composer install
