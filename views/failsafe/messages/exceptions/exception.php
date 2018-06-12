@@ -9,12 +9,16 @@
  * @uses $vars['object'] An exception
  */
 
+if (elgg_is_admin_logged_in()) {
+	echo elgg_view('messages/exceptions/admin_exception', $vars);
+	return;
+}
 ?>
 
-<p class="elgg-messages-exception">
+<div class="elgg-messages-exception">
 	<span title="Unrecoverable Error">
 		<?php echo elgg_echo('exception:contact_admin'); ?>
 		<br /><br />
 		Exception at time <?php echo elgg_extract('ts', $vars); ?>.
 	</span>
-</p>
+</div>

@@ -9,7 +9,7 @@ $entity = elgg_extract('entity', $vars);
 /* @var $entity \ElggUpgrade */
 
 $batch = $entity->getBatch();
-if (!$batch) {
+if (!$batch || $batch->shouldBeSkipped()) {
 	// Something went wrong with class resolution
 	return;
 }

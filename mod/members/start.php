@@ -41,28 +41,32 @@ function members_init() {
  * @return \ElggMenuItem[]
  */
 function members_register_filter_menu(\Elgg\Hook $hook) {
-	$result = (array) $hook->getValue();
+	$result = $hook->getValue();
+	$filter_value = $hook->getParam('filter_value');
 	
 	$result['newest'] = \ElggMenuItem::factory([
 		'name' => 'newest',
 		'text' => elgg_echo('sort:newest'),
 		'href' => 'members/newest',
-		'selected' => $hook->getParam('filter_value') == 'newest',
+		'selected' => $filter_value === 'newest',
 	]);
 	$result['alpha'] =\ElggMenuItem::factory([
 		'name' => 'alpha',
 		'text' => elgg_echo('sort:alpha'),
 		'href' => 'members/alpha',
+		'selected' => $filter_value === 'alpha',
 	]);
 	$result['popular'] = \ElggMenuItem::factory([
 		'name' => 'popular',
 		'text' => elgg_echo('sort:popular'),
 		'href' => 'members/popular',
+		'selected' => $filter_value === 'popular',
 	]);
 	$result['online'] = \ElggMenuItem::factory([
 		'name' => 'online',
 		'text' => elgg_echo('members:label:online'),
 		'href' => 'members/online',
+		'selected' => $filter_value === 'online',
 	]);
 	
 	return $result;

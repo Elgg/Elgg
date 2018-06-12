@@ -1,5 +1,7 @@
 <?php
+
 namespace Elgg;
+
 /**
  * Manages core autoloading and caching of class maps
  *
@@ -9,6 +11,8 @@ namespace Elgg;
  * @subpackage Autoloader
  */
 class AutoloadManager {
+
+	use Cacheable;
 
 	const FILENAME = 'autoload_data.php';
 	const KEY_CLASSES = 'classes';
@@ -28,11 +32,6 @@ class AutoloadManager {
 	 * @var bool was data in the manager altered?
 	 */
 	protected $altered = false;
-
-	/**
-	 * @var \ElggCache
-	 */
-	protected $storage = null;
 
 	/**
 	 * Constructor
@@ -101,12 +100,12 @@ class AutoloadManager {
 	 * @return \Elgg\AutoloadManager
 	 */
 	public function saveCache() {
-		if ($this->storage) {
+		if ($this->cache) {
 			$map = $this->loader->getClassMap();
 			if ($this->altered || $map->getAltered()) {
 				$spec[self::KEY_CLASSES] = $map->getMap();
 				$spec[self::KEY_SCANNED_DIRS] = $this->scannedDirs;
-				$this->storage->save(self::FILENAME, serialize($spec));
+				$this->cache->save(self::FILENAME, serialize($spec));
 			}
 		}
 		return $this;
@@ -138,11 +137,11 @@ class AutoloadManager {
 	 * @return false|array
 	 */
 	protected function getCacheFileContents() {
-		if (!$this->storage) {
+		if (!$this->cache) {
 			return false;
 		}
 		
-		$serialization = $this->storage->load(self::FILENAME);
+		$serialization = $this->cache->load(self::FILENAME);
 		if (!$serialization) {
 			return false;
 		}
@@ -161,8 +160,8 @@ class AutoloadManager {
 	 * @return \Elgg\AutoloadManager
 	 */
 	public function deleteCache() {
-		if ($this->storage) {
-			$this->storage->delete(self::FILENAME);
+		if ($this->cache) {
+			$this->cache->delete(self::FILENAME);
 		}
 		return $this;
 	}
@@ -174,24 +173,5 @@ class AutoloadManager {
 	 */
 	public function getLoader() {
 		return $this->loader;
-	}
-
-	/**
-	 * Set the cache storage object
-	 *
-	 * @param \ElggCache $storage Cache object
-	 * @return void
-	 */
-	public function setStorage(\ElggCache $storage) {
-		$this->storage = $storage;
-	}
-
-	/**
-	 * Save the cache on object destruction
-	 *
-	 * @return void
-	 */
-	public function __destruct() {
-		$this->saveCache();
 	}
 }

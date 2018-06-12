@@ -8,9 +8,14 @@
  * @uses $vars['menu']      Menu array provided by elgg_view_menu()
  */
 
-$actions = elgg_extract('action', $vars['menu'], []);
-$main = elgg_extract('default', $vars['menu'], []);
-$admin = elgg_extract('admin', $vars['menu'], []);
+$menu = elgg_extract('menu', $vars);
+if (!$menu instanceof \Elgg\Menu\PreparedMenu) {
+	return;
+}
+
+$actions = $menu->getItems('action');
+$main = $menu->getItems('default');
+$admin = $menu->getItems('admin');
 
 $user = elgg_extract('entity', $vars);
 if (!($user instanceof ElggUser)) {

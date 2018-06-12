@@ -154,6 +154,41 @@ class Entities extends Repository {
 
 		return _elgg_services()->entityTable->fetch($qb, $options);
 	}
+	
+	/**
+	 * Returns a list of months in which entities were updated or created.
+	 *
+	 * @tip     Use this to generate a list of archives by month for when entities were added or updated.
+	 *
+	 * @warning Months are returned in the form YYYYMM.
+	 *
+	 * @return array|false Either an array months as YYYYMM, or false on failure
+	 */
+	public function getDates() {
+		
+		$qb = Select::fromTable('entities', 'e');
+
+		$qb->select("DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(e.time_created)) AS yearmonth");
+
+		$this->expandInto($qb, 'e');
+
+		$qb = $this->buildQuery($qb);
+
+		$options = $this->options->getArrayCopy();
+		unset($options['count']);
+		
+		$options['callback'] = false;
+		
+		$results = _elgg_services()->entityTable->fetch($qb, $options);
+		
+		if (empty($results)) {
+			return false;
+		}
+	
+		return array_map(function ($e) {
+			return $e->yearmonth;
+		}, $results);
+	}
 
 	/**
 	 * Execute the query resolving calculation, count and/or batch options

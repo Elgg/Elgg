@@ -28,7 +28,8 @@ class UpgradeCommandTest extends IntegrationTestCase {
 		$commandTester = new CommandTester($command);
 		$commandTester->execute(['command' => $command->getName()]);
 
-		$this->assertRegExp('/Your system has been upgraded/im', $commandTester->getDisplay());
+		$this->assertRegExp('/System has been upgraded/im', $commandTester->getDisplay());
+		$this->assertRegExp('/Plugins have been upgraded/im', $commandTester->getDisplay());
 	}
 
 	public function testExecuteAsyncUpgrades() {
@@ -40,9 +41,11 @@ class UpgradeCommandTest extends IntegrationTestCase {
 		$commandTester->execute([
 			'command' => $command->getName(),
 			'async' => ['async'],
+			'--quiet' => true,
 		]);
 
-		$this->assertRegExp('/Your system has been upgraded/im', $commandTester->getDisplay());
+		$this->assertRegExp('/System has been upgraded/im', $commandTester->getDisplay());
+		$this->assertRegExp('/Plugins have been upgraded/im', $commandTester->getDisplay());
 	}
 
 }

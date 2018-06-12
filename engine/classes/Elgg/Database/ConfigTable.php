@@ -1,6 +1,10 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\BootService;
+use Elgg\Database;
+use Psr\Log\LoggerInterface;
+
 /**
  * Manipulates values in the dbprefix_config table. Do not use to read/write $CONFIG.
  *
@@ -12,12 +16,12 @@ namespace Elgg\Database;
 class ConfigTable {
 		
 	/**
-	 * @var \Elgg\Database
+	 * @var Database
 	 */
 	protected $db;
 	
 	/**
-	 * @var \Elgg\BootService
+	 * @var BootService
 	 */
 	protected $boot;
 	
@@ -29,11 +33,15 @@ class ConfigTable {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Database    $db     Database
-	 * @param \Elgg\BootService $boot   BootService
-	 * @param \Elgg\Logger      $logger Logger
+	 * @param Database        $db     Database
+	 * @param BootService     $boot   BootService
+	 * @param LoggerInterface $logger Logger
 	 */
-	public function __construct(\Elgg\Database $db, \Elgg\BootService $boot, \Elgg\Logger $logger) {
+	public function __construct(
+		Database $db,
+		BootService $boot,
+		LoggerInterface $logger
+	) {
 		$this->db = $db;
 		$this->boot = $boot;
 		$this->logger = $logger;
@@ -134,42 +142,20 @@ class ConfigTable {
 	}
 
 	/**
-	 * Load all config values from the config table (and datalists if not yet
-	 * upgraded to 3.0)
-	 *
-	 * @todo move into BootData once we no longer have to support the 2.x schema
-	 *
+	 * Load all config values from the config table
 	 * @return array
+	 * @throws \DatabaseException
 	 */
 	public function getAll() {
 		$values = [];
 
-		$sql = "
-			SELECT *
-			FROM {$this->db->prefix}config
-		";
-		foreach ($this->db->getData($sql) as $row) {
-			$values[$row->name] = unserialize($row->value);
-		}
+		$qb = Select::fromTable('config');
+		$qb->select('*');
 
-		if (!array_key_exists('installed', $values)) {
-			// try to fetch from old pre 3.0 datalists table
-			// need to do this to be able to perform an upgrade from 2.x to 3.0
-			try {
-				$sql = "
-					SELECT *
-					FROM {$this->db->prefix}datalists
-				";
-				foreach ($this->db->getData($sql) as $row) {
-					$value = $row->value;
-					if ($row->name == 'processed_upgrades') {
-						// config table already serializes data so no need to double serialize
-						$value = unserialize($value);
-					}
-					$values[$row->name] = $value;
-				}
-			} catch (\Exception $e) {
-			}
+		$data = $this->db->getData($qb);
+
+		foreach ($data as $row) {
+			$values[$row->name] = unserialize($row->value);
 		}
 
 		// don't pull in old config values

@@ -27,4 +27,4 @@ foreach ($entity_rows as $entity_row) {
 
 $entity_info .= '</table>';
 	
-echo elgg_view_module('inline', elgg_echo('developers:entity_explorer:info:attributes'), $entity_info);
+echo elgg_view_module('info', elgg_echo('developers:entity_explorer:info:attributes'), $entity_info);

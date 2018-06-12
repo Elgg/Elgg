@@ -37,7 +37,9 @@ return array(
 	'developers:help:block_email' => "You can block outgoing e-mail to regular users or to all users",
 	'developers:label:forward_email' => "Forward all outgoing e-mails to one address",
 	'developers:help:forward_email' => "All outgoing e-mails will be sent to the configured e-mail address",
-	
+	'developers:label:enable_error_log' => "Enable error log",
+	'developers:help:enable_error_log' => "Maintain a separate log of errors and messages logged to the error_log() based on your trace level setting. The log is viewable via admin interface.",
+
 	'developers:label:submit' => "Save and flush caches",
 
 	'developers:block_email:forward' => 'Forward all e-mails',
@@ -118,4 +120,7 @@ return array(
 	'developers:settings:success' => 'Settings saved and caches flushed',
 
 	'developers:amd' => 'AMD',
+
+	'admin:develop_tools:error_log' => 'Error Log',
+	'developers:logs:empty' => 'Error log is empty',
 );

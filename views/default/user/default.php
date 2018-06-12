@@ -8,15 +8,14 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!($entity instanceof ElggUser)) {
+if (!$entity instanceof ElggUser) {
 	return;
 }
 
 $size = elgg_extract('size', $vars, 'small');
-$icon = elgg_view_entity_icon($entity, $size, $vars);
 
 if (elgg_get_context() == 'gallery') {
-	echo $icon;
+	echo elgg_view_entity_icon($entity, $size, $vars);
 	return;
 }
 	
@@ -28,12 +27,16 @@ if (!$title) {
 	]);
 }
 
+$params = [
+	'entity' => $entity,
+	'title' => $title,
+	'icon_entity' => $entity,
+	'icon_size' => $size,
+	'tags' => false,
+];
+
 if ($entity->isBanned()) {
-	$params = [
-		'entity' => $entity,
-		'title' => $title,
-		'subtitle' => elgg_echo('banned'),
-	];
+	$params['subtitle'] = elgg_echo('banned');
 } else {
 	$subtitle = '';
 	$location = $entity->location;
@@ -44,16 +47,12 @@ if ($entity->isBanned()) {
 	
 	$subtitle .= elgg_format_element('div', [], $entity->briefdescription);
 	
-	$params = [
-		'entity' => $entity,
-		'title' => $title,
-		'subtitle' => $subtitle,
-		'content' => elgg_view('user/status', ['entity' => $entity]),
-	];
+	$params['subtitle'] = $subtitle;
+	if (elgg_view_exists('user/status')) {
+		$params['content'] = elgg_view('user/status', ['entity' => $entity]);
+	}
 }
 
 $params = $params + $vars;
 
-$list_body = elgg_view('user/elements/summary', $params);
-
-echo elgg_view_image_block($icon, $list_body);
+echo elgg_view('user/elements/summary', $params);

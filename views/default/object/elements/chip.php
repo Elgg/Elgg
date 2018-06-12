@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Object chip
  * Renders a simple image block with an icon and title
@@ -10,6 +9,7 @@
  * @uses $vars['class']     Class selector for the image block
  * @uses $vars['image_block_vars'] Attributes for the image block wrapper
  */
+
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
 	return;
@@ -17,10 +17,6 @@ if (!$entity instanceof ElggEntity) {
 
 $title = elgg_extract('title', $vars, '');
 if ($title === '') {
-	$vars['title'] = elgg_view('output/url', [
-		'text' => elgg_get_excerpt($entity->getDisplayName(), 100),
-		'href' => $entity->getURL(),
-	]);
 	$title = elgg_view('object/elements/summary/title', $vars);
 }
 

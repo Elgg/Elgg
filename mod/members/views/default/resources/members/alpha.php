@@ -18,6 +18,7 @@ $body = elgg_view_layout('default', [
 	'sidebar' => elgg_view('members/sidebar'),
 	'title' => $title,
 	'filter_id' => 'members',
+	'filter_value' => 'alpha',
 ]);
 
 echo elgg_view_page($title, $body);

@@ -53,9 +53,9 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function save() {
 		$db = $this->getDatabase();
-		$qb = \Elgg\Database\Select::fromTable('entities');
-		$qb->select('*')
-			->where($qb->compare('type', '=', 'site', ELGG_VALUE_STRING));
+		$qb = \Elgg\Database\Select::fromTable('entities', 'e');
+		$qb->select('e.*')
+			->where($qb->compare('e.type', '=', 'site', ELGG_VALUE_STRING));
 
 		$row = $db->getDataRow($qb);
 
@@ -114,7 +114,7 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function __set($name, $value) {
 		if ($name === 'url') {
-			_elgg_services()->logger->warn("ElggSite::url cannot be set");
+			_elgg_services()->logger->warning("ElggSite::url cannot be set");
 			return;
 		}
 		parent::__set($name, $value);
@@ -149,7 +149,7 @@ class ElggSite extends \ElggEntity {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function prepareObject($object) {
+	protected function prepareObject(\Elgg\Export\Entity $object) {
 		$object = parent::prepareObject($object);
 		$object->name = $this->getDisplayName();
 		$object->description = $this->description;

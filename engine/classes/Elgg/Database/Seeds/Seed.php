@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg\Database\Seeds;
+use Elgg\Cli\Progressing;
 
 /**
  * Abstract seed
@@ -11,6 +12,7 @@ namespace Elgg\Database\Seeds;
 abstract class Seed implements Seedable {
 
 	use Seeding;
+	use Progressing;
 
 	/**
 	 * Seed constructor.

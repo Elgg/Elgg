@@ -38,6 +38,8 @@ class Groups extends Seed {
 			]);
 		};
 
+		$this->advance($count_groups());
+
 		$count_members = function ($group) {
 			return elgg_get_entities([
 				'types' => 'user',
@@ -124,6 +126,8 @@ class Groups extends Seed {
 					}
 				}
 			}
+
+			$this->advance();
 		}
 
 	}
@@ -150,6 +154,8 @@ class Groups extends Seed {
 			} else {
 				$this->log("Failed to delete group $group->guid");
 			}
+
+			$this->advance();
 		}
 	}
 

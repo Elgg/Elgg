@@ -59,6 +59,29 @@ class MetadataCache {
 	}
 
 	/**
+	 * Get all entity metadata
+	 *
+	 * @param int $entity_guid Entity guid
+	 * @return array
+	 */
+	public function getAll($entity_guid) {
+		$metadata = $this->getEntityMetadata($entity_guid);
+		if (empty($metadata)) {
+			return [];
+		}
+
+		$metadata_values = [];
+
+		foreach ($metadata as $md) {
+			$metadata_values[$md->name][] = $md->value;
+		}
+
+		return array_map(function($values) {
+			return count($values) > 1 ? $values : $values[0];
+		}, $metadata_values);
+	}
+
+	/**
 	 * Get the metadata for a particular name. Note, this can return an array of values.
 	 *
 	 * Warning: You should always call isLoaded() beforehand to verify that this
@@ -72,8 +95,8 @@ class MetadataCache {
 	 * @return array|string|int|null null = value does not exist
 	 */
 	public function getSingle($entity_guid, $name) {
-		$metadata = $this->cache->load($entity_guid);
-		if (!$metadata) {
+		$metadata = $this->getEntityMetadata($entity_guid);
+		if (empty($metadata)) {
 			return null;
 		}
 
@@ -109,8 +132,8 @@ class MetadataCache {
 	 * @return int[]|int|null
 	 */
 	public function getSingleId($entity_guid, $name) {
-		$metadata = $this->cache->load($entity_guid);
-		if (!$metadata) {
+		$metadata = $this->getEntityMetadata($entity_guid);
+		if (empty($metadata)) {
 			return null;
 		}
 
@@ -172,15 +195,13 @@ class MetadataCache {
 	 * @return \stdClass[]|null
 	 */
 	public function getEntityMetadata($entity_guid) {
-		if (!$this->isLoaded($entity_guid)) {
-			$this->populateFromEntities($entity_guid);
+		$entity_guid = (int) $entity_guid;
+		$metadata =	$this->populateFromEntities($entity_guid);
+		if (!isset($metadata)) {
+			return null;
 		}
 
-		if ($this->isLoaded($entity_guid)) {
-			return $this->cache->load($entity_guid);
-		}
-
-		return null;
+		return elgg_extract($entity_guid, $metadata);
 	}
 
 	/**
@@ -203,7 +224,7 @@ class MetadataCache {
 	 * Populate the cache from a set of entities
 	 *
 	 * @param int[] ...$guids Array of or single GUIDs
-	 * @return void
+	 * @return array|null [guid => [metadata]]
 	 */
 	public function populateFromEntities(...$guids) {
 		try {
@@ -213,24 +234,27 @@ class MetadataCache {
 		}
 
 		if (empty($guids)) {
-			return;
+			return null;
 		}
 
 		$version = (int) _elgg_config()->version;
 		if (!empty($version) && ($version < 2016110900)) {
 			// can't use this during upgrade from 2.x to 3.0
-			return;
+			return null;
 		}
+
+		$cached_values = [];
 
 		foreach ($guids as $i => $guid) {
 			$value = $this->cache->load($guid);
 			if ($value !== null) {
+				$cached_values[$guid] = $value;
 				unset($guids[$i]);
 			}
 		}
 
 		if (empty($guids)) {
-			return;
+			return $cached_values;
 		}
 
 		// could be useful at some point in future
@@ -262,7 +286,10 @@ class MetadataCache {
 
 		foreach ($values as $guid => $row) {
 			$this->cache->save($guid, $row);
+			$cached_values[$guid] = $row;
 		}
+
+		return $cached_values;
 	}
 
 	/**

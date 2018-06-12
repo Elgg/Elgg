@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Hook;
 use ElggObject;
 use ElggUser;
 
@@ -458,5 +459,58 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertTrue((bool) $annotation_called);
 	}
 
+	/**
+	 * @group AccessSQL
+	 * @group Access
+	 */
+	public function testDatabaseRowContainsCorrectParametersWhenJoined() {
+
+		_elgg_services()->hooks->backup();
+
+		$handler = function(Hook $hook) {
+
+			$value = $hook->getValue();
+
+			$alias = $hook->getParam('table_alias');
+			$guid_column = $hook->getParam('guid_column');
+
+			$qb = $hook->getParam('query_builder');
+			/* @var $qb \Elgg\Database\QueryBuilder */
+
+			$qb->joinMetadataTable($alias, $guid_column, 'foo', 'inner', 'md');
+
+			$value['ands'][] = $qb->where($qb->compare('md.value', '=', 'bar', ELGG_VALUE_STRING));
+
+			return $value;
+		};
+
+		$entity = $this->createObject();
+
+		$hook = $this->registerTestingHook('get_sql', 'access', $handler);
+
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($entity) {
+			$row = _elgg_services()->entityTable->getRow($entity->guid);
+			$this->assertFalse($row);
+
+			elgg_call(ELGG_IGNORE_ACCESS,function() use ($entity) {
+				$entity->foo = 'bar';
+				$entity->save();
+			});
+
+			$row = _elgg_services()->entityTable->getRow($entity->guid);
+			$this->assertInstanceOf(\stdClass::class, $row);
+
+			$this->assertEquals($entity->guid, $row->guid);
+			$this->assertEquals($entity->owner_guid, $row->owner_guid);
+			$this->assertEquals($entity->container_guid, $row->container_guid);
+			$this->assertEquals($entity->access_id, $row->access_id);
+			$this->assertEquals($entity->enabled, $row->enabled);
+			$this->assertEquals($entity->time_created, $row->time_created);
+		});
+
+		$hook->unregister();
+
+		_elgg_services()->hooks->restore();
+	}
 
 }

@@ -106,6 +106,13 @@ $data = [
 		'#class' => elgg_get_plugin_setting('block_email', 'developers') === 'forward' ? '' : 'hidden',
 		'value' => elgg_get_plugin_setting('forward_email', 'developers'),
 	],
+
+	'enable_error_log' => [
+		'#type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('enable_error_log', 'developers') == 1,
+		'switch' => true,
+	],
 ];
 
 $form_vars = [

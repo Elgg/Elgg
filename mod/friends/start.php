@@ -15,6 +15,61 @@ function elgg_friends_plugin_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_friends_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:title', '_elgg_friends_setup_title_menu');
+}
+
+/**
+ * Adds friending to profile title menu
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:title'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @access private
+ */
+function _elgg_friends_setup_title_menu(\Elgg\Hook $hook) {
+	
+	$user = $hook->getEntityParam();
+	if (!$user instanceof ElggUser || !elgg_is_logged_in()) {
+		return;
+	}
+
+	if (elgg_get_logged_in_user_guid() === $user->guid) {
+		return;
+	}
+	
+	$isFriend = $user->isFriend();
+
+	$return = $hook->getValue();
+	
+	// Always emit both to make it super easy to toggle with ajax
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'remove_friend',
+		'href' => elgg_generate_action_url('friends/remove', [
+			'friend' => $user->guid,
+		]),
+		'text' => elgg_echo('friend:remove'),
+		'icon' => 'user-times',
+		'section' => 'action',
+		'link_class' => 'elgg-button-action elgg-button',
+		'item_class' => $isFriend ? '' : 'hidden',
+		'data-toggle' => 'add_friend',
+	]);
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'add_friend',
+		'href' => elgg_generate_action_url('friends/add', [
+			'friend' => $user->guid,
+		]),
+		'text' => elgg_echo('friend:add'),
+		'icon' => 'user-plus',
+		'section' => 'action',
+		'link_class' => 'elgg-button-action elgg-button',
+		'item_class' => $isFriend ? 'hidden' : '',
+		'data-toggle' => 'remove_friend',
+	]);
+
+	return $return;
 }
 
 /**
@@ -45,8 +100,9 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 	// Always emit both to make it super easy to toggle with ajax
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'remove_friend',
-		'href' => "action/friends/remove?friend={$user->guid}",
-		'is_action' => true,
+		'href' => elgg_generate_action_url('friends/remove', [
+			'friend' => $user->guid,
+		]),
 		'text' => elgg_echo('friend:remove'),
 		'icon' => 'user-times',
 		'section' => 'action',
@@ -56,8 +112,9 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'add_friend',
-		'href' => "action/friends/add?friend={$user->guid}",
-		'is_action' => true,
+		'href' => elgg_generate_action_url('friends/add', [
+			'friend' => $user->guid,
+		]),
 		'text' => elgg_echo('friend:add'),
 		'icon' => 'user-plus',
 		'section' => 'action',

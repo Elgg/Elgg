@@ -1,7 +1,7 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggEntity) {
+if (!$entity instanceof ElggUser) {
 	return;
 }
 
@@ -15,13 +15,13 @@ $icon = elgg_view_entity_icon($entity, 'tiny', [
 	'use_link' => false,
 	'href' => false,
 	'use_hover' => false,
-		]);
+]);
 
 $title = elgg_format_element('h3', [], $entity->getDisplayName());
 
 $label = elgg_view_image_block($icon, $title, [
 	'class' => 'elgg-autocomplete-item',
-		]);
+]);
 
 $data = $entity->toObject();
 $data->label = $label;
@@ -29,9 +29,10 @@ $data->value = $entity->username;
 $data->icon = $icon;
 
 if ($input_name) {
-	$data->html = elgg_view('input/userpicker/item', $vars);
+	$data->html = elgg_view('input/autocomplete/item', $vars);
 }
 
 echo json_encode($data);
 
+// restore viewtype
 elgg_set_viewtype($viewtype);

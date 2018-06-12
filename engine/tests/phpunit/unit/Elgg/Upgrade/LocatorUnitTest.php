@@ -64,6 +64,8 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 
 		$upgrade = _elgg_services()->upgradeLocator->getUpgrade($class, 'test_plugin');
 
-		$this->assertEmpty($upgrade);
+		$batch = $upgrade->getBatch();
+
+		$this->assertTrue($batch->shouldBeSkipped());
 	}
 }

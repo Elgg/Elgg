@@ -8,6 +8,8 @@ if (!$blog->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();
 }
 
+$vars['entity'] = $blog;
+
 elgg_push_entity_breadcrumbs($blog);
 elgg_push_breadcrumb(elgg_echo('edit'));
 

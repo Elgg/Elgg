@@ -30,6 +30,8 @@ class Seeder extends Seed {
 			]);
 		};
 
+		$this->advance($count_discussions());
+
 		while ($count_discussions() < $this->limit) {
 			$metadata = [
 				'status' => $this->getRandomStatus(),
@@ -58,6 +60,8 @@ class Seeder extends Seed {
 			]);
 
 			elgg_trigger_event('publish', 'object', $discussion);
+
+			$this->advance();
 		}
 	}
 
@@ -84,6 +88,8 @@ class Seeder extends Seed {
 			} else {
 				$this->log("Failed to delete discussion $discussion->guid");
 			}
+
+			$this->advance();
 		}
 	}
 

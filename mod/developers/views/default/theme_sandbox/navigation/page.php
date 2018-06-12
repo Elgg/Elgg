@@ -2,10 +2,11 @@
 
 $items = [];
 
-foreach (['cogs', 'support', 'question', 'info'] as $icon) {
+foreach (['cogs', 'support', 'question', 'info'] as $index => $icon) {
 	$items[] = [
 		'name' => $icon,
 		'icon' => $icon,
+		'badge' => $index ?: null,
 		'text' => "Menu item",
 		'href' => '#',
 		'link_class' => $icon == 'info' ? 'elgg-state elgg-state-notice' : '',

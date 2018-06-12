@@ -1,17 +1,16 @@
 <?php
-/**
- *
- */
 
 namespace Elgg\Database\Seeds;
 
-use Elgg\Project\Paths;
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\QueryBuilder;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
 use ElggUser;
 use Exception;
 use Faker\Factory;
+use Psr\Log\LogLevel;
 
 /**
  * Seeding trait
@@ -438,18 +437,17 @@ trait Seeding {
 	public function getRandomUser(array $exclude = []) {
 
 		$exclude[] = 0;
-		$exclude_in = implode(',', array_map(function ($e) {
-			return (int) $e;
-		}, $exclude));
 
 		$users = elgg_get_entities([
 			'types' => 'user',
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
 			'wheres' => [
-				"e.guid NOT IN ($exclude_in)",
+				function(QueryBuilder $qb) use ($exclude) {
+					return $qb->compare('e.guid', 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
+				}
 			],
-			'order_by' => 'RAND()',
+			'order_by' => new OrderByClause('RAND()', null),
 		]);
 
 		return $users ? $users[0] : false;
@@ -465,18 +463,17 @@ trait Seeding {
 	public function getRandomGroup(array $exclude = []) {
 
 		$exclude[] = 0;
-		$exclude_in = implode(',', array_map(function ($e) {
-			return (int) $e;
-		}, $exclude));
 
 		$groups = elgg_get_entities([
 			'types' => 'group',
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
 			'wheres' => [
-				"e.guid NOT IN ($exclude_in)",
+				function(QueryBuilder $qb) use ($exclude) {
+					return $qb->compare('e.guid', 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
+				}
 			],
-			'order_by' => 'RAND()',
+			'order_by' => new OrderByClause('RAND()', null),
 		]);
 
 		return $groups ? $groups[0] : false;
@@ -757,7 +754,7 @@ trait Seeding {
 	 *
 	 * @return void
 	 */
-	public function log($msg, $level = 'NOTICE') {
+	public function log($msg, $level = LogLevel::NOTICE) {
 		elgg_log($msg, $level);
 	}
 

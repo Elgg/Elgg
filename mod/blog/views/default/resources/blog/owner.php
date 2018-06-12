@@ -13,10 +13,14 @@ elgg_register_title_button('blog', 'add', 'object', 'blog');
 
 elgg_push_collection_breadcrumbs('object', 'blog', $user);
 
-if ($lower) {
-	$title = elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
-} else {
+if ($user->guid === elgg_get_logged_in_user_guid()) {
 	$title = elgg_echo('collection:object:blog');
+} else {
+	$title = elgg_echo('collection:object:blog:owner', [$user->getDisplayName()]);
+}
+
+if ($lower) {
+	$title .= ': ' . elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
 }
 
 $content = elgg_view('blog/listing/owner', [

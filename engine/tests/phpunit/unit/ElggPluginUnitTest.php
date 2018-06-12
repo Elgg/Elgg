@@ -15,7 +15,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @expectedException PluginException
+	 * @expectedException InvalidArgumentException
 	 * @expectedExceptionMessage Plugin ID must be set
 	 */
 	public function testConstructorThrowsWithEmptyId() {
@@ -197,7 +197,19 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testUsesBootstrapOnUpgrade() {
 
+		$app = $this->createApplication();
+
+		// We don't need to run actual upgrades for this test
+		$locator = $this->createMock(\Elgg\Upgrade\Locator::class);
+		$locator->method('locate')
+			->willReturn([]);
+
+		$app->_services->setValue('upgradeLocator', $locator);
+
+		$app->bootCore();
+
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+		$plugin->activate();
 
 		$prefix = _elgg_config()->dbprefix;
 
@@ -222,16 +234,34 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->plugins->addTestingPlugin($plugin);
 
-		\Elgg\Application::upgrade();
+		$assertions = 0;
+		$assert = function() use ($plugin, &$assertions) {
+			$methods = [
+				'upgrade',
+			];
 
-		$methods = [
-			'upgrade',
-		];
+			foreach ($methods as $method) {
+				$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
+				$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+			}
 
-		foreach ($methods as $method) {
-			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
-			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
-		}
+			$assertions++;
+		};
+
+		$fail = function($error) {
+			if ($error instanceof Throwable) {
+				$error = $error->getMessage();
+			} else if (is_array($error)) {
+				$error = array_shift($error);
+			}
+
+			$this->fail($error);
+		};
+
+		$upgrade = _elgg_services()->upgrades->run();
+		$upgrade->done($assert, $fail);
+
+		$this->assertEquals(1, $assertions);
 	}
 
 	public function testUsesBootstrapOnShutdown() {

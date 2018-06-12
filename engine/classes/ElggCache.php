@@ -15,6 +15,11 @@ abstract class ElggCache implements \ArrayAccess {
 	private $variables;
 
 	/**
+	 * @var bool
+	 */
+	protected $disabled = false;
+
+	/**
 	 * Set the constructor.
 	 */
 	public function __construct() {
@@ -132,6 +137,23 @@ abstract class ElggCache implements \ArrayAccess {
 	 * @return bool
 	 */
 	abstract public function clear();
+
+	/**
+	 * Disable cache
+	 * Do not write or read from cache
+	 * @return void
+	 */
+	public function disable() {
+		$this->disabled = true;
+	}
+
+	/**
+	 * Enable disabled cache
+	 * @return void
+	 */
+	public function enable() {
+		$this->disabled = false;
+	}
 
 	/**
 	 * Populate cache from an array of key => values

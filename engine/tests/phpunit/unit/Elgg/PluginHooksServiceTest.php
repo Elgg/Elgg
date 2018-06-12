@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg;
+use Psr\Log\LogLevel;
 
 /**
  * @group UnitTests
@@ -80,7 +81,7 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame([
 			[
 				'message' => 'Handler for hook [foo, bar] is not callable: (stdClass)->uncallableMethod',
-				'level' => 300,
+				'level' => 'warning',
 			],
 		], $logged);
 	}
@@ -125,7 +126,7 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertArrayHasKey('message', $message_details);
 		$this->assertArrayHasKey('level', $message_details);
 		$this->assertStringStartsWith('Deprecated in 1.0: The plugin hook "foo":"bar" has been deprecated Called from', $message_details['message']);
-		$this->assertEquals(Logger::WARNING, $message_details['level']);
+		$this->assertEquals(LogLevel::WARNING, $message_details['level']);
 	}
 
 	public static function returnTwo() {

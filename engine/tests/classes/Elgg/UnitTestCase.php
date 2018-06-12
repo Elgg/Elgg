@@ -3,7 +3,10 @@
 namespace Elgg;
 
 use Elgg\Mocks\Di\MockServiceProvider;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Psr\Log\LogLevel;
+use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Tests\Output\TestOutput;
 
 /**
  * Unit test abstraction class
@@ -25,7 +28,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
 		$sp->config->boot_complete = false;
-		$sp->config->system_cache_enabled = true;
+		$sp->config->system_cache_enabled = elgg_extract('system_cache_enabled', $params, true);
 		$sp->config->site = new \ElggSite((object) [
 			'guid' => 1,
 		]);
@@ -39,10 +42,14 @@ abstract class UnitTestCase extends BaseTestCase {
 
 		Application::setInstance($app);
 
+		$cli_output = new NullOutput();
+		$cli_output->setVerbosity(OutputInterface::VERBOSITY_VERBOSE);
+		$app->_services->setValue('cli_output', $cli_output);
+
 		if (in_array('--verbose', $_SERVER['argv'])) {
-			Logger::$verbosity = ConsoleOutput::VERBOSITY_VERY_VERBOSE;
+			$app->_services->logger->setLevel(LogLevel::DEBUG);
 		} else {
-			Logger::$verbosity = ConsoleOutput::VERBOSITY_NORMAL;
+			$app->_services->logger->setLevel(LogLevel::ERROR);
 		}
 
 		// Invalidate caches
@@ -85,7 +92,10 @@ abstract class UnitTestCase extends BaseTestCase {
 	final protected function tearDown() {
 		$this->down();
 
-		_elgg_services()->db->clearQuerySpecs();
+		$app = Application::getInstance();
+		if ($app && $app->_services instanceof MockServiceProvider) {
+			$app->_services->db->clearQuerySpecs();
+		}
 
 		parent::tearDown();
 	}

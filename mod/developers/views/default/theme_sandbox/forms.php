@@ -461,6 +461,20 @@ $ipsum = elgg_view('developers/ipsum');
 			'id' => 'f13a',
 			'#label' => 'Friend picker input (.elgg-user-picker):',
 		]);
+		
+		echo elgg_view_field([
+			'#type' => 'grouppicker',
+			'name' => 'f13b',
+			'id' => 'f13b',
+			'#label' => 'Groups picker input (.elgg-input-grouppicker):',
+		]);
+		
+		echo elgg_view_field([
+			'#type' => 'objectpicker',
+			'name' => 'f13c',
+			'id' => 'f13c',
+			'#label' => 'Object picker input (.elgg-input-objectpicker):',
+		]);
 
 		echo elgg_view_field([
 			'#type' => 'plaintext',

@@ -10,9 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * elgg-cli install [--config]
  */
-class InstallCommand extends \Symfony\Component\Console\Command\Command {
-
-	use ConsoleInteractions;
+class InstallCommand extends BaseCommand {
 
 	/**
 	 * {@inheritdoc}
@@ -20,7 +18,9 @@ class InstallCommand extends \Symfony\Component\Console\Command\Command {
 	protected function configure() {
 		$this->setName('install')
 			->setDescription('Install Elgg using a configuration file or interactive questions')
-			->addOption('config', 'c', InputOption::VALUE_OPTIONAL, 'Path to php file that returns an array with installation configuration');
+			->addOption('config', 'c', InputOption::VALUE_OPTIONAL,
+				'Path to php file that returns an array with installation configuration'
+			);
 	}
 
 	/**
@@ -68,7 +68,7 @@ class InstallCommand extends \Symfony\Component\Console\Command\Command {
 			$installer->batchInstall($params, $htaccess);
 		} catch (\InstallationException $ex) {
 			$this->dumpRegisters();
-			$this->write(elgg_format_element('error', [], $ex->getMessage()));
+			$this->error($ex);
 
 			return 1;
 		}
@@ -77,10 +77,10 @@ class InstallCommand extends \Symfony\Component\Console\Command\Command {
 
 		$version = elgg_get_version(true);
 
-		$this->write("Elgg $version install successful");
-		$this->write("wwwroot: " . elgg_get_config('wwwroot'));
-		$this->write("dataroot: " . elgg_get_config('dataroot'));
-		$this->write("cacheroot: " . elgg_get_config('cacheroot'));
+		$this->notice("Elgg $version install successful");
+		$this->notice("wwwroot: " . elgg_get_config('wwwroot'));
+		$this->notice("dataroot: " . elgg_get_config('dataroot'));
+		$this->notice("cacheroot: " . elgg_get_config('cacheroot'));
 
 		return 0;
 	}

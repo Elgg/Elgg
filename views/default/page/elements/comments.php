@@ -26,15 +26,10 @@ if (!$limit) {
 	$limit = elgg_comments_per_page($entity);
 }
 
-$attr = [
+$module_vars = [
 	'id' => elgg_extract('id', $vars, 'comments'),
 	'class' => elgg_extract_class($vars, 'elgg-comments'),
 ];
-
-$content = '';
-if ($show_add_form && $entity->canComment()) {
-	$content .= elgg_view_form('comment/save', [], $vars);
-}
 
 $options = [
 	'type' => 'object',
@@ -44,8 +39,9 @@ $options = [
 	'limit' => $limit,
 	'preload_owners' => true,
 	'distinct' => false,
-	'url_fragment' => $attr['id'],
+	'url_fragment' => $module_vars['id'],
 	'order_by' => [new OrderByClause('e.guid', $latest_first ? 'DESC' : 'ASC')],
+	'list_class' => 'comments-list',
 ];
 
 $show_guid = (int) elgg_extract('show_guid', $vars);
@@ -66,10 +62,36 @@ if ($show_guid && $limit) {
 	$options['offset'] = (int) floor($count / $limit) * $limit;
 }
 
-$content .= elgg_list_entities($options);
+$comments_list = elgg_list_entities($options);
+
+$content = '';
+if ($show_add_form && $entity->canComment()) {
+	$form_vars = [];
+	if ($comments_list) {
+		$form_vars['class'] = 'hidden';
+		
+		$module_vars['menu'] = elgg_view_menu('comments', [
+			'items' => [
+				[
+					'name' => 'add',
+					'text' => elgg_echo('generic_comments:add'),
+					'href' => false,
+					'icon' => 'plus',
+					'class' => ['elgg-button', 'elgg-button-action'],
+					'rel' => 'toggle',
+					'data-toggle-selector' => '.elgg-form-comment-save',
+				],
+			],
+		]);
+	}
+	
+	$content .= elgg_view_form('comment/save', $form_vars, $vars);
+}
+
+$content .= $comments_list;
 
 if (empty($content)) {
 	return;
 }
 
-echo elgg_format_element('div', $attr, $content);
+echo elgg_view_module('comments', elgg_echo('comments'), $content, $module_vars);

@@ -1616,3 +1616,63 @@ function elgg_list_registered_entities(array $options = []) {
 	$options['count'] = $count;
 	return elgg_view_entity_list($entities, $options);
 }
+
+/**
+ * Returns the version of the upgrade filename.
+ *
+ * @param string $filename The upgrade filename. No full path.
+ * @return int|false
+ * @since 1.8.0
+ * @deprecated 3.0 Use asynchronous upgrades
+ */
+function elgg_get_upgrade_file_version($filename) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Use asynchronous upgrades instead', '3.0');
+
+	preg_match('/^([0-9]{10})([\.a-z0-9-_]+)?\.(php)$/i', $filename, $matches);
+
+	if (isset($matches[1])) {
+		return (int) $matches[1];
+	}
+
+	return false;
+}
+
+/**
+ * Returns a list of upgrade files relative to the $upgrade_path dir.
+ *
+ * @param string $upgrade_path The directory that has upgrade scripts
+ * @return array|false
+ * @access private
+ * @deprecated 3.0 Use asynchronous upgrades
+ */
+function elgg_get_upgrade_files($upgrade_path = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Use asynchronous upgrades instead', '3.0');
+
+	if (!$upgrade_path) {
+		$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
+	}
+	$upgrade_path = \Elgg\Project\Paths::sanitize($upgrade_path);
+	$handle = opendir($upgrade_path);
+
+	if (!$handle) {
+		return false;
+	}
+
+	$upgrade_files = [];
+
+	while ($upgrade_file = readdir($handle)) {
+		// make sure this is a well formed upgrade.
+		if (is_dir($upgrade_path . '$upgrade_file')) {
+			continue;
+		}
+		$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
+		if (!$upgrade_version) {
+			continue;
+		}
+		$upgrade_files[] = $upgrade_file;
+	}
+
+	sort($upgrade_files);
+
+	return $upgrade_files;
+}

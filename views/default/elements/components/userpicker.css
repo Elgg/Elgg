@@ -15,7 +15,3 @@
 .elgg-user-picker.elgg-state-disabled > label {
 	display: none;
 }
-
-.elgg-user-picker-remove {
-	cursor: pointer;
-}

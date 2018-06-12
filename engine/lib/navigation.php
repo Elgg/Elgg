@@ -46,6 +46,10 @@
  * @subpackage Navigation
  */
 
+use Elgg\Menu\MenuItems;
+use Elgg\Menu\PreparedMenu;
+use Elgg\Menu\UnpreparedMenu;
+
 /**
  * Register an item for an Elgg menu
  *
@@ -525,12 +529,12 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
  *
  * Registers custom menu items
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:site'
- * @param ElggMenuItem[] $return Menu
- * @param array          $params Hook params
+ * @param string    $hook   'register'
+ * @param string    $type   'menu:site'
+ * @param MenuItems $return Menu
+ * @param array     $params Hook params
  *
- * @return ElggMenuItem[]
+ * @return MenuItems
  *
  * @access private
  */
@@ -555,25 +559,28 @@ function _elgg_site_menu_init($hook, $type, $return, $params) {
  *
  * Handles default, featured, and custom menu items
  *
- * @param string         $hook   'prepare'
- * @param string         $type   'menu:site'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param string       $hook   'prepare'
+ * @param string       $type   'menu:site'
+ * @param PreparedMenu $menu   current return value
+ * @param array        $params supplied params
  *
- * @return ElggMenuItem[]
+ * @return PreparedMenu
  *
  * @access private
  */
-function _elgg_site_menu_setup($hook, $type, $return, $params) {
+function _elgg_site_menu_setup($hook, $type, $menu, $params) {
 
 	$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));
 
-	$registered = elgg_extract('default', $return, []);
-	/* @var ElggMenuItem[] $registered */
-
+	$registered = $menu->getItems('default');
+	if (empty($registered)) {
+		return;
+	}
+	
 	$has_selected = false;
 	$priority = 500;
-	foreach ($registered as &$item) {
+
+	foreach ($registered as $item) {
 		if (in_array($item->getName(), $featured_menu_names)) {
 			$featured_index = array_search($item->getName(), $featured_menu_names);
 			$item->setPriority($featured_index);
@@ -587,7 +594,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 	}
 
 	if (!$has_selected) {
-		$is_selected = function ($item) {
+		$is_selected = function (ElggMenuItem $item) {
 			$current_url = current_page_url();
 			if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
 				if ($item->getName() == elgg_get_context()) {
@@ -600,7 +607,8 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 
 			return false;
 		};
-		foreach ($registered as &$item) {
+
+		foreach ($registered as $item) {
 			if ($is_selected($item)) {
 				$item->setSelected(true);
 				break;
@@ -622,7 +630,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 	if (!empty($more)) {
 		$dropdown = ElggMenuItem::factory([
 			'name' => 'more',
-			'href' => 'javascript:void(0);',
+			'href' => false,
 			'text' => elgg_echo('more'),
 			'icon_alt' => 'angle-down',
 			'priority' => 999,
@@ -637,9 +645,8 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 		$registered[] = $dropdown;
 	}
 
-	$return['default'] = $registered;
+	$menu->getSection('default')->fill($registered);
 
-	return $return;
 }
 
 /**
@@ -648,14 +655,18 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
  * Sets the display child menu option to "toggle" if not set
  * Recursively marks parents of the selected item as selected (expanded)
  *
- * @param \Elgg\Hook $hook 'prepare', 'menu:page'
+ * @elgg_plugin_hook prepare menu:page
+ * @elgg_plugin_hook prepare menu:owner_block
  *
- * @return ElggMenuItem[]
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return PreparedMenu
  *
  * @access private
  */
 function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 	$menu = $hook->getValue();
+	/* @var $menu PreparedMenu */
 
 	$prepare = function(ElggMenuItem $menu_item) use (&$prepare) {
 		$child_menu_vars = $menu_item->getChildMenuOptions();
@@ -692,12 +703,12 @@ function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 /**
  * Entity menu is list of links and info on any entity
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:entity'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param string    $hook   'register'
+ * @param string    $type   'menu:entity'
+ * @param MenuItems $return current return value
+ * @param array     $params supplied params
  *
- * @return void|ElggMenuItem[]
+ * @return MenuItems
  *
  * @access private
  */
@@ -759,26 +770,30 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
  *
  * @tip    Pass 'dropdown' => false to entity menu options to render the menu inline without a dropdown
  *
- * @param \Elgg\Hook $hook 'prepare', 'menu:entity'|'menu:river'
+ * @elgg_plugin_hook prepare menu:entity
+ * @elgg_plugin_hook prepare menu:river
  *
- * @return void|ElggMenuItem[]
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return void
  *
  * @access private
  */
 function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
-	$result = $hook->getValue();
+	$menu = $hook->getValue();
+	/* @var $menu PreparedMenu */
 
 	$is_dropdown = $hook->getParam('dropdown', true);
 	if ($is_dropdown === false) {
 		return;
 	}
 
-	$items = elgg_extract('default', $result);
+	$items = $menu->getItems('default');
 	if (empty($items)) {
 		return;
 	}
 
-	$result['default'] = [
+	$menu->getSection('default')->fill([
 		\ElggMenuItem::factory([
 			'name' => 'entity-menu-toggle',
 			'icon' => 'ellipsis-v',
@@ -795,17 +810,17 @@ function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 			],
 			'children' => $items,
 		]),
-	];
-
-	return $result;
+	]);
 }
 
 /**
  * Entity navigation menu is previous/next link for an entity
  *
- * @param \Elgg\Hook $hook 'register' 'menu:entity_navigation'
+ * @elgg_plugin_hook register menu:entity_navigation
  *
- * @return void|ElggMenuItem[]
+ * @param \Elgg\Hook $hook Hook
+ *
+ * @return MenuItems
  *
  * @access private
  */
@@ -816,6 +831,7 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 	}
 
 	$return = $hook->getValue();
+	/* @var $return MenuItems */
 
 	$options = [
 		'type' => $entity->getType(),
@@ -879,12 +895,12 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 /**
  * Widget menu is a set of widget controls
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:widget'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param string    $hook   'register'
+ * @param string    $type   'menu:widget'
+ * @param MenuItems $return current return value
+ * @param array     $params supplied params
  *
- * @return void|ElggMenuItem[]
+ * @return MenuItems
  *
  * @access private
  */
@@ -928,12 +944,12 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 /**
  * Add the register and forgot password links to login menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:login'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param string    $hook   'register'
+ * @param string    $type   'menu:login'
+ * @param MenuItems $return current return value
+ * @param array     $params supplied params
  *
- * @return ElggMenuItem[]
+ * @return MenuItems
  *
  * @access private
  */
@@ -961,12 +977,12 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 /**
  * Add the RSS link to the menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:footer'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param string    $hook   'register'
+ * @param string    $type   'menu:footer'
+ * @param MenuItems $return current return value
+ * @param array     $params supplied params
  *
- * @return void|ElggMenuItem[]
+ * @return MenuItems
  *
  * @access private
  */

@@ -55,6 +55,19 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		$this->assertNull($this->cache->getSingle(2, 'foo1'));
 	}
 
+	public function testLoadAll() {
+
+		$this->cache->inject(1, ['foo1' => 'bar', 'foo2' => ['bar1', 'bar2']]);
+		$this->cache->inject(2, []);
+
+		$this->assertEquals($this->cache->getAll(1), [
+			'foo1' => 'bar',
+			'foo2' => ['bar1', 'bar2'],
+		]);
+
+		$this->assertEmpty($this->cache->getAll(2));
+	}
+
 	public function testDirectInvalidation() {
 
 		$this->cache->inject(1, ['foo1' => 'bar']);
@@ -169,5 +182,26 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 
 		$object1->delete();
 		$object2->delete();
+	}
+
+	public function testMetadataCanBeLoadedWithCacheDisabled() {
+		$object1 = $this->createObject();
+		$object1->foo = 'bar';
+
+		_elgg_disable_caches();
+
+		$object = get_entity($object1->guid);
+		$this->assertInstanceOf(\ElggObject::class, $object);
+		$this->assertEquals($object->guid, $object1->guid);
+
+		$this->assertEquals('bar', $object->foo);
+
+		_elgg_enable_caches();
+
+		$object = get_entity($object1->guid);
+		$this->assertInstanceOf(\ElggObject::class, $object);
+		$this->assertEquals($object->guid, $object1->guid);
+
+		$this->assertEquals('bar', $object->foo);
 	}
 }

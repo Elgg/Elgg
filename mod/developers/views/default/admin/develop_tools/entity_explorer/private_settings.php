@@ -1,15 +1,18 @@
 <?php
 
 $entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
 
-$private_settings = get_all_private_settings($entity->guid);
+$private_settings = $entity->getAllPrivateSettings();
 if (empty($private_settings)) {
 	$private_settings_info = elgg_echo('notfound');
 } else {
 	$private_settings_info = '<table class="elgg-table">';
-	$private_settings_info .= '<tr>';
+	$private_settings_info .= '<thead><tr>';
 	$private_settings_info .= '<th>key</th><th>value</th><th>&nbsp;</th>';
-	$private_settings_info .= '</tr>';
+	$private_settings_info .= '</tr></thead>';
 	
 	foreach ($private_settings as $key => $value) {
 		$key_val = elgg_view('output/text', ['value' => $key]);
@@ -30,4 +33,4 @@ if (empty($private_settings)) {
 	}
 	$private_settings_info .= '</table>';
 }
-echo elgg_view_module('inline', elgg_echo('developers:entity_explorer:info:private_settings'), $private_settings_info);
+echo elgg_view_module('info', elgg_echo('developers:entity_explorer:info:private_settings'), $private_settings_info);

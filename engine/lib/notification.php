@@ -448,7 +448,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 					$params
 				);
 			} catch (Exception $e) {
-				elgg_log($e->getMessage(), 'ERROR');
+				elgg_log($e, 'ERROR');
 			}
 		}
 	}

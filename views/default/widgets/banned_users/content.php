@@ -17,4 +17,5 @@ echo elgg_list_entities([
 	],
 	'pagination' => false,
 	'limit' => $num_display,
+	'no_results' => true,
 ]);

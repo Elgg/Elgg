@@ -3,6 +3,7 @@
 namespace Elgg\Cli;
 
 use Elgg\IntegrationTestCase;
+use Elgg\Logger;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

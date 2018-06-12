@@ -15,7 +15,9 @@ function developers_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_developers_page_menu');
 		
 	elgg_extend_view('admin.css', 'developers/css');
+	elgg_extend_view('admin.css', 'admin/develop_tools/error_log.css');
 	elgg_extend_view('elgg.css', 'developers/css');
+	elgg_extend_view('elgg.css', 'admin/develop_tools/error_log.css');
 
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
 	elgg_register_ajax_view('developers/ajax_demo.html');
@@ -34,17 +36,43 @@ function developers_process_settings() {
 
 	ini_set('display_errors', (int) !empty($settings['display_errors']));
 
-	if (!empty($settings['screen_log'])) {
+	if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default')) {
 		// don't show in action/simplecache
 		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
 		if (!preg_match('~^(cache|action)/~', $path)) {
-			$cache = new ElggLogCache();
-			elgg_set_config('log_cache', $cache);
-			elgg_register_plugin_hook_handler('debug', 'log', [$cache, 'insertDump']);
-			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
+			// Write to JSON file to not take up memory See #11886
+			$uid = substr(hash('md5', uniqid('', true)), 0, 10);
+			$log_file = \Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . "logs/screen/$uid.html", false);
+			elgg()->config->log_cache = $log_file;
+
+			$handler = new \Monolog\Handler\StreamHandler(
+				$log_file,
+				elgg()->logger->getLevel()
+			);
+
+			$formatter = new \Elgg\DevelopersPlugin\ErrorLogHtmlFormatter();
+			$handler->setFormatter($formatter);
+
+			elgg()->logger->pushHandler($handler);
+
+			$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
+
+			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params)  use ($handler) {
+				$handler->close();
+
 				$vars['body'] .= elgg_view('developers/log');
 				return $vars;
 			});
+
+			elgg_register_event_handler('shutdown', 'system', function() use ($handler) {
+				// Prevent errors in cli
+				$handler->close();
+				
+				$log_file = elgg()->config->log_cache;
+				if (is_file($log_file)) {
+					unlink($log_file);
+				}
+			}, 1000);
 		}
 	}
 
@@ -91,6 +119,26 @@ function developers_process_settings() {
 			elgg_register_plugin_hook_handler('prepare', 'system:email', $handler);
 		}
 	}
+
+	if (!empty($settings['enable_error_log'])) {
+		$handler = new \Monolog\Handler\RotatingFileHandler(
+			\Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . 'logs/html/errors.html', false),
+			elgg_extract('error_log_max_files', $settings, 60),
+			\Psr\Log\LogLevel::ERROR
+		);
+
+		$formatter = new \Elgg\DevelopersPlugin\ErrorLogHtmlFormatter();
+		$handler->setFormatter($formatter);
+
+		$handler->pushProcessor(new \Monolog\Processor\PsrLogMessageProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\MemoryUsageProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\MemoryPeakUsageProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\ProcessIdProcessor());
+		$handler->pushProcessor(new \Monolog\Processor\WebProcessor());
+		$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
+
+		elgg()->logger->pushHandler($handler);
+	}
 }
 
 /**
@@ -118,13 +166,20 @@ function _developers_page_menu($hook, $type, $return, $params) {
 		'priority' => 10,
 		'section' => 'develop',
 	]);
+
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'error_log',
+		'href' => 'admin/develop_tools/error_log',
+		'text' => elgg_echo('admin:develop_tools:error_log'),
+		'section' => 'develop',
+	]);
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'inspect',
 		'text' => elgg_echo('admin:inspect'),
 		'section' => 'develop',
 	]);
-	
+
 	$inspect_options = developers_get_inspect_options();
 	foreach ($inspect_options as $key => $value) {
 		$return[] = \ElggMenuItem::factory([

@@ -1,44 +1,67 @@
 <?php
+
 namespace Elgg;
 
-use Elgg\Printer\ErrorLogPrinter;
+use Elgg\Cli\Application;
+use Elgg\Cli\ErrorFormatter;
+use Elgg\Cli\ErrorHandler;
+use Elgg\Logger\BacktraceProcessor;
+use Elgg\Logger\ElggLogFormatter;
+use Monolog\Handler\ErrorLogHandler;
+use Monolog\Processor\MemoryPeakUsageProcessor;
+use Monolog\Processor\MemoryUsageProcessor;
+use Monolog\Processor\ProcessIdProcessor;
+use Monolog\Processor\PsrLogMessageProcessor;
+use Monolog\Processor\WebProcessor;
+use Psr\Log\LogLevel;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Logger
  *
- * Use the elgg_* versions instead.
- *
- * @access private
- *
- * @package    Elgg.Core
- * @subpackage Logging
- * @since      1.9.0
+ * Use elgg()->logger
  */
-class Logger {
+class Logger extends \Monolog\Logger {
 
-	const OFF = 0;
-	const ERROR = 400;
-	const WARNING = 300;
-	const NOTICE = 250;
-	const INFO = 200;
+	const CHANNEL = 'ELGG';
 
-	protected static $levels = [
-		0 => 'OFF',
-		200 => 'INFO',
-		250 => 'NOTICE',
-		300 => 'WARNING',
-		400 => 'ERROR',
+	const OFF = false;
+
+	/**
+	 * Severity levels
+	 * @var array
+	 */
+	protected static $elgg_levels = [
+		0 => false,
+		100 => LogLevel::DEBUG,
+		200 => LogLevel::INFO,
+		250 => LogLevel::NOTICE,
+		300 => LogLevel::WARNING,
+		400 => LogLevel::ERROR,
+		500 => LogLevel::CRITICAL,
+		550 => LogLevel::ALERT,
+		600 => LogLevel::EMERGENCY,
 	];
 
 	/**
-	 * @var int
+	 * A map of legacy string levels
+	 * @var array
 	 */
-	public static $verbosity;
+	protected static $legacy_levels = [
+		'OFF' => false,
+		'INFO' => LogLevel::INFO,
+		'NOTICE' => LogLevel::NOTICE,
+		'WARNING' => LogLevel::WARNING,
+		'ERROR' => LogLevel::ERROR,
+	];
 
 	/**
-	 * @var int The logging level
+	 * @var string The logging level
 	 */
-	protected $level = self::ERROR;
+	protected $level;
 
 	/**
 	 * @var PluginHooksService
@@ -51,109 +74,162 @@ class Logger {
 	private $disabled_stack;
 
 	/**
-	 * @var Printer
-	 */
-	private $printer;
-
-	/**
-	 * @var Config
-	 */
-	private $config;
-
-	/**
-	 * Constructor
+	 * Build a new logger
 	 *
-	 * @param PluginHooksService $hooks   Hooks service
-	 * @param Config             $config  Config
-	 * @param Printer            $printer Printer
+	 * @param $input  InputInterface  Console input
+	 * @param $output OutputInterface Console output
+	 *
+	 * @return static
 	 */
-	public function __construct(PluginHooksService $hooks, Config $config, Printer $printer = null) {
-		$this->hooks = $hooks;
-		if (!isset($printer)) {
-			$printer = new ErrorLogPrinter();
-		}
-		$this->printer = $printer;
-		$this->config = $config;
-		
-		$php_error_level = error_reporting();
+	public static function factory(InputInterface $input = null, OutputInterface $output = null) {
+		$logger = new static(self::CHANNEL);
 
-		// value is in settings.php, use until boot values are available
-		if ($this->config->hasInitialValue('debug')) {
-			$this->setLevel($this->config->debug);
-			return;
+		if (\Elgg\Application::isCli()) {
+			if (is_null($input) || is_null($output)) {
+				$input = $input ? : \Elgg\Application::getStdIn();
+				$output = $output ? : \Elgg\Application::getStdOut();
+
+				$app = new Application();
+				$app->setup($input, $output);
+			}
+
+			$handler = new ErrorHandler(
+				$output,
+				\Elgg\Application::getStdErr(),
+				true
+			);
+
+			$formatter = new ErrorFormatter();
+			$formatter->allowInlineLineBreaks();
+			$formatter->ignoreEmptyContextAndExtra();
+
+			$handler->setFormatter($formatter);
+
+			$handler->pushProcessor(new BacktraceProcessor(self::ERROR));
+		} else {
+			$handler = new ErrorLogHandler();
+
+			$handler->pushProcessor(new WebProcessor());
+
+			$formatter = new ElggLogFormatter();
+			$formatter->allowInlineLineBreaks();
+			$formatter->ignoreEmptyContextAndExtra();
+
+			$handler->setFormatter($formatter);
+
+			$handler->pushProcessor(new MemoryUsageProcessor());
+			$handler->pushProcessor(new MemoryPeakUsageProcessor());
+			$handler->pushProcessor(new ProcessIdProcessor());
+			$handler->pushProcessor(new BacktraceProcessor(self::WARNING));
 		}
 
-		$this->level = self::OFF;
+		$handler->pushProcessor(new PsrLogMessageProcessor());
 
-		if (($php_error_level & E_NOTICE) == E_NOTICE) {
-			$this->level = self::NOTICE;
-		} elseif (($php_error_level & E_WARNING) == E_WARNING) {
-			$this->level = self::WARNING;
-		} elseif (($php_error_level & E_ERROR) == E_ERROR) {
-			$this->level = self::ERROR;
+		$logger->pushHandler($handler);
+
+		$logger->setLevel();
+
+		return $logger;
+	}
+
+	/**
+	 * Normalizes legacy string or numeric representation of the level to LogLevel strings
+	 *
+	 * @param mixed $level Level
+	 *
+	 * @return string|false
+	 * @access private
+	 * @internal
+	 */
+	protected function normalizeLevel($level = null) {
+		if (!$level) {
+			return false;
 		}
+
+		if (array_key_exists($level, self::$legacy_levels)) {
+			$level = self::$legacy_levels[$level];
+		}
+
+		if (array_key_exists($level, self::$elgg_levels)) {
+			$level = self::$elgg_levels[$level];
+		}
+
+		if (!in_array($level, self::$elgg_levels)) {
+			$level = false;
+		}
+
+		return $level;
 	}
 
 	/**
 	 * Set the logging level
 	 *
-	 * @param int $level The logging level
+	 * @param mixed $level Level
+	 *
 	 * @return void
+	 * @access private
+	 * @internal
 	 */
-	public function setLevel($level) {
-		if (!$level) {
-			// 0 or empty string
-			$this->level = self::OFF;
-			return;
-		}
+	public function setLevel($level = null) {
+		if (!isset($level)) {
+			$php_error_level = error_reporting();
 
-		// @todo Elgg has used string constants for logging levels
-		if (is_string($level)) {
-			$level = strtoupper($level);
-			$level = array_search($level, self::$levels);
+			$level = false;
 
-			if ($level !== false) {
-				$this->level = $level;
-			} else {
-				$this->warn(__METHOD__ .": invalid level ignored.");
+			if (($php_error_level & E_NOTICE) == E_NOTICE) {
+				$level = LogLevel::NOTICE;
+			} else if (($php_error_level & E_WARNING) == E_WARNING) {
+				$level = LogLevel::WARNING;
+			} else if (($php_error_level & E_ERROR) == E_ERROR) {
+				$level = LogLevel::ERROR;
 			}
-			return;
 		}
 
-		if (isset(self::$levels[$level])) {
-			$this->level = $level;
-		} else {
-			$this->warn(__METHOD__ .": invalid level ignored.");
-		}
+		$this->level = $this->normalizeLevel($level);
 	}
 
 	/**
-	 * Get the current logging level
+	 * Get the current logging level severity
 	 *
-	 * @return int
+	 * @param bool $severity If true, will return numeric representation of the logging level
+	 *
+	 * @return int|string|false
+	 * @access private
+	 * @internal
 	 */
-	public function getLevel() {
+	public function getLevel($severity = true) {
+		if ($severity) {
+			return array_search($this->level, self::$elgg_levels);
+		}
+
 		return $this->level;
 	}
 
 	/**
-	 * Set custom printer
+	 * Check if a level is loggable under current logging level
 	 *
-	 * @param Printer $printer Printer
-	 * @return void
+	 * @param mixed $level Level name or severity code
+	 *
+	 * @return bool
 	 */
-	public function setPrinter(Printer $printer) {
-		$this->printer = $printer;
+	public function isLoggable($level) {
+		$level = $this->normalizeLevel($level);
+
+		$severity = array_search($level, self::$elgg_levels);
+		if (!$this->getLevel() || $severity < $this->getLevel()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
-	 * Add a message to the log
-	 *
-	 * @param string $message The message to log
-	 * @param int    $level   The logging level
-	 * @return bool Whether the messages was logged
+	 * {@inheritdoc}
 	 */
-	public function log($message, $level = self::NOTICE) {
+	public function log($level, $message, array $context = []) {
+
+		$level = $this->normalizeLevel($level);
+
 		if ($this->disabled_stack) {
 			// capture to top of stack
 			end($this->disabled_stack);
@@ -164,11 +240,7 @@ class Logger {
 			];
 		}
 
-		if ($this->level == self::OFF || $level < $this->level) {
-			return false;
-		}
-
-		if (!array_key_exists($level, self::$levels)) {
+		if (!$this->isLoggable($level)) {
 			return false;
 		}
 
@@ -177,83 +249,101 @@ class Logger {
 			return true;
 		}
 
-		$levelString = self::$levels[$level];
+		if ($this->hooks) {
+			$levelString = strtoupper($level);
 
-		$this->process("$levelString: $message", $level);
+			$params = [
+				'level' => $level,
+				'msg' => $message,
+				'context' => $context,
+			];
 
-		return true;
+			if (!$this->hooks->triggerDeprecated('debug', 'log', $params, true)) {
+				return false;
+			}
+		}
+
+		return parent::log($level, $message, $context);
 	}
 
 	/**
-	 * Log message at the ERROR level
-	 *
-	 * @param string $message The message to log
-	 * @return bool
+	 * {@inheritdoc}
 	 */
-	public function error($message) {
-		return $this->log($message, self::ERROR);
+	public function emergency($message, array $context = []) {
+		return $this->log(LogLevel::EMERGENCY, $message, $context);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function alert($message, array $context = []) {
+		return $this->log(LogLevel::ALERT, $message, $context);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function critical($message, array $context = []) {
+		return $this->log(LogLevel::CRITICAL, $message, $context);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function error($message, array $context = []) {
+		return $this->log(LogLevel::ERROR, $message, $context);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function warning($message, array $context = []) {
+		return $this->log(LogLevel::WARNING, $message, $context);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function notice($message, array $context = []) {
+		return $this->log(LogLevel::NOTICE, $message, $context);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function info($message, array $context = []) {
+		return $this->log(LogLevel::INFO, $message, $context);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function debug($message, array $context = []) {
+		return $this->log(LogLevel::DEBUG, $message, $context);
 	}
 
 	/**
 	 * Log message at the WARNING level
 	 *
 	 * @param string $message The message to log
-	 * @return bool
-	 */
-	public function warn($message) {
-		return $this->log($message, self::WARNING);
-	}
-
-	/**
-	 * Log message at the NOTICE level
+	 * @param array  $context Context
 	 *
-	 * @param string $message The message to log
 	 * @return bool
+	 * @deprecated 3.0 Use Logger::warning()
 	 */
-	public function notice($message) {
-		return $this->log($message, self::NOTICE);
-	}
-
-	/**
-	 * Log message at the INFO level
-	 *
-	 * @param string $message The message to log
-	 * @return bool
-	 */
-	public function info($message) {
-		return $this->log($message, self::INFO);
+	public function warn($message, array $context = []) {
+		return $this->warning($message, $context);
 	}
 
 	/**
 	 * Dump data to log
 	 *
 	 * @param mixed $data The data to log
-	 * @return void
+	 *
+	 * @return bool
 	 */
 	public function dump($data) {
-		$this->process($data, self::ERROR);
-	}
-
-	/**
-	 * Process logging data
-	 *
-	 * @param mixed $data  The data to process
-	 * @param int   $level The logging level for this data
-	 * @return void
-	 */
-	protected function process($data, $level) {
-		
-		// plugin can return false to stop the default logging method
-		$params = [
-			'level' => $level,
-			'msg' => $data,
-		];
-
-		if (!$this->hooks->trigger('debug', 'log', $params, true)) {
-			return;
-		}
-
-		$this->printer->write($data, $level);
+		return $this->log(LogLevel::ERROR, $data);
 	}
 
 	/**
@@ -262,10 +352,10 @@ class Logger {
 	 * Call disable() before your tests and enable() after. enable() will return a list of
 	 * calls to log() (and helper methods) that were not acted upon.
 	 *
-	 * @note This behaves like a stack. You must call enable() for each disable() call.
+	 * @note   This behaves like a stack. You must call enable() for each disable() call.
 	 *
 	 * @return void
-	 * @see enable()
+	 * @see    enable()
 	 * @access private
 	 * @internal
 	 */
@@ -277,7 +367,7 @@ class Logger {
 	 * Restore logging and get record of log calls (after tests)
 	 *
 	 * @return array
-	 * @see disable()
+	 * @see    disable()
 	 * @access private
 	 * @internal
 	 */

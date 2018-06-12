@@ -23,30 +23,27 @@ $comment = elgg_extract('comment', $vars);
 
 $inline = elgg_extract('inline', $vars, false);
 
-$entity_guid_input = '';
 if ($entity) {
-	$entity_guid_input = elgg_view('input/hidden', [
+	echo elgg_view('input/hidden', [
 		'name' => 'entity_guid',
 		'value' => $entity->guid,
 	]);
 }
 
 $comment_text = '';
-$comment_guid_input = '';
+$footer = '';
 if ($comment && $comment->canEdit()) {
-	$entity_guid_input = elgg_view('input/hidden', [
+	echo elgg_view('input/hidden', [
 		'name' => 'comment_guid',
 		'value' => $comment->guid,
 	]);
 	$comment_label  = elgg_echo("generic_comments:edit");
-	$submit_input = elgg_view('input/submit', ['value' => elgg_echo('save')]);
+	$footer .= elgg_view('input/submit', ['value' => elgg_echo('save')]);
 	$comment_text = $comment->description;
 } else {
 	$comment_label  = elgg_echo("generic_comments:add");
-	$submit_input = elgg_view('input/submit', ['value' => elgg_echo('comment')]);
+	$footer .= elgg_view('input/submit', ['value' => elgg_echo('comment')]);
 }
-
-$footer = $entity_guid_input . $comment_guid_input . $submit_input;
 
 if ($inline) {
 	$form = elgg_view('input/text', [

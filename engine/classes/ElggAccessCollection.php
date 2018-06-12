@@ -192,17 +192,16 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function toObject() {
-		$object = new stdClass();
+	public function toObject(array $params = []) {
+		$object = new \Elgg\Export\AccessCollection();
 		$object->type = $this->getType();
 		$object->subtype = $this->getSubtype();
 		$object->id = $this->id;
 		$object->owner_guid = $this->owner_guid;
 		$object->name = $this->name;
 
-		$params = [
-			'access_collection' => $this,
-		];
+		$params['access_collection'] = $this;
+
 		return _elgg_services()->hooks->trigger('to:object', 'access_collection', $params, $object);
 	}
 

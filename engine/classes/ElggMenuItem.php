@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Collections\Collection;
+
 /**
  * Elgg Menu Item
  *
@@ -12,7 +15,7 @@
  * @subpackage Navigation
  * @since      1.8.0
  */
-class ElggMenuItem {
+class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 
 	/**
 	 * @var array Non-rendered data about the menu item
@@ -30,8 +33,8 @@ class ElggMenuItem {
 		// int Smaller priorities float to the top
 		'priority' => 100,
 
-		// bool Is this the currently selected menu item
-		'selected' => false,
+		// bool Is this the currently selected menu item (null for autodetection)
+		'selected' => null,
 
 		// string Identifier of this item's parent
 		'parent_name' => '',
@@ -168,7 +171,7 @@ class ElggMenuItem {
 		}
 		
 		foreach ($options as $key => $value) {
-			if (isset($item->data[$key])) {
+			if (array_key_exists($key, $item->data)) {
 				$item->data[$key] = $value;
 			} else {
 				$item->$key = $value;
@@ -311,6 +314,7 @@ class ElggMenuItem {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -330,7 +334,11 @@ class ElggMenuItem {
 	 * @return bool
 	 */
 	public function getSelected() {
-		return $this->data['selected'];
+		if (isset($this->data['selected'])) {
+			return $this->data['selected'];
+		}
+
+		return elgg_http_url_is_identical(current_page_url(), $this->getHref());
 	}
 
 	/**
@@ -501,7 +509,7 @@ class ElggMenuItem {
 	// @codingStandardsIgnoreStart
 	/**
 	 * Add additional classes
-	 * 
+	 *
 	 * @param array $current    The current array of classes
 	 * @param mixed $additional Additional classes (either array of string)
 	 * @return void
@@ -662,5 +670,13 @@ class ElggMenuItem {
 		unset($values['data']);
 
 		return $values;
+	}
+
+	/**
+	 * Get unique item identifier within a collection
+	 * @return string|int
+	 */
+	public function getId() {
+		return $this->getName();
 	}
 }

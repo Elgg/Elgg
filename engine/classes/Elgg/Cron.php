@@ -13,6 +13,7 @@ use GO\Scheduler;
  */
 class Cron {
 
+	use Loggable;
 	use TimeUsing;
 
 	static $intervals = [
@@ -33,11 +34,6 @@ class Cron {
 	protected $hooks;
 
 	/**
-	 * @var Printer
-	 */
-	protected $printer;
-	
-	/**
 	 * @var EventsService
 	 */
 	protected $events;
@@ -45,13 +41,13 @@ class Cron {
 	/**
 	 * Constructor
 	 *
-	 * @param PluginHooksService $hooks   Hooks service
-	 * @param Printer            $printer Printer
-	 * @param EventsService      $events  Events service
+	 * @param PluginHooksService $hooks  Hooks service
+	 * @param Logger             $logger Logger
+	 * @param EventsService      $events Events service
 	 */
-	public function __construct(PluginHooksService $hooks, Printer $printer, EventsService $events) {
+	public function __construct(PluginHooksService $hooks, Logger $logger, EventsService $events) {
 		$this->hooks = $hooks;
-		$this->printer = $printer;
+		$this->logger = $logger;
 		$this->events = $events;
 	}
 
@@ -60,6 +56,7 @@ class Cron {
 	 *
 	 * @param array $intervals Interval names to run
 	 * @param bool  $force     Force cron jobs to run even they are not yet due
+	 *
 	 * @return Job[]
 	 * @throws \CronException
 	 */
@@ -172,7 +169,7 @@ class Cron {
 		$this->log('output', $interval, $output);
 		$this->log('completion', $interval, $time->getTimestamp());
 
-		$this->printer->write($output, null, Logger::$verbosity);
+		$this->logger->info($output);
 
 		$this->events->triggerAfter('cron', $interval, $time);
 	}

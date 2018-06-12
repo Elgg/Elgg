@@ -7,6 +7,7 @@ use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Elgg\I18n\Translator;
 use Elgg\Project\Paths;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -177,7 +178,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([
 			[
 				'message' => 'Unrecognized value \'pblc\' for $access in Elgg\\ActionsService::register',
-				'level' => Logger::ERROR,
+				'level' => LogLevel::ERROR,
 			]
 		], $logged);
 

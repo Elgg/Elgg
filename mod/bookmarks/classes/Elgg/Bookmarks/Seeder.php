@@ -25,6 +25,8 @@ class Seeder extends Seed {
 			]);
 		};
 
+		$this->advance($count_bookmarks());
+
 		while ($count_bookmarks() < $this->limit) {
 			$metadata = [
 				'address' => $this->faker()->url,
@@ -50,6 +52,8 @@ class Seeder extends Seed {
 				'object_guid' => $bookmark->guid,
 				'target_guid' => $bookmark->container_guid,
 			]);
+
+			$this->advance();
 		}
 	}
 
@@ -76,6 +80,8 @@ class Seeder extends Seed {
 			} else {
 				$this->log("Failed to delete bookmark $bookmark->guid");
 			}
+
+			$this->advance();
 		}
 	}
 }

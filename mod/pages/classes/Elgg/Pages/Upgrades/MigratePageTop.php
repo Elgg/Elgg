@@ -2,9 +2,9 @@
 
 namespace Elgg\Pages\Upgrades;
 
+use Elgg\Upgrade\AsynchronousUpgrade;
+use Elgg\Upgrade\Result;
 use ElggObject;
-use \Elgg\Upgrade\Batch;
-use \Elgg\Upgrade\Result;
 
 /**
  * Migrate 'object', 'page_top' to 'object', 'page'
@@ -12,7 +12,7 @@ use \Elgg\Upgrade\Result;
  *
  * @since 3.0
  */
-class MigratePageTop implements Batch {
+class MigratePageTop implements AsynchronousUpgrade {
 	
 	/**
 	 * {@inheritDoc}
@@ -70,8 +70,6 @@ class MigratePageTop implements Batch {
 				$result->addFailures();
 			}
 		}
-		
-		return $result;
 	}
 	
 	/**

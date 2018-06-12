@@ -108,6 +108,18 @@ abstract class ElggEntity extends \ElggData implements
 	protected $_is_cacheable = true;
 
 	/**
+	 * Holds metadata key/value pairs acquired from the metadata cache
+	 * Entity metadata may have mutated since last call to __get,
+	 * do not rely on this value for any business logic
+	 * This storage is intended to help with debugging objects during dump,
+	 * because otherwise it's hard to tell what the object is from it's attributes
+	 *
+	 * @var array
+	 * @internal
+	 */
+	protected $_cached_metadata;
+
+	/**
 	 * Create a new entity.
 	 *
 	 * Plugin developers should only use the constructor to create a new entity.
@@ -163,9 +175,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * The owner and container guids come from the original entity. The clone
 	 * method copies metadata but does not copy annotations or private settings.
 	 *
-	 * @note metadata will have its owner and access id set when the entity is saved
-	 * and it will be the same as that of the entity.
-	 *
 	 * @return void
 	 */
 	public function __clone() {
@@ -210,8 +219,8 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * Anything that is not an attribute is saved as metadata.
 	 *
-	 * @warning Metadata set this way will inherit the entity's owner and
-	 * access ID. If you want more control over metadata, use \ElggEntity::setMetadata()
+	 * Be advised that metadata values are cast to integer or string.
+	 * You can save booleans, but they will be stored and returned as integers.
 	 *
 	 * @param string $name  Name of the attribute or metadata
 	 * @param mixed  $value The value to be set
@@ -221,15 +230,6 @@ abstract class ElggEntity extends \ElggData implements
 	public function __set($name, $value) {
 		if ($this->$name === $value) {
 			// quick return if value is not changing
-			return;
-		}
-
-		// Due to https://github.com/Elgg/Elgg/pull/5456#issuecomment-17785173, certain attributes
-		// will store empty strings as null in the DB. In the somewhat common case that we're re-setting
-		// the value to empty string, don't consider this a change.
-		if (in_array($name, ['title', 'name', 'description'])
-			&& $this->$name === null
-			&& $value === "") {
 			return;
 		}
 
@@ -328,35 +328,25 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return mixed The value, or null if not found.
 	 */
 	public function getMetadata($name) {
-		$guid = $this->guid;
+		$metadata = $this->getAllMetadata();
+		return elgg_extract($name, $metadata);
+	}
 
-		if (!$guid) {
-			if (isset($this->temp_metadata[$name])) {
-				// md is returned as an array only if more than 1 entry
-				if (count($this->temp_metadata[$name]) == 1) {
-					return $this->temp_metadata[$name][0];
-				} else {
-					return $this->temp_metadata[$name];
-				}
-			} else {
-				return null;
-			}
+	/**
+	 * Get all entity metadata
+	 *
+	 * @return array
+	 */
+	public function getAllMetadata() {
+		if (!$this->guid) {
+			return array_map(function($values) {
+				return count($values) > 1 ? $values : $values[0];
+			}, $this->temp_metadata);
 		}
 
-		// upon first cache miss, just load/cache all the metadata and retry.
-		// if this works, the rest of this function may not be needed!
-		$cache = _elgg_services()->metadataCache;
-		if ($cache->isLoaded($guid)) {
-			return $cache->getSingle($guid, $name);
-		} else {
-			$cache->populateFromEntities([$guid]);
-			// in case ignore_access was on, we have to check again...
-			if ($cache->isLoaded($guid)) {
-				return $cache->getSingle($guid, $name);
-			}
+		$this->_cached_metadata = _elgg_services()->metadataCache->getAll($this->guid);
 
-			return null;
-		}
+		return $this->_cached_metadata;
 	}
 
 	/**
@@ -1801,28 +1791,32 @@ abstract class ElggEntity extends \ElggData implements
 		try {
 			return _elgg_services()->entityTable->delete($this, $recursive);
 		} catch (DatabaseException $ex) {
-			elgg_log($ex->getMessage(), 'ERROR');
+			elgg_log($ex, 'ERROR');
 			return false;
 		}
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * Export an entity
+	 *
+	 * @param array $params Params to pass to the hook
+	 * @return \Elgg\Export\Entity
 	 */
-	public function toObject() {
-		$object = $this->prepareObject(new stdClass());
-		$params = ['entity' => $this];
-		$object = _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
-		return $object;
+	public function toObject(array $params = []) {
+		$object = $this->prepareObject(new \Elgg\Export\Entity());
+
+		$params['entity'] = $this;
+
+		return _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
 	}
 
 	/**
 	 * Prepare an object copy for toObject()
 	 *
-	 * @param stdClass $object Object representation of the entity
-	 * @return stdClass
+	 * @param \Elgg\Export\Entity $object Object representation of the entity
+	 * @return \Elgg\Export\Entity
 	 */
-	protected function prepareObject($object) {
+	protected function prepareObject(\Elgg\Export\Entity $object) {
 		$object->guid = $this->guid;
 		$object->type = $this->getType();
 		$object->subtype = $this->getSubtype();
@@ -2059,6 +2053,10 @@ abstract class ElggEntity extends \ElggData implements
 	 * @internal
 	 */
 	public function isCacheable() {
+		if (!$this->guid) {
+			return false;
+		}
+		
 		if (_elgg_services()->session->getIgnoreAccess()) {
 			return false;
 		}

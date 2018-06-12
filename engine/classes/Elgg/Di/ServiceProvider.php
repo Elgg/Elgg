@@ -9,13 +9,13 @@ use Elgg\Assets\CssCompiler;
 use Elgg\Cache\CompositeCache;
 use Elgg\Cache\DataCache;
 use Elgg\Cache\SessionCache;
+use Elgg\Cli\Progress;
 use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
 use Elgg\Invoker;
-use Elgg\Printer\CliPrinter;
-use Elgg\Printer\ErrorLogPrinter;
+use Elgg\Logger;
 use Elgg\Project\Paths;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
@@ -28,98 +28,101 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
  *
- * @property-read \Elgg\Database\AccessCollections         $accessCollections
- * @property-read \ElggCache                               $accessCache
- * @property-read \Elgg\ActionsService                     $actions
- * @property-read \Elgg\Users\Accounts                     $accounts
- * @property-read \Elgg\Database\AdminNotices              $adminNotices
- * @property-read \Elgg\Ajax\Service                       $ajax
- * @property-read \Elgg\Amd\Config                         $amdConfig
- * @property-read \Elgg\Database\AnnotationsTable          $annotationsTable
- * @property-read \ElggAutoP                               $autoP
- * @property-read \Elgg\AutoloadManager                    $autoloadManager
- * @property-read \Elgg\BootService                        $boot
- * @property-read \Elgg\Application\CacheHandler           $cacheHandler
- * @property-read \Elgg\Assets\CssCompiler                 $cssCompiler
- * @property-read \Elgg\Security\Csrf                      $csrf
- * @property-read \Elgg\ClassLoader                        $classLoader
- * @property-read \Elgg\Cli                                $cli
- * @property-read \Elgg\Cron                               $cron
- * @property-read \ElggCrypto                              $crypto
- * @property-read \Elgg\Config                             $config
- * @property-read \Elgg\Database\ConfigTable               $configTable
- * @property-read \Elgg\Cache\DataCache                    $dataCache
- * @property-read \Elgg\Database                           $db
- * @property-read \Elgg\Database\DbConfig                  $dbConfig
- * @property-read \Elgg\DeprecationService                 $deprecation
- * @property-read \Elgg\DI\PublicContainer                 $dic
- * @property-read \Di\ContainerBuilder                     $dic_builder
- * @property-read \Elgg\Di\DefinitionCache                 $dic_cache
- * @property-read \Elgg\Di\DefinitionLoader                $dic_loader
- * @property-read \Elgg\EmailService                       $emails
- * @property-read \Elgg\Cache\EntityCache                  $entityCache
- * @property-read \Elgg\EntityPreloader                    $entityPreloader
- * @property-read \Elgg\Database\EntityTable               $entityTable
- * @property-read \Elgg\EventsService                      $events
- * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
- * @property-read \ElggCache                               $fileCache
- * @property-read \ElggDiskFilestore                       $filestore
- * @property-read \Elgg\FormsService                       $forms
- * @property-read \Elgg\Gatekeeper                         $gatekeeper
- * @property-read \Elgg\HandlersService                    $handlers
- * @property-read \Elgg\Security\HmacFactory               $hmac
- * @property-read \Elgg\PluginHooksService                 $hooks
- * @property-read \Elgg\EntityIconService                  $iconService
- * @property-read \Elgg\ImageService                       $imageService
- * @property-read \Elgg\Invoker                            $invoker
- * @property-read \Elgg\Logger                             $logger
- * @property-read Mailer                                   $mailer
- * @property-read \Elgg\Menu\Service                       $menus
- * @property-read \Elgg\Cache\MetadataCache                $metadataCache
- * @property-read \Elgg\Database\MetadataTable             $metadataTable
- * @property-read \Elgg\Database\Mutex                     $mutex
- * @property-read \Elgg\Notifications\NotificationsService $notifications
- * @property-read \Elgg\PasswordService                    $passwords
- * @property-read \Elgg\PersistentLoginService             $persistentLogin
- * @property-read \Elgg\Database\Plugins                   $plugins
- * @property-read \ElggCache                               $privateSettingsCache
- * @property-read \Elgg\Printer                            $printer
- * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
- * @property-read \Elgg\Application\Database               $publicDb
- * @property-read \Elgg\Database\QueryCounter              $queryCounter
- * @property-read \Elgg\RedirectService                    $redirects
- * @property-read \Elgg\Http\Request                       $request
- * @property-read \Elgg\Router\RequestContext              $requestContext
- * @property-read \Elgg\Http\ResponseFactory               $responseFactory
- * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
- * @property-read \Elgg\Router\RouteCollection             $routeCollection
- * @property-read \Elgg\Router\RouteRegistrationService    $routes
- * @property-read \Elgg\Router                             $router
- * @property-read \Elgg\Database\Seeder                    $seeder
- * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
- * @property-read \ElggSession                             $session
- * @property-read \Elgg\Cache\SessionCache                 $sessionCache
- * @property-read \Elgg\Search\SearchService               $search
- * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
- * @property-read \Elgg\Database\SiteSecret                $siteSecret
- * @property-read \Elgg\Forms\StickyForms                  $stickyForms
- * @property-read \Elgg\Cache\SystemCache                  $systemCache
- * @property-read \Elgg\SystemMessagesService              $systemMessages
- * @property-read \Elgg\Views\TableColumn\ColumnFactory    $table_columns
- * @property-read \ElggTempDiskFilestore                   $temp_filestore
- * @property-read \Elgg\Timer                              $timer
- * @property-read \Elgg\I18n\Translator                    $translator
- * @property-read \Elgg\Security\UrlSigner                 $urlSigner
- * @property-read \Elgg\UpgradeService                     $upgrades
- * @property-read \Elgg\Upgrade\Locator                    $upgradeLocator
- * @property-read \Elgg\Router\UrlGenerator                $urlGenerator
- * @property-read \Elgg\Router\UrlMatcher                  $urlMatcher
- * @property-read \Elgg\UploadService                      $uploads
- * @property-read \Elgg\UserCapabilities                   $userCapabilities
- * @property-read \Elgg\Database\UsersTable                $usersTable
- * @property-read \Elgg\ViewsService                       $views
- * @property-read \Elgg\Cache\ViewCacher                   $viewCacher
- * @property-read \Elgg\WidgetsService                     $widgets
+ * @property-read \Elgg\Database\AccessCollections                $accessCollections
+ * @property-read \ElggCache                                      $accessCache
+ * @property-read \Elgg\ActionsService                            $actions
+ * @property-read \Elgg\Users\Accounts                            $accounts
+ * @property-read \Elgg\Database\AdminNotices                     $adminNotices
+ * @property-read \Elgg\Ajax\Service                              $ajax
+ * @property-read \Elgg\Amd\Config                                $amdConfig
+ * @property-read \Elgg\Database\AnnotationsTable                 $annotationsTable
+ * @property-read \ElggAutoP                                      $autoP
+ * @property-read \Elgg\AutoloadManager                           $autoloadManager
+ * @property-read \Elgg\BootService                               $boot
+ * @property-read \Elgg\Application\CacheHandler                  $cacheHandler
+ * @property-read \Elgg\Assets\CssCompiler                        $cssCompiler
+ * @property-read \Elgg\Security\Csrf                             $csrf
+ * @property-read \Elgg\ClassLoader                               $classLoader
+ * @property-read \Elgg\Cli                                       $cli
+ * @property-read \Symfony\Component\Console\Input\InputInterface $cli_input
+ * @property-read \Symfony\Component\Console\Output\OutputInterface $cli_output
+ * @property-read \Elgg\Cli\Progress                              $cli_progress
+ * @property-read \Elgg\Cron                                      $cron
+ * @property-read \ElggCrypto                                     $crypto
+ * @property-read \Elgg\Config                                    $config
+ * @property-read \Elgg\Database\ConfigTable                      $configTable
+ * @property-read \Elgg\Cache\DataCache                           $dataCache
+ * @property-read \Elgg\Database                                  $db
+ * @property-read \Elgg\Database\DbConfig                         $dbConfig
+ * @property-read \Elgg\DeprecationService                        $deprecation
+ * @property-read \Elgg\DI\PublicContainer                        $dic
+ * @property-read \Di\ContainerBuilder                            $dic_builder
+ * @property-read \Elgg\Di\DefinitionCache                        $dic_cache
+ * @property-read \Elgg\Di\DefinitionLoader                       $dic_loader
+ * @property-read \Elgg\EmailService                              $emails
+ * @property-read \Elgg\Cache\EntityCache                         $entityCache
+ * @property-read \Elgg\EntityPreloader                           $entityPreloader
+ * @property-read \Elgg\Database\EntityTable                      $entityTable
+ * @property-read \Elgg\EventsService                             $events
+ * @property-read \Elgg\Assets\ExternalFiles                      $externalFiles
+ * @property-read \ElggCache                                      $fileCache
+ * @property-read \ElggDiskFilestore                              $filestore
+ * @property-read \Elgg\FormsService                              $forms
+ * @property-read \Elgg\Gatekeeper                                $gatekeeper
+ * @property-read \Elgg\HandlersService                           $handlers
+ * @property-read \Elgg\Security\HmacFactory                      $hmac
+ * @property-read \Elgg\Views\HtmlFormatter                       $html_formatter
+ * @property-read \Elgg\PluginHooksService                        $hooks
+ * @property-read \Elgg\EntityIconService                         $iconService
+ * @property-read \Elgg\ImageService                              $imageService
+ * @property-read \Elgg\Invoker                                   $invoker
+ * @property-read \Elgg\Logger                                    $logger
+ * @property-read Mailer                                          $mailer
+ * @property-read \Elgg\Menu\Service                              $menus
+ * @property-read \Elgg\Cache\MetadataCache                       $metadataCache
+ * @property-read \Elgg\Database\MetadataTable                    $metadataTable
+ * @property-read \Elgg\Database\Mutex                            $mutex
+ * @property-read \Elgg\Notifications\NotificationsService        $notifications
+ * @property-read \Elgg\PasswordService                           $passwords
+ * @property-read \Elgg\PersistentLoginService                    $persistentLogin
+ * @property-read \Elgg\Database\Plugins                          $plugins
+ * @property-read \ElggCache                                      $privateSettingsCache
+ * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
+ * @property-read \Elgg\Application\Database                      $publicDb
+ * @property-read \Elgg\Database\QueryCounter                     $queryCounter
+ * @property-read \Elgg\RedirectService                           $redirects
+ * @property-read \Elgg\Http\Request                              $request
+ * @property-read \Elgg\Router\RequestContext                     $requestContext
+ * @property-read \Elgg\Http\ResponseFactory                      $responseFactory
+ * @property-read \Elgg\Database\RelationshipsTable               $relationshipsTable
+ * @property-read \Elgg\Router\RouteCollection                    $routeCollection
+ * @property-read \Elgg\Router\RouteRegistrationService           $routes
+ * @property-read \Elgg\Router                                    $router
+ * @property-read \Elgg\Database\Seeder                           $seeder
+ * @property-read \Elgg\Application\ServeFileHandler              $serveFileHandler
+ * @property-read \ElggSession                                    $session
+ * @property-read \Elgg\Cache\SessionCache                        $sessionCache
+ * @property-read \Elgg\Search\SearchService                      $search
+ * @property-read \Elgg\Cache\SimpleCache                         $simpleCache
+ * @property-read \Elgg\Database\SiteSecret                       $siteSecret
+ * @property-read \Elgg\Forms\StickyForms                         $stickyForms
+ * @property-read \Elgg\Cache\SystemCache                         $systemCache
+ * @property-read \Elgg\SystemMessagesService                     $systemMessages
+ * @property-read \Elgg\Views\TableColumn\ColumnFactory           $table_columns
+ * @property-read \ElggTempDiskFilestore                          $temp_filestore
+ * @property-read \Elgg\Timer                                     $timer
+ * @property-read \Elgg\I18n\Translator                           $translator
+ * @property-read \Elgg\Security\UrlSigner                        $urlSigner
+ * @property-read \Elgg\UpgradeService                            $upgrades
+ * @property-read \Elgg\Upgrade\Locator                           $upgradeLocator
+ * @property-read \Elgg\Router\UrlGenerator                       $urlGenerator
+ * @property-read \Elgg\Router\UrlMatcher                         $urlMatcher
+ * @property-read \Elgg\UploadService                             $uploads
+ * @property-read \Elgg\UserCapabilities                          $userCapabilities
+ * @property-read \Elgg\Database\UsersTable                       $usersTable
+ * @property-read \Elgg\ViewsService                              $views
+ * @property-read \Elgg\Cache\ViewCacher                          $viewCacher
+ * @property-read \Elgg\WidgetsService                            $widgets
  *
  * @access private
  */
@@ -135,10 +138,12 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
+
 			if (!$c->config->AutoloaderManager_skip_storage) {
-				$manager->setStorage($c->fileCache);
+				$manager->setCache($c->fileCache);
 				$manager->loadCache();
 			}
+
 			return $manager;
 		});
 
@@ -224,8 +229,28 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('cli', function(ServiceProvider $c) {
 			$version = elgg_get_version(true);
-			$console = new \Symfony\Component\Console\Application('Elgg', $version);
-			return new \Elgg\Cli($console, $c->hooks);
+
+			$console = new \Elgg\Cli\Application('Elgg', $version);
+			$console->setup($c->cli_input, $c->cli_output);
+
+			return new \Elgg\Cli(
+				$console,
+				$c->hooks,
+				$c->cli_input,
+				$c->cli_output
+			);
+		});
+
+		$this->setFactory('cli_input', function(ServiceProvider $c) {
+			return Application::getStdIn();
+		});
+
+		$this->setFactory('cli_output', function(ServiceProvider $c) {
+			return Application::getStdOut();
+		});
+
+		$this->setFactory('cli_progress', function(ServiceProvider $c) {
+			return new Progress($c->cli_output);
 		});
 
 		$this->setFactory('config', function (ServiceProvider $sp) use ($config) {
@@ -238,7 +263,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('cron', function(ServiceProvider $c) {
-			return new Cron($c->hooks, $c->printer, $c->events);
+			return new Cron($c->hooks, $c->logger, $c->events);
 		});
 
 		$this->setClassName('crypto', \ElggCrypto::class);
@@ -339,7 +364,7 @@ class ServiceProvider extends DiContainer {
 			if ($c->config->enable_profiling) {
 				$events->setTimer($c->timer);
 			}
-			
+
 			return $events;
 		});
 
@@ -375,6 +400,15 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Security\HmacFactory($c->siteSecret, $c->crypto);
 		});
 
+		$this->setFactory('html_formatter', function(ServiceProvider $c) {
+			return new \Elgg\Views\HtmlFormatter(
+				$c->logger,
+				$c->views,
+				$c->hooks,
+				$c->autoP
+			);
+		});
+
 		$this->setFactory('hooks', function(ServiceProvider $c) {
 			return new \Elgg\PluginHooksService($c->events);
 		});
@@ -404,11 +438,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
-			$logger = new \Elgg\Logger($c->hooks, $c->config, $c->printer);
+			$logger = Logger::factory($c->cli_input, $c->cli_output);
+
+			$logger->setLevel($c->config->debug);
+			$logger->setHooks($c->hooks);
+
 			return $logger;
 		});
 
-		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
 		$this->setFactory('menus', function(ServiceProvider $c) {
@@ -475,15 +512,7 @@ class ServiceProvider extends DiContainer {
 			return $c->dataCache->private_settings;
 		});
 
-		$this->setFactory('printer', function(ServiceProvider $c) {
-			if (php_sapi_name() === 'cli') {
-				return new CliPrinter();
-			} else {
-				return new ErrorLogPrinter();
-			}
-		});
-
-		$this->setFactory('privateSettings', function(ServiceProvider $c) {
+		$this->setFactory('privateSettings', function (ServiceProvider $c) {
 			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->privateSettingsCache);
 		});
 
@@ -514,11 +543,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('responseFactory', function(ServiceProvider $c) {
-			if (php_sapi_name() === 'cli') {
-				$transport = new \Elgg\Http\OutputBufferTransport();
-			} else {
-				$transport = new \Elgg\Http\HttpProtocolTransport();
-			}
+			$transport = Application::getResponseTransport();
 			return new \Elgg\Http\ResponseFactory($c->request, $c->hooks, $c->ajax, $transport, $c->events);
 		});
 
@@ -555,7 +580,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('seeder', function(ServiceProvider $c) {
-			return new \Elgg\Database\Seeder($c->hooks);
+			return new \Elgg\Database\Seeder($c->hooks, $c->cli_progress);
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
@@ -612,7 +637,8 @@ class ServiceProvider extends DiContainer {
 				$c->config,
 				$c->logger,
 				$c->mutex,
-				$c->systemMessages
+				$c->systemMessages,
+				$c->cli_progress
 			);
 		});
 
@@ -647,8 +673,7 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('upgradeLocator', function(ServiceProvider $c) {
 			return new \Elgg\Upgrade\Locator(
 				$c->plugins,
-				$c->logger,
-				$c->privateSettings
+				$c->logger
 			);
 		});
 
@@ -722,7 +747,7 @@ class ServiceProvider extends DiContainer {
 		if ($config->cacheroot) {
 			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
 		} else {
-			$config->cacheroot = $config->dataroot;
+			$config->cacheroot = $config->dataroot . 'caches/';
 		}
 		$lock('cacheroot');
 

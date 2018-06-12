@@ -244,7 +244,7 @@ function elgg_delete_river(array $options = []) {
  * @param array $options Any options from elgg_get_river() plus:
  *   item_view  => STR         Alternative view to render list items
  *   pagination => BOOL        Display pagination links (true)
- *   no_results => STR|Closure Message to display if no items
+ *   no_results => STR|true|Closure Message to display if no items
  *
  * @return string
  * @since 1.8.0
@@ -257,7 +257,6 @@ function elgg_list_river(array $options = []) {
 		'limit'      => (int) max(get_input('limit', max(20, _elgg_config()->default_limit)), 0),
 		'pagination' => true,
 		'list_class' => 'elgg-list-river',
-		'no_results' => '',
 	];
 
 	$options = array_merge($defaults, $options);

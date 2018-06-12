@@ -2,14 +2,13 @@
 
 namespace Elgg\Upgrades;
 
-use Elgg\Upgrade\Batch;
+use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
-use League\Flysystem\Exception;
 
 /**
  * Updates database charset to utf8mb4
  */
-class AlterDatabaseToMultiByteCharset implements Batch {
+class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 
 	private $utf8mb4_tables = [
 		// InnoDB
@@ -116,7 +115,7 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 	public function shouldBeSkipped() {
 
 		$config = _elgg_services()->dbConfig->getConnectionConfig();
-		$rows = get_data("SHOW TABLE STATUS FROM `{$config['database']}`");
+		$rows = elgg()->db->getData("SHOW TABLE STATUS FROM `{$config['database']}`");
 
 		$prefixed_table_names = array_map(function ($t) use ($config) {
 			return "{$config['prefix']}{$t}";
@@ -147,9 +146,9 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 
 		try {
 			// required to allow bigger index sizes required for utf8mb4
-			update_data("SET GLOBAL innodb_large_prefix = 'ON'");
+			elgg()->db->updateData("SET GLOBAL innodb_large_prefix = 'ON'");
 			
-			update_data("
+			elgg()->db->updateData("
 				ALTER DATABASE
     			`{$config['database']}`
     			CHARACTER SET = utf8mb4
@@ -161,12 +160,12 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 					foreach ($this->non_mb4_columns[$table] as $column => $index) {
 						if ($index) {
 							if ($index['primary']) {
-								update_data("
+								elgg()->db->updateData("
 									ALTER TABLE {$config['prefix']}{$table}
 									DROP PRIMARY KEY
 								");
 							} else {
-								update_data("
+								elgg()->db->updateData("
 									ALTER TABLE {$config['prefix']}{$table}
 									DROP KEY {$index['name']}
 								");
@@ -175,12 +174,12 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 					}
 				}
 
-				update_data("
+				elgg()->db->updateData("
 					ALTER TABLE {$config['prefix']}{$table}
 					ROW_FORMAT=DYNAMIC
 				");
 
-				update_data("
+				elgg()->db->updateData("
 					ALTER TABLE {$config['prefix']}{$table}
 					CONVERT TO CHARACTER SET utf8mb4
 					COLLATE utf8mb4_general_ci
@@ -190,7 +189,7 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 					foreach ($this->non_mb4_columns[$table] as $column => $index) {
 						if (empty($index['columns'])) {
 							// Alter table only if the key is not composite
-							update_data("
+							elgg()->db->updateData("
 								ALTER TABLE {$config['prefix']}{$table}
 								MODIFY $column VARCHAR(255)
 								CHARACTER SET utf8
@@ -213,7 +212,7 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 							$sql .= " KEY {$index['name']} ($key_columns)";
 						}
 
-						update_data("
+						elgg()->db->updateData("
 							ALTER TABLE {$config['prefix']}{$table}
 							$sql
 						");
@@ -228,8 +227,6 @@ class AlterDatabaseToMultiByteCharset implements Batch {
 		}
 
 		$result->addSuccesses();
-
-		return $result;
 
 	}
 

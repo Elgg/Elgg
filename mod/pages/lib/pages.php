@@ -104,8 +104,30 @@ function pages_get_navigation_tree($container) {
 	]);
 
 	$tree = [];
-	$depths = [];
-
+	
+	$get_children = function($parent_guid, $depth = 0) use (&$tree, &$get_children) {
+		$children = new ElggBatch('elgg_get_entities_from_metadata', [
+			'type' => 'object',
+			'subtype' => 'page',
+			'metadata_name_value_pairs' => [
+				'parent_guid' => $parent_guid,
+			],
+			'limit' => false,
+		]);
+		
+		foreach ($children as $child) {
+			$tree[] = [
+				'guid' => $child->guid,
+				'title' => $child->getDisplayName(),
+				'url' => $child->getURL(),
+				'parent_guid' => $parent_guid,
+				'depth' => $depth + 1,
+			];
+			
+			$get_children($child->guid, $depth + 1);
+		}
+	};
+	
 	/* @var $page ElggPage */
 	foreach ($top_pages as $page) {
 		$tree[] = [
@@ -114,35 +136,8 @@ function pages_get_navigation_tree($container) {
 			'url' => $page->getURL(),
 			'depth' => 0,
 		];
-		$depths[$page->guid] = 0;
-
-		$stack = [];
-		array_push($stack, $page);
-		while (count($stack) > 0) {
-			$parent = array_pop($stack);
-			$children = elgg_get_entities([
-				'type' => 'object',
-				'subtype' => 'page',
-				'limit' => false,
-				'batch' => true,
-				'metadata_name_value_pairs' => [
-					'parent_guid' => $parent->guid,
-				],
-			]);
-
-			/* @var $child ElggPage */
-			foreach ($children as $child) {
-				$tree[] = [
-					'guid' => $child->guid,
-					'title' => $child->getDisplayName(),
-					'url' => $child->getURL(),
-					'parent_guid' => $parent->guid,
-					'depth' => $depths[$parent->guid] + 1,
-				];
-				$depths[$child->guid] = $depths[$parent->guid] + 1;
-				array_push($stack, $child);
-			}
-		}
+		
+		$get_children($page->guid);
 	}
 
 	return $tree;

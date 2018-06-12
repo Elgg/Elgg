@@ -26,17 +26,32 @@ if (!class_exists('\Elgg\Application')) {
 	die(2);
 }
 
+
 $settings_file = \Elgg\Project\Paths::settingsFile();
 
 $installed = is_file($settings_file);
 if ($installed) {
-	try {
-		\Elgg\Application::start();
-	} catch (RuntimeException $ex) {
-		// Try to recover by running a system upgrade
-		\Elgg\Application::upgrade();
+	$app = \Elgg\Application::getInstance();
+
+	$services = $app->_services;
+
+	$logger = $services->logger;
+
+	$cli = $services->cli;
+	$cli->setLogger($logger);
+
+	$argv = $services->request->server->get('argv');
+
+	if ($argv[1] === 'upgrade') {
+		// To run an upgrade successfully, we must first migrate
+		// the application before booting it
+		$cli->add(\Elgg\Cli\UpgradeCommand::class);
+	} else {
+		// For other commands, we just boot an application
+		$app->start();
 	}
-	_elgg_services()->cli->run();
+
+	$cli->run();
 } else {
 	$cli = new Symfony\Component\Console\Application();
 	$cli->add(new \Elgg\Cli\InstallCommand());

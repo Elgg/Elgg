@@ -10,6 +10,10 @@
 	max-width: 600px;
 }
 
+.elgg-autocomplete-item-remove {
+	cursor: pointer;
+}
+
 .ui-autocomplete {
 	background-color: #ffffff;
 	border: 1px solid $(border-color-soft);
