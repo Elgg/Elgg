@@ -175,7 +175,7 @@ class Cron {
 	}
 
 	/**
-	 * Populate sites private settings with cron info
+	 * Log the results of a cron interval
 	 *
 	 * @param string $setting  'output'|'completion'
 	 * @param string $interval Interval name
@@ -184,10 +184,41 @@ class Cron {
 	 * @return void
 	 */
 	protected function log($setting, $interval, $msg = '') {
-		$suffix = $setting === 'completion' ? 'ts' : 'msg';
-		$msg_key = "cron_latest:$interval:$suffix";
-
-		elgg_get_site_entity()->setPrivateSetting($msg_key, $msg);
+		$suffix = $setting ? : 'output';
+		
+		$fh = new \ElggFile();
+		$fh->owner_guid = elgg_get_site_entity()->guid;
+		$fh->setFilename("{$interval}-{$suffix}.log");
+		
+		$fh->open('write');
+		$fh->write($msg);
+		$fh->close();
 	}
-
+	
+	/**
+	 * Get the log contents of a cron interval
+	 *
+	 * @param string $setting  'output'|'completion'
+	 * @param string $interval Interval name
+	 *
+	 * @return string
+	 */
+	public function getLog($setting, $interval) {
+		$suffix = $setting ? : 'output';
+		
+		$fh = new \ElggFile();
+		$fh->owner_guid = elgg_get_site_entity()->guid;
+		$fh->setFilename("{$interval}-{$suffix}.log");
+		
+		if (!$fh->exists()) {
+			return '';
+		}
+		
+		$contents = $fh->grabFile();
+		if (!is_string($contents)) {
+			$contents = '';
+		}
+		
+		return $contents;
+	}
 }

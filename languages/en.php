@@ -1630,4 +1630,7 @@ To view %s's profile, click here:
 
 	"core:upgrade:2018041801:title" => "Delete old plugin entities",
 	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
+	
+	"core:upgrade:2018061401:title" => "Migrate cron log entries",
+	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
 );
