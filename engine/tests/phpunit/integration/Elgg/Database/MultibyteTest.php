@@ -2,6 +2,7 @@
 
 namespace Elgg\Database;
 
+use Elgg\Database\Clauses\OrderByClause;
 use Elgg\IntegrationTestCase;
 
 /**
@@ -65,4 +66,42 @@ class MultibyteTest extends IntegrationTestCase {
 		$this->assertEquals($title, $object->title);
 	}
 
+	public function testDatabaseCollactionAllowsSearchForMultibyteCharactersByExactMatch() {
+
+		// @todo : does this work on all mysql versions?
+		//$mysql_version = elgg()->db
+		//->getConnection(DbConfig::READ_WRITE)
+		//->getWrappedConnection()
+		//->getAttribute(\PDO::ATTR_SERVER_VERSION);
+
+		$grinning_face = $this->createObject([
+			'title' => "😀 Grinning Face",
+		]);
+
+		$monkey_face = $this->createObject([
+			'title' => "🐵 Monkey Face",
+		]);
+
+		$entities = elgg_get_entities([
+			'guids' => [
+				$grinning_face->guid,
+				$monkey_face->guid,
+			],
+			'metadata_name_value_pairs' => [
+				[
+					'name' => 'title',
+					'value' => "%😀%",
+					'operand' => 'LIKE',
+				],
+			],
+			'order_by' => new OrderByClause('e.guid', 'DESC'),
+			'limit' => 0,
+		]);
+
+		$this->assertCount(1, $entities);
+
+		$grinning_face = array_shift($entities);
+
+		$this->assertRegExp('/\\x{1f600}/u', $grinning_face->title);
+	}
 }
