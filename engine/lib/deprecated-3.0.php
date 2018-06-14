@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Database\Entities;
+use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * Removes a config setting.
@@ -1675,4 +1676,36 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 	sort($upgrade_files);
 
 	return $upgrade_files;
+}
+
+/**
+ * Returns a list of months in which entities were updated or created.
+ *
+ * @tip Use this to generate a list of archives by month for when entities were added or updated.
+ *
+ * @warning Months are returned in the form YYYYMM.
+ *
+ * @param string $type           The type of entity
+ * @param string $subtype        The subtype of entity
+ * @param int    $container_guid The container GUID that the entities belong to
+ * @param int    $ignored        Ignored parameter
+ * @param string $order_by       Order_by SQL order by clause
+ *
+ * @deprecated 3.0 use elgg_get_entity_dates()
+ *
+ * @return array|false Either an array months as YYYYMM, or false on failure
+ */
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'e.time_created') {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated, please use elgg_get_entity_dates()', '3.0');
+	
+	$options = [
+		'types' => $type,
+		'subtypes' => $subtype,
+		'container_guids' => $container_guid,
+		'order_by' => [
+			new OrderByClause($order_by),
+		],
+	];
+
+	return elgg_get_entity_dates($options);
 }

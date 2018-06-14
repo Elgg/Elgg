@@ -97,8 +97,10 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 	$page_owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
 	$page = elgg_extract('page', $params);
 	
-	$options = [];
-	$container_guid = ELGG_ENTITIES_ANY_VALUE;
+	$options = [
+		'type' => 'object',
+		'subtype' => 'blog',
+	];
 	if ($page_owner instanceof ElggUser) {
 		if ($page === 'friends') {
 			$options['relationship'] = 'friend';
@@ -108,10 +110,10 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 			$options['owner_guid'] = $page_owner->guid;
 		}
 	} elseif ($page_owner instanceof ElggEntity) {
-		$container_guid = $page_owner->guid;
+		$options['container_guid'] = $page_owner->guid;
 	}
 	
-	$dates = get_entity_dates('object', 'blog', $container_guid, 0, 'e.time_created', $options);
+	$dates = elgg_get_entity_dates($options);
 	if (!$dates) {
 		return;
 	}
