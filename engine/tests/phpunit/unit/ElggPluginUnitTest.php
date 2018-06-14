@@ -146,6 +146,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
 			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
 		}
+
+		// elgg-plugin.php should only be included once
+		global $BOOTSTRAP_PLUGIN_TEST;
+		$this->assertEquals(1, $BOOTSTRAP_PLUGIN_TEST);
 	}
 
 	public function testUsesBootstrapOnDeactivate() {
@@ -164,6 +168,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
 			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
 		}
+
+		// elgg-plugin.php should only be included once
+		global $BOOTSTRAP_PLUGIN_TEST;
+		$this->assertEquals(1, $BOOTSTRAP_PLUGIN_TEST);
 	}
 
 	public function testUsesBootstrapOnBoot() {
@@ -190,6 +198,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
 			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
 		}
+
+		// elgg-plugin.php should only be included once
+		global $BOOTSTRAP_PLUGIN_TEST;
+		$this->assertEquals(1, $BOOTSTRAP_PLUGIN_TEST);
 	}
 
 	/**
@@ -244,6 +256,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 				$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
 				$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
 			}
+
+			// elgg-plugin.php should only be included once
+			global $BOOTSTRAP_PLUGIN_TEST;
+			$this->assertEquals(1, $BOOTSTRAP_PLUGIN_TEST);
 
 			$assertions++;
 		};

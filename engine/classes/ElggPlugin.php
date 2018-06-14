@@ -871,7 +871,7 @@ class ElggPlugin extends ElggObject {
 		}
 
 		try {
-			$ret = Includer::includeFile($filepath);
+			$ret = Application::requireSetupFileOnce($filepath);
 		} catch (Exception $e) {
 			$msg = elgg_echo(
 				'ElggPlugin:Exception:IncludeFileThrew',
