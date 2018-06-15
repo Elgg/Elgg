@@ -34,11 +34,14 @@ $options = [
 $content = elgg_list_entities($options);
 elgg_pop_context();
 
-$new_link = elgg_view('output/url', [
-	'href' => elgg_generate_url('add:object:bookmarks', ['guid' => $group->guid]),
-	'text' => elgg_echo('add:object:bookmarks'),
-	'is_trusted' => true,
-]);
+$new_link = null;
+if ($group->canWriteToContainer(0, 'object', 'bookmarks')) {
+	$new_link = elgg_view('output/url', [
+		'href' => elgg_generate_url('add:object:bookmarks', ['guid' => $group->guid]),
+		'text' => elgg_echo('add:object:bookmarks'),
+		'is_trusted' => true,
+	]);
+}
 
 echo elgg_view('groups/profile/module', [
 	'title' => elgg_echo('collection:object:bookmarks:group'),
