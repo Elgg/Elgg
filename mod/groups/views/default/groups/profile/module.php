@@ -26,10 +26,8 @@ if ($group->canWriteToContainer() && isset($vars['add_link'])) {
 	], elgg_extract('add_link', $vars));
 }
 
-echo '<li>';
 echo elgg_view_module('info', $title, $vars['content'], [
 	'menu' => $menu,
 	'class' => 'elgg-module-group',
 	'footer' => $footer,
 ]);
-echo '</li>';

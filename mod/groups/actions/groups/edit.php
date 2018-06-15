@@ -91,21 +91,26 @@ if (!$group->name) {
 }
 
 // Set group tool options (only pass along saved entities)
-$tool_entity = !$is_new_group ? $group : null;
-$tool_options = elgg_get_group_tool_options($tool_entity);
-if ($tool_options) {
-	foreach ($tool_options as $group_option) {
-		$option_toggle_name = $group_option->name . "_enable";
-		$value = get_input($option_toggle_name);
-		if ($value === null) {
-			continue;
-		}
-		
-		if ($value === 'yes') {
-			$group->enableTool($group_option->name);
-		} else {
-			$group->disableTool($group_option->name);
-		}
+// @todo: move this to an event handler to make sure groups created outside of the action
+// get their tools configured
+if ($is_new_group) {
+	$tools = elgg()->group_tools->all();
+} else {
+	$tools = elgg()->group_tools->group($group);
+}
+
+foreach ($tools as $tool) {
+	$prop_name = $tool->mapMetadataName();
+	$value = get_input($prop_name);
+
+	if (!isset($value)) {
+		continue;
+	}
+
+	if ($value === 'yes') {
+		$group->enableTool($tool->name);
+	} else {
+		$group->disableTool($tool->name);
 	}
 }
 

@@ -157,7 +157,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``update_river_access_by_object``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_access_collection_override``
- * ``groups_get_group_tool_options``: Use ``elgg_get_group_tool_options``
+ * ``groups_get_group_tool_options``: Use ``elgg()->group_tools->all()``
  * ``groups_join_group``: Use ``ElggGroup::join``
  * ``groups_prepare_profile_buttons``: Use ``register, menu:title`` hook
  * ``groups_register_profile_buttons``: Use ``register, menu:title`` hook

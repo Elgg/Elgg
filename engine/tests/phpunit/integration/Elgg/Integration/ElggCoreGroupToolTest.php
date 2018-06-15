@@ -7,6 +7,7 @@ use Elgg\IntegrationTestCase;
 
 /**
  * @group Groups
+ * @group GroupTools
  */
 class ElggCoreGroupToolTest extends IntegrationTestCase {
 	/**

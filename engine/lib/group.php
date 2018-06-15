@@ -9,61 +9,6 @@
  */
 
 /**
- * Adds a group tool option
- *
- * @see remove_group_tool_option().
- *
- * @param string $name       Name of the group tool option
- * @param string $label      Used for the group edit form
- * @param bool   $default_on True if this option should be active by default
- *
- * @return void
- * @since 1.5.0
- */
-function add_group_tool_option($name, $label = null, $default_on = true) {
-	$options = _elgg_config()->group_tool_options;
-	if (!$options) {
-		$options = [];
-	}
-
-	if (!$label) {
-		$label = elgg_echo("groups:tool:$name");
-	}
-
-	$options[$name] = (object) [
-		'name' => $name,
-		'label' => $label,
-		'default_on' => $default_on,
-	];
-	_elgg_config()->group_tool_options = $options;
-}
-
-/**
- * Removes a group tool option based on name
- *
- * @see add_group_tool_option()
- *
- * @param string $name Name of the group tool option
- *
- * @return void
- * @since 1.7.5
- */
-function remove_group_tool_option($name) {
-	$options = _elgg_config()->group_tool_options;
-	if (!is_array($options)) {
-		return;
-	}
-	
-	if (!isset($options[$name])) {
-		return;
-	}
-	
-	unset($options[$name]);
-	
-	_elgg_config()->group_tool_options = $options;
-}
-
-/**
  * Checks if a group has a specific tool enabled.
  * Forward to the group if the tool is disabled.
  *
@@ -72,6 +17,7 @@ function remove_group_tool_option($name) {
  *                           will be pulled from elgg_get_page_owner_guid().
  *
  * @return void
+ * @throws \Elgg\GroupGatekeeperException
  * @since 3.0.0
  */
 function elgg_group_tool_gatekeeper($option, $group_guid = null) {
@@ -85,29 +31,11 @@ function elgg_group_tool_gatekeeper($option, $group_guid = null) {
 	if ($group->isToolEnabled($option)) {
 		return;
 	}
-	
-	register_error(elgg_echo('groups:tool_gatekeeper'));
-	forward($group->getURL(), 'group_tool');
-}
 
-/**
- * Function to return available group tool options
- *
- * @param \ElggGroup $group optional group
- *
- * @return array
- * @since 3.0.0
- */
-function elgg_get_group_tool_options(\ElggGroup $group = null) {
-	
-	$tool_options = elgg_get_config('group_tool_options');
-	
-	$hook_params = [
-		'group_tool_options' => $tool_options,
-		'entity' => $group,
-	];
-		
-	return (array) elgg_trigger_plugin_hook('tool_options', 'group', $hook_params, $tool_options);
+	$ex = new \Elgg\GroupGatekeeperException(elgg_echo('groups:tool_gatekeeper'));
+	$ex->setRedirectUrl($group->getURL());
+
+	throw $ex;
 }
 
 /**

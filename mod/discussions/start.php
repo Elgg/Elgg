@@ -19,8 +19,7 @@ function discussion_init() {
 	elgg_extend_view('object/elements/imprint/contents', 'discussion/imprint/status');
 
 	// add the forum tool option
-	add_group_tool_option('forum', null, true);
-	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
+	elgg()->group_tools->register('forum');
 
 	// notifications
 	elgg_register_plugin_hook_handler('get', 'subscriptions', 'discussion_get_subscriptions');

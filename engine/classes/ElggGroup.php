@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Groups\Tool;
+
 /**
  * A group entity, used as a container for other entities.
  *
@@ -220,87 +223,94 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * Checks if a tool option is enabled
 	 *
-	 * @param string $option The option to check
+	 * @param string $name Tool name
+	 *
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public function isToolEnabled($option) {
-		if (empty($option)) {
+	public function isToolEnabled($name) {
+		if (empty($name)) {
 			return false;
 		}
-		
-		$setting = $this->{"{$option}_enable"};
-		if ($setting === 'no') {
+
+		$tool = $this->getTool($name);
+		if (!$tool) {
 			return false;
 		}
-		
-		$tool_config = $this->getToolConfig($option);
-		if (!$tool_config) {
-			return false;
+
+		$md_name = $tool->mapMetadataName();
+		$setting = $this->$md_name;
+
+		if (!isset($setting)) {
+			return $tool->isEnabledByDefault();
 		}
-		
-		if ($setting !== null) {
-			return (bool) ($setting == 'yes');
-		}
-		
-		// check default setting
-		return (bool) $tool_config->default_on;
+
+		return $setting == 'yes';
 	}
-	
+
 	/**
 	 * Enables a tool option
 	 *
-	 * @param string $option The option to enable
+	 * @param string $name The option to enable
+	 *
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public function enableTool($option) {
-		if (!$this->getToolConfig($option)) {
+	public function enableTool($name) {
+		if (!$tool = $this->getTool($name)) {
 			return false;
 		}
-		
-		$this->{"{$option}_enable"} = 'yes';
+
+		$md_name = $tool->mapMetadataName();
+		$md_value = $tool->mapMetadataValue('yes');
+
+		$this->$md_name = $md_value;
+
 		return true;
 	}
 	
 	/**
 	 * Disables a tool option
 	 *
-	 * @param string $option The option to disable
+	 * @param Tool|string $name The option to disable
+	 *
 	 * @return bool
 	 * @since 3.0.0
 	 */
-	public function disableTool($option) {
-		if (!$this->getToolConfig($option)) {
+	public function disableTool($name) {
+		if (!$tool = $this->getTool($name)) {
 			return false;
 		}
-		
-		$this->{"{$option}_enable"} = 'no';
+
+		$md_name = $tool->mapMetadataName();
+		$md_value = $tool->mapMetadataValue('no');
+
+		$this->$md_name = $md_value;
+
 		return true;
 	}
-	
+
 	/**
 	 * Returns the registered tool configuration
 	 *
-	 * @param string $option The tool option to get the config for
-	 * @return stdClass|false Returns the config object or false if it does not exists
+	 * @param string $name Tool name
+	 *
+	 * @return Tool|null
+	 * @deprecated 3.0 Use ElggGroup::getTool
 	 */
-	protected function getToolConfig($option) {
-		if (empty($option)) {
-			return false;
-		}
-		
-		$group_tool_options = (array) elgg_get_group_tool_options($this);
-		
-		foreach ($group_tool_options as $config) {
-			if ($config->name !== $option) {
-				continue;
-			}
-			
-			return $config;
-		}
-		
-		return false;
+	protected function getToolConfig($name) {
+		return $this->getTool($name);
+	}
+
+	/**
+	 * Returns the registered tool configuration
+	 *
+	 * @param string $name Tool name
+	 *
+	 * @return Tool|null
+	 */
+	protected function getTool($name) {
+		return elgg()->group_tools->group($this)->get($name);
 	}
 
 	/**
