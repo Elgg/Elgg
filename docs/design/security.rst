@@ -66,6 +66,9 @@ the code in the cookies table, the corresponding user is automatically logged in
 
 When a user changes their password all existing permanent cookie codes are removed from the database.
 
+The lifetime of the persistent cookie can be controlled in the `/elgg-config/settings.php` file. The default lifetime is 30 days. The database records
+for the persistent cookies will be removed after the lifetime expired.
+
 Alternative authentication
 ==========================
 
