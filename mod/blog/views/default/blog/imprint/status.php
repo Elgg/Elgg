@@ -5,7 +5,7 @@ if (!$entity instanceof ElggBlog) {
 	return;
 }
 
-if ($entity->status == 'published') {
+if ($entity->status == 'published' || empty($entity->status)) {
 	return;
 }
 $icon = elgg_view_icon('warning');
