@@ -25,7 +25,7 @@ $fields = [
 	],
 	[
 		'#type' => 'password',
-		'#label' => elgg_echo('user:password2'),
+		'#label' => elgg_echo('user:password2:label'),
 		'name' => 'password2',
 	],
 ];

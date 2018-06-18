@@ -21,50 +21,66 @@ class DropUsersEntityTable extends AbstractMigration {
 			'language' => 'text',
 			'banned' => 'text',
 			'admin' => 'text',
-			'last_action' => 'integer',
 			'prev_last_action' => 'integer',
 			'last_login' => 'integer',
 			'prev_last_login' => 'integer',
 		];
+		$col_names = "'" . implode("', '", array_keys($cols)) . "'";
 				
-		$users_query = "SELECT * FROM {$prefix}users_entity LIMIT 25";
+		$users_query = "SELECT * FROM {$prefix}users_entity LIMIT 100";
 		while ($rows = $this->fetchAll($users_query)) {
+			$guids = [];
 			foreach ($rows as $row) {
+				$guids[] = $row['guid'];
+			}
+			
+			$guids = implode(',', $guids);
+			
+			// remove existing metadata... attributes are more important
+			$this->execute("
+				DELETE FROM {$prefix}metadata
+				WHERE entity_guid IN ({$guids}) AND
+				name IN ({$col_names})
+			");
+			
+			$new_metadata_rows = [];
+			
+			foreach ($rows as $row) {
+				
+				// special column last_action goes to last_action in entities table
+				$this->execute("
+					UPDATE {$prefix}entities SET last_action = {$row['last_action']}
+					WHERE guid = {$row['guid']}
+				");
+				
 				foreach ($cols as $col => $type) {
-					if ($col == 'last_action') {
-						// special column last_action goes to last_action in entities table
-						$this->execute("
-							UPDATE {$prefix}entities SET last_action = {$row['last_action']}
-							WHERE guid = {$row['guid']}
-						");
+					$value = $row[$col];
+					if (is_null($value) || $value === '') {
 						continue;
 					}
 					
-					// remove existing metadata... attributes are more important
-					$this->execute("
-						DELETE FROM {$prefix}metadata
-						WHERE entity_guid = {$row['guid']} AND
-						name = '{$col}'
-					");
-					
-					$this->insert('metadata', [
+					$new_metadata_rows[] = [
 						'entity_guid' => $row['guid'],
 						'name' => $col,
-						'value' => $row[$col],
+						'value' => $value,
 						'value_type' => $type,
 						'owner_guid' => 0,
 						'access_id' => 2,
 						'time_created' => time(),
 						'enabled' => 'yes',
-					]);
+					];
 				}
-				
-				// remove from users so it does not get processed again in the next while loop
-				$this->execute("
-					DELETE FROM {$prefix}users_entity
-					WHERE guid = {$row['guid']}
-				");
 			}
+			
+			if (!empty($new_metadata_rows)) {
+				$this->insert('metadata', $new_metadata_rows);
+			}
+			
+			// remove from users so it does not get processed again in the next while loop
+			$this->execute("
+				DELETE FROM {$prefix}users_entity
+				WHERE guid IN ({$guids})
+			");
 		}
 		
 		// all data migrated, so drop the table

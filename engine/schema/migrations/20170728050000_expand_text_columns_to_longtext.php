@@ -7,13 +7,8 @@ class ExpandTextColumnsToLongtext extends AbstractMigration {
 
 	// Columns that change from text to longtext
 	private $text_to_longtext = [
-		'annotations' => ['value'],
 		'config' => ['value'],
-		'groups_entity' => ['description'],
-		'metadata' => ['value'],
-		'objects_entity' => ['description'],
 		'private_settings' => ['value'],
-		'sites_entity' => ['description'],
 	];
 
 	/**

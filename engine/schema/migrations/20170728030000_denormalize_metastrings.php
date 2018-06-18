@@ -1,5 +1,6 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 class DenormalizeMetastrings extends AbstractMigration {
@@ -33,6 +34,7 @@ class DenormalizeMetastrings extends AbstractMigration {
 				$table->addColumn('value', 'text', [
 					'null' => false,
 					'after' => 'entity_guid',
+					'limit' => MysqlAdapter::TEXT_LONG,
 				]);
 			}
 
