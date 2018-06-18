@@ -18,7 +18,6 @@ use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
-use Elgg\Integration\OrderByClauseTest;
 use Elgg\UnitTestCase;
 
 /**
@@ -890,6 +889,125 @@ class QueryOptionsTest extends UnitTestCase {
 	public function testNormalizesPrivateSettingOptionsOnMultipleRuns() {
 
 		$options = $this->options->normalizeOptions([
+			'private_setting_name_value_pair' => [
+				'status' => 'draft',
+				'category' => ['foo', 'bar'],
+			],
+		]);
+
+		$this->assertEquals($options, $this->options->normalizeOptions($options));
+	}
+
+	public function testNormalizesPrivateSettingOptionsFromSingularsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_name' => 'status',
+			'private_setting_value' => 'draft',
+			'private_setting_name_prefix' => 'prefixed:',
+		]);
+
+		$this->assertEquals(1, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+
+	}
+
+	public function testNormalizesPrivateSettingOptionsFromPluralsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_names' => 'status',
+			'private_setting_values' => 'draft',
+			'private_setting_name_prefix' => 'prefixed:',
+		]);
+
+		$this->assertEquals(1, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+	}
+
+	public function testNormalizesPrivateSettingOptionsForMultiplePairsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'guid' => 1,
+			'private_setting_name_prefix' => 'prefixed:',
+			'private_setting_name_value_pairs' => [
+				'status' => 'draft',
+				'category' => ['foo', 'bar'],
+				[
+					'name' => 'priority',
+					'value' => ['100', '200'],
+					'operand' => '!=',
+					'case_sensitive' => true,
+				],
+			],
+		]);
+
+		$this->assertEquals(3, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertEquals([1], $pair->entity_guids);
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:category'], $pair->names);
+		$this->assertEquals(['foo', 'bar'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertEquals([1], $pair->entity_guids);
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:priority'], $pair->names);
+		$this->assertEquals(['100', '200'], $pair->values);
+		$this->assertEquals('!=', $pair->comparison);
+		$this->assertEquals([1], $pair->entity_guids);
+	}
+
+	public function testNormalizesPrivateSettingOptionsForMultipleMixedPairsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_name_prefix' => 'prefixed:',
+			'private_setting_name_value_pairs' => [
+				'status' => 'draft',
+				new PrivateSettingWhereClause(),
+			],
+		]);
+
+		$this->assertEquals(2, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(null, $pair->ids);
+		$this->assertEquals(null, $pair->names);
+		$this->assertEquals(null, $pair->values);
+	}
+
+	public function testNormalizesPrivateSettingOptionsOnMultipleRunsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_name_prefix' => 'prefixed:',
 			'private_setting_name_value_pair' => [
 				'status' => 'draft',
 				'category' => ['foo', 'bar'],
