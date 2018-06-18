@@ -319,6 +319,14 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertTrue($this->svc->removeExpiredTokens(time()));
 	}
+	
+	function testRemoveAllHashes() {
+		$this->dbMock->expects($this->once())
+				->method('deleteData')
+				->will($this->returnCallback([$this, 'mock_deleteAll']));
+		
+		$this->svc->removeAllHashes($this->user123);
+	}
 
 	// mock \ElggUser which will return the GUID on ->guid reads
 	function getMockElggUser($guid) {

@@ -548,4 +548,17 @@ class ElggUser extends \ElggEntity
 
 		parent::invalidateCache();
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function delete($recursive = true) {
+		$result = parent::delete($recursive);
+		if ($result) {
+			// cleanup remember me cookie records
+			_elgg_services()->persistentLogin->removeAllHashes($this);
+		}
+		
+		return $result;
+	}
 }
