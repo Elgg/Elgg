@@ -476,17 +476,6 @@ trait LegacyQueryOptionsAdapter {
 
 		$options = self::normalizePluralOptions($options, $singulars);
 
-		if (isset($options['private_setting_name_prefix'])) {
-			$prefix = $options['private_setting_name_prefix'];
-			unset($options['private_setting_name_prefix']);
-
-			if (is_array($options['private_setting_names'])) {
-				$options['private_setting_names'] = array_map(function ($el) use ($prefix) {
-					return "$prefix$el";
-				}, $options['private_setting_names']);
-			}
-		}
-
 		$options = $this->normalizePairedOptions('private_setting', $options);
 
 		foreach ($options['private_setting_name_value_pairs'] as $key => $pair) {
@@ -498,6 +487,12 @@ trait LegacyQueryOptionsAdapter {
 		}
 
 		$options['private_setting_name_value_pairs'] = $this->removeKeyPrefix('private_setting_', $options['private_setting_name_value_pairs']);
+
+		$prefix = null;
+		if (isset($options['private_setting_name_prefix'])) {
+			$prefix = $options['private_setting_name_prefix'];
+			unset($options['private_setting_name_prefix']);
+		}
 
 		$defaults = [
 			'name' => null,
@@ -516,10 +511,15 @@ trait LegacyQueryOptionsAdapter {
 
 			$pair = array_merge($defaults, $pair);
 
+			$names = (array) elgg_extract('name', $pair);
+			$names = array_map(function($name) use ($prefix) {
+				return $prefix ? "$prefix$name" : $name;
+			}, $names);
+
 			$clause = new PrivateSettingWhereClause();
 			$clause->ids = (array) $pair['ids'];
 			$clause->entity_guids = (array) $pair['entity_guids'];
-			$clause->names = (array) $pair['name'];
+			$clause->names = $names;
 			$clause->values = (array) $pair['value'];
 			$clause->comparison = $pair['comparison'];
 			$clause->value_type = $pair['type'];
