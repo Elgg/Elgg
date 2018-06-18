@@ -1,4 +1,5 @@
 <?php
+elgg_deprecated_notice('The view blog/imprint/status is no longer used', '3.0');
 
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggBlog) {

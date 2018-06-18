@@ -20,8 +20,6 @@ function blog_init() {
 		'href' => elgg_generate_url('collection:object:blog:all'),
 	]);
 
-	elgg_extend_view('object/elements/imprint/contents', 'blog/imprint/status');
-
 	// notifications
 	elgg_register_notification_event('object', 'blog', ['publish']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:blog', 'blog_prepare_notification');
