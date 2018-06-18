@@ -1168,15 +1168,17 @@ function groups_prepare_form_vars($group = null) {
 
 	// handle tool options
 	$entity = ($group instanceof \ElggGroup) ? $group : null;
-	$tools = elgg_get_group_tool_options($entity);
-	foreach ($tools as $group_option) {
-		$option_name = $group_option->name . "_enable";
+	$tools = elgg()->group_tools->group($entity);
 
-		$enabled = $group_option->default_on;
+	foreach ($tools as $tool) {
 		if ($entity) {
-			$enabled = $entity->isToolEnabled($group_option->name);
+			$enabled = $entity->isToolEnabled($tool->name);
+		} else {
+			$enabled = $tool->isEnabledByDefault();
 		}
-		$values[$option_name] = $enabled ? 'yes' : 'no';
+
+		$prop_name = $tool->mapMetadataName();
+		$values[$prop_name] = $enabled ? 'yes' : 'no';
 	}
 
 	// get any sticky form settings

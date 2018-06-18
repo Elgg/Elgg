@@ -33,8 +33,7 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page', 'pages_prepare_notification');
 
 	// add to groups
-	add_group_tool_option('pages', null, true);
-	elgg_extend_view('groups/tool_latest', 'pages/group_module');
+	elgg()->group_tools->register('pages');
 	
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below

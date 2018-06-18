@@ -1,6 +1,7 @@
 <?php
 namespace Elgg;
 
+use Elgg\Collections\Collection;
 use Elgg\Config\DatarootSettingMigrator;
 use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Database\ConfigTable;
@@ -50,7 +51,6 @@ use Elgg\Project\Paths;
  * @property mixed         $embed_tab
  * @property string        $exception_include
  * @property string[]      $group
- * @property array         $group_tool_options
  * @property bool          $i18n_loaded_from_cache
  * @property array         $icon_sizes
  * @property string        $image_processor
@@ -384,6 +384,12 @@ class Config {
 	 * @return mixed null if does not exist
 	 */
 	public function __get($name) {
+		switch ($name) {
+			case 'group_tool_options':
+				elgg_deprecated_notice("'$name' config option is no longer in use. Use elgg()->group_tools->all()", '3.0');
+				return elgg()->group_tools->all();
+		}
+
 		if (isset($this->values[$name])) {
 			return $this->values[$name];
 		}

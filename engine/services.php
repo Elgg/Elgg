@@ -25,6 +25,7 @@ return [
 	'db' => new PhpDiResolver(Database::class, 'publicDb'),
 	'events' => new PhpDiResolver(EventsService::class, 'events'),
 	'gatekeeper' => new PhpDiResolver(Gatekeeper::class, 'gatekeeper'),
+	'group_tools' => new PhpDiResolver(\Elgg\Groups\Tools::class, 'group_tools'),
 	'html_formatter' => new PhpDiResolver(HtmlFormatter::class, 'html_formatter'),
 	'hooks' => new PhpDiResolver(PluginHooksService::class, 'hooks'),
 	'logger' => new PhpDiResolver(Logger::class, 'logger'),

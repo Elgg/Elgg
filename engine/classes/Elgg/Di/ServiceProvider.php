@@ -14,6 +14,7 @@ use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Groups\Tools;
 use Elgg\Invoker;
 use Elgg\Logger;
 use Elgg\Project\Paths;
@@ -69,6 +70,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggDiskFilestore                              $filestore
  * @property-read \Elgg\FormsService                              $forms
  * @property-read \Elgg\Gatekeeper                                $gatekeeper
+ * @property-read \Elgg\Groups\Tools                              $group_tools
  * @property-read \Elgg\HandlersService                           $handlers
  * @property-read \Elgg\Security\HmacFactory                      $hmac
  * @property-read \Elgg\Views\HtmlFormatter                       $html_formatter
@@ -394,6 +396,10 @@ class ServiceProvider extends DiContainer {
 			);
 		});
 
+		$this->setFactory('group_tools', function(ServiceProvider $c) {
+			return new Tools($c->hooks);
+		});
+		
 		$this->setClassName('handlers', \Elgg\HandlersService::class);
 
 		$this->setFactory('hmac', function(ServiceProvider $c) {

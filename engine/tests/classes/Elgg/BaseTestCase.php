@@ -87,7 +87,6 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 			'profile_files' => [],
 			'group' => [],
-			'group_tool_options' => [],
 
 			'minusername' => 10,
 			'profile_custom_fields' => [],

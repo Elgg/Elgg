@@ -30,8 +30,7 @@ function blog_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
 	// Add group option
-	add_group_tool_option('blog', null, true);
-	elgg_extend_view('groups/tool_latest', 'blog/group_module');
+	elgg()->group_tools->register('blog');
 
 	// archive menu
 	elgg_register_plugin_hook_handler('register', 'menu:blog_archive', 'blog_archive_menu_setup');

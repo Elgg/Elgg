@@ -33,8 +33,7 @@ function bookmarks_init() {
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'bookmarks_ecml_views_hook');
 
 	// Groups
-	add_group_tool_option('bookmarks', null, true);
-	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
+	elgg()->group_tools->register('bookmarks');
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:bookmarks', 'Elgg\Values::getTrue');

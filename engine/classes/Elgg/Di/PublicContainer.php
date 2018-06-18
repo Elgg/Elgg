@@ -7,6 +7,7 @@ use Elgg\Application\Database;
 use Elgg\Config;
 use Elgg\EventsService;
 use Elgg\Gatekeeper;
+use Elgg\Groups\Tools;
 use Elgg\I18n\Translator;
 use Elgg\Logger;
 use Elgg\Menu\Service;
@@ -27,6 +28,7 @@ use ElggSession;
  * @property-read Database              $db              Public database
  * @property-read EventsService         $events          Event service
  * @property-read Gatekeeper            $gatekeeper      Gatekeeper
+ * @property-read Tools                 $group_tools     Group Tools
  * @property-read HtmlFormatter         $html_formatter  HTML formatter
  * @property-read PluginHooksService    $hooks           Hooks service
  * @property-read Logger                $logger          Logger
