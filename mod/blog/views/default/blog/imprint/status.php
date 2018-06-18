@@ -1,11 +1,12 @@
 <?php
+elgg_deprecated_notice('The view blog/imprint/status is no longer used', '3.0');
 
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggBlog) {
 	return;
 }
 
-if ($entity->status == 'published') {
+if ($entity->status == 'published' || empty($entity->status)) {
 	return;
 }
 $icon = elgg_view_icon('warning');
