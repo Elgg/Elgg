@@ -1167,12 +1167,15 @@ function groups_prepare_form_vars($group = null) {
 	}
 
 	// handle tool options
-	$entity = ($group instanceof \ElggGroup) ? $group : null;
-	$tools = elgg()->group_tools->group($entity);
+	if ($group instanceof ElggGroup) {
+		$tools = elgg()->group_tools->group($group);
+	} else {
+		$tools = elgg()->group_tools->all();
+	}
 
 	foreach ($tools as $tool) {
-		if ($entity) {
-			$enabled = $entity->isToolEnabled($tool->name);
+		if ($group instanceof ElggGroup) {
+			$enabled = $group->isToolEnabled($tool->name);
 		} else {
 			$enabled = $tool->isEnabledByDefault();
 		}
