@@ -16,8 +16,6 @@ function discussion_init() {
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
-	elgg_extend_view('object/elements/imprint/contents', 'discussion/imprint/status');
-
 	// add the forum tool option
 	elgg()->group_tools->register('forum');
 
