@@ -36,7 +36,12 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 	 * @return mixed The formatted record
 	 */
 	public function format(array $record) {
-
+		
+		if (elgg_get_viewtype() !== 'default') {
+			// prevent 'view not found' deadloops in other viewtypes (eg failsafe)
+			return parent::format($record);
+		}
+		
 		$context = elgg_extract('context', $record, []);
 		$exception = elgg_extract('exception', $context);
 		
