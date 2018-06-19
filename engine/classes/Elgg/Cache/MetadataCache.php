@@ -1,11 +1,13 @@
 <?php
 namespace Elgg\Cache;
 
+use Elgg\Cacheable;
+use Elgg\Database\Clauses\GroupByClause;
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\QueryOptions;
 use Elgg\Values;
 use ElggCache;
 use ElggMetadata;
-use Elgg\Database\Clauses\GroupByClause;
 
 /**
  * In memory cache of known metadata values stored by entity.
@@ -13,6 +15,8 @@ use Elgg\Database\Clauses\GroupByClause;
  * @access private
  */
 class MetadataCache {
+
+	use Cacheable;
 
 	/**
 	 * @var ElggCache
@@ -82,6 +86,52 @@ class MetadataCache {
 	}
 
 	/**
+	 * Cache by metadata name
+	 *
+	 * @param int         $entity_guid Entity guid
+	 * @param string      $name        Metadata name
+	 * @param \stdClass[] $rows        Metadata rows
+	 *
+	 * @return void
+	 */
+	public function addSingle($entity_guid, $name, array $rows) {
+
+		$this->clearSingle($entity_guid, $name);
+
+		$cached_values = $this->cache->load($entity_guid);
+		if (!$cached_values) {
+			$cached_values = [];
+		}
+
+		$cached_values = array_merge($cached_values, $rows);
+
+		$this->cache->save($entity_guid, $cached_values);
+	}
+
+	/**
+	 * Clear by metadata name
+	 *
+	 * @param int    $entity_guid Entity guid
+	 * @param string $name        Metadata name
+	 * @return void
+	 */
+	public function clearSingle($entity_guid, $name) {
+		$cached_values = $this->cache->load($entity_guid);
+		if (!$cached_values) {
+			return;
+		}
+
+		foreach ($cached_values as $index => $metadata) {
+			if ($metadata->name === $name) {
+				unset($cached_values[$index]);
+			}
+		}
+
+
+		$this->cache->save($entity_guid, $cached_values);
+	}
+
+	/**
 	 * Get the metadata for a particular name. Note, this can return an array of values.
 	 *
 	 * Warning: You should always call isLoaded() beforehand to verify that this
@@ -115,7 +165,6 @@ class MetadataCache {
 		}
 
 		return count($values) > 1 ? $values : $values[0];
-
 	}
 
 	/**
@@ -162,9 +211,7 @@ class MetadataCache {
 	 * @return void
 	 */
 	public function clear($entity_guid) {
-		$this->invalidateByOptions([
-			'guid' => $entity_guid,
-		]);
+		$this->cache->delete($entity_guid);
 	}
 
 	/**
@@ -190,18 +237,31 @@ class MetadataCache {
 	/**
 	 * Returns loaded entity metadata
 	 *
-	 * @param int $entity_guid Entity guid
+	 * @param int    $entity_guid Entity guid
+	 * @param string $name        Metadata name
+	 *                            If set, will only return metadata with the given name
 	 *
 	 * @return \stdClass[]|null
 	 */
-	public function getEntityMetadata($entity_guid) {
+	public function getEntityMetadata($entity_guid, $name = null) {
 		$entity_guid = (int) $entity_guid;
-		$metadata =	$this->populateFromEntities($entity_guid);
-		if (!isset($metadata)) {
+		$cache = $this->populateFromEntities($entity_guid);
+		if (empty($cache)) {
 			return null;
 		}
 
-		return elgg_extract($entity_guid, $metadata);
+		$metadata = elgg_extract($entity_guid, $cache);
+		if (empty($metadata)) {
+			return null;
+		}
+
+		if (!isset($name)) {
+			return $metadata;
+		}
+
+		return array_filter($metadata, function($row) use ($name) {
+			return $row->name === $name;
+		});
 	}
 
 	/**
@@ -212,11 +272,27 @@ class MetadataCache {
 	 * @return void
 	 */
 	public function invalidateByOptions(array $options) {
-		if (empty($options['guid'])) {
+		$options = new QueryOptions($options);
+
+		if (empty($options->guids)) {
 			_elgg_services()->sessionCache->clear();
 			_elgg_services()->dataCache->clear();
-		} else {
-			_elgg_services()->entityTable->invalidateCache($options['guid']);
+			return;
+		}
+
+		$guids = $options->guids;
+		$pairs = $options->metadata_name_value_pairs;
+
+		foreach ($guids as $guid) {
+			if (empty($pairs)) {
+				$this->clear($guid);
+			} else {
+				foreach ($pairs as $pair) {
+					foreach ($pair->names as $name) {
+						$this->clearSingle($guid, $name);
+					}
+				}
+			}
 		}
 	}
 

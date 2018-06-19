@@ -31,6 +31,7 @@ function elgg_delete_metadata_by_id($id) {
 	if (!$metadata) {
 		return false;
 	}
+
 	return $metadata->delete();
 }
 

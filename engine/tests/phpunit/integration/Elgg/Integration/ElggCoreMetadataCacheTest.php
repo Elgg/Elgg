@@ -42,7 +42,6 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 
 		$this->assertTrue($this->cache->isLoaded(1));
 		$this->assertTrue($this->cache->isLoaded(2));
-		$this->assertFalse($this->cache->isLoaded(3));
 	}
 
 	public function testLoad() {
@@ -95,13 +94,13 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		$object->delete();
 	}
 
-	public function testWritesInvalidate() {
+	public function testDeleteInvalidatesCache() {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		$guid1 = $object1->guid;
 		$guid2 = $object2->guid;
-		
-		// elgg_delete_metadata
+
+		// Deleting by entity guid should invalidate cache for that entity
 		$this->cache->inject($guid1, ['foo' => 'bar']);
 		$this->cache->inject($guid2, ['bing' => 'bar']);
 		elgg_delete_metadata(array(
@@ -110,30 +109,52 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		$this->assertFalse($this->cache->isLoaded($guid1));
 		$this->assertTrue($this->cache->isLoaded($guid2));
 
+		// Deleting by multiple guids should invalidate cache for those entities
 		$this->cache->inject($guid1, ['foo' => 'bar']);
 		$this->cache->inject($guid2, ['bing' => 'bar']);
-		elgg_delete_metadata(['guids' => [$guid1, $guid2]]);
+		elgg_delete_metadata([
+			'guids' => [$guid1, $guid2],
+		]);
 		$this->assertFalse($this->cache->isLoaded($guid1));
 		$this->assertFalse($this->cache->isLoaded($guid2));
 
-		// setMetadata
-		$this->cache->inject($guid1, ['foo' => 'bar']);
-		$object1->setMetadata('test_metadata', 'test_metadata');
-		$this->assertFalse($this->cache->isLoaded($guid1));
+		// Deleting with specific metadata names should only invalidate cache for those metadata names
+		$this->cache->inject($guid1, [
+			'foo' => 'bar',
+			'unfoo' => 'unbar',
+		]);
 
-		// deleteMetadata
-		$this->cache->inject($guid1, ['foo' => 'bar']);
-		$object1->deleteMetadata('test_metadata');
-		$this->assertFalse($this->cache->isLoaded($guid1));
+		$this->cache->inject($guid2, [
+			'bing' => 'bar',
+			'unbing' => 'unbar',
+		]);
 
-		// create_metadata
-		$this->cache->inject($guid1, ['foo' => 'bar']);
-		$metadata = new \ElggMetadata();
-		$metadata->entity_guid = $guid1;
-		$metadata->name = 'foo';
-		$metadata->value = 'bar';
-		$metadata->save();
-		$this->assertFalse($this->cache->isLoaded($guid1));
+		elgg_delete_metadata([
+			'guids' => [$guid1, $guid2],
+			'metadata_names' => ['foo', 'bing'],
+		]);
+
+		$this->assertTrue($this->cache->isLoaded($guid1));
+		$this->assertTrue($this->cache->isLoaded($guid2));
+
+		$index = function(array $values) {
+			$return = [];
+			foreach ($values as $value) {
+				$name = $value->name;
+				$return[$name] = $value->value;
+			}
+
+			return $return;
+		};
+
+		$cache1 = $index($this->cache->getCache()->load($guid1));
+		$cache2 = $index($this->cache->getCache()->load($guid2));
+
+		$this->assertNull(elgg_extract('foo', $cache1));
+		$this->assertEquals('unbar', elgg_extract('unfoo', $cache1));
+
+		$this->assertNull(elgg_extract('bing', $cache2));
+		$this->assertEquals('unbar', elgg_extract('unbing', $cache2));
 
 		$object1->delete();
 		$object2->delete();
