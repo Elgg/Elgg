@@ -1,11 +1,14 @@
 <?php
 namespace Elgg\Database;
 
+use DatabaseException;
 use Elgg\Database;
 use Elgg\Database\Clauses\GroupByClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\EventsService;
+use ElggRelationship;
+use InvalidArgumentException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -60,7 +63,7 @@ class RelationshipsTable {
 	 *
 	 * @param int $id The relationship ID
 	 *
-	 * @return \ElggRelationship|false False if not found
+	 * @return ElggRelationship|false False if not found
 	 */
 	public function get($id) {
 		$row = $this->getRow($id);
@@ -68,7 +71,7 @@ class RelationshipsTable {
 			return false;
 		}
 
-		return new \ElggRelationship($row);
+		return new ElggRelationship($row);
 	}
 
 	/**
@@ -80,35 +83,45 @@ class RelationshipsTable {
 	 * @access private
 	 */
 	public function getRow($id) {
-		$sql = "SELECT * FROM {$this->db->prefix}entity_relationships WHERE id = :id";
-		$params = [
-			':id' => (int) $id,
-		];
-		return $this->db->getDataRow($sql, null, $params);
+		$qb = Select::fromTable('entity_relationships');
+		$qb->select('*')
+			->where($qb->compare('id', '=', $id, ELGG_VALUE_INTEGER));
+
+		return $this->db->getDataRow($qb);
 	}
 
 	/**
 	 * Delete a relationship by its ID
 	 *
-	 * @param int  $id         Relationship ID
-	 * @param bool $call_event Call the delete event before deleting
+	 * @param ElggRelationship $relationship Relationship
 	 *
 	 * @return bool
 	 */
-	public function delete($id, $call_event = true) {
-		$id = (int) $id;
+	public function delete(ElggRelationship $relationship) {
 
-		$relationship = $this->get($id);
-
-		if ($call_event && !$this->events->trigger('delete', 'relationship', $relationship)) {
+		if (!$relationship->id) {
 			return false;
 		}
 
-		$sql = "DELETE FROM {$this->db->prefix}entity_relationships WHERE id = :id";
-		$params = [
-			':id' => $id,
-		];
-		return (bool) $this->db->deleteData($sql, $params);
+		if (!$this->events->triggerBefore('delete', 'relationship', $relationship)) {
+			return false;
+		}
+
+		if (!$this->events->triggerDeprecated('delete', 'relationship', $relationship)) {
+			return false;
+		}
+
+		$qb = Delete::fromTable('entity_relationships');
+		$qb->where($qb->compare('id', '=', $relationship->id, ELGG_VALUE_INTEGER));
+
+		$result = (bool) $this->db->deleteData($qb);
+
+		if ($result) {
+			$this->events->triggerAfter('delete', 'relationship', $relationship);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -117,53 +130,61 @@ class RelationshipsTable {
 	 * This function lets you make the statement "$guid_one is a $relationship of $guid_two". In the statement,
 	 * $guid_one is the subject of the relationship, $guid_two is the target, and $relationship is the type.
 	 *
-	 * @param int    $guid_one     GUID of the subject entity of the relationship
-	 * @param string $relationship Type of the relationship
-	 * @param int    $guid_two     GUID of the target entity of the relationship
-	 * @param bool   $return_id    Return the ID instead of bool?
+	 * @param ElggRelationship $relationship Relationship
 	 *
 	 * @return bool|int
-	 * @throws \InvalidArgumentException
+	 * @throws DatabaseException
 	 */
-	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
-		if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
-			$msg = "relationship name cannot be longer than " . \ElggRelationship::RELATIONSHIP_LIMIT;
-			throw new \InvalidArgumentException($msg);
+	public function add(ElggRelationship $relationship) {
+		if (strlen($relationship->relationship) > ElggRelationship::RELATIONSHIP_LIMIT) {
+			$msg = "relationship name cannot be longer than " . ElggRelationship::RELATIONSHIP_LIMIT;
+			throw new InvalidArgumentException($msg);
 		}
+
+		$guid_one = $relationship->guid_one;
+		$name = $relationship->relationship;
+		$guid_two = $relationship->guid_two;
 
 		// Check for duplicates
-		// note: escape $relationship after this call, we don't want to double-escape
-		if ($this->check($guid_one, $relationship, $guid_two)) {
-			return false;
-		}
-		
-		$sql = "
-			INSERT INTO {$this->db->prefix}entity_relationships
-			       (guid_one, relationship, guid_two, time_created)
-			VALUES (:guid1, :relationship, :guid2, :time)
-				ON DUPLICATE KEY UPDATE time_created = :time
-		";
-		$params = [
-			':guid1' => (int) $guid_one,
-			':guid2' => (int) $guid_two,
-			':relationship' => $relationship,
-			':time' => $this->getCurrentTime()->getTimestamp(),
-		];
-
-		$id = $this->db->insertData($sql, $params);
-		if (!$id) {
+		// note: escape $name after this call, we don't want to double-escape
+		if ($relationship->id || $this->check($guid_one, $name, $guid_two)) {
 			return false;
 		}
 
-		$obj = $this->get($id);
-
-		$result = $this->events->trigger('create', 'relationship', $obj);
-		if (!$result) {
-			$this->delete($id, false);
+		if (!$this->events->triggerBefore('create', 'relationship', $relationship)) {
 			return false;
 		}
 
-		return $return_id ? $obj->id : true;
+		$created = $relationship->time_created ? : $this->getCurrentTime()->getTimestamp();
+
+		try {
+			$qb = Insert::intoTable('entity_relationships');
+			$qb->values([
+				'guid_one' => $qb->param($guid_one, ELGG_VALUE_INTEGER),
+				'relationship' => $qb->param($name, ELGG_VALUE_STRING),
+				'guid_two' => $qb->param($guid_two, ELGG_VALUE_INTEGER),
+				'time_created' => $qb->param($created, ELGG_VALUE_INTEGER),
+			]);
+
+			$id = $this->db->insertData($qb);
+			if (!$id) {
+				throw new DatabaseException();
+			}
+		} catch (DatabaseException $ex) {
+			return false;
+		}
+
+		$relationship->id = $id;
+		$relationship->time_created = $created;
+
+		if (!$this->events->triggerDeprecated('create', 'relationship', $relationship)) {
+			$relationship->delete();
+			return false;
+		}
+
+		$this->events->triggerAfter('create', 'relationship', $relationship);
+
+		return $id;
 	}
 
 	/**
@@ -175,27 +196,27 @@ class RelationshipsTable {
 	 * @param string $relationship Type of the relationship
 	 * @param int    $guid_two     GUID of the target entity of the relationship
 	 *
-	 * @return \ElggRelationship|false Depending on success
+	 * @return ElggRelationship|false Depending on success
 	 */
 	public function check($guid_one, $relationship, $guid_two) {
-		$query = "
-			SELECT * FROM {$this->db->prefix}entity_relationships
-			WHERE guid_one = :guid1
-			  AND relationship = :relationship
-			  AND guid_two = :guid2
-			LIMIT 1
-		";
-		$params = [
-			':guid1' => (int) $guid_one,
-			':guid2' => (int) $guid_two,
-			':relationship' => $relationship,
-		];
-		$row = $this->rowToElggRelationship($this->db->getDataRow($query, null, $params));
-		if ($row) {
-			return $row;
+		$qb = Select::fromTable('entity_relationships');
+		$qb->select('*')
+			->where($qb->merge([
+				$qb->compare('guid_one', '=', $guid_one, ELGG_VALUE_INTEGER),
+				$qb->compare('relationship', '=', $relationship, ELGG_VALUE_STRING),
+				$qb->compare('guid_two', '=', $guid_two, ELGG_VALUE_INTEGER),
+			]))
+			->setMaxResults(1);
+
+		$callback = [$this, 'rowToElggRelationship'];
+
+		$result = $this->db->getDataRow($qb, $callback);
+
+		if (empty($result)) {
+			return false;
 		}
 
-		return false;
+		return $result;
 	}
 
 	/**
@@ -210,12 +231,12 @@ class RelationshipsTable {
 	 * @return bool
 	 */
 	public function remove($guid_one, $relationship, $guid_two) {
-		$obj = $this->check($guid_one, $relationship, $guid_two);
-		if (!$obj) {
+		$rel = $this->check($guid_one, $relationship, $guid_two);
+		if (!$rel) {
 			return false;
 		}
 
-		return $this->delete($obj->id);
+		return $rel->delete();
 	}
 
 	/**
@@ -272,7 +293,7 @@ class RelationshipsTable {
 	 * @param bool $inverse_relationship Is $guid the target of the deleted relationships? By default $guid is
 	 *                                   the subject of the relationships.
 	 *
-	 * @return \ElggRelationship[]
+	 * @return ElggRelationship[]
 	 */
 	public function getAll($guid, $inverse_relationship = false) {
 		$params[':guid'] = (int) $guid;
@@ -306,12 +327,12 @@ class RelationshipsTable {
 	 *
 	 * @param \stdClass $row Database row from the relationship table
 	 *
-	 * @return \ElggRelationship|false
+	 * @return ElggRelationship|false
 	 * @access private
 	 */
 	public function rowToElggRelationship($row) {
 		if ($row instanceof \stdClass) {
-			return new \ElggRelationship($row);
+			return new ElggRelationship($row);
 		}
 
 		return false;

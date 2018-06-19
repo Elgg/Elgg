@@ -142,7 +142,7 @@ Example:
 
     // Register the function myPlugin_handle_create_object() to handle the
     // create object event with priority 400.
-    elgg_register_event_handler('create', 'object', 'myPlugin_handle_create_object', 400);
+    elgg_register_event_handler('create:after', 'object', 'myPlugin_handle_create_object', 400);
 
 .. warning::
 

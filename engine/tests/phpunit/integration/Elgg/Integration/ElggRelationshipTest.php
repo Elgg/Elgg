@@ -8,6 +8,7 @@ use ElggObject;
 
 /**
  * @group IntegrationTests
+ * @group EntityRelationships
  */
 class ElggRelationshipTest extends LegacyIntegrationTestCase {
 
@@ -114,22 +115,10 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
 		$r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid);
 		$this->assertInstanceOf(\ElggRelationship::class, $r);
-		$old_id = $r->id;
 
 		// note - string because that's how it's returned when getting a new object
 		$r->guid_two = (string) $this->entity3->guid;
-		$new_id = $r->save();
-		$this->assertInternalType('integer', $new_id);
-		$this->assertNotEqual($new_id, $old_id);
-
-		$test_r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
-		$this->assertInstanceOf(\ElggRelationship::class, $test_r);
-		$this->assertIdentical($r->guid_one, $test_r->guid_one);
-		$this->assertIdentical($r->guid_two, $test_r->guid_two);
-		$this->assertIdentical($r->relationship, $test_r->relationship);
-
-		// the original shouldn't exist anymore
-		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
+		$this->assertFalse($r->save());
 	}
 
 	public function testRelationshipDelete() {
