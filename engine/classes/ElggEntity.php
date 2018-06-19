@@ -430,18 +430,35 @@ abstract class ElggEntity extends \ElggData implements
 			}
 		}
 
+		$rows = [];
+		if ($multiple) {
+			$rows = _elgg_services()->metadataCache->getEntityMetadata($this->guid, $name);
+		}
+
 		// create new metadata
 		foreach ($value as $value_tmp) {
-			$metadata = new ElggMetadata();
-			$metadata->entity_guid = $this->guid;
-			$metadata->name = $name;
-			$metadata->value_type = $value_type;
-			$metadata->value = $value_tmp;
+			$row = new \stdClass();
+			$row->entity_guid = $this->guid;
+			$row->name = $name;
+			$row->value_type = $value_type;
+			$row->value = $value_tmp;
+
+			$metadata = new ElggMetadata($row);
+
 			$md_id = _elgg_services()->metadataTable->create($metadata, $multiple);
 			if (!$md_id) {
 				return false;
 			}
+
+			$row->id = $metadata->id;
+
+			$rows[] = $metadata;
 		}
+
+		_elgg_services()->metadataCache->addSingle($this->guid, $name, $rows);
+
+		// Populate caches that rely on entity metadata, e.g. username cache
+		$this->cache();
 
 		return true;
 	}

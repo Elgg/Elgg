@@ -11,6 +11,7 @@ use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
+use Stash\Driver\FileSystem\NativeEncoder;
 
 /**
  * Base test case abstraction
@@ -301,12 +302,12 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 * {@inheritdoc}
 	 */
 	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
-		if ($expected instanceof \ElggData) {
-			$expected = $expected->toObject();
+		if ($expected instanceof \Serializable) {
+			$expected = serialize($expected);
 		}
 
-		if ($actual instanceof \ElggData) {
-			$actual = $actual->toObject();
+		if ($actual instanceof \Serializable) {
+			$actual = serialize($actual);
 		}
 
 		parent::assertEquals($expected, $actual, $message, $delta, $maxDepth, $canonicalize, $ignoreCase);

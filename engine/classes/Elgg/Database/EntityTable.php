@@ -648,6 +648,8 @@ class EntityTable {
 
 		_elgg_services()->events->triggerAfter('delete', $entity->type, $entity);
 
+		$entity->invalidateCache();
+
 		return true;
 	}
 

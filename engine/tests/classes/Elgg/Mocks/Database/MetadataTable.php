@@ -89,7 +89,7 @@ class MetadataTable extends DbMetadataTabe {
 	 */
 	public function getAll(array $options = array()) {
 		$guids = elgg_extract('guids', $options, (array) elgg_extract('guid', $options));
-		
+
 		$rows = [];
 		foreach ($this->rows as $id => $row) {
 			if (empty($guids) || in_array($row->entity_guid, $guids)) {

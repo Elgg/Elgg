@@ -186,6 +186,11 @@ class MetadataTable {
 	/**
 	 * Deletes metadata using its ID
 	 *
+	 * @see \ElggEntity::deleteMetadata()
+	 *
+	 * @warning Deleting single metadata using this method will not invalidate metadata cache for the entity
+	 *          Use ElggEntity::deleteMetadata() to clear caches
+	 *
 	 * @param ElggMetadata $metadata Metadata
 	 *
 	 * @return bool
@@ -204,10 +209,6 @@ class MetadataTable {
 		$qb->where($qb->compare('id', '=', $metadata->id, ELGG_VALUE_INTEGER));
 
 		$deleted = $this->db->deleteData($qb);
-
-		if ($deleted) {
-			$this->metadata_cache->clear($metadata->entity_guid);
-		}
 
 		return $deleted !== false;
 	}
@@ -289,8 +290,6 @@ class MetadataTable {
 		$metadata->time_created = $time_created;
 
 		if ($this->events->trigger('create', 'metadata', $metadata)) {
-			$this->metadata_cache->clear($metadata->entity_guid);
-
 			$this->events->triggerAfter('create', 'metadata', $metadata);
 
 			return $id;
@@ -333,8 +332,6 @@ class MetadataTable {
 		if ($result === false) {
 			return false;
 		}
-
-		$this->metadata_cache->clear($metadata->entity_guid);
 
 		$this->events->trigger('update', 'metadata', $metadata);
 		$this->events->triggerAfter('update', 'metadata', $metadata);
@@ -397,7 +394,8 @@ class MetadataTable {
 
 		$success = 0;
 		foreach ($metadata as $md) {
-			if ($md->delete()) {
+			/* @var $md ElggMetadata */
+			if ($this->delete($md)) {
 				$success++;
 			}
 		}

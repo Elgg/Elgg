@@ -73,7 +73,12 @@ class ElggMetadata extends ElggExtender {
 	 * @return bool
 	 */
 	public function delete() {
-		return _elgg_services()->metadataTable->delete($this);
+		if (_elgg_services()->metadataTable->delete($this)) {
+			_elgg_services()->metadataCache->clear($this->entity_guid);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
