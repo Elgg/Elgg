@@ -75,7 +75,11 @@ class AnnotationsTable {
 			return false;
 		}
 
-		if (!$this->events->trigger('delete', 'annotation', $annotation)) {
+		if (!$this->events->triggerBefore('delete', 'annotation', $annotation)) {
+			return false;
+		}
+
+		if (!$this->events->triggerDeprecated('delete', 'annotation', $annotation)) {
 			return false;
 		}
 
@@ -88,6 +92,8 @@ class AnnotationsTable {
 				'annotation_id' => $annotation->id,
 				'limit' => false,
 			]);
+
+			$this->events->triggerAfter('delete', 'annotation', $annotation);
 		}
 
 		return $deleted !== false;
@@ -115,7 +121,7 @@ class AnnotationsTable {
 		//	return false;
 		//}
 
-		if (!$this->events->trigger('annotate', $entity->getType(), $entity)) {
+		if (!$this->events->triggerDeprecated('annotate', $entity->getType(), $entity)) {
 			return false;
 		}
 
@@ -144,7 +150,7 @@ class AnnotationsTable {
 		$annotation->id = $result;
 		$annotation->time_created = $time_created;
 
-		if (!$this->events->trigger('create', 'annotation', $annotation)) {
+		if (!$this->events->triggerDeprecated('create', 'annotation', $annotation)) {
 			elgg_delete_annotation_by_id($result);
 
 			return false;
@@ -189,7 +195,7 @@ class AnnotationsTable {
 			return false;
 		}
 
-		$this->events->trigger('update', 'annotation', $annotation);
+		$this->events->triggerDeprecated('update', 'annotation', $annotation);
 		$this->events->triggerAfter('update', 'annotation', $annotation);
 
 		return $result;

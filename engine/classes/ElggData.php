@@ -16,6 +16,7 @@ abstract class ElggData implements CollectionItemInterface,
 								   ArrayAccess {
 
 	use \Elgg\TimeUsing;
+	use \Elgg\Loggable;
 
 	/**
 	 * The main attributes of an entity.
@@ -256,5 +257,41 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	public function unserialize($serialized) {
 		$this->attributes = unserialize($serialized);
+	}
+
+	/**
+	 * Resolve a magic constant to an actual access level
+	 *
+	 * @param int  $access_id  Access ID
+	 * @param null $owner_guid Owner guid
+	 *
+	 * @return int
+	 * @throws InvalidParameterException
+	 *
+	 * @internal
+	 * @access private
+	 */
+	protected function normalizeAccessId($access_id, $owner_guid = null) {
+		switch ($access_id) {
+			case ACCESS_DEFAULT :
+				throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
+
+			case ACCESS_FRIENDS :
+				$owner = get_entity($owner_guid);
+
+				$acl = false;
+				if ($owner instanceof ElggUser) {
+					$acl = $owner->getOwnedAccessCollection('friends');
+				}
+
+				if (!$acl) {
+					throw new InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+				}
+
+				return $acl->getId();
+
+			default :
+				return $access_id;
+		}
 	}
 }

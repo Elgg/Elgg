@@ -234,12 +234,10 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		$obj = new \ElggObject();
 		$obj->subtype = $this->getRandomSubtype();
 		$obj->save();
-		$obj->owner_guid = $obj->guid;
-		$obj->save();
 
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $obj->guid";
 		$r = get_data_row($q);
-		$this->assertEqual($obj->guid, $r->owner_guid);
+		$this->assertEqual($obj->owner_guid, $r->owner_guid);
 
 		$this->assertTrue($obj->delete(true));
 

@@ -196,7 +196,11 @@ class MetadataTable {
 			return false;
 		}
 
-		if (!_elgg_services()->events->trigger('delete', 'metadata', $metadata)) {
+		if (!_elgg_services()->events->triggerBefore('delete', 'metadata', $metadata)) {
+			return false;
+		}
+
+		if (!_elgg_services()->events->triggerDeprecated('delete', 'metadata', $metadata)) {
 			return false;
 		}
 
@@ -207,6 +211,8 @@ class MetadataTable {
 
 		if ($deleted) {
 			$this->metadata_cache->clear($metadata->entity_guid);
+
+			_elgg_services()->events->triggerAfter('delete', 'metadata', $metadata);
 		}
 
 		return $deleted !== false;
@@ -288,17 +294,17 @@ class MetadataTable {
 		$metadata->id = (int) $id;
 		$metadata->time_created = $time_created;
 
-		if ($this->events->trigger('create', 'metadata', $metadata)) {
-			$this->metadata_cache->clear($metadata->entity_guid);
-
-			$this->events->triggerAfter('create', 'metadata', $metadata);
-
-			return $id;
-		} else {
+		if (!$this->events->triggerDeprecated('create', 'metadata', $metadata)) {
 			$this->delete($metadata);
 
 			return false;
 		}
+
+		$this->metadata_cache->clear($metadata->entity_guid);
+
+		$this->events->triggerAfter('create', 'metadata', $metadata);
+
+		return $metadata->id;
 	}
 
 	/**
@@ -336,7 +342,7 @@ class MetadataTable {
 
 		$this->metadata_cache->clear($metadata->entity_guid);
 
-		$this->events->trigger('update', 'metadata', $metadata);
+		$this->events->triggerDeprecated('update', 'metadata', $metadata);
 		$this->events->triggerAfter('update', 'metadata', $metadata);
 
 		return true;

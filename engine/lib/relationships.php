@@ -25,7 +25,12 @@ function get_relationship($id) {
  * @return bool
  */
 function delete_relationship($id) {
-	return _elgg_services()->relationshipsTable->delete($id);
+	$relationship = _elgg_services()->relationshipsTable->get($id);
+	if (!$relationship) {
+		return false;
+	}
+
+	return $relationship->delete();
 
 }
 
@@ -43,7 +48,13 @@ function delete_relationship($id) {
  * @throws InvalidArgumentException
  */
 function add_entity_relationship($guid_one, $relationship, $guid_two) {
-	return _elgg_services()->relationshipsTable->add($guid_one, $relationship, $guid_two);
+	$rel = new ElggRelationship();
+
+	$rel->guid_one = $guid_one;
+	$rel->relationship = $relationship;
+	$rel->guid_two = $guid_two;
+
+	return $rel->save();
 }
 
 /**

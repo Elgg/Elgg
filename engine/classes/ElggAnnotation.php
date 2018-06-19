@@ -46,6 +46,8 @@ class ElggAnnotation extends \ElggExtender {
 			$this->owner_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 
+		$this->access_id = $this->normalizeAccessId($this->access_id, $this->owner_guid);
+
 		if ($this->id) {
 			return _elgg_services()->annotationsTable->update($this);
 		}

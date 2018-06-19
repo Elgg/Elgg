@@ -114,13 +114,19 @@ User events
 Relationship events
 ===================
 
-**create, relationship**
-    Triggered after a relationship has been created. Returning false deletes
-    the relationship that was just created.
+**create:before, relationship**
+    Triggered before a relationship is written to the database.
+	Return ``false`` to prevent the DB write.
 
-**delete, relationship**
-    Triggered before a relationship is deleted. Return false to prevent it
-    from being deleted.
+**create:after, relationship**
+    Triggered after a relationship is written to the database
+
+**delete:before, relationship**
+    Triggered before a relationship is deleted.
+    Return ``false`` to prevent it from being deleted.
+
+**delete:after, relationship**
+	Triggered after a relationship is deleted from the database.
 
 **join, group**
     Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.
@@ -131,21 +137,31 @@ Relationship events
 Entity events
 =============
 
-**create, <entity type>**
-    Triggered for user, group, object, and site entities after creation. Return false to delete entity.
+**create:before, <entity type>**
+	Triggered before entity is written to the database and attributes are validated.
+	Handlers can use this hook to alter entity attributes.
+	Handlers can return ``false`` to stop an entity from being written to the database.
 
-**update, <entity type>**
-    Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
-    The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
-    the entity was last saved.
+**create:after, <entity type>**
+	Triggered after an entity has been created.
+	Return from handlers is not honored.
+
+**update:before, <entity type>**
+	Triggered before updated entity properties have been written to the database.
+	Return ``false`` to prevent update.
+	The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
+	the entity was last saved.
 
 **update:after, <entity type>**
-    Triggered after an update for the user, group, object, and site entities.
-    The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
-    the entity was last saved.
+	Triggered after an update for the user, group, object, and site entities.
+	The entity method ``getOriginalAttributes()`` can be used to identify which attributes have changed since
+	the entity was last saved.
 
-**delete, <entity type>**
-    Triggered before entity deletion. Return false to prevent deletion.
+**delete:before, <entity type>**
+	Triggered before entity deletion. Return ``false`` to prevent deletion.
+
+**delete:after, <entity type>**
+	Triggered after the entity has been deleted.
 
 **disable, <entity type>**
     Triggered before the entity is disabled. Return false to prevent disabling.
@@ -162,15 +178,26 @@ Entity events
 Metadata events
 ===============
 
-**create, metadata**
-    Called after the metadata has been created. Return false to delete the
-    metadata that was just created.
+**create:before, metadata**
+    Called before metadata is written to the database.
+	Return ``false`` to prevent DB write.
 
-**update, metadata**
-    Called after the metadata has been updated. Return false to *delete the metadata.*
+**create:after, metadata**
+    Called after metadata is written to the database.
 
-**delete, metadata**
-    Called before metadata is deleted. Return false to prevent deletion.
+**update:before, metadata**
+    Called before updated metadata is written to the database.
+	Return ``false`` to prevent DB write.
+
+**update:after, metadata**
+	Called after metadata is written to the database.
+
+**delete:before, metadata**
+    Called before metadata is deleted from the database.
+    Return ``false`` to prevent deletion.
+
+**delete:after, metadata**
+	Called after metadata is deleted from the database.
 
 **enable, metadata**
 	Called when enabling metadata. Return false to prevent enabling.
@@ -181,19 +208,26 @@ Metadata events
 Annotation events
 =================
 
-**annotate, <entity type>**
-    Called before the annotation has been created. Return false to prevent
-    annotation of this entity.
+**create:before, annotation**
+    Called before annotation is written to the database.
+	Return ``false`` to prevent the DB write.
 
-**create, annotation**
-    Called after the annotation has been created. Return false to delete
-    the annotation.
+**create:after, annotation**
+    Called after annotation is written to the database.
 
-**update, annotation**
-    Called after the annotation has been updated. Return false to *delete the annotation.*
+**update:before, annotation**
+    Called before annotation is updated in the database.
+	Return ``false`` to prevent the DB write.
 
-**delete, annotation**
-    Called before annotation is deleted. Return false to prevent deletion.
+**update:after, annotation**
+	Called after annotation is updated in the database.
+
+**deleted:before, annotation**
+    Called before annotation is deleted the database.
+	Return ``false`` to prevent the deletion.
+
+**deleted:after, annotation**
+	Called after annotation is deleted from the database.
 
 **enable, annotation**
 	Called when enabling annotations. Return false to prevent enabling.

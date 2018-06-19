@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Relationship class.
  *
@@ -12,23 +13,29 @@
  * @property int    $time_created A UNIX timestamp of when the relationship was created (read-only, set on first save)
  */
 class ElggRelationship extends \ElggData {
-	// database column limit
+
+	/**
+	 * Database column length
+	 */
 	const RELATIONSHIP_LIMIT = 50;
 
 	/**
 	 * Create a relationship object
 	 *
-	 * @param \stdClass $row Database row
-	 * @throws InvalidArgumentException
+	 * @param stdClass $row Database row
 	 */
-	public function __construct(\stdClass $row) {
+	public function __construct(stdClass $row = null) {
 		$this->initializeAttributes();
 
-		foreach ((array) $row as $key => $value) {
-			$this->attributes[$key] = $value;
-		}
+		if ($row) {
+			foreach ((array) $row as $key => $value) {
+				if (in_array($key, ['id', 'guid_one', 'guid_two', 'time_created'])) {
+					$value = (int) $value;
+				}
 
-		$this->attributes['id'] = (int) $this->attributes['id'];
+				$this->attributes[$key] = $value;
+			}
+		}
 	}
 
 	/**
@@ -75,25 +82,10 @@ class ElggRelationship extends \ElggData {
 	/**
 	 * Save the relationship
 	 *
-	 * @return int the relationship ID
-	 * @throws IOException
+	 * @return int|false
 	 */
 	public function save() {
-		if ($this->id > 0) {
-			delete_relationship($this->id);
-		}
-
-		$this->id = _elgg_services()->relationshipsTable->add(
-			$this->guid_one,
-			$this->relationship,
-			$this->guid_two,
-			true
-		);
-		if (!$this->id) {
-			throw new \IOException("Unable to save new " . get_class());
-		}
-
-		return $this->id;
+		return _elgg_services()->relationshipsTable->add($this);
 	}
 
 	/**
@@ -102,7 +94,7 @@ class ElggRelationship extends \ElggData {
 	 * @return bool
 	 */
 	public function delete() {
-		return delete_relationship($this->id);
+		return _elgg_services()->relationshipsTable->delete($this);
 	}
 
 	/**
