@@ -136,8 +136,26 @@ class BootService {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}
 
-		$services->plugins->setBootPlugins($data->getActivePlugins());
+		$plugins = $data->getActivePlugins();
 
+		if (!empty($plugins)) {
+			foreach ($plugins as $plugin) {
+				if (!$plugin instanceof \ElggPlugin) {
+					continue;
+				}
+
+				$plugin_id = $plugin->getID();
+				if (!$plugin_id) {
+					continue;
+				}
+
+				$plugin->setAsActivated();
+				$plugin->cache();
+			}
+		}
+
+		$config->_active_plugins_set = true;
+		
 		// use value in settings.php if available
 		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
 		$services->logger->setLevel($debug);
@@ -171,7 +189,7 @@ class BootService {
 	 */
 	public function invalidateCache() {
 		$this->cache->clear();
-		_elgg_services()->plugins->setBootPlugins(null);
+
 		_elgg_config()->system_cache_loaded = false;
 		_elgg_config()->_boot_cache_hit = false;
 	}

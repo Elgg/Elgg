@@ -76,7 +76,7 @@ matrix:
         - php -f ./.scripts/is_memcached_enabled.php
       script:
         - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
-        - ./vendor/bin/phpunit
+        - ./vendor/bin/phpunit --verbose --debug
 
     # Redis enabled
     - php: 7.0

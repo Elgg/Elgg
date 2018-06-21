@@ -182,8 +182,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
 
+		$plugin->setAsActivated();
+		$plugin->cache();
+
 		$app->_services->config->boot_cache_ttl = 0;
-		$app->_services->plugins->addTestingPlugin($plugin);
 
 		$app->bootCore();
 
@@ -244,10 +246,8 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 			'sql' => "SHOW TABLE STATUS FROM `{$config['database']}`",
 		]);
 
-		_elgg_services()->plugins->addTestingPlugin($plugin);
-
 		$assertions = 0;
-		$assert = function() use ($plugin, &$assertions) {
+		$assert = function () use ($plugin, &$assertions) {
 			$methods = [
 				'upgrade',
 			];
@@ -264,7 +264,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 			$assertions++;
 		};
 
-		$fail = function($error) {
+		$fail = function ($error) {
 			if ($error instanceof Throwable) {
 				$error = $error->getMessage();
 			} else if (is_array($error)) {
@@ -281,8 +281,23 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testUsesBootstrapOnShutdown() {
-		/* @todo Test that bootstrap handlers are called during the shutdown event */
 
-		$this->markTestIncomplete();
+		$app = $this->createApplication();
+		$app->bootCore();
+
+		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
+		$plugin->activate();
+
+		$shutdown = new \Elgg\Application\ShutdownHandler($app);
+		$shutdown->shutdownApplication();
+
+		$methods = [
+			'shutdown',
+		];
+
+		foreach ($methods as $method) {
+			$prop = BootstrapPluginTestBootstrap::class . '::' . $method . '_calls';
+			$this->assertEquals(1, $plugin->$prop, "Method $method was called {$plugin->$prop} instead of expected 1 times");
+		}
 	}
 }

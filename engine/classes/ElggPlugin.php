@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Application;
+use Elgg\Collections\CollectionItemInterface;
 use Elgg\Includer;
 
 /**
@@ -9,7 +10,7 @@ use Elgg\Includer;
  * This class is currently a stub, allowing a plugin to
  * save settings in an object's private settings for each site.
  */
-class ElggPlugin extends ElggObject {
+class ElggPlugin extends ElggObject implements CollectionItemInterface {
 
 	/**
 	 * @var ElggPluginPackage
@@ -548,7 +549,8 @@ class ElggPlugin extends ElggObject {
 			return $this->activated;
 		}
 
-		$this->activated = elgg_is_active_plugin($this->getID());
+		$this->activated = (bool) check_entity_relationship($this->guid, 'active_plugin', 1);
+
 		return $this->activated;
 	}
 
@@ -618,6 +620,8 @@ class ElggPlugin extends ElggObject {
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
 			try {
+				$this->cache();
+
 				_elgg_services()->events->trigger('cache:flush', 'system');
 
 				$setup = $this->boot();
@@ -738,6 +742,8 @@ class ElggPlugin extends ElggObject {
 		}
 
 		$this->deactivateEntities();
+
+		_elgg_services()->runtimePlugins->remove($this->getID());
 
 		_elgg_services()->events->trigger('cache:flush', 'system');
 
@@ -1290,14 +1296,18 @@ class ElggPlugin extends ElggObject {
 	 * {@inheritdoc}
 	 */
 	public function isCacheable() {
-		return true;
+		return $this->getID() && $this->guid;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function cache($persist = true) {
-		_elgg_services()->plugins->cache($this);
+		_elgg_services()->knownPlugins->add($this);
+
+		if ($this->isActive()) {
+			_elgg_services()->runtimePlugins->add($this);
+		}
 
 		parent::cache($persist);
 	}
@@ -1308,7 +1318,8 @@ class ElggPlugin extends ElggObject {
 	public function invalidateCache() {
 		
 		_elgg_services()->boot->invalidateCache();
-		_elgg_services()->plugins->invalidateCache($this->getID());
+		_elgg_services()->knownPlugins->remove($this->getID());
+		_elgg_services()->plugins->invalidateProvidesCache();
 
 		parent::invalidateCache();
 	}
