@@ -15,7 +15,6 @@ return [
 	],
 	'actions' => [
 		'groups/edit' => [],
-		'groups/delete' => [],
 		'groups/featured' => [
 			'access' => 'admin',
 		],
