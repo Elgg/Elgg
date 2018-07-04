@@ -223,6 +223,10 @@ function elgg_get_site_entity() {
  *
  * In addition to metadata name value pairs, you can specify search pair, which will be merged using OR boolean
  * and will filter entities regardless of metadata name value pairs and their operator
+ * @warning During normalization, search name value pairs will ignore properties under metadata_ namespace, that is
+ *          you can not use metadata_ids, metadata_created_before, metadata_created_after, metadata_case_sensitive
+ *          to constrain search pairs. You will need to pass these properties for each individual search pair,
+ *          as seen in the example below
  *
  * @option array                $search_name_value_pairs
  *
@@ -253,10 +257,13 @@ function elgg_get_site_entity() {
  *       'case_sensitive' => false,
  *    ],
  *    [
+ *       // 'ids' => [55, 56, 57, 58, 59, 60], // only search these 5 metadata rows
  *       'name' => 'tags',
  *       'value' => '%world%',
  *       'operand' => 'LIKE',
  *       'case_sensitive' => false,
+ *       'created_after' => '-1 day',
+ *       'created_before' => 'now',
  *    ],
  * ];
  * </code>
