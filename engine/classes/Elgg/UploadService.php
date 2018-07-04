@@ -17,6 +17,12 @@ use Elgg\ImageService;
  */
 class UploadService {
 
+	const FIXABLE = [
+		'image/jpeg',
+		'image/jpg',
+		'image/tiff',
+	];
+
 	/**
 	 * @var Request
 	 */
@@ -41,15 +47,17 @@ class UploadService {
 	/**
 	 * Returns an array of uploaded file objects regardless of upload status/errors
 	 *
-	 * @param string $input_name Form input name
+	 * @param string $input_name      Form input name
+	 * @param bool   $fix_orientation Attempt to fix image orientation
+	 *
 	 * @return UploadedFile[]
 	 */
-	public function getFiles($input_name) {
+	public function getFiles($input_name, $fix_orientation = true) {
 		$files = $this->request->getFiles($input_name);
 
 		foreach ($files as $file) {
-			if ($file instanceof UploadedFile) {
-				$this->prepareFile($file);
+			if ($file instanceof UploadedFile && $fix_orientation) {
+				$this->fixImageOrientation($file);
 			}
 		}
 		
@@ -61,37 +69,18 @@ class UploadService {
 	 *
 	 * @param string $input_name         Form input name
 	 * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
+	 * @param bool   $fix_orientation    Attempt to fix image orientation
 	 *
 	 * @return UploadedFile[]|false
 	 */
-	public function getFile($input_name, $check_for_validity = true) {
+	public function getFile($input_name, $check_for_validity = true, $fix_orientation = true) {
 		$file = $this->request->getFile($input_name, $check_for_validity);
 		
-		if ($file instanceof UploadedFile) {
-			$this->prepareFile($file);
+		if ($file instanceof UploadedFile && $fix_orientation) {
+			$this->fixImageOrientation($file);
 		}
 		
 		return $file;
-	}
-	
-	/**
-	 * Prepares an uploaded file
-	 *
-	 * @param UploadedFile $file File to prepare
-	 *
-	 * @return void
-	 */
-	protected function prepareFile(UploadedFile $file) {
-		if (!$file->isValid()) {
-			return;
-		}
-		
-		$mime_detector = new MimeTypeDetector();
-		$mime = $mime_detector->getType($file->getPathname());
-
-		if (strpos($mime, 'image/') === 0) {
-			$this->fixImageOrientation($file);
-		}
 	}
 	
 	/**
@@ -102,6 +91,17 @@ class UploadService {
 	 * @return void
 	 */
 	protected function fixImageOrientation(UploadedFile $file) {
+		if (!$file->isValid()) {
+			return;
+		}
+
+		$mime_detector = new MimeTypeDetector();
+		$mime = $mime_detector->getType($file->getPathname());
+
+		 if (!in_array($mime, self::FIXABLE)) {
+		 	return;
+		 }
+
 		$temp_location = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid() . $file->getClientOriginalName();
 		copy($file->getPathname(), $temp_location);
 		

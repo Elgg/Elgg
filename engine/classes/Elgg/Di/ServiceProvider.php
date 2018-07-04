@@ -20,6 +20,7 @@ use Elgg\Logger;
 use Elgg\Project\Paths;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
+use Imagine\Image\ImagineInterface;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 
 /**
@@ -76,6 +77,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Views\HtmlFormatter                       $html_formatter
  * @property-read \Elgg\PluginHooksService                        $hooks
  * @property-read \Elgg\EntityIconService                         $iconService
+ * @property-read ImagineInterface                                $imageDriver
  * @property-read \Elgg\ImageService                              $imageService
  * @property-read \Elgg\Invoker                                   $invoker
  * @property-read \Elgg\Logger                                    $logger
@@ -423,20 +425,22 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable, $c->uploads);
 		});
 
-		$this->setFactory('imageService', function(ServiceProvider $c) {
+		$this->setFactory('imageDriver', function(ServiceProvider $c) {
 			switch ($c->config->image_processor) {
 				case 'imagick':
 					if (extension_loaded('imagick')) {
-						$imagine = new \Imagine\Imagick\Imagine();
-						break;
+						return new \Imagine\Imagick\Imagine();
 					}
-				default:
-					// default use GD
-					$imagine = new \Imagine\Gd\Imagine();
 					break;
+
 			}
 
-			return new \Elgg\ImageService($imagine, $c->config);
+			// default use GD
+			return new \Imagine\Gd\Imagine();
+		});
+
+		$this->setFactory('imageService', function(ServiceProvider $c) {
+			return new \Elgg\ImageService($c->imageDriver, $c->config);
 		});
 
 		$this->setFactory('invoker', function(ServiceProvider $c) {

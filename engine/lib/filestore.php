@@ -374,11 +374,13 @@ function _elgg_filestore_move_icons($event, $type, $entity) {
 /**
  * Returns an array of uploaded file objects regardless of upload status/errors
  *
- * @param string $input_name Form input name
+ * @param string $input_name      Form input name
+ * @param bool   $fix_orientation Attempt to fix image orientation
+ *
  * @return UploadedFile[]|false
  */
-function elgg_get_uploaded_files($input_name) {
-	return _elgg_services()->uploads->getFiles($input_name);
+function elgg_get_uploaded_files($input_name, $fix_orientation = true) {
+	return _elgg_services()->uploads->getFiles($input_name, $fix_orientation);
 }
 
 /**
@@ -386,11 +388,12 @@ function elgg_get_uploaded_files($input_name) {
  *
  * @param string $input_name         Form input name
  * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
+ * @param bool   $fix_orientation    Attempt to fix image orientation
  *
  * @return UploadedFile|false
  */
-function elgg_get_uploaded_file($input_name, $check_for_validity = true) {
-	return _elgg_services()->uploads->getFile($input_name, $check_for_validity);
+function elgg_get_uploaded_file($input_name, $check_for_validity = true, $fix_orientation = true) {
+	return _elgg_services()->uploads->getFile($input_name, $check_for_validity, $fix_orientation);
 }
 
 /**
