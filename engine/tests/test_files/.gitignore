@@ -25,3 +25,7 @@
 !/mod/
 !/installer/
 /installer/settings.php
+!/dataroot/1/1/exif/
+!/dataroot/1/1/exif/*
+!/dataroot/1/1/non_exif/
+!/dataroot/1/1/non_exif/*
