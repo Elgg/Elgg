@@ -560,7 +560,7 @@ elgg.parse_str = function(string) {
  * @return {String} The selector
  */
 elgg.getSelectorFromUrlFragment = function(url) {
-	var fragment = url.split('#')[1];
+	var fragment = url.split('#')[1].split('?')[0];
 
 	if (fragment) {
 		// this is a .class or a tag.class
