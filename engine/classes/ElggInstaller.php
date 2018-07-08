@@ -118,7 +118,8 @@ class ElggInstaller {
 			$config->system_cache_enabled = false;
 			$config->simplecache_enabled = false;
 			$config->debug = \Psr\Log\LogLevel::WARNING;
-			$config->cacheroot = Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/';
+			$config->cacheroot = Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/caches/';
+			$config->assetroot = Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/assets/';
 
 			$services = new ServiceProvider($config);
 

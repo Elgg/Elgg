@@ -742,7 +742,7 @@ class ServiceProvider extends DiContainer {
 		$sp->timer->begin([]);
 
 		if ($config->dataroot) {
-			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
+			$config->dataroot = Paths::sanitize($config->dataroot);
 		} else {
 			if (!$config->installer_running) {
 				throw new ConfigurationException('Config value "dataroot" is required.');
@@ -751,12 +751,19 @@ class ServiceProvider extends DiContainer {
 		$lock('dataroot');
 
 		if ($config->cacheroot) {
-			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
+			$config->cacheroot = Paths::sanitize($config->cacheroot);
 		} else {
-			$config->cacheroot = $config->dataroot . 'caches/';
+			$config->cacheroot = Paths::sanitize($config->dataroot . 'caches');
 		}
 		$lock('cacheroot');
 
+		if ($config->assetroot) {
+			$config->assetroot = Paths::sanitize($config->assetroot);
+		} else {
+			$config->assetroot = Paths::sanitize($config->cacheroot . 'views_simplecache');
+		}
+		$lock('assetroot');
+		
 		if ($config->wwwroot) {
 			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
 		} else {
