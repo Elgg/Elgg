@@ -604,7 +604,7 @@ class ServiceProvider extends DiContainer {
 		$this->initSiteSecret($config);
 
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
-			return new \Elgg\Cache\SimpleCache($c->config);
+			return new \Elgg\Cache\SimpleCache($c->config, $c->views);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
