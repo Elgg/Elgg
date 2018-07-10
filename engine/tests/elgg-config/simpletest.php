@@ -37,8 +37,6 @@ $settings = [
 	// These are fixed, because tests rely on specific location of the dataroot for source files
 	'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 	'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',
-	'cacheroot' => Paths::elgg() . 'engine/tests/test_files/cacheroot/',
-	'assetroot' => Paths::elgg() . 'engine/tests/test_files/assetroot/',
 	'plugins_path' => Paths::elgg() . 'mod/',
 
 	'system_cache_enabled' => false,

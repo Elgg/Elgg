@@ -78,9 +78,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 			// These are fixed, because tests rely on specific location of the dataroot for source files
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
-			'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',
-			'cacheroot' => Paths::elgg() . 'engine/tests/test_files/cacheroot/',
-			'assetroot' => Paths::elgg() . 'engine/tests/test_files/assetroot/',
+			'dataroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
 
 			'system_cache_enabled' => false,
 			'simplecache_enabled' => false,

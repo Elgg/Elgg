@@ -724,79 +724,39 @@ class ServiceProvider extends DiContainer {
 	 * @throws ConfigurationException
 	 */
 	public function initConfig(Config $config, ServiceProvider $sp) {
-		if ($config->elgg_config_locks === null) {
-			$config->elgg_config_locks = true;
-		}
-
-		if ($config->elgg_config_locks) {
-			$lock = function ($name) use ($config) {
-				$config->lock($name);
-			};
-		} else {
-			// the installer needs to build an application with defaults then update
-			// them after they're validated, so we don't want to lock them.
-			$lock = function () {
-			};
-		}
-
 		$sp->timer->begin([]);
-
-		if ($config->dataroot) {
-			$config->dataroot = Paths::sanitize($config->dataroot);
-		} else {
-			if (!$config->installer_running) {
-				throw new ConfigurationException('Config value "dataroot" is required.');
-			}
-		}
-		$lock('dataroot');
-
-		if ($config->cacheroot) {
-			$config->cacheroot = Paths::sanitize($config->cacheroot);
-		} else {
-			$config->cacheroot = Paths::sanitize($config->dataroot . 'caches');
-		}
-		$lock('cacheroot');
-
-		if ($config->assetroot) {
-			$config->assetroot = Paths::sanitize($config->assetroot);
-		} else {
-			$config->assetroot = Paths::sanitize($config->cacheroot . 'views_simplecache');
-		}
-		$lock('assetroot');
-		
-		if ($config->wwwroot) {
-			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
-		} else {
-			$config->wwwroot = $sp->request->sniffElggUrl();
-		}
-		$lock('wwwroot');
 
 		if (!$config->language) {
 			$config->language = Application::DEFAULT_LANG;
 		}
 
-		if ($config->default_limit) {
-			$lock('default_limit');
-		} else {
-			$config->default_limit = Application::DEFAULT_LIMIT;
+		if (!$config->dataroot) {
+			throw new ConfigurationException('Config value "dataroot" is required.');
 		}
 
-		if ($config->plugins_path) {
-			$plugins_path = rtrim($config->plugins_path, '/') . '/';
-		} else {
-			$plugins_path = Paths::project() . 'mod/';
-		}
+		$dataroot = Paths::sanitize($config->dataroot);
+		$cacheroot = $config->cacheroot ? : Paths::sanitize($dataroot . 'caches');
+		$assetroot = $config->assetroot ? : Paths::sanitize($cacheroot . 'views_simplecache');
+		$wwwroot = $config->wwwroot ? : $sp->request->sniffElggUrl();
+		$plugins_path = $config->plugins_path ? : Paths::sanitize(Paths::project() . 'mod');
+		$default_limit = $config->default_limit ? : Application::DEFAULT_LIMIT;
 
 		$locked_props = [
 			'site_guid' => 1,
 			'path' => Paths::project(),
 			'plugins_path' => $plugins_path,
 			'pluginspath' => $plugins_path,
-			'url' => $config->wwwroot,
+			'wwwroot' => $wwwroot,
+			'url' => $wwwroot,
+			'dataroot' => $dataroot,
+			'cacheroot' => $cacheroot,
+			'assetroot' => $assetroot,
+			'default_limit' => $default_limit,
 		];
+
 		foreach ($locked_props as $name => $value) {
 			$config->$name = $value;
-			$lock($name);
+			$config->lock($name);
 		}
 
 		// move sensitive credentials into isolated services

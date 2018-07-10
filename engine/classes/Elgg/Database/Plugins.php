@@ -139,11 +139,7 @@ class Plugins {
 	 * @return string
 	 */
 	public function getPath() {
-		$path = $this->config->plugins_path;
-		if (!$path) {
-			$path = Paths::project() . 'mod/';
-		}
-		return $path;
+		return $this->config->plugins_path;
 	}
 
 	/**
