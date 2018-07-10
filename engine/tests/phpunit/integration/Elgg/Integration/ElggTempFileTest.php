@@ -2,6 +2,7 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Project\Paths;
 use ElggTempFile;
 use Elgg\IntegrationTestCase;
 
@@ -36,7 +37,7 @@ class ElggTempFileTest extends IntegrationTestCase {
 	
 	public function testFilenameInSystemTempFolder() {
 		
-		$this->assertStringStartsWith(sys_get_temp_dir(), $this->temp_file->getFilenameOnFilestore());
+		$this->assertStringStartsWith(Paths::temp(), $this->temp_file->getFilenameOnFilestore());
 	}
 	
 	public function testWriteContent() {

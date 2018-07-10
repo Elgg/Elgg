@@ -33,7 +33,35 @@ class Paths {
 			}
 		}
 
-		return $path;
+		return self::sanitize($path);
+	}
+
+	/**
+	 * Get temporary directory location
+	 * @return string
+	 */
+	public static function temp() {
+		$is_valid = function($dir) {
+			if (!$dir) {
+				return false;
+			}
+
+			$dir = self::sanitize($dir);
+			return is_dir($dir) && is_writable($dir);
+		};
+
+		$temp = sys_get_temp_dir();
+		if ($is_valid($temp)) {
+			return self::sanitize($temp);
+		}
+
+		$temp = self::sanitize(self::project() . 'tmp/');
+		if ($is_valid($temp)) {
+			return $temp;
+		}
+
+		mkdir($temp);
+		return $temp;
 	}
 
 	/**
@@ -42,7 +70,7 @@ class Paths {
 	 * @return string
 	 */
 	public static function elgg() {
-		return dirname(dirname(dirname(dirname(__DIR__)))) . DIRECTORY_SEPARATOR;
+		return self::sanitize(dirname(dirname(dirname(dirname(__DIR__)))));
 	}
 
 	/**
@@ -51,7 +79,7 @@ class Paths {
 	 * @return string
 	 */
 	public static function projectConfig() {
-		return self::project() . self::PATH_TO_CONFIG . DIRECTORY_SEPARATOR;
+		return self::sanitize(self::project() . self::PATH_TO_CONFIG);
 	}
 
 	/**

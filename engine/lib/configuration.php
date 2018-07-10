@@ -33,7 +33,7 @@ function elgg_get_site_url() {
  * @since 1.8.0
  */
 function elgg_get_plugins_path() {
-	return _elgg_services()->plugins->getPath();
+	return _elgg_config()->plugins_path;
 }
 
 /**
@@ -54,8 +54,18 @@ function elgg_get_data_path() {
  * @return string
  */
 function elgg_get_cache_path() {
-	$path = _elgg_config()->cacheroot ? : elgg_get_data_path() . 'caches/';
-	return Paths::sanitize($path);
+	return _elgg_config()->cacheroot;
+}
+
+/**
+ * Get the asset cache directory path for this installation, ending with slash.
+ *
+ * If not set in settings, the cache path will be returned.
+ *
+ * @return string
+ */
+function elgg_get_asset_path() {
+	return _elgg_config()->assetroot;
 }
 
 /**

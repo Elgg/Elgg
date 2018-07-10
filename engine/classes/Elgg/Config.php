@@ -17,6 +17,7 @@ use Elgg\Project\Paths;
  * @property int           $action_token_timeout
  * @property bool          $allow_registration
  * @property string        $allow_user_default_access
+ * @property string        $assetroot            Path of asset (views) simplecache with trailing "/"
  * @property bool          $auto_disable_plugins
  * @property int           $batch_run_time_in_secs
  * @property bool          $boot_complete
@@ -68,7 +69,7 @@ use Elgg\Project\Paths;
  * @property string[]      $pages
  * @property-read string   $path         Path of composer install with trailing "/"
  * @property-read string   $pluginspath  Alias of plugins_path
- * @property-read string   $plugins_path Path of project "mod/" directory
+ * @property string        $plugins_path Path of project "mod/" directory
  * @property array         $profile_custom_fields
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
@@ -448,6 +449,12 @@ class Config {
 	 * @internal
 	 */
 	public function lock($name) {
+		if ($this->elgg_config_locks === false) {
+			// the installer needs to build an application with defaults then update
+			// them after they're validated, so we don't want to lock them.
+			return;
+		}
+
 		$this->locked[$name] = true;
 	}
 
@@ -478,6 +485,22 @@ class Config {
 		if ($this->wasWarnedLocked($name)) {
 			return;
 		}
+
+		switch ($name) {
+			case 'dataroot' :
+			case 'cacheroot' :
+			case 'assetroot' :
+			case 'path' :
+			case 'pluginspath' :
+			case 'plugins_path' :
+				$value = $value ? Paths::sanitize($value) : null;
+				break;
+
+			case 'wwwroot' :
+				$value = $value ? rtrim($value, '/') . '/' : null;
+				break;
+		}
+
 		$this->values[$name] = $value;
 	}
 

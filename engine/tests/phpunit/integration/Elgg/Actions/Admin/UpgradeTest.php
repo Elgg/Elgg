@@ -35,7 +35,17 @@ class UpgradeTest extends ActionResponseTestCase {
 
 	public function testUpgradeSucceeds() {
 		elgg_delete_admin_notice('pending_upgrades');
+		$upgrades = elgg_get_entities([
+			'types' => 'object',
+			'subtypes' => 'elgg_upgrade',
+			'limit' => 0,
+			'batch' => true,
+		]);
 
+		foreach ($upgrades as $upgrade) {
+			$upgrade->delete();
+		}
+		
 		$batch = new UpgradeTestBatch();
 		$version = $batch->getVersion();
 

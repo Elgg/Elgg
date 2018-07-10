@@ -74,6 +74,9 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$config = new Config();
 		$config->elgg_config_locks = false;
+		$config->dataroot = Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/');
+		$config->cacheroot = Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/cacheroot/');
+		$config->assetroot = Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/assetroot/');
 		$config->installer_running = true;
 		$config->dbencoding = 'utf8mb4';
 		$config->boot_cache_ttl = 0;
@@ -125,10 +128,11 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
 			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
 			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
-			'dataroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 			'timezone' => 'UTC',
-			'cacheroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/cacheroot/'),
+			'dataroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
+			'cacheroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/cacheroot/'),
+			'assetroot' => Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/assetroot/'),
 		];
 
 		foreach ($params as $k => $v) {

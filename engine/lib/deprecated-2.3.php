@@ -151,7 +151,7 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 
 	// we will write resized image to a temporary file and then delete it
 	// need to add a valid image extension otherwise resizing fails
-	$tmp_filename = tempnam(sys_get_temp_dir(), 'icon_resize');
+	$tmp_filename = tempnam(\Elgg\Project\Paths::temp(), 'icon_resize');
 	
 	$params = [
 		'w' => $maxwidth,

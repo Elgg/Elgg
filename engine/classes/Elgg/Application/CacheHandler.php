@@ -132,7 +132,7 @@ class CacheHandler {
 		}
 
 		// trust the client but check for an existing cache file
-		$filename = $config->cacheroot . "views_simplecache/$ts/$viewtype/$view";
+		$filename = $config->assetroot . "$ts/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag, $response);
 			return BinaryFileResponse::create($filename, 200, $response->headers->all());
@@ -151,7 +151,7 @@ class CacheHandler {
 
 		$lastcache = (int) $config->lastcache;
 
-		$filename = $config->cacheroot . "views_simplecache/$lastcache/$viewtype/$view";
+		$filename = $config->assetroot . "$lastcache/$viewtype/$view";
 
 		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag, $response);
