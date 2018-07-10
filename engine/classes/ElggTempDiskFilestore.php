@@ -24,7 +24,7 @@ class ElggTempDiskFilestore extends \ElggDiskFilestore {
 	public function __construct($directory_root = '') {
 		
 		if (!$directory_root) {
-			$directory_root = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . '/';
+			$directory_root = \Elgg\Project\Paths::temp();
 		}
 		
 		$this->unique_sub_dir = uniqid() . '/';

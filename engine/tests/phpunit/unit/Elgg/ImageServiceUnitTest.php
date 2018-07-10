@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg;
+use Elgg\Project\Paths;
 
 /**
  * @group UnitTests
@@ -18,7 +19,7 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 	public function up() {
 		$this->image_service = _elgg_services()->imageService;
 
-		$this->temp_dir = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		$this->temp_dir = Paths::temp();
 
 		$this->temp_source_image_location = tempnam($this->temp_dir, 'imageservice');
 		$source_image = _elgg_config()->dataroot . '1/1/300x300.jpg';

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Http\Request;
+use Elgg\Project\Paths;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\ImageService;
@@ -102,7 +103,7 @@ class UploadService {
 	 * @return void
 	 */
 	protected function fixImageOrientation(UploadedFile $file) {
-		$temp_location = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid() . $file->getClientOriginalName();
+		$temp_location = Paths::temp() . uniqid() . $file->getClientOriginalName();
 		copy($file->getPathname(), $temp_location);
 		
 		$rotated = $this->images->fixOrientation($temp_location);

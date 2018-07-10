@@ -292,8 +292,8 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		$path = $this->config->cacheroot ? : $this->config->dataroot;
-		if (!$path) {
+		$path = $this->config->cacheroot;
+		if (!$path || !is_writable($path)) {
 			return null;
 		}
 
