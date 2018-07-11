@@ -98,7 +98,7 @@ unset($vars['confirm']);
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-anchor');
 
-if ($text) {
+if ($text !== false && $text !== '') {
 	$text = elgg_format_element('span', [
 		'class' => 'elgg-anchor-label',
 	], $text);
