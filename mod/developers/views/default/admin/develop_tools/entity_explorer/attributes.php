@@ -1,19 +1,7 @@
 <?php
 $entity = elgg_extract('entity', $vars);
 
-$entity_rows = ['type', 'subtype', 'owner_guid', 'site_guid', 'container_guid', 'access_id', 'time_created', 'time_updated', 'last_action', 'enabled'];
-
-if ($entity instanceof ElggUser) {
-	$entity_rows = array_merge($entity_rows, ['name', 'username', 'email', 'language', 'banned', 'admin', 'last_action', 'prev_last_action', 'last_login', 'prev_last_login']);
-}
-
-if ($entity instanceof ElggGroup) {
-	$entity_rows = array_merge($entity_rows, ['name', 'description']);
-}
-
-if ($entity instanceof ElggSite) {
-	$entity_rows = array_merge($entity_rows, ['name', 'description', 'url']);
-}
+$entity_rows = ['type', 'subtype', 'owner_guid', 'container_guid', 'access_id', 'time_created', 'time_updated', 'last_action', 'enabled'];
 
 $entity_info = '<table class="elgg-table">';
 
