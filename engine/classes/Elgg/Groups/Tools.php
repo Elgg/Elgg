@@ -80,7 +80,9 @@ class Tools {
 	 * @return Collection|Tool[]
 	 */
 	public function all() {
-		return $this->tools;
+		$tool_options = clone $this->tools;
+		
+		return $this->hooks->trigger('tool_options', 'group', [], $tool_options);
 	}
 
 	/**
