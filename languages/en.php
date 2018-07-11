@@ -718,6 +718,7 @@ To go to the site, click here:
 	'admin:plugins:label:contributors:username' => 'Community username',
 	'admin:plugins:label:contributors:description' => 'Description',
 	'admin:plugins:label:dependencies' => 'Dependencies',
+	'admin:plugins:label:missing_dependency' => 'Missing dependency [%s].',
 
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
 	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',

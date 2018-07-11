@@ -497,7 +497,15 @@ class ElggPluginPackage {
 				if ($result !== null) {
 					// unless we're doing a full report, break as soon as we fail.
 					if (!$full_report && !$result['status']) {
-						$this->errorMsg = "Missing dependency [{$dep['type']}: {$dep['name']}].";
+						$type = $dep['type'];
+						
+						if ($type === 'priority') {
+							$text = "{$dep['priority']} {$dep['plugin']}";
+						} else {
+							$text = $dep['name'];
+						}
+						
+						$this->errorMsg = elgg_echo('admin:plugins:label:missing_dependency', ["{$type}: {$text}"]);
 
 						return $result['status'];
 					} else {
