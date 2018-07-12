@@ -745,17 +745,6 @@ class ElggPlugin extends ElggObject {
 
 		return $this->setStatus(false);
 	}
-	
-	/**
-	 * Function to set the activated state. Used when booting plugins.
-	 *
-	 * @see \Elgg\Database\Plugins->setBootPlugins()
-	 * @return void
-	 * @internal
-	 */
-	public function setAsActivated() {
-		$this->activated = true;
-	}
 
 	/**
 	 * Bootstrap object
