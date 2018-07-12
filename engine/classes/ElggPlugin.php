@@ -798,11 +798,6 @@ class ElggPlugin extends ElggObject {
 	 * @internal
 	 */
 	public function boot() {
-		// Detect plugins errors early and throw so that plugins service can disable the plugin
-		if (!$this->getManifest()) {
-			throw PluginException::factory('InvalidManifest', $this);
-		}
-
 		$this->autoload();
 
 		$this->activateEntities();
