@@ -266,12 +266,12 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		$has_class = class_exists('Memcache') || class_exists('Memcached');
-		if (!$has_class) {
+		if (!$this->config->memcache || !$this->config->memcache_servers) {
 			return null;
 		}
-
-		if (!$this->config->memcache || !$this->config->memcache_servers) {
+			
+		$has_class = class_exists('Memcache') || class_exists('Memcached');
+		if (!$has_class) {
 			return null;
 		}
 

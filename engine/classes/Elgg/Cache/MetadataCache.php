@@ -196,12 +196,12 @@ class MetadataCache {
 	 */
 	public function getEntityMetadata($entity_guid) {
 		$entity_guid = (int) $entity_guid;
-		$metadata =	$this->populateFromEntities($entity_guid);
-		if (!isset($metadata)) {
-			return null;
+		$metadata = $this->cache->load($entity_guid);
+		if ($metadata === null) {
+			$metadata = elgg_extract($entity_guid, $this->populateFromEntities($entity_guid));
 		}
-
-		return elgg_extract($entity_guid, $metadata);
+		
+		return $metadata;
 	}
 
 	/**

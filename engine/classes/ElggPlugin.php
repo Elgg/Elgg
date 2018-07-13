@@ -745,17 +745,6 @@ class ElggPlugin extends ElggObject {
 
 		return $this->setStatus(false);
 	}
-	
-	/**
-	 * Function to set the activated state. Used when booting plugins.
-	 *
-	 * @see \Elgg\Database\Plugins->setBootPlugins()
-	 * @return void
-	 * @internal
-	 */
-	public function setAsActivated() {
-		$this->activated = true;
-	}
 
 	/**
 	 * Bootstrap object
@@ -809,11 +798,6 @@ class ElggPlugin extends ElggObject {
 	 * @internal
 	 */
 	public function boot() {
-		// Detect plugins errors early and throw so that plugins service can disable the plugin
-		if (!$this->getManifest()) {
-			throw PluginException::factory('InvalidManifest', $this);
-		}
-
 		$this->autoload();
 
 		$this->activateEntities();
