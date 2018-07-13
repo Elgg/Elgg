@@ -23,6 +23,7 @@ use ElggSession;
 use ElggUser;
 use Exception;
 use Psr\Log\LogLevel;
+use Elgg\Cache\PrivateSettingsCache;
 
 /**
  * Persistent, installation-wide key-value storage.
@@ -75,7 +76,7 @@ class Plugins {
 	protected $views;
 
 	/**
-	 * @var ElggCache
+	 * @var PrivateSettingsCache
 	 */
 	protected $private_settings_cache;
 
@@ -104,7 +105,7 @@ class Plugins {
 	 * @param EventsService         $events                 Events
 	 * @param Translator            $translator             Translator
 	 * @param ViewsService          $views                  Views service
-	 * @param ElggCache             $private_settings_cache Settings cache
+	 * @param PrivateSettingsCache  $private_settings_cache Settings cache
 	 * @param Config                $config                 Config
 	 * @param SystemMessagesService $system_messages        System messages
 	 * @param Context               $context                Context
@@ -116,7 +117,7 @@ class Plugins {
 		EventsService $events,
 		Translator $translator,
 		ViewsService $views,
-		ElggCache $private_settings_cache,
+		PrivateSettingsCache $private_settings_cache,
 		Config $config,
 		SystemMessagesService $system_messages,
 		Context $context

@@ -88,7 +88,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\PasswordService                           $passwords
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
- * @property-read \ElggCache                                      $privateSettingsCache
+ * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
  * @property-read \Elgg\Application\Database                      $publicDb
  * @property-read \Elgg\Database\QueryCounter                     $queryCounter
@@ -354,6 +354,7 @@ class ServiceProvider extends DiContainer {
 				$c->db,
 				$c->entityCache,
 				$c->metadataCache,
+				$c->privateSettingsCache,
 				$c->events,
 				$c->session,
 				$c->translator,
@@ -515,7 +516,8 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('privateSettingsCache', function(ServiceProvider $c) {
-			return $c->dataCache->private_settings;
+			$cache = $c->dataCache->private_settings;
+			return new \Elgg\Cache\PrivateSettingsCache($cache);
 		});
 
 		$this->setFactory('privateSettings', function (ServiceProvider $c) {

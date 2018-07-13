@@ -504,29 +504,33 @@ function elgg_get_site_entity() {
  * RESULT OPTIONS
  * --------------
  *
- * @option bool $distinct           If set to false, Elgg will drop the DISTINCT clause from
- *                                  the MySQL query, which will improve performance in some situations.
- *                                  Avoid setting this option without a full understanding of the underlying
- *                                  SQL query Elgg creates.
- *                                  Default: true
- * @option callable|false $callback A callback function to pass each row through
- *                                  Default: entity_row_to_elggstar
- * @option bool $preload_owners     If set to true, this function will preload
- *                                  all the owners of the returned entities resulting in better
- *                                  performance when displaying entities owned by several users
- *                                  Default: false
- * @option bool $preload_containers If set to true, this function will preload
- *                                  all the containers of the returned entities resulting in better
- *                                  performance when displaying entities contained by several users/groups
- *                                  Default: false
- * @option bool $batch              If set to true, an Elgg\BatchResult object will be returned instead of an array.
- *                                  Default: false
- * @option bool $batch_inc_offset   If "batch" is used, this tells the batch to increment the offset
- *                                  on each fetch. This must be set to false if you delete the batched results.
- *                                  Default: true
- * @option int  $batch_size         If "batch" is used, this is the number of entities/rows to pull in before
- *                                  requesting more.
- *                                  Default: 25
+ * @option bool $distinct                 If set to false, Elgg will drop the DISTINCT clause from
+ *                                        the MySQL query, which will improve performance in some situations.
+ *                                        Avoid setting this option without a full understanding of the underlying
+ *                                        SQL query Elgg creates.
+ *                                        Default: true
+ * @option callable|false $callback       A callback function to pass each row through
+ *                                        Default: entity_row_to_elggstar
+ * @option bool $preload_owners           If set to true, this function will preload
+ *                                        all the owners of the returned entities resulting in better
+ *                                        performance when displaying entities owned by several users
+ *                                        Default: false
+ * @option bool $preload_containers       If set to true, this function will preload
+ *                                        all the containers of the returned entities resulting in better
+ *                                        performance when displaying entities contained by several users/groups
+ *                                        Default: false
+ * @option bool $preload_private_settings If set to true, this function will preload
+ *                                        all the private settings of the returned entities resulting in better
+ *                                        performance when displaying entities where private settings are often used, such as widgets
+ *                                        Default: false
+ * @option bool $batch                    If set to true, an Elgg\BatchResult object will be returned instead of an array.
+ *                                        Default: false
+ * @option bool $batch_inc_offset         If "batch" is used, this tells the batch to increment the offset
+ *                                        on each fetch. This must be set to false if you delete the batched results.
+ *                                        Default: true
+ * @option int  $batch_size               If "batch" is used, this is the number of entities/rows to pull in before
+ *                                        requesting more.
+ *                                        Default: 25
  *
  *
  * @see    elgg_list_entities()
