@@ -5,6 +5,7 @@ namespace Elgg\Cache;
 /**
  * @group UnitTests
  * @group Cache
+ * @group SimpleCache
  */
 class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
@@ -17,31 +18,26 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testGetUrlHandlesSingleArgument() {
-		$this->markTestIncomplete();
-		$simpleCache = new SimpleCache();
-
 		$view = 'view.js';
-		$url = $simpleCache->getUrl($view);
+		elgg_register_simplecache_view($view);
 
-		$this->assertTrue(preg_match("#default/view.js#", $url));
+		$url = _elgg_services()->simpleCache->getUrl($view);
+
+		$this->assertRegExp("#default/view.js#", $url);
 	}
 
 	public function testGetUrlHandlesTwoArguments() {
-		$this->markTestIncomplete();
-		$simpleCache = new SimpleCache();
+		elgg_register_simplecache_view('js/view.js');
+		$url = _elgg_services()->simpleCache->getUrl('js', 'view.js');
 
-		$url = $simpleCache->getUrl('js', 'view.js');
-
-		$this->assertTrue(preg_match("#default/view.js$#", $url));
+		$this->assertRegExp("#default/view.js$#", $url);
 	}
 
 	public function testGetUrlHandlesTwoArgumentsWhereSecondArgHasRedundantPrefix() {
-		$this->markTestIncomplete();
-		$simpleCache = new SimpleCache();
+		elgg_register_simplecache_view('js/view.js');
+		$url = _elgg_services()->simpleCache->getUrl('js', 'js/view.js');
 
-		$url = $simpleCache->getUrl('js', 'js/view.js');
-
-		$this->assertTrue(preg_match("#default/view.js$#", $url));
+		$this->assertRegExp("#default/view.js$#", $url);
 	}
 
 	public function testRespectsViewAliases() {

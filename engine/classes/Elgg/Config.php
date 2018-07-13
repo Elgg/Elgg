@@ -17,6 +17,7 @@ use Elgg\Project\Paths;
  * @property int           $action_token_timeout
  * @property bool          $allow_registration
  * @property string        $allow_user_default_access
+ * @property string        $assetroot            Path of asset (views) simplecache with trailing "/"
  * @property bool          $auto_disable_plugins
  * @property int           $batch_run_time_in_secs
  * @property bool          $boot_complete
