@@ -61,24 +61,7 @@ class PrivateSettingsTable {
 	 * @throws DatabaseException
 	 */
 	public function get(ElggEntity $entity, $name) {
-		$values = $this->cache->load($entity->guid);
-
-		if (isset($values[$name])) {
-			return $values[$name];
-		}
-
-		$qb = Select::fromTable('private_settings');
-		$qb->select('name')
-			->addSelect('value')
-			->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
-			->andWhere($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
-
-		$setting = $this->db->getDataRow($qb);
-		if ($setting) {
-			return $setting->value;
-		}
-
-		return null;
+		return elgg_extract($name, $this->getAllForEntity($entity));
 	}
 
 	/**

@@ -64,7 +64,7 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 		$rows = [];
 		foreach ($this->rows as $id => $row) {
 			if ($row->entity_guid == $entity->guid) {
-				$rows[] = $row;
+				$rows[$row->name] = $row->value;
 			}
 		}
 
