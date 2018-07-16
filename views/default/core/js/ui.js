@@ -157,7 +157,7 @@ elgg.ui.initHoverMenu = function(parent) {
 	}
 
 	// avatar contextual menu
-	$(document).on('click', ".elgg-avatar > a", function(e) {
+	$(document).on('click', ".elgg-avatar-menu > a", function(e) {
 		e.preventDefault();
 
 		var $icon = $(this);

@@ -30,47 +30,27 @@ if (!array_key_exists($size, $icon_sizes)) {
 $name = htmlspecialchars($user->getDisplayName(), ENT_QUOTES, 'UTF-8', false);
 $username = $user->username;
 
-$class = "elgg-avatar elgg-avatar-$size";
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
+$wrapper_class = [
+	'elgg-avatar',
+	"elgg-avatar-$size",
+];
+$wrapper_class = elgg_extract_class($vars, $wrapper_class);
+
 if ($user->isBanned()) {
-	$class .= ' elgg-state-banned';
-	$banned_text = elgg_echo('banned');
-	$name .= " ($banned_text)";
-}
-
-$use_link = elgg_extract('use_link', $vars, true);
-
-$icontime = $user->icontime;
-if (!$icontime) {
-	$icontime = "default";
-}
-
-$img_class = '';
-if (isset($vars['img_class'])) {
-	$img_class = elgg_extract('img_class', $vars);
-}
-
-
-$use_hover = elgg_extract('use_hover', $vars, true);
-if (isset($vars['hover'])) {
-	// only 1.8.0 was released with 'hover' as the key
-	$use_hover = elgg_extract('hover', $vars);
+	$wrapper_class[] = 'elgg-state-banned';
+	$name .= ' (' . elgg_echo('banned') . ')';
 }
 
 $icon = elgg_view('output/img', [
 	'src' => $user->getIconURL($size),
 	'alt' => $name,
 	'title' => $name,
-	'class' => $img_class,
+	'class' => elgg_extract_class($vars, [], 'img_class'),
 ]);
 
-$show_menu = $use_hover && (elgg_is_admin_logged_in() || !$user->isBanned());
+$show_menu = elgg_extract('use_hover', $vars, true) && (elgg_is_admin_logged_in() || !$user->isBanned());
 
-?>
-<div class="<?php echo $class; ?>">
-<?php
+$content = '';
 
 if ($show_menu) {
 	$params = [
@@ -78,20 +58,20 @@ if ($show_menu) {
 		'username' => $username,
 		'name' => $name,
 	];
-	echo elgg_view('navigation/menu/user_hover/placeholder', ['entity' => $user]);
+	$content .= elgg_view('navigation/menu/user_hover/placeholder', ['entity' => $user]);
+	
+	$wrapper_class[] = 'elgg-avatar-menu';
 }
 
-if ($use_link) {
-	$class = elgg_extract('link_class', $vars, '');
-	$url = elgg_extract('href', $vars, $user->getURL());
-	echo elgg_view('output/url', [
-		'href' => $url,
+if (elgg_extract('use_link', $vars, true)) {
+	$content .= elgg_view('output/url', [
+		'href' => elgg_extract('href', $vars, $user->getURL()),
 		'text' => $icon,
 		'is_trusted' => true,
-		'class' => $class,
+		'class' => elgg_extract_class($vars, [], 'link_class'),
 	]);
 } else {
-	echo "<a>$icon</a>";
+	$content .= elgg_format_element('a', [], $icon);
 }
-?>
-</div>
+
+echo elgg_format_element('div', ['class' => $wrapper_class], $content);
