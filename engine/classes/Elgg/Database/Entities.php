@@ -134,6 +134,8 @@ class Entities extends Repository {
 		$original_order = elgg_extract('order_by', $this->options->__original_options);
 		if (empty($original_order) && $original_order !== false) {
 			$qb->addOrderBy('e.time_created', 'desc');
+			// also add order by guid, to rely less on internals of MySQL fallback ordering
+			$qb->addOrderBy('e.guid', 'desc');
 		}
 
 		if ($limit) {
