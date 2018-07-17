@@ -670,7 +670,7 @@ class ElggPlugin extends ElggObject {
 		foreach ($active_plugins as $plugin) {
 			$manifest = $plugin->getManifest();
 			if (!$manifest) {
-				return true;
+				continue;
 			}
 			$requires = $manifest->getRequires();
 
