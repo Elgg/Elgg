@@ -142,9 +142,6 @@ class BootService {
 		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
 		$services->logger->setLevel($debug);
 
-		// finish boot sequence
-		_elgg_session_boot($services);
-
 		if ($config->system_cache_enabled) {
 			$config->system_cache_loaded = false;
 

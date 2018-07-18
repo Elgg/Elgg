@@ -620,6 +620,7 @@ class ElggPlugin extends ElggObject {
 			try {
 				_elgg_services()->events->trigger('cache:flush', 'system');
 
+				$this->register();
 				$setup = $this->boot();
 				if ($setup instanceof Closure) {
 					$setup();
@@ -777,6 +778,7 @@ class ElggPlugin extends ElggObject {
 	 * Register plugin classes and require composer autoloader
 	 *
 	 * @return void
+	 * @throws PluginException
 	 * @access private
 	 * @internal
 	 */
@@ -790,7 +792,27 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Boot the plugin by autoloading files, classes etc
+	 * Autoload plugin classes and vendor libraries
+	 * Register plugin-specific entity classes and execute bootstrapped load scripts
+	 * Register languages and views
+	 *
+	 * @return void
+	 * @throws PluginException
+	 * @access private
+	 * @internal
+	 */
+	public function register() {
+		$this->autoload();
+
+		$this->activateEntities();
+		$this->registerLanguages();
+		$this->registerViews();
+
+		$this->getBootstrap()->load();
+	}
+
+	/**
+	 * Boot the plugin
 	 *
 	 * @throws PluginException
 	 * @return \Closure|null
@@ -798,19 +820,10 @@ class ElggPlugin extends ElggObject {
 	 * @internal
 	 */
 	public function boot() {
-		$this->autoload();
-
-		$this->activateEntities();
-
-		$this->getBootstrap()->load();
-
 		$result = null;
 		if ($this->canReadFile('start.php')) {
 			$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
 		}
-
-		$this->registerLanguages();
-		$this->registerViews();
 
 		$this->getBootstrap()->boot();
 
