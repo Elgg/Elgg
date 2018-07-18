@@ -227,7 +227,7 @@ class ElggPlugin extends ElggObject {
 	public function getPriority() {
 		$name = _elgg_services()->plugins->namespacePrivateSetting('internal', 'priority');
 
-		$priority = $this->getSetting($name);
+		$priority = $this->getPrivateSetting($name);
 		if (isset($priority)) {
 			return (int) $priority;
 		}

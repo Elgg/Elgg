@@ -727,8 +727,10 @@ class Plugins {
 			return [];
 		}
 
+		$loaded_from_cache = false;
 		if ($status === 'active' && isset($this->boot_plugins)) {
 			$plugins = $this->boot_plugins;
+			$loaded_from_cache = true;
 		} else {
 			$priority = $this->namespacePrivateSetting('internal', 'priority');
 			$site_guid = 1;
@@ -773,9 +775,9 @@ class Plugins {
 			$this->session->setIgnoreAccess($old_ia);
 		}
 
-		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) {
-			$a_value = $a->getVolatileData('select:value');
-			$b_value = $b->getVolatileData('select:value');
+		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) use ($loaded_from_cache) {
+			$a_value = $loaded_from_cache ? $a->getPriority() : $a->getVolatileData('select:value');
+			$b_value = $loaded_from_cache ? $b->getPriority() : $b->getVolatileData('select:value');
 
 			if ($b_value !== $a_value) {
 				return $a_value - $b_value;
