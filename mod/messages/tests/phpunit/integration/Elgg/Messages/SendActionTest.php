@@ -150,9 +150,7 @@ class SendActionTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$messages = _elgg_services()->systemMessages->dumpRegister();
-		$this->assertNotEmpty($messages['success']);
-		$this->assertEquals(elgg_echo('messages:posted', [], $user->language), array_shift($messages['success']));
+		$this->assertSystemMessageEmitted(elgg_echo('messages:posted', [], $user->language));
 		$this->assertEquals(	'messages/inbox/' . $user->username, $response->getForwardURL());
 
 		elgg_set_ignore_access(true);

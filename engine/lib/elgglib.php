@@ -1602,6 +1602,9 @@ function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 		\Elgg\Cli\DatabaseUnseedCommand::class,
 		\Elgg\Cli\CronCommand::class,
 		\Elgg\Cli\FlushCommand::class,
+		\Elgg\Cli\PluginsListCommand::class,
+		\Elgg\Cli\PluginsActivateCommand::class,
+		\Elgg\Cli\PluginsDeactivateCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());

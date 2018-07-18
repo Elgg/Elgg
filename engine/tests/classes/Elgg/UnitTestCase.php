@@ -29,6 +29,7 @@ abstract class UnitTestCase extends BaseTestCase {
 		$sp->config->getCookieConfig();
 		$sp->config->boot_complete = false;
 		$sp->config->system_cache_enabled = elgg_extract('system_cache_enabled', $params, true);
+		$sp->config->plugins_path = elgg_extract('plugins_path', $params);
 		$sp->config->site = new \ElggSite((object) [
 			'guid' => 1,
 		]);

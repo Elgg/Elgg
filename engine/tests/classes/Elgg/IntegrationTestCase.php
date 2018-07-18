@@ -48,6 +48,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$sp = new ServiceProvider($config);
 		$config->system_cache_enabled = true;
 		$config->boot_cache_ttl = 600;
+		$config->plugins_path = elgg_extract('plugins_path', $params);
 
 		// persistentLogin service needs this set to instantiate without calling DB
 		$sp->config->getCookieConfig();
@@ -98,7 +99,9 @@ abstract class IntegrationTestCase extends BaseTestCase {
 
 		$app->bootCore();
 
-		self::$_testing_app = $app;
+		if (!$isolate) {
+			self::$_testing_app = $app;
+		}
 
 		return $app;
 	}
