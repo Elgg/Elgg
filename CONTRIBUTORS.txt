@@ -1,13 +1,19 @@
 The following have made notable contributions to the Elgg Project.
 (List in alphabetical order.)
 
+Jerôme Bakker - http://www.coldtrick.com/
+
 Steve Clay - http://www.mrclay.org/, https://twitter.com/mrclay_org
 
 Cash Costello - cash@elgg.org, http://cashcostello.com/
 
+Jeroen Dalsem - http://www.coldtrick.com/
+
 Pete Harris - http://www.peteharris.co.uk/
 
 Kevin Jardine - http://radagast.biz/
+
+Ismayil Khayredinov - https://hypejunction.com/
 
 Jon Maul - MITRE http://www.mitre.org/
 
