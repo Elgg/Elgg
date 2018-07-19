@@ -730,4 +730,57 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$users = elgg_get_entities($options);
 		$this->assertTrue(count($users) > 1);
 	}
+	
+	public function testElggGetEntitiesWithoutPrivateSettingsPreloader() {
+		$entities = $this->createMany('object', 2);
+		
+		foreach ($entities as $e) {
+			$guids[] = $e->guid;
+			$e->setPrivateSetting('foo', 'bar');
+		}
+
+		$options = [
+			'guids' => $guids,
+			'limit' => false,
+		];
+
+		$es = elgg_get_entities($options);
+				
+		$cache = _elgg_services()->privateSettingsCache;
+		// cache should not be loaded
+		$this->assertNull($cache->load($guids[0]));
+		$this->assertNull($cache->load($guids[1]));
+		
+		// cleanup
+		foreach ($entities as $e) {
+			$e->delete();
+		}
+	}
+	
+	public function testElggGetEntitiesWithPrivateSettingsPreloader() {
+		$entities = $this->createMany('object', 2);
+		
+		foreach ($entities as $e) {
+			$guids[] = $e->guid;
+			$e->setPrivateSetting('foo', 'bar');
+		}
+
+		$options = [
+			'guids' => $guids,
+			'limit' => false,
+			'preload_private_settings' => true,
+		];
+
+		$es = elgg_get_entities($options);
+				
+		$cache = _elgg_services()->privateSettingsCache;
+		// cache should be loaded
+		$this->assertSame(['foo' => 'bar'], $cache->load($guids[0]));
+		$this->assertSame(['foo' => 'bar'], $cache->load($guids[1]));
+		
+		// cleanup
+		foreach ($entities as $e) {
+			$e->delete();
+		}
+	}
 }

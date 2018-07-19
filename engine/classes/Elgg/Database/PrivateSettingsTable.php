@@ -4,8 +4,9 @@ namespace Elgg\Database;
 
 use DatabaseException;
 use Elgg\Database;
-use ElggCache;
 use ElggEntity;
+use Elgg\Cache\PrivateSettingsCache;
+use Elgg\Values;
 
 /**
  * Private settings for entities
@@ -31,18 +32,18 @@ class PrivateSettingsTable {
 	protected $entities;
 
 	/**
-	 * @var ElggCache
+	 * @var PrivateSettingsCache
 	 */
 	protected $cache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Database    $db       The database
-	 * @param EntityTable $entities Entities table
-	 * @param ElggCache   $cache    Settings cache
+	 * @param Database             $db       The database
+	 * @param EntityTable          $entities Entities table
+	 * @param PrivateSettingsCache $cache    Settings cache
 	 */
-	public function __construct(Database $db, EntityTable $entities, ElggCache $cache) {
+	public function __construct(Database $db, EntityTable $entities, PrivateSettingsCache $cache) {
 		$this->db = $db;
 		$this->entities = $entities;
 		$this->cache = $cache;
@@ -95,6 +96,48 @@ class PrivateSettingsTable {
 
 		$this->cache->save($entity->guid, $return);
 
+		return $return;
+	}
+
+	/**
+	 * Return an array of all private settings for the requested guids
+	 *
+	 * @note this does not use cache as this is a helper function for the privatesettingscache which does the caching
+	 *
+	 * @see \Elgg\Cache\PrivateSettingsCache::populateFromEntities()
+	 *
+	 * @param int[] $guids GUIDS to fetch the settings for
+	 *
+	 * @return string[] array of guids and their settings
+	 * @throws DatabaseException
+	 *
+	 * @internal
+	 */
+	public function getAllForGUIDs($guids) {
+		$guids = Values::normalizeGuids($guids);
+		
+		if (!is_array($guids) || empty($guids)) {
+			return [];
+		}
+		
+		$qb = Select::fromTable('private_settings');
+		$qb->select('entity_guid')
+			->addSelect('name')
+			->addSelect('value')
+			->where($qb->compare('entity_guid', 'IN', $guids));
+
+		$result = $this->db->getData($qb);
+
+		if (!$result) {
+			return [];
+		}
+		
+		$return = [];
+		
+		foreach ($result as $r) {
+			$return[$r->entity_guid][$r->name] = $r->value;
+		}
+	
 		return $return;
 	}
 

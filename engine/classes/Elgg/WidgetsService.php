@@ -50,15 +50,16 @@ class WidgetsService {
 			return $this->widgetCache[$widget_cache_key];
 		}
 
-		$options = [
+		$widgets = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'widget',
 			'owner_guid' => $owner_guid,
 			'private_setting_name' => 'context',
 			'private_setting_value' => $context,
 			'limit' => 0,
-		];
-		$widgets = elgg_get_entities($options);
+			'preload_private_settings' => true,
+		]);
+		
 		if (!$widgets) {
 			return [];
 		}

@@ -24,6 +24,7 @@ use ElggUser;
 use InvalidParameterException;
 use Psr\Log\LoggerInterface;
 use stdClass;
+use Elgg\Cache\PrivateSettingsCache;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -74,6 +75,11 @@ class EntityTable {
 	protected $metadata_cache;
 
 	/**
+	 * @var PrivateSettingsCache
+	 */
+	protected $private_settings_cache;
+
+	/**
 	 * @var EventsService
 	 */
 	protected $events;
@@ -96,20 +102,22 @@ class EntityTable {
 	/**
 	 * Constructor
 	 *
-	 * @param Config          $config         Config
-	 * @param Database        $db             Database
-	 * @param EntityCache     $entity_cache   Entity cache
-	 * @param MetadataCache   $metadata_cache Metadata cache
-	 * @param EventsService   $events         Events service
-	 * @param ElggSession     $session        Session
-	 * @param Translator      $translator     Translator
-	 * @param LoggerInterface $logger         Logger
+	 * @param Config               $config                 Config
+	 * @param Database             $db                     Database
+	 * @param EntityCache          $entity_cache           Entity cache
+	 * @param MetadataCache        $metadata_cache         Metadata cache
+	 * @param PrivateSettingsCache $private_settings_cache Private Settings cache
+	 * @param EventsService        $events                 Events service
+	 * @param ElggSession          $session                Session
+	 * @param Translator           $translator             Translator
+	 * @param LoggerInterface      $logger                 Logger
 	 */
 	public function __construct(
 		Config $config,
 		Database $db,
 		EntityCache $entity_cache,
 		MetadataCache $metadata_cache,
+		PrivateSettingsCache $private_settings_cache,
 		EventsService $events,
 		ElggSession $session,
 		Translator $translator,
@@ -120,6 +128,7 @@ class EntityTable {
 		$this->table = $this->db->prefix . 'entities';
 		$this->entity_cache = $entity_cache;
 		$this->metadata_cache = $metadata_cache;
+		$this->private_settings_cache = $private_settings_cache;
 		$this->events = $events;
 		$this->session = $session;
 		$this->translator = $translator;
@@ -487,7 +496,11 @@ class EntityTable {
 		/* @var $preload ElggEntity[] */
 
 		$this->metadata_cache->populateFromEntities($preload);
-
+		
+		if (elgg_extract('preload_private_settings', $options, false)) {
+			$this->private_settings_cache->populateFromEntities($preload);
+		}
+		
 		$props_to_preload = [];
 		if (elgg_extract('preload_owners', $options, false)) {
 			$props_to_preload[] = 'owner_guid';
