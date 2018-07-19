@@ -112,6 +112,9 @@ class BootHandlerUnitTest extends UnitTestCase {
 	public function testBootEventCalls() {
 
 		$calls = new \stdClass();
+		$calls->{'plugins_load:before'} = 0;
+		$calls->{'plugins_load'} = 0;
+		$calls->{'plugins_load:after'} = 0;
 		$calls->{'plugins_boot:before'} = 0;
 		$calls->{'plugins_boot'} = 0;
 		$calls->{'plugins_boot:after'} = 0;
@@ -139,6 +142,31 @@ class BootHandlerUnitTest extends UnitTestCase {
 		}
 	}
 
+	public function testCanSetCustomUserClassDuringBootSequence() {
 
+		$app = $this->createMockApplication();
+
+		$app->_services->events->registerHandler('plugins_load', 'system', function(Event $event) {
+			elgg_set_entity_class('user', 'custom_user', CustomUser::class);
+		});
+
+		$user = $this->createUser([
+			'subtype' => 'custom_user',
+		]);
+
+		$app->_services->session->set('guid', $user->guid);
+
+		$user->invalidateCache();
+
+		$app->bootCore();
+
+		$this->assertInstanceOf(CustomUser::class, $app->_services->session->getLoggedInUser());
+
+		$app->_services->session->removeLoggedInUser();
+	}
+
+}
+
+class CustomUser extends \ElggUser {
 
 }
