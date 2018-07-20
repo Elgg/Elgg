@@ -73,43 +73,28 @@ $results = '';
 
 $types = $service->getTypeSubtypePairs();
 foreach ($types as $type => $subtypes) {
-	if (!empty($subtypes)) {
-		foreach ($subtypes as $subtype) {
-			$count = $service->listResults('entities', $type, $subtype, true);
-			$total += $count;
-			elgg_register_menu_item('page', [
-				'name' => "item:$type:$subtype",
-				'text' => elgg_echo("item:$type:$subtype"),
-				'href' => elgg_http_add_url_query_elements('search', [
-					'q' => $params['query'],
-					'entity_type' => $type,
-					'entity_subtype' => $subtype,
-					'owner_guid' => $params['owner_guid'],
-					'search_type' => 'entities',
-				]),
-				'badge' => $count,
-			]);
-
-			if ($use_type('entities', $type, $subtype)) {
-				$results .= $service->listResults('entities', $type, $subtype);
-			}
-		}
-	} else {
-		$count = $service->listResults('entities', $type, null, true);
+	if (empty($subtypes) || !is_array($subtypes)) {
+		continue;
+	}
+	
+	foreach ($subtypes as $subtype) {
+		$count = $service->listResults('entities', $type, $subtype, true);
 		$total += $count;
 		elgg_register_menu_item('page', [
-			'name' => "item:$type",
-			'text' => elgg_echo("item:$type"),
+			'name' => "item:$type:$subtype",
+			'text' => elgg_echo("item:$type:$subtype"),
 			'href' => elgg_http_add_url_query_elements('search', [
 				'q' => $params['query'],
 				'entity_type' => $type,
+				'entity_subtype' => $subtype,
 				'owner_guid' => $params['owner_guid'],
 				'search_type' => 'entities',
 			]),
 			'badge' => $count,
 		]);
-		if ($use_type('entities', $type)) {
-			$results .= $service->listResults('entities', $type);
+
+		if ($use_type('entities', $type, $subtype)) {
+			$results .= $service->listResults('entities', $type, $subtype);
 		}
 	}
 }
