@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "友達登録を解除する",
 
 	'friends:add:successful' => "%s さんを友達登録しました。",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "%s さんを友達登録できませんでした。",
 
 	'friends:remove:successful' => "%s さんの友達登録を解除しました。",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "%s さんの友達登録を解除できませんでした。",
 
 	'friends:none' => "友達登録はありません。",

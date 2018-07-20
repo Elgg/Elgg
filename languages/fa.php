@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "حذف دوست",
 
 	'friends:add:successful' => "شما با موفقیت %s  را به عنوان دوست اضافه کردید.",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "امکان افزودن %s به عنوان دوست نیست.",
 
 	'friends:remove:successful' => "شما با موفقیت %s را از لیست دوستانتان حذف کردید",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "امکان حذف %s از لیست دوستان شما نیست",
 
 	'friends:none' => "در حال حاضر هیچ دوستی ندارید",

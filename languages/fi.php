@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "Poista ystävistä",
 
 	'friends:add:successful' => "Olet lisännyt käyttäjän %s ystäväksesi.",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "Käyttäjää %s ei voitu lisätä ystäväksi.",
 
 	'friends:remove:successful' => "Olet poistanut käyttäjän %s ystävistäsi.",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "Käyttäjää %s ei voitu poistaa ystävistäsi.",
 
 	'friends:none' => "Tämä käyttäjä ei ole vielä lisännyt ketään ystäväkseen.",

@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "Llevar amic",
 
 	'friends:add:successful' => "S'ha afegit a %s com a amic",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "No s'ha pogut afegir a %s com amic. Si us plau intenteu-ho novament",
 
 	'friends:remove:successful' => "S'ha llevat a %s dels seus amics",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "No s'ha pogut llevar a %s dels seus amics. Si us plau intenteu-ho novament",
 
 	'friends:none' => "Aquest usuari no té amics encara",

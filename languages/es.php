@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "Quitar amigo",
 
 	'friends:add:successful' => "Se ha a&ntilde;adido a %s como amigo",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "No se pudo a&ntilde;adir a %s como amigo. Por favor intente nuevamente",
 
 	'friends:remove:successful' => "Se quit&oacute; a %s de sus amigos",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "No se pudo quitar a %s de sus amigos. Por favor intente nuevamente",
 
 	'friends:none' => "Este usuario no tiene amigos a&uacute;n",

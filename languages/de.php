@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "Aus Freundesliste entfernen",
 
 	'friends:add:successful' => "%s wurde zu Deiner Freundesliste hinzugefügt.",
+	'friends:add:duplicate' => "Du bist bereits mit %s befreundet.",
 	'friends:add:failure' => "%s konnte nicht zu Deiner Freundesliste hinzugefügt werden. Bitte versuche es noch einmal.",
 
 	'friends:remove:successful' => "%s wurde aus Deiner Freundesliste entfernt.",
+	'friends:remove:no_friend' => "%s und Du sind nicht befreundet.",
 	'friends:remove:failure' => "%s konnte nicht aus Deiner Freundesliste entfernt werden. Bitte versuche es noch einmal.",
 
 	'friends:none' => "Noch keine Freunde.",
