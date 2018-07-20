@@ -26,6 +26,8 @@ return array(
 	'groups:website' => 'Sito web',
 	'groups:members' => 'Membri del gruppo',
 
+	'groups:members_count' => '%s members',
+
 	'groups:members:title' => 'Membri di %s',
 	'groups:members:more' => "Visualizza tutti i membri",
 	'groups:membership' => "Autorizzazioni dei membri del gruppo",
