@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "Rimuovi un amico",
 
 	'friends:add:successful' => "Hai aggiunto %s agli amici.",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "Impossibile aggiungere %s agli amici.",
 
 	'friends:remove:successful' => "Hai rimosso %s dagli amici.",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "Impossibile rimuovere %s dai tuoi amici.",
 
 	'friends:none' => "Ancora nessun amico.",

@@ -52,7 +52,7 @@ Vezi și comentează marcajul:
 	'bookmarks:widget:description' => "Afișează-ți ultimele marcaje.",
 
 	'bookmarks:bookmarklet:description' =>
-			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks. To set it up, drag the button below to your browser's links bar:",
+			"Marcatorul este un buton special pe care îl salvezi în bara de legături a navigatorului tău. Acest lucru îţi permite să salvezi la marcajele tale orice resursă pe care o găseşti pe net. Pentru a seta marcatorul, trage butonul de mai jos şi adaugă-l în bara de legături.",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"Dacă folosești Internet Explorer, va trebui să dai clic dreapta pe butonul de marcat, selectează 'adaugă la favorite', și apoi bara de favorite.",

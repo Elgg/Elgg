@@ -95,6 +95,7 @@ Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wra
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg dispose de tests unitaires et d\'intégration pour détecter les bugs dans les classes et fonctions de son cœur.',
 	'developers:unit_tests:warning' => 'Attention : Ne Pas Exécuter Ces Tests sur un Site en Production. Ils peuvent corrompre votre base de données.',
+	'developers:unit_tests:warning:dependencies' => "Warning: Elgg isn't installed as a root project, make sure you've all the Elgg Composer dev-dependencies installed.",
 	'developers:unit_tests:run' => 'Exécuter',
 
 	// status messages

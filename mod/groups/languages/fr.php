@@ -147,13 +147,13 @@ return array(
 	'groups:invite:remove:check' => 'Confirmez-vous vouloir supprimer cette invitation ?',
 	'groups:invite:body' => "Bonjour %s,
 
-%s vous a invité(e) à rejoindre le groupe \"%s\". Cliquez sur le lien ci-dessous pour confirmer :
+%s vous a invité(e) à rejoindre le groupe '%s'. Cliquez sur le lien ci-dessous pour confirmer :
 
 %s",
 
 	'groups:welcome:subject' => "Bienvenue dans le groupe %s !",
 	'groups:welcome:body' => "Bonjour %s !
-
+		
 Vous êtes maintenant membre du groupe \"%s\" ! Cliquez le lien ci-dessous pour commencer à participer !
 
 %s",

@@ -96,6 +96,7 @@ developers_wrap_views().",
 	// unit tests
 	'developers:unit_tests:description' => 'Pro zjišťování chyb v základních třídách a funkcích má Elgg integrační a unit testy.',
 	'developers:unit_tests:warning' => 'Varování: NEPOUŠTĚJTE TYTO TESTY NA OSTRÝCH STRÁNKÁCH. Mohou poškodit vaši databázi.',
+	'developers:unit_tests:warning:dependencies' => "Warning: Elgg isn't installed as a root project, make sure you've all the Elgg Composer dev-dependencies installed.",
 	'developers:unit_tests:run' => 'Spustit',
 
 	// status messages

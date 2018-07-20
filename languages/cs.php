@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "Odebrat přítele",
 
 	'friends:add:successful' => "Úspěšně jste přidal/a %s jako svého přítele.",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "Nemohu přidat %s jako přítele.",
 
 	'friends:remove:successful' => "Úspěšně jste odebral/a %s z vašich přátel.",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "Nemůžu odebrat %s z vašich přátel.",
 
 	'friends:none' => "Zatím žádní přátelé.",

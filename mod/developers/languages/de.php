@@ -95,6 +95,7 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg enthält Modultests und Integrationstests, um mögliche Fehler in seinen Klassen und Funktionen zu finden.',
 	'developers:unit_tests:warning' => 'Warnung: Führe diese Tests niemals auf Deiner Hauptinstallation aus. Sie können Deine Datenbank beschädigen!',
+	'developers:unit_tests:warning:dependencies' => "Warnung: Elgg ist nicht als root-Projekt installiert. Stelle bitte sicher, dass alle in der composer.json-Datei von Elgg definierten dev-Dependencies installiert sind.",
 	'developers:unit_tests:run' => 'Ausführen',
 
 	// status messages

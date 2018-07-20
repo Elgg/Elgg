@@ -247,9 +247,11 @@ return array(
 	'friend:remove' => "Supprimer un contact",
 
 	'friends:add:successful' => "Vous avez ajouté %s à vos contacts.",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "%s n'a pas pu être ajouté(e) à vos contacts.",
 
 	'friends:remove:successful' => "Vous avez retiré %s de vos contacts.",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "%s n'a pas pu être retiré(e) de vos contacts.",
 
 	'friends:none' => "Aucun contact pour le moment.",

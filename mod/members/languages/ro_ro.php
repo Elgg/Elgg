@@ -1,11 +1,12 @@
 <?php
 return array(
 	'members:label:online' => 'Online',
-	'members:search' => 'Căutare participanți',
-	'members:title:search' => 'Căutare participanți %s',
-	'members:total' => 'Total membri %s',
-	'members:title:newest' => 'Cei mai noi participanți',
-	'members:title:popular' => 'Cei mai activi participanți',
-	'members:title:online' => 'Participanți online',
-	'members:list:popular:none' => 'Nu există prieteni membri',
+	'members:search' => 'Căutare membrii',
+	'members:title:search' => 'Căutare de membru pentru %s',
+	'members:total' => 'Total membrii: %s',
+	'members:title:newest' => 'Cei mai noi',
+	'members:title:popular' => 'Cei mai populari',
+	'members:title:online' => 'Online',
+	'members:title:alpha' => 'Toţi membrii',
+	'members:list:popular:none' => 'Nici un membru care are vreun prieten.',
 );

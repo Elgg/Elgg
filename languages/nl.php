@@ -248,9 +248,11 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'friend:remove' => "Verwijder vriend",
 
 	'friends:add:successful' => "Je hebt %s succesvol toegevoegd als vriend.",
+	'friends:add:duplicate' => "You're already friends with %s",
 	'friends:add:failure' => "We konden %s niet toevoegen als vriend. Probeer het nogmaals.",
 
 	'friends:remove:successful' => "Je hebt %s succesvol verwijderd als vriend.",
+	'friends:remove:no_friend' => "You and %s are not friends",
 	'friends:remove:failure' => "We konden %s niet verwijderen als vriend. Probeer het nogmaals.",
 
 	'friends:none' => "Deze gebruiker heeft nog niemand toegevoegd als vriend.",
