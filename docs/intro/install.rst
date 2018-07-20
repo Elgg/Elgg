@@ -14,6 +14,9 @@ Requirements
 -  PHP 5.6+ with the following extensions:
 
    -  GD (for graphics processing)
+   -  PDO (for database connection)
+   -  JSON (for AJAX responses, etc.)
+   -  XML (for reading plugin manifest files, etc.)
    -  `Multibyte String support`_ (for i18n)
    -  Proper configuration and ability to send email through an MTA
 
@@ -36,7 +39,7 @@ By "official support", we mean that:
    (but those are rare).
 
 .. _Multibyte String support: http://www.php.net/mbstring
-.. _rewrite module: http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html
+.. _rewrite module: https://httpd.apache.org/docs/2.0/mod/mod_rewrite.html
 
 Browser support policy
 ----------------------
@@ -61,8 +64,6 @@ but provide a JavaScript polyfill for the browsers that need it.
 You may find that Elgg happens to work on unsupported browsers,
 but compatibility may break at any time, even during a bugfix release.
 
-
-
 Overview
 ========
 
@@ -86,8 +87,7 @@ From pre-packaged zip (recommended if not comfortable with CLI):
 -  Upload the ZIP file with an FTP client to your server
 -  Unzip the files in your domain's document root.
 
-.. _latest version of Elgg: https://elgg.org/download.php
-
+.. _latest version of Elgg: https://elgg.org/about/download
 
 Create a data folder
 --------------------
@@ -95,10 +95,10 @@ Create a data folder
 Elgg needs a special folder to store uploaded files including profile
 icons and photos. You will need to create this directory.
 
-.. warning::
+.. attention::
    
-   For security reasons, this folder MUST be stored outside of your
-   document root. If you created it under /www/ or /public_html/, you're
+   For security reasons, this folder **MUST** be stored outside of your
+   document root. If you created it under ``/www/`` or ``/public_html/``, you're
    doing it wrong.
 
 Once this folder has been created, you'll need to make sure the web
@@ -107,7 +107,7 @@ directories in it. This shouldn't be a problem on Windows-based servers,
 but if your server runs Linux, Mac OS X or a UNIX variant, you'll need
 to `set the permissions on the directory`_.
 
-.. _set the permissions on the directory: http://en.wikipedia.org/wiki/Filesystem_permissions#Traditional_Unix_permissions
+.. _set the permissions on the directory: https://en.wikipedia.org/wiki/File_system_permissions#Traditional_Unix_permissions
 
 If you are using a graphical FTP client to upload files, you can
 usually set permissions by right clicking on the folder and
@@ -118,9 +118,11 @@ selecting 'properties' or 'Get Info'.
    Directories must be executable to be read and written to. The 
    suggested permissions depend upon the exact server and user
    configuration. If the data directory is owned by the web server
-   user, the recommended permissions are 770.
+   user, the recommended permissions are ``750``.
 
-   Setting your data directory to 777 will work, but it is insecure
+.. warning::
+
+   Setting your data directory to ``777`` will work, but it is insecure
    and is not recommended. If you are unsure how to correctly set
    permissions, contact your host for more information.
 
@@ -238,7 +240,7 @@ if the module is being loaded.
 
 **The rules in ``.htaccess`` aren't being obeyed.**
 
-.. _PHP info: http://uk.php.net/manual/en/function.phpinfo.php
+.. _PHP info: https://secure.php.net/manual/en/function.phpinfo.php
 
 In your virtual host configuration settings (which may be contained
 within ``httpd.conf``), change the AllowOverride setting so that it
@@ -256,7 +258,10 @@ The install script redirects me to "action" when it should be "actions"
 -----------------------------------------------------------------------
 
 This is a problem with your ``mod_rewrite`` setup.
-DO NOT, REPEAT, DO NOT change any directory names!
+
+.. attention::
+
+	DO NOT, REPEAT, DO NOT change any directory names!
 
 I installed in a subdirectory and my install action isn't working!
 ------------------------------------------------------------------
@@ -324,7 +329,6 @@ the Apache "error.log" file will contain an entry similar to:
 
      ... .htaccess: Invalid command 'AddOutputFilterByType', perhaps misspelled or defined by a module not included in the server configuration
 
-
 There is a white page after I submit my database settings
 ---------------------------------------------------------
 
@@ -348,8 +352,14 @@ I am having trouble setting my data path
 This is highly server specific so it is difficult to give specific
 advice. If you have created a directory for uploading data, make sure
 your http server can access it. The easiest (but least secure) way to do
-this is give it permissions 777. It is better to give the web server
+this is give it permissions ``777``. It is better to give the web server
 ownership of the directory and limit the permissions.
+
+.. warning::
+
+	Setting directory permissions to ``777`` allows the **ENTIRE** internet to place 
+	files in your directory structure an possibly infect you webserver with malware.
+	Setting permissions to ``750`` should be more than enough. 
 
 The top cause of this issue is PHP configured to prevent access to most
 directories using `open\_basedir`_. You may want to check with your
@@ -363,8 +373,7 @@ do not know the path of it, you might be able to figure it out from the
 www file path set in your datalists database table. Asking for help from
 your hosting help team is recommended at this stage.
 
-.. _open\_basedir: http://www.php.net/manual/en/ini.core.php#ini.open-basedir
-
+.. _open\_basedir: https://secure.php.net/manual/en/ini.core.php#ini.open-basedir
 
 I can't validate my admin account because I don't have an email server!
 -----------------------------------------------------------------------
@@ -392,4 +401,4 @@ Be sure to mention what version of Elgg you are installing, details of
 your server platform, and any error messages that you may have received
 including ones in the error log of your server.
 
-.. _Elgg community: http://community.elgg.org/
+.. _Elgg community: https://elgg.org/
