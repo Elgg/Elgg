@@ -97,7 +97,8 @@ You can also add additional response formats by defining new viewtypes.
 Parameters
 ~~~~~~~~~~
 
-Parameters expected by each method should be listed as an associative array, where the key represents the parameter name, and the value contains an array with ``type``, ``default`` and ``required`` fields.
+Parameters expected by each method should be listed as an associative array, where the key represents the parameter name, and the value 
+contains an array with ``type``, ``default`` and ``required`` fields.
 
 Values submitted with the API request for each parameter should match the declared type. API will throw on exception if validation fails.
 
@@ -139,7 +140,7 @@ You can use additional fields to describe your parameter, e.g. ``description``.
 
 .. note::
 
-	If a missing parameter has no default value, the argument will be ``null``. Before 2.1, a bug caused later
+	If a missing parameter has no default value, the argument will be ``null``. Before Elgg v2.1, a bug caused later
 	arguments to be shifted left in this case.
 
 Receive parameters as associative array
@@ -259,13 +260,6 @@ authentication method. Be aware that it is much more involved and could
 turn off developers when there are other sites out there with key-based
 authentication.
 
-OAuth
-~~~~~
-
-With the addition of the OAuth plugin, Elgg also fully supports the
-OAuth 1.0a authorization standard. Clients can then use standard OAuth
-libraries to make any API calls to the site.
-
 User authentication
 -------------------
 
@@ -319,11 +313,7 @@ GET HTTP requests.
 
 Please note that you will not be able to test this using a web browser
 as you did with the other methods. You need to write some client code to
-do this. There is some example client code in ``/engine/lib/api.php``.
-Take a look at `send\_api\_post\_call()`_. You can also do a search for
-clients that have been written for the APIs of Flickr or Twitter or any
-other similar API. You will find a wide variety written in almost any
-language you can think of.
+do this.
 
 Building out your API
 ---------------------
@@ -336,8 +326,6 @@ your API? Be sure to take a look at the APIs created by popular Web 2.0
 sites for inspiration. If you are looking for 3rd party developers to
 build applications using your API, you will probably want to provide one
 or more language-specific clients.
-
-.. _send\_api\_post\_call(): http://reference.elgg.org/lib_2api_8php.html#ee7382c2cbf1ad49ac6892556d3eaff2
 
 Determining the authentication available
 ----------------------------------------
@@ -376,18 +364,14 @@ When testing, you may find it useful to register the
 the browser. Be careful not to use this PAM on a production site because
 it could open up your users to a `CSRF attack`_.
 
-Right now, the only other PAMs publicly available besides those provided
-by the Elgg core are the OAuth PAMs. See `Justin Richer's OAuth plugin`_
-for more detail.
-
 .. _pluggable authentication module (PAM): http://en.wikipedia.org/wiki/Pluggable_Authentication_Modules
 .. _CSRF attack: http://en.wikipedia.org/wiki/Csrf
-.. _Justin Richer's OAuth plugin: http://community.elgg.org/pg/plugins/jricher/read/385119/oauth
 
 Related
 -------
 
 .. toctree::
    :maxdepth: 1
+   :glob:
    
-   web-services/hmac
+   web-services/*
