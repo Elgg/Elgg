@@ -18,7 +18,6 @@ use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
-use Elgg\Integration\OrderByClauseTest;
 use Elgg\UnitTestCase;
 
 /**
@@ -93,6 +92,8 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEquals([0], $options['owner_guids']);
 	}
 
+	/* ACCESS */
+	
 	public function testNormalizesAccessOptions() {
 		$options = $this->options->normalizeOptions([
 			'access_id' => ['1', 2],
@@ -100,6 +101,8 @@ class QueryOptionsTest extends UnitTestCase {
 
 		$this->assertEquals([1, 2], $options['access_ids']);
 	}
+	
+	/* TYPE SUBTYPE PAIRS */
 
 	public function testNormalizesTypeSubtypeOptionsFromTypeSubtypeSingulars() {
 		$options = $this->options->normalizeOptions([
@@ -182,6 +185,8 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertNotEmpty($messages);
 	}
 
+	/* METADATA PAIRS */
+	
 	public function testNormalizesMetadataOptionsFromSingulars() {
 
 		$options = $this->options->normalizeOptions([
@@ -493,6 +498,190 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEquals($options, $this->options->normalizeOptions($options));
 
 	}
+
+	/* METADATA SEARCH PAIRS */
+
+	public function testNormalizesSearchMetadataOptionsFromTimeOptionsWithNestedPair() {
+
+		$options = $this->options->normalizeOptions([
+			'search_name_value_pair' => [
+				['status' => 'draft']
+			],
+		]);
+
+		$this->assertEquals(1, count($options['search_name_value_pairs']));
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+	}
+
+	public function testNormalizesSearchMetadataOptionsFromTimeOptionsForMultiplePairs() {
+
+		$options = $this->options->normalizeOptions([
+			'search_name_value_pair' => [
+				'status' => 'draft',
+				'category' => ['foo', 'bar'],
+			],
+		]);
+
+		$this->assertEquals(2, count($options['search_name_value_pairs']));
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);;
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['category'], $pair->names);
+		$this->assertEquals(['foo', 'bar'], $pair->values);
+
+	}
+
+	public function testNormalizesSearchMetadataOptionsForMultiplePairs() {
+
+		$after = (new \DateTime())->modify('-1 day');
+		$before = (new \DateTime());
+
+		$options = $this->options->normalizeOptions([
+			'guid' => 1,
+			'search_name_value_pairs' => [
+				'status' => 'draft',
+				'category' => ['foo', 'bar'],
+				[
+					'name' => 'priority',
+					'value' => ['100', '200'],
+					'operand' => '!=',
+					'case_sensitive' => false,
+					'created_after' => $after,
+					'created_before' => $before,
+					'ids' => [5, 6, 7],
+				],
+				'tags' => "'tag1', 'tag2'",
+			],
+		]);
+
+		$this->assertEquals(4, count($options['search_name_value_pairs']));
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertTrue($pair->case_sensitive);
+		$this->assertEquals([1], $pair->entity_guids);
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['category'], $pair->names);
+		$this->assertEquals(['foo', 'bar'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertTrue($pair->case_sensitive);
+		$this->assertEquals([1], $pair->entity_guids);
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals([5, 6, 7], $pair->ids);
+		$this->assertEquals(['priority'], $pair->names);
+		$this->assertEquals(['100', '200'], $pair->values);
+		$this->assertEquals($after, $pair->created_after);
+		$this->assertEquals($before, $pair->created_before);
+		$this->assertEquals('!=', $pair->comparison);
+		$this->assertFalse($pair->case_sensitive);
+		$this->assertEquals([1], $pair->entity_guids);
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['tags'], $pair->names);
+		$this->assertEquals(['tag1', 'tag2'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertTrue($pair->case_sensitive);
+		$this->assertEquals([1], $pair->entity_guids);
+	}
+
+	public function testNormalizesSearchMetadataOptionsForMultipleMixedPairs() {
+		$options = $this->options->normalizeOptions([
+			'search_name_value_pairs' => [
+				'status' => 'draft',
+				new MetadataWhereClause(),
+				'owner_guid' => 1,
+			],
+		]);
+
+		$this->assertEquals(3, count($options['search_name_value_pairs']));
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertEquals(null, $pair->created_after);
+		$this->assertEquals(null, $pair->created_before);
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(null, $pair->ids);
+		$this->assertEquals(null, $pair->names);
+		$this->assertEquals(null, $pair->values);
+		$this->assertEquals(null, $pair->created_after);
+		$this->assertEquals(null, $pair->created_before);
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(AttributeWhereClause::class, $pair);
+		$this->assertEquals(['owner_guid'], $pair->names);
+		$this->assertEquals([1], $pair->values);
+	}
+
+	public function testNormalizesSearchMetadataOptionsForSinglePairInRoot() {
+
+		$options = $this->options->normalizeOptions([
+			'search_name_value_pairs' => [
+				'name' => 'status',
+				'value' => 'draft',
+			],
+		]);
+
+		$this->assertEquals(1, count($options['search_name_value_pairs']));
+
+		$pair = array_shift($options['search_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+	}
+
+	public function testNormalizesSearchMetadataOptionsOnMultipleRuns() {
+
+		$after = (new \DateTime())->modify('-1 day');
+		$before = (new \DateTime());
+
+		$options = $this->options->normalizeOptions([
+			'metadata_id' => [5, 6, 7],
+			'search_name_value_pair' => [
+				'status' => 'draft',
+				'category' => ['foo', 'bar'],
+			],
+			'metadata_created_time_lower' => $after,
+			'metadata_created_time_upper' => $before,
+		]);
+
+		$this->assertEquals($options, $this->options->normalizeOptions($options));
+
+	}
+	
+	/* ANNOTATIONS */
 
 	public function testNormalizesAnnotationsOptionsFromSingulars() {
 
@@ -890,6 +1079,125 @@ class QueryOptionsTest extends UnitTestCase {
 	public function testNormalizesPrivateSettingOptionsOnMultipleRuns() {
 
 		$options = $this->options->normalizeOptions([
+			'private_setting_name_value_pair' => [
+				'status' => 'draft',
+				'category' => ['foo', 'bar'],
+			],
+		]);
+
+		$this->assertEquals($options, $this->options->normalizeOptions($options));
+	}
+
+	public function testNormalizesPrivateSettingOptionsFromSingularsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_name' => 'status',
+			'private_setting_value' => 'draft',
+			'private_setting_name_prefix' => 'prefixed:',
+		]);
+
+		$this->assertEquals(1, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+
+	}
+
+	public function testNormalizesPrivateSettingOptionsFromPluralsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_names' => 'status',
+			'private_setting_values' => 'draft',
+			'private_setting_name_prefix' => 'prefixed:',
+		]);
+
+		$this->assertEquals(1, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+	}
+
+	public function testNormalizesPrivateSettingOptionsForMultiplePairsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'guid' => 1,
+			'private_setting_name_prefix' => 'prefixed:',
+			'private_setting_name_value_pairs' => [
+				'status' => 'draft',
+				'category' => ['foo', 'bar'],
+				[
+					'name' => 'priority',
+					'value' => ['100', '200'],
+					'operand' => '!=',
+					'case_sensitive' => true,
+				],
+			],
+		]);
+
+		$this->assertEquals(3, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertEquals([1], $pair->entity_guids);
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:category'], $pair->names);
+		$this->assertEquals(['foo', 'bar'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+		$this->assertEquals([1], $pair->entity_guids);
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:priority'], $pair->names);
+		$this->assertEquals(['100', '200'], $pair->values);
+		$this->assertEquals('!=', $pair->comparison);
+		$this->assertEquals([1], $pair->entity_guids);
+	}
+
+	public function testNormalizesPrivateSettingOptionsForMultipleMixedPairsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_name_prefix' => 'prefixed:',
+			'private_setting_name_value_pairs' => [
+				'status' => 'draft',
+				new PrivateSettingWhereClause(),
+			],
+		]);
+
+		$this->assertEquals(2, count($options['private_setting_name_value_pairs']));
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(['prefixed:status'], $pair->names);
+		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEquals('=', $pair->comparison);
+
+		$pair = array_shift($options['private_setting_name_value_pairs']);
+
+		$this->assertInstanceOf(PrivateSettingWhereClause::class, $pair);
+		$this->assertEquals(null, $pair->ids);
+		$this->assertEquals(null, $pair->names);
+		$this->assertEquals(null, $pair->values);
+	}
+
+	public function testNormalizesPrivateSettingOptionsOnMultipleRunsWithPrefix() {
+
+		$options = $this->options->normalizeOptions([
+			'private_setting_name_prefix' => 'prefixed:',
 			'private_setting_name_value_pair' => [
 				'status' => 'draft',
 				'category' => ['foo', 'bar'],

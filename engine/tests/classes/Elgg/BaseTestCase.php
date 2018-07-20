@@ -80,6 +80,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 			'dataroot' => Paths::elgg() . 'engine/tests/test_files/dataroot/',
 			'cacheroot' => Paths::elgg() . 'engine/tests/test_files/cacheroot/',
+			'assetroot' => Paths::elgg() . 'engine/tests/test_files/assetroot/',
 
 			'system_cache_enabled' => false,
 			'simplecache_enabled' => false,
@@ -87,7 +88,6 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 			'profile_files' => [],
 			'group' => [],
-			'group_tool_options' => [],
 
 			'minusername' => 10,
 			'profile_custom_fields' => [],

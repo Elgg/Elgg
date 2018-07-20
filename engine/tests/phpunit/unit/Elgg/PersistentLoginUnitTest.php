@@ -72,11 +72,7 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->dbMock = $this->getMockBuilder('\Elgg\Database')
 			->disableOriginalConstructor()
 			->getMock();
-		// use addslashes as ->sanitizeString (my local CLI doesn't have MySQL)
-		$this->dbMock->expects($this->any())
-			->method('sanitizeString')
-			->will($this->returnCallback(array($this, 'mock_sanitizeString')));
-
+		
 		$this->cryptoMock = $this->getMockBuilder('\ElggCrypto')
 			->getMock();
 		$this->cryptoMock->expects($this->any())
@@ -287,6 +283,50 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame($this->mockToken, $this->lastCookieSet->value);
 		$this->assertSame($this->mockToken, $this->session->get('code'));
 	}
+	
+	function testUpdateTokenUsageWithoutCookie() {
+		$this->assertNull($this->svc->updateTokenUsage($this->user123));
+	}
+	
+	function testUpdateTokenUsageWithWrongUser() {
+		$this->svc = $this->getSvcWithCookie($this->mockToken);
+		
+		$wrong_user = $this->createUser();
+		
+		$this->dbMock->expects($this->once())
+				->method('updateData')
+				->will($this->returnCallback([$this, 'mock_updateWrongUser']));
+		
+		$this->assertFalse($this->svc->updateTokenUsage($wrong_user));
+	}
+	
+	function testUpdateTokenUsageWithCorrectUser() {
+		$this->svc = $this->getSvcWithCookie($this->mockToken);
+		
+		$this->dbMock->expects($this->once())
+				->method('updateData')
+				->will($this->returnCallback([$this, 'mock_updateCorrectUser']));
+		
+		$this->assertTrue($this->svc->updateTokenUsage($this->user123));
+		
+		$this->assertSame($this->mockToken, $this->lastCookieSet->value);
+	}
+	
+	function testRemoveExpiredTokens() {
+		$this->dbMock->expects($this->once())
+				->method('deleteData')
+				->will($this->returnCallback([$this, 'mock_deleteExpiredTokens']));
+		
+		$this->assertTrue($this->svc->removeExpiredTokens(time()));
+	}
+	
+	function testRemoveAllHashes() {
+		$this->dbMock->expects($this->once())
+				->method('deleteData')
+				->will($this->returnCallback([$this, 'mock_deleteAll']));
+		
+		$this->svc->removeAllHashes($this->user123);
+	}
 
 	// mock \ElggUser which will return the GUID on ->guid reads
 	function getMockElggUser($guid) {
@@ -315,11 +355,6 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->timeSlept = $seconds;
 	}
 
-	function mock_sanitizeString($string) {
-		// no need for dependence on MySQL here
-		return addslashes($string);
-	}
-
 	/**
 	 * @param string $cookie_token
 	 * @return \Elgg\PersistentLoginService
@@ -345,26 +380,68 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		return $svc;
 	}
 
-	function mock_insertData($sql) {
-		$this->assertContains("INSERT INTO users_remember_me_cookies", $sql);
-		$this->assertContains("VALUES ('{$this->mockHash}', 123,", $sql);
+	function mock_insertData($sql, $params) {
+		$pattern = '~INSERT INTO users_remember_me_cookies \(code, guid, timestamp\)\\s+VALUES \(:hash, :guid, :time\)~';
+		$this->assertRegExp($pattern, $sql);
+		$this->assertArraySubset([
+			':guid' => 123,
+			':hash' => $this->mockHash,
+		], $params);
 	}
 
-	function mock_deleteData($sql) {
-		$pattern = "~DELETE FROM users_remember_me_cookies\\s+WHERE code = '{$this->mockHash}'~";
-		$this->assertSame(1, preg_match($pattern, $sql));
+	function mock_deleteData($sql, $params) {
+		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE code = :hash~';
+		$this->assertRegExp($pattern, $sql);
+		$this->assertEquals([
+			':hash' => $this->mockHash,
+		], $params);
 	}
 
-	function mock_getDataRow($sql) {
-		$pattern = "~SELECT guid FROM users_remember_me_cookies\\s+WHERE code = '{$this->mockHash}'~";
-		$this->assertSame(1, preg_match($pattern, $sql));
+	function mock_getDataRow($sql, $callback, $params) {
+		$pattern = '~SELECT guid\\s+FROM users_remember_me_cookies\\s+WHERE code = :hash~';
+		$this->assertRegExp($pattern, $sql);
+		$this->assertEquals([
+			':hash' => $this->mockHash,
+		], $params);
 
 		return (object) array('guid' => 123);
 	}
 
-	function mock_deleteAll($sql) {
-		$pattern = "~DELETE FROM users_remember_me_cookies\\s+WHERE guid = '123'+~";
-		$this->assertSame(1, preg_match($pattern, $sql));
+	function mock_deleteAll($sql, $params) {
+		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE guid = :guid~';
+		$this->assertRegExp($pattern, $sql);
+		$this->assertEquals([
+			':guid' => 123,
+		], $params);
 	}
 
+	function mock_updateWrongUser($sql, $get_num_rows, $params) {
+		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
+		$this->assertRegExp($pattern, $sql);
+		$this->assertArraySubset([
+			':hash' => $this->mockHash,
+		], $params);
+		$this->assertNotContains($params, [
+			':guid' => 123,
+		]);
+	}
+	
+	function mock_updateCorrectUser($sql, $get_num_rows, $params) {
+		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
+		$this->assertRegExp($pattern, $sql);
+		$this->assertArraySubset([
+			':guid' => 123,
+			':hash' => $this->mockHash,
+		], $params);
+		
+		return 1;
+	}
+	
+	function mock_deleteExpiredTokens($sql, $params) {
+		$pattern = '~DELETE FROM users_remember_me_cookies\\s+WHERE timestamp < :time~';
+		$this->assertRegExp($pattern, $sql);
+		$this->assertArrayHasKey(':time', $params);
+		
+		return 1;
+	}
 }

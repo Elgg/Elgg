@@ -3,9 +3,6 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
-use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Database\Entities;
-
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
  *
@@ -226,6 +223,10 @@ function elgg_get_site_entity() {
  *
  * In addition to metadata name value pairs, you can specify search pair, which will be merged using OR boolean
  * and will filter entities regardless of metadata name value pairs and their operator
+ * @warning During normalization, search name value pairs will ignore properties under metadata_ namespace, that is
+ *          you can not use metadata_ids, metadata_created_before, metadata_created_after, metadata_case_sensitive
+ *          to constrain search pairs. You will need to pass these properties for each individual search pair,
+ *          as seen in the example below
  *
  * @option array                $search_name_value_pairs
  *
@@ -256,10 +257,13 @@ function elgg_get_site_entity() {
  *       'case_sensitive' => false,
  *    ],
  *    [
+ *       // 'ids' => [55, 56, 57, 58, 59, 60], // only search these 5 metadata rows
  *       'name' => 'tags',
  *       'value' => '%world%',
  *       'operand' => 'LIKE',
  *       'case_sensitive' => false,
+ *       'created_after' => '-1 day',
+ *       'created_before' => 'now',
  *    ],
  * ];
  * </code>
@@ -500,29 +504,33 @@ function elgg_get_site_entity() {
  * RESULT OPTIONS
  * --------------
  *
- * @option bool $distinct           If set to false, Elgg will drop the DISTINCT clause from
- *                                  the MySQL query, which will improve performance in some situations.
- *                                  Avoid setting this option without a full understanding of the underlying
- *                                  SQL query Elgg creates.
- *                                  Default: true
- * @option callable|false $callback A callback function to pass each row through
- *                                  Default: entity_row_to_elggstar
- * @option bool $preload_owners     If set to true, this function will preload
- *                                  all the owners of the returned entities resulting in better
- *                                  performance when displaying entities owned by several users
- *                                  Default: false
- * @option bool $preload_containers If set to true, this function will preload
- *                                  all the containers of the returned entities resulting in better
- *                                  performance when displaying entities contained by several users/groups
- *                                  Default: false
- * @option bool $batch              If set to true, an Elgg\BatchResult object will be returned instead of an array.
- *                                  Default: false
- * @option bool $batch_inc_offset   If "batch" is used, this tells the batch to increment the offset
- *                                  on each fetch. This must be set to false if you delete the batched results.
- *                                  Default: true
- * @option int  $batch_size         If "batch" is used, this is the number of entities/rows to pull in before
- *                                  requesting more.
- *                                  Default: 25
+ * @option bool $distinct                 If set to false, Elgg will drop the DISTINCT clause from
+ *                                        the MySQL query, which will improve performance in some situations.
+ *                                        Avoid setting this option without a full understanding of the underlying
+ *                                        SQL query Elgg creates.
+ *                                        Default: true
+ * @option callable|false $callback       A callback function to pass each row through
+ *                                        Default: entity_row_to_elggstar
+ * @option bool $preload_owners           If set to true, this function will preload
+ *                                        all the owners of the returned entities resulting in better
+ *                                        performance when displaying entities owned by several users
+ *                                        Default: false
+ * @option bool $preload_containers       If set to true, this function will preload
+ *                                        all the containers of the returned entities resulting in better
+ *                                        performance when displaying entities contained by several users/groups
+ *                                        Default: false
+ * @option bool $preload_private_settings If set to true, this function will preload
+ *                                        all the private settings of the returned entities resulting in better
+ *                                        performance when displaying entities where private settings are often used, such as widgets
+ *                                        Default: false
+ * @option bool $batch                    If set to true, an Elgg\BatchResult object will be returned instead of an array.
+ *                                        Default: false
+ * @option bool $batch_inc_offset         If "batch" is used, this tells the batch to increment the offset
+ *                                        on each fetch. This must be set to false if you delete the batched results.
+ *                                        Default: true
+ * @option int  $batch_size               If "batch" is used, this is the number of entities/rows to pull in before
+ *                                        requesting more.
+ *                                        Default: 25
  *
  *
  * @see    elgg_list_entities()
@@ -614,34 +622,17 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 /**
  * Returns a list of months in which entities were updated or created.
  *
- * @tip Use this to generate a list of archives by month for when entities were added or updated.
- *
- * @todo document how to pass in array for $subtype
+ * @tip     Use this to generate a list of archives by month for when entities were added or updated.
  *
  * @warning Months are returned in the form YYYYMM.
  *
- * @param string $type           The type of entity
- * @param string $subtype        The subtype of entity
- * @param int    $container_guid The container GUID that the entities belong to
- * @param int    $ignored        Ignored parameter
- * @param string $order_by       Order_by SQL order by clause
- * @param array  $options        Additional options for ege
+ * @param array $options all entity options supported by {@see elgg_get_entities()}
  *
  * @return array|false Either an array months as YYYYMM, or false on failure
+ * @since 3.0
  */
-function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'e.time_created', array $options = []) {
-	$defaults = [
-		'types' => $type,
-		'subtypes' => $subtype,
-		'container_guids' => $container_guid,
-		'order_by' => [
-			new OrderByClause($order_by),
-		],
-	];
-
-	$options = array_merge($options, $defaults);
-	
-	return Entities::with($options)->getDates();
+function elgg_get_entity_dates(array $options = []) {
+	return \Elgg\Database\Entities::with($options)->getDates();
 }
 
 /**

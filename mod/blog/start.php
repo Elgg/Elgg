@@ -20,8 +20,6 @@ function blog_init() {
 		'href' => elgg_generate_url('collection:object:blog:all'),
 	]);
 
-	elgg_extend_view('object/elements/imprint/contents', 'blog/imprint/status');
-
 	// notifications
 	elgg_register_notification_event('object', 'blog', ['publish']);
 	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:blog', 'blog_prepare_notification');
@@ -30,8 +28,7 @@ function blog_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
 	// Add group option
-	add_group_tool_option('blog', null, true);
-	elgg_extend_view('groups/tool_latest', 'blog/group_module');
+	elgg()->group_tools->register('blog');
 
 	// archive menu
 	elgg_register_plugin_hook_handler('register', 'menu:blog_archive', 'blog_archive_menu_setup');
@@ -97,8 +94,10 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 	$page_owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
 	$page = elgg_extract('page', $params);
 	
-	$options = [];
-	$container_guid = ELGG_ENTITIES_ANY_VALUE;
+	$options = [
+		'type' => 'object',
+		'subtype' => 'blog',
+	];
 	if ($page_owner instanceof ElggUser) {
 		if ($page === 'friends') {
 			$options['relationship'] = 'friend';
@@ -108,10 +107,10 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 			$options['owner_guid'] = $page_owner->guid;
 		}
 	} elseif ($page_owner instanceof ElggEntity) {
-		$container_guid = $page_owner->guid;
+		$options['container_guid'] = $page_owner->guid;
 	}
 	
-	$dates = get_entity_dates('object', 'blog', $container_guid, 0, 'e.time_created', $options);
+	$dates = elgg_get_entity_dates($options);
 	if (!$dates) {
 		return;
 	}

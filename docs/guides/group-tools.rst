@@ -1,12 +1,32 @@
 Group Tools
 ===========
 
-In Elgg groups have a feature where you can enable or disable different tools for a group. These tools are provided by other plugins like blog or file.
+Elgg groups allow group administrators to enable/disable various tools available within a group.
+These tools are provided by other plugins like blog or file.
 
-Plugins need to tell Elgg that these tools exist. This can be done by using the ``add_group_tool_option`` function.
-If an existing tool option needs to be removed you can use ``remove_group_tool_option``.
+Plugins can access group tool register via ``elgg()->group_tools``.
 
-On a group edit form you can turn the tools on or off for the specific group. You can also do so programmatically as shown in the code example below. 
+.. code-block:: php
+
+	elgg()->group_tools->register('my-tool', [
+		'default_on' => false, // default is true
+		'label' => elgg_echo('my-tool:checkbox:label'),
+		'priority' => 300, // display this earlier than other modules/tools
+	]);
+
+A registered tool will have an option to be toggled on the group edit form, and can have a profile view module associated with it.
+To add a profile module, simply add a corresponding view as ``groups/profile/module/<tool_name>``.
+
+.. code-block:: php
+
+	// file: groups/profile/module/my-tool.php
+
+	echo elgg_view('groups/profile/module', [
+		'title' => elgg_echo('my-tool'),
+		'content' => 'Hello, world!',
+	]);
+
+You can programmically enable and disable tools for a given group:
 
 .. code-block:: php
 	
@@ -30,4 +50,4 @@ It is also a possibility to use a gatekeeper function to prevent access to a gro
 
 	Read more about gatekeepers here: :ref:`authentication-gatekeepers`
 
-If you need the configured group tool options for a specific group you can use the ``elgg_get_group_tool_options($group)`` function.
+If you need the configured group tool options for a specific group you can use the ``elgg()->group_tools->group($group)`` function.

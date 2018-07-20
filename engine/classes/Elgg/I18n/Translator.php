@@ -541,8 +541,6 @@ class Translator {
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
 
-		$language = sanitise_string($language);
-
 		$en = count($this->translations['en']);
 
 		$missing = $this->getMissingLanguageKeys($language);

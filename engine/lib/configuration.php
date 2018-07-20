@@ -59,6 +59,18 @@ function elgg_get_cache_path() {
 }
 
 /**
+ * Get the asset cache directory path for this installation, ending with slash.
+ *
+ * If not set in settings, the cache path will be returned.
+ *
+ * @return string
+ */
+function elgg_get_asset_path() {
+	$path = _elgg_config()->assetroot ? : elgg_get_cache_path() . 'views_simplecache/';
+	return Paths::sanitize($path);
+}
+
+/**
  * Get the project path (where composer is installed), ending with slash.
  *
  * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg

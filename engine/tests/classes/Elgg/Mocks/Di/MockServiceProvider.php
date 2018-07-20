@@ -50,6 +50,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 				$sp->db,
 				$sp->entityCache,
 				$sp->metadataCache,
+				$sp->privateSettingsCache,
 				$sp->events,
 				$sp->session,
 				$sp->translator,

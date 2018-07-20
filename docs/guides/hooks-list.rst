@@ -1108,7 +1108,13 @@ Groups
 	Filters buttons (``ElggMenuItem`` instances) to be registered in the title menu of the group profile page
 
 **tool_options, group**
-	Use this hook to influence the available group tool options
+	Filters a collection of tools available within a specific group:
+
+	The ``$return`` is ``\Elgg\Collections\Collection<\Elgg\Groups\Tool>``, a collection of group tools.
+
+	The ``$params`` array contains:
+
+	 * ``entity`` - ``\ElggGroup``
 
 HTMLawed
 --------

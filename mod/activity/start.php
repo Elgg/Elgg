@@ -51,8 +51,7 @@ function elgg_activity_init() {
 		'href' => elgg_generate_url('default:river'),
 	]);
 	
-	add_group_tool_option('activity', null, true);
-	elgg_extend_view('groups/tool_latest', 'activity/group_module');
+	elgg()->group_tools->register('activity');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '_elgg_activity_owner_block_menu');
 }

@@ -196,12 +196,12 @@ class MetadataCache {
 	 */
 	public function getEntityMetadata($entity_guid) {
 		$entity_guid = (int) $entity_guid;
-		$metadata =	$this->populateFromEntities($entity_guid);
-		if (!isset($metadata)) {
-			return null;
+		$metadata = $this->cache->load($entity_guid);
+		if ($metadata === null) {
+			$metadata = elgg_extract($entity_guid, $this->populateFromEntities($entity_guid));
 		}
-
-		return elgg_extract($entity_guid, $metadata);
+		
+		return $metadata;
 	}
 
 	/**
@@ -284,11 +284,14 @@ class MetadataCache {
 			$values[$row->entity_guid][] = $row;
 		}
 
-		foreach ($values as $guid => $row) {
-			$this->cache->save($guid, $row);
-			$cached_values[$guid] = $row;
+		// store always for every guid, even if there is no metadata
+		foreach ($guids as $guid) {
+			$metadata = elgg_extract($guid, $values, []);
+			
+			$this->cache->save($guid, $metadata);
+			$cached_values[$guid] = $metadata;
 		}
-
+		
 		return $cached_values;
 	}
 

@@ -31,7 +31,6 @@ If you had your Elgg 2.3 project installed using composer, you can follow this s
 .. code-block:: sh
 
     composer self-update
-    composer global update fxp/composer-asset-plugin
 
     cd ./path/to/project/root
     composer require elgg/elgg:~3.0

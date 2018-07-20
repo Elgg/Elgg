@@ -630,6 +630,8 @@ E.g. retrieving users who joined your group in January 2014.
         'relationship_created_time_upper' => 1391212800, // February 1st 2014
     ));
 
+.. _database-access-control:
+
 Access Control
 ==============
 
@@ -641,10 +643,10 @@ over who sees an item of data he or she creates.
 Access controls in the data model
 ---------------------------------
 
-In order to achieve this, every entity, annotation and piece of
-metadata contains an ``access_id`` property, which in turn corresponds
-to one of the pre-defined access controls or an entry in the
-``access_collections`` database table.
+In order to achieve this, every entity and annotation contains an 
+``access_id`` property, which in turn corresponds to one of the 
+pre-defined access controls or an entry in the ``access_collections`` 
+database table.
 
 Pre-defined access controls
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -657,19 +659,17 @@ User defined access controls
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You may define additional access groups and assign them to an entity,
-annotation or metadata. A number of functions have been defined to
-assist you; see the `access library reference`_ for more information.
+or annotation. A number of functions have been defined to
+assist you; see the :doc:`/guides/access` for more information.
 
 How access affects data retrieval
 ---------------------------------
 
 All data retrieval functions above the database layer - for example
-``get_entities`` and its cousins - will only return items that the
-current user has access to see. It is not possible to retrieve items
-that the current user does not have access to. This makes it very hard
-to create a security hole for retrieval.
-
-.. _access library reference: http://reference.elgg.org/engine_2lib_2access_8php.html
+``elgg_get_entities`` will only return items that the current user has 
+access to see. It is not possible to retrieve items that the current 
+user does not have access to. This makes it very hard to create a 
+security hole for retrieval.
 
 Write access
 ------------
@@ -686,12 +686,6 @@ You can override this behaviour using a :ref:`plugin hook <design/events#plugin-
 function that has announced it wants to be referenced. Returning
 ``true`` will allow write access; returning ``false`` will deny it. See
 :ref:`the plugin hook reference for permissions\_check <guides/hooks-list#permission-hooks>` for more details.
-
-.. seealso::
-
-   `Access library reference`_
-
-.. _Access library reference: http://reference.elgg.org/engine_2lib_2access_8php.html
 
 Schema
 ======
@@ -713,52 +707,45 @@ populated with your first site.
 
 It contains the following fields:
 
--  **guid** An auto-incrementing counter producing a GUID that uniquely
-   identifies this entity in the system.
+-  **guid** An auto-incrementing counter producing a GUID that uniquely identifies this entity in the system
 -  **type** The type of entity - object, user, group or site
 -  **subtype** A subtype of entity
--  **owner\_guid** The GUID of the owner's entity.
--  **site\_guid** The site the entity belongs to.
--  **container\_guid** The GUID this entity is contained by - either a user or
-   a group.
--  **access\_id** Access controls on this entity.
--  **time\_created** Unix timestamp of when the entity is created.
--  **time\_updated** Unix timestamp of when the entity was updated.
+-  **owner\_guid** The GUID of the owner's entity
+-  **container\_guid** The GUID this entity is contained by - either a user or a group
+-  **access\_id** Access controls on this entity
+-  **time\_created** Unix timestamp of when the entity is created
+-  **time\_updated** Unix timestamp of when the entity was updated
 -  **enabled** If this is 'yes' an entity is accessible, if 'no' the entity
    has been disabled (Elgg treats it as if it were deleted without actually
-   removing it from the database).
+   removing it from the database)
 
 Table: metadata
 ~~~~~~~~~~~~~~~
 
 This table contains `Metadata`_, extra information attached to an entity.
 
--  **id** A counter.
--  **entity\_guid** The entity this is attached to.
+-  **id** A unique IDentifier
+-  **entity\_guid** The entity this is attached to
 -  **name** The name string
-   table.
--  **value** The value string.
--  **value\_type** The value class, either text or an integer.
--  **time\_created** Unix timestamp of when the metadata is created.
--  **enabled** If this is 'yes' an item is accessible, if 'no' the item
-   has been deleted.
+-  **value** The value string
+-  **value\_type** The value class, either text or an integer
+-  **time\_created** Unix timestamp of when the metadata is created
+-  **enabled** If this is 'yes' an item is accessible, if 'no' the item has been disabled
 
 Table: annotations
 ~~~~~~~~~~~~~~~~~~
 
 This table contains `Annotations`_, this is distinct from `Metadata`_.
 
--  **id** A counter.
--  **entity\_guid** The entity this is attached to.
+-  **id** A unique IDentifier
+-  **entity\_guid** The entity this is attached to
 -  **name** The name string
 -  **value** The value string
--  **value\_type** The value class, either text or an integer.
--  **owner\_guid** The owner GUID of the owner who set this item of
-   metadata.
--  **access\_id** An Access controls on this item of metadata.
--  **time\_created** Unix timestamp of when the metadata is created.
--  **enabled** If this is 'yes' an item is accessible, if 'no' the item
-   has been deleted.
+-  **value\_type** The value class, either text or an integer
+-  **owner\_guid** The owner GUID of the owner who set this annotation
+-  **access\_id** An Access controls on this annotation
+-  **time\_created** Unix timestamp of when the annotation is created.
+-  **enabled** If this is 'yes' an item is accessible, if 'no' the item has been disabled
 
 Table: relationships
 ~~~~~~~~~~~~~~~~~~~~
@@ -768,3 +755,16 @@ This table defines `Relationships`_, these link one entity with another.
 -  **guid\_one** The GUID of the subject entity.
 -  **relationship** The type of the relationship.
 -  **guid\_two** The GUID of the target entity.
+
+Secundairy tables
+-----------------
+
+Table: access_collections
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This table defines Access Collections, which grant users access to `Entities`_ or `Annotations`_.
+
+- **id** A unique IDentifier
+- ***name**  The name of the access collection
+- **owner_guid** The GUID of the owning entity (eg. a user or a group)
+- **subtype** the subtype of the access collection (eg. `friends` or `group_acl`)

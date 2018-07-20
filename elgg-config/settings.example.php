@@ -188,6 +188,16 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cacheroot = "";
 
 /**
+ * Set views simplecache directory
+ *
+ * Elgg uses the asset directory to store cached asset files.
+ * By default, assets are stored in the cache root and site owners are
+ * advised to symlink project root /cache to asset root.
+ * Using this config value, you can change the default behavior
+ */
+//$CONFIG->assetroot = "";
+
+/**
  * Enable SendFile file serving
  *
  * After enabling X-Sendfile/X-Accel on your server, you can enable its support in Elgg. Set the

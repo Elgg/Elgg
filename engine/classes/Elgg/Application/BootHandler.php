@@ -116,14 +116,25 @@ class BootHandler {
 
 		$events = $this->app->_services->events;
 
-		$events->registerHandler('plugins_boot:before', 'system', 'elgg_views_boot');
+		$events->registerHandler('plugins_load:before', 'system', 'elgg_views_boot');
+		$events->registerHandler('plugins_load:after', 'system', function() {
+			_elgg_session_boot($this->app->_services);
+		});
+
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_actions');
 
-		// Load the plugins that are active
-		$this->app->_services->plugins->load();
+		// Setup all boot sequence handlers for active plugins
+		$this->app->_services->plugins->build();
 
-		// Allows registering handlers strictly before all init, system handlers
+		// Register plugin classes, entities etc
+		// Call PluginBootstrap::load()
+		// After event completes, Elgg session is booted
+		$events->triggerSequence('plugins_load', 'system');
+
+		// Boot plugin, setup languages and views
+		// Include start.php
+		// Call PluginBootstrap::boot()
 		$events->triggerSequence('plugins_boot', 'system');
 
 		$config->_plugins_boot_complete = true;

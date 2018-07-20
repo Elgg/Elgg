@@ -109,7 +109,7 @@ function elgg_disable_system_cache() {
  * @since 1.8.0
  */
 function elgg_register_simplecache_view($view_name) {
-	_elgg_services()->simpleCache->registerView($view_name);
+	_elgg_services()->views->registerCacheableView($view_name);
 }
 
 /**
@@ -241,9 +241,8 @@ function elgg_flush_caches() {
  */
 function _elgg_is_cache_symlinked() {
 	$root_path = elgg_get_root_path();
-	$cache_path = elgg_get_cache_path();
 
-	$simplecache_path = "{$cache_path}views_simplecache";
+	$simplecache_path = elgg_get_asset_path();
 	$symlink_path = "{$root_path}cache";
 
 	if (!is_dir($simplecache_path)) {
@@ -266,9 +265,7 @@ function _elgg_symlink_cache() {
 	}
 
 	$root_path = elgg_get_root_path();
-	$cache_path = elgg_get_cache_path();
-
-	$simplecache_path = "{$cache_path}views_simplecache";
+	$simplecache_path = rtrim(elgg_get_asset_path(), '/');
 	$symlink_path = "{$root_path}cache";
 
 	if (is_dir($symlink_path)) {

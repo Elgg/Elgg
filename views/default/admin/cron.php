@@ -4,21 +4,27 @@
  */
 
 $periods = elgg_get_config('elgg_cron_periods');
+$cron_service = _elgg_services()->cron;
+
 $table_content = '';
 foreach ($periods as $period) {
-	$name = elgg_echo("interval:$period");
-	$key = "cron_latest:$period:ts";
-	$ts = elgg_get_site_entity()->getPrivateSetting($key);
+	$row = [];
+	
+	// name
+	$row[] = elgg_format_element('td', [], elgg_echo("interval:$period"));
+	
+	// last completed (friendly) and full date
+	$ts = $cron_service->getLog('completion', $period);
 	if ($ts) {
-		$friendly_time = elgg_view_friendly_time($ts);
-		$date = date('r', $ts);
+		$row[] = elgg_format_element('td', [], elgg_view_friendly_time($ts));
+		$row[] = elgg_format_element('td', [], date('r', $ts));
 	} else {
-		$friendly_time = elgg_echo('never');
-		$date = '';
+		$row[] = elgg_format_element('td', [], elgg_echo('never'));
+		$row[] = elgg_format_element('td', [], '&nbsp;');
 	}
 
-	$msg_key = "cron_latest:$period:msg";
-	$msg = elgg_get_site_entity()->getPrivateSetting($msg_key);
+	// cron output
+	$msg = $cron_service->getLog('output', $period);
 	if ($msg) {
 		$msg = nl2br($msg);
 	}
@@ -35,8 +41,9 @@ foreach ($periods as $period) {
 			'rel' => 'toggle',
 		]) . $wrapped_message;
 	}
+	$row[] = elgg_format_element('td', [], $msg);
 	
-	$table_content .= "<tr><td>$name</td><td>$friendly_time</td><td>$date</td><td>$msg</td><tr>";
+	$table_content .= elgg_format_element('tr', [], implode(PHP_EOL, $row));
 }
 
 $period_hd = elgg_echo('admin:cron:period');
@@ -46,8 +53,17 @@ $msg_hd = elgg_echo('admin:cron:msg');
 
 $table = <<<HTML
 <table class="elgg-table">
-	<thead><tr><th>$period_hd</th><th>$friendly_hd</th><th>$date_hd</th><th>$msg_hd</th></tr></thead>
-	$table_content
+	<thead>
+		<tr>
+			<th>$period_hd</th>
+			<th>$friendly_hd</th>
+			<th>$date_hd</th>
+			<th>$msg_hd</th>
+		</tr>
+	</thead>
+	<tbody>
+		$table_content
+	</tbody>
 </table>
 HTML;
 

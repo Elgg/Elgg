@@ -52,6 +52,7 @@ trait LegacyQueryOptionsAdapter {
 		$options = $this->normalizeRelationshipOptions($options);
 		$options = $this->normalizeAnnotationOptions($options);
 		$options = $this->normalizeMetadataOptions($options);
+		$options = $this->normalizeMetadataSearchOptions($options);
 
 		foreach (['selects', 'joins', 'wheres'] as $prop) {
 			if (empty($options[$prop])) {
@@ -242,7 +243,6 @@ trait LegacyQueryOptionsAdapter {
 		$options = self::normalizePluralOptions($options, $singulars);
 
 		$options = $this->normalizePairedOptions('metadata', $options);
-		$options = $this->normalizePairedOptions('search', $options);
 
 		if (isset($options['order_by_metadata'])) {
 			$name = elgg_extract('name', $options['order_by_metadata']);
@@ -302,7 +302,6 @@ trait LegacyQueryOptionsAdapter {
 			'ids' => null,
 			'created_after' => null,
 			'created_before' => null,
-			'entity_guids' => null,
 		];
 
 		foreach ($options['metadata_name_value_pairs'] as $key => $pair) {
@@ -337,6 +336,82 @@ trait LegacyQueryOptionsAdapter {
 			$clause->case_sensitive = $pair['case_sensitive'];
 
 			$options['metadata_name_value_pairs'][$key] = $clause;
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Normalizes metadata search options
+	 * These queries are added merge with 'OR' and appended to other metadata queries with 'AND'
+	 *
+	 * @param array $options Options
+	 *
+	 * @return array
+	 */
+	protected function normalizeMetadataSearchOptions(array $options = []) {
+		$singulars = [
+			'search_name_value_pair',
+		];
+
+		$options = self::normalizePluralOptions($options, $singulars);
+
+		$options = $this->normalizePairedOptions('search', $options);
+
+		foreach ($options['search_name_value_pairs'] as $key => $pair) {
+			if ($pair instanceof Clause) {
+				continue;
+			}
+
+			$options['search_name_value_pairs'][$key]['entity_guids'] = $options['guids'];
+		}
+
+		$options['search_name_value_pairs'] = $this->removeKeyPrefix('metadata_', $options['search_name_value_pairs']);
+
+		$defaults = [
+			'name' => null,
+			'value' => null,
+			'comparison' => '=',
+			'type' => ELGG_VALUE_STRING,
+			'case_sensitive' => true,
+			'entity_guids' => null,
+			'ids' => null,
+			'created_after' => null,
+			'created_before' => null,
+		];
+
+		foreach ($options['search_name_value_pairs'] as $key => $pair) {
+			if ($pair instanceof WhereClause) {
+				continue;
+			}
+
+			$pair = array_merge($defaults, $pair);
+
+			if (in_array(strtolower($pair['comparison']), ['in', 'eq', '=']) && is_string($pair['value'])) {
+				// Apparently this madness is supported
+				// \Elgg\Integration\ElggCoreGetEntitiesFromMetadataTest::testElggApiGettersEntityMetadataNVPValidNValidVOperandIn
+				$pair['value'] = array_map(function ($e) {
+					return trim($e, ' \"\'');
+				}, explode(',', $pair['value']));
+			}
+
+			if (in_array($pair['name'], ElggEntity::$primary_attr_names)) {
+				$clause = new AttributeWhereClause();
+			} else {
+				$clause = new MetadataWhereClause();
+				$clause->ids = (array) $pair['ids'];
+				$clause->entity_guids = (array) $pair['entity_guids'];
+				$clause->created_after = $pair['created_after'];
+				$clause->created_before = $pair['created_before'];
+			}
+
+			$clause->names = (array) $pair['name'];
+			$clause->values = (array) $pair['value'];
+			$clause->comparison = $pair['comparison'];
+			$clause->value_type = $pair['type'];
+			$clause->case_sensitive = $pair['case_sensitive'];
+
+			$options['search_name_value_pairs'][$key] = $clause;
 		}
 
 		return $options;
@@ -476,17 +551,6 @@ trait LegacyQueryOptionsAdapter {
 
 		$options = self::normalizePluralOptions($options, $singulars);
 
-		if (isset($options['private_setting_name_prefix'])) {
-			$prefix = $options['private_setting_name_prefix'];
-			unset($options['private_setting_name_prefix']);
-
-			if (is_array($options['private_setting_names'])) {
-				$options['private_setting_names'] = array_map(function ($el) use ($prefix) {
-					return "$prefix$el";
-				}, $options['private_setting_names']);
-			}
-		}
-
 		$options = $this->normalizePairedOptions('private_setting', $options);
 
 		foreach ($options['private_setting_name_value_pairs'] as $key => $pair) {
@@ -498,6 +562,12 @@ trait LegacyQueryOptionsAdapter {
 		}
 
 		$options['private_setting_name_value_pairs'] = $this->removeKeyPrefix('private_setting_', $options['private_setting_name_value_pairs']);
+
+		$prefix = null;
+		if (isset($options['private_setting_name_prefix'])) {
+			$prefix = $options['private_setting_name_prefix'];
+			unset($options['private_setting_name_prefix']);
+		}
 
 		$defaults = [
 			'name' => null,
@@ -516,10 +586,15 @@ trait LegacyQueryOptionsAdapter {
 
 			$pair = array_merge($defaults, $pair);
 
+			$names = (array) elgg_extract('name', $pair);
+			$names = array_map(function($name) use ($prefix) {
+				return $prefix ? "$prefix$name" : $name;
+			}, $names);
+
 			$clause = new PrivateSettingWhereClause();
 			$clause->ids = (array) $pair['ids'];
 			$clause->entity_guids = (array) $pair['entity_guids'];
-			$clause->names = (array) $pair['name'];
+			$clause->names = $names;
 			$clause->values = (array) $pair['value'];
 			$clause->comparison = $pair['comparison'];
 			$clause->value_type = $pair['type'];

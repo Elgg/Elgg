@@ -228,13 +228,6 @@ $CONFIG->registers;
 $CONFIG->register_objects;
 
 /**
- * Holds available group tools options.  Added with {@link add_group_tool_option()}
- *
- * @global array $CONFIG->group_tool_options
- */
-$CONFIG->group_tool_options;
-
-/**
  * The last cache time for the current viewtype.  Used in the generation of CSS and JS links.
  *
  * @global string $CONFIG->lastcache

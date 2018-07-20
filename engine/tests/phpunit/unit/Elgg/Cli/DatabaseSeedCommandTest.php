@@ -21,7 +21,7 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 
 	}
 
-	public function testExecute() {
+	public function testSeedCommand() {
 		$hook = $this->registerTestingHook('seeds', 'database', function(Hook $hook) {
 			$value = $hook->getValue();
 			$value[] = CliSeeder::class;
@@ -30,9 +30,6 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 
 		$application = new Application();
 		$application->add(new DatabaseSeedCommand());
-		$application->add(new DatabaseUnseedCommand());
-
-		$application = $application;
 
 		$command = $application->find('database:seed');
 		$commandTester = new CommandTester($command);
@@ -41,6 +38,22 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 			'--limit' => '2',
 		]);
 
+		$seeder = preg_quote(CliSeeder::class);
+		$this->assertRegExp("/{$seeder}::seed/im", $commandTester->getDisplay());
+
+		$hook->unregister();
+	}
+	
+	public function testUnseedCommand() {
+		$hook = $this->registerTestingHook('seeds', 'database', function(Hook $hook) {
+			$value = $hook->getValue();
+			$value[] = CliSeeder::class;
+			return $value;
+		});
+
+		$application = new Application();
+		$application->add(new DatabaseUnseedCommand());
+
 		$command = $application->find('database:unseed');
 		$commandTester = new CommandTester($command);
 		$commandTester->execute([
@@ -48,7 +61,6 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 		]);
 
 		$seeder = preg_quote(CliSeeder::class);
-		$this->assertRegExp("/{$seeder}::seed/im", $commandTester->getDisplay());
 		$this->assertRegExp("/{$seeder}::unseed/im", $commandTester->getDisplay());
 
 		$hook->unregister();

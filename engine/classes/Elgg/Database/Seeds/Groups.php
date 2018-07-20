@@ -63,7 +63,7 @@ class Groups extends Seed {
 					'membership' => $this->getRandomMembership(),
 				], [
 					'profile_fields' => (array) elgg_get_config('group'),
-					'group_tool_options' => (array) elgg_get_config('group_tool_options'),
+					'group_tool_options' => elgg()->group_tools->all(),
 				]);
 				if (!$group) {
 					continue;

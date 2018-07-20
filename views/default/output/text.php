@@ -10,8 +10,8 @@
  */
 
 $value = elgg_extract('value', $vars);
-if (!is_string($value)) {
+if (!is_scalar($value)) {
 	return;
 }
 
-echo htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);
+echo htmlspecialchars("{$value}", ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', false);

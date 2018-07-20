@@ -2,8 +2,10 @@
 
 namespace Elgg\Database\Seeds;
 
+use Elgg\Collections\Collection;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
+use Elgg\Groups\Tool;
 use ElggEntity;
 use ElggGroup;
 use ElggObject;
@@ -254,12 +256,12 @@ trait Seeding {
 			}
 
 			$tool_options = elgg_extract('group_tools_options', $options, []);
-			if ($tool_options) {
-				foreach ($tool_options as $group_option) {
-					$option_toggle_name = $group_option->name . "_enable";
-					$option_default = $group_option->default_on ? 'yes' : 'no';
-					$properties[$option_toggle_name] = $option_default;
-				}
+			/* @var $tool_options Collection|Tool[] */
+
+			foreach ($tool_options as $group_option) {
+				$prop_name = $group_option->mapMetadataName();
+				$prop_value = $group_option->mapMetadataValue();
+				$properties[$prop_name] = $prop_value;
 			}
 
 			if ($this->faker()->boolean(20)) {

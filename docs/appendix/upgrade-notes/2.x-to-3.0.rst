@@ -157,7 +157,7 @@ All the functions in ``engine/lib/deprecated-1.10.php`` were removed. See https:
  * ``update_river_access_by_object``
  * ``garbagecollector_orphaned_metastrings``
  * ``groups_access_collection_override``
- * ``groups_get_group_tool_options``: Use ``elgg_get_group_tool_options``
+ * ``groups_get_group_tool_options``: Use ``elgg()->group_tools->all()``
  * ``groups_join_group``: Use ``ElggGroup::join``
  * ``groups_prepare_profile_buttons``: Use ``register, menu:title`` hook
  * ``groups_register_profile_buttons``: Use ``register, menu:title`` hook
@@ -316,6 +316,7 @@ Deprecated APIs
  * ``elgg_batch_delete_callback``
  * ``\Elgg\Project\Paths::sanitize``: Use ``\Elgg\Project\Paths::sanitize()``
  * ``elgg_group_gatekeeper``: Use ``elgg_entity_gatekeeper()``
+ * ``get_entity_dates``: Use ``elgg_get_entity_dates()``
 
 Removed global vars
 -------------------
@@ -1111,3 +1112,14 @@ Error logging
 -------------
 
 Sending ``elgg_log()`` and PHP error messages to page output is now only possible via the developers plugin "Log to the screen" setting. See the ``settings.example.php`` file for more information on using ``$CONFIG->debug`` in your ``settings.php`` file. Debugging should generally be done via the ``xdebug`` extension or ``tail -f /path/to/error.log`` on your server.
+
+Composer asset plugin no longer required
+----------------------------------------
+
+Assets are now loaded from https://asset-packagist.org. FXP composer asset plugin is no longer required when installing Elgg or updating composer dependencies.
+
+Cron logs
+---------
+
+The cron logs are no longer stored in the database, but on the filesystem (in dataroot). This will allow longer output to be stored. A migration 
+script was added to migrate the old database settings to the new location and remove the old values from the database.

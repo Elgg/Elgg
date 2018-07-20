@@ -714,7 +714,8 @@ function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
  */
 function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
-	if (!($entity instanceof \ElggObject)) {
+	if (!($entity instanceof \ElggEntity) || $entity instanceof \ElggUser) {
+		// users mostly use the hover menu for their actions
 		return;
 	}
 

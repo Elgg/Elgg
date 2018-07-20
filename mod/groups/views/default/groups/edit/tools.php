@@ -8,23 +8,29 @@
  * @package ElggGroups
  */
 
-$tools = elgg_get_group_tool_options(elgg_extract('entity', $vars));
+$entity = elgg_extract('entity', $vars);
+
+if ($entity instanceof ElggGroup) {
+	$tools = elgg()->group_tools->group($entity);
+} else {
+	$tools = elgg()->group_tools->all();
+}
+
+$tools = $tools->sort()->all();
+/* @var $tools \Elgg\Groups\Tool[] */
+
 if (empty($tools)) {
 	return;
 }
 
-usort($tools, function($a, $b) {
-	return strcmp($a->label, $b->label);
-});
-
-foreach ($tools as $group_option) {
-	$group_option_toggle_name = $group_option->name . "_enable";
-	$value = elgg_extract($group_option_toggle_name, $vars);
+foreach ($tools as $tool) {
+	$prop_name = $tool->mapMetadataName();
+	$value = elgg_extract($prop_name, $vars);
 
 	echo elgg_view_field([
 		'#type' => 'checkbox',
-		'#label' => $group_option->label,
-		'name' => $group_option_toggle_name,
+		'#label' => $tool->label,
+		'name' => $prop_name,
 		'value' => 'yes',
 		'default' => 'no',
 		'switch' => true,

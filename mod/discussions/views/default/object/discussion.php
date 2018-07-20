@@ -20,6 +20,16 @@ if (!$poster instanceof ElggEntity) {
 	return;
 }
 
+if ($entity->status && $entity->status !== 'open') {
+	$vars['imprint'] = [
+		[
+			'icon_name' => 'warning',
+			'content' => elgg_echo("status:{$entity->status}"),
+			'class' => 'elgg-listing-discussion-status',
+		],
+	];
+}
+
 if ($full_view) {
 	$body = elgg_view('output/longtext', [
 		'value' => $entity->description,

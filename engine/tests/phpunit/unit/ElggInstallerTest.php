@@ -129,6 +129,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 			'timezone' => 'UTC',
 			'cacheroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/cacheroot/'),
+			'assetroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/assetroot/'),
 		];
 
 		foreach ($params as $k => $v) {

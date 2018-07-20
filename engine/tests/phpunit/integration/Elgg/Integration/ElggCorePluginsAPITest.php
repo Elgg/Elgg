@@ -432,7 +432,7 @@ class ElggCorePluginsAPITest extends \Elgg\LegacyIntegrationTestCase {
 		]);
 
 		$this->assertEqual('foo', $plugin->getSetting(__METHOD__, 'bar'));
-		$cache->clear();
+		$plugin->unsetSetting(__METHOD__);
 		$this->assertEqual('bar', $plugin->getSetting(__METHOD__, 'bar'));
 	}
 }

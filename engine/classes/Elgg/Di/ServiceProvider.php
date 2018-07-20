@@ -14,6 +14,7 @@ use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Groups\Tools;
 use Elgg\Invoker;
 use Elgg\Logger;
 use Elgg\Project\Paths;
@@ -69,6 +70,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggDiskFilestore                              $filestore
  * @property-read \Elgg\FormsService                              $forms
  * @property-read \Elgg\Gatekeeper                                $gatekeeper
+ * @property-read \Elgg\Groups\Tools                              $group_tools
  * @property-read \Elgg\HandlersService                           $handlers
  * @property-read \Elgg\Security\HmacFactory                      $hmac
  * @property-read \Elgg\Views\HtmlFormatter                       $html_formatter
@@ -86,7 +88,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\PasswordService                           $passwords
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
- * @property-read \ElggCache                                      $privateSettingsCache
+ * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
  * @property-read \Elgg\Application\Database                      $publicDb
  * @property-read \Elgg\Database\QueryCounter                     $queryCounter
@@ -352,6 +354,7 @@ class ServiceProvider extends DiContainer {
 				$c->db,
 				$c->entityCache,
 				$c->metadataCache,
+				$c->privateSettingsCache,
 				$c->events,
 				$c->session,
 				$c->translator,
@@ -394,6 +397,10 @@ class ServiceProvider extends DiContainer {
 			);
 		});
 
+		$this->setFactory('group_tools', function(ServiceProvider $c) {
+			return new Tools($c->hooks);
+		});
+		
 		$this->setClassName('handlers', \Elgg\HandlersService::class);
 
 		$this->setFactory('hmac', function(ServiceProvider $c) {
@@ -509,7 +516,8 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('privateSettingsCache', function(ServiceProvider $c) {
-			return $c->dataCache->private_settings;
+			$cache = $c->dataCache->private_settings;
+			return new \Elgg\Cache\PrivateSettingsCache($cache);
 		});
 
 		$this->setFactory('privateSettings', function (ServiceProvider $c) {
@@ -598,7 +606,7 @@ class ServiceProvider extends DiContainer {
 		$this->initSiteSecret($config);
 
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
-			return new \Elgg\Cache\SimpleCache($c->config);
+			return new \Elgg\Cache\SimpleCache($c->config, $c->views);
 		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
@@ -736,7 +744,7 @@ class ServiceProvider extends DiContainer {
 		$sp->timer->begin([]);
 
 		if ($config->dataroot) {
-			$config->dataroot = rtrim($config->dataroot, '\\/') . DIRECTORY_SEPARATOR;
+			$config->dataroot = Paths::sanitize($config->dataroot);
 		} else {
 			if (!$config->installer_running) {
 				throw new ConfigurationException('Config value "dataroot" is required.');
@@ -745,12 +753,19 @@ class ServiceProvider extends DiContainer {
 		$lock('dataroot');
 
 		if ($config->cacheroot) {
-			$config->cacheroot = rtrim($config->cacheroot, '\\/') . DIRECTORY_SEPARATOR;
+			$config->cacheroot = Paths::sanitize($config->cacheroot);
 		} else {
-			$config->cacheroot = $config->dataroot . 'caches/';
+			$config->cacheroot = Paths::sanitize($config->dataroot . 'caches');
 		}
 		$lock('cacheroot');
 
+		if ($config->assetroot) {
+			$config->assetroot = Paths::sanitize($config->assetroot);
+		} else {
+			$config->assetroot = Paths::sanitize($config->cacheroot . 'views_simplecache');
+		}
+		$lock('assetroot');
+		
 		if ($config->wwwroot) {
 			$config->wwwroot = rtrim($config->wwwroot, '/') . '/';
 		} else {

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Database\EntityTable;
+use Elgg\Database\Entities;
 
 /**
  * Preload entities based on properties of fetched objects
@@ -32,8 +33,8 @@ class EntityPreloader {
 		$this->_callable_cache_checker = function ($guid) use ($entity_table) {
 			return $entity_table->getFromCache($guid);
 		};
-		$this->_callable_entity_loader = function ($options) use ($entity_table) {
-			return $entity_table->get($options);
+		$this->_callable_entity_loader = function ($options) {
+			return Entities::find($options);
 		};
 	}
 
@@ -48,6 +49,7 @@ class EntityPreloader {
 	 */
 	public function preload($objects, array $guid_properties) {
 		$guids = $this->getGuidsToLoad($objects, $guid_properties);
+		
 		// If only 1 to load, not worth the overhead of elgg_get_entities(),
 		// get_entity() will handle it later.
 		if (count($guids) > 1) {

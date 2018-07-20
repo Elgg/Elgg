@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Cache;
 
 use Elgg\Application;
@@ -11,39 +12,32 @@ use Elgg\ViewsService;
  *
  * @access private
  *
- * @since 1.10.0
+ * @since  1.10.0
  */
 class SimpleCache {
 
-	/** @var Config */
-	private $config;
+	/**
+	 * @var Config
+	 */
+	protected $config;
+
+	/**
+	 * @var ViewsService
+	 */
+	protected $views;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Config $config Elgg's global configuration
+	 * @param Config       $config Elgg's global configuration
+	 * @param ViewsService $views  Views service
 	 */
-	public function __construct(Config $config) {
+	public function __construct(
+		Config $config,
+		ViewsService $views
+	) {
 		$this->config = $config;
-	}
-
-	/**
-	 * Registers a view to simple cache.
-	 *
-	 * Simple cache is a caching mechanism that saves the output of
-	 * a view and its extensions into a file.
-	 *
-	 * @warning Simple cached views must take no parameters and return
-	 * the same content no matter who is logged in.
-	 *
-	 * @param string $view_name View name
-	 *
-	 * @return void
-	 * @see elgg_get_simplecache_url()
-	 */
-	function registerView($view_name) {
-		$view_name = ViewsService::canonicalizeViewName($view_name);
-		elgg_register_external_view($view_name, true);
+		$this->views = $views;
 	}
 
 	/**
@@ -85,7 +79,8 @@ class SimpleCache {
 		$view = ViewsService::canonicalizeViewName($view);
 
 		// should be normalized to canonical form by now: `getUrl('blog/save_draft.js')`
-		$this->registerView($view);
+		$this->views->registerCacheableView($view);
+
 		return $this->getRoot() . $view;
 	}
 
@@ -131,7 +126,7 @@ class SimpleCache {
 	 *
 	 * @warning Simplecache is also purged when disabled.
 	 *
-	 * @see elgg_register_simplecache_view()
+	 * @see     elgg_register_simplecache_view()
 	 * @return void
 	 */
 	function disable() {
@@ -148,8 +143,7 @@ class SimpleCache {
 	 * @return string
 	 */
 	private function getPath() {
-		$realpath = realpath($this->config->cacheroot);
-		return rtrim($realpath, DIRECTORY_SEPARATOR) . "/views_simplecache";
+		return $this->config->assetroot;
 	}
 
 	/**

@@ -1,10 +1,11 @@
 <?php
 
+use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 
 class DenormalizeMetastrings extends AbstractMigration {
 	/**
-	 * Denormlize metastrings
+	 * Denormalize metastrings
 	 *
 	 * - Add "name" and "value" columns to "metadata" table
 	 * - Populate these new columns from metastrings table by id
@@ -33,14 +34,7 @@ class DenormalizeMetastrings extends AbstractMigration {
 				$table->addColumn('value', 'text', [
 					'null' => false,
 					'after' => 'entity_guid',
-				]);
-			}
-
-			if (!$table->hasIndex('value')) {
-				$table->addIndex(['value'], [
-					'name' => "value",
-					'unique' => false,
-					'limit' => 50,
+					'limit' => MysqlAdapter::TEXT_LONG,
 				]);
 			}
 
@@ -51,30 +45,12 @@ class DenormalizeMetastrings extends AbstractMigration {
 				]);
 			}
 
-			if (!$table->hasIndex('name')) {
-				$table->addIndex(['name'], [
-					'name' => "name",
-					'unique' => false,
-					'limit' => 50,
-				]);
-			}
-
 			$table->save();
 
 			if ($table->hasColumn('name_id') && $table->hasColumn('value_id')) {
 				$prefix = $this->getAdapter()->getOption('table_prefix');
 
-				// move in all metastrings
-				$this->query("
-					UPDATE {$prefix}{$table->getName()} n_table
-					INNER JOIN {$prefix}metastrings msn ON n_table.name_id = msn.id
-					INNER JOIN {$prefix}metastrings msv ON n_table.value_id = msv.id
-					SET n_table.name = msn.string,
-						n_table.value = msv.string	
-				");
-
-				// drop columns and indexes
-
+				// remove indexes
 				if ($table->hasIndex('name_id')) {
 					$table->removeIndexByName('name_id');
 				}
@@ -82,11 +58,38 @@ class DenormalizeMetastrings extends AbstractMigration {
 				if ($table->hasIndex('value_id')) {
 					$table->removeIndexByName('value_id');
 				}
+				
+				// move in all metastrings
+				$this->query("
+					UPDATE {$prefix}{$table->getName()} n_table
+					INNER JOIN {$prefix}metastrings msn ON n_table.name_id = msn.id
+					INNER JOIN {$prefix}metastrings msv ON n_table.value_id = msv.id
+					SET n_table.name = msn.string,
+						n_table.value = msv.string
+				");
 
+				// drop columns
 				$table->removeColumn('name_id');
 				$table->removeColumn('value_id');
 			}
-
+			
+			// add new indexes
+			if (!$table->hasIndex('name')) {
+				$table->addIndex(['name'], [
+					'name' => "name",
+					'unique' => false,
+					'limit' => 50,
+				]);
+			}
+			
+			if (!$table->hasIndex('value')) {
+				$table->addIndex(['value'], [
+					'name' => "value",
+					'unique' => false,
+					'limit' => 50,
+				]);
+			}
+			
 			$table->save();
 		}
 
@@ -165,7 +168,7 @@ class DenormalizeMetastrings extends AbstractMigration {
 			$table->save();
 
 			$rows = $this->fetchAll("
-				SELECT name, value 
+				SELECT name, value
 				FROM {$prefix}{$table->getName()}
 			");
 
@@ -182,7 +185,7 @@ class DenormalizeMetastrings extends AbstractMigration {
 				INNER JOIN {$prefix}metastrings msn ON n_table.name = msn.string
 				INNER JOIN {$prefix}metastrings msv ON n_table.value = msv.string
 				SET n_table.name_id = msn.id,
-					n_table.value_id = msv.id	
+					n_table.value_id = msv.id
 			");
 
 			if ($table->hasIndex('name')) {

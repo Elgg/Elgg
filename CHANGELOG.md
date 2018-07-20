@@ -638,6 +638,24 @@ var `$DEFAULT_FILE_STORE`.
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
 
 
+<a name="2.3.8"></a>
+### 2.3.8  (2018-07-20)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Documentation
+
+* **install:** updated installation requirements ([48de11e1](https://github.com/Elgg/Elgg/commit/48de11e130b034fe9db6ad35a3d06d99af54df0b))
+* **web_services:** removed outdated webservices documentation ([6372fa8b](https://github.com/Elgg/Elgg/commit/6372fa8b465e092a92588aa582204ff7a676456b))
+
+
+#### Bug Fixes
+
+* **core:** revert original libxml_use_internal_errors value after use (#12008) ([69c422c9](https://github.com/Elgg/Elgg/commit/69c422c9c64b55bd8c46a110ec205d73fcb91548))
+
+
 <a name="2.3.7"></a>
 ### 2.3.7  (2018-05-24)
 

@@ -23,6 +23,7 @@ use ElggSession;
 use ElggUser;
 use Exception;
 use Psr\Log\LogLevel;
+use Elgg\Cache\PrivateSettingsCache;
 
 /**
  * Persistent, installation-wide key-value storage.
@@ -75,7 +76,7 @@ class Plugins {
 	protected $views;
 
 	/**
-	 * @var ElggCache
+	 * @var PrivateSettingsCache
 	 */
 	protected $private_settings_cache;
 
@@ -104,7 +105,7 @@ class Plugins {
 	 * @param EventsService         $events                 Events
 	 * @param Translator            $translator             Translator
 	 * @param ViewsService          $views                  Views service
-	 * @param ElggCache             $private_settings_cache Settings cache
+	 * @param PrivateSettingsCache  $private_settings_cache Settings cache
 	 * @param Config                $config                 Config
 	 * @param SystemMessagesService $system_messages        System messages
 	 * @param Context               $context                Context
@@ -116,7 +117,7 @@ class Plugins {
 		EventsService $events,
 		Translator $translator,
 		ViewsService $views,
-		ElggCache $private_settings_cache,
+		PrivateSettingsCache $private_settings_cache,
 		Config $config,
 		SystemMessagesService $system_messages,
 		Context $context
@@ -449,7 +450,7 @@ class Plugins {
 	}
 
 	/**
-	 * Loads all active plugins in the order specified in the tool admin panel.
+	 * Registers lifecycle hooks for all active plugins sorted by their priority
 	 *
 	 * @note   This is called on every page load. If a plugin is active and problematic, it
 	 * will be disabled and a visible error emitted. This does not check the deps system because
@@ -458,7 +459,7 @@ class Plugins {
 	 * @return bool
 	 * @access private
 	 */
-	public function load() {
+	public function build() {
 
 		$plugins_path = $this->getPath();
 
@@ -471,6 +472,7 @@ class Plugins {
 			return false;
 		}
 
+		$this->events->registerHandler('plugins_load', 'system', [$this, 'register']);
 		$this->events->registerHandler('plugins_boot:before', 'system', [$this, 'boot']);
 		$this->events->registerHandler('init', 'system', [$this, 'init']);
 		$this->events->registerHandler('ready', 'system', [$this, 'ready']);
@@ -478,6 +480,41 @@ class Plugins {
 		$this->events->registerHandler('shutdown', 'system', [$this, 'shutdown']);
 
 		return true;
+	}
+
+	/**
+	 * Autoload plugin classes and files
+	 * Register views, translations and custom entity types
+	 *
+	 * @elgg_event plugins_load system
+	 * @return void
+	 *
+	 * @access     private
+	 * @internal
+	 */
+	public function register() {
+		$plugins = $this->find('active');
+		if (empty($plugins)) {
+			return;
+		}
+
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
+		foreach ($plugins as $plugin) {
+			try {
+				$setup = $plugin->register();
+			} catch (Exception $ex) {
+				$this->disable($plugin, $ex);
+			}
+		}
+
+		$this->registerRoot();
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
 	}
 
 	/**
@@ -518,21 +555,12 @@ class Plugins {
 	}
 
 	/**
-	 * Boot root level custom plugin for starter-project installation
+	 * Register root level plugin views and translations
 	 * @return void
 	 */
-	protected function bootRoot() {
+	protected function registerRoot() {
 		if (Paths::project() === Paths::elgg()) {
 			return;
-		}
-
-		// This is root directory start.php
-		$root_start = Paths::project() . "start.php";
-		if (is_file($root_start)) {
-			$setup = Application::requireSetupFileOnce($root_start);
-			if ($setup instanceof \Closure) {
-				$setup();
-			}
 		}
 
 		// Elgg is installed as a composer dep, so try to treat the root directory
@@ -553,6 +581,24 @@ class Plugins {
 
 		if (!$this->config->i18n_loaded_from_cache) {
 			$this->translator->registerTranslations(Paths::project() . 'languages');
+		}
+	}
+	/**
+	 * Boot root level custom plugin for starter-project installation
+	 * @return void
+	 */
+	protected function bootRoot() {
+		if (Paths::project() === Paths::elgg()) {
+			return;
+		}
+
+		// This is root directory start.php
+		$root_start = Paths::project() . "start.php";
+		if (is_file($root_start)) {
+			$setup = Application::requireSetupFileOnce($root_start);
+			if ($setup instanceof \Closure) {
+				$setup();
+			}
 		}
 	}
 
@@ -727,8 +773,10 @@ class Plugins {
 			return [];
 		}
 
+		$loaded_from_cache = false;
 		if ($status === 'active' && isset($this->boot_plugins)) {
 			$plugins = $this->boot_plugins;
+			$loaded_from_cache = true;
 		} else {
 			$priority = $this->namespacePrivateSetting('internal', 'priority');
 			$site_guid = 1;
@@ -773,9 +821,9 @@ class Plugins {
 			$this->session->setIgnoreAccess($old_ia);
 		}
 
-		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) {
-			$a_value = $a->getVolatileData('select:value');
-			$b_value = $b->getVolatileData('select:value');
+		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) use ($loaded_from_cache) {
+			$a_value = $loaded_from_cache ? $a->getPriority() : $a->getVolatileData('select:value');
+			$b_value = $loaded_from_cache ? $b->getPriority() : $b->getVolatileData('select:value');
 
 			if ($b_value !== $a_value) {
 				return $a_value - $b_value;

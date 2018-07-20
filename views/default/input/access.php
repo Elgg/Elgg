@@ -88,9 +88,7 @@ if (!isset($vars['disabled'])) {
 
 // if access is set to a value not present in the available options, add the option
 if (!isset($vars['options_values'][$vars['value']])) {
-	$acl = get_access_collection($vars['value']);
-	$display = $acl ? $acl->name : elgg_echo('access:missing_name');
-	$vars['options_values'][$vars['value']] = $display;
+	$vars['options_values'][$vars['value']] = get_readable_access_level($vars['value']);
 }
 
 echo elgg_view('input/select', $vars);

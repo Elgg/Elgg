@@ -72,6 +72,7 @@ trait PluginTesting {
 
 		// @todo Resolve plugin dependencies and activate required plugins
 
+		$plugin->register();
 		$setup = $plugin->boot();
 		if ($setup instanceof \Closure) {
 			$setup();

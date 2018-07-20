@@ -536,9 +536,16 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 	}
 
 	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
-		$allowed_access[] = ACCESS_LOGGED_IN;
-		if (!elgg_get_config('walled_garden')) {
-			$allowed_access[] = ACCESS_PUBLIC;
+		// don't allow content sharing with higher levels than group access level
+		// see https://github.com/Elgg/Elgg/issues/10285
+		if (in_array($page_owner->access_id, [ACCESS_PUBLIC, ACCESS_LOGGED_IN])) {
+			// at least logged in is allowed
+			$allowed_access[] = ACCESS_LOGGED_IN;
+			
+			if ($page_owner->access_id === ACCESS_PUBLIC && !elgg_get_config('walled_garden')) {
+				// public access is allowed
+				$allowed_access[] = ACCESS_PUBLIC;
+			}
 		}
 	}
 
@@ -549,6 +556,7 @@ function groups_write_acl_plugin_hook(\Elgg\Hook $hook) {
 		$write_acls[$acl->id] = $acl->getDisplayName();
 	}
 
+	// remove all but the allowed access levels
 	foreach (array_keys($write_acls) as $access_id) {
 		if (!in_array($access_id, $allowed_access)) {
 			unset($write_acls[$access_id]);
@@ -1107,7 +1115,7 @@ function _groups_get_group_acl(\ElggGroup $group) {
 		return false;
 	}
 	
-	return elgg_extract(0, $group->getOwnedAccessCollections(['subtype' => 'group_acl']), false);
+	return $group->getOwnedAccessCollection('group_acl');
 }
 
 /**
@@ -1159,16 +1167,21 @@ function groups_prepare_form_vars($group = null) {
 	}
 
 	// handle tool options
-	$entity = ($group instanceof \ElggGroup) ? $group : null;
-	$tools = elgg_get_group_tool_options($entity);
-	foreach ($tools as $group_option) {
-		$option_name = $group_option->name . "_enable";
+	if ($group instanceof ElggGroup) {
+		$tools = elgg()->group_tools->group($group);
+	} else {
+		$tools = elgg()->group_tools->all();
+	}
 
-		$enabled = $group_option->default_on;
-		if ($entity) {
-			$enabled = $entity->isToolEnabled($group_option->name);
+	foreach ($tools as $tool) {
+		if ($group instanceof ElggGroup) {
+			$enabled = $group->isToolEnabled($tool->name);
+		} else {
+			$enabled = $tool->isEnabledByDefault();
 		}
-		$values[$option_name] = $enabled ? 'yes' : 'no';
+
+		$prop_name = $tool->mapMetadataName();
+		$values[$prop_name] = $enabled ? 'yes' : 'no';
 	}
 
 	// get any sticky form settings

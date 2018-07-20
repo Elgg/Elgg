@@ -19,9 +19,9 @@ class ElggCacheUnitTest extends \Elgg\UnitTestCase {
 	public function testCanSymlinkCache() {
 
 		$root_path = elgg_get_root_path();
-		$cache_path = elgg_get_cache_path();
+		$asset_path = elgg_get_asset_path();
 
-		$simplecache_path = "{$cache_path}views_simplecache";
+		$simplecache_path = $asset_path;
 		$symlink_path = "{$root_path}cache";
 
 		if (is_dir($simplecache_path)) {

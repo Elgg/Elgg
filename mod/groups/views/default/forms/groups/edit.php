@@ -29,19 +29,7 @@ if ($entity) {
 }
 
 // build form footer
-$footer = '';
-if (!empty($entity) && $entity->canDelete()) {
-	// add delete link
-	$footer .= elgg_view("output/url", [
-		"text" => elgg_echo("groups:delete"),
-		"href" => "action/groups/delete?guid={$entity->guid}",
-		"confirm" => elgg_echo("groups:deletewarning"),
-		"class" => "elgg-button elgg-button-delete float-alt",
-	]);
-}
-
-// save button
-$footer .= elgg_view_field([
+$footer = elgg_view_field([
 	'#type' => 'submit',
 	'value' => elgg_echo('save'),
 ]);

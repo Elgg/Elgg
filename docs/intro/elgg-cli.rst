@@ -51,14 +51,30 @@ Available commands
     # Run cron jobs
     vendor/bin/elgg-cli cron [-i|--interval INTERVAL] [-q|--quiet]
 
-	# Flush caches
-	vendor/bin/elgg-cli flush
+    # Flush caches
+    vendor/bin/elgg-cli flush
 
-	# System upgrade
-	vendor/bin/elgg-cli upgrade [-v]
+    # System upgrade
+    # -v|-vv|-vvv control verbosity of the command (helpful for debugging upgrade scripts)
+    vendor/bin/elgg-cli upgrade [-v]
 
-	# Upgrade and execute all async upgrades
-	vendor/bin/elgg-cli upgrade async [-v]
+    # Upgrade and execute all async upgrades
+    vendor/bin/elgg-cli upgrade async [-v]
+
+    # List all, active or inactive plugins
+    # STATUS = all | active | inactive
+    vendor/bin/elgg-cli plugins:list [-s|--status STATUS]
+
+    # Activate plugins
+    # List plugin ids separating them with spaces: vendor/bin/elgg-cli plugins:activate activity blog
+    # use -f flag to resolve conflicts and dependencies
+    vendor/bin/elgg-cli plugins:activate [<plugins>] [-f|--force]
+
+    # Deactivate plugins
+    # List plugin ids separating them with spaces: vendor/bin/elgg-cli plugins:deactivate activity blog
+    # use -f flag to also disable dependents
+    vendor/bin/elgg-cli plugins:deactivate [<plugins>] [-f|--force]
+
 
 Adding custom commands
 ======================

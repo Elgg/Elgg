@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Database\Entities;
+use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * Removes a config setting.
@@ -1675,4 +1676,102 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 	sort($upgrade_files);
 
 	return $upgrade_files;
+}
+
+/**
+ * Returns a list of months in which entities were updated or created.
+ *
+ * @tip Use this to generate a list of archives by month for when entities were added or updated.
+ *
+ * @warning Months are returned in the form YYYYMM.
+ *
+ * @param string $type           The type of entity
+ * @param string $subtype        The subtype of entity
+ * @param int    $container_guid The container GUID that the entities belong to
+ * @param int    $ignored        Ignored parameter
+ * @param string $order_by       Order_by SQL order by clause
+ *
+ * @deprecated 3.0 use elgg_get_entity_dates()
+ *
+ * @return array|false Either an array months as YYYYMM, or false on failure
+ */
+function get_entity_dates($type = '', $subtype = '', $container_guid = 0, $ignored = 0, $order_by = 'e.time_created') {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated, please use elgg_get_entity_dates()', '3.0');
+	
+	$options = [
+		'types' => $type,
+		'subtypes' => $subtype,
+		'container_guids' => $container_guid,
+		'order_by' => [
+			new OrderByClause($order_by),
+		],
+	];
+
+	return elgg_get_entity_dates($options);
+}
+
+/**
+ * Adds a group tool option
+ *
+ * @see        remove_group_tool_option()
+ *
+ * @param string $name    Tool ID
+ * @param array  $options Tool config options
+ *
+ * @option string   $label      Label to appear on the group edit form
+ * @option bool     $default_on Is the tool enabled by default?
+ * @option int      $priority   Module priority
+ * @return void
+ *
+ * @since 1.5.0
+ * @deprecated 3.0 Use elgg()->group_tools
+ */
+function add_group_tool_option($name, $options = []) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->group_tools service', '3.0');
+
+	if (!is_array($options)) {
+		$arguments = func_get_args();
+		$options = [
+			'label' => elgg_extract(1, $arguments),
+			'default_on' => elgg_extract(2, $arguments),
+			'priority' => null,
+		];
+	}
+
+	elgg()->group_tools->register($name, $options);
+}
+
+/**
+ * Removes a group tool option based on name
+ *
+ * @see add_group_tool_option()
+ *
+ * @param string $name Name of the group tool option
+ *
+ * @return void
+ * @since 1.7.5
+ * @deprecated 3.0 Use elgg()->group_tools
+ */
+function remove_group_tool_option($name) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->group_tools service', '3.0');
+
+	elgg()->group_tools->unregister($name);
+}
+
+/**
+ * Function to return available group tool options
+ *
+ * @param \ElggGroup $group optional group
+ *
+ * @return Collection|Tool[]
+ * @deprecated 3.0
+ */
+function elgg_get_group_tool_options(\ElggGroup $group = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg()->group_tools service', '3.0');
+
+	if ($group) {
+		return elgg()->group_tools->group($group);
+	}
+
+	return elgg()->group_tools->all();
 }

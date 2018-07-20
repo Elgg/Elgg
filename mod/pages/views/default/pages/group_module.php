@@ -35,11 +35,14 @@ $content = elgg_list_entities([
 
 elgg_pop_context();
 
-$new_link = elgg_view('output/url', [
-	'href' => elgg_generate_url('add:object:page', ['guid' => $group->guid]),
-	'text' => elgg_echo('add:object:page'),
-	'is_trusted' => true,
-]);
+$new_link = null;
+if ($group->canWriteToContainer(0, 'object', 'page')) {
+	$new_link = elgg_view('output/url', [
+		'href' => elgg_generate_url('add:object:page', ['guid' => $group->guid]),
+		'text' => elgg_echo('add:object:page'),
+		'is_trusted' => true,
+	]);
+}
 
 echo elgg_view('groups/profile/module', [
 	'title' => elgg_echo('collection:object:page:group'),

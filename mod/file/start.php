@@ -37,7 +37,7 @@ function file_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:file', 'file_prepare_notification');
 
 	// add the group files tool option
-	add_group_tool_option('file', null, true);
+	elgg()->group_tools->register('file');
 
 	// add a file link to owner blocks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'file_owner_block_menu');
