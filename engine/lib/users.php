@@ -773,7 +773,7 @@ function users_init() {
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 
 	// Register the user type
-	elgg_register_entity_type('user', '');
+	elgg_register_entity_type('user', 'user');
 
 	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 
