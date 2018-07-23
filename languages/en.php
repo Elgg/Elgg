@@ -122,7 +122,6 @@ return array(
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
 	'BadRequestException' => 'Bad request',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
-	'LogicException:NotSubclass' => '%s must extend %s',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
@@ -540,7 +539,7 @@ three sections:
 		<dt>Information</dt><dd>Information about your site like statistics.</dd>
 		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
 	</dl>
-	",
+",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Be sure to check out the resources available through the footer links and thank you for using Elgg!',
@@ -783,13 +782,13 @@ To go to the site, click here:
 	'admin:server:memcache:inactive' => '
 		Memcache is not setup on this server or it has not yet been configured in Elgg config.
 		For improved performance, it is recommended that you enable and configure memcache (or redis).
-	',
+',
 
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
 		Redis is not setup on this server or it has not yet been configured in Elgg config.
 		For improved performance, it is recommended that you enable and configure redis (or memcached).
-	',
+',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
@@ -1071,8 +1070,7 @@ These changes will only affect new users on the site.',
  */
 
 	'useradd:subject' => 'User account created',
-	'useradd:body' => '
-%s,
+	'useradd:body' => '%s,
 
 A user account has been created for you at %s. To log in, visit:
 
@@ -1083,8 +1081,7 @@ And log in with these user credentials:
 Username: %s
 Password: %s
 
-Once you have logged in, we highly recommend that you change your password.
-',
+Once you have logged in, we highly recommend that you change your password.',
 
 /**
  * System messages
@@ -1248,7 +1245,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:legend:debug' => 'Debugging and Logging',
 	
 	'config:remove_branding:label' => "Remove Elgg branding",
-	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/supporter.php.",
+	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Disable RSS feeds",
 	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
 	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
@@ -1262,16 +1259,15 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
 	'upgrade:unlock:success' => "Upgrade unlocked successfully.",
 	'upgrade:unable_to_upgrade' => 'Unable to upgrade.',
-	'upgrade:unable_to_upgrade_info' =>
-		'This installation cannot be upgraded because legacy views
-		were detected in the Elgg core views directory. These views have been deprecated and need to be
-		removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
-		simply delete the views directory and replace it with the one from the latest
-		package of Elgg downloaded from <a href="http://elgg.org">elgg.org</a>.<br /><br />
+	'upgrade:unable_to_upgrade_info' => 'This installation cannot be upgraded because legacy views
+were detected in the Elgg core views directory. These views have been deprecated and need to be
+removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
+simply delete the views directory and replace it with the one from the latest
+package of Elgg downloaded from <a href="https://elgg.org">elgg.org</a>.<br /><br />
 
-		If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
-		Upgrading Elgg documentation</a>.  If you require assistance, please post to the
-		<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
+If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
+Upgrading Elgg documentation</a>. If you require assistance, please post to the
+<a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
 
 	'update:oauth_api:deactivated' => 'OAuth API (previously OAuth Lib) was deactivated during the upgrade.  Please activate it manually if required.',
 	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
@@ -1325,9 +1321,7 @@ Once you have logged in, we highly recommend that you change your password.
 
 To view their profile, click here:
 
-%s
-
-Please do not reply to this email.",
+%s",
 
 	'email:changepassword:subject' => "Password changed!",
 	'email:changepassword:body' => "Hi %s,
@@ -1342,12 +1336,11 @@ Your password has been reset to: %s",
 	'email:changereq:subject' => "Request for password change.",
 	'email:changereq:body' => "Hi %s,
 
-Somebody (from the IP address %s) has requested a password change for their account.
+Somebody (from the IP address %s) has requested a password change for this account.
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
-%s
-",
+%s",
 
 /**
  * user default access

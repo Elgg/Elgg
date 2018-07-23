@@ -27,9 +27,9 @@ If you are ready to proceed, click the Next button.",
 
 	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
 
-		1. Change the permissions on the root directory
+1. Change the permissions on the root directory
 
-		2. Copy the file install/config/htaccess.dist to .htaccess',
+2. Copy the file install/config/htaccess.dist to .htaccess',
 
 	'install:check:php:version' => 'Elgg requires PHP %s or above. This server is using version %s.',
 	'install:check:php:extension' => 'Elgg requires the PHP extension %s.',
@@ -42,9 +42,9 @@ If you are ready to proceed, click the Next button.",
 
 	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Change the permissions on the elgg-config directory of your Elgg installation
+1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'A settings file exists in the installation directory, but the web server cannot read it. You can delete the file or change the read permissions on it.',
 
 	'install:check:php:success' => "Your server's PHP satisfies all of Elgg's requirements.",
@@ -147,7 +147,7 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:lighttpd' => 'We think your server is running the Lighttpd web server.',
 	'install:error:rewrite:iis' => 'We think your server is running the IIS web server.',
 	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
-				\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
+\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
 	'install:error:rewrite:htaccess:write_permission' => 'Your web server does not have permission to create the .htaccess file in Elgg\'s directory. You need to manually copy install/config/htaccess.dist to .htaccess or change the permissions on the directory.',
 	'install:error:rewrite:htaccess:read_permission' => 'There is an .htaccess file in Elgg\'s directory, but your web server does not have permission to read it.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'There is an .htaccess file in Elgg\'s directory that was not not created by Elgg. Please remove it.',

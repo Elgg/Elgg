@@ -23,7 +23,6 @@ return array(
 	'friends:collections:delete:success' => 'Collection was successfully deleted',
 	'friends:collections:delete:fail' => 'Collection could not be deleted',
 
-	'friends:collections:remove_member' => 'Remove',
 	'friends:collections:remove_member:permissions' => 'You are not allowed to remove members from this collection',
 	'friends:collections:remove_member:success' => 'Member was successfully removed from the collection',
 	'friends:collections:remove_member:fail' => 'Member could not be removed from the collection',
