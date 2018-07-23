@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Bestanden",
-	'file:user' => "Bestanden van %s",
-	'file:friends' => "Bestanden van vrienden",
-	'file:all' => "Alle bestanden op de site",
-	'file:edit' => "Bewerk bestand",
+	'item:object:file' => 'Bestanden',
+	'collection:object:file' => 'Bestanden',
+	'collection:object:file:all' => "Alle bestanden",
+	'collection:object:file:owner' => "%s's bestanden",
+	'collection:object:file:friends' => "Bestanden van vrienden",
+	'collection:object:file:group' => "Groepsbestanden",
+	'add:object:file' => "Upload een bestand",
+	'edit:object:file' => "Bewerk bestand",
+
 	'file:more' => "Meer bestanden",
 	'file:list' => "lijstweergave",
-	'file:group' => "Groepsbestanden",
-	'file:gallery' => "galerijweergave",
-	'file:gallery_list' => "Galerij- of lijstweergave",
+
 	'file:num_files' => "Aantal bestanden om weer te geven",
-	'file:user:gallery'=>'Bekijk de galerij van %s',
-	'file:upload' => "Upload een bestand",
 	'file:replace' => 'Vervang bestandsinhoud (laat dit leeg om het bestand <em>niet</em> te vervangen)',
 	'file:list:title' => "Van %s: %s en %s",
 	'file:title:friends' => "Vrienden",
-
-	'file:add' => 'Upload een bestand',
 
 	'file:file' => "Bestand",
 
@@ -53,45 +48,27 @@ return [
 	'file:widget' => "Bestandenwidget",
 	'file:widget:description' => "Laat je laatst geüploade bestanden zien",
 
-	'groups:enablefiles' => 'Activeer groepsbestanden',
+	'groups:tool:file' => 'Schakel groepsbestanden in',
 
-	'file:delete:confirm' => "Weet je zeken dat je dit bestand wilt verwijderen?",
-
-	'file:upload_limit' => 'Maximaal toegestane bestandsgrootte is %s',
-
-	'file:tagcloud' => "Tag-cloud",
-
-	'file:display:number' => "Aantal bestanden om weer te geven",
-
-	'river:create:object:file' => '%s heeft het bestand %s geüpload',
-	'river:comment:object:file' => '%s reageerde op het bestand %s',
-
-	'item:object:file' => 'Bestanden',
+	'river:object:file:create' => '%s heeft het bestand %s geüpload',
+	'river:object:file:comment' => '%s reageerde op het bestand %s',
 
 	'file:notify:summary' => 'Nieuw bestand met de titel %s',
 	'file:notify:subject' => 'Nieuw bestand: %s',
 	'file:notify:body' =>
-'Hallo!
-
-%s heeft een nieuw bestand geüpload.
+'%s heeft een nieuw bestand geüpload: %s
 
 %s
-%s
 
-Je kunt het bestand hier bekijken:
-%s
-
------
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
-',
+Bekijk en reageer op het bestand:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
 	'file:saved' => "Je bestand is succesvol opgeslagen.",
-	'file:deleted' => "Je bestand is succesvol verwijderd.",
+	'entity:delete:object:file:success' => "Het bestand is succesvol verwijderd",
 
 	/**
 	 * Error messages
@@ -99,9 +76,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 
 	'file:none' => "We konden op dit moment geen bestanden vinden.",
 	'file:uploadfailed' => "Sorry, we konden het bestand niet opslaan.",
-	'file:downloadfailed' => "Sorry, dit bestand is op dit moment niet beschikbaar.",
-	'file:deletefailed' => "Je bestand kon op dit moment niet worden verwijderd.",
 	'file:noaccess' => "Je hebt onvoldoende rechten om dit bestand aan te passen",
 	'file:cannotload' => "Er was een fout tijdens het uploaden van het bestand",
-	'file:nofile' => "Selecteer een bestand",
-];
+);

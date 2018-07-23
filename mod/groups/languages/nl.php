@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Groepsicoon (laat leeg om het huidige icoon te behouden)',
 	'groups:name' => 'Groepsnaam',
-	'groups:username' => 'Korte groepsnaam (voor URLs, alleen alfanumerieke tekens: letters van het alfabet en de cijfers 0 tot en met 9)',
 	'groups:description' => 'Omschrijving',
 	'groups:briefdescription' => 'Korte omschrijving',
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',
 	'groups:members' => 'Groepsleden',
-	'groups:my_status' => 'Mijn status',
-	'groups:my_status:group_owner' => 'Jij bent eigenaar/beheerder van deze groep',
-	'groups:my_status:group_member' => 'Je bent lid van deze groep',
-	'groups:subscribed' => 'Groepsnotificaties staan aan',
-	'groups:unsubscribed' => 'Groepsnotificaties staan uit',
+
+	'groups:members_count' => '%s leden',
 
 	'groups:members:title' => 'Leden van %s',
 	'groups:members:more' => "Bekijk alle leden",
@@ -46,14 +42,7 @@ return [
 	'groups:widget:membership' => 'Groepslidmaatschap',
 	'groups:widgets:description' => 'Laat de groepen waarvan je lid bent zien op je profiel',
 
-	'groups:widget:group_activity:title' => 'Groep activiteit',
-	'groups:widget:group_activity:description' => 'Bekijk de activiteit in één van jouw groepen',
-	'groups:widget:group_activity:edit:select' => 'Selecteer een groep',
-	'groups:widget:group_activity:content:noactivity' => 'Er is geen activiteit in deze groep',
-	'groups:widget:group_activity:content:noselect' => 'Wijzig deze widget om een groep te selecteren',
-
 	'groups:noaccess' => 'Geen toegang tot de groep',
-	'groups:ingroup' => 'in de groep',
 	'groups:cantcreate' => 'Alleen sitebeheerders mogen nieuwe groepen aanmaken.',
 	'groups:cantedit' => 'Je kunt deze groep niet bewerken',
 	'groups:saved' => 'Groep opgeslagen',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Verlaat deze groep',
 	'groups:invite' => 'Nodig vrienden uit',
 	'groups:invite:title' => 'Nodig vrienden uit in deze groep',
-	'groups:inviteto' => "Nodig vrienden uit voor '%s'",
-	'groups:nofriends' => "Al jouw vrienden zijn al lid van deze groep.",
+	'groups:invite:friends:help' => 'Zoek naar een vriend op naam of gebruikersnaam en selecteer de vriend uit de lijst',
+	'groups:invite:resend' => 'Verstuur de uitnodigingen opnieuw voor de al uitgenodigde gebruikers',
+
 	'groups:nofriendsatall' => 'Je hebt geen vrienden om uit te nodigen!',
-	'groups:viagroups' => "via groepen",
 	'groups:group' => "Groep",
 	'groups:search:tags' => "tag",
 	'groups:search:title' => "Zoek naar groepen met het trefwoord '%s'",
 	'groups:search:none' => "Geen overeenkomende groepen gevonden",
 	'groups:search_in_group' => "Zoek in deze groep",
 	'groups:acl' => "Groep: %s",
-
-	'groups:activity' => "Groepsactiviteit",
-	'groups:enableactivity' => 'Schakel groepsactiviteit in',
-	'groups:activity:none' => "Er is nog geen groepsactiviteit",
+	'groups:acl:in_context' => 'Groepsleden',
 
 	'groups:notfound' => "Groep niet gevonden",
-	'groups:notfound:details' => "De gevraagde groep bestaat niet, of je hebt er geen toegang toe",
-
+	
 	'groups:requests:none' => 'Er zijn  op dit moment <strong>geen</strong> openstaande lidmaatschapsaanvragen.',
 
 	'groups:invitations:none' => 'Er zijn op dit moment <strong>geen</strong> openstaande uitnodigingen.',
 
-	'groups:count' => "groepen aangemaakt",
 	'groups:open' => "open groep",
 	'groups:closed' => "besloten groep",
 	'groups:member' => "leden",
-	'groups:searchtag' => "Zoek naar groepen op trefwoord",
+	'groups:search' => "Zoek naar groepen",
 
 	'groups:more' => 'Meer groepen',
 	'groups:none' => 'Geen groepen',
@@ -117,12 +101,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Laatst bijgewerkt: %s door %s',
-	'groups:lastcomment' => 'Laatste reactie: %s door %s',
 
 	'admin:groups' => 'Groepen',
 
-	'groups:privategroup' => 'Deze groep is besloten. Lidmaatschap wordt aangevraagd.',
 	'groups:notitle' => 'Groepen moeten een titel hebben',
 	'groups:cantjoin' => 'Kan niet lid worden van de groep',
 	'groups:cantleave' => 'Kon de groep niet verlaten',
@@ -133,76 +114,44 @@ return [
 	'groups:joinrequestnotmade' => 'Lidmaatschapsverzoek kon niet worden gedaan',
 	'groups:joinrequestmade' => 'Lidmaatschapsverzoek succesvol gedaan',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:button:joined' => 'Lid',
+	'groups:button:owned' => 'EIgenaar',
 	'groups:joined' => 'Je bent lid geworden van de groep!',
 	'groups:left' => 'De groep succesvol verlaten',
-	'groups:notowner' => 'Helaas, je bent geen eigenaar/beheerder van deze groep.',
-	'groups:notmember' => 'Sorry, je bent niet lid van deze groep.',
-	'groups:alreadymember' => 'Je bent reeds lid van deze groep!',
 	'groups:userinvited' => 'Gebruiker is uitgenodigd.',
 	'groups:usernotinvited' => 'Gebruiker kon niet worden uitgenodigd.',
 	'groups:useralreadyinvited' => 'Gebruiker is al uitgenodigd',
 	'groups:invite:subject' => "%s je bent uitgenodigd om lid te worden van %s!",
-	'groups:started' => "Gestart door %s",
 	'groups:joinrequest:remove:check' => 'Weet je zeker dat je dit lidmaatschapsverzoek wilt verwijderen?',
 	'groups:invite:remove:check' => 'Weet je zeker dat je deze uitnodiging wilt verwijderen?',
 	'groups:invite:body' => "Beste %s,
 
-%s heeft je uitgenodigd om lid te worden van de groep '%s'.
+%s heeft je uitgenodigd om lid te worden van de '%s' groep.
 
-Klik op onderstaande link om je uitnodigingen te zien:
-%s
-
----
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
+Om al je uitnodigingen te bekijken, klik hier:
+%s",
 
 	'groups:welcome:subject' => "Welkom bij de groep '%s'!",
 	'groups:welcome:body' => "Beste %s,
 
-Je bent nu lid van de groep '%s'! 
+Je bent nu lid van de '%s' groep.
 
-Klik op de link hieronder om actief deel te nemen in de groep:
-
-%s
-
----
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
+Om de groep te bekijken, klik hier:
+%s",
 
 	'groups:request:subject' => "%s wil lid worden van %s",
 	'groups:request:body' => "Beste %s,
 
-%s wil lid worden van de groep '%s'. Klik hieronder om zijn/haar profiel te bekijken:
+%s wil graag wil worden van de '%s' groep.
 
+Om het profiel van de gebruiker te bekijken, klik hier:
 %s
 
-Of klik hieronder om het verzoek direct te accepteren:
+Of om alle lidmaatschapsverzoeken van de groep te bekijken, klik hier:
+%s",
 
-%s
-
----
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
-
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s heeft de groep \'%s\' gemaakt',
-	'river:join:group:default' => '%s is lid geworden van de groep \'%s\'',
-
-	'groups:nowidgets' => 'Er zijn geen widgets gedefinieerd voor deze groep.',
-
-
-	'groups:widgets:members:title' => 'Groepsleden',
-	'groups:widgets:members:description' => 'Lijst van groepsleden.',
-	'groups:widgets:members:label:displaynum' => 'Toon de groepsleden.',
-	'groups:widgets:members:label:pleaseedit' => 'Stel deze widget in.',
-
-	'groups:widgets:entities:title' => "Objecten in de groep",
-	'groups:widgets:entities:description' => "Toon de objecten van deze groep",
-	'groups:widgets:entities:label:displaynum' => 'Toon de objecten van een groep.',
-	'groups:widgets:entities:label:pleaseedit' => 'Stel deze widget in.',
+	'river:group:create' => '%s heeft de groep %s aangemaakt',
+	'river:group:join' => '%s is lid geworden van de groep %s',
 
 	'groups:allowhiddengroups' => 'Wil je privégroepen toestaan? Deze zijn onzichtbaar voor wie er geen toegang toe heeft.',
 	'groups:whocancreate' => 'Wie mag of mogen nieuwe groepen aanmaken?',
@@ -210,10 +159,8 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'De groep en bijbehorende groepsberichten zijn verwijderd',
-	'group:notdeleted' => 'Groep kon niet worden verwijderd',
-
-	'group:notfound' => 'Kon de groep  niet vinden',
+	'groups:deleted' => 'De groep en zijn content zijn verwijderd',
+	'groups:notdeleted' => 'De groep kon niet worden verwijderd',
 	'groups:deletewarning' => "Weet je zeker dat je deze groep wilt verwijderen? Dit kan niet ongedaan worden gemaakt!",
 
 	'groups:invitekilled' => 'De uitnodiging is verwijderd',
@@ -225,4 +172,11 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Groepsprofielen',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Verplaats de groepsiconen naar de nieuwe locatie',
+	'groups:upgrade:2016101900:description' => 'De nieuwe iconen API plaatst de bestanden op een voorspelbare locatie op de bestandslocatie relatief aan de entity\'s bestandlocatie.
+Deze upgrade verplaatst alle groepsiconen naar deze nieuwe locatie.',
+);

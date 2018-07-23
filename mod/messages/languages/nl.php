@@ -41,21 +41,17 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Je hebt een nieuw bericht!',
-	'messages:email:body' => "You have a new message from %s. It reads:
+	'messages:email:body' => "Je hebt een nieuw bericht van %s
 
+Bericht:
 
-	%s
+%s
 
+Om al je berichten te bekijken, klik hier:
+%s
 
-	To view your messages, click here:
-
-	%s
-
-	To send %s a message, click here:
-
-	%s
-
-	Please do not reply to this email.",
+Om een bericht te sturen naar %s, klik hier:
+%s",
 
 	/**
 	* Error messages
