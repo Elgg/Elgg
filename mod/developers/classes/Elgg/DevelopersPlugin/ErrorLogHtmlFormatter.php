@@ -45,7 +45,10 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 		$context = elgg_extract('context', $record, []);
 		$exception = elgg_extract('exception', $context);
 		
+		$level = strtolower(\Elgg\Logger::getLevelName($record['level']));
+		
 		$message_vars = [];
+		$message_vars['title'] = $level; // help prevent elgg_echo() missing language key recursion
 		
 		if ($exception instanceof \Throwable) {
 			$timestamp = isset($exception->timestamp) ? (int) $exception->timestamp : time();
@@ -66,7 +69,6 @@ class ErrorLogHtmlFormatter extends HtmlFormatter {
 			$message_vars['title'] = "EXCEPTION $timestamp";
 		}
 		
-		$level = strtolower(\Elgg\Logger::getLevelName($record['level']));
 		$output = '<table class="elgg-table elgg-table-alt">';
 
 		$output .= $this->addRow('Message', (string) $record['message']);
