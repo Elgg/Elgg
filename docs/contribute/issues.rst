@@ -7,11 +7,17 @@ See below for guidelines.
 DISCLAIMERS
 -----------
 
--  **SECURITY ISSUES SHOULD BE REPORTED TO security @ elgg . org!**
-   Please do not post any security issues on github!!
--  Support requests belong on the `community site`_.
-   Tickets with support requests will be closed.
--  We cannot make any guarantees as to when your ticket will be resolved.
+.. attention::
+
+	Security issues should be reported to **security @ elgg . org**! Please do not post any security issues on github!!
+
+.. note:: 
+
+	Support requests belong on the `community site`_. Tickets with support requests will be closed.
+
+.. important::
+	
+	We cannot make any guarantees as to when your ticket will be resolved.
 
 Bug reports
 -----------

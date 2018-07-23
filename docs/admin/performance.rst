@@ -169,16 +169,19 @@ If the static assets aren't being cached:
 
 __ https://addons.mozilla.org/en-us/firefox/addon/yslow/
 
-Memcache
---------
+Memcached
+---------
 
-Memcache is a generic caching technology developed by Brad Fitzpatrick for LiveJournal.
+Libmemcached was created by Brian Aker and was designed from day one to give the best performance available to users of Memcached. 
 
-.. warning:: SUPPORT FOR MEMCACHE IS EXPERIMENTAL AND MAY BE CHANGED.
+.. seealso::
+
+	http://libmemcached.org/About.html and https://secure.php.net/manual/en/book.memcached.php
 
 Installation requirements:
 
-- php5-memcache
+- php-memcached
+- libmemcached
 - memcached
 
 Configuration:
