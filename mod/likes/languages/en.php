@@ -33,8 +33,7 @@ or view %2$s\'s profile here:
 %6$s
 
 Thanks,
-%4$s
-',
+%4$s',
 	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
 	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	

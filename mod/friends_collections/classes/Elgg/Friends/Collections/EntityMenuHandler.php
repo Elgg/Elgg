@@ -39,7 +39,7 @@ class EntityMenuHandler {
 		
 		$return[] = ElggMenuItem::factory([
 			'name' => 'remove_member',
-			'text' => elgg_echo('friends:collections:remove_member'),
+			'text' => elgg_echo('remove'),
 			'href' => elgg_http_add_url_query_elements('action/friends/collections/remove_member', [
 				'collection_id' => $collection->id,
 				'user_guid' => $entity->guid,

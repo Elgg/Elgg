@@ -20,12 +20,13 @@ return array(
 
 I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => 'You have been invited to join %s by %s. They included the following message:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
+
+They included the following message:
 
 %s
 
 To join, click the following link:
-
 %s
 
 You will automatically add them as a friend when you create your account.',

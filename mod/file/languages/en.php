@@ -55,21 +55,19 @@ return array(
 
 	'file:notify:summary' => 'New file called %s',
 	'file:notify:subject' => 'New file: %s',
-	'file:notify:body' =>
-'%s uploaded a new file: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
 View and comment on the file:
-%s
-',
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Your file was successfully saved.",
-	'entity:delete:object:file:success' => "Your file was successfully deleted.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
