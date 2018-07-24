@@ -1,19 +1,23 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "The Wire",
-	'thewire:everyone' => "Alle Wire-berichten",
-	'thewire:user' => "Wire-berichten van %s",
-	'thewire:friends' => "Wire-berichten van je vrienden",
+
+	'item:object:thewire' => "Wire-berichten",
+	'collection:object:thewire' => 'Wire berichten',
+	'collection:object:thewire:all' => "Alle Wire berichten",
+	'collection:object:thewire:owner' => "%s's Wire berichten",
+	'collection:object:thewire:friends' => "Wire berichten van vrienden",
+
 	'thewire:replying' => "Antwoord op %s (@%s), die schreef",
 	'thewire:thread' => "Conversatie",
 	'thewire:charleft' => "karakters resterend",
 	'thewire:tags' => "Wire-berichten met de tag '%s'",
 	'thewire:noposts' => "Nog geen Wire-berichten",
-	'item:object:thewire' => "Wire-berichten",
+
 	'thewire:by' => 'Wire-bericht van %s',
 	'thewire:previous:help' => "Bekijk vorige bericht",
 	'thewire:hide:help' => "Verberg vorige bericht",
@@ -21,7 +25,7 @@ return [
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s plaatste een bericht op %s",
+	'river:object:thewire:create' => "%s plaatste %s",
 	'thewire:wire' => 'The Wire',
 
 	/**
@@ -37,7 +41,6 @@ return [
 	'thewire:posted' => "Je bericht is succesvol geplaatst op The Wire.",
 	'thewire:deleted' => "Je notitie is succesvol verwijderd.",
 	'thewire:blank' => "Sorry, je moet wel iets intypen voordat we je bericht kunnen versturen!",
-	'thewire:notfound' => "Sorry, we konden het gezochte Wire-bericht niet vinden.",
 	'thewire:notsaved' => "Sorry, we konden je Wire-bericht niet opslaan.",
 	'thewire:notdeleted' => "Sorry, we konden dit Wire-bericht niet verwijderen.",
 
@@ -55,4 +58,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Maximum aantal karakters voor Wire-berichten:",
 	'thewire:settings:limit:none' => "Geen limiet",
-];
+);
