@@ -24,7 +24,7 @@ $service = new \Elgg\Search\Search($params);
 
 $service->prepareEntity($entity);
 
-$view = $service->getSearchView();
+$view = $service->getSearchView($entity);
 
 if ($view && $view != 'search/entity' && elgg_view_exists($view)) {
 	$vars['entity'] = $entity;
