@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da7981f8e6952d65a799dbff3ed914b9",
+    "content-hash": "2b8fac5edb44c1a86039cf9ab4be9242",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
             "version": "5.0.13",
             "source": {
                 "type": "git",
-                "url": "git@github.com:FortAwesome/Font-Awesome.git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
                 "reference": "bca574eca32c5a766b2a09fdcbedf382a78ebc38"
             },
             "dist": {

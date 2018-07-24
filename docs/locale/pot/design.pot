@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-08 13:41+0100\n"
+"POT-Creation-Date: 2018-07-24 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -896,52 +896,52 @@ msgstr ""
 msgid "E.g. retrieving users who joined your group in January 2014."
 msgstr ""
 
-#: ../../design/database.rst:634
+#: ../../design/database.rst:636
 msgid "Access Control"
 msgstr ""
 
-#: ../../design/database.rst:636
+#: ../../design/database.rst:638
 msgid "Granular access controls are one of the fundamental design principles in Elgg, and a feature that has been at the centre of the system throughout its development. The idea is simple: a user should have full control over who sees an item of data he or she creates."
 msgstr ""
 
-#: ../../design/database.rst:642
+#: ../../design/database.rst:644
 msgid "Access controls in the data model"
 msgstr ""
 
-#: ../../design/database.rst:644
-msgid "In order to achieve this, every entity, annotation and piece of metadata contains an ``access_id`` property, which in turn corresponds to one of the pre-defined access controls or an entry in the ``access_collections`` database table."
-msgstr ""
-
-#: ../../design/database.rst:650
-msgid "Pre-defined access controls"
+#: ../../design/database.rst:646
+msgid "In order to achieve this, every entity and annotation contains an ``access_id`` property, which in turn corresponds to one of the pre-defined access controls or an entry in the ``access_collections`` database table."
 msgstr ""
 
 #: ../../design/database.rst:652
-msgid "``ACCESS_PRIVATE`` (value: 0) Private."
-msgstr ""
-
-#: ../../design/database.rst:653
-msgid "``ACCESS_LOGGED_IN`` (value: 1) Logged in users."
+msgid "Pre-defined access controls"
 msgstr ""
 
 #: ../../design/database.rst:654
+msgid "``ACCESS_PRIVATE`` (value: 0) Private."
+msgstr ""
+
+#: ../../design/database.rst:655
+msgid "``ACCESS_LOGGED_IN`` (value: 1) Logged in users."
+msgstr ""
+
+#: ../../design/database.rst:656
 msgid "``ACCESS_PUBLIC`` (value: 2) Public data."
 msgstr ""
 
-#: ../../design/database.rst:657
+#: ../../design/database.rst:659
 msgid "User defined access controls"
 msgstr ""
 
-#: ../../design/database.rst:659
-msgid "You may define additional access groups and assign them to an entity, annotation or metadata. A number of functions have been defined to assist you; see the `access library reference`_ for more information."
-msgstr ""
-
-#: ../../design/database.rst:664
-msgid "How access affects data retrieval"
+#: ../../design/database.rst:661
+msgid "You may define additional access groups and assign them to an entity, or annotation. A number of functions have been defined to assist you; see the :doc:`/guides/access` for more information."
 msgstr ""
 
 #: ../../design/database.rst:666
-msgid "All data retrieval functions above the database layer - for example ``get_entities`` and its cousins - will only return items that the current user has access to see. It is not possible to retrieve items that the current user does not have access to. This makes it very hard to create a security hole for retrieval."
+msgid "How access affects data retrieval"
+msgstr ""
+
+#: ../../design/database.rst:668
+msgid "All data retrieval functions above the database layer - for example ``elgg_get_entities`` will only return items that the current user has access to see. It is not possible to retrieve items that the current user does not have access to. This makes it very hard to create a security hole for retrieval."
 msgstr ""
 
 #: ../../design/database.rst:675
@@ -968,161 +968,175 @@ msgstr ""
 msgid "You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called ``permissions_check``, which passes the entity in question to any function that has announced it wants to be referenced. Returning ``true`` will allow write access; returning ``false`` will deny it. See :ref:`the plugin hook reference for permissions\\_check <guides/hooks-list#permission-hooks>` for more details."
 msgstr ""
 
-#: ../../design/database.rst:692
-msgid "`Access library reference`_"
-msgstr ""
-
-#: ../../design/database.rst:697
+#: ../../design/database.rst:691
 msgid "Schema"
 msgstr ""
 
-#: ../../design/database.rst:699
+#: ../../design/database.rst:693
 msgid "The database contains a number of primary and secondary tables. You can follow schema changes in ``engine/schema/migrations/``"
 msgstr ""
 
-#: ../../design/database.rst:702
+#: ../../design/database.rst:696
 msgid "Main tables"
 msgstr ""
 
-#: ../../design/database.rst:704
+#: ../../design/database.rst:698
 msgid "This is a description of the main tables. Keep in mind that in a given Elgg installation, the tables will have a prefix (typically \"elgg\\_\")."
 msgstr ""
 
-#: ../../design/database.rst:708
+#: ../../design/database.rst:702
 msgid "Table: entities"
 msgstr ""
 
-#: ../../design/database.rst:710
+#: ../../design/database.rst:704
 msgid "This is the main `Entities`_ table containing Elgg users, sites, objects and groups. When you first install Elgg this is automatically populated with your first site."
 msgstr ""
 
-#: ../../design/database.rst:714
+#: ../../design/database.rst:708
 msgid "It contains the following fields:"
 msgstr ""
 
-#: ../../design/database.rst:716
-msgid "**guid** An auto-incrementing counter producing a GUID that uniquely identifies this entity in the system."
+#: ../../design/database.rst:710
+msgid "**guid** An auto-incrementing counter producing a GUID that uniquely identifies this entity in the system"
 msgstr ""
 
-#: ../../design/database.rst:718
+#: ../../design/database.rst:711
 msgid "**type** The type of entity - object, user, group or site"
 msgstr ""
 
-#: ../../design/database.rst:719
+#: ../../design/database.rst:712
 msgid "**subtype** A subtype of entity"
 msgstr ""
 
-#: ../../design/database.rst:720
-msgid "**owner\\_guid** The GUID of the owner's entity."
+#: ../../design/database.rst:713
+msgid "**owner\\_guid** The GUID of the owner's entity"
 msgstr ""
 
-#: ../../design/database.rst:721
-msgid "**site\\_guid** The site the entity belongs to."
+#: ../../design/database.rst:714
+msgid "**container\\_guid** The GUID this entity is contained by - either a user or a group"
 msgstr ""
 
-#: ../../design/database.rst:722
-msgid "**container\\_guid** The GUID this entity is contained by - either a user or a group."
+#: ../../design/database.rst:715
+msgid "**access\\_id** Access controls on this entity"
 msgstr ""
 
-#: ../../design/database.rst:724
-msgid "**access\\_id** Access controls on this entity."
+#: ../../design/database.rst:716
+msgid "**time\\_created** Unix timestamp of when the entity is created"
 msgstr ""
 
-#: ../../design/database.rst:725
-msgid "**time\\_created** Unix timestamp of when the entity is created."
+#: ../../design/database.rst:717
+msgid "**time\\_updated** Unix timestamp of when the entity was updated"
 msgstr ""
 
-#: ../../design/database.rst:726
-msgid "**time\\_updated** Unix timestamp of when the entity was updated."
+#: ../../design/database.rst:718
+msgid "**enabled** If this is 'yes' an entity is accessible, if 'no' the entity has been disabled (Elgg treats it as if it were deleted without actually removing it from the database)"
 msgstr ""
 
-#: ../../design/database.rst:727
-msgid "**enabled** If this is 'yes' an entity is accessible, if 'no' the entity has been disabled (Elgg treats it as if it were deleted without actually removing it from the database)."
-msgstr ""
-
-#: ../../design/database.rst:732
+#: ../../design/database.rst:723
 msgid "Table: metadata"
 msgstr ""
 
-#: ../../design/database.rst:734
+#: ../../design/database.rst:725
 msgid "This table contains `Metadata`_, extra information attached to an entity."
 msgstr ""
 
-#: ../../design/database.rst:736
-#: ../../design/database.rst:751
-msgid "**id** A counter."
-msgstr ""
-
-#: ../../design/database.rst:737
-#: ../../design/database.rst:752
-msgid "**entity\\_guid** The entity this is attached to."
-msgstr ""
-
-#: ../../design/database.rst:738
-msgid "**name** The name string table."
-msgstr ""
-
+#: ../../design/database.rst:727
 #: ../../design/database.rst:740
-msgid "**value** The value string."
+#: ../../design/database.rst:767
+msgid "**id** A unique IDentifier"
 msgstr ""
 
+#: ../../design/database.rst:728
 #: ../../design/database.rst:741
-#: ../../design/database.rst:755
-msgid "**value\\_type** The value class, either text or an integer."
+msgid "**entity\\_guid** The entity this is attached to"
 msgstr ""
 
+#: ../../design/database.rst:729
 #: ../../design/database.rst:742
-#: ../../design/database.rst:759
-msgid "**time\\_created** Unix timestamp of when the metadata is created."
-msgstr ""
-
-#: ../../design/database.rst:743
-#: ../../design/database.rst:760
-msgid "**enabled** If this is 'yes' an item is accessible, if 'no' the item has been deleted."
-msgstr ""
-
-#: ../../design/database.rst:747
-msgid "Table: annotations"
-msgstr ""
-
-#: ../../design/database.rst:749
-msgid "This table contains `Annotations`_, this is distinct from `Metadata`_."
-msgstr ""
-
-#: ../../design/database.rst:753
 msgid "**name** The name string"
 msgstr ""
 
-#: ../../design/database.rst:754
+#: ../../design/database.rst:730
+#: ../../design/database.rst:743
 msgid "**value** The value string"
 msgstr ""
 
-#: ../../design/database.rst:756
-msgid "**owner\\_guid** The owner GUID of the owner who set this item of metadata."
+#: ../../design/database.rst:731
+#: ../../design/database.rst:744
+msgid "**value\\_type** The value class, either text or an integer"
 msgstr ""
 
-#: ../../design/database.rst:758
-msgid "**access\\_id** An Access controls on this item of metadata."
+#: ../../design/database.rst:732
+msgid "**time\\_created** Unix timestamp of when the metadata is created"
 msgstr ""
 
-#: ../../design/database.rst:764
+#: ../../design/database.rst:733
+#: ../../design/database.rst:748
+msgid "**enabled** If this is 'yes' an item is accessible, if 'no' the item has been disabled"
+msgstr ""
+
+#: ../../design/database.rst:736
+msgid "Table: annotations"
+msgstr ""
+
+#: ../../design/database.rst:738
+msgid "This table contains `Annotations`_, this is distinct from `Metadata`_."
+msgstr ""
+
+#: ../../design/database.rst:745
+msgid "**owner\\_guid** The owner GUID of the owner who set this annotation"
+msgstr ""
+
+#: ../../design/database.rst:746
+msgid "**access\\_id** An Access controls on this annotation"
+msgstr ""
+
+#: ../../design/database.rst:747
+msgid "**time\\_created** Unix timestamp of when the annotation is created."
+msgstr ""
+
+#: ../../design/database.rst:751
 msgid "Table: relationships"
 msgstr ""
 
-#: ../../design/database.rst:766
+#: ../../design/database.rst:753
 msgid "This table defines `Relationships`_, these link one entity with another."
 msgstr ""
 
-#: ../../design/database.rst:768
+#: ../../design/database.rst:755
 msgid "**guid\\_one** The GUID of the subject entity."
 msgstr ""
 
-#: ../../design/database.rst:769
+#: ../../design/database.rst:756
 msgid "**relationship** The type of the relationship."
 msgstr ""
 
-#: ../../design/database.rst:770
+#: ../../design/database.rst:757
 msgid "**guid\\_two** The GUID of the target entity."
+msgstr ""
+
+#: ../../design/database.rst:760
+msgid "Secundairy tables"
+msgstr ""
+
+#: ../../design/database.rst:763
+msgid "Table: access_collections"
+msgstr ""
+
+#: ../../design/database.rst:765
+msgid "This table defines Access Collections, which grant users access to `Entities`_ or `Annotations`_."
+msgstr ""
+
+#: ../../design/database.rst:768
+msgid "***name**  The name of the access collection"
+msgstr ""
+
+#: ../../design/database.rst:769
+msgid "**owner_guid** The GUID of the owning entity (eg. a user or a group)"
+msgstr ""
+
+#: ../../design/database.rst:770
+msgid "**subtype** the subtype of the access collection (eg. `friends` or `group_acl`)"
 msgstr ""
 
 #: ../../design/events.rst:2
@@ -1507,7 +1521,7 @@ msgid "Security"
 msgstr ""
 
 #: ../../design/security.rst:4
-msgid "Elgg’s approach to the various security issues common to all web applications."
+msgid "Elgg's approach to the various security issues common to all web applications."
 msgstr ""
 
 #: ../../design/security.rst:8
@@ -1526,143 +1540,151 @@ msgstr ""
 msgid "The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in ``/elgg-config/settings.php``. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook."
 msgstr ""
 
-#: ../../design/security.rst:23
+#: ../../design/security.rst:25
 msgid "Password hashing"
 msgstr ""
 
-#: ../../design/security.rst:25
-msgid "Passwords are never stored, only salted hashes produced with bcrypt. This is done via the standard ``password_hash()`` function. On older systems, the ``password-compat`` polyfill is used, but the algorithm is identical."
-msgstr ""
-
 #: ../../design/security.rst:27
-msgid "Elgg installations created before version 1.10 may have residual \"legacy\" password hashes created using salted MD5. These are migrated to bcrypt as users log in, and will be completely removed when a system is upgraded to Elgg 3.0. In the meantime we're happy to assist site owners to manually remove these legacy hashes, though it would force those users to reset their passwords."
+msgid "Passwords are never stored in plain text, only salted hashes produced with bcrypt. This is done via the standard ``password_hash()`` function. On older systems, the ``password-compat`` polyfill is used, but the algorithm is identical."
 msgstr ""
 
 #: ../../design/security.rst:30
-msgid "Password throttling"
-msgstr ""
-
-#: ../../design/security.rst:32
-msgid "Elgg has a password throttling mechanism to make dictionary attacks from the outside very difficult. A user is only allowed 5 login attempts over a 5 minute period."
+msgid "Elgg installations created before version 1.10 may have residual \"legacy\" password hashes created using salted MD5. These are migrated to bcrypt as users log in, and will be completely removed when a system is upgraded to Elgg 3.0. In the meantime we're happy to assist site owners to manually remove these legacy hashes, though it would force those users to reset their passwords."
 msgstr ""
 
 #: ../../design/security.rst:35
-msgid "Password resetting"
+msgid "Password throttling"
 msgstr ""
 
 #: ../../design/security.rst:37
+msgid "Elgg has a password throttling mechanism to make dictionary attacks from the outside very difficult. A user is only allowed 5 login attempts over a 5 minute period."
+msgstr ""
+
+#: ../../design/security.rst:41
+msgid "Password resetting"
+msgstr ""
+
+#: ../../design/security.rst:43
 msgid "If a user forgets his password, a new random password can be requested. After the request, an email is sent with a unique URL. When the user visits that URL, a new random password is sent to the user through email."
 msgstr ""
 
-#: ../../design/security.rst:40
+#: ../../design/security.rst:47
 msgid "Sessions"
 msgstr ""
 
-#: ../../design/security.rst:42
-msgid "Elgg uses PHP's session handling with custom handlers. Session data is stored in the database. The session cookie contains the session id that links the user to the browser. The user's metadata is stored in the session including GUID, username, email address. The session's lifetime is controlled through the server's PHP configuration."
-msgstr ""
-
-#: ../../design/security.rst:45
-msgid "Session fixation"
-msgstr ""
-
-#: ../../design/security.rst:46
-msgid "Elgg protects against session fixation by regenerating the session id when a user logs in."
-msgstr ""
-
 #: ../../design/security.rst:49
-msgid "Session hijacking"
-msgstr ""
-
-#: ../../design/security.rst:50
-msgid "This section is questionable."
+msgid "Elgg uses PHP's session handling with custom handlers. Session data is stored in the database. The session cookie contains the session id that links the user to the browser. The user's metadata is stored in the session including GUID, username, email address."
 msgstr ""
 
 #: ../../design/security.rst:52
-msgid "Besides protecting against session fixation attacks, Elgg also has a further check to try to defeat session hijacking if the session identifier is compromised. Elgg stores a hash of the browser's user agent and a site secret as a session fingerprint. The use of the site secret is rather superfluous but checking the user agent might prevent some session hijacking attempts."
+msgid "The session's lifetime is controlled through the server's PHP configuration and additionally through options in the ``/elgg-config/settings.php``."
 msgstr ""
 
 #: ../../design/security.rst:55
-msgid "“Remember me” cookie"
+msgid "Session fixation"
 msgstr ""
 
-#: ../../design/security.rst:56
-msgid "To allow users to stay logged in for a longer period of time regardless of whether the browser has been closed, Elgg uses a cookie (called elggperm) that contains what could be considered a super session identifier. This identifier is stored in a cookies table. When a session is being initiated, Elgg checks for the presence of the elggperm cookie. If it exists and the session code in the cookie matches the code in the cookies table, the corresponding user is automatically logged in."
+#: ../../design/security.rst:57
+msgid "Elgg protects against session fixation by regenerating the session id when a user logs in."
 msgstr ""
 
-#: ../../design/security.rst:59
-msgid "Alternative authentication"
+#: ../../design/security.rst:60
+msgid "\"Remember me\" cookie"
 msgstr ""
 
-#: ../../design/security.rst:61
-msgid "This section is very hand-wavy"
+#: ../../design/security.rst:62
+msgid "To allow users to stay logged in for a longer period of time regardless of whether the browser has been closed, Elgg uses a cookie (default called ``elggperm``) that contains what could be considered a super session identifier. This identifier is stored in a cookies table. When a session is being initiated, Elgg checks for the presence of the ``elggperm`` cookie. If it exists and the session code in the cookie matches the code in the cookies table, the corresponding user is automatically logged in."
 msgstr ""
 
-#: ../../design/security.rst:63
-msgid "To replace Elgg's default user authentication system, a plugin would have to replace the default action with its own through ``register_action()``. It would also have to register its own pam handler using ``register_pam_handler()``."
-msgstr ""
-
-#: ../../design/security.rst:65
-msgid "The ``pam_authenticate()`` function used to call the different modules has a bug related to the importance variable."
+#: ../../design/security.rst:67
+msgid "When a user changes their password all existing permanent cookie codes are removed from the database."
 msgstr ""
 
 #: ../../design/security.rst:69
-msgid "HTTPS"
-msgstr ""
-
-#: ../../design/security.rst:71
-msgid "You must enable SSL support on your server for any of these techniques to work."
+msgid "The lifetime of the persistent cookie can be controlled in the `/elgg-config/settings.php` file. The default lifetime is 30 days. The database records for the persistent cookies will be removed after the lifetime expired."
 msgstr ""
 
 #: ../../design/security.rst:73
-msgid "To make the login form submit over https, turn on login-over-ssl from Elgg’s admin panel."
+msgid "Alternative authentication"
 msgstr ""
 
 #: ../../design/security.rst:75
-msgid "You can also serve your whole site over SSL by simply changing the site URL to include “https” instead of just “http.”"
+msgid "This section is very hand-wavy"
 msgstr ""
 
-#: ../../design/security.rst:78
+#: ../../design/security.rst:77
+msgid "To replace Elgg's default user authentication system, a plugin could replace the default ``login`` action with its own. Better would be to register a PAM handler using ``register_pam_handler()`` which handles the authentication of the user based on the new requirements."
+msgstr ""
+
+#: ../../design/security.rst:81
+msgid "HTTPS"
+msgstr ""
+
+#: ../../design/security.rst:83
+msgid "You must enable SSL support on your server for any of these techniques to work."
+msgstr ""
+
+#: ../../design/security.rst:85
+msgid "You can serve your whole site over SSL by changing the site URL to include \"https\" instead of just \"http\"."
+msgstr ""
+
+#: ../../design/security.rst:88
 msgid "XSS"
 msgstr ""
 
-#: ../../design/security.rst:80
+#: ../../design/security.rst:90
 msgid "Filtering is used in Elgg to make XSS attacks more difficult. The purpose of the filtering is to remove Javascript and other dangerous input from users."
 msgstr ""
 
-#: ../../design/security.rst:82
+#: ../../design/security.rst:93
 msgid "Filtering is performed through the function ``filter_tags()``. This function takes in a string and returns a filtered string. It triggers a ``validate, input`` plugin hook."
 msgstr ""
 
-#: ../../design/security.rst:84
-msgid "By default Elgg comes with the htmLawed filtering code as a plugin. Developers can drop in any additional or replacement filtering code as a plugin."
+#: ../../design/security.rst:96
+msgid "By default Elgg comes with the htmLawed filtering code. Developers can drop in any additional or replacement filtering code as a plugin."
 msgstr ""
 
-#: ../../design/security.rst:86
+#: ../../design/security.rst:98
 msgid "The ``filter_tags()`` function is called on any user input as long as the input is obtained through a call to ``get_input()``. If for some reason a developer did not want to perform the default filtering on some user input, the ``get_input()`` function has a parameter for turning off filtering."
 msgstr ""
 
-#: ../../design/security.rst:89
+#: ../../design/security.rst:102
 msgid "CSRF / XSRF"
 msgstr ""
 
-#: ../../design/security.rst:91
+#: ../../design/security.rst:104
 msgid "Elgg generates security tokens to prevent `cross-site request forgery`_. These are embedded in all forms and state-modifying AJAX requests as long as the correct API is used. Read more in the :doc:`/guides/actions` developer guide."
 msgstr ""
 
-#: ../../design/security.rst:94
+#: ../../design/security.rst:108
+msgid "Signed URLs"
+msgstr ""
+
+#: ../../design/security.rst:110
+msgid "It's possible to protect URLs with a unique signature. Read more in the :doc:`/guides/actions` developer guide."
+msgstr ""
+
+#: ../../design/security.rst:113
 msgid "SQL Injection"
 msgstr ""
 
-#: ../../design/security.rst:96
-msgid "Elgg’s API sanitizes all input before issuing DB queries. Read more in the :doc:`/design/database` design doc."
+#: ../../design/security.rst:115
+msgid "Elgg's API sanitizes all input before issuing DB queries. Read more in the :doc:`/design/database` design doc."
 msgstr ""
 
-#: ../../design/security.rst:99
+#: ../../design/security.rst:118
 msgid "Privacy"
 msgstr ""
 
-#: ../../design/security.rst:101
+#: ../../design/security.rst:120
 msgid "Elgg uses an ACL system to control which users have access to various pieces of content. Read more in the :doc:`/design/database` design doc."
+msgstr ""
+
+#: ../../design/security.rst:125
+msgid "Hardening"
+msgstr ""
+
+#: ../../design/security.rst:127
+msgid "Site administrators can configure settings which will help with hardening the website. Read more in the Administrator guide :doc:`/admin/security`."
 msgstr ""
 
