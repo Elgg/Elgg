@@ -45,15 +45,7 @@ $title = elgg_view('output/url', [
 	'class' => 'search-matched-title',
 ]);
 
-$subtitle = '';
-
 $type = $entity->getType();
-if ($type == 'object') {
-	$subtitle = elgg_view('page/elements/by_line', [
-		'entity' => $entity,
-		'time' => $entity->getVolatileData('search_time'),
-	]);
-}
 
 $content = '';
 if ($description) {
@@ -70,7 +62,9 @@ echo elgg_view("$type/elements/summary", [
 	'entity' => $entity,
 	'tags' => false,
 	'title' => $title,
-	'subtitle' => $subtitle,
+	'subtitle' => ($type == 'object') ? null : '',
+	'time' => $entity->getVolatileData('search_time'),
+	'access' => false,
 	'content' => $content,
 	'icon' => $icon,
 ]);
