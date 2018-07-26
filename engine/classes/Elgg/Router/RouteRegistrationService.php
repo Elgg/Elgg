@@ -80,6 +80,8 @@ class RouteRegistrationService {
 	 */
 	public function register($name, array $params = []) {
 
+		$this->routes->remove($name);
+
 		$params = $this->hooks->trigger('route:config', $name, $params, $params);
 
 		$path = elgg_extract('path', $params);
