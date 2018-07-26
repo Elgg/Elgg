@@ -1027,13 +1027,12 @@ function elgg_view_entity_list($entities, array $vars = []) {
 		$vars["pagination"] = false;
 	}
 
-	if ($vars['list_type'] == 'table') {
-		return elgg_view('page/components/table', $vars);
-	} elseif ($vars['list_type'] == 'list') {
-		return elgg_view('page/components/list', $vars);
-	} else {
-		return elgg_view('page/components/gallery', $vars);
+	$view = "page/components/{$vars['list_type']}";
+	if (!elgg_view_exists($view)) {
+		$view = 'page/components/list';
 	}
+	
+	return elgg_view($view, $vars);
 }
 
 /**
