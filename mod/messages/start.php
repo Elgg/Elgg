@@ -243,8 +243,8 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		add_entity_relationship($message_sent->guid, "reply", $original_msg_guid);
 	}
 
-	$message_contents = strip_tags($body);
 	if (($recipient_guid != elgg_get_logged_in_user_guid()) && $notify) {
+		$message_contents = $body;
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
 		
@@ -252,9 +252,13 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$body = elgg_echo('messages:email:body', [
 				$sender->getDisplayName(),
 				$message_contents,
-				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
+				elgg_generate_url('collection:object:messages:owner', [
+					'username' => $recipient->username,
+				]),
 				$sender->getDisplayName(),
-				elgg_get_site_url() . "messages/add?send_to=" . $sender_guid,
+				elgg_generate_url('add:object:messages', [
+					'send_to' => $sender_guid,
+				]),
 			],
 			$recipient->language
 		);
