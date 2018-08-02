@@ -32,9 +32,6 @@ function messages_init() {
 	elgg_extend_view('elgg.css', 'messages/css');
 	elgg_extend_view('elgg.js', 'messages/js');
 
-	// Register a URL handler
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'messages_set_url');
-
 	// Extend avatar hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', 'messages_user_hover_menu');
@@ -284,6 +281,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
  * @param array  $params supplied params
  *
  * @return void|string
+ * @deprecated 3.0 use ElggEntity::getURL()
  */
 function messages_set_url($hook, $type, $url, $params) {
 	
@@ -292,7 +290,9 @@ function messages_set_url($hook, $type, $url, $params) {
 		return;
 	}
 	
-	return "messages/read/{$entity->getGUID()}";
+	elgg_deprecated_notice(__METHOD__ . ' is deprecated please use ElggEntity::getURL()', '3.0');
+	
+	return elgg_generate_entity_url($entity);
 }
 
 /**
