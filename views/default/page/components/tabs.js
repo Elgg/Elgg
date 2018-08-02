@@ -25,10 +25,10 @@ define(function (require) {
 		$target.removeClass('hidden').addClass('elgg-state-active');
 
 		return true;
-	}
-
-	$(document).on('click', '.elgg-tabs-component .elgg-tabs > li > a', function (e) {
-		e.preventDefault();
+	};
+	
+	var clickLink = function (event) {
+		event.preventDefault();
 
 		var $link = $(this);
 		var $tab = $(this).parent();
@@ -85,7 +85,10 @@ define(function (require) {
 				}
 			});
 		}
-	});
+	};
+
+	// register click event
+	$(document).on('click', '.elgg-tabs-component .elgg-tabs a', clickLink);
 
 	// Open selected tabs
 	// This will load any selected tabs that link to ajax views
