@@ -68,6 +68,7 @@ define(function (require) {
 				data: $link.data('ajaxQuery') || {},
 				beforeSend: function () {
 					changeTab($tab);
+					$target.html('');
 					$target.addClass('elgg-ajax-loader');
 				}
 			}).done(function (output, statusText, jqXHR) {
