@@ -173,4 +173,23 @@ class Values {
 	public static function preventViewOutput() {
 		return ['__view_output' => ''];
 	}
+	
+	/**
+	 * Check if a value isn't empty, but allow 0 and '0'
+	 *
+	 * @param mixed $value the value to check
+	 *
+	 * @see empty()
+	 *
+	 * @return bool
+	 * @since 3.0.0
+	 */
+	public static function isEmpty($value) {
+		
+		if ($value === 0 || $value === '0' || $value === 0.0) {
+			return false;
+		}
+		
+		return empty($value);
+	}
 }
