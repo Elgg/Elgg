@@ -317,6 +317,7 @@ Deprecated APIs
  * ``\Elgg\Project\Paths::sanitize``: Use ``\Elgg\Project\Paths::sanitize()``
  * ``elgg_group_gatekeeper``: Use ``elgg_entity_gatekeeper()``
  * ``get_entity_dates``: Use ``elgg_get_entity_dates()``
+ * ``messages_set_url``: Use ``ElggEntity::getURL()``
 
 Removed global vars
 -------------------
