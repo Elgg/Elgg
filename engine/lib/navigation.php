@@ -693,6 +693,7 @@ function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 		$parent = $selected_item->getParent();
 		while ($parent instanceof \ElggMenuItem) {
 			$parent->setSelected();
+			$parent->addItemClass('elgg-has-selected-child');
 			$parent = $parent->getParent();
 		}
 	}

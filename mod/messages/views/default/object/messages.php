@@ -73,7 +73,7 @@ if (elgg_extract('full_view', $vars)) {
 	return;
 }
 
-$body .= elgg_view('output/longtext', [
+$body = elgg_view('output/longtext', [
 	'value' => elgg_get_excerpt($entity->description),
 ]);
 

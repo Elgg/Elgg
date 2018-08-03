@@ -169,13 +169,22 @@ class Search {
 	}
 
 	/**
-	 * Returns the name of the view to render an entity in search results
+	 * Returns the name of the view to render an item in search results
+	 *
+	 * @param \Loggable $item Optional item to get the type/subtype of
+	 *
 	 * @return string
 	 */
-	public function getSearchView() {
-
-		$type = elgg_extract('type', $this->params);
-		$subtype = elgg_extract('subtype', $this->params);
+	public function getSearchView(\Loggable $item = null) {
+		
+		if ($item instanceof \Loggable) {
+			$type = $item->getType();
+			$subtype = $item->getSubtype();
+		} else {
+			$type = elgg_extract('type', $this->params);
+			$subtype = elgg_extract('subtype', $this->params);
+		}
+		
 		$search_type = elgg_extract('search_type', $this->params);
 
 		$views = [
