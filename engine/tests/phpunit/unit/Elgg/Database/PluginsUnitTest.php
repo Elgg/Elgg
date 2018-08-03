@@ -60,7 +60,7 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 		$priority_name = $plugins->namespacePrivateSetting('internal', 'priority');
 		// because of mocking issues don't use ->setPriority()
 		$plugin_high_priority->setPrivateSetting($priority_name, 100);
-		
+
 		/* @var $plugin_low_priority \ElggPlugin */
 		$plugin_low_priority = $this->createObject([
 			'subtype' => 'plugin',
@@ -77,7 +77,7 @@ class PluginsUnitTest extends \Elgg\UnitTestCase {
 			$plugin_high_priority,
 			$plugin_low_priority,
 		];
-		
+
 		$plugins->setBootPlugins($bootplugins);
 		
 		$active_plugins = $plugins->find('active');

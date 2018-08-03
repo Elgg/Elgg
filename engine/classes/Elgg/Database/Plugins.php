@@ -159,12 +159,12 @@ class Plugins {
 			unset($this->boot_plugins);
 			return;
 		}
-		
+
 		foreach ($plugins as $plugin) {
 			if (!$plugin instanceof ElggPlugin) {
 				continue;
 			}
-			
+
 			$plugin_id = $plugin->getID();
 			if (!$plugin_id) {
 				continue;
@@ -228,85 +228,75 @@ class Plugins {
 	 */
 	public function generateEntities() {
 
-		$mod_dir = $this->getPath();
+		$generator = function() {
+			$mod_dir = $this->getPath();
 
-		// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
-		$old_ia = $this->session->setIgnoreAccess(true);
+			$known_plugins = $this->find('all');
+			/* @var \ElggPlugin[] $known_plugins */
 
-		// show hidden entities so that we can enable them if appropriate
-		$old_access = $this->session->setDisabledEntityVisibility(true);
-
-		$known_plugins = $this->find('all');
-		/* @var \ElggPlugin[] $known_plugins */
-
-		if (!$known_plugins) {
-			$known_plugins = [];
-		}
-
-		// map paths to indexes
-		$id_map = [];
-		foreach ($known_plugins as $i => $plugin) {
-			// if the ID is wrong, delete the plugin because we can never load it.
-			$id = $plugin->getID();
-			if (!$id) {
-				$plugin->delete();
-				unset($known_plugins[$i]);
-				continue;
+			if (!$known_plugins) {
+				$known_plugins = [];
 			}
-			$id_map[$plugin->getID()] = $i;
-			$plugin->cache();
-		}
 
-		$physical_plugins = $this->getDirsInDir($mod_dir);
-		if (!$physical_plugins) {
-			$this->session->setIgnoreAccess($old_ia);
-			$this->session->setDisabledEntityVisibility($old_access);
-
-			return false;
-		}
-
-		// check real plugins against known ones
-		foreach ($physical_plugins as $plugin_id) {
-			// is this already in the db?
-			if (array_key_exists($plugin_id, $id_map)) {
-				$index = $id_map[$plugin_id];
-				$plugin = $known_plugins[$index];
-				// was this plugin deleted and its entity disabled?
-				if (!$plugin->isEnabled()) {
-					$plugin->enable();
-					$plugin->deactivate();
-					$plugin->setPriority('new');
+			// map paths to indexes
+			$id_map = [];
+			foreach ($known_plugins as $i => $plugin) {
+				// if the ID is wrong, delete the plugin because we can never load it.
+				$id = $plugin->getID();
+				if (!$id) {
+					$plugin->delete();
+					unset($known_plugins[$i]);
+					continue;
 				}
-
-				// remove from the list of plugins to disable
-				unset($known_plugins[$index]);
-			} else {
-				// create new plugin
-				// priority is forced to last in save() if not set.
-				$plugin = ElggPlugin::fromId($plugin_id);
+				$id_map[$plugin->getID()] = $i;
 				$plugin->cache();
 			}
-		}
 
-		// everything remaining in $known_plugins needs to be disabled
-		// because they are entities, but their dirs were removed.
-		// don't delete the entities because they hold settings.
-		foreach ($known_plugins as $plugin) {
-			if ($plugin->isActive()) {
-				$plugin->deactivate();
+			$physical_plugins = $this->getDirsInDir($mod_dir);
+			if ($physical_plugins) {
+				// check real plugins against known ones
+				foreach ($physical_plugins as $plugin_id) {
+					// is this already in the db?
+					if (array_key_exists($plugin_id, $id_map)) {
+						$index = $id_map[$plugin_id];
+						$plugin = $known_plugins[$index];
+						// was this plugin deleted and its entity disabled?
+						if (!$plugin->isEnabled()) {
+							$plugin->enable();
+							$plugin->deactivate();
+							$plugin->setPriority('new');
+						}
+
+						// remove from the list of plugins to disable
+						unset($known_plugins[$index]);
+					} else {
+						// create new plugin
+						// priority is forced to last in save() if not set.
+						$plugin = ElggPlugin::fromId($plugin_id);
+						$plugin->cache();
+					}
+				}
 			}
-			// remove the priority.
-			$name = $this->namespacePrivateSetting('internal', 'priority');
-			remove_private_setting($plugin->guid, $name);
-			if ($plugin->isEnabled()) {
-				$plugin->disable();
+
+			// everything remaining in $known_plugins needs to be disabled
+			// because they are entities, but their dirs were removed.
+			// don't delete the entities because they hold settings.
+			foreach ($known_plugins as $plugin) {
+				if ($plugin->isActive()) {
+					$plugin->deactivate();
+				}
+				// remove the priority.
+				$name = $this->namespacePrivateSetting('internal', 'priority');
+				remove_private_setting($plugin->guid, $name);
+				if ($plugin->isEnabled()) {
+					$plugin->disable();
+				}
 			}
-		}
 
-		$this->reindexPriorities();
+			$this->reindexPriorities();
+		};
 
-		$this->session->setIgnoreAccess($old_ia);
-		$this->session->setDisabledEntityVisibility($old_access);
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, $generator);
 
 		return true;
 	}
@@ -440,12 +430,12 @@ class Plugins {
 		if (isset($this->boot_plugins) && is_array($this->boot_plugins)) {
 			return array_key_exists($plugin_id, $this->boot_plugins);
 		}
-		
+
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
 		}
-		
+
 		return check_entity_relationship($plugin->guid, 'active_plugin', 1) instanceof \ElggRelationship;
 	}
 
@@ -493,7 +483,7 @@ class Plugins {
 	 * @internal
 	 */
 	public function register() {
-		$plugins = $this->find('active');
+		$plugins = $this->find(ElggPlugin::STATUS_ACTIVE);
 		if (empty($plugins)) {
 			return;
 		}
@@ -527,7 +517,7 @@ class Plugins {
 	 * @internal
 	 */
 	public function boot() {
-		$plugins = $this->find('active');
+		$plugins = $this->find(ElggPlugin::STATUS_ACTIVE);
 		if (empty($plugins)) {
 			return;
 		}
@@ -609,7 +599,7 @@ class Plugins {
 	 * @return void
 	 */
 	public function init() {
-		$plugins = $this->find('active');
+		$plugins = $this->find(ElggPlugin::STATUS_ACTIVE);
 		if (empty($plugins)) {
 			return;
 		}
@@ -638,7 +628,7 @@ class Plugins {
 	 * @return void
 	 */
 	public function ready() {
-		$plugins = $this->find('active');
+		$plugins = $this->find(ElggPlugin::STATUS_ACTIVE);
 		if (empty($plugins)) {
 			return;
 		}
@@ -667,7 +657,7 @@ class Plugins {
 	 * @return void
 	 */
 	public function upgrade() {
-		$plugins = $this->find('active');
+		$plugins = $this->find(ElggPlugin::STATUS_ACTIVE);
 		if (empty($plugins)) {
 			return;
 		}
@@ -696,7 +686,7 @@ class Plugins {
 	 * @return void
 	 */
 	public function shutdown() {
-		$plugins = $this->find('active');
+		$plugins = $this->find(ElggPlugin::STATUS_ACTIVE);
 		if (empty($plugins)) {
 			return;
 		}
@@ -768,71 +758,78 @@ class Plugins {
 	 *
 	 * @return ElggPlugin[]
 	 */
-	public function find($status = 'active') {
+	public function find($status = ElggPlugin::STATUS_ACTIVE) {
 		if (!$this->db || !$this->config->installed) {
 			return [];
 		}
 
-		$loaded_from_cache = false;
-		if ($status === 'active' && isset($this->boot_plugins)) {
+		if ($status === ElggPlugin::STATUS_ACTIVE && isset($this->boot_plugins)) {
 			$plugins = $this->boot_plugins;
-			$loaded_from_cache = true;
 		} else {
-			$priority = $this->namespacePrivateSetting('internal', 'priority');
-			$site_guid = 1;
+			$old_ia = $this->session->setIgnoreAccess(true);
 
-			// grab plugins
-			$options = [
+			$plugins = elgg_get_entities([
 				'type' => 'object',
 				'subtype' => 'plugin',
 				'limit' => 0,
-				'selects' => ['ps.value'],
-				'private_setting_names' => [$priority],
-				// ORDER BY CAST(ps.value) is super slow. We usort() below.
-				'order_by' => false,
-			];
+				'order_by' => false, // ORDER BY CAST(ps.value) is super slow. We usort() below.
+				'wheres' => [
+					function (QueryBuilder $qb) {
+						$ps_name = $this->namespacePrivateSetting('internal', 'priority');
+						$qb->joinPrivateSettingsTable('e', 'guid', $ps_name, 'left', 'ps');
+						$qb->addSelect('ps.value as priority');
+					},
+					function (QueryBuilder $qb) use ($status) {
+						if (!in_array($status, [ElggPlugin::STATUS_ACTIVE, ElggPlugin::STATUS_INACTIVE])) {
+							return null;
+						}
 
-			switch ($status) {
-				case 'active':
-					$options['relationship'] = 'active_plugin';
-					$options['relationship_guid'] = $site_guid;
-					$options['inverse_relationship'] = true;
-					break;
-
-				case 'inactive':
-					$options['wheres'][] = function (QueryBuilder $qb) use ($site_guid) {
 						$subquery = $qb->subquery('entity_relationships', 'active_er');
 						$subquery->select('*')
-							->where($qb->compare('active_er.guid_one', '=', 'e.guid'))
-							->andWhere($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))
-							->andWhere($qb->compare('active_er.guid_two', '=', 1));
+							->where(
+								$qb->merge([
+									$qb->compare('active_er.guid_one', '=', 'e.guid'),
+									$qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING),
+									$qb->compare('active_er.guid_two', '=', 1),
+								])
+							);
 
-						return "NOT EXISTS ({$subquery->getSQL()})";
-					};
-					break;
+						$operand = $status === ElggPlugin::STATUS_ACTIVE ? "EXISTS" : "NOT EXISTS";
 
-				case 'all':
-				default:
-					break;
+						return $qb->compare(null, $operand, $subquery->getSQL());
+					},
+				],
+			]);
+
+			if (!$plugins) {
+				$plugins = [];
 			}
 
-			$old_ia = $this->session->setIgnoreAccess(true);
-			$plugins = elgg_get_entities($options) ? : [];
 			$this->session->setIgnoreAccess($old_ia);
 		}
 
-		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) use ($loaded_from_cache) {
-			$a_value = $loaded_from_cache ? $a->getPriority() : $a->getVolatileData('select:value');
-			$b_value = $loaded_from_cache ? $b->getPriority() : $b->getVolatileData('select:value');
-
-			if ($b_value !== $a_value) {
-				return $a_value - $b_value;
-			} else {
-				return $a->guid - $b->guid;
-			}
-		});
+		usort($plugins, [$this, 'sort']);
 
 		return $plugins;
+	}
+
+	/**
+	 * Callback to sort plugins by priority
+	 *
+	 * @param ElggPlugin $a Plugin
+	 * @param ElggPlugin $b Plugin
+	 *
+	 * @return int
+	 */
+	protected function sort(ElggPlugin $a, ElggPlugin $b) {
+		$priority_a = $a->getVolatileData('select:priority') ?? $a->getPriority();
+		$priority_b = $b->getVolatileData('select:priority') ?? $b->getPriority();
+
+		if ($priority_a == $priority_b) {
+			return $a->guid - $b->guid;
+		}
+
+		return $priority_a - $priority_b;
 	}
 
 	/**
@@ -958,7 +955,7 @@ class Plugins {
 	 */
 	public function getProvides($type = null, $name = null) {
 		if ($this->provides_cache === null) {
-			$active_plugins = $this->find('active');
+			$active_plugins = $this->find(ElggPlugin::STATUS_ACTIVE);
 
 			$provides = [];
 
@@ -1464,7 +1461,6 @@ class Plugins {
 	 * @throws DatabaseException
 	 */
 	public function setPriority(ElggPlugin $plugin, $priority) {
-
 		$old_priority = $plugin->getPriority() ? : 1;
 
 		$name = $this->namespacePrivateSetting('internal', 'priority');

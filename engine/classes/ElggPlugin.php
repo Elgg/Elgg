@@ -11,6 +11,9 @@ use Elgg\Includer;
  */
 class ElggPlugin extends ElggObject {
 
+	const STATUS_ACTIVE = 'active';
+	const STATUS_INACTIVE = 'inactive';
+
 	/**
 	 * @var ElggPluginPackage
 	 */
@@ -68,7 +71,6 @@ class ElggPlugin extends ElggObject {
 		}
 
 		$plugin = elgg_get_plugin_from_id($plugin_id);
-
 		if (!$plugin) {
 			$ia = _elgg_services()->session->setIgnoreAccess(true);
 			$plugin = new ElggPlugin();
