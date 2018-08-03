@@ -36,4 +36,24 @@ class ValuesUnitTest extends UnitTestCase {
 			[new DateTime('+2 days')],
 		];
 	}
+	
+	/**
+	 * @dataProvider emptyProvider
+	 */
+	public function testIsEmpty($value, $expected_result) {
+		$this->assertEquals($expected_result, Values::isEmpty($value));
+	}
+	
+	public function emptyProvider() {
+		return [
+			[0, false],
+			[0.0, false],
+			['0', false],
+			[null, true],
+			[false, true],
+			[[], true],
+			['', true],
+			[new \stdClass(), false],
+		];
+	}
 }
