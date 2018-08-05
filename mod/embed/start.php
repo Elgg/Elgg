@@ -82,7 +82,10 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
  */
 function embed_select_tab($hook, $type, $items, $vars) {
 	$tab_name = elgg_extract('tab', $vars);
-		
+	if($tab_name == "")
+	{
+            $tab_name = "file";
+	}	
 	foreach ($items as $item) {
 		if ($item->getName() == $tab_name) {
 			$item->setSelected();
