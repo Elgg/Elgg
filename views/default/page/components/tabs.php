@@ -53,31 +53,43 @@ foreach ($tabs as $index => $tab) {
 
 	$selected = elgg_extract('selected', $tab);
 
+	$class = ['elgg-content'];
+	$tab_content = '';
+	$tab_id = "{$id}-{$index}";
 	if (isset($tab['content'])) {
-		$class = ['elgg-content'];
 		$class[] = $selected ? 'elgg-state-active' : 'hidden';
 
-		$content .= elgg_format_element('div', [
-			'class' => $class,
-			'id' => "{$id}-{$index}",
-		], $tab['content']);
+		$tab_content = elgg_extract('content', $tab);
 		unset($tab['content']);
 
-		$tab['href'] = "#{$id}-{$index}";
+		$tab['href'] = "#{$tab_id}";
 	} else {
 		if (!isset($tab['data-ajax-reload'])) {
 			$tab['data-ajax-reload'] = true;
 		}
+		
+		$class[] = 'hidden';
 	}
 	
+	// place for content
+	$content .= elgg_format_element('div', [
+		'class' => $class,
+		'id' => $tab_id,
+	], $tab_content);
+	
+	// additional tab information
 	if (!isset($tab['name'])) {
 		$tab['name'] = "{$id}-tab-{$index}";
 	}
+	
+	$tab['data-target'] = "#{$tab_id}";
+	$tab['item_class'] = elgg_extract_class($tab, ['elgg-components-tab'], 'item_class');
 	
 	$tabs[$index] = $tab;
 }
 
 $tabs = elgg_view('navigation/tabs', [
+	'class' => 'elgg-components-tabs',
 	'tabs' => $tabs,
 ]);
 
