@@ -28,9 +28,13 @@ define(function (require) {
 	};
 	
 	var clickLink = function (event) {
+		var $link = $(this);
+		if ($link.hasClass('elgg-non-link')) {
+			return;
+		}
+		
 		event.preventDefault();
 
-		var $link = $(this);
 		var $tab = $(this).parent();
 		var $component = $(this).closest('.elgg-tabs-component');
 		var $content = $component.find('.elgg-tabs-content');

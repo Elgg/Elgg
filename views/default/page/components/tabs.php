@@ -70,6 +70,10 @@ foreach ($tabs as $index => $tab) {
 		}
 	}
 	
+	if (!isset($tab['name'])) {
+		$tab['name'] = "{$id}-tab-{$index}";
+	}
+	
 	$tabs[$index] = $tab;
 }
 
