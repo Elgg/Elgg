@@ -4,78 +4,39 @@
  *
  * @uses string $vars['type'] horizontal || vertical - Defaults to horizontal
  * @uses string $vars['class'] Additional class to add to ul
- * @uses array $vars['tabs'] A multi-dimensional array of tab entries in the format array(
- * 	'text' => string, // The string between the <a></a> tags
- * 	'href' => string, // URL for the link
- * 	'class' => string  // Class of the li element
- * 	'id' => string, // ID of the li element
- * 	'selected' => bool // if this tab is currently selected (applied to li element)
- * 	'link_class' => string, // Class to pass to the link
- * 	'link_id' => string, // ID to pass to the link
- * )
+ * @uses array  $vars['tabs'] A multi-dimensional array of tab entries in the format for ElggMenuItem
  */
+
+$tabs = elgg_extract('tabs', $vars);
+if (empty($tabs) || !is_array($tabs)) {
+	return;
+}
+unset($vars['tabs']);
+
+// make sure tabs have a name (for menu item rendering)
+foreach ($tabs as $index => &$tab) {
+	if (isset($tab['name'])) {
+		continue;
+	}
+	
+	$tab['name'] = "tab-{$index}";
+}
+
 $options = $vars;
 
 $type = elgg_extract('type', $vars, 'horizontal');
-
-if ($type == 'horizontal') {
-	$options['class'] = "elgg-tabs elgg-htabs";
-} else {
-	$options['class'] = "elgg-tabs elgg-vtabs";
-}
-if (isset($vars['class'])) {
-	$options['class'] = "{$options['class']} {$vars['class']}";
-}
-
-unset($options['tabs']);
 unset($options['type']);
 
-$attributes = elgg_format_attributes($options);
-
-if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
-	?>
-	<ul <?php echo $attributes; ?>>
-		<?php
-		foreach ($vars['tabs'] as $info) {
-			$class = elgg_extract_class($info);
-			$id = elgg_extract('id', $info);
-
-			$selected = elgg_extract('selected', $info, false);
-			if ($selected) {
-				$class[] = 'elgg-state-selected';
-			}
-			
-			$options = $info;
-			unset($options['class']);
-			unset($options['id']);
-			unset($options['selected']);
-
-			if (!isset($info['href']) && isset($info['url'])) {
-				$options['href'] = $info['url'];
-				unset($options['url']);
-			}
-			if (!isset($info['text']) && isset($info['title'])) {
-				$options['text'] = $options['title'];
-				unset($options['title']);
-			}
-			if (isset($info['link_class'])) {
-				$options['class'] = $options['link_class'];
-				unset($options['link_class']);
-			}
-
-			if (isset($info['link_id'])) {
-				$options['id'] = $options['link_id'];
-				unset($options['link_id']);
-			}
-
-			$link = elgg_view('output/url', $options);
-
-			echo elgg_format_element('li', [
-				'id' => $id,
-				'class' => $class,
-			], $link);
-		}
-		?>
-	</ul>
-	<?php
+$class = [
+	'elgg-tabs',
+];
+if ($type == 'horizontal') {
+	$class[] = 'elgg-htabs';
+} else {
+	$class[] = 'elgg-vtabs';
 }
+
+$options['class'] = elgg_extract_class($options, $class);
+$options['items'] = $tabs;
+
+echo elgg_view_menu('navigation/tabs', $options);
