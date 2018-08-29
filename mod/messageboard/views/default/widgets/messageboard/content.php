@@ -1,9 +1,9 @@
 <?php
-use Elgg\Database\Clauses\OrderByClause;
-
 /**
  * Messageboard widget view
  */
+
+use Elgg\Database\Clauses\OrderByClause;
 
 $widget = elgg_extract('entity', $vars);
 $owner = $widget->getOwnerEntity();
@@ -25,18 +25,14 @@ echo elgg_list_annotations([
 	],
 ]);
 
-if ($owner instanceof ElggGroup) {
-	$url = "messageboard/group/{$owner->guid}/all";
-} else {
-	$url = "messageboard/owner/{$owner->username}";
-}
-
 $more_link = elgg_view('output/url', [
-	'href' => $url,
+	'href' => elgg_generate_url('collection:annotation:messageboard:owner', [
+		'username' => $owner->username,
+	]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
 
-echo "<div class=\"elgg-widget-more\">$more_link</div>";
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);
 
 elgg_require_js('elgg/messageboard');

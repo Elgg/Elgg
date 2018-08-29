@@ -97,13 +97,11 @@ function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
 		return;
 	}
 	
-	$url = elgg_http_add_url_query_elements('action/messageboard/delete', [
-		'annotation_id' => $annotation->id,
-	]);
-
 	$return[] = ElggMenuItem::factory([
 		'name' => 'delete',
-		'href' => $url,
+		'href' => elgg_generate_action_url('messageboard/delete', [
+			'annotation_id' => $annotation->id,
+		]),
 		'text' => elgg_view_icon('delete'),
 		'confirm' => elgg_echo('deleteconfirm'),
 		'encode_text' => false,
