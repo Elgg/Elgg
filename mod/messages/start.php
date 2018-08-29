@@ -12,18 +12,23 @@
 function messages_init() {
 
 	// add page menu items
-	if (elgg_is_logged_in()) {
+	$user = elgg_get_logged_in_user_entity();
+	if (!empty($user)) {
 		elgg_register_menu_item('page', [
 			'name' => 'messages:inbox',
 			'text' => elgg_echo('messages:inbox'),
-			'href' => "messages/inbox/" . elgg_get_logged_in_user_entity()->username,
+			'href' => elgg_generate_url('collection:object:messages:owner', [
+				'username' => $user->username,
+			]),
 			'context' => 'messages',
 		]);
 		
 		elgg_register_menu_item('page', [
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
-			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
+			'href' => elgg_generate_url('collection:object:messages:sent', [
+				'username' => $user->username,
+			]),
 			'context' => 'messages',
 		]);
 	}
@@ -79,7 +84,9 @@ function messages_register_topbar($hook, $type, $items, $params) {
 
 	$items[] = ElggMenuItem::factory([
 		'name' => 'messages',
-		'href' => "messages/inbox/$user->username",
+		'href' => elgg_generate_url('collection:object:messages:owner', [
+			'username' => $user->username,
+		]),
 		'text' => $text,
 		'priority' => 600,
 		'title' => $title,
@@ -389,7 +396,9 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 		'name' => 'send',
 		'text' => elgg_echo('messages:sendmessage'),
 		'icon' => 'mail',
-		'href' => "messages/add?send_to={$user->guid}",
+		'href' => elgg_generate_url('add:object:messages', [
+			'send_to' => $user->guid,
+		]),
 	];
 	
 	if ($type == 'menu:user_hover') {
