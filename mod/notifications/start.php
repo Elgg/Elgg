@@ -60,7 +60,9 @@ function _notifications_page_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => '2_a_user_notify',
 		'text' => elgg_echo('notifications:subscriptions:changesettings'),
-		'href' => "notifications/personal/{$user->username}",
+		'href' => elgg_generate_url('settings:notification:personal', [
+			'username' => $user->username,
+		]),
 		'section' => 'notifications',
 	]);
 	
@@ -68,7 +70,9 @@ function _notifications_page_menu($hook, $type, $return, $params) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => '2_group_notify',
 			'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
-			'href' => "notifications/group/{$user->username}",
+			'href' => elgg_generate_url('settings:notification:groups', [
+				'username' => $user->username,
+			]),
 			'section' => 'notifications',
 		]);
 	}
@@ -116,7 +120,9 @@ function _notification_groups_title_menu(\Elgg\Hook $hook) {
 		'name' => 'notifications',
 		'parent_name' => 'group-dropdown',
 		'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
-		'href' => "notifications/group/{$user->username}",
+		'href' => elgg_generate_url('settings:notification:groups', [
+			'username' => $user->username,
+		]),
 		'badge' => $subscribed ? elgg_echo('on') : elgg_echo('off'),
 		'icon' => $subscribed ? 'bell' : 'bell-slash',
 	]);
