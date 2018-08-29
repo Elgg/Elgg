@@ -28,12 +28,12 @@ define(function (require) {
 	};
 	
 	var clickLink = function (event) {
-		console.log('clicked');
+
 		var $link = $(this);
 		if ($link.hasClass('elgg-non-link')) {
 			return;
 		}
-		console.log('1');
+
 		event.preventDefault();
 		
 		var $tab = $(this).parent();
