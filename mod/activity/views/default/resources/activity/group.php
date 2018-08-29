@@ -1,5 +1,8 @@
 <?php
 
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+
 $group = elgg_get_page_owner_entity();
 
 elgg_entity_gatekeeper($group->guid, 'group');
@@ -11,15 +14,27 @@ $title = elgg_echo('collection:river:group');
 elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
-$db_prefix = elgg_get_config('dbprefix');
+$on_object = function (QueryBuilder $qb, $joined_alias, $main_alias) {
+	return $qb->compare("{$joined_alias}.guid", '=', "{$main_alias}.object_guid");
+};
+$on_target = function (QueryBuilder $qb, $joined_alias, $main_alias) {
+	return $qb->compare("{$joined_alias}.guid", '=', "{$main_alias}.target_guid");
+};
 
 $options = [
 	'joins' => [
-		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
-		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
+		new JoinClause('entities', 'e1', $on_object),
+		new JoinClause('entities', 'e2', $on_target, 'left'),
 	],
 	'wheres' => [
-		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
+		function (QueryBuilder $qb, $main_alias) use ($group) {
+			$wheres = [];
+			$wheres[] = $qb->compare("{$main_alias}.object_guid", '=', $group->guid);
+			$wheres[] = $qb->compare('e1.container_guid', '=', $group->guid);
+			$wheres[] = $qb->compare('e2.container_guid', '=', $group->guid);
+			
+			return $qb->merge($wheres, 'OR');
+		},
 	],
 	'no_results' => elgg_echo('river:none'),
 ];
