@@ -23,8 +23,10 @@ if (empty($content)) {
 echo $content;
 
 $more_link = elgg_view('output/url', [
-	'href' => "thewire/owner/" . $widget->getOwnerEntity()->username,
+	'href' => elgg_generate_url('collection:object:thewire:owner', [
+		'username' => $widget->getOwnerEntity()->username,
+	]),
 	'text' => elgg_echo('thewire:moreposts'),
 	'is_trusted' => true,
 ]);
-echo "<div class=\"elgg-widget-more\">$more_link</div>";
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);
