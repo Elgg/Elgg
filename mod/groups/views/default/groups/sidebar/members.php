@@ -18,7 +18,9 @@ if (!($entity instanceof \ElggGroup)) {
 $limit = elgg_extract('limit', $vars, 14);
 
 $all_link = elgg_view('output/url', [
-	'href' => "groups/members/{$entity->guid}",
+	'href' => elgg_generate_url('collection:user:user:group_members', [
+		'guid' => $entity->guid,
+	]),
 	'text' => elgg_echo('groups:members:more'),
 	'is_trusted' => true,
 ]);

@@ -17,8 +17,10 @@ echo elgg_list_entities([
 ]);
 
 $more_link = elgg_view('output/url', [
-	'href' => 'groups/member/' . $widget->getOwnerEntity()->username,
+	'href' => elgg_generate_url('collection:group:group:member', [
+		'username' => $widget->getOwnerEntity()->username,
+	]),
 	'text' => elgg_echo('groups:more'),
 	'is_trusted' => true,
 ]);
-echo "<div class=\"elgg-widget-more\">$more_link</div>";
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], $more_link);

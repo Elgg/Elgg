@@ -28,7 +28,7 @@ function thewire_init() {
 		'name' => 'thewire',
 		'icon' => 'comments-o',
 		'text' => elgg_echo('thewire'),
-		'href' => 'thewire/all',
+		'href' => elgg_generate_url('collection:object:thewire:all'),
 	]);
 
 	// owner block menu
@@ -358,7 +358,7 @@ function thewire_setup_entity_menu_items($hook, $type, $menu, $params) {
 			'name' => 'reply',
 			'icon' => 'reply',
 			'text' => elgg_echo('reply'),
-			'href' => "thewire/reply/{$entity->guid}",
+			'href' => elgg_generate_entity_url($entity, 'reply'),
 		]));
 	}
 
@@ -367,7 +367,7 @@ function thewire_setup_entity_menu_items($hook, $type, $menu, $params) {
 			'name' => 'previous',
 			'icon' => 'arrow-left',
 			'text' => elgg_echo('previous'),
-			'href' => "thewire/previous/{$entity->guid}",
+			'href' => elgg_generate_entity_url($entity, 'previous'),
 			'link_class' => 'thewire-previous',
 			'title' => elgg_echo('thewire:previous:help'),
 		]));
@@ -377,7 +377,9 @@ function thewire_setup_entity_menu_items($hook, $type, $menu, $params) {
 		'name' => 'thread',
 		'icon' => 'comments-o',
 		'text' => elgg_echo('thewire:thread'),
-		'href' => "thewire/thread/{$entity->wire_thread}",
+		'href' => elgg_generate_url('collection:object:thewire:thread', [
+			'guid' => $entity->wire_thread,
+		]),
 	]));
 
 	return $menu;
@@ -403,7 +405,9 @@ function thewire_owner_block_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'thewire',
 		'text' => elgg_echo('item:object:thewire'),
-		'href' => "thewire/owner/{$params['entity']->username}",
+		'href' => elgg_generate_url('collection:object:thewire:owner', [
+			'username' => $user->username,
+		]),
 	]);
 	
 	return $return;

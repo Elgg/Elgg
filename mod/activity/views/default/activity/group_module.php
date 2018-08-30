@@ -5,8 +5,11 @@
  * @todo add people joining group to activity
  */
 
+use Elgg\Database\QueryBuilder;
+use Elgg\Database\Clauses\JoinClause;
+
 $group = elgg_extract('entity', $vars);
-if (!($group instanceof \ElggGroup)) {
+if (!$group instanceof \ElggGroup) {
 	return;
 }
 
@@ -15,22 +18,38 @@ if (!$group->isToolEnabled('activity')) {
 }
 
 $all_link = elgg_view('output/url', [
-	'href' => "groups/activity/$group->guid",
+	'href' => elgg_generate_url('collection:river:group', [
+		'guid' => $group->guid,
+	]),
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ]);
 
 elgg_push_context('widgets');
-$db_prefix = elgg_get_config('dbprefix');
+
+$on_object = function (QueryBuilder $qb, $joined_alias, $main_alias) {
+	return $qb->compare("{$joined_alias}.guid", '=', "{$main_alias}.object_guid");
+};
+$on_target = function (QueryBuilder $qb, $joined_alias, $main_alias) {
+	return $qb->compare("{$joined_alias}.guid", '=', "{$main_alias}.target_guid");
+};
+
 $content = elgg_list_river([
 	'limit' => 4,
 	'pagination' => false,
 	'joins' => [
-		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
-		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
+		new JoinClause('entities', 'e1', $on_object),
+		new JoinClause('entities', 'e2', $on_target, 'left'),
 	],
 	'wheres' => [
-		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
+		function (QueryBuilder $qb, $main_alias) use ($group) {
+			$wheres = [];
+			$wheres[] = $qb->compare("{$main_alias}.object_guid", '=', $group->guid);
+			$wheres[] = $qb->compare('e1.container_guid', '=', $group->guid);
+			$wheres[] = $qb->compare('e2.container_guid', '=', $group->guid);
+			
+			return $qb->merge($wheres, 'OR');
+		},
 	],
 	'no_results' => elgg_echo('river:none'),
 ]);

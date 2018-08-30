@@ -257,7 +257,9 @@ function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'discussion',
 		'text' => elgg_echo('discussion:latest'),
-		'href' => 'groups/all?filter=discussion',
+		'href' => elgg_generate_url('collection:group:group:all', [
+			'filter' => 'discussion',
+		]),
 		'priority' => 500,
 		'selected' => $filter_value == 'discussion',
 	]);

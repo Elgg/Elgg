@@ -20,7 +20,9 @@ $subject_link = elgg_view('output/url', [
 ]);
 
 $object_link = elgg_view('output/url', [
-	'href' => "thewire/owner/$subject->username",
+	'href' => elgg_generate_url('collection:object:thewire:owner', [
+		'username' => $subject->username,
+	]),
 	'text' => elgg_echo('thewire:wire'),
 	'class' => 'elgg-river-object',
 	'is_trusted' => true,

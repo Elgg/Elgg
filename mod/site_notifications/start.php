@@ -33,13 +33,16 @@ function site_notifications_init() {
  */
 function site_notifications_set_topbar() {
 	
-	if (!elgg_is_logged_in()) {
+	$user = elgg_get_logged_in_user_entity();
+	if (empty($user)) {
 		return;
 	}
 	
 	elgg_register_menu_item('topbar', [
 		'name' => 'site_notifications',
-		'href' => 'site_notifications/owner/' . elgg_get_logged_in_user_entity()->username,
+		'href' => elgg_generate_url('collection:object:site_notification:owner', [
+			'username' => $user->username
+		]),
 		'text' => elgg_echo('site_notifications:topbar'),
 		'icon' => 'bell',
 		'priority' => 100,
