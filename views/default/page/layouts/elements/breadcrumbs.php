@@ -11,7 +11,7 @@
  *                             [
  *                                [
  *                                   'title' => 'Breadcrumb title',
- *                                   'link' => '/path/to/page',
+ *                                   'href' => '/path/to/page',
  *                                ],
  *                             ]
  *                             </code>
