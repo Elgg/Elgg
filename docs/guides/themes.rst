@@ -309,6 +309,9 @@ You can use any of these icons by calling:
 
 ``icon-name`` can be any of the `FontAwesome icons`_ without the ``fa-``-prefix.
 
+By default you will get the solid styled variant of the icons. Postfixing the icon name with ``-solid``, ``-regular`` or ``-light`` allows you to target a specific style.
+Be advised; the light styled variant is only available as a FontAwesome Pro licensed icon.
+
 .. _FontAwesome: http://fontawesome.io/
 .. _FontAwesome icons: http://fontawesome.io/icons/
 

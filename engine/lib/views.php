@@ -2708,14 +2708,27 @@ function _elgg_map_icon_glyph_class(array $classes, $map_sprites = true) {
 
 				$base_icon = elgg_extract($base_icon, $legacy_sprites, $base_icon);
 			}
-
-			if (array_key_exists($base_icon, $fa5)) {
-				$classes[] = $fa5[$base_icon][1];
-				$base_icon = $fa5[$base_icon][0];
-			} else if (in_array($base_icon, $brands)) {
-				$classes[] = 'fab';
-			} else {
+			
+			// map solid/regular/light iconnames to correct classes
+			if (preg_match('/.*-solid$/', $base_icon)) {
+				$base_icon = preg_replace('/(.*)-solid$/', '$1', $base_icon);
 				$classes[] = 'fas';
+			} elseif (preg_match('/.*-regular$/', $base_icon)) {
+				$base_icon = preg_replace('/(.*)-regular$/', '$1', $base_icon);
+				$classes[] = 'far';
+			} elseif (preg_match('/.*-light$/', $base_icon)) {
+				// currently light is only available in FontAwesome 5 Pro
+				$base_icon = preg_replace('/(.*)-light$/', '$1', $base_icon);
+				$classes[] = 'fal';
+			} else {
+				if (array_key_exists($base_icon, $fa5)) {
+					$classes[] = $fa5[$base_icon][1];
+					$base_icon = $fa5[$base_icon][0];
+				} else if (in_array($base_icon, $brands)) {
+					$classes[] = 'fab';
+				} else {
+					$classes[] = 'fas';
+				}
 			}
 
 			$classes[] = "fa-{$base_icon}";
