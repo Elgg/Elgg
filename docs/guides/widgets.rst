@@ -73,7 +73,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
     ]);
 
     // Add a second file widget
-   elgg_register_widget_type([
+    elgg_register_widget_type([
         'id' => 'filerepo2', 
         'name' => elgg_echo('widgets:filerepo2:name'), 
         'description' => elgg_echo('widgets:filerepo2:description'),
@@ -81,7 +81,7 @@ It is possible to add multiple widgets for a plugin. You just initialize as many
     ]);
 
     // Add a third file widget
-   elgg_register_widget_type([
+    elgg_register_widget_type([
         'id' => 'filerepo3', 
         'name' => elgg_echo('widgets:filerepo3:name'), 
         'description' => elgg_echo('widgets:filerepo3:description'),

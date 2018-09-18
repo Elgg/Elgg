@@ -202,7 +202,7 @@ to add a namespace prefix. In order to do this, uncomment the following line
 
 .. code-block:: php
 
-	$CONFIG->memcache_namespace_prefix = '';
+    $CONFIG->memcache_namespace_prefix = '';
 
 Squid
 -----

@@ -782,7 +782,7 @@ Labelling
 
 Entity and collection labelling conventions have changed to comply with the new routing patterns:
 
-.. code-block::php
+.. code-block:: php
 
    return [
       'item:object:blog' => 'Blog',

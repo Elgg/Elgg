@@ -32,7 +32,7 @@ Defining the Module
 
 Here we define a basic module that alters the page, by passing a "definition function" to ``define()``:
 
-.. code-block:: javascript
+.. code-block:: js
 
     // in views/default/myplugin/say_hello.js
 
@@ -56,7 +56,7 @@ Making modules dependent on other modules
 Below we refactor a bit so that the module depends on a new ``myplugin/hello`` module to provide
 the greeting:
 
-.. code-block:: javascript
+.. code-block:: js
 
     // in views/default/myplugin/hello.js
 
@@ -66,7 +66,7 @@ the greeting:
         return elgg.echo('hello_world');
     });
 
-.. code-block:: javascript
+.. code-block:: js
 
     // in views/default/myplugin/say_hello.js
 
@@ -114,7 +114,7 @@ Let's pass some data to a module:
     elgg_register_plugin_hook_handler('elgg.data', 'site', 'myplugin_config_site');
     elgg_register_plugin_hook_handler('elgg.data', 'page', 'myplugin_config_page');
 
-.. code-block:: javascript
+.. code-block:: js
 
     define(function(require) {
         var elgg = require("elgg");
@@ -235,7 +235,7 @@ Booting your plugin
 
 To add functionality to each page, or make sure your hook handlers are registered early enough, you may create a boot module for your plugin, with the name ``boot/<plugin_id>``.
 
-.. code-block:: javascript
+.. code-block:: js
 
     // in views/default/boot/example.js
 
@@ -539,15 +539,15 @@ popup modules programmatically:
 
          var $trigger = $(this);
          var $target = $('#my-target');
-		 var $close = $target.find('.close');
+         var $close = $target.find('.close');
 
          require(['elgg/popup'], function(popup) {
-		   popup.open($trigger, $target, {
-			  'collision': 'fit none'
-		   });
+            popup.open($trigger, $target, {
+               'collision': 'fit none'
+            });
 
-           $close.on('click', popup.close);
-		 });
+            $close.on('click', popup.close);
+         });
       });
    });
 
@@ -704,7 +704,7 @@ Inline tabs component fires an ``open`` event whenever a tabs is open and, in ca
 
 .. code-block:: js
 
-    // Add custom animation to tab content
+	// Add custom animation to tab content
 	require(['jquery', 'elgg/ready'], function($) {
 		$(document).on('open', '.theme-sandbox-tab-callback', function() {
 			$(this).find('a').text('Clicked!');
@@ -762,7 +762,7 @@ Handler functions are registered using ``elgg.register_hook_handler()``. Multipl
 
 The following example registers the ``handleFoo`` function for the ``foo, bar`` hook.
 
-.. code-block:: javascript
+.. code-block:: js
 
     define(function (require) {
         var elgg = require('elgg');
@@ -794,7 +794,7 @@ Triggering custom hooks
 
 Plugins can trigger their own hooks:
 
-.. code-block:: javascript
+.. code-block:: js
 
     define(function(require) {
         require('elgg/init');
