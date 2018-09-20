@@ -444,8 +444,10 @@ class Database {
 			}
 		} catch (\Exception $e) {
 			throw new \DatabaseException($e->getMessage() . "\n\n"
-			. "QUERY: $query \n\n"
-			. "PARAMS: " . print_r($params, true));
+					. "QUERY: $query \n\n"
+					. "PARAMS: " . print_r($params, true),
+				null,
+				$e);
 		}
 
 		if ($this->timer) {
@@ -581,9 +583,9 @@ class Database {
 
 	/**
 	 * Enable the query cache
-	 * 
+	 *
 	 * This does not take precedence over the \Elgg\Database\Config setting.
-	 * 
+	 *
 	 * @return void
 	 * @access private
 	 */
@@ -596,10 +598,10 @@ class Database {
 
 	/**
 	 * Disable the query cache
-	 * 
+	 *
 	 * This is useful for special scripts that pull large amounts of data back
 	 * in single queries.
-	 * 
+	 *
 	 * @return void
 	 * @access private
 	 */

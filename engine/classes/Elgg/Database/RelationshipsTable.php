@@ -3,6 +3,7 @@ namespace Elgg\Database;
 
 use Elgg\Database;
 use Elgg\EventsService;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -41,7 +42,7 @@ class RelationshipsTable {
 	 * Constructor
 	 *
 	 * @param Database      $db       Elgg Database
-	 * @param EntityTable   $entities Entity table 
+	 * @param EntityTable   $entities Entity table
 	 * @param MetadataTable $metadata Metadata table
 	 * @param EventsService $events   Events service
 	 */
@@ -138,7 +139,6 @@ class RelationshipsTable {
 			INSERT INTO {$this->db->prefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES (:guid1, :relationship, :guid2, :time)
-				ON DUPLICATE KEY UPDATE time_created = :time
 		";
 		$params = [
 			':guid1' => (int)$guid_one,
@@ -147,9 +147,18 @@ class RelationshipsTable {
 			':time' => $this->getCurrentTime()->getTimestamp(),
 		];
 
-		$id = $this->db->insertData($sql, $params);
-		if (!$id) {
-			return false;
+		try {
+			$id = $this->db->insertData($sql, $params);
+			if (!$id) {
+				return false;
+			}
+		} catch (\DatabaseException $e) {
+			$prev = $e->getPrevious();
+			if ($prev instanceof UniqueConstraintViolationException) {
+				// duplicate key error see https://github.com/Elgg/Elgg/issues/9179
+				return false;
+			}
+			throw $e;
 		}
 
 		$obj = $this->get($id);

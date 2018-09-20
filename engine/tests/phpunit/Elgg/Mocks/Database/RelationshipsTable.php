@@ -90,7 +90,6 @@ class RelationshipsTable extends DbRelationshipsTable {
 			INSERT INTO {$dbprefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES (:guid1, :relationship, :guid2, :time)
-				ON DUPLICATE KEY UPDATE time_created = :time
 		";
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
