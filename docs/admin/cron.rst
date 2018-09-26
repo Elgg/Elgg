@@ -32,7 +32,7 @@ Plugins can add jobs by registering a plugin hook handler for one of the followi
  * ``monthly`` - Run every month
  * ``yearly`` - Run every year
 
-.. code::php
+.. code-block:: php
 
    elgg_register_plugin_hook_handler('cron', 'hourly', function() {
 
@@ -54,7 +54,7 @@ Once cron tab activates the cron job, Elgg executes all hook handlers attached t
 
 If you have SSH access to your Linux servers, type ``crontab -e`` and add your crontab configuration.
 
-.. code::
+.. code-block:: text
 
    * * * * * path/to/phpbin path/to/elgg/elgg-cli cron -q
 
@@ -62,7 +62,7 @@ The above command will run every minute and activate all due cron jobs.
 
 Optionally you can activate handlers for a specific interval:
 
-.. code::
+.. code-block:: text
 
    0 * * * * path/to/phpbin path/to/elgg/elgg-cli cron -i hourly -q
 

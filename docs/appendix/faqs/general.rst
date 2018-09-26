@@ -151,7 +151,7 @@ problems validating an account, you can validate users manually by going to Admi
 
 You can remove this requirement by deactivating the User Validation by Email plugin.
 
-.. note:: 
+.. note::
 
    Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers.
 

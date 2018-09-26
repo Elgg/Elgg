@@ -64,7 +64,7 @@ Update ``elgg-plugin.php`` to look like this:
 
 .. code-block:: php
 
-    <?php
+	<?php
 
 	return [
 	    'routes' => [

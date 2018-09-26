@@ -21,7 +21,7 @@ Theming Principles and Best Practices
 	What's `is-primary` in one theme, might be something else in the other. Having no framework allows plugins to alter appearance using pure css, without having to overwrite views and
 	append framework-specific selectors to HTML markup elements.
 
-.. code::html
+.. code-block:: html
 
 	/* BAD */
 	<div class="box has-shadow is-inline">
@@ -47,7 +47,7 @@ Theming Principles and Best Practices
 	Because our default font-size is ``16px``, we use fractions of `rem`, so ``0.5rem = 8px``.
 	8-point grid system makes it a lot easier for developers to collaborate on styling elements: we no longer have to think if the padding should be ``5px`` or ``6px``.
 
-.. code::css
+.. code-block:: css
 
 	/* BAD */
 	.menu > li {
@@ -68,7 +68,7 @@ Theming Principles and Best Practices
 	We write mobile-first CSS.
 	We use two breakpoints: ``50rem`` and ``80rem`` (800px and 1280px at 16px/rem).
 
-.. code::css
+.. code-block:: css
 
 	/* BAD: mobile defined in media blocks, different display types */
 
@@ -99,7 +99,7 @@ Theming Principles and Best Practices
 	Flexbox provides simplicity in stacking elements into grids. Flexbox is used for everything from menus to layout elements.
 	We avoid ``float`` and ``clearfix`` as they are hard to collaborate on and create lots of room for failure and distortion.
 
-.. code::css
+.. code-block:: css
 
 	/* BAD */
 	.heading:after {
@@ -131,7 +131,7 @@ Theming Principles and Best Practices
 **Symmetrical**
 	We maintain symmetry.
 
-.. code::css
+.. code-block:: css
 
 	/* BAD */
 	.row .column:first-child {
@@ -154,7 +154,7 @@ Theming Principles and Best Practices
 **Increase the click area**
 	When working with nested anchors, we increase the click area of the anchor, rather than the parent
 
-.. code::css
+.. code-block:: css
 
 	/* BAD */
 	.menu > li {
@@ -176,7 +176,7 @@ Theming Principles and Best Practices
 **Wrap HTML siblings**
 	We make sure that there are no orphaned strings within a parent and that siblings are wrapped in a way that they can be targeted by CSS.
 
-.. code::html
+.. code-block:: html
 
 	/* BAD */
 	<label>
@@ -191,7 +191,7 @@ Theming Principles and Best Practices
 	</label>
 
 
-.. code::html
+.. code-block:: html
 
 	/* BAD */
 	<div>

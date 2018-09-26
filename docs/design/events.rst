@@ -194,13 +194,13 @@ This makes it clear for the event handler what state to expect and which events 
 
     <?php
 
-	// handlers for the user, login:before event know the user isn't logged in yet.
-	if (!elgg_trigger_before_event('login', 'user', $user)) {
-		return false;
-	}
+    // handlers for the user, login:before event know the user isn't logged in yet.
+    if (!elgg_trigger_before_event('login', 'user', $user)) {
+        return false;
+    }
 
-	// handlers for the user, login:after event know the user is logged in.
-	elgg_trigger_after_event('login', 'user', $user);
+    // handlers for the user, login:after event know the user is logged in.
+    elgg_trigger_after_event('login', 'user', $user);
 
 Parameters:
 

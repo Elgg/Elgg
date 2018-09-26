@@ -55,13 +55,13 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 
 .. code-block:: php
 
-    return [
+	return [
 		// Bootstrap must implement \Elgg\PluginBootstrapInterface
 		'bootstrap' => MyPluginBootstrap::class,
 
 		'entities' => [
 			[
-                // Register a new object subtype and tell Elgg to use a specific class to instantiate it
+				// Register a new object subtype and tell Elgg to use a specific class to instantiate it
 				'type' => 'object',
 				'subtype' => 'my_object_subtype',
 				'class' => MyObjectClass::class,
@@ -141,7 +141,7 @@ in the root of the plugin directory.
 
 This file must return an array of PHP-DI definitions. Services will by available via ``elgg()``.
 
-.. code-block::php
+.. code-block:: php
 
    return [
       PluginService::class => \DI\object()->constructor(\DI\get(DependencyService::class)),
@@ -149,7 +149,7 @@ This file must return an array of PHP-DI definitions. Services will by available
 
 Plugins can then use PHP-DI API to autowire and call the service:
 
-.. code-block::php
+.. code-block:: php
 
    $service = elgg()->get(PluginService::class);
 

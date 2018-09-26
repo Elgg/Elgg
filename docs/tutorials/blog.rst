@@ -207,8 +207,8 @@ It can, for example, be used to configure entities, actions, widgets and routes.
 
 .. code-block:: php
 
-    <?php
-    
+	<?php
+
 	return [
 		'entities' => [
 			[
@@ -295,7 +295,7 @@ the page that views the post. Add this function to your ``start.php`` file:
             echo elgg_view_resource('my_blog/view', $resource_vars);
             return true;
         }
-	
+
         return false;
     }
 
