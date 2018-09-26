@@ -265,7 +265,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Get the URL of the menu item
 	 *
-	 * @return string
+	 * @return string|false|null
 	 */
 	public function getHref() {
 		return $this->href;
