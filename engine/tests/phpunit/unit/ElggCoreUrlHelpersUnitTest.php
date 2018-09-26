@@ -155,6 +155,10 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 			'example.com' => 'http://example.com',
 			'example.com/subpage' => 'http://example.com/subpage',
 
+			'foobar#test' => 'foobar',
+			'/' => elgg_get_site_url(),
+			'#test' => '#test',
+
 			'page/handler' =>                	elgg_get_site_url() . 'page/handler',
 			'page/handler?p=v&p2=v2' =>      	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
 			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
@@ -169,6 +173,32 @@ class ElggCoreUrlHelpersUnitTest extends \Elgg\UnitTestCase {
 			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
 			'/rootfile.php' =>                  elgg_get_site_url() . 'rootfile.php',
 			'/rootfile.php?p=v&p2=v2' =>        elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
+		];
+		$ret = [];
+		foreach ($data as $in => $out) {
+			$ret[] = [$in, $out];
+		}
+		return $ret;
+	}
+
+	/**
+	 * @dataProvider providerHttpUrlIsNotIdentical
+	 */
+	public function testHttpUrlIsNotIdentical($input, $output) {
+		$this->assertFalse(elgg_http_url_is_identical($output, $input), "Failed to determine URLs as NOT identical for: '$output' and '$input'");
+		$this->assertFalse(elgg_http_url_is_identical($input, $output), "Failed to determine URLs as NOT identical for: '$input' and '$output'");
+	}
+
+	function providerHttpUrlIsNotIdentical() {
+		self::createApplication();
+
+		$data = [
+			'http://example1.com' => 'http://example2.com',
+			'https://example.com' => 'http://example.com',
+			'0' => 0,
+			false => elgg_get_site_url(),
+			true => elgg_get_site_url(),
+			'#test' => elgg_get_site_url(),
 		];
 		$ret = [];
 		foreach ($data as $in => $out) {
