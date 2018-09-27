@@ -949,6 +949,7 @@ function _groups_title_menu(\Elgg\Hook $hook) {
 		]);
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:invite',
+			'icon' => 'user-plus',
 			'href' => elgg_generate_entity_url($group, 'invite'),
 			'text' => elgg_echo('groups:invite'),
 			'link_class' => 'elgg-button elgg-button-action',
