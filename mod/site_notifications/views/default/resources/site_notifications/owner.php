@@ -19,8 +19,9 @@ $list = elgg_list_entities([
 	'subtype' => 'site_notification',
 	'owner_guid' => $page_owner->guid,
 	'full_view' => false,
-	'metadata_name' => 'read',
-	'metadata_value' => false,
+	'metadata_name_value_pairs' => [
+		'read' => false,
+	],
 ]);
 
 $body_vars = [
