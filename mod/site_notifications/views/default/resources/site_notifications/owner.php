@@ -12,9 +12,6 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 
 elgg_load_js('elgg.site_notifications');
 
-elgg_push_breadcrumb(elgg_echo('site_notifications'), 'site_notifications');
-elgg_push_breadcrumb($page_owner->getDisplayName());
-
 $title = elgg_echo('site_notifications');
 
 $list = elgg_list_entities([
