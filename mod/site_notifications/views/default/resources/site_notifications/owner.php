@@ -24,14 +24,20 @@ $list = elgg_list_entities([
 	],
 ]);
 
-$body_vars = [
-	'list' => $list
-];
-
-$form = elgg_view_form("site_notifications/process", [], $body_vars);
+if (empty($list)) {
+	$content = elgg_view('page/components/no_results', [
+		'no_results' => elgg_echo('site_notifications:empty'),
+	]);
+} else {
+	$body_vars = [
+		'list' => $list
+	];
+	
+	$content = elgg_view_form("site_notifications/process", [], $body_vars);
+}
 
 $body = elgg_view_layout('content', [
-	'content' => $form,
+	'content' => $content,
 	'title' => $title,
 	'filter' => '',
 	'show_owner_block_menu' => false,

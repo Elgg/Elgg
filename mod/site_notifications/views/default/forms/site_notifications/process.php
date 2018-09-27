@@ -1,14 +1,7 @@
 <?php
 
-$list = elgg_extract('list', $vars);
-
-if (empty($list)) {
-	echo elgg_echo('site_notifications:empty');
-	return true;
-}
-
 echo "<div class='site-notifications-container'>";
-echo $list;
+echo elgg_extract('list', $vars);
 echo "</div>";
 
 echo '<div class="elgg-foot site-notifications-buttonbank">';
