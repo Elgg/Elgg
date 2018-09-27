@@ -4,7 +4,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!($entity instanceof SiteNotification)) {
+if (!$entity instanceof SiteNotification) {
 	return;
 }
 
@@ -33,14 +33,11 @@ $checkbox = elgg_view('input/checkbox', [
 
 $params = [
 	'entity' => $entity,
-	'metadata' => elgg_view_menu('entity', [
-		'entity' => $entity,
-		'handler' => 'site_notifications',
-	]),
 	'icon' => $checkbox . $icon,
 	'content' => $text,
 	'byline' => false,
 	'access' => false,
+	'show_social_menu' => false,
 ];
 $params = $params + $vars;
 echo elgg_view('object/elements/summary', $params);
