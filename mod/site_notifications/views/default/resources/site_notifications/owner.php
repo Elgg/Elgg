@@ -12,9 +12,6 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 
 elgg_load_js('elgg.site_notifications');
 
-elgg_push_breadcrumb(elgg_echo('site_notifications'), 'site_notifications');
-elgg_push_breadcrumb($page_owner->getDisplayName());
-
 $title = elgg_echo('site_notifications');
 
 $list = elgg_list_entities([
@@ -22,18 +19,25 @@ $list = elgg_list_entities([
 	'subtype' => 'site_notification',
 	'owner_guid' => $page_owner->guid,
 	'full_view' => false,
-	'metadata_name' => 'read',
-	'metadata_value' => false,
+	'metadata_name_value_pairs' => [
+		'read' => false,
+	],
 ]);
 
-$body_vars = [
-	'list' => $list
-];
-
-$form = elgg_view_form("site_notifications/process", [], $body_vars);
+if (empty($list)) {
+	$content = elgg_view('page/components/no_results', [
+		'no_results' => elgg_echo('site_notifications:empty'),
+	]);
+} else {
+	$body_vars = [
+		'list' => $list
+	];
+	
+	$content = elgg_view_form("site_notifications/process", [], $body_vars);
+}
 
 $body = elgg_view_layout('content', [
-	'content' => $form,
+	'content' => $content,
 	'title' => $title,
 	'filter' => '',
 	'show_owner_block_menu' => false,
