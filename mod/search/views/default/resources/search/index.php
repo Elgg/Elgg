@@ -104,11 +104,11 @@ foreach ($custom_types as $search_type) {
 	$count = $service->listResults($search_type, null, null, true);
 	$total += $count;
 	elgg_register_menu_item('page', [
-		'name' => "search_types:$type",
-		'text' => elgg_echo("search_types:$type"),
+		'name' => "search_types:{$search_type}",
+		'text' => elgg_echo("search_types:{$search_type}"),
 		'href' => elgg_generate_url('default:search', [
 			'q' => $params['query'],
-			'search_type' => $type,
+			'search_type' => $search_type,
 		]),
 		'badge' => $count,
 	]);
