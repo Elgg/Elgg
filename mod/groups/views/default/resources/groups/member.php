@@ -21,7 +21,7 @@ elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($title);
 
 if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
-	elgg_register_title_button('groups', 'add', 'group');
+	elgg_register_title_button('groups', 'add', 'group', 'group');
 }
 
 $content = elgg_list_entities([

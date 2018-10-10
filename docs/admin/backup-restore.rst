@@ -167,7 +167,7 @@ Edit the MySQL backup
 
 Open the ``.sql`` file that you extracted from your backup in your favorite text editor. Comment out the following lines with a hash mark:
 
-.. code-block:: mysql
+.. code-block:: sql
 
    #CREATE DATABASE /*!32312 IF NOT EXISTS*/ `userx_elgg` /*!40100 DEFAULT CHARACTER SET latin1 */;
    #USE `userx_elgg`;

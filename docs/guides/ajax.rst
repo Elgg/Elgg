@@ -75,7 +75,7 @@ To execute it, use ``ajax.action('<action_name>', options)``:
         if (jqXHR.AjaxData.status == -1) {
             return;
         }
-        
+
         alert(output.sum);
         alert(output.product);
     });
@@ -103,15 +103,15 @@ Consider this PHP script that runs at ``http://example.org/myplugin_time``.
 
     // in myplugin/elgg-plugin.php
     return [
-		'routes' => [
-			'default:myplugin:time' => [
-				'path' => '/myplugin_time',
-				'resource' => 'myplugin/time',
-			],
-		],
-	];
-   
-	// in myplugin/views/default/resources/myplugin/time.php
+        'routes' => [
+            'default:myplugin:time' => [
+                'path' => '/myplugin_time',
+                'resource' => 'myplugin/time',
+            ],
+        ],
+    ];
+
+    // in myplugin/views/default/resources/myplugin/time.php
     elgg_ajax_gatekeeper();
 
     echo json_encode([
@@ -132,7 +132,7 @@ To fetch its output, use ``ajax.path('<url_path>', options)``.
         if (jqXHR.AjaxData.status == -1) {
             return;
         }
-        
+
         alert(output.rfc2822);
         alert(output.day);
     });
@@ -188,7 +188,7 @@ To fetch the view, use ``ajax.view('<view_name>', options)``:
         if (jqXHR.AjaxData.status == -1) {
             return;
         }
-        
+
         $('.myplugin-link').html(output);
     });
 
@@ -226,7 +226,7 @@ To fetch this using ``ajax.form('<action_name>', options)``.
         if (jqXHR.AjaxData.status == -1) {
             return;
         }
-        
+
         $('.myplugin-form-container').html(output);
     });
 
@@ -267,7 +267,7 @@ Use ``ajax.forward()`` to start a spinner and redirect the user to a new destina
 
 .. code-block:: js
 
-	var Ajax = require('elgg/Ajax');
+    var Ajax = require('elgg/Ajax');
     var ajax = new Ajax();
     ajax.forward('/activity');
 

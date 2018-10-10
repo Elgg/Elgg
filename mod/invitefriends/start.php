@@ -38,7 +38,7 @@ function invitefriends_register_page_menu($hook, $type, $result, $params) {
 	$result[] = \ElggMenuItem::factory([
 		'name' => 'invite',
 		'text' => elgg_echo('friends:invite'),
-		'href' => 'friends/invite',
+		'href' => elgg_generate_url('default:user:user:invite'),
 		'contexts' => ['friends'],
 	]);
 	

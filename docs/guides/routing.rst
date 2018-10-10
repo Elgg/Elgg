@@ -101,7 +101,7 @@ The following conventions are used in core and recommended for plugins:
 URL generator will first try to generate a URL using the subtype, and will then fallback to a route name without a subtype.
 For example, user profiles are routed to the same resource view regardless of user subtype.
 
-.. code::php
+.. code-block:: php
 
 	elgg_register_route('view:object:attachments', [
 		'path' => '/attachments/{guid}',
@@ -131,7 +131,7 @@ In this case the URL will be matched even if the ``section`` segment is not prov
 
 You can further constrain segments using regex requirements:
 
-.. code-block::php
+.. code-block:: php
 
 	// elgg-plugin.php
 	return [
@@ -152,7 +152,7 @@ You can further constrain segments using regex requirements:
 
 By default, Elgg will set the following requirements for named URL segments:
 
-.. code-block::php
+.. code-block:: php
 
 	$patterns = [
 		'guid' => '\d+', // only digits
@@ -181,7 +181,7 @@ Middleware handlers can be set to any callable that receives an instance of ``\E
 The handler should throw an instance of ``HttpException`` to prevent route access.
 The handler can return an instance of ``\Elgg\Http\ResponseBuilder`` to prevent further implementation of the routing sequence (a redirect response can be returned to re-route the request).
 
-.. code-block::php
+.. code-block:: php
 
 	class MyMiddleware {
 
@@ -211,7 +211,7 @@ Route controllers
 In certain cases, using resource views is not appropriate. In these cases you can use a controller - any callable
 that receives an instance of ``\Elgg\Request``:
 
-.. code-block::php
+.. code-block:: php
 
 	class MyController {
 

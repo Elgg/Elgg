@@ -147,7 +147,9 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
 		
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends',
-		'href' => "friends/{$viewer->username}",
+		'href' => elgg_generate_url('collection:friends:owner', [
+			'username' => $viewer->username,
+		]),
 		'text' => elgg_echo('friends'),
 		'icon' => 'users',
 		'title' => elgg_echo('friends'),
@@ -182,14 +184,18 @@ function _elgg_friends_page_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends',
 		'text' => elgg_echo('friends'),
-		'href' => 'friends/' . $owner->username,
+		'href' => elgg_generate_url('collection:friends:owner', [
+			'username' => $owner->username,
+		]),
 		'contexts' => ['friends'],
 	]);
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends:of',
 		'text' => elgg_echo('friends:of'),
-		'href' => 'friendsof/' . $owner->username,
+		'href' => elgg_generate_url('collection:friends_of:owner', [
+			'username' => $owner->username,
+		]),
 		'contexts' => ['friends'],
 	]);
 
@@ -299,7 +305,9 @@ function _elgg_friends_widget_urls($hook, $type, $result, $params) {
 		return;
 	}
 			
-	return "friends/{$owner->username}";
+	return elgg_generate_url('collection:friends:owner', [
+		'username' => $owner->username,
+	]);
 }
 
 return function() {

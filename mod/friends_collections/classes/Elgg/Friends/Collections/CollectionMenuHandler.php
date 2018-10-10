@@ -34,17 +34,18 @@ class CollectionMenuHandler {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
-			'href' => "friends/collections/edit/$collection->id",
+			'href' => elgg_generate_url('edit:access_collection:friends', [
+				'collection_id' => $collection->id,
+			]),,
 			'priority' => 500,
 		]);
 
 		$return[] = ElggMenuItem::factory([
 			'name' => 'delete',
 			'text' => elgg_echo('delete'),
-			'href' => elgg_http_add_url_query_elements("action/friends/collections/delete", [
+			'href' => elgg_generate_action_url('friends/collections/delete', [
 				'collection_id' => $collection->id,
 			]),
-			'is_action' => true,
 			'confirm' => true,
 			'priority' => 900,
 		]);

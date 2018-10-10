@@ -28,7 +28,9 @@ elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
 
 elgg_register_menu_item('title', [
 	'name' => 'add',
-	'href' => 'friends/collections/add',
+	'href' => elgg_generate_url('add:access_collection:friends', [
+		'username' => $user->username,
+	]),
 	'text' => elgg_echo('friends:collections:add'),
 	'link_class' => 'elgg-button elgg-button-action',
 ]);

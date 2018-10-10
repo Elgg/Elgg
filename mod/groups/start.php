@@ -156,7 +156,7 @@ function _groups_page_menu_group_profile($hook, $type, $return, $params) {
 		'text' => $text,
 		'badge' => $count ? $count : null,
 		'title' => $title,
-		'href' => "groups/requests/{$page_owner->guid}",
+		'href' => elgg_generate_entity_url($page_owner, 'requests'),
 	]);
 	
 	return $return;
@@ -190,7 +190,7 @@ function _groups_page_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'groups:all',
 		'text' => elgg_echo('groups:all'),
-		'href' => 'groups/all',
+		'href' => elgg_generate_url('collection:group:group:all'),
 	]);
 
 	$user = elgg_get_logged_in_user_entity();
@@ -201,13 +201,17 @@ function _groups_page_menu($hook, $type, $return, $params) {
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'groups:owned',
 		'text' => elgg_echo('groups:owned'),
-		'href' => "groups/owner/$user->username",
+		'href' => elgg_generate_url('collection:group:group:owner', [
+			'username' => $user->username,
+		]),
 	]);
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'groups:member',
 		'text' => elgg_echo('groups:yours'),
-		'href' => "groups/member/$user->username",
+		'href' => elgg_generate_url('collection:group:group:member', [
+			'username' => $user->username,
+		]),
 	]);
 
 	$invitation_count = groups_get_invited_groups($user->guid, false, ['count' => true]);
@@ -224,7 +228,9 @@ function _groups_page_menu($hook, $type, $return, $params) {
 		'text' => $text,
 		'badge' => $invitation_count ?: null,
 		'title' => $title,
-		'href' => "groups/invitations/$user->username",
+		'href' => elgg_generate_url('collection:group:group:invitations', [
+			'username' => $user->username,
+		]),
 	]);
 
 	return $return;
@@ -281,11 +287,10 @@ function groups_get_group_leave_menu_item(\ElggGroup $group, $user = null) {
 		'name' => 'groups:leave',
 		'icon' => 'sign-out',
 		'text' => elgg_echo('groups:leave'),
-		'href' => elgg_http_add_url_query_elements('action/groups/leave', [
+		'href' => elgg_generate_action_url('groups/leave', [
 			'group_guid' => $group->guid,
 			'user_guid' => $user->guid,
 		]),
-		'is_action' => true,
 	]);
 }
 
@@ -325,11 +330,10 @@ function groups_get_group_join_menu_item(\ElggGroup $group, $user = null) {
 		'name' => $menu_name,
 		'icon' => 'sign-in',
 		'text' => elgg_echo($menu_name),
-		'href' => elgg_http_add_url_query_elements('action/groups/join', [
+		'href' => elgg_generate_action_url('groups/join', [
 			'group_guid' => $group->guid,
 			'user_guid' => $user->guid,
 		]),
-		'is_action' => true,
 	]);
 }
 
@@ -371,8 +375,10 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'name' => 'feature',
 			'icon' => 'arrow-up',
 			'text' => elgg_echo('groups:makefeatured'),
-			'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=feature",
-			'is_action' => true,
+			'href' => elgg_generate_action_url('groups/featured', [
+				'group_guid' => $entity->guid,
+				'action_type' => 'feature',
+			]),
 			'item_class' => $isFeatured ? 'hidden' : '',
 			'data-toggle' => 'unfeature',
 		]);
@@ -381,8 +387,10 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 			'name' => 'unfeature',
 			'icon' => 'arrow-down',
 			'text' => elgg_echo('groups:makeunfeatured'),
-			'href' => "action/groups/featured?group_guid={$entity->guid}&action_type=unfeature",
-			'is_action' => true,
+			'href' => elgg_generate_action_url('groups/featured', [
+				'group_guid' => $entity->guid,
+				'action_type' => 'unfeature',
+			]),
 			'item_class' => $isFeatured ? '' : 'hidden',
 			'data-toggle' => 'feature',
 		]);
@@ -422,7 +430,10 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 	
 	$return[] = ElggMenuItem::factory([
 		'name' => 'removeuser',
-		'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
+		'href' => elgg_generate_action_url('groups/remove', [
+			'user_guid' => $entity->guid,
+			'group_guid' => $group->guid,
+		]),
 		'text' => elgg_echo('groups:removeuser'),
 		'icon' => 'user-times',
 		'confirm' => true,
@@ -794,29 +805,23 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
 		return $menu;
 	}
 
-	$accept_url = elgg_http_add_url_query_elements('action/groups/join', [
-		'user_guid' => $user->guid,
-		'group_guid' => $group->guid,
-	]);
-
 	$menu[] = \ElggMenuItem::factory([
 		'name' => 'accept',
-		'href' => $accept_url,
-		'is_action' => true,
+		'href' => elgg_generate_action_url('groups/join', [
+			'user_guid' => $user->guid,
+			'group_guid' => $group->guid,
+		]),
 		'text' => elgg_echo('accept'),
 		'link_class' => 'elgg-button elgg-button-submit',
 		'is_trusted' => true,
 	]);
 
-	$delete_url = elgg_http_add_url_query_elements('action/groups/killinvitation', [
-		'user_guid' => $user->guid,
-		'group_guid' => $group->guid,
-	]);
-
 	$menu[] = \ElggMenuItem::factory([
 		'name' => 'delete',
-		'href' => $delete_url,
-		'is_action' => true,
+		'href' => elgg_generate_action_url('groups/killinvitation', [
+			'user_guid' => $user->guid,
+			'group_guid' => $group->guid,
+		]),
 		'confirm' => elgg_echo('groups:invite:remove:check'),
 		'text' => elgg_echo('delete'),
 		'link_class' => 'elgg-button elgg-button-delete mlm',
@@ -845,14 +850,19 @@ function groups_members_menu_setup($hook, $type, $menu, $params) {
 	$menu[] = ElggMenuItem::factory([
 		'name' => 'alpha',
 		'text' => elgg_echo('sort:alpha'),
-		'href' => "groups/members/{$entity->getGUID()}",
+		'href' => elgg_generate_url('collection:user:user:group_members', [
+			'guid' => $entity->guid,
+		]),
 		'priority' => 100
 	]);
 
 	$menu[] = ElggMenuItem::factory([
 		'name' => 'newest',
 		'text' => elgg_echo('sort:newest'),
-		'href' => "groups/members/{$entity->getGUID()}/newest",
+		'href' => elgg_generate_url('collection:user:user:group_members', [
+			'guid' => $entity->guid,
+			'sort' => 'newest',
+		]),
 		'priority' => 200
 	]);
 
@@ -898,7 +908,9 @@ function _groups_topbar_menu_setup(\Elgg\Hook $hook) {
 		'icon' => 'users',
 		'parent_name' => 'account',
 		'section' => 'alt',
-		'href' => "groups/invitations/{$user->username}",
+		'href' => elgg_generate_url('collection:group:group:invitations', [
+			'username' => $user->username,
+		]),
 	]);
 	
 	return $result;
@@ -929,14 +941,16 @@ function _groups_title_menu(\Elgg\Hook $hook) {
 	if ($group->canEdit()) {
 		// group owners can edit the group and invite new members
 		$result[] = \ElggMenuItem::factory([
-			'name' => 'groups:edit',
-			'href' => "groups/edit/{$group->guid}",
+			'name' => 'edit',
+			'icon' => 'edit',
+			'href' => elgg_generate_entity_url($group, 'edit'),
 			'text' => elgg_echo('groups:edit'),
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'groups:invite',
-			'href' => "groups/invite/{$group->guid}",
+			'icon' => 'user-plus',
+			'href' => elgg_generate_entity_url($group, 'invite'),
 			'text' => elgg_echo('groups:invite'),
 			'link_class' => 'elgg-button elgg-button-action',
 		]);
@@ -1052,7 +1066,9 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'newest',
 		'text' => elgg_echo('sort:newest'),
-		'href' => 'groups/all?filter=newest',
+		'href' => elgg_generate_url('collection:group:group:all', [
+			'filter' => 'newest',
+		]),
 		'priority' => 200,
 		'selected' => $filter_value == 'newest',
 	]);
@@ -1060,7 +1076,9 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'alpha',
 		'text' => elgg_echo('sort:alpha'),
-		'href' => 'groups/all?filter=alpha',
+		'href' => elgg_generate_url('collection:group:group:all', [
+			'filter' => 'alpha',
+		]),
 		'priority' => 250,
 		'selected' => $filter_value == 'alpha',
 	]);
@@ -1068,7 +1086,9 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'popular',
 		'text' => elgg_echo('sort:popular'),
-		'href' => 'groups/all?filter=popular',
+		'href' => elgg_generate_url('collection:group:group:all', [
+			'filter' => 'popular',
+		]),
 		'priority' => 300,
 		'selected' => $filter_value == 'popular',
 	]);
@@ -1076,7 +1096,9 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'featured',
 		'text' => elgg_echo('groups:featured'),
-		'href' => 'groups/all?filter=featured',
+		'href' => elgg_generate_url('collection:group:group:all', [
+			'filter' => 'featured',
+		]),
 		'priority' => 400,
 		'selected' => $filter_value == 'featured',
 	]);

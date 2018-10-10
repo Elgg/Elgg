@@ -665,6 +665,11 @@ function elgg_register_entity_type($type, $subtype = null) {
 	}
 
 	if ($subtype) {
+		if (in_array($subtype, $entities[$type])) {
+			// subtype already registered
+			return true;
+		}
+		
 		$entities[$type][] = $subtype;
 	}
 
