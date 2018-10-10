@@ -28,7 +28,7 @@ $highlighted_query = $service->getHighlighter()->highlightWords($query);
 $title = elgg_echo('search:results', ["\"$highlighted_query\""]);
 
 $form = elgg_view_form('search', [
-	'action' => elgg_normalize_url('search'),
+	'action' => elgg_generate_url('default:search'),
 	'method' => 'get',
 	'disable_security' => true,
 ], $params);
@@ -83,7 +83,7 @@ foreach ($types as $type => $subtypes) {
 		elgg_register_menu_item('page', [
 			'name' => "item:$type:$subtype",
 			'text' => elgg_echo("item:$type:$subtype"),
-			'href' => elgg_http_add_url_query_elements('search', [
+			'href' => elgg_generate_url('default:search', [
 				'q' => $params['query'],
 				'entity_type' => $type,
 				'entity_subtype' => $subtype,
@@ -106,7 +106,7 @@ foreach ($custom_types as $search_type) {
 	elgg_register_menu_item('page', [
 		'name' => "search_types:$type",
 		'text' => elgg_echo("search_types:$type"),
-		'href' => elgg_http_add_url_query_elements('search', [
+		'href' => elgg_generate_url('default:search', [
 			'q' => $params['query'],
 			'search_type' => $type,
 		]),
@@ -121,7 +121,7 @@ foreach ($custom_types as $search_type) {
 elgg_register_menu_item('page', [
 	'name' => 'all',
 	'text' => elgg_echo('all'),
-	'href' => elgg_http_add_url_query_elements('search', [
+	'href' => elgg_generate_url('default:search', [
 		'q' => $params['query'],
 		'owner_guid' => $params['owner_guid'],
 		'search_type' => 'all',

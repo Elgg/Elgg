@@ -14,7 +14,7 @@ $class = elgg_extract_class($vars, "elgg-search");
 unset($vars['class']);
 
 echo elgg_view_form('search', [
-	'action' => elgg_normalize_url('search'),
+	'action' => elgg_generate_url('default:search'),
 	'method' => 'get',
 	'disable_security' => true,
 	'class' => $class,
