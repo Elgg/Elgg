@@ -28,10 +28,14 @@ $count = elgg_extract('count', $results);
 $offset = elgg_extract('offset', $params);
 $limit = elgg_extract('limit', $params);
 
+$search_type = elgg_extract('search_type', $params);
+$type = elgg_extract('type', $params);
+$subtype = elgg_extract('subtype', $params);
+
 $keys = [
-	"search_types:{$params['search_type']}",
-	"item:{$params['type']}:{$params['subtype']}",
-	"item:{$params['type']}",
+	"search_types:{$search_type}",
+	"item:{$type}:{$subtype}",
+	"item:{$type}",
 ];
 
 $type_label = elgg_echo('search:unknown_entity');
@@ -43,19 +47,19 @@ foreach ($keys as $key) {
 }
 
 $base_url = elgg_generate_url('default:search', [
-	'q' => $params['query'],
-	'entity_type' => $params['type'],
-	'entity_subtype' => $params['subtype'],
+	'q' => elgg_extract('query', $params),
+	'entity_type' => $type,
+	'entity_subtype' => $subtype,
 	'limit' => $limit,
 	'offset' => $offset,
-	'search_type' => $params['search_type'],
+	'search_type' => $search_type,
 	'container_guid' => elgg_extract('container_guid', $params),
 ]);
 
 $more_items = $count - ($offset + $limit);
 
 $pagination = '';
-if (array_key_exists('pagination', $params) && $params['pagination']) {
+if (elgg_extract('pagination', $params)) {
 	$pagination = elgg_view('navigation/pagination', [
 		'base_url' => $base_url,
 		'offset' => $offset,
