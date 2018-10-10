@@ -33,7 +33,7 @@ $form = elgg_view_form('search', [
 	'disable_security' => true,
 ], $params);
 
-if (empty($query) && $query != "0") {
+if (elgg_is_empty($query)) {
 	// display a search form if there is no query
 	$layout = elgg_view_layout('content', [
 		'title' => elgg_echo('search'),
