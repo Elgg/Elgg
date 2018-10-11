@@ -261,9 +261,8 @@ class Search {
 		$owner_guid = get_input('owner_guid', ELGG_ENTITIES_ANY_VALUE);
 		$container_guid = get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
 
-		$sort = get_input('sort');
-		$order = get_input('order', '');
-
+		$default_order = 'desc';
+		$sort = get_input('sort', 'time_created');
 		switch ($sort) {
 			case 'action_on' :
 				$sort = 'last_action';
@@ -278,17 +277,13 @@ class Search {
 				break;
 
 			case 'alpha' :
-				if (!$order || !in_array(strtoupper($order), ['ASC', 'DESC'])) {
-					$order = 'ASC';
-				}
+				$default_order = 'asc';
 				$sort = 'name';
 				break;
-
-			default :
-				$sort = 'time_created';
-				$order = 'desc';
 		}
 
+		$order = get_input('order', $default_order);
+		
 		$current_params = [
 			'query' => $query,
 			'offset' => $offset,
