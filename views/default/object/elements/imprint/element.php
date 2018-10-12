@@ -9,6 +9,11 @@ if ($icon_name !== false) {
 
 $content = elgg_extract('content', $vars, '');
 
+$result = $icon . $content;
+if (elgg_is_empty($result)) {
+	return;
+}
+
 echo elgg_format_element('span', [
 	'class' => elgg_extract_class($vars),
-], $icon . $content);
+], $result);
