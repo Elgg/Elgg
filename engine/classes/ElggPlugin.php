@@ -108,12 +108,11 @@ class ElggPlugin extends ElggObject {
 			$priority = 'last';
 		}
 
-		$guid = parent::save();
-		if ($guid && $priority) {
-			$this->setPriority($new ? 'new' : 'last');
+		if ($priority) {
+			$this->setPriority($priority);
 		}
-
-		return $guid;
+		
+		return parent::save();
 	}
 
 	/**

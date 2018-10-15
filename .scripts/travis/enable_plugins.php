@@ -66,3 +66,10 @@ foreach ($ordered_plugins as $priority => $plugin_id) {
 		exit(1);
 	}
 }
+
+echo "The following plugins are active" . PHP_EOL;
+
+$plugins = elgg_get_plugins('active');
+foreach($plugins as $plugin) {
+	echo $plugin->getPriority() . " -> " . $plugin->getID() . PHP_EOL;
+}
