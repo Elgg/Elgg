@@ -46,7 +46,7 @@ foreach ($keys as $key) {
 	}
 }
 
-$base_url = elgg_generate_url('default:search', [
+$base_url = elgg_http_add_url_query_elements(current_page_url(), [
 	'q' => elgg_extract('query', $params),
 	'entity_type' => $type,
 	'entity_subtype' => $subtype,
