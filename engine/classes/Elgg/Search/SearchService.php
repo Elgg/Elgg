@@ -121,6 +121,12 @@ class SearchService {
 	 * @return array
 	 */
 	public function normalizeOptions(array $options = []) {
+		
+		if (elgg_extract('_elgg_search_service_normalize_options', $options)) {
+			// already normalized once before
+			return $options;
+		}
+		
 		$search_type = elgg_extract('search_type', $options, 'entities', false);
 		$options['search_type'] = $search_type;
 
@@ -129,6 +135,9 @@ class SearchService {
 		$options = $this->normalizeQuery($options);
 		$options = $this->normalizeSearchFields($options);
 
+		// prevent duplicate normalization
+		$options['_elgg_search_service_normalize_options'] = true;
+		
 		return $options;
 	}
 

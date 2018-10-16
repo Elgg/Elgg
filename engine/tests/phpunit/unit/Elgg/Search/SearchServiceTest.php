@@ -129,7 +129,8 @@ class SearchServiceTest extends UnitTestCase {
 				'annotations' => [],
 				'private_settings' => [],
 			],
-			'query_parts' => ['altered', 'query']
+			'query_parts' => ['altered', 'query'],
+			'_elgg_search_service_normalize_options' => true,
 		], $options);
 	}
 
@@ -164,6 +165,7 @@ class SearchServiceTest extends UnitTestCase {
 			],
 			'query' => '',
 			'query_parts' => [],
+			'_elgg_search_service_normalize_options' => true,
 		], $options);
 	}
 
@@ -201,6 +203,7 @@ class SearchServiceTest extends UnitTestCase {
 			],
 			'query' => '',
 			'query_parts' => [],
+			'_elgg_search_service_normalize_options' => true,
 		], $options);
 	}
 

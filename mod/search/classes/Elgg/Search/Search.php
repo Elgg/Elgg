@@ -112,9 +112,13 @@ class Search {
 	 */
 	public function listResults($search_type, $type = null, $subtype = null, $count = false) {
 		$current_params = $this->params;
+		
 		$current_params['search_type'] = $search_type;
 		$current_params['type'] = $type;
 		$current_params['subtype'] = $subtype;
+		
+		// normalizing current search params so the listing has better awareness
+		$current_params = _elgg_services()->search->normalizeOptions($current_params);
 
 		switch ($search_type) {
 			case 'entities' :
@@ -302,13 +306,15 @@ class Search {
 		];
 
 		$params = array_merge($current_params, $params);
-
+		
+		// normalizing here to set query_parts
 		$this->params = _elgg_services()->search->normalizeOptions($params);
-
-		if ($search_type == 'all' && empty(array_filter($this->params['fields']))) {
-			// Plugin hooks did not provide a specific set of fields to use
-			// We will let params to repopulate the fields for type specific searches
+		
+		// unsetting some data which will be reset during actual search
+		if (empty($params['fields'])) {
+			// no fields provided by input, so unset the magic fields from normalilzation
 			unset($this->params['fields']);
 		}
+		unset($this->params['_elgg_search_service_normalize_options']);
 	}
 }
