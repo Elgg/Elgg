@@ -1,9 +1,9 @@
 <?php
 $params = [
 	'tabs' => [
-		['title' => 'First', 'url' => "#"],
-		['title' => 'Second', 'url' => "#", 'selected' => true],
-		['title' => 'Third', 'url' => "#", 'icon' => 'question'],
+		['text' => 'First', 'href' => "#"],
+		['text' => 'Second', 'href' => "#", 'selected' => true],
+		['text' => 'Third', 'href' => "#", 'icon' => 'question'],
 	]
 ];
 
