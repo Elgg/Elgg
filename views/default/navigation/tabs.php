@@ -34,7 +34,7 @@ foreach ($tabs as $index => &$tab) {
 	}
 
 	if (isset($tab['id']) && isset($tab['link_id'])) {
-		elgg_deprecated_notice('The navigation/tabs tab does not support passing 2 ids. Only id is used to set the id of the menu item', '3.0');
+span class="pl-s1"> 		elgg_deprecated_notice('The navigation/tabs tab does not support passing 2 ids. Only 'id' is used to set the id of the menu item', '3.0');
 	}
 	
 	if (!isset($tab['id']) && isset($tab['link_id'])) {
