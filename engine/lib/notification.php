@@ -245,7 +245,8 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		$from = $site->email;
 	} else {
 		// If all else fails, use the domain of the site.
-		$from = 'noreply@' . $site->getDomain();
+		$token = _elgg_services()->crypto->getRandomBytes(24);
+		$from = "noreply-{$token}@{$site->getDomain()}";
 	}
 
 	return elgg_send_email($from, $to, $message->subject, $message->body, $params);

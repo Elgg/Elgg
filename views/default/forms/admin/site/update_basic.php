@@ -18,6 +18,7 @@ echo elgg_view_field([
 	'#type' => 'email',
 	'name' => 'siteemail',
 	'#label' => elgg_echo('installation:siteemail'),
+	'#help' => elgg_echo('installation:siteemail:help'),
 	'value' => elgg_get_site_entity()->email,
 	'class' => 'elgg-input-text',
 ]);
