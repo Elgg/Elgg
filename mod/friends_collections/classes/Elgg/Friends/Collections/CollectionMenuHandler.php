@@ -36,7 +36,7 @@ class CollectionMenuHandler {
 			'text' => elgg_echo('edit'),
 			'href' => elgg_generate_url('edit:access_collection:friends', [
 				'collection_id' => $collection->id,
-			]),,
+			]),
 			'priority' => 500,
 		]);
 

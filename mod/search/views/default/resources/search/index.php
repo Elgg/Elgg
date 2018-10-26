@@ -131,9 +131,9 @@ elgg_register_menu_item('page', [
 ]);
 
 if (empty($results)) {
-	$results = elgg_format_element('p', [
-		'class' => 'elgg-no-results',
-	], elgg_echo('notfound'));
+	$results = elgg_view('page/components/no_results', [
+		'no_results' => elgg_echo('notfound'),
+	]);
 }
 
 $layout = elgg_view_layout('content', [
