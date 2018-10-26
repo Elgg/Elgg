@@ -60,9 +60,9 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 		$map = function($plugins) {
 			$mapped = [];
 			foreach ($plugins as $plugin) {
-				$mapped[] = $plugin->getPriority();
+				$mapped[] = "{$plugin->getPriority()}:{$plugin->getID()}";
 			}
-			sort($plugins);
+			
 			return $mapped;
 		};
 
