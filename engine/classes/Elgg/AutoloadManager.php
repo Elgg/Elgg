@@ -73,6 +73,10 @@ class AutoloadManager {
 	 * @return array
 	 */
 	protected function scanClassesDir($dir) {
+		if (!is_dir($dir)) {
+			return [];
+		}
+		
 		$dir = new \DirectoryIterator($dir);
 		$map = [];
 
