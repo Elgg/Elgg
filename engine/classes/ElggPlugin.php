@@ -784,9 +784,20 @@ class ElggPlugin extends ElggObject {
 		$this->registerClasses();
 
 		$autoload_file = 'vendor/autoload.php';
-		if ($this->canReadFile($autoload_file)) {
-			Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+		if (!$this->canReadFile($autoload_file)) {
+			return;
 		}
+		
+		$autoloader = Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+		
+		if (!$autoloader instanceof \Composer\Autoload\ClassLoader) {
+			return;
+		}
+		
+		$autoloader->unregister();
+		
+		// plugins should be appended, composer defaults to prepend
+		$autoloader->register(false);
 	}
 
 	/**
