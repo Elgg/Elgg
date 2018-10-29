@@ -148,7 +148,7 @@ class ElggPlugin extends ElggObject {
 	 * @access private
 	 */
 	public function setPath($path) {
-		$this->path = $path;
+		$this->path = \Elgg\Project\Paths::sanitize($path, true);
 	}
 
 	/**
@@ -158,12 +158,11 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function getPath() {
 		if (isset($this->path)) {
-			$path = $this->path;
-		} else {
-			$path = elgg_get_plugins_path() . $this->getID();
+			return $this->path;
 		}
-
-		return \Elgg\Project\Paths::sanitize($path, true);
+		
+		$this->setPath(elgg_get_plugins_path() . $this->getID());
+		return $this->path;
 	}
 
 	/**
