@@ -150,14 +150,19 @@ class Plugins {
 	/**
 	 * Set the list of active plugins according to the boot data cache
 	 *
-	 * @param ElggPlugin[]|null $plugins Set of active plugins
+	 * @param ElggPlugin[]|null $plugins       Set of active plugins
+	 * @param bool              $order_plugins Make sure plugins are saved in the correct order (set to false if provided plugins are already sorted)
 	 *
 	 * @return void
 	 */
-	public function setBootPlugins($plugins) {
+	public function setBootPlugins($plugins, $order_plugins = true) {
 		if (!is_array($plugins)) {
 			unset($this->boot_plugins);
 			return;
+		}
+		
+		if ($order_plugins) {
+			$plugins = $this->orderPluginsByPriority($plugins);
 		}
 		
 		foreach ($plugins as $plugin) {
@@ -773,66 +778,92 @@ class Plugins {
 			return [];
 		}
 
-		$loaded_from_cache = false;
 		if ($status === 'active' && isset($this->boot_plugins)) {
-			$plugins = $this->boot_plugins;
-			$loaded_from_cache = true;
-		} else {
-			$priority = $this->namespacePrivateSetting('internal', 'priority');
-			$site_guid = 1;
+			// boot_plugins is an already ordered list of plugins
+			return array_values($this->boot_plugins);
+		}
+		
+		$priority = $this->namespacePrivateSetting('internal', 'priority');
+		$site_guid = 1;
 
-			// grab plugins
-			$options = [
-				'type' => 'object',
-				'subtype' => 'plugin',
-				'limit' => 0,
-				'selects' => ['ps.value'],
-				'private_setting_names' => [$priority],
-				// ORDER BY CAST(ps.value) is super slow. We usort() below.
-				'order_by' => false,
-			];
+		// grab plugins
+		$options = [
+			'type' => 'object',
+			'subtype' => 'plugin',
+			'limit' => 0,
+			'selects' => ['ps.value'],
+			'private_setting_names' => [$priority],
+			// ORDER BY CAST(ps.value) is super slow. We custom sorting below.
+			'order_by' => false,
+		];
 
-			switch ($status) {
-				case 'active':
-					$options['relationship'] = 'active_plugin';
-					$options['relationship_guid'] = $site_guid;
-					$options['inverse_relationship'] = true;
-					break;
+		switch ($status) {
+			case 'active':
+				$options['relationship'] = 'active_plugin';
+				$options['relationship_guid'] = $site_guid;
+				$options['inverse_relationship'] = true;
+				break;
 
-				case 'inactive':
-					$options['wheres'][] = function (QueryBuilder $qb) use ($site_guid) {
-						$subquery = $qb->subquery('entity_relationships', 'active_er');
-						$subquery->select('*')
-							->where($qb->compare('active_er.guid_one', '=', 'e.guid'))
-							->andWhere($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))
-							->andWhere($qb->compare('active_er.guid_two', '=', 1));
+			case 'inactive':
+				$options['wheres'][] = function (QueryBuilder $qb) {
+					$subquery = $qb->subquery('entity_relationships', 'active_er');
+					$subquery->select('*')
+						->where($qb->compare('active_er.guid_one', '=', 'e.guid'))
+						->andWhere($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))
+						->andWhere($qb->compare('active_er.guid_two', '=', 1));
 
-						return "NOT EXISTS ({$subquery->getSQL()})";
-					};
-					break;
+					return "NOT EXISTS ({$subquery->getSQL()})";
+				};
+				break;
 
-				case 'all':
-				default:
-					break;
-			}
-
-			$old_ia = $this->session->setIgnoreAccess(true);
-			$plugins = elgg_get_entities($options) ? : [];
-			$this->session->setIgnoreAccess($old_ia);
+			case 'all':
+			default:
+				break;
 		}
 
-		usort($plugins, function (ElggPlugin $a, ElggPlugin $b) use ($loaded_from_cache) {
-			$a_value = $loaded_from_cache ? $a->getPriority() : $a->getVolatileData('select:value');
-			$b_value = $loaded_from_cache ? $b->getPriority() : $b->getVolatileData('select:value');
+		$old_ia = $this->session->setIgnoreAccess(true);
+		$plugins = elgg_get_entities($options) ? : [];
+		$this->session->setIgnoreAccess($old_ia);
 
-			if ($b_value !== $a_value) {
-				return $a_value - $b_value;
-			} else {
-				return $a->guid - $b->guid;
+		$result = $this->orderPluginsByPriority($plugins, 'select:value');
+		
+		if ($status === 'active' && !isset($this->boot_plugins)) {
+			// populate local cache if for some reason this is not set yet
+			$this->setBootPlugins($result, false);
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Sorts plugins by priority
+	 *
+	 * @param \ElggPlugin[] $plugins            Array of plugins
+	 * @param string        $volatile_data_name Use an optional volatile data name to retrieve priority
+	 *
+	 * @return ElggPlugin[]
+	 */
+	protected function orderPluginsByPriority($plugins = [], $volatile_data_name = null) {
+		$priorities = [];
+		$sorted_plugins = [];
+				
+		foreach ($plugins as $plugin) {
+			$priority = null;
+			if (!empty($volatile_data_name)) {
+				$priority = $plugin->getVolatileData($volatile_data_name);
 			}
-		});
-
-		return $plugins;
+			
+			if (!isset($priority)) {
+				$priority = $plugin->getPriority();
+			}
+			
+			$priorities[$plugin->guid] = (int) $priority;
+			$sorted_plugins[$plugin->guid] = $plugin;
+		}
+		
+		asort($priorities);
+		
+		return array_values(array_replace($priorities, $sorted_plugins));
 	}
 
 	/**
