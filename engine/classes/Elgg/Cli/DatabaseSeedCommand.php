@@ -15,6 +15,7 @@ class DatabaseSeedCommand extends Command {
 	protected function configure() {
 		$this->setName('database:seed')
 			->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Number of entities to seed')
+			->addOption('image_folder', null, InputOption::VALUE_OPTIONAL, 'Path to a local folder containing images for seeding')
 			->setDescription('Seeds the database with fake entities');
 	}
 
@@ -40,6 +41,11 @@ class DatabaseSeedCommand extends Command {
 		_elgg_services()->setValue('mailer', new \Zend\Mail\Transport\InMemory());
 
 		$limit = $this->option('limit') ? : 20;
+		$image_folder = $this->option('image_folder');
+		if (!empty($image_folder)) {
+			elgg_set_config('seeder_local_image_folder', $image_folder);
+		}
+		
 		try {
 			_elgg_services()->seeder->seed($limit);
 		} catch (\Exception $e) {
