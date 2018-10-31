@@ -1144,6 +1144,7 @@ return array(
 	'installation:view' => "あなたのサイトのデフォルトで使用するviewを入力してください。デフォルトviewを使用する場合は、空欄のままにしておいてください。(よくわからない場合は、そのままにしておいてください)",
 
 	'installation:siteemail' => "サイトの電子メールアドレス（システムメールを送信するときに使用します）:",
+	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "1ページ当たりの項目数の既定値",
 
 	'admin:site:access:warning' => "ユーザが新しくコンテントを作成する際に示されるプライバシー・セッティングです。これを変更しても、すでにあるコンテントへのアクセス権は変更されません。",

@@ -1139,6 +1139,7 @@ Una vegada autentificat, li recomanem que modifique la seua contrasenya.
 	'installation:view' => "Ingresse la vista que es visualitzará per defecte en el lloc web o deixe açò en blanc per a la vista per defecte (si tens dubtes, deixeu-ho com per defecte):",
 
 	'installation:siteemail' => "Direcció d'Email del lloc web (utilitzada per a enviar correus electrònics desde el sistema):",
+	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "Nombre per defecte d'elements per pàgina",
 
 	'admin:site:access:warning' => "Les modificacions en el control d'accessos solament tindrá impacte en els accessos futurs",

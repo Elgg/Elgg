@@ -247,11 +247,11 @@ return array(
 	'friend:remove' => "Quitar amigo",
 
 	'friends:add:successful' => "Se ha a&ntilde;adido a %s como amigo",
-	'friends:add:duplicate' => "You're already friends with %s",
+	'friends:add:duplicate' => "Ya eres amigo de %s",
 	'friends:add:failure' => "No se pudo a&ntilde;adir a %s como amigo. Por favor intente nuevamente",
 
 	'friends:remove:successful' => "Se quit&oacute; a %s de sus amigos",
-	'friends:remove:no_friend' => "You and %s are not friends",
+	'friends:remove:no_friend' => "Tu y %s no sois amigos",
 	'friends:remove:failure' => "No se pudo quitar a %s de sus amigos. Por favor intente nuevamente",
 
 	'friends:none' => "Este usuario no tiene amigos a&uacute;n",
@@ -1139,6 +1139,7 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'installation:view' => "Ingrese la vista que se visualizar&aacute; por defecto en el sitio o deje esto en blanco para la vista por defecto (si tiene dudas, d&eacute;jelo por defecto):",
 
 	'installation:siteemail' => "Direcci&oacute;n de Email del sitio (utilizada para enviar mails desde el sistema):",
+	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "N&uacute;mero por defecto de elementos por p&aacute;gina",
 
 	'admin:site:access:warning' => "Las modificaciones en el control de accesos s&oacute;lo tendr&aacute; impacto en los accesos futuros",

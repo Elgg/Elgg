@@ -247,11 +247,11 @@ return array(
 	'friend:remove' => "Supprimer un contact",
 
 	'friends:add:successful' => "Vous avez ajouté %s à vos contacts.",
-	'friends:add:duplicate' => "You're already friends with %s",
+	'friends:add:duplicate' => "Vous êtes déjà en contact avec %s",
 	'friends:add:failure' => "%s n'a pas pu être ajouté(e) à vos contacts.",
 
 	'friends:remove:successful' => "Vous avez retiré %s de vos contacts.",
-	'friends:remove:no_friend' => "You and %s are not friends",
+	'friends:remove:no_friend' => "Vous et %s n'êtes pas en contact",
 	'friends:remove:failure' => "%s n'a pas pu être retiré(e) de vos contacts.",
 
 	'friends:none' => "Aucun contact pour le moment.",
@@ -1145,6 +1145,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.
 	'installation:view' => "Entrez le nom de la vue qui sera utilisée par défaut pour l'affichage du site, ou laissez vide pour la vue par défaut (en cas de doute, laissez la valeur par défaut) :",
 
 	'installation:siteemail' => "L'adresse email du site (utilisée lors de l'envoi d'emails par le système)",
+	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "Nombre d'éléments par page par défaut",
 
 	'admin:site:access:warning' => "Le niveau d'accès suggéré aux utilisateurs lorsqu'ils créent un nouveau contenu. Modifier ce réglage n'affectera que les publications créées dans le futur.",
