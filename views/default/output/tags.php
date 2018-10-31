@@ -47,11 +47,11 @@ if (isset($vars['item_class'])) {
 $icon_class = elgg_extract('icon_class', $vars);
 unset($vars['icon_class']);
 
-$list_items = ''; 
+$list_items = '';
 
 $params = $vars;
 foreach($tags as $tag) {
-	if (is_string($tag) && strlen($tag) > 0) {
+	if (is_scalar($tag) && strlen($tag) > 0) {
 		$params['value'] = $tag;
 
 		$list_items .= "<li class=\"$item_class\">";
