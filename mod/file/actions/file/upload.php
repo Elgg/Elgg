@@ -67,7 +67,7 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 		$guid = $file->save();
 	}
 	
-	if ($guid && $file->saveIconFromElggFile($file)) {
+	if ($guid && ($file->getSimpleType() === 'image') && $file->saveIconFromElggFile($file)) {
 		$file->thumbnail = $file->getIcon('small')->getFilename();
 		$file->smallthumb = $file->getIcon('medium')->getFilename();
 		$file->largethumb = $file->getIcon('large')->getFilename();
