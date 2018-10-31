@@ -14,17 +14,15 @@ define(function (require) {
 	var STATES = elgg.data.likes_states;
 
 	function update_like_menu_item(guid, menu_item) {
-		$('.elgg-menu-item-likes > a[data-likes-guid=' + guid + ']').each(function(){
-			$(this).html(menu_item);
-		})
+		$('.elgg-menu-item-likes > a[data-likes-guid=' + guid + ']').replaceWith(menu_item);
 	}
 
 	function set_counts(guid, num_likes, new_value) {
 		var li_modifier = num_likes > 0 ? 'removeClass' : 'addClass';
 
-		$('.elgg-menu-item-likes-count [data-likes-guid=' + guid + ']').each(function () {
+		$('.elgg-menu-item-likes-count > a[data-likes-guid=' + guid + ']').each(function () {
 			$(this)
-				.html(new_value)
+				.replaceWith(new_value)
 				.parent()[li_modifier]('hidden');
 		});
 	}
