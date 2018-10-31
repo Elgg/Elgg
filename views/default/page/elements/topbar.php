@@ -26,7 +26,9 @@ elgg_require_js('page/elements/topbar');
 		'class' => 'elgg-nav-search',
 	], elgg_view('search/search_box'));
 
-	echo elgg_view_menu('site');
+	echo elgg_view_menu('site', [
+		'sort_by' => 'text',
+	]);
 	echo elgg_view_menu('topbar');
 	?>
 </div>
