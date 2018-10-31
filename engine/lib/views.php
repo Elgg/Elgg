@@ -742,9 +742,8 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  *                              items => an array of unprepared menu items
  *                                       as ElggMenuItem or menu item factory options
  *                              sort_by => string or php callback
- *                                  string options: 'name', 'priority', 'title' (default),
- *                                  'register' (registration order) or a
- *                                  php callback (a compare function for usort)
+ *                                  string options: 'name', 'priority' (default), 'text'
+ *                                  or a php callback (a compare function for usort)
  *                              handler: string the page handler to build action URLs
  *                              entity: \ElggEntity to use to build action URLs
  *                              class: string the class for the entire menu.
