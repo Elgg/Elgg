@@ -991,7 +991,8 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *      'full_view'        Display the full view of the entities?
  *      'list_class'       CSS class applied to the list
  *      'item_class'       CSS class applied to the list items
- *      'item_view'        Alternative view to render list items
+ *      'item_view'        Alternative view to render list items content
+ *      'list_item_view'   Alternative view to render list items
  *      'pagination'       Display pagination?
  *      'base_url'         Base URL of list (optional)
  *      'url_fragment'     URL fragment to add to links if not present in base_url (optional)
