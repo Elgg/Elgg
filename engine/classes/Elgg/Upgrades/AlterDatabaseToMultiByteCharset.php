@@ -44,6 +44,13 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 				'unique' => false,
 			],
 		],
+		'entities' => [
+			'subtype' => [
+				'primary' => false,
+				'name' => 'subtype',
+				'unique' => false,
+			],
+		],
 		'queue' => [
 			'name' => [
 				'primary' => false,
