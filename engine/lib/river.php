@@ -74,10 +74,10 @@ function elgg_create_river_item(array $options = []) {
 	$values = [
 		'action_type' => $action_type,
 		'view' => $view,
-		'subject_guid' => $subject_guid,
-		'object_guid' => $object_guid,
-		'target_guid' => $target_guid,
-		'annotation_id' => $annotation_id,
+		'subject_guid' => $subject_guid ? : null,
+		'object_guid' => $object_guid ? : null,
+		'target_guid' => $target_guid ? : null,
+		'annotation_id' => $annotation_id ? : null,
 		'posted' => $posted,
 	];
 	$col_types = [

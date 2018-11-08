@@ -1328,6 +1328,8 @@ class ElggInstaller {
 		try {
 			return $this->getApp()->migrate();
 		} catch (\Exception $e) {
+			dump($e);
+
 			return false;
 		}
 	}

@@ -131,7 +131,7 @@ class AnnotationsTable {
 			'name' => $qb->param($annotation->name, ELGG_VALUE_STRING),
 			'value' => $qb->param($annotation->value, $annotation->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING),
 			'value_type' => $qb->param($annotation->value_type, ELGG_VALUE_STRING),
-			'owner_guid' => $qb->param($annotation->owner_guid, ELGG_VALUE_INTEGER),
+			'owner_guid' => $qb->param($annotation->owner_guid ? : null, ELGG_VALUE_INTEGER),
 			'time_created' => $qb->param($time_created, ELGG_VALUE_INTEGER),
 			'access_id' => $qb->param($annotation->access_id, ELGG_VALUE_INTEGER),
 		]);
@@ -180,7 +180,7 @@ class AnnotationsTable {
 			->set('value', $qb->param($annotation->value, $annotation->value_type === 'integer' ? ELGG_VALUE_INTEGER : ELGG_VALUE_STRING))
 			->set('value_type', $qb->param($annotation->value_type, ELGG_VALUE_STRING))
 			->set('access_id', $qb->param($annotation->access_id, ELGG_VALUE_INTEGER))
-			->set('owner_guid', $qb->param($annotation->owner_guid, ELGG_VALUE_INTEGER))
+			->set('owner_guid', $qb->param($annotation->owner_guid ? : null, ELGG_VALUE_INTEGER))
 			->where($qb->compare('id', '=', $annotation->id, ELGG_VALUE_INTEGER));
 
 		$result = $this->db->updateData($qb);

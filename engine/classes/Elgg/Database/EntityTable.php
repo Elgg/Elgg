@@ -227,8 +227,8 @@ class EntityTable {
 		return $this->db->insertData($sql, [
 			':type' => $row->type,
 			':subtype' => $row->subtype,
-			':owner_guid' => $row->owner_guid,
-			':container_guid' => $row->container_guid,
+			':owner_guid' => $row->owner_guid ? : null,
+			':container_guid' => $row->container_guid ? : null,
 			':access_id' => $row->access_id,
 			':time_created' => $row->time_created,
 			':time_updated' => $row->time_updated,
@@ -256,9 +256,9 @@ class EntityTable {
 		";
 
 		$params = [
-			':owner_guid' => $row->owner_guid,
 			':access_id' => $row->access_id,
-			':container_guid' => $row->container_guid,
+			':owner_guid' => $row->owner_guid ? : null,
+			':container_guid' => $row->container_guid ? : null,
 			':time_created' => $row->time_created,
 			':time_updated' => $row->time_updated,
 			':guid' => $guid,
@@ -652,7 +652,9 @@ class EntityTable {
 			$this->deleteRelatedEntities($entity);
 		}
 
-		$this->deleteEntityProperties($entity);
+		$dir = new \Elgg\EntityDirLocator($entity->guid);
+		$file_path = _elgg_config()->dataroot . $dir;
+		delete_directory($file_path);
 
 		$qb = Delete::fromTable('entities');
 		$qb->where($qb->compare('guid', '=', $guid, ELGG_VALUE_INTEGER));
@@ -703,41 +705,5 @@ class EntityTable {
 
 		$this->session->setDisabledEntityVisibility($entity_disable_override);
 		$this->session->setIgnoreAccess($ia);
-	}
-
-	/**
-	 * Clear data from secondary tables
-	 *
-	 * @param ElggEntity $entity Entity
-	 *
-	 * @return void
-	 */
-	protected function deleteEntityProperties(ElggEntity $entity) {
-
-		$guid = $entity->guid;
-
-		$entity_disable_override = $this->session->getDisabledEntityVisibility();
-		$this->session->setDisabledEntityVisibility(true);
-		$ia = $this->session->setIgnoreAccess(true);
-
-		elgg_delete_river(['subject_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
-
-		$entity->removeAllPrivateSettings();
-		$entity->deleteOwnedAccessCollections();
-		$entity->deleteAccessCollectionMemberships();
-		$entity->deleteRelationships();
-		$entity->deleteOwnedAnnotations();
-		$entity->deleteAnnotations();
-		$entity->deleteMetadata();
-
-		$this->session->setDisabledEntityVisibility($entity_disable_override);
-		$this->session->setIgnoreAccess($ia);
-
-		$dir = new \Elgg\EntityDirLocator($guid);
-		$file_path = _elgg_config()->dataroot . $dir;
-		delete_directory($file_path);
-
 	}
 }
