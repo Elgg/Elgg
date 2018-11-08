@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Cache\EntityCache;
+
 class EntityPreloaderTest extends \Elgg\TestCase {
 
 	/**
@@ -41,7 +43,10 @@ class EntityPreloaderTest extends \Elgg\TestCase {
 
 	public function testOnlyLoadsIfNotCached() {
 		$this->obj->_callable_entity_loader = array($this->mock, 'load');
-		$this->mock->expects($this->once())->method('load')->with(array('guids' => array(234, 345)));
+		$this->mock->expects($this->once())->method('load')->with([
+			'guids' => array(234, 345),
+			'limit' => EntityCache::MAX_SIZE,
+		]);
 		$this->obj->preload(array(
 			(object) array('foo' => 23,),
 			(object) array('bar' => 234,),
@@ -60,7 +65,10 @@ class EntityPreloaderTest extends \Elgg\TestCase {
 
 	public function testQuietlyIgnoresMissingProperty() {
 		$this->obj->_callable_entity_loader = array($this->mock, 'load');
-		$this->mock->expects($this->once())->method('load')->with(array('guids' => array(234, 345)));
+		$this->mock->expects($this->once())->method('load')->with([
+			'guids' => array(234, 345),
+			'limit' => EntityCache::MAX_SIZE,
+		]);
 		$this->obj->preload(array(
 			(object) array('foo' => 234),
 			(object) array(),

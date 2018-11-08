@@ -55,6 +55,7 @@ class EntityPreloader {
 		if (count($guids) > 1) {
 			call_user_func($this->_callable_entity_loader, array(
 				'guids' => $guids,
+				'limit' => EntityCache::MAX_SIZE,
 			));
 		}
 	}
