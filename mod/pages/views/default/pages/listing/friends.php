@@ -16,11 +16,8 @@ echo elgg_list_entities([
 	'metadata_name_value_pairs' => [
 		'parent_guid' => 0,
 	],
-	'full_view' => false,
 	'relationship' => 'friend',
 	'relationship_guid' => $entity->guid,
 	'relationship_join_on' => 'container_guid',
 	'no_results' => elgg_echo('pages:none'),
-	'preload_owners' => true,
-	'preload_containers' => true,
 ]);

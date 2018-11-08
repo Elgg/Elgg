@@ -14,8 +14,6 @@ $defaults = [
 	'subtype' => 'blog',
 	'full_view' => false,
 	'no_results' => elgg_echo('blog:none'),
-	'preload_owners' => true,
-	'preload_containers' => true,
 	'distinct' => false,
 ];
 
