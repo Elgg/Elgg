@@ -587,6 +587,8 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 		'list_type_toggle' => false,
 		'pagination' => true,
 		'no_results' => '',
+		'preload_owners' => true,
+		'preload_containers' => true,
 	];
 
 	$options = array_merge($defaults, $options);

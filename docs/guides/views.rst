@@ -499,8 +499,7 @@ It initializes the ``["head","page"]`` plugin hook (which is used by the header)
 in order to provide RSS autodiscovery, which is why you can see the orange RSS
 icon on those pages in some browsers.
 
-If your entity list will display the entity owners,
-you can improve performance a bit by preloading all owner entities:
+Entity listings will default try to load entity owners and container owners. If you want to prevent this you can turn this off.
 
 .. code-block:: php
 
@@ -508,8 +507,8 @@ you can improve performance a bit by preloading all owner entities:
 	    'type' => 'object',
 	    'subtype' => 'blog',
 
-	    // enable owner preloading
-	    'preload_owners' => true,
+	    // disable owner preloading
+	    'preload_owners' => false,
 	]);
 
 See also :doc:`this background information on Elgg's database </design/database>`.

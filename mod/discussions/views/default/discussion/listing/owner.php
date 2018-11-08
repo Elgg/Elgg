@@ -7,9 +7,7 @@ $options = [
 	'subtype' => 'discussion',
 	'limit' => max(20, elgg_get_config('default_limit')),
 	'order_by' => 'e.last_action desc',
-	'full_view' => false,
 	'no_results' => elgg_echo('discussion:none'),
-	'preload_owners' => true,
 ];
 
 if ($entity instanceof ElggUser) {

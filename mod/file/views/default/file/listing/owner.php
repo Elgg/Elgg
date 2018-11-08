@@ -6,9 +6,7 @@ $owner = elgg_extract('entity', $vars);
 $options = [
 	'type' => 'object',
 	'subtype' => 'file',
-	'full_view' => false,
 	'no_results' => elgg_echo("file:none"),
-	'preload_owners' => true,
 	'distinct' => false,
 ];
 

@@ -10,10 +10,7 @@ $options = [
 	'subtype' => 'discussion',
 	'order_by' => 'e.last_action desc',
 	'limit' => max(20, elgg_get_config('default_limit')),
-	'full_view' => false,
 	'no_results' => elgg_echo('discussion:none'),
-	'preload_owners' => true,
-	'preload_containers' => true,
 ];
 
 $container_type = elgg_extract('container_type', $vars);

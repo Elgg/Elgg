@@ -26,7 +26,6 @@ $options = [
 		new OrderByClause('n_table.time_created', 'DESC'),
 		new OrderByClause('n_table.id', 'DESC'),
 	],
-	'preload_owners' => true,
 	'no_results' => elgg_echo('messageboard:none'),
 ];
 
