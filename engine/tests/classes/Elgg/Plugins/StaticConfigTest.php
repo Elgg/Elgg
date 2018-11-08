@@ -43,8 +43,16 @@ class StaticConfigTest extends UnitTestCase {
 		foreach ($actions as $action => $action_spec) {
 			$this->assertInternalType('array', $action_spec);
 
-			$filename = elgg_extract('filename', $action_spec, "$root_path/actions/{$action}.php");
-			$this->assertFileExists($filename);
+			if (isset($action_spec['controller'])) {
+				$controller = elgg_extract('controller', $action_spec);
+				$this->assertTrue(_elgg_services()->handlers->isCallable($controller));
+			} else if (isset($action_spec['handler'])) {
+				$handler = elgg_extract('handler', $action_spec);
+				$this->assertTrue(_elgg_services()->handlers->isCallable($handler));
+			} else {
+				$filename = elgg_extract('filename', $action_spec, "$root_path/actions/{$action}.php");
+				$this->assertFileExists($filename);
+			}
 		}
 	}
 
@@ -56,8 +64,10 @@ class StaticConfigTest extends UnitTestCase {
 		$routes = $this->plugin->getStaticConfig('routes', []);
 		
 		foreach ($routes as $name => $conf) {
-			if (elgg_extract('handler', $conf)) {
-				$this->assertTrue(is_callable($conf['handler']));
+			if (elgg_extract('controller', $conf)) {
+				$this->assertTrue(_elgg_services()->handlers->isCallable($conf['controller']));
+			} else if (elgg_extract('handler', $conf)) {
+				$this->assertTrue(_elgg_services()->handlers->isCallable($conf['handler']));
 			} else if (elgg_extract('resource', $conf)) {
 				$view = "resources/{$conf['resource']}";
 				$this->assertTrue(elgg_view_exists($view), "Resource $view for route $name does not exist");

@@ -2,6 +2,8 @@
 
 namespace Elgg\Plugins;
 
+use Elgg\UnitTestCase;
+
 /**
  * Common operations during plugin testing
  */
@@ -51,7 +53,9 @@ trait PluginTesting {
 	 * Start a plugin that extending test belongs to
 	 * Calling this method should only be required in unit test cases
 	 *
-	 * @param null $flags Start flags
+	 * @param string $plugin_id         Start a plugin
+	 * @param bool   $activate_requires Activate required plugins
+	 * @param bool   $activate_suggests Activate suggested plugins
 	 *
 	 * @return \ElggPlugin|null
 	 *
@@ -59,8 +63,11 @@ trait PluginTesting {
 	 * @throws \InvalidParameterException
 	 * @throws \PluginException
 	 */
-	public function startPlugin() {
-		$plugin_id = $this->getPluginID();
+	public function startPlugin($plugin_id = null, $activate_requires = true, $activate_suggests = false) {
+		if (!isset($plugin_id)) {
+			$plugin_id = $this->getPluginID();
+		}
+
 		if (!$plugin_id) {
 			return null;
 		}
@@ -70,7 +77,32 @@ trait PluginTesting {
 			return null;
 		}
 
-		// @todo Resolve plugin dependencies and activate required plugins
+		if ($this instanceof UnitTestCase) {
+			// @todo Decouple plugin injection logic from this trait
+
+			$svc = _elgg_services()->plugins;
+			/* @var $svc \Elgg\Mocks\Database\Plugins */
+
+			$svc->addTestingPlugin($plugin);
+		}
+
+		if ($activate_requires) {
+			$requires = $plugin->getManifest()->getRequires();
+			foreach ($requires as $require) {
+				if ($require['type'] === 'plugin') {
+					$this->startPlugin($require['name'], $activate_requires, $activate_suggests);
+				}
+			}
+		}
+
+		if ($activate_suggests) {
+			$suggests = $plugin->getManifest()->getSuggests();
+			foreach ($suggests as $suggest) {
+				if ($suggest['type'] === 'plugin') {
+					$this->startPlugin($suggest['name'], $activate_requires, $activate_suggests);
+				}
+			}
+		}
 
 		$plugin->register();
 		$setup = $plugin->boot();
@@ -78,8 +110,10 @@ trait PluginTesting {
 			$setup();
 		}
 
+		_elgg_rebuild_public_container();
+
 		$plugin->init();
-		
+
 		return $plugin;
 	}
 
