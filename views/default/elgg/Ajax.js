@@ -347,20 +347,19 @@ define(function (require) {
 		};
 
 		/**
-		 * Convert a form element to a FormData object. Use this instead of $.serialize to allow other plugins
-		 * to alter the request by plugin hook.
+		 * Convert a form element to a FormData object.
 		 *
 		 * @param {*} el HTML form element or CSS selector (to a form element)
 		 * @returns {FormData}
 		 */
 		this.objectify = function (el) {
-			$(el).one('submit', function (e) {
-				// Let other plugins, e.g. CKEditor populate the fields
-				// with actual values
-				e.preventDefault();
-				return false;
-			}).trigger('submit');
-
+			
+			/*
+			 * Triggering an event to allow preparation of the form to happen.
+			 * Plugins like CKEditor can use this to populate the fields with actual values.
+			 */
+			$(el).trigger('elgg-ajax-objectify');
+			
 			return new FormData($(el)[0]);
 		};
 
