@@ -150,8 +150,6 @@ class AnnotationsTable {
 			return false;
 		}
 
-		$entity->updateLastAction($annotation->time_created);
-
 		$this->events->triggerAfter('create', 'annotation', $annotation);
 
 		return $result;
