@@ -1046,6 +1046,8 @@ The generation of entity icons has ben changed. No longer will all the configure
 (``ElggEntity::saveIconFromUploadedFile``, ``ElggEntity::saveIconFromLocalFile`` or ``ElggEntity::saveIconFromElggFile``), but only the `master` size.
 The other configured sizes will be generated when requesting that size based of the `master` icon.
 
+The 'original' icon size is a special case. The 'original' icon size is the unchanged original image saved without resizing. The 'original' icon size is not configured by default though. If you need the original image to be saved for an entity type, use the ``entity:icon:sizes, <entity_type>`` plugin hook to add the 'original' key without size parameters to the icon_sizes array.
+
 Icon glyphs
 -----------
 

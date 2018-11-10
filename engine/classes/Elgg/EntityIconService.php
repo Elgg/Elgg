@@ -225,9 +225,14 @@ class EntityIconService {
 		if ($created !== true) {
 			// remove existing icons
 			$this->deleteIcon($entity, $type, true);
-			
+
+			// save original image if 'original' icon_size is available for this type of entity
+			$store = $this->generateIcon($entity, $file, $type, $coords, 'original');
+
 			// save master image
-			$store = $this->generateIcon($entity, $file, $type, $coords, 'master');
+			if ($store) {
+				$store = $this->generateIcon($entity, $file, $type, $coords, 'master');
+			}
 			
 			if (!$store) {
 				$this->deleteIcon($entity, $type);
