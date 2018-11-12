@@ -18,6 +18,7 @@ $title = $topic->getDisplayName();
 $params = [
 	'content' => $content,
 	'title' => $title,
+	'entity' => $topic,
 	'sidebar' => elgg_view('discussion/sidebar'),
 	'filter' => '',
 ];

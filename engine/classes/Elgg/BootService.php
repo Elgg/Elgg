@@ -136,7 +136,7 @@ class BootService {
 			$services->dataCache->metadata->save($guid, $metadata);
 		}
 
-		$services->plugins->setBootPlugins($data->getActivePlugins());
+		$services->plugins->setBootPlugins($data->getActivePlugins(), false);
 
 		// use value in settings.php if available
 		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;

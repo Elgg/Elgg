@@ -742,9 +742,8 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  *                              items => an array of unprepared menu items
  *                                       as ElggMenuItem or menu item factory options
  *                              sort_by => string or php callback
- *                                  string options: 'name', 'priority', 'title' (default),
- *                                  'register' (registration order) or a
- *                                  php callback (a compare function for usort)
+ *                                  string options: 'name', 'priority' (default), 'text'
+ *                                  or a php callback (a compare function for usort)
  *                              handler: string the page handler to build action URLs
  *                              entity: \ElggEntity to use to build action URLs
  *                              class: string the class for the entire menu.
@@ -992,7 +991,8 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *      'full_view'        Display the full view of the entities?
  *      'list_class'       CSS class applied to the list
  *      'item_class'       CSS class applied to the list items
- *      'item_view'        Alternative view to render list items
+ *      'item_view'        Alternative view to render list items content
+ *      'list_item_view'   Alternative view to render list items
  *      'pagination'       Display pagination?
  *      'base_url'         Base URL of list (optional)
  *      'url_fragment'     URL fragment to add to links if not present in base_url (optional)

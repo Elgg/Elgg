@@ -58,6 +58,11 @@ class ClassLoader {
 	protected $map;
 
 	/**
+	 * @var array of checked but not found files
+	 */
+	protected $missing = [];
+
+	/**
 	 * Constructor
 	 *
 	 * @param \Elgg\ClassMap $map Class map
@@ -170,6 +175,11 @@ class ClassLoader {
 			require $file;
 			return;
 		}
+		
+		// is missing? return
+		if (isset($this->missing[$class])) {
+			return;
+		}
 
 		$file = $this->findFile($class);
 		if ($file && is_readable($file)) {
@@ -177,6 +187,9 @@ class ClassLoader {
 			$this->map->setAltered(true);
 			require $file;
 		}
+		
+		// add to missing
+		$this->missing[$class] = true;
 	}
 
 	/**

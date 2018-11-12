@@ -146,12 +146,12 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		$message = isset($vars['_msg']) ? $vars['_msg'] : null;
 		unset($vars['tag_name'], $vars['text'], $vars['_msg']);
 
-		$this->assertSame(elgg_format_element($tag_name, $attrs, $text, $opts), $expected, $message);
+		$this->assertSame($expected, elgg_format_element($tag_name, $attrs, $text, $opts), $message);
 
 		$attrs['#tag_name'] = $tag_name;
 		$attrs['#text'] = $text;
 		$attrs['#options'] = $opts;
-		$this->assertSame(elgg_format_element($attrs), $expected, $message);
+		$this->assertSame($expected, elgg_format_element($attrs), $message);
 	}
 
 	/**
@@ -179,6 +179,12 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 				'text' => 'a &times; b',
 				'opts' => array('encode_text' => true, 'double_encode' => true),
 				'_msg' => 'HTML escaping double encodes',
+			),
+			'<div id="foo">no empty arrays in output</div>' => array(
+				'tag_name' => 'div',
+				'text' => 'no empty arrays in output',
+				'attrs' => array('id' => 'foo', 'class' => []),
+				'_msg' => 'No empty arrays outputted as values',
 			),
 			'<IMG src="a &amp; b">' => array(
 				'tag_name' => 'IMG',

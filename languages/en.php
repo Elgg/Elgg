@@ -240,7 +240,8 @@ return array(
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
-
+	'widgets:not_configured' => "This widget is not yet configured",
+	
 /**
  * Groups
  */

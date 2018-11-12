@@ -308,6 +308,30 @@ function _elgg_river_test($hook, $type, $value) {
 }
 
 /**
+ * Updates the last action of the object of an river item
+ *
+ * @param string         $event 'create'
+ * @param string         $type  'river'
+ * @param \ElggRiverItem $item  The entity being disabled
+ *
+ * @return void
+ *
+ * @access private
+ */
+function _elgg_river_update_object_last_action($event, $type, $item) {
+	if (!$item instanceof \ElggRiverItem) {
+		return;
+	}
+	
+	$object = $item->getObjectEntity();
+	if (!$object) {
+		return;
+	}
+	
+	$object->updateLastAction($item->getTimePosted());
+}
+
+/**
  * Disable river entries that reference a disabled entity as subject/object/target
  *
  * @param string     $event  'disable'
@@ -421,6 +445,8 @@ function _elgg_river_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
+	
+	elgg_register_event_handler('created', 'river', '_elgg_river_update_object_last_action');
 }
 
 /**

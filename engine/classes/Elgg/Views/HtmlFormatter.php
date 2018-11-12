@@ -196,6 +196,11 @@ class HtmlFormatter {
 				$val = $attr; //e.g. checked => true ==> checked="checked"
 			}
 
+			if (is_array($val) && empty($val)) {
+				//e.g. ['class' => []]
+				continue;
+			}
+			
 			if (is_scalar($val)) {
 				$val = [$val];
 			}

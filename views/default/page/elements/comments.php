@@ -37,7 +37,6 @@ $options = [
 	'container_guid' => $entity->guid,
 	'full_view' => true,
 	'limit' => $limit,
-	'preload_owners' => true,
 	'distinct' => false,
 	'url_fragment' => $module_vars['id'],
 	'order_by' => [new OrderByClause('e.guid', $latest_first ? 'DESC' : 'ASC')],

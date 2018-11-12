@@ -18,7 +18,6 @@ if (!$widget_context && $list) {
 $current_info = null;
 $tabs = [];
 foreach ($list as $info) {
-	$url = "admin/configure_utilities/default_widgets?widget_context={$info['widget_context']}";
 	$selected = false;
 	if ($widget_context == $info['widget_context']) {
 		$selected = true;
@@ -26,9 +25,9 @@ foreach ($list as $info) {
 	}
 
 	$tabs[] = [
-		'title' => $info['name'],
-		'url' => $url,
-		'selected' => $selected
+		'text' => $info['name'],
+		'href' => "admin/configure_utilities/default_widgets?widget_context={$info['widget_context']}",
+		'selected' => $selected,
 	];
 }
 

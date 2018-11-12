@@ -19,10 +19,9 @@ if (!$limit) {
 echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'comment',
-	'container_guid' => $vars['entity']->guid,
+	'container_guid' => $entity->guid,
 	'reverse_order_by' => true,
 	'full_view' => true,
 	'limit' => $limit,
-	'preload_owners' => true,
 	'distinct' => false,
 ]);
