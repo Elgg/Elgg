@@ -10,6 +10,11 @@ use Elgg\UnitTestCase;
 trait PluginTesting {
 
 	/**
+	 * @var array
+	 */
+	protected $started_plugins = [];
+
+	/**
 	 * Returns plugin's root path or false if not called from a plugin directory
 	 *
 	 * @return string|false
@@ -77,6 +82,10 @@ trait PluginTesting {
 			return null;
 		}
 
+		if (in_array($plugin_id, $this->started_plugins)) {
+			return null;
+		}
+
 		if ($this instanceof UnitTestCase) {
 			// @todo Decouple plugin injection logic from this trait
 
@@ -113,6 +122,8 @@ trait PluginTesting {
 		_elgg_rebuild_public_container();
 
 		$plugin->init();
+
+		$this->started_plugins[] = $plugin_id;
 
 		return $plugin;
 	}
