@@ -6,7 +6,8 @@
 	margin-bottom: 0.5rem;
 	border-bottom: 1px solid $(border-color-soft);
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
 .elgg-menu-filter > li,
