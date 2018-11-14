@@ -11,11 +11,19 @@ use Elgg\Email\Address;
 class EmailUnitTest extends UnitTestCase {
 
 	public function up() {
-
+		// set site email address to avoid random string test errors
+		$site = elgg_get_site_entity();
+		if (!isset($site->email)) {
+			$site->email = "unittest@{$site->getDomain()}";
+		}
 	}
 
 	public function down() {
-
+		// restore site email address
+		$site = elgg_get_site_entity();
+		if ($site->email === "unittest@{$site->getDomain()}") {
+			unset($site->email);
+		}
 	}
 
 	public function testFactoryFromElggUser() {

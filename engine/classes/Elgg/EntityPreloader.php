@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\EntityTable;
 use Elgg\Database\Entities;
+use Elgg\Cache\EntityCache;
 
 /**
  * Preload entities based on properties of fetched objects
@@ -55,6 +56,7 @@ class EntityPreloader {
 		if (count($guids) > 1) {
 			call_user_func($this->_callable_entity_loader, [
 				'guids' => $guids,
+				'limit' => EntityCache::MAX_SIZE,
 			]);
 		}
 	}

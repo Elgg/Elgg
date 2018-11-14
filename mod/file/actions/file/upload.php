@@ -63,7 +63,9 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 	}
 	
 	// update icons
-	$file->saveIconFromElggFile($file);
+	if ($file->getSimpleType() === 'image') {
+		$file->saveIconFromElggFile($file);
+	}
 	
 	// remove legacy metadata
 	unset($file->thumbnail);

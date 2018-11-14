@@ -1145,6 +1145,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:view' => "Syötä näkymä, jota käytetään sivustosi etusivuna. Jätä kenttä tyhjäksi käyttääksesi oletusnäkymää (jos et ole varma, jätä tämä oletukseksi):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
+	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "Listauksissa näytettävien kohteiden oletusmäärä",
 
 	'admin:site:access:warning' => "Tämä määrittää oletusasetuksen, kun ollaan luomassa uutta sisältöä. Tämän asetuksen muuttaminen ei vaikuta jo olemassa oleviin sisältöihin.",
