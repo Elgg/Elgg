@@ -6,7 +6,8 @@ return array(
 	'garbagecollector:monthly' => 'Einmal pro Monat',
 	'garbagecollector:yearly' => 'Einmal pro Jahr',
 
-	'garbagecollector' => "GARBAGE COLLECTOR\n",
-	'garbagecollector:done' => "FERTIG\n",
-	'garbagecollector:optimize' => "Optimiere %s ",
+	'garbagecollector' => 'GARBAGE COLLECTOR',
+	'garbagecollector:start' => "Garbage collector gestartet",
+	'garbagecollector:done' => "Garbage collector beendet",
+	'garbagecollector:optimize' => "Optimiere %s",
 );

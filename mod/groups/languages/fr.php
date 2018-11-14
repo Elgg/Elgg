@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Icône du groupe (ne rien sélectionner pour laisser inchangé)',
 	'groups:name' => 'Nom du groupe',
-	'groups:username' => 'Nom court du goupe (affiché dans l\'URL : en caractères alphanumériques)',
 	'groups:description' => 'Description',
 	'groups:briefdescription' => 'Brève description',
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Site web',
 	'groups:members' => 'Membres du groupe',
-	'groups:my_status' => 'Mon statut',
-	'groups:my_status:group_owner' => 'Vous êtes responsable de ce groupe',
-	'groups:my_status:group_member' => 'Vous êtes dans ce groupe',
-	'groups:subscribed' => 'Les notifications du groupe sont activées',
-	'groups:unsubscribed' => 'Les notifications du groupe sont désactivées',
+
+	'groups:members_count' => '%s membres',
 
 	'groups:members:title' => 'Les membres de %s',
 	'groups:members:more' => "Voir tous les membres",
@@ -46,14 +42,7 @@ return [
 	'groups:widget:membership' => 'Groupes',
 	'groups:widgets:description' => 'Affiche les groupes dont vous êtes membre sur votre page de profil',
 
-	'groups:widget:group_activity:title' => 'Activité du Groupe',
-	'groups:widget:group_activity:description' => 'Affiche l\'activité d\'un de vos groupes',
-	'groups:widget:group_activity:edit:select' => 'Sélectionnez un groupe',
-	'groups:widget:group_activity:content:noactivity' => 'Aucune activité dans ce groupe',
-	'groups:widget:group_activity:content:noselect' => 'Configurez ce widget pour sélectionner un groupe',
-
 	'groups:noaccess' => 'Vous n\'avez pas accès au groupe',
-	'groups:ingroup' => 'dans le groupe',
 	'groups:cantcreate' => 'Vous ne pouvez créer un groupe. Seuls les administrateurs le peuvent.',
 	'groups:cantedit' => 'Vous ne pouvez pas modifier ce groupe',
 	'groups:saved' => 'Groupe enregistré',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Quitter le groupe',
 	'groups:invite' => 'Inviter des contacts',
 	'groups:invite:title' => 'Invitez des contacts à rejoindre ce groupe',
-	'groups:inviteto' => "Inviter des contacts à rejoindre le groupe '%s'",
-	'groups:nofriends' => "Vous n'avez plus de contact à inviter à rejoindre ce groupe.",
+	'groups:invite:friends:help' => 'Rechercher un contact par nom ou nom d\'utilisateur et sélectionner le contact dans la liste',
+	'groups:invite:resend' => 'Renvoyer les invitations aux membres déjà invités',
+
 	'groups:nofriendsatall' => 'Vous n\'avez pas de contact à inviter !',
-	'groups:viagroups' => "via les groupes",
 	'groups:group' => "Groupe",
 	'groups:search:tags' => "tag",
 	'groups:search:title' => "Rechercher des groupes avec le tag \"%s\"",
 	'groups:search:none' => "Aucun groupe correspondant n'a été trouvé",
 	'groups:search_in_group' => "Chercher dans ce groupe",
 	'groups:acl' => "Groupe : %s",
-
-	'groups:activity' => "Activité du groupe",
-	'groups:enableactivity' => 'Activer l\'activité du groupe',
-	'groups:activity:none' => "Il n'y a pas encore eu d'activité dans ce groupe",
+	'groups:acl:in_context' => 'Membres du groupe',
 
 	'groups:notfound' => "Le groupe n'a pas été trouvé",
-	'groups:notfound:details' => "Le groupe que vous recherchez n'existe pas, ou alors vous n'avez pas la permission d'y accéder",
-
+	
 	'groups:requests:none' => 'Personne ne demande à rejoindre le groupe en ce moment.',
 
 	'groups:invitations:none' => 'Aucune invitation en attente.',
 
-	'groups:count' => "groupe créé",
 	'groups:open' => "groupe ouvert",
 	'groups:closed' => "groupe fermé",
 	'groups:member' => "membres",
-	'groups:searchtag' => "Rechercher des groupes par tag",
+	'groups:search' => "Rechercher des groupes",
 
 	'groups:more' => 'Plus de groupes',
 	'groups:none' => 'Aucun groupe',
@@ -117,12 +101,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Dernière mise à jour %s par %s',
-	'groups:lastcomment' => 'Dernier commentaire %s by %s',
 
 	'admin:groups' => 'Groupes',
 
-	'groups:privategroup' => 'Ce groupe est privé. Il est nécessaire de demander une adhésion.',
 	'groups:notitle' => 'Les groupes doivent avoir un titre',
 	'groups:cantjoin' => 'Impossible de rejoindre le groupe',
 	'groups:cantleave' => 'Impossible de quitter le groupe',
@@ -133,61 +114,44 @@ return [
 	'groups:joinrequestnotmade' => 'Impossible de demander à rejoindre le groupe',
 	'groups:joinrequestmade' => 'La demande à rejoindre le groupe a bien été effectuée',
 	'groups:joinrequest:exists' => 'Vous avez déjà fait une demande d\'adhésion pour ce groupe.',
+	'groups:button:joined' => 'Membre',
+	'groups:button:owned' => 'Propriétaire',
 	'groups:joined' => 'Vous avez bien rejoint le groupe !',
 	'groups:left' => 'Vous avez bien quitté le groupe',
-	'groups:notowner' => 'Désolé, vous n\'êtes pas le propriétaire du groupe.',
-	'groups:notmember' => 'Désolé, vous n\'êtes pas membre de ce groupe.',
-	'groups:alreadymember' => 'Vous êtes déjà membre de ce groupe !',
 	'groups:userinvited' => 'L\'utilisateur a été invité.',
 	'groups:usernotinvited' => 'L\'utilisateur n\'a pas pu être invité',
 	'groups:useralreadyinvited' => 'L\'utilisateur a déjà été invité',
 	'groups:invite:subject' => "%s vous avez été invité(e) à rejoindre %s !",
-	'groups:started' => "Démarré par %s",
 	'groups:joinrequest:remove:check' => 'Confirmez-vous vouloir supprimer cette demande d\'adhésion ?',
 	'groups:invite:remove:check' => 'Confirmez-vous vouloir supprimer cette invitation ?',
 	'groups:invite:body' => "Bonjour %s,
 
-%s vous a invité(e) à rejoindre le groupe \"%s\". Cliquez sur le lien ci-dessous pour confirmer :
+%s vous a invité(e) à rejoindre le groupe '%s'.
 
+Cliquez sur le lien ci-dessous pour voir vos invitations :
 %s",
 
 	'groups:welcome:subject' => "Bienvenue dans le groupe %s !",
 	'groups:welcome:body' => "Bonjour %s !
 
-Vous êtes maintenant membre du groupe \"%s\" ! Cliquez le lien ci-dessous pour commencer à participer !
+Vous êtes maintenant membre du groupe '%s'.
 
+Cliquez le lien ci-dessous pour commencer à participer !
 %s",
 
 	'groups:request:subject' => "%s a demandé à rejoindre %s",
 	'groups:request:body' => "Bonjour %s,
 
-%s a demandé à rejoindre le groupe \"%s'\". Cliquez le lien ci-dessous pour voir son profil :
+%s a demandé à rejoindre le groupe '%s'.
 
+Cliquez le lien ci-dessous pour voir son profil :
 %s
 
-ou cliquez sur le lien ci-dessous pour confirmer son adhésion :
-
+u cliquez sur le lien ci-dessous pour voir les demandes d'adhésion au groupe :
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s a créé le groupe %s',
-	'river:join:group:default' => '%s a rejoint le groupe %s',
-
-	'groups:nowidgets' => 'Aucun widget n\'a été défini pour ce groupe.',
-
-
-	'groups:widgets:members:title' => 'Membres du groupe',
-	'groups:widgets:members:description' => 'Liste les membres d\'un groupe.',
-	'groups:widgets:members:label:displaynum' => 'Liste les membres d\'un groupe.',
-	'groups:widgets:members:label:pleaseedit' => 'Veuillez configurer ce widget.',
-
-	'groups:widgets:entities:title' => "Objets dans le groupe",
-	'groups:widgets:entities:description' => "Lister les objets enregistrés dans ce groupe",
-	'groups:widgets:entities:label:displaynum' => 'Lister les objets d\'un groupe.',
-	'groups:widgets:entities:label:pleaseedit' => 'Veuillez configurer ce widget.',
+	'river:group:create' => '%s a créé le groupe %s',
+	'river:group:join' => '%s a rejoint le groupe %s',
 
 	'groups:allowhiddengroups' => 'Activer les groupes privés (invisibles) ?',
 	'groups:whocancreate' => 'Qui peut créer un nouveau groupe ?',
@@ -195,10 +159,8 @@ ou cliquez sur le lien ci-dessous pour confirmer son adhésion :
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Le groupe et son contenu ont bien été supprimés',
-	'group:notdeleted' => 'Le groupe n\'a pas pu être supprimé',
-
-	'group:notfound' => 'Impossible de trouver le groupe',
+	'groups:deleted' => 'Groupe et contenus du groupe supprimés',
+	'groups:notdeleted' => 'Le groupe n\'a pas pu être supprimé',
 	'groups:deletewarning' => "Confirmez-vous vouloir supprimer ce groupe ? Cette action est irréversible !",
 
 	'groups:invitekilled' => 'L\'invitation a été supprimée',
@@ -210,4 +172,11 @@ ou cliquez sur le lien ci-dessous pour confirmer son adhésion :
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Profils de groupe',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transférer les icônes du groupe vers un nouvel emplacement',
+	'groups:upgrade:2016101900:description' => 'La nouvelle API des icônes d\'entités conserve les icônes dans un emplacement prédictible dans le dossier de données (filestore)
+relatif au dossier de données de l\'entité. Cette mise à niveau va aligner le plugin group avec les exigences de la nouvelle API.',
+);

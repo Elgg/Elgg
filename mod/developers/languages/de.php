@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	// menu
 	'admin:develop_tools' => 'Entwickler-Werkzeuge',
 	'admin:develop_tools:sandbox' => 'Theme-Sandbox',
@@ -13,7 +13,7 @@ return [
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Prüfe die untenstehenden Entwicklungs- und Debug-Einstellungen. Einige dieser Einstellungen sind auch auf anderen Admin-Seiten verfügbar.',
 	'developers:label:simple_cache' => 'Simple-Cache aktivieren',
-	'developers:help:simple_cache' => 'Deaktiviere den Simple-Cache während Entwicklungstests. Andernfalls werden Code-Änderungen an Views (inklusive CSS und Javascript) nicht unmittelbar sichtbar sein.',
+	'developers:help:simple_cache' => 'Deaktiviere Simple-Cache während Entwicklungstests. Andernfalls werden Code-Änderungen an Views (inklusive CSS und Javascript) nicht unmittelbar sichtbar sein.',
 	'developers:label:system_cache' => 'Systemcache aktivieren',
 	'developers:help:system_cache' => 'Deaktiviere den Systemcache während Entwicklungstests. Andernfalls werden neue Views in Deinen Plugins nicht unmittelbar registriert werden.',
 	'developers:label:debug_level' => "Fehlerprotokoll-Level",
@@ -33,8 +33,19 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:help:log_events' => "Einträge für Events und Plugin Hooks ins Log schreiben. Warnung: es gibt sehr viele davon bei jedem Seitenaufruf.",
 	'developers:label:show_gear' => "Verwende %s außerhalb des Admin-Backends",
 	'developers:help:show_gear' => "Ein (nur für Admins sichtbares) Icon in der unteren rechten Ecke des Viewports, mit dessen Hilfe Zugriff auf Entwicklungseinstellungen und -links möglich ist.",
+	'developers:label:block_email' => "Alle ausgehenden Emails blockieren",
+	'developers:help:block_email' => "Du kannst alle Emails oder an normale Benutzer gehenden Emails blockieren.",
+	'developers:label:forward_email' => "Alle ausgehenden Emails an eine Email-Adresse umleiten",
+	'developers:help:forward_email' => "Alle ausgehenden Emails werden an die angegebene Email-Adresse umgeleitet.",
+	'developers:label:enable_error_log' => "Error-Log aktivieren",
+	'developers:help:enable_error_log' => "Verwende ein separates Error-Log für Fehler und Meldungen, die von error_log() entsprechend dem eingestellten Log-Level erstellt werden. Du kannst dieses Log im Admin-Bereich einsehen.",
+
 	'developers:label:submit' => "Speichern und Caches zurücksetzen",
 
+	'developers:block_email:forward' => 'Alle Emails umleiten',
+	'developers:block_email:users' => 'Nur von normalen Benutzern',
+	'developers:block_email:all' => 'Von Admins und normalen Benutzern',
+	
 	'developers:debug:off' => 'Aus',
 	'developers:debug:error' => 'Fehler',
 	'developers:debug:warning' => 'Warnung',
@@ -59,6 +70,7 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:inspect:pluginhooks' => 'Plugin-Hooks',
 	'developers:inspect:priority' => 'Priorität',
 	'developers:inspect:simplecache' => 'Simple-Cache',
+	'developers:inspect:routes' => 'Routen',
 	'developers:inspect:views' => 'Views',
 	'developers:inspect:views:all_filtered' => "<b>Beachte!</b> Alle Eingaben/Ausgaben von Views werden durch folgende Plugin-Hooks gefiltert:",
 	'developers:inspect:views:input_filtered' => "(Eingaben gefiltert durch Plugin-Hook: %s)",
@@ -67,7 +79,19 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Kontext',
 	'developers:inspect:functions' => 'Funktionen',
-	'developers:inspect:file_location' => 'Dateipfad relativ zum Elgg-Root-Verzeichnis',
+	'developers:inspect:file_location' => 'Dateipfad relativ zum Elgg-Root-Verzeichnis oder Controller',
+	'developers:inspect:route' => 'Route-Name',
+	'developers:inspect:path' => 'Pfad-Muster',
+	'developers:inspect:resource' => 'Resource-View',
+	'developers:inspect:handler' => 'Handler',
+	'developers:inspect:controller' => 'Controller',
+	'developers:inspect:file' => 'Datei',
+	'developers:inspect:middleware' => 'Datei',
+	'developers:inspect:handler_type' => 'Verarbeitet von',
+	'developers:inspect:services' => 'Services',
+	'developers:inspect:service:name' => 'Name',
+	'developers:inspect:service:path' => 'Definition',
+	'developers:inspect:service:class' => 'Klasse',
 
 	// event logging
 	'developers:request_stats' => "Abfragen-Statistik (Shutdown-Event nicht berücksichtigt)",
@@ -92,13 +116,11 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 
 	'theme_sandbox:icons:blurb' => 'Verwende <em>elgg_view_icon($name)</em> zur Ausgabe von Icons.',
 
-	// unit tests
-	'developers:unit_tests:description' => 'Elgg enthält Modultests und Integrationstests, um mögliche Fehler in seinen Klassen und Funktionen zu finden.',
-	'developers:unit_tests:warning' => 'Warnung: Führe diese Tests niemals auf Deiner Hauptinstallation aus. Sie können Deine Datenbank beschädigen!',
-	'developers:unit_tests:run' => 'Ausführen',
-
 	// status messages
 	'developers:settings:success' => 'Einstellungen gespeichert und Caches zurückgesetzt.',
 
 	'developers:amd' => 'AMD',
-];
+
+	'admin:develop_tools:error_log' => 'Error-Log',
+	'developers:logs:empty' => 'Das Error-Log hat noch keine Einträge.',
+);

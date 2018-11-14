@@ -3,13 +3,16 @@
 # This file is distributed under the same license as the Elgg package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2017
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-08 13:41+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2018-07-24 10:08+0200\n"
+"PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2017\n"
 "Language-Team: Italian (https://www.transifex.com/elgg/teams/11337/it/)\n"
 "MIME-Version: 1.0\n"

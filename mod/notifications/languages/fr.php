@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Tous les contacts',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Recevoir des notifications quand des actions concernent vos propres publications',
 	'notifications:subscriptions:personal:title' => 'Notifications personnelles',
 
-	'notifications:subscriptions:friends:title' => 'Contacts',
-	'notifications:subscriptions:friends:description' => 'Voici ci-dessous vos listes de contacts. En sélectionnant une liste, les notifications seront activées pour les utilisateurs correspondants.',
-	'notifications:subscriptions:collections:edit' => 'Pour éditer vos notifications d\'accès partagés, cliquez ici.',
+	'notifications:subscriptions:collections:friends' => 'Paramètres à utiliser pour les nouveaux membres que vous ajoutez comme contacts',
+	'notifications:subscriptions:collections:custom' => 'Paramètres à utiliser pour les nouveaux contacts que vous ajoutez à la collection %s',
 
 	'notifications:subscriptions:changesettings' => 'Notifications',
 	'notifications:subscriptions:changesettings:groups' => 'Notifications pour les groupes',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Vos paramètres de notifications ont bien été enregistrés.',
 
-];
+	'notifications:subscriptions:no_results' => 'Aucune entrée d\'abonnement pour le moment',
+	
+	'notifications:groups:subscribed' => 'Les notifications sont activées pour ce groupe',
+	'notifications:groups:unsubscribed' => 'Les notifications sont désactivés pour ce groupe',
+
+);

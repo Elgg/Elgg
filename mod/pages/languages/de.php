@@ -1,43 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "Coop-Seiten",
-	'pages:owner' => "Coop-Seiten von %s",
-	'pages:friends' => "Coop-Seiten von Freunden",
-	'pages:all' => "Alle Coop-Seiten",
-	'pages:add' => "Eine Coop-Seiten hinzufügen",
+	'item:object:page' => 'Coop-Seiten',
+	'collection:object:page' => 'Coop-Seiten',
+	'collection:object:page:all' => "Alle Coop-Seiten",
+	'collection:object:page:owner' => "Coop-Seiten von %s",
+	'collection:object:page:friends' => "Coop-Seiten von Freunden",
+	'collection:object:page:group' => "Gruppen-Coop-Seiten",
+	'add:object:page' => "Coop-Seite hinzufügen",
+	'edit:object:page' => "Coop-Seite bearbeiten",
 
-	'pages:group' => "Gruppen-Coop-Seiten",
-	'groups:enablepages' => 'Gruppen-Coop-Seiten aktivieren',
+	'groups:tool:pages' => 'Gruppen-Coop-Seiten aktivieren',
 
-	'pages:new' => "Eine neue Coop-Seite",
-	'pages:edit' => "Diese Coop-Seite bearbeiten",
-	'pages:delete' => "Diese Coop-Seite löschen",
+	'pages:delete' => "Coop-Seite löschen",
 	'pages:history' => "Bearbeitungsverlauf",
 	'pages:view' => "Coop-Seite anzeigen",
 	'pages:revision' => "Revision",
-	'pages:current_revision' => "Aktuelle Revision",
-	'pages:revert' => "Diese Revision wiederherstellen",
 
 	'pages:navigation' => "Navigation",
 
-	'pages:notify:summary' => 'Eine neue Coop-Seite namens %s wurde erstellt',
-	'pages:notify:subject' => "Eine neue Coop-Seite: %s",
+	'pages:notify:summary' => 'Eine neue Coop-Seite namens %s wurde erstellt.',
+	'pages:notify:subject' => "Neue Coop-Seite: %s",
 	'pages:notify:body' =>
 '%s hat eine neue Coop-Seite erstellt: %s
 
 %s
 
 Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
-%s
-',
-	'item:object:page_top' => 'Haupt-Coop-Seiten',
-	'item:object:page' => 'Coop-Seiten',
-	'pages:nogroup' => 'Diese Gruppe hat noch keine Coop-Seiten.',
+%s',
+
 	'pages:more' => 'Weitere Coop-Seiten',
 	'pages:none' => 'Es wurden noch keine Coop-Seiten erstellt.',
 
@@ -45,13 +40,10 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	* River
 	**/
 
-	'river:create:object:page' => '%s hat die Coop-Seite %s hinzugefügt.',
-	'river:create:object:page_top' => '%s hat die Coop-Seite %s hinzugefügt.',
-	'river:update:object:page' => '%s aktualisierte die Coop-Seite %s.',
-	'river:update:object:page_top' => '%s aktualisierte die Coop-Seite %s.',
-	'river:comment:object:page' => '%s schrieb einen Kommentar zur Coop-Seite %s.',
-	'river:comment:object:page_top' => '%s schrieb einen Kommentar zur Coop-Seite %s.',
-
+	'river:object:page:create' => '%s hat die Coop-Seite %s hinzugefügt',
+	'river:object:page:update' => '%s aktualisierte die Coop-Seite %s',
+	'river:object:page:comment' => '%s schrieb einen Kommentar zur Coop-Seite %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -66,21 +58,13 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'Keine Zugangsberechtigung für diese Coop-Seite.',
 	'pages:cantedit' => 'Du kannst diese Coop-Seite nicht bearbeiten.',
 	'pages:saved' => 'Die Coop-Seite wurde gespeichert.',
 	'pages:notsaved' => 'Die Coop-Seite konnte nicht gespeichert werden.',
 	'pages:error:no_title' => 'Du mußt einen Titel für diese Coop-Seite eingeben.',
-	'pages:delete:success' => 'Die Coop-Seite wurde gelöscht.',
-	'pages:delete:failure' => 'Die Coop-Seite konnte nicht gelöscht werden.',
+	'entity:delete:object:page:success' => 'Die Coop-Seite wurde gelöscht.',
 	'pages:revision:delete:success' => 'Die Revision der Coop-Seite wurde gelöscht.',
 	'pages:revision:delete:failure' => 'Die Revision der Coop-Seite konnte nicht gelöscht werden.',
-	'pages:revision:not_found' => 'Diese Revision konnte nicht gefunden werden.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Zuletzt aktualisiert am %s von %s',
 
 	/**
 	 * History
@@ -92,7 +76,8 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	 **/
 
 	'pages:num' => 'Anzahl der anzuzeigenden Coop-Seiten',
-	'pages:widget:description' => "Dies ist eine Liste Deiner Coop-Seiten.",
+	'widgets:pages:name' => 'Coop-Seiten',
+	'widgets:pages:description' => "Dies ist eine Auflistung Deiner neuesten Coop-Seiten.",
 
 	/**
 	 * Submenu items
@@ -101,13 +86,14 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 	'pages:label:edit' => "Coop-Seite bearbeiten",
 	'pages:label:history' => "Bearbeitungsverlauf der Coop-Seite",
 
+	'pages:newchild' => "Unter-Coop-Seite hinzufügen",
+	
 	/**
-	 * Sidebar items
+	 * Upgrades
 	 */
-	'pages:sidebar:this' => "Diese Coop-Seite",
-	'pages:sidebar:children' => "Unter-Coop-Seiten",
-	'pages:sidebar:parent' => "Übergeordnete Coop-Seite",
-
-	'pages:newchild' => "Eine Unter-Coop-Seite erstellen",
-	'pages:backtoparent' => "Zurück zu '%s'",
-];
+	'pages:upgrade:2017110700:title' => "Umwandeln von \"page_top\"- in \"page\"-Entitäten",
+	'pages:upgrade:2017110700:description' => "Ändert den Subtyp von Haupt-Coop-Seiten von \"page_top\" zu \"page\" und fügt einen Metadata-Eintrag hinzu, damit die Auflistung der Seiten weiterhin korrekt erfolgt.",
+	
+	'pages:upgrade:2017110701:title' => "Aktualisieren von River-Einträgen der \"page_top\"-Entitäten",
+	'pages:upgrade:2017110701:description' => "Aktualisiert den Subtyp bei allen River-Einträgen vom bisherigen \"page_top\" zu \"page\".",
+);

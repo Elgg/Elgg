@@ -1,19 +1,23 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Le Fil",
-	'thewire:everyone' => "Tous les messages du Fil",
-	'thewire:user' => "Le Fil de %s",
-	'thewire:friends' => "Messages des contacts sur le Fil",
+
+	'item:object:thewire' => "Messages du Fil",
+	'collection:object:thewire' => 'Messages du Fil',
+	'collection:object:thewire:all' => "Tous les messages du Fil",
+	'collection:object:thewire:owner' => "Le Fil de %s",
+	'collection:object:thewire:friends' => "Messages du Fil des contacts",
+
 	'thewire:replying' => "Répondre à %s (@%s), qui a écrit",
 	'thewire:thread' => "Conversation",
 	'thewire:charleft' => "caractères",
 	'thewire:tags' => "Messages du Fil avec le tag \"%s\"",
 	'thewire:noposts' => "Il n'y a pas encore de message sur le Fil",
-	'item:object:thewire' => "Messages du Fil",
+
 	'thewire:by' => 'Message du Fil de %s',
 	'thewire:previous:help' => "Voir le message précédent",
 	'thewire:hide:help' => "Masquer le message précédent",
@@ -21,7 +25,7 @@ return [
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s a publié sur %s",
+	'river:object:thewire:create' => "%s a écrit %s",
 	'thewire:wire' => 'le Fil',
 
 	/**
@@ -37,7 +41,6 @@ return [
 	'thewire:posted' => "Votre message a bien été publié sur le Fil.",
 	'thewire:deleted' => "Votre message a bien été supprimé du Fil.",
 	'thewire:blank' => "Désolé, vous devez d'abord écrire un message avant de pouvoir le publier.",
-	'thewire:notfound' => "Désolé, le message spécifié n'a pu être trouvé.",
 	'thewire:notsaved' => "Désolé. Impossible d'enregistrer ce message du Fil.",
 	'thewire:notdeleted' => "Désolé, ce message du Fil n'a pas pu être supprimé.",
 
@@ -55,4 +58,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Nombre maximum de caractères pour chaque commentaire :",
 	'thewire:settings:limit:none' => "Pas de limite",
-];
+);

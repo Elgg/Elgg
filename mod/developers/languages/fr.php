@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	// menu
 	'admin:develop_tools' => 'Outils',
 	'admin:develop_tools:sandbox' => 'Bac à sable du thème',
@@ -27,14 +27,25 @@ return [
 	'developers:label:show_modules' => "Montrer les modules AMD chargés dans la console",
 	'developers:help:show_modules' => "Affiche les modules chargés et les valeurs dans votre console JavaScript.",
 	'developers:label:wrap_views' => "Envelopper les Vues",
-	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un élément de code HTML particulier. 
-Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wrap_views() pour plus de détails. ",
+	'developers:help:wrap_views' => "Ceci enveloppe presque toutes les vues avec des commentaires HTML. Pratique pour identifier la vue responsable d'un élément de code HTML particulier.
+									Cela peut casser les vues non HTML de l'affichage principal (images, RSS, XML, JSON, etc.). Voir developers_wrap_views() pour plus de détails. ",
 	'developers:label:log_events' => "Journaliser les événements et les interceptions (hooks) des plugins.",
 	'developers:help:log_events' => "Écrit les événements et les interceptions (hooks) des plugins dans le journal. Attention : cela représente beaucoup d'informations par page.",
 	'developers:label:show_gear' => "Utiliser %s hors de la zone d'administration",
 	'developers:help:show_gear' => "Une icône en bas à droite de l'affichage qui offre aux administrateurs un accès aux paramètres et liens pour développeurs.",
+	'developers:label:block_email' => "Bloquer tous les emails sortants",
+	'developers:help:block_email' => "Vous pouvez bloquer les emails sortants vers les membres ou pour tous les utilisateurs",
+	'developers:label:forward_email' => "Faire suivre tous les emails sortants vers une seule adresse email",
+	'developers:help:forward_email' => "Tous les emails sortants seront envoyés sur l'adresse email configurée",
+	'developers:label:enable_error_log' => "Activer le journal des erreurs",
+	'developers:help:enable_error_log' => "Maintenir un journal séparé des erreurs et des messages envoyés via error_log() sur la base de votre configuration de niveau de trace. Le journal peut être affiché via l'interface admin.",
+
 	'developers:label:submit' => "Enregistrer et vider les caches",
 
+	'developers:block_email:forward' => 'Faire suivre tous les emails',
+	'developers:block_email:users' => 'Seulement les membres',
+	'developers:block_email:all' => 'Admins et membres',
+	
 	'developers:debug:off' => 'Désactivé',
 	'developers:debug:error' => 'Erreur',
 	'developers:debug:warning' => 'Avertissement',
@@ -59,6 +70,7 @@ Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wra
 	'developers:inspect:pluginhooks' => 'Hooks des plugins',
 	'developers:inspect:priority' => 'Priorité',
 	'developers:inspect:simplecache' => 'Cache simple',
+	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Vues',
 	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les entrées/sorties des vues sont filtrées par les hooks des plugins suivants :",
 	'developers:inspect:views:input_filtered' => "(entrée filtrée par le hook de plugin : %s)",
@@ -67,7 +79,19 @@ Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wra
 	'developers:inspect:webservices' => 'Services web',
 	'developers:inspect:widgets:context' => 'Contexte',
 	'developers:inspect:functions' => 'Fonctions',
-	'developers:inspect:file_location' => 'Chemin à partir de la racine Elgg',
+	'developers:inspect:file_location' => 'Chemin depuis la racine Elgg ou le contrôleur',
+	'developers:inspect:route' => 'Nom de la route',
+	'developers:inspect:path' => 'Motif du chemin',
+	'developers:inspect:resource' => 'Vue de la ressources',
+	'developers:inspect:handler' => 'Gestionnaire (handler)',
+	'developers:inspect:controller' => 'Contrôleur',
+	'developers:inspect:file' => 'Fichier',
+	'developers:inspect:middleware' => 'Fichier',
+	'developers:inspect:handler_type' => 'Géré par',
+	'developers:inspect:services' => 'Services',
+	'developers:inspect:service:name' => 'Nom',
+	'developers:inspect:service:path' => 'Définition',
+	'developers:inspect:service:class' => 'Classe',
 
 	// event logging
 	'developers:request_stats' => "Statistiques des requêtes (n'inclue pas l'événement shutdown)",
@@ -92,13 +116,11 @@ Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wra
 
 	'theme_sandbox:icons:blurb' => 'Utilisez <em>elgg_view_icon($name)</em> ou la classe elgg-icon-$name pour afficher une icône. ',
 
-	// unit tests
-	'developers:unit_tests:description' => 'Elgg dispose de tests unitaires et d\'intégration pour détecter les bugs dans les classes et fonctions de son cœur.',
-	'developers:unit_tests:warning' => 'Attention : Ne Pas Exécuter Ces Tests sur un Site en Production. Ils peuvent corrompre votre base de données.',
-	'developers:unit_tests:run' => 'Exécuter',
-
 	// status messages
 	'developers:settings:success' => 'Paramètres enregistrés et caches vidés',
 
 	'developers:amd' => 'AMD',
-];
+
+	'admin:develop_tools:error_log' => 'Journal des erreurs',
+	'developers:logs:empty' => 'Le journal des erreurs est vide',
+);
