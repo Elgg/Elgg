@@ -1,3 +1,26 @@
+<a name="2.3.9"></a>
+### 2.3.9  (2018-11-14)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+* Ismayil Khayredinov (1)
+* Jeroen Dalsem (1)
+
+#### Performance
+
+* **entities:** limit entity preloading by max entity cache size ([7619c1f7](https://github.com/Elgg/Elgg/commit/7619c1f79ee59eff5e413bb66d576159905fd1cd))
+
+
+#### Bug Fixes
+
+* **db:** improved handling of duplicate relationship creation ([418e6a81](https://github.com/Elgg/Elgg/commit/418e6a81414e420d406806e505a0f3445f7aa239))
+* **developers:** correctly register ajax view ([c188342d](https://github.com/Elgg/Elgg/commit/c188342d718201879988badea7a77bf3f88c03c0))
+* **files:** only try to generate thumbs for image uploads ([36de95f3](https://github.com/Elgg/Elgg/commit/36de95f38cc2dd2887ced951fcb1a2d03b7eafc4))
+* **output:** correctly output non string tags ([a2722ff2](https://github.com/Elgg/Elgg/commit/a2722ff268ee8966ed67e82b1c728934d708126b))
+* **security:** tokenize outgoing no-reply email address ([bed58cd7](https://github.com/Elgg/Elgg/commit/bed58cd75f43f045bdb743be9ee09159727d3307))
+
+
 <a name="2.3.8"></a>
 ### 2.3.8  (2018-07-20)
 
