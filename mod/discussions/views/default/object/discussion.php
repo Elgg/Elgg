@@ -49,7 +49,6 @@ if ($full_view) {
 		'show_summary' => true,
 		'body' => $body,
 		'responses' => $responses,
-		'show_navigation' => true,
 	];
 
 	$params = $params + $vars;

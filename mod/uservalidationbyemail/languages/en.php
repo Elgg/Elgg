@@ -1,7 +1,7 @@
 <?php
 return array(
 	'email:validate:subject' => "%s please confirm your email address for %s!",
-	'email:validate:body' => "%s,
+	'email:validate:body' => "Hi %s,
 
 Before you can start you using %s, you must confirm your email address.
 
@@ -12,8 +12,7 @@ Please confirm your email address by clicking on the link below:
 If you can't click on the link, copy and paste it to your browser manually.
 
 %s
-%s
-",
+%s",
 	'email:confirm:success' => "You have confirmed your email address!",
 	'email:confirm:fail' => "Your email address could not be verified...",
 

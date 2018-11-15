@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-08 13:41+0100\n"
+"POT-Creation-Date: 2018-07-24 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -125,27 +125,27 @@ msgid "htmLawed XSS filters"
 msgstr ""
 
 #: ../../index.rst:36
-msgid "Composer asset plugin for NPM/Bower dependencies"
-msgstr ""
-
-#: ../../index.rst:37
 msgid "DBAL"
 msgstr ""
 
-#: ../../index.rst:38
+#: ../../index.rst:37
 msgid "Phinx database migrations"
 msgstr ""
 
-#: ../../index.rst:39
+#: ../../index.rst:38
 msgid "CSS-Crush for CSS preprocessing"
 msgstr ""
 
-#: ../../index.rst:40
+#: ../../index.rst:39
 msgid "Imagine for image manipulation"
 msgstr ""
 
+#: ../../index.rst:40
+msgid "Persistent caching with Memcached and/or Redis"
+msgstr ""
+
 #: ../../index.rst:41
-msgid "Memcached support"
+msgid "Error handling with Monolog"
 msgstr ""
 
 #: ../../index.rst:44

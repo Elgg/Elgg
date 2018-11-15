@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Elgg module element
  *
@@ -13,10 +12,11 @@
  * @uses $vars['id']           Optional id for module
  * @uses $vars['show_inner']   Optional flag to leave out inner div (default: false)
  */
-$type = elgg_extract('type', $vars, false);
-$title = elgg_extract('title', $vars, '');
-$body = elgg_extract('body', $vars, '');
-$footer = elgg_extract('footer', $vars, '');
+
+$type = elgg_extract('type', $vars);
+$title = elgg_extract('title', $vars);
+$body = elgg_extract('body', $vars);
+$footer = elgg_extract('footer', $vars);
 $show_inner = elgg_extract('show_inner', $vars, false);
 
 $attrs = [
@@ -24,12 +24,12 @@ $attrs = [
 	'class' => elgg_extract_class($vars, 'elgg-module'),
 ];
 
-if ($type) {
+if (!elgg_is_empty($type)) {
 	$attrs['class'][] = "elgg-module-$type";
 }
 
 $header = elgg_extract('header', $vars);
-if ($title) {
+if (!elgg_is_empty($title)) {
 	$header = elgg_format_element('h3', [], $title);
 }
 
@@ -43,7 +43,7 @@ if ($header !== null) {
 }
 
 $body = elgg_format_element('div', ['class' => 'elgg-body'], $body);
-if ($footer) {
+if (!elgg_is_empty($footer)) {
 	$footer = elgg_format_element('div', ['class' => 'elgg-foot'], $footer);
 }
 

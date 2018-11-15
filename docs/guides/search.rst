@@ -26,7 +26,7 @@ In addition to all parameters accepted by ``elgg_get_entities()``, ``elgg_search
                      By default search queries are tokenized, meaning that we will match ``elgg has been released`` when searching for ``elgg released``
 
 
-.. code:: php
+.. code-block:: php
 
     // List all users who list United States as their address or mention it in their description
     $options = [
@@ -51,7 +51,7 @@ Search fields
 
 You can customize search fields for each entity type/subtype, using ``search:fields`` hook:
 
-.. code:: php
+.. code-block:: php
 
     // Let's remove search in location and add address field instead
     elgg_register_plugin_hook_handler('search:fields', 'user', 'my_plugin_search_user_fields');
@@ -75,7 +75,7 @@ Searchable types
 To register an entity type for search, use ``elgg_register_entity_type()``, or do so when defining an entity type in ``elgg-plugin.php``.
 To combine search results or filter how search results are presented in the search plugin, use ``'search:config', 'type_subtype_pairs'`` hook.
 
-.. code:: php
+.. code-block:: php
 
     // Let's add places and place reviews as public facing entities
     elgg_register_entity_type('object', 'place');
@@ -135,7 +135,7 @@ Custom search types
 Elgg core only supports entity search. You can implement custom searches, e.g. using search query as a location and listing entities by proximity to that location.
 
 
-.. code:: php
+.. code-block:: php
 
     // Let's added proximity search type
     elgg_register_plugin_hook_handler('search:config', 'search_types', function (\Elgg\Hook $hook) {
@@ -183,7 +183,7 @@ Autocomplete and livesearch endpoint
 
 Core provides a JSON endpoint for searching users and groups. These endpoints are used by ``input/autocomplete`` and ``input/userpicker`` views.
 
-.. code:: php
+.. code-block:: php
 
     // Get JSON results of a group search for 'class'
     $json = file_get_contents('http://example.com/livesearch/groups?view=json&q=class');
@@ -191,7 +191,7 @@ Core provides a JSON endpoint for searching users and groups. These endpoints ar
 
 You can add custom search types, by adding a corresponding resource view:
 
-.. code:: php
+.. code-block:: php
 
     // Let's add an endpoint that will search for users that are not members of a group
     // and render a userpicker for our invite form

@@ -17,7 +17,7 @@ $params = elgg_extract('params', $vars);
 $service = new \Elgg\Search\Search($params);
 
 foreach ($entities as $entity) {
-	if ($view = $service->getSearchView()) {
+	if ($view = $service->getSearchView($entity)) {
 		echo elgg_view($view, [
 			'entity' => $entity,
 			'params' => $service->getParams(),

@@ -30,7 +30,9 @@ class PageMenuHandler {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'friends:view:collections',
 			'text' => elgg_echo('friends:collections'),
-			'href' => "friends/collections/owner/$user->username",
+			'href' => elgg_generate_url('collection:access_collection:friends:owner', [
+				'username' => $user->username,
+			]),
 			'contexts' => ['friends'],
 		]);
 

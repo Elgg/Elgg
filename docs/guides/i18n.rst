@@ -95,7 +95,7 @@ This function is like ``elgg_echo`` in PHP.
 
 Client-side translations are loaded asynchronously. Ensure translations are available by requiring the "elgg" AMD module:
 
-.. code-block:: javascript
+.. code-block:: js
 
 	define(function(require) {
 		var elgg = require("elgg");

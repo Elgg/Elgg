@@ -11,7 +11,6 @@ $list = elgg_list_annotations([
 	'guid' => $guid,
 	'annotation_name' => 'likes',
 	'limit' => 99,
-	'preload_owners' => true,
 	'pagination' => false,
 ]);
 

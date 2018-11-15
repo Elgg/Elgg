@@ -96,12 +96,17 @@ class SearchPluginTest extends UnitTestCase {
 			'foo' => $lorem,
 		]);
 
-		$search = new Search([
+		// prepare search params
+		$search_params = [
 			'query' => 'lorem ipsum',
 			'type' => 'object',
 			'subtype' => $entity->getSubtype(),
 			'search_type' => 'custom',
-		]);
+		];
+		// normalize params as they get sent to the view in a normalized form
+		$search_params = _elgg_services()->search->normalizeOptions($search_params);
+		
+		$search = new Search($search_params);
 
 		$search->prepareEntity($entity);
 
@@ -113,6 +118,4 @@ class SearchPluginTest extends UnitTestCase {
 		$this->assertEquals(elgg_view_entity_icon($entity, 'small'), $entity->getVolatileData('search_icon'));
 		$this->assertEquals($entity->getURL(), $entity->getVolatileData('search_url'));
 	}
-
-
 }

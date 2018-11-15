@@ -28,12 +28,12 @@ $highlighted_query = $service->getHighlighter()->highlightWords($query);
 $title = elgg_echo('search:results', ["\"$highlighted_query\""]);
 
 $form = elgg_view_form('search', [
-	'action' => elgg_normalize_url('search'),
+	'action' => elgg_generate_url('default:search'),
 	'method' => 'get',
 	'disable_security' => true,
 ], $params);
 
-if (empty($query) && $query != "0") {
+if (elgg_is_empty($query)) {
 	// display a search form if there is no query
 	$layout = elgg_view_layout('content', [
 		'title' => elgg_echo('search'),
@@ -73,43 +73,28 @@ $results = '';
 
 $types = $service->getTypeSubtypePairs();
 foreach ($types as $type => $subtypes) {
-	if (!empty($subtypes)) {
-		foreach ($subtypes as $subtype) {
-			$count = $service->listResults('entities', $type, $subtype, true);
-			$total += $count;
-			elgg_register_menu_item('page', [
-				'name' => "item:$type:$subtype",
-				'text' => elgg_echo("item:$type:$subtype"),
-				'href' => elgg_http_add_url_query_elements('search', [
-					'q' => $params['query'],
-					'entity_type' => $type,
-					'entity_subtype' => $subtype,
-					'owner_guid' => $params['owner_guid'],
-					'search_type' => 'entities',
-				]),
-				'badge' => $count,
-			]);
-
-			if ($use_type('entities', $type, $subtype)) {
-				$results .= $service->listResults('entities', $type, $subtype);
-			}
-		}
-	} else {
-		$count = $service->listResults('entities', $type, null, true);
+	if (empty($subtypes) || !is_array($subtypes)) {
+		continue;
+	}
+	
+	foreach ($subtypes as $subtype) {
+		$count = $service->listResults('entities', $type, $subtype, true);
 		$total += $count;
 		elgg_register_menu_item('page', [
-			'name' => "item:$type",
-			'text' => elgg_echo("item:$type"),
-			'href' => elgg_http_add_url_query_elements('search', [
+			'name' => "item:$type:$subtype",
+			'text' => elgg_echo("item:$type:$subtype"),
+			'href' => elgg_generate_url('default:search', [
 				'q' => $params['query'],
 				'entity_type' => $type,
+				'entity_subtype' => $subtype,
 				'owner_guid' => $params['owner_guid'],
 				'search_type' => 'entities',
 			]),
 			'badge' => $count,
 		]);
-		if ($use_type('entities', $type)) {
-			$results .= $service->listResults('entities', $type);
+
+		if ($use_type('entities', $type, $subtype)) {
+			$results .= $service->listResults('entities', $type, $subtype);
 		}
 	}
 }
@@ -119,11 +104,11 @@ foreach ($custom_types as $search_type) {
 	$count = $service->listResults($search_type, null, null, true);
 	$total += $count;
 	elgg_register_menu_item('page', [
-		'name' => "search_types:$type",
-		'text' => elgg_echo("search_types:$type"),
-		'href' => elgg_http_add_url_query_elements('search', [
+		'name' => "search_types:{$search_type}",
+		'text' => elgg_echo("search_types:{$search_type}"),
+		'href' => elgg_generate_url('default:search', [
 			'q' => $params['query'],
-			'search_type' => $type,
+			'search_type' => $search_type,
 		]),
 		'badge' => $count,
 	]);
@@ -136,7 +121,7 @@ foreach ($custom_types as $search_type) {
 elgg_register_menu_item('page', [
 	'name' => 'all',
 	'text' => elgg_echo('all'),
-	'href' => elgg_http_add_url_query_elements('search', [
+	'href' => elgg_generate_url('default:search', [
 		'q' => $params['query'],
 		'owner_guid' => $params['owner_guid'],
 		'search_type' => 'all',
@@ -146,9 +131,9 @@ elgg_register_menu_item('page', [
 ]);
 
 if (empty($results)) {
-	$results = elgg_format_element('p', [
-		'class' => 'elgg-no-results',
-	], elgg_echo('notfound'));
+	$results = elgg_view('page/components/no_results', [
+		'no_results' => elgg_echo('notfound'),
+	]);
 }
 
 $layout = elgg_view_layout('content', [

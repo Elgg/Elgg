@@ -112,9 +112,13 @@ class Search {
 	 */
 	public function listResults($search_type, $type = null, $subtype = null, $count = false) {
 		$current_params = $this->params;
+		
 		$current_params['search_type'] = $search_type;
 		$current_params['type'] = $type;
 		$current_params['subtype'] = $subtype;
+		
+		// normalizing current search params so the listing has better awareness
+		$current_params = _elgg_services()->search->normalizeOptions($current_params);
 
 		switch ($search_type) {
 			case 'entities' :
@@ -169,13 +173,22 @@ class Search {
 	}
 
 	/**
-	 * Returns the name of the view to render an entity in search results
+	 * Returns the name of the view to render an item in search results
+	 *
+	 * @param \Loggable $item Optional item to get the type/subtype of
+	 *
 	 * @return string
 	 */
-	public function getSearchView() {
-
-		$type = elgg_extract('type', $this->params);
-		$subtype = elgg_extract('subtype', $this->params);
+	public function getSearchView(\Loggable $item = null) {
+		
+		if ($item instanceof \Loggable) {
+			$type = $item->getType();
+			$subtype = $item->getSubtype();
+		} else {
+			$type = elgg_extract('type', $this->params);
+			$subtype = elgg_extract('subtype', $this->params);
+		}
+		
 		$search_type = elgg_extract('search_type', $this->params);
 
 		$views = [
@@ -252,9 +265,8 @@ class Search {
 		$owner_guid = get_input('owner_guid', ELGG_ENTITIES_ANY_VALUE);
 		$container_guid = get_input('container_guid', ELGG_ENTITIES_ANY_VALUE);
 
-		$sort = get_input('sort');
-		$order = get_input('order', '');
-
+		$default_order = 'desc';
+		$sort = get_input('sort', 'time_created');
 		switch ($sort) {
 			case 'action_on' :
 				$sort = 'last_action';
@@ -269,17 +281,13 @@ class Search {
 				break;
 
 			case 'alpha' :
-				if (!$order || !in_array(strtoupper($order), ['ASC', 'DESC'])) {
-					$order = 'ASC';
-				}
+				$default_order = 'asc';
 				$sort = 'name';
 				break;
-
-			default :
-				$sort = 'time_created';
-				$order = 'desc';
 		}
 
+		$order = get_input('order', $default_order);
+		
 		$current_params = [
 			'query' => $query,
 			'offset' => $offset,
@@ -298,13 +306,15 @@ class Search {
 		];
 
 		$params = array_merge($current_params, $params);
-
+		
+		// normalizing here to set query_parts
 		$this->params = _elgg_services()->search->normalizeOptions($params);
-
-		if ($search_type == 'all' && empty(array_filter($this->params['fields']))) {
-			// Plugin hooks did not provide a specific set of fields to use
-			// We will let params to repopulate the fields for type specific searches
+		
+		// unsetting some data which will be reset during actual search
+		if (empty($params['fields'])) {
+			// no fields provided by input, so unset the magic fields from normalilzation
 			unset($this->params['fields']);
 		}
+		unset($this->params['_elgg_search_service_normalize_options']);
 	}
 }

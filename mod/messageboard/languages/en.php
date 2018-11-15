@@ -34,21 +34,17 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'You have a new message board comment!',
-	'messageboard:email:body' => "You have a new message board comment from %s. It reads:
+	'messageboard:email:body' => "You have a new message board comment from %s.
 
+It reads:
 
 %s
 
-
 To view your message board comments, click here:
-
-	%s
+%s
 
 To view %s's profile, click here:
-
-	%s
-
-You cannot reply to this email.",
+%s",
 
 	/**
 	 * Error messages

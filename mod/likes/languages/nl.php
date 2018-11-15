@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'vindt dit leuk',
 	'likes:deleted' => 'Je vindt dit niet meer leuk',
 	'likes:see' => 'Bekijk wie dit leuk vindt',
@@ -22,20 +22,17 @@ return [
 	'likes:notifications:body' =>
 'Beste %1$s,
 
-%2$s vindt je item "%3$s" op %4$s leuk!
+%2$s vind je bericht "%3$s" op %4$s leuk
 
-Bekijk je originele item hier:
+Bekijk je originele bericht hier:
 %5$s
 
-Je kunt het profiel van %2$s hier bekijken:
+of bekijk het profiel van %2$s hier:
 %6$s
 
-Dank je wel!
-%4$s
-
----
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.
-',
+Bedank,
+%4$s',
+	'likes:upgrade:2017120700:title' => "Publieke Likes annotaties",
+	'likes:upgrade:2017120700:description' => "Dit update het toegangsniveau van alle likes annotaties naar publiek",
 	
-];
+);

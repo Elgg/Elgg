@@ -24,15 +24,19 @@ foreach ($requests as $user) {
 	]);
 
 	$accept_button = elgg_view('output/url', [
-		'href' => "action/groups/addtogroup?user_guid={$user->guid}&group_guid={$entity->guid}",
+		'href' => elgg_generate_action_url('groups/addtogroup', [
+			'user_guid' => $user->guid,
+			'group_guid' => $entity->guid,
+		]),
 		'text' => elgg_echo('accept'),
 		'class' => 'elgg-button elgg-button-submit',
-		'is_action' => true,
-		'is_trusted' => true,
 	]);
 
 	$delete_button = elgg_view('output/url', [
-		'href' => "action/groups/killrequest?user_guid={$user->guid}&group_guid={$entity->guid}",
+		'href' => elgg_generate_action_url('groups/killrequest', [
+			'user_guid' => $user->guid,
+			'group_guid' => $entity->guid,
+		]),
 		'confirm' => elgg_echo('groups:joinrequest:remove:check'),
 		'text' => elgg_echo('delete'),
 		'class' => 'elgg-button elgg-button-delete mlm',

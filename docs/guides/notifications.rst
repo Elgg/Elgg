@@ -310,26 +310,26 @@ add a key ``attachments`` in ``$params`` which is an array of the attachments. A
 
 	// this example is for notify_user()
 	$params['attachments'] = [];
-	
+
 	// Example of an ElggFile attachment
 	$file = new \ElggFile();
 	$file->owner_guid = <some owner_guid>;
 	$file->setFilename('<some filename>');
-	
+
 	$params['attachments'][] = $file;
-	
+
 	// Example of array with content  
 	$params['attachments'][] = [
 		'content' => 'The file content',
 		'filename' => 'test_file.txt',
 		'type' => 'text/plain',
 	];
-  	
-  	// Example of array with filepath
-  	// 'filename' can be provided, if not basename() of filepath will be used
-  	// 'type' can be provided, if not will try a best guess
+
+	// Example of array with filepath
+	// 'filename' can be provided, if not basename() of filepath will be used
+	// 'type' can be provided, if not will try a best guess
 	$params['attachments'][] = [
 		'filepath' => '<path to a valid file>',
-  	];
-  	
-  	notify_user($to_guid, $from_guid, $subject, $body, $params);
+	];
+
+	notify_user($to_guid, $from_guid, $subject, $body, $params);

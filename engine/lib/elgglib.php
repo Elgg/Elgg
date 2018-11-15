@@ -989,6 +989,10 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @since 1.8.0
  */
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = ['offset', 'limit']) {
+	if (!is_string($url1) || !is_string($url2)) {
+		return false;
+	}
+	
 	$url1 = elgg_normalize_url($url1);
 	$url2 = elgg_normalize_url($url2);
 

@@ -18,8 +18,8 @@ if ($lower) {
 
 $content = elgg_view('blog/listing/group', [
 	'entity' => $group,
-	'lower' => $lower,
-	'upper' => $upper,
+	'created_after' => $lower,
+	'created_before' => $upper,
 ]);
 
 $layout = elgg_view_layout('default', [

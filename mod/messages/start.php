@@ -12,18 +12,23 @@
 function messages_init() {
 
 	// add page menu items
-	if (elgg_is_logged_in()) {
+	$user = elgg_get_logged_in_user_entity();
+	if (!empty($user)) {
 		elgg_register_menu_item('page', [
 			'name' => 'messages:inbox',
 			'text' => elgg_echo('messages:inbox'),
-			'href' => "messages/inbox/" . elgg_get_logged_in_user_entity()->username,
+			'href' => elgg_generate_url('collection:object:messages:owner', [
+				'username' => $user->username,
+			]),
 			'context' => 'messages',
 		]);
 		
 		elgg_register_menu_item('page', [
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
-			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
+			'href' => elgg_generate_url('collection:object:messages:sent', [
+				'username' => $user->username,
+			]),
 			'context' => 'messages',
 		]);
 	}
@@ -31,9 +36,6 @@ function messages_init() {
 	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('elgg.css', 'messages/css');
 	elgg_extend_view('elgg.js', 'messages/js');
-
-	// Register a URL handler
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'messages_set_url');
 
 	// Extend avatar hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');
@@ -82,7 +84,9 @@ function messages_register_topbar($hook, $type, $items, $params) {
 
 	$items[] = ElggMenuItem::factory([
 		'name' => 'messages',
-		'href' => "messages/inbox/$user->username",
+		'href' => elgg_generate_url('collection:object:messages:owner', [
+			'username' => $user->username,
+		]),
 		'text' => $text,
 		'priority' => 600,
 		'title' => $title,
@@ -243,8 +247,8 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		add_entity_relationship($message_sent->guid, "reply", $original_msg_guid);
 	}
 
-	$message_contents = strip_tags($body);
 	if (($recipient_guid != elgg_get_logged_in_user_guid()) && $notify) {
+		$message_contents = $body;
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
 		
@@ -252,9 +256,13 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$body = elgg_echo('messages:email:body', [
 				$sender->getDisplayName(),
 				$message_contents,
-				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
+				elgg_generate_url('collection:object:messages:owner', [
+					'username' => $recipient->username,
+				]),
 				$sender->getDisplayName(),
-				elgg_get_site_url() . "messages/add?send_to=" . $sender_guid,
+				elgg_generate_url('add:object:messages', [
+					'send_to' => $sender_guid,
+				]),
 			],
 			$recipient->language
 		);
@@ -280,6 +288,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
  * @param array  $params supplied params
  *
  * @return void|string
+ * @deprecated 3.0 use ElggEntity::getURL()
  */
 function messages_set_url($hook, $type, $url, $params) {
 	
@@ -288,7 +297,9 @@ function messages_set_url($hook, $type, $url, $params) {
 		return;
 	}
 	
-	return "messages/read/{$entity->getGUID()}";
+	elgg_deprecated_notice(__METHOD__ . ' is deprecated please use ElggEntity::getURL()', '3.0');
+	
+	return elgg_generate_entity_url($entity);
 }
 
 /**
@@ -385,7 +396,9 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 		'name' => 'send',
 		'text' => elgg_echo('messages:sendmessage'),
 		'icon' => 'mail',
-		'href' => "messages/add?send_to={$user->guid}",
+		'href' => elgg_generate_url('add:object:messages', [
+			'send_to' => $user->guid,
+		]),
 	];
 	
 	if ($type == 'menu:user_hover') {

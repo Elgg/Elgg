@@ -193,6 +193,21 @@ function elgg_clear_sticky_value($form_name, $variable) {
 }
 
 /**
+ * Check if a value isn't empty, but allow 0 and '0'
+ *
+ * @param mixed $value the value to check
+ *
+ * @see empty()
+ * @see Elgg\Values::isEmpty()
+ *
+ * @return bool
+ * @since 3.0.0
+ */
+function elgg_is_empty($value) {
+	return Elgg\Values::isEmpty($value);
+}
+
+/**
  * htmLawed filtering of data
  *
  * Called on the 'validate', 'input' plugin hook

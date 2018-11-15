@@ -128,7 +128,7 @@ before_install:
 install:
   - composer travis:install-with-mysql
   - php -f ./.scripts/travis/enable_plugins.php
-  - php ./elgg-cli database:seed --limit=5 -vv
+  - php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv
   - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
   - sleep 3 # give Web server some time to bind to sockets, etc
 

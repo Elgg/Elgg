@@ -24,9 +24,7 @@ $list = elgg_list_entities([
 	'metadata_name' => 'toId',
 	'metadata_value' => elgg_get_page_owner_guid(),
 	'owner_guid' => elgg_get_page_owner_guid(),
-	'full_view' => false,
-	'preload_owners' => true,
-	'bulk_actions' => true
+	'bulk_actions' => true,
 ]);
 
 $body_vars = [

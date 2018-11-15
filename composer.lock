@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "da7981f8e6952d65a799dbff3ed914b9",
+    "content-hash": "2b8fac5edb44c1a86039cf9ab4be9242",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
-            "version": "5.0.13",
+            "version": "5.3.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:FortAwesome/Font-Awesome.git",
-                "reference": "bca574eca32c5a766b2a09fdcbedf382a78ebc38"
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "ff2853acce00085b5830a050a2afa328fd212562"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/bca574eca32c5a766b2a09fdcbedf382a78ebc38",
-                "reference": "bca574eca32c5a766b2a09fdcbedf382a78ebc38",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/ff2853acce00085b5830a050a2afa328fd212562",
+                "reference": "ff2853acce00085b5830a050a2afa328fd212562",
                 "shasum": null
             },
             "type": "bower-asset"
@@ -222,12 +222,12 @@
             "version": "2.3.5",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jrburke/requirejs-bower.git",
+                "url": "https://github.com/requirejs/requirejs-bower.git",
                 "reference": "d45f44145ea3816adb8df01b36ed46c7945a5cf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jrburke/requirejs-bower/zipball/d45f44145ea3816adb8df01b36ed46c7945a5cf2",
+                "url": "https://api.github.com/repos/requirejs/requirejs-bower/zipball/d45f44145ea3816adb8df01b36ed46c7945a5cf2",
                 "reference": "d45f44145ea3816adb8df01b36ed46c7945a5cf2",
                 "shasum": ""
             },

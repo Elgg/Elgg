@@ -31,7 +31,9 @@ $friendlytime = elgg_view_friendly_time($like->time_created);
 $delete_button = '';
 if ($like->canEdit()) {
 	$delete_button = elgg_view("output/url", [
-		'href' => "action/likes/delete?id={$like->id}",
+		'href' => elgg_generate_action_url('likes/delete', [
+			'id' => $like->id,
+		]),
 		'text' => elgg_view_icon('delete', 'float-alt'),
 		'confirm' => elgg_echo('likes:delete:confirm'),
 		'encode_text' => false,

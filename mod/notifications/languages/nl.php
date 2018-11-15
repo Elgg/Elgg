@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Alle vrienden',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Ontvang een notificatie als er acties worden ondernomen op jouw content, bijvoorbeeld als er een reactie gegeven wordt.',
 	'notifications:subscriptions:personal:title' => 'Persoonlijke notificatie',
 
-	'notifications:subscriptions:friends:title' => 'Vrienden',
-	'notifications:subscriptions:friends:description' => 'Hieronder staan de automatische verzamelingen van je vrienden. Je kunt selecteren van welke verzameling(en) je notificaties wilt ontvangen. Dit zal invloed hebben op de betreffende gebruikers in het kopje \'overzicht notificatie-instellingen\' aan de onderkant van deze pagina.',
-	'notifications:subscriptions:collections:edit' => 'Klik hier om je vriendenverzameling(en) aan te passen.',
+	'notifications:subscriptions:collections:friends' => 'Instellingen welke gebruikt moeten worden als je een nieuwe vriend toevoegd',
+	'notifications:subscriptions:collections:custom' => 'Instellingen welke gebruikt moeten worden als je nieuwe vrienden toevoegt aan de %s vriendenlijst',
 
 	'notifications:subscriptions:changesettings' => 'Notificaties',
 	'notifications:subscriptions:changesettings:groups' => 'Groepsnotificaties',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Je notificatie-instellingen zijn opgeslagen.',
 
-];
+	'notifications:subscriptions:no_results' => 'Er zijn nog geen abonnement gegevens',
+	
+	'notifications:groups:subscribed' => 'Groep notificaties staan aan',
+	'notifications:groups:unsubscribed' => 'Groep notificaties staan uit',
+
+);

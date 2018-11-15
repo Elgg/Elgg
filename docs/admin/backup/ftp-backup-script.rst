@@ -59,7 +59,7 @@ Here is an automated script for backing up an Elgg installation.
    $syscmd = "$cmd_mysqldump --host=$dbhost --user=$dbuser --password=$dbpwd --add-drop-table --databases $database_names_elgg -c -l | $cmd_gzip > $mysql_backup_file_elgg";
    
    system($syscmd);
- 
+   
    # CREATING FULL SITE BACKUP FILE
    $syscmd = "tar -czf $full_backup_file $mysql_backup_file_elgg $site_backup_file";
    system($syscmd);
@@ -76,7 +76,7 @@ Here is an automated script for backing up an Elgg installation.
       
       $ftp->login($ftp_user, $ftp_pwd)
          or die "Cannot login ", $ftp->message;
- 	  
+      
       $ftp->cwd($ftp_dir)
          or die "Can't CWD to remote FTP directory ", $ftp->message;
       

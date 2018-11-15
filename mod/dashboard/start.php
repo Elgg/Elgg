@@ -12,7 +12,7 @@ function dashboard_init() {
 	if (elgg_is_logged_in()) {
 		elgg_register_menu_item('topbar', [
 			'name' => 'dashboard',
-			'href' => 'dashboard',
+			'href' => elgg_generate_url('default:dashboard'),
 			'text' => elgg_echo('dashboard'),
 			'icon' => 'th-large',
 			'priority' => 100,

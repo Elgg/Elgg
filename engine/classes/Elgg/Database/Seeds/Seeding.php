@@ -13,6 +13,7 @@ use ElggUser;
 use Exception;
 use Faker\Factory;
 use Psr\Log\LogLevel;
+use Elgg\Database\Seeds\Providers\LocalImage;
 
 /**
  * Seeding trait
@@ -43,6 +44,8 @@ trait Seeding {
 		if (!isset($this->faker)) {
 			$this->faker = Factory::create($locale);
 		}
+		
+		$this->faker->addProvider(new LocalImage($this->faker));
 
 		return $this->faker;
 	}

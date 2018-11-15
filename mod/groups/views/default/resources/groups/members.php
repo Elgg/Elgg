@@ -30,10 +30,8 @@ switch ($sort) {
 		break;
 	default:
 		$options['order_by_metadata'] = [
-			[
-				'name' => 'name',
-				'direction' => 'ASC',
-			],
+			'name' => 'name',
+			'direction' => 'ASC',
 		];
 		break;
 }

@@ -112,7 +112,7 @@ In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` an
    
    // Database name
    $CONFIG->dbname = 'elgg_production';
- 
+   
    // Database server
    // (For most configurations, you can leave this as 'localhost')
    $CONFIG->dbhost = 'localhost';

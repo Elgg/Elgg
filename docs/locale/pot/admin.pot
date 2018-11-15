@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-08 13:41+0100\n"
+"POT-Creation-Date: 2018-07-24 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -416,12 +416,12 @@ msgid "Open the phpMyAdmin tool on the new host from the CPanel. Select the ``us
 msgstr ""
 
 #: ../../admin/backup-restore.rst:232
-#: ../../admin/duplicate-installation.rst:172
+#: ../../admin/duplicate-installation.rst:171
 msgid "Change the installation path"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:238
-#: ../../admin/duplicate-installation.rst:179
+#: ../../admin/duplicate-installation.rst:178
 msgid "Change the data directory"
 msgstr ""
 
@@ -450,7 +450,7 @@ msgid "If you followed the steps outlined here you should now have a fully funct
 msgstr ""
 
 #: ../../admin/backup-restore.rst:263
-#: ../../admin/duplicate-installation.rst:228
+#: ../../admin/duplicate-installation.rst:227
 msgid "Related"
 msgstr ""
 
@@ -460,6 +460,74 @@ msgstr ""
 
 #: ../../admin/backup/ftp-backup-script.rst:4
 msgid "Here is an automated script for backing up an Elgg installation."
+msgstr ""
+
+#: ../../admin/composer.rst:2
+msgid "Composer installation"
+msgstr ""
+
+#: ../../admin/composer.rst:4
+msgid "The easiest way to keep your Elgg site up-to-date is by using `Composer`_. Composer will take care of installing all the required dependencies of all plugins and Elgg, while also keeping those depencies up-to-date without having conflicts."
+msgstr ""
+
+#: ../../admin/composer.rst:12
+msgid "Install Composer"
+msgstr ""
+
+#: ../../admin/composer.rst:14
+msgid "https://getcomposer.org/download/"
+msgstr ""
+
+#: ../../admin/composer.rst:17
+msgid "Install Elgg as a Composer Project"
+msgstr ""
+
+#: ../../admin/composer.rst:26
+msgid "This will create a composer.json file based of the `Elgg starter project`_ which has the basics of installing Elgg."
+msgstr ""
+
+#: ../../admin/composer.rst:29
+msgid "Open your browser"
+msgstr ""
+
+#: ../../admin/composer.rst:31
+msgid "Go to your browser and install Elgg via the installation interface"
+msgstr ""
+
+#: ../../admin/composer.rst:34
+msgid "Setup version controls"
+msgstr ""
+
+#: ../../admin/composer.rst:36
+msgid "This step is optional but highly recommended. It'll allow you to easily manage the installation of the same plugin versions between environments (development/testing/production)."
+msgstr ""
+
+#: ../../admin/composer.rst:50
+msgid "Install plugins"
+msgstr ""
+
+#: ../../admin/composer.rst:52
+msgid "Install plugins as Composer depencies. This assumes that a plugin has been registered on `Packagist`_"
+msgstr ""
+
+#: ../../admin/composer.rst:61
+msgid "Commit"
+msgstr ""
+
+#: ../../admin/composer.rst:63
+msgid "Make sure ``composer.lock`` is not ignored in ``.gitignore``"
+msgstr ""
+
+#: ../../admin/composer.rst:72
+msgid "Deploy to production"
+msgstr ""
+
+#: ../../admin/composer.rst:75
+msgid "Initial Deploy"
+msgstr ""
+
+#: ../../admin/composer.rst:89
+msgid "Subsequent Deploys"
 msgstr ""
 
 #: ../../admin/cron.rst:2
@@ -735,82 +803,82 @@ msgid "If you don't have shell access to your server and have to ftp the data, y
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:97
-msgid "You also need to delete the views cache on the test server after the copy process. This is a directory called ``views_simplecache`` in your data directory and the directory called ``system_cache`` ."
+msgid "You also need to delete cache directories from your disk. These correspond to ``cacheroot`` and ``assetroot`` directories in your config."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:101
+#: ../../admin/duplicate-installation.rst:100
 msgid "Edit settings.php"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:103
+#: ../../admin/duplicate-installation.rst:102
 msgid "The ``elgg-config/settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` and find the lines that look like this:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:126
+#: ../../admin/duplicate-installation.rst:125
 msgid "We need to change these lines to match our new installation:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:152
+#: ../../admin/duplicate-installation.rst:151
 msgid "Notice the ``$CONFIG->dbname`` has changed to reflect our new database."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:155
+#: ../../admin/duplicate-installation.rst:154
 msgid "Copy Elgg Database"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:157
+#: ../../admin/duplicate-installation.rst:156
 msgid "Now the database must be copied from ``elgg_production`` to ``elgg_test``. See your favorite MySQL manager's documentation for how to make a duplicate database. You will generally export the current database tables to a file, create the new database, and then import the tables that you previously exported."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:161
+#: ../../admin/duplicate-installation.rst:160
 msgid "You have two options on updating the values in the database. You could change the values in the export file or you could import the file and change the values with database queries. One advantage of modifying the dump file is that you can also change links that people have created to content within your site. For example, if people have bookmarked pages using the bookmark plugin, the bookmarks will point to the old site unless your update their URLs."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:167
+#: ../../admin/duplicate-installation.rst:166
 msgid "Database Entries"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:169
+#: ../../admin/duplicate-installation.rst:168
 msgid "We must now change 4 entries in the database. This is easily accomplished with 4 simple SQL commands:"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:186
+#: ../../admin/duplicate-installation.rst:185
 msgid "Check .htaccess"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:188
+#: ../../admin/duplicate-installation.rst:187
 msgid "If you have made changes to .htaccess that modify any paths, make sure you update them in the test installation."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:191
+#: ../../admin/duplicate-installation.rst:190
 msgid "Update Webserver Config"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:193
+#: ../../admin/duplicate-installation.rst:192
 msgid "For this example, you must edit the Apache config to enable a subdomain with a document root of ``/var/www/elgg_test/``. If you plan to install into a subdirectory of your document root, this step is unnecessary."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:196
+#: ../../admin/duplicate-installation.rst:195
 msgid "If you're using Nginx, you need to update server config to match new paths based on ``install/config/nginx.dist``."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:199
+#: ../../admin/duplicate-installation.rst:198
 msgid "Run upgrade.php"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:201
+#: ../../admin/duplicate-installation.rst:200
 msgid "To regenerate cached data, make sure to run ``http://test.myelgg.org/upgrade.php``"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:204
+#: ../../admin/duplicate-installation.rst:203
 msgid "Tips"
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:206
+#: ../../admin/duplicate-installation.rst:205
 msgid "It is a good idea to keep a test server around to experiment with installing new mods and doing development work. If you automate restorations to the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/elgg-config/settings.php`` file will allow seamless re-writing of the MySQL database entries."
 msgstr ""
 
-#: ../../admin/duplicate-installation.rst:232
+#: ../../admin/duplicate-installation.rst:231
 msgid ":doc:`backup-restore`"
 msgstr ""
 
@@ -1207,7 +1275,7 @@ msgid "This cache is automatically flushed when a plugin is enabled, disabled or
 msgstr ""
 
 #: ../../admin/performance.rst:86
-msgid "For best performance, you can also create a symlink from ``/cache/`` in your www root dir to the ``/views_simplecache/`` directory in the data directory you configured when you installed Elgg:"
+msgid "For best performance, you can also create a symlink from ``/cache/`` in your www root dir to the ``assetroot`` directory specified in your config (by default it's located under ``/path/to/dataroot/caches/views_simplecache/``:"
 msgstr ""
 
 #: ../../admin/performance.rst:95
@@ -1295,122 +1363,126 @@ msgid "Enable Simplecache_, which turns select views into browser-cacheable asse
 msgstr ""
 
 #: ../../admin/performance.rst:173
-msgid "Memcache"
+msgid "Memcached"
 msgstr ""
 
 #: ../../admin/performance.rst:175
-msgid "Memcache is a generic caching technology developed by Brad Fitzpatrick for LiveJournal."
-msgstr ""
-
-#: ../../admin/performance.rst:177
-msgid "SUPPORT FOR MEMCACHE IS EXPERIMENTAL AND MAY BE CHANGED."
+msgid "Libmemcached was created by Brian Aker and was designed from day one to give the best performance available to users of Memcached."
 msgstr ""
 
 #: ../../admin/performance.rst:179
-msgid "Installation requirements:"
+msgid "http://libmemcached.org/About.html and https://secure.php.net/manual/en/book.memcached.php"
 msgstr ""
 
 #: ../../admin/performance.rst:181
-msgid "php5-memcache"
+msgid "Installation requirements:"
 msgstr ""
 
-#: ../../admin/performance.rst:182
-msgid "memcached"
+#: ../../admin/performance.rst:183
+msgid "php-memcached"
 msgstr ""
 
 #: ../../admin/performance.rst:184
+msgid "libmemcached"
+msgstr ""
+
+#: ../../admin/performance.rst:185
+msgid "memcached"
+msgstr ""
+
+#: ../../admin/performance.rst:187
 msgid "Configuration:"
 msgstr ""
 
-#: ../../admin/performance.rst:186
+#: ../../admin/performance.rst:189
 msgid "Uncomment and populate the following sections in ``settings.php``"
 msgstr ""
 
-#: ../../admin/performance.rst:197
+#: ../../admin/performance.rst:200
 msgid "Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want to add a namespace prefix. In order to do this, uncomment the following line"
 msgstr ""
 
-#: ../../admin/performance.rst:205
+#: ../../admin/performance.rst:208
 msgid "Squid"
 msgstr ""
 
-#: ../../admin/performance.rst:207
+#: ../../admin/performance.rst:210
 msgid "We have had good results by using `Squid`_ to cache images for us."
 msgstr ""
 
-#: ../../admin/performance.rst:213
+#: ../../admin/performance.rst:216
 msgid "Bytecode caching"
 msgstr ""
 
-#: ../../admin/performance.rst:215
+#: ../../admin/performance.rst:218
 msgid "There are numerous PHP code caches available on the market. These speed up your site by caching the compiled byte code from your script meaning that your server doesn't have to compile the PHP code each time it is executed."
 msgstr ""
 
-#: ../../admin/performance.rst:221
+#: ../../admin/performance.rst:224
 msgid "Direct file serving"
 msgstr ""
 
-#: ../../admin/performance.rst:223
+#: ../../admin/performance.rst:226
 msgid "If your server can be configured to support the X-Sendfile or X-Accel headers, you can configure it to be used in ``settings.php``. This allows your web server to directly stream files to the client instead of using PHP's ``readfile()``."
 msgstr ""
 
-#: ../../admin/performance.rst:228
+#: ../../admin/performance.rst:231
 msgid "Hosting"
 msgstr ""
 
-#: ../../admin/performance.rst:230
+#: ../../admin/performance.rst:233
 msgid "Don't expect to run a site catering for millions of users on a cheap shared host. You will need to have your own host hardware and access over the configuration, as well as lots of bandwidth and memory available."
 msgstr ""
 
-#: ../../admin/performance.rst:235
+#: ../../admin/performance.rst:238
 msgid "Memory, CPU and bandwidth"
 msgstr ""
 
-#: ../../admin/performance.rst:237
+#: ../../admin/performance.rst:240
 msgid "Due to the nature of caching, all caching solutions will require memory. It is a fairly cheap return to throw memory and CPU at the problem."
 msgstr ""
 
-#: ../../admin/performance.rst:240
+#: ../../admin/performance.rst:243
 msgid "On advanced hardware it is likely that bandwidth is going to be your bottleneck before the server itself. Ensure that your host can support the load you are suggesting."
 msgstr ""
 
-#: ../../admin/performance.rst:244
+#: ../../admin/performance.rst:247
 msgid "Configuration"
 msgstr ""
 
-#: ../../admin/performance.rst:246
+#: ../../admin/performance.rst:249
 msgid "Lastly, take a look at your configuration as there are a few gotchas that can catch people."
 msgstr ""
 
-#: ../../admin/performance.rst:248
+#: ../../admin/performance.rst:251
 msgid "For example, out of the box, Apache can handle quite a high load. However, most distros of Linux come with mysql configured for small sites. This can result in Apache processes getting stalled waiting to talk to one very overloaded MySQL process."
 msgstr ""
 
-#: ../../admin/performance.rst:253
+#: ../../admin/performance.rst:256
 msgid "Check for poorly-behaved plugins"
 msgstr ""
 
-#: ../../admin/performance.rst:255
+#: ../../admin/performance.rst:258
 msgid "Plugins can be programmed in a very naive way and this can cause your whole site to feel slow."
 msgstr ""
 
-#: ../../admin/performance.rst:257
+#: ../../admin/performance.rst:260
 msgid "Try disabling some plugins to see if that noticeably improves performance. Once you've found a likely offender, go to the original plugin author and report your findings."
 msgstr ""
 
-#: ../../admin/performance.rst:261
+#: ../../admin/performance.rst:264
 msgid "Use client-rendered HTML"
 msgstr ""
 
-#: ../../admin/performance.rst:263
+#: ../../admin/performance.rst:266
 msgid "We've found that at a certain point, much of the time spent on the server is simply building the HTML of the page with Elgg's views system."
 msgstr ""
 
-#: ../../admin/performance.rst:266
+#: ../../admin/performance.rst:269
 msgid "It's very difficult to cache the output of templates since they can generally take arbitrary inputs. Instead of trying to cache the HTML output of certain pages or views, the suggestion is to switch to an HTML-based templating system so that the user's browser can cache the templates themselves. Then have the user's computer do the work of generating the output by applying JSON data to those templates."
 msgstr ""
 
-#: ../../admin/performance.rst:271
+#: ../../admin/performance.rst:274
 msgid "This can be very effective, but has the downside of being significant extra development cost. The Elgg team is looking to integrate this strategy into Elgg directly, since it is so effective especially on pages with repeated or hidden content."
 msgstr ""
 
@@ -1710,421 +1782,433 @@ msgstr ""
 msgid "Basic instructions"
 msgstr ""
 
-#: ../../admin/upgrading.rst:26
-msgid "Log in as an admin to your site"
-msgstr ""
-
 #: ../../admin/upgrading.rst:27
-msgid "Disable caching in Advanced Settings"
-msgstr ""
-
-#: ../../admin/upgrading.rst:28
-msgid "**Back up your database, data directory, and code**"
+msgid "Composer Upgrade"
 msgstr ""
 
 #: ../../admin/upgrading.rst:29
-msgid "Download the new version of Elgg from http://elgg.org"
+msgid "If you had your Elgg 2.3 project installed using composer, you can follow this sequence:"
 msgstr ""
 
-#: ../../admin/upgrading.rst:31
-msgid "Update the files"
+#: ../../admin/upgrading.rst:42
+msgid "Manual Upgrade"
 msgstr ""
 
-#: ../../admin/upgrading.rst:31
-msgid "If doing a patch upgrade (1.9.x), overwrite your existing files with the new version of Elgg"
-msgstr ""
-
-#: ../../admin/upgrading.rst:32
-msgid "If doing a minor upgrade (1.x), replace the existing core files completely"
-msgstr ""
-
-#: ../../admin/upgrading.rst:34
-msgid "Merge any new changes to the rewrite rules"
-msgstr ""
-
-#: ../../admin/upgrading.rst:34
-msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
-msgstr ""
-
-#: ../../admin/upgrading.rst:35
-msgid "For Nginx from ``install/config/nginx.dist`` into your server configuration (usually inside ``/etc/nginx/sites-enabled``)"
-msgstr ""
-
-#: ../../admin/upgrading.rst:36
-msgid "Merge any new changes from ``settings.example.php`` into ``settings.php``"
-msgstr ""
-
-#: ../../admin/upgrading.rst:37
-msgid "Visit http://your-elgg-site.com/upgrade.php"
-msgstr ""
-
-#: ../../admin/upgrading.rst:41
-msgid "Any modifications should have been written within plugins, so that they are not lost on overwriting. If this is not the case, take care to maintain your modifications."
+#: ../../admin/upgrading.rst:44
+msgid "Log in as an admin to your site"
 msgstr ""
 
 #: ../../admin/upgrading.rst:45
-#: ../../admin/upgrading.rst:152
-msgid "From 2.3 to 3.0"
+msgid "Disable caching in Advanced Settings"
 msgstr ""
 
-#: ../../admin/upgrading.rst:48
-msgid "Update ``settings.php``"
+#: ../../admin/upgrading.rst:46
+msgid "**Back up your database, data directory, and code**"
+msgstr ""
+
+#: ../../admin/upgrading.rst:47
+msgid "Download the new version of Elgg from http://elgg.org"
+msgstr ""
+
+#: ../../admin/upgrading.rst:49
+msgid "Update the files"
+msgstr ""
+
+#: ../../admin/upgrading.rst:49
+msgid "If doing a patch upgrade (1.9.x), overwrite your existing files with the new version of Elgg"
 msgstr ""
 
 #: ../../admin/upgrading.rst:50
-msgid "On your working 2.3 installation:"
+msgid "If doing a minor upgrade (1.x), replace the existing core files completely"
 msgstr ""
 
 #: ../../admin/upgrading.rst:52
-msgid "Open your ``settings.php`` file."
+msgid "Merge any new changes to the rewrite rules"
+msgstr ""
+
+#: ../../admin/upgrading.rst:52
+msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:53
-msgid "In the browser, open the site's Advanced Settings page in the admin area"
+msgid "For Nginx from ``install/config/nginx.dist`` into your server configuration (usually inside ``/etc/nginx/sites-enabled``)"
 msgstr ""
 
 #: ../../admin/upgrading.rst:54
-msgid "Copy the **data directory** path into your settings file as ``$CONFIG->dataroot``."
+msgid "Merge any new changes from ``settings.example.php`` into ``settings.php``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:55
-msgid "Copy the **site URL** into your settings file as ``$CONFIG->wwwroot``."
+msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr ""
 
-#: ../../admin/upgrading.rst:57
-msgid "Elgg 3.0 **will not operate** at all without ``$CONFIG->dataroot`` set in ``settings.php``."
+#: ../../admin/upgrading.rst:59
+msgid "Any modifications should have been written within plugins, so that they are not lost on overwriting. If this is not the case, take care to maintain your modifications."
 msgstr ""
 
-#: ../../admin/upgrading.rst:60
-msgid "Update ``.htaccess``"
+#: ../../admin/upgrading.rst:63
+#: ../../admin/upgrading.rst:170
+msgid "From 2.3 to 3.0"
 msgstr ""
 
-#: ../../admin/upgrading.rst:62
-msgid "Find the line:"
+#: ../../admin/upgrading.rst:66
+msgid "Update ``settings.php``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:68
-msgid "And replace it with:"
+msgid "On your working 2.3 installation:"
+msgstr ""
+
+#: ../../admin/upgrading.rst:70
+msgid "Open your ``settings.php`` file."
+msgstr ""
+
+#: ../../admin/upgrading.rst:71
+msgid "In the browser, open the site's Advanced Settings page in the admin area"
+msgstr ""
+
+#: ../../admin/upgrading.rst:72
+msgid "Copy the **data directory** path into your settings file as ``$CONFIG->dataroot``."
+msgstr ""
+
+#: ../../admin/upgrading.rst:73
+msgid "Copy the **site URL** into your settings file as ``$CONFIG->wwwroot``."
 msgstr ""
 
 #: ../../admin/upgrading.rst:75
-msgid "Removed / changed language keys"
+msgid "Elgg 3.0 **will not operate** at all without ``$CONFIG->dataroot`` set in ``settings.php``."
 msgstr ""
 
-#: ../../admin/upgrading.rst:77
-msgid "The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys"
+#: ../../admin/upgrading.rst:78
+msgid "Update ``.htaccess``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:80
-msgid "New MySQL schema features are not applied"
+msgid "Find the line:"
 msgstr ""
 
-#: ../../admin/upgrading.rst:82
-msgid "New 3.0 installations require MySQL 5.5.3 and use the utf8mb4 character set and LONGTEXT content columns (notably allowing storing longer content and extended characters like emoji)."
+#: ../../admin/upgrading.rst:86
+msgid "And replace it with:"
 msgstr ""
 
-#: ../../admin/upgrading.rst:85
-msgid "Miscellaneous changes"
-msgstr ""
-
-#: ../../admin/upgrading.rst:87
-msgid "The settings \"Allow visitors to register\" and \"Restrict pages to logged-in users\" now appear on the Basic Settings admin page."
-msgstr ""
-
-#: ../../admin/upgrading.rst:90
-msgid "Twitter API plugin"
-msgstr ""
-
-#: ../../admin/upgrading.rst:92
-msgid "The ``twitter_api`` plugin no longer comes bundled with Elgg."
+#: ../../admin/upgrading.rst:93
+msgid "Removed / changed language keys"
 msgstr ""
 
 #: ../../admin/upgrading.rst:95
-msgid "Unit and Integration Testing"
+msgid "The language keys related to comment notifications have changed. Check the ``generic_comment:notification:owner:`` language keys"
 msgstr ""
 
-#: ../../admin/upgrading.rst:97
-msgid "Elgg's PHPUnit bootstrap can now handle both unit and integration tests. Please note that **you shouldn't run tests on a production site**, as it may damage data integrity. To prevent data loss, you need to specify database settings via environment variables. You can do so via the phpunit.xml bootstrap."
+#: ../../admin/upgrading.rst:98
+msgid "New MySQL schema features are not applied"
 msgstr ""
 
-#: ../../admin/upgrading.rst:101
-msgid "Plugins can now implement their own PHPUnit tests by extending ``\\Elgg\\UnitTestCase`` and ``\\Elgg\\IntegrationTestCase`` classes. ``plugins`` test suite will automatically autoload PHPUnit tests from ``mod/<plugin_id>/tests/phpunit/unit`` and ``mod/<plugin_id>/tests/phpunit/integration``."
+#: ../../admin/upgrading.rst:100
+msgid "New 3.0 installations require MySQL 5.5.3 and use the utf8mb4 character set and LONGTEXT content columns (notably allowing storing longer content and extended characters like emoji)."
+msgstr ""
+
+#: ../../admin/upgrading.rst:103
+msgid "Miscellaneous changes"
 msgstr ""
 
 #: ../../admin/upgrading.rst:105
-msgid "Prior to running integration tests, you need to enable the plugins that you wish to test alongside core API."
+msgid "The settings \"Allow visitors to register\" and \"Restrict pages to logged-in users\" now appear on the Basic Settings admin page."
 msgstr ""
 
-#: ../../admin/upgrading.rst:107
-msgid "``\\Elgg\\IntegrationTestCase`` uses ``\\Elgg\\Seeding`` trait, which can be used to conveniently build new entities and write them to the database."
+#: ../../admin/upgrading.rst:108
+msgid "Twitter API plugin"
 msgstr ""
 
 #: ../../admin/upgrading.rst:110
-msgid "``\\Elgg\\UnitTestCase`` does not use the database, but provides a database mocking interface, which allows tests to define query specs with predefined returns."
+msgid "The ``twitter_api`` plugin no longer comes bundled with Elgg."
 msgstr ""
 
 #: ../../admin/upgrading.rst:113
-msgid "By default, both unit and integration tests will be run whenever ``phpunit`` is called. You can use ``--testsuite`` flag to only run a specific suite: ``phpunit --testsuite unit`` or ``phpunit --testsuite integration`` or ``phpunit --testsuite plugins``."
+msgid "Unit and Integration Testing"
 msgstr ""
 
 #: ../../admin/upgrading.rst:115
-msgid "For integration testing to run properly, plugins are advised to not put any logic into the root of ``start.php``, and instead return a Closure. This allows the testsuite to build a new Application instance without loosing plugin initialization logic."
+msgid "Elgg's PHPUnit bootstrap can now handle both unit and integration tests. Please note that **you shouldn't run tests on a production site**, as it may damage data integrity. To prevent data loss, you need to specify database settings via environment variables. You can do so via the phpunit.xml bootstrap."
 msgstr ""
 
-#: ../../admin/upgrading.rst:118
-msgid "Plugins with simpletests will continue working as perviously. However, method signatures in the ``ElggCoreUnitTest`` abstract class have changed and you will need to update your tests accordingly. Namely, it's discouraged to use ``__construct`` and ``__desctruct`` methods. ``setUp`` and ``tearDown`` have been marked as private and are used for consistent test boostrapping and asserting pre and post conditions, your test case should use ``up`` and ``down`` methods instead."
+#: ../../admin/upgrading.rst:119
+msgid "Plugins can now implement their own PHPUnit tests by extending ``\\Elgg\\UnitTestCase`` and ``\\Elgg\\IntegrationTestCase`` classes. ``plugins`` test suite will automatically autoload PHPUnit tests from ``mod/<plugin_id>/tests/phpunit/unit`` and ``mod/<plugin_id>/tests/phpunit/integration``."
 msgstr ""
 
 #: ../../admin/upgrading.rst:123
-msgid "Simpletests can no longer be executed from the admin interface of the developers plugin. Use Elgg cli command: ``elgg-cli simpletest``"
+msgid "Prior to running integration tests, you need to enable the plugins that you wish to test alongside core API."
+msgstr ""
+
+#: ../../admin/upgrading.rst:125
+msgid "``\\Elgg\\IntegrationTestCase`` uses ``\\Elgg\\Seeding`` trait, which can be used to conveniently build new entities and write them to the database."
 msgstr ""
 
 #: ../../admin/upgrading.rst:128
-msgid "From 2.2 to 2.3"
+msgid "``\\Elgg\\UnitTestCase`` does not use the database, but provides a database mocking interface, which allows tests to define query specs with predefined returns."
 msgstr ""
 
 #: ../../admin/upgrading.rst:131
-msgid "PHP Version"
+msgid "By default, both unit and integration tests will be run whenever ``phpunit`` is called. You can use ``--testsuite`` flag to only run a specific suite: ``phpunit --testsuite unit`` or ``phpunit --testsuite integration`` or ``phpunit --testsuite plugins``."
 msgstr ""
 
 #: ../../admin/upgrading.rst:133
-msgid "PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are secure, we now require PHP 5.6 for new installations."
+msgid "For integration testing to run properly, plugins are advised to not put any logic into the root of ``start.php``, and instead return a Closure. This allows the testsuite to build a new Application instance without loosing plugin initialization logic."
 msgstr ""
 
-#: ../../admin/upgrading.rst:135
-msgid "Existing installations can continue using PHP 5.5 until Elgg 3.0."
+#: ../../admin/upgrading.rst:136
+msgid "Plugins with simpletests will continue working as perviously. However, method signatures in the ``ElggCoreUnitTest`` abstract class have changed and you will need to update your tests accordingly. Namely, it's discouraged to use ``__construct`` and ``__desctruct`` methods. ``setUp`` and ``tearDown`` have been marked as private and are used for consistent test boostrapping and asserting pre and post conditions, your test case should use ``up`` and ``down`` methods instead."
 msgstr ""
 
-#: ../../admin/upgrading.rst:137
-msgid "In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may need to use ``--ignore-platform-reqs`` flag."
+#: ../../admin/upgrading.rst:141
+msgid "Simpletests can no longer be executed from the admin interface of the developers plugin. Use Elgg cli command: ``elgg-cli simpletest``"
 msgstr ""
 
-#: ../../admin/upgrading.rst:140
-msgid "Tests"
-msgstr ""
-
-#: ../../admin/upgrading.rst:142
-msgid "PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\\Elgg\\TestCase``."
-msgstr ""
-
-#: ../../admin/upgrading.rst:143
-msgid "PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_config()`` instead."
-msgstr ""
-
-#: ../../admin/upgrading.rst:144
-msgid "Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``"
-msgstr ""
-
-#: ../../admin/upgrading.rst:147
-msgid "Schema"
+#: ../../admin/upgrading.rst:146
+msgid "From 2.2 to 2.3"
 msgstr ""
 
 #: ../../admin/upgrading.rst:149
-msgid "The database GUID columns need to be aligned. In the admin section an upgrade is available to handle this. Please make sure you have a backup available"
+msgid "PHP Version"
+msgstr ""
+
+#: ../../admin/upgrading.rst:151
+msgid "PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are secure, we now require PHP 5.6 for new installations."
+msgstr ""
+
+#: ../../admin/upgrading.rst:153
+msgid "Existing installations can continue using PHP 5.5 until Elgg 3.0."
 msgstr ""
 
 #: ../../admin/upgrading.rst:155
-msgid "Data removal"
+msgid "In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may need to use ``--ignore-platform-reqs`` flag."
 msgstr ""
 
-#: ../../admin/upgrading.rst:157
-msgid "Be aware the 3.0 upgrade process will remove any remaining \"legacy\" password hashes. This will affect users who have never logged in under an Elgg 1.10 or later system. These users will be politely asked to reset their password."
+#: ../../admin/upgrading.rst:158
+msgid "Tests"
 msgstr ""
 
 #: ../../admin/upgrading.rst:160
-msgid "From 1.x to 2.0"
+msgid "PHPUnit bootstrap is deprecated by composer autoloader: Tests should no longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. Instead, tests should extend ``\\Elgg\\TestCase``."
 msgstr ""
 
-#: ../../admin/upgrading.rst:163
-msgid "Removed plugins"
+#: ../../admin/upgrading.rst:161
+msgid "PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use ``_elgg_config()`` instead."
+msgstr ""
+
+#: ../../admin/upgrading.rst:162
+msgid "Core and tests no longer use private global values in ``$_ELGG->view_path`` and ``$_ELGG->allowed_ajax_views``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:165
-msgid "The following plugins are no longer bundled with Elgg core:"
+msgid "Schema"
 msgstr ""
 
 #: ../../admin/upgrading.rst:167
-msgid "categories (https://github.com/elgg/categories)"
-msgstr ""
-
-#: ../../admin/upgrading.rst:168
-msgid "zaudio (https://github.com/elgg/zaudio)"
-msgstr ""
-
-#: ../../admin/upgrading.rst:171
-msgid "IE-specific workarounds have been dropped"
+msgid "The database GUID columns need to be aligned. In the admin section an upgrade is available to handle this. Please make sure you have a backup available"
 msgstr ""
 
 #: ../../admin/upgrading.rst:173
-msgid "Several views (``css/ie``, ``css/ie7``, ``css/ie8``, etc.) as well as conditional comments have been discarded now that IE10+ browsers are more standards-compliant. If you need browser support farther back than that, you will need to find or build a plugin that introduces its own compatibility layer or polyfills."
+msgid "Data removal"
 msgstr ""
 
-#: ../../admin/upgrading.rst:179
-msgid "Update your webserver config"
+#: ../../admin/upgrading.rst:175
+msgid "Be aware the 3.0 upgrade process will remove any remaining \"legacy\" password hashes. This will affect users who have never logged in under an Elgg 1.10 or later system. These users will be politely asked to reset their password."
+msgstr ""
+
+#: ../../admin/upgrading.rst:178
+msgid "From 1.x to 2.0"
 msgstr ""
 
 #: ../../admin/upgrading.rst:181
-msgid "URL paths like ``cache/*`` and ``rewrite.php`` now use the main front controller script. You **must** remove these rewrite rules from your webserver config (e.g. ``.htaccess``)."
+msgid "Removed plugins"
 msgstr ""
 
-#: ../../admin/upgrading.rst:184
-msgid "Also remove the rules for paths like ``export/*``; these endpoints have been removed."
+#: ../../admin/upgrading.rst:183
+msgid "The following plugins are no longer bundled with Elgg core:"
 msgstr ""
 
-#: ../../admin/upgrading.rst:187
-msgid "Settings location"
+#: ../../admin/upgrading.rst:185
+msgid "categories (https://github.com/elgg/categories)"
+msgstr ""
+
+#: ../../admin/upgrading.rst:186
+msgid "zaudio (https://github.com/elgg/zaudio)"
 msgstr ""
 
 #: ../../admin/upgrading.rst:189
-msgid "After upgrading, move your ``settings.php`` file from ``engine/`` to ``elgg-config/``."
+msgid "IE-specific workarounds have been dropped"
 msgstr ""
 
-#: ../../admin/upgrading.rst:192
-msgid "From 1.10 to 1.11"
+#: ../../admin/upgrading.rst:191
+msgid "Several views (``css/ie``, ``css/ie7``, ``css/ie8``, etc.) as well as conditional comments have been discarded now that IE10+ browsers are more standards-compliant. If you need browser support farther back than that, you will need to find or build a plugin that introduces its own compatibility layer or polyfills."
 msgstr ""
 
-#: ../../admin/upgrading.rst:195
-#: ../../admin/upgrading.rst:208
-msgid "Breaking changes"
+#: ../../admin/upgrading.rst:197
+msgid "Update your webserver config"
 msgstr ""
 
-#: ../../admin/upgrading.rst:196
-msgid "In versions 1.9 and 1.10, names and values for metadata and annotations were not correctly trimmed for whitespace. Elgg 1.11 correctly trims these strings and updates the database to correct existing strings. If your plugin uses metadata or annotations with leading or trailing whitespace, you will need to update the plugin to trim the names and values. This is especially important if you are using custom SQL clauses or have hard-coded metastring IDs, since the update might change metastring IDs."
+#: ../../admin/upgrading.rst:199
+msgid "URL paths like ``cache/*`` and ``rewrite.php`` now use the main front controller script. You **must** remove these rewrite rules from your webserver config (e.g. ``.htaccess``)."
 msgstr ""
 
-#: ../../admin/upgrading.rst:204
-msgid "From 1.8 to 1.9"
+#: ../../admin/upgrading.rst:202
+msgid "Also remove the rules for paths like ``export/*``; these endpoints have been removed."
 msgstr ""
 
 #: ../../admin/upgrading.rst:205
-msgid "Elgg 1.9 is a much lighter upgrade than 1.8 was."
+msgid "Settings location"
 msgstr ""
 
-#: ../../admin/upgrading.rst:209
-msgid "Plugins and themes written for 1.8 are expected to be compatible with 1.9 except as it pertains to comments, discussion replies, and notifications. Please `report any backwards compatibility issues <issues_>`_ besides those just listed."
+#: ../../admin/upgrading.rst:207
+msgid "After upgrading, move your ``settings.php`` file from ``engine/`` to ``elgg-config/``."
+msgstr ""
+
+#: ../../admin/upgrading.rst:210
+msgid "From 1.10 to 1.11"
+msgstr ""
+
+#: ../../admin/upgrading.rst:213
+#: ../../admin/upgrading.rst:226
+msgid "Breaking changes"
 msgstr ""
 
 #: ../../admin/upgrading.rst:214
-msgid "Upgrade steps"
-msgstr ""
-
-#: ../../admin/upgrading.rst:215
-msgid "There are several data migrations involved, so it is especially important that you **back up your database and data directory** before performing the upgrade."
-msgstr ""
-
-#: ../../admin/upgrading.rst:218
-msgid "Download the new version and copy these files from the existing 1.8 site:"
-msgstr ""
-
-#: ../../admin/upgrading.rst:220
-msgid "``.htaccess``"
-msgstr ""
-
-#: ../../admin/upgrading.rst:221
-msgid "``engine/settings.php``"
+msgid "In versions 1.9 and 1.10, names and values for metadata and annotations were not correctly trimmed for whitespace. Elgg 1.11 correctly trims these strings and updates the database to correct existing strings. If your plugin uses metadata or annotations with leading or trailing whitespace, you will need to update the plugin to trim the names and values. This is especially important if you are using custom SQL clauses or have hard-coded metastring IDs, since the update might change metastring IDs."
 msgstr ""
 
 #: ../../admin/upgrading.rst:222
-msgid "any 3rd-party plugin folders in the ``mod`` directory"
+msgid "From 1.8 to 1.9"
 msgstr ""
 
-#: ../../admin/upgrading.rst:224
-msgid "Then replace the old installation directory with the new one. This way you are guaranteed to get rid of obsolete files which might cause problems if left behind."
+#: ../../admin/upgrading.rst:223
+msgid "Elgg 1.9 is a much lighter upgrade than 1.8 was."
 msgstr ""
 
 #: ../../admin/upgrading.rst:227
-msgid "Follow the basic instructions listed above."
+msgid "Plugins and themes written for 1.8 are expected to be compatible with 1.9 except as it pertains to comments, discussion replies, and notifications. Please `report any backwards compatibility issues <issues_>`_ besides those just listed."
 msgstr ""
 
-#: ../../admin/upgrading.rst:229
-msgid "After you've visited ``upgrade.php``, go to the admin area of your site. You should see a notification that you have pending upgrades. Click the link in the notification bar to view and run the upgrades."
+#: ../../admin/upgrading.rst:232
+msgid "Upgrade steps"
 msgstr ""
 
 #: ../../admin/upgrading.rst:233
-msgid "The new notifications system delivers messages via a minutely cron handler. If you haven't done so yet, you will need to :doc:`install and configure crontab </admin/cron>` on your server. If cron jobs are already configured, note that the scope of available cron periods may have changed and you may need to update your current crontab to reflect these changes."
+msgid "There are several data migrations involved, so it is especially important that you **back up your database and data directory** before performing the upgrade."
+msgstr ""
+
+#: ../../admin/upgrading.rst:236
+msgid "Download the new version and copy these files from the existing 1.8 site:"
+msgstr ""
+
+#: ../../admin/upgrading.rst:238
+msgid "``.htaccess``"
+msgstr ""
+
+#: ../../admin/upgrading.rst:239
+msgid "``engine/settings.php``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:240
-msgid "Time commitment"
+msgid "any 3rd-party plugin folders in the ``mod`` directory"
 msgstr ""
 
-#: ../../admin/upgrading.rst:241
-msgid "Running all of the listed upgrades `took about 1 hour and 15 minutes`__ on the Elgg community site which at the time had to migrate:"
-msgstr ""
-
-#: ../../admin/upgrading.rst:244
-msgid "~75,000 discussion replies"
+#: ../../admin/upgrading.rst:242
+msgid "Then replace the old installation directory with the new one. This way you are guaranteed to get rid of obsolete files which might cause problems if left behind."
 msgstr ""
 
 #: ../../admin/upgrading.rst:245
-msgid "~75,000 comments"
+msgid "Follow the basic instructions listed above."
 msgstr ""
 
-#: ../../admin/upgrading.rst:246
-msgid "~75,000 data directories"
+#: ../../admin/upgrading.rst:247
+msgid "After you've visited ``upgrade.php``, go to the admin area of your site. You should see a notification that you have pending upgrades. Click the link in the notification bar to view and run the upgrades."
 msgstr ""
 
-#: ../../admin/upgrading.rst:250
-msgid "You should take this only as a ballpark estimate for your own upgrade. How long it takes will depend on how large your site is and how powerful your servers are."
+#: ../../admin/upgrading.rst:251
+msgid "The new notifications system delivers messages via a minutely cron handler. If you haven't done so yet, you will need to :doc:`install and configure crontab </admin/cron>` on your server. If cron jobs are already configured, note that the scope of available cron periods may have changed and you may need to update your current crontab to reflect these changes."
 msgstr ""
 
-#: ../../admin/upgrading.rst:254
-msgid "From 1.7 to 1.8"
-msgstr ""
-
-#: ../../admin/upgrading.rst:255
-msgid "Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades."
+#: ../../admin/upgrading.rst:258
+msgid "Time commitment"
 msgstr ""
 
 #: ../../admin/upgrading.rst:259
-msgid "Updating core"
-msgstr ""
-
-#: ../../admin/upgrading.rst:260
-msgid "Delete the following core directories (same level as _graphics and engine):"
+msgid "Running all of the listed upgrades `took about 1 hour and 15 minutes`__ on the Elgg community site which at the time had to migrate:"
 msgstr ""
 
 #: ../../admin/upgrading.rst:262
-msgid "_css"
+msgid "~75,000 discussion replies"
 msgstr ""
 
 #: ../../admin/upgrading.rst:263
-msgid "account"
+msgid "~75,000 comments"
 msgstr ""
 
 #: ../../admin/upgrading.rst:264
-msgid "admin"
-msgstr ""
-
-#: ../../admin/upgrading.rst:265
-msgid "dashboard"
-msgstr ""
-
-#: ../../admin/upgrading.rst:266
-msgid "entities"
-msgstr ""
-
-#: ../../admin/upgrading.rst:267
-msgid "friends"
+msgid "~75,000 data directories"
 msgstr ""
 
 #: ../../admin/upgrading.rst:268
+msgid "You should take this only as a ballpark estimate for your own upgrade. How long it takes will depend on how large your site is and how powerful your servers are."
+msgstr ""
+
+#: ../../admin/upgrading.rst:272
+msgid "From 1.7 to 1.8"
+msgstr ""
+
+#: ../../admin/upgrading.rst:273
+msgid "Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades."
+msgstr ""
+
+#: ../../admin/upgrading.rst:277
+msgid "Updating core"
+msgstr ""
+
+#: ../../admin/upgrading.rst:278
+msgid "Delete the following core directories (same level as _graphics and engine):"
+msgstr ""
+
+#: ../../admin/upgrading.rst:280
+msgid "_css"
+msgstr ""
+
+#: ../../admin/upgrading.rst:281
+msgid "account"
+msgstr ""
+
+#: ../../admin/upgrading.rst:282
+msgid "admin"
+msgstr ""
+
+#: ../../admin/upgrading.rst:283
+msgid "dashboard"
+msgstr ""
+
+#: ../../admin/upgrading.rst:284
+msgid "entities"
+msgstr ""
+
+#: ../../admin/upgrading.rst:285
+msgid "friends"
+msgstr ""
+
+#: ../../admin/upgrading.rst:286
 msgid "search"
 msgstr ""
 
-#: ../../admin/upgrading.rst:269
+#: ../../admin/upgrading.rst:287
 msgid "settings"
 msgstr ""
 
-#: ../../admin/upgrading.rst:270
+#: ../../admin/upgrading.rst:288
 msgid "simplecache"
 msgstr ""
 
-#: ../../admin/upgrading.rst:271
+#: ../../admin/upgrading.rst:289
 msgid "views"
 msgstr ""
 
-#: ../../admin/upgrading.rst:275
+#: ../../admin/upgrading.rst:293
 msgid "If you do not delete these directories before an upgrade, you will have problems!"
 msgstr ""
 

@@ -6,7 +6,8 @@ return array(
 	'garbagecollector:monthly' => 'Eens per maand',
 	'garbagecollector:yearly' => 'Eens per jaar',
 
-	'garbagecollector' => "GARBAGE COLLECTOR\n",
-	'garbagecollector:done' => "KLAAR\n",
-	'garbagecollector:optimize' => "Optimaliseren %s ",
+	'garbagecollector' => 'GARBAGE COLLECTOR',
+	'garbagecollector:start' => "Garbage collector geïnitialiseerd",
+	'garbagecollector:done' => "Garbage collector afgerond",
+	'garbagecollector:optimize' => "Optimaliseren van %s",
 );

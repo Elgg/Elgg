@@ -1,10 +1,13 @@
 <?php
+
 return array(
 /**
  * Sites
  */
 
-	'item:site' => 'Sites',
+	'item:site:site' => 'Site',
+	'collection:site:site' => 'Sites',
+	'index:content' => '<p>Welkom op je Elgg site.</p><p><strong>Tip:</strong> Veel sites gebruiken de <code>activity</code> plugin om een activiteiten stroom op de voorpagina te plaatsen.</p>',
 
 /**
  * Sessions
@@ -62,10 +65,16 @@ return array(
 Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet conflicteren met, of afhankelijk zijn van iets dat ze zelf bieden!',
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
+	'ElggPlugin:Error' => 'Plugin fout',
+	'ElggPlugin:Error:ID' => 'Fout in plugin "%s"',
+	'ElggPlugin:Error:Path' => 'Fout in plugin pad "%s"',
+	'ElggPlugin:Error:Unknown' => 'Ongedefinieerde plugin fout',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Kan %s niet laden voor plugin %s (guid: %s) in %s. Controleer de rechten!',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Kan de views-map niet openen van plugin %s (guid: %s) in %s. Controleer de rechten!',
 	'ElggPlugin:Exception:NoID' => 'Geen ID voor plugin-guid %s!',
+	'ElggPlugin:Exception:InvalidPackage' => 'Package cannot be loaded',
+	'ElggPlugin:Exception:InvalidManifest' => 'Plugin manifest is missing or invalid',
 	'PluginException:NoPluginName' => "De pluginnaam kon niet worden gevonden",
 	'PluginException:ParserError' => 'Fout tijdens het lezen van de manifest met API-versie %s in plugin %s',
 	'PluginException:NoAvailableParser' => 'Kan geen parser vinden voor manifest API-versie %s in plugin %s.',
@@ -108,6 +117,15 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 
 	'UserFetchFailureException' => 'Kan voor user_guid [%s] niet de rechten nakijken omdat de gebruiker niet bestaat.',
 
+	'PageNotFoundException' => 'De pagina die je opvraagt bestaat niet, of je hebt onvoldoende rechten om deze te mogen bekijken.',
+	'EntityNotFoundException' => 'De inhoud is verwijderd of je hebt geen rechten om die te mogen bekijken.',
+	'EntityPermissionsException' => 'Je hebt onvoldoende rechten om deze actie uit te mogen voeren',
+	'GatekeeperException' => 'Je hebt niet de juiste rechten om deze pagina te zien.',
+	'BadRequestException' => 'Het verzoek is onjuist',
+	'ValidationException' => 'De opgestuurde data voldoet niet aan de vereisten, controleer de invoer',
+	'LogicException:NotSubclass' => '%s must extend %s',
+	'LogicException:InterfaceNotImplemented' => '%smoet %s implementeren',
+
 	'deprecatedfunction' => 'Waarschuwing: Deze code gebruikt de niet meer gebruikte functies \'%s\' en is niet compatibel met deze versie van Elgg. ',
 
 	'pageownerunavailable' => 'Waarschuwing: De pagina-eigenaar %d is niet toegankelijk!',
@@ -118,6 +136,8 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'error:missing_data' => 'Er missen enkele gegevens in je verzoek',
 	'save:fail' => 'Er ging iets mis bij het opslaan van je gegevens',
 	'save:success' => 'Je gegevens zijn opgeslagen',
+
+	'forward:error' => 'Onze excuses. Er is een fout opgetreden terwijl we je wilden doorsturen naar een andere site.',
 
 	'error:default:title' => 'Oeps...',
 	'error:default:content' => 'Oeps... er ging iets mis.',
@@ -181,11 +201,11 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
  * Access
  */
 
-	'PRIVATE' => "Privé",
-	'LOGGED_IN' => "Aangemelde gebruikers",
-	'PUBLIC' => "Publiek",
-	'LOGGED_OUT' => "Uitgelogde leden",
-	'access:friends:label' => "Vrienden",
+	'access:label:private' => "Privé",
+	'access:label:logged_in' => "Aangemelde gebruikers",
+	'access:label:public' => "Publiekelijk",
+	'access:label:logged_out' => "Afgemelde gebruikers",
+	'access:label:friends' => "Vrienden",
 	'access' => "Toegang",
 	'access:overridenotice' => "De inhoud van deze groep is alléén toegankelijk voor leden.",
 	'access:limited:label' => "Gelimiteerd",
@@ -205,7 +225,6 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 
 	'widgets:add' => 'Voeg widgets toe',
 	'widgets:add:description' => "Klik op een widgetknop om de widget aan jouw pagina toe te voegen.",
-	'widgets:panel:close' => "Sluit widgets paneel",
 	'widgets:position:fixed' => '(Vaste positie op pagina)',
 	'widget:unavailable' => 'Je hebt deze widget al toegevoegd',
 	'widget:numbertodisplay' => 'Aantal items om weer te geven',
@@ -216,6 +235,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'widgets' => "Widgets",
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
+	'collection:object:widget' => 'Widgets',
 	'widgets:save:success' => "De widget is succesvol opgeslagen.",
 	'widgets:save:failure' => "Er ging iets mis tijdens het opslaan van je widget. Probeer het nog een keer.",
 	'widgets:add:success' => "De widget is toegevoegd.",
@@ -229,6 +249,10 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 
 	'group' => "Groep",
 	'item:group' => "Groepen",
+	'collection:group' => 'Groepen',
+	'item:group:group' => "Groep",
+	'collection:group:group' => 'Groepen',
+	'groups:tool_gatekeeper' => "De gevraagde functionaliteit is op dit moment niet ingeschakeld in deze groep.",
 
 /**
  * Users
@@ -236,58 +260,17 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 
 	'user' => "Gebruiker",
 	'item:user' => "Gebruikers",
-
-/**
- * Friends
- */
+	'collection:user' => 'Gebruikers',
+	'item:user:user' => 'Gebruiker',
+	'collection:user:user' => 'Gebruikers',
 
 	'friends' => "Vrienden",
-	'friends:yours' => "Jouw vrienden",
-	'friends:owned' => "Vrienden van %s",
-	'friend:add' => "Voeg toe als vriend",
-	'friend:remove' => "Verwijder vriend",
-
-	'friends:add:successful' => "Je hebt %s succesvol toegevoegd als vriend.",
-	'friends:add:failure' => "We konden %s niet toevoegen als vriend. Probeer het nogmaals.",
-
-	'friends:remove:successful' => "Je hebt %s succesvol verwijderd als vriend.",
-	'friends:remove:failure' => "We konden %s niet verwijderen als vriend. Probeer het nogmaals.",
-
-	'friends:none' => "Deze gebruiker heeft nog niemand toegevoegd als vriend.",
-	'friends:none:you' => "Je hebt nog niemand toegevoegd als vriend!",
-
-	'friends:none:found' => "Geen vrienden gevonden.",
-
-	'friends:of:none' => "Deze gebruiker is nog door niemand toegevoegd als vriend. ",
-	'friends:of:none:you' => "Nog niemand heeft jou als vriend toegevoegd. Om beter vindbaar te zijn raden we je aan om je profiel in of aan te vullen, en om content te plaatsen: discussies, blogs etc.",
-
-	'friends:of:owned' => "Mensen die %s als vriend hebben",
-
-	'friends:of' => "Vrienden van",
-	'friends:collections' => "Vriendenlijsten",
-	'collections:add' => "Nieuwe lijst",
-	'friends:collections:add' => "Nieuwe lijst met vrienden",
-	'friends:addfriends' => "Voeg vrienden toe",
-	'friends:collectionname' => "Lijstnaam",
-	'friends:collectionfriends' => "Vrienden in de lijst",
-	'friends:collectionedit' => "Bewerk deze lijst",
-	'friends:nocollections' => "Je hebt nog geen lijst.",
-	'friends:collectiondeleted' => "Je lijst is verwijderd.",
-	'friends:collectiondeletefailed' => "We konden je lijst niet verwijderen. Mogelijk heb je geen toegang, of er was een ander probleem.",
-	'friends:collectionadded' => "Je lijst werd succesvol aangemaakt",
-	'friends:nocollectionname' => "Je moet je lijst een naam geven voordat die opgeslagen kan worden.",
-	'friends:collections:members' => "Leden in de lijst",
-	'friends:collections:edit' => "Bewerk lijst",
-	'friends:collections:edited' => "Lijst bijgewerkt",
-	'friends:collection:edit_failed' => 'De lijst kon niet worden opgeslagen.',
-
-	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+	'collection:friends' => 'Vrienden %s',
 
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "Je hebt geen rechten om de avatar van deze gebruiker te bewerken.",
 	'avatar:create' => 'Maak je avatar',
 	'avatar:edit' => 'Bewerk avatar',
-	'avatar:preview' => 'Voorbeeld',
 	'avatar:upload' => 'Upload een nieuwe avatar',
 	'avatar:current' => 'Huidige avatar',
 	'avatar:remove' => 'Verwijder je avatar en gebruik het standaard icoon',
@@ -301,55 +284,16 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'avatar:crop:fail' => 'Bijsnijden van de avatar mislukt',
 	'avatar:remove:success' => 'Avatar succesvol verwijderd',
 	'avatar:remove:fail' => 'Avatar verwijderen is mislukt',
-
-	'profile:edit' => 'Bewerk profiel',
-	'profile:aboutme' => "Over mij",
-	'profile:description' => "Over mij",
-	'profile:briefdescription' => "Korte omschrijving",
-	'profile:location' => "Locatie",
-	'profile:skills' => "Vaardigheden",
-	'profile:interests' => "Interesses",
-	'profile:contactemail' => "Contact e-mailadres",
-	'profile:phone' => "Telefoon",
-	'profile:mobile' => "Mobiele telefoon",
-	'profile:website' => "Website",
-	'profile:twitter' => "Twitter gebruikersnaam",
-	'profile:saved' => "Je profiel is succesvol opgeslagen.",
-
-	'profile:field:text' => 'Korte tekst',
-	'profile:field:longtext' => 'Groot tekstveld',
-	'profile:field:tags' => 'Tags',
-	'profile:field:url' => 'Webadres',
-	'profile:field:email' => 'E-mailadres',
-	'profile:field:location' => 'Locatie',
-	'profile:field:date' => 'Datum',
-
-	'admin:appearance:profile_fields' => 'Bewerk profielvelden',
-	'profile:edit:default' => 'Bewerk profielvelden',
-	'profile:label' => "Profiellabel",
-	'profile:type' => "Profieltype",
-	'profile:editdefault:delete:fail' => 'Verwijderen van het profielveld is mislukt',
-	'profile:editdefault:delete:success' => 'Standaard profielitem verwijderd!',
-	'profile:defaultprofile:reset' => 'Standaard systeemprofiel herstellen',
-	'profile:resetdefault' => 'Standaardprofiel herstellen',
-	'profile:resetdefault:confirm' => 'Weet je zeker dat je de aangepaste profielvelden wilt verwijderen?',
-	'profile:explainchangefields' => "Je kunt de bestaande profielvelden vervangen met die van jou. Dit doe je met behulp van onderstaand formulier.
-
-Geef het nieuwe profielveld een label, bijvoorbeeld: 'Favoriete team'. Selecteer vervolgens het veldtype, bijvoorbeeld: tekst, url, tags. Klik daarna op de knop 'Toevoegen'. Om de velden te sorteren sleep je ze met het handvat naast het label. Voor het bewerken van het label klik je op de tekst van het label om het bewerkbaar te maken.
-
-Je kunt op elk moment terugkeren naar het standaardprofiel, maar dan gaat alle informatie die al ingevoerd was in aangepaste velden op de profielpagina's verloren.",
-	'profile:editdefault:success' => 'Item succesvol toegevoegd aan het standaardprofiel
-',
-	'profile:editdefault:fail' => 'Het standaardprofiel kon niet worden opgeslagen',
-	'profile:field_too_long' => 'Je profielinformatie kon niet worden opgeslagen omdat de sectie \'%s\' te lang is.',
-	'profile:noaccess' => "Je hebt onvoldoende rechten om dit profiel te bewerken",
-	'profile:invalid_email' => '%s moet een geldig e-mailadres zijn.',
-
+	
+	'action:user:validate:already' => "%s was al gevalideerd",
+	'action:user:validate:success' => "%s is gevalideerd",
+	'action:user:validate:error' => "Een fout is opgetreden tijdens het valideren van %s",
 
 /**
  * Feeds
  */
 	'feed:rss' => 'Abonneer je op de RSS-feed',
+	'feed:rss:title' => 'RSS feed voor deze pagina',
 /**
  * Links
  */
@@ -361,9 +305,8 @@ Je kunt op elk moment terugkeren naar het standaardprofiel, maar dan gaat alle i
  * River
  */
 	'river' => "River",
-	'river:friend:user:default' => "%s is nu bevriend met %s",
+	'river:user:friend' => "%s is nu bevriend met%s",
 	'river:update:user:avatar' => '%s heeft een nieuwe avatar',
-	'river:update:user:profile' => '%s heeft zijn profiel bijgewerkt',
 	'river:noaccess' => 'Je hebt geen toegang tot dit item.',
 	'river:posted:generic' => '%s plaatste',
 	'riveritem:single:user' => 'een gebruiker',
@@ -379,11 +322,7 @@ Je kunt op elk moment terugkeren naar het standaardprofiel, maar dan gaat alle i
 	'river:subject:invalid_subject' => 'Ongeldige gebruiker',
 	'activity:owner' => 'Bekijk activiteit',
 
-	'river:widget:title' => "Activiteit",
-	'river:widget:description' => "Toon de laatste activiteit",
-	'river:widget:type' => "Activiteittype",
-	'river:widgets:friends' => 'Activiteit van vrienden',
-	'river:widgets:all' => 'Alle activiteit op de site',
+	
 
 /**
  * Notifications
@@ -439,6 +378,7 @@ Je kunt op elk moment terugkeren naar het standaardprofiel, maar dan gaat alle i
 	'registerdisabled' => "Je kunt je op dit moment niet registreren.",
 	'register:fields' => 'Alle velden zijn verplicht',
 
+	'registration:noname' => 'Weergavenaam is verplicht',
 	'registration:notemail' => 'Het opgegeven e-mailadres lijkt niet te kloppen. Het e-mailadres moet het format aaa@bbbb.ccc hebben!',
 	'registration:userexists' => 'Deze gebruikersnaam bestaat al.',
 	'registration:usernametooshort' => 'Je gebruikersnaam moet minimaal %u karakters lang zijn.',
@@ -459,6 +399,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:name:label' => "Mijn weergavenaam",
 	'user:name:success' => "Je weergavenaam is succesvol gewijzigd.",
 	'user:name:fail' => "Er is een fout opgetreden tijdens het wijzigen van je weergavenaam.",
+	'user:username:success' => "Je gebruikersnaam is succesvol gewijzigd.",
+	'user:username:fail' => "Je gebruikersnaam kon niet worden gewijzigd",
 
 	'user:set:password' => "Accountwachtwoord",
 	'user:current_password:label' => 'Huidige wachtwoord',
@@ -478,8 +420,10 @@ De volgende karakters zijn niet toegestaan: %s',
 	'user:language:fail' => "Er is een fout opgetreden tijdens het wijzigen van je taalinstelling.",
 
 	'user:username:notfound' => 'Gebruikersnaam %s niet gevonden.',
+	'user:username:help' => 'Houd er rekening mee dat een wijziging van de gebruikersnaam alle dynamische links mbt je account worden gewijzigd',
 
 	'user:password:lost' => 'Wachtwoord vergeten',
+	'user:password:hash_missing' => 'We moeten je vragen om je wachtwoord te wijzigen. De veiligheid van de wachtwoorden is verbeterd, echter konden we niet all accounts migrereren.',
 	'user:password:changereq:success' => 'De aanvraag voor een nieuw wachtwoord is gelukt. Er wordt een e-mail verstuurd.',
 	'user:password:changereq:fail' => 'Er kan geen nieuw wachtwoord aangevraagd worden.',
 
@@ -487,7 +431,7 @@ De volgende karakters zijn niet toegestaan: %s',
 
 	'user:persistent' => 'Onthoud mij',
 
-	'walled_garden:welcome' => 'Welkom bij',
+	'walled_garden:home' => 'Home',
 
 /**
  * Administration
@@ -495,6 +439,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'menu:page:header:administer' => 'Beheer',
 	'menu:page:header:configure' => 'Configureer',
 	'menu:page:header:develop' => 'Ontwikkel',
+	'menu:page:header:information' => 'Informatie',
 	'menu:page:header:default' => 'Andere',
 
 	'admin:view_site' => 'Bekijk website',
@@ -511,10 +456,9 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin' => "Beheer",
 	'admin:description' => "Het beheerpaneel maakt het mogelijk het hele systeem te beheren: van gebruikersbeheer tot hoe plugins zich gedragen. Kies een optie om te beginnen.",
 
-	'admin:statistics' => "Statistieken",
-	'admin:statistics:overview' => 'Overzicht',
-	'admin:statistics:server' => 'Serverinformatie',
-	'admin:statistics:cron' => 'Cron',
+	'admin:statistics' => 'Statistieken',
+	'admin:server' => 'Server',
+	'admin:cron' => 'Cron',
 	'admin:cron:record' => 'Laatste Cron Jobs',
 	'admin:cron:period' => 'Cron periode',
 	'admin:cron:friendly' => 'Laatst afgerond',
@@ -539,9 +483,18 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:users:opt:linktext' => "Configureer gebruikers.",
 	'admin:users:opt:description' => "Configureer gebruikers- en accountinformatie",
 	'admin:users:find' => 'Zoek',
-
-	'admin:administer_utilities:maintenance' => 'Onderhoudsmodus',
+	'admin:users:unvalidated' => 'Ongevalideerd',
+	'admin:users:unvalidated:no_results' => 'Geen ongevalideerde gebruikers',
+	'admin:users:unvalidated:registered' => 'Geregistreerd %s',
+	
+	'admin:configure_utilities:maintenance' => 'Onderhoudsmodus',
 	'admin:upgrades' => 'Upgrades',
+	'admin:upgrades:run' => 'Start alle upgrades',
+	'admin:upgrades:error:invalid_upgrade' => 'Entity %s bestaat niet of is geen geldig type van een ElggUpgrade',
+	'admin:upgrades:error:invalid_batch' => 'Batch runner voor de upgrade %s (%s) kon niet worden geïnstantieerd',
+	'admin:upgrades:completed' => 'Upgrade "%s" is afgerond om %s',
+	'admin:upgrades:completed:errors' => 'Upgrade "%s" is afgerond om %s, maar bevatte %s fouten',
+	'admin:upgrades:failed' => 'Upgrade "%s" is mislukt',
 
 	'admin:settings' => 'Instellingen',
 	'admin:settings:basic' => 'Basisinstellingen',
@@ -550,11 +503,6 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:site:opt:linktext' => "Configureer site",
 	'admin:settings:in_settings_file' => 'Deze instelling configureer je in settings.php',
 
-	'admin:legend:security' => 'Veiligheid',
-	'admin:site:secret:intro' => 'Elgg gebruikt een sleutel om veiligheidstokens voor verschillende doeleinden te genereren. ',
-	'admin:site:secret_regenerated' => "Het 'sitegeheim' is opnieuw gegenereerd. ",
-	'admin:site:secret:regenerate' => "Genereer het 'sitegeheim' opnieuw",
-	'admin:site:secret:regenerate:help' => "Let op: als je het 'sitegeheim' opnieuw laat genereren, dan kunnen sommige gebruikers daar wat hinder van ondervinden. De tokens die in 'Onthoud mij'-cookies, e-mailvalidatie-aanvragen, validatiecodes en meer zit worden dan opnieuw gemaakt.",
 	'site_secret:current_strength' => 'Sterkte van de sleutel',
 	'site_secret:strength:weak' => "Zwak",
 	'site_secret:strength_msg:weak' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren!",
@@ -574,8 +522,11 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:widget:content_stats:help' => 'Blijf op de hoogte van de inhoud die door de gebruikers is gemaakt',
 	'admin:widget:cron_status' => 'Cron status',
 	'admin:widget:cron_status:help' => 'Toont de status van de laatste afronding van de cron jobs',
-	'widget:content_stats:type' => 'Type inhoud',
-	'widget:content_stats:number' => 'Aantal',
+	'admin:statistics:numentities' => 'Inhoud statistieken',
+	'admin:statistics:numentities:type' => 'Content Type',
+	'admin:statistics:numentities:number' => 'Nummer',
+	'admin:statistics:numentities:searchable' => 'Doorzoekbare entiteiten',
+	'admin:statistics:numentities:other' => 'Andere entiteiten',
 
 	'admin:widget:admin_welcome' => 'Welkom',
 	'admin:widget:admin_welcome:help' => "Een korte introductie op het beheerdeel van Elgg",
@@ -583,12 +534,14 @@ De volgende karakters zijn niet toegestaan: %s',
 'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"Navigatie door het beheerders gedeelte is mogelijk via de menu's aan e rechterkant. Het is opgedeeld in drie secties:
-<dl>
-<dt>Beheer</dt><dd>Dagelijkse taken zoals de controle op gemelde inhoud, het controleren wie er online is, en bekijken van statistieken.</dd>
-<dt>Configureer</dt><dd>Gelegenheid taken, zoals het instellen van de naam van de site of het activeren van een plugin.</dd>
-<dt>Ontwikkel</dt><dd>Voor ontwikkelaars die plugin maken of themes ontwikkelen. (Vereist een ontwikkelaars plugin.)</dd>
-</dl>",
+"Navigatie door het beheer gedeelte is mogelijk door het menu aan de rechterkant. Dit is georganiseerd in drie secties:
+	<dl>
+		<dt>Beheer</dt><dd>Basis taken zoals het beheren van gebruikers, bekijken van gerapporteerde content en het activeren van plugins</dd>
+		<dt>Configureer</dt><dd>Incidentele taken zoals het wijzigen van de site naam, of het configureren van plugin instellingen</dd>
+		<dt>Informatie</dt><dd>Informatie over je website zoals content statistieken</dd>
+		<dt>Ontwikkel</dt><dd>Voor ontwikkelaars welke bezig zijn met het ontwikkelen van een plugin of een theme. (Vereist de developer plugin)</dd>
+</dl>
+",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br>Controleer de links onderaan de pagina voor meer informatie en bedankt voor het gebruik van Elgg!',
@@ -625,11 +578,103 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:plugins:markdown:unknown_plugin' => 'Onbekende plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Onbekend bestand.',
 
+	'admin:notices:delete_all' => 'Sluit alle %s meldingen',
 	'admin:notices:could_not_delete' => 'Kon melding niet verwijderen',
 	'item:object:admin_notice' => 'Bericht voor sitebeheerder',
+	'collection:object:admin_notice' => 'Berichten voor beheerder',
 
 	'admin:options' => 'Beheeropties',
 
+	'admin:security' => 'Beveiliging',
+	'admin:security:settings' => 'Instellingen',
+	'admin:security:settings:description' => 'Op deze pagina kun je enkele veiligheidskeuzes maken. Lees de instellingen zorgvuldig.',
+	'admin:security:settings:label:hardening' => 'Hardening',
+	'admin:security:settings:label:notifications' => 'Notificaties',
+	'admin:security:settings:label:site_secret' => 'Site Secret',
+	
+	'admin:security:settings:notify_admins' => 'Stuur alle beheerders een bericht indien er een beheerder wordt toegevoegd of verwijderd',
+	'admin:security:settings:notify_admins:help' => 'Dit stuurt een notificatie naar alle beheerders dat een gebruiker beheerdersrechten heeft gekregen of verloren.',
+	
+	'admin:security:settings:notify_user_admin' => 'Stuur de gebruiker een notificatie indien de beheerdersrol aan hem/haar is toegekend',
+	'admin:security:settings:notify_user_admin:help' => 'Dit zorgt voor een notificatie naar de gebruiker indien hij/zij beheerdersrechten heeft gekregen.',
+	
+	'admin:security:settings:notify_user_ban' => 'Stuur een bericht naar de gebruiker als het account wordt ge(de)blokkeerd',
+	'admin:security:settings:notify_user_ban:help' => 'Dit zorgt voor een notificatie naar de gebruiker indien hij/zij is ge(de)blokkeerd.',
+	
+	'admin:security:settings:protect_upgrade' => 'Bescherm upgrade.php',
+	'admin:security:settings:protect_upgrade:help' => 'Dit beperkt de toegang tot upgrade.php tot beheerders en een ieder die een geldig token heeft.',
+	'admin:security:settings:protect_upgrade:token' => 'Indien je upgrade.php als afgemelde gebruiker, of als een gewone gebruiker, wilt gebruiken, gebruik dan de volgende URL:',
+	
+	'admin:security:settings:protect_cron' => 'Bescherm /cron URLs',
+	'admin:security:settings:protect_cron:help' => 'Dit beperkt de toegang tot /cron URLs. Enkel indien een valide token aanwezig is zal de cron worden uitgevoerd.',
+	'admin:security:settings:protect_cron:token' => 'Om de /cron URLs te kunnen gebruiken, moeten de volgende tokens worden gebruikt. Houdt er rekening mee dat elke interval zijn eigen token heeft.',
+	'admin:security:settings:protect_cron:toggle' => 'Toon/verberg cron URLs',
+	
+	'admin:security:settings:disable_password_autocomplete' => 'Schakel autocomplete uit voor wachtwoord velden',
+	'admin:security:settings:disable_password_autocomplete:help' => 'Gegevens die je invoert bij deze velden zullen door de browser worden gecached. Een aanvaller die toegang heeft tot de browser van het slachtoffer kan deze informatie stelen. Dit is met name belangrijk indien de website wordt gebruikt in een publiekelijke plek zoals internetcafés of het vliegveld. Indien je de autocomplete uitschakeld dan kunnen wachtwoord managers mogelijk niet meer functioneren. De ondersteuning voor de autocomplete functionaliteit kan per browser verschillen.',
+	
+	'admin:security:settings:email_require_password' => 'Vereis een wachtwoord om je emailadres te wijzigen',
+	'admin:security:settings:email_require_password:help' => 'Wanneer een gebruiker zijn/haar emailadres wenst te wijziging, dan moet ook het huidige wachtwoord worden ingevoerd.',
+	
+	'admin:security:settings:site_secret:intro' => 'Elgg gebruikt een sleutel om tokens te genereren voor verschillende doeleinden.',
+	'admin:security:settings:site_secret:regenerate' => "Regenereer site secret",
+	'admin:security:settings:site_secret:regenerate:help' => "Let op: Het regenereren van het site secret kan ongemak met zich meebrengen voor sommige gebruikers. Denk hierbij aan het 'onthoud mij' cookie, email validatie verzoeken of uitnodigingscodes.",
+	
+	'admin:site:secret:regenerated' => "Het site secret is geregenereerd",
+	'admin:site:secret:prevented' => "Het genereren van een nieuw sitegeheim code werd geblokeerd",
+	
+	'admin:notification:make_admin:admin:subject' => 'Er is een nieuwe site beheerder toegevoegd aan %s',
+	'admin:notification:make_admin:admin:body' => 'Beste %s,
+
+%s heeft %s toegevoegd als een site beheerder van %s.
+
+Om het profiel van de nieuwe site beheerder te bekijken, klik hier:
+%s
+
+Om naar de website te gaan, klik hier
+%s',
+	
+	'admin:notification:make_admin:user:subject' => 'Je bent toegevoegd als site beheerder van %s',
+	'admin:notification:make_admin:user:body' => 'Beste %s,
+
+%s heeft je een site beheerder gemaakt van %s.
+
+Om naar de website te gaan, klik hier:
+%s',
+	'admin:notification:remove_admin:admin:subject' => 'Een site beheerder is verwijderd van %s',
+	'admin:notification:remove_admin:admin:body' => 'Beste %s,
+
+%s heeft %s verwijderd als site beheerder van %s.
+
+Om het profiel van de oud beheerder te bekijken, klik hier:
+%s
+
+Om naar de website te gaan, klik hier:
+%s',
+	
+	'admin:notification:remove_admin:user:subject' => 'Je bent verwijderd als site beheerder van %s',
+	'admin:notification:remove_admin:user:body' => 'Beste %s,
+
+%s heeft je verwijderd als site beheerder van %s.
+
+Om naar de website te gaan, klik hier:
+%s',
+	'user:notification:ban:subject' => 'Je account op %s is geblokkeerd',
+	'user:notification:ban:body' => 'Beste %s,
+
+Je account op %s is geblokkeerd.
+
+Om naar de website te gaan, klik hier:
+%s',
+	
+	'user:notification:unban:subject' => 'Je account op %s is niet meer geblokkeerd',
+	'user:notification:unban:body' => 'Beste %s,
+
+je account op %s is niet meer geblokkeerd, Je kunt weer gebruik maken van de website.
+
+Om naar de website te gaan, klik hier:
+%s',
+	
 /**
  * Plugins
  */
@@ -640,6 +685,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'plugins:usersettings:save:ok' => "Gebruikersinstellingen voor de plugin '%s' zijn succesvol opgeslagen.",
 	'plugins:usersettings:save:fail' => "Er is een fout opgetreden tijden het opslaan van de gebruikersinstellingen van de plugin '%s'.",
 	'item:object:plugin' => 'Plugins',
+	'collection:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "Plugins",
 	'admin:plugins:activate_all' => 'Alles activeren',
@@ -673,6 +719,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:plugins:label:contributors:username' => 'Community-gebruikersnaam',
 	'admin:plugins:label:contributors:description' => 'Omschrijving',
 	'admin:plugins:label:dependencies' => 'Afhankelijkheden',
+	'admin:plugins:label:missing_dependency' => 'Ontbrekende afhankelijkheid [%s]',
 
 	'admin:plugins:warning:unmet_dependencies' => 'Deze plugin heeft onvervulde afhankelijkheden en kan niet worden geactiveerd. Controleer de afhankelijkheden onder \'meer info\'.',
 	'admin:plugins:warning:invalid' => '%s is geen geldige plugin voor Elgg. Controleer <a href="http://docs.elgg.org/Invalid_Plugin" target="_blank">de Elgg-documentatie</a> voor handige tips.',
@@ -707,7 +754,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:statistics:description' => "Dit is een overzicht van onder andere gebruikersstatistieken van de site. Als je meer gedetailleerde informatie nodig hebt, is er een professionele beheerfunctie beschikbaar.",
 	'admin:statistics:opt:description' => "Bekijk statistische gegevens over gebruikers en objecten op de site.",
 	'admin:statistics:opt:linktext' => "Bekijk statistieken",
-	'admin:statistics:label:basic' => "Basis sitestatistieken",
+	'admin:statistics:label:user' => "Gebruikers statistieken",
 	'admin:statistics:label:numentities' => "Entities op de site",
 	'admin:statistics:label:numusers' => "Aantal gebruikers",
 	'admin:statistics:label:numonline' => "Aantal gebruikers online",
@@ -716,8 +763,11 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:statistics:label:version' => "Elgg-versie",
 	'admin:statistics:label:version:release' => "Release",
 	'admin:statistics:label:version:version' => "Versie",
+	'admin:statistics:label:version:code' => "Code versie",
 
+	'admin:server:label:elgg' => 'Elgg',
 	'admin:server:label:php' => 'PHP',
+	'admin:server:label:phpinfo' => 'Toon PHPInfo',
 	'admin:server:label:web_server' => 'Webserver',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Locatie van log',
@@ -732,9 +782,14 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:server:warning:post_max_too_small' => '(PS: post_max_size moet groter zijn dan deze waarde om uploads van deze grootte te ondersteunen)',
 	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
-		Memcache is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure memcache.
-	',
+		Memcache is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
+		Voor verbeterde performance wordt het aangeraden om Memcache (of Redis) in te schakelen en te configureren.
+',
+
+	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => '
+		Redis is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
+		Voor verbeterde performance wordt het aangeraden om Redis (of Memcached) in te schakelen en te configureren.',
 
 	'admin:user:label:search' => "Gebruikers zoeken:",
 	'admin:user:label:searchbutton' => "Zoek",
@@ -758,7 +813,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:user:removeadmin:no' => "We konden de beheerrechten van deze gebruiker niet verwijderen.",
 	'admin:user:self:removeadmin:no' => "Je kunt jezelf de beheerrechten niet afnemen!",
 
-	'admin:appearance:menu_items' => 'Menu-items',
+	'admin:configure_utilities:menu_items' => 'Menu items',
 	'admin:menu_items:configure' => 'Configureer items in het hoofdmenu',
 	'admin:menu_items:description' => 'Selecteer welke menu-items je als hoofditems wilt zien. Ongebruikte items zullen worden toegevoegd aan "Meer" aan het einde van de lijst.',
 	'admin:menu_items:hide_toolbar_entries' => 'Verwijder links uit het menu?',
@@ -766,9 +821,10 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:add_menu_item' => 'Voeg een eigen menu-item toe',
 	'admin:add_menu_item:description' => 'Vul de weergavenaam en URL in om een eigen menu-item toe te voegen aan het navigatiemenu.',
 
-	'admin:appearance:default_widgets' => 'Standaardwidgets',
+	'admin:configure_utilities:default_widgets' => 'Standaard widgets',
 	'admin:default_widgets:unknown_type' => 'Onbekend widgettype',
-	'admin:default_widgets:instructions' => 'Plaats, verwijder, positioneer en configureer standaardwidgets voor de geselecteerde widgetpagina. Deze wijzigingen hebben alleen effect op nieuwe gebruikers.',
+	'admin:default_widgets:instructions' => 'Plaats, verwijder, positioneer en configureer de standaard widgets voor de geselecteerde pagina.
+Deze wijzigingen hebben alleen effect op nieuwe gebruikers van de website.',
 
 	'admin:robots.txt:instructions' => "Je kunt hieronder de robots.txt van de site bewerken.",
 	'admin:robots.txt:plugins' => "Plugins zullen het volgende toevoegen aan de robots.txt:",
@@ -776,7 +832,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:robots.txt:physical' => "De robots.txt tool zal niet werken omdat er een fysiek robots.txt bestand aanwezig is.",
 
 	'admin:maintenance_mode:default_message' => 'De site is offline in verband met onderhoud.',
-	'admin:maintenance_mode:instructions' => 'Je kunt de onderhoudsmodus het beste alléén gebruiken als er sprake is van een upgrade, of als je grote veranderingen aan de site wilt aanbrengen. 
+	'admin:maintenance_mode:instructions' => 'Je kunt de onderhoudsmodus het beste alléén gebruiken als er sprake is van een upgrade, of als je grote veranderingen aan de site wilt aanbrengen.
 Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en de site bekijken!',
 	'admin:maintenance_mode:mode_label' => 'Onderhoudsmodus',
 	'admin:maintenance_mode:message_label' => 'Bericht dat gebruikers zien als de site in onderhoudsmodus is',
@@ -793,7 +849,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'usersettings:statistics' => "Jouw statistieken",
 	'usersettings:statistics:opt:description' => "Bekijk statistische gegevens van gebruikers en objecten op je site.",
 	'usersettings:statistics:opt:linktext' => "Accountstatistieken",
-	
+
 	'usersettings:statistics:login_history' => "Login History",
 	'usersettings:statistics:login_history:date' => "Date",
 	'usersettings:statistics:login_history:ip' => "IP Address",
@@ -828,12 +884,6 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'river:comments:all' => 'Bekijk alle %u reacties',
 	'river:generic_comment' => 'reageerde op %s %s',
 
-	'friends:widget:description' => "Toont een aantal van je vrienden.",
-	'friends:num_display' => "Aantal vrienden om weer te geven",
-	'friends:icon_size' => "Grootte van de avatar",
-	'friends:tiny' => "Klein",
-	'friends:small' => "Normaal",
-
 /**
  * Icons
  */
@@ -851,6 +901,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
  */
 
 	'save' => "Opslaan",
+	'save_go' => "Opslaan en doorgaan naar %s",
 	'reset' => 'Wis',
 	'publish' => "Publiceer",
 	'cancel' => "Annuleren",
@@ -901,6 +952,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'create' => 'Aanmaken',
 	'remove' => 'Verwijder',
 	'revert' => 'Herstel',
+	'validate' => 'Valideer',
 
 	'site' => 'Website',
 	'activity' => 'Activiteit',
@@ -1011,7 +1063,8 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 
 	'deleteconfirm' => "Weet je zeker dat je dit item wilt verwijderen?",
 	'deleteconfirm:plural' => "Weet je zeker dat je deze items wilt verwijderen?",
-	'fileexists' => "Er is reeds een bestand geüpload. Om het te vervangen selecteer het hieronder:",
+	'fileexists' => "Er is reeds een bestand geüpload. Om het te vervangen selecteer hieronder een nieuw bestand",
+	'input:file:upload_limit' => 'De maximale bestandsgrootte is %s',
 
 /**
  * User add
@@ -1020,16 +1073,16 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'useradd:subject' => 'Gebruikersaccount aangemaakt',
 	'useradd:body' => '%s,
 
-Een gebruikers account is voor jou aangemaakt op %s. Om je aan te melden, klikt hier:
+Er is een gebruikersaccount voor je aangemaakt op %s. Om je aan te melden bezoek:
 
 %s
 
-En meld je aan met de volgende gegevens:
+Om je aan te melden moet je de volgende gegevens gebruiken:
 
 Gebruikersnaam: %s
 Wachtwoord: %s
 
-Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
+Als je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 
 /**
  * System messages
@@ -1037,6 +1090,15 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 
 	'systemmessages:dismiss' => "Klik om te verbergen",
 
+
+/**
+ * Messages
+ */
+	'messages:title:success' => 'Succes',
+	'messages:title:error' => 'Fout',
+	'messages:title:warning' => 'Waarschuwing',
+	'messages:title:help' => 'Help',
+	'messages:title:notice' => 'Bericht',
 
 /**
  * Import / export
@@ -1049,6 +1111,10 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
  * Time
  */
 
+	'input:date_format' => 'Y-m-d',
+	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
+	'input:time_format' => 'G:i',
+
 	'friendlytime:justnow' => "zojuist",
 	'friendlytime:minutes' => "%s minuten geleden",
 	'friendlytime:minutes:singular' => "een minuut geleden",
@@ -1057,6 +1123,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'friendlytime:days' => "%s dagen geleden",
 	'friendlytime:days:singular' => "gisteren",
 	'friendlytime:date_format' => 'j F Y @ G:i',
+	'friendlytime:date_format:short' => 'j M Y',
 
 	'friendlytime:future:minutes' => "over %s minuten",
 	'friendlytime:future:minutes:singular' => "zometeen",
@@ -1077,7 +1144,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'date:month:10' => '%s oktober',
 	'date:month:11' => '%s november',
 	'date:month:12' => '%s december',
-	
+
 	'date:month:short:01' => '%s jan',
 	'date:month:short:02' => '%s feb',
 	'date:month:short:03' => '%s mrt',
@@ -1116,7 +1183,6 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'interval:weekly' => 'Elke week',
 	'interval:monthly' => 'Elke maand',
 	'interval:yearly' => 'Elk jaar',
-	'interval:reboot' => 'Bij opnieuw opstarten',
 
 /**
  * System settings
@@ -1124,6 +1190,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 
 	'installation:sitename' => "De naam van je site (bijvoorbeeld 'Mijn sociale netwerksite'):",
 	'installation:sitedescription' => "Korte omschrijving van je site (optioneel)",
+	'installation:sitedescription:help' => "Met de gebundelde plugins zal dit enkel verschijnen in de 'description' meta-tag voor zoekmachine resultaten.",
 	'installation:wwwroot' => "De site-URL, gevolgd door een slash:",
 	'installation:path' => "Het volledige pad naar de hoofdmap van de site op de schijf, gevolgd door een slash:",
 	'installation:dataroot' => "Het volledige pad naar de map waar de uploads worden opgeslagen, gevolgd door een slash:",
@@ -1147,6 +1214,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'installation:view' => "Geeft de view op die standaard wordt gebruikt binnen de site, of laat het leeg voor de standaardview. Bij twijfel, laat de standaard staan!",
 
 	'installation:siteemail' => "Site e-mailadres (dit wordt gebruikt voor het verzenden van systeem e-mails):",
+	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "Standaard aantal items per pagina",
 
 	'admin:site:access:warning' => "Het wijzigen van de toegangsinstellingen is alleen van toepassing op nieuwe content.",
@@ -1177,20 +1245,29 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'admin:legend:content_access' => 'Toegang tot content',
 	'admin:legend:site_access' => 'Toegang tot de site',
 	'admin:legend:debug' => 'Debugging en loggen',
-
+	
+	'config:remove_branding:label' => "Verwijder Elgg uitingen",
+	'config:remove_branding:help' => "Overal op de website zijn er verschillende links en logo's welke aantonen dat de website is gemaakt middels Elgg. Als je de uitingen verwijderd overweeg om een donatie te doen op https://elgg.org/about/supporters",
+	'config:disable_rss:label' => "Schakel RSS feeds uit",
+	'config:disable_rss:help' => "Schakel dit uit om de RSS feeds niet meer te promoten",
+	'config:friendly_time_number_of_days:label' => "Aantal dagen dat de relatieve tijdsweergave gebruikt mag worden",
+	'config:friendly_time_number_of_days:help' => "Je kunt het aantal dagen configureren dat de relatieve tijdsweergave gebruikt wordt. Na het opgegeven aantal dagen zal de relatieve tijdsweergave wijzigen in een normaal datum formaat. Indien dit wordt ingesteld op 0 zal de relatieve tijdsweergave niet gebruikt worden.",
+	
 	'upgrading' => 'Bijwerken',
 	'upgrade:core' => 'Je Elgg-installatie is bijgewerkt',
 	'upgrade:unlock' => 'Ontgrendel upgrade',
 	'upgrade:unlock:confirm' => "De database is geblokkeerd door een andere upgrade. Meerdere upgrades tegelijkertijd laten lopen is gevaarlijk. Je moet alleen verder gaan als je zeker weet dat er geen andere upgrade draait. Ontgrendelen?",
+	'upgrade:terminated' => 'De uprgade is afgebroken door een event handler',
 	'upgrade:locked' => "Upgrade is niet mogelijk: er loopt reeds een upgrade. Om de upgrade te ontgrendelen bezoek je de beheersectie.",
 	'upgrade:unlock:success' => "Upgrade succesvol ontgrendeld",
 	'upgrade:unable_to_upgrade' => 'Upgrade niet mogelijk.',
 	'upgrade:unable_to_upgrade_info' =>
-		'Deze installatie kan niet worden geüpgrade omdat er \'legacy views\' zijn ontdekt in de Elgg \'core views\' map. Deze views zijn verouderd en moeten worden verwijderd om Elgg correct te laten functioneren. Als je geen wijzigingen hebt gemaakt aan de Elgg-core kun je de map verwijderen en vervangen met de inhoud uit de laatste versie van Elgg, die je kunt vinden op <a href="http://elgg.org" target="_blank">elgg.org</a>.<br><br>
+		'De installatie kan niet worden geüpgrade vanwege de aanwezigheid van legacy views in de Elgg core views map. Deze views zijn verouderd en dienen te worden verwijderd om Elgg correct te laten functioneren. 
+Indien je geen aanpassingen hebt gemaakt aan de Elgg core kun je de views map verwijderen en vervangen met de inhoud uit de laatste Elgg release welke te downloaden is op <a href="http://elgg.org">elgg.org</a>.<br /><br />
 
-Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">documentatie \'Upgrading Elgg\'</a>. Als je hulp nodig hebt, plaats je je vraag op de <a href="http://community.elgg.org/pg/groups/discussion/" target="_blank">Community Support Forums</a>.',
+Indien je gedetailleerde informatie nodig hebt, bekijk de <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">Upgrading Elgg documentatie</a>.
+Indien de ondersteuning nodig hebt bezoek de <a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
 
-	'update:twitter_api:deactivated' => 'Twitter API (voorheen Twitter Service) is uitgeschakeld tijdens de upgrade. Activeer deze zelf weer als het nodig is.',
 	'update:oauth_api:deactivated' => 'OAuth API (voorheen OAuth Lib) is uitgeschakeld tijdens de upgrade. Activeer deze zelf weer als het nodig is.',
 	'upgrade:site_secret_warning:moderate' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
 	'upgrade:site_secret_warning:weak' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
@@ -1200,14 +1277,13 @@ Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.
 	'admin:pending_upgrades' => 'Er zijn belangrijke upgrades waar je beter nu meteen aandacht aan kunt schenken!',
 	'admin:view_upgrades' => 'Bekijk de upgrades.',
 	'item:object:elgg_upgrade' => 'Site-upgrades',
+	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'De installatie is up-to-date!',
 
 	'upgrade:item_count' => 'Er zijn <b>%s</b> zaken die geüpgrade moeten worden.',
 	'upgrade:warning' => 'Let op: dit kan lang duren, als je een grote site hebt!',
 	'upgrade:success_count' => 'Geüpgraded:',
 	'upgrade:error_count' => 'Fouten:',
-	'upgrade:river_update_failed' => 'Het updaten van de activiteitstroom voor het item met de ID %s is helaas niet gelukt.',
-	'upgrade:timestamp_update_failed' => 'Het is helaas niet gelukt om de tijdsdatering voor het item met het ID %s te updaten.',
 	'upgrade:finished' => 'Upgrade is voltooid.',
 	'upgrade:finished_with_errors' => '<p>De upgrade is afgerond, maar er zijn fouten geconstateerd. Ververs de pagina en probeer de upgrade opnieuw uit te voeren.</p></p><br />Als de fouten zich opnieuw voordoen, kijk dan in je serverlog of daar een mogelijke oorzaak te vinden is. Je kunt bijstand krijgen bij het oplossen van de fout op de community van Elgg <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">in de groep \'technisch(e) support\'</a>',
 
@@ -1232,27 +1308,24 @@ Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.
 
 	'email:settings' => "E-mailinstellingen",
 	'email:address:label' => "Jouw e-mailadres",
+	'email:address:password' => "Wachtwoord",
+	'email:address:password:help' => "Om je e-mail adres te kunnen wijzigen moet je je huidige wachtwoord bevestigen.",
 
 	'email:save:success' => "Het nieuwe e-mail adres is opgeslagen, en er wordt verificatie gevraagd.",
 	'email:save:fail' => "Je nieuwe e-mailadres kon niet worden opgeslagen.",
+	'email:save:fail:password' => "Het opgegeven wachtwoord komt niet overeen met je huidige wachtwoord, je e-mail adres kon niet worden aangepast.",
 
 	'friend:newfriend:subject' => "%s heeft jou toegevoegd als vriend!",
-	'friend:newfriend:body' => "Hallo!
+	'friend:newfriend:body' => "%s heeft je toegevoegd als vriend!
 
-%s heeft jou toegevoegd als vriend.
+Om het profiel te bekijken, klik hier:
 
-Om zijn/haar profiel te bekijken klik je hier:
-
-%s
-
----
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren. ",
+%s",
 
 	'email:changepassword:subject' => "Wachtwoord gewijzigd!",
 	'email:changepassword:body' => "Beste %s,
 
-Je wachtwoord is gewijzigd.",
+je wachtwoord is gewijzigd.",
 
 	'email:resetpassword:subject' => "Wachtwoord reset!",
 	'email:resetpassword:body' => "Beste %s,
@@ -1262,12 +1335,11 @@ Je wachtwoord is gereset naar: %s",
 	'email:changereq:subject' => "Aanvraag om het wachtwoord te wijzigen.",
 	'email:changereq:body' => "Beste %s,
 
-Iemand (van het IP adres %s) heeft een wijziging van het wachtwoord voor dit account aangevraagd.
+Iemand (vanaf het IP adres %s) heeft een wachtwoord wijziging aangevraagd voor dit account.
 
-Indien jij deze persoon bent, klik dan op onderstaande link. In het andere geval kun je deze email negeren.
+Indien dit door jou is aangevraagd, klik op de onderstaande link. Anders negeer deze e-mail.
 
-%s
-",
+%s",
 
 /**
  * user default access
@@ -1284,8 +1356,9 @@ Indien jij deze persoon bent, klik dan op onderstaande link. In het andere geval
 
 	'comments:count' => "%s reacties",
 	'item:object:comment' => 'Reacties',
+	'collection:object:comment' => 'Reacties',
 
-	'river:comment:object:default' => '%s reageerde op %s',
+	'river:object:default:comment' => '%s reageerde op %s',
 
 	'generic_comments:add' => "Voeg een reactie toe",
 	'generic_comments:edit' => "Reactie bewerken",
@@ -1294,33 +1367,39 @@ Indien jij deze persoon bent, klik dan op onderstaande link. In het andere geval
 	'generic_comments:latest' => "Laatste reacties",
 	'generic_comment:posted' => "Je reactie is succesvol geplaatst.",
 	'generic_comment:updated' => "De reactie is gewijzigd",
-	'generic_comment:deleted' => "Je reactie is succesvol verwijderd.",
+	'entity:delete:object:comment:success' => "De reactie is succesvol verwijderd",
 	'generic_comment:blank' => "Sorry, je moet wel wat invullen voordat we je reactie kunnen opslaan!",
 	'generic_comment:notfound' => "Sorry, we konden de opgegeven reactie niet vinden.",
 	'generic_comment:notfound_fallback' => "Sorry, we konden de opgegeven reactie niet vinden, maar we hebben je doorgestuurd naar de pagina waar de reactie is achtergelaten.",
-	'generic_comment:notdeleted' => "Sorry, we konden deze reactie niet verwijderen.",
 	'generic_comment:failure' => "Er is een fout opgetreden tijdens het opslaan van je reactie. Probeer het nogmaals.",
 	'generic_comment:none' => 'Geen reacties',
 	'generic_comment:title' => 'Reactie door %s',
 	'generic_comment:on' => '%s op %s',
 	'generic_comments:latest:posted' => 'plaatste een',
 
-	'generic_comment:email:subject' => 'Er is een nieuwe reactie!',
-	'generic_comment:email:body' => "Hoi!
-
-Er is een nieuwe reactie op je item %s. De reactie die %s gaf is:
-
-%s
-
-Om te antwoorden of het originele item te zien, klik je hier:
+	'generic_comment:notification:owner:subject' => 'Je hebt een nieuwe reactie',
+	'generic_comment:notification:owner:summary' => 'Je hebt een nieuwe reactie',
+	'generic_comment:notification:owner:body' => "Je hebt een nieuwe reactie gekregen op je item \"%s\" van %s.
 
 %s
 
-Wil je eerst het profiel van %s bekijken? Klik dan hier: %s
+Om te reageren of het originele item te bekijken, klik hier:
+%s
 
----
+Om naar het profiel van %s te gaan, klik hier:
+%s",
+	
+	'generic_comment:notification:user:subject' => 'Een nieuwe reactie op: %s',
+	'generic_comment:notification:user:summary' => 'Een nieuwe reactie op: %s',
+	'generic_comment:notification:user:body' => "Je hebt een nieuwe reactie gekregen op je item \"%s\" van %s.
 
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
+%s
+
+Om te reageren of het originele item te bekijken, klik hier:
+%s
+
+Om naar het profiel van te gaan, klik hier:
+%s",
 
 /**
  * Entities
@@ -1328,7 +1407,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 
 	'byline' => 'Door %s',
 	'byline:ingroup' => 'in de groep %s',
-	'entity:default:strapline' => 'Aangemaakt op %s door %s',
 	'entity:default:missingsupport:popup' => 'Deze entity kan niet correct worden weergegeven. Dit kan komen doordat er ondersteuning nodig is van een plugin die niet meer is geïnstalleerd.',
 
 	'entity:delete:item' => 'Item',
@@ -1531,4 +1609,21 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 
 	"field:required" => 'Vereist',
 
+	"core:upgrade:2017080900:title" => "Wijzig de database codering om multi-byte te ondersteunen",
+	"core:upgrade:2017080900:description" => "Wijzigt de database codering naar utf8mb4 om ondersteuning te bieden voor multi-byte karakters zoals emoji's",
+
+	"core:upgrade:2017080950:title" => "Update de standaard beveiligingsinstellingen",
+	"core:upgrade:2017080950:description" => "De geïnstalleerde Elgg versie bied een aantal extra beveiligingsinstellingen. Het wordt aangeraden om deze upgrade uit te voeren om de instellingen goed in te stellen. Je kunt de instellingen ten alle tijden wijzigen onder de Beveiligingsinstellingen",
+
+	"core:upgrade:2017121200:title" => "Maakt de vrienden access collections",
+	"core:upgrade:2017121200:description" => "Migreer het vrienden toegangsniveau naar een access collection",
+
+	"core:upgrade:2018041800:title" => "Activeer nieuwe plugins",
+	"core:upgrade:2018041800:description" => "Bepaalde core functionaliteiten zijn verhuisd naar eigen plugins. Deze upgrade zal deze nieuwe plugin inschakelen om compatibiliteit te bieden aan derde partij plugins welke misschien afhankelijk zijn van deze functionaliteiten.",
+
+	"core:upgrade:2018041801:title" => "Verwijder oude plugin entiteiten",
+	"core:upgrade:2018041801:description" => "Verwijder entiteiten welke geassocieerd zijn aan plugins welke zijn verwijderd in Elgg 3.0",
+	
+	"core:upgrade:2018061401:title" => "Migreer cron logboek",
+	"core:upgrade:2018061401:description" => "Migreer de cron logboek bijdrages in de database naar de nieuwe locatie.",
 );

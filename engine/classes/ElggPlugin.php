@@ -108,12 +108,11 @@ class ElggPlugin extends ElggObject {
 			$priority = 'last';
 		}
 
-		$guid = parent::save();
-		if ($guid && $priority) {
-			$this->setPriority($new ? 'new' : 'last');
+		if ($priority) {
+			$this->setPriority($priority);
 		}
-
-		return $guid;
+		
+		return parent::save();
 	}
 
 	/**
@@ -149,7 +148,7 @@ class ElggPlugin extends ElggObject {
 	 * @access private
 	 */
 	public function setPath($path) {
-		$this->path = $path;
+		$this->path = \Elgg\Project\Paths::sanitize($path, true);
 	}
 
 	/**
@@ -159,12 +158,11 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function getPath() {
 		if (isset($this->path)) {
-			$path = $this->path;
-		} else {
-			$path = elgg_get_plugins_path() . $this->getID();
+			return $this->path;
 		}
-
-		return \Elgg\Project\Paths::sanitize($path, true);
+		
+		$this->setPath(elgg_get_plugins_path() . $this->getID());
+		return $this->path;
 	}
 
 	/**
@@ -786,9 +784,20 @@ class ElggPlugin extends ElggObject {
 		$this->registerClasses();
 
 		$autoload_file = 'vendor/autoload.php';
-		if ($this->canReadFile($autoload_file)) {
-			Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+		if (!$this->canReadFile($autoload_file)) {
+			return;
 		}
+		
+		$autoloader = Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+		
+		if (!$autoloader instanceof \Composer\Autoload\ClassLoader) {
+			return;
+		}
+		
+		$autoloader->unregister();
+		
+		// plugins should be appended, composer defaults to prepend
+		$autoloader->register(false);
 	}
 
 	/**
@@ -1094,9 +1103,7 @@ class ElggPlugin extends ElggObject {
 	protected function registerClasses() {
 		$classes_path = "{$this->getPath()}classes";
 
-		if (is_dir($classes_path)) {
-			_elgg_services()->autoloadManager->addClasses($classes_path);
-		}
+		_elgg_services()->autoloadManager->addClasses($classes_path);
 	}
 
 	/**

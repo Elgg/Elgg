@@ -187,6 +187,12 @@ define(function (require) {
 
 			// show the toggle-editor link which is hidden by default, so it will only show up if the editor is correctly loaded
 			$toggler.show();
+			
+			$(textarea).closest('form').on('elgg-ajax-objectify', function() {
+				if ($(textarea).data('ckeditorInstance')) {
+					$(textarea).ckeditorGet().updateElement();
+				}
+			});
 		},
 
 		/**

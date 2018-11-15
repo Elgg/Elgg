@@ -31,8 +31,7 @@ return array(
 %s
 
 View and comment on the page:
-%s
-',
+%s',
 
 	'pages:more' => 'More pages',
 	'pages:none' => 'No pages created yet',

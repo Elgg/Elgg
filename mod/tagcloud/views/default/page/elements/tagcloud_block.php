@@ -42,7 +42,7 @@ if (!$cloud) {
 $cloud .= '<p class="small">';
 $cloud .= elgg_view_icon('tag');
 $cloud .= elgg_view('output/url', [
-	'href' => 'tags',
+	'href' => elgg_generate_url('tagcloud'),
 	'text' => elgg_echo('tagcloud:allsitetags'),
 	'is_trusted' => true,
 ]);
