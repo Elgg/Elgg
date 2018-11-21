@@ -26,7 +26,7 @@
  *                           ['text' => 'Tab 2', 'href' => '/static', 'data-ajax-reload' => false],
  *                           ['text' => 'Tab 3', 'href' => '/static', 'data-ajax-reload' => false, 'data-ajax-query' => json_encode($data)],
  *                           ['text' => 'Tab 3', 'href' => '/page', 'data-ajax-href' => '/ajax/page'],
- *                           ['text' => 'Tab 4', 'href' => 'Tab content'],
+ *                           ['text' => 'Tab 4', 'content' => 'Tab content'],
  *                        ]
  *                        </code>
  */
