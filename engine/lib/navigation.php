@@ -139,6 +139,10 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 	if (!$menus) {
 		return null;
 	}
+	
+	if (!isset($menus[$menu_name])) {
+		return null;
+	}
 
 	foreach ($menus[$menu_name] as $index => $menu_object) {
 		/* @var \ElggMenuItem $menu_object */
