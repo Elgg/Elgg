@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Pages externes",
-	'admin:appearance:expages' => "Pages externes",
+	'admin:configure_utilities:expages' => "Pages du site",
 	'expages:edit:viewpage' => "Voir la page sur le site",
 	'expages:about' => "À propos",
 	'expages:terms' => "Mentions légales",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "La page externe a bien été mise à jour.",
 	'expages:error' => "Impossible d'enregistrer cette page.",
-];
+);

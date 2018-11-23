@@ -123,7 +123,6 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'GatekeeperException' => 'Je hebt niet de juiste rechten om deze pagina te zien.',
 	'BadRequestException' => 'Het verzoek is onjuist',
 	'ValidationException' => 'De opgestuurde data voldoet niet aan de vereisten, controleer de invoer',
-	'LogicException:NotSubclass' => '%s must extend %s',
 	'LogicException:InterfaceNotImplemented' => '%smoet %s implementeren',
 
 	'deprecatedfunction' => 'Waarschuwing: Deze code gebruikt de niet meer gebruikte functies \'%s\' en is niet compatibel met deze versie van Elgg. ',
@@ -242,7 +241,8 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'widgets:add:failure' => "De widget kon niet worden toegevoegd.",
 	'widgets:move:failure' => "De nieuwe widgetpositie kon niet worden opgeslagen.",
 	'widgets:remove:failure' => "De widget kan niet worden verwijderd",
-
+	'widgets:not_configured' => "This widget is not yet configured",
+	
 /**
  * Groups
  */
@@ -305,7 +305,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
  * River
  */
 	'river' => "River",
-	'river:user:friend' => "%s is nu bevriend met%s",
+	'river:user:friend' => "%s is nu bevriend met %s",
 	'river:update:user:avatar' => '%s heeft een nieuwe avatar',
 	'river:noaccess' => 'Je hebt geen toegang tot dit item.',
 	'river:posted:generic' => '%s plaatste',
@@ -534,13 +534,14 @@ De volgende karakters zijn niet toegestaan: %s',
 'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"Navigatie door het beheer gedeelte is mogelijk door het menu aan de rechterkant. Dit is georganiseerd in drie secties:
+"Navigation for the administration area is provided by the menu to the right. It is organized into
+three sections:
 	<dl>
-		<dt>Beheer</dt><dd>Basis taken zoals het beheren van gebruikers, bekijken van gerapporteerde content en het activeren van plugins</dd>
-		<dt>Configureer</dt><dd>Incidentele taken zoals het wijzigen van de site naam, of het configureren van plugin instellingen</dd>
-		<dt>Informatie</dt><dd>Informatie over je website zoals content statistieken</dd>
-		<dt>Ontwikkel</dt><dd>Voor ontwikkelaars welke bezig zijn met het ontwikkelen van een plugin of een theme. (Vereist de developer plugin)</dd>
-</dl>
+		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
+		<dt>Information</dt><dd>Information about your site like statistics.</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
+	</dl>
 ",
 
 	// argh, this is ugly
@@ -782,14 +783,15 @@ Om naar de website te gaan, klik hier:
 	'admin:server:warning:post_max_too_small' => '(PS: post_max_size moet groter zijn dan deze waarde om uploads van deze grootte te ondersteunen)',
 	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
-		Memcache is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
-		Voor verbeterde performance wordt het aangeraden om Memcache (of Redis) in te schakelen en te configureren.
+		Memcache is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure memcache (or redis).
 ',
 
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
-		Redis is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
-		Voor verbeterde performance wordt het aangeraden om Redis (of Memcached) in te schakelen en te configureren.',
+		Redis is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure redis (or memcached).
+',
 
 	'admin:user:label:search' => "Gebruikers zoeken:",
 	'admin:user:label:searchbutton' => "Zoek",
@@ -1073,16 +1075,16 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'useradd:subject' => 'Gebruikersaccount aangemaakt',
 	'useradd:body' => '%s,
 
-Er is een gebruikersaccount voor je aangemaakt op %s. Om je aan te melden bezoek:
+A user account has been created for you at %s. To log in, visit:
 
 %s
 
-Om je aan te melden moet je de volgende gegevens gebruiken:
+And log in with these user credentials:
 
-Gebruikersnaam: %s
-Wachtwoord: %s
+Username: %s
+Password: %s
 
-Als je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
+Once you have logged in, we highly recommend that you change your password.',
 
 /**
  * System messages
@@ -1214,7 +1216,6 @@ Als je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'installation:view' => "Geeft de view op die standaard wordt gebruikt binnen de site, of laat het leeg voor de standaardview. Bij twijfel, laat de standaard staan!",
 
 	'installation:siteemail' => "Site e-mailadres (dit wordt gebruikt voor het verzenden van systeem e-mails):",
-	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "Standaard aantal items per pagina",
 
 	'admin:site:access:warning' => "Het wijzigen van de toegangsinstellingen is alleen van toepassing op nieuwe content.",
@@ -1247,7 +1248,7 @@ Als je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'admin:legend:debug' => 'Debugging en loggen',
 	
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
-	'config:remove_branding:help' => "Overal op de website zijn er verschillende links en logo's welke aantonen dat de website is gemaakt middels Elgg. Als je de uitingen verwijderd overweeg om een donatie te doen op https://elgg.org/about/supporters",
+	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Schakel RSS feeds uit",
 	'config:disable_rss:help' => "Schakel dit uit om de RSS feeds niet meer te promoten",
 	'config:friendly_time_number_of_days:label' => "Aantal dagen dat de relatieve tijdsweergave gebruikt mag worden",
@@ -1261,12 +1262,15 @@ Als je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'upgrade:locked' => "Upgrade is niet mogelijk: er loopt reeds een upgrade. Om de upgrade te ontgrendelen bezoek je de beheersectie.",
 	'upgrade:unlock:success' => "Upgrade succesvol ontgrendeld",
 	'upgrade:unable_to_upgrade' => 'Upgrade niet mogelijk.',
-	'upgrade:unable_to_upgrade_info' =>
-		'De installatie kan niet worden geüpgrade vanwege de aanwezigheid van legacy views in de Elgg core views map. Deze views zijn verouderd en dienen te worden verwijderd om Elgg correct te laten functioneren. 
-Indien je geen aanpassingen hebt gemaakt aan de Elgg core kun je de views map verwijderen en vervangen met de inhoud uit de laatste Elgg release welke te downloaden is op <a href="http://elgg.org">elgg.org</a>.<br /><br />
+	'upgrade:unable_to_upgrade_info' => 'This installation cannot be upgraded because legacy views
+were detected in the Elgg core views directory. These views have been deprecated and need to be
+removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
+simply delete the views directory and replace it with the one from the latest
+package of Elgg downloaded from <a href="https://elgg.org">elgg.org</a>.<br /><br />
 
-Indien je gedetailleerde informatie nodig hebt, bekijk de <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">Upgrading Elgg documentatie</a>.
-Indien de ondersteuning nodig hebt bezoek de <a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
+If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
+Upgrading Elgg documentation</a>. If you require assistance, please post to the
+<a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
 
 	'update:oauth_api:deactivated' => 'OAuth API (voorheen OAuth Lib) is uitgeschakeld tijdens de upgrade. Activeer deze zelf weer als het nodig is.',
 	'upgrade:site_secret_warning:moderate' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
@@ -1316,9 +1320,9 @@ Indien de ondersteuning nodig hebt bezoek de <a href="http://community.elgg.org/
 	'email:save:fail:password' => "Het opgegeven wachtwoord komt niet overeen met je huidige wachtwoord, je e-mail adres kon niet worden aangepast.",
 
 	'friend:newfriend:subject' => "%s heeft jou toegevoegd als vriend!",
-	'friend:newfriend:body' => "%s heeft je toegevoegd als vriend!
+	'friend:newfriend:body' => "%s has made you a friend!
 
-Om het profiel te bekijken, klik hier:
+To view their profile, click here:
 
 %s",
 
@@ -1333,11 +1337,11 @@ je wachtwoord is gewijzigd.",
 Je wachtwoord is gereset naar: %s",
 
 	'email:changereq:subject' => "Aanvraag om het wachtwoord te wijzigen.",
-	'email:changereq:body' => "Beste %s,
+	'email:changereq:body' => "Hi %s,
 
-Iemand (vanaf het IP adres %s) heeft een wachtwoord wijziging aangevraagd voor dit account.
+Somebody (from the IP address %s) has requested a password change for this account.
 
-Indien dit door jou is aangevraagd, klik op de onderstaande link. Anders negeer deze e-mail.
+If you requested this, click on the link below. Otherwise ignore this email.
 
 %s",
 

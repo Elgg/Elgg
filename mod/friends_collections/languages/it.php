@@ -23,7 +23,6 @@ return array(
 	'friends:collections:delete:success' => 'Lista eliminata correttamente.',
 	'friends:collections:delete:fail' => 'Non è stato possibile eliminare la lista',
 
-	'friends:collections:remove_member' => 'Rimuovi',
 	'friends:collections:remove_member:permissions' => 'Non hai i permessi per rimuovere membri da questa lista',
 	'friends:collections:remove_member:success' => 'Membro rimosso dalla lista correttamente',
 	'friends:collections:remove_member:fail' => 'Non è stato possibile rimuovere questo membro dalla lista',

@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Dateien",
-	'file:user' => "Dateien von %s",
-	'file:friends' => "Dateien Deiner Freunde",
-	'file:all' => "Alle Dateien der Community",
-	'file:edit' => "Datei-Eintrag editieren",
+	'item:object:file' => 'Dateien',
+	'collection:object:file' => 'Dateien',
+	'collection:object:file:all' => "Alle Dateien der Community",
+	'collection:object:file:owner' => "Dateien von %s",
+	'collection:object:file:friends' => "Dateien Deiner Freunde",
+	'collection:object:file:group' => "Gruppen-Dateien",
+	'add:object:file' => "Datei hochladen",
+	'edit:object:file' => "Datei-Eintrag bearbeiten",
+
 	'file:more' => "Weitere Dateien",
 	'file:list' => "Listen-Ansicht",
-	'file:group' => "Gruppen-Dateien",
-	'file:gallery' => "Gallerie-Ansicht",
-	'file:gallery_list' => "Gallerie- oder Listen-Ansicht",
+
 	'file:num_files' => "Anzahl der anzuzeigenden Dateien",
-	'file:user:gallery'=>'Gallerie-Ansicht der Dateien von %s',
-	'file:upload' => "Datei hochladen",
 	'file:replace' => 'Ersetzen der Datei (leer lassen, um Datei nicht zu ändern)',
 	'file:list:title' => "%s's %s %s",
 	'file:title:friends' => "Freunde",
-
-	'file:add' => 'Datei hochladen',
 
 	'file:file' => "Datei",
 
@@ -53,25 +48,14 @@ return [
 	'file:widget' => "Datei-Widget",
 	'file:widget:description' => "Auflistung Deiner neuesten Dateien",
 
-	'groups:enablefiles' => 'Gruppen-Dateien aktivieren',
+	'groups:tool:file' => 'Gruppen-Dateien aktivieren',
 
-	'file:delete:confirm' => "Bist Du sicher, dass Du diese Datei löschen willst?",
-
-	'file:upload_limit' => 'Die maximal zulässige Dateigröße ist %s.',
-
-	'file:tagcloud' => "Tagcloud",
-
-	'file:display:number' => "Anzahl der anzuzeigenden Dateien",
-
-	'river:create:object:file' => '%s hat die Datei %s hochgeladen',
-	'river:comment:object:file' => '%s kommentierte die Datei %s',
-
-	'item:object:file' => 'Dateien',
+	'river:object:file:create' => '%s hat die Datei %s hochgeladen',
+	'river:object:file:comment' => '%s schrieb einen Kommentar zur Datei %s',
 
 	'file:notify:summary' => 'Eine neue Datei namens %s wurde hochgeladen',
 	'file:notify:subject' => 'Neue Datei: %s',
-	'file:notify:body' =>
-'%s hat eine neue Datei hochgeladen: %s
+	'file:notify:body' => '%s hat eine neue Datei hochgeladen: %s
 
 %s
 
@@ -83,18 +67,15 @@ Schau Dir die Datei an und schreibe einen Kommentar:
 	 * Status messages
 	 */
 
-	'file:saved' => "Deine Datei wurde gespeichert.",
-	'file:deleted' => "Deine Datei wurde gelöscht.",
+	'file:saved' => "Die Datei wurde gespeichert.",
+	'entity:delete:object:file:success' => "Die Datei wurde gelöscht.",
 
 	/**
 	 * Error messages
 	 */
 
 	'file:none' => "Noch keine Dateien vorhanden.",
-	'file:uploadfailed' => "Entschuldigung, wir konnten Deine Datei nicht speichern.",
-	'file:downloadfailed' => "Entschuldigung, diese Datei ist derzeit nicht verfügbar.",
-	'file:deletefailed' => "Deine Datei konnte zu diesem Zeitpunkt nicht gelöscht werden.",
+	'file:uploadfailed' => "Entschuldigung, wir konnten die Datei nicht speichern.",
 	'file:noaccess' => "Du hast keine Berechtigung, um diesen Datei-Eintrag zu ändern.",
 	'file:cannotload' => "Beim Hochladen dieser Datei ist ein Fehler aufgetreten.",
-	'file:nofile' => "Du mußt eine Datei auswählen.",
-];
+);

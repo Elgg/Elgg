@@ -41,21 +41,14 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Vous avez reçu un nouveau message !',
-	'messages:email:body' => "You have a new message from %s. It reads:
+	'messages:email:body' => "Vous avez un nouveau message de %s : 
+%s
 
+Pour consulter vos messages :
+%s
 
-	%s
-
-
-	To view your messages, click here:
-
-	%s
-
-	To send %s a message, click here:
-
-	%s
-
-	Please do not reply to this email.",
+Pour envoyer un message à %s  :
+%s",
 
 	/**
 	* Error messages

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -10,9 +10,9 @@ return [
 	'groups:yours' => "Meine Gruppen",
 	'groups:user' => "Gruppen von %s",
 	'groups:all' => "Alle Gruppen",
-	'groups:add' => "Starte eine neue Gruppe",
-	'groups:edit' => "Bearbeite Gruppen-Einstellungen",
-	'groups:delete' => 'Lösche Gruppe',
+	'groups:add' => "Neue Gruppe",
+	'groups:edit' => "Gruppen-Einstellungen bearbeiten",
+	'groups:delete' => 'Gruppe löschen',
 	'groups:membershiprequests' => 'Verwalte Beitritts-Anfragen',
 	'groups:membershiprequests:pending' => 'Verwalte Beitritts-Anfragen (%s)',
 	'groups:invitations' => 'Einladungen zum Gruppenbeitritt',
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Gruppen-Icon (leer lassen, um nicht zu ändern)',
 	'groups:name' => 'Gruppenname',
-	'groups:username' => 'Kurzname der Gruppe (angezeigt in URLs, nur alphanumerische Zeichen)',
 	'groups:description' => 'Beschreibung',
 	'groups:briefdescription' => 'Kurzbeschreibung',
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Webseite',
 	'groups:members' => 'Gruppen-Mitglieder',
-	'groups:my_status' => 'Mein Status',
-	'groups:my_status:group_owner' => 'Die Gruppe wurde von Dir gegründet.',
-	'groups:my_status:group_member' => 'Du bist Mitglied dieser Gruppe.',
-	'groups:subscribed' => 'Benachrichtigungen für diese Gruppe sind aktiviert.',
-	'groups:unsubscribed' => 'Benachrichtigungen für diese Gruppe sind deaktiviert.',
+
+	'groups:members_count' => '%s Mitglieder',
 
 	'groups:members:title' => 'Mitglieder von %s',
 	'groups:members:more' => "Alle Mitglieder auflisten",
@@ -44,19 +40,12 @@ return [
 	'groups:owner:warning' => "Warnung: wenn Du diesen Wert veränderst, bist Du nicht länger der Gründer dieser Gruppe.",
 	'groups:widget:num_display' => 'Anzahl der anzuzeigenden Gruppen',
 	'groups:widget:membership' => 'Gruppen-Mitgliedschaft',
-	'groups:widgets:description' => 'Auflistung der Gruppen, in denen Du Mitglied bist, in Deinem Profil',
+	'groups:widgets:description' => 'Auflistung der Gruppen, in denen Du Mitglied bist, auf Deiner Profilseite',
 
-	'groups:widget:group_activity:title' => 'Gruppen-Aktivität',
-	'groups:widget:group_activity:description' => 'Zeige die Aktivitäten in einer Deiner Gruppen an.',
-	'groups:widget:group_activity:edit:select' => 'Wähle eine Gruppe',
-	'groups:widget:group_activity:content:noactivity' => 'In dieser Gruppe gibt es noch keine Aktivitäten.',
-	'groups:widget:group_activity:content:noselect' => 'Bearbeite dieses Widget, um eine Gruppe auszuwählen.',
-
-	'groups:noaccess' => 'Zugang zur Gruppe verweigert',
-	'groups:ingroup' => 'in der Gruppe',
+	'groups:noaccess' => 'Zugang zur Gruppe verweigert.',
 	'groups:cantcreate' => 'Du kannst keine Gruppe erstellen. Dies können nur Administratoren.',
-	'groups:cantedit' => 'Du kannst die Gruppen-Einstellungen nicht bearbeiten',
-	'groups:saved' => 'Gruppe angelegt',
+	'groups:cantedit' => 'Du kannst die Gruppen-Einstellungen nicht bearbeiten.',
+	'groups:saved' => 'Gruppe angelegt.',
 	'groups:save_error' => 'Beim Anlegen der Gruppe ist ein Fehler aufgetreten.',
 	'groups:featured' => 'Besondere Gruppen',
 	'groups:makeunfeatured' => 'Aus "Besondere Gruppen" entfernen',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Gruppe verlassen',
 	'groups:invite' => 'Freunde einladen',
 	'groups:invite:title' => 'Lade Deine Freunde ein, dieser Gruppe beizutreten',
-	'groups:inviteto' => "Freunde zur Gruppe '%s' einladen",
-	'groups:nofriends' => "Alle Deine Freunde wurden bereits zu dieser Gruppe eingeladen.",
+	'groups:invite:friends:help' => 'Suche mit Name oder Benutzername nach einem Freund und wähle den Freund aus der Liste aus',
+	'groups:invite:resend' => 'Einladungen an bereits eingeladene Mitglieder erneut senden',
+
 	'groups:nofriendsatall' => 'Du hast leider noch keine Freunde, die Du einladen könntest!',
-	'groups:viagroups' => "via Gruppen",
 	'groups:group' => "Gruppe",
 	'groups:search:tags' => "Tag",
 	'groups:search:title' => "Suche nach Gruppen mit dem Tag '%s'",
 	'groups:search:none' => "Es wurden keine passenden Gruppen gefunden.",
 	'groups:search_in_group' => "In dieser Gruppe suchen",
 	'groups:acl' => "Gruppe: %s",
+	'groups:acl:in_context' => 'Gruppen-Mitglieder',
 
-	'groups:activity' => "Letzte Aktivitäten der Gruppe",
-	'groups:enableactivity' => 'Anzeige von "Letzte Aktivitäten der Gruppe" aktivieren',
-	'groups:activity:none' => "In dieser Gruppe gibt es noch keine Aktivitäten.",
-
-	'groups:notfound' => "Gruppe nicht gefunden",
-	'groups:notfound:details' => "Die angeforderte Gruppe existiert entweder nicht oder Du hast keine Zugangsberechtigung",
-
+	'groups:notfound' => "Gruppe nicht gefunden.",
+	
 	'groups:requests:none' => 'Derzeit gibt es keine ausstehenden Anfragen für einen Beitritt zu dieser Gruppe.',
 
 	'groups:invitations:none' => 'Derzeit gibt es keine unbeantworteten Einladungen zum Beitreten in diese Gruppe.',
 
-	'groups:count' => "Verfügbare Gruppen",
 	'groups:open' => "Öffentliche Gruppe",
 	'groups:closed' => "Nicht-öffentliche Gruppe",
 	'groups:member' => "Mitglieder",
-	'groups:searchtag' => "Suche nach Gruppen via Tags",
+	'groups:search' => "Suche nach Gruppen",
 
 	'groups:more' => 'Weitere Gruppen',
 	'groups:none' => 'Keine Gruppen',
@@ -104,7 +88,7 @@ return [
 	/**
 	 * Access
 	 */
-	'groups:access:private' => 'Nicht-öffentliche Gruppe - Gruppenbeitritt ist nur mit Einladung möglich',
+	'groups:access:private' => 'Nicht-öffentliche Gruppe - Gruppenbeitritt nur mit Einladung möglich',
 	'groups:access:public' => 'Öffentliche Gruppe - jeder Benutzer kann der Gruppe beitreten',
 	'groups:access:group' => 'Nur für Gruppenmitglieder',
 	'groups:closedgroup' => "Diese Gruppe ist nicht-öffentlich.",
@@ -117,51 +101,52 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => '%s zuletzt aktualisiert durch %s',
-	'groups:lastcomment' => '%s zuletzt kommentiert durch %s',
 
 	'admin:groups' => 'Gruppen',
 
-	'groups:privategroup' => 'Dies ist eine nicht-öffentliche Gruppe. Der Beitritt zur Gruppe ist nur auf Anfrage möglich.',
 	'groups:notitle' => 'Gruppen müssen einen Titel haben.',
 	'groups:cantjoin' => 'Du kannst dieser Gruppe nicht beitreten.',
 	'groups:cantleave' => 'Das Verlassen der Gruppe ist fehlgeschlagen.',
-	'groups:removeuser' => 'Aus der Gruppe entfernen',
+	'groups:removeuser' => 'Aus Gruppe entfernen',
 	'groups:cantremove' => 'Der Benutzer konnte nicht aus der Gruppe entfernt werden.',
 	'groups:removed' => '%s wurde aus der Gruppe entfernt.',
 	'groups:addedtogroup' => 'Der Benutzer wurde als Mitglied der Gruppe hinzugefügt.',
 	'groups:joinrequestnotmade' => 'Die Anfrage zum Beitritt zur Gruppe ist fehlgeschlagen.',
 	'groups:joinrequestmade' => 'Die Anfrage zum Beitritt zur Gruppe wurde gesendet.',
 	'groups:joinrequest:exists' => 'Du hast bereits eine Anfrage zum Beitritt zu dieser Gruppe gestellt.',
+	'groups:button:joined' => 'Beigetreten',
+	'groups:button:owned' => 'Gegründet',
 	'groups:joined' => 'Du bist der Gruppe beigetreten!',
 	'groups:left' => 'Du hast die Gruppe verlassen.',
-	'groups:notowner' => 'Entschuldigung, aber Du bist nicht der Gründer dieser Gruppe.',
-	'groups:notmember' => 'Entschuldigung, aber Du bist kein Mitglied dieser Gruppe.',
-	'groups:alreadymember' => 'Du bist bereits ein Mitglied dieser Gruppe!',
-	'groups:userinvited' => 'Der Benutzer wurde eingeladen.',
-	'groups:usernotinvited' => 'Die Einladung an den Benutzer konnte nicht gesendet werden.',
-	'groups:useralreadyinvited' => 'Dieser Benutzer wurde bereits eingeladen.',
+	'groups:userinvited' => 'Das Community-Mitglied wurde eingeladen.',
+	'groups:usernotinvited' => 'Die Einladung an das Mitglied konnte nicht gesendet werden.',
+	'groups:useralreadyinvited' => 'Dieses Mitglied wurde bereits eingeladen.',
 	'groups:invite:subject' => "Hallo %s, Du wurdest eingeladen, der Gruppe %s beizutreten!",
-	'groups:started' => "Gestartet von %s",
 	'groups:joinrequest:remove:check' => 'Bist Du sicher, dass Du diese Anfrage zum Gruppenbeitritt löschen willst?',
 	'groups:invite:remove:check' => 'Bist Du sicher, dass Du diese Einladung zum Gruppenbeitritt löschen willst?',
 	'groups:invite:body' => "Hallo %s,
 
-%s hat Dich eingeladen, der Gruppe '%s' beizutreten. Folge dem Link um Deine ausstehenden Einladungen zum Beitreten in Gruppen zu sehen:
+%s hat Dich eingeladen, der Gruppe '%s' beizutreten.
+
+Folge dem Link um Deine ausstehenden Einladungen zum Beitreten in Gruppen zu sehen:
 
 %s",
 
 	'groups:welcome:subject' => "Willkommen in der Gruppe %s!",
 	'groups:welcome:body' => "Hallo %s!
 
-Du bist nun ein Mitglied der Gruppe '%s'! Folge dem Link um einen Beitrag in der Gruppe zu schreiben!
+Du bist nun ein Mitglied der Gruppe '%s'!
+
+Folge dem Link um einen Beitrag in der Gruppe zu schreiben!
 
 %s",
 
 	'groups:request:subject' => "%s hat beantragt, der Gruppe %s beitreten zu dürfen",
 	'groups:request:body' => "Hallo %s,
 
-%s hat beantragt, der Gruppe %s beitreten zu dürfen. Folge dem Link um ihr/sein Profil zu sehen:
+%s hat beantragt, der Gruppe %s beitreten zu dürfen.
+
+Folge dem Link um ihr/sein Profil zu sehen:
 
 %s
 
@@ -169,37 +154,18 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s hat die Gruppe %s gegründet',
-	'river:join:group:default' => '%s ist der Gruppe %s beigetreten',
-
-	'groups:nowidgets' => 'Für diese Gruppe wurden keine Widgets aktiviert.',
-
-
-	'groups:widgets:members:title' => 'Mitglieder der Gruppen',
-	'groups:widgets:members:description' => 'Zeige die Mitglieder einer Gruppe an.',
-	'groups:widgets:members:label:displaynum' => 'Zeige die Mitglieder einer Gruppe an.',
-	'groups:widgets:members:label:pleaseedit' => 'Bitte konfiguriere dieses Widget.',
-
-	'groups:widgets:entities:title' => "Objekte in der Gruppe",
-	'groups:widgets:entities:description' => "Zeige die Objekte an, die in dieser Gruppe gespeichert sind.",
-	'groups:widgets:entities:label:displaynum' => 'Zeige die Objekte einer Gruppe an.',
-	'groups:widgets:entities:label:pleaseedit' => 'Bitte konfiguriere dieses Widget.',
+	'river:group:create' => '%s hat die Gruppe %s gegründet',
+	'river:group:join' => '%s ist der Gruppe %s beigetreten',
 
 	'groups:allowhiddengroups' => 'Möchtest Du private (versteckte) Gruppen zulassen?',
-	'groups:whocancreate' => 'Wer soll neue Gruppen erstellen dürfen?',
+	'groups:whocancreate' => 'Wer soll neue Gruppen hinzufügen dürfen?',
 
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Die Gruppe und der Inhalt der Gruppe wurde gelöscht.',
-	'group:notdeleted' => 'Die Gruppe konnte nicht gelöscht werden.',
-
-	'group:notfound' => 'Die Gruppe wurde nicht gefunden.',
-	'groups:deletewarning' => "Bist Du sicher, dass Du diese Gruppe löschen willst? Dies kann nicht rückgängig gemacht werden!",
+	'groups:deleted' => 'Gruppe und Inhalte der Gruppe wurden gelöscht.',
+	'groups:notdeleted' => 'Das Löschen der Gruppe ist fehlgeschlagen.',
+	'groups:deletewarning' => "Bist Du sicher, dass Du diese Gruppe und ihre Inhalte löschen willst? Dies kann nicht rückgängig gemacht werden!",
 
 	'groups:invitekilled' => 'Die Einladung wurde gelöscht.',
 	'groups:joinrequestkilled' => 'Der Antrag zum Gruppenbeitritt wurde gelöscht.',
@@ -210,4 +176,10 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Gruppen-Profile',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Verschieben der Gruppen-Icons innerhalb des Datenverzeichnisses',
+	'groups:upgrade:2016101900:description' => 'Die neue Entitäts-Icon-API von Elgg speichert Icons nicht mehr im Filestore-Verzeichnis der Benutzer-Entität des Gruppen-Gründers sondern innerhalb eines Filestore-Verzeichnisses der Gruppen-Entität. Dieses Upgrade verschiebt die Gruppen-Icons von existierenden Gruppen entsprechend dem neuen Schema.',
+);

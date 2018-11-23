@@ -4,7 +4,9 @@ return array(
 	'profile' => 'Profilo',
 	'profile:notfound' => 'Spiacenti ma è impossibile trovare il profilo richiesto.',
 	'profile:upgrade:2017040700:title' => 'Schema di migrazione dei campi del profilo',
-	'profile:upgrade:2017040700:description' => '<p> Questa migrazione converte i campi del profilo da metadata ad annotazioni con ciascun nome avente come prefisso "profile:". <strong>Nota:</strong> Se vuoi migrare campi del profilo non attivi, ricreali e ricarica questa pagina per assicurarti che vengano migrati. </p>',
+	'profile:upgrade:2017040700:description' => 'This migration converts profile fields from metadata to annotations with each name
+prefixed with "profile:". <strong>Note:</strong> If you have "inactive" profile fields you want migrated, re-create those fields
+and re-load this page to make sure they get migrated.',
 	
 	'admin:configure_utilities:profile_fields' => 'Modifica i campi del profilo',
 	

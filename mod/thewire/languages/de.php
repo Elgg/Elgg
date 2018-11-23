@@ -1,19 +1,23 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Der Heiße Draht",
-	'thewire:everyone' => "Alle Nachrichten im Heißen Draht",
-	'thewire:user' => "Der Heiße Draht von %s",
-	'thewire:friends' => "Deine Freunde im Heißen Draht",
+
+	'item:object:thewire' => "Nachrichten im Heißen Draht",
+	'collection:object:thewire' => 'Nachrichten im Heißen Draht',
+	'collection:object:thewire:all' => "Alle Nachrichten im Heißen Draht",
+	'collection:object:thewire:owner' => "Der Heiße Draht von %s",
+	'collection:object:thewire:friends' => "Deine Freunde im Heißen Draht",
+
 	'thewire:replying' => "Antworten auf %s (@%s), der schrieb",
 	'thewire:thread' => "Thread",
 	'thewire:charleft' => "Zeichen übrig",
 	'thewire:tags' => "Nachrichten im Heißen Draht mit dem Tag '%s'",
 	'thewire:noposts' => "Noch keine Nachrichten im Heißen Draht.",
-	'item:object:thewire' => "Nachrichten im Heißen Draht",
+
 	'thewire:by' => 'Nachricht im Heißen Draht von %s',
 	'thewire:previous:help' => "Vorherige Nachricht ansehen",
 	'thewire:hide:help' => "Vorherige Nachricht verbergen",
@@ -21,7 +25,7 @@ return [
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s schrieb im %s",
+	'river:object:thewire:create' => "%s schrieb an %s",
 	'thewire:wire' => 'Heißen Draht',
 
 	/**
@@ -37,7 +41,6 @@ return [
 	'thewire:posted' => "Deine Nachricht wurde dem Heißen Draht hinzugefügt.",
 	'thewire:deleted' => "Die Nachricht wurde aus dem Heißen Draht gelöscht.",
 	'thewire:blank' => "Entschuldigung, Du mußt erst etwas schreiben, bevor es veröffentlicht werden kann.",
-	'thewire:notfound' => "Entschuldigung, die gesuchte Nachricht aus dem Heißen Draht konnte nicht gefunden werden.",
 	'thewire:notsaved' => "Entschuldigung, das Speichern der Nachricht ist fehlgeschlagen.",
 	'thewire:notdeleted' => "Entschuldigung, das Löschen der Nachricht aus dem Heißen Draht ist fehlgeschlagen.",
 
@@ -55,4 +58,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Maximal erlaubte Anzahl an Zeichen in Nachrichten im Heißen Draht:",
 	'thewire:settings:limit:none' => "Kein Limit",
-];
+);

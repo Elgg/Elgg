@@ -5,7 +5,7 @@ return array(
 	
 	'invitefriends:registration_disabled' => 'Die Registrierung von neuen Mitgliedern wurde auf dieser Community-Seite deaktiviert. Du kannst daher leider keine neuen Mitglieder einladen.',
 	
-	'invitefriends:introduction' => 'Um Deine Freunde einzuladen, dieser Community-Seite beizutreten, geben im Folgenden deren Email-Adressen ein (eine Adresse pro Zeile):',
+	'invitefriends:introduction' => 'Um Deine Freunde einzuladen, dieser Community-Seite beizutreten, geben im Folgenden deren Email-Adressen ein (eine Email-Adresse pro Zeile):',
 	'invitefriends:emails' => 'Email-Adressen (eine pro Zeile)',
 	'invitefriends:message' => 'Nachricht',
 	'invitefriends:subject' => 'Einladung für die Community-Webseite %s',
@@ -20,14 +20,16 @@ return array(
 
 Ich möchte Dich einladen, meiner Community-Seite %s beizutreten.',
 
-	'invitefriends:email' => 'Du bist eingeladen, der Community-Seite %s beizutreten. Die Einladung wurde von %s versendet. Die folgende Nachricht wurde der Einladung beigefügt:
+	'invitefriends:email' => 'Du bist eingeladen, der Community-Seite %s beizutreten.
+
+Die Einladung wurde von %s versendet. Folgende Nachricht wurde der Einladung beigefügt:
 
 %s
 
-Um der Community-Seite beizutreten, folge dem folgenden Link:
+Um der Community-Seite beizutreten, folge dem Link:
 
 %s
 
-Nachdem Du einen Account auf der Community-Seite erstellt hast, wirst das Mitglied, das Dich eingeladen hat, automatisch in Deine Freundesliste aufgenommen.',
+Nachdem Du einen Account auf der Community-Seite erstellt hast, wird das Mitglied, das Dich eingeladen hat, automatisch in Deine Freundesliste aufgenommen.',
 	
 );
