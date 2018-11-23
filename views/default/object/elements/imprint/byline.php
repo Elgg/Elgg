@@ -1,14 +1,16 @@
 <?php
-
 /**
  * Displays information about the author and container of the post
  *
- * @uses $vars['entity']      The entity to show the byline for
- * @uses $vars['byline']      Byline
- *                            If not set, will display default author/container information
- *                            If set to false, byline will not be rendered
- * @uses $vars['show_links']  Owner and container text should show as links (default: true)
+ * @uses $vars['entity']                  The entity to show the byline for
+ * @uses $vars['byline']                  Byline
+ *                                        If not set, will display default author/container information
+ *                                        If set to false, byline will not be rendered
+ * @uses $vars['byline_owner_entity']     the owner entity to use for the byline (default: ElggEntity::getOwnerEntity())
+ * @uses $vars['byline_container_entity'] the container entity to use for the byline (default: ElggEntity::getContainerEntity())
+ * @uses $vars['show_links']              Owner and container text should show as links (default: true)
  */
+
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof ElggEntity) {
 	return;
@@ -20,7 +22,7 @@ $byline_str = elgg_extract('byline', $vars);
 if (!isset($byline_str)) {
 	$parts = [];
 
-	$owner = $entity->getOwnerEntity();
+	$owner = elgg_extract('byline_owner_entity', $vars, $entity->getOwnerEntity());
 	if ($owner instanceof ElggEntity) {
 		if ($show_links) {
 			$owner_text = elgg_view('output/url', [
@@ -35,7 +37,7 @@ if (!isset($byline_str)) {
 		$parts[] = elgg_echo('byline', [$owner_text]);
 	}
 
-	$container_entity = $entity->getContainerEntity();
+	$container_entity = elgg_extract('byline_container_entity', $vars, $entity->getContainerEntity());
 	if ($container_entity instanceof ElggGroup && $container_entity->guid !== elgg_get_page_owner_guid()) {
 		if ($show_links) {
 			$group_text = elgg_view('output/url', [
