@@ -41,7 +41,7 @@ elgg_set_page_owner_guid($widget->getContainerGUID());
 
 $output = [
 	'content' => elgg_view('object/widget/elements/content', ['entity' => $widget]),
-	'title' => $widget->getTitle(),
+	'title' => $widget->getDisplayName(),
 	'href' => $widget->getURL(),
 ];
 foreach ($context_stack as $ctx) {
