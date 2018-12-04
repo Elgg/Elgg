@@ -1,40 +1,26 @@
 <?php
 
-use Elgg\Database\QueryBuilder;
-use Elgg\Database\Clauses\JoinClause;
+use Elgg\Activity\GroupRiverFilter;
 
-$group = elgg_get_page_owner_entity();
+$group_guid = elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($group->guid, 'group');
+elgg_entity_gatekeeper($group_guid, 'group');
+
+/* @var $group ElggGroup */
+$group = get_entity($group_guid);
+
+elgg_set_page_owner_guid($group->guid);
 
 elgg_group_tool_gatekeeper('activity');
 
 $title = elgg_echo('collection:river:group');
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
-$on_object = function (QueryBuilder $qb, $joined_alias, $main_alias) {
-	return $qb->compare("{$joined_alias}.guid", '=', "{$main_alias}.object_guid");
-};
-$on_target = function (QueryBuilder $qb, $joined_alias, $main_alias) {
-	return $qb->compare("{$joined_alias}.guid", '=', "{$main_alias}.target_guid");
-};
-
 $options = [
-	'joins' => [
-		new JoinClause('entities', 'e1', $on_object),
-		new JoinClause('entities', 'e2', $on_target, 'left'),
-	],
 	'wheres' => [
-		function (QueryBuilder $qb, $main_alias) use ($group) {
-			$wheres = [];
-			$wheres[] = $qb->compare("{$main_alias}.object_guid", '=', $group->guid);
-			$wheres[] = $qb->compare('e1.container_guid', '=', $group->guid);
-			$wheres[] = $qb->compare('e2.container_guid', '=', $group->guid);
-			
-			return $qb->merge($wheres, 'OR');
-		},
+		new GroupRiverFilter($group),
 	],
 	'no_results' => elgg_echo('river:none'),
 ];
@@ -54,7 +40,7 @@ if ($type != 'all') {
 	}
 }
 
-$content = elgg_view('core/river/filter', ['selector' => $selector]);
+$content = elgg_view('river/filter', ['selector' => $selector]);
 $content .= elgg_list_river($options);
 
 $body = elgg_view_layout('content', [
