@@ -106,7 +106,7 @@ function pages_get_navigation_tree($container) {
 	$tree = [];
 	
 	$get_children = function($parent_guid, $depth = 0) use (&$tree, &$get_children) {
-		$children = new ElggBatch('elgg_get_entities_from_metadata', [
+		$children = new ElggBatch('elgg_get_entities', [
 			'type' => 'object',
 			'subtype' => 'page',
 			'metadata_name_value_pairs' => [

@@ -441,7 +441,7 @@ function messages_purge($event, $type, $user) {
 		],
 		'limit' => false,
 	];
-	$batch = new ElggBatch('elgg_get_entities_from_metadata', $options);
+	$batch = new ElggBatch('elgg_get_entities', $options);
 	$batch->setIncrementOffset(false);
 	foreach ($batch as $e) {
 		$e->delete();

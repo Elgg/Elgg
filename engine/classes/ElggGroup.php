@@ -56,7 +56,7 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * Get an array of group members.
 	 *
-	 * @param array $options Options array. See elgg_get_entities_from_relationships
+	 * @param array $options Options array. See elgg_get_entities
 	 *                       for a complete list. Common ones are 'limit', 'offset',
 	 *                       and 'count'. Options set automatically are 'relationship',
 	 *                       'relationship_guid', 'inverse_relationship', and 'type'.
