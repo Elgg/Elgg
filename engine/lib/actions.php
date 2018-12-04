@@ -2,7 +2,7 @@
 /**
  * Elgg Actions
  *
- * @see http://learn.elgg.org/en/latest/guides/actions.html
+ * @see http://learn.elgg.org/en/stable/guides/actions.html
  *
  * @package Elgg.Core
  * @subpackage Actions
@@ -12,7 +12,7 @@ use Elgg\Http\ResponseBuilder;
 
 /**
  * Handle a request for an action
- * 
+ *
  * @param array $segments URL segments that make up action name
  *
  * @return ResponseBuilder|null
@@ -148,7 +148,7 @@ function validate_action_token($visible_errors = true, $token = null, $ts = null
  * This function verifies form input for security features (like a generated token),
  * and forwards if they are invalid.
  *
- * @param string $action The action being performed 
+ * @param string $action The action being performed
  *
  * @return mixed True if valid or redirects.
  * @access private
@@ -254,7 +254,7 @@ function elgg_is_xhr() {
  * }
  * </pre>
  * where "system_messages" is all message registers at the point of forwarding
- * 
+ *
  * @internal registered for the 'forward', 'all' plugin hook
  *
  * @param string $hook

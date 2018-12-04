@@ -5,7 +5,7 @@ The remainder of the project is available under either MIT or GPLv2.
 
 Both licenses can be found below.
 
-More info: http://learn.elgg.org/en/latest/intro/license.html
+More info: http://learn.elgg.org/en/stable/intro/license.html
 
 ------------------------------------------------------------------------
 
