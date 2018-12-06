@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Router\Middleware\Gatekeeper;
+
 return [
 	'entities' => [
 		[
@@ -48,6 +50,9 @@ return [
 		'reply:object:thewire' => [
 			'path' => '/thewire/reply/{guid}',
 			'resource' => 'thewire/reply',
+			'middleware' => [
+				Gatekeeper::class,
+			],
 		],
 		'previous:object:thewire' => [
 			'path' => '/thewire/previous/{guid}',

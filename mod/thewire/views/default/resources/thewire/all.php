@@ -1,10 +1,9 @@
 <?php
 /**
  * All wire posts
- *
  */
 
-elgg_push_breadcrumb(elgg_echo('thewire'));
+elgg_push_collection_breadcrumbs('object', 'thewire');
 
 $title = elgg_echo('collection:object:thewire:all');
 
