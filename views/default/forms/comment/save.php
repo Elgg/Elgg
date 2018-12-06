@@ -21,7 +21,7 @@ $entity = elgg_extract('entity', $vars);
 $comment = elgg_extract('comment', $vars);
 /* @var ElggComment $comment */
 
-$inline = elgg_extract('inline', $vars, false);
+$inline = (bool) elgg_extract('inline', $vars, false);
 
 if ($entity) {
 	echo elgg_view('input/hidden', [
