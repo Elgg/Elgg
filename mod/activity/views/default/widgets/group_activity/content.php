@@ -4,6 +4,7 @@
  */
 
 use Elgg\Activity\GroupRiverFilter;
+use Elgg\Database\QueryBuilder;
 
 $widget = elgg_extract('entity', $vars);
 
@@ -21,7 +22,11 @@ echo elgg_list_river([
 	'limit' => $num,
 	'pagination' => false,
 	'wheres' => [
-		new GroupRiverFilter($group),
+		function (QueryBuilder $qb, $main_alias) use ($group) {
+			$group = new GroupRiverFilter($group);
+			
+			return $group($qb, $main_alias);
+		},
 	],
 	'no_results' => elgg_echo('activity:widgets:group_activity:content:noactivity'),
 ]);
