@@ -47,7 +47,10 @@ class Highlighter {
 		];
 
 		$parts = elgg_extract('query_parts', $this->params);
-
+		if (empty($parts)) {
+			return $text;
+		}
+		
 		foreach ($parts as $part) {
 			// remove any boolean mode operators
 			$part = preg_replace("/([\-\+~])([\w]+)/i", '$2', $part);
