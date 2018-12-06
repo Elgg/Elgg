@@ -1,1 +1,1 @@
-See http://learn.elgg.org/en/2.0/contribute/docs.html
+See http://learn.elgg.org/en/stable/contribute/docs.html
