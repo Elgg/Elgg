@@ -3,19 +3,24 @@
  * View conversation thread
  */
 
-$thread_id = elgg_extract('thread_id', $vars);
+$thread_id = elgg_extract('guid', $vars);
+elgg_entity_gatekeeper($thread_id, 'object', 'thewire');
+
+/* @var $original_post ElggWire */
+$original_post = get_entity($thread_id);
 
 $title = elgg_echo('thewire:thread');
 
-elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
-elgg_push_breadcrumb($title);
+elgg_push_entity_breadcrumbs($original_post);
 
 $content = elgg_list_entities([
-	"metadata_name" => "wire_thread",
-	"metadata_value" => $thread_id,
-	"type" => "object",
-	"subtype" => "thewire",
-	"limit" => max(20, elgg_get_config('default_limit')),
+	'type' => 'object',
+	'subtype' => 'thewire',
+	'metadata_name_value_pairs' => [
+		'name' => 'wire_thread',
+		'value' => $thread_id,
+	],
+	'limit' => max(20, elgg_get_config('default_limit')),
 	'preload_owners' => true,
 ]);
 
