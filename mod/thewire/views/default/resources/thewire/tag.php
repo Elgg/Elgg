@@ -3,27 +3,29 @@
  * Wire posts tagged with <tag>
  */
 
+use Elgg\BadRequestException;
+
 $tag = elgg_extract('tag', $vars);
 if (!$tag) {
-	forward('thewire/all');
+	throw new BadRequestException();
 }
 
-elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
-elgg_push_breadcrumb('#' . $tag);
+elgg_push_collection_breadcrumbs('object', 'thewire');
 
 // remove # from tag
 $tag = trim($tag, '# ');
 
 $title = elgg_echo('thewire:tags', [$tag]);
 
-
 $content = elgg_list_entities([
-	'metadata_name' => 'tags',
-	'metadata_value' => $tag,
-	'metadata_case_sensitive' => false,
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'limit' => 15,
+	'metadata_name_value_pairs' => [
+		'name' => 'tags',
+		'value' => $tag,
+		'case_sensitive' => false,
+	],
 ]);
 
 $body = elgg_view_layout('content', [

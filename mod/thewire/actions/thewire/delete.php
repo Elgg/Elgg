@@ -27,12 +27,14 @@ if ($children) {
 	}
 }
 
+// Get owning user
+$owner = $thewire->getOwnerEntity();
+
 // Delete it
 if (!$thewire->delete()) {
 	return elgg_error_response(elgg_echo('thewire:notdeleted'));
 }
 
-// Get owning user
-$owner = $thewire->getOwnerEntity();
-
-return elgg_ok_response('', elgg_echo('thewire:deleted'), "thewire/owner/{$owner->username}");
+return elgg_ok_response('', elgg_echo('thewire:deleted'), elgg_generate_url('collection:object:thewire:owner', [
+	'username' => $owner->username,
+]));

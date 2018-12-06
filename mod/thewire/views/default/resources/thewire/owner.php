@@ -1,18 +1,16 @@
 <?php
 /**
  * User's wire posts
- *
  */
 
 $owner = elgg_get_page_owner_entity();
-if (!$owner) {
+if (!$owner instanceof ElggUser) {
 	forward('', '404');
 }
 
 $title = elgg_echo('collection:object:thewire:owner', [$owner->getDisplayName()]);
 
-elgg_push_breadcrumb(elgg_echo('thewire'), "thewire/all");
-elgg_push_breadcrumb($owner->getDisplayName());
+elgg_push_collection_breadcrumbs('object', 'thewire', $owner);
 
 $context = '';
 if (elgg_get_logged_in_user_guid() == $owner->guid) {

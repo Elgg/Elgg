@@ -40,9 +40,6 @@ function thewire_init() {
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('elgg.css', 'thewire/css');
 
-	// Register a URL handler for thewire posts
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'thewire_set_url');
-
 	// Register for notifications
 	elgg_register_notification_event('object', 'thewire');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:thewire', 'thewire_prepare_notification');
@@ -52,26 +49,6 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:thewire', 'Elgg\Values::getTrue');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
-}
-
-/**
- * Override the url for a wire post to return the thread
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $url    current return value
- * @param array  $params supplied params
- *
- * @return void|string
- */
-function thewire_set_url($hook, $type, $url, $params) {
-	
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggWire) {
-		return;
-	}
-	
-	return "thewire/view/{$entity->guid}";
 }
 
 /**
