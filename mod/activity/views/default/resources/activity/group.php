@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Activity\GroupRiverFilter;
+use Elgg\Database\QueryBuilder;
 
 $group_guid = elgg_extract('guid', $vars);
 
@@ -20,7 +21,11 @@ elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $options = [
 	'wheres' => [
-		new GroupRiverFilter($group),
+		function (QueryBuilder $qb, $main_alias) use ($group) {
+			$group = new GroupRiverFilter($group);
+			
+			return $group($qb, $main_alias);
+		},
 	],
 	'no_results' => elgg_echo('river:none'),
 ];
