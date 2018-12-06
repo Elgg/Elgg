@@ -2,7 +2,7 @@
 /**
  * Elgg Actions
  *
- * @see http://learn.elgg.org/en/latest/guides/actions.html
+ * @see http://learn.elgg.org/en/stable/guides/actions.html
  *
  * @package Elgg.Core
  * @subpackage Actions

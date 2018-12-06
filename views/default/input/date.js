@@ -52,9 +52,12 @@ define(function (require) {
 
 				opts.onSelect = function (dateText, instance) {
 					if ($(this).is('.elgg-input-timestamp')) {
-						// convert to unix timestamp
-						var timestamp = Date.UTC(instance.selectedYear, instance.selectedMonth, instance.selectedDay);
-						timestamp = timestamp / 1000;
+						timestamp = '';
+						if (dateText.length) {
+							// convert to unix timestamp
+							var timestamp = Date.UTC(instance.selectedYear, instance.selectedMonth, instance.selectedDay);
+							timestamp = timestamp / 1000;
+						}
 						$('input[rel="' + this.id + '"]').val(timestamp);
 					}
 				};
@@ -62,6 +65,14 @@ define(function (require) {
 				// defer until language loaded
 				i18n_ready.then(function () {
 					$elem.datepicker(opts);
+					$elem.on('keyup', function(event) {
+						switch (event.keyCode) {
+							case $.ui.keyCode.DELETE:
+							case $.ui.keyCode.BACKSPACE:
+								$.datepicker._clearDate(event.target);
+								break;
+						}
+					});
 				});
 			});
 		}
