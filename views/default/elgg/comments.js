@@ -29,7 +29,8 @@ define(['jquery', 'elgg'], function ($, elgg) {
 					var data = {
 						guid: $form.find('input[name="entity_guid"]').val(),
 						id: $form.attr('id'),
-						show_guid: comment_guid
+						show_guid: comment_guid,
+						inline: $form.find('.elgg-input-text').length
 					};
 						
 					if (!$container.length) {
@@ -63,7 +64,12 @@ define(['jquery', 'elgg'], function ($, elgg) {
 					ajax.view(view_name, {
 						data: data,
 						success: function(result) {
-							$container.html(result);
+							if (view_name === 'river/elements/responses') {
+								$container.html(result);
+							} else {
+								$container.html($(result).filter('.elgg-comments').html());
+							}
+							
 							$container.find('#elgg-object-' + comment_guid).addClass('elgg-state-highlight');
 							fix_pagination($container);
 						}
