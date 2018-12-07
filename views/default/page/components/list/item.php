@@ -25,6 +25,17 @@ if ($item instanceof \ElggEntity) {
 	if ($subtype) {
 		$li_attrs['class'][] = "elgg-item-$type-$subtype";
 	}
+} elseif ($item instanceof \ElggRiverItem) {
+	$type = $item->getType();
+
+	$li_attrs['id'] = "item-$type-{$item->id}";
+	
+	$li_attrs['class'][] = "elgg-item-$type";
+	
+	$object = $item->getObjectEntity();
+	if ($object instanceof \ElggEntity) {
+		$li_attrs['class'][] = "elgg-item-{$type}-{$object->getType()}-{$object->getSubtype()}-{$item->action_type}";
+	}
 } elseif (is_callable([$item, 'getType'])) {
 	$type = $item->getType();
 
