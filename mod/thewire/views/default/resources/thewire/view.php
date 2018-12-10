@@ -18,9 +18,10 @@ elgg_push_entity_breadcrumbs($post, false);
 $content = elgg_view_entity($post);
 
 $body = elgg_view_layout('content', [
-	'filter' => false,
-	'content' => $content,
 	'title' => $title,
+	'content' => $content,
+	'filter' => false,
+	'entity' => $post,
 ]);
 
 echo elgg_view_page($title, $body);
