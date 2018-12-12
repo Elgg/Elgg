@@ -374,6 +374,31 @@ Use the input/file view in your form’s content view.
    // /mod/example/views/default/forms/example.php
    echo elgg_view('input/file', array('name' => 'icon'));
 
+
+If you wish to upload an icon for entity you can use the helper view ``entity/edit/icon``.
+This view shows a file input for uploading a new icon for the entity, an thumbnail of the current icon and the option to remove the current icon.
+
+The view supports some variables to control the output
+
+* ``entity`` - the entity to add/remove the icon for. If provided based on this entity the thumbnail and remove option wil be shown
+* ``icon_type`` - the type of the icon (default: icon)
+* ``name`` - name of the input/file (default: icon)
+* ``remove_name`` - name of the remove icon toggle (default: $vars['name'] . '_remove')
+* ``required`` - is icon upload required (default: false)
+* ``show_remove`` - show the remove icon option (default: true)
+* ``show_thumb`` - show the thumb of the entity if available (default: true)
+* ``thumb_size`` - the icon size to use as the thumb (default: medium)
+
+If using the helper view you can use the following code in you action to save the icon to the entity or remove the current icon.
+
+.. code-block:: php
+
+   if (get_input('icon_remove')) {
+      $entity->deleteIcon();
+   } else {
+      $entity->saveIconFromUploadedFile('icon');
+   }
+
 Set the enctype of the form to multipart/form-data:
 
 .. code-block:: php
@@ -382,11 +407,15 @@ Set the enctype of the form to multipart/form-data:
      'enctype' => 'multipart/form-data'
    ));
 
-In your action file, use the ``$_FILES`` global to access the uploaded file:
+.. note::
+
+   The ``enctype`` of all forms that use the method ``POST`` defaults to ``multipart/form-data``. 
+
+In your action file, use ``elgg_get_uploaded_file('your-input-name')`` to access the uploaded file:
 
 .. code-block:: php
 
-   $icon = $_FILES['icon']
+   $icon = elgg_get_uploaded_file('icon');
 
 Sticky forms
 ============
