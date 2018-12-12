@@ -91,6 +91,14 @@ class EntityIconService {
 		if (empty($input)) {
 			return false;
 		}
+		
+		// auto detect cropping coordinates
+		if (empty($coords)) {
+			$auto_coords = $this->detectCroppingCoordinates();
+			if (!empty($auto_coords)) {
+				$coords = $auto_coords;
+			}
+		}
 
 		$tmp_filename = time() . $input->getClientOriginalName();
 		$tmp = new ElggFile();
@@ -668,6 +676,38 @@ class EntityIconService {
 			->setMaxAge(86400);
 
 		return $response;
+	}
+	
+	/**
+	 * Automagicly detect cropping coordinates
+	 *
+	 * Based in the input names x1, x2, y1 and y2
+	 *
+	 * @return false|array
+	 */
+	protected function detectCroppingCoordinates() {
+		
+		$auto_coords = [
+			'x1' => get_input('x1'),
+			'x2' => get_input('x2'),
+			'y1' => get_input('y1'),
+			'y2' => get_input('y2'),
+		];
+		
+		$auto_coords = array_filter($auto_coords, function($value) {
+			return !elgg_is_empty($value) && is_numeric($value);
+		});
+		
+		if (count($auto_coords) !== 4) {
+			return false;
+		}
+		
+		// make ints
+		array_walk($auto_coords, function (&$value) {
+			$value = (int) $value;
+		});
+		
+		return $auto_coords;
 	}
 
 }
