@@ -186,11 +186,7 @@ class ImageService {
 		// determine cropping offsets
 		if ($square) {
 			// asking for a square image back
-			// detect case where someone is passing crop parameters that are not for a square
-			if ($cropping_mode == true && $crop_width != $crop_height) {
-				throw new \LogicException("Coordinates [$x1, $y1], [$x2, $y2] are invalid for a squared image cropping");
-			}
-
+			
 			// size of the new square image
 			$max_width = $max_height = min($max_width, $max_height);
 

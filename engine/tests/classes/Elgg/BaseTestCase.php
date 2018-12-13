@@ -129,7 +129,8 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 					'w' => 2048,
 					'h' => 2048,
 					'square' => false,
-					'upscale' => false
+					'upscale' => false,
+					'crop' => false,
 				],
 			],
 			'debug' => LogLevel::ERROR,

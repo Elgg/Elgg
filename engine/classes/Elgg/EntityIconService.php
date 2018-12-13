@@ -312,18 +312,15 @@ class EntityIconService {
 			}
 			
 			$square = (bool) elgg_extract('square', $opts);
-
-			if ($type === 'icon' && $cropping_mode) {
-				$cropping_ratio = ($x2 - $x1) / ($y2 - $y1);
-				if ($cropping_ratio == 1 && $square === false) {
-					// Do not crop out non-square icons if cropping coordinates are a square
-					$coords = [
-						'x1' => 0,
-						'y1' => 0,
-						'x2' => 0,
-						'y2' => 0,
-					];
-				}
+			
+			// check if the icon config allows cropping
+			if (!(bool) elgg_extract('crop', $opts, true)) {
+				$coords = [
+					'x1' => 0,
+					'y1' => 0,
+					'x2' => 0,
+					'y2' => 0,
+				];
 			}
 
 			$icon = $this->getIcon($entity, $size, $type, false);
@@ -604,7 +601,12 @@ class EntityIconService {
 			'h' => 2048,
 			'square' => false,
 			'upscale' => false,
+			'crop' => false,
 		]);
+		
+		if (!isset($sizes['master']['crop'])) {
+			$sizes['master']['crop'] = false;
+		}
 		
 		return $sizes;
 	}
