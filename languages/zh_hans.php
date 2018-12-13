@@ -1213,6 +1213,7 @@ To go to the site, click here:
 	'installation:view' => "输入将用作站点默认值的视图，或将此空白保留为默认视图（如果不确定，请默认为左）：",
 
 	'installation:siteemail' => "站点电子邮件地址（用于发送系统电子邮件）：",
+	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
 	'installation:default_limit' => "每页的默认项目数",
 
 	'admin:site:access:warning' => "这是用户在创建新内容时建议的隐私设置。更改它不会改变对内容的访问权限。",

@@ -1,0 +1,3566 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-24 10:08+0200\n"
+"PO-Revision-Date: 2017-12-28 11:58+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
+"Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../contribute/code.rst:2
+msgid "Writing Code"
+msgstr "Écrire du code"
+
+#: ../../contribute/code.rst:4
+msgid ""
+"Understand Elgg's standards and processes to get your changes accepted as "
+"quickly as possible."
+msgstr ""
+"Comprenez les standards et process d'Elgg pour que vos propositions de "
+"modification soient acceptées aussi vite que possible."
+
+#: ../../contribute/code.rst:11
+msgid "License agreement"
+msgstr "Agrément de licence"
+
+#: ../../contribute/code.rst:13
+msgid ""
+"By submitting a patch you are agreeing to license the code under a `GPLv2 "
+"license`_ and `MIT license`_."
+msgstr ""
+"En proposant un patch vous accordez de publier le code sous une `licence "
+"GPLv2`_ et une `licence MIT`_."
+
+#: ../../contribute/code.rst:20
+msgid "Pull requests"
+msgstr "Demandes de fusion (Pull Requests)"
+
+#: ../../contribute/code.rst:22
+msgid ""
+"Pull requests (PRs) are the best way to get code contributed to Elgg core. "
+"The core development team uses them even for the most trivial changes."
+msgstr ""
+"Les Pull requests (PRs) sont le meilleur moyen de contribuer au noyau "
+"d'Elgg. L'équipe de développement les utilise y compris pour les "
+"modifications les plus mineures."
+
+#: ../../contribute/code.rst:25
+msgid ""
+"For new features, `submit a feature request "
+"<https://github.com/Elgg/Elgg/issues>`__ or `talk to us`_ first and make "
+"sure the core team approves of your direction before spending lots of time "
+"on code."
+msgstr ""
+"Pour de nouvelles fonctionnalités, `soumettez une demande de fonctionnalité "
+"<https://github.com/Elgg/Elgg/issues>`__ ou `parlez-en avec nous`_ en "
+"premier lieu et assurez-vous que l'équipe du noyau approuve votre "
+"proposition avant de passer beaucoup de temps sur du code."
+
+#: ../../contribute/code.rst:31
+msgid "Checklists"
+msgstr "Listes de vérification (checklists)"
+
+#: ../../contribute/code.rst:33
+msgid ""
+"Use these markdown checklists for new PRs on github to ensure high-quality "
+"contributions and help everyone understand the status of open PRs."
+msgstr ""
+"Utilisez ces listes de vérification réduites pour les nouveaux PRs sur "
+"github afin de garantir des contributions de haute qualité et d'aider tout "
+"le monde à comprendre le statut des PRs ouverts."
+
+#: ../../contribute/code.rst:36
+msgid "Bugfix PRs:"
+msgstr "Demandes de correction de bug (bugfix PR) :"
+
+#: ../../contribute/code.rst:46
+msgid "Feature PRs:"
+msgstr "Demande de fonctionnalité (feature PR) : "
+
+#: ../../contribute/code.rst:58
+msgid "Choosing a branch to submit to"
+msgstr "Choisir une branche vers laquelle publier"
+
+#: ../../contribute/code.rst:60
+msgid "The following table assumes the latest stable release is 2.1."
+msgstr "Le tableau suivant suppose que la dernière version stable est la 2.1."
+
+#: ../../contribute/code.rst:63
+msgid "Type of change"
+msgstr "Type de changement"
+
+#: ../../contribute/code.rst:63
+msgid "Branch to submit against"
+msgstr "Branche vers laquelle publier"
+
+#: ../../contribute/code.rst:65
+msgid "Security fix"
+msgstr "Correctif de sécurité"
+
+#: ../../contribute/code.rst:65
+msgid "Don't! Email security@elgg.org for guidance."
+msgstr ""
+"Ne le faites pas ! Envoyez un email à security@elgg.org pour des conseils."
+
+#: ../../contribute/code.rst:66
+msgid "Bug fix"
+msgstr "Correctif de bug"
+
+#: ../../contribute/code.rst:66
+msgid "1.12 (or 2.1 if the 1.12 fix is too complex)"
+msgstr "1.12 (ou 2.1 si le correctif pour 1.12 est trop complexe)"
+
+#: ../../contribute/code.rst:67
+msgid "Performance"
+msgstr "Performance"
+
+#: ../../contribute/code.rst:67 ../../contribute/code.rst:68
+#: ../../contribute/code.rst:69
+msgid "2.x"
+msgstr "2.x"
+
+#: ../../contribute/code.rst:68
+msgid "Deprecation"
+msgstr "Dépréciation"
+
+#: ../../contribute/code.rst:69
+msgid "Minor feature"
+msgstr "Fonctionnalité mineure"
+
+#: ../../contribute/code.rst:70
+msgid "Major feature"
+msgstr "Fonctionnalité majeure"
+
+#: ../../contribute/code.rst:70 ../../contribute/code.rst:71
+msgid "master"
+msgstr "master (maître)"
+
+#: ../../contribute/code.rst:71
+msgid "Has any breaking change"
+msgstr "A n'importe quel changement non rétro-compatible"
+
+#: ../../contribute/code.rst:74
+msgid "If you're not sure which branch to submit against, just ask!"
+msgstr "Si vous ne savez pas quelle branche choisir, demandez !"
+
+#: ../../contribute/code.rst:76
+msgid ""
+"The difference between minor and major feature is subjective and up to the "
+"core team."
+msgstr ""
+"La différence entre des changements mineurs et majeurs est subjective et "
+"soumise à l'appréciation de l'équipe du noyau."
+
+#: ../../contribute/code.rst:79
+msgid "Commit message format"
+msgstr "Format du message de commit"
+
+#: ../../contribute/code.rst:81
+msgid ""
+"We require a particular format to allow releasing more often, and with "
+"improved changelogs and source history. Just follow these steps:"
+msgstr ""
+"Nous exigeons un format particulier afin de permettre de publier plus "
+"souvent, avec des journaux des modifications et un historique des sources "
+"améliorés. Suivez simplement les étapes suivantes :"
+
+#: ../../contribute/code.rst:84
+msgid ""
+"Start with the ``type`` by selecting the *last category which applies* from "
+"this list:"
+msgstr ""
+"Commencez par le ``type`` en sélectionnant la *dernière catégorie qui "
+"s'applique* dans cette liste :"
+
+#: ../../contribute/code.rst:86
+msgid "**docs** - *only* docs are being updated"
+msgstr "**docs** - *uniquement* la documentation a été mise à jour"
+
+#: ../../contribute/code.rst:87
+msgid ""
+"**chore** - this include refactoring, code style changes, adding missing "
+"tests, Travis stuff, etc."
+msgstr ""
+"**chore** - (corvée) ceci comprend les remaniements (refactoring), les "
+"changements de style de code, l'ajout de tests manquants, ce qui concerne "
+"Travis, etc."
+
+#: ../../contribute/code.rst:88
+msgid "**perf** - the primary purpose is to improve performance"
+msgstr "**perf** - l'objectif principal est d'améliorer la performance"
+
+#: ../../contribute/code.rst:89
+msgid "**fix** - this fixes a bug"
+msgstr "**fix** - ceci corrige un bug"
+
+#: ../../contribute/code.rst:90
+msgid "**deprecate** - the change deprecates any part of the API"
+msgstr "**deprecate** - la modification rend obsolète toute partie de l'API"
+
+#: ../../contribute/code.rst:91
+msgid "**feature** - this adds a new user-facing or developer feature"
+msgstr ""
+"**feature** - ceci ajoute une nouvelle fonctionnalité pour les utilisateurs "
+"ou les développeurs"
+
+#: ../../contribute/code.rst:92
+msgid ""
+"**security** - the change affects a security issue in any way. *Please do "
+"not push this commit to any public repo.* Instead contact security@elgg.org."
+msgstr ""
+"**security** - la modification affecte une question de sécurité d'une "
+"manière ou d'une autre. *Merci de ne pas pousser ce commit vers un "
+"repository public.* Contactez plutôt security@elgg.org."
+
+#: ../../contribute/code.rst:94
+msgid ""
+"E.g. if your commit refactors to fix a bug, it's still a \"fix\". If that "
+"bug is security-related, however, the type must be \"security\" and you "
+"should email security@elgg.org before proceeding. When in doubt, make your "
+"best guess and a reviewer will provide guidance."
+msgstr ""
+"Par ex., si votre commit fait des remaniements pour régler (fix) un bug, "
+"cela reste un \"fix\". Cependant, si ce bug est lié à la sécurité, le type "
+"doit être \"security\" et vous devriez envoyer un email à security@elgg.org "
+"avant de procéder. En cas de doute, faites au mieux, et un relecteur "
+"(reviewer) vous fournira des conseils."
+
+#: ../../contribute/code.rst:98
+msgid ""
+"In parenthesis, add the ``component``, a short string which describes the "
+"subsystem being changed."
+msgstr ""
+"Entre parenthèses, ajoutez le ``component``, une courte chaîne qui décrit "
+"les sous-syst-me en train d'être modifié."
+
+#: ../../contribute/code.rst:100
+msgid ""
+"Some examples: ``views``, ``i18n``, ``seo``, ``a11y``, ``cache``, ``db``, "
+"``session``, ``router``, ``<plugin_name>``."
+msgstr ""
+"Quelques exemples : ``views``, ``i18n``, ``seo``, ``a11y``, ``cache``, "
+"``db``, ``session``, ``router``, ``<plugin_name>``."
+
+#: ../../contribute/code.rst:102
+msgid ""
+"Add a colon, a space, and a brief ``summary`` of the changes, which will "
+"appear in the changelog."
+msgstr ""
+"Ajoutez une virgule, un espace, et un court résumé ``summary`` des "
+"modifications, qui va apparaître dans le journal des modifications "
+"(changelog)."
+
+#: ../../contribute/code.rst:104
+msgid ""
+"No line may exceed 100 characters in length, so keep your summary concise."
+msgstr ""
+"Aucune ligne ne devrait dépasser 100 caractères en longueur, aussi gardez un"
+" résumé concis."
+
+#: ../../contribute/code.rst:107
+msgid "Good summary"
+msgstr "Bon résumé"
+
+#: ../../contribute/code.rst:107
+msgid "Bad summary (problem)"
+msgstr "Mauvais résumé (problème)"
+
+#: ../../contribute/code.rst:109
+msgid "page owners see their own owner blocks on pages"
+msgstr ""
+"les propriétaires de pages (pages owners) voient leur propre bloc "
+"propriétaire sur les pages"
+
+#: ../../contribute/code.rst:109
+msgid "bug fix (vague)"
+msgstr "correction de bug (vague)"
+
+#: ../../contribute/code.rst:110
+msgid "bar view no longer dies if 'foo' not set"
+msgstr ""
+"la vue du graphique en barres n'échoue plus si 'foo' n'est pas défini "
+
+#: ../../contribute/code.rst:110
+msgid ""
+"updates views/default/bar.php so bar view no longer... (redundant info)"
+msgstr ""
+"met à jour views/default/bar.php de sorte que la vue bar ne soit plus... "
+"(info redondante)"
+
+#: ../../contribute/code.rst:111
+msgid "narrows river layout to fit iPhone"
+msgstr "réduit la mise en page de la rivière pour rentrer sur un iPhone"
+
+#: ../../contribute/code.rst:111
+msgid "alters the river layout (vague)"
+msgstr "modifie la mise en page de la rivière (vague)"
+
+#: ../../contribute/code.rst:112
+msgid "elgg_foo() handles arrays for $bar"
+msgstr "elgg_foo() gère les tableaux pour $bar"
+
+#: ../../contribute/code.rst:112
+msgid ""
+"in elgg_foo() you can now pass an array for $bar and the function will... "
+"(move detail to description)"
+msgstr ""
+"dans elgg_foo() vous pouvez maintenant passer un tableau pour $bar et la "
+"fonction sera... (déplacez les précisions vers la description)"
+
+#: ../../contribute/code.rst:113
+msgid "removes link color from comments header in river"
+msgstr ""
+"supprime la couleur du lien de l'entête des commentaires dans la rivière"
+
+#: ../../contribute/code.rst:113
+msgid "fixes db so that... (redundant info)"
+msgstr "corrige la bdd pour que... (info redondante)"
+
+#: ../../contribute/code.rst:114
+msgid "requires non-empty title when saving pages"
+msgstr "requiert un titre non-vide pour enregistrer les pages"
+
+#: ../../contribute/code.rst:114
+msgid "can save pages with no title (confusingly summarizes old behavior)"
+msgstr ""
+"peut enregistrer des pages sans titre (résume de manière confuse l'ancien "
+"comportement)"
+
+#: ../../contribute/code.rst:117
+msgid ""
+"(recommended) Skip a line and add a ``description`` of the changes. Include "
+"the motivation for making them, any info about back or forward "
+"compatibility, and any rationale of why the change had to be done a certain "
+"way. Example:"
+msgstr ""
+"(recommandé) Sautez une ligne et ajoutez une ``description`` des "
+"modification. Incluez leur raison d'être, toute information sur la "
+"compatibilité ascendante ou descendante, et toute raison pour laquelle cette"
+" modification devait être faite d'une certaine manière. Exemple :"
+
+#: ../../contribute/code.rst:120
+msgid ""
+"We speed up the Remember Me table migration by using a single INSERT INTO "
+"... SELECT query instead of row-by-row. This migration takes place during "
+"the upgrade to 1.9."
+msgstr ""
+"Nous accélérons la migration des tables en utilisant une seule requête "
+"INSERT INTO ... SELECT au lieu de ligne par ligne. Cette migration se "
+"produit durant la mise à niveau vers Elgg 1.9."
+
+#: ../../contribute/code.rst:123
+msgid "Unless your change is trivial/obvious, a description is required."
+msgstr ""
+"A moins que votre modification soit triviale/évidente, une description est "
+"requise."
+
+#: ../../contribute/code.rst:125
+msgid ""
+"If the commit resolves a GitHub issue, skip a line and add ``Fixes #`` "
+"followed by the issue number. E.g. ``Fixes #1234``. You can include multiple"
+" issues by separating with commas."
+msgstr ""
+"Si le commit correspond à une demande (\"issue\") Github, sautez une ligne "
+"et ajoutez ``Fixes #`` suivi par le numéro de demande. Par ex. ``Fixes "
+"#1234``. Vous pouvez inclure de multiples demande en les séparant par des "
+"virgules."
+
+#: ../../contribute/code.rst:128
+msgid ""
+"GitHub will auto-close the issue when the commit is merged. If you just want"
+" to reference an issue, use ``Refs #`` instead."
+msgstr ""
+"GitHub va fermer automatiquement la demande quand le commit est fusionné. Si"
+" vous souhaitez simplement faire référence à une demande, utilisez ``Refs "
+"#``."
+
+#: ../../contribute/code.rst:131
+msgid "When done, your commit message will have the format:"
+msgstr "Quand c'est terminé, votre message de commit aura le format :"
+
+#: ../../contribute/code.rst:144
+msgid "Here is an example of a good commit message:"
+msgstr "Voici un exemple d'un bon message de commit :"
+
+#: ../../contribute/code.rst:156
+msgid ""
+"To validate commit messages locally, make sure "
+"``.scripts/validate_commit_msg.php`` is executable, and make a copy or "
+"symlink to it in the directory ``.git/hooks/commit-msg``."
+msgstr ""
+"Pour valider les messages de commit localement, vérifiez que "
+"``.scripts/validate_commit_msg.php`` est exécutable, et faites une copie ou "
+"un lien symbolique dans le dossier ``.git/hooks/commit-msg``."
+
+#: ../../contribute/code.rst:165
+msgid "Rewriting commit messages"
+msgstr "Réécrire des messages de commits"
+
+#: ../../contribute/code.rst:166
+msgid ""
+"If your PR does not conform to the standard commit message format, we'll ask"
+" you to rewrite it."
+msgstr ""
+"Si votre PR ne se conforme pas au format standard de message de commit, nous"
+" vous demanderons de le réécrire."
+
+#: ../../contribute/code.rst:168
+msgid "To edit just the last commit:"
+msgstr "Pour modifier seulement le dernier commit :"
+
+#: ../../contribute/code.rst:170
+msgid ""
+"Amend the commit: ``git commit --amend`` (git opens the message in a text "
+"editor)."
+msgstr ""
+"Amender le commit: ``git commit --amend`` (git ouvre le message dans un "
+"éditeur de texte)."
+
+#: ../../contribute/code.rst:171
+msgid "Change the message and save/exit the editor."
+msgstr "Changer le message et enregistrer/quitter l'éditeur."
+
+#: ../../contribute/code.rst:172
+msgid ""
+"Force push your branch: ``git push -f your_remote your_branch`` (your PR "
+"with be updated)."
+msgstr ""
+"Forcez l'envoi de votre branche : ``git push -f your_remote your_branch`` "
+"(votre PR sera mis à jour)."
+
+#: ../../contribute/code.rst:173 ../../contribute/code.rst:182
+msgid "Rename the PR title to match"
+msgstr "Renommez le titre du PR pour correspondre"
+
+#: ../../contribute/code.rst:175
+msgid "Otherwise you may need to perform an interactive rebase:"
+msgstr "Sinon vous pourrez avoir besoin d'effectuer un \"rebase\" interactif :"
+
+#: ../../contribute/code.rst:177
+msgid ""
+"Rebase the last N commits: ``git rebase -i HEAD~N`` where N is a number. "
+"(Git will open the ``git-rebase-todo`` file for editing)"
+msgstr ""
+"Faites un rebase des derniers N commits: ``git rebase -i HEAD~N`` où N est "
+"le nombre. (Git va ouvrir le fichier ``git-rebase-todo`` pour modification)"
+
+#: ../../contribute/code.rst:179
+msgid ""
+"For the commits that need to change, change ``pick`` to ``r`` (for reword) "
+"and save/exit the editor."
+msgstr ""
+"Pour les commits qui ont besoin d'être modifiés, modifiez ``pick`` en ``r`` "
+"(pour \"reword\", reformulation) et enregistrez/quittez l'éditeur."
+
+#: ../../contribute/code.rst:180
+msgid ""
+"Change the commit message(s), save/exit the editor (git will present a file "
+"for each commit that needs rewording)."
+msgstr ""
+"Modifiez le(s) message(s) de commit, enregistrez/quitter l'éditeur (git va "
+"prsenter un fichier pour chaque commit qui a besoin d'être reformulé)."
+
+#: ../../contribute/code.rst:181
+msgid ""
+"``git push -f your_remote your_branch`` to force push the branch (updating "
+"your PR)."
+msgstr ""
+"``git push -f your_remote your_branch`` pour forcer un push de la branche "
+"(qui met à jour votre PR)."
+
+#: ../../contribute/code.rst:188
+msgid "Coding Standards"
+msgstr "Standards de développements"
+
+#: ../../contribute/code.rst:190
+msgid ""
+"Elgg uses set of standards that are based partially on PEAR and PSR2 "
+"standards. You can view the ruleset in ``vendor/elgg/sniffs/elgg.xml``."
+msgstr ""
+"Elgg utilise des jeux de standards qui sont basés en partie sur les "
+"standards PEAR et PSR2. Vous pouvez voir le jeu de règles dans "
+"``vendor/elgg/sniffs/elgg.xml``."
+
+#: ../../contribute/code.rst:192
+msgid ""
+"To check your code for standard violations (provided you have installed Elgg"
+" with dev dependencies), run:"
+msgstr ""
+"Pour vérifier les violations des standards de votre code (à condition que "
+"vous ayez installé Elgg avec les dépendances dev), exécutez :"
+
+#: ../../contribute/code.rst:199
+msgid "To automatically fix fixable violations, run:"
+msgstr "Pour corriger automatiquement des violations réparables, exécutez :"
+
+#: ../../contribute/code.rst:205
+msgid ""
+"To check core directories, you can use shortcut ``composer lint`` and "
+"``composer lint-fixer``."
+msgstr ""
+"Pour vérifier les répertoires du noyau, vous pouvez utiliser le raccourci "
+"``composer lint`` et ``composer lint-fixer``."
+
+#: ../../contribute/code.rst:211
+msgid "Testing"
+msgstr "Tester"
+
+#: ../../contribute/code.rst:213
+msgid ""
+"Elgg has automated tests for both PHP and JavaScript functionality. All new "
+"contributions are required to come with appropriate tests."
+msgstr ""
+"Elgg dispose de tests automatisés à la fois pour PHP et JavaScript. Toutes "
+"les nouvelles contributions doivent intégrer les tests appropriés."
+
+#: ../../contribute/code.rst:217
+msgid ":doc:`tests`"
+msgstr ":doc:`tests`"
+
+#: ../../contribute/code.rst:220
+msgid "General guidelines"
+msgstr "Recommandations générales"
+
+#: ../../contribute/code.rst:222
+msgid ""
+"Break tests up by the behaviors you want to test and use names that describe"
+" the behavior. E.g.:"
+msgstr ""
+"Découpez les tests par comportements que vous souhaitez tester et utilisez "
+"des noms qui décrivent le comportement. Par ex. :"
+
+#: ../../contribute/code.rst:224
+msgid "Not so good: One big method ``testAdd()``."
+msgstr "Pas si bon : Une seule grosse méthode ``testAdd()``."
+
+#: ../../contribute/code.rst:226
+msgid ""
+"Better: Methods ``testAddingZeroChangesNothing`` and "
+"``testAddingNegativeNumberSubtracts``"
+msgstr ""
+"Mieux : Méthodes ``testAddingZeroChangesNothing`` et "
+"``testAddingNegativeNumberSubtracts``"
+
+#: ../../contribute/code.rst:228
+msgid ""
+"Strive for :ref:`componentized designs <contribute/code#solid>` that allow "
+"testing in isolation, without large dependency graphs or DB access. "
+"Injecting dependencies is key here."
+msgstr ""
+"Efforcez-vous d'utiliser des :ref:`designs à base de composants "
+"<contribute/code#solid>` qui permettent de tester en isolement, sans de "
+"grands graphes de dépendances ou d'accès à la base de données. L'injection "
+"de dépendances est ici critique."
+
+#: ../../contribute/code.rst:231
+msgid "PHP Tests"
+msgstr "Tests PHP"
+
+#: ../../contribute/code.rst:234
+msgid "PHPUnit"
+msgstr "PHPUnit"
+
+#: ../../contribute/code.rst:236
+msgid ""
+"Located in ``engine/tests/phpunit``, this is our preferred test suite. It "
+"uses no DB access, and has only superficial access to the entities API."
+msgstr ""
+"Située dans ``engine/tests/phpunit``, c'est notre suite de tests préférée. "
+"Elle n'utilise pas d'accès à la base de données, et n'a qu'un accès "
+"superficiel à l'API des entités."
+
+#: ../../contribute/code.rst:238
+msgid ""
+"We encourage you to create components that are testable in this suite if "
+"possible."
+msgstr ""
+"Si possible, nous vous encourageons à créer des composants qui sont "
+"testables dans cette suite."
+
+#: ../../contribute/code.rst:239
+msgid ""
+"Consider separating storage from your component so at least business logic "
+"can be tested here."
+msgstr ""
+"Envisagez de séparer le stockage de votre composant de sorte que la logique "
+"métier puisse être testée ici."
+
+#: ../../contribute/code.rst:240
+msgid ""
+"Depend on the ``Elgg\\Filesystem\\*`` classes rather than using PHP "
+"filesystem functions."
+msgstr ""
+"Dépendez des classes ``Elgg\\Filesystem\\*`` plutôt que d'utiliser les "
+"fonctions du système de fichiers PHP."
+
+#: ../../contribute/code.rst:243
+msgid "SimpleTest"
+msgstr "SimpleTest"
+
+#: ../../contribute/code.rst:245
+msgid ""
+"The rest of the files in ``engine/tests`` form our integration suite, for "
+"anything that needs access to the DB or entity APIs."
+msgstr ""
+"Le reste des fichiers dans ``engine/tests`` constitue notre suite "
+"d'intégration, pour tout ce qui demande un accès à la base de données ou aux"
+" APIs des entités."
+
+#: ../../contribute/code.rst:247
+msgid "Our long-term goals are to minimize these and convert them to PHPUnit"
+msgstr ""
+"Notre objectif à long terme est de les minimiser et de les convertir en "
+"PHPUnit"
+
+#: ../../contribute/code.rst:250
+msgid "Testing interactions between services"
+msgstr "Tester les interactions entre services"
+
+#: ../../contribute/code.rst:252
+msgid ""
+"Ideally your tests would construct your own isolated object graphs for "
+"direct manipulation, but this isn't always possible."
+msgstr ""
+"Dans l'idéal, vos tests devraient construire vos propres graphes d'objet "
+"isolés pour des manipulations directes, mais ce n'est pas toujours possible."
+
+#: ../../contribute/code.rst:254
+msgid ""
+"If your test relies on Elgg's Service Provider (``_elgg_services()`` returns"
+" a ``Elgg\\Di\\ServiceProvider``), realize that it maintains a singleton "
+"instance for most services it hands out, and many services keep their own "
+"local references to these services as well."
+msgstr ""
+"Si votre test dépend du Fournisseur de Service Elgg (``_elgg_services()`` "
+"retourne un ``Elgg\\Di\\ServiceProvider``), réalisez que cela maintient une "
+"instance singleton pour la plupart des services qu'il fournit, et que "
+"beaucoup de services conservent également leurs propres références locales "
+"pour ces services."
+
+#: ../../contribute/code.rst:256
+msgid ""
+"Due to these local references, replacing services on the SP within a test "
+"often will not have the desired effect. Instead, you may need to use "
+"functionality baked into the services themselves:"
+msgstr ""
+"Du fait de ces références locales, replacer les services sur le SP (SP = "
+"\"Service Provider\", Fournisseur de Service) au sein d'un test n'aura "
+"souvent pas l'effet désiré. Au lieu de cela, vous pourriez avoir besoin "
+"d'utiliser la fonctionnalité disponible dans les services eux-mêmes :"
+
+#: ../../contribute/code.rst:258
+msgid ""
+"The ``events`` and ``hooks`` services have methods ``backup()`` and "
+"``restore()``."
+msgstr ""
+"Les services ``events`` et ``hooks`` ont des méthodes ``backup()`` et "
+"``restore()``."
+
+#: ../../contribute/code.rst:259
+msgid "The ``logger`` service has methods ``disable()`` and ``enable()``."
+msgstr "Le service ``logger`` a des méthodes ``disable()`` et ``enable()``."
+
+#: ../../contribute/code.rst:262
+msgid "Jasmine Tests"
+msgstr "Tests Jasmine"
+
+#: ../../contribute/code.rst:264
+msgid ""
+"Test files must be named ``*Test.js`` and should go in either ``js/tests/`` "
+"or next to their source files in ``views/default/**.js``. Karma will "
+"automatically pick up on new ``*Test.js`` files and run those tests."
+msgstr ""
+"Les fichiers de test doivent être nommés ``*Test.js`` et devraient être "
+"placés soit dans ``js/tests/`` ou à côté de leurs fichiers sources dans "
+"``views/default/**.js``. Karma va automatiquement sélectionner les nouveaux "
+"fichiers ``*Test.js`` et exécuter ces tests."
+
+#: ../../contribute/code.rst:269
+msgid "Test boilerplate"
+msgstr "Test générique"
+
+#: ../../contribute/code.rst:284
+msgid "Running the tests"
+msgstr "Effectuer les tests"
+
+#: ../../contribute/code.rst:285
+msgid "Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests."
+msgstr ""
+"Elgg utilise `Karma`_ avec `Jasmine`_ pour effectuer des tests unitaires JS."
+
+#: ../../contribute/code.rst:290
+msgid "You will need to have nodejs and yarn installed."
+msgstr "Vous devez avoir nodejs et yarn installés."
+
+#: ../../contribute/code.rst:292
+msgid "First install all the development dependencies:"
+msgstr "Tout d'abord installez toute les dépendances de développement :"
+
+#: ../../contribute/code.rst:298
+msgid "Run through the tests just once and then quit:"
+msgstr "Exécutez les tests une seule fois puis quittez :"
+
+#: ../../contribute/code.rst:304
+msgid ""
+"You can also run tests continuously during development so they run on each "
+"save:"
+msgstr ""
+"Vous pouvez également exécuter les tests en continu pendant le développement"
+" de sorte qu'ils s'exécutent à chaque enregistrement :"
+
+#: ../../contribute/code.rst:311
+msgid "Debugging JS tests"
+msgstr "Déboguer les tests JS"
+
+#: ../../contribute/code.rst:313
+msgid "You can run the test suite inside Chrome dev tools:"
+msgstr ""
+"Vous pouvez exécuter la suite de test au sein des outils de développement de"
+" Chrome :"
+
+#: ../../contribute/code.rst:319
+msgid "This will output a URL like ``http://localhost:9876/``."
+msgstr "Ceci va renvoyer une URL telle que ``http://localhost:9876/``."
+
+#: ../../contribute/code.rst:321
+msgid "Open the URL in Chrome, and click \"Debug\"."
+msgstr "Ouvrez l'URL dans Chrome, et cliquez sur \"Debug\"."
+
+#: ../../contribute/code.rst:322
+msgid "Open Chrome dev tools and the Console tab."
+msgstr "Ouvrez les outils de développement de Chrome et l'onglet Console."
+
+#: ../../contribute/code.rst:323
+msgid "Reload the page."
+msgstr "Rechargez la page"
+
+#: ../../contribute/code.rst:325
+msgid ""
+"If you alter a test you'll have to quit Karma with ``Ctrl-c`` and restart "
+"it."
+msgstr ""
+"Si vous modifiez un test, vous devrez quitter Karma avec ``Ctrl-c`` et le "
+"rédémarrer."
+
+#: ../../contribute/code.rst:328
+msgid "Coding best practices"
+msgstr "Meilleures pratiques de développement"
+
+#: ../../contribute/code.rst:330
+msgid ""
+"Make your code easier to read, easier to maintain, and easier to debug. "
+"Consistent use of these guidelines means less guess work for developers, "
+"which means happier, more productive developers."
+msgstr ""
+"Rendez votre code plus facile à lire, plus facile à maintenir, et plus "
+"facile à déboguer. Un usage consistant de ces recommandations signifie moins"
+" de travail de devinettes pour les développeurs, ce qui signifie des "
+"développeurs plus heureux, et plus productifs."
+
+#: ../../contribute/code.rst:336
+msgid "General coding"
+msgstr "Développement en général"
+
+#: ../../contribute/code.rst:339
+msgid "Don't Repeat Yourself"
+msgstr "Ne Vous Répétez Pas"
+
+#: ../../contribute/code.rst:341
+msgid ""
+"If you are copy-pasting code a significant amount of code, consider whether "
+"there's an opportunity to reduce duplication by introducing a function, an "
+"additional argument, a view, or a new component class."
+msgstr ""
+"Si vous copiez-collez des morceaux significatifs de code, considérez qu'il y"
+" a une opportunité de réduire la duplication en introduisant une fonction, "
+"un argument supplémentaire, une vue, ou une nouvelle classe de composant."
+
+#: ../../contribute/code.rst:344
+msgid ""
+"E.g. If you find views that are identical except for a single value, "
+"refactor into a single view that takes an option."
+msgstr ""
+"Par ex. Si vous trouvez des vues qui sont identiques à l'exception d'une "
+"seule valeur, remaniez-les en une seule vue qui accepte une option."
+
+#: ../../contribute/code.rst:347
+msgid ""
+"**Note:** In a bugfix release, *some duplication is preferrable to "
+"refactoring*. Fix bugs in the simplest way possible and refactor to reduce "
+"duplication in the next minor release branch."
+msgstr ""
+"**Note:** Dans la publicaiton d'une correction de bugs, *un peu de "
+"duplication est préférable à de la refactorisation*. Corrigez les bugs de la"
+" manière la plus simple possible, et refactorisez pour réduire la "
+"duplication dans la branche de la prochaine version mineure."
+
+#: ../../contribute/code.rst:353
+msgid "Embrace SOLID and GRASP"
+msgstr "Adoptez SOLID et GRASP"
+
+#: ../../contribute/code.rst:355
+msgid ""
+"Use these `principles for OO design`__ to solve problems using loosely "
+"coupled components, and try to make all components and integration code "
+"testable."
+msgstr ""
+"Utilisez ces `principes pour le design OO`__ pour résoudre des problèmes en "
+"utilisant des composants couplés librement, et essayez de rendre tous les "
+"composants et le code d'intégration testables."
+
+#: ../../contribute/code.rst:361
+msgid "Whitespace is free"
+msgstr "Les espacements sont gratuits"
+
+#: ../../contribute/code.rst:363
+msgid ""
+"Don't be afraid to use it to separate blocks of code. Use a single space to "
+"separate function params and string concatenation."
+msgstr ""
+"N'ayez pas peur d'utiliser des blocs de code séparés. Utilisez un espace "
+"unique pour séparer les paramètres des fonctions et les concaténations de "
+"chaînes."
+
+#: ../../contribute/code.rst:367
+msgid "Variable names"
+msgstr "Nom des variables"
+
+#: ../../contribute/code.rst:369
+msgid ""
+"Use self-documenting variable names.  ``$group_guids`` is better than "
+"``$array``."
+msgstr ""
+"Utilisez des noms de variables auto-documentés. ``$group_guids`` est mieux "
+"que ``$array``."
+
+#: ../../contribute/code.rst:371
+msgid ""
+"Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``."
+msgstr ""
+"Evitez les doubles négations. Préférez ``$enable = true`` à ``$disable = "
+"false``."
+
+#: ../../contribute/code.rst:374
+msgid "Interface names"
+msgstr "Nom des interfaces"
+
+#: ../../contribute/code.rst:376
+msgid "Use the pattern ``Elgg\\{Namespace}\\{Name}``."
+msgstr "Utilisez le motif ``Elgg\\{Namespace}\\{Name}``."
+
+#: ../../contribute/code.rst:378
+msgid "Do not include an ``I`` prefix or an ``Interface`` suffix."
+msgstr "N'ajoutez pas de préfixe ``I`` ou de suffixe ``Interface``."
+
+#: ../../contribute/code.rst:380
+msgid "We do not include any prefix or suffix so that we're encouraged to:"
+msgstr ""
+"Nous n'utilisons aucun préfixe ou suffixe de sorte que nous sommes "
+"encouragés à :"
+
+#: ../../contribute/code.rst:382
+msgid ""
+"name implementation classes more descriptively (the \"default\" name is "
+"taken)."
+msgstr ""
+"nommer les classes d'implémentation de manière plus descriptive (le nom "
+"\"par défaut\" est déjà pris)."
+
+#: ../../contribute/code.rst:383
+msgid ""
+"type-hint on interfaces, because that is the shortest, easiest thing to do."
+msgstr ""
+"faites du typage sur les interfaces, parce que c'est la manière la plus "
+"courte et la plus simple de faire."
+
+#: ../../contribute/code.rst:385
+msgid ""
+"Name implementations like "
+"``Elgg\\{Namespace}\\{Interface}\\{Implementation}``."
+msgstr ""
+"Nommez les implementations comme "
+"``Elgg\\{Namespace}\\{Interface}\\{Implementation}``."
+
+#: ../../contribute/code.rst:388
+msgid "Functions"
+msgstr "Fonctions"
+
+#: ../../contribute/code.rst:390
+msgid ""
+"Where possible, have functions/methods return a single type. Use empty "
+"values such as ``array()``, ``\"\"``, or ``0`` to indicate no results."
+msgstr ""
+"Autant que possible, ayez des fonctions/méthodes qui renvoient un type "
+"unique. Utilisez des valeurs vides telle que ``array()``, ``\"\"``, ou ``0``"
+" pour indiquer l'absence de résultat."
+
+#: ../../contribute/code.rst:393
+msgid ""
+"Be careful where valid return values (like ``\"0\"``) could be interpreted "
+"as empty."
+msgstr ""
+"Faites attention aux cas où des valeurs de retour valides (telles que "
+"``\"0\"``) pourraient être interprétées comme vides."
+
+#: ../../contribute/code.rst:395
+msgid ""
+"Functions not throwing an exception on error should return ``false`` upon "
+"failure."
+msgstr ""
+"Les fonctions qui ne déclenchent pas une exception lors d'une erreur "
+"devraient retourner ``false`` lorsqu'elles échouent."
+
+#: ../../contribute/code.rst:397
+msgid ""
+"Functions returning only boolean should be prefaced with ``is_`` or ``has_``"
+" (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
+msgstr ""
+"Les fonctions qui ne renvoient qu'un booléen devraient être préfixées par "
+"``is_`` ou ``has_`` (par ex., ``elgg_is_logged_in()``, "
+"``elgg_has_access_to_entity()``)."
+
+#: ../../contribute/code.rst:401
+msgid "Ternary syntax"
+msgstr "Syntaxe ternaire"
+
+#: ../../contribute/code.rst:403
+msgid "Acceptable only for single-line, non-embedded statements."
+msgstr ""
+"Acceptable seulement pour des déclarations sur une seule ligne, non "
+"imbriquée"
+
+#: ../../contribute/code.rst:406
+msgid "Minimize complexity"
+msgstr "Minimisez la complexité"
+
+#: ../../contribute/code.rst:408
+msgid ""
+"Minimize nested blocks and distinct execution paths through code. Use "
+"`Return Early`__ to reduce nesting levels and cognitive load when reading "
+"code."
+msgstr ""
+"Minimisez les blocs imbriqués et les chemins d'exécution distinct au sein du"
+" code. Faites un `Return rapide`__ pour réduire les niveaux imbriqués et la "
+"charge cognitive lors de la lecture du code."
+
+#: ../../contribute/code.rst:414
+msgid "Use comments effectively"
+msgstr "Utilisez les commentaires à bon escient"
+
+#: ../../contribute/code.rst:416
+msgid "Good comments describe the \"why.\"  Good code describes the \"how.\" E.g.:"
+msgstr ""
+"Les bons commentaires décrivent le \"pourquoi.\"  Le bon code décrit le "
+"\"comment.\" Par ex. :"
+
+#: ../../contribute/code.rst:418 ../../contribute/code.rst:555
+#: ../../contribute/code.rst:591 ../../contribute/code.rst:629
+#: ../../contribute/code.rst:670 ../../contribute/code.rst:690
+#: ../../contribute/code.rst:705 ../../contribute/code.rst:723
+#: ../../contribute/code.rst:745 ../../contribute/code.rst:769
+msgid "Bad:"
+msgstr "Mauvais :"
+
+#: ../../contribute/code.rst:429 ../../contribute/code.rst:541
+#: ../../contribute/code.rst:571 ../../contribute/code.rst:608
+#: ../../contribute/code.rst:646 ../../contribute/code.rst:680
+#: ../../contribute/code.rst:696 ../../contribute/code.rst:711
+#: ../../contribute/code.rst:731 ../../contribute/code.rst:754
+#: ../../contribute/code.rst:777
+msgid "Good:"
+msgstr "Bon :"
+
+#: ../../contribute/code.rst:440
+msgid ""
+"Always include a comment if it's not obvious that something must be done in "
+"a certain way. Other developers looking at the code should be discouraged "
+"from refactoring in a way that would break the code."
+msgstr ""
+"Ajoutez toujours un commentaire s'il n'est pas évident que quelque chose "
+"doit être fait d'une certaine manière. D'autres développeurs qui regardent "
+"le code devraient être découragés de réorganiser le code d'une manière qui "
+"le casserait."
+
+#: ../../contribute/code.rst:452
+msgid "Commit effectively"
+msgstr "Commitez de manière efficace"
+
+#: ../../contribute/code.rst:454
+msgid ""
+"Err on the side of `atomic commits`__ which are highly focused on changing "
+"one aspect of the system."
+msgstr ""
+"Péchez par excès de `commits atomiques`__ qui sont précisément ciblés sur la"
+" modification d'un seul aspect du système."
+
+#: ../../contribute/code.rst:455
+msgid ""
+"Avoid mixing in unrelated changes or extensive whitespace changes. Commits "
+"with many changes are scary and make pull requests difficult to review."
+msgstr ""
+"Eviter de mélanger des modifications qui ne sont pas liées ou des "
+"modifications importants des espaces. Les commits avec de nombreux "
+"changements sont effrayants et rendent les demandes de fusion (Pull "
+"Requests) difficiles à évaluer."
+
+#: ../../contribute/code.rst:457
+msgid "Use visual git tools to craft `highly precise and readable diffs`__."
+msgstr ""
+"Utilisez des outils git visuels pour façonner `des diffs extrêmement précis "
+"et lisibles`__."
+
+#: ../../contribute/code.rst:463
+msgid "Include tests"
+msgstr "Incluez des tests"
+
+#: ../../contribute/code.rst:465
+msgid ""
+"When at all possible :ref:`include unit tests <contribute/code#testing>` for"
+" code you add or alter."
+msgstr ""
+"A chaque fois que c'est possible, :ref:`incluez des tests unitaires "
+"<contribute/code#testing>` pour le code que vous ajoutez ou modifiez."
+
+#: ../../contribute/code.rst:468
+msgid "Keep bugfixes simple"
+msgstr "Gardez les corrections de bugs simples"
+
+#: ../../contribute/code.rst:470
+msgid ""
+"Avoid the temptation to refactor code for a bugfix release. Doing so tends "
+"to introduce regressions, breaking functionality in what should be a stable "
+"release."
+msgstr ""
+"Évitez la tentation de refactoriser le code pour la publicaiton d'une "
+"correction de bug. Faire cela a tendance à introduire des régressions, à "
+"casser la fonctionnalité dans ce qui devrait être une version stable."
+
+#: ../../contribute/code.rst:474
+msgid "PHP guidelines"
+msgstr "Recommandations PHP"
+
+#: ../../contribute/code.rst:476
+msgid ""
+"These are the required coding standards for Elgg core and all bundled "
+"plugins. Plugin developers are strongly encouraged to adopt these standards."
+msgstr ""
+"Voici les standards de développement requis pour le noyau d'Elgg et tous les"
+" plugins associés. Les développeurs de plugins sont fortement encouragés à "
+"adopter ces standards."
+
+#: ../../contribute/code.rst:479
+msgid "Developers should first read the `PSR-2 Coding Standard Guide`__."
+msgstr ""
+"Les développeurs devraient lire en premier le `Guide des Standards de "
+"Développement PSR-2`__."
+
+#: ../../contribute/code.rst:483
+msgid "Elgg's standards extend PSR-2, but differ in the following ways:"
+msgstr ""
+"Les standards d'Elgg étendent PSR-2, mais diffèrent des manières suivantes :"
+
+#: ../../contribute/code.rst:485
+msgid "Indent using one tab character, not spaces."
+msgstr "Indentez en utilisant le caractère tabulation, pas des espaces."
+
+#: ../../contribute/code.rst:486
+msgid ""
+"Opening braces for classes, methods, and functions must go on the same line."
+msgstr ""
+"Les parenthèses ouvrantes pour les classes, méthodes, et fonctions doivent "
+"être sur le même ligne."
+
+#: ../../contribute/code.rst:487
+msgid ""
+"If a line reaches over 100 characters, consider refactoring (e.g. introduce "
+"variables)."
+msgstr ""
+"Si une ligne dépasse 100 caractères, envisagez de la remanier (par ex. en "
+"introduisant des variables)."
+
+#: ../../contribute/code.rst:488
+msgid "Compliance with `PSR-1`__ is encouraged, but not strictly required."
+msgstr ""
+"La compatibilité avec `PSR-1`__ est encouragée, mais pas strictement "
+"requise."
+
+#: ../../contribute/code.rst:493 ../../contribute/core/move_plugin.rst:124
+msgid "Documentation"
+msgstr "Documentation"
+
+#: ../../contribute/code.rst:495
+msgid ""
+"Include PHPDoc comments on functions and classes (all methods; declared "
+"properties when appropriate), including types and descriptions of all "
+"parameters."
+msgstr ""
+"Incluez des commentaires PHPDoc sur les fonctions et les classes (toutes les"
+" méthodes ; les propriétés déclarées quand c'est approprié), y compris les "
+"type et description de tous les paramètres."
+
+#: ../../contribute/code.rst:499
+msgid ""
+"In lists of ``@param`` declarations, the beginnings of variable names and "
+"descriptions must line up."
+msgstr ""
+"Dans les listes de déclarations ``@param``, le début des noms de variables "
+"et des descriptions doivent être alignées."
+
+#: ../../contribute/code.rst:502
+msgid ""
+"Annotate classes, methods, properties, and functions with ``@access "
+"private`` unless they are intended for public use, are already of limited "
+"visibility, or are within a class already marked as private."
+msgstr ""
+"Annotez les classes, méthodes, propriétés et fonctions avec ``@access "
+"private``, à moins qu'elles ne soient prévues pour un usage public, n'aient "
+"déjà une visibilité limitée, ou soient déjà au sein d'une classe marquée "
+"comme privée."
+
+#: ../../contribute/code.rst:506
+msgid "Use ``//`` or ``/* */`` when commenting."
+msgstr "Utilisez ``//`` ou ``/* */`` pour les commentaires."
+
+#: ../../contribute/code.rst:508
+msgid "Use only ``//`` comments inside function/method bodies."
+msgstr ""
+"Utilisez seulement les commentaires ``//`` à l'intérieur du corps des "
+"fonctions et méthodes."
+
+#: ../../contribute/code.rst:511
+msgid "Naming"
+msgstr "Nommage"
+
+#: ../../contribute/code.rst:513
+msgid ""
+"Use underscores to separate words in the names of functions, variables, and "
+"properties. Method names are camelCase."
+msgstr ""
+"Utilisez des traits de soulignements (\"underscores\") pour séparer les mots"
+" dans les noms de fonctions, de variables, et les propriétés. Les noms de "
+"méthodes utilisent la syntaxe camelCase."
+
+#: ../../contribute/code.rst:516
+msgid "Names of functions for public use must begin with ``elgg_``."
+msgstr ""
+"Les noms de fonctions pour un usage public doivent commencer par ``elgg_``."
+
+#: ../../contribute/code.rst:518
+msgid "All other function names must begin with ``_elgg_``."
+msgstr "Tous les autres noms de fonctions doivent commencer par ``_elgg_``."
+
+#: ../../contribute/code.rst:520
+msgid ""
+"Name globals and constants in ``ALL_CAPS`` (``ACCESS_PUBLIC``, ``$CONFIG``)."
+msgstr ""
+"Nommez les globales et les contantes en ``MAJUSCULE`` (``ACCESS_PUBLIC``, "
+"``$CONFIG``)."
+
+#: ../../contribute/code.rst:523
+msgid "Miscellaneous"
+msgstr "Divers"
+
+#: ../../contribute/code.rst:525
+msgid "For PHP requirements, see ``composer.json``."
+msgstr "Pour les pré-requis PHP, voyez ``composer.json``."
+
+#: ../../contribute/code.rst:527
+msgid ""
+"Do not use PHP shortcut tags ``<?`` or ``<%``. It is OK to use ``<?=`` since"
+" it is always enabled as of PHP 5.4."
+msgstr ""
+"N'utilisez pas les balises PHP raccourcies ``<?`` ou ``<%``. Il est possible"
+" d'utiliser ``<?=`` dans la mesure où cela est toujours activé à partir de "
+"PHP 5.4."
+
+#: ../../contribute/code.rst:530
+msgid "When creating strings with variables:"
+msgstr "Quand vous créez des chaînes de caractères avec des variables :"
+
+#: ../../contribute/code.rst:532
+msgid "use double-quoted strings"
+msgstr "utilisez des chaînes de caractères avec des guillemets doubles"
+
+#: ../../contribute/code.rst:533
+msgid "wrap variables with braces only when necessary."
+msgstr ""
+"encadrez les variables avec des accolades seulement quand c'est nécessaire."
+
+#: ../../contribute/code.rst:535
+msgid "Bad (hard to read, misuse of quotes and {}s):"
+msgstr "Mauvais (difficile à lire, mauvais usage des guillemets et des {}):"
+
+#: ../../contribute/code.rst:547
+msgid ""
+"Remove trailing whitespace at the end of lines. An easy way to do this "
+"before you commit is to run ``php .scripts/fix_style.php`` from the "
+"installation root."
+msgstr ""
+"Supprimez les espaces de fin de ligne. Un moyen simple de faire cela avant "
+"votre commit est d'exécuter ``php .scripts/fix_style.php`` à partir de la "
+"racine de l'installation."
+
+#: ../../contribute/code.rst:551
+msgid "Value validation"
+msgstr "Validation de la valeur"
+
+#: ../../contribute/code.rst:553
+msgid ""
+"When working with user input prepare the input outside of the validation "
+"method."
+msgstr ""
+"Quand vous travaillez avec des saisies utilisateur, préparez les saisies en "
+"dehors de la méthode de validation."
+
+#: ../../contribute/code.rst:587
+msgid "Use exceptions"
+msgstr "Utilisez les exceptions"
+
+#: ../../contribute/code.rst:589
+msgid ""
+"Do not be afraid to use exceptions. They are easier to deal with than mixed "
+"function output:"
+msgstr ""
+"N'ayez pas peur d'utiliser les exceptions. Elles sont plus faciles à gérer "
+"que des sorties de fonction mixtes : "
+
+#: ../../contribute/code.rst:625
+msgid "Documenting return values"
+msgstr "Documenter les valeurs de retour"
+
+#: ../../contribute/code.rst:627
+msgid "Do not use ``@return void`` on methods that return a value or null."
+msgstr ""
+"N'utilisez pas ``@return void`` sur des méthodes qui renvoient une valeur ou"
+" null."
+
+#: ../../contribute/code.rst:665
+msgid "CSS guidelines"
+msgstr "Recommandations CSS"
+
+#: ../../contribute/code.rst:668
+msgid "Use shorthand where possible"
+msgstr "Utilisez des abréviations quand c'est possible"
+
+#: ../../contribute/code.rst:688
+msgid "Use hyphens, not underscores"
+msgstr "Utilisez les traits d'union \"-\", pas les underscores \"_\""
+
+#: ../../contribute/code.rst:703
+msgid "One property per line"
+msgstr "Une propriété par ligne"
+
+#: ../../contribute/code.rst:719
+msgid "Property declarations"
+msgstr "Déclarations des propriétés"
+
+#: ../../contribute/code.rst:721
+msgid "These should be spaced like so: ``property: value;``"
+msgstr "Celles-ci devraient être espacées comme ceci : ``propriété: valeur;``"
+
+#: ../../contribute/code.rst:738
+msgid "Vendor prefixes"
+msgstr "Préfixes fournisseurs (vendor)"
+
+#: ../../contribute/code.rst:740
+msgid "Group vendor-prefixes for the same property together"
+msgstr "Regroupez les préfixes fournisseurs pour la même propriété"
+
+#: ../../contribute/code.rst:741
+msgid "Longest vendor-prefixed version first"
+msgstr "La version la plus longue des préfixes fournisseurs en premier"
+
+#: ../../contribute/code.rst:742
+msgid "Always include non-vendor-prefixed version"
+msgstr "Incluez toujours la version sans préfixe fournisseur"
+
+#: ../../contribute/code.rst:743
+msgid ""
+"Put an extra newline between vendor-prefixed groups and other properties"
+msgstr ""
+"Ajoutez une ligne supplémentaire entre les groupes  avec préfixes "
+"fournisseurs et les autres propriétés "
+
+#: ../../contribute/code.rst:767
+msgid "Group subproperties"
+msgstr "Regroupez les sous-propriétés"
+
+#: ../../contribute/code.rst:786
+msgid "Javascript guidelines"
+msgstr "Recommandations JavaScript"
+
+#: ../../contribute/code.rst:788
+msgid "Same formatting standards as PHP apply."
+msgstr "Les mêmes standards de formatage que PHP s'appliquent."
+
+#: ../../contribute/code.rst:790
+msgid "All functions should be in the ``elgg`` namespace."
+msgstr "Toutes les fonctions devraient être dans l'espace de nom ``elgg``."
+
+#: ../../contribute/code.rst:792
+msgid "Function expressions should end with a semi-colon."
+msgstr ""
+"Les expressions d'une fonction devraient se terminer par un point-virgule."
+
+#: ../../contribute/code.rst:803
+msgid "Deprecating APIs"
+msgstr "APIs obsolètes"
+
+#: ../../contribute/code.rst:805
+msgid ""
+"Occasionally functions and classes must be deprecated in favor of newer "
+"replacements. Since 3rd party plugin authors rely on a consistent API, "
+"backward compatibility must be maintained, but will not be maintained "
+"indefinitely as plugin authors are expected to properly update their "
+"plugins. In order to maintain backward compatibility, deprecated APIs will "
+"follow these guidelines:"
+msgstr ""
+"De temps en temps, des fonctions et des classes doivent être dépréciées au "
+"profit de nouveaux remplacements. Dans la mesure où les auteurs de plugins "
+"tierce-partie s'appuient sur une API cohérente, la compatibilité ascendante "
+"doit être maintenue, mais ne sera pas maintenue indéfiniment dans la mesure "
+"où les auteurs de plugins sont supposés mettre à jour leurs plugins. Afin de"
+" maintenir la compatibilité ascendante, les API obsolètes vont suivre les "
+"recommandations suivantes :"
+
+#: ../../contribute/code.rst:812
+msgid ""
+"Minor version (1.x) that deprecates an API must include a wrapper "
+"function/class (or otherwise appropriate means) to maintain backward "
+"compatibility, including any bugs in the original function/class. This "
+"compatibility layer uses ``elgg_deprecated_notice('...', '1.11')`` to log "
+"that the function is deprecated."
+msgstr ""
+"Les versions mineures (1.x) qui déprécient une API doivent inclure une "
+"fonction/classe d'emballage (\"wrapper\") -ou tout autre moyen approprié- "
+"qui maintient la compatibilité ascendante, y compris tout bug de la "
+"fonction/classe originelle. Cette couche de compatibilité utilise "
+"``elgg_deprecated_notice('...', '1.11')`` pour journaliser le fait que cette"
+" fonction est obsolète."
+
+#: ../../contribute/code.rst:818
+msgid ""
+"The next major revision (2.0) removes the compatibility layer. Any use of "
+"the deprecated API should be corrected before this."
+msgstr ""
+"La révision majeure suivante (2.0) supprime la couche de compatibilité. "
+"Toute utilisation de l'API obsolète devrait être corrigé auparavant."
+
+#: ../../contribute/core/index.rst:2
+msgid "Core tasks"
+msgstr "Tâches du noyau"
+
+#: ../../contribute/core/index.rst:4
+msgid ""
+"Certain tasks surrounding Elgg are reserved for the core developer as they "
+"require special permissions. The guides below show the workflow for these "
+"actions."
+msgstr ""
+"Certaines tâches autour d'Elgg sont réservées à l'équipe des développeurs du"
+" noyau dans la mesure où elles demandent certaines permissions spéciales. "
+"Les guides ci-dessous décrivent le processus pour ces actions."
+
+#: ../../contribute/core/move_plugin.rst:2
+msgid "Moving a plugin to its own repository"
+msgstr "Déplacer un plugin vers son propre dépôt"
+
+#: ../../contribute/core/move_plugin.rst:9
+msgid "Plugin extraction steps"
+msgstr "Étapes d'extraction d'un plugin"
+
+#: ../../contribute/core/move_plugin.rst:12
+msgid "Move the code to its own repository"
+msgstr "Déplacez le code vers son propre dépôt"
+
+#: ../../contribute/core/move_plugin.rst:14
+msgid ""
+"Follow the GitHub guide `Splitting a subfolder out into a new repository`_. "
+"This will make sure that the commit history is preserved."
+msgstr ""
+"Suivez le guide Github pour transformer un sous-dossier en un nouveau dépôt "
+"(`Splitting a subfolder out into a new repository`_). Ceci va faire en sorte"
+" que l'historique des commits soit préservé."
+
+#: ../../contribute/core/move_plugin.rst:18
+msgid "Dependencies"
+msgstr "Dépendances"
+
+#: ../../contribute/core/move_plugin.rst:20
+msgid ""
+"If the plugin has dependencies on any external libraries, make sure these "
+"dependencies are managed. For example if a PHP library is required which "
+"comes bundled with Elgg core, make sure to add it to the ``composer.json`` "
+"of this plugin as you can't rely on Elgg core keeping the library."
+msgstr ""
+"Si le plugin a des dépendances sur n'importe quelles bibliothèques externes,"
+" assurez-vous que ces dépendances soient gérées. Par exemple, si une "
+"bibliothèque PHP est requise qui est livrée avec le noyau d'Elgg, assurez-"
+"vous de l'ajouter dans le ``composer.json`` de ce plugin dans la mesure où "
+"vous ne pouvez pas vous appuyer sur le fait que le noyau d'Elgg conserve "
+"cette bibliothèque."
+
+#: ../../contribute/core/move_plugin.rst:25
+msgid "Commit the code"
+msgstr "Commitez le code"
+
+#: ../../contribute/core/move_plugin.rst:27
+msgid ""
+"During the GitHub guide a new repository is created for the plugin you're "
+"trying to move."
+msgstr ""
+"Au cours du guide GitHub un nouveau dépôt est créé pour le plugin que vous "
+"essayez de déplacer."
+
+#: ../../contribute/core/move_plugin.rst:29
+msgid ""
+"Since an attemp was already made to extract some of the plugins to their own"
+" repository maybe the repository already exists."
+msgstr ""
+"Dans la mesure où une tentative a déjà été faite pour extraire certains des "
+"plugins vers leur propre dépôt il se peut que le dépôt existe déjà."
+
+#: ../../contribute/core/move_plugin.rst:31
+msgid ""
+"If the repository didn't exist for the plugin, make sure you create it under"
+" the `Elgg organisation`_."
+msgstr ""
+"Si le dépôt n'existait pas pour le plugin, assurez-vous que vous le créez "
+"dans `Elgg organisation`_."
+
+#: ../../contribute/core/move_plugin.rst:33
+msgid ""
+"If the repository already exists, the best way to update the code would be "
+"by a Pull Request. This will however probably fail because of a difference "
+"in how the repository was first created (as discussed in this `GitHub "
+"issue`_)."
+msgstr ""
+"Si le dépôt existe déjà, le meilleur moyen de mettre à jour le code serait "
+"en faisant une Pull Request. Ceci risque cependant probablement d'échouer à "
+"cause d'une différence dans la manière dont le dépôt a été initialement créé"
+" (comme discuté dans `Problème avec GitHub`_)."
+
+#: ../../contribute/core/move_plugin.rst:36
+msgid "The initial repositories where created with"
+msgstr "Les dépôts initiaux ont été créés avec"
+
+#: ../../contribute/core/move_plugin.rst:42
+msgid "and the guide calls for"
+msgstr "et le guide appelle"
+
+#: ../../contribute/core/move_plugin.rst:48
+msgid ""
+"This will leave a difference in the commits which GitHub is unable to "
+"resolve. In that case you'll have to force push the changes to the existing "
+"Elgg plugin repository."
+msgstr ""
+"Ceci va laisser une différence dans les commits que Github est incapable de "
+"résoudre. Dans ce cas vous devrez forcer un push des modifications vers le "
+"dépôt du plugin Elgg existant."
+
+#: ../../contribute/core/move_plugin.rst:53
+msgid ""
+"Since this will override all the history in the plugin repository, make sure"
+" you know this is what you want to do."
+msgstr ""
+"Dans la mesure où cela va réécrire tout l'historique du dépôt du plugin, "
+"assurez-vous que vous savez que c'est bien ce que vous souhaitez faire."
+
+#: ../../contribute/core/move_plugin.rst:56
+msgid "Packagist"
+msgstr "Packagist"
+
+#: ../../contribute/core/move_plugin.rst:58
+msgid ""
+"Make sure the ``composer.json`` of the plugin contains all the relevant "
+"information. Here is an example:"
+msgstr ""
+"Assurez-vous que le ``composer.json`` du plugin contient bien toutes les "
+"informations pertinentes. Voici un exemple :"
+
+#: ../../contribute/core/move_plugin.rst:80
+msgid ""
+"The ``conflict`` rule is there to help prevent the installation of this "
+"plugin in an unsupported Elgg version."
+msgstr ""
+"La règle ``conflict`` est ici pour aider à éviter l'installation de ce "
+"plugin dans une version d'Elgg non supportée."
+
+#: ../../contribute/core/move_plugin.rst:82
+msgid ""
+"Add the repository to `Packagist`_, for the existing repositories this was "
+"already done. Make sure `Packagist`_ is updated correctly with all the "
+"commits."
+msgstr ""
+"Ajoutez le dépôt à `Packagist`_, pour les dépôts existants ceci a déjà été "
+"fait. Assurez-vous que `Packagist`_ est mis à jour correctement avec tous "
+"les commits."
+
+#: ../../contribute/core/move_plugin.rst:86
+msgid "Tag a release"
+msgstr "Tagguer une release"
+
+#: ../../contribute/core/move_plugin.rst:88
+msgid ""
+"In order for Composer to be able to cache the plugin for faster "
+"installation, a release has to be made on the repository. Probably the first"
+" version that needs to be tagged is the same version as mentioned in the "
+"``manifest.xml``. After this development can begin, following the `Semver`_ "
+"versioning scheme."
+msgstr ""
+"Afin que Composer soit capable de mettre en cache le plugin pour une "
+"installation plus rapide, une release doit être créée sur le dépôt. A "
+"priori, la première version qui doit être tagguée est la même version que "
+"celle mentionnée dans le ``manifest.xml``. Après cela le développement peut "
+"commencer, suivi par le schéma de version `Semver`_."
+
+#: ../../contribute/core/move_plugin.rst:93
+#: ../../contribute/core/move_plugin.rst:109 ../../contribute/i18n.rst:2
+msgid "Translations"
+msgstr "Traductions"
+
+#: ../../contribute/core/move_plugin.rst:95
+msgid ""
+"If the translations for the plugin need to be managed by `Transifex`_, add "
+"the plugin to `Transifex`_."
+msgstr ""
+"Si les traductions pour le plugin doivent être gérées par `Transifex`_, "
+"ajoutez le plugin à `Transifex`_."
+
+#: ../../contribute/core/move_plugin.rst:98
+msgid "Elgg core cleanup"
+msgstr "Nettoyage du noyau Elgg"
+
+#: ../../contribute/core/move_plugin.rst:100
+msgid ""
+"Now that the plugin has been moved to it's own repository, it's time to make"
+" a Pull Request on Elgg core to remove the original code."
+msgstr ""
+"Maintenant que le plugin a été déplacé dans son propre dépôt, il est temps "
+"de faire une Pull Request sur le noyau d'Elgg pour supprimer le code "
+"originel."
+
+#: ../../contribute/core/move_plugin.rst:103
+msgid "Remove the plugin"
+msgstr "Supprimez le plugin"
+
+#: ../../contribute/core/move_plugin.rst:105
+msgid "Delete the ``mod`` folder for the plugin"
+msgstr "Supprimez le plugin du dossier ``mod``"
+
+#: ../../contribute/core/move_plugin.rst:106
+msgid ""
+"Search for the plugin name in core to find any references which also need to"
+" be removed (eg. old docs, special tests, etc.)"
+msgstr ""
+"Recherchez le nom du plugin dans le noyau pour trouver toute référence qui "
+"aurait également besoin d'être retirée (par ex. anciennes docs, tests "
+"spéciaux, etc.)"
+
+#: ../../contribute/core/move_plugin.rst:111
+msgid ""
+"Since the plugin no longer is part of Elgg core, make sure the configuration"
+" of `Transifex`_ no longer contains the plugin."
+msgstr ""
+"Dans la mesure où le plugin ne fait plus partie du noyau Elgg, assurez-vous "
+"que la configuration de `Transifex`_ ne contient plus le plugin."
+
+#: ../../contribute/core/move_plugin.rst:114
+msgid "Bundled"
+msgstr "Plugins joints"
+
+#: ../../contribute/core/move_plugin.rst:116
+msgid ""
+"If the plugin still comes bundled with the release of a new Elgg version, "
+"make sure to add the plugin to the ``composer.json``."
+msgstr ""
+"Si le plugin est toujours livrés conjointement avec la publicaiton d'une "
+"nouvelle version de Elgg, assurez-vous d'ajouter le plugin dans "
+"``composer.json``."
+
+#: ../../contribute/core/move_plugin.rst:119
+msgid "Composer"
+msgstr "Composer"
+
+#: ../../contribute/core/move_plugin.rst:121
+msgid ""
+"Check the core composer dependencies if requirements that were specific for "
+"the removed plugin can also be removed in the core dependencies."
+msgstr ""
+"Vérifiez les dépendances composer du noyau pour identifier si des exigences "
+"qui étaient spécifiques pour le plugin retiré peuvent également être "
+"retirées des dépendances du noyau."
+
+#: ../../contribute/core/move_plugin.rst:126
+msgid ""
+"Add a mention in the :doc:`/appendix/upgrade-notes` documentation that the "
+"plugin was removed from Elgg core."
+msgstr ""
+"Ajoutez une mention dans la documentation :doc:`/appendix/upgrade-notes` qui"
+" indique que le plugin a été retiré du noyau de Elgg."
+
+#: ../../contribute/core/releases.rst:2
+msgid "Release Process Workflow"
+msgstr "Processus de publication d'une release"
+
+#: ../../contribute/core/releases.rst:4
+msgid "Release a new version of Elgg."
+msgstr "Publier une nouvelle version d'Elgg."
+
+#: ../../contribute/core/releases.rst:6
+msgid ""
+"This is the process the core team follows for making a new Elgg release. We "
+"have published this information in the spirit of openness, and to streamline"
+" onboarding of new team members."
+msgstr ""
+"Voici le processus suivi par l'équipe du noyau pour publier une nouvelle "
+"release d'Elgg. Nous publions cette information dans un esprit d'ouverture, "
+"et pour faciliter l'intégration de nouveaux membres de l'équipe."
+
+#: ../../contribute/core/releases.rst:15
+msgid "Requirements"
+msgstr "Pré-requis"
+
+#: ../../contribute/core/releases.rst:17
+msgid "SSH access to elgg.org"
+msgstr "Accès SSH à elgg.org"
+
+#: ../../contribute/core/releases.rst:18
+msgid "Commit access to http://github.com/Elgg/Elgg"
+msgstr "Accès aux commits sur http://github.com/Elgg/Elgg"
+
+#: ../../contribute/core/releases.rst:19
+msgid "Admin access to https://elgg.org/"
+msgstr "Accès admin à https://elgg.org/"
+
+#: ../../contribute/core/releases.rst:20
+msgid "Access to `Twitter account`_"
+msgstr "Accès au compte Twitter `Twitter account`_"
+
+#: ../../contribute/core/releases.rst:21
+msgid "Node.js and Yarn installed"
+msgstr "Node.js et Yarn installés"
+
+#: ../../contribute/core/releases.rst:22
+msgid "Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)"
+msgstr "Sphinx installé (``easy_install sphinx && easy_install sphinx-intl``)"
+
+#: ../../contribute/core/releases.rst:23
+msgid "Transifex client installed (``easy_install transifex-client``)"
+msgstr "Client Transifex installé (``easy_install transifex-client``)"
+
+#: ../../contribute/core/releases.rst:24
+msgid "Transifex account with access to Elgg project"
+msgstr "Compte Transifex avec accès au projet Elgg"
+
+#: ../../contribute/core/releases.rst:27
+msgid "Merge commits up from lower branches"
+msgstr "Fusionnez les commits à partir des branches les plus basses"
+
+#: ../../contribute/core/releases.rst:29
+msgid ""
+"Determine the LTS branch. We need to merge any new commits there up through "
+"the other branches."
+msgstr ""
+"Déterminez la branche LTS. Nous devons fusionner tous les nouveaux commits "
+"jusqu'ici en passant par les autres branches."
+
+#: ../../contribute/core/releases.rst:32
+msgid "For each branch"
+msgstr "Pour chaque branche"
+
+#: ../../contribute/core/releases.rst:34
+msgid ""
+"Check out the branch, make sure it's up to date, and make a new work branch "
+"with the merge. E.g. here we're merging 1.12 commits into 2.0:"
+msgstr ""
+"Vérifiez la branche, assurez-vous qu'elle est à jour, et créez une nouvelle "
+"branche de travail avec la fusion. Par ex. ici nous fusionnons les commits "
+"de la 1.12 dans la 2.0 :"
+
+#: ../../contribute/core/releases.rst:44
+msgid ""
+"If already up-to-date (no commits to merge), we can stop here for this "
+"branch."
+msgstr ""
+"Si elle est déjà à jour (aucun commit à fusionner), nous pouvons nous "
+"arrêter ici pour cette branche."
+
+#: ../../contribute/core/releases.rst:46
+msgid ""
+"If there are conflicts, resolve them, ``git add .``, and ``git merge``."
+msgstr "S'il y a des conflits, résolvez-les, ``git add .``, et ``git merge``."
+
+#: ../../contribute/core/releases.rst:48
+msgid ""
+"Make a PR for the branch and wait for automated tests and approval by other "
+"dev(s)."
+msgstr ""
+"Faites un PR pour la branche et attendez le résultat des tests automatiques "
+"et l'approbation par un ou plusieurs autre(s) dev(s)."
+
+#: ../../contribute/core/releases.rst:54
+msgid ""
+"Once merged, we would repeat the process to merge 2.0 commits into 2.1."
+msgstr ""
+"Une fois la fusion effectuée, nous répéterions le processus pour fusionner "
+"les commits de la 2.0 dans la 2.1."
+
+#: ../../contribute/core/releases.rst:57
+msgid "First new stable minor/major release"
+msgstr "Première nouvelle version mineure/majeure stable"
+
+#: ../../contribute/core/releases.rst:59
+msgid ""
+"Update the :doc:`/appendix/support` to include the new minor/major release "
+"date and fill in the blanks for the previous release."
+msgstr ""
+"Mettez à jour :doc:`/appendix/support` pour inclure la date de la nouvelle "
+"version mineure/majeure et complétez les vides de la version précédente."
+
+#: ../../contribute/core/releases.rst:62
+msgid "Prepare the release"
+msgstr "Préparer la sortie"
+
+#: ../../contribute/core/releases.rst:64
+msgid "Bring your local git clone up to date."
+msgstr "Mettez à jour votre clone git local."
+
+#: ../../contribute/core/releases.rst:66
+msgid "Merge latest commits up from lowest supported branch."
+msgstr ""
+"Fusionnez les derniers commits vers le haut en commençant par la branche "
+"supportée la plus basse."
+
+#: ../../contribute/core/releases.rst:68
+msgid ""
+"Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the "
+"PR if there is anything that needs to be merged up."
+msgstr ""
+"Visitez ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` et soumettez "
+"le PR si quoi que ce soit a besoin d'être fusionné plus haut."
+
+#: ../../contribute/core/releases.rst:70
+msgid "Install the prerequisites:"
+msgstr "Installez les pré-requis :"
+
+#: ../../contribute/core/releases.rst:79
+msgid ""
+"On Windows you need to run these command in a console with admin privileges"
+msgstr ""
+"Sur Windows, vous devrez exécuter ces commandes dans une console avec des "
+"privilèges admin"
+
+#: ../../contribute/core/releases.rst:81
+msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
+msgstr ""
+"Exécutez le script ``release.php``. Par exemple, pour publier 1.12.5 :"
+
+#: ../../contribute/core/releases.rst:88
+msgid "This creates a ``release-1.12.5`` branch in your local repo."
+msgstr "Ceci crée une branche ``release-1.12.5`` dans votre repo local."
+
+#: ../../contribute/core/releases.rst:90
+msgid ""
+"Next, manually browse to the ``/admin/settings/basic`` page and verify it "
+"loads. If it does not, a language file from Transifex may have a PHP syntax "
+"error. Fix the error and amend your commit with the new file:"
+msgstr ""
+"Ensuite, naviguez manuellement jusqu'à la page ``/admin/settings/basic`` et "
+"vérifiez qu'elle se charge. Si ce n'est pas le cas, il se peut qu'un fichier"
+" de traduction issu de Transifex comporte une erreur de syntaxe. Corrigez "
+"l'erreur et amendez votre commit avec le nouveau fichier :"
+
+#: ../../contribute/core/releases.rst:99
+msgid ""
+"Next, submit a PR via GitHub for automated testing and approval by another "
+"developer:"
+msgstr ""
+"Ensuite, soumettez un PR via Github pour les tests automatisés et "
+"l'approbation par un autre développeur :"
+
+#: ../../contribute/core/releases.rst:106
+msgid "Tag the release"
+msgstr "Tagguez la release"
+
+#: ../../contribute/core/releases.rst:108
+msgid "Once approved and merged, tag the release:"
+msgstr "Une fois approuvée et fusionnée, tagguez les release :"
+
+#: ../../contribute/core/releases.rst:116
+msgid "Or create a release on GitHub"
+msgstr "Ou créez une release sur Github"
+
+#: ../../contribute/core/releases.rst:118
+msgid "Goto releases"
+msgstr "Allez sur les releases"
+
+#: ../../contribute/core/releases.rst:119
+msgid "Click 'Draft a new release'"
+msgstr "Cliquez sur 'Create a new release'"
+
+#: ../../contribute/core/releases.rst:120
+msgid "Enter the version"
+msgstr "Saisissez la version"
+
+#: ../../contribute/core/releases.rst:121
+msgid ""
+"Select the correct branch (eg 1.12 for a 1.12.x release, 2.3 for a 2.3.x "
+"release, etc)"
+msgstr ""
+"Sélectionnez la bonne branche (par ex. 1.12 pour une release 1.12.x, 2.3 "
+"pour une release 2.3.x, etc.)"
+
+#: ../../contribute/core/releases.rst:122
+msgid "Set the release title as 'Elgg {version}'"
+msgstr "Définissez le titre de la release tel que 'Elgg {version}'"
+
+#: ../../contribute/core/releases.rst:123
+msgid "Paste the CHANGELOG.md part related to this release in the description"
+msgstr ""
+"Collez la partie de CHANGELOG.md relative à cette release dans la "
+"description"
+
+#: ../../contribute/core/releases.rst:125
+msgid "Some final administration"
+msgstr "Un peu d'administration pour finir"
+
+#: ../../contribute/core/releases.rst:127
+msgid "Mark GitHub release milestones as completed"
+msgstr "Marquez les jalons de release Github comme terminés"
+
+#: ../../contribute/core/releases.rst:128
+msgid "Move unresolved tickets in released milestones to later milestones"
+msgstr ""
+"Déplacez les tickets non résolus des jalons publiés vers des jalons "
+"ultérieurs"
+
+#: ../../contribute/core/releases.rst:131
+msgid "Update the website"
+msgstr "Mettez à jour le site web"
+
+#: ../../contribute/core/releases.rst:133
+msgid "ssh to elgg.org"
+msgstr "ssh vers elgg.org"
+
+#: ../../contribute/core/releases.rst:134
+msgid "Clone https://github.com/Elgg/elgg-scripts"
+msgstr "Clonez https://github.com/Elgg/elgg-scripts"
+
+#: ../../contribute/core/releases.rst:137
+msgid "Build zip package"
+msgstr "Construisez le package zip"
+
+#: ../../contribute/core/releases.rst:139
+msgid ""
+"Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip "
+"file. Run without arguments to see usage."
+msgstr ""
+"Utilisez ``elgg-scripts/build/elgg-starter-project.sh`` pour générer le "
+"fichier .zip. Exécutez sans argument pour voir son utilisation."
+
+#: ../../contribute/core/releases.rst:154
+msgid ""
+"For Elgg 2.x releases use the ``2.x`` branch of the starter-project (eg. "
+"``./elgg-starter-project.sh 2.x 2.0.4 /var/www/www.elgg.org/download/``)"
+msgstr ""
+"Pour les releases Elgg 2.x utilisez la branche ``2.x`` du starter-project "
+"(par ex. ``./elgg-starter-project.sh 2.x 2.0.4 "
+"/var/www/www.elgg.org/download/``)"
+
+#: ../../contribute/core/releases.rst:156
+msgid ""
+"Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the "
+"expected version."
+msgstr ""
+"Vérifiez que ``vendor/elgg/elgg/composer.json`` dans le fichier zip a bien "
+"la version attendue."
+
+#: ../../contribute/core/releases.rst:157
+msgid ""
+"If not, make sure GitHub has the release tag, and that the starter project "
+"has a compatible ``elgg/elgg`` item in the composer requires list."
+msgstr ""
+"Si ce n'est pas le cas, assurez-vous que GitHub a bien le tag de release, et"
+" que le projet de démarrage a un élément compatible ``elgg/elgg`` dans la "
+"liste \"requires\" de composer."
+
+#: ../../contribute/core/releases.rst:161
+msgid "Building 1.x zip packages"
+msgstr "Construire les packages zip 1.x"
+
+#: ../../contribute/core/releases.rst:163
+msgid ""
+"Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without "
+"arguments to see usage."
+msgstr ""
+"Utilisez ``elgg-scripts/build/build.sh`` pour générer le fichier .zip. "
+"Exécutez sans argument pour voir L'utilisation."
+
+#: ../../contribute/core/releases.rst:174
+msgid "Update elgg.org download page"
+msgstr "Mettez à jour la page de téléchargement de elgg.org"
+
+#: ../../contribute/core/releases.rst:176
+msgid "Clone https://github.com/Elgg/community"
+msgstr "Clonez https://github.com/Elgg/community"
+
+#: ../../contribute/core/releases.rst:177
+msgid "Add the new version to ``classes/Elgg/Releases.php``"
+msgstr "Ajoutez la nouvelle version dans ``classes/Elgg/Releases.php``"
+
+#: ../../contribute/core/releases.rst:178
+#: ../../contribute/core/releases.rst:196
+msgid "Commit and push the changes"
+msgstr "Committez et poussez les modifications (push)"
+
+#: ../../contribute/core/releases.rst:179
+msgid "Update the plugin on www.elgg.org"
+msgstr "Mettez à jour le plugin sur www.elgg.org"
+
+#: ../../contribute/core/releases.rst:186
+msgid "Update elgg.org"
+msgstr "Mettre à jour elgg.org"
+
+#: ../../contribute/core/releases.rst:188
+msgid "Clone https://github.com/Elgg/www.elgg.org"
+msgstr "Cloner https://github.com/Elgg/www.elgg.org"
+
+#: ../../contribute/core/releases.rst:189
+msgid "Change the required Elgg version in ``composer.json``"
+msgstr "Modifiez la version d'Elgg requise dans ``composer.json``"
+
+#: ../../contribute/core/releases.rst:190
+msgid "Update vendors"
+msgstr "Mettre à jours vendors"
+
+#: ../../contribute/core/releases.rst:197
+msgid "Pull to live site"
+msgstr "Faites un pull vers le site en activité"
+
+#: ../../contribute/core/releases.rst:203
+msgid "Update dependencies"
+msgstr "Mettez à jour les dépendances"
+
+#: ../../contribute/core/releases.rst:211
+msgid "Go to community admin panel"
+msgstr "Allez sur la panneau admin de la communauté"
+
+#: ../../contribute/core/releases.rst:210
+msgid "Flush APC cache"
+msgstr "Vider le cache APC"
+
+#: ../../contribute/core/releases.rst:211
+msgid "Run upgrade"
+msgstr "Exécuter la mise à niveau"
+
+#: ../../contribute/core/releases.rst:214
+msgid "Make the announcement"
+msgstr "Faites l'annonce"
+
+#: ../../contribute/core/releases.rst:216
+msgid "This should be the very last thing you do."
+msgstr "Ce devrait être la toute dernière chose à faire."
+
+#: ../../contribute/core/releases.rst:218
+msgid ""
+"Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the "
+"contents for that version"
+msgstr ""
+"Ouvrez ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` et copiez le"
+" contenu pour cette version"
+
+#: ../../contribute/core/releases.rst:219
+msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
+msgstr ""
+"Connectez-vous sur https://elgg.org/blog et rédigez un nouvel article de "
+"blog avec un sommaire"
+
+#: ../../contribute/core/releases.rst:220
+msgid ""
+"Copy in the CHANGELOG contents, clear formatting, and manually remove the "
+"SVG anchors"
+msgstr ""
+"Copiez le contenu dans le CHANGELOG, supprimez le formattage, et supprimez "
+"manuellement les balises SVG"
+
+#: ../../contribute/core/releases.rst:221
+msgid ""
+"Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being "
+"released"
+msgstr ""
+"Ajoutez les tags ``release`` et ``elgg2.x`` où x est le nom de la branche en"
+" train d'être publiée"
+
+#: ../../contribute/core/releases.rst:222
+msgid "Tweet from the elgg `Twitter account`_"
+msgstr "Tweetez depuis le `compte Twitter account`_ d'Elgg"
+
+#: ../../contribute/database.rst:2
+msgid "Database"
+msgstr "Base de données"
+
+#: ../../contribute/database.rst:4
+msgid "Contributing database schema changes"
+msgstr "Contribuer aux modifications du schéma de la base de données"
+
+#: ../../contribute/database.rst:11
+msgid "Database Migrations"
+msgstr "Migrations de la base de données"
+
+#: ../../contribute/database.rst:13
+msgid "Elgg uses `Phinx`_ to manage the database migrations."
+msgstr ""
+"Elgg utilise `Phinx`_ pour gérer les migrations de la base de données."
+
+#: ../../contribute/database.rst:19
+msgid "Create a migration"
+msgstr "Créer une migration"
+
+#: ../../contribute/database.rst:21
+msgid "To create a new migration run the following in your console:"
+msgstr ""
+"Pour créer une nouvelle migration, exécutez ce qui suit dans votre console :"
+
+#: ../../contribute/database.rst:28
+msgid ""
+"This will generate a timestamped skeleton migration in "
+"``engine/schema/migrations/``. Follow Phinx documentation to call the "
+"necessary methods to modify the database tables."
+msgstr ""
+"Ceci va générer un squelette de migration horodaté dans "
+"``engine/schema/migrations/``. Suivez la documentation de Phinx pour appeler"
+" les méthodes nécessaires pour modifier les tables de la base de données."
+
+#: ../../contribute/database.rst:33
+msgid "Executing a migration"
+msgstr "Exécuter une migration"
+
+#: ../../contribute/database.rst:35
+msgid ""
+"Migrations are executed every time your run ``upgrade.php``. If you would "
+"like to execute migrations manually, you can do so via the command line:"
+msgstr ""
+"Les migrations sont exécutées à chaque fois que vous exécutez "
+"``upgrade.php``. Si vous préférez exécuter les migrations manuellement, vous"
+" pouvez le faire via la ligne de commande :"
+
+#: ../../contribute/database.rst:42
+msgid ""
+"Check Phinx documentation for additional flags that allow you to run a "
+"single migration or a set of migrations within a time range."
+msgstr ""
+"Vérifiez la documentation Phinx pour des drapeaux additionnels qui vous "
+"autorisent à effectuer une seule migration ou un jeu de migrations dans un "
+"intervalle de temps."
+
+#: ../../contribute/docs.rst:2
+msgid "Writing Documentation"
+msgstr "Contribuer à la Documentation"
+
+#: ../../contribute/docs.rst:4
+msgid "New documentation should fit well with the rest of Elgg's docs."
+msgstr ""
+"La nouvelle documentation devrait s'intégrer correctement avec le reste de "
+"la documentation d'Elgg."
+
+#: ../../contribute/docs.rst:11
+msgid "Testing docs locally"
+msgstr "Tester les documentations localement"
+
+#: ../../contribute/docs.rst:12
+msgid ""
+"Elgg has a `grunt`_ script that automatically builds the docs, opens them in"
+" a browser window, and automatically reloads as you make changes (the reload"
+" takes just a few seconds). You need `yarn`_ and `sphinx`_ installed to be "
+"able to use these scripts."
+msgstr ""
+"Elgg dispose d'un script `grunt`_ qui construit automatiquement les docs, "
+"les ouvre dans une fenêtre de navigateur, et les recharge automatiquement "
+"pendant que vous faites des modifications (le rechargement ne prend que "
+"quelques secondes). Vous aurez besoin d'avoir `yarn`_ et `sphinx`_ installés"
+" pour pouvoir utiliser ces scripts."
+
+#: ../../contribute/docs.rst:22
+msgid ""
+"It's that easy! Grunt will continue running, watching the docs for changes "
+"and automatically rebuilding."
+msgstr ""
+"C'est aussi simple que cela ! Grunt va continuer à s'exécuter, à vérifier "
+"les docs pour des modifications, et à reconstruire automatiquement."
+
+#: ../../contribute/docs.rst:30
+msgid "Follow the existing document organization"
+msgstr "Suivez l'organisation du document existant"
+
+#: ../../contribute/docs.rst:31
+msgid ""
+"The current breakdown is not necessarily the One True Way to organize docs, "
+"but consistency is better than randomness."
+msgstr ""
+"L'organisation actuelle n'est pas nécessairement La Bonne Manière "
+"d'organiser les documentations, mais la cohérence est mieux que l'aléatoire."
+
+#: ../../contribute/docs.rst:36
+msgid "intro/*"
+msgstr "intro/*"
+
+#: ../../contribute/docs.rst:37
+msgid ""
+"This is everything that brand new users need to know (installation, "
+"features, license, etc.)"
+msgstr ""
+"C'est tout ce que les tout nouveaux utilisateurs ont besoin de savoir "
+"(installation, fonctionnalités, licence, etc.)"
+
+#: ../../contribute/docs.rst:40
+msgid "admin/*"
+msgstr "admin/*"
+
+#: ../../contribute/docs.rst:41
+msgid "Guides for administrators. Task-oriented."
+msgstr "Guides pour les administrateurs. Orienté tâches."
+
+#: ../../contribute/docs.rst:44
+msgid "guides/*"
+msgstr "guides/*"
+
+#: ../../contribute/docs.rst:45
+msgid ""
+"API guides for plugin developers. Cookbook-style. Example heavy. Code "
+"snippet heavy. Broken down by services (actions, i18n, routing, db, etc.). "
+"This should only discuss the public API and its behavior, not implementation"
+" details or reasoning."
+msgstr ""
+"Guides de l'API pour les développeurs de plugins. Style recette de cuisine. "
+"Exemple solide. Elément de code solide. Cassé par les services (actions, "
+"i18n, routage, bd, etc.). Ceci devrait discuter seulement de l'API publique "
+"et de son comportement, pas des détails d'implémentation ou du raisonnement."
+
+#: ../../contribute/docs.rst:50
+msgid "design/*"
+msgstr "design/*"
+
+#: ../../contribute/docs.rst:51
+msgid ""
+"Design docs for people who want to get a better understanding of how/why "
+"core is built the way it is. This should discuss internal implementation "
+"details of the various services, what tradeoffs were made, and the reasoning"
+" behind the final decision. Should be useful for people who want to "
+"contribute and for communication b/w core devs."
+msgstr ""
+"Documentation de conception (design docs) pour les personnes qui veulent "
+"avoir une meilleure compréhension de comment/pourquoi le noyau est construit"
+" de cette manière. Ceci devrait discuter des détails d'implémentaiton "
+"internes des divers services, de quels compromis ont été faits, et du "
+"raisonnement derrière la décision finale. Devrait être utile aux personnes "
+"qui veulent contribuer ou pour la communication entre les développeurs du "
+"noyau."
+
+#: ../../contribute/docs.rst:57
+msgid "contribute/*"
+msgstr "contribute/*"
+
+#: ../../contribute/docs.rst:58
+msgid ""
+"Contributors guides for the various ways people can participate in the "
+"project."
+msgstr ""
+"Guides de contributeurs pour les diverses manières dont des personnes "
+"peuvent participer au sein du projet."
+
+#: ../../contribute/docs.rst:61
+msgid "appendix/*"
+msgstr "appendix/*"
+
+#: ../../contribute/docs.rst:62
+msgid ""
+"More detailed/meta/background information about the project (history, "
+"roadmap, etc.)"
+msgstr ""
+"Des informations plus détaillées/méta/de contexte à propos du projet "
+"(historique, feuille de route, etc.)"
+
+#: ../../contribute/docs.rst:66
+msgid "Use \"Elgg\" in a grammatically correct way"
+msgstr "Utilisez \"Elgg\" d'une manière grammaticalement correcte"
+
+#: ../../contribute/docs.rst:67
+msgid ""
+"Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is "
+"incorrect. Please don't do this."
+msgstr ""
+"Elgg n'est pas un acronyme, l'écrire en majuscules (ELGG ou E-LGG) est "
+"incorrect. Veuillez ne pas le faire."
+
+#: ../../contribute/docs.rst:71
+msgid ""
+"In English, Elgg does not take an article when used as a noun. Here are some"
+" examples to emulate:"
+msgstr ""
+"En Français, Elgg ne prend pas d'article quand il est utilisé comme un nom. "
+"Voici quelques exemples à imiter :"
+
+#: ../../contribute/docs.rst:70
+msgid "\"I'm using Elgg to run my website\""
+msgstr "“J'utilise Elgg pour mon site web”"
+
+#: ../../contribute/docs.rst:71
+msgid "\"Install Elgg to get your community online\""
+msgstr "“Installez Elgg pour mettre votre communauté en ligne”"
+
+#: ../../contribute/docs.rst:75
+msgid ""
+"When used as an adjective, the article applies to the main noun, so you "
+"should use one. For example:"
+msgstr ""
+"Quand il est utilisé comme adjectif, l'article s'applique au nom principal, "
+"aussi vous devriez en utiliser un. Par exemple :"
+
+#: ../../contribute/docs.rst:74
+msgid "\"Go to the Elgg community website to get help.\""
+msgstr "\"Allez sur le site de la communauté Elgg pour trouver de l'aide.\""
+
+#: ../../contribute/docs.rst:75
+msgid "\"I built an Elgg-based network yesterday\""
+msgstr "\"J'ai construis un réseau avec Elgg hier\""
+
+#: ../../contribute/docs.rst:77
+msgid "This advice may not apply in languages other than English."
+msgstr ""
+"Ce conseil peut ne pas être valable pour d'autres langues que l'anglais."
+
+#: ../../contribute/docs.rst:81
+msgid "Avoid first person pronouns"
+msgstr "Évitez les pronoms à la première personne"
+
+#: ../../contribute/docs.rst:82
+msgid ""
+"Refer to the reader as \"you\". Do not include yourself in the normal "
+"narrative."
+msgstr ""
+"Faites référence au lecteur comme \"vous\". Ne vous incluez pas dans la "
+"narration habituelle."
+
+#: ../../contribute/docs.rst:84 ../../contribute/docs.rst:95
+#: ../../contribute/docs.rst:107 ../../contribute/docs.rst:121
+msgid "Before:"
+msgstr "Avant :"
+
+#: ../../contribute/docs.rst:86
+msgid "When we're done installing Elgg, we'll look for some plugins!"
+msgstr ""
+"Quand nous aurons terminé l'installation d'Elgg, nous irons rechercher "
+"quelques plugins !"
+
+#: ../../contribute/docs.rst:88 ../../contribute/docs.rst:99
+#: ../../contribute/docs.rst:111 ../../contribute/docs.rst:125
+msgid "After:"
+msgstr "Après :"
+
+#: ../../contribute/docs.rst:90
+msgid "When you're done installing Elgg, look for some plugins!"
+msgstr ""
+"Quand vous aurez terminé l'installation d'Elgg, recherchez quelques plugins "
+"!"
+
+#: ../../contribute/docs.rst:92
+msgid ""
+"To refer to yourself (avoid this if possible), use your name and write in "
+"the third person. This clarifies to future readers/editors whose opinions "
+"are being expressed."
+msgstr ""
+"Pour faire référence à vous-même (à éviter si possible), utilisez votre nom "
+"et écrivez à la troisième personne. Ceci permet aux futurs lecteurs/éditeurs"
+" de savoir de qui les opinions sont exprimées."
+
+#: ../../contribute/docs.rst:97
+msgid "I think the best way to do X is to use Y."
+msgstr "Je pense que le meilleur moyen pour faire X est d'utiliser Y."
+
+#: ../../contribute/docs.rst:101
+msgid "Evan thinks the best way to do X is to use Y."
+msgstr "Evan pense que le meilleur moyen pour faire X est d'utiliser Y."
+
+#: ../../contribute/docs.rst:105
+msgid "Eliminate fluff"
+msgstr "Supprimer le délayage"
+
+#: ../../contribute/docs.rst:109
+msgid ""
+"If you want to use a third-party javascript library within the Elgg "
+"framework, you should take care to call the ``elgg_register_js`` function to"
+" register it."
+msgstr ""
+"Si vous souhaitez utiliser une bibliothèque javascript tierce-partie au sein"
+" du framework Elgg, vous devriez prendre soin d'appeler la fonction "
+"``elgg_register_js`` pour l'enregistrer."
+
+#: ../../contribute/docs.rst:113
+msgid ""
+"To use a third-party javascript library, call ``elgg_register_js`` to "
+"register it."
+msgstr ""
+"Pour utiliser une bibliothèque javascript tierce-partie, appelez "
+"``elgg_register_js`` pour l'enregistrer."
+
+#: ../../contribute/docs.rst:117
+msgid "Prefer absolute dates over relative ones"
+msgstr "Préférez les dates absolues aux dates relatives"
+
+#: ../../contribute/docs.rst:118
+msgid ""
+"It is not easy to tell when a particular sentence or paragraph was written, "
+"so relative dates quickly become meaningless. Absolute dates also give the "
+"reader a good indication of whether a project has been abandoned, or whether"
+" some advice might be out of date."
+msgstr ""
+"Il est difficile de dire quand une phrase ou un paragraphe particuliers ont "
+"été écrits, aussi les dates relatives deviennent vite incompréhensibles. Les"
+" dates absolues donnent également au lecteur une bonne indication de si un "
+"projet a été abandonné, ou si un conseil est toujours d'actualité."
+
+#: ../../contribute/docs.rst:123
+msgid "Recently the foo was barred. Soon, the baz will be barred too."
+msgstr "Récemment le truc a été machin. Bientôt, la chose sera machin aussi."
+
+#: ../../contribute/docs.rst:127
+msgid ""
+"Recently (as of September 2013), the foo was barred. The baz is expected to "
+"be barred by October 2013."
+msgstr ""
+"Récemment (à partir de septembre 2013), le truc a été machin. Il est prévu "
+"que la chose soit également machin d'ici octobre 2013."
+
+#: ../../contribute/docs.rst:131
+msgid "Do not remind the reader to contribute"
+msgstr "Ne rappelez pas au lecteur de contribuer"
+
+#: ../../contribute/docs.rst:132
+msgid ""
+"Focus on addressing only the topic at hand. Constant solicitation for free "
+"work is annoying and makes the project look needy. If people want to "
+"contribute to the project, they can visit the contributor guide."
+msgstr ""
+"Concentrez-vous pour ne traiter que du sujet en question. Des sollicitations"
+" constantes pour du travail gratuit sont agaçantes et donnent l'impression "
+"que le projet est dans le besoin. Si des personnes souhaitent contribuer au "
+"projet, elles peuvent visiter le guide du contributeur."
+
+#: ../../contribute/docs.rst:138
+msgid "Internationalizing documentation"
+msgstr "Internationaliser la documentation"
+
+#: ../../contribute/docs.rst:140
+msgid ""
+"When you change documentation, remember to update the documentation "
+"translation templates before you commit:"
+msgstr ""
+"Quand vous modifiez la documentation, pensez à mettre à jour les modèles de "
+"traduction de la documentation avant de faire un commit :"
+
+#: ../../contribute/docs.rst:148
+msgid ""
+"For more information, see http://www.sphinx-doc.org/en/stable/intl.html"
+"#translating-with-sphinx-intl"
+msgstr ""
+"Pour plus d'information, voyez http://www.sphinx-doc.org/en/stable/intl.html"
+"#translating-with-sphinx-intl"
+
+#: ../../contribute/docs.rst:152
+msgid "Special attention"
+msgstr "Points d'attention spécifiques"
+
+#: ../../contribute/docs.rst:154
+msgid ""
+"When translating the documentation be aware of special syntax in the "
+"documentation files."
+msgstr ""
+"Quand vous traduisez la documentation soyez conscients de la syntaxe "
+"spécifique dans les fichiers de documentation."
+
+#: ../../contribute/docs.rst:157
+msgid "Translating links"
+msgstr "Liens de traduction"
+
+#: ../../contribute/docs.rst:159
+msgid ""
+"Translate text in anonymous links (e.g., ```pronunciation`__``), but "
+"maintain the order of all anonymous links in a single block. If there are "
+"two anonymous links within a single block for translation, they must not be "
+"rearranged relative to each other."
+msgstr ""
+"Traduisez le texte dans des liens anonymes (par ex., ```prononciation`__``),"
+" mais maintenez l'ordre de tous les liens anonymes dans un unique bloc. S'il"
+" y a deux liens anonymes à traduire dans un seul bloc de traduction, il ne "
+"doivent pas être inversés l'un par rapport à l'autre."
+
+#: ../../contribute/docs.rst:160
+msgid ""
+"Translate the text of named links (e.g., ```demo site`_``) but only if you "
+"maintain the name using the correct rST syntax. In this case that would be "
+"```translation of \"demo site\" <demo site_>`_``."
+msgstr ""
+"Traduisez le texte des liens nommés (par ex., ```site de démo`_``) mais "
+"seulement si vous maintenez le noms en utilisant la bonne syntaxe rST. Dans "
+"ce cas ce devrait être ```traduction de \"site de démo\" <demo site_>`_``."
+
+#: ../../contribute/docs.rst:163
+msgid "Do NOT translate"
+msgstr "NE traduisez PAS"
+
+#: ../../contribute/docs.rst:165
+msgid ""
+"Anything between pipe characters should not be translated (e.g., |version|)."
+msgstr ""
+"Tout ce qui se situe entre des caractères trait vertical ne devrait pas être"
+" traduit (par ex., |version|)."
+
+#: ../../contribute/docs.rst:166
+msgid "Code, unless it's a comment in the code."
+msgstr "Le code, à moins que ce ne soit un commentaire dans le code."
+
+#: ../../contribute/i18n.rst:4
+msgid ""
+"Translations multiply the impact that Elgg can have by making it accessible "
+"to a larger percentage of the world."
+msgstr ""
+"Les traductions démultiplient l'impact que Elgg peut avoir en le rendant "
+"accessible à un plus grand pourcentage du monde."
+
+#: ../../contribute/i18n.rst:7
+msgid ""
+"The community will always be indebted to those of you who work hard to "
+"provide high quality translations for Elgg's UI and docs."
+msgstr ""
+"La communauté sera toujours reconnaissante à ceux qui travaillent dur pour "
+"fournir des traductions de haute qualité pour l'UI et la documentation de "
+"Elgg."
+
+#: ../../contribute/i18n.rst:11
+msgid "Transifex"
+msgstr "Transifex"
+
+#: ../../contribute/i18n.rst:13
+msgid "All translation for the Elgg project is organized through Transifex."
+msgstr ""
+"Toutes les traductions pour le projet Elgg sont organisées à travers "
+"Transifex."
+
+#: ../../contribute/i18n.rst:15
+msgid "https://www.transifex.com/organization/elgg"
+msgstr "https://www.transifex.com/organization/elgg"
+
+#: ../../contribute/i18n.rst:17
+msgid ""
+"Plugin authors are encouraged to coordinate translations via Transifex as "
+"well so the whole community can be unified and make it really easy for "
+"translators to contribute to any plugin in the Elgg ecosystem."
+msgstr ""
+"Les auteurs de plugins sont encouragés à coordonner les traductions via "
+"Transifex également, de sorte que la communauté entière puisse être unie, et"
+" que cela facilite la possibilité pour les traducteurs de contribuer à la "
+"traduction de n'importe quel plugin dans l'écosystème Elgg."
+
+#: ../../contribute/i18n.rst:22
+msgid "Pulling translations"
+msgstr "Récupérer les traductions"
+
+#: ../../contribute/i18n.rst:24
+msgid ""
+"The translations made in Transifex need to be periodically pulled into the "
+"Elgg code repository. This can be done with the script "
+"``.scripts/languages.php`` bundled within Elgg's source code."
+msgstr ""
+"Les traductions faites dans Transifex ont besoin d'être récupérées "
+"périodiquement dans le dépôt de code d'Elgg. Ceci peut être effectué avec le"
+" script ``.scripts/languages.php`` livré avec le code source de Elgg."
+
+#: ../../contribute/i18n.rst:31
+msgid "Prerequisites for running the script are:"
+msgstr "Les pré-requis pour exécuter le script sont :"
+
+#: ../../contribute/i18n.rst:29
+msgid "Access to command line"
+msgstr "Accès à la ligne de commande"
+
+#: ../../contribute/i18n.rst:30
+msgid "`Git`_"
+msgstr "`Git`_"
+
+#: ../../contribute/i18n.rst:31
+msgid "`Transifex CLI tool`_"
+msgstr "`Transifex CLI tool`_"
+
+#: ../../contribute/i18n.rst:40
+msgid "The script will do the following steps:"
+msgstr "Le script va effectuer les étapes suivantes :"
+
+#: ../../contribute/i18n.rst:37
+msgid "Create a new git branch named ``{branch}_i18n_{timestamp}``"
+msgstr "Créer une nouvelle branche git nommée ``{branch}_i18n_{timestamp}``"
+
+#: ../../contribute/i18n.rst:38
+msgid ""
+"Pull translations for all languages that have 95% of the strings translated"
+msgstr ""
+"Récupérer les traductions pour toutes les langues qui ont 95% des chaînes "
+"traduites"
+
+#: ../../contribute/i18n.rst:39
+msgid "Remove possible invalid language codes"
+msgstr "Retirer les éventuels codes de langue invalides"
+
+#: ../../contribute/i18n.rst:40
+msgid "Commit the changes to the branch"
+msgstr "Commiter les modifications vers la branche"
+
+#: ../../contribute/i18n.rst:42
+msgid ""
+"After this you must push the branch to Github and make a new Pull request."
+msgstr ""
+"Après cela, faites un push de la branche vers Github et faites une nouvelle "
+"Pull Request."
+
+#: ../../contribute/i18n.rst:44
+msgid ""
+"For example if you want to pull the translations for the ``3.x`` branch, run"
+" the following commands:"
+msgstr ""
+"Par exemple, si vous voulez récupérer les traductions pour la branche "
+"``3.x``, exécutez les commandes suivantes :"
+
+#: ../../contribute/i18n.rst:52
+msgid ""
+"Run the command without parameters to get more detailed information of the "
+"usage."
+msgstr ""
+"Exécutez la commande sans paramètre pour avec des informations plus "
+"détaillées sur son utilisation."
+
+#: ../../contribute/i18n.rst:55
+msgid "Transifex configuration"
+msgstr "Configuration Transifex"
+
+#: ../../contribute/i18n.rst:57
+msgid ""
+"The configuration for Transifex can be found from Elgg's source code in the "
+"file ``.tx/config``."
+msgstr ""
+"La configuration pour Transifex se trouve dans le code source d'Elgg dans le"
+" fichier ``.tx/config``."
+
+#: ../../contribute/i18n.rst:62
+msgid "This file defines:"
+msgstr "Ce fichier définit :"
+
+#: ../../contribute/i18n.rst:61
+msgid "The Transifex project associated with Elgg's major version"
+msgstr "Le projet Transifex associé avec la version majeure d'Elgg"
+
+#: ../../contribute/i18n.rst:62
+msgid "The location of all the files that have translatable content"
+msgstr "L'emplacement des tous les fichiers qui ont du contenu traduisible"
+
+#: ../../contribute/i18n.rst:64
+msgid "Read the `Transifex documentation`_ for further details."
+msgstr "Lisez la `documentation Transifex`_ pour plus d'information."
+
+#: ../../contribute/i18n.rst:69
+msgid "New major Elgg version"
+msgstr "Nouvelle version majeure d'Elgg"
+
+#: ../../contribute/i18n.rst:71
+msgid ""
+"Every major version of Elgg must have its own project in Transifex. This way"
+" we can make sure that strings added and removed between versions do not "
+"conflict with each other. For example a translation key removed in Elgg 3 "
+"should not get removed from translations made for Elgg 2. Respectfully a new"
+" string added only to Elgg 3 should not be included in the translations "
+"meant for Elgg 2."
+msgstr ""
+"Chaque version majeure d'Elgg doit disposer de son propre projet dans "
+"Transifex. De cette manière nous pouvons nous assurer que les chaînes "
+"ajoutées et retirées entre les versions ne créent pas de conflit l'une avec "
+"l'autre. Par exemple une clef de traduction retirée dans Elgg 3 ne devrait "
+"pas être retirée des traductions faites pour Elgg 2. De même, une nouvelle "
+"chaîne ajoutée seulement pour Elgg 3 ne devrait pas être incluses dans les "
+"traductions prévues pour Elgg 2."
+
+#: ../../contribute/i18n.rst:77
+msgid "The process of setting up a new major version is:"
+msgstr ""
+"Le processus pour mettre en place une nouvelle version majeure est le "
+"suivant :"
+
+#: ../../contribute/i18n.rst:79
+msgid "Pull latest translations from Transifex to the previous major version"
+msgstr ""
+"Récupérez les dernières traductions depuis Transifex vers la précédente "
+"version majeure"
+
+#: ../../contribute/i18n.rst:80
+msgid ""
+"Merge the git branch of the previous version to the new to make sure all the"
+" latest translation keys are present"
+msgstr ""
+"Fusionnez la branche git de la version précédente vers la nouvelle afin de "
+"s'assurer que toutes les dernières clefs de traduction sont présentes"
+
+#: ../../contribute/i18n.rst:82
+msgid "Create a new Transifex project to https://www.transifex.com/elgg/"
+msgstr "Créez un nouveau projet Transifex sur https://www.transifex.com/elgg/"
+
+#: ../../contribute/i18n.rst:83
+msgid ""
+"Update ``.tx/config`` file in the development branch of the new major "
+"version"
+msgstr ""
+"Mettez à jour le fichier ``.tx/config`` dans la branche de développement de "
+"la nouvelle version majeure"
+
+#: ../../contribute/i18n.rst:85
+msgid "Update the configuration to point to the new Transifex project"
+msgstr ""
+"Mettez à jour la configuration pour pointer vers le nouveau projet Transifex"
+
+#: ../../contribute/i18n.rst:86
+msgid "Remove configuration of removed plugins"
+msgstr "Retirez la configuration des plugins retirés"
+
+#: ../../contribute/i18n.rst:87
+msgid "Add configuration for new plugins"
+msgstr "Ajoutez la configuration pour les nouveaux plugins"
+
+#: ../../contribute/i18n.rst:89
+msgid ""
+"Push the translation sources to the new Transifex project with the command: "
+"::"
+msgstr ""
+"Poussez les sources de traduction vers le nouveau projet Transifex avec la "
+"commande : ::"
+
+#: ../../contribute/i18n.rst:94
+msgid ""
+"Copy the new configuration file temporarily (do not commit) to the previous "
+"major version, and push the existing translations from it to the new "
+"project: ::"
+msgstr ""
+"Copiez le nouveau fichier de configuration temporairement (pas de commit) "
+"vers la version majeure précédente, et poussez les traductions existantes "
+"depuis là vers le nouveau projet : ::"
+
+#: ../../contribute/i18n.rst:100
+msgid ""
+"Later, once the dedicated branch (e.g. ``3.x`` has been created for the "
+"major version, configure Transifex to fetch new translation keys from it "
+"automatically in https://www.transifex.com/elgg/elgg-core-3/content/. This "
+"way you don't have to repeat step 5 manually every time new translation keys"
+" are added."
+msgstr ""
+"Plus tard, une fois que la branche dédiée (par ex. ``3.x``) a été créée pour"
+" la version majeure, configurez Transifex pour récupérer automatiquement les"
+" nouvelles clefs à partir d'elle dans https://www.transifex.com/elgg/elgg-"
+"core-3/content/. De cette manière vous n'avez pas à répéter manuellement "
+"l'étape 5 à chaque fois que de nouvelles clefs de traduction sont ajoutées."
+
+#: ../../contribute/i18n.rst:105
+msgid ""
+"It is important to always have a ``n.x`` branch besides the branches meant "
+"for specific minor versions (``n.1``, ``n.2``, etc.). This way the URLs of "
+"the auto-update sources do not have to be updated every time a new minor "
+"branch is created."
+msgstr ""
+"Il est important de toujours avoir une branche ``n.x`` en plus des branches "
+"créées pour des versions mineures spécifiques (``n.1``, ``n.2``, etc.). De "
+"cette manière les URLs des sources automatiquement mises à jour n'ont pas "
+"besoin d'être mises à jour à chaque fois qu'une nouvelle branche mineure est"
+" créée."
+
+#: ../../contribute/index.rst:2
+msgid "Contributor Guides"
+msgstr "Guides du contributeur"
+
+#: ../../contribute/index.rst:4
+msgid "Participate in making Elgg even better."
+msgstr "Participez à rendre Elgg encore meilleur."
+
+#: ../../contribute/index.rst:6
+msgid ""
+"Elgg is a community-driven project. It relies on the support of volunteers "
+"to succeed. Here are some ways you can help:"
+msgstr ""
+"Elgg est un projet communautaire. Il dépend du soutien de volontaires pour "
+"réussir. Voici plusieurs manières d'aider :"
+
+#: ../../contribute/issues.rst:2
+msgid "Reporting Issues"
+msgstr "Signaler des problèmes"
+
+#: ../../contribute/issues.rst:4
+msgid ""
+"Report bugs and features requests to https://github.com/Elgg/Elgg/issues. "
+"See below for guidelines."
+msgstr ""
+"Signalez bugs et demandes de fonctionnalités sur "
+"https://github.com/Elgg/Elgg/issues. Voyez ci-dessous pour des "
+"recomandations."
+
+#: ../../contribute/issues.rst:8
+msgid "DISCLAIMERS"
+msgstr "LIMITES DE RESPONSABILITÉ"
+
+#: ../../contribute/issues.rst:12
+msgid ""
+"Security issues should be reported to **security @ elgg . org**! Please do "
+"not post any security issues on github!!"
+msgstr ""
+"Les problèmes de sécurité devraient être signalés à **security @ elgg . "
+"org** ! Merci de ne publier aucun faille de sécurité sur github !!"
+
+#: ../../contribute/issues.rst:16
+msgid ""
+"Support requests belong on the `community site`_. Tickets with support "
+"requests will be closed."
+msgstr ""
+"Les demandes d'aide relèvent du `site de la communité`_. Les tickets avec "
+"des demandes d'aide seront fermés."
+
+#: ../../contribute/issues.rst:20
+msgid "We cannot make any guarantees as to when your ticket will be resolved."
+msgstr ""
+"Nous ne pouvons donner aucune garantie sur quand votre ticket sera résolu."
+
+#: ../../contribute/issues.rst:23
+msgid "Bug reports"
+msgstr "Rapports de bugs"
+
+#: ../../contribute/issues.rst:25
+msgid "Before submitting a bug report:"
+msgstr "Avant de soumettre un rapport de bug :"
+
+#: ../../contribute/issues.rst:27
+msgid ""
+"Search for an existing ticket on the issue you’re having. Add any extra info"
+" there."
+msgstr ""
+"Recherchez un ticket existant à propos du problème que vous rencontrez. "
+"Ajouter toute information supplémentaire à cet endroit."
+
+#: ../../contribute/issues.rst:29
+msgid "Verify the problem is reproducible"
+msgstr "Vérifiez que le problème est reproductible"
+
+#: ../../contribute/issues.rst:31
+msgid "On the latest version of Elgg"
+msgstr "Sur la dernière version d'Elgg"
+
+#: ../../contribute/issues.rst:32
+msgid "With all third-party plugins disabled"
+msgstr "Avec tous les plugins tierce-partie désactivés"
+
+#: ../../contribute/issues.rst:34
+msgid "Good bug report checklist:"
+msgstr "Liste de contrôle pour un bon signalement de bug :"
+
+#: ../../contribute/issues.rst:36
+msgid "Expected behavior and actual behavior"
+msgstr "Comportement attendu et comportement constaté"
+
+#: ../../contribute/issues.rst:37
+msgid "Clear steps to reproduce the problem"
+msgstr "Des étapes claires pour reproduire le problème"
+
+#: ../../contribute/issues.rst:38
+msgid "The version of Elgg you’re running"
+msgstr "La version d'Elgg que vous utilisez"
+
+#: ../../contribute/issues.rst:39
+msgid "Browsers affected by this problem"
+msgstr "Les navigateurs affectés par ce problème"
+
+#: ../../contribute/issues.rst:42
+msgid "Feature requests"
+msgstr "Demandes de fonctionnalité"
+
+#: ../../contribute/issues.rst:44
+msgid "Before submitting a feature request:"
+msgstr "Avant de soumettre une demande de fonctionnalité :"
+
+#: ../../contribute/issues.rst:46
+msgid ""
+"Check the `community site`_ for a plugin that has the features you need."
+msgstr ""
+"Vérifiez sur le `site de la communauté`_ si un plugin existe avec les "
+"fonctionnalités dont vous avez besoin."
+
+#: ../../contribute/issues.rst:48
+msgid ""
+"Consider if you can :doc:`develop a plugin </tutorials/index>` that does "
+"what you need."
+msgstr ""
+"Envisagez si vous le pouvez de :doc:`développer un plugin "
+"</tutorials/index>` qui fasse ce dont vous avez besoin."
+
+#: ../../contribute/issues.rst:49
+msgid ""
+"Search through the closed tickets to see if someone else suggested the same "
+"feature, but got turned down. You’ll need to be able to explain why your "
+"suggestion should be considered this time."
+msgstr ""
+"Recherchez parmi les tickets fermés pour voir si quelqu'un d'autre a suggéré"
+" la même fonctionnalité, mais que cela a été refusé. Vous devrez pouvoir "
+"expliquer pourquoi votre suggestion devrait être examinée cette fois-ci."
+
+#: ../../contribute/issues.rst:53
+msgid "Good feature request checklist:"
+msgstr "Liste de contrôle pour une bonne demande de fonctionnalité :"
+
+#: ../../contribute/issues.rst:55
+msgid "Detailed explanation of the feature"
+msgstr "Explication détaillée de la fonctionnalité"
+
+#: ../../contribute/issues.rst:56
+msgid "Real-life use-cases"
+msgstr "Cas d'usages réels"
+
+#: ../../contribute/issues.rst:57
+msgid "Proposed API"
+msgstr "API proposée"
+
+#: ../../contribute/money.rst:2
+msgid "Becoming a Financial Supporter"
+msgstr "Devenir un soutien financier"
+
+#: ../../contribute/money.rst:6
+msgid "All funds raised via the Elgg supporters network go directly into:"
+msgstr ""
+"Tous les fonds recueillis par l'intermédiaire du réseau de supporters Elgg "
+"vont directement pour :"
+
+#: ../../contribute/money.rst:5
+msgid "Elgg core development"
+msgstr "Développement du noyau Elgg"
+
+#: ../../contribute/money.rst:6
+msgid "Infrastructure provision (elgg.org, github, etc.)"
+msgstr "La fourniture d'infrastructures (elgg.org, github, etc)"
+
+#: ../../contribute/money.rst:8
+msgid "It is a great way to help with Elgg development!"
+msgstr "Il s'agit d'un excellent moyen d'aider au développement d'Elgg !"
+
+#: ../../contribute/money.rst:11
+msgid "Benefits"
+msgstr "Avantages"
+
+#: ../../contribute/money.rst:12
+msgid ""
+"For only $50 per year for individuals or $150 per year for organizations, "
+"you can get listed as a supporter on `our supporters page`_. Elgg supporters"
+" are listed there unless they request not to be."
+msgstr ""
+"Pour seulement $50 par an pour les individus ou $150 par an pour les "
+"organisations, vous pouvez être listé comme soutien sur `notre page des "
+"soutiens`_. Les soutiens d'Elgg apparaissent dans cette liste sauf s'ils "
+"demandent à ne pas l'être."
+
+#: ../../contribute/money.rst:18
+msgid ""
+"Supporters are able to put this official logo on their site if they wish:"
+msgstr ""
+"Les soutiens ont l'autorisation d'ajouter ce logo officiel sur leur site "
+"s'ils le souhaitent :"
+
+#: ../../contribute/money.rst:25
+msgid "Disclaimer"
+msgstr "Limite de responsabilité"
+
+#: ../../contribute/money.rst:26
+msgid ""
+"We operate a no refund policy on supporter subscriptions. If you would like "
+"to withdraw your support, go to PayPal and cancel your subscription. You "
+"will not be billed the following year."
+msgstr ""
+"Nous avons une politique de non-remboursement sur les souscriptions des "
+"soutiens. Si vous souhaitez arrêter votre soutien, allez sur Paypal et "
+"annulez votre souscription. Vous ne serez pas débité l'année suivante."
+
+#: ../../contribute/money.rst:30
+msgid ""
+"Being an Elgg Supporter does not give an individual or organization the "
+"right to impersonate, trade as or imply they are connected to the Elgg "
+"project. They can, however, mention that they support the Elgg project."
+msgstr ""
+"Etre un soutien d'Elgg ne donne en aucun cas le droit à un individu ou à une"
+" organisation le droit de parler au nom du projet Elgg, de commercialiser en"
+" son nom, ou de laisser entendre qu'ils sont liées au projet Elgg. Ils "
+"peuvent, toutefois, mentionner le fait qu'ils sont soutien du projet Elgg."
+
+#: ../../contribute/money.rst:34
+msgid "If you have any questions about this disclaimer, email info@elgg.org."
+msgstr ""
+"Si vous avez des questions à propos de cet avertissement, écrivez à "
+"info@elgg.org."
+
+#: ../../contribute/money.rst:36
+msgid ""
+"We reserve the right to remove or refuse a listing without any prior warning"
+" at our complete discretion. There is no refund policy."
+msgstr ""
+"Nous nous réservons le droit de retirer ou refuser une souscription sans "
+"avertissement préalable à notre entière discrétion. Il n'y a pas de "
+"politique de remboursement."
+
+#: ../../contribute/money.rst:39
+msgid ""
+"If there is no obvious use of Elgg, your site will be linked to with "
+"\"nofollow\" set."
+msgstr ""
+"S'il n'y a pas d'utilisation évidente de Elgg, votre site sera relié avec "
+"l'attribut \"nofollow\"."
+
+#: ../../contribute/money.rst:42
+msgid "Sign up"
+msgstr "S'inscrire"
+
+#: ../../contribute/money.rst:43
+msgid "If you would like to become an Elgg supporter:"
+msgstr "Si vous souhaitez devenir un supporter d'Elgg:"
+
+#: ../../contribute/money.rst:45
+msgid "read the disclaimer_ above"
+msgstr "lisez l'avertissement_  ci-dessus"
+
+#: ../../contribute/money.rst:46
+msgid "on the supporters page, `subscribe via PayPal`__"
+msgstr "sur la page des soutiens, `souscrivez via Paypal`__"
+
+#: ../../contribute/money.rst:47
+msgid "send an email to info@elgg.org with:"
+msgstr "envoyez un email à info@elgg.org avec :"
+
+#: ../../contribute/money.rst:49
+msgid "the date you subscribed"
+msgstr "la date de votre souscription"
+
+#: ../../contribute/money.rst:50
+msgid "your name (and organization name, if applicable)"
+msgstr "votre nom (et le nom de l'organisation, s'il y a lieu)"
+
+#: ../../contribute/money.rst:51
+msgid "your website"
+msgstr "votre site web"
+
+#: ../../contribute/money.rst:52
+msgid "your Elgg community profile"
+msgstr "votre profil sur la communauté Elgg"
+
+#: ../../contribute/money.rst:57
+msgid ""
+"Once all the details have been received, we will add you to the appropriate "
+"list. Thanks for your support!"
+msgstr ""
+"Une fois que tous les détails ont été reçus, nous vous ajouterons à la liste"
+" appropriée. Merci pour votre soutien!"
+
+#: ../../contribute/services.rst:2
+msgid "Adding a Service to Elgg"
+msgstr "Ajouter un Service à Elgg"
+
+#: ../../contribute/services.rst:4
+msgid ""
+"The :doc:`services guide </guides/services>` has general information about "
+"using Elgg services."
+msgstr ""
+"Le :doc:`guide sur les services </guides/services>` présente des "
+"informations générales sur l'utilisation des services Elgg."
+
+#: ../../contribute/services.rst:6
+msgid "To add a new service object to Elgg:"
+msgstr "Pour ajouter un nouvel objet service à Elgg :"
+
+#: ../../contribute/services.rst:8
+msgid "Annotate your class as ``@access private``."
+msgstr "Annotez votre classe comme ``@access private``."
+
+#: ../../contribute/services.rst:9
+msgid "Open the class ``Elgg\\Di\\ServiceProvider``."
+msgstr "Ouvrez la classe ``Elgg\\Di\\ServiceProvider``."
+
+#: ../../contribute/services.rst:10
+msgid ""
+"Add a ``@property-read`` annotation for your service at the top. This allows"
+" IDEs and static code analyzers to understand the type of the property."
+msgstr ""
+"Ajoutez une annotaiton ``@property-read`` pour votre service au tout début. "
+"Ceci permet aux EDIs et aux analyseurs de code statique de comprendre le "
+"type de la propriété."
+
+#: ../../contribute/services.rst:12
+msgid ""
+"To the constructor, add code to tell the service provider what to return. "
+"See the class ``Elgg\\Di\\DiContainer`` for more information on how Elgg's "
+"DI container works."
+msgstr ""
+"Pour le constructeur, ajoutez le code pour indiquer au fournisseur de "
+"service quoi retourner. Voyez la classe ``Elgg\\Di\\DiContainer`` pour plus "
+"d'information sur comment le conteneur DI (\"Dependency Injection\") d'Elgg "
+"fonctionne."
+
+#: ../../contribute/services.rst:15
+msgid ""
+"At this point your service will be available from the service provider "
+"object, but will not yet be accessible to plugins."
+msgstr ""
+"A ce stade votre service sera disponible depuis l'objet fournisseur de "
+"service, mais ne sera pas encore accessible aux plugins."
+
+#: ../../contribute/services.rst:18
+msgid "Inject your dependencies"
+msgstr "Injectez vos dépendances"
+
+#: ../../contribute/services.rst:20
+msgid ""
+"Design your class constructor to *ask for* the necessary dependencies rather"
+" than creating them or using ``_elgg_services()``. The service provider's "
+"``setFactory()`` method provides access to the service provider instance in "
+"your factory method."
+msgstr ""
+"Concevez votre constructeur de classe de sorte qu'il *demande* les "
+"dépendances nécessaires plutôt que de les créer ou d'utiliser "
+"``_elgg_services()``. La méthode ``setFactory()`` du fournisseur de service "
+"fournit l'accès à l'instance du fournisseur de service dans la méthode de "
+"votre fabrique."
+
+#: ../../contribute/services.rst:24
+msgid ""
+"Here's an example of a ``foo`` service factory, injecting the ``config`` and"
+" ``db`` services into the constructor:"
+msgstr ""
+"Voici un exemple de fabrique de service ``foo``, qui injecte les services "
+"``config`` et ``db`` dans le constructeur :"
+
+#: ../../contribute/services.rst:34
+msgid ""
+"The full list of internal services can be seen in the ``@property-read`` "
+"declarations at the top of ``Elgg\\Di\\ServiceProvider``."
+msgstr ""
+"La liste complète des services internes peut être vue dans les déclarations "
+"``@property-read`` au début de ``Elgg\\Di\\ServiceProvider``."
+
+#: ../../contribute/services.rst:39
+msgid ""
+"Avoid performing work in your service constructor, particularly if it "
+"requires database queries. Currently PHPUnit tests cannot perform them."
+msgstr ""
+"Evitez de faire du travail dans le constructeur de votre service, en "
+"particulier si cela requiert des requêtes sur la base de données. "
+"Actuellement les tests PHPUnit tests ne peuvent pas les effectuer."
+
+#: ../../contribute/services.rst:44
+msgid "Making a service part of the public API"
+msgstr "Faire qu'un service fasse partie de l'API publique"
+
+#: ../../contribute/services.rst:46
+msgid "If your service is meant for use by plugin developers:"
+msgstr ""
+"Si votre service est conçu pour être utilisé par des développeurs de plugins"
+" :"
+
+#: ../../contribute/services.rst:48
+msgid ""
+"Make an interface ``Elgg\\Services\\<Name>`` that contains only those "
+"methods needed in the public API."
+msgstr ""
+"Faites une interface ``Elgg\\Services\\<Name>`` qui ne contient que ces "
+"méthodes nécessaires dans l'API publique."
+
+#: ../../contribute/services.rst:49
+msgid "Have your service class implement that interface."
+msgstr "Faites que la classe de votre service implémente cette interface."
+
+#: ../../contribute/services.rst:50
+msgid ""
+"For methods that are in the interface, move the documentation to the "
+"interface. You can simply use ``{@inheritdoc}`` in the PHPDocs of the "
+"concrete class methods."
+msgstr ""
+"Pour les méthodes qui sont dans l'interface, déplacez la documentation dans "
+"l'interface. Vous pouvez simplement utiliser ``{@inheritdoc}`` dans les "
+"PHPDocs des méthodes de votre classe effective."
+
+#: ../../contribute/services.rst:52
+msgid "Document your service in ``docs/guides/services.rst`` (this file)."
+msgstr ""
+"Documentez votre service dans ``docs/guides/services.rst`` (ce fichier)"
+
+#: ../../contribute/services.rst:53
+msgid ""
+"Open the PHPUnit test ``Elgg\\ApplicationTest`` and add your service key to "
+"the ``$names`` array in ``testServices()``."
+msgstr ""
+"Ouvrez le test PHPUnit ``Elgg\\ApplicationTest`` et ajoutez la clef de votre"
+" service au tableau ``$names`` dans ``testServices()``."
+
+#: ../../contribute/services.rst:55
+msgid "Open the class ``Elgg\\Application``."
+msgstr "Ouvrez la classe ``Elgg\\Application``."
+
+#: ../../contribute/services.rst:56
+msgid ""
+"Add ``@property-read`` declaration to document your service, but use your "
+"**interface** as the type, *not* your service class name."
+msgstr ""
+"Ajoutez une déclaration ``@property-read`` pour documenter votre service, "
+"mais utilisez votre **interface** pour le type, et *pas* le nom de la classe"
+" de votre service."
+
+#: ../../contribute/services.rst:58
+msgid ""
+"Add your service key to the array in the ``$public_services`` property, e.g."
+" ``'foo' => true,``"
+msgstr ""
+"Ajoutez la clef de votre service au tableau dans la propriété "
+"``$public_services``, par ex. ``'foo' => true,``"
+
+#: ../../contribute/services.rst:60
+msgid ""
+"Now your service will be available via property access on the "
+"``Elgg\\Application`` instance:"
+msgstr ""
+"Désormais votre service sera disponible via l'accès à la propriété sur "
+"l'instance ``Elgg\\Application`` :"
+
+#: ../../contribute/services.rst:69
+msgid ""
+"For examples, see the ``config`` service, including the interface "
+"``Elgg\\Services\\Config`` and the concrete implementation ``Elgg\\Config``."
+msgstr ""
+"Pour des exemples, voyez le service ``config``, qui comprend l'interface "
+"``Elgg\\Services\\Config`` et la classe d'implémentation effective "
+"``Elgg\\Config``."
+
+#: ../../contribute/services.rst:73
+msgid "Service Life Cycle and Factories"
+msgstr "Cycle de vie d'un Service et Fabriques (\"factories\")"
+
+#: ../../contribute/services.rst:75
+msgid ""
+"By default, services registered on the service provider are \"shared\", "
+"meaning the service provider will store the created instance for the rest of"
+" the request, and serve that same instance to all who request the property."
+msgstr ""
+"Par défaut, les services enregistrés sur le fournisseur de service sont "
+"\"partagés\", ce qui signifie que le fournisseur de service va conserver "
+"l'instance créée pour le reste de la requête, et servir la même instance à "
+"tout ce qui demande la propriété."
+
+#: ../../contribute/services.rst:79
+msgid ""
+"If you need developers to be able to construct objects that are pre-wired to"
+" Elgg services, you may need to add a public factory method to "
+"``Elgg\\Application``. Here's an example that returns a new instance using "
+"internal Elgg services:"
+msgstr ""
+"Si vous avez besoin que les développeurs puissent construire des objets qui "
+"soient pré-coonnectés aux services Elgg, vous pouvez avoir besoin d'ajouter "
+"une méthode de fabrique publique à ``Elgg\\Application``. Voici un exemple "
+"qui retourne une nouvelle instance en utilisant les services d'Elgg :"
+
+#: ../../contribute/tests.rst:2
+msgid "Writing tests"
+msgstr "Écrire des tests"
+
+#: ../../contribute/tests.rst:9
+msgid "Vision"
+msgstr "Vision"
+
+#: ../../contribute/tests.rst:11
+msgid ""
+"We want to *make manual testing unnecessary* for core developers, plugin "
+"authors, and site administrators by promoting and enabling fast, automated "
+"testing at every level of the Elgg stack."
+msgstr ""
+"Nous voulons *rendre les tests manuels inutiles* pour les développeurs du "
+"noyau, les auteurs de plugins, et les administrateurs de sites en rendant "
+"possible et en faisant la promotion de tests rapides et automatisés à tous "
+"les niveaux de Elgg."
+
+#: ../../contribute/tests.rst:14
+msgid ""
+"We look forward to a world where the core developers do not need to do any "
+"manual testing to verify the correctness of code contributed to Elgg. "
+"Similarly, we envision a world where site administrators can upgrade and "
+"install new plugins with confidence that everything works well together."
+msgstr ""
+"Nous avons hâte d'un monde dans lequel les développeurs du noyau n'ont pas "
+"besoin de faire de tests manuels pour vérifier la correction du code "
+"contribué à Elgg. De manière similaire, nous envisageons un monde dans "
+"lequel les administrateurs de site peuvent mettre à niveau et installer de "
+"nouveaux plugins avec la certitude que tout fonctionne bien ensemble."
+
+#: ../../contribute/tests.rst:18
+msgid "Running Tests"
+msgstr "Effectuer les tests"
+
+#: ../../contribute/tests.rst:21
+msgid "Elgg Core Test Suite"
+msgstr "Suite de tests du noyau Elgg"
+
+#: ../../contribute/tests.rst:26
+msgid "Currently our tests are split in two pieces:"
+msgstr "Actuellement nos tests se partagent en deux parties :"
+
+#: ../../contribute/tests.rst:24
+msgid ""
+"PHPUnit tests are located in ``/tests/phpunit`` -- these are strictly unit "
+"tests for now. No integration or end to end tests."
+msgstr ""
+"Les test PHPUnit sont situés dans ``/tests/phpunit`` -- ce sont strictemetn "
+"des tests unitaires pour le moment. Pas d'intégration ni de tests de bout en"
+" bout."
+
+#: ../../contribute/tests.rst:25
+msgid ""
+"SimpleTest tests are located in ``/tests/`` -- These are supported but we "
+"strongly encourage writing new tests in PHPUnit and plan to migrate these to"
+" PHPUnit at our earliest convenience."
+msgstr ""
+"Les tests SimpleTest sont situés dans ``/tests/`` -- Ceux-ci sont supportés,"
+" mais nous encourageons fortement la création de nouveaux tests dans PHPUnit"
+" et planifions de migrer ceux-ci vers PHPUnit dans un futur proche le plus "
+"adéquat."
+
+#: ../../contribute/tests.rst:28
+msgid ""
+"Since we have a ``phpunit.xml`` configuration at the root of Elgg, testing "
+"should be as easy as:"
+msgstr ""
+"Dans la mesure où il existe un fichier de configuration ``phpunit.xml`` à la"
+" racine d'Elgg, les tests devraient être aussi simples que :"
+
+#: ../../contribute/tests.rst:37
+msgid "Plugin tests"
+msgstr "Tests des plugins"
+
+#: ../../contribute/tests.rst:39
+msgid ""
+"Ideally plugins are configured in such a way that they can be unit-tested "
+"much like Elgg core. Plugin developers are free to implement their own "
+"methods for unit testing, but we encourage everyone to make it as easy as "
+"Elgg core:"
+msgstr ""
+"Idéalement, les plugins sont configurés d'une telle manière qu'ils peuvent "
+"faire l'objet de tests unitaires de la même manière que le noyau d'Elgg. Les"
+" développeurs de plugins sont libres d'implémenter leurs propres méthodes "
+"pour les tests unitaires, mais nous encourageons tout le monde à les rendre "
+"aussi simple que pour le noyau de Elgg :"
+
+#: ../../contribute/tests.rst:49
+msgid "End-to-end tests"
+msgstr "Tests de bout en bout"
+
+#: ../../contribute/tests.rst:51
+msgid ""
+"Since Elgg plugins have so much power to override, filter, and modify Elgg's"
+" and other plugins' behavior, it's important to be able to run end-to-end "
+"tests on a staging server with your final configuration before deploying to "
+"production."
+msgstr ""
+"Dans la mesure où les plugins de Elgg ont une telle capacité à remplacer, "
+"filtrer et modifier Elgg et le comportement d'autres plugins, il est "
+"important de pouvoir exécuter des tests de bout en bout sur un serveur de "
+"pré-production avec votre configuration finale avant de déployer vers la "
+"production. "
+
+#: ../../contribute/tests.rst:56
+msgid ""
+"ToDo: Make it easy to run all Elgg integration and acceptance tests from the"
+" admin area given the current plugin configuration. (without worrying about "
+"database corruption!)"
+msgstr ""
+"ToDo : Faciliter l'exécution de tous les tests d'intégration et "
+"d'acceptabilité depuis le panneau admin en utilisant la configuration "
+"courante du plugin. (sans s'inquiéter de corruption de la base de données !)"
+
+#: ../../contribute/tests.rst:60
+msgid "Motivation"
+msgstr "Motivation"
+
+#: ../../contribute/tests.rst:65
+msgid "Briefly, the wins we expect from testing are:"
+msgstr "Brièvement, les gains escomptés des tests sont :"
+
+#: ../../contribute/tests.rst:63
+msgid "Increased confidence in the system."
+msgstr "Une confiance accrue dans le système."
+
+#: ../../contribute/tests.rst:64
+msgid "More freedom to refactor."
+msgstr "Une plus grande liberté pour remanier le code."
+
+#: ../../contribute/tests.rst:65
+msgid "Built-in, up-to-date documentation."
+msgstr "Une documentation intégrée et à jour."
+
+#: ../../contribute/tests.rst:67
+msgid ""
+"We love community contributions, but in order to maintain stability we "
+"cannot accept outside contributions without first verifying their "
+"correctness. By promoting automated testing, the core developers can avoid "
+"the hassle of manual verification before accepting patches. It also means "
+"that external developers don't have to spend time earning trust with the "
+"core team. If a patch comes in and has tests to verify it, then we can be "
+"confident it works without worrying about the reputation of the contributor."
+msgstr ""
+"Nous adorons les contributions communautaires, mais afin de maintenir la "
+"stabilit\" nous ne pouvons pas accepter de contributions extérieures sans "
+"vérifier au préalable leur correction. En promouvant les tests automatisés, "
+"les développeurs du noyau peuvent éviter les ennuis d'une vérification "
+"manuelle avant d'accepter un patch. Cela signifie également que les "
+"développeurs externes n'ont pas à perdre de temps à gagner la confiance de "
+"l'équipe du noyau. SI un patch arrive et qu'il dispose de tests pour le "
+"vérifier, nous pouvons être confiants dans le fait qu'il fonctionne sans "
+"avoir besoin de se soucier de la réputation de l'auteur."
+
+#: ../../contribute/tests.rst:72
+msgid ""
+"Note that these benefits can also extend to the plugins repository. Site "
+"owners are encouraged to \"test plugins thoroughly\" before deploying them "
+"on a production site. As of March 2013, this translates to manually "
+"verifying all the features that the plugin promises to offer. But Elgg "
+"provides a huge number of features, and it's not reasonable to test for "
+"*all* of them on *every browser* you want to support on *every device* you "
+"want to support. But what if plugin developers could write tests for their "
+"plugins and site owners could just run the tests for all installed plugins "
+"to verify the functionality is maintained? Then they wouldn't be limited to "
+"just picking plugins from \"trusted\" developers or \"stable\" releases. "
+"They could see that, indeed, nothing broke when they upgraded that critical "
+"plugin from 1.3 to 2.5, and push the upgrade to production with confidence."
+msgstr ""
+"Notez que ces bénéfices peuvent également s'étendre au dépôt des plugins. "
+"Les propriétaires de sites sont encouragés à \"tester les plugins "
+"minutieusement\" avant de les déployer sur un site de production. A la date "
+"de mars 2013, ceci signifie tester manuellement toutes les fonctionnalités "
+"que le plugin promet d'offrir. Mais Elgg fournit un grand nombre de "
+"fonctionnalités, et il n'est pas raisonnable de tester *chacune* d'entre "
+"elles sur *chaque navigateur* que vous voulez supporter et sur *chaque "
+"appareil* que vous voulez supporter ? Mais que se passerait-il si les "
+"développeurs de plugins pouvaient écrire des tests pour leurs plugins, et si"
+" les propriétaires de sites pouvaient simplement exécuter ces tests pour "
+"tous les plugins installés pour vérifier si la fonctionnalité est bien "
+"conservée ? Alors ils ne seraient pas limités à seulement prendre des "
+"plugins de développeurs \"de confiance\" ou des versions \"stables\". Ils "
+"pourraient voir que, en réalité, rien n'a été cassé quand ils ont mis à "
+"niveau ce plugin critique depuis la version 1.3 vers la 2.5, et passer la "
+"mise à niveau en production en toute confiance."
+
+#: ../../contribute/tests.rst:80
+msgid ""
+"The reason this isn't happening today is because Elgg itself is not easily "
+"testable at this level yet. We want to change that."
+msgstr ""
+"La raison pour laquelle ce n'est pas le cas actuellement est parce qu'Elgg "
+"lui-même n'est pas encore si facile à tester à ce niveau. Nous voulons "
+"changer cela."
+
+#: ../../contribute/tests.rst:83
+msgid "Strategy"
+msgstr "Stratégie"
+
+#: ../../contribute/tests.rst:85
+msgid ""
+"We have several guiding principles that we think will be helpful in bringing"
+" our vision into reality."
+msgstr ""
+"Nous avons quelques principes pour nous guider, dont nous pensons qu'ils "
+"seront utiles pour faire de cette vision une réalité."
+
+#: ../../contribute/tests.rst:90
+msgid "In short, we are advocating:"
+msgstr "En bref, nous prônons :"
+
+#: ../../contribute/tests.rst:88
+msgid "Continuous integration -- if Travis isn't happy, we're not happy"
+msgstr "L'intégration continue -- si Travis n'est pas content, nous non plus"
+
+#: ../../contribute/tests.rst:89
+msgid "Dependency injection -- For creating highly testable, modular code"
+msgstr ""
+"L'injection des dépendances -- Pour créer un code hautement testable et "
+"modulaire"
+
+#: ../../contribute/tests.rst:90
+msgid ""
+"BDD -- Tests should verify features and provide documentation, not rehash "
+"the Class API"
+msgstr ""
+"BDD (\"Behaviour Driven Development\") -- Les tests devraient vérifier des "
+"fonctionnalités et fournir de la documentation, pas reprendre l'API de la "
+"Classe"
+
+#: ../../contribute/tests.rst:93
+msgid "Continuous Integration"
+msgstr "Intégration continue"
+
+#: ../../contribute/tests.rst:95
+msgid ""
+"We run all of our tests on Travis CI so that we can get real time feedback "
+"on the correctness of incoming pull requests and development as it "
+"progresses. **If Travis isn't happy, we don't commit to the repo.** This "
+"empowers us to merge pull requests in at a rapid pace, so long as they pass "
+"the tests. It also allows us to reject pull requests without detailed "
+"investigation if they do not pass the tests. We can get past the \"does it "
+"work or not\" question and talk about the things that humans need to talk "
+"about: API design, usefulness to the project, whether it belongs in core or "
+"a plugin, etc. We want as many features as possible provided by Elgg core to"
+" be verified automatically by tests running on Travis."
+msgstr ""
+"Nous exécutons tous nos tests sur Travis CI de sorte que nous puissions "
+"avoir un feedback en temps réel sur la correction des demandes de fusion "
+"entrantes et des développements au fur et à mesure de leur évolution. **Si "
+"Travis n'est pas d'accord, nous ne faisons pas de commit sur le dépôt.** "
+"Ceci nous permet de fusionner les demandes de fusion à un rythme rapide, dès"
+" lors qu'elles ont passé les tests. Cela nous permet également de rejeter "
+"les demandes de fusion sans investigation poussée si elles ne passent pas "
+"les tests. Nous pouvons aller au-delà de la question \"est-ce que ça marche "
+"ou pas\" et évoquer les choses dont les humains ont besoin de parler : la "
+"conception de l'API, l'utilité pour le projet, est-ce que cela fait partie "
+"du noyau ou pas, etc. Nous voulons qu'autant de fonctionnalités que possible"
+" fournies par le noyau d'Elgg puissent être vérifiées automatiquement par "
+"des tests exécutés sur Travis."
+
+#: ../../contribute/tests.rst:102
+msgid "Dependency Injection"
+msgstr "Injection des dépendances"
+
+#: ../../contribute/tests.rst:104
+msgid ""
+"In order to maximize testability, **all dependencies need to be explicit**. "
+"Global functions, Singletons, and service locators are death for testability"
+" because it's impossible to tell what dependencies are hiding under the "
+"covers, and it's even harder to mock out those dependencies. Mocking is "
+"critical because you want your unit tests to test only one class at a time. "
+"Test failures in a TestCase should not result due to brokenness in a "
+"dependency; test failures should only indicate brokenness in the class under"
+" test. This makes everything much easier to debug. As of March 2013, most of"
+" Elgg still assumes and uses global state, and that has made Elgg and Elgg "
+"plugins historically very difficult to test. Fortunately we are moving in "
+"the opposite direction now, and a lot of work in Elgg 1.9 has gone into "
+"refactoring core components to be more dependency injectable. We are already"
+" reaping the benefits from that effort."
+msgstr ""
+"Afin de maximiser la testabilité, **toutes les dépendances doivent être "
+"explicites**. Les fonctions globales, les Singletons, et les localisateurs "
+"de service sont mortels pour la testabilité parce qu'il est impossible de "
+"dire quelles dépendances se cachent sous le capot, et qu'il est encore plus "
+"difficile de simuler (\"mock out\") ces dépendances. La capacité de "
+"simulation est critique parce que vous voulez que vos tests unitaires ne "
+"testent qu'une seule classe à la fois. Les échecs d'un test dans un TestCase"
+" ne devraient pas résulter d'une rupture dans une dépendance ; les échecs "
+"des tests ne devraient indiquer de rupture que dans la classe en train "
+"d'être testée. Ceci rend tout plus facile à déboguer. A la date de mars "
+"2013, la majorité d'Elgg assume et utilise toujours un état global, et ceci "
+"a rendu Elgg et les plugins Elgg historiquement très difficiles à tester. "
+"Fort heureusement nous avons pris une autre direction depuis, et une grande "
+"partie du travail dans Elgg 1.9 a consisté à refactorer des composants du "
+"noyau pour qu'ils soient plus injectables sous forme de dépendances. Nous "
+"récoltons déjà les bénéfices de cet effort."
+
+#: ../../contribute/tests.rst:113
+msgid "Behavior-Driven Development"
+msgstr "Développement orienté comportement"
+
+#: ../../contribute/tests.rst:115
+msgid ""
+"For us this means **we name tests for features rather than methods**. When "
+"you test for features, you are encouraged to write fewer, smaller, logical "
+"tests. When a test fails, we can know exactly what feature is compromised. "
+"Furthermore, when naming your tests for features, the list of tests provides"
+" documentation on what features the system supports. Documentation is "
+"something that is typically very troublesome to keep up to date, but when "
+"documentation and verification are one and the same, it becomes very easy to"
+" keep the documentation up to date."
+msgstr ""
+"Pour nous ceci signifie que **nous nommons les tests d'après les "
+"fonctionnalités plutôt que les méthodes**. Quand vous testez des "
+"fonctionnalités, vous êtes encouragés à écrire moins de tests, plus petits, "
+"et plus logiques. Quand un test échoue, cela permet de savoir exactement "
+"quelle fonctionnalité est compromise. De plus, en nommant vos tests d'après "
+"les fonctionnalités, la liste des tests fournit une documentation des "
+"fonctionnalités que le système supporte. La documentation est typiquement "
+"quelque chose de problématique à conserver à jour, mais quand la "
+"documentation et la vérification sont une seule et même chose, il devient "
+"très facile de maintenir la documentation à jour."
+
+#: ../../contribute/tests.rst:122
+msgid "Consider these two test methods:"
+msgstr "Considérez ces deux méthodes de test :"
+
+#: ../../contribute/tests.rst:121
+msgid "``testRegister()``"
+msgstr "``testRegister()``"
+
+#: ../../contribute/tests.rst:122
+msgid "``testCanRegisterFilesAsActionHandlers()``"
+msgstr "``testCanRegisterFilesAsActionHandlers()``"
+
+#: ../../contribute/tests.rst:124
+msgid ""
+"From just looking at the names, ``testRegister`` tells you that the class "
+"under test probably has a method named register. If this test passes, it "
+"presumably verifies that it is behaving correctly, but doesn't tell you what"
+" correct behavior entails, or what the original author of the test was "
+"intending to verify. If that method has multiple correct uses that you need "
+"to test for, this terse naming convention also encourages you to write a "
+"very long test which tests for all conditions and features of said method. "
+"Test failure could be caused by any one of those uses being compromised, and"
+" it will take more time to figure out where the true problem lies."
+msgstr ""
+"En regardant seulement les noms, ``testRegister`` vous indique que la classe"
+" testée a probablement une méthode nommée \"register\". Si ce test est "
+"passé, il vérifie probablement qu'elle se comporte correctement, mais ne "
+"vous dit pas ce qui caractérise un comportement correct, ou ce que l'auteur "
+"original du test essayait de vérifier. Si cette méthode a plusieurs usages "
+"corrects que vous devez tester, cette convention de nommage succincte vous "
+"encourage également à écrire un très long test qui teste toutes les "
+"conditions et fonctionnalités de ladite méthode. L'échec du test pourrait "
+"être causée par la compromission de n'importe laquelle d'entre elles, et "
+"cela prendra plus de temps pour savoir où se situe le véritable problème."
+
+#: ../../contribute/tests.rst:130
+msgid ""
+"On the other hand, ``testCanRegisterFilesAsActionHandlers`` tells you that "
+"there are these things called \"actions\" that need to be \"handled\" and "
+"that files can be registered as valid handlers for actions. This introduces "
+"newcomers to project terminology and communicates clearly the intent of the "
+"test to those already familiar with the terminology."
+msgstr ""
+"De l'autre côté, ``testCanRegisterFilesAsActionHandlers`` vous indique qu'il"
+" y a ces choses appelées \"actions\" qui ont besoin d'être \"gérées\" "
+"(\"handled\"), et que ces fichiers peuvent être enregistrés comme des "
+"gestionnaires valides pour les actions. Ceci expose mieux aux nouveaux venus"
+" la terminologie du projet et communique clairement l'intention du test pour"
+" ceux qui sont déjà familiers avec la terminologie."
+
+#: ../../contribute/tests.rst:134
+msgid ""
+"For a good example of what we're looking for, check out "
+"``/tests/phpunit/Elgg/ViewServiceTest.php``"
+msgstr ""
+"Pour un bon exemple de ce que nous recherchons, regardez "
+"``/tests/phpunit/Elgg/ViewServiceTest.php``"
