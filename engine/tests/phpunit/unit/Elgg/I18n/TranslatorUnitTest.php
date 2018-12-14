@@ -128,7 +128,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([
 			[
 				'message' => "Missing es translation for \"{$this->key}b\" language key",
-				'level' => LogLevel::NOTICE,
+				'level' => LogLevel::INFO,
 			]
 				], $logged);
 	}
