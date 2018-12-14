@@ -439,8 +439,10 @@ class EntityIconService {
 		], true);
 
 		if ($delete === false) {
-			return;
+			return false;
 		}
+		
+		$result = true;
 
 		$sizes = array_keys($this->getSizes($entity->getType(), $entity->getSubtype(), $type));
 		foreach ($sizes as $size) {
@@ -449,7 +451,7 @@ class EntityIconService {
 			}
 			
 			$icon = $this->getIcon($entity, $size, $type, false);
-			$icon->delete();
+			$result &= $icon->delete();
 		}
 
 		if ($type == 'icon') {
@@ -461,6 +463,8 @@ class EntityIconService {
 		} else {
 			unset($entity->{"{$type}_coords"});
 		}
+		
+		return $result;
 	}
 
 	/**
