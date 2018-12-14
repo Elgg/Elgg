@@ -240,7 +240,7 @@ return array(
 	'widgets:add:failure' => "Nous n'avons pas pu ajouter votre widget.",
 	'widgets:move:failure' => "Nous n'avons pas pu enregistrer la position du nouveau widget.",
 	'widgets:remove:failure' => "Impossible de supprimer ce widget",
-	'widgets:not_configured' => "This widget is not yet configured",
+	'widgets:not_configured' => "Ce widget n'est pas encore configuré",
 	
 /**
  * Groups
@@ -1214,6 +1214,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'installation:view' => "Entrez le nom de la vue qui sera utilisée par défaut pour l'affichage du site, ou laissez vide pour la vue par défaut (en cas de doute, laissez la valeur par défaut) :",
 
 	'installation:siteemail' => "L'adresse email du site (utilisée lors de l'envoi d'emails par le système)",
+	'installation:siteemail:help' => "Attention : N'utilisez pas une adresse email que vous pourriez avoir associé avec un autre service tiers, tels qu'un système de gestions de tickets, qui effectue des analyses des emails entrants, car cela peut vous exposer vous et vos utilisateurs à la fuite non intentionnelle de données privées et de jetons de sécurité. Dans l'idéal, créez une nouvelle adresse email dédiée qui ne va servir que pour ce site.",
 	'installation:default_limit' => "Nombre d'éléments par page par défaut",
 
 	'admin:site:access:warning' => "Le niveau d'accès suggéré aux utilisateurs lorsqu'ils créent un nouveau contenu. Modifier ce réglage n'affectera que les publications créées dans le futur.",
