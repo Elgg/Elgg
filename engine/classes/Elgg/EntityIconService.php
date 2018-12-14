@@ -458,6 +458,8 @@ class EntityIconService {
 			unset($entity->y1);
 			unset($entity->x2);
 			unset($entity->y2);
+		} else {
+			unset($entity->{"{$type}_coords"});
 		}
 	}
 
