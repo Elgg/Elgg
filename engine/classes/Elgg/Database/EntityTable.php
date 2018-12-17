@@ -683,7 +683,7 @@ class EntityTable {
 				$ors = $qb->merge([
 					$qb->compare('e.owner_guid', '=', $entity->guid, ELGG_VALUE_INTEGER),
 					$qb->compare('e.container_guid', '=', $entity->guid, ELGG_VALUE_INTEGER),
-				]);
+				], 'OR');
 
 				return $qb->merge([
 					$ors,

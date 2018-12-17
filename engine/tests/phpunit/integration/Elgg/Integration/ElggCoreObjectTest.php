@@ -207,11 +207,18 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 			}
 
 			$child = $this->createOne('object', [
+				'owner_guid' => $parent->guid,
+				'container_guid' => 1,
+			]);
+
+			$child2 = $this->createOne('object', [
+				'owner_guid' => $parent->guid,
 				'container_guid' => $parent->guid,
 			]);
 
 			$grandchild = $this->createOne('object', [
 				'container_guid' => $child->guid,
+				'owner_guid' => 1,
 			]);
 
 			$this->assertTrue($parent->delete(true));
@@ -221,6 +228,10 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 			$this->assertFalse($r);
 
 			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $child->guid";
+			$r = get_data($q);
+			$this->assertFalse($r);
+
+			$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $child2->guid";
 			$r = get_data($q);
 			$this->assertFalse($r);
 
