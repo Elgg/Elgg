@@ -22,7 +22,6 @@ module.exports = function(config) {
 			'views/default/core/js/hooks.js',
 
 			'views/default/core/js/ajax.js',
-			'views/default/core/js/comments.js',
 			'views/default/core/js/configuration.js',
 			'views/default/core/js/ElggEntity.js',
 			'views/default/core/js/ElggPriorityList.js',
