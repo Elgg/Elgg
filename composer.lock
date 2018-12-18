@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd107f359512585a3535481ec14a1117",
+    "content-hash": "2cea340b94370dcd822c994026d43ee5",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -249,7 +249,7 @@
             "version": "1.0.3",
             "source": {
                 "type": "git",
-                "url": "git@github.com:alexei/sprintf.js.git",
+                "url": "https://github.com/alexei/sprintf.js.git",
                 "reference": "747b806c2dab5b64d5c9958c42884946a187c3b1"
             },
             "dist": {
@@ -4977,8 +4977,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "roave/security-advisories": 20,
         "bower-asset/normalize-css": 20,
+        "roave/security-advisories": 20,
         "elgg/sniffs": 20
     },
     "prefer-stable": true,
