@@ -22,7 +22,7 @@
         "bower-asset/jquery-treeview": "^1.4",
         "bower-asset/jquery-ui": "~1.11.4",
         "bower-asset/jquery.imgareaselect": "~0.9.10",
-        "bower-asset/normalize-css": "dev-master",
+        "bower-asset/normalize-css": "*",
         "bower-asset/requirejs": "^2.1.18",
         "bower-asset/sprintf": "~1.0.3",
         "bower-asset/text": "^2.0.4",

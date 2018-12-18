@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2cea340b94370dcd822c994026d43ee5",
+    "content-hash": "c725a8b331222188168e83ab8bd636b2",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -202,20 +202,19 @@
         },
         {
             "name": "bower-asset/normalize-css",
-            "version": "dev-master",
+            "version": "8.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/necolas/normalize.css.git",
-                "reference": "7369f566898b8cefc2649b6a66e112857de4c46f"
+                "reference": "fc091cce1534909334c1911709a39c22d406977b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/necolas/normalize.css/zipball/7369f566898b8cefc2649b6a66e112857de4c46f",
-                "reference": "7369f566898b8cefc2649b6a66e112857de4c46f",
+                "url": "https://api.github.com/repos/necolas/normalize.css/zipball/fc091cce1534909334c1911709a39c22d406977b",
+                "reference": "fc091cce1534909334c1911709a39c22d406977b",
                 "shasum": null
             },
-            "type": "bower-asset",
-            "time": "2018-02-11T15:53:41+00:00"
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/requirejs",
@@ -4977,7 +4976,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "bower-asset/normalize-css": 20,
         "roave/security-advisories": 20,
         "elgg/sniffs": 20
     },
