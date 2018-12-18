@@ -40,6 +40,7 @@ $post_input = elgg_view('input/plaintext', [
 	'rows' => $num_lines,
 	'data-max-length' => $char_limit,
 	'required' => true,
+	'placeholder' => elgg_echo('thewire:form:body:placeholder'),
 ]);
 
 $submit_button = elgg_view('input/submit', [
