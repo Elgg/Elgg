@@ -15,7 +15,7 @@
         
         "elgg/login_as": "~2.0.0",
         
-        "bower-asset/fontawesome": "~5.0",
+        "bower-asset/fontawesome": "~5.6",
         "bower-asset/jquery": "^2.1.4",
         "bower-asset/jquery-colorbox": "^1.5.14",
         "bower-asset/jquery-form": "^3.51",
