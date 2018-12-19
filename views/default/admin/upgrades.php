@@ -18,6 +18,7 @@ elgg_require_js('core/js/upgrader');
 
 elgg_register_menu_item('title', [
 	'name' => 'run_upgrades',
+	'icon' => 'play',
 	'text' => elgg_echo('admin:upgrades:run'),
 	'id' => 'elgg-upgrades-run',
 	'link_class' => 'elgg-button elgg-button-action',

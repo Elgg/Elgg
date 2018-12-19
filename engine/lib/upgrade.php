@@ -36,13 +36,20 @@ function _elgg_upgrade_entity_menu(\Elgg\Hook $hook) {
 		return;
 	}
 	
-	if (!$entity->isCompleted()) {
-		return;
-	}
-	
 	$result = $hook->getValue();
 	
-	if ($batch = $entity->getBatch()) {
+	if (!$entity->isCompleted()) {
+		$result[] = ElggMenuItem::factory([
+			'name' => 'run_upgrade',
+			'icon' => 'play',
+			'text' => elgg_echo('admin:upgrades:menu:run_single'),
+			'href' => false,
+			'deps' => [
+				'core/js/upgrader',
+			],
+			'data-guid' => $entity->guid,
+		]);
+	} elseif ($batch = $entity->getBatch()) {
 		if (!$batch->shouldBeSkipped()) {
 			// only show reset if it will have an effect
 			$result[] = ElggMenuItem::factory([
