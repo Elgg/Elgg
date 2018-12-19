@@ -31,18 +31,12 @@ class MigrateDiscussionReplyRiver implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function countItems() {
-		
-		$hidden = access_show_hidden_entities(true);
-		
-		$count = elgg_get_river([
-			'type' => 'object',
-			'subtype' => 'discussion_reply',
+				
+		return elgg_get_river([
+			'action_type' => 'reply',
+			'view' => 'river/object/discussion_reply/create',
 			'count' => true,
 		]);
-		
-		access_show_hidden_entities($hidden);
-		
-		return $count;
 	}
 	
 	/**
@@ -58,10 +52,8 @@ class MigrateDiscussionReplyRiver implements AsynchronousUpgrade {
 	public function run(Result $result, $offset) {
 		
 		$qb = Update::table('river', 'r')
-			->set('r.subtype', '"comment"')
 			->set('r.action_type', '"comment"')
 			->set('r.view', '"river/object/comment/create"')
-			->andWhere('r.subtype = "discussion_reply"')
 			->andWhere('r.action_type = "reply"')
 			->andWhere('r.view = "river/object/discussion_reply/create"');
 		

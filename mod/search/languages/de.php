@@ -5,5 +5,5 @@ return array(
 	'search:more' => '+%s weitere %s',
 
 	'search:comment_on' => 'Kommentare zu "%s"',
-	'search:unknown_entity' => 'Der Typ der Entitäts ist unbekannt.',
+	'search:unknown_entity' => 'Der Typ der Entität ist unbekannt.',
 );

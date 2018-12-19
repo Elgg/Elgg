@@ -143,6 +143,7 @@ class Translator {
 
 		// try to translate
 		$notice = '';
+		$logger = _elgg_services()->logger;
 		$string = $message_key;
 		foreach (array_keys($langs) as $try_lang) {
 			if (isset($this->translations[$try_lang][$message_key])) {
@@ -156,16 +157,18 @@ class Translator {
 
 				break;
 			} else {
-				$notice = sprintf(
+				$message = sprintf(
 					'Missing %s translation for "%s" language key',
 					($try_lang === 'en') ? 'English' : $try_lang,
 					$message_key
 				);
+				
+				if ($try_lang === 'en') {
+					$logger->notice($message);
+				} else {
+					$logger->info($message);
+				}
 			}
-		}
-
-		if ($notice) {
-			_elgg_services()->logger->notice($notice);
 		}
 
 		return $string;
@@ -348,8 +351,8 @@ class Translator {
 
 			$language_file = "{$languages_path}{$language}.php";
 
-			if (!file_exists($language_file)) {
-				// This plugin doesn't have translations for the requested language
+			if (!file_exists($language_file) && ($language === 'en')) {
+				// This plugin doesn't have translations for the english language
 
 				$name = $plugin->getDisplayName();
 				_elgg_services()->logger->notice("Plugin $name is missing translations for $language language");

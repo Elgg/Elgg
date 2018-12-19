@@ -5,14 +5,26 @@
 
 $guid = (int) get_input('guid');
 $owner = get_user($guid);
-
 if (!$owner || !$owner->canEdit()) {
 	return elgg_error_response(elgg_echo('avatar:upload:fail'));
 }
 
-$error = elgg_get_friendly_upload_error($_FILES['avatar']['error']);
-if ($error) {
+if (get_input('avatar_remove')) {
+	if (!$owner->deleteIcon()) {
+		return elgg_error_response(elgg_echo('avatar:remove:fail'));
+	}
+	
+	return elgg_ok_response('', elgg_echo('avatar:remove:success'));
+}
+
+/* @var $avatar \Symfony\Component\HttpFoundation\File\UploadedFile */
+$avatar = elgg_get_uploaded_file('avatar', false);
+if (!empty($avatar) && !$avatar->isValid()) {
+	$error = elgg_get_friendly_upload_error($avatar->getError());
+	
 	return elgg_error_response($error);
+} elseif (empty($avatar)) {
+	return elgg_error_response(elgg_echo('avatar:upload:fail'));
 }
 
 if (!$owner->saveIconFromUploadedFile('avatar')) {

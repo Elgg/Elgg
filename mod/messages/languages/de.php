@@ -13,8 +13,8 @@ return array(
 	'messages:title' => "Betreff",
 	'messages:to:help' => "Gebe hier den Benutzernamen des Empfängers der Nachricht ein.",
 	'messages:inbox' => "Inbox",
-	'messages:sendmessage' => "Eine Nachricht senden",
-	'messages:add' => "Eine Nachricht verfassen",
+	'messages:sendmessage' => "Nachricht senden",
+	'messages:add' => "Nachricht verfassen",
 	'messages:sentmessages' => "Gesendete Nachrichten",
 	'messages:toggle' => 'Alle auswählen',
 	'messages:markread' => 'Als gelesen markieren',
@@ -41,27 +41,26 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Du hast eine neue Nachricht!',
-	'messages:email:body' => "You have a new message from %s. It reads:
+	'messages:email:body' => "Du hast eine neue Nachricht von %s erhalten.
+
+Die Nachricht lautet:
+
+%s
 
 
-	%s
+Um zu Deiner Inbox zu kommen, folge dem Link:
 
+%s
 
-	To view your messages, click here:
+und um %s eine Nachricht zu schicken, folge dem Link:
 
-	%s
-
-	To send %s a message, click here:
-
-	%s
-
-	Please do not reply to this email.",
+%s",
 
 	/**
 	* Error messages
 	*/
 
-	'messages:blank' => "Entschuldigung, Du mußt erst einen im Hauptteil der Nachricht schreiben, bevor die Nachricht versendet werden kann.",
+	'messages:blank' => "Entschuldigung, Du mußt erst etwas im Nachrichtenteil schreiben, bevor die Nachricht versendet werden kann.",
 	'messages:nomessages' => "Es gibt keine Nachrichten.",
 	'messages:user:nonexist' => "Wir konnten den Empfänger der Nachricht nicht in der Datenbank der Community-Seite finden.",
 	'messages:user:blank' => "Du hast keinen Empfänger für Deine Nachricht ausgewählt.",

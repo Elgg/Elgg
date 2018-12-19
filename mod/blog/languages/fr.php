@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Blogs',
-	'blog:blogs' => 'Blogs',
+return array(
+	'item:object:blog' => 'Article de blog',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'Tous les articles de blog du site',
+	'collection:object:blog:owner' => 'Articles de blog de %s',
+	'collection:object:blog:group' => 'Articles de blog du groupe',
+	'collection:object:blog:friends' => 'Articles de blog des contacts',
+	'add:object:blog' => 'Ajouter un article de blog',
+	'edit:object:blog' => 'Modifier l\'article de blog',
+
 	'blog:revisions' => 'Révisions',
 	'blog:archives' => 'Archives',
-	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Article de blog',
 
-	'blog:title:user_blogs' => 'Articles de blog de %s',
-	'blog:title:all_blogs' => 'Tous les articles de blog du site',
-	'blog:title:friends' => 'Articles de blog des contacts',
-
-	'blog:group' => 'Blog du groupe',
-	'blog:enableblog' => 'Activer le blog du groupe',
+	'groups:tool:blog' => 'Activer le blog du groupe',
 	'blog:write' => 'Écrire un article de blog',
 
 	// Editing
-	'blog:add' => 'Ajouter un article de blog',
-	'blog:edit' => 'Modifier l\'article de blog',
 	'blog:excerpt' => 'Extrait',
 	'blog:body' => 'Corps de l\'article',
 	'blog:save_status' => 'Dernier enregistrement:',
-	
+
 	'blog:revision' => 'Révision',
 	'blog:auto_saved_revision' => 'Révision automatiquement enregistrée',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Impossible de trouver cette révision.',
 
 	// river
-	'river:create:object:blog' => '%s a publié un article de blog %s',
-	'river:comment:object:blog' => '%s a commenté l\'article de blog %s',
+	'river:object:blog:create' => '%s a publié un article de blog %s',
+	'river:object:blog:comment' => '%s a commenté l\'article de blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nouvel article de blog intitulé %s',
 	'blog:notify:subject' => 'Nouvel article de blog: %s',
 	'blog:notify:body' =>
 '
-%s a publié un nouvel article de blog: %s
+%s a publié un nouvel article de blog : %s
 
 %s
 
-Voir et commenter cet article de blog:
+Voir et commenter cet article de blog :
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Ce widget affiche vos derniers articles de blog',
+	'widgets:blog:name' => 'Articles de blog',
+	'widgets:blog:description' => 'Affiche vos derniers articles de blog',
 	'blog:moreblogs' => 'Plus d\'articles de blog',
 	'blog:numbertodisplay' => 'Nombre d\'articles de blog à afficher',
-	'blog:noblogs' => 'Aucun article de blog'
-];
+);

@@ -11,7 +11,7 @@ use ElggPlugin;
 interface PluginBootstrapInterface {
 
 	/**
-	 * Executed during 'plugins_boot:before', 'system' event
+	 * Executed during 'plugins_load', 'system' event
 	 *
 	 * Allows the plugin to require additional files, as well as configure services prior to booting the plugin
 	 *

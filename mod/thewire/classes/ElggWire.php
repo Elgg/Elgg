@@ -20,18 +20,18 @@ class ElggWire extends ElggObject {
 	}
 
 	/**
-	 * Can a user comment on this wire post?
-	 *
+	 * {@inheritDoc}
 	 * @see ElggObject::canComment()
-	 *
-	 * @param int  $user_guid User guid (default is logged in user)
-	 * @param bool $default   Default permission
-	 *
-	 * @return bool
-	 *
-	 * @since 1.8.0
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggObject::getDisplayName()
+	 */
+	public function getDisplayName() {
+		return elgg_get_excerpt($this->description, 25);
 	}
 }

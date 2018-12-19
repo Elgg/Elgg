@@ -124,30 +124,30 @@ return array(
 	'groups:invite:subject' => "%s je bent uitgenodigd om lid te worden van %s!",
 	'groups:joinrequest:remove:check' => 'Weet je zeker dat je dit lidmaatschapsverzoek wilt verwijderen?',
 	'groups:invite:remove:check' => 'Weet je zeker dat je deze uitnodiging wilt verwijderen?',
-	'groups:invite:body' => "Beste %s,
+	'groups:invite:body' => "Hi %s,
 
-%s heeft je uitgenodigd om lid te worden van de '%s' groep.
+%s invited you to join the '%s' group.
 
-Om al je uitnodigingen te bekijken, klik hier:
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Welkom bij de groep '%s'!",
-	'groups:welcome:body' => "Beste %s,
+	'groups:welcome:body' => "Hi %s!
 
-Je bent nu lid van de '%s' groep.
+You are now a member of the '%s' group.
 
-Om de groep te bekijken, klik hier:
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s wil lid worden van %s",
-	'groups:request:body' => "Beste %s,
+	'groups:request:body' => "Hi %s,
 
-%s wil graag wil worden van de '%s' groep.
+%s has requested to join the '%s' group.
 
-Om het profiel van de gebruiker te bekijken, klik hier:
+Click below to view their profile:
 %s
 
-Of om alle lidmaatschapsverzoeken van de groep te bekijken, klik hier:
+or click below to view the group's join requests:
 %s",
 
 	'river:group:create' => '%s heeft de groep %s aangemaakt',
@@ -177,6 +177,6 @@ Of om alle lidmaatschapsverzoeken van de groep te bekijken, klik hier:
 	 * Upgrades
 	 */
 	'groups:upgrade:2016101900:title' => 'Verplaats de groepsiconen naar de nieuwe locatie',
-	'groups:upgrade:2016101900:description' => 'De nieuwe iconen API plaatst de bestanden op een voorspelbare locatie op de bestandslocatie relatief aan de entity\'s bestandlocatie.
-Deze upgrade verplaatst alle groepsiconen naar deze nieuwe locatie.',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
 );

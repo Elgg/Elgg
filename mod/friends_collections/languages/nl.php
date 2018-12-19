@@ -23,7 +23,6 @@ return array(
 	'friends:collections:delete:success' => 'Vriendenlijst succesvol verwijderd',
 	'friends:collections:delete:fail' => 'Vriendenlijst kon niet worden verwijderd',
 
-	'friends:collections:remove_member' => 'Remove',
 	'friends:collections:remove_member:permissions' => 'Je mag geen leden verwijderen uit deze vriendenlijst',
 	'friends:collections:remove_member:success' => 'Lid succesvol verwijderd uit de vriendenlijst',
 	'friends:collections:remove_member:fail' => 'Lid kon niet worden verwijderd uit de vriendenlijst',

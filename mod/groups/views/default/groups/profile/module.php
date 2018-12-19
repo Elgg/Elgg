@@ -20,6 +20,7 @@ if ($all_link) {
 	], $all_link);
 }
 
+$footer = '';
 if ($group->canWriteToContainer() && isset($vars['add_link'])) {
 	$footer = elgg_format_element('span', [
 		'class' => 'elgg-widget-more',

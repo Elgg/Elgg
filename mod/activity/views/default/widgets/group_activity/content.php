@@ -1,17 +1,18 @@
 <?php
-use Elgg\Database\QueryBuilder;
-use Elgg\Database\Clauses\JoinClause;
-
 /**
  * Group activity widget
  */
+
+use Elgg\Activity\GroupRiverFilter;
+use Elgg\Database\QueryBuilder;
 
 $widget = elgg_extract('entity', $vars);
 
 $num = (int) $widget->num_display ?: 8;
 $guid = (int) $widget->group_guid;
 
-if (empty($guid)) {
+$group = get_entity($guid);
+if (!$group instanceof ElggGroup) {
 	// no group selected yet
 	echo '<p>' . elgg_echo('activity:widgets:group_activity:content:noselect') . '</p>';
 	return;
@@ -20,15 +21,12 @@ if (empty($guid)) {
 echo elgg_list_river([
 	'limit' => $num,
 	'pagination' => false,
-	'joins' => [
-		new JoinClause('entities', 'e1', function(QueryBuilder $qb, $joined_alias, $main_alias) {
-			return $qb->compare("$joined_alias.guid", '=', "$main_alias.object_guid");
-		}),
-	],
 	'wheres' => [
-		function(QueryBuilder $qb) use ($guid) {
-			return $qb->compare('e1.container_guid', '=', $guid, ELGG_VALUE_INTEGER);
-		}
+		function (QueryBuilder $qb, $main_alias) use ($group) {
+			$group = new GroupRiverFilter($group);
+			
+			return $group($qb, $main_alias);
+		},
 	],
 	'no_results' => elgg_echo('activity:widgets:group_activity:content:noactivity'),
 ]);

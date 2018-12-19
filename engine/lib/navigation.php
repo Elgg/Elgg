@@ -139,6 +139,10 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 	if (!$menus) {
 		return null;
 	}
+	
+	if (!isset($menus[$menu_name])) {
+		return null;
+	}
 
 	foreach ($menus[$menu_name] as $index => $menu_object) {
 		/* @var \ElggMenuItem $menu_object */
@@ -289,7 +293,7 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  * @since 1.8.0
  * @see elgg_get_breadcrumbs()
  */
-function elgg_push_breadcrumb($text, $href = null) {
+function elgg_push_breadcrumb($text, $href = false) {
 	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
 	
 	$breadcrumbs[] = [
@@ -427,7 +431,7 @@ function elgg_push_entity_breadcrumbs(ElggEntity $entity, $link_self = true) {
 	$container = $entity->getContainerEntity() ? : null;
 	elgg_push_collection_breadcrumbs($entity->type, $entity->subtype, $container);
 
-	$entity_url = $link_self ? $entity->getURL() : null;
+	$entity_url = $link_self ? $entity->getURL() : false;
 	elgg_push_breadcrumb($entity->getDisplayName(), $entity_url);
 }
 

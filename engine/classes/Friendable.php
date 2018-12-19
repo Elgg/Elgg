@@ -52,7 +52,7 @@ interface Friendable {
 	/**
 	 * Gets this entity's friends
 	 *
-	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 * @param array $options Options array. See elgg_get_entities()
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity, relationship name to 'friend' and type to 'user'.
 	 *
@@ -63,7 +63,7 @@ interface Friendable {
 	/**
 	 * Gets users who have made this entity a friend
 	 *
-	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 * @param array $options Options array. See elgg_get_entities()
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity, relationship name to 'friend', type to 'user'
 	 *                       and inverse_relationship to true.
@@ -85,7 +85,7 @@ interface Friendable {
 	/**
 	 * Get an array of \ElggObjects owned by this entity's friends.
 	 *
-	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 * @param array $options Options array. See elgg_get_entities()
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity, type to 'object', relationship name to 'friend'
 	 *                       and relationship_join_on to 'container_guid'.

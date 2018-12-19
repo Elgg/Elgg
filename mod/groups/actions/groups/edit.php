@@ -199,7 +199,12 @@ if ($is_new_group) {
 	]);
 }
 
-$group->saveIconFromUploadedFile('icon');
+if (get_input('icon_remove')) {
+	$group->deleteIcon();
+} else {
+	// try to save new icon, will fail silently if no icon provided
+	$group->saveIconFromUploadedFile('icon');
+}
 
 $data = [
 	'entity' => $group,

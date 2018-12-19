@@ -22,8 +22,10 @@ $forward = null;
 // if reply, forward to thread display page
 if ($parent_guid) {
 	$parent = get_entity($parent_guid);
-	if ($parent) {
-		$forward = "thewire/thread/$parent->wire_thread";
+	if ($parent instanceof ElggWire) {
+		$forward = elgg_generate_url('collection:object:thewire:thread', [
+			'guid' => $parent->wire_thread,
+		]);
 	}
 }
 

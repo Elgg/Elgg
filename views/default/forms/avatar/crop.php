@@ -15,7 +15,7 @@ elgg_load_js('elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
 
 echo elgg_view('output/img', [
-	'src' => elgg_extract('entity', $vars)->getIconUrl('master'),
+	'src' => $entity->getIconUrl('master'),
 	'alt' => elgg_echo('avatar'),
 	'class' => 'mrl',
 	'id' => 'user-avatar-cropper',

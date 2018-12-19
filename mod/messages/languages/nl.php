@@ -41,16 +41,16 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Je hebt een nieuw bericht!',
-	'messages:email:body' => "Je hebt een nieuw bericht van %s
+	'messages:email:body' => "You have a new message from %s.
 
-Bericht:
+It reads:
 
 %s
 
-Om al je berichten te bekijken, klik hier:
+To view your messages, click here:
 %s
 
-Om een bericht te sturen naar %s, klik hier:
+To send %s a message, click here:
 %s",
 
 	/**

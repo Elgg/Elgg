@@ -3,9 +3,6 @@
  * Upload and crop an avatar page
  */
 
-// Only logged in users
-elgg_gatekeeper();
-
 $username = elgg_extract('username', $vars);
 $entity = get_user_by_username($username);
 
@@ -27,11 +24,10 @@ if ($entity->hasIcon('master')) {
 	$content .= elgg_view('core/avatar/crop', ['entity' => $entity]);
 }
 
-$params = [
-	'content' => $content,
+$body = elgg_view_layout('one_sidebar', [
 	'title' => $title,
+	'content' => $content,
 	'show_owner_block_menu' => false,
-];
-$body = elgg_view_layout('one_sidebar', $params);
+]);
 
 echo elgg_view_page($title, $body);

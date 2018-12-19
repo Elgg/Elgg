@@ -126,26 +126,28 @@ return array(
 	'groups:invite:remove:check' => 'Sei sicuro di voler annullare questo invito?',
 	'groups:invite:body' => "Hi %s,
 
-%s invited you to join the '%s' group. Click below to view your invitations:
+%s invited you to join the '%s' group.
 
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Benvenuto/a nel gruppo %s!",
 	'groups:welcome:body' => "Hi %s!
 
-You are now a member of the '%s' group! Click below to begin posting!
+You are now a member of the '%s' group.
 
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s ha richiesto di unirsi a %s",
 	'groups:request:body' => "Hi %s,
 
-%s has requested to join the '%s' group. Click below to view their profile:
+%s has requested to join the '%s' group.
 
+Click below to view their profile:
 %s
 
 or click below to view the group's join requests:
-
 %s",
 
 	'river:group:create' => '%s ha creato il gruppo %s',
@@ -175,9 +177,6 @@ or click below to view the group's join requests:
 	 * Upgrades
 	 */
 	'groups:upgrade:2016101900:title' => 'Trasferisci le icone del gruppo in una nuova posizione',
-	'groups:upgrade:2016101900:description' => '
-		New entity icon API stores icons in a predictable location on the filestore
-		relative to the entity\'s filestore directory. This upgrade aligns
-		will align group plugin with the requirements of the new API.
-	',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
 );

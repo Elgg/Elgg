@@ -529,7 +529,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
 	 * @return void
 	 */
-	public function setPriority($priority) {
+	public function setPriority(int $priority) {
 		$this->data['priority'] = $priority;
 	}
 
@@ -539,7 +539,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * @return int
 	 */
 	public function getPriority() {
-		return $this->data['priority'];
+		return (int) $this->data['priority'];
 	}
 
 	/**
