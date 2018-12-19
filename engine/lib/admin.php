@@ -20,6 +20,8 @@
  * @subpackage Admin
  */
 
+use Elgg\Menu\MenuItems;
+
 /**
  * Get the admin users
  *
@@ -138,6 +140,7 @@ function _elgg_admin_init() {
 		
 	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:filter:admin/upgrades', '_elgg_admin_upgrades_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu_plugin_settings');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated:bulk', '_elgg_admin_user_unvalidated_bulk_menu');
@@ -1048,6 +1051,39 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
 	$return_value->url = false;
 	
 	return $return_value;
+}
+
+/**
+ * Add menu items to the filter menu on the admin upgrades page
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:filter:admin/upgrades'
+ *
+ * @return MenuItems
+ * @access private
+ */
+function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
+	
+	$result = $hook->getValue();
+	
+	$selected = $hook->getParam('filter_value');
+	
+	$result[] = ElggMenuItem::factory([
+		'name' => 'pending',
+		'text' => elgg_echo('admin:upgrades:menu:pending'),
+		'href' => 'admin/upgrades',
+		'priority' => 100,
+		'selected' => $selected === 'pending',
+	]);
+	
+	$result[] = ElggMenuItem::factory([
+		'name' => 'completed',
+		'text' => elgg_echo('admin:upgrades:menu:completed'),
+		'href' => 'admin/upgrades/finished',
+		'priority' => 200,
+		'selected' => $selected === 'completed',
+	]);
+	
+	return $result;
 }
 
 /**
