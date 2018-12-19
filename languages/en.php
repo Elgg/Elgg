@@ -496,6 +496,7 @@ return array(
 	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
 	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
 	'admin:upgrades:failed' => 'Upgrade "%s" failed',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
