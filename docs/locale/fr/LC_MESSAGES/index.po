@@ -3,14 +3,18 @@
 # This file is distributed under the same license as the Elgg package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
+# Translators:
+# Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2017
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-12-06 10:03+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2017\n"
+"POT-Creation-Date: 2018-07-24 10:08+0200\n"
+"PO-Revision-Date: 2017-12-28 11:58+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,49 +23,261 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../../index.rst:2
-msgid "Elgg |version| Documentation"
-msgstr "Elgg |version| Documentation"
+msgid "Elgg Documentation (|version|)"
+msgstr "Documentation Elgg (|version|)"
 
 #: ../../index.rst:4
 msgid ""
-"Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a "
-"rapid development framework with built-in social features. It is a great fit"
-" for building any app where users log in and share information."
+"Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is an "
+"open source rapid development framework for socially aware web applications."
+" It is a great fit for building any app where users log in and share "
+"information."
 msgstr ""
 "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) est un "
-"environnement de développement intégrant des fonctionnalités sociales. Ce "
-"framework est idéal pour construire des applications dans lesquelles les "
-"utilisateurs s'identifient et partagent des informations."
+"framework de développement rapide pour construire des applications web "
+"sociales. C'est un excellent choix pour construire tout type d'application "
+"où des utilisateurs se connectent et partagent des informations."
 
-#: ../../index.rst:7
+#: ../../index.rst:8
+msgid "Features"
+msgstr "Fonctionnalités"
+
+#: ../../index.rst:10
+msgid ""
+"**Well-documented core API** that allows developers to kick start their new "
+"project with a simple learning curve"
+msgstr ""
+"**Une API bien documentée** qui permet aux développeurs d'accélérer leurs "
+"nouveaux projets avec une courbe d'apprentissage simple"
+
+#: ../../index.rst:11
+msgid ""
+"**Composer** is the package manager of choice that greatly simplifes "
+"installation and maintenance of Elgg core and plugins"
+msgstr ""
+"**Composer** est le gestionnaire de paquets qui simplifie grandement "
+"l'installation et la maintenance du coeur d'Elgg et des plugins"
+
+#: ../../index.rst:12
+msgid ""
+"**Flexible system of hooks and events** that allows plugins to extend and "
+"modify most aspects of application's functionality and behavior"
+msgstr ""
+"**Un système flexible de hooks et d'événements** qui permet aux plugins "
+"d'étendre et de modifier la majorité des aspects du fonctionnement et du "
+"comportement des fonctionnalités des applications"
+
+#: ../../index.rst:13
+msgid ""
+"**Extendable system of views** that allows plugins to collaborate on "
+"application's presentation layer and built out complex custom themes"
+msgstr ""
+"**Un système de vues extensible** qui permet aux plugins de collaborer sur "
+"la couche de présentation des applications et de construire des thèmes "
+"personnalisés complexes"
+
+#: ../../index.rst:14
+msgid ""
+"**Cacheable system of static assets** that allows themes and plugins to "
+"serve images, stylesheets, fonts and scripts bypassing the engine"
+msgstr ""
+"**Un système d'assets statiques mis en cache** qui permet aux thèmes et aux "
+"plugins de servir des images, feuilles de style, polices et scripts sans "
+"charger le moteur"
+
+#: ../../index.rst:15
+msgid ""
+"**User authentication** is powered by pluggable auth modules, which allow "
+"applications to implement custom authentication protocols"
+msgstr ""
+"**L'authentication des utilsateurs** s'appuie sur des modules "
+"d'authentification enfichables, ce qui permet aux applications d'implémenter"
+" des protocoles d'authentification personnalisés"
+
+#: ../../index.rst:16
+msgid ""
+"**Security** is ensured by built-in anti CSRF validation, strict XSS "
+"filters, HMAC signatures, latest cryptographic approaches to password "
+"hashing"
+msgstr ""
+"**La Sécurité** est assurée par une validation anti CSRF native, des filtres"
+" XSS stricts, des signatures HMAC, et les dernières approches "
+"cryptographiques pour le hachage des mots de passe"
+
+#: ../../index.rst:17
+msgid ""
+"**Client-side API** powered by asynchronous JavaScript modules via RequireJS"
+" and a build-in Ajax service for easy communication with the server"
+msgstr ""
+"**Une API côté client** motorisée par des modules JavaScript asynchrones "
+"chargés via RequireJS et un service Ajax natif pour une communication aisée "
+"avec le serveur"
+
+#: ../../index.rst:18
+msgid ""
+"**Flexible entity system** that allows applications to prototype new types "
+"of content and user interactions"
+msgstr ""
+"**Un système d'Entités flexible** qui permet aux applications de prototyper "
+"de nouveaux types de contenus et d'interactions entre utilisateurs"
+
+#: ../../index.rst:19
+msgid ""
+"**Opinionated data model** with a consolidated API layer that allows the "
+"developers to easily interface with the database"
+msgstr ""
+"**Un modèle de données très bien conçu** avec une couche d'API consolidée "
+"qui permet aux développeurs de créer facilement les interfaces avec la base "
+"de données"
+
+#: ../../index.rst:20
+msgid ""
+"**Access control system** that allows applications to build granular content"
+" access policies, as well as create private networks and intranets"
+msgstr ""
+"**Une système de contrôle d'accès** qui permet aux applications de "
+"construire des politiques d'accès aux contenus granulaires, comme de créer "
+"des réseaux privés et des intranets"
+
+#: ../../index.rst:21
+msgid "**Groups** - out of the box support for user groups"
+msgstr "**Groupes** - support d'emblée pour des groupes d'utilisateurs"
+
+#: ../../index.rst:22
+msgid ""
+"**File storage** powered by flexible API that allows plugins to store user-"
+"generated files and serve/stream them without booting the engine"
+msgstr ""
+"**Stockage de fichiers** supporté par une API flexible qui permet aux "
+"plugins de stocker les fichiers créés par les utilisateurs et de les "
+"servir/streamer sans démarrer le moteur"
+
+#: ../../index.rst:23
+msgid ""
+"**Notifications service** that allows applications to subscribe users to on-"
+"site and email notifications and implement integrations with other their-"
+"party services"
+msgstr ""
+"**Un Service de Notifications** qui permet aux applications d'abonner des "
+"utilisateurs aux notifications sur le site ou par email, et d'implémenter "
+"l'intégration avec d'autres services tierce-partie"
+
+#: ../../index.rst:24
+msgid ""
+"**RPC web services** that can be used for complex integrations with external"
+" applications and mobile clients"
+msgstr ""
+"**Des Services Web RPC** qui peuvent être utilisés pour des intégrations "
+"complexes avec des applications externes et des clietns mobiles"
+
+#: ../../index.rst:25
+msgid ""
+"**Internationalization** and localization of Elgg applications is simple and"
+" can be integrated with third-party services such as Transifex"
+msgstr ""
+"**L'Internationalisation** et la localisation des applications Elgg est "
+"simple et peut être intégrée avec des services tierce-partie tels que "
+"Transifex"
+
+#: ../../index.rst:26
+msgid ""
+"**Elgg community** that can help with any arising issues and hosts a "
+"repository of **1000+ open source plugins**"
+msgstr ""
+"**La communauté Elgg** peut aider sur n'importe quelle problématique qui "
+"survienne, et héberge un répertoire de plus de **1000+ plugins open source**"
+
+#: ../../index.rst:28
+msgid "Under the hood:"
+msgstr "Sous le capot :"
+
+#: ../../index.rst:30
+msgid "Elgg is a modular OOP framework that is driven by DI services"
+msgstr ""
+"Elgg est un framework modulaire orienté objet (OOP) qui est dirigé par des "
+"services DI"
+
+#: ../../index.rst:31
+msgid "NGINX or Apache compatible"
+msgstr "compatible NGINX ou Apache"
+
+#: ../../index.rst:32
+msgid "Symfony2 HTTP Foundation handles requests and responses"
+msgstr "Symfony2 HTTP Foundation gère les requêtes et réponses"
+
+#: ../../index.rst:33
+msgid "RequireJS handles AMD"
+msgstr "RequireJS gère les modules AMD"
+
+#: ../../index.rst:34
+msgid "Zend Mail handles outgoing email"
+msgstr "Zend Mail gère les emails sortants"
+
+#: ../../index.rst:35
+msgid "htmLawed XSS filters"
+msgstr "Filtres XSS htmLawed"
+
+#: ../../index.rst:36
+msgid "DBAL"
+msgstr "DBAL"
+
+#: ../../index.rst:37
+msgid "Phinx database migrations"
+msgstr "Migrations de base de donnée Phinx"
+
+#: ../../index.rst:38
+msgid "CSS-Crush for CSS preprocessing"
+msgstr "CSS-Crush pour le pré-traitement CSS"
+
+#: ../../index.rst:39
+msgid "Imagine for image manipulation"
+msgstr "Imagine pour la manipulation d'image"
+
+#: ../../index.rst:40
+msgid "Persistent caching with Memcached and/or Redis"
+msgstr "Cache persistant avec Memcached et/ou Redis"
+
+#: ../../index.rst:41
+msgid "Error handling with Monolog"
+msgstr "Gestion des erreurs avec Monolog"
+
+#: ../../index.rst:44
+msgid "Examples"
+msgstr "Exemples"
+
+#: ../../index.rst:46
 msgid "It has been used to build `all kinds of social apps`__:"
 msgstr ""
 "Elgg a été utilisé pour construire `tous types d'applications sociales`__:"
 
-#: ../../index.rst:11
+#: ../../index.rst:50
 msgid "open networks (similar to Facebook)"
 msgstr "réseau sociaux ouverts (similaires à Facebook)"
 
-#: ../../index.rst:12
+#: ../../index.rst:51
 msgid "topical (like the Elgg Community)"
 msgstr "thématiques (comme la communauté Elgg)"
 
-#: ../../index.rst:13
-msgid "private intranets"
-msgstr "intranets privés / RSE"
+#: ../../index.rst:52
+msgid "private/corporate intranets"
+msgstr "intranets privés ou professionnels"
 
-#: ../../index.rst:14
+#: ../../index.rst:53
 msgid "dating"
 msgstr "rencontres"
 
-#: ../../index.rst:15
+#: ../../index.rst:54
 msgid "educational"
 msgstr "éducatifs"
 
-#: ../../index.rst:16
+#: ../../index.rst:55
 msgid "company blog"
 msgstr "blog d'entreprise"
 
-#: ../../index.rst:18
+#: ../../index.rst:57
 msgid "This is the canonical documentation for the Elgg_ project."
 msgstr "Ceci constitue la documentation officielle du projet Elgg_."
+
+#: ../../index.rst:62
+msgid "Continue Reading"
+msgstr "Poursuivre le lecture"

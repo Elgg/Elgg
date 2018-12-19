@@ -20,21 +20,20 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s 가 당신의 글 "%s" 를 공감합니다',
 	'likes:notifications:body' =>
-'안녕하세요 %1$s,
+'Hi %1$s,
 
-%2$s 가 당신의 글 "%3$s" %4$s 을 공감합니다. 
+%2$s likes your post "%3$s" on %4$s
 
-원문은 아래에서 볼 수 있습니다:
+See your original post here:
 
 %5$s
 
-혹은 아래에서 %2$s가 누군지 알아보세요:
+or view %2$s\'s profile here:
 
 %6$s
 
-갑사합니다,
-%4$s
-',
+Thanks,
+%4$s',
 	'likes:upgrade:2017120700:title' => "공개된 공감 주석",
 	'likes:upgrade:2017120700:description' => "이 주석의 액세스 ID가 공개로 업데이트됩니다.
 

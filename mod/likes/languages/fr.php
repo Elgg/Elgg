@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'aime',
 	'likes:deleted' => 'Votre appréciation a été retirée',
 	'likes:see' => 'Voir les membres qui aiment',
@@ -25,14 +25,15 @@ return [
 %2$s aime votre publication "%3$s" sur %4$s
 
 Pour afficher votre publication :
-
 %5$s
 
 ou voir le profil de %2$s :
+
 %6$s
 
 Merci,
-%4$s
-',
+%4$s',
+	'likes:upgrade:2017120700:title' => "Annotations de Likes publiques",
+	'likes:upgrade:2017120700:description' => "Ceci met à jour l'id de niveau d'accès des annotations des likes vers Public ",
 	
-];
+);

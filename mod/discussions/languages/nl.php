@@ -21,7 +21,7 @@ return array(
 	/**
 	 * River
 	 */
-	'river:object:discussion:create' => '%s heeft een nieuwe discussie toegevoegd%s',
+	'river:object:discussion:create' => '%s heeft een nieuwe discussie toegevoegd %s',
 	'river:object:discussion:comment' => '%s reageerde op de discussie %s',
 	
 	/**

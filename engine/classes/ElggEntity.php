@@ -967,12 +967,12 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Gets an array of entities with a relationship to this entity.
 	 *
-	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 * @param array $options Options array. See elgg_get_entities()
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity.
 	 *
 	 * @return array|false An array of entities or false on failure
-	 * @see elgg_get_entities_from_relationship()
+	 * @see elgg_get_entities()
 	 */
 	public function getEntitiesFromRelationship(array $options = []) {
 		$options['relationship_guid'] = $this->guid;

@@ -16,12 +16,11 @@ return array(
 	'invitefriends:already_members' => 'Les invités suivants sont déjà membres : %s',
 	'invitefriends:noemails' => 'Aucune adresse email n\'a été renseignée.',
 	
-	'invitefriends:message:default' => 'Bonjour
+	'invitefriends:message:default' => 'BonjourJe,
 
 Je vous invite à rejoindre mon réseau sur %s.',
 
 	'invitefriends:email' => 'Vous avez été invité à rejoindre %s par %s :
-
 %s
 
 Pour vous inscrire, cliquez sur le lien suivant :

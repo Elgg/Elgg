@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Externe Seiten",
-	'admin:appearance:expages' => "Externe Seiten",
+	'admin:configure_utilities:expages' => "Externe Seiten",
 	'expages:edit:viewpage' => "Diese externe Seite anzeigen",
 	'expages:about' => "Impressum",
 	'expages:terms' => "AGBs",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Dein Seiten-Eintrag wurde gespeichert.",
 	'expages:error' => "Beim Speichern der Seite ist ein Fehler aufgetreten.",
-];
+);

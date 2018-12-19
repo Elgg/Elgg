@@ -81,12 +81,12 @@ class ElggCoreWidgetTest extends IntegrationTestCase {
 		$this->widget->title = 'get_title';
 		$this->widget->handler = 'widget_handler';
 		$this->widget->context = 'widget_context';
-		$this->assertEquals('get_title', $this->widget->getTitle());
+		$this->assertEquals('get_title', $this->widget->getDisplayName());
 		
 		unset($this->widget->title);
 		
 		$this->assertTrue(elgg_register_widget_type('widget_handler', 'title_from_definition', 'widget_description', ['widget_context']));
-		$this->assertEquals('title_from_definition', $this->widget->getTitle());
+		$this->assertEquals('title_from_definition', $this->widget->getDisplayName());
 	}
 	
 	public function testSaveSettings() {

@@ -27,7 +27,7 @@ $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
 
 if ($no_results === true) {
-	$no_results = elgg_echo('notfound');
+	$vars['no_results'] = elgg_echo('notfound');
 }
 
 if (!$items && $no_results) {

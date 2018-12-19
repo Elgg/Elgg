@@ -1,84 +1,58 @@
 <?php
 
-return [
-	'discussion' => 'Discussions',
-	'discussion:add' => 'Ajouter un sujet de discussion',
+return array(
+	'add:object:discussion' => 'Ajouter un sujet de discussion',
+	'edit:object:discussion' => 'Modifier le sujet',
+
 	'discussion:latest' => 'Dernières discussions',
-	'discussion:group' => 'Discussions de groupe',
+	'collection:object:discussion:group' => 'Discussions du groupe',
 	'discussion:none' => 'Pas de discussion',
-	'discussion:reply:title' => 'Réponse de %s',
-	'discussion:new' => "Ajouter un sujet de discussion",
 	'discussion:updated' => "Derniere réponse de %s %s",
 
 	'discussion:topic:created' => 'Le sujet de discussion a été créé.',
 	'discussion:topic:updated' => 'Le sujet de discussion a été mis à jour.',
-	'discussion:topic:deleted' => 'Le sujet de discussion a été supprimé.',
+	'entity:delete:object:discussion:success' => 'Le sujet de discussion a été supprimé.',
 
 	'discussion:topic:notfound' => 'Le sujet de discussion est introuvable',
 	'discussion:error:notsaved' => 'Impossible d\'enregistrer ce sujet',
 	'discussion:error:missing' => 'Les deux champs "titre" et "message" sont obligatoires',
 	'discussion:error:permissions' => 'Vous n\'avez pas les droits pour effectuer cette action',
-	'discussion:error:notdeleted' => 'Impossible de supprimer le sujet de discussion',
-
-	'discussion:reply:edit' => 'Modifier la réponse',
-	'discussion:reply:deleted' => 'La réponse discussion a été supprimée.',
-	'discussion:reply:error:notfound' => 'La réponse à cette discussion n\'a pas été trouvée',
-	'discussion:reply:error:notfound_fallback' => "Désolé, la réponse spécifiée n'a pu être trouvée, mais vous avez été redirigé vers le sujet de discussion original.",
-	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse à la discussion',
-
-	'discussion:search:title' => 'Répondre au sujet : %s',
-
-	/**
-	 * Action messages
-	 */
-	'discussion:reply:missing' => 'Vous ne pouvez pas publier une réponse vide.',
-	'discussion:reply:topic_not_found' => 'Le sujet de discussion n\'a pas été trouvé',
-	'discussion:reply:error:cannot_edit' => 'Vous n\'avez pas la permission de modifier cette réponse.',
-	'discussion:reply:error:permissions' => 'Vous n\'avez pas l\'autorisation de répondre à ce sujet',
 
 	/**
 	 * River
 	 */
-	'river:create:object:discussion' => '%s a ajouté un nouveau sujet de discussion %s',
-	'river:reply:object:discussion' => '%s a répondu sur le sujet de discussion %s',
-	'river:reply:view' => 'afficher la réponse',
-
+	'river:object:discussion:create' => '%s a ajouté un nouveau sujet de discussion %s',
+	'river:object:discussion:comment' => '%s a commenté le sujet de discussion %s',
+	
 	/**
 	 * Notifications
 	 */
 	'discussion:topic:notify:summary' => 'Nouveau sujet de discussion intitulé %s',
 	'discussion:topic:notify:subject' => 'Nouveau sujet de discussion : %s',
 	'discussion:topic:notify:body' =>
-'%s a ajouté un nouveau sujet de discussion à %s :
+'%s a ajouté un nouveau sujet de discussion "%s":
 
 %s
 
-Voir la discussion et répondre :
+Voir le sujet de discussion et y répondre :
 %s
 ',
 
 	'discussion:comment:notify:summary' => 'Nouvelle réponse dans la discussion : %s',
 	'discussion:comment:notify:subject' => 'Nouvelle réponse dans la discussion : %s',
 	'discussion:comment:notify:body' =>
-'%s a répondu au sujet de discussion "%s" :
+'%s a répondu au sujet de discussion "%s":
 
 %s
 
-Voir la discussion et répondre :
+Voir la discussion et y répondre :
 %s
 ',
 
 	'item:object:discussion' => "Sujets de discussion",
-	'item:object:discussion_reply' => "Réponses à la discussion",
+	'collection:object:discussion' => 'Sujets de discussion',
 
-	'groups:enableforum' => 'Activer les discussions de groupe',
-
-	'reply:this' => 'Répondre',
-
-	/**
-	 * ecml
-	 */
-	'discussion:ecml:discussion' => 'Discussions du groupe',
+	'groups:tool:forum' => 'Activer les discussions du groupe',
 
 	/**
 	 * Discussion status
@@ -87,13 +61,11 @@ Voir la discussion et répondre :
 	'discussion:topic:closed:title' => 'Cette discussion est fermée.',
 	'discussion:topic:closed:desc' => 'Cette discussion a été fermée et n\'accepte plus de nouveaux commentaires.',
 
-	'discussion:replies' => 'Réponses',
-	'discussion:addtopic' => 'Ajouter un sujet',
-	'discussion:post:success' => 'Votre réponse a bien été publiée',
-	'discussion:post:failure' => 'Il y a eu un problème lors de la publication de votre réponse',
-	'discussion:topic:edit' => 'Modifier le sujet',
 	'discussion:topic:description' => 'Message du sujet',
 
-	'discussion:reply:edited' => "Vous avez bien modifié cette discussion.",
-	'discussion:reply:error' => "Il y a eu un problème lors de la modification de la discussion.",
-];
+	// upgrades
+	'discussions:upgrade:2017112800:title' => "Migrer les réponses aux discussions vers les commentaires",
+	'discussions:upgrade:2017112800:description' => "Les réponses aux sujets de discussion avaient leur propre sous-type, ceci a été unifié dans les commentaires.",
+	'discussions:upgrade:2017112801:title' => "Migrer l'activité de la rivière relative aux réponses aux sujets de discussions",
+	'discussions:upgrade:2017112801:description' => "Les réponses aux sujets de discussion avaient leur propre sous-type, ceci a été unifié dans les commentaires.",
+);

@@ -26,11 +26,11 @@ return array(
 	'pages:notify:summary' => 'Nieuwe pagina met de titel %s',
 	'pages:notify:subject' => "Een nieuwe pagina: %s",
 	'pages:notify:body' =>
-'%s heeft een nieuwe pagina toegevoegd: %s
+'%s added a new page: %s
 
 %s
 
-Bekijk en reageer op de pagina:
+View and comment on the page:
 %s',
 
 	'pages:more' => 'Meer pagina\'s',

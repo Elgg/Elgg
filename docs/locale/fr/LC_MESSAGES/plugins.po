@@ -1,0 +1,783 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+# Translators:
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-24 10:08+0200\n"
+"PO-Revision-Date: 2018-01-19 10:19+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
+"Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../plugins/blog.rst:2
+msgid "Blog"
+msgstr "Blog"
+
+#: ../../plugins/blog.rst:4
+msgid ""
+"A weblog, or blog, is arguably one of the fundamental DNA pieces of most "
+"types of social networking site. The simplest form of personal publishing, "
+"it allows for text-based notes to be published in reverse-chronological "
+"order. Commenting is also an important part of blogging, turning an "
+"individual act of publishing into a conversation."
+msgstr ""
+"Un weblog, ou blog, est sans conteste l'un des éléments fondamental d'ADN de"
+" tous les types de sites de réseautage social. La forme la plus simple de "
+"publication personnelle, qui permet de publier des notes textuelles dans un "
+"ordre antéchronologique. Les commentaires sont également une part importante"
+" du blogging, en transformant un acte de publication personnel en une "
+"conversation."
+
+#: ../../plugins/blog.rst:6
+msgid ""
+"Elgg's blog expands this model by providing per-entry access controls and "
+"cross-blog tagging. You can control exactly who can see each individual "
+"entry, as well as find other entries that people have written on similar "
+"topics. You can also see entries written by your friends (that you have "
+"access to)."
+msgstr ""
+"Le blog d'Elgg étend ce modèle en fournissant des contrôles d'accès pour "
+"chaque entrée et un système de tags transverse aux blogs. Vous pouvez "
+"contrôler précisément qui peut voir quel article de blog, et identifier des "
+"articles écrits par d'autres personnes sur des sujets similaires. Vous "
+"pouvez également voir les entrées écrites par vos contacts (auxquels vous "
+"avec accès)."
+
+#: ../../plugins/blog.rst:10
+msgid "`Blogging on Wikipedia <http://en.wikipedia.org/wiki/Blog>`_"
+msgstr "`Blogging sur Wikipedia <http://fr.wikipedia.org/wiki/Blog>`_"
+
+#: ../../plugins/dashboard.rst:2
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+#: ../../plugins/dashboard.rst:10
+msgid "A typical Elgg dashboard"
+msgstr "Un tableau de bord Elgg typique"
+
+#: ../../plugins/dashboard.rst:12
+msgid ""
+"The dashboard is bundled with both the full and core-only Elgg packages. "
+"This is a users portal to activity that is important to them both from "
+"within the site and from external sources. Using Elgg's powerful widget API,"
+" it is possible to build widgets that pull out relevant content from within "
+"an Elgg powered site as well as grab information from third party sources "
+"such as Twitter or Flickr (providing those widgets exist). A users dashboard"
+" is not the same as their profile, whereas the profile is for consumption by"
+" others, the dashboard is a space for users to use for their own needs."
+msgstr ""
+"Le tableau de bord est livré à la fois avec la version complète et noyau "
+"seulement d'Elgg. C'est le portail des utilisateurs vers des activités qui "
+"leur sont importantes à la fois à l'intérieur du site et depuis des sources "
+"externes. En utilisant la puissante API widgets d'Elgg, il est possible de "
+"construire des widgets qui retirent du contenu pertinent depuis l'intérieur "
+"d'un site Elgg, ainsi que de récupérer des informations depuis des sources "
+"tierce-partie telles que Twitter ou Flickr (dès lors que ces widgets "
+"existent). Le tableau de bord des utilisateurs n'est pas la même chose que "
+"leur profil : tandis que le profil est destiné à être consulté par les "
+"autres, le tableau de bord est un espace strictement personnel que les "
+"utilisateurs utilisent pour leurs propres besoins."
+
+#: ../../plugins/diagnostics.rst:2
+msgid "Diagnostics"
+msgstr "Diagnostics"
+
+#: ../../plugins/diagnostics.rst:4
+msgid ""
+"For the technically savvy user, system diagnostics enables you to quickly "
+"evaluate the server environment, Elgg code, and plugins of an Elgg install. "
+"Diagnostics is a core system plugin that comes turned on by default with "
+"Elgg. To download the diagnostics file, follow the steps below. The file is "
+"a dump of all sorts of useful information."
+msgstr ""
+"Pour l'utilisateur techniquement averti, les diagnostics système permettent "
+"d'évaluer rapidement l'environnement serveur, le code d'Elgg, et les plugins"
+" d'une installation Elgg. Les diagnostics sont un plugin système du noyau "
+"qui est activé par défaut avec Elgg. Pour télécharger le fichier de "
+"diagnostics, suivez les étapes ci-dessous. Le fichier est un vidage de tous "
+"types d'informations utiles."
+
+#: ../../plugins/diagnostics.rst:6
+msgid "To use:"
+msgstr "Pour l'utiliser :"
+
+#: ../../plugins/diagnostics.rst:8
+msgid "Log in as Administrator"
+msgstr "Connectez-vous en tant qu'administrateur"
+
+#: ../../plugins/diagnostics.rst:9
+msgid "Go to Administration -> Administer -> Utilities ->System Diagnostics"
+msgstr ""
+"Rendez-vous dans Administration -> Administrer -> Utilitaires ->Diagnostics "
+"Système"
+
+#: ../../plugins/diagnostics.rst:10
+msgid "Click 'Download'"
+msgstr "Cliquez sur 'Télécharger'"
+
+#: ../../plugins/diagnostics.rst:12
+msgid "System diagnostics dump file contents:"
+msgstr "Contenu du fichier de vidage des diagnostics système"
+
+#: ../../plugins/diagnostics.rst:14
+msgid "List of all Elgg files along with a hash for each file"
+msgstr ""
+"Liste de tous les fichiers d'Elgg ainsi qu'un hash pour chaque fichier"
+
+#: ../../plugins/diagnostics.rst:15
+msgid "List of all the plugins"
+msgstr "Liste de tous les plugins"
+
+#: ../../plugins/diagnostics.rst:16
+msgid "PHP superglobals"
+msgstr "Superglobales PHP"
+
+#: ../../plugins/diagnostics.rst:17
+msgid "PHP settings"
+msgstr "Paramètres PHP"
+
+#: ../../plugins/diagnostics.rst:18
+msgid "Apache settings"
+msgstr "Paramètres Apache"
+
+#: ../../plugins/diagnostics.rst:26
+msgid "Elgg CONFIG values"
+msgstr "Valeurs de Elgg CONFIG"
+
+#: ../../plugins/diagnostics.rst:20
+msgid "language strings"
+msgstr "chaînes de traduction"
+
+#: ../../plugins/diagnostics.rst:21
+msgid "site settings"
+msgstr "paramètres du site"
+
+#: ../../plugins/diagnostics.rst:22
+msgid "database settings"
+msgstr "paramètres de la base de données"
+
+#: ../../plugins/diagnostics.rst:23
+msgid "plugin hooks"
+msgstr "hooks des plugins"
+
+#: ../../plugins/diagnostics.rst:24
+msgid "actions"
+msgstr "actions"
+
+#: ../../plugins/diagnostics.rst:25
+msgid "views"
+msgstr "vues"
+
+#: ../../plugins/diagnostics.rst:26
+msgid "page handlers"
+msgstr "gestionnaires de pages"
+
+#: ../../plugins/diagnostics.rst:27
+msgid "much more"
+msgstr "beaucoup plus"
+
+#: ../../plugins/file.rst:2
+msgid "File repository"
+msgstr "Répertoire de fichiers"
+
+#: ../../plugins/file.rst:10
+msgid "A file in an Elgg file repository"
+msgstr "Un fichier dans un répertoire de fichiers Elgg"
+
+#: ../../plugins/file.rst:12
+msgid ""
+"The file repository allows users to upload any kind of file. As with "
+"everything in an Elgg system, you can filter uploaded files by tag and "
+"restrict access so that they're only visible by the people you want them to "
+"be. Each file may also have comments attached to it."
+msgstr ""
+"Le répertoire de fichiers permet à des membres de charger n'importe quel "
+"type de fichier. Comme avec tout dans un système Elgg, vous pouvez aisément "
+"filtrer les fichiers par tags et restreindre l'accès de sorte qu'ils soient "
+"visibles seulement par les personnes que vous souhaitez. Chaque fichier peut"
+" également avoir des commentaires associés."
+
+#: ../../plugins/file.rst:14
+msgid "There are a number of different uses for this functionality"
+msgstr ""
+"Il existe plusieurs types d'usages différents pour cette fonctionnalité"
+
+#: ../../plugins/file.rst:17
+msgid "Photo gallery"
+msgstr "Galerie de photo"
+
+#: ../../plugins/file.rst:19
+msgid ""
+"When a user uploads photographs or other pictures, they are automatically "
+"collated into an Elgg photo gallery that can be browsed through. Users can "
+"also see pictures that their friends have uploaded, or see pictures attached"
+" to a group. Clicking into an individual file shows a larger version of the "
+"photo."
+msgstr ""
+"Quand un utilisateur charge des photographies ou d'autres images, elles sont"
+" automatiquement rassemblées dans une galerie de photos Elgg dans laquelle "
+"il est possible de naviguer. Les utilisateurs peuvent aussi voir les photos "
+"que leurs contacts ont chargées, ou voir des images attachées à un groupe. "
+"Une version plus grande de la photo apparaît en cliquant sur l'un des "
+"fichiers."
+
+#: ../../plugins/file.rst:22
+msgid "Podcasting"
+msgstr "Podcasts"
+
+#: ../../plugins/file.rst:24
+msgid ""
+"An Elgg file repository RSS feed automatically doubles as an RSS feed, so "
+"you can subscribe to new audio content using programs like iTunes."
+msgstr ""
+"Un répertoire de fichiers Elgg est doublé automatiquement par un flux RSS, "
+"de sorte que vous pouvez vous abonner à du nouveau contenu audio en "
+"utilisant des programmes tels que iTunes."
+
+#: ../../plugins/file.rst:27
+msgid "Special content"
+msgstr "Contenus spéciaux"
+
+#: ../../plugins/file.rst:29
+msgid ""
+"It is possible for other plugins to add to the players available for "
+"different content types. It's possible for a plugin author to embed a viewer"
+" for Word documents, for example."
+msgstr ""
+"Il est possible pour d'autres plugins d'ajouter de nouveaux lecteurs et "
+"visionneuses pour différents types de contenus. L'auteur d'un plugin peut "
+"par exemple intégrer de cette manière une visionneuse pour des documents "
+"Word."
+
+#: ../../plugins/file.rst:32
+msgid "Note for developers"
+msgstr "Note pour les développeurs"
+
+#: ../../plugins/file.rst:34
+msgid ""
+"To add a special content type player, create a plugin with views of the form"
+" ``file/specialcontent/mime/type``. For example, to create a special viewer "
+"for Word documents, you would create a view called "
+"``file/specialcontent/application/msword``, because ``application/msword`` "
+"is the MIME-type for Word documents. Within this view, the ``ElggEntity`` "
+"version of the file will be referenced as ``$vars['entity']``. Therefore, "
+"the URL of the downloadable file is:"
+msgstr ""
+"Pour ajouter un lecteur pour un nouveau type de contenu, créez un plugin "
+"avec des vues de la forme ``file/specialcontent/mime/type``. Par exemple, "
+"pour créer une visionneuse pour des documents Word, vous pouvez créer une "
+"vue nommée ``file/specialcontent/application/msword``, puisque "
+"``application/msword`` est le type MIME pour les documents Word. A "
+"l'intérieur de cette vue, la version ``ElggEntity`` du fichier sera "
+"référencée en tant que ``$vars['entity']``. Dès lors, l'URL du fichier "
+"téléchargeable est :"
+
+#: ../../plugins/file.rst:41
+msgid ""
+"Using this, it should be possible to develop most types of embeddable "
+"viewers."
+msgstr ""
+"En utilisant cela, il devrait être possible de développer la plupart des "
+"types de visionnneuses embarquables."
+
+#: ../../plugins/groups.rst:2
+msgid "Groups"
+msgstr "Groupes"
+
+#: ../../plugins/groups.rst:10
+msgid "A typical group profile"
+msgstr "Un profil de groupe typique"
+
+#: ../../plugins/groups.rst:12
+msgid ""
+"Once you have found others with similar interests - or perhaps you are part "
+"of a research groups or a course/class - you may want to have a more "
+"structured setting to share content and discuss ideas. This is where Elgg's "
+"powerful group building can be used. You can create and moderate as many "
+"groups as you like"
+msgstr ""
+"Une fois que vous avez trouvé d'autres personnes avec des centres d'intérêt "
+"similaires - ou peut-être que vous faites partie d'un groupe de recherche ou"
+" d'un cours - vous pourriez souhaiter disposer d'un environnement plus "
+"structuré pour partager du contenu et discuter d'idées. C'est là "
+"qu'interviennent les puissantes fonctionnalités d'Elgg en terme de "
+"construction de groupes. Vous pouvez créer et modérer autant de groupes que "
+"vous le désirez. "
+
+#: ../../plugins/groups.rst:15
+msgid ""
+"You can keep all group activity private to the group or you can use the "
+"'make public' option to disseminate work to the wider public."
+msgstr ""
+"Vous pouvez conserver toute l'activité du groupe privée pour le groupe, ou "
+"utiliser l'option 'rendre public' pour disséminer ses travaux auprès d'un "
+"public plus large."
+
+#: ../../plugins/groups.rst:16
+msgid ""
+"Each group produces granular RSS feeds, so it is easy to follow group "
+"developments"
+msgstr ""
+"Chaque groupe produit des flux RSS granulaires, de sorte qu'il est aisé de "
+"suivre les développements des groupes"
+
+#: ../../plugins/groups.rst:17
+msgid "Each group has its own URL and profile"
+msgstr "Chaque groupe dispose de sa propre URL et page de profil"
+
+#: ../../plugins/groups.rst:18
+msgid "Each group comes with a :doc:`file`, forum, pages and messageboard"
+msgstr ""
+"Chaque groupe dispose d'un répertoire de fichiers :doc:`file`, d'un forum, "
+"de pages et d'un panneau d'affichage"
+
+#: ../../plugins/index.rst:2
+msgid "Bundled plugins"
+msgstr "Plugins joints"
+
+#: ../../plugins/index.rst:4
+msgid ""
+"Elgg comes with a set of plugins. These provide the basic functionality for "
+"your social network."
+msgstr ""
+"Elgg est livré avec un jeu de plugins. Ils fournissent les fonctionnalités "
+"fondamentales pour votre réseau social"
+
+#: ../../plugins/index.rst:21
+msgid ""
+"The following plugins are also bundled with Elgg, but are not (yet) "
+"documented"
+msgstr ""
+"Les plugins suivants sont également livrés avec Elgg, mais ne sont pas "
+"(encore) documentés"
+
+#: ../../plugins/index.rst:23
+msgid "activity"
+msgstr "activity (activité)"
+
+#: ../../plugins/index.rst:24
+msgid "bookmarks"
+msgstr "signets"
+
+#: ../../plugins/index.rst:25
+msgid "ckeditor"
+msgstr "ckeditor"
+
+#: ../../plugins/index.rst:26
+msgid "custom_index"
+msgstr "custom_index (index personnalisé)"
+
+#: ../../plugins/index.rst:27
+msgid "developers"
+msgstr "developers (développeurs)"
+
+#: ../../plugins/index.rst:28
+msgid "discussions"
+msgstr "discussions"
+
+#: ../../plugins/index.rst:29
+msgid "embed"
+msgstr "embed"
+
+#: ../../plugins/index.rst:30
+msgid "externalpages"
+msgstr "externalpages"
+
+#: ../../plugins/index.rst:31
+msgid "friends"
+msgstr "friends (contacts)"
+
+#: ../../plugins/index.rst:32
+msgid "friends_collections"
+msgstr "friends_collections"
+
+#: ../../plugins/index.rst:33
+msgid "garbagecollector"
+msgstr "garbagecollector"
+
+#: ../../plugins/index.rst:34
+msgid "invitefriends"
+msgstr "invitefriends"
+
+#: ../../plugins/index.rst:35
+msgid "likes"
+msgstr "likes"
+
+#: ../../plugins/index.rst:36
+msgid "members"
+msgstr "members"
+
+#: ../../plugins/index.rst:37
+msgid "notifications"
+msgstr "notifications"
+
+#: ../../plugins/index.rst:38
+msgid "reportedcontent"
+msgstr "reportedcontent"
+
+#: ../../plugins/index.rst:39
+msgid "search"
+msgstr "search"
+
+#: ../../plugins/index.rst:40
+msgid "site_notifications"
+msgstr "site_notifications"
+
+#: ../../plugins/index.rst:41
+msgid "system_log"
+msgstr "system_log"
+
+#: ../../plugins/index.rst:42
+msgid "tagcloud"
+msgstr "tagcloud"
+
+#: ../../plugins/index.rst:43
+msgid "web_services"
+msgstr "web_services"
+
+#: ../../plugins/messageboard.rst:2
+msgid "Messageboard"
+msgstr "Messageboard"
+
+#: ../../plugins/messageboard.rst:9
+msgid "A sample messageboard placed on the profile"
+msgstr "Un exemple de panneau d'affichage placé sur le profil"
+
+#: ../../plugins/messageboard.rst:11
+msgid ""
+"The messageboard - similar to 'The Wall' in Facebook or a comment wall in "
+"other networks is a plugin that lets users put a messageboard widget on "
+"their profile. Other users can then post messages that will appear on the "
+"messageboard. You can then reply directly to any message and view the "
+"history between yourself and the person posting the message."
+msgstr ""
+"Le panneau d'affichage - similaire au 'Mur' de Facebook ou à un mur de "
+"commentaires dans d'autres réseaux - est un plugin qui permet aux membres de"
+" placer un widget panneau d'affichage sur leur profil. Les autres membres "
+"peuvent alors publier des messages qui vont apparaître sur ce panneau "
+"d'affichage. Vous pouvez ensuite répondre directement à n'importe quel "
+"message et voir l'historique entre vous et la personne qui a publié le "
+"message."
+
+#: ../../plugins/messages.rst:2
+msgid "Messages"
+msgstr "Messages"
+
+#: ../../plugins/messages.rst:9
+msgid "Message notification"
+msgstr "Notification des messages"
+
+#: ../../plugins/messages.rst:11
+msgid ""
+"Private messaging can be sent to users by clicking on their avatar or "
+"profile link, providing you have permission. Then, using the built in "
+":doc:`WYSIWYG editor </tutorials/wysiwyg>`, it is possible to format the "
+"message. Each user has their own inbox and sentbox. It is possible to be "
+"notified via email of new messages."
+msgstr ""
+"Des messages privés peuvent être envoyés aux memrbes en cliquant sur leur "
+"avatar ou le lien vers leur profil. Puis, en utilisant l':doc:`éditeur "
+"WYSIWYG </tutorials/wysiwyg>` natif, il est possible de formater le message."
+" Chaque membre dispose de sa propre boîte de réception et d'envoi. Il est "
+"possible d'être notifié par email des nouveaux messages."
+
+#: ../../plugins/messages.rst:13
+msgid ""
+"When users first login, they will be notified about any new message by the "
+"messages notification mechanism in their top toolbar."
+msgstr ""
+"Quand les membres s'identifient, il sont notifiés de tout nouveau message "
+"par le mécanisme de notification des messages dans leur barre d'outil "
+"supérieure."
+
+#: ../../plugins/pages.rst:2
+msgid "Pages"
+msgstr "Pages"
+
+#: ../../plugins/pages.rst:9
+msgid "An Elgg Page"
+msgstr "Une page Elgg"
+
+#: ../../plugins/pages.rst:11
+msgid ""
+"The pages plugin allows you to save and store hierarchically-organized pages"
+" of text, and restrict both reading and writing privileges to them. This "
+"means that you can collaboratively create a set of documents with a loose "
+"collection of people, participate in a writing process with a formal group, "
+"or simply use the functionality to write a document that only you can see, "
+"and only choose to share it once it's done. The easy navigation menu allows "
+"you to see the whole document structure from any page. You can create as "
+"many of these structures as you like; each individual page has its own "
+"access controls, so you can reveal portions of the structure while keeping "
+"others hidden. In keeping with all other elements in Elgg, you can add "
+"comments on a page, or search for pages by tag."
+msgstr ""
+"Le plugin pages permet d'enregistrer et de conserver d'une manière organisée"
+" et hiérarchisée des pages de texte, et d'en restreindre à la fois les accès"
+" en lecture et en écriture. Ceci signifie que vous pouvez créer "
+"collaborativement un ensemble de documents avec une liste de personnes "
+"choisies, participer à un processus d'écriture au sein d'un groupe "
+"formalisé, ou simplement utiliser cette fonctionnalité pour créer un "
+"document que vous seul pouvez voir, jusqu'à ce que vous choisissiez de le "
+"partager une fois terminé. Le menu de navigation simple vous permet de voir "
+"la structure de l'ensemble de documents depuis n'importe quelle page. Vous "
+"pouvez créer autant de ces structures que vous le souhaitez ; chaque page "
+"individuelle dispose de ses propres contrôles d'accès, de sorte que vous "
+"pouvez révéler des portions de la structure tout en conservant les autres "
+"invisibles. Dans la ligne des autres éléments dans Elgg, vous pouvez "
+"aisément ajouter des commentaires sur une page, ou rechercher des pages par "
+"tag."
+
+#: ../../plugins/pages.rst:15
+msgid "Usage"
+msgstr "Usage"
+
+#: ../../plugins/pages.rst:17
+msgid ""
+"Pages really come into their own in two areas, firstly as a way for users to"
+" build up things such as a resume, reflective documentation and so on. The "
+"second thing is in the area of collaboration, especially when in the context"
+" of groups. With the powerful access controls on both read and write, this "
+"plugin is ideal for collaborative document creation."
+msgstr ""
+"Les pages expriment vraiment leur potentiel dans deux domaines, d'abord "
+"comme moyen pour les utilisateurs de construire des choses telles qu'un CV, "
+"un portfolio, une documentation réflexive, et autres constructions de ce "
+"type. La seconde est dans le domaine de la collaboration, tout "
+"particulièrement dans le cadre d'un groupe. Avec les puissants outils de "
+"contrôle d'accès à la fois en lecture et en écriture, ce plugin est idéal "
+"pour la création collaborative de documents."
+
+#: ../../plugins/pages.rst:21
+msgid "Developers should note that there are actually 2 types of pages:"
+msgstr ""
+"Les développeurs devraient tenir compte du fait qu'il existe en fait 2 types"
+" de pages :"
+
+#: ../../plugins/pages.rst:23
+msgid "Top-level pages (with subtype ``page_top``)"
+msgstr "Pages racine (avec le sous-type ``page_top``)"
+
+#: ../../plugins/pages.rst:24
+msgid "Normal pages (with subtype ``page``)"
+msgstr "Pages normales (avec le sous-type ``page``)"
+
+#: ../../plugins/profile.rst:2
+msgid "Profile"
+msgstr "Profil"
+
+#: ../../plugins/profile.rst:9
+msgid "An Elgg profile"
+msgstr "Un profil Elgg"
+
+#: ../../plugins/profile.rst:11
+msgid ""
+"The profile plugin is bundled with both the full and core-only Elgg "
+"packages. The intention is that it can be disabled and replaced with another"
+" profile plugin if you wish. It provides a number of pieces of functionality"
+" which many consider fundamental to the concept of a social networking site,"
+" and is unique within the plugins because the profile icon it defines is "
+"referenced as standard from all over the system."
+msgstr ""
+"Le plugin profile est livré à la fois avec la version complète et noyau "
+"seulement d'Elgg. L'objectif est qu'il puisse être désactivé et remplacé par"
+" un autre plugin de profil si vous le souhaitez. Il fournit un certain "
+"nombre d'éléments de fonctionnalités que beaucoup considèrent comme "
+"fondamentales pour le concept d'un site de réseautage social, et est unique "
+"parmi les plugins parce que l'icône de profil qu'il définit est référencée "
+"comme un standard à travers l'ensemble du système."
+
+#: ../../plugins/profile.rst:15
+msgid "User details"
+msgstr "Informations utilisateur"
+
+#: ../../plugins/profile.rst:17
+msgid ""
+"This provides information about a user, which is configurable from within "
+"the plugin's start.php file. You can change the available profile fields "
+"form the admin panel. Each profile field has its own access restriction, so "
+"users can choose exactly who can see each individual element. Some of the "
+"fields contain tags (for example *skills*) limiting access to a field will "
+"also limit who can find you by that tag."
+msgstr ""
+"Ceci fournit des informations à propos d'un utilisateur, qui est "
+"configurable à partir du fichier start.php du plugin. Vous pouvez changer "
+"les champs de profil disponibles depuis le panneau d'administration. Chaque "
+"champ de profil dispose de son propre niveau d'accès, de sorte que les "
+"membres puissent choisir exactement qui peut voir quel élément précis. "
+"Certains des champs contiennent des tags (par exemple *compétences*) : "
+"restreindre l'accès à ce champ va également restreindre les personnes qui "
+"peuvent vous trouver via ce tag."
+
+#: ../../plugins/profile.rst:21
+msgid "User avatar"
+msgstr "Avatar utilisateur"
+
+#: ../../plugins/profile.rst:28
+msgid "The Elgg context menu"
+msgstr "Le menu contextuel Elgg"
+
+#: ../../plugins/profile.rst:30
+msgid ""
+"The user avatar represents a user (or a group) throughout the site. By "
+"default, this includes a context-sensitive menu that allows you to perform "
+"actions on the user it belongs to wherever you see their avatar. For "
+"example, you can add them as a friend, send an internal message, and more. "
+"Each plugin can add to this context menu, so its full contents will vary "
+"depending on the functionality active in the current Elgg site."
+msgstr ""
+"L'avatar utilisateur représente un utilisateur (ou un groupe) à travers le "
+"site. Par défaut, l'avatar intègre un menu contextuel sensitif qui vous "
+"permet d'effectuer des actions sur l'utilisateur dès lors que vous voyez son"
+" avatar. Par exemple vous pouvez l'ajouter comme contact, lui envoyer un "
+"message privé, et plus. Chaque plugin peut ajouter des entrées à ce menu "
+"contextuel, de sorte que son contenu final va beaucoup dépendre des "
+"fonctionnalités actives dans le site Elgg actuel."
+
+#: ../../plugins/profile.rst:33
+msgid "Notes for developers"
+msgstr "Notes pour les développeurs"
+
+#: ../../plugins/profile.rst:36
+msgid "Using a different profile icon"
+msgstr "Utiliser une icône de profil différente"
+
+#: ../../plugins/profile.rst:36
+msgid ""
+"To replace the profile icon, or provide more content, extend the "
+"``icon/user/default`` view."
+msgstr ""
+"Pour remplacer l'icône de profil, ou fournir plus de contenu, étendre la vue"
+" ``icon/user/default``."
+
+#: ../../plugins/profile.rst:43
+msgid "Adding to the context menu"
+msgstr "Ajouter des éléments au menu contextuel"
+
+#: ../../plugins/profile.rst:39
+msgid ""
+"The context menu can be expanded by registering a :ref:`plugin hook "
+"<design/events#plugin-hooks>` for 'register' 'menu:user_hover', the "
+"following sections have special meaning:"
+msgstr ""
+"Le menu contextuel peut être étendu en enregistrant un :ref:`hook de plugin "
+"<design/events#plugin-hooks>` pour 'register' 'menu:user_hover', les "
+"sections suivantes ont une signification spéciale :"
+
+#: ../../plugins/profile.rst:41
+msgid "**default** for non-active links (eg to read a blog)"
+msgstr "**default** pour les liens non actifs (par ex. pour lire un blog)"
+
+#: ../../plugins/profile.rst:42
+msgid "**admin** for links accessible by administrators only"
+msgstr ""
+"**admin** pour les liens accessibles seulement par les administrateurs"
+
+#: ../../plugins/profile.rst:44
+msgid ""
+"In each case, the user in question will be passed as ``$params['entity']``."
+msgstr ""
+"Dans tous les cas, l'utilisateur en question sera passé en tant que "
+"``$params['entity']``."
+
+#: ../../plugins/thewire.rst:2
+msgid "The Wire"
+msgstr "Le Fil"
+
+#: ../../plugins/thewire.rst:4
+msgid ""
+"Elgg wire plugin \"The Wire\" is Twitter-style microblogging plugin that "
+"allows users to post notes to the wire."
+msgstr ""
+"Le plugin de câble d'Elgg \"The Wire\" (Le Fil) est un plugin de micro-"
+"blogging à la Twitter, qui permet aux utilisateurs de publier des notes vers"
+" le fil."
+
+#: ../../plugins/uservalidationbyemail.rst:2
+msgid "User validation by e-mail"
+msgstr "Validation des comptes utilisateur via l'email"
+
+#: ../../plugins/uservalidationbyemail.rst:4
+msgid ""
+"The uservalidationbyemail plugin adds a step to the user registration "
+"process. After the user registered on the site, an e-mail is sent to their "
+"e-mail address in order to validate that the e-mail address belongs to the "
+"user. In the e-mail is an verification link, only after the user clicked on "
+"the link will the account of the user be able to login to the site."
+msgstr ""
+"Le plugin uservalidationbyemail ajoute une étape au processus d'inscription "
+"des utilisateurs. Après que l'utilisateur se soit enregistré sur le site, un"
+" email est envoyé à son adresse email afin de valider que cette adresse "
+"email appartient bien à l'utilisateur. L'utilisateur ne pourra se connecter "
+"qu'après avoir cliqué sur le lien de vérification contenu dans l'email."
+
+#: ../../plugins/uservalidationbyemail.rst:9
+msgid "The process for the user"
+msgstr "Déroulement pour l'utilisateur"
+
+#: ../../plugins/uservalidationbyemail.rst:11
+msgid ""
+"The user creates an account by going to the registration page of your site"
+msgstr ""
+"L'utilisateur crée un compte en se rendant sur la page d'inscription de "
+"votre site"
+
+#: ../../plugins/uservalidationbyemail.rst:12
+msgid ""
+"After the account is created the user lands on a page with instructions to "
+"check their e-mail account for the validation e-mail"
+msgstr ""
+"Une fois le compte créé l'utilisateur arrive sur une page qui indique de "
+"vérifier la présence de l'email de validation sa boîte de messagerie"
+
+#: ../../plugins/uservalidationbyemail.rst:13
+msgid "In the validation e-mail is a link to confirm their e-mail address"
+msgstr ""
+"Dans l'email de validation, un lien permet de confirmer son adresse email"
+
+#: ../../plugins/uservalidationbyemail.rst:14
+msgid "After clicking on the link, the account is validated"
+msgstr "Après avoir cliqué sur le lien, le compte est validé"
+
+#: ../../plugins/uservalidationbyemail.rst:15
+msgid "If possible the user gets logged in"
+msgstr "Si possible l'utilisateur est connecté"
+
+#: ../../plugins/uservalidationbyemail.rst:17
+msgid ""
+"If the user tries to login before validating their account an error is shown"
+" to indicate that the user needs to check their e-mail account. Also the "
+"validation e-mail is sent again."
+msgstr ""
+"Si l'utilisateur tente de s'identifier avant d'avoir validé son compte, une "
+"erreur indique que l'utilisateur doit d'abord vérifier sa boite mail. De "
+"plus, un nouveau mail de validation est envoyé."
+
+#: ../../plugins/uservalidationbyemail.rst:21
+msgid "Options for site administrators"
+msgstr "Options pour les administrateurs du site"
+
+#: ../../plugins/uservalidationbyemail.rst:23
+msgid ""
+"A site administrator can take some actions on unvalidated accounts. Under "
+"Administration -> Users -> Unvalidated is a list of unvalidated users. The "
+"administrator can manualy validate or delete the user. Also the option to "
+"resend the validation e-mail is present."
+msgstr ""
+"Un administrateur du site peut effectuer certaines actions sur les comptes "
+"non validés. Une liste des membres non validés se trouve dans Administration"
+" -> Utilisateurs -> Non validés. L'administrateur peut manuellement valider "
+"ou supprimer l'utilisateur. Il existe également une option pour renvoyer "
+"l'email de validation."

@@ -1780,7 +1780,7 @@ function elgg_views_boot() {
 	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_js('elgg');
 
-	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/font-awesome.css'));
+	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
 	elgg_load_css('font-awesome');
 
 	elgg_register_css('elgg', elgg_get_simplecache_url('elgg.css'));
@@ -1836,7 +1836,7 @@ function elgg_views_boot() {
 			'small' => ['w' => 40, 'h' => 40, 'square' => true, 'upscale' => true],
 			'medium' => ['w' => 100, 'h' => 100, 'square' => true, 'upscale' => true],
 			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
-			'master' => ['w' => 2048, 'h' => 2048, 'square' => false, 'upscale' => false],
+			'master' => ['w' => 2048, 'h' => 2048, 'square' => false, 'upscale' => false, 'crop' => false],
 		];
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}

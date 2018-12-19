@@ -91,6 +91,14 @@ class EntityIconService {
 		if (empty($input)) {
 			return false;
 		}
+		
+		// auto detect cropping coordinates
+		if (empty($coords)) {
+			$auto_coords = $this->detectCroppingCoordinates();
+			if (!empty($auto_coords)) {
+				$coords = $auto_coords;
+			}
+		}
 
 		$tmp_filename = time() . $input->getClientOriginalName();
 		$tmp = new ElggFile();
@@ -304,18 +312,15 @@ class EntityIconService {
 			}
 			
 			$square = (bool) elgg_extract('square', $opts);
-
-			if ($type === 'icon' && $cropping_mode) {
-				$cropping_ratio = ($x2 - $x1) / ($y2 - $y1);
-				if ($cropping_ratio == 1 && $square === false) {
-					// Do not crop out non-square icons if cropping coordinates are a square
-					$coords = [
-						'x1' => 0,
-						'y1' => 0,
-						'x2' => 0,
-						'y2' => 0,
-					];
-				}
+			
+			// check if the icon config allows cropping
+			if (!(bool) elgg_extract('crop', $opts, true)) {
+				$coords = [
+					'x1' => 0,
+					'y1' => 0,
+					'x2' => 0,
+					'y2' => 0,
+				];
 			}
 
 			$icon = $this->getIcon($entity, $size, $type, false);
@@ -434,8 +439,10 @@ class EntityIconService {
 		], true);
 
 		if ($delete === false) {
-			return;
+			return false;
 		}
+		
+		$result = true;
 
 		$sizes = array_keys($this->getSizes($entity->getType(), $entity->getSubtype(), $type));
 		foreach ($sizes as $size) {
@@ -444,7 +451,7 @@ class EntityIconService {
 			}
 			
 			$icon = $this->getIcon($entity, $size, $type, false);
-			$icon->delete();
+			$result &= $icon->delete();
 		}
 
 		if ($type == 'icon') {
@@ -453,7 +460,11 @@ class EntityIconService {
 			unset($entity->y1);
 			unset($entity->x2);
 			unset($entity->y2);
+		} else {
+			unset($entity->{"{$type}_coords"});
 		}
+		
+		return $result;
 	}
 
 	/**
@@ -596,7 +607,12 @@ class EntityIconService {
 			'h' => 2048,
 			'square' => false,
 			'upscale' => false,
+			'crop' => false,
 		]);
+		
+		if (!isset($sizes['master']['crop'])) {
+			$sizes['master']['crop'] = false;
+		}
 		
 		return $sizes;
 	}
@@ -668,6 +684,38 @@ class EntityIconService {
 			->setMaxAge(86400);
 
 		return $response;
+	}
+	
+	/**
+	 * Automagicly detect cropping coordinates
+	 *
+	 * Based in the input names x1, x2, y1 and y2
+	 *
+	 * @return false|array
+	 */
+	protected function detectCroppingCoordinates() {
+		
+		$auto_coords = [
+			'x1' => get_input('x1'),
+			'x2' => get_input('x2'),
+			'y1' => get_input('y1'),
+			'y2' => get_input('y2'),
+		];
+		
+		$auto_coords = array_filter($auto_coords, function($value) {
+			return !elgg_is_empty($value) && is_numeric($value);
+		});
+		
+		if (count($auto_coords) !== 4) {
+			return false;
+		}
+		
+		// make ints
+		array_walk($auto_coords, function (&$value) {
+			$value = (int) $value;
+		});
+		
+		return $auto_coords;
 	}
 
 }

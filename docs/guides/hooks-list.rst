@@ -863,6 +863,7 @@ Other
      * ``h`` - Height of the image in pixels
      * ``square`` - Should the aspect ratio be a square (true/false)
      * ``upscale`` - Should the image be upscaled in case it is smaller than the given width and height (true/false)
+     * ``crop`` - Is cropping allowed on this image size (true/false, default: true)
 
 	If the configuration array for an image size is empty, the image will be
 	saved as an exact copy of the source without resizing or cropping.

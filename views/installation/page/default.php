@@ -45,9 +45,9 @@ $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 			</div>
 			<footer class="elgg-page-footer" role="contentinfo">
 				<ul class="elgg-menu elgg-menu-footer">
-					<li><a href="http://learn.elgg.org/en/2.x/intro/install.html" target="_blank">Install instructions</a></li>
-					<li><a href="http://learn.elgg.org/en/2.x/intro/install.html#troubleshooting" target="_blank">Install troubleshooting</a></li>
-					<li><a href="http://community.elgg.org/discussion/all" target="_blank">Elgg community forums</a></li>
+					<li><a href="http://learn.elgg.org/en/stable/intro/install.html" target="_blank">Install instructions</a></li>
+					<li><a href="http://learn.elgg.org/en/stable/intro/install.html#troubleshooting" target="_blank">Install troubleshooting</a></li>
+					<li><a href="https://elgg.org/discussion/all" target="_blank">Elgg community forums</a></li>
 				</ul>
 			</footer>
 		</div>

@@ -92,7 +92,11 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 function blog_archive_menu_setup($hook, $type, $return, $params) {
 
 	$page_owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
-	$page = elgg_extract('page', $params);
+	$page = elgg_extract('page', $params, 'all');
+	if (!in_array($page, ['all', 'owner', 'friends', 'group'])) {
+		// only generate archive menu for supported pages
+		return;
+	}
 	
 	$options = [
 		'type' => 'object',

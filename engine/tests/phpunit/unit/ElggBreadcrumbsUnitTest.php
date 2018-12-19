@@ -20,7 +20,7 @@ class ElggBreadcrumbsUnitTest extends \Elgg\IntegratedUnitTestCase {
 		elgg_push_breadcrumb('title 2', 'path2');
 
 		$this->assertEquals([
-			['text' => 'title 1', 'href' => null, 'name' => 0],
+			['text' => 'title 1', 'href' => false, 'name' => 0],
 			['text' => 'title 2', 'href' => 'path2', 'name' => 1],
 		], elgg_get_breadcrumbs());
 	}
@@ -36,10 +36,10 @@ class ElggBreadcrumbsUnitTest extends \Elgg\IntegratedUnitTestCase {
 		$this->assertEquals(['text' => 'title 2', 'href' => 'path2'], elgg_pop_breadcrumb());
 
 		$this->assertEquals([
-			['text' => 'title 1', 'href' => null, 'name' => 0],
+			['text' => 'title 1', 'href' => false, 'name' => 0],
 		], elgg_get_breadcrumbs());
 
-		$this->assertEquals(['text' => 'title 1', 'href' => null], elgg_pop_breadcrumb());
+		$this->assertEquals(['text' => 'title 1', 'href' => false], elgg_pop_breadcrumb());
 
 		$this->assertEquals([], elgg_get_breadcrumbs());
 
@@ -54,7 +54,7 @@ class ElggBreadcrumbsUnitTest extends \Elgg\IntegratedUnitTestCase {
 		$this->assertEquals([
 			[
 				'text' => str_repeat('abcd ', 100),
-				'href' => null,
+				'href' => false,
 				'name' => 0,
 			],
 		], elgg_get_breadcrumbs());
@@ -66,7 +66,7 @@ class ElggBreadcrumbsUnitTest extends \Elgg\IntegratedUnitTestCase {
 		$this->assertEquals([
 			[
 				'text' => str_repeat('abcd ', 100),
-				'href' => null,
+				'href' => false,
 				'name' => 0,
 			]
 		], elgg_get_breadcrumbs());

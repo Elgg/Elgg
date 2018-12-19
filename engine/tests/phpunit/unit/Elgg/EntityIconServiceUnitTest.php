@@ -117,6 +117,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 				'h' => 2048,
 				'square' => false,
 				'upscale' => false,
+				'crop' => false,
 			],
 		];
 	}
