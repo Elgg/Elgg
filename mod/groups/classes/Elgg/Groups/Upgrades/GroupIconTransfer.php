@@ -34,7 +34,7 @@ class GroupIconTransfer implements AsynchronousUpgrade {
 	 * @see \Elgg\Upgrade\Batch::shouldBeSkipped()
 	 */
 	public function shouldBeSkipped() {
-		return !empty($this->countItems());
+		return empty($this->countItems());
 	}
 
 	/**
