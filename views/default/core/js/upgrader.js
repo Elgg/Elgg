@@ -11,6 +11,7 @@ define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 	var spinner = require('elgg/spinner');
+	var popup = require('elgg/popup');
 
 	var UNKNOWN_COUNT = -1;
 	var upgrades = $('.elgg-item-object-elgg_upgrade');
@@ -46,6 +47,8 @@ define(function(require) {
 		if ($('.elgg-item-object-elgg_upgrade').length) {
 			$('#elgg-upgrades-run').removeClass('hidden').click(run);
 		}
+		
+		$(document).on('click', '.elgg-menu-item-run-upgrade > a', runSingle);
 
 		upgrades.each(function(key, value) {
 			// Initialize progressbar
@@ -70,11 +73,39 @@ define(function(require) {
 
 		return false;
 	}
+	
+	/**
+	 * Run a single upgrade
+	 *
+	 * @param {Object} e Event object
+	 */
+	function runSingle(e) {
+		var guid = $(this).data().guid;
+		
+		if (!$('#elgg-object-' + guid).length) {
+			return;
+		}
+		
+		spinner.start();
+		upgrade = $('#elgg-object-' + guid);
+		
+		runUpgrade(false);
+		
+		popup.close();
+	}
 
 	/**
 	 * Takes care of processing a single upgrade in multiple batches
+	 *
+	 * @param bool advanceToNextWhenDone when the upgrade is done shoul it continue to the next available
 	 */
-	function runUpgrade() {
+	function runUpgrade(advanceToNextWhenDone) {
+		
+		if (typeof advanceToNextWhenDone !== 'boolean') {
+			// IE doesn't support default function params
+			advanceToNextWhenDone = true;
+		}
+		
 		upgrade = $(upgrade);
 		progressbar = upgrade.find('.elgg-progressbar');
 		counter = upgrade.find('.upgrade-counter');
@@ -99,13 +130,21 @@ define(function(require) {
 		upgradeStartTime = new Date().getTime();
 		percentage = 0;
 
-		processBatch();
+		processBatch(advanceToNextWhenDone);
 	}
 
 	/**
 	 * Takes care of upgrading a single batch of items
+	 *
+	 * @param bool advanceToNextWhenDone when the upgrade is done shoul it continue to the next available
 	 */
-	function processBatch() {
+	function processBatch(advanceToNextWhenDone) {
+		
+		if (typeof advanceToNextWhenDone !== 'boolean') {
+			// IE doesn't support default function params
+			advanceToNextWhenDone = true;
+		}
+		
 		var options = {
 			data: {guid: guid},
 			dataType: 'json'
@@ -186,16 +225,21 @@ define(function(require) {
 				numSuccess = numError = numProcessed = percentage = 0;
 				messages = [];
 
-				// Get next upgrade
-				upgrade = upgrade.next();
+				if (advanceToNextWhenDone) {
+					// Get next upgrade
+					upgrade = upgrade.next();
+				} else {
+					upgrade = '';
+				}
 
 				if (upgrade.length) {
 					// Continue to next upgrade
-					runUpgrade();
+					runUpgrade(advanceToNextWhenDone);
 				} else {
 					spinner.stop();
 					$('#upgrade-finished').removeClass('hidden');
 				}
+				
 				return;
 			}
 
@@ -207,7 +251,7 @@ define(function(require) {
 			}
 
 			// Start next upgrade call
-			processBatch();
+			processBatch(advanceToNextWhenDone);
 		};
 
 		// We use post() instead of action() so we can catch error messages
