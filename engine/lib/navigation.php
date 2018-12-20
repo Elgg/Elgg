@@ -1001,10 +1001,6 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 	if (!_elgg_has_rss_link()) {
 		return;
 	}
-	
-	if (_elgg_config()->disable_rss) {
-		return;
-	}
 
 	$return[] = ElggMenuItem::factory([
 		'name' => 'rss',

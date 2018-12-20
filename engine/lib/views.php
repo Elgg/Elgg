@@ -1599,7 +1599,7 @@ function elgg_unregister_rss_link() {
  * @access private
  */
 function _elgg_has_rss_link() {
-	if (!_elgg_config()->disable_rss) {
+	if (_elgg_config()->disable_rss) {
 		return false;
 	}
 
