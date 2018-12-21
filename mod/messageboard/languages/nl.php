@@ -34,13 +34,16 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Er is een nieuwe reactie op een bericht!',
-	'messageboard:email:body' => "Er is een nieuw bericht in je berichtenbox van %s
+	'messageboard:email:body' => "Er is een nieuw bericht achtergelaten door %s.
 
-Bericht:
+Het bericht is:
 
 %s
 
 Om je berichtenbox te bekijken, klik hier:
+%s
+
+Om naar het profiel van %s te gaan, klik hier:
 %s",
 
 	/**

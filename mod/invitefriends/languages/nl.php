@@ -20,15 +20,15 @@ return array(
 
 Ik wil je uitnodigen om lid te worden van mijn netwerk op %s.',
 
-	'invitefriends:email' => 'Je bent uitgenodigd om lid te worden van %s door %s. 
+	'invitefriends:email' => 'Je bent uitgenodigd om lid te worden van %s door %s.
 
-Bekijk het bijgesloten bericht:
+Er is de volgende tekst toegevoegd aan de uitnodiging:
 
 %s
 
-Om lid te worden gebruik de volgende link:
+Om lid te worden, klik op de volgende link:
 %s
 
-Je wordt automatisch vrienden als je een account aanmaakt.',
+Je zult automatisch vrienden worden als je een account aanmaakt.',
 	
 );

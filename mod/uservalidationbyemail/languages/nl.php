@@ -1,15 +1,15 @@
 <?php
 return array(
 	'email:validate:subject' => "%s, bevestig alsjeblieft je e-mailadres voor %s!",
-	'email:validate:body' => "Beste %s
+	'email:validate:body' => "Beste %s,
 
-Voordat je gebruik kunt maken van %s moet je je e-mail adres bevestigen.
+Voordat je gebruik kunt maken van %s, moet je je e-mail adres bevestigen.
 
-Bevestig je e-mail adres door op onderstaande link te klikken:
+Om je e-mail adres te bevestigen klik op onderstaande link:
 
 %s
 
-Indien je niet op de link kunt klikken, kopieer en plak het handmatig in je browser.
+Indien je niet op de link kunt klikken, kopieer en plak deze handmatig in je browser.
 
 %s
 %s",
