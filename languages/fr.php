@@ -894,6 +894,10 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'icon:size:medium' => "Moyen",
 	'icon:size:large' => "Grand",
 	'icon:size:master' => "Très grand",
+	
+	'entity:edit:icon:file:label' => "Upload a new icon",
+	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
+	'entity:edit:icon:remove:label' => "Remove icon",
 
 /**
  * Generic action words

@@ -55,19 +55,18 @@ return array(
 
 	'file:notify:summary' => 'Nieuw bestand met de titel %s',
 	'file:notify:subject' => 'Nieuw bestand: %s',
-	'file:notify:body' =>
-'%s heeft een nieuw bestand geüpload: %s
+	'file:notify:body' => '%s heeft een nieuw bestand geüpload: %s
 
 %s
 
-Bekijk en reageer op het bestand:
+Om het bestand te bekijken en te reageren, klik hier:
 %s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Je bestand is succesvol opgeslagen.",
+	'file:saved' => "Het bestand is succesvol opgeslagen",
 	'entity:delete:object:file:success' => "Het bestand is succesvol verwijderd",
 
 	/**

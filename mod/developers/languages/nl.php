@@ -1,11 +1,12 @@
 <?php
-return [
+return array(
 	// menu
 	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspecteer',
 	'admin:inspect' => 'Inspecteer',
 	'admin:develop_tools:unit_tests' => 'Unittesten',
+	'admin:develop_tools:entity_explorer' => 'Entiteiten Verkenner',
 	'admin:developers' => 'Ontwikkelaars',
 	'admin:developers:settings' => 'Instellingen',
 
@@ -26,18 +27,41 @@ return [
 	'developers:label:show_modules' => "Toon de geladen AMD modules in de console",
 	'developers:help:show_modules' => "Streamt geladen modules en waarden naar jouw JavaScript console.",
 	'developers:label:wrap_views' => "Omcirkel views",
-	'developers:help:wrap_views' => "Dit omcirkelt bijna alle views met HTML-commentaar. Handig om erachter te komen uit welke view een stuk HTML komt.",
+	'developers:help:wrap_views' => "Dit omwikkeld alle views met een HTML comment block. Dit kan je helpen indien je wilt weten welke view de HTML heeft gegenereerd.
+
+Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_wrap_views() functie for meer informatie.",
 	'developers:label:log_events' => "Log-events en plugin-hooks",
 	'developers:help:log_events' => "Schrijf events- en plugin-hook naar de log. Waarschuwing: dit zijn er veel per pagina.",
 	'developers:label:show_gear' => "Gebruik %s buiten de admin sectie",
 	'developers:help:show_gear' => "Een icoon onderaan rechts van het venster dat administrators toegang geeft tot ontwikkelaars instellingen en links.",
+	'developers:label:block_email' => "Blokkeer alle uitgaande emails",
+	'developers:help:block_email' => "Het is mogelijk om alle uitgaande emails naar reguliere gebruikers of naar alle gebruikers",
+	'developers:label:forward_email' => "Stuur alle uitgaande emails naar één adres",
+	'developers:help:forward_email' => "Alle uitgaande emails zullen naar het geconfigureerde emailadres worden verzonden",
+	'developers:label:enable_error_log' => "Schakel error logging in",
+	'developers:help:enable_error_log' => "Maak een eigen logbestand aan met fouten en berichten welke gelogd worden via error_log() gebaseerd op je loglevel instellingen. Deze log is zichtbaar via de beheer pagina.",
+
 	'developers:label:submit' => "Opslaan en cache wissen",
 
+	'developers:block_email:forward' => 'Stuur alle emails door',
+	'developers:block_email:users' => 'Enkel voor gewone gebruikers',
+	'developers:block_email:all' => 'Beheerders en gewone gebruikers',
+	
 	'developers:debug:off' => 'Uit',
 	'developers:debug:error' => 'Fout',
 	'developers:debug:warning' => 'Waarschuwing',
 	'developers:debug:notice' => 'Bericht',
 	'developers:debug:info' => 'Informatie',
+	
+	// entity explorer
+	'developers:entity_explorer:help' => 'Bekijk informatie van entiteiten en voor enkele simpele acties uit',
+	'developers:entity_explorer:guid:label' => 'Voer de GUID in van de entiteit die je wilt inspecteren',
+	'developers:entity_explorer:info' => 'Entiteit Informatie',
+	'developers:entity_explorer:info:attributes' => 'Attributen',
+	'developers:entity_explorer:info:metadata' => 'Metadata',
+	'developers:entity_explorer:info:relationships' => 'Relationships',
+	'developers:entity_explorer:info:private_settings' => 'Private Settings',
+	'developers:entity_explorer:delete_entity' => 'Verwijder deze entiteit',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecteer de configuratie van het Elgg framework.',
@@ -47,6 +71,7 @@ return [
 	'developers:inspect:pluginhooks' => 'Plugin Hooks',
 	'developers:inspect:priority' => 'Prioriteit',
 	'developers:inspect:simplecache' => 'Simple Cache',
+	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Views',
 	'developers:inspect:views:all_filtered' => "<b>Opmerking!</b>Alle view in/output word gefilterd door deze Plugin Hooks:",
 	'developers:inspect:views:input_filtered' => "(input gefilterd op plugin hook: %s)",
@@ -55,7 +80,19 @@ return [
 	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functies',
-	'developers:inspect:file_location' => 'Pad van het bestand vanaf de Elgg root map',
+	'developers:inspect:file_location' => 'Bestandslocatie of controller',
+	'developers:inspect:route' => 'Route Naam',
+	'developers:inspect:path' => 'Path Patroon',
+	'developers:inspect:resource' => 'Resource View',
+	'developers:inspect:handler' => 'Handler',
+	'developers:inspect:controller' => 'Controller',
+	'developers:inspect:file' => 'Bestand',
+	'developers:inspect:middleware' => 'Bestand',
+	'developers:inspect:handler_type' => 'Afhandeling door',
+	'developers:inspect:services' => 'Services',
+	'developers:inspect:service:name' => 'Naam',
+	'developers:inspect:service:path' => 'Definitie',
+	'developers:inspect:service:class' => 'Class',
 
 	// event logging
 	'developers:request_stats' => "Request Statistieken (bevat niet het shutdown event)",
@@ -80,13 +117,11 @@ return [
 
 	'theme_sandbox:icons:blurb' => 'Gebruik <em>elgg_view_icon($name)</em> of de klasse <em>elgg-icon-$name</em> om iconen weer te geven.',
 
-	// unit tests
-	'developers:unit_tests:description' => 'Elgg bevat unit- en integratietesten voor het detecteren van bugs in de core classes en functies.',
-	'developers:unit_tests:warning' => 'Waarschuwing: doe deze testen niet op een productiesite! Deze kunnen de database beschadigen.',
-	'developers:unit_tests:run' => 'Uitvoeren',
-
 	// status messages
 	'developers:settings:success' => 'Instellingen opgeslagen',
 
 	'developers:amd' => 'AMD',
-];
+
+	'admin:develop_tools:error_log' => 'Fouten logboek',
+	'developers:logs:empty' => 'Foutenlogboek is leeg',
+);

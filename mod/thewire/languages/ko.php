@@ -22,6 +22,8 @@ return array(
 	'thewire:previous:help' => "지난 글 보기",
 	'thewire:hide:help' => "지난글 감추기",
 
+	'thewire:form:body:placeholder' => "What's happening?",
+	
 	/**
 	 * The wire river
 	 */

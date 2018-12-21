@@ -68,7 +68,7 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 	'install:database:help:dbprefix' => "Het voorvoegsel dat voor alle tabellen van Elgg gebruikt wordt (meestal elgg_)",
 	'install:database:help:timezone' => "De standaard tijdzone waarin de site zal werken",
 
-	'install:settings:instructions' => 'We hebben wat informatie nodig over de site terwijl we Elgg configureren. Als je nog geen <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">datamap hebt aangemaakt</a> voor Elgg, moet je dit nu doen.',
+	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => 'Sitenaam',
 	'install:settings:label:siteemail' => 'Site e-mailadres',
