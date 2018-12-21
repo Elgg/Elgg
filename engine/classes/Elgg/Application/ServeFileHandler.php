@@ -63,6 +63,10 @@ class ServeFileHandler {
 		if ($expires && $expires < time()) {
 			return $response->setStatusCode(403)->setContent('URL has expired');
 		}
+		
+		// revert spaces from elgg_normalize_url()
+		// not using urldecode because it could replace to much
+		$path_from_dataroot = str_replace('%20', ' ', $path_from_dataroot);
 
 		$hmac_data = [
 			'expires' => (int) $expires,
@@ -78,7 +82,7 @@ class ServeFileHandler {
 
 		$hmac = $this->hmac->getHmac($hmac_data);
 		if (!$hmac->matchesToken($mac)) {
-			return $response->setStatusCode(403)->setContent('HMAC mistmatch');
+			return $response->setStatusCode(403)->setContent('HMAC mismatch');
 		}
 
 		// Path may have been encoded to avoid problems with special chars in URLs
