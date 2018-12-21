@@ -495,6 +495,7 @@ class UpgradeService {
 		$upgrades = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => 'elgg_upgrade',
+			'private_setting_name' => 'class', // filters old upgrades
 			'private_setting_name_value_pairs' => [
 				'name' => 'is_completed',
 				'value' => true,
