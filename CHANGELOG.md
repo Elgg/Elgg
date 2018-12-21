@@ -1,3 +1,15 @@
+<a name="2.3.10"></a>
+### 2.3.10  (2018-12-21)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Bug Fixes
+
+* **js:** input datepicker can be cleared using delete or backspace ([54b76928](https://github.com/Elgg/Elgg/commit/54b769286745e5e6fb0d5255645eab66144c6cc9))
+
+
 <a name="2.3.9"></a>
 ### 2.3.9  (2018-11-14)
 
