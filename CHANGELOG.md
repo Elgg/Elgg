@@ -842,6 +842,19 @@ var `$DEFAULT_FILE_STORE`.
  ([618c79d3](https://github.com/Elgg/Elgg/commit/618c79d301eda1b265441b14f3bfbda2235ee3fd))
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
 
+
+<a name="2.3.10"></a>
+### 2.3.10  (2018-12-21)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+
+#### Bug Fixes
+
+* **js:** input datepicker can be cleared using delete or backspace ([54b76928](https://github.com/Elgg/Elgg/commit/54b769286745e5e6fb0d5255645eab66144c6cc9))
+
+
 <a name="2.3.9"></a>
 ### 2.3.9  (2018-11-14)
 
