@@ -10,6 +10,7 @@ define(function (require) {
 	var toggle = {
 
 		init: function () {
+			// handles clicking on a menu item that has toggleable childmenu
 			$(document).on('click', '.elgg-menu-item-has-toggle > a', function (e) {
 
 				e.preventDefault();
@@ -31,6 +32,21 @@ define(function (require) {
 						$trigger.parent().removeClass('elgg-state-selected');
 					}
 				});
+			});
+			
+			// if an anchor also has its own link the text acts as the link, the before pseudo element handles the toggle 
+			$(document).on('click', '.elgg-menu-item-has-toggle > a > .elgg-anchor-label', function (e) {
+				var $anchor = $(this).closest('a');
+				var href = $anchor.attr('href');
+				
+				if ($anchor.hasClass('elgg-non-link') || !href) {
+					return;
+				}
+				
+				document.location = href;
+				
+				e.preventDefault();
+				e.stopImmediatePropagation();
 			});
 
 			toggle.init = elgg.nullFunction;
