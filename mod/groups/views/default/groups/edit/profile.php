@@ -21,6 +21,8 @@ echo elgg_view_field([
 
 echo elgg_view('entity/edit/icon', [
 	'entity' => elgg_extract('entity', $vars),
+	'entity_type' => 'group',
+	'entity_subtype' => 'group',
 ]);
 
 // show the configured group profile fields
