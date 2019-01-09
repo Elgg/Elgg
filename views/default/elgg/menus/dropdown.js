@@ -50,7 +50,7 @@ define(function (require) {
 				popup.open($trigger, $target, position);
 			});
 			
-			// if an anchor also has its own link the text acts as the link, the before pseudo element handles the toggle 
+			// if an anchor also has its own link the text acts as the link, the before pseudo element handles the toggle
 			$(document).on('click', '.elgg-menu-item-has-dropdown > a > .elgg-anchor-label', function (e) {
 				var $anchor = $(this).closest('a');
 				var href = $anchor.attr('href');

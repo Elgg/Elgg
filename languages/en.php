@@ -962,6 +962,7 @@ These changes will only affect new users on the site.',
 	'remove' => 'Remove',
 	'revert' => 'Revert',
 	'validate' => 'Validate',
+	'read_more' => 'Read more',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
