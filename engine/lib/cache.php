@@ -276,7 +276,7 @@ function _elgg_symlink_cache() {
 
 	if (!is_dir($simplecache_path)) {
 		// Views simplecache directory has not yet been created
-		mkdir($simplecache_path, 0700, true);
+		mkdir($simplecache_path, 0755, true);
 	}
 
 	symlink($simplecache_path, $symlink_path);
