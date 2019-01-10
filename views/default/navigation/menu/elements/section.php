@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Menu group
  *
@@ -10,7 +9,11 @@
  * @uses $vars['item_class']           Additional CSS class for each menu item
  * @uses $vars['show_section_headers'] Do we show headers for each section
  */
+
 $items = elgg_extract('items', $vars, []);
+if (empty($items) || !is_array($items)) {
+	return;
+}
 unset($vars['items']);
 
 $headers = elgg_extract('show_section_headers', $vars, false);
@@ -29,18 +32,15 @@ $vars['data-menu-section'] = $section;
 if ($headers) {
 	echo elgg_format_element('h2', [
 		'class' => 'elgg-menu-section-header',
-			], elgg_echo("menu:$name:header:$section"));
+	], elgg_echo("menu:$name:header:$section"));
 }
 
-$lis = '';
-
-if (is_array($items)) {
-	foreach ($items as $menu_item) {
-		$lis .= elgg_view('navigation/menu/elements/item', [
-			'item' => $menu_item,
-			'item_class' => $item_class,
-		]);
-	}
+$lis = [];
+foreach ($items as $menu_item) {
+	$lis[] = elgg_view('navigation/menu/elements/item', [
+		'item' => $menu_item,
+		'item_class' => $item_class,
+	]);
 }
 
-echo elgg_format_element('ul', $vars, $lis);
+echo elgg_format_element('ul', $vars, implode(PHP_EOL, $lis));
