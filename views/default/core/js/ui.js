@@ -103,7 +103,7 @@ elgg.ui.initHoverMenu = function(parent) {
 		}
 		
 		require(['elgg/Ajax'], function(Ajax) {
-			var ajax = new Ajax(false);
+			var ajax = new Ajax();
 			ajax.view('navigation/menu/user_hover/contents', {
 				data: $ul.data('elggMenuData'),
 				success: function(data) {
