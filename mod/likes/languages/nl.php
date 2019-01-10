@@ -20,19 +20,18 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s vindt je item "%s" leuk',
 	'likes:notifications:body' =>
-'Hi %1$s,
+'Beste %1$s,
 
-%2$s likes your post "%3$s" on %4$s
+%2$s vond je item "%3$s" op %4$s leuk.
 
-See your original post here:
-
+Om naar je item te gaan, klik hier:
 %5$s
 
-or view %2$s\'s profile here:
+of bekijk %2$s\'s profiel hier:
 
 %6$s
 
-Thanks,
+Bedankt,
 %4$s',
 	'likes:upgrade:2017120700:title' => "Publieke Likes annotaties",
 	'likes:upgrade:2017120700:description' => "Dit update het toegangsniveau van alle likes annotaties naar publiek",

@@ -892,6 +892,10 @@ To go to the site, click here:
 	'icon:size:medium' => "中",
 	'icon:size:large' => "大",
 	'icon:size:master' => "超大",
+	
+	'entity:edit:icon:file:label' => "Upload a new icon",
+	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
+	'entity:edit:icon:remove:label' => "Remove icon",
 
 /**
  * Generic action words

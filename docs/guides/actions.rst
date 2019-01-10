@@ -381,6 +381,8 @@ This view shows a file input for uploading a new icon for the entity, an thumbna
 The view supports some variables to control the output
 
 * ``entity`` - the entity to add/remove the icon for. If provided based on this entity the thumbnail and remove option wil be shown
+* ``entity_type`` - the entity type for which the icon will be uploaded. Plugins could find this usefull, maybe to validate icon sizes
+* ``entity_subtype`` - the entity subtype for which the icon will be uploaded. Plugins could find this usefull, maybe to validate icon sizes
 * ``icon_type`` - the type of the icon (default: icon)
 * ``name`` - name of the input/file (default: icon)
 * ``remove_name`` - name of the remove icon toggle (default: $vars['name'] . '_remove')

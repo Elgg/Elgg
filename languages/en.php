@@ -487,12 +487,17 @@ return array(
 	
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
+	'admin:upgrades:finished' => 'Completed',
+	'admin:upgrades:menu:pending' => 'Pending upgrades',
+	'admin:upgrades:menu:completed' => 'Completed upgrades',
+	'admin:upgrades:menu:run_single' => 'Run this upgrade',
 	'admin:upgrades:run' => 'Run upgrades now',
 	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
 	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
 	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
 	'admin:upgrades:failed' => 'Upgrade "%s" failed',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -957,6 +962,7 @@ These changes will only affect new users on the site.',
 	'remove' => 'Remove',
 	'revert' => 'Revert',
 	'validate' => 'Validate',
+	'read_more' => 'Read more',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
@@ -1293,7 +1299,9 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 	'upgrade:error_count' => 'Errors: %s',
 	'upgrade:finished' => 'Upgrade finished',
 	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
-
+	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:count_items' => '%d items to upgrade',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
 	

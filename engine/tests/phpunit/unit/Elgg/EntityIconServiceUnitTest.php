@@ -113,8 +113,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	public static function getDefaultIconSizes() {
 		return [
 			'master' => [
-				'w' => 2048,
-				'h' => 2048,
+				'w' => 10240,
+				'h' => 10240,
 				'square' => false,
 				'upscale' => false,
 				'crop' => false,

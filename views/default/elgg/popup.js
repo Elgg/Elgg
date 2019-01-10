@@ -127,6 +127,11 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 
 			if (!$trigger.is('.elgg-popup-inline')) {
 				$target.appendTo('body');
+
+				// when a popup is absolutely positioned, close the popup on scroll
+				$(document).one('scroll', function() {
+					popup.close();
+				});
 			}
 			
 			// need to do a double position because of positioning issues during fadeIn() in Opera

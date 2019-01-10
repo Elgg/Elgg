@@ -18,7 +18,7 @@ return [
 	'admin/site/update_basic' => ['access' => 'admin'],
 	'admin/site/update_advanced' => ['access' => 'admin'],
 	'admin/upgrade' => ['access' => 'admin'],
-	'admin/upgrades/upgrade_database_guid_columns' => ['access' => 'admin'],
+	'admin/upgrade/reset' => ['access' => 'admin'],
 	'admin/user/ban' => ['access' => 'admin'],
 	'admin/user/bulk/delete' => ['access' => 'admin'],
 	'admin/user/bulk/validate' => ['access' => 'admin'],

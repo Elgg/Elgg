@@ -22,6 +22,8 @@ return array(
 	'thewire:previous:help' => "Bekijk vorige bericht",
 	'thewire:hide:help' => "Verberg vorige bericht",
 
+	'thewire:form:body:placeholder' => "Wat gebeurt er?",
+	
 	/**
 	 * The wire river
 	 */

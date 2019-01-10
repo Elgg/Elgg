@@ -266,8 +266,10 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 	
 	if (elgg_language_key_exists("$name:$entity_type:$entity_subtype")) {
 		$text = elgg_echo("$name:$entity_type:$entity_subtype");
-	} else {
+	} elseif (elgg_language_key_exists("$handler:$name")) {
 		$text = elgg_echo("$handler:$name");
+	} else {
+		$text = elgg_echo($name);
 	}
 	
 	// register the title menu item
@@ -999,10 +1001,6 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 	}
 	
 	if (!_elgg_has_rss_link()) {
-		return;
-	}
-	
-	if (_elgg_config()->disable_rss) {
 		return;
 	}
 

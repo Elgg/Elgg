@@ -203,6 +203,31 @@ class ElggUpgrade extends ElggObject {
 
 		return $this->getPrivateSetting($name);
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggData::__isset()
+	 */
+	public function __isset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			return parent::__isset($name);
+		}
+		
+		$private_setting = $this->getPrivateSetting($name);
+		return !is_null($private_setting);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggEntity::__unset()
+	 */
+	public function __unset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			parent::__unset($name);
+		}
+		
+		$this->removePrivateSetting($name);
+	}
 
 	/**
 	 * {@inheritdoc}

@@ -603,8 +603,8 @@ class EntityIconService {
 		// lazy generation of icons requires a 'master' size
 		// this ensures a default config for 'master' size
 		$sizes['master'] = elgg_extract('master', $sizes, [
-			'w' => 2048,
-			'h' => 2048,
+			'w' => 10240,
+			'h' => 10240,
 			'square' => false,
 			'upscale' => false,
 			'crop' => false,
