@@ -15,7 +15,6 @@
 		padding: 0.5em 0.75em;
 		vertical-align: top;
 		background-color: white;
-		word-break: break-word;
 	}
 
 	tr.elgg-state-selected td,
@@ -39,4 +38,16 @@
 .elgg-table-alt th:first-child,
 .elgg-table-alt td:first-child {
 	width: 15rem;
+}
+
+@media $(media-tablet-up) {
+	.elgg-table,
+	.elgg-table-alt {
+		thead,
+		tfoot {
+			th {
+				word-break: normal;
+			}
+		}
+	}
 }
