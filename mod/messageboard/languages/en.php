@@ -10,10 +10,7 @@ return array(
 	'messageboard:messageboard' => "message board",
 	'messageboard:none' => "There is nothing on this message board yet",
 	'messageboard:num_display' => "Number of messages to display",
-	'messageboard:desc' => "This is a message board that you can put on your profile where other users can comment.",
-
 	'messageboard:user' => "%s's message board",
-
 	'messageboard:owner' => '%s\'s message board',
 	'messageboard:owner_history' => '%s\'s posts on %s\'s message board',
 
@@ -55,4 +52,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "An unexpected error occurred when adding your message. Please try again.",
 
+	'widgets:messageboard:name' => "Message board",
+	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
 );

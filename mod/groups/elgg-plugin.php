@@ -97,8 +97,6 @@ return [
 	],
 	'widgets' => [
 		'a_users_groups' => [
-			'name' => elgg_echo('groups:widget:membership'),
-			'description' => elgg_echo('groups:widgets:description'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],

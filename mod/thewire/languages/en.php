@@ -33,7 +33,8 @@ return array(
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Display your latest wire posts',
+	
+	'widgets:thewire:description' => 'Display your latest wire posts',
 	'thewire:num' => 'Number of posts to display',
 	'thewire:moreposts' => 'More wire posts',
 
