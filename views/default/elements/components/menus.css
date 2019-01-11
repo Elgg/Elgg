@@ -8,8 +8,12 @@
 	&.elgg-menu-title-container {
 		flex-direction: row;
 		
-		.elgg-menu-hz > li {
-			margin: 0 0.25rem;
+		> .elgg-menu-hz {
+			justify-content: flex-end;
+			
+			> li {
+				margin: 0 0.25rem;
+			}
 		}
 	}
 }
@@ -37,10 +41,15 @@
 
 .elgg-menu.elgg-menu-hz {
 	flex-direction: row;
+	flex-wrap: wrap;
 	align-items: center;
 	
 	> li {
 		margin: 0 0.25rem 0 0;
+		
+		> .elgg-button {
+			margin-bottom: .25rem;
+		}
 	}
 }
 
