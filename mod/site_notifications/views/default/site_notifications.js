@@ -50,14 +50,18 @@ elgg.site_notifications.delete = function(event) {
  * @return void
  */
 elgg.site_notifications.auto_delete = function(event) {
-	var href = this.href;
-	var id = this.id.replace("link", "delete");
-
-	require(['elgg/spinner'], function (spinner) {
-		elgg.action($('#' + id).prop('href'), {
-			beforeSend: spinner.start,
+	event.preventDefault();
+	
+	var $link = $(this);
+	
+	require(['elgg/Ajax'], function (Ajax) {
+		var ajax = new Ajax();
+		ajax.action('site_notifications/delete', {
+			data: {
+				guid: $link.data().guid,
+			},
 			complete: function() {
-				location.href = href;
+				location.href = $link.attr('href');
 			}
 		});
 	});

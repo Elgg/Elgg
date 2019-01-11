@@ -21,7 +21,7 @@ if ($url) {
 		'href' => $url,
 		'is_trusted' => true,
 		'class' => 'site-notifications-link',
-		'id' => 'site-notifications-link-' . $entity->guid,
+		'data-guid' => $entity->guid,
 	]);
 }
 
@@ -34,7 +34,7 @@ $checkbox = elgg_view('input/checkbox', [
 $params = [
 	'entity' => $entity,
 	'icon' => $checkbox . $icon,
-	'content' => $text,
+	'title' => $text,
 	'byline' => false,
 	'access' => false,
 	'show_social_menu' => false,
