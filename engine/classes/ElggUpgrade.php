@@ -113,7 +113,10 @@ class ElggUpgrade extends ElggObject {
 		try {
 			$batch = _elgg_services()->upgradeLocator->getBatch($this->class);
 		} catch (InvalidArgumentException $ex) {
-			elgg_log($ex->getMessage(), 'ERROR');
+			// only report error if the upgrade still needs to run
+			$loglevel = $this->isCompleted() ? 'INFO' : 'ERROR';
+			elgg_log($ex->getMessage(), $loglevel);
+			
 			return false;
 		}
 
