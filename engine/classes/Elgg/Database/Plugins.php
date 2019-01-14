@@ -160,7 +160,7 @@ class Plugins {
 			unset($this->boot_plugins);
 			return;
 		}
-		
+				
 		if ($order_plugins) {
 			$plugins = $this->orderPluginsByPriority($plugins);
 		}
@@ -307,8 +307,10 @@ class Plugins {
 				$plugin->disable();
 			}
 		}
-
-		$this->reindexPriorities();
+		
+		if (!empty($known_plugins)) {
+			$this->reindexPriorities();
+		}
 
 		$this->session->setIgnoreAccess($old_ia);
 		$this->session->setDisabledEntityVisibility($old_access);
