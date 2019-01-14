@@ -800,6 +800,8 @@ class Plugins {
 			'private_setting_names' => [$priority],
 			// ORDER BY CAST(ps.value) is super slow. We custom sorting below.
 			'order_by' => false,
+			// preload private settings because private settings will probably be used, at least priority
+			'preload_private_settings' => true,
 		];
 
 		switch ($status) {
