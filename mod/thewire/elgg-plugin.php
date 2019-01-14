@@ -61,7 +61,6 @@ return [
 	],
 	'widgets' => [
 		'thewire' => [
-			'description' => elgg_echo('thewire:widget:desc'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],

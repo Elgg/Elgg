@@ -55,7 +55,6 @@ return [
 	],
 	'widgets' => [
 		'bookmarks' => [
-			'description' => elgg_echo('widgets:bookmarks:description'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],

@@ -87,7 +87,6 @@ return [
 	],
 	'widgets' => [
 		'blog' => [
-			'description' => elgg_echo('widgets:blog:description'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],

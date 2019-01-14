@@ -47,8 +47,6 @@ return [
 	],
 	'widgets' => [
 		'filerepo' => [
-			'name' => elgg_echo('collection:object:file'),
-			'description' => elgg_echo('file:widget:description'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],
