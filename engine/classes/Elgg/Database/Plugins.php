@@ -160,7 +160,10 @@ class Plugins {
 			unset($this->boot_plugins);
 			return;
 		}
-				
+		
+		// Always (re)set the boot_plugins. This makes sure that even if you have no plugins active this is known to the system.
+		$this->boot_plugins = [];
+		
 		if ($order_plugins) {
 			$plugins = $this->orderPluginsByPriority($plugins);
 		}
