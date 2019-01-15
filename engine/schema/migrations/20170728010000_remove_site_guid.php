@@ -74,9 +74,9 @@ class RemoveSiteGuid extends AbstractMigration {
 		}
 
 		if ($this->hasTable('config')) {
-			$table = $this->table('config', [
-				'primary_key' => ["name"],
-			]);
+			$prefix = $this->getAdapter()->getOption('table_prefix');
+			$this->query("ALTER TABLE {$prefix}config DROP PRIMARY KEY, ADD PRIMARY KEY(name)");
+			$table = $this->table('config');
 
 			if ($table->hasIndex('site_guid')) {
 				$table->removeIndexByName('site_guid');
@@ -109,6 +109,9 @@ class RemoveSiteGuid extends AbstractMigration {
 			if ($table->hasIndex('site_guid')) {
 				$table->removeIndexByName('site_guid');
 			}
+
+			$prefix = $this->getAdapter()->getOption('table_prefix');
+			$this->query("ALTER TABLE {$prefix}users_apisessions DROP KEY user_guid, ADD UNIQUE KEY user_guid(user_guid)");
 
 			if ($table->hasColumn('site_guid')) {
 				$table->removeColumn('site_guid');
