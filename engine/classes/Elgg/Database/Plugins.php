@@ -161,6 +161,9 @@ class Plugins {
 			return;
 		}
 		
+		// Always (re)set the boot_plugins. This makes sure that even if you have no plugins active this is known to the system.
+		$this->boot_plugins = [];
+		
 		if ($order_plugins) {
 			$plugins = $this->orderPluginsByPriority($plugins);
 		}
@@ -307,8 +310,10 @@ class Plugins {
 				$plugin->disable();
 			}
 		}
-
-		$this->reindexPriorities();
+		
+		if (!empty($known_plugins)) {
+			$this->reindexPriorities();
+		}
 
 		$this->session->setIgnoreAccess($old_ia);
 		$this->session->setDisabledEntityVisibility($old_access);
@@ -795,6 +800,8 @@ class Plugins {
 			'private_setting_names' => [$priority],
 			// ORDER BY CAST(ps.value) is super slow. We custom sorting below.
 			'order_by' => false,
+			// preload private settings because private settings will probably be used, at least priority
+			'preload_private_settings' => true,
 		];
 
 		switch ($status) {
