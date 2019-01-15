@@ -152,9 +152,25 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 		$config = _elgg_services()->dbConfig->getConnectionConfig();
 
 		try {
-			// required to allow bigger index sizes required for utf8mb4
-			elgg()->db->updateData("SET GLOBAL innodb_large_prefix = 'ON'");
+			// check if we need to change a global variable
+			$row = elgg()->db->getDataRow("SHOW GLOBAL VARIABLES LIKE 'innodb_large_prefix'");
 			
+			if (empty($row) || $row->Value === 'OFF') {
+				// required to allow bigger index sizes required for utf8mb4
+				elgg()->db->updateData("SET GLOBAL innodb_large_prefix = 'ON'");
+			}
+		} catch (\Exception $e) {
+			// something went wrong, maybe database permissions, or version
+			$result->addFailures();
+			$result->addError("Failure to set 'innodb_large_prefix'. Ask your database administrator for more information.");
+			$result->addError("Alternatively ask the database administrator to (temporarily) set 'innodb_large_prefix' to 'ON'.");
+			$result->addError($e->getMessage());
+			
+			return $result;
+		}
+		
+		try {
+			// alter table structure
 			elgg()->db->updateData("
 				ALTER DATABASE
     			`{$config['database']}`
@@ -226,15 +242,15 @@ class AlterDatabaseToMultiByteCharset implements AsynchronousUpgrade {
 					}
 				}
 			}
-
 		} catch (\Exception $e) {
 			$result->addFailures();
 			$result->addError($e->getMessage());
+			
 			return $result;
 		}
 
 		$result->addSuccesses();
 
+		return $result;
 	}
-
 }
