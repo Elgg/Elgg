@@ -72,6 +72,8 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
 
 	elgg_register_plugin_hook_handler('gatekeeper', 'group:group', '_groups_gatekeeper_allow_profile_page');
+	
+	elgg_register_plugin_hook_handler('search:fields', 'group', \Elgg\Search\GroupSearchProfileFieldsHandler::class);
 }
 
 /**

@@ -8,12 +8,12 @@ use Elgg\Hook;
  * @access private
  * @since  3.0
  */
-class UserSearchFieldsHandler {
+class GroupSearchProfileFieldsHandler {
 
 	/**
-	 * Populate default search fields for user entities
+	 * Search through the group profile fields
 	 *
-	 * @elgg_plugin_hook search:fields user
+	 * @elgg_plugin_hook search:fields group
 	 *
 	 * @param Hook $hook Hook
 	 *
@@ -29,13 +29,9 @@ class UserSearchFieldsHandler {
 
 		$value = array_merge($defaults, $value);
 
-		$fields = [
-			'username',
-			'name',
-			'description',
-		];
+		$profile_fields = array_keys((array) elgg_get_config('group'));
 
-		$value['metadata'] = array_merge($value['metadata'], $fields);
+		$value['metadata'] = array_merge($value['metadata'], $profile_fields);
 
 		return $value;
 	}
