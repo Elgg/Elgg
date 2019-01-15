@@ -43,9 +43,12 @@ function elgg_search(array $options = []) {
  * @since 3.0
  */
 function _elgg_search_init() {
-	elgg_register_plugin_hook_handler('search:fields', 'user', \Elgg\Search\UserSearchFieldsHandler::class);
-	elgg_register_plugin_hook_handler('search:fields', 'object', \Elgg\Search\ObjectSearchFieldsHandler::class);
 	elgg_register_plugin_hook_handler('search:fields', 'group', \Elgg\Search\GroupSearchFieldsHandler::class);
+	elgg_register_plugin_hook_handler('search:fields', 'group', \Elgg\Search\TagsSearchFieldsHandler::class);
+	elgg_register_plugin_hook_handler('search:fields', 'object', \Elgg\Search\ObjectSearchFieldsHandler::class);
+	elgg_register_plugin_hook_handler('search:fields', 'object', \Elgg\Search\TagsSearchFieldsHandler::class);
+	elgg_register_plugin_hook_handler('search:fields', 'user', \Elgg\Search\UserSearchFieldsHandler::class);
+	elgg_register_plugin_hook_handler('search:fields', 'user', \Elgg\Search\TagsSearchFieldsHandler::class);
 }
 
 return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

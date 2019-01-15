@@ -8,12 +8,12 @@ use Elgg\Hook;
  * @access private
  * @since  3.0
  */
-class UserSearchFieldsHandler {
+class TagsSearchFieldsHandler {
 
 	/**
-	 * Populate default search fields for user entities
+	 * Populate default search fields for entities
 	 *
-	 * @elgg_plugin_hook search:fields user
+	 * @elgg_plugin_hook search:fields group|user|object
 	 *
 	 * @param Hook $hook Hook
 	 *
@@ -29,13 +29,9 @@ class UserSearchFieldsHandler {
 
 		$value = array_merge($defaults, $value);
 
-		$fields = [
-			'username',
-			'name',
-			'description',
-		];
+		$tags = (array) elgg_get_registered_tag_metadata_names();
 
-		$value['metadata'] = array_merge($value['metadata'], $fields);
+		$value['metadata'] = array_merge($value['metadata'], $tags);
 
 		return $value;
 	}

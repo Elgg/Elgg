@@ -34,9 +34,7 @@ class GroupSearchFieldsHandler {
 			'description',
 		];
 
-		$tags = (array) elgg_get_registered_tag_metadata_names();
-
-		$value['metadata'] = array_merge($value['metadata'], $fields, $tags);
+		$value['metadata'] = array_merge($value['metadata'], $fields);
 
 		return $value;
 	}

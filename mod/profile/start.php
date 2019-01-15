@@ -26,6 +26,7 @@ function profile_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_profile_admin_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_profile_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_profile_user_hover_menu');
+	elgg_register_plugin_hook_handler('search:fields', 'user', \Elgg\Search\UserSearchProfileFieldsHandler::class);
 }
 
 /**
