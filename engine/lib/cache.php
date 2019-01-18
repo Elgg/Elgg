@@ -340,6 +340,21 @@ function _elgg_clear_caches() {
 }
 
 /**
+ * Resets OPcache
+ *
+ * @return void
+ * @internal
+ * @access private
+ */
+function _elgg_reset_opcache() {
+	if (!function_exists('opcache_reset')) {
+		return;
+	}
+	
+	opcache_reset();
+}
+
+/**
  * Enable all caches
  *
  * @return void
@@ -389,6 +404,7 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 
 	$events->registerHandler('cache:flush:before', 'system', '_elgg_disable_caches');
 	$events->registerHandler('cache:flush', 'system', '_elgg_clear_caches');
+	$events->registerHandler('cache:flush', 'system', '_elgg_reset_opcache');
 	$events->registerHandler('cache:flush:after', 'system', '_elgg_enable_caches');
 	$events->registerHandler('cache:flush:after', 'system', '_elgg_rebuild_public_container');
 };
