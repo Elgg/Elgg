@@ -796,6 +796,12 @@ To go to the site, click here:
 		For improved performance, it is recommended that you enable and configure redis (or memcache).
 ',
 
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache is not available on this server or it has not yet been enabled.
+		For improved performance, it is recommended that you enable and configure OPcache.
+',
+	
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
 
