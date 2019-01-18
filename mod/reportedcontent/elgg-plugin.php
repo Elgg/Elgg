@@ -21,7 +21,6 @@ return [
 	],
 	'widgets' => [
 		'reportedcontent' => [
-			'description' => elgg_echo('reportedcontent:widget:description'),
 			'context' => ['admin'],
 		],
 	],

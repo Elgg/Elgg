@@ -23,7 +23,7 @@ foreach ($groups as $group) {
 echo elgg_view_field([
 	'#type' => 'select',
 	'name' => 'params[group_guid]',
-	'#label' => elgg_echo('activity:widgets:group_activity:edit:select'),
+	'#label' => elgg_echo('widgets:group_activity:edit:select'),
 	'value' => $widget->group_guid,
 	'options_values' => $mygroups,
 ]);

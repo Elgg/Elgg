@@ -38,6 +38,10 @@ function _elgg_upgrade_entity_menu(\Elgg\Hook $hook) {
 	
 	$result = $hook->getValue();
 	
+	// deleting upgrades has no point, they'll be rediscovered again
+	// don't want to completely block the ability in ->canDelete(), just don't offer the link
+	$result->remove('delete');
+	
 	if (!$entity->isCompleted()) {
 		$result[] = ElggMenuItem::factory([
 			'name' => 'run_upgrade',
@@ -69,5 +73,5 @@ function _elgg_upgrade_entity_menu(\Elgg\Hook $hook) {
 return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('complete', 'upgrade', '_elgg_upgrade_completed');
 	
-	$hooks->registerHandler('register', 'menu:entity', '_elgg_upgrade_entity_menu');
+	$hooks->registerHandler('register', 'menu:entity', '_elgg_upgrade_entity_menu', 501);
 };

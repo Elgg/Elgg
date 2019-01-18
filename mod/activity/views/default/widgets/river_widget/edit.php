@@ -14,11 +14,11 @@ if (elgg_in_context('dashboard')) {
 	echo elgg_view_field([
 		'#type' => 'select',
 		'name' => 'params[content_type]',
-		'#label' => elgg_echo('activity:widgets:river_widget:type'),
+		'#label' => elgg_echo('widgets:river_widget:type'),
 		'value' => $widget->content_type,
 		'options_values' => [
-			'friends' => elgg_echo('activity:widgets:river_widget:friends'),
-			'all' => elgg_echo('activity:widgets:river_widget:all'),
+			'friends' => elgg_echo('widgets:river_widget:friends'),
+			'all' => elgg_echo('widgets:river_widget:all'),
 		],
 	]);
 }

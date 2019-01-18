@@ -3,6 +3,11 @@
 *************************************** */
 body {
 	font-family: $(font-family);
+	
+	/* Break everywhere as a fallback */
+	word-break: break-all;
+	/* Instead use this non-standard one as it is better */
+	word-break: break-word;
 }
 
 a {

@@ -46,6 +46,10 @@ System events
 	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 
 	are not cleared.
 
+**upgrade:execute, system**
+	Triggered as a sequence (so including ``:before`` and ``:after``) when executing an ``ElggUpgrade``. 
+	The ``$object`` of the event is the ``ElggUpgrade``.
+
 **activate, plugin**
     Return false to prevent activation of the plugin.
 

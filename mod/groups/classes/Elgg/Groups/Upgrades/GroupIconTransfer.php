@@ -85,6 +85,7 @@ class GroupIconTransfer implements AsynchronousUpgrade {
 		$dir = (new \Elgg\EntityDirLocator($group->owner_guid))->getPath();
 		$prefix = 'groups/';
 
+		$error = false;
 		foreach ($sizes as $size => $opts) {
 			if ($size == 'original') {
 				$filename = "{$group->guid}.jpg";

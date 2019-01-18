@@ -207,7 +207,7 @@ trait LegacyQueryOptionsAdapter {
 			}
 		}
 
-		if (is_array($options['type_subtype_pairs'])) {
+		if (isset($options['type_subtype_pairs']) && is_array($options['type_subtype_pairs'])) {
 			foreach ($options['type_subtype_pairs'] as $type => $subtypes) {
 				if (!in_array($type, Config::getEntityTypes())) {
 					elgg_log("'$type' is not a valid entity type", 'WARNING');

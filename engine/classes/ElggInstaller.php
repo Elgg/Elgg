@@ -1356,7 +1356,7 @@ class ElggInstaller {
 		}
 
 		$dir = \Elgg\Project\Paths::sanitize($submissionVars['path']) . 'data';
-		if (file_exists($dir) || mkdir($dir, 0700)) {
+		if (file_exists($dir) || mkdir($dir, 0755)) {
 			$submissionVars['dataroot'] = $dir;
 			if (!file_exists("$dir/.htaccess")) {
 				$htaccess = "Order Deny,Allow\nDeny from All\n";

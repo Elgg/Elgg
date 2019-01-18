@@ -315,6 +315,9 @@ class Translator {
 		// to continue unless loading a specific language on-demand
 		if ($language) {
 			$this->loadPluginTranslations($language);
+			
+			$translations = elgg_extract($language, $this->translations, []);
+			elgg_save_system_cache("{$language}.lang", serialize($translations));
 		}
 	}
 
