@@ -166,6 +166,21 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
+	 * Returns the plugin's languages directory full path with trailing slash.
+	 * Returns false if directory does not exist
+	 *
+	 * @return string|false
+	 */
+	public function getLanguagesPath() {
+		$languages_path = $this->getPath() . 'languages/';
+		if (!is_dir($languages_path)) {
+			return false;
+		}
+		
+		return $languages_path;
+	}
+
+	/**
 	 * Get a value from the plugins's static config file.
 	 *
 	 * @note     If the system cache is on, Elgg APIs should not call this on every request.
@@ -619,6 +634,10 @@ class ElggPlugin extends ElggObject {
 				_elgg_services()->events->trigger('cache:flush', 'system');
 
 				$this->register();
+				
+				// directly load languages to have them available during runtime
+				$this->loadLanguages();
+				
 				$setup = $this->boot();
 				if ($setup instanceof Closure) {
 					$setup();
@@ -1078,17 +1097,32 @@ class ElggPlugin extends ElggObject {
 
 	/**
 	 * Registers the plugin's languages
+	 *
+	 * Makes the language paths available to the system. Commonly used during boot of engine.
+	 *
 	 * @return void
 	 */
-	protected function registerLanguages() {
-		$languages_path = $this->getPath() . 'languages';
-		if (!is_dir($languages_path)) {
+	public function registerLanguages() {
+		$languages_path = $this->getLanguagesPath();
+		if (empty($languages_path)) {
 			return;
 		}
 
-		$path_only = _elgg_services()->translator->wasLoadedFromCache();
-		if ($path_only) {
-			_elgg_services()->translator->registerLanguagePath($languages_path);
+		_elgg_services()->translator->registerLanguagePath($languages_path);
+	}
+
+	/**
+	 * Loads the plugin's translations
+	 *
+	 * Directly loads the translations for this plugin into available translations.
+	 *
+	 * Use when on runtime activating a plugin.
+	 *
+	 * @return void
+	 */
+	protected function loadLanguages() {
+		$languages_path = $this->getLanguagesPath();
+		if (empty($languages_path)) {
 			return;
 		}
 

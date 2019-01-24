@@ -107,16 +107,19 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	public function testIssuesNoticeOnMissingKey() {
 		// key is missing from all checked translations
 		$logger = _elgg_services()->logger;
+		
 		$logger->disable();
 
 		$this->assertEquals("{$this->key}b", $this->translator->translate("{$this->key}b"));
+		
 		$logged = $logger->enable();
-
-		$this->assertEquals(1, count($logged));
+		
+		// expecting translations loaded info and notice about missing key
+		$this->assertEquals(2, count($logged));
 
 		$message = "Missing English translation for \"{$this->key}b\" language key";
-		$this->assertEquals($message, $logged[0]['message']);
-		$this->assertEquals(LogLevel::NOTICE, $logged[0]['level']);
+		$this->assertEquals($message, $logged[1]['message']);
+		$this->assertEquals(LogLevel::NOTICE, $logged[1]['level']);
 
 		// has fallback key
 		$this->translator->addTranslation('en', ["{$this->key}b" => 'Dummy']);
@@ -130,7 +133,7 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 				'message' => "Missing es translation for \"{$this->key}b\" language key",
 				'level' => LogLevel::INFO,
 			]
-				], $logged);
+		], $logged);
 	}
 
 	public function testDoesNotProcessArgsOnKey() {
