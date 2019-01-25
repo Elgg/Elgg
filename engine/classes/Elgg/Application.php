@@ -597,6 +597,10 @@ class Application {
 	 * @return bool
 	 */
 	public static function migrate() {
+		
+		$constants = self::elggDir()->getPath('engine/lib/constants.php');
+		self::requireSetupFileOnce($constants);
+		
 		$conf = self::elggDir()->getPath('engine/conf/migrations.php');
 		if (!$conf) {
 			throw new InstallationException('Settings file is required to run database migrations.');
