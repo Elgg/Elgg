@@ -584,7 +584,7 @@ class Application {
 
 			$response = new RedirectResponse($url, ELGG_HTTP_PERMANENTLY_REDIRECT);
 		} catch (Exception $ex) {
-			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ? : 500);
+			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ? : ELGG_HTTP_INTERNAL_SERVER_ERROR);
 		}
 
 		return self::respond($response);
