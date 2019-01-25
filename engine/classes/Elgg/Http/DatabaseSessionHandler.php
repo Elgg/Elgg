@@ -56,7 +56,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		$query = "INSERT INTO {$this->db->prefix}users_sessions
 			(session, ts, data) VALUES
 			('$id', '$time', '$sess_data_sanitised')
-			ON DUPLICATE KEY UPDATE ts = '$time', data = '$sess_data_sanitised'";
+			ON DUPLICATE KEY UPDATE ts = VALUES(ts), data = VALUES(data)";
 
 		if ($this->db->insertData($query) !== false) {
 			return true;

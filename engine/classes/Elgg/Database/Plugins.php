@@ -178,6 +178,8 @@ class Plugins {
 				continue;
 			}
 
+			$plugin->registerLanguages();
+			
 			$this->boot_plugins[$plugin_id] = $plugin;
 			$this->cache->save($plugin_id, $plugin);
 		}

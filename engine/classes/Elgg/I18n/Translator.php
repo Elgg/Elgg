@@ -62,11 +62,6 @@ class Translator {
 	private $was_reloaded = false;
 
 	/**
-	 * @var bool
-	 */
-	private $loaded_from_cache = false;
-
-	/**
 	 * Constructor
 	 *
 	 * @param Config $config Elgg config
@@ -77,17 +72,6 @@ class Translator {
 	public function __construct(Config $config) {
 		$this->config = $config;
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
-	}
-
-	/**
-	 * Check if translations were loaded from cache
-	 *
-	 * @return bool
-	 * @access private
-	 * @internal
-	 */
-	public function wasLoadedFromCache() {
-		return $this->loaded_from_cache;
 	}
 
 	/**
@@ -263,12 +247,29 @@ class Translator {
 	}
 
 	/**
+	 * Ensures all needed translations are loaded
+	 *
+	 * This loads only English and the language of the logged in user.
+	 *
+	 * @return void
+	 *
+	 * @access private
+	 * @internal
+	 */
+	public function bootTranslations() {
+		$languages = array_unique(['en', $this->getCurrentLanguage()]);
+		
+		$this->registerLanguagePath($this->defaultPath);
+
+		foreach ($languages as $language) {
+			$this->loadTranslations($language);
+		}
+	}
+
+	/**
 	 * Load both core and plugin translations
 	 *
-	 * By default this loads only English and the language of the logged
-	 * in user.
-	 *
-	 * The optional $language argument can be used to load translations
+	 * The $language argument can be used to load translations
 	 * on-demand in case we need to translate something to a language not
 	 * loaded by default for the current request.
 	 *
@@ -279,100 +280,23 @@ class Translator {
 	 * @access private
 	 * @internal
 	 */
-	public function loadTranslations($language = null) {
-		if (elgg_is_system_cache_enabled()) {
-			$loaded = true;
-
-			if ($language) {
-				$languages = [$language];
-			} else {
-				$languages = array_unique(['en', $this->getCurrentLanguage()]);
-			}
-
-			foreach ($languages as $language) {
-				$data = elgg_load_system_cache("{$language}.lang");
-				if ($data) {
-					$this->addTranslation($language, unserialize($data));
-				} else {
-					$loaded = false;
-				}
-			}
-
-			if ($loaded) {
-				$this->loaded_from_cache = true;
-				$this->registerLanguagePath($this->defaultPath);
-				$this->is_initialized = true;
-
-				return;
-			}
-		}
-
-		// load core translations from languages directory
-		$this->registerTranslations($this->defaultPath, false, $language);
-
-		// Plugin translation have already been loaded for the default
-		// languages by ElggApplication::bootCore(), so there's no need
-		// to continue unless loading a specific language on-demand
-		if ($language) {
-			$this->loadPluginTranslations($language);
-			
-			$translations = elgg_extract($language, $this->translations, []);
-			elgg_save_system_cache("{$language}.lang", serialize($translations));
-		}
-	}
-
-	/**
-	 * Load plugin translations for a language
-	 *
-	 * This is needed only if the current request uses a language
-	 * that is neither English of the same as the language of the
-	 * logged in user.
-	 *
-	 * @param string $language Language code
-	 *
-	 * @return void
-	 * @throws PluginException
-	 * @access private
-	 * @internal
-	 */
-	private function loadPluginTranslations($language) {
-		// Get active plugins
-		$plugins = _elgg_services()->plugins->find('active');
-
-		if (!$plugins) {
-			// Active plugins were not found, so no need to register plugin translations
+	public function loadTranslations($language) {
+		if (!is_string($language)) {
 			return;
 		}
-
-		foreach ($plugins as $plugin) {
-			$languages_path = "{$plugin->getPath()}languages/";
-
-			if (!is_dir($languages_path)) {
-				// This plugin doesn't have anything to translate
-				continue;
-			}
-
-			$language_file = "{$languages_path}{$language}.php";
-
-			if (!file_exists($language_file) && ($language === 'en')) {
-				// This plugin doesn't have translations for the english language
-
-				$name = $plugin->getDisplayName();
-				_elgg_services()->logger->notice("Plugin $name is missing translations for $language language");
-
-				continue;
-			}
-
-			// Register translations from the plugin languages directory
-			if (!$this->registerTranslations($languages_path, false, $language)) {
-				$msg = vsprintf(
-					'Cannot register languages for plugin %s (guid: %s) at %s.',
-					[$plugin->getID(), $plugin->guid, $languages_path]
-				);
-
-				throw PluginException::factory('CannotRegisterViews', $plugin, $msg);
-			}
+		
+		$data = elgg_load_system_cache("{$language}.lang");
+		if ($data) {
+			$this->addTranslation($language, unserialize($data));
+			return;
 		}
+		
+		foreach ($this->getLanguagePaths() as $path) {
+			$this->registerTranslations($path, false, $language);
+		}
+			
+		$translations = elgg_extract($language, $this->translations, []);
+		elgg_save_system_cache("{$language}.lang", serialize($translations));
 	}
 
 	/**
@@ -477,16 +401,7 @@ class Translator {
 		$languages = $this->getAvailableLanguages();
 		
 		foreach ($languages as $language) {
-			if ($this->loaded_from_cache) {
-				$data = elgg_load_system_cache("{$language}.lang");
-				if ($data) {
-					$this->addTranslation($language, unserialize($data));
-				}
-			} else {
-				foreach ($this->getLanguagePaths() as $path) {
-					$this->registerTranslations($path, false, $language);
-				}
-			}
+			$this->ensureTranslationsLoaded($language);
 		}
 		
 		_elgg_services()->events->triggerAfter('reload', 'translations');

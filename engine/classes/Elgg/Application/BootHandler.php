@@ -82,7 +82,7 @@ class BootHandler {
 			// no database boot!
 			elgg_views_boot();
 			$this->app->_services->session->start();
-			$this->app->_services->translator->loadTranslations();
+			$this->app->_services->translator->bootTranslations();
 
 			_elgg_init();
 			_elgg_input_init();
