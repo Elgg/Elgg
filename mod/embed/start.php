@@ -56,7 +56,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 
 	$items[] = ElggMenuItem::factory([
 		'name' => 'embed',
-		'href' => 'javascript:',
+		'href' => false,
 		'data-colorbox-opts' => json_encode([
 			'href' => elgg_normalize_url($url),
 		]),
@@ -82,7 +82,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
  */
 function embed_select_tab($hook, $type, $items, $vars) {
 	$tab_name = elgg_extract('tab', $vars);
-		
+	
 	foreach ($items as $item) {
 		if ($item->getName() == $tab_name) {
 			$item->setSelected();
@@ -92,8 +92,10 @@ function embed_select_tab($hook, $type, $items, $vars) {
 
 	if (!elgg_get_config('embed_tab') && count($items) > 0) {
 		$keys = array_keys($items->all());
-		$items->get($keys[0])->setSelected();
-		elgg_set_config('embed_tab', $items[0]);
+
+		$first_tab = $items->get($keys[0]);
+		$first_tab->setSelected();
+		elgg_set_config('embed_tab', $first_tab);
 	}
 	
 	return $items;

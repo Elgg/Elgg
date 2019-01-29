@@ -7,23 +7,15 @@
 
 $entity = elgg_extract('entity', $vars);
 
-$title = $entity->getDisplayName();
+$title = elgg_get_excerpt($entity->getDisplayName());
 
-// don't let it be too long
-$title = elgg_get_excerpt($title);
+$icon = elgg_view_entity_icon($entity, 'small', ['link_class' => 'embed-insert']);
 
-$subtitle = elgg_view('object/elements/imprint', [
-	'entity' => $entity,
-	'show_links' => false,
-]);
-
-$image = elgg_view_entity_icon($entity, 'small', ['link_class' => 'embed-insert']);
-
-$params = [
+echo elgg_view('object/elements/summary', [
 	'title' => $title,
 	'entity' => $entity,
-	'subtitle' => $subtitle,
+	'show_links' => false,
+	'metadata' => false,
 	'tags' => false,
-	'icon' => $image,
-];
-echo elgg_view('object/elements/summary', $params);
+	'icon' => $icon,
+]);
