@@ -383,10 +383,16 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
  * @return array
  */
 function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
-	$reply = $params['event']->getObject();
+	$event = elgg_extract('event', $params);
+
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
+		return;
+	}
+
+	$reply = $event->getObject();
 
 	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
-		return $subscriptions;
+		return;
 	}
 
 	$container_guid = $reply->getContainerEntity()->container_guid;
