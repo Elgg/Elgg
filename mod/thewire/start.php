@@ -331,6 +331,11 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
  */
 function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 	$event = $params['event'];
+
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
+		return;
+	}
+
 	$entity = $event->getObject();
 	if (!$entity || !elgg_instanceof($entity, 'object', 'thewire')) {
 		return;
