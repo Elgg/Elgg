@@ -110,7 +110,7 @@ define(function (require) {
 						}
 						if (response.status >= 0) {
 							var forward = $('input[name=embed_forward]').val();
-							var url = elgg.normalize_url('embed/tab/' + forward);
+							var url = elgg.normalize_url('embed/' + forward);
 							url = embed.addContainerGUID(url);
 							$('.embed-wrapper').parent().load(url);
 						} else {
@@ -125,7 +125,7 @@ define(function (require) {
 					// intrusive to the rest of the ajax system.
 					else if (response === undefined && $.browser.msie) {
 						var forward = $('input[name=embed_forward]').val();
-						var url = elgg.normalize_url('embed/tab/' + forward);
+						var url = elgg.normalize_url('embed/' + forward);
 						url = embed.addContainerGUID(url);
 						$('.embed-wrapper').parent().load(url);
 					}
@@ -151,7 +151,9 @@ define(function (require) {
 			// make sure container guid is passed
 			var url = $(this).attr('href');
 			url = embed.addContainerGUID(url);
-			$('.embed-wrapper').parent().load(url);
+			$('.embed-wrapper').parent().load(url, function() {
+				$(window).trigger('resize.lightbox');
+			});
 			event.preventDefault();
 		},
 
