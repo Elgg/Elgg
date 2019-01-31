@@ -314,8 +314,9 @@
 	}
 }
 
-.elgg-menu-hover-admin {
+.elgg-menu.elgg-menu-hover-admin {
 	border-top: 1px solid $(border-color-soft);
+	max-width: unset;
 }
 
 .elgg-menu-hover .elgg-menu-hover-admin a {
