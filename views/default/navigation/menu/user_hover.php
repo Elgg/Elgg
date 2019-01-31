@@ -45,18 +45,20 @@ $user_info = elgg_view_entity($user, [
 $card = elgg_format_element('div', ['class' => 'elgg-menu-hover-card'], $user_info);
 
 // actions
+$combined_actions = [];
 if (elgg_is_logged_in() && $actions) {
-	$card .= elgg_view('navigation/menu/elements/section', [
-		'class' => "elgg-menu elgg-menu-hover-actions",
-		'items' => $actions,
-	]);
+	$combined_actions += $actions;
 }
 
 // main
 if ($main) {
+	$combined_actions += $main;
+}
+
+if ($combined_actions) {
 	$card .= elgg_view('navigation/menu/elements/section', [
-		'class' => 'elgg-menu elgg-menu-hover-default',
-		'items' => $main,
+		'class' => "elgg-menu elgg-menu-hover-actions",
+		'items' => $combined_actions,
 	]);
 }
 
