@@ -2,7 +2,8 @@
 
 namespace Elgg;
 
-use DateTime;
+use DateTime as PHPDateTime;
+use Elgg\I18n\DateTime as ElggDateTime;
 
 /**
  * @group Values
@@ -24,7 +25,7 @@ class ValuesUnitTest extends UnitTestCase {
 
 		$dt = Values::normalizeTime($time);
 
-		$this->assertInstanceOf(\DateTime::class, $dt);
+		$this->assertInstanceOf(ElggDateTime::class, $dt);
 		$this->assertEquals($dt->getTimestamp(), Values::normalizeTimestamp($time));
 
 	}
@@ -33,7 +34,8 @@ class ValuesUnitTest extends UnitTestCase {
 		return [
 			['January 9, 2018 12:00'],
 			[1515496794],
-			[new DateTime('+2 days')],
+			[new PHPDateTime('+2 days')],
+			[new ElggDateTime('-2 days')],
 		];
 	}
 	

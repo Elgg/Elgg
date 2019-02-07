@@ -17,7 +17,10 @@ foreach ($periods as $period) {
 	$ts = $cron_service->getLog('completion', $period);
 	if ($ts) {
 		$row[] = elgg_format_element('td', [], elgg_view_friendly_time($ts));
-		$row[] = elgg_format_element('td', [], date('r', $ts));
+		$row[] = elgg_format_element('td', [], elgg_view('output/date', [
+			'value' => $ts,
+			'format' => DATE_RFC2822,
+		]));
 	} else {
 		$row[] = elgg_format_element('td', [], elgg_echo('never'));
 		$row[] = elgg_format_element('td', [], '&nbsp;');

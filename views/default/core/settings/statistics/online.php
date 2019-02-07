@@ -16,8 +16,14 @@ $label_email = elgg_echo('usersettings:statistics:label:email');
 $label_member_since = elgg_echo('usersettings:statistics:label:membersince');
 $label_last_login = elgg_echo('usersettings:statistics:label:lastlogin');
 
-$time_created = date("r", $user->time_created);
-$last_login = date("r", $user->last_login);
+$time_created = elgg_view('output/date', [
+	'value' => $user->time_created,
+	'format' => DATE_RFC2822,
+]);
+$last_login = elgg_view('output/date', [
+	'value' => $user->last_login,
+	'format' => DATE_RFC2822,
+]);
 
 $title = elgg_echo('usersettings:statistics:yourdetails');
 
