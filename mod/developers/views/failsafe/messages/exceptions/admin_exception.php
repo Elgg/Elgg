@@ -9,15 +9,17 @@
  * @uses       $vars['object'] An exception
  */
 
-$exception = $vars['object'];
-/* @var \Exception $exception */
-?>
+$exception = elgg_extract('object', $vars);
+if (!$exception instanceof Throwable) {
+	return;
+}
 
+?>
 <div class="elgg-messages-exception">
 	<div title="<?= get_class($exception); ?>">
 		<?= nl2br($exception->getMessage()); ?>
 		<br/><br/>
-		Log at time <?= $vars['ts']; ?> may have more data.
+		Log at time <?= date(DATE_W3C, elgg_extract('ts', $vars)); ?> may have more data.
 	</div>
 </div>
 <br/>
