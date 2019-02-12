@@ -166,7 +166,8 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 				'href' => '#',
 				'child_menu' => [
 					'display' => 'toggle',
-				]
+				],
+				'priority' => -(int) "{$year}00", // make negative to be sure 2019 is before 2018
 			]);
 		}
 
@@ -177,6 +178,7 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 			'text' => $month,
 			'href' => $generate_url($timestamplow, $timestamphigh),
 			'parent_name' => $year,
+			'priority' => -(int) $date, // make negative to be sure March 2019 is before February 2019
 		]);
 	}
 
