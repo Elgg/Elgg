@@ -112,9 +112,10 @@ class Cron {
 		// give every period at least 'max_execution_time' (PHP ini setting)
 		set_time_limit((int) ini_get('max_execution_time'));
 
-		$formatted_time = $time->format('r');
+		$now = new DateTime();
 
-		$msg = elgg_echo('admin:cron:started', [$interval, $formatted_time]) . PHP_EOL;
+		$msg = elgg_echo('admin:cron:started', [$interval, $time->format(DATE_RFC2822)]) . PHP_EOL;
+		$msg .= elgg_echo('admin:cron:started:actual', [$interval, $now->format(DATE_RFC2822)]) . PHP_EOL;
 
 		$this->log('output', $interval, $msg);
 	}
@@ -133,9 +134,12 @@ class Cron {
 			$time = $this->getCurrentTime();
 		}
 
+		$now = new DateTime();
+
 		$output = [];
 
-		$output[] = elgg_echo('admin:cron:started', [$interval, $time->format('r')]);
+		$output[] = elgg_echo('admin:cron:started', [$interval, $time->format(DATE_RFC2822)]);
+		$output[] = elgg_echo('admin:cron:started:actual', [$interval, $now->format(DATE_RFC2822)]);
 
 		ob_start();
 
@@ -147,9 +151,9 @@ class Cron {
 		$output[] = ob_get_clean();
 		$output[] = $old_stdout;
 
-		$time = $this->getCurrentTime();
+		$now = new DateTime();
 
-		$output[] = elgg_echo('admin:cron:complete', [$interval, $time->format('r')]);
+		$output[] = elgg_echo('admin:cron:complete', [$interval, $now->format(DATE_RFC2822)]);
 
 		return implode(PHP_EOL, array_filter($output));
 	}
@@ -164,7 +168,7 @@ class Cron {
 	 */
 	protected function after($output, $interval) {
 
-		$time = new \DateTime();
+		$time = new DateTime();
 
 		$this->log('output', $interval, $output);
 		$this->log('completion', $interval, $time->getTimestamp());
