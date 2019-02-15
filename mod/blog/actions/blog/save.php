@@ -73,12 +73,6 @@ foreach ($values as $name => $default) {
 			$values[$name] = string_to_tag_array($value);
 			break;
 
-		case 'excerpt':
-			if ($value) {
-				$values[$name] = elgg_get_excerpt($value);
-			}
-			break;
-
 		case 'container_guid':
 			// this can't be empty or saving the base entity fails
 			if (!empty($value)) {
