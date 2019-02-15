@@ -36,7 +36,7 @@ if ($guid) {
 	$blog->access_id = ACCESS_PRIVATE;
 	$blog->title = $title;
 	$blog->description = $description;
-	$blog->excerpt = $excerpt ? elgg_get_excerpt($excerpt) : null;
+	$blog->excerpt = $excerpt;
 
 	// mark this as a brand new post so we can work out the
 	// river / revision logic in the real save action.
