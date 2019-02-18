@@ -463,6 +463,7 @@ return array(
 	'admin:cron:date' => 'Date and time',
 	'admin:cron:msg' => 'Message',
 	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => 'Appearance',
