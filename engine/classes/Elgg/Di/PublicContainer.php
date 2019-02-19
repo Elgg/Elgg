@@ -18,6 +18,7 @@ use Elgg\Users\Accounts;
 use Elgg\Views\HtmlFormatter;
 use Elgg\Views\TableColumn\ColumnFactory;
 use ElggSession;
+use Elgg\I18n\LocaleService;
 
 /**
  * Public service container
@@ -31,6 +32,7 @@ use ElggSession;
  * @property-read Tools                 $group_tools     Group Tools
  * @property-read HtmlFormatter         $html_formatter  HTML formatter
  * @property-read PluginHooksService    $hooks           Hooks service
+ * @property-read LocaleService         $locale          LocaleService
  * @property-read Logger                $logger          Logger
  * @property-read Service               $menus           Menus
  * @property-read ElggSession           $session         Session

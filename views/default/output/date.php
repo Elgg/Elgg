@@ -20,6 +20,6 @@ try {
 		'datetime' => $dt->format('c'),
 	];
 	
-	echo elgg_format_element('time', $attributes, $dt->format($format));
+	echo elgg_format_element('time', $attributes, $dt->formatLocale($format));
 } catch (DataFormatException $ex) {
 }

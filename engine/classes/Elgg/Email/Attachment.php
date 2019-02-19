@@ -4,6 +4,7 @@ namespace Elgg\Email;
 
 use Elgg\Filesystem\MimeTypeDetector;
 use Zend\Mime\Part;
+use Zend\Mime\Mime;
 
 /**
  * Email attachment
@@ -70,6 +71,8 @@ class Attachment extends Part {
 			
 			$content = file_get_contents($filepath);
 			
+			$options['encoding'] = Mime::ENCODING_BASE64;
+			
 			if (!isset($options['filename'])) {
 				$options['filename'] = basename($filepath);
 			}
@@ -107,6 +110,7 @@ class Attachment extends Part {
 			'content' => $file->grabFile(),
 			'type' => $file->getMimeType(),
 			'filename' => basename($file->getFilename()),
+			'encoding' => Mime::ENCODING_BASE64,
 		];
 		
 		return self::factory($options);

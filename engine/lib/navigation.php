@@ -845,16 +845,21 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		'type' => $entity->getType(),
 		'subtype' => $entity->getSubtype(),
 		'container_guid' => $entity->container_guid,
-		'wheres' => [
-			function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
-				return $qb->compare("{$main_alias}.guid", '!=', $entity->guid, ELGG_VALUE_INTEGER);
-			},
-		],
 		'limit' => 1,
 	];
 
 	$previous_options = $options;
-	$previous_options['created_before'] = $entity->time_created;
+	$previous_options['wheres'] = [
+		function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+			return $qb->merge([
+				$qb->compare("{$main_alias}.time_created", '<', $entity->time_created, ELGG_VALUE_INTEGER),
+				$qb->merge([
+					$qb->compare("{$main_alias}.time_created", '=', $entity->time_created, ELGG_VALUE_INTEGER),
+					$qb->compare("{$main_alias}.guid", '<', $entity->guid, ELGG_VALUE_GUID),
+				], 'AND'),
+			], 'OR');
+		},
+	];
 	$previous_options['order_by'] = [
 		new \Elgg\Database\Clauses\OrderByClause('time_created', 'DESC'),
 		new \Elgg\Database\Clauses\OrderByClause('guid', 'DESC'),
@@ -876,7 +881,17 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 	}
 	
 	$next_options = $options;
-	$next_options['created_after'] = $entity->time_created;
+	$next_options['wheres'] = [
+		function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+			return $qb->merge([
+				$qb->compare("{$main_alias}.time_created", '>', $entity->time_created, ELGG_VALUE_INTEGER),
+				$qb->merge([
+					$qb->compare("{$main_alias}.time_created", '=', $entity->time_created, ELGG_VALUE_INTEGER),
+					$qb->compare("{$main_alias}.guid", '>', $entity->guid, ELGG_VALUE_GUID),
+				], 'AND'),
+			], 'OR');
+		},
+	];
 	$next_options['order_by'] = [
 		new \Elgg\Database\Clauses\OrderByClause('time_created', 'ASC'),
 		new \Elgg\Database\Clauses\OrderByClause('guid', 'ASC'),

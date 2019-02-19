@@ -25,7 +25,7 @@ function create_user_token($username, $expire = 60) {
 	if (elgg()->db->insertData("INSERT into {$dbprefix}users_apisessions
 				(user_guid, token, expires) values
 				({$user->guid}, '$token', '$time')
-				on duplicate key update token='$token', expires='$time'")) {
+				on duplicate key update token = VALUES(token), expires = VALUES(expires)")) {
 		return $token;
 	}
 

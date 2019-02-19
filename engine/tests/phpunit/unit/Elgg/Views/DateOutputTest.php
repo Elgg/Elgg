@@ -2,6 +2,8 @@
 
 namespace Elgg\Views;
 
+use Elgg\I18n\DateTime;
+
 /**
  * @group ViewRendering
  * @group ViewsService
@@ -12,7 +14,7 @@ class DateOutputTest extends ViewRenderingTestCase {
 	public function up() {
 		parent::up();
 
-		$this->date = new \DateTime();
+		$this->date = new DateTime();
 		$this->format = 'Y-m-d H:i';
 	}
 
@@ -37,7 +39,7 @@ class DateOutputTest extends ViewRenderingTestCase {
 
 		$output = elgg_format_element('time', [
 			'datetime' => $this->date->format('c'),
-		], $this->date->format($this->format));
+		], $this->date->formatLocale($this->format));
 
 		$this->assertViewOutput($output, 'output/date', [
 			'value' => $this->date,
@@ -46,18 +48,15 @@ class DateOutputTest extends ViewRenderingTestCase {
 	}
 
 	public function testCanRenderTime() {
-
 		$format = 'g:ia';
 		
 		$output = elgg_format_element('time', [
 			'datetime' => $this->date->format('c'),
-		], $this->date->format($format));
+		], $this->date->formatLocale($format));
 
 		$this->assertViewOutput($output, 'output/time', [
 			'value' => $this->date,
 			'format' => $format,
 		]);
 	}
-
-
 }

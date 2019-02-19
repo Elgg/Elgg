@@ -4,7 +4,6 @@ namespace Elgg\I18n;
 
 use Elgg\Config;
 use Elgg\Includer;
-use PluginException;
 
 /**
  * Translator
@@ -19,6 +18,11 @@ class Translator {
 	 * @var Config
 	 */
 	private $config;
+	
+	/**
+	 * @var LocaleService
+	 */
+	private $localeService;
 
 	/**
 	 * @var array
@@ -62,32 +66,19 @@ class Translator {
 	private $was_reloaded = false;
 
 	/**
-	 * @var bool
-	 */
-	private $loaded_from_cache = false;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Config $config Elgg config
+	 * @param Config        $config       Elgg config
+	 * @param LocaleService $localService locale service
 	 *
 	 * @access private
 	 * @internal
 	 */
-	public function __construct(Config $config) {
+	public function __construct(Config $config, LocaleService $localService) {
 		$this->config = $config;
+		$this->localeService = $localService;
+		
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
-	}
-
-	/**
-	 * Check if translations were loaded from cache
-	 *
-	 * @return bool
-	 * @access private
-	 * @internal
-	 */
-	public function wasLoadedFromCache() {
-		return $this->loaded_from_cache;
 	}
 
 	/**
@@ -263,12 +254,29 @@ class Translator {
 	}
 
 	/**
+	 * Ensures all needed translations are loaded
+	 *
+	 * This loads only English and the language of the logged in user.
+	 *
+	 * @return void
+	 *
+	 * @access private
+	 * @internal
+	 */
+	public function bootTranslations() {
+		$languages = array_unique(['en', $this->getCurrentLanguage()]);
+		
+		$this->registerLanguagePath($this->defaultPath);
+
+		foreach ($languages as $language) {
+			$this->loadTranslations($language);
+		}
+	}
+
+	/**
 	 * Load both core and plugin translations
 	 *
-	 * By default this loads only English and the language of the logged
-	 * in user.
-	 *
-	 * The optional $language argument can be used to load translations
+	 * The $language argument can be used to load translations
 	 * on-demand in case we need to translate something to a language not
 	 * loaded by default for the current request.
 	 *
@@ -279,100 +287,23 @@ class Translator {
 	 * @access private
 	 * @internal
 	 */
-	public function loadTranslations($language = null) {
-		if (elgg_is_system_cache_enabled()) {
-			$loaded = true;
-
-			if ($language) {
-				$languages = [$language];
-			} else {
-				$languages = array_unique(['en', $this->getCurrentLanguage()]);
-			}
-
-			foreach ($languages as $language) {
-				$data = elgg_load_system_cache("{$language}.lang");
-				if ($data) {
-					$this->addTranslation($language, unserialize($data));
-				} else {
-					$loaded = false;
-				}
-			}
-
-			if ($loaded) {
-				$this->loaded_from_cache = true;
-				$this->registerLanguagePath($this->defaultPath);
-				$this->is_initialized = true;
-
-				return;
-			}
-		}
-
-		// load core translations from languages directory
-		$this->registerTranslations($this->defaultPath, false, $language);
-
-		// Plugin translation have already been loaded for the default
-		// languages by ElggApplication::bootCore(), so there's no need
-		// to continue unless loading a specific language on-demand
-		if ($language) {
-			$this->loadPluginTranslations($language);
-			
-			$translations = elgg_extract($language, $this->translations, []);
-			elgg_save_system_cache("{$language}.lang", serialize($translations));
-		}
-	}
-
-	/**
-	 * Load plugin translations for a language
-	 *
-	 * This is needed only if the current request uses a language
-	 * that is neither English of the same as the language of the
-	 * logged in user.
-	 *
-	 * @param string $language Language code
-	 *
-	 * @return void
-	 * @throws PluginException
-	 * @access private
-	 * @internal
-	 */
-	private function loadPluginTranslations($language) {
-		// Get active plugins
-		$plugins = _elgg_services()->plugins->find('active');
-
-		if (!$plugins) {
-			// Active plugins were not found, so no need to register plugin translations
+	public function loadTranslations($language) {
+		if (!is_string($language)) {
 			return;
 		}
-
-		foreach ($plugins as $plugin) {
-			$languages_path = "{$plugin->getPath()}languages/";
-
-			if (!is_dir($languages_path)) {
-				// This plugin doesn't have anything to translate
-				continue;
-			}
-
-			$language_file = "{$languages_path}{$language}.php";
-
-			if (!file_exists($language_file) && ($language === 'en')) {
-				// This plugin doesn't have translations for the english language
-
-				$name = $plugin->getDisplayName();
-				_elgg_services()->logger->notice("Plugin $name is missing translations for $language language");
-
-				continue;
-			}
-
-			// Register translations from the plugin languages directory
-			if (!$this->registerTranslations($languages_path, false, $language)) {
-				$msg = vsprintf(
-					'Cannot register languages for plugin %s (guid: %s) at %s.',
-					[$plugin->getID(), $plugin->guid, $languages_path]
-				);
-
-				throw PluginException::factory('CannotRegisterViews', $plugin, $msg);
-			}
+		
+		$data = elgg_load_system_cache("{$language}.lang");
+		if ($data) {
+			$this->addTranslation($language, unserialize($data));
+			return;
 		}
+		
+		foreach ($this->getLanguagePaths() as $path) {
+			$this->registerTranslations($path, false, $language);
+		}
+			
+		$translations = elgg_extract($language, $this->translations, []);
+		elgg_save_system_cache("{$language}.lang", serialize($translations));
 	}
 
 	/**
@@ -477,16 +408,7 @@ class Translator {
 		$languages = $this->getAvailableLanguages();
 		
 		foreach ($languages as $language) {
-			if ($this->loaded_from_cache) {
-				$data = elgg_load_system_cache("{$language}.lang");
-				if ($data) {
-					$this->addTranslation($language, unserialize($data));
-				}
-			} else {
-				foreach ($this->getLanguagePaths() as $path) {
-					$this->registerTranslations($path, false, $language);
-				}
-			}
+			$this->ensureTranslationsLoaded($language);
 		}
 		
 		_elgg_services()->events->triggerAfter('reload', 'translations');
@@ -624,7 +546,7 @@ class Translator {
 	public function getAvailableLanguages() {
 		$languages = [];
 		
-		$allowed_languages = $this->getAllLanguageCodes();
+		$allowed_languages = $this->localeService->getLanguageCodes();
 		
 		foreach ($this->getLanguagePaths() as $path) {
 			try {
@@ -707,159 +629,11 @@ class Translator {
 	 * Returns an array of language codes.
 	 *
 	 * @return array
-	 * @access private
-	 * @internal
+	 * @deprecated 3.0 please use elgg()->locale->getAllLanguageCodes()
 	 */
 	public static function getAllLanguageCodes() {
-		return [
-			"aa", // "Afar"
-			"ab", // "Abkhazian"
-			"af", // "Afrikaans"
-			"am", // "Amharic"
-			"ar", // "Arabic"
-			"as", // "Assamese"
-			"ay", // "Aymara"
-			"az", // "Azerbaijani"
-			"ba", // "Bashkir"
-			"be", // "Byelorussian"
-			"bg", // "Bulgarian"
-			"bh", // "Bihari"
-			"bi", // "Bislama"
-			"bn", // "Bengali; Bangla"
-			"bo", // "Tibetan"
-			"br", // "Breton"
-			"ca", // "Catalan"
-			"cmn", // "Mandarin Chinese" // ISO 639-3
-			"co", // "Corsican"
-			"cs", // "Czech"
-			"cy", // "Welsh"
-			"da", // "Danish"
-			"de", // "German"
-			"dz", // "Bhutani"
-			"el", // "Greek"
-			"en", // "English"
-			"eo", // "Esperanto"
-			"es", // "Spanish"
-			"et", // "Estonian"
-			"eu", // "Basque"
-			"eu_es", // "Basque (Spain)"
-			"fa", // "Persian"
-			"fi", // "Finnish"
-			"fj", // "Fiji"
-			"fo", // "Faeroese"
-			"fr", // "French"
-			"fy", // "Frisian"
-			"ga", // "Irish"
-			"gd", // "Scots / Gaelic"
-			"gl", // "Galician"
-			"gn", // "Guarani"
-			"gu", // "Gujarati"
-			"he", // "Hebrew"
-			"ha", // "Hausa"
-			"hi", // "Hindi"
-			"hr", // "Croatian"
-			"hu", // "Hungarian"
-			"hy", // "Armenian"
-			"ia", // "Interlingua"
-			"id", // "Indonesian"
-			"ie", // "Interlingue"
-			"ik", // "Inupiak"
-			"is", // "Icelandic"
-			"it", // "Italian"
-			"iu", // "Inuktitut"
-			"iw", // "Hebrew (obsolete)"
-			"ja", // "Japanese"
-			"ji", // "Yiddish (obsolete)"
-			"jw", // "Javanese"
-			"ka", // "Georgian"
-			"kk", // "Kazakh"
-			"kl", // "Greenlandic"
-			"km", // "Cambodian"
-			"kn", // "Kannada"
-			"ko", // "Korean"
-			"ks", // "Kashmiri"
-			"ku", // "Kurdish"
-			"ky", // "Kirghiz"
-			"la", // "Latin"
-			"ln", // "Lingala"
-			"lo", // "Laothian"
-			"lt", // "Lithuanian"
-			"lv", // "Latvian/Lettish"
-			"mg", // "Malagasy"
-			"mi", // "Maori"
-			"mk", // "Macedonian"
-			"ml", // "Malayalam"
-			"mn", // "Mongolian"
-			"mo", // "Moldavian"
-			"mr", // "Marathi"
-			"ms", // "Malay"
-			"mt", // "Maltese"
-			"my", // "Burmese"
-			"na", // "Nauru"
-			"ne", // "Nepali"
-			"nl", // "Dutch"
-			"no", // "Norwegian"
-			"oc", // "Occitan"
-			"om", // "(Afan) Oromo"
-			"or", // "Oriya"
-			"pa", // "Punjabi"
-			"pl", // "Polish"
-			"ps", // "Pashto / Pushto"
-			"pt", // "Portuguese"
-			"pt_br", // "Portuguese (Brazil)"
-			"qu", // "Quechua"
-			"rm", // "Rhaeto-Romance"
-			"rn", // "Kirundi"
-			"ro", // "Romanian"
-			"ro_ro", // "Romanian (Romania)"
-			"ru", // "Russian"
-			"rw", // "Kinyarwanda"
-			"sa", // "Sanskrit"
-			"sd", // "Sindhi"
-			"sg", // "Sangro"
-			"sh", // "Serbo-Croatian"
-			"si", // "Singhalese"
-			"sk", // "Slovak"
-			"sl", // "Slovenian"
-			"sm", // "Samoan"
-			"sn", // "Shona"
-			"so", // "Somali"
-			"sq", // "Albanian"
-			"sr", // "Serbian"
-			"sr_latin", // "Serbian (Latin)"
-			"ss", // "Siswati"
-			"st", // "Sesotho"
-			"su", // "Sundanese"
-			"sv", // "Swedish"
-			"sw", // "Swahili"
-			"ta", // "Tamil"
-			"te", // "Tegulu"
-			"tg", // "Tajik"
-			"th", // "Thai"
-			"ti", // "Tigrinya"
-			"tk", // "Turkmen"
-			"tl", // "Tagalog"
-			"tn", // "Setswana"
-			"to", // "Tonga"
-			"tr", // "Turkish"
-			"ts", // "Tsonga"
-			"tt", // "Tatar"
-			"tw", // "Twi"
-			"ug", // "Uigur"
-			"uk", // "Ukrainian"
-			"ur", // "Urdu"
-			"uz", // "Uzbek"
-			"vi", // "Vietnamese"
-			"vo", // "Volapuk"
-			"wo", // "Wolof"
-			"xh", // "Xhosa"
-			"yi", // "Yiddish"
-			"yo", // "Yoruba"
-			"za", // "Zuang"
-			"zh", // "Chinese"
-			"zh_hans", // "Chinese Simplified"
-			"zu", // "Zulu"
-		];
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg()->locale->getAllLanguageCodes()', '3.0');
+		return elgg()->locale->getAllLanguageCodes();
 	}
 
 	/**

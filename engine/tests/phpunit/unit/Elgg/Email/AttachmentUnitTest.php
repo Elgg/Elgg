@@ -3,6 +3,7 @@
 namespace Elgg\Email;
 
 use Elgg\UnitTestCase;
+use Zend\Mime\Mime;
 
 /**
  * @group EmailService
@@ -73,7 +74,8 @@ class AttachmentUnitTest extends UnitTestCase {
 		
 		$this->assertNotFalse($attachment);
 		
-		$this->assertEquals($this->file->grabFile(), $attachment->getContent());
+		$this->assertEquals(Mime::ENCODING_BASE64, $attachment->getEncoding());
+		$this->assertEquals($this->file->grabFile(), base64_decode($attachment->getContent()));
 		$this->assertEquals($this->file->getMimeType(), $attachment->getType());
 		$this->assertEquals($this->file->getFilename(), $attachment->getFileName());
 		$this->assertEquals('attachment', $attachment->getDisposition());
@@ -85,7 +87,8 @@ class AttachmentUnitTest extends UnitTestCase {
 		
 		$this->assertNotFalse($attachment);
 		
-		$this->assertEquals($this->file->grabFile(), $attachment->getContent());
+		$this->assertEquals(Mime::ENCODING_BASE64, $attachment->getEncoding());
+		$this->assertEquals($this->file->grabFile(), base64_decode($attachment->getContent()));
 		$this->assertEquals($this->file->getMimeType(), $attachment->getType());
 		$this->assertEquals($this->file->getFilename(), $attachment->getFileName());
 		$this->assertEquals('attachment', $attachment->getDisposition());

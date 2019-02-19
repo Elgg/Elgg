@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Email\Address;
+use Zend\Mime\Mime;
 
 /**
  * @group EmailService
@@ -237,7 +238,8 @@ class EmailUnitTest extends UnitTestCase {
 		$email_parts = $email->getAttachments();
 		$email_part = $email_parts[0];
 		
-		$this->assertEquals($file->grabFile(), $email_part->getContent());
+		$this->assertEquals(Mime::ENCODING_BASE64, $email_part->getEncoding());
+		$this->assertEquals($file->grabFile(), base64_decode($email_part->getContent()));
 		$this->assertEquals($file->getMimeType(), $email_part->getType());
 		$this->assertEquals($file->getFilename(), $email_part->getFileName());
 	}

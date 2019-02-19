@@ -13,7 +13,7 @@ if (!$entity instanceof ElggEntity) {
 	return;
 }
 
-$format = elgg_extract('format', $vars, 'M d, Y H:i');
+$format = elgg_extract('format', $vars, DATE_RFC2822);
 
 if ($format === 'friendly') {
 	echo elgg_view('output/friendlytime', [
@@ -22,4 +22,7 @@ if ($format === 'friendly') {
 	return;
 }
 
-echo date($format, $entity->time_updated);
+echo elgg_view('output/date', [
+	'value' => $entity->time_updated,
+	'format' => $format,
+]);

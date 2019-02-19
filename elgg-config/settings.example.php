@@ -372,3 +372,28 @@ $CONFIG->allow_phpinfo = false;
  * the string levels in Elgg\Logger or ''. E.g., use 'INFO' to log all DB queries during boot up.
  */
 //$CONFIG->debug = 'INFO';
+
+/**
+ * Language to locale mapping
+ *
+ * Some features support mapping a language to a locale setting (for example date presentations). In this setting
+ * the mapping between language (key) and locale setting (values) can be configured.
+ *
+ * For example if you wish to present English dates in USA format make the mapping 'en' => ['en_US'], or if you
+ * wish to use UK format 'en' => ['en_UK'].
+ *
+ * It's possible to configure the locale mapping for mulitple languages, for example:
+ * [
+ * 	'en' => ['en_US', 'en_UK'],
+ * 	'nl' => ['nl_NL'],
+ * ]
+ *
+ * It's also possible to add new languages to the supported languages
+ * [
+ * 	'my_language' => [], // no locale mapping
+ * 	'my_language2' => ['en_US'], // using USA locale mapping
+ * ]
+ *
+ * @see https://secure.php.net/manual/en/function.setlocale.php
+ */
+//$CONFIG->language_to_locale_mapping = [];

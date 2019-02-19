@@ -17,6 +17,7 @@ use Elgg\SystemMessagesService;
 use Elgg\Users\Accounts;
 use Elgg\Views\HtmlFormatter;
 use Elgg\Views\TableColumn\ColumnFactory;
+use Elgg\I18n\LocaleService;
 
 return [
 	'accounts' => new PhpDiResolver(Accounts::class, 'accounts'),
@@ -28,6 +29,7 @@ return [
 	'group_tools' => new PhpDiResolver(\Elgg\Groups\Tools::class, 'group_tools'),
 	'html_formatter' => new PhpDiResolver(HtmlFormatter::class, 'html_formatter'),
 	'hooks' => new PhpDiResolver(PluginHooksService::class, 'hooks'),
+	'locale' => new PhpDiResolver(LocaleService::class, 'localeService'),
 	'logger' => new PhpDiResolver(Logger::class, 'logger'),
 	'menus' => new PhpDiResolver(MenuService::class, 'menus'),
 	'session' => new PhpDiResolver(ElggSession::class, 'session'),

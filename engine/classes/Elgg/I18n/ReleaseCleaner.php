@@ -25,7 +25,7 @@ class ReleaseCleaner {
 	 */
 	public function __construct(array $codes = []) {
 		if (!$codes) {
-			$codes = Translator::getAllLanguageCodes();
+			$codes = elgg()->locale->getLanguageCodes();
 		}
 		$this->codes = $codes;
 	}

@@ -171,9 +171,9 @@ class EmailService {
 		
 		$body->addPart($plain_text_part);
 		
-		// process attachements
-		$attachements = $email->getAttachments();
-		foreach ($attachements as $attachement) {
+		// process attachments
+		$attachments = $email->getAttachments();
+		foreach ($attachments as $attachement) {
 			$body->addPart($attachement);
 		}
 		
