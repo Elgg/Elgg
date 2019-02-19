@@ -58,12 +58,12 @@ class DateTime extends PHPDateTime {
 	/**
 	 * Format the date using strftime() which supports locale output
 	 *
-	 * @param string $format output format, supports date() formatting
-	 * @param string $locale the output locale, defaults to current language
+	 * @param string $format   output format, supports date() formatting
+	 * @param string $language the output language, defaults to current language
 	 *
 	 * @return string
 	 */
-	public function formatLocale($format, $locale = null) {
+	public function formatLocale(string $format, string $language = null) {
 		// convert date() format to strftime() format
 		$correct_format = $this->dateFormatToStrftime($format);
 		if ($correct_format === false) {
@@ -71,29 +71,13 @@ class DateTime extends PHPDateTime {
 			return $this->format($format);
 		}
 		
-		if (isset($locale)) {
-			try {
-				$new_locale = Locale::parse($locale);
-				$locale = (string) $new_locale;
-			} catch (InvalidLocaleException $e) {
-				$locale = null;
-			}
-		}
-		
-		if (!isset($locale)) {
-			$locale = get_current_language();
-		}
-		
 		// switch locale
-		$current_locale = setlocale(LC_TIME, 0);
-		@setlocale(LC_TIME, $locale);
-		
-		
+		$current_locale = elgg()->locale->setLocaleFromLanguageKey(LC_TIME, $language);
 		
 		$result = strftime($correct_format, $this->getTimestamp());
 		
 		// restore locale
-		setlocale(LC_TIME, $current_locale);
+		elgg()->locale->setLocale(LC_TIME, $current_locale);
 		
 		if ($result === false) {
 			elgg_log("Unable to generate locale representation for format: '{$correct_format}', using non-locale version", 'INFO');

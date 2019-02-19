@@ -28,19 +28,19 @@ class DateTimeUnitTest extends UnitTestCase {
 	/**
 	 * @dataProvider formatLocaleProvider
 	 */
-	public function testFormatLocale($time, $date_format, $strftime_format, $locale) {
+	public function testFormatLocale($time, $date_format, $strftime_format, $language) {
 		
 		$date = new DateTime($time);
 		
 		// make expected output
 		$current_locale = setlocale(LC_TIME, 0);
-		setlocale(LC_TIME, $locale);
+		setlocale(LC_TIME, $language);
 		
 		$expected = strftime($strftime_format, $date->getTimestamp());
 		
 		setlocale(LC_TIME, $current_locale);
 		
-		$this->assertEquals($expected, $date->formatLocale($date_format, $locale));
+		$this->assertEquals($expected, $date->formatLocale($date_format, $language));
 	}
 	
 	public function formatLocaleProvider() {
