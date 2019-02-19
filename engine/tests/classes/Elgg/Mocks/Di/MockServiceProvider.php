@@ -121,7 +121,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 		
 		$this->setFactory('translator', function(MockServiceProvider $sp) {
-			return new \Elgg\Mocks\I18n\Translator($sp->config);
+			return new \Elgg\Mocks\I18n\Translator($sp->config, $sp->localeService);
 		});
 
 		$this->setFactory('usersTable', function(MockServiceProvider $sp) {

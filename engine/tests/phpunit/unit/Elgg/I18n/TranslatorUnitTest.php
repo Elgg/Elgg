@@ -2,8 +2,6 @@
 
 namespace Elgg\I18n;
 
-use Elgg\Logger;
-use Elgg\Project\Paths;
 use Psr\Log\LogLevel;
 
 /**
@@ -20,7 +18,10 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 	public $translator;
 
 	public function up() {
-		$this->translator = new Translator(_elgg_config());
+		$config = elgg()->config;
+		$localeService = elgg()->locale;
+		
+		$this->translator = new Translator($config, $localeService);
 		$this->translator->loadTranslations('en');
 
 		$this->translator->addTranslation('en', [$this->key => 'Dummy']);
