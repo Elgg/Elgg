@@ -20,7 +20,7 @@ fieldset > div:last-child {
 }
 
 label, .elgg-field-label {
-	font-weight: 500;
+	font-weight: 600;
 	font-size: 0.9rem;
 	line-height: 1.8rem;
 
