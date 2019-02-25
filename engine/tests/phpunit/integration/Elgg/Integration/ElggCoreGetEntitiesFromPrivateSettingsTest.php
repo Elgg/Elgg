@@ -69,7 +69,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->guid, $guids));
-			$value = get_private_setting($entity->guid, $setting_name);
+			$value = $entity->getPrivateSetting($setting_name);
 			$this->assertEquals($setting_value, $value);
 		}
 
@@ -82,7 +82,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->guid, $guids));
-			$value = get_private_setting($entity->guid, $setting_name);
+			$value = $entity->getPrivateSetting($setting_name);
 			$this->assertEquals($setting_value, $value);
 		}
 

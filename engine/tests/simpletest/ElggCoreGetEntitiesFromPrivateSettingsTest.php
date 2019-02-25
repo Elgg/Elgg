@@ -22,16 +22,16 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBas
 		$valid->subtype = $subtype;
 		$valid->save();
 		$guids[] = $valid->getGUID();
-		set_private_setting($valid->getGUID(), $setting_name, $setting_value);
-		set_private_setting($valid->getGUID(), $setting_name2, $setting_value2);
+		$valid->setPrivateSetting($setting_name, $setting_value);
+		$valid->setPrivateSetting($setting_name2, $setting_value2);
 
 		$valid2 = new \ElggObject();
 		$valid2->subtype = $subtype;
 		$valid2->save();
 		$guids[] = $valid2->getGUID();
-		set_private_setting($valid2->getGUID(), $setting_name, $setting_value);
-		set_private_setting($valid2->getGUID(), $setting_name2, $setting_value2);
-
+		$valid2->setPrivateSetting($setting_name, $setting_value);
+		$valid2->setPrivateSetting($setting_name2, $setting_value2);
+		
 		// simple test with name
 		$options = [
 			'private_setting_name' => $setting_name
@@ -41,7 +41,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBas
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->getGUID(), $guids));
-			$value = get_private_setting($entity->getGUID(), $setting_name);
+			$value = $entity->getPrivateSetting($setting_name);
 			$this->assertEqual($value, $setting_value);
 		}
 
@@ -54,7 +54,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBas
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->getGUID(), $guids));
-			$value = get_private_setting($entity->getGUID(), $setting_name);
+			$value = $entity->getPrivateSetting($setting_name);
 			$this->assertEqual($value, $setting_value);
 		}
 
