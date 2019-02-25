@@ -300,7 +300,7 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 			$new_widget->owner_guid = $entity->guid;
 
 			// pull in settings
-			$settings = get_all_private_settings($widget->guid);
+			$settings = $widget->getAllPrivateSettings();
 
 			foreach ($settings as $name => $value) {
 				$new_widget->$name = $value;
