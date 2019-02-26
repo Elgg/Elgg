@@ -22,7 +22,6 @@ function groups_init() {
 
 	// Register URL handlers for groups
 	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
-	elgg_register_plugin_hook_handler('entity:icon:sizes', 'group', 'groups_set_icon_sizes');
 
 	// group entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
@@ -1106,22 +1105,6 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 	]);
 	
 	return $return;
-}
-
-/**
- * Add 'original' to group icon sizes
- *
- * @elgg_plugin_hook entity:icon:sizes group
- *
- * @param \Elgg\Hook $hook Hook
- * @return array
- */
-function groups_set_icon_sizes(\Elgg\Hook $hook) {
-
-	$sizes = $hook->getValue();
-	$sizes['original'] = [];
-
-	return $sizes;
 }
 
 /**
