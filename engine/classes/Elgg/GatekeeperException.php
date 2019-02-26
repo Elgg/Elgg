@@ -17,7 +17,7 @@ class GatekeeperException extends HttpException {
 			$message = elgg_echo('GatekeeperException');
 		}
 		if (!$code) {
-			$code = ELGG_HTTP_FORBIDDEN;
+			$code = ELGG_HTTP_UNAUTHORIZED;
 		}
 		parent::__construct($message, $code, $previous);
 	}

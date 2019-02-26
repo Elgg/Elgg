@@ -1,7 +1,5 @@
 <?php
 
-elgg_gatekeeper();
-
 $guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($guid);
 

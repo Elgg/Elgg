@@ -27,21 +27,33 @@ return [
 		'path' => '/register',
 		'resource' => 'account/register',
 		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+		],
 	],
 	'account:login' => [
 		'path' => '/login',
 		'resource' => 'account/login',
 		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+		],
 	],
 	'account:password:reset' => [
 		'path' => '/forgotpassword',
 		'resource' => 'account/forgotten_password',
 		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+		],
 	],
 	'account:password:change' => [
 		'path' => '/changepassword',
 		'resource' => 'account/change_password',
 		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+		],
 	],
 	'ajax' => [
 		'path' => '/ajax/{segments}',

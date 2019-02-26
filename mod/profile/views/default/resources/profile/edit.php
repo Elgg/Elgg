@@ -3,8 +3,6 @@
  * Edit profile page
  */
 
-elgg_gatekeeper();
-
 $username = elgg_extract('username', $vars);
 $user = get_user_by_username($username);
 

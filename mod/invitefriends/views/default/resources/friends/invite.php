@@ -1,7 +1,5 @@
 <?php
 
-elgg_gatekeeper();
-
 if (!elgg_get_config('allow_registration')) {
 	forward();
 }

@@ -8,6 +8,9 @@ return [
 			'requirements' => [
 				'tab' => '\w+',
 			],
+			'middleware' => [
+				\Elgg\Router\Middleware\AjaxGatekeeper::class,
+			],
 		],
 	],
 ];

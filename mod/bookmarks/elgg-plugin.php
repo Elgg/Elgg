@@ -39,6 +39,9 @@ return [
 		'add:object:bookmarks' => [
 			'path' => '/bookmarks/add/{guid}',
 			'resource' => 'bookmarks/add',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'view:object:bookmarks' => [
 			'path' => '/bookmarks/view/{guid}/{title?}',
@@ -47,10 +50,16 @@ return [
 		'edit:object:bookmarks' => [
 			'path' => '/bookmarks/edit/{guid}',
 			'resource' => 'bookmarks/edit',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'bookmarklet:object:bookmarks' => [
 			'path' => '/bookmarks/bookmarklet/{guid}',
 			'resource' => 'bookmarks/bookmarklet',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 	],
 	'widgets' => [

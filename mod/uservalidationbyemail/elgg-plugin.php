@@ -16,6 +16,9 @@ return [
 			'path' => '/uservalidationbyemail/emailsent',
 			'resource' => 'uservalidationbyemail/emailsent',
 			'walled' => false,
+			'middleware' => [
+				\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+			],
 		],
 	],
 ];
