@@ -6,10 +6,6 @@
  * @subpackage Registration
  */
 
-if (elgg_is_logged_in()) {
-	throw new \Elgg\GatekeeperException();
-}
-
 elgg_signed_request_gatekeeper();
 
 $user_guid = get_input('u');

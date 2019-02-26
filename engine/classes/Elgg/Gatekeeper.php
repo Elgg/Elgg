@@ -95,6 +95,24 @@ class Gatekeeper {
 	}
 
 	/**
+	 * Require a user to be not authenticated (logged out) to with code execution
+	 * @return void
+	 * @throws GatekeeperException
+	 */
+	public function assertUnauthenticatedUser() {
+		if (!$this->session->isLoggedIn()) {
+			return;
+		}
+
+		$msg = $this->translator->translate('loggedoutrequired');
+		
+		$exception = new GatekeeperException($msg, ELGG_HTTP_FORBIDDEN);
+		$exception->setRedirectUrl(elgg_get_site_url());
+		
+		throw $exception;
+	}
+
+	/**
 	 * Require an admin user to be authenticated to proceed with code execution
 	 * @return void
 	 * @throws GatekeeperException

@@ -8,10 +8,6 @@
  * If the user is logged in, this page will forward to the front page.
  */
 
-if (elgg_is_logged_in()) {
-	throw new \Elgg\GatekeeperException();
-}
-
 $title = elgg_echo('login');
 $content = elgg_view('core/account/login_box', ['title' => false]);
 
