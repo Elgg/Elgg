@@ -29,6 +29,9 @@ return [
 		'edit:user' => [
 			'path' => '/profile/{username}/edit',
 			'resource' => 'profile/edit',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 	]
 ];

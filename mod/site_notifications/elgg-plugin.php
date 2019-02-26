@@ -16,6 +16,9 @@ return [
 		'collection:object:site_notification:owner' => [
 			'path' => '/site_notifications/owner/{username}',
 			'resource' => 'site_notifications/owner',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 	],
 ];

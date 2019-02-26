@@ -3,8 +3,6 @@
  * Create a new page
  */
 
-elgg_gatekeeper();
-
 $container = false;
 
 $parent_guid = (int) elgg_extract('guid', $vars);

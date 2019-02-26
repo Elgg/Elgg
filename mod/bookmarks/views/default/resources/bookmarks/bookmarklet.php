@@ -5,8 +5,6 @@
 * @package Bookmarks
 */
 
-elgg_gatekeeper();
-
 $container_guid = elgg_extract('guid', $vars, elgg_extract('container_guid', $vars));
 $container = get_entity($container_guid);
 $page_owner = $container;

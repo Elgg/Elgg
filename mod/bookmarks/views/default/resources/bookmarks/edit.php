@@ -4,7 +4,6 @@
  *
  * @package ElggBookmarks
  */
-elgg_gatekeeper();
 
 $bookmark_guid = elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($bookmark_guid, 'object', 'bookmarks');

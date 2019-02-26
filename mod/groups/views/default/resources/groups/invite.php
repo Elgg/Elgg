@@ -1,7 +1,5 @@
 <?php
 
-elgg_gatekeeper();
-
 $guid = elgg_extract('guid', $vars);
 $group = get_entity($guid);
 if (!($group instanceof ElggGroup) || !$group->canEdit()) {

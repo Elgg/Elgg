@@ -3,8 +3,6 @@
  * Edit an existing collection
  */
 
-elgg_gatekeeper();
-
 $collection_id = elgg_extract('collection_id', $vars);
 $collection = get_access_collection($collection_id);
 
