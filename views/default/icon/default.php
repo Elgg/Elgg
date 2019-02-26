@@ -60,6 +60,9 @@ if (!empty($vars['height'])) {
 }
 
 $img = elgg_view('output/img', $img_params);
+if (empty($img)) {
+	return;
+}
 
 if ($url) {
 	$params = [
