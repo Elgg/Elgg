@@ -507,14 +507,15 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 	}
 
 	$items = [];
+	$items[] = ElggMenuItem::factory([
+		'name' => 'all',
+		'text' => elgg_echo('all'),
+		'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
+		'selected' => ($selected == 'all'),
+		'priority' => 200,
+	]);
+	
 	if ($user) {
-		$items[] = ElggMenuItem::factory([
-			'name' => 'all',
-			'text' => elgg_echo('all'),
-			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
-			'selected' => ($selected == 'all'),
-			'priority' => 200,
-		]);
 		$items[] = ElggMenuItem::factory([
 			'name' => 'mine',
 			'text' => elgg_echo('mine'),
