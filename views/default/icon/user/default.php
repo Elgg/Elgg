@@ -48,6 +48,10 @@ $icon = elgg_view('output/img', [
 	'class' => elgg_extract_class($vars, [], 'img_class'),
 ]);
 
+if (empty($icon)) {
+	return;
+}
+
 $show_menu = elgg_extract('use_hover', $vars, true) && (elgg_is_admin_logged_in() || !$user->isBanned());
 
 $content = '';
