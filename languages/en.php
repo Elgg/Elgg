@@ -27,6 +27,7 @@ return array(
 	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "You must be logged in to view the requested page.",
+	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
 	'limited_access' => "You do not have permission to view the requested page.",

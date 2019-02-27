@@ -5,8 +5,6 @@
 * @package ElggMessages
 */
 
-elgg_gatekeeper();
-
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();

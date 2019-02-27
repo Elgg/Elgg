@@ -32,10 +32,16 @@ return [
 		'add:object:discussion' => [
 			'path' => '/discussion/add/{guid}',
 			'resource' => 'discussion/add',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'edit:object:discussion' => [
 			'path' => '/discussion/edit/{guid}',
 			'resource' => 'discussion/edit',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'view:object:discussion' => [
 			'path' => '/discussion/view/{guid}/{title?}',

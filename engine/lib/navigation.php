@@ -450,7 +450,9 @@ function elgg_push_entity_breadcrumbs(ElggEntity $entity, $link_self = true) {
 function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEntity $container = null, $friends = false) {
 
 	if ($container) {
-		elgg_push_breadcrumb($container->getDisplayName(), $container->getURL());
+		if (!$container instanceof \ElggSite) {
+			elgg_push_breadcrumb($container->getDisplayName(), $container->getURL());
+		}
 
 		if ($friends) {
 			$collection_route = "collection:$entity_type:$entity_subtype:friends";
@@ -458,12 +460,14 @@ function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEnt
 			$collection_route = "collection:$entity_type:$entity_subtype:owner";
 		} else if ($container instanceof ElggGroup) {
 			$collection_route = "collection:$entity_type:$entity_subtype:group";
+		} else if ($container instanceof ElggSite) {
+			$collection_route = "collection:$entity_type:$entity_subtype:all";
 		} else {
 			$collection_route = "collection:$entity_type:$entity_subtype:container";
 		}
 
 		$parameters = _elgg_services()->routes->resolveRouteParameters($collection_route, $container);
-		if ($parameters) {
+		if ($parameters !== false) {
 			$label = elgg_echo("collection:$entity_type:$entity_subtype");
 			if ($friends) {
 				if (elgg_language_key_exists("collection:$entity_type:$entity_subtype:friends")) {
@@ -503,14 +507,15 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 	}
 
 	$items = [];
+	$items[] = ElggMenuItem::factory([
+		'name' => 'all',
+		'text' => elgg_echo('all'),
+		'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
+		'selected' => ($selected == 'all'),
+		'priority' => 200,
+	]);
+	
 	if ($user) {
-		$items[] = ElggMenuItem::factory([
-			'name' => 'all',
-			'text' => elgg_echo('all'),
-			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
-			'selected' => ($selected == 'all'),
-			'priority' => 200,
-		]);
 		$items[] = ElggMenuItem::factory([
 			'name' => 'mine',
 			'text' => elgg_echo('mine'),

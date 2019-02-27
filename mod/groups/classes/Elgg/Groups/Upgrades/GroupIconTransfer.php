@@ -80,7 +80,7 @@ class GroupIconTransfer implements AsynchronousUpgrade {
 	public function transferIcons(\ElggGroup $group, Result $result) {
 
 		$sizes = elgg_get_icon_sizes('group', $group->getSubtype());
-
+		$sizes['original'] = [];
 		$dataroot = elgg_get_config('dataroot');
 		$dir = (new \Elgg\EntityDirLocator($group->owner_guid))->getPath();
 		$prefix = 'groups/';

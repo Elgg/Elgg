@@ -307,7 +307,7 @@ class Plugins {
 			}
 			// remove the priority.
 			$name = $this->namespacePrivateSetting('internal', 'priority');
-			remove_private_setting($plugin->guid, $name);
+			$plugin->removePrivateSetting($name);
 			if ($plugin->isEnabled()) {
 				$plugin->disable();
 			}

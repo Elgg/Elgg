@@ -3,8 +3,6 @@
  * Create a new collection
  */
 
-elgg_gatekeeper();
-
 $username = elgg_extract('username', $vars);
 if ($username) {
 	$user = get_user_by_username($username);

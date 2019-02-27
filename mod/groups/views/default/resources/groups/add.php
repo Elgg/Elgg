@@ -1,7 +1,5 @@
 <?php
 
-elgg_gatekeeper();
-
 elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
 elgg_require_js('elgg/groups/edit');

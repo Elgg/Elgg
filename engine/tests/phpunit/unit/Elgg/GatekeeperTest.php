@@ -44,6 +44,21 @@ class GatekeeperTest extends UnitTestCase {
 	/**
 	 * @expectedException \Elgg\GatekeeperException
 	 */
+	public function testGatekeeperPreventsAccessByLoggedInUser() {
+		$user = $this->createUser();
+		$this->session->setLoggedInUser($user);
+		
+		$this->gatekeeper->assertUnauthenticatedUser();
+		
+	}
+
+	public function testGatekeeperAllowsAccessToGuestUser() {
+		$this->assertNull($this->gatekeeper->assertUnauthenticatedUser());
+	}
+
+	/**
+	 * @expectedException \Elgg\GatekeeperException
+	 */
 	public function testAdminGatekeeperPreventsAccessByGuestUser() {
 		$this->gatekeeper->assertAuthenticatedAdmin();
 	}
