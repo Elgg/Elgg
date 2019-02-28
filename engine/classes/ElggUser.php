@@ -22,6 +22,14 @@ class ElggUser extends \ElggEntity
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 		$this->attributes['subtype'] = 'user';
+		
+		// Before Elgg 3.0 this was handled by database logic
+		$this->banned = 'no';
+		$this->admin = 'no';
+		$this->language = elgg_get_config('language');
+		$this->prev_last_action = 0;
+		$this->last_login = 0;
+		$this->prev_last_login = 0;
 	}
 
 	/**
@@ -77,6 +85,12 @@ class ElggUser extends \ElggEntity
 				$existing_user = get_user_by_username($value);
 				if ($existing_user && ($existing_user->guid !== $this->guid)) {
 					throw new InvalidParameterException("{$name} is supposed to be unique for ElggUser");
+				}
+				break;
+			case 'admin':
+			case 'banned':
+				if (!in_array($value, ['yes', 'no'], true)) {
+					throw new InvalidArgumentException("{$name} only supports 'yes' or 'no' value");
 				}
 				break;
 		}

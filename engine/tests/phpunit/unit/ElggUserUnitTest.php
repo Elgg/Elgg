@@ -84,4 +84,46 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($user->guid, $user->getSystemLogID());
 		$this->assertEquals($user, $user->getObjectFromID($user->guid));
 	}
+	
+	public function testDefaultUserMetadata() {
+		$user = new \ElggUser();
+		
+		$this->assertEquals(0, $user->prev_last_action);
+		$this->assertEquals(0, $user->last_login);
+		$this->assertEquals(0, $user->prev_last_login);
+		$this->assertEquals('no', $user->banned);
+		$this->assertEquals('no', $user->admin);
+		$this->assertNotEmpty($user->language);
+		$this->assertInternalType('string', $user->language);
+	}
+	
+	/**
+	 * @dataProvider incorrectAdminBannedValues
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetIncorrectBannedValue($value) {
+		$user = $this->createUser();
+		
+		$user->banned = $value;
+	}
+	
+	/**
+	 * @dataProvider incorrectAdminBannedValues
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testSetIncorrectAdminValue($value) {
+		$user = $this->createUser();
+		
+		$user->admin = $value;
+	}
+	
+	public function incorrectAdminBannedValues() {
+		return [
+			[1],
+			[0],
+			[true],
+			[false],
+			['some random string'],
+		];
+	}
 }
