@@ -61,24 +61,33 @@ if ($order != 'asc' && $order != 'desc') {
 	$order = 'desc';
 }
 
-// Get object containers: container of comments
+// Get object containers: container of comments and discussion_replies
 $container_guids = array();
 if (!empty($container_guid)) {
 	$container_guids[] = (int)$container_guid; // Add group container to the container's list
-	$comment_subtype_id = get_subtype_id('object', 'comment');
-	if (!empty($comment_subtype_id)) {
+	
+	$subtypes = ['comment', 'discussion_reply'];
+	$subtype_ids = array();
+	foreach ($subtypes as $subtype) {
+		$subtype_id = get_subtype_id('object', $subtype);
+		if (!empty($subtype_id)) {
+			$subtype_ids[] = $subtype_id;
+		}
+	}
+	
+	if (!empty($subtype_ids)) {
+		$string_subtype_ids = implode(',', $subtype_ids);
 		$params = array(
 			'type' => 'object',
 			'container_guid' => (int)$container_guid,
-			'joins' => ["LEFT JOIN elgg_entities AS ce ON ce.container_guid = e.guid AND ce.type = 'object' AND ce.subtype = $comment_subtype_id"],
+			'joins' => ["LEFT JOIN elgg_entities AS ce ON ce.container_guid = e.guid AND ce.type = 'object' AND ce.subtype IN ($string_subtype_ids)"],
 			'wheres' => ["ce.guid IS NOT NULL"],
+			'batch' => true,
+			'callback' => function($row){return (int)$row->guid;},
 			'limit' => 0,
 		);
-		$object_containers = elgg_get_entities($params);
-
-		foreach ($object_containers as $object_container) {
-			$container_guids[] = $object_container->getGUID();
-		}
+		$object_container_ids = elgg_get_entities($params);
+		$container_guids = array_merge($container_guids, $object_container_ids);
 	}
 }
 
