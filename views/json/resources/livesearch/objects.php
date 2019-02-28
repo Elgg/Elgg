@@ -2,14 +2,14 @@
 
 elgg_gatekeeper();
 
-$limit = get_input('limit', elgg_get_config('default_limit'));
-$query = get_input('term', get_input('q'));
-$input_name = get_input('name');
+$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'));
+$query = elgg_extract('term', $vars, elgg_extract('q', $vars));
+$input_name = elgg_extract('name', $vars);
 
 $options = [
 	'query' => $query,
 	'type' => 'object',
-	'subtype' => get_input('subtype'),
+	'subtype' => elgg_extract('subtype', $vars),
 	'limit' => $limit,
 	'sort' => 'title',
 	'order' => 'ASC',
