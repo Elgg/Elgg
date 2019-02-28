@@ -64,22 +64,22 @@ if ($order != 'asc' && $order != 'desc') {
 // Get object containers: container of comments
 $container_guids = array();
 if (!empty($container_guid)) {
+	$container_guids[] = (int)$container_guid; // Add group container to the container's list
 	$comment_subtype_id = get_subtype_id('object', 'comment');
-	$params = array(
-		'type' => 'object',
-		'container_guid' => $container_guid,
-		'joins' => ["LEFT JOIN elgg_entities AS ce ON ce.container_guid = e.guid AND ce.type = 'object' AND ce.subtype = $comment_subtype_id"],
-		'wheres' => ["ce.guid IS NOT NULL"],
-		'limit' => 0,
-	);
-	$object_containers = elgg_get_entities($params);
+	if (!empty($comment_subtype_id)) {
+		$params = array(
+			'type' => 'object',
+			'container_guid' => (int)$container_guid,
+			'joins' => ["LEFT JOIN elgg_entities AS ce ON ce.container_guid = e.guid AND ce.type = 'object' AND ce.subtype = $comment_subtype_id"],
+			'wheres' => ["ce.guid IS NOT NULL"],
+			'limit' => 0,
+		);
+		$object_containers = elgg_get_entities($params);
 
-	foreach ($object_containers as $object_container) {
-		$container_guids[] = $object_container->getGUID();
+		foreach ($object_containers as $object_container) {
+			$container_guids[] = $object_container->getGUID();
+		}
 	}
-	
-	// Add group container to the container's list
-	$container_guids[] = (int)$container_guid;
 }
 
 // set up search params
