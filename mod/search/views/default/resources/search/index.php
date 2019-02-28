@@ -82,7 +82,6 @@ if (!empty($container_guid)) {
 			'container_guid' => (int)$container_guid,
 			'joins' => ["LEFT JOIN elgg_entities AS ce ON ce.container_guid = e.guid AND ce.type = 'object' AND ce.subtype IN ($string_subtype_ids)"],
 			'wheres' => ["ce.guid IS NOT NULL"],
-			'batch' => true,
 			'callback' => function($row){return (int)$row->guid;},
 			'limit' => 0,
 		);
