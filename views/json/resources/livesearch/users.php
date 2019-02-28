@@ -39,6 +39,15 @@ if (elgg_extract('friends_only', $vars, false)) {
 	};
 }
 
+// by default search in all users,
+// with 'include_banned' => false, only search in 'allowed' users
+if (!(bool) elgg_extract('include_banned', $vars, true)) {
+	$options['metadata_name_value_pairs'][] = [
+		'name' => 'banned',
+		'value' => 'no',
+	];
+}
+
 $body = elgg_list_entities($options, 'elgg_search');
 
 echo elgg_view_page('', $body);
