@@ -154,7 +154,7 @@ function discussion_prepare_comment_notification($hook, $type, $notification, $p
 function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 	
 	$event = elgg_extract('event', $params);
-	if (!$event instanceof Elgg\Notifications\NotificationEvent) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
 	

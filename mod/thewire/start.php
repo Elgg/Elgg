@@ -229,6 +229,10 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
  */
 function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 	$event = elgg_extract('event', $params);
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
+		return;
+	}
+
 	$entity = $event->getObject();
 	if (!($entity instanceof ElggWire)) {
 		return;
