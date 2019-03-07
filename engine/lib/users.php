@@ -609,7 +609,7 @@ function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $pa
 	}
 
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\Event)) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
 
@@ -618,11 +618,11 @@ function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $pa
 	}
 
 	$user = $event->getObject();
-	if (!($user instanceof \ElggUser)) {
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 
-	$return_value[$user->getGUID()] = ['email'];
+	$return_value[$user->guid] = ['email'];
 
 	return $return_value;
 }

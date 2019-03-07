@@ -158,6 +158,10 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 		return;
 	}
 	
+	if ($event->getAction() !== 'create') {
+		return;
+	}
+	
 	$comment = $event->getObject();
 	if (!$comment instanceof ElggComment) {
 		return;
