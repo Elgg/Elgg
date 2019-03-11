@@ -78,6 +78,30 @@ $params = array(
 	'pagination' => ($search_type == 'all') ? FALSE : TRUE
 );
 
+if (!empty($container_guid)) {
+	// INNER JOIN APPROACH
+	$params['joins'] = ['JOIN '.elgg_get_config('dbprefix').'entities AS pe ON e.container_guid = pe.guid'];
+	$params['wheres'] = ["((e.container_guid = $container_guid) OR (pe.container_guid = $container_guid))"];
+	unset($params['container_guid']);
+	// OR
+	// CONDITIONAL LEFT OUTTER JOIN APPROACH
+	/*$subtypes = ['comment', 'discussion_reply']; //TODO: add a hook to support custom subtypes
+	$subtype_ids = array();
+	foreach ($subtypes as $subtype) {
+		$subtype_id = get_subtype_id('object', $subtype);
+		if (!empty($subtype_id)) {
+			$subtype_ids[] = $subtype_id;
+		}
+	}
+	if (!empty($subtype_ids)) {
+		$string_subtype_ids = implode(',', $subtype_ids);
+		
+		$params['joins'] = ["LEFT JOIN ".elgg_get_config('dbprefix')."entities AS pe ON e.container_guid = pe.guid AND e.type = 'object' AND e.subtype IN ($string_subtype_ids)"];
+		$params['wheres'] = ["((e.container_guid = $container_guid) OR (pe.container_guid = $container_guid))"];
+		unset($params['container_guid']);
+	}*/
+}
+
 $types = get_registered_entity_types();
 $types = elgg_trigger_plugin_hook('search_types', 'get_queries', $params, $types);
 
