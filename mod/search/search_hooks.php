@@ -26,7 +26,7 @@ function search_comments_hook($hook, $type, $value, $params) {
 		$params['joins'] = elgg_extract('joins', $params, []);
 		$params['joins'][] = 'JOIN '.elgg_get_config('dbprefix').'entities AS pe ON e.container_guid = pe.guid';
 		$params["wheres"] = elgg_extract("wheres", $params, []);
-		$params['wheres'] = "((e.container_guid = $container_guid) OR (pe.container_guid = $container_guid))";
+		$params['wheres'][] = "((e.container_guid = $container_guid) OR (pe.container_guid = $container_guid))";
 	}
 	
 	// trigger the 'normal' object search as it can handle the added options
