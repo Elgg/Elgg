@@ -790,16 +790,14 @@ class Plugins {
 			return array_values($this->boot_plugins);
 		}
 		
-		$priority = $this->namespacePrivateSetting('internal', 'priority');
+		$volatile_data_name = null;
 		$site_guid = 1;
 
 		// grab plugins
 		$options = [
 			'type' => 'object',
 			'subtype' => 'plugin',
-			'limit' => 0,
-			'selects' => ['ps.value'],
-			'private_setting_names' => [$priority],
+			'limit' => false,
 			// ORDER BY CAST(ps.value) is super slow. We custom sorting below.
 			'order_by' => false,
 			// preload private settings because private settings will probably be used, at least priority
@@ -811,17 +809,23 @@ class Plugins {
 				$options['relationship'] = 'active_plugin';
 				$options['relationship_guid'] = $site_guid;
 				$options['inverse_relationship'] = true;
+				
+				// shorten callstack
+				$volatile_data_name = 'select:value';
+				$options['select'] = ['ps.value'];
+				$options['private_setting_names'] = [
+					$this->namespacePrivateSetting('internal', 'priority'),
+				];
 				break;
 
 			case 'inactive':
-				$options['wheres'][] = function (QueryBuilder $qb) {
+				$options['wheres'][] = function (QueryBuilder $qb, $main_alias) {
 					$subquery = $qb->subquery('entity_relationships', 'active_er');
-					$subquery->select('*')
-						->where($qb->compare('active_er.guid_one', '=', 'e.guid'))
-						->andWhere($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))
-						->andWhere($qb->compare('active_er.guid_two', '=', 1));
+					$subquery->select('active_er.guid_one')
+						->where($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))
+						->andWhere($qb->compare('active_er.guid_two', '=', $site_guid, ELGG_VALUE_GUID));
 
-					return "NOT EXISTS ({$subquery->getSQL()})";
+					return $qb->compare("{$main_alias}.guid", 'NOT IN', $subquery->getSQL());
 				};
 				break;
 
@@ -834,7 +838,7 @@ class Plugins {
 		$plugins = elgg_get_entities($options) ? : [];
 		$this->session->setIgnoreAccess($old_ia);
 
-		$result = $this->orderPluginsByPriority($plugins, 'select:value');
+		$result = $this->orderPluginsByPriority($plugins, $volatile_data_name);
 		
 		if ($status === 'active' && !isset($this->boot_plugins)) {
 			// populate local cache if for some reason this is not set yet
