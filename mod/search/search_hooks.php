@@ -7,6 +7,33 @@
  */
 
 /**
+ * Search in group and in object containers
+ *
+ * @param string $hook   the name of the hook
+ * @param string $type   the type of the hook
+ * @param mixed  $value  the current return value
+ * @param array  $params supplied params
+ */
+function search_comments_hook($hook, $type, $value, $params) {
+
+	if (empty($params) || !is_array($params)) {
+		return $value;
+	}
+
+	$container_guid = elgg_extract('container_guid', $params);
+	if (!empty($container_guid)) {
+		unset($params['container_guid']);
+		$params['joins'] = elgg_extract('joins', $params, []);
+		$params['joins'][] = 'JOIN '.elgg_get_config('dbprefix').'entities AS pe ON e.container_guid = pe.guid';
+		$params["wheres"] = elgg_extract("wheres", $params, []);
+		$params['wheres'] = "((e.container_guid = $container_guid) OR (pe.container_guid = $container_guid))";
+	}
+	
+	// trigger the 'normal' object search as it can handle the added options
+	return elgg_trigger_plugin_hook('search', 'object', $params, array());
+}
+
+/**
  * Get objects that match the search parameters.
  *
  * @param string $hook   Hook name

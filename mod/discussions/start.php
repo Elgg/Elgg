@@ -626,6 +626,16 @@ function discussion_search_discussion($hook, $type, $value, $params) {
 	unset($params["subtype"]);
 	$params["subtypes"] = array("discussion", "discussion_reply");
 
+	// Search in group and in discussion containers
+	$container_guid = elgg_extract('container_guid', $params);
+	if (!empty($container_guid)) {
+		unset($params['container_guid']);
+		$params['joins'] = elgg_extract('joins', $params, []);
+		$params['joins'][] = 'JOIN '.elgg_get_config('dbprefix').'entities AS pe ON e.container_guid = pe.guid';
+		$params["wheres"] = elgg_extract("wheres", $params, []);
+		$params['wheres'] = "((e.container_guid = $container_guid) OR (pe.container_guid = $container_guid))";
+	}
+	
 	// trigger the 'normal' object search as it can handle the added options
 	return elgg_trigger_plugin_hook('search', 'object', $params, array());
 }

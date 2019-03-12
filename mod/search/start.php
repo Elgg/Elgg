@@ -17,6 +17,7 @@ function search_init() {
 	elgg_register_page_handler('search', 'search_page_handler');
 
 	// register some default search hooks
+	elgg_register_plugin_hook_handler('search', 'object:comment', 'search_comments_hook');
 	elgg_register_plugin_hook_handler('search', 'object', 'search_objects_hook');
 	elgg_register_plugin_hook_handler('search', 'user', 'search_users_hook');
 	elgg_register_plugin_hook_handler('search', 'group', 'search_groups_hook');
