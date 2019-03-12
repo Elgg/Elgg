@@ -233,8 +233,12 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 		return;
 	}
 
+	if ($event->getAction() !== 'create') {
+		return;
+	}
+	
 	$entity = $event->getObject();
-	if (!($entity instanceof ElggWire)) {
+	if (!$entity instanceof ElggWire) {
 		return;
 	}
 	
@@ -250,11 +254,11 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 	/* @var $parent ElggWire */
 	$parent = $parents[0];
 	// do not add a subscription if reply was to self
-	if ($parent->getOwnerGUID() === $entity->getOwnerGUID()) {
+	if ($parent->owner_guid === $entity->owner_guid) {
 		return;
 	}
 	
-	if (array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
+	if (array_key_exists($parent->owner_guid, $subscriptions)) {
 		// already in the list
 		return;
 	}
@@ -273,7 +277,7 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 		return;
 	}
 	
-	$subscriptions[$parent->getOwnerGUID()] = $methods;
+	$subscriptions[$parent->owner_guid] = $methods;
 	return $subscriptions;
 }
 

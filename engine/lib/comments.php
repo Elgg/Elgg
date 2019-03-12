@@ -280,7 +280,11 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $returnvalue, $params) {
 	
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\NotificationEvent)) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
+		return;
+	}
+	
+	if ($event->getAction() !== 'create') {
 		return;
 	}
 	
@@ -290,7 +294,7 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 	}
 	
 	$content_owner = $object->getContainerEntity()->getOwnerEntity();
-	if (!($content_owner instanceof ElggUser)) {
+	if (!$content_owner instanceof ElggUser) {
 		return;
 	}
 	
@@ -299,13 +303,13 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 		return;
 	}
 	
-	$returnvalue[$content_owner->getGUID()] = [];
+	$returnvalue[$content_owner->guid] = [];
 	foreach ($notification_settings as $method => $enabled) {
 		if (empty($enabled)) {
 			continue;
 		}
 		
-		$returnvalue[$content_owner->getGUID()][] = $method;
+		$returnvalue[$content_owner->guid][] = $method;
 	}
 	
 	return $returnvalue;

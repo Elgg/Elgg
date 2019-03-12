@@ -21,6 +21,7 @@
  */
 
 use Elgg\Menu\MenuItems;
+use Elgg\Database\QueryBuilder;
 
 /**
  * Get the admin users
@@ -804,7 +805,7 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 	}
 	
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\Event)) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
 	
@@ -813,7 +814,7 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 	}
 	
 	$user = $event->getObject();
-	if (!($user instanceof \ElggUser)) {
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 	
@@ -821,14 +822,16 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 	$admin_batch = elgg_get_admins([
 		'limit' => false,
 		'wheres' => [
-			"e.guid <> {$user->getGUID()}",
+			function (QueryBuilder $qb, $main_alias) use ($user) {
+				return $qb->compare("{$main_alias}.guid", '!=', $user->guid, ELGG_VALUE_GUID);
+			},
 		],
 		'batch' => true,
 	]);
 	
 	/* @var $admin \ElggUser */
 	foreach ($admin_batch as $admin) {
-		$return_value[$admin->getGUID()] = ['email'];
+		$return_value[$admin->guid] = ['email'];
 	}
 	
 	return $return_value;
@@ -945,7 +948,7 @@ function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_valu
 	}
 	
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\Event)) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
 	
@@ -954,11 +957,11 @@ function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_valu
 	}
 	
 	$user = $event->getObject();
-	if (!($user instanceof \ElggUser)) {
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 	
-	$return_value[$user->getGUID()] = ['email'];
+	$return_value[$user->guid] = ['email'];
 	
 	return $return_value;
 }
