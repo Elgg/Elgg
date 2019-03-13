@@ -20,7 +20,7 @@
 }
 
 .elgg-image-block > .elgg-body {
-	flex: 1;
+	flex: 1 1 auto;
 }
 
 .elgg-image-block.elgg-chip {

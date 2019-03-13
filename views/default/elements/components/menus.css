@@ -305,7 +305,7 @@
 }
 
 .elgg-menu-hover .elgg-menu {
-	flex: 1;
+	flex: 1 1 auto;
 	max-width: 20rem;
 	
 	&.elgg-menu-hover-actions {
