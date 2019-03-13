@@ -26,6 +26,10 @@ define(function (require) {
 		$target.siblings().addClass('hidden').removeClass('elgg-state-active');
 		$target.removeClass('hidden').addClass('elgg-state-active');
 
+		// trigger scroll to close potential open menus
+		// see elgg/popup.js open function
+		$(document).trigger('scroll');
+		
 		return true;
 	};
 	
