@@ -8,6 +8,7 @@ use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\EventsService as Events;
 use Elgg\TimeUsing;
 use ElggMetadata;
+use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * This class interfaces with the database to perform CRUD operations on metadata
@@ -104,7 +105,7 @@ class MetadataTable {
 	/**
 	 * Get popular tags and their frequencies
 	 *
-	 * Accepts all options supported by {@link elgg_get_entities()}
+	 * Accepts all options supported by {@see elgg_get_metadata()}
 	 *
 	 * Returns an array of objects that include "tag" and "total" properties
 	 *
@@ -114,11 +115,11 @@ class MetadataTable {
 	 *
 	 * @param array $options Options
 	 *
-	 * @return    object[]|false
-	 * @throws \DatabaseException
 	 * @option int      $threshold Minimum number of tag occurrences
 	 * @option string[] $tag_names Names of registered tag names to include in search
 	 *
+	 * @return \stdClass[]|false
+	 * @throws \DatabaseException
 	 */
 	public function getTags(array $options = []) {
 		$defaults = [
@@ -140,21 +141,56 @@ class MetadataTable {
 
 		unset($options['tag_names']);
 		unset($options['threshold']);
-
-		$qb = \Elgg\Database\Select::fromTable('metadata', 'md');
-		$qb->select('md.value AS tag')
-			->addSelect('COUNT(md.id) AS total')
-			->where($qb->compare('md.name', 'IN', $tag_names, ELGG_VALUE_STRING))
-			->andWhere($qb->compare('md.value', '!=', '', ELGG_VALUE_STRING))
-			->groupBy('md.value')
-			->having($qb->compare('total', '>=', $threshold, ELGG_VALUE_INTEGER))
-			->orderBy('total', 'desc');
-
-		$options = new \Elgg\Database\QueryOptions($options);
-		$alias = $qb->joinEntitiesTable('md', 'entity_guid', 'inner', 'e');
-		$qb->addClause(\Elgg\Database\Clauses\EntityWhereClause::factory($options), $alias);
-
-		return _elgg_services()->db->getData($qb);
+		
+		// custom selects
+		$options['selects'] = [
+			function(QueryBuilder $qb, $main_alias) {
+				return "{$main_alias}.value AS tag";
+			},
+			function(QueryBuilder $qb, $main_alias) {
+				return "COUNT({$main_alias}.id) AS total";
+			},
+		];
+		
+		// additional wheres
+		$wheres = (array) elgg_extract('wheres', $options, []);
+		$wheres[] = function(QueryBuilder $qb, $main_alias) use ($tag_names) {
+			return $qb->compare("{$main_alias}.name", 'in', $tag_names, ELGG_VALUE_STRING);
+		};
+		$wheres[] = function(QueryBuilder $qb, $main_alias) {
+			return $qb->compare("{$main_alias}.value", '!=', '', ELGG_VALUE_STRING);
+		};
+		$options['wheres'] = $wheres;
+		
+		// custom group by
+		$options['group_by'] = [
+			function(QueryBuilder $qb, $main_alias) {
+				return "{$main_alias}.value";
+			},
+		];
+		
+		// having
+		$having = (array) elgg_extract('having', $options, []);
+		$having[] = function(QueryBuilder $qb, $main_alias) use ($threshold) {
+			return $qb->compare('total', '>=', $threshold, ELGG_VALUE_INTEGER);
+		};
+		$options['having'] = $having;
+		
+		// order by
+		$options['order_by'] = [
+			new OrderByClause('total', 'desc'),
+		];
+		
+		// custom callback
+		$options['callback'] = function($row) {
+			$result = new \stdClass();
+			$result->tag = $row->tag;
+			$result->total = (int) $row->total;
+			
+			return $result;
+		};
+		
+		return $this->getAll($options);
 	}
 
 	/**
