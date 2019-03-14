@@ -1121,13 +1121,17 @@ trait LegacyQueryOptionsAdapter {
 			}
 		}
 
-		$options['group_by'] = array_map(function ($e) {
-			if (!$e instanceof GroupByClause) {
-				$e = new GroupByClause(trim($e));
+		foreach ($options['group_by'] as $key => $expr) {
+			if ($expr instanceof GroupByClause) {
+				continue;
 			}
-
-			return $e;
-		}, $options['group_by']);
+			
+			if (is_string($expr)) {
+				$expr = trim($expr);
+			}
+			
+			$options['group_by'][$key] = new GroupByClause($expr);
+		}
 
 		return $options;
 	}
