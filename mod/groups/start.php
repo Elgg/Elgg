@@ -439,6 +439,7 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 		'icon' => 'user-times',
 		'confirm' => true,
 		'priority' => 999,
+		'section' => 'action',
 	]);
 
 	return $return;
