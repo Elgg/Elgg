@@ -136,7 +136,7 @@ function elgg_generate_action_url($action, array $query = [], $add_csrf_tokens =
  * Used at the top of a page to mark it as logged in users only.
  *
  * @return void
- * @throws \Elgg\GatekeeperException
+ * @throws \Elgg\Http\Exception\LoggedInGatekeeperException
  * @since 1.9.0
  */
 function elgg_gatekeeper() {
@@ -147,7 +147,7 @@ function elgg_gatekeeper() {
  * Used at the top of a page to mark it as admin only.
  *
  * @return void
- * @throws \Elgg\GatekeeperException
+ * @throws \Elgg\Http\Exception\AdminGatekeeperException
  * @since 1.9.0
  */
 function elgg_admin_gatekeeper() {
@@ -169,6 +169,7 @@ function elgg_admin_gatekeeper() {
  *
  * @throws Exception
  * @throws \Elgg\EntityNotFoundException
+ * @throws \Elgg\EntityPermissionsException
  * @throws \Elgg\HttpException
  * @since 1.9.0
  */
@@ -182,7 +183,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
  * will end and a 400 response page will be sent.
  *
  * @return void
- * @throws \Elgg\BadRequestException
+ * @throws \Elgg\Http\Exception\AjaxGatekeeperException
  * @since 1.12.0
  */
 function elgg_ajax_gatekeeper() {

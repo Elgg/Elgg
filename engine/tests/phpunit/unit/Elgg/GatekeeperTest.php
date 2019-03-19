@@ -27,7 +27,7 @@ class GatekeeperTest extends UnitTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\GatekeeperException
+	 * @expectedException \Elgg\Http\Exception\LoggedInGatekeeperException
 	 */
 	public function testGatekeeperPreventsAccessByGuestUser() {
 		$this->gatekeeper->assertAuthenticatedUser();
@@ -42,7 +42,7 @@ class GatekeeperTest extends UnitTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\GatekeeperException
+	 * @expectedException \Elgg\Http\Exception\LoggedOutGatekeeperException
 	 */
 	public function testGatekeeperPreventsAccessByLoggedInUser() {
 		$user = $this->createUser();
@@ -64,7 +64,7 @@ class GatekeeperTest extends UnitTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\GatekeeperException
+	 * @expectedException \Elgg\Http\Exception\AdminGatekeeperException
 	 */
 	public function testAdminGatekeeperPreventsAccessByNonAdminUser() {
 		$user = $this->createUser();
@@ -96,7 +96,7 @@ class GatekeeperTest extends UnitTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\EntityNotFoundException
+	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testEntityGatekeeperPreventsAccessToNonPublicEntity() {
 		$user = $this->createUser();
@@ -219,7 +219,7 @@ class GatekeeperTest extends UnitTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\EntityNotFoundException
+	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testEntityGatekeeperPreventsAccessToPublicEntityWithNonPublicParent() {
 
@@ -428,7 +428,7 @@ class GatekeeperTest extends UnitTestCase {
 		]);
 
 		$handler = function (Hook $hook) {
-			$this->assertInstanceOf(EntityNotFoundException::class, $hook->getValue());
+			$this->assertInstanceOf(EntityPermissionsException::class, $hook->getValue());
 
 			return true;
 		};
@@ -443,7 +443,7 @@ class GatekeeperTest extends UnitTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\BadRequestException
+	 * @expectedException \Elgg\Http\Exception\AjaxGatekeeperException
 	 */
 	public function testXhrGatekeeperPreventsAccess() {
 		$this->gatekeeper->assertXmlHttpRequest();
