@@ -219,7 +219,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 	}
 
 	/**
-	 * @expectedException \Elgg\EntityNotFoundException
+	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testViewRouteRespondsWithErrorIfEntityIsNotFound() {
 
