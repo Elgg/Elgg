@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\EntityIcon;
+use Elgg\Database\QueryBuilder;
 
 /**
  * The parent class for all Elgg Entities.
@@ -1639,7 +1640,9 @@ abstract class ElggEntity extends \ElggData implements
 			$callback = function () use ($guid, $reason) {
 				$base_options = [
 					'wheres' => [
-						"e.guid != $guid",
+						function(QueryBuilder $qb, $main_alias) use ($guid) {
+							return $qb->compare("{$main_alias}.guid", '!=', $guid, ELGG_VALUE_GUID);
+						},
 					],
 					'limit' => false,
 				];

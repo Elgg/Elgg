@@ -679,15 +679,15 @@ class EntityTable {
 		$ia = $this->session->setIgnoreAccess(true);
 
 		$options = [
-			'wheres' => function (QueryBuilder $qb) use ($entity) {
+			'wheres' => function (QueryBuilder $qb, $main_alias) use ($entity) {
 				$ors = $qb->merge([
-					$qb->compare('e.owner_guid', '=', $entity->guid, ELGG_VALUE_INTEGER),
-					$qb->compare('e.container_guid', '=', $entity->guid, ELGG_VALUE_INTEGER),
+					$qb->compare("{$main_alias}.owner_guid", '=', $entity->guid, ELGG_VALUE_GUID),
+					$qb->compare("{$main_alias}.container_guid", '=', $entity->guid, ELGG_VALUE_GUID),
 				], 'OR');
 
 				return $qb->merge([
 					$ors,
-					$qb->compare('e.guid', 'neq', $entity->guid, ELGG_VALUE_INTEGER),
+					$qb->compare("{$main_alias}.guid", 'neq', $entity->guid, ELGG_VALUE_GUID),
 				]);
 			},
 			'limit' => false,
