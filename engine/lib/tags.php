@@ -31,7 +31,7 @@ function string_to_tag_array($string) {
 /**
  * Get popular tags and their frequencies
  *
- * Accepts all options supported by {@link elgg_get_entities()}
+ * Accepts all options supported by {@see elgg_get_metadata()}
  *
  * Returns an array of objects that include "tag" and "total" properties
  *
@@ -44,7 +44,7 @@ function string_to_tag_array($string) {
  * @option int      $threshold Minimum number of tag occurrences
  * @option string[] $tag_names Names of registered tag names to include in search
  *
- * @return 	object[]|false
+ * @return stdClass[]|false
  * @since 1.7.1
  */
 function elgg_get_tags(array $options = []) {

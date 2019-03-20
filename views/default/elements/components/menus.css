@@ -165,11 +165,10 @@
 
 .elgg-menu-entity-navigation {
 	flex-direction: row;
-	justify-content: flex-end;
-}
-
-.elgg-menu-entity-navigation .elgg-menu-item-previous {
-	margin-right: auto;
+	
+	.elgg-menu-item-next {
+		margin-left: auto;
+	}
 }
 
 /* ***************************************
@@ -306,7 +305,7 @@
 }
 
 .elgg-menu-hover .elgg-menu {
-	flex: 1;
+	flex: 1 1 auto;
 	max-width: 20rem;
 	
 	&.elgg-menu-hover-actions {
