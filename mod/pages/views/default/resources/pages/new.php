@@ -8,10 +8,10 @@
 elgg_gatekeeper();
 
 $container_guid = (int) elgg_extract('guid', $vars);
+
+elgg_entity_gatekeeper($container_guid);
+
 $container = get_entity($container_guid);
-if (!$container) {
-	forward(REFERER);
-}
 
 $parent_guid = 0;
 $page_owner = $container;
@@ -21,6 +21,14 @@ if (elgg_instanceof($container, 'object')) {
 }
 
 elgg_set_page_owner_guid($page_owner->getGUID());
+
+elgg_group_gatekeeper();
+
+// Make sure user has permissions to add to container
+if (!$page_owner->canWriteToContainer(0, 'object', 'page') && !$page_owner->canWriteToContainer(0, 'object', 'page_top')) {
+	register_error(elgg_echo('actionunauthorized'));
+	forward(REFERER);
+}
 
 $title = elgg_echo('pages:add');
 elgg_push_breadcrumb($title);

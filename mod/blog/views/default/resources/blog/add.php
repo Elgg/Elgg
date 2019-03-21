@@ -3,7 +3,18 @@
 elgg_gatekeeper();
 
 $page_type = elgg_extract('page_type', $vars);
-$guid = elgg_extract('guid', $vars);
+$guid = (int) elgg_extract('guid', $vars);
+
+elgg_entity_gatekeeper($guid);
+elgg_group_gatekeeper(true, $guid);
+
+$container = get_entity($guid);
+
+// Make sure user has permissions to add to container
+if (!$container->canWriteToContainer(0, 'object', 'blog')) {
+	register_error(elgg_echo('actionunauthorized'));
+	forward(REFERER);
+}
 
 $params = blog_get_page_content_edit('add', $guid);
 

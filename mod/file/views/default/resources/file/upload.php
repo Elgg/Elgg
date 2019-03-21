@@ -12,6 +12,12 @@ $owner = elgg_get_page_owner_entity();
 elgg_gatekeeper();
 elgg_group_gatekeeper();
 
+// Make sure user has permissions to add to container
+if (!$owner->canWriteToContainer(0, 'object', 'file')) {
+	register_error(elgg_echo('actionunauthorized'));
+	forward(REFERER);
+}
+
 $title = elgg_echo('file:add');
 
 // set up breadcrumbs

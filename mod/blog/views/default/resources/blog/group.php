@@ -6,11 +6,10 @@ $group_guid = elgg_extract('group_guid', $vars);
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 
-$group = get_entity($group_guid);
+elgg_entity_gatekeeper($group_guid, 'group');
+elgg_group_gatekeeper();
 
-if (!elgg_instanceof($group, 'group')) {
-	forward('', '404');
-}
+$group = get_entity($group_guid);
 
 if (!isset($subpage) || $subpage == 'all') {
 	$params = blog_get_page_content_list($group_guid);
