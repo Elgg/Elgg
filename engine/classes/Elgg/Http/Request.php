@@ -153,7 +153,7 @@ class Request extends SymfonyRequest {
 		$attributes = $this->attributes->all();
 		$post = $this->request->all();
 
-		$result = array_merge($query, $attributes, $post);
+		$result = array_merge($post, $attributes, $query);
 
 		if ($filter_result) {
 			$result = filter_tags($result);
