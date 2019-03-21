@@ -6,12 +6,11 @@
 $guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($guid);
 
+elgg_entity_gatekeeper($guid, 'group');
 elgg_group_gatekeeper();
 
 $group = get_entity($guid);
-if (!elgg_instanceof($group, 'group')) {
-	forward('', '404');
-}
+
 elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb(elgg_echo('item:object:discussion'));
 
