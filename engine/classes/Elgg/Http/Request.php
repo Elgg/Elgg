@@ -126,17 +126,12 @@ class Request extends SymfonyRequest {
 	public function getParam($key, $default = null, $filter_result = true) {
 		$result = $default;
 
-		$this->getContextStack()->push('input');
+		$values = $this->getParams($filter_result);
 
-		$value = $this->get($key);
+		$value = elgg_extract($key, $values, $default);
 		if ($value !== null) {
 			$result = $value;
-			if ($filter_result) {
-				$result = filter_tags($result);
-			}
 		}
-
-		$this->getContextStack()->pop();
 
 		return $result;
 	}
@@ -156,7 +151,11 @@ class Request extends SymfonyRequest {
 		$result = array_merge($post, $attributes, $query);
 
 		if ($filter_result) {
+			$this->getContextStack()->push('input');
+			
 			$result = filter_tags($result);
+			
+			$this->getContextStack()->pop();
 		}
 
 		return $result;
