@@ -9,6 +9,11 @@
  * @uses $vars['descrption'] The description for the RSS feed
  */
 
+ // Don't show RSS if disabled
+ if (_elgg_config()->disable_rss) {
+ 	throw new \Elgg\PageNotFoundException();
+ }
+
 // Set title
 if (empty($vars['title'])) {
 	$title = elgg_get_config('sitename');
