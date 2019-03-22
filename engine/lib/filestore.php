@@ -375,7 +375,7 @@ function _elgg_filestore_move_icons($event, $type, $entity) {
  * Returns an array of uploaded file objects regardless of upload status/errors
  *
  * @param string $input_name Form input name
- * @return UploadedFile[]|false
+ * @return UploadedFile[]
  */
 function elgg_get_uploaded_files($input_name) {
 	return _elgg_services()->uploads->getFiles($input_name);

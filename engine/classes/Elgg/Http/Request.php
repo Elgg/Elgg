@@ -368,7 +368,11 @@ class Request extends SymfonyRequest {
 	 * @return UploadedFile[]
 	 */
 	public function getFiles($input_name) {
-		$files = $this->files->get($input_name, []);
+		$files = $this->files->get($input_name);
+		if (empty($files)) {
+			return [];
+		}
+
 		if (!is_array($files)) {
 			$files = [$files];
 		}
