@@ -14,6 +14,12 @@
  * @uses $vars['thumb_size']     the icon size to use as the thumb (default: medium)
  */
 
+$entity = elgg_extract('entity', $vars);
+if ($entity instanceof ElggEntity) {
+	$vars['entity_type'] = elgg_extract('entity_type', $vars, $entity->getType());
+	$vars['entity_subtype'] = elgg_extract('entity_subtype', $vars, $entity->getSubtype());
+}
+
 $content = elgg_view('entity/edit/icon/file', $vars);
 $content .= elgg_view('entity/edit/icon/thumb', $vars);
 $content .= elgg_view('entity/edit/icon/remove', $vars);
