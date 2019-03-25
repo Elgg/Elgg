@@ -277,6 +277,11 @@ class AccessCollections {
 			return true;
 		}
 
+		if ($user_guid && !$entity->canEdit($user_guid)) {
+			// Current logged in user (Owner/Admin) has edit access to the content
+			return false;
+		}
+
 		// See #7159. Must not allow ignore access to affect query
 		$ia = _elgg_services()->session->setIgnoreAccess(false);
 
