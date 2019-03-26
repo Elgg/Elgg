@@ -1,7 +1,7 @@
 <?php
 
 $guid = elgg_extract('guid', $vars);
-elgg_entity_gatekeeper($guid, 'object', 'blog');
+elgg_entity_gatekeeper($guid, 'object', 'blog', true);
 
 $blog = get_entity($guid);
 if (!$blog->canEdit()) {

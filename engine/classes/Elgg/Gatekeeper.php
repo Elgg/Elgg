@@ -109,7 +109,7 @@ class Gatekeeper {
 
 		$exception = new LoggedOutGatekeeperException();
 		$exception->setRedirectUrl(elgg_get_site_url());
-		
+
 		throw $exception;
 	}
 
@@ -168,19 +168,33 @@ class Gatekeeper {
 	/**
 	 * Require that authenticated user has access to entity
 	 *
-	 * @param ElggEntity $entity Entity
-	 * @param ElggUser   $user   User
+	 * @param ElggEntity $entity       Entity
+	 * @param ElggUser   $user         User
+	 * @param bool       $canEditCheck flag to check canEdit access
 	 *
 	 * @return void
 	 * @throws HttpException
 	 */
-	public function assertAccessibleEntity(ElggEntity $entity, ElggUser $user = null) {
+	public function assertAccessibleEntity(ElggEntity $entity, ElggUser $user = null, $canEditCheck = false) {
 
 		$result = true;
 
 		try {
 			if (!$this->session->getIgnoreAccess() && !$this->access->hasAccessToEntity($entity, $user)) {
 				// user is logged in but still does not have access to it
+				$msg = $this->translator->translate('limited_access');
+				$exception = new EntityPermissionsException($msg);
+				$exception->setParams([
+					'entity' => $entity,
+					'user' => $user,
+					'route' => $this->request->get('_route'),
+				]);
+				throw $exception;
+			}
+
+			$user_guid = isset($user) ? (int) $user->guid : _elgg_services()->session->getLoggedInUserGuid();
+			if ($canEditCheck && !$entity->canEdit($user_guid)) {
+				// logged in user does not have edit or write access to it
 				$msg = $this->translator->translate('limited_access');
 				$exception = new EntityPermissionsException($msg);
 				$exception->setParams([
@@ -250,7 +264,7 @@ class Gatekeeper {
 		if (!$user->isBanned()) {
 			return;
 		}
-		
+
 		if (!isset($viewer)) {
 			$viewer = $this->session->getLoggedInUser();
 		}
@@ -280,7 +294,7 @@ class Gatekeeper {
 		if ($group->canAccessContent($user)) {
 			return;
 		}
-		
+
 		$this->assertAuthenticatedUser();
 
 		$this->redirects->setLastForwardFrom();

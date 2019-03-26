@@ -5,7 +5,7 @@
 
 $page_guid = (int) elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($page_guid, 'object', 'page');
+elgg_entity_gatekeeper($page_guid, 'object', 'page', true);
 
 $page = get_entity($page_guid);
 if (!$page->canEdit()) {
