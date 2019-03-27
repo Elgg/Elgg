@@ -1,12 +1,17 @@
 /* ***************************************
 	FILTER MENU AND TABS
 *************************************** */
+.elgg-layout-filter {
+	overflow: auto;
+	white-space: nowrap;
+}
+
 .elgg-menu-filter,
 .elgg-tabs {
 	margin-bottom: 0.5rem;
 	border-bottom: 1px solid $(border-color-soft);
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 }
 
 .elgg-menu-filter > li,
