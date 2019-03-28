@@ -1,5 +1,8 @@
-Page/elements/foot vs footer
+page/elements/footer vs foot
 ============================
+
+Footer
+------
 
 ``page/elements/footer`` is the content that goes inside this part of the page:
 
@@ -11,6 +14,14 @@ Page/elements/foot vs footer
 		</div>
 	</div>
 
-It's content is visible to end users and usually where you would put a sitemap or other secondary global navigation, copyright info, powered by elgg, etc.
+It's content is visible to end users and usually where you would put a sitemap or other secondary global navigation, copyright info, 
+powered by Elgg, etc.
 
-``page/elements/foot`` is inserted just before the ending ``</body>`` tag and is mostly meant as a place to insert scripts that don't already work with ``elgg_register_js(array('location' => 'footer'));`` or ``elgg_require_js('amd/module');``. In other words, you should never override this view and probably don't need to extend it either. Just use the ``elgg_*_js`` functions instead
+Foot
+----
+
+``page/elements/foot`` is inserted just before the ending ``</body>`` tag.
+It is mostly meant as a place to insert scripts that don't already work with ``elgg_register_js(array('location' => 'footer'));`` 
+or ``elgg_require_js('amd/module');``. 
+
+In other words, you should never override this view and probably don't need to extend it either. Just use the ``elgg_*_js`` functions instead.

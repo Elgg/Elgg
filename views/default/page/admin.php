@@ -39,7 +39,7 @@ $page_vars['class'] = elgg_extract_class($page_vars, ['elgg-page', 'elgg-page-ad
 
 $body = elgg_format_element('div', $page_vars, $page);
 
-$body .= elgg_view('page/elements/foot');
+$body .= elgg_view('page/elements/foot', $vars);
 
 $head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
 

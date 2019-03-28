@@ -45,7 +45,7 @@ $body = <<<__BODY
 </div>
 __BODY;
 
-$body .= elgg_view('page/elements/foot');
+$body .= elgg_view('page/elements/foot', $vars);
 
 $head = elgg_view('page/elements/head', elgg_extract('head', $vars, []));
 
