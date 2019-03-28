@@ -429,7 +429,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
 		$icon = $service->getIcon($this->entity, 'small');
 
-		$this->assertEquals(elgg_get_inline_url($icon, true), $service->getIconURL($this->entity, 'small'));
+		$this->assertEquals(elgg_get_inline_url($icon), $service->getIconURL($this->entity, 'small'));
 	}
 
 	/**

@@ -31,6 +31,12 @@ Email address change requires password
 
 When a user wishes to change their email address associated with their account, they need to also supply their current password.
 
+Session bound icons
+===================
+
+Entity icons can be session bound by default. This means the URLs generated also contain information about the current session. 
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session. 
+
 Notification to site administrators
 ===================================
 

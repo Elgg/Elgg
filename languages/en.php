@@ -621,6 +621,10 @@ three sections:
 	
 	'admin:security:settings:email_require_password' => 'Require password to change email address',
 	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
