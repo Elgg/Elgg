@@ -819,7 +819,7 @@ class Plugins {
 				break;
 
 			case 'inactive':
-				$options['wheres'][] = function (QueryBuilder $qb, $main_alias) {
+				$options['wheres'][] = function (QueryBuilder $qb, $main_alias) use ($site_guid) {
 					$subquery = $qb->subquery('entity_relationships', 'active_er');
 					$subquery->select('active_er.guid_one')
 						->where($qb->compare('active_er.relationship', '=', 'active_plugin', ELGG_VALUE_STRING))

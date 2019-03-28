@@ -281,37 +281,6 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 }
 
 /**
- * Set user avatar URL
- * Replaces user avatar URL with a public URL when walled garden is disabled
- *
- * @param string $hook   "entity:icon:url"
- * @param string $type   "user"
- * @param string $return Icon URL
- * @param array  $params Hook params
- * @return string
- * @access private
- */
-function user_avatar_hook($hook, $type, $return, $params) {
-	$user = elgg_extract('entity', $params);
-	$size = elgg_extract('size', $params, 'medium');
-
-	if (!$user instanceof ElggUser) {
-		return;
-	}
-
-	if (_elgg_config()->walled_garden) {
-		return;
-	}
-
-	if (!$user->hasIcon($size, 'icon')) {
-		return;
-	}
-
-	$icon = $user->getIcon($size, 'icon');
-	return elgg_get_inline_url($icon, false);
-}
-
-/**
  * Setup the default user hover menu
  *
  * @param string         $hook   'register'
@@ -769,8 +738,6 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
-
-	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 
 	// Register the user type
 	elgg_register_entity_type('user', 'user');

@@ -38,12 +38,12 @@ class MigrateFriendsACL implements AsynchronousUpgrade {
 	protected function getItems(array $options = []) {
 
 		$options['types'] = 'user';
-		$options['wheres'][] = function(QueryBuilder $qb) {
+		$options['wheres'][] = function(QueryBuilder $qb, $main_alias) {
 			$subquery = $qb->subquery('access_collections', 'acl');
 			$subquery->select('acl.owner_guid')
 				->where($qb->compare('acl.subtype', '=', 'friends', ELGG_VALUE_STRING));
 
-			return $qb->compare('e.guid', 'NOT IN', $subquery->getSQL());
+			return $qb->compare("{$main_alias}.guid", 'NOT IN', $subquery->getSQL());
 		};
 
 		return elgg_get_entities($options);

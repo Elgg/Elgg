@@ -238,7 +238,7 @@ class Accounts {
 
 		// Belts and braces
 		// @todo Tidy into main unicode
-		$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=';
+		$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=,:';
 
 		$blacklist2 = $this->hooks->trigger(
 			'username:character_blacklist',
