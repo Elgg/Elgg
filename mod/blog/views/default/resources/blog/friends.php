@@ -18,11 +18,10 @@ if ($lower) {
 	$title .= ': ' . elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
 }
 
-$content = elgg_view('blog/listing/friends', [
-	'entity' => $user,
-	'created_after' => $lower,
-	'created_before' => $upper,
-]);
+$vars['entity'] = $user;
+$vars['created_after'] = $lower;
+$vars['created_before'] = $upper;
+$content = blog_listing_friends($vars);
 
 $layout = elgg_view_layout('default', [
 	'title' => $title,

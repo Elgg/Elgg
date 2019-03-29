@@ -11,6 +11,9 @@
  * @return void
  */
 function blog_init() {
+	
+	// add lib file
+	require_once __DIR__ . "/libs/functions.php";
 
 	// add a site navigation item
 	elgg_register_menu_item('site', [

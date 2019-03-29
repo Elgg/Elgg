@@ -12,10 +12,9 @@ if ($lower) {
 	$title .= ': ' . elgg_echo('date:month:' . date('m', $lower), [date('Y', $lower)]);
 }
 
-$content = elgg_view('blog/listing/all', [
-	'created_after' => $lower,
-	'created_before' => $upper,
-]);
+$vars['created_after'] = $lower;
+$vars['created_before'] = $upper;
+$content = blog_listing_all($vars);
 
 $layout = elgg_view_layout('default', [
 	'title' => $title,
