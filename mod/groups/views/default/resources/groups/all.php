@@ -5,11 +5,8 @@ if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admi
 }
 
 $selected_tab = get_input('filter', 'newest');
-if (!elgg_view_exists("groups/listing/$selected_tab")) {
-	$selected_tab = 'newest';
-}
 
-$content = elgg_view("groups/listing/$selected_tab", $vars);
+$content = groups_listing($selected_tab, $vars);
 
 $sidebar = elgg_view('groups/sidebar/find');
 $sidebar .= elgg_view('groups/sidebar/featured');

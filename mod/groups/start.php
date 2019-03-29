@@ -12,6 +12,9 @@
  */
 function groups_init() {
 
+	// add lib file
+	require_once __DIR__ . "/libs/functions.php";
+	
 	// Set up the menu
 	elgg_register_menu_item('site', [
 		'name' => 'groups',
