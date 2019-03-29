@@ -111,7 +111,7 @@ input[type="number"] {
 
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radios.elgg-horizontal li {
-	display: inline;
+	display: inline-block;
 	padding-right: 1rem;
 }
 
