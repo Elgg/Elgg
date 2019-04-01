@@ -56,7 +56,7 @@ function filter_tags($var) {
 
 /**
  * Returns the current page's complete URL.
- * 
+ *
  * It uses the configured site URL for the hostname rather than depending on
  * what the server uses to populate $_SERVER.
  *
@@ -287,7 +287,7 @@ function input_livesearch_page_handler($page) {
 			case 'groups':
 				// don't return results if groups aren't enabled.
 				if (!elgg_is_active_plugin('groups')) {
-					continue;
+					break;
 				}
 				
 				$options = array(
