@@ -157,6 +157,9 @@ class Service {
 	 */
 	public function respondWithError($msg = '', $status = 400) {
 		$response = new JsonResponse(['error' => $msg], $status);
+		
+		// clear already set system messages as we respond directly with an error as message body
+		$this->msgs->dumpRegister();
 
 		$this->response_sent = true;
 		return _elgg_services()->responseFactory->send($response);
