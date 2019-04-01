@@ -143,18 +143,21 @@ class WidgetsService {
 			return false;
 		}
 
-		if ($user) {
-			$return = ($user->isAdmin() || (elgg_get_page_owner_guid() == $user->guid));
-		} else {
-			$return = false;
+		$page_owner = elgg_get_page_owner_entity();
+		$default = false;
+		
+		if ($page_owner) {
+			$default = $page_owner->canEdit($user_guid);
+		} elseif ($user) {
+			$default = $user->isAdmin();
 		}
-
+		
 		$params = [
 			'user' => $user,
 			'context' => $context,
-			'page_owner' => elgg_get_page_owner_entity(),
+			'page_owner' => $page_owner,
 		];
-		return _elgg_services()->hooks->trigger('permissions_check', 'widget_layout', $params, $return);
+		return _elgg_services()->hooks->trigger('permissions_check', 'widget_layout', $params, $default);
 	}
 
 	/**
