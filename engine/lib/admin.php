@@ -1086,6 +1086,14 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 		'selected' => $selected === 'completed',
 	]);
 	
+	$result[] = ElggMenuItem::factory([
+		'name' => 'db',
+		'text' => elgg_echo('admin:upgrades:menu:db'),
+		'href' => 'admin/upgrades/db',
+		'priority' => 300,
+		'selected' => $selected === 'db',
+	]);
+	
 	return $result;
 }
 
