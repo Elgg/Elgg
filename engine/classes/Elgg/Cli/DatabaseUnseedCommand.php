@@ -38,5 +38,4 @@ class DatabaseUnseedCommand extends Command {
 
 		return 0;
 	}
-
 }
