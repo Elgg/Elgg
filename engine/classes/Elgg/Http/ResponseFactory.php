@@ -476,8 +476,15 @@ class ResponseFactory {
 
 		$forward_reason = (string) $status_code;
 
+		// force closing session so session is saved to db before redirect headers are sent
+		// preventing race conditions with session data https://github.com/Elgg/Elgg/issues/12348
+		$session = elgg_get_session();
+		if ($session->isStarted()) {
+			$session->save();
+		}
+		
 		$forward_url = $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
-
+		
 		if ($this->response_sent) {
 			// Response was sent from a forward hook
 			// Clearing handlers to void infinite loops
