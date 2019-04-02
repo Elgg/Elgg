@@ -49,10 +49,15 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 * {@inheritDoc}
 	 */
 	public function write($session_id, $session_data) {
+		
+		if (elgg_get_config('_disable_session_save')) {
+			return true;
+		}
+		
 		$id = sanitize_string($session_id);
 		$time = time();
 		$sess_data_sanitised = sanitize_string($session_data);
-
+		
 		$query = "INSERT INTO {$this->db->prefix}users_sessions
 			(session, ts, data) VALUES
 			('$id', '$time', '$sess_data_sanitised')

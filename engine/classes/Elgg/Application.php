@@ -445,6 +445,7 @@ class Application {
 			}
 
 			if (0 === strpos($request->getElggPath(), '/cache/')) {
+				$config->_disable_session_save = true;
 				$response = $this->_services->cacheHandler->handleRequest($request, $this)->prepare($request);
 				self::getResponseTransport()->send($response);
 
