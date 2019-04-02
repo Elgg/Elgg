@@ -56,5 +56,4 @@ class DatabaseSeedCommand extends Command {
 
 		return 0;
 	}
-
 }
