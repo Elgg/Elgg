@@ -532,6 +532,7 @@ class ElggSite extends \ElggEntity {
 			'serve-file/.*',
 			'robots.txt',
 			'favicon.ico',
+			'manifest.json',
 		);
 
 		// include a hook for plugin authors to include public pages
