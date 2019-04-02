@@ -7,6 +7,7 @@ use Elgg\Hook;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Elgg\Logger;
 
 /**
  * @group Cli
@@ -15,10 +16,16 @@ use Symfony\Component\Console\Tester\CommandTester;
 class DatabaseSeedCommandTest extends UnitTestCase {
 
 	public function up() {
+		// Need to adjust loglevel to make sure system messages go to screen output and not to logger
+		$app = \Elgg\Application::getInstance();
+		$this->loglevel = $app->_services->logger->getLevel();
+		$app->_services->logger->setLevel(Logger::ERROR);
 	}
 
 	public function down() {
-
+		// restore loglevel
+		$app = \Elgg\Application::getInstance();
+		$app->_services->logger->setLevel($this->loglevel);
 	}
 
 	public function testSeedCommand() {
