@@ -109,7 +109,7 @@ class AutoloadManager {
 			if ($this->altered || $map->getAltered()) {
 				$spec[self::KEY_CLASSES] = $map->getMap();
 				$spec[self::KEY_SCANNED_DIRS] = $this->scannedDirs;
-				$this->cache->save(self::FILENAME, serialize($spec));
+				$this->cache->save(self::FILENAME, $spec);
 			}
 		}
 		return $this;
@@ -145,12 +145,7 @@ class AutoloadManager {
 			return false;
 		}
 		
-		$serialization = $this->cache->load(self::FILENAME);
-		if (!$serialization) {
-			return false;
-		}
-		
-		$spec = unserialize($serialization);
+		$spec = $this->cache->load(self::FILENAME);
 		if (isset($spec[self::KEY_CLASSES])) {
 			return $spec;
 		}
@@ -167,6 +162,11 @@ class AutoloadManager {
 		if ($this->cache) {
 			$this->cache->delete(self::FILENAME);
 		}
+		
+		$this->loader->getClassMap()->setMap([])->setAltered(true);
+		$this->scannedDirs = [];
+		$this->altered = true;
+
 		return $this;
 	}
 
