@@ -31,7 +31,7 @@ if ($guid) {
 		$blog = $entity;
 	} else {
 		register_error(elgg_echo('blog:error:post_not_found'));
-		forward(get_input('forward', REFERER));
+		forward($error_forward_url);
 	}
 
 	// save some data for revisions once we save the new edit
