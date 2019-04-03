@@ -2,7 +2,7 @@
 /**
  * List all user files
  *
- * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
  * @uses $vars['entity'] the user or group to list for
  */
@@ -13,8 +13,8 @@ $owner = elgg_extract('entity', $vars);
 $options = [
 	'type' => 'object',
 	'subtype' => 'file',
-	'no_results' => elgg_echo("file:none"),
 	'distinct' => false,
+	'pagination' => false,
 ];
 
 if ($owner instanceof ElggGroup) {
@@ -22,7 +22,5 @@ if ($owner instanceof ElggGroup) {
 } else {
 	$options['owner_guid'] = $owner->guid;
 }
-
-file_register_toggle();
 
 echo elgg_list_entities($options);

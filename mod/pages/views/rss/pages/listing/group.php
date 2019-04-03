@@ -1,10 +1,10 @@
 <?php
 /**
- * Display user's pages
+ * Display group pages
  *
- * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
- * @uses $vars['entity'] the user
+ * @uses $vars['entity'] the group
  */
 
 $entity = elgg_extract('entity', $vars);
@@ -18,6 +18,6 @@ echo elgg_list_entities([
 	'metadata_name_value_pairs' => [
 		'parent_guid' => 0,
 	],
-	'owner_guid' => $entity->guid,
-	'no_results' => elgg_echo('pages:none'),
+	'container_guid' => $entity->guid,
+	'pagination' => false,
 ]);

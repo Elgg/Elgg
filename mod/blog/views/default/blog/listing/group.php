@@ -1,7 +1,8 @@
 <?php
-
 /**
  * List group blogs
+ *
+ * Note: this view has a corresponding view in the default rss type, changes should be reflected
  *
  * @uses $vars['entity'] Group
  * @uses $vars['created_after']  Only show blogs created after a date

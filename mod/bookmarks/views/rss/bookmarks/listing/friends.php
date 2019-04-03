@@ -2,7 +2,7 @@
 /**
  * Display friends' bookmarks
  *
- * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
  * @uses $vars['entity']
  */
@@ -18,5 +18,5 @@ echo elgg_list_entities([
 	'relationship' => 'friend',
 	'relationship_guid' => $entity->guid,
 	'relationship_join_on' => 'owner_guid',
-	'no_results' => elgg_echo('bookmarks:none'),
+	'pagination' => false,
 ]);
