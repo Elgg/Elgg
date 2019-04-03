@@ -2,7 +2,7 @@
 /**
  * Display user's pages
  *
- * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
  * @uses $vars['entity'] the user
  */
@@ -19,5 +19,5 @@ echo elgg_list_entities([
 		'parent_guid' => 0,
 	],
 	'owner_guid' => $entity->guid,
-	'no_results' => elgg_echo('pages:none'),
+	'pagination' => false,
 ]);

@@ -2,20 +2,20 @@
 /**
  * List blogs
  *
- * Note: this view has a corresponding view in the default rss type, changes should be reflected
+ * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
  * @uses $vars['options'] Options
  * @uses $vars['created_after']  Only show blogs created after a date
  * @uses $vars['created_before'] Only show blogs created before a date
- * @uess $vars['status'] Filter by status
+ * @uses $vars['status'] Filter by status
  */
 
 $defaults = [
 	'type' => 'object',
 	'subtype' => 'blog',
 	'full_view' => false,
-	'no_results' => elgg_echo('blog:none'),
 	'distinct' => false,
+	'pagination' => false,
 ];
 
 $options = (array) elgg_extract('options', $vars, []);

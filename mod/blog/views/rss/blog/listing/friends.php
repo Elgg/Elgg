@@ -1,8 +1,8 @@
 <?php
 /**
- * List user blogs
+ * List friends' blogs
  *
- * Note: this view has a corresponding view in the default rss type, changes should be reflected
+ * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
  * @uses $vars['entity'] User
  * @uses $vars['created_after']  Only show blogs created after a date
@@ -13,8 +13,9 @@
 $entity = elgg_extract('entity', $vars);
 
 $vars['options'] = [
-	'owner_guids' => (int) $entity->guid,
-	'preload_owners' => false,
+	'relationship' => 'friend',
+	'relationship_guid' => (int) $entity->guid,
+	'relationship_join_on' => 'owner_guid',
 ];
 
 echo elgg_view('blog/listing/all', $vars);

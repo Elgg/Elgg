@@ -2,7 +2,7 @@
 /**
  * List all user discussions
  *
- * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ * Note: this view has a corresponding view in the default view type, changes should be reflected
  *
  * @uses $vars['entity'] the user
  */
@@ -16,7 +16,7 @@ $options = [
 	'subtype' => 'discussion',
 	'limit' => max(20, elgg_get_config('default_limit')),
 	'order_by' => new OrderByClause('e.last_action', 'desc'),
-	'no_results' => elgg_echo('discussion:none'),
+	'pagination' => false,
 ];
 
 if ($entity instanceof ElggUser) {
