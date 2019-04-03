@@ -79,19 +79,33 @@ function elgg_load_library($name) {
  */
 function forward($location = "", $reason = 'system') {
 	if (!headers_sent($file, $line)) {
+		$forward_url = $location;
 		if ($location === REFERER) {
-			$location = _elgg_services()->request->headers->get('Referer');
+			$forward_url = '';
+			
+			$unsafe_url = _elgg_services()->request->headers->get('Referer');
+			$safe_url = elgg_normalize_site_url($unsafe_url);
+			if ($safe_url !== false) {
+				$forward_url = $safe_url;
+			}
 		}
 
-		$location = elgg_normalize_url($location);
+		$forward_url = elgg_normalize_url($forward_url);
+		// validate we forward to a (browser) supported url
+		if (!preg_match('/^(http|https|ftp|sftp|ftps):\/\//', $forward_url)) {
+			$forward_url = elgg_get_site_url();
+		}
 
 		// return new forward location or false to stop the forward or empty string to exit
-		$current_page = current_page_url();
-		$params = array('current_url' => $current_page, 'forward_url' => $location);
-		$location = elgg_trigger_plugin_hook('forward', $reason, $params, $location);
+		$params = array(
+			'current_url' => current_page_url(), 
+			'forward_url' => $forward_url,
+			'location' => $location,
+		);
+		$forward_url = elgg_trigger_plugin_hook('forward', $reason, $params, $forward_url);
 
-		if ($location) {
-			header("Location: {$location}");
+		if ($forward_url) {
+			header("Location: {$forward_url}");
 		}
 		exit;
 	} else {

@@ -359,6 +359,28 @@ function elgg_normalize_url($url) {
 }
 
 /**
+ * From untrusted input, get a site URL safe for forwarding.
+ *
+ * @param string $unsafe_url URL from untrusted input
+ *
+ * @return bool|string Normalized URL or false if given URL was not a path.
+ *
+ * @since 1.12.18
+ */
+function elgg_normalize_site_url($unsafe_url) {
+	if (!is_string($unsafe_url)) {
+		return false;
+	}
+
+	$unsafe_url = elgg_normalize_url($unsafe_url);
+	if (0 === strpos($unsafe_url, elgg_get_site_url())) {
+		return $unsafe_url;
+	}
+
+	return false;
+}
+
+/**
  * When given a title, returns a version suitable for inclusion in a URL
  *
  * @param string $title The title
