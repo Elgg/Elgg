@@ -22,7 +22,7 @@ return [
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s enviou mensagem para %s",
+	'river:object:thewire:create' => "%s enviou mensagem para %s",
 	'thewire:wire' => 'micro-blog',
 
 	/**
