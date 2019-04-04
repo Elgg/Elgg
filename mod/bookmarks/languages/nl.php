@@ -35,7 +35,7 @@ Bekijk en reageer op de favoriet:
 
 	'bookmarks:numbertodisplay' => 'Aantal favorieten om weer te geven',
 
-	'river:object:bookmarks:create' => '%s heeft%s als favoriet toegevoegd',
+	'river:object:bookmarks:create' => '%s heeft %s als favoriet toegevoegd',
 	'river:object:bookmarks:comment' => '%s reageerde op de favoriet%s',
 
 	'groups:tool:bookmarks' => 'Schakel groepsfavorieten in',

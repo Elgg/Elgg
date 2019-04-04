@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Блогови',
-	'blog:blogs' => 'Блогови',
+return array(
+	'item:object:blog' => 'Блогови',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Ревизије',
 	'blog:archives' => 'Архива',
-	'blog:blog' => 'Блог',
-	'item:object:blog' => 'Блогови',
 
-	'blog:title:user_blogs' => '%s\'s блог',
-	'blog:title:all_blogs' => 'Сви блогови',
-	'blog:title:friends' => 'Блогови пријатеља',
-
-	'blog:group' => 'Блог групе',
-	'blog:enableblog' => 'Укључи блог групе',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Напиши блог чланак',
 
 	// Editing
-	'blog:add' => 'Додај блог чланак',
-	'blog:edit' => 'Уреди блог чланак',
 	'blog:excerpt' => 'Издвојено',
 	'blog:body' => 'Текст',
 	'blog:save_status' => 'Задњи пут сачуваноЧ',
-	
+
 	'blog:revision' => 'Ревизија',
 	'blog:auto_saved_revision' => 'Аутоматски сачувана ревизија',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Не могу да нађем ову ревизију.',
 
 	// river
-	'river:create:object:blog' => '%s је објавио блог чланак %s',
-	'river:comment:object:blog' => '%s је коментарисао блог %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Нови блог чланак %s',
 	'blog:notify:subject' => 'Нови блог чланак: %s',
 	'blog:notify:body' =>
 '
-%s је објавио нови блог чланак: %s
+%s published a new blog post: %s
 
 %s
 
-Погледај и коментариши блог чланак:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Прикажи твоје најновије блог чланке',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Више блог чланака',
 	'blog:numbertodisplay' => 'Број блог чланака за приказ',
-	'blog:noblogs' => 'Нема блог чланака.'
-];
+);

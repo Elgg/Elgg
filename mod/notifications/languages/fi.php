@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Kaikki ystävät',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Vastaanota ilmoituksia kun sisältöäsi päivitetään',
 	'notifications:subscriptions:personal:title' => 'Henkilökohtaiset ilmoitukset',
 
-	'notifications:subscriptions:friends:title' => 'Ystävät',
-	'notifications:subscriptions:friends:description' => 'Saadaksesi ystäväkokoelmiisi liittyviä ilmoituksia, valitse asetukset alla olevasta listasta. Nämä asetukset vaikuttavat myös sivun alareunassa oleviin käyttäjäkohtaisiin asetuksiin. ',
-	'notifications:subscriptions:collections:edit' => 'Muokataksesi kontaktikokoelmia, klikkaa tästä.',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Ilmoitukset',
 	'notifications:subscriptions:changesettings:groups' => 'Ryhmäilmoitukset',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Ilmoitusasetukset tallennettu.',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

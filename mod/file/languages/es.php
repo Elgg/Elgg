@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Archivos",
-	'file:user' => "Archivos de %s",
-	'file:friends' => "Archivos de amigos",
-	'file:all' => "Archivos de todo el sitio",
-	'file:edit' => "Editar archivo",
+	'item:object:file' => 'Archivo',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "Mover archivo",
 	'file:list' => "Listar archivos",
-	'file:group' => "Archivos de los Grupos",
-	'file:gallery' => "vista de galer&iacute;a",
-	'file:gallery_list' => "Galer&iacute;a o vista de lista",
+
 	'file:num_files' => "N&uacute;mero de archivos a mostrar",
-	'file:user:gallery'=>'Ver galer&iacute;a de %s',
-	'file:upload' => "Subir un archivo",
 	'file:replace' => 'Reemplazar los contenidos del archivo (deja en blanco para no cambiar el archivo)',
 	'file:list:title' => "%s's %s %s",
 	'file:title:friends' => "Amigos'",
-
-	'file:add' => 'Subir un archivo',
 
 	'file:file' => "Archivo",
 
@@ -50,41 +45,29 @@ return [
 	'file:friends:type:image' => "Im&aacute;genes de tus amigos",
 	'file:friends:type:general' => "Archivos de tus amigos",
 
-	'file:widget' => "Widget de archivos",
-	'file:widget:description' => "Presenta tus últimos archivos",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Habilitar Archivos para los Grupos',
+	'groups:tool:file' => 'Enable group files',
 
-	'file:delete:confirm' => "&iquest;Seguro que deseas borrar este archivo?",
-
-	'file:upload_limit' => 'El tamaño máximo permitido por fichero son %s.',
-
-	'file:tagcloud' => "Nube de etiquetas",
-
-	'file:display:number' => "N&uacute;mero de archivos a mostrar",
-
-	'river:create:object:file' => '%s ha subido el archivo %s',
-	'river:comment:object:file' => '%s ha comentado el archivo %s',
-
-	'item:object:file' => 'Archivo',
+	'river:object:file:create' => '%s uploaded the file %s',
+	'river:object:file:comment' => '%s commented on the file %s',
 
 	'file:notify:summary' => 'Nuevo archivo llamado %s',
 	'file:notify:subject' => 'Nuevo archivo: %s',
-	'file:notify:body' =>
-'%s subió un nuevo archivo: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Ver y comentar en el archivo:
-%s
-',
+View and comment on the file:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Tu archivo ha sido guardado correctamente.",
-	'file:deleted' => "Tu archivo fue borrado correctamente.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -92,9 +75,6 @@ Ver y comentar en el archivo:
 
 	'file:none' => "No hay archivos.",
 	'file:uploadfailed' => "No se pudo guardar el archivo.",
-	'file:downloadfailed' => "El archivo no est&aacute; disponible momentáneamente.",
-	'file:deletefailed' => "El archivo no pudo ser borrado ahora.",
 	'file:noaccess' => "No tienes permisos para modficar este archivo",
 	'file:cannotload' => "Ha habido un error subiendo el archivo",
-	'file:nofile' => "Debes seleccionar un archivo",
-];
+);

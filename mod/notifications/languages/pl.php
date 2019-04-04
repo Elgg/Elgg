@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Wszyscy znajomi',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Otrzymuj powiadomienia o akcjach wykonywanych na twojej treści',
 	'notifications:subscriptions:personal:title' => 'Powiadomienia osobiste',
 
-	'notifications:subscriptions:friends:title' => 'Znajomi',
-	'notifications:subscriptions:friends:description' => 'Poniżej znajdują się kolekcje twoich znajomych. Wybór kolekcji włącza powiadomienia dla użytkowników w danej kolekcji.',
-	'notifications:subscriptions:collections:edit' => 'Aby edytować swoje powiadomienia o dzielonym dostępie, kliknij tutaj.',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Powiadomienia',
 	'notifications:subscriptions:changesettings:groups' => 'Powiadomienia grupowe',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Twoje ustawienia powiadomień zostały zapisane.',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

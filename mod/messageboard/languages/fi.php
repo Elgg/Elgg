@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -8,25 +8,16 @@ return [
 
 	'messageboard:board' => "Ilmoitustaulu",
 	'messageboard:messageboard' => "ilmoitustaulu",
-	'messageboard:viewall' => "Näytä kaikki",
-	'messageboard:postit' => "Lähetä",
-	'messageboard:history:title' => "Historia",
 	'messageboard:none' => "Tällä ilmoitustaululla ei ole vielä sisältöä",
 	'messageboard:num_display' => "Näytettävien kohteiden määrä",
-	'messageboard:desc' => "Ilmoitustaulu, johon muut käyttäjät voivat lisätä omia kommenttejaan.",
-
 	'messageboard:user' => "Käyttäjän %s ilmoitustaulu",
-
-	'messageboard:replyon' => 'reply on',
-	'messageboard:history' => "historia",
-
 	'messageboard:owner' => 'Käyttäjän %s ilmoitustaulu',
 	'messageboard:owner_history' => 'Käyttäjän %s viestit käyttäjän %s ilmoitustaululla',
 
 	/**
 	 * Message board widget river
 	 */
-	'river:messageboard:user:default' => "%s kirjoitti käyttäjän %s ilmoitustaululle",
+	'river:user:messageboard' => "%s posted on %s's message board",
 
 	/**
 	 * Status messages
@@ -40,31 +31,27 @@ return [
 	 */
 
 	'messageboard:email:subject' => 'Ilmoitustaulullasi on uusi kommentti!',
-	'messageboard:email:body' => "%s kirjoitti uuden kommentin ilmoitustaulullesi:
+	'messageboard:email:body' => "You have a new message board comment from %s.
 
+It reads:
 
 %s
 
+To view your message board comments, click here:
+%s
 
-Nähdäksesi ilmoitustaulusi sisällön, klikkaa tästä:
-
-	%s
-
-Nähdäksesi käyttäjän %s profiilin, klikkaa tästä:
-
-	%s
-
-Tähän viestiin ei voi vastata.",
+To view %s's profile, click here:
+%s",
 
 	/**
 	 * Error messages
 	 */
 
 	'messageboard:blank' => "Viestin sisältö puuttuu!",
-	'messageboard:notfound' => "Pyytämääsi kohdetta ei löytynyt.",
 	'messageboard:notdeleted' => "Viestin poistaminen epäonnistui.",
-	'messageboard:somethingwentwrong' => "Viestin tallentamisessa tapahtui virhe.",
 
 	'messageboard:failure' => "Viestin tallentamisessa tapahtui odottamaton virhe. Yritä uudelleen.",
 
-];
+	'widgets:messageboard:name' => "Message board",
+	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+);

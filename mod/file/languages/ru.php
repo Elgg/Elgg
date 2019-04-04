@@ -45,8 +45,8 @@ return array(
 	'file:friends:type:image' => "Изображения Ваших друзей",
 	'file:friends:type:general' => "Основные файлы Ваших друзей",
 
-	'file:widget' => "Файлы",
-	'file:widget:description' => "Ваши последние файлы",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
 	'groups:tool:file' => 'Разрешить группировку файлов',
 
@@ -55,21 +55,19 @@ return array(
 
 	'file:notify:summary' => 'Новый файл: %s',
 	'file:notify:subject' => 'Новый файл: %s',
-	'file:notify:body' =>
-'%s загрузил новый файл: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Смотреть и комментировать файл:
-%s
-',
+View and comment on the file:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Ваш файл успешно сохранен.",
-	'entity:delete:object:file:success' => "Ваш файл был успешно удалён.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages

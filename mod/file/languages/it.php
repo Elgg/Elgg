@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "File",
-	'file:user' => "File di %s",
-	'file:friends' => "File degli amici",
-	'file:all' => "Tutti i file",
-	'file:edit' => "Modifica file",
+	'item:object:file' => 'File',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "Più file",
 	'file:list' => "vista a elenco",
-	'file:group' => "File del gruppo",
-	'file:gallery' => "vista a icone",
-	'file:gallery_list' => "Vista a icone o elenco",
+
 	'file:num_files' => "Numero di file da visualizzare",
-	'file:user:gallery'=>'Visualizza la galleria di %s',
-	'file:upload' => "Carica un file",
 	'file:replace' => 'Sostituisci il contenuto del file (lascia vuoto per non cambiare il file)',
 	'file:list:title' => "di %s %s %s",
 	'file:title:friends' => "Degli amici",
-
-	'file:add' => 'Carica un file',
 
 	'file:file' => "File",
 
@@ -50,40 +45,29 @@ return [
 	'file:friends:type:image' => "Immagini dei tuoi amici",
 	'file:friends:type:general' => "Tutti i file dei tuoi amici",
 
-	'file:widget' => "File di widget",
-	'file:widget:description' => "Visualizza i tuoi file più recenti",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Abilita file del gruppo',
+	'groups:tool:file' => 'Enable group files',
 
-	'file:delete:confirm' => "Cancellare questo file?",
-
-	'file:upload_limit' => 'Dimensione massima del file consentita %s',
-
-	'file:tagcloud' => "Tag cloud",
-
-	'file:display:number' => "Numero di file da visualizzare",
-
-	'river:create:object:file' => '%s ha caricato il file %s',
-	'river:comment:object:file' => '%s ha commentato il file %s',
-
-	'item:object:file' => 'File',
+	'river:object:file:create' => '%s ha caricato il file %s',
+	'river:object:file:comment' => '%s ha commentato il file %s',
 
 	'file:notify:summary' => 'Nuovo file chiamato %s',
 	'file:notify:subject' => 'Nuovo file: %s',
-	'file:notify:body' =>
-'%s ha caricato un nuovo file: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Visualizza e commenta il nuovo file:
+View and comment on the file:
 %s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Il file è stato salvato.",
-	'file:deleted' => "Il file è stato eliminato.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -91,9 +75,6 @@ Visualizza e commenta il nuovo file:
 
 	'file:none' => "Nessun file caricato.",
 	'file:uploadfailed' => "Impossibile salvare il file.",
-	'file:downloadfailed' => "File non disponibile al momento.",
-	'file:deletefailed' => "Impossibile eliminare il file ora.",
 	'file:noaccess' => "Permessi insufficienti per modificare questo file",
 	'file:cannotload' => "Si è verificato un errore durante il caricamento del file",
-	'file:nofile' => "Occorre selezionare un file",
-];
+);

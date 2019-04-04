@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Infosivut",
-	'admin:appearance:expages' => "Infosivut",
+	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Näytä sivu",
 	'expages:about' => "Tietoa",
 	'expages:terms' => "Käyttöehdot",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Sivu päivitetty.",
 	'expages:error' => "Sivun tallentaminen epäonnistui.",
-];
+);

@@ -1,10 +1,13 @@
 <?php
+
 return array(
 /**
  * Sites
  */
 
-	'item:site' => 'Sivustot',
+	'item:site:site' => 'Site',
+	'collection:site:site' => 'Sites',
+	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
  * Sessions
@@ -24,6 +27,7 @@ return array(
 	'session_changed_user' => "Olet kirjautunut toisena käyttäjänä, joten sinun täytyy <a href='javascript:location.reload(true)'>ladata sivu uudelleen</a>.",
 
 	'loggedinrequired' => "Tämän sivun näkyminen edellyttää, että olet kirjautuneena sisään.",
+	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "Tämän sivun näkyminen edellyttää ylläpitäjän oikeuksia.",
 	'membershiprequired' => "Sinun pitää olla ryhmän jäsen nähdäksesi tämän sivun.",
 	'limited_access' => "Sinulla ei ole oikeuksia tämän sivun tarkasteluun.",
@@ -61,10 +65,16 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Virheellinen %s riippuvuus "%s" pluginissa %s. Pluginit eivät voi vaatia toimintoa tai olla konfliktissa toiminnon kanssa, jonka ne itse tarjoavat!',
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Konfliktissa pluginin %s kanssa.',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Tiedosto "elgg-plugin.php" löytyi, mutta sitä ei pystytä lukemaan,',
+	'ElggPlugin:Error' => 'Plugin error',
+	'ElggPlugin:Error:ID' => 'Error in plugin "%s"',
+	'ElggPlugin:Error:Path' => 'Error in plugin path "%s"',
+	'ElggPlugin:Error:Unknown' => 'Undefined plugin error',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Ei voida lisätä toiminnallisuutta %s pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Ei voida avata näkymähakemistoa pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
 	'ElggPlugin:Exception:NoID' => 'Ei löydetty ID:tä pluginille guid %s!',
+	'ElggPlugin:Exception:InvalidPackage' => 'Package cannot be loaded',
+	'ElggPlugin:Exception:InvalidManifest' => 'Plugin manifest is missing or invalid',
 	'PluginException:NoPluginName' => "Liitännäisen nimeä ei löytynyt",
 	'PluginException:ParserError' => 'Virhe yrittäessä käsitellä infotiedostoa API-versiolla %s pluginissa %s.',
 	'PluginException:NoAvailableParser' => 'Ei löydetty käsittelijää infotiedoston API-versiolle %s pluginissa %s.',
@@ -107,6 +117,14 @@ return array(
 
 	'UserFetchFailureException' => 'Oikeuksien tarkistaminen käyttäjälle GUID [%s] epäonnistui, koska käyttäjää ei ole olemassa.',
 
+	'PageNotFoundException' => 'The page you are trying to view does not exist or you do not have permissions to view it',
+	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
+	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
+	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
+	'BadRequestException' => 'Bad request',
+	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
+	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
+
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
 	'pageownerunavailable' => 'Varoitus: Sivun omistajaa %d ei pystytä näyttämään!',
@@ -117,6 +135,8 @@ return array(
 	'error:missing_data' => 'Pyynnössäsi oli puutteellisia tietoja',
 	'save:fail' => 'Tallentaminen epäonnistui',
 	'save:success' => 'Tiedot tallennettu',
+
+	'forward:error' => 'Sorry. An error occurred while redirecting to you to another site.',
 
 	'error:default:title' => 'Hups...',
 	'error:default:content' => 'Hups... jotain meni pieleen.',
@@ -180,11 +200,11 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Yksityinen",
-	'LOGGED_IN' => "Kirjautuneet",
-	'PUBLIC' => "Julkinen",
-	'LOGGED_OUT' => "Kirjautumattomat käyttäjät",
-	'access:friends:label' => "Ystävät",
+	'access:label:private' => "Private",
+	'access:label:logged_in' => "Logged in users",
+	'access:label:public' => "Public",
+	'access:label:logged_out' => "Logged out users",
+	'access:label:friends' => "Friends",
 	'access' => "Pääsy",
 	'access:overridenotice' => "Huom: Vain ryhmän jäsenillä on pääsy tähän ryhmään lisättyihin sisältöihin.",
 	'access:limited:label' => "Rajoitettu",
@@ -204,7 +224,6 @@ return array(
 
 	'widgets:add' => 'Vimpaimet',
 	'widgets:add:description' => "Klikkaa alla olevia vimpaimia lisätäksesi ne sivulle.",
-	'widgets:panel:close' => "Sulje vimpainpaneeli",
 	'widgets:position:fixed' => '(Lukittu sijainti sivulla)',
 	'widget:unavailable' => 'Olet jo lisännyt tämän vimpaimen',
 	'widget:numbertodisplay' => 'Näytettävien kohteiden määrä',
@@ -215,19 +234,25 @@ return array(
 	'widgets' => "Vimpaimet",
 	'widget' => "Vimpain",
 	'item:object:widget' => "Vimpaimet",
+	'collection:object:widget' => 'Widgets',
 	'widgets:save:success' => "Vimpain tallennettu onnistuneesti.",
 	'widgets:save:failure' => "Vimpaimen tallentaminen epäonnistui.",
 	'widgets:add:success' => "Vimpain lisättiin onnituneesti.",
 	'widgets:add:failure' => "Vimpaimen lisääminen epäonnistui.",
 	'widgets:move:failure' => "Vimpaimen uuden sijainnin tallentaminen epäonnistui.",
 	'widgets:remove:failure' => "Vimpaimen poistaminen epäonnistui.",
-
+	'widgets:not_configured' => "This widget is not yet configured",
+	
 /**
  * Groups
  */
 
 	'group' => "Ryhmä",
 	'item:group' => "Ryhmät",
+	'collection:group' => 'Groups',
+	'item:group:group' => "Group",
+	'collection:group:group' => 'Groups',
+	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
  * Users
@@ -235,58 +260,17 @@ return array(
 
 	'user' => "Käyttäjä",
 	'item:user' => "Käyttäjät",
-
-/**
- * Friends
- */
+	'collection:user' => 'Users',
+	'item:user:user' => 'User',
+	'collection:user:user' => 'Users',
 
 	'friends' => "Ystävät",
-	'friends:yours' => "Omat ystäväsi",
-	'friends:owned' => "Käyttäjän %s ystävät",
-	'friend:add' => "Lisää ystäväksi",
-	'friend:remove' => "Poista ystävistä",
-
-	'friends:add:successful' => "Olet lisännyt käyttäjän %s ystäväksesi.",
-	'friends:add:failure' => "Käyttäjää %s ei voitu lisätä ystäväksi.",
-
-	'friends:remove:successful' => "Olet poistanut käyttäjän %s ystävistäsi.",
-	'friends:remove:failure' => "Käyttäjää %s ei voitu poistaa ystävistäsi.",
-
-	'friends:none' => "Tämä käyttäjä ei ole vielä lisännyt ketään ystäväkseen.",
-	'friends:none:you' => "Et ole lisännyt vielä ketään ystäväksesi.",
-
-	'friends:none:found' => "Ystäviä ei löydetty.",
-
-	'friends:of:none' => "Kukaan ei ole vielä lisännyt tätä käyttäjää ystäväkseen.",
-	'friends:of:none:you' => "Kukaan ei ole vielä lisännyt sinua ystäväkseen. Ala lisätä sisältöä sivustolle, täytä profiiliisi ja anna ihmisten löytää sinut!",
-
-	'friends:of:owned' => "Käyttäjät, joiden ystävänä %s on",
-
-	'friends:of' => "Kenen ystävänä",
-	'friends:collections' => "Ystäväkokoelmat",
-	'collections:add' => "Uusi kokoelma",
-	'friends:collections:add' => "Uusi ystäväkokoelma",
-	'friends:addfriends' => "Lisää ystäviä",
-	'friends:collectionname' => "Kokoelman nimi",
-	'friends:collectionfriends' => "Ystävät kokoelmassa",
-	'friends:collectionedit' => "Muokkaa kokoelmaa",
-	'friends:nocollections' => "Sinulla ei ole vielä yhtään ystäväkokoelmaa.",
-	'friends:collectiondeleted' => "Ystäväkokoelma on poistettu.",
-	'friends:collectiondeletefailed' => "Ystäväkokoelmaa ei voitu poistaa. Joko sinulla ei ole oikeuksia tähän, tai sitten tapahtui jokin odottamaton virhe.",
-	'friends:collectionadded' => "Ystäväkokoelma luotiin onnistuneesti",
-	'friends:nocollectionname' => "Sinun täytyy antaa ystäväkokoelmalle nimi ennen kuin se voidaan luoda.",
-	'friends:collections:members' => "Kokoelman jäsenet",
-	'friends:collections:edit' => "Muokkaa kokoelmaa",
-	'friends:collections:edited' => "Muutokset tallennettiin",
-	'friends:collection:edit_failed' => 'Muutoksien tallentaminen eponnistui.',
-
-	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ',
+	'collection:friends' => 'Friends\' %s',
 
 	'avatar' => 'Profiilikuva',
 	'avatar:noaccess' => "Sinulla ei ole oikeuksia muokata tämän käyttäjän profiilikuvaa",
 	'avatar:create' => 'Rajaa profiilikuva',
 	'avatar:edit' => 'Muokkaa profiilikuvaa',
-	'avatar:preview' => 'Esikatselu',
 	'avatar:upload' => 'Vaihda profiilikuva',
 	'avatar:current' => 'Nykyinen profiilikuva',
 	'avatar:remove' => 'Poista profiilikuva',
@@ -300,50 +284,16 @@ return array(
 	'avatar:crop:fail' => 'Profiilikuvan rajaaminen epäonnistui',
 	'avatar:remove:success' => 'Profiilikuva poistettu',
 	'avatar:remove:fail' => 'Profiilikuvan poistaminen epäonnistui.',
-
-	'profile:edit' => 'Muokkaa profiilia',
-	'profile:aboutme' => "Kuvaus",
-	'profile:description' => "Kuvaus",
-	'profile:briefdescription' => "Lyhyt kuvaus",
-	'profile:location' => "Sijainti",
-	'profile:skills' => "Taidot",
-	'profile:interests' => "Kiinnostuksen kohteet",
-	'profile:contactemail' => "Sähköpostiosoite",
-	'profile:phone' => "Puhelin",
-	'profile:mobile' => "Matkapuhelin",
-	'profile:website' => "www-sivu",
-	'profile:twitter' => "Twitter-tunnus",
-	'profile:saved' => "Profiili tallennettu",
-
-	'profile:field:text' => 'Lyhyt tekstikenttä',
-	'profile:field:longtext' => 'Suuri tekstikenttä',
-	'profile:field:tags' => 'Tagit',
-	'profile:field:url' => 'WWW-osoite',
-	'profile:field:email' => 'Sähköpostiosoite',
-	'profile:field:location' => 'Sijainti',
-	'profile:field:date' => 'Päivämäärä',
-
-	'admin:appearance:profile_fields' => 'Profiilikentät',
-	'profile:edit:default' => 'Muokkaa profiilikenttiä',
-	'profile:label' => "Kentän nimi",
-	'profile:type' => "Kentän tyyppi",
-	'profile:editdefault:delete:fail' => 'Kentän poistaminen epäonnistui',
-	'profile:editdefault:delete:success' => 'Oletuskenttä poistettu!',
-	'profile:defaultprofile:reset' => 'Käyttäjäprofiilin kenttien oletusasetukset palautettu',
-	'profile:resetdefault' => 'Palauta oletusarvoiset profiilikentät',
-	'profile:resetdefault:confirm' => 'Haluatko varmasti poistaa itse lisätyt profiilikentät?',
-	'profile:explainchangefields' => "Voit korvata olemassa olevat profiilikentät omilla kentillä käyttämällä alla olevaa lomaketta. \n\n Kirjoita ensin uuden profiilikentän otsikko, esimerkiksi 'Suosikkijoukkue'. Valitse seuraavaksi kentän tyyppi (teksti, tagit, url, jne). Voit muuttaa kenttien järjestystä raahaamalla kenttiä nuolikuvakkeesta. Klikkaa kentän nimeä muokataksesi sitä. \n\n Voit milloin tahansa palauttaa profiilin kentät järjestelmän oletusarvoihin. Huomioi kuitenkin, että menetät tällöin kaikki käyttäjien lisäkenttiin syöttämät tiedot.",
-	'profile:editdefault:success' => 'Uusi profiilikenttä lisätty onnistuneesti',
-	'profile:editdefault:fail' => 'Uuden profiilikentän tallentaminen epäonnistui',
-	'profile:field_too_long' => 'Profiilitietojasi ei voida tallentaa, sillä osio "%s" on liian pitkä.',
-	'profile:noaccess' => "Sinulla ei ole oikeuksia tämän profiilin muokkaamiseen.",
-	'profile:invalid_email' => 'Syötit virheellisen sähköpostiosoitteen.',
-
+	
+	'action:user:validate:already' => "%s was already validated",
+	'action:user:validate:success' => "%s has been validated",
+	'action:user:validate:error' => "An error occurred while validating %s",
 
 /**
  * Feeds
  */
 	'feed:rss' => 'Tilaa sivu syötteenä',
+	'feed:rss:title' => 'RSS feed for this page',
 /**
  * Links
  */
@@ -355,9 +305,8 @@ return array(
  * River
  */
 	'river' => "Toimintalista",
-	'river:friend:user:default' => "%s on nyt käyttäjän %s ystävä",
+	'river:user:friend' => "%s is now a friend with %s",
 	'river:update:user:avatar' => 'Käyttäjä %s päivitti profiilikuvansa',
-	'river:update:user:profile' => '%s päivitti profiiliaan',
 	'river:noaccess' => 'Sinulla ei ole oikeuksia tämän kohteen näkemiseen.',
 	'river:posted:generic' => '%s lähetti',
 	'riveritem:single:user' => 'a user',
@@ -373,11 +322,7 @@ return array(
 	'river:subject:invalid_subject' => 'Virheellinen käyttäjä',
 	'activity:owner' => 'Näytä toiminta',
 
-	'river:widget:title' => "Toimintalista",
-	'river:widget:description' => "Näytä viimeisin toiminta",
-	'river:widget:type' => "Toiminnan tyyppi",
-	'river:widgets:friends' => 'Ystävien toiminta',
-	'river:widgets:all' => 'Kaikki sivuston toiminta',
+	
 
 /**
  * Notifications
@@ -433,6 +378,7 @@ return array(
 	'registerdisabled' => "Sivuston ylläpitäjä on ottanut rekisteröitymisen pois käytöstä",
 	'register:fields' => 'Kaikki kentät ovat pakollisia',
 
+	'registration:noname' => 'Display name is required.',
 	'registration:notemail' => 'Syötit virheellisen sähköpostiosoitteen.',
 	'registration:userexists' => 'Syöttämäsi käyttäjätunnus on jo olemassa',
 	'registration:usernametooshort' => 'Käyttäjätunnuksen tulee olla vähintään %u merkin pituinen.',
@@ -452,6 +398,8 @@ return array(
 	'user:name:label' => "Nimi",
 	'user:name:success' => "Nimi vaihdettu.",
 	'user:name:fail' => "Nimen vaihtaminen epäonnistui.",
+	'user:username:success' => "Successfully changed username on the system.",
+	'user:username:fail' => "Could not change username on the system.",
 
 	'user:set:password' => "Tilin salasana",
 	'user:current_password:label' => 'Nykyinen salasana',
@@ -471,8 +419,10 @@ return array(
 	'user:language:fail' => "Kieliasetuksen tallentaminen epäonnistui.",
 
 	'user:username:notfound' => 'Käyttäjätunnusta %s ei löytynyt.',
+	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
 
 	'user:password:lost' => 'Unohtunut salasana',
+	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
 	'user:password:changereq:success' => 'Pyydettiin uutta salasanaa, sähköposti lähetetty',
 	'user:password:changereq:fail' => 'Uuden salasanan pyytäminen epäonnistui.',
 
@@ -480,7 +430,7 @@ return array(
 
 	'user:persistent' => 'Muista minut',
 
-	'walled_garden:welcome' => 'Tervetuloa sivustolle',
+	'walled_garden:home' => 'Home',
 
 /**
  * Administration
@@ -488,6 +438,7 @@ return array(
 	'menu:page:header:administer' => 'Hallinnointi',
 	'menu:page:header:configure' => 'Asetukset',
 	'menu:page:header:develop' => 'Kehittäjän työkalut',
+	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Muut',
 
 	'admin:view_site' => 'Siirry sivustolle',
@@ -504,16 +455,16 @@ return array(
 	'admin' => "Hallinta",
 	'admin:description' => "Hallintapaneelilla voit vaikuttaa kaikkiin sivustoa koskeviin asetuksiin. Valitse vaihtoehto alta aloittaaksesi.",
 
-	'admin:statistics' => "Tilastotiedot",
-	'admin:statistics:overview' => 'Yhteenveto',
-	'admin:statistics:server' => 'Palvelimen tiedot',
-	'admin:statistics:cron' => 'Cron',
+	'admin:statistics' => 'Tilastotiedot',
+	'admin:server' => 'Server',
+	'admin:cron' => 'Cron',
 	'admin:cron:record' => 'Viimeisimmät Cron-ajot',
 	'admin:cron:period' => 'Cron-aikaväli',
 	'admin:cron:friendly' => 'Suoritettu viimeksi',
 	'admin:cron:date' => 'Päivä ja aika',
 	'admin:cron:msg' => 'Viesti',
 	'admin:cron:started' => '%s ajettava Cron aloitettu %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => '%s ajettava Cron suoritettu %s',
 
 	'admin:appearance' => 'Ulkoasu',
@@ -532,9 +483,23 @@ return array(
 	'admin:users:opt:linktext' => "Hallinnoi käyttäjiä...",
 	'admin:users:opt:description' => "Säädä käyttäjä ja tiliasetuksia. ",
 	'admin:users:find' => 'Etsi',
-
-	'admin:administer_utilities:maintenance' => 'Ylläpitotila',
+	'admin:users:unvalidated' => 'Unvalidated',
+	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
+	'admin:users:unvalidated:registered' => 'Registered: %s',
+	
+	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Päivitykset',
+	'admin:upgrades:finished' => 'Completed',
+	'admin:upgrades:menu:pending' => 'Pending upgrades',
+	'admin:upgrades:menu:completed' => 'Completed upgrades',
+	'admin:upgrades:menu:run_single' => 'Run this upgrade',
+	'admin:upgrades:run' => 'Run upgrades now',
+	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
+	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
+	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
+	'admin:upgrades:failed' => 'Upgrade "%s" failed',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'Asetukset',
 	'admin:settings:basic' => 'Perusasetukset',
@@ -543,11 +508,6 @@ return array(
 	'admin:site:opt:linktext' => "Hallinnoi sivuston asetuksia...",
 	'admin:settings:in_settings_file' => 'Tämä asetus on määritetty asetustiedostossa (settings.php)',
 
-	'admin:legend:security' => 'Tietoturva',
-	'admin:site:secret:intro' => 'Elgg käyttää salausavainta erilaisten tietoturvaa parantavien koodiavainten luomiseen.',
-	'admin:site:secret_regenerated' => "Sivustonlaajuinen salausavain on uusittu.",
-	'admin:site:secret:regenerate' => "Päivitä salausavain",
-	'admin:site:secret:regenerate:help' => "Huom: Avaimen uusiminen kumoaa tähän asti luodut avainkoodit, joita käytetään \"Muista minut\"-toiminnossa, sähköpostien vahvistusviesteissä, kutsukoodeissa, yms. Tämä saattaa aiheuttaa ongelmia joillekin käyttäjille.",
 	'site_secret:current_strength' => 'Salausavaimen vahvuus',
 	'site_secret:strength:weak' => "Heikko",
 	'site_secret:strength_msg:weak' => "Suosittelemme, että uusit sivuston salausavaimen.",
@@ -567,8 +527,11 @@ return array(
 	'admin:widget:content_stats:help' => 'Näyttää sivustolle luotujen sisältöjen määrän',
 	'admin:widget:cron_status' => 'Cron-seuranta',
 	'admin:widget:cron_status:help' => 'Näyttää listan Cron-ajojen viimeisimmistä ajankohdista',
-	'widget:content_stats:type' => 'Sisältötyyppi',
-	'widget:content_stats:number' => 'Lukumäärä',
+	'admin:statistics:numentities' => 'Content Statistics',
+	'admin:statistics:numentities:type' => 'Content type',
+	'admin:statistics:numentities:number' => 'Number',
+	'admin:statistics:numentities:searchable' => 'Searchable entities',
+	'admin:statistics:numentities:other' => 'Other entities',
 
 	'admin:widget:admin_welcome' => 'Tervetuloa',
 	'admin:widget:admin_welcome:help' => "Lyhyt perehdytys Elggin hallintapaneeliin",
@@ -576,14 +539,15 @@ return array(
 'Tervetuloa Elggiin! Olet juuri nyt ylläpitäjän kojelaudalla, joka on kätevä työkalu sivuston toiminnan seuraamiseen.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"Ylläpitopuolen navigaatio löytyy oikella olevasta valikosta. Se on jaettu
-kolmeen osioon:
+"Navigation for the administration area is provided by the menu to the right. It is organized into
+three sections:
 	<dl>
-		<dt>Hallinnointi</dt><dd>Käteviä toimintoja kuten listaukset tilastotiedoista, kirjautuneista käyttäjistä sekä sopimattomaksi raportoidusta sisällöstä.</dd>
-		<dt>Asetukset</dt><dd>Toiminnot kuten sivuston nimen muuttaminen ja uusien liitännäisten lisääminen.</dd>
-		<dt>Kehittäjän työkalut</dt><dd>Henkilöille, jotka kehittävät uusia liitännäisiä tai teemoja. (Vaati developer-pluginin.)</dd>
+		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
+		<dt>Information</dt><dd>Information about your site like statistics.</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
 	</dl>
-	",
+",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Tutustu myös sivun alaosassa oleviin linkkeihin, ja kiitos kun käytät Elggiä!',
@@ -620,11 +584,107 @@ kolmeen osioon:
 	'admin:plugins:markdown:unknown_plugin' => 'Tuntematon liitännäinen.',
 	'admin:plugins:markdown:unknown_file' => 'Tuntematon tiedosto.',
 
+	'admin:notices:delete_all' => 'Dismiss all %s notices',
 	'admin:notices:could_not_delete' => 'Ilmoituksen poistaminen epäonnistui.',
 	'item:object:admin_notice' => 'Ylläpidon ilmoitus',
+	'collection:object:admin_notice' => 'Admin notices',
 
 	'admin:options' => 'Hallintavalikko',
 
+	'admin:security' => 'Security',
+	'admin:security:settings' => 'Settings',
+	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
+	'admin:security:settings:label:hardening' => 'Hardening',
+	'admin:security:settings:label:notifications' => 'Notifications',
+	'admin:security:settings:label:site_secret' => 'Site secret',
+	
+	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
+	'admin:security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
+	
+	'admin:security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
+	'admin:security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
+	
+	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
+	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
+	
+	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
+	'admin:security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
+	'admin:security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
+	
+	'admin:security:settings:protect_cron' => 'Protect the /cron URLs',
+	'admin:security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
+	'admin:security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
+	'admin:security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
+	
+	'admin:security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
+	'admin:security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
+	
+	'admin:security:settings:email_require_password' => 'Require password to change email address',
+	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+	
+	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
+	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
+	'admin:security:settings:site_secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
+	
+	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
+	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
+	
+	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
+	'admin:notification:make_admin:admin:body' => 'Hi %s,
+
+%s made %s a site administrator of %s.
+
+To view the profile of the new administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
+	'admin:notification:make_admin:user:body' => 'Hi %s,
+
+%s made you a site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
+	'admin:notification:remove_admin:admin:body' => 'Hi %s,
+
+%s removed %s as a site administrator of %s.
+
+To view the profile of the old administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
+	'admin:notification:remove_admin:user:body' => 'Hi %s,
+
+%s removed you as site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'user:notification:ban:subject' => 'Your account on %s was banned',
+	'user:notification:ban:body' => 'Hi %s,
+
+Your account on %s was banned.
+
+To go to the site, click here:
+%s',
+	
+	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
+	'user:notification:unban:body' => 'Hi %s,
+
+Your account on %s is no longer banned. You can use the site again.
+
+To go to the site, click here:
+%s',
+	
 /**
  * Plugins
  */
@@ -635,6 +695,7 @@ kolmeen osioon:
 	'plugins:usersettings:save:ok' => "Päivitettiin käyttöasetukset liitännäiselle %s.",
 	'plugins:usersettings:save:fail' => "Käyttöasetusten päivittäminen liitännäiselle %s epäonnistui.",
 	'item:object:plugin' => 'Liitännäiset',
+	'collection:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "Liitännäiset",
 	'admin:plugins:activate_all' => 'Aktivoi kaikki',
@@ -668,6 +729,7 @@ kolmeen osioon:
 	'admin:plugins:label:contributors:username' => 'Yhteisön käyttäjätunnus',
 	'admin:plugins:label:contributors:description' => 'Kuvaus',
 	'admin:plugins:label:dependencies' => 'Riippuvuudet',
+	'admin:plugins:label:missing_dependency' => 'Missing dependency [%s].',
 
 	'admin:plugins:warning:unmet_dependencies' => 'Tällä liitännäisellä on puuttuvia riippuvuuksia, joten sitä ei voida aktivoida. Tarkista riippuvuudet lisätiedoista.',
 	'admin:plugins:warning:invalid' => 'Pluginissa on virhe: %s',
@@ -702,7 +764,7 @@ kolmeen osioon:
 	'admin:statistics:description' => "Tämä näyttää tilastoja sivustostasi. Tarkempien tietojen selvittämiseen voit käyttää erillistä hallintatyökalua.",
 	'admin:statistics:opt:description' => "Näyttää tilastoja sivustosi käyttäjistä ja sisällöistä.",
 	'admin:statistics:opt:linktext' => "View statistics...",
-	'admin:statistics:label:basic' => "Sivuston perustilastot",
+	'admin:statistics:label:user' => "User statistics",
 	'admin:statistics:label:numentities' => "Sivustolla olevat kohteet",
 	'admin:statistics:label:numusers' => "Käyttäjien määrä",
 	'admin:statistics:label:numonline' => "Tällä hetkellä kirjautuneena",
@@ -711,8 +773,11 @@ kolmeen osioon:
 	'admin:statistics:label:version' => "Elgg-versio",
 	'admin:statistics:label:version:release' => "Julkaisu",
 	'admin:statistics:label:version:version' => "Versio",
+	'admin:statistics:label:version:code' => "Code Version",
 
+	'admin:server:label:elgg' => 'Elgg',
 	'admin:server:label:php' => 'PHP',
+	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'Web-palvelin',
 	'admin:server:label:server' => 'Palvelin',
 	'admin:server:label:log_location' => 'Lokin sijainti',
@@ -727,10 +792,22 @@ kolmeen osioon:
 	'admin:server:warning:post_max_too_small' => '(Huom: post_max_size pitää olla isompi kuin tämä.)',
 	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
-		Memcachea ei ole otettu käyttöön palvelimella, tai sitä ei ole konfiguroitu Elggiin.
-		Memcachen käyttö on suositeltua, koska se parantaa suorituskykyä.
+		Memcache is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure memcache (or redis).
 ',
 
+	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => '
+		Redis is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure redis (or memcache).
+',
+
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache is not available on this server or it has not yet been enabled.
+		For improved performance, it is recommended that you enable and configure OPcache.
+',
+	
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
 
@@ -753,7 +830,7 @@ kolmeen osioon:
 	'admin:user:removeadmin:no' => "Ylläpito-oikeuksien poistaminen epäonnistui.",
 	'admin:user:self:removeadmin:no' => "Et voi poistaa omia ylläpito-oikeuksiasi.",
 
-	'admin:appearance:menu_items' => 'Päänavigaatio',
+	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Määrittele päänavigaation linkit',
 	'admin:menu_items:description' => 'Valitse päänavigaatiossa näytettävät linkit. Käyttämättömät linkit sijoitetaan listan lopussa olevan "Lisää"-kohdan alle.',
 	'admin:menu_items:hide_toolbar_entries' => 'Remove links from tool bar menu?',
@@ -761,10 +838,10 @@ kolmeen osioon:
 	'admin:add_menu_item' => 'Lisää navigaatiolinkki',
 	'admin:add_menu_item:description' => 'Syötä kohteen nimi ja osoite lisätäksesi uuden linkin päänavigaatioon.',
 
-	'admin:appearance:default_widgets' => 'Oletusvimpaimet',
+	'admin:configure_utilities:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Tuntematon vimpaintyyppi',
-	'admin:default_widgets:instructions' => 'Lisää, poista, asettele ja konfiguroi oletusvimpaimet valitulle vimpainsivulle.
-Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
+	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
+These changes will only affect new users on the site.',
 
 	'admin:robots.txt:instructions' => "Muokkaa sivuston robots.txt-tiedostoa",
 	'admin:robots.txt:plugins' => "Liitännäisten robots.txt-tiedostoon lisäämät säännöt:",
@@ -772,8 +849,8 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'admin:robots.txt:physical' => "Hallintapaneelin robots.txt-toimintoa ei voi käyttää, koska asennushakemistossa on jo robots.txt -tiedosto",
 
 	'admin:maintenance_mode:default_message' => 'Sivusto on väliaikaisesti poissa käytöstä huoltokatkoksen vuoksi',
-	'admin:maintenance_mode:instructions' => 'Huoltotilaa tulisi käyttää päivitysten ja muiden laajojen muutosten aikana.
-		Huoltotilan ollessa päällä, vain ylläpitäjät pääsevät kirjautumaan sivustolle.',
+	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.
+		When it is on, only admins can log in and browse the site.',
 	'admin:maintenance_mode:mode_label' => 'Ylläpitotila',
 	'admin:maintenance_mode:message_label' => 'Käyttäjille näytettävä viesti',
 	'admin:maintenance_mode:saved' => 'Huoltotilan asetukset tallennettu',
@@ -789,7 +866,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'usersettings:statistics' => "Tilastotietosi",
 	'usersettings:statistics:opt:description' => "Katsele tilastotietoja käyttäjistä ja sivuston objekteista.",
 	'usersettings:statistics:opt:linktext' => "Tilin tilastotiedot",
-	
+
 	'usersettings:statistics:login_history' => "Kirjautumishistoria",
 	'usersettings:statistics:login_history:date' => "Päivämäärä",
 	'usersettings:statistics:login_history:ip' => "IP-osoite",
@@ -824,12 +901,6 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'river:comments:all' => 'Kaikki %u kommenttia',
 	'river:generic_comment' => 'kommentoi %s %s',
 
-	'friends:widget:description' => "Näyttää listan ystävistäsi.",
-	'friends:num_display' => "Näytettävien ystävien määrä",
-	'friends:icon_size' => "Kuvakkeen koko",
-	'friends:tiny' => "pikkuruinen",
-	'friends:small' => "pieni",
-
 /**
  * Icons
  */
@@ -841,12 +912,17 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'icon:size:medium' => "Keskikokoinen",
 	'icon:size:large' => "Suuri",
 	'icon:size:master' => "Erittäin suuri",
+	
+	'entity:edit:icon:file:label' => "Upload a new icon",
+	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
+	'entity:edit:icon:remove:label' => "Remove icon",
 
 /**
  * Generic action words
  */
 
 	'save' => "Tallenna",
+	'save_go' => "Save, and go to %s",
 	'reset' => 'Resetöi',
 	'publish' => "Julkaise",
 	'cancel' => "Peruuta",
@@ -897,6 +973,8 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'create' => 'Luo',
 	'remove' => 'Poista',
 	'revert' => 'Palauta',
+	'validate' => 'Validate',
+	'read_more' => 'Read more',
 
 	'site' => 'Sivusto',
 	'activity' => 'Toiminta',
@@ -1007,27 +1085,26 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 
 	'deleteconfirm' => "Haluatko varmasti poistaa tämän kohteen?",
 	'deleteconfirm:plural' => "Haluatko varmasti poistaa nämä kohteet?",
-	'fileexists' => "Jätä tämä tyhjäksi, jos haluat säilyttää nykyisen version.",
+	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
+	'input:file:upload_limit' => 'Maximum allowed file size is %s',
 
 /**
  * User add
  */
 
 	'useradd:subject' => 'Käyttäjätili luotu',
-	'useradd:body' => '
-%s,
+	'useradd:body' => '%s,
 
-Sinulle on luotu käyttäjätili sivustolla %s. Kirjautuaksesi sivustolle siirry osoitteeseen:
+A user account has been created for you at %s. To log in, visit:
 
 %s
 
-Ja kirjaudu käyttäen näitä tietoja:
+And log in with these user credentials:
 
-Tunnus: %s
-Salasana: %s
+Username: %s
+Password: %s
 
-Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
-',
+Once you have logged in, we highly recommend that you change your password.',
 
 /**
  * System messages
@@ -1035,6 +1112,15 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 
 	'systemmessages:dismiss' => "click to dismiss",
 
+
+/**
+ * Messages
+ */
+	'messages:title:success' => 'Success',
+	'messages:title:error' => 'Error',
+	'messages:title:warning' => 'Warning',
+	'messages:title:help' => 'Help',
+	'messages:title:notice' => 'Notice',
 
 /**
  * Import / export
@@ -1047,6 +1133,10 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
  * Time
  */
 
+	'input:date_format' => 'Y-m-d',
+	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
+	'input:time_format' => 'g:ia',
+
 	'friendlytime:justnow' => "juuri nyt",
 	'friendlytime:minutes' => "%s minuuttia sitten",
 	'friendlytime:minutes:singular' => "hetki sitten",
@@ -1055,6 +1145,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'friendlytime:days' => "%s päivää sitten",
 	'friendlytime:days:singular' => "eilen",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
+	'friendlytime:date_format:short' => 'j M Y',
 
 	'friendlytime:future:minutes' => "%s minuutin kuluttua",
 	'friendlytime:future:minutes:singular' => "minuutin kuluttua",
@@ -1075,7 +1166,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'date:month:10' => '%s lokakuu',
 	'date:month:11' => '%s marraskuu',
 	'date:month:12' => '%s joulukuu',
-	
+
 	'date:month:short:01' => 'Tammi %s',
 	'date:month:short:02' => 'Helmi %s',
 	'date:month:short:03' => 'Maalis %s',
@@ -1114,7 +1205,6 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'interval:weekly' => 'Viikoittain',
 	'interval:monthly' => 'Kuukausittain',
 	'interval:yearly' => 'Vuosittain',
-	'interval:reboot' => 'Uudelleenkäynnistyksen yhteydessä',
 
 /**
  * System settings
@@ -1122,6 +1212,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 
 	'installation:sitename' => "Sivuston nimi:",
 	'installation:sitedescription' => "Sivuston kuvaus (vapaaehtoinen):",
+	'installation:sitedescription:help' => "With bundled plugins this appears only in the description meta tag for search engine results.",
 	'installation:wwwroot' => "Sivuston URL:",
 	'installation:path' => "Polku Elgg-asennukseen:",
 	'installation:dataroot' => "Polku datahakemistoon:",
@@ -1176,22 +1267,32 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'admin:legend:content_access' => 'Pääsy sisältöihin',
 	'admin:legend:site_access' => 'Pääsy sivustolle',
 	'admin:legend:debug' => 'Lokit ja virheidenjäljitys',
-
+	
+	'config:remove_branding:label' => "Remove Elgg branding",
+	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
+	'config:disable_rss:label' => "Disable RSS feeds",
+	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
+	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
+	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+	
 	'upgrading' => 'Päivitetään...',
 	'upgrade:core' => 'Elgg päivitetty.',
 	'upgrade:unlock' => 'Avaa päivityksen lukitus',
 	'upgrade:unlock:confirm' => "Aiemmin käynnistetty päivitys on lukinnut tietokannan. Useiden päivitysten ajaminen samanaikaisesti on vaarallista, joten avaa lukitus vain jos tiedät, että käynnissä ei ole päivitystä. Avataanko lukitus?",
+	'upgrade:terminated' => 'Upgrade has been terminated by an event handler',
 	'upgrade:locked' => "Päivitystä ei voida aloittaa, koska käynnissä on jo toinen päivitys. Voit avata lukituksen hallintapaneelista.",
 	'upgrade:unlock:success' => "Avattiin päivityksen lukitus.",
 	'upgrade:unable_to_upgrade' => 'Päivityksen lukituksen avaaminen epäonnistui.',
-	'upgrade:unable_to_upgrade_info' =>
-		'Sivustoa ei voi päivittää, koska Elggin lähdekoodissa havaittiin vanhentuneita tiedostoja. Kyseiset tiedostot pitää poistaa, jotta Elgg toimii oikein.
+	'upgrade:unable_to_upgrade_info' => 'This installation cannot be upgraded because legacy views
+were detected in the Elgg core views directory. These views have been deprecated and need to be
+removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
+simply delete the views directory and replace it with the one from the latest
+package of Elgg downloaded from <a href="https://elgg.org">elgg.org</a>.<br /><br />
 
-Jos et ole tehnyt Elggin lähdekoodiin muutoksia, voit poistaa views-hakemiston kokonaan, ja korvata sen sitten Elggin uuden version mukana tulleella.
+If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
+Upgrading Elgg documentation</a>. If you require assistance, please post to the
+<a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
 
-Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">päivitysdokumentaatiosta</a> tai pyytää apua <a href="http://community.elgg.org/groups/discussion/">tukifoorumilla</a>.',
-
-	'update:twitter_api:deactivated' => 'Twitter API (aiemmin "Twitter Service") otettiin pois käytöstä päivityksen aikana. Ota se käyttöön manuaalisesti, mikäli sille on tarvetta.',
 	'update:oauth_api:deactivated' => 'OAuth API (aiemmin "OAuth Lib") otettiin pois käytöstä päivityksen aikana. Ota se käyttöön manuaalisesti, mikäli sille on tarvetta.',
 	'upgrade:site_secret_warning:moderate' => "On suositeltavaa, että uusit sivuston salausavaimen parantaaksesi tietoturvaa. Lisätietoja löydät kohdasta: Asetukset > Lisäasetukset",
 	'upgrade:site_secret_warning:weak' => "Sivustollasi on käytössä liian heikko salausavain, mikä saattaa heikentää tietoturvaa. Uudista salausavain kohdasta: Asetukset > Lisäasetukset",
@@ -1201,17 +1302,18 @@ Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/ad
 	'admin:pending_upgrades' => 'Sivustolla on odottavia päivityksiä, jotka vaativat välitöntä huomiotasi.',
 	'admin:view_upgrades' => 'Siirry päivityksiin tästä.',
 	'item:object:elgg_upgrade' => 'Sivuston päivitykset',
+	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Sivustosi on ajan tasalla!',
 
 	'upgrade:item_count' => 'Sivustolla on <b>%s</b> kohdetta, jotka vaativat päivityksen.',
 	'upgrade:warning' => '<b>Varoitus:</b> Tämä päivitys saattaa viedä huomattavasti aikaa.',
 	'upgrade:success_count' => 'Päivitetyt kohteet:',
 	'upgrade:error_count' => 'Virheet:',
-	'upgrade:river_update_failed' => 'Ei voitu päivittää kohdetta (id %s) sivuston toimintalistaukseen',
-	'upgrade:timestamp_update_failed' => 'Luontiajan päivittäminen kohteelle %s epäonnistui',
 	'upgrade:finished' => 'Päivitys on valmis',
 	'upgrade:finished_with_errors' => '<p>Päivityksen aikana ilmeni virheitä. Päivitä sivu ja yritä ajaa päivitys uudelleen.<br /></p><p>Jos virheet toistuvat, yritä selvittää niiden syy palvelimen virhelokeista. Tarvittaessa voit pyytää apua Elggin yhteisön <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">teknisen tuen ryhmästä</a>.</p>',
-
+	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:count_items' => '%d items to upgrade',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
 	
@@ -1233,41 +1335,38 @@ Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/ad
 
 	'email:settings' => "Sähköpostiasetukset",
 	'email:address:label' => "Sähköpostiosoite",
+	'email:address:password' => "Password",
+	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
 	'email:save:success' => "Uusi sähköpostiosoite tallennettu.",
 	'email:save:fail' => "Sähköpostiosoitteen vaihtaminen epäonnistui.",
+	'email:save:fail:password' => "The password doesn't match your current password, could not change your email address",
 
 	'friend:newfriend:subject' => "%s on tehnyt sinusta ystävänsä!",
-	'friend:newfriend:body' => "%s on tehnyt sinusta ystävänsä!
+	'friend:newfriend:body' => "%s has made you a friend!
 
-Nähdäksesi hänen profiilinsa, siirry tänne:
-%s
+To view their profile, click here:
 
-Tähän viestiin ei voi vastata.",
+%s",
 
 	'email:changepassword:subject' => "Salasana nollattu!",
-	'email:changepassword:body' => "Hei %s,
+	'email:changepassword:body' => "Hi %s,
 
-Salasanasi on nollattu.
-
-Uusi salasanasi on: %s",
+Your password has been changed.",
 
 	'email:resetpassword:subject' => "Salasana nollattu!",
-	'email:resetpassword:body' => "Hei %s,
+	'email:resetpassword:body' => "Hi %s,
 
-Salasanasi on nollattu.
-
-Uusi salasanasi on: %s",
+Your password has been reset to: %s",
 
 	'email:changereq:subject' => "Anomus salasanan vaihtamiseksi.",
-	'email:changereq:body' => "Hei %s
+	'email:changereq:body' => "Hi %s,
 
-Joku (IP-osoitteesta %s) on anonut uutta salasanaa tiliin, johon tämä sähköpostiosoite on liitetty.
+Somebody (from the IP address %s) has requested a password change for this account.
 
-Jos anoit uutta salasanaa, klikkaa alla olevaa linkkiä. Muussa tapauksessa voit jättää tämän viestin huomiotta.
+If you requested this, click on the link below. Otherwise ignore this email.
 
-%s
-",
+%s",
 
 /**
  * user default access
@@ -1284,8 +1383,9 @@ Jos anoit uutta salasanaa, klikkaa alla olevaa linkkiä. Muussa tapauksessa voit
 
 	'comments:count' => "%s kommenttia",
 	'item:object:comment' => 'Kommentit',
+	'collection:object:comment' => 'Comments',
 
-	'river:comment:object:default' => '%s kommentoi kohdetta %s',
+	'river:object:default:comment' => '%s commented on %s',
 
 	'generic_comments:add' => "Kommentoi",
 	'generic_comments:edit' => "Muokkaa",
@@ -1294,33 +1394,39 @@ Jos anoit uutta salasanaa, klikkaa alla olevaa linkkiä. Muussa tapauksessa voit
 	'generic_comments:latest' => "Viimeisimmät kommentit",
 	'generic_comment:posted' => "Kommentti lisätty.",
 	'generic_comment:updated' => "Kommentti päivitetty.",
-	'generic_comment:deleted' => "Kommentti poistettu.",
+	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
 	'generic_comment:blank' => "Kommenttiin täytyy kirjoittaa jotain ennen kuin se voidaan tallentaa.",
 	'generic_comment:notfound' => "Etsimääsi kommenttia ei löytynyt.",
 	'generic_comment:notfound_fallback' => "Etsimääsi kommenttia ei löytynyt, mutta ohjasimme sinut sivulle, jonne kommentti oli jätetty.",
-	'generic_comment:notdeleted' => "Kommentin poistaminen epäonnistui.",
 	'generic_comment:failure' => "Kommentin tallentamisessa tapahtui odottamaton virhe.",
 	'generic_comment:none' => 'Ei kommentteja',
 	'generic_comment:title' => 'Kommentti käyttäjältä %s',
 	'generic_comment:on' => '%s kohteessa %s',
 	'generic_comments:latest:posted' => 'posted a',
 
-	'generic_comment:email:subject' => 'Sinulla on uusi kommentti!',
-	'generic_comment:email:body' => "Kohdettasi \"%s\" on kommentoinut %s. Siinä sanotaan
-
-
-%s
-
-
-Vastataksesi tai nähdäksesi alkuperäisen viestin, klikkaa tätä:
+	'generic_comment:notification:owner:subject' => 'You have a new comment!',
+	'generic_comment:notification:owner:summary' => 'You have a new comment!',
+	'generic_comment:notification:owner:body' => "You have a new comment on your item \"%s\" from %s. It reads:
 
 %s
 
-Nähdäksesi käyttäjän %s profiilin, klikkaa tätä:
+To reply or view the original item, click here:
+%s
+
+To view %s's profile, click here:
+%s",
+	
+	'generic_comment:notification:user:subject' => 'A new comment on: %s',
+	'generic_comment:notification:user:summary' => 'A new comment on: %s',
+	'generic_comment:notification:user:body' => "A new comment was made on \"%s\" by %s. It reads:
 
 %s
 
-Tähän viestiin ei voi vastata.",
+To reply or view the original item, click here:
+%s
+
+To view %s's profile, click here:
+%s",
 
 /**
  * Entities
@@ -1328,7 +1434,6 @@ Tähän viestiin ei voi vastata.",
 
 	'byline' => 'Käyttäjältä %s',
 	'byline:ingroup' => 'ryhmässä %s',
-	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'Tätä kohdetta ei voida näyttää oikein. Tämä voi johtua puuttuvasta liitännäisestä.',
 
 	'entity:delete:item' => 'Kohde',
@@ -1531,4 +1636,21 @@ Tähän viestiin ei voi vastata.",
 
 	"field:required" => 'Pakollinen',
 
+	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
+	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
+
+	"core:upgrade:2017080950:title" => "Update default security parameters",
+	"core:upgrade:2017080950:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the defaults. You can later update these parameters in your site settings.",
+
+	"core:upgrade:2017121200:title" => "Create friends access collections",
+	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
+
+	"core:upgrade:2018041800:title" => "Activate new plugins",
+	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
+
+	"core:upgrade:2018041801:title" => "Delete old plugin entities",
+	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
+	
+	"core:upgrade:2018061401:title" => "Migrate cron log entries",
+	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
 );

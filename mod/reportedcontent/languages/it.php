@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Segnala all\'amministratore',
 	'reportedcontent:instructions' => 'Questa segnalazione verrà inviata agli amministratori del sito per verifica.',
 	'reportedcontent:numbertodisplay' => 'Numero di segnalazioni da visualizzare',
-	'reportedcontent:widget:description' => 'Visualizza contenuti segnalati',
 	'reportedcontent:user' => 'Segnala utente',
 
 	'reportedcontent:failed' => 'Spiacenti, il tentativo di segnalare questo contenuto non è andato a buon fine.',
 	'reportedcontent:notarchived' => 'Non è stato possibile archiviare la segnalazione',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

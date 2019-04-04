@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Denunciar ante un administrador',
 	'reportedcontent:instructions' => 'A denuncia enviarase aos administradores do sitio para que a revisen.',
 	'reportedcontent:numbertodisplay' => 'Número de denuncias para mostrar',
-	'reportedcontent:widget:description' => 'Mostrar o contido denunciado',
 	'reportedcontent:user' => 'Denunciar o usuario',
 
 	'reportedcontent:failed' => 'Non foi posíbel denunciar este contido.',
 	'reportedcontent:notarchived' => 'Non foi posíbel arquivar a denuncia.',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

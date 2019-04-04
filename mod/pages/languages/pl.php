@@ -1,43 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "Strony",
-	'pages:owner' => "Strony użytkownika %s",
-	'pages:friends' => "Strony znajomych",
-	'pages:all' => "Wszystkie strony",
-	'pages:add' => "Dodaj stronę",
+	'item:object:page' => 'Strony',
+	'collection:object:page' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "Strony grupy",
-	'groups:enablepages' => 'Włącz strony grupy',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "Nowa strona",
-	'pages:edit' => "Edytuj tą stronę",
 	'pages:delete' => "Usuń tą stronę",
 	'pages:history' => "Historia strony",
 	'pages:view' => "Wyświetl stronę",
 	'pages:revision' => "Wersja",
-	'pages:current_revision' => "Obecna wersja",
-	'pages:revert' => "Przywróć",
 
 	'pages:navigation' => "Nawigacja strony",
 
 	'pages:notify:summary' => 'Nowa strona o nazwie %s',
 	'pages:notify:subject' => "Nowa strona: %s",
 	'pages:notify:body' =>
-'%s dodał nową stronę: %s
+'%s added a new page: %s
 
 %s
 
-Wyświetl i skomentuj nową stronę:
-%s
-',
-	'item:object:page_top' => 'Strony najwyższego poziomu',
-	'item:object:page' => 'Strony',
-	'pages:nogroup' => 'Ta grupa nie ma jeszcze żadnych stron.',
+View and comment on the page:
+%s',
+
 	'pages:more' => 'Więcej stron',
 	'pages:none' => 'Nie utworzono jeszcze stron',
 
@@ -45,13 +40,10 @@ Wyświetl i skomentuj nową stronę:
 	* River
 	**/
 
-	'river:create:object:page' => '%s utworzył stronę %s',
-	'river:create:object:page_top' => '%s utworzył stronę %s',
-	'river:update:object:page' => '%s zaktualizował stronę %s',
-	'river:update:object:page_top' => '%s zaktualizował stronę %s',
-	'river:comment:object:page' => '%s skomentował stronę %s',
-	'river:comment:object:page_top' => '%s skomentował stronę %s',
-
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -66,21 +58,13 @@ Wyświetl i skomentuj nową stronę:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'Brak dostępu do strony',
 	'pages:cantedit' => 'Nie można edytować tej strony',
 	'pages:saved' => 'Strona zapisana',
 	'pages:notsaved' => 'Strona nie mogła zostać zapisana',
 	'pages:error:no_title' => 'Musisz podać tytuł dla tej strony.',
-	'pages:delete:success' => 'Twoja strona została pomyślnie usunięta.',
-	'pages:delete:failure' => 'Strona nie może zostać usunięta.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'Pomyślnie usunięto wersję strony.',
 	'pages:revision:delete:failure' => 'Usunięcie wersji strony nie powiodło się.',
-	'pages:revision:not_found' => 'Nie znaleziono wskazanej wersji.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Ostatnia aktualizacja %s przez %s',
 
 	/**
 	 * History
@@ -92,7 +76,8 @@ Wyświetl i skomentuj nową stronę:
 	 **/
 
 	'pages:num' => 'Ilość stron do wyświetlenia',
-	'pages:widget:description' => "Oto lista twoich stron",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -101,13 +86,14 @@ Wyświetl i skomentuj nową stronę:
 	'pages:label:edit' => "Edytuj stronę",
 	'pages:label:history' => "Historia strony",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "Ta strona",
-	'pages:sidebar:children' => "Podstrony",
-	'pages:sidebar:parent' => "Strona nadrzędna",
-
 	'pages:newchild' => "Utwórz podstronę",
-	'pages:backtoparent' => "Wróć do '%s'",
-];
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+);

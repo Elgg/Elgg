@@ -1,33 +1,40 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Messaggi brevi",
-	'thewire:everyone' => "Tutti i messaggi",
-	'thewire:user' => "Messaggi di %s",
-	'thewire:friends' => "Messaggi dei tuoi amici",
+
+	'item:object:thewire' => "Messaggi",
+	'collection:object:thewire' => 'Wire posts',
+	'collection:object:thewire:all' => "All wire posts",
+	'collection:object:thewire:owner' => "%s's wire posts",
+	'collection:object:thewire:friends' => "Friends' wire posts",
+
 	'thewire:replying' => "Stai rispondendo a %s (@%s) che ha scritto",
 	'thewire:thread' => "Argomento",
 	'thewire:charleft' => "caratteri rimanenti",
 	'thewire:tags' => "Messaggi con tag '%s'",
 	'thewire:noposts' => "Ancora nessun messaggio",
-	'item:object:thewire' => "Messaggi",
+
 	'thewire:by' => 'Messaggi da %s',
 	'thewire:previous:help' => "Leggi i precedenti",
 	'thewire:hide:help' => "Nascondi i precedenti",
 
+	'thewire:form:body:placeholder' => "What's happening?",
+	
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s ha inviato a %s",
+	'river:object:thewire:create' => "%s ha postato su %s",
 	'thewire:wire' => 'messaggio',
 
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Visualizza i tuoi ultimi messaggi',
+	
+	'widgets:thewire:description' => 'Display your latest wire posts',
 	'thewire:num' => 'Numero di elementi da visualizzare',
 	'thewire:moreposts' => 'Più messaggi',
 
@@ -37,7 +44,6 @@ return [
 	'thewire:posted' => "Il tuo messaggio è stato inviato.",
 	'thewire:deleted' => "Il tuo messaggio è stato eliminato.",
 	'thewire:blank' => "Devi scrivere qualcosa prima di poterlo inviare.",
-	'thewire:notfound' => "Impossibile trovare il messaggio cercato.",
 	'thewire:notsaved' => "Impossibile salvare questo messaggio.",
 	'thewire:notdeleted' => "Impossibile eliminare questo messaggio.",
 
@@ -55,4 +61,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Numero massimo di caratteri per un messaggio:",
 	'thewire:settings:limit:none' => "Nessun limite",
-];
+);

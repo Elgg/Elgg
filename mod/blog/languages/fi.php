@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Blogit',
-	'blog:blogs' => 'Blogit',
+return array(
+	'item:object:blog' => 'Blogit',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Versiot',
 	'blog:archives' => 'Arkisto',
-	'blog:blog' => 'Blogi',
-	'item:object:blog' => 'Blogit',
 
-	'blog:title:user_blogs' => 'Käyttäjän %s blogit',
-	'blog:title:all_blogs' => 'Kaikki blogit',
-	'blog:title:friends' => 'Ystävien blogit',
-
-	'blog:group' => 'Ryhmän blogi',
-	'blog:enableblog' => 'Ota käyttöön ryhmän blogi',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Lisää blogiviesti',
 
 	// Editing
-	'blog:add' => 'Luo uusi blogiviesti',
-	'blog:edit' => 'Muokkaa blogiviestiä',
 	'blog:excerpt' => 'Tiivistelmä',
 	'blog:body' => 'Viesti',
 	'blog:save_status' => 'Tallennettu viimeksi: ',
-	
+
 	'blog:revision' => 'Versio',
 	'blog:auto_saved_revision' => 'Versio  Auto Saved Revision',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Versiota ei löydy.',
 
 	// river
-	'river:create:object:blog' => '%s julkaisi blogiviestin %s',
-	'river:comment:object:blog' => '%s kommentoi blogiviestiä %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Uusi blogiviesti %s',
 	'blog:notify:subject' => 'Uusi blogiviesti: %s',
 	'blog:notify:body' =>
 '
-%s julkaisi uuden blogikirjoituksen: %s
+%s published a new blog post: %s
 
 %s
 
-Voit lukea blogikirjoituksen täällä:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Näytä viimeisimmät blogiviestisi',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Lisää blogiviestejä',
 	'blog:numbertodisplay' => 'Näytettävien kohteiden määrä',
-	'blog:noblogs' => 'Ei blogiviestejä'
-];
+);

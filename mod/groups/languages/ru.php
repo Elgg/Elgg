@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Иконка группы',
 	'groups:name' => 'Название группы',
-	'groups:username' => 'Краткое название группы',
 	'groups:description' => 'Описание',
 	'groups:briefdescription' => 'Краткое описание',
 	'groups:interests' => 'Интересы',
 	'groups:website' => 'Сайт',
 	'groups:members' => 'Участники',
-	'groups:my_status' => 'Мой статус',
-	'groups:my_status:group_owner' => 'Вы владеете этой группой',
-	'groups:my_status:group_member' => 'Вы в этой группе',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
+
+	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Участники %s',
 	'groups:members:more' => "Показать всех участников группы",
@@ -43,17 +39,10 @@ return [
 	'groups:owner' => "Владелец",
 	'groups:owner:warning' => "Внимание: если вы измените это значение, вы больше не будете владельцем группы.",
 	'groups:widget:num_display' => 'Число отображаемых групп',
-	'groups:widget:membership' => 'Членство',
-	'groups:widgets:description' => 'Число отображаемых групп',
-
-	'groups:widget:group_activity:title' => 'Активность группы',
-	'groups:widget:group_activity:description' => 'Посмотреть активность в одной из ваших групп',
-	'groups:widget:group_activity:edit:select' => 'Выберите группы',
-	'groups:widget:group_activity:content:noactivity' => 'В этой группе нет активности',
-	'groups:widget:group_activity:content:noselect' => 'Измените этот виджет и укажите группу',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'Нет доступа к группе',
-	'groups:ingroup' => 'в группе',
 	'groups:cantcreate' => 'Вы не можете создать группу. Только админы могут.',
 	'groups:cantedit' => 'Вы не можете редактировать эту группу',
 	'groups:saved' => 'Сохранено',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Покинуть группу',
 	'groups:invite' => 'Пригласить в группу',
 	'groups:invite:title' => 'Пригласить в группу',
-	'groups:inviteto' => "Пригласить в '%s'",
-	'groups:nofriends' => "Все друзья приглашены.",
+	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
+	'groups:invite:resend' => 'Resend the invitations to already invited users',
+
 	'groups:nofriendsatall' => 'Некого приглашать!',
-	'groups:viagroups' => "в группе",
 	'groups:group' => "Группа",
 	'groups:search:tags' => "Интересы",
 	'groups:search:title' => "Искать группу по интересам: '%s'",
 	'groups:search:none' => "Ничего не найдено!",
 	'groups:search_in_group' => "Поиск в этой группе",
 	'groups:acl' => "Группа: %s",
-
-	'groups:activity' => "Активность группы",
-	'groups:enableactivity' => 'Включить активность группы',
-	'groups:activity:none' => "---",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:notfound' => "Группа не найдена",
-	'groups:notfound:details' => "Запрашиваемая группа или не существует, или у Вас нет доступа к ней",
-
+	
 	'groups:requests:none' => 'Пока нет никаких запросов членства.',
 
 	'groups:invitations:none' => 'There are no oustanding invitations at this time.',
 
-	'groups:count' => "групп создано",
 	'groups:open' => "открытая группа",
 	'groups:closed' => "закрытая группа",
 	'groups:member' => "участников",
-	'groups:searchtag' => "Поиск групп по интересам",
+	'groups:search' => "Search for groups",
 
 	'groups:more' => 'Еще группы',
 	'groups:none' => '---',
@@ -117,12 +101,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Последнее обновление %s от пользователя %s',
-	'groups:lastcomment' => 'Последний комментарий %s от пользователя %s',
 
 	'admin:groups' => 'Группы',
 
-	'groups:privategroup' => 'Это личная группа, для просмотра требуется членство.',
 	'groups:notitle' => 'Группы должны иметь название.',
 	'groups:cantjoin' => 'Простите, невозможно вступить в группу.',
 	'groups:cantleave' => 'Простите, невозможно покинуть группу.',
@@ -133,61 +114,44 @@ return [
 	'groups:joinrequestnotmade' => 'Простите, запрос не может быть осуществлен.',
 	'groups:joinrequestmade' => 'Запрос осуществлен.',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:button:joined' => 'Joined',
+	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Вы вступили в группу!',
 	'groups:left' => 'Вы покинули группу',
-	'groups:notowner' => 'Простите, но вы не вледелец этой группы.',
-	'groups:notmember' => 'Извините, но вы не участник этой группы.',
-	'groups:alreadymember' => 'Вы уже состоите в этой группе!',
 	'groups:userinvited' => 'Пользователь приглашен.',
 	'groups:usernotinvited' => 'Простите, пользователь не может быть приглашен.',
 	'groups:useralreadyinvited' => 'Пользователь уже был приглашен',
 	'groups:invite:subject' => "%s you have been invited to join %s!",
-	'groups:started' => "Начато пользователем",
 	'groups:joinrequest:remove:check' => 'Удалить запрос приглашения?',
 	'groups:invite:remove:check' => 'Удалить приглашение?',
-	'groups:invite:body' => "Привет %s,
+	'groups:invite:body' => "Hi %s,
 
-Вас пригласили вступить в группу '%s', кликните для подтверждения:
+%s invited you to join the '%s' group.
 
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Добро пожаловать в группу %s!",
-	'groups:welcome:body' => "Привет %s!
+	'groups:welcome:body' => "Hi %s!
 
-Вы член группы '%s'! Кликните для начала деятельности.
+You are now a member of the '%s' group.
 
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s попросил вступить в группу %s",
-	'groups:request:body' => "Привет %s,
+	'groups:request:body' => "Hi %s,
 
-%s попросил вступить в группу '%s', кликните для просмотра профиля:
+%s has requested to join the '%s' group.
 
+Click below to view their profile:
 %s
 
-или нажмите для подтверждения запроса:
-
+or click below to view the group's join requests:
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s создал(а) группу %s',
-	'river:join:group:default' => '%s вступил(а) в группу %s',
-
-	'groups:nowidgets' => 'У группы не определены элементы.',
-
-
-	'groups:widgets:members:title' => 'Члены группы',
-	'groups:widgets:members:description' => 'Список членов группы',
-	'groups:widgets:members:label:displaynum' => 'Список членов группы',
-	'groups:widgets:members:label:pleaseedit' => 'Пожалуйста, настройте этот виджет.',
-
-	'groups:widgets:entities:title' => "Объекты в группе",
-	'groups:widgets:entities:description' => "Список объектов группы",
-	'groups:widgets:entities:label:displaynum' => 'Список объектов группы.',
-	'groups:widgets:entities:label:pleaseedit' => 'Пожалуйста, настройте этот виджет.',
+	'river:group:create' => '%s created the group %s',
+	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Хотите вступить в подпольную группу?',
 	'groups:whocancreate' => 'Кто может создавать новые группы?',
@@ -195,10 +159,8 @@ return [
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Группа и все содержимое удалено',
-	'group:notdeleted' => 'Удаление невозможно',
-
-	'group:notfound' => 'Невозможно найти тему форума',
+	'groups:deleted' => 'Group and group contents deleted',
+	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Вы уверены, что хотите удалить эту группу? Возврата не будет!",
 
 	'groups:invitekilled' => 'Приглашение удалено.',
@@ -210,4 +172,11 @@ return [
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Профили группы',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+);

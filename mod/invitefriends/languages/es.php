@@ -16,18 +16,19 @@ return array(
 	'invitefriends:already_members' => 'La siguiente direcci&oacute;n ya est&aacute; registrada por %s',
 	'invitefriends:noemails' => 'No se han ingresado direcciones de email.',
 	
-	'invitefriends:message:default' => 'Hola,
+	'invitefriends:message:default' => 'Hi,
 
-Quiero invitarte a que te unas a mi red aquí %s.',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => 'Haz sido invitado a unirte a %s por %s. Ellos han incluido el siguiente mensaje:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
 
-%s
-
-Para unirte, ház click en el siguiente link:
+They included the following message:
 
 %s
 
-Tu seras automáticamente agregado como amigo al crear tu cuenta.',
+To join, click the following link:
+%s
+
+You will automatically add them as a friend when you create your account.',
 	
 );

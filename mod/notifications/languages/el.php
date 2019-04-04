@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Όλοι οι φίλοι',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Λήψη ειδοποιήσεων για ενέργειες στο περιεχόμενο μου',
 	'notifications:subscriptions:personal:title' => 'Προσωπικές ειδοποιήσεις',
 
-	'notifications:subscriptions:friends:title' => 'Φίλοι',
-	'notifications:subscriptions:friends:description' => 'Παρακάτω είναι οι συλλογές των φίλων σας. Επιλέγοντας μία συλλογή ενεργοποιείτε τις ειδοποιήσεις για τους χρήστες της συλλογής.',
-	'notifications:subscriptions:collections:edit' => 'Για να επεξεργαστείτε τις κοινές ειδοποιήσεις πρόσβασης σας, κάντε κλικ εδώ.',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Ειδοποιήσεις',
 	'notifications:subscriptions:changesettings:groups' => 'Ειδοποιήσεις ομάδας',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Οι ρυθμίσεις ειδοποιήσεων αποθηκεύτηκαν με επιτυχία.',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

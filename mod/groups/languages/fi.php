@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Ryhmän kuvake (jätä tyhjäksi, jos et halua vaihtaa)',
 	'groups:name' => 'Ryhmän nimi',
-	'groups:username' => 'Ryhmän lyhyt nimi (näytetään osoitteissa, käytä vain kirjaimia ja numeroita)',
 	'groups:description' => 'Kuvaus',
 	'groups:briefdescription' => 'Lyhyt kuvaus',
 	'groups:interests' => 'Tagit',
 	'groups:website' => 'Nettisivu',
 	'groups:members' => 'Ryhmän jäsenet',
-	'groups:my_status' => 'Oma jäsenyytesi',
-	'groups:my_status:group_owner' => 'Olet ryhmän omistaja',
-	'groups:my_status:group_member' => 'Olet ryhmän jäsen',
-	'groups:subscribed' => 'Ilmoitukset ovat päällä',
-	'groups:unsubscribed' => 'Ilmoitukset ovat pois päältä',
+
+	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Jäsenet ryhmässä: %s',
 	'groups:members:more' => "Näytä kaikki jäsenet",
@@ -43,17 +39,10 @@ return [
 	'groups:owner' => "Omistaja",
 	'groups:owner:warning' => "Varoitus: Jos muutat tätä, luovut ryhmän omistajuudesta.",
 	'groups:widget:num_display' => 'Näytettävien ryhmien määrä',
-	'groups:widget:membership' => 'Ryhmien jäsenyys',
-	'groups:widgets:description' => 'Näytä profiilissasi ryhmät, joiden jäsenenä olet',
-
-	'groups:widget:group_activity:title' => 'Ryhmän toiminta',
-	'groups:widget:group_activity:description' => 'Näyttää valitsemasi ryhmän toiminta',
-	'groups:widget:group_activity:edit:select' => 'Valitse',
-	'groups:widget:group_activity:content:noactivity' => 'Ryhmässä ei ole vielä ollut toimintaa',
-	'groups:widget:group_activity:content:noselect' => 'Valitse ryhmä vimpaimen asetuksista',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'Sinulla ei ole oikeuksia tämän ryhmän näkemiseen',
-	'groups:ingroup' => 'ryhmässä',
 	'groups:cantcreate' => 'Vain sivuston ylläpitäjät voivat luoda uusia ryhmiä.',
 	'groups:cantedit' => 'Voit nyt muokata ryhmää',
 	'groups:saved' => 'Ryhmä tallennettu',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Eroa ryhmästä',
 	'groups:invite' => 'Kutsu ystäviä',
 	'groups:invite:title' => 'Kutsu ystäviä ryhmään',
-	'groups:inviteto' => "Kutsu ystäviä ryhmään '%s'",
-	'groups:nofriends' => "Kaikki ystäväsi on jo kutsuttu ryhmän jäseniksi.",
+	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
+	'groups:invite:resend' => 'Resend the invitations to already invited users',
+
 	'groups:nofriendsatall' => 'Sinulla ei vielä ole ystäviä, joita kutsua!',
-	'groups:viagroups' => "lisäsi uuden viestin keskusteluun",
 	'groups:group' => "Ryhmä",
 	'groups:search:tags' => "tagi",
 	'groups:search:title' => "Ryhmät, joissa tagi '%s'",
 	'groups:search:none' => "Ryhmiä ei löytynyt",
 	'groups:search_in_group' => "Etsi tästä ryhmästä",
 	'groups:acl' => "Ryhmä: %s",
-
-	'groups:activity' => "Ryhmän toiminta",
-	'groups:enableactivity' => 'Ota käyttöön ryhmän toiminta',
-	'groups:activity:none' => "Ryhmässä ei vielä ole ollut toimintaa",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:notfound' => "Ryhmää ei löytynyt",
-	'groups:notfound:details' => "Pyydettyä ryhmää ei joko ole olemassa tai sinulla ei ole oikeuksia siihen",
-
+	
 	'groups:requests:none' => 'Ei odottavia jäsenyyspyyntöjä.',
 
 	'groups:invitations:none' => 'Ei odottavia kutsuja.',
 
-	'groups:count' => "ryhmää luotuna",
 	'groups:open' => "avoin ryhmä",
 	'groups:closed' => "suljettu ryhmä",
 	'groups:member' => "jäsentä",
-	'groups:searchtag' => "Etsi ryhmiä tagin perusteella",
+	'groups:search' => "Search for groups",
 
 	'groups:more' => 'Lisää ryhmiä',
 	'groups:none' => 'Ei ryhmiä',
@@ -117,12 +101,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Viimeksi päivitetty %s käyttäjän %s toimesta',
-	'groups:lastcomment' => 'Viimeksi kommentoitu %s käyttäjän %s toimesta',
 
 	'admin:groups' => 'Ryhmät',
 
-	'groups:privategroup' => 'Tämä ryhmä on suljettu. Anotaan jäsenyyttä.',
 	'groups:notitle' => 'Ryhmällä pitää olla nimi',
 	'groups:cantjoin' => 'Ryhmään liittyminen epäonnistui',
 	'groups:cantleave' => 'Ryhmästä eroaminen epäonnistui',
@@ -133,61 +114,44 @@ return [
 	'groups:joinrequestnotmade' => 'Ryhmän jäsenyyden anominen epäonnistui',
 	'groups:joinrequestmade' => 'Lähetettiin pyyntö päästä ryhmän jäseneksi',
 	'groups:joinrequest:exists' => 'Olet jo anonut jäsenyyttä tähän ryhmään',
+	'groups:button:joined' => 'Joined',
+	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Olet nyt ryhmän jäsen!',
 	'groups:left' => 'Olet nyt eronnut ryhmästä',
-	'groups:notowner' => 'Et ole ryhmän omistaja.',
-	'groups:notmember' => 'Et ole ryhmän jäsen.',
-	'groups:alreadymember' => 'Olet jo ryhmän jäsenenä!',
 	'groups:userinvited' => 'Käyttäjä kutsuttu.',
 	'groups:usernotinvited' => 'Käyttäjän kutsuminen epäonnistui.',
 	'groups:useralreadyinvited' => 'Käyttäjä on jo kutsuttu',
 	'groups:invite:subject' => "%s sinut on kutsuttu ryhmän %s jäseneksi!",
-	'groups:started' => "Aloittaja %s",
 	'groups:joinrequest:remove:check' => 'Haluatko varmasti poistaa tämän liittymispyynnön?',
 	'groups:invite:remove:check' => 'Haluatko varmasti poistaa tämän kutsun?',
-	'groups:invite:body' => "Hei %s,
+	'groups:invite:body' => "Hi %s,
 
-%s on kutsunut sinut liittymään ryhmään '%s'. Klikkaa linkkiä nähdäksesi kutsun:
+%s invited you to join the '%s' group.
 
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Tervetuloa ryhmään %s!",
-	'groups:welcome:body' => "Hei %s!
+	'groups:welcome:body' => "Hi %s!
 
-Olet nyt ryhmän '%s' jäsen! Klikkaa linkkiä päästäksesi alkuun!
+You are now a member of the '%s' group.
 
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s on anonut jäsenyyttä ryhmään %s",
-	'groups:request:body' => "Hei %s,
+	'groups:request:body' => "Hi %s,
 
-%s on anonut jäsenyyttä ryhmään '%s'. Klikkaa tästä nähdäksesi hänen profiilinsa:
+%s has requested to join the '%s' group.
 
+Click below to view their profile:
 %s
 
-tai tästä nähdäksesi ryhmän jäsenanomukset:
-
+or click below to view the group's join requests:
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s loi ryhmän %s',
-	'river:join:group:default' => '%s liittyi ryhmään %s',
-
-	'groups:nowidgets' => 'Tälle ryhmälle ei ole määritetty vimpaimia.',
-
-
-	'groups:widgets:members:title' => 'Ryhmän jäsenet',
-	'groups:widgets:members:description' => 'Listaa ryhmän jäsenet.',
-	'groups:widgets:members:label:displaynum' => 'Listaa ryhmän jäsenet.',
-	'groups:widgets:members:label:pleaseedit' => 'Määrittele vimpaimelle asetukset.',
-
-	'groups:widgets:entities:title' => "Kohdetta ryhmässä",
-	'groups:widgets:entities:description' => "Listaa ryhmässä olevat kohteet",
-	'groups:widgets:entities:label:displaynum' => 'Listaa ryhmässä olevat kohteet.',
-	'groups:widgets:entities:label:pleaseedit' => 'Määrittele vimpaimelle asetukset.',
+	'river:group:create' => '%s created the group %s',
+	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Sallitaanko suljettujen (piilotettujen) ryhmien luominen?',
 	'groups:whocancreate' => 'Kuka voi luoda uusia ryhmiä?',
@@ -195,10 +159,8 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Ryhmä ja sen sisällöt poistettu',
-	'group:notdeleted' => 'Ryhmää ei voitu poistaa',
-
-	'group:notfound' => 'Ryhmää ei löytynyt',
+	'groups:deleted' => 'Group and group contents deleted',
+	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Haluatko varmasti poistaa tämän ryhmän? Tätä toimintoa ei voi perua!",
 
 	'groups:invitekilled' => 'Kutsu poistettu.',
@@ -210,4 +172,11 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Ryhmät',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+);

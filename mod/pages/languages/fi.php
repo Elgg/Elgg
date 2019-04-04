@@ -1,43 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "Wikit",
-	'pages:owner' => "Käyttäjän %s wikit",
-	'pages:friends' => "Ystävien wikit",
-	'pages:all' => "Kaikki sivuston wikit",
-	'pages:add' => "Luo uusi wiki",
+	'item:object:page' => 'Wikisivut',
+	'collection:object:page' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "Ryhmän wikit",
-	'groups:enablepages' => 'Ota käyttöön ryhmän wikit',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "Uusi sivu",
-	'pages:edit' => "Muokkaa sivua",
 	'pages:delete' => "Poista tämä sivu",
 	'pages:history' => "Historia",
 	'pages:view' => "Näytä sivu",
 	'pages:revision' => "Versio",
-	'pages:current_revision' => "Tämänhetkinen versio",
-	'pages:revert' => "Palauta",
 
 	'pages:navigation' => "Navigaatio",
 
 	'pages:notify:summary' => 'Uusi wikisivu: %s',
 	'pages:notify:subject' => "Uusi wikisivu: %s",
 	'pages:notify:body' =>
-'%s lisäsi uuden wikisivun: %s
+'%s added a new page: %s
 
 %s
 
-Voit lukea sivun täällä:
-%s
-',
-	'item:object:page_top' => 'Päätason wikisivut',
-	'item:object:page' => 'Wikisivut',
-	'pages:nogroup' => 'Tässä ryhmällä ei ole vielä wikisivuja',
+View and comment on the page:
+%s',
+
 	'pages:more' => 'Lisää wikisivuja',
 	'pages:none' => 'Wikejä ei vielä ole luotu',
 
@@ -45,13 +40,10 @@ Voit lukea sivun täällä:
 	* River
 	**/
 
-	'river:create:object:page' => '%s loi wikisivun %s',
-	'river:create:object:page_top' => '%s loi wikisivun %s',
-	'river:update:object:page' => '%s päivitti wikisivua %s',
-	'river:update:object:page_top' => '%s päivitti wikisivua %s',
-	'river:comment:object:page' => '%s kommentoi wikisivua %s',
-	'river:comment:object:page_top' => '%s kommentoi wikisivua %s',
-
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -66,21 +58,13 @@ Voit lukea sivun täällä:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'Sinulla ei ole oikeuksia lukea tätä wikisivua',
 	'pages:cantedit' => 'Sinulla ei ole oikeuksia muokata tätä wikisivua',
 	'pages:saved' => 'Sivu tallennettu',
 	'pages:notsaved' => 'Sivun tallentaminen epäonnistui',
 	'pages:error:no_title' => 'Syötä sivulle otsikko.',
-	'pages:delete:success' => 'Sivu poistettiin.',
-	'pages:delete:failure' => 'Sivun poistaminen epäonnistui.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'Versio poistettu.',
 	'pages:revision:delete:failure' => 'Version poistaminen epäonnistui.',
-	'pages:revision:not_found' => 'Versiota ei löydy.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Viimeisin päivitys %s käyttäjältä %s',
 
 	/**
 	 * History
@@ -92,7 +76,8 @@ Voit lukea sivun täällä:
 	 **/
 
 	'pages:num' => 'Näytettävien wikien määrä',
-	'pages:widget:description' => "Näyttää listan omistamistasi wikeistä.",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -101,13 +86,14 @@ Voit lukea sivun täällä:
 	'pages:label:edit' => "Muokkaa sivua",
 	'pages:label:history' => "Sivun historia",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "Tämä sivu",
-	'pages:sidebar:children' => "Alasivut",
-	'pages:sidebar:parent' => "Yläsivu",
-
 	'pages:newchild' => "Luo alasivu",
-	'pages:backtoparent' => "Takaisin sivulle '%s'",
-];
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+);

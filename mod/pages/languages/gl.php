@@ -1,43 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "Páxinas",
-	'pages:owner' => "Páxinas de %s",
-	'pages:friends' => "Páxinas dos contactos",
-	'pages:all' => "Páxinas do siti",
-	'pages:add' => "Engadir unha páxina",
+	'item:object:page' => 'Páxinas',
+	'collection:object:page' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "Páxinas de grupos",
-	'groups:enablepages' => 'Activas as páxinas de grupos',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "Nova páxina",
-	'pages:edit' => "Editar a páxina",
 	'pages:delete' => "Eliminar a páxina",
 	'pages:history' => "Historia",
 	'pages:view' => "Ver a páxina",
 	'pages:revision' => "Revisión",
-	'pages:current_revision' => "Revisión actual",
-	'pages:revert' => "Reverter",
 
 	'pages:navigation' => "Navegación",
 
 	'pages:notify:summary' => 'Nova páxina: «%s»',
 	'pages:notify:subject' => "Nova páxina: «%s»",
 	'pages:notify:body' =>
-'%s engadiu unha nova páxina: %s
+'%s added a new page: %s
 
 %s
 
-Vexa e deixe un comentario na páxina:
-%s
-',
-	'item:object:page_top' => 'Páxinas raíz',
-	'item:object:page' => 'Páxinas',
-	'pages:nogroup' => 'O grupo aínda non ten ningunha páxina',
+View and comment on the page:
+%s',
+
 	'pages:more' => 'Máis páxinas',
 	'pages:none' => 'Aínda non hai ningunha páxina creada.',
 
@@ -45,13 +40,10 @@ Vexa e deixe un comentario na páxina:
 	* River
 	**/
 
-	'river:create:object:page' => '%s creou unha páxina %s',
-	'river:create:object:page_top' => '%s creou unha páxina %s',
-	'river:update:object:page' => '%s actualizou unha páxina %s',
-	'river:update:object:page_top' => '%s actualizou unha páxina %s',
-	'river:comment:object:page' => '%s deixou un comentario na páxina «%s»',
-	'river:comment:object:page_top' => '%s deixou un comentario na páxina «%s»',
-
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -66,21 +58,13 @@ Vexa e deixe un comentario na páxina:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'Sen acceso',
 	'pages:cantedit' => 'Non pode editar a páxina.',
 	'pages:saved' => 'Gardouse a páxina.',
 	'pages:notsaved' => 'Non foi posíbel gardar a páxina.',
 	'pages:error:no_title' => 'Debe poñerlle título á páxina.',
-	'pages:delete:success' => 'Eliminouse a páxina.',
-	'pages:delete:failure' => 'Non foi posíbel eliminar a páxina.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'Eliminouse a revisión da páxina.',
 	'pages:revision:delete:failure' => 'Non foi posíbel eliminar a revisión da páxina',
-	'pages:revision:not_found' => 'Non é posíbel atopar a revisión indicada.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Última actualización %s por %s',
 
 	/**
 	 * History
@@ -92,7 +76,8 @@ Vexa e deixe un comentario na páxina:
 	 **/
 
 	'pages:num' => 'Número de páxinas para mostrar',
-	'pages:widget:description' => "Lista das súas páxinas",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -101,13 +86,14 @@ Vexa e deixe un comentario na páxina:
 	'pages:label:edit' => "Editar a páxina",
 	'pages:label:history' => "Historial da páxina",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "Esta páxina",
-	'pages:sidebar:children' => "Subpáxinas",
-	'pages:sidebar:parent' => "Páxina superior",
-
 	'pages:newchild' => "Crear unha subpáxina",
-	'pages:backtoparent' => "Volver a «%s»",
-];
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+);
