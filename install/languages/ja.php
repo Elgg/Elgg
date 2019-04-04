@@ -68,7 +68,7 @@ return [
 	'install:database:help:dbprefix' => "全てのElgg用テーブル名につける接頭辞(Prefix)(たいていは、elgg_)",
 	'install:database:help:timezone' => "サイトが扱う既定のタイムゾーン",
 
-	'install:settings:instructions' => 'Elggを構築するにあたってこのサイトについてのいくつかの情報が必要です。もし、まだElgg用の<a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">データディレクトリを作成</a>されておられないなら、今作成してください。',
+	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => 'サイトの名前',
 	'install:settings:label:siteemail' => 'サイトのEmailアドレス',

@@ -3023,8 +3023,13 @@ msgstr ""
 msgid "``elgg_in_context($context)`` Checks if you're in a context (this checks the complete stack, eg. 'widget' in 'groups')"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/helpers.rst:41
 #: ../../guides/hooks-list.rst:1094
+=======
+#: ../../guides/helpers.rst:37
+#: ../../guides/hooks-list.rst:837
+>>>>>>> refs/remotes/remote/2.3
 #: ../../guides/plugins.rst:2
 msgid "Plugins"
 msgstr ""
@@ -3131,7 +3136,12 @@ msgid "**diagnostics:report, system**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:25
+<<<<<<< HEAD
 msgid "Filter the output for the diagnostics report download."
+=======
+#: ../../guides/hooks-list.rst:919
+msgid "**search_types, get_types**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
 #: ../../guides/hooks-list.rst:28
@@ -3704,6 +3714,7 @@ msgstr ""
 msgid "``use_enabled_clause`` - whether disabled entities are shown/hidden"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:303
 msgid "``access_column`` - column in the main table containing the access collection ID value"
 msgstr ""
@@ -3754,6 +3765,14 @@ msgstr ""
 #: ../../guides/hooks-list.rst:735
 #: ../../guides/hooks-list.rst:743
 #: ../../guides/hooks-list.rst:765
+=======
+#: ../../guides/hooks-list.rst:342
+#: ../../guides/hooks-list.rst:356
+#: ../../guides/hooks-list.rst:376
+#: ../../guides/hooks-list.rst:431
+#: ../../guides/hooks-list.rst:454
+#: ../../guides/hooks-list.rst:581
+>>>>>>> refs/remotes/remote/2.3
 msgid "``$params`` array includes:"
 msgstr ""
 
@@ -3765,8 +3784,13 @@ msgstr ""
 msgid "**action_gatekeeper:permissions:check, all**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:328
 msgid "Triggered after a CSRF token is validated. Return false to prevent validation."
+=======
+#: ../../guides/hooks-list.rst:362
+msgid "**get, subscriptions**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
 #: ../../guides/hooks-list.rst:332
@@ -3801,14 +3825,35 @@ msgstr ""
 msgid "When the ``elgg/Ajax`` AMD module is used, this hook gives access to the response object (``\\Elgg\\Services\\AjaxResponse``) so it can be altered/extended. The hook type depends on the method call:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:355
 msgid "elgg/Ajax method"
+=======
+#: ../../guides/hooks-list.rst:353
+msgid "**IMPORTANT** Always validate the notification event, object and/or action types before adding any new recipients to ensure that you do not accidentally dispatch notifications to unintended recipients. Consider a situation, where a mentions plugin sends out an instant notification to a mentioned user - any hook acting on a subject or an object without validating an event or action type (e.g. including an owner of the original wire thread) might end up sending notifications to wrong users."
 msgstr ""
 
+#: ../../guides/hooks-list.rst:358
+#: ../../guides/hooks-list.rst:378
+#: ../../guides/hooks-list.rst:389
+#: ../../guides/hooks-list.rst:406
+#: ../../guides/hooks-list.rst:456
+msgid "``event`` - ``\\Elgg\\Notifications\\NotificationEvent`` instance that describes the notification event"
+>>>>>>> refs/remotes/remote/2.3
+msgstr ""
+
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:355
 msgid "plugin hook type"
+=======
+#: ../../guides/hooks-list.rst:359
+#: ../../guides/hooks-list.rst:396
+#: ../../guides/hooks-list.rst:413
+msgid "``origin`` - ``subscriptions_service`` or ``instant_notifications``"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:357
 msgid "action()"
 msgstr ""
@@ -3823,32 +3868,68 @@ msgstr ""
 
 #: ../../guides/hooks-list.rst:358
 msgid "path:<url_path>"
+=======
+#: ../../guides/hooks-list.rst:360
+msgid "``methods_override`` - delivery method preference for instant notifications"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:359
 msgid "view()"
+=======
+#: ../../guides/hooks-list.rst:362
+msgid "Handlers must return an array in the form:"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:359
 msgid "view:<view_name>"
+=======
+#: ../../guides/hooks-list.rst:379
+msgid "**send:before, notifications**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:360
 msgid "form()"
+=======
+#: ../../guides/hooks-list.rst:373
+msgid "Triggered before the notification event queue is processed. Can be used to terminate the notification event. Applies to **subscriptions** and **instant** notifications."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:360
 msgid "form:<action_name>"
+=======
+#: ../../guides/hooks-list.rst:379
+#: ../../guides/hooks-list.rst:457
+msgid "``subscriptions`` - a list of subscriptions. See ``'get', 'subscriptions'`` hook for details"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:367
 msgid "**output, ajax**"
+=======
+#: ../../guides/hooks-list.rst:396
+msgid "**prepare, notification**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:364
 msgid "This filters the JSON output wrapper returned to the legacy ajax API (``elgg.ajax``, ``elgg.action``, etc.). Plugins can alter the output, forward URL, system messages, and errors. For the ``elgg/Ajax`` AMD module, use the ``ajax_response`` hook documented above."
+=======
+#: ../../guides/hooks-list.rst:382
+msgid "A high level hook that can be used to alter an instance of ``\\Elgg\\Notifications\\Notification`` before it is sent to the user. Applies to **subscriptions** and **instant** notifications. This hook is triggered before a more granular ``'prepare', 'notification:<action>:<entity_type>:<entity_subtype>'`` and after ``'send:before', 'notifications``. Hook handler should return an altered notification object."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:372
 msgid "Permission hooks"
 msgstr ""
@@ -3859,8 +3940,13 @@ msgstr ""
 
 #: ../../guides/hooks-list.rst:375
 msgid "Triggered by ``ElggEntity:canWriteToContainer()`` before triggering ``permissions_check`` and ``container_permissions_check`` hooks. Unlike permissions hooks, logic check can be used to prevent certain entity types from being contained by other entity types, e.g. discussion replies should only be contained by discussions. This hook can also be used to apply status logic, e.g. do disallow new replies for closed discussions."
+=======
+#: ../../guides/hooks-list.rst:387
+msgid "``$params`` may vary based on the notification type and may include:"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:380
 msgid "The handler should return ``false`` to prevent an entity from containing another entity. The default value passed to the hook is ``null``, so the handler can check if another hook has modified the value by checking if return value is set. Should this hook return ``false``, ``container_permissions_check`` and ``permissions_check`` hooks will not be triggered."
 msgstr ""
@@ -3882,6 +3968,11 @@ msgstr ""
 
 #: ../../guides/hooks-list.rst:402
 msgid "**container_permissions_check, <entity_type>**"
+=======
+#: ../../guides/hooks-list.rst:390
+#: ../../guides/hooks-list.rst:407
+msgid "``object`` - object of the notification ``event``. Can be ``null`` for instant notifications"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
 #: ../../guides/hooks-list.rst:391
@@ -3901,85 +3992,207 @@ msgid "Return boolean for if the user ``$params['user']`` can edit the entity ``
 msgstr ""
 
 #: ../../guides/hooks-list.rst:408
+<<<<<<< HEAD
 msgid "**permissions_check:delete, <entity_type>**"
+=======
+msgid "``action`` - action that triggered the notification ``event``. May default to ``notify_user`` for instant notifications"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:408
 msgid "Return boolean for if the user ``$params['user']`` can delete the entity ``$params['entity']``. Defaults to ``$entity->canEdit()``."
+=======
+#: ../../guides/hooks-list.rst:392
+#: ../../guides/hooks-list.rst:409
+msgid "``method`` - delivery method (e.g. ``email``, ``site``)"
 msgstr ""
 
+#: ../../guides/hooks-list.rst:393
+#: ../../guides/hooks-list.rst:410
+msgid "``sender`` - sender"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:394
+#: ../../guides/hooks-list.rst:411
+msgid "``recipient`` - recipient"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:395
+#: ../../guides/hooks-list.rst:412
+msgid "``language`` - language of the notification (recipient's language)"
+>>>>>>> refs/remotes/remote/2.3
+msgstr ""
+
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:412
 msgid "**permissions_check:delete, river**"
+=======
+#: ../../guides/hooks-list.rst:413
+msgid "**prepare, notification:<action>:<entity_type>:<entity_type>**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:411
 msgid "Return boolean for if the user ``$params['user']`` can delete the river item ``$params['item']``. Defaults to ``true`` for admins and ``false`` for other users."
+=======
+#: ../../guides/hooks-list.rst:399
+msgid "A granular hook that can be used to filter a notification ``\\Elgg\\Notifications\\Notification`` before it is sent to the user. Applies to **subscriptions** and **instant** notifications. In case of instant notifications that have not received an object, the hook will be called as ``'prepare', 'notification:<action>'``. In case of instant notifications that have not received an action name, it will default to ``notify_user``."
 msgstr ""
 
+#: ../../guides/hooks-list.rst:404
+msgid "``$params`` include:"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:424
+msgid "**format, notification:<method>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:416
+msgid "This hook can be used to format a notification before it is passed to the ``'send', 'notification:<method>'`` hook. Applies to **subscriptions** and **instant** notifications. The hook handler should return an instance of ``\\Elgg\\Notifications\\Notification``. The hook does not receive any ``$params``. Some of the use cases include:"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:422
+msgid "Strip tags from notification title and body for plaintext email notifications"
+>>>>>>> refs/remotes/remote/2.3
+msgstr ""
+
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:420
 msgid "**permissions_check:download, file**"
+=======
+#: ../../guides/hooks-list.rst:423
+msgid "Inline HTML styles for HTML email notifications"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:415
 msgid "Return boolean for if the user ``$params['user']`` can download the file in ``$params['entity']``."
+=======
+#: ../../guides/hooks-list.rst:424
+msgid "Wrap notification in a template, add signature etc."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:419
 msgid "``entity`` - Instance of ``ElggFile``"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:420
 msgid "``user`` - User who will download the file"
+=======
+#: ../../guides/hooks-list.rst:433
+msgid "**send, notification:<method>**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:424
 msgid "**permissions_check, widget_layout**"
+=======
+#: ../../guides/hooks-list.rst:427
+msgid "Delivers a notification. Applies to **subscriptions** and **instant** notifications. The handler must return ``true`` or ``false`` indicating the success of the delivery."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:423
 msgid "Return boolean for if ``$params['user']`` can edit the widgets in the context passed as ``$params['context']`` and with a page owner of ``$params['page_owner']``."
+=======
+#: ../../guides/hooks-list.rst:433
+msgid "``notification`` - a notification object ``\\Elgg\\Notifications\\Notification``"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:428
 msgid "**permissions_check:metadata, <entity_type>**"
+=======
+#: ../../guides/hooks-list.rst:448
+msgid "**email, system**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:427
 msgid "Return boolean for if the user ``$params['user']`` can edit the metadata ``$params['metadata']`` on the entity ``$params['entity']``."
+=======
+#: ../../guides/hooks-list.rst:436
+msgid "Triggered by ``elgg_send_email()``. Applies to **subscriptions** and **instant** notifications with ``email`` method. This hook can be used to alter email parameters (subject, body, headers etc) - the handler should return an array of altered parameters. This hook can also be used to implement a custom email transport (in place of Elgg's default plaintext ``\\Zend\\Mail\\Transport\\Sendmail``) - the handler must return ``true`` or ``false`` to indicate whether the email was sent using a custom transport."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:431
 msgid "**permissions_check:comment, <entity_type>**"
+=======
+#: ../../guides/hooks-list.rst:441
+msgid "``$params`` contains:"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:431
 msgid "Return boolean for if the user ``$params['user']`` can comment on the entity ``$params['entity']``."
+=======
+#: ../../guides/hooks-list.rst:443
+msgid "``to`` - email address or string in the form ``Name <name@example.org>`` of the recipient"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:437
 msgid "**permissions_check:annotate:<annotation_name>, <entity_type>**"
+=======
+#: ../../guides/hooks-list.rst:444
+msgid "``from`` - email address or string in the form ``Name <name@example.org>`` of the sender"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:434
 msgid "Return boolean for if the user ``$params['user']`` can create an annotation ``<annotation_name>`` on the entity ``$params['entity']``. If logged in, the default is true."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:437
 msgid "This is called before the more general ``permissions_check:annotate`` hook, and its return value is that hook's initial value."
+=======
+#: ../../guides/hooks-list.rst:445
+msgid "``subject`` - subject line of the email"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:443
 msgid "**permissions_check:annotate, <entity_type>**"
+=======
+#: ../../guides/hooks-list.rst:446
+msgid "``body`` - body of the email"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:440
 msgid "Return boolean for if the user ``$params['user']`` can create an annotation ``$params['annotation_name']`` on the entity ``$params['entity']``. if logged in, the default is true."
+=======
+#: ../../guides/hooks-list.rst:447
+msgid "``headers`` - an array of headers"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:443
 msgid "This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object."
+=======
+#: ../../guides/hooks-list.rst:448
+msgid "``params`` - other parameters inherited from the notification object or passed directly to ``elgg_send_email()``"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:447
 msgid "**permissions_check:annotation**"
 msgstr ""
@@ -4175,17 +4388,29 @@ msgid "``notification`` - a notification object ``\\Elgg\\Notifications\\Notific
 msgstr ""
 
 #: ../../guides/hooks-list.rst:578
+=======
+#: ../../guides/hooks-list.rst:459
+>>>>>>> refs/remotes/remote/2.3
 msgid "**send:after, notifications**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:570
+=======
+#: ../../guides/hooks-list.rst:451
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered after all notifications in the queue for the notifications event have been processed. Applies to **subscriptions** and **instant** notifications."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:577
+=======
+#: ../../guides/hooks-list.rst:458
+>>>>>>> refs/remotes/remote/2.3
 msgid "``deliveries`` - a matrix of delivery statuses by user for each delivery method"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:581
 msgid "Emails"
 msgstr ""
@@ -4239,72 +4464,140 @@ msgid "Triggered by the default email transport handler (Elgg uses ``zendframewo
 msgstr ""
 
 #: ../../guides/hooks-list.rst:621
+=======
+#: ../../guides/hooks-list.rst:462
+>>>>>>> refs/remotes/remote/2.3
 #: ../../guides/routing.rst:2
 msgid "Routing"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:626
 msgid "**route:config, <route_name>**"
+=======
+#: ../../guides/hooks-list.rst:469
+msgid "**route, <identifier>**"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:624
 msgid "Allows altering the route configuration before it is registered. This hook can be used to alter the path, default values, requirements, as well as to set/remove middleware. Please note that the handler for this hook should be registered outside of the ``init`` event handler, as core routes are registered during ``plugins_boot`` event."
+=======
+#: ../../guides/hooks-list.rst:465
+msgid "Allows applying logic or returning a response before the page handler is called. See :doc:`routing` for details. Note that plugins using this hook to rewrite paths, will not be able to filter the response object by its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for the original path."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:630
+=======
+#: ../../guides/hooks-list.rst:472
+>>>>>>> refs/remotes/remote/2.3
 msgid "**route:rewrite, <identifier>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:629
 msgid "Allows altering the site-relative URL path for an incoming request. See :doc:`routing` for details. Please note that the handler for this hook should be registered outside of the ``init`` event handler, as route rewrites take place after ``plugins_boot`` event has completed."
+=======
+#: ../../guides/hooks-list.rst:472
+msgid "Allows altering the site-relative URL path. See :doc:`routing` for details."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:637
+=======
+#: ../../guides/hooks-list.rst:479
+>>>>>>> refs/remotes/remote/2.3
 msgid "**response, path:<path>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:633
+=======
+#: ../../guides/hooks-list.rst:475
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to the client. This hook type will only be used if the path did not start with \"action/\" or \"ajax/\". This hook can be used to modify response content, status code, forward URL, or set additional response headers. Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` hook should use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` hook."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:642
+=======
+#: ../../guides/hooks-list.rst:484
+>>>>>>> refs/remotes/remote/2.3
 msgid "**ajax_response, path:<path>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:640
+=======
+#: ../../guides/hooks-list.rst:482
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will only be used if the path did not start with \"action/\" or \"ajax/\"."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:647
+=======
+#: ../../guides/hooks-list.rst:489
+>>>>>>> refs/remotes/remote/2.3
 #: ../../guides/plugins/plugin-skeleton.rst:142
 #: ../../guides/views.rst:2
 msgid "Views"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:650
+=======
+#: ../../guides/hooks-list.rst:492
+>>>>>>> refs/remotes/remote/2.3
 msgid "**view_vars, <view_name>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:650
+=======
+#: ../../guides/hooks-list.rst:492
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filters the ``$vars`` array passed to the view"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:653
+=======
+#: ../../guides/hooks-list.rst:495
+>>>>>>> refs/remotes/remote/2.3
 msgid "**view, <view_name>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:653
+=======
+#: ../../guides/hooks-list.rst:495
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filters the returned content of the view"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:661
+=======
+#: ../../guides/hooks-list.rst:498
+>>>>>>> refs/remotes/remote/2.3
 msgid "**layout, page**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:656
 msgid "In ``elgg_view_layout()``, filters the layout name. ``$params`` array includes:"
+=======
+#: ../../guides/hooks-list.rst:498
+msgid "In ``elgg_view_layout()``, filters the layout name"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:659
 msgid "``identifier`` - ID of the page being rendered"
 msgstr ""
@@ -4318,61 +4611,117 @@ msgid "other ``$vars`` received by ``elgg_view_layout()``"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:664
+=======
+#: ../../guides/hooks-list.rst:501
+>>>>>>> refs/remotes/remote/2.3
 msgid "**shell, page**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:664
+=======
+#: ../../guides/hooks-list.rst:501
+>>>>>>> refs/remotes/remote/2.3
 msgid "In ``elgg_view_page()``, filters the page shell name"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:672
+=======
+#: ../../guides/hooks-list.rst:509
+>>>>>>> refs/remotes/remote/2.3
 msgid "**head, page**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:667
+=======
+#: ../../guides/hooks-list.rst:504
+>>>>>>> refs/remotes/remote/2.3
 msgid "In ``elgg_view_page()``, filters ``$vars['head']`` Return value contains an array with ``title``, ``metas`` and ``links`` keys, where ``metas`` is an array of elements to be formatted as ``<meta>`` head tags, and ``links`` is an array of elements to be formatted as ``<link>`` head tags. Each meta and link element contains a set of key/value pairs that are formatted into html tag attributes, e.g."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:702
+=======
+#: ../../guides/hooks-list.rst:539
+>>>>>>> refs/remotes/remote/2.3
 msgid "**ajax_response, view:<view>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:702
+=======
+#: ../../guides/hooks-list.rst:539
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:705
+=======
+#: ../../guides/hooks-list.rst:542
+>>>>>>> refs/remotes/remote/2.3
 msgid "**ajax_response, form:<action>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:705
+=======
+#: ../../guides/hooks-list.rst:542
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:710
+=======
+#: ../../guides/hooks-list.rst:547
+>>>>>>> refs/remotes/remote/2.3
 msgid "**response, view:<view_name>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:708
+=======
+#: ../../guides/hooks-list.rst:545
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to the client. Applies to request to ``/ajax/view/<view_name>``. This hook can be used to modify response content, status code, forward URL, or set additional response headers."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:715
+=======
+#: ../../guides/hooks-list.rst:552
+>>>>>>> refs/remotes/remote/2.3
 msgid "**response, form:<form_name>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:713
+=======
+#: ../../guides/hooks-list.rst:550
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to the client. Applies to request to ``/ajax/form/<form_name>``. This hook can be used to modify response content, status code, forward URL, or set additional response headers."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:721
+=======
+#: ../../guides/hooks-list.rst:558
+>>>>>>> refs/remotes/remote/2.3
 msgid "**table_columns:call, <name>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:718
+=======
+#: ../../guides/hooks-list.rst:555
+>>>>>>> refs/remotes/remote/2.3
 msgid "When the method ``elgg()->table_columns->$name()`` is called, this hook is called to allow plugins to override or provide an implementation. Handlers receive the method arguments via ``$params['arguments']`` and should return an instance of ``Elgg\\Views\\TableColumn`` if they wish to specify the column directly."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:726
 msgid "**vars:compiler, css**"
 msgstr ""
@@ -4382,9 +4731,13 @@ msgid "Allows plugins to alter CSS variables passed to CssCrush during compilati
 msgstr ""
 
 #: ../../guides/hooks-list.rst:729
+=======
+#: ../../guides/hooks-list.rst:561
+>>>>>>> refs/remotes/remote/2.3
 msgid "Files"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:737
 msgid "**download:url, file**"
 msgstr ""
@@ -4415,37 +4768,69 @@ msgid "By default, the inline URL is generated by the file service."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:749
+=======
+#: ../../guides/hooks-list.rst:565
+>>>>>>> refs/remotes/remote/2.3
 msgid "**mime_type, file**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:748
+=======
+#: ../../guides/hooks-list.rst:564
+>>>>>>> refs/remotes/remote/2.3
 msgid "Return the mimetype for the filename ``$params['filename']`` with original filename ``$params['original_filename']`` and with the default detected mimetype of ``$params['default']``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:756
+=======
+#: ../../guides/hooks-list.rst:572
+>>>>>>> refs/remotes/remote/2.3
 msgid "**simple_type, file**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:752
+=======
+#: ../../guides/hooks-list.rst:568
+>>>>>>> refs/remotes/remote/2.3
 msgid "In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']`` (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store ``simpletype`` metadata on file entities and make use of it when serving icons and constructing ``ege*`` filters and menus."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:769
+=======
+#: ../../guides/hooks-list.rst:584
+>>>>>>> refs/remotes/remote/2.3
 msgid "**upload, file**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:759
+=======
+#: ../../guides/hooks-list.rst:575
+>>>>>>> refs/remotes/remote/2.3
 msgid "Allows plugins to implement custom logic for moving an uploaded file into an instance of ``ElggFile``. The handler must return ``true`` to indicate that the uploaded file was moved. The handler must return ``false`` to indicate that the uploaded file could not be moved. Other returns will indicate that ``ElggFile::acceptUploadedFile`` should proceed with the default upload logic."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:767
+=======
+#: ../../guides/hooks-list.rst:583
+>>>>>>> refs/remotes/remote/2.3
 msgid "``file`` - instance of ``ElggFile`` to write to"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:768
+=======
+#: ../../guides/hooks-list.rst:584
+>>>>>>> refs/remotes/remote/2.3
 msgid "``upload`` - instance of Symfony's ``UploadedFile``"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:774
 #: ../../guides/search.rst:2
 msgid "Search"
@@ -4534,17 +4919,30 @@ msgid "Implemented in the **search** plugin. Allows plugins to populate entity's
 msgstr ""
 
 #: ../../guides/hooks-list.rst:831
+=======
+#: ../../guides/hooks-list.rst:589
+>>>>>>> refs/remotes/remote/2.3
 msgid "Other"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:835
+=======
+#: ../../guides/hooks-list.rst:592
+>>>>>>> refs/remotes/remote/2.3
 msgid "**config, comments_per_page**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:834
 msgid "Filters the number of comments displayed per page. Default is 25. ``$params['entity']`` will hold the containing entity or null if not provided."
+=======
+#: ../../guides/hooks-list.rst:592
+msgid "Filters the number of comments displayed per page. Default is 25."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:839
 msgid "**config, comments_latest_first**"
 msgstr ""
@@ -4554,13 +4952,21 @@ msgid "Filters the order of comments. Default is ``true`` for latest first. ``$p
 msgstr ""
 
 #: ../../guides/hooks-list.rst:846
+=======
+#: ../../guides/hooks-list.rst:599
+>>>>>>> refs/remotes/remote/2.3
 msgid "**default, access**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:842
+=======
+#: ../../guides/hooks-list.rst:595
+>>>>>>> refs/remotes/remote/2.3
 msgid "In get_default_access(), this hook filters the return value, so it can be used to alter the default value in the input/access view. For core plugins, the value \"input_params\" has the keys \"entity\" (ElggEntity|false), \"entity_type\" (string), \"entity_subtype\" (string), \"container_guid\" (int) are provided. An empty entity value generally means the form is to create a new object."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:850
 msgid "**classes, icon**"
 msgstr ""
@@ -4570,51 +4976,95 @@ msgid "Can be used to filter CSS classes applied to icon glyphs. By default, Elg
 msgstr ""
 
 #: ../../guides/hooks-list.rst:854
+=======
+#: ../../guides/hooks-list.rst:603
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:icon:sizes, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:853
+=======
+#: ../../guides/hooks-list.rst:602
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes. ``entity_subtype`` will be passed with the ``$params`` array to the callback."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:871
+=======
+#: ../../guides/hooks-list.rst:620
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:<icon_type>:sizes, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:857
+=======
+#: ../../guides/hooks-list.rst:606
+>>>>>>> refs/remotes/remote/2.3
 msgid "Allows filtering sizes for custom icon types, see ``entity:icon:sizes, <entity_type>``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:859
+=======
+#: ../../guides/hooks-list.rst:608
+>>>>>>> refs/remotes/remote/2.3
 msgid "The hook must return an associative array where keys are the names of the icon sizes (e.g. \"large\"), and the values are arrays with the following keys:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:862
+=======
+#: ../../guides/hooks-list.rst:611
+>>>>>>> refs/remotes/remote/2.3
 msgid "``w`` - Width of the image in pixels"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:863
+=======
+#: ../../guides/hooks-list.rst:612
+>>>>>>> refs/remotes/remote/2.3
 msgid "``h`` - Height of the image in pixels"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:864
+=======
+#: ../../guides/hooks-list.rst:613
+>>>>>>> refs/remotes/remote/2.3
 msgid "``square`` - Should the aspect ratio be a square (true/false)"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:865
+=======
+#: ../../guides/hooks-list.rst:614
+>>>>>>> refs/remotes/remote/2.3
 msgid "``upscale`` - Should the image be upscaled in case it is smaller than the given width and height (true/false)"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:866
 msgid "``crop`` - Is cropping allowed on this image size (true/false, default: true)"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:868
+=======
+#: ../../guides/hooks-list.rst:617
+>>>>>>> refs/remotes/remote/2.3
 msgid "If the configuration array for an image size is empty, the image will be saved as an exact copy of the source without resizing or cropping."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:871
 #: ../../guides/i18n.rst:51
+=======
+#: ../../guides/hooks-list.rst:620
+#: ../../guides/i18n.rst:46
+>>>>>>> refs/remotes/remote/2.3
 #: ../../guides/notifications.rst:24
 #: ../../guides/notifications.rst:186
 #: ../../guides/notifications.rst:210
@@ -4622,180 +5072,353 @@ msgstr ""
 msgid "Example:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:903
+=======
+#: ../../guides/hooks-list.rst:652
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:icon:url, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:891
+=======
+#: ../../guides/hooks-list.rst:640
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should return URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``. Following parameters are available through the ``$params`` array:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:895
+=======
+#: ../../guides/hooks-list.rst:644
+>>>>>>> refs/remotes/remote/2.3
 msgid "entity"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:896
+=======
+#: ../../guides/hooks-list.rst:645
+>>>>>>> refs/remotes/remote/2.3
 msgid "Entity for which icon url is requested."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:897
+=======
+#: ../../guides/hooks-list.rst:646
+>>>>>>> refs/remotes/remote/2.3
 msgid "viewtype"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:898
+=======
+#: ../../guides/hooks-list.rst:647
+>>>>>>> refs/remotes/remote/2.3
 msgid "The type of :ref:`view <guides/views#listing-entities>` e.g. ``'default'`` or ``'json'``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:900
+=======
+#: ../../guides/hooks-list.rst:649
+>>>>>>> refs/remotes/remote/2.3
 msgid "size"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:900
+=======
+#: ../../guides/hooks-list.rst:649
+>>>>>>> refs/remotes/remote/2.3
 msgid "Size requested, see :ref:`entity icons <guides/database#entity-icons>` for possible values."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:902
+=======
+#: ../../guides/hooks-list.rst:651
+>>>>>>> refs/remotes/remote/2.3
 msgid "Example on how one could default to a Gravatar icon for users that have not yet uploaded an avatar:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:937
+=======
+#: ../../guides/hooks-list.rst:686
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:<icon_type>:url, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:937
+=======
+#: ../../guides/hooks-list.rst:686
+>>>>>>> refs/remotes/remote/2.3
 msgid "Allows filtering URLs for custom icon types, see ``entity:icon:url, <entity_type>``"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:942
+=======
+#: ../../guides/hooks-list.rst:691
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:icon:file, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:940
+=======
+#: ../../guides/hooks-list.rst:689
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered by ``ElggEntity::getIcon()`` and allows plugins to provide an alternative ``ElggIcon`` object that points to a custom location of the icon on filestore. The handler must return an instance of ``ElggIcon`` or an exception will be thrown."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:945
+=======
+#: ../../guides/hooks-list.rst:694
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:<icon_type>:file, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:945
+=======
+#: ../../guides/hooks-list.rst:694
+>>>>>>> refs/remotes/remote/2.3
 msgid "Allows filtering icon file object for custom icon types, see ``entity:icon:file, <entity_type>``"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:957
+=======
+#: ../../guides/hooks-list.rst:706
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:<icon_type>:prepare, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:948
+=======
+#: ../../guides/hooks-list.rst:697
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to prepare an image from uploaded/linked file. This hook can be used to e.g. rotate the image before it is resized/cropped, or it can be used to extract an image frame if the uploaded file is a video. The handler must return an instance of ``ElggFile`` with a `simpletype` that resolves to `image`. The ``$return`` value passed to the hook is an instance of ``ElggFile`` that points to a temporary copy of the uploaded/linked file."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:954
 #: ../../guides/hooks-list.rst:1074
 #: ../../guides/hooks-list.rst:1116
+=======
+#: ../../guides/hooks-list.rst:703
+>>>>>>> refs/remotes/remote/2.3
 msgid "The ``$params`` array contains:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:956
 #: ../../guides/hooks-list.rst:964
 #: ../../guides/hooks-list.rst:974
 #: ../../guides/hooks-list.rst:982
+=======
+#: ../../guides/hooks-list.rst:705
+#: ../../guides/hooks-list.rst:713
+#: ../../guides/hooks-list.rst:723
+#: ../../guides/hooks-list.rst:731
+>>>>>>> refs/remotes/remote/2.3
 msgid "``entity`` - entity that owns the icons"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:957
+=======
+#: ../../guides/hooks-list.rst:706
+>>>>>>> refs/remotes/remote/2.3
 msgid "``file`` - original input file before it has been modified by other hooks"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:966
+=======
+#: ../../guides/hooks-list.rst:715
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:<icon_type>:save, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:960
+=======
+#: ../../guides/hooks-list.rst:709
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to apply custom image manipulation logic to resizing/cropping icons. The handler must return ``true`` to prevent the core APIs from resizing/cropping icons. The ``$params`` array contains:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:965
+=======
+#: ../../guides/hooks-list.rst:714
+>>>>>>> refs/remotes/remote/2.3
 msgid "``file`` - ``ElggFile`` object that points to the image file to be used as source for icons"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:966
 #: ../../guides/hooks-list.rst:975
+=======
+#: ../../guides/hooks-list.rst:715
+#: ../../guides/hooks-list.rst:724
+>>>>>>> refs/remotes/remote/2.3
 msgid "``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:975
+=======
+#: ../../guides/hooks-list.rst:724
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:<icon_type>:saved, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:969
+=======
+#: ../../guides/hooks-list.rst:718
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered by ``ElggEntity::saveIcon*()`` methods once icons have been created. This hook can be used by plugins to create river items, update cropping coordinates for custom icon types etc. The handler can access the created icons using ``ElggEntity::getIcon()``. The ``$params`` array contains:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:982
+=======
+#: ../../guides/hooks-list.rst:731
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:<icon_type>:delete, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:978
+=======
+#: ../../guides/hooks-list.rst:727
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered by ``ElggEntity::deleteIcon()`` method and can be used for clean up operations. This hook is triggered before the icons are deleted. The handler can return ``false`` to prevent icons from being deleted. The ``$params`` array contains:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:987
+=======
+#: ../../guides/hooks-list.rst:736
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:url, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:985
+=======
+#: ../../guides/hooks-list.rst:734
+>>>>>>> refs/remotes/remote/2.3
 msgid "Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the ``getUrl()`` method of ElggEntity. This hook should be used when it's not possible to subclass (like if you want to extend a bundled plugin without overriding many views)."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:991
+=======
+#: ../../guides/hooks-list.rst:740
+>>>>>>> refs/remotes/remote/2.3
 msgid "**to:object, <entity_type|metadata|annotation|relationship|river_item>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:990
+=======
+#: ../../guides/hooks-list.rst:739
+>>>>>>> refs/remotes/remote/2.3
 msgid "Converts the entity ``$params['entity']`` to a StdClass object. This is used mostly for exporting entity properties for portable data formats like JSON and XML."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:994
+=======
+#: ../../guides/hooks-list.rst:743
+>>>>>>> refs/remotes/remote/2.3
 msgid "**extender:url, <annotation|metadata>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:994
+=======
+#: ../../guides/hooks-list.rst:743
+>>>>>>> refs/remotes/remote/2.3
 msgid "Return the URL for the annotation or metadatum ``$params['extender']``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:997
+=======
+#: ../../guides/hooks-list.rst:746
+>>>>>>> refs/remotes/remote/2.3
 msgid "**file:icon:url, override**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:997
+=======
+#: ../../guides/hooks-list.rst:746
+>>>>>>> refs/remotes/remote/2.3
 msgid "Override a file icon URL."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1000
+=======
+#: ../../guides/hooks-list.rst:749
+>>>>>>> refs/remotes/remote/2.3
 msgid "**is_member, group**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1000
+=======
+#: ../../guides/hooks-list.rst:749
+>>>>>>> refs/remotes/remote/2.3
 msgid "Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1004
+=======
+#: ../../guides/hooks-list.rst:753
+>>>>>>> refs/remotes/remote/2.3
 msgid "**entity:annotate, <entity_type>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1003
+=======
+#: ../../guides/hooks-list.rst:752
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can be used to add annotations to all full entity views."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1013
+=======
+#: ../../guides/hooks-list.rst:762
+>>>>>>> refs/remotes/remote/2.3
 msgid "**usersetting, plugin**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1007
+=======
+#: ../../guides/hooks-list.rst:756
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter user settings for plugins. ``$params`` contains:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1009
 msgid "``user`` - An ElggUser instance"
 msgstr ""
@@ -4813,150 +5436,312 @@ msgstr ""
 #: ../../guides/hooks-list.rst:1012
 #: ../../guides/hooks-list.rst:1020
 msgid "``name`` - The name of the setting"
+=======
+#: ../../guides/hooks-list.rst:758
+msgid "``user`` - An ElggUser instance"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1013
 #: ../../guides/hooks-list.rst:1021
 msgid "``value`` - The value to set"
+=======
+#: ../../guides/hooks-list.rst:759
+#: ../../guides/hooks-list.rst:767
+msgid "``plugin`` - An ElggPlugin instance"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1021
+msgid "**setting, plugin**"
+=======
+#: ../../guides/hooks-list.rst:760
+#: ../../guides/hooks-list.rst:768
+msgid "``plugin_id`` - The plugin ID"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:761
+#: ../../guides/hooks-list.rst:769
+msgid "``name`` - The name of the setting"
+>>>>>>> refs/remotes/remote/2.3
+msgstr ""
+
+<<<<<<< HEAD
+#: ../../guides/hooks-list.rst:1016
+=======
+#: ../../guides/hooks-list.rst:762
+#: ../../guides/hooks-list.rst:770
+msgid "``value`` - The value to set"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:770
 msgid "**setting, plugin**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:1016
+#: ../../guides/hooks-list.rst:765
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter plugin settings. ``$params`` contains:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1024
+=======
+#: ../../guides/hooks-list.rst:773
+>>>>>>> refs/remotes/remote/2.3
 msgid "**relationship:url, <relationship_name>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1024
+=======
+#: ../../guides/hooks-list.rst:773
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter the URL for the relationship object ``$params['relationship']``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1028
+=======
+#: ../../guides/hooks-list.rst:777
+>>>>>>> refs/remotes/remote/2.3
 msgid "**profile:fields, group**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1027
 #: ../../guides/hooks-list.rst:1038
+=======
+#: ../../guides/hooks-list.rst:776
+#: ../../guides/hooks-list.rst:787
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter an array of profile fields. The result should be returned as an array in the format ``name => input view name``. For example:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1039
+=======
+#: ../../guides/hooks-list.rst:788
+>>>>>>> refs/remotes/remote/2.3
 msgid "**profile:fields, profile**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1049
+=======
+#: ../../guides/hooks-list.rst:798
+>>>>>>> refs/remotes/remote/2.3
 msgid "**widget_settings, <widget_handler>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1048
+=======
+#: ../../guides/hooks-list.rst:797
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``. If handling saving the settings, the handler should return true to prevent the default code from running."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1053
+=======
+#: ../../guides/hooks-list.rst:802
+>>>>>>> refs/remotes/remote/2.3
 msgid "**handlers, widgets**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1052
+=======
+#: ../../guides/hooks-list.rst:801
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered when a list of available widgets is needed. Plugins can conditionally add or remove widgets from this list or modify attributes of existing widgets like ``context`` or ``multiple``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1057
+=======
+#: ../../guides/hooks-list.rst:806
+>>>>>>> refs/remotes/remote/2.3
 msgid "**get_list, default_widgets**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1056
+=======
+#: ../../guides/hooks-list.rst:805
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filters a list of default widgets to add for newly registered users. The list is an array of arrays in the format:"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1076
+=======
+#: ../../guides/hooks-list.rst:819
+>>>>>>> refs/remotes/remote/2.3
 msgid "**public_pages, walled_garden**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1069
 msgid "Filters a list of URLs (paths) that can be seen by logged out users in a walled garden mode. Handlers must return an array of regex strings that will allow access if matched. Please note that system public routes are passed as the default value to the hook, and plugins must take care to not accidentally override these values."
+=======
+#: ../../guides/hooks-list.rst:818
+msgid "Filter the URLs that are can be seen by logged out users if Walled Garden is enabled. ``$value`` is an array of regex strings that will allow access if matched."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1076
 msgid "``url`` - URL of the page being tested for public accessibility"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:1081
+=======
+#: ../../guides/hooks-list.rst:824
+>>>>>>> refs/remotes/remote/2.3
 msgid "**volatile, metadata**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1079
+=======
+#: ../../guides/hooks-list.rst:822
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered when exporting an entity through the export handler. This is rare. This allows handler to handle any volatile (non-persisted) metadata on the entity. It's preferred to use the ``to:object, <type>`` hook."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1085
+=======
+#: ../../guides/hooks-list.rst:828
+>>>>>>> refs/remotes/remote/2.3
 msgid "**maintenance:allow, url**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1085
+=======
+#: ../../guides/hooks-list.rst:828
+>>>>>>> refs/remotes/remote/2.3
 msgid "Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1085
+=======
+#: ../../guides/hooks-list.rst:828
+>>>>>>> refs/remotes/remote/2.3
 msgid "is allowed during maintenance mode."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1088
+=======
+#: ../../guides/hooks-list.rst:831
+>>>>>>> refs/remotes/remote/2.3
 msgid "**robots.txt, site**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1088
+=======
+#: ../../guides/hooks-list.rst:831
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter the robots.txt values for ``$params['site']``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1091
+=======
+#: ../../guides/hooks-list.rst:834
+>>>>>>> refs/remotes/remote/2.3
 msgid "**config, amd**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1091
+=======
+#: ../../guides/hooks-list.rst:834
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter the AMD config for the requirejs library."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1097
+=======
+#: ../../guides/hooks-list.rst:840
+>>>>>>> refs/remotes/remote/2.3
 msgid "Embed"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1099
+=======
+#: ../../guides/hooks-list.rst:842
+>>>>>>> refs/remotes/remote/2.3
 msgid "**embed_get_items, <active_section>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1101
+=======
+#: ../../guides/hooks-list.rst:844
+>>>>>>> refs/remotes/remote/2.3
 msgid "**embed_get_sections, all**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1103
+=======
+#: ../../guides/hooks-list.rst:846
+>>>>>>> refs/remotes/remote/2.3
 msgid "**embed_get_upload_sections, all**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1106
+=======
+#: ../../guides/hooks-list.rst:849
+>>>>>>> refs/remotes/remote/2.3
 msgid "Groups"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1109
+=======
+#: ../../guides/hooks-list.rst:852
+>>>>>>> refs/remotes/remote/2.3
 msgid "**profile_buttons, group**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1109
+=======
+#: ../../guides/hooks-list.rst:852
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filters buttons (``ElggMenuItem`` instances) to be registered in the title menu of the group profile page"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1118
+=======
+#: ../../guides/hooks-list.rst:855
+>>>>>>> refs/remotes/remote/2.3
 msgid "**tool_options, group**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1112
 msgid "Filters a collection of tools available within a specific group:"
+=======
+#: ../../guides/hooks-list.rst:855
+msgid "Use this hook to influence the available group tool options"
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1114
 msgid "The ``$return`` is ``\\Elgg\\Collections\\Collection<\\Elgg\\Groups\\Tool>``, a collection of group tools."
 msgstr ""
@@ -4966,25 +5751,46 @@ msgid "``entity`` - ``\\ElggGroup``"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:1121
+=======
+#: ../../guides/hooks-list.rst:858
+>>>>>>> refs/remotes/remote/2.3
 msgid "HTMLawed"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1124
+=======
+#: ../../guides/hooks-list.rst:861
+>>>>>>> refs/remotes/remote/2.3
 msgid "**allowed_styles, htmlawed**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1124
+=======
+#: ../../guides/hooks-list.rst:861
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter the HTMLawed allowed style array."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1127
+=======
+#: ../../guides/hooks-list.rst:864
+>>>>>>> refs/remotes/remote/2.3
 msgid "**config, htmlawed**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1127
 msgid "Filter the HTMLawed ``$config`` array."
+=======
+#: ../../guides/hooks-list.rst:864
+msgid "Filter the HTMLawed config array."
+>>>>>>> refs/remotes/remote/2.3
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1130
 msgid "**spec, htmlawed**"
 msgstr ""
@@ -4994,86 +5800,217 @@ msgid "Filter the HTMLawed ``$spec`` string (default empty)."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:1133
+=======
+#: ../../guides/hooks-list.rst:867
+>>>>>>> refs/remotes/remote/2.3
 msgid "Likes"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1139
+=======
+#: ../../guides/hooks-list.rst:873
+>>>>>>> refs/remotes/remote/2.3
 msgid "**likes:is_likable, <type>:<subtype>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1136
+=======
+#: ../../guides/hooks-list.rst:870
+>>>>>>> refs/remotes/remote/2.3
 msgid "This is called to set the default permissions for whether to display/allow likes on an entity of type ``<type>`` and subtype ``<subtype>``."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1139
+=======
+#: ../../guides/hooks-list.rst:873
+>>>>>>> refs/remotes/remote/2.3
 msgid "The callback ``'Elgg\\Values::getTrue'`` is a useful handler for this hook."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1142
+=======
+#: ../../guides/hooks-list.rst:876
+>>>>>>> refs/remotes/remote/2.3
 msgid "Members"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1145
+=======
+#: ../../guides/hooks-list.rst:879
+>>>>>>> refs/remotes/remote/2.3
 msgid "**members:list, <page_segment>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1145
+=======
+#: ../../guides/hooks-list.rst:879
+>>>>>>> refs/remotes/remote/2.3
 msgid "To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1149
+=======
+#: ../../guides/hooks-list.rst:883
+>>>>>>> refs/remotes/remote/2.3
 msgid "**members:config, tabs**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1148
+=======
+#: ../../guides/hooks-list.rst:882
+>>>>>>> refs/remotes/remote/2.3
 msgid "This hook is used to assemble an array of tabs to be passed to the navigation/tabs view for the members pages."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1152
+=======
+#: ../../guides/hooks-list.rst:886
+msgid "Twitter API"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:890
+msgid "**authorize, twitter_api**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:889
+msgid "Triggered when a user is authorizes Twitter for a login. ``$params['token']`` contains the Twitter authorization token."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:893
+>>>>>>> refs/remotes/remote/2.3
 msgid "Reported Content"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1155
+=======
+#: ../../guides/hooks-list.rst:896
+>>>>>>> refs/remotes/remote/2.3
 msgid "**reportedcontent:add, system**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1155
+=======
+#: ../../guides/hooks-list.rst:896
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered after adding the reported content object ``$params['report']``. Return false to delete report."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1158
+=======
+#: ../../guides/hooks-list.rst:899
+>>>>>>> refs/remotes/remote/2.3
 msgid "**reportedcontent:archive, system**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1158
+=======
+#: ../../guides/hooks-list.rst:899
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered before archiving the reported content object ``$params['report']``. Return false to prevent archiving."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1162
+=======
+#: ../../guides/hooks-list.rst:902
+>>>>>>> refs/remotes/remote/2.3
 msgid "**reportedcontent:delete, system**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1161
+=======
+#: ../../guides/hooks-list.rst:902
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered before deleting the reported content object ``$params['report']``. Return false to prevent deleting."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1165
+=======
+#: ../../guides/hooks-list.rst:905
+msgid "Search"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:909
+msgid "**search, <type>:<subtype>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:908
+msgid "Filter more granular search results than searching by type alone. Must return an array with ``count`` as the total count of results and  ``entities`` an array of ElggUser entities."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:911
+msgid "**search, tags**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:915
+msgid "**search, <type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:914
+msgid "Filter the search for entities for type ``$type``. Must return an array with ``count`` as the total count of results and  ``entities`` an array of ElggUser entities."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:918
+msgid "Filter an array of search types. This allows plugins to add custom types that don't correspond directly to entities."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:923
+msgid "**search_types, get_queries**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:922
+msgid "Before a search this filters the types queried. This can be used to reorder the display of search results."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:926
+>>>>>>> refs/remotes/remote/2.3
 msgid "Web Services"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1169
+=======
+#: ../../guides/hooks-list.rst:930
+>>>>>>> refs/remotes/remote/2.3
 msgid "**rest, init**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1168
+=======
+#: ../../guides/hooks-list.rst:929
+>>>>>>> refs/remotes/remote/2.3
 msgid "Triggered by the web services rest handler. Plugins can set up their own authentication handlers, then return ``true`` to prevent the default handlers from being registered."
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1171
+=======
+#: ../../guides/hooks-list.rst:932
+>>>>>>> refs/remotes/remote/2.3
 msgid "**rest:output, <method_name>**"
 msgstr ""
 
+<<<<<<< HEAD
 #: ../../guides/hooks-list.rst:1172
+=======
+#: ../../guides/hooks-list.rst:933
+>>>>>>> refs/remotes/remote/2.3
 msgid "Filter the result (and subsequently the output) of the API method"
 msgstr ""
 
