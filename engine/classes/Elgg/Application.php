@@ -511,7 +511,7 @@ class Application {
 		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 
 		// turn any full in-site URLs into absolute paths
-		$forward_url = get_input('forward', '/admin', false);
+		$forward_url = elgg_normalize_site_url(get_input('forward', '/admin', false));
 		$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
 
 		if (strpos($forward_url, '/') !== 0) {
@@ -606,7 +606,7 @@ class Application {
 
 	/**
 	 * Flag this application as running for testing (PHPUnit)
-	 * 
+	 *
 	 * @param bool $testing Is testing application
 	 * @return void
 	 */

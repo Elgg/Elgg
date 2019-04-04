@@ -11,7 +11,7 @@ $access = ACCESS_PRIVATE; //this is private and only admins can see it
 
 $fail = function () use ($address) {
 	register_error(elgg_echo('reportedcontent:failed'));
-	forward($address);
+	forward(elgg_normalize_site_url($address));
 };
 
 if (!$title || !$address) {

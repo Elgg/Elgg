@@ -51,7 +51,7 @@ class ResponseFactory {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Request            $request   HTTP request
 	 * @param PluginHooksService $hooks     Plugin hooks service
 	 * @param AjaxService        $ajax      AJAX service
@@ -211,7 +211,7 @@ class ResponseFactory {
 		}
 
 		if ($response->getForwardURL() !== null && !$is_xhr) {
-			// non-xhr requests should issue a forward if redirect url is set 
+			// non-xhr requests should issue a forward if redirect url is set
 			// unless it's an error, in which case we serve an error page
 			if ($this->isAction() || (!$response->isClientError() && !$response->isServerError())) {
 				$response->setStatusCode(ELGG_HTTP_FOUND);
@@ -376,18 +376,40 @@ class ResponseFactory {
 	 * @throws InvalidParameterException
 	 */
 	public function redirect($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
-
+		$location = $forward_url;
+		
+		// get a secure referrer url
+		$secure_referrer = function () {
+			$unsafe_url = $this->request->headers->get('Referer');
+			$safe_url = elgg_normalize_site_url($unsafe_url);
+			if ($safe_url !== false) {
+				return $safe_url;
+			}
+			
+			return '';
+		};
+		
+		// validate we forward to a (browser) supported url
+		$secure_forward_url = function($forward_url) {
+			$forward_url = elgg_normalize_url($forward_url);
+			if (!preg_match('/^(http|https|ftp|sftp|ftps):\/\//', $forward_url)) {
+				$forward_url = elgg_get_site_url();
+			}
+			
+			return $forward_url;
+		};
+		
 		if ($forward_url === REFERRER) {
-			$forward_url = $this->request->headers->get('Referer');
+			$forward_url = $secure_referrer();
 		}
 
-		$forward_url = elgg_normalize_url($forward_url);
+		$forward_url = $secure_forward_url($forward_url);
 
 		// allow plugins to rewrite redirection URL
-		$current_page = current_page_url();
 		$params = [
-			'current_url' => $current_page,
-			'forward_url' => $forward_url
+			'current_url' => current_page_url(),
+			'forward_url' => $forward_url,
+			'location' => $location,
 		];
 
 		$forward_reason = (string) $status_code;
@@ -401,14 +423,14 @@ class ResponseFactory {
 		}
 
 		if ($forward_url === REFERRER) {
-			$forward_url = $this->request->headers->get('Referer');
+			$forward_url = $secure_referrer();
 		}
 
 		if (!is_string($forward_url)) {
 			throw new InvalidParameterException("'forward', '$forward_reason' hook must return a valid redirection URL");
 		}
 
-		$forward_url = elgg_normalize_url($forward_url);
+		$forward_url = $secure_forward_url($forward_url);
 
 		switch ($status_code) {
 			case 'system':
@@ -516,7 +538,7 @@ class ResponseFactory {
 	/**
 	 * Normalizes content into serializable data by walking through arrays
 	 * and objectifying Elgg entities
-	 * 
+	 *
 	 * @param mixed $content Data to normalize
 	 * @return mixed
 	 */
