@@ -34,7 +34,7 @@ return array(
 	 * Wire widget
 	 */
 	
-	'widgets:thewire:description' => 'Display your latest wire posts',
+	'widgets:thewire:description' => 'Toon je laatste Wire-berichten',
 	'thewire:num' => 'Aantal items om weer te geven',
 	'thewire:moreposts' => 'Meer Wire-berichten',
 

@@ -27,7 +27,7 @@ return array(
 	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Je moet aangemeld zijn om die pagina te kunnen bekijken.",
-	'loggedoutrequired' => "You must be logged out to view the requested page.",
+	'loggedoutrequired' => "Je moet afgemeld zijn om die pagina te kunnen bekijken.",
 	'adminrequired' => "Je moet een beheerder zijn om die pagina te kunnen bekijken.",
 	'membershiprequired' => "Je moet lid zijn van deze groep om deze pagina te kunnen bekijken.",
 	'limited_access' => "Je hebt niet de juiste rechten om deze pagina te zien.",
@@ -466,7 +466,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:cron:date' => 'Datum en tijd',
 	'admin:cron:msg' => 'Bericht',
 	'admin:cron:started' => 'Cron jobs voor "%s" zijn gestart om %s',
-	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" is gestart op %s',
 	'admin:cron:complete' => 'Cron jobs voor "%s" zijn afgerond om %s',
 
 	'admin:appearance' => 'Uiterlijk',
@@ -491,17 +491,17 @@ De volgende karakters zijn niet toegestaan: %s',
 	
 	'admin:configure_utilities:maintenance' => 'Onderhoudsmodus',
 	'admin:upgrades' => 'Upgrades',
-	'admin:upgrades:finished' => 'Completed',
-	'admin:upgrades:menu:pending' => 'Pending upgrades',
-	'admin:upgrades:menu:completed' => 'Completed upgrades',
-	'admin:upgrades:menu:run_single' => 'Run this upgrade',
+	'admin:upgrades:finished' => 'Afgerond',
+	'admin:upgrades:menu:pending' => 'Nog uit te voeren upgrades',
+	'admin:upgrades:menu:completed' => 'Afgeronde upgrades',
+	'admin:upgrades:menu:run_single' => 'Start deze upgrade',
 	'admin:upgrades:run' => 'Start alle upgrades',
 	'admin:upgrades:error:invalid_upgrade' => 'Entity %s bestaat niet of is geen geldig type van een ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner voor de upgrade %s (%s) kon niet worden geïnstantieerd',
 	'admin:upgrades:completed' => 'Upgrade "%s" is afgerond om %s',
 	'admin:upgrades:completed:errors' => 'Upgrade "%s" is afgerond om %s, maar bevatte %s fouten',
 	'admin:upgrades:failed' => 'Upgrade "%s" is mislukt',
-	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" is herstart',
 
 	'admin:settings' => 'Instellingen',
 	'admin:settings:basic' => 'Basisinstellingen',
@@ -623,9 +623,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:security:settings:email_require_password' => 'Vereis een wachtwoord om je emailadres te wijzigen',
 	'admin:security:settings:email_require_password:help' => 'Wanneer een gebruiker zijn/haar emailadres wenst te wijziging, dan moet ook het huidige wachtwoord worden ingevoerd.',
 
-	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
-Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+	'admin:security:settings:session_bound_entity_icons' => 'Sessie gebonden entity iconen',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity iconen zijn standaard sessie gebonden. Dit houdt in dat de URLs naar de iconen informatie bevatten over de huidige sessie. Indien iconen sessiegebonden zijn, zijn ze niet deelbaar tussen sessies en dus meer afgeschermd. Het bijeffect is dat de iconen alleen voor de huidige sessie cachebaar zijn.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg gebruikt een sleutel om tokens te genereren voor verschillende doeleinden.',
 	'admin:security:settings:site_secret:regenerate' => "Regenereer site secret",
@@ -799,14 +798,14 @@ Om naar de website te gaan, klik hier:
 
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
-		Redis is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure redis (or memcache).
+		Redis is niet beschikbaar op deze server, of is nog niet geconfigureerd in de Elgg configuratie.
+		Voor verbeterde performance wordt het aangeraden om Redis (of Memcache) in te schakelen en te configureren.
 ',
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => '
-		OPcache is not available on this server or it has not yet been enabled.
-		For improved performance, it is recommended that you enable and configure OPcache.
+		OPcache is niet beschikbaar op deze server, of is nog niet geactiveerd.
+		Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en te configureren.
 ',
 	
 	'admin:user:label:search' => "Gebruikers zoeken:",
@@ -975,7 +974,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'remove' => 'Verwijder',
 	'revert' => 'Herstel',
 	'validate' => 'Valideer',
-	'read_more' => 'Read more',
+	'read_more' => 'Lees meer',
 
 	'site' => 'Website',
 	'activity' => 'Activiteit',
@@ -1308,8 +1307,8 @@ Indien de ondersteuning nodig hebt bezoek de <a href="http://community.elgg.org/
 	'upgrade:error_count' => 'Fouten:',
 	'upgrade:finished' => 'Upgrade is voltooid.',
 	'upgrade:finished_with_errors' => '<p>De upgrade is afgerond, maar er zijn fouten geconstateerd. Ververs de pagina en probeer de upgrade opnieuw uit te voeren.</p></p><br />Als de fouten zich opnieuw voordoen, kijk dan in je serverlog of daar een mogelijke oorzaak te vinden is. Je kunt bijstand krijgen bij het oplossen van de fout op de community van Elgg <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">in de groep \'technisch(e) support\'</a>',
-	'upgrade:should_be_skipped' => 'No items to upgrade',
-	'upgrade:count_items' => '%d items to upgrade',
+	'upgrade:should_be_skipped' => 'Geen items om te upgraden',
+	'upgrade:count_items' => '%d items te upgraden',
 	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
