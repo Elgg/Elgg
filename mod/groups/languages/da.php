@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Gruppe ikon (efterlad blank for at beholde det uændret)',
 	'groups:name' => 'Gruppe navn',
-	'groups:username' => 'Gruppens korte navn (vises i web adressen, brug kun alfanumeriske tegn, dvs. A-Z og 0-9)',
 	'groups:description' => 'Beskrivelse',
 	'groups:briefdescription' => 'Kort beskrivelse',
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Hjemmeside',
 	'groups:members' => 'Gruppens medlemmer',
-	'groups:my_status' => 'My status',
-	'groups:my_status:group_owner' => 'You own this group',
-	'groups:my_status:group_member' => 'You are in this group',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
+
+	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Medlemmer af %s',
 	'groups:members:more' => "Se alle medlemmer",
@@ -43,17 +39,10 @@ return [
 	'groups:owner' => "Ejer",
 	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
 	'groups:widget:num_display' => 'Antal af grupper der skal vises',
-	'groups:widget:membership' => 'Grupper',
-	'groups:widgets:description' => 'Vis de grupper, som du er medlem af, på din profil',
-
-	'groups:widget:group_activity:title' => 'Gruppeaktivitet',
-	'groups:widget:group_activity:description' => 'Vis aktiviteten i en af dine grupper',
-	'groups:widget:group_activity:edit:select' => 'Vælg en gruppe',
-	'groups:widget:group_activity:content:noactivity' => 'Der er ingen aktivitet i denne gruppe',
-	'groups:widget:group_activity:content:noselect' => 'Ændre denne widget for at vælge en gruppe',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'Ikke adgang til gruppen',
-	'groups:ingroup' => 'i gruppen',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'Du kan ikke redigere denne gruppe',
 	'groups:saved' => 'Gruppe gemt',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Forlad gruppen',
 	'groups:invite' => 'Inviter venner',
 	'groups:invite:title' => 'Inviter venner til gruppen',
-	'groups:inviteto' => "Inviter venner til '%s'",
-	'groups:nofriends' => "Ingen af dine venner mangler at blive inviteret til gruppen.",
+	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
+	'groups:invite:resend' => 'Resend the invitations to already invited users',
+
 	'groups:nofriendsatall' => 'Du har ingen venner at invitere!',
-	'groups:viagroups' => "via grupper",
 	'groups:group' => "Gruppe",
 	'groups:search:tags' => "tag",
 	'groups:search:title' => "Søg efter grupper tagget med '%s'",
 	'groups:search:none' => "Ingen match blev fundet",
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
-
-	'groups:activity' => "Gruppeaktivitet",
-	'groups:enableactivity' => 'Aktiver gruppeaktivitet',
-	'groups:activity:none' => "Der er ingen gruppeaktivitet endnu",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:notfound' => "Gruppe ikke fundet",
-	'groups:notfound:details' => "Den forespurgte gruppe eksisterer ikke eller du har ikke adgang til den",
-
+	
 	'groups:requests:none' => 'Der er ingen udestående anmodninger om medlemskab.',
 
 	'groups:invitations:none' => 'Der er ingen udestående invitationer.',
 
-	'groups:count' => "grupper oprettet",
 	'groups:open' => "åben gruppe",
 	'groups:closed' => "lukket gruppe",
 	'groups:member' => "medlemmer",
-	'groups:searchtag' => "Søg grupper efter tag",
+	'groups:search' => "Search for groups",
 
 	'groups:more' => 'Flere grupper',
 	'groups:none' => 'Ingen grupper',
@@ -117,12 +101,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Sidst opdateret %s af %s',
-	'groups:lastcomment' => 'Seneste kommentar %s af %s',
 
 	'admin:groups' => 'Grupper',
 
-	'groups:privategroup' => 'Denne gruppe er privat, kræver medlemsskab.',
 	'groups:notitle' => 'Grupper skal have en titel',
 	'groups:cantjoin' => 'Kunne ikke blive medlem af gruppen',
 	'groups:cantleave' => 'Kunne ikke forlade gruppen',
@@ -133,61 +114,44 @@ return [
 	'groups:joinrequestnotmade' => 'Kunne ikke ansøge om at blive medlem',
 	'groups:joinrequestmade' => 'Ansøgning om at blive medlem af gruppen er gennemført',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:button:joined' => 'Joined',
+	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Du er blevet medlem af gruppen!',
 	'groups:left' => 'Du er frameldt gruppen!',
-	'groups:notowner' => 'Beklager, du ejer ikke denne gruppe.',
-	'groups:notmember' => 'Beklager, du er ikke medlem af denne gruppe.',
-	'groups:alreadymember' => 'Du er allerede medlem af denne gruppe!',
 	'groups:userinvited' => 'Brugeren er blevet inviteret.',
 	'groups:usernotinvited' => 'Brugeren kunne ikke inviteres.',
 	'groups:useralreadyinvited' => 'Brugeren er allerede blevet inviteret',
 	'groups:invite:subject' => "%s du er blevet inviteret til at blive medlem af %s!",
-	'groups:started' => "Startet af %s",
 	'groups:joinrequest:remove:check' => 'Er du sikker på, at du vil fjerne denne anmodning om tilmelding?',
 	'groups:invite:remove:check' => 'Er du sikker på, at du vil fjerne denne invitation?',
-	'groups:invite:body' => "Hej %s,
-	
-%s inviterede dig til at være med i '%s' gruppen, klik herunder for at bekræfte:
+	'groups:invite:body' => "Hi %s,
 
+%s invited you to join the '%s' group.
+
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Velkommen til %s gruppen!",
-	'groups:welcome:body' => "Hej %s!
-	
-Du er nu medlem af '%s' gruppen! Klik herunder for at begynde med at skrive!
+	'groups:welcome:body' => "Hi %s!
 
+You are now a member of the '%s' group.
+
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s har ønsket at blive medlem af %s",
-	'groups:request:body' => "Hej %s,
-	
-%s har bedt om at måtte være med i '%s' gruppen, klik nedenfor for at se deres profil:
+	'groups:request:body' => "Hi %s,
 
+%s has requested to join the '%s' group.
+
+Click below to view their profile:
 %s
 
-eller klik nedenfor for at se gruppens anmodningsliste:
-
+or click below to view the group's join requests:
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s oprettede gruppen %s',
-	'river:join:group:default' => '%s blev medlem af gruppen %s',
-
-	'groups:nowidgets' => 'Ingen widgets defineret for denne gruppe.',
-
-
-	'groups:widgets:members:title' => 'Gruppens medlemmer',
-	'groups:widgets:members:description' => 'Vis en gruppes medlemmer.',
-	'groups:widgets:members:label:displaynum' => 'Vis en gruppes medlemmer.',
-	'groups:widgets:members:label:pleaseedit' => 'Indstil venligst denne widget.',
-
-	'groups:widgets:entities:title' => "Objekter i gruppen",
-	'groups:widgets:entities:description' => "Vis objekterne gemt i denne gruppe",
-	'groups:widgets:entities:label:displaynum' => 'Vis en gruppes objekter',
-	'groups:widgets:entities:label:pleaseedit' => 'Indstil venligst denne widget.',
+	'river:group:create' => '%s created the group %s',
+	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Vil du tillade private (skjulte) grupper?',
 	'groups:whocancreate' => 'Who can create new groups?',
@@ -195,10 +159,8 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Gruppe og gruppeindhold slettet',
-	'group:notdeleted' => 'Gruppen kunne ikke slettes',
-
-	'group:notfound' => 'Kunne ikke finde gruppen',
+	'groups:deleted' => 'Group and group contents deleted',
+	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Er du sikker på at du vil slette denne gruppe? Du kan ikke gøre det om!",
 
 	'groups:invitekilled' => 'Invitationen er blevet slettet.',
@@ -210,4 +172,11 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Gruppeprofiler',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+);

@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Páginas del sitio",
-	'admin:appearance:expages' => "P&aacute;ginas externas",
+	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Ver página en el sitio",
 	'expages:about' => "Acerca de",
 	'expages:terms' => "T&eacute;rminos",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "La p&aacute;gina ha sido guardada correctamente.",
 	'expages:error' => "No se pudo guardar la p&aacute;gina.",
-];
+);

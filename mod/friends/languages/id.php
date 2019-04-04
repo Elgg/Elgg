@@ -18,7 +18,8 @@ return array(
 
 	'friends:of' => "Teman dari",
 	
-	'friends:widget:description' => "Menampilkan beberapa teman Anda",
 	'friends:num_display' => "Jumlah teman untuk ditampilkan",
-
+	
+	'widgets:friends:name' => "Friends",
+	'widgets:friends:description' => "Displays some of your friends.",
 );

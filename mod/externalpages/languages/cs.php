@@ -5,7 +5,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Informační stránky",
-	'admin:appearance:expages' => "Informační stránky",
+	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Zobrazit na stránce",
 	'expages:about' => "O těchto stránkách",
 	'expages:terms' => "Podmínky",

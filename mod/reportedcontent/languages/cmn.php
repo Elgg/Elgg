@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => '報告給管理者',
 	'reportedcontent:instructions' => '這個報告將發送給這個站臺的管理者以供檢閱。',
 	'reportedcontent:numbertodisplay' => '要顯示的報告數量',
-	'reportedcontent:widget:description' => '顯示報告的內容',
 	'reportedcontent:user' => '報告的使用者',
 
 	'reportedcontent:failed' => '抱歉，嘗試報告這個內容時失敗。',
 	'reportedcontent:notarchived' => '我們無法封存該報告',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

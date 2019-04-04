@@ -1,33 +1,40 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Микроблог",
-	'thewire:everyone' => "Все записи микроблога",
-	'thewire:user' => "Микроблог пользователя %s",
-	'thewire:friends' => "Микроблоги друзей",
+
+	'item:object:thewire' => "Микроблог",
+	'collection:object:thewire' => 'Wire posts',
+	'collection:object:thewire:all' => "All wire posts",
+	'collection:object:thewire:owner' => "%s's wire posts",
+	'collection:object:thewire:friends' => "Friends' wire posts",
+
 	'thewire:replying' => "Ответить %s (@%s), который писал(а) в своем микроблоге",
 	'thewire:thread' => "Микроблог пользователя",
 	'thewire:charleft' => "символов осталось",
 	'thewire:tags' => "Сообщения микроблога с тегом '%s'",
 	'thewire:noposts' => "В микроблоге нет постов",
-	'item:object:thewire' => "Микроблог",
+
 	'thewire:by' => 'Запись пользователя %s',
 	'thewire:previous:help' => "Посмотреть первый пост",
 	'thewire:hide:help' => "Скрыть первый пост",
 
+	'thewire:form:body:placeholder' => "What's happening?",
+	
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s сделал(а) запись в %s",
+	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'микроблог',
 
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Показать ваши последние записи',
+	
+	'widgets:thewire:description' => 'Display your latest wire posts',
 	'thewire:num' => 'Кол-во записей',
 	'thewire:moreposts' => 'Показать больше',
 
@@ -37,7 +44,6 @@ return [
 	'thewire:posted' => "Запись добавлена.",
 	'thewire:deleted' => "Запись удалена.",
 	'thewire:blank' => "Ну ты же ничего не ввел дружище.",
-	'thewire:notfound' => "Не могу найти эту запись.",
 	'thewire:notsaved' => "Не могу сохранить запись.",
 	'thewire:notdeleted' => "Не могу удалить запись.",
 
@@ -55,4 +61,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Максимальное количество символов сообщения:",
 	'thewire:settings:limit:none' => "Без ограничения",
-];
+);

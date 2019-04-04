@@ -20,19 +20,21 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s του αρέσει η ανάρτηση "%s"',
 	'likes:notifications:body' =>
-'Γεια σου %1$s,
+'Hi %1$s,
 
-%2$s likes your post "%3$s" σε %4$s
+%2$s likes your post "%3$s" on %4$s
 
-Δείτε την ανάρτηση σας εδώ:
+See your original post here:
 
 %5$s
 
-ή δείτε το προφίλ του χρήστη %2$s\'s εδώ:
+or view %2$s\'s profile here:
 
 %6$s
 
-Ευχαριστούμε,
+Thanks,
 %4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
 );

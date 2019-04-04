@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Todos los amigos',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Recibir notificaciones por acciones hechas en tus contenidos',
 	'notifications:subscriptions:personal:title' => 'Notificaciones personales',
 
-	'notifications:subscriptions:friends:title' => 'Amigos',
-	'notifications:subscriptions:friends:description' => 'A continuaci&oacute;n est&aacute; la colecci&oacute;n de amigos. Seleccionar una colecci&oacute; habilitar&aacute; las notificaciones de los amigos en esa colecci&oacute;n.',
-	'notifications:subscriptions:collections:edit' => 'Para habilitar el acceso compartido a la notificaciones, haz click aqu&iacute;.',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Notificaciones',
 	'notifications:subscriptions:changesettings:groups' => 'Notificaciones de grupos',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Tu configuraci&oacute;n de notificaciones ha sido guardada.',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

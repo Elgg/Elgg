@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'install:title' => 'Elgg 安裝',
 	'install:welcome' => '歡迎',
 	'install:requirements' => '需求檢查',
@@ -11,11 +11,11 @@ return [
 	'install:next' => '下一步',
 	'install:refresh' => '重新整理',
 
-	'install:welcome:instructions' => "安裝 Elgg 有 6 個簡單的步驟，而讀取這個歡迎畫面是第一個！
+	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
-如果您還沒有看過 Elgg 包含的安裝指示，請按一下位於頁面底部的指示鏈結)。
+If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
 
-如果您已準備好繼續下去，請按「下一步」按鈕。",
+If you are ready to proceed, click the Next button.",
 	'install:requirements:instructions:success' => "伺服器通過了需求檢查。",
 	'install:requirements:instructions:failure' => "伺服器需求檢查失敗。在您修正了以下問題之後，請重新整理這個頁面。如果您需要進一步的協助，請看看位於這個頁面底部的疑難排解鏈結。",
 	'install:requirements:instructions:warning' => "伺服器通過了需求檢查，但是至少出現一個警告。我們建議您看看安裝疑難排解頁面以獲得更多細節。",
@@ -25,11 +25,11 @@ return [
 	'install:require:settings' => '設定值檔案',
 	'install:require:database' => '資料庫',
 
-	'install:check:root' => '網頁伺服器沒有在 Elgg 根目錄中建立 .htaccess 檔案的權限。您有兩個選擇：
+	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
 
-		1.變更根目錄上的權限
+1. Change the permissions on the root directory
 
-		2.將檔案 htaccess_dist 拷貝為 .htaccess',
+2. Copy the file install/config/htaccess.dist to .htaccess',
 
 	'install:check:php:version' => 'Elgg 要求 PHP %s 或以上。這個伺服器正在使用版本 %s。',
 	'install:check:php:extension' => 'Elgg 要求 PHP 延伸功能 %s。',
@@ -42,9 +42,9 @@ return [
 
 	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Change the permissions on the elgg-config directory of your Elgg installation
+1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => '設定值檔案存在於引擎目錄中，但是網頁伺服器無法讀取它。您可以刪除檔案或變更它的讀取權限。',
 
 	'install:check:php:success' => "伺服器上的 PHP 滿足 Elggs 的所有需求。",
@@ -109,6 +109,8 @@ return [
 
 	'install:complete:instructions' => 'Elgg 站臺現在已準備好要使用。按以下按鈕以進入站臺。',
 	'install:complete:gotosite' => '前往站臺',
+	'install:complete:admin_notice' => 'Welcome to your Elgg site! For more options, see the %s.',
+	'install:complete:admin_notice:link_text' => 'settings pages',
 
 	'InstallationException:UnknownStep' => '%s 是不明的安裝步驟。',
 	'InstallationException:MissingLibrary' => 'Could not load %s',
@@ -120,6 +122,7 @@ return [
 
 	'install:error:htaccess' => '無法建立 .htaccess',
 	'install:error:settings' => '無法建立設定值檔案',
+	'install:error:settings_mismatch' => 'The settings file value for "%s" does not match the given $params.',
 	'install:error:databasesettings' => '無法以這些設定值連線到資料庫。',
 	'install:error:database_prefix' => '在資料庫前綴中有無效字元',
 	'install:error:oldmysql2' => 'MySQL 必須是版本 5.5.3 或以上。伺服器正在使用 %s。',
@@ -143,8 +146,8 @@ return [
 	'install:error:rewrite:nginx' => '我們認為您的主機正在運行 Nginx 網頁伺服器。',
 	'install:error:rewrite:lighttpd' => '我們認為您的主機正在運行 Lighttpd 網頁伺服器。',
 	'install:error:rewrite:iis' => '我們認為您的主機正在運行 IIS 網頁伺服器。',
-	'install:error:rewrite:allowoverride' => "改寫測試失敗的原因，很有可能是 AllowOverride 對於 Elgg 的目錄並非設定為 All。這會防止 Apache 去處理含有改寫規則的 .htaccess 檔案。
-				\n\n較不可能的原因是 Apache 被組配了別名給 Elgg 目錄，而您需要在 .htaccess 中設定 RewriteBase。在 Elgg 目錄的 .htaccess 檔案中有些進一步的指示。",
+	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
+\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
 	'install:error:rewrite:htaccess:write_permission' => '網頁伺服器沒有在 Elgg 的目錄中建立.htaccess 檔案的權限。您需要手動將 htaccess_dist 拷貝為 .htaccess，或是變更目錄上的權限。',
 	'install:error:rewrite:htaccess:read_permission' => '在 Elgg 的目錄中有 .htaccess 檔案，但是網頁伺服器沒有讀取它的權限。',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => '在 Elgg 的目錄中有 .htaccess 檔案，但那不是由 Elgg 所建立的。請移除它。',
@@ -153,8 +156,9 @@ return [
 	'install:error:rewrite:altserver' => '改寫規則測試失敗。您需要組配網頁伺服器與 Elgg 的改寫規則並再次嘗試。',
 	'install:error:rewrite:unknown' => '哎呀，我們無法認出在主機中運行什麼樣的網頁伺服器，而它的改寫規則失敗。我們無法提供任何特定的建言。請看看疑難排解鏈結。',
 	'install:warning:rewrite:unknown' => '您的伺服器不支援自動的改寫規則測試，而您的瀏覽器不支援經由 JavaScript 的檢查。您可以繼續進行安裝，但是也許會遇到一些站臺問題。您可以藉由按下這個鏈結，來手動<a href="%s" target="_blank ">測試</a>改寫規則。如果規則發生作用，您將會看到成功的字樣。',
-	
+	'install:error:wwwroot' => '%s is not a valid URL',
+
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => '發生了無法回復的錯誤，並且已經記錄下來。如果您是站臺管理者，請檢查您的設定檔案；否則請聯絡站臺管理者，並附上以下資訊：',
 	'DatabaseException:WrongCredentials' => "Elgg 無法利用給定的憑據與資料庫連線。請檢查設定檔案。",
-];
+);

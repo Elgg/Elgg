@@ -1,6 +1,0 @@
-<?php
-return [
-	'profile' => 'Profil',
-	'profile:notfound' => 'Przepraszamy. Nie można znaleźć określonego profilu.',
-
-];

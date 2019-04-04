@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Denunciar aix&ograve;',
 	'reportedcontent:instructions' => 'La denúncia serà enviada als administradors del lloc perquè puguin moderar.',
 	'reportedcontent:numbertodisplay' => 'Quantitat de denúncies a mostrar',
-	'reportedcontent:widget:description' => 'Mostrar el contingut denunciat',
 	'reportedcontent:user' => 'Denunciar usuària',
 
 	'reportedcontent:failed' => 'Ens sap greu, hi ha hagut una errada a l&acute;hora d&acute;intentar denunciar el contingut.',
 	'reportedcontent:notarchived' => 'No s&acute;ha pogut arxivar la denúncia',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

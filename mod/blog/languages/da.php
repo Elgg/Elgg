@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Blogs',
-	'blog:blogs' => 'Blogs',
+return array(
+	'item:object:blog' => 'Blogs',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Revision',
 	'blog:archives' => 'Arkiver',
-	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Blogs',
 
-	'blog:title:user_blogs' => '%s\'s blogge',
-	'blog:title:all_blogs' => 'Alle blogge',
-	'blog:title:friends' => 'Friends\' blogs',
-
-	'blog:group' => 'Gruppe blog',
-	'blog:enableblog' => 'Aktiver gruppe blog',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Skriv et blogindlæg',
 
 	// Editing
-	'blog:add' => 'Tilføj blogindlæg',
-	'blog:edit' => 'Rediger blogindlæg',
 	'blog:excerpt' => 'Uddrag',
 	'blog:body' => 'Brødtekst',
 	'blog:save_status' => 'Sidst gemt: ',
-	
+
 	'blog:revision' => 'Revision',
 	'blog:auto_saved_revision' => 'Auto gemt revision',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Kan ikke finde denne revision.',
 
 	// river
-	'river:create:object:blog' => '%s har offentliggjort et blogindlæg %s',
-	'river:comment:object:blog' => '%s har kommenteret et blogindlæg %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nyt blog indlæg kaldt %s',
 	'blog:notify:subject' => 'Nyt blot indlæg: %s',
 	'blog:notify:body' =>
 '
-%s udgivet et nyt blog indlæg: %s
+%s published a new blog post: %s
 
 %s
 
-Se og kommenter på det nye blog indlæg:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Vis dit seneste blogindlæg',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Flere blogindlæg',
 	'blog:numbertodisplay' => 'Antal af blogindlæg, der skal vises',
-	'blog:noblogs' => 'Ingen blogindlæg'
-];
+);

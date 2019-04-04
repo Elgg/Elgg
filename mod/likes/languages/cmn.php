@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => '稱讚這個項目',
 	'likes:deleted' => '您的稱讚已移除',
 	'likes:see' => '看看誰稱讚這個項目',
@@ -20,20 +20,21 @@ return [
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s 稱讚您的貼文 "%s"',
 	'likes:notifications:body' =>
-'嗨！%1$s，
+'Hi %1$s,
 
-%2$s 稱讚您的貼文 "%3$s" 於 %4$s
+%2$s likes your post "%3$s" on %4$s
 
-請在這裡參看您原來的貼文：
+See your original post here:
 
 %5$s
 
-或在這裡檢視 %2$s 的側寫：
+or view %2$s\'s profile here:
 
 %6$s
 
-謝謝。
-%4$s
-',
+Thanks,
+%4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'li agrada això',
 	'likes:deleted' => 'El teu "m\'agrada" s\'ha eliminat',
 	'likes:see' => 'Mira a qui li agrada',
@@ -20,19 +20,21 @@ return [
 	// notifications. yikes.
 	'likes:notifications:subject' => 'a %s li agrada el teu missatge "%s"',
 	'likes:notifications:body' =>
-'Hola %1$s,
+'Hi %1$s,
 
-A %2$s li agrada el teu missatge "%3$s" a %4$s
+%2$s likes your post "%3$s" on %4$s
 
-Mira el teu missatge original aquí:
+See your original post here:
 
 %5$s
 
-o mira el perfil de %2$s aquí:
+or view %2$s\'s profile here:
 
 %6$s
 
-Gràcies,
+Thanks,
 %4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'synes godt om dette',
 	'likes:deleted' => 'Din tilkendegivelse "synes godt om" er blevet fjernet',
 	'likes:see' => 'Se hvem der synes godt om dette',
@@ -33,7 +33,8 @@ or view %2$s\'s profile here:
 %6$s
 
 Thanks,
-%4$s
-',
+%4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

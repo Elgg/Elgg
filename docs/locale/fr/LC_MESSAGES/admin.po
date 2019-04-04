@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-24 10:08+0200\n"
+"POT-Creation-Date: 2018-12-21 16:20+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2918,8 +2918,12 @@ msgid "Upgrading Elgg"
 msgstr "Mettre à niveau Elgg"
 
 #: ../../admin/upgrading.rst:4
-msgid "Switch a live site to a new version of Elgg."
-msgstr "Basculer un site actif vers une nouvelle version d'Elgg."
+msgid ""
+"This document will guide you through steps necessary to upgrade your Elgg "
+"installation to the latest version."
+msgstr ""
+"Ce document va vous guider à travers les étapes nécessaires pour mettre à "
+"niveau votre installation Elgg vers la dernière version."
 
 #: ../../admin/upgrading.rst:6
 msgid ""
@@ -2937,8 +2941,10 @@ msgid "Advice"
 msgstr "Conseil"
 
 #: ../../admin/upgrading.rst:12
-msgid "**Back up your database** and code"
-msgstr "**Sauvegardez votre base de données** et le code"
+msgid "**Back up your database, data directory and code**"
+msgstr ""
+"**Sauvegardez votre base de données, votre répertoire de données et le code "
+"source**"
 
 #: ../../admin/upgrading.rst:13
 msgid "Mind any version-specific comments below"
@@ -2948,10 +2954,11 @@ msgstr ""
 
 #: ../../admin/upgrading.rst:14
 msgid ""
-"Version below 2.0 are advised to only upgrade one minor version at a time"
+"Version below 2.0 are advised to only upgrade **one minor version at a "
+"time**"
 msgstr ""
-"Les versions inférieures à 2.0 sont invitées à n'effectuer qu'une seule mise"
-" à niveau mineure à la fois"
+"Les versions inférieures à 2.0 sont invitées à n'effectuer qu'**une seule "
+"mise à niveau mineure à la fois**"
 
 #: ../../admin/upgrading.rst:15
 msgid ""
@@ -2966,24 +2973,34 @@ msgstr ""
 msgid ""
 "You can only upgrade the latest minor version in the previous major version "
 "to any minor version in the next version (2.3 -> 3.0 or 2.3 -> 3.2, but not "
-"2.2 -> 3.x or 2.3 -> 4.x)."
+"2.2 -> 3.x)."
 msgstr ""
-"Vous ne pouvez mettre à niveau que la dernière version mineure de la version"
-" majeure précédente vers n'importe quelle version mineure de la version "
-"majeure suivante (2.3 -> 3.0 ou 2.3 -> 3.2, mais pas 2.2 -> 3.x ou 2.3 -> "
-"4.x)."
+"Vous pouvez mettre à niveau uniquement la dernière version mineure de la "
+"version majeure précédente vers n'importe quelle version mineure de la "
+"version majeure suivante (2.3 -> 3.0 ou 2.3 -> 3.2, mais pas 2.2 -> 3.x)."
 
 #: ../../admin/upgrading.rst:17
+msgid ""
+"From Elgg 2.3.* you can upgrade to any future version of Elgg without having"
+" to go through each minor version (e.g. you can upgrade directly from 2.3.8 "
+"to 3.2.5, without having to upgrade to 3.0 and 3.1)"
+msgstr ""
+"A partir de Elgg 2.3.* vous pouvez mettre à niveau vers n'importe quelle "
+"version ultérieure de Elgg sans devoir passer par chacune des versions "
+"mineures (par ex. vous pouvez mettre à niveau directement de la 2.3.8 vers "
+"la 3.2.5, sans devoir mettre à niveau vers les versions 3.0 et 3.1)"
+
+#: ../../admin/upgrading.rst:18
 msgid "Try out the new version on a test site before doing an upgrade"
 msgstr ""
 "Essayez la nouvelle version sur un site de test avant d'effectuer une mise à"
 " niveau"
 
-#: ../../admin/upgrading.rst:18
+#: ../../admin/upgrading.rst:19
 msgid "Report any problems in plugins to the plugin authors"
 msgstr "Signalez tout problème dans les plugins aux auteurs de plugins"
 
-#: ../../admin/upgrading.rst:19
+#: ../../admin/upgrading.rst:20
 msgid ""
 "If you are a plugin author you can `report any backwards-compatibility "
 "issues to GitHub <issues_>`_"
@@ -2991,15 +3008,66 @@ msgstr ""
 "Si vous êtes auteur de plugins, vous pouvez `signaler tout problème de "
 "rétro-compatibilité sur GitHub <issues_>`_"
 
-#: ../../admin/upgrading.rst:24
+#: ../../admin/upgrading.rst:25
 msgid "Basic instructions"
 msgstr "Instructions de base"
 
-#: ../../admin/upgrading.rst:27
-msgid "Composer Upgrade"
-msgstr "Mise à niveau via Composer"
+#: ../../admin/upgrading.rst:28
+msgid "From 2.3 to 3.0"
+msgstr "De 2.3 à 3.0"
 
-#: ../../admin/upgrading.rst:29
+#: ../../admin/upgrading.rst:31
+msgid "1. Update ``composer.json``"
+msgstr "1. Mettez à niveau ``composer.json``"
+
+#: ../../admin/upgrading.rst:33
+msgid ""
+"If you have used Elgg's starter project to install Elgg 2.3, you may need to"
+" update your ``composer.json``:"
+msgstr ""
+"Si vous avez utilisé le projet de démarrage Elgg pour installer Elgg 2.3, "
+"vous pouvez avoir besoin de mettre à niveau votre ``composer.json`` :"
+
+#: ../../admin/upgrading.rst:35
+msgid "change platform requirements to PHP >= 7.0"
+msgstr "modifiez les pré-requis de la plateforme vers PHP >= 7.0"
+
+#: ../../admin/upgrading.rst:36
+msgid "optionally, set autoloader optimization parameters"
+msgstr ""
+"facultativement, définiez les paramètres d'optimisation de l'autoloader"
+
+#: ../../admin/upgrading.rst:37
+msgid "optionally, disable fxp-asset plugin in favor of asset-packagist"
+msgstr ""
+"facultativement, désactivez le plugin fxp-asset au bénéfice de asset-"
+"packagist"
+
+#: ../../admin/upgrading.rst:39
+msgid ""
+"Your ``composer.json`` would look something like this (depending what "
+"changes you may have introduced yourself):"
+msgstr ""
+"Votre ``composer.json`` devrait ressembler à quelque chose comme ceci (en "
+"fonction des changements que vous avez vous-même introduits) :"
+
+#: ../../admin/upgrading.rst:70
+msgid "2. Update ``.htaccess``"
+msgstr "2. Mettez à jour ``.htaccess``"
+
+#: ../../admin/upgrading.rst:72
+msgid "Find the line:"
+msgstr "Trouvez la ligne :"
+
+#: ../../admin/upgrading.rst:78
+msgid "And replace it with:"
+msgstr "Et rempalcez-la par :"
+
+#: ../../admin/upgrading.rst:86
+msgid "3a. Composer Upgrade (recommended)"
+msgstr "3a. Mise à niveau via Composer (recommandé)"
+
+#: ../../admin/upgrading.rst:88
 msgid ""
 "If you had your Elgg 2.3 project installed using composer, you can follow "
 "this sequence:"
@@ -3007,59 +3075,74 @@ msgstr ""
 "Si vous aviez installé votre projet 2.3 avec composer, vous pouvez suivre la"
 " séquence suivante :"
 
-#: ../../admin/upgrading.rst:42
-msgid "Manual Upgrade"
-msgstr "Mise à niveau manuelle"
-
-#: ../../admin/upgrading.rst:44
-msgid "Log in as an admin to your site"
-msgstr "Identifiez-vous sur votre site en tant qu'administrateur"
-
-#: ../../admin/upgrading.rst:45
-msgid "Disable caching in Advanced Settings"
-msgstr "Désactivez le cache dans les Paramètres Avancés (Advanced Settings)"
-
-#: ../../admin/upgrading.rst:46
+#: ../../admin/upgrading.rst:90 ../../admin/upgrading.rst:110
 msgid "**Back up your database, data directory, and code**"
 msgstr ""
 "**Sauvegardez votre base de données, votre répertoire de données, et le "
 "code**"
 
-#: ../../admin/upgrading.rst:47
+#: ../../admin/upgrading.rst:104
+msgid "3b. Manual Upgrade (legacy approach)"
+msgstr "3b. Mise à niveau manuelle (approche traditionnelle)"
+
+#: ../../admin/upgrading.rst:106
+msgid ""
+"Manual upgrades are a major undertaking for site admins. We discourage you "
+"from maintaining an Elgg installation using ZIP dist packages. Save yourself"
+" some time by learning how to use ``composer`` and version control systems, "
+"such as ``git``. This task will also be complicated if you have third-party "
+"plugins and/or have made any modifications to core files!"
+msgstr ""
+"Les mises à niveau manuelles sont une opération pénible pour les "
+"administrateurs de sites. Nous vous déconseillons de maintenir un site Elgg "
+"en utilisant des archives ZIP. Economisez-vous du temps en apprenant comment"
+" utiliser ``composer`` et les systèmes de contrôle de version, tels que "
+"``git``. Cette tâche sera également plus complexe si vous utilisez des "
+"plugins tierce-partie et/ou si vous avez modifié les fichiers du noyau !"
+
+#: ../../admin/upgrading.rst:111
+msgid "Log in as an admin to your site"
+msgstr "Identifiez-vous sur votre site en tant qu'administrateur"
+
+#: ../../admin/upgrading.rst:112
 msgid "Download the new version of Elgg from http://elgg.org"
 msgstr "Téléchargez la nouvelle version de Elgg depuis http://elgg.org"
 
-#: ../../admin/upgrading.rst:49
+#: ../../admin/upgrading.rst:115
 msgid "Update the files"
 msgstr "Mettez à jour les fichiers"
 
-#: ../../admin/upgrading.rst:49
+#: ../../admin/upgrading.rst:114
 msgid ""
-"If doing a patch upgrade (1.9.x), overwrite your existing files with the new"
-" version of Elgg"
+"If upgrading to a major version, you need to overwrite all core files and "
+"remove any files that were removed from Elgg core, as they may interfere "
+"with proper functioning of your site."
 msgstr ""
-"Si vous faites une mise à niveau corrective (1.9.x), écrasez vos fichiers "
-"existants avec la nouvelle version d'Elgg"
+"Si vous mettez à niveau vers une version majeure, vous devrez replacer tous "
+"les fichiers du noyau et supprimer tous les fichiers qui ont été retirés du "
+"noyau d'Elgg, car ils peuvent interférer avec le bon fonctionnement de votre"
+" site."
 
-#: ../../admin/upgrading.rst:50
+#: ../../admin/upgrading.rst:116
 msgid ""
-"If doing a minor upgrade (1.x), replace the existing core files completely"
+"If upgrading to a minor version or patching, you need to overwrite all core "
+"files."
 msgstr ""
-"Si vous faites une mise à niveau mineure (1.x), remplacez totalement les "
-"fichiers du noyau existant"
+"Si vous mettez à jour vers une version mineure ou un patch, vous devez "
+"remplacer tous les fichiers du code."
 
-#: ../../admin/upgrading.rst:52
+#: ../../admin/upgrading.rst:118
 msgid "Merge any new changes to the rewrite rules"
 msgstr ""
 "Fusionnez tous les nouveaux changements des règles de réécriture (rewrite "
 "rules)"
 
-#: ../../admin/upgrading.rst:52
+#: ../../admin/upgrading.rst:118
 msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 "Pour Apache depuis ``install/config/htaccess.dist`` vers ``.htaccess``"
 
-#: ../../admin/upgrading.rst:53
+#: ../../admin/upgrading.rst:119
 msgid ""
 "For Nginx from ``install/config/nginx.dist`` into your server configuration "
 "(usually inside ``/etc/nginx/sites-enabled``)"
@@ -3067,18 +3150,18 @@ msgstr ""
 "Pour Nginx depuis ``install/config/nginx.dist`` vers la configuration de "
 "votre serveur (habituellement dans ``/etc/nginx/sites-enabled``)"
 
-#: ../../admin/upgrading.rst:54
-msgid ""
-"Merge any new changes from ``settings.example.php`` into ``settings.php``"
-msgstr ""
-"Fusionnez toutes les modifications depuis ``settings.example.php`` dans "
-"``settings.php``"
-
-#: ../../admin/upgrading.rst:55
+#: ../../admin/upgrading.rst:120
 msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr "Visitez http://your-elgg-site.com/upgrade.php"
 
-#: ../../admin/upgrading.rst:59
+#: ../../admin/upgrading.rst:121
+msgid ""
+"Execute asynchronous upgrades at http://your-elgg-site.com/admin/upgrades"
+msgstr ""
+"Exécutez les mises à niveau asynchrones via http://your-elgg-"
+"site.com/admin/upgrades"
+
+#: ../../admin/upgrading.rst:125
 msgid ""
 "Any modifications should have been written within plugins, so that they are "
 "not lost on overwriting. If this is not the case, take care to maintain your"
@@ -3088,624 +3171,99 @@ msgstr ""
 "qu'elles ne soient pas perdues lors de l'écrasement des fichiers. Si ce "
 "n'est pas le cas, prenez soin de maintenir vos modifications."
 
-#: ../../admin/upgrading.rst:63 ../../admin/upgrading.rst:170
-msgid "From 2.3 to 3.0"
-msgstr "De 2.3 à 3.0"
-
-#: ../../admin/upgrading.rst:66
-msgid "Update ``settings.php``"
-msgstr "Mettez à jour ``settings.php``"
-
-#: ../../admin/upgrading.rst:68
-msgid "On your working 2.3 installation:"
-msgstr "Sur votre installation 2.3 fonctionnelle :"
-
-#: ../../admin/upgrading.rst:70
-msgid "Open your ``settings.php`` file."
-msgstr "Ouvrez le fichier ``settings.php``."
-
-#: ../../admin/upgrading.rst:71
+#: ../../admin/upgrading.rst:130
 msgid ""
-"In the browser, open the site's Advanced Settings page in the admin area"
+"If you are unable to access ``upgrade.php`` script and receive an error, add"
+" ``$CONFIG->security_protect_upgrade = false;`` to your ``settings.php`` and"
+" remove it after you have completed all of the upgrade steps."
 msgstr ""
-"Dans le navigateur, ouvrez la page des Paramètres Avancés (Advanced "
-"Settings) dans la partie admin"
+"Si vous n'arrivez pas à accéder au script ``upgrade.php`` et recevez une "
+"erreur, ajoutez ``$CONFIG->security_protect_upgrade = false;`` à votre "
+"ficher ``settings.php`` et supprimez-le après avoir terminé toutes les "
+"étapes de l'installation."
 
-#: ../../admin/upgrading.rst:72
+#: ../../admin/upgrading.rst:135
 msgid ""
-"Copy the **data directory** path into your settings file as "
-"``$CONFIG->dataroot``."
+"If you encounter issues with plugins during the upgrade, add an empty file "
+"called ``disabled`` in your ``/mod/`` directory. This will disable the "
+"plugins, so that you can finish the core upgrade. You can then deal with "
+"issues on per-plugin basis."
 msgstr ""
-"Copiez le chemin **data directory** dans votre fichier de configuration dans"
-" ``$CONFIG->dataroot``."
+"Si vous rencontrez des soucis avec des plugins lors du processus de mise à "
+"niveau, ajoutez un fichier nommé ``disabled`` dans votre dossier ``/mod/``. "
+"Ceci va désactiver tous les plugins, de sorte que vous puissiez terminer la "
+"mise à niveau du noyau. Vous pouvez ensuite gérer les mises à niveau de "
+"chacun des plugins l'un après l'autre."
 
-#: ../../admin/upgrading.rst:73
-msgid "Copy the **site URL** into your settings file as ``$CONFIG->wwwroot``."
-msgstr ""
-"Copiez l'**URL du site** dans votre fichier de configuration dans "
-"``$CONFIG->wwwroot``."
-
-#: ../../admin/upgrading.rst:75
+#: ../../admin/upgrading.rst:139
 msgid ""
-"Elgg 3.0 **will not operate** at all without ``$CONFIG->dataroot`` set in "
-"``settings.php``."
+"If you have installed Elgg using a dist package but would now like to switch"
+" to composer:"
 msgstr ""
-"Elgg 3.0 **ne fonctionnera pas**  du tout sans ``$CONFIG->dataroot`` défini "
-"dans ``settings.php``."
-
-#: ../../admin/upgrading.rst:78
-msgid "Update ``.htaccess``"
-msgstr "Mettez à jour ``.htaccess``"
-
-#: ../../admin/upgrading.rst:80
-msgid "Find the line:"
-msgstr "Trouvez la ligne :"
-
-#: ../../admin/upgrading.rst:86
-msgid "And replace it with:"
-msgstr "Et rempalcez-la par :"
-
-#: ../../admin/upgrading.rst:93
-msgid "Removed / changed language keys"
-msgstr "Clefs de traduction supprimées / modifiées"
-
-#: ../../admin/upgrading.rst:95
-msgid ""
-"The language keys related to comment notifications have changed. Check the "
-"``generic_comment:notification:owner:`` language keys"
-msgstr ""
-"Les clefs de traduction relatives aux notifications des commentaires ont "
-"changé. Vérifiez les clefs de traduction "
-"``generic_comment:notification:owner:``"
-
-#: ../../admin/upgrading.rst:98
-msgid "New MySQL schema features are not applied"
-msgstr "Les nouvelles fonctionnalités du schéma MySQL ne sont pas appliquées"
-
-#: ../../admin/upgrading.rst:100
-msgid ""
-"New 3.0 installations require MySQL 5.5.3 and use the utf8mb4 character set "
-"and LONGTEXT content columns (notably allowing storing longer content and "
-"extended characters like emoji)."
-msgstr ""
-"Les nouvelles installations 3.0 ont besoin de MySQL 5.5.3 et utilisent "
-"l'encodage de caractères utf8mb4 et des colonnes de contenu LONGTEXT (qui "
-"permettent notamment de stocker des contenus plus longs et des caractères "
-"étendus tels que des emojis)."
-
-#: ../../admin/upgrading.rst:103
-msgid "Miscellaneous changes"
-msgstr "Changements divers"
-
-#: ../../admin/upgrading.rst:105
-msgid ""
-"The settings \"Allow visitors to register\" and \"Restrict pages to logged-"
-"in users\" now appear on the Basic Settings admin page."
-msgstr ""
-"Les paramètres \"Permettre aux visiteurs de s'inscrire\" et \"Restreindre "
-"les pages aux utilisateurs connectés\" apparaissent désormais sur la page "
-"admin des paramètres basiques (\"Basicv Settings\")."
-
-#: ../../admin/upgrading.rst:108
-msgid "Twitter API plugin"
-msgstr "Plugin Twitter API"
-
-#: ../../admin/upgrading.rst:110
-msgid "The ``twitter_api`` plugin no longer comes bundled with Elgg."
-msgstr "Le plugin ``twitter_api`` n'est plus livré avec Elgg."
-
-#: ../../admin/upgrading.rst:113
-msgid "Unit and Integration Testing"
-msgstr "Tests Unitaires et d'Intégration"
-
-#: ../../admin/upgrading.rst:115
-msgid ""
-"Elgg's PHPUnit bootstrap can now handle both unit and integration tests. "
-"Please note that **you shouldn't run tests on a production site**, as it may"
-" damage data integrity. To prevent data loss, you need to specify database "
-"settings via environment variables. You can do so via the phpunit.xml "
-"bootstrap."
-msgstr ""
-"L'amorçage du PHPUnit de Elgg peut désormais gérer à la fois les tests "
-"unitaires et d'intégration. Veuillez noter que **vous ne devriez pas "
-"exécuter de test sur un site de production**, car cela peut endommager "
-"l'intégrité des données. Pour éviter les pertes de données, vous devez "
-"spécifier les paramètres de la base de données via les variables "
-"d'environnement. Vous pouvez faire cela via le fichier d'amorçage "
-"phpunit.xml."
-
-#: ../../admin/upgrading.rst:119
-msgid ""
-"Plugins can now implement their own PHPUnit tests by extending "
-"``\\Elgg\\UnitTestCase`` and ``\\Elgg\\IntegrationTestCase`` classes. "
-"``plugins`` test suite will automatically autoload PHPUnit tests from "
-"``mod/<plugin_id>/tests/phpunit/unit`` and "
-"``mod/<plugin_id>/tests/phpunit/integration``."
-msgstr ""
-"Les plugins peuvent désormais implémenter leurs propres tests PHPUnit en "
-"étendant les classes ``\\Elgg\\UnitTestCase`` et "
-"``\\Elgg\\IntegrationTestCase``. La suite de test ``plugins`` va "
-"automatiquement charger les tests PHPUnit depuis "
-"``mod/<plugin_id>/tests/phpunit/unit`` et "
-"``mod/<plugin_id>/tests/phpunit/integration``."
-
-#: ../../admin/upgrading.rst:123
-msgid ""
-"Prior to running integration tests, you need to enable the plugins that you "
-"wish to test alongside core API."
-msgstr ""
-"Avant d'exécuter des tests d'intégration, vous devez activer les plugins que"
-" vous souhaitez tester en même temps que l'API du noyau."
-
-#: ../../admin/upgrading.rst:125
-msgid ""
-"``\\Elgg\\IntegrationTestCase`` uses ``\\Elgg\\Seeding`` trait, which can be"
-" used to conveniently build new entities and write them to the database."
-msgstr ""
-"``\\Elgg\\IntegrationTestCase`` utilise le trait ``\\Elgg\\Seeding``, qui "
-"peut être utilisé pour construire aisément de nouvelles entités et les "
-"enregistrer dans la base de données."
-
-#: ../../admin/upgrading.rst:128
-msgid ""
-"``\\Elgg\\UnitTestCase`` does not use the database, but provides a database "
-"mocking interface, which allows tests to define query specs with predefined "
-"returns."
-msgstr ""
-"``\\Elgg\\UnitTestCase`` n'utilise pas la base de données, mais fournit une "
-"interface de base de données factice, qui permet aux tests de définir des "
-"spécifications de requête avec des retours prédéfinis."
-
-#: ../../admin/upgrading.rst:131
-msgid ""
-"By default, both unit and integration tests will be run whenever ``phpunit``"
-" is called. You can use ``--testsuite`` flag to only run a specific suite: "
-"``phpunit --testsuite unit`` or ``phpunit --testsuite integration`` or "
-"``phpunit --testsuite plugins``."
-msgstr ""
-"Par défaut, les tests unitaires et d'intégration seront exécutés à chaque "
-"fois que ``phpunit`` est appelé. Vous pouvez utiliser le drapeau "
-"``--testsuite`` pour n'exécuter qu'une suite de tests spécifique : ``phpunit"
-" --testsuite unit`` ou ``phpunit --testsuite integration`` ou ``phpunit "
-"--testsuite plugins``."
-
-#: ../../admin/upgrading.rst:133
-msgid ""
-"For integration testing to run properly, plugins are advised to not put any "
-"logic into the root of ``start.php``, and instead return a Closure. This "
-"allows the testsuite to build a new Application instance without loosing "
-"plugin initialization logic."
-msgstr ""
-"Pour que les tests d'intégration s'exécutent correctement, il est recommandé"
-" que les plugins ne placent aucune logique de focntionnement dans la racine "
-"de ``start.php``, et renvoient plutôt une Closure à la place. Ceci permet à "
-"la suite de test de construire une nouvelle instance Application sans perdre"
-" la logique d'initialisation du plugin."
-
-#: ../../admin/upgrading.rst:136
-msgid ""
-"Plugins with simpletests will continue working as perviously. However, "
-"method signatures in the ``ElggCoreUnitTest`` abstract class have changed "
-"and you will need to update your tests accordingly. Namely, it's discouraged"
-" to use ``__construct`` and ``__desctruct`` methods. ``setUp`` and "
-"``tearDown`` have been marked as private and are used for consistent test "
-"boostrapping and asserting pre and post conditions, your test case should "
-"use ``up`` and ``down`` methods instead."
-msgstr ""
-"Les plugins avec simpletests vont continuer à fonctionner comme "
-"précédemment. Cependant, les méthodes de signature dans la classe abstraite "
-"``ElggCoreUnitTest`` ont changé et vous allez avoir besoin de mettre à jour "
-"vos tests en conséquence. A savoir, il est déconseillé d'utiliser les "
-"méthodes ``__construct`` et ``__destruct``. ``setUp`` et ``tearDown`` ont "
-"été marquées comme privées et sont utilisées pour amorcer des tests "
-"cohérents et pour déclarer des conditions pre et post ; votre cas de test "
-"devrait utiliser les méthodes ``up`` et ``down`` à leur place."
+"Si vous avez installé Elgg en utilisant une archive d'installation mais "
+"souhaitez maintenant basculer vers composer : "
 
 #: ../../admin/upgrading.rst:141
+msgid "Upgrade your current installation using Manual Upgrade method"
+msgstr "Mettez à niveau votre installation en utilisant la Méthode manuelle"
+
+#: ../../admin/upgrading.rst:142
+msgid "Move your codebase to a temporary location"
+msgstr "Déplacez votre code vers un emplacement provisoire"
+
+#: ../../admin/upgrading.rst:143
 msgid ""
-"Simpletests can no longer be executed from the admin interface of the "
-"developers plugin. Use Elgg cli command: ``elgg-cli simpletest``"
+"Create a new composer project using Elgg's starter project following "
+":doc:`installation instructions </intro/install>` in the root directory of "
+"your current installation"
 msgstr ""
-"Simpletests ne peut plus être exécuté depuis l'interface admin du plugin "
-"developers. Utilisez la commande Elgg cli : ``elgg-cli simpletest``"
+"Créez un nouveau projet composer en utilisant le projet Elgg de démarrage en"
+" suivant les  :doc:`instruction d'installation </intro/install>` dans le "
+"répertoire racine de votre installation actuelle"
+
+#: ../../admin/upgrading.rst:144
+msgid ""
+"Copy third-party plugins from your old installation into ``/mod`` directory"
+msgstr ""
+"Copiez les plugins tierce-partie depuis votre ancienne installation vers le "
+"répertoire ``/mod``"
+
+#: ../../admin/upgrading.rst:145
+msgid "Run Elgg's installer using your browser or ``elgg-cli`` tool"
+msgstr ""
+"Exécutez l'installateur de Elgg en utilisant votre navigateur ou l'outil "
+"``elgg-cli``"
 
 #: ../../admin/upgrading.rst:146
-msgid "From 2.2 to 2.3"
-msgstr "De 2.2 à 2.3"
+msgid ""
+"When you reach the database step, provide the same credentials you have used"
+" for manual installation, Elgg will understand that is's an existing "
+"installation and will not override any database values"
+msgstr ""
+"Quand vous arrivez à l'étape de la base de données, indiquez les mêmes accès"
+" que vous avez utilisés pour l'installation manuelle, Elgg va comprendre "
+"qu'il y a une installation existante et ne remplacera aucune valeur de la "
+"base de données"
 
-#: ../../admin/upgrading.rst:149
-msgid "PHP Version"
-msgstr "Version de PHP"
+#: ../../admin/upgrading.rst:147
+msgid "Optionally commit your new project to version control"
+msgstr ""
+"Facultativement, commitez votre nouveau projet vers un suivi de version"
 
 #: ../../admin/upgrading.rst:151
-msgid ""
-"PHP 5.5 has reached end of life in July 2016. To ensure that Elgg sites are "
-"secure, we now require PHP 5.6 for new installations."
-msgstr ""
-"PHP 5.5 a atteint la date de fin de support en Juillet 2016. Afin de "
-"s'assurer que les sites Elgg soient sécurisés, nous exigeons désormais PHP "
-"5.6 pour les nouvelles installations."
+msgid "Earlier versions"
+msgstr "Versions précédentes"
 
 #: ../../admin/upgrading.rst:153
-msgid "Existing installations can continue using PHP 5.5 until Elgg 3.0."
-msgstr ""
-"Les installations existantes peuvent continuer à utiliser PHP 5.5 jusqu'à "
-"Elgg 3.0."
-
-#: ../../admin/upgrading.rst:155
 msgid ""
-"In order to upgrade Elgg to 2.3 using composer while using PHP 5.5, you may "
-"need to use ``--ignore-platform-reqs`` flag."
+"Check Elgg documentation that corresponds to the Elgg version you want to "
+"upgrade to, by switching the documentation version in the lower left corner "
+"of `Upgrading docs <upgrading-docs_>`"
 msgstr ""
-"Afin de mettre à niveau Elgg vers la 2.3 en utilisant composer avec PHP 5.5,"
-" vous pouvez avoir besoin d'utiliser le drapeau ``--ignore-platform-reqs``."
-
-#: ../../admin/upgrading.rst:158
-msgid "Tests"
-msgstr "Tests"
-
-#: ../../admin/upgrading.rst:160
-msgid ""
-"PHPUnit bootstrap is deprecated by composer autoloader: Tests should no "
-"longer bootstrap themselves using ``/engine/tests/phpunit/bootstrap.php``. "
-"Instead, tests should extend ``\\Elgg\\TestCase``."
-msgstr ""
-"PHPUnit bootstrap est rendu obsolète par le chargeur automatique "
-"(autoloader) de composer : les tests ne devraient plus s'amorcer eux-même en"
-" utilisant ``/engine/tests/phpunit/bootstrap.php``. Au lieu de cela, les "
-"tests devraient étendre ``\\Elgg\\TestCase``."
-
-#: ../../admin/upgrading.rst:161
-msgid ""
-"PHPUnit bootstrap no longer sets global ``$CONFIG``. Tests should use "
-"``_elgg_config()`` instead."
-msgstr ""
-"PHPUnit bootstrap ne définit plus la varible globale ``$CONFIG``. Les tests "
-"devraient utiliser ``_elgg_config()`` à la place."
-
-#: ../../admin/upgrading.rst:162
-msgid ""
-"Core and tests no longer use private global values in ``$_ELGG->view_path`` "
-"and ``$_ELGG->allowed_ajax_views``"
-msgstr ""
-"Le noyau et les tests n'utilisent plus de valeurs globales privées dans "
-"``$_ELGG->view_path`` et ``$_ELGG->allowed_ajax_views``"
-
-#: ../../admin/upgrading.rst:165
-msgid "Schema"
-msgstr "Schéma"
-
-#: ../../admin/upgrading.rst:167
-msgid ""
-"The database GUID columns need to be aligned. In the admin section an "
-"upgrade is available to handle this. Please make sure you have a backup "
-"available"
-msgstr ""
-"Les colonnes GUID de la base de données doivent être alignées. Dans la "
-"section admin une mise à niveau permet d'effectuer cette action. Assurez-"
-"vous d'avoir un backup disponible."
-
-#: ../../admin/upgrading.rst:173
-msgid "Data removal"
-msgstr "Suppression de données"
-
-#: ../../admin/upgrading.rst:175
-msgid ""
-"Be aware the 3.0 upgrade process will remove any remaining \"legacy\" "
-"password hashes. This will affect users who have never logged in under an "
-"Elgg 1.10 or later system. These users will be politely asked to reset their"
-" password."
-msgstr ""
-"Soyez conscients que le processus de mise à niveau vers Elgg 3.0 va "
-"supprimer toutes les valeurs de hachage \"historiques\" des mots de passe. "
-"Ceci va affecter les utilisateurs qui ne se sont jamais connectés sous Elgg "
-"1.10 ou un système ultérieur. Il sera poliment demandé à ces utilisateurs de"
-" réinitialiser leur mot de passe."
-
-#: ../../admin/upgrading.rst:178
-msgid "From 1.x to 2.0"
-msgstr "De 1.x à 2.0"
-
-#: ../../admin/upgrading.rst:181
-msgid "Removed plugins"
-msgstr "Plugins retirés"
-
-#: ../../admin/upgrading.rst:183
-msgid "The following plugins are no longer bundled with Elgg core:"
-msgstr "Les plugins suivants ne sont plus livrés avec le noyau d'Elgg :"
-
-#: ../../admin/upgrading.rst:185
-msgid "categories (https://github.com/elgg/categories)"
-msgstr "categories (https://github.com/elgg/categories)"
-
-#: ../../admin/upgrading.rst:186
-msgid "zaudio (https://github.com/elgg/zaudio)"
-msgstr "zaudio (https://github.com/elgg/zaudio)"
-
-#: ../../admin/upgrading.rst:189
-msgid "IE-specific workarounds have been dropped"
-msgstr ""
-"Les solutions de rechange spécifiques à IE suivantes ont été abandonnées"
-
-#: ../../admin/upgrading.rst:191
-msgid ""
-"Several views (``css/ie``, ``css/ie7``, ``css/ie8``, etc.) as well as "
-"conditional comments have been discarded now that IE10+ browsers are more "
-"standards-compliant. If you need browser support farther back than that, you"
-" will need to find or build a plugin that introduces its own compatibility "
-"layer or polyfills."
-msgstr ""
-"Plusieurs vues (``css/ie``, ``css/ie7``, ``css/ie8``, etc.) ainsi que des "
-"commentaires conditionnels ont été supprimés maintenant que les navigateurs "
-"à partir de IE10 sont plus conformes aux standards. Si vous avez besoin d'un"
-" support des navigateurs plus anciens que cela, vous devrez trouver ou "
-"construire un plugin qui ajoute sa propre couche de compatibilité ou des "
-"polyfills."
-
-#: ../../admin/upgrading.rst:197
-msgid "Update your webserver config"
-msgstr "Mettez à jour la configuration de votre serveur web"
-
-#: ../../admin/upgrading.rst:199
-msgid ""
-"URL paths like ``cache/*`` and ``rewrite.php`` now use the main front "
-"controller script. You **must** remove these rewrite rules from your "
-"webserver config (e.g. ``.htaccess``)."
-msgstr ""
-"Les chemins d'URL tels que ``cache/*`` et ``rewrite.php`` utilisent "
-"désormais le script du contrôleur frontal principal. Vous **devez** "
-"supprimer ces règles de réécriture de al configuration de votre serveur web "
-"(par ex. ``.htaccess``)."
-
-#: ../../admin/upgrading.rst:202
-msgid ""
-"Also remove the rules for paths like ``export/*``; these endpoints have been"
-" removed."
-msgstr ""
-"Supprimez également les règles pour les chemins tels que  ``export/*`` ; ces"
-" points de terminaison ont été supprimés."
-
-#: ../../admin/upgrading.rst:205
-msgid "Settings location"
-msgstr "Emplacement des paramètres"
-
-#: ../../admin/upgrading.rst:207
-msgid ""
-"After upgrading, move your ``settings.php`` file from ``engine/`` to ``elgg-"
-"config/``."
-msgstr ""
-"Après la mise à niveau, déplacez votre fichier ``settings.php`` depuis "
-"``engine/`` vers ``elgg-config/``."
-
-#: ../../admin/upgrading.rst:210
-msgid "From 1.10 to 1.11"
-msgstr "De 1.10 à 1.11"
-
-#: ../../admin/upgrading.rst:213 ../../admin/upgrading.rst:226
-msgid "Breaking changes"
-msgstr "Changements non rétrocompatibles"
-
-#: ../../admin/upgrading.rst:214
-msgid ""
-"In versions 1.9 and 1.10, names and values for metadata and annotations were"
-" not correctly trimmed for whitespace. Elgg 1.11 correctly trims these "
-"strings and updates the database to correct existing strings. If your plugin"
-" uses metadata or annotations with leading or trailing whitespace, you will "
-"need to update the plugin to trim the names and values. This is especially "
-"important if you are using custom SQL clauses or have hard-coded metastring "
-"IDs, since the update might change metastring IDs."
-msgstr ""
-"Dans les versions 1.9 et 1.10, les noms et les valeurs pour les métadonnées "
-"et les annotations n'étaient correctement rognées (trim) pour les espaces "
-"vides. Elgg 1.11 trim correctement ces chaînes de caractères et met à jour "
-"la base de données pour corriger les chaînes existantes. Si votre plugin "
-"utilise des métadonnées ou des annotations, vous allez devoir mettre à jour "
-"le plugin pour rogner les noms et les valeurs. Ceci est particulièrement "
-"important si vous utilisez des clauses SQL spécifiques ou avez des IDs de "
-"valeurs de métadonnées (metastrings) codées en dur, dans la mesure où la "
-"mise à jour peut modifier les IDs de ces valeurs des métadonnées."
-
-#: ../../admin/upgrading.rst:222
-msgid "From 1.8 to 1.9"
-msgstr "De 1.8 à 1.9"
-
-#: ../../admin/upgrading.rst:223
-msgid "Elgg 1.9 is a much lighter upgrade than 1.8 was."
-msgstr ""
-"Elgg 1.9 est une mise à niveau bien plus légère que ne l'était la 1.8."
-
-#: ../../admin/upgrading.rst:227
-msgid ""
-"Plugins and themes written for 1.8 are expected to be compatible with 1.9 "
-"except as it pertains to comments, discussion replies, and notifications. "
-"Please `report any backwards compatibility issues <issues_>`_ besides those "
-"just listed."
-msgstr ""
-"Les plugins et thèmes écrits pour la 1.8 sont censés être compatibles avec "
-"la 1.9 à l'exception de ce qui est relatif aux commentaires, réponses aux "
-"discussions, et notifications. Veuillez `rapporter tout problème de rétro-"
-"compatibilité <issues_>`_ outre celles qui viennent d'être listées."
-
-#: ../../admin/upgrading.rst:232
-msgid "Upgrade steps"
-msgstr "Étapes de la mise à niveau"
-
-#: ../../admin/upgrading.rst:233
-msgid ""
-"There are several data migrations involved, so it is especially important "
-"that you **back up your database and data directory** before performing the "
-"upgrade."
-msgstr ""
-"Plusieurs migrations de données sont en jeu, aussi il est particulièrement "
-"important que vous fassiez une **sauvegarde de votre base de données et de "
-"votre répertoire de données** avant d'effectuer la mise à niveau."
-
-#: ../../admin/upgrading.rst:236
-msgid ""
-"Download the new version and copy these files from the existing 1.8 site:"
-msgstr ""
-"Téléchargez la nouvelle version et copiez ces fichiers depuis le site 1.8 "
-"existant :"
-
-#: ../../admin/upgrading.rst:238
-msgid "``.htaccess``"
-msgstr "``.htaccess``"
-
-#: ../../admin/upgrading.rst:239
-msgid "``engine/settings.php``"
-msgstr "``engine/settings.php``"
-
-#: ../../admin/upgrading.rst:240
-msgid "any 3rd-party plugin folders in the ``mod`` directory"
-msgstr "tout les dossiers de plugins tierce-partie dans le répertoire ``mod``"
-
-#: ../../admin/upgrading.rst:242
-msgid ""
-"Then replace the old installation directory with the new one. This way you "
-"are guaranteed to get rid of obsolete files which might cause problems if "
-"left behind."
-msgstr ""
-"Puis remplacez l'ancien répertoire d'installation par le nouveau. De cette "
-"manière vous vous assurez de vous débarrasser des fichiers obsolètes qui "
-"pourraient causer des problèmes s'ils restaient en place."
-
-#: ../../admin/upgrading.rst:245
-msgid "Follow the basic instructions listed above."
-msgstr "Suivez les instructions basiques listées précédemment."
-
-#: ../../admin/upgrading.rst:247
-msgid ""
-"After you've visited ``upgrade.php``, go to the admin area of your site. You"
-" should see a notification that you have pending upgrades. Click the link in"
-" the notification bar to view and run the upgrades."
-msgstr ""
-"Une fois que vous avez visité ``upgrade.php``, rendez-vous dans la partie "
-"admin de votre site. Vous devriez voir une notifications indiquant que vous "
-"avez des mises à niveau en attente. Cliquez sur le lien dans la notification"
-" pour voir et effectuer les mises à niveau."
-
-#: ../../admin/upgrading.rst:251
-msgid ""
-"The new notifications system delivers messages via a minutely cron handler. "
-"If you haven't done so yet, you will need to :doc:`install and configure "
-"crontab </admin/cron>` on your server. If cron jobs are already configured, "
-"note that the scope of available cron periods may have changed and you may "
-"need to update your current crontab to reflect these changes."
-msgstr ""
-"Le nouveau système de notifications délivre les messages toutes les minutes "
-"via un gestionnaire cron. Si vous n'avez pas encore mis cela en place, vous "
-"allez devoir :doc:`installer et configurer crontab </admin/cron>` sur votre "
-"serveur. Si les tâches cron sont déjà configurées, notez que les périodes de"
-" cron disponibles peuvent avoir changé et que vous pouvez avoir besoin de "
-"mettre à jour votre crontab actuel pour refléter ces changements."
-
-#: ../../admin/upgrading.rst:258
-msgid "Time commitment"
-msgstr "Enagement en temps"
-
-#: ../../admin/upgrading.rst:259
-msgid ""
-"Running all of the listed upgrades `took about 1 hour and 15 minutes`__ on "
-"the Elgg community site which at the time had to migrate:"
-msgstr ""
-"Exécuter l'ensemble de ces mises à niveau a demandé `environ 1 heure et 15 "
-"minutes`__ sur le site de la communauté Elgg qui contenait au moment de la "
-"migration :"
-
-#: ../../admin/upgrading.rst:262
-msgid "~75,000 discussion replies"
-msgstr "~75,000 réponses aux sujets de discussion"
-
-#: ../../admin/upgrading.rst:263
-msgid "~75,000 comments"
-msgstr "~75,000 commentaires"
-
-#: ../../admin/upgrading.rst:264
-msgid "~75,000 data directories"
-msgstr "~75,000 répertoires de données"
-
-#: ../../admin/upgrading.rst:268
-msgid ""
-"You should take this only as a ballpark estimate for your own upgrade. How "
-"long it takes will depend on how large your site is and how powerful your "
-"servers are."
-msgstr ""
-"Vous devriez ne considérer ceci que comme une estimation à la louche pour "
-"votre propre mise à niveau. Le temps que cela prendra va dépendre de la "
-"taille de votre site et de la puissance de vos serveurs."
-
-#: ../../admin/upgrading.rst:272
-msgid "From 1.7 to 1.8"
-msgstr "De 1.7 à 1.8"
-
-#: ../../admin/upgrading.rst:273
-msgid ""
-"Elgg 1.8 is the biggest leap forward in the development of Elgg since "
-"version 1.0. As such, there is more work to update core and plugins than "
-"with previous upgrades."
-msgstr ""
-"Elgg 1.8 est le plus grand pas en avant dans le développement d'Elgg depuis "
-"la version 1.0. De ce fait, il y a plus de travail pour mettre à jour le "
-"noyau et les plugins que pour les mises à niveau précédentes."
-
-#: ../../admin/upgrading.rst:277
-msgid "Updating core"
-msgstr "Mettre à niveau le noyau"
-
-#: ../../admin/upgrading.rst:278
-msgid ""
-"Delete the following core directories (same level as _graphics and engine):"
-msgstr ""
-"Supprimez les répertoire du noyau suivants (même niveau que _graphics et "
-"engine) :"
-
-#: ../../admin/upgrading.rst:280
-msgid "_css"
-msgstr "_css"
-
-#: ../../admin/upgrading.rst:281
-msgid "account"
-msgstr "account"
-
-#: ../../admin/upgrading.rst:282
-msgid "admin"
-msgstr "admin"
-
-#: ../../admin/upgrading.rst:283
-msgid "dashboard"
-msgstr "dashboard"
-
-#: ../../admin/upgrading.rst:284
-msgid "entities"
-msgstr "entities"
-
-#: ../../admin/upgrading.rst:285
-msgid "friends"
-msgstr "friends"
-
-#: ../../admin/upgrading.rst:286
-msgid "search"
-msgstr "search"
-
-#: ../../admin/upgrading.rst:287
-msgid "settings"
-msgstr "settings"
-
-#: ../../admin/upgrading.rst:288
-msgid "simplecache"
-msgstr "simplecache"
-
-#: ../../admin/upgrading.rst:289
-msgid "views"
-msgstr "views"
-
-#: ../../admin/upgrading.rst:293
-msgid ""
-"If you do not delete these directories before an upgrade, you will have "
-"problems!"
-msgstr ""
-"Si vous ne supprimez pas ces répertoires avant une mise à niveau, vous allez"
-" avoir des ennuis !"
+"Vérifiez la documentation Elgg qui correspond à la version d'Elgg vers "
+"laquelle vous souhaitez effectuer la mise à niveau, en changeant la version "
+"de la documentation dans le coin inférieur gauche de `Documentation de mise "
+"à niveau <upgrading-docs_>`"
 
 #: ../../admin/uservalidation.rst:2
 msgid "User validation"

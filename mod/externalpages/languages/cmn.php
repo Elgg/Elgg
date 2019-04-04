@@ -1,11 +1,12 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "站臺頁面",
-	'admin:appearance:expages' => "站臺頁面",
+	'admin:configure_utilities:expages' => "Site Pages",
+	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "關於",
 	'expages:terms' => "條款",
 	'expages:privacy' => "隱私",
@@ -18,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "您的頁面已成功更新。",
 	'expages:error' => "無法儲存這個頁面。",
-];
+);

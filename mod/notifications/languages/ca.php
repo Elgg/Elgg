@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Totes les teves amistats',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Rebre notificacions quan es modifiquin els teus continguts',
 	'notifications:subscriptions:personal:title' => 'Notificacions personals',
 
-	'notifications:subscriptions:friends:title' => 'Contactes',
-	'notifications:subscriptions:friends:description' => 'Això és una col·lecció automàtica de les teves amigues. Per rebre actualitzacions, selecciona-ho a sota. Això afectarà les usuàries que corresponguin amb el panell principal de notificacions al final de la pàgina.',
-	'notifications:subscriptions:collections:edit' => 'Modifica les opcions de les amistats',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Notificacions',
 	'notifications:subscriptions:changesettings:groups' => 'Notificacions de grup',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'La teva configuració de notificacions s\'ha desat correctament.',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

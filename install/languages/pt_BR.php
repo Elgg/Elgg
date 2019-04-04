@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'install:title' => 'Instalação do Elgg',
 	'install:welcome' => 'Bem-vindo',
 	'install:requirements' => 'Verificando requisitos',
@@ -11,11 +11,11 @@ return [
 	'install:next' => 'Proximo',
 	'install:refresh' => 'Atualiza',
 
-	'install:welcome:instructions' => "A instalacao do Elgg possui 6 fases simples e ler esta mensagem de boas vindas e o primeiro passo!
+	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
-Se você ainda não fez, leia através da instalação as instrucoes incluidas com Elgg (ou clique no link de instrucoes no final da pagina).
+If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
 
-Se você está pronto para prosseguir, clique no botão PROXIMO.",
+If you are ready to proceed, click the Next button.",
 	'install:requirements:instructions:success' => "Seu servidor passou na verificacao de requisitos.",
 	'install:requirements:instructions:failure' => "Seu servidor falhou na verificacao de requisitos. Depois que voce corrigir as situacoes apontadas abaixo, atualize a pagina. Verifique os links de solucao de problemas <i>(troubleshooting links)</i> no final da pagina se voce necessitar de ajuda adicional.",
 	'install:requirements:instructions:warning' => "Seu servidor passou na verificacao de requisitos, mas existe pelo menos um aviso. Recomendamos que verifique a pagina de de solucao de problemas <i>(troubleshooting page)</i> para mais detalhes.",
@@ -25,11 +25,11 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:require:settings' => 'Arquivos de configuração',
 	'install:require:database' => 'Banco de dados',
 
-	'install:check:root' => 'Seu servidor web nao possui permissao para criar o arquivo <b>.htaccess</b> no diretorio raiz do Elgg. Voce tem duas opcoes:
+	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
 
-		1. Altere as permissoes do diretorio raiz
+1. Change the permissions on the root directory
 
-		2. Copie o arquivo htaccess_dist para \'.htaccess',
+2. Copy the file install/config/htaccess.dist to .htaccess',
 
 	'install:check:php:version' => 'O Elgg necessita que esteja instalado o PHP %s ou superior. Este servidor esta usando a versao %s.',
 	'install:check:php:extension' => 'O Elgg necessita a extensao PHP %s ativada.',
@@ -42,9 +42,9 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 
 	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Change the permissions on the elgg-config directory of your Elgg installation
+1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Um arquivo de configuração existe no diretorio <b>engine</b>, mas o servidor web nao pode executar a leitura. Voce pode apagar o arquivo ou alterar as permissoes de leitura dele.',
 
 	'install:check:php:success' => "Seu servidor de PHP satisfaz todas as necessidades do Elgg.",
@@ -109,6 +109,8 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 
 	'install:complete:instructions' => 'Seu site Elgg esta agora pronto para ser usado. Clique no botao abaixo para entrar no seu site.',
 	'install:complete:gotosite' => 'Ir para o  site',
+	'install:complete:admin_notice' => 'Welcome to your Elgg site! For more options, see the %s.',
+	'install:complete:admin_notice:link_text' => 'settings pages',
 
 	'InstallationException:UnknownStep' => '%s é uma etapa desconhecida na instalação.',
 	'InstallationException:MissingLibrary' => 'Nao foi possivel acessar %s',
@@ -120,6 +122,7 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 
 	'install:error:htaccess' => 'Não foi possivel criar o arquivo <b>.htaccess</b>',
 	'install:error:settings' => 'Não foi possivel criar o arquivo de configurações <i>(settings file)</i>',
+	'install:error:settings_mismatch' => 'The settings file value for "%s" does not match the given $params.',
 	'install:error:databasesettings' => 'Não foi possivel conectar ao banco de dados com estas configurações.',
 	'install:error:database_prefix' => 'Caracteres invalidos no prefixo da base de dados (database prefix)',
 	'install:error:oldmysql2' => 'MySQL deve ser da versao 5.5.3 ou superior. Seu servidor está usando %s.',
@@ -143,8 +146,8 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:error:rewrite:nginx' => 'Nos achamos que seu servidor está funcionando em um servidor Nginx <i>(Nginx web server)</i>.',
 	'install:error:rewrite:lighttpd' => 'Nos achamos que seu servidor está funcionando em um servidor Lighttpd <i>(Lighttpd web server)</i>.',
 	'install:error:rewrite:iis' => 'Nos achamos que seu servidor está funcionando em um servidor IIS <i>(IIS web server)</i>.',
-	'install:error:rewrite:allowoverride' => "O teste de escrita falhou e a causa mais provavel foi que <b>AllowOverride</b> nao esta definida para todos diretorios do Elgg. Isto previne o Apache de processar o arquivo <b>.htaccess</b> que contem as regras de redirecionamento (rewrite rules).
-				\n\nUm causa menos provavel seria se o Apache foi configurado com um <b>alias</b> para seu diretorio Elgg e voce precisa definir o <b>RewriteBase</b> no seu <b>.htaccess</b>. Existem instrucoes complementares no arquivo <b>.htaccess</b> no seu diretorio do Elgg.",
+	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
+\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
 	'install:error:rewrite:htaccess:write_permission' => 'Seu servidor web nao possui permissao para criar o arquivo <b>.htaccess</b> no diretorio do Elgg. Voce precisa copiar manualmente o arquivo <b>htaccess_dist</b> para <b>.htaccess</b> ou alterar as permissoes no diretorio.',
 	'install:error:rewrite:htaccess:read_permission' => 'Existe um arquivo <b>.htaccess</b> no diretorio do Elgg, mas seu servidor web nao possui permissao para ler este arquivo.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Existe um arquivo <b>.htaccess</b> no diretorio do Elgg que nao foi criado pelo Elgg.  Por favor, remova o arquivo.',
@@ -153,8 +156,9 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:error:rewrite:altserver' => 'O teste com as regras de redirecionamento (rewrite rules) falhou. Voce precisa configurar seu servidor web com as regras de escrita do Elgg e tentar novamente.',
 	'install:error:rewrite:unknown' => 'Não foi possivel identificar qual o tipo de servidor web esta funcionando no seu servidor e ocorreu uma falha com as regras de redirecionamento (rewrite rules).  Não nos é possivel fornecer qualquer tipo de conselho. Por favor verifique o link de solução de problemas <i>(troubleshooting link)</i>.',
 	'install:warning:rewrite:unknown' => 'Seu servidor nao suporta testes automaticos das regras de redirecionamento (rewrite rules). Você pode continuar a instalação.  Contudo voce pode ter problemas com seu site. Voce pode realizar os testes manualmente com as regras de escrita clicando neste link: <a href="%s" target="_blank">teste</a>. Voce visualizará a palavra SUCESSO se as regras estiverem funcionando.',
-	
+	'install:error:wwwroot' => '%s is not a valid URL',
+
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'Um erro irrecuperavel ocorreu e foi registrado. se voce for o administrador do site verifique seus arquivos de configuracoes, ou entre em contato com o administrador do site com as seguintes informacoes:',
 	'DatabaseException:WrongCredentials' => "Elgg nao pode se conectar ao banco de dados usando as credenciais informadas.  Verifique seu arquivo de configuracoes.",
-];
+);
