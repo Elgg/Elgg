@@ -68,7 +68,7 @@ Se siete pronti per procedere, cliccate sul pulsante Successivo.",
 	'install:database:help:dbprefix' => "Il prefisso preposto a tutte le tabelle di Elgg (normalmente elgg_)",
 	'install:database:help:timezone' => "Il fuso orario predefinito in cui il sito opera",
 
-	'install:settings:instructions' => 'Sono necessarie alcune informazioni sul sito per configurare Elgg. Se non è stata creata una <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">cartella dati</a> per Elgg, dovete farlo ora.',
+	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => 'Nome del sito',
 	'install:settings:label:siteemail' => 'Indirizzo dell\'email del sito',

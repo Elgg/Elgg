@@ -1147,7 +1147,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'installation:view' => "Gebe den Ansichtsmodus an, der für Deine Community-Seite verwendet werden soll. Wenn Du nicht sicher bist was Du eingeben sollst, lass das Textfeld leer oder verwende \"default\", um den Standardmodus zu verwenden:",
 
 	'installation:siteemail' => "Email-Adresse Deiner Community-Seite (wird vom System verwendet, um Benachrichtigungen zu versenden)",
-	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
+	'installation:siteemail:help' => "Warnung: verwende keine Email-Adresse, die Du bereits anderweitig einsetzt oder einsetzen willst, beispielweise bei externen Services wie Ticketsystemen oder anderen ähnlichen Systemen, die eingehende Emails analysieren oder anderweitig verarbeiten. Dies könnte dazu führen, dass unauthorisierte Personen an private Daten von Dir oder anderen Benutzern oder Sicherheits-Token gelangen könnten. Idealerweise verwendest Du eine Email-Adresse, die Du auschließlich als Email-Adresse dieser Community-Seite einsetzen kannst.",
 	'installation:default_limit' => "Standardmäßige Anzahl der Einträge pro Seite",
 
 	'admin:site:access:warning' => "Dies ist der Zugangslevel, der Benutzern standardmäßig vorgeschlagen wird, wenn sie neue Inhalte erstellen. Eine Änderung hier verändert nicht den Zugangslevel der Inhalte selbst.",
