@@ -64,5 +64,5 @@ if (count($activated_guids) === 1) {
 	if (strpos($url, '#')) {
 		$url = substr(0, strpos($url, '#'));
 	}
-	forward($url);
+	forward(elgg_normalize_site_url($url));
 }

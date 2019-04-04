@@ -34,7 +34,7 @@ if (!$entity->delete()) {
 }
 
 // determine forward URL
-$forward_url = get_input('forward_url');
+$forward_url = elgg_normalize_site_url(get_input('forward_url'));
 if (!$forward_url) {
 	$forward_url = REFERRER;
 	$referrer_url = !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';

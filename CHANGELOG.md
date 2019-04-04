@@ -1513,6 +1513,18 @@ change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
+<a name="1.12.18"></a>
+### 1.12.18  (2019-04-03)
+
+#### Contributors
+
+* Jyoti Raval (1)
+* Wouter van Os (1)
+
+#### Bug Fixes
+
+* **core:** revert original libxml_use_internal_errors value after use ([bc30e941](https://github.com/Elgg/Elgg/commit/bc30e941071b25c42101c8843b4918a171044027))
+
 <a name="1.12.17"></a>
 ### 1.12.17  (2017-09-21)
 
