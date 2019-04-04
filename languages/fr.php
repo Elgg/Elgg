@@ -1145,7 +1145,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.
 	'installation:view' => "Entrez le nom de la vue qui sera utilisée par défaut pour l'affichage du site, ou laissez vide pour la vue par défaut (en cas de doute, laissez la valeur par défaut) :",
 
 	'installation:siteemail' => "L'adresse email du site (utilisée lors de l'envoi d'emails par le système)",
-	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
+	'installation:siteemail:help' => "Attention : N'utilisez pas une adresse email que vous pourriez avoir associé avec un autre service tiers, tels qu'un système de gestions de tickets, qui effectue des analyses des emails entrants, car cela peut vous exposer vous et vos utilisateurs à la fuite non intentionnelle de données privées et de jetons de sécurité. Dans l'idéal, créez une nouvelle adresse email dédiée qui ne va servir que pour ce site.",
 	'installation:default_limit' => "Nombre d'éléments par page par défaut",
 
 	'admin:site:access:warning' => "Le niveau d'accès suggéré aux utilisateurs lorsqu'ils créent un nouveau contenu. Modifier ce réglage n'affectera que les publications créées dans le futur.",

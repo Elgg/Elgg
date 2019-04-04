@@ -68,7 +68,7 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:database:help:dbprefix' => "Kaikille Elggin tietokantatauluille annettava etuliite (yleensä elgg_)",
 	'install:database:help:timezone' => "Aikavyöhyke, jossa sivustoa tullaan käyttämään.",
 
-	'install:settings:instructions' => 'Elggin konfiguroimiseen tarvitaan vielä hieman lisätietoja. Jos et ole vielä luonut Elggille <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">datahakemistoa</a>, tee se nyt.',
+	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => 'Sivuston nimi',
 	'install:settings:label:siteemail' => 'Sivuston sähköpostiosoite',
