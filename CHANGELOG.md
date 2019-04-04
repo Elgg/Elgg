@@ -1,3 +1,19 @@
+<a name="2.3.11"></a>
+### 2.3.11  (2019-04-04)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Ismayil Khayredinov (1)
+
+#### Bug Fixes
+
+* **gatekeeper:** more consistency in resource gatekeepers ([60a045a3](https://github.com/Elgg/Elgg/commit/60a045a3b72734321413830c8375e4594622b9e2))
+* **livesearch:** prevent PHP warning in switch statement ([44e671d0](https://github.com/Elgg/Elgg/commit/44e671d053b2f69b59876d942c9aeb340048337e))
+* **notifications:** fix faulty subscription list mutations ([0edb38d1](https://github.com/Elgg/Elgg/commit/0edb38d1a86c01e9b0c05911fcd7d9421dc33822))
+* **walled_garden:** allow access to webapp manifest.json ([73c36a13](https://github.com/Elgg/Elgg/commit/73c36a139c2271b5330fed60964e6a2522863c20))
+
+
 <a name="2.3.10"></a>
 ### 2.3.10  (2018-12-21)
 
