@@ -68,7 +68,7 @@ Pokud jste připraven/a začít, klikněte na tlačítko \"Další\".",
 	'install:database:help:dbprefix' => "Předpona přidaná ke všem tabulkám projektu Elgg (obvykle elgg_)",
 	'install:database:help:timezone' => "Výchozí časová zóna ve které budou stránky provozovány",
 
-	'install:settings:instructions' => 'Pro nastavení projektu Elgg potřebujeme pár informací o nových stránkách. Pokud jste pro Elgg ještě <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">nevytvořil/a datový adresář</a> , je potřeba vytvořit ho nyní.',
+	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => 'Jméno stránek',
 	'install:settings:label:siteemail' => 'E-mailová adresa stránek',

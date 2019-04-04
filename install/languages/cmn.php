@@ -68,7 +68,7 @@ return [
 	'install:database:help:dbprefix' => "賦予所有 Elgg 資料表的前綴 (通常是 elgg_)",
 	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
-	'install:settings:instructions' => '當我們組配 Elgg 時，需要一些站臺的相關資訊。如果還沒建立用於 Elgg 的<a href=http://docs.elgg.org/wiki/Data_directory target=_blank>資料目錄</a>，您現在就需要這樣做。',
+	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
 	'install:settings:label:sitename' => '站臺名稱',
 	'install:settings:label:siteemail' => '站臺電子郵件地址',
