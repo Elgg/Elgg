@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-21 15:47+0100\n"
+"POT-Creation-Date: 2019-04-04 11:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2830,7 +2830,7 @@ msgid "``elgg_in_context($context)`` Checks if you're in a context (this checks 
 msgstr ""
 
 #: ../../guides/helpers.rst:37
-#: ../../guides/hooks-list.rst:834
+#: ../../guides/hooks-list.rst:837
 #: ../../guides/plugins.rst:2
 msgid "Plugins"
 msgstr ""
@@ -2905,7 +2905,7 @@ msgid "Filter the output for the diagnostics report download."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:25
-#: ../../guides/hooks-list.rst:916
+#: ../../guides/hooks-list.rst:919
 msgid "**search_types, get_types**"
 msgstr ""
 
@@ -3563,11 +3563,11 @@ msgid "Can be used to prevent a notification event from sending **subscription**
 msgstr ""
 
 #: ../../guides/hooks-list.rst:342
-#: ../../guides/hooks-list.rst:353
-#: ../../guides/hooks-list.rst:373
-#: ../../guides/hooks-list.rst:428
-#: ../../guides/hooks-list.rst:451
-#: ../../guides/hooks-list.rst:578
+#: ../../guides/hooks-list.rst:356
+#: ../../guides/hooks-list.rst:376
+#: ../../guides/hooks-list.rst:431
+#: ../../guides/hooks-list.rst:454
+#: ../../guides/hooks-list.rst:581
 msgid "``$params`` array includes:"
 msgstr ""
 
@@ -3579,7 +3579,7 @@ msgstr ""
 msgid "``action`` - action that triggered the notification event. E.g. corresponds to ``publish`` when ``elgg_trigger_event('publish', 'object', $object)`` is called"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:359
+#: ../../guides/hooks-list.rst:362
 msgid "**get, subscriptions**"
 msgstr ""
 
@@ -3587,395 +3587,399 @@ msgstr ""
 msgid "Filters subscribers of the notification event. Applies to **subscriptions** and **instant** notifications. In case of a subscription event, by default, the subscribers list consists of the users subscribed to the container entity of the event object. In case of an instant notification event, the subscribers list consists of the users passed as recipients to ``notify_user()``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:355
-#: ../../guides/hooks-list.rst:375
-#: ../../guides/hooks-list.rst:386
-#: ../../guides/hooks-list.rst:403
-#: ../../guides/hooks-list.rst:453
+#: ../../guides/hooks-list.rst:353
+msgid "**IMPORTANT** Always validate the notification event, object and/or action types before adding any new recipients to ensure that you do not accidentally dispatch notifications to unintended recipients. Consider a situation, where a mentions plugin sends out an instant notification to a mentioned user - any hook acting on a subject or an object without validating an event or action type (e.g. including an owner of the original wire thread) might end up sending notifications to wrong users."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:358
+#: ../../guides/hooks-list.rst:378
+#: ../../guides/hooks-list.rst:389
+#: ../../guides/hooks-list.rst:406
+#: ../../guides/hooks-list.rst:456
 msgid "``event`` - ``\\Elgg\\Notifications\\NotificationEvent`` instance that describes the notification event"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:356
-#: ../../guides/hooks-list.rst:393
-#: ../../guides/hooks-list.rst:410
+#: ../../guides/hooks-list.rst:359
+#: ../../guides/hooks-list.rst:396
+#: ../../guides/hooks-list.rst:413
 msgid "``origin`` - ``subscriptions_service`` or ``instant_notifications``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:357
+#: ../../guides/hooks-list.rst:360
 msgid "``methods_override`` - delivery method preference for instant notifications"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:359
+#: ../../guides/hooks-list.rst:362
 msgid "Handlers must return an array in the form:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:376
+#: ../../guides/hooks-list.rst:379
 msgid "**send:before, notifications**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:370
+#: ../../guides/hooks-list.rst:373
 msgid "Triggered before the notification event queue is processed. Can be used to terminate the notification event. Applies to **subscriptions** and **instant** notifications."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:376
-#: ../../guides/hooks-list.rst:454
+#: ../../guides/hooks-list.rst:379
+#: ../../guides/hooks-list.rst:457
 msgid "``subscriptions`` - a list of subscriptions. See ``'get', 'subscriptions'`` hook for details"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:393
+#: ../../guides/hooks-list.rst:396
 msgid "**prepare, notification**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:379
+#: ../../guides/hooks-list.rst:382
 msgid "A high level hook that can be used to alter an instance of ``\\Elgg\\Notifications\\Notification`` before it is sent to the user. Applies to **subscriptions** and **instant** notifications. This hook is triggered before a more granular ``'prepare', 'notification:<action>:<entity_type>:<entity_subtype>'`` and after ``'send:before', 'notifications``. Hook handler should return an altered notification object."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:384
-msgid "``$params`` may vary based on the notification type and may include:"
-msgstr ""
-
 #: ../../guides/hooks-list.rst:387
-#: ../../guides/hooks-list.rst:404
-msgid "``object`` - object of the notification ``event``. Can be ``null`` for instant notifications"
-msgstr ""
-
-#: ../../guides/hooks-list.rst:388
-#: ../../guides/hooks-list.rst:405
-msgid "``action`` - action that triggered the notification ``event``. May default to ``notify_user`` for instant notifications"
-msgstr ""
-
-#: ../../guides/hooks-list.rst:389
-#: ../../guides/hooks-list.rst:406
-msgid "``method`` - delivery method (e.g. ``email``, ``site``)"
+msgid "``$params`` may vary based on the notification type and may include:"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:390
 #: ../../guides/hooks-list.rst:407
-msgid "``sender`` - sender"
+msgid "``object`` - object of the notification ``event``. Can be ``null`` for instant notifications"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:391
 #: ../../guides/hooks-list.rst:408
-msgid "``recipient`` - recipient"
+msgid "``action`` - action that triggered the notification ``event``. May default to ``notify_user`` for instant notifications"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:392
 #: ../../guides/hooks-list.rst:409
+msgid "``method`` - delivery method (e.g. ``email``, ``site``)"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:393
+#: ../../guides/hooks-list.rst:410
+msgid "``sender`` - sender"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:394
+#: ../../guides/hooks-list.rst:411
+msgid "``recipient`` - recipient"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:395
+#: ../../guides/hooks-list.rst:412
 msgid "``language`` - language of the notification (recipient's language)"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:410
+#: ../../guides/hooks-list.rst:413
 msgid "**prepare, notification:<action>:<entity_type>:<entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:396
+#: ../../guides/hooks-list.rst:399
 msgid "A granular hook that can be used to filter a notification ``\\Elgg\\Notifications\\Notification`` before it is sent to the user. Applies to **subscriptions** and **instant** notifications. In case of instant notifications that have not received an object, the hook will be called as ``'prepare', 'notification:<action>'``. In case of instant notifications that have not received an action name, it will default to ``notify_user``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:401
+#: ../../guides/hooks-list.rst:404
 msgid "``$params`` include:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:421
+#: ../../guides/hooks-list.rst:424
 msgid "**format, notification:<method>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:413
+#: ../../guides/hooks-list.rst:416
 msgid "This hook can be used to format a notification before it is passed to the ``'send', 'notification:<method>'`` hook. Applies to **subscriptions** and **instant** notifications. The hook handler should return an instance of ``\\Elgg\\Notifications\\Notification``. The hook does not receive any ``$params``. Some of the use cases include:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:419
+#: ../../guides/hooks-list.rst:422
 msgid "Strip tags from notification title and body for plaintext email notifications"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:420
+#: ../../guides/hooks-list.rst:423
 msgid "Inline HTML styles for HTML email notifications"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:421
+#: ../../guides/hooks-list.rst:424
 msgid "Wrap notification in a template, add signature etc."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:430
+#: ../../guides/hooks-list.rst:433
 msgid "**send, notification:<method>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:424
+#: ../../guides/hooks-list.rst:427
 msgid "Delivers a notification. Applies to **subscriptions** and **instant** notifications. The handler must return ``true`` or ``false`` indicating the success of the delivery."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:430
+#: ../../guides/hooks-list.rst:433
 msgid "``notification`` - a notification object ``\\Elgg\\Notifications\\Notification``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:445
+#: ../../guides/hooks-list.rst:448
 msgid "**email, system**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:433
+#: ../../guides/hooks-list.rst:436
 msgid "Triggered by ``elgg_send_email()``. Applies to **subscriptions** and **instant** notifications with ``email`` method. This hook can be used to alter email parameters (subject, body, headers etc) - the handler should return an array of altered parameters. This hook can also be used to implement a custom email transport (in place of Elgg's default plaintext ``\\Zend\\Mail\\Transport\\Sendmail``) - the handler must return ``true`` or ``false`` to indicate whether the email was sent using a custom transport."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:438
+#: ../../guides/hooks-list.rst:441
 msgid "``$params`` contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:440
+#: ../../guides/hooks-list.rst:443
 msgid "``to`` - email address or string in the form ``Name <name@example.org>`` of the recipient"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:441
+#: ../../guides/hooks-list.rst:444
 msgid "``from`` - email address or string in the form ``Name <name@example.org>`` of the sender"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:442
+#: ../../guides/hooks-list.rst:445
 msgid "``subject`` - subject line of the email"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:443
+#: ../../guides/hooks-list.rst:446
 msgid "``body`` - body of the email"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:444
+#: ../../guides/hooks-list.rst:447
 msgid "``headers`` - an array of headers"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:445
+#: ../../guides/hooks-list.rst:448
 msgid "``params`` - other parameters inherited from the notification object or passed directly to ``elgg_send_email()``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:456
+#: ../../guides/hooks-list.rst:459
 msgid "**send:after, notifications**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:448
+#: ../../guides/hooks-list.rst:451
 msgid "Triggered after all notifications in the queue for the notifications event have been processed. Applies to **subscriptions** and **instant** notifications."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:455
+#: ../../guides/hooks-list.rst:458
 msgid "``deliveries`` - a matrix of delivery statuses by user for each delivery method"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:459
+#: ../../guides/hooks-list.rst:462
 #: ../../guides/routing.rst:2
 msgid "Routing"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:466
+#: ../../guides/hooks-list.rst:469
 msgid "**route, <identifier>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:462
+#: ../../guides/hooks-list.rst:465
 msgid "Allows applying logic or returning a response before the page handler is called. See :doc:`routing` for details. Note that plugins using this hook to rewrite paths, will not be able to filter the response object by its final path and should either switch to ``route:rewrite, <identifier>`` hook or use ``response, path:<path>`` hook for the original path."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:469
+#: ../../guides/hooks-list.rst:472
 msgid "**route:rewrite, <identifier>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:469
+#: ../../guides/hooks-list.rst:472
 msgid "Allows altering the site-relative URL path. See :doc:`routing` for details."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:476
+#: ../../guides/hooks-list.rst:479
 msgid "**response, path:<path>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:472
+#: ../../guides/hooks-list.rst:475
 msgid "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to the client. This hook type will only be used if the path did not start with \"action/\" or \"ajax/\". This hook can be used to modify response content, status code, forward URL, or set additional response headers. Note that the ``<path>`` value is parsed from the request URL, therefore plugins using the ``route`` hook should use the original ``<path>`` to filter the response, or switch to using the ``route:rewrite`` hook."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:481
+#: ../../guides/hooks-list.rst:484
 msgid "**ajax_response, path:<path>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:479
+#: ../../guides/hooks-list.rst:482
 msgid "Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will only be used if the path did not start with \"action/\" or \"ajax/\"."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:486
+#: ../../guides/hooks-list.rst:489
 #: ../../guides/plugins/plugin-skeleton.rst:142
 #: ../../guides/views.rst:2
 msgid "Views"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:489
+#: ../../guides/hooks-list.rst:492
 msgid "**view_vars, <view_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:489
+#: ../../guides/hooks-list.rst:492
 msgid "Filters the ``$vars`` array passed to the view"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:492
+#: ../../guides/hooks-list.rst:495
 msgid "**view, <view_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:492
+#: ../../guides/hooks-list.rst:495
 msgid "Filters the returned content of the view"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:495
+#: ../../guides/hooks-list.rst:498
 msgid "**layout, page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:495
+#: ../../guides/hooks-list.rst:498
 msgid "In ``elgg_view_layout()``, filters the layout name"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:498
+#: ../../guides/hooks-list.rst:501
 msgid "**shell, page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:498
+#: ../../guides/hooks-list.rst:501
 msgid "In ``elgg_view_page()``, filters the page shell name"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:506
+#: ../../guides/hooks-list.rst:509
 msgid "**head, page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:501
+#: ../../guides/hooks-list.rst:504
 msgid "In ``elgg_view_page()``, filters ``$vars['head']`` Return value contains an array with ``title``, ``metas`` and ``links`` keys, where ``metas`` is an array of elements to be formatted as ``<meta>`` head tags, and ``links`` is an array of elements to be formatted as ``<link>`` head tags. Each meta and link element contains a set of key/value pairs that are formatted into html tag attributes, e.g."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:536
+#: ../../guides/hooks-list.rst:539
 msgid "**ajax_response, view:<view>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:536
+#: ../../guides/hooks-list.rst:539
 msgid "Filters ``ajax/view/`` responses before they're sent back to the ``elgg/Ajax`` module."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:539
+#: ../../guides/hooks-list.rst:542
 msgid "**ajax_response, form:<action>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:539
+#: ../../guides/hooks-list.rst:542
 msgid "Filters ``ajax/form/`` responses before they're sent back to the ``elgg/Ajax`` module."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:544
+#: ../../guides/hooks-list.rst:547
 msgid "**response, view:<view_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:542
+#: ../../guides/hooks-list.rst:545
 msgid "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to the client. Applies to request to ``/ajax/view/<view_name>``. This hook can be used to modify response content, status code, forward URL, or set additional response headers."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:549
+#: ../../guides/hooks-list.rst:552
 msgid "**response, form:<form_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:547
+#: ../../guides/hooks-list.rst:550
 msgid "Filter an instance of ``\\Elgg\\Http\\ResponseBuilder`` before it is sent to the client. Applies to request to ``/ajax/form/<form_name>``. This hook can be used to modify response content, status code, forward URL, or set additional response headers."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:555
+#: ../../guides/hooks-list.rst:558
 msgid "**table_columns:call, <name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:552
+#: ../../guides/hooks-list.rst:555
 msgid "When the method ``elgg()->table_columns->$name()`` is called, this hook is called to allow plugins to override or provide an implementation. Handlers receive the method arguments via ``$params['arguments']`` and should return an instance of ``Elgg\\Views\\TableColumn`` if they wish to specify the column directly."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:558
+#: ../../guides/hooks-list.rst:561
 msgid "Files"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:562
+#: ../../guides/hooks-list.rst:565
 msgid "**mime_type, file**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:561
+#: ../../guides/hooks-list.rst:564
 msgid "Return the mimetype for the filename ``$params['filename']`` with original filename ``$params['original_filename']`` and with the default detected mimetype of ``$params['default']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:569
+#: ../../guides/hooks-list.rst:572
 msgid "**simple_type, file**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:565
+#: ../../guides/hooks-list.rst:568
 msgid "In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']`` (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store ``simpletype`` metadata on file entities and make use of it when serving icons and constructing ``ege*`` filters and menus."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:581
+#: ../../guides/hooks-list.rst:584
 msgid "**upload, file**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:572
+#: ../../guides/hooks-list.rst:575
 msgid "Allows plugins to implement custom logic for moving an uploaded file into an instance of ``ElggFile``. The handler must return ``true`` to indicate that the uploaded file was moved. The handler must return ``false`` to indicate that the uploaded file could not be moved. Other returns will indicate that ``ElggFile::acceptUploadedFile`` should proceed with the default upload logic."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:580
+#: ../../guides/hooks-list.rst:583
 msgid "``file`` - instance of ``ElggFile`` to write to"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:581
+#: ../../guides/hooks-list.rst:584
 msgid "``upload`` - instance of Symfony's ``UploadedFile``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:586
+#: ../../guides/hooks-list.rst:589
 msgid "Other"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:589
+#: ../../guides/hooks-list.rst:592
 msgid "**config, comments_per_page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:589
+#: ../../guides/hooks-list.rst:592
 msgid "Filters the number of comments displayed per page. Default is 25."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:596
+#: ../../guides/hooks-list.rst:599
 msgid "**default, access**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:592
+#: ../../guides/hooks-list.rst:595
 msgid "In get_default_access(), this hook filters the return value, so it can be used to alter the default value in the input/access view. For core plugins, the value \"input_params\" has the keys \"entity\" (ElggEntity|false), \"entity_type\" (string), \"entity_subtype\" (string), \"container_guid\" (int) are provided. An empty entity value generally means the form is to create a new object."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:600
+#: ../../guides/hooks-list.rst:603
 msgid "**entity:icon:sizes, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:599
+#: ../../guides/hooks-list.rst:602
 msgid "Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes. ``entity_subtype`` will be passed with the ``$params`` array to the callback."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:617
+#: ../../guides/hooks-list.rst:620
 msgid "**entity:<icon_type>:sizes, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:603
+#: ../../guides/hooks-list.rst:606
 msgid "Allows filtering sizes for custom icon types, see ``entity:icon:sizes, <entity_type>``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:605
+#: ../../guides/hooks-list.rst:608
 msgid "The hook must return an associative array where keys are the names of the icon sizes (e.g. \"large\"), and the values are arrays with the following keys:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:608
+#: ../../guides/hooks-list.rst:611
 msgid "``w`` - Width of the image in pixels"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:609
+#: ../../guides/hooks-list.rst:612
 msgid "``h`` - Height of the image in pixels"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:610
+#: ../../guides/hooks-list.rst:613
 msgid "``square`` - Should the aspect ratio be a square (true/false)"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:611
+#: ../../guides/hooks-list.rst:614
 msgid "``upscale`` - Should the image be upscaled in case it is smaller than the given width and height (true/false)"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:614
+#: ../../guides/hooks-list.rst:617
 msgid "If the configuration array for an image size is empty, the image will be saved as an exact copy of the source without resizing or cropping."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:617
+#: ../../guides/hooks-list.rst:620
 #: ../../guides/i18n.rst:46
 #: ../../guides/notifications.rst:24
 #: ../../guides/notifications.rst:186
@@ -3984,484 +3988,484 @@ msgstr ""
 msgid "Example:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:649
+#: ../../guides/hooks-list.rst:652
 msgid "**entity:icon:url, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:637
+#: ../../guides/hooks-list.rst:640
 msgid "Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should return URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``. Following parameters are available through the ``$params`` array:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:641
+#: ../../guides/hooks-list.rst:644
 msgid "entity"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:642
+#: ../../guides/hooks-list.rst:645
 msgid "Entity for which icon url is requested."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:643
+#: ../../guides/hooks-list.rst:646
 msgid "viewtype"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:644
+#: ../../guides/hooks-list.rst:647
 msgid "The type of :ref:`view <guides/views#listing-entities>` e.g. ``'default'`` or ``'json'``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:646
+#: ../../guides/hooks-list.rst:649
 msgid "size"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:646
+#: ../../guides/hooks-list.rst:649
 msgid "Size requested, see :ref:`entity icons <guides/database#entity-icons>` for possible values."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:648
+#: ../../guides/hooks-list.rst:651
 msgid "Example on how one could default to a Gravatar icon for users that have not yet uploaded an avatar:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:683
+#: ../../guides/hooks-list.rst:686
 msgid "**entity:<icon_type>:url, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:683
+#: ../../guides/hooks-list.rst:686
 msgid "Allows filtering URLs for custom icon types, see ``entity:icon:url, <entity_type>``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:688
+#: ../../guides/hooks-list.rst:691
 msgid "**entity:icon:file, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:686
+#: ../../guides/hooks-list.rst:689
 msgid "Triggered by ``ElggEntity::getIcon()`` and allows plugins to provide an alternative ``ElggIcon`` object that points to a custom location of the icon on filestore. The handler must return an instance of ``ElggIcon`` or an exception will be thrown."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:691
+#: ../../guides/hooks-list.rst:694
 msgid "**entity:<icon_type>:file, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:691
+#: ../../guides/hooks-list.rst:694
 msgid "Allows filtering icon file object for custom icon types, see ``entity:icon:file, <entity_type>``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:703
+#: ../../guides/hooks-list.rst:706
 msgid "**entity:<icon_type>:prepare, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:694
+#: ../../guides/hooks-list.rst:697
 msgid "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to prepare an image from uploaded/linked file. This hook can be used to e.g. rotate the image before it is resized/cropped, or it can be used to extract an image frame if the uploaded file is a video. The handler must return an instance of ``ElggFile`` with a `simpletype` that resolves to `image`. The ``$return`` value passed to the hook is an instance of ``ElggFile`` that points to a temporary copy of the uploaded/linked file."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:700
+#: ../../guides/hooks-list.rst:703
 msgid "The ``$params`` array contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:702
-#: ../../guides/hooks-list.rst:710
-#: ../../guides/hooks-list.rst:720
-#: ../../guides/hooks-list.rst:728
+#: ../../guides/hooks-list.rst:705
+#: ../../guides/hooks-list.rst:713
+#: ../../guides/hooks-list.rst:723
+#: ../../guides/hooks-list.rst:731
 msgid "``entity`` - entity that owns the icons"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:703
+#: ../../guides/hooks-list.rst:706
 msgid "``file`` - original input file before it has been modified by other hooks"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:712
+#: ../../guides/hooks-list.rst:715
 msgid "**entity:<icon_type>:save, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:706
+#: ../../guides/hooks-list.rst:709
 msgid "Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to apply custom image manipulation logic to resizing/cropping icons. The handler must return ``true`` to prevent the core APIs from resizing/cropping icons. The ``$params`` array contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:711
+#: ../../guides/hooks-list.rst:714
 msgid "``file`` - ``ElggFile`` object that points to the image file to be used as source for icons"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:712
-#: ../../guides/hooks-list.rst:721
+#: ../../guides/hooks-list.rst:715
+#: ../../guides/hooks-list.rst:724
 msgid "``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:721
+#: ../../guides/hooks-list.rst:724
 msgid "**entity:<icon_type>:saved, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:715
+#: ../../guides/hooks-list.rst:718
 msgid "Triggered by ``ElggEntity::saveIcon*()`` methods once icons have been created. This hook can be used by plugins to create river items, update cropping coordinates for custom icon types etc. The handler can access the created icons using ``ElggEntity::getIcon()``. The ``$params`` array contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:728
+#: ../../guides/hooks-list.rst:731
 msgid "**entity:<icon_type>:delete, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:724
+#: ../../guides/hooks-list.rst:727
 msgid "Triggered by ``ElggEntity::deleteIcon()`` method and can be used for clean up operations. This hook is triggered before the icons are deleted. The handler can return ``false`` to prevent icons from being deleted. The ``$params`` array contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:733
+#: ../../guides/hooks-list.rst:736
 msgid "**entity:url, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:731
+#: ../../guides/hooks-list.rst:734
 msgid "Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the ``getUrl()`` method of ElggEntity. This hook should be used when it's not possible to subclass (like if you want to extend a bundled plugin without overriding many views)."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:737
+#: ../../guides/hooks-list.rst:740
 msgid "**to:object, <entity_type|metadata|annotation|relationship|river_item>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:736
+#: ../../guides/hooks-list.rst:739
 msgid "Converts the entity ``$params['entity']`` to a StdClass object. This is used mostly for exporting entity properties for portable data formats like JSON and XML."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:740
+#: ../../guides/hooks-list.rst:743
 msgid "**extender:url, <annotation|metadata>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:740
+#: ../../guides/hooks-list.rst:743
 msgid "Return the URL for the annotation or metadatum ``$params['extender']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:743
+#: ../../guides/hooks-list.rst:746
 msgid "**file:icon:url, override**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:743
+#: ../../guides/hooks-list.rst:746
 msgid "Override a file icon URL."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:746
+#: ../../guides/hooks-list.rst:749
 msgid "**is_member, group**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:746
+#: ../../guides/hooks-list.rst:749
 msgid "Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:750
+#: ../../guides/hooks-list.rst:753
 msgid "**entity:annotate, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:749
+#: ../../guides/hooks-list.rst:752
 msgid "Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can be used to add annotations to all full entity views."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:759
+#: ../../guides/hooks-list.rst:762
 msgid "**usersetting, plugin**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:753
+#: ../../guides/hooks-list.rst:756
 msgid "Filter user settings for plugins. ``$params`` contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:755
-msgid "``user`` - An ElggUser instance"
-msgstr ""
-
-#: ../../guides/hooks-list.rst:756
-#: ../../guides/hooks-list.rst:764
-msgid "``plugin`` - An ElggPlugin instance"
-msgstr ""
-
-#: ../../guides/hooks-list.rst:757
-#: ../../guides/hooks-list.rst:765
-msgid "``plugin_id`` - The plugin ID"
-msgstr ""
-
 #: ../../guides/hooks-list.rst:758
-#: ../../guides/hooks-list.rst:766
-msgid "``name`` - The name of the setting"
+msgid "``user`` - An ElggUser instance"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:759
 #: ../../guides/hooks-list.rst:767
-msgid "``value`` - The value to set"
+msgid "``plugin`` - An ElggPlugin instance"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:767
-msgid "**setting, plugin**"
+#: ../../guides/hooks-list.rst:760
+#: ../../guides/hooks-list.rst:768
+msgid "``plugin_id`` - The plugin ID"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:761
+#: ../../guides/hooks-list.rst:769
+msgid "``name`` - The name of the setting"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:762
+#: ../../guides/hooks-list.rst:770
+msgid "``value`` - The value to set"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:770
+msgid "**setting, plugin**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:765
 msgid "Filter plugin settings. ``$params`` contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:770
+#: ../../guides/hooks-list.rst:773
 msgid "**relationship:url, <relationship_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:770
+#: ../../guides/hooks-list.rst:773
 msgid "Filter the URL for the relationship object ``$params['relationship']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:774
+#: ../../guides/hooks-list.rst:777
 msgid "**profile:fields, group**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:773
-#: ../../guides/hooks-list.rst:784
+#: ../../guides/hooks-list.rst:776
+#: ../../guides/hooks-list.rst:787
 msgid "Filter an array of profile fields. The result should be returned as an array in the format ``name => input view name``. For example:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:785
+#: ../../guides/hooks-list.rst:788
 msgid "**profile:fields, profile**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:795
+#: ../../guides/hooks-list.rst:798
 msgid "**widget_settings, <widget_handler>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:794
+#: ../../guides/hooks-list.rst:797
 msgid "Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``. If handling saving the settings, the handler should return true to prevent the default code from running."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:799
+#: ../../guides/hooks-list.rst:802
 msgid "**handlers, widgets**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:798
+#: ../../guides/hooks-list.rst:801
 msgid "Triggered when a list of available widgets is needed. Plugins can conditionally add or remove widgets from this list or modify attributes of existing widgets like ``context`` or ``multiple``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:803
+#: ../../guides/hooks-list.rst:806
 msgid "**get_list, default_widgets**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:802
+#: ../../guides/hooks-list.rst:805
 msgid "Filters a list of default widgets to add for newly registered users. The list is an array of arrays in the format:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:816
+#: ../../guides/hooks-list.rst:819
 msgid "**public_pages, walled_garden**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:815
+#: ../../guides/hooks-list.rst:818
 msgid "Filter the URLs that are can be seen by logged out users if Walled Garden is enabled. ``$value`` is an array of regex strings that will allow access if matched."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:821
+#: ../../guides/hooks-list.rst:824
 msgid "**volatile, metadata**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:819
+#: ../../guides/hooks-list.rst:822
 msgid "Triggered when exporting an entity through the export handler. This is rare. This allows handler to handle any volatile (non-persisted) metadata on the entity. It's preferred to use the ``to:object, <type>`` hook."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:825
+#: ../../guides/hooks-list.rst:828
 msgid "**maintenance:allow, url**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:825
+#: ../../guides/hooks-list.rst:828
 msgid "Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:825
+#: ../../guides/hooks-list.rst:828
 msgid "is allowed during maintenance mode."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:828
+#: ../../guides/hooks-list.rst:831
 msgid "**robots.txt, site**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:828
+#: ../../guides/hooks-list.rst:831
 msgid "Filter the robots.txt values for ``$params['site']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:831
+#: ../../guides/hooks-list.rst:834
 msgid "**config, amd**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:831
+#: ../../guides/hooks-list.rst:834
 msgid "Filter the AMD config for the requirejs library."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:837
+#: ../../guides/hooks-list.rst:840
 msgid "Embed"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:839
+#: ../../guides/hooks-list.rst:842
 msgid "**embed_get_items, <active_section>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:841
+#: ../../guides/hooks-list.rst:844
 msgid "**embed_get_sections, all**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:843
+#: ../../guides/hooks-list.rst:846
 msgid "**embed_get_upload_sections, all**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:846
+#: ../../guides/hooks-list.rst:849
 msgid "Groups"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:849
+#: ../../guides/hooks-list.rst:852
 msgid "**profile_buttons, group**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:849
+#: ../../guides/hooks-list.rst:852
 msgid "Filters buttons (``ElggMenuItem`` instances) to be registered in the title menu of the group profile page"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:852
+#: ../../guides/hooks-list.rst:855
 msgid "**tool_options, group**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:852
+#: ../../guides/hooks-list.rst:855
 msgid "Use this hook to influence the available group tool options"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:855
+#: ../../guides/hooks-list.rst:858
 msgid "HTMLawed"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:858
+#: ../../guides/hooks-list.rst:861
 msgid "**allowed_styles, htmlawed**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:858
+#: ../../guides/hooks-list.rst:861
 msgid "Filter the HTMLawed allowed style array."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:861
+#: ../../guides/hooks-list.rst:864
 msgid "**config, htmlawed**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:861
+#: ../../guides/hooks-list.rst:864
 msgid "Filter the HTMLawed config array."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:864
+#: ../../guides/hooks-list.rst:867
 msgid "Likes"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:870
+#: ../../guides/hooks-list.rst:873
 msgid "**likes:is_likable, <type>:<subtype>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:867
+#: ../../guides/hooks-list.rst:870
 msgid "This is called to set the default permissions for whether to display/allow likes on an entity of type ``<type>`` and subtype ``<subtype>``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:870
+#: ../../guides/hooks-list.rst:873
 msgid "The callback ``'Elgg\\Values::getTrue'`` is a useful handler for this hook."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:873
+#: ../../guides/hooks-list.rst:876
 msgid "Members"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:876
+#: ../../guides/hooks-list.rst:879
 msgid "**members:list, <page_segment>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:876
+#: ../../guides/hooks-list.rst:879
 msgid "To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:880
+#: ../../guides/hooks-list.rst:883
 msgid "**members:config, tabs**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:879
+#: ../../guides/hooks-list.rst:882
 msgid "This hook is used to assemble an array of tabs to be passed to the navigation/tabs view for the members pages."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:883
+#: ../../guides/hooks-list.rst:886
 msgid "Twitter API"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:887
+#: ../../guides/hooks-list.rst:890
 msgid "**authorize, twitter_api**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:886
+#: ../../guides/hooks-list.rst:889
 msgid "Triggered when a user is authorizes Twitter for a login. ``$params['token']`` contains the Twitter authorization token."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:890
+#: ../../guides/hooks-list.rst:893
 msgid "Reported Content"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:893
+#: ../../guides/hooks-list.rst:896
 msgid "**reportedcontent:add, system**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:893
+#: ../../guides/hooks-list.rst:896
 msgid "Triggered after adding the reported content object ``$params['report']``. Return false to delete report."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:896
+#: ../../guides/hooks-list.rst:899
 msgid "**reportedcontent:archive, system**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:896
+#: ../../guides/hooks-list.rst:899
 msgid "Triggered before archiving the reported content object ``$params['report']``. Return false to prevent archiving."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:899
+#: ../../guides/hooks-list.rst:902
 msgid "**reportedcontent:delete, system**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:899
+#: ../../guides/hooks-list.rst:902
 msgid "Triggered before deleting the reported content object ``$params['report']``. Return false to prevent deleting."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:902
+#: ../../guides/hooks-list.rst:905
 msgid "Search"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:906
+#: ../../guides/hooks-list.rst:909
 msgid "**search, <type>:<subtype>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:905
+#: ../../guides/hooks-list.rst:908
 msgid "Filter more granular search results than searching by type alone. Must return an array with ``count`` as the total count of results and  ``entities`` an array of ElggUser entities."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:908
+#: ../../guides/hooks-list.rst:911
 msgid "**search, tags**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:912
+#: ../../guides/hooks-list.rst:915
 msgid "**search, <type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:911
+#: ../../guides/hooks-list.rst:914
 msgid "Filter the search for entities for type ``$type``. Must return an array with ``count`` as the total count of results and  ``entities`` an array of ElggUser entities."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:915
+#: ../../guides/hooks-list.rst:918
 msgid "Filter an array of search types. This allows plugins to add custom types that don't correspond directly to entities."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:920
+#: ../../guides/hooks-list.rst:923
 msgid "**search_types, get_queries**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:919
+#: ../../guides/hooks-list.rst:922
 msgid "Before a search this filters the types queried. This can be used to reorder the display of search results."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:923
+#: ../../guides/hooks-list.rst:926
 msgid "Web Services"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:927
+#: ../../guides/hooks-list.rst:930
 msgid "**rest, init**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:926
+#: ../../guides/hooks-list.rst:929
 msgid "Triggered by the web services rest handler. Plugins can set up their own authentication handlers, then return ``true`` to prevent the default handlers from being registered."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:929
+#: ../../guides/hooks-list.rst:932
 msgid "**rest:output, <method_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:930
+#: ../../guides/hooks-list.rst:933
 msgid "Filter the result (and subsequently the output) of the API method"
 msgstr ""
 
