@@ -85,5 +85,4 @@ class InstallCommand extends BaseCommand {
 
 		return 0;
 	}
-
 }

@@ -3,7 +3,8 @@ return array(
 	'site_notifications' => 'Notificacións do sitio',
 	'notification:method:site' => 'Sitio',
 	'site_notifications:topbar' => 'Notificacións',
-	'item:object:site_notification' => 'Notificacións do siti',
+	'item:object:site_notification' => 'Site notification',
+	'collection:object:site_notification' => 'Site notifications',
 
 	'site_notifications:no_access' => 'Non ten acceso á páxina. Pode que necesite identificarse',
 	'site_notifications:empty' => 'Non hai notificacións.',

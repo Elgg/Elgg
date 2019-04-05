@@ -1,27 +1,22 @@
 <?php
 return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Αρχεία",
-	'file:user' => "%s' αρχεία",
-	'file:friends' => "Αρχεία φίλων",
-	'file:all' => "Όλα τα αρχεία",
-	'file:edit' => "Επεξεργασία αρχείου",
+	'item:object:file' => 'Αρχεία',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "Περισσότερα αρχεία",
 	'file:list' => "Προβολή λίστας",
-	'file:group' => "Αρχεία ομάδας",
-	'file:gallery' => "Προβολή εικονιδίων",
-	'file:gallery_list' => "Προβολή λίστας ή εικονιδίων",
+
 	'file:num_files' => "Αριθμός αρχείων για εμφάνιση",
-	'file:user:gallery'=>'Προβολή %s',
-	'file:upload' => "Ανέβασμα αρχείου",
 	'file:replace' => 'Αντικατάσταση αρχείου (αφήστε το κενό για να μην αλλάξει το αρχείο)',
 	'file:list:title' => "%s's %s %s",
 	'file:title:friends' => "Φίλων'",
-
-	'file:add' => 'Ανέβασμα αρχείου',
 
 	'file:file' => "Αρχείο",
 
@@ -50,41 +45,29 @@ return array(
 	'file:friends:type:image' => "Οι εικόνες των φίλων σας",
 	'file:friends:type:general' => "Τα αρχεία των φίλων σας",
 
-	'file:widget' => "Εφαρμογή αρχείου",
-	'file:widget:description' => "Εμφάνιση των πιο πρόσφατων αρχείων σας",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Ενεργοποίηση αρχείων ομάδας',
+	'groups:tool:file' => 'Enable group files',
 
-	'file:delete:confirm' => "Είστε σίγουροι για τη διαγραφή αυτού του αρχείου?",
-
-	'file:upload_limit' => 'Μέγιστο επιτρεπόμενο μέγεθος αρχείου',
-
-	'file:tagcloud' => "Σύννεφο ετικετών",
-
-	'file:display:number' => "Αριθμός αρχείων για εμφάνιση",
-
-	'river:create:object:file' => '%s ανέβασε το αρχείο %s',
-	'river:comment:object:file' => '%s σχολίασε το αρχείο %s',
-
-	'item:object:file' => 'Αρχεία',
+	'river:object:file:create' => '%s uploaded the file %s',
+	'river:object:file:comment' => '%s commented on the file %s',
 
 	'file:notify:summary' => 'Νέο αρχείο με όνομα %s',
 	'file:notify:subject' => 'Νέο αρχείο: %s',
-	'file:notify:body' =>
-'%s ανέβασε ένα νέο αρχείο: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Δείτε και σχολιάστε το αρχείο:
-%s
-',
+View and comment on the file:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Το αρχείο αποθηκεύτηκε με επιτυχία.",
-	'file:deleted' => "Το αρχείο διαγράφτηκε με επιτυχία.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -92,9 +75,6 @@ return array(
 
 	'file:none' => "Δεν υπάρχουν αρχεία.",
 	'file:uploadfailed' => "Αδύνατη η αποθήκευση του αρχείου.",
-	'file:downloadfailed' => "Το αρχείο δεν είναι διαθέσιμο.",
-	'file:deletefailed' => "Αδύνατη η διαγραφή του αρχείου.",
 	'file:noaccess' => "Δεν έχετε δικαιώματα αλλαγής του αρχείου",
 	'file:cannotload' => "Σφάλμα κατά τη μεταφόρτωση του αρχείου",
-	'file:nofile' => "Πρέπει να επιλέξετε ένα αρχείο",
 );

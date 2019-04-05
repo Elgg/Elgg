@@ -2,7 +2,9 @@
 /**
  * Display friends pages
  *
- * @uses $vars['entity']
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
+ * @uses $vars['entity'] the user to list friends content for
  */
 
 $entity = elgg_extract('entity', $vars);

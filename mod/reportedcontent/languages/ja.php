@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => '管理者に報告',
 	'reportedcontent:instructions' => 'この報告はサイトの管理者に監査してもらうために送られます。',
 	'reportedcontent:numbertodisplay' => '報告の表示数',
-	'reportedcontent:widget:description' => '報告の内容を表示',
 	'reportedcontent:user' => '不適切なユーザを報告',
 
 	'reportedcontent:failed' => '申し訳ありません、このコンテントを報告しようとしましたが、失敗しました。もう一度お試しください。',
 	'reportedcontent:notarchived' => 'この報告を書庫に保存することができませんでした。',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

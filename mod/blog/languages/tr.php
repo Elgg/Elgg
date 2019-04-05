@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Bloglar',
-	'blog:blogs' => 'Bloglar',
+return array(
+	'item:object:blog' => 'Bloglar',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Düzeltmeler',
 	'blog:archives' => 'Arşivler',
-	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Bloglar',
 
-	'blog:title:user_blogs' => '%s kullanıcısının blogları',
-	'blog:title:all_blogs' => 'Tüm site blogları',
-	'blog:title:friends' => 'Arkadaşların blogları',
-
-	'blog:group' => 'Grup bloğu',
-	'blog:enableblog' => 'Grup blogunu etkinleştir',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Bir blog gönderisi yaz',
 
 	// Editing
-	'blog:add' => 'Blog gönderisi ekle',
-	'blog:edit' => 'Blog gönderisini düzenle',
 	'blog:excerpt' => 'Alıntı',
 	'blog:body' => 'Gövde',
 	'blog:save_status' => 'Son kayıt:',
-	
+
 	'blog:revision' => 'Düzeltme',
 	'blog:auto_saved_revision' => 'Otomatik Kaydedilmiş Düzeltme',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Bu düzeltme bulunamadı.',
 
 	// river
-	'river:create:object:blog' => '%s bir blog gönderisi yayımladı %s',
-	'river:comment:object:blog' => '%s bloga yorum yaptı %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => '%s adında yeni bir blog gönderisi',
 	'blog:notify:subject' => 'Yeni blog gönderisi: %s',
 	'blog:notify:body' =>
 '
-%s yeni bir blog gönderisi yayımladı: %s
+%s published a new blog post: %s
 
 %s
 
-Blog gönderisini görüntüle ve yorum yap:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Son blog gönderilerinizi göster',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Daha fazla blog gönderisi',
 	'blog:numbertodisplay' => 'Gösterilecek blog gönderisi sayısı',
-	'blog:noblogs' => 'Blog gönderisi yok'
-];
+);

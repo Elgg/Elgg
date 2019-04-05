@@ -16,18 +16,19 @@ return array(
 	'invitefriends:already_members' => 'Nämä henkilöt ovat jo sivuston jäseniä: %s',
 	'invitefriends:noemails' => 'Et syöttänyt yhtäkään sähköpostiosoitetta.',
 	
-	'invitefriends:message:default' => 'Hei,
+	'invitefriends:message:default' => 'Hi,
 
-Liity verkostooni sivustolla %s.',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => '
-Sinut on kutsuttu jäseneksi sivustolle %s käyttäjän %s toimesta. Hän lisäsi seuraavan viestin:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
+
+They included the following message:
 
 %s
 
-Liittyäksesi sivustolle klikkaa tästä:
+To join, click the following link:
 %s
 
-Tulette automaattisesti toistenne kavereiksi luodessasi käyttäjätilisi.',
+You will automatically add them as a friend when you create your account.',
 	
 );

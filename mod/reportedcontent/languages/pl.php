@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Zgłoś administratorowi',
 	'reportedcontent:instructions' => 'To zgłoszenie zostanie przesłane administratorom strony do weryfikacji.',
 	'reportedcontent:numbertodisplay' => 'Ilość wyświetlanych zgłoszeń',
-	'reportedcontent:widget:description' => 'Wyświetl zgłoszoną treść',
 	'reportedcontent:user' => 'Zgłoś użytkownika',
 
 	'reportedcontent:failed' => 'Przykro nam, próba zgłoszenia tej treści zakończyła się niepowodzeniem.',
 	'reportedcontent:notarchived' => 'Nie powiodła się archiwizacja tego zgłoszenia',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

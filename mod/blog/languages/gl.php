@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Bitácoras',
-	'blog:blogs' => 'Bitácoras',
+return array(
+	'item:object:blog' => 'Bitácoras',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Revisións',
 	'blog:archives' => 'Arquivos',
-	'blog:blog' => 'Bitácora',
-	'item:object:blog' => 'Bitácoras',
 
-	'blog:title:user_blogs' => 'Bitácoras de %s',
-	'blog:title:all_blogs' => 'Todas as bitácoras',
-	'blog:title:friends' => 'Bitácoras dos contactos',
-
-	'blog:group' => 'Bitácora do grupo',
-	'blog:enableblog' => 'Activar a bitácora do grupo',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Escribir un artigo',
 
 	// Editing
-	'blog:add' => 'Engadir o artigo',
-	'blog:edit' => 'Editar o artigo',
 	'blog:excerpt' => 'Fragmento',
 	'blog:body' => 'Corp',
 	'blog:save_status' => 'Gardado:',
-	
+
 	'blog:revision' => 'Revisión',
 	'blog:auto_saved_revision' => 'Revisión gardada automaticamente',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Non é posíbel atopar esta revisión.',
 
 	// river
-	'river:create:object:blog' => '%s publicou un artigo %s',
-	'river:comment:object:blog' => '%s deixou un comentario na bitácora %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Novo artigo: «%s»',
 	'blog:notify:subject' => 'Novo artigo: «%s»',
 	'blog:notify:body' =>
 '
-%s publicou un novo artigo: %s
+%s published a new blog post: %s
 
 %s
 
-Véxao e deixe un comentario desde:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Mostrar os seus últimos artigos',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Máis artigos',
 	'blog:numbertodisplay' => 'Número de artigos para mostrar.',
-	'blog:noblogs' => 'Non hai artigos.'
-];
+);

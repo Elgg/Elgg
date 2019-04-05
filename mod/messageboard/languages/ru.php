@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -8,25 +8,16 @@ return [
 
 	'messageboard:board' => "Доска",
 	'messageboard:messageboard' => "доска",
-	'messageboard:viewall' => "Смотреть все",
-	'messageboard:postit' => "Написать",
-	'messageboard:history:title' => "история",
 	'messageboard:none' => "Пока никто не написал на стене.",
 	'messageboard:num_display' => "Число отображаемых записей",
-	'messageboard:desc' => "Это стена, которую можно добавить в Ваш профиль и на которой смогут писать Ваши друзья.",
-
 	'messageboard:user' => "стену пользователя %s",
-
-	'messageboard:replyon' => 'ответить',
-	'messageboard:history' => "История",
-
 	'messageboard:owner' => '%s\'s message board',
 	'messageboard:owner_history' => '%s\'s posts on %s\'s message board',
 
 	/**
 	 * Message board widget river
 	 */
-	'river:messageboard:user:default' => "%s написал[а] на доске сообщений %s",
+	'river:user:messageboard' => "%s posted on %s's message board",
 
 	/**
 	 * Status messages
@@ -40,31 +31,27 @@ return [
 	 */
 
 	'messageboard:email:subject' => 'У Вас есть новая запись на стене.',
-	'messageboard:email:body' => "У Вас есть новая запись на стене от %s. Она гласит:
+	'messageboard:email:body' => "You have a new message board comment from %s.
 
+It reads:
 
 %s
 
+To view your message board comments, click here:
+%s
 
-Чтобы посмотреть записи на Вашей стене, нажмите здесь: 
-
-	%s
-
-Чтобы посмотреть польфиль %s, кликните здесь:
-
-	%s
-
-Это письмо составлено роботом. Пожалуйста, не отвечайте на него.",
+To view %s's profile, click here:
+%s",
 
 	/**
 	 * Error messages
 	 */
 
 	'messageboard:blank' => "Простите, но Вы должны что-нибудь написать перед размещением записи.",
-	'messageboard:notfound' => "Простите, данный пункт не найден.",
 	'messageboard:notdeleted' => "Простите, удаление невозможно.",
-	'messageboard:somethingwentwrong' => "Что-то пошло не так в процессе отправки Вашего сообщения. Пожалуйста, попробуйте снова.",
 
 	'messageboard:failure' => "Простите, при размещении записи произошла ошибка. Попробуйте снова.",
 
-];
+	'widgets:messageboard:name' => "Message board",
+	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+);

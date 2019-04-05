@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Einem Admin melden',
 	'reportedcontent:instructions' => 'Die Meldung wird an die Administratoren dieser Community-Seite gesendet, damit sie auf diesen Beitrag aufmerksam gemacht werden.',
 	'reportedcontent:numbertodisplay' => 'Anzahl der anzuzeigenden Meldungen',
-	'reportedcontent:widget:description' => 'Gemeldete Beiträge anzeigen.',
 	'reportedcontent:user' => 'Benutzer melden',
 
 	'reportedcontent:failed' => 'Entschuldigung, leider ist der Versuch, diesen Beitrag zu melden, gescheitert.',
 	'reportedcontent:notarchived' => 'Die Meldung konnte nicht archiviert werden.',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

@@ -250,8 +250,6 @@ function elgg_delete_river(array $options = []) {
  * @since 1.8.0
  */
 function elgg_list_river(array $options = []) {
-	elgg_register_rss_link();
-
 	$defaults = [
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', max(20, _elgg_config()->default_limit)), 0),
@@ -260,7 +258,12 @@ function elgg_list_river(array $options = []) {
 	];
 
 	$options = array_merge($defaults, $options);
-
+	
+	$options['register_rss_link'] = elgg_extract('register_rss_link', $options, elgg_extract('pagination', $options));
+	if ($options['register_rss_link']) {
+		elgg_register_rss_link();
+	}
+	
 	if (!$options["limit"] && !$options["offset"]) {
 		// no need for pagination if listing is unlimited
 		$options["pagination"] = false;

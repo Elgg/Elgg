@@ -27,6 +27,7 @@ return array(
 	'session_changed_user' => "Du wurdest als ein anderer Benutzer eingeloggt. Du solltest die Seite <a href='javascript:location.reload(true)'>neu laden</a>.",
 
 	'loggedinrequired' => "Du mußt angemeldet sein, um diese Seite aufrufen zu können.",
+	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "Du mußt ein Administrator sein, um diese Seite aufrufen zu können.",
 	'membershiprequired' => "Du mußt Mitglied dieser Gruppe sein, um diese Seite aufrufen zu können.",
 	'limited_access' => "Du hast nicht die notwendige Berechtigung, um auf die angeforderte Seite zuzugreifen.",
@@ -463,6 +464,7 @@ return array(
 	'admin:cron:date' => 'Datum und Zeit',
 	'admin:cron:msg' => 'Statusausgaben',
 	'admin:cron:started' => 'Cronjobs für "%s" gestarted am %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => 'Cronjobs für "%s" abgeschlossen am %s',
 
 	'admin:appearance' => 'Design',
@@ -487,12 +489,17 @@ return array(
 	
 	'admin:configure_utilities:maintenance' => 'Wartungs-Modus',
 	'admin:upgrades' => 'Aktualisierungen',
+	'admin:upgrades:finished' => 'Completed',
+	'admin:upgrades:menu:pending' => 'Pending upgrades',
+	'admin:upgrades:menu:completed' => 'Completed upgrades',
+	'admin:upgrades:menu:run_single' => 'Run this upgrade',
 	'admin:upgrades:run' => 'Aktualisierungen jetzt ausführen',
 	'admin:upgrades:error:invalid_upgrade' => 'Entität %s existiert nicht oder sie ist keine gültige ElggUpgrade-Instanz.',
 	'admin:upgrades:error:invalid_batch' => 'Der Batch-Prozeß für die Aktualisierung %s (%s) konnte nicht instanziiert werden.',
 	'admin:upgrades:completed' => 'Aktualisierung "%s" abgeschlossen um %s',
 	'admin:upgrades:completed:errors' => 'Aktualisierung "%s" abgeschlossen um %s. Es traten aber %s Fehler auf.',
 	'admin:upgrades:failed' => 'Aktualisierung "%s" fehlgeschlagen.',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'Einstellungen',
 	'admin:settings:basic' => 'Grundeinstellungen',
@@ -614,6 +621,10 @@ return array(
 	
 	'admin:security:settings:email_require_password' => 'Passworteingabe bei Änderung der Email-Adresse notwendig',
 	'admin:security:settings:email_require_password:help' => 'Möchte ein Benutzer die Email-Adresse seines Accounts ändern, muss er diese Änderung durch die Eingabe seines derzeitigen Passworts bestätigen.',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg verwendet einen seitenspezifischen Geheimschlüssel, um darauf basierend Sicherheits-Token zu generieren, die für verschiedene Authentifizierungszwecke verwendet werden.',
 	'admin:security:settings:site_secret:regenerate' => "Geheimschlüssel neu erzeugen",
@@ -793,10 +804,16 @@ Um die Community-Seite aufzurufen, folge diesem Link:
 
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
-		Redis ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
-		Für eine bessere Performance ist es empfehlenswert, Redis (oder Memcache) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
+		Redis is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure redis (or memcache).
 ',
 
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache is not available on this server or it has not yet been enabled.
+		For improved performance, it is recommended that you enable and configure OPcache.
+',
+	
 	'admin:user:label:search' => "Suche Benutzeraccount:",
 	'admin:user:label:searchbutton' => "Suche",
 
@@ -963,6 +980,7 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'remove' => 'Entfernen',
 	'revert' => 'Zurücksetzen',
 	'validate' => 'Validieren',
+	'read_more' => 'Read more',
 
 	'site' => 'Webseite',
 	'activity' => 'Aktivitäten',
@@ -1293,7 +1311,9 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 	'upgrade:error_count' => 'Fehler:',
 	'upgrade:finished' => 'Die Aktualisierung ist abgeschlossen.',
 	'upgrade:finished_with_errors' => '<p>Die Aktualisierung wurde beendet. Allerdings sind dabei Fehler aufgetreten. Lade die Seite erneut und versuche, die Aktualisierung nochmals durchzuführen.</p></p><br />Wenn dabei wieder Fehler auftreten, schaue in der Logdatei Deines Servers nach, ob es dort Einträge gibt, die eventuell weitere Informationen zur Ursache der Fehler liefern. Du kannst auch in der <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support-Gruppe</a> auf der Elgg-Community-Seite um Hilfe bei Deinem Problem bitten.</p>',
-
+	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:count_items' => '%d items to upgrade',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Datentyp-Angleichung der GUID-Spalten in der Datenbank',
 	

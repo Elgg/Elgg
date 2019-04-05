@@ -33,7 +33,8 @@ return array(
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Anzeige Deiner neuesten Nachrichten im Heißen Draht',
+	
+	'widgets:thewire:description' => 'Display your latest wire posts',
 	'thewire:num' => 'Anzahl der anzuzeigenden Einträge',
 	'thewire:moreposts' => 'Weitere Nachrichten im Heißen Draht',
 

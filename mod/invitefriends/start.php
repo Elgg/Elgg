@@ -27,7 +27,9 @@ function invitefriends_init() {
  * @return void|ElggMenuItem[]
  */
 function invitefriends_register_page_menu($hook, $type, $result, $params) {
-	if (!elgg_is_logged_in()) {
+	
+	$user = elgg_get_logged_in_user_entity();
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 	
@@ -38,7 +40,9 @@ function invitefriends_register_page_menu($hook, $type, $result, $params) {
 	$result[] = \ElggMenuItem::factory([
 		'name' => 'invite',
 		'text' => elgg_echo('friends:invite'),
-		'href' => elgg_generate_url('default:user:user:invite'),
+		'href' => elgg_generate_url('default:user:user:invite', [
+			'username' => $user->username,
+		]),
 		'contexts' => ['friends'],
 	]);
 	

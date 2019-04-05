@@ -2,9 +2,7 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Http\Input;
 use Psr\Log\LogLevel;
-use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -51,7 +49,7 @@ class PluginsActivateCommand extends Command {
 			$progress->advance();
 		}
 
-		$progress->finish();
+		$helper->finish($progress);
 
 		return 0;
 	}

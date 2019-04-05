@@ -22,7 +22,7 @@ return array(
 	'thewire:previous:help' => "Voir le message précédent",
 	'thewire:hide:help' => "Masquer le message précédent",
 
-	'thewire:form:body:placeholder' => "What's happening?",
+	'thewire:form:body:placeholder' => "Que se passe-t-il ?",
 	
 	/**
 	 * The wire river
@@ -33,7 +33,8 @@ return array(
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Affiche vos derniers messages sur le Fil',
+	
+	'widgets:thewire:description' => 'Affiche vos derniers messages publiés sur le Fil',
 	'thewire:num' => 'Nombre de messages à afficher',
 	'thewire:moreposts' => 'Plus de messages du Fil',
 

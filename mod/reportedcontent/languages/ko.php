@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => '관리자에게 신고',
 	'reportedcontent:instructions' => '검토를 위해 신고내용이 관리자에게 보내질 것입니다.',
 	'reportedcontent:numbertodisplay' => '표시할 신고의 개수',
-	'reportedcontent:widget:description' => '신고된 내용 표시',
 	'reportedcontent:user' => '사용자 신고',
 
 	'reportedcontent:failed' => '죄송합니다. 이 내용을 신고하는데 실패하였습니다.',
 	'reportedcontent:notarchived' => '이 신고를 저장할 수 없었습니다',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

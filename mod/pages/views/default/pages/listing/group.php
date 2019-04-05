@@ -1,6 +1,10 @@
 <?php
 /**
  * Display group pages
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
+ * @uses $vars['entity'] the group
  */
 
 $entity = elgg_extract('entity', $vars);

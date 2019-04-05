@@ -16,18 +16,19 @@ return array(
 	'invitefriends:already_members' => 'Os seguintes enderezos corresponden a membros actuais do sitio: %s.',
 	'invitefriends:noemails' => 'Non escribiu ningún enderezo de correo electrónico',
 	
-	'invitefriends:message:default' => 'Ola.
+	'invitefriends:message:default' => 'Hi,
 
-Quero invitarte a unirte á miña rede en %s.',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => 'Esta é unha invitación para que se una a %s, enviada de parte de %s, que incluíu a seguinte mensaxe:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
 
-%s
-
-Para unirse, siga esta ligazón:
+They included the following message:
 
 %s
 
-Cando cree a súa conta, a persoa que lle enviou a invitación convertirase automaticamente no seu contacto.',
+To join, click the following link:
+%s
+
+You will automatically add them as a friend when you create your account.',
 	
 );

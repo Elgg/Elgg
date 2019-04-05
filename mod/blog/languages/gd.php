@@ -1,27 +1,25 @@
 <?php
 return array(
-	'blog' => 'Blogaichean',
-	'blog:blogs' => 'Blogaichean',
+	'item:object:blog' => 'Blogaichean',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Lèirmheasan',
 	'blog:archives' => 'Tasglannan',
-	'blog:blog' => 'Bloga',
-	'item:object:blog' => 'Blogaichean',
 
-	'blog:title:user_blogs' => 'Na blogaichean aig %s',
-	'blog:title:all_blogs' => 'A h-uile bloga na làraich',
-	'blog:title:friends' => 'Blogaichean charaidean',
-
-	'blog:group' => 'Bloga a\' bhuidhinn',
-	'blog:enableblog' => 'Cuir an comas bloga a\' bhuidhinn',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Sgrìobh post bloga',
 
 	// Editing
-	'blog:add' => 'Cuir ris post bloga',
-	'blog:edit' => 'Deasaich post bloga',
 	'blog:excerpt' => 'Às-earrann',
 	'blog:body' => 'Bodhaig',
 	'blog:save_status' => 'Air a shàbhaladh mu dheireadh:',
-	
+
 	'blog:revision' => 'Lèirmheas',
 	'blog:auto_saved_revision' => 'Lèirmheas air a shàbhaladh gu fèin-obrachail',
 
@@ -42,25 +40,25 @@ return array(
 	'blog:error:revision_not_found' => 'Cha deach an lèirmheas seo a lorg.',
 
 	// river
-	'river:create:object:blog' => 'Dh\'fhoillsich %s post bloga %s',
-	'river:comment:object:blog' => 'Chuir %s beachd ri bloga %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Tha post bloga ùr ann air a bheil %s',
 	'blog:notify:subject' => 'Post bloga ùr: %s',
 	'blog:notify:body' =>
 '
-Dh\'fhoillsich %s post bloga ùr: %s
+%s published a new blog post: %s
 
 %s
 
-Seall post a\' bhloga \'s cuir do bheachd ris:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Seall na postaichean bloga as ùire agad',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Barrachd postaichean bloga',
 	'blog:numbertodisplay' => 'An àireamh dhe phostaichean bloga ri an sealltainn',
-	'blog:noblogs' => 'Chan eil post bloga ann'
 );

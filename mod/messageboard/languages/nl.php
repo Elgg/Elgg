@@ -10,10 +10,7 @@ return array(
 	'messageboard:messageboard' => "berichtenbox",
 	'messageboard:none' => "Er zijn nog geen berichten geplaatst",
 	'messageboard:num_display' => "Aantal berichten om weer te geven",
-	'messageboard:desc' => "Dit is een berichtenbox die je op je profiel kunt plaatsen. Andere gebruikers kunnen via deze box een reactie aan je sturen.",
-
 	'messageboard:user' => "Berichtenbox van %s",
-
 	'messageboard:owner' => 'Berichtenbox van %s',
 	'messageboard:owner_history' => 'Berichten van %s in de berichtenbox van %s',
 
@@ -55,4 +52,6 @@ Om naar het profiel van %s te gaan, klik hier:
 
 	'messageboard:failure' => "Er is een fout opgetreden tijdens het toevoegen van je bericht. Probeer het nogmaals.",
 
+	'widgets:messageboard:name' => "Berichtenbox",
+	'widgets:messageboard:description' => "Dit is een berichtenbox die je op je profiel kunt plaatsen. Andere gebruikers kunnen via deze box een reactie aan je sturen.",
 );

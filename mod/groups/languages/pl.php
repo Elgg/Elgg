@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Ikona grupy',
 	'groups:name' => 'Nazwa grupy',
-	'groups:username' => 'Krótka nazwa grupy (wyświetlana w adresach URL, tylko litery i cyfry)',
 	'groups:description' => 'Opis',
 	'groups:briefdescription' => 'Krótki opis',
 	'groups:interests' => 'Zainteresowania',
 	'groups:website' => 'Strona www',
 	'groups:members' => 'Członkowie grupy',
-	'groups:my_status' => 'Twój status',
-	'groups:my_status:group_owner' => 'Jesteś właścicielem tej grupy',
-	'groups:my_status:group_member' => 'Jesteś członkiem tej grupy',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
+
+	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Członkowie %s',
 	'groups:members:more' => "Wyświetl wszystkich członków",
@@ -43,17 +39,10 @@ return [
 	'groups:owner' => "Właściciel",
 	'groups:owner:warning' => "Uwaga: jeśli zmienisz tą wartość, to przestaniesz być właścicielem tej grupy.",
 	'groups:widget:num_display' => 'Liczba grup do wyświetlenia',
-	'groups:widget:membership' => 'Członkostwo grupy',
-	'groups:widgets:description' => 'Wyświetl w profilu grupy do których należę',
-
-	'groups:widget:group_activity:title' => 'Aktywność w grupie',
-	'groups:widget:group_activity:description' => 'Wyświetla aktywność w jednej z twoich grup',
-	'groups:widget:group_activity:edit:select' => 'Wybierz grupę',
-	'groups:widget:group_activity:content:noactivity' => 'Brak aktywności w tej grupie',
-	'groups:widget:group_activity:content:noselect' => 'Edytuj ustawienia gadżetu aby wybrać grupę',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'Brak dostępu do grupy',
-	'groups:ingroup' => 'w grupie',
 	'groups:cantcreate' => 'Nie możesz utworzyć grupy. Tylko administrator ma taką możliwość.',
 	'groups:cantedit' => 'Nie można edytować tej grupy',
 	'groups:saved' => 'Grupa zapisana',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Odejdź z grupy',
 	'groups:invite' => 'Zaproś przyjaciół',
 	'groups:invite:title' => 'Zaproś znajomych do tej grupy',
-	'groups:inviteto' => "Zaproszeni przyjaciele do '%s'",
-	'groups:nofriends' => "Nie masz przyjaciół którzy zostali zaproszeni do tej grupy.",
+	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
+	'groups:invite:resend' => 'Resend the invitations to already invited users',
+
 	'groups:nofriendsatall' => 'Nie masz znajomych, których mógłbyś zaprosić!',
-	'groups:viagroups' => "przez grupy",
 	'groups:group' => "Grupa",
 	'groups:search:tags' => "tag",
 	'groups:search:title' => "Szukaj grup oznaczonych tagiem '%s'",
 	'groups:search:none' => "Nie znaleziono pasujących grup",
 	'groups:search_in_group' => "Szukaj w tej grupie",
 	'groups:acl' => "Grupa: %s",
-
-	'groups:activity' => "Aktywność w grupie",
-	'groups:enableactivity' => 'Włącz aktywność w grupie',
-	'groups:activity:none' => "Jak na razie, brak aktywności w tej grupie",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:notfound' => "Nie znaleziono grupy",
-	'groups:notfound:details' => "Wskazana grupa nie istnieje lub nie masz do niej dostępu",
-
+	
 	'groups:requests:none' => 'Nie ma obecnie próśb o dołączenie.',
 
 	'groups:invitations:none' => 'Nie ma obecnie zaproszeń.',
 
-	'groups:count' => "utworzonych grup",
 	'groups:open' => "otwartych grup",
 	'groups:closed' => "zamkniętych grup",
 	'groups:member' => "członkowie",
-	'groups:searchtag' => "Wyszukuj grupy za pomocą tagów",
+	'groups:search' => "Search for groups",
 
 	'groups:more' => 'Więcej grup',
 	'groups:none' => 'Brak grup',
@@ -117,12 +101,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Ostatnia aktualizacja %s przez %s',
-	'groups:lastcomment' => 'Ostatni komentarz %s przez %s',
 
 	'admin:groups' => 'Grupy',
 
-	'groups:privategroup' => 'Ta grupa jest zamknięta, wysłaliśmy prośbę o członkostwo.',
 	'groups:notitle' => 'Grupy muszą mieć tytuł',
 	'groups:cantjoin' => 'Nie możesz dołączyć do grupy',
 	'groups:cantleave' => 'Nie możesz odejść z grupy.',
@@ -133,61 +114,44 @@ return [
 	'groups:joinrequestnotmade' => 'Dołączenie do grupy nie powiodło się.',
 	'groups:joinrequestmade' => 'Prośba o dołączenie do grupy wysłana pomyślnie',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:button:joined' => 'Joined',
+	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Pomyślnie dołączyłeś do grupy!',
 	'groups:left' => 'Pomyślnie opuściłeś grupę',
-	'groups:notowner' => 'Niestety, nie jesteś właścicielem tej grupy.',
-	'groups:notmember' => 'Przykro nam, nie jesteś członkiem tej grupy.',
-	'groups:alreadymember' => 'Jesteś już członkiem tej grupy!',
 	'groups:userinvited' => 'Użytkownik został zaproszony.',
 	'groups:usernotinvited' => 'Użytkownik nie został zaproszony.',
 	'groups:useralreadyinvited' => 'Użytkownik już został zaproszony',
 	'groups:invite:subject' => "%s zostałeś zaproszony do %s!",
-	'groups:started' => "Rozpoczął %s",
 	'groups:joinrequest:remove:check' => 'Czy na pewno chcesz usunąć tą prośbę o członkostwo?',
 	'groups:invite:remove:check' => 'Czy na pewno chcesz usunąć to zaproszenie?',
-	'groups:invite:body' => "Cześć %s,
+	'groups:invite:body' => "Hi %s,
 
-Zostałeś zaproszony do '% s' grupy, kliknij przycisk poniżej aby potwierdzić:
+%s invited you to join the '%s' group.
 
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Witamy w %s !",
-	'groups:welcome:body' => "Cześć %s!
-		
-Jesteś już członkiem grupy \"% s\"! Kliknij poniżej aby rozpocząć postowanie!
+	'groups:welcome:body' => "Hi %s!
 
+You are now a member of the '%s' group.
+
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s wystąpił z prośbą o dołączenie do %s",
-	'groups:request:body' => "Cześć %s,
+	'groups:request:body' => "Hi %s,
 
-%s wystąpił z wnioskiem o dołączenie do grupy '%s' , kliknij poniżej aby zobaczyć profil:
+%s has requested to join the '%s' group.
 
+Click below to view their profile:
 %s
 
-lub kliknij poniżej aby potwierdzić prośbę:
-
+or click below to view the group's join requests:
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s utworzył grupę %s',
-	'river:join:group:default' => '%s dołączył do grupy %s',
-
-	'groups:nowidgets' => 'Żaden gadżet nie został zdefiniowany dla tej grupy.',
-
-
-	'groups:widgets:members:title' => 'Użytkownicy grupy',
-	'groups:widgets:members:description' => 'Lista użytkowników grupy.',
-	'groups:widgets:members:label:displaynum' => 'Lista użytkowników grupy.',
-	'groups:widgets:members:label:pleaseedit' => 'Proszę skonfigurować ten gadżet.',
-
-	'groups:widgets:entities:title' => "Obiekty w grupie",
-	'groups:widgets:entities:description' => "Lista obiektów zapisanych w grupie",
-	'groups:widgets:entities:label:displaynum' => 'Lista obiektów w grupie.',
-	'groups:widgets:entities:label:pleaseedit' => 'Proszę skonfigurować ten gadżet.',
+	'river:group:create' => '%s created the group %s',
+	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Czy zezwolić na prywatne (niewidoczne) grupy?',
 	'groups:whocancreate' => 'Kto może utworzyć nową grupę?',
@@ -195,10 +159,8 @@ lub kliknij poniżej aby potwierdzić prośbę:
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Grupa i zawartość grupy zostały usunięte',
-	'group:notdeleted' => 'Nie powiodło się usunięcie grupy',
-
-	'group:notfound' => 'Nie można znaleźć grupy',
+	'groups:deleted' => 'Group and group contents deleted',
+	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Czy na pewno chcesz usunąć tą grupę? Tej operacji nie można cofnąć!",
 
 	'groups:invitekilled' => 'Usunięto zaproszenie.',
@@ -210,4 +172,11 @@ lub kliknij poniżej aby potwierdzić prośbę:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Profile grupy',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+);

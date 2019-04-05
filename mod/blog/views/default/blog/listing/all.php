@@ -1,7 +1,8 @@
 <?php
-
 /**
  * List blogs
+ *
+ * Note: this view has a corresponding view in the default rss type, changes should be reflected
  *
  * @uses $vars['options'] Options
  * @uses $vars['created_after']  Only show blogs created after a date

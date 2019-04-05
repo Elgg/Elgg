@@ -1,10 +1,11 @@
 <?php
-
 /**
  * Elgg invite friends action
  *
  * @package ElggInviteFriends
  */
+
+use Elgg\Email;
 
 elgg_make_sticky_form('invitefriends');
 
@@ -34,22 +35,22 @@ $error = false;
 $bad_emails = [];
 $already_members = [];
 $sent_total = 0;
-foreach ($emails as $email) {
-	$email = trim($email);
-	if (empty($email)) {
+foreach ($emails as $email_address) {
+	$email_address = trim($email_address);
+	if (empty($email_address)) {
 		continue;
 	}
 
 	// send out other email addresses
-	if (!is_email_address($email)) {
+	if (!is_email_address($email_address)) {
 		$error = true;
-		$bad_emails[] = $email;
+		$bad_emails[] = $email_address;
 		continue;
 	}
 
-	if (get_user_by_email($email)) {
+	if (get_user_by_email($email_address)) {
 		$error = true;
-		$already_members[] = $email;
+		$already_members[] = $email_address;
 		continue;
 	}
 
@@ -58,16 +59,19 @@ foreach ($emails as $email) {
 		'invitecode' => generate_invite_code($current_user->username),
 	]);
 	
-	$message = elgg_echo('invitefriends:email', [
-		$site->getDisplayName(),
-		$current_user->getDisplayName(),
-		$emailmessage,
-		$link,
+	$email = Email::factory([
+		'to' => $email_address,
+		'from' => $from,
+		'subject' => elgg_echo('invitefriends:subject', [$site->getDisplayName()]),
+		'body' => elgg_echo('invitefriends:email', [
+			$site->getDisplayName(),
+			$current_user->getDisplayName(),
+			$emailmessage,
+			$link,
+		]),
 	]);
-
-	$subject = elgg_echo('invitefriends:subject', [$site->getDisplayName()]);
-
-	elgg_send_email($from, $email, $subject, $message);
+	
+	elgg_send_email($email);
 	$sent_total++;
 }
 

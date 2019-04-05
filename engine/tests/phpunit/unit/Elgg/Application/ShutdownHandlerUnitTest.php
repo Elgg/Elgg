@@ -128,8 +128,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$shutdown->persistCaches();
 
 		$cache = $app->_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
-		$cache = unserialize($cache);
-
+		
 		$this->assertContains($dir, $cache['scannedDirs']);
 
 	}

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'Одобряю',
 	'likes:deleted' => 'Ваш отзыв удалён',
 	'likes:see' => 'Посмотреть кто это одобрил',
@@ -20,20 +20,21 @@ return [
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s одобряет ваше сообщение "%s"',
 	'likes:notifications:body' =>
-'Привет %1$s,
+'Hi %1$s,
 
-%2$s одобрил(а) ваше сообщение "%3$s" в %4$s!
+%2$s likes your post "%3$s" on %4$s
 
-Смотрите исходное сообщение здесь:
+See your original post here:
 
 %5$s
 
-или смотрите профиль %2$s\'s здесь:
+or view %2$s\'s profile here:
 
 %6$s
 
-Спасибо,
-%4$s
-',
+Thanks,
+%4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

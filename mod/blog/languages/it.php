@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Blog',
-	'blog:blogs' => 'Blog',
+return array(
+	'item:object:blog' => 'Blog',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Revisioni',
 	'blog:archives' => 'Archivi',
-	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Blog',
 
-	'blog:title:user_blogs' => 'blog di %s',
-	'blog:title:all_blogs' => 'Tutti i blog del sito',
-	'blog:title:friends' => 'Blog degli amici',
-
-	'blog:group' => 'Blog del gruppo',
-	'blog:enableblog' => 'Abilita blog del gruppo',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Scrivi un articolo',
 
 	// Editing
-	'blog:add' => 'Aggiungi un articolo',
-	'blog:edit' => 'Modifica un articolo',
 	'blog:excerpt' => 'Estratto',
 	'blog:body' => 'Corpo',
 	'blog:save_status' => 'Ultimo salvataggio:',
-	
+
 	'blog:revision' => 'Revisione',
 	'blog:auto_saved_revision' => 'Revisione salvata automaticamente',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Impossibile trovare questa revisione.',
 
 	// river
-	'river:create:object:blog' => '%s ha pubblicato un articolo %s ',
-	'river:comment:object:blog' => '%s ha commentato l\'articolo %s',
+	'river:object:blog:create' => '%sha pubblicato un articolo nel blog %s',
+	'river:object:blog:comment' => '%s ha commentato il blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nuovo articolo intitolato %s',
 	'blog:notify:subject' => 'Nuovo articolo: %s',
 	'blog:notify:body' =>
 '
-%s ha pubblicato un nuovo articolo: %s
+%s published a new blog post: %s
 
 %s
 
-Leggi e commenta l\'articolo:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Visualizza gli ultimi articoli',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Altri articoli',
 	'blog:numbertodisplay' => 'Numero di articoli da visualizzare',
-	'blog:noblogs' => 'Nessun articolo'
-];
+);

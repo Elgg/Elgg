@@ -39,8 +39,8 @@ return array(
 	'groups:owner' => "Responsabile",
 	'groups:owner:warning' => "Attenzione: con questa modifica non sarai più il responsabile di questo gruppo.",
 	'groups:widget:num_display' => 'Numero di gruppi da visualizzare',
-	'groups:widget:membership' => 'Gruppi di cui fai parte',
-	'groups:widgets:description' => 'Visualizza i gruppi di cui sei membro nel tuo profilo',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'Nessun accesso al gruppo',
 	'groups:cantcreate' => 'Non puoi creare un gruppo. Funzione riservata agli amministratori',

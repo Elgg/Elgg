@@ -16,20 +16,19 @@ return array(
 	'invitefriends:already_members' => 'Уже приглашены: %s',
 	'invitefriends:noemails' => 'e-mail не введен.',
 	
-	'invitefriends:message:default' => '
-Привет!
+	'invitefriends:message:default' => 'Hi,
 
-Хочу пригласить тебя на замечательный сайт %s. Я там уже есть, присоединяйся! ;)',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => '
-Вы приглашены на %s пользователем %s. Кроме того, Вам передали привет и написали:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
+
+They included the following message:
 
 %s
 
-Для регистрации перейдите по этой ссылке:
+To join, click the following link:
+%s
 
-	%s
-
-После регистрации Вы будете автоматически добавлены в друзья пригласившего Вас пользователя.",',
+You will automatically add them as a friend when you create your account.',
 	
 );

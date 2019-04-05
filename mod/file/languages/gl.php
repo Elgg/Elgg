@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Ficheiros",
-	'file:user' => "Ficheiros de %s",
-	'file:friends' => "Ficheiros dos contactos",
-	'file:all' => "Ficheiros do siti",
-	'file:edit' => "Editar o ficheir",
+	'item:object:file' => 'Ficheiros',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "Máis ficheiros",
 	'file:list' => "Vista de lista",
-	'file:group' => "Ficheiros do grupo",
-	'file:gallery' => "Vista de galería",
-	'file:gallery_list' => "Vistas de lista ou galería.",
+
 	'file:num_files' => "Número de ficheiros para mostrar",
-	'file:user:gallery'=>'Ver a galería %s',
-	'file:upload' => "Enviar un ficheir",
 	'file:replace' => 'Substituír o contido do ficheiro (deixar baleiro para non cambiar o ficheiro)',
 	'file:list:title' => "%s: %s %s",
 	'file:title:friends' => "Dos contactos",
-
-	'file:add' => 'Enviar un ficheiro',
 
 	'file:file' => "Ficheir",
 
@@ -50,41 +45,29 @@ return [
 	'file:friends:type:image' => "Imaxes dos contactos",
 	'file:friends:type:general' => "Ficheiros xerais dos contactos",
 
-	'file:widget' => "Trebello de ficheiro",
-	'file:widget:description' => "Presentar os últimos ficheiros",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Activar os ficheiros de grupo',
+	'groups:tool:file' => 'Enable group files',
 
-	'file:delete:confirm' => "Está seguro de que quere eliminar este ficheiro?",
-
-	'file:upload_limit' => 'O tamaño máximo permitido para os ficheiros son %s.',
-
-	'file:tagcloud' => "Nube de etiquetas",
-
-	'file:display:number' => "Número de ficheiros para mostrar",
-
-	'river:create:object:file' => '%s enviou o ficheiro %s',
-	'river:comment:object:file' => '%s deixou un comentario no ficheiro %s',
-
-	'item:object:file' => 'Ficheiros',
+	'river:object:file:create' => '%s uploaded the file %s',
+	'river:object:file:comment' => '%s commented on the file %s',
 
 	'file:notify:summary' => 'Novo ficheiro: «%s»',
 	'file:notify:subject' => 'Novo ficheiro: «%s»',
-	'file:notify:body' =>
-'%s enviou un novo ficheiro: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Vexa e deixe un comentario no ficheiro:
-%s
-',
+View and comment on the file:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Gardouse o ficheiro.",
-	'file:deleted' => "Eliminouse o ficheiro.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -92,9 +75,6 @@ Vexa e deixe un comentario no ficheiro:
 
 	'file:none' => "Non hai ficheiros",
 	'file:uploadfailed' => "Non foi posíbel gardar o ficheiro",
-	'file:downloadfailed' => "O ficheiro non está dispoñíbel nestes momentos",
-	'file:deletefailed' => "Non foi posíbel eliminar o ficheiro.",
 	'file:noaccess' => "Non ten permisos para cambiar o ficheiro.",
 	'file:cannotload' => "There was an error uploading the file",
-	'file:nofile' => "Debe seleccionar un ficheiro.",
-];
+);

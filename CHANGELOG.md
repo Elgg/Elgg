@@ -1,3 +1,122 @@
+<a name="3.0.0"></a>
+## 3.0.0  (2019-04-05)
+
+#### Contributors
+
+* Jerôme Bakker (60)
+* Jeroen Dalsem (54)
+* Rohit Gupta (3)
+* iionly (1)
+
+#### Features
+
+* **cache:** reset opcache when flushing the system cache ([b3c84901](https://github.com/Elgg/Elgg/commit/b3c849016573f222bf6b0a28e37accedf5bf060f))
+* **core:** added server statistics about OPcache ([f48d7b1a](https://github.com/Elgg/Elgg/commit/f48d7b1a9fbeec55ed391b838012c9419765d588))
+* **gatekeeper:**
+  * improved gatekeeper exceptions ([d8765071](https://github.com/Elgg/Elgg/commit/d876507178c5c5816c9079aedbee4637caf6cd6d))
+  * added a logged out gatekeeper middleware ([b9264a93](https://github.com/Elgg/Elgg/commit/b9264a931847ae559fd25d0f8cf3b47490e17dc1))
+* **i18n:** output date in locale string ([c2ca5da2](https://github.com/Elgg/Elgg/commit/c2ca5da28e6d9e2af70bb82f812d96db128c55ab))
+* **livesearch:** allow to filter out banned users ([c3d631a3](https://github.com/Elgg/Elgg/commit/c3d631a3efa489d2f4fcd8527522f2dfdb33ed4e))
+* **security:** added admin setting to set if icons are session bound ([07f070de](https://github.com/Elgg/Elgg/commit/07f070dead59dee8782687b031840303514ba6c6))
+* **upgrades:** added an information page about the phinx db upgrades ([5ce9bced](https://github.com/Elgg/Elgg/commit/5ce9bced0444be55ec369fbe9f73f8609d9917ae))
+
+
+#### Performance
+
+* **db:** added combined index on entities type/subtype ([33b8463c](https://github.com/Elgg/Elgg/commit/33b8463cf1313ad48334e97ffb8907bdb3a059b1))
+* **i18n:**
+  * improved logic of loading translations ([d615165b](https://github.com/Elgg/Elgg/commit/d615165b78ebf8554e8143e70f4b2b203a13fef1))
+  * cache translations in systemcache only when loaded ([ea22727f](https://github.com/Elgg/Elgg/commit/ea22727fa07daffff6e86fc13e2e7f22588d3212))
+* **plugins:**
+  * preload private settings when fetching plugins from db ([daaab2a2](https://github.com/Elgg/Elgg/commit/daaab2a21de0ecd734254b24a0f47563612b0f82))
+  * always set boot plugins ([a70787c8](https://github.com/Elgg/Elgg/commit/a70787c89ceca536ccc54ba472047c3300220f73))
+  * only reset plugin priority if dirty ([2d5d8571](https://github.com/Elgg/Elgg/commit/2d5d8571ada91bb6feb717cc18a3a19f067f4100))
+* **upgrades:**
+  * use direct queries during friends acl upgrade ([6a401bc9](https://github.com/Elgg/Elgg/commit/6a401bc9cfca4279739c158f5434e337600587e7))
+  * disable systemlog during execution of an ElggUpgrade ([d94ec941](https://github.com/Elgg/Elgg/commit/d94ec9412c69dca18824e3322617f19eea58979d))
+
+
+#### Documentation
+
+* **icons:** document recommended additional options for entity icons ([a39bb1c7](https://github.com/Elgg/Elgg/commit/a39bb1c7ff14001be2e98284d4c555825a05f1ea))
+
+
+#### Bug Fixes
+
+* **account:** don't allow , and : in username ([7049923e](https://github.com/Elgg/Elgg/commit/7049923e0240b2cf478aa5aee7a7e72a4761411a))
+* **ajax:** on error response clear system messages ([e3ca2b10](https://github.com/Elgg/Elgg/commit/e3ca2b1026d4631ceb6ce0a73e44ae16cfbbe69d))
+* **blog:**
+  * use correct route after deleting a blog ([6481b93f](https://github.com/Elgg/Elgg/commit/6481b93f3a363b0fab31c8447a2b5f86dbe9efe9))
+  * excerpt no longer limited during save ([f2f1eb7c](https://github.com/Elgg/Elgg/commit/f2f1eb7cc8550dcb95770dbe9af72375d7bc36c7))
+  * ordering of archive menu items not consistent ([3ff75438](https://github.com/Elgg/Elgg/commit/3ff7543810a2e3cc777bb6ac0ba4798cbf6b963e))
+* **cache:** clear running autoloadermap when flushing the caches ([2ea53a3b](https://github.com/Elgg/Elgg/commit/2ea53a3b9cf3e4e3010279be24d9a194339fb177))
+* **comments:** show read more in activity for long comments ([5cca32bf](https://github.com/Elgg/Elgg/commit/5cca32bfa0fd2e80291ce9e3d4613f73f441b96d))
+* **core:**
+  * fallback to generic error code in ErrorResponse ([9c81a8bb](https://github.com/Elgg/Elgg/commit/9c81a8bb21a5d087a228d0168c411dd21ac4e508))
+  * make sure constants are available during db migrations ([d5c8ff47](https://github.com/Elgg/Elgg/commit/d5c8ff472f8ce322e64c2437129971b01776ff07))
+  * directory permissions more usable ([5fdf3a86](https://github.com/Elgg/Elgg/commit/5fdf3a8674a7dc8e88431d760f68ff2dc7647796))
+  * try to forward to entity collection after deletion ([df08d138](https://github.com/Elgg/Elgg/commit/df08d13878401926a1b26b2fe66171f672339ecf))
+* **css:**
+  * keep tabs together on smaller screens ([ef0b42f7](https://github.com/Elgg/Elgg/commit/ef0b42f710f0a404a547be8b34177635965f466f))
+  * entity navigation not always correctly aligned in all browsers ([64c6a0c0](https://github.com/Elgg/Elgg/commit/64c6a0c013787945980bce63b821dea22054ef03))
+  * popped out dropdown always showing ([9597d6c4](https://github.com/Elgg/Elgg/commit/9597d6c4c9b44bf8cdb517cda0b01fb137037603))
+  * allow wrapping of elgg-menu-hz menu items if there is no room ([2e4292ca](https://github.com/Elgg/Elgg/commit/2e4292ca39cbea675343b5ce6172eb52eb2baf77))
+  * wordbreaking is now allowed everywhere ([994663fd](https://github.com/Elgg/Elgg/commit/994663fd8ed981b6eaff5f5feca1cb4c7962bfd1))
+* **database:** support closure group_by clauses ([7da86a40](https://github.com/Elgg/Elgg/commit/7da86a407e5485a63e7695a958ae48431c911478))
+* **email:** set content encoding on magic email attachments ([b0ef558a](https://github.com/Elgg/Elgg/commit/b0ef558a2eca10008a52a38d83b07d20d4b83f07))
+* **embed:** tabs now working correctly ([8a4b80e5](https://github.com/Elgg/Elgg/commit/8a4b80e58a0d440b4250cc1d655780b2174cfbdf))
+* **gatekeeper:** return http 401 status code when not authorized ([4bb770d7](https://github.com/Elgg/Elgg/commit/4bb770d7bc7ba9f14e653d5f00f566a9e62fef11))
+* **groups:** add menu item in correct menu section ([436c93a6](https://github.com/Elgg/Elgg/commit/436c93a6bd0fb74b517e30e8f4f66c3df6342637))
+* **icons:** increased the default resolution of master icon to 10240px ([e39e5d29](https://github.com/Elgg/Elgg/commit/e39e5d29d5bdb1fc73fdf6775a2fa7879cc85c9a))
+* **input:** do not autocomplete input date fields ([d55cf07b](https://github.com/Elgg/Elgg/commit/d55cf07bb6a9191063055718f95d731051356e2b))
+* **invitefriends:** route path conflict with friends plugin ([9c645ed0](https://github.com/Elgg/Elgg/commit/9c645ed0fbcb96e1ba4089b1bf2c85ae760c000a))
+* **js:**
+  * clear system messages when submitting ajax submitted form ([dbc6a913](https://github.com/Elgg/Elgg/commit/dbc6a913d154b06c660e945c5e8d677c46db6734))
+  * check if trigger is set before validation if part of comments ([9fdd66d7](https://github.com/Elgg/Elgg/commit/9fdd66d7f427608d0194aa22e60e42f21c8c63c0))
+  * provide user feedback when opening user hover menu ([bb280605](https://github.com/Elgg/Elgg/commit/bb28060562dc420493c731b4fc89d97d9b9fd83f))
+  * close popups on window scroll ([6fbaf8d4](https://github.com/Elgg/Elgg/commit/6fbaf8d42115495f0433708dcb57486615e9e168))
+* **menus:**
+  * menu items will recursively sort its children ([e979cd69](https://github.com/Elgg/Elgg/commit/e979cd69591650a4280eeb2df587c0606444609d))
+  * prevent section output if no items ([f7868abb](https://github.com/Elgg/Elgg/commit/f7868abb58ae4537fa00c9cf8cb97c45dc10780b))
+  * you can now have a link with toggleable features combined ([097b01f7](https://github.com/Elgg/Elgg/commit/097b01f7f4c266aa8eb7e84b097dfeddf861936e))
+* **navigation:**
+  * always append admin toggle menu item ([41021eda](https://github.com/Elgg/Elgg/commit/41021eda88380c02f758cf674591c83c79571be4))
+  * do not require logged in user for filter tab all ([570d7721](https://github.com/Elgg/Elgg/commit/570d772168ff91e442ed7dff8b9c2de583028f11))
+  * correctly remove selected state if link item not a tab ([8cd7209a](https://github.com/Elgg/Elgg/commit/8cd7209a1c76998e1d4f93246c915b988b92fb66))
+  * improved breadcrumbs for site containers ([578a25c5](https://github.com/Elgg/Elgg/commit/578a25c5bb8d705d362ea161db279b40b9d036b3))
+  * entity nav fixed for entities with same time created ([4d66fcc1](https://github.com/Elgg/Elgg/commit/4d66fcc1dd41b7e6f0aeba7dedf650e4d563a6ce))
+  * add default user_hover section items to actions section ([387d618b](https://github.com/Elgg/Elgg/commit/387d618b13795d3eef38d546a0a1432a6aab2770))
+* **notifications:** validate the notification event ([b8e34723](https://github.com/Elgg/Elgg/commit/b8e3472322c28467696b27118dab79952773a696))
+* **plugins:**
+  * generateEntities correctly rediscovers disabled plugins ([b62238dd](https://github.com/Elgg/Elgg/commit/b62238ddf62fcf0df64edd65b3f647ea4146716f))
+  * rely on magic translations for widgets ([988ec419](https://github.com/Elgg/Elgg/commit/988ec419cd41cd371e64c8f3c0c46ea587591b97))
+* **request:**
+  * return expected return type ([af805ca1](https://github.com/Elgg/Elgg/commit/af805ca182ad309b132f01fdab84191cb96f96e3))
+  * set_input values override request values ([ba1e977d](https://github.com/Elgg/Elgg/commit/ba1e977d89f6e89ddbb52c2cc1721f229f5aa550))
+  * use same order as in getParam() ([9ac24c7a](https://github.com/Elgg/Elgg/commit/9ac24c7a029b6c9321fca840eeab4d8922ad9851))
+* **rss:**
+  * listings have rss content ([07e6338c](https://github.com/Elgg/Elgg/commit/07e6338c0f73e2728632c0809de1a8040b257e31))
+  * register rss link in a more logical way and provide control ([9e785825](https://github.com/Elgg/Elgg/commit/9e785825a93ac8004787d6d5a0e27268b0899c31))
+  * prevent RSS output if disabled ([cf6af267](https://github.com/Elgg/Elgg/commit/cf6af2671fbac39617cbf4e3aaf9dc8c6a8953b6))
+* **scripts:** transifex script adjustments ([0633121c](https://github.com/Elgg/Elgg/commit/0633121cd11a0cedffffa58eddaba57b346bb244))
+* **search:**
+  * namespace profile fields ([3fc2afcb](https://github.com/Elgg/Elgg/commit/3fc2afcbe1c4b84c9eff03fcae957ee40296d03b))
+  * improved search fields normalization ([ec58c6f1](https://github.com/Elgg/Elgg/commit/ec58c6f1f1498ec8408cdb6e1c3b01199dcb34fe))
+  * split search field registrations ([cae5e906](https://github.com/Elgg/Elgg/commit/cae5e90649f34d0242dec6f709e19b15993b0eba))
+* **session:** close session early when redirecting repsonses ([4149f8d3](https://github.com/Elgg/Elgg/commit/4149f8d3002c269078454beeca341195ce209252))
+* **site_notifications:** site notification link js handling works again ([2a62cd6e](https://github.com/Elgg/Elgg/commit/2a62cd6e4fca45fbf3102170178717697b981efa))
+* **system_log:** use correct plugin setting for cron jobs ([f6c5d109](https://github.com/Elgg/Elgg/commit/f6c5d1097d02dbb245eac8a01bea3aed77118a94))
+* **tags:** support documented elgg_get_metadata features ([4460f948](https://github.com/Elgg/Elgg/commit/4460f9488741756262db45337b8297d3222166a4))
+* **tests:** pass test independed of loglevel settings ([2e22b1df](https://github.com/Elgg/Elgg/commit/2e22b1df5fdf06ddcde4bc619bf49417d8c17622))
+* **upgrades:**
+  * drop site_guid as primary and unique key explicitely before removing site_guid column ([ff6f2069](https://github.com/Elgg/Elgg/commit/ff6f206947c4f63a4448321aaa94f397f43ad7ee))
+  * validate database setting before changing ([89989f56](https://github.com/Elgg/Elgg/commit/89989f563c1cb780cb5e745633eef9ca45eb37a0))
+  * don't report Batch errors for completed upgrades ([b8e1af6e](https://github.com/Elgg/Elgg/commit/b8e1af6ed64a8bd14bf48112836cbb25a338ac74))
+  * don't offer delete link for ElggUpgrades ([5b9d1b08](https://github.com/Elgg/Elgg/commit/5b9d1b08fa9fd2a416da70df5f448fd530dd7d64))
+* **users:** set default values ([7757fcd5](https://github.com/Elgg/Elgg/commit/7757fcd5b6b55ec970ae5bad223aa69940332a58))
+* **widgets:** check page owner canEdit in can_edit_widget_layout ([e40ffbcc](https://github.com/Elgg/Elgg/commit/e40ffbcc453382a4dd60f87d58996204395a3359))
+
+
 <a name="3.0.0-rc.2"></a>
 ### 3.0.0-rc.2  (2018-12-21)
 
@@ -950,6 +1069,22 @@ keyword `all` no longer has any effect on calling order. ([1b0cc64d](https://git
 var `$DEFAULT_FILE_STORE`.
  ([618c79d3](https://github.com/Elgg/Elgg/commit/618c79d301eda1b265441b14f3bfbda2235ee3fd))
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
+
+
+<a name="2.3.11"></a>
+### 2.3.11  (2019-04-04)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Ismayil Khayredinov (1)
+
+#### Bug Fixes
+
+* **gatekeeper:** more consistency in resource gatekeepers ([60a045a3](https://github.com/Elgg/Elgg/commit/60a045a3b72734321413830c8375e4594622b9e2))
+* **livesearch:** prevent PHP warning in switch statement ([44e671d0](https://github.com/Elgg/Elgg/commit/44e671d053b2f69b59876d942c9aeb340048337e))
+* **notifications:** fix faulty subscription list mutations ([0edb38d1](https://github.com/Elgg/Elgg/commit/0edb38d1a86c01e9b0c05911fcd7d9421dc33822))
+* **walled_garden:** allow access to webapp manifest.json ([73c36a13](https://github.com/Elgg/Elgg/commit/73c36a139c2271b5330fed60964e6a2522863c20))
 
 
 <a name="2.3.10"></a>
@@ -2492,6 +2627,18 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+<a name="1.12.18"></a>
+### 1.12.18  (2019-04-03)
+
+#### Contributors
+
+* Jyoti Raval (1)
+* Wouter van Os (1)
+
+#### Bug Fixes
+
+* **core:** revert original libxml_use_internal_errors value after use ([bc30e941](https://github.com/Elgg/Elgg/commit/bc30e941071b25c42101c8843b4918a171044027))
 
 <a name="1.12.17"></a>
 ### 1.12.17  (2017-09-21)

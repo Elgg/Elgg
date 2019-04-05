@@ -10,10 +10,7 @@ return array(
 	'messageboard:messageboard' => "Nachrichten-Pinnwand",
 	'messageboard:none' => "Es gibt noch keine Nachrichten auf dieser Pinnwand.",
 	'messageboard:num_display' => "Anzahl der anzuzeigenden Nachrichten",
-	'messageboard:desc' => "Dieses Widget ist eine Nachrichten-Pinnwand, die Du zu Deiner Profilseite hinzufügen kannst, damit andere Mitglieder Dir eine Nachricht hinterlassen können.",
-
 	'messageboard:user' => "Nachrichten-Pinnwand von %s",
-
 	'messageboard:owner' => 'Nachrichten-Pinnwand von %s',
 	'messageboard:owner_history' => 'Nachrichten von %s auf der Pinnwand von %s',
 
@@ -57,4 +54,6 @@ oder um das Profil von %s aufzurufen, folge dem Link:
 
 	'messageboard:failure' => "Beim Speichern Deiner Nachricht ist ein unerwarteter Fehler aufgetreten. Bitte versuche es noch einmal.",
 
+	'widgets:messageboard:name' => "Message board",
+	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
 );

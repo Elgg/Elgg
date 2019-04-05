@@ -1,42 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "Pagine",
-	'pages:owner' => "Pagine di %s",
-	'pages:friends' => "Pagine degli amici",
-	'pages:all' => "Tutte le pagine del sito",
-	'pages:add' => "Aggiungi una pagina",
+	'item:object:page' => 'Pagine',
+	'collection:object:page' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "Pagine del gruppo",
-	'groups:enablepages' => 'Abilita pagine del gruppo',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "Una nuova pagina",
-	'pages:edit' => "Modifica questa pagina",
 	'pages:delete' => "Elimina questa pagina",
 	'pages:history' => "Cronologia",
 	'pages:view' => "Mostra pagina",
 	'pages:revision' => "Revisione",
-	'pages:current_revision' => "Revisione attuale",
-	'pages:revert' => "Ripristina",
 
 	'pages:navigation' => "Navigazione",
 
 	'pages:notify:summary' => 'Nuova pagina intitolata %s',
 	'pages:notify:subject' => "Una nuova pagina: %s",
 	'pages:notify:body' =>
-'%s ha aggiunto una nuova pagina: %s
+'%s added a new page: %s
 
 %s
 
-Visualizza e commenta questa pagina:
+View and comment on the page:
 %s',
-	'item:object:page_top' => 'Pagine di primo livello',
-	'item:object:page' => 'Pagine',
-	'pages:nogroup' => 'Questo gruppo non ha ancora alcuna pagina',
+
 	'pages:more' => 'Più pagine',
 	'pages:none' => 'Ancora nessuna pagina creata',
 
@@ -44,13 +40,10 @@ Visualizza e commenta questa pagina:
 	* River
 	**/
 
-	'river:create:object:page' => '%s ha creato la pagina %s',
-	'river:create:object:page_top' => '%s ha creato la pagina %s',
-	'river:update:object:page' => '%s ha aggiornato la pagina %s',
-	'river:update:object:page_top' => '%s ha aggiornato la pagina %s',
-	'river:comment:object:page' => '%s ha commentato la pagina %s',
-	'river:comment:object:page_top' => '%s ha commentato la pagina %s',
-
+	'river:object:page:create' => '%s ha creato la pagina %s',
+	'river:object:page:update' => '%s ha aggiornato la pagina %s',
+	'river:object:page:comment' => '%s ha commentato la pagina dal titolo %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -65,21 +58,13 @@ Visualizza e commenta questa pagina:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'Non hai accesso a questa pagina',
 	'pages:cantedit' => 'Non puoi modificare questa pagina',
 	'pages:saved' => 'Pagina salvata',
 	'pages:notsaved' => 'La pagina non può essare salvata',
 	'pages:error:no_title' => 'Devi specificare un titolo per questa pagina.',
-	'pages:delete:success' => 'La pagina è stata eliminata con successo.',
-	'pages:delete:failure' => 'Impossibile rimuovere la pagina.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'La revisione della pagina è stata eliminata.',
 	'pages:revision:delete:failure' => 'La revisione della pagina non può essere eliminata.',
-	'pages:revision:not_found' => 'Impossibile trovare questa revisione.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Ultimo aggiornamento %s di %s',
 
 	/**
 	 * History
@@ -91,7 +76,8 @@ Visualizza e commenta questa pagina:
 	 **/
 
 	'pages:num' => 'Numero di pagine da visualizzare',
-	'pages:widget:description' => "Questo è un elenco delle tue pagine.",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -100,13 +86,14 @@ Visualizza e commenta questa pagina:
 	'pages:label:edit' => "Modifica pagina",
 	'pages:label:history' => "Cronologia della pagina",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "Questa pagina",
-	'pages:sidebar:children' => "Sotto-pagine",
-	'pages:sidebar:parent' => "Su di un livello",
-
 	'pages:newchild' => "Crea una sotto-pagina",
-	'pages:backtoparent' => "Torna a '%s'",
-];
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migra page_top a page entities",
+	'pages:upgrade:2017110700:description' => "Cambia il sottotipo di tutte le 'pagine top' in 'pagina' e imposta i metadati per assicurare un'elencazione corretta.",
+	
+	'pages:upgrade:2017110701:title' => "Migra gli inserimenti sul river delle page_top",
+	'pages:upgrade:2017110701:description' => "Cambia il sottotipo di tutti gli elementi del river per le 'Pagine top' in 'pagina'",
+);

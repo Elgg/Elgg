@@ -145,5 +145,4 @@ class SimpletestCommand extends Command {
 
 		return $result ? 0 : 1;
 	}
-
 }

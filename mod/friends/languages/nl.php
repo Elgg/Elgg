@@ -18,7 +18,8 @@ return array(
 
 	'friends:of' => "Vrienden van",
 	
-	'friends:widget:description' => "Toon een aantal van je vrienden",
 	'friends:num_display' => "Het aantal vrienden om weer te geven",
-
+	
+	'widgets:friends:name' => "Vrienden",
+	'widgets:friends:description' => "Toon een aantal van je vrienden",
 );

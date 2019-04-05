@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Pliki",
-	'file:user' => "Pliki użytkownika %s",
-	'file:friends' => "Pliki znajomych",
-	'file:all' => "Wszystkie pliki",
-	'file:edit' => "Edytuj plik",
+	'item:object:file' => 'Pliki',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "Więcej plików",
 	'file:list' => "widok listy",
-	'file:group' => "Pliki w grupie",
-	'file:gallery' => "Widok galerii",
-	'file:gallery_list' => "Widok galerii lub listy",
+
 	'file:num_files' => "Liczba plików do wyświetlenia",
-	'file:user:gallery'=>'Wyświetl galerię użytkownika %s',
-	'file:upload' => "Wgraj plik",
 	'file:replace' => 'Zastąp zawartość pliku (pozostaw puste aby nie zmieniać pliku)',
 	'file:list:title' => "%s %s %s",
 	'file:title:friends' => "Znajomi",
-
-	'file:add' => 'Wgraj plik',
 
 	'file:file' => "Plik",
 
@@ -50,41 +45,29 @@ return [
 	'file:friends:type:image' => "Zdjęcia twoich znajomych",
 	'file:friends:type:general' => "Ogólne pliki twoich znajomych",
 
-	'file:widget' => "Gadżet plików",
-	'file:widget:description' => "Zaprezentuj swoje ostatnie pliki",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Włącz pliki grupy',
+	'groups:tool:file' => 'Enable group files',
 
-	'file:delete:confirm' => "Czy na pewno chcesz usunąć ten plik?",
-
-	'file:upload_limit' => 'Maksymalny dozwolony rozmar pliku to %s',
-
-	'file:tagcloud' => "Chmura tagów",
-
-	'file:display:number' => "Liczba plików do wyświetlenia",
-
-	'river:create:object:file' => '%s wgrał nowy plik %s',
-	'river:comment:object:file' => '%s skomentował plik %s',
-
-	'item:object:file' => 'Pliki',
+	'river:object:file:create' => '%s uploaded the file %s',
+	'river:object:file:comment' => '%s commented on the file %s',
 
 	'file:notify:summary' => 'Nowy plik o nazwie %s',
 	'file:notify:subject' => 'Nowy plik: %s',
-	'file:notify:body' =>
-'%s zamieścił nowy plik: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Zobacz i skomentuj nowy plik:
-%s
-',
+View and comment on the file:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Twój plik został pomyślnie zapisany.",
-	'file:deleted' => "Plik został usunięty.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -92,9 +75,6 @@ Zobacz i skomentuj nowy plik:
 
 	'file:none' => "Brak plików.",
 	'file:uploadfailed' => "Przykro nam, nie można było zapisać pliku.",
-	'file:downloadfailed' => "Przykro nam, ten plik nie jest dostępny w tej chwili.",
-	'file:deletefailed' => "Plik nie może być usunięty w tej chwili.",
 	'file:noaccess' => "Nie masz uprawnień do modyfikacji tego pliku",
 	'file:cannotload' => "There was an error uploading the file",
-	'file:nofile' => "Musisz wskazać plik",
-];
+);

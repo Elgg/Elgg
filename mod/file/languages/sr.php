@@ -1,27 +1,22 @@
 <?php
-return [
+return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Фајлови",
-	'file:user' => "%s's фајлови",
-	'file:friends' => "Фајлови пријатеља",
-	'file:all' => "Сви фајлови сајта",
-	'file:edit' => "Уреди фајл",
+	'item:object:file' => 'Фајлови',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "Више фајлова",
 	'file:list' => "Листа - преглед",
-	'file:group' => "Фајлови групе",
-	'file:gallery' => "Галерија - преглед",
-	'file:gallery_list' => "Галерија или листа",
+
 	'file:num_files' => "Број фајлова за приказ",
-	'file:user:gallery'=>'Види %s галерију',
-	'file:upload' => "Додај фајл",
 	'file:replace' => 'Замени садржај фајла (остави празно да не промениш фајл)',
 	'file:list:title' => "%s %s %s",
 	'file:title:friends' => "Пријатељи",
-
-	'file:add' => 'Додај фајл',
 
 	'file:file' => "Фајл",
 
@@ -50,41 +45,29 @@ return [
 	'file:friends:type:image' => "Слике ваших пријатеља",
 	'file:friends:type:general' => "Општи фајлови ваших пријатеља",
 
-	'file:widget' => "Виџет фајлова",
-	'file:widget:description' => "Прикажите ваше најновије фајлове",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Омогући фајлове групе',
+	'groups:tool:file' => 'Enable group files',
 
-	'file:delete:confirm' => "Да ли сте сигурни да желите да обришете овај фајл?",
-
-	'file:upload_limit' => 'Максимална дозвољена величина фајла је %s',
-
-	'file:tagcloud' => "Облак ознака",
-
-	'file:display:number' => "Број фајлова за приказ",
-
-	'river:create:object:file' => '%s је додао/ла фајл %s',
-	'river:comment:object:file' => '%s је коментарисао/ла на фајл %s',
-
-	'item:object:file' => 'Фајлови',
+	'river:object:file:create' => '%s uploaded the file %s',
+	'river:object:file:comment' => '%s commented on the file %s',
 
 	'file:notify:summary' => 'Novi fajl imena %s',
 	'file:notify:subject' => 'Нови фајл: %s',
-	'file:notify:body' =>
-'%s је додао/ла нови фајл: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Видите и коментаришите фајл:
-%s
-',
+View and comment on the file:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Ваш фајл је успешно сачуван.",
-	'file:deleted' => "Ваш фајл је успешно обрисан.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -92,9 +75,6 @@ return [
 
 	'file:none' => "Нема фајлова.",
 	'file:uploadfailed' => "Извините, нисмо могли да сачувамо ваш фајл.",
-	'file:downloadfailed' => "Извинте,  овај фајл није доступан тренутно.",
-	'file:deletefailed' => "Нисмо могли да обришемо ваш фајл.",
 	'file:noaccess' => "Немате дозволе да мењате овај фајл",
 	'file:cannotload' => "Дошло је до грешке приликом слања фајла",
-	'file:nofile' => "Морате да означите фајл",
-];
+);

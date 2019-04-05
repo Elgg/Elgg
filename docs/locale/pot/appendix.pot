@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-21 16:20+0100\n"
+"POT-Creation-Date: 2019-04-05 10:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1471,7 +1471,7 @@ msgid "Security fixes through"
 msgstr ""
 
 #: ../../appendix/support.rst:53
-msgid "1.12 LTS"
+msgid "1.12"
 msgstr ""
 
 #: ../../appendix/support.rst:53
@@ -1481,7 +1481,7 @@ msgstr ""
 #: ../../appendix/support.rst:53
 #: ../../appendix/support.rst:53
 #: ../../appendix/support.rst:63
-msgid "August 2018 [#f1]_"
+msgid "April 2019"
 msgstr ""
 
 #: ../../appendix/support.rst:55
@@ -1520,7 +1520,7 @@ msgid "2.3 LTS"
 msgstr ""
 
 #: ../../appendix/support.rst:61
-msgid "August 2019 [#f1]_"
+msgid "April 2020"
 msgstr ""
 
 #: ../../appendix/support.rst:61
@@ -1528,7 +1528,7 @@ msgid "**Until 4.0**"
 msgstr ""
 
 #: ../../appendix/support.rst:63
-msgid "3.0"
+msgid "3.0 LTS"
 msgstr ""
 
 #: ../../appendix/support.rst:65
@@ -1537,10 +1537,6 @@ msgstr ""
 
 #: ../../appendix/support.rst:65
 msgid "TBD"
-msgstr ""
-
-#: ../../appendix/support.rst:68
-msgid "Will be updated when 3.0 becomes stable"
 msgstr ""
 
 #: ../../appendix/upgrade-notes.rst:2
@@ -5280,7 +5276,7 @@ msgid "``expages``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:568
-msgid "``invitefriends``: Use ``friends/invite``"
+msgid "``invitefriends``: Use ``friends/{username}/invite``"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:569
