@@ -80,7 +80,7 @@ foreach ($log_entries as $entry) {
 	<?php echo $entry->object_id; ?>
 </td>
 <td class="log-entry-action">
-	<?php echo elgg_echo($entry->event); ?>
+	<?php echo $entry->event; ?>
 </td>
 </tr>
 <?php

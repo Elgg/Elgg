@@ -565,7 +565,7 @@ Removed pagehandling
  * ``collections/pickercallback``
  * ``discussion/reply``: See :ref:`upgrade-discussion-replies`
  * ``expages``
- * ``invitefriends``: Use ``friends/invite``
+ * ``invitefriends``: Use ``friends/{username}/invite``
  * ``messages/compose``: Use ``messages/add``
  * ``reportedcontent``
 

@@ -18,7 +18,8 @@ return array(
 
 	'friends:of' => "Contact de",
 	
-	'friends:widget:description' => "Affiche une partie de vos contacts.",
 	'friends:num_display' => "Nombre de contacts à afficher",
-
+	
+	'widgets:friends:name' => "Contacts",
+	'widgets:friends:description' => "Affiche une partie de vos contacts.",
 );

@@ -27,23 +27,49 @@ if (!$entity->delete()) {
 }
 
 // determine forward URL
-$forward_url = get_input('forward_url');
+$forward_url = elgg_normalize_site_url(get_input('forward_url'));
 if (!$forward_url) {
 	$forward_url = REFERER;
 	$referrer_url = $_SERVER['HTTP_REFERER'] ?: '';
 	$site_url = elgg_get_site_url();
 	
+	$find_forward_url = function (ElggEntity $container = null) use ($type, $subtype) {
+		$routes = _elgg_services()->routes;
+		
+		// check if there is a collection route (eg. blog/owner/username)
+		$route_name = false;
+		if ($container instanceof ElggUser) {
+			$route_name = "collection:{$type}:{$subtype}:owner";
+		} elseif ($container instanceof ElggGroup) {
+			$route_name = "collection:{$type}:{$subtype}:group";
+		}
+		
+		if ($route_name && $routes->get($route_name)) {
+			$params = $routes->resolveRouteParameters($route_name, $container);
+			
+			return elgg_generate_url($route_name, $params);
+		}
+		
+		// no route found, fallback to container url
+		if ($container instanceof ElggEntity) {
+			return $container->getURL();
+		}
+		
+		// no container
+		return '';
+	};
+	
 	if ($referrer_url && 0 == strpos($referrer_url, $site_url)) {
 		// referer is on current site
-		
 		$referrer_path = substr($referrer_url, strlen($site_url));
 		$segments = explode('/', $referrer_path);
+		
 		if (in_array($guid, $segments)) {
 			// referrer URL contains a reference to the entity that will be deleted
-			$forward_url = ($container) ? $container->getURL() : '';
+			$forward_url = $find_forward_url($container);
 		}
 	} elseif ($container) {
-		$forward_url = $container->getURL();
+		$forward_url = $find_forward_url($container);
 	}
 }
 

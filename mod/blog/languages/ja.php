@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'ブログ',
-	'blog:blogs' => 'ブログ',
+return array(
+	'item:object:blog' => 'ブログ',
+	'collection:object:blog' => 'ブログ',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => '変更履歴',
 	'blog:archives' => '書庫',
-	'blog:blog' => 'ブログ',
-	'item:object:blog' => 'ブログ',
 
-	'blog:title:user_blogs' => '%s さんのブログ',
-	'blog:title:all_blogs' => 'サイトの全ブログ',
-	'blog:title:friends' => '友達のブログ',
-
-	'blog:group' => 'グループブログ',
-	'blog:enableblog' => 'グループブログを使えるようにする',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'ブログに投稿する',
 
 	// Editing
-	'blog:add' => 'ブログ記事を追加',
-	'blog:edit' => 'ブログ記事を編集',
 	'blog:excerpt' => '見出し',
 	'blog:body' => '本文',
 	'blog:save_status' => '最後に保存:',
-	
+
 	'blog:revision' => '変更履歴',
 	'blog:auto_saved_revision' => '自動保存された変更履歴',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'この変更記録を見つけることはできませんでした。',
 
 	// river
-	'river:create:object:blog' => '%s さんは、ブログ「%s」を公表しました。',
-	'river:comment:object:blog' => '%s さんは、ブログ「%s」にコメントしました。',
+	'river:object:blog:create' => '%s さんがブログ %s を公開しました。',
+	'river:object:blog:comment' => '%s さんがブログ %s にコメントしました。',
 
 	// notifications
 	'blog:notify:summary' => '新着ブログ「%s」',
 	'blog:notify:subject' => '新着ブログ: %s',
 	'blog:notify:body' =>
 '
-%s さんは、新しいブログを公開しました: %s
+%s published a new blog post: %s
 
 %s
 
-閲覧・コメントするには、:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'あなたの最近のブログ記事を表示',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => '別のブログ記事',
 	'blog:numbertodisplay' => 'ブログ記事の表示件数',
-	'blog:noblogs' => 'ブログ記事は一つもありません'
-];
+);

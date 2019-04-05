@@ -20,7 +20,7 @@ fieldset > div:last-child {
 }
 
 label, .elgg-field-label {
-	font-weight: 500;
+	font-weight: 600;
 	font-size: 0.9rem;
 	line-height: 1.8rem;
 
@@ -111,7 +111,7 @@ input[type="number"] {
 
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radios.elgg-horizontal li {
-	display: inline;
+	display: inline-block;
 	padding-right: 1rem;
 }
 

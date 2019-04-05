@@ -17,11 +17,14 @@ function system_log_init() {
 	/** Register a default system log handler */
 	elgg_register_event_handler('log', 'systemlog', 'system_log_default_logger', 999);
 
-	elgg_register_event_handler('upgrade:before', 'system', function() {
+	$disable_logging = function() {
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
 		elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 		elgg_unregister_event_handler('all', 'all', 'system_log_listener');
-	});
+	};
+	
+	elgg_register_event_handler('upgrade:before', 'system', $disable_logging);
+	elgg_register_event_handler('upgrade:execute:before', 'system', $disable_logging);
 
 	// Register cron hook for archival of logs
 	elgg_register_plugin_hook_handler('cron', 'all', 'system_log_archive_cron');
@@ -118,7 +121,7 @@ function system_log_user_hover_menu($hook, $type, $return, $params) {
 function system_log_archive_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logrotated");
 
-	$period = elgg_get_plugin_setting('period', 'logrotate');
+	$period = elgg_get_plugin_setting('period', 'system_log');
 	if ($period !== $type) {
 		return;
 	}
@@ -144,7 +147,7 @@ function system_log_archive_cron($hook, $type, $returnvalue, $params) {
 function system_log_delete_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logdeleted");
 
-	$period = elgg_get_plugin_setting('delete', 'logrotate');
+	$period = elgg_get_plugin_setting('delete', 'system_log');
 	if ($period == 'never') {
 		return;
 	}

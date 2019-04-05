@@ -20,6 +20,9 @@
  * @subpackage Admin
  */
 
+use Elgg\Menu\MenuItems;
+use Elgg\Database\QueryBuilder;
+
 /**
  * Get the admin users
  *
@@ -138,6 +141,7 @@ function _elgg_admin_init() {
 		
 	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:filter:admin/upgrades', '_elgg_admin_upgrades_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu_plugin_settings');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated:bulk', '_elgg_admin_user_unvalidated_bulk_menu');
@@ -801,7 +805,7 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 	}
 	
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\Event)) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
 	
@@ -810,7 +814,7 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 	}
 	
 	$user = $event->getObject();
-	if (!($user instanceof \ElggUser)) {
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 	
@@ -818,14 +822,16 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 	$admin_batch = elgg_get_admins([
 		'limit' => false,
 		'wheres' => [
-			"e.guid <> {$user->getGUID()}",
+			function (QueryBuilder $qb, $main_alias) use ($user) {
+				return $qb->compare("{$main_alias}.guid", '!=', $user->guid, ELGG_VALUE_GUID);
+			},
 		],
 		'batch' => true,
 	]);
 	
 	/* @var $admin \ElggUser */
 	foreach ($admin_batch as $admin) {
-		$return_value[$admin->getGUID()] = ['email'];
+		$return_value[$admin->guid] = ['email'];
 	}
 	
 	return $return_value;
@@ -942,7 +948,7 @@ function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_valu
 	}
 	
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\Event)) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
 	
@@ -951,11 +957,11 @@ function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_valu
 	}
 	
 	$user = $event->getObject();
-	if (!($user instanceof \ElggUser)) {
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 	
-	$return_value[$user->getGUID()] = ['email'];
+	$return_value[$user->guid] = ['email'];
 	
 	return $return_value;
 }
@@ -1048,6 +1054,47 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
 	$return_value->url = false;
 	
 	return $return_value;
+}
+
+/**
+ * Add menu items to the filter menu on the admin upgrades page
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:filter:admin/upgrades'
+ *
+ * @return MenuItems
+ * @access private
+ */
+function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
+	
+	$result = $hook->getValue();
+	
+	$selected = $hook->getParam('filter_value');
+	
+	$result[] = ElggMenuItem::factory([
+		'name' => 'pending',
+		'text' => elgg_echo('admin:upgrades:menu:pending'),
+		'href' => 'admin/upgrades',
+		'priority' => 100,
+		'selected' => $selected === 'pending',
+	]);
+	
+	$result[] = ElggMenuItem::factory([
+		'name' => 'completed',
+		'text' => elgg_echo('admin:upgrades:menu:completed'),
+		'href' => 'admin/upgrades/finished',
+		'priority' => 200,
+		'selected' => $selected === 'completed',
+	]);
+	
+	$result[] = ElggMenuItem::factory([
+		'name' => 'db',
+		'text' => elgg_echo('admin:upgrades:menu:db'),
+		'href' => 'admin/upgrades/db',
+		'priority' => 300,
+		'selected' => $selected === 'db',
+	]);
+	
+	return $result;
 }
 
 /**

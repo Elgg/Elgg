@@ -35,10 +35,16 @@ return [
 		'add:object:file' => [
 			'path' => '/file/add/{guid}',
 			'resource' => 'file/upload',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'edit:object:file' => [
 			'path' => '/file/edit/{guid}',
 			'resource' => 'file/edit',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'view:object:file' => [
 			'path' => '/file/view/{guid}/{title?}',
@@ -47,8 +53,6 @@ return [
 	],
 	'widgets' => [
 		'filerepo' => [
-			'name' => elgg_echo('collection:object:file'),
-			'description' => elgg_echo('file:widget:description'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],

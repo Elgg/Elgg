@@ -10,7 +10,7 @@
 /**
  * Gets the guid of the entity that owns the current page.
  *
- * @see default_page_owner_handler Used to guess the page owner if it's not been set.
+ * @see default_page_owner_handler() Used to guess the page owner if it's not been set.
  *
  * @param int $guid Optional parameter used by elgg_set_page_owner_guid().
  *
@@ -37,7 +37,8 @@ function elgg_get_page_owner_guid($guid = 0) {
 	if ($route) {
 		$page_owner = $route->resolvePageOwner();
 		if ($page_owner) {
-			return $page_owner->guid;
+			$page_owner_guid = $page_owner->guid;
+			return $page_owner_guid;
 		}
 	}
 

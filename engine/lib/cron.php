@@ -56,7 +56,7 @@ function _elgg_cron_page_handler($segments) {
 		$output .= "Exception: {$ex->getMessage()}";
 	}
 
-	echo $output;
+	echo nl2br($output);
 	return true;
 }
 

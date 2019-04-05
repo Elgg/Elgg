@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Ιστολόγια',
-	'blog:blogs' => 'Ιστολόγια',
+return array(
+	'item:object:blog' => 'Ιστολόγια',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Αναθεωρήσεις',
 	'blog:archives' => 'Αρχεία',
-	'blog:blog' => 'Ιστολόγιο',
-	'item:object:blog' => 'Ιστολόγια',
 
-	'blog:title:user_blogs' => 'ιστολόγια του χρήστη %s',
-	'blog:title:all_blogs' => 'Όλα τα ιστολόγια',
-	'blog:title:friends' => 'Ιστολόγια φίλων',
-
-	'blog:group' => 'Ιστολόγιο ομάδας',
-	'blog:enableblog' => 'Ενεργοποίηση ιστολογίου ομάδας',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Γράψτε μία νέα ανάρτηση',
 
 	// Editing
-	'blog:add' => 'Προσθέστε μία νέα ανάρτηση',
-	'blog:edit' => 'Επεξεργασία ανάρτησης',
 	'blog:excerpt' => 'Aπόσπασμα',
 	'blog:body' => 'Κείμενο',
 	'blog:save_status' => 'Τελευταία αποθήκευση:',
-	
+
 	'blog:revision' => 'Αναθεώρηση',
 	'blog:auto_saved_revision' => 'Αυτόματη αποθήκευση αναθεώρησης',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Αδύνατη εύρεση της αναθέωρησης',
 
 	// river
-	'river:create:object:blog' => '%s δημοσίευσε στο ιστολόγιο %s',
-	'river:comment:object:blog' => '%s σχολίασε στο ιστολόγιο %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Νέα ανάρτηση με τίτλο %s',
 	'blog:notify:subject' => 'Νέα ανάρτηση: %s',
 	'blog:notify:body' =>
 '
-%s έκανε μία νέα ανάρτηση: %s
+%s published a new blog post: %s
 
 %s
 
-Δείτε την ανάρτηση και σχολιάστε:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Προβολή πρόσφατων αναρτήσεων σας',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Περισσότερες αναρτήσεις',
 	'blog:numbertodisplay' => 'Αριθμός αναρτήσεων για εμφάνιση',
-	'blog:noblogs' => 'Δεν υπάρχουν αναρτήσεις'
-];
+);

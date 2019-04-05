@@ -4,7 +4,6 @@
  *
  * @package Bookmarks
  */
-elgg_gatekeeper();
 
 $title = elgg_echo('add:object:bookmarks');
 

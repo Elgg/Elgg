@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Alle venner',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Modtag besked når der sker noget omkring dit indhold',
 	'notifications:subscriptions:personal:title' => 'Personlig besked',
 
-	'notifications:subscriptions:friends:title' => 'Venner',
-	'notifications:subscriptions:friends:description' => 'Det følgende er en automatisk samling oprettet ud fra dine venner. For at modtage opdateringer vælg nedenfor. Dette vil påvirke den tilsvarende bruger i beskedindstillingspanelet nederst på siden.',
-	'notifications:subscriptions:collections:edit' => 'Klik her for at redigere din vennesamling.',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Beskeder',
 	'notifications:subscriptions:changesettings:groups' => 'Gruppe beskeder',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Dine indstillinger for beskeder er blevet gemt.',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

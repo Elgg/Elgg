@@ -368,6 +368,13 @@ elgg.system_messages = function(msgs, delay, type) {
 };
 
 /**
+ * Helper function to remove all current system messages
+ */
+elgg.clear_system_messages = function() {
+	$('ul.elgg-system-messages').empty();
+};
+
+/**
  * Wrapper function for system_messages. Specifies "messages" as the type of message
  * @param {String} msgs  The message to display
  * @param {Number} delay How long to display the message (milliseconds)

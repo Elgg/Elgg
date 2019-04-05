@@ -17,7 +17,7 @@
  *                           will be pulled from elgg_get_page_owner_guid().
  *
  * @return void
- * @throws \Elgg\GroupGatekeeperException
+ * @throws \Elgg\Http\Exception\GroupToolGatekeeperException
  * @since 3.0.0
  */
 function elgg_group_tool_gatekeeper($option, $group_guid = null) {
@@ -32,8 +32,12 @@ function elgg_group_tool_gatekeeper($option, $group_guid = null) {
 		return;
 	}
 
-	$ex = new \Elgg\GroupGatekeeperException(elgg_echo('groups:tool_gatekeeper'));
+	$ex = new \Elgg\Http\Exception\GroupToolGatekeeperException();
 	$ex->setRedirectUrl($group->getURL());
+	$ex->setParams([
+		'entity' => $group,
+		'tool' => $option,
+	]);
 
 	throw $ex;
 }

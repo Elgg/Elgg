@@ -167,8 +167,9 @@ final class PasswordService {
 			return false;
 		}
 
-		remove_private_setting($user_guid, 'passwd_conf_code');
-		remove_private_setting($user_guid, 'passwd_conf_time');
+		$user->removePrivateSetting('passwd_conf_code');
+		$user->removePrivateSetting('passwd_conf_time');
+		
 		// clean the logins failures
 		reset_login_failure_count($user_guid);
 

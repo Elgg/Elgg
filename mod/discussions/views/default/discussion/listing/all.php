@@ -1,4 +1,12 @@
 <?php
+/**
+ * Renders a list of discussions, optionally filtered by container type
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
+ * @uses $vars['container_type'] Container type filter to apply
+ */
+
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 

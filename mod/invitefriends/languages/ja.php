@@ -16,22 +16,19 @@ return array(
 	'invitefriends:already_members' => '以下の方は、すでにメンバです。: %s',
 	'invitefriends:noemails' => '電子メールアドレスが入力されていません。',
 	
-	'invitefriends:message:default' => 'こんにちは、
+	'invitefriends:message:default' => 'Hi,
 
-あなたをSNSサイト %s へお誘いしようと思っております。
+I want to invite you to join my network here on %s.',
 
-ぜひご参加いただけたらと思います。
-',
+	'invitefriends:email' => 'You have been invited to join %s by %s.
 
-	'invitefriends:email' => 'SNSサイト %1$s への招待状をお届けいたします。
-%2$s 様から下記のメッッセージをお預かりしております:
+They included the following message:
 
-%3$s
+%s
 
-ご参加いただける場合は、下のリンクをクリックしてください:
+To join, click the following link:
+%s
 
-%4$s
-
-アカウントを作成すると自動的に友達として登録されます。',
+You will automatically add them as a friend when you create your account.',
 	
 );

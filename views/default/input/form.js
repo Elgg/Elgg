@@ -12,6 +12,7 @@ define(function (require) {
 			data: ajax.objectify($form),
 			beforeSend: function() {
 				$form.find('[type="submit"]').prop('disabled', true);
+				elgg.clear_system_messages();
 			}
 		}).done(function (json, status, jqXHR) {
 			if (jqXHR.AjaxData.status === -1) {

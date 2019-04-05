@@ -11,19 +11,25 @@ define(function (require) {
 	var Ajax = require('elgg/Ajax');
 	var ajax = new Ajax(false);
 
-	function changeTab($tab) {
+	function changeTab($link_item) {
 
-		$tab.siblings().andSelf().removeClass('elgg-state-selected');
-		$tab.addClass('elgg-state-selected');
-
-		var $target = $tab.data('target');
+		var $target = $link_item.data('target');
 		if (!$target || !$target.length) {
 			return false;
 		}
 
+		// find the tabs that have the selected state and remove that state
+		$target.closest('.elgg-tabs-component').find('.elgg-tabs').eq(0).find('.elgg-state-selected').removeClass('elgg-state-selected');
+		
+		$link_item.addClass('elgg-state-selected');
+		
 		$target.siblings().addClass('hidden').removeClass('elgg-state-active');
 		$target.removeClass('hidden').addClass('elgg-state-active');
 
+		// trigger scroll to close potential open menus
+		// see elgg/popup.js open function
+		$(document).trigger('scroll');
+		
 		return true;
 	};
 	

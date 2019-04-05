@@ -445,6 +445,7 @@ class Application {
 			}
 
 			if (0 === strpos($request->getElggPath(), '/cache/')) {
+				$config->_disable_session_save = true;
 				$response = $this->_services->cacheHandler->handleRequest($request, $this)->prepare($request);
 				self::getResponseTransport()->send($response);
 
@@ -584,7 +585,7 @@ class Application {
 
 			$response = new RedirectResponse($url, ELGG_HTTP_PERMANENTLY_REDIRECT);
 		} catch (Exception $ex) {
-			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ? : 500);
+			$response = new ErrorResponse($ex->getMessage(), $ex->getCode() ? : ELGG_HTTP_INTERNAL_SERVER_ERROR);
 		}
 
 		return self::respond($response);
@@ -597,6 +598,10 @@ class Application {
 	 * @return bool
 	 */
 	public static function migrate() {
+		
+		$constants = self::elggDir()->getPath('engine/lib/constants.php');
+		self::requireSetupFileOnce($constants);
+		
 		$conf = self::elggDir()->getPath('engine/conf/migrations.php');
 		if (!$conf) {
 			throw new InstallationException('Settings file is required to run database migrations.');

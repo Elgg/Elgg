@@ -13,55 +13,33 @@ use Elgg\Upgrade\Result;
  */
 class GroupIconTransfer implements AsynchronousUpgrade {
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\Upgrade\Batch::getVersion()
+	 */
 	public function getVersion() {
 		return 2016101900;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\Upgrade\Batch::needsIncrementOffset()
+	 */
 	public function needsIncrementOffset() {
 		return true;
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
+	 * @see \Elgg\Upgrade\Batch::shouldBeSkipped()
 	 */
 	public function shouldBeSkipped() {
-		$groups = elgg_get_entities([
-			'types' => 'group',
-			'metadata_names' => 'icontime',
-		]);
-
-		if (empty($groups)) {
-			return true;
-		}
-
-		$group = array_pop($groups);
-
-		$sizes = elgg_get_icon_sizes('group', $group->getSubtype());
-
-		$dataroot = elgg_get_config('dataroot');
-		$dir = (new \Elgg\EntityDirLocator($group->owner_guid))->getPath();
-		$prefix = 'groups/';
-
-		// Check whether there are icons that are still saved under the
-		// group's owner instead of the group itself.
-		foreach ($sizes as $size => $opts) {
-			if ($size == 'original') {
-				$filename = "{$group->guid}.jpg";
-			} else {
-				$filename = "{$group->guid}{$size}.jpg";
-			}
-			$filestorename = "{$dataroot}{$dir}{$prefix}{$filename}";
-			if (file_exists($filestorename)) {
-				// A group icon was found meaning that the upgrade is needed.
-				return false;
-			}
-		}
-
-		return true;
+		return empty($this->countItems());
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
+	 * @see \Elgg\Upgrade\Batch::countItems()
 	 */
 	public function countItems() {
 		return elgg_get_entities([
@@ -71,7 +49,8 @@ class GroupIconTransfer implements AsynchronousUpgrade {
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
+	 * @see \Elgg\Upgrade\Batch::run()
 	 */
 	public function run(Result $result, $offset) {
 
@@ -101,11 +80,12 @@ class GroupIconTransfer implements AsynchronousUpgrade {
 	public function transferIcons(\ElggGroup $group, Result $result) {
 
 		$sizes = elgg_get_icon_sizes('group', $group->getSubtype());
-
+		$sizes['original'] = [];
 		$dataroot = elgg_get_config('dataroot');
 		$dir = (new \Elgg\EntityDirLocator($group->owner_guid))->getPath();
 		$prefix = 'groups/';
 
+		$error = false;
 		foreach ($sizes as $size => $opts) {
 			if ($size == 'original') {
 				$filename = "{$group->guid}.jpg";

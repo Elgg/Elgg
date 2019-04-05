@@ -57,7 +57,8 @@ use Elgg\Project\Paths;
  * @property string        $image_processor
  * @property string        $installed
  * @property bool          $installer_running
- * @property string        $language     Site language code
+ * @property string        $language                   Site language code
+ * @property string[]      $language_to_locale_mapping A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
  * @property int           $lastcache
  * @property array         $libraries
  * @property bool          $memcache

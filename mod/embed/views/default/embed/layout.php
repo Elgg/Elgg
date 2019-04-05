@@ -3,7 +3,7 @@
  * Layout of embed panel loaded in lightbox
  */
 
-$title =  elgg_view_title(elgg_echo('embed:media'));
+$title = elgg_view_title(elgg_echo('embed:media'));
 
 $menu = elgg_view_menu('embed', $vars);
 
@@ -11,11 +11,9 @@ $selected = elgg_get_config('embed_tab');
 if ($selected->getData('view')) {
 	$tab = elgg_view($selected->getData('view'), $vars);
 } else {
-	$tab = elgg_list_entities(
-		embed_get_list_options($selected->getData('options')),
-		'elgg_get_entities',
-		'embed_list_items'
-	);
+	$options = embed_get_list_options($selected->getData('options'));
+	
+	$tab = elgg_list_entities($options, 'elgg_get_entities', 'embed_list_items');
 }
 
 $tab .= elgg_view('graphics/ajax_loader', [

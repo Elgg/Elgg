@@ -17,7 +17,6 @@ return [
 	],
 	'widgets' => [
 		'friends' => [
-			'description' => elgg_echo('friends:widget:description'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],

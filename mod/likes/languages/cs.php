@@ -20,20 +20,21 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s přidal/a "líbí se" k vašemu příspěvku "%s"',
 	'likes:notifications:body' =>
-'Zdravím %1$s,
+'Hi %1$s,
 
-%2$s přidal/a "líbí se" k vašemu příspěvku "%3$s" na %4$s
+%2$s likes your post "%3$s" on %4$s
 
-Původní příspěvek zobrazíte zde:
+See your original post here:
 
 %5$s
 
-profil uživatele %2$s naleznete zde:
+or view %2$s\'s profile here:
 
 %6$s
 
-Díky,
-%4$s
-',
+Thanks,
+%4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
 );

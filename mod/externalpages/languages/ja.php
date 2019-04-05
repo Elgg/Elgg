@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "外部向け説明ページ",
-	'admin:appearance:expages' => "サイトページ",
+	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "サイトのページを見る",
 	'expages:about' => "このサイトについて",
 	'expages:terms' => "利用条件",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "ページを更新しました。",
 	'expages:error' => "このページを保存できませんでした。",
-];
+);

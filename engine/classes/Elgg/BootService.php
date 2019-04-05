@@ -151,7 +151,7 @@ class BootService {
 		}
 
 		// we don't store langs in boot data because it varies by user
-		$services->translator->loadTranslations();
+		$services->translator->bootTranslations();
 
 		// invalidate on some actions just in case other invalidation triggers miss something
 		$services->hooks->registerHandler('action', 'all', function ($action) {

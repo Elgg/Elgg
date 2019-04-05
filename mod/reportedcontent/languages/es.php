@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Reportar',
 	'reportedcontent:instructions' => 'Este reporte ha sido enviado para su revisi&oacute;n.',
 	'reportedcontent:numbertodisplay' => 'N&uacute;mero de reportes a mostrar',
-	'reportedcontent:widget:description' => 'Mostrar contenido reportado',
 	'reportedcontent:user' => 'Reportar usuario',
 
 	'reportedcontent:failed' => 'No se pudo enviar el reporte.',
 	'reportedcontent:notarchived' => 'No se pudo archivar el reporte',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

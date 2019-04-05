@@ -3,10 +3,6 @@
  * Assembles and outputs the forgotten password page.
  */
 
-if (elgg_is_logged_in()) {
-	throw new \Elgg\GatekeeperException();
-}
-
 $title = elgg_echo('user:password:lost');
 
 $hash_missing_username = elgg_get_session()->get('forgotpassword:hash_missing');

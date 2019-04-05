@@ -1,10 +1,12 @@
 <?php
 
+use Elgg\Database\QueryBuilder;
+
 elgg_gatekeeper();
 
-$limit = get_input('limit', elgg_get_config('default_limit'));
-$query = get_input('term', get_input('q'));
-$input_name = get_input('name');
+$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'));
+$query = elgg_extract('term', $vars, elgg_extract('q', $vars));
+$input_name = elgg_extract('name', $vars);
 
 $options = [
 	'query' => $query,
@@ -17,7 +19,7 @@ $options = [
 	'input_name' => $input_name,
 ];
 
-$target_guid = get_input('match_target');
+$target_guid = (int) elgg_extract('match_target', $vars);
 if ($target_guid) {
 	$target = get_entity($target_guid);
 } else {
@@ -28,20 +30,19 @@ if (!$target || !$target->canEdit()) {
 	forward('', '403');
 }
 
-if (get_input('match_owner', false)) {
+if (elgg_extract('match_owner', $vars, false)) {
 	$options['owner_guid'] = (int) $target->guid;
 }
 
-if (get_input('match_membership', false)) {
-	$dbprefix = elgg_get_config('dbprefix');
-	$options['wheres'][] = "
-		EXISTS(
-			SELECT 1 FROM {$dbprefix}entity_relationships
-			WHERE guid_one = $target->guid
-			AND relationship = 'member'
-			AND guid_two = e.guid
-		)
-	";
+if (elgg_extract('match_membership', $vars, false)) {
+	$options['wheres'][] = function (QueryBuilder $qb, $main_alias) use ($target) {
+		$rel = $qb->subquery('entity_relationships');
+		$rel->select('guid_two')
+			->where($qb->compare('relationship', '=', 'member', ELGG_VALUE_STRING))
+			->andWhere($qb->compare('guid_one', '=', $target->guid, ELGG_VALUE_GUID));
+		
+		return $qb->compare("{$main_alias}.guid", 'in', $rel->getSQL());
+	};
 }
 
 $body = elgg_list_entities($options, 'elgg_search');

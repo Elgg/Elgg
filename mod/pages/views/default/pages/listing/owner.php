@@ -1,6 +1,10 @@
 <?php
 /**
  * Display user's pages
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
+ * @uses $vars['entity'] the user
  */
 
 $entity = elgg_extract('entity', $vars);

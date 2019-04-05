@@ -2,7 +2,6 @@
 	max-width: $(desktop);
 	margin: 0 auto;
 	padding: 0 0.5rem;
-	position: relative;
 }
 
 .elgg-page-default .elgg-page-body > .elgg-inner {

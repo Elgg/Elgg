@@ -1,33 +1,40 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Chíos",
-	'thewire:everyone' => "Todos os chíos",
-	'thewire:user' => "Chíos de %s",
-	'thewire:friends' => "Chíos dos contactos",
+
+	'item:object:thewire' => "Chíos",
+	'collection:object:thewire' => 'Wire posts',
+	'collection:object:thewire:all' => "All wire posts",
+	'collection:object:thewire:owner' => "%s's wire posts",
+	'collection:object:thewire:friends' => "Friends' wire posts",
+
 	'thewire:replying' => "Resposta a %s (%s) que escribiu",
 	'thewire:thread' => "Fío",
 	'thewire:charleft' => "caracteres restantes",
 	'thewire:tags' => "Chíos coa etiqueta «%s»",
 	'thewire:noposts' => "Aínda non hai chíos.",
-	'item:object:thewire' => "Chíos",
+
 	'thewire:by' => 'Chíos de %s',
 	'thewire:previous:help' => "Ver chíos anteriores",
 	'thewire:hide:help' => "Agochar o chío anterior",
 
+	'thewire:form:body:placeholder' => "What's happening?",
+	
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s publicou en %s",
+	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'Chíos',
 
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Mostrar os seus últimos chíos',
+	
+	'widgets:thewire:description' => 'Display your latest wire posts',
 	'thewire:num' => 'Número de chíos para mostrar',
 	'thewire:moreposts' => 'Máis chíos',
 
@@ -37,7 +44,6 @@ return [
 	'thewire:posted' => "Publicouse o chío.",
 	'thewire:deleted' => "Eliminouse o chío.",
 	'thewire:blank' => "Non pode publicar chíos baleiros.",
-	'thewire:notfound' => "Non foi posíbel atopar o chío indicado",
 	'thewire:notsaved' => "Non foi posíbel gardar o chío.",
 	'thewire:notdeleted' => "Non foi posíbel eliminar o chío.",
 
@@ -55,4 +61,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Número máximo de caracteres por chío:",
 	'thewire:settings:limit:none' => "Sen límite",
-];
+);

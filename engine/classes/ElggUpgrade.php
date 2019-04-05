@@ -113,7 +113,10 @@ class ElggUpgrade extends ElggObject {
 		try {
 			$batch = _elgg_services()->upgradeLocator->getBatch($this->class);
 		} catch (InvalidArgumentException $ex) {
-			elgg_log($ex->getMessage(), 'ERROR');
+			// only report error if the upgrade still needs to run
+			$loglevel = $this->isCompleted() ? 'INFO' : 'ERROR';
+			elgg_log($ex->getMessage(), $loglevel);
+			
 			return false;
 		}
 
@@ -202,6 +205,31 @@ class ElggUpgrade extends ElggObject {
 		}
 
 		return $this->getPrivateSetting($name);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggData::__isset()
+	 */
+	public function __isset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			return parent::__isset($name);
+		}
+		
+		$private_setting = $this->getPrivateSetting($name);
+		return !is_null($private_setting);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggEntity::__unset()
+	 */
+	public function __unset($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			parent::__unset($name);
+		}
+		
+		$this->removePrivateSetting($name);
 	}
 
 	/**

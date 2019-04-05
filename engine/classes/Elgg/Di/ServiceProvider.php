@@ -21,6 +21,7 @@ use Elgg\Project\Paths;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
 use Zend\Mail\Transport\TransportInterface as Mailer;
+use Elgg\I18n\LocaleService;
 
 /**
  * Provides common Elgg services.
@@ -78,6 +79,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\EntityIconService                         $iconService
  * @property-read \Elgg\ImageService                              $imageService
  * @property-read \Elgg\Invoker                                   $invoker
+ * @property-read \Elgg\I18n\LocaleService                        $localeService
  * @property-read \Elgg\Logger                                    $logger
  * @property-read Mailer                                          $mailer
  * @property-read \Elgg\Menu\Service                              $menus
@@ -443,6 +445,10 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('invoker', function(ServiceProvider $c) {
 			return new Invoker($c->session, $c->dic);
 		});
+		
+		$this->setFactory('localeService', function(ServiceProvider $c) {
+			return new LocaleService($c->config);
+		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
 			$logger = Logger::factory($c->cli_input, $c->cli_output);
@@ -630,7 +636,7 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('timer', \Elgg\Timer::class);
 
 		$this->setFactory('translator', function(ServiceProvider $c) {
-			return new \Elgg\I18n\Translator($c->config);
+			return new \Elgg\I18n\Translator($c->config, $c->localeService);
 		});
 
 		$this->setFactory('uploads', function(ServiceProvider $c) {

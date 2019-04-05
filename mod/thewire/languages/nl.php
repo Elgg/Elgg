@@ -22,6 +22,8 @@ return array(
 	'thewire:previous:help' => "Bekijk vorige bericht",
 	'thewire:hide:help' => "Verberg vorige bericht",
 
+	'thewire:form:body:placeholder' => "Wat gebeurt er?",
+	
 	/**
 	 * The wire river
 	 */
@@ -31,7 +33,8 @@ return array(
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Toon je laatste Wire-berichten',
+	
+	'widgets:thewire:description' => 'Toon je laatste Wire-berichten',
 	'thewire:num' => 'Aantal items om weer te geven',
 	'thewire:moreposts' => 'Meer Wire-berichten',
 

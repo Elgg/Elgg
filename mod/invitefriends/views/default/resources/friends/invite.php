@@ -1,12 +1,16 @@
 <?php
 
-elgg_gatekeeper();
+use Elgg\EntityPermissionsException;
+use Elgg\GatekeeperException;
 
 if (!elgg_get_config('allow_registration')) {
-	forward();
+	throw new GatekeeperException(elgg_echo('invitefriends:registration_disabled'));
 }
 
-elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+$page_owner = elgg_get_page_owner_entity();
+if (!$page_owner instanceof ElggUser || $page_owner->guid !== elgg_get_logged_in_user_guid()) {
+	throw new EntityPermissionsException();
+}
 
 $title = elgg_echo('friends:invite');
 

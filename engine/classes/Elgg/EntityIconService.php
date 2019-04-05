@@ -497,7 +497,8 @@ class EntityIconService {
 		if ($url == null) {
 			if ($this->hasIcon($entity, $size, $type)) {
 				$icon = $this->getIcon($entity, $size, $type);
-				$url = $icon->getInlineURL((bool) elgg_extract('use_cookie', $params, true));
+				$default_use_cookie = (bool) elgg_get_config('session_bound_entity_icons', false);
+				$url = $icon->getInlineURL((bool) elgg_extract('use_cookie', $params, $default_use_cookie));
 			} else {
 				$url = $this->getFallbackIconUrl($entity, $params);
 			}
@@ -603,8 +604,8 @@ class EntityIconService {
 		// lazy generation of icons requires a 'master' size
 		// this ensures a default config for 'master' size
 		$sizes['master'] = elgg_extract('master', $sizes, [
-			'w' => 2048,
-			'h' => 2048,
+			'w' => 10240,
+			'h' => 10240,
 			'square' => false,
 			'upscale' => false,
 			'crop' => false,

@@ -16,6 +16,30 @@ class ActivateNewPlugins implements SystemUpgrade  {
 		'friends_collections',
 		'system_log',
 	];
+	
+	/**
+	 * Not all plugins which should be active have to be installed,
+	 * for example in the MIT version of Elgg
+	 *
+	 * @return string[]
+	 */
+	protected function getPluginIDs() {
+		$result = [];
+		
+		$plugins_path = elgg_get_plugins_path();
+		foreach ($this->plugins as $plugin_id) {
+			if (!is_dir($plugins_path . $plugin_id)) {
+				// plugin is not installed
+				// maybe using MIT version or otherwise modified version of Elgg
+				continue;
+			}
+			
+			// plugin exists
+			$result[] = $plugin_id;
+		}
+		
+		return $result;
+	}
 
 	/**
 	 * {@inheritdoc}
@@ -28,7 +52,7 @@ class ActivateNewPlugins implements SystemUpgrade  {
 	 * {@inheritdoc}
 	 */
 	public function shouldBeSkipped() {
-		return false;
+		return empty($this->getPluginIDs());
 	}
 
 	/**
@@ -42,7 +66,7 @@ class ActivateNewPlugins implements SystemUpgrade  {
 	 * {@inheritdoc}
 	 */
 	public function countItems() {
-		return count($this->plugins);
+		return count($this->getPluginIDs());
 	}
 
 	/**
@@ -51,7 +75,7 @@ class ActivateNewPlugins implements SystemUpgrade  {
 	public function run(Result $result, $offset) {
 		_elgg_generate_plugin_entities();
 
-		foreach ($this->plugins as $id) {
+		foreach ($this->getPluginIDs() as $id) {
 			$plugin = elgg_get_plugin_from_id($id);
 
 			if (!$plugin) {
@@ -80,5 +104,4 @@ class ActivateNewPlugins implements SystemUpgrade  {
 			}
 		}
 	}
-
 }

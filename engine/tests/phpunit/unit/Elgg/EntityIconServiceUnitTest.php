@@ -113,8 +113,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	public static function getDefaultIconSizes() {
 		return [
 			'master' => [
-				'w' => 2048,
-				'h' => 2048,
+				'w' => 10240,
+				'h' => 10240,
 				'square' => false,
 				'upscale' => false,
 				'crop' => false,
@@ -429,7 +429,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
 		$icon = $service->getIcon($this->entity, 'small');
 
-		$this->assertEquals(elgg_get_inline_url($icon, true), $service->getIconURL($this->entity, 'small'));
+		$this->assertEquals(elgg_get_inline_url($icon), $service->getIconURL($this->entity, 'small'));
 	}
 
 	/**

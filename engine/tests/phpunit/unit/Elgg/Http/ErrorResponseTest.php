@@ -20,9 +20,15 @@ class ErrorResponseTest extends OkResponseUnitTest {
 		$test_class = $this->class;
 		$response = new $test_class();
 		$this->assertEquals('', $response->getContent());
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
 		$this->assertEquals(REFERRER, $response->getForwardURL());
 		$this->assertEquals([], $response->getHeaders());
+	}
+
+	public function testConstructWithInvalidStatusCode() {
+		$test_class = $this->class;
+		$response = new $test_class('foo', 9999);
+		$this->assertEquals(ELGG_HTTP_INTERNAL_SERVER_ERROR, $response->getStatusCode());
 	}
 
 	public function testCanConstructWithArguments() {

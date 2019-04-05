@@ -27,6 +27,7 @@ return array(
 	'session_changed_user' => "登录信息发生改变，请 <a href='javascript:location.reload(true)'>重新登录</a>！",
 
 	'loggedinrequired' => "请登录后查看此页面！",
+	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "需要管理员权限！",
 	'membershiprequired' => "您不是该小组成员，请先加入该研究组！",
 	'limited_access' => "抱歉，您无权限查看！",
@@ -463,6 +464,7 @@ return array(
 	'admin:cron:date' => '日期与时间',
 	'admin:cron:msg' => '消息',
 	'admin:cron:started' => 'Cron 任务 "%s" 开始于 %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => 'Cron 任务 "%s" 完成于 %s',
 
 	'admin:appearance' => '外观',
@@ -487,12 +489,17 @@ return array(
 	
 	'admin:configure_utilities:maintenance' => '维护模式',
 	'admin:upgrades' => '升级',
+	'admin:upgrades:finished' => 'Completed',
+	'admin:upgrades:menu:pending' => 'Pending upgrades',
+	'admin:upgrades:menu:completed' => 'Completed upgrades',
+	'admin:upgrades:menu:run_single' => 'Run this upgrade',
 	'admin:upgrades:run' => '运行升级。',
 	'admin:upgrades:error:invalid_upgrade' => '升级%s (%s) 不是elggupgrade实例',
 	'admin:upgrades:error:invalid_batch' => '无法实例化升级%s (%s) 的批处理程序',
 	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
 	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
 	'admin:upgrades:failed' => 'Upgrade "%s" failed',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => '设置',
 	'admin:settings:basic' => '基本设置',
@@ -613,6 +620,10 @@ return array(
 	
 	'admin:security:settings:email_require_password' => '更改电子邮件地址需要密码验证。',
 	'admin:security:settings:email_require_password:help' => '当用户希望更改其电子邮件地址时，要求他们提供当前密码。',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg用来创建各种用途的安全令牌的关键。',
 	'admin:security:settings:site_secret:regenerate' => "更新网站的密钥",
@@ -787,9 +798,15 @@ To go to the site, click here:
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
 		Redis is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure redis (or memcached).
+		For improved performance, it is recommended that you enable and configure redis (or memcache).
 ',
 
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache is not available on this server or it has not yet been enabled.
+		For improved performance, it is recommended that you enable and configure OPcache.
+',
+	
 	'admin:user:label:search' => "查找用户:",
 	'admin:user:label:searchbutton' => "搜索",
 
@@ -892,6 +909,10 @@ To go to the site, click here:
 	'icon:size:medium' => "中",
 	'icon:size:large' => "大",
 	'icon:size:master' => "超大",
+	
+	'entity:edit:icon:file:label' => "Upload a new icon",
+	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
+	'entity:edit:icon:remove:label' => "Remove icon",
 
 /**
  * Generic action words
@@ -950,6 +971,7 @@ To go to the site, click here:
 	'remove' => '移除',
 	'revert' => '恢复',
 	'validate' => '验证',
+	'read_more' => 'Read more',
 
 	'site' => '网站',
 	'activity' => '动态',
@@ -1288,7 +1310,9 @@ To go to the site, click here:
 	'upgrade:error_count' => '错误:',
 	'upgrade:finished' => '升级完成',
 	'upgrade:finished_with_errors' => '<p>升级完成，但是仍有错误，刷新页面重新运行升级</p></p><br />如果错误重现，检查服务器错误log找到可能的原因，你也可以从<a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> 寻求帮助</p>',
-
+	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:count_items' => '%d items to upgrade',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => '对齐数据库GUID列',
 	

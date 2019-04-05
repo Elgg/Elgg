@@ -1,11 +1,12 @@
 <?php
-return [
+return array(
 	// menu
 	'admin:develop_tools' => 'Strumenti',
 	'admin:develop_tools:sandbox' => 'Sandbox per i temi',
 	'admin:develop_tools:inspect' => 'Ispeziona',
 	'admin:inspect' => 'Ispeziona',
 	'admin:develop_tools:unit_tests' => 'Test unità',
+	'admin:develop_tools:entity_explorer' => 'Entity Explorer',
 	'admin:developers' => 'Sviluppatori',
 	'admin:developers:settings' => 'Impostazioni',
 
@@ -26,19 +27,40 @@ return [
 	'developers:label:show_modules' => "Visualizza i moduli AMD caricati in console",
 	'developers:help:show_modules' => "Fa scorrere i moduli caricati e i valori nella console JavaScript.",
 	'developers:label:wrap_views' => "Commenta viste",
-	'developers:help:wrap_views' => "Avvolge praticamente ogni vista con commenti HTML. Può tornare utile per trovare la vista che crea uno specifico HTML.
-									Potrebbe interrompere le viste non HTML nel tipo di vista predefinito. Consultare developers_wrap_views() per dettagli.",
+	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.
+									This can break non-HTML views in the default viewtype. See developers_wrap_views() for details.",
 	'developers:label:log_events' => "Traccia gli agganci di eventi e plugin",
 	'developers:help:log_events' => "Scrive gli agganci di eventi e plugin nel log. Attenzione: ce ne sono tanti di questi per pagina.",
 	'developers:label:show_gear' => "Usa %s al di fuori dell'area amministrativa",
 	'developers:help:show_gear' => "Un'icona nell'angolo in basso a destra della vista che dà accessi amministrativi per sviluppare impostazioni e collegamenti.",
+	'developers:label:block_email' => "Block all outgoing e-mails",
+	'developers:help:block_email' => "You can block outgoing e-mail to regular users or to all users",
+	'developers:label:forward_email' => "Forward all outgoing e-mails to one address",
+	'developers:help:forward_email' => "All outgoing e-mails will be sent to the configured e-mail address",
+	'developers:label:enable_error_log' => "Enable error log",
+	'developers:help:enable_error_log' => "Maintain a separate log of errors and messages logged to the error_log() based on your trace level setting. The log is viewable via admin interface.",
+
 	'developers:label:submit' => "Salva e rinfresca la cache",
 
+	'developers:block_email:forward' => 'Forward all e-mails',
+	'developers:block_email:users' => 'Only regular users',
+	'developers:block_email:all' => 'Admins and regular users',
+	
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Errore',
 	'developers:debug:warning' => 'Warning',
 	'developers:debug:notice' => 'Notifica',
 	'developers:debug:info' => 'Info',
+	
+	// entity explorer
+	'developers:entity_explorer:help' => 'View information about entities and perform some basic actions on them.',
+	'developers:entity_explorer:guid:label' => 'Enter the guid of the entity to inspect',
+	'developers:entity_explorer:info' => 'Entity Information',
+	'developers:entity_explorer:info:attributes' => 'Attributes',
+	'developers:entity_explorer:info:metadata' => 'Metadata',
+	'developers:entity_explorer:info:relationships' => 'Relationships',
+	'developers:entity_explorer:info:private_settings' => 'Private Settings',
+	'developers:entity_explorer:delete_entity' => 'Remove this entity',
 	
 	// inspection
 	'developers:inspect:help' => 'Indaga la configurazione del framework di Elgg',
@@ -48,18 +70,35 @@ return [
 	'developers:inspect:pluginhooks' => 'Agganci dei plugin',
 	'developers:inspect:priority' => 'Priorità',
 	'developers:inspect:simplecache' => 'Cache semplice',
+	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Viste',
 	'developers:inspect:views:all_filtered' => "<b>Nota!</b> L'output di tutte le viste è filtrato attraverso questi agganci di plugin:",
+	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(filtrato per aggancio di plugin: %s)",
 	'developers:inspect:widgets' => 'Widgets',
 	'developers:inspect:webservices' => 'Servizi web',
 	'developers:inspect:widgets:context' => 'Contesto',
 	'developers:inspect:functions' => 'Funzioni',
-	'developers:inspect:file_location' => 'Percorso del file dalla radice di Elgg',
+	'developers:inspect:file_location' => 'File path from Elgg root or controller',
+	'developers:inspect:route' => 'Route Name',
+	'developers:inspect:path' => 'Path Pattern',
+	'developers:inspect:resource' => 'Resource View',
+	'developers:inspect:handler' => 'Handler',
+	'developers:inspect:controller' => 'Controller',
+	'developers:inspect:file' => 'File',
+	'developers:inspect:middleware' => 'File',
+	'developers:inspect:handler_type' => 'Handled by',
+	'developers:inspect:services' => 'Services',
+	'developers:inspect:service:name' => 'Name',
+	'developers:inspect:service:path' => 'Definition',
+	'developers:inspect:service:class' => 'Class',
 
 	// event logging
+	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
 	'developers:log_queries' => "%s query di DB (non comprende l'evento di shutdown)",
+	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
+	'developers:elapsed_time' => "Elapsed time (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduzione',
@@ -77,13 +116,11 @@ return [
 
 	'theme_sandbox:icons:blurb' => 'Usare <em>elgg_view_icon($name)</em> per visualizzare le icone.',
 
-	// unit tests
-	'developers:unit_tests:description' => 'Elgg possiede un\'unità e dei test integrati per rilevare i bug nelle classi e funzioni del suo core.',
-	'developers:unit_tests:warning' => 'Attenzione: Non eseguire questi test su un sito di produzione. Potrebbero danneggiare il database.',
-	'developers:unit_tests:run' => 'Esegui',
-
 	// status messages
 	'developers:settings:success' => 'Impostazioni salvate e cache rinfrescata',
 
 	'developers:amd' => 'AMD',
-];
+
+	'admin:develop_tools:error_log' => 'Error Log',
+	'developers:logs:empty' => 'Error log is empty',
+);

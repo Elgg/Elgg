@@ -62,6 +62,9 @@ return [
 		'collection:group:group:invitations' => [
 			'path' => '/groups/invitations/{username}',
 			'resource' => 'groups/invitations',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'collection:group:group:search' => [
 			'path' => '/groups/search',
@@ -77,6 +80,9 @@ return [
 		'add:group:group' => [
 			'path' => '/groups/add/{container_guid}',
 			'resource' => 'groups/add',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'view:group:group' => [
 			'path' => '/groups/profile/{guid}/{title?}',
@@ -85,20 +91,27 @@ return [
 		'edit:group:group' => [
 			'path' => '/groups/edit/{guid}',
 			'resource' => 'groups/edit',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'invite:group:group' => [
 			'path' => '/groups/invite/{guid}',
 			'resource' => 'groups/invite',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 		'requests:group:group' => [
 			'path' => '/groups/requests/{guid}',
 			'resource' => 'groups/requests',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
 		],
 	],
 	'widgets' => [
 		'a_users_groups' => [
-			'name' => elgg_echo('groups:widget:membership'),
-			'description' => elgg_echo('groups:widgets:description'),
 			'context' => ['profile', 'dashboard'],
 		],
 	],

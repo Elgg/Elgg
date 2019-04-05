@@ -3,7 +3,7 @@
 namespace Elgg\Router\Middleware;
 
 use Elgg\Http\ResponseBuilder;
-use Elgg\HttpException;
+use Elgg\Http\Exception\UpgradeGatekeeperException;
 
 /**
  * Protect upgrade.php from unauthorized execution
@@ -16,7 +16,7 @@ class UpgradeGatekeeper {
 	 * @param \Elgg\Request $request Request
 	 *
 	 * @return ResponseBuilder|null
-	 * @throws HttpException
+	 * @throws UpgradeGatekeeperException
 	 */
 	public function __invoke(\Elgg\Request $request) {
 
@@ -30,7 +30,7 @@ class UpgradeGatekeeper {
 
 		$url = $request->getURL();
 		if (!_elgg_services()->urlSigner->isValid($url)) {
-			throw new HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
+			throw new UpgradeGatekeeperException();
 		}
 	}
 

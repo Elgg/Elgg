@@ -16,18 +16,19 @@ return array(
 	'invitefriends:already_members' => 'I seguenti erano già membri: %s.',
 	'invitefriends:noemails' => 'Non è stato inserito alcun indirizzo email',
 	
-	'invitefriends:message:default' => 'Ciao,
+	'invitefriends:message:default' => 'Hi,
 
-voglio invitarti a far parte del mio social qui su  %s.',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => 'Sei stato invitato ad iscriverti su %s da %s che ti ha scritto questo messaggio:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
 
-%s
-
-Per iscriverti segui il link sottostante:
+They included the following message:
 
 %s
 
-Chi ti ha invitato, verrà automaticamente aggiunto come tuo amico quando creerai il tuo account.',
+To join, click the following link:
+%s
+
+You will automatically add them as a friend when you create your account.',
 	
 );

@@ -10,10 +10,7 @@ return array(
 	'messageboard:messageboard' => "forum",
 	'messageboard:none' => "Il n'y a encore rien dans ce forum",
 	'messageboard:num_display' => "Nombre de messages à afficher",
-	'messageboard:desc' => "Ceci est un forum que vous pouvez ajouter sur votre profil, dans lequel les autres utilisateurs peuvent laisser un message.",
-
 	'messageboard:user' => "forum de %s",
-
 	'messageboard:owner' => 'le forum de %s',
 	'messageboard:owner_history' => 'publications de %s dans le forum de %s',
 
@@ -52,4 +49,6 @@ Pour voir le profil de %s :
 
 	'messageboard:failure' => "Une erreur imprévue s'est produite lors de l'ajout de votre message. Veuillez réessayer.",
 
+	'widgets:messageboard:name' => "Forum",
+	'widgets:messageboard:description' => "Ceci est un forum que vous pouvez ajouter sur votre profil, dans lequel les autres utilisateurs peuvent laisser un message.",
 );

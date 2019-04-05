@@ -3,8 +3,6 @@
  * Edit a page
  */
 
-elgg_gatekeeper();
-
 $page_guid = (int) elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($page_guid, 'object', 'page');

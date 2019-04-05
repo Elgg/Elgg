@@ -20,17 +20,13 @@ return array(
 
 	'groups:icon' => 'Portrét skupiny (prázdné = žádné změny)',
 	'groups:name' => 'Jméno skupiny',
-	'groups:username' => 'Krátké jméno skupiny (zobrazeno v URL, pouze čísla a písmena)',
 	'groups:description' => 'Popis',
 	'groups:briefdescription' => 'Stručný popis',
 	'groups:interests' => 'Štítky',
 	'groups:website' => 'Webové stránky',
 	'groups:members' => 'Počet členů',
-	'groups:my_status' => 'Váš stav',
-	'groups:my_status:group_owner' => 'Tuto skupinu vlastníte',
-	'groups:my_status:group_member' => 'Jste v této skupině',
-	'groups:subscribed' => 'Skupinová oznámení jsou zapnuta',
-	'groups:unsubscribed' => 'Skupinová oznámení jsou vypnuta',
+
+	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Členové skupiny %s',
 	'groups:members:more' => "Zobrazit všechny členy",
@@ -43,17 +39,10 @@ return array(
 	'groups:owner' => "Vlastník",
 	'groups:owner:warning' => "Varování: pokud tuto hodnotu změníte, nebudete nadále vlastníkem této skupiny.",
 	'groups:widget:num_display' => 'Počet zobrazených skupin',
-	'groups:widget:membership' => 'Členství ve skupině',
-	'groups:widgets:description' => 'Zobrazuje skupiny kterých jste členem',
-
-	'groups:widget:group_activity:title' => 'Aktivita skupiny',
-	'groups:widget:group_activity:description' => 'Zobrazuje aktivitu v jedné z vašich skupin',
-	'groups:widget:group_activity:edit:select' => 'Zvolte skupinu',
-	'groups:widget:group_activity:content:noactivity' => 'V této skupině není žádná aktivita',
-	'groups:widget:group_activity:content:noselect' => 'Při úpravě tohoto udělátka můžete vybrat skupinu',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'K této skupině nemáte přístup',
-	'groups:ingroup' => 've skupině',
 	'groups:cantcreate' => 'Nemůžete vytvořit skupinu, to mohou pouze správci.',
 	'groups:cantedit' => 'Nemůžete upravit tuto skupinu',
 	'groups:saved' => 'Skupina uložena',
@@ -70,33 +59,28 @@ return array(
 	'groups:leave' => 'Opustit skupinu',
 	'groups:invite' => 'Pozvat přátele',
 	'groups:invite:title' => 'Pozvat přátele do této skupiny',
-	'groups:inviteto' => "Pozvat přátele do '%s'",
-	'groups:nofriends' => "Nemáte žádné další přátele, kteří by nebyli pozváni do této skupiny.",
+	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
+	'groups:invite:resend' => 'Resend the invitations to already invited users',
+
 	'groups:nofriendsatall' => 'Nemáte žádné přátele, které byste mohl/a pozvat!',
-	'groups:viagroups' => "přes skupiny",
 	'groups:group' => "Skupina",
 	'groups:search:tags' => "štítek",
 	'groups:search:title' => "Hledat skupiny se štítkem '%s'",
 	'groups:search:none' => "Hledání neodpovídá žádná skupina",
 	'groups:search_in_group' => "Hledat v této skupině",
 	'groups:acl' => "Skupina: %s",
-
-	'groups:activity' => "Aktivita skupiny",
-	'groups:enableactivity' => 'Povolit aktivitu skupiny',
-	'groups:activity:none' => "V této skupině zatím není žádná aktivita",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:notfound' => "Skupina nebyla nalezena",
-	'groups:notfound:details' => "Požadovaná skupina buď neexistuje nebo do ní nemáte přístup.",
-
+	
 	'groups:requests:none' => 'Aktuálně nejsou žádné požadavky na členství.',
 
 	'groups:invitations:none' => 'Aktuálně neexistují žádná pozvání.',
 
-	'groups:count' => "vytvořených skupin",
 	'groups:open' => "veřejná skupina",
 	'groups:closed' => "uzavřená skupina",
 	'groups:member' => "členů",
-	'groups:searchtag' => "Hledat skupiny podle štítku",
+	'groups:search' => "Search for groups",
 
 	'groups:more' => 'Více skupin',
 	'groups:none' => 'Žádné skupiny',
@@ -117,12 +101,9 @@ return array(
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Naposledy změněno %s uživatelem %s',
-	'groups:lastcomment' => 'Naposledy komentováno %s uživatelem %s',
 
 	'admin:groups' => 'Skupiny',
 
-	'groups:privategroup' => 'Tato skupina je uzavřena. Požaduji členství.',
 	'groups:notitle' => 'Skupina musí mít název',
 	'groups:cantjoin' => 'Není možné přidat se ke skupině',
 	'groups:cantleave' => 'Není možné opustit skupinu',
@@ -133,61 +114,44 @@ return array(
 	'groups:joinrequestnotmade' => 'Požadavek k připojení ke skupině nelze provést',
 	'groups:joinrequestmade' => 'Požadavek na přidání do skupiny byl úspěšně odeslán',
 	'groups:joinrequest:exists' => 'Již jste požadoval/a přidání do této skupiny',
+	'groups:button:joined' => 'Joined',
+	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Byl/a jste úspěšně přidán/a do skupiny!',
 	'groups:left' => 'Odebrání ze skupiny bylo úspěšné',
-	'groups:notowner' => 'Bohužel nejste vlastníkem této skupiny.',
-	'groups:notmember' => 'Bohužel nejste členem této skupiny.',
-	'groups:alreadymember' => 'Již jste členem této skupiny!',
 	'groups:userinvited' => 'Uživatel byl pozván.',
 	'groups:usernotinvited' => 'Uživatel nemohl být pozván.',
 	'groups:useralreadyinvited' => 'Uživatel byl již pozván',
 	'groups:invite:subject' => "%s vás pozval/a do skupiny %s!",
-	'groups:started' => "Založil/a %s",
 	'groups:joinrequest:remove:check' => 'Jste si jistý/á, že chcete smazat tuto žádost o přidání?',
 	'groups:invite:remove:check' => 'Jste si jistý/á, že chcete smazat toto pozvání?',
-	'groups:invite:body' => "Zdravím %s,
+	'groups:invite:body' => "Hi %s,
 
-%s vás pozval/a do skupiny '%s'. Vaše pozvání zobrazíte kliknutím na následující odkaz:
+%s invited you to join the '%s' group.
 
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Vítejte ve skupině %s!",
-	'groups:welcome:body' => "Zdravím %s!
+	'groups:welcome:body' => "Hi %s!
 
-Od teď jste členem skupiny '%s'! Kliknutím na následující odkaz můžete začít pracovat ve skupině!
+You are now a member of the '%s' group.
 
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s se chce přidat ke skupině %s",
-	'groups:request:body' => "Zdravím %s,
+	'groups:request:body' => "Hi %s,
 
-%s se chce přidat ke skupině '%s'. Jeho/její profil zobrazíte kliknutím na následující odkaz:
+%s has requested to join the '%s' group.
 
+Click below to view their profile:
 %s
 
-nebo můžete zobrazit požadavky na přidání k této skupině následujícím odkazem:
-
+or click below to view the group's join requests:
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s vytvořil/a skupinu %s',
-	'river:join:group:default' => '%s se přidal/a ke skupině %s',
-
-	'groups:nowidgets' => 'Pro tuto skupinu nebyla stanovena udělátka.',
-
-
-	'groups:widgets:members:title' => 'Členové skupiny',
-	'groups:widgets:members:description' => 'Zobrazuje členy skupiny',
-	'groups:widgets:members:label:displaynum' => 'Zobrazuje členy skupiny',
-	'groups:widgets:members:label:pleaseedit' => 'Nastavte prosím toho udělátko.',
-
-	'groups:widgets:entities:title' => "Položky ve skupině",
-	'groups:widgets:entities:description' => "Zobrazuje položky uložené v této skupině",
-	'groups:widgets:entities:label:displaynum' => 'Zobrazuje položky této skupiny.',
-	'groups:widgets:entities:label:pleaseedit' => 'Nastavte prosím toho udělátko.',
+	'river:group:create' => '%s created the group %s',
+	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Chcete povolit soukromé (neviditelné) skupiny?',
 	'groups:whocancreate' => 'Kdo může vytvářet nové skupiny?',
@@ -195,10 +159,8 @@ nebo můžete zobrazit požadavky na přidání k této skupině následujícím
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Skupina a její obsah byl smazán',
-	'group:notdeleted' => 'Skupinu není možné smazat',
-
-	'group:notfound' => 'Skupinu nelze najít',
+	'groups:deleted' => 'Group and group contents deleted',
+	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Jste si jistý/á, že chcete smazat tuto skupinu? Nejde to vrátit zpět!",
 
 	'groups:invitekilled' => 'Pozvání bylo smazáno.',
@@ -210,4 +172,11 @@ nebo můžete zobrazit požadavky na přidání k této skupině následujícím
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Skupinové profily',
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
 );

@@ -266,8 +266,10 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 	
 	if (elgg_language_key_exists("$name:$entity_type:$entity_subtype")) {
 		$text = elgg_echo("$name:$entity_type:$entity_subtype");
-	} else {
+	} elseif (elgg_language_key_exists("$handler:$name")) {
 		$text = elgg_echo("$handler:$name");
+	} else {
+		$text = elgg_echo($name);
 	}
 	
 	// register the title menu item
@@ -448,7 +450,9 @@ function elgg_push_entity_breadcrumbs(ElggEntity $entity, $link_self = true) {
 function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEntity $container = null, $friends = false) {
 
 	if ($container) {
-		elgg_push_breadcrumb($container->getDisplayName(), $container->getURL());
+		if (!$container instanceof \ElggSite) {
+			elgg_push_breadcrumb($container->getDisplayName(), $container->getURL());
+		}
 
 		if ($friends) {
 			$collection_route = "collection:$entity_type:$entity_subtype:friends";
@@ -456,12 +460,14 @@ function elgg_push_collection_breadcrumbs($entity_type, $entity_subtype, ElggEnt
 			$collection_route = "collection:$entity_type:$entity_subtype:owner";
 		} else if ($container instanceof ElggGroup) {
 			$collection_route = "collection:$entity_type:$entity_subtype:group";
+		} else if ($container instanceof ElggSite) {
+			$collection_route = "collection:$entity_type:$entity_subtype:all";
 		} else {
 			$collection_route = "collection:$entity_type:$entity_subtype:container";
 		}
 
 		$parameters = _elgg_services()->routes->resolveRouteParameters($collection_route, $container);
-		if ($parameters) {
+		if ($parameters !== false) {
 			$label = elgg_echo("collection:$entity_type:$entity_subtype");
 			if ($friends) {
 				if (elgg_language_key_exists("collection:$entity_type:$entity_subtype:friends")) {
@@ -501,14 +507,15 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 	}
 
 	$items = [];
+	$items[] = ElggMenuItem::factory([
+		'name' => 'all',
+		'text' => elgg_echo('all'),
+		'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
+		'selected' => ($selected == 'all'),
+		'priority' => 200,
+	]);
+	
 	if ($user) {
-		$items[] = ElggMenuItem::factory([
-			'name' => 'all',
-			'text' => elgg_echo('all'),
-			'href' => (isset($vars['all_link'])) ? $vars['all_link'] : "$context/all",
-			'selected' => ($selected == 'all'),
-			'priority' => 200,
-		]);
 		$items[] = ElggMenuItem::factory([
 			'name' => 'mine',
 			'text' => elgg_echo('mine'),
@@ -843,16 +850,21 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 		'type' => $entity->getType(),
 		'subtype' => $entity->getSubtype(),
 		'container_guid' => $entity->container_guid,
-		'wheres' => [
-			function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
-				return $qb->compare("{$main_alias}.guid", '!=', $entity->guid, ELGG_VALUE_INTEGER);
-			},
-		],
 		'limit' => 1,
 	];
 
 	$previous_options = $options;
-	$previous_options['created_before'] = $entity->time_created;
+	$previous_options['wheres'] = [
+		function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+			return $qb->merge([
+				$qb->compare("{$main_alias}.time_created", '<', $entity->time_created, ELGG_VALUE_INTEGER),
+				$qb->merge([
+					$qb->compare("{$main_alias}.time_created", '=', $entity->time_created, ELGG_VALUE_INTEGER),
+					$qb->compare("{$main_alias}.guid", '<', $entity->guid, ELGG_VALUE_GUID),
+				], 'AND'),
+			], 'OR');
+		},
+	];
 	$previous_options['order_by'] = [
 		new \Elgg\Database\Clauses\OrderByClause('time_created', 'DESC'),
 		new \Elgg\Database\Clauses\OrderByClause('guid', 'DESC'),
@@ -874,7 +886,17 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 	}
 	
 	$next_options = $options;
-	$next_options['created_after'] = $entity->time_created;
+	$next_options['wheres'] = [
+		function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+			return $qb->merge([
+				$qb->compare("{$main_alias}.time_created", '>', $entity->time_created, ELGG_VALUE_INTEGER),
+				$qb->merge([
+					$qb->compare("{$main_alias}.time_created", '=', $entity->time_created, ELGG_VALUE_INTEGER),
+					$qb->compare("{$main_alias}.guid", '>', $entity->guid, ELGG_VALUE_GUID),
+				], 'AND'),
+			], 'OR');
+		},
+	];
 	$next_options['order_by'] = [
 		new \Elgg\Database\Clauses\OrderByClause('time_created', 'ASC'),
 		new \Elgg\Database\Clauses\OrderByClause('guid', 'ASC'),
@@ -999,10 +1021,6 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 	}
 	
 	if (!_elgg_has_rss_link()) {
-		return;
-	}
-	
-	if (_elgg_config()->disable_rss) {
 		return;
 	}
 

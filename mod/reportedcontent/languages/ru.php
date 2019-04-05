@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:instructions' => 'Этот отчет будет отправлен на администраторов этого сайта для просмотра.',
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',
-	'reportedcontent:widget:description' => 'Пожаловаться на элемент',
 	'reportedcontent:user' => 'Пожаловаться на пользователя',
 
 	'reportedcontent:failed' => 'Простите, пожаловаться не получилось. Пожалуйтесь на эту ошибку.',
 	'reportedcontent:notarchived' => 'Простите, невозможно заархивировать жалобу.',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

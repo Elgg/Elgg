@@ -1,27 +1,25 @@
 <?php
-return [
-	'blog' => 'Blogi',
-	'blog:blogs' => 'Blogi',
+return array(
+	'item:object:blog' => 'Blogi',
+	'collection:object:blog' => 'Blogs',
+	'collection:object:blog:all' => 'All site blogs',
+	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:group' => 'Group blogs',
+	'collection:object:blog:friends' => 'Friends\' blogs',
+	'add:object:blog' => 'Add blog post',
+	'edit:object:blog' => 'Edit blog post',
+
 	'blog:revisions' => 'Wersje',
 	'blog:archives' => 'Archiwalne',
-	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Blogi',
 
-	'blog:title:user_blogs' => 'Blogi użytkownika %s',
-	'blog:title:all_blogs' => 'Wszystkie blogi',
-	'blog:title:friends' => 'Blogi znajomych',
-
-	'blog:group' => 'Blogi w grupie',
-	'blog:enableblog' => 'Włącz blog grupy',
+	'groups:tool:blog' => 'Enable group blog',
 	'blog:write' => 'Dodaj nowy wpis',
 
 	// Editing
-	'blog:add' => 'Dodaj wpis na blogu',
-	'blog:edit' => 'Edytuj wpis na blogu',
 	'blog:excerpt' => 'Fragment',
 	'blog:body' => 'Treść',
 	'blog:save_status' => 'Ostatnio zapisano:',
-	
+
 	'blog:revision' => 'Wersja',
 	'blog:auto_saved_revision' => 'Automatycznie zapisana wersja',
 
@@ -42,25 +40,25 @@ return [
 	'blog:error:revision_not_found' => 'Nie znaleziono wskazanej wersji.',
 
 	// river
-	'river:create:object:blog' => '%s opublikował wpis na blogu %s',
-	'river:comment:object:blog' => '%s skomentował wpis na blogu %s',
+	'river:object:blog:create' => '%s published a blog post %s',
+	'river:object:blog:comment' => '%s commented on the blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nowy wpis na blogu o nazwie %s',
 	'blog:notify:subject' => 'Nowy wpis na blogu: %s',
 	'blog:notify:body' =>
 '
-%s dodał nowy wpis na blogu: %s
+%s published a new blog post: %s
 
 %s
 
-Zobacz i skomentuj nowy wpis na blogu:
+View and comment on the blog post:
 %s
 ',
 
 	// widget
-	'blog:widget:description' => 'Wyświetl moje najnowsze wpisy na blogu',
+	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'Więcej wpisów na blogu',
 	'blog:numbertodisplay' => 'Ilość wyświetlanych wpisów',
-	'blog:noblogs' => 'Brak wpisów na blogu'
-];
+);

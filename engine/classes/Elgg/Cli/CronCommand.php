@@ -55,5 +55,4 @@ class CronCommand extends Command {
 
 		return 0;
 	}
-
 }

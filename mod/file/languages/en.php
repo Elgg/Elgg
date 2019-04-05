@@ -45,8 +45,8 @@ return array(
 	'file:friends:type:image' => "Your friends' pictures",
 	'file:friends:type:general' => "Your friends' general files",
 
-	'file:widget' => "File widget",
-	'file:widget:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
 	'groups:tool:file' => 'Enable group files',
 

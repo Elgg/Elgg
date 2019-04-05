@@ -487,6 +487,9 @@ Note that not all hooks apply to instant notifications.
 	In case of a subscription event, by default, the subscribers list consists of the users subscribed to the container entity of the event object.
 	In case of an instant notification event, the subscribers list consists of the users passed as recipients to ``notify_user()``
 
+   **IMPORTANT** Always validate the notification event, object and/or action types before adding any new recipients to ensure that you do not accidentally dispatch notifications to unintended recipients.
+   Consider a situation, where a mentions plugin sends out an instant notification to a mentioned user - any hook acting on a subject or an object without validating an event or action type (e.g. including an owner of the original wire thread) might end up sending notifications to wrong users.
+
 	``$params`` array includes:
 
 	 * ``event`` - ``\Elgg\Notifications\NotificationEvent`` instance that describes the notification event

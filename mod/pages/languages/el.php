@@ -1,42 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "Σελίδες",
-	'pages:owner' => "σελίδες του χρήστη %s",
-	'pages:friends' => "Σελίδες φίλων",
-	'pages:all' => "Όλες οι σελίδες",
-	'pages:add' => "Προσθήκη Σελίδας",
+	'item:object:page' => 'Σελίδες',
+	'collection:object:page' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "Σελίδες ομάδας",
-	'groups:enablepages' => 'Ενεργοποίηση σελίδων ομάδας',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "Νέα σελίδα",
-	'pages:edit' => "Επεξεργασία σελίδας",
 	'pages:delete' => "Διαγραφή σελίδας",
 	'pages:history' => "Ιστορικό",
 	'pages:view' => "Προβολή σελίδας",
 	'pages:revision' => "Αναθεώρηση",
-	'pages:current_revision' => "Τρέχουσα Αναθεώρηση",
-	'pages:revert' => "Επαναφορά",
 
 	'pages:navigation' => "Πλοήγηση",
 
 	'pages:notify:summary' => 'Νέα σελίδα με τίτλο %s',
 	'pages:notify:subject' => "Νέα σελίδα: %s",
 	'pages:notify:body' =>
-'Ο χρήστης %s πρόσθεσε μία νέα σελίδα: %s
+'%s added a new page: %s
 
 %s
 
-Δείτε και σχολιάστε τη σελίδα:
+View and comment on the page:
 %s',
-	'item:object:page_top' => 'Σελίδες 1ου επιπέδου',
-	'item:object:page' => 'Σελίδες',
-	'pages:nogroup' => 'Δεν υπάρχουν ακόμα σελίδες σε αυτή την ομάδα',
+
 	'pages:more' => 'Περισσότερες σελίδες',
 	'pages:none' => 'Δεν υπάρχουν ακόμα σελίδες',
 
@@ -44,13 +40,10 @@ return [
 	* River
 	**/
 
-	'river:create:object:page' => '%s δημιούργησε τη σελίδα %s',
-	'river:create:object:page_top' => '%s δημιούργησε τη σελίδα %s',
-	'river:update:object:page' => '%s ενημέρωσε τη σελίδα %s',
-	'river:update:object:page_top' => '%s ενημέρωσε τη σελίδα %s',
-	'river:comment:object:page' => '%s σχολίασε τη σελίδα με τίτλο %s',
-	'river:comment:object:page_top' => '%s σχολίασε τη σελίδα με τίτλο %s',
-
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -65,21 +58,13 @@ return [
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'Σελίδα χωρίς πρόσβαση',
 	'pages:cantedit' => 'Δεν μπορείτε να επεξεργαστείτε αυτή τη σελίδα',
 	'pages:saved' => 'Η σελίδα αποθηκεύτηκε',
 	'pages:notsaved' => 'Η σελίδα δεν μπορεί να αποθηκευτεί',
 	'pages:error:no_title' => 'Πρέπει να καθορίσετε έναν τίτλο για αυτή τη σελίδα.',
-	'pages:delete:success' => 'Η σελίδα διαγράφτηκε επιτυχώς.',
-	'pages:delete:failure' => 'Αδύνατη η διαγραφή της σελίδας.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'Η αναθεώρηση της σελίδας διαγράφτηκε επιτυχώς',
 	'pages:revision:delete:failure' => 'Δεν ήταν δυνατή η αναθεώρηση της σελίδας',
-	'pages:revision:not_found' => 'Αδύνατη εύρεση της αναθέωρησης',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Τελευταία ενημέρωση %s από %s',
 
 	/**
 	 * History
@@ -91,7 +76,8 @@ return [
 	 **/
 
 	'pages:num' => 'Αριθμός σελίδων για εμφάνιση',
-	'pages:widget:description' => "Λίστα των σελίδων σας.",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -100,13 +86,14 @@ return [
 	'pages:label:edit' => "Επεξεργασία σελίδας",
 	'pages:label:history' => "Ιστορικό σελίδας",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "Αυτή η σελίδα",
-	'pages:sidebar:children' => "Υποσελίδες",
-	'pages:sidebar:parent' => "Γονικό",
-
 	'pages:newchild' => "Δημιουργία υποσελίδας",
-	'pages:backtoparent' => "Επιστροφή σε '%s'",
-];
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+);

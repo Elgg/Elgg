@@ -11,7 +11,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	 * @var ServeFileHandler
 	 */
 	protected $handler;
-
+	
 	/**
 	 * @var \ElggFile
 	 */
@@ -23,23 +23,12 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->session->start();
 
 		$this->handler = _elgg_services()->serveFileHandler;
-
-		$file = new \ElggFile();
-		$file->owner_guid = 1;
-
-		// Using special characters to test against files that have been
-		// uploaded prior to implementation of filename sanitization
-		// See #10608
-		$file->setFilename("Iñtërn'âtiônàl-izætiøn.txt");
-		$file->open('write');
-		$file->write('Test file!');
-		$file->close();
-
-		$this->file = $file;
 	}
 
 	public function down() {
-		$this->file->delete();
+		if (isset($this->file)) {
+			$this->file->delete();
+		}
 	}
 
 	function createRequest(\Elgg\FileService\File $file) {
@@ -54,6 +43,38 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 		return $request;
 	}
+	
+	function fileProvider() {
+		return [
+			// Using special characters to test against files that have been
+			// uploaded prior to implementation of filename sanitization
+			// See #10608
+			["Iñtërn'âtiônàl-izætiøn.txt"],
+			// filename with spaces
+			['a filename.txt'],
+			// regular filename
+			['filename.txt'],
+		];
+	}
+	
+	function createFile($filename) {
+		$this->assertNotEmpty($filename);
+		
+		$file = new \ElggFile();
+		$file->owner_guid = 1;
+		
+		// Using special characters to test against files that have been
+		// uploaded prior to implementation of filename sanitization
+		// See #10608
+		$file->setFilename($filename);
+		$file->open('write');
+		$file->write('Test file!');
+		$file->close();
+		
+		$this->assertTrue($file->exists());
+		
+		return $file;
+	}
 
 	/**
 	 * @group FileService
@@ -67,25 +88,36 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 */
-	public function testSend403OnUrlExpiration() {
+	public function testSend403OnUrlExpiration($filename) {
 
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 		$file->setExpires('-1 day');
 
 		$request = $this->createRequest($file);
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(403, $response->getStatusCode());
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 */
-	public function testSends403OnFileModificationTimeMismatch() {
+	public function testSends403OnFileModificationTimeMismatch($filename) {
 
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 
 		$request = $this->createRequest($file);
 
@@ -95,22 +127,29 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		// Consecutive request will be send by the browswer with an etag header
 		// We need to make sure we check modified time before issuing a Not Modified header
 		// See issue #9571
-		$request->headers->set('if_none_match', '"' . $this->file->getModifiedTime() . '"');
+		$request->headers->set('if_none_match', '"' . $test_file->getModifiedTime() . '"');
 
 		sleep(1); // sometimes tests are too fast
-		$this->file->setModifiedTime();
+		$test_file->setModifiedTime();
 
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(403, $response->getStatusCode());
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 */
-	public function testResponseCodesOnSessionRestartWithCookieEnabledForFileUrls() {
+	public function testResponseCodesOnSessionRestartWithCookieEnabledForFileUrls($filename) {
 
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 		$file->bindSession(true);
 
 		$request = $this->createRequest($file);
@@ -125,14 +164,21 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(403, $response->getStatusCode());
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 */
-	public function testResponseHeadersMatchFileAttributesForInlineUrls() {
+	public function testResponseHeadersMatchFileAttributesForInlineUrls($filename) {
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 		$file->setDisposition('inline');
 		$file->bindSession(false);
 
@@ -141,20 +187,27 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals('text/plain', $response->headers->get('Content-Type'));
 
-		$filesize = filesize($this->file->getFilenameOnFilestore());
+		$filesize = filesize($test_file->getFilenameOnFilestore());
 		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
 
 		$this->assertContains('inline', $response->headers->get('Content-Disposition'));
 
-		$this->assertEquals('"' . $this->file->getModifiedTime() . '"', $response->headers->get('Etag'));
+		$this->assertEquals('"' . $test_file->getModifiedTime() . '"', $response->headers->get('Etag'));
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 */
-	public function testResponseHeadersMatchFileAttributesForAttachmentUrls() {
+	public function testResponseHeadersMatchFileAttributesForAttachmentUrls($filename) {
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 		$file->setDisposition('attachment');
 		$file->bindSession(true);
 
@@ -163,50 +216,74 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals('text/plain', $response->headers->get('Content-Type'));
 
-		$filesize = filesize($this->file->getFilenameOnFilestore());
+		$filesize = filesize($test_file->getFilenameOnFilestore());
 		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
 
 		$this->assertContains('attachment', $response->headers->get('Content-Disposition'));
 
-		$this->assertEquals('"' . $this->file->getModifiedTime() . '"', $response->headers->get('Etag'));
+		$this->assertEquals('"' . $test_file->getModifiedTime() . '"', $response->headers->get('Etag'));
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 * @expectedException \InvalidArgumentException
 	 */
-	public function testInvalidDisposition() {
+	public function testInvalidDisposition($filename) {
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 		$file->setDisposition('foo');
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 */
-	public function testSends304WithIfNoneMatchHeadersIncluded() {
+	public function testSends304WithIfNoneMatchHeadersIncluded($filename) {
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 
 		$request = $this->createRequest($file);
-		$request->headers->set('if_none_match', '"' . $this->file->getModifiedTime() . '"');
+		$request->headers->set('if_none_match', '"' . $test_file->getModifiedTime() . '"');
 
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(304, $response->getStatusCode());
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 	/**
 	 * @group FileService
+	 * @dataProvider fileProvider
 	 */
-	public function testSends304WithIfNoneMatchHeadersIncludedAndDeflationEnabled() {
+	public function testSends304WithIfNoneMatchHeadersIncludedAndDeflationEnabled($filename) {
+		$test_file = $this->createFile($filename);
+		$this->file = $test_file;
+		
 		$file = new \Elgg\FileService\File();
-		$file->setFile($this->file);
+		$file->setFile($test_file);
 
 		$request = $this->createRequest($file);
-		$request->headers->set('if_none_match', '"' . $this->file->getModifiedTime() . '-gzip"');
+		$request->headers->set('if_none_match', '"' . $test_file->getModifiedTime() . '-gzip"');
 
 		$response = $this->handler->getResponse($request);
 		$this->assertEquals(304, $response->getStatusCode());
+		
+		$this->assertTrue($test_file->delete());
+		unset($this->file);
 	}
 
 }

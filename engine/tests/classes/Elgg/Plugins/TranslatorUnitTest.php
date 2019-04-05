@@ -31,7 +31,7 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$provides = [];
 
-		$codes = Translator::getAllLanguageCodes();
+		$codes = elgg()->locale->getLanguageCodes();
 
 		$path = $this->getPath();
 		if (!$path) {

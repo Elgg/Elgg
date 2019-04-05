@@ -1,4 +1,9 @@
 <?php
+/**
+ * List all files
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ */
 
 file_register_toggle();
 

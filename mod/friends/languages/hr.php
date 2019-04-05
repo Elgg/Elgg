@@ -18,7 +18,8 @@ return array(
 
 	'friends:of' => "Prijatelj od",
 	
-	'friends:widget:description' => "Prikazuje neke od Vaših prijatelja. ",
 	'friends:num_display' => "Broj prijatelja za prikaz",
-
+	
+	'widgets:friends:name' => "Friends",
+	'widgets:friends:description' => "Displays some of your friends.",
 );

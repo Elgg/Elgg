@@ -7,7 +7,15 @@
  * @uses int    $vars['number_of_days'] (optional) number of days before friendly time switches to a date format
  */
 
+use Elgg\Values;
+
 $timestamp = elgg_extract('time', $vars);
+
+try {
+	$date = Values::normalizeTime($timestamp);
+} catch (DataFormatException $e) {
+	return;
+}
 		
 $default_friendly_time_number_of_days = elgg_get_config('friendly_time_number_of_days', 30);
 $friendly_time_number_of_days = (int) elgg_extract('number_of_days', $vars, $default_friendly_time_number_of_days);
@@ -15,12 +23,12 @@ $friendly_time_number_of_days = (int) elgg_extract('number_of_days', $vars, $def
 if (strtotime("-{$friendly_time_number_of_days}days") < $timestamp) {
 	$output = elgg_get_friendly_time($timestamp);
 } else {
-	$output = date(elgg_echo('friendlytime:date_format:short'), $timestamp);
+	$output = $date->formatLocale(elgg_echo('friendlytime:date_format:short'));
 }
 
 $attributes = [
-	'title' => date(elgg_echo('friendlytime:date_format'), $timestamp),
-	'datetime' => date('c', $timestamp),
+	'title' => $date->formatLocale(elgg_echo('friendlytime:date_format')),
+	'datetime' => $date->format('c'),
 ];
 
 echo elgg_format_element('time', $attributes, $output);

@@ -38,12 +38,12 @@ class MigrateFriendsACL implements AsynchronousUpgrade {
 	protected function getItems(array $options = []) {
 
 		$options['types'] = 'user';
-		$options['wheres'][] = function(QueryBuilder $qb) {
+		$options['wheres'][] = function(QueryBuilder $qb, $main_alias) {
 			$subquery = $qb->subquery('access_collections', 'acl');
 			$subquery->select('acl.owner_guid')
 				->where($qb->compare('acl.subtype', '=', 'friends', ELGG_VALUE_STRING));
 
-			return $qb->compare('e.guid', 'NOT IN', $subquery->getSQL());
+			return $qb->compare("{$main_alias}.guid", 'NOT IN', $subquery->getSQL());
 		};
 
 		return elgg_get_entities($options);
@@ -102,14 +102,16 @@ class MigrateFriendsACL implements AsynchronousUpgrade {
 	}
 
 	protected function addFriendsToACL(ElggUser $user, \ElggAccessCollection $acl) {
-		$friends = $user->getFriends([
-			'batch' => true,
-			'limit' => false,
-		]);
+		$dbprefix = elgg_get_config('dbprefix');
 
-		foreach ($friends as $friend) {
-			$acl->addMember($friend->guid);
-		}
+		$query = "
+			INSERT INTO {$dbprefix}access_collection_membership (user_guid, access_collection_id)
+			SELECT guid_two, {$acl->id} FROM {$dbprefix}entity_relationships
+			WHERE relationship = 'friend'
+			AND guid_one = {$user->guid}
+		";
+		
+		_elgg_services()->db->updateData($query);
 	}
 
 	protected function updateEntities(ElggUser $user, \ElggAccessCollection $acl) {
@@ -128,18 +130,11 @@ class MigrateFriendsACL implements AsynchronousUpgrade {
 	}
 
 	protected function updateAnnotations(ElggUser $user, \ElggAccessCollection $acl) {
-		$annotations = elgg_get_annotations([
-			'type' => 'object',
-			'owner_guid' => $user->guid,
-			'access_id' => ACCESS_FRIENDS,
-			'limit' => false,
-			'batch' => true,
-		]);
-
-		foreach ($annotations as $annotation) {
-			$annotation->access_id = $acl->id;
-			$annotation->save();
-		}
+		$update = \Elgg\Database\Update::table('annotations');
+		$update->set('access_id', $acl->id);
+		$update->where($update->compare('access_id', '=', ACCESS_FRIENDS, ELGG_VALUE_INTEGER));
+		$update->andWhere($update->compare('owner_guid', '=', $user->guid, ELGG_VALUE_GUID));
+		
+		_elgg_services()->db->updateData($update);
 	}
-
 }

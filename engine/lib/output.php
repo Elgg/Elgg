@@ -222,7 +222,7 @@ function elgg_normalize_url($url) {
  *
  * @return bool|string Normalized URL or false if given URL was not a path.
  *
- * @since 3.0.0
+ * @since 1.12.18
  */
 function elgg_normalize_site_url($unsafe_url) {
 	if (!is_string($unsafe_url)) {

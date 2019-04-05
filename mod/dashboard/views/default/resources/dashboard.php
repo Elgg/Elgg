@@ -1,8 +1,5 @@
 <?php
 
-// Ensure that only logged-in users can see this page
-elgg_gatekeeper();
-
 elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 $content = elgg_view_layout('widgets', [

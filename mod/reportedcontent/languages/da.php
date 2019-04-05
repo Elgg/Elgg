@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Rapporter til administrationen',
 	'reportedcontent:instructions' => 'Denne rapport vil blive sendt til administratorer af dette websted til gennemsyn.',
 	'reportedcontent:numbertodisplay' => 'Antal rapporter, der skal vises',
-	'reportedcontent:widget:description' => 'Vis rapporteret indhold',
 	'reportedcontent:user' => 'Rapporter bruger',
 
 	'reportedcontent:failed' => 'Beklager, forsøget på at rapportere dette indhold fejlede.',
 	'reportedcontent:notarchived' => 'Vi kunne ikke arkivere denne rapport',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

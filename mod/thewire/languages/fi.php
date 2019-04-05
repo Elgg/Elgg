@@ -1,33 +1,40 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Tila",
-	'thewire:everyone' => "Kaikki tilapäivitykset",
-	'thewire:user' => "Käyttäjän %s tilapäivitykset",
-	'thewire:friends' => "Ystävien tilapäivitykset",
+
+	'item:object:thewire' => "Tilapäivitykset",
+	'collection:object:thewire' => 'Wire posts',
+	'collection:object:thewire:all' => "All wire posts",
+	'collection:object:thewire:owner' => "%s's wire posts",
+	'collection:object:thewire:friends' => "Friends' wire posts",
+
 	'thewire:replying' => "Vastataan käyttäjälle %s (@%s), joka kirjoitti",
 	'thewire:thread' => "Aihe",
 	'thewire:charleft' => "merkkiä jäljellä",
 	'thewire:tags' => "Tilapäivitykset, jotka merkitty tägillä '%s'",
 	'thewire:noposts' => "Ei tilapäivityksiä",
-	'item:object:thewire' => "Tilapäivitykset",
+
 	'thewire:by' => 'Käyttäjän %s tilapäivitys',
 	'thewire:previous:help' => "Näytä edellinen viesti",
 	'thewire:hide:help' => "Piilota edellinen viesti",
 
+	'thewire:form:body:placeholder' => "What's happening?",
+	
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s päivitti %s",
+	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'tilansa',
 
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Näytä viimeisimmät tilapäivityksesi',
+	
+	'widgets:thewire:description' => 'Display your latest wire posts',
 	'thewire:num' => 'Näytettävien kohteiden määrä',
 	'thewire:moreposts' => 'Lisää tilapäivityksiä',
 
@@ -37,7 +44,6 @@ return [
 	'thewire:posted' => "Tila päivitetty.",
 	'thewire:deleted' => "Tilapäivitys poistettu.",
 	'thewire:blank' => "Lisää jotakin sisältöä ennen tallennusta.",
-	'thewire:notfound' => "Hakemaasi tilapäivitystä ei löytynyt.",
 	'thewire:notsaved' => "Tilan tallentaminen epäonnistui.",
 	'thewire:notdeleted' => "Tilapäivituksen poistaminen epäonnistui.",
 
@@ -55,4 +61,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Tilapäivityksen suurin sallittu merkkimäärä:",
 	'thewire:settings:limit:none' => "Ei rajaa",
-];
+);

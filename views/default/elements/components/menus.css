@@ -8,8 +8,12 @@
 	&.elgg-menu-title-container {
 		flex-direction: row;
 		
-		.elgg-menu-hz > li {
-			margin: 0 0.25rem;
+		> .elgg-menu-hz {
+			justify-content: flex-end;
+			
+			> li {
+				margin: 0 0.25rem;
+			}
 		}
 	}
 }
@@ -37,10 +41,15 @@
 
 .elgg-menu.elgg-menu-hz {
 	flex-direction: row;
+	flex-wrap: wrap;
 	align-items: center;
 	
 	> li {
 		margin: 0 0.25rem 0 0;
+		
+		> .elgg-button {
+			margin-bottom: .25rem;
+		}
 	}
 }
 
@@ -156,11 +165,10 @@
 
 .elgg-menu-entity-navigation {
 	flex-direction: row;
-	justify-content: flex-end;
-}
-
-.elgg-menu-entity-navigation .elgg-menu-item-previous {
-	margin-right: auto;
+	
+	.elgg-menu-item-next {
+		margin-left: auto;
+	}
 }
 
 /* ***************************************
@@ -231,7 +239,6 @@
 	display: none;
 	position: absolute;
 	overflow: hidden;
-	border-top: 1px solid $(border-color-soft);
 	background-color: #ffffff;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 	min-width: 10rem;
@@ -240,12 +247,11 @@
 .elgg-menu-hover-card-container {
 	display: flex;
 	flex-wrap: wrap;
-	max-width: 30rem;
 }
 
 .elgg-menu-hover-card {
 	padding: 1rem;
-	min-width: 20rem;
+	max-width: 20rem;
 	flex: 2;
 }
 
@@ -299,16 +305,17 @@
 }
 
 .elgg-menu-hover .elgg-menu {
-	flex: 1;
-	min-width: 10rem;
+	flex: 1 1 auto;
+	max-width: 20rem;
 	
 	&.elgg-menu-hover-actions {
 		border-left: 1px solid $(border-color-soft);
 	}
 }
 
-.elgg-menu-hover-admin {
+.elgg-menu.elgg-menu-hover-admin {
 	border-top: 1px solid $(border-color-soft);
+	max-width: unset;
 }
 
 .elgg-menu-hover .elgg-menu-hover-admin a {

@@ -92,25 +92,23 @@ function site_notifications_send($hook, $type, $result, $params) {
  *
  * @param \Elgg\Hook $hook Hook
  *
- * @return void|\ElggMenuItem[]
+ * @return void|\Elgg\Menu\MenuItems
  */
 function site_notifications_register_entity_menu(\Elgg\Hook $hook) {
 	$entity = $hook->getEntityParam();
-	if (!($entity instanceof SiteNotification)) {
+	if (!$entity instanceof SiteNotification) {
 		return;
 	}
 	
+	/* @var $return \Elgg\Menu\MenuItems */
 	$return = $hook->getValue();
-	foreach ($return as $index => $menu_item) {
-		if ($menu_item->getName() === 'edit') {
-			unset($return[$index]);
-			continue;
-		}
-		
-		if ($menu_item->getName() === 'delete') {
-			$menu_item->setLinkClass('site-notifications-delete');
-			$menu_item->{"data-entity-ref"} = 'elgg-object-' . $entity->guid;
-		}
+	
+	$return->remove('edit');
+	
+	$delete = $return->get('delete');
+	if ($delete instanceof ElggMenuItem) {
+		$delete->setLinkClass('site-notifications-delete');
+		$delete->{"data-entity-ref"} = 'elgg-object-' . $entity->guid;
 	}
 	
 	return $return;

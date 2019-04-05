@@ -1,11 +1,12 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Ekstra sider",
-	'admin:appearance:expages' => "Ekstra sider",
+	'admin:configure_utilities:expages' => "Site Pages",
+	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "Om",
 	'expages:terms' => "Betingelser",
 	'expages:privacy' => "Beskyttelse af personlige oplysninger",
@@ -18,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Din side blev opdateret.",
 	'expages:error' => "Kunne ikke gemme denne side.",
-];
+);

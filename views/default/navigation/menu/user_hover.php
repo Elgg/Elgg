@@ -24,17 +24,6 @@ if (!($user instanceof ElggUser)) {
 
 elgg_push_context('user_hover');
 
-if (elgg_is_admin_logged_in() && $admin) {
-	$actions[] = \ElggMenuItem::factory([
-		'name' => 'toggle_admin',
-		'text' => elgg_echo('admin:options'),
-		'icon' => 'ellipsis-v',
-		'href' => '#',
-		'data-toggle-selector' => ".hover_toggle_admin_{$user->guid}",
-		'rel' => 'toggle',
-	]);
-}
-
 $user_info = elgg_view_entity($user, [
 	'full_view' => false,
 	'use_hover' => false,
@@ -45,18 +34,31 @@ $user_info = elgg_view_entity($user, [
 $card = elgg_format_element('div', ['class' => 'elgg-menu-hover-card'], $user_info);
 
 // actions
+$combined_actions = [];
 if (elgg_is_logged_in() && $actions) {
-	$card .= elgg_view('navigation/menu/elements/section', [
-		'class' => "elgg-menu elgg-menu-hover-actions",
-		'items' => $actions,
-	]);
+	$combined_actions += $actions;
 }
 
 // main
 if ($main) {
+	$combined_actions += $main;
+}
+
+if (elgg_is_admin_logged_in() && $admin) {
+	$combined_actions[] = \ElggMenuItem::factory([
+		'name' => 'toggle_admin',
+		'text' => elgg_echo('admin:options'),
+		'icon' => 'ellipsis-v',
+		'href' => false,
+		'data-toggle-selector' => ".hover_toggle_admin_{$user->guid}",
+		'rel' => 'toggle',
+	]);
+}
+
+if ($combined_actions) {
 	$card .= elgg_view('navigation/menu/elements/section', [
-		'class' => 'elgg-menu elgg-menu-hover-default',
-		'items' => $main,
+		'class' => "elgg-menu elgg-menu-hover-actions",
+		'items' => $combined_actions,
 	]);
 }
 

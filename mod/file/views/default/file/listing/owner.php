@@ -1,4 +1,11 @@
 <?php
+/**
+ * List all user files
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
+ * @uses $vars['entity'] the user or group to list for
+ */
 
 $owner = elgg_extract('entity', $vars);
 

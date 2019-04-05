@@ -19,9 +19,10 @@ function bookmarks_init() {
 		'text' => elgg_echo('collection:object:bookmarks'),
 		'href' => elgg_generate_url('default:object:bookmarks'),
 	]);
-
+	
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:footer', 'bookmarks_footer_menu');
 
 	elgg_extend_view('elgg.js', 'bookmarks.js');
 
@@ -140,6 +141,36 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 	]);
 
 	return $return;
+}
+
+/**
+ * Adds a add bookmark link to the footer menu
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:footer'
+ *
+ * @return \Elgg\Menu\MenuItems
+ */
+function bookmarks_footer_menu(\Elgg\Hook $hook) {
+
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+	
+	$result = $hook->getValue();
+	
+	$result[] = \ElggMenuitem::factory([
+		'name' => 'bookmark',
+		'text' => elgg_echo('bookmarks:this'),
+		'icon' => 'push-pin-alt',
+		'href' => elgg_generate_url('add:object:bookmarks', [
+			'guid' => elgg_get_logged_in_user_guid(),
+			'address' => current_page_url(),
+		]),
+		'title' => elgg_echo('bookmarks:this'),
+		'rel' => 'nofollow',
+	]);
+
+	return $result;
 }
 
 /**

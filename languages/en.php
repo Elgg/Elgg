@@ -27,6 +27,7 @@ return array(
 	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "You must be logged in to view the requested page.",
+	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
 	'limited_access' => "You do not have permission to view the requested page.",
@@ -463,6 +464,7 @@ return array(
 	'admin:cron:date' => 'Date and time',
 	'admin:cron:msg' => 'Message',
 	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => 'Appearance',
@@ -487,12 +489,23 @@ return array(
 	
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',
+	'admin:upgrades:finished' => 'Completed',
+	'admin:upgrades:db' => 'Database upgrades',
+	'admin:upgrades:db:name' => 'Upgrade name',
+	'admin:upgrades:db:start_time' => 'Start time',
+	'admin:upgrades:db:end_time' => 'End time',
+	'admin:upgrades:db:duration' => 'Duration',
+	'admin:upgrades:menu:pending' => 'Pending upgrades',
+	'admin:upgrades:menu:completed' => 'Completed upgrades',
+	'admin:upgrades:menu:db' => 'Database upgrades',
+	'admin:upgrades:menu:run_single' => 'Run this upgrade',
 	'admin:upgrades:run' => 'Run upgrades now',
 	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
 	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
 	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
 	'admin:upgrades:failed' => 'Upgrade "%s" failed',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -614,6 +627,10 @@ three sections:
 	
 	'admin:security:settings:email_require_password' => 'Require password to change email address',
 	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
@@ -779,7 +796,7 @@ To go to the site, click here:
 	'admin:server:label:post_max_size' => 'POST maximum size',
 	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
 	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
-	'admin:server:label:memcache' => 'Memcached',
+	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
 		Memcache is not setup on this server or it has not yet been configured in Elgg config.
 		For improved performance, it is recommended that you enable and configure memcache (or redis).
@@ -788,9 +805,15 @@ To go to the site, click here:
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
 		Redis is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure redis (or memcached).
+		For improved performance, it is recommended that you enable and configure redis (or memcache).
 ',
 
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache is not available on this server or it has not yet been enabled.
+		For improved performance, it is recommended that you enable and configure OPcache.
+',
+	
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
 
@@ -957,6 +980,7 @@ These changes will only affect new users on the site.',
 	'remove' => 'Remove',
 	'revert' => 'Revert',
 	'validate' => 'Validate',
+	'read_more' => 'Read more',
 
 	'site' => 'Site',
 	'activity' => 'Activity',
@@ -1293,7 +1317,9 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 	'upgrade:error_count' => 'Errors: %s',
 	'upgrade:finished' => 'Upgrade finished',
 	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
-
+	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:count_items' => '%d items to upgrade',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
 	

@@ -654,7 +654,8 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 */
 	public function sortChildren($sortFunction) {
 		foreach ($this->data['children'] as $key => $node) {
-			$this->data['children'][$key]->data['original_order'] = $key;
+			$node->data['original_order'] = $key;
+			$node->sortChildren($sortFunction);
 		}
 		usort($this->data['children'], $sortFunction);
 	}

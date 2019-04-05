@@ -481,6 +481,46 @@ class UpgradeService {
 
 		return $pending;
 	}
+	
+	/**
+	 * Get completed (async) upgrades
+	 *
+	 * @param bool $async Include async upgrades
+	 *
+	 * @return ElggUpgrade[]
+	 */
+	public function getCompletedUpgrades($async = true) {
+		$completed = [];
+		
+		$upgrades = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'elgg_upgrade',
+			'private_setting_name' => 'class', // filters old upgrades
+			'private_setting_name_value_pairs' => [
+				'name' => 'is_completed',
+				'value' => true,
+			],
+			'limit' => false,
+			'batch' => true,
+		]);
+		/* @var $upgrade \ElggUpgrade */
+		foreach ($upgrades as $upgrade) {
+			$batch = $upgrade->getBatch();
+			if (!$batch) {
+				continue;
+			}
+
+			$completed[] = $upgrade;
+		}
+
+		if (!$async) {
+			$completed = array_filter($completed, function(ElggUpgrade $upgrade) {
+				return !$upgrade->isAsynchronous();
+			});
+		}
+
+		return $completed;
+	}
 
 	/**
 	 * Call the upgrade's run() for a specified period of time, or until it completes
@@ -498,18 +538,20 @@ class UpgradeService {
 		return elgg_call(
 			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES,
 			function () use ($upgrade, $max_duration) {
-				$result = new Result();
-
-				$loop = new Loop(
-					$upgrade,
-					$result,
-					$this->progress,
-					$this->logger
-				);
-
-				$loop->loop($max_duration);
-
-				return $result;
+				return $this->events->triggerSequence('upgrade:execute', 'system', $upgrade, function() use ($upgrade, $max_duration) {
+					$result = new Result();
+					
+					$loop = new Loop(
+						$upgrade,
+						$result,
+						$this->progress,
+						$this->logger
+					);
+					
+					$loop->loop($max_duration);
+					
+					return $result;
+				});
 			}
 		);
 	}

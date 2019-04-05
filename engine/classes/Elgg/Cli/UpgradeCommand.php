@@ -3,9 +3,7 @@
 namespace Elgg\Cli;
 
 use Elgg\Application;
-use Elgg\Http\OkResponse;
 use function React\Promise\all;
-use React\Promise\Deferred;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;

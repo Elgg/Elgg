@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	// menu
 	'admin:develop_tools' => 'Herramientas',
 	'admin:develop_tools:sandbox' => 'Sanbox del Tema',
@@ -27,20 +27,31 @@ return [
 	'developers:label:show_modules' => "Mostrar los módulos AMD cargados en la consola",
 	'developers:help:show_modules' => "Flujos de módulos cargados y valores a su consola de JavaScript. ",
 	'developers:label:wrap_views' => "Wrap de vistas",
-	'developers:help:wrap_views' => "Esto envuelve casi todas las vistas con comentarios HTML. Muy útil para encontrar la vista creando HTML particular
-         Esto puede dañar vistas no HTML en viewtype por defecto. Ver developers_wrap_views() para más detalles",
+	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.
+									This can break non-HTML views in the default viewtype. See developers_wrap_views() for details.",
 	'developers:label:log_events' => "Eventos de Logs y Hooks de plugins",
 	'developers:help:log_events' => "Escribir eventos y hooks de plugins en el log. Precaución: hay varios de estos por página.",
 	'developers:label:show_gear' => "Usar %s fuera de la zona de administración",
 	'developers:help:show_gear' => "Un icono en la parte inferior derecha de la ventana que permite el acceso de los administradores a la configuración y enlaces de desarrollo.",
+	'developers:label:block_email' => "Block all outgoing e-mails",
+	'developers:help:block_email' => "You can block outgoing e-mail to regular users or to all users",
+	'developers:label:forward_email' => "Forward all outgoing e-mails to one address",
+	'developers:help:forward_email' => "All outgoing e-mails will be sent to the configured e-mail address",
+	'developers:label:enable_error_log' => "Enable error log",
+	'developers:help:enable_error_log' => "Maintain a separate log of errors and messages logged to the error_log() based on your trace level setting. The log is viewable via admin interface.",
+
 	'developers:label:submit' => "Guardar y liberar cachés",
 
+	'developers:block_email:forward' => 'Forward all e-mails',
+	'developers:block_email:users' => 'Only regular users',
+	'developers:block_email:all' => 'Admins and regular users',
+	
 	'developers:debug:off' => 'Apagado',
 	'developers:debug:error' => 'Error',
 	'developers:debug:warning' => 'Precaución',
 	'developers:debug:notice' => 'Información',
 	'developers:debug:info' => 'Información',
-
+	
 	// entity explorer
 	'developers:entity_explorer:help' => 'Ver información sobre entidades y realizar algunas acciones básicas en ellas.',
 	'developers:entity_explorer:guid:label' => 'Introduzca el guid de la entidad para inspeccionar',
@@ -50,7 +61,7 @@ return [
 	'developers:entity_explorer:info:relationships' => 'Relaciones',
 	'developers:entity_explorer:info:private_settings' => 'Configuración privada',
 	'developers:entity_explorer:delete_entity' => 'Eliminar esta entidad',
-
+	
 	// inspection
 	'developers:inspect:help' => 'Inspección de configuration del framework Elgg.',
 	'developers:inspect:actions' => 'Acciones',
@@ -59,6 +70,7 @@ return [
 	'developers:inspect:pluginhooks' => 'Ganchos de complementos',
 	'developers:inspect:priority' => 'Prioridad',
 	'developers:inspect:simplecache' => 'Caché Simple',
+	'developers:inspect:routes' => 'Routes',
 	'developers:inspect:views' => 'Vistas',
 	'developers:inspect:views:all_filtered' => "<b>¡Nota!</b> Todas las salidas devueltas por las vistas son filtradas mediante Hooks de los plugins:",
 	'developers:inspect:views:input_filtered' => "(Entrada filtrada por el hook del plugin: %s)",
@@ -67,7 +79,19 @@ return [
 	'developers:inspect:webservices' => 'Servicios web',
 	'developers:inspect:widgets:context' => 'Contexto',
 	'developers:inspect:functions' => 'Funciones',
-	'developers:inspect:file_location' => 'Ruta de fichero de la raíz de Elgg',
+	'developers:inspect:file_location' => 'File path from Elgg root or controller',
+	'developers:inspect:route' => 'Route Name',
+	'developers:inspect:path' => 'Path Pattern',
+	'developers:inspect:resource' => 'Resource View',
+	'developers:inspect:handler' => 'Handler',
+	'developers:inspect:controller' => 'Controller',
+	'developers:inspect:file' => 'File',
+	'developers:inspect:middleware' => 'File',
+	'developers:inspect:handler_type' => 'Handled by',
+	'developers:inspect:services' => 'Services',
+	'developers:inspect:service:name' => 'Name',
+	'developers:inspect:service:path' => 'Definition',
+	'developers:inspect:service:class' => 'Class',
 
 	// event logging
 	'developers:request_stats' => "Solicitar estadísticas (No se incluye el evento shutdown)",
@@ -92,12 +116,11 @@ return [
 
 	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> ola clase elgg-icon-$name para mostrar iconos.',
 
-	// unit tests
-	'developers:unit_tests:description' => 'Elgg tiene tests unitarios y de integración para detectar bugs en las clases del core y sus funciones.',
-	'developers:unit_tests:warning' => 'Atención: No ejecutes estos tests en sitios en producción. Pueden corromper la base de datos.',
-	'developers:unit_tests:run' => 'Ejecuta',
-
 	// status messages
 	'developers:settings:success' => 'Configuraciones almacenadas',
+
 	'developers:amd' => 'AMD',
-];
+
+	'admin:develop_tools:error_log' => 'Error Log',
+	'developers:logs:empty' => 'Error log is empty',
+);

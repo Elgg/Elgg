@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => 'Все друзья',
+return array(
 
 	'notifications:subscriptions:personal:description' => 'Получать уведомления при изменениях в Вашем контенте',
 	'notifications:subscriptions:personal:title' => 'Личные уведомления',
 
-	'notifications:subscriptions:friends:title' => 'Выбрать группы друзей',
-	'notifications:subscriptions:friends:description' => 'Чтобы выбрать настройки членов групп Ваших друзей, воспользуйтесь данными значками. Пользователи будут оповещены.',
-	'notifications:subscriptions:collections:edit' => 'Чтобы редактировать группы друзей, нажмите здесь.',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Уведомления',
 	'notifications:subscriptions:changesettings:groups' => 'Уведомления групп',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => 'Сохранено.',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

@@ -45,8 +45,8 @@ return array(
 	'file:friends:type:image' => "Afbeeldingen van je vrienden",
 	'file:friends:type:general' => "Algemene bestanden van je vrienden",
 
-	'file:widget' => "Bestandenwidget",
-	'file:widget:description' => "Laat je laatst geüploade bestanden zien",
+	'widgets:filerepo:name' => "Bestandenwidget",
+	'widgets:filerepo:description' => "Laat je laatst geüploade bestanden zien",
 
 	'groups:tool:file' => 'Schakel groepsbestanden in',
 
@@ -55,19 +55,18 @@ return array(
 
 	'file:notify:summary' => 'Nieuw bestand met de titel %s',
 	'file:notify:subject' => 'Nieuw bestand: %s',
-	'file:notify:body' =>
-'%s heeft een nieuw bestand geüpload: %s
+	'file:notify:body' => '%s heeft een nieuw bestand geüpload: %s
 
 %s
 
-Bekijk en reageer op het bestand:
+Om het bestand te bekijken en te reageren, klik hier:
 %s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Je bestand is succesvol opgeslagen.",
+	'file:saved' => "Het bestand is succesvol opgeslagen",
 	'entity:delete:object:file:success' => "Het bestand is succesvol verwijderd",
 
 	/**

@@ -70,6 +70,16 @@ if ($key !== false) {
 	$vars['summary'] = elgg_echo($key, [$subject_link, $target_link]);
 }
 
-$vars['message'] = elgg_get_excerpt($comment->description);
+$message = elgg_get_excerpt($comment->description);
+if (substr($message, -3) === '...') {
+	$message .= elgg_view('output/url', [
+		'text' => elgg_echo('read_more'),
+		'href' => $comment->getURL(),
+		'is_trusted' => true,
+		'class' => 'mls',
+	]);
+}
+
+$vars['message'] = $message;
 
 echo elgg_view('river/elements/layout', $vars);

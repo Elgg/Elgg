@@ -1,33 +1,40 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'thewire' => "Жица",
-	'thewire:everyone' => "Све објаве",
-	'thewire:user' => "%s објаве",
-	'thewire:friends' => "Објаве пријатеља",
+
+	'item:object:thewire' => "Објаве на жици",
+	'collection:object:thewire' => 'Wire posts',
+	'collection:object:thewire:all' => "All wire posts",
+	'collection:object:thewire:owner' => "%s's wire posts",
+	'collection:object:thewire:friends' => "Friends' wire posts",
+
 	'thewire:replying' => "Одговор на пост од %s (@%s) који је написао",
 	'thewire:thread' => "Дискусија",
 	'thewire:charleft' => "знакова остало",
 	'thewire:tags' => "Објаве таговане са '%s'",
 	'thewire:noposts' => "Нема објава",
-	'item:object:thewire' => "Објаве на жици",
+
 	'thewire:by' => 'Објаве од %s',
 	'thewire:previous:help' => "Види раније објаве",
 	'thewire:hide:help' => "Сакриј раније објаве",
 
+	'thewire:form:body:placeholder' => "What's happening?",
+	
 	/**
 	 * The wire river
 	 */
-	'river:create:object:thewire' => "%s објавио на %s",
+	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'жица',
 
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Прикажите ваше најновије објаве',
+	
+	'widgets:thewire:description' => 'Display your latest wire posts',
 	'thewire:num' => 'Број објава за приказ',
 	'thewire:moreposts' => 'Више објава',
 
@@ -37,7 +44,6 @@ return [
 	'thewire:posted' => "Ваша порука је успешно објављена на жици.",
 	'thewire:deleted' => "Објава је успешно обрисана",
 	'thewire:blank' => "Извините али морате да унесете текст пре него што објавите.",
-	'thewire:notfound' => "Извините, нисмо успели да пронађемо тражену објаву на жици.",
 	'thewire:notsaved' => "Ивините. Нисмо успли да сачувамо ову објаву.",
 	'thewire:notdeleted' => "Извините. Нисмо успели да обришемо ову објаву.",
 
@@ -55,4 +61,4 @@ return [
 	 */
 	'thewire:settings:limit' => "Максимални број знакова у објави на жици:",
 	'thewire:settings:limit:none' => "Без ограничења",
-];
+);

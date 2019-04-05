@@ -39,8 +39,8 @@ return array(
 	'groups:owner' => "Eigenaar",
 	'groups:owner:warning' => "Opgelet: als je deze waarde aanpast ben je niet meer de eigenaar van deze groep",
 	'groups:widget:num_display' => 'Aantal groepen om weer te geven',
-	'groups:widget:membership' => 'Groepslidmaatschap',
-	'groups:widgets:description' => 'Laat de groepen waarvan je lid bent zien op je profiel',
+	'widgets:a_users_groups:name' => 'Groepslidmaatschap',
+	'widgets:a_users_groups:description' => 'Laat de groepen waarvan je lid bent zien op je profiel',
 
 	'groups:noaccess' => 'Geen toegang tot de groep',
 	'groups:cantcreate' => 'Alleen sitebeheerders mogen nieuwe groepen aanmaken.',
@@ -115,7 +115,7 @@ return array(
 	'groups:joinrequestmade' => 'Lidmaatschapsverzoek succesvol gedaan',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
 	'groups:button:joined' => 'Lid',
-	'groups:button:owned' => 'EIgenaar',
+	'groups:button:owned' => 'Eigenaar',
 	'groups:joined' => 'Je bent lid geworden van de groep!',
 	'groups:left' => 'De groep succesvol verlaten',
 	'groups:userinvited' => 'Gebruiker is uitgenodigd.',
@@ -124,30 +124,30 @@ return array(
 	'groups:invite:subject' => "%s je bent uitgenodigd om lid te worden van %s!",
 	'groups:joinrequest:remove:check' => 'Weet je zeker dat je dit lidmaatschapsverzoek wilt verwijderen?',
 	'groups:invite:remove:check' => 'Weet je zeker dat je deze uitnodiging wilt verwijderen?',
-	'groups:invite:body' => "Hi %s,
+	'groups:invite:body' => "Beste %s,
 
-%s invited you to join the '%s' group.
+%s heeft je uitgenodigd om lid te worden van de groep '%s'.
 
-Click below to view your invitations:
+On al je uitnodigingen te bekijken, klik hier:
 %s",
 
 	'groups:welcome:subject' => "Welkom bij de groep '%s'!",
-	'groups:welcome:body' => "Hi %s!
+	'groups:welcome:body' => "Beste %s,
 
-You are now a member of the '%s' group.
+Je bent nu lid van de groep '%s'.
 
-Click below to begin posting!
+Je kunt direct beginnen in de groep!
 %s",
 
 	'groups:request:subject' => "%s wil lid worden van %s",
-	'groups:request:body' => "Hi %s,
+	'groups:request:body' => "Beste %s,
 
-%s has requested to join the '%s' group.
+%s wil graag lid worden van de groep '%s'.
 
-Click below to view their profile:
+Om het profiel te bekijken, klik hier:
 %s
 
-or click below to view the group's join requests:
+of klik op de link om alle lidmaatschapsverzoeken te bekijken:
 %s",
 
 	'river:group:create' => '%s heeft de groep %s aangemaakt',
@@ -177,6 +177,6 @@ or click below to view the group's join requests:
 	 * Upgrades
 	 */
 	'groups:upgrade:2016101900:title' => 'Verplaats de groepsiconen naar de nieuwe locatie',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+	'groups:upgrade:2016101900:description' => 'De nieuwe iconen API plaatst de bestanden op een voorspelbare locatie op de bestandslocatie relatief aan de entity\'s bestandlocatie.
+Deze upgrade verplaatst alle groepsiconen naar deze nieuwe locatie.',
 );

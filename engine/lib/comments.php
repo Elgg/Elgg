@@ -105,8 +105,8 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$operator = elgg_comments_are_latest_first($container) ? '>' : '<';
 
 	// this won't work with threaded comments, but core doesn't support that yet
-	$condition = function(QueryBuilder $qb) use ($comment, $operator) {
-		return $qb->compare('e.guid', $operator, $comment->guid, ELGG_VALUE_INTEGER);
+	$condition = function(QueryBuilder $qb, $main_alias) use ($comment, $operator) {
+		return $qb->compare("{$main_alias}.guid", $operator, $comment->guid, ELGG_VALUE_GUID);
 	};
 	$count = elgg_get_entities([
 		'type' => 'object',
@@ -247,8 +247,8 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $entity->getGUID(),
-		'wheres' => [function(\Elgg\Database\QueryBuilder $qb) use ($entity) {
-			return $qb->compare('e.access_id', '!=', $entity->access_id, 'integer');
+		'wheres' => [function(\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+			return $qb->compare("{$main_alias}.access_id", '!=', $entity->access_id, ELGG_VALUE_INTEGER);
 		}],
 		'limit' => 0,
 	];
@@ -280,7 +280,11 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $returnvalue, $params) {
 	
 	$event = elgg_extract('event', $params);
-	if (!($event instanceof \Elgg\Notifications\NotificationEvent)) {
+	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
+		return;
+	}
+	
+	if ($event->getAction() !== 'create') {
 		return;
 	}
 	
@@ -290,7 +294,7 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 	}
 	
 	$content_owner = $object->getContainerEntity()->getOwnerEntity();
-	if (!($content_owner instanceof ElggUser)) {
+	if (!$content_owner instanceof ElggUser) {
 		return;
 	}
 	
@@ -299,13 +303,13 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 		return;
 	}
 	
-	$returnvalue[$content_owner->getGUID()] = [];
+	$returnvalue[$content_owner->guid] = [];
 	foreach ($notification_settings as $method => $enabled) {
 		if (empty($enabled)) {
 			continue;
 		}
 		
-		$returnvalue[$content_owner->getGUID()][] = $method;
+		$returnvalue[$content_owner->guid][] = $method;
 	}
 	
 	return $returnvalue;

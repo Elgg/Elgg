@@ -16,18 +16,19 @@ return array(
 	'invitefriends:already_members' => 'Następujący użytkownicy już dołączyli: %s',
 	'invitefriends:noemails' => 'Nie wprowadzono adresu e-mail.',
 	
-	'invitefriends:message:default' => 'Witaj,
+	'invitefriends:message:default' => 'Hi,
 
-Chcę Cię zaprosić do mojej sieci społecznościowej %s',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => 'Zaproszono Cię do dołączenia do %s - zaproszenie od %s. Wiadomość od zapraszającego:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
 
-%s
-
-Aby dołączyć, kliknij link poniżej:
+They included the following message:
 
 %s
 
-Zapraszający zostanie automatycznie dodany do Twoich znajomych gdy już utworzysz konto.',
+To join, click the following link:
+%s
+
+You will automatically add them as a friend when you create your account.',
 	
 );

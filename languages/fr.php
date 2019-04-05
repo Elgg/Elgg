@@ -27,6 +27,7 @@ return array(
 	'session_changed_user' => "Vous êtes connecté(e) avec un autre compte utilisateur. Vous devriez <a href='javascript:location.reload(true)'>recharger</a> la page.",
 
 	'loggedinrequired' => "Vous devez être connecté(e) pour voir cette page.",
+	'loggedoutrequired' => "Vous devez être déconnecté(e) pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
 	'membershiprequired' => "Vous devez être membre de ce groupe pour voir cette page.",
 	'limited_access' => "Vous n'avez pas la permission de consulter cette page.",
@@ -463,6 +464,7 @@ return array(
 	'admin:cron:date' => 'Date et heure',
 	'admin:cron:msg' => 'Message',
 	'admin:cron:started' => 'Tâches Cron pour "%s" démarrées à %s',
+	'admin:cron:started:actual' => 'Démarrage du traitement de l\'intervale cron "%s" à %s',
 	'admin:cron:complete' => 'Tâches Cron pour "%s" terminées à %s',
 
 	'admin:appearance' => 'Apparence',
@@ -487,12 +489,17 @@ return array(
 	
 	'admin:configure_utilities:maintenance' => 'Mode maintenance',
 	'admin:upgrades' => 'Mises à niveau',
+	'admin:upgrades:finished' => 'Terminé',
+	'admin:upgrades:menu:pending' => 'Mises à niveau en attente',
+	'admin:upgrades:menu:completed' => 'Mises à niveau terminées',
+	'admin:upgrades:menu:run_single' => 'Exécuter cette mise à niveau',
 	'admin:upgrades:run' => 'Lancer les mises à niveau maintenant',
 	'admin:upgrades:error:invalid_upgrade' => 'L\'entité %s n\'existe pas ou n\'est pas une instance valide de ElggUpgrade',
 	'admin:upgrades:error:invalid_batch' => 'L\'exécution du traitement par lot (batch) pour la mise à niveau  %s (%s) n\'a pas pu être instanciée',
 	'admin:upgrades:completed' => 'Mise à niveau "%s" terminée à %s',
 	'admin:upgrades:completed:errors' => 'Mise à niveau "%s" terminée à %s mais a rencontré %s erreurs',
 	'admin:upgrades:failed' => 'La mise à niveau "%s" a échoué',
+	'admin:action:upgrade:reset:success' => 'La mise à niveau "%s" a été réinitialisée',
 
 	'admin:settings' => 'Configuration',
 	'admin:settings:basic' => 'Configuration de base',
@@ -613,6 +620,10 @@ return array(
 	
 	'admin:security:settings:email_require_password' => 'Demander le mot de passe pour changer l\'adresse email',
 	'admin:security:settings:email_require_password:help' => 'Quand un utilisateur souhaite changer son adresse email, cette option impose qu\'il fournisse son mot de passe actuel.',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg utilise une clef pour créer des jetons de sécurité pour diverses finalités.',
 	'admin:security:settings:site_secret:regenerate' => "Régénérer la clef secrète du site",
@@ -787,9 +798,15 @@ Pour vous rendre sur le site :
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
 		Redis n\'est pas installé sur ce serveur ou n\'a pas encore été configuré dans la configuration d\'Elgg.
-		Pour des performances améliorées, il est recommandé que vous activiez et configuriez redis (ou memcached).
+		Pour des performances améliorées, il est recommandé que vous activiez et configuriez redis (ou memcache).
 ',
 
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache n\'est pas installé sur ce serveur ou n\'a pas encore été activé.
+		Pour des performances améliorées, il est recommandé que vous activiez et configuriez OPcache.
+	',
+	
 	'admin:user:label:search' => "Trouver des utilisateurs :",
 	'admin:user:label:searchbutton' => "Chercher",
 
@@ -894,6 +911,10 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'icon:size:medium' => "Moyen",
 	'icon:size:large' => "Grand",
 	'icon:size:master' => "Très grand",
+	
+	'entity:edit:icon:file:label' => "Chargez une nouvelle icône",
+	'entity:edit:icon:file:help' => "Laissez vide pour conserver l'icône actuelle.",
+	'entity:edit:icon:remove:label' => "Supprimez l'icône",
 
 /**
  * Generic action words
@@ -952,6 +973,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'remove' => 'Enlever',
 	'revert' => 'Rétablir',
 	'validate' => 'Valider',
+	'read_more' => 'Lire la suite',
 
 	'site' => 'Site',
 	'activity' => 'Activité',
@@ -1285,7 +1307,9 @@ documentation sur la Mise à niveau d\'Elgg</a>. Si vous avez besoin d\'assistan
 	'upgrade:error_count' => 'Erreurs :',
 	'upgrade:finished' => 'Mise à jour terminée',
 	'upgrade:finished_with_errors' => '<p>La mise à niveau s\'est terminée avec des erreurs. Rafraîchissez la page et tentez de relancer la mise à niveau.</p><p>Si l\'erreur se produit à nouveau, vérifiez les journaux d\'erreur du serveur web pour identifier une cause possible. Vous pouvez demander de l\'aide pour résoudre cette erreur dans le <a href="https://community.elgg.org/groups/profile/179063/elgg-technical-support">groupe de support technique</a> de la communauté Elgg.</p>',
-
+	'upgrade:should_be_skipped' => 'Aucun élément à mettre à niveau',
+	'upgrade:count_items' => '%d élément(s) à mettre à niveau',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Aligner les colonnes GUID de la base de données',
 	

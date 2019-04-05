@@ -17,8 +17,6 @@ return [
 	],
 	'widgets' => [
 		'messageboard' => [
-			'name' => elgg_echo('messageboard:board'),
-			'description' => elgg_echo('messageboard:desc'),
 			'context' => ['profile'],
 		],
 	],

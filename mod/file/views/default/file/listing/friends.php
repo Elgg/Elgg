@@ -1,4 +1,11 @@
 <?php
+/**
+ * List all files of a users friends
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
+ * @uses $vars['entity'] the user to list for
+ */
 
 $entity = elgg_extract('entity', $vars);
 

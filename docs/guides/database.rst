@@ -165,7 +165,7 @@ objects. These methods save the `master` size of the icon defined in the system.
 	$object->save();
 
 The following sizes exist by default: 
- * ``master`` - 2048px at longer edge (not upscaled)
+ * ``master`` - 10240px at longer edge (not upscaled)
  * ``large`` - 200px at longer edge (not upscaled)
  * ``medium`` - 100px square
  * ``small`` - 40px square

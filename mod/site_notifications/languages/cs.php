@@ -3,7 +3,8 @@ return array(
 	'site_notifications' => 'Upozornění stránek',
 	'notification:method:site' => 'Stránky',
 	'site_notifications:topbar' => 'Upozornění',
-	'item:object:site_notification' => 'Upozornění stránek',
+	'item:object:site_notification' => 'Site notification',
+	'collection:object:site_notification' => 'Site notifications',
 
 	'site_notifications:no_access' => 'Nemáte přístup k této stránce. Pravděpodobně nejste přihlášen/a.',
 	'site_notifications:empty' => 'Žádná upozornění',

@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Ilmoita ylläpitäjälle',
 	'reportedcontent:instructions' => 'Tämä ilmoitus lähetetään sivuston ylläpitäjälle tarkistettavaksi.',
 	'reportedcontent:numbertodisplay' => 'Näytettävien kohteiden määrä',
-	'reportedcontent:widget:description' => 'Näytä ilmiannettu kohde',
 	'reportedcontent:user' => 'Ilmianna käyttäjä',
 
 	'reportedcontent:failed' => 'Ilmoituksen tekeminen epäonnistui.',
 	'reportedcontent:notarchived' => 'Ilmoituksen arkistoiminen epäonnistui',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

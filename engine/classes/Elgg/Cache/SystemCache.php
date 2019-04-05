@@ -136,13 +136,5 @@ class SystemCache {
 		if (!$this->config->system_cache_loaded) {
 			_elgg_services()->views->cacheConfiguration($this);
 		}
-	
-		if (!_elgg_services()->translator->wasLoadedFromCache()) {
-			_elgg_services()->translator->reloadAllTranslations();
-
-			foreach (_elgg_services()->translator->getLoadedTranslations() as $lang => $map) {
-				$this->save("$lang.lang", serialize($map));
-			}
-		}
 	}
 }

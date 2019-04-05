@@ -25,7 +25,6 @@ class UserSearchFieldsHandler {
 
 		$defaults = [
 			'metadata' => [],
-			'annotations' => [],
 		];
 
 		$value = array_merge($defaults, $value);
@@ -36,13 +35,7 @@ class UserSearchFieldsHandler {
 			'description',
 		];
 
-		$tags = (array) elgg_get_registered_tag_metadata_names();
-
-		$value['metadata'] = array_merge($value['metadata'], $fields, $tags);
-
-		$profile_fields = array_keys((array) elgg_get_config('profile_fields'));
-
-		$value['annotations'] = array_merge($value['annotations'], $profile_fields);
+		$value['metadata'] = array_merge($value['metadata'], $fields);
 
 		return $value;
 	}

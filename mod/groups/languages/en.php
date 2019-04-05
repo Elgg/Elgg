@@ -39,8 +39,8 @@ return array(
 	'groups:owner' => "Owner",
 	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
 	'groups:widget:num_display' => 'Number of groups to display',
-	'groups:widget:membership' => 'Group membership',
-	'groups:widgets:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'No access to group',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',

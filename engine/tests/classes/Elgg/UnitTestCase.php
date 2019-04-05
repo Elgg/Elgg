@@ -111,8 +111,6 @@ abstract class UnitTestCase extends BaseTestCase {
 			'name' => "John Doe {$unique_id}",
 			'username' => "john_doe_{$unique_id}",
 			'email' => "john_doe_{$unique_id}@example.com",
-			'banned' => 'no',
-			'admin' => 'no',
 		];
 
 		$attributes = array_merge($defaults, $metadata, $attributes);

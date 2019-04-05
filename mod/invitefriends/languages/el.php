@@ -16,16 +16,19 @@ return array(
 	'invitefriends:already_members' => 'Οι ακόλουθοι είναι ήδη μέλη: %s',
 	'invitefriends:noemails' => 'Δεν πληκτρολογήσατε διευθύνσεις ηλεκτρονικού ταχυδρομείου.',
 	
-	'invitefriends:message:default' => 'Γεια,
+	'invitefriends:message:default' => 'Hi,
 
-Σε προσκαλώ να συμμετάσχεις στο δίκτυο %s.',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => 'Έχετε πρόσκληση για συμμετοχή στο δίκτυο %s από τον/την %s:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
+
+They included the following message:
 
 %s
 
-Για να συνδεθείτε, πατήστε στον ακόλουθο σύνδεσμο:
+To join, click the following link:
+%s
 
-%s',
+You will automatically add them as a friend when you create your account.',
 	
 );
