@@ -1,3 +1,15 @@
+<a name="3.0.1"></a>
+### 3.0.1  (2019-04-05)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **response:** secure correct url ([72192b60](https://github.com/Elgg/Elgg/commit/72192b60dd04eb8b97e6dfb51ed89310733c87f7))
+
+
 <a name="3.0.0"></a>
 ## 3.0.0  (2019-04-05)
 
