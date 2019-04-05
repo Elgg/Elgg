@@ -39,8 +39,8 @@ return array(
 	'groups:owner' => "Eigenaar",
 	'groups:owner:warning' => "Opgelet: als je deze waarde aanpast ben je niet meer de eigenaar van deze groep",
 	'groups:widget:num_display' => 'Aantal groepen om weer te geven',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Groepslidmaatschap',
+	'widgets:a_users_groups:description' => 'Laat de groepen waarvan je lid bent zien op je profiel',
 
 	'groups:noaccess' => 'Geen toegang tot de groep',
 	'groups:cantcreate' => 'Alleen sitebeheerders mogen nieuwe groepen aanmaken.',
@@ -177,6 +177,6 @@ of klik op de link om alle lidmaatschapsverzoeken te bekijken:
 	 * Upgrades
 	 */
 	'groups:upgrade:2016101900:title' => 'Verplaats de groepsiconen naar de nieuwe locatie',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+	'groups:upgrade:2016101900:description' => 'De nieuwe iconen API plaatst de bestanden op een voorspelbare locatie op de bestandslocatie relatief aan de entity\'s bestandlocatie.
+Deze upgrade verplaatst alle groepsiconen naar deze nieuwe locatie.',
 );

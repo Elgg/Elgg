@@ -20,6 +20,6 @@ return array(
 	
 	'friends:num_display' => "Het aantal vrienden om weer te geven",
 	
-	'widgets:friends:name' => "Friends",
-	'widgets:friends:description' => "Displays some of your friends.",
+	'widgets:friends:name' => "Vrienden",
+	'widgets:friends:description' => "Toon een aantal van je vrienden",
 );
