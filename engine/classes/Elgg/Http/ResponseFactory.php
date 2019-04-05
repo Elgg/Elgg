@@ -346,7 +346,7 @@ class ResponseFactory {
 			return $this->send($this->prepareResponse($error_page, $status_code));
 		}
 
-		$forward_url = $this->makeSecureForwardUrl($url);
+		$forward_url = $this->makeSecureForwardUrl($forward_url);
 		return $this->send($this->prepareRedirectResponse($forward_url));
 	}
 
