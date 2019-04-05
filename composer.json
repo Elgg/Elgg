@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "3.0.0-rc.2",
+    "version": "3.0.0",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -12,9 +12,7 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        
         "elgg/login_as": "~2.0.0",
-        
         "bower-asset/fontawesome": "~5.6",
         "bower-asset/jquery": "^2.1.4",
         "bower-asset/jquery-colorbox": "^1.5.14",
