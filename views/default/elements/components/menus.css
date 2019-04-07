@@ -252,7 +252,6 @@
 .elgg-menu-hover-card {
 	padding: 1rem;
 	max-width: 20rem;
-	flex: 2;
 }
 
 .elgg-menu-hover li:not(:last-child),
