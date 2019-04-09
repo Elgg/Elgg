@@ -3,10 +3,13 @@
 *************************************** */
 body {
 	font-family: $(font-family);
-	
-	/* Break everywhere as a fallback */
-	word-break: break-all;
-	/* Instead use this non-standard one as it is better */
+
+	/* Break lines anywhere if no otherwise-acceptable break points in the line. */
+	/* For legacy reasons, UAs must treat word-wrap as an legacy name alias of overflow-wrap */
+	/* Some UAs only support word-wrap so best choice seem to use legacy word-wrap */
+	word-wrap: anywhere;
+	/* If available (Chrome) use this proprietary one as it is better */
+	/* (but deprecated according to https://drafts.csswg.org/css-text-3/#changes-2018-12-12) */
 	word-break: break-word;
 }
 
