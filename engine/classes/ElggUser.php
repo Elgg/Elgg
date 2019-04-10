@@ -127,6 +127,8 @@ class ElggUser extends \ElggEntity
 		if (!_elgg_services()->events->trigger('ban', 'user', $this)) {
 			return false;
 		}
+		
+		_elgg_services()->events->triggerAfter('ban', 'user', $this);
 
 		$this->ban_reason = $reason;
 		$this->banned = 'yes';
@@ -150,6 +152,8 @@ class ElggUser extends \ElggEntity
 		if (!_elgg_services()->events->trigger('unban', 'user', $this)) {
 			return false;
 		}
+		
+		_elgg_services()->events->triggerAfter('unban', 'user', $this);
 
 		unset($this->ban_reason);
 		$this->banned = 'no';
