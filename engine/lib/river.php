@@ -397,6 +397,80 @@ QUERY;
 }
 
 /**
+ * Disable river entries that reference a disabled plugin
+ *
+ * @param string     $event  'deactivate'
+ * @param string     $type   'plugin'
+ * @param ElggEntity $entity The entity being disabled
+ *
+ * @return void
+ *
+ * @access private
+ */
+function _elgg_river_on_plugin_disable($event, $type, $entity) {
+	if (!isset($entity['plugin_id'])) {
+		return;
+	}
+	_elgg_river_on_activate_deactivate_plugin($entity, 'no');
+	return true;
+}
+
+
+/**
+ * Enable river entries that reference a enabled plugin
+ *
+ * @param string     $event  'activate'
+ * @param string     $type   'plugin'
+ * @param ElggEntity $entity The entity being enabled
+ *
+ * @return void
+ *
+ * @access private
+ */
+function _elgg_river_on_plugin_enable($event, $type, $entity) {
+	if (!isset($entity['plugin_id'])) {
+		return;
+	}
+	_elgg_river_on_activate_deactivate_plugin($entity, 'yes');
+	return true;
+}
+
+/**
+ * Function used to show/hide river activity
+ *
+ * @param ElggEntity $entity        The entity being enable/disabled
+ * @param string     $enable_option 'yes' or 'no'
+ *
+ * @return void
+ *
+ * @access private
+ */
+function _elgg_river_on_activate_deactivate_plugin($entity, $enable_option) {
+	$dbprefix = elgg_get_config('dbprefix');
+	$plugin = $entity['plugin_id'];
+	
+	$query = <<<QUERY
+	UPDATE {$dbprefix}river AS rv
+	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid
+	LEFT JOIN {$dbprefix}entities AS oe ON oe.guid = rv.object_guid
+	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
+	SET rv.enabled = '$enable_option'
+	WHERE (
+		(se.enabled = 'yes' OR se.guid IS NULL) AND
+		(oe.enabled = 'yes' OR oe.guid IS NULL) AND
+		(te.enabled = 'yes' OR te.guid IS NULL)
+	)
+	AND (
+		(se.subtype = '$plugin') OR
+		(oe.subtype = '$plugin') OR
+		(te.subtype = '$plugin')
+	);
+QUERY;
+	
+	elgg()->db->updateData($query);
+}
+
+/**
  * Add the delete to river actions menu
  *
  * @param \Elgg\Hook $hook 'register' 'menu:river'
@@ -447,6 +521,9 @@ function _elgg_river_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
 	
 	elgg_register_event_handler('created', 'river', '_elgg_river_update_object_last_action');
+
+	elgg_register_event_handler('deactivate', 'plugin', '_elgg_river_on_plugin_disable');
+	elgg_register_event_handler('activate', 'plugin', '_elgg_river_on_plugin_enable');
 }
 
 /**
