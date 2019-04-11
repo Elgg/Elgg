@@ -121,6 +121,7 @@ class MigrateFriendsACL implements AsynchronousUpgrade {
 			'access_id' => ACCESS_FRIENDS,
 			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
 		foreach ($entities as $entity) {
