@@ -58,4 +58,30 @@ class ValuesUnitTest extends UnitTestCase {
 			[new \stdClass(), false],
 		];
 	}
+	
+	/**
+	 * @dataProvider timezoneProvider
+	 */
+	public function testSetTimeAfterNormalize($timezone) {
+		
+		$tz = date_default_timezone_get();
+		date_default_timezone_set($timezone);
+		
+		$time = mktime(10, 15, 30, 1, 15, 2019); // 2019-01-15 10:15:30
+		$dt = Values::normalizeTime($time);
+		$dt->setTime(10, 15, 30);
+		
+		date_default_timezone_set($tz);
+		
+		$this->assertEquals($time, $dt->getTimestamp());
+	}
+	
+	public function timezoneProvider() {
+		return [
+			['UTC'],
+			['Australia/Adelaide'],
+			['Europe/Amsterdam'],
+			['America/New_York'],
+		];
+	}
 }
