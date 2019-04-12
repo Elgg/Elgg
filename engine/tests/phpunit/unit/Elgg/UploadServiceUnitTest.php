@@ -44,7 +44,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$request = $this->prepareHttpRequest();
 		_elgg_services()->setValue('request', $request);
-		_elgg_services()->setValue('uploads', new UploadService($request, _elgg_services()->imageService));
+		_elgg_services()->setValue('uploads', new UploadService($request));
 
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);

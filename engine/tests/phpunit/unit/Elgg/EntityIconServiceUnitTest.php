@@ -34,6 +34,11 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	private $uploads;
 
 	/**
+	 * @var \Elgg\ImageService
+	 */
+	private $images;
+
+	/**
 	 * @var \ElggObject
 	 */
 	private $entity;
@@ -65,7 +70,8 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->logger->setHooks($this->hooks);
 
 		$this->entities = _elgg_services()->entityTable;
-		$this->uploads = new \Elgg\UploadService($this->request, _elgg_services()->imageService);
+		$this->uploads = new \Elgg\UploadService($this->request);
+		$this->images = _elgg_services()->imageService;
 
 		$this->user = $this->createUser();
 		$this->entity = $this->createObject([
@@ -107,7 +113,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	protected function createService() {
-		return new \Elgg\EntityIconService(_elgg_config(), $this->hooks, $this->request, $this->logger, $this->entities, $this->uploads);
+		return new \Elgg\EntityIconService(_elgg_config(), $this->hooks, $this->request, $this->logger, $this->entities, $this->uploads, $this->images);
 	}
 	
 	public static function getDefaultIconSizes() {

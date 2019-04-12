@@ -130,6 +130,9 @@ class ImageService {
 			
 			$autorotate = new Autorotate();
 			$autorotate->apply($image)->save($filename);
+			
+			$image->strip()->save($filename);
+			
 			return true;
 		} catch (Exception $ex) {
 			$logger = $this->logger ? $this->logger : _elgg_services()->logger;

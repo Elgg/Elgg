@@ -52,6 +52,11 @@ class EntityIconService {
 	private $uploads;
 
 	/**
+	 * @var ImageService
+	 */
+	private $images;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Config             $config   Config
@@ -60,6 +65,7 @@ class EntityIconService {
 	 * @param LoggerInterface    $logger   Logger
 	 * @param EntityTable        $entities Entity table
 	 * @param UploadService      $uploads  Upload service
+	 * @param ImageService       $images   Image service
 	 */
 	public function __construct(
 		Config $config,
@@ -67,7 +73,8 @@ class EntityIconService {
 		Request $request,
 		LoggerInterface $logger,
 		EntityTable $entities,
-		UploadService $uploads
+		UploadService $uploads,
+		ImageService $images
 	) {
 		$this->config = $config;
 		$this->hooks = $hooks;
@@ -75,6 +82,7 @@ class EntityIconService {
 		$this->logger = $logger;
 		$this->entities = $entities;
 		$this->uploads = $uploads;
+		$this->images = $images;
 	}
 
 	/**
@@ -91,7 +99,7 @@ class EntityIconService {
 		if (empty($input)) {
 			return false;
 		}
-		
+				
 		// auto detect cropping coordinates
 		if (empty($coords)) {
 			$auto_coords = $this->detectCroppingCoordinates();
@@ -134,7 +142,7 @@ class EntityIconService {
 		if (!file_exists($filename) || !is_readable($filename)) {
 			throw new InvalidParameterException(__METHOD__ . " expects a readable local file. $filename is not readable");
 		}
-
+		
 		$tmp_filename = time() . pathinfo($filename, PATHINFO_BASENAME);
 		$tmp = new ElggFile();
 		$tmp->owner_guid = $entity->guid;
@@ -167,7 +175,7 @@ class EntityIconService {
 		if (!$file->exists()) {
 			throw new InvalidParameterException(__METHOD__ . ' expects an instance of ElggFile with an existing file on filestore');
 		}
-
+		
 		$tmp_filename = time() . pathinfo($file->getFilenameOnFilestore(), PATHINFO_BASENAME);
 		$tmp = new ElggFile();
 		$tmp->owner_guid = $entity->guid;
@@ -214,6 +222,8 @@ class EntityIconService {
 			$this->logger->error('Source file passed to ' . __METHOD__ . ' can not be resolved to a valid image');
 			return false;
 		}
+		
+		$this->prepareIcon($file->getFilenameOnFilestore());
 		
 		$x1 = (int) elgg_extract('x1', $coords);
 		$y1 = (int) elgg_extract('y1', $coords);
@@ -271,6 +281,28 @@ class EntityIconService {
 		]);
 		
 		return true;
+	}
+	
+	/**
+	 * Prepares an icon
+	 *
+	 * @param string $filename the file to prepare
+	 *
+	 * @return void
+	 */
+	protected function prepareIcon($filename) {
+		
+		// fix orientation
+		$temp_file = new \ElggTempFile();
+		$temp_file->setFilename(basename($filename));
+		
+		copy($filename, $temp_file->getFilenameOnFilestore());
+		
+		$rotated = $this->images->fixOrientation($temp_file->getFilenameOnFilestore());
+
+		if ($rotated) {
+			copy($temp_file->getFilenameOnFilestore(), $filename);
+		}
 	}
 	
 	/**
