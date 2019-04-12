@@ -108,16 +108,14 @@ class EntityIconService {
 			}
 		}
 
-		$tmp_filename = time() . $input->getClientOriginalName();
-		$tmp = new ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/$tmp_filename");
+		$tmp = new \ElggTempFile();
+		$tmp->setFilename(uniqid() . $input->getClientOriginalName());
 		$tmp->open('write');
 		$tmp->close();
-		// not using move_uploaded_file() for testing purposes
+		
 		copy($input->getPathname(), $tmp->getFilenameOnFilestore());
 
-		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp_filename, $input->getClientMimeType());
+		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore(), $input->getClientMimeType());
 		$tmp->simpletype = elgg_get_file_simple_type($tmp->mimetype);
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);
@@ -142,13 +140,12 @@ class EntityIconService {
 		if (!file_exists($filename) || !is_readable($filename)) {
 			throw new InvalidParameterException(__METHOD__ . " expects a readable local file. $filename is not readable");
 		}
-		
-		$tmp_filename = time() . pathinfo($filename, PATHINFO_BASENAME);
-		$tmp = new ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/$tmp_filename");
+				
+		$tmp = new \ElggTempFile();
+		$tmp->setFilename(uniqid() . basename($filename));
 		$tmp->open('write');
 		$tmp->close();
+		
 		copy($filename, $tmp->getFilenameOnFilestore());
 
 		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore());
@@ -176,12 +173,11 @@ class EntityIconService {
 			throw new InvalidParameterException(__METHOD__ . ' expects an instance of ElggFile with an existing file on filestore');
 		}
 		
-		$tmp_filename = time() . pathinfo($file->getFilenameOnFilestore(), PATHINFO_BASENAME);
-		$tmp = new ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/$tmp_filename");
+		$tmp = new \ElggTempFile();
+		$tmp->setFilename(uniqid() . basename($file->getFilenameOnFilestore()));
 		$tmp->open('write');
 		$tmp->close();
+		
 		copy($file->getFilenameOnFilestore(), $tmp->getFilenameOnFilestore());
 
 		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore(), $file->getMimeType());
@@ -294,7 +290,7 @@ class EntityIconService {
 		
 		// fix orientation
 		$temp_file = new \ElggTempFile();
-		$temp_file->setFilename(basename($filename));
+		$temp_file->setFilename(uniqid() . basename($filename));
 		
 		copy($filename, $temp_file->getFilenameOnFilestore());
 		
@@ -303,6 +299,8 @@ class EntityIconService {
 		if ($rotated) {
 			copy($temp_file->getFilenameOnFilestore(), $filename);
 		}
+		
+		$temp_file->delete();
 	}
 	
 	/**
