@@ -13,7 +13,6 @@
 function reportedcontent_init() {
 
 	// Extend CSS
-	elgg_extend_view('elgg.css', 'reportedcontent/css');
 	elgg_extend_view('admin.css', 'reportedcontent/admin_css');
 
 	elgg_register_ajax_view('forms/reportedcontent/add');
