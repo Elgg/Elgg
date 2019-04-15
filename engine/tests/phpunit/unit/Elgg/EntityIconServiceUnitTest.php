@@ -385,9 +385,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
 		$this->assertTrue($service->hasIcon($this->entity, 'tiny'));
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
-
-		// make sure uploaded file is deleted
-		$this->assertFalse(file_exists($upload->getPathname()));
 	}
 
 	/**

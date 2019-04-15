@@ -120,7 +120,6 @@ class EntityIconService {
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);
 
-		unlink($input->getPathname());
 		$tmp->delete();
 
 		return $result;
