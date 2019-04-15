@@ -920,7 +920,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
 	if (elgg_view_exists("icon/$entity_type/$subtype")) {
 		$contents = elgg_view("icon/$entity_type/$subtype", $vars);
 	}
-	if (empty($contents)) {
+	if (empty($contents) && elgg_view_exists("icon/$entity_type/default")) {
 		$contents = elgg_view("icon/$entity_type/default", $vars);
 	}
 	if (empty($contents)) {
