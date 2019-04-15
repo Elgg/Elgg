@@ -423,7 +423,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('iconService', function(ServiceProvider $c) {
-			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable, $c->uploads);
+			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable, $c->uploads, $c->imageService);
 		});
 
 		$this->setFactory('imageService', function(ServiceProvider $c) {
@@ -640,7 +640,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('uploads', function(ServiceProvider $c) {
-			return new \Elgg\UploadService($c->request, $c->imageService);
+			return new \Elgg\UploadService($c->request);
 		});
 
 		$this->setFactory('upgrades', function(ServiceProvider $c) {
