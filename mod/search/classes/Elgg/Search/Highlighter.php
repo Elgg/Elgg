@@ -100,11 +100,15 @@ class Highlighter {
 		$haystack_length = elgg_strlen($text);
 		$haystack_lc = elgg_strtolower($text);
 
-		$parts = elgg_extract('query_parts', $this->params);
-
 		// if haystack < $max_length return the entire haystack w/formatting immediately
 		if ($haystack_length <= $max_length) {
 			return $this->highlightWords($text);
+		}
+		
+		$parts = elgg_extract('query_parts', $this->params);
+		if (empty($parts) || !is_array($parts)) {
+			// no query
+			return $text;
 		}
 
 		// get the starting positions and lengths for all matching words
