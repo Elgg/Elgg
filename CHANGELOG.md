@@ -1,3 +1,15 @@
+<a name="2.3.12"></a>
+### 2.3.12  (2019-04-16)
+
+#### Contributors
+
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **widgets:** improved stability of widget title ([904eefc1](https://github.com/Elgg/Elgg/commit/904eefc191081fa055296e18ee22f2cc2e7b01fc))
+
+
 <a name="2.3.11"></a>
 ### 2.3.11  (2019-04-04)
 
