@@ -14,7 +14,8 @@
 	> h2,
 	> h3 {
 		order: 1;
-		flex-basis: 60%;
+		flex-basis: 30%;
+		flex-grow: 1;
 		
 		padding: 1rem;
 		text-align: center;
@@ -32,7 +33,7 @@
 		padding: 1rem;
 		flex-direction: row;
 		align-items: flex-start;
-		justify-content: flex-start;
+		justify-content: space-between;
 		
 		> h1,
 		> h2,
