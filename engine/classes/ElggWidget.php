@@ -163,9 +163,10 @@ class ElggWidget extends \ElggObject {
 	 * @since 1.8.0
 	 */
 	public function getTitle() {
-		$title = $this->title;
+		$title = $this->getDisplayName();
 		if (!$title) {
-			$title = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $this->getContainerEntity());
+			$container = $this->getContainerEntity() ? : null;
+			$title = _elgg_services()->widgets->getNameById($this->handler, $this->getContext(), $container);
 		}
 		return $title;
 	}
