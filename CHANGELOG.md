@@ -1,3 +1,32 @@
+<a name="3.0.2"></a>
+### 3.0.2  (2019-04-17)
+
+#### Contributors
+
+* Jeroen Dalsem (9)
+* Jerôme Bakker (6)
+
+#### Performance
+
+* **upgrades:** improved speed of friends acl async upgrade ([004dcdd4](https://github.com/Elgg/Elgg/commit/004dcdd4095720aa5ade00c641cad132cc4e6bf3))
+
+
+#### Bug Fixes
+
+* **core:**
+  * prevent namespace conflict ([526ecf72](https://github.com/Elgg/Elgg/commit/526ecf72ed72e6147226a4c085073f66047d1ceb))
+  * use webserver timezone for date ([f0f16685](https://github.com/Elgg/Elgg/commit/f0f166858d8ebafe5091f3c0e00c031f9572b68e))
+* **css:**
+  * user hover card is now single column layout ([fcff8f90](https://github.com/Elgg/Elgg/commit/fcff8f90d8824a38d9cfbc6bbba24ca33590d290))
+  * prevent quick wrapping of title menu items ([d0c07dc6](https://github.com/Elgg/Elgg/commit/d0c07dc6907f21288415c2829d458f3ecf39c084))
+* **forms:** added missing entity info in widget access input ([1f92b130](https://github.com/Elgg/Elgg/commit/1f92b130b1ae8858d2786f7ce56c9e09f2788c55))
+* **i18n:** make sure system translations are loaded before adding custom ([48ce7e0c](https://github.com/Elgg/Elgg/commit/48ce7e0c41d6c132ee618fe8d65cf0483cd234b9))
+* **icons:**
+  * do not remove uploaded file when saving as icon ([e669071c](https://github.com/Elgg/Elgg/commit/e669071c9d4a69cd3179e2c813a2659ac70bd946))
+  * only fix image orientation when handling icons ([4e690386](https://github.com/Elgg/Elgg/commit/4e690386e92518e368fc60932c0eed0b3be95b7c))
+* **upgrades:** friends acl upgrade will now update all entities ([68f12d13](https://github.com/Elgg/Elgg/commit/68f12d13041ba4647e59454772f4641f3c90a57d))
+
+
 <a name="3.0.1"></a>
 ### 3.0.1  (2019-04-05)
 
