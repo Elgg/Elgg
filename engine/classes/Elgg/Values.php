@@ -5,7 +5,6 @@ namespace Elgg;
 use Elgg\I18n\DateTime as ElggDateTime;
 use DataFormatException;
 use DateTime as PHPDateTime;
-use DateTimeZone;
 use Exception;
 
 
@@ -81,7 +80,7 @@ class Values {
 			} elseif ($time instanceof PHPDateTime) {
 				$dt = new ElggDateTime($time->format(PHPDateTime::RFC3339_EXTENDED));
 			} else if (is_numeric($time)) {
-				$dt = new ElggDateTime(null, new DateTimeZone('UTC'));
+				$dt = new ElggDateTime();
 				$dt->setTimestamp((int) $time);
 			} else {
 				$dt = new ElggDateTime($time);

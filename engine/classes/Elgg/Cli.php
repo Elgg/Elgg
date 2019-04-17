@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Cli\Application;
+use Elgg\Cli\Application as CliApplication;
 use Elgg\Cli\BaseCommand;
 use Exception;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +17,7 @@ class Cli {
 	use Loggable;
 
 	/**
-	 * @var Application
+	 * @var CliApplication
 	 */
 	protected $console;
 
@@ -39,13 +39,13 @@ class Cli {
 	/**
 	 * Constructor
 	 *
-	 * @param Application        $console Console application instance
+	 * @param CliApplication     $console Console application instance
 	 * @param PluginHooksService $hooks   Hooks registration service
 	 * @param InputInterface     $input   Console input
 	 * @param OutputInterface    $output  Console output
 	 */
 	public function __construct(
-		Application $console,
+		CliApplication $console,
 		PluginHooksService $hooks,
 		InputInterface $input,
 		OutputInterface $output

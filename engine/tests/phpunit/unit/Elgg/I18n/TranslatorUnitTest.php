@@ -115,12 +115,12 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		
 		$logged = $logger->enable();
 		
-		// expecting translations loaded info and notice about missing key
-		$this->assertEquals(2, count($logged));
+		// expecting translation about missing key
+		$this->assertEquals(1, count($logged));
 
 		$message = "Missing English translation for \"{$this->key}b\" language key";
-		$this->assertEquals($message, $logged[1]['message']);
-		$this->assertEquals(LogLevel::NOTICE, $logged[1]['level']);
+		$this->assertEquals($message, $logged[0]['message']);
+		$this->assertEquals(LogLevel::NOTICE, $logged[0]['level']);
 
 		// has fallback key
 		$this->translator->addTranslation('en', ["{$this->key}b" => 'Dummy']);

@@ -4,8 +4,6 @@ namespace Elgg;
 
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Elgg\Filesystem\MimeTypeDetector;
-use Elgg\ImageService;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -23,19 +21,12 @@ class UploadService {
 	private $request;
 
 	/**
-	 * @var ImageService
-	 */
-	private $images;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Request      $request Http request
-	 * @param ImageService $images  The image service
+	 * @param Request $request Http request
 	 */
-	public function __construct(Request $request, ImageService $images) {
+	public function __construct(Request $request) {
 		$this->request = $request;
-		$this->images = $images;
 	}
 
 	/**
@@ -45,13 +36,7 @@ class UploadService {
 	 * @return UploadedFile[]
 	 */
 	public function getFiles($input_name) {
-		$files = $this->request->getFiles($input_name);
-
-		foreach ($files as $file) {
-			$this->prepareFile($file);
-		}
-		
-		return $files;
+		return $this->request->getFiles($input_name);
 	}
 
 	/**
@@ -63,49 +48,6 @@ class UploadService {
 	 * @return UploadedFile[]|false
 	 */
 	public function getFile($input_name, $check_for_validity = true) {
-		$file = $this->request->getFile($input_name, $check_for_validity);
-		
-		if ($file instanceof UploadedFile) {
-			$this->prepareFile($file);
-		}
-		
-		return $file;
-	}
-	
-	/**
-	 * Prepares an uploaded file
-	 *
-	 * @param UploadedFile $file File to prepare
-	 *
-	 * @return void
-	 */
-	protected function prepareFile(UploadedFile $file) {
-		if (!$file->isValid()) {
-			return;
-		}
-		
-		$mime_detector = new MimeTypeDetector();
-		$mime = $mime_detector->getType($file->getPathname());
-
-		if (strpos($mime, 'image/') === 0) {
-			$this->fixImageOrientation($file);
-		}
-	}
-	
-	/**
-	 * Fixes the orientation of an image
-	 *
-	 * @param UploadedFile $file File to fix
-	 *
-	 * @return void
-	 */
-	protected function fixImageOrientation(UploadedFile $file) {
-		$temp_location = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . uniqid() . $file->getClientOriginalName();
-		copy($file->getPathname(), $temp_location);
-		
-		$rotated = $this->images->fixOrientation($temp_location);
-		if ($rotated) {
-			copy($temp_location, $file->getPathname());
-		}
+		return $this->request->getFile($input_name, $check_for_validity);
 	}
 }

@@ -246,7 +246,7 @@
 
 .elgg-menu-hover-card-container {
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
 }
 
 .elgg-menu-hover-card {
@@ -309,7 +309,7 @@
 	max-width: 20rem;
 	
 	&.elgg-menu-hover-actions {
-		border-left: 1px solid $(border-color-soft);
+		border-top: 1px solid $(border-color-soft);
 	}
 }
 

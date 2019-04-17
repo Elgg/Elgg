@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-21 16:20+0100\n"
+"POT-Creation-Date: 2019-04-05 10:27+0200\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -2873,10 +2873,22 @@ msgstr ""
 " il doit également donner son mot de passe actuel."
 
 #: ../../admin/security.rst:35
+msgid "Session bound icons"
+msgstr ""
+
+#: ../../admin/security.rst:37
+msgid ""
+"Entity icons can be session bound by default. This means the URLs generated "
+"also contain information about the current session. Having icons session "
+"bound makes icon urls not shareable between sessions. The side effect is "
+"that caching of these urls will only help the active session."
+msgstr ""
+
+#: ../../admin/security.rst:41
 msgid "Notification to site administrators"
 msgstr "Notification aux administrateurs du site"
 
-#: ../../admin/security.rst:37
+#: ../../admin/security.rst:43
 msgid ""
 "When a new site administrator is added or when a site administrator is "
 "removed all the site administrators get a notification about this action."
@@ -2885,15 +2897,15 @@ msgstr ""
 " du site est retiré tous les administrateurs du site reçoivent une "
 "notification à ce sujet."
 
-#: ../../admin/security.rst:40
+#: ../../admin/security.rst:46
 msgid "Notifications to user"
 msgstr "Notifications à l'utilisateur"
 
-#: ../../admin/security.rst:43
+#: ../../admin/security.rst:49
 msgid "Site administrator"
 msgstr "Administrateur du site"
 
-#: ../../admin/security.rst:45
+#: ../../admin/security.rst:51
 msgid ""
 "When the site administrator role is added to or removed from the account, "
 "send a notification to the user whos account this is affecting."
@@ -2901,11 +2913,11 @@ msgstr ""
 "Quand le rôle d'administrateur du site est ajouté ou retiré à un compte, "
 "envoie une notification à l'utilisateur dont le compte est affecté."
 
-#: ../../admin/security.rst:48
+#: ../../admin/security.rst:54
 msgid "(Un)ban"
 msgstr "Bannir/Réintégrer"
 
-#: ../../admin/security.rst:50
+#: ../../admin/security.rst:56
 msgid ""
 "When the account of a user gets banned or unbanned, let the affected user "
 "know about this action."
