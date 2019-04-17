@@ -22,6 +22,7 @@ if ($show_access) {
 		'#label' => elgg_echo('access'),
 		'name' => 'params[access_id]',
 		'value' => $widget->access_id,
+		'entity' => $widget,
 	]);
 }
 
