@@ -163,92 +163,46 @@ $body .= "<div class='elgg-plugin-details-container pvm'>";
 $body .= elgg_view('output/longtext', ['value' => $plugin->getManifest()->getDescription()]);
 
 // tabs
-$tabs = [];
-
-$tabs[] = [
-	'text' => elgg_echo("admin:plugins:label:info"),
-	'rel' => 'elgg-plugin-details-info',
-	'selected' => !$show_dependencies,
+$tabs = [
+	'elgg-plugin-details-info' => [
+		'text' => elgg_echo("admin:plugins:label:info"),
+		'selected' => !$show_dependencies,
+		'content' => $info_html,
+	],
 ];
 
 if ($resources_html) {
-	$tabs[] = [
+	$tabs['elgg-plugin-details-resources'] = [
 		'text' => elgg_echo("admin:plugins:label:resources"),
-		'rel' => 'elgg-plugin-details-resources'
+		'content' => $resources_html,
 	];
 }
 
 if ($files_html) {
-	$tabs[] = [
+	$tabs['elgg-plugin-details-files'] = [
 		'text' => elgg_echo("admin:plugins:label:files"),
-		'rel' => 'elgg-plugin-details-files'
+		'content' => $files_html,
 	];
 }
 
 if ($screenshots) {
-	$tabs[] = [
+	$tabs['elgg-plugin-details-screenshots'] = [
 		'text' => elgg_echo("admin:plugins:label:screenshots"),
-		'rel' => 'elgg-plugin-details-screenshots'
+		'content' => $screenshots_menu . $screenshots,
 	];
 }
 
-$tabs[] = [
+$tabs['elgg-plugin-details-dependencies'] = [
 	'text' => elgg_echo("admin:plugins:label:dependencies"),
-	'rel' => 'elgg-plugin-details-dependencies',
 	'selected' => $show_dependencies,
+	'content' => elgg_view('object/plugin/elements/dependencies', ['plugin' => $plugin]),
 ];
 
-$body .= elgg_view('navigation/tabs', [
+$body .= elgg_view('page/components/tabs', [
 	'tabs' => $tabs,
-	'class' => 'mtl',
 ]);
 
-$body .= "<div>";
-
-// info
-if (!$show_dependencies) {
-	$body .= "<div class='elgg-plugin-details-info'>";
-} else {
-	$body .= "<div class='elgg-plugin-details-info hidden'>";
-}
-$body .= $info_html;
 $body .= "</div>";
-
-// resources
-if ($resources_html) {
-	$body .= "<div class='elgg-plugin-details-resources hidden'>";
-	$body .= $resources_html;
-	$body .= "</div>";
-}
-
-// files
-if ($files_html) {
-	$body .= "<div class='elgg-plugin-details-files hidden'>";
-	$body .= $files_html;
-	$body .= "</div>";
-}
-
-// screenshots
-if ($screenshots) {
-	$body .= "<div class='elgg-plugin-details-screenshots hidden'>";
-	$body .= $screenshots_menu;
-	$body .= $screenshots_body;
-	$body .= "</div>";
-}
-
-// dependencies
-if (!$show_dependencies) {
-	$body .= "<div class='elgg-plugin-details-dependencies hidden'>";
-} else {
-	$body .= "<div class='elgg-plugin-details-dependencies'>";
-}
-$body .= elgg_view('object/plugin/elements/dependencies', ['plugin' => $plugin]);
-$body .= "</div>";
-
-$body .= "</div>";
-
-$body .= "</div>";
-
 $body .= "</div>";
 
 echo elgg_view_module("plugin-details", $plugin->getDisplayName(), $body);
