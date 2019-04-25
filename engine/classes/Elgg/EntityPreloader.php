@@ -57,6 +57,7 @@ class EntityPreloader {
 			call_user_func($this->_callable_entity_loader, [
 				'guids' => $guids,
 				'limit' => EntityCache::MAX_SIZE,
+				'order_by' => false,
 			]);
 		}
 	}
