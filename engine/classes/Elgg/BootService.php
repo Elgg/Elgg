@@ -152,13 +152,6 @@ class BootService {
 
 		// we don't store langs in boot data because it varies by user
 		$services->translator->bootTranslations();
-
-		// invalidate on some actions just in case other invalidation triggers miss something
-		$services->hooks->registerHandler('action', 'all', function ($action) {
-			if (0 === strpos($action, 'admin/' || $action === 'plugins/settings/save')) {
-				$this->invalidateCache();
-			}
-		}, 1);
 	}
 
 	/**
