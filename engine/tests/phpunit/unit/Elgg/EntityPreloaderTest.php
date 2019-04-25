@@ -53,6 +53,7 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 		$this->mock->expects($this->once())->method('load')->with([
 			'guids' => array(234, 345),
 			'limit' => EntityCache::MAX_SIZE,
+			'order_by' => false,
 		]);
 		$this->obj->preload(array(
 			(object) array('foo' => 23,),
@@ -75,6 +76,7 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 		$this->mock->expects($this->once())->method('load')->with([
 			'guids' => array(234, 345),
 			'limit' => EntityCache::MAX_SIZE,
+			'order_by' => false,
 		]);
 		$this->obj->preload(array(
 			(object) array('foo' => 234),
