@@ -37,8 +37,7 @@ if (strcmp($password, $password2) != 0) {
 // For now, just try and register the user
 try {
 	$guid = register_user($username, $password, $name, $email, true);
-
-	if (!$guid) {
+	if ($guid === false) {
 		return elgg_error_response(elgg_echo('adduser:bad'));
 	}
 
