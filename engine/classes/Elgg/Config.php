@@ -36,6 +36,7 @@ use Elgg\Project\Paths;
  * @property string        $dbhost
  * @property string        $dbpass
  * @property string        $dbprefix
+ * @property bool          $db_disable_query_cache
  * @property string        $debug
  * @property int           $default_access
  * @property int           $default_limit
@@ -246,7 +247,8 @@ class Config {
 		$get_db = function() {
 			// try to migrate settings to the file
 			$db_conf = new \Elgg\Database\DbConfig($GLOBALS['CONFIG']);
-			return new Database($db_conf);
+			$cache = new \Elgg\Cache\QueryCache(50, true);
+			return new Database($db_conf, $cache);
 		};
 
 		if (empty($GLOBALS['CONFIG']->dataroot)) {

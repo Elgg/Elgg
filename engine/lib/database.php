@@ -68,7 +68,7 @@ function run_sql_script($scriptlocation) {
  * @since 2.0.0
  */
 function elgg_enable_query_cache() {
-	_elgg_services()->db->enableQueryCache();
+	_elgg_services()->queryCache->enable();
 }
 
 /**
@@ -81,7 +81,7 @@ function elgg_enable_query_cache() {
  * @since 2.0.0
  */
 function elgg_disable_query_cache() {
-	_elgg_services()->db->disableQueryCache();
+	_elgg_services()->queryCache->disable();
 }
 
 /**
