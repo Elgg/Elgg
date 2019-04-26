@@ -93,7 +93,6 @@ use Elgg\I18n\LocaleService;
  * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable             $privateSettings
  * @property-read \Elgg\Application\Database                      $publicDb
- * @property-read \Elgg\Database\QueryCounter                     $queryCounter
  * @property-read \Elgg\RedirectService                           $redirects
  * @property-read \Elgg\Http\Request                              $request
  * @property-read \Elgg\Router\RequestContext                     $requestContext
@@ -533,10 +532,6 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('publicDb', function(ServiceProvider $c) {
 			return new \Elgg\Application\Database($c->db);
 		});
-
-		$this->setFactory('queryCounter', function(ServiceProvider $c) {
-			return new \Elgg\Database\QueryCounter($c->db);
-		}, false);
 
 		$this->setFactory('redirects', function(ServiceProvider $c) {
 			$url = current_page_url();

@@ -85,25 +85,6 @@ function elgg_disable_query_cache() {
 }
 
 /**
- * Get a new query counter that will begin counting from 0. For profiling isolated
- * sections of code.
- *
- * <code>
- * $counter = _elgg_db_get_query_counter();
- *
- * ... code to profile
- *
- * $counter->setDeltaHeader();
- * </code>
- *
- * @return \Elgg\Database\QueryCounter
- * @access private
- */
-function _elgg_db_get_query_counter() {
-	return _elgg_services()->queryCounter;
-}
-
-/**
  * Runs unit tests for the database
  *
  * @param string $hook  'unit_test'
