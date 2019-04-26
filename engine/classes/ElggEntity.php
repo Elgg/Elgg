@@ -607,6 +607,12 @@ abstract class ElggEntity extends \ElggData implements
 		if (is_bool($value)) {
 			$value = (int) $value;
 		}
+		
+		// checking if string value matches saved value (as get privatesettings does not know value type) and db column is a string
+		if (strval($value) === $this->getPrivateSetting($name)) {
+			// no need to update value
+			return true;
+		}
 
 		if (!$this->guid) {
 			$this->temp_private_settings[$name] = $value;
