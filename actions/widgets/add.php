@@ -22,8 +22,8 @@ if (!elgg_can_edit_widget_layout($context)) {
 	return elgg_error_response(elgg_echo('widgets:add:failure'));
 }
 
-$guid = elgg_create_widget($page_owner->getGUID(), $handler, $context);
-if (!$guid) {
+$guid = elgg_create_widget($page_owner->guid, $handler, $context);
+if ($guid === false) {
 	return elgg_error_response(elgg_echo('widgets:add:failure'));
 }
 

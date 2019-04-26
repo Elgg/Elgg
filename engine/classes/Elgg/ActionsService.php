@@ -6,7 +6,7 @@ use Elgg\Project\Paths;
 use Elgg\Router\Middleware\ActionMiddleware;
 use Elgg\Router\Middleware\AdminGatekeeper;
 use Elgg\Router\Middleware\CsrfFirewall;
-use Elgg\Router\Middleware\Gatekeeper;
+use Elgg\Router\Middleware\Gatekeeper as MiddlewareGateKeeper;
 use Elgg\Router\RouteRegistrationService;
 
 /**
@@ -102,7 +102,7 @@ class ActionsService {
 		if ($access == 'admin') {
 			$middleware[] = AdminGatekeeper::class;
 		} else if ($access == 'logged_in') {
-			$middleware[] = Gatekeeper::class;
+			$middleware[] = MiddlewareGateKeeper::class;
 		}
 
 		$middleware[] = ActionMiddleware::class;
@@ -192,7 +192,7 @@ class ActionsService {
 
 			$access = 'public';
 			$middleware = $route->getDefault('_middleware');
-			if (in_array(Gatekeeper::class, $middleware)) {
+			if (in_array(MiddlewareGateKeeper::class, $middleware)) {
 				$access = 'logged_in';
 			} else if (in_array(AdminGatekeeper::class, $middleware)) {
 				$access = 'admin';

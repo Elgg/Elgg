@@ -296,7 +296,7 @@ class Config {
 	 *
 	 * @param string $settings_path Path of settings file
 	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
-	 * @return Config
+	 * @return string
 	 *
 	 * @access private
 	 * @internal

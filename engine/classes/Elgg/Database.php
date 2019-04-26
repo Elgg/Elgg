@@ -440,7 +440,7 @@ class Database {
 	 * @param Connection          $connection The DB connection
 	 * @param array               $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
-	 * @return Statement The result of the query
+	 * @return Statement|int The result of the query
 	 * @throws \DatabaseException
 	 */
 	protected function executeQuery($query, Connection $connection, array $params = []) {

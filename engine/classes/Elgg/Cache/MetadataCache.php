@@ -87,7 +87,7 @@ class MetadataCache {
 	 * Warning: You should always call isLoaded() beforehand to verify that this
 	 * function's return value can be trusted.
 	 *
-	 * @see isLoaded
+	 * @see MetadataCache::isLoaded()
 	 *
 	 * @param int    $entity_guid The GUID of the entity
 	 * @param string $name        The metadata name
@@ -124,7 +124,7 @@ class MetadataCache {
 	 * Warning: You should always call isLoaded() beforehand to verify that this
 	 * function's return value can be trusted.
 	 *
-	 * @see isLoaded
+	 * @see MetadataCache::isLoaded()
 	 *
 	 * @param int    $entity_guid The GUID of the entity
 	 * @param string $name        The metadata name

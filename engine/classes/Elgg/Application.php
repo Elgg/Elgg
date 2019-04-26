@@ -17,7 +17,7 @@ use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\RedirectResponse;
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Http\ResponseTransport;
 use Elgg\Project\Paths;
@@ -307,10 +307,10 @@ class Application {
 		}
 
 		if ($spec['request']) {
-			if ($spec['request'] instanceof Request) {
+			if ($spec['request'] instanceof HttpRequest) {
 				$spec['service_provider']->setValue('request', $spec['request']);
 			} else {
-				throw new InvalidArgumentException("Given request is not a " . Request::class);
+				throw new InvalidArgumentException("Given request is not a " . HttpRequest::class);
 			}
 		}
 
@@ -326,7 +326,7 @@ class Application {
 	/**
 	 * Route a request
 	 *
-	 * @param Request $request Request
+	 * @param HttpRequest $request Request
 	 *
 	 * @return Response|false
 	 * @throws ClassException
@@ -335,11 +335,11 @@ class Application {
 	 * @throws InvalidParameterException
 	 * @throws SecurityException
 	 */
-	public static function route(Request $request) {
+	public static function route(HttpRequest $request) {
 		self::loadCore();
 
 		if ($request->isRewriteCheck()) {
-			$response = new OkResponse(Request::REWRITE_TEST_OUTPUT);
+			$response = new OkResponse(HttpRequest::REWRITE_TEST_OUTPUT);
 			return self::respond($response);
 		}
 
@@ -692,14 +692,14 @@ class Application {
 
 	/**
 	 * Build request object
-	 * @return Request
+	 * @return \Elgg\Http\Request
 	 */
 	public static function getRequest() {
 		if (self::$_instance) {
 			return self::$_instance->_services->request;
 		}
 
-		return Request::createFromGlobals();
+		return HttpRequest::createFromGlobals();
 	}
 
 	/**
