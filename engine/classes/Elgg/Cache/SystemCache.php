@@ -78,7 +78,7 @@ class SystemCache {
 	 * Deletes the contents of a system cache.
 	 *
 	 * @param string $type The type of cache to delete
-	 * @return string
+	 * @return bool
 	 */
 	function delete($type) {
 		return $this->cache->delete($type);

@@ -22,7 +22,7 @@ class Cli {
 	protected $console;
 
 	/**
-	 * @var HooksRegistrationService
+	 * @var PluginHooksService
 	 */
 	protected $hooks;
 
