@@ -154,6 +154,22 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
+	 * @param bool $track_query should the query be tracked by timers and loggers
+	 */
+	public function execute(bool $track_query = true) {
+		
+		if (!$track_query) {
+			return parent::execute();
+		}
+		
+		return _elgg_services()->db->trackQuery($this, [], function() {
+			return parent::execute();
+		});
+	}
+	
+	/**
 	 * {@inheritdoc}
 	 *
 	 * @access private Use create() method on the extending class

@@ -453,23 +453,20 @@ class Database {
 			$params = $query->getParameters();
 			$sql = $query->getSQL();
 		}
-
-		$this->query_count++;
-
-		if ($this->timer) {
-			$timer_key = preg_replace('~\\s+~', ' ', trim($sql . '|' . serialize($params)));
-			$this->timer->begin(['SQL', $timer_key]);
-		}
-
+				
 		try {
-			if ($query instanceof QueryBuilder) {
-				$value = $query->execute();
-			} elseif ($params) {
-				$value = $connection->executeQuery($sql, $params);
-			} else {
-				// faster
-				$value = $connection->query($sql);
-			}
+			$value = $this->trackQuery($sql, $params, function() use ($query, $params, $connection, $sql) {
+				if ($query instanceof \Elgg\Database\QueryBuilder) {
+					return $query->execute(false);
+				} elseif ($query instanceof QueryBuilder) {
+					return $query->execute();
+				} elseif ($params) {
+					return $connection->executeQuery($sql, $params);
+				} else {
+					// faster
+					return $connection->query($sql);
+				}
+			});
 		} catch (\Exception $e) {
 			$ex = new \DatabaseException($e->getMessage());
 			$ex->setParameters($params);
@@ -478,11 +475,51 @@ class Database {
 			throw $ex;
 		}
 
-		if ($this->timer) {
-			$this->timer->end(['SQL', $timer_key]);
+		return $value;
+	}
+	
+	/**
+	 * Tracks the query count and timers for a given query
+	 *
+	 * @param QueryBuilder|string $query    The query
+	 * @param array               $params   Optional query params
+	 * @param callable            $callback Callback to execyte during query execution
+	 *
+	 * @return mixed
+	 */
+	public function trackQuery($query, array $params, callable $callback) {
+	
+		$sql = $query;
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$sql = $query->getSQL();
 		}
 
-		return $value;
+		$this->query_count++;
+
+		$timer_key = false;
+		if ($this->timer) {
+			$timer_key = preg_replace('~\\s+~', ' ', trim($sql . '|' . serialize($params)));
+			$this->timer->begin(['SQL', $timer_key]);
+		}
+		
+		$stop_timer = function() use ($timer_key) {
+			if ($timer_key) {
+				$this->timer->end(['SQL', $timer_key]);
+			}
+		};
+		
+		try {
+			$result = $callback();
+		} catch (\Exception $e) {
+			$stop_timer();
+			
+			throw $ex;
+		}
+		
+		$stop_timer();
+		
+		return $result;
 	}
 
 	/**
