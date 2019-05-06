@@ -301,19 +301,25 @@ class Plugins {
 		// everything remaining in $known_plugins needs to be disabled
 		// because they are entities, but their dirs were removed.
 		// don't delete the entities because they hold settings.
+		$reindex = false;
 		foreach ($known_plugins as $plugin) {
+			if (!$plugin->isEnabled()) {
+				continue;
+			}
+			
+			$reindex = true;
+			
 			if ($plugin->isActive()) {
 				$plugin->deactivate();
 			}
 			// remove the priority.
 			$name = $this->namespacePrivateSetting('internal', 'priority');
 			$plugin->removePrivateSetting($name);
-			if ($plugin->isEnabled()) {
-				$plugin->disable();
-			}
+			
+			$plugin->disable();
 		}
 		
-		if (!empty($known_plugins)) {
+		if ($reindex) {
 			$this->reindexPriorities();
 		}
 

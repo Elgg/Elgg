@@ -43,8 +43,7 @@ class TimerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function assertIsATime($val) {
-		list($one, $two) = explode(' ', $val);
-		$this->assertTrue(is_numeric($one) && is_numeric($two));
+		$this->assertInternalType('float', $val);
 	}
 
 	public function testCanDetectEnd() {

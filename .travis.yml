@@ -3,6 +3,7 @@ php:
  - 7.0
  - 7.1
  - 7.2
+ - 7.3
 
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
@@ -25,7 +26,7 @@ matrix:
   fast_finish: true
   include:
     # Commit message and lint
-    - php: 7.0
+    - php: 7.3
       env: JOB_NAME=lint VARIA=true
       install:
         - composer travis:install
@@ -34,7 +35,7 @@ matrix:
         - composer lint
 
     # Build and test javascript
-    - php: 7.0
+    - php: 7.3
       env: JOB_NAME=js_tests VARIA=true
       dist: trusty
       install:
@@ -48,7 +49,7 @@ matrix:
     # Flags used here, not in `make html`:
     #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
     #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
-    - php: 7.0
+    - php: 7.3
       env: JOB_NAME=docs_build VARIA=true
       install:
         - pip install --user "Sphinx==1.3.1"
@@ -63,7 +64,7 @@ matrix:
         - memcached
         - mysql
       env:
-        - JOB_NAME=memcache_php56 VARIA=true
+        - JOB_NAME=memcache VARIA=true
         - ELGG_MEMCACHE=1
         - ELGG_MEMCACHE_SERVER1_HOST=127.0.0.1
         - ELGG_MEMCACHE_SERVER1_PORT=11211

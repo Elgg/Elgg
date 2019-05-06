@@ -200,11 +200,11 @@ class CompositeCache extends ElggCache {
 	 */
 	protected function createPool() {
 		$drivers = [];
+		$drivers[] = $this->buildEphemeralDriver();
 		$drivers[] = $this->buildApcDriver();
 		$drivers[] = $this->buildRedisDriver();
 		$drivers[] = $this->buildMemcachedDriver();
 		$drivers[] = $this->buildFileSystemDriver();
-		$drivers[] = $this->buildEphemeralDriver();
 		$drivers[] = $this->buildBlackHoleDriver();
 		$drivers = array_filter($drivers);
 
@@ -304,7 +304,7 @@ class CompositeCache extends ElggCache {
 
 	/**
 	 * Builds in-memory driver
-	 * @return Ephemeral
+	 * @return null|Ephemeral
 	 */
 	protected function buildEphemeralDriver() {
 		if (!($this->flags & ELGG_CACHE_RUNTIME)) {
@@ -316,7 +316,7 @@ class CompositeCache extends ElggCache {
 
 	/**
 	 * Builds null cache driver
-	 * @return BlackHole
+	 * @return null|BlackHole
 	 */
 	protected function buildBlackHoleDriver() {
 		if (!($this->flags & ELGG_CACHE_BLACK_HOLE)) {

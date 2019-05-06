@@ -38,7 +38,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 
 		$this->setFactory('db', function (MockServiceProvider $sp) {
 			$config = $sp->dbConfig;
-			$db = new \Elgg\Mocks\Database($config);
+			$db = new \Elgg\Mocks\Database($config, $sp->queryCache);
 			$db->setLogger($sp->logger);
 
 			return $db;

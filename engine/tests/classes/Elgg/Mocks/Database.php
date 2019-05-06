@@ -29,14 +29,6 @@ class Database extends DbDatabase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __construct(DbConfig $config, LoggerInterface $logger = null) {
-		parent::__construct($config);
-		$this->setLogger($logger);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
 	public function setupConnections() {
 
 	}

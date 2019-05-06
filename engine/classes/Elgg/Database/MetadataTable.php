@@ -398,6 +398,29 @@ class MetadataTable {
 	}
 
 	/**
+	 * Returns metadata rows
+	 *
+	 * Used internally for metadata preloading
+	 *
+	 * @param array $guids Array of guids to fetch metadata rows for
+	 *
+	 * @return \stdClass[]
+	 *
+	 * @internal
+	 */
+	public function getRowsForGuids(array $guids) {
+
+		$qb = Select::fromTable('metadata');
+		$qb->select('*')
+			->where($qb->compare('entity_guid', 'IN', $guids, ELGG_VALUE_GUID))
+			->orderBy('entity_guid', 'asc')
+			->orderBy('time_created', 'asc')
+			->orderBy('id', 'asc');
+		
+		return $qb->execute()->fetchAll();
+	}
+
+	/**
 	 * Deletes metadata based on $options.
 	 *
 	 * @warning Unlike elgg_get_metadata() this will not accept an empty options array!

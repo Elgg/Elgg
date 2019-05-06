@@ -116,7 +116,7 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 			->setMethods(['updateData'])
 			->setConstructorArgs([
 				new \Elgg\Database\DbConfig((object) ['dbprefix' => 'test_']),
-				_elgg_services()->logger
+				_elgg_services()->queryCache
 			])
 			->getMock();
 	}

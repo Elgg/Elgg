@@ -19,7 +19,7 @@ class Timer {
 	 * @return void
 	 */
 	public function begin(array $keys) {
-		$this->getTreeNode($keys)[self::MARKER_BEGIN] = microtime();
+		$this->getTreeNode($keys)[self::MARKER_BEGIN] = microtime(true);
 	}
 
 	/**
@@ -29,7 +29,7 @@ class Timer {
 	 * @return void
 	 */
 	public function end(array $keys) {
-		$this->getTreeNode($keys)[self::MARKER_END] = microtime();
+		$this->getTreeNode($keys)[self::MARKER_END] = microtime(true);
 	}
 
 	/**

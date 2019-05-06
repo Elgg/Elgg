@@ -101,6 +101,21 @@ class MetadataTable extends DbMetadataTabe {
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function getRowsForGuids(array $guids) {
+		
+		$rows = [];
+		foreach ($this->rows as $id => $row) {
+			if (in_array($row->entity_guid, $guids)) {
+				$rows[] = $row;
+			}
+		}
+		
+		return $rows;
+	}
+
+	/**
 	 * Clear query specs
 	 *
 	 * @param \stdClass $row Data row
