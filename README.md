@@ -60,7 +60,7 @@ The Elgg project was started in 2004 by
 License
 -------
 
-Copyright (c) 2008-2017, see COPYRIGHT.txt
+Copyright (c) 2008-2019, see COPYRIGHT.txt
 
 Elgg is released under the GNU General Public License (GPL) Version 2 and the
 Massachusetts Institute of Technology (MIT-X11) License. 
