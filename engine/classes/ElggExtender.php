@@ -95,10 +95,8 @@ abstract class ElggExtender extends \ElggData {
 				switch ($this->attributes['value_type']) {
 					case 'integer' :
 						return (int) $this->attributes['value'];
-						break;
 					case 'text' :
 						return $this->attributes['value'];
-						break;
 					default :
 						$msg = "{$this->attributes['value_type']} is not a supported \ElggExtender value type.";
 						throw new \UnexpectedValueException($msg);

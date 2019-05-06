@@ -1084,7 +1084,7 @@ class ElggInstaller {
 		$url .= Request::REWRITE_TEST_TOKEN . '?' . http_build_query([
 				Request::REWRITE_TEST_TOKEN => '1',
 			]);
-		$report['rewrite'] = [$tester->run($url, Paths::project())];
+		$report['rewrite'] = [$tester->run($url)];
 	}
 
 	/**

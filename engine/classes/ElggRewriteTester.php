@@ -26,7 +26,7 @@ class ElggRewriteTester {
 	 * Run the rewrite test and return a status array
 	 *
 	 * @param string $url  URL of rewrite test
-	 * @param string $path Root directory of Elgg with trailing slash
+	 * @param string $path Obsolete, don't use
 	 *
 	 * @return array
 	 */
@@ -38,7 +38,7 @@ class ElggRewriteTester {
 
 		if ($this->rewriteTestPassed == false) {
 			if ($this->webserver == 'apache' || $this->webserver == 'unknown') {
-				if ($this->createHtaccess($url, $path)) {
+				if ($this->createHtaccess($url)) {
 					$this->rewriteTestPassed = $this->runRewriteTest($url);
 				}
 			}

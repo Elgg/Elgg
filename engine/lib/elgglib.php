@@ -1389,27 +1389,6 @@ function _elgg_ajax_page_handler($segments) {
 }
 
 /**
- * Handle requests for /favicon.ico
- *
- * @param string[] $segments The URL segments
- * @return bool
- * @access private
- * @since 1.10
- */
-function _elgg_favicon_page_handler($segments) {
-	header("HTTP/1.1 404 Not Found", true, 404);
-
-	header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+1 week")), true);
-	header("Pragma: public", true);
-	header("Cache-Control: public", true);
-
-	header('Content-Type: image/x-icon');
-	echo elgg_view('graphics/favicon.ico');
-
-	return true;
-}
-
-/**
  * Checks if there are some constraints on the options array for
  * potentially dangerous operations.
  *

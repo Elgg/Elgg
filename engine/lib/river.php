@@ -42,12 +42,12 @@ function elgg_create_river_item(array $options = []) {
 	}
 
 	$subject_guid = elgg_extract('subject_guid', $options, elgg_get_logged_in_user_guid());
-	if (!($subject = get_entity($subject_guid))) {
+	if (!(get_entity($subject_guid) instanceof ElggEntity)) {
 		return false;
 	}
 
 	$object_guid = elgg_extract('object_guid', $options, 0);
-	if (!($object = get_entity($object_guid))) {
+	if (!(get_entity($object_guid) instanceof ElggEntity)) {
 		return false;
 	}
 
@@ -55,7 +55,7 @@ function elgg_create_river_item(array $options = []) {
 	if ($target_guid) {
 		// target_guid is not a required parameter so check
 		// it only if it is included in the parameters
-		if (!($target = get_entity($target_guid))) {
+		if (!(get_entity($target_guid) instanceof ElggEntity)) {
 			return false;
 		}
 	}

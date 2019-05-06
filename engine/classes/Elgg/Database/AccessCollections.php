@@ -855,8 +855,6 @@ class AccessCollections {
 		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
-		$user_guid = $this->session->getLoggedInUserGuid();
-		
 		if (!$collection || !$collection->canEdit()) {
 			// return 'Limited' if the collection can not be loaded or it can not be edited
 			return $translator->translate('access:limited:label');

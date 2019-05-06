@@ -65,9 +65,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 
 	$entity = $params['event']->getObject();
 	$owner = $params['event']->getActor();
-	$recipient = $params['recipient'];
 	$language = $params['language'];
-	$method = $params['method'];
 	$descr = $entity->description;
 
 	$subject = elgg_echo('thewire:notify:subject', [$owner->getDisplayName()], $language);

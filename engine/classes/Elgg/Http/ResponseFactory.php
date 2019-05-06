@@ -328,7 +328,7 @@ class ResponseFactory {
 			// @see elgg_error_page_handler
 			$forward_reason = (string) $status_code;
 
-			$forward_url = $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
+			$this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
 
 			if ($this->response_sent) {
 				// Response was sent from a forward hook

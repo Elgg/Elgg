@@ -130,7 +130,6 @@ class Translator {
 		$langs['en'] = true;
 
 		// try to translate
-		$notice = '';
 		$logger = _elgg_services()->logger;
 		$string = $message_key;
 		foreach (array_keys($langs) as $try_lang) {
