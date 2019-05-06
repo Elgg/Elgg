@@ -291,7 +291,7 @@ class MetadataTable {
 				");
 			}
 
-			if ($id) {
+			if ($id > 0) {
 				$metadata->id = $id;
 
 				if ($this->update($metadata)) {

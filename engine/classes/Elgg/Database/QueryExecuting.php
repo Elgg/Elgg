@@ -106,7 +106,7 @@ interface QueryExecuting {
 	/**
 	 * Add HAVING
 	 *
-	 * @param sring $expression Having
+	 * @param string $expression Having
 	 *
 	 * @return static
 	 */

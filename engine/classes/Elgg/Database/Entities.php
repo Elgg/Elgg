@@ -138,7 +138,7 @@ class Entities extends Repository {
 			$qb->addOrderBy('e.guid', 'desc');
 		}
 
-		if ($limit) {
+		if ($limit > 0) {
 			$qb->setMaxResults((int) $limit);
 			$qb->setFirstResult((int) $offset);
 		}

@@ -133,7 +133,7 @@ class Annotations extends Repository {
 			$qb->addOrderBy('n_table.id', 'asc');
 		}
 
-		if ($limit) {
+		if ($limit > 0) {
 			$qb->setMaxResults((int) $limit);
 			$qb->setFirstResult((int) $offset);
 		}

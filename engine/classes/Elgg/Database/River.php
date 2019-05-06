@@ -156,7 +156,7 @@ class River extends Repository {
 			$qb->addOrderBy('rv.posted', 'desc');
 		}
 
-		if ($limit) {
+		if ($limit > 0) {
 			$qb->setMaxResults((int) $limit);
 			$qb->setFirstResult((int) $offset);
 		}
