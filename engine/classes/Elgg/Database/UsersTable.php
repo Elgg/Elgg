@@ -93,7 +93,7 @@ class UsersTable {
 	 * Get an array of users from an email address
 	 *
 	 * @param string $email Email address
-	 * @return array
+	 * @return \ElggUser[]
 	 */
 	public function getByEmail($email) {
 		if (!$email) {

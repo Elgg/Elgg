@@ -282,7 +282,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @param string $type           Value type for sanitization/casting
 	 * @param bool   $case_sensitive Use case sensitive comparison for strings
 	 *
-	 * @return CompositeExpression|null
+	 * @return CompositeExpression|null|string
 	 */
 	public function compare($x, $comparison, $y = null, $type = null, $case_sensitive = null) {
 		return (new ComparisonClause($x, $comparison, $y, $type, $case_sensitive))->prepare($this);
@@ -295,7 +295,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @param mixed  $lower Lower bound
 	 * @param mixed  $upper Upper bound
 	 *
-	 * @return CompositeExpression|null
+	 * @return CompositeExpression|null|string
 	 */
 	public function between($x, $lower = null, $upper = null, $type = null) {
 		$wheres = [];

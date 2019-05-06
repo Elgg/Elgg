@@ -425,7 +425,7 @@ trait Seeding {
 	 * @param array $attributes Object entity attributes
 	 * @param array $metadata   Object entity metadata
 	 *
-	 * @return ElggObject
+	 * @return \ElggSite
 	 */
 	public function createSite(array $attributes = [], array $metadata = []) {
 		// We don't want to create more than one site
