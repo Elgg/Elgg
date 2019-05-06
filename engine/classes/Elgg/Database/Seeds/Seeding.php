@@ -425,7 +425,7 @@ trait Seeding {
 	 * @param array $attributes Object entity attributes
 	 * @param array $metadata   Object entity metadata
 	 *
-	 * @return ElggObject
+	 * @return \ElggSite
 	 */
 	public function createSite(array $attributes = [], array $metadata = []) {
 		// We don't want to create more than one site
@@ -699,7 +699,7 @@ trait Seeding {
 		$tries = 0;
 		$success = 0;
 
-		if (!$limit) {
+		if ($limit === null) {
 			$limit = $this->faker()->numberBetween(1, 20);
 		}
 
@@ -735,7 +735,7 @@ trait Seeding {
 
 		$success = 0;
 
-		if (!$limit) {
+		if ($limit === null) {
 			$limit = $this->faker()->numberBetween(1, 20);
 		}
 
@@ -762,5 +762,4 @@ trait Seeding {
 	public function log($msg, $level = LogLevel::NOTICE) {
 		elgg_log($msg, $level);
 	}
-
 }

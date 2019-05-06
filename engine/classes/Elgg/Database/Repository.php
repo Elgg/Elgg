@@ -80,7 +80,7 @@ abstract class Repository implements QueryExecuting {
 	 *
 	 * @param array $options Options
 	 *
-	 * @return ElggData[]|int|mixed
+	 * @return \ElggData[]|int|mixed
 	 */
 	public static function find(array $options = []) {
 		try {
@@ -173,11 +173,11 @@ abstract class Repository implements QueryExecuting {
 	 * Extend query builder with select, group_by, having and order_by clauses from $options
 	 *
 	 * @param QueryBuilder $qb          Query builder
-	 * @param              $table_alias Table alias
+	 * @param string       $table_alias Table alias
 	 *
 	 * @return void
 	 */
-	public function expandInto(QueryBuilder $qb, $table_alias = nul) {
+	public function expandInto(QueryBuilder $qb, $table_alias = null) {
 		foreach ($this->options->selects as $select_clause) {
 			$select_clause->prepare($qb, $table_alias);
 		}

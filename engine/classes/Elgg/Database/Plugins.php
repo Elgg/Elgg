@@ -1108,7 +1108,7 @@ class Plugins {
 	 *
 	 * @param array $dep An \ElggPluginPackage dependency array
 	 *
-	 * @return array
+	 * @return false|array
 	 * @access private
 	 */
 	public function getDependencyStrings($dep) {
