@@ -325,8 +325,6 @@ class EntityIconService {
 		$x2 = (int) elgg_extract('x2', $coords);
 		$y2 = (int) elgg_extract('y2', $coords);
 		
-		$cropping_mode = ($x2 > $x1) && ($y2 > $y1);
-		
 		$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
 		
 		if (!empty($icon_size) && !isset($sizes[$icon_size])) {
@@ -339,8 +337,6 @@ class EntityIconService {
 				// only generate the given icon size
 				continue;
 			}
-			
-			$square = (bool) elgg_extract('square', $opts);
 			
 			// check if the icon config allows cropping
 			if (!(bool) elgg_extract('crop', $opts, true)) {

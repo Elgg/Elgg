@@ -253,7 +253,6 @@ abstract class ElggEntity extends \ElggData implements
 				case 'time_updated':
 				case 'last_action':
 					return;
-					break;
 				case 'access_id':
 				case 'owner_guid':
 				case 'container_guid':

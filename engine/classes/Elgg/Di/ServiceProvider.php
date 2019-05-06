@@ -531,7 +531,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('publicDb', function(ServiceProvider $c) {
-			return new \Elgg\Application\Database($c->db, $c->queryCache);
+			return new \Elgg\Application\Database($c->db);
 		});
 
 		$this->setFactory('queryCache', function(ServiceProvider $c) {

@@ -134,10 +134,3 @@ function elgg_annotation_exists($entity_guid, $name, $owner_guid = null) {
 
 	return _elgg_services()->annotationsTable->exists($entity_guid, $name, $owner_guid);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-};

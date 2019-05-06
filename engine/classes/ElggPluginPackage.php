@@ -182,19 +182,12 @@ class ElggPluginPackage {
 	 */
 	private function validate() {
 		// check required files.
-		$have_req_files = true;
 		foreach ($this->requiredFiles as $file) {
 			if (!is_readable($this->path . $file)) {
-				$have_req_files = false;
 				$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:MissingFile', [$file]);
 
 				return false;
 			}
-		}
-
-		// check required files
-		if (!$have_req_files) {
-			return $this->valid = false;
 		}
 
 		// check for valid manifest.

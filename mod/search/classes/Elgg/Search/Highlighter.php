@@ -148,8 +148,6 @@ class Highlighter {
 		// figure out if we can adjust the offsets and lengths
 		// in order to return more context
 		$total_length = array_sum($offsets);
-
-		$add_length = 0;
 		if ($total_length < $max_length && $offsets) {
 			$add_length = floor((($max_length - $total_length) / count($offsets)) / 2);
 
