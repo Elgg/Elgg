@@ -530,7 +530,7 @@ class EntityTable {
 	 */
 	public function updateLastAction(ElggEntity $entity, $posted = null) {
 
-		if (!$posted) {
+		if ($posted === null) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
 
