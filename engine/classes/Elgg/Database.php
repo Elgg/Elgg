@@ -8,6 +8,7 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Database\DbConfig;
 use Psr\Log\LogLevel;
+use Elgg\Cache\QueryCache;
 
 /**
  * The Elgg database
@@ -44,20 +45,9 @@ class Database {
 	/**
 	 * Query cache for select queries.
 	 *
-	 * Queries and their results are stored in this cache as:
-	 * <code>
-	 * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
-	 * </code>
-	 * @see \Elgg\Database::getResults() for details on the hash.
-	 *
-	 * @var \Elgg\Cache\LRUCache $query_cache The cache
+	 * @var \Elgg\Cache\QueryCache $query_cache The cache
 	 */
-	private $query_cache = null;
-
-	/**
-	 * @var int $query_cache_size The number of queries to cache
-	 */
-	private $query_cache_size = 50;
+	protected $query_cache;
 
 	/**
 	 * Queries are saved as an array with the DELAYED_* constants as keys.
@@ -76,9 +66,12 @@ class Database {
 	/**
 	 * Constructor
 	 *
-	 * @param DbConfig $config DB configuration
+	 * @param DbConfig   $config      DB configuration
+	 * @param QueryCache $query_cache Query Cache
 	 */
-	public function __construct(DbConfig $config) {
+	public function __construct(DbConfig $config, QueryCache $query_cache) {
+		$this->query_cache = $query_cache;
+		
 		$this->resetConnections($config);
 	}
 
@@ -93,7 +86,9 @@ class Database {
 		$this->connections = [];
 		$this->config = $config;
 		$this->table_prefix = $config->getTablePrefix();
-		$this->enableQueryCache();
+		$this->query_cache->enable();
+		$this->query_cache->clear();
+		
 	}
 
 	/**
@@ -243,7 +238,7 @@ class Database {
 
 		$connection = $this->getConnection('write');
 
-		$this->invalidateQueryCache();
+		$this->query_cache->clear();
 
 		$this->executeQuery($query, $connection, $params);
 		return (int) $connection->lastInsertId();
@@ -274,7 +269,7 @@ class Database {
 			$this->logger->info("DB update query $query (params: " . print_r($params, true) . ")");
 		}
 
-		$this->invalidateQueryCache();
+		$this->query_cache->clear();
 
 		$stmt = $this->executeQuery($query, $this->getConnection('write'), $params);
 		if ($get_num_rows) {
@@ -308,7 +303,7 @@ class Database {
 
 		$connection = $this->getConnection('write');
 
-		$this->invalidateQueryCache();
+		$this->query_cache->clear();
 
 		$stmt = $this->executeQuery("$query", $connection, $params);
 		return (int) $stmt->rowCount();
@@ -364,34 +359,24 @@ class Database {
 		} else {
 			$sql = $query;
 		}
-
+		
 		// Since we want to cache results of running the callback, we need to
 		// namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
-		$query_id = (int) $single . $sql . '|';
-		if ($params) {
-			$query_id .= serialize($params) . '|';
-		}
-
+		$extras = (int) $single . '|';
 		if ($callback) {
 			if (!is_callable($callback)) {
 				throw new \RuntimeException('$callback must be a callable function. Given '
 											. _elgg_services()->handlers->describeCallable($callback));
 			}
-			$query_id .= $this->fingerprintCallback($callback);
+			$extras .= $this->fingerprintCallback($callback);
 		}
+		
+		$hash = $this->query_cache->getHash($sql, $params, $extras);
 
-		// MD5 yields smaller mem usage for cache and cleaner logs
-		$hash = md5($query_id);
-
-		// Is cached?
-		if ($this->query_cache) {
-			if (isset($this->query_cache[$hash])) {
-				if ($this->logger) {
-					$this->logger->info("DB query results returned from cache (hash: $hash)");
-				}
-				return $this->query_cache[$hash];
-			}
+		$cached_results = $this->query_cache->get($hash);
+		if (isset($cached_results)) {
+			return $cached_results;
 		}
 		
 		if ($this->logger) {
@@ -420,13 +405,8 @@ class Database {
 		}
 
 		// Cache result
-		if ($this->query_cache) {
-			$this->query_cache[$hash] = $return;
-			if ($this->logger) {
-				$this->logger->info("DB query results cached (hash: $hash)");
-			}
-		}
-
+		$this->query_cache->set($hash, $return);
+				
 		return $return;
 	}
 
@@ -453,23 +433,20 @@ class Database {
 			$params = $query->getParameters();
 			$sql = $query->getSQL();
 		}
-
-		$this->query_count++;
-
-		if ($this->timer) {
-			$timer_key = preg_replace('~\\s+~', ' ', trim($sql . '|' . serialize($params)));
-			$this->timer->begin(['SQL', $timer_key]);
-		}
-
+				
 		try {
-			if ($query instanceof QueryBuilder) {
-				$value = $query->execute();
-			} elseif ($params) {
-				$value = $connection->executeQuery($sql, $params);
-			} else {
-				// faster
-				$value = $connection->query($sql);
-			}
+			$value = $this->trackQuery($sql, $params, function() use ($query, $params, $connection, $sql) {
+				if ($query instanceof \Elgg\Database\QueryBuilder) {
+					return $query->execute(false);
+				} elseif ($query instanceof QueryBuilder) {
+					return $query->execute();
+				} elseif ($params) {
+					return $connection->executeQuery($sql, $params);
+				} else {
+					// faster
+					return $connection->query($sql);
+				}
+			});
 		} catch (\Exception $e) {
 			$ex = new \DatabaseException($e->getMessage());
 			$ex->setParameters($params);
@@ -478,11 +455,51 @@ class Database {
 			throw $ex;
 		}
 
-		if ($this->timer) {
-			$this->timer->end(['SQL', $timer_key]);
+		return $value;
+	}
+	
+	/**
+	 * Tracks the query count and timers for a given query
+	 *
+	 * @param QueryBuilder|string $query    The query
+	 * @param array               $params   Optional query params
+	 * @param callable            $callback Callback to execyte during query execution
+	 *
+	 * @return mixed
+	 */
+	public function trackQuery($query, array $params, callable $callback) {
+	
+		$sql = $query;
+		if ($query instanceof QueryBuilder) {
+			$params = $query->getParameters();
+			$sql = $query->getSQL();
 		}
 
-		return $value;
+		$this->query_count++;
+
+		$timer_key = false;
+		if ($this->timer) {
+			$timer_key = preg_replace('~\\s+~', ' ', trim($sql . '|' . serialize($params)));
+			$this->timer->begin(['SQL', $timer_key]);
+		}
+		
+		$stop_timer = function() use ($timer_key) {
+			if ($timer_key) {
+				$this->timer->end(['SQL', $timer_key]);
+			}
+		};
+		
+		try {
+			$result = $callback();
+		} catch (\Exception $e) {
+			$stop_timer();
+			
+			throw $ex;
+		}
+		
+		$stop_timer();
+		
+		return $result;
 	}
 
 	/**
@@ -618,10 +635,7 @@ class Database {
 	 * @access private
 	 */
 	public function enableQueryCache() {
-		if ($this->config->isQueryCacheEnabled() && $this->query_cache === null) {
-			// @todo if we keep this cache, expose the size as a config parameter
-			$this->query_cache = new \Elgg\Cache\LRUCache($this->query_cache_size);
-		}
+		$this->query_cache->enable();
 	}
 
 	/**
@@ -634,21 +648,7 @@ class Database {
 	 * @access private
 	 */
 	public function disableQueryCache() {
-		$this->query_cache = null;
-	}
-
-	/**
-	 * Invalidate the query cache
-	 *
-	 * @return void
-	 */
-	protected function invalidateQueryCache() {
-		if ($this->query_cache) {
-			$this->query_cache->clear();
-			if ($this->logger) {
-				$this->logger->info("Query cache invalidated");
-			}
-		}
+		$this->query_cache->disable();
 	}
 
 	/**

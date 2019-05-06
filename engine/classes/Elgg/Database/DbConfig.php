@@ -21,7 +21,6 @@ class DbConfig {
 	protected $dbuser;
 	protected $dbpass;
 	protected $dbname;
-	protected $db_disable_query_cache;
 	protected $dbencoding;
 
 	/**
@@ -34,7 +33,6 @@ class DbConfig {
 	 *  dbuser
 	 *  dbpass
 	 *  dbname
-	 *  db_disable_query_cache
 	 *  dbencoding
 	 */
 	public function __construct(\stdClass $config) {
@@ -65,19 +63,6 @@ class DbConfig {
 	 */
 	public function getTablePrefix() {
 		return $this->dbprefix;
-	}
-
-	/**
-	 * Is the query cache enabled?
-	 *
-	 * @return bool
-	 */
-	public function isQueryCacheEnabled() {
-		if ($this->db_disable_query_cache !== null) {
-			return !$this->db_disable_query_cache;
-		}
-
-		return true;
 	}
 
 	/**
