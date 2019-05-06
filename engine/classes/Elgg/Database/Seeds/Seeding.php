@@ -699,7 +699,7 @@ trait Seeding {
 		$tries = 0;
 		$success = 0;
 
-		if (!$limit) {
+		if ($limit === null) {
 			$limit = $this->faker()->numberBetween(1, 20);
 		}
 
@@ -735,7 +735,7 @@ trait Seeding {
 
 		$success = 0;
 
-		if (!$limit) {
+		if ($limit === null) {
 			$limit = $this->faker()->numberBetween(1, 20);
 		}
 
@@ -762,5 +762,4 @@ trait Seeding {
 	public function log($msg, $level = LogLevel::NOTICE) {
 		elgg_log($msg, $level);
 	}
-
 }
