@@ -38,6 +38,16 @@ function site_notifications_set_topbar() {
 		return;
 	}
 	
+	$count = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => 'site_notification',
+		'owner_guid' => $user->guid,
+		'count' => true,
+		'metadata_name_value_pairs' => [
+			'read' => false,
+		],
+	]);
+	
 	elgg_register_menu_item('topbar', [
 		'name' => 'site_notifications',
 		'href' => elgg_generate_url('collection:object:site_notification:owner', [
@@ -45,6 +55,7 @@ function site_notifications_set_topbar() {
 		]),
 		'text' => elgg_echo('site_notifications:topbar'),
 		'icon' => 'bell',
+		'badge' => $count ?: null,
 		'priority' => 100,
 	]);
 }
