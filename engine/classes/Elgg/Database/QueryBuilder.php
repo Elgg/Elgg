@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use DatabaseException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\DBAL\Query\QueryBuilder as DbalQueryBuilder;
