@@ -32,7 +32,7 @@ class ElggBlog extends ElggObject {
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		$result = parent::canComment($user_guid, $default);
-		if ($result == false) {
+		if (!$result) {
 			return $result;
 		}
 

@@ -342,7 +342,7 @@ class ElggInstaller {
 		$this->checkRewriteRules($report);
 
 		// check for existence of settings file
-		if ($this->checkSettingsFile($report) != true) {
+		if ($this->checkSettingsFile($report) !== true) {
 			// no file, so check permissions on engine directory
 			$this->isInstallDirWritable($report);
 		}
@@ -1586,7 +1586,7 @@ class ElggInstaller {
 		$app = $this->getApp();
 
 		$ia = $app->_services->session->setIgnoreAccess(true);
-		if ($user->makeAdmin() == false) {
+		if (!$user->makeAdmin()) {
 			$app->_services->systemMessages->addErrorMessage(elgg_echo('install:error:adminaccess'));
 		} else {
 			$app->_services->configTable->set('admin_registered', 1);
@@ -1603,10 +1603,10 @@ class ElggInstaller {
 
 		$this->createSessionFromDatabase();
 		try {
-			if (login($user) == false) {
-				$app->_services->systemMessages->addErrorMessage(elgg_echo('install:error:adminlogin'));
-			}
+			login($user);
 		} catch (LoginException $ex) {
+			$app->_services->systemMessages->addErrorMessage(elgg_echo('install:error:adminlogin'));
+			
 			return false;
 		}
 

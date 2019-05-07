@@ -218,7 +218,7 @@ class AccessCollections {
 
 				$ignore_access = $this->capabilities->canBypassPermissionsCheck($user_guid);
 
-				if ($ignore_access == true) {
+				if ($ignore_access === true) {
 					$access_array[] = ACCESS_PRIVATE;
 				}
 			}

@@ -284,7 +284,7 @@ class UserCapabilities {
 			}
 
 			// If the user can edit the entity this is attached to, they can edit.
-			if ($result == false && $entity->canEdit($user->guid)) {
+			if ($result === false && $entity->canEdit($user->guid)) {
 				$result = true;
 			}
 		}
