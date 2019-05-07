@@ -1937,15 +1937,16 @@ function _elgg_get_js_page_data() {
  * @access private
  */
 function _elgg_view_under_viewtype($view, $vars, $viewtype) {
+	$current_view_type = null;
 	if ($viewtype) {
-		$old = elgg_get_viewtype();
+		$current_view_type = elgg_get_viewtype();
 		elgg_set_viewtype($viewtype);
 	}
 
 	$ret = elgg_view($view, $vars);
 
-	if ($viewtype) {
-		elgg_set_viewtype($old);
+	if (isset($current_view_type)) {
+		elgg_set_viewtype($current_view_type);
 	}
 
 	return $ret;

@@ -104,8 +104,10 @@ class Profiler {
 
 		$tree = $profiler->buildTree(_elgg_services()->timer);
 		$tree = $profiler->formatTree($tree);
-		$data['tree'] = $tree;
-		$data['total'] = $tree['duration'] . " seconds";
+		$data = [
+			'tree' => $tree,
+			'total' => $tree['duration'] . " seconds",
+		];
 
 		$list = [];
 		$profiler->flattenTree($list, $tree);

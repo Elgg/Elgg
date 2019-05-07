@@ -116,7 +116,9 @@ class Translator {
 
 		// build language array for different trys
 		// avoid dupes without overhead of array_unique
-		$langs[$language] = true;
+		$langs = [
+			$language => true,
+		];
 
 		// load site language
 		$site_language = $this->config->language;

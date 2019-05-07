@@ -98,6 +98,7 @@ function elgg_create_river_item(array $options = []) {
 	}
 
 	$qb = \Elgg\Database\Insert::intoTable('river');
+	$query_params = [];
 	foreach ($values as $name => $value) {
 		$query_params[$name] = $qb->param($value, $col_types[$name]);
 	}
