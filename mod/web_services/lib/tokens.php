@@ -66,7 +66,8 @@ function validate_user_token($token) {
 	
 	$query = "SELECT *
 		FROM {$dbprefix}users_apisessions
-		WHERE token = :token and :time < expires";
+		WHERE token = :token
+		AND :time < expires";
 	$params = [
 		':token' => $token,
 		':time' => time(),

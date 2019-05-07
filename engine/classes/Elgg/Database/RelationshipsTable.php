@@ -290,7 +290,7 @@ class RelationshipsTable {
 			FROM {$this->db->prefix}entity_relationships
 			WHERE {$where}";
 		$params = [
-			':guid' => (int) $guid
+			':guid' => (int) $guid,
 		];
 
 		return $this->db->getData($query, [$this, 'rowToElggRelationship'], $params);
