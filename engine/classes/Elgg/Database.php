@@ -494,7 +494,7 @@ class Database {
 		} catch (\Exception $e) {
 			$stop_timer();
 			
-			throw $ex;
+			throw $e;
 		}
 		
 		$stop_timer();
