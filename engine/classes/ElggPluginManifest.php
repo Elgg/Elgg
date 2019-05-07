@@ -128,7 +128,7 @@ class ElggPluginManifest {
 	/**
 	 * The API version of the manifest.
 	 *
-	 * @var int
+	 * @var string
 	 */
 	protected $apiVersion;
 
@@ -182,7 +182,7 @@ class ElggPluginManifest {
 			$namespace = $manifest_obj->attributes['xmlns'];
 			$version = str_replace($this->namespace_root, '', $namespace);
 		} else {
-			$version = 1.7;
+			$version = '1.7';
 		}
 
 		$this->apiVersion = $version;
@@ -212,7 +212,7 @@ class ElggPluginManifest {
 	/**
 	 * Returns the API version in use.
 	 *
-	 * @return int
+	 * @return string
 	 */
 	public function getApiVersion() {
 		return $this->apiVersion;

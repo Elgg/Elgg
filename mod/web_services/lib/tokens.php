@@ -63,12 +63,17 @@ function get_user_tokens($user_guid) {
  */
 function validate_user_token($token) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$token = sanitise_string($token);
-	$time = time();
-
-	$user = elgg()->db->getDataRow("SELECT * from {$dbprefix}users_apisessions
-		where token='$token' and $time < expires");
-
+	
+	$query = "SELECT *
+		FROM {$dbprefix}users_apisessions
+		WHERE token = :token
+		AND :time < expires";
+	$params = [
+		':token' => $token,
+		':time' => time(),
+	];
+	
+	$user = elgg()->db->getDataRow($query, null, $params);
 	if ($user) {
 		return $user->user_guid;
 	}
@@ -86,10 +91,14 @@ function validate_user_token($token) {
  */
 function remove_user_token($token) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$token = sanitise_string($token);
+	
+	$query = "DELETE FROM {$dbprefix}users_apisessions
+		WHERE token = :token";
+	$params = [
+		':token' => $token,
+	];
 
-	return elgg()->db->deleteData("DELETE from {$dbprefix}users_apisessions
-		where token='$token'");
+	return elgg()->db->deleteData($query, $params);
 }
 
 /**

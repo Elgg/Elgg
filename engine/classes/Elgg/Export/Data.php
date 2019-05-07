@@ -8,7 +8,7 @@ use DateTime;
 /**
  * Exported representation of an ElggData instance
  *
- * @property int $time_created
+ * @property string $time_created
  */
 abstract class Data extends ArrayObject {
 

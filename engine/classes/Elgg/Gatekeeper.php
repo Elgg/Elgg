@@ -138,9 +138,9 @@ class Gatekeeper {
 	 * @warning Returned entity has been retrieved with ignored access, as well including disabled entities.
 	 *          You must validate entity access on the return of this method.
 	 *
-	 * @param int  $guid    GUID of the entity
-	 * @param null $type    Entity type
-	 * @param null $subtype Entity subtype
+	 * @param int    $guid    GUID of the entity
+	 * @param string $type    Entity type
+	 * @param string $subtype Entity subtype
 	 *
 	 * @return ElggEntity
 	 * @throws EntityNotFoundException

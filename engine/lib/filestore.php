@@ -18,8 +18,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @return int The size of the directory in bytes
  */
 function get_dir_size($dir, $total_size = 0) {
-	$handle = @opendir($dir);
-	while ($file = @readdir($handle)) {
+	if (!is_dir($dir)) {
+		return $total_size;
+	}
+	
+	$handle = opendir($dir);
+	while (($file = readdir($handle)) !== false) {
 		if (in_array($file, ['.', '..'])) {
 			continue;
 		}
@@ -29,7 +33,7 @@ function get_dir_size($dir, $total_size = 0) {
 			$total_size += filesize($dir . $file);
 		}
 	}
-	@closedir($handle);
+	closedir($handle);
 
 	return($total_size);
 }

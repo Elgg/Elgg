@@ -26,8 +26,8 @@ if (!isset($vars['label'])) {
 $vars['#label'] = elgg_extract('label', $vars);
 unset($vars['label']);
 
-$value = sanitize_int($widget->$name, false);
-if (!$value) {
+$value = (int) $widget->$name;
+if ($value < 1) {
 	$value = (int) elgg_extract('default', $vars, 4);
 }
 $vars['value'] = $value;

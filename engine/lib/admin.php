@@ -1051,7 +1051,7 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
 		$site->getURL(),
 	], $language);
 
-	$return_value->url = false;
+	$return_value->url = '';
 	
 	return $return_value;
 }

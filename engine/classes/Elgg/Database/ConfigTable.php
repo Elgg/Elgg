@@ -130,8 +130,9 @@ class ConfigTable {
 			FROM {$this->db->prefix}config
 			WHERE name = :name
 		";
-			
-		$params[':name'] = $name;
+		$params = [
+			':name' => $name,
+		];
 		
 		$result = $this->db->getDataRow($sql, null, $params);
 		if ($result) {

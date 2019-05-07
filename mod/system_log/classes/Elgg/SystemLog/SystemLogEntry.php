@@ -64,6 +64,7 @@ class SystemLogEntry {
 
 				return $object;
 			} catch (\Exception $e) {
+				return false;
 			}
 		}
 

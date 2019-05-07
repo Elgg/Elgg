@@ -36,7 +36,7 @@ class ElggRewriteTester {
 
 		$this->rewriteTestPassed = $this->runRewriteTest($url);
 
-		if ($this->rewriteTestPassed == false) {
+		if ($this->rewriteTestPassed === false) {
 			if ($this->webserver == 'apache' || $this->webserver == 'unknown') {
 				if ($this->createHtaccess($url)) {
 					$this->rewriteTestPassed = $this->runRewriteTest($url);

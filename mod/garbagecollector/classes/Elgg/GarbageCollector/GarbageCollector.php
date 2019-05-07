@@ -122,7 +122,7 @@ class GarbageCollector {
 	 */
 	public function optimizeTable($table) {
 		$table = $this->db->sanitizeString($table);
-
+		
 		return $this->db->updateData("OPTIMIZE TABLE $table");
 	}
 

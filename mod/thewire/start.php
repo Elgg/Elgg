@@ -69,6 +69,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 
 	$subject = elgg_echo('thewire:notify:subject', [$owner->getDisplayName()], $language);
+	$body = '';
 	if ($entity->reply) {
 		$parent = thewire_get_parent($entity->guid);
 		if ($parent) {

@@ -284,6 +284,7 @@ function pages_container_permission_check($hook, $type, $returnvalue, $params) {
 	}
 
 	// look up a page object given via input
+	$page = false;
 	if ($page_guid = get_input('page_guid', 0)) {
 		$page = get_entity($page_guid);
 	} elseif ($parent_guid = get_input('parent_guid', 0)) {
