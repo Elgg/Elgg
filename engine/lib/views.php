@@ -946,7 +946,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
  * @param array           $vars       Variable array for view.
  *      'item_view'  Alternative view used to render an annotation
  *
- * @return string/false Rendered annotation
+ * @return string|false Rendered annotation
  */
 function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
 	$defaults = [

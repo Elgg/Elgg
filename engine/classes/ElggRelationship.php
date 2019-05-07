@@ -83,15 +83,17 @@ class ElggRelationship extends \ElggData {
 			delete_relationship($this->id);
 		}
 
-		$this->id = _elgg_services()->relationshipsTable->add(
+		$id = _elgg_services()->relationshipsTable->add(
 			$this->guid_one,
 			$this->relationship,
 			$this->guid_two,
 			true
 		);
-		if (!$this->id) {
+		if (!$id) {
 			throw new \IOException("Unable to save new " . get_class());
 		}
+		
+		$this->id = $id;
 
 		return $this->id;
 	}

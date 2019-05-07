@@ -57,7 +57,7 @@ class Logger extends \Monolog\Logger {
 	];
 
 	/**
-	 * @var string The logging level
+	 * @var false|string The logging level
 	 */
 	protected $level;
 

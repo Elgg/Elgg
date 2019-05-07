@@ -89,7 +89,7 @@ class Request {
 	 * @see set_input()
 	 *
 	 * @param string $key   Parameter name
-	 * @param null   $value Value
+	 * @param mixed  $value Value
 	 *
 	 * @return void
 	 */
