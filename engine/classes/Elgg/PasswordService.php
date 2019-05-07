@@ -60,7 +60,8 @@ final class PasswordService {
 	 *
 	 * @param int $user_guid User GUID
 	 *
-	 * @return bool
+	 * @return false|array
+	 * @see notify_user()
 	 */
 	function sendNewPasswordRequest($user_guid) {
 		$user_guid = (int) $user_guid;
@@ -112,7 +113,7 @@ final class PasswordService {
 	function forcePasswordReset($user, $password) {
 		if (!$user instanceof \ElggUser) {
 			$user = _elgg_services()->entityTable->get($user, 'user');
-			if (!$user) {
+			if (!$user instanceof \ElggUser) {
 				return false;
 			}
 		}

@@ -42,7 +42,7 @@ class ResponseFactory {
 	private $transport;
 
 	/**
-	 * @var Response|bool
+	 * @var Response|false
 	 */
 	private $response_sent = false;
 

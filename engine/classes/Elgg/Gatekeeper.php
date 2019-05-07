@@ -4,7 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\AccessCollections;
 use Elgg\Database\EntityTable;
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use Elgg\I18n\Translator;
 use ElggEntity;
 use ElggGroup;
@@ -29,7 +29,7 @@ class Gatekeeper {
 	protected $session;
 
 	/**
-	 * @var Request
+	 * @var \Elgg\Http\Request
 	 */
 	protected $request;
 
@@ -57,7 +57,7 @@ class Gatekeeper {
 	 * Constructor
 	 *
 	 * @param ElggSession       $session    Session
-	 * @param Request           $request    HTTP Request
+	 * @param HttpRequest       $request    HTTP Request
 	 * @param RedirectService   $redirects  Redirects Service
 	 * @param EntityTable       $entities   Entity table
 	 * @param AccessCollections $access     Access collection table
@@ -68,7 +68,7 @@ class Gatekeeper {
 	 */
 	public function __construct(
 		ElggSession $session,
-		Request $request,
+		HttpRequest $request,
 		RedirectService $redirects,
 		EntityTable $entities,
 		AccessCollections $access,

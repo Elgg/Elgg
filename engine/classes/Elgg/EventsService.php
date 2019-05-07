@@ -62,6 +62,8 @@ class EventsService extends HooksRegistrationService {
 	 * @see elgg_trigger_event()
 	 * @see elgg_trigger_after_event()
 	 * @see elgg_trigger_before_event()
+	 *
+	 * @return bool
 	 */
 	public function trigger($name, $type, $object = null, array $options = []) {
 		$options = array_merge([
