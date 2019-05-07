@@ -93,7 +93,7 @@ class AdminNotices {
 	 *
 	 * @param array $options Query options
 	 *
-	 * @return \ElggObject[] Admin notices
+	 * @return \ElggObject[]|int|mixed Admin notices
 	 */
 	public function find(array $options = []) {
 		$options = array_merge($options, [

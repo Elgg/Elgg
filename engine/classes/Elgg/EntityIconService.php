@@ -4,7 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\EntityTable;
 use Elgg\Filesystem\MimeTypeDetector;
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use ElggEntity;
 use ElggFile;
 use ElggIcon;
@@ -37,7 +37,7 @@ class EntityIconService {
 	private $hooks;
 
 	/**
-	 * @var Request
+	 * @var \Elgg\Http\Request
 	 */
 	private $request;
 
@@ -61,7 +61,7 @@ class EntityIconService {
 	 *
 	 * @param Config             $config   Config
 	 * @param PluginHooksService $hooks    Hook registration service
-	 * @param Request            $request  Http request
+	 * @param HttpRequest        $request  Http request
 	 * @param LoggerInterface    $logger   Logger
 	 * @param EntityTable        $entities Entity table
 	 * @param UploadService      $uploads  Upload service
@@ -70,7 +70,7 @@ class EntityIconService {
 	public function __construct(
 		Config $config,
 		PluginHooksService $hooks,
-		Request $request,
+		HttpRequest $request,
 		LoggerInterface $logger,
 		EntityTable $entities,
 		UploadService $uploads,

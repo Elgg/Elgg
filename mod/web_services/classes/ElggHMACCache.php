@@ -37,7 +37,7 @@ class ElggHMACCache extends ElggCache {
 			':time' => time(),
 		];
 		
-		return elgg()->db->insertData($query);
+		return elgg()->db->insertData($query, $params);
 	}
 
 	/**

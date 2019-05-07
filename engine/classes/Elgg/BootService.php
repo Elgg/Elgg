@@ -4,9 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
-use Elgg\Project\Paths;
 use ElggCache;
-use Stash\Invalidation;
 
 /**
  * Boots Elgg and manages a cache of data needed during boot
@@ -67,7 +65,7 @@ class BootService {
 			$config->bootdata_plugin_settings_limit = self::DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT;
 		}
 		if ($config->simplecache_enabled === null) {
-			$config->simplecache_enabled = 0;
+			$config->simplecache_enabled = false;
 		}
 		if ($config->system_cache_enabled === null) {
 			$config->system_cache_enabled = false;

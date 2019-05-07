@@ -184,7 +184,7 @@ class Csrf {
 	 * @param int    $timestamp     Unix timestamp
 	 * @param string $session_token Session-specific token
 	 *
-	 * @return string
+	 * @return false|string
 	 * @access private
 	 */
 	public function generateActionToken($timestamp, $session_token = '') {

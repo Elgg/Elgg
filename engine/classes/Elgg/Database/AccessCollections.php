@@ -781,12 +781,12 @@ class AccessCollections {
 	 *
 	 * @param int   $collection_id The collection's ID
 	 * @param array $options       Ege* options
-	 * @return ElggEntity[]|false
+	 * @return \ElggData[]|int|mixed
 	 */
 	public function getMembers($collection_id, array $options = []) {
 		$options['wheres'][] = function(QueryBuilder $qb, $table_alias) use ($collection_id) {
 			$qb->join($table_alias, 'access_collection_membership', 'acm', $qb->compare('acm.user_guid', '=', "$table_alias.guid"));
-			return $qb->compare('acm.access_collection_id', '=', $collection_id, 'integer');
+			return $qb->compare('acm.access_collection_id', '=', $collection_id, ELGG_VALUE_INTEGER);
 		};
 
 		return Entities::find($options);

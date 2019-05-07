@@ -22,7 +22,7 @@ class Profiler {
 	 * Return a tree of time periods from a Timer
 	 *
 	 * @param Timer $timer Timer object
-	 * @return array
+	 * @return false|array
 	 */
 	public function buildTree(Timer $timer) {
 		$times = $timer->getTimes();
@@ -131,7 +131,7 @@ class Profiler {
 	 * @param string $name  Period name
 	 * @param array  $times Times
 	 *
-	 * @return array|bool False if missing begin/end time
+	 * @return false|array False if missing begin/end time
 	 */
 	private function analyzePeriod($name, array $times) {
 		$begin = $this->findBeginTime($times);
