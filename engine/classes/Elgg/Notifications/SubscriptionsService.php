@@ -150,7 +150,7 @@ class SubscriptionsService {
 	 */
 	protected function getSubscriptionRecords($container_guid) {
 
-		$container_guid = $this->db->sanitizeInt($container_guid);
+		$container_guid = (int) $container_guid;
 
 		// create IN clause
 		$rels = $this->getMethodRelationships();

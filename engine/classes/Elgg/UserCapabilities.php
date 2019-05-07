@@ -221,6 +221,8 @@ class UserCapabilities {
 	 * @deprecated 3.0
 	 */
 	public function canEditMetadata(ElggEntity $entity, $user_guid = 0, ElggMetadata $metadata = null) {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Metadata no longer has it\'s own access system', '3.0', 3);
+		
 		if (!$entity->guid) {
 			// @todo cannot edit metadata on unsaved entity?
 			return false;

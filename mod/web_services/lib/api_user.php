@@ -36,12 +36,16 @@ function create_api_user() {
  */
 function get_api_user($api_key) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$api_key = sanitise_string($api_key);
 
-	$query = "SELECT * from {$dbprefix}api_users"
-	. " where api_key='$api_key' and active=1";
+	$query = "SELECT *
+		FROM {$dbprefix}api_users
+		WHERE api_key = :api_key
+		AND active = 1";
+	$params = [
+		':api_key' => $api_key,
+	];
 
-	return elgg()->db->getDataRow($query);
+	return elgg()->db->getDataRow($query, null, $params);
 }
 
 /**
