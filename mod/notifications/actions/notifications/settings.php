@@ -20,10 +20,10 @@ foreach ($methods as $method) {
 	$user->setNotificationSetting($method, in_array($method, $personal_settings));
 }
 
-$collections_by_method = [];
-
 $collection_settings = get_input('collections');
 if ($collection_settings !== null) {
+	$collections_by_method = [];
+	
 	if (!empty($collection_settings)) {
 		foreach ($collection_settings as $collection_id => $preferred_methods) {
 			if (!is_array($preferred_methods)) {
@@ -37,6 +37,13 @@ if ($collection_settings !== null) {
 
 	foreach ($methods as $method) {
 		$metaname = 'collections_notifications_preferences_' . $method;
+		
+		if (!isset($collections_by_method[$method])) {
+			// no collections for this method
+			unset($user->$metaname);
+			continue;
+		}
+		
 		$user->$metaname = array_unique($collections_by_method[$method]);
 	}
 }
