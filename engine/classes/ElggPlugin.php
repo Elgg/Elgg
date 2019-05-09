@@ -104,7 +104,7 @@ class ElggPlugin extends ElggObject {
 		if ($new) {
 			$name = _elgg_services()->plugins->namespacePrivateSetting('internal', 'priority');
 			$priority = elgg_extract($name, $this->temp_private_settings, 'new');
-		} else if (!$this->getPriority()) {
+		} elseif ($this->getPriority() === null) {
 			$priority = 'last';
 		}
 

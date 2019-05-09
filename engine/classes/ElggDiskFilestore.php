@@ -44,7 +44,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @param string    $mode read, write, or append.
 	 *
 	 * @throws InvalidParameterException
-	 * @return resource File pointer resource
+	 * @return false|resource File pointer resource or false on failure
 	 */
 	public function open(\ElggFile $file, $mode) {
 		$fullname = $this->getFilenameOnFilestore($file);
@@ -87,7 +87,6 @@ class ElggDiskFilestore extends \ElggFilestore {
 		}
 
 		return fopen($fullname, $mode);
-
 	}
 
 	/**

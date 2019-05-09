@@ -89,7 +89,7 @@ class ElggRelationship extends \ElggData {
 			$this->guid_two,
 			true
 		);
-		if (!$id) {
+		if ($id === false) {
 			throw new \IOException("Unable to save new " . get_class());
 		}
 		
@@ -182,7 +182,7 @@ class ElggRelationship extends \ElggData {
 	 *
 	 * @param int $id ID
 	 *
-	 * @return \ElggRelationship
+	 * @return \ElggRelationship|false
 	 */
 	public function getObjectFromID($id) {
 		return get_relationship($id);

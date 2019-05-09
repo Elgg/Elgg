@@ -151,10 +151,10 @@ class ElggWidget extends \ElggObject {
 	 *
 	 * @return string
 	 * @since 1.8.0
+	 * @deprecated 3.0 use \ElggWidget::getDisplayName()
 	 */
 	public function getTitle() {
-		_elgg_services()->deprecation->sendNotice(__CLASS__ . '::' . __FUNCTION__ . ' is deprecated. '
-					. 'Use getDisplayName() instead', '3.0');
+		_elgg_services()->deprecation->sendNotice(__METHOD__ . ' is deprecated. Use \ElggWidget::getDisplayName() instead', '3.0');
 		return $this->getDisplayName();
 	}
 	

@@ -1569,7 +1569,7 @@ class ElggInstaller {
 			return false;
 		}
 
-		if (!$guid) {
+		if ($guid === false) {
 			$app->_services->systemMessages->addErrorMessage(elgg_echo('install:admin:cannot_create'));
 
 			return false;
@@ -1594,7 +1594,7 @@ class ElggInstaller {
 		$app->_services->session->setIgnoreAccess($ia);
 
 		// add validation data to satisfy user validation plugins
-		$user->validated = 1;
+		$user->validated = true;
 		$user->validated_method = 'admin_user';
 
 		if (!$login) {

@@ -326,7 +326,7 @@ class ElggPluginPackage {
 	/**
 	 * Returns a parsed manifest file.
 	 *
-	 * @return \ElggPluginManifest
+	 * @return \ElggPluginManifest|false
 	 */
 	public function getManifest() {
 		if (!$this->manifest) {
@@ -559,7 +559,7 @@ class ElggPluginPackage {
 	 * @param array $plugins A list of plugins as returned by elgg_get_plugins();
 	 * @param bool  $inverse Inverse the results to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepPriority(array $dep, array $plugins, $inverse = false) {
 		// grab the \ElggPlugin using this package.

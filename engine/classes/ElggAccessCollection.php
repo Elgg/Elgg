@@ -141,7 +141,7 @@ class ElggAccessCollection extends ElggData {
 	 * Returns members of the access collection
 	 *
 	 * @param array $options ege options
-	 * @return ElggEntity|int|false
+	 * @return ElggEntity[]|int|false
 	 */
 	public function getMembers(array $options = []) {
 		return _elgg_services()->accessCollections->getMembers($this->id, $options);

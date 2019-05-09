@@ -22,16 +22,18 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @package    Elgg.Core
  * @subpackage DataModel.File
  *
- * @property string $mimetype         MIME type of the file
- * @property string $simpletype       Category of the file
- * @property string $originalfilename Filename of the original upload
- * @property int    $upload_time      Timestamp of the upload action, used as a filename prefix
- * @property string $filestore_prefix Prefix (directory) on user's filestore where the file is saved
+ * @property      string $mimetype         MIME type of the file
+ * @property      string $simpletype       Category of the file
+ * @property      string $originalfilename Filename of the original upload
+ * @property      int    $upload_time      Timestamp of the upload action, used as a filename prefix
+ * @property      string $filestore_prefix Prefix (directory) on user's filestore where the file is saved
+ * @property-read string $filename         The filename of the file
  */
 class ElggFile extends ElggObject {
 
 	/**
-	 * @var resource|null File handle used to identify this file in a filestore. Created by open.
+	 * @var resource|null File handle used to identify this file in a filestore
+	 * @see \ElggFile::open()
 	 */
 	private $handle;
 
@@ -89,13 +91,14 @@ class ElggFile extends ElggObject {
 			$container_guid = $this->container_guid;
 		}
 		// @todo add getSize() to \ElggFilestore
-		return $this->getFilestore()->getSize($prefix, $container_guid);
+		return (int) $this->getFilestore()->getSize($prefix, $container_guid);
 	}
 
 	/**
 	 * Get the mime type of the file.
 	 * Returns mimetype metadata value if set, otherwise attempts to detect it.
-	 * @return string
+	 *
+	 * @return string|false
 	 */
 	public function getMimeType() {
 		if ($this->mimetype) {
@@ -108,7 +111,8 @@ class ElggFile extends ElggObject {
 	 * Set the mime type of the file.
 	 *
 	 * @param string $mimetype The mimetype
-	 * @return bool
+	 *
+	 * @return string
 	 */
 	public function setMimeType($mimetype) {
 		return $this->mimetype = $mimetype;

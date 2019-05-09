@@ -279,7 +279,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getDescription() {
-		return $this->parser->getAttribute('description');
+		return (string) $this->parser->getAttribute('description');
 	}
 
 	/**
@@ -305,11 +305,8 @@ class ElggPluginManifest {
 	public function getLicense() {
 		// license vs licence.  Use license.
 		$en_us = $this->parser->getAttribute('license');
-		if ($en_us) {
-			return $en_us;
-		} else {
-			return $this->parser->getAttribute('licence');
-		}
+		
+		return (string) ($en_us ?: $this->parser->getAttribute('licence'));
 	}
 
 	/**
@@ -318,7 +315,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getRepositoryURL() {
-		return $this->parser->getAttribute('repository');
+		return (string) $this->parser->getAttribute('repository');
 	}
 
 	/**
@@ -327,7 +324,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getBugTrackerURL() {
-		return $this->parser->getAttribute('bugtracker');
+		return (string) $this->parser->getAttribute('bugtracker');
 	}
 
 	/**
@@ -336,13 +333,13 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getDonationsPageURL() {
-		return $this->parser->getAttribute('donations');
+		return (string) $this->parser->getAttribute('donations');
 	}
 
 	/**
 	 * Returns the version of the plugin.
 	 *
-	 * @return float
+	 * @return mixed
 	 */
 	public function getVersion() {
 		return $this->parser->getAttribute('version');
@@ -354,7 +351,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getAuthor() {
-		return $this->parser->getAttribute('author');
+		return (string) $this->parser->getAttribute('author');
 	}
 
 	/**
@@ -363,7 +360,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getCopyright() {
-		return $this->parser->getAttribute('copyright');
+		return (string) $this->parser->getAttribute('copyright');
 	}
 
 	/**
@@ -372,7 +369,7 @@ class ElggPluginManifest {
 	 * @return string
 	 */
 	public function getWebsite() {
-		return $this->parser->getAttribute('website');
+		return (string) $this->parser->getAttribute('website');
 	}
 
 	/**

@@ -142,12 +142,15 @@ class HtmlFormatter {
 	 **/
 	public function addParagaraphs($string) {
 		try {
-			return $this->autop->process($string);
+			$result = $this->autop->process($string);
+			if ($result !== false) {
+				return $result;
+			}
 		} catch (\RuntimeException $e) {
 			$this->logger->warning('ElggAutoP failed to process the string: ' . $e->getMessage());
-
-			return $string;
 		}
+		
+		return $string;
 	}
 
 	/**
