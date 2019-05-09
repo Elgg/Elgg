@@ -5,7 +5,7 @@ namespace Elgg;
 use Elgg\Application\CacheHandler;
 use Elgg\Cache\SystemCache;
 use Elgg\Filesystem\Directory;
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -27,7 +27,7 @@ class ViewsService {
 	const BASE_VIEW_PRIORITY = 500;
 
 	/**
-	 * @see fileExists
+	 * @see ViewsService::fileExists()
 	 * @var array
 	 */
 	protected $file_exists_cache = [];
@@ -76,7 +76,7 @@ class ViewsService {
 	private $cache;
 
 	/**
-	 * @var Request
+	 * @var \Elgg\Http\Request
 	 */
 	private $request;
 
@@ -90,9 +90,9 @@ class ViewsService {
 	 *
 	 * @param PluginHooksService $hooks   The hooks service
 	 * @param LoggerInterface    $logger  Logger
-	 * @param Request            $request Http Request
+	 * @param \Elgg\Http\Request $request Http Request
 	 */
-	public function __construct(PluginHooksService $hooks, LoggerInterface $logger, Request $request = null) {
+	public function __construct(PluginHooksService $hooks, LoggerInterface $logger, HttpRequest $request = null) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 		$this->request = $request;

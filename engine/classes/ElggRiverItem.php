@@ -97,7 +97,7 @@ class ElggRiverItem {
 	/**
 	 * Get the Annotation for this river item
 	 *
-	 * @return \ElggAnnotation
+	 * @return \ElggAnnotation|false
 	 */
 	public function getAnnotation() {
 		return elgg_get_annotation_from_id($this->annotation_id);

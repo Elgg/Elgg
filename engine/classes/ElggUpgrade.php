@@ -16,10 +16,13 @@ use Elgg\Upgrade\Batch;
  * @package Elgg.Admin
  * @access private
  *
- * @property bool $is_completed
- * @property int  $processed
- * @property int  $offset
- * @property int  $has_errors
+ * @property      bool   $is_completed   Is the upgrade completed yet
+ * @property      int    $processed      Number of items processed
+ * @property      int    $offset         Offset for batch
+ * @property      int    $has_errors     Number of errors
+ * @property      int    $completed_time Time when the upgrade finished
+ * @property-read string $id             The ID of the upgrade
+ * @property-read string $class          The class which will handle the upgrade
  */
 class ElggUpgrade extends ElggObject {
 
@@ -135,11 +138,12 @@ class ElggUpgrade extends ElggObject {
 	/**
 	 * Sets the timestamp for when the upgrade completed.
 	 *
-	 * @param int $time Timestamp when upgrade finished. Defaults to now.
-	 * @return bool
+	 * @param int $time Timestamp when upgrade finished. Defaults to now
+	 *
+	 * @return int
 	 */
 	public function setCompletedTime($time = null) {
-		if (!$time) {
+		if (!is_int($time)) {
 			$time = $this->getCurrentTime()->getTimestamp();
 		}
 

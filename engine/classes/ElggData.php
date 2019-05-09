@@ -224,7 +224,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @param int $offset Offset
 	 *
-	 * @return int
+	 * @return bool
 	 */
 	public function offsetExists($offset) {
 		return array_key_exists($offset, $this->attributes);

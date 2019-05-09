@@ -438,7 +438,7 @@ abstract class ElggEntity extends \ElggData implements
 			$metadata->value_type = $value_type;
 			$metadata->value = $value_tmp;
 			$md_id = _elgg_services()->metadataTable->create($metadata, $multiple);
-			if (!$md_id) {
+			if ($md_id === false) {
 				return false;
 			}
 		}
@@ -837,7 +837,7 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @param array $options Array of options for elgg_get_annotations() except guid.
 	 *
-	 * @return array
+	 * @return \ElggAnnotation[]|mixed
 	 * @see elgg_get_annotations()
 	 */
 	public function getAnnotations(array $options = []) {
@@ -977,7 +977,7 @@ abstract class ElggEntity extends \ElggData implements
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity.
 	 *
-	 * @return array|false An array of entities or false on failure
+	 * @return \ElggEntity[]|int|mixed
 	 * @see elgg_get_entities()
 	 */
 	public function getEntitiesFromRelationship(array $options = []) {
@@ -991,7 +991,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param string $relationship         Relationship type (eg "friends")
 	 * @param bool   $inverse_relationship Invert relationship
 	 *
-	 * @return int|false The number of entities or false on failure
+	 * @return int
 	 */
 	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
 		return elgg_get_entities([
@@ -1156,7 +1156,7 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @param int $container_guid The ID of the container.
 	 *
-	 * @return bool
+	 * @return int
 	 */
 	public function setContainerGUID($container_guid) {
 		return $this->container_guid = (int) $container_guid;
@@ -1339,10 +1339,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * Saves the base information in the entities table for the entity.  Saving
 	 * the type-specific information is handled in the calling class method.
 	 *
-	 * @warning Entities must have an entry in both the entities table and their type table
-	 * or they will throw an exception when loaded.
-	 *
-	 * @return int The new entity's GUID
+	 * @return int|false The new entity's GUID or false on failure
 	 * @throws InvalidParameterException If the entity's type has not been set.
 	 * @throws IOException If the new row fails to write to the DB.
 	 */
@@ -1914,7 +1911,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * This is used by the system log. It can be called on any Loggable object.
 	 *
 	 * @param int $id GUID.
-	 * @return int GUID
+	 * @return \ElggEntity|false
 	 */
 	public function getObjectFromID($id) {
 		return get_entity($id);
