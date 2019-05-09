@@ -205,6 +205,10 @@ function elgg_get_river_item_from_id($id) {
  *          subject_guid(s), object_guid(s), target_guid(s)
  *          or view(s) must be set.
  *
+ *          Access is ignored during the execution of this function.
+ *          Intended usage of this function is to cleanup river content.
+ *          For an example see actions/avatar/upload.
+ *
  * @param array $options An options array. {@link elgg_get_river()}
  *
  * @return bool|null true on success, false on failure, null if no metadata to delete.
@@ -218,25 +222,27 @@ function elgg_delete_river(array $options = []) {
 		return false;
 	}
 
-	$options['batch'] = true;
-	$options['batch_size'] = 25;
-	$options['batch_inc_offset'] = false;
-
-	$river = elgg_get_river($options);
-	$count = $river->count();
-
-	if (!$count) {
-		return;
-	}
-
-	$success = 0;
-	foreach ($river as $river_item) {
-		if ($river_item->delete()) {
-			$success++;
+	return elgg_call(ELGG_IGNORE_ACCESS, function() use ($options) {
+		$options['batch'] = true;
+		$options['batch_size'] = 25;
+		$options['batch_inc_offset'] = false;
+	
+		$river = elgg_get_river($options);
+		$count = $river->count();
+	
+		if (!$count) {
+			return;
 		}
-	}
-
-	return $success == $count;
+	
+		$success = 0;
+		foreach ($river as $river_item) {
+			if ($river_item->delete()) {
+				$success++;
+			}
+		}
+	
+		return $success == $count;
+	});
 }
 
 /**

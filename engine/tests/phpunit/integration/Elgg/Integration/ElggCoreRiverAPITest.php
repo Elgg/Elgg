@@ -268,7 +268,7 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		elgg_unregister_event_handler('delete:before', 'river', $handler);
 		elgg_unregister_event_handler('delete:after', 'river', $handler);
 
-		$this->assertEquals($events_fired, 3);
+		$this->assertEquals($events_fired, 2);
 
 		_elgg_services()->session->setLoggedInUser($old_user);
 	}
