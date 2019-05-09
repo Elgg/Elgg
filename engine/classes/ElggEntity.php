@@ -1048,14 +1048,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * If no specific metadata is passed, it returns whether the user can
 	 * edit any metadata on the entity.
 	 *
-	 * @tip Can be overridden by by registering for the permissions_check:metadata
-	 * plugin hook.
-	 *
 	 * @param \ElggMetadata $metadata  The piece of metadata to specifically check or null for any metadata
 	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool
 	 * @see elgg_set_ignore_access()
+	 * @deprecated 3.0
 	 */
 	public function canEditMetadata($metadata = null, $user_guid = 0) {
 		return _elgg_services()->userCapabilities->canEditMetadata($this, $user_guid, $metadata);
