@@ -688,6 +688,17 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
+	 * Removes all river items related to this entity
+	 *
+	 * @return void
+	 */
+	public function removeAllRelatedRiverItems() {
+		elgg_delete_river(['subject_guid' => $this->guid, 'limit' => false]);
+		elgg_delete_river(['object_guid' => $this->guid, 'limit' => false]);
+		elgg_delete_river(['target_guid' => $this->guid, 'limit' => false]);
+	}
+
+	/**
 	 * Deletes all annotations on this object (annotations.entity_guid = $this->guid).
 	 * If you pass a name, only annotations matching that name will be deleted.
 	 *
