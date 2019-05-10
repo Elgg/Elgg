@@ -202,10 +202,6 @@ class Gatekeeper {
 				throw $exception;
 			}
 
-			if ($entity instanceof ElggUser) {
-				$this->assertAccessibleUser($entity, $user);
-			}
-
 			if ($entity instanceof ElggGroup) {
 				$this->assertAccessibleGroup($entity, $user);
 			}
