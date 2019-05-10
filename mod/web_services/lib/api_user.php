@@ -8,7 +8,7 @@
 /**
  * Generate a new API user for a site, returning a new keypair on success.
  *
- * @return stdClass object or false
+ * @return false|stdClass object or false
  */
 function create_api_user() {
 	$dbprefix = elgg_get_config('dbprefix');
@@ -19,11 +19,11 @@ function create_api_user() {
 		(api_key, secret) values
 		('$public', '$secret')");
 
-	if ($insert) {
-		return get_api_user($public);
+	if ($insert === false) {
+		return false;
 	}
-
-	return false;
+	
+	return get_api_user($public);
 }
 
 /**
@@ -59,7 +59,7 @@ function remove_api_user($api_key) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$keypair = get_api_user($api_key);
 	if ($keypair) {
-		return elgg()->db->deleteData("DELETE from {$dbprefix}api_users where id={$keypair->id}");
+		return (bool) elgg()->db->deleteData("DELETE from {$dbprefix}api_users where id={$keypair->id}");
 	}
 
 	return false;

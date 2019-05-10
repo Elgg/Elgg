@@ -4,9 +4,9 @@
  */
 
 $guid = get_input('guid');
-$user = get_entity($guid);
 
-if (!$user || !$user->canEdit()) {
+$user = get_user($guid);
+if (!$user instanceof ElggUser || !$user->canEdit()) {
 	return elgg_error_response(elgg_echo('actionunauthorized'), '', 403);
 }
 

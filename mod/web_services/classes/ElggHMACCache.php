@@ -25,7 +25,7 @@ class ElggHMACCache extends ElggCache {
 	 * @param string $data         Value
 	 * @param int    $expire_after Number of seconds to expire cache after
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function save($key, $data, $expire_after = null) {
 		$dbprefix = elgg()->db->prefix;
@@ -37,7 +37,7 @@ class ElggHMACCache extends ElggCache {
 			':time' => time(),
 		];
 		
-		return elgg()->db->insertData($query, $params);
+		return (bool) elgg()->db->insertData($query, $params);
 	}
 
 	/**
@@ -47,7 +47,7 @@ class ElggHMACCache extends ElggCache {
 	 * @param int    $offset Offset
 	 * @param int    $limit  Limit
 	 *
-	 * @return string
+	 * @return mixed|null The stored data or null if it's a miss
 	 */
 	public function load($key, $offset = 0, $limit = null) {
 		$dbprefix = elgg()->db->prefix;
@@ -64,7 +64,7 @@ class ElggHMACCache extends ElggCache {
 			return $row->hmac;
 		}
 
-		return false;
+		return null;
 	}
 
 	/**
@@ -83,7 +83,7 @@ class ElggHMACCache extends ElggCache {
 			':hmac' => $key,
 		];
 
-		return elgg()->db->deleteData($query, $params);
+		return (bool) elgg()->db->deleteData($query, $params);
 	}
 
 	/**

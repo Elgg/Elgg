@@ -101,6 +101,13 @@ class ElggPriorityList
 	 * @var array
 	 */
 	private $elements = [];
+	
+	/**
+	 * Has the list already been sorted
+	 *
+	 * @var bool
+	 */
+	private $sorted = false;
 
 	/**
 	 * Create a new priority list.
@@ -236,11 +243,11 @@ class ElggPriorityList
 	/**
 	 * Sort the elements if they haven't been sorted yet.
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	private function sortIfUnsorted() {
 		if (!$this->sorted) {
-			return $this->sort();
+			$this->sort();
 		}
 	}
 

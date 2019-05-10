@@ -1328,7 +1328,7 @@ abstract class ElggEntity extends \ElggData implements
 			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid && !_elgg_services()->events->trigger('create', $this->type, $this)) {
+			if ($guid !== false && !_elgg_services()->events->trigger('create', $this->type, $this)) {
 				// plugins that return false to event don't need to override the access system
 				elgg_call(ELGG_IGNORE_ACCESS, function() {
 					return $this->delete();

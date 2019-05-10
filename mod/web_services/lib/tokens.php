@@ -9,7 +9,7 @@
  * @param string $username The username
  * @param int    $expire   Minutes until token expires (default is 60 minutes)
  *
- * @return bool
+ * @return false|string
  */
 function create_user_token($username, $expire = 60) {
 	$dbprefix = elgg_get_config('dbprefix');
@@ -37,7 +37,7 @@ function create_user_token($username, $expire = 60) {
  *
  * @param int $user_guid The user GUID
  *
- * @return false if none available or array of stdClass objects
+ * @return false|stdClass[] false if none available or array of stdClass objects
  * 		(see users_apisessions schema for available variables in objects)
  * @since 1.7.0
  */
@@ -98,13 +98,13 @@ function remove_user_token($token) {
 		':token' => $token,
 	];
 
-	return elgg()->db->deleteData($query, $params);
+	return (bool) elgg()->db->deleteData($query, $params);
 }
 
 /**
  * Remove expired tokens
  *
- * @return bool
+ * @return int Number of rows removed
  * @since 1.7.0
  */
 function remove_expired_user_tokens() {
@@ -142,7 +142,7 @@ function auth_gettoken($username, $password) {
 	// validate username and password
 	if (true === elgg_authenticate($username, $password)) {
 		$token = create_user_token($username);
-		if ($token) {
+		if ($token !== false) {
 			return $token;
 		}
 	}
