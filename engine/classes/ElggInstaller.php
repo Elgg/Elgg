@@ -1432,16 +1432,13 @@ class ElggInstaller {
 
 		$app->_services->config->site = $site;
 
-		// new installations have run all the upgrades
-		$upgrades = elgg_get_upgrade_files(Paths::elgg() . "engine/lib/upgrades/");
-
 		$sets = [
 			'installed' => time(),
 			'version' => elgg_get_version(),
 			'simplecache_enabled' => 1,
 			'system_cache_enabled' => 1,
 			'simplecache_lastupdate' => time(),
-			'processed_upgrades' => $upgrades,
+			'processed_upgrades' => [],
 			'language' => 'en',
 			'default_access' => $submissionVars['siteaccess'],
 			'allow_registration' => false,

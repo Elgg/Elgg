@@ -1653,17 +1653,20 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 		$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 	}
 	$upgrade_path = \Elgg\Project\Paths::sanitize($upgrade_path);
+	
+	if (!is_dir($upgrade_path)) {
+		return false;
+	}
 	$handle = opendir($upgrade_path);
-
 	if (!$handle) {
 		return false;
 	}
 
 	$upgrade_files = [];
 
-	while ($upgrade_file = readdir($handle)) {
+	while (($upgrade_file = readdir($handle)) !== false) {
 		// make sure this is a well formed upgrade.
-		if (is_dir($upgrade_path . '$upgrade_file')) {
+		if (!is_file($upgrade_path . $upgrade_file)) {
 			continue;
 		}
 		$upgrade_version = elgg_get_upgrade_file_version($upgrade_file);
