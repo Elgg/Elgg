@@ -121,11 +121,22 @@ class CompositeCache extends ElggCache {
 			call_user_func_array([$item, 'setInvalidationMethod'], $invalidation_method);
 		}
 		
-		if ($item->isMiss()) {
-			return null;
+		try {
+			if ($item->isMiss()) {
+				return null;
+			}
+			
+			return $item->get();
+		} catch (\Error $e) {
+			// catching parsing errors in file driver, because of potential race conditions during write
+			// this will cause corrupted data in the file and will crash the site when reading the file
+			elgg_log(__METHOD__ . " failed for key: {$this->getNamespace()}/{$key} with error: {$e->getMessage()}", 'ERROR');
+			
+			// remove the item from the cache so it can try to generate this item again
+			$this->delete($key);
 		}
 
-		return $item->get();
+		return null;
 	}
 
 	/**
