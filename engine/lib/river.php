@@ -7,6 +7,8 @@
  * @subpackage River
  */
 
+use Elgg\Integration\ElggCoreRiverAPITest;
+
 /**
  * Adds an item to the river.
  *

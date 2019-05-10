@@ -147,18 +147,15 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
  * @param boolean $return Can the current user write to this container?
  * @param array   $params Array of parameters (container, user, subtype)
  *
- * @return array
+ * @return void|true
  * @access private
  * @todo this doesn't seem to make a difference if a user can comment or not
  */
 function _elgg_comments_container_permissions_override($hook, $type, $return, $params) {
-
 	// is someone trying to comment, if so override permissions check
-	if ($params['subtype'] === 'comment') {
+	if (elgg_extract('subtype', $params) === 'comment') {
 		return true;
 	}
-
-	return $return;
 }
 
 /**
@@ -169,18 +166,16 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
  * @param boolean $return Can the given user edit the given entity?
  * @param array   $params Array of parameters (entity, user)
  *
- * @return boolean Whether the given user is allowed to edit the given comment.
+ * @return void|boolean Whether the given user is allowed to edit the given comment.
  * @access private
  */
 function _elgg_comments_permissions_override($hook, $type, $return, $params) {
-	$entity = $params['entity'];
-	$user = $params['user'];
+	$entity = elgg_extract('entity', $params);
+	$user = elgg_extract('user', $params);
 	
-	if ($entity instanceof ElggComment && $user) {
-		return $entity->getOwnerGUID() == $user->getGUID();
+	if ($entity instanceof ElggComment && $user instanceof ElggUser) {
+		return $entity->getOwnerGUID() === $user->getGUID();
 	}
-	
-	return $return;
 }
 
 /**

@@ -287,7 +287,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
  * @param string $url    current return value
  * @param array  $params supplied params
  *
- * @return void|string
+ * @return void|string|false
  * @deprecated 3.0 use ElggEntity::getURL()
  */
 function messages_set_url($hook, $type, $url, $params) {
@@ -310,7 +310,7 @@ function messages_set_url($hook, $type, $url, $params) {
  * @param int  $offset    Start at a defined offset (for listings)
  * @param bool $count     Switch between entities array or count mode
  *
- * @return ElggObject[]|int
+ * @return ElggMessage[]|int|false
  * @since 1.9
  */
 function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
@@ -456,7 +456,7 @@ function messages_purge($event, $type, $user) {
  *
  * @param string $hook         'get_views'
  * @param string $type         'ecml'
- * @param string $return_value current return value
+ * @param array  $return_value current return value
  * @param array  $params       supplied params
  *
  * @return array

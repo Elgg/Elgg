@@ -6,12 +6,13 @@
  * @uses $vars['body'] The main content of the page
  * @uses $vars['sysmessages'] Array of system status messages
  */
-use Elgg\Filesystem\Directory;
+
+use Elgg\Filesystem\Directory as ElggDirectory;
 
 $title = elgg_echo('install:title');
 $title .= " : " . elgg_extract('title', $vars);
 
-$isElggAtRoot = Elgg\Application::elggDir()->getPath() === Directory\Local::projectRoot()->getPath();
+$isElggAtRoot = Elgg\Application::elggDir()->getPath() === ElggDirectory\Local::projectRoot()->getPath();
 $elggSubdir = $isElggAtRoot ? '' : 'vendor/elgg/elgg/';
 
 ?>

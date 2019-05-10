@@ -9,6 +9,7 @@ $guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'object', 'file');
 
+/* @var $file \ElggFile */
 $file = get_entity($guid);
 
 $owner = elgg_get_page_owner_entity();

@@ -1302,7 +1302,7 @@ function _elgg_services() {
  * /ajax/form/<action_name>?<key/value params>
  *
  * @param string[] $segments URL segments (not including "ajax")
- * @return ResponseBuilder
+ * @return false|ResponseBuilder
  *
  * @see elgg_register_ajax_view()
  * @elgg_pagehandler ajax

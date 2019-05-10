@@ -23,7 +23,7 @@ class SuccessResult extends GenericResult {
 	/**
 	 * Returns a new instance of this class
 	 *
-	 * @param unknown $result A result of some kind?
+	 * @param string $result A result of some kind?
 	 *
 	 * @return SuccessResult
 	 */

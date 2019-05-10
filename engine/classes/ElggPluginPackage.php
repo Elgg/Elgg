@@ -622,7 +622,7 @@ class ElggPluginPackage {
 	 * @param array $elgg_version An Elgg version (either YYYYMMDDXX or X.Y.Z)
 	 * @param bool  $inverse      Inverse the result to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepElgg(array $dep, $elgg_version, $inverse = false) {
 		$status = version_compare($elgg_version, $dep['version'], $dep['comparison']);
@@ -643,7 +643,7 @@ class ElggPluginPackage {
 	 * @param array $dep     An Elgg manifest.xml deps array
 	 * @param bool  $inverse Inverse the result to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepPhpVersion(array $dep, $inverse = false) {
 		$php_version = phpversion();
@@ -718,7 +718,7 @@ class ElggPluginPackage {
 	 * @param array $dep     An Elgg manifest.xml deps array
 	 * @param bool  $inverse Inverse the result to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepPhpIni($dep, $inverse = false) {
 		$name = $dep['name'];

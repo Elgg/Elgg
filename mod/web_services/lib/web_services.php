@@ -171,14 +171,11 @@ function get_parameters_for_method($method) {
  * Get POST data
  * Since this is called through a handler, we need to manually get the post data
  *
- * @return POST data as string encoded as multipart/form-data
+ * @return false|string POST data as string encoded as multipart/form-data
  * @access private
  */
 function get_post_data() {
-
-	$postdata = file_get_contents('php://input');
-
-	return $postdata;
+	return file_get_contents('php://input');
 }
 
 /**

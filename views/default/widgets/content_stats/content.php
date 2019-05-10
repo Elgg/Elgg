@@ -3,11 +3,17 @@
  * Content stats widget
  */
 
+/* @var $widget \ElggWidget */
 $widget = elgg_extract('entity', $vars);
 
 $entity_stats = get_entity_statistics();
 
 $registered_entity_types = get_registered_entity_types();
+if (empty($registered_entity_types)) {
+	echo elgg_view('output/longtext', [
+		'value' => elgg_echo('notfound'),
+	]);
+}
 
 $stats = [];
 
