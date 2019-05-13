@@ -241,7 +241,7 @@ class ElggFile extends ElggObject {
 	/**
 	 * Gets the full contents of this file.
 	 *
-	 * @return mixed The file contents.
+	 * @return false|string The file contents.
 	 */
 	public function grabFile() {
 		return $this->getFilestore()->grabFile($this);

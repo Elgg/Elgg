@@ -30,7 +30,7 @@ class RefreshCsrfToken {
 		$valid_tokens = (object) [];
 		foreach ($pairs as $pair) {
 			list($ts, $token) = explode(',', $pair, 2);
-			if ($request->elgg()->csrf->validateTokenOwnership($token, $ts, $session_token)) {
+			if ($request->elgg()->csrf->validateTokenOwnership($token, (int) $ts, $session_token)) {
 				$valid_tokens->{$token} = true;
 			}
 		}

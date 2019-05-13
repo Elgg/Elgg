@@ -32,7 +32,7 @@ class UpgradeCommand extends BaseCommand {
 		$this->input = $input;
 		$this->output = $output;
 
-		$async = in_array('async', $this->argument('async'));
+		$async = (bool) $this->argument('async');
 
 		$return = 0;
 

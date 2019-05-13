@@ -137,7 +137,7 @@ class Config {
 	/**
 	 * @var array
 	 */
-	private $cookies;
+	private $cookies = [];
 
 	/**
 	 * @var ConfigTable Do not use directly. Use getConfigTable().
@@ -356,16 +356,16 @@ class Config {
 		}
 
 		$cookies = $this->cookies;
-		if (!is_array($cookies)) {
-			$cookies = [];
-		}
-
+		
+		// session cookie config
 		if (!isset($cookies['session'])) {
 			$cookies['session'] = [];
 		}
 		$session_defaults = session_get_cookie_params();
 		$session_defaults['name'] = 'Elgg';
 		$cookies['session'] = array_merge($session_defaults, $cookies['session']);
+		
+		// remember me cookie config
 		if (!isset($cookies['remember_me'])) {
 			$cookies['remember_me'] = [];
 		}

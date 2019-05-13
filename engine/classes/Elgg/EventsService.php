@@ -56,7 +56,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 * @param array  $options     (internal) options for triggering the event
 	 *
 	 * @see elgg_trigger_event()
@@ -117,7 +117,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type. The fired event type will be appended with ":before".
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 *
 	 * @return bool False if any handler returned false, otherwise true
 	 *
@@ -138,7 +138,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type. The fired event type will be appended with ":after".
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 *
 	 * @return true
 	 *
@@ -161,7 +161,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string   $event       The event type
 	 * @param string   $object_type The object type
-	 * @param string   $object      The object involved in the event
+	 * @param mixed    $object      The object involved in the event
 	 * @param callable $callable    Callable to run on successful event, before event:after
 	 * @return mixed
 	 */
@@ -189,7 +189,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 * @param string $message     The deprecation message
 	 * @param string $version     Human-readable *release* version: 1.9, 1.10, ...
 	 *

@@ -179,7 +179,7 @@ class ExternalFiles {
 		$items = array_filter($items, function($v) use ($location) {
 			return $v->loaded == true && $v->location == $location;
 		});
-		if ($items) {
+		if (!empty($items)) {
 			array_walk($items, function(&$v, $k){
 				$v = $v->url;
 			});

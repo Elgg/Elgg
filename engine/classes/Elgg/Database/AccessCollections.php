@@ -210,7 +210,7 @@ class AccessCollections {
 					':user_guid' => $user_guid,
 				]);
 
-				if ($collections) {
+				if (!empty($collections)) {
 					foreach ($collections as $collection) {
 						$access_array[] = (int) $collection->id;
 					}
@@ -337,7 +337,7 @@ class AccessCollections {
 			];
 
 			$collections = $this->getEntityCollections(['owner_guid' => $user_guid]);
-			if ($collections) {
+			if (!empty($collections)) {
 				foreach ($collections as $collection) {
 					$access_array[$collection->id] = $collection->getDisplayName();
 				}
@@ -393,7 +393,7 @@ class AccessCollections {
 
 		$collection = $this->get($collection_id);
 
-		if (!$user || !$collection) {
+		if (!$user instanceof \ElggUser || !$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
 
@@ -520,7 +520,7 @@ class AccessCollections {
 	public function update($collection_id, array $new_members = []) {
 		$acl = $this->get($collection_id);
 
-		if (!$acl) {
+		if (!$acl instanceof \ElggAccessCollection) {
 			return false;
 		}
 
@@ -673,7 +673,7 @@ class AccessCollections {
 
 		$collection = $this->get($collection_id);
 
-		if (!$collection) {
+		if (!$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
 
@@ -855,7 +855,7 @@ class AccessCollections {
 		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
-		if (!$collection || !$collection->canEdit()) {
+		if (!$collection instanceof \ElggAccessCollection || !$collection->canEdit()) {
 			// return 'Limited' if the collection can not be loaded or it can not be edited
 			return $translator->translate('access:limited:label');
 		}
