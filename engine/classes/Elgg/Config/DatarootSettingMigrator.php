@@ -23,26 +23,27 @@ class DatarootSettingMigrator extends SettingsMigrator {
 				WHERE name = 'dataroot'
 			");
 
-			if ($row) {
-				$value = $row->value;
-				$lines = [
-					"",
-					"/**",
-					" * The full file path for Elgg data storage. E.g. /path/to/elgg-data/",
-					" *",
-					" * @global string \$CONFIG->dataroot",
-					" */",
-					"\$CONFIG->dataroot = \"{$value}\";",
-					""
-				];
-				$bytes = implode(PHP_EOL, $lines);
-
-				$this->append($bytes);
-
-				return $value;
-			} else {
+			if (empty($row)) {
 				error_log("The DB table {$this->db->prefix}datalists did not have 'dataroot'.");
+				return;
 			}
+			
+			$value = $row->value;
+			$lines = [
+				"",
+				"/**",
+				" * The full file path for Elgg data storage. E.g. /path/to/elgg-data/",
+				" *",
+				" * @global string \$CONFIG->dataroot",
+				" */",
+				"\$CONFIG->dataroot = \"{$value}\";",
+				"",
+			];
+			$bytes = implode(PHP_EOL, $lines);
+
+			$this->append($bytes);
+
+			return $value;
 		} catch (\DatabaseException $ex) {
 			error_log($ex->getMessage());
 		}

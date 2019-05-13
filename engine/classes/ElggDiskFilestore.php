@@ -230,7 +230,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 *
 	 * @param \ElggFile $file File object
 	 *
-	 * @return string
+	 * @return false|string
 	 */
 	public function grabFile(\ElggFile $file) {
 		return file_get_contents($file->getFilenameOnFilestore());

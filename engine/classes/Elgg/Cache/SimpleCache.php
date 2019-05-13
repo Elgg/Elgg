@@ -2,7 +2,6 @@
 
 namespace Elgg\Cache;
 
-use Elgg\Application;
 use Elgg\Config;
 use Elgg\ViewsService;
 
@@ -64,7 +63,7 @@ class SimpleCache {
 	 *
 	 * @return string
 	 */
-	function getUrl($view, $subview = '') {
+	public function getUrl($view, $subview = '') {
 		// handle `getUrl('js', 'js/blog/save_draft')`
 		if (($view === 'js' || $view === 'css') && 0 === strpos($subview, $view . '/')) {
 			$view = $subview;
@@ -90,7 +89,7 @@ class SimpleCache {
 	 * @return string The simplecache root url for the current viewtype.
 	 * @access private
 	 */
-	function getRoot() {
+	public function getRoot() {
 		$viewtype = elgg_get_viewtype();
 		if ($this->isEnabled()) {
 			$lastcache = (int) $this->config->lastcache;
@@ -106,7 +105,7 @@ class SimpleCache {
 	 *
 	 * @return bool
 	 */
-	function isEnabled() {
+	public function isEnabled() {
 		return (bool) $this->config->simplecache_enabled;
 	}
 
@@ -116,7 +115,7 @@ class SimpleCache {
 	 * @see elgg_register_simplecache_view()
 	 * @return void
 	 */
-	function enable() {
+	public function enable() {
 		$this->config->save('simplecache_enabled', 1);
 		$this->invalidate();
 	}
@@ -129,7 +128,7 @@ class SimpleCache {
 	 * @see     elgg_register_simplecache_view()
 	 * @return void
 	 */
-	function disable() {
+	public function disable() {
 		if ($this->config->simplecache_enabled) {
 			$this->config->save('simplecache_enabled', 0);
 
@@ -152,7 +151,7 @@ class SimpleCache {
 	 *
 	 * @return bool
 	 */
-	function invalidate() {
+	public function invalidate() {
 		_elgg_rmdir($this->getPath(), true);
 
 		$time = time();

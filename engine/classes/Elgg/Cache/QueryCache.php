@@ -17,8 +17,14 @@ use Elgg\Loggable;
 class QueryCache extends LRUCache {
 	use Loggable;
 	
+	/**
+	 * @var bool Is this cache disabled by a config flag
+	 */
 	protected $config_disabled = false;
 
+	/**
+	 * @var bool Is this cache disabled during runtime
+	 */
 	protected $runtime_enabled = false;
 	
 	/**
@@ -31,7 +37,7 @@ class QueryCache extends LRUCache {
 		
 		$this->config_disabled = $config_disabled;
 		
-		return parent::__construct($size);
+		parent::__construct($size);
 	}
 	
 	/**
@@ -127,7 +133,7 @@ class QueryCache extends LRUCache {
 	public function getHash(string $sql, array $params = [], string $extras = '') {
 		
 		$query_id = $sql . '|';
-		if ($params) {
+		if (!empty($params)) {
 			$query_id .= serialize($params) . '|';
 		}
 		

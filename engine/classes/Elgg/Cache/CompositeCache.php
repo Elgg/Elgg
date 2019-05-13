@@ -259,7 +259,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		if (!$this->config->redis || !$this->config->redis_servers) {
+		if (!$this->config->redis || empty($this->config->redis_servers)) {
 			return null;
 		}
 
@@ -277,7 +277,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		if (!$this->config->memcache || !$this->config->memcache_servers) {
+		if (!$this->config->memcache || empty($this->config->memcache_servers)) {
 			return null;
 		}
 			
