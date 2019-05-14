@@ -140,7 +140,7 @@ class Translator {
 
 				// only pass through if we have arguments to allow backward compatibility
 				// with manual sprintf() calls.
-				if ($args) {
+				if (!empty($args)) {
 					$string = vsprintf($string, $args);
 				}
 

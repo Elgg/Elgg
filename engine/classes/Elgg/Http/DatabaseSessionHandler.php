@@ -46,7 +46,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		];
 		
 		$result = $this->db->getDataRow($query, null, $params);
-		if ($result) {
+		if (!empty($result)) {
 			return (string) $result->data;
 		}
 		

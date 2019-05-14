@@ -91,7 +91,7 @@ class File {
 	 */
 	public function getURL() {
 
-		if (!$this->file instanceof \ElggFile || !$this->file->exists()) {
+		if (!$this->file->exists()) {
 			elgg_log("Unable to resolve resource URL for a file that does not exist on filestore");
 			return false;
 		}

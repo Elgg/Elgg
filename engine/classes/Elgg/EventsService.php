@@ -125,7 +125,7 @@ class EventsService extends HooksRegistrationService {
 	 * @see EventsService::triggerAfter()
 	 * @since 2.0.0
 	 */
-	function triggerBefore($event, $object_type, $object = null) {
+	public function triggerBefore($event, $object_type, $object = null) {
 		return $this->trigger("$event:before", $object_type, $object);
 	}
 
@@ -198,7 +198,7 @@ class EventsService extends HooksRegistrationService {
 	 * @see EventsService::trigger()
 	 * @see elgg_trigger_deprecated_event()
 	 */
-	function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
+	public function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
 		$options = [
 			self::OPTION_DEPRECATION_MESSAGE => $message,
 			self::OPTION_DEPRECATION_VERSION => $version,

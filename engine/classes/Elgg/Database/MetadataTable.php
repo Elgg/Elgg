@@ -212,7 +212,7 @@ class MetadataTable {
 		$qb->addClause($where);
 
 		$row = $this->db->getDataRow($qb);
-		if ($row) {
+		if (!empty($row)) {
 			return new ElggMetadata($row);
 		}
 
@@ -228,7 +228,7 @@ class MetadataTable {
 	 * @throws \DatabaseException
 	 */
 	public function delete(ElggMetadata $metadata) {
-		if (!$metadata->id || !$metadata->canEdit()) {
+		if (!$metadata->id) {
 			return false;
 		}
 
@@ -452,6 +452,7 @@ class MetadataTable {
 		}
 
 		$success = 0;
+		/* @var $md \ElggMetadata */
 		foreach ($metadata as $md) {
 			if ($md->delete()) {
 				$success++;

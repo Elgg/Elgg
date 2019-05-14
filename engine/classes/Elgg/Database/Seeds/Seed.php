@@ -30,12 +30,12 @@ abstract class Seed implements Seedable {
 	 * Populate database
 	 * @return mixed
 	 */
-	abstract function seed();
+	public abstract function seed();
 
 	/**
 	 * Removed seeded rows from database
 	 * @return mixed
 	 */
-	abstract function unseed();
+	public abstract function unseed();
 
 }

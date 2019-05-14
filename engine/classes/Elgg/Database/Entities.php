@@ -44,7 +44,7 @@ class Entities extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (!$result) {
+		if (empty($result)) {
 			return 0;
 		}
 		

@@ -88,7 +88,7 @@ class DefinitionCache implements Cache,
 	/**
 	 * {@inheritdoc}
 	 */
-	function fetchMultiple(array $keys) {
+	public function fetchMultiple(array $keys) {
 		$values = [];
 		foreach ($keys as $key) {
 			$values[] = $this->cache->load($key);
@@ -100,7 +100,7 @@ class DefinitionCache implements Cache,
 	/**
 	 * {@inheritdoc}
 	 */
-	function saveMultiple(array $keysAndValues, $lifetime = 0) {
+	public function saveMultiple(array $keysAndValues, $lifetime = 0) {
 		foreach ($keysAndValues as $key => $value) {
 			$this->save($key, $value, $lifetime);
 		}

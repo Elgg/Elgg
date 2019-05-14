@@ -281,10 +281,10 @@ trait Seeding {
 
 			$group->save();
 
-			if ($group->access_id == ACCESS_PRIVATE) {
-				$acls = $group->getOwnedAccessCollections(['subtype' => 'group_acl']);
-				if ($acls) {
-					$group->access_id = $acls[0]->id;
+			if ($group->access_id === ACCESS_PRIVATE) {
+				$acl = $group->getOwnedAccessCollection('group_acl');
+				if ($acl instanceof \ElggAccessCollection) {
+					$group->access_id = $acl->id;
 					$group->save();
 				}
 			}
