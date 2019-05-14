@@ -33,9 +33,9 @@ class CronRunner {
 		$output = [];
 		foreach ($ops as $op) {
 			$ok = $op->result ? 'ok' : 'err';
-			$output[] = $op->operation . '\t' . $ok . '\t' . $op->completed->format(DATE_ATOM);
+			$output[] = $op->operation . ': ' . $ok . '. Completed: ' . $op->completed->format(DATE_ATOM);
 		}
 
-		echo implode(PHP_EOL, $output);
+		echo implode(PHP_EOL, $output) . PHP_EOL;
 	}
 }
