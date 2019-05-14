@@ -228,7 +228,7 @@ class MetadataTable {
 	 * @throws \DatabaseException
 	 */
 	public function delete(ElggMetadata $metadata) {
-		if (!$metadata->id || !$metadata->canEdit()) {
+		if (!$metadata->id) {
 			return false;
 		}
 
