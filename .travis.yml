@@ -27,7 +27,7 @@ matrix:
   include:
     # Commit message and lint
     - php: 7.3
-      env: JOB_NAME=lint VARIA=true
+      env: JOB_NAME=lint
       install:
         - composer travis:install
       script:
@@ -36,7 +36,7 @@ matrix:
 
     # Build and test javascript
     - php: 7.3
-      env: JOB_NAME=js_tests VARIA=true
+      env: JOB_NAME=js_tests
       dist: trusty
       install:
         - npm install -g yarn && yarn
@@ -50,7 +50,7 @@ matrix:
     #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
     #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
     - php: 7.3
-      env: JOB_NAME=docs_build VARIA=true
+      env: JOB_NAME=docs_build
       install:
         - pip install --user "Sphinx==1.3.1"
         - pip install --user "sphinx-intl"
@@ -64,7 +64,7 @@ matrix:
         - memcached
         - mysql
       env:
-        - JOB_NAME=memcache VARIA=true
+        - JOB_NAME=memcache
         - ELGG_MEMCACHE=1
         - ELGG_MEMCACHE_SERVER1_HOST=127.0.0.1
         - ELGG_MEMCACHE_SERVER1_PORT=11211
@@ -85,7 +85,7 @@ matrix:
         - redis-server
         - mysql
       env:
-        - JOB_NAME=redis VARIA=true
+        - JOB_NAME=redis
         - ELGG_REDIS=1
         - ELGG_REDIS_SERVER1_HOST=127.0.0.1
         - ELGG_REDIS_SERVER1_PORT=6379
@@ -101,7 +101,7 @@ matrix:
 
     # Test upgrade path from 2.3
     - php: 7.0
-      env: JOB_NAME=upgrade_from_Elgg2 VARIA=true
+      env: JOB_NAME=upgrade_from_Elgg2
       install:
         - git fetch origin 2.3
         - git checkout FETCH_HEAD
@@ -117,12 +117,30 @@ matrix:
         - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
         - ./vendor/bin/phpunit
 
+    # MySql 5.7
+    # setup according to https://docs.travis-ci.com/user/database-setup/#mysql-57
+    - php: 7.3
+      env: JOB_NAME=mysql57
+      addons:
+        apt:
+          sources:
+            - mysql-5.7-trusty
+          packages:
+            - mysql-server
+            - mysql-client
+      script:
+        - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
+        - ./vendor/bin/phpunit --testsuite integration
+        - ./vendor/bin/phpunit --testsuite plugins-integration
+
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
   - mysql
 
 before_install:
+  - mysqld --version
+  - mysql --version
   - phpenv config-rm xdebug.ini
   - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 
@@ -140,7 +158,8 @@ script:
   # combined test runner is executed in e2e builds
   - ./vendor/bin/phpunit --testsuite unit
   - ./vendor/bin/phpunit --testsuite integration
-  - ./vendor/bin/phpunit --testsuite plugins
+  - ./vendor/bin/phpunit --testsuite plugins-unit
+  - ./vendor/bin/phpunit --testsuite plugins-integration
 
 after_script:
   - php ./elgg-cli database:unseed -vv

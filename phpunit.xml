@@ -46,8 +46,10 @@
         <testsuite name="integration">
             <directory>./engine/tests/phpunit/integration/</directory>
         </testsuite>
-        <testsuite name="plugins">
+        <testsuite name="plugins-unit">
             <directory>./mod/*/tests/phpunit/unit/</directory>
+        </testsuite>
+        <testsuite name="plugins-integration">
             <directory>./mod/*/tests/phpunit/integration/</directory>
         </testsuite>
     </testsuites>
