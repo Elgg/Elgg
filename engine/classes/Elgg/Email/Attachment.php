@@ -102,7 +102,7 @@ class Attachment extends Part {
 	 */
 	public static function fromElggFile(\ElggFile $file) {
 		
-		if (!$file instanceof \ElggFile || !$file->exists()) {
+		if (!$file->exists()) {
 			return false;
 		}
 		

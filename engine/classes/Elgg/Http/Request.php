@@ -238,11 +238,11 @@ class Request extends SymfonyRequest {
 	 */
 	public function getFirstUrlSegment() {
 		$segments = $this->getUrlSegments();
-		if ($segments) {
+		if (!empty($segments)) {
 			return array_shift($segments);
-		} else {
-			return '';
 		}
+		
+		return '';
 	}
 
 	/**
@@ -433,7 +433,7 @@ class Request extends SymfonyRequest {
 			return true;
 		};
 
-		if (!$is_valid) {
+		if (!$is_valid()) {
 			$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', [
 				'post_size' => $reported_bytes,
 				'visible_errors' => true,

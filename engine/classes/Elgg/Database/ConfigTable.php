@@ -54,7 +54,7 @@ class ConfigTable {
 	 *
 	 * @return bool Success or failure
 	 */
-	function remove($name) {
+	public function remove($name) {
 		$query = "
 			DELETE FROM {$this->db->prefix}config
 			WHERE name = :name
@@ -86,7 +86,7 @@ class ConfigTable {
 	 *
 	 * @return bool
 	 */
-	function set($name, $value) {
+	public function set($name, $value) {
 		// cannot store anything longer than 255 characters in db, so catch before we set
 		if (elgg_strlen($name) > 255) {
 			$this->logger->error("The name length for configuration variables cannot be greater than 255");
@@ -124,7 +124,7 @@ class ConfigTable {
 	 *
 	 * @return mixed|null
 	 */
-	function get($name) {
+	public function get($name) {
 		$sql = "
 			SELECT value
 			FROM {$this->db->prefix}config
@@ -135,7 +135,7 @@ class ConfigTable {
 		];
 		
 		$result = $this->db->getDataRow($sql, null, $params);
-		if ($result) {
+		if (!empty($result)) {
 			return unserialize($result->value);
 		}
 	

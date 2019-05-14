@@ -220,7 +220,7 @@ class RelationshipsTable {
 	 */
 	public function remove($guid_one, $relationship, $guid_two) {
 		$obj = $this->check($guid_one, $relationship, $guid_two);
-		if (!$obj) {
+		if (!$obj instanceof \ElggRelationship) {
 			return false;
 		}
 
