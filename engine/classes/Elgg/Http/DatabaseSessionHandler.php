@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Http;
 
 /**
@@ -11,7 +12,9 @@ namespace Elgg\Http;
  */
 class DatabaseSessionHandler implements \SessionHandlerInterface {
 
-	/** @var \Elgg\Database $db */
+	/**
+	 * @var \Elgg\Database $db
+	 */
 	protected $db;
 
 	/**
@@ -35,14 +38,19 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 */
 	public function read($session_id) {
 		
-		$id = sanitize_string($session_id);
-		$query = "SELECT * FROM {$this->db->prefix}users_sessions WHERE session='$id'";
-		$result = $this->db->getDataRow($query);
-		if ($result) {
+		$query = "SELECT *
+			FROM {$this->db->prefix}users_sessions
+			WHERE session = :session_id";
+		$params = [
+			':session_id' => $session_id,
+		];
+		
+		$result = $this->db->getDataRow($query, null, $params);
+		if (!empty($result)) {
 			return (string) $result->data;
-		} else {
-			return '';
 		}
+		
+		return '';
 	}
 
 	/**
@@ -54,20 +62,21 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 			return true;
 		}
 		
-		$id = sanitize_string($session_id);
-		$time = time();
-		$sess_data_sanitised = sanitize_string($session_data);
-		
 		$query = "INSERT INTO {$this->db->prefix}users_sessions
 			(session, ts, data) VALUES
-			('$id', '$time', '$sess_data_sanitised')
+			(:session_id, :time, :data)
 			ON DUPLICATE KEY UPDATE ts = VALUES(ts), data = VALUES(data)";
+		$params = [
+			':session_id' => $session_id,
+			':time' => time(),
+			':data' => $session_data,
+		];
 
-		if ($this->db->insertData($query) !== false) {
+		if ($this->db->insertData($query, $params) !== false) {
 			return true;
-		} else {
-			return false;
 		}
+		
+		return false;
 	}
 
 	/**
@@ -82,9 +91,13 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 */
 	public function destroy($session_id) {
 		
-		$id = sanitize_string($session_id);
-		$query = "DELETE FROM {$this->db->prefix}users_sessions WHERE session='$id'";
-		return (bool) $this->db->deleteData($query);
+		$query = "DELETE FROM {$this->db->prefix}users_sessions
+			WHERE session = :session_id";
+		$params = [
+			':session_id' => $session_id,
+		];
+		
+		return (bool) $this->db->deleteData($query, $params);
 	}
 
 	/**
@@ -92,8 +105,12 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	 */
 	public function gc($max_lifetime) {
 		
-		$life = time() - $max_lifetime;
-		$query = "DELETE FROM {$this->db->prefix}users_sessions WHERE ts < '$life'";
-		return (bool) $this->db->deleteData($query);
+		$query = "DELETE FROM {$this->db->prefix}users_sessions
+			WHERE ts < :life";
+		$params = [
+			':life' => (time() - $max_lifetime),
+		];
+		
+		return (bool) $this->db->deleteData($query, $params);
 	}
 }

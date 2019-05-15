@@ -38,7 +38,7 @@ class SystemCache {
 	 *
 	 * @return void
 	 */
-	function reset() {
+	public function reset() {
 		$this->cache->clear();
 	}
 	
@@ -49,7 +49,7 @@ class SystemCache {
 	 * @param string $data The data to be saved
 	 * @return bool
 	 */
-	function save($type, $data) {
+	public function save($type, $data) {
 		if ($this->isEnabled()) {
 			return $this->cache->save($type, $data);
 		}
@@ -63,7 +63,7 @@ class SystemCache {
 	 * @param string $type The type of cache to load
 	 * @return string
 	 */
-	function load($type) {
+	public function load($type) {
 		if ($this->isEnabled()) {
 			$cached_data = $this->cache->load($type);
 			if ($cached_data) {
@@ -78,9 +78,9 @@ class SystemCache {
 	 * Deletes the contents of a system cache.
 	 *
 	 * @param string $type The type of cache to delete
-	 * @return string
+	 * @return bool
 	 */
-	function delete($type) {
+	public function delete($type) {
 		return $this->cache->delete($type);
 	}
 	
@@ -89,7 +89,7 @@ class SystemCache {
 	 *
 	 * @return bool
 	 */
-	function isEnabled() {
+	public function isEnabled() {
 		return (bool) $this->config->system_cache_enabled;
 	}
 	
@@ -101,7 +101,7 @@ class SystemCache {
 	 *
 	 * @return void
 	 */
-	function enable() {
+	public function enable() {
 		$this->config->save('system_cache_enabled', 1);
 		$this->reset();
 	}
@@ -114,7 +114,7 @@ class SystemCache {
 	 *
 	 * @return void
 	 */
-	function disable() {
+	public function disable() {
 		$this->config->save('system_cache_enabled', 0);
 		$this->reset();
 	}
@@ -127,7 +127,7 @@ class SystemCache {
 	 *
 	 * @access private
 	 */
-	function init() {
+	public function init() {
 		if (!$this->isEnabled()) {
 			return;
 		}

@@ -36,6 +36,7 @@ use Elgg\Project\Paths;
  * @property string        $dbhost
  * @property string        $dbpass
  * @property string        $dbprefix
+ * @property bool          $db_disable_query_cache
  * @property string        $debug
  * @property int           $default_access
  * @property int           $default_limit
@@ -88,7 +89,7 @@ use Elgg\Project\Paths;
  * @property bool          $security_protect_cron
  * @property bool          $security_protect_upgrade
  * @property string        $seeder_local_image_folder Path to a local folder containing images used for seeding
- * @property int           $simplecache_enabled
+ * @property bool          $simplecache_enabled
  * @property int           $simplecache_lastupdate
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
@@ -136,7 +137,7 @@ class Config {
 	/**
 	 * @var array
 	 */
-	private $cookies;
+	private $cookies = [];
 
 	/**
 	 * @var ConfigTable Do not use directly. Use getConfigTable().
@@ -246,7 +247,8 @@ class Config {
 		$get_db = function() {
 			// try to migrate settings to the file
 			$db_conf = new \Elgg\Database\DbConfig($GLOBALS['CONFIG']);
-			return new Database($db_conf);
+			$cache = new \Elgg\Cache\QueryCache(50, true);
+			return new Database($db_conf, $cache);
 		};
 
 		if (empty($GLOBALS['CONFIG']->dataroot)) {
@@ -296,7 +298,7 @@ class Config {
 	 *
 	 * @param string $settings_path Path of settings file
 	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
-	 * @return Config
+	 * @return string
 	 *
 	 * @access private
 	 * @internal
@@ -354,16 +356,16 @@ class Config {
 		}
 
 		$cookies = $this->cookies;
-		if (!is_array($cookies)) {
-			$cookies = [];
-		}
-
+		
+		// session cookie config
 		if (!isset($cookies['session'])) {
 			$cookies['session'] = [];
 		}
 		$session_defaults = session_get_cookie_params();
 		$session_defaults['name'] = 'Elgg';
 		$cookies['session'] = array_merge($session_defaults, $cookies['session']);
+		
+		// remember me cookie config
 		if (!isset($cookies['remember_me'])) {
 			$cookies['remember_me'] = [];
 		}

@@ -27,6 +27,15 @@ class GroupItemVisibility {
 	 * @var string
 	 */
 	public $reasonHidden = '';
+	
+	/**
+	 * Added for deprecated notice
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		elgg_deprecated_notice('The usage of \Elgg\GroupItemVisibility is deprecated, use ElggGroup::canAccessContent', '3.0', 2);
+	}
 
 	/**
 	 * Determine visibility of items within a container for the current user

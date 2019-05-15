@@ -1,7 +1,7 @@
 <?php
 namespace Elgg;
 
-use Elgg\HooksRegistrationService\Hook;
+use Elgg\HooksRegistrationService\Hook as HrsHook;
 
 /**
  * Plugin Hooks
@@ -93,7 +93,7 @@ class PluginHooksService extends HooksRegistrationService {
 			}
 			if ($return !== null) {
 				$value = $return;
-				if ($hook instanceof Hook) {
+				if ($hook instanceof HrsHook) {
 					$hook->setValue($return);
 				}
 			}

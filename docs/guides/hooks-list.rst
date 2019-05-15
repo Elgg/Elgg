@@ -424,7 +424,7 @@ Permission hooks
 	``$params['context']`` and with a page owner of ``$params['page_owner']``.
 
 **permissions_check:metadata, <entity_type>**
-	Return boolean for if the user ``$params['user']`` can edit the metadata ``$params['metadata']``
+	(Deprecated) Return boolean for if the user ``$params['user']`` can edit the metadata ``$params['metadata']``
 	on the entity ``$params['entity']``.
 
 **permissions_check:comment, <entity_type>**
@@ -439,8 +439,6 @@ Permission hooks
 **permissions_check:annotate, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can create an annotation ``$params['annotation_name']``
 	on the entity ``$params['entity']``. if logged in, the default is true.
-
-	.. warning:: This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object.
 
 **permissions_check:annotation**
 	Return boolean for if the user in ``$params['user']`` can edit the annotation ``$params['annotation']`` on the

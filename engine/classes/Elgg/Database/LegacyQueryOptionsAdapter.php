@@ -849,8 +849,6 @@ trait LegacyQueryOptionsAdapter {
 			foreach ($bounds as $bound) {
 				$prop_name = "{$prop}_{$bound}";
 
-				$time = elgg_extract($prop_name, $options);
-
 				$new_prop_name = $prop_name;
 				$new_prop_name = str_replace('modified', 'updated', $new_prop_name);
 				$new_prop_name = str_replace('posted', 'created', $new_prop_name);

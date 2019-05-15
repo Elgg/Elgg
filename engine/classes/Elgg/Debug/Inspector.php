@@ -221,7 +221,14 @@ class Inspector {
 
 			$file = $route->getDefault('_file') ? : '';
 
-			$middleware = $route->getDefault('_middleware') ? : '';
+			$middleware = $route->getDefault('_middleware');
+			if (!is_array($middleware)) {
+				if (!empty($middleware)) {
+					$middleware = [$middleware];
+				} else {
+					$middleware = [];
+				}
+			}
 			$middleware = array_map(function($e) {
 				return $this->describeCallable($e);
 			}, $middleware);

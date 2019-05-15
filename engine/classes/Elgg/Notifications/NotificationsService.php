@@ -315,7 +315,7 @@ class NotificationsService {
 	protected function sendNotifications($event, $subscriptions, array $params = []) {
 
 		if (!$this->methods) {
-			return 0;
+			return [];
 		}
 
 		$result = [];

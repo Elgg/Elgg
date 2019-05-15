@@ -37,7 +37,7 @@ class Annotations extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (!$result) {
+		if (empty($result)) {
 			return 0;
 		}
 
@@ -99,7 +99,7 @@ class Annotations extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (!$result) {
+		if (empty($result)) {
 			return 0;
 		}
 
@@ -133,7 +133,7 @@ class Annotations extends Repository {
 			$qb->addOrderBy('n_table.id', 'asc');
 		}
 
-		if ($limit) {
+		if ($limit > 0) {
 			$qb->setMaxResults((int) $limit);
 			$qb->setFirstResult((int) $offset);
 		}
@@ -146,7 +146,7 @@ class Annotations extends Repository {
 		}
 
 		$results = _elgg_services()->db->getData($qb, $callback);
-		if ($results && $this->options->preload_owners) {
+		if (!empty($results) && $this->options->preload_owners) {
 			_elgg_services()->entityPreloader->preload($results, ['owner_guid']);
 		}
 

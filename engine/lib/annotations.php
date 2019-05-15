@@ -128,16 +128,10 @@ function elgg_enable_annotations(array $options) {
  * @since 1.8.0
  */
 function elgg_annotation_exists($entity_guid, $name, $owner_guid = null) {
-	if (!$owner_guid) {
+	$owner_guid = (int) $owner_guid;
+	if ($owner_guid < 1) {
 		$owner_guid = elgg_get_logged_in_user_guid();
 	}
 
 	return _elgg_services()->annotationsTable->exists($entity_guid, $name, $owner_guid);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-
-};

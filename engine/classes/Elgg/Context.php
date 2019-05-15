@@ -1,7 +1,7 @@
 <?php
 namespace Elgg;
 
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 
 /**
  * Manages a global stack of strings for sharing information about the current execution context
@@ -30,9 +30,9 @@ final class Context {
 	/**
 	 * Initialize the context from the request
 	 *
-	 * @param Request $request Elgg request
+	 * @param HttpRequest $request Elgg request
 	 */
-	public function __construct(Request $request) {
+	public function __construct(HttpRequest $request) {
 		// don't do this for *_handler.php, etc.
 		if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
 			$context = $request->getFirstUrlSegment();

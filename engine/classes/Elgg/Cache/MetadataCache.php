@@ -87,7 +87,7 @@ class MetadataCache {
 	 * Warning: You should always call isLoaded() beforehand to verify that this
 	 * function's return value can be trusted.
 	 *
-	 * @see isLoaded
+	 * @see MetadataCache::isLoaded()
 	 *
 	 * @param int    $entity_guid The GUID of the entity
 	 * @param string $name        The metadata name
@@ -124,7 +124,7 @@ class MetadataCache {
 	 * Warning: You should always call isLoaded() beforehand to verify that this
 	 * function's return value can be trusted.
 	 *
-	 * @see isLoaded
+	 * @see MetadataCache::isLoaded()
 	 *
 	 * @param int    $entity_guid The GUID of the entity
 	 * @param string $name        The metadata name
@@ -257,28 +257,10 @@ class MetadataCache {
 			return $cached_values;
 		}
 
-		// could be useful at some point in future
-		//$guids = $this->filterMetadataHeavyEntities($guids);
-
-		$options = [
-			'guids' => $guids,
-			'limit' => 0,
-			'callback' => false,
-			'distinct' => false,
-			'order_by' => [
-				new OrderByClause('n_table.entity_guid', 'asc'),
-				new OrderByClause('n_table.time_created', 'asc'),
-				new OrderByClause('n_table.id', 'asc')
-			],
-		];
-
-		// We already have a loaded entity, so we can ignore entity access clauses
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
-		$data = _elgg_services()->metadataTable->getAll($options);
-		_elgg_services()->session->setIgnoreAccess($ia);
-
+		$data = _elgg_services()->metadataTable->getRowsForGuids($guids);
+		
 		$values = [];
-
+		
 		foreach ($data as $i => $row) {
 			$row->value = ($row->value_type === 'text') ? $row->value : (int) $row->value;
 			$values[$row->entity_guid][] = $row;

@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use DatabaseException;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Doctrine\DBAL\Query\QueryBuilder as DbalQueryBuilder;
@@ -154,6 +153,22 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 *
+	 * @param bool $track_query should the query be tracked by timers and loggers
+	 */
+	public function execute(bool $track_query = true) {
+		
+		if (!$track_query) {
+			return parent::execute();
+		}
+		
+		return _elgg_services()->db->trackQuery($this, [], function() {
+			return parent::execute();
+		});
+	}
+	
+	/**
 	 * {@inheritdoc}
 	 *
 	 * @access private Use create() method on the extending class
@@ -282,7 +297,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @param string $type           Value type for sanitization/casting
 	 * @param bool   $case_sensitive Use case sensitive comparison for strings
 	 *
-	 * @return CompositeExpression|null
+	 * @return CompositeExpression|null|string
 	 */
 	public function compare($x, $comparison, $y = null, $type = null, $case_sensitive = null) {
 		return (new ComparisonClause($x, $comparison, $y, $type, $case_sensitive))->prepare($this);
@@ -295,7 +310,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @param mixed  $lower Lower bound
 	 * @param mixed  $upper Upper bound
 	 *
-	 * @return CompositeExpression|null
+	 * @return CompositeExpression|null|string
 	 */
 	public function between($x, $lower = null, $upper = null, $type = null) {
 		$wheres = [];
@@ -363,11 +378,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Join metadata table from alias and return joined table alias
 	 *
-	 * @param string $from_alias   Alias of the main table
-	 * @param string $from_column  Guid column name in the main table
-	 * @param null   $name         Metadata name(s)
-	 * @param string $join_type    JOIN type
-	 * @param string $joined_alias Joined table alias
+	 * @param string          $from_alias   Alias of the main table
+	 * @param string          $from_column  Guid column name in the main table
+	 * @param string|string[] $name         Metadata name(s)
+	 * @param string          $join_type    JOIN type
+	 * @param string          $joined_alias Joined table alias
 	 *
 	 * @return string
 	 */
@@ -410,11 +425,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Join annotations table from alias and return joined table alias
 	 *
-	 * @param string $from_alias   Main table alias
-	 * @param string $from_column  Guid column name in the main table
-	 * @param null   $name         Annotation name
-	 * @param string $join_type    JOIN type
-	 * @param string $joined_alias Joined table alias
+	 * @param string          $from_alias   Main table alias
+	 * @param string          $from_column  Guid column name in the main table
+	 * @param string|string[] $name         Annotation name
+	 * @param string          $join_type    JOIN type
+	 * @param string          $joined_alias Joined table alias
 	 *
 	 * @return string
 	 */
@@ -457,11 +472,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Join private settings table from alias and return joined table alias
 	 *
-	 * @param string $from_alias   Main table alias
-	 * @param string $from_column  Guid column name in the main table
-	 * @param null   $name         Private setting name
-	 * @param string $join_type    JOIN type
-	 * @param string $joined_alias Joined table alias
+	 * @param string          $from_alias   Main table alias
+	 * @param string          $from_column  Guid column name in the main table
+	 * @param string|string[] $name         Private setting name
+	 * @param string          $join_type    JOIN type
+	 * @param string          $joined_alias Joined table alias
 	 *
 	 * @return string
 	 */

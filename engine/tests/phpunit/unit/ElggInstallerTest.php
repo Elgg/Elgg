@@ -474,36 +474,37 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 
-		$vars['variables'] = [
-			'displayname' => [
-				'type' => 'text',
-				'value' => '',
-				'required' => true,
+		$vars = [
+			'variables' => [
+				'displayname' => [
+					'type' => 'text',
+					'value' => '',
+					'required' => true,
+				],
+				'email' => [
+					'type' => 'email',
+					'value' => '',
+					'required' => true,
+				],
+				'username' => [
+					'type' => 'text',
+					'value' => '',
+					'required' => true,
+				],
+				'password1' => [
+					'type' => 'password',
+					'value' => '',
+					'required' => true,
+					'pattern' => '.{6,}',
+				],
+				'password2' => [
+					'type' => 'password',
+					'value' => '',
+					'required' => true,
+				],
 			],
-			'email' => [
-				'type' => 'email',
-				'value' => '',
-				'required' => true,
-			],
-			'username' => [
-				'type' => 'text',
-				'value' => '',
-				'required' => true,
-			],
-			'password1' => [
-				'type' => 'password',
-				'value' => '',
-				'required' => true,
-				'pattern' => '.{6,}',
-			],
-			'password2' => [
-				'type' => 'password',
-				'value' => '',
-				'required' => true,
-			],
+			'next_step' => 'complete',
 		];
-
-		$vars['next_step'] = 'complete';
 
 		$title = elgg_echo("install:admin");
 		$body = elgg_view("install/pages/admin", $vars);
@@ -526,7 +527,6 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		);
 
 		$this->assertEquals($output, $response->getContent());
-
 	}
 
 	public function testAdminAction() {

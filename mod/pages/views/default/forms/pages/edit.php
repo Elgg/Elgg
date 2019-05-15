@@ -30,7 +30,7 @@ foreach ($fields as $name => $type) {
 		case 'write_access_id' :
 			if (!$user->canEdit()) {
 				// Only owner and admins can change access
-				continue;
+				continue(2);
 			}
 
 			$field['entity'] = $entity;

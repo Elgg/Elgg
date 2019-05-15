@@ -111,7 +111,7 @@ final class Fly implements Directory {
 	 */
 	protected function getEntries($path = '', $recursive = true, $types = ['file', 'dir']) {
 		$contents = $this->fs->listContents($this->getInternalPath($path), $recursive);
-		if (!$contents) {
+		if (empty($contents)) {
 			$contents = [];
 		}
 

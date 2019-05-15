@@ -105,7 +105,7 @@ function find_active_users(array $options = []) {
  *
  * @param int $user_guid User GUID
  *
- * @return bool
+ * @return false|array
  */
 function send_new_password_request($user_guid) {
 	return _elgg_services()->passwords->sendNewPasswordRequest($user_guid);

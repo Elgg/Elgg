@@ -332,7 +332,7 @@ class SearchService {
 	 * @param array        $query_parts   Search query
 	 * @param bool         $partial_match Allow partial matches
 	 *
-	 * @return CompositeExpression
+	 * @return CompositeExpression|string
 	 * @throws InvalidParameterException
 	 */
 	public function buildSearchWhereQuery(QueryBuilder $qb, $alias, $fields, $query_parts, $partial_match = true) {

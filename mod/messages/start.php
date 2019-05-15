@@ -48,7 +48,6 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'messages_ecml_views_hook');
 
 	// permission overrides
-	elgg_register_plugin_hook_handler('permissions_check:metadata', 'object', 'messages_can_edit_metadata');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'messages_can_edit');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
 
@@ -95,30 +94,6 @@ function messages_register_topbar($hook, $type, $items, $params) {
 	]);
 
 	return $items;
-}
-
-/**
- * Override the canEditMetadata function to return true for messages
- *
- * @param string $hook         'permissions_check:metadata'
- * @param string $type         'object'
- * @param bool   $return_value current return value
- * @param array  $parameters   supplied params
- *
- * @return void|true
- */
-function messages_can_edit_metadata($hook, $type, $return_value, $parameters) {
-
-	global $messagesendflag;
-
-	if ($messagesendflag !== 1) {
-		return;
-	}
-	
-	$entity = elgg_extract('entity', $parameters);
-	if ($entity instanceof ElggObject && $entity->getSubtype() == 'messages') {
-		return true;
-	}
 }
 
 /**
@@ -287,7 +262,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
  * @param string $url    current return value
  * @param array  $params supplied params
  *
- * @return void|string
+ * @return void|string|false
  * @deprecated 3.0 use ElggEntity::getURL()
  */
 function messages_set_url($hook, $type, $url, $params) {
@@ -310,7 +285,7 @@ function messages_set_url($hook, $type, $url, $params) {
  * @param int  $offset    Start at a defined offset (for listings)
  * @param bool $count     Switch between entities array or count mode
  *
- * @return ElggObject[]|int
+ * @return ElggMessage[]|int|false
  * @since 1.9
  */
 function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
@@ -456,7 +431,7 @@ function messages_purge($event, $type, $user) {
  *
  * @param string $hook         'get_views'
  * @param string $type         'ecml'
- * @param string $return_value current return value
+ * @param array  $return_value current return value
  * @param array  $params       supplied params
  *
  * @return array

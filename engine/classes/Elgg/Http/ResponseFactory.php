@@ -42,7 +42,7 @@ class ResponseFactory {
 	private $transport;
 
 	/**
-	 * @var Response|bool
+	 * @var Response|false
 	 */
 	private $response_sent = false;
 
@@ -203,6 +203,8 @@ class ResponseFactory {
 
 			$this->events->triggerAfter('send', 'http_response', $response);
 			$this->response_sent = $response;
+			
+			$this->closeSession();
 		}
 
 		return $this->response_sent;
@@ -328,7 +330,7 @@ class ResponseFactory {
 			// @see elgg_error_page_handler
 			$forward_reason = (string) $status_code;
 
-			$forward_url = $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
+			$this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
 
 			if ($this->response_sent) {
 				// Response was sent from a forward hook
@@ -346,7 +348,7 @@ class ResponseFactory {
 			return $this->send($this->prepareResponse($error_page, $status_code));
 		}
 
-		$forward_url = $this->makeSecureForwardUrl($url);
+		$forward_url = $this->makeSecureForwardUrl($forward_url);
 		return $this->send($this->prepareRedirectResponse($forward_url));
 	}
 
@@ -477,13 +479,6 @@ class ResponseFactory {
 
 		$forward_reason = (string) $status_code;
 
-		// force closing session so session is saved to db before redirect headers are sent
-		// preventing race conditions with session data https://github.com/Elgg/Elgg/issues/12348
-		$session = elgg_get_session();
-		if ($session->isStarted()) {
-			$session->save();
-		}
-		
 		$forward_url = $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
 		
 		if ($this->response_sent) {
@@ -683,5 +678,22 @@ class ResponseFactory {
 		}
 		
 		return $url;
+	}
+	
+	/**
+	 * Closes the session
+	 *
+	 * Force closing the session so session is saved to the database before headers are sent
+	 * preventing race conditions with session data
+	 *
+	 * @see https://github.com/Elgg/Elgg/issues/12348
+	 *
+	 * @return void
+	 */
+	protected function closeSession() {
+		$session = elgg_get_session();
+		if ($session->isStarted()) {
+			$session->save();
+		}
 	}
 }

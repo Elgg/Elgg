@@ -13,9 +13,6 @@ define(function(require) {
 		// plugin category filtering
 		$(document).on('click', '.elgg-admin-plugins-categories a', filterPluginCategory);
 		
-		// plugin details selection
-		$(document).on('click', '.elgg-plugin-details-container > ul a', showPluginDetails);
-
 		$(document).on('click', '.elgg-plugins-toggle', toggleAllPlugins);
 
 		$(document).on('click', '.elgg-plugin-state-change', toggleSinglePlugin);
@@ -192,23 +189,7 @@ define(function(require) {
 		$(".elgg-plugin-category-" + $(this).attr("rel")).show();
 		$(this).closest('li').addClass("elgg-state-selected");
 	};
-	
-	/**
-	 * Shows the details of the selected plugin
-	 *
-	 * @return void
-	 */
-	function showPluginDetails () {
-		// remove selected state from all buttons
-		$(".elgg-plugin-details-container > ul > li").removeClass("elgg-state-selected");
-
-		// must use .hide/show() to work with elgg-tabs
-		$(".elgg-plugin-details-container > div > div").hide();
-		$(".elgg-plugin-details-container ." + $(this).attr("rel")).show();
 		
-		$(this).parent().addClass("elgg-state-selected");
-	};
-	
 	/**
 	 * Handles mouseenters to show plugin screenshots
 	 *

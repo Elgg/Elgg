@@ -30,11 +30,6 @@ class Translator {
 	private $translations = [];
 
 	/**
-	 * @var bool
-	 */
-	private $is_initialized = false;
-
-	/**
 	 * @var string
 	 */
 	private $defaultPath = null;
@@ -79,6 +74,8 @@ class Translator {
 		$this->localeService = $localService;
 		
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
+		
+		$this->registerLanguagePath($this->defaultPath);
 	}
 
 	/**
@@ -119,7 +116,9 @@ class Translator {
 
 		// build language array for different trys
 		// avoid dupes without overhead of array_unique
-		$langs[$language] = true;
+		$langs = [
+			$language => true,
+		];
 
 		// load site language
 		$site_language = $this->config->language;
@@ -133,7 +132,6 @@ class Translator {
 		$langs['en'] = true;
 
 		// try to translate
-		$notice = '';
 		$logger = _elgg_services()->logger;
 		$string = $message_key;
 		foreach (array_keys($langs) as $try_lang) {
@@ -142,7 +140,7 @@ class Translator {
 
 				// only pass through if we have arguments to allow backward compatibility
 				// with manual sprintf() calls.
-				if ($args) {
+				if (!empty($args)) {
 					$string = vsprintf($string, $args);
 				}
 
@@ -173,12 +171,13 @@ class Translator {
 	 *	$english = array('message1' => 'message1', 'message2' => 'message2');
 	 *  $german = array('message1' => 'Nachricht1','message2' => 'Nachricht2');
 	 *
-	 * @param string $country_code   Standard country code (eg 'en', 'nl', 'es')
-	 * @param array  $language_array Formatted array of strings
+	 * @param string $country_code               Standard country code (eg 'en', 'nl', 'es')
+	 * @param array  $language_array             Formatted array of strings
+	 * @param bool   $ensure_translations_loaded Ensures translations are loaded before adding the language array (default: true)
 	 *
 	 * @return bool Depending on success
 	 */
-	public function addTranslation($country_code, $language_array) {
+	public function addTranslation($country_code, $language_array, $ensure_translations_loaded = true) {
 		$country_code = strtolower($country_code);
 		$country_code = trim($country_code);
 
@@ -188,6 +187,11 @@ class Translator {
 
 		if (!isset($this->translations[$country_code])) {
 			$this->translations[$country_code] = [];
+			
+			if ($ensure_translations_loaded) {
+				// make sure all existing paths are included first before adding language arrays
+				$this->loadTranslations($country_code);
+			}
 		}
 
 		// Note that we are using union operator instead of array_merge() due to performance implications
@@ -266,8 +270,6 @@ class Translator {
 	public function bootTranslations() {
 		$languages = array_unique(['en', $this->getCurrentLanguage()]);
 		
-		$this->registerLanguagePath($this->defaultPath);
-
 		foreach ($languages as $language) {
 			$this->loadTranslations($language);
 		}
@@ -294,7 +296,7 @@ class Translator {
 		
 		$data = elgg_load_system_cache("{$language}.lang");
 		if ($data) {
-			$this->addTranslation($language, unserialize($data));
+			$this->addTranslation($language, unserialize($data), false);
 			return;
 		}
 		
@@ -330,7 +332,6 @@ class Translator {
 
 		// Make a note of this path just in case we need to register this language later
 		$this->registerLanguagePath($path);
-		$this->is_initialized = true;
 
 		_elgg_services()->logger->info("Translations loaded from: $path");
 
@@ -611,18 +612,15 @@ class Translator {
 	 * @internal
 	 */
 	private function ensureTranslationsLoaded($language) {
-		if (!$this->is_initialized) {
-			// this means we probably had an exception before translations were initialized
-			$this->registerTranslations($this->defaultPath);
+		if (isset($this->translations[$language])) {
+			return;
 		}
-
-		if (!isset($this->translations[$language])) {
-			// The language being requested is not the same as the language of the
-			// logged in user, so we will have to load it separately. (Most likely
-			// we're sending a notification and the recipient is using a different
-			// language than the logged in user.)
-			$this->loadTranslations($language);
-		}
+		
+		// The language being requested is not the same as the language of the
+		// logged in user, so we will have to load it separately. (Most likely
+		// we're sending a notification and the recipient is using a different
+		// language than the logged in user.)
+		$this->loadTranslations($language);
 	}
 
 	/**

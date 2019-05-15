@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 /**
@@ -19,6 +20,11 @@ class EntityDirLocator {
 	 * Number of entries per matrix dir. DO NOT CHANGE!
 	 */
 	const BUCKET_SIZE = 5000;
+	
+	/**
+	 * @var int
+	 */
+	protected $guid;
 
 	/**
 	 * Find an entity's data dir.
@@ -66,13 +72,11 @@ class EntityDirLocator {
 	 * @param int $bucket_size The size of the bucket. (The number of entities per dir.)
 	 * @return int
 	 */
-	private static function getLowerBucketBound($guid, $bucket_size = null) {
-		if (!$bucket_size || $bucket_size < 1) {
+	private static function getLowerBucketBound(int $guid, int $bucket_size = 0) {
+		if ($bucket_size < 1) {
 			$bucket_size = self::BUCKET_SIZE;
 		}
-		if ($guid < 1) {
-			return false;
-		}
+		
 		return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
 	}
 }

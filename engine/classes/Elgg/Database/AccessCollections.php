@@ -210,7 +210,7 @@ class AccessCollections {
 					':user_guid' => $user_guid,
 				]);
 
-				if ($collections) {
+				if (!empty($collections)) {
 					foreach ($collections as $collection) {
 						$access_array[] = (int) $collection->id;
 					}
@@ -218,7 +218,7 @@ class AccessCollections {
 
 				$ignore_access = $this->capabilities->canBypassPermissionsCheck($user_guid);
 
-				if ($ignore_access == true) {
+				if ($ignore_access === true) {
 					$access_array[] = ACCESS_PRIVATE;
 				}
 			}
@@ -337,7 +337,7 @@ class AccessCollections {
 			];
 
 			$collections = $this->getEntityCollections(['owner_guid' => $user_guid]);
-			if ($collections) {
+			if (!empty($collections)) {
 				foreach ($collections as $collection) {
 					$access_array[$collection->id] = $collection->getDisplayName();
 				}
@@ -393,7 +393,7 @@ class AccessCollections {
 
 		$collection = $this->get($collection_id);
 
-		if (!$user || !$collection) {
+		if (!$user instanceof \ElggUser || !$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
 
@@ -520,7 +520,7 @@ class AccessCollections {
 	public function update($collection_id, array $new_members = []) {
 		$acl = $this->get($collection_id);
 
-		if (!$acl) {
+		if (!$acl instanceof \ElggAccessCollection) {
 			return false;
 		}
 
@@ -673,7 +673,7 @@ class AccessCollections {
 
 		$collection = $this->get($collection_id);
 
-		if (!$collection) {
+		if (!$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
 
@@ -781,12 +781,12 @@ class AccessCollections {
 	 *
 	 * @param int   $collection_id The collection's ID
 	 * @param array $options       Ege* options
-	 * @return ElggEntity[]|false
+	 * @return \ElggData[]|int|mixed
 	 */
 	public function getMembers($collection_id, array $options = []) {
 		$options['wheres'][] = function(QueryBuilder $qb, $table_alias) use ($collection_id) {
 			$qb->join($table_alias, 'access_collection_membership', 'acm', $qb->compare('acm.user_guid', '=', "$table_alias.guid"));
-			return $qb->compare('acm.access_collection_id', '=', $collection_id, 'integer');
+			return $qb->compare('acm.access_collection_id', '=', $collection_id, ELGG_VALUE_INTEGER);
 		};
 
 		return Entities::find($options);
@@ -855,9 +855,7 @@ class AccessCollections {
 		// Admins should always be able to see the readable version
 		$collection = $this->get($access);
 
-		$user_guid = $this->session->getLoggedInUserGuid();
-		
-		if (!$collection || !$collection->canEdit()) {
+		if (!$collection instanceof \ElggAccessCollection || !$collection->canEdit()) {
 			// return 'Limited' if the collection can not be loaded or it can not be edited
 			return $translator->translate('access:limited:label');
 		}

@@ -8,7 +8,7 @@
 /**
  * Generate a new API user for a site, returning a new keypair on success.
  *
- * @return stdClass object or false
+ * @return false|stdClass object or false
  */
 function create_api_user() {
 	$dbprefix = elgg_get_config('dbprefix');
@@ -19,11 +19,11 @@ function create_api_user() {
 		(api_key, secret) values
 		('$public', '$secret')");
 
-	if ($insert) {
-		return get_api_user($public);
+	if ($insert === false) {
+		return false;
 	}
-
-	return false;
+	
+	return get_api_user($public);
 }
 
 /**
@@ -36,12 +36,16 @@ function create_api_user() {
  */
 function get_api_user($api_key) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$api_key = sanitise_string($api_key);
 
-	$query = "SELECT * from {$dbprefix}api_users"
-	. " where api_key='$api_key' and active=1";
+	$query = "SELECT *
+		FROM {$dbprefix}api_users
+		WHERE api_key = :api_key
+		AND active = 1";
+	$params = [
+		':api_key' => $api_key,
+	];
 
-	return elgg()->db->getDataRow($query);
+	return elgg()->db->getDataRow($query, null, $params);
 }
 
 /**
@@ -55,7 +59,7 @@ function remove_api_user($api_key) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$keypair = get_api_user($api_key);
 	if ($keypair) {
-		return elgg()->db->deleteData("DELETE from {$dbprefix}api_users where id={$keypair->id}");
+		return (bool) elgg()->db->deleteData("DELETE from {$dbprefix}api_users where id={$keypair->id}");
 	}
 
 	return false;

@@ -2,7 +2,8 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Application;
+use Elgg\Application as ElggApplication;
+use Elgg\Application\BootHandler;
 use function React\Promise\all;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -31,16 +32,16 @@ class UpgradeCommand extends BaseCommand {
 		$this->input = $input;
 		$this->output = $output;
 
-		$async = in_array('async', $this->argument('async'));
+		$async = (bool) $this->argument('async');
 
 		$return = 0;
 
-		Application::migrate();
+		ElggApplication::migrate();
 
-		$app = Application::getInstance();
+		$app = ElggApplication::getInstance();
 		$initial_app = clone $app;
 
-		$boot = new Application\BootHandler($app);
+		$boot = new BootHandler($app);
 		$boot->bootServices();
 
 		$upgrades = _elgg_services()->upgrades->getPendingUpgrades(false);
@@ -66,7 +67,7 @@ class UpgradeCommand extends BaseCommand {
 
 		// We want to reboot the application, because some of the services (e.g. dic) can bootstrap themselves again
 		$app = $initial_app;
-		Application::setInstance($initial_app);
+		ElggApplication::setInstance($initial_app);
 		$app->start();
 
 		$upgrades = _elgg_services()->upgrades->getPendingUpgrades($async);

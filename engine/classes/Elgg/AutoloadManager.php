@@ -104,14 +104,20 @@ class AutoloadManager {
 	 * @return \Elgg\AutoloadManager
 	 */
 	public function saveCache() {
-		if ($this->cache) {
-			$map = $this->loader->getClassMap();
-			if ($this->altered || $map->getAltered()) {
-				$spec[self::KEY_CLASSES] = $map->getMap();
-				$spec[self::KEY_SCANNED_DIRS] = $this->scannedDirs;
-				$this->cache->save(self::FILENAME, $spec);
-			}
+		if (!$this->cache) {
+			return $this;
 		}
+		
+		$map = $this->loader->getClassMap();
+		if ($this->altered || $map->getAltered()) {
+			$spec = [
+				self::KEY_CLASSES => $map->getMap(),
+				self::KEY_SCANNED_DIRS => $this->scannedDirs,
+			];
+			
+			$this->cache->save(self::FILENAME, $spec);
+		}
+		
 		return $this;
 	}
 

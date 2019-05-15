@@ -60,7 +60,7 @@ class Users extends Seed {
 			}
 
 			$collection_id = create_access_collection('Best Fake Friends Collection', $user->guid, 'friends_collection');
-			if ($collection_id) {
+			if ($collection_id > 0) {
 				$this->log("Created new friend collection for user {$user->getDisplayName()} [collection_id: {$collection_id}]");
 			}
 
@@ -80,7 +80,7 @@ class Users extends Seed {
 
 				if ($user->addFriend($friend->guid, true)) {
 					$this->log("User {$user->getDisplayName()} [guid: {$user->guid}] friended user {$friend->getDisplayName()} [guid: {$friend->guid}]");
-					if ($this->faker()->boolean() && $collection_id) {
+					if ($this->faker()->boolean() && $collection_id > 0) {
 						add_user_to_access_collection($friend->guid, $collection_id);
 					}
 				}

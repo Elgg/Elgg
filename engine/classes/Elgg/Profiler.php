@@ -22,13 +22,13 @@ class Profiler {
 	 * Return a tree of time periods from a Timer
 	 *
 	 * @param Timer $timer Timer object
-	 * @return array
+	 * @return false|array
 	 */
 	public function buildTree(Timer $timer) {
 		$times = $timer->getTimes();
 
-		if (!isset($times[':end'])) {
-			$times[':end'] = microtime();
+		if (!isset($times[Timer::MARKER_END])) {
+			$times[Timer::MARKER_END] = microtime(true);
 		}
 
 		$begin = $this->findBeginTime($times);
@@ -104,8 +104,10 @@ class Profiler {
 
 		$tree = $profiler->buildTree(_elgg_services()->timer);
 		$tree = $profiler->formatTree($tree);
-		$data['tree'] = $tree;
-		$data['total'] = $tree['duration'] . " seconds";
+		$data = [
+			'tree' => $tree,
+			'total' => $tree['duration'] . " seconds",
+		];
 
 		$list = [];
 		$profiler->flattenTree($list, $tree);
@@ -129,7 +131,7 @@ class Profiler {
 	 * @param string $name  Period name
 	 * @param array  $times Times
 	 *
-	 * @return array|bool False if missing begin/end time
+	 * @return false|array False if missing begin/end time
 	 */
 	private function analyzePeriod($name, array $times) {
 		$begin = $this->findBeginTime($times);
@@ -137,7 +139,8 @@ class Profiler {
 		if ($begin === false || $end === false) {
 			return false;
 		}
-		unset($times[':begin'], $times[':end']);
+		$has_own_markers = isset($times[Timer::MARKER_BEGIN]) && isset($times[Timer::MARKER_BEGIN]);
+		unset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_END]);
 
 		$total = $this->diffMicrotime($begin, $end);
 		$ret = [
@@ -159,6 +162,15 @@ class Profiler {
 		}
 
 		if (isset($ret['periods'])) {
+			if (!$has_own_markers) {
+				// this is an aggregation of different non sequential timers (eg. SQL queries)
+				$ret['duration'] = 0;
+				foreach ($ret['periods'] as $period) {
+					$ret['duration'] += $period['duration'];
+				}
+				$ret['percentage'] = 100 * $ret['duration'] / $this->total;
+			}
+			
 			usort($ret['periods'], function ($a, $b) {
 				if ($a['duration'] == $b['duration']) {
 					return 0;
@@ -177,10 +189,10 @@ class Profiler {
 	 * @return string|false
 	 */
 	private function findBeginTime(array $times) {
-		if (isset($times[':begin'])) {
-			return $times[':begin'];
+		if (isset($times[Timer::MARKER_BEGIN])) {
+			return $times[Timer::MARKER_BEGIN];
 		}
-		unset($times[':begin'], $times[':end']);
+		unset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_END]);
 		$first = reset($times);
 		if (is_array($first)) {
 			return $this->findBeginTime($first);
@@ -195,10 +207,10 @@ class Profiler {
 	 * @return string|false
 	 */
 	private function findEndTime(array $times) {
-		if (isset($times[':end'])) {
-			return $times[':end'];
+		if (isset($times[Timer::MARKER_END])) {
+			return $times[Timer::MARKER_END];
 		}
-		unset($times[':begin'], $times[':end']);
+		unset($times[Timer::MARKER_BEGIN], $times[Timer::MARKER_END]);
 		$last = end($times);
 		if (is_array($last)) {
 			return $this->findEndTime($last);
@@ -209,16 +221,12 @@ class Profiler {
 	/**
 	 * Calculate a precise time difference.
 	 *
-	 * @param string $start result of microtime()
-	 * @param string $end   result of microtime()
+	 * @param float $start result of microtime(true)
+	 * @param float $end   result of microtime(true)
 	 *
 	 * @return float difference in seconds, calculated with minimum precision loss
 	 */
 	private function diffMicrotime($start, $end) {
-		list($start_usec, $start_sec) = explode(" ", $start);
-		list($end_usec, $end_sec) = explode(" ", $end);
-		$diff_sec = (int) $end_sec - (int) $start_sec;
-		$diff_usec = (float) $end_usec - (float) $start_usec;
-		return (float) $diff_sec + $diff_usec;
+		return (float) $end - $start;
 	}
 }

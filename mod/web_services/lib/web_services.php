@@ -36,7 +36,7 @@ function authenticate_method($method) {
 
 	// check if user authentication is required
 	if ($API_METHODS[$method]["require_user_auth"] == true) {
-		if ($user_auth_result == false) {
+		if (!$user_auth_result) {
 			throw new APIException($user_pam->getFailureMessage(), ErrorResult::$RESULT_FAIL_AUTHTOKEN);
 		}
 	}
@@ -171,14 +171,11 @@ function get_parameters_for_method($method) {
  * Get POST data
  * Since this is called through a handler, we need to manually get the post data
  *
- * @return POST data as string encoded as multipart/form-data
+ * @return false|string POST data as string encoded as multipart/form-data
  * @access private
  */
 function get_post_data() {
-
-	$postdata = file_get_contents('php://input');
-
-	return $postdata;
+	return file_get_contents('php://input');
 }
 
 /**
@@ -347,7 +344,7 @@ function api_auth_key() {
 	}
 
 	// check that it is active
-	$api_user = get_api_user(elgg_get_site_entity()->guid, $api_key);
+	$api_user = get_api_user($api_key);
 	if (!$api_user) {
 		// key is not active or does not exist
 		throw new APIException(elgg_echo('APIException:BadAPIKey'));
@@ -372,7 +369,7 @@ function api_auth_hmac() {
 	$api_header = get_and_validate_api_headers();
 
 	// Pull API user details
-	$api_user = get_api_user(elgg_get_site_entity()->guid, $api_header->api_key);
+	$api_user = get_api_user($api_header->api_key);
 
 	if (!$api_user) {
 		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),
@@ -613,7 +610,7 @@ function pam_auth_usertoken() {
 		return false;
 	}
 	
-	$validated_userid = validate_user_token($token, elgg_get_site_entity()->guid);
+	$validated_userid = validate_user_token($token);
 
 	if ($validated_userid) {
 		$u = get_entity($validated_userid);

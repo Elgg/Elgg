@@ -35,7 +35,7 @@ class ElggAnnotation extends \ElggExtender {
 	/**
 	 * Save this instance and returns an annotation ID
 	 *
-	 * @return int|false
+	 * @return int|bool
 	 */
 	public function save() {
 		if (!isset($this->access_id)) {

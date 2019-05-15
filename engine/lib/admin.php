@@ -77,7 +77,7 @@ function elgg_delete_admin_notice($id) {
  *
  * @param array $options Query options
  *
- * @return ElggObject[] Admin notices
+ * @return \ElggObject[]|int|mixed Admin notices
  * @since 1.8.0
  */
 function elgg_get_admin_notices(array $options = []) {
@@ -213,7 +213,7 @@ function _elgg_ajax_plugins_update() {
  * @param \ElggMenuItem[] $return current return value
  * @param array           $params supplied params
  *
- * @return void|\ElggMenuItem
+ * @return void|MenuItems
  *
  * @access private
  * @since 3.0
@@ -777,7 +777,7 @@ function _elgg_add_admin_widgets($event, $type, $user) {
 	foreach ($adminWidgets as $column => $handlers) {
 		foreach ($handlers as $position => $handler) {
 			$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
-			if ($guid) {
+			if ($guid !== false) {
 				$widget = get_entity($guid);
 				/* @var \ElggWidget $widget */
 				$widget->move($column, $position);
@@ -1051,7 +1051,7 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
 		$site->getURL(),
 	], $language);
 
-	$return_value->url = false;
+	$return_value->url = '';
 	
 	return $return_value;
 }

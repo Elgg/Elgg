@@ -70,7 +70,7 @@ class Route extends \Symfony\Component\Routing\Route {
 			case 'edit' :
 				$username = elgg_extract('username', $params);
 				if ($username) {
-					return get_user_by_username($username);
+					return get_user_by_username($username) ?: null;
 				}
 
 				$guid = elgg_extract('guid', $params);
@@ -83,7 +83,7 @@ class Route extends \Symfony\Component\Routing\Route {
 			case 'collection' :
 				$username = elgg_extract('username', $params);
 				if ($username) {
-					return get_user_by_username($username);
+					return get_user_by_username($username) ?: null;
 				}
 
 				$guid = elgg_extract('guid', $params);

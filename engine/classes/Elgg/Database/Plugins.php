@@ -208,15 +208,20 @@ class Plugins {
 			$dir = $this->getPath();
 		}
 
-		$plugin_dirs = [];
+		if (!is_dir($dir)) {
+			return [];
+		}
+		
 		$handle = opendir($dir);
-
-		if ($handle) {
-			while ($plugin_dir = readdir($handle)) {
-				// must be directory and not begin with a .
-				if (substr($plugin_dir, 0, 1) !== '.' && is_dir($dir . $plugin_dir)) {
-					$plugin_dirs[] = $plugin_dir;
-				}
+		if ($handle === false) {
+			return [];
+		}
+		
+		$plugin_dirs = [];
+		while (($plugin_dir = readdir($handle)) !== false) {
+			// must be directory and not begin with a .
+			if (substr($plugin_dir, 0, 1) !== '.' && is_dir($dir . $plugin_dir)) {
+				$plugin_dirs[] = $plugin_dir;
 			}
 		}
 
@@ -247,9 +252,7 @@ class Plugins {
 		$old_access = $this->session->setDisabledEntityVisibility(true);
 
 		$known_plugins = $this->find('all');
-		/* @var \ElggPlugin[] $known_plugins */
-
-		if (!$known_plugins) {
+		if (empty($known_plugins)) {
 			$known_plugins = [];
 		}
 
@@ -268,7 +271,7 @@ class Plugins {
 		}
 
 		$physical_plugins = $this->getDirsInDir($mod_dir);
-		if (!$physical_plugins) {
+		if (empty($physical_plugins)) {
 			$this->session->setIgnoreAccess($old_ia);
 			$this->session->setDisabledEntityVisibility($old_access);
 
@@ -301,19 +304,25 @@ class Plugins {
 		// everything remaining in $known_plugins needs to be disabled
 		// because they are entities, but their dirs were removed.
 		// don't delete the entities because they hold settings.
+		$reindex = false;
 		foreach ($known_plugins as $plugin) {
+			if (!$plugin->isEnabled()) {
+				continue;
+			}
+			
+			$reindex = true;
+			
 			if ($plugin->isActive()) {
 				$plugin->deactivate();
 			}
 			// remove the priority.
 			$name = $this->namespacePrivateSetting('internal', 'priority');
 			$plugin->removePrivateSetting($name);
-			if ($plugin->isEnabled()) {
-				$plugin->disable();
-			}
+			
+			$plugin->disable();
 		}
 		
-		if (!empty($known_plugins)) {
+		if ($reindex) {
 			$this->reindexPriorities();
 		}
 
@@ -432,13 +441,11 @@ class Plugins {
 			->andWhere($qb->compare('e.subtype', '=', 'plugin', ELGG_VALUE_STRING));
 
 		$data = $this->db->getDataRow($qb);
-
-		$max = 1;
-		if ($data) {
-			$max = (int) $data->max;
+		if (empty($data)) {
+			return 1;
 		}
 
-		return max(1, $max);
+		return max(1, (int) $data->max);
 	}
 
 	/**
@@ -516,7 +523,7 @@ class Plugins {
 
 		foreach ($plugins as $plugin) {
 			try {
-				$setup = $plugin->register();
+				$plugin->register();
 			} catch (Exception $ex) {
 				$this->disable($plugin, $ex);
 			}
@@ -893,11 +900,11 @@ class Plugins {
 	 * @return bool
 	 * @access private
 	 */
-	function setPriorities(array $order) {
+	public function setPriorities(array $order) {
 		$name = $this->namespacePrivateSetting('internal', 'priority');
 
 		$plugins = $this->find('any');
-		if (!$plugins) {
+		if (empty($plugins)) {
 			return false;
 		}
 
@@ -945,7 +952,7 @@ class Plugins {
 	 * @return bool
 	 * @access private
 	 */
-	function reindexPriorities() {
+	public function reindexPriorities() {
 		return $this->setPriorities([]);
 	}
 
@@ -964,7 +971,7 @@ class Plugins {
 	 * @return string
 	 * @access private
 	 */
-	function namespacePrivateSetting($type, $name, $id = null) {
+	public function namespacePrivateSetting($type, $name, $id = null) {
 		switch ($type) {
 			case 'user_setting':
 				if (!$id) {
@@ -1102,7 +1109,7 @@ class Plugins {
 	 *
 	 * @param array $dep An \ElggPluginPackage dependency array
 	 *
-	 * @return array
+	 * @return false|array
 	 * @access private
 	 */
 	public function getDependencyStrings($dep) {
@@ -1311,7 +1318,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::setUserSetting()
 	 */
-	function setUserSetting($name, $value, $user_guid = 0, $plugin_id = null) {
+	public function setUserSetting($name, $value, $user_guid = 0, $plugin_id = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -1330,7 +1337,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetUserSetting()
 	 */
-	function unsetUserSetting($name, $user_guid = 0, $plugin_id = null) {
+	public function unsetUserSetting($name, $user_guid = 0, $plugin_id = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -1350,7 +1357,7 @@ class Plugins {
 	 * @return mixed
 	 * @see \ElggPlugin::getUserSetting()
 	 */
-	function getUserSetting($name, $user_guid = 0, $plugin_id = null, $default = null) {
+	public function getUserSetting($name, $user_guid = 0, $plugin_id = null, $default = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -1369,7 +1376,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::setSetting()
 	 */
-	function setSetting($name, $value, $plugin_id) {
+	public function setSetting($name, $value, $plugin_id) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -1388,7 +1395,7 @@ class Plugins {
 	 * @return mixed
 	 * @see \ElggPlugin::getSetting()
 	 */
-	function getSetting($name, $plugin_id, $default = null) {
+	public function getSetting($name, $plugin_id, $default = null) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -1406,7 +1413,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetSetting()
 	 */
-	function unsetSetting($name, $plugin_id) {
+	public function unsetSetting($name, $plugin_id) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;
@@ -1423,7 +1430,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::unsetAllSettings()
 	 */
-	function unsetAllSettings($plugin_id) {
+	public function unsetAllSettings($plugin_id) {
 		$plugin = $this->get($plugin_id);
 		if (!$plugin) {
 			return false;

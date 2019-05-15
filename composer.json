@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "3.0.0",
+    "version": "3.0.2",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -49,7 +49,7 @@
         "symfony/polyfill-php72": "^1.7",
         "symfony/routing": "^3.3",
         "symfony/var-dumper": "~3.3",
-        "tedivm/stash": "0.14.*",
+        "tedivm/stash": "~0.15.0",
         "vanilla/htmlawed": "~2.2.0",
         "zendframework/zend-mail": "~2.4"
     },

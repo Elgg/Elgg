@@ -8,7 +8,6 @@ use Elgg\Friends\Collections\CollectionMenuHandler;
 use Elgg\Friends\Collections\DeleteRelationshipHandler;
 use Elgg\Friends\Collections\EntityMenuHandler;
 use Elgg\Friends\Collections\PageMenuHandler;
-use Elgg\Friends\Collections\Router;
 use Elgg\Friends\Collections\UrlHandler;
 
 /**
