@@ -197,9 +197,7 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 function blog_prepare_notification($hook, $type, $notification, $params) {
 	$entity = $params['event']->getObject();
 	$owner = $params['event']->getActor();
-	$recipient = $params['recipient'];
 	$language = $params['language'];
-	$method = $params['method'];
 
 	$notification->subject = elgg_echo('blog:notify:subject', [$entity->getDisplayName()], $language);
 	$notification->body = elgg_echo('blog:notify:body', [

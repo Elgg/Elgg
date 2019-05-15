@@ -325,7 +325,6 @@ function ws_rest_handler() {
 
 	// Get parameter variables
 	$method = get_input('method');
-	$result = null;
 
 	// this will throw an exception if authentication fails
 	authenticate_method($method);

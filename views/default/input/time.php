@@ -53,6 +53,7 @@ if ($value) {
 		$value_timestamp = $dt->format('H') * 60 * 60 + $dt->format('i') * 60;
 		$value_time = $dt->format($format);
 	} catch (DataFormatException $ex) {
+		// $value is not a valid datetime, using blank value
 	}
 }
 

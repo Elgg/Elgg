@@ -148,7 +148,7 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 	 *
 	 * @param string $name Argument name
 	 *
-	 * @return string
+	 * @return mixed
 	 */
 	public function argument($name) {
 		return $this->input->getArgument($name);

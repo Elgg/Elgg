@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A user entity
  *
@@ -7,7 +8,10 @@
  * @property      string $email            The email address to which Elgg will send email notifications
  * @property      string $language         The language preference of the user (ISO 639-1 formatted)
  * @property      string $banned           'yes' if the user is banned from the network, 'no' otherwise
+ * @property      string $ban_reason       The reason why the user was banned
  * @property      string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property      bool   $validated        User validation status
+ * @property      string $validated_method User validation method
  * @property-read string $password_hash    The hashed password of the user
  * @property-read int    $prev_last_action A UNIX timestamp of the previous last action
  * @property-read int    $last_login       A UNIX timestamp of the last login
@@ -405,7 +409,7 @@ class ElggUser extends \ElggEntity
 	 *
 	 * @param array $options Options array.
 	 *
-	 * @return array|false Array of \ElggGroup, or false, depending on success
+	 * @return \ElggGroup[]|int|mixed
 	 */
 	public function getGroups(array $options = []) {
 		$options['type'] = 'group';

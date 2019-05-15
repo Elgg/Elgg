@@ -17,14 +17,19 @@ class InstantNotificationEvent implements NotificationEvent {
 	
 	const DEFAULT_ACTION_NAME = 'notify_user';
 
-	/* @var string The name of the action/event */
-
+	/**
+	 * @var string The name of the action/event
+	 */
 	protected $action;
 
-	/* @var string Action's object */
+	/**
+	 * @var \ElggData Action's object
+	 */
 	protected $object;
 
-	/* @var ElggEntity User who triggered the event */
+	/**
+	 * @var ElggEntity User who triggered the event
+	 */
 	protected $actor;
 
 	/**

@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg\Database\Seeds;
+
 use Elgg\Cli\Progressing;
 
 /**
@@ -17,7 +18,7 @@ abstract class Seed implements Seedable {
 	/**
 	 * Seed constructor.
 	 *
-	 * @param null $limit Number of item to seed
+	 * @param int $limit Number of item to seed
 	 */
 	public function __construct($limit = null) {
 		if (isset($limit)) {
@@ -29,12 +30,12 @@ abstract class Seed implements Seedable {
 	 * Populate database
 	 * @return mixed
 	 */
-	abstract function seed();
+	public abstract function seed();
 
 	/**
 	 * Removed seeded rows from database
 	 * @return mixed
 	 */
-	abstract function unseed();
+	public abstract function unseed();
 
 }

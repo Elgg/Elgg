@@ -1,8 +1,11 @@
 <?php
+
 /**
  * Site notification class
+ *
+ * @property string $url  Url to the target of the notification
+ * @property bool   $read Has this notification been read yet
  */
-
 class SiteNotification extends ElggObject {
 
 	const HAS_ACTOR = "hasActor";

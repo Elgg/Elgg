@@ -48,6 +48,7 @@ class TypeSubtypeWhereClause extends WhereClause {
 			}
 		}
 
+		$wheres = [];
 		if (!empty($types_where)) {
 			$wheres[] = $qb->merge($types_where, 'OR');
 		}

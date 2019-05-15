@@ -82,7 +82,7 @@ function entity_row_to_elggstar($row) {
  *
  * @param int $guid The GUID of the entity
  *
- * @return \ElggEntity The correct Elgg or custom object based upon entity type and subtype
+ * @return \ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
  */
 function get_entity($guid) {
 	if ($guid == 1) {

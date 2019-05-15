@@ -212,7 +212,7 @@ class MetadataTable {
 		$qb->addClause($where);
 
 		$row = $this->db->getDataRow($qb);
-		if ($row) {
+		if (!empty($row)) {
 			return new ElggMetadata($row);
 		}
 
@@ -228,7 +228,7 @@ class MetadataTable {
 	 * @throws \DatabaseException
 	 */
 	public function delete(ElggMetadata $metadata) {
-		if (!$metadata->id || !$metadata->canEdit()) {
+		if (!$metadata->id) {
 			return false;
 		}
 
@@ -278,7 +278,7 @@ class MetadataTable {
 		}
 
 		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '$metadata->name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
 		}
 
 		if (!$allow_multiple) {
@@ -346,16 +346,13 @@ class MetadataTable {
 	 * @throws \DatabaseException
 	 */
 	public function update(ElggMetadata $metadata) {
-		if (!$metadata->canEdit()) {
-			return false;
-		}
 
 		if (!$this->events->triggerBefore('update', 'metadata', $metadata)) {
 			return false;
 		}
 
 		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '$metadata->name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
 		}
 
 		$qb = Update::table('metadata');
@@ -455,6 +452,7 @@ class MetadataTable {
 		}
 
 		$success = 0;
+		/* @var $md \ElggMetadata */
 		foreach ($metadata as $md) {
 			if ($md->delete()) {
 				$success++;

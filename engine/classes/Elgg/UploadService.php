@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -16,16 +16,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class UploadService {
 
 	/**
-	 * @var Request
+	 * @var \Elgg\Http\Request
 	 */
 	private $request;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Request $request Http request
+	 * @param \Elgg\Http\Request $request Http request
 	 */
-	public function __construct(Request $request) {
+	public function __construct(HttpRequest $request) {
 		$this->request = $request;
 	}
 
@@ -33,6 +33,7 @@ class UploadService {
 	 * Returns an array of uploaded file objects regardless of upload status/errors
 	 *
 	 * @param string $input_name Form input name
+	 *
 	 * @return UploadedFile[]
 	 */
 	public function getFiles($input_name) {
@@ -45,7 +46,7 @@ class UploadService {
 	 * @param string $input_name         Form input name
 	 * @param bool   $check_for_validity If there is an uploaded file, is it required to be valid
 	 *
-	 * @return UploadedFile[]|false
+	 * @return UploadedFile|false
 	 */
 	public function getFile($input_name, $check_for_validity = true) {
 		return $this->request->getFile($input_name, $check_for_validity);

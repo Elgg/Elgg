@@ -378,11 +378,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Join metadata table from alias and return joined table alias
 	 *
-	 * @param string $from_alias   Alias of the main table
-	 * @param string $from_column  Guid column name in the main table
-	 * @param null   $name         Metadata name(s)
-	 * @param string $join_type    JOIN type
-	 * @param string $joined_alias Joined table alias
+	 * @param string          $from_alias   Alias of the main table
+	 * @param string          $from_column  Guid column name in the main table
+	 * @param string|string[] $name         Metadata name(s)
+	 * @param string          $join_type    JOIN type
+	 * @param string          $joined_alias Joined table alias
 	 *
 	 * @return string
 	 */
@@ -425,11 +425,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Join annotations table from alias and return joined table alias
 	 *
-	 * @param string $from_alias   Main table alias
-	 * @param string $from_column  Guid column name in the main table
-	 * @param null   $name         Annotation name
-	 * @param string $join_type    JOIN type
-	 * @param string $joined_alias Joined table alias
+	 * @param string          $from_alias   Main table alias
+	 * @param string          $from_column  Guid column name in the main table
+	 * @param string|string[] $name         Annotation name
+	 * @param string          $join_type    JOIN type
+	 * @param string          $joined_alias Joined table alias
 	 *
 	 * @return string
 	 */
@@ -472,11 +472,11 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * Join private settings table from alias and return joined table alias
 	 *
-	 * @param string $from_alias   Main table alias
-	 * @param string $from_column  Guid column name in the main table
-	 * @param null   $name         Private setting name
-	 * @param string $join_type    JOIN type
-	 * @param string $joined_alias Joined table alias
+	 * @param string          $from_alias   Main table alias
+	 * @param string          $from_column  Guid column name in the main table
+	 * @param string|string[] $name         Private setting name
+	 * @param string          $join_type    JOIN type
+	 * @param string          $joined_alias Joined table alias
 	 *
 	 * @return string
 	 */

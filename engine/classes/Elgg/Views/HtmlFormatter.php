@@ -142,12 +142,15 @@ class HtmlFormatter {
 	 **/
 	public function addParagaraphs($string) {
 		try {
-			return $this->autop->process($string);
+			$result = $this->autop->process($string);
+			if ($result !== false) {
+				return $result;
+			}
 		} catch (\RuntimeException $e) {
 			$this->logger->warning('ElggAutoP failed to process the string: ' . $e->getMessage());
-
-			return $string;
 		}
+		
+		return $string;
 	}
 
 	/**
@@ -324,8 +327,10 @@ class HtmlFormatter {
 	 * @return string String run through strip_tags() and any plugin hooks.
 	 */
 	public function stripTags($string, $allowable_tags = null) {
-		$params['original_string'] = $string;
-		$params['allowable_tags'] = $allowable_tags;
+		$params = [
+			'original_string' => $string,
+			'allowable_tags' => $allowable_tags,
+		];
 
 		$string = strip_tags($string, $allowable_tags);
 		$string = $this->hooks->trigger('format', 'strip_tags', $params, $string);

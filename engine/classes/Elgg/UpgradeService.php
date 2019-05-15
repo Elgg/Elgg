@@ -5,12 +5,10 @@ namespace Elgg;
 use Elgg\Cli\Progress;
 use Elgg\Database\Mutex;
 use Elgg\i18n\Translator;
-use Elgg\Upgrade\Batch;
 use Elgg\Upgrade\Locator;
 use Elgg\Upgrade\Loop;
 use Elgg\Upgrade\Result;
 use ElggUpgrade;
-use Psr\Log\LogLevel;
 use function React\Promise\all;
 use React\Promise\Deferred;
 use React\Promise\Promise;
@@ -377,17 +375,21 @@ class UpgradeService {
 			$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 		}
 		$upgrade_path = \Elgg\Project\Paths::sanitize($upgrade_path);
+		
+		if (!is_dir($upgrade_path)) {
+			return false;
+		}
+		
 		$handle = opendir($upgrade_path);
-
 		if (!$handle) {
 			return false;
 		}
 
 		$upgrade_files = [];
 
-		while ($upgrade_file = readdir($handle)) {
+		while (($upgrade_file = readdir($handle)) !== false) {
 			// make sure this is a wellformed upgrade.
-			if (is_dir($upgrade_path . '$upgrade_file')) {
+			if (!is_file($upgrade_path . $upgrade_file)) {
 				continue;
 			}
 			$upgrade_version = $this->getUpgradeFileVersion($upgrade_file);
@@ -417,6 +419,10 @@ class UpgradeService {
 			$upgrade_files = $this->getUpgradeFiles();
 		}
 
+		if (empty($upgrade_files)) {
+			return [];
+		}
+		
 		if ($processed_upgrades === null) {
 			$processed_upgrades = $this->config->processed_upgrades;
 			if (!is_array($processed_upgrades)) {

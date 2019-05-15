@@ -75,7 +75,7 @@ function system_log_get_log_entry($entry_id) {
 /**
  * Return the object referred to by a given log entry
  *
- * @param stdClass|int $entry The log entry row or its ID
+ * @param SystemLogEntry|int $entry The log entry row or its ID
  *
  * @return ElggData|false
  * @throws DatabaseException
@@ -83,9 +83,10 @@ function system_log_get_log_entry($entry_id) {
 function system_log_get_object_from_log_entry($entry) {
 	if (is_numeric($entry)) {
 		$entry = system_log_get_log_entry($entry);
-		if (!$entry) {
-			return false;
-		}
+	}
+	
+	if (!$entry instanceof SystemLogEntry) {
+		return false;
 	}
 
 	return $entry->getObject();

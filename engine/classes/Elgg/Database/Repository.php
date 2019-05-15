@@ -69,7 +69,7 @@ abstract class Repository implements QueryExecuting {
 	 *
 	 * @return static
 	 */
-	public static function with(array $options = null) {
+	public static function with(array $options = []) {
 		$query = new static($options);
 
 		return $query;

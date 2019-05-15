@@ -49,6 +49,7 @@ if ($value) {
 		$value_date = $dt->format($format);
 		$value_timestamp = $dt->getTimestamp();
 	} catch (DataFormatException $ex) {
+		// $value is not a valid datetime, using blank value
 	}
 }
 

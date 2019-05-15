@@ -36,7 +36,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	$access_id = (int) $access_id;
 	
 	$result_id = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
-	if (!$result_id) {
+	if (!is_int($result_id)) {
 		return false;
 	}
 

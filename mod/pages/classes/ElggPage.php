@@ -3,6 +3,8 @@
 /**
  * Page class
  *
+ * @property int $parent_guid The GUID of the parent page
+ *
  * @since 3.0
  */
 class ElggPage extends ElggObject {

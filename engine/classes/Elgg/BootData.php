@@ -60,7 +60,7 @@ class BootData {
 		$this->active_plugins = $plugins->find('active');
 
 		// get plugin settings
-		if (!$this->active_plugins) {
+		if (empty($this->active_plugins)) {
 			return;
 		}
 
@@ -94,7 +94,7 @@ class BootData {
 			$guids = array_diff($guids, $unsuitable_guids);
 		}
 
-		if ($guids) {
+		if (!empty($guids)) {
 			// get the settings
 			$set = implode(',', $guids);
 			$rows = $db->getData("
@@ -106,7 +106,7 @@ class BootData {
 			");
 			// make sure we show all entities as loaded
 			$this->plugin_settings = array_fill_keys($guids, []);
-			foreach ($rows as $i => $row) {
+			foreach ($rows as $row) {
 				$this->plugin_settings[$row->entity_guid][$row->name] = $row->value;
 			}
 		}

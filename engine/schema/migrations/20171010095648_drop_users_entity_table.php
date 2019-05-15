@@ -46,7 +46,6 @@ class DropUsersEntityTable extends AbstractMigration {
 			$new_metadata_rows = [];
 			
 			foreach ($rows as $row) {
-				
 				// special column last_action goes to last_action in entities table
 				$this->execute("
 					UPDATE {$prefix}entities SET last_action = {$row['last_action']}

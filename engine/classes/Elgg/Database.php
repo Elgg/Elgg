@@ -343,7 +343,7 @@ class Database {
 	 * an optional callback function. This is for R queries (from CRUD).
 	 *
 	 * @param QueryBuilder|string $query    The select query to execute
-	 * @param string              $callback An optional callback function to run on each row
+	 * @param callable            $callback An optional callback function to run on each row
 	 * @param bool                $single   Return only a single result?
 	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
@@ -440,7 +440,7 @@ class Database {
 					return $query->execute(false);
 				} elseif ($query instanceof QueryBuilder) {
 					return $query->execute();
-				} elseif ($params) {
+				} elseif (!empty($params)) {
 					return $connection->executeQuery($sql, $params);
 				} else {
 					// faster
@@ -494,7 +494,7 @@ class Database {
 		} catch (\Exception $e) {
 			$stop_timer();
 			
-			throw $ex;
+			throw $e;
 		}
 		
 		$stop_timer();

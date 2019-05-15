@@ -89,7 +89,7 @@ use Elgg\Project\Paths;
  * @property bool          $security_protect_cron
  * @property bool          $security_protect_upgrade
  * @property string        $seeder_local_image_folder Path to a local folder containing images used for seeding
- * @property int           $simplecache_enabled
+ * @property bool          $simplecache_enabled
  * @property int           $simplecache_lastupdate
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
@@ -137,7 +137,7 @@ class Config {
 	/**
 	 * @var array
 	 */
-	private $cookies;
+	private $cookies = [];
 
 	/**
 	 * @var ConfigTable Do not use directly. Use getConfigTable().
@@ -356,16 +356,16 @@ class Config {
 		}
 
 		$cookies = $this->cookies;
-		if (!is_array($cookies)) {
-			$cookies = [];
-		}
-
+		
+		// session cookie config
 		if (!isset($cookies['session'])) {
 			$cookies['session'] = [];
 		}
 		$session_defaults = session_get_cookie_params();
 		$session_defaults['name'] = 'Elgg';
 		$cookies['session'] = array_merge($session_defaults, $cookies['session']);
+		
+		// remember me cookie config
 		if (!isset($cookies['remember_me'])) {
 			$cookies['remember_me'] = [];
 		}

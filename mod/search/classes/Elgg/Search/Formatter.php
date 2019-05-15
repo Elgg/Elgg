@@ -151,6 +151,7 @@ class Formatter {
 						continue;
 					}
 
+					$property_values = '';
 					switch ($property_type) {
 						case 'attributes' :
 						case 'metadata' :

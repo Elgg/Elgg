@@ -116,7 +116,9 @@ class Translator {
 
 		// build language array for different trys
 		// avoid dupes without overhead of array_unique
-		$langs[$language] = true;
+		$langs = [
+			$language => true,
+		];
 
 		// load site language
 		$site_language = $this->config->language;
@@ -130,7 +132,6 @@ class Translator {
 		$langs['en'] = true;
 
 		// try to translate
-		$notice = '';
 		$logger = _elgg_services()->logger;
 		$string = $message_key;
 		foreach (array_keys($langs) as $try_lang) {
@@ -139,7 +140,7 @@ class Translator {
 
 				// only pass through if we have arguments to allow backward compatibility
 				// with manual sprintf() calls.
-				if ($args) {
+				if (!empty($args)) {
 					$string = vsprintf($string, $args);
 				}
 

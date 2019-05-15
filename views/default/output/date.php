@@ -22,4 +22,6 @@ try {
 	
 	echo elgg_format_element('time', $attributes, $dt->formatLocale($format));
 } catch (DataFormatException $ex) {
+	// $value is not a valid datetime, no output
+	return;
 }

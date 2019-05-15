@@ -837,7 +837,7 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  *      'item_view'           Alternative view used to render this entity
  *      'register_rss_link'   Register the rss link availability (default: depending on full_view)
  *
- * @return string HTML to display or false
+ * @return false|string HTML to display or false
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
 function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
@@ -946,7 +946,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
  * @param array           $vars       Variable array for view.
  *      'item_view'  Alternative view used to render an annotation
  *
- * @return string/false Rendered annotation
+ * @return string|false Rendered annotation
  */
 function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
 	$defaults = [
@@ -1529,7 +1529,7 @@ function elgg_view_tagcloud(array $options = []) {
  *                    'item_view' - Alternative view used to render list items
  *                                  This parameter is required if rendering
  *                                  list items that are not entity, annotation or river
- * @return string
+ * @return false|string
  * @since 1.8.0
  * @access private
  */
@@ -1937,15 +1937,16 @@ function _elgg_get_js_page_data() {
  * @access private
  */
 function _elgg_view_under_viewtype($view, $vars, $viewtype) {
+	$current_view_type = null;
 	if ($viewtype) {
-		$old = elgg_get_viewtype();
+		$current_view_type = elgg_get_viewtype();
 		elgg_set_viewtype($viewtype);
 	}
 
 	$ret = elgg_view($view, $vars);
 
-	if ($viewtype) {
-		elgg_set_viewtype($old);
+	if (isset($current_view_type)) {
+		elgg_set_viewtype($current_view_type);
 	}
 
 	return $ret;

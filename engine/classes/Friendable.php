@@ -56,7 +56,7 @@ interface Friendable {
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity, relationship name to 'friend' and type to 'user'.
 	 *
-	 * @return array|false Array of \ElggUser, or false, depending on success
+	 * @return \ElggUser[]|int|mixed
 	 */
 	public function getFriends(array $options = []);
 
@@ -68,7 +68,7 @@ interface Friendable {
 	 *                       this entity, relationship name to 'friend', type to 'user'
 	 *                       and inverse_relationship to true.
 	 *
-	 * @return array|false Array of \ElggUser, or false, depending on success
+	 * @return \ElggUser[]|int|mixed
 	 */
 	public function getFriendsOf(array $options = []);
 
@@ -78,7 +78,7 @@ interface Friendable {
 	 * @param array $options Options array. See elgg_get_entities() for a list of options.
 	 *                       'type' is set to object and owner_guid to this entity.
 	 *
-	 * @return array|false
+	 * @return \ElggObject[]|int|mixed
 	 */
 	public function getObjects(array $options = []);
 
@@ -90,7 +90,7 @@ interface Friendable {
 	 *                       this entity, type to 'object', relationship name to 'friend'
 	 *                       and relationship_join_on to 'container_guid'.
 	 *
-	 * @return array|false
+	 * @return \ElggObject[]|int|mixed
 	 */
 	public function getFriendsObjects(array $options = []);
 }

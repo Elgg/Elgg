@@ -57,7 +57,7 @@ class Logger extends \Monolog\Logger {
 	];
 
 	/**
-	 * @var string The logging level
+	 * @var false|string The logging level
 	 */
 	protected $level;
 
@@ -248,8 +248,6 @@ class Logger extends \Monolog\Logger {
 		}
 
 		if ($this->hooks) {
-			$levelString = strtoupper($level);
-
 			$params = [
 				'level' => $level,
 				'msg' => $message,

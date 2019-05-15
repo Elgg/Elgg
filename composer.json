@@ -49,7 +49,7 @@
         "symfony/polyfill-php72": "^1.7",
         "symfony/routing": "^3.3",
         "symfony/var-dumper": "~3.3",
-        "tedivm/stash": "0.14.*",
+        "tedivm/stash": "~0.15.0",
         "vanilla/htmlawed": "~2.2.0",
         "zendframework/zend-mail": "~2.4"
     },
