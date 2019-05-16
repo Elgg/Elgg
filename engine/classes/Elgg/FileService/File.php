@@ -55,7 +55,8 @@ class File {
 	/**
 	 * Sets URL expiration
 	 *
-	 * @param int $expires String suitable for strtotime()
+	 * @param string $expires String suitable for strtotime()
+	 *
 	 * @return void
 	 */
 	public function setExpires($expires = '+2 hours') {

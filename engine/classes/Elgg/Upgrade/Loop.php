@@ -94,7 +94,7 @@ class Loop {
 	/**
 	 * Run upgrade loop for a preset number of seconds
 	 *
-	 * @param int|false $max_duration Maximum loop duration
+	 * @param int $max_duration Maximum loop duration
 	 *
 	 * @return void
 	 */

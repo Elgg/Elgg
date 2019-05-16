@@ -55,13 +55,13 @@ class SubscriptionsService {
 
 		$subscriptions = [];
 
-		if (!$this->methods) {
-			return $subscriptions;
+		if (empty($this->methods)) {
+			return [];
 		}
 
 		$object = $event->getObject();
-		if (!$object) {
-			return $subscriptions;
+		if (!$object instanceof \ElggData) {
+			return [];
 		}
 		
 		// get subscribers only for \ElggEntity if it isn't private
@@ -74,7 +74,10 @@ class SubscriptionsService {
 			}
 		}
 
-		$params = ['event' => $event, 'origin' => Notification::ORIGIN_SUBSCRIPTIONS];
+		$params = [
+			'event' => $event,
+			'origin' => Notification::ORIGIN_SUBSCRIPTIONS,
+		];
 		return _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 	}
 
@@ -94,7 +97,7 @@ class SubscriptionsService {
 
 		$subscriptions = [];
 
-		if (!$this->methods) {
+		if (empty($this->methods)) {
 			return $subscriptions;
 		}
 

@@ -31,7 +31,7 @@ interface NotificationEvent extends Serializable {
 	/**
 	 * Get the object of the event
 	 *
-	 * @return ElggData
+	 * @return ElggData|false
 	 */
 	public function getObject();
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\Database\EntityTable\UserFetchFailureException;
@@ -189,12 +190,8 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function registerType(WidgetDefinition $definition) {
-		if (!($definition instanceof WidgetDefinition)) {
-			return false;
-		}
-		
 		$id = $definition->id;
-		if (!$id) {
+		if (empty($id)) {
 			return false;
 		}
 		
@@ -215,11 +212,12 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function unregisterType($id) {
-		if (isset($this->widgets[$id])) {
-			unset($this->widgets[$id]);
-			return true;
+		if (!isset($this->widgets[$id])) {
+			return false;
 		}
-		return false;
+		
+		unset($this->widgets[$id]);
+		return true;
 	}
 
 	/**
@@ -331,4 +329,3 @@ class WidgetsService {
 		return $widgets;
 	}
 }
-
