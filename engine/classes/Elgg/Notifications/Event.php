@@ -46,9 +46,6 @@ class Event implements NotificationEvent {
 			_elgg_services()->deprecation->sendNotice(__CLASS__ . ' is deprecated. '
 					. 'Use ' . SubscriptionNotificationEvent::class . ' instead', '2.3');
 		}
-		if (!$object instanceof ElggData) {
-			throw new InvalidArgumentException(__METHOD__ . ' expects an object as an instance of ' . ElggData::class);
-		}
 		if (!$action) {
 			throw new InvalidArgumentException(__METHOD__ . ' expects a valid action name');
 		}

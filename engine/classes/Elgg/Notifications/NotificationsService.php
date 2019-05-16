@@ -115,7 +115,7 @@ class NotificationsService {
 		}
 
 		$action_list =& $this->events[$type][$subtype];
-		if ($actions) {
+		if (!empty($actions)) {
 			$action_list = array_unique(array_merge($action_list, $actions));
 		} elseif (!in_array('create', $action_list)) {
 			$action_list[] = 'create';
@@ -314,7 +314,7 @@ class NotificationsService {
 	 */
 	protected function sendNotifications($event, $subscriptions, array $params = []) {
 
-		if (!$this->methods) {
+		if (empty($this->methods)) {
 			return [];
 		}
 
@@ -371,13 +371,9 @@ class NotificationsService {
 	 */
 	public function sendInstantNotifications(\ElggEntity $sender, array $recipients = [], array $params = []) {
 
-		if (!$sender instanceof \ElggEntity) {
-			throw new InvalidArgumentException("Notification sender must be a valid entity");
-		}
-		
 		$deliveries = [];
 
-		if (!$this->methods) {
+		if (empty($this->methods)) {
 			return $deliveries;
 		}
 		
@@ -564,17 +560,17 @@ class NotificationsService {
 	private function getNotificationSubject(NotificationEvent $event, ElggUser $recipient) {
 		$actor = $event->getActor();
 		$object = $event->getObject();
-		/* @var \ElggObject $object */
+		
 		$language = $recipient->language;
 
 		// Check custom notification subject for the action/type/subtype combination
 		$subject_key = "notification:{$event->getDescription()}:subject";
 		if ($this->translator->languageKeyExists($subject_key, $language)) {
+			$display_name = '';
 			if ($object instanceof \ElggEntity) {
 				$display_name = $object->getDisplayName();
-			} else {
-				$display_name = '';
 			}
+			
 			return $this->translator->translate($subject_key, [
 				$actor->getDisplayName(),
 				$display_name,

@@ -43,7 +43,7 @@ class ElggCrypto {
 
 		if (empty($chars)) {
 			$numBytes = ceil($length * 0.75);
-			$bytes    = random_bytes($numBytes);
+			$bytes = random_bytes($numBytes);
 			$string = substr(rtrim(base64_encode($bytes), '='), 0, $length);
 
 			// Base64 URL

@@ -418,11 +418,6 @@ class ViewsService {
 		}
 		$extensions_tree[] = $view;
 
-		if (!is_array($vars)) {
-			$this->logger->error("Vars in views must be an array: $view");
-			$vars = [];
-		}
-
 		// Get the current viewtype
 		if ($viewtype === '' || !$this->isValidViewtype($viewtype)) {
 			$viewtype = $this->getViewtype();
