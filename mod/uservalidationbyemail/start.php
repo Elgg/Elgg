@@ -178,7 +178,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  * @return void
  */
 function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
-	if ($user instanceof ElggUser && !$user->isValidated()) {
+	if ($user instanceof ElggUser && $user->isValidated() !== true) {
 		$user->setValidationStatus(true, 'admin_user');
 	}
 }

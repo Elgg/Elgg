@@ -2,7 +2,7 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Application;
+use Elgg\Application as ElggApplication;
 use Elgg\Project\Paths;
 use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Input\InputOption;
@@ -58,14 +58,14 @@ class SimpletestCommand extends Command {
 		}
 
 		$sp = _elgg_services();
-		$app = Application::factory([
+		$app = ElggApplication::factory([
 			'settings_path' => $settings_path,
 			'service_provider' => $sp,
 			'handle_exceptions' => false,
 			'handle_shutdown' => false,
 		]);
 
-		Application::setInstance($app);
+		ElggApplication::setInstance($app);
 
 		$app->bootCore();
 
@@ -145,5 +145,4 @@ class SimpletestCommand extends Command {
 
 		return $result ? 0 : 1;
 	}
-
 }

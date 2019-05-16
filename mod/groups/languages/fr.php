@@ -39,8 +39,8 @@ return array(
 	'groups:owner' => "Propriétaire",
 	'groups:owner:warning' => "Attention : si vous faites cette modification vous ne serez plus le propriétaire du groupe.",
 	'groups:widget:num_display' => 'Nombre de groupes à afficher',
-	'groups:widget:membership' => 'Groupes',
-	'groups:widgets:description' => 'Affiche les groupes dont vous êtes membre sur votre page de profil',
+	'widgets:a_users_groups:name' => 'Adhésion aux groupes',
+	'widgets:a_users_groups:description' => 'Affiche les groupes dont vous êtes membre sur votre profil',
 
 	'groups:noaccess' => 'Vous n\'avez pas accès au groupe',
 	'groups:cantcreate' => 'Vous ne pouvez créer un groupe. Seuls les administrateurs le peuvent.',

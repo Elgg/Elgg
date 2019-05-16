@@ -5,39 +5,34 @@ return array(
 	 * Menu items and titles
 	 */
 
-	'pages' => "Články",
-	'pages:owner' => "%s - články",
-	'pages:friends' => "Články přátel",
-	'pages:all' => "Všechny články",
-	'pages:add' => "Přidat článek",
+	'item:object:page' => 'Články',
+	'collection:object:page' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "Články skupiny",
-	'groups:enablepages' => 'Povolit skupinové články',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "Nový článek",
-	'pages:edit' => "Upravit tento článek",
 	'pages:delete' => "Smazat tento článek",
 	'pages:history' => "Historie",
 	'pages:view' => "Zobrazit článek",
 	'pages:revision' => "Revize",
-	'pages:current_revision' => "Současná revize",
-	'pages:revert' => "Vrátit",
 
 	'pages:navigation' => "Navigace",
 
 	'pages:notify:summary' => 'Nový článek se jménem %s',
 	'pages:notify:subject' => "Nový článek: %s",
 	'pages:notify:body' =>
-'%s přidal/a nový článek: %s
+'%s added a new page: %s
 
 %s
 
-Zobrazení a komentáře ke článku:
-%s
-',
-	'item:object:page_top' => 'Články na nejvyšší úrovni',
-	'item:object:page' => 'Články',
-	'pages:nogroup' => 'Skupina zatím nemá žádné články',
+View and comment on the page:
+%s',
+
 	'pages:more' => 'Více článků',
 	'pages:none' => 'Zatím nebyly vytvořeny žádné články',
 
@@ -45,13 +40,10 @@ Zobrazení a komentáře ke článku:
 	* River
 	**/
 
-	'river:create:object:page' => '%s vytvořil/a článek %s',
-	'river:create:object:page_top' => '%s vytvořil/a článek %s',
-	'river:update:object:page' => '%s aktualizoval/a článek %s',
-	'river:update:object:page_top' => '%s aktualizoval/a článek %s',
-	'river:comment:object:page' => '%s přidal/a komentář ke článku s názvem %s',
-	'river:comment:object:page_top' => '%s přidal/a komentář ke článku s názvem %s',
-
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -66,21 +58,13 @@ Zobrazení a komentáře ke článku:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'K tomuto článku nemáte přístup',
 	'pages:cantedit' => 'Nemůžete upravit tento článek',
 	'pages:saved' => 'Článek byl uložen',
 	'pages:notsaved' => 'Článek není možné uložit',
 	'pages:error:no_title' => 'Musíte zadat název článku.',
-	'pages:delete:success' => 'Článek byl úspěšně smazán.',
-	'pages:delete:failure' => 'Článek není možné smazat.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'Revize článku byla úspěšně smazána.',
 	'pages:revision:delete:failure' => 'Revizi článku není možné smazat.',
-	'pages:revision:not_found' => 'Nemohu najít tuto revizi.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => 'Naposledy změněno %s uživatelem %s',
 
 	/**
 	 * History
@@ -92,7 +76,8 @@ Zobrazení a komentáře ke článku:
 	 **/
 
 	'pages:num' => 'Počet zobrazených článků',
-	'pages:widget:description' => "Toto je seznam vašich článků.",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -101,13 +86,14 @@ Zobrazení a komentáře ke článku:
 	'pages:label:edit' => "Upravit článek",
 	'pages:label:history' => "Historie článku",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "Tento článek",
-	'pages:sidebar:children' => "Pod-články",
-	'pages:sidebar:parent' => "Nadřazený",
-
 	'pages:newchild' => "Vytvořit pod-článek",
-	'pages:backtoparent' => "Zpět k '%s'",
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
 );

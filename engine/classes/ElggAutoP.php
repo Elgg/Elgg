@@ -13,6 +13,9 @@
  */
 class ElggAutoP {
 
+	/**
+	 * @var string
+	 */
 	public $encoding = 'UTF-8';
 
 	/**
@@ -25,6 +28,9 @@ class ElggAutoP {
 	 */
 	protected $_xpath = null;
 
+	/**
+	 * @var array
+	 */
 	protected $_blocks = 'address article area aside blockquote caption col colgroup dd
 		details div dl dt fieldset figure figcaption footer form h1 h2 h3 h4 h5 h6 header
 		hr hgroup legend map math menu nav noscript p pre section select style summary
@@ -54,7 +60,9 @@ class ElggAutoP {
 	protected $_alterList = 'article aside blockquote body details div footer header
 		section';
 
-	/** @var string */
+	/**
+	 * @var string
+	 */
 	protected $_unique = '';
 
 	/**

@@ -101,6 +101,13 @@ class ElggPriorityList
 	 * @var array
 	 */
 	private $elements = [];
+	
+	/**
+	 * Has the list already been sorted
+	 *
+	 * @var bool
+	 */
+	private $sorted = false;
 
 	/**
 	 * Create a new priority list.
@@ -127,7 +134,9 @@ class ElggPriorityList
 	 *                        slot, taking into consideration all previously registered elements.
 	 *                        Negative elements are accepted.
 	 * @param bool  $exact    unused
-	 * @return int            The priority of the added element.
+	 *
+	 * @return int|false The priority of the added element
+	 *
 	 * @todo remove $exact or implement it. Note we use variable name strict below.
 	 */
 	public function add($element, $priority = null, $exact = false) {
@@ -139,6 +148,7 @@ class ElggPriorityList
 
 		$this->elements[$priority] = $element;
 		$this->sorted = false;
+		
 		return $priority;
 	}
 
@@ -150,16 +160,17 @@ class ElggPriorityList
 	 *
 	 * @param mixed $element The element to remove from the list
 	 * @param bool  $strict  Whether to check the type of the element match
+	 *
 	 * @return bool
 	 */
 	public function remove($element, $strict = false) {
 		$index = array_search($element, $this->elements, $strict);
-		if ($index !== false) {
-			unset($this->elements[$index]);
-			return true;
-		} else {
+		if ($index === false) {
 			return false;
 		}
+		
+		unset($this->elements[$index]);
+		return true;
 	}
 
 	/**
@@ -168,6 +179,7 @@ class ElggPriorityList
 	 * @param mixed $element      The element to move
 	 * @param int   $new_priority The new priority for the element
 	 * @param bool  $strict       Whether to check the type of the element match
+	 *
 	 * @return bool
 	 */
 	public function move($element, $new_priority, $strict = false) {
@@ -185,7 +197,7 @@ class ElggPriorityList
 		// move the actual element so strict operations still work
 		$element = $this->getElement($current_priority);
 		unset($this->elements[$current_priority]);
-		return $this->add($element, $new_priority);
+		return ($this->add($element, $new_priority) !== false);
 	}
 
 	/**
@@ -231,11 +243,11 @@ class ElggPriorityList
 	/**
 	 * Sort the elements if they haven't been sorted yet.
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	private function sortIfUnsorted() {
 		if (!$this->sorted) {
-			return $this->sort();
+			$this->sort();
 		}
 	}
 

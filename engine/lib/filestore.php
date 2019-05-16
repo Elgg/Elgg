@@ -18,8 +18,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @return int The size of the directory in bytes
  */
 function get_dir_size($dir, $total_size = 0) {
-	$handle = @opendir($dir);
-	while ($file = @readdir($handle)) {
+	if (!is_dir($dir)) {
+		return $total_size;
+	}
+	
+	$handle = opendir($dir);
+	while (($file = readdir($handle)) !== false) {
 		if (in_array($file, ['.', '..'])) {
 			continue;
 		}
@@ -29,7 +33,7 @@ function get_dir_size($dir, $total_size = 0) {
 			$total_size += filesize($dir . $file);
 		}
 	}
-	@closedir($handle);
+	closedir($handle);
 
 	return($total_size);
 }
@@ -375,7 +379,7 @@ function _elgg_filestore_move_icons($event, $type, $entity) {
  * Returns an array of uploaded file objects regardless of upload status/errors
  *
  * @param string $input_name Form input name
- * @return UploadedFile[]|false
+ * @return UploadedFile[]
  */
 function elgg_get_uploaded_files($input_name) {
 	return _elgg_services()->uploads->getFiles($input_name);

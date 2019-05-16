@@ -38,7 +38,7 @@ class DeprecationService {
 	 *                                for a full backtrace.
 	 * @return bool
 	 */
-	function sendNotice($msg, $dep_version, $backtrace_level = 1) {
+	public function sendNotice($msg, $dep_version, $backtrace_level = 1) {
 
 		$msg = "Deprecated in $dep_version: $msg Called from ";
 

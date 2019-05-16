@@ -121,7 +121,7 @@ function system_log_user_hover_menu($hook, $type, $return, $params) {
 function system_log_archive_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logrotated");
 
-	$period = elgg_get_plugin_setting('period', 'logrotate');
+	$period = elgg_get_plugin_setting('period', 'system_log');
 	if ($period !== $type) {
 		return;
 	}
@@ -147,7 +147,7 @@ function system_log_archive_cron($hook, $type, $returnvalue, $params) {
 function system_log_delete_cron($hook, $type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logdeleted");
 
-	$period = elgg_get_plugin_setting('delete', 'logrotate');
+	$period = elgg_get_plugin_setting('delete', 'system_log');
 	if ($period == 'never') {
 		return;
 	}

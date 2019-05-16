@@ -84,9 +84,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$entity = $params['event']->getObject();
 	$owner = $params['event']->getActor();
-	$recipient = $params['recipient'];
 	$language = $params['language'];
-	$method = $params['method'];
 
 	$descr = $entity->description;
 	$title = $entity->getDisplayName();

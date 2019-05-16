@@ -530,7 +530,7 @@ class EntityTable {
 	 */
 	public function updateLastAction(ElggEntity $entity, $posted = null) {
 
-		if (!$posted) {
+		if ($posted === null) {
 			$posted = $this->getCurrentTime()->getTimestamp();
 		}
 
@@ -713,29 +713,18 @@ class EntityTable {
 	 * @return void
 	 */
 	protected function deleteEntityProperties(ElggEntity $entity) {
-
-		$guid = $entity->guid;
-
-		$entity_disable_override = $this->session->getDisabledEntityVisibility();
-		$this->session->setDisabledEntityVisibility(true);
-		$ia = $this->session->setIgnoreAccess(true);
-
-		elgg_delete_river(['subject_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['object_guid' => $guid, 'limit' => false]);
-		elgg_delete_river(['target_guid' => $guid, 'limit' => false]);
-
-		$entity->removeAllPrivateSettings();
-		$entity->deleteOwnedAccessCollections();
-		$entity->deleteAccessCollectionMemberships();
-		$entity->deleteRelationships();
-		$entity->deleteOwnedAnnotations();
-		$entity->deleteAnnotations();
-		$entity->deleteMetadata();
-
-		$this->session->setDisabledEntityVisibility($entity_disable_override);
-		$this->session->setIgnoreAccess($ia);
-
-		$dir = new \Elgg\EntityDirLocator($guid);
+		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($entity) {
+			$entity->removeAllRelatedRiverItems();
+			$entity->removeAllPrivateSettings();
+			$entity->deleteOwnedAccessCollections();
+			$entity->deleteAccessCollectionMemberships();
+			$entity->deleteRelationships();
+			$entity->deleteOwnedAnnotations();
+			$entity->deleteAnnotations();
+			$entity->deleteMetadata();
+		});
+		
+		$dir = new \Elgg\EntityDirLocator($entity->guid);
 		$file_path = _elgg_config()->dataroot . $dir;
 		delete_directory($file_path);
 

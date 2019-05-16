@@ -86,15 +86,20 @@ function elgg_get_excerpt($text, $num_chars = 250) {
  * Format bytes to a human readable format
  *
  * @param int $size      File size in bytes to format
- *
  * @param int $precision Precision to round formatting bytes to
  *
- * @return string
+ * @return false|string
  * @since 1.9.0
  */
 function elgg_format_bytes($size, $precision = 2) {
-	if (!$size || $size < 0) {
+	$size = (int) $size;
+	if ($size < 0) {
 		return false;
+	}
+	
+	$precision = (int) $precision;
+	if ($precision < 0) {
+		$precision = 2;
 	}
 
 	$base = log($size) / log(1024);
@@ -222,7 +227,7 @@ function elgg_normalize_url($url) {
  *
  * @return bool|string Normalized URL or false if given URL was not a path.
  *
- * @since 3.0.0
+ * @since 1.12.18
  */
 function elgg_normalize_site_url($unsafe_url) {
 	if (!is_string($unsafe_url)) {
@@ -274,8 +279,8 @@ function elgg_get_friendly_title($title) {
  * @since 1.7.2
  */
 function elgg_get_friendly_time($time, $current_time = null) {
-	
-	if (!$current_time) {
+
+	if (!isset($current_time)) {
 		$current_time = time();
 	}
 

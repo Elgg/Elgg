@@ -1,27 +1,22 @@
 <?php
 return array(
 
-	/**
-	 * Menu items and titles
-	 */
-	'file' => "Soubory",
-	'file:user' => "%s - soubory ",
-	'file:friends' => "Soubory přátel",
-	'file:all' => "Všechny soubory",
-	'file:edit' => "Upravit soubor",
+	'item:object:file' => 'Soubory',
+	'collection:object:file' => 'Files',
+	'collection:object:file:all' => "All site files",
+	'collection:object:file:owner' => "%s's files",
+	'collection:object:file:friends' => "Friends' files",
+	'collection:object:file:group' => "Group files",
+	'add:object:file' => "Upload a file",
+	'edit:object:file' => "Edit file",
+
 	'file:more' => "Více souborů",
 	'file:list' => "jako seznam",
-	'file:group' => "Soubory skupiny",
-	'file:gallery' => "jako galerii",
-	'file:gallery_list' => "Zobrazit jako seznam nebo galerii",
+
 	'file:num_files' => "Počet zobrazených souborů",
-	'file:user:gallery'=>'Zobrazit galerii %s',
-	'file:upload' => "Nahrát soubor",
 	'file:replace' => 'Nahradit obsah souboru (pokud nahrazovat nechcete, ponechte prázdné)',
 	'file:list:title' => "%s - %s %s",
 	'file:title:friends' => "Přátel",
-
-	'file:add' => 'Nahrát soubor',
 
 	'file:file' => "Soubor",
 
@@ -50,41 +45,29 @@ return array(
 	'file:friends:type:image' => "Obrázky přátel",
 	'file:friends:type:general' => "Obecné soubory přátel",
 
-	'file:widget' => "Souborové udělátko",
-	'file:widget:description' => "Přehlídka vašich nejnovějších souborů",
+	'widgets:filerepo:name' => "File widget",
+	'widgets:filerepo:description' => "Showcase your latest files",
 
-	'groups:enablefiles' => 'Povolit skupinové soubory',
+	'groups:tool:file' => 'Enable group files',
 
-	'file:delete:confirm' => "Jste si jistý/á, že chcete smazat tento soubor?",
-
-	'file:upload_limit' => 'Maximální povolená velikost souboru je %s',
-
-	'file:tagcloud' => "Zásobník štítků",
-
-	'file:display:number' => "Počet zobrazených souborů",
-
-	'river:create:object:file' => '%s nahrál/a soubor %s',
-	'river:comment:object:file' => '%s přidal/a komentář k souboru %s',
-
-	'item:object:file' => 'Soubory',
+	'river:object:file:create' => '%s uploaded the file %s',
+	'river:object:file:comment' => '%s commented on the file %s',
 
 	'file:notify:summary' => 'Nový soubor se jménem %s',
 	'file:notify:subject' => 'Nový soubor: %s',
-	'file:notify:body' =>
-'%s nahrál nový soubor: %s
+	'file:notify:body' => '%s uploaded a new file: %s
 
 %s
 
-Pro zobrazení a komentáře použijte následující odkaz:
-%s
-',
+View and comment on the file:
+%s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "Soubor byl úspěšně uložen.",
-	'file:deleted' => "Soubor byl úspěšně smazán.",
+	'file:saved' => "The file was successfully saved.",
+	'entity:delete:object:file:success' => "The file was successfully deleted.",
 
 	/**
 	 * Error messages
@@ -92,9 +75,6 @@ Pro zobrazení a komentáře použijte následující odkaz:
 
 	'file:none' => "Žádné soubory.",
 	'file:uploadfailed' => "Bohužel nemůžeme uložit váš soubor.",
-	'file:downloadfailed' => "Tento soubor bohužel není momentálně k dispozici.",
-	'file:deletefailed' => "Váš soubor nemůže být momentálně smazán.",
 	'file:noaccess' => "Nemáte oprávnění upravovat tento soubor.",
 	'file:cannotload' => "Při nahrávání souboru nastala chyba",
-	'file:nofile' => "Musíte vybrat soubor",
 );

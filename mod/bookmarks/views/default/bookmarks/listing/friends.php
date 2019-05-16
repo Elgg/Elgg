@@ -2,6 +2,8 @@
 /**
  * Display friends' bookmarks
  *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
+ *
  * @uses $vars['entity']
  */
 

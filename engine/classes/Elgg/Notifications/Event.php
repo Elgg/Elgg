@@ -11,19 +11,25 @@ use stdClass;
  *
  * @package    Elgg.Core
  * @subpackage Notifications
- * @deprecated 2.3
+ * @todo remove this class in Elgg 4.0 in favour of SubscriptionNotificationEvent (see https://github.com/Elgg/Elgg/issues/11241)
  */
 class Event implements NotificationEvent {
 
 	use EventSerialization;
 	
-	/* @var string The name of the action/event */
+	/**
+	 * @var string The name of the action/event
+	 */
 	protected $action;
 
-	/* @var string Action's object */
+	/**
+	 * @var \ElggData Action's object
+	 */
 	protected $object;
 
-	/* @var ElggEntity User who triggered the event */
+	/**
+	 * @var ElggEntity User who triggered the event
+	 */
 	protected $actor;
 
 	/**

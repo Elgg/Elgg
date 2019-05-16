@@ -42,7 +42,7 @@ class ResponseFactory {
 	private $transport;
 
 	/**
-	 * @var Response|bool
+	 * @var Response|false
 	 */
 	private $response_sent = false;
 
@@ -203,6 +203,8 @@ class ResponseFactory {
 
 			$this->events->triggerAfter('send', 'http_response', $response);
 			$this->response_sent = $response;
+			
+			$this->closeSession();
 		}
 
 		return $this->response_sent;
@@ -317,7 +319,7 @@ class ResponseFactory {
 			return $this->send($this->prepareResponse($error, $status_code, $headers));
 		}
 
-		$forward_url = $this->request->headers->get('Referer');
+		$forward_url = $this->getSiteRefererUrl();
 
 		if (!$this->isAction()) {
 			$params = [
@@ -328,7 +330,7 @@ class ResponseFactory {
 			// @see elgg_error_page_handler
 			$forward_reason = (string) $status_code;
 
-			$forward_url = $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
+			$this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
 
 			if ($this->response_sent) {
 				// Response was sent from a forward hook
@@ -346,7 +348,7 @@ class ResponseFactory {
 			return $this->send($this->prepareResponse($error_page, $status_code));
 		}
 
-		$forward_url = elgg_normalize_url($forward_url);
+		$forward_url = $this->makeSecureForwardUrl($forward_url);
 		return $this->send($this->prepareRedirectResponse($forward_url));
 	}
 
@@ -386,7 +388,7 @@ class ResponseFactory {
 		$content = $this->stringify($content);
 
 		if ($forward_url === REFERRER) {
-			$forward_url = $this->request->headers->get('Referer');
+			$forward_url = $this->getSiteRefererUrl();
 		}
 
 		$params = [
@@ -412,7 +414,7 @@ class ResponseFactory {
 		$content = $this->stringify($content);
 
 		if ($forward_url === REFERRER) {
-			$forward_url = $this->request->headers->get('Referer');
+			$forward_url = $this->getSiteRefererUrl();
 		}
 
 		// always pass the full structure to avoid boilerplate JS code.
@@ -460,24 +462,25 @@ class ResponseFactory {
 	 * @throws InvalidParameterException
 	 */
 	public function redirect($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
-
+		$location = $forward_url;
+		
 		if ($forward_url === REFERRER) {
-			$forward_url = $this->request->headers->get('Referer');
+			$forward_url = $this->getSiteRefererUrl();
 		}
 
-		$forward_url = elgg_normalize_url($forward_url);
+		$forward_url = $this->makeSecureForwardUrl($forward_url);
 
 		// allow plugins to rewrite redirection URL
-		$current_page = current_page_url();
 		$params = [
-			'current_url' => $current_page,
-			'forward_url' => $forward_url
+			'current_url' => current_page_url(),
+			'forward_url' => $forward_url,
+			'location' => $location,
 		];
 
 		$forward_reason = (string) $status_code;
 
 		$forward_url = $this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
-
+		
 		if ($this->response_sent) {
 			// Response was sent from a forward hook
 			// Clearing handlers to void infinite loops
@@ -485,14 +488,14 @@ class ResponseFactory {
 		}
 
 		if ($forward_url === REFERRER) {
-			$forward_url = $this->request->headers->get('Referer');
+			$forward_url = $this->getSiteRefererUrl();
 		}
 
 		if (!is_string($forward_url)) {
 			throw new InvalidParameterException("'forward', '$forward_reason' hook must return a valid redirection URL");
 		}
 
-		$forward_url = elgg_normalize_url($forward_url);
+		$forward_url = $this->makeSecureForwardUrl($forward_url);
 
 		switch ($status_code) {
 			case 'system':
@@ -644,5 +647,53 @@ class ResponseFactory {
 	 */
 	public function setTransport(ResponseTransport $transport) {
 		$this->transport = $transport;
+	}
+	
+	/**
+	 * Ensures the referer header is a site url
+	 *
+	 * @return string
+	 */
+	protected function getSiteRefererUrl() {
+		$unsafe_url = $this->request->headers->get('Referer');
+		$safe_url = elgg_normalize_site_url($unsafe_url);
+		if ($safe_url !== false) {
+			return $safe_url;
+		}
+		
+		return '';
+	}
+	
+	/**
+	 * Ensure the url has a valid protocol for browser use
+	 *
+	 * @param string $url url the secure
+	 *
+	 * @return string
+	 */
+	protected function makeSecureForwardUrl($url) {
+		$url = elgg_normalize_url($url);
+		if (!preg_match('/^(http|https|ftp|sftp|ftps):\/\//', $url)) {
+			return elgg_get_site_url();
+		}
+		
+		return $url;
+	}
+	
+	/**
+	 * Closes the session
+	 *
+	 * Force closing the session so session is saved to the database before headers are sent
+	 * preventing race conditions with session data
+	 *
+	 * @see https://github.com/Elgg/Elgg/issues/12348
+	 *
+	 * @return void
+	 */
+	protected function closeSession() {
+		$session = elgg_get_session();
+		if ($session->isStarted()) {
+			$session->save();
+		}
 	}
 }

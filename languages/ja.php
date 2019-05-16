@@ -1,10 +1,13 @@
 <?php
+
 return array(
 /**
  * Sites
  */
 
-	'item:site' => 'サイト',
+	'item:site:site' => 'Site',
+	'collection:site:site' => 'Sites',
+	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
  * Sessions
@@ -24,6 +27,7 @@ return array(
 	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "要求されたページはログインしないとご覧になることはできません。",
+	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "要求されたページは管理者でないとご覧になることはできません。",
 	'membershiprequired' => "要求されたページはこのグループのメンバでないとご覧になることはできません。",
 	'limited_access' => "あなたには要求されたページを閲覧する十分な権限はありません。",
@@ -61,10 +65,16 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'プラグイン %3$s で依存関係のタイプ %2$s の 「%1$s」 が正しくありません。依存関係が循環しています。',
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
+	'ElggPlugin:Error' => 'Plugin error',
+	'ElggPlugin:Error:ID' => 'Error in plugin "%s"',
+	'ElggPlugin:Error:Path' => 'Error in plugin path "%s"',
+	'ElggPlugin:Error:Unknown' => 'Undefined plugin error',
 	'ElggPlugin:Exception:CannotIncludeFile' => '%s (プラグイン %s (guid: %s))が %s に含まれていません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'プラグイン %s (guid: %s)のViewディレクトリを %s で開くことができません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:NoID' => 'プラグイン guid %s のIDがありません！',
+	'ElggPlugin:Exception:InvalidPackage' => 'Package cannot be loaded',
+	'ElggPlugin:Exception:InvalidManifest' => 'Plugin manifest is missing or invalid',
 	'PluginException:NoPluginName' => "プラグイン名を見つけることができませんでした。",
 	'PluginException:ParserError' => 'API(var. %s)でプラグイン %s のマニフェストを解析するときにエラーが発生しました)。',
 	'PluginException:NoAvailableParser' => 'マニフェストAPI(Ver. %s)のパーサをプラグイン%sの中で見つけることができません。',
@@ -107,6 +117,14 @@ return array(
 
 	'UserFetchFailureException' => 'user_guid[%s] のユーザが存在しないため、パーミッションのチェックができません。',
 
+	'PageNotFoundException' => 'The page you are trying to view does not exist or you do not have permissions to view it',
+	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
+	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
+	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
+	'BadRequestException' => 'Bad request',
+	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
+	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
+
 	'deprecatedfunction' => '警告: このコードは廃止された時代遅れの関数「 %s 」を使用しており、このバージョンのElggとは互換性がありません。',
 
 	'pageownerunavailable' => '警告： ページオーナー %d を許可できません。',
@@ -117,6 +135,8 @@ return array(
 	'error:missing_data' => 'あなたのリクエストにおいていくつかデータの欠損がありました。',
 	'save:fail' => 'データを保存するのに失敗しました',
 	'save:success' => 'データを保存しました',
+
+	'forward:error' => 'Sorry. An error occurred while redirecting to you to another site.',
 
 	'error:default:title' => 'アレッ？',
 	'error:default:content' => 'アレッ？何かがおかしいです。',
@@ -180,11 +200,11 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "本人のみ",
-	'LOGGED_IN' => "ログインユーザのみ",
-	'PUBLIC' => "公開",
-	'LOGGED_OUT' => "ログアウトしたユーザ",
-	'access:friends:label' => "友達のみ",
+	'access:label:private' => "Private",
+	'access:label:logged_in' => "Logged in users",
+	'access:label:public' => "Public",
+	'access:label:logged_out' => "Logged out users",
+	'access:label:friends' => "Friends",
 	'access' => "公開範囲",
 	'access:overridenotice' => "注意: グループポリシーですでに設定されているので、このコンテントはグループメンバーからのみしかアクセスすることができません。",
 	'access:limited:label' => "限定公開",
@@ -204,7 +224,6 @@ return array(
 
 	'widgets:add' => 'ウィジェットを追加',
 	'widgets:add:description' => "下のウィジェットボタンをクリックして、ページに追加してみてください。",
-	'widgets:panel:close' => "ウィジェットパネルを閉じる",
 	'widgets:position:fixed' => '（固定した位置）',
 	'widget:unavailable' => 'すでに、このウィジェットを追加済みです。',
 	'widget:numbertodisplay' => '表示するアイテムの数',
@@ -215,19 +234,25 @@ return array(
 	'widgets' => "ウィジェット",
 	'widget' => "ウィジェット",
 	'item:object:widget' => "ウィジェット",
+	'collection:object:widget' => 'Widgets',
 	'widgets:save:success' => "ウィジェットを保存しました。",
 	'widgets:save:failure' => "ウィジェットを保存できませんでした。",
 	'widgets:add:success' => "ウィジェットを追加しました。",
 	'widgets:add:failure' => "あなたのウィジェットを追加できませんでした。",
 	'widgets:move:failure' => "ウィジェットを新しい場所に移動できませんでした。",
 	'widgets:remove:failure' => "このウィジェットを削除することができませんでした",
-
+	'widgets:not_configured' => "This widget is not yet configured",
+	
 /**
  * Groups
  */
 
 	'group' => "グループ",
 	'item:group' => "グループ",
+	'collection:group' => 'Groups',
+	'item:group:group' => "Group",
+	'collection:group:group' => 'Groups',
+	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
  * Users
@@ -235,58 +260,17 @@ return array(
 
 	'user' => "ユーザ",
 	'item:user' => "ユーザ",
-
-/**
- * Friends
- */
+	'collection:user' => 'Users',
+	'item:user:user' => 'User',
+	'collection:user:user' => 'Users',
 
 	'friends' => "友達",
-	'friends:yours' => "あなたの友達",
-	'friends:owned' => "%sさんの友達",
-	'friend:add' => "友達登録する",
-	'friend:remove' => "友達登録を解除する",
-
-	'friends:add:successful' => "%s さんを友達登録しました。",
-	'friends:add:failure' => "%s さんを友達登録できませんでした。",
-
-	'friends:remove:successful' => "%s さんの友達登録を解除しました。",
-	'friends:remove:failure' => "%s さんの友達登録を解除できませんでした。",
-
-	'friends:none' => "友達登録はありません。",
-	'friends:none:you' => "あなたはまだ誰も友達登録していません。",
-
-	'friends:none:found' => "友達が見つかりませんでした。",
-
-	'friends:of:none' => "まだ誰もこのユーザを友達として登録していません。",
-	'friends:of:none:you' => "誰もあなたを友達登録していません。コンテンツを追加したりプロフィール欄を埋めて目立ちましょう！",
-
-	'friends:of:owned' => "%s さんを友達登録しているメンバ",
-
-	'friends:of' => "このユーザを友達登録しているメンバ",
-	'friends:collections' => "友達リスト",
-	'collections:add' => "新しい友達リスト",
-	'friends:collections:add' => "新規友達リストの作成",
-	'friends:addfriends' => "友達を選んでください",
-	'friends:collectionname' => "リストの名前",
-	'friends:collectionfriends' => "リストに登録された友達",
-	'friends:collectionedit' => "リストの編集",
-	'friends:nocollections' => "リストがありません。",
-	'friends:collectiondeleted' => "リストを削除しました。",
-	'friends:collectiondeletefailed' => "リストが削除できません。権限がないか、何らかの問題が発生しています。",
-	'friends:collectionadded' => "リストを作成しました。",
-	'friends:nocollectionname' => "リストの名前を入力してください。",
-	'friends:collections:members' => "リストのメンバ",
-	'friends:collections:edit' => "リストの編集",
-	'friends:collections:edited' => "保存したリスト",
-	'friends:collection:edit_failed' => 'リストを保存できませんでした。',
-
-	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+	'collection:friends' => 'Friends\' %s',
 
 	'avatar' => 'アバター',
 	'avatar:noaccess' => "このユーザのアバターを編集する権限はあなたにはありません",
 	'avatar:create' => 'アバターを作る',
 	'avatar:edit' => 'アバターを編集する',
-	'avatar:preview' => 'プレビュー',
 	'avatar:upload' => '新しいアバターをアップロードする',
 	'avatar:current' => '現在使用中のアバター',
 	'avatar:remove' => 'アバターを削除して、デフォルトのアイコンに戻す',
@@ -300,50 +284,16 @@ return array(
 	'avatar:crop:fail' => 'アバター画像の切り取りに失敗しました',
 	'avatar:remove:success' => 'アバターを無事削除しました',
 	'avatar:remove:fail' => 'アバターをの削除に失敗しました。',
-
-	'profile:edit' => 'プロフィールを編集',
-	'profile:aboutme' => "自己紹介",
-	'profile:description' => "自己紹介",
-	'profile:briefdescription' => "ちょっと一言",
-	'profile:location' => "住所・地域",
-	'profile:skills' => "特技",
-	'profile:interests' => "趣味",
-	'profile:contactemail' => "電子メール",
-	'profile:phone' => "電話番号",
-	'profile:mobile' => "携帯番号",
-	'profile:website' => "Website",
-	'profile:twitter' => "Twitterユーザ名",
-	'profile:saved' => "プロフィールデータを保存しました",
-
-	'profile:field:text' => '短文',
-	'profile:field:longtext' => '長文',
-	'profile:field:tags' => 'タグ',
-	'profile:field:url' => 'Webアドレス',
-	'profile:field:email' => 'Emailアドレス',
-	'profile:field:location' => '地域・場所',
-	'profile:field:date' => '日付',
-
-	'admin:appearance:profile_fields' => 'プロフィール項目を編集',
-	'profile:edit:default' => 'プロフィール項目を編集',
-	'profile:label' => "プロフィールのラベル",
-	'profile:type' => "プロフィールのタイプ",
-	'profile:editdefault:delete:fail' => 'プロフィールの項目を削除するのに失敗しました。',
-	'profile:editdefault:delete:success' => 'デフォルトのプロフィール項目を削除しました！',
-	'profile:defaultprofile:reset' => 'デフォルトのシステムプロフィールにリセット',
-	'profile:resetdefault' => 'プロフィールの項目をシステムのデフォルトにリセットする',
-	'profile:resetdefault:confirm' => 'カスタムプロフィールの項目を削除してもよろしいですか？',
-	'profile:explainchangefields' => "既存のプロフィールフィールドをあなた独自のものに置き換えることができます。\n\n 新しいプロフィール項目にラベルを付けてください。たとえば、「好きなチーム」など。次に、プロフィールタイプ(text, url, tagなど)を選択して「追加」ボタンを押してください。順番を並び替えるには、ラベルの右にあるハンドルをマウスでつまんで調整してください。フィールドのラベルを編集するにはラベルをマウスでクリックしてください。\n\n いつでもデフォルトに戻すことができますが、あなた独自に作ったの項目を削除した場合、そこに入っていた値は失われてしまうでしょう。",
-	'profile:editdefault:success' => 'デフォルトプロフィールに項目を追加しました',
-	'profile:editdefault:fail' => 'デフォルトプロフィールを保存できませんでした。',
-	'profile:field_too_long' => '"%s" セクションが長すぎるので、あなたのプロフィール情報を保存することができません。',
-	'profile:noaccess' => "あなたには、このプロフィールを編集する権限がありません。",
-	'profile:invalid_email' => 'メールアドレス 「%s」が間違っているようです。有効なアドレスを登録しなおしてください。',
-
+	
+	'action:user:validate:already' => "%s was already validated",
+	'action:user:validate:success' => "%s has been validated",
+	'action:user:validate:error' => "An error occurred while validating %s",
 
 /**
  * Feeds
  */
 	'feed:rss' => 'このページをRSSフィードする',
+	'feed:rss:title' => 'このページのRSSフィード',
 /**
  * Links
  */
@@ -355,9 +305,8 @@ return array(
  * River
  */
 	'river' => "River",
-	'river:friend:user:default' => "%sさんは、%sさんと友達になりました",
+	'river:user:friend' => "%s is now a friend with %s",
 	'river:update:user:avatar' => '%sさんが、新しいアバターを設定しました',
-	'river:update:user:profile' => '%sさんがプロフィールを更新しました',
 	'river:noaccess' => 'このアイテムを見る権限がありません。',
 	'river:posted:generic' => '%sさんが投稿しました。',
 	'riveritem:single:user' => 'ユーザ',
@@ -373,11 +322,7 @@ return array(
 	'river:subject:invalid_subject' => '正しいユーザではありません',
 	'activity:owner' => 'アクティビティ一覧',
 
-	'river:widget:title' => "近況報告",
-	'river:widget:description' => "最新の近況報告を表示",
-	'river:widget:type' => "近況報告のタイプ",
-	'river:widgets:friends' => '友達の近況報告',
-	'river:widgets:all' => '全近況報告',
+	
 
 /**
  * Notifications
@@ -433,6 +378,7 @@ return array(
 	'registerdisabled' => "システム管理者が新規登録を禁止しています。",
 	'register:fields' => 'すべての項目が必須となります。',
 
+	'registration:noname' => 'Display name is required.',
 	'registration:notemail' => 'あなたが入力したEメールアドレスは、正しいものでは無いようです。',
 	'registration:userexists' => 'そのログイン名はすでに使われています。',
 	'registration:usernametooshort' => 'ログイン名は半角英字で %u 文字以上にしてください。',
@@ -452,6 +398,8 @@ return array(
 	'user:name:label' => "表示名",
 	'user:name:success' => "表示名を変更しました。",
 	'user:name:fail' => "表示名を変更できませんでした。",
+	'user:username:success' => "Successfully changed username on the system.",
+	'user:username:fail' => "Could not change username on the system.",
 
 	'user:set:password' => "パスワード",
 	'user:current_password:label' => '現在のパスワード',
@@ -471,8 +419,10 @@ return array(
 	'user:language:fail' => "言語の設定を保存できませんでした。",
 
 	'user:username:notfound' => 'ログイン名 %s が見当たりません。',
+	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
 
 	'user:password:lost' => 'パスワードを忘れた場合',
+	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
 	'user:password:changereq:success' => '新しいパスワード発行の手続きをしました。ご登録のEメールあてに確認のメールを送信しました。',
 	'user:password:changereq:fail' => '新しいパスワード発行の手続きに失敗しました。',
 
@@ -480,14 +430,15 @@ return array(
 
 	'user:persistent' => '次回入力を省略',
 
-	'walled_garden:welcome' => 'Welcome to',
+	'walled_garden:home' => 'Home',
 
 /**
  * Administration
  */
-	'menu:page:header:administer' => '管理業務',
+	'menu:page:header:administer' => '管理',
 	'menu:page:header:configure' => '設定',
 	'menu:page:header:develop' => '開発',
+	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'その他',
 
 	'admin:view_site' => 'サイトを見る',
@@ -501,19 +452,19 @@ return array(
 
 	'admin:unknown_section' => '不正な管理セクションです',
 
-	'admin' => "管理業務",
+	'admin' => "管理",
 	'admin:description' => "この管理パネルでは、ユーザの管理からプラグインの振る舞いにいたるまで、システムの全ての事柄をコントロールすることができます。開始するには以下のオプションを選択してください。",
 
-	'admin:statistics' => "統計情報",
-	'admin:statistics:overview' => '概要',
-	'admin:statistics:server' => 'サーバの情報',
-	'admin:statistics:cron' => 'Cron',
+	'admin:statistics' => '統計情報',
+	'admin:server' => 'Server',
+	'admin:cron' => 'Cron',
 	'admin:cron:record' => '最後に行った Cron Jobs',
 	'admin:cron:period' => 'Cron の間隔',
 	'admin:cron:friendly' => '最後に完了した時間',
 	'admin:cron:date' => '日付と時間',
 	'admin:cron:msg' => 'Message',
 	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => '見た目',
@@ -532,9 +483,29 @@ return array(
 	'admin:users:opt:linktext' => "ユーザ設定...",
 	'admin:users:opt:description' => "ユーザとアカウント情報の設定",
 	'admin:users:find' => '検索',
-
-	'admin:administer_utilities:maintenance' => 'メンテナンス・モード',
+	'admin:users:unvalidated' => 'Unvalidated',
+	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
+	'admin:users:unvalidated:registered' => 'Registered: %s',
+	
+	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'アップグレード',
+	'admin:upgrades:finished' => 'Completed',
+	'admin:upgrades:db' => 'Database upgrades',
+	'admin:upgrades:db:name' => 'Upgrade name',
+	'admin:upgrades:db:start_time' => 'Start time',
+	'admin:upgrades:db:end_time' => 'End time',
+	'admin:upgrades:db:duration' => 'Duration',
+	'admin:upgrades:menu:pending' => 'Pending upgrades',
+	'admin:upgrades:menu:completed' => 'Completed upgrades',
+	'admin:upgrades:menu:db' => 'Database upgrades',
+	'admin:upgrades:menu:run_single' => 'Run this upgrade',
+	'admin:upgrades:run' => 'Run upgrades now',
+	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
+	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
+	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
+	'admin:upgrades:failed' => 'Upgrade "%s" failed',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'セッティング',
 	'admin:settings:basic' => '基本設定',
@@ -543,11 +514,6 @@ return array(
 	'admin:site:opt:linktext' => "サイトの構築..",
 	'admin:settings:in_settings_file' => 'この設定は、settings.php 内で行えます。',
 
-	'admin:legend:security' => 'セキュリティ',
-	'admin:site:secret:intro' => 'Elgg は様々な目的で使用するセキュリティートークンを作成するためのキーを1つ使用します。',
-	'admin:site:secret_regenerated' => "あなたのサイトの秘密キーを作り直しました。",
-	'admin:site:secret:regenerate' => "サイトの秘密キーを作成します。",
-	'admin:site:secret:regenerate:help' => "注意: サイトの秘密キーを作りなおすと、\"次回入力を省略する\" cookies や e-mail 正否確認リクエストや紹介コードなどで使用されるトークンが不正となってしまい、ユーザ様に迷惑をお掛けすることがあるかもしれません。",
 	'site_secret:current_strength' => 'キーの強さ',
 	'site_secret:strength:weak' => "弱い",
 	'site_secret:strength_msg:weak' => "サイトの秘密キーを再設定することを強くおすすめします。",
@@ -567,21 +533,27 @@ return array(
 	'admin:widget:content_stats:help' => 'ユーザが作成したコンテントの記録を保存しています。',
 	'admin:widget:cron_status' => 'Cronの状態',
 	'admin:widget:cron_status:help' => '最後に cron jobs が完了したときの状態を表示する',
-	'widget:content_stats:type' => 'コンテントのタイプ',
-	'widget:content_stats:number' => '件数',
+	'admin:statistics:numentities' => 'Content Statistics',
+	'admin:statistics:numentities:type' => 'Content type',
+	'admin:statistics:numentities:number' => 'Number',
+	'admin:statistics:numentities:searchable' => 'Searchable entities',
+	'admin:statistics:numentities:other' => 'Other entities',
 
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "Elggの管理エリアについての短い紹介",
 	'admin:widget:admin_welcome:intro' =>
-'Elggにようこそ！現在あなたが見ている画面は管理業務のダッシュボードです。このページはサイトで何がおっこっているかを追跡するのに便利なようにできています。',
+'Elggにようこそ！現在あなたが見ている画面は管理用のダッシュボードです。このページはサイトで何がおこっているかを追跡するのに便利なようにできています。',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"管理エリアのナビゲーションは右側のメニューにあり、3つの節で構成されています:
+"Navigation for the administration area is provided by the menu to the right. It is organized into
+three sections:
 	<dl>
-			<dt>管理業務</dt><dd>報告コンテントの監視、誰がオンラインしているか、統計情報を見るなど日常の業務</dd>
-			<dt>構成設定</dt><dd>サイト名の設定やプラグインの起動など、たまにしか行わない業務</dd>
-			<dt>開発</dt><dd>プラグイン作成やテーマデザインなどの開発者向けの項目。（developerプラグインが必要）</dd>
-	</dl>",
+		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
+		<dt>Information</dt><dd>Information about your site like statistics.</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
+	</dl>
+",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />フッタリンクに’使える’リソースがありますので、チェックしてみてください。Elggをご使用いただき、誠にありがとうございました。',
@@ -592,8 +564,8 @@ return array(
 	'admin:cache:flush' => 'キャッシュをクリアする',
 	'admin:cache:flushed' => "サイトのキャシュをクリアしました",
 
-	'admin:footer:faq' => '管理業務FAQ',
-	'admin:footer:manual' => '管理業務マニュアル',
+	'admin:footer:faq' => '管理FAQ',
+	'admin:footer:manual' => '管理マニュアル',
 	'admin:footer:community_forums' => 'Elggコミュニティーフォーラム',
 	'admin:footer:blog' => 'Elggブログ',
 
@@ -618,11 +590,107 @@ return array(
 	'admin:plugins:markdown:unknown_plugin' => '不明なプラグイン',
 	'admin:plugins:markdown:unknown_file' => '不明なファイル',
 
+	'admin:notices:delete_all' => 'Dismiss all %s notices',
 	'admin:notices:could_not_delete' => '通知を消去することができませんでした。',
 	'item:object:admin_notice' => '通知の管理',
+	'collection:object:admin_notice' => 'Admin notices',
 
 	'admin:options' => '管理者オプション',
 
+	'admin:security' => 'Security',
+	'admin:security:settings' => 'Settings',
+	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
+	'admin:security:settings:label:hardening' => 'Hardening',
+	'admin:security:settings:label:notifications' => 'Notifications',
+	'admin:security:settings:label:site_secret' => 'Site secret',
+	
+	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
+	'admin:security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
+	
+	'admin:security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
+	'admin:security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
+	
+	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
+	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
+	
+	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
+	'admin:security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
+	'admin:security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
+	
+	'admin:security:settings:protect_cron' => 'Protect the /cron URLs',
+	'admin:security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
+	'admin:security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
+	'admin:security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
+	
+	'admin:security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
+	'admin:security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
+	
+	'admin:security:settings:email_require_password' => 'Require password to change email address',
+	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+	
+	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
+	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
+	'admin:security:settings:site_secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
+	
+	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
+	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
+	
+	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
+	'admin:notification:make_admin:admin:body' => 'Hi %s,
+
+%s made %s a site administrator of %s.
+
+To view the profile of the new administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
+	'admin:notification:make_admin:user:body' => 'Hi %s,
+
+%s made you a site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
+	'admin:notification:remove_admin:admin:body' => 'Hi %s,
+
+%s removed %s as a site administrator of %s.
+
+To view the profile of the old administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
+	'admin:notification:remove_admin:user:body' => 'Hi %s,
+
+%s removed you as site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'user:notification:ban:subject' => 'Your account on %s was banned',
+	'user:notification:ban:body' => 'Hi %s,
+
+Your account on %s was banned.
+
+To go to the site, click here:
+%s',
+	
+	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
+	'user:notification:unban:body' => 'Hi %s,
+
+Your account on %s is no longer banned. You can use the site again.
+
+To go to the site, click here:
+%s',
+	
 /**
  * Plugins
  */
@@ -633,6 +701,7 @@ return array(
 	'plugins:usersettings:save:ok' => "プラグイン %s のユーザセッティングを保存しました。",
 	'plugins:usersettings:save:fail' => "プラグイン %s のユーザセッティングを保存する際に問題が発生しました",
 	'item:object:plugin' => 'プラグイン',
+	'collection:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "プラグイン管理",
 	'admin:plugins:activate_all' => '全て起動する',
@@ -666,6 +735,7 @@ return array(
 	'admin:plugins:label:contributors:username' => 'コミュニティのユーザーネーム',
 	'admin:plugins:label:contributors:description' => '説明',
 	'admin:plugins:label:dependencies' => '依存関係',
+	'admin:plugins:label:missing_dependency' => 'Missing dependency [%s].',
 
 	'admin:plugins:warning:unmet_dependencies' => 'このプラグインは依存関係が不適切なので起動できません。詳細情報で依存関係をチェックしてください。',
 	'admin:plugins:warning:invalid' => 'このプラグインは正しくありません: %s',
@@ -700,7 +770,7 @@ return array(
 	'admin:statistics:description' => "これはあなたのサイトの大ざぱな統計情報です。更に詳細な統計情報が必要なときは、専門的な管理機能をご利用ください。",
 	'admin:statistics:opt:description' => "サイト上のユーザとオブジェクトに関する統計情報を表示します。",
 	'admin:statistics:opt:linktext' => "統計情報をみる...",
-	'admin:statistics:label:basic' => "サイト統計情報（概要）",
+	'admin:statistics:label:user' => "User statistics",
 	'admin:statistics:label:numentities' => "サイト統計情報（数値）",
 	'admin:statistics:label:numusers' => "ユーザ数",
 	'admin:statistics:label:numonline' => "ログイン中のユーザ数",
@@ -709,8 +779,11 @@ return array(
 	'admin:statistics:label:version' => "Elgg バージョン",
 	'admin:statistics:label:version:release' => "リリース",
 	'admin:statistics:label:version:version' => "バージョン",
+	'admin:statistics:label:version:code' => "Code Version",
 
+	'admin:server:label:elgg' => 'Elgg',
 	'admin:server:label:php' => 'PHP',
+	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'Webサーバ',
 	'admin:server:label:server' => 'サーバ',
 	'admin:server:label:log_location' => 'ログ記録の保存場所',
@@ -726,9 +799,21 @@ return array(
 	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
 		Memcache is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure memcache.
-	',
+		For improved performance, it is recommended that you enable and configure memcache (or redis).
+',
 
+	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => '
+		Redis is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure redis (or memcache).
+',
+
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache is not available on this server or it has not yet been enabled.
+		For improved performance, it is recommended that you enable and configure OPcache.
+',
+	
 	'admin:user:label:search' => "ユーザ検索",
 	'admin:user:label:searchbutton' => "検索",
 
@@ -751,17 +836,18 @@ return array(
 	'admin:user:removeadmin:no' => "このユーザの管理者権限が解除できませんでした。",
 	'admin:user:self:removeadmin:no' => "自分自身の管理者権限を削除することはできません。",
 
-	'admin:appearance:menu_items' => 'メニュー項目',
+	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'メインメニュー項目の構築設定',
-	'admin:menu_items:description' => 'どのメニューアイテムをfeaturedリンクとして表示したいのかを選択してください。使用しない項目は、メニューリストの最後の"More"以下に追加されます。',
+	'admin:menu_items:description' => 'どのメニューアイテムをfeaturedリンクとして表示したいのかを選択してください。使用しない項目は、メニューリストの最後の"もっと"以下に追加されます。',
 	'admin:menu_items:hide_toolbar_entries' => 'ツールバーメニューからリンクを削除する。',
 	'admin:menu_items:saved' => 'メニュー項目を保存しました。',
 	'admin:add_menu_item' => 'カスタムメニュー項目を追加する',
 	'admin:add_menu_item:description' => 'ナビゲーションメニューにカスタム項目を追加するため、表示名とURLを欄に入れててください。',
 
-	'admin:appearance:default_widgets' => 'デフォルト ウィジェット',
+	'admin:configure_utilities:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => '不明なウィジェットのタイプです。',
-	'admin:default_widgets:instructions' => '選択したウィジェットページに既定のウィジェットを追加、削除、配置変更、設定変更します。ここでした変更はこのサイトの新規ユーザのみに反映されます。',
+	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
+These changes will only affect new users on the site.',
 
 	'admin:robots.txt:instructions' => "このサイトの robots.txt ファイルを編集します。",
 	'admin:robots.txt:plugins' => "プラグインは編集結果を robots.txt ファイルに追加しています。",
@@ -769,8 +855,8 @@ return array(
 	'admin:robots.txt:physical' => "robots.txt ファイルが存在しますので、 robots.txt tool は機能しないでしょう。",
 
 	'admin:maintenance_mode:default_message' => '申し訳ありません。このサイトは現在メンテナンス中で接続出来ません。',
-	'admin:maintenance_mode:instructions' => 'サイトのアップグレードやサイトに大きな変更をするときに、メンテナンス・モードをご利用ください。
-		メンテナンス・モードにすると、管理者のみログインできサイトを閲覧することができます。',
+	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.
+		When it is on, only admins can log in and browse the site.',
 	'admin:maintenance_mode:mode_label' => 'メンテナンス・モード',
 	'admin:maintenance_mode:message_label' => 'メンテナンス・モードに入っているときに、ユーザに表示されるメッセージ',
 	'admin:maintenance_mode:saved' => 'メンテナンス・モードの設定が保存されました。',
@@ -786,7 +872,7 @@ return array(
 	'usersettings:statistics' => "あなたの統計情報",
 	'usersettings:statistics:opt:description' => "サイト上のユーザとオブジェクトに関する統計情報を表示します。",
 	'usersettings:statistics:opt:linktext' => "アカウントの統計情報",
-	
+
 	'usersettings:statistics:login_history' => "Login History",
 	'usersettings:statistics:login_history:date' => "Date",
 	'usersettings:statistics:login_history:ip' => "IP Address",
@@ -817,15 +903,9 @@ return array(
 	'river:owner' => '%s さんのアクティビティ',
 	'river:friends' => '友達のアクティティ',
 	'river:select' => '表示:%s',
-	'river:comments:more' => '+%u more',
+	'river:comments:more' => '+%u もっと',
 	'river:comments:all' => '全ての %u さんのコメントを表示する',
 	'river:generic_comment' => 'commented on %s %s',
-
-	'friends:widget:description' => "友達を何人か表示",
-	'friends:num_display' => "表示する友達の人数",
-	'friends:icon_size' => "アイコンのサイズ",
-	'friends:tiny' => "tiny",
-	'friends:small' => "small",
 
 /**
  * Icons
@@ -838,12 +918,17 @@ return array(
 	'icon:size:medium' => "Medium",
 	'icon:size:large' => "Large",
 	'icon:size:master' => "Extra Large",
+	
+	'entity:edit:icon:file:label' => "Upload a new icon",
+	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
+	'entity:edit:icon:remove:label' => "Remove icon",
 
 /**
  * Generic action words
  */
 
 	'save' => "保存",
+	'save_go' => "Save, and go to %s",
 	'reset' => 'リセット',
 	'publish' => "公開",
 	'cancel' => "キャンセル",
@@ -875,7 +960,7 @@ return array(
 	'hide' => '隠す',
 	'show' => '表示する',
 	'reply' => "返信",
-	'more' => 'More',
+	'more' => 'もっと',
 	'more_info' => '更に詳しく',
 	'comments' => 'コメント',
 	'import' => 'インポート',
@@ -894,6 +979,8 @@ return array(
 	'create' => '作成',
 	'remove' => '削除',
 	'revert' => '戻す',
+	'validate' => 'Validate',
+	'read_more' => 'Read more',
 
 	'site' => 'サイト',
 	'activity' => 'アクティビティ',
@@ -1004,27 +1091,26 @@ return array(
 
 	'deleteconfirm' => "このアイテムを削除してよいですか？",
 	'deleteconfirm:plural' => "これらのアイテムを削除してもよろしいですか？",
-	'fileexists' => "ファイルはすでにアップロードされています。置き換えるときは以下から選択してください:",
+	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
+	'input:file:upload_limit' => 'Maximum allowed file size is %s',
 
 /**
  * User add
  */
 
 	'useradd:subject' => 'ユーザを作成しました。',
-	'useradd:body' => '
-%s 様,
+	'useradd:body' => '%s,
 
-%s にあなたのメールアドレスでユーザアカウントが登録されました。 ログインするには、以下のURLにアクセスしてください:
+A user account has been created for you at %s. To log in, visit:
 
 %s
 
-ログインのためのユーザ名とパスワードは次の通りです:
+And log in with these user credentials:
 
-ログイン名: %s
-パスワード: %s
+Username: %s
+Password: %s
 
-ログイン後は、できるだけ早くにご自身でパスワードを変更することをおすすめします。
-',
+Once you have logged in, we highly recommend that you change your password.',
 
 /**
  * System messages
@@ -1032,6 +1118,15 @@ return array(
 
 	'systemmessages:dismiss' => "クリックすると消えます。",
 
+
+/**
+ * Messages
+ */
+	'messages:title:success' => 'Success',
+	'messages:title:error' => 'Error',
+	'messages:title:warning' => 'Warning',
+	'messages:title:help' => 'Help',
+	'messages:title:notice' => 'Notice',
 
 /**
  * Import / export
@@ -1044,6 +1139,10 @@ return array(
  * Time
  */
 
+	'input:date_format' => 'Y-m-d',
+	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
+	'input:time_format' => 'g:ia',
+
 	'friendlytime:justnow' => "Now!",
 	'friendlytime:minutes' => "%s 分前",
 	'friendlytime:minutes:singular' => "1 分前",
@@ -1052,6 +1151,7 @@ return array(
 	'friendlytime:days' => "%s 日前",
 	'friendlytime:days:singular' => "昨日",
 	'friendlytime:date_format' => 'Y年m月d日@ H:i',
+	'friendlytime:date_format:short' => 'j M Y',
 
 	'friendlytime:future:minutes' => "%s分で",
 	'friendlytime:future:minutes:singular' => "1分で",
@@ -1072,7 +1172,7 @@ return array(
 	'date:month:10' => '10月 %s',
 	'date:month:11' => '11月 %s',
 	'date:month:12' => '12月 %s',
-	
+
 	'date:month:short:01' => '1月%s日',
 	'date:month:short:02' => '2月%s日',
 	'date:month:short:03' => '3月%s日',
@@ -1111,7 +1211,6 @@ return array(
 	'interval:weekly' => '毎週',
 	'interval:monthly' => '毎月',
 	'interval:yearly' => '毎年',
-	'interval:reboot' => 'リブート時',
 
 /**
  * System settings
@@ -1119,6 +1218,7 @@ return array(
 
 	'installation:sitename' => "あなたのサイト名:",
 	'installation:sitedescription' => "あなたのサイトのちょっとした説明（任意）:",
+	'installation:sitedescription:help' => "With bundled plugins this appears only in the description meta tag for search engine results.",
 	'installation:wwwroot' => "サイトのURL",
 	'installation:path' => "Elggのインストール先のフルパス",
 	'installation:dataroot' => "データディレクトリのフルパス",
@@ -1173,22 +1273,32 @@ return array(
 	'admin:legend:content_access' => 'コンテント・アクセス',
 	'admin:legend:site_access' => 'サイト・アクセス',
 	'admin:legend:debug' => 'デバッグとログ',
-
+	
+	'config:remove_branding:label' => "Remove Elgg branding",
+	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
+	'config:disable_rss:label' => "Disable RSS feeds",
+	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
+	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
+	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+	
 	'upgrading' => 'アップグレード中...',
 	'upgrade:core' => 'Elggをアップグレードしました。',
 	'upgrade:unlock' => 'アプグレードのロックを解除する',
 	'upgrade:unlock:confirm' => "もうひとつアップグレードがありますのでデータベースをロックします。複数のアップグレードを同時に実行するのは危険です。他のアップグレードがないことをご確認の上作業を継続してください。ロックを解除しますか？",
+	'upgrade:terminated' => 'Upgrade has been terminated by an event handler',
 	'upgrade:locked' => "アップグレードできません。別のアップグレードが実行されています。アップグレードのロックを解除するには、管理セクションに行ってください。",
 	'upgrade:unlock:success' => "アップグレードのロックを解除しました。",
 	'upgrade:unable_to_upgrade' => 'アップグレードできませんでした',
-	'upgrade:unable_to_upgrade_info' =>
-		'Elggコアディレクトリに古いタイプのviewsが見つかったため、このインストレーションは、アップグレードできません。
-		
-このようなviewsは廃止予定にされており、Elggが正しく機能するためには削除しなければなりません。あなたがElggコアに独自に変更をしていなければ、そのviewsディレクトリを削除して、<a href="http://elgg.org">elgg.org</a>からダウンロードした最新のElggパッケージのものに差し替えるだけでよいでしょう。<br /><br />
+	'upgrade:unable_to_upgrade_info' => 'This installation cannot be upgraded because legacy views
+were detected in the Elgg core views directory. These views have been deprecated and need to be
+removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
+simply delete the views directory and replace it with the one from the latest
+package of Elgg downloaded from <a href="https://elgg.org">elgg.org</a>.<br /><br />
 
-手順の詳細は、 <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">Upgrading Elgg documentation</a> をご覧ください。また、<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a> に投稿すれば、きっと誰かが助けてくれるでしょう。',
+If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
+Upgrading Elgg documentation</a>. If you require assistance, please post to the
+<a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
 
-	'update:twitter_api:deactivated' => 'Twitter API(旧称Twitter Service)はアップグレード中に停止しました。必要なら、手動でプラグインを再起動させてください。',
 	'update:oauth_api:deactivated' => 'OAuth API(旧称 OAuth LIb)はアップグレード中に停止しました。必要なら、手動でプラグインを再起動させてください。',
 	'upgrade:site_secret_warning:moderate' => "システムの安全性を改善するために、サイトの秘密キーを再生成するようにしましょう。設定 &gt; セッティング &gt; 詳細設定で設定出来ます。",
 	'upgrade:site_secret_warning:weak' => "システムの安全性を改善するためにサイトの秘密キーを再生成してください。設定 &gt; セッティング &gt; 詳細設定",
@@ -1198,17 +1308,18 @@ return array(
 	'admin:pending_upgrades' => 'サイトはアップグレードの途中で中断されています。これ以降は直接あなたの操作が必要です。',
 	'admin:view_upgrades' => '中断されているアップグレードを見る。',
 	'item:object:elgg_upgrade' => 'サイトのアップグレード',
+	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'このインストールは最新の状態です！',
 
 	'upgrade:item_count' => 'アップグレードが必要なものが <b>%s</b> 個あります。',
 	'upgrade:warning' => '<b>警告:</b>大きなサイトならアップグレードするのに少々時間がかかるかもしれません。',
 	'upgrade:success_count' => 'アップグレード済み:',
 	'upgrade:error_count' => 'エラー:',
-	'upgrade:river_update_failed' => 'item id %s のriverエントリを更新するのに失敗しました。',
-	'upgrade:timestamp_update_failed' => 'item id %s のタイムスタンプを更新するのに失敗しました。',
 	'upgrade:finished' => 'アプグレードを完了しました',
 	'upgrade:finished_with_errors' => '<p>アップグレードはエラーが出て終了してしまいました。 ページをリフレッシュして、もう一度アップグレードを実行してください。</p></p><br />再びエラーが起こったなら、原因を究明するためサーバのエラーログをチェックしてみてください。Elgg community の <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> にエラーを修正するための答えがあるかもしれません。</p>',
-
+	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:count_items' => '%d items to upgrade',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
 	
@@ -1230,38 +1341,38 @@ return array(
 
 	'email:settings' => "Eメール設定",
 	'email:address:label' => "Eメールアドレス",
+	'email:address:password' => "Password",
+	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
 	'email:save:success' => "新しいEメールアドレスを保存しました。アドレスが正しいかどうかの確認が求められています。",
 	'email:save:fail' => "Eメールアドレスを保存できませんでした。",
+	'email:save:fail:password' => "The password doesn't match your current password, could not change your email address",
 
 	'friend:newfriend:subject' => "%s さんはあなたを友達に登録しました！",
-	'friend:newfriend:body' => "%s さんはあなたを友達として登録しました！
+	'friend:newfriend:body' => "%s has made you a friend!
 
-プロフィールは次のURLで確認できます。
+To view their profile, click here:
 
-%s
-
-(※) このメールには、返信をしないようにお願いします。",
+%s",
 
 	'email:changepassword:subject' => "パスワードが変更されました!",
-	'email:changepassword:body' => "%s　さん、こんにちは。
+	'email:changepassword:body' => "Hi %s,
 
-あなたのパスワードが変更されましたので、お知らせいたします。",
+Your password has been changed.",
 
 	'email:resetpassword:subject' => "パスワードをリセットしました",
-	'email:resetpassword:body' => "%s さん、こんにちは。
+	'email:resetpassword:body' => "Hi %s,
 
-あなたのパスワードをリセットしました: %s",
+Your password has been reset to: %s",
 
 	'email:changereq:subject' => "パスワード変更の申請",
-	'email:changereq:body' => "%s さん、こんにちは。
+	'email:changereq:body' => "Hi %s,
 
-誰か ( IPアドレス %s ) がアカウントのパスワードの変更を求めています。
+Somebody (from the IP address %s) has requested a password change for this account.
 
-これがあなたなのでしたら、下のリンクをクリックしてください。身に覚えがないようでしたら、このメールを無視してください。
+If you requested this, click on the link below. Otherwise ignore this email.
 
-%s
-",
+%s",
 
 /**
  * user default access
@@ -1278,8 +1389,9 @@ return array(
 
 	'comments:count' => "%s さんのコメント",
 	'item:object:comment' => 'コメント',
+	'collection:object:comment' => 'Comments',
 
-	'river:comment:object:default' => '%s さんが、%s さんにコメントしました',
+	'river:object:default:comment' => '%s commented on %s',
 
 	'generic_comments:add' => "コメントする",
 	'generic_comments:edit' => "コメントを編集",
@@ -1288,33 +1400,39 @@ return array(
 	'generic_comments:latest' => "最新のコメント",
 	'generic_comment:posted' => "コメントを投稿しました。",
 	'generic_comment:updated' => "コメントを更新しました。",
-	'generic_comment:deleted' => "コメントを削除しました。",
+	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
 	'generic_comment:blank' => "申し訳ありません。コメント内容が空欄のため保存できません。",
 	'generic_comment:notfound' => "申し訳ありません。お探しのコメントは見つかりませんでした。",
 	'generic_comment:notfound_fallback' => "申し訳ありません。お探しのコメントは見つかりませんでしたが、コメントされていたページへご案内しました。",
-	'generic_comment:notdeleted' => "申し訳ありません。このコメントが削除できませんでした。",
 	'generic_comment:failure' => "コメントを保存する際に予期せぬエラーが発生しました。",
 	'generic_comment:none' => 'コメントはありません',
 	'generic_comment:title' => '%s さんが付けたコメント',
 	'generic_comment:on' => '%s さんが %s にコメント',
 	'generic_comments:latest:posted' => '投稿:',
 
-	'generic_comment:email:subject' => '新しいコメントがあります！',
-	'generic_comment:email:body' => "あなたの投稿「 %s 」に、 %s さんがコメントしました:
-
-
-%s
-
-
-このコメントを見るか、返信する場合はここをクリックしてください: 
+	'generic_comment:notification:owner:subject' => 'You have a new comment!',
+	'generic_comment:notification:owner:summary' => 'You have a new comment!',
+	'generic_comment:notification:owner:body' => "You have a new comment on your item \"%s\" from %s. It reads:
 
 %s
 
-%sさんのプロフィールを見る場合は下記をクリックしてください: 
+To reply or view the original item, click here:
+%s
+
+To view %s's profile, click here:
+%s",
+	
+	'generic_comment:notification:user:subject' => 'A new comment on: %s',
+	'generic_comment:notification:user:summary' => 'A new comment on: %s',
+	'generic_comment:notification:user:body' => "A new comment was made on \"%s\" by %s. It reads:
 
 %s
 
-※　このメールには返信をしないようお願いします。",
+To reply or view the original item, click here:
+%s
+
+To view %s's profile, click here:
+%s",
 
 /**
  * Entities
@@ -1322,7 +1440,6 @@ return array(
 
 	'byline' => 'By %s',
 	'byline:ingroup' => '%sグループ内',
-	'entity:default:strapline' => '作成 %s by %s',
 	'entity:default:missingsupport:popup' => 'この情報を正確に表示できません。利用していたプラグインがうまく動作していないか、アンインストールされた可能性があります。',
 
 	'entity:delete:item' => '項目',
@@ -1525,4 +1642,21 @@ return array(
 
 	"field:required" => '必須です',
 
+	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
+	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
+
+	"core:upgrade:2017080950:title" => "Update default security parameters",
+	"core:upgrade:2017080950:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the defaults. You can later update these parameters in your site settings.",
+
+	"core:upgrade:2017121200:title" => "Create friends access collections",
+	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
+
+	"core:upgrade:2018041800:title" => "Activate new plugins",
+	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
+
+	"core:upgrade:2018041801:title" => "Delete old plugin entities",
+	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
+	
+	"core:upgrade:2018061401:title" => "Migrate cron log entries",
+	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
 );

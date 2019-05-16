@@ -96,6 +96,8 @@ users avatars in most cases have a long expiration time and do not need to be re
 current session - this will allows browsers to cache the images and file service will
 send appropriate ``Not Modified`` headers on consecutive requests.
 
+The default behaviour of ``use_cookie`` can be controlled on the admin security settings page.
+
 For entities that are under Elgg's access control, you may want to use cookies to ensure
 that access settings are respected and users do not share download URLs with somebody else.
 

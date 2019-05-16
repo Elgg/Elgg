@@ -1,11 +1,12 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Site sayfaları",
-	'admin:appearance:expages' => "Site Sayfaları",
+	'admin:configure_utilities:expages' => "Site Pages",
+	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "Hakkında",
 	'expages:terms' => "Kullanım Koşulları",
 	'expages:privacy' => "Gizlilik",
@@ -18,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Sayfa başarılı şekilde kaydedildi.",
 	'expages:error' => "Bu sayfa kaydedilemiyor.",
-];
+);

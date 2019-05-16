@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Αναφέρατε αυτό',
 	'reportedcontent:instructions' => 'Η αναφορά στάλθηκε στους διαχειριστές του ιστότοπου για έλεγχο.',
 	'reportedcontent:numbertodisplay' => 'Αριθμός αναφορών για εμφάνιση',
-	'reportedcontent:widget:description' => 'Εμφάνιση περιεχομένου που έχει αναφερθεί',
 	'reportedcontent:user' => 'Αναφορά χρήστη',
 
 	'reportedcontent:failed' => 'Λυπούμαστε, η προσπάθεια αναφοράς αυτού του περιεχομένου απέτυχε',
 	'reportedcontent:notarchived' => 'Δεν ήταν δυνατή η αρχειοθέτηση αυτής της αναφοράς',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

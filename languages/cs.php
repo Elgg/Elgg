@@ -1,10 +1,13 @@
 <?php
+
 return array(
 /**
  * Sites
  */
 
-	'item:site' => 'Stránky',
+	'item:site:site' => 'Site',
+	'collection:site:site' => 'Sites',
+	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
  * Sessions
@@ -24,6 +27,7 @@ return array(
 	'session_changed_user' => "Byl/a jste přihlášen/a jako jiný uživatel. Měl/a byste <a href='javascript:location.reload(true)'>obnovit</a> stránku.",
 
 	'loggedinrequired' => "Musíte být přihlášen/a aby jste mohl/a vidět požadovanou stránku.",
+	'loggedoutrequired' => "You must be logged out to view the requested page.",
 	'adminrequired' => "Musíte být správcem aby jste viděl/a požadovanou stránku.",
 	'membershiprequired' => "Musíte být členem této skupiny aby jste mohl/a vidět požadovanou stránku.",
 	'limited_access' => "Nemáte oprávnění vidět požadovanou stránku.",
@@ -61,10 +65,16 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Existuje vadná %s závislost "%s" v doplňku %s. Doplněk nemůže být v konfliktu s nebo požadovat něco co poskytuje!',
 	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Je v konfliktu s doplňkem: %s',
 	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Soubor doplňku "elgg-plugin.php" file je přítomen ale nedá se číst.',
+	'ElggPlugin:Error' => 'Plugin error',
+	'ElggPlugin:Error:ID' => 'Error in plugin "%s"',
+	'ElggPlugin:Error:Path' => 'Error in plugin path "%s"',
+	'ElggPlugin:Error:Unknown' => 'Undefined plugin error',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Nemohu vložit %s pro doplněk %s (guid: %s) na %s.',
 	'ElggPlugin:Exception:IncludeFileThrew' => 'Vyhozena výjimka obsahující %s pro doplněk %s (guid: %s) na %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Nemohu otevřít složku pohledů pro doplněk %s (guid: %s) na %s.',
 	'ElggPlugin:Exception:NoID' => 'Žádné ID pro doplněk guid %s!',
+	'ElggPlugin:Exception:InvalidPackage' => 'Package cannot be loaded',
+	'ElggPlugin:Exception:InvalidManifest' => 'Plugin manifest is missing or invalid',
 	'PluginException:NoPluginName' => "Jméno doplňku nebylo nalezeno",
 	'PluginException:ParserError' => 'Při čtení manifestu s verzí API %s v doplňku %s nastala chyba.',
 	'PluginException:NoAvailableParser' => 'Nemohu najít čtečku pro manifest s verzí API %s v doplňku %s.',
@@ -107,6 +117,14 @@ return array(
 
 	'UserFetchFailureException' => 'Nemohu zkontrolovat práva pro user_guid [%s] neboť tento uživatel neexistuje.',
 
+	'PageNotFoundException' => 'The page you are trying to view does not exist or you do not have permissions to view it',
+	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
+	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
+	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
+	'BadRequestException' => 'Bad request',
+	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
+	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
+
 	'deprecatedfunction' => 'Varování: Tento kód používá zastaralou funkci \'%s\' a není kompatibilní s touto verzí projektu Elgg',
 
 	'pageownerunavailable' => 'Varování: Vlastník stránky %d není dostupný!',
@@ -117,6 +135,8 @@ return array(
 	'error:missing_data' => 'V požadavku chybí nějaká data.',
 	'save:fail' => 'Při ukládání vašich dat se vyskytla chyba',
 	'save:success' => 'Data byla uložena',
+
+	'forward:error' => 'Sorry. An error occurred while redirecting to you to another site.',
 
 	'error:default:title' => 'Jejda...',
 	'error:default:content' => 'Jejda... něco se pokazilo.',
@@ -180,11 +200,11 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Osobní",
-	'LOGGED_IN' => "Přihlášení uživatelé",
-	'PUBLIC' => "Veřejné",
-	'LOGGED_OUT' => "Odhlášení uživatelé",
-	'access:friends:label' => "Přátelé",
+	'access:label:private' => "Private",
+	'access:label:logged_in' => "Logged in users",
+	'access:label:public' => "Public",
+	'access:label:logged_out' => "Logged out users",
+	'access:label:friends' => "Friends",
 	'access' => "Přístup",
 	'access:overridenotice' => "Poznámka: Díky pravidlům skupiny bude tento obsah přístupný pouze pro členy skupiny.",
 	'access:limited:label' => "Omezený",
@@ -204,7 +224,6 @@ return array(
 
 	'widgets:add' => 'Přidat udělátka',
 	'widgets:add:description' => "Udělátka na stránku přidáte kliknutím na následující tlačítka.",
-	'widgets:panel:close' => "Zavřít panel udělátek",
 	'widgets:position:fixed' => '(Pevná pozice na stránce)',
 	'widget:unavailable' => 'Toto udělátko již máte přidané',
 	'widget:numbertodisplay' => 'Počet zobrazených položek',
@@ -215,19 +234,25 @@ return array(
 	'widgets' => "Udělátka",
 	'widget' => "Udělátko",
 	'item:object:widget' => "Udělátka",
+	'collection:object:widget' => 'Widgets',
 	'widgets:save:success' => "Udělátko bylo úspěšně uloženo.",
 	'widgets:save:failure' => "Nemohu uložit udělátko.",
 	'widgets:add:success' => "Udělátko bylo úspěšně přidáno.",
 	'widgets:add:failure' => "Nemohu přidat udělátko.",
 	'widgets:move:failure' => "Nemohu uložit novou pozici udělátka.",
 	'widgets:remove:failure' => "Toto udělátko není možné odebrat ",
-
+	'widgets:not_configured' => "This widget is not yet configured",
+	
 /**
  * Groups
  */
 
 	'group' => "Skupina",
 	'item:group' => "Skupiny",
+	'collection:group' => 'Groups',
+	'item:group:group' => "Group",
+	'collection:group:group' => 'Groups',
+	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
  * Users
@@ -235,58 +260,17 @@ return array(
 
 	'user' => "Uživatel",
 	'item:user' => "Uživatelé",
-
-/**
- * Friends
- */
+	'collection:user' => 'Users',
+	'item:user:user' => 'User',
+	'collection:user:user' => 'Users',
 
 	'friends' => "Přátelé",
-	'friends:yours' => "Vaši přátelé",
-	'friends:owned' => "%s - přátelé",
-	'friend:add' => "Přidat přítele",
-	'friend:remove' => "Odebrat přítele",
-
-	'friends:add:successful' => "Úspěšně jste přidal/a %s jako svého přítele.",
-	'friends:add:failure' => "Nemohu přidat %s jako přítele.",
-
-	'friends:remove:successful' => "Úspěšně jste odebral/a %s z vašich přátel.",
-	'friends:remove:failure' => "Nemůžu odebrat %s z vašich přátel.",
-
-	'friends:none' => "Zatím žádní přátelé.",
-	'friends:none:you' => "Zatím nemáte žádné přátele.",
-
-	'friends:none:found' => "Přátelé nebyli nalezeni.",
-
-	'friends:of:none' => "Zatím si tohoto uživatele nikdo nepřidal do přátel.",
-	'friends:of:none:you' => "Zatím si vás nikdo nepřidal do přátel. Začněte přidávat nějaký obsah a vyplněním profilu dejte ostatním možnost vás najít!",
-
-	'friends:of:owned' => "Lidé, kteří si přidali %s jako přítele",
-
-	'friends:of' => "Přátelé",
-	'friends:collections' => "Okruhy přátel",
-	'collections:add' => "Nový okruh",
-	'friends:collections:add' => "Nový okruh přátel",
-	'friends:addfriends' => "Zvolte přítele",
-	'friends:collectionname' => "Jméno okruhu",
-	'friends:collectionfriends' => "Přátelé v okruhu",
-	'friends:collectionedit' => "Upravit tento okruh",
-	'friends:nocollections' => "Zatím nemáte žádné okruhy.",
-	'friends:collectiondeleted' => "Váš okruh byl smazán.",
-	'friends:collectiondeletefailed' => "Okruh není možné smazat. Buď k němu nemáte přístup nebo se vyskytl nějaký problém.",
-	'friends:collectionadded' => "Váš okruh byl úspěšně vytvořen",
-	'friends:nocollectionname' => "Před vytvořením musíte dát svému okruhu nějaké jméno.",
-	'friends:collections:members' => "Členové okruhu",
-	'friends:collections:edit' => "Upravit okruh",
-	'friends:collections:edited' => "Okruh uložen",
-	'friends:collection:edit_failed' => 'Nemohu uložit okruh.',
-
-	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+	'collection:friends' => 'Friends\' %s',
 
 	'avatar' => 'Portrét',
 	'avatar:noaccess' => "Nemáte povoleno upravovat portrét tohoto uživatele",
 	'avatar:create' => 'Vytvořit portrét',
 	'avatar:edit' => 'Upravit portrét',
-	'avatar:preview' => 'Ukázka',
 	'avatar:upload' => 'Nahrát nový portrét',
 	'avatar:current' => 'Současný portrét',
 	'avatar:remove' => 'Odebrat portrét a nastavit výchozí obrázek',
@@ -300,50 +284,16 @@ return array(
 	'avatar:crop:fail' => 'Oříznutí portrétu se nezdařilo',
 	'avatar:remove:success' => 'Portrét úspěšně odebrán',
 	'avatar:remove:fail' => 'Odebrání portrétu se nezdařilo',
-
-	'profile:edit' => 'Upravit profil',
-	'profile:aboutme' => "O mě",
-	'profile:description' => "O mě",
-	'profile:briefdescription' => "Stručný popis",
-	'profile:location' => "Umístění",
-	'profile:skills' => "Dovednosti",
-	'profile:interests' => "Zájmy",
-	'profile:contactemail' => "Kontaktní e-mail",
-	'profile:phone' => "Telefon",
-	'profile:mobile' => "Mobil",
-	'profile:website' => "Webové stránky",
-	'profile:twitter' => "Twitterové jméno",
-	'profile:saved' => "Profil byl úspěšně uložen.",
-
-	'profile:field:text' => 'Krátký text',
-	'profile:field:longtext' => 'Dlouhý text',
-	'profile:field:tags' => 'Štítky',
-	'profile:field:url' => 'Webová adresa',
-	'profile:field:email' => 'E-mailová adresa',
-	'profile:field:location' => 'Umístění',
-	'profile:field:date' => 'Datum',
-
-	'admin:appearance:profile_fields' => 'Upravit položky profilu',
-	'profile:edit:default' => 'Upravit položky profilu',
-	'profile:label' => "Nadpis profilu",
-	'profile:type' => "Typ profilu",
-	'profile:editdefault:delete:fail' => 'Selhalo odstranění položky profilu',
-	'profile:editdefault:delete:success' => 'Položka profilu byla odstraněna',
-	'profile:defaultprofile:reset' => 'Nastavit položkám profilu výchozí hodnoty',
-	'profile:resetdefault' => 'Položky profilu nastavit na výchozí hodnoty',
-	'profile:resetdefault:confirm' => 'Jste si jistý/á, že chcete smazat uživatelské položky profilu?',
-	'profile:explainchangefields' => "Pomocí následujícího formuláře můžete nahradit současné položky profilu svými. \n\n Pojmenujte novou položku, např. 'Oblíbený tým', potom vyberte typ položky (text, url, tagy) a klikněte na tlačítko 'Přidat'. Pro změnu pořadí položek přetáhněte položku v místě vedle jména položky. Změna jména položky je možná po kliku do textu jména. \n\n Kdykoliv je možné vrátit se zpět k výchozím hodnotám, ale v tom případě ztratíte všechny informace vložené do uživatelských položek v profilech.",
-	'profile:editdefault:success' => 'Přidána nová položka profilu',
-	'profile:editdefault:fail' => 'Výchozí profil není možné uložit',
-	'profile:field_too_long' => 'Není možné uložit informace vašeho profilu protože část "%s" je příliš dlouhá.',
-	'profile:noaccess' => "Nemáte oprávnění upravovat tento profil.",
-	'profile:invalid_email' => '%s musí být platná e-mailová adresa.',
-
+	
+	'action:user:validate:already' => "%s was already validated",
+	'action:user:validate:success' => "%s has been validated",
+	'action:user:validate:error' => "An error occurred while validating %s",
 
 /**
  * Feeds
  */
 	'feed:rss' => 'RSS kanál pro tuto stránku',
+	'feed:rss:title' => 'RSS feed for this page',
 /**
  * Links
  */
@@ -355,9 +305,8 @@ return array(
  * River
  */
 	'river' => "Aktivita",
-	'river:friend:user:default' => "%s a %s jsou teď přátelé",
+	'river:user:friend' => "%s is now a friend with %s",
 	'river:update:user:avatar' => '%s má nový portrét',
-	'river:update:user:profile' => '%s aktualizoval/a svůj profil',
 	'river:noaccess' => 'Nemáte oprávnění vidět tuto položku.',
 	'river:posted:generic' => '%s odesláno',
 	'riveritem:single:user' => 'uživatel',
@@ -373,11 +322,7 @@ return array(
 	'river:subject:invalid_subject' => 'Neplatný uživatel',
 	'activity:owner' => 'Zobrazit aktivitu',
 
-	'river:widget:title' => "Aktivita",
-	'river:widget:description' => "Zobrazuje nejnovější aktivitu",
-	'river:widget:type' => "Typ aktivity",
-	'river:widgets:friends' => 'Aktivita přátel',
-	'river:widgets:all' => 'Veškerá aktivita stránek',
+	
 
 /**
  * Notifications
@@ -433,6 +378,7 @@ return array(
 	'registerdisabled' => "Registrace byla zakázána správcem systému",
 	'register:fields' => 'Všechny položky jsou vyžadované',
 
+	'registration:noname' => 'Display name is required.',
 	'registration:notemail' => 'E-mailová adresa kterou jste zadal/a se nezdá být platnou e-mailovou adresou.',
 	'registration:userexists' => 'Toto uživatelské jméno již existuje',
 	'registration:usernametooshort' => 'Uživatelské jméno musí mít alespoň %u znaků.',
@@ -452,6 +398,8 @@ return array(
 	'user:name:label' => "Zobrazené jméno",
 	'user:name:success' => "Zobrazované jméno bylo úspěšně změněno.",
 	'user:name:fail' => "Nemohu změnit zobrazované jméno.",
+	'user:username:success' => "Successfully changed username on the system.",
+	'user:username:fail' => "Could not change username on the system.",
 
 	'user:set:password' => "Heslo účtu",
 	'user:current_password:label' => 'Současné heslo',
@@ -471,8 +419,10 @@ return array(
 	'user:language:fail' => "Jazykové nastavení není možné uložit.",
 
 	'user:username:notfound' => 'Uživatelské jméno %s nebylo nalezeno.',
+	'user:username:help' => 'Please be aware that changing a username will change all dynamic user related links',
 
 	'user:password:lost' => 'Ztracené heslo',
+	'user:password:hash_missing' => 'Regretfully, we must ask you to reset your password. We have improved the security of passwords on the site, but were unable to migrate all accounts in the process.',
 	'user:password:changereq:success' => 'Požadavek na nové heslo byl úspěšný, e-mail byl odeslán',
 	'user:password:changereq:fail' => 'Nelze požádat o nové heslo.',
 
@@ -480,7 +430,7 @@ return array(
 
 	'user:persistent' => 'Pamatovat si mě',
 
-	'walled_garden:welcome' => 'Vítejte na',
+	'walled_garden:home' => 'Home',
 
 /**
  * Administration
@@ -488,6 +438,7 @@ return array(
 	'menu:page:header:administer' => 'Spravovat',
 	'menu:page:header:configure' => 'Nastavovat',
 	'menu:page:header:develop' => 'Vyvíjet',
+	'menu:page:header:information' => 'Information',
 	'menu:page:header:default' => 'Ostatní',
 
 	'admin:view_site' => 'Zobrazit stránky',
@@ -504,16 +455,16 @@ return array(
 	'admin' => "Správa",
 	'admin:description' => "Správcovský panel umožňuje řídit všechny součásti systému, od správy uživatelů k chování doplňků. Následují dostupné možnosti.",
 
-	'admin:statistics' => "Statistiky",
-	'admin:statistics:overview' => 'Přehled',
-	'admin:statistics:server' => 'Informace o serveru',
-	'admin:statistics:cron' => 'Cron',
+	'admin:statistics' => 'Statistiky',
+	'admin:server' => 'Server',
+	'admin:cron' => 'Cron',
 	'admin:cron:record' => 'Nejnovější úlohy cronu',
 	'admin:cron:period' => 'Lhůta cronu',
 	'admin:cron:friendly' => 'Naposledy spuštěno',
 	'admin:cron:date' => 'Datum a čas',
 	'admin:cron:msg' => 'Zpráva',
 	'admin:cron:started' => 'Úlohy cronu pro "%s" spuštěny v %s',
+	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
 	'admin:cron:complete' => 'Úlohy cronu pro "%s" dokončeny v %s',
 
 	'admin:appearance' => 'Vzhled',
@@ -532,9 +483,29 @@ return array(
 	'admin:users:opt:linktext' => "Nastavit uživatele...",
 	'admin:users:opt:description' => "Umožňuje nastavit uživatele a informace o účtech. ",
 	'admin:users:find' => 'Najít',
-
-	'admin:administer_utilities:maintenance' => 'Režim údržby',
+	'admin:users:unvalidated' => 'Unvalidated',
+	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
+	'admin:users:unvalidated:registered' => 'Registered: %s',
+	
+	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Aktualizace',
+	'admin:upgrades:finished' => 'Completed',
+	'admin:upgrades:db' => 'Database upgrades',
+	'admin:upgrades:db:name' => 'Upgrade name',
+	'admin:upgrades:db:start_time' => 'Start time',
+	'admin:upgrades:db:end_time' => 'End time',
+	'admin:upgrades:db:duration' => 'Duration',
+	'admin:upgrades:menu:pending' => 'Pending upgrades',
+	'admin:upgrades:menu:completed' => 'Completed upgrades',
+	'admin:upgrades:menu:db' => 'Database upgrades',
+	'admin:upgrades:menu:run_single' => 'Run this upgrade',
+	'admin:upgrades:run' => 'Run upgrades now',
+	'admin:upgrades:error:invalid_upgrade' => 'Entity %s does not exist or not a valid instance of ElggUpgrade',
+	'admin:upgrades:error:invalid_batch' => 'Batch runner for the upgrade %s (%s) could not be instantiated',
+	'admin:upgrades:completed' => 'Upgrade "%s" completed at %s',
+	'admin:upgrades:completed:errors' => 'Upgrade "%s" completed at %s but encountered %s errors',
+	'admin:upgrades:failed' => 'Upgrade "%s" failed',
+	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
 
 	'admin:settings' => 'Nastavení',
 	'admin:settings:basic' => 'Základní nastavení',
@@ -543,11 +514,6 @@ return array(
 	'admin:site:opt:linktext' => "Nastavit stránky...",
 	'admin:settings:in_settings_file' => 'Toto nastavení je definováno v settings.php',
 
-	'admin:legend:security' => 'Bezpečnost',
-	'admin:site:secret:intro' => 'Elgg používá klíč k vytváření bezpečnostních známek pro různé účely.',
-	'admin:site:secret_regenerated' => "Šifrovací klíč stránek byl přegenerován.",
-	'admin:site:secret:regenerate' => "Přegenerovat šifrovací klíč stránek",
-	'admin:site:secret:regenerate:help' => "Pozn.: Přegenerování šifrovacího klíče může některým uživatelům způsobit potíže zneplatněním známek použitých v cookies \"pamatuj si mě\", v požadavcích na potvrzení platnosti e-mailu, zvacích kódech a podobně.",
 	'site_secret:current_strength' => 'Síla klíče',
 	'site_secret:strength:weak' => "Slabý",
 	'site_secret:strength_msg:weak' => "Důrazně vám doporučujeme přegenerování šifrovacího klíče stránek.",
@@ -567,8 +533,11 @@ return array(
 	'admin:widget:content_stats:help' => 'Zobrazuje statistiky obsahu vytvořeného vašimi uživateli',
 	'admin:widget:cron_status' => 'Stav cronu',
 	'admin:widget:cron_status:help' => 'Zobrazuje stav kdy byla úloha cronu naposledy skončena',
-	'widget:content_stats:type' => 'Typ obsahu',
-	'widget:content_stats:number' => 'Hodnota',
+	'admin:statistics:numentities' => 'Content Statistics',
+	'admin:statistics:numentities:type' => 'Content type',
+	'admin:statistics:numentities:number' => 'Number',
+	'admin:statistics:numentities:searchable' => 'Searchable entities',
+	'admin:statistics:numentities:other' => 'Other entities',
 
 	'admin:widget:admin_welcome' => 'Vítejte',
 	'admin:widget:admin_welcome:help' => "Krátké uvedení do administrace projektu Elgg",
@@ -576,13 +545,15 @@ return array(
 'Vítejte v projektu Elgg! Právě se díváte na správcovskou nástěnku. Hodí se na sledování dějů na stránkách.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"Navigace ve správcovské oblasti je realizována pomocí nabídky vpravo. Je rozdělena do tří částí:
+"Navigation for the administration area is provided by the menu to the right. It is organized into
+three sections:
 	<dl>
-		<dt>Spravovat</dt><dd>Každodenní úlohy jako sledování nahlášeného obsahu, kontrola kdo je přihlášen a zobrazení statistik.</dd>
-		<dt>Nastavovat</dt><dd>Příležitostné úlohy jako nastavení stránek nebo povolení doplňku.</dd>
-		<dt>Vyvíjet</dt><dd>Pro vývojáře kteří tvoří doplňky nebo motivy. (Vyžaduje vývojářský doplněk.)</dd>
+		<dt>Administer</dt><dd>Basic tasks like managing users, monitoring reported content and activating plugins.</dd>
+		<dt>Configure</dt><dd>Occasional tasks like setting the site name or configuring settings of a plugin.</dd>
+		<dt>Information</dt><dd>Information about your site like statistics.</dd>
+		<dt>Develop</dt><dd>For developers who are building plugins or designing themes. (Requires a developer plugin.)</dd>
 	</dl>
-	",
+",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Nezapomeňte zkontrolovat zdroje dostupné přes odkazy v patičce. Děkujeme že používáte Elgg!',
@@ -619,11 +590,107 @@ return array(
 	'admin:plugins:markdown:unknown_plugin' => 'Neznámý doplněk.',
 	'admin:plugins:markdown:unknown_file' => 'Neznámý soubor.',
 
+	'admin:notices:delete_all' => 'Dismiss all %s notices',
 	'admin:notices:could_not_delete' => 'Nemohu smazat oznámení.',
 	'item:object:admin_notice' => 'Oznámení správce',
+	'collection:object:admin_notice' => 'Admin notices',
 
 	'admin:options' => 'Volby správce',
 
+	'admin:security' => 'Security',
+	'admin:security:settings' => 'Settings',
+	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
+	'admin:security:settings:label:hardening' => 'Hardening',
+	'admin:security:settings:label:notifications' => 'Notifications',
+	'admin:security:settings:label:site_secret' => 'Site secret',
+	
+	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
+	'admin:security:settings:notify_admins:help' => 'This will send out a notification to all site administrators that one of the admins added/removed a site administrator.',
+	
+	'admin:security:settings:notify_user_admin' => 'Notify the user when the admin role is added or removed',
+	'admin:security:settings:notify_user_admin:help' => 'This will send a notification to the user that the admin role was added to/removed from their account.',
+	
+	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
+	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
+	
+	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
+	'admin:security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
+	'admin:security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
+	
+	'admin:security:settings:protect_cron' => 'Protect the /cron URLs',
+	'admin:security:settings:protect_cron:help' => 'This will protect the /cron URLs with a token, only if a valid token is provided will the cron execute.',
+	'admin:security:settings:protect_cron:token' => 'In order to be able to use the /cron URLs the following tokens needs to be used. Please note that each interval has its own token.',
+	'admin:security:settings:protect_cron:toggle' => 'Show/hide cron URLs',
+	
+	'admin:security:settings:disable_password_autocomplete' => 'Disable autocomplete on password fields',
+	'admin:security:settings:disable_password_autocomplete:help' => 'Data entered in these fields will be cached by the browser. An attacker who can access the victim\'s browser could steal this information. This is especially important if the application is commonly used in shared computers such as cyber cafes or airport terminals. If you disable this, password management tools can no longer autofill these fields. The support for the autocomplete attribute can be browser specific.',
+	
+	'admin:security:settings:email_require_password' => 'Require password to change email address',
+	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+
+	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
+Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+	
+	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
+	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
+	'admin:security:settings:site_secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
+	
+	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
+	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
+	
+	'admin:notification:make_admin:admin:subject' => 'A new site administrator was added to %s',
+	'admin:notification:make_admin:admin:body' => 'Hi %s,
+
+%s made %s a site administrator of %s.
+
+To view the profile of the new administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:make_admin:user:subject' => 'You were added as a site administator of %s',
+	'admin:notification:make_admin:user:body' => 'Hi %s,
+
+%s made you a site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'admin:notification:remove_admin:admin:subject' => 'A site administrator was removed from %s',
+	'admin:notification:remove_admin:admin:body' => 'Hi %s,
+
+%s removed %s as a site administrator of %s.
+
+To view the profile of the old administrator, click here:
+%s
+
+To go to the site, click here:
+%s',
+	
+	'admin:notification:remove_admin:user:subject' => 'You were removed as a site administator from %s',
+	'admin:notification:remove_admin:user:body' => 'Hi %s,
+
+%s removed you as site administrator of %s.
+
+To go to the site, click here:
+%s',
+	'user:notification:ban:subject' => 'Your account on %s was banned',
+	'user:notification:ban:body' => 'Hi %s,
+
+Your account on %s was banned.
+
+To go to the site, click here:
+%s',
+	
+	'user:notification:unban:subject' => 'Your account on %s is no longer banned',
+	'user:notification:unban:body' => 'Hi %s,
+
+Your account on %s is no longer banned. You can use the site again.
+
+To go to the site, click here:
+%s',
+	
 /**
  * Plugins
  */
@@ -634,6 +701,7 @@ return array(
 	'plugins:usersettings:save:ok' => "Uživatelské nastavení pro doplněk %s bylo úspěšně uloženo.",
 	'plugins:usersettings:save:fail' => "Při ukládání uživatelského nastavení pro doplněk %s se vyskytl problém.",
 	'item:object:plugin' => 'Doplňky',
+	'collection:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "Doplňky",
 	'admin:plugins:activate_all' => 'Aktivovat všechny',
@@ -667,6 +735,7 @@ return array(
 	'admin:plugins:label:contributors:username' => 'Komunitní uživatelské jméno',
 	'admin:plugins:label:contributors:description' => 'Popis',
 	'admin:plugins:label:dependencies' => 'Závislosti',
+	'admin:plugins:label:missing_dependency' => 'Missing dependency [%s].',
 
 	'admin:plugins:warning:unmet_dependencies' => 'Tento doplněk má nesplněné závislosti a nemůže být aktivován. Zkontrolujte závislosti pod "více informací".',
 	'admin:plugins:warning:invalid' => 'Tento doplněk je chybný: %s',
@@ -701,7 +770,7 @@ return array(
 	'admin:statistics:description' => "Toto je přehled statistik vašich stánek. Pokud potřebujete podrobnější statistiky, je k dispozici profesionální správcovská součást.",
 	'admin:statistics:opt:description' => "Zobrazí statistické informace o uživatelích a objektech na vašich stránkách.",
 	'admin:statistics:opt:linktext' => "Zobrazit statistiky...",
-	'admin:statistics:label:basic' => "Základní statistiky stránek",
+	'admin:statistics:label:user' => "User statistics",
 	'admin:statistics:label:numentities' => "Subjekty na stránkách",
 	'admin:statistics:label:numusers' => "Počet uživatelů",
 	'admin:statistics:label:numonline' => "Počet připojených uživatelů",
@@ -710,8 +779,11 @@ return array(
 	'admin:statistics:label:version' => "Verze Elgg",
 	'admin:statistics:label:version:release' => "Vydání",
 	'admin:statistics:label:version:version' => "Verze",
+	'admin:statistics:label:version:code' => "Code Version",
 
+	'admin:server:label:elgg' => 'Elgg',
 	'admin:server:label:php' => 'PHP',
+	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'Webový server',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Umístění logu',
@@ -726,10 +798,22 @@ return array(
 	'admin:server:warning:post_max_too_small' => '(Pozn: pro schopnost nahrávat tuto velikost musí být post_max_size  větší než tato hodnota)',
 	'admin:server:label:memcache' => 'Memcache',
 	'admin:server:memcache:inactive' => '
-		Memcache není na tomto serveru dostupná nebo zatím nebyla nastavena v Elgg nastavení.
-		Pro zvýšení výkonu je doporučeno aby byla povolena a správně nastavena.
-	',
+		Memcache is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure memcache (or redis).
+',
 
+	'admin:server:label:redis' => 'Redis',
+	'admin:server:redis:inactive' => '
+		Redis is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure redis (or memcache).
+',
+
+	'admin:server:label:opcache' => 'OPcache',
+	'admin:server:opcache:inactive' => '
+		OPcache is not available on this server or it has not yet been enabled.
+		For improved performance, it is recommended that you enable and configure OPcache.
+',
+	
 	'admin:user:label:search' => "Hledat uživatele:",
 	'admin:user:label:searchbutton' => "Hledat",
 
@@ -752,7 +836,7 @@ return array(
 	'admin:user:removeadmin:no' => "Tomuto uživateli nemůžeme odebrat správcovská práva.",
 	'admin:user:self:removeadmin:no' => "Nemůžete odebrat správcovská práva sám sobě.",
 
-	'admin:appearance:menu_items' => 'Položky nabídky',
+	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Nastavit položky hlavní nabídky',
 	'admin:menu_items:description' => 'Vyberte jaké položky chcete zobrazovat jako zajímavé odkazy. Nepoužité položky budou přidány jako "Další" na konci výpisu.',
 	'admin:menu_items:hide_toolbar_entries' => 'Odebrat odkazy z nabídky v liště s nástroji?',
@@ -760,10 +844,10 @@ return array(
 	'admin:add_menu_item' => 'Přidat vlastní položku nabídky',
 	'admin:add_menu_item:description' => 'Pro přidání vlastní položky do nabídky navigace vyplňte "Zobrazované jméno" a URL.',
 
-	'admin:appearance:default_widgets' => 'Výchozí udělátka',
+	'admin:configure_utilities:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Neznámý typ udělátka',
-	'admin:default_widgets:instructions' => 'Přidejte, odeberte, umístěte a nastavte výchozí udělátka pro zvolenou stránku.
-Tyto změny se projeví pouze novým uživatelům na stránkách.',
+	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
+These changes will only affect new users on the site.',
 
 	'admin:robots.txt:instructions' => "Upravte následující soubor robots.txt",
 	'admin:robots.txt:plugins' => "Doplňky do souboru robots.txt přidávají následující záznamy",
@@ -771,8 +855,8 @@ Tyto změny se projeví pouze novým uživatelům na stránkách.',
 	'admin:robots.txt:physical' => "Nástroj robots.txt nebude fungovat protože existuje soubor robots.txt",
 
 	'admin:maintenance_mode:default_message' => 'Stránky jsou vypnuté z důvodu údržby',
-	'admin:maintenance_mode:instructions' => 'Režim údržby by měl být použit při aktualizacích a dalších velkých změnách stránek.
-		Pokud je zapnutý, mohou se přihlásit a pracovat pouze správci.',
+	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.
+		When it is on, only admins can log in and browse the site.',
 	'admin:maintenance_mode:mode_label' => 'Režim údržby',
 	'admin:maintenance_mode:message_label' => 'Zpráva zobrazená uživatelům když je zapnutý režim údržby.',
 	'admin:maintenance_mode:saved' => 'Nastavení režimu údržby bylo uloženo.',
@@ -788,7 +872,7 @@ Tyto změny se projeví pouze novým uživatelům na stránkách.',
 	'usersettings:statistics' => "Vaše statistiky",
 	'usersettings:statistics:opt:description' => "Zobrazí statistické informace o uživatelích a objektech na vašich stránkách.",
 	'usersettings:statistics:opt:linktext' => "Statistiky účtu",
-	
+
 	'usersettings:statistics:login_history' => "Historie přihlášení",
 	'usersettings:statistics:login_history:date' => "Datum",
 	'usersettings:statistics:login_history:ip' => "IP adresa",
@@ -823,12 +907,6 @@ Tyto změny se projeví pouze novým uživatelům na stránkách.',
 	'river:comments:all' => 'Zobrazit všech %u komentářů',
 	'river:generic_comment' => 'přidal/a komentář k %s %s',
 
-	'friends:widget:description' => "Zobrazuje některé vaše přátele",
-	'friends:num_display' => "Počet zobrazených přátel",
-	'friends:icon_size' => "Velikost ikony",
-	'friends:tiny' => "mrňavá",
-	'friends:small' => "malá",
-
 /**
  * Icons
  */
@@ -840,12 +918,17 @@ Tyto změny se projeví pouze novým uživatelům na stránkách.',
 	'icon:size:medium' => "Střední",
 	'icon:size:large' => "Velká",
 	'icon:size:master' => "Obrovská",
+	
+	'entity:edit:icon:file:label' => "Upload a new icon",
+	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
+	'entity:edit:icon:remove:label' => "Remove icon",
 
 /**
  * Generic action words
  */
 
 	'save' => "Uložit",
+	'save_go' => "Save, and go to %s",
 	'reset' => 'Vynulovat',
 	'publish' => "Zveřejnit",
 	'cancel' => "Zrušit",
@@ -896,6 +979,8 @@ Tyto změny se projeví pouze novým uživatelům na stránkách.',
 	'create' => 'Vytvořit',
 	'remove' => 'Odstranit',
 	'revert' => 'Vrátit',
+	'validate' => 'Validate',
+	'read_more' => 'Read more',
 
 	'site' => 'Stránky',
 	'activity' => 'Aktivita',
@@ -1006,27 +1091,26 @@ Tyto změny se projeví pouze novým uživatelům na stránkách.',
 
 	'deleteconfirm' => "Jste si jistý/á, že chcete smazat tuto položku?",
 	'deleteconfirm:plural' => "Jste si jistý/á, že chcete smazat tyto položky?",
-	'fileexists' => "Soubor byl již nahrán, vybráním ho nahradíte:",
+	'fileexists' => "A file has already been uploaded. To replace it, select a new one below",
+	'input:file:upload_limit' => 'Maximum allowed file size is %s',
 
 /**
  * User add
  */
 
 	'useradd:subject' => 'Uživatelský účet byl vytvořen',
-	'useradd:body' => '
-%s,
+	'useradd:body' => '%s,
 
-byl vám zřízen účet na %s. Pro přihlášení navštivte:
+A user account has been created for you at %s. To log in, visit:
 
 %s
 
-a přihlaste se pomocí těchto údajů:
+And log in with these user credentials:
 
-uživatelské jméno: %s
-heslo: %s
+Username: %s
+Password: %s
 
-Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
-',
+Once you have logged in, we highly recommend that you change your password.',
 
 /**
  * System messages
@@ -1034,6 +1118,15 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 
 	'systemmessages:dismiss' => "kliknutím potvrdíte",
 
+
+/**
+ * Messages
+ */
+	'messages:title:success' => 'Success',
+	'messages:title:error' => 'Error',
+	'messages:title:warning' => 'Warning',
+	'messages:title:help' => 'Help',
+	'messages:title:notice' => 'Notice',
 
 /**
  * Import / export
@@ -1046,6 +1139,10 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
  * Time
  */
 
+	'input:date_format' => 'Y-m-d',
+	'input:date_format:datepicker' => 'yy-mm-dd', // jQuery UI datepicker format
+	'input:time_format' => 'g:ia',
+
 	'friendlytime:justnow' => "právě teď",
 	'friendlytime:minutes' => "před %s minutami",
 	'friendlytime:minutes:singular' => "před minutou",
@@ -1054,6 +1151,7 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 	'friendlytime:days' => "před %s dny",
 	'friendlytime:days:singular' => "včera",
 	'friendlytime:date_format' => 'j. F Y G:i',
+	'friendlytime:date_format:short' => 'j M Y',
 
 	'friendlytime:future:minutes' => "za %s minut",
 	'friendlytime:future:minutes:singular' => "za minutu",
@@ -1074,7 +1172,7 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 	'date:month:10' => 'říjen %s',
 	'date:month:11' => 'listopad %s',
 	'date:month:12' => 'prosinec %s',
-	
+
 	'date:month:short:01' => '%s. led',
 	'date:month:short:02' => '%s. úno',
 	'date:month:short:03' => '%s. bře',
@@ -1113,7 +1211,6 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 	'interval:weekly' => 'Týdně',
 	'interval:monthly' => 'Měsíčně',
 	'interval:yearly' => 'Ročně',
-	'interval:reboot' => 'Při restartu',
 
 /**
  * System settings
@@ -1121,6 +1218,7 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 
 	'installation:sitename' => "Jméno vašich stránek:",
 	'installation:sitedescription' => "Krátký popis vašich stránek (volitelné):",
+	'installation:sitedescription:help' => "With bundled plugins this appears only in the description meta tag for search engine results.",
 	'installation:wwwroot' => "URL stránek:",
 	'installation:path' => "Úplná cesta k instalaci systému Elgg:",
 	'installation:dataroot' => "Úplná cesta k datovému adresáři:",
@@ -1175,25 +1273,32 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 	'admin:legend:content_access' => 'Přístup k obsahu',
 	'admin:legend:site_access' => 'Přístup ke stránkám',
 	'admin:legend:debug' => 'Ladění a výpisy',
-
+	
+	'config:remove_branding:label' => "Remove Elgg branding",
+	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
+	'config:disable_rss:label' => "Disable RSS feeds",
+	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
+	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
+	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+	
 	'upgrading' => 'Aktualizace...',
 	'upgrade:core' => 'Vaše instalace Elgg byla aktualizována.',
 	'upgrade:unlock' => 'Odemknout aktualizaci',
 	'upgrade:unlock:confirm' => "Databáze je zamčena jinou aktualizací. Spuštění několika aktualizací naráz je nebezpečné. Měl/a byste pokračovat pouze pokud víte, že neprobíhá jiná aktualizace. Odemknout?",
+	'upgrade:terminated' => 'Upgrade has been terminated by an event handler',
 	'upgrade:locked' => "Nemohu aktualizovat, probíhá jiná aktualizace. Pro odstranění zámku aktualizace navštivte sekci správce.",
 	'upgrade:unlock:success' => "Aktualizace odemčena úspěšně.",
 	'upgrade:unable_to_upgrade' => 'Nelze aktualizovat.',
-	'upgrade:unable_to_upgrade_info' =>
-		'Tuto instalaci není možné aktualizovat protože v adresáři pro
-		základní pohledy byly nalezeny zastaralé pohledy. Tyto pohledy je nutné odstranit aby Elgg
-		pracoval správně. Pokud jste neprováděl/a úpravy v Elgg jádře, můžete jednoduše smazat adresář pohledů
-		a nahradit jej z nejnovějšího balíku Elgg staženého z  <a href="http://elgg.org">elgg.org</a>.<br /><br />
+	'upgrade:unable_to_upgrade_info' => 'This installation cannot be upgraded because legacy views
+were detected in the Elgg core views directory. These views have been deprecated and need to be
+removed for Elgg to function correctly. If you have not made changes to Elgg core, you can
+simply delete the views directory and replace it with the one from the latest
+package of Elgg downloaded from <a href="https://elgg.org">elgg.org</a>.<br /><br />
 
-		Pokud potřebujete podrobnější informace, navštivte prosím <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
-		dokumentaci aktualizace Elgg</a>. Pokud požadujete pomoc, napište anglicky příspěvek na 
-		<a href="http://community.elgg.org/pg/groups/discussion/">komunitní fórum podpory</a>.',
+If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
+Upgrading Elgg documentation</a>. If you require assistance, please post to the
+<a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
 
-	'update:twitter_api:deactivated' => 'Twitter API (dříve Služba Twitter) byla během aktualizace deaktivována. Pokud ji požadujete, aktivujte ji prosím ručně.',
 	'update:oauth_api:deactivated' => 'OAuth API (dříve OAuth Lib) byla během aktualizace deaktivována. Pokud ji požadujete, aktivujte ji prosím ručně.',
 	'upgrade:site_secret_warning:moderate' => "Doporučujeme vám zvýšit zabezpečení vašich stránek přegenerováním šifrovacího klíče. Viz. Nastavovat &gt; Nastavení &gt; Rozšířená nastavení",
 	'upgrade:site_secret_warning:weak' => "Důrazně vám doporučujeme zvýšit zabezpečení vašich stránek přegenerováním šifrovacího klíče. Viz. Nastavovat &gt; Nastavení &gt; Rozšířená nastavení",
@@ -1203,17 +1308,18 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 	'admin:pending_upgrades' => 'Stránky mají nevyřízené aktualizace, které požadují váš bezodkladný zásah.',
 	'admin:view_upgrades' => 'Zobrazit nevyřízené aktualizace',
 	'item:object:elgg_upgrade' => 'Aktualizace stránek',
+	'collection:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Vaše instalace je aktuální!',
 
 	'upgrade:item_count' => 'Je zde <b>%s</b> položek, které vyžadují aktualizaci.',
 	'upgrade:warning' => '<b>Varování:</b> na rozsáhlých stránkách může tato aktualizace trvat velice dlouho!',
 	'upgrade:success_count' => 'Aktualizováno:',
 	'upgrade:error_count' => 'Chyby:',
-	'upgrade:river_update_failed' => 'Nepodařilo se aktualizovat záznam aktivity pro položku s id %s',
-	'upgrade:timestamp_update_failed' => 'Nepodařilo se aktualizovat časovou značku pro položku s id %s',
 	'upgrade:finished' => 'Aktualizace dokončena',
 	'upgrade:finished_with_errors' => '<p>Aktualizace dokončena s chybami. Obnovte stránku a zkuste aktualizaci spustit znovu.</p></p><br />Pokud se bude chyba opakovat, zkontrolujte chybový log serveru, ten může obsahovat důvod. Pomoc s opravou chyby můžete najít ve <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">skupině technické podpory</a> pro komunitu Elgg.</p>',
-
+	'upgrade:should_be_skipped' => 'No items to upgrade',
+	'upgrade:count_items' => '%d items to upgrade',
+	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Zarovnat GUID sloupce v databázi',
 	
@@ -1235,38 +1341,38 @@ Důrazně vám doporučujeme si po přihlášení ihned změnit heslo.
 
 	'email:settings' => "Nastavení e-mailu",
 	'email:address:label' => "E-mailová adresa",
+	'email:address:password' => "Password",
+	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
 	'email:save:success' => "Nová e-mailová adresa byla uložena. Je požadováno ověření.",
 	'email:save:fail' => "Nová e-mailová adresa nemohla být uložena.",
+	'email:save:fail:password' => "The password doesn't match your current password, could not change your email address",
 
 	'friend:newfriend:subject' => "%s z vás udělal/a svého přítele!",
-	'friend:newfriend:body' => "%s z vás udělal/a svého přítele!
+	'friend:newfriend:body' => "%s has made you a friend!
 
-Pro zobrazení jeho/jejího profilu klikněte na následující odkaz:
+To view their profile, click here:
 
-%s
-
-Na tento e-mail prosím neodpovídejte.",
+%s",
 
 	'email:changepassword:subject' => "Heslo bylo změněno!",
-	'email:changepassword:body' => "Zdravím %s,
+	'email:changepassword:body' => "Hi %s,
 
-vaše heslo bylo změněno.",
+Your password has been changed.",
 
 	'email:resetpassword:subject' => "Heslo obnoveno!",
-	'email:resetpassword:body' => "Zdravím %s,
+	'email:resetpassword:body' => "Hi %s,
 
-vaše heslo bylo obnoveno na: %s",
+Your password has been reset to: %s",
 
 	'email:changereq:subject' => "Požadavek na změnu hesla.",
-	'email:changereq:body' => "Zdravím %s
+	'email:changereq:body' => "Hi %s,
 
-někdo (z IP adresy %s) požaduje změnu hesla pro tento účet.
+Somebody (from the IP address %s) has requested a password change for this account.
 
-Pokud jste to vy, klikněte na následující odkaz. V opačném případě tento e-mail ignorujte.
+If you requested this, click on the link below. Otherwise ignore this email.
 
-%s
-",
+%s",
 
 /**
  * user default access
@@ -1283,8 +1389,9 @@ Pokud jste to vy, klikněte na následující odkaz. V opačném případě tent
 
 	'comments:count' => "%s komentářů",
 	'item:object:comment' => 'Komentáře',
+	'collection:object:comment' => 'Comments',
 
-	'river:comment:object:default' => '%s přidal/a komentář k %s',
+	'river:object:default:comment' => '%s commented on %s',
 
 	'generic_comments:add' => "Přidat komentář",
 	'generic_comments:edit' => "Upravit komentář",
@@ -1293,33 +1400,39 @@ Pokud jste to vy, klikněte na následující odkaz. V opačném případě tent
 	'generic_comments:latest' => "Nejnovější komentáře",
 	'generic_comment:posted' => "Váš komentář byl úspěšně odeslán.",
 	'generic_comment:updated' => "Váš komentář byl úspěšně aktualizován.",
-	'generic_comment:deleted' => "Komentář byl úspěšně smazán.",
+	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
 	'generic_comment:blank' => "Omlouváme se, ale aby bylo možné komentář uložit, musíte do něj nejdříve něco napsat.",
 	'generic_comment:notfound' => "Bohužel jsme nemohli najít požadovaný komentář.",
 	'generic_comment:notfound_fallback' => "Bohužel jsme nemohli najít požadovaný komentář, ale přesměrovali jsme vás na místo, kde byl zanechán.",
-	'generic_comment:notdeleted' => "Bohužel nemůžeme smazat tento komentář.",
 	'generic_comment:failure' => "Při ukládání komentáře nastala nečekaná chyba.",
 	'generic_comment:none' => 'Žádné komentáře',
 	'generic_comment:title' => 'Komentováno uživatelem %s',
 	'generic_comment:on' => '%s na %s',
 	'generic_comments:latest:posted' => 'odeslal/a',
 
-	'generic_comment:email:subject' => 'Máte nový komentář!',
-	'generic_comment:email:body' => "Vaše položka \"%s\" dostala nový komentář od %s. Říká se v něm:
-
-
-%s
-
-
-Adresa pro odpověď nebo zobrazení původní položky:
+	'generic_comment:notification:owner:subject' => 'You have a new comment!',
+	'generic_comment:notification:owner:summary' => 'You have a new comment!',
+	'generic_comment:notification:owner:body' => "You have a new comment on your item \"%s\" from %s. It reads:
 
 %s
 
-Adresa profilu uživatele %s:
+To reply or view the original item, click here:
+%s
+
+To view %s's profile, click here:
+%s",
+	
+	'generic_comment:notification:user:subject' => 'A new comment on: %s',
+	'generic_comment:notification:user:summary' => 'A new comment on: %s',
+	'generic_comment:notification:user:body' => "A new comment was made on \"%s\" by %s. It reads:
 
 %s
 
-Na tento e-mail prosím neodpovídejte.",
+To reply or view the original item, click here:
+%s
+
+To view %s's profile, click here:
+%s",
 
 /**
  * Entities
@@ -1327,7 +1440,6 @@ Na tento e-mail prosím neodpovídejte.",
 
 	'byline' => 'Od %s',
 	'byline:ingroup' => 've skupině %s',
-	'entity:default:strapline' => 'Vytvořeno %s uživatelem %s',
 	'entity:default:missingsupport:popup' => 'Tato položka nemůže být správně zobrazena. Možná požaduje podporu doplňku, který již není nainstalován.',
 
 	'entity:delete:item' => 'Položka',
@@ -1530,4 +1642,21 @@ Na tento e-mail prosím neodpovídejte.",
 
 	"field:required" => 'Vyžadováno',
 
+	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
+	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
+
+	"core:upgrade:2017080950:title" => "Update default security parameters",
+	"core:upgrade:2017080950:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the defaults. You can later update these parameters in your site settings.",
+
+	"core:upgrade:2017121200:title" => "Create friends access collections",
+	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
+
+	"core:upgrade:2018041800:title" => "Activate new plugins",
+	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
+
+	"core:upgrade:2018041801:title" => "Delete old plugin entities",
+	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
+	
+	"core:upgrade:2018061401:title" => "Migrate cron log entries",
+	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
 );

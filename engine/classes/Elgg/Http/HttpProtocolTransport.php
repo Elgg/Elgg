@@ -2,7 +2,6 @@
 
 namespace Elgg\Http;
 
-use Elgg\Http\ResponseTransport;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -15,6 +14,8 @@ class HttpProtocolTransport implements ResponseTransport {
 	
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @return Response
 	 */
 	public function send(Response $response) {
 		return $response->send();

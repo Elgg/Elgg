@@ -94,7 +94,7 @@ foreach ($values as $name => $default) {
 }
 
 // if preview, force status to be draft
-if ($save == false) {
+if (!$save) {
 	$values['status'] = 'draft';
 }
 
@@ -154,7 +154,7 @@ if (($new_post || $old_status == 'draft') && $status == 'published') {
 	]);
 }
 
-if ($blog->status == 'published' || $save == false) {
+if ($blog->status == 'published' || !$save) {
 	$forward_url = $blog->getURL();
 } else {
 	$forward_url = elgg_generate_url('edit:object:blog', [

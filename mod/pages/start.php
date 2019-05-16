@@ -197,9 +197,7 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	}
 	
 	$owner = $event->getActor();
-	$recipient = elgg_extract('recipient', $params);
 	$language = elgg_extract('language', $params);
-	$method = elgg_extract('method', $params);
 
 	$descr = $entity->description;
 	$title = $entity->getDisplayName();
@@ -245,7 +243,6 @@ function pages_write_permission_check($hook, $type, $returnvalue, $params) {
 		case ACCESS_PRIVATE:
 			// Elgg's default decision is what we want
 			return;
-			break;
 		default:
 			$list = get_access_array($user->guid);
 			if (in_array($write_permission, $list)) {
@@ -287,6 +284,7 @@ function pages_container_permission_check($hook, $type, $returnvalue, $params) {
 	}
 
 	// look up a page object given via input
+	$page = false;
 	if ($page_guid = get_input('page_guid', 0)) {
 		$page = get_entity($page_guid);
 	} elseif ($parent_guid = get_input('parent_guid', 0)) {

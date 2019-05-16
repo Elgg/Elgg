@@ -182,19 +182,12 @@ class ElggPluginPackage {
 	 */
 	private function validate() {
 		// check required files.
-		$have_req_files = true;
 		foreach ($this->requiredFiles as $file) {
 			if (!is_readable($this->path . $file)) {
-				$have_req_files = false;
 				$this->errorMsg = elgg_echo('ElggPluginPackage:InvalidPlugin:MissingFile', [$file]);
 
 				return false;
 			}
-		}
-
-		// check required files
-		if (!$have_req_files) {
-			return $this->valid = false;
 		}
 
 		// check for valid manifest.
@@ -333,7 +326,7 @@ class ElggPluginPackage {
 	/**
 	 * Returns a parsed manifest file.
 	 *
-	 * @return \ElggPluginManifest
+	 * @return \ElggPluginManifest|false
 	 */
 	public function getManifest() {
 		if (!$this->manifest) {
@@ -566,7 +559,7 @@ class ElggPluginPackage {
 	 * @param array $plugins A list of plugins as returned by elgg_get_plugins();
 	 * @param bool  $inverse Inverse the results to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepPriority(array $dep, array $plugins, $inverse = false) {
 		// grab the \ElggPlugin using this package.
@@ -629,7 +622,7 @@ class ElggPluginPackage {
 	 * @param array $elgg_version An Elgg version (either YYYYMMDDXX or X.Y.Z)
 	 * @param bool  $inverse      Inverse the result to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepElgg(array $dep, $elgg_version, $inverse = false) {
 		$status = version_compare($elgg_version, $dep['version'], $dep['comparison']);
@@ -650,7 +643,7 @@ class ElggPluginPackage {
 	 * @param array $dep     An Elgg manifest.xml deps array
 	 * @param bool  $inverse Inverse the result to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepPhpVersion(array $dep, $inverse = false) {
 		$php_version = phpversion();
@@ -725,7 +718,7 @@ class ElggPluginPackage {
 	 * @param array $dep     An Elgg manifest.xml deps array
 	 * @param bool  $inverse Inverse the result to use as a conflicts.
 	 *
-	 * @return bool
+	 * @return array
 	 */
 	private function checkDepPhpIni($dep, $inverse = false) {
 		$name = $dep['name'];

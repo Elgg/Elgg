@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Cli\Application;
+use Elgg\Cli\Application as CliApplication;
 use Elgg\Cli\ErrorFormatter;
 use Elgg\Cli\ErrorHandler;
 use Elgg\Logger\BacktraceProcessor;
@@ -14,9 +14,7 @@ use Monolog\Processor\ProcessIdProcessor;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
 use Psr\Log\LogLevel;
-use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -59,7 +57,7 @@ class Logger extends \Monolog\Logger {
 	];
 
 	/**
-	 * @var string The logging level
+	 * @var false|string The logging level
 	 */
 	protected $level;
 
@@ -89,7 +87,7 @@ class Logger extends \Monolog\Logger {
 				$input = $input ? : \Elgg\Application::getStdIn();
 				$output = $output ? : \Elgg\Application::getStdOut();
 
-				$app = new Application();
+				$app = new CliApplication();
 				$app->setup($input, $output);
 			}
 
@@ -250,8 +248,6 @@ class Logger extends \Monolog\Logger {
 		}
 
 		if ($this->hooks) {
-			$levelString = strtoupper($level);
-
 			$params = [
 				'level' => $level,
 				'msg' => $message,

@@ -1,7 +1,6 @@
 <?php
 
-use Elgg\Filesystem\Directory;
-use Elgg\Application;
+use Elgg\Filesystem\Directory as ElggDirectory;
 use Elgg\Project\Paths;
 use Elgg\Http\Request;
 
@@ -26,7 +25,7 @@ class ElggRewriteTester {
 	 * Run the rewrite test and return a status array
 	 *
 	 * @param string $url  URL of rewrite test
-	 * @param string $path Root directory of Elgg with trailing slash
+	 * @param string $path Obsolete, don't use
 	 *
 	 * @return array
 	 */
@@ -36,9 +35,9 @@ class ElggRewriteTester {
 
 		$this->rewriteTestPassed = $this->runRewriteTest($url);
 
-		if ($this->rewriteTestPassed == false) {
+		if ($this->rewriteTestPassed === false) {
 			if ($this->webserver == 'apache' || $this->webserver == 'unknown') {
-				if ($this->createHtaccess($url, $path)) {
+				if ($this->createHtaccess($url)) {
 					$this->rewriteTestPassed = $this->runRewriteTest($url);
 				}
 			}
@@ -151,7 +150,7 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function createHtaccess($url) {
-		$root = Directory\Local::projectRoot();
+		$root = ElggDirectory\Local::projectRoot();
 		$file = $root->getFile(".htaccess");
 
 		if ($file->exists()) {
@@ -169,7 +168,7 @@ class ElggRewriteTester {
 			}
 
 			// check if this is an old Elgg htaccess
-			if (strpos($data, 'RewriteRule ^rewrite.php$ install.php') == false) {
+			if (strpos($data, 'RewriteRule ^rewrite.php$ install.php') === false) {
 				$this->htaccessIssue = 'old_elgg_htaccess';
 				return false;
 			}

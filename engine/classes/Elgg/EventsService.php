@@ -56,12 +56,14 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 * @param array  $options     (internal) options for triggering the event
 	 *
 	 * @see elgg_trigger_event()
 	 * @see elgg_trigger_after_event()
 	 * @see elgg_trigger_before_event()
+	 *
+	 * @return bool
 	 */
 	public function trigger($name, $type, $object = null, array $options = []) {
 		$options = array_merge([
@@ -115,7 +117,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type. The fired event type will be appended with ":before".
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 *
 	 * @return bool False if any handler returned false, otherwise true
 	 *
@@ -123,7 +125,7 @@ class EventsService extends HooksRegistrationService {
 	 * @see EventsService::triggerAfter()
 	 * @since 2.0.0
 	 */
-	function triggerBefore($event, $object_type, $object = null) {
+	public function triggerBefore($event, $object_type, $object = null) {
 		return $this->trigger("$event:before", $object_type, $object);
 	}
 
@@ -136,7 +138,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type. The fired event type will be appended with ":after".
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 *
 	 * @return true
 	 *
@@ -159,7 +161,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string   $event       The event type
 	 * @param string   $object_type The object type
-	 * @param string   $object      The object involved in the event
+	 * @param mixed    $object      The object involved in the event
 	 * @param callable $callable    Callable to run on successful event, before event:after
 	 * @return mixed
 	 */
@@ -187,7 +189,7 @@ class EventsService extends HooksRegistrationService {
 	 *
 	 * @param string $event       The event type
 	 * @param string $object_type The object type
-	 * @param string $object      The object involved in the event
+	 * @param mixed  $object      The object involved in the event
 	 * @param string $message     The deprecation message
 	 * @param string $version     Human-readable *release* version: 1.9, 1.10, ...
 	 *
@@ -196,7 +198,7 @@ class EventsService extends HooksRegistrationService {
 	 * @see EventsService::trigger()
 	 * @see elgg_trigger_deprecated_event()
 	 */
-	function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
+	public function triggerDeprecated($event, $object_type, $object = null, $message = null, $version = null) {
 		$options = [
 			self::OPTION_DEPRECATION_MESSAGE => $message,
 			self::OPTION_DEPRECATION_VERSION => $version,

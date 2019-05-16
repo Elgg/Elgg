@@ -47,6 +47,7 @@ if ($comment_count) {
 	echo elgg_view_entity_list($comments, [
 		'list_class' => 'elgg-river-comments',
 		'show_excerpt' => true,
+		'register_rss_link' => false,
 	]);
 	
 	if ($comment_count > count($comments)) {

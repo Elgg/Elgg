@@ -88,7 +88,7 @@ class PrivateSettingsTable {
 
 		$return = [];
 
-		if ($result) {
+		if (!empty($result)) {
 			foreach ($result as $r) {
 				$return[$r->name] = $r->value;
 			}
@@ -127,8 +127,7 @@ class PrivateSettingsTable {
 			->where($qb->compare('entity_guid', 'IN', $guids));
 
 		$result = $this->db->getData($qb);
-
-		if (!$result) {
+		if (empty($result)) {
 			return [];
 		}
 		
@@ -146,7 +145,7 @@ class PrivateSettingsTable {
 	 *
 	 * @param ElggEntity $entity Entity
 	 * @param string     $name   The name of the setting
-	 * @param string     $value  The value of the setting
+	 * @param string|int $value  The value of the setting
 	 *
 	 * @return bool
 	 * @throws DatabaseException
@@ -163,7 +162,7 @@ class PrivateSettingsTable {
 
 		$row = $this->db->getDataRow($qb);
 
-		if ($row) {
+		if (!empty($row)) {
 			$qb = Update::table('private_settings');
 			$qb->set('value', $qb->param($value, $value_type))
 				->where($qb->compare('id', '=', $row->id, ELGG_VALUE_INTEGER));

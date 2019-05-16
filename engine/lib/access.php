@@ -358,7 +358,7 @@ function elgg_get_access_collections($options = []) {
  * @param bool  $guids_only    If set to true, will only return the members' GUIDs (default: false)
  * @param array $options       ege* options
  *
- * @return ElggUser[]|int[]|false guids or entities if successful, false if not
+ * @return \ElggData[]|int|int[]|mixed guids or entities if successful, false if not
  * @see add_user_to_access_collection()
  */
 function get_members_of_access_collection($collection_id, $guids_only = false, array $options = []) {
@@ -374,7 +374,7 @@ function get_members_of_access_collection($collection_id, $guids_only = false, a
 	$options['callback'] = false;
 	$rows = _elgg_services()->accessCollections->getMembers($collection_id, $options);
 	foreach ($rows as $row) {
-		$guids[] = $row->guid;
+		$guids[] = (int) $row->guid;
 	}
 	return $guids;
 }

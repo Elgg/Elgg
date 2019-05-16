@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-21 16:20+0100\n"
+"POT-Creation-Date: 2019-04-17 11:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1703,30 +1703,38 @@ msgid "When a user wishes to change their email address associated with their ac
 msgstr ""
 
 #: ../../admin/security.rst:35
-msgid "Notification to site administrators"
+msgid "Session bound icons"
 msgstr ""
 
 #: ../../admin/security.rst:37
-msgid "When a new site administrator is added or when a site administrator is removed all the site administrators get a notification about this action."
+msgid "Entity icons can be session bound by default. This means the URLs generated also contain information about the current session. Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session."
 msgstr ""
 
-#: ../../admin/security.rst:40
-msgid "Notifications to user"
+#: ../../admin/security.rst:41
+msgid "Notification to site administrators"
 msgstr ""
 
 #: ../../admin/security.rst:43
+msgid "When a new site administrator is added or when a site administrator is removed all the site administrators get a notification about this action."
+msgstr ""
+
+#: ../../admin/security.rst:46
+msgid "Notifications to user"
+msgstr ""
+
+#: ../../admin/security.rst:49
 msgid "Site administrator"
 msgstr ""
 
-#: ../../admin/security.rst:45
+#: ../../admin/security.rst:51
 msgid "When the site administrator role is added to or removed from the account, send a notification to the user whos account this is affecting."
 msgstr ""
 
-#: ../../admin/security.rst:48
+#: ../../admin/security.rst:54
 msgid "(Un)ban"
 msgstr ""
 
-#: ../../admin/security.rst:50
+#: ../../admin/security.rst:56
 msgid "When the account of a user gets banned or unbanned, let the affected user know about this action."
 msgstr ""
 

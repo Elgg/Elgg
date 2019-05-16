@@ -2,14 +2,11 @@
 
 return array(
 
-	'friends:all' => 'Všichni přátelé',
-
 	'notifications:subscriptions:personal:description' => 'Dostávat upozornění při aktivitě na vašem obsahu',
 	'notifications:subscriptions:personal:title' => 'Osobní upozornění',
 
-	'notifications:subscriptions:friends:title' => 'Přátelé',
-	'notifications:subscriptions:friends:description' => 'Následují okruhy vašich přátel. Vybráním okruhu nastavíte upozornění pro všechny uživatele v tomto okruhu.',
-	'notifications:subscriptions:collections:edit' => 'Klikněte sem pro úpravy upozornění sdíleného obsahu.',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => 'Upozornění',
 	'notifications:subscriptions:changesettings:groups' => 'Skupinová upozornění',
@@ -20,5 +17,10 @@ return array(
 	'notifications:subscriptions:groups:description' => 'Chcete-li obdržet upozornění na nový obsah ve skupině ve které jste členem, najděte ji v následujícím výběru a zvolte způsob(y) upozornění, který/é chcete použít.',
 
 	'notifications:subscriptions:success' => 'Nastavení upozornění bylo uloženo.',
+
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
 
 );

@@ -85,7 +85,10 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 			continue;
 		}
 		
-		$widgets_content .= elgg_view_entity($widget, ['show_access' => $show_access]);
+		$widgets_content .= elgg_view_entity($widget, [
+			'show_access' => $show_access,
+			'register_rss_link' => false,
+		]);
 	}
 
 	$grid .= elgg_format_element('div', [

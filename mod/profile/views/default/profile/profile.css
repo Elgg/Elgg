@@ -64,6 +64,7 @@
 #profile-details {
 	border: 1px solid $(border-color-soft);
 	background: white;
+	margin-bottom: 1rem;
 }
 
 @media $(media-tablet-up) {

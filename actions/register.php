@@ -34,7 +34,7 @@ try {
 	}
 
 	$guid = register_user($username, $password, $name, $email);
-	if (!$guid) {
+	if ($guid === false) {
 		throw new RegistrationException(elgg_echo('registerbad'));
 	}
 

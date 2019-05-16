@@ -15,11 +15,11 @@ $priority = get_input('priority');
 
 $plugin = get_entity($plugin_guid);
 
-if (!($plugin instanceof ElggPlugin)) {
+if (!$plugin instanceof ElggPlugin) {
 	return elgg_error_response(elgg_echo('admin:plugins:set_priority:no', [$plugin_guid]));
 }
 
-if (!$plugin->setPriority($priority)) {
+if ($plugin->setPriority($priority) === false) {
 	$msg = $plugin->getError();
 	$string = ($msg) ? 'admin:plugins:set_priority:no_with_msg' : 'admin:plugins:set_priority:no';
 

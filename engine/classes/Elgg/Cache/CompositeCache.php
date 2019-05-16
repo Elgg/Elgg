@@ -121,11 +121,22 @@ class CompositeCache extends ElggCache {
 			call_user_func_array([$item, 'setInvalidationMethod'], $invalidation_method);
 		}
 		
-		if ($item->isMiss()) {
-			return null;
+		try {
+			if ($item->isMiss()) {
+				return null;
+			}
+			
+			return $item->get();
+		} catch (\Error $e) {
+			// catching parsing errors in file driver, because of potential race conditions during write
+			// this will cause corrupted data in the file and will crash the site when reading the file
+			elgg_log(__METHOD__ . " failed for key: {$this->getNamespace()}/{$key} with error: {$e->getMessage()}", 'ERROR');
+			
+			// remove the item from the cache so it can try to generate this item again
+			$this->delete($key);
 		}
 
-		return $item->get();
+		return null;
 	}
 
 	/**
@@ -200,11 +211,11 @@ class CompositeCache extends ElggCache {
 	 */
 	protected function createPool() {
 		$drivers = [];
+		$drivers[] = $this->buildEphemeralDriver();
 		$drivers[] = $this->buildApcDriver();
 		$drivers[] = $this->buildRedisDriver();
 		$drivers[] = $this->buildMemcachedDriver();
 		$drivers[] = $this->buildFileSystemDriver();
-		$drivers[] = $this->buildEphemeralDriver();
 		$drivers[] = $this->buildBlackHoleDriver();
 		$drivers = array_filter($drivers);
 
@@ -248,7 +259,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		if (!$this->config->redis || !$this->config->redis_servers) {
+		if (!$this->config->redis || empty($this->config->redis_servers)) {
 			return null;
 		}
 
@@ -266,7 +277,7 @@ class CompositeCache extends ElggCache {
 			return null;
 		}
 
-		if (!$this->config->memcache || !$this->config->memcache_servers) {
+		if (!$this->config->memcache || empty($this->config->memcache_servers)) {
 			return null;
 		}
 			
@@ -304,7 +315,7 @@ class CompositeCache extends ElggCache {
 
 	/**
 	 * Builds in-memory driver
-	 * @return Ephemeral
+	 * @return null|Ephemeral
 	 */
 	protected function buildEphemeralDriver() {
 		if (!($this->flags & ELGG_CACHE_RUNTIME)) {
@@ -316,7 +327,7 @@ class CompositeCache extends ElggCache {
 
 	/**
 	 * Builds null cache driver
-	 * @return BlackHole
+	 * @return null|BlackHole
 	 */
 	protected function buildBlackHoleDriver() {
 		if (!($this->flags & ELGG_CACHE_BLACK_HOLE)) {

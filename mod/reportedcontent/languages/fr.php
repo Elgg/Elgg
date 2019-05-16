@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Signaler à l\'administrateur',
 	'reportedcontent:instructions' => 'Ce signalement sera envoyé aux administrateurs du site pour examen.',
 	'reportedcontent:numbertodisplay' => 'Nombre de signalements à afficher',
-	'reportedcontent:widget:description' => 'Afficher le contenu signalé',
 	'reportedcontent:user' => 'Signaler cet utilisateur',
 
 	'reportedcontent:failed' => 'Désolé, la tentative de signaler ce contenu a échoué.',
 	'reportedcontent:notarchived' => 'Il a été impossible d\'archiver ce signalement',
+	
+	'widgets:reportedcontent:name' => 'Contenu signalé',
+	'widgets:reportedcontent:description' => 'Afficher le contenu signalé',
 );

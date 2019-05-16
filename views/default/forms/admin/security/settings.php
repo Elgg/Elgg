@@ -99,6 +99,18 @@ $hardening .= elgg_view_field([
 	'checked' => (bool) elgg_get_config('security_email_require_password'),
 ]);
 
+// session bound entity icons
+$hardening .= elgg_view_field([
+	'#type' => 'checkbox',
+	'label' => elgg_echo('admin:security:settings:session_bound_entity_icons'),
+	'#help' => elgg_echo('admin:security:settings:session_bound_entity_icons:help'),
+	'name' => 'session_bound_entity_icons',
+	'default' => 0,
+	'value' => 1,
+	'switch' => true,
+	'checked' => (bool) elgg_get_config('session_bound_entity_icons'),
+]);
+
 // allow others to extend this section
 $hardening .= elgg_view('admin/security/settings/extend/hardening');
 

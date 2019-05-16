@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -8,25 +8,16 @@ return [
 
 	'messageboard:board' => "Pannello messaggi",
 	'messageboard:messageboard' => "pannello messaggi",
-	'messageboard:viewall' => "Visualizza tutti",
-	'messageboard:postit' => "Invia",
-	'messageboard:history:title' => "Cronologia",
 	'messageboard:none' => "Ancora nulla in questo pannello messaggi",
 	'messageboard:num_display' => "Numero di messaggi da visualizzare",
-	'messageboard:desc' => "Puoi aggiungere questo pannello messaggi al tuo profilo per permettere agli altri utenti di inviarti dei messaggi privati.",
-
 	'messageboard:user' => "Pannello messaggi di %s",
-
-	'messageboard:replyon' => 'rispondi a',
-	'messageboard:history' => "cronologia",
-
 	'messageboard:owner' => 'Pannello messaggi di %s',
 	'messageboard:owner_history' => 'Messaggi di %s sul pannello messaggi di %s',
 
 	/**
 	 * Message board widget river
 	 */
-	'river:messageboard:user:default' => "%s ha inviato un messaggio privato a %s",
+	'river:user:messageboard' => "%s ha postato sulla bacheca messaggi di %s",
 
 	/**
 	 * Status messages
@@ -40,31 +31,27 @@ return [
 	 */
 
 	'messageboard:email:subject' => 'Hai un nuovo messaggio privato!',
-	'messageboard:email:body' => "Hai un nuovo messaggio privato inviato da %s. Ha scritto:
+	'messageboard:email:body' => "You have a new message board comment from %s.
 
-			
+It reads:
+
 %s
 
+To view your message board comments, click here:
+%s
 
-Per vedere i tuoi messaggi privati, clicca qui:
-
-	%s
-
-Per vedere il profilo di %s, clicca qui:
-
-	%s
-
-Non puoi rispondere a questa email.",
+To view %s's profile, click here:
+%s",
 
 	/**
 	 * Error messages
 	 */
 
 	'messageboard:blank' => "Devi scrivere qualcosa nel messaggio per poterlo salvare.",
-	'messageboard:notfound' => "Impossibile trovare l'elemento specificato.",
 	'messageboard:notdeleted' => "Impossibile eliminare questo messaggio.",
-	'messageboard:somethingwentwrong' => "Qualcosa è andato storto durante il salvataggio del messaggio. Accertati di aver effettivamente scritto un messaggio.",
 
 	'messageboard:failure' => "Si è verificato un errore imprevisto aggiungendo il tuo messaggio. Per favore riprova.",
 
-];
+	'widgets:messageboard:name' => "Message board",
+	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+);

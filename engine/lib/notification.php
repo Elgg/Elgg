@@ -257,7 +257,7 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
  *
  * @see    https://tools.ietf.org/html/rfc5322#section-3.6.4
  *
- * @return array
+ * @return void|\Elgg\Email
  * @access private
  */
 function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email) {
@@ -284,7 +284,7 @@ function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email
  * @param string      $type  "system:email"
  * @param \Elgg\Email $email Email instance
  *
- * @return array
+ * @return void|\Elgg\Email
  * @access private
  */
 function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {

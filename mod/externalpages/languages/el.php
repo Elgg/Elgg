@@ -5,7 +5,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Σελίδες ιστότοπου",
-	'admin:appearance:expages' => "Σελίδες Ιστότοπου",
+	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Προβολή σελίδας",
 	'expages:about' => "Περί",
 	'expages:terms' => "Όροι Χρήσης",

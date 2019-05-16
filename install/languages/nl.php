@@ -25,11 +25,11 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 	'install:require:settings' => 'Instellingenbestand',
 	'install:require:database' => 'Database',
 
-	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
+	'install:check:root' => 'De webserver heeft geen rechten op een .htaccess bestand aan te maken in de hoofdmap van Elgg. Er zijn twee keuzes:
 
-1. Change the permissions on the root directory
+1. Wijzig de rechten op de hoofdmap
 
-2. Copy the file install/config/htaccess.dist to .htaccess',
+2. Kopieer het bestand install/config/htaccess.dist naar .htaccess',
 
 	'install:check:php:version' => 'Elgg vereist PHP-versie %s of nieuwer. Jouw server gebruikt versie %s.',
 	'install:check:php:extension' => 'Elgg vereist de PHP-uitbreiding %s.',
@@ -40,11 +40,11 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 	'install:check:php:register_globals' => 'Register globals moet uitgeschakeld zijn.',
 	'install:check:php:session.auto_start' => "session.auto_start moet uitgeschakeld zijn om Elgg te laten werken. Verander de configuratie van je server of voeg deze richtlijn toe aan het .htaccess bestand van Elgg.",
 
-	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
+	'install:check:installdir' => 'De webserver heeft geen rechten op het bestande settings.php aan te maken in de installatiemap. Er zijn twee keuzes:
 
-1. Change the permissions on the elgg-config directory of your Elgg installation
+1. Wijzig de rechten van de elgg-config map in de Elgg installatie
 
-2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+2. Kopieer het bestand %s/settings.example.php naar elgg-config/settings.php en volg de instructies in het bestand om de database configuratie af te ronden',
 	'install:check:readsettings' => 'Er staat een instellingenbestand in de installatie map, maar de webserver kan dit niet lezen. Je kunt het bestand verwijderen of de leesbevoegdheden ervan wijzigen.',
 
 	'install:check:php:success' => "De PHP van jouw webserver voldoet aan de eisen van Elgg.",
@@ -68,7 +68,7 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 	'install:database:help:dbprefix' => "Het voorvoegsel dat voor alle tabellen van Elgg gebruikt wordt (meestal elgg_)",
 	'install:database:help:timezone' => "De standaard tijdzone waarin de site zal werken",
 
-	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
+	'install:settings:instructions' => 'We hebben wat informatie nodig over de site terwijl we Elgg configureren. Als je nog geen <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">datamap hebt aangemaakt</a> voor Elgg, moet je dit nu doen.',
 
 	'install:settings:label:sitename' => 'Sitenaam',
 	'install:settings:label:siteemail' => 'Site e-mailadres',
@@ -146,8 +146,7 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 	'install:error:rewrite:nginx' => 'We denken dat je server op Nginx draait.',
 	'install:error:rewrite:lighttpd' => 'We denken dat je server op Lighttpd draait.',
 	'install:error:rewrite:iis' => 'We denken dat je server op IIS draait.',
-	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
-\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
+	'install:error:rewrite:allowoverride' => "De rewrite test is mislukt en de meest waarschijnlijke reden is dat AllowOverride niet op All is ingesteld voor de map van Elgg. Dit weerhoudt Apache ervan om het .htaccess bestand te verwerken. Hierin staat de rewrite regels.				\n\nEen minder waarschijnlijke reden is dat Apache geconfigureerd is met een alias voor de Elgg map and dat je RewriteBase in het .htaccess bestand moet instellen. Aanvullende instructies kun je in het .htaccess bestand in de Elgg map terugvinden.",
 	'install:error:rewrite:htaccess:write_permission' => 'Je webserver heeft onvoldoende rechten om een .htaccess-bestand in de hoofdmap van Elgg te plaatsen. Je zult handmatig het bestand vanuit install/config/htaccess.dist naar .htaccess moeten kopiëren of je moet de rechten op de installatie map aanpassen.',
 	'install:error:rewrite:htaccess:read_permission' => 'Er is een .htaccess bestand in de Elgg map, maar de webserver mag het niet lezen.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Er is een .htaccess bestand in de Elgg map, maar die is niet door Elgg aangemaakt. Verwijder het bestand.',

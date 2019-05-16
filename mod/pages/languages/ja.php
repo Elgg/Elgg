@@ -1,43 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "ページ",
-	'pages:owner' => "%sさんのページ",
-	'pages:friends' => "友達のページ",
-	'pages:all' => "サイト内のページ",
-	'pages:add' => "ページを追加",
+	'item:object:page' => 'ページ',
+	'collection:object:page' => 'ページ',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "グループページ",
-	'groups:enablepages' => 'グループページを使用する',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "新規ページ",
-	'pages:edit' => "このページを編集",
 	'pages:delete' => "このページを削除",
 	'pages:history' => "履歴",
 	'pages:view' => "ページをみる",
 	'pages:revision' => "リビジョン",
-	'pages:current_revision' => "現在のリビジョン",
-	'pages:revert' => "戻す",
 
 	'pages:navigation' => "ナビゲーション",
 
 	'pages:notify:summary' => '新規ページ「%s」が追加されました',
 	'pages:notify:subject' => "新規ページ: %s",
 	'pages:notify:body' =>
-'%s さんが新規ページ「%s」を追加しました:
+'%s added a new page: %s
 
 %s
 
-このページについて閲覧・コメントするには:
-%s
-',
-	'item:object:page_top' => '最上位のページ',
-	'item:object:page' => 'ページ',
-	'pages:nogroup' => 'このグループにはまだページがありません',
+View and comment on the page:
+%s',
+
 	'pages:more' => 'More pages',
 	'pages:none' => 'No pages created yet',
 
@@ -45,13 +40,10 @@ return [
 	* River
 	**/
 
-	'river:create:object:page' => '%sさんがページ「%s」を作成しました。',
-	'river:create:object:page_top' => '%sさんがページ「%s」を作成しました。',
-	'river:update:object:page' => '%sさんがページ「%s」を更新しました。',
-	'river:update:object:page_top' => '%sさんがページ「%s」を更新しました。',
-	'river:comment:object:page' => '%sさんがページ「%s」にコメントしました。',
-	'river:comment:object:page_top' => '%sさんがページ「%s」にコメントしました。',
-
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -66,21 +58,13 @@ return [
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'ページを閲覧できません。',
 	'pages:cantedit' => 'このページの編集はできません。',
 	'pages:saved' => 'ページを保存しました。',
 	'pages:notsaved' => 'ページを保存できません。',
 	'pages:error:no_title' => 'このページにはタイトルが付けられていません。タイトルをつけてください。',
-	'pages:delete:success' => 'ページを削除しました。',
-	'pages:delete:failure' => 'ページが削除できません。',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'ページのリビジョンを削除しました。',
 	'pages:revision:delete:failure' => 'ページのリビジョンを削除できませんでした。',
-	'pages:revision:not_found' => 'このリビジョンを見つけることができませんでした。',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => '最終更新： %s （更新者 %s ）',
 
 	/**
 	 * History
@@ -92,7 +76,8 @@ return [
 	 **/
 
 	'pages:num' => '表示数',
-	'pages:widget:description' => "あなたのページを一覧表示します。",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -101,13 +86,14 @@ return [
 	'pages:label:edit' => "ページの編集",
 	'pages:label:history' => "履歴",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "このページ",
-	'pages:sidebar:children' => "子ページ",
-	'pages:sidebar:parent' => "親ページ",
-
 	'pages:newchild' => "子ページを作成",
-	'pages:backtoparent' => "「 %s 」にもどる",
-];
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+);

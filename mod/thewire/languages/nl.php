@@ -33,7 +33,8 @@ return array(
 	/**
 	 * Wire widget
 	 */
-	'thewire:widget:desc' => 'Toon je laatste Wire-berichten',
+	
+	'widgets:thewire:description' => 'Toon je laatste Wire-berichten',
 	'thewire:num' => 'Aantal items om weer te geven',
 	'thewire:moreposts' => 'Meer Wire-berichten',
 

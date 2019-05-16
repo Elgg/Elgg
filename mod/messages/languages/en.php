@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'There was a problem saving your message. Please try again.',
 
-	'item:object:messages' => 'Messages',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

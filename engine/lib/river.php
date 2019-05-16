@@ -7,6 +7,8 @@
  * @subpackage River
  */
 
+use Elgg\Integration\ElggCoreRiverAPITest;
+
 /**
  * Adds an item to the river.
  *
@@ -42,12 +44,12 @@ function elgg_create_river_item(array $options = []) {
 	}
 
 	$subject_guid = elgg_extract('subject_guid', $options, elgg_get_logged_in_user_guid());
-	if (!($subject = get_entity($subject_guid))) {
+	if (!(get_entity($subject_guid) instanceof ElggEntity)) {
 		return false;
 	}
 
 	$object_guid = elgg_extract('object_guid', $options, 0);
-	if (!($object = get_entity($object_guid))) {
+	if (!(get_entity($object_guid) instanceof ElggEntity)) {
 		return false;
 	}
 
@@ -55,7 +57,7 @@ function elgg_create_river_item(array $options = []) {
 	if ($target_guid) {
 		// target_guid is not a required parameter so check
 		// it only if it is included in the parameters
-		if (!($target = get_entity($target_guid))) {
+		if (!(get_entity($target_guid) instanceof ElggEntity)) {
 			return false;
 		}
 	}
@@ -98,6 +100,7 @@ function elgg_create_river_item(array $options = []) {
 	}
 
 	$qb = \Elgg\Database\Insert::intoTable('river');
+	$query_params = [];
 	foreach ($values as $name => $value) {
 		$query_params[$name] = $qb->param($value, $col_types[$name]);
 	}
@@ -204,6 +207,10 @@ function elgg_get_river_item_from_id($id) {
  *          subject_guid(s), object_guid(s), target_guid(s)
  *          or view(s) must be set.
  *
+ *          Access is ignored during the execution of this function.
+ *          Intended usage of this function is to cleanup river content.
+ *          For an example see actions/avatar/upload.
+ *
  * @param array $options An options array. {@link elgg_get_river()}
  *
  * @return bool|null true on success, false on failure, null if no metadata to delete.
@@ -217,25 +224,27 @@ function elgg_delete_river(array $options = []) {
 		return false;
 	}
 
-	$options['batch'] = true;
-	$options['batch_size'] = 25;
-	$options['batch_inc_offset'] = false;
-
-	$river = elgg_get_river($options);
-	$count = $river->count();
-
-	if (!$count) {
-		return;
-	}
-
-	$success = 0;
-	foreach ($river as $river_item) {
-		if ($river_item->delete()) {
-			$success++;
+	return elgg_call(ELGG_IGNORE_ACCESS, function() use ($options) {
+		$options['batch'] = true;
+		$options['batch_size'] = 25;
+		$options['batch_inc_offset'] = false;
+	
+		$river = elgg_get_river($options);
+		$count = $river->count();
+	
+		if (!$count) {
+			return;
 		}
-	}
-
-	return $success == $count;
+	
+		$success = 0;
+		foreach ($river as $river_item) {
+			if ($river_item->delete()) {
+				$success++;
+			}
+		}
+	
+		return $success == $count;
+	});
 }
 
 /**
@@ -250,8 +259,6 @@ function elgg_delete_river(array $options = []) {
  * @since 1.8.0
  */
 function elgg_list_river(array $options = []) {
-	elgg_register_rss_link();
-
 	$defaults = [
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', max(20, _elgg_config()->default_limit)), 0),
@@ -260,7 +267,12 @@ function elgg_list_river(array $options = []) {
 	];
 
 	$options = array_merge($defaults, $options);
-
+	
+	$options['register_rss_link'] = elgg_extract('register_rss_link', $options, elgg_extract('pagination', $options));
+	if ($options['register_rss_link']) {
+		elgg_register_rss_link();
+	}
+	
 	if (!$options["limit"] && !$options["offset"]) {
 		// no need for pagination if listing is unlimited
 		$options["pagination"] = false;

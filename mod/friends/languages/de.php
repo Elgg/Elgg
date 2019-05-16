@@ -18,7 +18,8 @@ return array(
 
 	'friends:of' => "Befreundet mit",
 	
-	'friends:widget:description' => "Auflistung einiger Deiner Freunde.",
 	'friends:num_display' => "Anzahl der anzuzeigenden Freunde",
-
+	
+	'widgets:friends:name' => "Friends",
+	'widgets:friends:description' => "Displays some of your friends.",
 );

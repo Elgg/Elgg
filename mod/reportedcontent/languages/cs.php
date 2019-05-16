@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Nahlásit správci',
 	'reportedcontent:instructions' => 'Hlášení bude odesláno na posouzení správcům stránek.',
 	'reportedcontent:numbertodisplay' => 'Počet zobrazených hlášení',
-	'reportedcontent:widget:description' => 'Zobrazuje nahlášený obsah',
 	'reportedcontent:user' => 'Nahlásit uživatele',
 
 	'reportedcontent:failed' => 'Pokus o nahlášení tohoto obsahu bohužel selhal.',
 	'reportedcontent:notarchived' => 'Nemůžeme archivovat toto hlášení',
+	
+	'widgets:reportedcontent:name' => 'Reported content',
+	'widgets:reportedcontent:description' => 'Display reported content',
 );

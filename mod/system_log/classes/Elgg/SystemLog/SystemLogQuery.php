@@ -145,7 +145,8 @@ class SystemLogQuery extends Repository {
 			$qb->where($wheres);
 		}
 
-		if ($limit) {
+		$limit = (int) $limit;
+		if ($limit > 0) {
 			$qb->setMaxResults($limit);
 			$qb->setFirstResult($offset);
 		}
@@ -209,7 +210,7 @@ class SystemLogQuery extends Repository {
 	 *
 	 * @param QueryBuilder $qb Query builder
 	 *
-	 * @return CompositeExpression
+	 * @return CompositeExpression|string
 	 */
 	protected function buildQuery(QueryBuilder $qb) {
 

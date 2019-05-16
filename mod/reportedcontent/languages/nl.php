@@ -24,9 +24,11 @@ return array(
 	'reportedcontent:report' => 'Meld aan beheerder',
 	'reportedcontent:instructions' => 'De melding zal worden verstuurd aan de beheerders van deze site ter controle.',
 	'reportedcontent:numbertodisplay' => 'Aantal meldingen om weer te geven',
-	'reportedcontent:widget:description' => 'Toon gemelde inhoud',
 	'reportedcontent:user' => 'Meld deze gebruiker bij de sitebeheerder',
 
 	'reportedcontent:failed' => 'Sorry, de poging om deze inhoud te melden is mislukt.',
 	'reportedcontent:notarchived' => 'Het was niet mogelijk om deze melding te archiveren',
+	
+	'widgets:reportedcontent:name' => 'Gemelde inhoud',
+	'widgets:reportedcontent:description' => 'Toon gemelde inhoud',
 );

@@ -4,7 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\EntityTable;
 use Elgg\Filesystem\MimeTypeDetector;
-use Elgg\Http\Request;
+use Elgg\Http\Request as HttpRequest;
 use ElggEntity;
 use ElggFile;
 use ElggIcon;
@@ -37,7 +37,7 @@ class EntityIconService {
 	private $hooks;
 
 	/**
-	 * @var Request
+	 * @var \Elgg\Http\Request
 	 */
 	private $request;
 
@@ -52,22 +52,29 @@ class EntityIconService {
 	private $uploads;
 
 	/**
+	 * @var ImageService
+	 */
+	private $images;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Config             $config   Config
 	 * @param PluginHooksService $hooks    Hook registration service
-	 * @param Request            $request  Http request
+	 * @param HttpRequest        $request  Http request
 	 * @param LoggerInterface    $logger   Logger
 	 * @param EntityTable        $entities Entity table
 	 * @param UploadService      $uploads  Upload service
+	 * @param ImageService       $images   Image service
 	 */
 	public function __construct(
 		Config $config,
 		PluginHooksService $hooks,
-		Request $request,
+		HttpRequest $request,
 		LoggerInterface $logger,
 		EntityTable $entities,
-		UploadService $uploads
+		UploadService $uploads,
+		ImageService $images
 	) {
 		$this->config = $config;
 		$this->hooks = $hooks;
@@ -75,6 +82,7 @@ class EntityIconService {
 		$this->logger = $logger;
 		$this->entities = $entities;
 		$this->uploads = $uploads;
+		$this->images = $images;
 	}
 
 	/**
@@ -91,7 +99,7 @@ class EntityIconService {
 		if (empty($input)) {
 			return false;
 		}
-		
+				
 		// auto detect cropping coordinates
 		if (empty($coords)) {
 			$auto_coords = $this->detectCroppingCoordinates();
@@ -100,21 +108,18 @@ class EntityIconService {
 			}
 		}
 
-		$tmp_filename = time() . $input->getClientOriginalName();
-		$tmp = new ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/$tmp_filename");
+		$tmp = new \ElggTempFile();
+		$tmp->setFilename(uniqid() . $input->getClientOriginalName());
 		$tmp->open('write');
 		$tmp->close();
-		// not using move_uploaded_file() for testing purposes
+		
 		copy($input->getPathname(), $tmp->getFilenameOnFilestore());
 
-		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp_filename, $input->getClientMimeType());
+		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore(), $input->getClientMimeType());
 		$tmp->simpletype = elgg_get_file_simple_type($tmp->mimetype);
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);
 
-		unlink($input->getPathname());
 		$tmp->delete();
 
 		return $result;
@@ -134,13 +139,12 @@ class EntityIconService {
 		if (!file_exists($filename) || !is_readable($filename)) {
 			throw new InvalidParameterException(__METHOD__ . " expects a readable local file. $filename is not readable");
 		}
-
-		$tmp_filename = time() . pathinfo($filename, PATHINFO_BASENAME);
-		$tmp = new ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/$tmp_filename");
+				
+		$tmp = new \ElggTempFile();
+		$tmp->setFilename(uniqid() . basename($filename));
 		$tmp->open('write');
 		$tmp->close();
+		
 		copy($filename, $tmp->getFilenameOnFilestore());
 
 		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore());
@@ -167,13 +171,12 @@ class EntityIconService {
 		if (!$file->exists()) {
 			throw new InvalidParameterException(__METHOD__ . ' expects an instance of ElggFile with an existing file on filestore');
 		}
-
-		$tmp_filename = time() . pathinfo($file->getFilenameOnFilestore(), PATHINFO_BASENAME);
-		$tmp = new ElggFile();
-		$tmp->owner_guid = $entity->guid;
-		$tmp->setFilename("tmp/$tmp_filename");
+		
+		$tmp = new \ElggTempFile();
+		$tmp->setFilename(uniqid() . basename($file->getFilenameOnFilestore()));
 		$tmp->open('write');
 		$tmp->close();
+		
 		copy($file->getFilenameOnFilestore(), $tmp->getFilenameOnFilestore());
 
 		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore(), $file->getMimeType());
@@ -214,6 +217,8 @@ class EntityIconService {
 			$this->logger->error('Source file passed to ' . __METHOD__ . ' can not be resolved to a valid image');
 			return false;
 		}
+		
+		$this->prepareIcon($file->getFilenameOnFilestore());
 		
 		$x1 = (int) elgg_extract('x1', $coords);
 		$y1 = (int) elgg_extract('y1', $coords);
@@ -274,6 +279,30 @@ class EntityIconService {
 	}
 	
 	/**
+	 * Prepares an icon
+	 *
+	 * @param string $filename the file to prepare
+	 *
+	 * @return void
+	 */
+	protected function prepareIcon($filename) {
+		
+		// fix orientation
+		$temp_file = new \ElggTempFile();
+		$temp_file->setFilename(uniqid() . basename($filename));
+		
+		copy($filename, $temp_file->getFilenameOnFilestore());
+		
+		$rotated = $this->images->fixOrientation($temp_file->getFilenameOnFilestore());
+
+		if ($rotated) {
+			copy($temp_file->getFilenameOnFilestore(), $filename);
+		}
+		
+		$temp_file->delete();
+	}
+	
+	/**
 	 * Generate an icon for the given entity
 	 *
 	 * @param ElggEntity $entity    Temporary ElggFile instance
@@ -296,8 +325,6 @@ class EntityIconService {
 		$x2 = (int) elgg_extract('x2', $coords);
 		$y2 = (int) elgg_extract('y2', $coords);
 		
-		$cropping_mode = ($x2 > $x1) && ($y2 > $y1);
-		
 		$sizes = $this->getSizes($entity->getType(), $entity->getSubtype(), $type);
 		
 		if (!empty($icon_size) && !isset($sizes[$icon_size])) {
@@ -310,8 +337,6 @@ class EntityIconService {
 				// only generate the given icon size
 				continue;
 			}
-			
-			$square = (bool) elgg_extract('square', $opts);
 			
 			// check if the icon config allows cropping
 			if (!(bool) elgg_extract('crop', $opts, true)) {
@@ -497,7 +522,8 @@ class EntityIconService {
 		if ($url == null) {
 			if ($this->hasIcon($entity, $size, $type)) {
 				$icon = $this->getIcon($entity, $size, $type);
-				$url = $icon->getInlineURL((bool) elgg_extract('use_cookie', $params, true));
+				$default_use_cookie = (bool) elgg_get_config('session_bound_entity_icons', false);
+				$url = $icon->getInlineURL((bool) elgg_extract('use_cookie', $params, $default_use_cookie));
 			} else {
 				$url = $this->getFallbackIconUrl($entity, $params);
 			}

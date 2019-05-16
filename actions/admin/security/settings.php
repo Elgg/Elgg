@@ -9,6 +9,7 @@ $settings = [
 	'security_notify_user_admin',
 	'security_notify_user_ban',
 	'security_notify_user_password',
+	'session_bound_entity_icons',
 ];
 
 foreach ($settings as $setting) {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3649f765e23296a8959c47c48934d311",
+    "content-hash": "916b0bef570cda8365e2e7212845e362",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -17,8 +17,7 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/1975bba5c4ade236c02bf2e5f9551160ee85109d",
-                "reference": "1975bba5c4ade236c02bf2e5f9551160ee85109d",
-                "shasum": null
+                "reference": "1975bba5c4ade236c02bf2e5f9551160ee85109d"
             },
             "type": "bower-asset"
         },
@@ -99,7 +98,7 @@
             "version": "3.51",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery-form/form.git",
+                "url": "https://github.com/jquery-form/form.git",
                 "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
             },
             "dist": {
@@ -164,7 +163,7 @@
             "version": "1.11.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/components/jqueryui.git",
+                "url": "git@github.com:components/jqueryui.git",
                 "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
             },
             "dist": {
@@ -205,14 +204,13 @@
             "version": "8.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/necolas/normalize.css.git",
+                "url": "git@github.com:necolas/normalize.css.git",
                 "reference": "fc091cce1534909334c1911709a39c22d406977b"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/necolas/normalize.css/zipball/fc091cce1534909334c1911709a39c22d406977b",
-                "reference": "fc091cce1534909334c1911709a39c22d406977b",
-                "shasum": null
+                "reference": "fc091cce1534909334c1911709a39c22d406977b"
             },
             "type": "bower-asset"
         },
@@ -221,14 +219,13 @@
             "version": "2.3.6",
             "source": {
                 "type": "git",
-                "url": "https://github.com/requirejs/requirejs-bower.git",
+                "url": "git@github.com:jrburke/requirejs-bower.git",
                 "reference": "3596b04fa67953d2fb06456ecb92cf833b462b82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/requirejs/requirejs-bower/zipball/3596b04fa67953d2fb06456ecb92cf833b462b82",
-                "reference": "3596b04fa67953d2fb06456ecb92cf833b462b82",
-                "shasum": null
+                "url": "https://api.github.com/repos/jrburke/requirejs-bower/zipball/3596b04fa67953d2fb06456ecb92cf833b462b82",
+                "reference": "3596b04fa67953d2fb06456ecb92cf833b462b82"
             },
             "type": "bower-asset",
             "license": [
@@ -268,7 +265,7 @@
             "version": "2.0.15",
             "source": {
                 "type": "git",
-                "url": "git@github.com:requirejs/text.git",
+                "url": "https://github.com/requirejs/text.git",
                 "reference": "d04de4ffd7bf5ba6cb80cdca2d40d4f6f52a1b1f"
             },
             "dist": {
@@ -1594,9 +1591,7 @@
             "version": "3.0.13",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/formdata-polyfill/-/formdata-polyfill-3.0.13.tgz",
-                "reference": null,
-                "shasum": null
+                "url": "https://registry.npmjs.org/formdata-polyfill/-/formdata-polyfill-3.0.13.tgz"
             },
             "type": "npm-asset",
             "license": [
@@ -1609,7 +1604,6 @@
             "dist": {
                 "type": "tar",
                 "url": "https://registry.npmjs.org/weakmap-polyfill/-/weakmap-polyfill-2.0.0.tgz",
-                "reference": null,
                 "shasum": "8f28f935e3853896ad40747e5258db578d9dc8de"
             },
             "require-dev": {
@@ -3097,28 +3091,28 @@
         },
         {
             "name": "tedivm/stash",
-            "version": "v0.14.2",
+            "version": "v0.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tedious/Stash.git",
-                "reference": "7ea9749784152dcd2dab72c4bbf2bef18c326e41"
+                "reference": "7a6a74106c49b1bdc3a10a725b03c509dc773dbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tedious/Stash/zipball/7ea9749784152dcd2dab72c4bbf2bef18c326e41",
-                "reference": "7ea9749784152dcd2dab72c4bbf2bef18c326e41",
+                "url": "https://api.github.com/repos/tedious/Stash/zipball/7a6a74106c49b1bdc3a10a725b03c509dc773dbb",
+                "reference": "7a6a74106c49b1bdc3a10a725b03c509dc773dbb",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.4|^7.0",
+                "php": "^7.0",
                 "psr/cache": "~1.0"
             },
             "provide": {
                 "psr/cache-implementation": "1.0.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^1.9",
-                "phpunit/phpunit": "4.8.*",
+                "friendsofphp/php-cs-fixer": "^2.8",
+                "phpunit/phpunit": "^6",
                 "satooshi/php-coveralls": "1.0.*"
             },
             "type": "library",
@@ -3153,7 +3147,7 @@
                 "redis",
                 "sessions"
             ],
-            "time": "2017-04-23T17:16:57+00:00"
+            "time": "2019-03-09T21:04:14+00:00"
         },
         {
             "name": "true/punycode",
@@ -4249,6 +4243,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {

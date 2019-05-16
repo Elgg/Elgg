@@ -60,10 +60,12 @@ class SystemLogEntry {
 		} else {
 			// surround with try/catch because object could be disabled
 			try {
-				$object = new $class($this->object_id);
+				// assuming the object is a custom entity class
+				$object = get_entity($id);
 
 				return $object;
 			} catch (\Exception $e) {
+				return false;
 			}
 		}
 

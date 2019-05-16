@@ -1,6 +1,8 @@
 <?php
 /**
  * Display pages
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
  */
 
 echo elgg_list_entities([

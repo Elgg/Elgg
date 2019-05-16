@@ -39,7 +39,7 @@ function get_input($variable, $default = null, $filter_result = true) {
  * @return void
  */
 function set_input($variable, $value) {
-	_elgg_services()->request->setParam($variable, $value);
+	_elgg_services()->request->setParam($variable, $value, true);
 }
 
 /**

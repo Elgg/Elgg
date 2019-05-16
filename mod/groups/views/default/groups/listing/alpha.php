@@ -1,7 +1,10 @@
 <?php
 /**
  * Renders a list of groups ordered alphabetically
+ *
+ * Note: this view has a corresponding view in the rss view type, changes should be reflected
  */
+
 echo elgg_list_entities([
 	'type' => 'group',
 	'order_by_metadata' => [

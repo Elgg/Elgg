@@ -212,7 +212,7 @@ class MetadataTable {
 		$qb->addClause($where);
 
 		$row = $this->db->getDataRow($qb);
-		if ($row) {
+		if (!empty($row)) {
 			return new ElggMetadata($row);
 		}
 
@@ -228,7 +228,7 @@ class MetadataTable {
 	 * @throws \DatabaseException
 	 */
 	public function delete(ElggMetadata $metadata) {
-		if (!$metadata->id || !$metadata->canEdit()) {
+		if (!$metadata->id) {
 			return false;
 		}
 
@@ -278,7 +278,7 @@ class MetadataTable {
 		}
 
 		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '$metadata->name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
 		}
 
 		if (!$allow_multiple) {
@@ -291,7 +291,7 @@ class MetadataTable {
 				");
 			}
 
-			if ($id) {
+			if ($id > 0) {
 				$metadata->id = $id;
 
 				if ($this->update($metadata)) {
@@ -346,16 +346,13 @@ class MetadataTable {
 	 * @throws \DatabaseException
 	 */
 	public function update(ElggMetadata $metadata) {
-		if (!$metadata->canEdit()) {
-			return false;
-		}
 
 		if (!$this->events->triggerBefore('update', 'metadata', $metadata)) {
 			return false;
 		}
 
 		if (strlen($metadata->value) > self::MYSQL_TEXT_BYTE_LIMIT) {
-			elgg_log("Metadata '$metadata->name' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
+			elgg_log("Metadata '{$metadata->name}' is above the MySQL TEXT size limit and may be truncated.", 'WARNING');
 		}
 
 		$qb = Update::table('metadata');
@@ -398,6 +395,29 @@ class MetadataTable {
 	}
 
 	/**
+	 * Returns metadata rows
+	 *
+	 * Used internally for metadata preloading
+	 *
+	 * @param array $guids Array of guids to fetch metadata rows for
+	 *
+	 * @return \stdClass[]
+	 *
+	 * @internal
+	 */
+	public function getRowsForGuids(array $guids) {
+
+		$qb = Select::fromTable('metadata');
+		$qb->select('*')
+			->where($qb->compare('entity_guid', 'IN', $guids, ELGG_VALUE_GUID))
+			->orderBy('entity_guid', 'asc')
+			->orderBy('time_created', 'asc')
+			->orderBy('id', 'asc');
+		
+		return $qb->execute()->fetchAll();
+	}
+
+	/**
 	 * Deletes metadata based on $options.
 	 *
 	 * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
@@ -432,6 +452,7 @@ class MetadataTable {
 		}
 
 		$success = 0;
+		/* @var $md \ElggMetadata */
 		foreach ($metadata as $md) {
 			if ($md->delete()) {
 				$success++;

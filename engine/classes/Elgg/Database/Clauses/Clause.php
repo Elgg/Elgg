@@ -14,7 +14,7 @@ interface Clause {
 	 * Build an expression and/or apply it to an instance of query builder
 	 *
 	 * @param QueryBuilder $qb          Query builder
-	 * @param null         $table_alias Table alias
+	 * @param string       $table_alias Table alias
 	 *
 	 * @return CompositeExpression|null|string
 	 */

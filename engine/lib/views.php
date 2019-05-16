@@ -833,10 +833,11 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  *
  * @param \ElggEntity $entity The entity to display
  * @param array       $vars   Array of variables to pass to the entity view.
- *      'full_view'        Whether to show a full or condensed view. (Default: true)
- *      'item_view'        Alternative view used to render this entity
+ *      'full_view'           Whether to show a full or condensed view. (Default: true)
+ *      'item_view'           Alternative view used to render this entity
+ *      'register_rss_link'   Register the rss link availability (default: depending on full_view)
  *
- * @return string HTML to display or false
+ * @return false|string HTML to display or false
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
 function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
@@ -846,13 +847,15 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 		return false;
 	}
 
-	elgg_register_rss_link();
-
 	$defaults = [
 		'full_view' => true,
 	];
 
 	$vars = array_merge($defaults, $vars);
+	
+	if (elgg_extract('register_rss_link', $vars, elgg_extract('full_view', $vars))) {
+		elgg_register_rss_link();
+	}
 
 	$vars['entity'] = $entity;
 
@@ -917,7 +920,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
 	if (elgg_view_exists("icon/$entity_type/$subtype")) {
 		$contents = elgg_view("icon/$entity_type/$subtype", $vars);
 	}
-	if (empty($contents)) {
+	if (empty($contents) && elgg_view_exists("icon/$entity_type/default")) {
 		$contents = elgg_view("icon/$entity_type/default", $vars);
 	}
 	if (empty($contents)) {
@@ -943,11 +946,9 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
  * @param array           $vars       Variable array for view.
  *      'item_view'  Alternative view used to render an annotation
  *
- * @return string/false Rendered annotation
+ * @return string|false Rendered annotation
  */
 function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
-	elgg_register_rss_link();
-
 	$defaults = [
 		'full_view' => true,
 	];
@@ -1239,7 +1240,8 @@ function elgg_view_message($type, $body, array $vars = []) {
  *
  * @param \ElggRiverItem $item A river item object
  * @param array          $vars An array of variables for the view
- *      'item_view'  Alternative view to render the item
+ *      'item_view'         Alternative view to render the item
+ *      'register_rss_link' Register the rss link availability (default: false)
  * @return string returns empty string if could not be rendered
  */
 function elgg_view_river_item($item, array $vars = []) {
@@ -1256,6 +1258,10 @@ function elgg_view_river_item($item, array $vars = []) {
 	if (!$subject || !$object) {
 		// subject is disabled or subject/object deleted
 		return '';
+	}
+	
+	if (elgg_extract('register_rss_link', $vars)) {
+		elgg_register_rss_link();
 	}
 
 	$vars['item'] = $item;
@@ -1523,7 +1529,7 @@ function elgg_view_tagcloud(array $options = []) {
  *                    'item_view' - Alternative view used to render list items
  *                                  This parameter is required if rendering
  *                                  list items that are not entity, annotation or river
- * @return string
+ * @return false|string
  * @since 1.8.0
  * @access private
  */
@@ -1603,10 +1609,6 @@ function _elgg_has_rss_link() {
 		return false;
 	}
 
-	if (isset($GLOBALS['autofeed']) && is_bool($GLOBALS['autofeed'])) {
-		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
-		return $GLOBALS['autofeed'];
-	}
 	return (bool) _elgg_config()->_elgg_autofeed;
 }
 
@@ -1935,15 +1937,16 @@ function _elgg_get_js_page_data() {
  * @access private
  */
 function _elgg_view_under_viewtype($view, $vars, $viewtype) {
+	$current_view_type = null;
 	if ($viewtype) {
-		$old = elgg_get_viewtype();
+		$current_view_type = elgg_get_viewtype();
 		elgg_set_viewtype($viewtype);
 	}
 
 	$ret = elgg_view($view, $vars);
 
-	if ($viewtype) {
-		elgg_set_viewtype($old);
+	if (isset($current_view_type)) {
+		elgg_set_viewtype($current_view_type);
 	}
 
 	return $ret;

@@ -47,7 +47,7 @@ class Seeder {
 	 * @return void
 	 */
 	public function seed($limit = null) {
-		if (!$limit) {
+		if (!is_numeric($limit)) {
 			$limit = max(elgg_get_config('default_limit'), 20);
 		}
 

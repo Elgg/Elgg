@@ -81,7 +81,7 @@ class River extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (!$result) {
+		if (empty($result)) {
 			return 0;
 		}
 
@@ -122,7 +122,7 @@ class River extends Repository {
 
 		$result = _elgg_services()->db->getDataRow($qb);
 
-		if (!$result) {
+		if (empty($result)) {
 			return 0;
 		}
 
@@ -156,7 +156,7 @@ class River extends Repository {
 			$qb->addOrderBy('rv.posted', 'desc');
 		}
 
-		if ($limit) {
+		if ($limit > 0) {
 			$qb->setMaxResults((int) $limit);
 			$qb->setFirstResult((int) $offset);
 		}
@@ -170,7 +170,7 @@ class River extends Repository {
 
 		$items = _elgg_services()->db->getData($qb, $callback);
 
-		if ($items) {
+		if (!empty($items)) {
 			$preload = array_filter($items, function($e) {
 				return $e instanceof ElggRiverItem;
 			});
@@ -279,14 +279,14 @@ class River extends Repository {
 
 		$ands = [];
 
-		if ($this->options->subject_guids || $use_access_clause) {
+		if (!empty($this->options->subject_guids) || $use_access_clause) {
 			$qb->joinEntitiesTable('rv', 'subject_guid', 'inner', 'se');
 			$subject = new EntityWhereClause();
 			$subject->guids = $this->options->subject_guids;
 			$ands[] = $subject->prepare($qb, 'se');
 		}
 
-		if ($this->options->object_guids || $use_access_clause || $this->options->type_subtype_pairs) {
+		if (!empty($this->options->object_guids) || $use_access_clause || !empty($this->options->type_subtype_pairs)) {
 			$qb->joinEntitiesTable('rv', 'object_guid', 'inner', 'oe');
 			$object = new EntityWhereClause();
 			$object->guids = $this->options->object_guids;
@@ -294,7 +294,7 @@ class River extends Repository {
 			$ands[] = $object->prepare($qb, 'oe');
 		}
 
-		if ($this->options->target_guids || $use_access_clause) {
+		if (!empty($this->options->target_guids) || $use_access_clause) {
 			$target_ors = [];
 			$qb->joinEntitiesTable('rv', 'target_guid', 'left', 'te');
 			$target = new EntityWhereClause();

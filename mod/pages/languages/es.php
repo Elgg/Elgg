@@ -1,44 +1,38 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 
-	'pages' => "P&aacute;ginas",
-	'pages:owner' => "P&aacute;ginas de %s",
-	'pages:friends' => "P&aacute;ginas de amigos",
-	'pages:all' => "Todas las p&aacute;ginas",
-	'pages:add' => "Agregar una página",
+	'item:object:page' => 'P&aacute;ginas',
+	'collection:object:page' => 'Pages',
+	'collection:object:page:all' => "All site pages",
+	'collection:object:page:owner' => "%s's pages",
+	'collection:object:page:friends' => "Friends' pages",
+	'collection:object:page:group' => "Group pages",
+	'add:object:page' => "Add a page",
+	'edit:object:page' => "Edit this page",
 
-	'pages:group' => "P&aacute;ginas para grupos",
-	'groups:enablepages' => 'Habilitar p&aacute;ginas para grupos',
+	'groups:tool:pages' => 'Enable group pages',
 
-	'pages:new' => "Una nueva p&aacute;gina",
-	'pages:edit' => "Editar esta p&aacute;gina",
 	'pages:delete' => "Borrar esta p&aacute;gina",
 	'pages:history' => "Historial",
 	'pages:view' => "Ver p&aacute;gina",
 	'pages:revision' => "Revisi&oacute;n",
-	'pages:current_revision' => "Revisión actual",
-	'pages:revert' => "Revertir",
 
 	'pages:navigation' => "Navegaci&oacute;n",
 
 	'pages:notify:summary' => 'Nueva página llamada %s',
 	'pages:notify:subject' => "Una nueva página: %s",
 	'pages:notify:body' =>
-'%s ha agregado una nueva página:
+'%s added a new page: %s
 
 %s
-%s
 
-Ver y comentar:
-%s
-',
-	'item:object:page_top' => 'P&aacute;ginas top',
-	'item:object:page' => 'P&aacute;ginas',
-	'pages:nogroup' => 'Este grupo no tiene p&aacute;ginas a&uacute;n',
+View and comment on the page:
+%s',
+
 	'pages:more' => 'M&aacute;s p&aacute;ginas',
 	'pages:none' => 'No se han creado p&aacute;ginas a&uacute;n',
 
@@ -46,13 +40,10 @@ Ver y comentar:
 	* River
 	**/
 
-	'river:create:object:page' => '%s ha creado la p&aacute;gina %s',
-	'river:create:object:page_top' => '%s ha creado la p&aacute;gina %s',
-	'river:update:object:page' => '%s ha actualizado la p&aacute;gina %s',
-	'river:update:object:page_top' => '%s ha actualizao una p&aacute;gina %s',
-	'river:comment:object:page' => '%s ha comentado en la p&aacute;gina %s',
-	'river:comment:object:page_top' => '%s ha comentado en la p&aacute;gina %s',
-
+	'river:object:page:create' => '%s created a page %s',
+	'river:object:page:update' => '%s updated a page %s',
+	'river:object:page:comment' => '%s commented on a page titled %s',
+	
 	/**
 	 * Form fields
 	 */
@@ -67,21 +58,13 @@ Ver y comentar:
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'No tienes acceso a la p&aacute;gina',
 	'pages:cantedit' => 'No puedes editar esta p&aacute;gina',
 	'pages:saved' => 'P&aacute;gina guardada',
 	'pages:notsaved' => 'La p&aacute;gina no pudo ser guardada',
 	'pages:error:no_title' => 'Debes especificar un t&iacute;tulo para esta p&aacute;gina.',
-	'pages:delete:success' => 'La p&aacute;gina ha sido borrada.',
-	'pages:delete:failure' => 'La p&aacute;gina no pudo ser borrada.',
+	'entity:delete:object:page:success' => 'The page was successfully deleted.',
 	'pages:revision:delete:success' => 'La revisión de la página se eliminó correctamente.',
 	'pages:revision:delete:failure' => 'No fue posible eliminar la revisión de la página.',
-	'pages:revision:not_found' => 'No se puede encontrar esta revisi&oacute;n.',
-
-	/**
-	 * Page
-	 */
-	'pages:strapline' => '&Uacute;ltima actualizaci&oacute;n de %s en %s',
 
 	/**
 	 * History
@@ -93,7 +76,8 @@ Ver y comentar:
 	 **/
 
 	'pages:num' => 'N&uacute;mero de p&aacute;ginas a mostrar',
-	'pages:widget:description' => "Esta es la lista de tus p&aacute;ginas.",
+	'widgets:pages:name' => 'Pages',
+	'widgets:pages:description' => "This is a list of your pages.",
 
 	/**
 	 * Submenu items
@@ -102,13 +86,14 @@ Ver y comentar:
 	'pages:label:edit' => "Editar p&aacute;gina",
 	'pages:label:history' => "Historial de la p&aacute;gina",
 
-	/**
-	 * Sidebar items
-	 */
-	'pages:sidebar:this' => "esta p&aacute;gina",
-	'pages:sidebar:children' => "Subp&aacute;gina",
-	'pages:sidebar:parent' => "Padre",
-
 	'pages:newchild' => "Crear una subp&aacute;gina",
-	'pages:backtoparent' => "Regresar a '%s'",
-];
+	
+	/**
+	 * Upgrades
+	 */
+	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
+	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
+	
+	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
+	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+);

@@ -1,11 +1,11 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'expages' => "Стране сајта",
-	'admin:appearance:expages' => "Стране Сајта",
+	'admin:configure_utilities:expages' => "Site Pages",
 	'expages:edit:viewpage' => "Погледај страницу на сајту",
 	'expages:about' => "О сајту",
 	'expages:terms' => "Услови коришћења",
@@ -19,4 +19,4 @@ return [
 	 */
 	'expages:posted' => "Страна је успешно сачувана.",
 	'expages:error' => "Страна није сачувана.",
-];
+);

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => '「like」にしました',
 	'likes:deleted' => 'あなたの「like」を削除しました',
 	'likes:see' => '「like」を押した人',
@@ -20,20 +20,21 @@ return [
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s さんは、あなたの投稿 「 %s 」 に"Like"を付けました',
 	'likes:notifications:body' =>
-'%1$s さん、
+'Hi %1$s,
 
-%2$s さんがあなたの %4$s への投稿 「 %3$s 」 に"like"を付けました。
+%2$s likes your post "%3$s" on %4$s
 
-あなたの投稿を見るには:
+See your original post here:
 
 %5$s
 
-%2$s さんのプロフィールを見るには:
+or view %2$s\'s profile here:
 
 %6$s
 
-ありがとうございました。
-%4$s
-',
+Thanks,
+%4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

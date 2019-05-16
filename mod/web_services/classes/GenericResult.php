@@ -23,7 +23,7 @@ abstract class GenericResult {
 	 * Result store.
 	 * Attach result specific informaton here.
 	 *
-	 * @var mixed. Should probably be an object of some sort.
+	 * @var mixed Should probably be an object of some sort.
 	 */
 	private $result;
 

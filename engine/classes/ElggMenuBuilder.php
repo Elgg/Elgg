@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Collections\Collection;
 use Elgg\Menu\MenuItems;
 use Elgg\Menu\PreparedMenu;
 
@@ -276,7 +275,7 @@ class ElggMenuBuilder {
 	 * @param ElggMenuItem $a Menu item
 	 * @param ElggMenuItem $b Menu item
 	 *
-	 * @return bool
+	 * @return int
 	 */
 	public static function compareByText($a, $b) {
 		$at = strip_tags($a->getText());
@@ -296,7 +295,7 @@ class ElggMenuBuilder {
 	 * @param ElggMenuItem $a Menu item
 	 * @param ElggMenuItem $b Menu item
 	 *
-	 * @return bool
+	 * @return int
 	 */
 	public static function compareByName($a, $b) {
 		$an = $a->getName();
@@ -316,7 +315,7 @@ class ElggMenuBuilder {
 	 * @param ElggMenuItem $a Menu item
 	 * @param ElggMenuItem $b Menu item
 	 *
-	 * @return bool
+	 * @return int
 	 * @since 1.9.0
 	 */
 	public static function compareByPriority($a, $b) {

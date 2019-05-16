@@ -45,8 +45,8 @@ return array(
 	'file:friends:type:image' => "Afbeeldingen van je vrienden",
 	'file:friends:type:general' => "Algemene bestanden van je vrienden",
 
-	'file:widget' => "Bestandenwidget",
-	'file:widget:description' => "Laat je laatst geüploade bestanden zien",
+	'widgets:filerepo:name' => "Bestandenwidget",
+	'widgets:filerepo:description' => "Laat je laatst geüploade bestanden zien",
 
 	'groups:tool:file' => 'Schakel groepsbestanden in',
 

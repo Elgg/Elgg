@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,17 +20,13 @@ return [
 
 	'groups:icon' => 'Icona do grupo (deixe o cambio baleiro para mantela)',
 	'groups:name' => 'Nome',
-	'groups:username' => 'Nome curto do grupo, para mostrar en URLs. Só pode ter números e letras.',
 	'groups:description' => 'Descrición',
 	'groups:briefdescription' => 'Descrición breve.',
 	'groups:interests' => 'Etiquetas',
 	'groups:website' => 'Sitio web',
 	'groups:members' => 'Membros',
-	'groups:my_status' => 'Rol',
-	'groups:my_status:group_owner' => 'Administrador',
-	'groups:my_status:group_member' => 'Membr',
-	'groups:subscribed' => 'Group notifications are on',
-	'groups:unsubscribed' => 'Group notifications are off',
+
+	'groups:members_count' => '%s members',
 
 	'groups:members:title' => 'Membros de %s',
 	'groups:members:more' => "Ver todos os membros",
@@ -43,17 +39,10 @@ return [
 	'groups:owner' => "Administrador",
 	'groups:owner:warning' => "Aviso: se cambia o valor, deixará de ser o administrador do grupo.",
 	'groups:widget:num_display' => 'Número de grupos para mostrar',
-	'groups:widget:membership' => 'Grupos aos que pertence',
-	'groups:widgets:description' => 'Mostrar os grupos aos que pertence no seu perfil.',
-
-	'groups:widget:group_activity:title' => 'Actividade do grupo',
-	'groups:widget:group_activity:description' => 'Ver a actividade nun dos grupos ao que pertence',
-	'groups:widget:group_activity:edit:select' => 'Seleccione un grupo',
-	'groups:widget:group_activity:content:noactivity' => 'Este grupo non ten actividade',
-	'groups:widget:group_activity:content:noselect' => 'Edite este trebello para seleccionar un grupo.',
+	'widgets:a_users_groups:name' => 'Group membership',
+	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
 
 	'groups:noaccess' => 'Non ten acceso ao grupo.',
-	'groups:ingroup' => 'No grupo',
 	'groups:cantcreate' => 'Só os administradores poden crear grupos.',
 	'groups:cantedit' => 'Non pode editar o grupo.',
 	'groups:saved' => 'Gardouse o grupo.',
@@ -70,33 +59,28 @@ return [
 	'groups:leave' => 'Deixar o grupo',
 	'groups:invite' => 'Invitar contactos',
 	'groups:invite:title' => 'Invitar contactos a unirse a este grupo.',
-	'groups:inviteto' => "Invitar contactos a «%s»",
-	'groups:nofriends' => "Non lle quedan contactos que non recibisen xa unha invitación para unirse a este grupo.",
+	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
+	'groups:invite:resend' => 'Resend the invitations to already invited users',
+
 	'groups:nofriendsatall' => 'Non ten contactos que invitar.',
-	'groups:viagroups' => "Mediante grupos",
 	'groups:group' => "Grupo",
 	'groups:search:tags' => "Etiqueta",
 	'groups:search:title' => "Buscar grupos coa etiqueta «%s»",
 	'groups:search:none' => "Non se atopou ningunha coincidencia.",
 	'groups:search_in_group' => "Buscar no grupo",
 	'groups:acl' => "Grupo: %s",
-
-	'groups:activity' => "Actividade do grupo",
-	'groups:enableactivity' => 'Activar a actividade do grupo',
-	'groups:activity:none' => "Aínda non hai actividade no grupo",
+	'groups:acl:in_context' => 'Group members',
 
 	'groups:notfound' => "Non se atopou o grupo.",
-	'groups:notfound:details' => "O grupo solicitado non existe ou non ten permisos para acceder a el",
-
+	
 	'groups:requests:none' => 'Non hai ningunha solicitude de admisión pendente.',
 
 	'groups:invitations:none' => 'Non hai ningunha invitación.',
 
-	'groups:count' => "Grupos creados",
 	'groups:open' => "Grupo abert",
 	'groups:closed' => "Grupo pechado",
 	'groups:member' => "Membros",
-	'groups:searchtag' => "Buscar grupos por etiqueta",
+	'groups:search' => "Search for groups",
 
 	'groups:more' => 'Máis grupos',
 	'groups:none' => 'Non hai grupos.',
@@ -117,12 +101,9 @@ return [
 	/**
 	 * Group tools
 	 */
-	'groups:lastupdated' => 'Actualizado po última vez o %s por %s.',
-	'groups:lastcomment' => 'O último comentario deixouno %s %s.',
 
 	'admin:groups' => 'Grupos',
 
-	'groups:privategroup' => 'O grupo é un grupo pechado. Solicitarase a admisión.',
 	'groups:notitle' => 'Os grupos necesitan un título.',
 	'groups:cantjoin' => 'Non foi posíbel unirse ao grupo.',
 	'groups:cantleave' => 'Non foi posíbel deixar o grupo.',
@@ -133,61 +114,44 @@ return [
 	'groups:joinrequestnotmade' => 'Non foi posíbel solicitar unirse ao grupo.',
 	'groups:joinrequestmade' => 'Solicitouse unirse ao grupo.',
 	'groups:joinrequest:exists' => 'You already requested membership for this group',
+	'groups:button:joined' => 'Joined',
+	'groups:button:owned' => 'Owned',
 	'groups:joined' => 'Uniuse ao grupo.',
 	'groups:left' => 'Deixou o grupo.',
-	'groups:notowner' => 'Non é o administrador do grupo.',
-	'groups:notmember' => 'Non é membro do grupo.',
-	'groups:alreadymember' => 'Xa é membro do grupo.',
 	'groups:userinvited' => 'Invitouse o usuario.',
 	'groups:usernotinvited' => 'Non foi posíbel invitar o usuario.',
 	'groups:useralreadyinvited' => 'Xa se invitara o usuario.',
 	'groups:invite:subject' => "%s recibiu unha invitación a %s.",
-	'groups:started' => "Iniciado por %s",
 	'groups:joinrequest:remove:check' => 'Está seguro de que quere eliminar a solicitude de admisión?',
 	'groups:invite:remove:check' => 'Está seguro de que quere eliminar a invitación?',
-	'groups:invite:body' => "Ola, %s.
+	'groups:invite:body' => "Hi %s,
 
-%s invitouno a unirse ao grupo «%s». Siga esta ligazón para ver as súas invitacións:
+%s invited you to join the '%s' group.
 
+Click below to view your invitations:
 %s",
 
 	'groups:welcome:subject' => "Benvida ao grupo «%s»!",
-	'groups:welcome:body' => "Ola, %s.
+	'groups:welcome:body' => "Hi %s!
 
-Agora forma parte do grupo «%s». Siga esta ligazón para deixar unha mensaxe:
+You are now a member of the '%s' group.
 
+Click below to begin posting!
 %s",
 
 	'groups:request:subject' => "%s solicitou unirse a %s",
-	'groups:request:body' => "Ola, %s.
+	'groups:request:body' => "Hi %s,
 
-%s solicitou unirse ao grupo «%s». Prema a seguinte ligazón para ver o seu perfil:
+%s has requested to join the '%s' group.
 
+Click below to view their profile:
 %s
 
-Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
-
+or click below to view the group's join requests:
 %s",
 
-	/**
-	 * Forum river items
-	 */
-
-	'river:create:group:default' => '%s creou o grupo %s',
-	'river:join:group:default' => '%s uniuse ao grupo %s',
-
-	'groups:nowidgets' => 'Non se definiu ningún trebello para este grupo.',
-
-
-	'groups:widgets:members:title' => 'Membros',
-	'groups:widgets:members:description' => 'Listar os membros dun grupo.',
-	'groups:widgets:members:label:displaynum' => 'Listar os membros dun grupo.',
-	'groups:widgets:members:label:pleaseedit' => 'Configure o trebello.',
-
-	'groups:widgets:entities:title' => "Obxectos no grupo",
-	'groups:widgets:entities:description' => "Listar os obxectos gardados no grupo.",
-	'groups:widgets:entities:label:displaynum' => 'Listar os obxectos dun grupo.',
-	'groups:widgets:entities:label:pleaseedit' => 'Configure o trebello.',
+	'river:group:create' => '%s created the group %s',
+	'river:group:join' => '%s joined the group %s',
 
 	'groups:allowhiddengroups' => 'Quere permitir grupos privados (invisíbeis)?',
 	'groups:whocancreate' => 'Quen pode crear grupos novos?',
@@ -195,10 +159,8 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 	/**
 	 * Action messages
 	 */
-	'group:deleted' => 'Elimináronse o grupo e mailos seus contidos.',
-	'group:notdeleted' => 'Non foi posíbel eliminar o grupo.',
-
-	'group:notfound' => 'Non foi posíbel atopar o grupo.',
+	'groups:deleted' => 'Group and group contents deleted',
+	'groups:notdeleted' => 'Group could not be deleted',
 	'groups:deletewarning' => "Está seguro de que quere eliminar o grupo? Esta operación non pode desfacerse.",
 
 	'groups:invitekilled' => 'Eliminouse a invitación',
@@ -210,4 +172,11 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 	 * ecml
 	 */
 	'groups:ecml:groupprofile' => 'Perfís do grupo',
-];
+
+	/**
+	 * Upgrades
+	 */
+	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
+	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
+relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+);

@@ -35,6 +35,7 @@ $notices = elgg_get_admin_notices([
 
 $list = elgg_view_entity_list($notices, [
 	'list_class' => 'elgg-admin-notices',
+	'register_rss_link' => false,
 ]);
 
 echo elgg_view_module('admin-notices', ' ', $list, [

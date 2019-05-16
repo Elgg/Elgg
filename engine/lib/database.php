@@ -68,7 +68,7 @@ function run_sql_script($scriptlocation) {
  * @since 2.0.0
  */
 function elgg_enable_query_cache() {
-	_elgg_services()->db->enableQueryCache();
+	_elgg_services()->queryCache->enable();
 }
 
 /**
@@ -81,26 +81,7 @@ function elgg_enable_query_cache() {
  * @since 2.0.0
  */
 function elgg_disable_query_cache() {
-	_elgg_services()->db->disableQueryCache();
-}
-
-/**
- * Get a new query counter that will begin counting from 0. For profiling isolated
- * sections of code.
- *
- * <code>
- * $counter = _elgg_db_get_query_counter();
- *
- * ... code to profile
- *
- * $counter->setDeltaHeader();
- * </code>
- *
- * @return \Elgg\Database\QueryCounter
- * @access private
- */
-function _elgg_db_get_query_counter() {
-	return _elgg_services()->queryCounter;
+	_elgg_services()->queryCache->disable();
 }
 
 /**

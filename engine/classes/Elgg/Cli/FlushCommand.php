@@ -22,9 +22,8 @@ class FlushCommand extends Command {
 
 		elgg_flush_caches();
 
-		system_message('System caches have been flushed');
+		$this->write('System caches have been flushed');
 
 		return 0;
 	}
-
 }

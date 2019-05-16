@@ -565,7 +565,7 @@ Removed pagehandling
  * ``collections/pickercallback``
  * ``discussion/reply``: See :ref:`upgrade-discussion-replies`
  * ``expages``
- * ``invitefriends``: Use ``friends/invite``
+ * ``invitefriends``: Use ``friends/{username}/invite``
  * ``messages/compose``: Use ``messages/add``
  * ``reportedcontent``
 
@@ -1082,7 +1082,7 @@ The function ``elgg_delete_river()`` which was deprecated in 2.3, has been reins
 
  * It accepts all ``$options`` from ``elgg_get_river()`` but requires at least one of the following params to be set id(s), annotation_id(s), subject_guid(s), object_guid(s), target_guid(s) or view(s)
  * Since ``elgg_get_river`` by default has a limit on the number of river items it fetches, if you wish to remove all river items you need to set ``limit`` to ``false``
- * A hook is fired for each river item which checks the delete permissions
+ * Access is ignored when deleting river items
  * Events are fired just before and after a river item has been deleted
 
 .. _upgrade-discussion-replies:

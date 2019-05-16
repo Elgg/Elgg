@@ -1,15 +1,12 @@
 <?php
 
-return [
-
-	'friends:all' => '所有朋友',
+return array(
 
 	'notifications:subscriptions:personal:description' => '當有動作施加於您的內容時就通知您',
 	'notifications:subscriptions:personal:title' => '個人通知',
 
-	'notifications:subscriptions:friends:title' => '朋友',
-	'notifications:subscriptions:friends:description' => '以下是您的朋友集合。選取某個集合將會開啟對於該集合中使用者的通知。',
-	'notifications:subscriptions:collections:edit' => '要編輯您共享的存取通知，請按一下這裡。',
+	'notifications:subscriptions:collections:friends' => 'Settings to use for new users you add as friends',
+	'notifications:subscriptions:collections:custom' => 'Settings to use for new friends you add to %s collection',
 
 	'notifications:subscriptions:changesettings' => '通知',
 	'notifications:subscriptions:changesettings:groups' => '群組通知',
@@ -21,4 +18,9 @@ return [
 
 	'notifications:subscriptions:success' => '您的通知設定值已儲存。',
 
-];
+	'notifications:subscriptions:no_results' => 'There are no subscription records yet',
+	
+	'notifications:groups:subscribed' => 'Group notifications are on',
+	'notifications:groups:unsubscribed' => 'Group notifications are off',
+
+);

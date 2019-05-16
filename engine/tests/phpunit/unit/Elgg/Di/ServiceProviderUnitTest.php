@@ -52,7 +52,6 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 		$sp = _elgg_services();
 
 		$non_shared_names = [
-			'queryCounter',
 		];
 
 		$skipped_names = [

@@ -1,5 +1,5 @@
 <?php
-return [
+return array(
 	'likes:this' => 'tykkää tästä',
 	'likes:deleted' => 'Tykkäys poistettu',
 	'likes:see' => 'Katso, ketkä tykkäsivät tästä',
@@ -20,18 +20,21 @@ return [
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s tykkää kohteestasi "%s"',
 	'likes:notifications:body' =>
-'Hei %1$s,
+'Hi %1$s,
 
-%2$s tykkää kohteestasi "%3$s" sivustolla %4$s
+%2$s likes your post "%3$s" on %4$s
+
+See your original post here:
 
 %5$s
 
-käyttäjän %2$s profiili:
+or view %2$s\'s profile here:
 
 %6$s
 
-Terveisin,
-%4$s
-',
+Thanks,
+%4$s',
+	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
+	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

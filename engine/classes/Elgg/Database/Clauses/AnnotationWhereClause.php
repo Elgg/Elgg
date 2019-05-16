@@ -11,17 +11,17 @@ use Elgg\Database\QueryBuilder;
 class AnnotationWhereClause extends WhereClause {
 
 	/**
-	 * @var int[]
+	 * @var int|int[]
 	 */
 	public $ids;
 
 	/**
-	 * @var int[]|\ElggEntity[]
+	 * @var int|int[]|\ElggEntity[]
 	 */
 	public $entity_guids;
 
 	/**
-	 * @var int[]|\ElggEntity[]
+	 * @var int|int[]|\ElggEntity[]
 	 */
 	public $owner_guids;
 
@@ -31,21 +31,22 @@ class AnnotationWhereClause extends WhereClause {
 	public $enabled;
 
 	/**
-	 * @var int[]
+	 * @var int|int[]
 	 */
 	public $access_ids;
 
 	/**
-	 * @var string[]
+	 * @var string|string[]
 	 */
 	public $names;
+	
 	/**
 	 * @var string
 	 */
 	public $comparison = '=';
 
 	/**
-	 * @var string[]
+	 * @var string|string[]
 	 */
 	public $values;
 

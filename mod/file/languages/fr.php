@@ -45,8 +45,8 @@ return array(
 	'file:friends:type:image' => "Images des contacts",
 	'file:friends:type:general' => "Autres types de fichiers des contacts",
 
-	'file:widget' => "Widget Fichiers",
-	'file:widget:description' => "Affiche une liste de vos derniers fichiers",
+	'widgets:filerepo:name' => "Widget Fichiers",
+	'widgets:filerepo:description' => "Affiche une liste de vos derniers fichiers",
 
 	'groups:tool:file' => 'Activer les fichiers du groupe',
 

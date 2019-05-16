@@ -51,10 +51,20 @@ $refine = elgg_view('logbrowser/refine', [
 ]);
 
 // Get log entries
-$log = system_log_get_log($user_guid, "", "", "", "", $limit, $offset, false, $timeupper, $timelower,
-	0, $ip_address);
-$count = system_log_get_log($user_guid, "", "", "", "", $limit, $offset, true, $timeupper, $timelower,
-	0, $ip_address);
+
+$options = [
+	'performed_by_guid' => $user_guid,
+	'limit' => $limit,
+	'offset' => $offset,
+	'created_before' => $timeupper,
+	'created_after' => $timelower,
+	'ip_address' => $ip_address,
+];
+
+$log = system_log_get_log($options);
+
+$options['count'] = true;
+$count = system_log_get_log($options);
 
 // if user does not exist, we have no results
 if ($search_username && is_null($user_guid)) {

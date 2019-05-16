@@ -46,8 +46,6 @@ class ShutdownHandler {
 		} catch (\Throwable $e) {
 			$this->log(LogLevel::CRITICAL, $e);
 		}
-
-		$this->shutdownSession();
 	}
 
 	/**
@@ -105,14 +103,5 @@ class ShutdownHandler {
 	 */
 	public function persistCaches() {
 		$this->app->_services->autoloadManager->saveCache();
-	}
-
-	/**
-	 * Shutdown session
-	 * Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
-	 * @return void
-	 */
-	public function shutdownSession() {
-		session_write_close();
 	}
 }

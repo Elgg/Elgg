@@ -23,6 +23,7 @@ $defaults = [
 	'value' => '',
 	'disabled' => false,
 	'timestamp' => false,
+	'autocomplete' => 'off',
 	'type' => 'text',
 	'format' => elgg_get_config('date_format', elgg_echo('input:date_format')),
 ];
@@ -48,6 +49,7 @@ if ($value) {
 		$value_date = $dt->format($format);
 		$value_timestamp = $dt->getTimestamp();
 	} catch (DataFormatException $ex) {
+		// $value is not a valid datetime, using blank value
 	}
 }
 

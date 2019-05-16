@@ -4,6 +4,7 @@
  *
  * @uses $vars['item']
  */
+
 $item = elgg_extract('item', $vars);
 if (!$item instanceof ElggRiverItem) {
 	return;
@@ -14,9 +15,11 @@ $name = htmlspecialchars($name, ENT_NOQUOTES, 'UTF-8');
 $title = elgg_echo('river:update', [$name]);
 
 $timestamp = date('r', $item->getTimePosted());
-$summary = elgg_view('river/elements/summary', $vars, 'default');
-$body = elgg_extract('summary', $vars, $summary);
 
+$summary = elgg_view('river/elements/summary', $vars, 'default');
+$summary = elgg_strip_tags($summary);
+
+$body = elgg_extract('summary', $vars, $summary);
 
 $object = $item->getObjectEntity();
 if ($object) {

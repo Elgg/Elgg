@@ -16,18 +16,19 @@ return array(
 	'invitefriends:already_members' => 'Následující jsou již členy: %s',
 	'invitefriends:noemails' => 'Nebyly zadány e-mailové adresy.',
 	
-	'invitefriends:message:default' => 'Ahoj,
+	'invitefriends:message:default' => 'Hi,
 
-přidej se ke mě na %s.',
+I want to invite you to join my network here on %s.',
 
-	'invitefriends:email' => 'Byl/a jste pozván/a do %s uživatelem %s s následující zprávou:
+	'invitefriends:email' => 'You have been invited to join %s by %s.
 
-%s
-
-Chcete-li se stát členem, použijte následující odkaz:
+They included the following message:
 
 %s
 
-Po vytvoření účtu bude automaticky přidán/a jako váš přítel.',
+To join, click the following link:
+%s
+
+You will automatically add them as a friend when you create your account.',
 	
 );
