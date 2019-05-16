@@ -1000,6 +1000,7 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Active',
 	'total' => 'Total',
+	'unvalidated' => 'Unvalidated',
 
 	'ok' => 'OK',
 	'any' => 'Any',

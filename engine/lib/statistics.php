@@ -52,32 +52,47 @@ function get_entity_statistics($owner_guid = 0) {
 /**
  * Return the number of users registered in the system.
  *
- * @param bool $show_deactivated Count not enabled users?
+ * @param string $type count for the type - unverified, banned, total, active (default)
  *
  * @return int
  */
-function get_number_users($show_deactivated = false) {
-
-	$where = new \Elgg\Database\Clauses\EntityWhereClause();
-	$where->type_subtype_pairs = [
-		'user' => null,
-	];
-
-	if ($show_deactivated) {
-		$where->use_enabled_clause = false;
-	}
-
-	$select = \Elgg\Database\Select::fromTable('entities', 'e');
-	$select->select('COUNT(DISTINCT e.guid) AS count');
-	$select->addClause($where, 'e');
-
-	$result = _elgg_services()->db->getDataRow($select);
-
-	if ($result) {
-		return $result->count;
-	}
-
-	return 0;
+function get_number_users($type = 'active') {
+    switch ($type) {
+        case 'unverified':
+            $metadata_name_value_pairs = [
+                ['name' => 'validated', 'value' => false],
+            ];
+            break;
+        case 'banned':
+            $metadata_name_value_pairs = [
+                ['name' => 'banned', 'value' => 'yes'],
+            ];
+            break;
+        case 'total':
+            $metadata_name_value_pairs = [];
+            break;
+        default:
+            $metadata_name_value_pairs = [
+                ['name' => 'banned', 'value' => 'no'],
+            ];
+            break;
+    }
+    
+    $hidden_status = access_get_show_hidden_status();
+    
+    if($type == 'total' || $type == 'unverified'){
+        access_show_hidden_entities(true);
+    }
+    
+    $result = elgg_get_entities([
+        'type' => 'user',
+        'sybtype' => 'user',
+        'count'=> true,
+        'metadata_name_value_pairs' => $metadata_name_value_pairs,
+    ]);
+    access_show_hidden_entities($hidden_status);
+	
+	return $result;
 }
 
 /**
