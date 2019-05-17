@@ -14,7 +14,7 @@ class ElggHMACCache extends ElggCache {
 	 *
 	 * @param int $max_age Maximum age in seconds, 0 if no limit.
 	 */
-	function __construct($max_age = 0) {
+	public function __construct($max_age = 0) {
 		$this->setVariable('max_age', $max_age);
 	}
 
