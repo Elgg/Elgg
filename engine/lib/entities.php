@@ -661,7 +661,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 	}
 
 	$entities = _elgg_config()->registered_entities;
-	if (!$entities) {
+	if (empty($entities)) {
 		$entities = [];
 	}
 
@@ -702,7 +702,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
 	}
 
 	$entities = _elgg_config()->registered_entities;
-	if (!$entities) {
+	if (empty($entities)) {
 		return false;
 	}
 
@@ -735,7 +735,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
  */
 function get_registered_entity_types($type = null) {
 	$registered_entities = _elgg_config()->registered_entities;
-	if (!$registered_entities) {
+	if (empty($registered_entities)) {
 		return false;
 	}
 
@@ -764,8 +764,8 @@ function get_registered_entity_types($type = null) {
  */
 function is_registered_entity_type($type, $subtype = null) {
 	$registered_entities = _elgg_config()->registered_entities;
-	if (!$registered_entities) {
-		return true;
+	if (empty($registered_entities)) {
+		return false;
 	}
 
 	$type = strtolower($type);

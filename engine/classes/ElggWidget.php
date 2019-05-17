@@ -189,15 +189,16 @@ class ElggWidget extends \ElggObject {
 				['name' => 'column', 'value' => $column]
 			]
 		];
+		/* @var $widgets \ElggWidget[] */
 		$widgets = elgg_get_entities($options);
-		if (!$widgets) {
+		if (empty($widgets)) {
 			$this->column = (int) $column;
 			$this->order = 0;
 			return;
 		}
 
-		usort($widgets, function($a, $b) {return (int) $a->order > (int) $b->order;
-
+		usort($widgets, function($a, $b) {
+			return (int) $a->order > (int) $b->order;
 		});
 
 		// remove widgets from inactive plugins

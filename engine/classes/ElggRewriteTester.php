@@ -29,7 +29,7 @@ class ElggRewriteTester {
 	 *
 	 * @return array
 	 */
-	public function run($url, $path) {
+	public function run($url, $path = null) {
 
 		$this->webserver = \ElggRewriteTester::guessWebServer();
 
@@ -76,15 +76,16 @@ class ElggRewriteTester {
 	 */
 	public function guessSubdirectory($url) {
 		$elements = parse_url($url);
-		if (!$elements || !isset($elements['path'])) {
+		if (!is_array($elements) || !isset($elements['path'])) {
 			return false;
 		}
+		
 		$subdir = trim(dirname($elements['path']), '/');
 		if (!$subdir) {
 			return false;
-		} else {
-			return "/$subdir/";
 		}
+		
+		return "/$subdir/";
 	}
 
 	/**
@@ -156,7 +157,7 @@ class ElggRewriteTester {
 		if ($file->exists()) {
 			// check that this is the Elgg .htaccess
 			$data = $file->getContents();
-			if ($data === false) {
+			if (empty($data)) {
 				// don't have permission to read the file
 				$this->htaccessIssue = 'read_permission';
 				return false;

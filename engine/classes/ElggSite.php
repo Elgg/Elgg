@@ -59,7 +59,7 @@ class ElggSite extends \ElggEntity {
 
 		$row = $db->getDataRow($qb);
 
-		if ($row) {
+		if (!empty($row)) {
 			if ($row->guid == $this->attributes['guid']) {
 				// can save active site
 				return parent::save();
