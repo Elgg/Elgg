@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Notifications;
 
 use Elgg\Database;
@@ -185,4 +186,3 @@ class SubscriptionsService {
 		return $names;
 	}
 }
-

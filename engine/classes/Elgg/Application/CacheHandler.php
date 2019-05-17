@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Application;
 
 use Elgg\Application;
@@ -378,4 +379,3 @@ class CacheHandler {
 		return Response::create($msg, 403);
 	}
 }
-

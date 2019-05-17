@@ -35,4 +35,3 @@ $footer = elgg_view_field([
 	'value' => elgg_echo('save'),
 ]);
 elgg_set_form_footer($footer);
-

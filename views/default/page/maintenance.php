@@ -33,4 +33,3 @@ $body = <<<__BODY
 __BODY;
 
 echo elgg_view("page/elements/html", ['head' => $head, 'body' => $body]);
-

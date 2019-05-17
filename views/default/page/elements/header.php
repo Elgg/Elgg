@@ -2,4 +2,3 @@
 /**
  * Elgg page header
  */
-

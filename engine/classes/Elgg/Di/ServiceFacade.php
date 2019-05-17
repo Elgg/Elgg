@@ -31,5 +31,4 @@ trait ServiceFacade {
 
 		return elgg()->call([self::instance(), $method], $arguments);
 	}
-
 }

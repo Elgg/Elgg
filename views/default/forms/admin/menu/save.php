@@ -92,4 +92,3 @@ $footer = elgg_view_field([
 ]);
 
 elgg_set_form_footer($footer);
-

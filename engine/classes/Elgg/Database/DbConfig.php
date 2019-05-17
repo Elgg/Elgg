@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 use Elgg\Config;
@@ -178,4 +179,3 @@ class DbConfig {
 		return $config;
 	}
 }
-

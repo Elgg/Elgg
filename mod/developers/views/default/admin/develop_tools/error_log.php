@@ -30,4 +30,3 @@ while ($entry = readdir($handle)) {
 		'class' => 'developers-error-log-module',
 	]);
 }
-

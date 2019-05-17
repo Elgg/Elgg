@@ -2741,5 +2741,4 @@ function _elgg_map_icon_glyph_class(array $classes, $map_sprites = true) {
 	$classes = array_unique($classes);
 
 	return elgg_trigger_plugin_hook('classes', 'icon', null, $classes);
-
 }

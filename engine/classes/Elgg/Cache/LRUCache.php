@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Cache;
 
 /**
@@ -180,4 +181,3 @@ class LRUCache implements \ArrayAccess {
 		return $this->containsKey($key);
 	}
 }
-
