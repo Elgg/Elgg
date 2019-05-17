@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
@@ -6,13 +7,12 @@ namespace Elgg\I18n;
  *
  * Can "translate" language keys into various human-readable, localized strings.
  *
- * TODO(ewinslow): Remove the "Interface" suffix
- *
  * @since 1.11
  *
  * @access private
  */
 interface TranslatorInterface {
+	
 	/**
 	 * Given a message key, returns a best-effort translated string.
 	 *
@@ -33,5 +33,5 @@ interface TranslatorInterface {
 	 *
 	 * @return string The final, best-effort translation.
 	 */
-	function translate($key, array $args = [], Locale $locale = null);
+	public function translate($key, array $args = [], Locale $locale = null);
 }
