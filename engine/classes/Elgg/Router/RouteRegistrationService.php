@@ -255,8 +255,8 @@ class RouteRegistrationService {
 	 * Register a function that gets called when the first part of a URL is
 	 * equal to the identifier.
 	 *
-	 * @param string $identifier The page type to handle
-	 * @param string $function   Your function name
+	 * @param string   $identifier The page type to handle
+	 * @param callable $function   Your function name
 	 *
 	 * @return bool Depending on success
 	 * @throws InvalidParameterException

@@ -618,9 +618,9 @@ class ElggPluginPackage {
 	/**
 	 * Checks if $elgg_version meets the requirement by $dep.
 	 *
-	 * @param array $dep          An Elgg manifest.xml deps array
-	 * @param array $elgg_version An Elgg version (either YYYYMMDDXX or X.Y.Z)
-	 * @param bool  $inverse      Inverse the result to use as a conflicts.
+	 * @param array  $dep          An Elgg manifest.xml deps array
+	 * @param string $elgg_version An Elgg version (either YYYYMMDDXX or X.Y.Z)
+	 * @param bool   $inverse      Inverse the result to use as a conflicts.
 	 *
 	 * @return array
 	 */

@@ -274,7 +274,7 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * Disables a tool option
 	 *
-	 * @param Tool|string $name The option to disable
+	 * @param string $name The option to disable
 	 *
 	 * @return bool
 	 * @since 3.0.0

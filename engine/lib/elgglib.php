@@ -436,10 +436,10 @@ function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * @param string $event       The event type
- * @param string $object_type The object type
- * @param string $callback    The handler callback
- * @param int    $priority    The priority - 0 is default, negative before, positive after
+ * @param string   $event       The event type
+ * @param string   $object_type The object type
+ * @param callable $callback    The handler callback
+ * @param int      $priority    The priority - 0 is default, negative before, positive after
  *
  * @return bool
  * @example documentation/events/basic.php
@@ -453,9 +453,9 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 /**
  * Unregisters a callback for an event.
  *
- * @param string $event       The event type
- * @param string $object_type The object type
- * @param string $callback    The callback. Since 1.11, static method callbacks will match dynamic methods
+ * @param string   $event       The event type
+ * @param string   $object_type The object type
+ * @param callable $callback    The callback. Since 1.11, static method callbacks will match dynamic methods
  *
  * @return bool true if a handler was found and removed
  * @since 1.7
@@ -1394,11 +1394,12 @@ function _elgg_ajax_page_handler($segments) {
  *
  * @param array  $options Options array
  * @param string $type    Options type: metadata, annotation or river
+ *
  * @return bool
  * @access private
  */
 function _elgg_is_valid_options_for_batch_operation($options, $type) {
-	if (!$options || !is_array($options)) {
+	if (empty($options) || !is_array($options)) {
 		return false;
 	}
 

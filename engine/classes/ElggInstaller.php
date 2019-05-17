@@ -734,7 +734,7 @@ class ElggInstaller {
 		try {
 			// check that the config table has been created
 			$result = $db->getData("SHOW TABLES");
-			if (!$result) {
+			if (empty($result)) {
 				return;
 			}
 			foreach ($result as $table) {
@@ -751,8 +751,8 @@ class ElggInstaller {
 			$qb = \Elgg\Database\Select::fromTable('config');
 			$qb->select('COUNT(*) AS total');
 
-			$result = $db->getData($qb);
-			if ($result && $result[0]->total > 0) {
+			$result = $db->getDataRow($qb);
+			if (!empty($result) && $result->total > 0) {
 				$this->has_completed['settings'] = true;
 			} else {
 				return;
@@ -763,8 +763,8 @@ class ElggInstaller {
 			$qb->select('COUNT(*) AS total')
 				->where($qb->compare('type', '=', 'user', ELGG_VALUE_STRING));
 
-			$result = $db->getData($qb);
-			if ($result && $result[0]->total > 0) {
+			$result = $db->getDataRow($qb);
+			if (!empty($result) && $result->total > 0) {
 				$this->has_completed['admin'] = true;
 			} else {
 				return;

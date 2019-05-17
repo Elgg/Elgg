@@ -313,7 +313,7 @@ class ElggBatch implements BatchResult {
 
 		$this->totalIncompletes += $num_incomplete;
 
-		if ($this->incompleteEntities) {
+		if (!empty($this->incompleteEntities)) {
 			// pad the front of the results with nulls representing the incompletes
 			array_splice($this->results, 0, 0, array_pad([], $num_incomplete, null));
 			// ...and skip past them
