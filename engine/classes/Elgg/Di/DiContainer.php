@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Di;
 
 /**
@@ -207,4 +208,3 @@ class DiContainer {
 		return $names;
 	}
 }
-

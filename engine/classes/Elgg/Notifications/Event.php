@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Notifications;
 
 use ElggData;
@@ -140,4 +141,3 @@ class Event implements NotificationEvent {
 		return $obj;
 	}
 }
-

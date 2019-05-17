@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg\Application;
+
 use Elgg\Application;
 use Elgg\Loggable;
 use Exception;

@@ -132,5 +132,4 @@ class Tool implements CollectionItemInterface {
 
 		return 'no';
 	}
-
 }

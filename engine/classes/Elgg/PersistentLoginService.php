@@ -456,4 +456,3 @@ class PersistentLoginService {
 	 */
 	public $_callable_sleep = 'sleep';
 }
-

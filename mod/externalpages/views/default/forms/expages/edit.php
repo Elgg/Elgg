@@ -62,4 +62,3 @@ $view_page
 $submit_input
 </div>
 EOT;
-

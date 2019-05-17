@@ -1,5 +1,7 @@
 <?php
+
 namespace Elgg;
+
 /**
  * Wrap an object and display warnings whenever the object's variables are
  * accessed or a method is used. It can also be used to wrap a string.
@@ -208,4 +210,3 @@ class DeprecationWrapper implements \ArrayAccess {
 		}
 	}
 }
-
