@@ -3576,12 +3576,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/elgg-coding-standards.git",
-                "reference": "db786746e3f7dc8c11184b818e0ac0c74712f8c7"
+                "reference": "90d87b4bc6bff25f161f4e4581e960a6e4e3bf31"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/db786746e3f7dc8c11184b818e0ac0c74712f8c7",
-                "reference": "db786746e3f7dc8c11184b818e0ac0c74712f8c7",
+                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/90d87b4bc6bff25f161f4e4581e960a6e4e3bf31",
+                "reference": "90d87b4bc6bff25f161f4e4581e960a6e4e3bf31",
                 "shasum": ""
             },
             "require": {
@@ -3595,7 +3595,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Elgg coding standards",
-            "time": "2019-05-17T08:34:27+00:00"
+            "time": "2019-05-17T09:46:44+00:00"
         },
         {
             "name": "myclabs/deep-copy",
