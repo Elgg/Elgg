@@ -5,7 +5,6 @@ namespace Elgg\Actions;
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
-use Elgg\Values;
 
 /**
  * @group ActionsService
@@ -13,26 +12,42 @@ use Elgg\Values;
  */
 class LoginIntegrationTest extends ActionResponseTestCase {
 
+	/**
+	 * @var \ElggUser User during tests
+	 */
+	private $user;
+	
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\ActionResponseTestCase::up()
+	 */
 	public function up() {
 		parent::up();
 
 		self::createApplication(['isolate'=> true]);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\ActionResponseTestCase::down()
+	 */
 	public function down() {
+		
+		if ($this->user instanceof \ElggUser) {
+			$this->user->delete();
+		}
+		
 		parent::down();
 	}
 
 	public function testLoginWithUsernameAndPassword() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 			'language' => 'de',
 		]);
 
-		$user->save();
-
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -53,11 +68,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginWithEmailAndPassword() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->email,
@@ -74,11 +89,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithEmptyPassword() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -90,11 +105,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithIncorrectPassword() {
 
-		$user = $this->createOne('user', [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -118,13 +133,12 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithBannedUser() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 			'banned' => true,
 		]);
-		/* @var $user \ElggUser */
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -144,12 +158,12 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		_elgg_services()->events->registerHandler('login:before', 'user', $handler);
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 			'language' => 'de',
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -173,11 +187,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testRespectsLastForwardFrom() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$last_forward_form = elgg_normalize_site_url('where_i_came_from');
 		$forward_to = elgg_normalize_site_url('where_i_want_to_be');

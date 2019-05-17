@@ -355,8 +355,11 @@ class Config {
 			return $this->cookies;
 		}
 
-		$cookies = $this->cookies;
-		
+		$cookies = [];
+		if ($this->hasInitialValue('cookies')) {
+			$cookies = $this->getInitialValue('cookies');
+		}
+
 		// session cookie config
 		if (!isset($cookies['session'])) {
 			$cookies['session'] = [];
