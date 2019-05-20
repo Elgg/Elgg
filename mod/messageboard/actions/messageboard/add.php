@@ -17,7 +17,7 @@ if (!$owner || empty($message_content)) {
 
 $result = messageboard_add(elgg_get_logged_in_user_entity(), $owner, $message_content, $owner->access_id);
 
-if (!$result) {
+if ($result === false) {
 	return elgg_error_response(elgg_echo('messageboard:failure'));
 }
 

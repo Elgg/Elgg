@@ -152,7 +152,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 	// check if logging in with email address
 	if (strpos($username, '@') !== false) {
 		$users = get_user_by_email($username);
-		if ($users) {
+		if (!empty($users)) {
 			$username = $users[0]->username;
 		}
 	}

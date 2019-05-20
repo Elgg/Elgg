@@ -52,7 +52,7 @@ interface ResponseBuilder {
 
 	/**
 	 * Returns redirect URL
-	 * @return string|null null when no forward url was set
+	 * @return string|int|null string the forward url, null when no url was set or the constant REFERER
 	 */
 	public function getForwardURL();
 

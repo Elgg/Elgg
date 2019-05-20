@@ -60,7 +60,7 @@ class ElggHMACCache extends ElggCache {
 		];
 
 		$row = elgg()->db->getDataRow($query, null, $params);
-		if ($row) {
+		if (!empty($row)) {
 			return $row->hmac;
 		}
 
