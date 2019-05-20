@@ -201,7 +201,7 @@ class Service {
 			return new JsonResponse(['error' => "The response was cancelled"], 400);
 		}
 
-		$response = new JsonResponse($api_response->getData());
+		$response = _elgg_services()->responseFactory->prepareJsonResponse($api_response->getData());
 
 		$ttl = $api_response->getTtl();
 		if ($ttl > 0) {
