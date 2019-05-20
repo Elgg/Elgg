@@ -59,7 +59,7 @@ function get_user_tokens($user_guid) {
  *
  * @param string $token The Token.
  *
- * @return mixed The user id attached to the token if not expired or false.
+ * @return false|int The user id attached to the token if not expired or false.
  */
 function validate_user_token($token) {
 	$dbprefix = elgg_get_config('dbprefix');
@@ -74,8 +74,8 @@ function validate_user_token($token) {
 	];
 	
 	$user = elgg()->db->getDataRow($query, null, $params);
-	if ($user) {
-		return $user->user_guid;
+	if (!empty($user)) {
+		return (int) $user->user_guid;
 	}
 
 	return false;

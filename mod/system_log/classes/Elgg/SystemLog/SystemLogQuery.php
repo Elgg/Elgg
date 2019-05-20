@@ -105,7 +105,7 @@ class SystemLogQuery extends Repository {
 		}
 
 		$result = _elgg_services()->db->getDataRow($qb);
-		if (!$result) {
+		if (empty($result)) {
 			return 0;
 		}
 
@@ -185,22 +185,22 @@ class SystemLogQuery extends Repository {
 			}
 		}
 
-		if (isset($this->performed_by_guid)) {
+		if (!elgg_is_empty($this->performed_by_guid)) {
 			$this->performed_by_guid = Values::normalizeGuids($this->performed_by_guid);
 		}
-		if (isset($this->owner_guid)) {
+		if (!elgg_is_empty($this->owner_guid)) {
 			$this->owner_guid = Values::normalizeGuids($this->owner_guid);
 		}
-		if (isset($this->object_id)) {
+		if (!elgg_is_empty($this->object_id)) {
 			$this->object_id = Values::normalizeIds($this->object_id);
 		}
-		if (isset($this->access_id)) {
+		if (!elgg_is_empty($this->access_id)) {
 			$this->access_id = Values::normalizeIds($this->access_id);
 		}
-		if (isset($this->created_after)) {
+		if (!elgg_is_empty($this->created_after)) {
 			$this->created_after = Values::normalizeTimestamp($this->created_after);
 		}
-		if (isset($this->created_before)) {
+		if (!elgg_is_empty($this->created_before)) {
 			$this->created_before = Values::normalizeTimestamp($this->created_before);
 		}
 	}
@@ -216,37 +216,37 @@ class SystemLogQuery extends Repository {
 
 		$wheres = [];
 
-		if ($this->performed_by_guid) {
+		if (!elgg_is_empty($this->performed_by_guid)) {
 			$wheres[] = $qb->compare('performed_by_guid', '=', $this->performed_by_guid, ELGG_VALUE_INTEGER);
 		}
-		if ($this->event) {
+		if (!elgg_is_empty($this->event)) {
 			$wheres[] = $qb->compare('event', '=', $this->event, ELGG_VALUE_STRING);
 		}
-		if ($this->object_id) {
+		if (!elgg_is_empty($this->object_id)) {
 			$wheres[] = $qb->compare('object_id', '=', $this->object_id, ELGG_VALUE_INTEGER);
 		}
-		if ($this->object_class) {
+		if (!elgg_is_empty($this->object_class)) {
 			$wheres[] = $qb->compare('object_class', '=', $this->object_class, ELGG_VALUE_STRING);
 		}
-		if ($this->object_type) {
+		if (!elgg_is_empty($this->object_type)) {
 			$wheres[] = $qb->compare('object_type', '=', $this->object_type, ELGG_VALUE_STRING);
 		}
-		if ($this->object_subtype) {
+		if (!elgg_is_empty($this->object_subtype)) {
 			$wheres[] = $qb->compare('object_subtype', '=', $this->object_subtype, ELGG_VALUE_STRING);
 		}
-		if ($this->ip_address) {
+		if (!elgg_is_empty($this->ip_address)) {
 			$wheres[] = $qb->compare('ip_address', '=', $this->ip_address, ELGG_VALUE_STRING);
 		}
-		if ($this->owner_guid) {
+		if (!elgg_is_empty($this->owner_guid)) {
 			$wheres[] = $qb->compare('owner_guid', '=', $this->owner_guid, ELGG_VALUE_INTEGER);
 		}
-		if ($this->access_id || $this->access_id == ACCESS_PRIVATE) {
+		if (!elgg_is_empty($this->access_id)) {
 			$wheres[] = $qb->compare('access_id', '=', $this->access_id, ELGG_VALUE_INTEGER);
 		}
-		if ($this->enabled) {
+		if (!elgg_is_empty($this->enabled)) {
 			$wheres[] = $qb->compare('enabled', '=', $this->enabled, ELGG_VALUE_STRING);
 		}
-		if ($this->created_before || $this->created_after) {
+		if (!elgg_is_empty($this->created_before) || !elgg_is_empty($this->created_after)) {
 			$wheres[] = $qb->between('time_created', $this->created_after, $this->created_before, ELGG_VALUE_INTEGER);
 		}
 

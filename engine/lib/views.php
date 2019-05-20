@@ -842,11 +842,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  */
 function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 
-	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof \ElggEntity)) {
-		return false;
-	}
-
 	$defaults = [
 		'full_view' => true,
 	];
@@ -903,11 +898,6 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
  * @return string HTML to display or false
  */
 function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []) {
-
-	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof \ElggEntity)) {
-		return false;
-	}
 
 	$vars['entity'] = $entity;
 	$vars['size'] = $size;
@@ -1089,10 +1079,7 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  * @todo Change the hook name.
  */
 function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
-	if (!($entity instanceof \ElggEntity)) {
-		return false;
-	}
-
+	
 	$entity_type = $entity->getType();
 
 	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
@@ -1153,7 +1140,8 @@ function elgg_view_friendly_time($time) {
  * @return string|false Rendered comments or false on failure
  */
 function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
-	if (!($entity instanceof \ElggEntity)) {
+	
+	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
 
@@ -1164,9 +1152,9 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
 	$output = elgg_trigger_plugin_hook('comments', $entity->getType(), $vars, false);
 	if ($output !== false) {
 		return $output;
-	} else {
-		return elgg_view('page/elements/comments', $vars);
 	}
+	
+	return elgg_view('page/elements/comments', $vars);
 }
 
 /**
@@ -1831,7 +1819,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
 
 	// set default icon sizes - can be overridden with plugin
-	if (!_elgg_config()->icon_sizes) {
+	if (!_elgg_config()->hasValue('icon_sizes')) {
 		$icon_sizes = [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],

@@ -15,6 +15,10 @@ if ($entity instanceof ElggPage) {
 	$container = elgg_get_page_owner_entity();
 }
 
+if (!$container instanceof ElggEntity) {
+	return;
+}
+
 $pages = pages_get_navigation_tree($container);
 
 $options = [];

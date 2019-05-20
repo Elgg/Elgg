@@ -124,7 +124,7 @@ function developers_process_settings() {
 		$handler = new \Monolog\Handler\RotatingFileHandler(
 			\Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . 'logs/html/errors.html', false),
 			elgg_extract('error_log_max_files', $settings, 60),
-			\Psr\Log\LogLevel::ERROR
+			\Monolog\Logger::ERROR
 		);
 
 		$formatter = new \Elgg\DevelopersPlugin\ErrorLogHtmlFormatter();

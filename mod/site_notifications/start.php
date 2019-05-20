@@ -82,7 +82,7 @@ function site_notifications_send($hook, $type, $result, $params) {
 	$ia = elgg_set_ignore_access(true);
 	$note = SiteNotificationFactory::create($recipient, $message, $actor, $object, $url);
 	elgg_set_ignore_access($ia);
-	if ($note) {
+	if ($note instanceof SiteNotification) {
 		return true;
 	}
 }

@@ -316,7 +316,7 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
  * @return int
  */
 function messages_count_unread($user_guid = 0) {
-	return messages_get_unread($user_guid, 10, 0, true);
+	return (int) messages_get_unread($user_guid, 10, 0, true);
 }
 
 /**
