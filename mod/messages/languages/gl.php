@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Non foi posíbel gardar a mensaxe. Inténteo de novo',
 
-	'item:object:messages' => 'Mensaxes',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

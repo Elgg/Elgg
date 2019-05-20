@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Ocurri&oacute; un problema al guardar el mensaje. Por favor intenta de nuevo.',
 
-	'item:object:messages' => 'Mensajes',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

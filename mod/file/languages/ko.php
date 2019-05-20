@@ -45,8 +45,8 @@ return array(
 	'file:friends:type:image' => "친구의 그림",
 	'file:friends:type:general' => "친구의 일반 파일",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "파일 위젯",
+	'widgets:filerepo:description' => "최근 파일을 봅니다",
 
 	'groups:tool:file' => '모둠 파일 활성화',
 
@@ -55,19 +55,19 @@ return array(
 
 	'file:notify:summary' => '%s 라는 새 파일',
 	'file:notify:subject' => '새 파일: %s',
-	'file:notify:body' => '%s uploaded a new file: %s
+	'file:notify:body' => '%s 가 새 파일을 올렸습니다: %s
 
 %s
 
-View and comment on the file:
+파일을 보고 댓글을 남깁니다:
 %s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "The file was successfully saved.",
-	'entity:delete:object:file:success' => "The file was successfully deleted.",
+	'file:saved' => "파일이 성공적으로 저장되었습니다.",
+	'entity:delete:object:file:success' => "파일이 성공적으로 삭제되었습니다.",
 
 	/**
 	 * Error messages

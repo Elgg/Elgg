@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Vyskytl se problém s ukládáním vaší zprávy. Zkuste to prosím znovu.',
 
-	'item:object:messages' => 'Zprávy',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages
