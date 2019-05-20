@@ -295,7 +295,7 @@ class Translator {
 		}
 		
 		$data = elgg_load_system_cache("{$language}.lang");
-		if ($data) {
+		if (is_array($data)) {
 			$this->addTranslation($language, $data, false);
 			return;
 		}
