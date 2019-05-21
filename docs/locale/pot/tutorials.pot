@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-17 11:46+0200\n"
+"POT-Creation-Date: 2019-05-21 08:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,11 @@ msgstr ""
 
 #: ../../tutorials/blog.rst:4
 msgid "This tutorial will teach you how to create a simple blog plugin. The basic functions of the blog will be creating posts, saving them and viewing them. The plugin duplicates features that are found in the bundled ``blog`` plugin. You can disable the bundled ``blog`` plugin if you wish, but it is not necessary since the features do not conflict each other."
+msgstr ""
+
+#: ../../tutorials/blog.rst:15
+#: ../../tutorials/widget.rst:17
+msgid "Contents"
 msgstr ""
 
 #: ../../tutorials/blog.rst:17
