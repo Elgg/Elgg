@@ -143,7 +143,7 @@ class ResponseFactory {
 	/**
 	 * Creates an HTTP response
 	 *
-	 * @param string  $content The response content
+	 * @param mixed   $content The response content
 	 * @param integer $status  The response status code
 	 * @param array   $headers An array of response headers
 	 *
@@ -181,7 +181,7 @@ class ResponseFactory {
 	/**
 	 * Creates an JSON response
 	 *
-	 * @param string  $content The response content
+	 * @param mixed   $content The response content
 	 * @param integer $status  The response status code
 	 * @param array   $headers An array of response headers
 	 *

@@ -63,7 +63,7 @@ class SystemCache {
 	 *
 	 * @param string $type The type of cache to load
 	 *
-	 * @return mixed
+	 * @return mixed null if key not found in cache
 	 */
 	public function load($type) {
 		if (!$this->isEnabled()) {
