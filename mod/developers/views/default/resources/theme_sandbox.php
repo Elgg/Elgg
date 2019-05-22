@@ -5,7 +5,7 @@ if (!elgg_view_exists("theme_sandbox/{$page}")) {
 	throw new \Elgg\EntityNotFoundException();
 }
 
-elgg_load_css('dev.theme_sandbox');
+elgg_load_external_file('css', 'dev.theme_sandbox');
 
 $pages = [
 	'buttons',

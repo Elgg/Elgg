@@ -108,11 +108,10 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$condition = function(QueryBuilder $qb, $main_alias) use ($comment, $operator) {
 		return $qb->compare("{$main_alias}.guid", $operator, $comment->guid, ELGG_VALUE_GUID);
 	};
-	$count = elgg_get_entities([
+	$count = elgg_count_entities([
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $container->guid,
-		'count' => true,
 		'wheres' => [$condition],
 	]);
 	$limit = (int) get_input('limit');

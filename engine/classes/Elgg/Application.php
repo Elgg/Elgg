@@ -775,6 +775,7 @@ class Application {
 			'database.php',
 			'deprecated-2.3.php',
 			'deprecated-3.0.php',
+			'deprecated-3.1.php',
 			'entities.php',
 			'filestore.php',
 			'group.php',

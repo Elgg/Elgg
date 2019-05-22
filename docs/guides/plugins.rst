@@ -235,7 +235,6 @@ In addition to the require elements above, the follow elements are available to 
 * copyright - The plugin's copyright information.
 * license - The plugin's license information.
 * provides - Specifies that this plugin provides the same functionality as another Elgg plugin or a PHP extension.
-* screenshot - Screenshots of the plugin. There can be multiple entries. See the advanced example for syntax.
 * suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build 
   on the plugin.
 * website - A link to the website for the plugin.
@@ -256,7 +255,7 @@ This manifest file is the bare minimum a plugin must have.
 		<name>Example Manifest</name>
 		<author>Elgg</author>
 		<version>1.0</version>
-		<description>This is a simple example of a manifest file. In this example, there are not screenshots, dependencies, or additional information about the plugin.</description>
+		<description>This is a simple example of a manifest file. In this example, there are no dependencies, or additional information about the plugin.</description>
 
 		<requires>
 			<type>elgg_release</type>
@@ -277,7 +276,7 @@ This example uses all of the available elements:
 		<author>Brett Profitt</author>
 		<version>1.0</version>
 		<blurb>This is an example manifest file.</blurb>
-		<description>This is a simple example of a manifest file. In this example, there are many options used, including screenshots, dependencies, and additional information about the plugin.</description>
+		<description>This is a simple example of a manifest file. In this example, there are many options used, including dependencies, and additional information about the plugin.</description>
 		<website>http://www.elgg.org/</website>
 		<copyright>(C) Brett Profitt 2014</copyright>
 		<license>GNU Public License version 2</license>
@@ -288,12 +287,6 @@ This example uses all of the available elements:
 			<type>elgg_release</type>
 			<version>1.9.1</version>
 		</requires>
-
-		<!-- The path is relative to the plugin's root. -->
-		<screenshot>
-			<description>Elgg profile.</description>
-			<path>screenshots/profile.png</path>
-		</screenshot>
 
 		<provides>
 			<type>plugin</type>

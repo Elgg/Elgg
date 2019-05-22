@@ -17,7 +17,7 @@ if (empty($form)) {
 	return;
 }
 
-elgg_load_css('admin/users/unvalidated');
+elgg_require_css('admin/users/unvalidated');
 
 // add header
 $header = elgg_view_menu('user:unvalidated:bulk', [

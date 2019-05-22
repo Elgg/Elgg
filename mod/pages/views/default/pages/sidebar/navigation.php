@@ -6,7 +6,7 @@
  */
 
 // add the jquery treeview files for navigation
-elgg_load_css('jquery.treeview');
+elgg_load_external_file('css', 'jquery.treeview');
 elgg_require_js('pages/sidebar/navigation');
 
 $selected_page = elgg_extract('page', $vars, false);

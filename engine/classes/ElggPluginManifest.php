@@ -434,6 +434,8 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getScreenshots() {
+		elgg_deprecated_notice('Using screenshots in plugins are deprecated an will no longer be shown in the plugin details.', '3.1');
+		
 		$ss = $this->parser->getAttribute('screenshot');
 
 		if (!$ss) {

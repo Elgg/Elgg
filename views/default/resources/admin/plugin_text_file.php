@@ -9,7 +9,7 @@ $filename = elgg_extract('filename', $vars);
 
 elgg_admin_gatekeeper();
 
-elgg_unregister_css('elgg');
+elgg_unregister_external_file('css', 'elgg');
 elgg_require_js('elgg/admin');
 
 $error = false;

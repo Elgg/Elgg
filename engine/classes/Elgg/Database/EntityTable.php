@@ -726,7 +726,7 @@ class EntityTable {
 		
 		$dir = new \Elgg\EntityDirLocator($entity->guid);
 		$file_path = _elgg_config()->dataroot . $dir;
-		delete_directory($file_path);
+		elgg_delete_directory($file_path);
 
 	}
 }

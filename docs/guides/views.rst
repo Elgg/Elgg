@@ -124,17 +124,11 @@ sets long-term expires headers on the returned file.
      * Don't try to generate the URLs yourself
      * Don't store the returned URLs in a database
 
-In your plugin's init function, register the css file:
+On the page you want to load the css, call:
 
 .. code-block:: php
 
-    elgg_register_css('mystyles', elgg_get_simplecache_url('mystyles.css'));
-
-Then on the page you want to load the css, call:
-
-.. code-block:: php
-
-    elgg_load_css('mystyles');
+    elgg_require_css('mystyles');
 
 .. _guides/views#viewtypes:
 

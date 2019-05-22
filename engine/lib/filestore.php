@@ -73,8 +73,10 @@ function elgg_save_resized_image($source, $destination = null, array $params = [
  * @param string $directory Directory to delete
  *
  * @return bool
+ *
+ * @since 3.1
  */
-function delete_directory($directory) {
+function elgg_delete_directory(string $directory) {
 
 	if (!file_exists($directory)) {
 		return true;
@@ -98,7 +100,7 @@ function delete_directory($directory) {
 		$path = "$directory/$file";
 		if (is_dir($path)) {
 			// recurse down through directory
-			if (!delete_directory($path)) {
+			if (!elgg_delete_directory($path)) {
 				return false;
 			}
 		} else {

@@ -547,6 +547,19 @@ function elgg_get_entities(array $options = []) {
 }
 
 /**
+ * Returns a count of entities.
+ *
+ * @param array $options the same options as elgg_get_entities() but forces 'count' to true
+ *
+ * @return int
+ */
+function elgg_count_entities(array $options = []) {
+	$options['count'] = true;
+	
+	return (int) elgg_get_entities($options);
+}
+
+/**
  * Returns a string of rendered entities.
  *
  * Displays list of entities with formatting specified by the entity view.

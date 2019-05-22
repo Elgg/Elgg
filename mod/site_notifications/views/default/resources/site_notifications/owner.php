@@ -9,7 +9,7 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	throw new \Elgg\EntityPermissionsException(elgg_echo('site_notifications:no_access'));
 }
 
-elgg_load_js('elgg.site_notifications');
+elgg_load_external_file('js', 'elgg.site_notifications');
 
 $title = elgg_echo('site_notifications');
 

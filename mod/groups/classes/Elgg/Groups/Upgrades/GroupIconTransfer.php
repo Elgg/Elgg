@@ -42,9 +42,8 @@ class GroupIconTransfer implements AsynchronousUpgrade {
 	 * @see \Elgg\Upgrade\Batch::countItems()
 	 */
 	public function countItems() {
-		return elgg_get_entities([
+		return elgg_count_entities([
 			'types' => 'group',
-			'count' => true,
 		]);
 	}
 

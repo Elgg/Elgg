@@ -130,8 +130,8 @@ function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
  */
 function _elgg_admin_init() {
 
-	elgg_register_css('elgg.admin', elgg_get_simplecache_url('admin.css'));
-	elgg_register_css('admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
+	elgg_register_external_file('css', 'elgg.admin', elgg_get_simplecache_url('admin.css'));
+	elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
 
 	elgg_define_js('admin/users/unvalidated', [
 		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
@@ -150,7 +150,7 @@ function _elgg_admin_init() {
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
 		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler', 600);
 		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check', 600);
-		elgg_register_css('maintenance', elgg_get_simplecache_url('maintenance.css'));
+		elgg_register_external_file('css', 'maintenance', elgg_get_simplecache_url('maintenance.css'));
 
 		elgg_register_menu_item('topbar', [
 			'name' => 'maintenance_mode',
@@ -606,7 +606,7 @@ function _elgg_admin_page_handler($page) {
 	elgg_admin_gatekeeper();
 	elgg_set_context('admin');
 
-	elgg_unregister_css('elgg');
+	elgg_unregister_external_file('css', 'elgg');
 	elgg_require_js('elgg/admin');
 
 	// default to dashboard

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bb16d5c5444ff4611961380f549ca380",
+    "content-hash": "fe64386b103290c222289f7f8730f360",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -17,7 +17,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/e05a1219784935ff5beb6bfb17cdc86bc848d0bb",
-                "reference": "e05a1219784935ff5beb6bfb17cdc86bc848d0bb"
+                "reference": "e05a1219784935ff5beb6bfb17cdc86bc848d0bb",
+                "shasum": null
             },
             "type": "bower-asset"
         },
@@ -210,7 +211,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/necolas/normalize.css/zipball/fc091cce1534909334c1911709a39c22d406977b",
-                "reference": "fc091cce1534909334c1911709a39c22d406977b"
+                "reference": "fc091cce1534909334c1911709a39c22d406977b",
+                "shasum": null
             },
             "type": "bower-asset"
         },
@@ -225,7 +227,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jrburke/requirejs-bower/zipball/3596b04fa67953d2fb06456ecb92cf833b462b82",
-                "reference": "3596b04fa67953d2fb06456ecb92cf833b462b82"
+                "reference": "3596b04fa67953d2fb06456ecb92cf833b462b82",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [
@@ -271,7 +274,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/requirejs/text/zipball/3f9d4c19b3a1a3c6f35650c5788cbea1db93197a",
-                "reference": "3f9d4c19b3a1a3c6f35650c5788cbea1db93197a"
+                "reference": "3f9d4c19b3a1a3c6f35650c5788cbea1db93197a",
+                "shasum": null
             },
             "type": "bower-asset",
             "license": [
@@ -280,16 +284,16 @@
         },
         {
             "name": "ckeditor/ckeditor",
-            "version": "4.7.3",
+            "version": "4.11.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ckeditor/ckeditor-releases.git",
-                "reference": "97b8f412f6b36985c734daf0717e81009a885dba"
+                "reference": "b42e90185ed50054d3f4bd1b60446f21256ef1b1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/97b8f412f6b36985c734daf0717e81009a885dba",
-                "reference": "97b8f412f6b36985c734daf0717e81009a885dba",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/b42e90185ed50054d3f4bd1b60446f21256ef1b1",
+                "reference": "b42e90185ed50054d3f4bd1b60446f21256ef1b1",
                 "shasum": ""
             },
             "type": "library",
@@ -317,7 +321,7 @@
                 "text",
                 "wysiwyg"
             ],
-            "time": "2017-09-13T13:09:47+00:00"
+            "time": "2019-04-09T14:01:57+00:00"
         },
         {
             "name": "composer/installers",
@@ -1587,7 +1591,9 @@
             "version": "3.0.15",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/formdata-polyfill/-/formdata-polyfill-3.0.15.tgz"
+                "url": "https://registry.npmjs.org/formdata-polyfill/-/formdata-polyfill-3.0.15.tgz",
+                "reference": null,
+                "shasum": null
             },
             "type": "npm-asset",
             "license": [
@@ -1600,6 +1606,7 @@
             "dist": {
                 "type": "tar",
                 "url": "https://registry.npmjs.org/weakmap-polyfill/-/weakmap-polyfill-2.0.0.tgz",
+                "reference": null,
                 "shasum": "8f28f935e3853896ad40747e5258db578d9dc8de"
             },
             "require-dev": {
@@ -4246,7 +4253,6 @@
                 "mock",
                 "xunit"
             ],
-            "abandoned": true,
             "time": "2018-08-09T05:50:03+00:00"
         },
         {

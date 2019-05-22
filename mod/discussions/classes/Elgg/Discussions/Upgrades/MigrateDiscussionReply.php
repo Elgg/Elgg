@@ -34,10 +34,9 @@ class MigrateDiscussionReply implements AsynchronousUpgrade {
 		
 		$hidden = access_show_hidden_entities(true);
 		
-		$count = elgg_get_entities([
+		$count = elgg_count_entities([
 			'type' => 'object',
 			'subtype' => 'discussion_reply',
-			'count' => true,
 		]);
 		
 		access_show_hidden_entities($hidden);

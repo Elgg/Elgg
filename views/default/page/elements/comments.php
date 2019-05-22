@@ -51,11 +51,10 @@ if ($show_guid && $limit) {
 	$condition = function(QueryBuilder $qb) use ($show_guid, $operator) {
 		return $qb->compare('e.guid', $operator, $show_guid, ELGG_VALUE_INTEGER);
 	};
-	$count = elgg_get_entities([
+	$count = elgg_count_entities([
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $entity->guid,
-		'count' => true,
 		'wheres' => [$condition],
 	]);
 	$options['offset'] = (int) floor($count / $limit) * $limit;
