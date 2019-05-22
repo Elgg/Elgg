@@ -636,7 +636,7 @@ class ElggInstaller {
 
 		$result = $this->render('complete');
 
-		_elgg_rmdir(Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/');
+		elgg_delete_directory(Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/');
 
 		return $result;
 	}

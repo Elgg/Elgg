@@ -24,18 +24,16 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->file = $file;
 
 		$dataroot = _elgg_config()->dataroot;
-		if (is_dir($dataroot . '1/2/')) {
-			// we use this for writing new files
-			_elgg_rmdir($dataroot . '1/2/');
-		}
+		
+		// we use this for writing new files
+		elgg_delete_directory($dataroot . '1/2/');
 	}
 
 	public function down() {
 		$dataroot = _elgg_config()->dataroot;
-		if (is_dir($dataroot . '1/2/')) {
-			// we use this for writing new files
-			_elgg_rmdir($dataroot . '1/2/');
-		}
+		
+		// we use this for writing new files
+		elgg_delete_directory($dataroot . '1/2/');
 	}
 
 	/**
@@ -455,8 +453,8 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse(file_exists("{$dataroot}1/4/file-to-transfer.txt"));
 
 		// cleanup
-		_elgg_rmdir("{$dataroot}1/3/");
-		_elgg_rmdir("{$dataroot}1/4/");
+		elgg_delete_directory("{$dataroot}1/3/");
+		elgg_delete_directory("{$dataroot}1/4/");
 	}
 
 	/**

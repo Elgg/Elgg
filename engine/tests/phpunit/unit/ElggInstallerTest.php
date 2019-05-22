@@ -319,7 +319,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 	public function testDatabaseAction() {
 
 		$dataroot = dirname(Paths::elgg()) . '/_installer_testing_dataroot/';
-		_elgg_rmdir($dataroot, false);
+		elgg_delete_directory($dataroot);
 
 		mkdir($dataroot);
 
@@ -345,7 +345,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
 		$this->assertEquals(elgg_normalize_url('install.php?step=settings'), $response->getForwardURL());
 
-		_elgg_rmdir($dataroot, false);
+		elgg_delete_directory($dataroot);
 	}
 
 	public function testSettings() {

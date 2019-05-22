@@ -52,10 +52,8 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function down() {
-		if (is_dir($this->owner_dir_path)) {
-			_elgg_rmdir($this->owner_dir_path);
-		}
-
+		elgg_delete_directory($this->owner_dir_path);
+		
 		_elgg_services()->hooks->restore();
 		_elgg_services()->events->restore();
 	}

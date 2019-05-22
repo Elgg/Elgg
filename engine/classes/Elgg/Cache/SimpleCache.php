@@ -142,7 +142,7 @@ class SimpleCache {
 	 * @return string
 	 */
 	private function getPath() {
-		return $this->config->assetroot;
+		return (string) $this->config->assetroot;
 	}
 
 	/**
@@ -152,7 +152,7 @@ class SimpleCache {
 	 * @return bool
 	 */
 	public function invalidate() {
-		_elgg_rmdir($this->getPath(), true);
+		elgg_delete_directory($this->getPath());
 
 		$time = time();
 		$this->config->save("simplecache_lastupdate", $time);
