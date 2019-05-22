@@ -10,7 +10,7 @@
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
-elgg_load_css('elgg.admin');
+elgg_load_external_file('css', 'elgg.admin');
 
 $messages = elgg_view('page/elements/messages', ['object' => elgg_extract('sysmessages', $vars)]);
 $messages .= elgg_view('page/elements/admin_notices', $vars);

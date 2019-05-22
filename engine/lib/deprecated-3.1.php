@@ -89,3 +89,56 @@ function elgg_unregister_js($name) {
 	
 	return elgg_unregister_external_file('js', $name);
 }
+
+/**
+ * Register a CSS file for inclusion in the HTML head
+ *
+ * @param string $name     An identifier for the CSS file
+ * @param string $url      URL of the CSS file
+ * @param int    $priority Priority of the CSS file (lower numbers load earlier)
+ *
+ * @return bool
+ * @since 1.8.0
+ *
+ * @deprecated 3.1 Use elgg_require_css()
+ */
+function elgg_register_css($name, $url, $priority = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_require_css().', '3.1');
+	
+	return elgg_register_external_file('css', $name, $url, 'head', $priority);
+}
+
+/**
+ * Unregister a CSS file
+ *
+ * @param string $name The identifier for the CSS file
+ *
+ * @return bool
+ * @since 1.8.0
+ *
+ * @deprecated 3.1
+ */
+function elgg_unregister_css($name) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated.', '3.1');
+	
+	return elgg_unregister_external_file('css', $name);
+}
+
+/**
+ * Load a CSS file for this page
+ *
+ * This must be called before elgg_view_page(). It can be called before the
+ * CSS file is registered. If you do not want a CSS file loaded, unregister it.
+ *
+ * @param string $name Identifier of the CSS file
+ *
+ * @return void
+ * @since 1.8.0
+ *
+ * @deprecated 3.1 Use elgg_require_css()
+ */
+function elgg_load_css($name) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_require_css().', '3.1');
+	
+	elgg_load_external_file('css', $name);
+}

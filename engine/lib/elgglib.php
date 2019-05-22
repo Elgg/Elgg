@@ -136,44 +136,35 @@ function elgg_get_loaded_js($location = 'head') {
 }
 
 /**
- * Register a CSS file for inclusion in the HTML head
+ * Register a CSS view name to be included in the HTML head
  *
- * @param string $name     An identifier for the CSS file
- * @param string $url      URL of the CSS file
- * @param int    $priority Priority of the CSS file (lower numbers load earlier)
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_register_css($name, $url, $priority = null) {
-	return elgg_register_external_file('css', $name, $url, 'head', $priority);
-}
-
-/**
- * Unregister a CSS file
- *
- * @param string $name The identifier for the CSS file
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_unregister_css($name) {
-	return elgg_unregister_external_file('css', $name);
-}
-
-/**
- * Load a CSS file for this page
- *
- * This must be called before elgg_view_page(). It can be called before the
- * CSS file is registered. If you do not want a CSS file loaded, unregister it.
- *
- * @param string $name Identifier of the CSS file
+ * @param string $view The css view name
  *
  * @return void
- * @since 1.8.0
+ *
+ * @since 3.1
  */
-function elgg_load_css($name) {
-	elgg_load_external_file('css', $name);
+function elgg_require_css(string $view) {
+	$view_name = "{$view}.css";
+	if (!elgg_view_exists($view_name)) {
+		$view_name = $view;
+	}
+	
+	elgg_register_external_file('css', $view, elgg_get_simplecache_url($view_name));
+	elgg_load_external_file('css', $view);
+}
+
+/**
+ * Unregister a CSS view name to be included in the HTML head
+ *
+ * @param string $view The css view name
+ *
+ * @return void
+ *
+ * @since 3.1
+ */
+function elgg_unrequire_css(string $view) {
+	elgg_unregister_css($view);
 }
 
 /**
@@ -192,13 +183,13 @@ function elgg_get_loaded_css() {
  * @param string $type     Type of external resource (js or css)
  * @param string $name     Identifier used as key
  * @param string $url      URL
- * @param string $location Location in the page to include the file
+ * @param string $location Location in the page to include the file (default = 'head')
  * @param int    $priority Loading priority of the file
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_external_file($type, $name, $url, $location, $priority = 500) {
+function elgg_register_external_file($type, $name, $url, $location = 'head', $priority = 500) {
 	return _elgg_services()->externalFiles->register($type, $name, $url, $location, $priority);
 }
 
@@ -1415,7 +1406,7 @@ function _elgg_walled_garden_init() {
 		return;
 	}
 
-	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
+	elgg_register_external_file('css', 'elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
 
 	elgg_register_plugin_hook_handler('register', 'menu:walled_garden', '_elgg_walled_garden_menu');
 

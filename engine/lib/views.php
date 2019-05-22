@@ -1770,11 +1770,10 @@ function elgg_views_boot() {
 	elgg_register_external_file('js', 'elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_external_file('js', 'elgg');
 
-	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
-	elgg_load_css('font-awesome');
+	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
+	elgg_load_external_file('css', 'font-awesome');
 
-	elgg_register_css('elgg', elgg_get_simplecache_url('elgg.css'));
-	elgg_load_css('elgg');
+	elgg_require_css('elgg');
 
 	elgg_register_simplecache_view('elgg/init.js');
 
@@ -1790,9 +1789,9 @@ function elgg_views_boot() {
 	elgg_register_external_file('js', 'elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
 
 	elgg_register_external_file('js', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
-	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
+	elgg_register_external_file('css', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
-	elgg_register_css('jquery.treeview', elgg_get_simplecache_url('jquery-treeview/jquery.treeview.css'));
+	elgg_register_external_file('css', 'jquery.treeview', elgg_get_simplecache_url('jquery-treeview/jquery.treeview.css'));
 	elgg_define_js('jquery.treeview', [
 		'src' => elgg_get_simplecache_url('jquery-treeview/jquery.treeview.js'),
 		'exports' => 'jQuery.fn.treeview',

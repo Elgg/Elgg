@@ -12,7 +12,7 @@ if (!$entity instanceof \ElggUser) {
 
 elgg_load_external_file('js', 'jquery.imgareaselect');
 elgg_load_external_file('js', 'elgg.avatar_cropper');
-elgg_load_css('jquery.imgareaselect');
+elgg_load_external_file('css', 'jquery.imgareaselect');
 
 echo elgg_view('output/img', [
 	'src' => $entity->getIconUrl('master'),

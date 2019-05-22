@@ -1,6 +1,6 @@
 <?php
 
-elgg_load_css('admin/users/newest.css');
+elgg_require_css('admin/users/newest');
 
 // newest users
 echo elgg_list_entities([

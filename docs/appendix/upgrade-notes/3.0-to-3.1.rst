@@ -13,5 +13,8 @@ Screenshots added to plugins are no longer supported and will no longer be shown
 Loading external files
 ----------------------
 
-The usage of ``elgg_register_js``, ``elgg_unregister_js`` and ``elgg_load_js`` are discouraged.
+The usage of ``elgg_register_js``, ``elgg_unregister_js`` and ``elgg_load_js`` is discouraged.
 Make sure your javascript is an AMD module and use ``elgg_require_js`` to include it.
+
+The usage of ``elgg_register_css``, ``elgg_unregister_css`` and ``elgg_load_css`` is discouraged.
+You can register and include css with the new ``elgg_require_css`` function.
