@@ -37,11 +37,10 @@ function site_notifications_set_topbar() {
 		return;
 	}
 	
-	$count = elgg_get_entities([
+	$count = elgg_count_entities([
 		'type' => 'object',
 		'subtype' => 'site_notification',
 		'owner_guid' => $user->guid,
-		'count' => true,
 		'metadata_name_value_pairs' => [
 			'read' => false,
 		],

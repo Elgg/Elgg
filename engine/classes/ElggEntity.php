@@ -936,11 +936,10 @@ abstract class ElggEntity extends \ElggData implements
 			return $num;
 		}
 
-		return elgg_get_entities([
+		return elgg_count_entities([
 			'type' => 'object',
 			'subtype' => 'comment',
 			'container_guid' => $this->getGUID(),
-			'count' => true,
 			'distinct' => false,
 		]);
 	}
@@ -1005,11 +1004,10 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return int
 	 */
 	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
-		return elgg_get_entities([
+		return elgg_count_entities([
 			'relationship' => $relationship,
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => $inverse_relationship,
-			'count' => true
 		]);
 	}
 

@@ -15,21 +15,19 @@ class Users extends Seed {
 	public function seed() {
 
 		$count_users = function () {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'types' => 'user',
 				'metadata_names' => '__faker',
-				'count' => true,
 			]);
 		};
 
 		$count_friends = function ($user) {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'types' => 'user',
 				'relationship' => 'friend',
 				'relationship_guid' => $user->guid,
 				'inverse_relationship' => false,
 				'metadata_names' => '__faker',
-				'count' => true,
 			]);
 		};
 

@@ -114,11 +114,10 @@ class AdminNotices {
 	 */
 	public function exists($id) {
 		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
-		$notice = elgg_get_entities([
+		$notice = elgg_count_entities([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name_value_pair' => ['name' => 'admin_notice_id', 'value' => $id],
-			'count' => true,
 		]);
 		_elgg_services()->session->setIgnoreAccess($old_ia);
 	

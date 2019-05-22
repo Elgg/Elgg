@@ -138,12 +138,11 @@ function _groups_page_menu_group_profile($hook, $type, $return, $params) {
 		return;
 	}
 	
-	$count = elgg_get_entities([
+	$count = elgg_count_entities([
 		'type' => 'user',
 		'relationship' => 'membership_request',
 		'relationship_guid' => $page_owner->guid,
 		'inverse_relationship' => true,
-		'count' => true,
 	]);
 
 	$text = elgg_echo('groups:membershiprequests');
