@@ -5,4 +5,7 @@ From 3.0 to 3.1
    :local:
    :depth: 1
 
+Plugin screenshots
+------------------
 
+Screenshots added to plugins are no longer supported and will no longer be shown in the plugin details.
