@@ -415,18 +415,19 @@ class Request extends SymfonyRequest {
 	public function validate() {
 
 		$reported_bytes = $this->server->get('CONTENT_LENGTH');
-		$actual_bytes = strlen($this->getContent());
-		$query_elements = count($this->request->all());
-
-		$is_valid = function() use ($reported_bytes, $actual_bytes, $query_elements) {
+		$post_data_count = count($this->request->all());
+		$file_count = count($this->files->all());
+		
+		$is_valid = function() use ($reported_bytes, $post_data_count, $file_count) {
 			if (empty($reported_bytes)) {
 				// Content length is set for POST requests only
 				return true;
 			}
 
-			if (empty($actual_bytes) && empty($query_elements)) {
-				// The size of $_POST or uploaded file has exceed the size limit
+			if (empty($post_data_count) && empty($file_count)) {
+				// The size of $_POST or uploaded files has exceed the size limit
 				// and the request body/query has been truncated
+				// thus the request reported bytes is set, but no postdata is found
 				return false;
 			}
 

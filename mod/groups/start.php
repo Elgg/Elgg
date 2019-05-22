@@ -267,9 +267,6 @@ function groups_set_url($hook, $type, $url, $params) {
  * @return \ElggMenuItem|false
  */
 function groups_get_group_leave_menu_item(\ElggGroup $group, $user = null) {
-	if (!$group instanceof \ElggGroup) {
-		return false;
-	}
 	
 	if (!$user instanceof ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
@@ -304,9 +301,6 @@ function groups_get_group_leave_menu_item(\ElggGroup $group, $user = null) {
  * @return \ElggMenuItem|false
  */
 function groups_get_group_join_menu_item(\ElggGroup $group, $user = null) {
-	if (!$group instanceof \ElggGroup) {
-		return false;
-	}
 	
 	if (!$user instanceof ElggUser) {
 		$user = elgg_get_logged_in_user_entity();
@@ -975,7 +969,7 @@ function _groups_title_menu(\Elgg\Hook $hook) {
 		]);
 		
 		$leave_group = groups_get_group_leave_menu_item($group, $user);
-		if ($leave_group) {
+		if ($leave_group instanceof ElggMenuItem) {
 			$leave_group->setParentName('group-dropdown');
 			$result[] = $leave_group;
 		}
@@ -1119,10 +1113,6 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
  * @since 3.0
  */
 function _groups_get_group_acl(\ElggGroup $group) {
-	if (!$group instanceof \ElggGroup) {
-		return false;
-	}
-	
 	return $group->getOwnedAccessCollection('group_acl');
 }
 

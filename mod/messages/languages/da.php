@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Der opstod et problem med at gemme din besked. Prøv venligst igen.',
 
-	'item:object:messages' => 'Beskeder',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

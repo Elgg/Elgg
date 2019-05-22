@@ -177,7 +177,7 @@ class HtmlFormatter {
 	 * @see elgg_format_element()
 	 */
 	public function formatAttributes(array $attrs = []) {
-		if (!is_array($attrs) || empty($attrs)) {
+		if (empty($attrs)) {
 			return '';
 		}
 
@@ -300,20 +300,19 @@ class HtmlFormatter {
 			$text = htmlspecialchars($text, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8', $double_encode);
 		}
 
-		if ($attributes) {
+		$attrs = '';
+		if (!empty($attributes)) {
 			$attrs = $this->formatAttributes($attributes);
 			if ($attrs !== '') {
 				$attrs = " $attrs";
 			}
-		} else {
-			$attrs = '';
 		}
 
 		if ($is_void) {
 			return empty($options['is_xml']) ? "<{$tag_name}{$attrs}>" : "<{$tag_name}{$attrs} />";
-		} else {
-			return "<{$tag_name}{$attrs}>$text</$tag_name>";
 		}
+		
+		return "<{$tag_name}{$attrs}>$text</$tag_name>";
 	}
 
 	/**

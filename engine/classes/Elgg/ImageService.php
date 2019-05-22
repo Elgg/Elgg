@@ -79,8 +79,8 @@ class ImageService {
 
 			$resize_params = $this->normalizeResizeParameters($width, $height, $params);
 
-			$max_width = elgg_extract('w', $resize_params);
-			$max_height = elgg_extract('h', $resize_params);
+			$max_width = (int) elgg_extract('w', $resize_params);
+			$max_height = (int) elgg_extract('h', $resize_params);
 
 			$x1 = (int) elgg_extract('x1', $resize_params, 0);
 			$y1 = (int) elgg_extract('y1', $resize_params, 0);
@@ -119,7 +119,7 @@ class ImageService {
 	 *
 	 * @return bool
 	 */
-	function fixOrientation($filename) {
+	public function fixOrientation($filename) {
 		try {
 			$image = $this->imagine->open($filename);
 			$metadata = $image->metadata();

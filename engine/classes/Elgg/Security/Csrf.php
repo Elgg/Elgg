@@ -150,10 +150,13 @@ class Csrf {
 	 * @since  1.9.0
 	 */
 	public function getActionTokenTimeout() {
-		if (($timeout = $this->config->action_token_timeout) === null) {
-			// default to 2 hours
-			$timeout = 2;
+		// default to 2 hours
+		$timeout = 2;
+		if ($this->config->hasValue('action_token_timeout')) {
+			// timeout set in config
+			$timeout = $this->config->action_token_timeout;
 		}
+		
 		$hour = 60 * 60;
 
 		return (int) ((float) $timeout * $hour);

@@ -235,7 +235,7 @@ class ElggGroup extends \ElggEntity {
 		}
 
 		$tool = $this->getTool($name);
-		if (!$tool) {
+		if (!$tool instanceof Tool) {
 			return false;
 		}
 
@@ -258,7 +258,8 @@ class ElggGroup extends \ElggEntity {
 	 * @since 3.0.0
 	 */
 	public function enableTool($name) {
-		if (!$tool = $this->getTool($name)) {
+		$tool = $this->getTool($name);
+		if (!$tool instanceof Tool) {
 			return false;
 		}
 
@@ -273,13 +274,14 @@ class ElggGroup extends \ElggEntity {
 	/**
 	 * Disables a tool option
 	 *
-	 * @param Tool|string $name The option to disable
+	 * @param string $name The option to disable
 	 *
 	 * @return bool
 	 * @since 3.0.0
 	 */
 	public function disableTool($name) {
-		if (!$tool = $this->getTool($name)) {
+		$tool = $this->getTool($name);
+		if (!$tool instanceof Tool) {
 			return false;
 		}
 

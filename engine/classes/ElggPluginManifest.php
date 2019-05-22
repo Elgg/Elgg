@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Parses Elgg manifest.xml files.
  *
@@ -666,24 +667,24 @@ class ElggPluginManifest {
 	/**
 	 * Should this plugin be activated when Elgg is installed
 	 *
-	 *  @return bool
+	 * @return bool
 	 */
 	public function getActivateOnInstall() {
 		$activate = $this->parser->getAttribute('activate_on_install');
+		if ($activate === false) {
+			return false;
+		}
+		
+		// these are the truthy supported values, everything else will result in false
 		switch (strtolower($activate)) {
 			case 'yes':
 			case 'true':
 			case 'on':
 			case 1:
 				return true;
-
-			case 'no':
-			case 'false':
-			case 'off':
-			case 0:
-			case '':
-				return false;
 		}
+		
+		return false;
 	}
 
 	/**
@@ -713,7 +714,7 @@ class ElggPluginManifest {
 	 * @param string $category The category as defined in the manifest.
 	 * @return string A human-readable category
 	 */
-	static public function getFriendlyCategory($category) {
+	public static function getFriendlyCategory($category) {
 		$cat_raw_string = "admin:plugins:category:$category";
 		if (_elgg_services()->translator->languageKeyExists($cat_raw_string)) {
 			return elgg_echo($cat_raw_string);

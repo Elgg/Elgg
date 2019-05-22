@@ -76,7 +76,7 @@ class CompositeCache extends ElggCache {
 	 * Save data in a cache.
 	 *
 	 * @param string       $key  Name
-	 * @param string       $data Value
+	 * @param mixed        $data Value
 	 * @param int|DateTime $ttl  Expire value after
 	 *
 	 * @return bool

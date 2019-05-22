@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -142,17 +143,20 @@ class ResponseFactory {
 	/**
 	 * Creates an HTTP response
 	 *
-	 * @param string  $content The response content
+	 * @param mixed   $content The response content
 	 * @param integer $status  The response status code
 	 * @param array   $headers An array of response headers
+	 *
 	 * @return Response
+	 * @throws InvalidArgumentException
 	 */
 	public function prepareResponse($content = '', $status = 200, array $headers = []) {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
+		
 		$response = new Response($content, $status, $header_bag->all());
-		$response->prepare($this->request);
-		return $response;
+		
+		return $this->finalizeResponsePreparation($response, $header_bag);
 	}
 
 	/**
@@ -161,14 +165,63 @@ class ResponseFactory {
 	 * @param string  $url     URL to redirect to
 	 * @param integer $status  The status code (302 by default)
 	 * @param array   $headers An array of response headers (Location is always set to the given URL)
+	 *
 	 * @return SymfonyRedirectResponse
 	 * @throws InvalidArgumentException
 	 */
 	public function prepareRedirectResponse($url, $status = 302, array $headers = []) {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
+		
 		$response = new SymfonyRedirectResponse($url, $status, $header_bag->all());
+		
+		return $this->finalizeResponsePreparation($response, $header_bag);
+	}
+	
+	/**
+	 * Creates an JSON response
+	 *
+	 * @param mixed   $content The response content
+	 * @param integer $status  The response status code
+	 * @param array   $headers An array of response headers
+	 *
+	 * @return JsonResponse
+	 * @throws InvalidArgumentException
+	 */
+	public function prepareJsonResponse($content = '', $status = 200, array $headers = []) {
+		$header_bag = $this->getHeaders();
+		$header_bag->add($headers);
+		
+		/**
+		 * Removing Content-Type header because in some cases content-type headers were already set
+		 * This is a problem when serving a cachable view (for example a .css) in ajax/view
+		 *
+		 * @see https://github.com/Elgg/Elgg/issues/9794
+		 */
+		$header_bag->remove('Content-Type');
+		
+		$response = new JsonResponse($content, $status, $header_bag->all());
+		
+		return $this->finalizeResponsePreparation($response, $header_bag);
+	}
+	
+	/**
+	 * Last preparations on a response
+	 *
+	 * @param Response          $response The response to prepare
+	 * @param ResponseHeaderBag $headers  Header container with additional content
+	 *
+	 * @return Response
+	 * @todo revisit this when upgrading to Symfony/HttpFoundation v3.3+
+	 */
+	private function finalizeResponsePreparation(Response $response, ResponseHeaderBag $headers) {
+		// Cookies aren't part of the headers, need to copy manualy
+		foreach ($headers->getCookies() as $cookie) {
+			$response->headers->setCookie($cookie);
+		}
+		
 		$response->prepare($this->request);
+		
 		return $response;
 	}
 

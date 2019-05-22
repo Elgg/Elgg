@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Проблема сохранения. Попробуйте еще раз.',
 
-	'item:object:messages' => 'Сообщения',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

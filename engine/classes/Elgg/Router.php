@@ -101,10 +101,8 @@ class Router {
 			return true;
 		}
 
-		if ($response instanceof ResponseBuilder) {
-			$this->response->respond($response);
-		}
-
+		$this->response->respond($response);
+		
 		return headers_sent();
 	}
 
@@ -120,11 +118,11 @@ class Router {
 	public function getResponse(HttpRequest $request) {
 		$response = $this->prepareLegacyResponse($request);
 
-		if (!$response) {
+		if (!$response instanceof ResponseBuilder) {
 			$response = $this->prepareResponse($request);
 		}
 
-		if (!$response) {
+		if (!$response instanceof ResponseBuilder) {
 			throw new PageNotFoundException();
 		}
 
@@ -148,7 +146,7 @@ class Router {
 	protected function prepareLegacyResponse(HttpRequest $request) {
 
 		$segments = $request->getUrlSegments();
-		if ($segments) {
+		if (!empty($segments)) {
 			$identifier = array_shift($segments);
 		} else {
 			$identifier = '';
@@ -349,7 +347,7 @@ class Router {
 	 */
 	public function allowRewrite(HttpRequest $request) {
 		$segments = $request->getUrlSegments();
-		if ($segments) {
+		if (!empty($segments)) {
 			$identifier = array_shift($segments);
 		} else {
 			$identifier = '';

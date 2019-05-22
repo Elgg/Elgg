@@ -83,7 +83,7 @@ abstract class ElggPluginManifestParser {
 	 * Return an attribute in the manifest.
 	 *
 	 * @param string $name Attribute name
-	 * @return mixed
+	 * @return false|mixed
 	 */
 	public function getAttribute($name) {
 		if (in_array($name, $this->validAttributes) && isset($this->manifest[$name])) {

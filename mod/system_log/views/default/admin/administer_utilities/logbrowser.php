@@ -51,16 +51,15 @@ $refine = elgg_view('logbrowser/refine', [
 ]);
 
 // Get log entries
-
 $options = [
 	'performed_by_guid' => $user_guid,
 	'limit' => $limit,
 	'offset' => $offset,
+	'count' => false,
 	'created_before' => $timeupper,
 	'created_after' => $timelower,
 	'ip_address' => $ip_address,
 ];
-
 $log = system_log_get_log($options);
 
 $options['count'] = true;

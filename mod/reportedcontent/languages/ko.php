@@ -29,6 +29,6 @@ return array(
 	'reportedcontent:failed' => '죄송합니다. 이 내용을 신고하는데 실패하였습니다.',
 	'reportedcontent:notarchived' => '이 신고를 저장할 수 없었습니다',
 	
-	'widgets:reportedcontent:name' => 'Reported content',
-	'widgets:reportedcontent:description' => 'Display reported content',
+	'widgets:reportedcontent:name' => '신고된 내용',
+	'widgets:reportedcontent:description' => '신고된 내용 표시',
 );

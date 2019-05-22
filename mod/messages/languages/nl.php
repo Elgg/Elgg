@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Er was een probleem tijdens het opslaan van je bericht. Probeer het nogmaals.',
 
-	'item:object:messages' => 'Berichten',
+	'item:object:messages' => 'Bericht',
+	'collection:object:messages' => 'Berichten',
 
 	/**
 	* Status messages

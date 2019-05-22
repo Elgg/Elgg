@@ -1,12 +1,12 @@
 <?php
-use Elgg\Database\Clauses\OrderByClause;
-
 /**
  * River item footer
  *
  * @uses $vars['item'] ElggRiverItem
  * @uses $vars['responses'] Alternate override for this item
  */
+
+use Elgg\Database\Clauses\OrderByClause;
 
 // allow river views to override the response content
 $responses = elgg_extract('responses', $vars);

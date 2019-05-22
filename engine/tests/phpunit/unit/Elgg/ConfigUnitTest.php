@@ -1,5 +1,7 @@
 <?php
+
 use Elgg\Project\Paths;
+use Elgg\Config;
 
 /**
  * @group Config
@@ -37,5 +39,70 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 		}
 		$this->assertEquals(realpath(elgg_get_root_path()), $project_path);
 	}
-
+	
+	public function testGetDefaultCookieConfig() {
+		
+		$config = new Config();
+		
+		$cookie_config = $config->getCookieConfig();
+		
+		$this->assertInternalType('array', $cookie_config);
+		$this->assertArrayHasKey('session', $cookie_config);
+		$this->assertArrayHasKey('remember_me', $cookie_config);
+		
+		// session
+		$session = $cookie_config['session'];
+		$this->assertInternalType('array', $session);
+		
+		$this->assertArrayHasKey('name', $session);
+		$this->assertEquals('Elgg', $session['name']);
+		
+		// remember me
+		$remember_me = $cookie_config['remember_me'];
+		$this->assertInternalType('array', $remember_me);
+		
+		$this->assertArrayHasKey('name', $remember_me);
+		$this->assertEquals('elggperm', $remember_me['name']);
+		
+		$this->assertArrayHasKey('expire', $remember_me);
+		$this->assertEquals(strtotime("+30 days"), $remember_me['expire']);
+	}
+	
+	public function testGetCustomCookieConfig() {
+		
+		$custom = [
+			'session' => [
+				'name' => 'CustomName',
+			],
+			'remember_me' => [
+				'name' => 'MyPerm',
+				'expire' => strtotime("+300 days"),
+			],
+		];
+		
+		$config = new Config(['cookies' => $custom]);
+		
+		$cookie_config = $config->getCookieConfig();
+		
+		$this->assertInternalType('array', $cookie_config);
+		$this->assertArrayHasKey('session', $cookie_config);
+		$this->assertArrayHasKey('remember_me', $cookie_config);
+		
+		// session
+		$session = $cookie_config['session'];
+		$this->assertInternalType('array', $session);
+		
+		$this->assertArrayHasKey('name', $session);
+		$this->assertEquals($custom['session']['name'], $session['name']);
+		
+		// remember me
+		$remember_me = $cookie_config['remember_me'];
+		$this->assertInternalType('array', $remember_me);
+		
+		$this->assertArrayHasKey('name', $remember_me);
+		$this->assertEquals($custom['remember_me']['name'], $remember_me['name']);
+		
+		$this->assertArrayHasKey('expire', $remember_me);
+		$this->assertEquals($custom['remember_me']['expire'], $remember_me['expire']);
+	}
 }

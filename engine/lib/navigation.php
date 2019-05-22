@@ -100,8 +100,8 @@ use Elgg\Menu\UnpreparedMenu;
 function elgg_register_menu_item($menu_name, $menu_item) {
 	if (is_array($menu_item)) {
 		$options = $menu_item;
-		$menu_item = \ElggMenuItem::factory($options);
-		if (!$menu_item) {
+		$menu_item = ElggMenuItem::factory($options);
+		if (!$menu_item instanceof ElggMenuItem) {
 			$menu_item_name = elgg_extract('name', $options, 'MISSING NAME');
 			elgg_log("Unable to add menu item '{$menu_item_name}' to '$menu_name' menu", 'WARNING');
 			return false;
@@ -115,7 +115,7 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 	}
 
 	$menus = _elgg_config()->menus;
-	if (!$menus) {
+	if (empty($menus)) {
 		$menus = [];
 	}
 
@@ -136,7 +136,7 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  */
 function elgg_unregister_menu_item($menu_name, $item_name) {
 	$menus = _elgg_config()->menus;
-	if (!$menus) {
+	if (empty($menus)) {
 		return null;
 	}
 	
@@ -168,7 +168,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  */
 function elgg_is_menu_item_registered($menu_name, $item_name) {
 	$menus = _elgg_config()->menus;
-	if (!$menus) {
+	if (empty($menus)) {
 		return false;
 	}
 
@@ -197,7 +197,7 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
  */
 function elgg_get_menu_item($menu_name, $item_name) {
 	$menus = _elgg_config()->menus;
-	if (!$menus) {
+	if (empty($menus)) {
 		return null;
 	}
 
@@ -287,9 +287,9 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
  *
  * See elgg_get_breadcrumbs() and the navigation/breadcrumbs view.
  *
- * @param string $text The title to display. During rendering this is HTML encoded.
- * @param string $href Optional. The href for the title. During rendering links are
- *                     normalized via elgg_normalize_url().
+ * @param string       $text The title to display. During rendering this is HTML encoded.
+ * @param false|string $href Optional. The href for the title. During rendering links are
+ *                           normalized via elgg_normalize_url().
  *
  * @return void
  * @since 1.8.0
@@ -349,11 +349,6 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	if (!isset($breadcrumbs)) {
 		// if no crumbs set, still allow hook to populate it
 		$breadcrumbs = (array) _elgg_config()->breadcrumbs;
-	}
-
-	if (!is_array($breadcrumbs)) {
-		_elgg_services()->logger->error(__FUNCTION__ . ' expects breadcrumbs as an array');
-		$breadcrumbs = [];
 	}
 	
 	$params = [

@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 /**
@@ -14,7 +15,7 @@ final class Includer {
 	 * @param string $file File to include
 	 * @return mixed
 	 */
-	static public function includeFile($file) {
+	public static function includeFile($file) {
 		return include $file;
 	}
 
@@ -24,7 +25,7 @@ final class Includer {
 	 * @param string $file File to require
 	 * @return mixed
 	 */
-	static public function requireFile($file) {
+	public static function requireFile($file) {
 		return require $file;
 	}
 
@@ -34,7 +35,7 @@ final class Includer {
 	 * @param string $file File to require
 	 * @return mixed
 	 */
-	static public function requireFileOnce($file) {
+	public static function requireFileOnce($file) {
 		return require_once $file;
 	}
 }

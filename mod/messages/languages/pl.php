@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Wystąpił problem w trakcie zapisu wiadomości. Proszę spróbować ponownie.',
 
-	'item:object:messages' => 'Wiadomości',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

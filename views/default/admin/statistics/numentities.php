@@ -2,8 +2,6 @@
 // Get entity statistics
 $entity_stats = get_entity_statistics();
 
-$registered_entity_types = get_registered_entity_types();
-
 $searchable = [];
 $other = [];
 
@@ -11,10 +9,10 @@ foreach ($entity_stats as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $value) {
 		$is_registered = false;
 		if ($subtype == '__base__') {
-			$is_registered = array_key_exists($type, $registered_entity_types);
+			$is_registered = is_registered_entity_type($type);
 			$name = elgg_echo("collection:$type");
 		} else {
-			$is_registered = in_array($subtype, elgg_extract($type, $registered_entity_types, []));
+			$is_registered = is_registered_entity_type($type, $subtype);
 			$name = elgg_echo("collection:$type:$subtype");
 		}
 		

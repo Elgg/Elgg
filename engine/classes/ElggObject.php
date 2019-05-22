@@ -53,6 +53,7 @@ class ElggObject extends \ElggEntity {
 	 *
 	 * @param int  $user_guid User guid (default is logged in user)
 	 * @param bool $default   Default permission
+	 *
 	 * @return bool
 	 * @since 1.8.0
 	 */

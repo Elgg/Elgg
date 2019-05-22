@@ -7,6 +7,9 @@
  * @subpackage Settings.User
  */
 
+use Elgg\Request;
+use Elgg\Http\ResponseBuilder;
+
 /**
  * Set a user's password
  * Returns null if no change is required
@@ -14,19 +17,25 @@
  *
  * @elgg_plugin_hook usersettings:save user
  *
- * @param \Elgg\Hook $hook Hook
+ * @param \Elgg\Hook $hook 'usersettings:save', 'user'
  *
- * @return bool|null
+ * @return bool|null|void
  * @since 1.8.0
  * @access private
  */
 function _elgg_set_user_password(\Elgg\Hook $hook) {
 
 	$actor = elgg_get_logged_in_user_entity();
+	if (!$actor instanceof ElggUser) {
+		return;
+	}
 
 	$user = $hook->getUserParam();
 	$request = $hook->getParam('request');
-	/* @var $request \Elgg\Request */
+	
+	if (!$user instanceof ElggUser || !$request instanceof Request) {
+		return;
+	}
 
 	$password = $request->getParam('password', null, false);
 	$password2 = $request->getParam('password2', null, false);
@@ -35,7 +44,7 @@ function _elgg_set_user_password(\Elgg\Hook $hook) {
 		return null;
 	}
 
-	if (!$actor->isAdmin() || $user->guid == $actor->guid) {
+	if (!$actor->isAdmin() || $user->guid === $actor->guid) {
 		// let admin user change anyone's password without knowing it except his own.
 
 		$current_password = $request->getParam('current_password', null, false);
@@ -122,7 +131,10 @@ function _elgg_set_user_username(\Elgg\Hook $hook) {
 
 	$user = $hook->getUserParam();
 	$request = $hook->getParam('request');
-	/* @var $request \Elgg\Request */
+	
+	if (!$user instanceof ElggUser || !$request instanceof Request) {
+		return null;
+	}
 
 	$username = $request->getParam('username');
 	if (!isset($username)) {
@@ -153,7 +165,9 @@ function _elgg_set_user_username(\Elgg\Hook $hook) {
 	// correctly forward after after a username change
 	elgg_register_plugin_hook_handler('response', 'action:usersettings/save', function (\Elgg\Hook $hook) use ($username) {
 		$response = $hook->getValue();
-		/* @var $response \Elgg\Http\ResponseBuilder */
+		if (!$response instanceof ResponseBuilder) {
+			return;
+		}
 
 		if ($response->getForwardURL() === REFERRER) {
 			$response->setForwardURL(elgg_generate_url('settings:account', [
@@ -182,7 +196,10 @@ function _elgg_set_user_language(\Elgg\Hook $hook) {
 
 	$user = $hook->getUserParam();
 	$request = $hook->getParam('request');
-	/* @var $request \Elgg\Request */
+	
+	if (!$user instanceof ElggUser || !$request instanceof Request) {
+		return null;
+	}
 
 	$language = $request->getParam('language');
 	if (!isset($language)) {
@@ -212,11 +229,18 @@ function _elgg_set_user_language(\Elgg\Hook $hook) {
  * @access private
  */
 function _elgg_set_user_email(\Elgg\Hook $hook) {
+	
 	$actor = elgg_get_logged_in_user_entity();
+	if (!$actor instanceof ElggUser) {
+		return null;
+	}
 
 	$user = $hook->getUserParam();
 	$request = $hook->getParam('request');
-	/* @var $request \Elgg\Request */
+	
+	if (!$user instanceof ElggUser || !$request instanceof Request) {
+		return null;
+	}
 
 	$email = $request->getParam('email');
 	if (!isset($email)) {

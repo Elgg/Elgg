@@ -60,13 +60,11 @@ class Service {
 	 * @return UnpreparedMenu
 	 */
 	public function getUnpreparedMenu($name, array $params = []) {
-		$menus = $this->config->menus;
-
 		$items = $this->prepareMenuItems(elgg_extract('items', $params, []));
 		unset($params['items']);
 
-		if ($menus && isset($menus[$name])) {
-			$registered_items = elgg_extract($name, $menus, []);
+		$registered_items = elgg_extract($name, $this->config->menus);
+		if (is_array($registered_items)) {
 			$items->merge($registered_items);
 		}
 

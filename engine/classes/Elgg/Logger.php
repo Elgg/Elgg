@@ -228,7 +228,7 @@ class Logger extends \Monolog\Logger {
 
 		$level = $this->normalizeLevel($level);
 
-		if ($this->disabled_stack) {
+		if (!empty($this->disabled_stack)) {
 			// capture to top of stack
 			end($this->disabled_stack);
 			$key = key($this->disabled_stack);
@@ -243,7 +243,7 @@ class Logger extends \Monolog\Logger {
 		}
 
 		// when capturing, still use consistent return value
-		if ($this->disabled_stack) {
+		if (!empty($this->disabled_stack)) {
 			return true;
 		}
 

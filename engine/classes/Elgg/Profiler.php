@@ -1,5 +1,7 @@
 <?php
+
 namespace Elgg;
+
 use Elgg\Project\Paths;
 
 /**
@@ -186,7 +188,7 @@ class Profiler {
 	 * Get the microtime start time
 	 *
 	 * @param array $times Time periods
-	 * @return string|false
+	 * @return float|false
 	 */
 	private function findBeginTime(array $times) {
 		if (isset($times[Timer::MARKER_BEGIN])) {
@@ -204,7 +206,7 @@ class Profiler {
 	 * Get the microtime end time
 	 *
 	 * @param array $times Time periods
-	 * @return string|false
+	 * @return float|false
 	 */
 	private function findEndTime(array $times) {
 		if (isset($times[Timer::MARKER_END])) {

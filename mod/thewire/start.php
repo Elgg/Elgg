@@ -169,7 +169,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	$post->method = $method; //method: site, email, api, ...
 
 	$tags = thewire_get_hashtags($text);
-	if ($tags) {
+	if (!empty($tags)) {
 		$post->tags = $tags;
 	}
 

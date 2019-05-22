@@ -1,3 +1,56 @@
+<a name="3.0.3"></a>
+### 3.0.3  (2019-05-21)
+
+#### Contributors
+
+* Jerôme Bakker (55)
+* Jeroen Dalsem (21)
+* Rohit Gupta (1)
+* therecluse26 (1)
+
+#### Performance
+
+* **db:** improved preloader queries for performance ([6ec44b7a](https://github.com/Elgg/Elgg/commit/6ec44b7a38f16a0fe61652806cf18897eeff4bf4))
+* **entity:** only update private settings if value changes ([ee955db4](https://github.com/Elgg/Elgg/commit/ee955db4417d0c1b770061a59a8e2104e8857b54))
+
+
+#### Bug Fixes
+
+* **ajax:** reponseFactory prepares reponse ([ff965eab](https://github.com/Elgg/Elgg/commit/ff965eab5b68d7d5836afc248683581ec7a6afdb))
+* **cache:**
+  * let cache (un)serialize contents (#12615) ([29eeabc5](https://github.com/Elgg/Elgg/commit/29eeabc57fc8eac8102936943bf71c984ebca1b6))
+  * updated Stash version to 0.15.* ([3aa057a8](https://github.com/Elgg/Elgg/commit/3aa057a87504badf1ceb4b13640a502719e9e6fb))
+  * improved error handling in Stash ([79107e3f](https://github.com/Elgg/Elgg/commit/79107e3f7fad98e0c76d31541468c78c1f2e4692))
+* **core:**
+  * use correct typehint namespace ([aaeacf36](https://github.com/Elgg/Elgg/commit/aaeacf36c11b5826a003e9a2f50f4facef34d3d3))
+  * remove unused action hook listener in BootService ([01ff862c](https://github.com/Elgg/Elgg/commit/01ff862cc103de03e456ff39e98fab96dccaffbf))
+  * report correct duration for non sequential timers ([1831589f](https://github.com/Elgg/Elgg/commit/1831589fd45e812e8f0e4a13fd128f6b039a6957))
+* **db:** make sure all queries are tracked and logged ([8e6da0c6](https://github.com/Elgg/Elgg/commit/8e6da0c673d812e1b8d7d99b8cf1df520e2dd7d5))
+* **email:** don't set duplicate content-type header (#12625) ([5625412c](https://github.com/Elgg/Elgg/commit/5625412ccd035e144c667d9d432a729526596015))
+* **gatekeeper:** allow access to content of banned users ([c7c36082](https://github.com/Elgg/Elgg/commit/c7c360823e27b449eff09e388b52024dc4e407af))
+* **messages:** added missing translation string ([5c612c1a](https://github.com/Elgg/Elgg/commit/5c612c1aebac0859094c977bbd178c9a65838e4a))
+* **metadata:**
+  * removed usage of canEditMetadata is MetadataTable::delete ([35c39119](https://github.com/Elgg/Elgg/commit/35c39119bca850674893ae31c1c9231e299ab4de))
+  * removed usage of canEditMetadata ([42495a6b](https://github.com/Elgg/Elgg/commit/42495a6b63a9d2b4eddda4791b58b1b4a979c15c))
+* **notifications:** prevent php warning when no collections selected ([6efd8f7b](https://github.com/Elgg/Elgg/commit/6efd8f7bb9a719e3d2fd9e01cd7e6e9cd97f9c65))
+* **output:** always return string in formatter ([b92a6dbd](https://github.com/Elgg/Elgg/commit/b92a6dbde602abacede71d73e30c04d12fca84c8))
+* **pages:** don't show access fields if no edit rights ([33eff4b2](https://github.com/Elgg/Elgg/commit/33eff4b23b99e696b3be79c25cd0d714c2a92d20))
+* **plugins:**
+  * only reindex plugin priorities with new disabled plugins ([9652c77e](https://github.com/Elgg/Elgg/commit/9652c77e85a988b03c21efe00d10c10ca21080d8))
+  * plugin details tabs work again ([f3c9bb3f](https://github.com/Elgg/Elgg/commit/f3c9bb3f296e3108245e2c20ef31ef87a16017c6))
+* **request:** upload post max size is now correct validated (#12610) ([5b118806](https://github.com/Elgg/Elgg/commit/5b118806db760aade196efcaafd7128e3e0aee4f))
+* **river:** restored ignoring access when bulk deleting river items ([761dc191](https://github.com/Elgg/Elgg/commit/761dc191226495731a47df296b93b7cc1ef6175f))
+* **search:** no longer set deprecated search_type tags on tag links (#12611) ([a639fbba](https://github.com/Elgg/Elgg/commit/a639fbbae9b584716fb7e66d105d56e9d62849ab))
+* **session:**
+  * cookie configuration not read from settings file ([d43d282c](https://github.com/Elgg/Elgg/commit/d43d282c371bfa9c2ac8a27962a6d0985dcef332))
+  * session close moved to the latest possible moment ([16c06fc2](https://github.com/Elgg/Elgg/commit/16c06fc285def47efceca7317ecc45751b94fe79))
+* **system_log:**
+  * filtering in logbrowser could result in no results ([bdf6ec54](https://github.com/Elgg/Elgg/commit/bdf6ec549fedd1656bc97abd111f66486336de73))
+  * system_log_get_log accepts single array argument (#12607) ([9641b008](https://github.com/Elgg/Elgg/commit/9641b008de477caaed9d934c577d42b5316afbf4))
+* **web_services:** fetch correct api user ([f857b1ef](https://github.com/Elgg/Elgg/commit/f857b1efab0fa2c6abe36e41ace5fd1ce68c3c48))
+* **widgets:** return all widgets in case of duplicate order ([e2899cb4](https://github.com/Elgg/Elgg/commit/e2899cb4c7546c43a0db4f9865a005001a468f55))
+
+
 <a name="3.0.2"></a>
 ### 3.0.2  (2019-04-17)
 

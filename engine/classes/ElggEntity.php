@@ -1081,7 +1081,8 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @param int  $user_guid User guid (default is logged in user)
 	 * @param bool $default   Default permission
-	 * @return bool
+	 *
+	 * @return bool|null
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);
@@ -1588,14 +1589,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * into volatile data.
 	 *
 	 * @param stdClass $row DB row with new entity data
+	 *
 	 * @return bool
 	 * @access private
 	 */
 	public function refresh(stdClass $row) {
-		if ($row instanceof stdClass) {
-			return $this->load($row);
-		}
-		return false;
+		return $this->load($row);
 	}
 
 	/**
@@ -1987,7 +1986,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$result = true;
 		foreach ($collections as $collection) {
-			$result = $result & $ac->removeUser($this->guid, $collection->id);
+			$result &= $ac->removeUser($this->guid, $collection->id);
 		}
 
 		return $result;
@@ -2092,16 +2091,18 @@ abstract class ElggEntity extends \ElggData implements
 
 		_elgg_services()->entityCache->save($this);
 
-		if ($persist) {
-			$tmp = $this->volatile;
-
-			// don't store volatile data
-			$this->volatile = [];
-
-			_elgg_services()->dataCache->entities->save($this->guid, $this);
-
-			$this->volatile = $tmp;
+		if (!$persist) {
+			return;
 		}
+		
+		$tmp = $this->volatile;
+
+		// don't store volatile data
+		$this->volatile = [];
+
+		_elgg_services()->dataCache->entities->save($this->guid, $this);
+
+		$this->volatile = $tmp;
 	}
 
 	/**
