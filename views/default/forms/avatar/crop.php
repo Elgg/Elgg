@@ -10,8 +10,8 @@ if (!$entity instanceof \ElggUser) {
 	return;
 }
 
-elgg_load_js('jquery.imgareaselect');
-elgg_load_js('elgg.avatar_cropper');
+elgg_load_external_file('js', 'jquery.imgareaselect');
+elgg_load_external_file('js', 'elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
 
 echo elgg_view('output/img', [

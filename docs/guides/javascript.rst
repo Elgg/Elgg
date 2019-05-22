@@ -723,32 +723,12 @@ Inline tabs component fires an ``open`` event whenever a tabs is open and, in ca
 Traditional scripts
 ===================
 
-Although we highly recommend using AMD modules, you can register scripts with ``elgg_register_js``:
+Although we highly recommend using AMD modules, and there is no Elgg API for loading the scripts, 
+you can register scripts in a hook handler to add elements to the head links;
 
 .. code-block:: php
 
-   elgg_register_js('jquery', $cdnjs_url);
-
-This will override any URLs previously registered under this name.
-
-Load a library on the current page with ``elgg_load_js``:
-
-.. code-block:: php
-
-   elgg_load_js('jquery');
-
-This will load the library in the page footer. You must use the ``require()`` function to depend on
-modules like ``elgg`` and ``jquery``.
-
-.. warning::
-
-   Using inline scripts is NOT SUPPORTED because:
-    * They are not testable (maintainability)
-    * They are not cacheable (performance)
-    * They prevent use of Content-Security-Policy (security)
-    * They prevent scripts from being loaded with ``defer`` or ``async`` (performance)
-
-   Inline scripts in core or bundled plugins are considered legacy bugs.
+	elgg_register_plugin_hook_handler('head', 'page', $callback);
 
 Hooks
 =====

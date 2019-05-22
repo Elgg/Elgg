@@ -1755,20 +1755,20 @@ function elgg_views_boot() {
 	_elgg_services()->viewCacher->registerCoreViews();
 
 	// jQuery and UI must come before require. See #9024
-	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
-	elgg_load_js('jquery');
+	elgg_register_external_file('js', 'jquery', elgg_get_simplecache_url('jquery.js'), 'head');
+	elgg_load_external_file('js', 'jquery');
 
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
-	elgg_load_js('jquery-ui');
+	elgg_register_external_file('js', 'jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
+	elgg_load_external_file('js', 'jquery-ui');
 
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
-	elgg_load_js('elgg.require_config');
+	elgg_register_external_file('js', 'elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
+	elgg_load_external_file('js', 'elgg.require_config');
 
-	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
-	elgg_load_js('require');
+	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'), 'head');
+	elgg_load_external_file('js', 'require');
 
-	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
-	elgg_load_js('elgg');
+	elgg_register_external_file('js', 'elgg', elgg_get_simplecache_url('elgg.js'), 'head');
+	elgg_load_external_file('js', 'elgg');
 
 	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
 	elgg_load_css('font-awesome');
@@ -1784,12 +1784,12 @@ function elgg_views_boot() {
 		'deps' => ['jquery-ui'],
 	]);
 
-	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
+	elgg_register_external_file('js', 'elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
 
 	// @deprecated 2.2
-	elgg_register_js('elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
+	elgg_register_external_file('js', 'elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
 
-	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
+	elgg_register_external_file('js', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
 	elgg_register_css('jquery.treeview', elgg_get_simplecache_url('jquery-treeview/jquery.treeview.css'));
