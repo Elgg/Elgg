@@ -1,6 +1,6 @@
 <?php
 
-$guid = (int) get_input("guid");
+$guid = (int) get_input('guid');
 
 if (empty($guid)) {
 	return;
@@ -20,7 +20,7 @@ if ($package && !$package->checkDependencies()) {
 $screenshots_menu = '';
 $screenshots_body = '';
 $screenshots = $plugin->getManifest()->getScreenshots();
-if ($screenshots) {
+if (!empty($screenshots)) {
 	foreach ($screenshots as $key => $screenshot) {
 		$state = "";
 		$rel = "elgg-plugin-details-screenshot-" . $key;
@@ -69,7 +69,7 @@ $info[elgg_echo('admin:plugins:label:author')] = elgg_view('output/text', [
 ]);
 
 $url = $plugin->getManifest()->getWebsite();
-if ($url) {
+if (!empty($url)) {
 	$info[elgg_echo('admin:plugins:label:website')] = elgg_view('output/url', [
 		'href' => $plugin->getManifest()->getWebsite(),
 		'text' => $plugin->getManifest()->getWebsite(),
@@ -142,7 +142,7 @@ if (!empty($resources_html)) {
 $files = $plugin->getAvailableTextFiles();
 
 $files_html = '';
-if ($files) {
+if (!empty($files)) {
 	$files_html = '<ul>';
 	foreach ($files as $file => $path) {
 		$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
@@ -171,24 +171,24 @@ $tabs = [
 	],
 ];
 
-if ($resources_html) {
+if (!empty($resources_html)) {
 	$tabs['elgg-plugin-details-resources'] = [
 		'text' => elgg_echo("admin:plugins:label:resources"),
 		'content' => $resources_html,
 	];
 }
 
-if ($files_html) {
+if (!empty($files_html)) {
 	$tabs['elgg-plugin-details-files'] = [
 		'text' => elgg_echo("admin:plugins:label:files"),
 		'content' => $files_html,
 	];
 }
 
-if ($screenshots) {
+if (!empty($screenshots)) {
 	$tabs['elgg-plugin-details-screenshots'] = [
 		'text' => elgg_echo("admin:plugins:label:screenshots"),
-		'content' => $screenshots_menu . $screenshots,
+		'content' => $screenshots_menu . $screenshots_body,
 	];
 }
 

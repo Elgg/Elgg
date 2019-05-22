@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class ElggFile extends ElggObject {
 
 	/**
-	 * @var resource|null File handle used to identify this file in a filestore
+	 * @var resource|null|false File handle used to identify this file in a filestore
 	 * @see \ElggFile::open()
 	 */
 	private $handle;
@@ -187,7 +187,7 @@ class ElggFile extends ElggObject {
 	 *
 	 * @param string $mode Either read/write/append
 	 *
-	 * @return resource File handler
+	 * @return false|resource File handler
 	 *
 	 * @throws IOException
 	 * @throws InvalidParameterException
@@ -525,7 +525,7 @@ class ElggFile extends ElggObject {
 	public function getInlineURL($use_cookie = false, $expires = '') {
 		$file_svc = new \Elgg\FileService\File();
 		$file_svc->setFile($this);
-		if ($expires) {
+		if (!empty($expires)) {
 			$file_svc->setExpires($expires);
 		}
 		$file_svc->setDisposition('inline');

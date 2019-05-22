@@ -491,7 +491,7 @@ function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
 	
 	// plugin settings
 	$active_plugins = elgg_get_plugins('active');
-	if (!$active_plugins) {
+	if (empty($active_plugins)) {
 		// nothing added because no items
 		return;
 	}
@@ -730,7 +730,7 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 
 		if (!$user) {
 			$users = get_user_by_email($username);
-			if ($users) {
+			if (!empty($users)) {
 				$user = $users[0];
 			}
 		}

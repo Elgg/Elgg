@@ -117,5 +117,4 @@ interface CollectionInterface {
 	 * @return mixed
 	 */
 	public function map(callable $callback);
-
 }

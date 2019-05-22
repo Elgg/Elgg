@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'メッセージの保存の際に問題が発生しました。もう一度やり直してください。',
 
-	'item:object:messages' => 'メッセージ',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

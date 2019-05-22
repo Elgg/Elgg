@@ -368,7 +368,8 @@ class UserCapabilities {
 	 * @param ElggEntity $entity    Object entity
 	 * @param int        $user_guid User guid (default is logged in user)
 	 * @param bool       $default   Default permission
-	 * @return bool
+	 *
+	 * @return bool|null
 	 */
 	public function canComment(ElggEntity $entity, $user_guid = 0, $default = null) {
 		if ($this->canBypassPermissionsCheck($user_guid)) {

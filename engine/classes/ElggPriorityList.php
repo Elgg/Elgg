@@ -115,10 +115,8 @@ class ElggPriorityList
 	 * @param array $elements An optional array of priorities => element
 	 */
 	public function __construct(array $elements = []) {
-		if ($elements) {
-			foreach ($elements as $priority => $element) {
-				$this->add($element, $priority);
-			}
+		foreach ($elements as $priority => $element) {
+			$this->add($element, $priority);
 		}
 	}
 

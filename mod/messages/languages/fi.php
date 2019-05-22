@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Viestisi tallentaminen epäonnistui. Yritä uudelleen.',
 
-	'item:object:messages' => 'Viestit',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

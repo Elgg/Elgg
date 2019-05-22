@@ -133,5 +133,4 @@ class ExceptionHandler {
 			$response->send();
 		}
 	}
-
 }

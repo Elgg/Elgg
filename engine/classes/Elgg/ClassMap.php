@@ -1,5 +1,7 @@
 <?php
+
 namespace Elgg;
+
 /**
  * A map of class names to absolute file paths
  *
@@ -104,4 +106,3 @@ class ClassMap {
 		return $this;
 	}
 }
-

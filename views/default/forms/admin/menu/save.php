@@ -61,27 +61,25 @@ $custom_items[''] = ''; // add empty option
 $name_str = elgg_echo('name');
 $url_str = elgg_echo('admin:plugins:label:website');
 
-if (is_array($custom_items)) {
-	foreach ($custom_items as $title => $url) {
-		$add_menu .= elgg_view_field([
-			'#type' => 'fieldset',
-			'align' => 'horizontal',
-			'fields' => [
-				[
-					'#type' => 'text',
-					'#label' => $name_str,
-					'name' => 'custom_menu_titles[]',
-					'value' => $title,
-				],
-				[
-					'#type' => 'text',
-					'#label' => $url_str,
-					'name' => 'custom_menu_urls[]',
-					'value' => $url,
-				]
+foreach ($custom_items as $title => $url) {
+	$add_menu .= elgg_view_field([
+		'#type' => 'fieldset',
+		'align' => 'horizontal',
+		'fields' => [
+			[
+				'#type' => 'text',
+				'#label' => $name_str,
+				'name' => 'custom_menu_titles[]',
+				'value' => $title,
 			],
-		]);
-	}
+			[
+				'#type' => 'text',
+				'#label' => $url_str,
+				'name' => 'custom_menu_urls[]',
+				'value' => $url,
+			]
+		],
+	]);
 }
 
 echo elgg_view_module('info', elgg_echo('admin:add_menu_item'), $add_menu);
@@ -92,4 +90,3 @@ $footer = elgg_view_field([
 ]);
 
 elgg_set_form_footer($footer);
-

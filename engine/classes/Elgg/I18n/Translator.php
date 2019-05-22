@@ -295,8 +295,8 @@ class Translator {
 		}
 		
 		$data = elgg_load_system_cache("{$language}.lang");
-		if ($data) {
-			$this->addTranslation($language, unserialize($data), false);
+		if (is_array($data)) {
+			$this->addTranslation($language, $data, false);
 			return;
 		}
 		
@@ -305,7 +305,7 @@ class Translator {
 		}
 			
 		$translations = elgg_extract($language, $this->translations, []);
-		elgg_save_system_cache("{$language}.lang", serialize($translations));
+		elgg_save_system_cache("{$language}.lang", $translations);
 	}
 
 	/**

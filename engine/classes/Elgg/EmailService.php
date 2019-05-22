@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Psr\Log\LoggerInterface;
 use RuntimeException;
+use Zend\Mail\Header\ContentType;
 use Zend\Mail\Message as MailMessage;
 use Zend\Mail\Transport\TransportInterface;
 use Zend\Mime\Mime;
@@ -106,7 +107,6 @@ class EmailService {
 		
 		// set headers
 		$headers = [
-			"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
 			"MIME-Version" => "1.0",
 			"Content-Transfer-Encoding" => "8bit",
 		];
@@ -120,6 +120,10 @@ class EmailService {
 			$message->getHeaders()->addHeaderLine("{$name}: {$value}");
 		}
 		
+		// add the body to the message
+		$body = $this->buildMessageBody($email);
+		$message->setBody($body);
+		
 		// set Subject
 		$subject = elgg_strip_tags($email->getSubject());
 		$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
@@ -128,15 +132,18 @@ class EmailService {
 		$subject = trim($subject);
 		
 		$message->setSubject($subject);
-		
-		// add the body to the message
-		$body = $this->buildMessageBody($email);
-		$message->setBody($body);
 
 		// allow others to modify the $message content
 		// eg. add html body, add attachments
 		$message = $this->hooks->trigger('zend:message', 'system:email', $hook_params, $message);
 
+		// fix content type header
+		// @see https://github.com/Elgg/Elgg/issues/12555
+		$ct = $message->getHeaders()->get('Content-Type');
+		if ($ct instanceof ContentType) {
+			$ct->addParameter('format', 'flowed');
+		}
+		
 		try {
 			$this->mailer->send($message);
 		} catch (RuntimeException $e) {

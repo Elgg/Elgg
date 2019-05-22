@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Amd;
 
 /**
@@ -59,4 +60,3 @@ class ViewFilter {
 		return $content;
 	}
 }
-

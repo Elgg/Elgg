@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-17 11:46+0200\n"
+"POT-Creation-Date: 2019-05-21 08:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,20 @@ msgstr ""
 
 #: ../../appendix/faqs.rst:4
 msgid "Below are some commonly asked questions about Elgg."
+msgstr ""
+
+#: ../../appendix/faqs.rst:8
+#: ../../appendix/support.rst:8
+#: ../../appendix/upgrade-notes/1.10-to-1.11.rst:6
+#: ../../appendix/upgrade-notes/1.7-to-1.8.rst:6
+#: ../../appendix/upgrade-notes/1.8-to-1.9.rst:6
+#: ../../appendix/upgrade-notes/1.9-to-1.10.rst:6
+#: ../../appendix/upgrade-notes/1.x-to-2.0.rst:6
+#: ../../appendix/upgrade-notes/2.0-to-2.1.rst:6
+#: ../../appendix/upgrade-notes/2.1-to-2.2.rst:6
+#: ../../appendix/upgrade-notes/2.2-to-2.3.rst:6
+#: ../../appendix/upgrade-notes/2.x-to-3.0.rst:6
+msgid "Contents"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:2
@@ -6434,7 +6448,7 @@ msgid "Since ``elgg_get_river`` by default has a limit on the number of river it
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1085
-msgid "A hook is fired for each river item which checks the delete permissions"
+msgid "Access is ignored when deleting river items"
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:1086

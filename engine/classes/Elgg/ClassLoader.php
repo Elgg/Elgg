@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 /**
@@ -249,4 +250,3 @@ class ClassLoader {
 		}
 	}
 }
-

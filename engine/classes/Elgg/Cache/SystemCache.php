@@ -46,14 +46,15 @@ class SystemCache {
 	 * Saves a system cache.
 	 *
 	 * @param string $type The type or identifier of the cache
-	 * @param string $data The data to be saved
+	 * @param mixed  $data The data to be saved
+	 *
 	 * @return bool
 	 */
 	public function save($type, $data) {
 		if ($this->isEnabled()) {
 			return $this->cache->save($type, $data);
 		}
-	
+
 		return false;
 	}
 	
@@ -61,17 +62,18 @@ class SystemCache {
 	 * Retrieve the contents of a system cache.
 	 *
 	 * @param string $type The type of cache to load
-	 * @return string
+	 *
+	 * @return mixed null if key not found in cache
 	 */
 	public function load($type) {
-		if ($this->isEnabled()) {
-			$cached_data = $this->cache->load($type);
-			if ($cached_data) {
-				return $cached_data;
-			}
+		if (!$this->isEnabled()) {
+			return;
 		}
-	
-		return null;
+		
+		$cached_data = $this->cache->load($type);
+		if (isset($cached_data)) {
+			return $cached_data;
+		}
 	}
 	
 	/**

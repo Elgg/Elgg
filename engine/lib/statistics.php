@@ -72,9 +72,8 @@ function get_number_users($show_deactivated = false) {
 	$select->addClause($where, 'e');
 
 	$result = _elgg_services()->db->getDataRow($select);
-
-	if ($result) {
-		return $result->count;
+	if (!empty($result)) {
+		return (int) $result->count;
 	}
 
 	return 0;

@@ -7,6 +7,8 @@
  * @subpackage PageOwner
  */
 
+use Elgg\Router\Route;
+
 /**
  * Gets the guid of the entity that owns the current page.
  *
@@ -34,7 +36,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 	}
 
 	$route = _elgg_services()->request->getRoute();
-	if ($route) {
+	if ($route instanceof Route) {
 		$page_owner = $route->resolvePageOwner();
 		if ($page_owner) {
 			$page_owner_guid = $page_owner->guid;

@@ -21,9 +21,9 @@ class HandlersService {
 	/**
 	 * Call the handler with the hook/event object
 	 *
-	 * @param callable          $callable Callable
-	 * @param string|Hook|Event $object   Event object
-	 * @param array             $args     Arguments for legacy events/hooks
+	 * @param callable $callable Callable
+	 * @param mixed    $object   Event object
+	 * @param array    $args     Arguments for legacy events/hooks
 	 *
 	 * @return array [success, result, object]
 	 */

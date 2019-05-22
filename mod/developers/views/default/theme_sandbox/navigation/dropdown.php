@@ -55,4 +55,3 @@ echo elgg_view_menu('theme_sandbox:dropdown_menu', [
 	'items' => $items,
 	'class' => 'elgg-menu-hz',
 ]);
-

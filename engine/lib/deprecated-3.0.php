@@ -1297,8 +1297,8 @@ function elgg_batch_disable_callback($object) {
  * Requests not handled are forwarded to the front page with a reason of 404.
  * Plugins can register for the 'forward', '404' plugin hook. @see forward()
  *
- * @param string $identifier The page type identifier
- * @param string $function   Your function name
+ * @param string   $identifier The page type identifier
+ * @param callable $function   Your function name
  *
  * @return bool Depending on success
  * @deprecated 3.0 Use elgg_register_route() to register a named route

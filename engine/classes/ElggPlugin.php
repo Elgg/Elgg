@@ -132,7 +132,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function getDisplayName() {
 		$manifest = $this->getManifest();
-		if ($manifest) {
+		if ($manifest instanceof ElggPluginManifest) {
 			return $manifest->getName();
 		}
 

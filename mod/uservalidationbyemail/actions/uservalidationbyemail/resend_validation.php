@@ -4,7 +4,7 @@
  */
 
 $user_guids = (array) get_input('user_guids');
-if (!$user_guids) {
+if (empty($user_guids)) {
 	return elgg_error_response(elgg_echo('uservalidationbyemail:errors:unknown_users'));
 }
 

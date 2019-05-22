@@ -37,5 +37,4 @@ trait Cacheable {
 
 		return $this->cache;
 	}
-
 }

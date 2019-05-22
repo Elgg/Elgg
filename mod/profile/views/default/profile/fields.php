@@ -41,14 +41,14 @@ foreach ($fields as $shortname => $valtype) {
 		return $a->value;
 	}, $annotations);
 
-	if (!$values) {
+	if (empty($values)) {
 		continue;
 	}
 	// emulate metadata API
 	$value = (count($values) === 1) ? $values[0] : $values;
 
 	// validate urls
-	if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
+	if ($valtype === 'url' && is_string($value) && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
 	}
 
@@ -68,4 +68,3 @@ foreach ($fields as $shortname => $valtype) {
 if ($output) {
 	echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);
 }
-

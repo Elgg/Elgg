@@ -15,8 +15,8 @@ foreach ($periods as $period) {
 	
 	// last completed (friendly) and full date
 	$ts = $cron_service->getLog('completion', $period);
-	if ($ts) {
-		$row[] = elgg_format_element('td', [], elgg_view_friendly_time($ts));
+	if (!elgg_is_empty($ts)) {
+		$row[] = elgg_format_element('td', [], elgg_view_friendly_time((int) $ts));
 		$row[] = elgg_format_element('td', [], elgg_view('output/date', [
 			'value' => $ts,
 			'format' => DATE_RFC2822,

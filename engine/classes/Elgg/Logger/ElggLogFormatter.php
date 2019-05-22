@@ -36,5 +36,4 @@ class ElggLogFormatter extends LineFormatter {
 
 		return parent::format($record);
 	}
-
 }

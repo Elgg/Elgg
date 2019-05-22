@@ -27,7 +27,7 @@ return array(
 	'blog:message:saved' => 'Сохранено.',
 	'blog:error:cannot_save' => 'Не могу сохранить сообщение.',
 	'blog:error:cannot_auto_save' => 'Не могу автоматически сохранить.',
-	'blog:error:cannot_write_to_container' => 'Нехватает прав для сохранения блога.',
+	'blog:error:cannot_write_to_container' => 'Недостаточно прав для сохранения блога.',
 	'blog:messages:warning:draft' => 'Это не сохраненный черновик сообщения!',
 	'blog:edit_revision_notice' => '(Старая версия)',
 	'blog:message:deleted_post' => 'Сообщение удалено.',
@@ -48,16 +48,16 @@ return array(
 	'blog:notify:subject' => 'Новая запись блога: %s',
 	'blog:notify:body' =>
 '
-%s published a new blog post: %s
+%s опубликовал в блоге новую запись: %s
 
 %s
 
-View and comment on the blog post:
+Просмотр и комментирование записи:
 %s
 ',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
+	'widgets:blog:name' => 'Записи блога',
 	'widgets:blog:description' => 'Показать последние посты',
 	'blog:moreblogs' => 'Показать больше постов',
 	'blog:numbertodisplay' => 'Число отображаемых постов',

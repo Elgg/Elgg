@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\SystemMessages\RegisterSet;
@@ -153,7 +154,7 @@ class SystemMessagesService {
 				continue;
 			}
 			$arr = array_filter($values, $filter);
-			if ($arr) {
+			if (!empty($arr)) {
 				$data[$prop] = array_values($arr);
 			}
 		}

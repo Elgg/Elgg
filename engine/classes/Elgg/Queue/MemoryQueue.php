@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Queue;
 
 /**
@@ -52,4 +53,3 @@ class MemoryQueue implements \Elgg\Queue\Queue {
 		return count($this->queue);
 	}
 }
-

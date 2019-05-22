@@ -41,5 +41,4 @@ class OptimizeCommand extends Command {
 
 		return 0;
 	}
-
 }
