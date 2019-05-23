@@ -1,16 +1,60 @@
 <?php
-// Work out number of users
-$users_stats = get_number_users();
-$total_users = get_number_users(true);
+// Banned user count
+$users_banned = elgg_count_entities([
+	'type' => 'user',
+	'metadata_name_value_pairs' => ['banned' => 'yes'],
+]);
+
+// Active user count
+$users_active = elgg_count_entities([
+	'type' => 'user',
+	'metadata_name_value_pairs' => ['banned' => 'no'],
+]);
+
+// Unverified user count
+$users_unverified = elgg_count_entities([
+	'type' => 'user',
+	'metadata_name_value_pairs' => ['validated' => false],
+]);
+
+// Total user count (Enable & Disabled)
+$hidden_status = access_show_hidden_entities(true);
+$total_users = elgg_count_entities([
+	'type' => 'user',
+]);
+access_show_hidden_entities($hidden_status);
+
+// Enabled user count
+$users_enabled = elgg_count_entities([
+	'type' => 'user',
+]);
+
+// Disabled user count
+$users_disabled = $total_users - $users_enabled;
 
 $active_title = elgg_echo('active');
 $total_title = elgg_echo('total');
+$unverified_title = elgg_echo('unvalidated');
+$banned_title = elgg_echo('banned');
+$disabled_title = elgg_echo('disabled');
 
 $body = <<<__HTML
 <table class="elgg-table-alt">
 	<tr>
 		<td><b>{$active_title} :</b></td>
-		<td>{$users_stats}</td>
+		<td>{$users_active}</td>
+	</tr>
+	<tr>
+		<td><b>{$disabled_title} :</b></td>
+		<td>{$users_disabled}</td>
+	</tr>
+	<tr>
+		<td><b>{$unverified_title} :</b></td>
+		<td>{$users_unverified}</td>
+	</tr>
+	<tr>
+		<td><b>{$banned_title} :</b></td>
+		<td>{$users_banned}</td>
 	</tr>
 	<tr>
 		<td><b>{$total_title} :</b></td>
