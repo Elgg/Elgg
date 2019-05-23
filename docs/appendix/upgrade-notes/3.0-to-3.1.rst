@@ -26,3 +26,8 @@ Make sure your javascript is an AMD module and use ``elgg_require_js`` to includ
 
 The usage of ``elgg_register_css``, ``elgg_unregister_css`` and ``elgg_load_css`` is discouraged.
 You can register and include css with the new ``elgg_require_css`` function.
+
+Deprecated APIs
+---------------
+
+ * ``elgg_instanceof()`` Use PHP instanceof type operator.

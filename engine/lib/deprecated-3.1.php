@@ -142,3 +142,35 @@ function elgg_load_css($name) {
 	
 	elgg_load_external_file('css', $name);
 }
+
+/**
+ * Checks if $entity is an \ElggEntity and optionally for type and subtype.
+ *
+ * @tip Use this function in actions and views to check that you are dealing
+ * with the correct type of entity.
+ *
+ * @param mixed  $entity  Entity
+ * @param string $type    Entity type
+ * @param string $subtype Entity subtype
+ *
+ * @return bool
+ * @since 1.8.0
+ *
+ * @deprecated 3.1 Use PHP instanceof type operator
+ */
+function elgg_instanceof($entity, $type = null, $subtype = null) {
+	elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use PHP instanceof type operator.', '3.1');
+	
+	$return = ($entity instanceof \ElggEntity);
+
+	if ($type) {
+		/* @var \ElggEntity $entity */
+		$return = $return && ($entity->getType() == $type);
+	}
+
+	if ($subtype) {
+		$return = $return && ($entity->getSubtype() == $subtype);
+	}
+
+	return $return;
+}

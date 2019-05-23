@@ -286,7 +286,7 @@ Example:
 	function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 		$reply = $params['event']->getObject();
 
-		if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+		if (!$reply instanceof \ElggDiscussionReply) {
 			return $subscriptions;
 		}
 

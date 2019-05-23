@@ -5,7 +5,7 @@
 class ElggAdminNotice extends \ElggObject {
 
 	/**
-	 * @inheritdoc
+	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
