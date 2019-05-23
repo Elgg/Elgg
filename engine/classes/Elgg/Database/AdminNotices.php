@@ -26,7 +26,7 @@ class AdminNotices {
 	 * @param string $id      A unique ID that your plugin can remember
 	 * @param string $message Body of the message
 	 *
-	 * @return \ElggObject|bool
+	 * @return \ElggAdminNotice|bool
 	 */
 	public function add($id, $message) {
 		if (!$id || !$message) {
@@ -40,10 +40,7 @@ class AdminNotices {
 		// need to handle when no one is logged in
 		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
 
-		$admin_notice = new \ElggObject();
-		$admin_notice->subtype = 'admin_notice';
-		// admins can see ACCESS_PRIVATE but no one else can.
-		$admin_notice->access_id = ACCESS_PRIVATE;
+		$admin_notice = new \ElggAdminNotice();
 		$admin_notice->admin_notice_id = $id;
 		$admin_notice->description = $message;
 
