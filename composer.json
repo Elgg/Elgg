@@ -44,7 +44,7 @@
         "roave/security-advisories": "dev-master",
         "robmorgan/phinx": "^0.8.1",
         "symfony/console": "~3.3",
-        "symfony/http-foundation": "~2.6",
+        "symfony/http-foundation": "~3.4",
         "symfony/polyfill-php71": "^1.7",
         "symfony/polyfill-php72": "^1.7",
         "symfony/routing": "^3.3",

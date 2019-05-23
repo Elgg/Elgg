@@ -156,7 +156,9 @@ class ResponseFactory {
 		
 		$response = new Response($content, $status, $header_bag->all());
 		
-		return $this->finalizeResponsePreparation($response, $header_bag);
+		$response->prepare($this->request);
+		
+		return $response;
 	}
 
 	/**
@@ -175,7 +177,9 @@ class ResponseFactory {
 		
 		$response = new SymfonyRedirectResponse($url, $status, $header_bag->all());
 		
-		return $this->finalizeResponsePreparation($response, $header_bag);
+		$response->prepare($this->request);
+		
+		return $response;
 	}
 	
 	/**
@@ -201,24 +205,6 @@ class ResponseFactory {
 		$header_bag->remove('Content-Type');
 		
 		$response = new JsonResponse($content, $status, $header_bag->all());
-		
-		return $this->finalizeResponsePreparation($response, $header_bag);
-	}
-	
-	/**
-	 * Last preparations on a response
-	 *
-	 * @param Response          $response The response to prepare
-	 * @param ResponseHeaderBag $headers  Header container with additional content
-	 *
-	 * @return Response
-	 * @todo revisit this when upgrading to Symfony/HttpFoundation v3.3+
-	 */
-	private function finalizeResponsePreparation(Response $response, ResponseHeaderBag $headers) {
-		// Cookies aren't part of the headers, need to copy manualy
-		foreach ($headers->getCookies() as $cookie) {
-			$response->headers->setCookie($cookie);
-		}
 		
 		$response->prepare($this->request);
 		

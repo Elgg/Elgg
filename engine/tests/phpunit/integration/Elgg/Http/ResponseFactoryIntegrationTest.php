@@ -6,6 +6,8 @@ use Elgg\IntegrationTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 	
@@ -62,9 +64,10 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		$response = $this->service->prepareResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		
-		$response_cookies = $response->headers->getCookies();
+		$cookie = $this->findCookie($response->headers, 'foo');
 		
-		$this->assertEquals($factory_cookies, $response_cookies);
+		$this->assertInstanceOf(Cookie::class, $cookie);
+		$this->assertEquals('bar', $cookie->getValue());
 	}
 	
 	public function testPrepareRedirectResponseContainsFactoryCookies() {
@@ -78,9 +81,10 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		$response = $this->service->prepareRedirectResponse('foo/bar');
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		
-		$response_cookies = $response->headers->getCookies();
+		$cookie = $this->findCookie($response->headers, 'foo');
 		
-		$this->assertEquals($factory_cookies, $response_cookies);
+		$this->assertInstanceOf(Cookie::class, $cookie);
+		$this->assertEquals('bar', $cookie->getValue());
 	}
 	
 	public function testPrepareJsonResponseContainsFactoryCookies() {
@@ -94,8 +98,19 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		$response = $this->service->prepareJsonResponse();
 		$this->assertInstanceOf(JsonResponse::class, $response);
 		
-		$response_cookies = $response->headers->getCookies();
+		$cookie = $this->findCookie($response->headers, 'foo');
 		
-		$this->assertEquals($factory_cookies, $response_cookies);
+		$this->assertInstanceOf(Cookie::class, $cookie);
+		$this->assertEquals('bar', $cookie->getValue());
+	}
+	
+	private function findCookie(ResponseHeaderBag $headerbag, string $cookie_name) {
+		foreach ($headerbag->getCookies() as $cookie) {
+			if ($cookie->getName() === $cookie_name) {
+				return $cookie;
+			}
+		}
+		
+		return false;
 	}
 }
