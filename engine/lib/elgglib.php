@@ -1549,11 +1549,12 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
  * @access private
  */
 function _elgg_init() {
+	elgg_register_simplecache_view('resources/manifest.json');
 	
 	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
 		$result['links']['manifest'] = [
 			'rel' => 'manifest',
-			'href' => elgg_normalize_url('/manifest.json'),
+			'href' => elgg_get_simplecache_url('resources/manifest.json'),
 		];
 
 		return $result;
