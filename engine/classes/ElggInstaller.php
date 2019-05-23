@@ -1437,6 +1437,8 @@ class ElggInstaller {
 			'version' => elgg_get_version(),
 			'simplecache_enabled' => 1,
 			'system_cache_enabled' => 1,
+			'simplecache_minify_js' => true,
+			'simplecache_minify_css' => true,
 			'simplecache_lastupdate' => time(),
 			'processed_upgrades' => [],
 			'language' => 'en',
