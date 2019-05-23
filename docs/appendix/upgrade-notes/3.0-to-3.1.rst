@@ -5,6 +5,14 @@ From 3.0 to 3.1
    :local:
    :depth: 1
 
+PHP Version
+-----------
+
+PHP 7.0 has reached end of life in January 2019. To ensure that Elgg sites are secure, we now require PHP 7.1 for new installations.
+
+If upgrading from a previous Elgg installation make sure you have the correct PHP version installed.
+
+
 Plugin screenshots
 ------------------
 

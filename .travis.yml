@@ -1,6 +1,5 @@
 language: php
 php:
- - 7.0
  - 7.1
  - 7.2
  - 7.3
@@ -59,7 +58,7 @@ matrix:
         - composer docs:build
 
     # Memcached enabled
-    - php: 7.0
+    - php: 7.1
       services:
         - memcached
         - mysql
@@ -80,7 +79,7 @@ matrix:
         - ./vendor/bin/phpunit
 
     # Redis enabled
-    - php: 7.0
+    - php: 7.1
       services:
         - redis-server
         - mysql
@@ -100,7 +99,7 @@ matrix:
         - ./vendor/bin/phpunit
 
     # Test upgrade path from 2.3
-    - php: 7.0
+    - php: 7.1
       env: JOB_NAME=upgrade_from_Elgg2
       install:
         - git fetch origin 2.3
