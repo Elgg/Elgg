@@ -164,7 +164,7 @@ function elgg_require_css(string $view) {
  * @since 3.1
  */
 function elgg_unrequire_css(string $view) {
-	elgg_unregister_css($view);
+	elgg_unregister_external_file('css', $view);
 }
 
 /**
