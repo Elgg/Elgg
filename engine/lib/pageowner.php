@@ -23,6 +23,8 @@ function elgg_get_page_owner_guid($guid = 0) {
 		return $page_owner->getPageOwnerGuid();
 	}
 	
+	elgg_deprecated_notice(__METHOD__ . ' should not be used to set the page owner. Use elgg_set_page_owner_guid().', '3.1');
+	
 	// calling function for BC
 	elgg_set_page_owner_guid($guid);
 	
