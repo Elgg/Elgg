@@ -18,29 +18,6 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	}
 
 	/**
-	 * Test elgg_instanceof()
-	 */
-	public function testElggInstanceOf() {
-		$entity = new \ElggObject();
-		$entity->subtype = 'test_subtype';
-		$entity->save();
-
-		$this->assertTrue(elgg_instanceof($entity));
-		$this->assertTrue(elgg_instanceof($entity, 'object'));
-		$this->assertTrue(elgg_instanceof($entity, 'object', 'test_subtype'));
-
-		$this->assertFalse(elgg_instanceof($entity, 'object', 'invalid_subtype'));
-		$this->assertFalse(elgg_instanceof($entity, 'user', 'test_subtype'));
-
-		$entity->delete();
-
-		$bad_entity = false;
-		$this->assertFalse(elgg_instanceof($bad_entity));
-		$this->assertFalse(elgg_instanceof($bad_entity, 'object'));
-		$this->assertFalse(elgg_instanceof($bad_entity, 'object', 'test_subtype'));
-	}
-
-	/**
 	 * Test elgg_normalize_url()
 	 */
 	public function testElggNormalizeURL() {

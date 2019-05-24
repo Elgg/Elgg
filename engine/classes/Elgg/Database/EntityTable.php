@@ -390,7 +390,11 @@ class EntityTable {
 		$guid = (int) $guid;
 
 		$entity = $this->getFromCache($guid);
-		if ($entity && elgg_instanceof($entity, $type, $subtype)) {
+		if (
+			$entity instanceof \ElggEntity &&
+			(!isset($type) || $entity->type === $type) &&
+			(!isset($subtype) || $entity->subtype === $subtype)
+		) {
 			return $entity;
 		}
 
@@ -399,11 +403,11 @@ class EntityTable {
 			return false;
 		}
 
-		if ($type && $row->type != $type) {
+		if (isset($type) && $row->type !== $type) {
 			return false;
 		}
 
-		if ($subtype && $row->subtype !== $subtype) {
+		if (isset($subtype) && $row->subtype !== $subtype) {
 			return false;
 		}
 

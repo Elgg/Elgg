@@ -273,7 +273,7 @@ the entity should of course be a my_blog post. Add this function to your
 
     function my_blog_set_url($hook, $type, $url, $params) {
         $entity = $params['entity'];
-        if (elgg_instanceof($entity, 'object', 'my_blog')) {
+        if ($entity->getSubtype() === 'my_blog') {
             return "my_blog/view/{$entity->guid}";
         }
     }

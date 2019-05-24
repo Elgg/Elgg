@@ -143,7 +143,7 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		$ia = elgg_set_ignore_access(true);
 		$this->assertTrue($new_user->delete());
 		elgg_set_ignore_access($ia);
-		$original_page_owner_guid = (elgg_instanceof($original_page_owner)) ? $original_page_owner->guid : 0;
+		$original_page_owner_guid = ($original_page_owner instanceof \ElggEntity) ? $original_page_owner->guid : 0;
 		elgg_set_page_owner_guid($original_page_owner_guid);
 
 	}

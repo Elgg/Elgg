@@ -4,7 +4,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!elgg_instanceof($entity, 'object', 'admin_notice')) {
+if (!$entity instanceof \ElggAdminNotice) {
 	return;
 }
 

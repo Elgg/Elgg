@@ -796,34 +796,6 @@ function is_registered_entity_type($type, $subtype = null) {
 }
 
 /**
- * Checks if $entity is an \ElggEntity and optionally for type and subtype.
- *
- * @tip Use this function in actions and views to check that you are dealing
- * with the correct type of entity.
- *
- * @param mixed  $entity  Entity
- * @param string $type    Entity type
- * @param string $subtype Entity subtype
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_instanceof($entity, $type = null, $subtype = null) {
-	$return = ($entity instanceof \ElggEntity);
-
-	if ($type) {
-		/* @var \ElggEntity $entity */
-		$return = $return && ($entity->getType() == $type);
-	}
-
-	if ($subtype) {
-		$return = $return && ($entity->getSubtype() == $subtype);
-	}
-
-	return $return;
-}
-
-/**
  * Checks options for the existing of site_guid or site_guids contents and reports a warning if found
  *
  * @param array $options array of options to check
