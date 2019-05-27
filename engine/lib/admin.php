@@ -408,16 +408,9 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 	// configure
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'settings:basic',
-		'href' => 'admin/settings/basic',
-		'text' => elgg_echo('admin:settings:basic'),
+		'href' => 'admin/site_settings',
+		'text' => elgg_echo('admin:site_settings'),
 		'priority' => 10,
-		'section' => 'configure',
-	]);
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'settings:advanced',
-		'href' => 'admin/settings/advanced',
-		'text' => elgg_echo('admin:settings:advanced'),
-		'priority' => 20,
 		'section' => 'configure',
 	]);
 	$return[] = \ElggMenuItem::factory([
