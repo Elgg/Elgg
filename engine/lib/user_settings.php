@@ -141,7 +141,11 @@ function _elgg_set_user_username(\Elgg\Hook $hook) {
 		return null;
 	}
 
-	if (!elgg_is_admin_logged_in()) {
+	if (!elgg_is_admin_logged_in() && !elgg_get_config('can_change_username', false)) {
+		return null;
+	}
+	
+	if (!$user->canEdit()) {
 		return null;
 	}
 
