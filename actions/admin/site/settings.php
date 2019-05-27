@@ -1,9 +1,10 @@
 <?php
 /**
- * Updates the advanced settings for the primary site object.
+ * Updates the basic settings for the primary site object.
  *
- * Options are saved among metadata on the site object
- * and entries in the config table.
+ * Basic site settings are saved as metadata on the site object,
+ * with the exception of the default language, which is saved in
+ * the config table.
  *
  * @package Elgg.Core
  * @subpackage Administration.Site
@@ -16,6 +17,31 @@ if (!$site) {
 if (!($site instanceof ElggSite)) {
 	throw new InstallationException("Passing a non-ElggSite to an ElggSite constructor!");
 }
+
+$site->description = get_input('sitedescription');
+$site->name = strip_tags(get_input('sitename'));
+$site->email = get_input('siteemail');
+
+if (!$site->save()) {
+	return elgg_error_response(elgg_echo('admin:configuration:fail'));
+}
+
+// allow new user registration?
+$allow_registration = ('on' === get_input('allow_registration', false));
+elgg_save_config('allow_registration', $allow_registration);
+
+// setup walled garden
+$walled_garden = ('on' === get_input('walled_garden', false));
+elgg_save_config('walled_garden', $walled_garden);
+
+elgg_save_config('language', get_input('language'));
+
+$default_limit = (int) get_input('default_limit');
+if ($default_limit < 1) {
+	return elgg_error_response(elgg_echo('admin:configuration:default_limit'));
+}
+
+elgg_save_config('default_limit', $default_limit);
 
 if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
 	if ('on' === get_input('simplecache_enabled')) {
@@ -65,9 +91,5 @@ if ($friendly_time_number_of_days === '') {
 	$friendly_time_number_of_days = 30;
 }
 elgg_save_config('friendly_time_number_of_days', (int) $friendly_time_number_of_days);
-
-if (!$site->save()) {
-	return elgg_error_response(elgg_echo('admin:configuration:fail'));
-}
 
 return elgg_ok_response('', elgg_echo('admin:configuration:success'));

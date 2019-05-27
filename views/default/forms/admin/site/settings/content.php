@@ -1,9 +1,15 @@
 <?php
-/**
- * Advanced site settings, content access section.
- */
 
-$field = [
+$body = elgg_view_field([
+	'#type' => 'checkbox',
+	'label' => elgg_echo('installation:walled_garden:label'),
+	'#help' => elgg_echo('installation:walled_garden:description'),
+	'name' => 'walled_garden',
+	'checked' => (bool) elgg_get_config('walled_garden'),
+	'switch' => true,
+]);
+
+$body .= elgg_view_field([
 	'#type' => 'access',
 	'options_values' => [
 		ACCESS_PRIVATE => elgg_echo('access:label:private'),
@@ -14,9 +20,7 @@ $field = [
 	'#label' => elgg_echo('installation:sitepermissions'),
 	'#help' => elgg_echo('admin:site:access:warning'),
 	'value' => elgg_get_config('default_access'),
-];
-
-$body = elgg_view_field($field);
+]);
 
 $body .= elgg_view_field([
 	'#type' => 'checkbox',
@@ -27,4 +31,13 @@ $body .= elgg_view_field([
 	'switch' => true,
 ]);
 
-echo elgg_view_module('info', elgg_echo('admin:legend:content_access'), $body, ['id' => 'elgg-settings-advanced-content-access']);
+$body .= elgg_view_field([
+	'#type' => 'number',
+	'name' => 'default_limit',
+	'#label' => elgg_echo('installation:default_limit'),
+	'value' => elgg_get_config('default_limit'),
+	'min' => 1,
+	'step' => 1,
+]);
+
+echo elgg_view_module('info', elgg_echo('admin:legend:content'), $body);
