@@ -7,8 +7,6 @@
  * @subpackage PageOwner
  */
 
-use Elgg\Router\Route;
-
 /**
  * Gets the guid of the entity that owns the current page.
  *
@@ -20,39 +18,17 @@ use Elgg\Router\Route;
  * @since 1.8.0
  */
 function elgg_get_page_owner_guid($guid = 0) {
-	static $page_owner_guid;
-
-	if ($guid === false || $guid === null) {
-		$page_owner_guid = 0;
-		return $page_owner_guid;
+	$page_owner = _elgg_services()->pageOwner;
+	if ($guid === 0) {
+		return $page_owner->getPageOwnerGuid();
 	}
 	
-	if ($guid) {
-		$page_owner_guid = (int) $guid;
-	}
-
-	if (isset($page_owner_guid)) {
-		return $page_owner_guid;
-	}
-
-	$route = _elgg_services()->request->getRoute();
-	if ($route instanceof Route) {
-		$page_owner = $route->resolvePageOwner();
-		if ($page_owner) {
-			$page_owner_guid = $page_owner->guid;
-			return $page_owner_guid;
-		}
-	}
-
-	// return guid of page owner entity
-	// Note: core registers default_page_owner_handler() to handle this hook.
-	$guid = (int) elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
-
-	if ($guid) {
-		$page_owner_guid = $guid;
-	}
-
-	return $guid;
+	elgg_deprecated_notice(__METHOD__ . ' should not be used to set the page owner. Use elgg_set_page_owner_guid().', '3.1');
+	
+	// calling function for BC
+	elgg_set_page_owner_guid($guid);
+	
+	return $page_owner->getPageOwnerGuid();
 }
 
 /**
@@ -63,12 +39,7 @@ function elgg_get_page_owner_guid($guid = 0) {
  * @since 1.8.0
  */
 function elgg_get_page_owner_entity() {
-	$guid = elgg_get_page_owner_guid();
-	if (!$guid) {
-		return false;
-	}
-
-	return get_entity($guid);
+	return _elgg_services()->pageOwner->getPageOwnerEntity();
 }
 
 /**
@@ -79,88 +50,15 @@ function elgg_get_page_owner_entity() {
  * @since 1.8.0
  */
 function elgg_set_page_owner_guid($guid) {
-	elgg_get_page_owner_guid($guid);
-}
-
-/**
- * Sets the page owner based on request
- *
- * Tries to figure out the page owner by looking at the URL or a request
- * parameter. The request parameters used are 'username' and 'owner_guid'.
- * Otherwise, this function attempts to figure out the owner if the url
- * fits the patterns of:
- *   <identifier>/owner/<username>
- *   <identifier>/friends/<username>
- *   <identifier>/view/<entity guid>
- *   <identifier>/add/<container guid>
- *   <identifier>/edit/<entity guid>
- *   <identifier>/group/<group guid>
- *
- * @note Access is disabled while finding the page owner for the group gatekeeper functions.
- *
- *
- * @param string $hook        'page_owner'
- * @param string $entity_type 'system'
- * @param int    $returnvalue Previous function's return value
- * @param array  $params      no parameters
- *
- * @return int GUID
- * @access private
- */
-function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) {
-
-	if ($returnvalue) {
-		return $returnvalue;
+	$page_owner = _elgg_services()->pageOwner;
+	
+	if ((int) $guid >= 0) {
+		$page_owner->setPageOwnerGuid((int) $guid);
+		return;
 	}
-
-	$ia = elgg_set_ignore_access(true);
-
-	$username = get_input("username");
-	if ($user = get_user_by_username($username)) {
-		elgg_set_ignore_access($ia);
-		return $user->getGUID();
-	}
-
-	$owner = get_input("owner_guid");
-	if ($owner) {
-		if ($user = get_entity($owner)) {
-			elgg_set_ignore_access($ia);
-			return $user->getGUID();
-		}
-	}
-
-	// @todo feels hacky
-	$segments = _elgg_services()->request->getUrlSegments();
-	if (isset($segments[1]) && isset($segments[2])) {
-		switch ($segments[1]) {
-			case 'owner':
-			case 'friends':
-				$user = get_user_by_username($segments[2]);
-				if ($user) {
-					elgg_set_ignore_access($ia);
-					return $user->getGUID();
-				}
-				break;
-			case 'view':
-			case 'edit':
-				$entity = get_entity($segments[2]);
-				if ($entity) {
-					elgg_set_ignore_access($ia);
-					return $entity->getContainerGUID();
-				}
-				break;
-			case 'add':
-			case 'group':
-				$entity = get_entity($segments[2]);
-				if ($entity) {
-					elgg_set_ignore_access($ia);
-					return $entity->getGUID();
-				}
-				break;
-		}
-	}
-
-	elgg_set_ignore_access($ia);
+	
+	// removes page owner
+	$page_owner->setPageOwnerGuid(0);
 }
 
 /**
@@ -259,20 +157,3 @@ function elgg_get_context_stack() {
 function elgg_set_context_stack(array $stack) {
 	_elgg_services()->request->getContextStack()->fromArray($stack);
 }
-
-/**
- * Set up default page owner default
- *
- * @return void
- * @access private
- */
-function _elgg_pageowner_init() {
-	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
-}
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_pageowner_init');
-};
