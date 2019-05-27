@@ -1,6 +1,6 @@
 <?php
 
-if (!elgg_is_admin_logged_in()) {
+if (!elgg_is_admin_logged_in() && !elgg_get_config('can_change_username', false)) {
 	// only admins are allowed to change the username
 	return;
 }

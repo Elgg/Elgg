@@ -32,13 +32,4 @@ $result .= elgg_view_field([
 	'options_values' => get_installed_translations(true),
 ]);
 
-$result .= elgg_view_field([
-	'#type' => 'checkbox',
-	'label' => elgg_echo('installation:registration:label'),
-	'#help' => elgg_echo('installation:registration:description'),
-	'name' => 'allow_registration',
-	'checked' => (bool) elgg_get_config('allow_registration'),
-	'switch' => true,
-]);
-
 echo elgg_view_module('info', elgg_echo('admin:settings:basic'), $result);
