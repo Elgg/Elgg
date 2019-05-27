@@ -56,6 +56,11 @@ if ($item->getSelected()) {
 	$item_vars['class'][] = "elgg-state-selected";
 }
 
+$badge = $item->getData('badge');
+if (is_numeric($badge)) {
+	$item->setData('badge', \Elgg\Values::shortFormatOutput($badge, 1));
+}
+
 $item_view = elgg_view_menu_item($item) . $child_menu_view;
 
 echo elgg_format_element('li', $item_vars, $item_view);

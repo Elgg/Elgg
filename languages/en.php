@@ -1081,6 +1081,12 @@ These changes will only affect new users on the site.',
 	'on' => 'On',
 	'off' => 'Off',
 
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
+
 /**
  * Entity actions
  */
