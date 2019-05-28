@@ -21,9 +21,7 @@ $content = elgg_view_form('discussion/save', [], $body_vars);
 $params = [
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('discussion/sidebar/edit'),
-	'filter' => '',
 ];
-$body = elgg_view_layout('content', $params);
+$body = elgg_view_layout('default', $params);
 
 echo elgg_view_page($title, $body);
