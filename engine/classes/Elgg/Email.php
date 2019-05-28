@@ -25,6 +25,16 @@ final class Email {
 	protected $to;
 
 	/**
+	 * @var mixed
+	 */
+	protected $sender;
+
+	/**
+	 * @var mixed
+	 */
+	protected $recipient;
+
+	/**
 	 * @var string
 	 */
 	protected $subject;
@@ -70,7 +80,9 @@ final class Email {
 		$headers = elgg_extract('headers', $options, []);
 
 		$email = new self();
+		$email->setSender($from);
 		$email->setFrom(self::prepareFrom($from));
+		$email->setRecipient($to);
 		$email->setTo(self::prepareTo($to));
 		$email->setSubject($subject);
 		$email->setBody($body);
@@ -84,6 +96,46 @@ final class Email {
 		}
 		
 		return $email;
+	}
+
+	/**
+	 * Sets email sender
+	 *
+	 * @param mixed $sender Original sender of the Email
+	 * @return self
+	 */
+	public function setSender($sender) {
+		$this->sender = $sender;
+		return $this;
+	}
+
+	/**
+	 * Returns sender
+	 *
+	 * @return mixed
+	 */
+	public function getSender() {
+		return $this->sender;
+	}
+
+	/**
+	 * Sets email recipient
+	 *
+	 * @param mixed $recipient Original recipient of the Email
+	 * @return self
+	 */
+	public function setRecipient($recipient) {
+		$this->recipient = $recipient;
+		return $this;
+	}
+
+	/**
+	 * Returns recipient
+	 *
+	 * @return mixed
+	 */
+	public function getRecipient() {
+		return $this->recipient;
 	}
 
 	/**
