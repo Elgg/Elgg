@@ -128,8 +128,8 @@ if (!$blog || $blog->status != 'published') {
 if ($blog) {
 	// add a delete button if editing
 	$footer .= elgg_view('output/url', [
-		'href' => elgg_generate_action_url('blog/delete', [
-			'guid' => $vars['guid'],
+		'href' => elgg_generate_action_url('entity/delete', [
+			'guid' => $blog->guid,
 		]),
 		'text' => elgg_echo('delete'),
 		'class' => 'elgg-button elgg-button-delete float-alt',

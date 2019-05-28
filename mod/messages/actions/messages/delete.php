@@ -3,6 +3,8 @@
  * Delete message
  */
 
+elgg_deprecated_notice("The action 'messages/delete' is deprecated. Use 'entity/delete'.", '3.1');
+
 $guid = (int) get_input('guid');
 $full = (bool) get_input('full', false);
 
