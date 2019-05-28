@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Currently Online',
 	'admin:users:newest' => 'Newest',
 	'admin:users:admins' => 'Administrators',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Add New User',
 	'admin:users:description' => "This admin panel allows you to control user settings for your site. Choose an option below to get started.",
 	'admin:users:adduser:label' => "Click here to add a new user...",
