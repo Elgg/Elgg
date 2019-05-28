@@ -50,6 +50,12 @@ class EmailUnitTest extends UnitTestCase {
 		$site = elgg_get_site_entity();
 		$this->assertEquals(new Address($site->getEmailAddress(), $site->getDisplayName()), $email->getFrom());
 		$this->assertEquals(new Address($to->email, $to->getDisplayName()), $email->getTo());
+		
+		$this->assertInstanceOf(\ElggUser::class, $email->getSender());
+		$this->assertEquals($from->guid, $email->getSender()->guid);
+		
+		$this->assertInstanceOf(\ElggUser::class, $email->getRecipient());
+		$this->assertEquals($to->guid, $email->getRecipient()->guid);
 	}
 
 	public function testFactoryFromEmailString() {
@@ -284,5 +290,23 @@ class EmailUnitTest extends UnitTestCase {
 		
 		$this->assertInternalType('array', $email->getAttachments());
 		$this->assertCount(0, $email->getAttachments());
+	}
+	
+	function testSenderSetAndGet() {
+		
+		$email = new Email();
+		$this->assertNull($email->getSender());
+		
+		$email->setSender('bar');
+		$this->assertEquals('bar', $email->getSender());
+	}
+	
+	function testRecipientSetAndGet() {
+		
+		$email = new Email();
+		$this->assertNull($email->getRecipient());
+		
+		$email->setRecipient('bar');
+		$this->assertEquals('bar', $email->getRecipient());
 	}
 }
