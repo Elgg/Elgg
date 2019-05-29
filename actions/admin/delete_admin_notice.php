@@ -3,6 +3,8 @@
  * Removes an admin notice.
  */
 
+elgg_deprecated_notice("The action 'admin/delete_admin_notice' is deprecated. Use 'entity/delete'.", '3.1');
+
 $guid = (int) get_input('guid');
 $notice = get_entity($guid);
 

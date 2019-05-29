@@ -31,7 +31,7 @@ class AdminNoticesTest extends ActionResponseTestCase {
 
 		$this->assertTrue(elgg_admin_notice_exists('zen'));
 
-		$response = $this->executeAction('admin/delete_admin_notice', [
+		$response = $this->executeAction('entity/delete', [
 			'guid' => $notice->guid,
 		]);
 
@@ -52,17 +52,6 @@ class AdminNoticesTest extends ActionResponseTestCase {
 
 		$this->assertTrue(elgg_delete_admin_notice(''));
 		$this->assertFalse(elgg_admin_notice_exists(''));
-	}
-
-	public function testIgnoresNonAdminNoticesDuringDeleteAction() {
-
-		$object = $this->createObject();
-
-		$response = $this->executeAction('admin/delete_admin_notice', [
-			'guid' => $object->guid,
-		]);
-
-		$this->assertInstanceOf(ErrorResponse::class, $response);
 	}
 
 	public function testDeletesBatchAdminNotices() {

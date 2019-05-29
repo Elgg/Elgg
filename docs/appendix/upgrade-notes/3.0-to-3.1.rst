@@ -36,3 +36,11 @@ Deprecated APIs
 ---------------
 
  * ``elgg_instanceof()`` Use PHP instanceof type operator.
+
+Deprecated actions
+------------------
+
+ * ``admin/delete_admin_notice`` Replaced by generic entity/delete action.
+ * ``blog/delete`` Replaced by generic entity/delete action.
+ * ``messages/delete`` Replaced by generic entity/delete action.
+ * ``site_notifications/delete`` Replaced by generic entity/delete action.
