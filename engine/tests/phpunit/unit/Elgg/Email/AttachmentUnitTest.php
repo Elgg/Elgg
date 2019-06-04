@@ -52,6 +52,7 @@ class AttachmentUnitTest extends UnitTestCase {
 		$this->assertEquals($this->attachment['type'], $attachment->getType());
 		$this->assertEquals($this->attachment['filename'], $attachment->getFileName());
 		$this->assertEquals('attachment', $attachment->getDisposition());
+		$this->assertNotEmpty($attachment->getId());
 	}
 	
 	public function testFactoryFromInvalidArray() {
@@ -79,6 +80,7 @@ class AttachmentUnitTest extends UnitTestCase {
 		$this->assertEquals($this->file->getMimeType(), $attachment->getType());
 		$this->assertEquals($this->file->getFilename(), $attachment->getFileName());
 		$this->assertEquals('attachment', $attachment->getDisposition());
+		$this->assertNotEmpty($attachment->getId());
 	}
 	
 	public function testFromElggFile() {
@@ -92,6 +94,7 @@ class AttachmentUnitTest extends UnitTestCase {
 		$this->assertEquals($this->file->getMimeType(), $attachment->getType());
 		$this->assertEquals($this->file->getFilename(), $attachment->getFileName());
 		$this->assertEquals('attachment', $attachment->getDisposition());
+		$this->assertNotEmpty($attachment->getId());
 	}
 	
 	public function testFromInvalidElggFile() {
@@ -108,5 +111,32 @@ class AttachmentUnitTest extends UnitTestCase {
 		_elgg_services()->logger->enable();
 		
 		$this->assertFalse($attachment);
+	}
+	
+	public function testUniqueID() {
+		
+		$attachment = Attachment::factory($this->attachment);
+		$attachment2 = Attachment::factory($this->attachment);
+		
+		$this->assertNotFalse($attachment);
+		$this->assertNotFalse($attachment2);
+		
+		$this->assertNotEmpty($attachment->getId());
+		$this->assertNotEmpty($attachment2->getId());
+		
+		$this->assertNotEquals($attachment->getId(), $attachment2->getId());
+	}
+	
+	public function testSetID() {
+		
+		$options = $this->attachment;
+		$options['id'] = 'my_custom_id';
+		
+		$attachment = Attachment::factory($options);
+		
+		$this->assertNotFalse($attachment);
+		
+		$this->assertNotEmpty($attachment->getId());
+		$this->assertEquals($options['id'], $attachment->getId());
 	}
 }
