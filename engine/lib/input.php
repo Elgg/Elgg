@@ -340,22 +340,6 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 }
 
 /**
- * Runs unit tests for htmlawed
- *
- * @param string   $hook   "unit_test"
- * @param string   $type   "system"
- * @param string[] $value  Test files
- * @param array    $params Hook params
- *
- * @return array
- * @codeCoverageIgnore
- */
-function _elgg_htmlawed_test($hook, $type, $value, $params) {
-	$value[] = ElggHtmLawedTest::class;
-	return $value;
-}
-
-/**
  * Disable the autocomplete feature on password fields
  *
  * @param string $hook         'view_vars'
@@ -385,8 +369,6 @@ function _elgg_disable_password_autocomplete($hook, $type, $return_value, $param
 function _elgg_input_init() {
 
 	elgg_register_plugin_hook_handler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
-
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_htmlawed_test');
 	
 	elgg_register_plugin_hook_handler('view_vars', 'input/password', '_elgg_disable_password_autocomplete');
 }

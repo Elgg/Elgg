@@ -47,8 +47,6 @@ function thewire_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:thewire', 'Elgg\Values::getTrue');
-
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
 }
 
 /**
@@ -395,21 +393,6 @@ function thewire_owner_block_menu($hook, $type, $return, $params) {
 	]);
 	
 	return $return;
-}
-
-/**
- * Runs unit tests for the wire
- *
- * @param string $hook   'unit_test'
- * @param string $type   'system'
- * @param array  $value  current return value
- * @param array  $params supplied params
- *
- * @return array
- */
-function thewire_test($hook, $type, $value, $params) {
-	$value[] = elgg_get_plugins_path() . 'thewire/tests/regex.php';
-	return $value;
 }
 
 return function() {

@@ -610,27 +610,8 @@ function _elgg_save_notification_user_settings() {
 }
 
 /**
- * Register unit tests
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $tests current return value
- *
- * @return array
- *
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_notifications_test($hook, $type, $tests) {
-	$tests[] = ElggCoreDatabaseQueueTest::class;
-	return $tests;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_notifications_init');
-
-	$hooks->registerHandler('unit_test', 'system', '_elgg_notifications_test');
 };

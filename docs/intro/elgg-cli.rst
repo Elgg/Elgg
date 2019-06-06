@@ -35,9 +35,6 @@ Available commands
     # Install Elgg
     vendor/bin/elgg-cli install [-c|--config CONFIG]
 
-    # Run Simpletest test suite
-    vendor/bin/elgg-cli simpletest [-c|--config CONFIG] [-p|--plugins PLUGINS] [-f|--filter FILTER]
-
     # Seed the database with fake entities
     vendor/bin/elgg-cli database:seed [-l|--limit LIMIT]
 

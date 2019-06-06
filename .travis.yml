@@ -152,7 +152,6 @@ install:
 
 script:
   - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
-  - php ./elgg-cli simpletest -p all -v
   # in this build, we want to make sure the test suites can bootstrap on their own
   # combined test runner is executed in e2e builds
   - ./vendor/bin/phpunit --testsuite unit

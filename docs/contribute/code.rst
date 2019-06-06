@@ -239,13 +239,6 @@ Located in ``engine/tests/phpunit``, this is our preferred test suite. It uses n
 * Consider separating storage from your component so at least business logic can be tested here.
 * Depend on the ``Elgg\Filesystem\*`` classes rather than using PHP filesystem functions.
 
-SimpleTest
-^^^^^^^^^^
-
-The rest of the files in ``engine/tests`` form our integration suite, for anything that needs access to the DB or entity APIs.
-
-* Our long-term goals are to minimize these and convert them to PHPUnit
-
 Testing interactions between services
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

@@ -21,9 +21,7 @@ Elgg Core Test Suite
 --------------------
 
 Currently our tests are split in two pieces:
- * PHPUnit tests are located in ``/tests/phpunit`` -- these are strictly unit tests for now. No integration or end to end tests.
- * SimpleTest tests are located in ``/tests/`` -- These are supported but we strongly encourage writing new tests in PHPUnit and plan to 
-   migrate these to PHPUnit at our earliest convenience.
+ * PHPUnit tests are located in ``/tests/phpunit`` -- these are split between unit tests and integration tests.
 
 Since we have a ``phpunit.xml`` configuration at the root of Elgg, testing should be as easy as:
 

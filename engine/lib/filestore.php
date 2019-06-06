@@ -141,9 +141,6 @@ function _elgg_filestore_init() {
 	// Parse category of file from MIME type
 	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
 
-	// Unit testing
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
-
 	// Touch entity icons if entity access id has changed
 	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
 	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_touch_icons');
@@ -206,22 +203,6 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
 
 	// unrecognized MIME
 	return $simple_type;
-}
-
-/**
- * Unit tests for files
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param mixed  $value Array of tests
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_filestore_test($hook, $type, $value) {
-	$value[] = ElggCoreFilestoreTest::class;
-	return $value;
 }
 
 /**

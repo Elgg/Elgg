@@ -171,23 +171,6 @@ function _elgg_config() {
 }
 
 /**
- * Register unit tests
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $tests current return value
- *
- * @return array
- *
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_config_test($hook, $type, $tests) {
-	$tests[] = ElggCoreConfigTest::class;
-	return $tests;
-}
-
-/**
  * Returns a configuration array of icon sizes
  *
  * @param string $entity_type    Entity type
@@ -198,10 +181,3 @@ function _elgg_config_test($hook, $type, $tests) {
 function elgg_get_icon_sizes($entity_type = null, $entity_subtype = null, $type = 'icon') {
 	return _elgg_services()->iconService->getSizes($entity_type, $entity_subtype, $type);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$hooks->registerHandler('unit_test', 'system', '_elgg_config_test');
-};

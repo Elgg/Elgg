@@ -28,9 +28,6 @@ function notifications_plugin_init() {
 	// update notifications when new friend or access collection membership
 	elgg_register_event_handler('create', 'relationship', 'notifications_update_friend_notify');
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
-
-	// register unit tests
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'notifications_register_tests');
 }
 
 /**
@@ -258,20 +255,6 @@ function notifications_update_collection_notify($event, $type, $returnvalue, $pa
 			}
 		}
 	}
-}
-
-/**
- * Register unit tests
- *
- * @param string   $hook  "unit_test"
- * @param string   $type  "system"
- * @param string[] $tests Tests
- *
- * @return string[]
- */
-function notifications_register_tests($hook, $type, $tests) {
-	$tests[] = __DIR__ . '/tests/ElggNotificationsPluginUnitTest.php';
-	return $tests;
 }
 
 return function() {

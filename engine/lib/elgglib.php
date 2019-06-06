@@ -1571,32 +1571,9 @@ function _elgg_register_actions() {
 }
 
 /**
- * Adds unit tests for the general API.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  array of test files
- * @param array  $params empty
- *
- * @elgg_plugin_hook unit_tests system
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_api_test($hook, $type, $value, $params) {
-	$value[] = ElggTravisInstallTest::class;
-	$value[] = ElggCoreHelpersTest::class;
-	$value[] = ElggCoreRegressionBugsTest::class;
-	$value[] = ElggBatchTest::class;
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
-
-	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 };
