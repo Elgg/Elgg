@@ -29,7 +29,7 @@ class DropSitesEntityTable extends AbstractMigration
 					name = '{$col}'
 				");
 				
-				$this->insert('metadata', [
+				$this->table('metadata')->insert([[
 					'entity_guid' => $row['guid'],
 					'name' => $col,
 					'value' => $row[$col],
@@ -38,11 +38,11 @@ class DropSitesEntityTable extends AbstractMigration
 					'access_id' => 2,
 					'time_created' => time(),
 					'enabled' => 'yes',
-				]);
+				]])->saveData();
 			}
 		}
 
 		// all data migrated, so drop the table
-		$this->dropTable('sites_entity');
+		$this->table('sites_entity')->drop()->save();
 	}
 }

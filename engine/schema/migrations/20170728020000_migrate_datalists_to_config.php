@@ -54,14 +54,14 @@ class MigrateDatalistsToConfig extends AbstractMigration {
 				$value = serialize($row['value']);
 			}
 
-			$this->insert('config', [
+			$this->table('config')->insert([[
 				'name' => $row['name'],
 				'value' => $value,
-			]);
+			]])->saveData();
 		}
 
 		// all data migrated, so drop the table
-		$this->dropTable('datalists');
+		$this->table('datalists')->drop()->save();
 	}
 
 	/**

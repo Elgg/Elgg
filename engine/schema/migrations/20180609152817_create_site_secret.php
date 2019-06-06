@@ -26,10 +26,10 @@ class CreateSiteSecret extends AbstractMigration {
 			$crypto = new ElggCrypto();
 			$hash = 'z' . $crypto->getRandomString(31);
 
-			$this->insert('config', [
+			$this->table('config')->insert([[
 				'name' => $config_key,
 				'value' => serialize($hash),
-			]);
+			]])->saveData();
 		}
 	}
 }

@@ -116,6 +116,6 @@ class DenormalizeEntitySubtypes extends AbstractMigration {
 		
 		$table->save();
 
-		$this->dropTable('entity_subtypes');
+		$this->table('entity_subtypes')->drop()->save();
 	}
 }
