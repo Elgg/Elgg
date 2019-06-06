@@ -14,10 +14,6 @@
  * it is a possible vector for a reflected XSS attack. If you are expecting an
  * integer, cast it to an int. If it is a string, escape quotes.
  *
- * Note: this function does not handle nested arrays (ex: form input of param[m][n])
- * because of the filtering done in htmlawed from the filter_tags call.
- * @todo Is this ^ still true?
- *
  * @param string $variable      The variable name we want.
  * @param mixed  $default       A default value for the variable if it is not found.
  * @param bool   $filter_result If true, then the result is filtered for bad tags.
@@ -255,20 +251,16 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 	if (!is_array($var)) {
 		return Htmlawed::filter($var, $config, $spec);
 	} else {
-		array_walk_recursive($var, '_elgg_htmLawedArray', [$config, $spec]);
+		$callback = function (&$v, $k, $config_spec) {
+			list ($config, $spec) = $config_spec;
+			$v = Htmlawed::filter($v, $config, $spec);
+		};
+		
+		array_walk_recursive($var, $callback, [$config, $spec]);
+		
 		return $var;
 	}
 }
-
-// @codingStandardsIgnoreStart
-/**
- * wrapper function for htmlawed for handling arrays
- */
-function _elgg_htmLawedArray(&$v, $k, $config_spec) {
-	list ($config, $spec) = $config_spec;
-	$v = Htmlawed::filter($v, $config, $spec);
-}
-// @codingStandardsIgnoreEnd
 
 /**
  * Post processor for tags in htmlawed
