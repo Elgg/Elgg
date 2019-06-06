@@ -32,6 +32,12 @@ echo elgg_view('admin/develop_tools/entity_explorer/relationships', ['entity' =>
 // Private Settings Information
 echo elgg_view('admin/develop_tools/entity_explorer/private_settings', ['entity' => $entity]);
 
+// Owned ACLs
+echo elgg_view('admin/develop_tools/entity_explorer/owned_acls', ['entity' => $entity]);
+
+// ACL membership
+echo elgg_view('admin/develop_tools/entity_explorer/acl_memberships', ['entity' => $entity]);
+
 access_show_hidden_entities($show_hidden);
 
 echo elgg_view('output/url', [

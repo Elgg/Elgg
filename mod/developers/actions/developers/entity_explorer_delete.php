@@ -32,6 +32,9 @@ switch ($type) {
 	case 'private_setting':
 		$entity->removePrivateSetting($key);
 		break;
+	case 'acl':
+		delete_access_collection($key);
+		break;
 }
 
 access_show_hidden_entities($show_hidden);
