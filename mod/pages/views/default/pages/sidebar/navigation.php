@@ -5,10 +5,6 @@
  * @uses $vars['page'] Page object if manually setting selected item
  */
 
-// add the jquery treeview files for navigation
-elgg_load_external_file('css', 'jquery.treeview');
-elgg_require_js('pages/sidebar/navigation');
-
 $selected_page = elgg_extract('page', $vars, false);
 
 $title = elgg_echo('pages:navigation');

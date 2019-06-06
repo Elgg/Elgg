@@ -72,6 +72,16 @@ The legacy style hook and event callback arguments are deprecated. You should sw
 		$object = $event->getObject();
 	}
 
+Deprecated CSS libraries
+------------------------
+
+ * ``jquery.treeview`` Do not use this external css file.
+ 
+Deprecated JS libraries
+-----------------------
+
+* ``jquery.treeview`` Do not depend on this external javascript library.
+
 Deprecated APIs
 ---------------
 
