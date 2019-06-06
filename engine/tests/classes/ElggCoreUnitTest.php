@@ -15,6 +15,8 @@ use Elgg\Testing;
  * DO NOT WRITE ANY MORE TESTS EXTENDING THIS CLASS
  * USE PHPUNIT INTEGRATION TESTS INSTEAD
  * SIMPLETEST SUITE WILL PROBABLY GO AWAY AFTER ELGG 3.0
+ *
+ * @deprecated
  */
 abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\Testable {
 

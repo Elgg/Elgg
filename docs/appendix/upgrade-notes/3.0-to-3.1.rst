@@ -32,6 +32,12 @@ Setting page owner
 
 Setting the page owner via the ``elgg_get_page_owner_guid`` function parameter is deprecated. Use ``elgg_set_page_owner_guid``.
 
+Simpletests
+-----------
+
+The core simpletests have been removed from the system. They are all replaced by PHP unit tests or integration tests.
+The simpletest cli command has been deprecated.
+
 Deprecated APIs
 ---------------
 

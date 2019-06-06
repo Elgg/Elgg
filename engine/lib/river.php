@@ -305,21 +305,6 @@ function elgg_list_river(array $options = []) {
 }
 
 /**
- * Register river unit tests
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $value current return value
- *
- * @return array
- * @codeCoverageIgnore
- */
-function _elgg_river_test($hook, $type, $value) {
-	$value[] = ElggCoreRiverAPITest::class;
-	return $value;
-}
-
-/**
  * Updates the last action of the object of an river item
  *
  * @param string         $event 'create'
@@ -454,8 +439,6 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
  * @access private
  */
 function _elgg_river_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
-
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
 	
 	elgg_register_event_handler('created', 'river', '_elgg_river_update_object_last_action');

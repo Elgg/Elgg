@@ -446,26 +446,8 @@ function _elgg_comments_social_menu_setup(\Elgg\Hook $hook) {
 }
 
 /**
- * Runs unit tests for \ElggComment
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_comments_test($hook, $type, $value, $params) {
-	$value[] = ElggCoreCommentTest::class;
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_comments_init');
-	$hooks->registerHandler('unit_test', 'system', '_elgg_comments_test');
 };

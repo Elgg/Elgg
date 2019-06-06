@@ -533,24 +533,6 @@ function access_friends_acl_get_name(\Elgg\Hook $hook) {
 }
 
 /**
- * Runs unit tests for the access library
- *
- * @param string $hook   'unit_test'
- * @param string $type   'system'
- * @param array  $value  current return value
- * @param array  $params supplied params
- *
- * @return array
- *
- * @access private
- * @codeCoverageIgnore
- */
-function access_test($hook, $type, $value, $params) {
-	$value[] = ElggCoreAccessCollectionsTest::class;
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
@@ -563,6 +545,4 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	$events->registerHandler('create', 'relationship', 'access_friends_acl_add_friend');
 	$events->registerHandler('delete', 'relationship', 'access_friends_acl_remove_friend');
 	$hooks->registerHandler('access_collection:name', 'access_collection', 'access_friends_acl_get_name');
-
-	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };

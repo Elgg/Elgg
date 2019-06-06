@@ -265,8 +265,6 @@ function _elgg_plugins_init() {
 		elgg_register_ajax_view('object/plugin/full');
 		elgg_register_ajax_view('object/plugin/details');
 	}
-
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_plugins_test');
 }
 
 /**
