@@ -20,8 +20,8 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 
 		$ia = elgg_set_ignore_access($access_before);
 		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities($disabled_before);
-
+		elgg()->session->setDisabledEntityVisibility($disabled_before);
+		
 		$flags = null;
 		if ($ignore_access === true) {
 			$flags |= ELGG_IGNORE_ACCESS;
@@ -60,7 +60,7 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($disabled_before, access_get_show_hidden_status());
 
 		elgg_set_ignore_access($ia);
-		access_show_hidden_entities($ha);
+		elgg()->session->setDisabledEntityVisibility($ha);
 	}
 
 	public function flagsDataProvider() {

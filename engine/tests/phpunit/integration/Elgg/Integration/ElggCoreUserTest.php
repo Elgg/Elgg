@@ -227,18 +227,15 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 		_elgg_services()->entityTable->disableEntities($user);
 
-		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-
-		$objects = elgg_get_entities([
-			'owner_guid' => $user->guid,
-		]);
-
+		$objects = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
+			return elgg_get_entities([
+				'owner_guid' => $user->guid,
+			]);
+		});
+		
 		foreach ($objects as $object) {
 			$this->assertFalse($object->isEnabled());
 		}
-
-		access_show_hidden_entities($ha);
 	}
 
 	protected function fetchUser($guid) {

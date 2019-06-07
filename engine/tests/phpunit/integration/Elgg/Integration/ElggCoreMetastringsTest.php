@@ -31,11 +31,13 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 	public function down() {
 		$this->object->delete();
 
-		access_show_hidden_entities(true);
-		elgg_delete_annotations([
-			'guid' => $this->object->guid,
-		]);
-		access_show_hidden_entities(false);
+		$guid = $this->object->guid;
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
+			elgg_delete_annotations([
+				'guid' => $guid,
+			]);
+		});
+		
 		_elgg_services()->session->removeLoggedInUser();
 	}
 
@@ -123,11 +125,12 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
 		$this->assertFalse($test);
 
-		$prev = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, 'annotation'));
-		access_show_hidden_entities($prev);
-
+		$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id) {
+			return _elgg_delete_metastring_based_object_by_id($id, 'annotation');
+		});
+		
+		$this->assertTrue($result);
+		
 		elgg_set_ignore_access($ia);
 	}
 
@@ -144,10 +147,10 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		]);
 		$this->assertEquals([], $test);
 
-		$prev = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, 'annotation'));
-		access_show_hidden_entities($prev);
+		$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id) {
+			return _elgg_delete_metastring_based_object_by_id($id, 'annotation');
+		});
+		$this->assertTrue($result);
 	}
 
 	public function testEnableDisableByID() {
@@ -169,14 +172,14 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		$this->assertEquals('no', $test[0]->enabled);
 
 		// enable
-		$ashe = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
+		$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id, $type) {
+			return _elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type);
+		});
+		$this->assertTrue($result);
 
 		$test = get_data($q);
 		$this->assertEquals('yes', $test[0]->enabled);
 
-		access_show_hidden_entities($ashe);
 		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
 	}
 

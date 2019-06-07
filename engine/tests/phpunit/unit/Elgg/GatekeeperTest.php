@@ -278,10 +278,9 @@ class GatekeeperTest extends UnitTestCase {
 			'enabled' => 'no',
 		]);
 
-		access_show_hidden_entities(true);
-		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
-		access_show_hidden_entities(false);
-
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($object) {
+			$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
+		});
 	}
 
 	public function testEntityGatekeeperAllowsAccessToPublicGroupContent() {

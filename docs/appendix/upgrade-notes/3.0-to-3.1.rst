@@ -41,6 +41,7 @@ The simpletest cli command has been deprecated.
 Deprecated APIs
 ---------------
 
+ * ``access_show_hidden_entities()`` Use ``elgg_call()`` with ``ELGG_SHOW_DISABLED_ENTITIES`` flag.
  * ``autoregister_views()``
  * ``count_messages()`` Use ``elgg()->system_messages->count()``.
  * ``disable_user_entities()``

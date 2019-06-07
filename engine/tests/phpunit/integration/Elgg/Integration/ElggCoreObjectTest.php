@@ -181,10 +181,10 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		$r = get_data_row($q);
 		$this->assertEqual('no', $r->enabled);
 
-		access_show_hidden_entities(true);
-		$e1->delete();
-		$e2->delete();
-		access_show_hidden_entities(false);
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($e1, $e2) {
+			$e1->delete();
+			$e2->delete();
+		});
 	}
 
 	public function testElggRecursiveDelete() {

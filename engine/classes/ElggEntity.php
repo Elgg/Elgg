@@ -766,8 +766,6 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Enables annotations for this entity, optionally based on name.
 	 *
-	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
-	 *
 	 * @param string $name An options name of annotations to enable.
 	 * @return bool
 	 * @since 1.8
@@ -1604,8 +1602,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Recursively disabling an entity will disable all entities
 	 * owned or contained by the parent entity.
 	 *
-	 * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
-	 *
 	 * @note Internal: Disabling an entity sets the 'enabled' column to 'no'.
 	 *
 	 * @param string $reason    Optional reason
@@ -1704,9 +1700,6 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Enable the entity
-	 *
-	 * @warning Disabled entities can't be loaded unless
-	 * {@link access_show_hidden_entities(true)} has been called.
 	 *
 	 * @param bool $recursive Recursively enable all entities disabled with the entity?
 	 * @see access_show_hiden_entities()

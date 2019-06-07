@@ -32,9 +32,6 @@ global $ENTITY_SHOW_HIDDEN_OVERRIDE;
  * @tip Use this to access entities in automated scripts
  * when no user is logged in.
  *
- * @warning This will not show disabled entities.
- * Use {@link access_show_hidden_entities()} to access disabled entities.
- *
  * @note Internal: The access override is checked in elgg_override_permissions(). It is
  * registered for the 'permissions_check' hooks to override the access system for
  * the canEdit() and canWriteToContainer() methods.
@@ -126,16 +123,6 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
 		'input_params' => $input_params,
 	];
 	return _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
-}
-
-/**
- * Show or hide disabled entities.
- *
- * @param bool $show_hidden Show disabled entities.
- * @return bool
- */
-function access_show_hidden_entities($show_hidden) {
-	elgg()->session->setDisabledEntityVisibility($show_hidden);
 }
 
 /**

@@ -332,16 +332,13 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		}
 
 		//disable them
-		$show_hidden = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$options = [
-			'guid' => $group->guid,
-			'limit' => $total,
-			//using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
-		];
-		elgg_disable_annotations($options);
-		access_show_hidden_entities($show_hidden);
-
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($group, $total) {
+			elgg_disable_annotations([
+				'guid' => $group->guid,
+				'limit' => $total, //using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
+			]);
+		});
+		
 		//confirm all being disabled
 		$annotations = $group->getAnnotations([
 			'limit' => $total,

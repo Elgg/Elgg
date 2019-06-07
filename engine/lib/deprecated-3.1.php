@@ -492,3 +492,17 @@ function autoregister_views($view_base, $folder, $ignored, $viewtype) {
 	
 	return _elgg_services()->views->autoregisterViews($view_base, $folder, $viewtype);
 }
+
+/**
+ * Show or hide disabled entities.
+ *
+ * @param bool $show_hidden Show disabled entities.
+ * @return bool
+ *
+ * @deprecated 3.1 Use elgg_call() with ELGG_SHOW_DISABLED_ENTITIES flag
+ */
+function access_show_hidden_entities($show_hidden) {
+	elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use elgg_call() with ELGG_SHOW_DISABLED_ENTITIES flag.', '3.1');
+	
+	elgg()->session->setDisabledEntityVisibility($show_hidden);
+}

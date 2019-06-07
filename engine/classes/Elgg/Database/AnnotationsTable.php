@@ -364,9 +364,6 @@ class AnnotationsTable {
 	 *
 	 * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
 	 *
-	 * @warning In order to enable annotations, you must first use
-	 * {@link access_show_hidden_entities()}.
-	 *
 	 * @param array $options An options array. {@link elgg_get_annotations()}
 	 * @return bool|null true on success, false on failure, null if no metadata enabled.
 	 */

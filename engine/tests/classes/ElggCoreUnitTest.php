@@ -35,8 +35,8 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 		_elgg_services()->session->setIgnoreAccess(false);
-		access_show_hidden_entities(false);
-
+		_elgg_services()->session->setDisabledEntityVisibility(false);
+		
 		$this->up();
 	}
 
