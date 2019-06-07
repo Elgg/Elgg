@@ -39,8 +39,7 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 			$show_disabled = $ha;
 		}
 
-		$calls = 0;
-		$function = function() use ($ignore_access, $show_disabled, &$calls) {
+		$exception_function = function() use ($ignore_access, $show_disabled) {
 			$this->assertEquals($ignore_access, elgg_get_ignore_access());
 			$this->assertEquals($show_disabled, access_get_show_hidden_status());
 
@@ -49,12 +48,28 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 
 		$exception_thrown = false;
 		try {
-			elgg_call($flags, $function);
+			elgg_call($flags, $exception_function);
 		} catch (\RuntimeException $ex) {
 			$exception_thrown = true;
 		}
 
 		$this->assertTrue($exception_thrown);
+
+		$error_function = function() use ($ignore_access, $show_disabled) {
+			$this->assertEquals($ignore_access, elgg_get_ignore_access());
+			$this->assertEquals($show_disabled, access_get_show_hidden_status());
+
+			throw new ParseError();
+		};
+
+		$error_thrown = false;
+		try {
+			elgg_call($flags, $error_function);
+		} catch (\ParseError $err) {
+			$error_thrown = true;
+		}
+
+		$this->assertTrue($error_thrown);
 
 		$this->assertEquals($access_before, elgg_get_ignore_access());
 		$this->assertEquals($disabled_before, access_get_show_hidden_status());
