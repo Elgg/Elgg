@@ -4,6 +4,17 @@ use Elgg\Database\Entities;
 use Elgg\Database\Clauses\OrderByClause;
 
 /**
+ * Allow disabled entities and metadata to be returned by getter functions
+ *
+ * @todo when removing this global, make sure it is no longer used in ElggSession
+ *
+ * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
+ * @access private
+ * @deprecated 3.0
+ */
+global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+
+/**
  * Removes a config setting.
  *
  * @param string $name The name of the field.

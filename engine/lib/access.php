@@ -11,15 +11,6 @@
  */
 
 /**
- * Allow disabled entities and metadata to be returned by getter functions
- *
- * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
- * @access private
- * @deprecated 3.0
- */
-global $ENTITY_SHOW_HIDDEN_OVERRIDE;
-
-/**
  * Set if Elgg's access system should be ignored.
  *
  * The access system will not return entities in any getter functions if the
