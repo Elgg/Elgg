@@ -95,11 +95,11 @@ class SeedingTest extends IntegrationTestCase {
 		$this->assertEquals('de', $user->getLanguage());
 		$this->assertEquals('de', get_entity($user->guid)->getLanguage());
 
-		$ia = elgg_set_ignore_access(true);
-		$user->language = 'af';
-		$this->assertTrue($user->save());
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+			$user->language = 'af';
+			$this->assertTrue($user->save());
+		});
+		
 		$this->assertEquals('af', $user->language);
 		$this->assertEquals('af', $user->getLanguage());
 		$this->assertEquals('af', get_entity($user->guid)->getLanguage());

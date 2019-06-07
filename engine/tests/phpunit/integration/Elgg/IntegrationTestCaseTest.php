@@ -24,9 +24,9 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	}
 
 	public function down() {
-		$ia = elgg_set_ignore_access();
-		$this->entity->delete();
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$this->entity->delete();
+		});
 	}
 
 	public function testCanLoadEntityFromTestingApplicationDatabase() {

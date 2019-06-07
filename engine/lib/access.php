@@ -11,42 +11,10 @@
  */
 
 /**
- * Set if Elgg's access system should be ignored.
- *
- * The access system will not return entities in any getter functions if the
- * user doesn't have access. This removes this restriction.
- *
- * When the access system is being ignored, all checks for create, retrieve,
- * update, and delete should pass. This affects all the canEdit() and related
- * methods.
- *
- * @tip Use this to access entities in automated scripts
- * when no user is logged in.
- *
- * @note Internal: The access override is checked in elgg_override_permissions(). It is
- * registered for the 'permissions_check' hooks to override the access system for
- * the canEdit() and canWriteToContainer() methods.
- *
- * @note Internal: This clears the access cache.
- *
- * @note Internal: For performance reasons this is done at the database access clause level.
- *
- * @param bool $ignore If true, disables all access checks.
- *
- * @return bool Previous ignore_access setting.
- * @since 1.7.0
- * @see elgg_get_ignore_access()
- */
-function elgg_set_ignore_access($ignore = true) {
-	return elgg()->session->setIgnoreAccess($ignore);
-}
-
-/**
  * Get current ignore access setting.
  *
  * @return bool
  * @since 1.7.0
- * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
 	return elgg()->session->getIgnoreAccess();
@@ -184,7 +152,7 @@ function get_write_access_array($user_guid = 0, $ignored = 0, $flush = false, ar
  * Use the plugin hook of 'access:collections:write', 'user' to change this.
  * @see get_write_access_array() for details on the hook.
  *
- * Respects access control disabling for admin users and {@link elgg_set_ignore_access()}
+ * Respects access control disabling for admin users and {@link elgg_call()}
  *
  * @see get_write_access_array()
  *

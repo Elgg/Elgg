@@ -163,13 +163,12 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$language = 'ab';
 
-		$ia = elgg_set_ignore_access(true);
-		$user = $this->createUser([], [
-			'language' => $language,
-		]);
-
-		elgg_set_ignore_access($ia);
-
+		$user = elgg_call(ELGG_IGNORE_ACCESS, function() use ($language) {
+			return $this->createUser([], [
+				'language' => $language,
+			]);
+		});
+		
 		$this->assertEquals('en', $this->translator->getCurrentLanguage());
 
 		_elgg_services()->session->setLoggedInUser($user);

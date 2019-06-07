@@ -49,6 +49,7 @@ Deprecated APIs
  * ``elgg_get_file_list()`` Use a PHP directory iterator.
  * ``elgg_instanceof()`` Use PHP instanceof type operator.
  * ``elgg_is_admin_user()`` Use ``ElggUser::isAdmin()``.
+ * ``elgg_set_ignore_access()`` Use ``elgg_call()`` with ``ELGG_IGNORE_ACCESS`` flag.
  * ``elgg_sort_3d_array_by_value()``
  * ``get_access_list()`` Use ``get_access_array()``.
  * ``get_language()`` Use ``get_current_language()``.

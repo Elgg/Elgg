@@ -448,17 +448,14 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
  * @return bool
  */
 function groups_create_event_listener($event, $type, $object) {
-
 	// ensure that user has sufficient permissions to update group metadata
 	// prior to joining the group
-	$ia = elgg_set_ignore_access(true);
-
-	$ac_name = elgg_echo('groups:group') . ": " . $object->getDisplayName();
-	$ac_id = create_access_collection($ac_name, $object->guid, 'group_acl');
-	
-	elgg_set_ignore_access($ia);
-
-	return (bool) $ac_id; // delete the group if acl creation fails
+	return elgg_call(ELGG_IGNORE_ACCESS, function() use ($object) {
+		$ac_name = elgg_echo('groups:group') . ": " . $object->getDisplayName();
+		
+		// delete the group if acl creation fails
+		return (bool) create_access_collection($ac_name, $object->guid, 'group_acl');
+	});
 }
 
 /**
@@ -704,20 +701,18 @@ function groups_access_default_override($hook, $type, $access) {
  */
 function groups_get_invited_groups($user_guid, $return_guids = false, $options = []) {
 
-	$ia = elgg_set_ignore_access(true);
-
-	$defaults = [
-		'relationship' => 'invited',
-		'relationship_guid' => (int) $user_guid,
-		'inverse_relationship' => true,
-		'limit' => 0,
-	];
-
-	$options = array_merge($defaults, $options);
-	$groups = elgg_get_entities($options);
-
-	elgg_set_ignore_access($ia);
-
+	$groups = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user_guid, $options) {
+		$defaults = [
+			'relationship' => 'invited',
+			'relationship_guid' => (int) $user_guid,
+			'inverse_relationship' => true,
+			'limit' => 0,
+		];
+	
+		$options = array_merge($defaults, $options);
+		return elgg_get_entities($options);
+	});
+	
 	if ($return_guids) {
 		$guids = [];
 		foreach ($groups as $group) {

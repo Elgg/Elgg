@@ -277,39 +277,39 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 		}
 
 		// need to be able to access everything
-		$old_ia = elgg_set_ignore_access(true);
 		elgg_push_context('create_default_widgets');
 
-		// pull in by widget context with widget owners as the site
-		// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
-		$widgets = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'widget',
-			'owner_guid' => elgg_get_site_entity()->guid,
-			'private_setting_name' => 'context',
-			'private_setting_value' => elgg_extract('widget_context', $info),
-			'limit' => 0,
-			'batch' => true,
-		]);
-		/* @var \ElggWidget[] $widgets */
-
-		foreach ($widgets as $widget) {
-			// change the container and owner
-			$new_widget = clone $widget;
-			$new_widget->container_guid = $entity->guid;
-			$new_widget->owner_guid = $entity->guid;
-
-			// pull in settings
-			$settings = $widget->getAllPrivateSettings();
-
-			foreach ($settings as $name => $value) {
-				$new_widget->$name = $value;
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($entity, $info) {
+			// pull in by widget context with widget owners as the site
+			// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
+			$widgets = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => 'widget',
+				'owner_guid' => elgg_get_site_entity()->guid,
+				'private_setting_name' => 'context',
+				'private_setting_value' => elgg_extract('widget_context', $info),
+				'limit' => 0,
+				'batch' => true,
+			]);
+			/* @var \ElggWidget[] $widgets */
+	
+			foreach ($widgets as $widget) {
+				// change the container and owner
+				$new_widget = clone $widget;
+				$new_widget->container_guid = $entity->guid;
+				$new_widget->owner_guid = $entity->guid;
+	
+				// pull in settings
+				$settings = $widget->getAllPrivateSettings();
+	
+				foreach ($settings as $name => $value) {
+					$new_widget->$name = $value;
+				}
+	
+				$new_widget->save();
 			}
-
-			$new_widget->save();
-		}
-
-		elgg_set_ignore_access($old_ia);
+		});
+		
 		elgg_pop_context();
 	}
 }

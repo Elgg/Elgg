@@ -114,24 +114,22 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 
 		$this->assertTrue((bool) $id);
 
-		$ia = elgg_set_ignore_access(true);
-
-		$annotation = elgg_get_annotation_from_id($id);
-
-		$this->assertInstanceOf(ElggAnnotation::class, $annotation);
-
-		$this->assertTrue($annotation->disable());
-
-		$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
-		$this->assertFalse($test);
-
-		$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id) {
-			return _elgg_delete_metastring_based_object_by_id($id, 'annotation');
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($id) {
+			$annotation = elgg_get_annotation_from_id($id);
+	
+			$this->assertInstanceOf(ElggAnnotation::class, $annotation);
+	
+			$this->assertTrue($annotation->disable());
+	
+			$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
+			$this->assertFalse($test);
+	
+			$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id) {
+				return _elgg_delete_metastring_based_object_by_id($id, 'annotation');
+			});
+			
+			$this->assertTrue($result);
 		});
-		
-		$this->assertTrue($result);
-		
-		elgg_set_ignore_access($ia);
 	}
 
 	public function testGetMetastringBasedObjectWithDisabledAnnotation() {

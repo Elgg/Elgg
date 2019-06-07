@@ -18,7 +18,7 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 	 */
 	public function testCanCallWithFlags($access_before, $disabled_before, $ignore_access, $show_disabled) {
 
-		$ia = elgg_set_ignore_access($access_before);
+		$ia = elgg()->session->setIgnoreAccess($access_before);
 		$ha = access_get_show_hidden_status();
 		elgg()->session->setDisabledEntityVisibility($disabled_before);
 		
@@ -74,7 +74,7 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($access_before, elgg_get_ignore_access());
 		$this->assertEquals($disabled_before, access_get_show_hidden_status());
 
-		elgg_set_ignore_access($ia);
+		elgg()->session->setIgnoreAccess($ia);
 		elgg()->session->setDisabledEntityVisibility($ha);
 	}
 

@@ -365,10 +365,10 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 
 		$this->assertSame($river[0]->enabled, 'yes');
 
-		$ia = elgg_set_ignore_access(true);
-		$this->assertTrue($user->disable());
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+			$this->assertTrue($user->disable());
+		});
+		
 		// should no longer be able to get the river
 		$river = elgg_get_river(['ids' => [$id]]);
 
