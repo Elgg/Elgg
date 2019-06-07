@@ -237,23 +237,6 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
 }
 
 /**
- * Runs unit tests for plugin API.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_plugins_test($hook, $type, $value, $params) {
-	$value[] = ElggCorePluginsAPITest::class;
-	return $value;
-}
-
-/**
  * Initialize the plugin system
  *
  * @return void

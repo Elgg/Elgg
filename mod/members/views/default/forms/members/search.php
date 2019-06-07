@@ -13,6 +13,6 @@ $footer = elgg_view_field([
 
 $footer .= elgg_format_element('p', [
 	'class' => 'elgg-text-help',
-], elgg_echo('members:total', [get_number_users()]));
+], elgg_echo('members:total', [elgg_count_entities(['type' => 'user'])]));
 
 elgg_set_form_footer($footer);

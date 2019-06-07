@@ -225,7 +225,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 			'container_guid' => $user->guid,
 		]);
 
-		disable_user_entities($user->guid);
+		_elgg_services()->entityTable->disableEntities($user);
 
 		$ha = access_get_show_hidden_status();
 		access_show_hidden_entities(true);

@@ -59,28 +59,6 @@ function elgg_is_admin_logged_in() {
 }
 
 /**
- * Check if the given user has full access.
- *
- * @todo: Will always return full access if the user is an admin.
- *
- * @param int $user_guid The user to check
- *
- * @return bool
- * @since 1.7.1
- */
-function elgg_is_admin_user($user_guid) {
-	
-	$user_guid = (int) $user_guid;
-
-	$entity = get_user($user_guid);
-	if (!$entity) {
-		return false;
-	}
-	
-	return $entity->isAdmin();
-}
-
-/**
  * Perform user authentication with a given username and password.
  *
  * @warning This returns an error message on failure. Use the identical operator to check

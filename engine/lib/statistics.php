@@ -50,36 +50,6 @@ function get_entity_statistics($owner_guid = 0) {
 }
 
 /**
- * Return the number of users registered in the system.
- *
- * @param bool $show_deactivated Count not enabled users?
- *
- * @return int
- */
-function get_number_users($show_deactivated = false) {
-
-	$where = new \Elgg\Database\Clauses\EntityWhereClause();
-	$where->type_subtype_pairs = [
-		'user' => null,
-	];
-
-	if ($show_deactivated) {
-		$where->use_enabled_clause = false;
-	}
-
-	$select = \Elgg\Database\Select::fromTable('entities', 'e');
-	$select->select('COUNT(DISTINCT e.guid) AS count');
-	$select->addClause($where, 'e');
-
-	$result = _elgg_services()->db->getDataRow($select);
-	if (!empty($result)) {
-		return (int) $result->count;
-	}
-
-	return 0;
-}
-
-/**
  * Render a list of currently online users
  *
  * @tip This also support options from elgg_list_entities().

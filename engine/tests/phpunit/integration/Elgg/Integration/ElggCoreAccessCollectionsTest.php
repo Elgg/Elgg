@@ -186,24 +186,18 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 		$id = create_access_collection('custom', $user->guid);
 
-		foreach ([
-					 'get_access_list',
-					 'get_access_array'
-				 ] as $func) {
+		_elgg_services()->accessCache->clear();
 
-			_elgg_services()->accessCache->clear();
+		$expected = [
+			ACCESS_PUBLIC,
+			ACCESS_LOGGED_IN,
+			ACCESS_PRIVATE,
+			$id,
+		];
 
-			$expected = [
-				ACCESS_PUBLIC,
-				ACCESS_LOGGED_IN,
-				ACCESS_PRIVATE,
-				$id,
-			];
-
-			$actual = $func($user->getGUID());
-			$this->assertNotEqual($expected, $actual);
-		}
-
+		$actual = get_access_array($user->getGUID());
+		$this->assertNotEqual($expected, $actual);
+		
 		_elgg_services()->session->setLoggedInUser($backup_user);
 
 		$user->delete();

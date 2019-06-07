@@ -48,7 +48,6 @@
 
 use Elgg\Menu\MenuItems;
 use Elgg\Menu\PreparedMenu;
-use Elgg\Menu\UnpreparedMenu;
 
 /**
  * Register an item for an Elgg menu

@@ -9,7 +9,6 @@
  */
 
 use Elgg\Database\SiteSecret;
-use Elgg\Http\ResponseBuilder;
 
 /**
  * Registers an action.

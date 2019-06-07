@@ -49,15 +49,6 @@ function get_current_language() {
 }
 
 /**
- * Detect the current system/user language or false.
- *
- * @return string The language code (eg "en") or false if not set
- */
-function get_language() {
-	return elgg()->translator->getCurrentLanguage();
-}
-
-/**
  * Return an array of installed translations as an associative
  * array "two letter code" => "native language name".
  *

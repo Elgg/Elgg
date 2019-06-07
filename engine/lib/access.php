@@ -65,25 +65,6 @@ function elgg_get_ignore_access() {
 }
 
 /**
- * Return a string of access_ids for $user_guid appropriate for inserting into an SQL IN clause.
- *
- * @uses get_access_array
- *
- * @see get_access_array()
- *
- * @param int  $user_guid User ID; defaults to currently logged in user
- * @param int  $ignored   Ignored parameter
- * @param bool $flush     If set to true, will refresh the access list from the
- *                        database rather than using this function's cache.
- *
- * @return string A list of access collections suitable for using in an SQL call
- * @access private
- */
-function get_access_list($user_guid = 0, $ignored = 0, $flush = false) {
-	return _elgg_services()->accessCollections->getAccessList($user_guid, $flush);
-}
-
-/**
  * Returns an array of access IDs a user is permitted to see.
  *
  * Can be overridden with the 'access:collections:read', 'user' plugin hook.
@@ -253,31 +234,10 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
  * @param string $subtype    The subtype indicates the usage of the acl
  *
  * @return int|false The collection ID if successful and false on failure.
- * @see update_access_collection()
  * @see delete_access_collection()
  */
 function create_access_collection($name, $owner_guid = 0, $subtype = null) {
 	return _elgg_services()->accessCollections->create($name, $owner_guid, $subtype);
-}
-
-/**
- * Updates the membership in an access collection.
- *
- * @warning Expects a full list of all members that should
- * be part of the access collection
- *
- * @note This will run all hooks associated with adding or removing
- * members to access collections.
- *
- * @param int   $collection_id The ID of the collection.
- * @param array $members       Array of member GUIDs
- *
- * @return bool
- * @see add_user_to_access_collection()
- * @see remove_user_from_access_collection()
- */
-function update_access_collection($collection_id, $members) {
-	return _elgg_services()->accessCollections->update($collection_id, $members);
 }
 
 /**
@@ -287,7 +247,6 @@ function update_access_collection($collection_id, $members) {
  *
  * @return bool
  * @see create_access_collection()
- * @see update_access_collection()
  */
 function delete_access_collection($collection_id) {
 	return _elgg_services()->accessCollections->delete($collection_id);
@@ -318,7 +277,6 @@ function get_access_collection($collection_id) {
  * @param int $collection_id The ID of the collection to add them to
  *
  * @return bool
- * @see update_access_collection()
  * @see remove_user_from_access_collection()
  */
 function add_user_to_access_collection($user_guid, $collection_id) {
@@ -334,7 +292,6 @@ function add_user_to_access_collection($user_guid, $collection_id) {
  * @param int $collection_id The access collection ID
  *
  * @return bool
- * @see update_access_collection()
  * @see remove_user_from_access_collection()
  */
 function remove_user_from_access_collection($user_guid, $collection_id) {
