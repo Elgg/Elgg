@@ -114,3 +114,34 @@ Read access
 The access system of Elgg automaticly adds all the ACLs a user is a member of to the access checks. For example a 
 user is a member of a group and is friends with 3 other users, all the corresponding ACLs are added in order to check 
 access to entities when retrieving them (eg. listing all blogs).
+
+Ignoring access
+===============
+
+If for some case you need entities retrieved ignoring the access rules you can wrap your code in ``elgg_call``.
+There are different flags you can use. 
+
+ * ELGG_IGNORE_ACCESS: no access rules are applied 
+ * ELGG_ENFORCE_ACCESS: access rules are forced to be applied
+ * ELGG_SHOW_DISABLED_ENTITIES: will retrieve entities that are disabled
+ * ELGG_HIDE_DISABLED_ENTITIES: will never retrieve entities that are disabled
+ 
+.. code-block:: php
+
+	$options = [
+		'type' => 'user'
+	];
+
+	$entities = elgg_call(ELGG_IGNORE_ACCESS, function() use ($options) {
+		return elgg_get_entities($options);
+	});
+	
+You can also combine flags.
+
+.. code-block:: php
+
+	$entities = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+		return elgg_get_entities([
+			'type' => 'user'
+		]);
+	});
