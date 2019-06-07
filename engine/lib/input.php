@@ -48,6 +48,8 @@ function set_input($variable, $value) {
  * @param bool $filter_result Sanitize input values
  *
  * @return array
+ *
+ * @since 3.0
  */
 function elgg_get_request_data($filter_result = true) {
 	return _elgg_services()->request->getParams($filter_result);

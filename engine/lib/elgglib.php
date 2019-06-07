@@ -75,7 +75,7 @@ function elgg_set_http_header($header, $replace = true) {
  * Instead, simply call elgg_require_js("module/name").
  *
  * @note The configuration is cached in simplecache, so logic should not depend on user-
- *       specific values like get_language().
+ *       specific values like get_current_language().
  *
  * @param string $name   The module name
  * @param array  $config An array like the following:
@@ -230,52 +230,6 @@ function elgg_load_external_file($type, $name) {
  */
 function elgg_get_loaded_external_files($type, $location) {
 	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
-}
-
-/**
- * Returns a list of files in $directory.
- *
- * Only returns files.  Does not recurse into subdirs.
- *
- * @param string $directory  Directory to look in
- * @param array  $exceptions Array of filenames to ignore
- * @param array  $list       Array of files to append to
- * @param mixed  $extensions Array of extensions to allow, null for all. Use a dot: array('.php').
- *
- * @return array Filenames in $directory, in the form $directory/filename.
- */
-function elgg_get_file_list($directory, $exceptions = [], $list = [], $extensions = null) {
-
-	$directory = \Elgg\Project\Paths::sanitize($directory);
-	if ($handle = opendir($directory)) {
-		while (($file = readdir($handle)) !== false) {
-			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
-				continue;
-			}
-
-			if (is_array($extensions)) {
-				if (in_array(strrchr($file, '.'), $extensions)) {
-					$list[] = $directory . $file;
-				}
-			} else {
-				$list[] = $directory . $file;
-			}
-		}
-		closedir($handle);
-	}
-
-	return $list;
-}
-
-/**
- * Counts the number of messages, either globally or in a particular register
- *
- * @param string $register Optionally, the register
- *
- * @return integer The number of messages
- */
-function count_messages($register = "") {
-	return elgg()->system_messages->count($register);
 }
 
 /**
@@ -1110,58 +1064,6 @@ function elgg_call(int $flags, Closure $closure) {
 }
 
 /**
- * Sorts a 3d array by specific element.
- *
- * @warning Will re-index numeric indexes.
- *
- * @note This operates the same as the built-in sort functions.
- * It sorts the array and returns a bool for success.
- *
- * Do this: elgg_sort_3d_array_by_value($my_array);
- * Not this: $my_array = elgg_sort_3d_array_by_value($my_array);
- *
- * @param array  $array      Array to sort
- * @param string $element    Element to sort by
- * @param int    $sort_order PHP sort order {@link http://us2.php.net/array_multisort}
- * @param int    $sort_type  PHP sort type {@link http://us2.php.net/sort}
- *
- * @return bool
- */
-function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, $sort_type = SORT_LOCALE_STRING) {
-
-	$sort = [];
-
-	foreach ($array as $v) {
-		if (isset($v[$element])) {
-			$sort[] = strtolower($v[$element]);
-		} else {
-			$sort[] = null;
-		}
-	};
-
-	return array_multisort($sort, $sort_order, $sort_type, $array);
-}
-
-/**
- * Return the state of a php.ini setting as a bool
- *
- * @warning Using this on ini settings that are not boolean
- * will be inaccurate!
- *
- * @param string $ini_get_arg The INI setting
- *
- * @return bool Depending on whether it's on or off
- */
-function ini_get_bool($ini_get_arg) {
-	$temp = strtolower(ini_get($ini_get_arg));
-
-	if ($temp == '1' || $temp == 'on' || $temp == 'true') {
-		return true;
-	}
-	return false;
-}
-
-/**
  * Returns a PHP INI setting in bytes.
  *
  * @tip Use this for arithmetic when determining if a file can be uploaded.
@@ -1195,24 +1097,6 @@ function elgg_get_ini_setting_in_bytes($setting) {
 
 	// return byte value
 	return $val;
-}
-
-/**
- * Returns true is string is not empty, false, or null.
- *
- * Function to be used in array_filter which returns true if $string is not null.
- *
- * @param string $string The string to test
- *
- * @return bool
- * @todo This is used once in metadata.php.  Use a lambda function instead.
- */
-function is_not_null($string) {
-	if (($string === '') || ($string === false) || ($string === null)) {
-		return false;
-	}
-
-	return true;
 }
 
 /**

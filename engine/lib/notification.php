@@ -1,5 +1,24 @@
 <?php
 /**
+ * Notifications
+ * This file contains classes and functions which allow plugins to register and send notifications.
+ *
+ * There are notification methods which are provided out of the box
+ * (see notification_init() ). Each method is identified by a string, e.g. "email".
+ *
+ * To register an event use register_notification_handler() and pass the method name and a
+ * handler function.
+ *
+ * To send a notification call notify() passing it the method you wish to use combined with a
+ * number of method specific addressing parameters.
+ *
+ * Catch NotificationException to trap errors.
+ *
+ * @package Elgg.Core
+ * @subpackage Notifications
+ */
+
+/**
  * Adding a New Notification Event
  * ===============================
  * 1. Register the event with elgg_register_notification_event()
@@ -455,25 +474,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 
 	return $result;
 }
-
-/**
- * Notifications
- * This file contains classes and functions which allow plugins to register and send notifications.
- *
- * There are notification methods which are provided out of the box
- * (see notification_init() ). Each method is identified by a string, e.g. "email".
- *
- * To register an event use register_notification_handler() and pass the method name and a
- * handler function.
- *
- * To send a notification call notify() passing it the method you wish to use combined with a
- * number of method specific addressing parameters.
- *
- * Catch NotificationException to trap errors.
- *
- * @package Elgg.Core
- * @subpackage Notifications
- */
 
 /**
  * Notify a user via their preferences.

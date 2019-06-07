@@ -1601,27 +1601,6 @@ function _elgg_has_rss_link() {
 }
 
 /**
- * Auto-registers views from a location.
- *
- * @note Views in plugin/views/ are automatically registered for active plugins.
- * Plugin authors would only need to call this if optionally including
- * an entire views structure.
- *
- * @param string $view_base Optional The base of the view name without the view type.
- * @param string $folder    Required The folder to begin looking in
- * @param string $ignored   This argument is ignored
- * @param string $viewtype  The type of view we're looking at (default, rss, etc)
- *
- * @return bool returns false if folder can't be read
- * @since 1.7.0
- * @see elgg_set_view_location()
- * @access private
- */
-function autoregister_views($view_base, $folder, $ignored, $viewtype) {
-	return _elgg_services()->views->autoregisterViews($view_base, $folder, $viewtype);
-}
-
-/**
  * Minifies simplecache CSS and JS views by handling the "simplecache:generate" hook
  *
  * @param string $hook    The name of the hook

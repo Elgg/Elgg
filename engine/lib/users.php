@@ -8,27 +8,6 @@
  */
 
 /**
- * Disables all of a user's entities
- *
- * @param int $owner_guid The owner GUID
- *
- * @return bool Depending on success
- */
-function disable_user_entities($owner_guid) {
-	try {
-		$entity = get_entity($owner_guid);
-		if (!$entity) {
-			return false;
-		}
-		return _elgg_services()->entityTable->disableEntities($entity);
-	} catch (DatabaseException $ex) {
-		elgg_log($ex, 'ERROR');
-
-		return false;
-	}
-}
-
-/**
  * Get a user object from a GUID.
  *
  * This function returns an \ElggUser from a given GUID.
@@ -748,7 +727,6 @@ function users_init() {
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_unban_action');
 	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
 	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:user', '_elgg_user_prepare_unban_notification');
-
 }
 
 /**

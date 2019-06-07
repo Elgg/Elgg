@@ -41,7 +41,21 @@ The simpletest cli command has been deprecated.
 Deprecated APIs
 ---------------
 
+ * ``autoregister_views()``
+ * ``count_messages()`` Use ``elgg()->system_messages->count()``.
+ * ``disable_user_entities()``
+ * ``elgg_enable_entity()`` Use ``ElggEntity::enable()``.
+ * ``elgg_get_file_list()`` Use a PHP directory iterator.
  * ``elgg_instanceof()`` Use PHP instanceof type operator.
+ * ``elgg_is_admin_user()`` Use ``ElggUser::isAdmin()``.
+ * ``elgg_sort_3d_array_by_value()``
+ * ``get_access_list()`` Use ``get_access_array()``.
+ * ``get_language()`` Use ``get_current_language()``.
+ * ``get_number_users()`` Use ``elgg_count_entities()``.
+ * ``ini_get_bool()``
+ * ``is_not_null()``
+ * ``update_access_collection()``
+ 
 
 Deprecated actions
 ------------------

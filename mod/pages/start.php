@@ -301,7 +301,7 @@ function pages_container_permission_check($hook, $type, $returnvalue, $params) {
 	}
 
 	// I don't understand this but it's old - mrclay
-	if (in_array($page->write_access_id, get_access_list())) {
+	if (in_array($page->write_access_id, get_access_array($user->guid))) {
 		return true;
 	}
 }

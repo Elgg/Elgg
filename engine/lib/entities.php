@@ -109,19 +109,6 @@ function elgg_entity_exists($guid) {
 }
 
 /**
- * Enable an entity.
- *
- * @param int  $guid      GUID of entity to enable
- * @param bool $recursive Recursively enable all entities disabled with the entity?
- *
- * @return bool
- * @since 1.9.0
- */
-function elgg_enable_entity($guid, $recursive = true) {
-	return _elgg_services()->entityTable->enable($guid, $recursive);
-}
-
-/**
  * Get the current site entity
  *
  * @return \ElggSite
