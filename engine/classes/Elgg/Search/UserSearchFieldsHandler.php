@@ -34,6 +34,10 @@ class UserSearchFieldsHandler {
 			'name',
 			'description',
 		];
+		
+		if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
+			$fields[] = 'email';
+		}
 
 		$value['metadata'] = array_merge($value['metadata'], $fields);
 
