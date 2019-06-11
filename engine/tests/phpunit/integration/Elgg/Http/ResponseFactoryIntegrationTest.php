@@ -98,4 +98,30 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertEquals($factory_cookies, $response_cookies);
 	}
+	
+	/**
+	 * @dataProvider respondWithErrorProvider
+	 */
+	public function testRespondWithErrorDefaultContentText($status_code, $elgg_echo_part) {
+		
+		ob_start();
+		$response = $this->service->respondWithError('', $status_code);
+		ob_end_clean();
+		
+		$this->assertInstanceOf(Response::class, $response);
+		$this->assertEquals($status_code, $response->getStatusCode());
+		
+		$content = $response->getContent();
+		$this->assertContains(elgg_echo("error:{$elgg_echo_part}:title"), $content);
+		$this->assertContains(elgg_echo("error:{$elgg_echo_part}:content"), $content);
+	}
+	
+	public function respondWithErrorProvider() {
+		return [
+			[ELGG_HTTP_BAD_REQUEST, 400],
+			[ELGG_HTTP_FORBIDDEN, 403],
+			[ELGG_HTTP_NOT_FOUND, 404],
+			[ELGG_HTTP_UNAUTHORIZED, 'default'],
+		];
+	}
 }

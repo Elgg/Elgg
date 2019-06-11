@@ -392,7 +392,9 @@ class ResponseFactory {
 
 			if (elgg_view_exists('resources/error')) {
 				$params['type'] = $forward_reason;
-				$params['params']['error'] = $error;
+				if (!elgg_is_empty($error)) {
+					$params['params']['error'] = $error;
+				}
 				$error_page = elgg_view_resource('error', $params);
 			} else {
 				$error_page = $error;
