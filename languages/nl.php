@@ -479,6 +479,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:users:online' => 'Op dit moment online',
 	'admin:users:newest' => 'Nieuwste',
 	'admin:users:admins' => 'Beheerders',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Nieuwe gebruiker',
 	'admin:users:description' => "Dit beheerpaneel maakt het mogelijk om gebruikersinstellingen te wijzigen. Kies hieronder een optie om te beginnen.",
 	'admin:users:adduser:label' => "Klik hier om een nieuwe gebruiker toe te voegen.",
@@ -512,6 +514,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:settings' => 'Instellingen',
 	'admin:settings:basic' => 'Basisinstellingen',
 	'admin:settings:advanced' => 'Geavanceerde instellingen',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Via dit beheerpaneel kun je de algemene instellingen van de site beheren. Kies een optie om te beginnen.",
 	'admin:site:opt:linktext' => "Configureer site",
 	'admin:settings:in_settings_file' => 'Deze instelling configureer je in settings.php',
@@ -1010,6 +1014,8 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 
 	'active' => 'Actief',
 	'total' => 'Totaal',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'OK',
 	'any' => 'Welke dan ook',
@@ -1076,6 +1082,12 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 
 	'on' => 'Aan',
 	'off' => 'Uit',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1282,13 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 
 	'admin:legend:system' => 'Systeem',
 	'admin:legend:caching' => 'Caching',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Toegang tot content',
 	'admin:legend:site_access' => 'Toegang tot de site',
 	'admin:legend:debug' => 'Debugging en loggen',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
 	'config:remove_branding:help' => "Overal op de website zijn er verschillende links en logo's welke aantonen dat de website is gemaakt middels Elgg. Als je de uitingen verwijderd overweeg om een donatie te doen op https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Schakel RSS feeds uit",

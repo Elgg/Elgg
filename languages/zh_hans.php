@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => '当前在线用户',
 	'admin:users:newest' => '最新用户',
 	'admin:users:admins' => '管理员',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => '添加新用户',
 	'admin:users:description' => "管理面板允许你控制用户设置，从下面选择一个选项开始.",
 	'admin:users:adduser:label' => "点击此处添加新用户...",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => '设置',
 	'admin:settings:basic' => '基本设置',
 	'admin:settings:advanced' => '高级设置',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "管理面板允许你控制全局设置，从下面选择一个选项开始.",
 	'admin:site:opt:linktext' => "配置网站...",
 	'admin:settings:in_settings_file' => '此设置在settings.php里面配置',
@@ -1007,6 +1011,8 @@ To go to the site, click here:
 
 	'active' => '活跃',
 	'total' => '总计',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => '好',
 	'any' => '任何',
@@ -1073,6 +1079,12 @@ To go to the site, click here:
 
 	'on' => '开',
 	'off' => '关',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1269,10 +1281,13 @@ To go to the site, click here:
 
 	'admin:legend:system' => '系统',
 	'admin:legend:caching' => '缓存',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => '内容访问',
 	'admin:legend:site_access' => '网站访问',
 	'admin:legend:debug' => '调试和纪录',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "除去Elgg版权",
 	'config:remove_branding:help' => "整个网站有不同的链接和标志表明这个网站是使用Elgg创建。如果你有版权考虑请捐赠在https://elgg.org/supporter.php。",
 	'config:disable_rss:label' => "关闭 RSS 源",

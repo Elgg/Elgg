@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Online',
 	'admin:users:newest' => 'Neueste',
 	'admin:users:admins' => 'Administratoren',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Benutzer hinzufügen',
 	'admin:users:description' => "In diesem Admin-Bereich kannst Du Einstellugen für Benutzeraccounts konfigurieren. Wähle eine der unten gezeigten Optionen.",
 	'admin:users:adduser:label' => "Hier klicken um einen neuen Benutzeraccount zu erstellen...",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => 'Einstellungen',
 	'admin:settings:basic' => 'Grundeinstellungen',
 	'admin:settings:advanced' => 'Erweiterte Einstellungen',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Hier kannst Du einige globale Einstellungen für Deine Community-Seite vornehmen.",
 	'admin:site:opt:linktext' => "Community-Seite konfigurieren...",
 	'admin:settings:in_settings_file' => 'Diese Einstellung kann in elgg-config/settings.php angepasst werden.',
@@ -1016,6 +1020,8 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'active' => 'Aktiv',
 	'total' => 'Gesamt',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'OK',
 	'any' => 'Irgendeine',
@@ -1082,6 +1088,12 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'on' => 'An',
 	'off' => 'Aus',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1276,10 +1288,13 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 
 	'admin:legend:system' => 'System',
 	'admin:legend:caching' => 'Caching-Mechanismen',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Zugangslevel für Inhalte',
 	'admin:legend:site_access' => 'Zugangsbeschränkungen zur Community-Seite',
 	'admin:legend:debug' => 'Debuggen und Protokollieren',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Elgg-Branding verbergen",
 	'config:remove_branding:help' => "Aktiviere diese Option, um die Links und Logos, die auf den Seiten der Community eingeblendet werden und darauf hinweisen, dass diese Community-Seite mit Elgg erstellt wurde, zu verbergen. Falls Du Dich dazu entschließt, das Elgg-Branding zu verbergen, wäre es nett, wenn Du eine Spende für das Elgg-Projekt in Betracht ziehen würdest (https://elgg.org/about/supporters).",
 	'config:disable_rss:label' => "RSS-Feeds deaktivieren",
