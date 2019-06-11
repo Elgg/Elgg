@@ -78,6 +78,15 @@ $CONFIG->dbname = '{{dbname}}';
 $CONFIG->dbhost = '{{dbhost}}';
 
 /**
+ * The database port.
+ *
+ * For most installations, this is 3306
+ *
+ * @global string $CONFIG->dbport
+ */
+$CONFIG->dbport = '{{dbport}}';
+
+/**
  * The database prefix
  *
  * This prefix will be appended to all Elgg tables.  If you're sharing
@@ -113,15 +122,18 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->db['write']['dbpass'] = "";
 //$CONFIG->db['write']['dbname'] = "";
 //$CONFIG->db['write']['dbhost'] = "";
+//$CONFIG->db['write']['dbport'] = "";
 
 //$CONFIG->db['read'][0]['dbuser'] = "";
 //$CONFIG->db['read'][0]['dbpass'] = "";
 //$CONFIG->db['read'][0]['dbname'] = "";
 //$CONFIG->db['read'][0]['dbhost'] = "";
+//$CONFIG->db['read'][0]['dbport'] = "";
 //$CONFIG->db['read'][1]['dbuser'] = "";
 //$CONFIG->db['read'][1]['dbpass'] = "";
 //$CONFIG->db['read'][1]['dbname'] = "";
 //$CONFIG->db['read'][1]['dbhost'] = "";
+//$CONFIG->db['read'][1]['dbport'] = "";
 
 /**
  * Memcache setup (optional)

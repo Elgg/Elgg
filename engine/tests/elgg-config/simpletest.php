@@ -11,6 +11,7 @@ $settings = [
 	'dbuser' => getenv('ELGG_DB_USER') ? : '',
 	'dbpass' => getenv('ELGG_DB_PASS') ? : '',
 	'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+	'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
 	'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
 
 	'memcache' => (bool) getenv('ELGG_MEMCACHE'),

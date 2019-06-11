@@ -296,6 +296,7 @@ class ServiceProvider extends DiContainer {
 			unset($config->db);
 			unset($config->dbname);
 			unset($config->dbhost);
+			unset($config->dbport);
 			unset($config->dbuser);
 			unset($config->dbpass);
 
@@ -833,6 +834,7 @@ class ServiceProvider extends DiContainer {
 		unset($config->db);
 		unset($config->dbname);
 		unset($config->dbhost);
+		unset($config->dbport);
 		unset($config->dbuser);
 		unset($config->dbpass);
 
