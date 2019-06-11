@@ -31,17 +31,12 @@ class MigrateDiscussionReply implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function countItems() {
-		
-		$hidden = access_show_hidden_entities(true);
-		
-		$count = elgg_count_entities([
-			'type' => 'object',
-			'subtype' => 'discussion_reply',
-		]);
-		
-		access_show_hidden_entities($hidden);
-		
-		return $count;
+		return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () {
+			return elgg_count_entities([
+				'type' => 'object',
+				'subtype' => 'discussion_reply',
+			]);
+		});
 	}
 	
 	/**

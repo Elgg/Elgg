@@ -316,10 +316,10 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		]);
 
 		// can save with access ignore
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($this->entity->save());
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$this->assertTrue($this->entity->save());
+		});
+		
 		$this->replaceSession($old_user);
 		$user->delete();
 	}

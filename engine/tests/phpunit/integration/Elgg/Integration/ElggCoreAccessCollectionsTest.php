@@ -123,20 +123,20 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 		$this->assertTrue($result);
 
 		// should be true since IA is on.
-		$ia = elgg_set_ignore_access(true);
-		$result = can_edit_access_collection($acl_id);
+		$result = elgg_call(ELGG_IGNORE_ACCESS, function() use ($acl_id) {
+			return can_edit_access_collection($acl_id);
+		});
 		$this->assertTrue($result);
-		elgg_set_ignore_access($ia);
-
+		
 		$logged_in_user = _elgg_services()->session->getLoggedInUser();
 		_elgg_services()->session->removeLoggedInUser();
 
-		$ia = elgg_set_ignore_access(false);
-		$result = can_edit_access_collection($acl_id, $this->user->guid);
-		$result_no_user = can_edit_access_collection($acl_id);
-		$this->assertTrue($result);
-		$this->assertFalse($result_no_user);
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($acl_id) {
+			$result = can_edit_access_collection($acl_id, $this->user->guid);
+			$result_no_user = can_edit_access_collection($acl_id);
+			$this->assertTrue($result);
+			$this->assertFalse($result_no_user);
+		});
 
 		_elgg_services()->session->setLoggedInUser($logged_in_user);
 
@@ -167,11 +167,11 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 		elgg_register_plugin_hook_handler('access:collections:write', 'all', $handler, 600);
 
 		// enable security since we usually run as admin
-		$ia = elgg_set_ignore_access(false);
-		$result = can_edit_access_collection($acl_id, $this->user->guid);
+		$result = elgg_call(ELGG_ENFORCE_ACCESS, function() use ($acl_id) {
+			return can_edit_access_collection($acl_id, $this->user->guid);
+		});
 		$this->assertTrue($result);
-		$ia = elgg_set_ignore_access($ia);
-
+		
 		elgg_unregister_plugin_hook_handler('access:collections:write', 'all', $handler);
 
 		delete_access_collection($acl_id);
@@ -236,47 +236,46 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 	}
 
 	public function testCanGetReadAccessArray() {
-
-		$ia = elgg_set_ignore_access(false);
-
 		// Default access array
 		$expected = [
 			ACCESS_PUBLIC,
 			ACCESS_LOGGED_IN
 		];
-		$actual = get_access_array($this->user->guid);
+			
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($expected) {
+			
+			$actual = get_access_array($this->user->guid);
+	
+			sort($expected);
+			sort($actual);
+			$this->assertEqual($expected, $actual);
+	
+			$owned_collection_id = create_access_collection('test', $this->user->guid);
+	
+			$joined_collection_id = create_access_collection('test2');
+			add_user_to_access_collection($this->user->guid, $joined_collection_id);
+	
+			$expected[] = $owned_collection_id;
+			$expected[] = $joined_collection_id;
+	
+			$actual = get_access_array($this->user->guid, null, true);
+	
+			sort($expected);
+			sort($actual);
+			$this->assertEqual($expected, $actual);
+			
+			delete_access_collection($owned_collection_id);
+			delete_access_collection($joined_collection_id);
+		});
 
-		sort($expected);
-		sort($actual);
-		$this->assertEqual($expected, $actual);
-
-		$owned_collection_id = create_access_collection('test', $this->user->guid);
-
-		$joined_collection_id = create_access_collection('test2');
-		add_user_to_access_collection($this->user->guid, $joined_collection_id);
-
-		$expected[] = $owned_collection_id;
-		$expected[] = $joined_collection_id;
-
-		$actual = get_access_array($this->user->guid, null, true);
-
-		sort($expected);
-		sort($actual);
-		$this->assertEqual($expected, $actual);
-
-		elgg_set_ignore_access();
-
-		$expected[] = ACCESS_PRIVATE;
-		$actual = get_access_array($this->user->guid, null, true);
-
-		sort($expected);
-		sort($actual);
-		$this->assertEqual($expected, $actual);
-
-		delete_access_collection($owned_collection_id);
-		delete_access_collection($joined_collection_id);
-
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($expected) {
+			$expected[] = ACCESS_PRIVATE;
+			$actual = get_access_array($this->user->guid, null, true);
+	
+			sort($expected);
+			sort($actual);
+			$this->assertEqual($expected, $actual);
+		});
 	}
 
 	public function testCanGetWriteAccessArray() {
@@ -382,18 +381,16 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 
 		$member = $this->createOne('user');
 
-		$ia = elgg_set_ignore_access(false);
-
-		$collection_id = create_access_collection('test', $this->user->guid);
-		add_user_to_access_collection($member->guid, $collection_id);
-
-		$acl = get_access_collection($collection_id);
-
-		$this->assertTrue($acl->canEdit($this->user->guid));
-		$this->assertFalse($acl->canEdit($member->guid));
-
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($member) {
+			$collection_id = create_access_collection('test', $this->user->guid);
+			add_user_to_access_collection($member->guid, $collection_id);
+	
+			$acl = get_access_collection($collection_id);
+	
+			$this->assertTrue($acl->canEdit($this->user->guid));
+			$this->assertFalse($acl->canEdit($member->guid));
+		});
+		
 		$member->delete();
 	}
 

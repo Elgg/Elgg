@@ -146,26 +146,28 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 	public function testBypassesCacheWithIgnoredAccess() {
 
 		$user = $this->createUser();
-
+		$object = null;
+		
 		_elgg_services()->session->setLoggedInUser($user);
 
-		$ia = elgg_set_ignore_access(true);
-
-		$object = $this->createObject([
-			'owner_guid' => $user->guid,
-			'access_id' => ACCESS_PRIVATE,
-		]);
-
-		$this->assertNull(_elgg_services()->entityCache->load($object->guid));
-
-		$this->assertEquals($object, get_entity($object->guid));
-
-		_elgg_services()->session->removeLoggedInUser();
-
-		$this->assertEquals($object, get_entity($object->guid));
-
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user, &$object) {
+		
+			$object = $this->createObject([
+				'owner_guid' => $user->guid,
+				'access_id' => ACCESS_PRIVATE,
+			]);
+	
+			$this->assertNull(_elgg_services()->entityCache->load($object->guid));
+	
+			$this->assertEquals($object, get_entity($object->guid));
+	
+			_elgg_services()->session->removeLoggedInUser();
+	
+			$this->assertEquals($object, get_entity($object->guid));
+			
+			return $object;
+		});
+		
 		$this->assertNull(_elgg_services()->entityCache->load($object->guid));
 
 		$this->assertFalse(get_entity($object->guid));

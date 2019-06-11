@@ -16,9 +16,9 @@ $group_guid = (int) get_input('group_guid');
 $user = get_user($user_guid);
 
 // access bypass for getting invisible group
-$ia = elgg_set_ignore_access(true);
-$group = get_entity($group_guid);
-elgg_set_ignore_access($ia);
+$group = elgg_call(ELGG_IGNORE_ACCESS, function() use ($group_guid) {
+	return get_entity($group_guid);
+});
 
 if (!$user || !($group instanceof \ElggGroup)) {
 	return elgg_error_response(elgg_echo('groups:cantjoin'));

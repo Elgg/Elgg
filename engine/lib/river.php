@@ -113,9 +113,9 @@ function elgg_create_river_item(array $options = []) {
 		return $id;
 	}
 
-	$ia = elgg_set_ignore_access(true);
-	$item = elgg_get_river_item_from_id($id);
-	elgg_set_ignore_access($ia);
+	$item = elgg_call(ELGG_IGNORE_ACCESS, function () use ($id) {
+		return elgg_get_river_item_from_id($id);
+	});
 
 	if (!$item) {
 		return false;

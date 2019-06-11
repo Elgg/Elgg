@@ -400,30 +400,25 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
  */
 function messages_purge($event, $type, $user) {
 
-	if (!$user->getGUID()) {
+	if (!$user->guid) {
 		return;
 	}
 
 	// make sure we delete them all
-	$entity_disable_override = access_show_hidden_entities(true);
-	$ia = elgg_set_ignore_access(true);
-
-	$options = [
-		'type' => 'object',
-		'subtype' => 'messages',
-		'metadata_name_value_pairs' => [
-			'fromId' => $user->guid,
-		],
-		'limit' => false,
-	];
-	$batch = new ElggBatch('elgg_get_entities', $options);
-	$batch->setIncrementOffset(false);
-	foreach ($batch as $e) {
-		$e->delete();
-	}
-
-	elgg_set_ignore_access($ia);
-	access_show_hidden_entities($entity_disable_override);
+	elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
+		$batch = new ElggBatch('elgg_get_entities', [
+			'type' => 'object',
+			'subtype' => 'messages',
+			'metadata_name_value_pairs' => [
+				'fromId' => $user->guid,
+			],
+			'limit' => false,
+		]);
+		$batch->setIncrementOffset(false);
+		foreach ($batch as $e) {
+			$e->delete();
+		}
+	});
 }
 
 /**

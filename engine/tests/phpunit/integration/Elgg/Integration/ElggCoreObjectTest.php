@@ -161,14 +161,13 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 
 		// fake being logged out
 		$old_user = $this->replaceSession();
-		$ia = elgg_set_ignore_access(true);
-
-		$this->assertTrue($e1->disable(null, true));
-
-		// "log in" original user
-		$this->replaceSession($old_user);
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($e1, $old_user) {
+			$this->assertTrue($e1->disable(null, true));
+	
+			// "log in" original user
+			$this->replaceSession($old_user);
+		});
+		
 		$this->assertFalse((bool) get_entity($guid1));
 		$this->assertFalse((bool) get_entity($guid2));
 
@@ -181,10 +180,10 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 		$r = get_data_row($q);
 		$this->assertEqual('no', $r->enabled);
 
-		access_show_hidden_entities(true);
-		$e1->delete();
-		$e2->delete();
-		access_show_hidden_entities(false);
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($e1, $e2) {
+			$e1->delete();
+			$e2->delete();
+		});
 	}
 
 	public function testElggRecursiveDelete() {

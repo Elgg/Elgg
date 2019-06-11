@@ -264,59 +264,57 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		$entity->access_id = ACCESS_PUBLIC;
 		$entity->save();
 
-		$md_values = [
-			'one',
-			'two',
-			'three'
-		];
-
 		// need to fake different logins.
 		// good times without mocking.
 		$original_user = _elgg_services()->session->getLoggedInUser();
 		_elgg_services()->session->setLoggedInUser($user1);
 
-		$ia = elgg_set_ignore_access(false);
-
-		// add metadata as one user
-		$entity->test = $md_values;
-
-		// check only these md exists
-		$qb = Select::fromTable('metadata');
-		$qb->select('*');
-		$qb->where($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
-			->andWhere($qb->compare('name', '=', 'test', ELGG_VALUE_STRING));
-
-		$data = get_data($qb);
-
-		$this->assertEquals(count($md_values), count($data));
-		foreach ($data as $md_row) {
-			$md = elgg_get_metadata_from_id($md_row->id);
-			$this->assertTrue(in_array($md->value, $md_values));
-			$this->assertEquals('test', $md->name);
-		}
-
-		// add md w/ same name as a different user
-		_elgg_services()->session->setLoggedInUser($user2);
-		$md_values2 = [
-			'four',
-			'five',
-			'six',
-			'seven'
-		];
-
-		$entity->test = $md_values2;
-
-		$data = get_data($qb);
-
-		$this->assertEquals(count($md_values2), count($data));
-		foreach ($data as $md_row) {
-			$md = elgg_get_metadata_from_id($md_row->id);
-			$this->assertTrue(in_array($md->value, $md_values2));
-			$this->assertEquals('test', $md->name);
-		}
-
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($entity, $user2) {
+			$md_values = [
+				'one',
+				'two',
+				'three'
+			];
+		
+			// add metadata as one user
+			$entity->test = $md_values;
+	
+			// check only these md exists
+			$qb = Select::fromTable('metadata');
+			$qb->select('*');
+			$qb->where($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
+				->andWhere($qb->compare('name', '=', 'test', ELGG_VALUE_STRING));
+	
+			$data = get_data($qb);
+	
+			$this->assertEquals(count($md_values), count($data));
+			foreach ($data as $md_row) {
+				$md = elgg_get_metadata_from_id($md_row->id);
+				$this->assertTrue(in_array($md->value, $md_values));
+				$this->assertEquals('test', $md->name);
+			}
+	
+			// add md w/ same name as a different user
+			_elgg_services()->session->setLoggedInUser($user2);
+			$md_values2 = [
+				'four',
+				'five',
+				'six',
+				'seven'
+			];
+	
+			$entity->test = $md_values2;
+	
+			$data = get_data($qb);
+	
+			$this->assertEquals(count($md_values2), count($data));
+			foreach ($data as $md_row) {
+				$md = elgg_get_metadata_from_id($md_row->id);
+				$this->assertTrue(in_array($md->value, $md_values2));
+				$this->assertEquals('test', $md->name);
+			}
+		});
+		
 		_elgg_services()->session->setLoggedInUser($original_user);
 
 		$entity->delete();
@@ -325,59 +323,63 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	}
 
 	public function testDefaultOrderedById() {
-		$ia = elgg_set_ignore_access(true);
-
-		$obj = new ElggObject();
-		$obj->subtype = $this->getRandomSubtype();
-		$obj->owner_guid = elgg_get_site_entity()->guid;
-		$obj->container_guid = elgg_get_site_entity()->guid;
-		$obj->access_id = ACCESS_PUBLIC;
-		$obj->save();
-
-		$obj->test_md = [1, 2, 3];
-
-		$time = time();
-		$prefix = _elgg_services()->db->prefix;
-
-		// all times the same
-		$mds = elgg_get_metadata([
-			'guid' => $obj->guid,
-			'metadata_names' => 'test_md',
-			'order_by' => 'n_table.id ASC',
-		]);
-
-		foreach ($mds as $md) {
-			update_data("
-				UPDATE {$prefix}metadata
-				SET time_created = " . ($time) . "
-				WHERE id = {$md->id}
-			");
-		}
-
-		// with the same time_created expecting row order by ID
-		$mds = elgg_get_metadata([
-			'guid' => $obj->guid,
-			'metadata_names' => 'test_md',
-		]);
-
-		$md_values = array_map(function (ElggMetadata $md) {
-			return (int) $md->value;
-		}, $mds);
-		$this->assertEquals([1, 2, 3], $md_values);
-
+		$obj = null;
+		$md_values = null;
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use (&$obj, &$md_values) {
+			$obj = new ElggObject();
+			$obj->subtype = $this->getRandomSubtype();
+			$obj->owner_guid = elgg_get_site_entity()->guid;
+			$obj->container_guid = elgg_get_site_entity()->guid;
+			$obj->access_id = ACCESS_PUBLIC;
+			$obj->save();
+	
+			$obj->test_md = [1, 2, 3];
+	
+			$time = time();
+			$prefix = _elgg_services()->db->prefix;
+	
+			// all times the same
+			$mds = elgg_get_metadata([
+				'guid' => $obj->guid,
+				'metadata_names' => 'test_md',
+				'order_by' => 'n_table.id ASC',
+			]);
+	
+			foreach ($mds as $md) {
+				update_data("
+					UPDATE {$prefix}metadata
+					SET time_created = " . ($time) . "
+					WHERE id = {$md->id}
+				");
+			}
+	
+			// with the same time_created expecting row order by ID
+			$mds = elgg_get_metadata([
+				'guid' => $obj->guid,
+				'metadata_names' => 'test_md',
+			]);
+	
+			$md_values = array_map(function (ElggMetadata $md) {
+				return (int) $md->value;
+			}, $mds);
+			$this->assertEquals([1, 2, 3], $md_values);
+		});
+		
 		// ignore access bypasses the MD cache, so we try it both ways
-		elgg_set_ignore_access(false);
-		_elgg_services()->metadataCache->clear($obj->guid);
-		$md_values = $obj->test_md;
-		$this->assertEquals([1, 2, 3], $md_values);
-
-		elgg_set_ignore_access(true);
-		_elgg_services()->metadataCache->clear($obj->guid);
-		$md_values = $obj->test_md;
-		$this->assertEquals([1, 2, 3], $md_values);
-
-		$obj->delete();
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use (&$obj, &$md_values) {
+			_elgg_services()->metadataCache->clear($obj->guid);
+			$md_values = $obj->test_md;
+			$this->assertEquals([1, 2, 3], $md_values);
+		});
+		
+		elgg_call(ELGG_IGNORE_ACCESS, function() use (&$obj, &$md_values) {
+			_elgg_services()->metadataCache->clear($obj->guid);
+			$md_values = $obj->test_md;
+			$this->assertEquals([1, 2, 3], $md_values);
+	
+			$obj->delete();
+		});
 	}
 
 	public function testCanDeleteMetadataById() {

@@ -236,25 +236,25 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 	
 	// need to override access in case comments ended up with ACCESS_PRIVATE
 	// and to ensure write permissions
-	$ia = elgg_set_ignore_access(true);
-	$options = [
-		'type' => 'object',
-		'subtype' => 'comment',
-		'container_guid' => $entity->getGUID(),
-		'wheres' => [function(\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
-			return $qb->compare("{$main_alias}.access_id", '!=', $entity->access_id, ELGG_VALUE_INTEGER);
-		}],
-		'limit' => 0,
-	];
-
-	$batch = new \ElggBatch('elgg_get_entities', $options, null, 25, false);
-	foreach ($batch as $comment) {
-		// Update comment access_id
-		$comment->access_id = $entity->access_id;
-		$comment->save();
-	}
-		
-	elgg_set_ignore_access($ia);
+	elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
+		$comments = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'comment',
+			'container_guid' => $entity->guid,
+			'wheres' => [function(\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+				return $qb->compare("{$main_alias}.access_id", '!=', $entity->access_id, ELGG_VALUE_INTEGER);
+			}],
+			'limit' => 0,
+			'batch' => true,
+			'batch_inc_offset' => false,
+		]);
+	
+		foreach ($comments as $comment) {
+			// Update comment access_id
+			$comment->access_id = $entity->access_id;
+			$comment->save();
+		}
+	});
 	
 	return true;
 }

@@ -766,8 +766,6 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Enables annotations for this entity, optionally based on name.
 	 *
-	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
-	 *
 	 * @param string $name An options name of annotations to enable.
 	 * @return bool
 	 * @since 1.8
@@ -1019,7 +1017,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param int $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool Whether this entity is editable by the given user.
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit($user_guid = 0) {
 		return _elgg_services()->userCapabilities->canEdit($this, $user_guid);
@@ -1034,7 +1031,6 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @return bool Whether this entity is deletable by the given user.
 	 * @since 1.11
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canDelete($user_guid = 0) {
 		return _elgg_services()->userCapabilities->canDelete($this, $user_guid);
@@ -1050,7 +1046,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 * @deprecated 3.0
 	 */
 	public function canEditMetadata($metadata = null, $user_guid = 0) {
@@ -1065,7 +1060,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param string $subtype   The subtype of the entity we're looking to write
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
 		return _elgg_services()->userCapabilities->canWriteToContainer($this, $user_guid, $type, $subtype);
@@ -1604,8 +1598,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Recursively disabling an entity will disable all entities
 	 * owned or contained by the parent entity.
 	 *
-	 * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
-	 *
 	 * @note Internal: Disabling an entity sets the 'enabled' column to 'no'.
 	 *
 	 * @param string $reason    Optional reason
@@ -1704,9 +1696,6 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Enable the entity
-	 *
-	 * @warning Disabled entities can't be loaded unless
-	 * {@link access_show_hidden_entities(true)} has been called.
 	 *
 	 * @param bool $recursive Recursively enable all entities disabled with the entity?
 	 * @see access_show_hiden_entities()

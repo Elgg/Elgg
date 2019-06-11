@@ -57,8 +57,6 @@ class UserCapabilities {
 	 *   1) an admin user guid is passed to this function.
 	 *   2) {@link elgg_get_ignore_access()} returns true.
 	 *
-	 * @see elgg_set_ignore_access()
-	 *
 	 * @param int $user_guid The user to check against.
 	 *
 	 * @return bool
@@ -88,7 +86,6 @@ class UserCapabilities {
 	 * @param int        $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool Whether this entity is editable by the given user.
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit(ElggEntity $entity, $user_guid = 0) {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
@@ -146,7 +143,6 @@ class UserCapabilities {
 	 *
 	 * @return bool Whether this entity is deletable by the given user.
 	 * @since 1.11
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canDelete(ElggEntity $entity, $user_guid = 0) {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
@@ -178,7 +174,6 @@ class UserCapabilities {
 	 *
 	 * @return bool Whether this river item should be considered deletable by the given user.
 	 * @since 2.3
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canDeleteRiverItem(ElggRiverItem $item, $user_guid = 0) {
 		if ($this->canBypassPermissionsCheck($user_guid)) {
@@ -215,7 +210,6 @@ class UserCapabilities {
 	 * @param ElggMetadata $metadata  The piece of metadata to specifically check or null for any metadata
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 * @deprecated 3.0
 	 */
 	public function canEditMetadata(ElggEntity $entity, $user_guid = 0, ElggMetadata $metadata = null) {
@@ -259,7 +253,6 @@ class UserCapabilities {
 	 * @param ElggAnnotation $annotation Annotation
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canEditAnnotation(ElggEntity $entity, $user_guid = 0, ElggAnnotation $annotation = null) {
 		if (!$annotation) {
@@ -309,7 +302,6 @@ class UserCapabilities {
 	 * @param string     $subtype   The subtype of the entity we're looking to write
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canWriteToContainer(ElggEntity $entity, $user_guid = 0, $type = 'all', $subtype = 'all') {
 		try {

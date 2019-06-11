@@ -151,20 +151,18 @@ class SendActionTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(OkResponse::class, $response);
 
 		$this->assertSystemMessageEmitted(elgg_echo('messages:posted', [], $user->language));
-		$this->assertEquals(	'messages/inbox/' . $user->username, $response->getForwardURL());
+		$this->assertEquals('messages/inbox/' . $user->username, $response->getForwardURL());
 
-		elgg_set_ignore_access(true);
-
-		$data= $response->getContent();
-		$message = get_entity($data['sent_guid']);
-
-		$this->assertInstanceOf(\ElggObject::class, $message);
-		$this->assertEquals('messages', $message->getSubtype());
-		$this->assertEquals('Message Subject', $message->title);
-		$this->assertEquals('Message Body', $message->description);
-
-		elgg_set_ignore_access(false);
-
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($response) {
+			$data = $response->getContent();
+			$message = get_entity($data['sent_guid']);
+	
+			$this->assertInstanceOf(\ElggObject::class, $message);
+			$this->assertEquals('messages', $message->getSubtype());
+			$this->assertEquals('Message Subject', $message->title);
+			$this->assertEquals('Message Body', $message->description);
+		});
+		
 		$notification = _elgg_services()->mailer->getLastMessage();
 		/* @var $notification \Zend\Mail\Message */
 

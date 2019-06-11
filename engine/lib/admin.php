@@ -753,32 +753,29 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
  * @access private
  */
 function _elgg_add_admin_widgets($event, $type, $user) {
-	$ia = elgg_set_ignore_access(true);
-
-	// check if the user already has widgets
-	if (elgg_get_widgets($user->getGUID(), 'admin')) {
-		elgg_set_ignore_access($ia);
-		return;
-	}
-
-	// In the form column => array of handlers in order, top to bottom
-	$adminWidgets = [
-		1 => ['control_panel', 'admin_welcome'],
-		2 => ['online_users', 'new_users', 'content_stats'],
-	];
-
-	foreach ($adminWidgets as $column => $handlers) {
-		foreach ($handlers as $position => $handler) {
-			$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
-			if ($guid !== false) {
-				$widget = get_entity($guid);
-				/* @var \ElggWidget $widget */
-				$widget->move($column, $position);
+	elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+		// check if the user already has widgets
+		if (elgg_get_widgets($user->guid, 'admin')) {
+			return;
+		}
+	
+		// In the form column => array of handlers in order, top to bottom
+		$adminWidgets = [
+			1 => ['control_panel', 'admin_welcome'],
+			2 => ['online_users', 'new_users', 'content_stats'],
+		];
+	
+		foreach ($adminWidgets as $column => $handlers) {
+			foreach ($handlers as $position => $handler) {
+				$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
+				if ($guid !== false) {
+					$widget = get_entity($guid);
+					/* @var \ElggWidget $widget */
+					$widget->move($column, $position);
+				}
 			}
 		}
-	}
-	
-	elgg_set_ignore_access($ia);
+	});
 }
 
 /**

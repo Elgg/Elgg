@@ -111,18 +111,18 @@ class RiverRepositoryTest extends UnitTestCase {
 			]
 		]);
 
-		$options = [
-			'count' => true,
-		];
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$options = [
+				'count' => true,
+			];
+			
+			$find = River::find($options);
+			$count = River::with($options)->count();
 
-		$ia = elgg_set_ignore_access();
-		$find = River::find($options);
-		$count = River::with($options)->count();
-		elgg_set_ignore_access($ia);
-
-		$this->assertEquals(10, $find);
-		$this->assertEquals(10, $count);
-
+			$this->assertEquals(10, $find);
+			$this->assertEquals(10, $count);
+		});
+		
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 

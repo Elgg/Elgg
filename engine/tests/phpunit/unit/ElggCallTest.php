@@ -18,10 +18,10 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 	 */
 	public function testCanCallWithFlags($access_before, $disabled_before, $ignore_access, $show_disabled) {
 
-		$ia = elgg_set_ignore_access($access_before);
+		$ia = elgg()->session->setIgnoreAccess($access_before);
 		$ha = access_get_show_hidden_status();
-		access_show_hidden_entities($disabled_before);
-
+		elgg()->session->setDisabledEntityVisibility($disabled_before);
+		
 		$flags = null;
 		if ($ignore_access === true) {
 			$flags |= ELGG_IGNORE_ACCESS;
@@ -39,8 +39,7 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 			$show_disabled = $ha;
 		}
 
-		$calls = 0;
-		$function = function() use ($ignore_access, $show_disabled, &$calls) {
+		$exception_function = function() use ($ignore_access, $show_disabled) {
 			$this->assertEquals($ignore_access, elgg_get_ignore_access());
 			$this->assertEquals($show_disabled, access_get_show_hidden_status());
 
@@ -49,18 +48,34 @@ class ElggCallTest extends \Elgg\UnitTestCase {
 
 		$exception_thrown = false;
 		try {
-			elgg_call($flags, $function);
+			elgg_call($flags, $exception_function);
 		} catch (\RuntimeException $ex) {
 			$exception_thrown = true;
 		}
 
 		$this->assertTrue($exception_thrown);
 
+		$error_function = function() use ($ignore_access, $show_disabled) {
+			$this->assertEquals($ignore_access, elgg_get_ignore_access());
+			$this->assertEquals($show_disabled, access_get_show_hidden_status());
+
+			throw new ParseError();
+		};
+
+		$error_thrown = false;
+		try {
+			elgg_call($flags, $error_function);
+		} catch (\ParseError $err) {
+			$error_thrown = true;
+		}
+
+		$this->assertTrue($error_thrown);
+
 		$this->assertEquals($access_before, elgg_get_ignore_access());
 		$this->assertEquals($disabled_before, access_get_show_hidden_status());
 
-		elgg_set_ignore_access($ia);
-		access_show_hidden_entities($ha);
+		elgg()->session->setIgnoreAccess($ia);
+		elgg()->session->setDisabledEntityVisibility($ha);
 	}
 
 	public function flagsDataProvider() {

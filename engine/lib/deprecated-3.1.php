@@ -492,3 +492,52 @@ function autoregister_views($view_base, $folder, $ignored, $viewtype) {
 	
 	return _elgg_services()->views->autoregisterViews($view_base, $folder, $viewtype);
 }
+
+/**
+ * Show or hide disabled entities.
+ *
+ * @param bool $show_hidden Show disabled entities.
+ * @return bool
+ *
+ * @deprecated 3.1 Use elgg_call() with ELGG_SHOW_DISABLED_ENTITIES flag
+ */
+function access_show_hidden_entities($show_hidden) {
+	elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use elgg_call() with ELGG_SHOW_DISABLED_ENTITIES flag.', '3.1');
+	
+	elgg()->session->setDisabledEntityVisibility($show_hidden);
+}
+
+/**
+ * Set if Elgg's access system should be ignored.
+ *
+ * The access system will not return entities in any getter functions if the
+ * user doesn't have access. This removes this restriction.
+ *
+ * When the access system is being ignored, all checks for create, retrieve,
+ * update, and delete should pass. This affects all the canEdit() and related
+ * methods.
+ *
+ * @tip Use this to access entities in automated scripts
+ * when no user is logged in.
+ *
+ * @note Internal: The access override is checked in elgg_override_permissions(). It is
+ * registered for the 'permissions_check' hooks to override the access system for
+ * the canEdit() and canWriteToContainer() methods.
+ *
+ * @note Internal: This clears the access cache.
+ *
+ * @note Internal: For performance reasons this is done at the database access clause level.
+ *
+ * @param bool $ignore If true, disables all access checks.
+ *
+ * @return bool Previous ignore_access setting.
+ * @since 1.7.0
+ * @see elgg_get_ignore_access()
+ *
+ * @deprecated 3.1 Use elgg_call() with ELGG_IGNORE_ACCESS flag
+ */
+function elgg_set_ignore_access($ignore = true) {
+	elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use elgg_call() with ELGG_IGNORE_ACCESS flag.', '3.1');
+	
+	return elgg()->session->setIgnoreAccess($ignore);
+}

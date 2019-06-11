@@ -159,7 +159,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 		$app->_services->session->removeLoggedInUser();
 		$app->_services->session->setIgnoreAccess(false);
-		access_show_hidden_entities(false);
+		$app->_services->session->setDisabledEntityVisibility(false);
 
 		// Make sure the application has been bootstrapped correctly
 		$this->assertInstanceOf(ServiceProvider::class, $app->_services, __METHOD__ . ': ServiceProvider not bootstrapped');

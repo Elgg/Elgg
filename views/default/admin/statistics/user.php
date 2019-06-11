@@ -18,11 +18,11 @@ $users_unverified = elgg_count_entities([
 ]);
 
 // Total user count (Enable & Disabled)
-$hidden_status = access_show_hidden_entities(true);
-$total_users = elgg_count_entities([
-	'type' => 'user',
-]);
-access_show_hidden_entities($hidden_status);
+$total_users = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () {
+	return elgg_count_entities([
+		'type' => 'user',
+	]);
+});
 
 // Enabled user count
 $users_enabled = elgg_count_entities([

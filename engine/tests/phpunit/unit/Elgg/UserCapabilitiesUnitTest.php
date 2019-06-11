@@ -51,9 +51,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canEdit($viewer->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $viewer) {
+			$this->assertTrue($entity->canEdit($viewer->guid));
+		});
 	}
 
 	/**
@@ -86,9 +86,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($user->canEdit($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($user->canEdit($viewer->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user, $viewer) {
+			$this->assertTrue($user->canEdit($viewer->guid));
+		});
 	}
 
 	/**
@@ -119,9 +119,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canEdit($user->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $user) {
+			$this->assertTrue($entity->canEdit($user->guid));
+		});
 	}
 
 	/**
@@ -172,9 +172,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canEdit($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canEdit($owner->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $owner) {
+			$this->assertTrue($entity->canEdit($owner->guid));
+		});
 	}
 
 	/**
@@ -231,9 +231,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $owner) {
+			$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+		});
 	}
 
 	/**
@@ -324,9 +324,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canEditMetadata($metadata, $admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $metadata, $owner) {
+			$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
+		});
 	}
 
 	/**
@@ -367,9 +367,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($annotation->canEdit($viewer->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($annotation, $viewer) {
+			$this->assertTrue($annotation->canEdit($viewer->guid));
+		});
 	}
 
 	/**
@@ -395,9 +395,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($annotation->canEdit($viewer->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($annotation, $viewer) {
+			$this->assertTrue($annotation->canEdit($viewer->guid));
+		});
 	}
 
 	/**
@@ -450,9 +450,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($annotation->canEdit($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($annotation->canEdit($owner->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($annotation, $owner) {
+			$this->assertTrue($annotation->canEdit($owner->guid));
+		});
 	}
 
 	/**
@@ -501,9 +501,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($object->canComment($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($object->canComment($viewer->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($object, $viewer) {
+			$this->assertTrue($object->canComment($viewer->guid));
+		});
 
 		// can't comment on comment
 		$comment = new \ElggComment();
@@ -540,9 +540,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canComment($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canComment($owner->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $owner) {
+			$this->assertTrue($entity->canComment($owner->guid));
+		});
 	}
 
 	/**
@@ -652,9 +652,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $owner) {
+			$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
+		});
 	}
 
 	/**
@@ -685,9 +685,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canAnnotate($admin_user->guid, 'baz'));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $owner) {
+			$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
+		});
 	}
 
 	/**
@@ -780,9 +780,9 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertFalse($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $owner) {
+			$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
+		});
 	}
 
 	/**
@@ -831,8 +831,8 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canDownload($admin_user->guid));
 
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($entity->canDownload($admin_user->guid));
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $admin_user) {
+			$this->assertTrue($entity->canDownload($admin_user->guid));
+		});
 	}
 }

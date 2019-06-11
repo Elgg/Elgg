@@ -176,7 +176,7 @@ function elgg_get_site_entity() {
  * ------------------
  *
  * Filter entities by their access_id attribute. Note that this filter apply to entities that the user has access to.
- * You can ignore access system using {@link elgg_set_ignore_access()}
+ * You can ignore access system using {@link elgg_call()}
  *
  * @option int[] $access_id
  *

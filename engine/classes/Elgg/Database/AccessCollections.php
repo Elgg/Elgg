@@ -376,7 +376,7 @@ class AccessCollections {
 	 * Use the plugin hook of 'access:collections:write', 'user' to change this.
 	 * @see get_write_access_array() for details on the hook.
 	 *
-	 * Respects access control disabling for admin users and {@link elgg_set_ignore_access()}
+	 * Respects access control disabling for admin users and {@link elgg_call()}
 	 *
 	 * @see get_write_access_array()
 	 *
