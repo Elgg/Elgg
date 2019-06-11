@@ -10,6 +10,7 @@ use Zend\Mail\Transport\TransportInterface;
 use Zend\Mime\Mime;
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part;
+use Zend\Mime\Exception\InvalidArgumentException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -121,7 +122,15 @@ class EmailService {
 		}
 		
 		// add the body to the message
-		$body = $this->buildMessageBody($email);
+		try {
+			$body = $this->buildMessageBody($email);
+		} catch (InvalidArgumentException $e) {
+			$this->logger->error($e->getMessage());
+			
+			return false;
+		}
+		
+		
 		$message->setBody($body);
 		
 		// set Subject
@@ -161,6 +170,7 @@ class EmailService {
 	 * @param Email $email Email
 	 *
 	 * @return \Zend\Mime\Message
+	 * @throws \Zend\Mime\Exception\InvalidArgumentException
 	 */
 	protected function buildMessageBody(Email $email) {
 		// create body

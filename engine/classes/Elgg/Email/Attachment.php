@@ -26,6 +26,7 @@ class Attachment extends Part {
 		parent::__construct($content);
 		
 		$this->disposition = 'attachment';
+		$this->setId(uniqid('attachment'));
 	}
 	
 	/**
