@@ -100,7 +100,7 @@ foreach ($fields as $field) {
 
 $save_status = elgg_echo('blog:save_status');
 if ($blog) {
-	$saved = date('F j, Y @ H:i', $blog->time_created);
+	$saved = date('F j, Y @ H:i', $blog->time_updated);
 } else {
 	$saved = elgg_echo('never');
 }
