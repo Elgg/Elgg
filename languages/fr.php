@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Actuellement en ligne',
 	'admin:users:newest' => 'Nouveaux',
 	'admin:users:admins' => 'Administrateurs',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Créer un utilisateur',
 	'admin:users:description' => "Ce panneau d'administration vous permet de contrôler les paramètres des utilisateurs de votre site. Choisissez une option ci-dessous pour commencer.",
 	'admin:users:adduser:label' => "Cliquez ici pour ajouter un nouvel utilisateur ...",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => 'Configuration',
 	'admin:settings:basic' => 'Configuration de base',
 	'admin:settings:advanced' => 'Configuration avancée',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Ce menu vous permet de définir les paramètres globaux de votre site. Choisissez une option ci-dessous pour commencer.",
 	'admin:site:opt:linktext' => "Configurer le site...",
 	'admin:settings:in_settings_file' => 'Ce paramètre est configuré dans settings.php',
@@ -1009,6 +1013,8 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 
 	'active' => 'Activé',
 	'total' => 'Total',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'OK',
 	'any' => 'N\'importe lequel',
@@ -1075,6 +1081,12 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 
 	'on' => 'Activé',
 	'off' => 'Désactivé',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1282,13 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 
 	'admin:legend:system' => 'Système',
 	'admin:legend:caching' => 'Mise en cache',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Niveau d\'accès (nouveaux contenus)',
 	'admin:legend:site_access' => 'Accès au site',
 	'admin:legend:debug' => 'Débogage et journalisation',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Retirer le logo Elgg",
 	'config:remove_branding:help' => "Il existe divers liens et logos à travers le site qui indiquent le ce site a été réalisé en utilisant Elgg. Si vous supprimez toute mention d'Elgg veuillez envisager une donation via https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Désactiver les flux RSS",

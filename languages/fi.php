@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Tällä hetkellä kirjautuneena',
 	'admin:users:newest' => 'Uusimmat',
 	'admin:users:admins' => 'Ylläpitäjät',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Lisää uusi käyttäjä',
 	'admin:users:description' => "Tämän hallintapaneelin avulla voit vaikuttaa sivustosi käyttäjäasetuksiin. Valitse vaihtoehto alta aloittaaksesi.",
 	'admin:users:adduser:label' => "Klikkaa tästä lisätäksesi uuden käyttäjän...",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => 'Asetukset',
 	'admin:settings:basic' => 'Perusasetukset',
 	'admin:settings:advanced' => 'Lisäasetukset',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Tämän hallintapaneelin avulla voit vaikuttaa sivustosi yleisiin asetuksiin. Valitse vaihtoehto alta aloittaaksesi.",
 	'admin:site:opt:linktext' => "Hallinnoi sivuston asetuksia...",
 	'admin:settings:in_settings_file' => 'Tämä asetus on määritetty asetustiedostossa (settings.php)',
@@ -1010,6 +1014,8 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Aktiivista',
 	'total' => 'Yhteensä',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'OK',
 	'any' => 'Mikä tahansa',
@@ -1076,6 +1082,12 @@ These changes will only affect new users on the site.',
 
 	'on' => 'On',
 	'off' => 'Off',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1282,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'Järjestelmä',
 	'admin:legend:caching' => 'Välimuisti',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Pääsy sisältöihin',
 	'admin:legend:site_access' => 'Pääsy sivustolle',
 	'admin:legend:debug' => 'Lokit ja virheidenjäljitys',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
 	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Disable RSS feeds",

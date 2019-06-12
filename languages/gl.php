@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Conectados agora',
 	'admin:users:newest' => 'Últimos',
 	'admin:users:admins' => 'Administradores',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Engadir un usuario',
 	'admin:users:description' => "Este panel de administrador permítelle controlar a configuración dos usuarios do sitio. Escolla unha das seguintes opcións para comezar.",
 	'admin:users:adduser:label' => "Prema aquí para engadir un usuario…",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => 'Configuración',
 	'admin:settings:basic' => 'Configuración básica',
 	'admin:settings:advanced' => 'Configuración avanzada',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Este panel de administración permítelle controlar a configuración global do sitio. Escolla unha das seguintes opcións para comezar.",
 	'admin:site:opt:linktext' => "Configurar o sitio…",
 	'admin:settings:in_settings_file' => 'A opción está configurada en «settings.php».',
@@ -1010,6 +1014,8 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Activo',
 	'total' => 'Total',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'Aceptar',
 	'any' => 'Calquera',
@@ -1076,6 +1082,12 @@ These changes will only affect new users on the site.',
 
 	'on' => 'Activado',
 	'off' => 'Desactivado',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1282,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caché',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Acceso a contidos',
 	'admin:legend:site_access' => 'Acceso ao sitio',
 	'admin:legend:debug' => 'Depuración e rexistr',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
 	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Disable RSS feeds",

@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'オンライン中',
 	'admin:users:newest' => '最新',
 	'admin:users:admins' => '管理者',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => '新規ユーザ追加',
 	'admin:users:description' => "この管理者パネルでサイト内でのユーザの設定をコントロールすることができます。開始するには、下のオプションを選択してください。",
 	'admin:users:adduser:label' => "新規ユーザを追加するには、ここをクリック...",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => 'セッティング',
 	'admin:settings:basic' => '基本設定',
 	'admin:settings:advanced' => '詳細設定',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "この管理パネルでは、インストールしたサイト全体に関わる設定をコントロールすることができます。はじめるには、以下のオプションを選択してください。",
 	'admin:site:opt:linktext' => "サイトの構築..",
 	'admin:settings:in_settings_file' => 'この設定は、settings.php 内で行えます。',
@@ -1010,6 +1014,8 @@ These changes will only affect new users on the site.',
 
 	'active' => 'アクティブ',
 	'total' => '総数',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'OK',
 	'any' => 'Any',
@@ -1076,6 +1082,12 @@ These changes will only affect new users on the site.',
 
 	'on' => 'On',
 	'off' => 'Off',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1282,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'システム',
 	'admin:legend:caching' => 'キャシュ',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'コンテント・アクセス',
 	'admin:legend:site_access' => 'サイト・アクセス',
 	'admin:legend:debug' => 'デバッグとログ',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
 	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Disable RSS feeds",

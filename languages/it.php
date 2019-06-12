@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Online in questo momento',
 	'admin:users:newest' => 'Più recenti',
 	'admin:users:admins' => 'Amministratori',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Aggiungi un nuovo utente',
 	'admin:users:description' => "Questo pannello di amministrazione permette di controllare le impostazioni del sito. Selezionare un'opzione qui sotto per iniziare.",
 	'admin:users:adduser:label' => "Cliccare qui per aggiungere un nuovo utente...",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => 'Impostazioni',
 	'admin:settings:basic' => 'Impostazioni di base',
 	'admin:settings:advanced' => 'Impostazioni avanzate',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Questo pannello di amministrazione permette di gestire le impostazioni globali del sito. Selezionare un'opzione qui sotto per iniziare.",
 	'admin:site:opt:linktext' => "Configura sito...",
 	'admin:settings:in_settings_file' => 'Queste impostazioni sono definite in settings.php',
@@ -1010,6 +1014,8 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Attivi',
 	'total' => 'Totale',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'OK',
 	'any' => 'Qualsiasi',
@@ -1076,6 +1082,12 @@ These changes will only affect new users on the site.',
 
 	'on' => 'On',
 	'off' => 'Off',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1282,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caching',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Accesso ai contenuti',
 	'admin:legend:site_access' => 'Accesso al sito',
 	'admin:legend:debug' => 'Debug e Log',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
 	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Disable RSS feeds",
