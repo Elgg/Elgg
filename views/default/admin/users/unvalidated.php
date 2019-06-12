@@ -6,6 +6,12 @@
  */
 
 
+echo elgg_view_form('admin/users/search', [
+	'method' => 'GET',
+	'action' => 'admin/users/unvalidated',
+	'class' => 'mbm',
+]);
+
 $form = elgg_view_form('admin/users/unvalidated', [
 	'id' => 'admin-users-unvalidated-bulk',
 ]);
