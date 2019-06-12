@@ -1165,6 +1165,18 @@ var `$DEFAULT_FILE_STORE`.
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
 
 
+<a name="2.3.13"></a>
+### 2.3.13  (2019-06-12)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **blog:** show correct last saved date ([b888e7e1](https://github.com/Elgg/Elgg/commit/b888e7e1a3772f205f5a7fe1de62894964ee8e0c))
+
+
 <a name="2.3.12"></a>
 ### 2.3.12  (2019-04-16)
 

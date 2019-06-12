@@ -274,6 +274,10 @@ msgstr ""
 msgid "Get your own instance of Elgg running in no time."
 msgstr ""
 
+#: ../../intro/install.rst:8
+msgid "Contents"
+msgstr ""
+
 #: ../../intro/install.rst:11
 msgid "Requirements"
 msgstr ""
