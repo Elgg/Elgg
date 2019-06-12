@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-16 16:35+0200\n"
+"POT-Creation-Date: 2019-06-12 11:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,6 +22,10 @@ msgstr ""
 
 #: ../../appendix/faqs.rst:4
 msgid "Below are some commonly asked questions about Elgg."
+msgstr ""
+
+#: ../../appendix/faqs.rst:8
+msgid "Contents"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:2
