@@ -1,3 +1,21 @@
+<a name="3.0.4"></a>
+### 3.0.4  (2019-06-12)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+* Jeroen Dalsem (2)
+
+#### Bug Fixes
+
+* **blog:** save draft in correct container ([b32c6139](https://github.com/Elgg/Elgg/commit/b32c6139bdb841a736bbd9b46f7f82a540793ff4))
+* **email:** set default email attachment id ([ae8fc0a4](https://github.com/Elgg/Elgg/commit/ae8fc0a436106d511aabfad6e990a58f86855358))
+* **install:** minification is enabled for fresh installations ([ae869441](https://github.com/Elgg/Elgg/commit/ae8694419f955f131cea2b6dc953bda8ff49155f))
+* **livesearch:** by default no longer include banned users ([c059ff11](https://github.com/Elgg/Elgg/commit/c059ff115d7c2227c30fb5205e1cd1f1a57e8ffa))
+* **response:** only set error content if provided ([518231ab](https://github.com/Elgg/Elgg/commit/518231ab7be60696c3476e190dbef8723188e2ab))
+* **system_log:** prevent fatal exception when constructing objects ([5105ca6f](https://github.com/Elgg/Elgg/commit/5105ca6f0a0198445aba03599430f9b14e691ae0))
+
+
 <a name="3.0.3"></a>
 ### 3.0.3  (2019-05-21)
 
