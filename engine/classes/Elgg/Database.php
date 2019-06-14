@@ -149,6 +149,7 @@ class Database {
 			'user' => $conf['user'],
 			'password' => $conf['password'],
 			'host' => $conf['host'],
+			'port' => $conf['port'],
 			'charset' => $conf['encoding'],
 			'driver' => 'pdo_mysql',
 		];

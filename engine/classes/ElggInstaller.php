@@ -188,6 +188,7 @@ class ElggInstaller {
 
 		$defaults = [
 			'dbhost' => 'localhost',
+			'dbport' => '3306',
 			'dbprefix' => 'elgg_',
 			'language' => 'en',
 			'siteaccess' => ACCESS_PUBLIC,
@@ -245,6 +246,7 @@ class ElggInstaller {
 		$config_keys = [
 			// param key => config key
 			'dbhost' => 'dbhost',
+			'dbport' => 'dbport',
 			'dbuser' => 'dbuser',
 			'dbpassword' => 'dbpass',
 			'dbname' => 'dbname',
@@ -253,7 +255,7 @@ class ElggInstaller {
 		];
 		foreach ($config_keys as $params_key => $config_key) {
 			if ($params[$params_key] !== $config->$config_key) {
-				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$config_key]));
+				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$config_key]) . $params[$params_key] . ' ' . $config->$config_key);
 			}
 		}
 
@@ -405,6 +407,13 @@ class ElggInstaller {
 				'type' => 'text',
 				'value' => 'localhost',
 				'required' => true,
+			],
+			'dbport' => [
+				'type' => 'number',
+				'value' => 3306,
+				'required' => true,
+				'min' => 0,
+				'max' => 65535,
 			],
 			'dbprefix' => [
 				'type' => 'text',
@@ -722,7 +731,8 @@ class ElggInstaller {
 			$app->_services->config->dbuser,
 			$app->_services->config->dbpass,
 			$app->_services->config->dbname,
-			$app->_services->config->dbhost
+			$app->_services->config->dbhost,
+			$app->_services->config->dbport
 		);
 
 		if (!$dbSettingsPass) {
@@ -1199,7 +1209,8 @@ class ElggInstaller {
 			$submissionVars['dbuser'],
 			$submissionVars['dbpassword'],
 			$submissionVars['dbname'],
-			$submissionVars['dbhost']
+			$submissionVars['dbhost'],
+			$submissionVars['dbport']
 		);
 	}
 
@@ -1210,14 +1221,16 @@ class ElggInstaller {
 	 * @param string $password Password
 	 * @param string $dbname   Database name
 	 * @param string $host     Host
+	 * @param int    $port     Port
 	 *
 	 * @return bool
 	 */
-	protected function checkDatabaseSettings($user, $password, $dbname, $host) {
+	protected function checkDatabaseSettings($user, $password, $dbname, $host, $port) {
 		$app = $this->getApp();
 
 		$config = new DbConfig((object) [
 			'dbhost' => $host,
+			'dbport' => $port,
 			'dbuser' => $user,
 			'dbpass' => $password,
 			'dbname' => $dbname,
@@ -1286,6 +1299,7 @@ class ElggInstaller {
 
 		$config = (object) [
 			'dbhost' => elgg_extract('dbhost', $params, 'localhost'),
+			'dbport' => elgg_extract('dbport', $params, 3306),
 			'dbuser' => elgg_extract('dbuser', $params),
 			'dbpass' => elgg_extract('dbpassword', $params),
 			'dbname' => elgg_extract('dbname', $params),

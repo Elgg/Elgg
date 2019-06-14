@@ -35,6 +35,7 @@ use Elgg\Project\Paths;
  * @property string        $dbname
  * @property string        $dbuser
  * @property string        $dbhost
+ * @property int           $dbport
  * @property string        $dbpass
  * @property string        $dbprefix
  * @property bool          $db_disable_query_cache
@@ -170,6 +171,7 @@ class Config {
 			'__site_secret__',
 			'db',
 			'dbhost',
+			'dbport',
 			'dbuser',
 			'dbpass',
 			'dbname',
