@@ -298,24 +298,8 @@ function serialise_parameters($method, $parameters) {
 					throw new APIException($msg);
 				}
 
-				$array = "array(";
-
-				foreach ($parameters[$key] as $k => $v) {
-					// This is using sanitise_string() to escape characters to be inside a
-					// single-quoted string literal in PHP code. Not sure what we have to do
-					// to keep this safe in 3.0...
-					$k = sanitise_string($k);
-					$v = sanitise_string($v);
-
-					$array .= "'$k'=>'$v',";
-				}
-
-				$array = trim($array, ",");
-
-				$array .= ")";
-				$array = ",$array";
-
-				$serialised_parameters .= $array;
+				$serialised_parameters .= build_array_string($parameters[$key]);
+				
 				break;
 			default:
 				$msg = elgg_echo('APIException:UnrecognisedTypeCast', [$value['type'], $key, $method]);
@@ -763,3 +747,38 @@ function service_handler($handler, $request) {
 		exit;
 	}
 }
+/**
+ * Build a string representation of an array, recursively
+ *
+ * @param string $method Method, e.g. "foo.bar"
+ *
+ * @return String       The array in a string format
+ * @access private
+ */
+function build_array_string($parameters){
+
+    $array = "array(";
+
+    foreach ($parameters as $k => $v) {
+            $k = sanitise_string($k);
+
+            if(is_array($v)){
+                
+                $array2 = build_array_string($v);
+                
+                $array2 = trim($array2, ",");
+                $array .= "'$k'=>$array2,";
+
+            }elseif(is_string($v)){
+                $v = sanitise_string($v);
+                $array .= "'$k'=>'$v',";
+            }
+    }
+    $array = trim($array, ",");
+    $array .= ")";
+    $array = ",$array";    
+    
+    return $array;
+}
+
+
