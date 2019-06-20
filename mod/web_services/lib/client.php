@@ -41,8 +41,16 @@ $content_type = 'application/octet-stream') {
 
 	// URL encode all the parameters
 	foreach ($call as $k => $v) {
-		$encoded_params[] = urlencode($k) . '=' . urlencode($v);
-	}
+            if (is_null($v)) {
+                continue;
+            }
+
+            if (is_array($v)) {
+                $encoded_params[] = encode_array($v, $k, true);
+            } else {
+                $encoded_params[] = urlencode($k) . '=' . urlencode($v);
+            }
+        }
 
 	$params = implode('&', $encoded_params);
 
@@ -157,4 +165,39 @@ function serialise_api_headers(array $headers) {
 	}
 
 	return trim($headers_str);
+}
+/**
+ * Encode an array as string to be sended as URLs parameter
+ *
+ * @param array  $arr          The array to be encoded
+ * @param string $perfix       Optional prefix to be used 
+ *
+ * @return string
+ */
+function encode_array($arr, $prefix = null)
+    {
+        if (!is_array($arr)) {
+            return $arr;
+        }
+
+        $r = array();
+        foreach ($arr as $k => $v) {
+            if (is_null($v)) {
+                continue;
+            }
+
+            if ($prefix && $k && !is_int($k)) {
+                $k = $prefix."[".$k."]";
+            } elseif ($prefix) {
+                $k = $prefix."[]";
+            }
+
+            if (is_array($v)) {
+                $r[] = encode_array($v, $k, true);
+            } else {
+                $r[] = urlencode($k)."=".urlencode($v);
+            }
+        }
+
+        return implode("&", $r);
 }
