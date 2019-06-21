@@ -17,3 +17,4 @@ Best practices for effectively managing an Elgg-based site.
 	getting-help
 	security
 	uservalidation
+	spam
