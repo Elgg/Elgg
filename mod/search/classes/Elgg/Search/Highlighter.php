@@ -38,45 +38,28 @@ class Highlighter {
 
 		$text = _elgg_get_display_query($text);
 
-		$i = 1;
-		$replace_html = [
-			'span' => rand(10000, 99999),
-			'class' => rand(10000, 99999),
-			'search-highlight' => rand(10000, 99999),
-			'search-highlight-color' => rand(10000, 99999)
-		];
-
 		$parts = elgg_extract('query_parts', $this->params);
 		if (empty($parts)) {
 			return $text;
 		}
-		
-		foreach ($parts as $part) {
+
+		foreach ($parts as $index => $part) {
 			// remove any boolean mode operators
 			$part = preg_replace("/([\-\+~])([\w]+)/i", '$2', $part);
 
 			// escape the delimiter and any other regexp special chars
 			$part = preg_quote($part, '/');
-
-			$search = "/($part)/i";
-
-			// Must replace with placeholders in case one of the search terms is in the html string.
-			// Later will replace the placeholders with the actual html.
-			$span = $replace_html['span'];
-			$class = $replace_html['class'];
-			$highlight = $replace_html['search-highlight'];
-			$color = $replace_html['search-highlight-color'];
-
-			$replace = "<$span $class=\"$highlight $color{$i}\">$1</$span>";
-			$text = preg_replace($search, $replace, $text);
-			$i++;
+			$parts[$index] = $part;
 		}
+		
+		$search = "/(" . implode('|', $parts) . ")/i";
 
-		foreach ($replace_html as $replace => $search) {
-			$text = str_replace($search, $replace, $text);
-		}
-
-		return $text;
+		return preg_replace_callback($search, function($matches) use ($parts) {
+			$text = $matches[0];
+			$i = array_search($text, $parts) + 1;
+			
+			return "<span class=\"search-highlight search-highlight-color{$i}\">{$text}</span>";
+		}, $text);
 	}
 
 	/**
