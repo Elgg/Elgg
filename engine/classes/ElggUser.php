@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Entity\ProfileData;
+
 /**
  * A user entity
  *
@@ -20,6 +22,8 @@
 class ElggUser extends \ElggEntity
 	implements Friendable {
 
+	use ProfileData;
+	
 	/**
 	 * {@inheritdoc}
 	 */
