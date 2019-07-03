@@ -971,6 +971,8 @@ class ElggPlugin extends ElggObject {
 		// Declared views first
 		$file = "{$this->getPath()}views.php";
 		if (is_file($file)) {
+			elgg_deprecated_notice("The usage of the views.php file for {$this->getDisplayName()} is deprecated. Use the elgg-plugin.php views section.", '3.1');
+			
 			$spec = Includer::includeFile($file);
 			if (is_array($spec)) {
 				$views->mergeViewsSpec($spec);

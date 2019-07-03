@@ -168,15 +168,17 @@ Setting the URL of a module
 
 You may have an AMD script outside your views you wish to make available as a module.
 
-The best way to accomplish this is by configuring the path to the file using the
-``views.php`` file in the root of your plugin:
+The best way to accomplish this is by configuring the path to the file using the ``views`` section of the
+``elgg-plugin.php`` file in the root of your plugin:
 
 .. code-block:: php
 
-    <?php // views.php
+    <?php // elgg-plugin.php
     return [
-        'default' => [
-            'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+        'views' => [
+	        'default' => [
+	            'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+	        ],
         ],
     ];
 
@@ -185,10 +187,12 @@ you can use something like this instead:
 
 .. code-block:: php
 
-    <?php // views.php
+    <?php // elgg-plugin.php
     return [
-        'default' => [
-            'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+        'views' => [
+	        'default' => [
+	            'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+	        ],
         ],
     ];
 

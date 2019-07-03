@@ -123,7 +123,6 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			'user_setting_name' => 'user_setting_value',
 		],
 
-		// this is identical to using views.php in Elgg 2.x series
 		'views' => [
 			'default' => [
 				'cool_lib/' => __DIR__ . '/vendors/cool_lib/dist/',
