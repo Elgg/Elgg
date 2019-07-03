@@ -874,6 +874,8 @@ class ElggPlugin extends ElggObject {
 		$this->registerActions();
 		$this->registerEntities();
 		$this->registerWidgets();
+		$this->registerHooks();
+		$this->registerEvents();
 
 		$this->getBootstrap()->init();
 	}
@@ -1177,6 +1179,68 @@ class ElggPlugin extends ElggObject {
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
 				elgg_set_entity_class($entity['type'], $entity['subtype']);
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's hooks provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerHooks() {
+		$hooks = _elgg_services()->hooks;
+
+		$spec = (array) $this->getStaticConfig('hooks', []);
+
+		foreach ($spec as $name => $types) {
+			foreach ($types as $type => $callbacks) {
+				foreach ($callbacks as $callback => $hook_spec) {
+					if (!is_array($hook_spec)) {
+						continue;
+					}
+					
+					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+					
+					if ($unregister) {
+						$hooks->unregisterHandler($name, $type, $callback);
+					} else {
+						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+			
+						$hooks->registerHandler($name, $type, $callback, $priority);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's events provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerEvents() {
+		$events = _elgg_services()->events;
+
+		$spec = (array) $this->getStaticConfig('events', []);
+
+		foreach ($spec as $name => $types) {
+			foreach ($types as $type => $callbacks) {
+				foreach ($callbacks as $callback => $hook_spec) {
+					if (!is_array($hook_spec)) {
+						continue;
+					}
+					
+					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+
+					if ($unregister) {
+						$events->unregisterHandler($name, $type, $callback);
+					} else {
+						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+			
+						$events->registerHandler($name, $type, $callback, $priority);
+					}
+				}
 			}
 		}
 	}
