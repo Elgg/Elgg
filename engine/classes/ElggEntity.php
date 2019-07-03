@@ -709,15 +709,25 @@ abstract class ElggEntity extends \ElggData implements
 	 * @since 1.8
 	 */
 	public function deleteAnnotations($name = null) {
-		$options = [
-			'guid' => $this->guid,
-			'limit' => 0
-		];
-		if ($name) {
-			$options['annotation_name'] = $name;
+		if ($this->guid) {
+			$options = [
+				'guid' => $this->guid,
+				'limit' => 0
+			];
+			if ($name) {
+				$options['annotation_name'] = $name;
+			}
+	
+			return elgg_delete_annotations($options);
 		}
-
-		return elgg_delete_annotations($options);
+		
+		if ($name) {
+			unset($this->temp_annotations[$name]);
+		} else {
+			$this->temp_annotations = [];
+		}
+		
+		return true;
 	}
 
 	/**

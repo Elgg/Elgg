@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This requires elgg_get_logged_in_user_guid() in session.php, the access 
+ * This requires elgg_get_logged_in_user_guid() in session.php, the access
  * constants defined in entities.php, and elgg_normalize_url() in output.php
  *
  * @group ElggEntity
@@ -70,6 +70,14 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 
 	public function testGettingNonexistentMetadataNoDatabase() {
 		$this->assertNull($this->obj->foo);
+	}
+	
+	public function testAnnotationsNoDatabase() {
+		$this->obj->annotate('foo', 'bar');
+		$this->assertEquals(['bar'], $this->obj->getAnnotations(['annotation_name' => 'foo']));
+		
+		$this->obj->deleteAnnotations('foo');
+		$this->assertEmpty($this->obj->getAnnotations(['annotation_name' => 'foo']));
 	}
 
 	public function testSimpleGetters() {
