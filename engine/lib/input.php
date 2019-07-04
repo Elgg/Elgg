@@ -236,7 +236,7 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 		'comment' => 1,
 		'cdata' => 1,
 
-		'deny_attribute' => 'class, on*',
+		'deny_attribute' => 'class, on*, formaction',
 		'hook_tag' => '_elgg_htmlawed_tag_post_processor',
 
 		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
