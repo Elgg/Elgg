@@ -22,6 +22,7 @@ if (elgg_get_config('security_email_require_password') && ($user->getGUID() === 
 		'#label' => elgg_echo('email:address:password'),
 		'#help' => elgg_echo('email:address:password:help'),
 		'name' => 'email_password',
+		'autocomplete' => 'current-password',
 	]);
 }
 

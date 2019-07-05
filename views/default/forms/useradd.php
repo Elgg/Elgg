@@ -58,18 +58,20 @@ echo elgg_view_field([
 
 echo elgg_view_field([
 	'#type' => 'password',
+	'#label' => elgg_echo('password'),
 	'name' => 'password',
 	'value' => $password,
-	'#label' => elgg_echo('password'),
 	'required' => true,
+	'autocomplete' => 'new-password',
 ]);
 
 echo elgg_view_field([
 	'#type' => 'password',
+	'#label' => elgg_echo('passwordagain'),
 	'name' => 'password2',
 	'value' => $password2,
-	'#label' => elgg_echo('passwordagain'),
 	'required' => true,
+	'autocomplete' => 'new-password',
 ]);
 
 echo elgg_view_field([
