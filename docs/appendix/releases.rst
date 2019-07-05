@@ -9,7 +9,11 @@ We adhere to `semantic versioning`_.
 
 Follow the blog to `stay up to date on the latest releases`__.
 
-__ https://community.elgg.org/blog/all
+__ https://elgg.org/blog/all
+
+.. contents:: Contents
+   :local:
+   :depth: 1
 
 Patch/Bugfix Releases (2.1.x)
 -----------------------------
@@ -79,6 +83,34 @@ Backwards compatibility
 
 Some parts of the system need some additional clarification if we are talking about being backwards compatible.
 Everything that is considered public API needs to adhere to the backwards compatibility rules that are part of `semantic versioning`_.
+
+Classes and functions
+=====================
+
+Classes and functions marked with ``@internal`` are not considered part of the public API and can be changed / removed at any time.
+If a class is marked with ``@internal`` all properties and methods in that class are considered private API and therefor can be 
+changed / removed at any time.
+
+Event and plugin hook callbacks
+===============================
+
+All event and plugin hook callbacks should never be called directly but only be called by their respective event / plugin hook.
+
+The name of the callback function is considered API as plugin developers need to be able to rely on the fact that they can 
+(un)register a callback. This only applies if the callback still serves the same purpose. If a callback becomes obsolete its allowed 
+to be removed from the system.
+
+.. warning::
+
+	Exceptions to these rules are the callback functions related to the following ``system`` events, these callbacks 
+	can be renamed / removed at any time. 
+
+	- ``plugins_load``
+	- ``plugins_boot``
+	- ``init``
+	- ``ready``
+	- ``shutdown``
+	- ``upgrade``
 
 Views
 =====
