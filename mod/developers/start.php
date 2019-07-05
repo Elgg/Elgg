@@ -151,7 +151,7 @@ function developers_process_settings() {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _developers_page_menu($hook, $type, $return, $params) {

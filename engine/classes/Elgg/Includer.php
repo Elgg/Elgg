@@ -5,7 +5,7 @@ namespace Elgg;
 /**
  * Allow executing scripts without $this context or local vars
  *
- * @access private
+ * @internal
  */
 final class Includer {
 

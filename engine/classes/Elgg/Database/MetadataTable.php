@@ -15,7 +15,7 @@ use Elgg\Database\Clauses\OrderByClause;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  */
 class MetadataTable {
 

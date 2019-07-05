@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
@@ -7,8 +8,7 @@ namespace Elgg\I18n;
  * A message that always ignores all parameters and just returns the template.
  *
  * @since 1.11
- *
- * @access private
+ * @internal
  */
 final class NullMessage extends MessageTemplate {
 	

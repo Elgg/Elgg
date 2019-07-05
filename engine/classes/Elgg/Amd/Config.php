@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Amd;
 
 /**
@@ -7,7 +8,7 @@ namespace Elgg\Amd;
  * @package    Elgg.Core
  * @subpackage JavaScript
  *
- * @access private
+ * @internal
  */
 class Config {
 	private $baseUrl = '';

@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Structs\Collection;
 
 use Elgg\Structs\Collection;
@@ -7,8 +8,7 @@ use Elgg\Structs\Collection;
  * Uses native PHP array to implement the Collection interface.
  *
  * @since 1.10
- *
- * @access private
+ * @internal
  */
 final class InMemory implements Collection {
 	/** @var array */

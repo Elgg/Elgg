@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 use Elgg\BootService;
@@ -10,8 +11,8 @@ use Psr\Log\LoggerInterface;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
- * @since  1.10.0
+ * @internal
+ * @since 1.10.0
  */
 class ConfigTable {
 		

@@ -10,7 +10,7 @@ namespace Elgg\Cache;
  *
  * Based on https://github.com/cash/LRUCache
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Cache

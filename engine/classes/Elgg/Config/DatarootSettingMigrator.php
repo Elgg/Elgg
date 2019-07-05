@@ -5,7 +5,7 @@ namespace Elgg\Config;
 /**
  * Migrates dataroot database value to settings.php
  *
- * @access private
+ * @internal
  */
 class DatarootSettingMigrator extends SettingsMigrator {
 

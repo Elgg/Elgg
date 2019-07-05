@@ -18,7 +18,7 @@ use Throwable;
 /**
  * Upgrade service for Elgg
  *
- * @access private
+ * @internal
  */
 class UpgradeService {
 

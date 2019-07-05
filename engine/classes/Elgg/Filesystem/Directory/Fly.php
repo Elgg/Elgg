@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Filesystem\Directory;
 
 use Elgg\Filesystem\Directory;
@@ -12,8 +13,7 @@ use League\Flysystem\Memory\MemoryAdapter;
  * A wrapper around Flysystem that implements Elgg's filesystem API.
  *
  * @since 1.10.0
- *
- * @access private
+ * @internal
  */
 final class Fly implements Directory {
 

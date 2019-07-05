@@ -14,7 +14,7 @@
  * Allow disabled entities and metadata to be returned by getter functions
  *
  * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
- * @access private
+ * @internal
  * @deprecated 3.0
  */
 global $ENTITY_SHOW_HIDDEN_OVERRIDE;
@@ -77,7 +77,7 @@ function elgg_get_ignore_access() {
  *                        database rather than using this function's cache.
  *
  * @return string A list of access collections suitable for using in an SQL call
- * @access private
+ * @internal
  */
 function get_access_list($user_guid = 0, $ignored = 0, $flush = false) {
 	return _elgg_services()->accessCollections->getAccessList($user_guid, $flush);
@@ -542,7 +542,7 @@ function access_friends_acl_get_name(\Elgg\Hook $hook) {
  *
  * @return array
  *
- * @access private
+ * @internal
  * @codeCoverageIgnore
  */
 function access_test($hook, $type, $value, $params) {

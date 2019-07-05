@@ -111,7 +111,6 @@ class ElggGroup extends \ElggEntity {
 	 * Return the content access mode used by group_gatekeeper()
 	 *
 	 * @return string One of CONTENT_ACCESS_MODE_* constants
-	 * @access private
 	 * @since 1.9.0
 	 */
 	public function getContentAccessMode() {

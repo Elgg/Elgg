@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use DateTime;
@@ -6,7 +7,7 @@ use DateTime;
 /**
  * Adds methods for setting the current time (for testing)
  *
- * @access private
+ * @internal
  */
 trait TimeUsing {
 

@@ -9,7 +9,7 @@ use ElggCache;
 /**
  * System Cache
  *
- * @access private
+ * @internal
  * @since  1.10.0
  */
 class SystemCache {
@@ -126,8 +126,6 @@ class SystemCache {
 	 * when appropriate.
 	 *
 	 * @return void
-	 *
-	 * @access private
 	 */
 	public function init() {
 		if (!$this->isEnabled()) {

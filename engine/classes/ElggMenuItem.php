@@ -583,11 +583,10 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Set the parent menu item
 	 *
-	 * This is reserved for the \ElggMenuBuilder.
-	 *
 	 * @param \ElggMenuItem $parent The parent of this menu item
 	 * @return void
-	 * @access private
+	 *
+	 * @internal This is reserved for the \ElggMenuBuilder
 	 */
 	public function setParent($parent) {
 		$this->data['parent'] = $parent;
@@ -596,10 +595,9 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Get the parent menu item
 	 *
-	 * This is reserved for the \ElggMenuBuilder.
-	 *
 	 * @return \ElggMenuItem or null
-	 * @access private
+	 *
+	 * @internal This is reserved for the \ElggMenuBuilder
 	 */
 	public function getParent() {
 		return $this->data['parent'];
@@ -608,11 +606,10 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Add a child menu item
 	 *
-	 * This is reserved for the \ElggMenuBuilder.
-	 *
 	 * @param \ElggMenuItem $item A child menu item
 	 * @return void
-	 * @access private
+	 *
+	 * @internal This is reserved for the \ElggMenuBuilder
 	 */
 	public function addChild($item) {
 		$this->data['children'][] = $item;
@@ -621,11 +618,10 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Set the menu item's children
 	 *
-	 * This is reserved for the \ElggMenuBuilder.
-	 *
 	 * @param ElggMenuItem[] $children Array of items
 	 * @return void
-	 * @access private
+	 *
+	 * @internal This is reserved for the \ElggMenuBuilder
 	 */
 	public function setChildren($children) {
 		$this->data['children'] = $children;
@@ -634,10 +630,9 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Get the children menu items
 	 *
-	 * This is reserved for the \ElggMenuBuilder.
-	 *
 	 * @return ElggMenuItem[]
-	 * @access private
+	 *
+	 * @internal This is reserved for the \ElggMenuBuilder
 	 */
 	public function getChildren() {
 		return $this->data['children'];
@@ -646,12 +641,11 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Sort the children
 	 *
-	 * This is reserved for the \ElggMenuBuilder.
-	 *
 	 * @param callable $sortFunction A function that is passed to usort()
 	 *
 	 * @return void
-	 * @access private
+	 *
+	 * @internal This is reserved for the \ElggMenuBuilder
 	 */
 	public function sortChildren($sortFunction) {
 		foreach ($this->data['children'] as $key => $node) {

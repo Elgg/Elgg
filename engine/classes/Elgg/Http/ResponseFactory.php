@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @since 2.3
- * @access private
+ * @internal
  */
 class ResponseFactory {
 

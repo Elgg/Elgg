@@ -14,9 +14,8 @@ use Elgg\Router\RouteRegistrationService;
  *
  * Use the elgg_* versions instead.
  *
- * @access     private
  * @internal
- * @since      1.9.0
+ * @since 1.9.0
  */
 class ActionsService {
 
@@ -66,7 +65,6 @@ class ActionsService {
 	 * @return bool
 	 *
 	 * @see    elgg_register_action()
-	 * @access private
 	 * @throws \InvalidParameterException
 	 */
 	public function register($action, $handler = "", $access = 'logged_in') {
@@ -125,8 +123,7 @@ class ActionsService {
 	 *
 	 * @return bool
 	 *
-	 * @see    elgg_unregister_action()
-	 * @access private
+	 * @see elgg_unregister_action()
 	 */
 	public function unregister($action) {
 		$action = trim($action, '/');
@@ -147,8 +144,7 @@ class ActionsService {
 	 *
 	 * @return bool
 	 *
-	 * @see    elgg_action_exists()
-	 * @access private
+	 * @see elgg_action_exists()
 	 */
 	public function exists($action) {
 		$action = trim($action, '/');

@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 use Elgg\Config as ElggConfig;
@@ -17,7 +18,7 @@ use ElggCrypto;
  * is not too difficult to find). As such, systems with a low getrandmax() value created particularly
  * weak keys. You can check key string using getStrength().
  *
- * @access private
+ * @internal
  * @since  1.10.0
  */
 class SiteSecret {
@@ -45,8 +46,7 @@ class SiteSecret {
 	 *
 	 * @param bool $raw If true, a binary key will be returned
 	 *
-	 * @return string Site secret.
-	 * @access private
+	 * @return string Site secret
 	 */
 	public function get($raw = false) {
 		if (!$this->key) {
@@ -81,7 +81,6 @@ class SiteSecret {
 	 * the key.
 	 *
 	 * @return string "strong", "moderate", or "weak"
-	 * @access private
 	 */
 	public function getStrength() {
 		$secret = $this->get();

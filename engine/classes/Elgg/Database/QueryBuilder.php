@@ -171,7 +171,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * {@inheritdoc}
 	 *
-	 * @access private Use create() method on the extending class
+	 * @internal Use create() method on the extending class
 	 */
 	public function from($table, $alias = null) {
 		$this->table_name = $table;
@@ -183,7 +183,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * {@inheritdoc}
 	 *
-	 * @access private Use create() method on the extending class
+	 * @internal Use create() method on the extending class
 	 */
 	public function insert($insert = null) {
 		$this->table_name = $insert;
@@ -194,7 +194,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * {@inheritdoc}
 	 *
-	 * @access private Use create() method on the extending class
+	 * @internal Use create() method on the extending class
 	 */
 	public function update($table = null, $alias = null) {
 		$this->table_name = $table;
@@ -206,7 +206,7 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	/**
 	 * {@inheritdoc}
 	 *
-	 * @access private Use create() method on the extending class
+	 * @internal Use create() method on the extending class
 	 */
 	public function delete($table = null, $alias = null) {
 		$this->table_name = $table;

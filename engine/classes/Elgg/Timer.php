@@ -1,10 +1,11 @@
 <?php
+
 namespace Elgg;
 
 /**
  * Capture timing info for profiling
  *
- * @access private
+ * @internal
  */
 class Timer {
 	const MARKER_BEGIN = ':begin';

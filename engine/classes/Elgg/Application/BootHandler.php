@@ -8,7 +8,6 @@ use Elgg\Event;
 /**
  * Handles application boot sequence
  *
- * @access private
  * @internal
  */
 class BootHandler {

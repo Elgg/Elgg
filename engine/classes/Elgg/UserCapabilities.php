@@ -17,7 +17,7 @@ use InvalidArgumentException;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
+ * @internal
  * @since 2.2
  */
 class UserCapabilities {

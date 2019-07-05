@@ -19,7 +19,7 @@ use Elgg\Database\Seeds\Providers\LocalImage;
  * Seeding trait
  * Can be used to easily create new random users, groups and objects in the database
  *
- * @access private
+ * @internal
  */
 trait Seeding {
 

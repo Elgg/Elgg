@@ -7,7 +7,7 @@
  *
  * @return array
  *
- * @access private
+ * @internal
  *
  * @since 3.0
  */

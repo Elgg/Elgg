@@ -185,7 +185,7 @@ function elgg_disable_simplecache() {
  * @param bool   $empty If true, we just empty the directory
  *
  * @return boolean Whether the dir was successfully deleted.
- * @access private
+ * @internal
  */
 function _elgg_rmdir($dir, $empty = false) {
 	if (empty($dir)) {
@@ -239,7 +239,7 @@ function elgg_flush_caches() {
  * Checks if /cache directory has been symlinked to views simplecache directory
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_is_cache_symlinked() {
 	$root_path = elgg_get_root_path();
@@ -257,7 +257,7 @@ function _elgg_is_cache_symlinked() {
  * Symlinks /cache directory to views simplecache directory
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_symlink_cache() {
 
@@ -299,8 +299,7 @@ function _elgg_symlink_cache() {
  * when appropriate.
  *
  * @return void
- *
- * @access private
+ * @internal
  */
 function _elgg_cache_init() {
 	_elgg_services()->systemCache->init();
@@ -311,7 +310,6 @@ function _elgg_cache_init() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_disable_caches() {
 	_elgg_services()->boot->getCache()->disable();
@@ -328,7 +326,6 @@ function _elgg_disable_caches() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_clear_caches() {
 	_elgg_services()->boot->invalidateCache();
@@ -346,7 +343,6 @@ function _elgg_clear_caches() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_reset_opcache() {
 	if (!function_exists('opcache_reset')) {
@@ -361,7 +357,6 @@ function _elgg_reset_opcache() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_enable_caches() {
 	_elgg_services()->boot->getCache()->enable();
@@ -378,7 +373,6 @@ function _elgg_enable_caches() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_rebuild_public_container() {
 	$services = _elgg_services();

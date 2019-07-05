@@ -96,7 +96,7 @@ function elgg_get_registered_tag_metadata_names() {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_tags_init() {
 	// register the standard tags metadata name

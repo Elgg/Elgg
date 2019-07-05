@@ -92,7 +92,7 @@ function elgg_disable_query_cache() {
  * @param array  $value Array of tests
  *
  * @return array
- * @access private
+ * @internal
  * @codeCoverageIgnore
  */
 function _elgg_db_test($hook, $type, $value) {
@@ -123,7 +123,7 @@ function _elgg_db_register_seeds(\Elgg\Hook $hook) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_db_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_db_test');

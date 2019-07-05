@@ -4,8 +4,6 @@ namespace Elgg\Search;
 
 /**
  * Highlights relavant substrings in search results
- *
- * @access private
  */
 class Highlighter {
 
@@ -18,8 +16,6 @@ class Highlighter {
 	 * Constructor
 	 *
 	 * @param array $params Search params
-	 *
-	 * @access private
 	 */
 	public function __construct(array $params = []) {
 		$this->params = $params;
@@ -31,8 +27,6 @@ class Highlighter {
 	 * @param string $text Text to highlight
 	 *
 	 * @return string
-	 *
-	 * @access public
 	 */
 	public function highlightWords($text) {
 
@@ -73,8 +67,6 @@ class Highlighter {
 	 * @param int    $max_length        Maximum length of the truncated and highlighted text (default: 300)
 	 *
 	 * @return string
-	 *
-	 * @access public
 	 */
 	public function highlight($text, $min_match_context = 30, $max_length = 300) {
 

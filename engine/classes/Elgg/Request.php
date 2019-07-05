@@ -32,9 +32,6 @@ class Request {
 	 *
 	 * @param PublicContainer $dic          DI container
 	 * @param HttpRequest     $http_request Request
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function __construct(PublicContainer $dic, HttpRequest $http_request) {
 		$this->http_request = $http_request;

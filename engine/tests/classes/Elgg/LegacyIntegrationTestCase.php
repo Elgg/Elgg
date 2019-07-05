@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
  * DO NOT EXTEND THIS CLASS IF YOU ARE WRITING NEW TESTS
  *
  * @deprecated
- * @access private
+ * @internal
  */
 abstract class LegacyIntegrationTestCase extends IntegrationTestCase {
 

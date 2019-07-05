@@ -11,7 +11,7 @@ use Elgg\PluginHooksService;
  *
  * Populates the database with rows for testing
  *
- * @access private
+ * @internal
  */
 class Seeder {
 

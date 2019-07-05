@@ -41,7 +41,7 @@ namespace Elgg;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Autoloader

@@ -28,9 +28,6 @@ class UnpreparedMenu {
 	 * @param array                    $params Parameters to be passed to the "prepare" hook and views.
 	 *                                         Must include value for "name".
 	 * @param ElggMenuItem[]|MenuItems $items  Menu items
-	 *
-	 * @access   private
-	 * @internal Do not use. Use the `elgg()->menus` service methods instead.
 	 */
 	public function __construct(array $params, $items) {
 		$this->params = $params;

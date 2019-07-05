@@ -85,7 +85,7 @@ function elgg_get_viewtype() {
  * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
  *
  * @return bool
- * @access private
+ * @internal
  * @since 1.9
  */
 function _elgg_is_valid_viewtype($viewtype) {
@@ -262,7 +262,6 @@ function elgg_view($view, $vars = [], $viewtype = '') {
  * @return string The parsed view
  *
  * @see elgg_view()
- * @access private
  */
 function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
 	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
@@ -443,7 +442,7 @@ function elgg_view_resource($name, array $vars = []) {
  *
  * @param string $title Page title for <head>
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_views_prepare_head($title) {
 	$params = [
@@ -672,7 +671,7 @@ function elgg_view_layout($layout_name, $vars = []) {
  *
  * @param array $vars Vars
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_normalize_content_layout_vars(array $vars = []) {
 
@@ -1042,7 +1041,7 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *      'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of annotations
- * @access private
+ * @internal
  */
 function elgg_view_annotation_list($annotations, array $vars = []) {
 	$defaults = [
@@ -1519,7 +1518,7 @@ function elgg_view_tagcloud(array $options = []) {
  *                                  list items that are not entity, annotation or river
  * @return false|string
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function elgg_view_list_item($item, array $vars = []) {
 
@@ -1590,7 +1589,7 @@ function elgg_unregister_rss_link() {
  * Should the RSS view of this URL be linked to?
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_has_rss_link() {
 	if (_elgg_config()->disable_rss) {
@@ -1615,7 +1614,7 @@ function _elgg_has_rss_link() {
  * @return bool returns false if folder can't be read
  * @since 1.7.0
  * @see elgg_set_view_location()
- * @access private
+ * @internal
  */
 function autoregister_views($view_base, $folder, $ignored, $viewtype) {
 	return _elgg_services()->views->autoregisterViews($view_base, $folder, $viewtype);
@@ -1630,7 +1629,7 @@ function autoregister_views($view_base, $folder, $ignored, $viewtype) {
  * @param array  $params  Array of parameters
  *
  * @return string|null View content minified (if css/js type)
- * @access private
+ * @internal
  */
 function _elgg_views_minify($hook, $type, $content, $params) {
 	if (preg_match('~[\.-]min\.~', $params['view'])) {
@@ -1659,7 +1658,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
  * @param array  $params  Array of parameters
  *
  * @return string|null View content
- * @access private
+ * @internal
  */
 function _elgg_views_preprocess_css($hook, $type, $content, $params) {
 	$options = elgg_extract('compiler_options', $params, []);
@@ -1675,7 +1674,7 @@ function _elgg_views_preprocess_css($hook, $type, $content, $params) {
  * @param array  $params  Array of parameters
  *
  * @return string|null View content minified (if css/js type)
- * @access private
+ * @internal
  */
 function _elgg_views_amd($hook, $type, $content, $params) {
 	$filter = new \Elgg\Amd\ViewFilter();
@@ -1687,7 +1686,7 @@ function _elgg_views_amd($hook, $type, $content, $params) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_views_send_header_x_frame_options() {
 	elgg_set_http_header('X-Frame-Options: SAMEORIGIN');
@@ -1718,7 +1717,7 @@ function _elgg_views_send_header_x_frame_options() {
  * @param string $path Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_view_may_be_altered($view, $path) {
 	$views = _elgg_services()->views;
@@ -1748,7 +1747,7 @@ function _elgg_view_may_be_altered($view, $path) {
  * This ensures simplecache is cleared during upgrades. See #2252
  *
  * @return void
- * @access private
+ * @internal
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
@@ -1841,7 +1840,7 @@ function elgg_views_boot() {
  * Unlike _elgg_get_js_page_data(), the keys returned are literal expressions.
  *
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_get_js_site_data() {
 	$language = _elgg_config()->language;
@@ -1865,7 +1864,7 @@ function _elgg_get_js_site_data() {
  * Get the initial contents of "elgg" client side. Will be extended by elgg.js.
  *
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_get_js_page_data() {
 	$data = elgg_trigger_plugin_hook('elgg.data', 'page', null, []);
@@ -1922,7 +1921,7 @@ function _elgg_get_js_page_data() {
  * @param string $viewtype Temporary viewtype ('' to leave current)
  *
  * @return mixed
- * @access private
+ * @internal
  */
 function _elgg_view_under_viewtype($view, $vars, $viewtype) {
 	$current_view_type = null;
@@ -1948,7 +1947,7 @@ function _elgg_view_under_viewtype($view, $vars, $viewtype) {
  * @param array  $return Data
  * @param array  $params Hook params
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_set_lightbox_config($hook, $type, $return, $params) {
 
@@ -1975,7 +1974,7 @@ function _elgg_set_lightbox_config($hook, $type, $return, $params) {
  * @param \Elgg\Hook $hook 'view_vars' 'elements/forms/help'
  *
  * @return void|array
- * @access private
+ * @internal
  */
 function _elgg_views_file_help_upload_limit(\Elgg\Hook $hook) {
 
@@ -2011,7 +2010,7 @@ function _elgg_views_file_help_upload_limit(\Elgg\Hook $hook) {
  * @param bool  $map_sprites Map legacy Elgg sprites
  *
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_map_icon_glyph_class(array $classes, $map_sprites = true) {
 

@@ -9,7 +9,7 @@ namespace Elgg\I18n;
  *
  * @since 1.11
  *
- * @access private
+ * @internal
  */
 interface TranslatorInterface {
 	

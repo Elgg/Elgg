@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
@@ -8,8 +9,7 @@ namespace Elgg\I18n;
  *                 if we ever support a Table data structure.
  *
  * @since 1.11
- *
- * @access private
+ * @internal
  */
 interface MessageBundle {
 	

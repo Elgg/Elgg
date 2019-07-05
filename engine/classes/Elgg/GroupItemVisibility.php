@@ -9,7 +9,7 @@ namespace Elgg;
  * @package    Elgg.Core
  * @subpackage Groups
  *
- * @access private
+ * @internal
  * @deprecated 3.0 Use ElggGroup::canAccessContent or Gatekeeper::assertAccessibleGroup
  */
 class GroupItemVisibility {
