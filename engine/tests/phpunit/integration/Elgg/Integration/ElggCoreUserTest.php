@@ -237,6 +237,99 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 			$this->assertFalse($object->isEnabled());
 		}
 	}
+	
+	/**
+	 * @dataProvider profileDataProvider
+	 */
+	public function testSavePrivateProfileData($name, $value) {
+		$profile_user = $this->createUser();
+		$reading_user = $this->createUser();
+		
+		$session = elgg_get_session();
+		
+		// store profile data
+		$session->setLoggedInUser($profile_user);
+		
+		$profile_user->setProfileData($name, $value, ACCESS_PRIVATE);
+		
+		// correctly stored
+		$this->assertEquals($value, $profile_user->getProfileData($name));
+		$this->assertEquals($value, $profile_user->$name); // metadata BC
+		
+		// try to read as different user
+		$session->setLoggedInUser($reading_user);
+		
+		$this->assertEmpty($profile_user->getProfileData($name));
+		
+		// cleanup
+		$session->removeLoggedInUser();
+		$profile_user->delete();
+		$reading_user->delete();
+	}
+	
+	/**
+	 * @dataProvider profileDataProvider
+	 */
+	public function testSavePublicProfileData($name, $value) {
+		$profile_user = $this->createUser();
+		$reading_user = $this->createUser();
+		
+		$session = elgg_get_session();
+		
+		// store profile data
+		$session->setLoggedInUser($profile_user);
+		
+		$profile_user->setProfileData($name, $value, ACCESS_PUBLIC);
+		
+		// correctly stored
+		$this->assertEquals($value, $profile_user->getProfileData($name));
+		$this->assertEquals($value, $profile_user->$name); // metadata BC
+		
+		// try to read as different user
+		$session->setLoggedInUser($reading_user);
+		
+		$this->assertEquals($value, $profile_user->getProfileData($name));
+		
+		// cleanup
+		$session->removeLoggedInUser();
+		$profile_user->delete();
+		$reading_user->delete();
+	}
+	
+	public function profileDataProvider() {
+		return [
+			['field_a', 'value'],
+			['field_b', 123],
+			['field_a', ['foo', 'bar']],
+			['field_b', [123, 456]],
+			['field_c', ['foo', 123]],
+			['field_d', null],
+		];
+	}
+	
+	/**
+	 * @dataProvider emptyProfileDataProvider
+	 */
+	public function testSaveEmptyProfileData($value) {
+		$user = $this->createUser();
+		
+		$user->setProfileData('foo', 'bar');
+		
+		$this->assertEquals('bar', $user->getProfileData('foo'));
+		
+		$user->setProfileData('foo', $value);
+		
+		$this->assertEmpty($user->getProfileData('foo'));
+		
+		$user->delete();
+	}
+	
+	public function emptyProfileDataProvider() {
+		return [
+			[''],
+			[null],
+		];
+	}
 
 	protected function fetchUser($guid) {
 		$qb = Select::fromTable('entities', 'e');

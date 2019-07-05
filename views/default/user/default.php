@@ -39,13 +39,16 @@ if ($entity->isBanned()) {
 	$params['subtitle'] = elgg_echo('banned');
 } else {
 	$subtitle = '';
-	$location = $entity->location;
+	$location = $entity->getProfileData('location');
 	if (is_string($location) && $location !== '') {
 		$location = elgg_view_icon('map-marker') . ' ' . $location;
 		$subtitle .= elgg_format_element('div', [], $location);
 	}
 	
-	$subtitle .= elgg_format_element('div', [], $entity->briefdescription);
+	$briefdescription = $entity->getProfileData('briefdescription');
+	if (is_string($briefdescription) && $briefdescription !== '') {
+		$subtitle .= elgg_format_element('div', [], $briefdescription);
+	}
 	
 	$params['subtitle'] = $subtitle;
 	if (elgg_view_exists('user/status')) {

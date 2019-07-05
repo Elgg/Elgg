@@ -7,7 +7,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!$entity instanceof ElggEntity) {
+if (!$entity instanceof ElggUser) {
 	return;
 }
 
@@ -15,10 +15,9 @@ $permalink = htmlspecialchars($entity->getURL(), ENT_NOQUOTES, 'UTF-8');
 $pubdate = date('r', $entity->getTimeCreated());
 $title = htmlspecialchars($entity->getDisplayName(), ENT_NOQUOTES, 'UTF-8');
 
-if ($entity->description) {
-	$description = elgg_autop($entity->description);
-} else {
-	$description = '';
+$description = $entity->getProfileData('description');
+if (!empty($description)) {
+	$description = elgg_autop($description);
 }
 
 $georss = elgg_view('page/components/georss', $vars);
