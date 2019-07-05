@@ -93,13 +93,21 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 					'path' => '/plugin/{foo?}',
 					'resource' => 'plugin/foo',
 				],
-			]
+			],
+			'settings' => [
+				'default1' => 'set1',
+			],
+			'user_settings' => [
+				'user_default1' => 'set1',
+			],
 		];
 
 		$this->assertEquals($config['entities'], $plugin->getStaticConfig('entities'));
 		$this->assertEquals($config['actions'], $plugin->getStaticConfig('actions'));
 		$this->assertEquals($config['widgets'], $plugin->getStaticConfig('widgets'));
 		$this->assertEquals($config['routes'], $plugin->getStaticConfig('routes'));
+		$this->assertEquals($config['settings'], $plugin->getStaticConfig('settings'));
+		$this->assertEquals($config['user_settings'], $plugin->getStaticConfig('user_settings'));
 
 		$plugin->delete();
 	}

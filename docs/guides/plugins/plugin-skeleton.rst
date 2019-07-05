@@ -54,8 +54,6 @@ The following files for plugin ``example`` would go in ``/mod/example/``
                 example_widget/
                     content.php
                     edit.php
-    activate.php
-    deactivate.php
     elgg-plugin.php
     CHANGES.txt
     COPYRIGHT.txt
@@ -144,8 +142,3 @@ Views
 In order to override core views, a plugin's views can be placed in ``views/``, or an ``elgg-plugin.php`` config file can be used for more detailed file/path mapping. See :doc:`/guides/views`.
 
 Javascript and CSS will live in the views system. See :doc:`/guides/javascript`.
-
-activate.php and deactivate.php
--------------------------------
-
-The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run respectively upon plugin activation or deactivation. Use these files to perform one-time events such as registering a persistent admin notice, registering subtypes, or performing garbage collection when deactivated.

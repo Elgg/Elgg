@@ -51,6 +51,8 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``user_settings`` - eliminates the need for setting default values on each call to ``elgg_get_plugin_user_setting()``
  * ``views`` - allows plugins to alias vendor assets to a path within the Elgg's view system
  * ``widgets`` - eliminates the need for calling ``elgg_register_widget_type()``
+ * ``events`` - eliminates the need for calling ``elgg_register_event_handler()``
+ * ``hooks`` - eliminates the need for calling ``elgg_register_plugin_hook_handler()``
 
 
 .. code-block:: php
@@ -123,10 +125,49 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			'user_setting_name' => 'user_setting_value',
 		],
 
-		// this is identical to using views.php in Elgg 2.x series
 		'views' => [
 			'default' => [
 				'cool_lib/' => __DIR__ . '/vendors/cool_lib/dist/',
+			],
+		],
+		
+		'hooks' => [
+			'register' => [
+				'menu:owner_block' => [
+					'blog_owner_block_menu' => [
+						'priority' => 700,
+					],
+				],
+			],
+			'likes:is_likable' => [
+				'object:blog' => [
+					'Elgg\Values::getTrue' => [],
+				],
+			],
+			'usersettings:save' => [
+				'user' => [
+					'_elgg_save_notification_user_settings' => ['unregister' => true],
+				],
+			],
+		],
+		
+		'events' => [
+			'delete' => [
+				'object' => [
+					'file_handle_object_delete' => [
+						'priority' => 999,
+					],
+				],
+			],
+			'create' => [
+				'relationship' => [
+					'_elgg_send_friend_notification' => [],
+				],
+			],
+			'log' => [
+				'systemlog' => [
+					'system_log_default_logger' => ['unregister' => true],
+				],
 			],
 		],
 	];
@@ -169,14 +210,6 @@ Here's a trivial example configuring view locations via the ``views`` key:
 			],
 		],
 	];
-
-activate.php, deactivate.php
-============================
-
-The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run
-upon plugin activation and deactivation. Use these files to perform one-time
-events such as registering a persistent admin notice, registering subtypes, or performing
-garbage collection when deactivated.
 
 manifest.xml
 ============
