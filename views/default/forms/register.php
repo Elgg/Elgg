@@ -63,6 +63,7 @@ $fields = [
 		'name' => 'password',
 		'value' => $password,
 		'required' => true,
+		'autocomplete' => 'new-password',
 	],
 	[
 		'#type' => 'password',
@@ -70,6 +71,7 @@ $fields = [
 		'name' => 'password2',
 		'value' => $password2,
 		'required' => true,
+		'autocomplete' => 'new-password',
 	],
 ];
 
