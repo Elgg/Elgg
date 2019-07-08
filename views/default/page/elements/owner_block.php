@@ -24,7 +24,10 @@ $header = elgg_view_entity($owner, [
 $extra_class = '';
 $body = '';
 if (elgg_extract('show_owner_block_menu', $vars, true)) {
-	$body .= elgg_view_menu('owner_block', ['entity' => $owner]);
+	$menu_params = elgg_extract('owner_block_menu_params', $vars, []);
+	$menu_params['entity'] = $owner;
+
+	$body .= elgg_view_menu('owner_block', $menu_params);
 } else {
 	$extra_class = 'elgg-owner-block-empty';
 }
