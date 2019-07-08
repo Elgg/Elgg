@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Forms;
 
 /**
@@ -8,7 +9,7 @@ namespace Elgg\Forms;
  * @subpackage Forms
  * @since      1.10.0
  *
- * @access private
+ * @internal
  */
 class StickyForms {
 	

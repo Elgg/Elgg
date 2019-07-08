@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Doctrine\DBAL\DriverManager;
@@ -13,7 +14,6 @@ use Elgg\Cache\QueryCache;
 /**
  * The Elgg database
  *
- * @access private
  * @internal Use the public API functions in engine/lib/database.php
  *
  * @property-read string $prefix Elgg table prefix (read only)
@@ -98,7 +98,6 @@ class Database {
 	 *
 	 * @return Connection
 	 * @throws \DatabaseException
-	 * @access private
 	 */
 	public function getConnection($type) {
 		if (isset($this->connections[$type])) {
@@ -119,7 +118,6 @@ class Database {
 	 *
 	 * @return void
 	 * @throws \DatabaseException
-	 * @access private
 	 */
 	public function setupConnections() {
 		if ($this->config->isDatabaseSplit()) {
@@ -139,7 +137,6 @@ class Database {
 	 *
 	 * @return void
 	 * @throws \DatabaseException
-	 * @access private
 	 */
 	public function connect($type = "readwrite") {
 		$conf = $this->config->getConnectionConfig($type);
@@ -319,7 +316,6 @@ class Database {
 	 *
 	 * @return string A string that is unique for each callable passed in
 	 * @since 1.9.4
-	 * @access private
 	 */
 	protected function fingerprintCallback($callback) {
 		if (is_string($callback)) {
@@ -525,7 +521,6 @@ class Database {
 	 *
 	 * @return void
 	 * @throws \DatabaseException
-	 * @access private
 	 */
 	public function runSqlScript($scriptlocation) {
 		$script = file_get_contents($scriptlocation);
@@ -575,8 +570,7 @@ class Database {
 	 * @param callable $callback A callback function to pass the results array to
 	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
-	 * @return boolean Whether registering was successful.
-	 * @access private
+	 * @return boolean Whether registering was successful
 	 */
 	public function registerDelayedQuery($query, $type, $callback = null, array $params = []) {
 		if ($type != 'read' && $type != 'write') {
@@ -598,7 +592,6 @@ class Database {
 	 * called by the system automatically on shutdown.
 	 *
 	 * @return void
-	 * @access private
 	 * @todo make protected once this class is part of public API
 	 */
 	public function executeDelayedQueries() {
@@ -632,7 +625,6 @@ class Database {
 	 * This does not take precedence over the \Elgg\Database\Config setting.
 	 *
 	 * @return void
-	 * @access private
 	 */
 	public function enableQueryCache() {
 		$this->query_cache->enable();
@@ -645,7 +637,6 @@ class Database {
 	 * in single queries.
 	 *
 	 * @return void
-	 * @access private
 	 */
 	public function disableQueryCache() {
 		$this->query_cache->disable();
@@ -655,7 +646,6 @@ class Database {
 	 * Get the number of queries made to the database
 	 *
 	 * @return int
-	 * @access private
 	 */
 	public function getQueryCount() {
 		return $this->query_count;
@@ -706,7 +696,6 @@ class Database {
 	 * @param string $type Connection type (Config constants, e.g. Config::READ_WRITE)
 	 *
 	 * @return string Empty if version cannot be determined
-	 * @access private
 	 */
 	public function getServerVersion($type) {
 		$driver = $this->getConnection($type)->getWrappedConnection();

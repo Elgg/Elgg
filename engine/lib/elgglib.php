@@ -1287,7 +1287,7 @@ function is_not_null($string) {
  * Get the global service provider
  *
  * @return \Elgg\Di\ServiceProvider
- * @access private
+ * @internal
  */
 function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
@@ -1306,7 +1306,7 @@ function _elgg_services() {
  *
  * @see elgg_register_ajax_view()
  * @elgg_pagehandler ajax
- * @access private
+ * @internal
  */
 function _elgg_ajax_page_handler($segments) {
 	elgg_ajax_gatekeeper();
@@ -1396,7 +1396,7 @@ function _elgg_ajax_page_handler($segments) {
  * @param string $type    Options type: metadata, annotation or river
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_is_valid_options_for_batch_operation($options, $type) {
 	if (empty($options) || !is_array($options)) {
@@ -1467,7 +1467,7 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
  * @since 1.8.0
  * @elgg_event_handler init system
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_walled_garden_init() {
 	if (!_elgg_config()->walled_garden) {
@@ -1503,7 +1503,7 @@ function _elgg_walled_garden_init() {
  *
  * @return array
  *
- * @access private
+ * @internal
  */
 function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
 	
@@ -1530,7 +1530,7 @@ function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
  *
  * @return array
  *
- * @access private
+ * @internal
  */
 function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
 	if (isset($accesses[ACCESS_PUBLIC])) {
@@ -1546,7 +1546,7 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
  *
  * @elgg_event_handler init system
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_init() {
 	
@@ -1577,7 +1577,7 @@ function _elgg_init() {
  * @param \Elgg\Hook $hook Hook
  *
  * @return \Elgg\Cli\Command[]
- * @access private
+ * @internal
  */
 function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 	$defaults = [
@@ -1647,7 +1647,7 @@ function _elgg_register_actions() {
  *
  * @elgg_plugin_hook unit_tests system
  * @return array
- * @access private
+ * @internal
  * @codeCoverageIgnore
  */
 function _elgg_api_test($hook, $type, $value, $params) {

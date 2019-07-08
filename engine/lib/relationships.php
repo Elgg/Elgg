@@ -141,7 +141,7 @@ function elgg_list_entities_from_relationship_count($options) {
  *
  * @return array
  *
- * @access private
+ * @internal
  * @codeCoverageIgnore
  */
 function _elgg_relationships_test($hook, $type, $tests) {
@@ -155,7 +155,7 @@ function _elgg_relationships_test($hook, $type, $tests) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_relationship_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_relationships_test');

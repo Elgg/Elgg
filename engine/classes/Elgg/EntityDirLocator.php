@@ -10,7 +10,7 @@ namespace Elgg;
  * @note This class does not require the Elgg engine to be loaded and is suitable for
  *       being used directly.
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  */

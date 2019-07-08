@@ -41,7 +41,6 @@ class ElggSession {
 	 * Constructor
 	 *
 	 * @param SessionInterface $storage The underlying Session implementation
-	 * @access private Use elgg_get_session()
 	 */
 	public function __construct(SessionInterface $storage) {
 		$this->storage = $storage;
@@ -343,7 +342,6 @@ class ElggSession {
 	 *
 	 * @return self
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public static function getMock() {
@@ -360,7 +358,6 @@ class ElggSession {
 	 *
 	 * @return ElggSession
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public static function fromDatabase(Config $config, Database $db) {
@@ -391,7 +388,6 @@ class ElggSession {
 	 *
 	 * @return ElggSession
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public static function fromFiles(Config $config) {

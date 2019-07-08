@@ -145,7 +145,7 @@ class ElggPlugin extends ElggObject {
 	 * @param string $path Path to plugin directory
 	 *
 	 * @return void
-	 * @access private
+	 * @internal
 	 */
 	public function setPath($path) {
 		$this->path = \Elgg\Project\Paths::sanitize($path, true);
@@ -189,8 +189,7 @@ class ElggPlugin extends ElggObject {
 	 * @param mixed  $default Value returned if missing
 	 *
 	 * @return mixed
-	 * @access   private
-	 * @internal For Elgg internal use only
+	 * @internal
 	 */
 	public function getStaticConfig($key, $default = null) {
 		if ($this->static_config === null) {
@@ -272,7 +271,7 @@ class ElggPlugin extends ElggObject {
 	 * @param mixed $priority Priority to normalize
 	 *
 	 * @return int
-	 * @access private
+	 * @internal
 	 */
 	public function normalizePriority($priority) {
 		// if no priority assume a priority of 1
@@ -768,7 +767,6 @@ class ElggPlugin extends ElggObject {
 	 * Bootstrap object
 	 * @return \Elgg\PluginBootstrapInterface
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function getBootstrap() {
@@ -796,7 +794,6 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function autoload() {
@@ -826,7 +823,6 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function register() {
@@ -844,7 +840,6 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @throws PluginException
 	 * @return \Closure|null
-	 * @access private
 	 * @internal
 	 */
 	public function boot() {
@@ -863,7 +858,6 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @throws InvalidParameterException
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function init() {
@@ -1026,7 +1020,6 @@ class ElggPlugin extends ElggObject {
 	 * @param string $root_path Plugin path
 	 *
 	 * @return void
-	 * @access private
 	 * @internal
 	 */
 	public static function addActionsFromStaticConfig(array $spec, $root_path) {

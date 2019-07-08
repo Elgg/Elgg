@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
@@ -10,8 +11,7 @@ namespace Elgg\I18n;
  * in-memory instead of going to the file system.
  *
  * @since 1.11
- *
- * @access private
+ * @internal
  */
 final class ArrayMessageBundle implements MessageBundle {
 	

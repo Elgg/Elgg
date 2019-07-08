@@ -1,10 +1,11 @@
 <?php
+
 namespace Elgg;
 
 /**
  * Make an object accept a timer.
  *
- * @access private
+ * @internal
  */
 trait Profilable {
 

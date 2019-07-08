@@ -20,7 +20,7 @@ use InvalidParameterException;
  *
  * API IN FLUX Do not access the methods directly, use elgg_get_annotations() instead
  *
- * @access private
+ * @internal
  */
 class Annotations extends Repository {
 

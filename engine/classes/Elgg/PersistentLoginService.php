@@ -23,7 +23,7 @@ namespace Elgg;
  *
  * @package Elgg.Core
  *
- * @access private
+ * @internal
  */
 class PersistentLoginService {
 
@@ -439,20 +439,20 @@ class PersistentLoginService {
 	protected $time;
 
 	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_get_user = 'get_user';
 
 	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_elgg_set_cookie = 'elgg_set_cookie';
 
 	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_sleep = 'sleep';
 }

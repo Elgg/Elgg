@@ -12,7 +12,7 @@
  *
  * @return bool
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_generate_plugin_entities() {
 	return _elgg_services()->plugins->generateEntities();
@@ -49,7 +49,7 @@ function elgg_plugin_exists($id) {
  *
  * @return int
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_get_max_plugin_priority() {
 	return _elgg_services()->plugins->getMaxPriority();
@@ -245,7 +245,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
  * @param mixed  $params Params
  *
  * @return array
- * @access private
+ * @internal
  * @codeCoverageIgnore
  */
 function _elgg_plugins_test($hook, $type, $value, $params) {
@@ -257,7 +257,7 @@ function _elgg_plugins_test($hook, $type, $value, $params) {
  * Initialize the plugin system
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_plugins_init() {
 

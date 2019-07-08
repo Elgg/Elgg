@@ -76,7 +76,7 @@ function profile_default_widgets_hook($hook, $type, $return) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _profile_fields_setup() {
 	$profile_defaults =  [
@@ -130,7 +130,7 @@ function _profile_fields_setup() {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _profile_topbar_menu(\Elgg\Hook $hook) {
@@ -161,7 +161,7 @@ function _profile_topbar_menu(\Elgg\Hook $hook) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _profile_user_hover_menu(\Elgg\Hook $hook) {
@@ -194,7 +194,7 @@ function _profile_user_hover_menu(\Elgg\Hook $hook) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _profile_admin_page_menu(\Elgg\Hook $hook) {
@@ -223,7 +223,7 @@ function _profile_admin_page_menu(\Elgg\Hook $hook) {
  *
  * @return void|ElggMenuItem
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _profile_user_page_menu(\Elgg\Hook $hook) {
@@ -253,7 +253,7 @@ function _profile_user_page_menu(\Elgg\Hook $hook) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _profile_title_menu(\Elgg\Hook $hook) {

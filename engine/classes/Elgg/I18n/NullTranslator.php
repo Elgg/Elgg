@@ -1,6 +1,6 @@
 <?php
-namespace Elgg\I18n;
 
+namespace Elgg\I18n;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -11,8 +11,7 @@ namespace Elgg\I18n;
  * easily tell what the available keys are for changing the wording of UI elements.
  *
  * @since 1.10.0
- *
- * @access private
+ * @internal
  */
 final class NullTranslator extends Translator {
 	

@@ -9,7 +9,7 @@ use ElggCache;
 /**
  * Boots Elgg and manages a cache of data needed during boot
  *
- * @access private
+ * @internal
  * @since  2.1
  */
 class BootService {

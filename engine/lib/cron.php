@@ -10,7 +10,7 @@
  * Cron initialization
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_cron_init() {
 	elgg_set_config('elgg_cron_periods', array_keys(\Elgg\Cron::$intervals));
@@ -30,7 +30,7 @@ function _elgg_cron_init() {
  * @param array $segments URL segments
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_cron_page_handler($segments) {
 

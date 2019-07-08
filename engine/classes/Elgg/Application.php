@@ -70,7 +70,6 @@ class Application {
 	 * Reference to the loaded Application
 	 *
 	 * @internal Do not use this
-	 * @access private
 	 * @var Application
 	 */
 	public static $_instance;
@@ -119,7 +118,7 @@ class Application {
 	 * it is queued and executed at the end.
 	 *
 	 * @return array
-	 * @access private
+	 *
 	 * @internal
 	 * @throws InstallationException
 	 */
@@ -147,7 +146,6 @@ class Application {
 	 *
 	 * @return mixed
 	 * @internal
-	 * @access private
 	 */
 	public static function requireSetupFileOnce($file) {
 		if (isset(self::$_setups[$file])) {
@@ -210,7 +208,6 @@ class Application {
 	 * @throws ClassException
 	 * @throws DatabaseException
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public function bootCore() {
@@ -662,7 +659,7 @@ class Application {
 	 * Allow plugins to rewrite the path.
 	 *
 	 * @return void
-	 * @access private
+	 *
 	 * @internal
 	 */
 	public function allowPathRewrite() {

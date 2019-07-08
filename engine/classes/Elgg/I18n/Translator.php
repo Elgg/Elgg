@@ -65,9 +65,6 @@ class Translator {
 	 *
 	 * @param Config        $config       Elgg config
 	 * @param LocaleService $localService locale service
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function __construct(Config $config, LocaleService $localService) {
 		$this->config = $config;
@@ -232,7 +229,7 @@ class Translator {
 	 * Detect the current system/user language or false.
 	 *
 	 * @return false|string The language code (eg "en") or false if not set
-	 * @access private
+	 *
 	 * @internal
 	 */
 	public function detectLanguage() {
@@ -264,7 +261,6 @@ class Translator {
 	 *
 	 * @return void
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public function bootTranslations() {
@@ -286,7 +282,6 @@ class Translator {
 	 *
 	 * @return void
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public function loadTranslations($language) {
@@ -318,7 +313,6 @@ class Translator {
 	 *
 	 * @return bool success
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public function registerTranslations($path, $load_all = false, $language = null) {
@@ -376,7 +370,7 @@ class Translator {
 	 *
 	 * @param string $path Path to file
 	 * @return bool
-	 * @access private
+	 *
 	 * @internal
 	 */
 	protected function includeLanguageFile($path) {
@@ -398,7 +392,7 @@ class Translator {
 	 * @todo Better on demand loading based on language_paths array
 	 *
 	 * @return void
-	 * @access private
+	 *
 	 * @internal
 	 */
 	public function reloadAllTranslations() {
@@ -491,7 +485,7 @@ class Translator {
 	 * @param string $language The language
 	 *
 	 * @return mixed
-	 * @access private
+	 *
 	 * @internal
 	 */
 	public function getMissingLanguageKeys($language) {
@@ -585,7 +579,7 @@ class Translator {
 	 * @param string $path path to a folder that contains translation files
 	 *
 	 * @return void
-	 * @access private
+	 *
 	 * @internal
 	 */
 	public function registerLanguagePath($path) {
@@ -596,8 +590,6 @@ class Translator {
 	 * Returns a unique array with locations of translation files
 	 *
 	 * @return array
-	 * @access private
-	 * @internal
 	 */
 	protected function getLanguagePaths() {
 		return array_keys($this->language_paths);
@@ -608,8 +600,6 @@ class Translator {
 	 *
 	 * @param string $language Language
 	 * @return void
-	 * @access private
-	 * @internal
 	 */
 	private function ensureTranslationsLoaded($language) {
 		if (isset($this->translations[$language])) {
@@ -640,7 +630,7 @@ class Translator {
 	 * @param string $code Language code
 	 *
 	 * @return string
-	 * @access private
+	 *
 	 * @internal
 	 */
 	public static function normalizeLanguageCode($code) {

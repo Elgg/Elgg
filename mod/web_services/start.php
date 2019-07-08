@@ -229,7 +229,7 @@ function elgg_ws_unexpose_function($method) {
  * Simple api to return a list of all api's installed on the system.
  *
  * @return array
- * @access private
+ * @internal
  */
 function list_all_apis() {
 	global $API_METHODS;
@@ -283,7 +283,7 @@ function elgg_ws_unregister_service_handler($handler) {
  * REST API handler
  *
  * @return void
- * @access private
+ * @internal
  *
  * @throws SecurityException|APIException
  */

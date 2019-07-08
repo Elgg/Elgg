@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
  * HTTP response transport interface
  *
  * @since 2.3
- * @access private
+ * @internal
  */
 interface ResponseTransport {
 

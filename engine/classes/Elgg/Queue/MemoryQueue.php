@@ -7,7 +7,7 @@ namespace Elgg\Queue;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Queue

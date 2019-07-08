@@ -13,7 +13,7 @@ use Elgg\Filesystem\MimeTypeDetector;
  * Image manipulation service
  *
  * @since 2.3
- * @access private
+ * @internal
  */
 class ImageService {
 	use Loggable;

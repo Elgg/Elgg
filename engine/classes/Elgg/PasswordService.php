@@ -1,11 +1,12 @@
 <?php
+
 namespace Elgg;
 
 /**
  * PRIVATE CLASS. API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @package Elgg.Core
- * @access  private
+ * @internal
  * @since   1.10.0
  */
 final class PasswordService {

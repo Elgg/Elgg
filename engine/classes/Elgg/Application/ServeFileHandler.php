@@ -15,7 +15,7 @@ use Elgg\Security\HmacFactory;
 /**
  * File server handler
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  */

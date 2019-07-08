@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Filesystem\Directory;
 
 use Elgg\Filesystem\Directory;
@@ -8,8 +9,7 @@ use Elgg\Project\Paths;
  * Namespace for generating local filesystems.
  *
  * @since 1.10.0
- *
- * @access private
+ * @internal
  */
 final class Local {
 	

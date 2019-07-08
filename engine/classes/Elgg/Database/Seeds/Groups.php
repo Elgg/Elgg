@@ -5,7 +5,7 @@ namespace Elgg\Database\Seeds;
 /**
  * Seed users
  *
- * @access private
+ * @internal
  */
 class Groups extends Seed {
 

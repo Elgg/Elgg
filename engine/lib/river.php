@@ -328,7 +328,7 @@ function _elgg_river_test($hook, $type, $value) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_river_update_object_last_action($event, $type, $item) {
 	if (!$item instanceof \ElggRiverItem) {
@@ -352,7 +352,7 @@ function _elgg_river_update_object_last_action($event, $type, $item) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_river_disable($event, $type, $entity) {
 
@@ -381,7 +381,7 @@ QUERY;
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_river_enable($event, $type, $entity) {
 
@@ -415,7 +415,7 @@ QUERY;
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  */
 function _elgg_river_menu_setup(\Elgg\Hook $hook) {
 	if (!elgg_is_logged_in()) {
@@ -451,7 +451,7 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_river_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');

@@ -27,7 +27,7 @@ use InvalidParameterException;
  *         Currently, n_table is expected across core and plugins, we need to refactor that code
  *         and remove n_table joins here
  *
- * @access private
+ * @internal
  */
 class Entities extends Repository {
 

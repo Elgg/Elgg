@@ -380,7 +380,7 @@ function _elgg_disable_password_autocomplete($hook, $type, $return_value, $param
  * Initialize the input library
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_input_init() {
 

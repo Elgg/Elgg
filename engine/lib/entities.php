@@ -53,7 +53,7 @@ function elgg_set_entity_class($type, $subtype, $class = "") {
  *
  * @return \stdClass|false
  * @see entity_row_to_elggstar()
- * @access private
+ * @internal
  */
 function get_entity_as_row($guid) {
 	return _elgg_services()->entityTable->getRow($guid);
@@ -69,7 +69,7 @@ function get_entity_as_row($guid) {
  * @return \ElggEntity|false
  * @see get_entity_as_row()
  * @see get_entity()
- * @access private
+ * @internal
  *
  * @throws ClassException|InstallationException
  */
@@ -846,7 +846,7 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
  * @param array  $value Array of tests
  *
  * @return array
- * @access private
+ * @internal
  * @codeCoverageIgnore
  */
 function _elgg_entities_test($hook, $type, $value) {
@@ -865,7 +865,7 @@ function _elgg_entities_test($hook, $type, $value) {
  *
  * @return void
  * @elgg_event_handler init system
- * @access private
+ * @internal
  */
 function _elgg_entities_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');

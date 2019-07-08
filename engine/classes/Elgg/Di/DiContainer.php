@@ -21,7 +21,7 @@ namespace Elgg\Di;
  * $c->a_string; // 'foo_factory'
  * </code>
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  * @since   1.9
@@ -189,9 +189,8 @@ class DiContainer {
 	/**
 	 * Get names for all values/factories
 	 *
-	 * @access private
-	 * @internal For unit testing only, do not use
 	 * @return string[]
+	 * @internal For unit testing only, do not use
 	 */
 	public function getNames() {
 		$names = [];

@@ -19,7 +19,6 @@ define(function (require) {
 		/**
 		 * This is called by elgg/init to initialize the plugin. Do not use.
 		 *
-		 * @access private
 		 * @internal
 		 */
 		this._init = function () {

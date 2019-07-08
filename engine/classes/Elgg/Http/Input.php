@@ -12,7 +12,7 @@ use Elgg\Context;
  * @package    Elgg.Core
  * @subpackage Http
  * @since      1.10.0
- * @access     private
+ * @internal
  */
 class Input {
 

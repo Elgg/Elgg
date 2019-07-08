@@ -115,6 +115,8 @@ use Elgg\Project\Paths;
  * @property bool          $_service_boot_complete
  * @property bool          $_plugins_boot_complete
  * @property bool          $_application_boot_complete
+ *
+ * @internal
  */
 class Config {
 	use Loggable;
@@ -158,8 +160,6 @@ class Config {
 	 * Constructor
 	 *
 	 * @param array $values Initial config values from Env/settings file
-	 * @internal Do not use
-	 * @access private
 	 */
 	public function __construct(array $values = []) {
 		$this->values = $values;
@@ -188,9 +188,6 @@ class Config {
 	 * @return Config
 	 *
 	 * @throws ConfigurationException
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public static function factory($settings_path = '', $try_env = true) {
 		$reason1 = '';
@@ -217,9 +214,6 @@ class Config {
 	 * @param string $reason Returned reason for failure
 	 *
 	 * @return bool|Config false on failure
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public static function fromFile($path, &$reason = '') {
 		if (!is_file($path)) {
@@ -299,9 +293,6 @@ class Config {
 	 * @param string $settings_path Path of settings file
 	 * @param bool   $try_env       If path not given, try $_ENV['ELGG_SETTINGS_FILE']
 	 * @return string
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public static function resolvePath($settings_path = '', $try_env = true) {
 		if (!$settings_path) {
@@ -320,9 +311,6 @@ class Config {
 	 *
 	 * @param array $values Values
 	 * @return void
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function mergeValues(array $values) {
 		foreach ($values as $name => $value) {
@@ -334,9 +322,6 @@ class Config {
 	 * Get all values
 	 *
 	 * @return array
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function getValues() {
 		return $this->values;
@@ -346,9 +331,6 @@ class Config {
 	 * Set up and return the cookie configuration array resolved from settings
 	 *
 	 * @return array
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function getCookieConfig() {
 		if ($this->cookies_configured) {
@@ -411,9 +393,6 @@ class Config {
 	 * @param string $name Name
 	 *
 	 * @return bool
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function hasValue($name) {
 		return isset($this->values[$name]);
@@ -424,9 +403,6 @@ class Config {
 	 *
 	 * @param string $name Name
 	 * @return mixed null = not set
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function getInitialValue($name) {
 		return isset($this->initial_values[$name]) ? $this->initial_values[$name] : null;
@@ -438,9 +414,6 @@ class Config {
 	 * @param string $name Name
 	 *
 	 * @return bool
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function hasInitialValue($name) {
 		return isset($this->initial_values[$name]);
@@ -451,9 +424,6 @@ class Config {
 	 *
 	 * @param string $name Name
 	 * @return void
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function lock($name) {
 		$this->locked[$name] = true;
@@ -465,9 +435,6 @@ class Config {
 	 * @param string $name Name
 	 *
 	 * @return bool
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function isLocked($name) {
 		return isset($this->locked[$name]);
@@ -564,9 +531,6 @@ class Config {
 	 *
 	 * @param string $name Name
 	 * @return bool
-	 *
-	 * @access private
-	 * @internal
 	 */
 	private function wasWarnedLocked($name) {
 		if (!isset($this->locked[$name])) {
@@ -586,9 +550,6 @@ class Config {
 	 *
 	 * @param ConfigTable $table the config table service
 	 * @return void
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function setConfigTable(ConfigTable $table) {
 		$this->config_table = $table;
@@ -607,9 +568,6 @@ class Config {
 	 * Get the config table API
 	 *
 	 * @return ConfigTable
-	 *
-	 * @access private
-	 * @internal
 	 */
 	private function getConfigTable() {
 		if (!$this->config_table) {

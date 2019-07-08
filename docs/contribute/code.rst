@@ -499,9 +499,9 @@ Documentation
 * In lists of ``@param`` declarations, the beginnings of variable names and
   descriptions must line up.
 
-* Annotate classes, methods, properties, and functions with ``@access private``
+* Annotate classes, methods, properties, and functions with ``@internal``
   unless they are intended for public use, are already of limited visibility,
-  or are within a class already marked as private.
+  or are within a class already marked as ``@internal``.
 
 * Use ``//`` or ``/* */`` when commenting.
 

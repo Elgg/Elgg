@@ -49,8 +49,6 @@ class WalledGarden {
 	 *
 	 * @return bool
 	 * @deprecated 3.0
-	 *
-	 * @access     private
 	 * @internal
 	 */
 	public static function isPublicPage($url = '') {

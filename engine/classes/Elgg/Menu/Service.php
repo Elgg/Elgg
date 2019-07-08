@@ -28,9 +28,6 @@ class Service {
 	 *
 	 * @param PluginHooksService $hooks  Plugin hooks
 	 * @param Config             $config Elgg config
-	 *
-	 * @access   private
-	 * @internal Do not use. Use `elgg()->menus`.
 	 */
 	public function __construct(PluginHooksService $hooks, Config $config) {
 		$this->hooks = $hooks;

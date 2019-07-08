@@ -15,8 +15,7 @@ use Psr\Log\LoggerInterface;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @since  3.0.0
- *
- * @access private
+ * @internal
  */
 class Locator {
 

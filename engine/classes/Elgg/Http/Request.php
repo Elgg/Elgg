@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 /**
  * Elgg HTTP request.
  *
- * @access private
  * @internal
  */
 class Request extends SymfonyRequest {

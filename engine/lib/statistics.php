@@ -102,7 +102,7 @@ function get_online_users(array $options = []) {
  * Initialise the statistics admin page.
  *
  * @return void
- * @access private
+ * @internal
  */
 function statistics_init() {
 	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/online');

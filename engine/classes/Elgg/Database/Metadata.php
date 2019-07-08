@@ -22,7 +22,7 @@ use LogicException;
  *
  * API IN FLUX Do not access the methods directly, use elgg_get_metadata() instead
  *
- * @access private
+ * @internal
  */
 class Metadata extends Repository {
 
