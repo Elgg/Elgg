@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 16:09+0200\n"
+"POT-Creation-Date: 2019-07-08 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -750,7 +750,7 @@ msgid "In lists of ``@param`` declarations, the beginnings of variable names and
 msgstr ""
 
 #: ../../contribute/code.rst:502
-msgid "Annotate classes, methods, properties, and functions with ``@access private`` unless they are intended for public use, are already of limited visibility, or are within a class already marked as private."
+msgid "Annotate classes, methods, properties, and functions with ``@internal`` unless they are intended for public use, are already of limited visibility, or are within a class already marked as ``@internal``."
 msgstr ""
 
 #: ../../contribute/code.rst:506
@@ -2023,7 +2023,7 @@ msgid "To add a new service object to Elgg:"
 msgstr ""
 
 #: ../../contribute/services.rst:8
-msgid "Annotate your class as ``@access private``."
+msgid "Annotate your class as ``@internal``."
 msgstr ""
 
 #: ../../contribute/services.rst:9

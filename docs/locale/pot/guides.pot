@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-12 16:09+0200\n"
+"POT-Creation-Date: 2019-07-08 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,6 +36,7 @@ msgstr ""
 #: ../../guides/menus.rst:12
 #: ../../guides/notifications.rst:10
 #: ../../guides/plugins.rst:8
+#: ../../guides/plugins/bootstrap.rst:13
 #: ../../guides/plugins/dependencies.rst:8
 #: ../../guides/search.rst:7
 #: ../../guides/themes.rst:14
@@ -6369,278 +6370,430 @@ msgid "Plugins must provide a ``manifest.xml`` file in the plugin root in order 
 msgstr ""
 
 #: ../../guides/plugins.rst:11
-msgid "start.php"
-msgstr ""
-
-#: ../../guides/plugins.rst:13
-msgid "The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks."
-msgstr ""
-
-#: ../../guides/plugins.rst:15
-msgid "It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file. This allows for consistency in Application bootstrapping, especially for testing purposes."
-msgstr ""
-
-#: ../../guides/plugins.rst:40
 msgid "elgg-plugin.php"
 msgstr ""
 
-#: ../../guides/plugins.rst:42
+#: ../../guides/plugins.rst:13
 msgid "``elgg-plugin.php`` is a static plugin configuration file. It is read by Elgg to configure various services, and must return an array if present. It should not be included by plugins and is not guaranteed to run at any particular time. Besides magic constants like ``__DIR__``, its return value should not change. The currently supported sections are:"
 msgstr ""
 
-#: ../../guides/plugins.rst:46
+#: ../../guides/plugins.rst:17
 msgid "``bootstrap`` - defines a class used to bootstrap the plugin"
 msgstr ""
 
-#: ../../guides/plugins.rst:47
+#: ../../guides/plugins.rst:18
 msgid "``entities`` - defines entity types and classes, and optionally registers them for search"
 msgstr ""
 
-#: ../../guides/plugins.rst:48
+#: ../../guides/plugins.rst:19
 msgid "``actions`` - eliminates the need for calling ``elgg_register_action()``"
 msgstr ""
 
-#: ../../guides/plugins.rst:49
+#: ../../guides/plugins.rst:20
 msgid "``routes`` - eliminates the need for calling ``elgg_register_route()``"
 msgstr ""
 
-#: ../../guides/plugins.rst:50
+#: ../../guides/plugins.rst:21
 msgid "``settings`` - eliminates the need for setting default values on each call to ``elgg_get_plugin_setting()``"
 msgstr ""
 
-#: ../../guides/plugins.rst:51
+#: ../../guides/plugins.rst:22
 msgid "``user_settings`` - eliminates the need for setting default values on each call to ``elgg_get_plugin_user_setting()``"
 msgstr ""
 
-#: ../../guides/plugins.rst:52
+#: ../../guides/plugins.rst:23
 msgid "``views`` - allows plugins to alias vendor assets to a path within the Elgg's view system"
 msgstr ""
 
-#: ../../guides/plugins.rst:53
+#: ../../guides/plugins.rst:24
 msgid "``widgets`` - eliminates the need for calling ``elgg_register_widget_type()``"
 msgstr ""
 
-#: ../../guides/plugins.rst:137
+#: ../../guides/plugins.rst:106
+msgid "Bootstrap class"
+msgstr ""
+
+#: ../../guides/plugins.rst:108
+msgid "As of Elgg 3.0 the recommended way to bootstrap you plugin is to use a bootstrap class. This class must implement the ``\\Elgg\\PluginBootstrapInterface`` interface. You can register you bootstrap class in the ``elgg-plugin.php``."
+msgstr ""
+
+#: ../../guides/plugins.rst:111
+msgid "The bootstrap interface defines several function to be implemented which are called during different events in the system booting process."
+msgstr ""
+
+#: ../../guides/plugins.rst:115
+msgid "For more information about the different functions defined in the ``\\Elgg\\PluginBootstrapInterface`` please read  :doc:`plugins/bootstrap`"
+msgstr ""
+
+#: ../../guides/plugins.rst:118
+msgid "start.php"
+msgstr ""
+
+#: ../../guides/plugins.rst:120
+msgid "The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks."
+msgstr ""
+
+#: ../../guides/plugins.rst:122
+msgid "It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file. This allows for consistency in Application bootstrapping, especially for testing purposes."
+msgstr ""
+
+#: ../../guides/plugins.rst:146
 msgid "elgg-services.php"
 msgstr ""
 
-#: ../../guides/plugins.rst:139
+#: ../../guides/plugins.rst:148
 msgid "Plugins can attach their services to Elgg's public DI container by providing PHP-DI definitions in ``elgg-services.php`` in the root of the plugin directory."
 msgstr ""
 
-#: ../../guides/plugins.rst:142
+#: ../../guides/plugins.rst:151
 msgid "This file must return an array of PHP-DI definitions. Services will by available via ``elgg()``."
 msgstr ""
 
-#: ../../guides/plugins.rst:150
+#: ../../guides/plugins.rst:159
 msgid "Plugins can then use PHP-DI API to autowire and call the service:"
 msgstr ""
 
-#: ../../guides/plugins.rst:156
+#: ../../guides/plugins.rst:165
 msgid "See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of definition and invokation possibilities."
 msgstr ""
 
-#: ../../guides/plugins.rst:159
-#: ../../guides/plugins.rst:190
+#: ../../guides/plugins.rst:168
+#: ../../guides/plugins.rst:199
 msgid "Syntax"
 msgstr ""
 
-#: ../../guides/plugins.rst:161
+#: ../../guides/plugins.rst:170
 msgid "Here's a trivial example configuring view locations via the ``views`` key:"
 msgstr ""
 
-#: ../../guides/plugins.rst:174
+#: ../../guides/plugins.rst:183
 msgid "activate.php, deactivate.php"
 msgstr ""
 
-#: ../../guides/plugins.rst:176
+#: ../../guides/plugins.rst:185
 msgid "The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run upon plugin activation and deactivation. Use these files to perform one-time events such as registering a persistent admin notice, registering subtypes, or performing garbage collection when deactivated."
 msgstr ""
 
-#: ../../guides/plugins.rst:182
+#: ../../guides/plugins.rst:191
 msgid "manifest.xml"
 msgstr ""
 
-#: ../../guides/plugins.rst:184
+#: ../../guides/plugins.rst:193
 msgid "Elgg plugins are required to have a ``manifest.xml`` file in the root of a plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:186
+#: ../../guides/plugins.rst:195
 msgid "The ``manifest.xml`` file includes information about the plugin itself, requirements to run the plugin, and optional information including where to display the plugin in the admin area and what APIs the plugin provides."
 msgstr ""
 
-#: ../../guides/plugins.rst:192
+#: ../../guides/plugins.rst:201
 msgid "The manifest file is a standard XML file in UTF-8. Everything is a child of the ``<plugin_manifest>`` element."
 msgstr ""
 
-#: ../../guides/plugins.rst:199
+#: ../../guides/plugins.rst:208
 msgid "The manifest syntax is as follows:"
 msgstr ""
 
-#: ../../guides/plugins.rst:205
+#: ../../guides/plugins.rst:214
 msgid "Many elements can contain children attributes:"
 msgstr ""
 
-#: ../../guides/plugins.rst:215
+#: ../../guides/plugins.rst:224
 msgid "Required Elements"
 msgstr ""
 
-#: ../../guides/plugins.rst:217
+#: ../../guides/plugins.rst:226
 msgid "All plugins are required to define the following elements in their manifest files:"
 msgstr ""
 
-#: ../../guides/plugins.rst:219
+#: ../../guides/plugins.rst:228
 msgid "id - This has the name as the directory that the plugin uses."
 msgstr ""
 
-#: ../../guides/plugins.rst:220
+#: ../../guides/plugins.rst:229
 msgid "name - The display name of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:221
+#: ../../guides/plugins.rst:230
 msgid "author - The name of the author who wrote the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:222
+#: ../../guides/plugins.rst:231
 msgid "version - The version of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:223
+#: ../../guides/plugins.rst:232
 msgid "description - A description of the what the plugin provides, its features, and other relevant information"
 msgstr ""
 
-#: ../../guides/plugins.rst:224
+#: ../../guides/plugins.rst:233
 msgid "requires - Each plugin must specify the release of Elgg it was developed for. See the plugin Dependencies page for more information."
 msgstr ""
 
-#: ../../guides/plugins.rst:227
+#: ../../guides/plugins.rst:236
 msgid "Available Elements"
 msgstr ""
 
-#: ../../guides/plugins.rst:229
+#: ../../guides/plugins.rst:238
 msgid "In addition to the require elements above, the follow elements are available to use:"
 msgstr ""
 
-#: ../../guides/plugins.rst:231
+#: ../../guides/plugins.rst:240
 msgid "blurb - A short description of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:232
+#: ../../guides/plugins.rst:241
 msgid "category - The category of the plugin. It is recommended to follow the :doc:`guidelines` and use one of the defined categories. There can be multiple entries."
 msgstr ""
 
-#: ../../guides/plugins.rst:234
+#: ../../guides/plugins.rst:243
 msgid "conflicts - Specifies that the plugin conflicts with a certain system configuration."
 msgstr ""
 
-#: ../../guides/plugins.rst:235
+#: ../../guides/plugins.rst:244
 msgid "copyright - The plugin's copyright information."
 msgstr ""
 
-#: ../../guides/plugins.rst:236
+#: ../../guides/plugins.rst:245
 msgid "license - The plugin's license information."
 msgstr ""
 
-#: ../../guides/plugins.rst:237
+#: ../../guides/plugins.rst:246
 msgid "provides - Specifies that this plugin provides the same functionality as another Elgg plugin or a PHP extension."
 msgstr ""
 
-#: ../../guides/plugins.rst:238
+#: ../../guides/plugins.rst:247
 msgid "screenshot - Screenshots of the plugin. There can be multiple entries. See the advanced example for syntax."
 msgstr ""
 
-#: ../../guides/plugins.rst:239
+#: ../../guides/plugins.rst:248
 msgid "suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build on the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:241
+#: ../../guides/plugins.rst:250
 msgid "website - A link to the website for the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:245
+#: ../../guides/plugins.rst:254
 msgid ":doc:`plugins/dependencies`"
 msgstr ""
 
-#: ../../guides/plugins.rst:248
+#: ../../guides/plugins.rst:257
 msgid "Simple Example"
 msgstr ""
 
-#: ../../guides/plugins.rst:250
+#: ../../guides/plugins.rst:259
 msgid "This manifest file is the bare minimum a plugin must have."
 msgstr ""
 
-#: ../../guides/plugins.rst:268
+#: ../../guides/plugins.rst:277
 msgid "Advanced example"
 msgstr ""
 
-#: ../../guides/plugins.rst:270
+#: ../../guides/plugins.rst:279
 msgid "This example uses all of the available elements:"
 msgstr ""
 
-#: ../../guides/plugins.rst:312
+#: ../../guides/plugins.rst:321
 msgid "composer.json"
 msgstr ""
 
-#: ../../guides/plugins.rst:314
+#: ../../guides/plugins.rst:323
 msgid "Since Elgg supports being installed as a `Composer`_ dependency, having your plugins also support Composer makes for easier installation by site administrators. In order to make your plugin compatible with Composer you need to at least have a ``composer.json`` file in the root of your plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:318
+#: ../../guides/plugins.rst:327
 msgid "Here is an example of a ``composer.json`` file:"
 msgstr ""
 
-#: ../../guides/plugins.rst:323
+#: ../../guides/plugins.rst:332
 msgid "Read more about the ``composer.json`` format on the `Composer`_ website."
 msgstr ""
 
-#: ../../guides/plugins.rst:325
+#: ../../guides/plugins.rst:334
 msgid "Important parts in the ``composer.json`` file are:"
 msgstr ""
 
-#: ../../guides/plugins.rst:327
+#: ../../guides/plugins.rst:336
 msgid "``name``: the name of your plugin, keep this inline with the name of your plugin folder to ensure correct installation"
 msgstr ""
 
-#: ../../guides/plugins.rst:328
+#: ../../guides/plugins.rst:337
 msgid "``type``: this will tell Composer where to install your plugin, ALWAYS keep this as ``elgg-plugin``"
 msgstr ""
 
-#: ../../guides/plugins.rst:329
+#: ../../guides/plugins.rst:338
 msgid "``require``: the ``composer/installers`` requirement is to make sure Composer knows where to install your plugin"
 msgstr ""
 
-#: ../../guides/plugins.rst:331
+#: ../../guides/plugins.rst:340
 msgid "As a suggestion, include a ``conflict`` rule with any Elgg version below your mininal required version, this will help prevent the accidental installation of your plugin on an incompatible Elgg version."
 msgstr ""
 
-#: ../../guides/plugins.rst:334
+#: ../../guides/plugins.rst:343
 msgid "After adding a ``composer.json`` file to your plugin project, you need to register your project on `Packagist`_ in order for other people to be able to install your plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:338
+#: ../../guides/plugins.rst:347
 msgid "Tests"
 msgstr ""
 
-#: ../../guides/plugins.rst:340
+#: ../../guides/plugins.rst:349
 msgid "It's encouraged to create PHPUnit test for your plugin. All tests should be located in ``tests/phpunit/unit`` for unit tests and ``tests/phpunit/integration`` for integration tests."
 msgstr ""
 
-#: ../../guides/plugins.rst:343
+#: ../../guides/plugins.rst:352
 msgid "An easy example of adding test is the ``ViewStackTest``, this will test that the views in your plugin are registered correctly and have no syntax errors. To add this test create a file ``ViewStackTest.php`` in the folder ``tests/phpunit/unit/<YourNameSpace>/<YourPluginName>/`` with the content:"
 msgstr ""
 
-#: ../../guides/plugins.rst:360
+#: ../../guides/plugins.rst:369
 msgid "If you wish to see a better example, look in any of the Elgg core plugins."
 msgstr ""
 
-#: ../../guides/plugins.rst:364
+#: ../../guides/plugins.rst:373
 msgid ":doc:`/contribute/tests`"
 msgstr ""
 
-#: ../../guides/plugins.rst:367
+#: ../../guides/plugins.rst:376
 #: ../../guides/views.rst:650
 #: ../../guides/web-services.rst:371
 msgid "Related"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:2
+msgid "Plugin bootstrap"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:4
+msgid "In order to bootstrap your plugin as of Elgg 3.0 you can use a bootstrap class. This class must implement the ``\\Elgg\\PluginBootstrapInterface`` interface, but it's recommended you extend the ``\\Elgg\\PluginBootstrap`` abstract class as some preparations have already been done."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:8
+msgid "If you only need a limited subset of the bootstrap functions your class can also extend the ``\\Elgg\\DefaultPluginBootstrap`` class, this class already has all the functions of ``\\Elgg\\PluginBootstrapInterface`` implemented. So you can overload only the functions you need."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:16
+msgid "Registering the bootstrap class"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:18
+msgid "You must register your bootstrap class in the ``elgg-plugin.php`` file."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:28
+msgid "Available functions"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:31
+msgid "->load()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:33
+msgid "Executed during ``plugins_load``, ``system`` event"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:35
+msgid "Allows the plugin to require additional files, as well as configure services prior to booting the plugin."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:38
+msgid "->boot()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:40
+msgid "Executed during ``plugins_boot:before``, ``system`` event"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:42
+msgid "Allows the plugin to register handlers for ``plugins_boot``, ``system`` and ``init``, ``system`` events, as well as implement boot time logic."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:46
+msgid "->init()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:48
+msgid "Executed during ``init``, ``system`` event"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:50
+msgid "Allows the plugin to implement business logic and register all other handlers."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:53
+msgid "->ready()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:55
+msgid "Executed during ``ready``, ``system`` event"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:57
+msgid "Allows the plugin to implement logic after all plugins are initialized."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:60
+msgid "->shutdown()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:62
+msgid "Executed during ``shutdown``, ``system`` event"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:64
+msgid "Allows the plugin to implement logic during shutdown."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:67
+msgid "->activate()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:69
+msgid "Executed when plugin is activated, after ``activate``, ``plugin`` event and before ``activate.php`` is included."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:72
+msgid "->deactivate()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:74
+msgid "Executed when plugin is deactivated, after ``deactivate``, ``plugin`` event and before ``deactivate.php`` is included."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:77
+msgid "->upgrade()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:79
+msgid "Registered as handler for ``upgrade``, ``system`` event"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:81
+msgid "Allows the plugin to implement logic during system upgrade."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:84
+msgid "Available helper functions"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:86
+msgid "This assumes your bootstrap class extends the ``\\Elgg\\PluginBootstrap`` abstract class or the ``\\Elgg\\DefaultPluginBootstrap`` class."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:89
+msgid "->elgg()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:91
+msgid "Returns Elgg's public DI container. This can be helpfull if you wish to register plugin hooks or event listeners."
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:102
+msgid "->plugin()"
+msgstr ""
+
+#: ../../guides/plugins/bootstrap.rst:104
+msgid "Returns plugin entity this bootstrap is related to. This makes it easier to get plugin settings."
 msgstr ""
 
 #: ../../guides/plugins/dependencies.rst:2

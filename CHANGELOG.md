@@ -1,3 +1,32 @@
+<a name="3.0.5"></a>
+### 3.0.5  (2019-07-08)
+
+#### Contributors
+
+* Jerôme Bakker (8)
+* Jeroen Dalsem (2)
+* Ismayil Khayredinov (1)
+
+#### Documentation
+
+* **compatibility:** explain @internal implications ([5c7b52e5](https://github.com/Elgg/Elgg/commit/5c7b52e5abc503eab2a3f17830005d7363d4a4d1))
+* **plugins:** document plugin bootstrap usage ([02ea7a0d](https://github.com/Elgg/Elgg/commit/02ea7a0d4cedac0c1027362bf69cef671eace297))
+
+
+#### Bug Fixes
+
+* **core:** correctly remove annotations on non saved entities ([20af166e](https://github.com/Elgg/Elgg/commit/20af166e6815b38e1771542cac69b7c3883e004a))
+* **http:** non-multipart requests should not fail validation ([c59ae7aa](https://github.com/Elgg/Elgg/commit/c59ae7aa095e663a57ec52e479264296a523297d), closes [#12654](https://github.com/Elgg/Elgg/issues/12654))
+* **notifications:** correctly sort the notifiable users ([583fb67f](https://github.com/Elgg/Elgg/commit/583fb67f8038741607f426efd5227880610b0ca1))
+* **search:** highlighter no longer messes up output when searching ints ([e3499498](https://github.com/Elgg/Elgg/commit/e34994983dba7de51eb5815e9746cd9e9d40c124))
+* **thewire:** full view uses correct entity layout ([64143d58](https://github.com/Elgg/Elgg/commit/64143d58e80bbbaec204727d88575691707f4599))
+
+
+#### Deprecations
+
+* **groups:** group_acl metadata has been deprecated ([380cfa24](https://github.com/Elgg/Elgg/commit/380cfa249a6d8d57838f2de911dcb0f4c6677588))
+
+
 <a name="3.0.4"></a>
 ### 3.0.4  (2019-06-12)
 
