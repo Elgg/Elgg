@@ -22,7 +22,7 @@ return array(
 	'thewire:previous:help' => "Vorherige Nachricht ansehen",
 	'thewire:hide:help' => "Vorherige Nachricht verbergen",
 
-	'thewire:form:body:placeholder' => "What's happening?",
+	'thewire:form:body:placeholder' => "Was gibt's Neues?",
 	
 	/**
 	 * The wire river
@@ -34,7 +34,7 @@ return array(
 	 * Wire widget
 	 */
 	
-	'widgets:thewire:description' => 'Display your latest wire posts',
+	'widgets:thewire:description' => 'Anzeige Deiner neuesten Nachrichten im Heißen Draht.',
 	'thewire:num' => 'Anzahl der anzuzeigenden Einträge',
 	'thewire:moreposts' => 'Weitere Nachrichten im Heißen Draht',
 

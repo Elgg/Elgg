@@ -45,8 +45,8 @@ return array(
 	'file:friends:type:image' => "Bilder Deiner Freunde",
 	'file:friends:type:general' => "Unbestimmte Dateien Deiner Freunde",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "Datei-Widget",
+	'widgets:filerepo:description' => "Auflistung Deiner neuesten Dateien",
 
 	'groups:tool:file' => 'Gruppen-Dateien aktivieren',
 

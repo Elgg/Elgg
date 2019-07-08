@@ -54,6 +54,6 @@ oder um das Profil von %s aufzurufen, folge dem Link:
 
 	'messageboard:failure' => "Beim Speichern Deiner Nachricht ist ein unerwarteter Fehler aufgetreten. Bitte versuche es noch einmal.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Nachrichten-Pinnwand",
+	'widgets:messageboard:description' => "Dieses Widget kannst Du zu Deiner Profilseite hinzufügen, damit Dir andere Mitglieder Nachrichten hinterlassen können.",
 );

@@ -39,8 +39,8 @@ return array(
 	'groups:owner' => "Gründer",
 	'groups:owner:warning' => "Warnung: wenn Du diesen Wert veränderst, bist Du nicht länger der Gründer dieser Gruppe.",
 	'groups:widget:num_display' => 'Anzahl der anzuzeigenden Gruppen',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Gruppen-Mitgliedschaft',
+	'widgets:a_users_groups:description' => 'Auflistung der Gruppen, in denen Du Mitglied bist.',
 
 	'groups:noaccess' => 'Zugang zur Gruppe verweigert.',
 	'groups:cantcreate' => 'Du kannst keine Gruppe erstellen. Dies können nur Administratoren.',

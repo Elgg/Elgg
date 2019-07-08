@@ -60,8 +60,8 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:entity_explorer:info:metadata' => 'Metadaten',
 	'developers:entity_explorer:info:relationships' => 'Beziehungen',
 	'developers:entity_explorer:info:private_settings' => 'Entitäts-spezifische Konfigurations-Daten',
-	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
-	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
+	'developers:entity_explorer:info:owned_acls' => 'Im Besitz der Zugriffslevel-Collections',
+	'developers:entity_explorer:info:acl_memberships' => 'Mitglied der Zugriffslevel-Collections',
 	'developers:entity_explorer:delete_entity' => 'Entität löschen',
 	
 	// inspection
