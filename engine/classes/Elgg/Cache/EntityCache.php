@@ -9,7 +9,7 @@ use ElggSession;
 /**
  * Volatile cache for entities
  *
- * @access private
+ * @internal
  */
 class EntityCache {
 

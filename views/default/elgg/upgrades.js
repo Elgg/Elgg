@@ -1,7 +1,7 @@
 /**
  * Provides functions for site upgrades performed through XHR
  *
- * @access private
+ * @internal
  */
 define(function(require) {
 	var $ = require('jquery');

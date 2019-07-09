@@ -131,7 +131,7 @@ function likes_social_menu_setup(\Elgg\Hook $hook) {
  * @param int        $priority Item priority
  *
  * @return ElggMenuItem
- * @access private
+ * @internal
  */
 function _likes_menu_item(ElggEntity $entity, $priority = 500) {
 	$is_liked = DataService::instance()->currentUserLikesEntity($entity->guid);
@@ -157,7 +157,7 @@ function _likes_menu_item(ElggEntity $entity, $priority = 500) {
  * @param int        $priority Item priority
  *
  * @return ElggMenuItem
- * @access private
+ * @internal
  */
 function _likes_count_menu_item(ElggEntity $entity, $priority = 500) {
 	$num_likes = DataService::instance()->getNumLikes($entity);

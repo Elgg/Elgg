@@ -8,7 +8,7 @@ use Elgg\Project\Paths;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  * @since   1.11

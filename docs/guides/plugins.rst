@@ -7,35 +7,6 @@ Plugins must provide a ``manifest.xml`` file in the plugin root in order to be r
    :local:
    :depth: 1
 
-start.php
-=========
-
-The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks.
-
-It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file.
-This allows for consistency in Application bootstrapping, especially for testing purposes.
-
-.. code-block:: php
-
-    function my_plugin_does_something_else() {
-        // Some procedural code that you want to run before any events are fired
-    }
-
-    function my_plugin_init() {
-        // Your plugin's initialization logic
-    }
-
-    function my_plugin_rewrite_hook() {
-        // Path rewrite hook
-    }
-
-    return function() {
-        my_plugin_do_something_else();
-        elgg_register_event_handler('init', 'system', 'my_plugin_init');
-        elgg_register_plugin_hook_handler('route:rewrite', 'proifle', 'my_plugin_rewrite_hook');
-    }
-
-
 elgg-plugin.php
 ===============
 
@@ -172,7 +143,45 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 		],
 	];
 
+Bootstrap class
+===============
 
+As of Elgg 3.0 the recommended way to bootstrap you plugin is to use a bootstrap class. This class must implement 
+the ``\Elgg\PluginBootstrapInterface`` interface. You can register you bootstrap class in the ``elgg-plugin.php``.
+
+The bootstrap interface defines several function to be implemented which are called during different events in the system booting process.
+
+.. seealso::
+
+	For more information about the different functions defined in the ``\Elgg\PluginBootstrapInterface`` please read  :doc:`plugins/bootstrap`
+
+start.php
+=========
+
+The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks.
+
+It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file.
+This allows for consistency in Application bootstrapping, especially for testing purposes.
+
+.. code-block:: php
+
+    function my_plugin_does_something_else() {
+        // Some procedural code that you want to run before any events are fired
+    }
+
+    function my_plugin_init() {
+        // Your plugin's initialization logic
+    }
+
+    function my_plugin_rewrite_hook() {
+        // Path rewrite hook
+    }
+
+    return function() {
+        my_plugin_do_something_else();
+        elgg_register_event_handler('init', 'system', 'my_plugin_init');
+        elgg_register_plugin_hook_handler('route:rewrite', 'proifle', 'my_plugin_rewrite_hook');
+    }
 
 elgg-services.php
 =================
@@ -397,6 +406,7 @@ Related
 
 	plugins/plugin-skeleton
 	plugins/dependencies
+	plugins/bootstrap
 
 .. _Composer: https://getcomposer.org/
 .. _Packagist: https://packagist.org/

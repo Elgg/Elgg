@@ -232,7 +232,6 @@ abstract class ElggExtender extends \ElggData {
 	 * @param string $value_type If specified as "text" or "integer", overrides the detection.
 	 *
 	 * @return string
-	 * @access private
 	 * @internal
 	 */
 	public static function detectValueType($value, $value_type = "") {

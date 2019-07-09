@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Právě přihlášeni',
 	'admin:users:newest' => 'Nejnovější',
 	'admin:users:admins' => 'Správci',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Přidat nového uživatele',
 	'admin:users:description' => "Tento správcovský panel umožňuje měnit nastavení členů vašich stránek. Následují dostupné možnosti.",
 	'admin:users:adduser:label' => "Pro přidání nového uživatele klikněte sem...",
@@ -510,6 +512,8 @@ return array(
 	'admin:settings' => 'Nastavení',
 	'admin:settings:basic' => 'Základní nastavení',
 	'admin:settings:advanced' => 'Rozšířená nastavení',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Tento správcovský panel umožňuje měnit celkové nastavení vašich stránek. Následují dostupné možnosti.",
 	'admin:site:opt:linktext' => "Nastavit stránky...",
 	'admin:settings:in_settings_file' => 'Toto nastavení je definováno v settings.php',
@@ -1010,6 +1014,8 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Aktivní',
 	'total' => 'Celkem',
+	'unvalidated' => 'Unvalidated',
+	'disabled' => 'Disabled',
 
 	'ok' => 'OK',
 	'any' => 'Jakákoliv',
@@ -1076,6 +1082,12 @@ These changes will only affect new users on the site.',
 
 	'on' => 'Zapnuto',
 	'off' => 'Vypnuto',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1282,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'Systém',
 	'admin:legend:caching' => 'Vyrovnávací paměť',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Přístup k obsahu',
 	'admin:legend:site_access' => 'Přístup ke stránkám',
 	'admin:legend:debug' => 'Ladění a výpisy',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
 	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Disable RSS feeds",

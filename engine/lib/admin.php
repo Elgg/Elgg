@@ -105,7 +105,7 @@ function elgg_admin_notice_exists($id) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
 	if (!$object instanceof \ElggUpgrade) {
@@ -126,7 +126,7 @@ function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
 /**
  * Initialize the admin backend.
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_admin_init() {
 
@@ -192,7 +192,7 @@ function _elgg_admin_init() {
 /**
  * Returns plugin listing and admin menu to the client (used after plugin (de)activation)
  *
- * @access private
+ * @internal
  * @return Elgg\Http\OkResponse
  */
 function _elgg_ajax_plugins_update() {
@@ -215,7 +215,7 @@ function _elgg_ajax_plugins_update() {
  *
  * @return void|MenuItems
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_admin_header_menu($hook, $type, $return, $params) {
@@ -274,7 +274,7 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
  *
  * @return void|\ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_admin_footer_menu($hook, $type, $return, $params) {
@@ -315,7 +315,7 @@ function _elgg_admin_footer_menu($hook, $type, $return, $params) {
  * @param \Elgg\Hook $hook 'register' 'menu:page'
  * @return array
  *
- * @access private
+ * @internal
  * @see _elgg_default_widgets_init() for default widgets menu items setup
  * @since 3.0
  */
@@ -474,7 +474,7 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
  * @param \Elgg\Hook $hook 'register' 'menu:page'
  * @return array
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
@@ -593,7 +593,7 @@ function _elgg_admin_user_unvalidated_bulk_menu(\Elgg\Hook $hook) {
  * @param array $page Array of pages
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_admin_page_handler($page) {
 	elgg_admin_gatekeeper();
@@ -652,7 +652,7 @@ function _elgg_admin_page_handler($page) {
  * @param string $current_url Current page URL
  * @return bool
  *
- * @access private
+ * @internal
  */
 function _elgg_admin_maintenance_allow_url($current_url) {
 	$site_path = preg_replace('~^https?~', '', elgg_get_site_url());
@@ -680,7 +680,7 @@ function _elgg_admin_maintenance_allow_url($current_url) {
  *
  * @return void|false
  *
- * @access private
+ * @internal
  */
 function _elgg_admin_maintenance_handler($hook, $type, $info) {
 	if (elgg_is_admin_logged_in()) {
@@ -705,11 +705,10 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 /**
  * Prevent non-admins from using actions
  *
- * @access private
- *
  * @param string $hook Hook name
  * @param string $type Action name
  * @return bool
+ * @internal
  */
 function _elgg_admin_maintenance_action_check($hook, $type) {
 	if (elgg_is_admin_logged_in()) {
@@ -750,7 +749,7 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
  * @param \ElggUser $user  affected user
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_add_admin_widgets($event, $type, $user) {
 	elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
@@ -1052,7 +1051,7 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
  * @param \Elgg\Hook $hook 'register', 'menu:filter:admin/upgrades'
  *
  * @return MenuItems
- * @access private
+ * @internal
  */
 function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 	

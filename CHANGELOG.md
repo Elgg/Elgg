@@ -1,3 +1,50 @@
+<a name="3.0.5"></a>
+### 3.0.5  (2019-07-08)
+
+#### Contributors
+
+* Jerôme Bakker (8)
+* Jeroen Dalsem (2)
+* Ismayil Khayredinov (1)
+
+#### Documentation
+
+* **compatibility:** explain @internal implications ([5c7b52e5](https://github.com/Elgg/Elgg/commit/5c7b52e5abc503eab2a3f17830005d7363d4a4d1))
+* **plugins:** document plugin bootstrap usage ([02ea7a0d](https://github.com/Elgg/Elgg/commit/02ea7a0d4cedac0c1027362bf69cef671eace297))
+
+
+#### Bug Fixes
+
+* **core:** correctly remove annotations on non saved entities ([20af166e](https://github.com/Elgg/Elgg/commit/20af166e6815b38e1771542cac69b7c3883e004a))
+* **http:** non-multipart requests should not fail validation ([c59ae7aa](https://github.com/Elgg/Elgg/commit/c59ae7aa095e663a57ec52e479264296a523297d), closes [#12654](https://github.com/Elgg/Elgg/issues/12654))
+* **notifications:** correctly sort the notifiable users ([583fb67f](https://github.com/Elgg/Elgg/commit/583fb67f8038741607f426efd5227880610b0ca1))
+* **search:** highlighter no longer messes up output when searching ints ([e3499498](https://github.com/Elgg/Elgg/commit/e34994983dba7de51eb5815e9746cd9e9d40c124))
+* **thewire:** full view uses correct entity layout ([64143d58](https://github.com/Elgg/Elgg/commit/64143d58e80bbbaec204727d88575691707f4599))
+
+
+#### Deprecations
+
+* **groups:** group_acl metadata has been deprecated ([380cfa24](https://github.com/Elgg/Elgg/commit/380cfa249a6d8d57838f2de911dcb0f4c6677588))
+
+
+<a name="3.0.4"></a>
+### 3.0.4  (2019-06-12)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+* Jeroen Dalsem (2)
+
+#### Bug Fixes
+
+* **blog:** save draft in correct container ([b32c6139](https://github.com/Elgg/Elgg/commit/b32c6139bdb841a736bbd9b46f7f82a540793ff4))
+* **email:** set default email attachment id ([ae8fc0a4](https://github.com/Elgg/Elgg/commit/ae8fc0a436106d511aabfad6e990a58f86855358))
+* **install:** minification is enabled for fresh installations ([ae869441](https://github.com/Elgg/Elgg/commit/ae8694419f955f131cea2b6dc953bda8ff49155f))
+* **livesearch:** by default no longer include banned users ([c059ff11](https://github.com/Elgg/Elgg/commit/c059ff115d7c2227c30fb5205e1cd1f1a57e8ffa))
+* **response:** only set error content if provided ([518231ab](https://github.com/Elgg/Elgg/commit/518231ab7be60696c3476e190dbef8723188e2ab))
+* **system_log:** prevent fatal exception when constructing objects ([5105ca6f](https://github.com/Elgg/Elgg/commit/5105ca6f0a0198445aba03599430f9b14e691ae0))
+
+
 <a name="3.0.3"></a>
 ### 3.0.3  (2019-05-21)
 
@@ -1163,6 +1210,18 @@ keyword `all` no longer has any effect on calling order. ([1b0cc64d](https://git
 var `$DEFAULT_FILE_STORE`.
  ([618c79d3](https://github.com/Elgg/Elgg/commit/618c79d301eda1b265441b14f3bfbda2235ee3fd))
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
+
+
+<a name="2.3.13"></a>
+### 2.3.13  (2019-06-12)
+
+#### Contributors
+
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **blog:** show correct last saved date ([b888e7e1](https://github.com/Elgg/Elgg/commit/b888e7e1a3772f205f5a7fe1de62894964ee8e0c))
 
 
 <a name="2.3.12"></a>

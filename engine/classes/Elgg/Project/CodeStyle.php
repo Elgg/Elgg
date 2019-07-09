@@ -5,7 +5,7 @@ namespace Elgg\Project;
 /**
  * Internal component to detect and fix some whitespace issues
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Project

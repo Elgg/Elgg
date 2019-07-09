@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-21 08:58+0200\n"
+"POT-Creation-Date: 2019-07-08 14:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,6 +25,7 @@ msgid "Below are some commonly asked questions about Elgg."
 msgstr ""
 
 #: ../../appendix/faqs.rst:8
+#: ../../appendix/releases.rst:16
 #: ../../appendix/support.rst:8
 #: ../../appendix/upgrade-notes/1.10-to-1.11.rst:6
 #: ../../appendix/upgrade-notes/1.7-to-1.8.rst:6
@@ -1188,119 +1189,167 @@ msgstr ""
 msgid "Follow the blog to `stay up to date on the latest releases`__."
 msgstr ""
 
-#: ../../appendix/releases.rst:15
+#: ../../appendix/releases.rst:19
 msgid "Patch/Bugfix Releases (2.1.x)"
 msgstr ""
 
-#: ../../appendix/releases.rst:16
+#: ../../appendix/releases.rst:20
 msgid "Every two weeks."
 msgstr ""
 
-#: ../../appendix/releases.rst:18
+#: ../../appendix/releases.rst:22
 msgid "Bugfix releases are made regularly to make sure Elgg stays stable, secure, and bug-free. The higher the third digit, the more tested and stable the release is."
 msgstr ""
 
-#: ../../appendix/releases.rst:21
+#: ../../appendix/releases.rst:25
 msgid "Since bugfix release focus on fixing bugs and not making major changes, themes and plugins should work from bugfix release to bugfix release."
 msgstr ""
 
-#: ../../appendix/releases.rst:26
+#: ../../appendix/releases.rst:30
 msgid "Minor/Feature Releases (2.x.0)"
 msgstr ""
 
-#: ../../appendix/releases.rst:27
+#: ../../appendix/releases.rst:31
 msgid "Every three months."
 msgstr ""
 
-#: ../../appendix/releases.rst:29
+#: ../../appendix/releases.rst:33
 msgid "Whenever we introduce new features, we'll bump the middle version number. These releases aren't as mature as bugfix release, but are considered stable and useable."
 msgstr ""
 
-#: ../../appendix/releases.rst:32
+#: ../../appendix/releases.rst:36
 msgid "We make every effort to be backward compatible in these releases, so plugins should work from minor release to minor release."
 msgstr ""
 
-#: ../../appendix/releases.rst:35
+#: ../../appendix/releases.rst:39
 msgid "However, plugins might need to be updated to make use of the new features."
 msgstr ""
 
-#: ../../appendix/releases.rst:39
+#: ../../appendix/releases.rst:43
 msgid "Major/Breaking Releases (x.0.0)"
 msgstr ""
 
-#: ../../appendix/releases.rst:40
+#: ../../appendix/releases.rst:44
 msgid "Every year."
 msgstr ""
 
-#: ../../appendix/releases.rst:42
+#: ../../appendix/releases.rst:46
 msgid "Inevitably, improving Elgg requires breaking changes and a new major release is made. These releases are opportunities for the core team to make strategic, breaking changes to the underlying platform. Themes and plugins from older versions are not expected to work without modification on different major releases."
 msgstr ""
 
-#: ../../appendix/releases.rst:46
+#: ../../appendix/releases.rst:50
 msgid "We may remove deprecated APIs, but we will not remove APIs without first deprecating them."
 msgstr ""
 
-#: ../../appendix/releases.rst:48
+#: ../../appendix/releases.rst:52
 msgid "Elgg's dependencies may be upgraded by their major version or removed entirely. We will not remove any dependences before a major release, but we do not \"deprecate\" dependencies or issue any warnings before removing them."
 msgstr ""
 
-#: ../../appendix/releases.rst:52
+#: ../../appendix/releases.rst:56
 msgid "Your package, plugin, or app should declare its own dependencies directly so that this does not cause a problem."
 msgstr ""
 
-#: ../../appendix/releases.rst:56
+#: ../../appendix/releases.rst:60
 msgid "Alphas, Betas, and Release Candidates"
 msgstr ""
 
-#: ../../appendix/releases.rst:58
+#: ../../appendix/releases.rst:62
 msgid "Before major releases (and sometimes before feature releases), the core team will offer a pre-release version of Elgg to get some real-world testing and feedback on the release. These are meant for testing only and should not be used on a live site."
 msgstr ""
 
-#: ../../appendix/releases.rst:63
+#: ../../appendix/releases.rst:67
 msgid "SemVer 2.0 does not define a particular meaning for pre-releases, but we approach alpha, beta, and rc releases with these general guidelines:"
 msgstr ""
 
-#: ../../appendix/releases.rst:66
+#: ../../appendix/releases.rst:70
 msgid "An ``-alpha.X`` pre-release means that there are still breaking changes planned, but the feature set of the release is frozen. No new features or breaking changes can be proposed for that release."
 msgstr ""
 
-#: ../../appendix/releases.rst:70
+#: ../../appendix/releases.rst:74
 msgid "A ``-beta.X`` pre-release means that there are no known breaking changes left to be included, but there are known regressions or critical bugs left to fix."
 msgstr ""
 
-#: ../../appendix/releases.rst:73
+#: ../../appendix/releases.rst:77
 msgid "An ``-rc.X`` pre-release means that there are no known regressions or critical bugs left to be fixed. This version could become the final stable version of Elgg if no new blockers are reported."
 msgstr ""
 
-#: ../../appendix/releases.rst:78
+#: ../../appendix/releases.rst:82
 msgid "Backwards compatibility"
 msgstr ""
 
-#: ../../appendix/releases.rst:80
+#: ../../appendix/releases.rst:84
 msgid "Some parts of the system need some additional clarification if we are talking about being backwards compatible. Everything that is considered public API needs to adhere to the backwards compatibility rules that are part of `semantic versioning`_."
 msgstr ""
 
-#: ../../appendix/releases.rst:84
-msgid "Views"
-msgstr ""
-
-#: ../../appendix/releases.rst:86
-msgid "View names are API."
-msgstr ""
-
-#: ../../appendix/releases.rst:87
-msgid "View arguments ($vars array) are API."
-msgstr ""
-
 #: ../../appendix/releases.rst:88
-msgid "Removing views or renaming views follows API deprecation policies."
-msgstr ""
-
-#: ../../appendix/releases.rst:89
-msgid "Adding new views requires a minor version change."
+msgid "Classes and functions"
 msgstr ""
 
 #: ../../appendix/releases.rst:90
+msgid "Classes and functions marked with ``@internal`` are not considered part of the public API and can be changed / removed at any time. If a class is marked with ``@internal`` all properties and methods in that class are considered private API and therefor can be changed / removed at any time."
+msgstr ""
+
+#: ../../appendix/releases.rst:95
+msgid "Event and plugin hook callbacks"
+msgstr ""
+
+#: ../../appendix/releases.rst:97
+msgid "All event and plugin hook callbacks should never be called directly but only be called by their respective event / plugin hook."
+msgstr ""
+
+#: ../../appendix/releases.rst:99
+msgid "The name of the callback function is considered API as plugin developers need to be able to rely on the fact that they can (un)register a callback. This only applies if the callback still serves the same purpose. If a callback becomes obsolete its allowed to be removed from the system."
+msgstr ""
+
+#: ../../appendix/releases.rst:105
+msgid "Exceptions to these rules are the callback functions related to the following ``system`` events, these callbacks can be renamed / removed at any time."
+msgstr ""
+
+#: ../../appendix/releases.rst:108
+msgid "``plugins_load``"
+msgstr ""
+
+#: ../../appendix/releases.rst:109
+msgid "``plugins_boot``"
+msgstr ""
+
+#: ../../appendix/releases.rst:110
+msgid "``init``"
+msgstr ""
+
+#: ../../appendix/releases.rst:111
+msgid "``ready``"
+msgstr ""
+
+#: ../../appendix/releases.rst:112
+msgid "``shutdown``"
+msgstr ""
+
+#: ../../appendix/releases.rst:113
+msgid "``upgrade``"
+msgstr ""
+
+#: ../../appendix/releases.rst:116
+msgid "Views"
+msgstr ""
+
+#: ../../appendix/releases.rst:118
+msgid "View names are API."
+msgstr ""
+
+#: ../../appendix/releases.rst:119
+msgid "View arguments ($vars array) are API."
+msgstr ""
+
+#: ../../appendix/releases.rst:120
+msgid "Removing views or renaming views follows API deprecation policies."
+msgstr ""
+
+#: ../../appendix/releases.rst:121
+msgid "Adding new views requires a minor version change."
+msgstr ""
+
+#: ../../appendix/releases.rst:122
 msgid "View output is not API and can be changed between patch releases."
 msgstr ""
 
@@ -5038,7 +5087,7 @@ msgid "Plugins should not rely on joined and selected table aliases. Closures pa
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:406
-msgid "Note that all of the private API around building raw SQL strings has also been removed. If you were relying on them in your plugins, be advised that anything marked as ``@access private`` and ``@internal`` in core can be modified and removed at any time, and we do not guarantee any backward compatibility for those functions. DO NOT USE THEM. If you find yourself needing to use them, open an issue on Github and we will consider adding a public equivalent."
+msgid "Note that all of the private API around building raw SQL strings has also been removed. If you were relying on them in your plugins, be advised that anything marked as ``@access private`` or ``@internal`` in core can be modified and removed at any time, and we do not guarantee any backward compatibility for those functions. DO NOT USE THEM. If you find yourself needing to use them, open an issue on Github and we will consider adding a public equivalent."
 msgstr ""
 
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:412

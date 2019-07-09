@@ -8,7 +8,7 @@ use Elgg\Database\Plugins;
 /**
  * Serializable collection of data used to boot Elgg
  *
- * @access private
+ * @internal
  * @since 2.1
  */
 class BootData {

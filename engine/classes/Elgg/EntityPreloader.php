@@ -9,19 +9,19 @@ use Elgg\Cache\EntityCache;
 /**
  * Preload entities based on properties of fetched objects
  *
- * @access private
+ * @internal
  */
 class EntityPreloader {
 
 	/**
-	 * @var callable DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_cache_checker;
 
 	/**
-	 * @var callable DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_entity_loader;
 

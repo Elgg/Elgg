@@ -12,7 +12,6 @@ use Elgg\Cacheable;
 /**
  * DI cache
  *
- * @access private
  * @internal
  */
 class DefinitionCache implements Cache,

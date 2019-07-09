@@ -7,7 +7,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Enables adding a logger. Users should not assume $this->logger is set: use Loggable::getLogger()
  *
- * @access private
+ * @internal
  */
 trait Loggable {
 

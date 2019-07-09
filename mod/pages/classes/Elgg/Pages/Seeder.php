@@ -7,7 +7,7 @@ use Elgg\Database\Seeds\Seed;
 /**
  * Add page seed
  *
- * @access private
+ * @internal
  */
 class Seeder extends Seed {
 

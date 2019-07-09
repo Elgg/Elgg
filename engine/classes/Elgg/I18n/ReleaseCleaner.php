@@ -1,10 +1,11 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
  * Removes invalid language files from an installation
  *
- * @access private
+ * @internal
  */
 class ReleaseCleaner {
 

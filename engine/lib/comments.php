@@ -13,7 +13,7 @@ use Elgg\Database\QueryBuilder;
  * Comments initialization function
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
@@ -73,7 +73,7 @@ function elgg_comments_per_page(ElggEntity $container = null) {
  * @param int $fallback_guid GUID of the containing entity
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$fail = function () {
@@ -147,7 +147,7 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
  * @param array   $params Array of parameters (container, user, subtype)
  *
  * @return void|true
- * @access private
+ * @internal
  * @todo this doesn't seem to make a difference if a user can comment or not
  */
 function _elgg_comments_container_permissions_override($hook, $type, $return, $params) {
@@ -166,7 +166,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
  * @param array   $params Array of parameters (entity, user)
  *
  * @return void|boolean Whether the given user is allowed to edit the given comment.
- * @access private
+ * @internal
  */
 function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
@@ -191,7 +191,7 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
  * @param array  $returnvalue Current mail parameters
  * @param array  $params      Original mail parameters
  * @return array $returnvalue Modified mail parameters
- * @access private
+ * @internal
  */
 function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $params) {
 	if (!is_array($returnvalue) || !is_array($returnvalue['params'])) {
@@ -227,7 +227,7 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
  * @param ElggEntity $entity The updated entity
  * @return bool
  *
- * @access private
+ * @internal
  */
 function _elgg_comments_access_sync($event, $type, $entity) {
 	if (!($entity instanceof \ElggEntity)) {
@@ -269,7 +269,7 @@ function _elgg_comments_access_sync($event, $type, $entity) {
  *
  * @return void|array
  *
- * @access private
+ * @internal
  */
 function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $returnvalue, $params) {
 	
@@ -319,7 +319,7 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
  *
  * @return void|\Elgg\Notifications\Notification
  *
- * @access private
+ * @internal
  */
 function _elgg_comments_prepare_content_owner_notification($hook, $type, $returnvalue, $params) {
 	
@@ -364,7 +364,7 @@ function _elgg_comments_prepare_content_owner_notification($hook, $type, $return
  *
  * @return void|\Elgg\Notifications\Notification
  *
- * @access private
+ * @internal
  */
 function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params) {
 	
@@ -408,7 +408,7 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
  *
  * @return void|\ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_comments_social_menu_setup(\Elgg\Hook $hook) {

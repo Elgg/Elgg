@@ -6,15 +6,15 @@ return array(
 	 */
 
 	'item:object:page' => '페이지',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => '페이지',
+	'collection:object:page:all' => "모든 페이지",
+	'collection:object:page:owner' => "%s의 페이지",
+	'collection:object:page:friends' => "친구의 페이지",
+	'collection:object:page:group' => "모둠 페이지",
+	'add:object:page' => "페이지 추가",
+	'edit:object:page' => "이 페이지 수정",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => '모둠 페이지 활성화',
 
 	'pages:delete' => " 이 페이지 삭제",
 	'pages:history' => "내역",
@@ -26,11 +26,11 @@ return array(
 	'pages:notify:summary' => '%s라는 새페이지',
 	'pages:notify:subject' => "새 페이지:%s",
 	'pages:notify:body' =>
-'%s added a new page: %s
+'%s 가 새 페이지를 추가함: %s
 
 %s
 
-View and comment on the page:
+페이지를 보고 댓글을 추가합니다:
 %s',
 
 	'pages:more' => '페이지 더보기',
@@ -40,9 +40,9 @@ View and comment on the page:
 	* River
 	**/
 
-	'river:object:page:create' => '%s created a page %s',
-	'river:object:page:update' => '%s updated a page %s',
-	'river:object:page:comment' => '%s commented on a page titled %s',
+	'river:object:page:create' => '%s 가 페이지 %s 를 만들었습니다.',
+	'river:object:page:update' => '%s 가 페이지 %s 를 수정했습니다.',
+	'river:object:page:comment' => '%s가 %s 제목의 페이지에 댓글을 남겼습니다.',
 	
 	/**
 	 * Form fields
@@ -62,7 +62,7 @@ View and comment on the page:
 	'pages:saved' => '페이지 저장됨',
 	'pages:notsaved' => '페이지를 저장할 수 없슴',
 	'pages:error:no_title' => '이 페이지의 제목을 입력해야합니다.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => '페이지가 성공적으로 삭제되었습니다.',
 	'pages:revision:delete:success' => '페이지 변경점이 성공적올 제거되었습니다.',
 	'pages:revision:delete:failure' => '페이지 변경점을 제거할 수 없습니다.',
 
@@ -76,8 +76,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => '표시할 페이지의 수',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => '페이지',
+	'widgets:pages:description' => "이것이 당신의 페이지들의 목록입니다.",
 
 	/**
 	 * Submenu items

@@ -5,7 +5,7 @@ namespace Elgg\Search;
 use Elgg\Hook;
 
 /**
- * @access private
+ * @internal
  * @since  3.0
  */
 class TagsSearchFieldsHandler {

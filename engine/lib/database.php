@@ -107,7 +107,7 @@ function _elgg_db_register_seeds(\Elgg\Hook $hook) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_db_init() {
 	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds');

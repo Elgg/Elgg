@@ -65,13 +65,13 @@ function elgg_is_admin_logged_in() {
  * for access: if (true === elgg_authenticate()) { ... }.
  *
  *
- * @see login
+ * @see login()
  *
  * @param string $username The username
  * @param string $password The password
  *
  * @return true|string True or an error message on failure
- * @access private
+ * @internal
  */
 function elgg_authenticate($username, $password) {
 	$pam = new \ElggPAM('user');
@@ -93,7 +93,7 @@ function elgg_authenticate($username, $password) {
  *
  * @return bool
  * @throws LoginException
- * @access private
+ * @internal
  */
 function pam_auth_userpass(array $credentials = []) {
 
@@ -318,7 +318,6 @@ function logout() {
  * @param \ElggUser     $user    Logged in user
  * @return string
  *
- * @access private
  * @internal
  */
 function _elgg_get_login_forward_url(\Elgg\Request $request, \ElggUser $user) {
@@ -368,7 +367,7 @@ function _elgg_session_cleanup_persistent_login(\Elgg\Hook $hook) {
  * @param ServiceProvider $services Services
  * @return bool
  * @throws SecurityException
- * @access private
+ * @internal
  */
 function _elgg_session_boot(ServiceProvider $services) {
 	$services->timer->begin([__FUNCTION__]);

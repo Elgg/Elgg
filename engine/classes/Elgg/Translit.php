@@ -28,7 +28,7 @@ namespace Elgg;
  * @author  Jonathan H. Wage <jonwage@gmail.com>
  * @author  Steve Clay <steve@mrclay.org>
  *
- * @access private Plugin authors should not use this directly
+ * @internal
  */
 class Translit {
 

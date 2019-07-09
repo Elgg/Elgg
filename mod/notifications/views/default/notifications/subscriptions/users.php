@@ -34,10 +34,8 @@ echo elgg_list_entities([
 		},
 	],
 	'order_by_metadata' => [
-		[
-			'name' => 'name',
-			'direction' => 'ASC',
-		],
+		'name' => 'name',
+		'direction' => 'ASC',
 	],
 	'group_by' => 'e.guid',
 	'offset_key' => 'subscriptions_users',

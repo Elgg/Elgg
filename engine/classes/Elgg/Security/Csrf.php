@@ -119,7 +119,6 @@ class Csrf {
 	 *
 	 * @return bool
 	 *
-	 * @access private
 	 * @internal
 	 */
 	public function isValidToken($token, $ts) {
@@ -146,7 +145,7 @@ class Csrf {
 	 * @return int number of seconds that action token is valid
 	 *
 	 * @see    Csrf::validateActionToken
-	 * @access private
+	 * @internal
 	 * @since  1.9.0
 	 */
 	public function getActionTokenTimeout() {
@@ -170,8 +169,7 @@ class Csrf {
 	 * @param string $session_token Session-specific token
 	 *
 	 * @return bool
-	 * @access private
-	 * @inernal
+	 * @internal
 	 */
 	public function validateTokenOwnership($token, $timestamp, $session_token = '') {
 		$required_token = $this->generateActionToken($timestamp, $session_token);
@@ -188,7 +186,7 @@ class Csrf {
 	 * @param string $session_token Session-specific token
 	 *
 	 * @return false|string
-	 * @access private
+	 * @internal
 	 */
 	public function generateActionToken($timestamp, $session_token = '') {
 		if (!$session_token) {

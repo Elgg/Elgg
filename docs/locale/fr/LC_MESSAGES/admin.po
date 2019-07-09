@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-17 11:46+0200\n"
+"POT-Creation-Date: 2019-05-21 08:58+0200\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -24,6 +24,14 @@ msgstr ""
 #: ../../admin/backup-restore.rst:2
 msgid "Backup and Restore"
 msgstr "Sauvegarde et Restauration"
+
+#: ../../admin/backup-restore.rst:6 ../../admin/composer.rst:9
+#: ../../admin/cron.rst:6 ../../admin/duplicate-installation.rst:6
+#: ../../admin/getting-help.rst:10 ../../admin/performance.rst:8
+#: ../../admin/plugins.rst:8 ../../admin/security.rst:8
+#: ../../admin/uservalidation.rst:8
+msgid "Contents"
+msgstr ""
 
 #: ../../admin/backup-restore.rst:9 ../../admin/duplicate-installation.rst:9
 msgid "Introduction"

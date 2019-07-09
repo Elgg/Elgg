@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 /**
@@ -6,13 +7,14 @@ namespace Elgg\Database;
  *
  * Controls all admin notices in the system.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Database
  * @since      1.10.0
  */
 class AdminNotices {
+	
 	/**
 	 * Write a persistent message to the admin view.
 	 * Useful to alert the admin to take a certain action.

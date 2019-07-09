@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-17 11:46+0200\n"
+"POT-Creation-Date: 2019-05-21 08:58+0200\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -32,6 +32,12 @@ msgid ""
 msgstr ""
 "Comprenez les standards et process d'Elgg pour que vos propositions de "
 "modification soient acceptées aussi vite que possible."
+
+#: ../../contribute/code.rst:8 ../../contribute/core/move_plugin.rst:6
+#: ../../contribute/core/releases.rst:12 ../../contribute/database.rst:8
+#: ../../contribute/docs.rst:8 ../../contribute/tests.rst:6
+msgid "Contents"
+msgstr ""
 
 #: ../../contribute/code.rst:11
 msgid "License agreement"

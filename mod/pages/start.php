@@ -328,7 +328,7 @@ function pages_ecml_views_hook($hook, $type, $return_value, $params) {
  * @param ElggObject $value the entity to check
  *
  * @return bool
- * @access private
+ * @internal
  */
 function pages_is_page($value) {
 	

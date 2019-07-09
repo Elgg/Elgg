@@ -20,8 +20,6 @@ class EventsService extends HooksRegistrationService {
 	 * Constructor
 	 *
 	 * @param HandlersService $handlers Handlers
-	 * @access private
-	 * @internal
 	 */
 	public function __construct(HandlersService $handlers) {
 		$this->handlers = $handlers;
@@ -31,7 +29,6 @@ class EventsService extends HooksRegistrationService {
 	 * Get the handlers service in use
 	 *
 	 * @return HandlersService
-	 * @access private
 	 * @internal
 	 */
 	public function getHandlersService() {

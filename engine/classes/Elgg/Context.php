@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\Http\Request as HttpRequest;
@@ -20,7 +21,7 @@ use Elgg\Http\Request as HttpRequest;
  * @warning The context is not available until the page_handler runs (after
  * the 'init, system' event processing has completed).
  *
- * @access private
+ * @internal
  * @since 1.10.0
  */
 final class Context {

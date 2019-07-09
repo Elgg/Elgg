@@ -40,7 +40,7 @@ function notifications_plugin_init() {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _notifications_page_menu($hook, $type, $return, $params) {
@@ -84,7 +84,7 @@ function _notifications_page_menu($hook, $type, $return, $params) {
  *
  * @return void
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _notification_groups_title_menu(\Elgg\Hook $hook) {

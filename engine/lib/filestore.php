@@ -131,7 +131,7 @@ function elgg_get_file_simple_type($mime_type) {
  * Register file-related handlers on "init, system" event
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_filestore_init() {
 
@@ -159,7 +159,7 @@ function _elgg_filestore_init() {
  * @param array  $params    Hook parameters
  *
  * @return string The MIME type
- * @access private
+ * @internal
  */
 function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
 
@@ -178,7 +178,7 @@ function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
  * @param array  $params      Hook parameters
  *
  * @return string 'document', 'audio', 'video', or 'general' if the MIME type is unrecognized
- * @access private
+ * @internal
  */
 function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
 
@@ -258,7 +258,7 @@ function elgg_get_embed_url(\ElggEntity $entity, $size) {
  * /serve-icon/<entity_guid>/<size>
  *
  * @return void
- * @access private
+ * @internal
  * @since 2.2
  */
 function _elgg_filestore_serve_icon_handler() {
@@ -274,7 +274,7 @@ function _elgg_filestore_serve_icon_handler() {
  * @param string     $type   "object"|"group"
  * @param ElggObject $entity Entity
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_filestore_touch_icons($event, $type, $entity) {
 	$original_attributes = $entity->getOriginalAttributes();
@@ -308,7 +308,7 @@ function _elgg_filestore_touch_icons($event, $type, $entity) {
  * @param string     $type   "object"|"group"
  * @param ElggObject $entity Entity
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_filestore_move_icons($event, $type, $entity) {
 

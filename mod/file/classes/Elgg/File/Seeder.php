@@ -8,7 +8,7 @@ use Elgg\Project\Paths;
 /**
  * Add file seed
  *
- * @access private
+ * @internal
  */
 class Seeder extends Seed {
 

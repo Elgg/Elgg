@@ -8,7 +8,7 @@ use ElggUser;
 /**
  * Populates volatile data with details needed to render a search view
  *
- * @access private
+ * @internal
  */
 class Formatter {
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Psr\Log\LoggerInterface;
@@ -8,7 +9,7 @@ use Psr\Log\LoggerInterface;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Deprecation

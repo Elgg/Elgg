@@ -14,7 +14,6 @@ use Psr\Log\LoggerInterface;
 /**
  * Route registration service
  *
- * @access private
  * @internal
  */
 class RouteRegistrationService {

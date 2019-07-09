@@ -3,7 +3,7 @@
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  *
  * @since 3.0.0
  */

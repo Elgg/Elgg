@@ -19,9 +19,6 @@ class PluginHooksService extends HooksRegistrationService {
 	 * Constructor
 	 *
 	 * @param EventsService $events Events
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function __construct(EventsService $events) {
 		$this->events = $events;

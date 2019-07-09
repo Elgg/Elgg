@@ -90,9 +90,8 @@ final class Result {
 	/**
 	 * Has the upgrade been marked complete?
 	 *
-	 * @internal
-	 * @access private
 	 * @return bool
+	 * @internal
 	 */
 	public function wasMarkedComplete() {
 		return $this->is_complete === true;

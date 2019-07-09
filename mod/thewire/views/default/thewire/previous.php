@@ -10,4 +10,4 @@ if (!$parent) {
 	return;
 }
 
-echo elgg_view_entity($parent);
+echo elgg_view_entity($parent, ['full_view' => false]);

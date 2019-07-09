@@ -21,7 +21,7 @@ use Elgg\Http\ResponseBuilder;
  *
  * @return bool|null|void
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_set_user_password(\Elgg\Hook $hook) {
 
@@ -83,7 +83,7 @@ function _elgg_set_user_password(\Elgg\Hook $hook) {
  *
  * @return bool|null
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_set_user_name(\Elgg\Hook $hook) {
 
@@ -125,7 +125,7 @@ function _elgg_set_user_name(\Elgg\Hook $hook) {
  * @return bool|null
  *
  * @since 3.0
- * @access private
+ * @internal
  */
 function _elgg_set_user_username(\Elgg\Hook $hook) {
 
@@ -194,7 +194,7 @@ function _elgg_set_user_username(\Elgg\Hook $hook) {
  *
  * @return bool|null
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_set_user_language(\Elgg\Hook $hook) {
 
@@ -230,7 +230,7 @@ function _elgg_set_user_language(\Elgg\Hook $hook) {
  *
  * @return bool|null
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_set_user_email(\Elgg\Hook $hook) {
 	
@@ -294,7 +294,7 @@ function _elgg_set_user_email(\Elgg\Hook $hook) {
  *
  * @return bool|null
  * @since 1.8.0
- * @access private
+ * @internal
  * @throws DatabaseException
  */
 function _elgg_set_user_default_access(\Elgg\Hook $hook) {
@@ -329,7 +329,7 @@ function _elgg_set_user_default_access(\Elgg\Hook $hook) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
@@ -402,7 +402,7 @@ function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
  * @param array  $params menu related parameters
  *
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
 	if (empty($value)) {
@@ -438,7 +438,7 @@ function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
  * Initialize the user settings library
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_user_settings_init() {
 

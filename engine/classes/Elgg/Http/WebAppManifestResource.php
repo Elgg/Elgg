@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Http;
 
 use ElggSite;
@@ -13,7 +14,7 @@ use ElggSite;
  * @subpackage Http
  * @since      1.10
  *
- * @access private
+ * @internal
  */
 class WebAppManifestResource {
 	/** @var ElggSite */

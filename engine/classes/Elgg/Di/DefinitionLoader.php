@@ -7,7 +7,6 @@ use Elgg\Project\Paths;
 /**
  * DI definition loader
  *
- * @access private
  * @internal
  */
 class DefinitionLoader {

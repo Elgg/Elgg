@@ -1139,7 +1139,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @param array $options An options array
 	 * @return array
-	 * @access private
+	 * @internal
 	 */
 	public static function normalizeMetastringOptions(array $options = []) {
 
@@ -1190,7 +1190,7 @@ trait LegacyQueryOptionsAdapter {
 	 * @param array $singulars A list of singular words to pluralize by adding 's'.
 	 *
 	 * @return array
-	 * @access private
+	 * @internal
 	 */
 	public static function normalizePluralOptions($options, $singulars) {
 		foreach ($singulars as $singular) {

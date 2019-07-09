@@ -12,7 +12,7 @@ use Elgg\Loggable;
  * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
  * </code>
  *
- * @access private
+ * @internal
  */
 class QueryCache extends LRUCache {
 	use Loggable;

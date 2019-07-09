@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
@@ -7,8 +8,7 @@ namespace Elgg\I18n;
  * Language class to ensure only valid languages are used.
  *
  * @since 1.11
- *
- * @access private
+ * @internal
  */
 final class Locale {
 	
