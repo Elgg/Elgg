@@ -13,8 +13,7 @@ use Psr\Log\LoggerInterface;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
- *
+ * @internal
  * @since  1.9.0
  */
 class ViewsService {
@@ -226,8 +225,7 @@ class ViewsService {
 	 *
 	 * @return bool returns false if folder can't be read
 	 *
-	 * @see    autoregister_views()
-	 * @access private
+	 * @see autoregister_views()
 	 */
 	public function autoregisterViews($view_base, $folder, $viewtype) {
 		$folder = rtrim($folder, '/\\');
@@ -269,8 +267,6 @@ class ViewsService {
 	 * @param string $viewtype Viewtype
 	 *
 	 * @return string Empty string if not found
-	 * @access   private
-	 * @internal Plugins should not use this.
 	 */
 	public function findViewFile($view, $viewtype) {
 		if (!isset($this->locations[$viewtype][$view])) {
@@ -294,8 +290,7 @@ class ViewsService {
 	 *
 	 * @return void
 	 *
-	 * @see    elgg_set_view_location()
-	 * @access private
+	 * @see elgg_set_view_location()
 	 */
 	public function setViewDir($view, $location, $viewtype = '') {
 		$view = self::canonicalizeViewName($view);
@@ -321,8 +316,7 @@ class ViewsService {
 	 *
 	 * @return void
 	 *
-	 * @see    elgg_register_viewtype_fallback()
-	 * @access private
+	 * @see elgg_register_viewtype_fallback()
 	 */
 	public function registerViewtypeFallback($viewtype) {
 		$this->fallbacks[] = $viewtype;
@@ -335,8 +329,7 @@ class ViewsService {
 	 *
 	 * @return bool
 	 *
-	 * @see    elgg_does_viewtype_fallback()
-	 * @access private
+	 * @see elgg_does_viewtype_fallback()
 	 */
 	public function doesViewtypeFallback($viewtype) {
 		return in_array($viewtype, $this->fallbacks);
@@ -352,8 +345,7 @@ class ViewsService {
 	 *
 	 * @return string The parsed view
 	 *
-	 * @access private
-	 * @see    elgg_view()
+	 * @see elgg_view()
 	 */
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
 		$view = self::canonicalizeViewName($view);
@@ -374,7 +366,6 @@ class ViewsService {
 	 * @param string $view View name
 	 *
 	 * @return string[]
-	 * @access private
 	 */
 	public function getViewList($view) {
 		if (isset($this->extensions[$view])) {
@@ -535,8 +526,7 @@ class ViewsService {
 	 *
 	 * @return bool
 	 *
-	 * @see    elgg_view_exists()
-	 * @access private
+	 * @see elgg_view_exists()
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
 		$view = self::canonicalizeViewName($view);
@@ -585,8 +575,7 @@ class ViewsService {
 	 *
 	 * @return void
 	 *
-	 * @see    elgg_extend_view()
-	 * @access private
+	 * @see elgg_extend_view()
 	 */
 	public function extendView($view, $view_extension, $priority = 501) {
 		$view = self::canonicalizeViewName($view);
@@ -616,8 +605,6 @@ class ViewsService {
 	 * @param string $view View name
 	 *
 	 * @return bool
-	 * @internal Plugins should not use this
-	 * @access   private
 	 */
 	public function viewIsExtended($view) {
 		return count($this->getViewList($view)) > 1;
@@ -629,8 +616,6 @@ class ViewsService {
 	 * @param string $view View name
 	 *
 	 * @return bool
-	 * @internal Plugins should not use this
-	 * @access   private
 	 */
 	public function viewHasHookHandlers($view) {
 		return $this->hooks->hasHandler('view', $view) || $this->hooks->hasHandler('view_vars', $view);
@@ -644,8 +629,7 @@ class ViewsService {
 	 *
 	 * @return bool
 	 *
-	 * @see    elgg_unextend_view()
-	 * @access private
+	 * @see elgg_unextend_view()
 	 */
 	public function unextendView($view, $view_extension) {
 		$view = self::canonicalizeViewName($view);
@@ -674,8 +658,6 @@ class ViewsService {
 	 * @param string $view the view name
 	 *
 	 * @return void
-	 *
-	 * @access private
 	 */
 	public function registerCacheableView($view) {
 		$view = self::canonicalizeViewName($view);
@@ -689,8 +671,6 @@ class ViewsService {
 	 * @param string $view the view name
 	 *
 	 * @return bool
-	 *
-	 * @access private
 	 */
 	public function isCacheableView($view) {
 		$view = self::canonicalizeViewName($view);
@@ -728,8 +708,6 @@ class ViewsService {
 	 * @param string $failed_dir This var is set to the failed directory if registration fails
 	 *
 	 * @return bool
-	 *
-	 * @access private
 	 */
 	public function registerPluginViews($path, &$failed_dir = '') {
 		$path = rtrim($path, "\\/");
@@ -772,8 +750,6 @@ class ViewsService {
 	 *                    ]
 	 *
 	 * @return void
-	 *
-	 * @access private
 	 */
 	public function mergeViewsSpec(array $spec) {
 		foreach ($spec as $viewtype => $list) {
@@ -807,8 +783,6 @@ class ViewsService {
 	 * @param string $viewtype Viewtype
 	 *
 	 * @return string[]
-	 *
-	 * @access private
 	 */
 	public function listViews($viewtype = 'default') {
 		if (empty($this->locations[$viewtype])) {
@@ -822,8 +796,6 @@ class ViewsService {
 	 * Get inspector data
 	 *
 	 * @return array
-	 *
-	 * @access private
 	 */
 	public function getInspectorData() {
 		$overrides = $this->overrides;
@@ -849,7 +821,6 @@ class ViewsService {
 	 * @param SystemCache $cache The system cache
 	 *
 	 * @return bool
-	 * @access private
 	 */
 	public function configureFromCache(SystemCache $cache) {
 		$data = $cache->load('view_locations');
@@ -873,7 +844,6 @@ class ViewsService {
 	 * @param SystemCache $cache The system cache
 	 *
 	 * @return void
-	 * @access private
 	 */
 	public function cacheConfiguration(SystemCache $cache) {
 		$cache->save('view_locations', [

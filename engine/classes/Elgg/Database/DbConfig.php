@@ -7,8 +7,8 @@ use Elgg\Config;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
- * @since  1.9.0
+ * @internal
+ * @since 1.9.0
  */
 class DbConfig {
 

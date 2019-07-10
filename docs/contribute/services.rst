@@ -5,7 +5,7 @@ The :doc:`services guide </guides/services>` has general information about using
 
 To add a new service object to Elgg:
 
-#. Annotate your class as ``@access private``.
+#. Annotate your class as ``@internal``.
 #. Open the class ``Elgg\Di\ServiceProvider``.
 #. Add a ``@property-read`` annotation for your service at the top. This allows IDEs and static code
    analyzers to understand the type of the property.

@@ -539,8 +539,6 @@ class ElggUser extends \ElggEntity
 	 * @param bool $persist Store in persistent cache
 	 *
 	 * @return void
-	 * @access private
-	 * @internal
 	 */
 	public function cache($persist = true) {
 		if ($persist && $this->username) {

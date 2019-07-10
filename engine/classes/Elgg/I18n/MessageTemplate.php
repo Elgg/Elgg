@@ -15,8 +15,7 @@ namespace Elgg\I18n;
  *  - "%s spent %d nights camping in %s" (sprintf)
  *
  * @since 1.11
- *
- * @access private
+ * @internal
  */
 abstract class MessageTemplate {
 

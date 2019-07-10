@@ -25,7 +25,7 @@ function elgg_friends_plugin_init() {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  */
 function _elgg_friends_setup_title_menu(\Elgg\Hook $hook) {
 	
@@ -82,7 +82,7 @@ function _elgg_friends_setup_title_menu(\Elgg\Hook $hook) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  */
 function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
 	
@@ -135,7 +135,7 @@ function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
@@ -171,7 +171,7 @@ function _elgg_friends_topbar_menu($hook, $type, $return, $params) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_friends_page_menu($hook, $type, $return, $params) {
@@ -210,7 +210,7 @@ function _elgg_friends_page_menu($hook, $type, $return, $params) {
  * @param \ElggRelationship $object Object
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_send_friend_notification($event, $type, $object) {
 	
@@ -259,6 +259,7 @@ function _elgg_send_friend_notification($event, $type, $object) {
  * @param array  $params Hook params
  *
  * @return array
+ * @internal
  */
 function _elgg_friends_filter_tabs($hook, $type, $items, $params) {
 
@@ -290,7 +291,7 @@ function _elgg_friends_filter_tabs($hook, $type, $items, $params) {
  * @param array  $params Parameters
  *
  * @return void|string
- * @access private
+ * @internal
  */
 function _elgg_friends_widget_urls($hook, $type, $result, $params) {
 	$widget = elgg_extract('entity', $params);

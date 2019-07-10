@@ -5,7 +5,7 @@ namespace Elgg;
 /**
  * Manages core autoloading and caching of class maps
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Autoloader

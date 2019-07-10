@@ -87,7 +87,7 @@ function generate_action_token($timestamp) {
  * Regenerate a new site key (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
  * @return mixed The site secret hash
- * @access private
+ * @internal
  */
 function init_site_secret() {
 	$secret = SiteSecret::regenerate(_elgg_services()->crypto, _elgg_services()->configTable);
@@ -99,7 +99,7 @@ function init_site_secret() {
  * Get the strength of the site secret
  *
  * @return string "strong", "moderate", or "weak"
- * @access private
+ * @internal
  */
 function _elgg_get_site_secret_strength() {
 	return _elgg_services()->siteSecret->getStrength();

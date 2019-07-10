@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Filesystem;
 
 use Elgg\Structs\Collection;
@@ -7,8 +8,7 @@ use Elgg\Structs\Collection;
  * A simple directory abstraction.
  *
  * @since 1.10.2
- *
- * @access private
+ * @internal
  */
 interface Directory {
 

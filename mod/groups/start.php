@@ -119,7 +119,7 @@ function groups_fields_setup() {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _groups_page_menu_group_profile($hook, $type, $return, $params) {
@@ -172,7 +172,7 @@ function _groups_page_menu_group_profile($hook, $type, $return, $params) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _groups_page_menu($hook, $type, $return, $params) {

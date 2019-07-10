@@ -5,7 +5,7 @@ namespace Elgg;
 /**
  * A map of class names to absolute file paths
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Autoloader

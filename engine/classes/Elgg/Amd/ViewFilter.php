@@ -11,7 +11,7 @@ namespace Elgg\Amd;
  * @subpackage JavaScript
  * @since      1.9
  *
- * @access private
+ * @internal
  */
 class ViewFilter {
 	/**

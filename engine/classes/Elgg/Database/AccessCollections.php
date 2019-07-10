@@ -16,7 +16,7 @@ use ElggUser;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -132,7 +132,6 @@ class AccessCollections {
 	 *                        database rather than using this function's cache.
 	 *
 	 * @return string A concatenated string of access collections suitable for using in an SQL IN clause
-	 * @access private
 	 */
 	public function getAccessList($user_guid = 0, $flush = false) {
 		$access_array = $this->getAccessArray($user_guid, $flush);

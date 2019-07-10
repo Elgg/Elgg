@@ -126,7 +126,7 @@ function remove_expired_user_tokens() {
  *
  * @return string Token string or exception
  * @throws SecurityException
- * @access private
+ * @internal
  */
 function auth_gettoken($username, $password) {
 	// check if username is an email address

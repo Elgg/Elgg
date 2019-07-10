@@ -1,11 +1,11 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
- *
+ * @internal
  * @since 1.11
  */
 class MessageTranslator implements TranslatorInterface {

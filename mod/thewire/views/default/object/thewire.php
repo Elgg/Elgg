@@ -20,13 +20,24 @@ if (!$thread_id) {
 
 $params = [
 	'title' => false,
-	'content' => thewire_filter($entity->description),
 	'tags' => false,
+	'access' => false,
 	'icon_entity' => $entity->getOwnerEntity(),
 	'class' => 'thewire-post',
 ];
-$params = $params + $vars;
-echo elgg_view('object/elements/summary', $params);
+
+if (elgg_extract('full_view', $vars)) {
+	$params['body'] = thewire_filter($entity->description);
+	$params['show_summary'] = true;
+	
+	$params = $params + $vars;
+	echo elgg_view('object/elements/full', $params);
+} else {
+	$params['content'] = thewire_filter($entity->description);
+	
+	$params = $params + $vars;
+	echo elgg_view('object/elements/summary', $params);
+}
 
 if (!$entity->reply) {
 	return;

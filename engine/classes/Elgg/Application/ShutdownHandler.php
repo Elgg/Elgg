@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Shutdown handler
  *
- * @access private
  * @internal
  */
 class ShutdownHandler {

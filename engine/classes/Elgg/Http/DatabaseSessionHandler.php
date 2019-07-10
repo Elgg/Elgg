@@ -5,7 +5,7 @@ namespace Elgg\Http;
 /**
  * Database session handler
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Http

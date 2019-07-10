@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Menu;
 
 /**
@@ -19,8 +20,6 @@ class Menu {
 	 * @param array $params Params. Must include:
 	 *                      "name" menu name
 	 *                      "menu" array of sections (each an array of items)
-	 * @access private
-	 * @internal Do not use. Use the `elgg()->menus` service methods instead.
 	 */
 	public function __construct(array $params) {
 		$this->params = $params;

@@ -53,7 +53,7 @@ function elgg_set_entity_class($type, $subtype, $class = "") {
  *
  * @return \stdClass|false
  * @see entity_row_to_elggstar()
- * @access private
+ * @internal
  */
 function get_entity_as_row($guid) {
 	return _elgg_services()->entityTable->getRow($guid);
@@ -69,7 +69,7 @@ function get_entity_as_row($guid) {
  * @return \ElggEntity|false
  * @see get_entity_as_row()
  * @see get_entity()
- * @access private
+ * @internal
  *
  * @throws ClassException|InstallationException
  */

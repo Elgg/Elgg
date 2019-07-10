@@ -35,7 +35,7 @@ class OkResponse implements ResponseBuilder {
 	 * @param mixed  $content     Response data
 	 * @param int    $status_code HTTP status code
 	 * @param string $forward_url Forward URL
-	 * @access private
+	 *
 	 * @see elgg_ok_response()
 	 */
 	public function __construct($content = '', $status_code = ELGG_HTTP_OK, $forward_url = null) {

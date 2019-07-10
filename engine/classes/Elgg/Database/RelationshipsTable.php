@@ -11,7 +11,7 @@ use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -78,7 +78,6 @@ class RelationshipsTable {
 	 * @param int $id The relationship ID
 	 *
 	 * @return \stdClass|false False if no row found
-	 * @access private
 	 */
 	public function getRow($id) {
 		$sql = "SELECT * FROM {$this->db->prefix}entity_relationships WHERE id = :id";
@@ -319,7 +318,6 @@ class RelationshipsTable {
 	 * @param \stdClass $row Database row from the relationship table
 	 *
 	 * @return \ElggRelationship|false
-	 * @access private
 	 */
 	public function rowToElggRelationship($row) {
 		if ($row instanceof \stdClass) {

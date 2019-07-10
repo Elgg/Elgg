@@ -7,7 +7,7 @@ use Elgg\Di\PublicContainer;
 /**
  * The object passed to invokable class name handlers
  *
- * @access private
+ * @internal
  */
 class Hook implements \Elgg\Hook {
 
@@ -27,9 +27,6 @@ class Hook implements \Elgg\Hook {
 	 * @param string          $type   Hook type
 	 * @param mixed           $value  Hook value
 	 * @param mixed           $params Hook params
-	 *
-	 * @access private
-	 * @internal
 	 */
 	public function __construct(PublicContainer $dic, $name, $type, $value, $params) {
 		$this->dic = $dic;

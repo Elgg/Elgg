@@ -541,7 +541,7 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
  *
  * @return MenuItems
  *
- * @access private
+ * @internal
  */
 function _elgg_site_menu_init($hook, $type, $return, $params) {
 	$custom_menu_items = elgg_get_config('site_custom_menu_items');
@@ -571,7 +571,7 @@ function _elgg_site_menu_init($hook, $type, $return, $params) {
  *
  * @return PreparedMenu
  *
- * @access private
+ * @internal
  */
 function _elgg_site_menu_setup($hook, $type, $menu, $params) {
 
@@ -667,7 +667,7 @@ function _elgg_site_menu_setup($hook, $type, $menu, $params) {
  *
  * @return PreparedMenu
  *
- * @access private
+ * @internal
  */
 function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 	$menu = $hook->getValue();
@@ -716,7 +716,7 @@ function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
  *
  * @return MenuItems
  *
- * @access private
+ * @internal
  */
 function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = elgg_extract('entity', $params);
@@ -784,7 +784,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 	$menu = $hook->getValue();
@@ -829,7 +829,7 @@ function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
  *
  * @return MenuItems
  *
- * @access private
+ * @internal
  */
 function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 	$entity = $hook->getEntityParam();
@@ -924,7 +924,7 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
  *
  * @return MenuItems
  *
- * @access private
+ * @internal
  */
 function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 
@@ -973,7 +973,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
  *
  * @return MenuItems
  *
- * @access private
+ * @internal
  */
 function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
@@ -1006,7 +1006,7 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
  *
  * @return MenuItems
  *
- * @access private
+ * @internal
  */
 function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 
@@ -1036,7 +1036,7 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
@@ -1084,7 +1084,7 @@ function _elgg_nav_init() {
  * @param mixed    $params       unused
  *
  * @return string[]
- * @access private
+ * @internal
  * @since 1.11.0
  */
 function _elgg_nav_public_pages($hook_name, $entity_type, $return_value, $params) {

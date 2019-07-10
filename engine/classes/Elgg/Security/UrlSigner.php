@@ -5,7 +5,7 @@ namespace Elgg\Security;
 /**
  * Component for creating signed URLs
  *
- * @access private
+ * @internal
  */
 class UrlSigner {
 

@@ -131,7 +131,6 @@ class PageOwnerService {
 	 * @note Access is disabled while finding the page owner for the group gatekeeper functions.
 	 *
 	 * @return int|void
-	 * @access private
 	 */
 	private function detectLegacyPageOwner() {
 	

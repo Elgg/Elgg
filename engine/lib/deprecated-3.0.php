@@ -9,7 +9,7 @@ use Elgg\Database\Clauses\OrderByClause;
  * @todo when removing this global, make sure it is no longer used in ElggSession
  *
  * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
- * @access private
+ * @internal
  * @deprecated 3.0
  */
 global $ENTITY_SHOW_HIDDEN_OVERRIDE;
@@ -44,7 +44,7 @@ function unset_config($name) {
  * @return bool
  * @see unset_config()
  * @see get_config()
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use elgg_save_config()
  */
@@ -63,7 +63,7 @@ function set_config($name, $value) {
  * @return mixed|null
  * @see set_config()
  * @see unset_config()
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use elgg_get_config()
  */
@@ -878,7 +878,7 @@ function elgg_list_entities_from_annotation_calculation($options) {
  *
  * @return bool
  * @throws InvalidParameterException
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use \ElggAnnotation::enable()
  */
@@ -913,7 +913,7 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
  * @return \ElggExtender
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use elgg_get_metadata_from_id()
  */
@@ -944,7 +944,7 @@ function _elgg_get_metastring_based_object_from_id($id, $type) {
  * @param int    $id   The object's ID
  * @param string $type The object's metastring type: annotation or metadata
  * @return bool
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use \ElggMetadata::delete()
  */
@@ -1069,7 +1069,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  * @param object $object The object to disable
  * @return bool
- * @access private
+ * @internal
  *
  * @deprecated 3.0
  */
@@ -1257,7 +1257,7 @@ function remove_all_private_settings($entity_guid) {
  *
  * @param object $object The object to enable
  * @return bool
- * @access private
+ * @internal
  * @deprecated 3.0
  */
 function elgg_batch_enable_callback($object) {
@@ -1276,7 +1276,7 @@ function elgg_batch_enable_callback($object) {
  *
  * @param object $object The object to disable
  * @return bool
- * @access private
+ * @internal
  * @deprecated 3.0
  */
 function elgg_batch_disable_callback($object) {
@@ -1654,7 +1654,7 @@ function elgg_get_upgrade_file_version($filename) {
  *
  * @param string $upgrade_path The directory that has upgrade scripts
  * @return array|false
- * @access private
+ * @internal
  * @deprecated 3.0 Use asynchronous upgrades
  */
 function elgg_get_upgrade_files($upgrade_path = null) {

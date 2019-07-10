@@ -227,7 +227,7 @@ Example:
 	 * @param bool   $result Has anyone sent a message yet?
 	 * @param array  $params Hook parameters
 	 * @return bool
-	 * @access private
+	 * @internal
 	 */
 	function sms_notifications_send($hook, $type, $result, $params) {
 		/* @var Elgg_Notifications_Notification $message */

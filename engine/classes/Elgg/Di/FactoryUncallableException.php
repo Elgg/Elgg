@@ -5,7 +5,7 @@ namespace Elgg\Di;
 /**
  * Factory uncallable exception
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  */

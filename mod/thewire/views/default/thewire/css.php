@@ -30,7 +30,8 @@ The Wire
 	color: #D40D12 !important;
 }
 .thewire-parent {
-	margin-left: 40px;
+	margin-left: 20px;
+	margin-top: 20px;
 }
 .thewire-post .elgg-content {
 	margin: 10px 5px;

@@ -234,7 +234,7 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 		'comment' => 1,
 		'cdata' => 1,
 
-		'deny_attribute' => 'class, on*',
+		'deny_attribute' => 'class, on*, formaction',
 		'hook_tag' => '_elgg_htmlawed_tag_post_processor',
 
 		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
@@ -358,7 +358,7 @@ function _elgg_disable_password_autocomplete($hook, $type, $return_value, $param
  * Initialize the input library
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_input_init() {
 

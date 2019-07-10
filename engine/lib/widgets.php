@@ -147,7 +147,7 @@ function elgg_get_widget_types($context = "") {
  * @param string $result URL
  * @param array  $params Parameters
  * @return string|null
- * @access private
+ * @internal
  */
 function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
 	$widget = elgg_extract('entity', $params);
@@ -171,7 +171,7 @@ function _elgg_widgets_widget_urls($hook, $type, $result, $params) {
  * Function to initialize widgets functionality
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_widgets_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_widgets_widget_urls');
@@ -200,7 +200,7 @@ function _elgg_widgets_init() {
  * new widgets.
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_default_widgets_init() {
 	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
@@ -252,7 +252,7 @@ function _elgg_default_widgets_init() {
  * @param string      $type   The type of object
  * @param \ElggEntity $entity The entity being created
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_create_default_widgets($event, $type, $entity) {
 	$default_widget_info = _elgg_config()->default_widget_info;
@@ -322,7 +322,7 @@ function _elgg_create_default_widgets($event, $type, $entity) {
  * @param string $return Value
  * @param mixed  $params Params
  * @return true|null
- * @access private
+ * @internal
  */
 function _elgg_default_widgets_permissions_override($hook, $type, $return, $params) {
 	if ($type == 'object' && $params['subtype'] == 'widget') {

@@ -202,7 +202,7 @@ function elgg_get_subscriptions_for_container($container_guid) {
  * @param string    $type   The type of the object
  * @param \ElggData $object The object of the event
  * @return void
- * @access private
+ * @internal
  * @since 1.9
  */
 function _elgg_enqueue_notification_event($action, $type, $object) {
@@ -214,7 +214,7 @@ function _elgg_enqueue_notification_event($action, $type, $object) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_notifications_cron() {
 	// calculate when we should stop
@@ -231,7 +231,7 @@ function _elgg_notifications_cron() {
  * @param bool   $result Has anyone sent a message yet?
  * @param array  $params Hook parameters
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_send_email_notification($hook, $type, $result, $params) {
 	
@@ -277,7 +277,7 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
  * @see    https://tools.ietf.org/html/rfc5322#section-3.6.4
  *
  * @return void|\Elgg\Email
- * @access private
+ * @internal
  */
 function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email) {
 	
@@ -304,7 +304,7 @@ function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email
  * @param \Elgg\Email $email Email instance
  *
  * @return void|\Elgg\Email
- * @access private
+ * @internal
  */
 function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {
 
@@ -359,7 +359,7 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_notifications_init() {
 	elgg_register_plugin_hook_handler('cron', 'minute', '_elgg_notifications_cron', 100);
@@ -389,7 +389,7 @@ function _elgg_notifications_init() {
  *                                 user's chosen delivery methods.
  *
  * @return array Compound array of each delivery user/delivery method's success or failure.
- * @access private
+ * @internal
  */
 function _elgg_notify_user($to, $from, $subject, $message, array $params = null, $methods_override = "") {
 
@@ -578,7 +578,7 @@ function elgg_set_email_transport(\Zend\Mail\Transport\TransportInterface $maile
  * Save personal notification settings - input comes from request
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_save_notification_user_settings() {
 

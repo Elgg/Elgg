@@ -709,15 +709,25 @@ abstract class ElggEntity extends \ElggData implements
 	 * @since 1.8
 	 */
 	public function deleteAnnotations($name = null) {
-		$options = [
-			'guid' => $this->guid,
-			'limit' => 0
-		];
-		if ($name) {
-			$options['annotation_name'] = $name;
+		if ($this->guid) {
+			$options = [
+				'guid' => $this->guid,
+				'limit' => 0
+			];
+			if ($name) {
+				$options['annotation_name'] = $name;
+			}
+	
+			return elgg_delete_annotations($options);
 		}
-
-		return elgg_delete_annotations($options);
+		
+		if ($name) {
+			unset($this->temp_annotations[$name]);
+		} else {
+			$this->temp_annotations = [];
+		}
+		
+		return true;
 	}
 
 	/**
@@ -1583,7 +1593,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param stdClass $row DB row with new entity data
 	 *
 	 * @return bool
-	 * @access private
+	 * @internal
 	 */
 	public function refresh(stdClass $row) {
 		return $this->load($row);
@@ -2012,7 +2022,7 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @param int $posted Timestamp of last action
 	 * @return int|false
-	 * @access private
+	 * @internal
 	 */
 	public function updateLastAction($posted = null) {
 		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);

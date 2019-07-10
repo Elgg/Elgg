@@ -3,7 +3,7 @@
 /**
  * Cryptographic services
  *
- * @access private
+ * @internal
  */
 class ElggCrypto {
 

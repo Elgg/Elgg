@@ -159,7 +159,7 @@ function elgg_remove_config($name) {
  * Get the Elgg config service
  *
  * @return \Elgg\Config
- * @access private
+ * @internal
  */
 function _elgg_config() {
 	$config = _elgg_services()->config;

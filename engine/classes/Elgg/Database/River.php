@@ -17,7 +17,7 @@ use InvalidParameterException;
  *
  * API IN FLUX Do not access the methods directly, use elgg_get_river() instead
  *
- * @access private
+ * @internal
  */
 class River extends Repository {
 

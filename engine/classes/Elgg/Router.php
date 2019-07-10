@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  * @package    Elgg.Core
  * @subpackage Router
  * @since      1.9.0
- * @access     private
+ * @internal
  */
 class Router {
 
@@ -86,7 +86,6 @@ class Router {
 	 * @return boolean Whether the request was routed successfully.
 	 * @throws InvalidParameterException
 	 * @throws Exception
-	 * @access private
 	 */
 	public function route(HttpRequest $request) {
 		if ($this->timer) {
@@ -343,7 +342,6 @@ class Router {
 	 * @param \Elgg\Http\Request $request Elgg request
 	 *
 	 * @return \Elgg\Http\Request
-	 * @access private
 	 */
 	public function allowRewrite(HttpRequest $request) {
 		$segments = $request->getUrlSegments();

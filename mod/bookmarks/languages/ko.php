@@ -35,8 +35,8 @@ return array(
 
 	'bookmarks:numbertodisplay' => '표시할 책갈피의 수',
 
-	'river:object:bookmarks:create' => '%s가 %s를 책갈피에 추가하였습니다',
-	'river:object:bookmarks:comment' => '%s가 책갈피에 댓글 %s을 남겼습니다',
+	'river:object:bookmarks:create' => '%s님이 %s를 책갈피에 추가하였습니다',
+	'river:object:bookmarks:comment' => '%s님이 책갈피에 댓글 %s을 남겼습니다',
 
 	'groups:tool:bookmarks' => '모둠 책갈피를 허용합니다',
 	

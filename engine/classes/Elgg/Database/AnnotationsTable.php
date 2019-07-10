@@ -13,7 +13,7 @@ use ElggEntity;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  */
 class AnnotationsTable {
 

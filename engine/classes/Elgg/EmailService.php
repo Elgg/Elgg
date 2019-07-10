@@ -17,8 +17,8 @@ use Zend\Mime\Exception\InvalidArgumentException;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
- * @since  3.0
+ * @internal
+ * @since 3.0
  */
 class EmailService {
 

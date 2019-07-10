@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 /**
  * Elgg HTTP request.
  *
- * @access private
  * @internal
  */
 class Request extends SymfonyRequest {
@@ -415,16 +414,19 @@ class Request extends SymfonyRequest {
 	public function validate() {
 
 		$reported_bytes = $this->server->get('CONTENT_LENGTH');
+		// Requests with multipart content type
 		$post_data_count = count($this->request->all());
+		// Requests with other content types
+		$post_body_length = is_string($this->content) ? strlen($this->content) : 0;
 		$file_count = count($this->files->all());
 		
-		$is_valid = function() use ($reported_bytes, $post_data_count, $file_count) {
+		$is_valid = function() use ($reported_bytes, $post_data_count, $post_body_length, $file_count) {
 			if (empty($reported_bytes)) {
 				// Content length is set for POST requests only
 				return true;
 			}
 
-			if (empty($post_data_count) && empty($file_count)) {
+			if (empty($post_data_count) && empty($post_body_length) && empty($file_count)) {
 				// The size of $_POST or uploaded files has exceed the size limit
 				// and the request body/query has been truncated
 				// thus the request reported bytes is set, but no postdata is found

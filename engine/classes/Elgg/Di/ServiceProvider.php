@@ -129,7 +129,7 @@ use Elgg\I18n\LocaleService;
  * @property-read \Elgg\Cache\ViewCacher                          $viewCacher
  * @property-read \Elgg\WidgetsService                            $widgets
  *
- * @access private
+ * @internal
  */
 class ServiceProvider extends DiContainer {
 

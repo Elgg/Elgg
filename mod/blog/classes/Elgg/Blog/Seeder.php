@@ -7,7 +7,7 @@ use Elgg\Database\Seeds\Seed;
 /**
  * Add blog seed
  *
- * @access private
+ * @internal
  */
 class Seeder extends Seed {
 

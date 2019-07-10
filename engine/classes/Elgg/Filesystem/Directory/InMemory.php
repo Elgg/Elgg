@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Filesystem\Directory;
 
 use Elgg\Filesystem\Directory;
@@ -8,7 +9,7 @@ use Elgg\Filesystem\Directory;
  *
  * @since 1.10.0
  *
- * @access private
+ * @internal
  */
 final class InMemory {
 

@@ -10,7 +10,7 @@ use Elgg\Database\Clauses\GroupByClause;
 /**
  * In memory cache of known metadata values stored by entity.
  *
- * @access private
+ * @internal
  */
 class MetadataCache {
 

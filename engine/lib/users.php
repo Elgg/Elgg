@@ -269,7 +269,7 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = elgg_extract('entity', $params);
@@ -379,7 +379,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_user_title_menu(\Elgg\Hook $hook) {
@@ -420,7 +420,7 @@ function _elgg_user_title_menu(\Elgg\Hook $hook) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_user_page_menu($hook, $type, $return, $params) {
@@ -460,7 +460,7 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_user_topbar_menu($hook, $type, $return, $params) {
@@ -708,7 +708,7 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
  * Users initialisation function, which establishes the page handler
  *
  * @return void
- * @access private
+ * @internal
  */
 function users_init() {
 

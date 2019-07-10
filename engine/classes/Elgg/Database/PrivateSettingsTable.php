@@ -16,7 +16,7 @@ use Elgg\Values;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  * @since  2.0.0
  */
 class PrivateSettingsTable {

@@ -20,7 +20,7 @@ namespace Elgg;
  *  session object in session lib
  *  config object in ElggPlugin::includeFile
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  */

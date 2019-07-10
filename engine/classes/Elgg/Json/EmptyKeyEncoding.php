@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Json;
 
 /**
@@ -9,7 +10,7 @@ namespace Elgg\Json;
  *
  * @package    Elgg.Core
  * @subpackage Json
- * @access     private
+ * @internal
  */
 class EmptyKeyEncoding {
 

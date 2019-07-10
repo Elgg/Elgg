@@ -12,7 +12,7 @@ use Psr\Log\LoggerInterface;
  * Provides database mutex that can be used to prevent race conditions
  * between two processes that affect the same data.
  *
- * @access private
+ * @internal
  * @since 2.1.0
  */
 class Mutex {

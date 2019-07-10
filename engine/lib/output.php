@@ -421,7 +421,7 @@ function elgg_html_decode($string) {
  * @param string $string string to prepare
  * @return string
  *
- * @access private
+ * @internal
  */
 function _elgg_get_display_query($string) {
 	//encode <,>,&, quotes and characters above 127
@@ -439,7 +439,7 @@ function _elgg_get_display_query($string) {
  *
  * @param string $url URL to validate
  * @return string|false
- * @access private
+ * @internal
  */
 function _elgg_sane_validate_url($url) {
 	// based on http://php.net/manual/en/function.filter-var.php#104160

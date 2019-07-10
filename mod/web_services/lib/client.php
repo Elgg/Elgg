@@ -147,7 +147,7 @@ function get_standard_api_key_array($secret_key, $api_key) {
  * @param array $headers The array of headers "key" => "value"
  *
  * @return string
- * @access private
+ * @internal
  */
 function serialise_api_headers(array $headers) {
 	$headers_str = "";

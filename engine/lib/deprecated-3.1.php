@@ -213,7 +213,7 @@ function elgg_is_admin_user($user_guid) {
  *                        database rather than using this function's cache.
  *
  * @return string A list of access collections suitable for using in an SQL call
- * @access private
+ * @internal
  *
  * @deprecated 3.1 Use get_access_array()
  */
@@ -483,7 +483,7 @@ function disable_user_entities($owner_guid) {
  * @return bool returns false if folder can't be read
  * @since 1.7.0
  * @see elgg_set_view_location()
- * @access private
+ * @internal
  *
  * @deprecated 3.1
  */

@@ -7,7 +7,7 @@ class ElggPAM {
 
 	/**
 	 * @var array
-	 * @access private
+	 * @internal
 	 * @todo move state into a PAM service
 	 */
 	public static $_handlers = [];

@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Transport for sending responses to non-HTTP clients, e.g. CLI applications, via output buffer
  *
  * @since 2.3
- * @access private
+ * @internal
  */
 class OutputBufferTransport implements ResponseTransport {
 

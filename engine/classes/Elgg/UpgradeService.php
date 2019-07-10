@@ -19,7 +19,7 @@ use Elgg\Database\Clauses\EntitySortByClause;
 /**
  * Upgrade service for Elgg
  *
- * @access private
+ * @internal
  */
 class UpgradeService {
 

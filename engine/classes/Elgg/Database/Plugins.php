@@ -30,8 +30,7 @@ use Elgg\Cache\PrivateSettingsCache;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
- *
+ * @internal
  * @since  1.10.0
  */
 class Plugins {
@@ -201,7 +200,6 @@ class Plugins {
 	 *                    Must have a trailing slash.
 	 *
 	 * @return array Array of directory names (not full paths)
-	 * @access private
 	 */
 	public function getDirsInDir($dir = null) {
 		if (!$dir) {
@@ -239,7 +237,6 @@ class Plugins {
 	 * @return bool
 	 * @throws DatabaseException
 	 * @throws \PluginException
-	 * @access private
 	 */
 	public function generateEntities() {
 
@@ -338,8 +335,6 @@ class Plugins {
 	 * @param ElggPlugin $plugin the plugin to cache
 	 *
 	 * @return void
-	 *
-	 * @access private
 	 */
 	public function cache(ElggPlugin $plugin) {
 		if (!$plugin->getID()) {
@@ -427,7 +422,6 @@ class Plugins {
 	 * Returns the highest priority of the plugins
 	 *
 	 * @return int
-	 * @access private
 	 * @throws DatabaseException
 	 */
 	public function getMaxPriority() {
@@ -476,7 +470,6 @@ class Plugins {
 	 * that was too slow.
 	 *
 	 * @return bool
-	 * @access private
 	 */
 	public function build() {
 
@@ -507,9 +500,6 @@ class Plugins {
 	 *
 	 * @elgg_event plugins_load system
 	 * @return void
-	 *
-	 * @access     private
-	 * @internal
 	 */
 	public function register() {
 		$plugins = $this->find('active');
@@ -541,9 +531,6 @@ class Plugins {
 	 *
 	 * @elgg_event plugins_boot:before system
 	 * @return void
-	 *
-	 * @access     private
-	 * @internal
 	 */
 	public function boot() {
 		$plugins = $this->find('active');
@@ -898,7 +885,6 @@ class Plugins {
 	 * @param array $order An array of plugin ids in the order to set them
 	 *
 	 * @return bool
-	 * @access private
 	 */
 	public function setPriorities(array $order) {
 		$name = $this->namespacePrivateSetting('internal', 'priority');
@@ -950,7 +936,6 @@ class Plugins {
 	 * Reindexes all plugin priorities starting at 1.
 	 *
 	 * @return bool
-	 * @access private
 	 */
 	public function reindexPriorities() {
 		return $this->setPriorities([]);
@@ -969,7 +954,6 @@ class Plugins {
 	 * @param string $id   The plugin's ID to namespace with.  Required for user_setting.
 	 *
 	 * @return string
-	 * @access private
 	 */
 	public function namespacePrivateSetting($type, $name, $id = null) {
 		switch ($type) {
@@ -1005,7 +989,6 @@ class Plugins {
 	 * @param string $name A specific provided name to return. Requires $provide_type.
 	 *
 	 * @return array|false
-	 * @access private
 	 */
 	public function getProvides($type = null, $name = null) {
 		if ($this->provides_cache === null) {
@@ -1053,7 +1036,6 @@ class Plugins {
 	 * Deletes all cached data on plugins being provided.
 	 *
 	 * @return boolean
-	 * @access private
 	 */
 	public function invalidateProvidesCache() {
 		$this->provides_cache = null;
@@ -1074,7 +1056,6 @@ class Plugins {
 	 *    'status' => bool Does the provide exist?,
 	 *    'value' => string The version provided
 	 * )
-	 * @access private
 	 */
 	public function checkProvides($type, $name, $version = null, $comparison = 'ge') {
 		$provided = $this->getProvides($type, $name);
@@ -1110,7 +1091,6 @@ class Plugins {
 	 * @param array $dep An \ElggPluginPackage dependency array
 	 *
 	 * @return false|array
-	 * @access private
 	 */
 	public function getDependencyStrings($dep) {
 		$translator = $this->translator;

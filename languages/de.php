@@ -27,7 +27,7 @@ return array(
 	'session_changed_user' => "Du wurdest als ein anderer Benutzer eingeloggt. Du solltest die Seite <a href='javascript:location.reload(true)'>neu laden</a>.",
 
 	'loggedinrequired' => "Du mußt angemeldet sein, um diese Seite aufrufen zu können.",
-	'loggedoutrequired' => "You must be logged out to view the requested page.",
+	'loggedoutrequired' => "Du darfst nicht angemeldet sein, um diese Seite aufrufen zu können.",
 	'adminrequired' => "Du mußt ein Administrator sein, um diese Seite aufrufen zu können.",
 	'membershiprequired' => "Du mußt Mitglied dieser Gruppe sein, um diese Seite aufrufen zu können.",
 	'limited_access' => "Du hast nicht die notwendige Berechtigung, um auf die angeforderte Seite zuzugreifen.",
@@ -241,7 +241,7 @@ return array(
 	'widgets:add:failure' => "Das Hinzufügen des Widgets ist fehlgeschlagen.",
 	'widgets:move:failure' => "Die Position des Widgets auf Deiner Seite konnte nicht gespeichert werden.",
 	'widgets:remove:failure' => "Das Widget konnte nicht entfernt werden.",
-	'widgets:not_configured' => "This widget is not yet configured",
+	'widgets:not_configured' => "Dieses Widget wurde noch nicht konfiguriert.",
 	
 /**
  * Groups
@@ -464,7 +464,7 @@ return array(
 	'admin:cron:date' => 'Datum und Zeit',
 	'admin:cron:msg' => 'Statusausgaben',
 	'admin:cron:started' => 'Cronjobs für "%s" gestarted am %s',
-	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
+	'admin:cron:started:actual' => 'Cron-Zeitintervall "%s" in Bearbeitung seit %s',
 	'admin:cron:complete' => 'Cronjobs für "%s" abgeschlossen am %s',
 
 	'admin:appearance' => 'Design',
@@ -477,6 +477,8 @@ return array(
 	'admin:users:online' => 'Online',
 	'admin:users:newest' => 'Neueste',
 	'admin:users:admins' => 'Administratoren',
+	'admin:users:searchuser' => 'Suche Benutzer, um sie zu Admins zu machen',
+	'admin:users:existingadmins' => 'Liste der existierenden Admins',
 	'admin:users:add' => 'Benutzer hinzufügen',
 	'admin:users:description' => "In diesem Admin-Bereich kannst Du Einstellugen für Benutzeraccounts konfigurieren. Wähle eine der unten gezeigten Optionen.",
 	'admin:users:adduser:label' => "Hier klicken um einen neuen Benutzeraccount zu erstellen...",
@@ -489,27 +491,29 @@ return array(
 	
 	'admin:configure_utilities:maintenance' => 'Wartungs-Modus',
 	'admin:upgrades' => 'Aktualisierungen',
-	'admin:upgrades:finished' => 'Completed',
-	'admin:upgrades:db' => 'Database upgrades',
-	'admin:upgrades:db:name' => 'Upgrade name',
-	'admin:upgrades:db:start_time' => 'Start time',
-	'admin:upgrades:db:end_time' => 'End time',
-	'admin:upgrades:db:duration' => 'Duration',
-	'admin:upgrades:menu:pending' => 'Pending upgrades',
-	'admin:upgrades:menu:completed' => 'Completed upgrades',
-	'admin:upgrades:menu:db' => 'Database upgrades',
-	'admin:upgrades:menu:run_single' => 'Run this upgrade',
+	'admin:upgrades:finished' => 'Abgeschlossen',
+	'admin:upgrades:db' => 'Datenbank-Aktualisierungen',
+	'admin:upgrades:db:name' => 'Aktualisierungsname',
+	'admin:upgrades:db:start_time' => 'Startzeit',
+	'admin:upgrades:db:end_time' => 'Endzeit',
+	'admin:upgrades:db:duration' => 'Ausführungsdauer',
+	'admin:upgrades:menu:pending' => 'Ausstehende Aktualisierungen',
+	'admin:upgrades:menu:completed' => 'Abgeschlossene Aktualisierungen',
+	'admin:upgrades:menu:db' => 'Datenbank-Aktualisierungen',
+	'admin:upgrades:menu:run_single' => 'Diese Aktualisierung jetzt ausführen',
 	'admin:upgrades:run' => 'Aktualisierungen jetzt ausführen',
 	'admin:upgrades:error:invalid_upgrade' => 'Entität %s existiert nicht oder sie ist keine gültige ElggUpgrade-Instanz.',
 	'admin:upgrades:error:invalid_batch' => 'Der Batch-Prozeß für die Aktualisierung %s (%s) konnte nicht instanziiert werden.',
 	'admin:upgrades:completed' => 'Aktualisierung "%s" abgeschlossen um %s',
 	'admin:upgrades:completed:errors' => 'Aktualisierung "%s" abgeschlossen um %s. Es traten aber %s Fehler auf.',
 	'admin:upgrades:failed' => 'Aktualisierung "%s" fehlgeschlagen.',
-	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
+	'admin:action:upgrade:reset:success' => 'Aktualisierung "%s" wurde zurückgesetzt.',
 
 	'admin:settings' => 'Einstellungen',
 	'admin:settings:basic' => 'Grundeinstellungen',
 	'admin:settings:advanced' => 'Erweiterte Einstellungen',
+	'admin:settings:users' => 'Benutzer',
+	'admin:site_settings' => "Seiteneinstellungen",
 	'admin:site:description' => "Hier kannst Du einige globale Einstellungen für Deine Community-Seite vornehmen.",
 	'admin:site:opt:linktext' => "Community-Seite konfigurieren...",
 	'admin:settings:in_settings_file' => 'Diese Einstellung kann in elgg-config/settings.php angepasst werden.',
@@ -628,9 +632,9 @@ return array(
 	'admin:security:settings:email_require_password' => 'Passworteingabe bei Änderung der Email-Adresse notwendig',
 	'admin:security:settings:email_require_password:help' => 'Möchte ein Benutzer die Email-Adresse seines Accounts ändern, muss er diese Änderung durch die Eingabe seines derzeitigen Passworts bestätigen.',
 
-	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
-Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+	'admin:security:settings:session_bound_entity_icons' => 'Session-gebundene Entitäts-Bilder',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entitäts-Bilder können standardmäßig an die PHP-Session gebunden sein. In diesem Fall sind auch die URLs dieser Bilder Session-spezifisch.
+Bei Session-gebundenen Bildern können die zugehörigen URLs nicht von unterschiedlichen PHP-Sessions verwendet werden. Dies bedeutet auch, dass ein Caching dieser URLs nur innerhalb der jeweils zugehörigen Session hilft.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg verwendet einen seitenspezifischen Geheimschlüssel, um darauf basierend Sicherheits-Token zu generieren, die für verschiedene Authentifizierungszwecke verwendet werden.',
 	'admin:security:settings:site_secret:regenerate' => "Geheimschlüssel neu erzeugen",
@@ -810,14 +814,14 @@ Um die Community-Seite aufzurufen, folge diesem Link:
 
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
-		Redis is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure redis (or memcache).
+		Redis ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, Redis (oder Memcache) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
 ',
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => '
-		OPcache is not available on this server or it has not yet been enabled.
-		For improved performance, it is recommended that you enable and configure OPcache.
+		OPcache ist auf diesem Server nicht installiert oder nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, OPcache auf dem Server zu installieren und einzurichten.
 ',
 	
 	'admin:user:label:search' => "Suche Benutzeraccount:",
@@ -925,9 +929,9 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'icon:size:large' => "Groß",
 	'icon:size:master' => "Sehr groß",
 	
-	'entity:edit:icon:file:label' => "Upload a new icon",
-	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
-	'entity:edit:icon:remove:label' => "Remove icon",
+	'entity:edit:icon:file:label' => "Neues Bild hochladen",
+	'entity:edit:icon:file:help' => "Leer lassen, um derzeitiges Bild zu behalten.",
+	'entity:edit:icon:remove:label' => "Bild entfernen",
 
 /**
  * Generic action words
@@ -986,7 +990,7 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'remove' => 'Entfernen',
 	'revert' => 'Zurücksetzen',
 	'validate' => 'Validieren',
-	'read_more' => 'Read more',
+	'read_more' => 'Mehr lesen',
 
 	'site' => 'Webseite',
 	'activity' => 'Aktivitäten',
@@ -1016,6 +1020,8 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'active' => 'Aktiv',
 	'total' => 'Gesamt',
+	'unvalidated' => 'Nicht validiert',
+	'disabled' => 'Deaktiviert',
 
 	'ok' => 'OK',
 	'any' => 'Irgendeine',
@@ -1082,6 +1088,12 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'on' => 'An',
 	'off' => 'Aus',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1248,7 +1260,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	'installation:view' => "Gebe den Ansichtsmodus an, der für Deine Community-Seite verwendet werden soll. Wenn Du nicht sicher bist was Du eingeben sollst, lass das Textfeld leer oder verwende \"default\", um den Standardmodus zu verwenden:",
 
 	'installation:siteemail' => "Email-Adresse Deiner Community-Seite (wird vom System verwendet, um Benachrichtigungen zu versenden)",
-	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
+	'installation:siteemail:help' => "Warnung: verwende keine Email-Adresse, die Du bereits anderweitig einsetzt oder einsetzen willst, beispielweise bei externen Services wie Ticketsystemen oder anderen ähnlichen Systemen, die eingehende Emails analysieren oder anderweitig verarbeiten. Dies könnte dazu führen, dass unauthorisierte Personen an private Daten von Dir oder anderen Benutzern oder Sicherheits-Token gelangen könnten. Idealerweise verwendest Du eine Email-Adresse, die Du auschließlich als Email-Adresse dieser Community-Seite einsetzen kannst.",
 	'installation:default_limit' => "Standardmäßige Anzahl der Einträge pro Seite",
 
 	'admin:site:access:warning' => "Dies ist der Zugangslevel, der Benutzern standardmäßig vorgeschlagen wird, wenn sie neue Inhalte erstellen. Eine Änderung hier verändert nicht den Zugangslevel der Inhalte selbst.",
@@ -1276,10 +1288,13 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 
 	'admin:legend:system' => 'System',
 	'admin:legend:caching' => 'Caching-Mechanismen',
+	'admin:legend:content' => 'Inhalt',
 	'admin:legend:content_access' => 'Zugangslevel für Inhalte',
 	'admin:legend:site_access' => 'Zugangsbeschränkungen zur Community-Seite',
 	'admin:legend:debug' => 'Debuggen und Protokollieren',
 	
+	'config:users:can_change_username' => "Benutzern erlauben, ihren Benutzernamen zu ändern",
+	'config:users:can_change_username:help' => "Falls es Benutzern nicht erlaubt ist, können nur Admins den Benutzernamen eines Benutzers ändern.",
 	'config:remove_branding:label' => "Elgg-Branding verbergen",
 	'config:remove_branding:help' => "Aktiviere diese Option, um die Links und Logos, die auf den Seiten der Community eingeblendet werden und darauf hinweisen, dass diese Community-Seite mit Elgg erstellt wurde, zu verbergen. Falls Du Dich dazu entschließt, das Elgg-Branding zu verbergen, wäre es nett, wenn Du eine Spende für das Elgg-Projekt in Betracht ziehen würdest (https://elgg.org/about/supporters).",
 	'config:disable_rss:label' => "RSS-Feeds deaktivieren",
@@ -1317,8 +1332,8 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 	'upgrade:error_count' => 'Fehler:',
 	'upgrade:finished' => 'Die Aktualisierung ist abgeschlossen.',
 	'upgrade:finished_with_errors' => '<p>Die Aktualisierung wurde beendet. Allerdings sind dabei Fehler aufgetreten. Lade die Seite erneut und versuche, die Aktualisierung nochmals durchzuführen.</p></p><br />Wenn dabei wieder Fehler auftreten, schaue in der Logdatei Deines Servers nach, ob es dort Einträge gibt, die eventuell weitere Informationen zur Ursache der Fehler liefern. Du kannst auch in der <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support-Gruppe</a> auf der Elgg-Community-Seite um Hilfe bei Deinem Problem bitten.</p>',
-	'upgrade:should_be_skipped' => 'No items to upgrade',
-	'upgrade:count_items' => '%d items to upgrade',
+	'upgrade:should_be_skipped' => 'Keine zu aktualisierende Einträge',
+	'upgrade:count_items' => '%d zu aktualisierende Einträge',
 	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Datentyp-Angleichung der GUID-Spalten in der Datenbank',

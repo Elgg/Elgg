@@ -1,10 +1,11 @@
 <?php
+
 namespace Elgg\Security;
 
 /**
  * Encode and decode Base 64 URL
  *
- * @access private
+ * @internal
  */
 class Base64Url {
 

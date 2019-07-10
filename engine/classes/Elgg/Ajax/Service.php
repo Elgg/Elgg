@@ -3,7 +3,6 @@
 namespace Elgg\Ajax;
 
 use Elgg\Amd\Config;
-use Elgg\Http\Input;
 use Elgg\Http\Request;
 use Elgg\PluginHooksService;
 use Elgg\Services\AjaxResponse;
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * Models the Ajax API service
  *
  * @since 1.12.0
- * @access private
  * @internal
  */
 class Service {
@@ -233,7 +231,6 @@ class Service {
 	 * @param array        $params   Hook params
 	 *
 	 * @return AjaxResponse
-	 * @access private
 	 * @internal
 	 */
 	public function prepareResponse($hook, $type, $response, $params) {

@@ -7,7 +7,7 @@ use Elgg\Security\Base64Url;
 /**
  * File service
  *
- * @access private
+ * @internal
  */
 class File {
 

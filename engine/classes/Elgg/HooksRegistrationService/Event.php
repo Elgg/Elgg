@@ -7,7 +7,7 @@ use Elgg\Di\PublicContainer;
 /**
  * The object passed to invokable class name handlers
  *
- * @access private
+ * @internal
  */
 class Event implements
 	\Elgg\Event,
@@ -28,8 +28,6 @@ class Event implements
 	 * @param string          $name   Event name
 	 * @param string          $type   Event type
 	 * @param mixed           $object Object of the event
-	 * @access private
-	 * @internal
 	 */
 	public function __construct(PublicContainer $dic, $name, $type, $object) {
 		$this->dic = $dic;

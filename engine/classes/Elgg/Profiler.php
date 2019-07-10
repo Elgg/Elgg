@@ -7,7 +7,7 @@ use Elgg\Project\Paths;
 /**
  * Analyzes duration of functions, queries, and processes
  *
- * @access private
+ * @internal
  */
 class Profiler {
 

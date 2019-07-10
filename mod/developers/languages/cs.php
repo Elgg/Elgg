@@ -60,6 +60,8 @@ return array(
 	'developers:entity_explorer:info:metadata' => 'Metadata',
 	'developers:entity_explorer:info:relationships' => 'Relace',
 	'developers:entity_explorer:info:private_settings' => 'Neveřejná nastavení',
+	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
+	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
 	'developers:entity_explorer:delete_entity' => 'Odebrat tuto entitu',
 	
 	// inspection
