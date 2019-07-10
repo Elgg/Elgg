@@ -4,6 +4,7 @@
  */
 
 use Elgg\DevelopersPlugin\Hooks;
+use Elgg\Project\Paths;
 
 /**
  * Developers init
@@ -271,42 +272,53 @@ function _developers_decorate_translations($language) {
  * @return void|string
  */
 function developers_wrap_views($hook, $type, $result, $params) {
-	if (elgg_get_viewtype() != "default") {
+	
+	if (elgg_get_viewtype() !== 'default' || elgg_is_empty($result)) {
 		return;
 	}
 	
 	if (stristr(current_page_url(), elgg_normalize_url('cache/'))) {
 		return;
 	}
-
-	$excluded_bases = ['resources', 'input', 'output', 'embed', 'icon', 'json', 'xml'];
-
+	
 	$excluded_views = [
 		'page/default',
 		'page/admin',
 		'page/elements/head',
+		'page/elements/html',
 	];
 
-	$view = $params['view'];
-
-	$view_hierarchy = explode('/', $view);
-	if (in_array($view_hierarchy[0], $excluded_bases)) {
-		return;
-	}
-
+	$view = elgg_extract('view', $params);
 	if (in_array($view, $excluded_views)) {
 		return;
 	}
 	
-	if ((new \SplFileInfo($view))->getExtension()) {
+	$excluded_bases = [
+		'resources',
+		'input',
+		'output',
+		'embed',
+		'icon',
+		'json',
+		'xml',
+	];
+	
+	$view_hierarchy = explode('/', $view);
+	if (in_array($view_hierarchy[0], $excluded_bases)) {
 		return;
 	}
-
-	if ($result) {
-		$result = "<!-- developers:begin $view -->$result<!-- developers:end $view -->";
+	
+	if ((new \SplFileInfo($view))->getExtension()) {
+		// don't wrap views with extension
+		// for example: elements/buttons.css
+		return;
 	}
-
-	return $result;
+	
+	$view_location = _elgg_services()->views->findViewFile($view, 'default');
+	$project_path = str_replace('\\', '/', Paths::project()); // handle Windows paths
+	$view_location = str_ireplace($project_path, '', $view_location); // strip project path from view location
+	
+	return "<!-- developers:begin {$view} @ {$view_location} -->{$result}<!-- developers:end {$view} -->";
 }
 
 /**
