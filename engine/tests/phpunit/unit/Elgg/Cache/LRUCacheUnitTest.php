@@ -84,5 +84,28 @@ class LRUCacheUnitTest extends \Elgg\UnitTestCase {
 	public function testThrowExceptionOnNonIntSize() {
 		$pool = new LRUCache("abc");
 	}
+	
+	/**
+	 * @dataProvider setGetRemoveProvider
+	 */
+	public function testSetGetRemove($name, $value, $default_value) {
+		$pool = new LRUCache(5);
+		
+		$pool->set($name, $value);
+		
+		$this->assertEquals($value, $pool->get($name, $default_value));
+		$this->assertEquals($value, $pool->remove($name));
+		$this->assertEquals($default_value, $pool->get($name, $default_value));
+	}
+	
+	public function setGetRemoveProvider() {
+		return [
+			['foo', 'bar', false],
+			['foo', 1, 'bar'],
+			['foo', true, false],
+			['foo', false, null],
+			['foo', null, 'bar'],
+		];
+	}
 
 }
