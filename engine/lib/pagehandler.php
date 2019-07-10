@@ -161,9 +161,10 @@ function elgg_admin_gatekeeper() {
  * if it does. If the viewer cannot view this entity, it forwards to an
  * appropriate page.
  *
- * @param int    $guid    Entity GUID
- * @param string $type    Optional required entity type
- * @param string $subtype Optional required entity subtype
+ * @param int    $guid              Entity GUID
+ * @param string $type              Optional required entity type
+ * @param string $subtype           Optional required entity subtype
+ * @param bool   $validate_can_edit flag to check canEdit access
  *
  * @return void
  *
@@ -173,9 +174,9 @@ function elgg_admin_gatekeeper() {
  * @throws \Elgg\HttpException
  * @since 1.9.0
  */
-function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $validate_can_edit = false) {
 	$entity = _elgg_services()->gatekeeper->assertExists($guid, $type, $subtype);
-	_elgg_services()->gatekeeper->assertAccessibleEntity($entity);
+	_elgg_services()->gatekeeper->assertAccessibleEntity($entity, null, $validate_can_edit);
 }
 
 /**
