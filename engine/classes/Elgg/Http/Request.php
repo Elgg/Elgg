@@ -414,10 +414,14 @@ class Request extends SymfonyRequest {
 	public function validate() {
 
 		$reported_bytes = $this->server->get('CONTENT_LENGTH');
+
 		// Requests with multipart content type
 		$post_data_count = count($this->request->all());
+
 		// Requests with other content types
-		$post_body_length = is_string($this->content) ? strlen($this->content) : 0;
+		$content = $this->getContent();
+		$post_body_length = is_string($content) ? strlen($content) : 0;
+
 		$file_count = count($this->files->all());
 		
 		$is_valid = function() use ($reported_bytes, $post_data_count, $post_body_length, $file_count) {
