@@ -241,6 +241,20 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 		_elgg_services()->session->setLoggedInUser($logged_in_user);
 	}
 
+	public function testNoPublicAccessInWalledGarden() {
+		
+		$with_public = get_write_access_array();
+		$this->assertArrayHasKey(ACCESS_PUBLIC, $with_public);
+		
+		// need to do this as hook is not registered during walled garden init if walled garden is not enabled
+		elgg_register_plugin_hook_handler('access:collections:write', 'all', '_elgg_walled_garden_remove_public_access', 9999);
+		
+		$without_public = get_write_access_array();
+		$this->assertArrayNotHasKey(ACCESS_PUBLIC, $without_public);
+
+		elgg_unregister_plugin_hook_handler('access:collections:write', 'all', '_elgg_walled_garden_remove_public_access');
+	}
+
 	public function testCanGetReadAccessArray() {
 
 		$ia = elgg_set_ignore_access(false);
