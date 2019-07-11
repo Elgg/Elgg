@@ -12,6 +12,7 @@ use InvalidParameterException;
 use RuntimeException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Elgg\Database\Plugins;
 
 /**
  * Delegates requests to controllers based on the registered configuration.
@@ -53,6 +54,11 @@ class Router {
 	protected $response;
 
 	/**
+	 * @var Plugins
+	 */
+	protected $plugins;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks    Hook service
@@ -60,19 +66,22 @@ class Router {
 	 * @param UrlMatcher         $matcher  URL Matcher
 	 * @param HandlersService    $handlers Handlers service
 	 * @param ResponseFactory    $response Response
+	 * @param Plugins            $plugins  Plugins
 	 */
 	public function __construct(
 		PluginHooksService $hooks,
 		RouteCollection $routes,
 		UrlMatcher $matcher,
 		HandlersService $handlers,
-		ResponseFactory $response
+		ResponseFactory $response,
+		Plugins $plugins
 	) {
 		$this->hooks = $hooks;
 		$this->routes = $routes;
 		$this->matcher = $matcher;
 		$this->handlers = $handlers;
 		$this->response = $response;
+		$this->plugins = $plugins;
 	}
 
 	/**
@@ -232,6 +241,15 @@ class Router {
 			
 			$middleware = elgg_extract('_middleware', $parameters, []);
 			unset($parameters['_middleware']);
+
+			$required_plugins = (array) elgg_extract('_required_plugins', $parameters, []);
+			unset($parameters['_required_plugins']);
+			
+			foreach ($required_plugins as $plugin_id) {
+				if (!$this->plugins->isActive($plugin_id)) {
+					throw new PageNotFoundException();
+				}
+			}
 
 			$route = $this->routes->get($parameters['_route']);
 			$route->setMatchedParameters($parameters);

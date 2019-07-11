@@ -29,10 +29,16 @@ return [
 		'collection:object:page:friends' => [
 			'path' => '/pages/friends/{username}',
 			'resource' => 'pages/friends',
+			'required_plugins' => [
+				'friends',
+			],
 		],
 		'collection:object:page:group' => [
 			'path' => '/pages/group/{guid}/{subpage?}',
 			'resource' => 'pages/group',
+			'required_plugins' => [
+				'groups',
+			],
 		],
 		'add:object:page' => [
 			'path' => '/pages/add/{guid}',

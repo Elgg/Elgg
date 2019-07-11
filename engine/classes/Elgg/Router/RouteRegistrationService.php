@@ -89,6 +89,7 @@ class RouteRegistrationService {
 		$middleware = elgg_extract('middleware', $params, []);
 		$protected = elgg_extract('walled', $params, true);
 		$deprecated = elgg_extract('deprecated', $params, '');
+		$required_plugins = elgg_extract('required_plugins', $params, []);
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
 			throw new InvalidParameterException(
@@ -146,6 +147,7 @@ class RouteRegistrationService {
 		$defaults['_handler'] = $handler;
 		$defaults['_deprecated'] = $deprecated;
 		$defaults['_middleware'] = $middleware;
+		$defaults['_required_plugins'] = $required_plugins;
 
 		$route = new Route($path, $defaults, $requirements, [
 			'utf8' => true,

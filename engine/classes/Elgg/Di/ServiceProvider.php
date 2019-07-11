@@ -600,7 +600,8 @@ class ServiceProvider extends DiContainer {
 				$c->routeCollection,
 				$c->urlMatcher,
 				$c->handlers,
-				$c->responseFactory
+				$c->responseFactory,
+				$c->plugins
 			);
 			if ($c->config->enable_profiling) {
 				$router->setTimer($c->timer);

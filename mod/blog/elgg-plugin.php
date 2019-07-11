@@ -30,6 +30,9 @@ return [
 				'lower' => '\d+',
 				'upper' => '\d+',
 			],
+			'required_plugins' => [
+				'friends',
+			],
 		],
 		'collection:object:blog:archive' => [
 			'path' => '/blog/archive/{username?}/{lower?}/{upper?}',
@@ -70,6 +73,9 @@ return [
 				'subpage' => 'all|archive',
 				'lower' => '\d+',
 				'upper' => '\d+',
+			],
+			'required_plugins' => [
+				'groups',
 			],
 		],
 		'collection:object:blog:all' => [

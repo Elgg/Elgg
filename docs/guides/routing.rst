@@ -162,6 +162,25 @@ By default, Elgg will set the following requirements for named URL segments:
 		'username' => '[\p{L}\p{Nd}._-]+', // letters, digits, underscores, dashes
 	];
 
+Plugin dependent routes
+-----------------------
+
+If a route requires a specific plugin to be active this can be configured in the route configuration.
+
+.. code-block:: php
+
+	// elgg-plugin.php
+	return [
+		'routes' => [
+			'collection:object:blog:friends' => [
+				'path' => '/blog/friends/{username?}/{lower?}/{upper?}',
+				'resource' => 'blog/friends',
+				'required_plugins' => [
+					'friends', // route only allowed when friends plugin is active
+				],
+			],
+		]
+	];
 
 Route middleware
 ----------------
