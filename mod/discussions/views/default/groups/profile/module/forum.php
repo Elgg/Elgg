@@ -1,8 +1,13 @@
 <?php
 /**
  * Latest forum posts
- *
- * @uses $vars['entity']
  */
 
-echo elgg_view('discussion/group_module', $vars);
+$params = [
+	'entity_type' => 'object',
+	'entity_subtype' => 'discussion',
+	'no_results' => elgg_echo('discussion:none'),
+];
+$params = $params + $vars;
+
+echo elgg_view('groups/profile/module', $params);

@@ -3,4 +3,11 @@
  * Group blog module
  */
 
-echo elgg_view('blog/group_module', $vars);
+$params = [
+	'entity_type' => 'object',
+	'entity_subtype' => 'blog',
+	'no_results' => elgg_echo('blog:none'),
+];
+$params = $params + $vars;
+
+echo elgg_view('groups/profile/module', $params);
