@@ -258,7 +258,8 @@ function _developers_decorate_translations($language) {
  *
  * 1. Only process views served with the 'default' viewtype.
  * 2. Does not wrap views that are not HTML.
- * 3. Does not wrap html head or the primary page shells
+ * 3. Does not wrap input and output views.
+ * 4. Does not wrap html head or the primary page shells
  *
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
@@ -294,6 +295,8 @@ function developers_wrap_views($hook, $type, $result, $params) {
 	
 	$excluded_bases = [
 		'resources',
+		'input', // because of possible html encoding in views, which would result in debug cobe being shown to users
+		'output', // because of possible html encoding in views, which would result in debug cobe being shown to users
 		'embed',
 		'icon',
 		'json',
