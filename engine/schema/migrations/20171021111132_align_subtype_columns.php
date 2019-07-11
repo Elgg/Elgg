@@ -41,7 +41,7 @@ class AlignSubtypeColumns extends AbstractMigration {
 
 		$table = $this->table('system_log');
 
-		$table->removeIndexByName('river_key');
+		$table->removeIndexByName('river_key')->save();
 
 		$table->changeColumn('object_subtype', 'string', $options)->save();
 

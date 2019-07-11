@@ -54,7 +54,7 @@ class DropObjectsEntityTable extends AbstractMigration {
 			}
 			
 			if (!empty($new_metadata_rows)) {
-				$this->insert('metadata', $new_metadata_rows);
+				$this->table('metadata')->insert($new_metadata_rows)->saveData();
 			}
 			
 			// remove from objects so it does not get processed again in the next while loop
@@ -65,6 +65,6 @@ class DropObjectsEntityTable extends AbstractMigration {
 		}
 		
 		// all data migrated, so drop the table
-		$this->dropTable('objects_entity');
+		$this->table('objects_entity')->drop()->save();
 	}
 }

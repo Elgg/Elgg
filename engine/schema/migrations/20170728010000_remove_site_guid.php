@@ -53,24 +53,20 @@ class RemoveSiteGuid extends AbstractMigration {
 			$table = $this->table('access_collections');
 
 			if ($table->hasIndex('site_guid')) {
-				$table->removeIndexByName('site_guid');
+				$table->removeIndexByName('site_guid')->save();
 			}
 
 			if ($table->hasColumn('site_guid')) {
-				$table->removeColumn('site_guid');
+				$table->removeColumn('site_guid')->save();
 			}
-
-			$table->save();
 		}
 
 		if ($this->hasTable('api_users')) {
 			$table = $this->table('api_users');
 
 			if ($table->hasColumn('site_guid')) {
-				$table->removeColumn('site_guid');
+				$table->removeColumn('site_guid')->save();
 			}
-
-			$table->save();
 		}
 
 		if ($this->hasTable('config')) {
@@ -79,54 +75,48 @@ class RemoveSiteGuid extends AbstractMigration {
 			$table = $this->table('config');
 
 			if ($table->hasIndex('site_guid')) {
-				$table->removeIndexByName('site_guid');
+				$table->removeIndexByName('site_guid')->save();
 			}
 
 			if ($table->hasColumn('site_guid')) {
-				$table->removeColumn('site_guid');
+				$table->removeColumn('site_guid')->save();
 			}
-
-			$table->save();
 		}
 
 		if ($this->hasTable('entities')) {
 			$table = $this->table('entities');
 
 			if ($table->hasIndex('site_guid')) {
-				$table->removeIndexByName('site_guid');
+				$table->removeIndexByName('site_guid')->save();
 			}
 
 			if ($table->hasColumn('site_guid')) {
-				$table->removeColumn('site_guid');
+				$table->removeColumn('site_guid')->save();
 			}
-
-			$table->save();
 		}
 
 		if ($this->hasTable('users_apisessions')) {
 			$table = $this->table('users_apisessions');
 
 			if ($table->hasIndex('site_guid')) {
-				$table->removeIndexByName('site_guid');
+				$table->removeIndexByName('site_guid')->save();
 			}
 
 			$prefix = $this->getAdapter()->getOption('table_prefix');
 			$this->query("ALTER TABLE {$prefix}users_apisessions DROP KEY user_guid, ADD UNIQUE KEY user_guid(user_guid)");
 
 			if ($table->hasColumn('site_guid')) {
-				$table->removeColumn('site_guid');
+				$table->removeColumn('site_guid')->save();
 			}
 
 			if ($table->hasIndex('user_guid')) {
-				$table->removeIndex('user_guid');
+				$table->removeIndexByName('user_guid')->save();
 			}
 
 			$table->addIndex(['user_guid'], [
 				'name' => "user_guid",
 				'unique' => false,
-			]);
-
-			$table->save();
+			])->save();
 		}
 
 		if ($this->hasTable('entity_relationships')) {
@@ -154,17 +144,15 @@ class RemoveSiteGuid extends AbstractMigration {
 					'limit' => MysqlAdapter::INT_BIG,
 					'precision' => 20,
 					'signed' => false,
-				]);
+				])->save();
 			}
 
 			if (!$table->hasIndex('site_guid')) {
 				$table->addIndex(['site_guid'], [
 					'name' => 'site_guid',
 					'unique' => false,
-				]);
+				])->save();
 			}
-
-			$table->save();
 
 			$prefix = $this->getAdapter()->getOption('table_prefix');
 			$this->query("
@@ -183,10 +171,8 @@ class RemoveSiteGuid extends AbstractMigration {
 					'limit' => MysqlAdapter::INT_BIG,
 					'precision' => 20,
 					'signed' => false,
-				]);
+				])->save();
 			}
-
-			$table->save();
 
 			$prefix = $this->getAdapter()->getOption('table_prefix');
 			$this->query("
@@ -202,7 +188,7 @@ class RemoveSiteGuid extends AbstractMigration {
 					"name",
 					"site_guid"
 				],
-			]);
+			])->save();
 
 			if (!$table->hasColumn('site_guid')) {
 				$table->addColumn('site_guid', 'integer', [
@@ -210,17 +196,15 @@ class RemoveSiteGuid extends AbstractMigration {
 					'limit' => MysqlAdapter::INT_BIG,
 					'precision' => 20,
 					'signed' => false,
-				]);
+				])->save();
 			}
 
 			if (!$table->hasIndex('site_guid')) {
 				$table->addIndex(['site_guid'], [
 					'name' => 'site_guid',
 					'unique' => false,
-				]);
+				])->save();
 			}
-
-			$table->save();
 
 			$prefix = $this->getAdapter()->getOption('table_prefix');
 			$this->query("
@@ -240,17 +224,15 @@ class RemoveSiteGuid extends AbstractMigration {
 					'limit' => MysqlAdapter::INT_BIG,
 					'precision' => 20,
 					'signed' => false,
-				]);
+				])->save();
 			}
 
 			if (!$table->hasIndex('site_guid')) {
 				$table->addIndex(['site_guid'], [
 					'name' => 'site_guid',
 					'unique' => false,
-				]);
+				])->save();
 			}
-
-			$table->save();
 
 			$prefix = $this->getAdapter()->getOption('table_prefix');
 			$this->query("
@@ -266,12 +248,12 @@ class RemoveSiteGuid extends AbstractMigration {
 				");
 
 				foreach ($rows as $row) {
-					$this->insert('entity_relationships', [
+					$this->table('entity_relationships')->insert([[
 						'guid_one' => $row['guid'],
 						'relationship' => 'member_of_site',
 						'guid_two' => 1,
 						'time_created' => time(),
-					]);
+					]])->saveData();
 				}
 			}
 		}
@@ -281,7 +263,7 @@ class RemoveSiteGuid extends AbstractMigration {
 			$table = $this->table('users_apisessions');
 
 			if ($table->hasIndex('site_guid')) {
-				$table->removeIndexByName('site_guid');
+				$table->removeIndexByName('site_guid')->save();
 			}
 
 			if (!$table->hasColumn('site_guid')) {
@@ -290,11 +272,11 @@ class RemoveSiteGuid extends AbstractMigration {
 					'limit' => MysqlAdapter::INT_BIG,
 					'precision' => 20,
 					'signed' => false,
-				]);
+				])->save();
 			}
 
 			if ($table->hasIndex('user_guid')) {
-				$table->removeIndexByName('user_guid');
+				$table->removeIndexByName('user_guid')->save();
 			}
 
 			$table->addIndex([
@@ -303,9 +285,7 @@ class RemoveSiteGuid extends AbstractMigration {
 			], [
 				'name' => "user_guid",
 				'unique' => true,
-			]);
-
-			$table->save();
+			])->save();
 
 			$prefix = $this->getAdapter()->getOption('table_prefix');
 			$this->query("
@@ -314,6 +294,5 @@ class RemoveSiteGuid extends AbstractMigration {
 				WHERE site_guid != 1
 			");
 		}
-
 	}
 }

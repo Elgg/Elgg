@@ -56,7 +56,7 @@ class DropGroupsEntityTable extends AbstractMigration
 			}
 			
 			if (!empty($new_metadata_rows)) {
-				$this->insert('metadata', $new_metadata_rows);
+				$this->table('metadata')->insert($new_metadata_rows)->saveData();
 			}
 			
 			// remove from groups so it does not get processed again in the next while loop
@@ -67,6 +67,6 @@ class DropGroupsEntityTable extends AbstractMigration
 		}
 		
 		// all data migrated, so drop the table
-		$this->dropTable('groups_entity');
+		$this->table('groups_entity')->drop()->save();
 	}
 }

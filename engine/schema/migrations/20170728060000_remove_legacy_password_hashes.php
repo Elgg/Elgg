@@ -17,7 +17,7 @@ class RemoveLegacyPasswordHashes extends AbstractMigration
 		$table = $this->table('users_entity');
 
 		if ($table->hasIndex('password')) {
-			$table->removeIndexByName('password');
+			$table->removeIndexByName('password')->save();
 		}
 
 		if ($table->hasColumn('password')) {

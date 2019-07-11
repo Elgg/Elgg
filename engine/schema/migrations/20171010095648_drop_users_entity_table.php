@@ -72,7 +72,7 @@ class DropUsersEntityTable extends AbstractMigration {
 			}
 			
 			if (!empty($new_metadata_rows)) {
-				$this->insert('metadata', $new_metadata_rows);
+				$this->table('metadata')->insert($new_metadata_rows)->saveData();
 			}
 			
 			// remove from users so it does not get processed again in the next while loop
@@ -83,6 +83,6 @@ class DropUsersEntityTable extends AbstractMigration {
 		}
 		
 		// all data migrated, so drop the table
-		$this->dropTable('users_entity');
+		$this->table('users_entity')->drop()->save();
 	}
 }
