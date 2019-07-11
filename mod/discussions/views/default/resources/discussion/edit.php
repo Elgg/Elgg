@@ -2,13 +2,9 @@
 
 $guid = elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($guid, 'object', 'discussion');
+elgg_entity_gatekeeper($guid, 'object', 'discussion', true);
 
 $topic = get_entity($guid);
-
-if (!$topic->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
-}
 
 $title = elgg_echo('edit:object:discussion');
 
