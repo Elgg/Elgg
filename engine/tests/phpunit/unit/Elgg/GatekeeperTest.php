@@ -182,6 +182,39 @@ class GatekeeperTest extends UnitTestCase {
 		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object));
 
 	}
+	
+	public function testEntityGatekeeperCanEditPass() {
+		
+		$user = $this->createUser();
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_LOGGED_IN,
+			'owner_guid' => $user->guid,
+		]);
+		
+		$this->session->setLoggedInUser($user);
+		
+		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object, null, true));
+	}
+	
+	/**
+	 * @expectedException \Elgg\EntityPermissionsException
+	 */
+	public function testEntityGatekeeperCanEditFail() {
+		
+		$user = $this->createUser();
+		
+		$object = $this->createObject([
+			'access_id' => ACCESS_LOGGED_IN,
+			'owner_guid' => $user->guid,
+		]);
+		
+		$viewer = $this->createUser();
+		
+		$this->session->setLoggedInUser($viewer);
+		
+		$this->assertNull($this->gatekeeper->assertAccessibleEntity($object, null, true));
+	}
 
 	/**
 	 * @expectedException \Elgg\EntityNotFoundException
