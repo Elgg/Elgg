@@ -16,13 +16,10 @@ Basic usage
 
 Basic functionalities can be achieved through these two functions:
 
- - `elgg_register_menu_item()`__ to add an item to a menu
- - `elgg_unregister_menu_item()`__ to remove an item from a menu
+ - ``elgg_register_menu_item()`` to add an item to a menu
+ - ``elgg_unregister_menu_item()`` to remove an item from a menu
 
 You normally want to call them from your plugin's init function.
-
-__ http://reference.elgg.org/engine_2lib_2navigation_8php.html#a344445364078d03607904c44bad36c1c
-__ http://reference.elgg.org/engine_2lib_2navigation_8php.html#ae26ee09e330a130984c9a6f9e19f6546
 
 Examples
 --------
@@ -44,21 +41,22 @@ Examples
 Admin menu
 ==========
 
-You can also register `page` menu items to the admin backend menu. When registering for the admin menu you can set the context of
-the menu items to `admin` so the menu items only show in the `admin` context. There are 3 default sections to add your menu items to.
+You can also register ``page`` menu items to the admin backend menu. When registering for the admin menu you can set the context of
+the menu items to ``admin`` so the menu items only show in the ``admin`` context. There are 3 default sections to add your menu items to.
  
- - `administer` for daily tasks, usermanagement and other actionable tasks
- - `configure` for settings, configuration and utilities that configure stuff
- - `information` for statistics, overview of information or status
+ - ``administer`` for daily tasks, usermanagement and other actionable tasks
+ - ``configure`` for settings, configuration and utilities that configure stuff
+ - ``information`` for statistics, overview of information or status
 
 
 Advanced usage
 ==============
 
 You can get more control over menus by using :doc:`plugin hooks </design/events>`
-and the public methods provided by the ElggMenuItem__ class.
+and the public methods provided by the ``ElggMenuItem`` class.
 
-There are two hooks that can be used to modify a menu:
+There are three hooks that can be used to modify a menu:
+ - ``'parameters', 'menu:<menu name>'`` to add or modify parameters use for the menu building (eg. sorting)
  - ``'register', 'menu:<menu name>'`` to add or modify items (especially in dynamic menus)
  - ``'prepare', 'menu:<menu name>'`` to modify the structure of the menu before it is displayed
 
@@ -69,8 +67,6 @@ The third parameter passed into a menu handler contains all the menu items that
 have been registered so far by Elgg core and other enabled plugins. In the
 handler we can loop through the menu items and use the class methods to
 interact with the properties of the menu item.
-
-__ http://reference.elgg.org/classElggMenuItem.html
 
 Examples
 --------
@@ -154,10 +150,8 @@ Creating a new menu
 Elgg provides multiple different menus by default. Sometimes you may however
 need some menu items that don't fit in any of the existing menus.
 If this is the case, you can create your very own menu with the
-`elgg_view_menu()`__ function. You must call the function from the view,
+``elgg_view_menu()`` function. You must call the function from the view,
 where you want to menu to be displayed.
-
-__ http://reference.elgg.org/views_8php.html#ac2d475d3efbbec30603537013ac34e22
 
 **Example:** Display a menu called "my_menu" that displays it's menu items 
 in alphapetical order:

@@ -737,17 +737,16 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
  * @param array                      $vars An associative array of display options for the menu.
  *
- *                          Options include:
- *                              items => an array of unprepared menu items
- *                                       as ElggMenuItem or menu item factory options
- *                              sort_by => string or php callback
- *                                  string options: 'name', 'priority' (default), 'text'
- *                                  or a php callback (a compare function for usort)
- *                              handler: string the page handler to build action URLs
- *                              entity: \ElggEntity to use to build action URLs
- *                              class: string the class for the entire menu.
- *                              menu_view: name of the view to be used to render the menu
- *                              show_section_headers: bool show headers before menu sections.
+ *  Options include:
+ *    items                => (array) an array of unprepared menu items as ElggMenuItem or menu item factory options
+ *    sort_by              => (string) or php callback string options: 'name', 'priority' (default), 'text'
+ *                            or a php callback (a compare function for usort)
+ *    handler              => (string) the page handler to build action URLs
+ *    entity               => (\ElggEntity) entity to use to build action URLs
+ *    class                => (string) the class for the entire menu
+ *    menu_view            => (string) name of the view to be used to render the menu
+ *    show_section_headers => (bool) show headers before menu sections
+ *    selected_item_name   => (string) the menu item name to be selected
  *
  * @return string
  * @since 1.8.0

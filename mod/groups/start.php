@@ -1051,8 +1051,6 @@ function groups_default_page_owner_handler($hook, $type, $return, $params) {
  */
 function groups_setup_filter_tabs($hook, $type, $return, $params) {
 
-	$filter_value = elgg_extract('filter_value', $params);
-
 	$return[] = ElggMenuItem::factory([
 		'name' => 'newest',
 		'text' => elgg_echo('sort:newest'),
@@ -1060,7 +1058,6 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 			'filter' => 'newest',
 		]),
 		'priority' => 200,
-		'selected' => $filter_value == 'newest',
 	]);
 
 	$return[] = ElggMenuItem::factory([
@@ -1070,7 +1067,6 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 			'filter' => 'alpha',
 		]),
 		'priority' => 250,
-		'selected' => $filter_value == 'alpha',
 	]);
 
 	$return[] = ElggMenuItem::factory([
@@ -1080,7 +1076,6 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 			'filter' => 'popular',
 		]),
 		'priority' => 300,
-		'selected' => $filter_value == 'popular',
 	]);
 
 	$return[] = ElggMenuItem::factory([
@@ -1090,7 +1085,6 @@ function groups_setup_filter_tabs($hook, $type, $return, $params) {
 			'filter' => 'featured',
 		]),
 		'priority' => 400,
-		'selected' => $filter_value == 'featured',
 	]);
 	
 	return $return;
