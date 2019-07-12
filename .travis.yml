@@ -51,8 +51,9 @@ matrix:
     - php: 7.3
       env: JOB_NAME=docs_build
       install:
-        - pip install --user "Sphinx==1.3.1"
+        - pip install --user "Sphinx==1.8.5"
         - pip install --user "sphinx-intl"
+        - pip install --user "sphinxcontrib.phpdomain"
         - export PATH=$PATH:$HOME/.local/bin
       script:
         - composer docs:build

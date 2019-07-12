@@ -434,7 +434,7 @@ elgg.action notes
 elgg.action JSON response wrapper
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code-block:: json
+.. code-block
 
     {
         current_url: {String} "http://example.org/action/example/math", // not very useful
