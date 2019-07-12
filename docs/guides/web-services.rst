@@ -81,7 +81,10 @@ and you should see JSON data like this:
 
 .. code-block:: json
 
-    {"status":0,"result":"testing"}
+    {
+    	"status":0,
+    	"result":"testing"
+    }
 
 Plugins can filter the output of individual API methods by registering a handler
 for ``'rest:output',$method`` plugin hook.
