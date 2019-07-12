@@ -322,17 +322,14 @@ function _elgg_set_user_default_access(\Elgg\Hook $hook) {
 /**
  * Register menu items for the user settings page menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:page'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
  * @return void|ElggMenuItem[]
  *
  * @internal
  * @since 3.0
  */
-function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
+function _elgg_user_settings_menu_register(\Elgg\Hook $hook) {
 	$user = elgg_get_page_owner_entity();
 	if (!$user) {
 		return;
@@ -341,6 +338,8 @@ function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
 	if (!elgg_in_context('settings')) {
 		return;
 	}
+	
+	$return = $hook->getValue();
 
 	$return[] = \ElggMenuItem::factory([
 		'name' => '1_account',
@@ -396,26 +395,24 @@ function _elgg_user_settings_menu_register($hook, $type, $return, $params) {
 /**
  * Prepares the page menu to strip out empty plugins menu item for user settings
  *
- * @param string $hook   prepare
- * @param string $type   menu:page
- * @param array  $value  array of menu items
- * @param array  $params menu related parameters
+ * @param \Elgg\Hook $hook 'prepare', 'menu:page'
  *
- * @return array
+ * @return void|array
  * @internal
  */
-function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
+function _elgg_user_settings_menu_prepare(\Elgg\Hook $hook) {
+	$value = $hook->getValue();
 	if (empty($value)) {
-		return $value;
+		return;
 	}
 
 	if (!elgg_in_context("settings")) {
-		return $value;
+		return;
 	}
 
 	$configure = elgg_extract("configure", $value);
 	if (empty($configure)) {
-		return $value;
+		return;
 	}
 
 	foreach ($configure as $index => $menu_item) {

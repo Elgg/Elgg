@@ -343,14 +343,12 @@ function ws_rest_handler() {
 /**
  * Filters system API list to remove PHP internal function names
  *
- * @param string $hook   "rest:output"
- * @param string $type   "system.api.list"
- * @param array  $return API list
- * @param array  $params Method params
+ * @param \Elgg\Hook $hook "rest:output", "system.api.list"
+ *
  * @return array
  */
-function ws_system_api_list_hook($hook, $type, $return, $params) {
-
+function ws_system_api_list_hook(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
 	if (!empty($return) && is_array($return)) {
 		foreach ($return as $method => $settings) {
 			unset($return[$method]['function']);

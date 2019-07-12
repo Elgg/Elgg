@@ -392,15 +392,14 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
  * Prepare breadcrumbs before display. This turns titles into 100-character excerpts, and also
  * removes the last crumb if it's not a link.
  *
- * @param string $hook        "prepare"
- * @param string $type        "breadcrumbs"
- * @param array  $breadcrumbs Breadcrumbs to be altered
- * @param array  $params      Hook parameters
+ * @param \Elgg\Hook $hook "prepare", "breadcrumbs"
  *
  * @return array
  * @since 1.11
  */
-function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+function elgg_prepare_breadcrumbs(\Elgg\Hook $hook) {
+	$breadcrumbs = $hook->getValue();
+	
 	// remove last crumb if not a link
 	$last_crumb = end($breadcrumbs);
 	if (empty($last_crumb['href'])) {
@@ -534,26 +533,26 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
  *
  * Registers custom menu items
  *
- * @param string    $hook   'register'
- * @param string    $type   'menu:site'
- * @param MenuItems $return Menu
- * @param array     $params Hook params
+ * @param \Elgg\Hook $hook 'register', 'menu:site'
  *
  * @return MenuItems
  *
  * @internal
  */
-function _elgg_site_menu_init($hook, $type, $return, $params) {
+function _elgg_site_menu_init(\Elgg\Hook $hook) {
 	$custom_menu_items = elgg_get_config('site_custom_menu_items');
-
-	if ($custom_menu_items) {
-		// add custom menu items
-		$n = 1;
-		foreach ($custom_menu_items as $title => $url) {
-			$item = new ElggMenuItem("custom$n", $title, $url);
-			$return[] = $item;
-			$n++;
-		}
+	if (empty($custom_menu_items)) {
+		return;
+	}
+	
+	$return = $hook->getValue();
+	
+	// add custom menu items
+	$n = 1;
+	foreach ($custom_menu_items as $title => $url) {
+		$item = new ElggMenuItem("custom$n", $title, $url);
+		$return[] = $item;
+		$n++;
 	}
 
 	return $return;
@@ -564,17 +563,15 @@ function _elgg_site_menu_init($hook, $type, $return, $params) {
  *
  * Handles default, featured, and custom menu items
  *
- * @param string       $hook   'prepare'
- * @param string       $type   'menu:site'
- * @param PreparedMenu $menu   current return value
- * @param array        $params supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'menu:site'
  *
  * @return PreparedMenu
  *
  * @internal
  */
-function _elgg_site_menu_setup($hook, $type, $menu, $params) {
+function _elgg_site_menu_setup(\Elgg\Hook $hook) {
 
+	$menu = $hook->getValue();
 	$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));
 
 	$registered = $menu->getItems('default');
@@ -709,23 +706,20 @@ function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 /**
  * Entity menu is list of links and info on any entity
  *
- * @param string    $hook   'register'
- * @param string    $type   'menu:entity'
- * @param MenuItems $return current return value
- * @param array     $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:entity'
  *
  * @return MenuItems
  *
  * @internal
  */
-function _elgg_entity_menu_setup($hook, $type, $return, $params) {
-	$entity = elgg_extract('entity', $params);
+function _elgg_entity_menu_setup(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
 	if (!($entity instanceof \ElggEntity) || $entity instanceof \ElggUser) {
 		// users mostly use the hover menu for their actions
 		return;
 	}
 
-	$handler = elgg_extract('handler', $params, false);
+	$handler = $hook->getParam('handler', false);
 	if ($handler) {
 		elgg_deprecated_notice("Using 'handler' in entity menu parameters is deprecated. Use named routes instead.", '3.0');
 
@@ -746,6 +740,8 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		]);
 	}
 
+	$return = $hook->getValue();
+	
 	if ($entity->canEdit() && $edit_url) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'edit',
@@ -917,21 +913,20 @@ function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
 /**
  * Widget menu is a set of widget controls
  *
- * @param string    $hook   'register'
- * @param string    $type   'menu:widget'
- * @param MenuItems $return current return value
- * @param array     $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:widget'
  *
  * @return MenuItems
  *
  * @internal
  */
-function _elgg_widget_menu_setup($hook, $type, $return, $params) {
+function _elgg_widget_menu_setup(\Elgg\Hook $hook) {
 
-	$widget = elgg_extract('entity', $params);
+	$widget = $hook->getEntityParam();
 	if (!($widget instanceof \ElggWidget)) {
 		return;
 	}
+	
+	$return = $hook->getValue();
 	
 	if ($widget->canDelete()) {
 		$return[] = \ElggMenuItem::factory([
@@ -947,7 +942,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 		]);
 	}
 	
-	$show_edit = elgg_extract('show_edit', $params, $widget->canEdit());
+	$show_edit = $hook->getParam('show_edit', $widget->canEdit());
 	if ($show_edit) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'settings',
@@ -966,17 +961,15 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 /**
  * Add the register and forgot password links to login menu
  *
- * @param string    $hook   'register'
- * @param string    $type   'menu:login'
- * @param MenuItems $return current return value
- * @param array     $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:login'
  *
  * @return MenuItems
  *
  * @internal
  */
-function _elgg_login_menu_setup($hook, $type, $return, $params) {
-
+function _elgg_login_menu_setup(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
+	
 	if (_elgg_config()->allow_registration) {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'register',
@@ -999,16 +992,13 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 /**
  * Add the RSS link to the menu
  *
- * @param string    $hook   'register'
- * @param string    $type   'menu:footer'
- * @param MenuItems $return current return value
- * @param array     $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:footer'
  *
  * @return MenuItems
  *
  * @internal
  */
-function _elgg_rss_menu_setup($hook, $type, $return, $params) {
+function _elgg_rss_menu_setup(\Elgg\Hook $hook) {
 
 	if (!elgg_is_logged_in()) {
 		return;
@@ -1017,6 +1007,8 @@ function _elgg_rss_menu_setup($hook, $type, $return, $params) {
 	if (!_elgg_has_rss_link()) {
 		return;
 	}
+	
+	$return = $hook->getValue();
 
 	$return[] = ElggMenuItem::factory([
 		'name' => 'rss',
@@ -1078,26 +1070,23 @@ function _elgg_nav_init() {
 /**
  * Extend public pages
  *
- * @param string   $hook_name    "public_pages"
- * @param string   $entity_type  "walled_garden"
- * @param string[] $return_value Paths accessible outside the "walled garden"
- * @param mixed    $params       unused
+ * @param \Elgg\Hook $hook "public_pages", "walled_garden"
  *
  * @return string[]
  * @internal
  * @since 1.11.0
  */
-function _elgg_nav_public_pages($hook_name, $entity_type, $return_value, $params) {
-	if (is_array($return_value)) {
-		$return_value[] = 'navigation/menu/user_hover/contents';
-	}
-
+function _elgg_nav_public_pages(\Elgg\Hook $hook) {
+	$return_value = $hook->getValue();
+	
+	$return_value[] = 'navigation/menu/user_hover/contents';
+	
 	return $return_value;
 }
 
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_nav_init');
 };

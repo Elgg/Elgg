@@ -61,27 +61,23 @@ function site_notifications_set_topbar() {
 /**
  * Create a site notification
  *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param bool   $result Has the notification been sent
- * @param array  $params Hook parameters
+ * @param \Elgg\Hook $hook 'send', 'notification:site'
  *
  * @return void|true
  */
-function site_notifications_send($hook, $type, $result, $params) {
+function site_notifications_send(\Elgg\Hook $hook) {
 	/* @var Elgg\Notifications\Notification */
-	$notification = elgg_extract('notification', $params);
+	$notification = $hook->getParam('notification');
 	if ($notification->summary) {
 		$message = $notification->summary;
 	} else {
 		$message = $notification->subject;
 	}
 
-	if (isset($params['event'])) {
-		$event = $params['event'];
+	$object = null;
+	$event = $hook->getParam('event');
+	if (isset($event)) {
 		$object = $event->getObject();
-	} else {
-		$object = null;
 	}
 
 	$actor = $notification->getSender();

@@ -155,20 +155,18 @@ function embed_get_list_options($options = []) {
  * Substitutes thumbnail's inline URL with a permanent URL
  * Registered with a very late priority of 1000 to ensure we replace all previous values
  *
- * @param string $hook   "entity:icon:url"
- * @param string $type   "object"
- * @param string $return URL
- * @param array  $params Hook params
+ * @param \Elgg\Hook $hook "entity:icon:url", "object"
+ *
  * @return string
  */
-function embed_set_thumbnail_url($hook, $type, $return, $params) {
+function embed_set_thumbnail_url(\Elgg\Hook $hook) {
 
 	if (!elgg_in_context('embed')) {
 		return;
 	}
 	
-	$entity = elgg_extract('entity', $params);
-	$size = elgg_extract('size', $params);
+	$entity = $hook->getEntityParam();
+	$size = $hook->getParam('size');
 
 	$thumbnail = $entity->getIcon($size);
 	if (!$thumbnail->exists()) {

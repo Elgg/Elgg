@@ -52,16 +52,14 @@ function expages_setup_footer_menu() {
 /**
  * Adds menu items to the expages edit form
  *
- * @param string $hook   'register'
- * @param string $type   'menu:expages'
- * @param array  $return current menu items
- * @param array  $params parameters
+ * @param \Elgg\Hook $hook 'register', 'menu:expages'
  *
  * @return array
  */
-function expages_menu_register_hook($hook, $type, $return, $params) {
-	$type = elgg_extract('type', $params);
-		
+function expages_menu_register_hook(\Elgg\Hook $hook) {
+	$type = $hook->getParam('type');
+	$return = $hook->getValue();
+	
 	$pages = ['about', 'terms', 'privacy'];
 	foreach ($pages as $page) {
 		$return[] = ElggMenuItem::factory([

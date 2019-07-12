@@ -216,15 +216,12 @@ function elgg_is_empty($value) {
  * For information on these arguments, see
  * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s2.2
  *
- * @param string $hook   Hook name
- * @param string $type   The type of hook
- * @param mixed  $result Data to filter
- * @param array  $params Not used
+ * @param \Elgg\Hook $hook 'validate', 'input'
  *
  * @return mixed
  */
-function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
-	$var = $result;
+function _elgg_htmlawed_filter_tags(\Elgg\Hook $hook) {
+	$var = $hook->getValue();
 
 	$config = [
 		// seems to handle about everything we need.
@@ -336,18 +333,17 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 /**
  * Disable the autocomplete feature on password fields
  *
- * @param string $hook         'view_vars'
- * @param string $type         'input/password'
- * @param array  $return_value the current view vars
- * @param array  $params       supplied params
+ * @param \Elgg\Hook $hook 'view_vars', 'input/password'
  *
  * @return void|array
  */
-function _elgg_disable_password_autocomplete($hook, $type, $return_value, $params) {
+function _elgg_disable_password_autocomplete(\Elgg\Hook $hook) {
 	
 	if (!_elgg_config()->security_disable_password_autocomplete) {
 		return;
 	}
+	
+	$return_value = $hook->getValue();
 	
 	$return_value['autocomplete'] = 'off';
 	
@@ -370,6 +366,6 @@ function _elgg_input_init() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_input_init');
 };

@@ -10,18 +10,15 @@ class Hooks {
 	/**
 	 * Alter input of menu sections in "gear" popup
 	 *
-	 * @param string $hook   'view_vars'
-	 * @param string $type   'navigation/menu/elements/section'
-	 * @param array  $value  Menu section $vars
-	 * @param array  $params Hook params
+	 * @param \Elgg\Hook $hook 'view_vars', 'navigation/menu/elements/section'
 	 *
 	 * @return mixed
 	 */
-	public static function alterMenuSectionVars($hook, $type, $value, $params) {
+	public static function alterMenuSectionVars(\Elgg\Hook $hook) {
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
-
+		$value = $hook->getValue();
 		$idx = array_search('elgg-menu-page', $value['class']);
 		if ($idx !== false) {
 			unset($value['class'][$idx]);
@@ -42,19 +39,17 @@ class Hooks {
 	/**
 	 * Alter output of menu sections in "gear" popup
 	 *
-	 * @param string $hook   'view'
-	 * @param string $type   'navigation/menu/elements/section'
-	 * @param array  $output Menu section HTML
-	 * @param array  $params Hook params
+	 * @param \Elgg\Hook $hook 'view', 'navigation/menu/elements/section'
 	 *
 	 * @return mixed
 	 */
-	public static function alterMenuSections($hook, $type, $output, $params) {
+	public static function alterMenuSections(\Elgg\Hook $hook) {
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
-
+		$params = $hook->getParams();
 		if (in_array('elgg-developers-gear', $params['vars']['class'])) {
+			$output = $hook->getValue();
 			return "<section>$output</section>";
 		}
 	}
@@ -62,18 +57,16 @@ class Hooks {
 	/**
 	 * Alter output of complete menu in "gear" popup
 	 *
-	 * @param string $hook   'view'
-	 * @param string $type   'navigation/menu/default'
-	 * @param array  $output Menu HTML
-	 * @param array  $params Hook params
+	 * @param \Elgg\Hook $hook 'view', 'navigation/menu/default'
 	 *
 	 * @return mixed
 	 */
-	public static function alterMenu($hook, $type, $output, $params) {
+	public static function alterMenu(\Elgg\Hook $hook) {
 		if (!elgg_in_context('developers_gear')) {
 			return;
 		}
-
+		
+		$output = $hook->getValue();
 		$output = preg_replace('~^<nav\b[^>]+>~', '', $output);
 		$output = preg_replace('~^</nav>$~', '', $output);
 		return $output;

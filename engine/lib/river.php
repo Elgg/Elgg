@@ -305,15 +305,14 @@ function elgg_list_river(array $options = []) {
 /**
  * Updates the last action of the object of an river item
  *
- * @param string         $event 'create'
- * @param string         $type  'river'
- * @param \ElggRiverItem $item  The entity being disabled
+ * @param \Elgg\Event $event 'create', 'river'
  *
  * @return void
  *
  * @internal
  */
-function _elgg_river_update_object_last_action($event, $type, $item) {
+function _elgg_river_update_object_last_action(\Elgg\Event $event) {
+	$item = $event->getObject();
 	if (!$item instanceof \ElggRiverItem) {
 		return;
 	}
@@ -329,16 +328,14 @@ function _elgg_river_update_object_last_action($event, $type, $item) {
 /**
  * Disable river entries that reference a disabled entity as subject/object/target
  *
- * @param string     $event  'disable'
- * @param string     $type   'all'
- * @param ElggEntity $entity The entity being disabled
+ * @param \Elgg\Event $event 'disable', 'all'
  *
  * @return void
  *
  * @internal
  */
-function _elgg_river_disable($event, $type, $entity) {
-
+function _elgg_river_disable(\Elgg\Event $event) {
+	$entity = $event->getObject();
 	if (!$entity instanceof ElggEntity) {
 		return;
 	}
@@ -358,16 +355,14 @@ QUERY;
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
  *
- * @param string     $event  'enable'
- * @param string     $type   'all'
- * @param ElggEntity $entity The entity being enabled
+ * @param \Elgg\Event $event 'enable', 'all'
  *
  * @return void
  *
  * @internal
  */
-function _elgg_river_enable($event, $type, $entity) {
-
+function _elgg_river_enable(\Elgg\Event $event) {
+	$entity = $event->getObject();
 	if (!$entity instanceof ElggEntity) {
 		return;
 	}
@@ -445,7 +440,7 @@ function _elgg_river_init() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_river_init');
 	$events->registerHandler('disable:after', 'all', '_elgg_river_disable', 600);
 	$events->registerHandler('enable:after', 'all', '_elgg_river_enable', 600);

@@ -3,6 +3,7 @@
 namespace Elgg\Integration;
 
 use Elgg\LegacyIntegrationTestCase;
+use Elgg\HooksRegistrationService\Hook;
 
 class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 
@@ -83,7 +84,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		elgg_push_context('input');
 
 		foreach ($tests as $input => $expected) {
-			$result = _elgg_htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
 			$this->assertEqual($expected, $result);
 		}
 
@@ -94,7 +95,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		];
 
 		foreach ($weird_schemes as $input => $expected) {
-			$result = _elgg_htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
 			$this->assertEqual($expected, $result);
 		}
 
@@ -113,7 +114,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		}
 
 		foreach ($tests as $input => $expected) {
-			$result = _elgg_htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
 			$this->assertEqual($expected, $result);
 		}
 	}
@@ -155,7 +156,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		}
 
 		foreach ($tests as $input => $expected) {
-			$result = _elgg_htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
 			$this->assertEqual($expected, $result);
 		}
 	}
@@ -195,7 +196,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		}
 
 		foreach ($tests as $input => $expected) {
-			$result = _elgg_htmlawed_filter_tags(null, null, $input);
+			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
 			$this->assertEqual($expected, $result);
 		}
 	}

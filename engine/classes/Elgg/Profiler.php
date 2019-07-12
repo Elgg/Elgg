@@ -90,14 +90,11 @@ class Profiler {
 	/**
 	 * Append a SCRIPT element to the page output
 	 *
-	 * @param string $hook   "output"
-	 * @param string $type   "page"
-	 * @param string $html   Full page HTML
-	 * @param array  $params Hook params
+	 * @param \Elgg\Hook $hook "output", "page"
 	 *
 	 * @return string
 	 */
-	public static function handlePageOutput($hook, $type, $html, $params) {
+	public static function handlePageOutput(\Elgg\Hook $hook) {
 		$profiler = new self();
 		$min_percentage = _elgg_config()->profiling_minimum_percentage;
 		if ($min_percentage !== null) {
@@ -121,7 +118,8 @@ class Profiler {
 		}, $list);
 
 		$data['list'] = $list;
-
+		
+		$html = $hook->getValue();
 		$html .= "<script>console.log(" . json_encode($data) . ");</script>";
 
 		return $html;

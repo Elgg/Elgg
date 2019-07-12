@@ -33,17 +33,14 @@ function notifications_plugin_init() {
 /**
  * Register menu items for the page menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:page'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
  * @return void|ElggMenuItem[]
  *
  * @internal
  * @since 3.0
  */
-function _notifications_page_menu($hook, $type, $return, $params) {
+function _notifications_page_menu(\Elgg\Hook $hook) {
 	
 	if (!elgg_in_context('settings') || !elgg_get_logged_in_user_guid()) {
 		return;
@@ -54,6 +51,7 @@ function _notifications_page_menu($hook, $type, $return, $params) {
 		$user = elgg_get_logged_in_user_entity();
 	}
 	
+	$return = $hook->getValue();
 	$return[] = \ElggMenuItem::factory([
 		'name' => '2_a_user_notify',
 		'text' => elgg_echo('notifications:subscriptions:changesettings'),
@@ -130,14 +128,12 @@ function _notification_groups_title_menu(\Elgg\Hook $hook) {
 /**
  * Update notifications when a relationship is deleted
  *
- * @param string            $event        "delete"
- * @param string            $object_type  "relationship"
- * @param \ElggRelationship $relationship Relationship obj
+ * @param \Elgg\Event $event "delete", "relationship"
  *
  * @return void
  */
-function notifications_relationship_remove($event, $object_type, $relationship) {
-	
+function notifications_relationship_remove(\Elgg\Event $event) {
+	$relationship = $event->getObject();
 	if (!$relationship instanceof ElggRelationship) {
 		return;
 	}
@@ -155,14 +151,12 @@ function notifications_relationship_remove($event, $object_type, $relationship) 
 /**
  * Turn on notifications for new friends if all friend notifications is on
  *
- * @param string           $event        'create'
- * @param string           $type         'relationship'
- * @param ElggRelationship $relationship new relationship
+ * @param \Elgg\Event $event 'create', 'relationship'
  *
  * @return void
  */
-function notifications_update_friend_notify($event, $type, $relationship) {
-	
+function notifications_update_friend_notify(\Elgg\Event $event) {
+	$relationship = $event->getObject();
 	if (!$relationship instanceof ElggRelationship) {
 		return;
 	}
@@ -203,18 +197,15 @@ function notifications_update_friend_notify($event, $type, $relationship) {
  *
  * This function assumes that only friends can belong to access collections.
  *
- * @param string $event       'access:collections:add_user'
- * @param string $type        'collection'
- * @param bool   $returnvalue current return value
- * @param array  $params      supplied params
+ * @param \Elgg\hook $hook 'access:collections:add_user', 'collection'
  *
  * @return void
  */
-function notifications_update_collection_notify($event, $type, $returnvalue, $params) {
+function notifications_update_collection_notify(\Elgg\hook $hook) {
 	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	// only update notifications for user owned collections
-	$collection_id = elgg_extract('collection_id', $params);
+	$collection_id = $hook->getParam('collection_id');
 	$collection = get_access_collection($collection_id);
 	if (!$collection instanceof ElggAccessCollection) {
 		return;
@@ -224,7 +215,7 @@ function notifications_update_collection_notify($event, $type, $returnvalue, $pa
 		return;
 	}
 
-	$member_guid = (int) elgg_extract('user_guid', $params);
+	$member_guid = (int) $hook->getParam('user_guid');
 	if (empty($member_guid)) {
 		return;
 	}
@@ -246,9 +237,9 @@ function notifications_update_collection_notify($event, $type, $returnvalue, $pa
 		}
 		if (in_array($collection_id, $collections_preferences)) {
 			// notifications are on for this collection so we add/remove
-			if ($event == 'access:collections:add_user') {
+			if ($hook->getName() == 'access:collections:add_user') {
 				add_entity_relationship($user->guid, "notify$method", $member_guid);
-			} elseif ($event == 'access:collections:remove_user') {
+			} elseif ($hook->getName() == 'access:collections:remove_user') {
 				// removing someone from an access collection is not a guarantee
 				// that they should be removed from notifications
 				//remove_entity_relationship($user->guid, "notify$method", $member_guid);

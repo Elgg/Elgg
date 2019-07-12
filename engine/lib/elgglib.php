@@ -1308,20 +1308,19 @@ function _elgg_walled_garden_init() {
 /**
  * Adds home link to walled garden menu
  *
- * @param string $hook         'register'
- * @param string $type         'menu:walled_garden'
- * @param array  $return_value Current menu items
- * @param array  $params       Optional menu parameters
+ * @param \Elgg\Hook $hook 'register', 'menu:walled_garden'
  *
  * @return array
  *
  * @internal
  */
-function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
+function _elgg_walled_garden_menu(\Elgg\Hook $hook) {
 	
 	if (current_page_url() === elgg_get_site_url()) {
 		return;
 	}
+	
+	$return_value = $hook->getValue();
 	
 	$return_value[] = \ElggMenuItem::factory([
 		'name' => 'home',
@@ -1336,19 +1335,38 @@ function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
 /**
  * Remove public access for walled gardens
  *
- * @param string $hook     'access:collections:write'
- * @param string $type     'all'
- * @param array  $accesses current return value
+ * @param \Elgg\Hook $hook 'access:collections:write', 'all'
  *
  * @return array
  *
  * @internal
  */
-function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
+function _elgg_walled_garden_remove_public_access(\Elgg\Hook $hook) {
+	$accesses = $hook->getValue();
 	if (isset($accesses[ACCESS_PUBLIC])) {
 		unset($accesses[ACCESS_PUBLIC]);
 	}
 	return $accesses;
+}
+
+/**
+ * Adds the manifest.json to head links
+ *
+ * @param \Elgg\Hook $hook 'head', 'page'
+ *
+ * @return array
+ *
+ * @internal
+ * @since 3.1
+ */
+function _elgg_head_manifest(\Elgg\Hook $hook) {
+	$result = $hook->getValue();
+	$result['links']['manifest'] = [
+		'rel' => 'manifest',
+		'href' => elgg_get_simplecache_url('resources/manifest.json'),
+	];
+
+	return $result;
 }
 
 /**
@@ -1363,14 +1381,7 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
 function _elgg_init() {
 	elgg_register_simplecache_view('resources/manifest.json');
 	
-	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
-		$result['links']['manifest'] = [
-			'rel' => 'manifest',
-			'href' => elgg_get_simplecache_url('resources/manifest.json'),
-		];
-
-		return $result;
-	});
+	elgg_register_plugin_hook_handler('head', 'page', '_elgg_head_manifest');
 
 	if (_elgg_config()->enable_profiling) {
 		/**
@@ -1453,7 +1464,7 @@ function _elgg_register_actions() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
 };

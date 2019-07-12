@@ -32,28 +32,25 @@ function profile_init() {
 /**
  * Parse ECML on parts of the profile
  *
- * @param string $hook         'get_views'
- * @param string $type         'ecml'
- * @param array  $return_value current return value
+ * @param \Elgg\Hook $hook 'get_views', 'ecml'
  *
  * @return array
  */
-function profile_ecml_views_hook($hook, $type, $return_value) {
+function profile_ecml_views_hook(\Elgg\Hook $hook) {
+	$return_value = $hook->getValue();
 	$return_value['profile/profile_content'] = elgg_echo('profile');
-
 	return $return_value;
 }
 
 /**
  * Register profile widgets with default widgets
  *
- * @param string $hook   'get_list'
- * @param string $type   'default_widgets'
- * @param array  $return current return value
+ * @param \Elgg\Hook $hook 'get_list', 'default_widgets'
  *
  * @return array
  */
-function profile_default_widgets_hook($hook, $type, $return) {
+function profile_default_widgets_hook(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
 	$return[] = [
 		'name' => elgg_echo('profile'),
 		'widget_context' => 'profile',

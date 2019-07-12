@@ -34,19 +34,17 @@ function ckeditor_init() {
 /**
  * Add a menu item to an longtext
  *
- * @param string         $hook  'register'
- * @param string         $type  'menu:longtext'
- * @param ElggMenuItem[] $items current return value
- * @param array          $vars  supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:longtext'
  *
  * @return void|ElggMenuItem[]
  */
-function ckeditor_longtext_menu($hook, $type, $items, $vars) {
+function ckeditor_longtext_menu(\Elgg\Hook $hook) {
 
-	$id = elgg_extract('textarea_id', $vars);
+	$id = $hook->getParam('textarea_id');
 	if ($id === null) {
 		return;
 	}
+	$items = $hook->getValue();
 	
 	$items[] = ElggMenuItem::factory([
 		'name' => 'ckeditor_toggler',
@@ -61,15 +59,12 @@ function ckeditor_longtext_menu($hook, $type, $items, $vars) {
 /**
  * Set an id on input/longtext
  *
- * @param string $hook   'view_vars'
- * @param string $type   'input/longtext'
- * @param array  $vars   current return value
- * @param array  $params supplied params
+ * @param \Elgg\Hook $hook 'view_vars', 'input/longtext'
  *
  * @return void|array
  */
-function ckeditor_longtext_id($hook, $type, $vars, $params) {
-
+function ckeditor_longtext_id(\Elgg\Hook $hook) {
+	$vars = $hook->getValue();
 	$id = elgg_extract('id', $vars);
 	if ($id !== null) {
 		return;
