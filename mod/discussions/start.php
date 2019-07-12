@@ -256,8 +256,6 @@ function discussion_prepare_form_vars($topic = null) {
  */
 function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
 
-	$filter_value = elgg_extract('filter_value', $params);
-
 	$return[] = ElggMenuItem::factory([
 		'name' => 'discussion',
 		'text' => elgg_echo('discussion:latest'),
@@ -265,7 +263,6 @@ function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
 			'filter' => 'discussion',
 		]),
 		'priority' => 500,
-		'selected' => $filter_value == 'discussion',
 	]);
 
 	return $return;

@@ -188,6 +188,24 @@ class MenuServiceTest extends UnitTestCase {
 		$this->assertEquals(["t:100", "t:200", "t:300", "t:400"], $sorts);
 
 	}
+	
+	public function testSetSelectedMenuItem() {
+		$items = $this->buildMenu();
+		
+		foreach ($items as $item) {
+			elgg_register_menu_item('test', $item);
+		}
+		
+		$menu = elgg()->menus->getMenu('test', [
+			'selected_item_name' => 'n:200',
+		]);
+		
+		$params = $menu->getParams();
+		$selected_item = elgg_extract('selected_item', $params);
+		
+		$this->assertInstanceOf(\ElggMenuItem::class, $selected_item);
+		$this->assertEquals('n:200', $selected_item->getName());
+	}
 
 	public function buildMenu() {
 		$items = [

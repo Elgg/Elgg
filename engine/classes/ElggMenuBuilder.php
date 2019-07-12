@@ -56,6 +56,24 @@ class ElggMenuBuilder {
 	}
 
 	/**
+	 * Set a menu item as selected
+	 *
+	 * @param string $item_name the menu item name to select
+	 *
+	 * @return bool
+	 */
+	public function setSelected(string $item_name) {
+		$menu_item = $this->items->get($item_name);
+		if (!$menu_item instanceof ElggMenuItem) {
+			return false;
+		}
+		
+		$menu_item->setSelected();
+		
+		return true;
+	}
+	
+	/**
 	 * Get the selected menu item
 	 *
 	 * @return ElggMenuItem|null

@@ -1057,14 +1057,11 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 	
 	$result = $hook->getValue();
 	
-	$selected = $hook->getParam('filter_value');
-	
 	$result[] = ElggMenuItem::factory([
 		'name' => 'pending',
 		'text' => elgg_echo('admin:upgrades:menu:pending'),
 		'href' => 'admin/upgrades',
 		'priority' => 100,
-		'selected' => $selected === 'pending',
 	]);
 	
 	$result[] = ElggMenuItem::factory([
@@ -1072,7 +1069,6 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 		'text' => elgg_echo('admin:upgrades:menu:completed'),
 		'href' => 'admin/upgrades/finished',
 		'priority' => 200,
-		'selected' => $selected === 'completed',
 	]);
 	
 	$result[] = ElggMenuItem::factory([
@@ -1080,7 +1076,6 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 		'text' => elgg_echo('admin:upgrades:menu:db'),
 		'href' => 'admin/upgrades/db',
 		'priority' => 300,
-		'selected' => $selected === 'db',
 	]);
 	
 	return $result;
