@@ -714,19 +714,15 @@ function elgg_get_version($human_readable = false) {
 /**
  * Log a notice about deprecated use of a function, view, etc.
  *
- * @param string $msg             Message to log
- * @param string $dep_version     Human-readable *release* version: 1.7, 1.8, ...
- * @param int    $backtrace_level How many levels back to display the backtrace.
- *                                Useful if calling from functions that are called
- *                                from other places (like elgg_view()). Set to -1
- *                                for a full backtrace.
+ * @param string $msg         Message to log
+ * @param string $dep_version Human-readable *release* version: 1.7, 1.8, ...
+ * @param mixed  $ignored     No longer used argument
  *
  * @return bool
  * @since 1.7.0
  */
-function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
-	$backtrace_level += 1;
-	return _elgg_services()->deprecation->sendNotice($msg, $dep_version, $backtrace_level);
+function elgg_deprecated_notice($msg, $dep_version, $ignored = null) {
+	return _elgg_services()->deprecation->sendNotice($msg, $dep_version);
 }
 
 /**

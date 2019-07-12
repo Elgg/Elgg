@@ -282,8 +282,7 @@ abstract class HooksRegistrationService {
 		
 		_elgg_services()->deprecation->sendNotice(
 			$options[self::OPTION_DEPRECATION_MESSAGE],
-			$options[self::OPTION_DEPRECATION_VERSION],
-			4
+			$options[self::OPTION_DEPRECATION_VERSION]
 		);
 	}
 }
