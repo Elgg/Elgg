@@ -47,12 +47,13 @@ class LRUCache implements \ArrayAccess {
 	 * @return mixed
 	 */
 	public function get($key, $default = null) {
-		if (isset($this->data[$key])) {
+		if ($this->containsKey($key)) {
 			$this->recordAccess($key);
+			
 			return $this->data[$key];
-		} else {
-			return $default;
 		}
+		
+		return $default;
 	}
 
 	/**
@@ -63,7 +64,7 @@ class LRUCache implements \ArrayAccess {
 	 * @return void
 	 */
 	public function set($key, $value) {
-		if (isset($this->data[$key])) {
+		if ($this->containsKey($key)) {
 			$this->data[$key] = $value;
 			$this->recordAccess($key);
 		} else {
@@ -92,7 +93,7 @@ class LRUCache implements \ArrayAccess {
 	 * @return boolean
 	 */
 	public function containsKey($key) {
-		return isset($this->data[$key]);
+		return array_key_exists($key, $this->data);
 	}
 
 	/**
@@ -102,13 +103,13 @@ class LRUCache implements \ArrayAccess {
 	 * @return mixed Value or null if not set
 	 */
 	public function remove($key) {
-		if (isset($this->data[$key])) {
+		if ($this->containsKey($key)) {
 			$value = $this->data[$key];
 			unset($this->data[$key]);
 			return $value;
-		} else {
-			return null;
 		}
+		
+		return null;
 	}
 
 	/**

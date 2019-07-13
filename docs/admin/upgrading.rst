@@ -6,6 +6,10 @@ This document will guide you through steps necessary to upgrade your Elgg instal
 If you've written custom plugins, you should also read the developer guides for
 :doc:`information on upgrading plugin code </appendix/upgrade-notes>` for the latest version of Elgg.
 
+.. contents:: Contents
+   :depth: 2
+   :local:
+
 Advice
 ======
 
@@ -20,9 +24,6 @@ Advice
 * If you are a plugin author you can `report any backwards-compatibility issues to GitHub <issues_>`_
 
 .. _issues: https://github.com/Elgg/Elgg/issues
-
-Basic instructions
-==================
 
 From 2.3 to 3.0
 ===============
@@ -146,11 +147,44 @@ If you have installed Elgg using a dist package but would now like to switch to 
  * When you reach the database step, provide the same credentials you have used for manual installation, Elgg will understand that is's an existing installation and will not override any database values
  * Optionally commit your new project to version control
 
+Applying a patch using Composer
+===============================
+
+The definition of a patch can be found in the :doc:`Release policy </appendix/releases>`.
+
+Your ``composer.json`` requirement for Elgg should be ``~3.y.0`` (where ``y`` is the minor version ``0``, ``1``, etc. you wish to have 
+installed). This will make sure you can easily install patches without the risk of installing the next minor release.
+
+.. code-block:: json
+
+	{
+		"require": {
+			"elgg/elgg": "~3.0.0"
+		}
+	}
+
+Just to be sure you can first verify what will be installed / upgraded by executing the folowing command
+
+.. code-block:: sh
+
+	# to get a full list of all packages which can be upgraded
+	composer update --dry-run
+	
+	# or if you only wish to check for Elgg
+	composer update elgg/elgg --dry-run
+
+To upgrade Elgg simply execute
+
+.. code-block:: sh
+
+	# to upgrade all packages
+	composer update
+	
+	# or to only upgrade Elgg
+	composer update elgg/elgg
 
 Earlier versions
 ================
 
 Check Elgg documentation that corresponds to the Elgg version you want to upgrade to, by switching the documentation
-version in the lower left corner of `Upgrading docs <upgrading-docs_>`
-
-.. _upgrading-docs: http://learn.elgg.org/en/stable/admin/upgrading.html
+version in the lower left corner of :doc:`Upgrading docs <upgrading>`

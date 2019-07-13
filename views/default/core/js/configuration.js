@@ -17,6 +17,8 @@ elgg.get_site_url = function() {
  * @return {String} The site URL.
  */
 elgg.get_simplecache_url = function(view, subview) {
+	elgg.assertTypeOf('string', view);
+	
 	var lastcache, path;
 
 	if (elgg.config.simplecache_enabled) {
@@ -28,6 +30,8 @@ elgg.get_simplecache_url = function(view, subview) {
 	if (!subview) {
 		path = '/cache/' + lastcache + '/' + elgg.config.viewtype + '/' + view;
 	} else {
+		elgg.assertTypeOf('string', subview);
+		
 		if ((view === 'js' || view === 'css') && 0 === subview.indexOf(view + '/')) {
 			subview = subview.substr(view.length + 1);
 		}

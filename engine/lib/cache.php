@@ -194,6 +194,9 @@ function elgg_invalidate_simplecache() {
  * @since 1.11
  */
 function elgg_flush_caches() {
+	// this event sequence could take while, make sure there is no timeout
+	set_time_limit(0);
+	
 	_elgg_services()->events->triggerSequence('cache:flush', 'system');
 }
 
