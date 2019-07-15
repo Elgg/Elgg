@@ -227,6 +227,48 @@ If your server can be configured to support the X-Sendfile or X-Accel headers,
 you can configure it to be used in ``settings.php``. This allows your web server to
 directly stream files to the client instead of using PHP's ``readfile()``.
 
+Composer Autoloader Optimization
+--------------------------------
+
+The Composer autoloader is responsible for loading classes provided by dependencies of Elgg. The way the autoloader works is it 
+searches for a classname in the installed dependencies. While this is mostly a fast process it can be optimized.
+
+You can optimize the autoloader 2 different ways. The first is in the commandline, the other is in the ``composer.json`` of your project.
+
+If you want to optimize the autoloader using the commandline use the ``-o`` flag. The disadvantage is you have to add 
+the ``-o`` flag every time you run Composer.
+
+.. code-block:: sh
+
+	# During the installation
+	composer install -o
+	
+	# Or during the upgrade process
+	composer upgrade -o
+
+The second option is to add the optimization to your ``composer.json`` file, that way you never forget it.
+
+.. code-block:: json
+
+	{
+		"config": {
+			"optimize-autoloader": true,
+			"apcu-autoloader": true
+		}
+	}
+
+.. seealso::
+
+	Check out the `Autoloader Optimization`__ page for more information about how to optimize the Composer autoloader.
+
+__ https://getcomposer.org/doc/articles/autoloader-optimization.md
+
+.. note::
+
+	As of Elgg 3.0 all the `downloads`__ of Elgg from the website have the optimized autoloader.
+
+__ https://elgg.org/about/download
+
 Hosting
 =======
 
