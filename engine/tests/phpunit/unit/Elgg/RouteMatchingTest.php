@@ -164,8 +164,8 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 			'handler' => function() {},
 		]);
 
-		$this->assertEquals('/hello/123?baz=x', elgg_generate_url('foo', ['guid' => '123', 'baz' => 'x']));
-		$this->assertEquals('/hello/123/x?baz=y', elgg_generate_url('foo', ['guid' => '123', 'bar' => 'x', 'baz' => 'y']));
+		$this->assertEquals(elgg_normalize_url('/hello/123?baz=x'), elgg_generate_url('foo', ['guid' => '123', 'baz' => 'x']));
+		$this->assertEquals(elgg_normalize_url('/hello/123/x?baz=y'), elgg_generate_url('foo', ['guid' => '123', 'bar' => 'x', 'baz' => 'y']));
 
 		elgg_unregister_route('foo');
 	}
@@ -262,7 +262,7 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 			'foo2' => 'right',
 		]);
 
-		$this->assertEquals("/view/{$entity->guid}/my-object/bar/right?baz=bam", $url);
+		$this->assertEquals(elgg_normalize_url("/view/{$entity->guid}/my-object/bar/right?baz=bam"), $url);
 
 		// test view route with subview
 		$url = elgg_generate_entity_url($entity, 'view', 'sub', [
@@ -270,7 +270,7 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 			'foo2' => 'right',
 		]);
 
-		$this->assertEquals("/view/sub/{$entity->guid}/my-object/bar/right?baz=bam", $url);
+		$this->assertEquals(elgg_normalize_url("/view/sub/{$entity->guid}/my-object/bar/right?baz=bam"), $url);
 
 		// test unknown route for entity
 		$url = elgg_generate_entity_url($entity, 'unknown', null, [
