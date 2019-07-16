@@ -446,8 +446,6 @@ class UpgradeService {
 		$dbversion = (int) $this->config->version;
 
 		if ($this->upgradeCode($dbversion)) {
-			$this->system_messages->addSuccessMessage($this->translator->translate('upgrade:core'));
-
 			return true;
 		}
 
