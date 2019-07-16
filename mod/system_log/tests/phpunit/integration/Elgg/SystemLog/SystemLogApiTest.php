@@ -3,6 +3,7 @@
 namespace Elgg\SystemLog;
 
 use Elgg\IntegrationTestCase;
+use Elgg\HooksRegistrationService\Event;
 
 /**
  * @group Plugins
@@ -29,10 +30,10 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		$event = 'SystemLogApiTest' . rand();
 
-		system_log_default_logger('log', 'systemlog', [
+		system_log_default_logger(new Event(elgg(), 'log', 'systemlog', [
 			'object' => $object,
 			'event' => $event,
-		]);
+		]));
 
 		_elgg_services()->db->executeDelayedQueries();
 
@@ -76,10 +77,10 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		$event = 'SystemLogApiTest' . rand();
 
-		system_log_default_logger('log', 'systemlog', [
+		system_log_default_logger(new Event(elgg(), 'log', 'systemlog', [
 			'object' => $object,
 			'event' => $event,
-		]);
+		]));
 
 		_elgg_services()->db->executeDelayedQueries();
 

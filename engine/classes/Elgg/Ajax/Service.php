@@ -225,15 +225,13 @@ class Service {
 	/**
 	 * Prepare the response with additional metadata, like system messages and required AMD modules
 	 *
-	 * @param string       $hook     "ajax_response"
-	 * @param string       $type     "all"
-	 * @param AjaxResponse $response Ajax response
-	 * @param array        $params   Hook params
+	 * @param \Elgg\Hook $hook "ajax_response", "all"
 	 *
 	 * @return AjaxResponse
 	 * @internal
 	 */
-	public function prepareResponse($hook, $type, $response, $params) {
+	public function prepareResponse(\Elgg\Hook $hook) {
+		$response = $hook->getValue();
 		if (!$response instanceof AjaxResponse) {
 			return;
 		}

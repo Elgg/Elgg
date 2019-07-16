@@ -153,17 +153,14 @@ function _elgg_filestore_init() {
 /**
  * Fix MIME type detection for Microsoft zipped formats
  *
- * @param string $hook      "mime_type"
- * @param string $type      "file"
- * @param string $mime_type Detected MIME type
- * @param array  $params    Hook parameters
+ * @param \Elgg\Hook $hook "mime_type", "file"
  *
  * @return string The MIME type
  * @internal
  */
-function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
-
-	$original_filename = elgg_extract('original_filename', $params);
+function _elgg_filestore_detect_mimetype(\Elgg\Hook $hook) {
+	$mime_type = $hook->getValue();
+	$original_filename = $hook->getParam('original_filename');
 	$ext = pathinfo($original_filename, PATHINFO_EXTENSION);
 
 	return (new \Elgg\Filesystem\MimeTypeDetector())->fixDetectionErrors($mime_type, $ext);
@@ -172,17 +169,14 @@ function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
 /**
  * Parse a file category of file from a MIME type
  *
- * @param string $hook        "simple_type"
- * @param string $type        "file"
- * @param string $simple_type The category of file
- * @param array  $params      Hook parameters
+ * @param \Elgg\Hook $hook "simple_type", "file"
  *
- * @return string 'document', 'audio', 'video', or 'general' if the MIME type is unrecognized
+ * @return void|string 'document', 'audio', 'video', or 'general' if the MIME type is unrecognized
  * @internal
  */
-function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
+function _elgg_filestore_parse_simpletype(\Elgg\Hook $hook) {
 
-	$mime_type = elgg_extract('mime_type', $params);
+	$mime_type = $hook->getParam('mime_type');
 
 	switch ($mime_type) {
 		case "application/msword":
@@ -200,9 +194,6 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
 	if (0 === strpos($mime_type, 'text/') || false !== strpos($mime_type, 'opendocument')) {
 		return "document";
 	}
-
-	// unrecognized MIME
-	return $simple_type;
 }
 
 /**
@@ -270,13 +261,14 @@ function _elgg_filestore_serve_icon_handler() {
 /**
  * Reset icon URLs if access_id has changed
  *
- * @param string     $event  "update:after"
- * @param string     $type   "object"|"group"
- * @param ElggObject $entity Entity
+ * @param \Elgg\Event $event "update:after", "object"|"group"
+ *
  * @return void
  * @internal
  */
-function _elgg_filestore_touch_icons($event, $type, $entity) {
+function _elgg_filestore_touch_icons(\Elgg\Event $event) {
+	$entity = $event->getObject();
+	
 	$original_attributes = $entity->getOriginalAttributes();
 	if (!array_key_exists('access_id', $original_attributes)) {
 		return;
@@ -304,14 +296,14 @@ function _elgg_filestore_touch_icons($event, $type, $entity) {
  * directory, there are plugins that do (e.g. file plugin) - this handler
  * helps such plugins avoid ownership mismatch.
  *
- * @param string     $event  "update:after"
- * @param string     $type   "object"|"group"
- * @param ElggObject $entity Entity
+ * @param \Elgg\Event $event "update:after", "object"|"group"
+ *
  * @return void
  * @internal
  */
-function _elgg_filestore_move_icons($event, $type, $entity) {
-
+function _elgg_filestore_move_icons(\Elgg\Event $event) {
+	$entity = $event->getObject();
+	
 	$original_attributes = $entity->getOriginalAttributes();
 	if (empty($original_attributes['owner_guid'])) {
 		return;
@@ -393,6 +385,6 @@ function elgg_get_temp_file() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
 };

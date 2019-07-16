@@ -58,10 +58,12 @@ function developers_process_settings() {
 
 			$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
 
-			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params)  use ($handler) {
+			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function(\Elgg\Hook $hook)  use ($handler) {
 				$handler->close();
-
+				
+				$vars = $hook->getValue();
 				$vars['body'] .= elgg_view('developers/log');
+				
 				return $vars;
 			});
 
@@ -145,20 +147,19 @@ function developers_process_settings() {
 /**
  * Register menu items for the page menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:page'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
  * @return void|ElggMenuItem[]
  *
  * @internal
  * @since 3.0
  */
-function _developers_page_menu($hook, $type, $return, $params) {
+function _developers_page_menu(\Elgg\Hook $hook) {
 	if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 		return;
 	}
+	
+	$return = $hook->getValue();
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'dev_settings',
@@ -264,15 +265,12 @@ function _developers_decorate_translations($language) {
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
  *
- * @param string $hook   'view'
- * @param string $type   'all'
- * @param string $result current return value
- * @param mixed  $params supplied params
+ * @param \Elgg\Hook $hook 'view', 'all'
  *
  * @return void|string
  */
-function developers_wrap_views($hook, $type, $result, $params) {
-	
+function developers_wrap_views(\Elgg\Hook $hook) {
+	$result = $hook->getValue();
 	if (elgg_get_viewtype() !== 'default' || elgg_is_empty($result)) {
 		return;
 	}
@@ -288,7 +286,7 @@ function developers_wrap_views($hook, $type, $result, $params) {
 		'page/elements/html',
 	];
 
-	$view = elgg_extract('view', $params);
+	$view = $hook->getParam('view');
 	if (in_array($view, $excluded_views)) {
 		return;
 	}

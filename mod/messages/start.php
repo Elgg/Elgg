@@ -59,14 +59,11 @@ function messages_init() {
 /**
  * Add inbox link to topbar
  *
- * @param string         $hook   "register"
- * @param string         $type   "menu:topbar"
- * @param ElggMenuItem[] $items  Menu items
- * @param array          $params Hook params
+ * @param \Elgg\Hook $hook "register", "menu:topbar"
  *
  * @return void|ElggMenuItem[]
  */
-function messages_register_topbar($hook, $type, $items, $params) {
+function messages_register_topbar(\Elgg\Hook $hook) {
 	if (!elgg_is_logged_in()) {
 		return;
 	}
@@ -81,6 +78,7 @@ function messages_register_topbar($hook, $type, $items, $params) {
 		$title .= " (" . elgg_echo("messages:unreadcount", [$num_messages]) . ")";
 	}
 
+	$items = $hook->getValue();
 	$items[] = ElggMenuItem::factory([
 		'name' => 'messages',
 		'href' => elgg_generate_url('collection:object:messages:owner', [
@@ -99,22 +97,18 @@ function messages_register_topbar($hook, $type, $items, $params) {
 /**
  * Override the canEdit function to return true for messages within a particular context
  *
- * @param string $hook         'permissions_check'
- * @param string $type         'object'
- * @param bool   $return_value current return value
- * @param array  $parameters   supplied params
+ * @param \Elgg\Hook $hook 'permissions_check', 'object'
  *
  * @return void|true
  */
-function messages_can_edit($hook, $type, $return_value, $parameters) {
+function messages_can_edit(\Elgg\Hook $hook) {
 
 	global $messagesendflag;
-	
 	if ($messagesendflag !== 1) {
 		return;
 	}
 	
-	$entity = elgg_extract('entity', $parameters);
+	$entity = $hook->getEntityParam();
 	if ($entity instanceof ElggObject && $entity->getSubtype() == 'messages') {
 		return true;
 	}
@@ -123,17 +117,13 @@ function messages_can_edit($hook, $type, $return_value, $parameters) {
 /**
  * Override the canEdit function to return true for messages within a particular context
  *
- * @param string $hook         'container_permissions_check'
- * @param string $type         'object'
- * @param bool   $return_value current return value
- * @param array  $parameters   supplied params
+ * @param \Elgg\Hook $hook 'container_permissions_check', 'object'
  *
  * @return void|true
  */
-function messages_can_edit_container($hook, $type, $return_value, $parameters) {
+function messages_can_edit_container(\Elgg\Hook $hook) {
 
 	global $messagesendflag;
-
 	if ($messagesendflag == 1) {
 		return true;
 	}
@@ -349,16 +339,13 @@ function messages_prepare_form_vars($recipient_guid = 0) {
 /**
  * Add to the user hover menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:user_hover' or 'menu:title'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:user_hover' or 'menu:title'
  *
  * @return void|ElggMenuItem[]
  */
-function messages_user_hover_menu($hook, $type, $return, $params) {
+function messages_user_hover_menu(\Elgg\Hook $hook) {
 	
-	$user = elgg_extract('entity', $params);
+	$user = $hook->getEntityParam();
 	if (!elgg_is_logged_in() || !$user instanceof ElggUser) {
 		return;
 	}
@@ -376,14 +363,15 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 		]),
 	];
 	
-	if ($type == 'menu:user_hover') {
+	if ($hook->getType() == 'menu:user_hover') {
 		$menu_options['section'] = 'action';
 	}
 	
-	if ($type == 'menu:title') {
+	if ($hook->getType() == 'menu:title') {
 		$menu_options['class'] = ['elgg-button', 'elgg-button-action'];
 	}
 	
+	$return = $hook->getValue();
 	$return[] = ElggMenuItem::factory($menu_options);
 
 	return $return;
@@ -392,14 +380,12 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
 /**
  * Delete messages from a user who is being deleted
  *
- * @param string   $event Event name
- * @param string   $type  Event type
- * @param ElggUser $user  User being deleted
+ * @param \Elgg\Event $event 'delete', 'user'
  *
  * @return void
  */
-function messages_purge($event, $type, $user) {
-
+function messages_purge(\Elgg\Event $event) {
+	$user = $event->getObject();
 	if (!$user->guid) {
 		return;
 	}
@@ -424,16 +410,13 @@ function messages_purge($event, $type, $user) {
 /**
  * Register messages with ECML.
  *
- * @param string $hook         'get_views'
- * @param string $type         'ecml'
- * @param array  $return_value current return value
- * @param array  $params       supplied params
+ * @param \Elgg\Hook $hook 'get_views', 'ecml'
  *
  * @return array
  */
-function messages_ecml_views_hook($hook, $type, $return_value, $params) {
+function messages_ecml_views_hook(\Elgg\Hook $hook) {
+	$return_value = $hook->getValue();
 	$return_value['messages/messages'] = elgg_echo('messages');
-
 	return $return_value;
 }
 

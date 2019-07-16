@@ -1,10 +1,12 @@
 <?php
 
+use Elgg\HooksRegistrationService\Hook;
+
 elgg_set_viewtype('default');
 
 $css = elgg_view('core.css', []);
 
-echo _elgg_views_preprocess_css(null, null, $css, []);
+echo _elgg_views_preprocess_css(new Hook(elgg(), null, null, $css, []));
 
 elgg_set_viewtype('installation');
 

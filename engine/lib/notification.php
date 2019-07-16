@@ -198,15 +198,14 @@ function elgg_get_subscriptions_for_container($container_guid) {
  *
  * This function triggers the 'enqueue', 'notification' hook.
  *
- * @param string    $action The name of the action
- * @param string    $type   The type of the object
- * @param \ElggData $object The object of the event
+ * @param \Elgg\Event $event 'all', 'all'
+ *
  * @return void
  * @internal
  * @since 1.9
  */
-function _elgg_enqueue_notification_event($action, $type, $object) {
-	_elgg_services()->notifications->enqueueEvent($action, $type, $object);
+function _elgg_enqueue_notification_event(\Elgg\Event $event) {
+	_elgg_services()->notifications->enqueueEvent($event->getName(), $event->getType(), $event->getObject());
 }
 
 /**
@@ -226,21 +225,19 @@ function _elgg_notifications_cron() {
 /**
  * Send an email notification
  *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param bool   $result Has anyone sent a message yet?
- * @param array  $params Hook parameters
+ * @param \Elgg\Hook $hook 'send', 'notification:email'
+ *
  * @return bool
  * @internal
  */
-function _elgg_send_email_notification($hook, $type, $result, $params) {
+function _elgg_send_email_notification(\Elgg\Hook $hook) {
 	
-	if ($result === true) {
+	if ($hook->getValue() === true) {
 		// assume someone else already sent the message
 		return;
 	}
 
-	$message = $params['notification'];
+	$message = $hook->getParam('notification');
 	if (!$message instanceof \Elgg\Notifications\Notification) {
 		return false;
 	}
@@ -270,16 +267,15 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 /**
  * Adds default Message-ID header to all e-mails
  *
- * @param string      $hook  "prepare"
- * @param string      $type  "system:email"
- * @param \Elgg\Email $email Email instance
+ * @param \Elgg\Hook $hook "prepare", "system:email"
  *
  * @see    https://tools.ietf.org/html/rfc5322#section-3.6.4
  *
  * @return void|\Elgg\Email
  * @internal
  */
-function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email) {
+function _elgg_notifications_smtp_default_message_id_header(\Elgg\Hook $hook) {
+	$email = $hook->getValue();
 	
 	if (!$email instanceof \Elgg\Email) {
 		return;
@@ -299,15 +295,13 @@ function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email
  * Adds default thread SMTP headers to group messages correctly.
  * Note that it won't be sufficient for some email clients. Ie. Gmail is looking at message subject anyway.
  *
- * @param string      $hook  "prepare"
- * @param string      $type  "system:email"
- * @param \Elgg\Email $email Email instance
+ * @param \Elgg\Hook $hook "prepare", "system:email"
  *
  * @return void|\Elgg\Email
  * @internal
  */
-function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {
-
+function _elgg_notifications_smtp_thread_headers(\Elgg\Hook $hook) {
+	$email = $hook->getValue();
 	if (!$email instanceof \Elgg\Email) {
 		return;
 	}
@@ -612,6 +606,6 @@ function _elgg_save_notification_user_settings() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_notifications_init');
 };

@@ -38,6 +38,40 @@ Simpletests
 The core simpletests have been removed from the system. They are all replaced by PHP unit tests or integration tests.
 The simpletest cli command has been deprecated.
 
+Hook and event callbacks
+------------------------
+
+The legacy style hook and event callback arguments are deprecated. You should switch to the new style as soon as possible.
+
+.. code-block:: php
+	
+	// old style hook callback
+	function hook_callback($name, $type, $return_value, $params) {
+
+	}
+	
+	// new style hook callback
+	function hook_callback(\Elgg\Hook $hook) {
+		// now you can use a few new functions
+		$params = $hook->getParams();
+		$return = $hook->getValue();
+		
+		$specific_param = $hook->getParam('specific_param', 'default')
+		$entity = $hook->getEntityParam();
+		$user = $hook->getUserParam();
+	}
+	
+	// old style event callback
+	function event_callback($name, $type, $object) {
+
+	}
+	
+	// new style event callback
+	function event_callback(\Elgg\Event $event) {
+		// now you can use a few new functions
+		$object = $event->getObject();
+	}
+
 Deprecated APIs
 ---------------
 

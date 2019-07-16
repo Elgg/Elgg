@@ -503,21 +503,21 @@ function _elgg_views_prepare_head($title) {
 /**
  * Add favicon link tags to HTML head
  *
- * @param string $hook        "head"
- * @param string $type        "page"
- * @param array  $head_params Head params
- *                            <code>
- *                               [
- *                                  'title' => '',
- *                                  'metas' => [],
- *                                  'links' => [],
- *                               ]
- *                            </code>
- * @param array  $params      Hook params
+ * @param \Elgg\Hook $hook "head", "page"
+ * returnvalue contains head params
+ *		<code>
+ *      	[
+ *				'title' => '',
+ *				'metas' => [],
+ *				'links' => [],
+ *			]
+ *		</code>
+ *
  * @return array
  */
-function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) {
-
+function _elgg_views_prepare_favicon_links(\Elgg\Hook $hook) {
+	$head_params = $hook->getValue();
+	
 	$head_params['links']['apple-touch-icon'] = [
 		'rel' => 'apple-touch-icon',
 		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
@@ -1601,25 +1601,24 @@ function _elgg_has_rss_link() {
 /**
  * Minifies simplecache CSS and JS views by handling the "simplecache:generate" hook
  *
- * @param string $hook    The name of the hook
- * @param string $type    View type (css, js, or unknown)
- * @param string $content Content of the view
- * @param array  $params  Array of parameters
+ * @param \Elgg\Hook $hook 'simplecache:generate', 'css'
  *
  * @return string|null View content minified (if css/js type)
  * @internal
  */
-function _elgg_views_minify($hook, $type, $content, $params) {
-	if (preg_match('~[\.-]min\.~', $params['view'])) {
+function _elgg_views_minify(\Elgg\Hook $hook) {
+	if (preg_match('~[\.-]min\.~', $hook->getParam('view'))) {
 		// bypass minification
 		return;
 	}
 
-	if ($type == 'js') {
+	$content = $hook->getValue();
+	
+	if ($hook->getType() === 'js') {
 		if (_elgg_config()->simplecache_minify_js) {
 			return JSMin::minify($content);
 		}
-	} elseif ($type == 'css') {
+	} elseif ($hook->getType() === 'css') {
 		if (_elgg_config()->simplecache_minify_css) {
 			$cssmin = new CSSmin();
 			return $cssmin->run($content);
@@ -1630,33 +1629,27 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 /**
  * Preprocesses CSS views sent by /cache URLs
  *
- * @param string $hook    The name of the hook "simplecache:generate" or "cache:generate"
- * @param string $type    "css"
- * @param string $content Content of the view
- * @param array  $params  Array of parameters
+ * @param \Elgg\Hook $hook 'cache:generate' | 'simplecache:generate', 'css'
  *
  * @return string|null View content
  * @internal
  */
-function _elgg_views_preprocess_css($hook, $type, $content, $params) {
-	$options = elgg_extract('compiler_options', $params, []);
-	return _elgg_services()->cssCompiler->compile($content, $options);
+function _elgg_views_preprocess_css(\Elgg\Hook $hook) {
+	$options = $hook->getParam('compiler_options', []);
+	return _elgg_services()->cssCompiler->compile($hook->getValue(), $options);
 }
 
 /**
  * Inserts module names into anonymous modules by handling the "simplecache:generate" and "cache:generate" hook.
  *
- * @param string $hook    The name of the hook
- * @param string $type    View type (css, js, or unknown)
- * @param string $content Content of the view
- * @param array  $params  Array of parameters
+ * @param \Elgg\Hook $hook 'cache:generate' | 'simplecache:generate', 'js'
  *
  * @return string|null View content minified (if css/js type)
  * @internal
  */
-function _elgg_views_amd($hook, $type, $content, $params) {
+function _elgg_views_amd(\Elgg\Hook $hook) {
 	$filter = new \Elgg\Amd\ViewFilter();
-	return $filter->filter($params['view'], $content);
+	return $filter->filter($hook->getParam('view'), $hook->getValue());
 }
 
 /**
@@ -1919,15 +1912,14 @@ function _elgg_view_under_viewtype($view, $vars, $viewtype) {
 /**
  * Set lightbox config
  *
- * @param string $hook   "elgg.data"
- * @param string $type   "site"
- * @param array  $return Data
- * @param array  $params Hook params
+ * @param \Elgg\Hook $hook "elgg.data", "site"
+ *
  * @return array
  * @internal
  */
-function _elgg_set_lightbox_config($hook, $type, $return, $params) {
-
+function _elgg_set_lightbox_config(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
+	
 	$return['lightbox'] = [
 		'current' => elgg_echo('js:lightbox:current', ['{current}', '{total}']),
 		'previous' => elgg_view_icon('caret-left'),

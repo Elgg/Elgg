@@ -19,14 +19,11 @@ function invitefriends_init() {
 /**
  * Adds menu items to the page menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:page'
- * @param ElggMenuItem[] $result Current items
- * @param array          $params Hook params
+ * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
  * @return void|ElggMenuItem[]
  */
-function invitefriends_register_page_menu($hook, $type, $result, $params) {
+function invitefriends_register_page_menu(\Elgg\Hook $hook) {
 	
 	$user = elgg_get_logged_in_user_entity();
 	if (!$user instanceof \ElggUser) {
@@ -37,6 +34,7 @@ function invitefriends_register_page_menu($hook, $type, $result, $params) {
 		return;
 	}
 	
+	$result = $hook->getValue();
 	$result[] = \ElggMenuItem::factory([
 		'name' => 'invite',
 		'text' => elgg_echo('friends:invite'),
@@ -52,21 +50,18 @@ function invitefriends_register_page_menu($hook, $type, $result, $params) {
 /**
  * Add friends if invite code was set
  *
- * @param string $hook   'register'
- * @param string $type   'user'
- * @param bool   $result Whether to allow registration
- * @param array  $params Hook params
+ * @param \Elgg\Hook $hook 'register', 'user'
  *
  * @return void
  */
-function invitefriends_add_friends($hook, $type, $result, $params) {
-	$user = elgg_extract('user', $params);
-	if (!($user instanceof \ElggUser)) {
+function invitefriends_add_friends(\Elgg\Hook $hook) {
+	$user = $hook->getUserParam();
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 	
-	$friend_guid = elgg_extract('friend_guid', $params);
-	$invite_code = elgg_extract('invitecode', $params);
+	$friend_guid = $hook->getParam('friend_guid');
+	$invite_code = $hook->getParam('invitecode');
 	
 	if (!$friend_guid) {
 		return;
