@@ -620,6 +620,27 @@ three sections:
 	'admin:options' => 'Admin options',
 
 	'admin:security' => 'Security',
+	'admin:security:information' => 'Information',
+	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
+	'admin:security:information:https' => 'Is the website protected by HTTPS',
+	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
+(eg. passwords) from being sniffed over the internet connection.",
+	'admin:security:information:wwwroot' => 'Website main folder is writable',
+	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver.
+Malicious visitors could place unwanted code in your website.",
+	'admin:security:information:validate_input' => 'Input validation',
+	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to
+submit potentially harmfull content (eg. cross-site-scripting, etc)",
+	'admin:security:information:password_length' => 'Minimal password length',
+	'admin:security:information:password_length:warning' => "It's recommended to have a minimal password length of at least 6 characters.",
+	'admin:security:information:username_length' => 'Minimal username length',
+	'admin:security:information:username_length:warning' => "It's recommended to have a minimal username length of at least 4 characters.",
+	'admin:security:information:php:session_gc' => "PHP session cleanup",
+	'admin:security:information:php:session_gc:chance' => "Cleanup chance: %s%%",
+	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
+	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
+expired sessions from your database and not allow users to reuse old sessions.",
+	
 	'admin:security:settings' => 'Settings',
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
 	'admin:security:settings:label:hardening' => 'Hardening',

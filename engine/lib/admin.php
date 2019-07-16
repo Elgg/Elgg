@@ -457,6 +457,12 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 		'section' => 'information',
 	]);
 	$return[] = \ElggMenuItem::factory([
+		'name' => 'information:security',
+		'href' => 'admin/security/information',
+		'text' => elgg_echo('admin:security'),
+		'section' => 'information',
+	]);
+	$return[] = \ElggMenuItem::factory([
 		'name' => 'statistics',
 		'href' => 'admin/statistics',
 		'text' => elgg_echo('admin:statistics'),
