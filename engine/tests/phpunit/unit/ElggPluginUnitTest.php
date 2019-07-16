@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Application;
+
 /**
  * @group Plugins
  * @group ElggPlugin
@@ -209,6 +211,12 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testUsesBootstrapOnUpgrade() {
 
+		try {
+			Application::getMigrationSettings();
+		} catch (ConfigurationException $e) {
+			$this->markTestSkipped('Can only test with a settings.php present');
+		}
+		
 		$app = $this->createApplication();
 
 		// We don't need to run actual upgrades for this test

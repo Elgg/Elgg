@@ -191,14 +191,13 @@ class Config {
 	 */
 	public static function factory($settings_path = '', $try_env = true) {
 		$reason1 = '';
-		$reason2 = '';
 
 		$settings_path = self::resolvePath($settings_path, $try_env);
 
 		$config = self::fromFile($settings_path, $reason1);
 
 		if (!$config) {
-			$msg = __METHOD__ . ": Reading configs failed: $reason1 $reason2";
+			$msg = __METHOD__ . ": Reading configs failed: $reason1";
 			throw new ConfigurationException($msg);
 		}
 
