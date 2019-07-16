@@ -105,7 +105,7 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		];
 		
 		$url = $this->service->generateUrl('view:object:blog', $params);
-		$this->assertEquals('/blog/view/123/dummy-title', $url);
+		$this->assertEquals(elgg_normalize_url('/blog/view/123/dummy-title'), $url);
 	}
 	
 	public function testGenerateUrlMissingRouteName() {
