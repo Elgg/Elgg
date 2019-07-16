@@ -99,10 +99,45 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->obj->getTimeUpdated(), $this->obj->time_updated);
 	}
 
-	public function testUnsetAttribute() {
-		$this->obj->access_id = 2;
-		unset($this->obj->access_id);
-		$this->assertEquals('', $this->obj->access_id);
+	/**
+	 * @dataProvider unsetSuccessfullProvider
+	 */
+	public function testUnsetSuccessfullAttribute($attribute, $value) {
+		$this->obj->$attribute = $value;
+		$this->assertEquals($value, $this->obj->$attribute);
+		unset($this->obj->$attribute);
+		$this->assertEquals('', $this->obj->$attribute);
+	}
+	
+	public function unsetSuccessfullProvider() {
+		return [
+			['access_id', 2],
+
+			['type', 'foo'],
+			['subtype', 'foo'],
+	
+			['owner_guid', 1234],
+			['container_guid', 1234],
+ 			['enabled', 6],
+		];
+	}
+
+	/**
+	 * @dataProvider unsetUnsuccessfullProvider
+	 */
+	public function testUnsetUnsuccessfullAttribute($attribute, $value) {
+		$current_value = $this->obj->$attribute;
+		$this->obj->$attribute = $value;
+		unset($this->obj->$attribute);
+		$this->assertEquals($current_value, $this->obj->$attribute);
+	}
+	
+	public function unsetUnsuccessfullProvider() {
+		return [
+			['guid', 123456],
+			['last_action', 1234],
+			['time_updated', 1234],
+		];
 	}
 
 	public function testIsEnabled() {

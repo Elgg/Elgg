@@ -154,7 +154,7 @@ abstract class ElggEntity extends \ElggData implements
 		parent::initializeAttributes();
 
 		$this->attributes['guid'] = null;
-		$this->attributes['type'] = null;
+		$this->attributes['type'] = $this->getType();
 		$this->attributes['subtype'] = null;
 
 		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
@@ -164,8 +164,6 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = "yes";
-
-		$this->attributes['type'] = $this->getType();
 	}
 
 	/**
@@ -350,24 +348,6 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Unset a property from metadata or attribute.
-	 *
-	 * @warning If you use this to unset an attribute, you must save the object!
-	 *
-	 * @param string $name The name of the attribute or metadata.
-	 *
-	 * @return void
-	 * @todo some attributes should be set to null or other default values
-	 */
-	public function __unset($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			$this->attributes[$name] = "";
-		} else {
-			$this->deleteMetadata($name);
-		}
-	}
-
-	/**
 	 * Set metadata on this entity.
 	 *
 	 * Plugin developers usually want to use the magic set method ($entity->name = 'value').
@@ -385,6 +365,10 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
+		if ($value === null) {
+			return $this->deleteMetadata($name);
+		}
+		
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
 		if (is_array($value)) {
@@ -603,6 +587,11 @@ abstract class ElggEntity extends \ElggData implements
 	 * @throws DatabaseException
 	 */
 	public function setPrivateSetting($name, $value) {
+		
+		if ($value === null) {
+			return $this->removePrivateSetting($name);
+		}
+		
 		if (is_bool($value)) {
 			$value = (int) $value;
 		}
