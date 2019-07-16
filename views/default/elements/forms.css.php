@@ -67,7 +67,13 @@ input[type=email],
 input[type=password],
 input[type=text],
 input[type=number],
-input[type=url] {
+input[type=url],
+input[type=color],
+input[type=datetime-local],
+input[type=month],
+input[type=search],
+input[type=tel],
+input[type=week], {
 	height: 2.5rem;
 }
 
@@ -76,6 +82,12 @@ input[type=password]:focus,
 input[type=text]:focus,
 input[type=number]:focus,
 input[type=url]:focus,
+input[type=color]:focus,
+input[type=datetime-local]:focus,
+input[type=month]:focus,
+input[type=search]:focus,
+input[type=tel]:focus,
+input[type=week]:focus,
 textarea:focus {
 	border: solid 1px $(border-color-strong);
 	background-color: $(background-color-soft);
@@ -113,6 +125,21 @@ input[type="number"] {
 .elgg-input-radios.elgg-horizontal li {
 	display: inline-block;
 	padding-right: 1rem;
+}
+
+.elgg-color-box {
+	width: 1.0rem;
+	height: 1.0rem;
+	display: inline-block;
+	background-color: #ccc;
+	left: 5px;
+	top: 5px;
+	border: 1px solid #000;
+	border-radius: 3px;
+}
+
+.elgg-input-color {
+	width: 4.5rem;
 }
 
 <?php
