@@ -453,6 +453,7 @@ return array(
 	'admin:unknown_section' => 'Invalid Admin Section.',
 
 	'admin' => "Administration",
+	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "The admin panel allows you to control all aspects of the system, from user management to how plugins behave. Choose an option below to get started.",
 
 	'admin:performance' => 'Performance',
