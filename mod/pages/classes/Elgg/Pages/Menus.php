@@ -25,13 +25,7 @@ class Menus {
 		$return = $hook->getValue();
 		
 		$top = $entity->getTopParentEntity();
-		$return[] = \ElggMenuItem::factory([
-			'name' => $top->guid,
-			'text' => $top->getDisplayName(),
-			'href' => $top->getURL(),
-			'parent_name' => $top->getParentGUID(),
-		]);
-		
+				
 		$next_level_guids = [$top->guid];
 		while (!empty($next_level_guids)) {
 			$children = elgg_get_entities([
@@ -57,6 +51,17 @@ class Menus {
 				$next_level_guids[] = $child->guid;
 			}
 		}
+		
+		if (count($return) < 1) {
+			return;
+		}
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => $top->guid,
+			'text' => $top->getDisplayName(),
+			'href' => $top->getURL(),
+			'parent_name' => $top->getParentGUID(),
+		]);
 		
 		return $return;
 	}
