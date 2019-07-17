@@ -33,8 +33,13 @@ echo elgg_view_field([
 		'tags' => elgg_echo('profile:field:tags'),
 		'url' => elgg_echo('profile:field:url'),
 		'email' => elgg_echo('profile:field:email'),
+		'tel' => elgg_echo('profile:field:tel'),
 		'location' => elgg_echo('profile:field:location'),
 		'date' => elgg_echo('profile:field:date'),
+		'datetime-local' => elgg_echo('profile:field:datetime-local'),
+		'month' => elgg_echo('profile:field:month'),
+		'week' => elgg_echo('profile:field:week'),
+		'color' => elgg_echo('profile:field:color'),
 	],
 	'value' => $type,
 ]);

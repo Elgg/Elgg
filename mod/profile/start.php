@@ -83,8 +83,8 @@ function _profile_fields_setup() {
 		'interests' => 'tags',
 		'skills' => 'tags',
 		'contactemail' => 'email',
-		'phone' => 'text',
-		'mobile' => 'text',
+		'phone' => 'tel',
+		'mobile' => 'tel',
 		'website' => 'url',
 		'twitter' => 'text',
 	];
