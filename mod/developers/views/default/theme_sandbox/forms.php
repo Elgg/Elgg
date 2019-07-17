@@ -439,11 +439,11 @@ $ipsum = elgg_view('developers/ipsum');
 		]);
 
 		echo elgg_view_field([
-			'#type' => 'datetime',
-			'name' => 'f12-datetime',
-			'id' => 'f12-datetime',
+			'#type' => 'datetime-local',
+			'name' => 'f12-datetime-local',
+			'id' => 'f12-datetime-local',
 			'value' => '2012-12-31T11:59',
-			'#label' => 'DateTime input (.elgg-input-datetime):',
+			'#label' => 'DateTime input (.elgg-input-datetime-local):',
 			'#help' => 'Select date and time',
 		]);
 
