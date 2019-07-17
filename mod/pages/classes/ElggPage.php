@@ -33,6 +33,26 @@ class ElggPage extends ElggObject {
 	}
 	
 	/**
+	 * Get the top parent entity of this page
+	 *
+	 * @return \ElggPage
+	 *
+	 * @since 3.1
+	 */
+	public function getTopParentEntity() {
+		$top_entity = $this;
+		while (!$top_entity->isTopPage()) {
+			$new_top = $top_entity->getParentEntity();
+			if (!$new_top) {
+				break;
+			}
+			$top_entity = $new_top;
+		}
+		
+		return $top_entity;
+	}
+	
+	/**
 	 * Get the parent entity of this page
 	 *
 	 * @return false|ElggPage
