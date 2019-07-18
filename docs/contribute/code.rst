@@ -669,6 +669,8 @@ Good:
 CSS guidelines
 --------------
 
+Save the css in files with a ``.css`` extension.
+
 Use shorthand where possible
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -703,6 +705,10 @@ Good:
 .. code-block:: css
 
     .example-class {}
+    
+.. note::
+
+	You should prefix your ids and classnames with text that identifies your plugin.
 
 One property per line
 ^^^^^^^^^^^^^^^^^^^^^
@@ -786,6 +792,8 @@ Good:
 	background-color: white;
 	background-position: 2px -257px;
 	color: #0054A7;
+	
+
 
 Javascript guidelines
 ---------------------
