@@ -507,6 +507,8 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:users:unvalidated' => 'Unvalidated',
 	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
 	'admin:users:unvalidated:registered' => 'Registered: %s',
+	'admin:users:unvalidated:change_email' => 'Change e-mail address',
+	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Upgrades',

@@ -671,9 +671,19 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 	$return = $hook->getValue();
 	
 	$return[] = ElggMenuItem::factory([
+		'name' => 'change_email',
+		'text' => elgg_echo('admin:users:unvalidated:change_email'),
+		'href' => elgg_http_add_url_query_elements('ajax/form/admin/user/change_email', [
+			'user_guid' => $entity->guid,
+		]),
+		'link_class' => 'elgg-lightbox',
+		'priority' => 100,
+	]);
+	
+	$return[] = ElggMenuItem::factory([
 		'name' => 'validate',
 		'text' => elgg_echo('validate'),
-		'href' => elgg_http_add_url_query_elements('action/admin/user/validate', [
+		'href' => elgg_generate_action_url('admin/user/validate', [
 			'user_guid' => $entity->guid,
 		]),
 		'confirm' => true,
@@ -682,8 +692,10 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 	
 	$return[] = ElggMenuItem::factory([
 		'name' => 'delete',
-		'text' => elgg_echo('delete'),
-		'href' => elgg_http_add_url_query_elements('action/admin/user/delete', [
+		'icon' => 'delete',
+		'text' => false,
+		'title' => elgg_echo('delete'),
+		'href' => elgg_generate_action_url('admin/user/delete', [
 			'guid' => $entity->guid,
 		]),
 		'confirm' => elgg_echo('deleteconfirm'),
