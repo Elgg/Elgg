@@ -1,26 +1,17 @@
 <?php
 /**
- * Navigation menu for a user's or a group's pages
+ * Navigation menu for a page
  *
- * @uses $vars['page'] Page object if manually setting selected item
+ * @uses $vars['page'] Page object for which the menu items should be shown
  */
 
-// add the jquery treeview files for navigation
-elgg_load_external_file('css', 'jquery.treeview');
-elgg_require_js('pages/sidebar/navigation');
-
-$selected_page = elgg_extract('page', $vars, false);
-
-$title = elgg_echo('pages:navigation');
-
-pages_register_navigation_tree(elgg_get_page_owner_entity(), $selected_page);
-
 $content = elgg_view_menu('pages_nav', [
-	'class' => 'pages-nav',
+	'class' => ['pages-nav', 'elgg-menu-page'],
+	'entity' => elgg_extract('page', $vars),
 ]);
 
-if (!$content) {
-	$content = elgg_format_element('p', [], elgg_echo('pages:none'));
+if (empty($content)) {
+	return;
 }
 
-echo elgg_view_module('aside', $title, $content);
+echo elgg_view_module('aside', elgg_echo('pages:navigation'), $content);

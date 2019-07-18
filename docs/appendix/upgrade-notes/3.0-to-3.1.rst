@@ -72,6 +72,16 @@ The legacy style hook and event callback arguments are deprecated. You should sw
 		$object = $event->getObject();
 	}
 
+Deprecated CSS libraries
+------------------------
+
+ * ``jquery.treeview`` Do not use this external css file.
+ 
+Deprecated JS libraries
+-----------------------
+
+* ``jquery.treeview`` Do not depend on this external javascript library.
+
 Deprecated APIs
 ---------------
 
@@ -88,6 +98,7 @@ Deprecated APIs
  * ``get_access_list()`` Use ``get_access_array()``.
  * ``get_language()`` Use ``get_current_language()``.
  * ``get_number_users()`` Use ``elgg_count_entities()``.
+ * ``pages_register_navigation_tree()``
  * ``ini_get_bool()``
  * ``is_not_null()``
  * ``update_access_collection()``

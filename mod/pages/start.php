@@ -47,6 +47,8 @@ function pages_init() {
 	]);
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:pages_nav', '\Elgg\Pages\Menus::registerPageMenuItems');
+	elgg_register_plugin_hook_handler('prepare', 'menu:pages_nav', '_elgg_setup_vertical_menu', 999);
 
 	// write permission plugin hooks
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'pages_write_permission_check');
