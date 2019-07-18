@@ -394,6 +394,11 @@ Be careful where valid return values (like ``"0"``) could be interpreted as empt
 
 Functions not throwing an exception on error should return ``false`` upon failure.
 
+.. note::
+
+	Particularly low-level, non-API functions/methods (e.g. entity_row_to_elggstar),
+	which should not fail under normal conditions, should throw instead of returning false. 
+
 Functions returning only boolean should be prefaced with ``is_`` or ``has_``
 (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``).
 
