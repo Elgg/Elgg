@@ -30,6 +30,11 @@ class OkResponse implements ResponseBuilder {
 	protected $headers;
 
 	/**
+	 * @var \Exception
+	 */
+	protected $exception;
+
+	/**
 	 * Constructor
 	 *
 	 * @param mixed  $content     Response data
@@ -60,6 +65,23 @@ class OkResponse implements ResponseBuilder {
 	 */
 	public function getContent() {
 		return $this->content;
+	}
+
+	/**
+	 * @param \Exception $e Exception to store
+	 *
+	 * @return self
+	 */
+	public function setException(\Exception $e) {
+		$this->exception = $e;
+		return $this;
+	}
+
+	/**
+	 * @return \Exception|null
+	 */
+	public function getException() {
+		return $this->exception;
 	}
 
 	/**

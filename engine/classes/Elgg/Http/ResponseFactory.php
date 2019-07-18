@@ -319,43 +319,42 @@ class ResponseFactory {
 			}
 		}
 
-		$content = $this->stringify($response->getContent());
-		$status_code = $response->getStatusCode();
-		$headers = $response->getHeaders();
-
 		if ($response->isRedirection()) {
 			$redirect_url = $response->getForwardURL();
-			return $this->redirect($redirect_url, $status_code);
+			return $this->redirect($redirect_url, $response->getStatusCode());
 		}
 
 		if ($this->ajax->isReady() && $response->isSuccessful()) {
-			return $this->respondFromContent($content, $status_code, $headers);
+			return $this->respondFromContent($response);
 		}
 
 		if ($response->isClientError() || $response->isServerError() || $response instanceof ErrorResponse) {
-			return $this->respondWithError($content, $status_code, $headers);
+			return $this->respondWithError($response);
 		}
 
-		return $this->respondFromContent($content, $status_code, $headers);
+		return $this->respondFromContent($response);
 	}
 
 	/**
 	 * Send error HTTP response
 	 *
-	 * @param string $error       Error message
-	 * @param int    $status_code HTTP status code
-	 * @param array  $headers     HTTP headers (will be discarded on AJAX requests)
+	 * @param ResponseBuilder $response ResponseBuilder instance
+	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
+	 *
 	 * @return Response
 	 * @throws \InvalidParameterException
 	 */
-	public function respondWithError($error, $status_code = ELGG_HTTP_BAD_REQUEST, array $headers = []) {
+	public function respondWithError(ResponseBuilder $response) {
+		$error = $this->stringify($response->getContent());
+		$status_code = $response->getStatusCode();
+
 		if ($this->ajax->isReady()) {
 			return $this->send($this->ajax->respondWithError($error, $status_code));
 		}
 
 		if ($this->isXhr()) {
 			// xhr calls to non-actions (e.g. ajax/view or ajax/form) need to receive proper HTTP status code
-			return $this->send($this->prepareResponse($error, $status_code, $headers));
+			return $this->send($this->prepareResponse($error, $status_code, $response->getHeaders()));
 		}
 
 		$forward_url = $this->getSiteRefererUrl();
@@ -378,6 +377,7 @@ class ResponseFactory {
 
 			if (elgg_view_exists('resources/error')) {
 				$params['type'] = $forward_reason;
+				$params['exception'] = $response->getException();
 				if (!elgg_is_empty($error)) {
 					$params['params']['error'] = $error;
 				}
@@ -396,21 +396,20 @@ class ResponseFactory {
 	/**
 	 * Send OK response
 	 *
-	 * @param string $content     Response body
-	 * @param int    $status_code HTTP status code
-	 * @param array  $headers     HTTP headers (will be discarded for AJAX requests)
+	 * @param ResponseBuilder $response ResponseBuilder instance
+	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 *
 	 * @return Response|false
 	 */
-	public function respondFromContent($content = '', $status_code = ELGG_HTTP_OK, array $headers = []) {
-
+	public function respondFromContent(ResponseBuilder $response) {
+		$content = $this->stringify($response->getContent());
+		
 		if ($this->ajax->isReady()) {
 			$hook_type = $this->parseContext();
-			// $this->ajax->setStatusCode($status_code);
 			return $this->send($this->ajax->respondFromOutput($content, $hook_type));
 		}
 
-		return $this->send($this->prepareResponse($content, $status_code, $headers));
+		return $this->send($this->prepareResponse($content, $response->getStatusCode(), $response->getHeaders()));
 	}
 
 	/**
