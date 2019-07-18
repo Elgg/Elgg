@@ -1,6 +1,6 @@
 <?php
 /**
- * Memcache info
+ * Redis info
  */
 $servers = elgg_get_config('redis_servers');
 if (!elgg_get_config('redis') || empty($servers) || !\Stash\Driver\Redis::isAvailable()) {

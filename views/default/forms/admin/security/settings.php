@@ -187,7 +187,9 @@ $site_secret_link .= elgg_view('output/longtext', [
 
 $site_secret .= elgg_format_element('div', ['class' => 'mtm'], $site_secret_link);
 
-echo elgg_view_module('info', elgg_echo('admin:security:settings:label:site_secret'), $site_secret);
+echo elgg_view_module('info', elgg_echo('admin:security:settings:label:site_secret'), $site_secret, [
+	'id' => 'admin-security-site-secret',
+]);
 
 // footer
 $footer = elgg_view_field([
