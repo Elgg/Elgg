@@ -38,6 +38,10 @@ foreach ($fields as $name => $type) {
 			$field['entity_subtype'] = 'page';
 
 			if ($name === 'write_access_id') {
+				if (elgg_get_page_owner_entity() instanceof \ElggUser) {
+					$field['#type'] = 'hidden';
+				}
+				
 				$field['purpose'] = 'write';
 				// no access change warning for write access input
 				$field['entity_allows_comments'] = false;

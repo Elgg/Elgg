@@ -151,7 +151,7 @@ function pages_get_navigation_tree($container) {
  *
  * @return void
  *
- * @deprecated
+ * @deprecated 3.1
  */
 function pages_register_navigation_tree($container, $selected = null) {
 	elgg_deprecated_notice(__METHOD__ . ' is deprecated. Menu items for a page now come from a hook callback.', '3.1');
