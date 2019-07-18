@@ -826,6 +826,7 @@ To go to the site, click here:
 	'admin:statistics:label:version:code' => "Code Version",
 
 	'admin:server:label:elgg' => 'Elgg',
+	'admin:server:label:requirements' => 'Requirements',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'Web Server',
@@ -857,6 +858,12 @@ To go to the site, click here:
 		OPcache is not available on this server or it has not yet been enabled.
 		For improved performance, it is recommended that you enable and configure OPcache.
 ',
+	
+	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
+	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
+	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
+	'admin:server:requirements:rewrite:fail' => "Check your .htaccess for the correct rewrite rules",
 	
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",

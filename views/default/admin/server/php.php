@@ -36,10 +36,6 @@ if ($upload_max_filesize > $post_max_size) {
 		<td><?= number_format(elgg_get_ini_setting_in_bytes('memory_limit')); ?></td>
 	</tr>
 	<tr>
-		<td><b><?= elgg_echo('admin:server:label:mem_used'); ?></b></td>
-		<td><?= number_format(memory_get_peak_usage()); ?></td>
-	</tr>
-	<tr>
 		<td><b><?= elgg_echo('admin:server:label:post_max_size'); ?></b></td>
 		<td><?= number_format($post_max_size); ?></td>
 	</tr>
@@ -48,14 +44,3 @@ if ($upload_max_filesize > $post_max_size) {
 		<td><?= number_format($upload_max_filesize) . '&nbsp; ' . $post_max_size_warning; ?></td>
 	</tr>
 </table>
-<?php
-// Show phpinfo page
-if (elgg_get_config('allow_phpinfo') !== true) {
-	return;
-}
-
-echo elgg_format_element('div', ['class' => 'mts'], elgg_view('output/url', [
-	'text' => elgg_echo('admin:server:label:phpinfo'),
-	'href' => 'phpinfo',
-	'target' => '_blank',
-]));
