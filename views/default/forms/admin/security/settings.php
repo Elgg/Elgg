@@ -6,7 +6,7 @@ $hardening = '';
 $protect_upgrade = (bool) elgg_get_config('security_protect_upgrade');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:protect_upgrade'),
+	'#label' => elgg_echo('admin:security:settings:protect_upgrade'),
 	'#help' => elgg_echo('admin:security:settings:protect_upgrade:help'),
 	'name' => 'security_protect_upgrade',
 	'default' => 0,
@@ -27,7 +27,7 @@ if ($protect_upgrade) {
 $protect_cron = (bool) elgg_get_config('security_protect_cron');
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:protect_cron'),
+	'#label' => elgg_echo('admin:security:settings:protect_cron'),
 	'#help' => elgg_echo('admin:security:settings:protect_cron:help'),
 	'name' => 'security_protect_cron',
 	'default' => 0,
@@ -78,7 +78,7 @@ if ($protect_cron) {
 // disable autocomplete on password forms
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:disable_password_autocomplete'),
+	'#label' => elgg_echo('admin:security:settings:disable_password_autocomplete'),
 	'#help' => elgg_echo('admin:security:settings:disable_password_autocomplete:help'),
 	'name' => 'security_disable_password_autocomplete',
 	'default' => 0,
@@ -90,7 +90,7 @@ $hardening .= elgg_view_field([
 // require password the changing email address
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:email_require_password'),
+	'#label' => elgg_echo('admin:security:settings:email_require_password'),
 	'#help' => elgg_echo('admin:security:settings:email_require_password:help'),
 	'name' => 'security_email_require_password',
 	'default' => 0,
@@ -102,7 +102,7 @@ $hardening .= elgg_view_field([
 // session bound entity icons
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:session_bound_entity_icons'),
+	'#label' => elgg_echo('admin:security:settings:session_bound_entity_icons'),
 	'#help' => elgg_echo('admin:security:settings:session_bound_entity_icons:help'),
 	'name' => 'session_bound_entity_icons',
 	'default' => 0,
@@ -121,7 +121,7 @@ $notifications = '';
 // notify admins about add/remove of another admin
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:notify_admins'),
+	'#label' => elgg_echo('admin:security:settings:notify_admins'),
 	'#help' => elgg_echo('admin:security:settings:notify_admins:help'),
 	'name' => 'security_notify_admins',
 	'default' => 0,
@@ -133,7 +133,7 @@ $notifications .= elgg_view_field([
 // notify user about add/remove admin of his/her account
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:notify_user_admin'),
+	'#label' => elgg_echo('admin:security:settings:notify_user_admin'),
 	'#help' => elgg_echo('admin:security:settings:notify_user_admin:help'),
 	'name' => 'security_notify_user_admin',
 	'default' => 0,
@@ -145,7 +145,7 @@ $notifications .= elgg_view_field([
 // notify user about password change
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:notify_user_password'),
+	'#label' => elgg_echo('admin:security:settings:notify_user_password'),
 	'#help' => elgg_echo('admin:security:settings:notify_user_password:help'),
 	'name' => 'security_notify_user_password',
 	'default' => 0,
@@ -157,7 +157,7 @@ $notifications .= elgg_view_field([
 // notify user about (un)ban of his/her account
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
-	'label' => elgg_echo('admin:security:settings:notify_user_ban'),
+	'#label' => elgg_echo('admin:security:settings:notify_user_ban'),
 	'#help' => elgg_echo('admin:security:settings:notify_user_ban:help'),
 	'name' => 'security_notify_user_ban',
 	'default' => 0,
