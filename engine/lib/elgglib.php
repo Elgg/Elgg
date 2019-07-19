@@ -989,10 +989,8 @@ function elgg_signed_request_gatekeeper() {
 	if (\Elgg\Application::isCli()) {
 		return;
 	}
-
-	if (!elgg_http_validate_signed_url(current_page_url())) {
-		throw new \Elgg\HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
-	}
+	
+	_elgg_services()->urlSigner->assertValid(current_page_url());
 }
 
 /**

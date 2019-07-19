@@ -62,5 +62,21 @@ class SignedUrlTest extends \Elgg\UnitTestCase {
 		
 		$this->assertTrue($this->service->isValid($signed_url));
 	}
-
+	
+	public function testCanAssertValidUrl() {
+		$url = $this->service->sign($this->url);
+		
+		$this->assertNull($this->service->assertValid($url));
+	}
+	
+	/**
+	 * @expectedException \Elgg\HttpException
+	 */
+	public function testCanAssertInvalidUrl() {
+		$valid_url = $this->service->sign($this->url);
+		$invalid_url = elgg_http_add_url_query_elements($valid_url, [
+			'foo' => 'bar',
+		]);
+		$this->service->assertValid($invalid_url);
+	}
 }

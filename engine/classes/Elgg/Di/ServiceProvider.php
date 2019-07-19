@@ -174,7 +174,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('accounts', function(ServiceProvider $c) {
-			return new \Elgg\Users\Accounts($c->config, $c->translator, $c->passwords, $c->usersTable, $c->hooks);
+			return new \Elgg\Users\Accounts(
+				$c->config,
+				$c->translator,
+				$c->passwords,
+				$c->usersTable,
+				$c->hooks,
+				$c->emails
+			);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);

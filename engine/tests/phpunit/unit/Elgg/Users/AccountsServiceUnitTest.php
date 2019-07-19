@@ -98,7 +98,22 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		$this->assertEquals($email, $email);
 	}
 
-
+	public function testEmailChangeRequest() {
+		$user = $this->createUser();
+		$new_email = uniqid() . '@example.com';
+		
+		$this->assertTrue(elgg()->accounts->requestNewEmailValidation($user, $new_email));
+	}
+	
+	/**
+	 * @expectedException \InvalidParameterException
+	 */
+	public function testEmailChangeRequestWithInvalidEmail() {
+		$user = $this->createUser();
+		$new_email = 'example.com';
+		
+		elgg()->accounts->requestNewEmailValidation($user, $new_email);
+	}
 }
 
 class CustomUser extends \ElggUser {

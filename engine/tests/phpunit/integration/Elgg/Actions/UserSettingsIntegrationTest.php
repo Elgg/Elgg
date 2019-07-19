@@ -301,6 +301,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 	public function testEmailChangeSucceeds() {
 
 		elgg()->config->security_email_require_password = true;
+		elgg()->config->security_email_require_confirmation = false;
 
 		$pwd = generate_random_cleartext_password();
 
