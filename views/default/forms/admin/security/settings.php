@@ -142,6 +142,18 @@ $notifications .= elgg_view_field([
 	'checked' => (bool) elgg_get_config('security_notify_user_admin'),
 ]);
 
+// notify user about password change
+$notifications .= elgg_view_field([
+	'#type' => 'checkbox',
+	'label' => elgg_echo('admin:security:settings:notify_user_password'),
+	'#help' => elgg_echo('admin:security:settings:notify_user_password:help'),
+	'name' => 'security_notify_user_password',
+	'default' => 0,
+	'value' => 1,
+	'switch' => true,
+	'checked' => (bool) elgg_get_config('security_notify_user_password'),
+]);
+
 // notify user about (un)ban of his/her account
 $notifications .= elgg_view_field([
 	'#type' => 'checkbox',
