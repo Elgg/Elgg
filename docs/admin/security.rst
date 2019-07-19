@@ -31,6 +31,12 @@ Email address change requires password
 
 When a user wishes to change their email address associated with their account, they need to also supply their current password.
 
+Email address change requires confirmation
+==========================================
+
+When a user wishes to change their email address associated with their account, they need to confirm the new email address. This is 
+done by sending an email to the new address with a validation link. After clicking this link the new email address will be used.
+
 Session bound icons
 ===================
 

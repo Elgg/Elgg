@@ -14,7 +14,9 @@ use Zend\Mail\Message;
 class SendActionTest extends ActionResponseTestCase {
 
 	public function up() {
+		self::createApplication(['isolate'=> true]);
 		$this->startPlugin();
+		
 		parent::up();
 	}
 

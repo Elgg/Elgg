@@ -11,7 +11,7 @@ use Zend\Mail\Message;
 class MessagesPluginTest extends IntegrationTestCase {
 
 	public function up() {
-		
+		self::createApplication(['isolate'=> true]);
 	}
 
 	public function down() {
