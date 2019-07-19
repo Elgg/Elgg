@@ -136,6 +136,8 @@ function _elgg_admin_init() {
 	]);
 	
 	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
+	
+	elgg_register_ajax_view('forms/admin/user/change_email');
 		
 	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');

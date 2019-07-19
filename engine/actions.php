@@ -21,6 +21,7 @@ return [
 	'admin/user/ban' => ['access' => 'admin'],
 	'admin/user/bulk/delete' => ['access' => 'admin'],
 	'admin/user/bulk/validate' => ['access' => 'admin'],
+	'admin/user/change_email' => ['access' => 'admin'],
 	'admin/user/delete' => ['access' => 'admin'],
 	'admin/user/makeadmin' => ['access' => 'admin'],
 	'admin/user/resetpassword' => ['access' => 'admin'],
