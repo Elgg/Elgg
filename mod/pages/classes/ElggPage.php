@@ -3,7 +3,8 @@
 /**
  * Page class
  *
- * @property int $parent_guid The GUID of the parent page
+ * @property int $parent_guid     The GUID of the parent page
+ * @property int $write_access_id The access_id which allows other users to edit this page
  *
  * @since 3.0
  */
