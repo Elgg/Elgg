@@ -1771,4 +1771,29 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(1, $calls);
 	}
+	
+	public function testDeprecatedRouteTriggersDeprecationNotice() {
+		$request = $this->prepareHttpRequest('foo/bar');
+		$this->createService($request);
+
+		elgg_register_route('view:foo:bar', [
+			'path' => '/foo/bar',
+			'handler' => function () {
+			},
+			'deprecated' => '3.1',
+		]);
+		
+		_elgg_services()->logger->disable();
+		$this->route($request);
+		$logged = _elgg_services()->logger->enable();
+
+		$found = false;
+		foreach ($logged as $log){
+			if (stristr($log['message'], 'The route "view:foo:bar" has been deprecated.')) {
+				$found = true;
+			}
+		}
+		
+		$this->assertTrue($found, 'No route deprecation message found');
+	}
 }

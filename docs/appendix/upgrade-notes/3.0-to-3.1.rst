@@ -72,6 +72,11 @@ The legacy style hook and event callback arguments are deprecated. You should sw
 		$object = $event->getObject();
 	}
 
+Deprecated Routes
+-----------------
+
+ * ``previous:object:thewire`` This route was not in use. It now has been marked as deprecated.
+
 Deprecated CSS libraries
 ------------------------
 
