@@ -88,6 +88,7 @@ class RouteRegistrationService {
 		$handler = elgg_extract('handler', $params);
 		$middleware = elgg_extract('middleware', $params, []);
 		$protected = elgg_extract('walled', $params, true);
+		$deprecated = elgg_extract('deprecated', $params, '');
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
 			throw new InvalidParameterException(
@@ -143,6 +144,7 @@ class RouteRegistrationService {
 		$defaults['_file'] = $file;
 		$defaults['_resource'] = $resource;
 		$defaults['_handler'] = $handler;
+		$defaults['_deprecated'] = $deprecated;
 		$defaults['_middleware'] = $middleware;
 
 		$route = new Route($path, $defaults, $requirements, [
@@ -194,6 +196,14 @@ class RouteRegistrationService {
 	 */
 	public function generateUrl($name, array $parameters = []) {
 		try {
+			$route = $this->get($name);
+			if ($route instanceof Route) {
+				$deprecated = $route->getDefault('_deprecated');
+				if (!empty($deprecated)) {
+					elgg_deprecated_notice("The route \"{$name}\" has been deprecated.", $deprecated);
+				}
+			}
+			
 			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
 		} catch (Exception $exception) {
 			$this->logger->notice($exception->getMessage());

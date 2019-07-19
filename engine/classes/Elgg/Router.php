@@ -227,6 +227,9 @@ class Router {
 			$file = elgg_extract('_file', $parameters);
 			unset($parameters['_file']);
 
+			$deprecated = elgg_extract('_deprecated', $parameters, '');
+			unset($parameters['_deprecated']);
+			
 			$middleware = elgg_extract('_middleware', $parameters, []);
 			unset($parameters['_middleware']);
 
@@ -237,6 +240,10 @@ class Router {
 			$envelope = new \Elgg\Request(elgg(), $request);
 			$parameters['request'] = $envelope;
 
+			if (!empty($deprecated)) {
+				elgg_deprecated_notice("The route \"{$route->getName()}\" has been deprecated.", $deprecated);
+			}
+			
 			foreach ($middleware as $callable) {
 				$result = $this->handlers->call($callable, $envelope, null);
 				if ($result[1] instanceof ResponseBuilder) {

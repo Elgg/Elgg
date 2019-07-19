@@ -155,4 +155,26 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		$url = $this->service->generateUrl('view:object:blog', $params);
 		$this->assertFalse($url);
 	}
+	
+	public function testGenerateUrlForDeprecatedRoute() {
+		
+		// register
+		$route = $this->service->register('view:foo:bar', [
+			'path' => '/foo/bar',
+			'resource' => 'foo/bar',
+			'deprecated' => '3.1',
+		]);
+		
+		$this->assertInstanceOf(Route::class, $route);
+		
+		_elgg_services()->logger->disable();
+		$this->service->generateUrl('view:foo:bar');
+		$logged = _elgg_services()->logger->enable();
+		
+		$this->assertCount(1, $logged);
+		
+		$message_details = $logged[0];
+		
+		$this->assertContains('The route "view:foo:bar" has been deprecated.', $message_details['message']);
+	}
 }
