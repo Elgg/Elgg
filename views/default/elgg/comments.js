@@ -97,6 +97,10 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			$(this).data('Comment', dc);
 		}
 		dc.toggleEdit();
+		
+		// trick the popup menu to close itself
+		$(document).trigger('scroll');
+		
 		return false;
 	});
 	
