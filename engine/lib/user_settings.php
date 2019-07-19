@@ -68,6 +68,26 @@ function _elgg_set_user_password(\Elgg\Hook $hook) {
 
 	$user->setPassword($password);
 	_elgg_services()->persistentLogin->handlePasswordChange($user, $actor);
+	
+	if (elgg_get_config('security_notify_user_password')) {
+		// notify the user that their password has changed
+		$site = elgg_get_site_entity();
+		
+		$subject = elgg_echo('user:notification:password_change:subject', [], $user->language);
+		$body = elgg_echo('user:notification:password_change:body', [
+			$user->getDisplayName(),
+			$site->getDisplayName(),
+			elgg_generate_url('account:password:reset'),
+			$site->getURL(),
+		], $user->language);
+		
+		$params = [
+			'object' => $user,
+			'action' => 'password_change',
+		];
+		
+		notify_user($user->guid, $site->guid, $subject, $body, $params, ['email']);
+	}
 
 	$request->validation()->pass('password', '', elgg_echo('user:password:success'));
 }
@@ -443,7 +463,7 @@ function _elgg_user_settings_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_user_settings_menu_prepare');
 
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_language');
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_password');
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_password'); // this needs to be before email change, for security reasons
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_default_access');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_name');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_username');

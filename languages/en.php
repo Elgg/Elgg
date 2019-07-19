@@ -659,6 +659,9 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
 	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
 	
+	'admin:security:settings:notify_user_password' => 'Notify the user when they change their password',
+	'admin:security:settings:notify_user_password:help' => 'This will send a notification to the user when they change their password.',
+	
 	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
 	'admin:security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
 	'admin:security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
@@ -736,6 +739,17 @@ Your account on %s is no longer banned. You can use the site again.
 
 To go to the site, click here:
 %s',
+	
+	'user:notification:password_change:subject' => 'Your password has been changed!',
+	'user:notification:password_change:body' => "Hi %s,
+
+Your password on '%s' has been changed! If you made this change than you're all set.
+
+If you didn't make this change, please reset your password here:
+%s
+
+Or contact a site administrator:
+%s",
 	
 /**
  * Plugins
