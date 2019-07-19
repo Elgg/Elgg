@@ -3,6 +3,8 @@
  * Serve up html for a post's parent
  */
 
+elgg_deprecated_notice('The resource "thewire/previous" has been deprecated', '3.1');
+
 $guid = (int) elgg_extract('guid', $vars);
 $title = elgg_echo('previous');
 
