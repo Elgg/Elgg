@@ -488,6 +488,8 @@ class Application {
 			} else {
 				$response = new ErrorResponse($ex->getMessage(), $ex->getCode(), $forward_url);
 			}
+			
+			$response->setException($ex);
 
 			self::respond($response);
 		}

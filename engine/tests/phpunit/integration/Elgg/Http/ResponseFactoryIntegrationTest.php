@@ -120,7 +120,8 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 	public function testRespondWithErrorDefaultContentText($status_code, $elgg_echo_part) {
 		
 		ob_start();
-		$response = $this->service->respondWithError('', $status_code);
+		$response = new ErrorResponse('', $status_code);
+		$response = $this->service->respondWithError($response);
 		ob_end_clean();
 		
 		$this->assertInstanceOf(Response::class, $response);
@@ -138,5 +139,24 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 			[ELGG_HTTP_NOT_FOUND, 404],
 			[ELGG_HTTP_UNAUTHORIZED, 'default'],
 		];
+	}
+	
+	public function testRespondWithErrorPassesException() {
+		
+		$exception_found = false;
+		
+		elgg_register_plugin_hook_handler('view_vars', 'resources/error', function (\Elgg\Hook $hook) use (&$exception_found) {
+			if (elgg_extract('exception', $hook->getValue()) instanceof \Exception) {
+				$exception_found = true;
+			}
+		});
+		
+		ob_start();
+		$response = new ErrorResponse('');
+		$response->setException(new \Exception('foo'));
+		$this->service->respondWithError($response);
+		ob_end_clean();
+		
+		$this->assertTrue($exception_found, 'No exception found in view vars of resource/error');
 	}
 }
