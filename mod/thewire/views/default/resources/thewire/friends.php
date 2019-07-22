@@ -5,7 +5,7 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner instanceof ElggUser) {
-	forward('', '404');
+	throw new \Elgg\EntityNotFoundException();
 }
 
 $title = elgg_echo('collection:object:thewire:friends');

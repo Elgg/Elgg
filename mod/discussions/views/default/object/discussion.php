@@ -13,9 +13,10 @@ if (!$entity instanceof ElggDiscussion) {
 
 $poster = $entity->getOwnerEntity();
 if (!$poster instanceof ElggEntity) {
-	elgg_log("User {$entity->owner_guid} could not be loaded, and is needed to display entity {$entity->guid}", 'WARNING');
+	$msg = "User {$entity->owner_guid} could not be loaded, and is needed to display entity {$entity->guid}";
+	elgg_log($msg, 'WARNING');
 	if ($full_view) {
-		forward('', '404');
+		throw new \Elgg\EntityNotFoundException($msg);
 	}
 	return;
 }
