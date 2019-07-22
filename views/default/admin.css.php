@@ -57,6 +57,27 @@ echo elgg_view('core.css');
 		margin-left: auto;
 	}
 }
+
+/* ***************************************
+	Admin informationals
+**************************************** */
+.elgg-admin-information-row {
+	> .elgg-image {
+		min-width: 1rem;
+		text-align: center;
+		
+		.elgg-icon-times {
+			color: $(state-danger-font-color);
+		}
+		.elgg-icon-exclamation-triangle {
+			color: $(state-warning-font-color);
+		}
+		.elgg-icon-checkmark {
+			color: $(state-success-font-color);
+		}
+	}
+}
+
 /* ***************************************
 	PLUGINS FILTER
 **************************************** */

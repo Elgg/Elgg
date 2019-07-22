@@ -22,7 +22,7 @@ $view_module = function($icon, $title, $value = '', $subtext = '') {
 		$body .= elgg_format_element('div', ['class' => 'elgg-subtext'], $subtext);
 	}
 	
-	return elgg_view_image_block($icon, $body);
+	return elgg_view_image_block($icon, $body, ['class' => 'elgg-admin-information-row']);
 };
 
 // apache version
