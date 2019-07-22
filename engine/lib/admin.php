@@ -635,7 +635,7 @@ function _elgg_admin_page_handler($page) {
 
 			$title = elgg_echo("admin:{$page[0]}") . ': ' . $plugin->getDisplayName();
 		} else {
-			forward('', '404');
+			throw new \Elgg\PageNotFoundException();
 		}
 	} else {
 		$view = 'admin/' . implode('/', $page);
