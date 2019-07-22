@@ -42,29 +42,6 @@ class ElggCryptoUnitTest extends \Elgg\UnitTestCase {
 		return $bytes;
 	}
 
-	function provider() {
-		return array(
-			array(32, null, 'kwG37f3ds_7awuiaL52mVWXud9dqT1GF'),
-			array(32, \ElggCrypto::CHARS_HEX, '9301b7edfdddb3fedac2e89a2f9da655'),
-			array(32, \ElggCrypto::CHARS_PASSWORD, 'kl4lmjwyrpyh6rpqct3rkd9zvxwvqww8'),
-			array(32, "0123456789", "78181215379307389761767024720714"),
-		);
-	}
-
-	/**
-	 * @dataProvider provider
-	 */
-	function testGetRandomString($length, $chars, $expected) {
-
-		/**
-		 * @todo: These tests didn't run for quite some time, and we missed the changes to ElggCrypto
-		 *      This needs to be updated
-		 */
-		$this->markTestSkipped();
-
-		$this->assertSame($expected, $this->stub->getRandomString($length, $chars));
-	}
-
 	function testGeneratesMacInBase64Url() {
 		$key = 'a very bad key';
 		$data = '1';
