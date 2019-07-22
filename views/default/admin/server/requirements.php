@@ -33,7 +33,7 @@ $subtext = '';
 
 if (version_compare(PHP_VERSION, '7.0.0', '<')) {
 	$icon = $icon_error;
-	$subtext = 'missing';
+	$subtext = elgg_echo('admin:server:label:php_version:required');
 }
 
 echo $view_module($icon, $title, $value, $subtext);
@@ -79,6 +79,31 @@ foreach ($recommendedExtensions as $extension) {
 	
 	echo $view_module($icon, $title, $value, $subtext);
 }
+
+// db server information
+$db = elgg()->db->getConnection('read');
+$version = $db->query('select version()')->fetchColumn();
+$server = $db->getDatabasePlatform()->getName();
+$subtext = '';
+$icon = $icon_ok;
+
+if ($server !== 'mysql' || version_compare($version, '5.5.3', '<')) {
+	$subtext = elgg_echo('admin:server:requirements:database:server:required');
+	$icon = $icon_error;
+}
+
+echo $view_module($icon, elgg_echo('admin:server:requirements:database:server'), "{$server} v{$version}", $subtext);
+
+// db client information
+$client = $db->getDriver()->getName();
+$subtext = '';
+$icon = $icon_ok;
+
+if ($client !== 'pdo_mysql') {
+	$subtext = elgg_echo('admin:server:requirements:database:client:required');
+	$icon = $icon_error;
+}
+echo $view_module($icon, elgg_echo('admin:server:requirements:database:client'), $client, $subtext);
 
 // rewrite test
 $url = elgg_http_add_url_query_elements(Request::REWRITE_TEST_TOKEN, [
