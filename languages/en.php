@@ -849,7 +849,7 @@ Or contact a site administrator:
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Log Location',
 	'admin:server:label:php_version' => 'PHP version',
-	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.0',
+	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.1',
 	'admin:server:label:php_ini' => 'PHP ini file location',
 	'admin:server:label:php_log' => 'PHP Log',
 	'admin:server:label:mem_avail' => 'Memory available',

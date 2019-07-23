@@ -31,7 +31,7 @@ $title = elgg_echo('admin:server:label:php_version');
 $value = PHP_VERSION;
 $subtext = '';
 
-if (version_compare(PHP_VERSION, '7.0.0', '<')) {
+if (version_compare(PHP_VERSION, '7.1.0', '<')) {
 	$icon = $icon_error;
 	$subtext = elgg_echo('admin:server:label:php_version:required');
 }
