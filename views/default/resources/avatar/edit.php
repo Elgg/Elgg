@@ -19,11 +19,6 @@ elgg_set_page_owner_guid($entity->guid);
 
 $content = elgg_view('core/avatar/upload', ['entity' => $entity]);
 
-// only offer the crop view if an avatar has been uploaded
-if ($entity->hasIcon('master')) {
-	$content .= elgg_view('core/avatar/crop', ['entity' => $entity]);
-}
-
 $body = elgg_view_layout('one_sidebar', [
 	'title' => $title,
 	'content' => $content,

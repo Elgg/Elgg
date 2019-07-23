@@ -4,6 +4,8 @@
 
 elgg.provide('elgg.avatarCropper');
 
+elgg.deprecated_notice("The 'elgg/ui.avatar_cropper' view is deprecated, please use 'entity/edit/icon'", '3.1');
+
 /**
  * Register the avatar cropper.
  *

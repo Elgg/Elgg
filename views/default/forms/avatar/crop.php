@@ -5,6 +5,8 @@
  * @uses $vars['entity']
  */
 
+elgg_deprecated_notice("The view 'forms/avatar/crop' is deprecated use 'forms/avatar/upload'", '3.1');
+
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof \ElggUser) {
 	return;

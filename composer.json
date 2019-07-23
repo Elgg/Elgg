@@ -36,6 +36,8 @@
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "monolog/monolog": "^1.23",
+        "npm-asset/cropperjs": "~1.4.3",
+        "npm-asset/jquery-cropper": "~1.0.0",
         "npm-asset/formdata-polyfill": "3.0.15",
         "npm-asset/weakmap-polyfill": "^2.0",
         "peppeocchi/php-cron-scheduler": "2.*",

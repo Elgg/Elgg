@@ -1742,22 +1742,32 @@ function elgg_views_boot() {
 
 	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
 	elgg_load_external_file('css', 'font-awesome');
+	
+	elgg_define_js('cropperjs', [
+		'src' => elgg_get_simplecache_url('cropperjs/cropper.min.js'),
+	]);
+	elgg_define_js('jquery-cropper/jquery-cropper', [
+		'src' => elgg_get_simplecache_url('jquery-cropper/jquery-cropper.min.js'),
+	]);
 
 	elgg_require_css('elgg');
 
 	elgg_register_simplecache_view('elgg/init.js');
 
 	elgg_extend_view('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
+	elgg_extend_view('elgg.css', 'entity/edit/icon/crop.css');
 
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
 	]);
 
+	// @deprecated 3.1
 	elgg_register_external_file('js', 'elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
 
 	// @deprecated 2.2
 	elgg_register_external_file('js', 'elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
 
+	// @deprecated 3.1 no longer use imageareaselect js and css
 	elgg_register_external_file('js', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
 	elgg_register_external_file('css', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 

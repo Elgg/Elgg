@@ -80,12 +80,15 @@ Deprecated Routes
 Deprecated CSS libraries
 ------------------------
 
+ * ``jquery.imgareaselect`` Do not use this external css file.
  * ``jquery.treeview`` Do not use this external css file.
  
 Deprecated JS libraries
 -----------------------
 
-* ``jquery.treeview`` Do not depend on this external javascript library.
+ * ``elgg.avatar_cropper`` Do not depend on this external javascript library.
+ * ``jquery.imgareaselect`` Do not depend on this external javascript library.
+ * ``jquery.treeview`` Do not depend on this external javascript library.
 
 Deprecated APIs
 ---------------
@@ -107,12 +110,13 @@ Deprecated APIs
  * ``ini_get_bool()``
  * ``is_not_null()``
  * ``update_access_collection()``
- 
 
 Deprecated actions
 ------------------
 
  * ``admin/delete_admin_notice`` Replaced by generic entity/delete action.
+ * ``avatar/crop`` Handled in avatar/upload action.
+ * ``avatar/remove`` Handled in avatar/upload action.
  * ``blog/delete`` Replaced by generic entity/delete action.
  * ``messages/delete`` Replaced by generic entity/delete action.
  * ``site_notifications/delete`` Replaced by generic entity/delete action.
