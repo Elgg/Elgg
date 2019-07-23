@@ -565,7 +565,7 @@ class ResponseFactory {
 	 */
 	public function stringify($content = '') {
 		$content = $this->normalize($content);
-		if (empty($content) || (is_object($content) && is_callable($content, '__toString'))) {
+		if (empty($content) || (is_object($content) && is_callable([$content, '__toString']))) {
 			return (string) $content;
 		}
 		if (is_scalar($content)) {
