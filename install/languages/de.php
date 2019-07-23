@@ -66,9 +66,9 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:database:help:dbname' => 'Der Name der von zu verwendenden Datenbank',
 	'install:database:help:dbhost' => 'Der Hostname des MySQL-Servers (normalerweise \'localhost\')',
 	'install:database:help:dbprefix' => "Das Tabellen-Prefix das bei allen Elgg-Tabellen in der Datenbank gesetzt wird (normalerweise \'elgg_\')",
-	'install:database:help:timezone' => "Die Zeitzone, die von der Elggseite standardmäßig verwendet werden soll",
+	'install:database:help:timezone' => "Die Zeitzone, die von der Community-Seite standardmäßig verwendet werden soll",
 
-	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
+	'install:settings:instructions' => 'Für die weitere Konfiguration der Community-Seite benötigen wir einige Eingaben. Wenn Du noch kein <a href="http://learn.elgg.org/en/stable/intro/install.html#create-a-data-folder" target="_blank">Elgg-Datenverzeichnis</a> angelegt hast, mußt Du dies jetzt tun.',
 
 	'install:settings:label:sitename' => 'Seiten-Name',
 	'install:settings:label:siteemail' => 'Email-Adresse',

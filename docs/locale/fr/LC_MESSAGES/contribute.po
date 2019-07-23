@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-21 15:47+0100\n"
-"PO-Revision-Date: 2018-12-09 12:21+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>\n"
+"POT-Creation-Date: 2019-06-12 11:23+0200\n"
+"PO-Revision-Date: 2019-06-12 16:21+0000\n"
+"Last-Translator: Evan Winslow <evan@elgg.org>\n"
 "Language-Team: French (http://www.transifex.com/elgg/elgg-core-2/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,6 +28,11 @@ msgid ""
 "Understand Elgg's standards and processes to get your changes accepted as "
 "quickly as possible."
 msgstr "Comprenez les standards et process d'Elgg pour que vos propositions de modification soient acceptées aussi vite que possible."
+
+#: ../../contribute/code.rst:8 ../../contribute/docs.rst:8
+#: ../../contribute/releases.rst:12
+msgid "Contents"
+msgstr ""
 
 #: ../../contribute/code.rst:11
 msgid "License agreement"

@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-21 15:47+0100\n"
-"PO-Revision-Date: 2018-11-28 17:45+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>\n"
+"POT-Creation-Date: 2019-06-12 11:23+0200\n"
+"PO-Revision-Date: 2019-06-12 16:45+0000\n"
+"Last-Translator: Evan Winslow <evan@elgg.org>\n"
 "Language-Team: French (http://www.transifex.com/elgg/elgg-core-2/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,6 +22,12 @@ msgstr ""
 #: ../../admin/backup-restore.rst:2
 msgid "Backup and Restore"
 msgstr "Sauvegarde et Restauration"
+
+#: ../../admin/backup-restore.rst:6 ../../admin/duplicate-installation.rst:6
+#: ../../admin/getting-help.rst:10 ../../admin/performance.rst:8
+#: ../../admin/plugins.rst:8
+msgid "Contents"
+msgstr ""
 
 #: ../../admin/backup-restore.rst:9 ../../admin/duplicate-installation.rst:9
 msgid "Introduction"
