@@ -453,24 +453,28 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 		'href' => 'admin/performance',
 		'text' => elgg_echo('admin:performance'),
 		'section' => 'information',
+		'priority' => 70,
 	]);
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'information:security',
 		'href' => 'admin/security/information',
 		'text' => elgg_echo('admin:security'),
 		'section' => 'information',
+		'priority' => 60,
 	]);
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'statistics',
 		'href' => 'admin/statistics',
 		'text' => elgg_echo('admin:statistics'),
 		'section' => 'information',
+		'priority' => 80,
 	]);
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'server',
 		'href' => 'admin/server',
 		'text' => elgg_echo('admin:server'),
 		'section' => 'information',
+		'priority' => 50,
 	]);
 		
 	return $return;
