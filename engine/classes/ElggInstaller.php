@@ -55,7 +55,7 @@ class ElggInstaller {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -884,7 +884,7 @@ class ElggInstaller {
 	 * @return bool Whether the install process is encrypted.
 	 */
 	private function isHttps() {
-		return (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") ||
+		return (!empty($_SERVER["HTTPS"]) && strtolower($_SERVER["HTTPS"]) !== "off") ||
 			(!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
 	}
 
@@ -972,7 +972,7 @@ class ElggInstaller {
 
 	/**
 	 * Indicates whether the webserver can add settings.php on its own or not.
-	 * 
+	 *
 	 * @param array &$report The requirements report object
 	 *
 	 * @return bool
@@ -1028,7 +1028,7 @@ class ElggInstaller {
 	
 	/**
 	 * Returns the path to the root settings.php file.
-	 * 
+	 *
 	 * @return string
 	 */
 	private function getSettingsPath() {
@@ -1366,7 +1366,7 @@ class ElggInstaller {
 	 *
 	 * @param array &$submissionVars Submitted vars
 	 * @param array $formVars        Variables in the form
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function createDataDirectory(&$submissionVars, $formVars) {
