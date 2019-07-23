@@ -121,13 +121,7 @@ matrix:
     # setup according to https://docs.travis-ci.com/user/database-setup/#mysql-57
     - php: 7.3
       env: JOB_NAME=mysql57
-      addons:
-        apt:
-          sources:
-            - mysql-5.7-trusty
-          packages:
-            - mysql-server
-            - mysql-client
+      dist: xenial
       script:
         - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
         - ./vendor/bin/phpunit --testsuite integration
