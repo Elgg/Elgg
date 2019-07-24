@@ -27,8 +27,13 @@ return array(
 	'profile:field:tags' => 'Tags',
 	'profile:field:url' => 'Webadres',
 	'profile:field:email' => 'E-mailadres',
+	'profile:field:tel' => 'Telefoon',
 	'profile:field:location' => 'Locatie',
 	'profile:field:date' => 'Datum',
+	'profile:field:datetime-local' => 'Datum en tijd',
+	'profile:field:month' => 'Maand',
+	'profile:field:week' => 'Week',
+	'profile:field:color' => 'Kleur',
 
 	'profile:edit:default' => 'Bewerk profielvelden',
 	'profile:label' => "Profiellabel",
