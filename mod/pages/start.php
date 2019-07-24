@@ -25,9 +25,6 @@ function pages_init() {
 	// Register a url handler
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
 
-	// Extend the main css view
-	elgg_extend_view('elgg.css', 'pages/css');
-
 	// Register for notifications
 	elgg_register_notification_event('object', 'page');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page', 'pages_prepare_notification');
