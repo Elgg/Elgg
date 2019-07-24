@@ -14,11 +14,10 @@ class HttpProtocolTransport implements ResponseTransport {
 	
 	/**
 	 * {@inheritdoc}
-	 *
-	 * @return Response
 	 */
 	public function send(Response $response) {
-		return $response->send();
+		$response->send();
+		return true;
 	}
 
 }
