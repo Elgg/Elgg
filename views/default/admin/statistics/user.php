@@ -36,7 +36,7 @@ $active_title = elgg_echo('active');
 $total_title = elgg_echo('total');
 $unverified_title = elgg_echo('unvalidated');
 $banned_title = elgg_echo('banned');
-$disabled_title = elgg_echo('disabled');
+$disabled_title = elgg_echo('status:disabled');
 
 $body = <<<__HTML
 <table class="elgg-table-alt">
