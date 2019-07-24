@@ -20,21 +20,20 @@ return array(
 	// notifications. yikes.
 	'likes:notifications:subject' => '%s Me gusta en tu post "%s"',
 	'likes:notifications:body' =>
-'Hi %1$s,
+'Hola %1$s,
 
-%2$s likes your post "%3$s" on %4$s
+A %2$s le gusta tu post "%3$s" sobre %4$s
 
-See your original post here:
+Puedes ver el post original aquí:
 
 %5$s
 
-or view %2$s\'s profile here:
+o ver el perfil de %2$s aquí:
 
 %6$s
 
-Thanks,
+Gracias,
 %4$s',
-	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
-	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
-	
+	'likes:upgrade:2017120700:title' => "Publicaciones de 'me gusta'",
+	'likes:upgrade:2017120700:description' => "Esto actualiza el ID de acceso de las anotaciones de Me gusta a público.",
 );

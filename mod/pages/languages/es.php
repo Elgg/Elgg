@@ -6,15 +6,15 @@ return array(
 	 */
 
 	'item:object:page' => 'P&aacute;ginas',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'P&aacute;ginas',
+	'collection:object:page:all' => "Todas las p&aacute;ginas",
+	'collection:object:page:owner' => "P&aacute;ginas de %s",
+	'collection:object:page:friends' => "P&aacute;ginas de Amigos",
+	'collection:object:page:group' => "P&aacute;ginas de Grupo",
+	'add:object:page' => "Añadir una página",
+	'edit:object:page' => "Edita esta página",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Habilitar páginas de grupo',
 
 	'pages:delete' => "Borrar esta p&aacute;gina",
 	'pages:history' => "Historial",
@@ -26,11 +26,11 @@ return array(
 	'pages:notify:summary' => 'Nueva página llamada %s',
 	'pages:notify:subject' => "Una nueva página: %s",
 	'pages:notify:body' =>
-'%s added a new page: %s
+'%s ha añadido la nueva página: %s
 
 %s
 
-View and comment on the page:
+Ver y comentar sobre esta página:
 %s',
 
 	'pages:more' => 'M&aacute;s p&aacute;ginas',
@@ -40,10 +40,10 @@ View and comment on the page:
 	* River
 	**/
 
-	'river:object:page:create' => '%s created a page %s',
-	'river:object:page:update' => '%s updated a page %s',
-	'river:object:page:comment' => '%s commented on a page titled %s',
-	
+	'river:object:page:create' => '%s ha creado la página %s',
+	'river:object:page:update' => '%s ha actualizado la página %s',
+	'river:object:page:comment' => '%s ha comentado sobre una página titulada %s',
+
 	/**
 	 * Form fields
 	 */
@@ -62,7 +62,7 @@ View and comment on the page:
 	'pages:saved' => 'P&aacute;gina guardada',
 	'pages:notsaved' => 'La p&aacute;gina no pudo ser guardada',
 	'pages:error:no_title' => 'Debes especificar un t&iacute;tulo para esta p&aacute;gina.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'La página fue eliminada con éxito.',
 	'pages:revision:delete:success' => 'La revisión de la página se eliminó correctamente.',
 	'pages:revision:delete:failure' => 'No fue posible eliminar la revisión de la página.',
 
@@ -76,8 +76,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'N&uacute;mero de p&aacute;ginas a mostrar',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Páginas',
+	'widgets:pages:description' => "Esta es una lista de tus páginas.",
 
 	/**
 	 * Submenu items
@@ -87,13 +87,13 @@ View and comment on the page:
 	'pages:label:history' => "Historial de la p&aacute;gina",
 
 	'pages:newchild' => "Crear una subp&aacute;gina",
-	
+
 	/**
 	 * Upgrades
 	 */
-	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
-	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
-	
-	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
-	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
+	'pages:upgrade:2017110700:title' => "Migra page_top a las entidades de la página",
+	'pages:upgrade:2017110700:description' => "Cambia el subtipo de todas las páginas principales a 'página' y configura los metadatos para garantizar una lista correcta.",
+
+	'pages:upgrade:2017110701:title' => "Migrar las entradas del río page_top",
+	'pages:upgrade:2017110701:description' => "Cambia el subtipo de todos los elementos de río para las páginas superiores a 'página'.",
 );

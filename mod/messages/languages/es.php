@@ -11,7 +11,7 @@ return array(
 	'messages:sent' => "Enviado",
 	'messages:message' => "Mensaje",
 	'messages:title' => "Asunto",
-	'messages:to:help' => "Write recipient's username here.",
+	'messages:to:help' => "Escriba el nombre del destinatario aquí.",
 	'messages:inbox' => "Bandeja de entrada",
 	'messages:sendmessage' => "Enviar un mensaje",
 	'messages:add' => "Escribir un mensaje",
@@ -23,8 +23,8 @@ return array(
 
 	'messages:error' => 'Ocurri&oacute; un problema al guardar el mensaje. Por favor intenta de nuevo.',
 
-	'item:object:messages' => 'Message',
-	'collection:object:messages' => 'Messages',
+	'item:object:messages' => 'Mensaje',
+	'collection:object:messages' => 'Mensajes',
 
 	/**
 	* Status messages
@@ -42,16 +42,16 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Tienes un nuevo mensaje',
-	'messages:email:body' => "You have a new message from %s.
+	'messages:email:body' => "Tienes un nuevo mensaje de %s.
 
-It reads:
+Dice:
 
 %s
 
-To view your messages, click here:
+Para ver tus mensajes, haz clic aquí:
 %s
 
-To send %s a message, click here:
+Para enviarle un mensaje a %s, haz clic aquí:
 %s",
 
 	/**

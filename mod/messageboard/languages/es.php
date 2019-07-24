@@ -17,7 +17,7 @@ return array(
 	/**
 	 * Message board widget river
 	 */
-	'river:user:messageboard' => "%s posted on %s's message board",
+	'river:user:messageboard' => "%s publicó en el tablón de %s",
 
 	/**
 	 * Status messages
@@ -31,16 +31,16 @@ return array(
 	 */
 
 	'messageboard:email:subject' => 'Tienes nuevos comentarios en el tabl&oacute;n de mensajes',
-	'messageboard:email:body' => "You have a new message board comment from %s.
+	'messageboard:email:body' => "Tienes un nuevo comentario en el foro de %s.
 
-It reads:
+Dice:
 
 %s
 
-To view your message board comments, click here:
+Para ver los comentarios de tu tablero de mensajes, haz clic aquí.:
 %s
 
-To view %s's profile, click here:
+Para ver el perfil de %s, haz click aquí:
 %s",
 
 	/**
@@ -52,6 +52,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Ocurri&oacute; un error desconocido al guardar el mensaje. Intenta de nuevo.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Tabl&oacute;n de mensajes",
+	'widgets:messageboard:description' => "Este es un tablero de mensajes que puedes colocar en tu perfil donde otros usuarios pueden comentar.",
 );

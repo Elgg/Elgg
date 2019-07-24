@@ -26,12 +26,12 @@ return array(
 	'groups:website' => 'Sitio Web',
 	'groups:members' => 'Miembros del grupo',
 
-	'groups:members_count' => '%s members',
+	'groups:members_count' => '%s miembros',
 
 	'groups:members:title' => 'Miembros de %s',
 	'groups:members:more' => "Ver todos los miembros",
 	'groups:membership' => "Ver los permisos de los miembros",
-	'groups:content_access_mode' => "Accesabilidad del contenido del grupo",
+	'groups:content_access_mode' => "Accesibilidad del contenido del grupo",
 	'groups:content_access_mode:warning' => "Advertencia: Cambiar esta preferencia no cambiara los permisos de acceso al contenido existente en el grupo.",
 	'groups:content_access_mode:unrestricted' => "Sin restringir &mdash; el acceso depende de la configuración individual de cada contenido.",
 	'groups:content_access_mode:membersonly' => "Solo miembros - Los que no son miembros nunca podrán accesar al contenido del grupo",
@@ -39,8 +39,8 @@ return array(
 	'groups:owner' => "Propietario",
 	'groups:owner:warning' => "Advertencia: si cambia este valor, usted ya no será el dueño de este grupo.",
 	'groups:widget:num_display' => 'N&uacute;mero de miembros a mostrar',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Membresía de grupo',
+	'widgets:a_users_groups:description' => 'Muestra los grupos de los que eres miembro en tu perfil.',
 
 	'groups:noaccess' => 'No hay acceso al grupo',
 	'groups:cantcreate' => 'No se puede crear un grupo. Sólo los administradores pueden.',
@@ -59,8 +59,8 @@ return array(
 	'groups:leave' => 'Abandonar el grupo',
 	'groups:invite' => 'Invitar amigos',
 	'groups:invite:title' => 'Invitar amigos a este grupo',
-	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
-	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:friends:help' => 'Busca un amigo por nombre o nombre de usuario y selecciónalo de la lista',
+	'groups:invite:resend' => 'Reenvía las invitaciones a usuarios ya invitados.',
 
 	'groups:nofriendsatall' => 'No hay amigos para invitar',
 	'groups:group' => "Grupo",
@@ -69,10 +69,10 @@ return array(
 	'groups:search:none' => "No se encontraron grupos que coincidan",
 	'groups:search_in_group' => "Buscar en este grupo",
 	'groups:acl' => "Group: '%s'",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Miembros del grupo',
 
 	'groups:notfound' => "No se encontr&oacute; el grupo",
-	
+
 	'groups:requests:none' => 'No hay solicitudes de membres&iacute;a.',
 
 	'groups:invitations:none' => 'Actualmente no hay invitaciones.',
@@ -80,7 +80,7 @@ return array(
 	'groups:open' => "grupo abierto",
 	'groups:closed' => "grupo cerrado",
 	'groups:member' => "miembros",
-	'groups:search' => "Search for groups",
+	'groups:search' => "Buscar grupos",
 
 	'groups:more' => 'M&aacute;s grupos',
 	'groups:none' => 'No hay grupos',
@@ -114,8 +114,8 @@ return array(
 	'groups:joinrequestnotmade' => 'No se pudo enviar la solicitud de membres&iacute;a del grupo',
 	'groups:joinrequestmade' => 'Solicitar unirse al grupo',
 	'groups:joinrequest:exists' => 'Ya eres miembro de este grupo',
-	'groups:button:joined' => 'Joined',
-	'groups:button:owned' => 'Owned',
+	'groups:button:joined' => 'Unido',
+	'groups:button:owned' => 'Propietario',
 	'groups:joined' => 'Te has unido al grupo',
 	'groups:left' => 'Has abandonado el grupo',
 	'groups:userinvited' => 'El usuario ha sido invitado.',
@@ -124,34 +124,34 @@ return array(
 	'groups:invite:subject' => "%s te ha invitado al grupo %s",
 	'groups:joinrequest:remove:check' => '&iquest;Seguro que deseas cancelar la solicitud de membres&iacute;a?',
 	'groups:invite:remove:check' => '&iquest;Seguro que deseas anular esta invitaci&oacute;n?',
-	'groups:invite:body' => "Hi %s,
+	'groups:invite:body' => "Hola %s,
 
-%s invited you to join the '%s' group.
+%s te ha invitado a unirte al grupo '%s'.
 
-Click below to view your invitations:
+Haz clic abajo para ver tus invitaciones:
 %s",
 
 	'groups:welcome:subject' => "Bienvenido al grupo %s",
-	'groups:welcome:body' => "Hi %s!
+	'groups:welcome:body' => "Hola %s!
 
-You are now a member of the '%s' group.
+Ahora eres miembro del grupo '%s'.
 
-Click below to begin posting!
+Haz clic abajo para comenzar a publicar!
 %s",
 
 	'groups:request:subject' => "%s ha solicitado unirse a %s",
-	'groups:request:body' => "Hi %s,
+	'groups:request:body' => "Hola %s,
 
-%s has requested to join the '%s' group.
+%s ha solicitado unirse al grupo '%s'.
 
-Click below to view their profile:
+Haz clic abajo para ver su perfil:
 %s
 
-or click below to view the group's join requests:
+o haz clic abajo para ver las solicitudes de participación del grupo:
 %s",
 
-	'river:group:create' => '%s created the group %s',
-	'river:group:join' => '%s joined the group %s',
+	'river:group:create' => '%s ha creado el grupo %s',
+	'river:group:join' => '%s se ha unido al grupo %s',
 
 	'groups:allowhiddengroups' => '&iquest;Desea habilitar los grupos provados?',
 	'groups:whocancreate' => '¿Quién puede editar este grupo?',
@@ -159,8 +159,8 @@ or click below to view the group's join requests:
 	/**
 	 * Action messages
 	 */
-	'groups:deleted' => 'Group and group contents deleted',
-	'groups:notdeleted' => 'Group could not be deleted',
+	'groups:deleted' => 'El grupo y sus contenidos se han eliminado',
+	'groups:notdeleted' => 'Grupo no pudo ser eliminado',
 	'groups:deletewarning' => "&iquest;Seguro que deseas borrar este grupo? No se puede deshacer",
 
 	'groups:invitekilled' => 'El invitado ha sido eliminado.',
@@ -176,7 +176,7 @@ or click below to view the group's join requests:
 	/**
 	 * Upgrades
 	 */
-	'groups:upgrade:2016101900:title' => 'Transfer group icons to new location',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade aligns will align group plugin with the requirements of the new API.',
+	'groups:upgrade:2016101900:title' => 'Transfiere los iconos de grupo a una nueva ubicación',
+	'groups:upgrade:2016101900:description' => 'El nuevo API de icono de entidad almacena los iconos en una ubicación predecible en el almacén de archivos
+ en relación con el directorio del almacén de archivos de la entidad. Esta actualización alineará el complemento del grupo con los requisitos del nuevo API.',
 );

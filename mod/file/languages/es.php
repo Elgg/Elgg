@@ -2,13 +2,13 @@
 return array(
 
 	'item:object:file' => 'Archivo',
-	'collection:object:file' => 'Files',
-	'collection:object:file:all' => "All site files",
-	'collection:object:file:owner' => "%s's files",
-	'collection:object:file:friends' => "Friends' files",
-	'collection:object:file:group' => "Group files",
-	'add:object:file' => "Upload a file",
-	'edit:object:file' => "Edit file",
+	'collection:object:file' => 'Archivos',
+	'collection:object:file:all' => "Todos los archivos del sitio",
+	'collection:object:file:owner' => "Archivos de %s",
+	'collection:object:file:friends' => "Archivos de Amigos",
+	'collection:object:file:group' => "Archivos de Grupo",
+	'add:object:file' => "Subir un archivo",
+	'edit:object:file' => "Editar archivo",
 
 	'file:more' => "Mover archivo",
 	'file:list' => "Listar archivos",
@@ -45,29 +45,29 @@ return array(
 	'file:friends:type:image' => "Im&aacute;genes de tus amigos",
 	'file:friends:type:general' => "Archivos de tus amigos",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "Widget de archivo",
+	'widgets:filerepo:description' => "Muestra tus últimos archivos",
 
-	'groups:tool:file' => 'Enable group files',
+	'groups:tool:file' => 'Habilitar archivos de grupo',
 
-	'river:object:file:create' => '%s uploaded the file %s',
-	'river:object:file:comment' => '%s commented on the file %s',
+	'river:object:file:create' => '%s ha subido el archivo %s',
+	'river:object:file:comment' => '%s ha comentado sobre el archivo %s',
 
 	'file:notify:summary' => 'Nuevo archivo llamado %s',
 	'file:notify:subject' => 'Nuevo archivo: %s',
-	'file:notify:body' => '%s uploaded a new file: %s
+	'file:notify:body' => '%s ha subido un nuevo archivo: %s
 
 %s
 
-View and comment on the file:
+Ver y comentar sobre este archivo:
 %s',
 
 	/**
 	 * Status messages
 	 */
 
-	'file:saved' => "The file was successfully saved.",
-	'entity:delete:object:file:success' => "The file was successfully deleted.",
+	'file:saved' => "El archivo fue guardado con éxito.",
+	'entity:delete:object:file:success' => "El archivo fue eliminado con éxito.",
 
 	/**
 	 * Error messages

@@ -28,7 +28,7 @@ return array(
 
 	'reportedcontent:failed' => 'No se pudo enviar el reporte.',
 	'reportedcontent:notarchived' => 'No se pudo archivar el reporte',
-	
-	'widgets:reportedcontent:name' => 'Reported content',
-	'widgets:reportedcontent:description' => 'Display reported content',
+
+	'widgets:reportedcontent:name' => 'Contenido reportado',
+	'widgets:reportedcontent:description' => 'Mostrar contenido reportado',
 );

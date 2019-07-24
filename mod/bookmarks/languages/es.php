@@ -39,7 +39,7 @@ Ver y comentar en este marcador:
 	'river:object:bookmarks:comment' => '%s comento en un marcador %s',
 
 	'groups:tool:bookmarks' => 'Activar marcadores de grupo',
-	
+
 	/**
 	 * Widget and bookmarklet
 	 */

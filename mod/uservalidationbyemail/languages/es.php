@@ -1,15 +1,15 @@
 <?php
 return array(
 	'email:validate:subject' => "%s por favor confirma tu dirección de email para %s!",
-	'email:validate:body' => "Hi %s,
+	'email:validate:body' => "Hola %s,
 
-Before you can start you using %s, you must confirm your email address.
+Antes de que puedas comenzar a utilizar %s, debes confirmar tu dirección de correo electrónico.
 
-Please confirm your email address by clicking on the link below:
+Por favor confirma tu dirección de correo electrónico haciendo clic en el siguiente enlace:
 
 %s
 
-If you can't click on the link, copy and paste it to your browser manually.
+Si no puedes hacer clic en el enlace, cópielo y péguelo manualmente en tu navegador.
 
 %s
 %s",
@@ -23,11 +23,11 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:admin:resend_validation' => 'Reeniar validaci&oacute;n',
 	'uservalidationbyemail:confirm_resend_validation' => '&iquest;Reenviar confirmaci&oacute;n de email a %s?',
 	'uservalidationbyemail:confirm_resend_validation_checked' => '&iquest;Reenviar validaci&oacute;n a los usuarios marcados?',
-	
-	'uservalidationbyemail:errors:unknown_users' => 'Uusarios desconocidos',
+
+	'uservalidationbyemail:errors:unknown_users' => 'Usuarios desconocidos',
 	'uservalidationbyemail:errors:could_not_resend_validation' => 'No se pudo reenviar la confirmaci&oacute;n de validaci&oacute;n.',
 	'uservalidationbyemail:errors:could_not_resend_validations' => 'No se pudo reenviar la confirmaci&oacute;n de validaci&oacute;n para los usuarios marcados.',
 
-	'uservalidationbyemail:messages:resent_validation' => 'Solicitud devalidaci&oacute;n reenviada.',
-	'uservalidationbyemail:messages:resent_validations' => 'Solicitud devalidaci&oacute;n reenviada a todos los usuarios marcados.'
+	'uservalidationbyemail:messages:resent_validation' => 'Solicitud de validaci&oacute;n reenviada.',
+	'uservalidationbyemail:messages:resent_validations' => 'Solicitud de validaci&oacute;n reenviada a todos los usuarios marcados.'
 );

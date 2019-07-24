@@ -6,11 +6,11 @@ return array(
 	 */
 	'thewire' => "The Wire",
 
-	'item:object:thewire' => "Posts",
-	'collection:object:thewire' => 'Wire posts',
-	'collection:object:thewire:all' => "All wire posts",
-	'collection:object:thewire:owner' => "%s's wire posts",
-	'collection:object:thewire:friends' => "Friends' wire posts",
+	'item:object:thewire' => "Publicaciones",
+	'collection:object:thewire' => 'Publicaciones Wire',
+	'collection:object:thewire:all' => "Todas las publicaciones del wire",
+	'collection:object:thewire:owner' => "Publicaciones de %s",
+	'collection:object:thewire:friends' => "Publicaciones de Amigos",
 
 	'thewire:replying' => "Responder a %s (@%s) quien escribi&oacute;",
 	'thewire:thread' => "Hilo",
@@ -22,19 +22,19 @@ return array(
 	'thewire:previous:help' => "Ver posts anteriores",
 	'thewire:hide:help' => "Ocultar posts anteriores",
 
-	'thewire:form:body:placeholder' => "What's happening?",
-	
+	'thewire:form:body:placeholder' => "¿Qué está pasando?",
+
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s posted to %s",
+	'river:object:thewire:create' => "%s publicó en %s",
 	'thewire:wire' => 'wire',
 
 	/**
 	 * Wire widget
 	 */
-	
-	'widgets:thewire:description' => 'Display your latest wire posts',
+
+	'widgets:thewire:description' => 'Muestra tus últimas publicaciones en el hilo',
 	'thewire:num' => 'N&uacute;mero de posts a mostrar',
 	'thewire:moreposts' => 'M&aacute;s posts',
 
@@ -59,6 +59,6 @@ return array(
 	/**
 	 * Settings
 	 */
-	'thewire:settings:limit' => "Maximum number of characters for wire messages:",
-	'thewire:settings:limit:none' => "No limit",
+	'thewire:settings:limit' => "Número máximo de caracteres para mensajes de hilo:",
+	'thewire:settings:limit:none' => "Sin límite",
 );
