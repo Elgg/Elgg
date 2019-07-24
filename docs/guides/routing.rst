@@ -176,6 +176,7 @@ Elgg core implements several middleware handlers, including:
  * ``\Elgg\Router\Middleware\AdminGatekeeper`` - prevent access by non-admin users
  * ``\Elgg\Router\Middleware\AjaxGatekeeper`` - prevent access with non-xhr requests
  * ``\Elgg\Router\Middleware\CsrfFirewall`` - prevent access without CSRF tokens
+ * ``\Elgg\Router\Middleware\SignedRequestGatekeeper`` - prevent access if the url has been tampered with
 
 Middleware handlers can be set to any callable that receives an instance of ``\Elgg\Request``:
 The handler should throw an instance of ``HttpException`` to prevent route access.

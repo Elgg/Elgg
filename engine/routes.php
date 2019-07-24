@@ -53,6 +53,7 @@ return [
 		'walled' => false,
 		'middleware' => [
 			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+			\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
 		],
 	],
 	'ajax' => [

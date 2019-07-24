@@ -1,7 +1,5 @@
 <?php
 
-elgg_signed_request_gatekeeper();
-
 // new users are not enabled by default.
 return elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() {
 	$user_guid = get_input('u', false);
