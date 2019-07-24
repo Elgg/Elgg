@@ -42,5 +42,9 @@ return [
 		// Polyfills
 		"weakmap-polyfill.js" => "vendor/npm-asset/weakmap-polyfill/weakmap-polyfill.min.js",
 		"formdata-polyfill.js" => "vendor/npm-asset/formdata-polyfill/formdata.min.js",
+		
+		// CropperJS
+		"cropperjs/" => "vendor/npm-asset/cropperjs/dist/",
+		"jquery-cropper/" => "vendor/npm-asset/jquery-cropper/dist/",
 	],
 ];

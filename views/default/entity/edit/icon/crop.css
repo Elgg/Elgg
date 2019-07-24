@@ -1,0 +1,7 @@
+.elgg-entity-edit-icon-crop-wrapper {
+	max-height: 400px;
+	
+	> img {
+		max-width: 100%;
+	}
+}

@@ -5,6 +5,8 @@
  * @uses vars['entity']
  */
 
+elgg_deprecated_notice("The view 'core/avatar/crop' is deprecated use 'entity/edit/icon'", '3.1');
+
 $content = elgg_view('output/longtext', [
 	'value' => elgg_echo('avatar:create:instructions'),
 ]);

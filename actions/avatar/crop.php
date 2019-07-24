@@ -3,6 +3,8 @@
  * Avatar crop action
  */
 
+elgg_deprecated_notice("The action 'avatar/crop' has been deprecated, use 'avatar/upload'", '3.1');
+
 $guid = (int) get_input('guid');
 $owner = get_user($guid);
 
