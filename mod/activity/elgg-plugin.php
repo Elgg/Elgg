@@ -9,10 +9,16 @@ return [
 		'collection:river:friends' => [
 			'path' => '/activity/friends/{username?}',
 			'resource' => 'river',
+			'required_plugins' => [
+				'friends',
+			],
 		],
 		'collection:river:group' => [
 			'path' => '/activity/group/{guid}',
 			'resource' => 'activity/group',
+			'required_plugins' => [
+				'groups',
+			],
 		],
 		'collection:river:all' => [
 			'path' => '/activity/all',

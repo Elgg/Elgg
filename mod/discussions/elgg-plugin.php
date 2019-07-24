@@ -28,6 +28,9 @@ return [
 		'collection:object:discussion:group' => [
 			'path' => '/discussion/group/{guid}',
 			'resource' => 'discussion/group',
+			'required_plugins' => [
+				'groups',
+			],
 		],
 		'add:object:discussion' => [
 			'path' => '/discussion/add/{guid}',

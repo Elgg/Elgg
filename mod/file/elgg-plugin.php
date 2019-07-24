@@ -27,10 +27,16 @@ return [
 		'collection:object:file:friends' => [
 			'path' => '/file/friends/{username}',
 			'resource' => 'file/friends',
+			'required_plugins' => [
+				'friends',
+			],
 		],
 		'collection:object:file:group' => [
 			'path' => '/file/group/{guid}',
 			'resource' => 'file/owner',
+			'required_plugins' => [
+				'groups',
+			],
 		],
 		'add:object:file' => [
 			'path' => '/file/add/{guid}',

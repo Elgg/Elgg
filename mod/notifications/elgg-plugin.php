@@ -13,6 +13,9 @@ return [
 		'settings:notification:groups' => [
 			'path' => '/notifications/group/{username?}',
 			'resource' => 'notifications/groups',
+			'required_plugins' => [
+				'groups',
+			],
 		],
 	],
 ];

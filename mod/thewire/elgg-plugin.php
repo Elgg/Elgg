@@ -34,6 +34,9 @@ return [
 		'collection:object:thewire:friends' => [
 			'path' => '/thewire/friends/{username}',
 			'resource' => 'thewire/friends',
+			'required_plugins' => [
+				'friends',
+			],
 		],
 		'collection:object:thewire:thread' => [
 			'path' => '/thewire/thread/{guid}',

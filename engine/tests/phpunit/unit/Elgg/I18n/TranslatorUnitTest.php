@@ -222,7 +222,6 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
 
 		$app->_services->config->boot_cache_ttl = 0;
-		$app->_services->plugins->addTestingPlugin($plugin);
 
 		$plugin->activate();
 
@@ -240,7 +239,6 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
 
 		$app->_services->config->boot_cache_ttl = 0;
-		$app->_services->plugins->addTestingPlugin($plugin);
 
 		$plugin->activate();
 

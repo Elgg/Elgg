@@ -1705,6 +1705,22 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(1, $calls);
 	}
+	
+	/**
+	 * @expectedException \Elgg\PageNotFoundException
+	 */
+	function testCheckRequiredPluginsWhenRouting() {
+		$request = $this->prepareHttpRequest('hello');
+		$this->createService($request);
+
+		_elgg_services()->routes->register('hello', [
+			'path' => '/hello',
+			'handler' => 'hello_page_handler',
+			'required_plugins' => ['foo'],
+		]);
+
+		_elgg_services()->router->route($request);
+	}
 
 	public function testCanUseRouteFile() {
 
