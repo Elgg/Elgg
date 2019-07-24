@@ -6,8 +6,6 @@
  * @subpackage Registration
  */
 
-elgg_signed_request_gatekeeper();
-
 $user_guid = get_input('u');
 $code = get_input('c');
 
