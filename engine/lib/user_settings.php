@@ -297,10 +297,25 @@ function _elgg_set_user_email(\Elgg\Hook $hook) {
 	$hook_params = $hook->getParams();
 	$hook_params['email'] = $email;
 
-	if (elgg_trigger_plugin_hook('change:email', 'user', $hook_params, true)) {
-		$user->email = $email;
-		$request->validation()->pass('email', $email, elgg_echo('email:save:success'));
+	if (!elgg_trigger_plugin_hook('change:email', 'user', $hook_params, true)) {
+		return null;
 	}
+	
+	if (elgg()->config->security_email_require_confirmation) {
+		// validate the new email address
+		try {
+			elgg()->accounts->requestNewEmailValidation($user, $email);
+			
+			$request->validation()->pass('email', $email, elgg_echo('account:email:request:success', [$email]));
+			return true;
+		} catch (InvalidParameterException $e) {
+			$request->validation()->fail('email', $email, elgg_echo('email:save:fail:password'));
+			return false;
+		}
+	}
+	
+	$user->email = $email;
+	$request->validation()->pass('email', $email, elgg_echo('email:save:success'));
 }
 
 /**

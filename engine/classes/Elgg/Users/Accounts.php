@@ -10,6 +10,9 @@ use Elgg\PluginHooksService;
 use Elgg\Validation\ValidationResults;
 use ElggUser;
 use RegistrationException;
+use Elgg\Email;
+use Elgg\Email\Address;
+use Elgg\EmailService;
 
 /**
  * User accounts service
@@ -40,6 +43,11 @@ class Accounts {
 	 * @var PluginHooksService
 	 */
 	protected $hooks;
+	
+	/**
+	 * @var EmailService
+	 */
+	protected $email;
 
 	/**
 	 * Constructor
@@ -49,19 +57,22 @@ class Accounts {
 	 * @param PasswordService    $passwords  Passwords
 	 * @param UsersTable         $users      Users table
 	 * @param PluginHooksService $hooks      Plugin hooks service
+	 * @param EmailService       $email      Email server
 	 */
 	public function __construct(
 		Config $config,
 		Translator $translator,
 		PasswordService $passwords,
 		UsersTable $users,
-		PluginHooksService $hooks
+		PluginHooksService $hooks,
+		EmailService $email
 	) {
 		$this->config = $config;
 		$this->translator = $translator;
 		$this->passwords = $passwords;
 		$this->users = $users;
 		$this->hooks = $hooks;
+		$this->email = $email;
 	}
 
 	/**
@@ -377,5 +388,42 @@ class Accounts {
 	 */
 	public function isValidEmail($address) {
 		return filter_var($address, FILTER_VALIDATE_EMAIL) === $address;
+	}
+	
+	/**
+	 * Send out an e-mail to the new email address the user wanted
+	 *
+	 * @param \ElggUser $user  user with new e-mail address
+	 * @param string    $email E-mail address
+	 *
+	 * @return bool
+	 * @throws \InvalidParameterException
+	 */
+	public function requestNewEmailValidation(\ElggUser $user, $email) {
+		if (!$this->isValidEmail($email)) {
+			throw new \InvalidParameterException($this->translator->translate('registration:notemail'));
+		}
+		
+		$site = elgg_get_site_entity();
+		
+		$user->setPrivateSetting('new_email', $email);
+		
+		$url = elgg_generate_url('account:email:confirm', [
+			'guid' => $user->guid,
+		]);
+		$url = elgg_http_get_signed_url($url, '+1 hour');
+		
+		$notification = Email::factory([
+			'from' => $site,
+			'to' => new Address($email, $user->getDisplayName()),
+			'subject' => $this->translator->translate('email:request:email:subject', [], $user->getLanguage()),
+			'body' => $this->translator->translate('email:request:email:body', [
+				$user->getDisplayName(),
+				$site->getDisplayName(),
+				$url,
+			], $user->getLanguage()),
+		]);
+		
+		return $this->email->send($notification);
 	}
 }

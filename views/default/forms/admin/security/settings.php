@@ -99,6 +99,18 @@ $hardening .= elgg_view_field([
 	'checked' => (bool) elgg_get_config('security_email_require_password'),
 ]);
 
+// require confirmation on e-mail change
+$hardening .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('admin:security:settings:email_require_confirmation'),
+	'#help' => elgg_echo('admin:security:settings:email_require_confirmation:help'),
+	'name' => 'security_email_require_confirmation',
+	'default' => 0,
+	'value' => 1,
+	'switch' => true,
+	'checked' => (bool) elgg_get_config('security_email_require_confirmation'),
+]);
+
 // session bound entity icons
 $hardening .= elgg_view_field([
 	'#type' => 'checkbox',
