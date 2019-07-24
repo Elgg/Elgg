@@ -78,7 +78,7 @@
         "travis:install-with-mysql": [
             "composer travis:install",
             "mysql -e 'create database elgg;'",
-            "echo \"USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;\" | mysql -u root",
+            "echo \"SET PASSWORD FOR 'root'@'localhost' = PASSWORD('password'); FLUSH PRIVILEGES;\" | mysql -u root",
             "php ./elgg-cli install --config ./install/cli/testing_app.php --verbose"
         ],
         "docs:build": [
