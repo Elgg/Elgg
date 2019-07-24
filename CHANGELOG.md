@@ -1212,6 +1212,21 @@ var `$DEFAULT_FILE_STORE`.
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
 
 
+<a name="2.3.14"></a>
+### 2.3.14  (2019-07-24)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **groups:** no error on notification failure during membership request ([2bd72ffc](https://github.com/Elgg/Elgg/commit/2bd72ffcf2e156d6b3e0fd18ded72846279c37d9))
+* **http:** check object for toString function ([1cd0809e](https://github.com/Elgg/Elgg/commit/1cd0809eb7c9c31547b69cb306058dee7bfe3ae1))
+* **installer:** detect more https scenarios ([05648781](https://github.com/Elgg/Elgg/commit/056487810a7dccfc524c7c0aa8e0183424842307))
+
+
 <a name="2.3.13"></a>
 ### 2.3.13  (2019-06-12)
 
