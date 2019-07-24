@@ -337,17 +337,6 @@ function thewire_setup_entity_menu_items(\Elgg\Hook $hook) {
 		]));
 	}
 
-	if ($entity->reply) {
-		$menu->add(ElggMenuItem::factory([
-			'name' => 'previous',
-			'icon' => 'arrow-left',
-			'text' => elgg_echo('previous'),
-			'href' => elgg_generate_entity_url($entity, 'previous'),
-			'link_class' => 'thewire-previous',
-			'title' => elgg_echo('thewire:previous:help'),
-		]));
-	}
-
 	$menu->add(ElggMenuItem::factory([
 		'name' => 'thread',
 		'icon' => 'comments-o',
