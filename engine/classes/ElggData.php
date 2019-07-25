@@ -23,6 +23,8 @@ abstract class ElggData implements CollectionItemInterface,
 	 * Blank entries for all database fields should be created by the constructor.
 	 * Subclasses should add to this in their constructors.
 	 * Any field not appearing in this will be viewed as metadata
+	 *
+	 * @var array
 	 */
 	protected $attributes = [];
 
