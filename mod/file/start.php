@@ -234,12 +234,12 @@ function file_set_icon_url(\Elgg\Hook $hook) {
 /**
  * Handle an object being deleted
  *
- * @param string     $event Event name
- * @param string     $type  Event type
- * @param ElggObject $file  The object deleted
+ * @param \Elgg\Event $event 'delete', 'object'
+ *
  * @return void
  */
-function file_handle_object_delete($event, $type, ElggObject $file) {
+function file_handle_object_delete(\Elgg\Event $event) {
+	$file = $event->getObject();
 	if (!$file instanceof ElggFile) {
 		return;
 	}
