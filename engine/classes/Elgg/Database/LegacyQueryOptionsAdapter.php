@@ -1022,13 +1022,6 @@ trait LegacyQueryOptionsAdapter {
 
 		if (!empty($order_by)) {
 			if (is_string($order_by)) {
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'order_by' options parameter is deprecated.
-					Instead use an OrderByClause or array of them.
-					
-					{{ $order_by }}
-				", '3.0');
-
 				$orders = explode(',', $order_by);
 			} else if (is_array($order_by)) {
 				$orders = $order_by;

@@ -37,7 +37,6 @@ class ElggWidget extends \ElggObject {
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
-		
 	
 		// object title and description are stored as metadata
 		if (in_array($name, ['title', 'description'])) {
@@ -72,30 +71,6 @@ class ElggWidget extends \ElggObject {
 		}
 		
 		$this->setPrivateSetting($name, $value);
-	}
-
-	/**
-	 * Unset a property from private settings or attribute.
-	 *
-	 * @see \ElggEntity->__unset
-	 *
-	 * @param string $name The name of the attribute or metadata.
-	 *
-	 * @return void
-	 * @since 2.2.0
-	 */
-	public function __unset($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			parent::__unset($name);
-		}
-		
-		// object title and description are stored as metadata
-		if (in_array($name, ['title', 'description'])) {
-			parent::__unset($name);
-			return;
-		}
-		
-		$this->removePrivateSetting($name);
 	}
 	
 	/**

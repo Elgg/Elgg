@@ -387,6 +387,11 @@ Be careful where valid return values (like ``"0"``) could be interpreted as empt
 
 Functions not throwing an exception on error should return ``false`` upon failure.
 
+.. note::
+
+	Particularly low-level, non-API functions/methods (e.g. entity_row_to_elggstar),
+	which should not fail under normal conditions, should throw instead of returning false. 
+
 Functions returning only boolean should be prefaced with ``is_`` or ``has_``
 (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``).
 
@@ -657,6 +662,8 @@ Good:
 CSS guidelines
 --------------
 
+Save the css in files with a ``.css`` extension.
+
 Use shorthand where possible
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -691,6 +698,10 @@ Good:
 .. code-block:: css
 
     .example-class {}
+    
+.. note::
+
+	You should prefix your ids and classnames with text that identifies your plugin.
 
 One property per line
 ^^^^^^^^^^^^^^^^^^^^^
@@ -774,6 +785,8 @@ Good:
 	background-color: white;
 	background-position: 2px -257px;
 	color: #0054A7;
+	
+
 
 Javascript guidelines
 ---------------------

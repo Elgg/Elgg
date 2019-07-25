@@ -189,7 +189,7 @@ class RouteRegistrationService {
 	}
 
 	/**
-	 * Generate a relative URL for a named route
+	 * Generate a absolute URL for a named route
 	 *
 	 * @param string $name       Route name
 	 * @param array  $parameters Query parameters
@@ -206,7 +206,7 @@ class RouteRegistrationService {
 				}
 			}
 			
-			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
+			return elgg_normalize_url($this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_PATH));
 		} catch (Exception $exception) {
 			$this->logger->notice($exception->getMessage());
 		}

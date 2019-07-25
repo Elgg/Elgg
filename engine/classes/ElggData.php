@@ -65,6 +65,19 @@ abstract class ElggData implements CollectionItemInterface,
 	}
 
 	/**
+	 * Unset a property from metadata or attribute.
+	 *
+	 * @warning If you use this to unset an attribute, you must save the object!
+	 *
+	 * @param string $name The name of the attribute or metadata.
+	 *
+	 * @return void
+	 */
+	public function __unset($name) {
+		$this->$name = null;
+	}
+
+	/**
 	 * Get a URL for this object
 	 *
 	 * @return string
@@ -195,7 +208,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	public function offsetGet($key) {
 		if (array_key_exists($key, $this->attributes)) {
-			return $this->attributes[$key];
+			return $this->$key;
 		}
 
 		return null;
@@ -213,7 +226,7 @@ abstract class ElggData implements CollectionItemInterface,
 	public function offsetUnset($key) {
 		if (array_key_exists($key, $this->attributes)) {
 			// Full unsetting is dangerous for our objects
-			$this->attributes[$key] = "";
+			unset($this->$key);
 		}
 	}
 

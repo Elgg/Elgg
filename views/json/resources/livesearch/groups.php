@@ -14,7 +14,7 @@ $options = [
 	'limit' => $limit,
 	'sort' => 'name',
 	'order' => 'ASC',
-	'fields' => ['metadata' => ['name', 'username']],
+	'fields' => ['metadata' => ['name']],
 	'item_view' => 'search/entity',
 	'input_name' => $input_name,
 ];
