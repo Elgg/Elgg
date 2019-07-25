@@ -675,6 +675,9 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	
 	'admin:security:settings:email_require_password' => '更改电子邮件地址需要密码验证。',
 	'admin:security:settings:email_require_password:help' => '当用户希望更改其电子邮件地址时，要求他们提供当前密码。',
+	
+	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
+	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
@@ -989,6 +992,9 @@ Or contact a site administrator:
 	'icon:size:large' => "大",
 	'icon:size:master' => "超大",
 	
+	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
+	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
+	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
 	'entity:edit:icon:file:label' => "Upload a new icon",
 	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
 	'entity:edit:icon:remove:label' => "Remove icon",
@@ -1081,8 +1087,7 @@ Or contact a site administrator:
 	'active' => '活跃',
 	'total' => '总计',
 	'unvalidated' => 'Unvalidated',
-	'disabled' => 'Disabled',
-
+	
 	'ok' => '好',
 	'any' => '任何',
 	'error' => '错误',
@@ -1427,6 +1432,7 @@ Or contact a site administrator:
 
 	'email:settings' => "Email设置",
 	'email:address:label' => "Email地址",
+	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "密码",
 	'email:address:password:help' => "为了能够更改您的电子邮件地址，您需要提供您当前的密码。",
 
@@ -1462,6 +1468,38 @@ Or contact a site administrator:
 
 %s
 ",
+	
+	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
+	'email:request:email:subject' => "Please confirm your e-mail address",
+	'email:request:email:body' => "Hi %s,
+
+You requested to change your e-mail address on '%s'.
+If you didn't request this change, please reset your password.
+
+In order to confirm the e-mail address change, please click this link:
+%s
+
+Please note this link is only valid for 1 hour.",
+	
+	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	
+	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on '%s'.
+
+If you didn't request this change, please contact a site administrator.
+%s",
+	
+	'email:confirm:email:new:subject' => "You're e-mail address was changed",
+	'email:confirm:email:new:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on this e-mail address.
+
+If you didn't request this change, please contact a site administrator.
+%s",
 
 /**
  * user default access
@@ -1748,4 +1786,7 @@ To view %s's profile, click here:
 	
 	"core:upgrade:2018061401:title" => "Migrate cron log entries",
 	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
+	
+	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
+	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );

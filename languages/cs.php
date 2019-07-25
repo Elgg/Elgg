@@ -676,6 +676,9 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	
 	'admin:security:settings:email_require_password' => 'Require password to change email address',
 	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+	
+	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
+	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
@@ -992,6 +995,9 @@ These changes will only affect new users on the site.',
 	'icon:size:large' => "Velká",
 	'icon:size:master' => "Obrovská",
 	
+	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
+	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
+	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
 	'entity:edit:icon:file:label' => "Upload a new icon",
 	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
 	'entity:edit:icon:remove:label' => "Remove icon",
@@ -1084,8 +1090,7 @@ These changes will only affect new users on the site.',
 	'active' => 'Aktivní',
 	'total' => 'Celkem',
 	'unvalidated' => 'Unvalidated',
-	'disabled' => 'Disabled',
-
+	
 	'ok' => 'OK',
 	'any' => 'Jakákoliv',
 	'error' => 'Chyba',
@@ -1428,6 +1433,7 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 
 	'email:settings' => "Nastavení e-mailu",
 	'email:address:label' => "E-mailová adresa",
+	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "Password",
 	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
@@ -1459,6 +1465,38 @@ Somebody (from the IP address %s) has requested a password change for this accou
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
+%s",
+	
+	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
+	'email:request:email:subject' => "Please confirm your e-mail address",
+	'email:request:email:body' => "Hi %s,
+
+You requested to change your e-mail address on '%s'.
+If you didn't request this change, please reset your password.
+
+In order to confirm the e-mail address change, please click this link:
+%s
+
+Please note this link is only valid for 1 hour.",
+	
+	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	
+	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on '%s'.
+
+If you didn't request this change, please contact a site administrator.
+%s",
+	
+	'email:confirm:email:new:subject' => "You're e-mail address was changed",
+	'email:confirm:email:new:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on this e-mail address.
+
+If you didn't request this change, please contact a site administrator.
 %s",
 
 /**
@@ -1746,4 +1784,7 @@ To view %s's profile, click here:
 	
 	"core:upgrade:2018061401:title" => "Migrate cron log entries",
 	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
+	
+	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
+	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );
