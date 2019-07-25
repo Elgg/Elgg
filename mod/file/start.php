@@ -212,13 +212,11 @@ function file_set_icon_url(\Elgg\Hook $hook) {
 		$base_type = 'none';
 	}
 
-	$type = $hook->getType();
+	$type = 'general';
 	if (isset($mapping[$mime])) {
 		$type = $mapping[$mime];
 	} elseif (isset($mapping[$base_type])) {
 		$type = $mapping[$base_type];
-	} else {
-		$type = 'general';
 	}
 
 	if ($size == 'large') {

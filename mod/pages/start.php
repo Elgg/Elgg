@@ -252,7 +252,7 @@ function pages_container_permission_check(\Elgg\Hook $hook) {
 	}
 	
 	$container = $hook->getParam('container');
-	$user = $hook->getUserParam('user');
+	$user = $hook->getUserParam();
 	
 	if (!$user instanceof ElggUser) {
 		return;

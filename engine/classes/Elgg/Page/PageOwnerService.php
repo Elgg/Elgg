@@ -218,7 +218,7 @@ class PageOwnerService {
 	/**
 	 * Returns the page owner entity
 	 *
-	 * @return ElggEntity|false the current page owner or false if none.
+	 * @return \ElggEntity|false the current page owner or false if none.
 	 */
 	public function getPageOwnerEntity() {
 		return $this->entity_table->get($this->getPageOwnerGuid());

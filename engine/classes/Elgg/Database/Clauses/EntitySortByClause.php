@@ -11,7 +11,7 @@ use ElggEntity;
 class EntitySortByClause extends OrderByClause {
 
 	/**
-	 * @var string[]
+	 * @var string
 	 */
 	public $property;
 

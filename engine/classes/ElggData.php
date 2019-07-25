@@ -34,11 +34,6 @@ abstract class ElggData implements CollectionItemInterface,
 	 * @return void
 	 */
 	protected function initializeAttributes() {
-		// Create attributes array if not already created
-		if (!is_array($this->attributes)) {
-			$this->attributes = [];
-		}
-
 		$this->attributes['time_created'] = null;
 	}
 
