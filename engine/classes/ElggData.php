@@ -23,6 +23,8 @@ abstract class ElggData implements CollectionItemInterface,
 	 * Blank entries for all database fields should be created by the constructor.
 	 * Subclasses should add to this in their constructors.
 	 * Any field not appearing in this will be viewed as metadata
+	 *
+	 * @var array
 	 */
 	protected $attributes = [];
 
@@ -34,11 +36,6 @@ abstract class ElggData implements CollectionItemInterface,
 	 * @return void
 	 */
 	protected function initializeAttributes() {
-		// Create attributes array if not already created
-		if (!is_array($this->attributes)) {
-			$this->attributes = [];
-		}
-
 		$this->attributes['time_created'] = null;
 	}
 

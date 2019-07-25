@@ -8,9 +8,8 @@ if (empty($user_guids)) {
 	return elgg_error_response(elgg_echo('uservalidationbyemail:errors:unknown_users'));
 }
 
-$error = false;
-
-elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($user_guids, $error) {
+$error = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($user_guids) {
+	$error = false;
 	foreach ($user_guids as $guid) {
 		$user = get_user($guid);
 		if (empty($user)) {
@@ -23,6 +22,7 @@ elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($user_guids, $error) {
 			continue;
 		}
 	}
+	return $error;
 });
 
 if (count($user_guids) == 1) {

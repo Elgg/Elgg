@@ -162,6 +162,10 @@ function embed_set_thumbnail_url(\Elgg\Hook $hook) {
 	}
 	
 	$entity = $hook->getEntityParam();
+	if (!$entity instanceof \ElggEntity) {
+		return;
+	}
+	
 	$size = $hook->getParam('size');
 
 	$thumbnail = $entity->getIcon($size);
