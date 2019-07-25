@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-24 16:46+0200\n"
+"POT-Creation-Date: 2019-07-25 14:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,6 +112,34 @@ msgstr ""
 
 #: ../../guides/access.rst:114
 msgid "The access system of Elgg automaticly adds all the ACLs a user is a member of to the access checks. For example a user is a member of a group and is friends with 3 other users, all the corresponding ACLs are added in order to check access to entities when retrieving them (eg. listing all blogs)."
+msgstr ""
+
+#: ../../guides/access.rst:119
+msgid "Ignoring access"
+msgstr ""
+
+#: ../../guides/access.rst:121
+msgid "If for some case you need entities retrieved ignoring the access rules you can wrap your code in ``elgg_call``. There are different flags you can use."
+msgstr ""
+
+#: ../../guides/access.rst:124
+msgid "ELGG_IGNORE_ACCESS: no access rules are applied"
+msgstr ""
+
+#: ../../guides/access.rst:125
+msgid "ELGG_ENFORCE_ACCESS: access rules are forced to be applied"
+msgstr ""
+
+#: ../../guides/access.rst:126
+msgid "ELGG_SHOW_DISABLED_ENTITIES: will retrieve entities that are disabled"
+msgstr ""
+
+#: ../../guides/access.rst:127
+msgid "ELGG_HIDE_DISABLED_ENTITIES: will never retrieve entities that are disabled"
+msgstr ""
+
+#: ../../guides/access.rst:139
+msgid "You can also combine flags."
 msgstr ""
 
 #: ../../guides/accessibility.rst:2
@@ -1558,7 +1586,7 @@ msgid "You can fetch entities by their properties using ``elgg_get_entities``. U
 msgstr ""
 
 #: ../../guides/database.rst:123
-#: ../../guides/views.rst:436
+#: ../../guides/views.rst:430
 msgid "Displaying entities"
 msgstr ""
 
@@ -1834,75 +1862,71 @@ msgstr ""
 msgid "This example shows how you can populate your database on plugin activation."
 msgstr ""
 
-#: ../../guides/database.rst:353
-msgid "my_plugin/activate.php:"
-msgstr ""
-
-#: ../../guides/database.rst:363
+#: ../../guides/database.rst:360
 msgid "my_plugin/sql/activate.sql:"
 msgstr ""
 
-#: ../../guides/database.rst:379
+#: ../../guides/database.rst:376
 msgid "Note that Elgg execute statements through PHPs built-in functions and have limited support for comments. I.e. only single line comments are supported and must be prefixed by \"-- \" or \"# \". A comment must start at the very beginning of a line."
 msgstr ""
 
-#: ../../guides/database.rst:385
+#: ../../guides/database.rst:382
 msgid "Systemlog"
 msgstr ""
 
-#: ../../guides/database.rst:389
+#: ../../guides/database.rst:386
 msgid "This section need some attention and will contain outdated information"
 msgstr ""
 
-#: ../../guides/database.rst:391
+#: ../../guides/database.rst:388
 msgid "The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and searchable directly from the administration panel."
 msgstr ""
 
-#: ../../guides/database.rst:394
+#: ../../guides/database.rst:391
 msgid "System log storage"
 msgstr ""
 
-#: ../../guides/database.rst:396
+#: ../../guides/database.rst:393
 msgid "A system log row is stored whenever an event concerning an object whose class implements the :doc:`/design/loggable` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement :doc:`/design/loggable`, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations."
 msgstr ""
 
-#: ../../guides/database.rst:398
+#: ../../guides/database.rst:395
 msgid "Common events include:"
 msgstr ""
 
-#: ../../guides/database.rst:400
+#: ../../guides/database.rst:397
 msgid "create"
 msgstr ""
 
-#: ../../guides/database.rst:401
+#: ../../guides/database.rst:398
 msgid "update"
 msgstr ""
 
-#: ../../guides/database.rst:402
+#: ../../guides/database.rst:399
 msgid "delete"
 msgstr ""
 
-#: ../../guides/database.rst:403
+#: ../../guides/database.rst:400
 msgid "login"
 msgstr ""
 
-#: ../../guides/database.rst:406
+#: ../../guides/database.rst:403
 msgid "Creating your own system log"
 msgstr ""
 
-#: ../../guides/database.rst:408
+#: ../../guides/database.rst:405
 msgid "There are some reasons why you might want to create your own system log. For example, you might need to store a full copy of entities when they are updated or deleted, for auditing purposes. You might also need to notify an administrator when certain types of events occur."
 msgstr ""
 
-#: ../../guides/database.rst:410
+#: ../../guides/database.rst:407
 msgid "To do this, you can create a function that listens to all events for all types of object:"
 msgstr ""
 
-#: ../../guides/database.rst:416
+#: ../../guides/database.rst:413
 msgid "Your function can then be defined as:"
 msgstr ""
 
-#: ../../guides/database.rst:426
+#: ../../guides/database.rst:423
 msgid "You can then use the extra methods defined by :doc:`/design/loggable` to extract the information you need."
 msgstr ""
 
@@ -2036,7 +2060,7 @@ msgid "Triggered just after the plugins are loaded. Rarely used. init, system is
 msgstr ""
 
 #: ../../guides/events-list.rst:17
-#: ../../guides/javascript.rst:812
+#: ../../guides/javascript.rst:796
 msgid "**init, system**"
 msgstr ""
 
@@ -2045,7 +2069,7 @@ msgid "Plugins tend to use this event for initialization (extending views, regis
 msgstr ""
 
 #: ../../guides/events-list.rst:21
-#: ../../guides/javascript.rst:815
+#: ../../guides/javascript.rst:799
 msgid "**ready, system**"
 msgstr ""
 
@@ -2666,26 +2690,66 @@ msgid "Plugins can access group tool register via ``elgg()->group_tools``."
 msgstr ""
 
 #: ../../guides/group-tools.rst:17
-msgid "A registered tool will have an option to be toggled on the group edit form, and can have a profile view module associated with it. To add a profile module, simply add a corresponding view as ``groups/profile/module/<tool_name>``."
+msgid "A registered tool will have an option to be toggled on the group edit form, and can have a profile view module associated with it. To add a profile module, simply add a corresponding view as ``groups/profile/module/<tool_name>``. This view will only be called if the tool is enabled."
+msgstr ""
+
+#: ../../guides/group-tools.rst:21
+msgid "If you simply wish to list some content in the group you can use the ``groups/profile/module`` view with some additional parameters."
+msgstr ""
+
+#: ../../guides/group-tools.rst:23
+msgid "``entity_type``: in combination with the ``entity_subtype`` it can generate everything the module needs"
+msgstr ""
+
+#: ../../guides/group-tools.rst:24
+msgid "``entity_subtype``: in combination with the ``entity_type`` it can generate everything the module needs"
+msgstr ""
+
+#: ../../guides/group-tools.rst:25
+msgid "``no_results``: custom no results found text"
+msgstr ""
+
+#: ../../guides/group-tools.rst:27
+msgid "The following will be automaticly generated:"
 msgstr ""
 
 #: ../../guides/group-tools.rst:29
+msgid "``title``: based on the the language key ``collection:<entity_type>:<entity_subtype>:group``"
+msgstr ""
+
+#: ../../guides/group-tools.rst:30
+msgid "``content``: ``elgg_list_entities()`` based on given type/subtype"
+msgstr ""
+
+#: ../../guides/group-tools.rst:31
+msgid "``all_link``: based on the route name ``collection:<entity_type>:<entity_subtype>:group``"
+msgstr ""
+
+#: ../../guides/group-tools.rst:32
+msgid "``add_link``: based on the route name ``add:<entity_type>:<entity_subtype>:group`` and with a permissions check to the given type/subtype"
+msgstr ""
+
+#: ../../guides/group-tools.rst:49
+msgid "Alternatively you can generate your own title and content"
+msgstr ""
+
+#: ../../guides/group-tools.rst:60
 msgid "You can programmically enable and disable tools for a given group:"
 msgstr ""
 
-#: ../../guides/group-tools.rst:41
+#: ../../guides/group-tools.rst:72
 msgid "If you want to allow a certain feature in a group only if the group tool option is enabled, you can check this using ``\\ElggGroup::isToolEnabled($tool_option)``."
 msgstr ""
 
-#: ../../guides/group-tools.rst:43
+#: ../../guides/group-tools.rst:74
 msgid "It is also a possibility to use a gatekeeper function to prevent access to a group page based on an enabled tool."
 msgstr ""
 
-#: ../../guides/group-tools.rst:51
+#: ../../guides/group-tools.rst:82
 msgid "Read more about gatekeepers here: :ref:`authentication-gatekeepers`"
 msgstr ""
 
-#: ../../guides/group-tools.rst:53
+#: ../../guides/group-tools.rst:84
 msgid "If you need the configured group tool options for a specific group you can use the ``elgg()->group_tools->group($group)`` function."
 msgstr ""
 
@@ -2885,7 +2949,7 @@ msgid "Make the delete action accept ``action/<handler>/delete?guid=<guid>`` so 
 msgstr ""
 
 #: ../../guides/guidelines.rst:82
-#: ../../guides/plugins/plugin-skeleton.rst:82
+#: ../../guides/plugins/plugin-skeleton.rst:80
 msgid "Actions"
 msgstr ""
 
@@ -4326,7 +4390,7 @@ msgid "Filters ajax responses before they're sent back to the ``elgg/Ajax`` modu
 msgstr ""
 
 #: ../../guides/hooks-list.rst:648
-#: ../../guides/plugins/plugin-skeleton.rst:142
+#: ../../guides/plugins/plugin-skeleton.rst:140
 #: ../../guides/views.rst:2
 msgid "Views"
 msgstr ""
@@ -5224,7 +5288,7 @@ msgid "Customize Elgg's behavior with plugins."
 msgstr ""
 
 #: ../../guides/javascript.rst:2
-#: ../../guides/menus.rst:279
+#: ../../guides/menus.rst:273
 msgid "JavaScript"
 msgstr ""
 
@@ -5329,599 +5393,563 @@ msgid "You may have an AMD script outside your views you wish to make available 
 msgstr ""
 
 #: ../../guides/javascript.rst:171
-msgid "The best way to accomplish this is by configuring the path to the file using the ``views.php`` file in the root of your plugin:"
+msgid "The best way to accomplish this is by configuring the path to the file using the ``views`` section of the ``elgg-plugin.php`` file in the root of your plugin:"
 msgstr ""
 
-#: ../../guides/javascript.rst:183
+#: ../../guides/javascript.rst:185
 msgid "If you've copied the script directly into your plugin instead of managing it with Composer, you can use something like this instead:"
 msgstr ""
 
-#: ../../guides/javascript.rst:195
+#: ../../guides/javascript.rst:199
 msgid "That's it! Elgg will now load this file whenever the \"underscore\" module is requested."
 msgstr ""
 
-#: ../../guides/javascript.rst:199
+#: ../../guides/javascript.rst:203
 msgid "Using traditional JS libraries as modules"
 msgstr ""
 
-#: ../../guides/javascript.rst:201
+#: ../../guides/javascript.rst:205
 msgid "It's possible to support JavaScript libraries that do not declare themselves as AMD modules (i.e. they declare global variables instead) if you shim them by setting ``exports`` and ``deps`` in ``elgg_define_js``:"
 msgstr ""
 
-#: ../../guides/javascript.rst:213
+#: ../../guides/javascript.rst:217
 msgid "When this is requested client-side:"
 msgstr ""
 
-#: ../../guides/javascript.rst:215
+#: ../../guides/javascript.rst:219
 msgid "The jQuery module is loaded, as it's marked as a dependency."
 msgstr ""
 
-#: ../../guides/javascript.rst:216
+#: ../../guides/javascript.rst:220
 msgid "``https://elgg.example.org/cache/125235034/views/default/jquery.form.js`` is loaded and executed."
 msgstr ""
 
-#: ../../guides/javascript.rst:217
+#: ../../guides/javascript.rst:221
 msgid "The value of ``window.jQuery.fn.ajaxForm`` is returned by the module."
 msgstr ""
 
-#: ../../guides/javascript.rst:219
+#: ../../guides/javascript.rst:223
 msgid "Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler."
 msgstr ""
 
-#: ../../guides/javascript.rst:222
+#: ../../guides/javascript.rst:226
 msgid "Some things to note"
 msgstr ""
 
-#: ../../guides/javascript.rst:224
+#: ../../guides/javascript.rst:228
 msgid "Do not use ``elgg.provide()`` anymore nor other means to attach code to ``elgg`` or other global objects. Use modules."
 msgstr ""
 
-#: ../../guides/javascript.rst:226
+#: ../../guides/javascript.rst:230
 msgid "Return the value of the module instead of adding to a global variable."
 msgstr ""
 
-#: ../../guides/javascript.rst:227
+#: ../../guides/javascript.rst:231
 msgid "Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system."
 msgstr ""
 
-#: ../../guides/javascript.rst:228
-msgid "The configuration is also cached in simplecache, and should not rely on user-specific values like ``get_language()``."
+#: ../../guides/javascript.rst:232
+msgid "The configuration is also cached in simplecache, and should not rely on user-specific values like ``get_current_language()``."
 msgstr ""
 
-#: ../../guides/javascript.rst:234
+#: ../../guides/javascript.rst:238
 msgid "Booting your plugin"
 msgstr ""
 
-#: ../../guides/javascript.rst:236
+#: ../../guides/javascript.rst:240
 msgid "To add functionality to each page, or make sure your hook handlers are registered early enough, you may create a boot module for your plugin, with the name ``boot/<plugin_id>``."
 msgstr ""
 
-#: ../../guides/javascript.rst:257
+#: ../../guides/javascript.rst:261
 msgid "When your plugin is active, this module will automatically be loaded on each page. Other modules can depend on ``elgg/init`` to make sure all boot modules are loaded."
 msgstr ""
 
-#: ../../guides/javascript.rst:259
+#: ../../guides/javascript.rst:263
 msgid "Each boot module **must** return an instance of ``elgg/Plugin``. The constructor must receive an object with a function in the ``init`` key. The ``init`` function will be called in the order of the plugin in Elgg's admin area."
 msgstr ""
 
-#: ../../guides/javascript.rst:261
+#: ../../guides/javascript.rst:265
 msgid "Though not strictly necessary, you may want to use the ``init, system`` event to control when your initialization code runs with respect to other modules."
 msgstr ""
 
-#: ../../guides/javascript.rst:263
+#: ../../guides/javascript.rst:267
 msgid "A boot module **cannot** depend on the modules ``elgg/init`` or ``elgg/ready``."
 msgstr ""
 
-#: ../../guides/javascript.rst:266
+#: ../../guides/javascript.rst:270
 msgid "Modules provided with Elgg"
 msgstr ""
 
-#: ../../guides/javascript.rst:269
+#: ../../guides/javascript.rst:273
 msgid "Modules ``jquery`` and ``jquery-ui``"
 msgstr ""
 
-#: ../../guides/javascript.rst:271
+#: ../../guides/javascript.rst:275
 msgid "You must depend on these modules to use ``$`` or ``$.ui`` methods. In the future Elgg may stop loading these by default."
 msgstr ""
 
-#: ../../guides/javascript.rst:274
+#: ../../guides/javascript.rst:278
 msgid "Module ``elgg``"
 msgstr ""
 
-#: ../../guides/javascript.rst:276
+#: ../../guides/javascript.rst:280
 msgid "``elgg.echo()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:278
+#: ../../guides/javascript.rst:282
 msgid "Translate interface text"
 msgstr ""
 
-#: ../../guides/javascript.rst:285
+#: ../../guides/javascript.rst:289
 msgid "``elgg.system_message()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:287
+#: ../../guides/javascript.rst:291
 msgid "Display a status message to the user."
 msgstr ""
 
-#: ../../guides/javascript.rst:294
+#: ../../guides/javascript.rst:298
 msgid "``elgg.register_error()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:296
+#: ../../guides/javascript.rst:300
 msgid "Display an error message to the user."
 msgstr ""
 
-#: ../../guides/javascript.rst:303
+#: ../../guides/javascript.rst:307
 msgid "``elgg.normalize_url()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:305
+#: ../../guides/javascript.rst:309
 msgid "Normalize a URL relative to the elgg root:"
 msgstr ""
 
-#: ../../guides/javascript.rst:312
+#: ../../guides/javascript.rst:316
 msgid "``elgg.forward()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:314
+#: ../../guides/javascript.rst:318
 msgid "Redirect to a new page."
 msgstr ""
 
-#: ../../guides/javascript.rst:320
+#: ../../guides/javascript.rst:324
 msgid "This function automatically normalizes the URL."
 msgstr ""
 
-#: ../../guides/javascript.rst:323
+#: ../../guides/javascript.rst:327
 msgid "``elgg.parse_url()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:325
+#: ../../guides/javascript.rst:329
 msgid "Parse a URL into its component parts:"
 msgstr ""
 
-#: ../../guides/javascript.rst:338
+#: ../../guides/javascript.rst:342
 msgid "``elgg.get_page_owner_guid()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:340
+#: ../../guides/javascript.rst:344
 msgid "Get the GUID of the current page's owner."
 msgstr ""
 
-#: ../../guides/javascript.rst:343
+#: ../../guides/javascript.rst:347
 msgid "``elgg.register_hook_handler()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:345
+#: ../../guides/javascript.rst:349
 msgid "Register a hook handler with the event system. For best results, do this in a plugin boot module."
 msgstr ""
 
-#: ../../guides/javascript.rst:360
+#: ../../guides/javascript.rst:364
 msgid "``elgg.trigger_hook()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:362
+#: ../../guides/javascript.rst:366
 msgid "Emit a hook event in the event system. For best results depend on the elgg/init module."
 msgstr ""
 
-#: ../../guides/javascript.rst:377
+#: ../../guides/javascript.rst:381
 msgid "``elgg.security.refreshToken()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:379
+#: ../../guides/javascript.rst:383
 msgid "Force a refresh of all XSRF tokens on the page."
 msgstr ""
 
-#: ../../guides/javascript.rst:381
+#: ../../guides/javascript.rst:385
 msgid "This is automatically called every 5 minutes by default."
 msgstr ""
 
-#: ../../guides/javascript.rst:383
+#: ../../guides/javascript.rst:387
 msgid "The user will be warned if their session has expired."
 msgstr ""
 
-#: ../../guides/javascript.rst:386
+#: ../../guides/javascript.rst:390
 msgid "``elgg.security.addToken()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:388
+#: ../../guides/javascript.rst:392
 msgid "Add a security token to an object, URL, or query string:"
 msgstr ""
 
-#: ../../guides/javascript.rst:406
+#: ../../guides/javascript.rst:410
 msgid "``elgg.get_logged_in_user_entity()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:408
+#: ../../guides/javascript.rst:412
 msgid "Returns the logged in user as an JS ElggUser object."
 msgstr ""
 
-#: ../../guides/javascript.rst:411
+#: ../../guides/javascript.rst:415
 msgid "``elgg.get_logged_in_user_guid()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:413
+#: ../../guides/javascript.rst:417
 msgid "Returns the logged in user's guid."
 msgstr ""
 
-#: ../../guides/javascript.rst:416
+#: ../../guides/javascript.rst:420
 msgid "``elgg.is_logged_in()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:418
+#: ../../guides/javascript.rst:422
 msgid "True if the user is logged in."
 msgstr ""
 
-#: ../../guides/javascript.rst:421
+#: ../../guides/javascript.rst:425
 msgid "``elgg.is_admin_logged_in()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:423
+#: ../../guides/javascript.rst:427
 msgid "True if the user is logged in and is an admin."
 msgstr ""
 
-#: ../../guides/javascript.rst:426
+#: ../../guides/javascript.rst:430
 msgid "``elgg.config.get_language()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:428
+#: ../../guides/javascript.rst:432
 msgid "Get the current page's language."
 msgstr ""
 
-#: ../../guides/javascript.rst:431
+#: ../../guides/javascript.rst:435
 msgid "There are a number of configuration values set in the elgg object:"
 msgstr ""
 
-#: ../../guides/javascript.rst:447
+#: ../../guides/javascript.rst:451
 msgid "Module ``elgg/Ajax``"
 msgstr ""
 
-#: ../../guides/javascript.rst:449
+#: ../../guides/javascript.rst:453
 msgid "See the :doc:`ajax` page for details."
 msgstr ""
 
-#: ../../guides/javascript.rst:452
+#: ../../guides/javascript.rst:456
 msgid "Module ``elgg/init``"
 msgstr ""
 
-#: ../../guides/javascript.rst:454
+#: ../../guides/javascript.rst:458
 msgid "``elgg/init`` loads and initializes all boot modules in priority order and triggers the [init, system] hook."
 msgstr ""
 
-#: ../../guides/javascript.rst:456
-#: ../../guides/javascript.rst:468
+#: ../../guides/javascript.rst:460
+#: ../../guides/javascript.rst:472
 msgid "Require this module to make sure all plugins are ready."
 msgstr ""
 
-#: ../../guides/javascript.rst:459
+#: ../../guides/javascript.rst:463
 msgid "Module ``elgg/Plugin``"
 msgstr ""
 
-#: ../../guides/javascript.rst:461
+#: ../../guides/javascript.rst:465
 msgid "Used to create a :ref:`boot module <guides/javascript#boot>`."
 msgstr ""
 
-#: ../../guides/javascript.rst:464
+#: ../../guides/javascript.rst:468
 msgid "Module ``elgg/ready``"
 msgstr ""
 
-#: ../../guides/javascript.rst:466
+#: ../../guides/javascript.rst:470
 msgid "``elgg/ready`` loads and initializes all plugin boot modules in priority order."
 msgstr ""
 
-#: ../../guides/javascript.rst:471
+#: ../../guides/javascript.rst:475
 msgid "Module ``elgg/spinner``"
 msgstr ""
 
-#: ../../guides/javascript.rst:473
+#: ../../guides/javascript.rst:477
 msgid "The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixed to the top of the window."
 msgstr ""
 
-#: ../../guides/javascript.rst:489
+#: ../../guides/javascript.rst:493
 msgid "The ``elgg/Ajax`` module uses the spinner by default."
 msgstr ""
 
-#: ../../guides/javascript.rst:492
+#: ../../guides/javascript.rst:496
 msgid "Module ``elgg/popup``"
 msgstr ""
 
-#: ../../guides/javascript.rst:494
+#: ../../guides/javascript.rst:498
 msgid "The ``elgg/popup`` module can be used to display an overlay positioned relatively to its anchor (trigger)."
 msgstr ""
 
-#: ../../guides/javascript.rst:496
+#: ../../guides/javascript.rst:500
 msgid "The ``elgg/popup`` module is loaded by default, and binding a popup module to an anchor is as simple as adding ``rel=\"popup\"`` attribute and defining target module with a ``href`` (or ``data-href``) attribute. Popup module positioning can be defined with ``data-position`` attribute of the trigger element."
 msgstr ""
 
-#: ../../guides/javascript.rst:529
+#: ../../guides/javascript.rst:533
 msgid "The ``elgg/popup`` module allows you to build out more complex UI/UX elements. You can open and close popup modules programmatically:"
 msgstr ""
 
-#: ../../guides/javascript.rst:554
+#: ../../guides/javascript.rst:558
 msgid "You can use ``getOptions, ui.popup`` plugin hook to manipulate the position of the popup before it has been opened. You can use jQuery ``open`` and ``close`` events to manipulate popup module after it has been opened or closed."
 msgstr ""
 
-#: ../../guides/javascript.rst:583
+#: ../../guides/javascript.rst:587
 msgid "Open popup modules will always contain the following data that can be accessed via ``$.data()``:"
 msgstr ""
 
-#: ../../guides/javascript.rst:585
+#: ../../guides/javascript.rst:589
 msgid "``trigger`` - jQuery element used to trigger the popup module to open"
 msgstr ""
 
-#: ../../guides/javascript.rst:586
+#: ../../guides/javascript.rst:590
 msgid "``position`` - An object defining popup module position that was passed to ``$.position()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:588
+#: ../../guides/javascript.rst:592
 msgid "By default, ``target`` element will be appended to ``$('body')`` thus altering DOM hierarchy. If you need to preserve the DOM position of the popup module, you can add ``.elgg-popup-inline`` class to your trigger."
 msgstr ""
 
-#: ../../guides/javascript.rst:591
+#: ../../guides/javascript.rst:595
 msgid "Module ``elgg/widgets``"
 msgstr ""
 
-#: ../../guides/javascript.rst:593
+#: ../../guides/javascript.rst:597
 msgid "Plugins that load a widget layout via Ajax should initialize via this module:"
 msgstr ""
 
-#: ../../guides/javascript.rst:602
+#: ../../guides/javascript.rst:606
 msgid "Module ``elgg/lightbox``"
 msgstr ""
 
-#: ../../guides/javascript.rst:604
+#: ../../guides/javascript.rst:608
 msgid "Elgg is distributed with the Colorbox jQuery library. Please go to http://www.jacklmoore.com/colorbox for more information on the options of this lightbox."
 msgstr ""
 
-#: ../../guides/javascript.rst:606
+#: ../../guides/javascript.rst:610
 msgid "Use the following classes to bind your anchor elements to a lightbox:"
 msgstr ""
 
-#: ../../guides/javascript.rst:608
+#: ../../guides/javascript.rst:612
 msgid "``elgg-lightbox`` - loads an HTML resource"
 msgstr ""
 
-#: ../../guides/javascript.rst:609
+#: ../../guides/javascript.rst:613
 msgid "``elgg-lightbox-photo`` - loads an image resource (should be used to avoid displaying raw image bytes instead of an ``img`` tag)"
 msgstr ""
 
-#: ../../guides/javascript.rst:610
+#: ../../guides/javascript.rst:614
 msgid "``elgg-lightbox-inline`` - displays an inline HTML element in a lightbox"
 msgstr ""
 
-#: ../../guides/javascript.rst:611
+#: ../../guides/javascript.rst:615
 msgid "``elgg-lightbox-iframe`` - loads a resource in an ``iframe``"
 msgstr ""
 
-#: ../../guides/javascript.rst:613
+#: ../../guides/javascript.rst:617
 msgid "You may apply colorbox options to an individual ``elgg-lightbox`` element by setting the attribute ``data-colorbox-opts`` to a JSON settings object."
 msgstr ""
 
-#: ../../guides/javascript.rst:626
+#: ../../guides/javascript.rst:630
 msgid "Use ``\"getOptions\", \"ui.lightbox\"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened. Note that the hook handler should depend on ``elgg/init`` AMD module."
 msgstr ""
 
-#: ../../guides/javascript.rst:628
+#: ../../guides/javascript.rst:632
 msgid "``elgg/lightbox`` AMD module should be used to open and close the lightbox programmatically:"
 msgstr ""
 
-#: ../../guides/javascript.rst:649
+#: ../../guides/javascript.rst:653
 msgid "To support gallery sets (via ``rel`` attribute), you need to bind colorbox directly to a specific selector (note that this will ignore ``data-colorbox-opts`` on all elements in a set):"
 msgstr ""
 
-#: ../../guides/javascript.rst:661
+#: ../../guides/javascript.rst:665
 msgid "You can also resize the lightbox programmatically if needed:"
 msgstr ""
 
-#: ../../guides/javascript.rst:674
+#: ../../guides/javascript.rst:678
 msgid "Module ``elgg/ckeditor``"
 msgstr ""
 
-#: ../../guides/javascript.rst:676
+#: ../../guides/javascript.rst:680
 msgid "This module can be used to add WYSIWYG editor to a textarea (requires ``ckeditor`` plugin to be enabled). Note that WYSIWYG will be automatically attached to all instances of ``.elgg-input-longtext``."
 msgstr ""
 
-#: ../../guides/javascript.rst:701
+#: ../../guides/javascript.rst:705
 msgid "Inline tabs component"
 msgstr ""
 
-#: ../../guides/javascript.rst:703
+#: ../../guides/javascript.rst:707
 msgid "Inline tabs component fires an ``open`` event whenever a tabs is open and, in case of ajax tabs, finished loading:"
 msgstr ""
 
-#: ../../guides/javascript.rst:724
+#: ../../guides/javascript.rst:728
 msgid "Traditional scripts"
 msgstr ""
 
-#: ../../guides/javascript.rst:726
-msgid "Although we highly recommend using AMD modules, you can register scripts with ``elgg_register_js``:"
+#: ../../guides/javascript.rst:730
+msgid "Although we highly recommend using AMD modules, and there is no Elgg API for loading the scripts, you can register scripts in a hook handler to add elements to the head links;"
 msgstr ""
 
-#: ../../guides/javascript.rst:732
-msgid "This will override any URLs previously registered under this name."
-msgstr ""
-
-#: ../../guides/javascript.rst:734
-msgid "Load a library on the current page with ``elgg_load_js``:"
-msgstr ""
-
-#: ../../guides/javascript.rst:740
-msgid "This will load the library in the page footer. You must use the ``require()`` function to depend on modules like ``elgg`` and ``jquery``."
-msgstr ""
-
-#: ../../guides/javascript.rst:749
-msgid "Using inline scripts is NOT SUPPORTED because:"
-msgstr ""
-
-#: ../../guides/javascript.rst:746
-msgid "They are not testable (maintainability)"
-msgstr ""
-
-#: ../../guides/javascript.rst:747
-msgid "They are not cacheable (performance)"
-msgstr ""
-
-#: ../../guides/javascript.rst:748
-msgid "They prevent use of Content-Security-Policy (security)"
-msgstr ""
-
-#: ../../guides/javascript.rst:749
-msgid "They prevent scripts from being loaded with ``defer`` or ``async`` (performance)"
-msgstr ""
-
-#: ../../guides/javascript.rst:751
-msgid "Inline scripts in core or bundled plugins are considered legacy bugs."
-msgstr ""
-
-#: ../../guides/javascript.rst:754
+#: ../../guides/javascript.rst:738
 msgid "Hooks"
 msgstr ""
 
-#: ../../guides/javascript.rst:756
+#: ../../guides/javascript.rst:740
 msgid "The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks are triggered and plugins can register functions to react or alter information. There is no concept of Elgg events in the JS engine; everything in the JS engine is implemented as a hook."
 msgstr ""
 
-#: ../../guides/javascript.rst:759
+#: ../../guides/javascript.rst:743
 msgid "Registering hook handlers"
 msgstr ""
 
-#: ../../guides/javascript.rst:761
+#: ../../guides/javascript.rst:745
 msgid "Handler functions are registered using ``elgg.register_hook_handler()``. Multiple handlers can be registered for the same hook."
 msgstr ""
 
-#: ../../guides/javascript.rst:763
+#: ../../guides/javascript.rst:747
 msgid "The following example registers the ``handleFoo`` function for the ``foo, bar`` hook."
 msgstr ""
 
-#: ../../guides/javascript.rst:781
+#: ../../guides/javascript.rst:765
 msgid "The handler function"
 msgstr ""
 
-#: ../../guides/javascript.rst:783
+#: ../../guides/javascript.rst:767
 msgid "The handler will receive 4 arguments:"
 msgstr ""
 
-#: ../../guides/javascript.rst:785
+#: ../../guides/javascript.rst:769
 msgid "**hook** - The hook name"
 msgstr ""
 
-#: ../../guides/javascript.rst:786
+#: ../../guides/javascript.rst:770
 msgid "**type** - The hook type"
 msgstr ""
 
-#: ../../guides/javascript.rst:787
+#: ../../guides/javascript.rst:771
 msgid "**params** - An object or set of parameters specific to the hook"
 msgstr ""
 
-#: ../../guides/javascript.rst:788
+#: ../../guides/javascript.rst:772
 msgid "**value** - The current value"
 msgstr ""
 
-#: ../../guides/javascript.rst:790
+#: ../../guides/javascript.rst:774
 msgid "The ``value`` will be passed through each hook. Depending on the hook, callbacks can simply react or alter data."
 msgstr ""
 
-#: ../../guides/javascript.rst:793
+#: ../../guides/javascript.rst:777
 msgid "Triggering custom hooks"
 msgstr ""
 
-#: ../../guides/javascript.rst:795
+#: ../../guides/javascript.rst:779
 msgid "Plugins can trigger their own hooks:"
 msgstr ""
 
-#: ../../guides/javascript.rst:806
+#: ../../guides/javascript.rst:790
 msgid "Be aware of timing. If you don't depend on elgg/init, other plugins may not have had a chance to register their handlers."
 msgstr ""
 
-#: ../../guides/javascript.rst:809
+#: ../../guides/javascript.rst:793
 msgid "Available hooks"
 msgstr ""
 
-#: ../../guides/javascript.rst:812
+#: ../../guides/javascript.rst:796
 msgid "Plugins should register their init functions for this hook. It is fired after Elgg's JS is loaded and all plugin boot modules have been initialized. Depend on the ``elgg/init`` module to be sure this has completed."
 msgstr ""
 
-#: ../../guides/javascript.rst:815
+#: ../../guides/javascript.rst:799
 msgid "This hook is fired when the system has fully booted (after init). Depend on the ``elgg/ready`` module to be sure this has completed."
 msgstr ""
 
-#: ../../guides/javascript.rst:818
+#: ../../guides/javascript.rst:802
 msgid "**getOptions, ui.popup**"
 msgstr ""
 
-#: ../../guides/javascript.rst:818
+#: ../../guides/javascript.rst:802
 msgid "This hook is fired for pop up displays (``\"rel\"=\"popup\"``) and allows for customized placement options."
 msgstr ""
 
-#: ../../guides/javascript.rst:821
+#: ../../guides/javascript.rst:805
 msgid "**getOptions, ui.lightbox**"
 msgstr ""
 
-#: ../../guides/javascript.rst:821
+#: ../../guides/javascript.rst:805
 msgid "This hook can be used to filter options passed to ``$.colorbox()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:824
+#: ../../guides/javascript.rst:808
 msgid "**config, ckeditor**"
 msgstr ""
 
-#: ../../guides/javascript.rst:824
+#: ../../guides/javascript.rst:808
 msgid "This filters the CKEditor config object. Register for this hook in a plugin boot module. The defaults can be seen in the module ``elgg/ckeditor/config``."
 msgstr ""
 
-#: ../../guides/javascript.rst:827
+#: ../../guides/javascript.rst:811
 msgid "**prepare, ckeditor**"
 msgstr ""
 
-#: ../../guides/javascript.rst:827
+#: ../../guides/javascript.rst:811
 msgid "This hook can be used to decorate ``CKEDITOR`` global. You can use this hook to register new CKEditor plugins and add event bindings."
 msgstr ""
 
-#: ../../guides/javascript.rst:831
+#: ../../guides/javascript.rst:815
 msgid "**ajax_request_data, \\***"
 msgstr ""
 
-#: ../../guides/javascript.rst:830
+#: ../../guides/javascript.rst:814
 msgid "This filters request data sent by the ``elgg/Ajax`` module. See :doc:`ajax` for details. The hook must check if the data is a plain object or an instanceof ``FormData`` to piggyback the values using correct API."
 msgstr ""
 
-#: ../../guides/javascript.rst:834
+#: ../../guides/javascript.rst:818
 msgid "**ajax_response_data, \\***"
 msgstr ""
 
-#: ../../guides/javascript.rst:834
+#: ../../guides/javascript.rst:818
 msgid "This filters the response data returned to users of the ``elgg/Ajax`` module. See :doc:`ajax` for details."
 msgstr ""
 
-#: ../../guides/javascript.rst:837
+#: ../../guides/javascript.rst:821
 msgid "**insert, editor**"
 msgstr ""
 
-#: ../../guides/javascript.rst:837
+#: ../../guides/javascript.rst:821
 msgid "This hook is triggered by the embed plugin and can be used to filter content before it is inserted into the textarea. This hook can also be used by WYSIWYG editors to insert content using their own API (in this case the handler should return ``false``). See ckeditor plugin for an example."
 msgstr ""
 
-#: ../../guides/javascript.rst:840
+#: ../../guides/javascript.rst:824
 msgid "Third-party assets"
 msgstr ""
 
-#: ../../guides/javascript.rst:842
+#: ../../guides/javascript.rst:826
 msgid "We recommend managing third-party scripts and styles with Composer. Elgg's composer.json is configured to install dependencies from the **Bower** or **Yarn** package repositories using Composer command-line tool. Core configuration installs the assets from `Asset Packagist <https://asset-packagist.org>`_ (a repository managed by the Yii community)."
 msgstr ""
 
-#: ../../guides/javascript.rst:847
+#: ../../guides/javascript.rst:831
 msgid "Alternatively, you can install ``fxp/composer-asset-plugin`` globally to achieve the same results, but the installation and update takes much longer."
 msgstr ""
 
-#: ../../guides/javascript.rst:850
+#: ../../guides/javascript.rst:834
 msgid "For example, to include jQuery, you could run the following Composer commands:"
 msgstr ""
 
-#: ../../guides/javascript.rst:857
+#: ../../guides/javascript.rst:841
 msgid "If you are using a starter-project, or pulling in Elgg as a composer dependency via a custom composer project, update your ``composer.json`` with the following configuration:"
 msgstr ""
 
-#: ../../guides/javascript.rst:876
+#: ../../guides/javascript.rst:860
 msgid "You can find additional information at `Asset Packagist <https://asset-packagist.org>`_ website."
 msgstr ""
 
@@ -5947,143 +5975,147 @@ msgid "Basic functionalities can be achieved through these two functions:"
 msgstr ""
 
 #: ../../guides/menus.rst:19
-msgid "`elgg_register_menu_item()`__ to add an item to a menu"
+msgid "``elgg_register_menu_item()`` to add an item to a menu"
 msgstr ""
 
 #: ../../guides/menus.rst:20
-msgid "`elgg_unregister_menu_item()`__ to remove an item from a menu"
+msgid "``elgg_unregister_menu_item()`` to remove an item from a menu"
 msgstr ""
 
 #: ../../guides/menus.rst:22
 msgid "You normally want to call them from your plugin's init function."
 msgstr ""
 
-#: ../../guides/menus.rst:28
-#: ../../guides/menus.rst:76
+#: ../../guides/menus.rst:25
+#: ../../guides/menus.rst:72
 msgid "Examples"
 msgstr ""
 
-#: ../../guides/menus.rst:45
+#: ../../guides/menus.rst:42
 msgid "Admin menu"
 msgstr ""
 
+#: ../../guides/menus.rst:44
+msgid "You can also register ``page`` menu items to the admin backend menu. When registering for the admin menu you can set the context of the menu items to ``admin`` so the menu items only show in the ``admin`` context. There are 3 default sections to add your menu items to."
+msgstr ""
+
 #: ../../guides/menus.rst:47
-msgid "You can also register `page` menu items to the admin backend menu. When registering for the admin menu you can set the context of the menu items to `admin` so the menu items only show in the `admin` context. There are 3 default sections to add your menu items to."
+msgid "``administer`` for daily tasks, usermanagement and other actionable tasks"
 msgstr ""
 
-#: ../../guides/menus.rst:50
-msgid "`administer` for daily tasks, usermanagement and other actionable tasks"
+#: ../../guides/menus.rst:48
+msgid "``configure`` for settings, configuration and utilities that configure stuff"
 msgstr ""
 
-#: ../../guides/menus.rst:51
-msgid "`configure` for settings, configuration and utilities that configure stuff"
+#: ../../guides/menus.rst:49
+msgid "``information`` for statistics, overview of information or status"
 msgstr ""
 
-#: ../../guides/menus.rst:52
-msgid "`information` for statistics, overview of information or status"
-msgstr ""
-
-#: ../../guides/menus.rst:56
+#: ../../guides/menus.rst:53
 msgid "Advanced usage"
 msgstr ""
 
-#: ../../guides/menus.rst:58
-msgid "You can get more control over menus by using :doc:`plugin hooks </design/events>` and the public methods provided by the ElggMenuItem__ class."
+#: ../../guides/menus.rst:55
+msgid "You can get more control over menus by using :doc:`plugin hooks </design/events>` and the public methods provided by the ``ElggMenuItem`` class."
 msgstr ""
 
-#: ../../guides/menus.rst:63
-msgid "There are two hooks that can be used to modify a menu:"
+#: ../../guides/menus.rst:61
+msgid "There are three hooks that can be used to modify a menu:"
 msgstr ""
 
-#: ../../guides/menus.rst:62
+#: ../../guides/menus.rst:59
+msgid "``'parameters', 'menu:<menu name>'`` to add or modify parameters use for the menu building (eg. sorting)"
+msgstr ""
+
+#: ../../guides/menus.rst:60
 msgid "``'register', 'menu:<menu name>'`` to add or modify items (especially in dynamic menus)"
 msgstr ""
 
-#: ../../guides/menus.rst:63
+#: ../../guides/menus.rst:61
 msgid "``'prepare', 'menu:<menu name>'`` to modify the structure of the menu before it is displayed"
 msgstr ""
 
-#: ../../guides/menus.rst:65
+#: ../../guides/menus.rst:63
 msgid "When you register a plugin hook handler, replace the ``<menu name>`` part with the internal name of the menu."
 msgstr ""
 
-#: ../../guides/menus.rst:68
+#: ../../guides/menus.rst:66
 msgid "The third parameter passed into a menu handler contains all the menu items that have been registered so far by Elgg core and other enabled plugins. In the handler we can loop through the menu items and use the class methods to interact with the properties of the menu item."
 msgstr ""
 
-#: ../../guides/menus.rst:78
+#: ../../guides/menus.rst:74
 msgid "**Example 1:** Change the URL for menu item called \"albums\" in the ``owner_block`` menu:"
 msgstr ""
 
-#: ../../guides/menus.rst:116
+#: ../../guides/menus.rst:112
 msgid "**Example 2:** Modify the ``entity`` menu for the ``ElggBlog`` objects"
 msgstr ""
 
-#: ../../guides/menus.rst:115
+#: ../../guides/menus.rst:111
 msgid "Remove the thumb icon"
 msgstr ""
 
-#: ../../guides/menus.rst:116
+#: ../../guides/menus.rst:112
 msgid "Change the \"Edit\" text into a custom icon"
 msgstr ""
 
-#: ../../guides/menus.rst:152
+#: ../../guides/menus.rst:148
 msgid "Creating a new menu"
 msgstr ""
 
-#: ../../guides/menus.rst:154
-msgid "Elgg provides multiple different menus by default. Sometimes you may however need some menu items that don't fit in any of the existing menus. If this is the case, you can create your very own menu with the `elgg_view_menu()`__ function. You must call the function from the view, where you want to menu to be displayed."
+#: ../../guides/menus.rst:150
+msgid "Elgg provides multiple different menus by default. Sometimes you may however need some menu items that don't fit in any of the existing menus. If this is the case, you can create your very own menu with the ``elgg_view_menu()`` function. You must call the function from the view, where you want to menu to be displayed."
 msgstr ""
 
-#: ../../guides/menus.rst:162
+#: ../../guides/menus.rst:156
 msgid "**Example:** Display a menu called \"my_menu\" that displays it's menu items in alphapetical order:"
 msgstr ""
 
-#: ../../guides/menus.rst:170
+#: ../../guides/menus.rst:164
 msgid "You can now add new items to the menu like this:"
 msgstr ""
 
-#: ../../guides/menus.rst:181
+#: ../../guides/menus.rst:175
 msgid "Furthermore it is now possible to modify the menu using the hooks ``'register', 'menu:my_menu'`` and ``'prepare', 'menu:my_menu'``."
 msgstr ""
 
-#: ../../guides/menus.rst:185
+#: ../../guides/menus.rst:179
 msgid "Child Dropdown Menus"
 msgstr ""
 
-#: ../../guides/menus.rst:187
+#: ../../guides/menus.rst:181
 msgid "Child menus can be configured using ``child_menu`` factory option on the parent item."
 msgstr ""
 
-#: ../../guides/menus.rst:189
+#: ../../guides/menus.rst:183
 msgid "``child_menu`` options array accepts ``display`` parameter, which can be used to set the child menu to open as ``dropdown`` or be displayed via ``toggle``. All other key value pairs will be passed as attributes to the ``ul`` element."
 msgstr ""
 
-#: ../../guides/menus.rst:230
+#: ../../guides/menus.rst:224
 msgid "Theming"
 msgstr ""
 
-#: ../../guides/menus.rst:232
+#: ../../guides/menus.rst:226
 msgid "The menu name, section names, and item names are all embedded into the HTML as CSS classes (normalized to contain only hyphens, rather that underscores or colons). This increases the size of the markup slightly but provides themers with a high degree of control and flexibility when styling the site."
 msgstr ""
 
-#: ../../guides/menus.rst:237
+#: ../../guides/menus.rst:231
 msgid "**Example:** The following would be the output of the ``foo`` menu with sections ``alt`` and ``default`` containing items ``baz`` and ``bar`` respectively."
 msgstr ""
 
-#: ../../guides/menus.rst:250
+#: ../../guides/menus.rst:244
 msgid "Toggling Menu Items"
 msgstr ""
 
-#: ../../guides/menus.rst:252
+#: ../../guides/menus.rst:246
 msgid "There are situations where you wish to toggle menu items that are actions that are the opposite of each other and ajaxify them. E.g. like/unlike, friend/unfriend, ban/unban, etc. Elgg has built-in support for this kind of actions. When you register a menu item you can provide a name of the menu item (in the same menu) that should be toggled. An ajax call will be made using the href of the menu item."
 msgstr ""
 
-#: ../../guides/menus.rst:275
+#: ../../guides/menus.rst:269
 msgid "The menu items are optimistically toggled. This means the menu items are toggled before the actions finish. If the actions fail, the menu items will be toggled back."
 msgstr ""
 
-#: ../../guides/menus.rst:281
+#: ../../guides/menus.rst:275
 msgid "It is common that menu items rely on JavaScript. You can bind client-side events to menu items by placing your JavaScript into AMD module and defining the requirement during the registration."
 msgstr ""
 
@@ -6409,254 +6441,250 @@ msgstr ""
 msgid "``widgets`` - eliminates the need for calling ``elgg_register_widget_type()``"
 msgstr ""
 
-#: ../../guides/plugins.rst:106
+#: ../../guides/plugins.rst:25
+msgid "``events`` - eliminates the need for calling ``elgg_register_event_handler()``"
+msgstr ""
+
+#: ../../guides/plugins.rst:26
+msgid "``hooks`` - eliminates the need for calling ``elgg_register_plugin_hook_handler()``"
+msgstr ""
+
+#: ../../guides/plugins.rst:147
 msgid "Bootstrap class"
 msgstr ""
 
-#: ../../guides/plugins.rst:108
+#: ../../guides/plugins.rst:149
 msgid "As of Elgg 3.0 the recommended way to bootstrap you plugin is to use a bootstrap class. This class must implement the ``\\Elgg\\PluginBootstrapInterface`` interface. You can register you bootstrap class in the ``elgg-plugin.php``."
 msgstr ""
 
-#: ../../guides/plugins.rst:111
+#: ../../guides/plugins.rst:152
 msgid "The bootstrap interface defines several function to be implemented which are called during different events in the system booting process."
 msgstr ""
 
-#: ../../guides/plugins.rst:115
+#: ../../guides/plugins.rst:156
 msgid "For more information about the different functions defined in the ``\\Elgg\\PluginBootstrapInterface`` please read  :doc:`plugins/bootstrap`"
 msgstr ""
 
-#: ../../guides/plugins.rst:118
+#: ../../guides/plugins.rst:159
 msgid "start.php"
 msgstr ""
 
-#: ../../guides/plugins.rst:120
+#: ../../guides/plugins.rst:161
 msgid "The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks."
 msgstr ""
 
-#: ../../guides/plugins.rst:122
+#: ../../guides/plugins.rst:163
 msgid "It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file. This allows for consistency in Application bootstrapping, especially for testing purposes."
 msgstr ""
 
-#: ../../guides/plugins.rst:146
+#: ../../guides/plugins.rst:187
 msgid "elgg-services.php"
 msgstr ""
 
-#: ../../guides/plugins.rst:148
+#: ../../guides/plugins.rst:189
 msgid "Plugins can attach their services to Elgg's public DI container by providing PHP-DI definitions in ``elgg-services.php`` in the root of the plugin directory."
 msgstr ""
 
-#: ../../guides/plugins.rst:151
+#: ../../guides/plugins.rst:192
 msgid "This file must return an array of PHP-DI definitions. Services will by available via ``elgg()``."
 msgstr ""
 
-#: ../../guides/plugins.rst:159
+#: ../../guides/plugins.rst:200
 msgid "Plugins can then use PHP-DI API to autowire and call the service:"
 msgstr ""
 
-#: ../../guides/plugins.rst:165
+#: ../../guides/plugins.rst:206
 msgid "See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of definition and invokation possibilities."
 msgstr ""
 
-#: ../../guides/plugins.rst:168
-#: ../../guides/plugins.rst:199
+#: ../../guides/plugins.rst:209
+#: ../../guides/plugins.rst:232
 msgid "Syntax"
 msgstr ""
 
-#: ../../guides/plugins.rst:170
+#: ../../guides/plugins.rst:211
 msgid "Here's a trivial example configuring view locations via the ``views`` key:"
 msgstr ""
 
-#: ../../guides/plugins.rst:183
-msgid "activate.php, deactivate.php"
-msgstr ""
-
-#: ../../guides/plugins.rst:185
-msgid "The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run upon plugin activation and deactivation. Use these files to perform one-time events such as registering a persistent admin notice, registering subtypes, or performing garbage collection when deactivated."
-msgstr ""
-
-#: ../../guides/plugins.rst:191
+#: ../../guides/plugins.rst:224
 msgid "manifest.xml"
 msgstr ""
 
-#: ../../guides/plugins.rst:193
+#: ../../guides/plugins.rst:226
 msgid "Elgg plugins are required to have a ``manifest.xml`` file in the root of a plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:195
+#: ../../guides/plugins.rst:228
 msgid "The ``manifest.xml`` file includes information about the plugin itself, requirements to run the plugin, and optional information including where to display the plugin in the admin area and what APIs the plugin provides."
 msgstr ""
 
-#: ../../guides/plugins.rst:201
+#: ../../guides/plugins.rst:234
 msgid "The manifest file is a standard XML file in UTF-8. Everything is a child of the ``<plugin_manifest>`` element."
 msgstr ""
 
-#: ../../guides/plugins.rst:208
+#: ../../guides/plugins.rst:241
 msgid "The manifest syntax is as follows:"
 msgstr ""
 
-#: ../../guides/plugins.rst:214
+#: ../../guides/plugins.rst:247
 msgid "Many elements can contain children attributes:"
 msgstr ""
 
-#: ../../guides/plugins.rst:224
+#: ../../guides/plugins.rst:257
 msgid "Required Elements"
 msgstr ""
 
-#: ../../guides/plugins.rst:226
+#: ../../guides/plugins.rst:259
 msgid "All plugins are required to define the following elements in their manifest files:"
 msgstr ""
 
-#: ../../guides/plugins.rst:228
+#: ../../guides/plugins.rst:261
 msgid "id - This has the name as the directory that the plugin uses."
 msgstr ""
 
-#: ../../guides/plugins.rst:229
+#: ../../guides/plugins.rst:262
 msgid "name - The display name of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:230
+#: ../../guides/plugins.rst:263
 msgid "author - The name of the author who wrote the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:231
+#: ../../guides/plugins.rst:264
 msgid "version - The version of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:232
+#: ../../guides/plugins.rst:265
 msgid "description - A description of the what the plugin provides, its features, and other relevant information"
 msgstr ""
 
-#: ../../guides/plugins.rst:233
+#: ../../guides/plugins.rst:266
 msgid "requires - Each plugin must specify the release of Elgg it was developed for. See the plugin Dependencies page for more information."
 msgstr ""
 
-#: ../../guides/plugins.rst:236
+#: ../../guides/plugins.rst:269
 msgid "Available Elements"
 msgstr ""
 
-#: ../../guides/plugins.rst:238
+#: ../../guides/plugins.rst:271
 msgid "In addition to the require elements above, the follow elements are available to use:"
 msgstr ""
 
-#: ../../guides/plugins.rst:240
+#: ../../guides/plugins.rst:273
 msgid "blurb - A short description of the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:241
+#: ../../guides/plugins.rst:274
 msgid "category - The category of the plugin. It is recommended to follow the :doc:`guidelines` and use one of the defined categories. There can be multiple entries."
 msgstr ""
 
-#: ../../guides/plugins.rst:243
+#: ../../guides/plugins.rst:276
 msgid "conflicts - Specifies that the plugin conflicts with a certain system configuration."
 msgstr ""
 
-#: ../../guides/plugins.rst:244
+#: ../../guides/plugins.rst:277
 msgid "copyright - The plugin's copyright information."
 msgstr ""
 
-#: ../../guides/plugins.rst:245
+#: ../../guides/plugins.rst:278
 msgid "license - The plugin's license information."
 msgstr ""
 
-#: ../../guides/plugins.rst:246
+#: ../../guides/plugins.rst:279
 msgid "provides - Specifies that this plugin provides the same functionality as another Elgg plugin or a PHP extension."
 msgstr ""
 
-#: ../../guides/plugins.rst:247
-msgid "screenshot - Screenshots of the plugin. There can be multiple entries. See the advanced example for syntax."
-msgstr ""
-
-#: ../../guides/plugins.rst:248
+#: ../../guides/plugins.rst:280
 msgid "suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build on the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:250
+#: ../../guides/plugins.rst:282
 msgid "website - A link to the website for the plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:254
+#: ../../guides/plugins.rst:286
 msgid ":doc:`plugins/dependencies`"
 msgstr ""
 
-#: ../../guides/plugins.rst:257
+#: ../../guides/plugins.rst:289
 msgid "Simple Example"
 msgstr ""
 
-#: ../../guides/plugins.rst:259
+#: ../../guides/plugins.rst:291
 msgid "This manifest file is the bare minimum a plugin must have."
 msgstr ""
 
-#: ../../guides/plugins.rst:277
+#: ../../guides/plugins.rst:309
 msgid "Advanced example"
 msgstr ""
 
-#: ../../guides/plugins.rst:279
+#: ../../guides/plugins.rst:311
 msgid "This example uses all of the available elements:"
 msgstr ""
 
-#: ../../guides/plugins.rst:321
+#: ../../guides/plugins.rst:347
 msgid "composer.json"
 msgstr ""
 
-#: ../../guides/plugins.rst:323
+#: ../../guides/plugins.rst:349
 msgid "Since Elgg supports being installed as a `Composer`_ dependency, having your plugins also support Composer makes for easier installation by site administrators. In order to make your plugin compatible with Composer you need to at least have a ``composer.json`` file in the root of your plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:327
+#: ../../guides/plugins.rst:353
 msgid "Here is an example of a ``composer.json`` file:"
 msgstr ""
 
-#: ../../guides/plugins.rst:332
+#: ../../guides/plugins.rst:358
 msgid "Read more about the ``composer.json`` format on the `Composer`_ website."
 msgstr ""
 
-#: ../../guides/plugins.rst:334
+#: ../../guides/plugins.rst:360
 msgid "Important parts in the ``composer.json`` file are:"
 msgstr ""
 
-#: ../../guides/plugins.rst:336
+#: ../../guides/plugins.rst:362
 msgid "``name``: the name of your plugin, keep this inline with the name of your plugin folder to ensure correct installation"
 msgstr ""
 
-#: ../../guides/plugins.rst:337
+#: ../../guides/plugins.rst:363
 msgid "``type``: this will tell Composer where to install your plugin, ALWAYS keep this as ``elgg-plugin``"
 msgstr ""
 
-#: ../../guides/plugins.rst:338
+#: ../../guides/plugins.rst:364
 msgid "``require``: the ``composer/installers`` requirement is to make sure Composer knows where to install your plugin"
 msgstr ""
 
-#: ../../guides/plugins.rst:340
+#: ../../guides/plugins.rst:366
 msgid "As a suggestion, include a ``conflict`` rule with any Elgg version below your mininal required version, this will help prevent the accidental installation of your plugin on an incompatible Elgg version."
 msgstr ""
 
-#: ../../guides/plugins.rst:343
+#: ../../guides/plugins.rst:369
 msgid "After adding a ``composer.json`` file to your plugin project, you need to register your project on `Packagist`_ in order for other people to be able to install your plugin."
 msgstr ""
 
-#: ../../guides/plugins.rst:347
+#: ../../guides/plugins.rst:373
 msgid "Tests"
 msgstr ""
 
-#: ../../guides/plugins.rst:349
+#: ../../guides/plugins.rst:375
 msgid "It's encouraged to create PHPUnit test for your plugin. All tests should be located in ``tests/phpunit/unit`` for unit tests and ``tests/phpunit/integration`` for integration tests."
 msgstr ""
 
-#: ../../guides/plugins.rst:352
+#: ../../guides/plugins.rst:378
 msgid "An easy example of adding test is the ``ViewStackTest``, this will test that the views in your plugin are registered correctly and have no syntax errors. To add this test create a file ``ViewStackTest.php`` in the folder ``tests/phpunit/unit/<YourNameSpace>/<YourPluginName>/`` with the content:"
 msgstr ""
 
-#: ../../guides/plugins.rst:369
+#: ../../guides/plugins.rst:395
 msgid "If you wish to see a better example, look in any of the Elgg core plugins."
 msgstr ""
 
-#: ../../guides/plugins.rst:373
+#: ../../guides/plugins.rst:399
 msgid ":doc:`/contribute/tests`"
 msgstr ""
 
-#: ../../guides/plugins.rst:376
-#: ../../guides/views.rst:650
-#: ../../guides/web-services.rst:371
+#: ../../guides/plugins.rst:402
+#: ../../guides/views.rst:644
+#: ../../guides/web-services.rst:374
 msgid "Related"
 msgstr ""
 
@@ -7181,140 +7209,132 @@ msgstr ""
 msgid "The following files for plugin ``example`` would go in ``/mod/example/``"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:70
+#: ../../guides/plugins/plugin-skeleton.rst:68
 msgid "Required Files"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:72
+#: ../../guides/plugins/plugin-skeleton.rst:70
 msgid "Plugins **must** provide a ``manifest.xml`` file in the plugin root in order to be recognized by Elgg."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:74
+#: ../../guides/plugins/plugin-skeleton.rst:72
 msgid "Therefore the following is the minimally compliant structure:"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:84
+#: ../../guides/plugins/plugin-skeleton.rst:82
 msgid "Plugins *should* place scripts for actions an ``actions/`` directory, and furthermore *should* use the name of the action to determine the location within that directory."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:86
+#: ../../guides/plugins/plugin-skeleton.rst:84
 msgid "For example, the action ``my/example/action`` would go in ``my_plugin/actions/my/example/action.php``. This makes it very obvious which script is associated with which action."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:88
+#: ../../guides/plugins/plugin-skeleton.rst:86
 msgid "Similarly, the body of the form that submits to this action should be located in ``forms/my/example/action.php``. Not only does this make the connection b/w action handler, form code, and action name obvious, but it allows you to use the ``elgg_view_form()`` function easily."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:91
+#: ../../guides/plugins/plugin-skeleton.rst:89
 msgid "Text Files"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:93
+#: ../../guides/plugins/plugin-skeleton.rst:91
 msgid "Plugins *may* provide various \\*.txt as additional documentation for the plugin. These files **must** be in Markdown syntax and will generate links on the plugin management sections."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:96
+#: ../../guides/plugins/plugin-skeleton.rst:94
 msgid "README.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:96
+#: ../../guides/plugins/plugin-skeleton.rst:94
 msgid "*should* provide additional information about the plugin of an unspecified nature"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:99
+#: ../../guides/plugins/plugin-skeleton.rst:97
 msgid "COPYRIGHT.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:99
+#: ../../guides/plugins/plugin-skeleton.rst:97
 msgid "If included, **must** provide an explanation of the plugin's copyright, besides what is included in ``manifest.xml``"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:102
+#: ../../guides/plugins/plugin-skeleton.rst:100
 msgid "LICENSE.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:102
+#: ../../guides/plugins/plugin-skeleton.rst:100
 msgid "If included, **must** provide the text of the license that the plugin is released under."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:105
+#: ../../guides/plugins/plugin-skeleton.rst:103
 msgid "INSTALL.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:105
+#: ../../guides/plugins/plugin-skeleton.rst:103
 msgid "If included, **must** provide additional instructions for installing the plugin if the process is sufficiently complicated (e.g. if it requires installing third party libraries on the host machine, or requires acquiring an API key from a third party)."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:108
+#: ../../guides/plugins/plugin-skeleton.rst:106
 msgid "CHANGES.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:108
+#: ../../guides/plugins/plugin-skeleton.rst:106
 msgid "If included, **must** provide a list of changes for their plugin, grouped by version number, with the most recent version at the top."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:110
+#: ../../guides/plugins/plugin-skeleton.rst:108
 msgid "Plugins *may* include additional \\*.txt files besides these, but no interface is given for reading them."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:113
+#: ../../guides/plugins/plugin-skeleton.rst:111
 msgid "Pages"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:115
+#: ../../guides/plugins/plugin-skeleton.rst:113
 msgid "To render full pages, plugins should use **resource views** (which have names beginning with ``resources/``). This allows other plugins to easily replace functionality via the view system."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:120
+#: ../../guides/plugins/plugin-skeleton.rst:118
 msgid "The reason we encourage this structure is"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:122
+#: ../../guides/plugins/plugin-skeleton.rst:120
 msgid "To form a logical relationship between urls and scripts, so that people examining the code can have an idea of what it does just by examining the structure."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:123
+#: ../../guides/plugins/plugin-skeleton.rst:121
 msgid "To clean up the root plugin directory, which historically has quickly gotten cluttered with the page handling scripts."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:126
+#: ../../guides/plugins/plugin-skeleton.rst:124
 msgid "Classes"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:128
+#: ../../guides/plugins/plugin-skeleton.rst:126
 msgid "Elgg provides `PSR-0 <http://www.php-fig.org/psr/psr-0/>`_ autoloading out of every active plugin's ``classes/`` directory."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:130
+#: ../../guides/plugins/plugin-skeleton.rst:128
 msgid "You're encouraged to follow the `PHP-FIG <http://www.php-fig.org/>`_ standards when writing your classes."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:134
+#: ../../guides/plugins/plugin-skeleton.rst:132
 msgid "Files with a \".class.php\" extension will **not** be recognized by Elgg."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:137
+#: ../../guides/plugins/plugin-skeleton.rst:135
 msgid "Vendors"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:139
+#: ../../guides/plugins/plugin-skeleton.rst:137
 msgid "Included third-party libraries of any kind *should* be included in the ``vendors/`` folder in the plugin root. Though this folder has no special significance to the Elgg engine, this has historically been the location where Elgg core stores its third-party libraries, so we encourage the same format for the sake of consistency and familiarity."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:144
+#: ../../guides/plugins/plugin-skeleton.rst:142
 msgid "In order to override core views, a plugin's views can be placed in ``views/``, or an ``elgg-plugin.php`` config file can be used for more detailed file/path mapping. See :doc:`/guides/views`."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:146
+#: ../../guides/plugins/plugin-skeleton.rst:144
 msgid "Javascript and CSS will live in the views system. See :doc:`/guides/javascript`."
-msgstr ""
-
-#: ../../guides/plugins/plugin-skeleton.rst:149
-msgid "activate.php and deactivate.php"
-msgstr ""
-
-#: ../../guides/plugins/plugin-skeleton.rst:151
-msgid "The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run respectively upon plugin activation or deactivation. Use these files to perform one-time events such as registering a persistent admin notice, registering subtypes, or performing garbage collection when deactivated."
 msgstr ""
 
 #: ../../guides/river.rst:2
@@ -7617,107 +7637,119 @@ msgstr ""
 msgid "By default, Elgg will set the following requirements for named URL segments:"
 msgstr ""
 
-#: ../../guides/routing.rst:167
+#: ../../guides/routing.rst:166
+msgid "Plugin dependent routes"
+msgstr ""
+
+#: ../../guides/routing.rst:168
+msgid "If a route requires a specific plugin to be active this can be configured in the route configuration."
+msgstr ""
+
+#: ../../guides/routing.rst:186
 msgid "Route middleware"
 msgstr ""
 
-#: ../../guides/routing.rst:169
+#: ../../guides/routing.rst:188
 msgid "Route middleware can be used to prevent access to a certain route, or to perform some business logic before the route is rendered. Middleware can be used, e.g. to implement a paywall, or to log analytics, or to set open graph metatags."
 msgstr ""
 
-#: ../../guides/routing.rst:173
+#: ../../guides/routing.rst:192
 msgid "Elgg core implements several middleware handlers, including:"
 msgstr ""
 
-#: ../../guides/routing.rst:175
+#: ../../guides/routing.rst:194
 msgid "``\\Elgg\\Router\\Middleware\\Gatekeeper`` - prevent access by non-authenticated users"
 msgstr ""
 
-#: ../../guides/routing.rst:176
+#: ../../guides/routing.rst:195
 msgid "``\\Elgg\\Router\\Middleware\\AdminGatekeeper`` - prevent access by non-admin users"
 msgstr ""
 
-#: ../../guides/routing.rst:177
+#: ../../guides/routing.rst:196
 msgid "``\\Elgg\\Router\\Middleware\\AjaxGatekeeper`` - prevent access with non-xhr requests"
 msgstr ""
 
-#: ../../guides/routing.rst:178
+#: ../../guides/routing.rst:197
 msgid "``\\Elgg\\Router\\Middleware\\CsrfFirewall`` - prevent access without CSRF tokens"
 msgstr ""
 
-#: ../../guides/routing.rst:180
+#: ../../guides/routing.rst:198
+msgid "``\\Elgg\\Router\\Middleware\\SignedRequestGatekeeper`` - prevent access if the url has been tampered with"
+msgstr ""
+
+#: ../../guides/routing.rst:200
 msgid "Middleware handlers can be set to any callable that receives an instance of ``\\Elgg\\Request``: The handler should throw an instance of ``HttpException`` to prevent route access. The handler can return an instance of ``\\Elgg\\Http\\ResponseBuilder`` to prevent further implementation of the routing sequence (a redirect response can be returned to re-route the request)."
 msgstr ""
 
-#: ../../guides/routing.rst:209
+#: ../../guides/routing.rst:229
 msgid "Route controllers"
 msgstr ""
 
-#: ../../guides/routing.rst:211
+#: ../../guides/routing.rst:231
 msgid "In certain cases, using resource views is not appropriate. In these cases you can use a controller - any callable that receives an instance of ``\\Elgg\\Request``:"
 msgstr ""
 
-#: ../../guides/routing.rst:235
+#: ../../guides/routing.rst:255
 msgid "The ``route:rewrite`` Plugin Hook"
 msgstr ""
 
-#: ../../guides/routing.rst:237
+#: ../../guides/routing.rst:257
 msgid "For URL rewriting, the ``route:rewrite`` hook (with similar arguments as ``route``) is triggered very early, and allows modifying the request URL path (relative to the Elgg site)."
 msgstr ""
 
-#: ../../guides/routing.rst:240
+#: ../../guides/routing.rst:260
 msgid "Here we rewrite requests for ``news/*`` to ``blog/*``:"
 msgstr ""
 
-#: ../../guides/routing.rst:253
+#: ../../guides/routing.rst:273
 msgid "The hook must be registered directly in your plugin ``start.php`` (the ``[init, system]`` event is too late)."
 msgstr ""
 
-#: ../../guides/routing.rst:257
+#: ../../guides/routing.rst:277
 msgid "Routing overview"
 msgstr ""
 
-#: ../../guides/routing.rst:259
+#: ../../guides/routing.rst:279
 msgid "For regular pages, Elgg's program flow is something like this:"
 msgstr ""
 
-#: ../../guides/routing.rst:261
+#: ../../guides/routing.rst:281
 msgid "A user requests ``http://example.com/news/owner/jane``."
 msgstr ""
 
-#: ../../guides/routing.rst:262
+#: ../../guides/routing.rst:282
 msgid "Plugins are initialized."
 msgstr ""
 
-#: ../../guides/routing.rst:263
+#: ../../guides/routing.rst:283
 msgid "Elgg parses the URL to identifier ``news`` and segments ``['owner', 'jane']``."
 msgstr ""
 
-#: ../../guides/routing.rst:264
+#: ../../guides/routing.rst:284
 msgid "Elgg triggers the plugin hook ``route:rewrite, news`` (see above)."
 msgstr ""
 
-#: ../../guides/routing.rst:265
+#: ../../guides/routing.rst:285
 msgid "Elgg triggers the plugin hook ``route, blog`` (was rewritten in the rewrite hook)."
 msgstr ""
 
-#: ../../guides/routing.rst:266
+#: ../../guides/routing.rst:286
 msgid "Elgg finds a registered route that matches the final route path, and renders a resource view associated with it. It calls ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username."
 msgstr ""
 
-#: ../../guides/routing.rst:268
+#: ../../guides/routing.rst:288
 msgid "The ``resources/blog/owner`` view gets the username via ``$vars['username']``, and uses many other views and formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page."
 msgstr ""
 
-#: ../../guides/routing.rst:270
+#: ../../guides/routing.rst:290
 msgid "PHP invokes Elgg's shutdown sequence."
 msgstr ""
 
-#: ../../guides/routing.rst:271
+#: ../../guides/routing.rst:291
 msgid "The user receives a fully rendered page."
 msgstr ""
 
-#: ../../guides/routing.rst:273
+#: ../../guides/routing.rst:293
 msgid "Elgg's coding standards suggest a particular URL layout, but there is no syntax enforced."
 msgstr ""
 
@@ -8170,7 +8202,7 @@ msgid "This gives you total control over the way Elgg looks and behaves. It give
 msgstr ""
 
 #: ../../guides/themes.rst:303
-#: ../../guides/views.rst:598
+#: ../../guides/views.rst:592
 msgid "Icons"
 msgstr ""
 
@@ -8571,473 +8603,469 @@ msgid "Don't store the returned URLs in a database"
 msgstr ""
 
 #: ../../guides/views.rst:127
-msgid "In your plugin's init function, register the css file:"
+msgid "On the page you want to load the css, call:"
 msgstr ""
 
-#: ../../guides/views.rst:133
-msgid "Then on the page you want to load the css, call:"
-msgstr ""
-
-#: ../../guides/views.rst:143
+#: ../../guides/views.rst:137
 msgid "Views and third-party assets"
 msgstr ""
 
-#: ../../guides/views.rst:145
+#: ../../guides/views.rst:139
 msgid "The best way to serve third-party assets is through views. However, instead of manually copy/pasting the assets into the right location in ``/views/*``, you can map the assets into the views system via the ``\"views\"`` key in your plugin's ``elgg-plugin.php`` config file."
 msgstr ""
 
-#: ../../guides/views.rst:149
+#: ../../guides/views.rst:143
 msgid "The views value must be a 2 dimensional array. The first level maps a viewtype to a list of view mappings. The secondary lists map view names to file paths, either absolute or relative to the Elgg root directory."
 msgstr ""
 
-#: ../../guides/views.rst:152
+#: ../../guides/views.rst:146
 msgid "If you check your assets into source control, point to them like this:"
 msgstr ""
 
-#: ../../guides/views.rst:168
+#: ../../guides/views.rst:162
 msgid "To point to assets installed with composer, use install-root-relative paths by leaving off the leading slash:"
 msgstr ""
 
-#: ../../guides/views.rst:182
+#: ../../guides/views.rst:176
 msgid "Elgg core uses this feature extensively, though the value is returned directly from ``/engine/views.php``."
 msgstr ""
 
-#: ../../guides/views.rst:186
+#: ../../guides/views.rst:180
 msgid "You don't have to use Bower, Composer Asset Plugin, or any other script for managing your plugin's assets, but we highly recommend using a package manager of some kind because it makes upgrading so much easier."
 msgstr ""
 
-#: ../../guides/views.rst:191
+#: ../../guides/views.rst:185
 msgid "Specifying additional views directories"
 msgstr ""
 
-#: ../../guides/views.rst:193
+#: ../../guides/views.rst:187
 msgid "In ``elgg-plugin.php`` you can also specify directories to be scanned for views. Just provide a view name prefix ending with ``/`` and a directory path (like above)."
 msgstr ""
 
-#: ../../guides/views.rst:207
+#: ../../guides/views.rst:201
 msgid "With the above, files found within the ``icons`` folder will be interpreted as views. E.g. the view ``file/icon/general.gif`` will be created and mapped to ``mod/file/graphics/icons/general.gif``."
 msgstr ""
 
-#: ../../guides/views.rst:212
+#: ../../guides/views.rst:206
 msgid "This is a fully recursive scan. All files found will be brought into the views system."
 msgstr ""
 
-#: ../../guides/views.rst:214
+#: ../../guides/views.rst:208
 msgid "Multiple paths can share the same prefix, just give an array of paths:"
 msgstr ""
 
-#: ../../guides/views.rst:231
+#: ../../guides/views.rst:225
 msgid "Viewtypes"
 msgstr ""
 
-#: ../../guides/views.rst:233
+#: ../../guides/views.rst:227
 msgid "You might be wondering: \"Why ``/views/default/hello/world.php`` instead of just ``/views/hello/world.php``?\"."
 msgstr ""
 
-#: ../../guides/views.rst:235
+#: ../../guides/views.rst:229
 msgid "The subdirectory under ``/views`` determines the *viewtype* of the views below it. A viewtype generally corresponds to the output format of the views."
 msgstr ""
 
-#: ../../guides/views.rst:238
+#: ../../guides/views.rst:232
 msgid "The default viewtype is assumed to be HTML and other static assets necessary to render a responsive web page in a desktop or mobile browser, but it could also be:"
 msgstr ""
 
-#: ../../guides/views.rst:241
+#: ../../guides/views.rst:235
 msgid "RSS"
 msgstr ""
 
-#: ../../guides/views.rst:242
+#: ../../guides/views.rst:236
 msgid "ATOM"
 msgstr ""
 
-#: ../../guides/views.rst:243
+#: ../../guides/views.rst:237
 msgid "JSON"
 msgstr ""
 
-#: ../../guides/views.rst:244
+#: ../../guides/views.rst:238
 msgid "Mobile-optimized HTML"
 msgstr ""
 
-#: ../../guides/views.rst:245
+#: ../../guides/views.rst:239
 msgid "TV-optimized HTML"
 msgstr ""
 
-#: ../../guides/views.rst:246
+#: ../../guides/views.rst:240
 msgid "Any number of other data formats"
 msgstr ""
 
-#: ../../guides/views.rst:248
+#: ../../guides/views.rst:242
 msgid "You can force Elgg to use a particular viewtype to render the page by setting the ``view`` input variable like so: ``https://mysite.com/?view=rss``."
 msgstr ""
 
-#: ../../guides/views.rst:251
+#: ../../guides/views.rst:245
 msgid "You could also write a plugin to set this automatically using the ``elgg_set_viewtype()`` function. For example, your plugin might detect that the page was accessed with an iPhone's browser string, and set the viewtype to ``iphone`` by calling:"
 msgstr ""
 
-#: ../../guides/views.rst:259
+#: ../../guides/views.rst:253
 msgid "The plugin would presumably also supply a set of views optimized for those devices."
 msgstr ""
 
-#: ../../guides/views.rst:264
+#: ../../guides/views.rst:258
 msgid "Altering views via plugins"
 msgstr ""
 
-#: ../../guides/views.rst:266
+#: ../../guides/views.rst:260
 msgid "Without modifying Elgg's core, Elgg provides several ways to customize almost all output:"
 msgstr ""
 
-#: ../../guides/views.rst:268
+#: ../../guides/views.rst:262
 msgid "You can `override a view <#overriding-views>`_, completely changing the file used to render it."
 msgstr ""
 
-#: ../../guides/views.rst:269
+#: ../../guides/views.rst:263
 msgid "You can `extend a view <#extending-views>`_ by prepending or appending the output of another view to it."
 msgstr ""
 
-#: ../../guides/views.rst:270
+#: ../../guides/views.rst:264
 msgid "You can `alter a view's inputs <#altering-view-input>`_ by plugin hook."
 msgstr ""
 
-#: ../../guides/views.rst:271
+#: ../../guides/views.rst:265
 msgid "You can `alter a view's output <#altering-view-output>`_ by plugin hook."
 msgstr ""
 
-#: ../../guides/views.rst:274
+#: ../../guides/views.rst:268
 msgid "Overriding views"
 msgstr ""
 
-#: ../../guides/views.rst:276
+#: ../../guides/views.rst:270
 msgid "Views in plugin directories always override views in the core directory; however, when plugins override the views of other plugins, :ref:`later plugins take precedent <admin/plugins#plugin-order>`."
 msgstr ""
 
-#: ../../guides/views.rst:280
+#: ../../guides/views.rst:274
 msgid "For example, if we wanted to customize the ``hello/world`` view to use an ``h2`` instead of an ``h1``, we could create a file at ``/mod/example/views/default/hello/world.php`` like this:"
 msgstr ""
 
-#: ../../guides/views.rst:289
+#: ../../guides/views.rst:283
 msgid "When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes."
 msgstr ""
 
-#: ../../guides/views.rst:292
+#: ../../guides/views.rst:286
 msgid "You may instead want to alter :ref:`the input <guides/views#altering-view-input>` or :ref:`the output <guides/views#altering-view-output>` of the view via plugin hooks."
 msgstr ""
 
-#: ../../guides/views.rst:297
+#: ../../guides/views.rst:291
 msgid "Elgg caches view locations. This means that you should disable the system cache while developing with views. When you install the changes to a production environment you must flush the caches."
 msgstr ""
 
-#: ../../guides/views.rst:301
+#: ../../guides/views.rst:295
 msgid "Extending views"
 msgstr ""
 
-#: ../../guides/views.rst:303
+#: ../../guides/views.rst:297
 msgid "There may be other situations in which you don't want to override the whole view, you just want to prepend or append some more content to it. In Elgg this is called *extending a view*."
 msgstr ""
 
-#: ../../guides/views.rst:306
+#: ../../guides/views.rst:300
 msgid "For example, instead of overriding the ``hello/world`` view, we could extend it like so:"
 msgstr ""
 
-#: ../../guides/views.rst:312
+#: ../../guides/views.rst:306
 msgid "If the contents of ``/views/default/hello/greeting.php`` is:"
 msgstr ""
 
-#: ../../guides/views.rst:318
+#: ../../guides/views.rst:312
 msgid "Then every time we call ``elgg_view('hello/world');``, we'll get:"
 msgstr ""
 
-#: ../../guides/views.rst:325
+#: ../../guides/views.rst:319
 msgid "You can prepend views by passing a value to the 3rd parameter that is less than 500:"
 msgstr ""
 
-#: ../../guides/views.rst:335
+#: ../../guides/views.rst:329
 msgid "All view extensions should be registered in your plugin's ``init,system`` event handler in ``start.php``."
 msgstr ""
 
-#: ../../guides/views.rst:340
+#: ../../guides/views.rst:334
 msgid "Altering view input"
 msgstr ""
 
-#: ../../guides/views.rst:342
+#: ../../guides/views.rst:336
 msgid "It may be useful to alter a view's ``$vars`` array before the view is rendered."
 msgstr ""
 
-#: ../../guides/views.rst:344
+#: ../../guides/views.rst:338
 msgid "Before each view rendering the ``$vars`` array is filtered by the :ref:`plugin hook <guides/hooks-list#views>` ``[\"view_vars\", $view_name]``. Each registered handler function is passed these arguments:"
 msgstr ""
 
-#: ../../guides/views.rst:348
+#: ../../guides/views.rst:342
 msgid "``$hook`` - the string ``\"view_vars\"``"
 msgstr ""
 
-#: ../../guides/views.rst:349
-#: ../../guides/views.rst:384
+#: ../../guides/views.rst:343
+#: ../../guides/views.rst:378
 msgid "``$view_name`` - the view name being rendered (the first argument passed to ``elgg_view()``)"
 msgstr ""
 
-#: ../../guides/views.rst:350
+#: ../../guides/views.rst:344
 msgid "``$returnvalue`` - the modified ``$vars`` array"
 msgstr ""
 
-#: ../../guides/views.rst:351
-#: ../../guides/views.rst:386
+#: ../../guides/views.rst:345
+#: ../../guides/views.rst:380
 msgid "``$params`` - an array containing:"
 msgstr ""
 
-#: ../../guides/views.rst:353
+#: ../../guides/views.rst:347
 msgid "``vars`` - the original ``$vars`` array, unaltered"
 msgstr ""
 
-#: ../../guides/views.rst:354
+#: ../../guides/views.rst:348
 msgid "``view`` - the view name"
 msgstr ""
 
-#: ../../guides/views.rst:355
-#: ../../guides/views.rst:388
+#: ../../guides/views.rst:349
+#: ../../guides/views.rst:382
 msgid "``viewtype`` - The :ref:`viewtype <guides/views#viewtypes>` being rendered"
 msgstr ""
 
-#: ../../guides/views.rst:358
+#: ../../guides/views.rst:352
 msgid "Altering view input example"
 msgstr ""
 
-#: ../../guides/views.rst:360
+#: ../../guides/views.rst:354
 msgid "Here we'll alter the default pagination limit for the comments view:"
 msgstr ""
 
-#: ../../guides/views.rst:375
+#: ../../guides/views.rst:369
 msgid "Altering view output"
 msgstr ""
 
-#: ../../guides/views.rst:377
+#: ../../guides/views.rst:371
 msgid "Sometimes it is preferable to alter the output of a view instead of overriding it."
 msgstr ""
 
-#: ../../guides/views.rst:379
+#: ../../guides/views.rst:373
 msgid "The output of each view is run through the :ref:`plugin hook <guides/hooks-list#views>` ``[\"view\", $view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:"
 msgstr ""
 
-#: ../../guides/views.rst:383
+#: ../../guides/views.rst:377
 msgid "``$hook`` - the string ``\"view\"``"
 msgstr ""
 
-#: ../../guides/views.rst:385
+#: ../../guides/views.rst:379
 msgid "``$result`` - the modified output of the view"
 msgstr ""
 
-#: ../../guides/views.rst:390
+#: ../../guides/views.rst:384
 msgid "To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string."
 msgstr ""
 
-#: ../../guides/views.rst:393
+#: ../../guides/views.rst:387
 msgid "Altering view output example"
 msgstr ""
 
-#: ../../guides/views.rst:395
+#: ../../guides/views.rst:389
 msgid "Here we'll eliminate breadcrumbs that don't have at least one link."
 msgstr ""
 
-#: ../../guides/views.rst:416
+#: ../../guides/views.rst:410
 msgid "Replacing view output completely"
 msgstr ""
 
-#: ../../guides/views.rst:418
+#: ../../guides/views.rst:412
 msgid "You can pre-set the view output by setting ``$vars['__view_output']``. The value will be returned as a string. View extensions will not be used and the ``view`` hook will not be triggered."
 msgstr ""
 
-#: ../../guides/views.rst:433
+#: ../../guides/views.rst:427
 msgid "For ease of use you can also use a already existing default hook callback to prevent output ``\\Elgg\\Values::preventViewOutput``"
 msgstr ""
 
-#: ../../guides/views.rst:438
+#: ../../guides/views.rst:432
 msgid "If you don't know what an entity is, :doc:`check this page out first </design/database>`."
 msgstr ""
 
-#: ../../guides/views.rst:440
+#: ../../guides/views.rst:434
 msgid "The following code will automatically display the entity in ``$entity``:"
 msgstr ""
 
-#: ../../guides/views.rst:446
+#: ../../guides/views.rst:440
 msgid "As you'll know from the data model introduction, all entities have a *type* (object, site, user or group), and optionally a subtype (which could be anything - 'blog', 'forumpost', 'banana')."
 msgstr ""
 
-#: ../../guides/views.rst:450
+#: ../../guides/views.rst:444
 msgid "``elgg_view_entity`` will automatically look for a view called ``type/subtype``; if there's no subtype, it will look for ``type/type``. Failing that, before it gives up completely it tries ``type/default``."
 msgstr ""
 
-#: ../../guides/views.rst:454
+#: ../../guides/views.rst:448
 msgid "RSS feeds in Elgg generally work by outputting the ``object/default`` view in the 'rss' viewtype."
 msgstr ""
 
-#: ../../guides/views.rst:456
+#: ../../guides/views.rst:450
 msgid "For example, the view to display a blog post might be ``object/blog``. The view to display a user is ``user/default``."
 msgstr ""
 
-#: ../../guides/views.rst:460
+#: ../../guides/views.rst:454
 msgid "Full and partial entity views"
 msgstr ""
 
-#: ../../guides/views.rst:462
+#: ../../guides/views.rst:456
 msgid "``elgg_view_entity`` actually has a number of parameters, although only the very first one is required. The first three are:"
 msgstr ""
 
-#: ../../guides/views.rst:465
+#: ../../guides/views.rst:459
 msgid "``$entity`` - The entity to display"
 msgstr ""
 
-#: ../../guides/views.rst:466
+#: ../../guides/views.rst:460
 msgid "``$viewtype`` - The viewtype to display in (defaults to the one we're currently in, but it can be forced - eg to display a snippet of RSS within an HTML page)"
 msgstr ""
 
-#: ../../guides/views.rst:468
+#: ../../guides/views.rst:462
 msgid "``$full_view`` - Whether to display a *full* version of the entity. (Defaults to ``true``.)"
 msgstr ""
 
-#: ../../guides/views.rst:470
+#: ../../guides/views.rst:464
 msgid "This last parameter is passed to the view as ``$vars['full_view']``. It's up to you what you do with it; the usual behaviour is to only display comments and similar information if this is set to true."
 msgstr ""
 
-#: ../../guides/views.rst:477
+#: ../../guides/views.rst:471
 msgid "Listing entities"
 msgstr ""
 
-#: ../../guides/views.rst:479
+#: ../../guides/views.rst:473
 msgid "This is then used in the provided listing functions. To automatically display a list of blog posts (:doc:`see the full tutorial </tutorials/blog>`), you can call:"
 msgstr ""
 
-#: ../../guides/views.rst:489
+#: ../../guides/views.rst:483
 msgid "This function checks to see if there are any entities; if there are, it first displays the ``navigation/pagination`` view in order to display a way to move from page to page. It then repeatedly calls ``elgg_view_entity`` on each entity before returning the result."
 msgstr ""
 
-#: ../../guides/views.rst:494
+#: ../../guides/views.rst:488
 msgid "Note that ``elgg_list_entities`` allows the URL to set its ``limit`` and ``offset`` options, so set those explicitly if you need particular values (e.g. if you're not using it for pagination)."
 msgstr ""
 
-#: ../../guides/views.rst:497
+#: ../../guides/views.rst:491
 msgid "Elgg knows that it can automatically supply an RSS feed on pages that use ``elgg_list_entities``. It initializes the ``[\"head\",\"page\"]`` plugin hook (which is used by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages in some browsers."
 msgstr ""
 
-#: ../../guides/views.rst:502
+#: ../../guides/views.rst:496
 msgid "Entity listings will default try to load entity owners and container owners. If you want to prevent this you can turn this off."
 msgstr ""
 
-#: ../../guides/views.rst:514
+#: ../../guides/views.rst:508
 msgid "See also :doc:`this background information on Elgg's database </design/database>`."
 msgstr ""
 
-#: ../../guides/views.rst:516
+#: ../../guides/views.rst:510
 msgid "If you want to show a message when the list does not contain items to list, you can pass a ``no_results`` message or ``true`` for the default message. If you want even more controle over the ``no_results`` message you can also pass a Closure (an anonymous function)."
 msgstr ""
 
-#: ../../guides/views.rst:530
+#: ../../guides/views.rst:524
 msgid "Rendering a list with an alternate view"
 msgstr ""
 
-#: ../../guides/views.rst:532
+#: ../../guides/views.rst:526
 msgid "You can define an alternative view to render list items using ``'item_view'`` parameter."
 msgstr ""
 
-#: ../../guides/views.rst:534
+#: ../../guides/views.rst:528
 msgid "In some cases, default entity views may be unsuitable for your needs. Using ``item_view`` allows you to customize the look, while preserving pagination, list's HTML markup etc."
 msgstr ""
 
-#: ../../guides/views.rst:537
+#: ../../guides/views.rst:531
 msgid "Consider these two examples:"
 msgstr ""
 
-#: ../../guides/views.rst:559
+#: ../../guides/views.rst:553
 msgid "In the first example, we are displaying a list of groups a user is a member of using the default group view. In the second example, we want to display a list of groups the user was invited to."
 msgstr ""
 
-#: ../../guides/views.rst:562
+#: ../../guides/views.rst:556
 msgid "Since invitations are not entities, they do not have their own views and can not be listed using ``elgg_list_*``. We are providing an alternative item view, that will use the group entity to display an invitation that contains a group name and buttons to access or reject the invitation."
 msgstr ""
 
-#: ../../guides/views.rst:567
+#: ../../guides/views.rst:561
 msgid "Rendering a list as a table"
 msgstr ""
 
-#: ../../guides/views.rst:569
+#: ../../guides/views.rst:563
 msgid "Since 2.3 you can render lists as tables. Set ``$options['list_type'] = 'table'`` and provide an array of TableColumn objects as ``$options['columns']``. The service ``elgg()->table_columns`` provides several methods to create column objects based around existing views (like ``page/components/column/*``), properties, or methods."
 msgstr ""
 
-#: ../../guides/views.rst:574
+#: ../../guides/views.rst:568
 msgid "In this example, we list the latest ``my_plugin`` objects in a table of 3 columns: entity icon, the display name, and a friendly format of the time."
 msgstr ""
 
-#: ../../guides/views.rst:593
+#: ../../guides/views.rst:587
 msgid "See the ``Elgg\\Views\\TableColumn\\ColumnFactory`` class for more details on how columns are specified and rendered. You can add or override methods of ``elgg()->table_columns`` in a variety of ways, based on views, properties/methods on the items, or given functions."
 msgstr ""
 
-#: ../../guides/views.rst:600
+#: ../../guides/views.rst:594
 msgid "Elgg has support for two kind of icons: generic icons to help with styling (eg. show delete icon) and Entity icons (eg. user avatar)."
 msgstr ""
 
-#: ../../guides/views.rst:603
+#: ../../guides/views.rst:597
 msgid "Generic icons"
 msgstr ""
 
-#: ../../guides/views.rst:605
+#: ../../guides/views.rst:599
 msgid "As of Elgg 2.0 the generic icons are based on the FontAwesome_ library. You can get any of the supported icons by calling ``elgg_view_icon($icon_name, $vars);`` where:"
 msgstr ""
 
-#: ../../guides/views.rst:608
+#: ../../guides/views.rst:602
 msgid "``$icon_name`` is the FontAwesome name (without ``fa-``) for example ``user``"
 msgstr ""
 
-#: ../../guides/views.rst:609
+#: ../../guides/views.rst:603
 msgid "``$vars`` is optional, for example you can set an additional class"
 msgstr ""
 
-#: ../../guides/views.rst:611
+#: ../../guides/views.rst:605
 msgid "``elgg_view_icon()`` calls the view ``output/icon`` with the given icon name and outputs all the correct classes to render the FontAwesome icon. If you wish to replace an icon with another icon you can write a ``view_vars``, ``output/icon`` hook to replace the icon name with your replacement."
 msgstr ""
 
-#: ../../guides/views.rst:614
+#: ../../guides/views.rst:608
 msgid "For backwards compatibility some older Elgg icon names are translated to a corresponding FontAwesome icon."
 msgstr ""
 
-#: ../../guides/views.rst:617
+#: ../../guides/views.rst:611
 msgid "Entity icons"
 msgstr ""
 
-#: ../../guides/views.rst:619
+#: ../../guides/views.rst:613
 msgid "To view an icon belowing to an Entity call ``elgg_view_entity_icon($entity, $size, $vars);`` where:"
 msgstr ""
 
-#: ../../guides/views.rst:621
+#: ../../guides/views.rst:615
 msgid "``$entity`` is the ``ElggEntity`` you wish to show the icon for"
 msgstr ""
 
-#: ../../guides/views.rst:622
+#: ../../guides/views.rst:616
 msgid "``$size`` is the requestes size. Default Elgg supports ``large``, ``medium``, ``small``, ``tiny`` and ``topbar`` (``master`` is also available, but don't use it)"
 msgstr ""
 
-#: ../../guides/views.rst:624
+#: ../../guides/views.rst:618
 msgid "``$vars`` in order to pass additional information to the icon view"
 msgstr ""
 
-#: ../../guides/views.rst:626
+#: ../../guides/views.rst:620
 msgid "``elgg_view_entity_icon()`` calls a view in the order:"
 msgstr ""
 
-#: ../../guides/views.rst:628
+#: ../../guides/views.rst:622
 msgid "``icon/<type>/<subtype>``"
 msgstr ""
 
-#: ../../guides/views.rst:629
+#: ../../guides/views.rst:623
 msgid "``icon/<type>/default``"
 msgstr ""
 
-#: ../../guides/views.rst:630
+#: ../../guides/views.rst:624
 msgid "``icon/default``"
 msgstr ""
 
-#: ../../guides/views.rst:632
+#: ../../guides/views.rst:626
 msgid "So if you wish to customize the layout of the icon you can overrule the corresponding view."
 msgstr ""
 
-#: ../../guides/views.rst:634
+#: ../../guides/views.rst:628
 msgid "An example of displaying a user avatar is"
 msgstr ""
 
@@ -9297,163 +9325,163 @@ msgstr ""
 msgid "If you add this code to a plugin and then go to http://yoursite.com/services/api/rest/json/?method=system.api.list, you should now see your test.echo method listed as an API call. Further, to test the exposed method from a web browser, you could hit the url: http://yoursite.com/services/api/rest/json/?method=test.echo&string=testing and you should see JSON data like this:"
 msgstr ""
 
-#: ../../guides/web-services.rst:86
+#: ../../guides/web-services.rst:89
 msgid "Plugins can filter the output of individual API methods by registering a handler for ``'rest:output',$method`` plugin hook."
 msgstr ""
 
-#: ../../guides/web-services.rst:90
+#: ../../guides/web-services.rst:93
 msgid "Response formats"
 msgstr ""
 
-#: ../../guides/web-services.rst:92
+#: ../../guides/web-services.rst:95
 msgid "JSON is the default format, however XML and serialized PHP can be fetched by enabling the ``data_views`` plugin and substituting ``xml`` or ``php`` in place of ``json`` in the above URLs."
 msgstr ""
 
-#: ../../guides/web-services.rst:95
+#: ../../guides/web-services.rst:98
 msgid "You can also add additional response formats by defining new viewtypes."
 msgstr ""
 
-#: ../../guides/web-services.rst:98
+#: ../../guides/web-services.rst:101
 msgid "Parameters"
 msgstr ""
 
-#: ../../guides/web-services.rst:100
+#: ../../guides/web-services.rst:103
 msgid "Parameters expected by each method should be listed as an associative array, where the key represents the parameter name, and the value contains an array with ``type``, ``default`` and ``required`` fields."
 msgstr ""
 
-#: ../../guides/web-services.rst:103
+#: ../../guides/web-services.rst:106
 msgid "Values submitted with the API request for each parameter should match the declared type. API will throw on exception if validation fails."
 msgstr ""
 
-#: ../../guides/web-services.rst:105
+#: ../../guides/web-services.rst:108
 msgid "Recognized parameter types are:"
 msgstr ""
 
-#: ../../guides/web-services.rst:107
+#: ../../guides/web-services.rst:110
 msgid "``integer`` (or ``int``)"
 msgstr ""
 
-#: ../../guides/web-services.rst:108
+#: ../../guides/web-services.rst:111
 msgid "``boolean`` (or ``bool``)"
 msgstr ""
 
-#: ../../guides/web-services.rst:109
+#: ../../guides/web-services.rst:112
 msgid "``string``"
 msgstr ""
 
-#: ../../guides/web-services.rst:110
+#: ../../guides/web-services.rst:113
 msgid "``float``"
 msgstr ""
 
-#: ../../guides/web-services.rst:111
+#: ../../guides/web-services.rst:114
 msgid "``array``"
 msgstr ""
 
-#: ../../guides/web-services.rst:113
+#: ../../guides/web-services.rst:116
 msgid "Unrecognized types will throw an API exception."
 msgstr ""
 
-#: ../../guides/web-services.rst:115
+#: ../../guides/web-services.rst:118
 msgid "You can use additional fields to describe your parameter, e.g. ``description``."
 msgstr ""
 
-#: ../../guides/web-services.rst:143
+#: ../../guides/web-services.rst:146
 msgid "If a missing parameter has no default value, the argument will be ``null``. Before Elgg v2.1, a bug caused later arguments to be shifted left in this case."
 msgstr ""
 
-#: ../../guides/web-services.rst:147
+#: ../../guides/web-services.rst:150
 msgid "Receive parameters as associative array"
 msgstr ""
 
-#: ../../guides/web-services.rst:149
+#: ../../guides/web-services.rst:152
 msgid "If you have a large number of method parameters, you can force the execution script to invoke the callback function with a single argument that contains an associative array of parameter => input pairs (instead of each parameter being a separate argument). To do that, set ``$assoc`` to ``true`` in ``elgg_ws_expose_function()``."
 msgstr ""
 
-#: ../../guides/web-services.rst:182
+#: ../../guides/web-services.rst:185
 msgid "If a missing parameter has no default value, ``null`` will be used."
 msgstr ""
 
-#: ../../guides/web-services.rst:185
+#: ../../guides/web-services.rst:188
 msgid "API authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:187
+#: ../../guides/web-services.rst:190
 msgid "You may want to control access to some of the functions that you expose. Perhaps you are exposing functions in order to integrate Elgg with another open source platform on the same server. In that case, you only want to allow that other application access to these methods. Another possibility is that you want to limit what external developers have access to your API. Or maybe you want to limit how many calls a developer can make against your API in a single day."
 msgstr ""
 
-#: ../../guides/web-services.rst:195
+#: ../../guides/web-services.rst:198
 msgid "In all of these cases, you can use Elgg's API authentication functions to control access. Elgg provides two built-in methods to perform API authentication: key based and HMAC signature based. You can also add your own authentication methods. The key based approach is very similar to what Google, Flickr, or Twitter. Developers can request a key (a random string) and pass that key with all calls that require API authentication. The keys are stored in the database and if an API call is made without a key or a bad key, the call is denied and an error message is returned."
 msgstr ""
 
-#: ../../guides/web-services.rst:206
+#: ../../guides/web-services.rst:209
 msgid "Key-based authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:208
+#: ../../guides/web-services.rst:211
 msgid "As an example, let's write a function that returns the number of users that have viewed the site in the last x minutes."
 msgstr ""
 
-#: ../../guides/web-services.rst:219
+#: ../../guides/web-services.rst:222
 msgid "Now, let's expose it and make the number of minutes an optional parameter:"
 msgstr ""
 
-#: ../../guides/web-services.rst:239
+#: ../../guides/web-services.rst:242
 msgid "This function is now available and if you check ``system.api.list``, you will see that it requires API authentication. If you hit the method with a web browser, it will return an error message about failing the API authentication. To test this method, you need an API key. Fortunately, there is a plugin called apiadmin that creates keys for you. It is available in the Elgg plugin repository. It will return a public and private key and you will use the public key for this kind of API authentication. Grab a key and then do a GET request with your browser on this API method passing in the key string as the parameter ``api_key``. It might look something like this: http://yoursite.com/services/api/rest/xml/?method=users.active&api_key=1140321cb56c71710c38feefdf72bc462938f59f."
 msgstr ""
 
-#: ../../guides/web-services.rst:252
+#: ../../guides/web-services.rst:255
 msgid "Signature-based authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:254
+#: ../../guides/web-services.rst:257
 msgid "The :doc:`web-services/hmac` is similar to what is used with OAuth or Amazon's S3 service. This involves both the public and private key. If you want to be very sure that the API calls are coming from the developer you think they are coming from and you want to make sure the data is not being tampered with during transmission, you would use this authentication method. Be aware that it is much more involved and could turn off developers when there are other sites out there with key-based authentication."
 msgstr ""
 
-#: ../../guides/web-services.rst:264
+#: ../../guides/web-services.rst:267
 msgid "User authentication"
 msgstr ""
 
-#: ../../guides/web-services.rst:266
+#: ../../guides/web-services.rst:269
 msgid "So far you have been allowing developers to pull data out of your Elgg site. Now we'll move on to pushing data into Elgg. In this case, it is going to be done by a user. Maybe you have created a desktop application that allows your Users to post to the wire without going to the site. You need to expose a method for posting to the wire and you need to make sure that a user cannot post using someone else's account. Elgg provides a token-based approach for user authentication. It allows a user to submit their username and password in exchange for a token using the method ``auth.gettoken``. This token can then be used for some amount of time to authenticate all calls to the API before it expires by passing it as the parameter ``auth_token``. If you do not want to have your users trusting their passwords to 3rd-party applications, you can also extend the current capability to use an approach like OAuth."
 msgstr ""
 
-#: ../../guides/web-services.rst:280
+#: ../../guides/web-services.rst:283
 msgid "Let's write our wire posting function:"
 msgstr ""
 
-#: ../../guides/web-services.rst:294
+#: ../../guides/web-services.rst:297
 msgid "Exposing this function is the same as the previous except we require user authentication and we're going to make this use POST rather than GET HTTP requests."
 msgstr ""
 
-#: ../../guides/web-services.rst:314
+#: ../../guides/web-services.rst:317
 msgid "Please note that you will not be able to test this using a web browser as you did with the other methods. You need to write some client code to do this."
 msgstr ""
 
-#: ../../guides/web-services.rst:319
+#: ../../guides/web-services.rst:322
 msgid "Building out your API"
 msgstr ""
 
-#: ../../guides/web-services.rst:321
+#: ../../guides/web-services.rst:324
 msgid "As soon as you feel comfortable with Elgg's web services API framework, you will want to step back and design your API. What sort of data are you trying to expose? Who or what will be API users? How do you want them to get access to authentication keys? How are you going to document your API? Be sure to take a look at the APIs created by popular Web 2.0 sites for inspiration. If you are looking for 3rd party developers to build applications using your API, you will probably want to provide one or more language-specific clients."
 msgstr ""
 
-#: ../../guides/web-services.rst:331
+#: ../../guides/web-services.rst:334
 msgid "Determining the authentication available"
 msgstr ""
 
-#: ../../guides/web-services.rst:333
+#: ../../guides/web-services.rst:336
 msgid "Elgg's web services API uses a type of `pluggable authentication module (PAM)`_ architecture to manage how users and developers are authenticated. This provides you the flexibility to add and remove authentication modules. Do you want to not use the default user authentication PAM but would prefer using OAuth? You can do this."
 msgstr ""
 
-#: ../../guides/web-services.rst:339
+#: ../../guides/web-services.rst:342
 msgid "The first step is registering a callback function for the *rest, init* plugin hook:"
 msgstr ""
 
-#: ../../guides/web-services.rst:346
+#: ../../guides/web-services.rst:349
 msgid "Then in the callback function, you register the PAMs that you want to use:"
 msgstr ""
 
-#: ../../guides/web-services.rst:362
+#: ../../guides/web-services.rst:365
 msgid "When testing, you may find it useful to register the ``pam_auth_session`` PAM so that you can easily test your methods from the browser. Be careful not to use this PAM on a production site because it could open up your users to a `CSRF attack`_."
 msgstr ""
 
