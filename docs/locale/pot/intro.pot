@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-24 16:46+0200\n"
+"POT-Creation-Date: 2019-07-25 14:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -146,11 +146,11 @@ msgstr ""
 msgid "Available commands"
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:80
+#: ../../intro/elgg-cli.rst:77
 msgid "Adding custom commands"
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:82
+#: ../../intro/elgg-cli.rst:79
 msgid "Plugins can add their commands to the CLI application, by adding command class name via ``'commands','cli'`` hook. Command class must extend ``\\Elgg\\CLI\\Command``."
 msgstr ""
 
@@ -283,7 +283,7 @@ msgid "MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)"
 msgstr ""
 
 #: ../../intro/install.rst:14
-msgid "PHP 7.0+ with the following extensions:"
+msgid "PHP 7.1+ with the following extensions:"
 msgstr ""
 
 #: ../../intro/install.rst:16
