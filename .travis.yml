@@ -127,6 +127,23 @@ matrix:
         - ./vendor/bin/phpunit --testsuite integration
         - ./vendor/bin/phpunit --testsuite plugins-integration
 
+    # CodeClimate test coverage
+    - php: 7.3
+      env: 
+        - JOB_NAME=codeclimate
+        - CC_TEST_REPORTER_ID=d76acdcc6ab2bf6d8f4a5af52ed410687510a0c3731d451a6884f75ee8b98117
+        - GIT_COMMITTED_AT=$(if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git log -1 --pretty=format:%ct; else git log -1 --skip 1 --pretty=format:%ct; fi)    
+      before_install:
+       - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - ./cc-test-reporter before-build
+      script:
+        - ./vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
+        - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT; fi
+
+
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
