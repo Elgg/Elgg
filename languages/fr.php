@@ -675,6 +675,9 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	
 	'admin:security:settings:email_require_password' => 'Demander le mot de passe pour changer l\'adresse email',
 	'admin:security:settings:email_require_password:help' => 'Quand un utilisateur souhaite changer son adresse email, cette option impose qu\'il fournisse son mot de passe actuel.',
+	
+	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
+	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
@@ -991,6 +994,9 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'icon:size:large' => "Grand",
 	'icon:size:master' => "Très grand",
 	
+	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
+	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
+	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
 	'entity:edit:icon:file:label' => "Chargez une nouvelle icône",
 	'entity:edit:icon:file:help' => "Laissez vide pour conserver l'icône actuelle.",
 	'entity:edit:icon:remove:label' => "Supprimez l'icône",
@@ -1083,8 +1089,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'active' => 'Activé',
 	'total' => 'Total',
 	'unvalidated' => 'Unvalidated',
-	'disabled' => 'Disabled',
-
+	
 	'ok' => 'OK',
 	'any' => 'N\'importe lequel',
 	'error' => 'Erreur',
@@ -1424,6 +1429,7 @@ documentation sur la Mise à niveau d\'Elgg</a>. Si vous avez besoin d\'assistan
 
 	'email:settings' => "Paramètres e-mail",
 	'email:address:label' => "Adresse e-mail",
+	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "Mot de passe",
 	'email:address:password:help' => "Pour pouvoir changer votre adresse email vous devez fournir votre mot de passe actuel.",
 
@@ -1455,6 +1461,38 @@ Quelqu'un (à partir de l'adresse IP %s) a demandé à changer le mot de passe d
 
 Si vous êtes à l'origine de cette demande, cliquez sur le lien suivant. Sinon ignorez cet email.
 
+%s",
+	
+	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
+	'email:request:email:subject' => "Please confirm your e-mail address",
+	'email:request:email:body' => "Hi %s,
+
+You requested to change your e-mail address on '%s'.
+If you didn't request this change, please reset your password.
+
+In order to confirm the e-mail address change, please click this link:
+%s
+
+Please note this link is only valid for 1 hour.",
+	
+	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	
+	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on '%s'.
+
+If you didn't request this change, please contact a site administrator.
+%s",
+	
+	'email:confirm:email:new:subject' => "You're e-mail address was changed",
+	'email:confirm:email:new:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on this e-mail address.
+
+If you didn't request this change, please contact a site administrator.
 %s",
 
 /**
@@ -1740,4 +1778,7 @@ Pour voir le profil de %s :
 	
 	"core:upgrade:2018061401:title" => "Migrer les entrées du journal du cron",
 	"core:upgrade:2018061401:description" => "Migre les entrées du journal du cron de la base de données vers un nouvel emplacement",
+	
+	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
+	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );

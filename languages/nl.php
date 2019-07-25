@@ -671,6 +671,9 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	
 	'admin:security:settings:email_require_password' => 'Vereis een wachtwoord om je emailadres te wijzigen',
 	'admin:security:settings:email_require_password:help' => 'Wanneer een gebruiker zijn/haar emailadres wenst te wijziging, dan moet ook het huidige wachtwoord worden ingevoerd.',
+	
+	'admin:security:settings:email_require_confirmation' => 'Vereis bevestiging van nieuwe e-mailadres bij wijziging',
+	'admin:security:settings:email_require_confirmation:help' => 'Het nieuwe e-mailadres moet worden bevestigd voordat de wijziging wordt doorgevoerd. Na een succesvolle wijziging zal er een mededeling verstuurd worden naar het oude e-mailadres.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Sessie gebonden entity iconen',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity iconen zijn standaard sessie gebonden. Dit houdt in dat de URLs naar de iconen informatie bevatten over de huidige sessie. Indien iconen sessiegebonden zijn, zijn ze niet deelbaar tussen sessies en dus meer afgeschermd. Het bijeffect is dat de iconen alleen voor de huidige sessie cachebaar zijn.',
@@ -986,6 +989,9 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'icon:size:large' => "Groot",
 	'icon:size:master' => "Extra groot",
 	
+	'entity:edit:icon:crop_messages:generic' => "De geselecteerde afbeelding voldoet niet aan de aanbevolen afmetingen van de afbeelding. Het resultaat hiervan kan lage kwaliteit iconen zijn.",
+	'entity:edit:icon:crop_messages:width' => "Het is aanbevolen om een afbeelding met een minimale breedte van tenminste %dpx te gebruiken.",
+	'entity:edit:icon:crop_messages:height' => "Het is aanbevolen om een afbeelding met een minimale hoogte van tenminste %dpx te gebruiken.",
 	'entity:edit:icon:file:label' => "Upload een nieuw icoon",
 	'entity:edit:icon:file:help' => "Laat dit leeg om het huidige icoon te behouden",
 	'entity:edit:icon:remove:label' => "Verwijder het icoon",
@@ -1078,8 +1084,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'active' => 'Actief',
 	'total' => 'Totaal',
 	'unvalidated' => 'Ongevalideerd',
-	'disabled' => 'Gedeactiveerd',
-
+	
 	'ok' => 'OK',
 	'any' => 'Welke dan ook',
 	'error' => 'Fout',
@@ -1418,6 +1423,7 @@ Indien de ondersteuning nodig hebt bezoek de <a href="http://community.elgg.org/
 
 	'email:settings' => "E-mailinstellingen",
 	'email:address:label' => "Jouw e-mailadres",
+	'email:address:help:confirm' => "E-mail wijziging aangevraagd naar '%s'. Controleer de e-mail inbox voor instructies.",
 	'email:address:password' => "Wachtwoord",
 	'email:address:password:help' => "Om je e-mail adres te kunnen wijzigen moet je je huidige wachtwoord bevestigen.",
 
@@ -1449,6 +1455,38 @@ Iemand (van het IP adres %s) heeft een nieuw wachtwoord aangevraagd voor dit acc
 
 Indien je dit zelf hebt aangevraagd, klik op onderstaande link. Anders negeer deze e-mail.
 
+%s",
+	
+	'account:email:request:success' => "Het nieuwe e-mailadres zal worden opgeslagen nadat deze is gevalideerd. Controleer de e-mail inbox van '%s' voor validatie instructies.",
+	'email:request:email:subject' => "Bevestig je e-mailadres",
+	'email:request:email:body' => "Beste %s,
+
+Je hebt een verzoek ingediend om je e-mailadres te wijziging op '%s'.
+Indien je deze wijziging niet hebt aangevraagd, wijzig dan je wachtwoord.
+
+Gebruik de volgende link om de wijziging te bevestigen:
+%s
+
+Deze link is slechts 1 uur geldig.",
+	
+	'account:email:request:error:no_new_email' => "Er is geen e-mailadres wijziging die nog moet worden goedgekeurd.",
+	
+	'email:confirm:email:old:subject' => "Het e-mailadres is gewijzigd",
+	'email:confirm:email:old:body' => "Beste %s,
+
+Je e-mailadres op '%s' is gewijzigd.
+Vanaf nu ontvang je de e-mail notificaties op '%s'.
+
+Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
+%s",
+	
+	'email:confirm:email:new:subject' => "Het e-mailadres is gewijzigd",
+	'email:confirm:email:new:body' => "Beste %s,
+
+Je e-mailadres op '%s' is gewijzigd.
+Vanaf nu ontvang je de e-mail notificaties op dit e-mailadres.
+
+Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
 %s",
 
 /**
@@ -1736,4 +1774,7 @@ Om naar het profiel van te gaan, klik hier:
 	
 	"core:upgrade:2018061401:title" => "Migreer cron logboek",
 	"core:upgrade:2018061401:description" => "Migreer de cron logboek bijdrages in de database naar de nieuwe locatie.",
+	
+	"core:upgrade:2019071901:title" => "Update een standaard beveiligingsinstelling: e-mail wijziging bevestigen",
+	"core:upgrade:2019071901:description" => "De geïnstalleerde Elgg versie bied een aantal extra beveiligingsinstellingen. Het wordt aangeraden om deze upgrade uit te voeren om de instellingen goed in te stellen. Je kunt de instellingen ten alle tijden wijzigen onder de Beveiligingsinstellingen",
 );

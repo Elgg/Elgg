@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 14:21+0200\n"
+"POT-Creation-Date: 2019-07-24 16:46+0200\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -29,7 +29,7 @@ msgstr "Sauvegarde et Restauration"
 #: ../../admin/cron.rst:6 ../../admin/duplicate-installation.rst:6
 #: ../../admin/getting-help.rst:10 ../../admin/performance.rst:8
 #: ../../admin/plugins.rst:8 ../../admin/security.rst:8
-#: ../../admin/uservalidation.rst:8
+#: ../../admin/upgrading.rst:11 ../../admin/uservalidation.rst:8
 msgid "Contents"
 msgstr ""
 
@@ -2388,10 +2388,53 @@ msgstr ""
 "client au lieu d'utiliser la focntion PHP ``readfile()``."
 
 #: ../../admin/performance.rst:231
+msgid "Composer Autoloader Optimization"
+msgstr ""
+
+#: ../../admin/performance.rst:233
+msgid ""
+"The Composer autoloader is responsible for loading classes provided by "
+"dependencies of Elgg. The way the autoloader works is it searches for a "
+"classname in the installed dependencies. While this is mostly a fast process"
+" it can be optimized."
+msgstr ""
+
+#: ../../admin/performance.rst:236
+msgid ""
+"You can optimize the autoloader 2 different ways. The first is in the "
+"commandline, the other is in the ``composer.json`` of your project."
+msgstr ""
+
+#: ../../admin/performance.rst:238
+msgid ""
+"If you want to optimize the autoloader using the commandline use the ``-o`` "
+"flag. The disadvantage is you have to add the ``-o`` flag every time you run"
+" Composer."
+msgstr ""
+
+#: ../../admin/performance.rst:249
+msgid ""
+"The second option is to add the optimization to your ``composer.json`` file,"
+" that way you never forget it."
+msgstr ""
+
+#: ../../admin/performance.rst:262
+msgid ""
+"Check out the `Autoloader Optimization`__ page for more information about "
+"how to optimize the Composer autoloader."
+msgstr ""
+
+#: ../../admin/performance.rst:268
+msgid ""
+"As of Elgg 3.0 all the `downloads`__ of Elgg from the website have the "
+"optimized autoloader."
+msgstr ""
+
+#: ../../admin/performance.rst:273
 msgid "Hosting"
 msgstr "Hébergement"
 
-#: ../../admin/performance.rst:233
+#: ../../admin/performance.rst:275
 msgid ""
 "Don't expect to run a site catering for millions of users on a cheap shared "
 "host. You will need to have your own host hardware and access over the "
@@ -2402,11 +2445,11 @@ msgstr ""
 "serveur d'hébergement et d'avoir la main sur la configuration, ainsi que de "
 "beaucoup de bande passante et de mémoire disponibles."
 
-#: ../../admin/performance.rst:238
+#: ../../admin/performance.rst:280
 msgid "Memory, CPU and bandwidth"
 msgstr "Mémoire, CPU et bande passante"
 
-#: ../../admin/performance.rst:240
+#: ../../admin/performance.rst:282
 msgid ""
 "Due to the nature of caching, all caching solutions will require memory. It "
 "is a fairly cheap return to throw memory and CPU at the problem."
@@ -2415,7 +2458,7 @@ msgstr ""
 "auront besoin de mémoire. C'est un investissement plutôt économique "
 "d'augmenter la mémoire et le CPU."
 
-#: ../../admin/performance.rst:243
+#: ../../admin/performance.rst:285
 msgid ""
 "On advanced hardware it is likely that bandwidth is going to be your "
 "bottleneck before the server itself. Ensure that your host can support the "
@@ -2425,11 +2468,11 @@ msgstr ""
 "goulet d'étranglement (bottleneck) avant le serveur lui-même. Assurez-vous "
 "que votre hébergement peut supporter le trafic que vous attendez."
 
-#: ../../admin/performance.rst:247
+#: ../../admin/performance.rst:289
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../../admin/performance.rst:249
+#: ../../admin/performance.rst:291
 msgid ""
 "Lastly, take a look at your configuration as there are a few gotchas that "
 "can catch people."
@@ -2437,7 +2480,7 @@ msgstr ""
 "Enfin, jetez un coup d’œil à votre configuration car il y a quelques points "
 "d'attention qui peuvent surprendre les gens."
 
-#: ../../admin/performance.rst:251
+#: ../../admin/performance.rst:293
 msgid ""
 "For example, out of the box, Apache can handle quite a high load. However, "
 "most distros of Linux come with mysql configured for small sites. This can "
@@ -2449,11 +2492,11 @@ msgstr ""
 "de petits sites. Ceci peut peut donner lieu à des processus Apache bloqués "
 "qui attendent de pouvoir parler à un processus MySQL très surchargé."
 
-#: ../../admin/performance.rst:256
+#: ../../admin/performance.rst:298
 msgid "Check for poorly-behaved plugins"
 msgstr "Vérifiez les plugins au mauvais comportement"
 
-#: ../../admin/performance.rst:258
+#: ../../admin/performance.rst:300
 msgid ""
 "Plugins can be programmed in a very naive way and this can cause your whole "
 "site to feel slow."
@@ -2461,7 +2504,7 @@ msgstr ""
 "Des plugins peuvent être développés d'une manière très naïve et ceci peut "
 "ralentir l'ensemble du site."
 
-#: ../../admin/performance.rst:260
+#: ../../admin/performance.rst:302
 msgid ""
 "Try disabling some plugins to see if that noticeably improves performance. "
 "Once you've found a likely offender, go to the original plugin author and "
@@ -2472,11 +2515,11 @@ msgstr ""
 "potentiel, rendez-vous sur la page de l'auteur du plugin et signalez vos "
 "résultats."
 
-#: ../../admin/performance.rst:264
+#: ../../admin/performance.rst:306
 msgid "Use client-rendered HTML"
 msgstr "Utilisez du HTML rendu côté client"
 
-#: ../../admin/performance.rst:266
+#: ../../admin/performance.rst:308
 msgid ""
 "We've found that at a certain point, much of the time spent on the server is"
 " simply building the HTML of the page with Elgg's views system."
@@ -2485,7 +2528,7 @@ msgstr ""
 "sur le serveur est simplement le temps de construction du HTML de la page "
 "avec le système de vues d'Elgg."
 
-#: ../../admin/performance.rst:269
+#: ../../admin/performance.rst:311
 msgid ""
 "It's very difficult to cache the output of templates since they can "
 "generally take arbitrary inputs. Instead of trying to cache the HTML output "
@@ -2502,7 +2545,7 @@ msgstr ""
 "modèles. Puis demandez à l'ordinateur de l'utilisateur de générer le "
 "résultat en appliquant des données JSON à ces modèles."
 
-#: ../../admin/performance.rst:274
+#: ../../admin/performance.rst:316
 msgid ""
 "This can be very effective, but has the downside of being significant extra "
 "development cost. The Elgg team is looking to integrate this strategy into "
@@ -2956,23 +2999,23 @@ msgstr ""
 "du code des plugins </appendix/upgrade-notes>` pour la dernière version "
 "d'Elgg."
 
-#: ../../admin/upgrading.rst:10
+#: ../../admin/upgrading.rst:14
 msgid "Advice"
 msgstr "Conseil"
 
-#: ../../admin/upgrading.rst:12
+#: ../../admin/upgrading.rst:16
 msgid "**Back up your database, data directory and code**"
 msgstr ""
 "**Sauvegardez votre base de données, votre répertoire de données et le code "
 "source**"
 
-#: ../../admin/upgrading.rst:13
+#: ../../admin/upgrading.rst:17
 msgid "Mind any version-specific comments below"
 msgstr ""
 "Faites attentions aux commentaires spécifiques pour certaines versions ci-"
 "dessous"
 
-#: ../../admin/upgrading.rst:14
+#: ../../admin/upgrading.rst:18
 msgid ""
 "Version below 2.0 are advised to only upgrade **one minor version at a "
 "time**"
@@ -2980,7 +3023,7 @@ msgstr ""
 "Les versions inférieures à 2.0 sont invitées à n'effectuer qu'**une seule "
 "mise à niveau mineure à la fois**"
 
-#: ../../admin/upgrading.rst:15
+#: ../../admin/upgrading.rst:19
 msgid ""
 "You can upgrade from any minor version to any higher minor version in the "
 "same major (2.0 -> 2.1 or 2.0 -> 2.3)"
@@ -2989,7 +3032,7 @@ msgstr ""
 "n'importe quelle version mineure supérieure au sein de la même version "
 "majeure (2.0 -> 2.1 oo 2.0 -> 2.3)"
 
-#: ../../admin/upgrading.rst:16
+#: ../../admin/upgrading.rst:20
 msgid ""
 "You can only upgrade the latest minor version in the previous major version "
 "to any minor version in the next version (2.3 -> 3.0 or 2.3 -> 3.2, but not "
@@ -2999,7 +3042,7 @@ msgstr ""
 "version majeure précédente vers n'importe quelle version mineure de la "
 "version majeure suivante (2.3 -> 3.0 ou 2.3 -> 3.2, mais pas 2.2 -> 3.x)."
 
-#: ../../admin/upgrading.rst:17
+#: ../../admin/upgrading.rst:21
 msgid ""
 "From Elgg 2.3.* you can upgrade to any future version of Elgg without having"
 " to go through each minor version (e.g. you can upgrade directly from 2.3.8 "
@@ -3010,17 +3053,17 @@ msgstr ""
 "mineures (par ex. vous pouvez mettre à niveau directement de la 2.3.8 vers "
 "la 3.2.5, sans devoir mettre à niveau vers les versions 3.0 et 3.1)"
 
-#: ../../admin/upgrading.rst:18
+#: ../../admin/upgrading.rst:22
 msgid "Try out the new version on a test site before doing an upgrade"
 msgstr ""
 "Essayez la nouvelle version sur un site de test avant d'effectuer une mise à"
 " niveau"
 
-#: ../../admin/upgrading.rst:19
+#: ../../admin/upgrading.rst:23
 msgid "Report any problems in plugins to the plugin authors"
 msgstr "Signalez tout problème dans les plugins aux auteurs de plugins"
 
-#: ../../admin/upgrading.rst:20
+#: ../../admin/upgrading.rst:24
 msgid ""
 "If you are a plugin author you can `report any backwards-compatibility "
 "issues to GitHub <issues_>`_"
@@ -3028,19 +3071,15 @@ msgstr ""
 "Si vous êtes auteur de plugins, vous pouvez `signaler tout problème de "
 "rétro-compatibilité sur GitHub <issues_>`_"
 
-#: ../../admin/upgrading.rst:25
-msgid "Basic instructions"
-msgstr "Instructions de base"
-
-#: ../../admin/upgrading.rst:28
+#: ../../admin/upgrading.rst:29
 msgid "From 2.3 to 3.0"
 msgstr "De 2.3 à 3.0"
 
-#: ../../admin/upgrading.rst:31
+#: ../../admin/upgrading.rst:32
 msgid "1. Update ``composer.json``"
 msgstr "1. Mettez à niveau ``composer.json``"
 
-#: ../../admin/upgrading.rst:33
+#: ../../admin/upgrading.rst:34
 msgid ""
 "If you have used Elgg's starter project to install Elgg 2.3, you may need to"
 " update your ``composer.json``:"
@@ -3048,22 +3087,22 @@ msgstr ""
 "Si vous avez utilisé le projet de démarrage Elgg pour installer Elgg 2.3, "
 "vous pouvez avoir besoin de mettre à niveau votre ``composer.json`` :"
 
-#: ../../admin/upgrading.rst:35
+#: ../../admin/upgrading.rst:36
 msgid "change platform requirements to PHP >= 7.0"
 msgstr "modifiez les pré-requis de la plateforme vers PHP >= 7.0"
 
-#: ../../admin/upgrading.rst:36
+#: ../../admin/upgrading.rst:37
 msgid "optionally, set autoloader optimization parameters"
 msgstr ""
 "facultativement, définiez les paramètres d'optimisation de l'autoloader"
 
-#: ../../admin/upgrading.rst:37
+#: ../../admin/upgrading.rst:38
 msgid "optionally, disable fxp-asset plugin in favor of asset-packagist"
 msgstr ""
 "facultativement, désactivez le plugin fxp-asset au bénéfice de asset-"
 "packagist"
 
-#: ../../admin/upgrading.rst:39
+#: ../../admin/upgrading.rst:40
 msgid ""
 "Your ``composer.json`` would look something like this (depending what "
 "changes you may have introduced yourself):"
@@ -3071,23 +3110,23 @@ msgstr ""
 "Votre ``composer.json`` devrait ressembler à quelque chose comme ceci (en "
 "fonction des changements que vous avez vous-même introduits) :"
 
-#: ../../admin/upgrading.rst:70
+#: ../../admin/upgrading.rst:71
 msgid "2. Update ``.htaccess``"
 msgstr "2. Mettez à jour ``.htaccess``"
 
-#: ../../admin/upgrading.rst:72
+#: ../../admin/upgrading.rst:73
 msgid "Find the line:"
 msgstr "Trouvez la ligne :"
 
-#: ../../admin/upgrading.rst:78
+#: ../../admin/upgrading.rst:79
 msgid "And replace it with:"
 msgstr "Et rempalcez-la par :"
 
-#: ../../admin/upgrading.rst:86
+#: ../../admin/upgrading.rst:87
 msgid "3a. Composer Upgrade (recommended)"
 msgstr "3a. Mise à niveau via Composer (recommandé)"
 
-#: ../../admin/upgrading.rst:88
+#: ../../admin/upgrading.rst:89
 msgid ""
 "If you had your Elgg 2.3 project installed using composer, you can follow "
 "this sequence:"
@@ -3095,17 +3134,17 @@ msgstr ""
 "Si vous aviez installé votre projet 2.3 avec composer, vous pouvez suivre la"
 " séquence suivante :"
 
-#: ../../admin/upgrading.rst:90 ../../admin/upgrading.rst:110
+#: ../../admin/upgrading.rst:91 ../../admin/upgrading.rst:111
 msgid "**Back up your database, data directory, and code**"
 msgstr ""
 "**Sauvegardez votre base de données, votre répertoire de données, et le "
 "code**"
 
-#: ../../admin/upgrading.rst:104
+#: ../../admin/upgrading.rst:105
 msgid "3b. Manual Upgrade (legacy approach)"
 msgstr "3b. Mise à niveau manuelle (approche traditionnelle)"
 
-#: ../../admin/upgrading.rst:106
+#: ../../admin/upgrading.rst:107
 msgid ""
 "Manual upgrades are a major undertaking for site admins. We discourage you "
 "from maintaining an Elgg installation using ZIP dist packages. Save yourself"
@@ -3120,19 +3159,19 @@ msgstr ""
 "``git``. Cette tâche sera également plus complexe si vous utilisez des "
 "plugins tierce-partie et/ou si vous avez modifié les fichiers du noyau !"
 
-#: ../../admin/upgrading.rst:111
+#: ../../admin/upgrading.rst:112
 msgid "Log in as an admin to your site"
 msgstr "Identifiez-vous sur votre site en tant qu'administrateur"
 
-#: ../../admin/upgrading.rst:112
+#: ../../admin/upgrading.rst:113
 msgid "Download the new version of Elgg from http://elgg.org"
 msgstr "Téléchargez la nouvelle version de Elgg depuis http://elgg.org"
 
-#: ../../admin/upgrading.rst:115
+#: ../../admin/upgrading.rst:116
 msgid "Update the files"
 msgstr "Mettez à jour les fichiers"
 
-#: ../../admin/upgrading.rst:114
+#: ../../admin/upgrading.rst:115
 msgid ""
 "If upgrading to a major version, you need to overwrite all core files and "
 "remove any files that were removed from Elgg core, as they may interfere "
@@ -3143,7 +3182,7 @@ msgstr ""
 "noyau d'Elgg, car ils peuvent interférer avec le bon fonctionnement de votre"
 " site."
 
-#: ../../admin/upgrading.rst:116
+#: ../../admin/upgrading.rst:117
 msgid ""
 "If upgrading to a minor version or patching, you need to overwrite all core "
 "files."
@@ -3151,18 +3190,18 @@ msgstr ""
 "Si vous mettez à jour vers une version mineure ou un patch, vous devez "
 "remplacer tous les fichiers du code."
 
-#: ../../admin/upgrading.rst:118
+#: ../../admin/upgrading.rst:119
 msgid "Merge any new changes to the rewrite rules"
 msgstr ""
 "Fusionnez tous les nouveaux changements des règles de réécriture (rewrite "
 "rules)"
 
-#: ../../admin/upgrading.rst:118
+#: ../../admin/upgrading.rst:119
 msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 "Pour Apache depuis ``install/config/htaccess.dist`` vers ``.htaccess``"
 
-#: ../../admin/upgrading.rst:119
+#: ../../admin/upgrading.rst:120
 msgid ""
 "For Nginx from ``install/config/nginx.dist`` into your server configuration "
 "(usually inside ``/etc/nginx/sites-enabled``)"
@@ -3170,18 +3209,18 @@ msgstr ""
 "Pour Nginx depuis ``install/config/nginx.dist`` vers la configuration de "
 "votre serveur (habituellement dans ``/etc/nginx/sites-enabled``)"
 
-#: ../../admin/upgrading.rst:120
+#: ../../admin/upgrading.rst:121
 msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr "Visitez http://your-elgg-site.com/upgrade.php"
 
-#: ../../admin/upgrading.rst:121
+#: ../../admin/upgrading.rst:122
 msgid ""
 "Execute asynchronous upgrades at http://your-elgg-site.com/admin/upgrades"
 msgstr ""
 "Exécutez les mises à niveau asynchrones via http://your-elgg-"
 "site.com/admin/upgrades"
 
-#: ../../admin/upgrading.rst:125
+#: ../../admin/upgrading.rst:126
 msgid ""
 "Any modifications should have been written within plugins, so that they are "
 "not lost on overwriting. If this is not the case, take care to maintain your"
@@ -3191,7 +3230,7 @@ msgstr ""
 "qu'elles ne soient pas perdues lors de l'écrasement des fichiers. Si ce "
 "n'est pas le cas, prenez soin de maintenir vos modifications."
 
-#: ../../admin/upgrading.rst:130
+#: ../../admin/upgrading.rst:131
 msgid ""
 "If you are unable to access ``upgrade.php`` script and receive an error, add"
 " ``$CONFIG->security_protect_upgrade = false;`` to your ``settings.php`` and"
@@ -3202,7 +3241,7 @@ msgstr ""
 "ficher ``settings.php`` et supprimez-le après avoir terminé toutes les "
 "étapes de l'installation."
 
-#: ../../admin/upgrading.rst:135
+#: ../../admin/upgrading.rst:136
 msgid ""
 "If you encounter issues with plugins during the upgrade, add an empty file "
 "called ``disabled`` in your ``/mod/`` directory. This will disable the "
@@ -3215,7 +3254,7 @@ msgstr ""
 "mise à niveau du noyau. Vous pouvez ensuite gérer les mises à niveau de "
 "chacun des plugins l'un après l'autre."
 
-#: ../../admin/upgrading.rst:139
+#: ../../admin/upgrading.rst:140
 msgid ""
 "If you have installed Elgg using a dist package but would now like to switch"
 " to composer:"
@@ -3223,15 +3262,15 @@ msgstr ""
 "Si vous avez installé Elgg en utilisant une archive d'installation mais "
 "souhaitez maintenant basculer vers composer : "
 
-#: ../../admin/upgrading.rst:141
+#: ../../admin/upgrading.rst:142
 msgid "Upgrade your current installation using Manual Upgrade method"
 msgstr "Mettez à niveau votre installation en utilisant la Méthode manuelle"
 
-#: ../../admin/upgrading.rst:142
+#: ../../admin/upgrading.rst:143
 msgid "Move your codebase to a temporary location"
 msgstr "Déplacez votre code vers un emplacement provisoire"
 
-#: ../../admin/upgrading.rst:143
+#: ../../admin/upgrading.rst:144
 msgid ""
 "Create a new composer project using Elgg's starter project following "
 ":doc:`installation instructions </intro/install>` in the root directory of "
@@ -3241,20 +3280,20 @@ msgstr ""
 " suivant les  :doc:`instruction d'installation </intro/install>` dans le "
 "répertoire racine de votre installation actuelle"
 
-#: ../../admin/upgrading.rst:144
+#: ../../admin/upgrading.rst:145
 msgid ""
 "Copy third-party plugins from your old installation into ``/mod`` directory"
 msgstr ""
 "Copiez les plugins tierce-partie depuis votre ancienne installation vers le "
 "répertoire ``/mod``"
 
-#: ../../admin/upgrading.rst:145
+#: ../../admin/upgrading.rst:146
 msgid "Run Elgg's installer using your browser or ``elgg-cli`` tool"
 msgstr ""
 "Exécutez l'installateur de Elgg en utilisant votre navigateur ou l'outil "
 "``elgg-cli``"
 
-#: ../../admin/upgrading.rst:146
+#: ../../admin/upgrading.rst:147
 msgid ""
 "When you reach the database step, provide the same credentials you have used"
 " for manual installation, Elgg will understand that is's an existing "
@@ -3265,25 +3304,49 @@ msgstr ""
 "qu'il y a une installation existante et ne remplacera aucune valeur de la "
 "base de données"
 
-#: ../../admin/upgrading.rst:147
+#: ../../admin/upgrading.rst:148
 msgid "Optionally commit your new project to version control"
 msgstr ""
 "Facultativement, commitez votre nouveau projet vers un suivi de version"
 
 #: ../../admin/upgrading.rst:151
-msgid "Earlier versions"
-msgstr "Versions précédentes"
+msgid "Applying a patch using Composer"
+msgstr ""
 
 #: ../../admin/upgrading.rst:153
 msgid ""
+"The definition of a patch can be found in the :doc:`Release policy "
+"</appendix/releases>`."
+msgstr ""
+
+#: ../../admin/upgrading.rst:155
+msgid ""
+"Your ``composer.json`` requirement for Elgg should be ``~3.y.0`` (where "
+"``y`` is the minor version ``0``, ``1``, etc. you wish to have installed). "
+"This will make sure you can easily install patches without the risk of "
+"installing the next minor release."
+msgstr ""
+
+#: ../../admin/upgrading.rst:166
+msgid ""
+"Just to be sure you can first verify what will be installed / upgraded by "
+"executing the folowing command"
+msgstr ""
+
+#: ../../admin/upgrading.rst:176
+msgid "To upgrade Elgg simply execute"
+msgstr ""
+
+#: ../../admin/upgrading.rst:187
+msgid "Earlier versions"
+msgstr "Versions précédentes"
+
+#: ../../admin/upgrading.rst:189
+msgid ""
 "Check Elgg documentation that corresponds to the Elgg version you want to "
 "upgrade to, by switching the documentation version in the lower left corner "
-"of `Upgrading docs <upgrading-docs_>`"
+"of :doc:`Upgrading docs <upgrading>`"
 msgstr ""
-"Vérifiez la documentation Elgg qui correspond à la version d'Elgg vers "
-"laquelle vous souhaitez effectuer la mise à niveau, en changeant la version "
-"de la documentation dans le coin inférieur gauche de `Documentation de mise "
-"à niveau <upgrading-docs_>`"
 
 #: ../../admin/uservalidation.rst:2
 msgid "User validation"

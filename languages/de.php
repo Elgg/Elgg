@@ -676,6 +676,9 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	
 	'admin:security:settings:email_require_password' => 'Passworteingabe bei Änderung der Email-Adresse notwendig',
 	'admin:security:settings:email_require_password:help' => 'Möchte ein Benutzer die Email-Adresse seines Accounts ändern, muss er diese Änderung durch die Eingabe seines derzeitigen Passworts bestätigen.',
+	
+	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
+	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session-gebundene Entitäts-Bilder',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entitäts-Bilder können standardmäßig an die PHP-Session gebunden sein. In diesem Fall sind auch die URLs dieser Bilder Session-spezifisch.
@@ -998,6 +1001,9 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'icon:size:large' => "Groß",
 	'icon:size:master' => "Sehr groß",
 	
+	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
+	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
+	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
 	'entity:edit:icon:file:label' => "Neues Bild hochladen",
 	'entity:edit:icon:file:help' => "Leer lassen, um derzeitiges Bild zu behalten.",
 	'entity:edit:icon:remove:label' => "Bild entfernen",
@@ -1090,8 +1096,7 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'active' => 'Aktiv',
 	'total' => 'Gesamt',
 	'unvalidated' => 'Nicht validiert',
-	'disabled' => 'Deaktiviert',
-
+	
 	'ok' => 'OK',
 	'any' => 'Irgendeine',
 	'error' => 'Fehler',
@@ -1428,6 +1433,7 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 
 	'email:settings' => "Email",
 	'email:address:label' => "Email-Adresse",
+	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "Passwort",
 	'email:address:password:help' => "Für die Änderung Deiner Email-Adresse ist die Eingabe Deines derzeitigen Passworts notwendig.",
 
@@ -1462,6 +1468,38 @@ Falls Du die Änderung des Passworts angefordert hast, klicke bitte auf den folg
 %s
 
 Andernfalls ignoriere bitte diese Email.",
+	
+	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
+	'email:request:email:subject' => "Please confirm your e-mail address",
+	'email:request:email:body' => "Hi %s,
+
+You requested to change your e-mail address on '%s'.
+If you didn't request this change, please reset your password.
+
+In order to confirm the e-mail address change, please click this link:
+%s
+
+Please note this link is only valid for 1 hour.",
+	
+	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	
+	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on '%s'.
+
+If you didn't request this change, please contact a site administrator.
+%s",
+	
+	'email:confirm:email:new:subject' => "You're e-mail address was changed",
+	'email:confirm:email:new:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on this e-mail address.
+
+If you didn't request this change, please contact a site administrator.
+%s",
 
 /**
  * user default access
@@ -1752,4 +1790,7 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 	
 	"core:upgrade:2018061401:title" => "Umwandlung der Cronlog-Datenbankeinträge",
 	"core:upgrade:2018061401:description" => "Damit werden die Cronlog-Einträge innerhalb der Datenbank verschoben, um mit dem neuen Datenbank-Schema kompatibel zu sein.",
+	
+	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
+	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );
