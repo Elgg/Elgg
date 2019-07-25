@@ -34,7 +34,7 @@ class UpgradeController {
 
 		$upgrade->done(
 			function () use (&$response, $forward_url) {
-				$response = elgg_redirect_response($forward_url);
+				$response = elgg_ok_response('', elgg_echo('upgrade:core'), $forward_url);
 			},
 			function ($error) use ($forward_url) {
 				$this->log(LogLevel::ERROR, $error);

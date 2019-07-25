@@ -455,8 +455,25 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:unknown_section' => 'Ongeldige beheersectie.',
 
 	'admin' => "Beheer",
+	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "Het beheerpaneel maakt het mogelijk het hele systeem te beheren: van gebruikersbeheer tot hoe plugins zich gedragen. Kies een optie om te beginnen.",
 
+	'admin:performance' => 'Performance',
+	'admin:performance:label:generic' => 'Algemeen',
+	'admin:performance:generic:description' => 'Hieronder staat een lijst met performance suggesties en waardes welke je kunnen helpen bij het tunen van de site',
+	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache:settings:warning' => "Het is aangeraden om de simplecache instelling op te nemen in de settings.php.
+Het configureren in de settings.php file bevorderd caching performance.
+Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het moment dat er JavaScript en CSS files uit de cache geserveerd kunnen worden.",
+	'admin:performance:systemcache' => 'Systemcache',
+	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'De mod_cache-module biedt HTTP-bewuste cacheschema\'s. Dit betekent dat de bestanden in de cache worden opgeslagen op basis van een instructie die aangeeft hoe lang een pagina als "vers" kan worden beschouwd.',
+	'admin:performance:php:open_basedir' => 'PHP open_basedir',
+	'admin:performance:php:open_basedir:not_configured' => 'Er zijn geen limitaties ingesteld',
+	'admin:performance:php:open_basedir:warning' => 'Een klein aantal open_basedir limitaties zijn in effect. Dit zou mogelijk impact kunnen hebben op de performance.',
+	'admin:performance:php:open_basedir:error' => 'Een groot aantal open_basedir limitaties zijn in effect. Dit heeft zeer waarschijnlijk impact op de performance.',
+	'admin:performance:php:open_basedir:generic' => 'Met open_basedir limitaties zal er, elke keer als er een bestand benaderd wordt, moeten worden gecontroleerd tegen de lijst van limitaties. Aangezien Elgg een grote hoeveelheid files benaderd zal dit dus een negatieve impact hebben. Ook de opcache van PHP kan door deze limitaties geen gebruik maken van al zijn caching mogelijkheden.',
+	
 	'admin:statistics' => 'Statistieken',
 	'admin:server' => 'Server',
 	'admin:cron' => 'Cron',
@@ -479,8 +496,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:users:online' => 'Op dit moment online',
 	'admin:users:newest' => 'Nieuwste',
 	'admin:users:admins' => 'Beheerders',
-	'admin:users:searchuser' => 'Search user to make them admin',
-	'admin:users:existingadmins' => 'List of existing admins',
+	'admin:users:searchuser' => 'Zoek de gebruiker die je beheerder wilt maken',
+	'admin:users:existingadmins' => 'Lijst van bestaande beheerders',
 	'admin:users:add' => 'Nieuwe gebruiker',
 	'admin:users:description' => "Dit beheerpaneel maakt het mogelijk om gebruikersinstellingen te wijzigen. Kies hieronder een optie om te beginnen.",
 	'admin:users:adduser:label' => "Klik hier om een nieuwe gebruiker toe te voegen.",
@@ -490,6 +507,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:users:unvalidated' => 'Ongevalideerd',
 	'admin:users:unvalidated:no_results' => 'Geen ongevalideerde gebruikers',
 	'admin:users:unvalidated:registered' => 'Geregistreerd %s',
+	'admin:users:unvalidated:change_email' => 'Wijzig e-mailadres',
+	'admin:users:unvalidated:change_email:user' => 'Wijzig e-mailadres van: %s',
 	
 	'admin:configure_utilities:maintenance' => 'Onderhoudsmodus',
 	'admin:upgrades' => 'Upgrades',
@@ -514,8 +533,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:settings' => 'Instellingen',
 	'admin:settings:basic' => 'Basisinstellingen',
 	'admin:settings:advanced' => 'Geavanceerde instellingen',
-	'admin:settings:users' => 'Users',
-	'admin:site_settings' => "Site Settings",
+	'admin:settings:users' => 'Gebruikers',
+	'admin:site_settings' => "Instellingen",
 	'admin:site:description' => "Via dit beheerpaneel kun je de algemene instellingen van de site beheren. Kies een optie om te beginnen.",
 	'admin:site:opt:linktext' => "Configureer site",
 	'admin:settings:in_settings_file' => 'Deze instelling configureer je in settings.php',
@@ -603,6 +622,23 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:options' => 'Beheeropties',
 
 	'admin:security' => 'Beveiliging',
+	'admin:security:information' => 'Informatie',
+	'admin:security:information:description' => 'Op deze pagina staat een lijst met beveiligingsaanbevelingen.',
+	'admin:security:information:https' => 'Is de site beveiligd met HTTPS',
+	'admin:security:information:https:warning' => "Het wordt aanbevolen om de site middels HTTPS te beschermen. Dit helpt bij het beschermen van je verbinding zodat data (zoals wachtwoorden) niet uit te lezen is.",
+	'admin:security:information:wwwroot' => 'Website installatie map is schrijfbaar',
+	'admin:security:information:wwwroot:error' => "Het is aanbevolen dat Elgg is geïnstalleerd in een map die niet schrijfbaar is door de webserver. Kwaadwillenden zouden eventueel ongewenste code op je site kunnen installeren.",
+	'admin:security:information:validate_input' => 'Invoer validatie',
+	'admin:security:information:validate_input:error' => "Een plugin heeft de invoer validatie uitgeschakeld op de site. Dit geeft gebruikers de mogelijkheid om mogelijk schadelijk content op je site te plaatsen.",
+	'admin:security:information:password_length' => 'Minimale wachtwoord lengte',
+	'admin:security:information:password_length:warning' => "Het is aanbevolen om een minimale wachtwoord lengte te hebben van tenminste 6 tekens.",
+	'admin:security:information:username_length' => 'Minimale gebruikersnaam lengte',
+	'admin:security:information:username_length:warning' => "Het is aanbevolen om een minimale gebruikersnaam lengte te hebben van tenminste 4 tekens.",
+	'admin:security:information:php:session_gc' => "PHP sessie opschoning",
+	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
+	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %sseconden",
+	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
+	
 	'admin:security:settings' => 'Instellingen',
 	'admin:security:settings:description' => 'Op deze pagina kun je enkele veiligheidskeuzes maken. Lees de instellingen zorgvuldig.',
 	'admin:security:settings:label:hardening' => 'Hardening',
@@ -617,6 +653,9 @@ De volgende karakters zijn niet toegestaan: %s',
 	
 	'admin:security:settings:notify_user_ban' => 'Stuur een bericht naar de gebruiker als het account wordt ge(de)blokkeerd',
 	'admin:security:settings:notify_user_ban:help' => 'Dit zorgt voor een notificatie naar de gebruiker indien hij/zij is ge(de)blokkeerd.',
+	
+	'admin:security:settings:notify_user_password' => 'Stuur de gebruiker een notificatie wanneer zij het wachtwoord wijzigen',
+	'admin:security:settings:notify_user_password:help' => 'Dit zorgt voor een notificatie naar de gebruiker indien hij/zij zelf het wachtwoord wijzigt.',
 	
 	'admin:security:settings:protect_upgrade' => 'Bescherm upgrade.php',
 	'admin:security:settings:protect_upgrade:help' => 'Dit beperkt de toegang tot upgrade.php tot beheerders en een ieder die een geldig token heeft.',
@@ -694,6 +733,17 @@ je account op %s is niet meer geblokkeerd, Je kunt weer gebruik maken van de web
 
 Om naar de website te gaan, klik hier:
 %s',
+	
+	'user:notification:password_change:subject' => 'Je wachtwoord is gewijzigd!',
+	'user:notification:password_change:body' => "Beste %s,
+
+Je wachtwoord op '%s' is gewijzigd! Indien je dit zelf hebt aangevraagd ben je klaar.
+
+Heb je deze wijziging niet zelf aangevraagd, dan kun je je wachtwoord hier wijzigen:
+%s
+
+Of neem contact op met de beheerder van de site:
+%s",
 	
 /**
  * Plugins
@@ -786,12 +836,14 @@ Om naar de website te gaan, klik hier:
 	'admin:statistics:label:version:code' => "Code versie",
 
 	'admin:server:label:elgg' => 'Elgg',
+	'admin:server:label:requirements' => 'Vereisten',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => 'Toon PHPInfo',
 	'admin:server:label:web_server' => 'Webserver',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Locatie van log',
 	'admin:server:label:php_version' => 'PHP-versie',
+	'admin:server:label:php_version:required' => 'Elgg vereist een minimale PHP versie van 7.1',
 	'admin:server:label:php_ini' => 'Locatie van PHP-.inibestand',
 	'admin:server:label:php_log' => 'PHP-log',
 	'admin:server:label:mem_avail' => 'Geheugen beschikbaar',
@@ -817,6 +869,17 @@ Om naar de website te gaan, klik hier:
 		OPcache is niet beschikbaar op deze server, of is nog niet geactiveerd.
 		Voor verbeterde performance wordt het aangeraden om OPcache in te schakelen en te configureren.
 ',
+	
+	'admin:server:requirements:php_extension' => "PHP extensie: %s",
+	'admin:server:requirements:php_extension:required' => "Deze PHP extensie is vereist voor een correcte werking van Elgg",
+	'admin:server:requirements:php_extension:recommended' => "Deze PHP extensie is aanbevolen voor een optimale werking van Elgg",
+	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
+	'admin:server:requirements:rewrite:fail' => "Controleer je .htaccess voor de correcte rewrite rules",
+	
+	'admin:server:requirements:database:server' => "Database server",
+	'admin:server:requirements:database:server:required' => "Elgg vereist MySQL v5.5.3 of hoger voor de database",
+	'admin:server:requirements:database:client' => "Database client",
+	'admin:server:requirements:database:client:required' => "Elgg vereist pdo_mysql om verbinding met de database server te maken",
 	
 	'admin:user:label:search' => "Gebruikers zoeken:",
 	'admin:user:label:searchbutton' => "Zoek",
@@ -1014,8 +1077,8 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 
 	'active' => 'Actief',
 	'total' => 'Totaal',
-	'unvalidated' => 'Unvalidated',
-	'disabled' => 'Disabled',
+	'unvalidated' => 'Ongevalideerd',
+	'disabled' => 'Gedeactiveerd',
 
 	'ok' => 'OK',
 	'any' => 'Welke dan ook',
@@ -1052,6 +1115,9 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'status:featured' => 'Uitgelicht',
 	'status:open' => 'Open',
 	'status:closed' => 'Gesloten',
+	'status:enabled' => 'Geactiveerd',
+	'status:disabled' => 'Gedeactiveerd',
+	'status:unavailable' => 'Niet beschikbaar',
 
 /**
  * Generic sorts
@@ -1083,7 +1149,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'on' => 'Aan',
 	'off' => 'Uit',
 
-	'number_counter:separatorr' => ".",
+	'number_counter:separatorr' => ",",
 	'number_counter:view:thousand' => "%sK",
 	'number_counter:view:million' => "%sM",
 	'number_counter:view:billion' => "%sB",
@@ -1282,13 +1348,13 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 
 	'admin:legend:system' => 'Systeem',
 	'admin:legend:caching' => 'Caching',
-	'admin:legend:content' => 'Content',
+	'admin:legend:content' => 'Inhoud',
 	'admin:legend:content_access' => 'Toegang tot content',
 	'admin:legend:site_access' => 'Toegang tot de site',
 	'admin:legend:debug' => 'Debugging en loggen',
 	
-	'config:users:can_change_username' => "Allow users to change their username",
-	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
+	'config:users:can_change_username' => "Sta gebruikers toe om hun wachtwoord te wijzigen",
+	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
 	'config:remove_branding:help' => "Overal op de website zijn er verschillende links en logo's welke aantonen dat de website is gemaakt middels Elgg. Als je de uitingen verwijderd overweeg om een donatie te doen op https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Schakel RSS feeds uit",

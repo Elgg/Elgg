@@ -1,3 +1,36 @@
+<a name="3.0.6"></a>
+### 3.0.6  (2019-07-24)
+
+#### Contributors
+
+* Jeroen Dalsem (11)
+* Jerôme Bakker (9)
+* Ismayil Khayredinov (1)
+
+#### Documentation
+
+* **code:** added note about low-level functions that should throw ([03417897](https://github.com/Elgg/Elgg/commit/034178975619dd60697019bd3e5cf0216512c5be))
+* **composer:** document composer autoloader optimization ([fee62f05](https://github.com/Elgg/Elgg/commit/fee62f05c8e3d9b568db00e9cbedd159cd6d2bf3))
+* **css:** added some best practices about css files and classnaming ([daa55646](https://github.com/Elgg/Elgg/commit/daa55646067a772e76036a4831f85f84ea329c55))
+
+
+#### Bug Fixes
+
+* **cache:**
+  * improved handling of values ([db7c8864](https://github.com/Elgg/Elgg/commit/db7c8864c37ce7d231ef2b2c80fa76e7cbcc7843))
+  * prevent timeout during cache flush ([ab8c759b](https://github.com/Elgg/Elgg/commit/ab8c759b865014a477656d0801fd01b6dcbdc32c))
+* **ckeditor:** no need to remove plugins as they are not loaded ([55b95e7a](https://github.com/Elgg/Elgg/commit/55b95e7a9dd454e95cb132ffa8fa28ab4d852605))
+* **comments:** popup menu will close itself when inline editing comments ([9a7ecc73](https://github.com/Elgg/Elgg/commit/9a7ecc73c8efd3dd3332db68c9e865fec2887874))
+* **core:**
+  * literal order by clauses are no longer deprecated ([e77e4898](https://github.com/Elgg/Elgg/commit/e77e4898fd0206c7358673c30f44502a3d675fd5))
+  * unset on ElggData will always use magic setter ([a0b442ad](https://github.com/Elgg/Elgg/commit/a0b442ad6d4b0538b0302f28dba7c167e52ec16e))
+  * always show success message when upgrade has finished ([0afb29d8](https://github.com/Elgg/Elgg/commit/0afb29d8fbf6b89e2082285b19f645ea128a84c4))
+* **http:** request validation now correctly reads payload ([c5e18f45](https://github.com/Elgg/Elgg/commit/c5e18f45781ba4feea4f40a2c6f6cfd9518df147))
+* **js:** validate arguments in elgg.get_simplecache_url ([91f7c143](https://github.com/Elgg/Elgg/commit/91f7c143c79cfc29c2078c2dd5c38f929378b162))
+* **pages:** correctly check who can edit (write) access ([a87ec78f](https://github.com/Elgg/Elgg/commit/a87ec78f4c71d02cdb8975afc8eaea90195ba25c))
+* **routes:** route url generation will always return a normalized url ([d0b2503a](https://github.com/Elgg/Elgg/commit/d0b2503a36bfa0a0ed7addddffa6a901bdc7bb7b))
+
+
 <a name="3.0.5"></a>
 ### 3.0.5  (2019-07-08)
 
@@ -1210,6 +1243,21 @@ keyword `all` no longer has any effect on calling order. ([1b0cc64d](https://git
 var `$DEFAULT_FILE_STORE`.
  ([618c79d3](https://github.com/Elgg/Elgg/commit/618c79d301eda1b265441b14f3bfbda2235ee3fd))
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
+
+
+<a name="2.3.14"></a>
+### 2.3.14  (2019-07-24)
+
+#### Contributors
+
+* Jerôme Bakker (3)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **groups:** no error on notification failure during membership request ([2bd72ffc](https://github.com/Elgg/Elgg/commit/2bd72ffcf2e156d6b3e0fd18ded72846279c37d9))
+* **http:** check object for toString function ([1cd0809e](https://github.com/Elgg/Elgg/commit/1cd0809eb7c9c31547b69cb306058dee7bfe3ae1))
+* **installer:** detect more https scenarios ([05648781](https://github.com/Elgg/Elgg/commit/056487810a7dccfc524c7c0aa8e0183424842307))
 
 
 <a name="2.3.13"></a>

@@ -27,8 +27,13 @@ return array(
 	'profile:field:tags' => 'Tags',
 	'profile:field:url' => 'Webseite',
 	'profile:field:email' => 'Email-Adresse',
+	'profile:field:tel' => 'Telefonnummer',
 	'profile:field:location' => 'Ort',
 	'profile:field:date' => 'Datum',
+	'profile:field:datetime-local' => 'Zeit und Datum',
+	'profile:field:month' => 'Monat',
+	'profile:field:week' => 'Woche',
+	'profile:field:color' => 'Farbe',
 
 	'profile:edit:default' => 'Anpassen der Profilfelder',
 	'profile:label' => "Name des Profilfeldes",

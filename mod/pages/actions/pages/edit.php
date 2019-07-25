@@ -41,11 +41,10 @@ if ($page_guid) {
 
 if (sizeof($input) > 0) {
 	// don't change access if not an owner/admin
-	$user = elgg_get_logged_in_user_entity();
 	$can_change_access = true;
 
-	if ($user && $page) {
-		$can_change_access = $user->isAdmin() || $user->getGUID() == $page->owner_guid;
+	if ($page->getOwnerEntity()) {
+		$can_change_access = $page->getOwnerEntity()->canEdit();
 	}
 	
 	foreach ($input as $name => $value) {

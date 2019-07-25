@@ -453,8 +453,27 @@ return array(
 	'admin:unknown_section' => 'Unbekannter Adminbereich.',
 
 	'admin' => "Admin",
+	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "Der Admin-Bereich ermöglicht es Dir, Systemeinstellungen vorzunehmen. Du hast Zugriff beispielsweise auf die Benutzerverwaltung und die Konfiguration von Plugins. Bitte wähle eine der unten angebotenen Optionen.",
 
+	'admin:performance' => 'Performance',
+	'admin:performance:label:generic' => 'Generic',
+	'admin:performance:generic:description' => 'Below is a list of performance suggestions / values which could help in tuning your website',
+	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache:settings:warning' => "It's recommended you configure the simplecache setting in the settings.php.
+Configuring simplecache in the settings.php file improves caching performance.
+It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
+	'admin:performance:systemcache' => 'Systemcache',
+	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'The mod_cache module provides HTTP-aware caching schemes. This means that the files will be cached according
+to an instruction specifying how long a page can be considered "fresh".',
+	'admin:performance:php:open_basedir' => 'PHP open_basedir',
+	'admin:performance:php:open_basedir:not_configured' => 'No limitations have been set',
+	'admin:performance:php:open_basedir:warning' => 'A small amount of open_basedir limitations are in effect, this could impact performance.',
+	'admin:performance:php:open_basedir:error' => 'A large amount of open_basedir limitations are in effect, this will probably impact performance.',
+	'admin:performance:php:open_basedir:generic' => 'With open_basedir every file access will be checked against the list of limitations. Since Elgg has a lot of
+file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
+	
 	'admin:statistics' => 'Statistiken',
 	'admin:server' => 'Server',
 	'admin:cron' => 'Cron',
@@ -488,6 +507,8 @@ return array(
 	'admin:users:unvalidated' => 'Nicht validiert',
 	'admin:users:unvalidated:no_results' => 'Es gibt derzeit keine Benutzeraccounts, die noch nicht validiert sind.',
 	'admin:users:unvalidated:registered' => 'Registriert: %s',
+	'admin:users:unvalidated:change_email' => 'Change e-mail address',
+	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
 	'admin:configure_utilities:maintenance' => 'Wartungs-Modus',
 	'admin:upgrades' => 'Aktualisierungen',
@@ -602,6 +623,27 @@ return array(
 	'admin:options' => 'Admin-Optionen',
 
 	'admin:security' => 'Sicherheit',
+	'admin:security:information' => 'Information',
+	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
+	'admin:security:information:https' => 'Is the website protected by HTTPS',
+	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
+(eg. passwords) from being sniffed over the internet connection.",
+	'admin:security:information:wwwroot' => 'Website main folder is writable',
+	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver.
+Malicious visitors could place unwanted code in your website.",
+	'admin:security:information:validate_input' => 'Input validation',
+	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to
+submit potentially harmfull content (eg. cross-site-scripting, etc)",
+	'admin:security:information:password_length' => 'Minimal password length',
+	'admin:security:information:password_length:warning' => "It's recommended to have a minimal password length of at least 6 characters.",
+	'admin:security:information:username_length' => 'Minimal username length',
+	'admin:security:information:username_length:warning' => "It's recommended to have a minimal username length of at least 4 characters.",
+	'admin:security:information:php:session_gc' => "PHP session cleanup",
+	'admin:security:information:php:session_gc:chance' => "Cleanup chance: %s%%",
+	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
+	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
+expired sessions from your database and not allow users to reuse old sessions.",
+	
 	'admin:security:settings' => 'Einstellungen',
 	'admin:security:settings:description' => 'Auf dieser Seite kannst Du einige Sicherheitseinstellungen vornehmen. Bitte lese die Informationen bei den Einstelloptionen sorgfältig durch bevor Du Änderungen vornimmst.',
 	'admin:security:settings:label:hardening' => 'Server-Absicherung',
@@ -616,6 +658,9 @@ return array(
 	
 	'admin:security:settings:notify_user_ban' => 'Benachrichtige den Benutzer, wenn sein Account gesperrt oder wieder entsperrt wird',
 	'admin:security:settings:notify_user_ban:help' => 'Damit wird eine Benachrichtigung an den Benutzer gesendet, wenn ein Admin seinen Account sperrt oder ihn wieder entsperrt.',
+	
+	'admin:security:settings:notify_user_password' => 'Notify the user when they change their password',
+	'admin:security:settings:notify_user_password:help' => 'This will send a notification to the user when they change their password.',
 	
 	'admin:security:settings:protect_upgrade' => 'Ausführung von upgrade.php absichern',
 	'admin:security:settings:protect_upgrade:help' => 'Damit wird die Ausführung von upgrade.php abgesichert. Es wird entweder ein gültiges Token benötigt, damit upgrade.php ausgeführt werden kann, oder Du mußt als Administrator angemeldet sein.',
@@ -700,6 +745,17 @@ Dein Account auf %s ist nicht länger gesperrt. Du kannst Dich auf der Community
 
 Um die Community-Seite aufzurufen, folge diesem Link:
 %s',
+	
+	'user:notification:password_change:subject' => 'Your password has been changed!',
+	'user:notification:password_change:body' => "Hi %s,
+
+Your password on '%s' has been changed! If you made this change than you're all set.
+
+If you didn't make this change, please reset your password here:
+%s
+
+Or contact a site administrator:
+%s",
 	
 /**
  * Plugins
@@ -792,12 +848,14 @@ Um die Community-Seite aufzurufen, folge diesem Link:
 	'admin:statistics:label:version:code' => "Code-Version",
 
 	'admin:server:label:elgg' => 'Elgg',
+	'admin:server:label:requirements' => 'Requirements',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => 'PHP-Info anzeigen',
 	'admin:server:label:web_server' => 'Webserver',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Speicherort des Logs',
 	'admin:server:label:php_version' => 'PHP-Version',
+	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.1',
 	'admin:server:label:php_ini' => 'Speicherort der php.ini-Datei',
 	'admin:server:label:php_log' => 'Speicherort des PHP-Logs',
 	'admin:server:label:mem_avail' => 'Verfügbarer Hauptspeicher',
@@ -823,6 +881,17 @@ Um die Community-Seite aufzurufen, folge diesem Link:
 		OPcache ist auf diesem Server nicht installiert oder nicht aktiviert.
 		Für eine bessere Performance ist es empfehlenswert, OPcache auf dem Server zu installieren und einzurichten.
 ',
+	
+	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
+	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
+	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
+	'admin:server:requirements:rewrite:fail' => "Check your .htaccess for the correct rewrite rules",
+	
+	'admin:server:requirements:database:server' => "Database server",
+	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
+	'admin:server:requirements:database:client' => "Database client",
+	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
 	
 	'admin:user:label:search' => "Suche Benutzeraccount:",
 	'admin:user:label:searchbutton' => "Suche",
@@ -1058,6 +1127,9 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'status:featured' => 'Vorgestellt',
 	'status:open' => 'Offen',
 	'status:closed' => 'Geschlossen',
+	'status:enabled' => 'Enabled',
+	'status:disabled' => 'Disabled',
+	'status:unavailable' => 'Unavailable',
 
 /**
  * Generic sorts
