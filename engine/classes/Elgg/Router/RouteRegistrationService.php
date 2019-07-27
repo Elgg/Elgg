@@ -206,7 +206,7 @@ class RouteRegistrationService {
 				}
 			}
 			
-			return elgg_normalize_url($this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_PATH));
+			return elgg_normalize_url($this->generator->generate($name, $parameters, UrlGenerator::RELATIVE_PATH));
 		} catch (Exception $exception) {
 			$this->logger->notice($exception->getMessage());
 		}
