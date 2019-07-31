@@ -141,7 +141,13 @@ define(function(require) {
 					['/mod/plugin/file.php', elgg.config.wwwroot + 'mod/plugin/file.php'],
 					['/mod/plugin/file.php?p=v&p2=v2', elgg.config.wwwroot + 'mod/plugin/file.php?p=v&p2=v2'],
 					['/rootfile.php', elgg.config.wwwroot + 'rootfile.php'],
-					['/rootfile.php?p=v&p2=v2', elgg.config.wwwroot + 'rootfile.php?p=v&p2=v2']
+					['/rootfile.php?p=v&p2=v2', elgg.config.wwwroot + 'rootfile.php?p=v&p2=v2'],
+					
+					['livesearch?term=some.thing', elgg.config.wwwroot + 'livesearch?term=some.thing'],
+					['livesearch#some.thing', elgg.config.wwwroot + 'livesearch#some.thing'],
+					
+					['/livesearch?term=some.thing', elgg.config.wwwroot + 'livesearch?term=some.thing'],
+					['/livesearch#some.thing', elgg.config.wwwroot + 'livesearch#some.thing'],
 				].forEach(function(args) {
 					expect(elgg.normalize_url(args[0])).toBe(args[1]);
 				});
@@ -150,8 +156,11 @@ define(function(require) {
 			it("leaves absolute and scheme-relative URLs alone", function() {
 				[
 					'http://example.com',
+					'http://example.com/sub',
 					'http://example-time.com',
+					'http://example-time.com/sub',
 					'https://example.com',
+					'https://example.com/sub',
 
 					'//example.com',
 
@@ -162,6 +171,12 @@ define(function(require) {
 					'mailto:brett@elgg.org',
 					'javascript:alert("test")',
 					'app://endpoint',
+					
+					'http://example.com?foo=b.a.r',
+					'http://example.com/sub?foo=b.a.r',
+					'http://example.com?foo=b.a.r#some.id',
+					'http://example.com/sub?foo=b.a.r#some.id',
+					
 				].forEach(function(url) {
 					expect(elgg.normalize_url(url)).toBe(url);
 				});
@@ -171,6 +186,10 @@ define(function(require) {
 				[
 					['example.com', 'http://example.com'],
 					['example.com/subpage', 'http://example.com/subpage'],
+					['example.com?foo=b.a.r', 'http://example.com?foo=b.a.r'],
+					['example.com/subpage?foo=b.a.r', 'http://example.com/subpage?foo=b.a.r'],
+					['example.com?foo=b.a.r#some.id', 'http://example.com?foo=b.a.r#some.id'],
+					['example.com/subpage?foo=b.a.r#some.id', 'http://example.com/subpage?foo=b.a.r#some.id'],
 				].forEach(function(args) {
 					expect(elgg.normalize_url(args[0])).toBe(args[1]);
 				});
