@@ -5,6 +5,8 @@ php:
  - 7.2
  - 7.3
 
+dist: trusty
+
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
@@ -37,7 +39,6 @@ matrix:
     # Build and test javascript
     - php: 7.3
       env: JOB_NAME=js_tests
-      dist: trusty
       install:
         - npm install -g yarn && yarn
       before_script:
