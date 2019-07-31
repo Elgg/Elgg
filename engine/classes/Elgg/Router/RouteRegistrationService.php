@@ -194,7 +194,10 @@ class RouteRegistrationService {
 	 */
 	public function generateUrl($name, array $parameters = []) {
 		try {
-			return elgg_normalize_url($this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_PATH));
+			$url = $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
+
+			// make sure the url is always normalized so it is also usable in CLI
+			return elgg_normalize_url($url);
 		} catch (Exception $exception) {
 			$this->logger->notice($exception->getMessage());
 		}
