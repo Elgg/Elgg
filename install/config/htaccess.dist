@@ -37,19 +37,6 @@ DirectoryIndex index.php
 ############################
 # PHP SETTINGS
 # Don't forget to keep these two IfModules in sync!
-#
-<IfModule mod_php5.c>
-	# If using PHP 5.6
-
-	# limit the maximum memory consumed by the php script to 64 MB
-	php_value memory_limit 64M
-	# post_max_size is the maximum size of ALL the data that is POST'ed to php at a time (8 MB)
-	php_value post_max_size 8388608
-	# upload_max_filesize is the maximum size of a single uploaded file (5 MB)
-	php_value upload_max_filesize 5242880
-	# on development servers, set to 1 to display errors. Set to 0 on production servers.
-	php_value display_errors 0
-</IfModule>
 <IfModule mod_php7.c>
 	# If using PHP 7.x
 
@@ -62,7 +49,6 @@ DirectoryIndex index.php
 	# on development servers, set to 1 to display errors. Set to 0 on production servers.
 	php_value display_errors 0
 </IfModule>
-
 
 ############################
 # COMPRESSION
