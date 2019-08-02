@@ -30,6 +30,9 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		$isolate = elgg_extract('isolate', $params, false);
 		unset($params['isolate']);
 
+		$custom_config_values = (array) elgg_extract('custom_config_values', $params, []);
+		unset($params['custom_config_values']);
+
 		if (isset(self::$_testing_app) && !$isolate) {
 			$app = self::$_testing_app;
 
@@ -45,6 +48,10 @@ abstract class IntegrationTestCase extends BaseTestCase {
 		Application::setInstance(null);
 
 		$config = self::getTestingConfig();
+		foreach ($custom_config_values as $key => $value) {
+			$config->$key = $value;
+		}
+		
 		$sp = new ServiceProvider($config);
 		$config->system_cache_enabled = true;
 		$config->boot_cache_ttl = 600;
