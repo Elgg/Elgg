@@ -119,6 +119,20 @@
 * **thewire:** the route previous:object:thewire is now deprecated ([677d9129](https://github.com/Elgg/Elgg/commit/677d9129cf075405bd0da9394b129b837dcae051))
 
 
+<a name="3.0.7"></a>
+### 3.0.7  (2019-08-02)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **js:** improved elgg.normalize_url to handle more site cases ([57af9e2b](https://github.com/Elgg/Elgg/commit/57af9e2bc83091790172eb736477b5483dd0c4b2))
+* **routes:** use absolute url as base for route url generation ([244854af](https://github.com/Elgg/Elgg/commit/244854afea723dfbecea94af919e11e448942722))
+
+
 <a name="3.0.6"></a>
 ### 3.0.6  (2019-07-24)
 

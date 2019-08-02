@@ -212,6 +212,7 @@ class MenuServiceTest extends UnitTestCase {
 			[
 				'name' => 'root',
 				'text' => 'root',
+				'href' => '#root',
 			],
 		];
 
@@ -219,6 +220,7 @@ class MenuServiceTest extends UnitTestCase {
 			$items[] = [
 				'name' => "n:$priority",
 				'text' => "t:$priority",
+				'href' => "#t:$priority",
 				'parent_name' => 'root',
 				'priority' => $priority,
 			];
@@ -228,6 +230,7 @@ class MenuServiceTest extends UnitTestCase {
 				$items[] = [
 					'name' => "n:$priority:$priority2",
 					'text' => "t:$priority:$priority2",
+					'href' => "#t:$priority:$priority2",
 					'parent_name' => "n:$priority",
 					'priority' => $priority2,
 				];
@@ -236,6 +239,7 @@ class MenuServiceTest extends UnitTestCase {
 					$items[] = [
 						'name' => "n:$priority:$priority2:$priority3",
 						'text' => "t:$priority:$priority2:$priority3",
+						'href' => "#t:$priority:$priority2:$priority3",
 						'parent_name' => "n:$priority:$priority2",
 						'priority' => $priority3,
 					];

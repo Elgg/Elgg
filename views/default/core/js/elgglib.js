@@ -308,7 +308,7 @@ elgg.normalize_url = function(url) {
 		// watch those double escapes in JS.
 		// 'install.php', 'install.php?step=step'
 		return elgg.config.wwwroot + url.ltrim('/');
-	} else if ((new RegExp("^[^/]*\\.", "i")).test(url)) {
+	} else if ((new RegExp("^[^/\\?\\#]*\\.", "i")).test(url)) {
 		// 'example.com', 'example.com/subpage'
 		return 'http://' + url;
 	} else {
