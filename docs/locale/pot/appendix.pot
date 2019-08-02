@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-25 14:16+0200\n"
+"POT-Creation-Date: 2019-08-02 13:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1592,14 +1592,23 @@ msgid "**Until 4.0**"
 msgstr ""
 
 #: ../../appendix/support.rst:63
-msgid "3.0 LTS"
+msgid "3.0"
+msgstr ""
+
+#: ../../appendix/support.rst:63
+#: ../../appendix/support.rst:65
+msgid "July 2019"
 msgstr ""
 
 #: ../../appendix/support.rst:65
+msgid "3.1"
+msgstr ""
+
+#: ../../appendix/support.rst:67
 msgid "4.0"
 msgstr ""
 
-#: ../../appendix/support.rst:65
+#: ../../appendix/support.rst:67
 msgid "TBD"
 msgstr ""
 
