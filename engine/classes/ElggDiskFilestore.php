@@ -15,6 +15,11 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @var string Directory root
 	 */
 	protected $dir_root;
+	
+	/**
+	 * @var array
+	 */
+	protected $file_exists_cache = [];
 
 	/**
 	 * Number of entries per matrix dir.
@@ -59,7 +64,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 		$path = substr($fullname, 0, $ls);
 
-		if (($mode === 'read') && (!file_exists($fullname))) {
+		if (($mode === 'read') && !$this->exists($file)) {
 			return false;
 		}
 
@@ -100,6 +105,9 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * @return false|int
 	 */
 	public function write($f, $data) {
+		// as we do not know the filename... reset all cache
+		$this->file_exists_cache = [];
+		
 		return fwrite($f, $data);
 	}
 
@@ -140,11 +148,16 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 */
 	public function delete(\ElggFile $file, $follow_symlinks = true) {
 		$filename = $this->getFilenameOnFilestore($file);
-		if (file_exists($filename) || is_link($filename)) {
-			if ($follow_symlinks && is_link($filename) && file_exists($filename)) {
+		$exists = $this->exists($file);
+		
+		if ($exists || is_link($filename)) {
+			
+			if ($follow_symlinks && is_link($filename) && $exists) {
 				$target = readlink($filename);
 				file_exists($target) && unlink($target);
 			}
+			
+			unset($this->file_exists_cache[$filename]);
 			return unlink($filename);
 		} else {
 			return true;
@@ -249,7 +262,13 @@ class ElggDiskFilestore extends \ElggFilestore {
 		if (!$file->getFilename()) {
 			return false;
 		}
-		return file_exists($this->getFilenameOnFilestore($file));
+		
+		$filename = $this->getFilenameOnFilestore($file);
+		if (!isset($this->file_exists_cache[$filename])) {
+			$this->file_exists_cache[$filename] = file_exists($filename);
+		}
+		
+		return $this->file_exists_cache[$filename];
 	}
 
 	/**
