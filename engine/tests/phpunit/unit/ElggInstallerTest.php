@@ -124,6 +124,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
 			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
 			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
 			'dataroot' => \Elgg\Project\Paths::sanitize(Paths::elgg() . 'engine/tests/test_files/dataroot/'),
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
@@ -267,6 +268,13 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 				'value' => 'localhost',
 				'required' => true,
 			],
+			'dbport' => [
+				'type' => 'number',
+				'value' => 3306,
+				'required' => true,
+				'min' => 0,
+				'max' => 65535,
+			],
 			'dbprefix' => [
 				'type' => 'text',
 				'value' => 'elgg_',
@@ -319,7 +327,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 	public function testDatabaseAction() {
 
 		$dataroot = dirname(Paths::elgg()) . '/_installer_testing_dataroot/';
-		_elgg_rmdir($dataroot, false);
+		elgg_delete_directory($dataroot);
 
 		mkdir($dataroot);
 
@@ -329,6 +337,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
 			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
 			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
 			'dataroot' => $dataroot,
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
@@ -345,7 +354,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
 		$this->assertEquals(elgg_normalize_url('install.php?step=settings'), $response->getForwardURL());
 
-		_elgg_rmdir($dataroot, false);
+		elgg_delete_directory($dataroot);
 	}
 
 	public function testSettings() {

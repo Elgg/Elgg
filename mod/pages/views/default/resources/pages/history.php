@@ -39,9 +39,6 @@ $content = elgg_list_annotations([
 $body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('pages/sidebar/navigation', [
-		'page' => $page,
-	]),
 ]);
 
 echo elgg_view_page($title, $body);

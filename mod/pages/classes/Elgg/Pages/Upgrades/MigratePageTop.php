@@ -32,10 +32,9 @@ class MigratePageTop implements AsynchronousUpgrade {
 	 * {@inheritDoc}
 	 */
 	public function countItems() {
-		return elgg_get_entities([
+		return elgg_count_entities([
 			'type' => 'object',
 			'subtype' => 'page_top',
-			'count' => true,
 		]);
 	}
 	

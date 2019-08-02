@@ -35,16 +35,16 @@ $card = elgg_format_element('div', ['class' => 'elgg-menu-hover-card'], $user_in
 
 // actions
 $combined_actions = [];
-if (elgg_is_logged_in() && $actions) {
+if (elgg_is_logged_in() && !empty($actions)) {
 	$combined_actions += $actions;
 }
 
 // main
-if ($main) {
+if (!empty($main)) {
 	$combined_actions += $main;
 }
 
-if (elgg_is_admin_logged_in() && $admin) {
+if (elgg_is_admin_logged_in() && !empty($admin)) {
 	$combined_actions[] = \ElggMenuItem::factory([
 		'name' => 'toggle_admin',
 		'text' => elgg_echo('admin:options'),
@@ -55,7 +55,7 @@ if (elgg_is_admin_logged_in() && $admin) {
 	]);
 }
 
-if ($combined_actions) {
+if (!empty($combined_actions)) {
 	$card .= elgg_view('navigation/menu/elements/section', [
 		'class' => "elgg-menu elgg-menu-hover-actions",
 		'items' => $combined_actions,
@@ -65,7 +65,7 @@ if ($combined_actions) {
 echo elgg_format_element('div', ['class' => 'elgg-menu-hover-card-container'], $card);
 
 // admin
-if (elgg_is_admin_logged_in() && $admin) {
+if (elgg_is_admin_logged_in() && !empty($admin)) {
 	echo elgg_view('navigation/menu/elements/section', [
 		'class' => [
 			'elgg-menu',

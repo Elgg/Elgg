@@ -148,7 +148,6 @@ abstract class ElggExtender extends \ElggData {
 	 *                      (defaults to currently logged in user)
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 */
 	abstract public function canEdit($user_guid = 0);
 
@@ -233,7 +232,6 @@ abstract class ElggExtender extends \ElggData {
 	 * @param string $value_type If specified as "text" or "integer", overrides the detection.
 	 *
 	 * @return string
-	 * @access private
 	 * @internal
 	 */
 	public static function detectValueType($value, $value_type = "") {

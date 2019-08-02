@@ -1,6 +1,11 @@
 <?php
 
-elgg_load_css('admin/users/newest.css');
+elgg_require_css('admin/users/newest');
+
+echo elgg_view_form('admin/users/search', ['method' => 'GET', 'action' => 'admin/users/newest']);
+
+$query = get_input('q');
+$getter = $query ? 'elgg_search' : 'elgg_get_entities';
 
 // newest users
 echo elgg_list_entities([
@@ -17,4 +22,5 @@ echo elgg_list_entities([
 		]),
 	],
 	'list_class' => 'elgg-newest-users',
-]);
+	'query' => $query,
+], $getter);

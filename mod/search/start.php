@@ -64,7 +64,6 @@ function search_output_tag(\Elgg\Hook $hook) {
 
 	$query_params = [
 		'q' => elgg_extract('value', $vars),
-		'search_type' => 'tags',
 		'type' => elgg_extract('type', $vars, null, false),
 		'subtype' => elgg_extract('subtype', $vars, null, false),
 	];

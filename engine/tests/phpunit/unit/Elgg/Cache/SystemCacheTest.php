@@ -37,8 +37,8 @@ class SystemCacheTest extends UnitTestCase {
 
 		_elgg_services()->systemCache->init();
 
-		$this->assertNotEmpty(elgg_load_system_cache('view_locations'));
-		$this->assertNotEmpty(elgg_load_system_cache('view_overrides'));
+		$this->assertNotNull(elgg_load_system_cache('view_locations'));
+		$this->assertNotNull(elgg_load_system_cache('view_overrides'));
 
 		elgg_reset_system_cache();
 	}

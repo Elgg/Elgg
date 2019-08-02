@@ -53,6 +53,15 @@ return [
 		'walled' => false,
 		'middleware' => [
 			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+			\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
+		],
+	],
+	'account:email:confirm' => [
+		'path' => '/emailconfirm/{guid}',
+		'controller' => \Elgg\Users\EmailChangeController::class,
+		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
 		],
 	],
 	'ajax' => [

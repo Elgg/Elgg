@@ -12,18 +12,17 @@ class AjaxResponseHandler {
 	/**
 	 * Alter ajax response to send back likes count
 	 *
-	 * @param string                      $hook     Hook name (AjaxResponse::RESPONSE_HOOK)
-	 * @param string                      $type     'all'
-	 * @param \Elgg\Services\AjaxResponse $response Ajax response
-	 * @param array                       $params   Hook params
+	 * @param \Elgg\Hook $hook AjaxResponse::RESPONSE_HOOK, 'all'
 	 *
 	 * @return void|\Elgg\Services\AjaxResponse
 	 */
-	public function __invoke($hook, $type, AjaxResponse $response, $params) {
+	public function __invoke(\Elgg\Hook $hook) {
 		$entity = get_entity(get_input('guid'));
 		if (!$entity) {
 			return;
 		}
+		
+		$response = $hook->getValue();
 		
 		$response->getData()->likes_status = [
 			'guid' => $entity->guid,

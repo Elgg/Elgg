@@ -37,21 +37,19 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanGetPluginUpgrade() {
-		$class = TestBatch::class;
-
-		$ia = elgg_set_ignore_access(true);
-
-		$upgrade = _elgg_services()->upgradeLocator->getUpgrade($class, 'test_plugin');
-		/* @var $upgrade ElggUpgrade */
-
-		$this->assertNotEmpty($upgrade);
-
-		$this->assertInstanceOf(ElggUpgrade::class, $upgrade);
-		$this->assertEquals('test_plugin:2016101900', $upgrade->id);
-		$this->assertEquals("test_plugin:upgrade:2016101900:title", $upgrade->title);
-		$this->assertEquals("test_plugin:upgrade:2016101900:description", $upgrade->description);
-
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$class = TestBatch::class;
+			
+			$upgrade = _elgg_services()->upgradeLocator->getUpgrade($class, 'test_plugin');
+			/* @var $upgrade ElggUpgrade */
+	
+			$this->assertNotEmpty($upgrade);
+	
+			$this->assertInstanceOf(ElggUpgrade::class, $upgrade);
+			$this->assertEquals('test_plugin:2016101900', $upgrade->id);
+			$this->assertEquals("test_plugin:upgrade:2016101900:title", $upgrade->title);
+			$this->assertEquals("test_plugin:upgrade:2016101900:description", $upgrade->description);
+		});
 	}
 
 	public function testCanGetExistingUpgrade() {

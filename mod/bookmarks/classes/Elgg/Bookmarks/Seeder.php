@@ -7,7 +7,7 @@ use Elgg\Database\Seeds\Seed;
 /**
  * Add bookmarks seed
  *
- * @access private
+ * @internal
  */
 class Seeder extends Seed {
 
@@ -17,11 +17,10 @@ class Seeder extends Seed {
 	public function seed() {
 
 		$count_bookmarks = function () {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'types' => 'object',
 				'subtypes' => 'bookmarks',
 				'metadata_names' => '__faker',
-				'count' => true,
 			]);
 		};
 

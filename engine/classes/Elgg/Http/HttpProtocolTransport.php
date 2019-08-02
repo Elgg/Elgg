@@ -8,17 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
  * Transport for sending responses to HTTP clients via HTTP protocol
  *
  * @since 2.3
- * @access private
+ * @internal
  */
 class HttpProtocolTransport implements ResponseTransport {
 	
 	/**
 	 * {@inheritdoc}
-	 *
-	 * @return Response
 	 */
 	public function send(Response $response) {
-		return $response->send();
+		$response->send();
+		return true;
 	}
 
 }

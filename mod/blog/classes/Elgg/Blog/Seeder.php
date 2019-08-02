@@ -7,7 +7,7 @@ use Elgg\Database\Seeds\Seed;
 /**
  * Add blog seed
  *
- * @access private
+ * @internal
  */
 class Seeder extends Seed {
 
@@ -23,11 +23,10 @@ class Seeder extends Seed {
 	public function seed() {
 
 		$count_blogs = function () {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'types' => 'object',
 				'subtypes' => 'blog',
 				'metadata_names' => '__faker',
-				'count' => true,
 			]);
 		};
 

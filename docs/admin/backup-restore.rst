@@ -223,6 +223,9 @@ Edit ``/public_html/elgg-config/settings.php`` on the new hosting provider to re
    // (For most configurations, you can leave this as 'localhost')
    $CONFIG->dbhost = 'localhost';
    
+   // (For most configurations, you can leave this as 3306)
+   $CONFIG->dbport = 3306;
+   
    $CONFIG->wwwroot = 'http://your.website.com/'
 
 Upload the ``settings.php`` file back to the new host - overwriting the existing file.

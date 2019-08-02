@@ -74,9 +74,13 @@ class Plugins extends DbPlugins {
 	}
 
 	public function addTestingPlugin(ElggPlugin $plugin) {
-		$this->_plugins[] = $plugin;
+		$this->_plugins[$plugin->getID()] = $plugin;
 	}
 
+	public function isActive($plugin_id) {
+		return array_key_exists($plugin_id, $this->_plugins);
+	}
+	
 	public function setPriority(ElggPlugin $plugin, $priority) {
 
 		$old_priority = $plugin->getPriority();

@@ -28,12 +28,18 @@ return [
 		'collection:object:bookmarks:friends' => [
 			'path' => '/bookmarks/friends/{username}',
 			'resource' => 'bookmarks/friends',
+			'required_plugins' => [
+				'friends',
+			],
 		],
 		'collection:object:bookmarks:group' => [
 			'path' => '/bookmarks/group/{guid}/{subpage?}',
 			'resource' => 'bookmarks/group',
 			'defaults' => [
 				'subpage' => 'all',
+			],
+			'required_plugins' => [
+				'groups',
 			],
 		],
 		'add:object:bookmarks' => [

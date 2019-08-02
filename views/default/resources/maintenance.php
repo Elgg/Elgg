@@ -8,7 +8,7 @@ if (!$message) {
 	$message = elgg_echo('admin:maintenance_mode:default_message');
 }
 
-elgg_load_css('maintenance');
+elgg_load_external_file('css', 'maintenance');
 
 elgg_set_http_header("HTTP/1.1 503 Service Unavailable");
 

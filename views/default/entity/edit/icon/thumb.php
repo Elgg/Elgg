@@ -2,13 +2,14 @@
 /**
  * Show an example of the current icon
  *
- * @uses $vars['entity']      entity to edit
- * @uses $vars['icon_type']   the type of the icon (default: icon)
- * @uses $vars['show_thumb']  show the thumb of the entity if available (default: true)
- * @uses $vars['thumb_size']  the icon size to use as the thumb (default: medium)
+ * @uses $vars['entity']          entity to edit
+ * @uses $vars['icon_type']       the type of the icon (default: icon)
+ * @uses $vars['show_thumb']      show the thumb of the entity if available (default: !cropper_enabled)
+ * @uses $vars['thumb_size']      the icon size to use as the thumb (default: medium)
+ * @uses $vars['cropper_enabled'] enable cropper features (default: false), when cropper is enabled thumbnail is disabled by default
  */
 
-if (elgg_extract('show_thumb', $vars, true) === false) {
+if (elgg_extract('show_thumb', $vars, !elgg_extract('cropper_enabled', $vars, false)) === false) {
 	return;
 }
 

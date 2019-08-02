@@ -125,7 +125,7 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 		
 		$this->assertArrayHasKey('message', $message_details);
 		$this->assertArrayHasKey('level', $message_details);
-		$this->assertStringStartsWith('Deprecated in 1.0: The plugin hook "foo":"bar" has been deprecated Called from', $message_details['message']);
+		$this->assertStringStartsWith('Deprecated in 1.0: The plugin hook "foo":"bar" has been deprecated', $message_details['message']);
 		$this->assertEquals(LogLevel::WARNING, $message_details['level']);
 	}
 

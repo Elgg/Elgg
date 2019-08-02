@@ -5,7 +5,7 @@ namespace Elgg\Database\Seeds;
 /**
  * Seed users
  *
- * @access private
+ * @internal
  */
 class Groups extends Seed {
 
@@ -31,23 +31,21 @@ class Groups extends Seed {
 	public function seed() {
 
 		$count_groups = function () {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'types' => 'group',
 				'metadata_names' => '__faker',
-				'count' => true,
 			]);
 		};
 
 		$this->advance($count_groups());
 
 		$count_members = function ($group) {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'types' => 'user',
 				'relationship' => 'member',
 				'relationship_guid' => $group->getGUID(),
 				'inverse_relationship' => true,
 				'metadata_names' => '__faker',
-				'count' => true,
 			]);
 		};
 

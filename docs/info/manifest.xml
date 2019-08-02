@@ -17,16 +17,6 @@
 		<version>1.8</version>
 	</requires>
 
-	<screenshot>
-		<description>An example screenshot</description>
-		<path>graphics/plugin_ss1.png</path>
-	</screenshot>
-
-	<screenshot>
-		<description>Another screenshot</description>
-		<path>graphics/plugin_ss2.png</path>
-	</screenshot>
-
 	<contributor>
 		<name>Evan Winslow</name>
 		<email>evan@elgg.org</email>

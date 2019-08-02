@@ -254,4 +254,14 @@ class OkResponseUnitTest extends \Elgg\UnitTestCase {
 		return $codes;
 	}
 
+	public function testCanSetException() {
+
+		$test_class = $this->class;
+		$response = new $test_class();
+
+		$ex = new \Exception('foo');
+		
+		$response->setException($ex);
+		$this->assertEquals($ex, $response->getException());
+	}
 }

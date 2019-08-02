@@ -16,9 +16,9 @@ $group_guid = (int) get_input('group_guid');
 $user = get_user($user_guid);
 
 // access bypass for getting invisible group
-$ia = elgg_set_ignore_access(true);
-$group = get_entity($group_guid);
-elgg_set_ignore_access($ia);
+$group = elgg_call(ELGG_IGNORE_ACCESS, function() use ($group_guid) {
+	return get_entity($group_guid);
+});
 
 if (!$user || !($group instanceof \ElggGroup)) {
 	return elgg_error_response(elgg_echo('groups:cantjoin'));
@@ -49,7 +49,9 @@ if (check_entity_relationship($user->guid, 'membership_request', $group->guid)) 
 }
 
 
-add_entity_relationship($user->guid, 'membership_request', $group->guid);
+if (!add_entity_relationship($user->guid, 'membership_request', $group->guid)) {
+	return elgg_error_response(elgg_echo('groups:joinrequestnotmade'));
+}
 
 $owner = $group->getOwnerEntity();
 
@@ -75,8 +77,6 @@ $params = [
 ];
 
 // Notify group owner
-if (!notify_user($owner->guid, $user->getGUID(), $subject, $body, $params)) {
-	return elgg_error_response(elgg_echo('groups:joinrequestnotmade'));
-}
+notify_user($owner->guid, $user->getGUID(), $subject, $body, $params);
 
 return elgg_ok_response('', elgg_echo('groups:joinrequestmade'));

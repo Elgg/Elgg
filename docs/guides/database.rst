@@ -350,15 +350,12 @@ Example: Run SQL script on plugin activation
 
 This example shows how you can populate your database on plugin activation.
 
-my_plugin/activate.php:
-
 .. code-block:: php
 
     if (!elgg_get_plugin_setting('database_version', 'my_plugin') {
         run_sql_script(__DIR__ . '/sql/activate.sql');
         elgg_set_plugin_setting('database_version', 1, 'my_plugin');
     }
-
 
 my_plugin/sql/activate.sql:
 

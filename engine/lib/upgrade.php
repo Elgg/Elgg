@@ -27,7 +27,7 @@ function _elgg_upgrade_completed() {
  * @param \Elgg\Hook $hook 'register', 'menu:entity'
  *
  * @return void|MenuItems
- * @access private
+ * @internal
  */
 function _elgg_upgrade_entity_menu(\Elgg\Hook $hook) {
 	

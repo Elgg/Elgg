@@ -19,13 +19,10 @@ $content = elgg_view('pages/listing/group', [
 	'entity' => $group,
 ]);
 
-$sidebar = elgg_view('pages/sidebar/navigation', $vars);
-$sidebar .= elgg_view('pages/sidebar');
-
 $body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => $sidebar,
+	'sidebar' => elgg_view('pages/sidebar', $vars),
 ]);
 
 echo elgg_view_page($title, $body);

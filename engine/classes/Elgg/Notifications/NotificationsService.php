@@ -20,7 +20,7 @@ use RuntimeException;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Notifications
@@ -103,7 +103,6 @@ class NotificationsService {
 	 * @return void
 	 *
 	 * @see elgg_register_notification_event()
-	 * @access private
 	 */
 	public function registerEvent($type, $subtype, array $actions = []) {
 
@@ -115,7 +114,7 @@ class NotificationsService {
 		}
 
 		$action_list =& $this->events[$type][$subtype];
-		if ($actions) {
+		if (!empty($actions)) {
 			$action_list = array_unique(array_merge($action_list, $actions));
 		} elseif (!in_array('create', $action_list)) {
 			$action_list[] = 'create';
@@ -131,7 +130,6 @@ class NotificationsService {
 	 * @return bool
 	 *
 	 * @see elgg_unregister_notification_event()
-	 * @access private
 	 */
 	public function unregisterEvent($type, $subtype) {
 
@@ -148,8 +146,6 @@ class NotificationsService {
 	 * Return the notification events
 	 *
 	 * @return array
-	 *
-	 * @access private
 	 */
 	public function getEvents() {
 		return $this->events;
@@ -162,7 +158,6 @@ class NotificationsService {
 	 * @return void
 	 *
 	 * @see elgg_register_notification_method()
-	 * @access private
 	 */
 	public function registerMethod($name) {
 		$this->methods[$name] = $name;
@@ -175,7 +170,6 @@ class NotificationsService {
 	 * @return bool
 	 *
 	 * @see elgg_unregister_notification_method()
-	 * @access private
 	 */
 	public function unregisterMethod($name) {
 		if (isset($this->methods[$name])) {
@@ -191,7 +185,6 @@ class NotificationsService {
 	 * @return string[]
 	 *
 	 * @see elgg_get_notification_methods()
-	 * @access private
 	 */
 	public function getMethods() {
 		return $this->methods;
@@ -204,7 +197,6 @@ class NotificationsService {
 	 * @param string   $type   Type of the object of the action
 	 * @param ElggData $object The object of the action
 	 * @return void
-	 * @access private
 	 */
 	public function enqueueEvent($action, $type, $object) {
 		
@@ -237,7 +229,6 @@ class NotificationsService {
 	 * @param int  $stopTime The Unix time to stop sending notifications
 	 * @param bool $matrix   If true, will return delivery matrix instead of a notifications event count
 	 * @return int|array The number of notification events handled, or a delivery matrix
-	 * @access private
 	 */
 	public function processQueue($stopTime, $matrix = false) {
 
@@ -310,11 +301,10 @@ class NotificationsService {
 	 * @param array             $subscriptions Subscriptions for this event
 	 * @param array             $params        Default notification parameters
 	 * @return array
-	 * @access private
 	 */
 	protected function sendNotifications($event, $subscriptions, array $params = []) {
 
-		if (!$this->methods) {
+		if (empty($this->methods)) {
 			return [];
 		}
 
@@ -367,17 +357,12 @@ class NotificationsService {
 	 *                                   user's chosen delivery methods.
 	 *
 	 * @return array
-	 * @access private
 	 */
 	public function sendInstantNotifications(\ElggEntity $sender, array $recipients = [], array $params = []) {
 
-		if (!$sender instanceof \ElggEntity) {
-			throw new InvalidArgumentException("Notification sender must be a valid entity");
-		}
-		
 		$deliveries = [];
 
-		if (!$this->methods) {
+		if (empty($this->methods)) {
 			return $deliveries;
 		}
 		
@@ -444,7 +429,6 @@ class NotificationsService {
 	 * @param string            $method The notification method
 	 * @param array             $params Default notification params
 	 * @return bool
-	 * @access private
 	 */
 	protected function sendNotification(NotificationEvent $event, $guid, $method, array $params = []) {
 
@@ -564,17 +548,17 @@ class NotificationsService {
 	private function getNotificationSubject(NotificationEvent $event, ElggUser $recipient) {
 		$actor = $event->getActor();
 		$object = $event->getObject();
-		/* @var \ElggObject $object */
+		
 		$language = $recipient->language;
 
 		// Check custom notification subject for the action/type/subtype combination
 		$subject_key = "notification:{$event->getDescription()}:subject";
 		if ($this->translator->languageKeyExists($subject_key, $language)) {
+			$display_name = '';
 			if ($object instanceof \ElggEntity) {
 				$display_name = $object->getDisplayName();
-			} else {
-				$display_name = '';
 			}
+			
 			return $this->translator->translate($subject_key, [
 				$actor->getDisplayName(),
 				$display_name,

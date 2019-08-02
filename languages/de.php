@@ -27,7 +27,7 @@ return array(
 	'session_changed_user' => "Du wurdest als ein anderer Benutzer eingeloggt. Du solltest die Seite <a href='javascript:location.reload(true)'>neu laden</a>.",
 
 	'loggedinrequired' => "Du mußt angemeldet sein, um diese Seite aufrufen zu können.",
-	'loggedoutrequired' => "You must be logged out to view the requested page.",
+	'loggedoutrequired' => "Du darfst nicht angemeldet sein, um diese Seite aufrufen zu können.",
 	'adminrequired' => "Du mußt ein Administrator sein, um diese Seite aufrufen zu können.",
 	'membershiprequired' => "Du mußt Mitglied dieser Gruppe sein, um diese Seite aufrufen zu können.",
 	'limited_access' => "Du hast nicht die notwendige Berechtigung, um auf die angeforderte Seite zuzugreifen.",
@@ -241,7 +241,7 @@ return array(
 	'widgets:add:failure' => "Das Hinzufügen des Widgets ist fehlgeschlagen.",
 	'widgets:move:failure' => "Die Position des Widgets auf Deiner Seite konnte nicht gespeichert werden.",
 	'widgets:remove:failure' => "Das Widget konnte nicht entfernt werden.",
-	'widgets:not_configured' => "This widget is not yet configured",
+	'widgets:not_configured' => "Dieses Widget wurde noch nicht konfiguriert.",
 	
 /**
  * Groups
@@ -453,8 +453,27 @@ return array(
 	'admin:unknown_section' => 'Unbekannter Adminbereich.',
 
 	'admin' => "Admin",
+	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "Der Admin-Bereich ermöglicht es Dir, Systemeinstellungen vorzunehmen. Du hast Zugriff beispielsweise auf die Benutzerverwaltung und die Konfiguration von Plugins. Bitte wähle eine der unten angebotenen Optionen.",
 
+	'admin:performance' => 'Performance',
+	'admin:performance:label:generic' => 'Generic',
+	'admin:performance:generic:description' => 'Below is a list of performance suggestions / values which could help in tuning your website',
+	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache:settings:warning' => "It's recommended you configure the simplecache setting in the settings.php.
+Configuring simplecache in the settings.php file improves caching performance.
+It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
+	'admin:performance:systemcache' => 'Systemcache',
+	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'The mod_cache module provides HTTP-aware caching schemes. This means that the files will be cached according
+to an instruction specifying how long a page can be considered "fresh".',
+	'admin:performance:php:open_basedir' => 'PHP open_basedir',
+	'admin:performance:php:open_basedir:not_configured' => 'No limitations have been set',
+	'admin:performance:php:open_basedir:warning' => 'A small amount of open_basedir limitations are in effect, this could impact performance.',
+	'admin:performance:php:open_basedir:error' => 'A large amount of open_basedir limitations are in effect, this will probably impact performance.',
+	'admin:performance:php:open_basedir:generic' => 'With open_basedir every file access will be checked against the list of limitations. Since Elgg has a lot of
+file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
+	
 	'admin:statistics' => 'Statistiken',
 	'admin:server' => 'Server',
 	'admin:cron' => 'Cron',
@@ -464,7 +483,7 @@ return array(
 	'admin:cron:date' => 'Datum und Zeit',
 	'admin:cron:msg' => 'Statusausgaben',
 	'admin:cron:started' => 'Cronjobs für "%s" gestarted am %s',
-	'admin:cron:started:actual' => 'Cron interval "%s" started processing at %s',
+	'admin:cron:started:actual' => 'Cron-Zeitintervall "%s" in Bearbeitung seit %s',
 	'admin:cron:complete' => 'Cronjobs für "%s" abgeschlossen am %s',
 
 	'admin:appearance' => 'Design',
@@ -477,6 +496,8 @@ return array(
 	'admin:users:online' => 'Online',
 	'admin:users:newest' => 'Neueste',
 	'admin:users:admins' => 'Administratoren',
+	'admin:users:searchuser' => 'Suche Benutzer, um sie zu Admins zu machen',
+	'admin:users:existingadmins' => 'Liste der existierenden Admins',
 	'admin:users:add' => 'Benutzer hinzufügen',
 	'admin:users:description' => "In diesem Admin-Bereich kannst Du Einstellugen für Benutzeraccounts konfigurieren. Wähle eine der unten gezeigten Optionen.",
 	'admin:users:adduser:label' => "Hier klicken um einen neuen Benutzeraccount zu erstellen...",
@@ -486,30 +507,34 @@ return array(
 	'admin:users:unvalidated' => 'Nicht validiert',
 	'admin:users:unvalidated:no_results' => 'Es gibt derzeit keine Benutzeraccounts, die noch nicht validiert sind.',
 	'admin:users:unvalidated:registered' => 'Registriert: %s',
+	'admin:users:unvalidated:change_email' => 'Change e-mail address',
+	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
 	'admin:configure_utilities:maintenance' => 'Wartungs-Modus',
 	'admin:upgrades' => 'Aktualisierungen',
-	'admin:upgrades:finished' => 'Completed',
-	'admin:upgrades:db' => 'Database upgrades',
-	'admin:upgrades:db:name' => 'Upgrade name',
-	'admin:upgrades:db:start_time' => 'Start time',
-	'admin:upgrades:db:end_time' => 'End time',
-	'admin:upgrades:db:duration' => 'Duration',
-	'admin:upgrades:menu:pending' => 'Pending upgrades',
-	'admin:upgrades:menu:completed' => 'Completed upgrades',
-	'admin:upgrades:menu:db' => 'Database upgrades',
-	'admin:upgrades:menu:run_single' => 'Run this upgrade',
+	'admin:upgrades:finished' => 'Abgeschlossen',
+	'admin:upgrades:db' => 'Datenbank-Aktualisierungen',
+	'admin:upgrades:db:name' => 'Aktualisierungsname',
+	'admin:upgrades:db:start_time' => 'Startzeit',
+	'admin:upgrades:db:end_time' => 'Endzeit',
+	'admin:upgrades:db:duration' => 'Ausführungsdauer',
+	'admin:upgrades:menu:pending' => 'Ausstehende Aktualisierungen',
+	'admin:upgrades:menu:completed' => 'Abgeschlossene Aktualisierungen',
+	'admin:upgrades:menu:db' => 'Datenbank-Aktualisierungen',
+	'admin:upgrades:menu:run_single' => 'Diese Aktualisierung jetzt ausführen',
 	'admin:upgrades:run' => 'Aktualisierungen jetzt ausführen',
 	'admin:upgrades:error:invalid_upgrade' => 'Entität %s existiert nicht oder sie ist keine gültige ElggUpgrade-Instanz.',
 	'admin:upgrades:error:invalid_batch' => 'Der Batch-Prozeß für die Aktualisierung %s (%s) konnte nicht instanziiert werden.',
 	'admin:upgrades:completed' => 'Aktualisierung "%s" abgeschlossen um %s',
 	'admin:upgrades:completed:errors' => 'Aktualisierung "%s" abgeschlossen um %s. Es traten aber %s Fehler auf.',
 	'admin:upgrades:failed' => 'Aktualisierung "%s" fehlgeschlagen.',
-	'admin:action:upgrade:reset:success' => 'Upgrade "%s" was reset',
+	'admin:action:upgrade:reset:success' => 'Aktualisierung "%s" wurde zurückgesetzt.',
 
 	'admin:settings' => 'Einstellungen',
 	'admin:settings:basic' => 'Grundeinstellungen',
 	'admin:settings:advanced' => 'Erweiterte Einstellungen',
+	'admin:settings:users' => 'Benutzer',
+	'admin:site_settings' => "Seiteneinstellungen",
 	'admin:site:description' => "Hier kannst Du einige globale Einstellungen für Deine Community-Seite vornehmen.",
 	'admin:site:opt:linktext' => "Community-Seite konfigurieren...",
 	'admin:settings:in_settings_file' => 'Diese Einstellung kann in elgg-config/settings.php angepasst werden.',
@@ -598,6 +623,27 @@ return array(
 	'admin:options' => 'Admin-Optionen',
 
 	'admin:security' => 'Sicherheit',
+	'admin:security:information' => 'Information',
+	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
+	'admin:security:information:https' => 'Is the website protected by HTTPS',
+	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
+(eg. passwords) from being sniffed over the internet connection.",
+	'admin:security:information:wwwroot' => 'Website main folder is writable',
+	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver.
+Malicious visitors could place unwanted code in your website.",
+	'admin:security:information:validate_input' => 'Input validation',
+	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to
+submit potentially harmfull content (eg. cross-site-scripting, etc)",
+	'admin:security:information:password_length' => 'Minimal password length',
+	'admin:security:information:password_length:warning' => "It's recommended to have a minimal password length of at least 6 characters.",
+	'admin:security:information:username_length' => 'Minimal username length',
+	'admin:security:information:username_length:warning' => "It's recommended to have a minimal username length of at least 4 characters.",
+	'admin:security:information:php:session_gc' => "PHP session cleanup",
+	'admin:security:information:php:session_gc:chance' => "Cleanup chance: %s%%",
+	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
+	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
+expired sessions from your database and not allow users to reuse old sessions.",
+	
 	'admin:security:settings' => 'Einstellungen',
 	'admin:security:settings:description' => 'Auf dieser Seite kannst Du einige Sicherheitseinstellungen vornehmen. Bitte lese die Informationen bei den Einstelloptionen sorgfältig durch bevor Du Änderungen vornimmst.',
 	'admin:security:settings:label:hardening' => 'Server-Absicherung',
@@ -613,6 +659,9 @@ return array(
 	'admin:security:settings:notify_user_ban' => 'Benachrichtige den Benutzer, wenn sein Account gesperrt oder wieder entsperrt wird',
 	'admin:security:settings:notify_user_ban:help' => 'Damit wird eine Benachrichtigung an den Benutzer gesendet, wenn ein Admin seinen Account sperrt oder ihn wieder entsperrt.',
 	
+	'admin:security:settings:notify_user_password' => 'Notify the user when they change their password',
+	'admin:security:settings:notify_user_password:help' => 'This will send a notification to the user when they change their password.',
+	
 	'admin:security:settings:protect_upgrade' => 'Ausführung von upgrade.php absichern',
 	'admin:security:settings:protect_upgrade:help' => 'Damit wird die Ausführung von upgrade.php abgesichert. Es wird entweder ein gültiges Token benötigt, damit upgrade.php ausgeführt werden kann, oder Du mußt als Administrator angemeldet sein.',
 	'admin:security:settings:protect_upgrade:token' => 'Um upgrade.php ausführen zu können, wenn man nicht angemeldet ist oder nicht als Administrator angemeldet ist, muss die folgende URL verwendet werden:',
@@ -627,10 +676,13 @@ return array(
 	
 	'admin:security:settings:email_require_password' => 'Passworteingabe bei Änderung der Email-Adresse notwendig',
 	'admin:security:settings:email_require_password:help' => 'Möchte ein Benutzer die Email-Adresse seines Accounts ändern, muss er diese Änderung durch die Eingabe seines derzeitigen Passworts bestätigen.',
+	
+	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
+	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
 
-	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
-	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
-Having icons session bound makes icon urls not shareable between sessions. The side effect is that caching of these urls will only help the active session.',
+	'admin:security:settings:session_bound_entity_icons' => 'Session-gebundene Entitäts-Bilder',
+	'admin:security:settings:session_bound_entity_icons:help' => 'Entitäts-Bilder können standardmäßig an die PHP-Session gebunden sein. In diesem Fall sind auch die URLs dieser Bilder Session-spezifisch.
+Bei Session-gebundenen Bildern können die zugehörigen URLs nicht von unterschiedlichen PHP-Sessions verwendet werden. Dies bedeutet auch, dass ein Caching dieser URLs nur innerhalb der jeweils zugehörigen Session hilft.',
 	
 	'admin:security:settings:site_secret:intro' => 'Elgg verwendet einen seitenspezifischen Geheimschlüssel, um darauf basierend Sicherheits-Token zu generieren, die für verschiedene Authentifizierungszwecke verwendet werden.',
 	'admin:security:settings:site_secret:regenerate' => "Geheimschlüssel neu erzeugen",
@@ -696,6 +748,17 @@ Dein Account auf %s ist nicht länger gesperrt. Du kannst Dich auf der Community
 
 Um die Community-Seite aufzurufen, folge diesem Link:
 %s',
+	
+	'user:notification:password_change:subject' => 'Your password has been changed!',
+	'user:notification:password_change:body' => "Hi %s,
+
+Your password on '%s' has been changed! If you made this change than you're all set.
+
+If you didn't make this change, please reset your password here:
+%s
+
+Or contact a site administrator:
+%s",
 	
 /**
  * Plugins
@@ -788,12 +851,14 @@ Um die Community-Seite aufzurufen, folge diesem Link:
 	'admin:statistics:label:version:code' => "Code-Version",
 
 	'admin:server:label:elgg' => 'Elgg',
+	'admin:server:label:requirements' => 'Requirements',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => 'PHP-Info anzeigen',
 	'admin:server:label:web_server' => 'Webserver',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Speicherort des Logs',
 	'admin:server:label:php_version' => 'PHP-Version',
+	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.1',
 	'admin:server:label:php_ini' => 'Speicherort der php.ini-Datei',
 	'admin:server:label:php_log' => 'Speicherort des PHP-Logs',
 	'admin:server:label:mem_avail' => 'Verfügbarer Hauptspeicher',
@@ -810,15 +875,26 @@ Um die Community-Seite aufzurufen, folge diesem Link:
 
 	'admin:server:label:redis' => 'Redis',
 	'admin:server:redis:inactive' => '
-		Redis is not setup on this server or it has not yet been configured in Elgg config.
-		For improved performance, it is recommended that you enable and configure redis (or memcache).
+		Redis ist auf diesem Server nicht eingerichtet oder es wurde in der Konfigurationsdatei von Elgg noch nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, Redis (oder Memcache) auf dem Server zu installieren und einzurichten und auch die Elgg-Konfigurationdatei entsprechend anzupassen.
 ',
 
 	'admin:server:label:opcache' => 'OPcache',
 	'admin:server:opcache:inactive' => '
-		OPcache is not available on this server or it has not yet been enabled.
-		For improved performance, it is recommended that you enable and configure OPcache.
+		OPcache ist auf diesem Server nicht installiert oder nicht aktiviert.
+		Für eine bessere Performance ist es empfehlenswert, OPcache auf dem Server zu installieren und einzurichten.
 ',
+	
+	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
+	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
+	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
+	'admin:server:requirements:rewrite:fail' => "Check your .htaccess for the correct rewrite rules",
+	
+	'admin:server:requirements:database:server' => "Database server",
+	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
+	'admin:server:requirements:database:client' => "Database client",
+	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
 	
 	'admin:user:label:search' => "Suche Benutzeraccount:",
 	'admin:user:label:searchbutton' => "Suche",
@@ -925,9 +1001,12 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'icon:size:large' => "Groß",
 	'icon:size:master' => "Sehr groß",
 	
-	'entity:edit:icon:file:label' => "Upload a new icon",
-	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
-	'entity:edit:icon:remove:label' => "Remove icon",
+	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
+	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
+	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
+	'entity:edit:icon:file:label' => "Neues Bild hochladen",
+	'entity:edit:icon:file:help' => "Leer lassen, um derzeitiges Bild zu behalten.",
+	'entity:edit:icon:remove:label' => "Bild entfernen",
 
 /**
  * Generic action words
@@ -986,7 +1065,7 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'remove' => 'Entfernen',
 	'revert' => 'Zurücksetzen',
 	'validate' => 'Validieren',
-	'read_more' => 'Read more',
+	'read_more' => 'Mehr lesen',
 
 	'site' => 'Webseite',
 	'activity' => 'Aktivitäten',
@@ -1016,7 +1095,8 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'active' => 'Aktiv',
 	'total' => 'Gesamt',
-
+	'unvalidated' => 'Nicht validiert',
+	
 	'ok' => 'OK',
 	'any' => 'Irgendeine',
 	'error' => 'Fehler',
@@ -1052,6 +1132,9 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'status:featured' => 'Vorgestellt',
 	'status:open' => 'Offen',
 	'status:closed' => 'Geschlossen',
+	'status:enabled' => 'Enabled',
+	'status:disabled' => 'Disabled',
+	'status:unavailable' => 'Unavailable',
 
 /**
  * Generic sorts
@@ -1082,6 +1165,12 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 
 	'on' => 'An',
 	'off' => 'Aus',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1248,7 +1337,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 	'installation:view' => "Gebe den Ansichtsmodus an, der für Deine Community-Seite verwendet werden soll. Wenn Du nicht sicher bist was Du eingeben sollst, lass das Textfeld leer oder verwende \"default\", um den Standardmodus zu verwenden:",
 
 	'installation:siteemail' => "Email-Adresse Deiner Community-Seite (wird vom System verwendet, um Benachrichtigungen zu versenden)",
-	'installation:siteemail:help' => "Warning: Do no use an email address that you may have associated with other third-party services, such as ticketing systems, that perform inbound email parsing, as it may expose you and your users to unintentional leakage of private data and security tokens. Ideally, create a new dedicated email address that will serve only this website.",
+	'installation:siteemail:help' => "Warnung: verwende keine Email-Adresse, die Du bereits anderweitig einsetzt oder einsetzen willst, beispielweise bei externen Services wie Ticketsystemen oder anderen ähnlichen Systemen, die eingehende Emails analysieren oder anderweitig verarbeiten. Dies könnte dazu führen, dass unauthorisierte Personen an private Daten von Dir oder anderen Benutzern oder Sicherheits-Token gelangen könnten. Idealerweise verwendest Du eine Email-Adresse, die Du auschließlich als Email-Adresse dieser Community-Seite einsetzen kannst.",
 	'installation:default_limit' => "Standardmäßige Anzahl der Einträge pro Seite",
 
 	'admin:site:access:warning' => "Dies ist der Zugangslevel, der Benutzern standardmäßig vorgeschlagen wird, wenn sie neue Inhalte erstellen. Eine Änderung hier verändert nicht den Zugangslevel der Inhalte selbst.",
@@ -1276,10 +1365,13 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.',
 
 	'admin:legend:system' => 'System',
 	'admin:legend:caching' => 'Caching-Mechanismen',
+	'admin:legend:content' => 'Inhalt',
 	'admin:legend:content_access' => 'Zugangslevel für Inhalte',
 	'admin:legend:site_access' => 'Zugangsbeschränkungen zur Community-Seite',
 	'admin:legend:debug' => 'Debuggen und Protokollieren',
 	
+	'config:users:can_change_username' => "Benutzern erlauben, ihren Benutzernamen zu ändern",
+	'config:users:can_change_username:help' => "Falls es Benutzern nicht erlaubt ist, können nur Admins den Benutzernamen eines Benutzers ändern.",
 	'config:remove_branding:label' => "Elgg-Branding verbergen",
 	'config:remove_branding:help' => "Aktiviere diese Option, um die Links und Logos, die auf den Seiten der Community eingeblendet werden und darauf hinweisen, dass diese Community-Seite mit Elgg erstellt wurde, zu verbergen. Falls Du Dich dazu entschließt, das Elgg-Branding zu verbergen, wäre es nett, wenn Du eine Spende für das Elgg-Projekt in Betracht ziehen würdest (https://elgg.org/about/supporters).",
 	'config:disable_rss:label' => "RSS-Feeds deaktivieren",
@@ -1317,8 +1409,8 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 	'upgrade:error_count' => 'Fehler:',
 	'upgrade:finished' => 'Die Aktualisierung ist abgeschlossen.',
 	'upgrade:finished_with_errors' => '<p>Die Aktualisierung wurde beendet. Allerdings sind dabei Fehler aufgetreten. Lade die Seite erneut und versuche, die Aktualisierung nochmals durchzuführen.</p></p><br />Wenn dabei wieder Fehler auftreten, schaue in der Logdatei Deines Servers nach, ob es dort Einträge gibt, die eventuell weitere Informationen zur Ursache der Fehler liefern. Du kannst auch in der <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support-Gruppe</a> auf der Elgg-Community-Seite um Hilfe bei Deinem Problem bitten.</p>',
-	'upgrade:should_be_skipped' => 'No items to upgrade',
-	'upgrade:count_items' => '%d items to upgrade',
+	'upgrade:should_be_skipped' => 'Keine zu aktualisierende Einträge',
+	'upgrade:count_items' => '%d zu aktualisierende Einträge',
 	
 	// Strings specific for the database guid columns reply upgrade
 	'admin:upgrades:database_guid_columns' => 'Datentyp-Angleichung der GUID-Spalten in der Datenbank',
@@ -1341,6 +1433,7 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 
 	'email:settings' => "Email",
 	'email:address:label' => "Email-Adresse",
+	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "Passwort",
 	'email:address:password:help' => "Für die Änderung Deiner Email-Adresse ist die Eingabe Deines derzeitigen Passworts notwendig.",
 
@@ -1375,6 +1468,38 @@ Falls Du die Änderung des Passworts angefordert hast, klicke bitte auf den folg
 %s
 
 Andernfalls ignoriere bitte diese Email.",
+	
+	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
+	'email:request:email:subject' => "Please confirm your e-mail address",
+	'email:request:email:body' => "Hi %s,
+
+You requested to change your e-mail address on '%s'.
+If you didn't request this change, please reset your password.
+
+In order to confirm the e-mail address change, please click this link:
+%s
+
+Please note this link is only valid for 1 hour.",
+	
+	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	
+	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on '%s'.
+
+If you didn't request this change, please contact a site administrator.
+%s",
+	
+	'email:confirm:email:new:subject' => "You're e-mail address was changed",
+	'email:confirm:email:new:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on this e-mail address.
+
+If you didn't request this change, please contact a site administrator.
+%s",
 
 /**
  * user default access
@@ -1665,4 +1790,7 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 	
 	"core:upgrade:2018061401:title" => "Umwandlung der Cronlog-Datenbankeinträge",
 	"core:upgrade:2018061401:description" => "Damit werden die Cronlog-Einträge innerhalb der Datenbank verschoben, um mit dem neuen Datenbank-Schema kompatibel zu sein.",
+	
+	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
+	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );

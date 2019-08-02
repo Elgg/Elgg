@@ -136,8 +136,6 @@ class Logger extends \Monolog\Logger {
 	 * @param mixed $level Level
 	 *
 	 * @return string|false
-	 * @access private
-	 * @internal
 	 */
 	protected function normalizeLevel($level = null) {
 		if (!$level) {
@@ -165,7 +163,6 @@ class Logger extends \Monolog\Logger {
 	 * @param mixed $level Level
 	 *
 	 * @return void
-	 * @access private
 	 * @internal
 	 */
 	public function setLevel($level = null) {
@@ -192,7 +189,6 @@ class Logger extends \Monolog\Logger {
 	 * @param bool $severity If true, will return numeric representation of the logging level
 	 *
 	 * @return int|string|false
-	 * @access private
 	 * @internal
 	 */
 	public function getLevel($severity = true) {
@@ -228,7 +224,7 @@ class Logger extends \Monolog\Logger {
 
 		$level = $this->normalizeLevel($level);
 
-		if ($this->disabled_stack) {
+		if (!empty($this->disabled_stack)) {
 			// capture to top of stack
 			end($this->disabled_stack);
 			$key = key($this->disabled_stack);
@@ -243,7 +239,7 @@ class Logger extends \Monolog\Logger {
 		}
 
 		// when capturing, still use consistent return value
-		if ($this->disabled_stack) {
+		if (!empty($this->disabled_stack)) {
 			return true;
 		}
 
@@ -352,7 +348,6 @@ class Logger extends \Monolog\Logger {
 	 *
 	 * @return void
 	 * @see    enable()
-	 * @access private
 	 * @internal
 	 */
 	public function disable() {
@@ -364,7 +359,6 @@ class Logger extends \Monolog\Logger {
 	 *
 	 * @return array
 	 * @see    disable()
-	 * @access private
 	 * @internal
 	 */
 	public function enable() {
@@ -377,7 +371,6 @@ class Logger extends \Monolog\Logger {
 	 * @param PluginHooksService $hooks the plugin hooks service
 	 *
 	 * @return void
-	 * @access private
 	 * @internal
 	 */
 	public function setHooks(PluginHooksService $hooks) {

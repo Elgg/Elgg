@@ -4,6 +4,17 @@ use Elgg\Database\Entities;
 use Elgg\Database\Clauses\OrderByClause;
 
 /**
+ * Allow disabled entities and metadata to be returned by getter functions
+ *
+ * @todo when removing this global, make sure it is no longer used in ElggSession
+ *
+ * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
+ * @internal
+ * @deprecated 3.0
+ */
+global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+
+/**
  * Removes a config setting.
  *
  * @param string $name The name of the field.
@@ -33,7 +44,7 @@ function unset_config($name) {
  * @return bool
  * @see unset_config()
  * @see get_config()
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use elgg_save_config()
  */
@@ -52,7 +63,7 @@ function set_config($name, $value) {
  * @return mixed|null
  * @see set_config()
  * @see unset_config()
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use elgg_get_config()
  */
@@ -867,7 +878,7 @@ function elgg_list_entities_from_annotation_calculation($options) {
  *
  * @return bool
  * @throws InvalidParameterException
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use \ElggAnnotation::enable()
  */
@@ -902,7 +913,7 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
  * @return \ElggExtender
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use elgg_get_metadata_from_id()
  */
@@ -933,7 +944,7 @@ function _elgg_get_metastring_based_object_from_id($id, $type) {
  * @param int    $id   The object's ID
  * @param string $type The object's metastring type: annotation or metadata
  * @return bool
- * @access private
+ * @internal
  *
  * @deprecated 3.0 Use \ElggMetadata::delete()
  */
@@ -1058,7 +1069,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  * @param object $object The object to disable
  * @return bool
- * @access private
+ * @internal
  *
  * @deprecated 3.0
  */
@@ -1246,7 +1257,7 @@ function remove_all_private_settings($entity_guid) {
  *
  * @param object $object The object to enable
  * @return bool
- * @access private
+ * @internal
  * @deprecated 3.0
  */
 function elgg_batch_enable_callback($object) {
@@ -1265,7 +1276,7 @@ function elgg_batch_enable_callback($object) {
  *
  * @param object $object The object to disable
  * @return bool
- * @access private
+ * @internal
  * @deprecated 3.0
  */
 function elgg_batch_disable_callback($object) {
@@ -1297,8 +1308,8 @@ function elgg_batch_disable_callback($object) {
  * Requests not handled are forwarded to the front page with a reason of 404.
  * Plugins can register for the 'forward', '404' plugin hook. @see forward()
  *
- * @param string $identifier The page type identifier
- * @param string $function   Your function name
+ * @param string   $identifier The page type identifier
+ * @param callable $function   Your function name
  *
  * @return bool Depending on success
  * @deprecated 3.0 Use elgg_register_route() to register a named route
@@ -1643,7 +1654,7 @@ function elgg_get_upgrade_file_version($filename) {
  *
  * @param string $upgrade_path The directory that has upgrade scripts
  * @return array|false
- * @access private
+ * @internal
  * @deprecated 3.0 Use asynchronous upgrades
  */
 function elgg_get_upgrade_files($upgrade_path = null) {

@@ -14,10 +14,6 @@
  * it is a possible vector for a reflected XSS attack. If you are expecting an
  * integer, cast it to an int. If it is a string, escape quotes.
  *
- * Note: this function does not handle nested arrays (ex: form input of param[m][n])
- * because of the filtering done in htmlawed from the filter_tags call.
- * @todo Is this ^ still true?
- *
  * @param string $variable      The variable name we want.
  * @param mixed  $default       A default value for the variable if it is not found.
  * @param bool   $filter_result If true, then the result is filtered for bad tags.
@@ -52,6 +48,8 @@ function set_input($variable, $value) {
  * @param bool $filter_result Sanitize input values
  *
  * @return array
+ *
+ * @since 3.0
  */
 function elgg_get_request_data($filter_result = true) {
 	return _elgg_services()->request->getParams($filter_result);
@@ -218,15 +216,12 @@ function elgg_is_empty($value) {
  * For information on these arguments, see
  * http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s2.2
  *
- * @param string $hook   Hook name
- * @param string $type   The type of hook
- * @param mixed  $result Data to filter
- * @param array  $params Not used
+ * @param \Elgg\Hook $hook 'validate', 'input'
  *
  * @return mixed
  */
-function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
-	$var = $result;
+function _elgg_htmlawed_filter_tags(\Elgg\Hook $hook) {
+	$var = $hook->getValue();
 
 	$config = [
 		// seems to handle about everything we need.
@@ -236,7 +231,7 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 		'comment' => 1,
 		'cdata' => 1,
 
-		'deny_attribute' => 'class, on*',
+		'deny_attribute' => 'class, on*, formaction',
 		'hook_tag' => '_elgg_htmlawed_tag_post_processor',
 
 		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
@@ -255,20 +250,16 @@ function _elgg_htmlawed_filter_tags($hook, $type, $result, $params = null) {
 	if (!is_array($var)) {
 		return Htmlawed::filter($var, $config, $spec);
 	} else {
-		array_walk_recursive($var, '_elgg_htmLawedArray', [$config, $spec]);
+		$callback = function (&$v, $k, $config_spec) {
+			list ($config, $spec) = $config_spec;
+			$v = Htmlawed::filter($v, $config, $spec);
+		};
+		
+		array_walk_recursive($var, $callback, [$config, $spec]);
+		
 		return $var;
 	}
 }
-
-// @codingStandardsIgnoreStart
-/**
- * wrapper function for htmlawed for handling arrays
- */
-function _elgg_htmLawedArray(&$v, $k, $config_spec) {
-	list ($config, $spec) = $config_spec;
-	$v = Htmlawed::filter($v, $config, $spec);
-}
-// @codingStandardsIgnoreEnd
 
 /**
  * Post processor for tags in htmlawed
@@ -340,36 +331,19 @@ function _elgg_htmlawed_tag_post_processor($element, $attributes = false) {
 }
 
 /**
- * Runs unit tests for htmlawed
- *
- * @param string   $hook   "unit_test"
- * @param string   $type   "system"
- * @param string[] $value  Test files
- * @param array    $params Hook params
- *
- * @return array
- * @codeCoverageIgnore
- */
-function _elgg_htmlawed_test($hook, $type, $value, $params) {
-	$value[] = ElggHtmLawedTest::class;
-	return $value;
-}
-
-/**
  * Disable the autocomplete feature on password fields
  *
- * @param string $hook         'view_vars'
- * @param string $type         'input/password'
- * @param array  $return_value the current view vars
- * @param array  $params       supplied params
+ * @param \Elgg\Hook $hook 'view_vars', 'input/password'
  *
  * @return void|array
  */
-function _elgg_disable_password_autocomplete($hook, $type, $return_value, $params) {
+function _elgg_disable_password_autocomplete(\Elgg\Hook $hook) {
 	
 	if (!_elgg_config()->security_disable_password_autocomplete) {
 		return;
 	}
+	
+	$return_value = $hook->getValue();
 	
 	$return_value['autocomplete'] = 'off';
 	
@@ -380,13 +354,11 @@ function _elgg_disable_password_autocomplete($hook, $type, $return_value, $param
  * Initialize the input library
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_input_init() {
 
 	elgg_register_plugin_hook_handler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
-
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_htmlawed_test');
 	
 	elgg_register_plugin_hook_handler('view_vars', 'input/password', '_elgg_disable_password_autocomplete');
 }
@@ -394,6 +366,6 @@ function _elgg_input_init() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_input_init');
 };

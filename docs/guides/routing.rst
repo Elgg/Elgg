@@ -162,6 +162,25 @@ By default, Elgg will set the following requirements for named URL segments:
 		'username' => '[\p{L}\p{Nd}._-]+', // letters, digits, underscores, dashes
 	];
 
+Plugin dependent routes
+-----------------------
+
+If a route requires a specific plugin to be active this can be configured in the route configuration.
+
+.. code-block:: php
+
+	// elgg-plugin.php
+	return [
+		'routes' => [
+			'collection:object:blog:friends' => [
+				'path' => '/blog/friends/{username?}/{lower?}/{upper?}',
+				'resource' => 'blog/friends',
+				'required_plugins' => [
+					'friends', // route only allowed when friends plugin is active
+				],
+			],
+		]
+	];
 
 Route middleware
 ----------------
@@ -176,6 +195,7 @@ Elgg core implements several middleware handlers, including:
  * ``\Elgg\Router\Middleware\AdminGatekeeper`` - prevent access by non-admin users
  * ``\Elgg\Router\Middleware\AjaxGatekeeper`` - prevent access with non-xhr requests
  * ``\Elgg\Router\Middleware\CsrfFirewall`` - prevent access without CSRF tokens
+ * ``\Elgg\Router\Middleware\SignedRequestGatekeeper`` - prevent access if the url has been tampered with
 
 Middleware handlers can be set to any callable that receives an instance of ``\Elgg\Request``:
 The handler should throw an instance of ``HttpException`` to prevent route access.

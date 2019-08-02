@@ -5,7 +5,7 @@ namespace Elgg\Search;
 use Elgg\Hook;
 
 /**
- * @access private
+ * @internal
  * @since  3.0
  */
 class UserSearchFieldsHandler {
@@ -34,6 +34,10 @@ class UserSearchFieldsHandler {
 			'name',
 			'description',
 		];
+		
+		if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
+			$fields[] = 'email';
+		}
 
 		$value['metadata'] = array_merge($value['metadata'], $fields);
 

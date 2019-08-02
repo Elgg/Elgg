@@ -132,7 +132,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function getDisplayName() {
 		$manifest = $this->getManifest();
-		if ($manifest) {
+		if ($manifest instanceof ElggPluginManifest) {
 			return $manifest->getName();
 		}
 
@@ -145,7 +145,7 @@ class ElggPlugin extends ElggObject {
 	 * @param string $path Path to plugin directory
 	 *
 	 * @return void
-	 * @access private
+	 * @internal
 	 */
 	public function setPath($path) {
 		$this->path = \Elgg\Project\Paths::sanitize($path, true);
@@ -189,8 +189,7 @@ class ElggPlugin extends ElggObject {
 	 * @param mixed  $default Value returned if missing
 	 *
 	 * @return mixed
-	 * @access   private
-	 * @internal For Elgg internal use only
+	 * @internal
 	 */
 	public function getStaticConfig($key, $default = null) {
 		if ($this->static_config === null) {
@@ -272,7 +271,7 @@ class ElggPlugin extends ElggObject {
 	 * @param mixed $priority Priority to normalize
 	 *
 	 * @return int
-	 * @access private
+	 * @internal
 	 */
 	public function normalizePriority($priority) {
 		// if no priority assume a priority of 1
@@ -646,6 +645,7 @@ class ElggPlugin extends ElggObject {
 				$this->getBootstrap()->activate();
 
 				if ($this->canReadFile('activate.php')) {
+					elgg_deprecated_notice("The usage of the activate.php for {$this->getDisplayName()} is deprecated. Use the Bootstrap->activate() function.", '3.1');
 					$return = $this->includeFile('activate.php');
 				}
 
@@ -749,6 +749,8 @@ class ElggPlugin extends ElggObject {
 
 		// run any deactivate code
 		if ($this->canReadFile('deactivate.php')) {
+			elgg_deprecated_notice("The usage of the deactivate.php for {$this->getDisplayName()} is deprecated. Use the Bootstrap->deactivate() function.", '3.1');
+			
 			// allows you to prevent disabling a plugin by returning false in a deactivate.php file
 			if ($this->includeFile('deactivate.php') === false) {
 				return false;
@@ -768,7 +770,6 @@ class ElggPlugin extends ElggObject {
 	 * Bootstrap object
 	 * @return \Elgg\PluginBootstrapInterface
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function getBootstrap() {
@@ -796,7 +797,6 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function autoload() {
@@ -826,7 +826,6 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return void
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function register() {
@@ -844,7 +843,6 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @throws PluginException
 	 * @return \Closure|null
-	 * @access private
 	 * @internal
 	 */
 	public function boot() {
@@ -863,7 +861,6 @@ class ElggPlugin extends ElggObject {
 	 * @return void
 	 * @throws InvalidParameterException
 	 * @throws PluginException
-	 * @access private
 	 * @internal
 	 */
 	public function init() {
@@ -871,6 +868,8 @@ class ElggPlugin extends ElggObject {
 		$this->registerActions();
 		$this->registerEntities();
 		$this->registerWidgets();
+		$this->registerHooks();
+		$this->registerEvents();
 
 		$this->getBootstrap()->init();
 	}
@@ -968,6 +967,8 @@ class ElggPlugin extends ElggObject {
 		// Declared views first
 		$file = "{$this->getPath()}views.php";
 		if (is_file($file)) {
+			elgg_deprecated_notice("The usage of the views.php file for {$this->getDisplayName()} is deprecated. Use the elgg-plugin.php views section.", '3.1');
+			
 			$spec = Includer::includeFile($file);
 			if (is_array($spec)) {
 				$views->mergeViewsSpec($spec);
@@ -1026,7 +1027,6 @@ class ElggPlugin extends ElggObject {
 	 * @param string $root_path Plugin path
 	 *
 	 * @return void
-	 * @access private
 	 * @internal
 	 */
 	public static function addActionsFromStaticConfig(array $spec, $root_path) {
@@ -1172,6 +1172,68 @@ class ElggPlugin extends ElggObject {
 		foreach ($spec as $entity) {
 			if (isset($entity['type'], $entity['subtype'], $entity['class'])) {
 				elgg_set_entity_class($entity['type'], $entity['subtype']);
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's hooks provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerHooks() {
+		$hooks = _elgg_services()->hooks;
+
+		$spec = (array) $this->getStaticConfig('hooks', []);
+
+		foreach ($spec as $name => $types) {
+			foreach ($types as $type => $callbacks) {
+				foreach ($callbacks as $callback => $hook_spec) {
+					if (!is_array($hook_spec)) {
+						continue;
+					}
+					
+					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+					
+					if ($unregister) {
+						$hooks->unregisterHandler($name, $type, $callback);
+					} else {
+						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+			
+						$hooks->registerHandler($name, $type, $callback, $priority);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's events provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerEvents() {
+		$events = _elgg_services()->events;
+
+		$spec = (array) $this->getStaticConfig('events', []);
+
+		foreach ($spec as $name => $types) {
+			foreach ($types as $type => $callbacks) {
+				foreach ($callbacks as $callback => $hook_spec) {
+					if (!is_array($hook_spec)) {
+						continue;
+					}
+					
+					$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+
+					if ($unregister) {
+						$events->unregisterHandler($name, $type, $callback);
+					} else {
+						$priority = (int) elgg_extract('priority', $hook_spec, 500);
+			
+						$events->registerHandler($name, $type, $callback, $priority);
+					}
+				}
 			}
 		}
 	}

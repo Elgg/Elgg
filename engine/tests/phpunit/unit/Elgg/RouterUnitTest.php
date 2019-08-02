@@ -1705,6 +1705,22 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals(1, $calls);
 	}
+	
+	/**
+	 * @expectedException \Elgg\PageNotFoundException
+	 */
+	function testCheckRequiredPluginsWhenRouting() {
+		$request = $this->prepareHttpRequest('hello');
+		$this->createService($request);
+
+		_elgg_services()->routes->register('hello', [
+			'path' => '/hello',
+			'handler' => 'hello_page_handler',
+			'required_plugins' => ['foo'],
+		]);
+
+		_elgg_services()->router->route($request);
+	}
 
 	public function testCanUseRouteFile() {
 
@@ -1770,5 +1786,30 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->hooks->restore();
 
 		$this->assertEquals(1, $calls);
+	}
+	
+	public function testDeprecatedRouteTriggersDeprecationNotice() {
+		$request = $this->prepareHttpRequest('foo/bar');
+		$this->createService($request);
+
+		elgg_register_route('view:foo:bar', [
+			'path' => '/foo/bar',
+			'handler' => function () {
+			},
+			'deprecated' => '3.1',
+		]);
+		
+		_elgg_services()->logger->disable();
+		$this->route($request);
+		$logged = _elgg_services()->logger->enable();
+
+		$found = false;
+		foreach ($logged as $log){
+			if (stristr($log['message'], 'The route "view:foo:bar" has been deprecated.')) {
+				$found = true;
+			}
+		}
+		
+		$this->assertTrue($found, 'No route deprecation message found');
 	}
 }

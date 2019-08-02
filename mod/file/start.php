@@ -105,20 +105,19 @@ function file_register_toggle() {
 /**
  * Prepare a notification message about a new file
  *
- * @param string                          $hook         Hook name
- * @param string                          $type         Hook type
- * @param Elgg\Notifications\Notification $notification The notification to prepare
- * @param array                           $params       Hook parameters
+ * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:file'
+ *
  * @return Elgg\Notifications\Notification
  */
-function file_prepare_notification($hook, $type, $notification, $params) {
-	$entity = $params['event']->getObject();
-	$owner = $params['event']->getActor();
-	$language = $params['language'];
+function file_prepare_notification(\Elgg\Hook $hook) {
+	$entity = $hook->getParam('event')->getObject();
+	$owner = $hook->getParam('event')->getActor();
+	$language = $hook->getParam('language');
 
 	$descr = $entity->description;
 	$title = $entity->getDisplayName();
-
+	
+	$notification = $hook->getValue();
 	$notification->subject = elgg_echo('file:notify:subject', [$title], $language);
 	$notification->body = elgg_echo('file:notify:body', [
 		$owner->getDisplayName(),
@@ -134,16 +133,15 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 /**
  * Add a menu item to the user ownerblock
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:owner_block'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:owner_block'
  *
  * @return ElggMenuItem[]
  */
-function file_owner_block_menu($hook, $type, $return, $params) {
+function file_owner_block_menu(\Elgg\Hook $hook) {
 
-	$entity = elgg_extract('entity', $params);
+	$entity = $hook->getEntityParam();
+	$return = $hook->getValue();
+	
 	if ($entity instanceof ElggUser) {
 		$url = elgg_generate_url('collection:object:file:owner', ['username' => $entity->username]);
 		$item = new ElggMenuItem('file', elgg_echo('collection:object:file'), $url);
@@ -164,21 +162,18 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  *
  * Plugins can override or extend the icons using the plugin hook: 'file:icon:url', 'override'
  *
- * @param string $hook   'entity:icon:url'
- * @param string $type   'object'
- * @param string $url    current return value
- * @param array  $params supplied params
+ * @param \Elgg\Hook $hook 'entity:icon:url', 'object'
  *
  * @return void|string
  */
-function file_set_icon_url($hook, $type, $url, $params) {
+function file_set_icon_url(\Elgg\Hook $hook) {
 	
-	$file = elgg_extract('entity', $params);
+	$file = $hook->getEntityParam();
 	if (!$file instanceof ElggFile) {
 		return;
 	}
 	
-	$size = elgg_extract('size', $params, 'large');
+	$size = $hook->getParam('size', 'large');
 	
 	// thumbnails get first priority
 	if ($file->hasIcon($size)) {
@@ -217,12 +212,11 @@ function file_set_icon_url($hook, $type, $url, $params) {
 		$base_type = 'none';
 	}
 
+	$type = 'general';
 	if (isset($mapping[$mime])) {
 		$type = $mapping[$mime];
 	} elseif (isset($mapping[$base_type])) {
 		$type = $mapping[$base_type];
-	} else {
-		$type = 'general';
 	}
 
 	if ($size == 'large') {
@@ -232,20 +226,18 @@ function file_set_icon_url($hook, $type, $url, $params) {
 	}
 
 	$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
-	$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
-	
-	return $url;
+	return elgg_trigger_plugin_hook('file:icon:url', 'override', $hook->getParams(), $url);
 }
 
 /**
  * Handle an object being deleted
  *
- * @param string     $event Event name
- * @param string     $type  Event type
- * @param ElggObject $file  The object deleted
+ * @param \Elgg\Event $event 'delete', 'object'
+ *
  * @return void
  */
-function file_handle_object_delete($event, $type, ElggObject $file) {
+function file_handle_object_delete(\Elgg\Event $event) {
+	$file = $event->getObject();
 	if (!$file instanceof ElggFile) {
 		return;
 	}
@@ -260,19 +252,18 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 /**
  * Set custom icon sizes for file objects
  *
- * @param string $hook   "entity:icon:url"
- * @param string $type   "object"
- * @param array  $return Sizes
- * @param array  $params Hook params
+ * @param \Elgg\Hook $hook "entity:icon:url", "object"
+ *
  * @return array
  */
-function file_set_custom_icon_sizes($hook, $type, $return, $params) {
+function file_set_custom_icon_sizes(\Elgg\Hook $hook) {
 
-	$entity_subtype = elgg_extract('entity_subtype', $params);
-	if ($entity_subtype !== 'file') {
+	if ($hook->getParam('entity_subtype') !== 'file') {
 		return;
 	}
 
+	$return = $hook->getValue();
+	
 	$return['small'] = [
 		'w' => 60,
 		'h' => 60,
@@ -297,21 +288,18 @@ function file_set_custom_icon_sizes($hook, $type, $return, $params) {
 /**
  * Set custom file thumbnail location
  *
- * @param string    $hook   "entity:icon:file"
- * @param string    $type   "object"
- * @param \ElggIcon $icon   Icon file
- * @param array     $params Hook params
+ * @param \Elgg\Hook $hook "entity:icon:file", "object"
+ *
  * @return \ElggIcon
  */
-function file_set_icon_file($hook, $type, $icon, $params) {
+function file_set_icon_file(\Elgg\Hook $hook) {
 
-	$entity = elgg_extract('entity', $params);
-	$size = elgg_extract('size', $params, 'large');
-
-	if (!($entity instanceof \ElggFile)) {
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof \ElggFile) {
 		return;
 	}
 	
+	$size = $hook->getParam('size', 'large');
 	switch ($size) {
 		case 'small' :
 			$filename_prefix = 'thumb';
@@ -329,6 +317,8 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 			break;
 	}
 
+	$icon = $hook->getValue();
+	
 	$icon->owner_guid = $entity->owner_guid;
 	if (isset($entity->$metadata_name)) {
 		$icon->setFilename($entity->$metadata_name);
@@ -344,9 +334,8 @@ function file_set_icon_file($hook, $type, $icon, $params) {
 /**
  * Register database seed
  *
- * @elgg_plugin_hook seeds database
+ * @param \Elgg\Hook $hook 'seeds', 'database'
  *
- * @param \Elgg\Hook $hook Hook
  * @return array
  */
 function file_register_db_seeds(\Elgg\Hook $hook) {

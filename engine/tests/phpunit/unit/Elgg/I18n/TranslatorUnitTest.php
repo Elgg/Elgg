@@ -163,13 +163,12 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$language = 'ab';
 
-		$ia = elgg_set_ignore_access(true);
-		$user = $this->createUser([], [
-			'language' => $language,
-		]);
-
-		elgg_set_ignore_access($ia);
-
+		$user = elgg_call(ELGG_IGNORE_ACCESS, function() use ($language) {
+			return $this->createUser([], [
+				'language' => $language,
+			]);
+		});
+		
 		$this->assertEquals('en', $this->translator->getCurrentLanguage());
 
 		_elgg_services()->session->setLoggedInUser($user);
@@ -223,7 +222,6 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
 
 		$app->_services->config->boot_cache_ttl = 0;
-		$app->_services->plugins->addTestingPlugin($plugin);
 
 		$plugin->activate();
 
@@ -241,7 +239,6 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$plugin = \ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
 
 		$app->_services->config->boot_cache_ttl = 0;
-		$app->_services->plugins->addTestingPlugin($plugin);
 
 		$plugin->activate();
 

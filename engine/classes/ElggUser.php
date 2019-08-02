@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Entity\ProfileData;
+
 /**
  * A user entity
  *
@@ -20,6 +22,8 @@
 class ElggUser extends \ElggEntity
 	implements Friendable {
 
+	use ProfileData;
+	
 	/**
 	 * {@inheritdoc}
 	 */
@@ -535,8 +539,6 @@ class ElggUser extends \ElggEntity
 	 * @param bool $persist Store in persistent cache
 	 *
 	 * @return void
-	 * @access private
-	 * @internal
 	 */
 	public function cache($persist = true) {
 		if ($persist && $this->username) {

@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Handler for uncaught exceptions
+ *
+ * @internal
  */
 class ExceptionHandler {
 
@@ -33,7 +35,6 @@ class ExceptionHandler {
 	 * @param Exception|\Error $exception The exception/error being handled
 	 *
 	 * @return void
-	 * @access  private
 	 */
 	public function __invoke($exception) {
 		$exception->timestamp = time();
@@ -133,5 +134,4 @@ class ExceptionHandler {
 			$response->send();
 		}
 	}
-
 }

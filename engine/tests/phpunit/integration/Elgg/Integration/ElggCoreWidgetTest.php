@@ -98,15 +98,14 @@ class ElggCoreWidgetTest extends IntegrationTestCase {
 		$result = $this->widget->saveSettings($params);
 		$this->assertFalse($result);
 		
-		$ia = elgg_set_ignore_access(true);
-		$result = $this->widget->saveSettings($params);
-		$this->assertTrue($result);
-		
-		foreach ($params as $name => $value) {
-			$this->assertEquals($value, $this->widget->$name);
-		}
-		
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($params) {
+			$result = $this->widget->saveSettings($params);
+			$this->assertTrue($result);
+			
+			foreach ($params as $name => $value) {
+				$this->assertEquals($value, $this->widget->$name);
+			}
+		});
 	}
 	
 	public function testHandlerRegistration() {

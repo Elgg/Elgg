@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
+ * @internal
  * @since 2.3
  */
 class UploadService {

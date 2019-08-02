@@ -404,7 +404,7 @@ Plugins should not rely on joined and selected table aliases. Closures passed to
 that corresponds to the selected table alias. Plugins must perform their own joins and use joined aliases accordingly.
 
 Note that all of the private API around building raw SQL strings has also been removed. If you were relying on them in your plugins,
-be advised that anything marked as ``@access private`` and ``@internal`` in core can be modified and removed at any time, and we do not guarantee
+be advised that anything marked as ``@access private`` or ``@internal`` in core can be modified and removed at any time, and we do not guarantee
 any backward compatibility for those functions. DO NOT USE THEM. If you find yourself needing to use them, open an issue
 on Github and we will consider adding a public equivalent.
 
@@ -893,7 +893,11 @@ The ``twitter_api`` plugin has been removed from the Elgg core. The plugin is st
 
 .. code-block:: json
 	
-	"elgg/twitter_api": "~1.9"
+	{
+		"require": {
+			"elgg/twitter_api": "~1.9"
+		}
+	}
 
 Legacy URLs plugin
 ------------------
@@ -904,7 +908,11 @@ The ``legacy_urls`` plugin has been removed from the Elgg core. The plugin is st
 
 .. code-block:: json
 	
-	"elgg/legacy_urls": "~2.3"
+	{
+		"require": {
+			"elgg/legacy_urls": "~2.3"
+		}
+	}
 
 User validation by email plugin
 -------------------------------

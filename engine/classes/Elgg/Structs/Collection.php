@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Structs;
 
 use Countable;
@@ -27,8 +28,7 @@ use Iterator;
  *  * Use composition -- http://en.wikipedia.org/wiki/Composition_over_inheritance
  *
  * @since 1.10
- *
- * @access private
+ * @internal
  */
 interface Collection extends Countable, Iterator {
 	

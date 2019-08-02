@@ -1,13 +1,14 @@
 <?php
+
 namespace Elgg\Di;
 
 /**
  * Missing value exception
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  */
 class MissingValueException extends \Exception {
-}
 
+}

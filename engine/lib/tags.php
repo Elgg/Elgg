@@ -22,7 +22,15 @@ function string_to_tag_array($string) {
 	
 	$ar = explode(",", $string);
 	$ar = array_map('trim', $ar);
-	$ar = array_filter($ar, 'is_not_null');
+	
+	$ar = array_filter($ar, function($string) {
+		if (($string === '') || ($string === false) || ($string === null)) {
+			return false;
+		}
+	
+		return true;
+	});
+	
 	$ar = array_map('strip_tags', $ar);
 	$ar = array_unique($ar);
 	return $ar;
@@ -96,7 +104,7 @@ function elgg_get_registered_tag_metadata_names() {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_tags_init() {
 	// register the standard tags metadata name

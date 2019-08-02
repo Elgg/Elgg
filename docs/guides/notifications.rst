@@ -227,7 +227,7 @@ Example:
 	 * @param bool   $result Has anyone sent a message yet?
 	 * @param array  $params Hook parameters
 	 * @return bool
-	 * @access private
+	 * @internal
 	 */
 	function sms_notifications_send($hook, $type, $result, $params) {
 		/* @var Elgg_Notifications_Notification $message */
@@ -286,7 +286,7 @@ Example:
 	function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 		$reply = $params['event']->getObject();
 
-		if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+		if (!$reply instanceof \ElggDiscussionReply) {
 			return $subscriptions;
 		}
 

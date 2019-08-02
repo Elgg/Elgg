@@ -11,6 +11,9 @@ return [
 			'path' => '/uservalidationbyemail/confirm',
 			'resource' => 'uservalidationbyemail/confirm',
 			'walled' => false,
+			'middleware' => [
+				\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
+			],
 		],
 		'account:validation:email:sent' => [
 			'path' => '/uservalidationbyemail/emailsent',

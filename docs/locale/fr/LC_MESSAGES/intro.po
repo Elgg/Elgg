@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 10:27+0200\n"
+"POT-Creation-Date: 2019-07-24 16:46+0200\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -217,6 +217,10 @@ msgstr ""
 #: ../../intro/elgg-cli.rst:2
 msgid "Elgg CLI"
 msgstr "Elgg CLI"
+
+#: ../../intro/elgg-cli.rst:7 ../../intro/install.rst:8
+msgid "Contents"
+msgstr ""
 
 #: ../../intro/elgg-cli.rst:10
 msgid "elgg-cli command line tools"

@@ -63,4 +63,3 @@ elgg_create_river_item([
 ]);
 
 return elgg_ok_response('', elgg_echo('discussion:topic:created'), $topic->getURL());
-	

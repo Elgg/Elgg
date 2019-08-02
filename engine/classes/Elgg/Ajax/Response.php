@@ -5,7 +5,6 @@ namespace Elgg\Ajax;
  * JSON endpoint response
  *
  * @since 1.12.0
- * @access private
  * @internal Devs should type hint the interface
  */
 class Response implements \Elgg\Services\AjaxResponse {

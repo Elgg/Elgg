@@ -239,13 +239,6 @@ Located in ``engine/tests/phpunit``, this is our preferred test suite. It uses n
 * Consider separating storage from your component so at least business logic can be tested here.
 * Depend on the ``Elgg\Filesystem\*`` classes rather than using PHP filesystem functions.
 
-SimpleTest
-^^^^^^^^^^
-
-The rest of the files in ``engine/tests`` form our integration suite, for anything that needs access to the DB or entity APIs.
-
-* Our long-term goals are to minimize these and convert them to PHPUnit
-
 Testing interactions between services
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -394,6 +387,11 @@ Be careful where valid return values (like ``"0"``) could be interpreted as empt
 
 Functions not throwing an exception on error should return ``false`` upon failure.
 
+.. note::
+
+	Particularly low-level, non-API functions/methods (e.g. entity_row_to_elggstar),
+	which should not fail under normal conditions, should throw instead of returning false. 
+
 Functions returning only boolean should be prefaced with ``is_`` or ``has_``
 (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``).
 
@@ -499,9 +497,9 @@ Documentation
 * In lists of ``@param`` declarations, the beginnings of variable names and
   descriptions must line up.
 
-* Annotate classes, methods, properties, and functions with ``@access private``
+* Annotate classes, methods, properties, and functions with ``@internal``
   unless they are intended for public use, are already of limited visibility,
-  or are within a class already marked as private.
+  or are within a class already marked as ``@internal``.
 
 * Use ``//`` or ``/* */`` when commenting.
 
@@ -664,6 +662,8 @@ Good:
 CSS guidelines
 --------------
 
+Save the css in files with a ``.css`` extension.
+
 Use shorthand where possible
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -698,6 +698,10 @@ Good:
 .. code-block:: css
 
     .example-class {}
+    
+.. note::
+
+	You should prefix your ids and classnames with text that identifies your plugin.
 
 One property per line
 ^^^^^^^^^^^^^^^^^^^^^
@@ -781,6 +785,8 @@ Good:
 	background-color: white;
 	background-position: 2px -257px;
 	color: #0054A7;
+	
+
 
 Javascript guidelines
 ---------------------

@@ -134,7 +134,7 @@ function elgg_strripos() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return int
+ * @return false|int
  * @since 1.7.0
  */
 function elgg_strrpos() {

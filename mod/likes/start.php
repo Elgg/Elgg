@@ -41,15 +41,12 @@ function likes_init() {
 /**
  * Only allow annotation owner (or someone who can edit the owner, like an admin) to delete like
  *
- * @param string $hook   "permissions_check"
- * @param string $type   "annotation"
- * @param bool   $return Current value
- * @param array  $params Hook parameters
+ * @param \Elgg\Hook $hook "permissions_check", "annotation"
  *
  * @return void|bool
  */
-function likes_permissions_check($hook, $type, $return, $params) {
-	$annotation = elgg_extract('annotation', $params);
+function likes_permissions_check(\Elgg\Hook $hook) {
+	$annotation = $hook->getParam('annotation');
 	if (!$annotation || $annotation->name !== 'likes') {
 		return;
 	}
@@ -65,20 +62,17 @@ function likes_permissions_check($hook, $type, $return, $params) {
 /**
  * Sets the default for whether to allow liking/viewing likes on an entity
  *
- * @param string $hook   "permissions_check:annotate"
- * @param string $type   "object"|"user"|"group"|"site"
- * @param bool   $return Current value
- * @param array  $params Hook parameters
+ * @param \Elgg\Hook $hook "permissions_check:annotate", "object"|"user"|"group"|"site"
  *
  * @return void|bool
  */
-function likes_permissions_check_annotate($hook, $type, $return, $params) {
-	if (elgg_extract('annotation_name', $params) !== 'likes') {
+function likes_permissions_check_annotate(\Elgg\Hook $hook) {
+	if ($hook->getParam('annotation_name') !== 'likes') {
 		return;
 	}
 
-	$user = elgg_extract('user', $params);
-	$entity = elgg_extract('entity', $params);
+	$user = $hook->getUserParam();
+	$entity = $hook->getEntityParam();
 
 	if (!$user || !$entity instanceof ElggEntity) {
 		return false;
@@ -131,7 +125,7 @@ function likes_social_menu_setup(\Elgg\Hook $hook) {
  * @param int        $priority Item priority
  *
  * @return ElggMenuItem
- * @access private
+ * @internal
  */
 function _likes_menu_item(ElggEntity $entity, $priority = 500) {
 	$is_liked = DataService::instance()->currentUserLikesEntity($entity->guid);
@@ -157,7 +151,7 @@ function _likes_menu_item(ElggEntity $entity, $priority = 500) {
  * @param int        $priority Item priority
  *
  * @return ElggMenuItem
- * @access private
+ * @internal
  */
 function _likes_count_menu_item(ElggEntity $entity, $priority = 500) {
 	$num_likes = DataService::instance()->getNumLikes($entity);

@@ -22,11 +22,13 @@ $fields = [
 		'#type' => 'password',
 		'#label' => elgg_echo('user:password:label'),
 		'name' => 'password1',
+		'autocomplete' => 'new-password',
 	],
 	[
 		'#type' => 'password',
 		'#label' => elgg_echo('user:password2:label'),
 		'name' => 'password2',
+		'autocomplete' => 'new-password',
 	],
 ];
 

@@ -188,6 +188,7 @@ class ElggInstaller {
 
 		$defaults = [
 			'dbhost' => 'localhost',
+			'dbport' => '3306',
 			'dbprefix' => 'elgg_',
 			'language' => 'en',
 			'siteaccess' => ACCESS_PUBLIC,
@@ -245,6 +246,7 @@ class ElggInstaller {
 		$config_keys = [
 			// param key => config key
 			'dbhost' => 'dbhost',
+			'dbport' => 'dbport',
 			'dbuser' => 'dbuser',
 			'dbpassword' => 'dbpass',
 			'dbname' => 'dbname',
@@ -253,7 +255,7 @@ class ElggInstaller {
 		];
 		foreach ($config_keys as $params_key => $config_key) {
 			if ($params[$params_key] !== $config->$config_key) {
-				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$config_key]));
+				throw new InstallationException(elgg_echo('install:error:settings_mismatch', [$config_key]) . $params[$params_key] . ' ' . $config->$config_key);
 			}
 		}
 
@@ -405,6 +407,13 @@ class ElggInstaller {
 				'type' => 'text',
 				'value' => 'localhost',
 				'required' => true,
+			],
+			'dbport' => [
+				'type' => 'number',
+				'value' => 3306,
+				'required' => true,
+				'min' => 0,
+				'max' => 65535,
 			],
 			'dbprefix' => [
 				'type' => 'text',
@@ -636,7 +645,7 @@ class ElggInstaller {
 
 		$result = $this->render('complete');
 
-		_elgg_rmdir(Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/');
+		elgg_delete_directory(Paths::sanitize(sys_get_temp_dir()) . 'elgginstaller/');
 
 		return $result;
 	}
@@ -722,7 +731,8 @@ class ElggInstaller {
 			$app->_services->config->dbuser,
 			$app->_services->config->dbpass,
 			$app->_services->config->dbname,
-			$app->_services->config->dbhost
+			$app->_services->config->dbhost,
+			$app->_services->config->dbport
 		);
 
 		if (!$dbSettingsPass) {
@@ -734,7 +744,7 @@ class ElggInstaller {
 		try {
 			// check that the config table has been created
 			$result = $db->getData("SHOW TABLES");
-			if (!$result) {
+			if (empty($result)) {
 				return;
 			}
 			foreach ($result as $table) {
@@ -751,8 +761,8 @@ class ElggInstaller {
 			$qb = \Elgg\Database\Select::fromTable('config');
 			$qb->select('COUNT(*) AS total');
 
-			$result = $db->getData($qb);
-			if ($result && $result[0]->total > 0) {
+			$result = $db->getDataRow($qb);
+			if (!empty($result) && $result->total > 0) {
 				$this->has_completed['settings'] = true;
 			} else {
 				return;
@@ -763,8 +773,8 @@ class ElggInstaller {
 			$qb->select('COUNT(*) AS total')
 				->where($qb->compare('type', '=', 'user', ELGG_VALUE_STRING));
 
-			$result = $db->getData($qb);
-			if ($result && $result[0]->total > 0) {
+			$result = $db->getDataRow($qb);
+			if (!empty($result) && $result->total > 0) {
 				$this->has_completed['admin'] = true;
 			} else {
 				return;
@@ -963,7 +973,7 @@ class ElggInstaller {
 	protected function checkPHP(&$report) {
 		$phpReport = [];
 
-		$min_php_version = '7.0.0';
+		$min_php_version = '7.1.0';
 		if (version_compare(PHP_VERSION, $min_php_version, '<')) {
 			$phpReport[] = [
 				'severity' => 'error',
@@ -1199,7 +1209,8 @@ class ElggInstaller {
 			$submissionVars['dbuser'],
 			$submissionVars['dbpassword'],
 			$submissionVars['dbname'],
-			$submissionVars['dbhost']
+			$submissionVars['dbhost'],
+			$submissionVars['dbport']
 		);
 	}
 
@@ -1210,14 +1221,16 @@ class ElggInstaller {
 	 * @param string $password Password
 	 * @param string $dbname   Database name
 	 * @param string $host     Host
+	 * @param int    $port     Port
 	 *
 	 * @return bool
 	 */
-	protected function checkDatabaseSettings($user, $password, $dbname, $host) {
+	protected function checkDatabaseSettings($user, $password, $dbname, $host, $port) {
 		$app = $this->getApp();
 
 		$config = new DbConfig((object) [
 			'dbhost' => $host,
+			'dbport' => $port,
 			'dbuser' => $user,
 			'dbpass' => $password,
 			'dbname' => $dbname,
@@ -1286,6 +1299,7 @@ class ElggInstaller {
 
 		$config = (object) [
 			'dbhost' => elgg_extract('dbhost', $params, 'localhost'),
+			'dbport' => elgg_extract('dbport', $params, 3306),
 			'dbuser' => elgg_extract('dbuser', $params),
 			'dbpass' => elgg_extract('dbpassword', $params),
 			'dbname' => elgg_extract('dbname', $params),
@@ -1437,6 +1451,8 @@ class ElggInstaller {
 			'version' => elgg_get_version(),
 			'simplecache_enabled' => 1,
 			'system_cache_enabled' => 1,
+			'simplecache_minify_js' => true,
+			'simplecache_minify_css' => true,
 			'simplecache_lastupdate' => time(),
 			'processed_upgrades' => [],
 			'language' => 'en',
@@ -1449,6 +1465,7 @@ class ElggInstaller {
 			'security_notify_admins' => true,
 			'security_notify_user_password' => true,
 			'security_email_require_password' => true,
+			'security_email_require_confirmation' => true,
 		];
 
 		foreach ($sets as $key => $value) {

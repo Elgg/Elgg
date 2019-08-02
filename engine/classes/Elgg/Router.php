@@ -12,6 +12,7 @@ use InvalidParameterException;
 use RuntimeException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Elgg\Database\Plugins;
 
 /**
  * Delegates requests to controllers based on the registered configuration.
@@ -21,7 +22,7 @@ use Symfony\Component\Routing\Exception\ResourceNotFoundException;
  * @package    Elgg.Core
  * @subpackage Router
  * @since      1.9.0
- * @access     private
+ * @internal
  */
 class Router {
 
@@ -53,6 +54,11 @@ class Router {
 	protected $response;
 
 	/**
+	 * @var Plugins
+	 */
+	protected $plugins;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks    Hook service
@@ -60,19 +66,22 @@ class Router {
 	 * @param UrlMatcher         $matcher  URL Matcher
 	 * @param HandlersService    $handlers Handlers service
 	 * @param ResponseFactory    $response Response
+	 * @param Plugins            $plugins  Plugins
 	 */
 	public function __construct(
 		PluginHooksService $hooks,
 		RouteCollection $routes,
 		UrlMatcher $matcher,
 		HandlersService $handlers,
-		ResponseFactory $response
+		ResponseFactory $response,
+		Plugins $plugins
 	) {
 		$this->hooks = $hooks;
 		$this->routes = $routes;
 		$this->matcher = $matcher;
 		$this->handlers = $handlers;
 		$this->response = $response;
+		$this->plugins = $plugins;
 	}
 
 	/**
@@ -86,7 +95,6 @@ class Router {
 	 * @return boolean Whether the request was routed successfully.
 	 * @throws InvalidParameterException
 	 * @throws Exception
-	 * @access private
 	 */
 	public function route(HttpRequest $request) {
 		if ($this->timer) {
@@ -101,10 +109,8 @@ class Router {
 			return true;
 		}
 
-		if ($response instanceof ResponseBuilder) {
-			$this->response->respond($response);
-		}
-
+		$this->response->respond($response);
+		
 		return headers_sent();
 	}
 
@@ -120,11 +126,11 @@ class Router {
 	public function getResponse(HttpRequest $request) {
 		$response = $this->prepareLegacyResponse($request);
 
-		if (!$response) {
+		if (!$response instanceof ResponseBuilder) {
 			$response = $this->prepareResponse($request);
 		}
 
-		if (!$response) {
+		if (!$response instanceof ResponseBuilder) {
 			throw new PageNotFoundException();
 		}
 
@@ -148,7 +154,7 @@ class Router {
 	protected function prepareLegacyResponse(HttpRequest $request) {
 
 		$segments = $request->getUrlSegments();
-		if ($segments) {
+		if (!empty($segments)) {
 			$identifier = array_shift($segments);
 		} else {
 			$identifier = '';
@@ -230,8 +236,20 @@ class Router {
 			$file = elgg_extract('_file', $parameters);
 			unset($parameters['_file']);
 
+			$deprecated = elgg_extract('_deprecated', $parameters, '');
+			unset($parameters['_deprecated']);
+			
 			$middleware = elgg_extract('_middleware', $parameters, []);
 			unset($parameters['_middleware']);
+
+			$required_plugins = (array) elgg_extract('_required_plugins', $parameters, []);
+			unset($parameters['_required_plugins']);
+			
+			foreach ($required_plugins as $plugin_id) {
+				if (!$this->plugins->isActive($plugin_id)) {
+					throw new PageNotFoundException();
+				}
+			}
 
 			$route = $this->routes->get($parameters['_route']);
 			$route->setMatchedParameters($parameters);
@@ -240,6 +258,10 @@ class Router {
 			$envelope = new \Elgg\Request(elgg(), $request);
 			$parameters['request'] = $envelope;
 
+			if (!empty($deprecated)) {
+				elgg_deprecated_notice("The route \"{$route->getName()}\" has been deprecated.", $deprecated);
+			}
+			
 			foreach ($middleware as $callable) {
 				$result = $this->handlers->call($callable, $envelope, null);
 				if ($result[1] instanceof ResponseBuilder) {
@@ -345,11 +367,10 @@ class Router {
 	 * @param \Elgg\Http\Request $request Elgg request
 	 *
 	 * @return \Elgg\Http\Request
-	 * @access private
 	 */
 	public function allowRewrite(HttpRequest $request) {
 		$segments = $request->getUrlSegments();
-		if ($segments) {
+		if (!empty($segments)) {
 			$identifier = array_shift($segments);
 		} else {
 			$identifier = '';

@@ -23,6 +23,8 @@ abstract class ElggData implements CollectionItemInterface,
 	 * Blank entries for all database fields should be created by the constructor.
 	 * Subclasses should add to this in their constructors.
 	 * Any field not appearing in this will be viewed as metadata
+	 *
+	 * @var array
 	 */
 	protected $attributes = [];
 
@@ -34,11 +36,6 @@ abstract class ElggData implements CollectionItemInterface,
 	 * @return void
 	 */
 	protected function initializeAttributes() {
-		// Create attributes array if not already created
-		if (!is_array($this->attributes)) {
-			$this->attributes = [];
-		}
-
 		$this->attributes['time_created'] = null;
 	}
 
@@ -62,6 +59,19 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	public function __isset($name) {
 		return $this->$name !== null;
+	}
+
+	/**
+	 * Unset a property from metadata or attribute.
+	 *
+	 * @warning If you use this to unset an attribute, you must save the object!
+	 *
+	 * @param string $name The name of the attribute or metadata.
+	 *
+	 * @return void
+	 */
+	public function __unset($name) {
+		$this->$name = null;
 	}
 
 	/**
@@ -195,7 +205,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 */
 	public function offsetGet($key) {
 		if (array_key_exists($key, $this->attributes)) {
-			return $this->attributes[$key];
+			return $this->$key;
 		}
 
 		return null;
@@ -213,7 +223,7 @@ abstract class ElggData implements CollectionItemInterface,
 	public function offsetUnset($key) {
 		if (array_key_exists($key, $this->attributes)) {
 			// Full unsetting is dangerous for our objects
-			$this->attributes[$key] = "";
+			unset($this->$key);
 		}
 	}
 

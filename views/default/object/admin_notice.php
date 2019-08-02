@@ -4,7 +4,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!elgg_instanceof($entity, 'object', 'admin_notice')) {
+if (!$entity instanceof \ElggAdminNotice) {
 	return;
 }
 
@@ -13,9 +13,8 @@ elgg_require_js('elgg/admin_notices');
 $message = $entity->description;
 
 $delete = elgg_view('output/url', [
-	'href' => "action/admin/delete_admin_notice?guid={$entity->guid}",
+	'href' => elgg_generate_action_url('entity/delete', ['guid' => $entity->guid]),
 	'text' => elgg_view_icon('delete'),
-	'is_action' => true,
 	'class' => 'elgg-admin-notice-dismiss float-alt',
 	'is_trusted' => true,
 ]);

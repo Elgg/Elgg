@@ -53,7 +53,7 @@ function elgg_get_admins(array $options = []) {
  * @param string $id      A unique ID that your plugin can remember
  * @param string $message Body of the message
  *
- * @return ElggObject|bool
+ * @return ElggAdminNotice|bool
  * @since 1.8.0
  */
 function elgg_add_admin_notice($id, $message) {
@@ -99,16 +99,14 @@ function elgg_admin_notice_exists($id) {
 /**
  * Add an admin notice when a new \ElggUpgrade object is created.
  *
- * @param string      $event  'create'
- * @param string      $type   'object'
- * @param \ElggObject $object the created object
+ * @param \Elgg\Event $event 'create', 'object'
  *
  * @return void
  *
- * @access private
+ * @internal
  */
-function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
-	if (!$object instanceof \ElggUpgrade) {
+function _elgg_create_notice_of_pending_upgrade(\Elgg\Event $event) {
+	if (!$event->getObject() instanceof \ElggUpgrade) {
 		return;
 	}
 	
@@ -126,18 +124,20 @@ function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
 /**
  * Initialize the admin backend.
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_admin_init() {
 
-	elgg_register_css('elgg.admin', elgg_get_simplecache_url('admin.css'));
-	elgg_register_css('admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
+	elgg_register_external_file('css', 'elgg.admin', elgg_get_simplecache_url('admin.css'));
+	elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
 
 	elgg_define_js('admin/users/unvalidated', [
 		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
 	]);
 	
 	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
+	
+	elgg_register_ajax_view('forms/admin/user/change_email');
 		
 	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');
@@ -150,7 +150,7 @@ function _elgg_admin_init() {
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
 		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler', 600);
 		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check', 600);
-		elgg_register_css('maintenance', elgg_get_simplecache_url('maintenance.css'));
+		elgg_register_external_file('css', 'maintenance', elgg_get_simplecache_url('maintenance.css'));
 
 		elgg_register_menu_item('topbar', [
 			'name' => 'maintenance_mode',
@@ -192,7 +192,7 @@ function _elgg_admin_init() {
 /**
  * Returns plugin listing and admin menu to the client (used after plugin (de)activation)
  *
- * @access private
+ * @internal
  * @return Elgg\Http\OkResponse
  */
 function _elgg_ajax_plugins_update() {
@@ -208,20 +208,19 @@ function _elgg_ajax_plugins_update() {
 /**
  * Register menu items for the admin_header menu
  *
- * @param string          $hook   'register'
- * @param string          $type   'menu:admin_header'
- * @param \ElggMenuItem[] $return current return value
- * @param array           $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:admin_header'
  *
  * @return void|MenuItems
  *
- * @access private
+ * @internal
  * @since 3.0
  */
-function _elgg_admin_header_menu($hook, $type, $return, $params) {
+function _elgg_admin_header_menu(\Elgg\Hook $hook) {
 	if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 		return;
 	}
+	
+	$return = $hook->getValue();
 
 	$admin = elgg_get_logged_in_user_entity();
 
@@ -267,21 +266,20 @@ function _elgg_admin_header_menu($hook, $type, $return, $params) {
 /**
  * Register menu items for the admin_footer menu
  *
- * @param string          $hook   'register'
- * @param string          $type   'menu:admin_footer'
- * @param \ElggMenuItem[] $return current return value
- * @param array           $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:admin_footer'
  *
  * @return void|\ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
-function _elgg_admin_footer_menu($hook, $type, $return, $params) {
+function _elgg_admin_footer_menu(\Elgg\Hook $hook) {
 	if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 		return;
 	}
 
+	$return = $hook->getValue();
+	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'faq',
 		'text' => elgg_echo('admin:footer:faq'),
@@ -315,7 +313,7 @@ function _elgg_admin_footer_menu($hook, $type, $return, $params) {
  * @param \Elgg\Hook $hook 'register' 'menu:page'
  * @return array
  *
- * @access private
+ * @internal
  * @see _elgg_default_widgets_init() for default widgets menu items setup
  * @since 3.0
  */
@@ -408,16 +406,9 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 	// configure
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'settings:basic',
-		'href' => 'admin/settings/basic',
-		'text' => elgg_echo('admin:settings:basic'),
+		'href' => 'admin/site_settings',
+		'text' => elgg_echo('admin:site_settings'),
 		'priority' => 10,
-		'section' => 'configure',
-	]);
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'settings:advanced',
-		'href' => 'admin/settings/advanced',
-		'text' => elgg_echo('admin:settings:advanced'),
-		'priority' => 20,
 		'section' => 'configure',
 	]);
 	$return[] = \ElggMenuItem::factory([
@@ -458,16 +449,32 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
 	
 	// information
 	$return[] = \ElggMenuItem::factory([
+		'name' => 'information:performance',
+		'href' => 'admin/performance',
+		'text' => elgg_echo('admin:performance'),
+		'section' => 'information',
+		'priority' => 70,
+	]);
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'information:security',
+		'href' => 'admin/security/information',
+		'text' => elgg_echo('admin:security'),
+		'section' => 'information',
+		'priority' => 60,
+	]);
+	$return[] = \ElggMenuItem::factory([
 		'name' => 'statistics',
 		'href' => 'admin/statistics',
 		'text' => elgg_echo('admin:statistics'),
 		'section' => 'information',
+		'priority' => 80,
 	]);
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'server',
 		'href' => 'admin/server',
 		'text' => elgg_echo('admin:server'),
 		'section' => 'information',
+		'priority' => 50,
 	]);
 		
 	return $return;
@@ -481,7 +488,7 @@ function _elgg_admin_page_menu(\Elgg\Hook $hook) {
  * @param \Elgg\Hook $hook 'register' 'menu:page'
  * @return array
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
@@ -491,7 +498,7 @@ function _elgg_admin_page_menu_plugin_settings(\Elgg\Hook $hook) {
 	
 	// plugin settings
 	$active_plugins = elgg_get_plugins('active');
-	if (!$active_plugins) {
+	if (empty($active_plugins)) {
 		// nothing added because no items
 		return;
 	}
@@ -600,13 +607,13 @@ function _elgg_admin_user_unvalidated_bulk_menu(\Elgg\Hook $hook) {
  * @param array $page Array of pages
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_admin_page_handler($page) {
 	elgg_admin_gatekeeper();
 	elgg_set_context('admin');
 
-	elgg_unregister_css('elgg');
+	elgg_unregister_external_file('css', 'elgg');
 	elgg_require_js('elgg/admin');
 
 	// default to dashboard
@@ -632,7 +639,7 @@ function _elgg_admin_page_handler($page) {
 
 			$title = elgg_echo("admin:{$page[0]}") . ': ' . $plugin->getDisplayName();
 		} else {
-			forward('', '404');
+			throw new \Elgg\PageNotFoundException();
 		}
 	} else {
 		$view = 'admin/' . implode('/', $page);
@@ -659,7 +666,7 @@ function _elgg_admin_page_handler($page) {
  * @param string $current_url Current page URL
  * @return bool
  *
- * @access private
+ * @internal
  */
 function _elgg_admin_maintenance_allow_url($current_url) {
 	$site_path = preg_replace('~^https?~', '', elgg_get_site_url());
@@ -681,19 +688,19 @@ function _elgg_admin_maintenance_allow_url($current_url) {
 /**
  * Handle requests when in maintenance mode
  *
- * @param string $hook 'route'
- * @param string $type 'all'
- * @param array  $info current return value
+ * @param \Elgg\Hook $hook 'route', 'all'
  *
  * @return void|false
  *
- * @access private
+ * @internal
  */
-function _elgg_admin_maintenance_handler($hook, $type, $info) {
+function _elgg_admin_maintenance_handler(\Elgg\Hook $hook) {
 	if (elgg_is_admin_logged_in()) {
 		return;
 	}
 
+	$info = $hook->getValue();
+	
 	if ($info['identifier'] == 'action' && $info['segments'][0] == 'login') {
 		return;
 	}
@@ -712,25 +719,24 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 /**
  * Prevent non-admins from using actions
  *
- * @access private
+ * @param \Elgg\Hook $hook 'action', 'all'
  *
- * @param string $hook Hook name
- * @param string $type Action name
  * @return bool
+ * @internal
  */
-function _elgg_admin_maintenance_action_check($hook, $type) {
+function _elgg_admin_maintenance_action_check(\Elgg\Hook $hook) {
 	if (elgg_is_admin_logged_in()) {
 		return true;
 	}
 
-	if ($type == 'login') {
+	if ($hook->getType() == 'login') {
 		$username = get_input('username');
 
 		$user = get_user_by_username($username);
 
 		if (!$user) {
 			$users = get_user_by_email($username);
-			if ($users) {
+			if (!empty($users)) {
 				$user = $users[0];
 			}
 		}
@@ -752,59 +758,53 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 /**
  * Adds default admin widgets to the admin dashboard.
  *
- * @param string    $event 'make_admin'
- * @param string    $type  'user'
- * @param \ElggUser $user  affected user
+ * @param \Elgg\Event $event 'make_admin', 'user'
  *
  * @return void
- * @access private
+ * @internal
  */
-function _elgg_add_admin_widgets($event, $type, $user) {
-	$ia = elgg_set_ignore_access(true);
-
-	// check if the user already has widgets
-	if (elgg_get_widgets($user->getGUID(), 'admin')) {
-		elgg_set_ignore_access($ia);
-		return;
-	}
-
-	// In the form column => array of handlers in order, top to bottom
-	$adminWidgets = [
-		1 => ['control_panel', 'admin_welcome'],
-		2 => ['online_users', 'new_users', 'content_stats'],
-	];
-
-	foreach ($adminWidgets as $column => $handlers) {
-		foreach ($handlers as $position => $handler) {
-			$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
-			if ($guid !== false) {
-				$widget = get_entity($guid);
-				/* @var \ElggWidget $widget */
-				$widget->move($column, $position);
+function _elgg_add_admin_widgets(\Elgg\Event $event) {
+	$user = $event->getObject();
+	
+	elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+		// check if the user already has widgets
+		if (elgg_get_widgets($user->guid, 'admin')) {
+			return;
+		}
+	
+		// In the form column => array of handlers in order, top to bottom
+		$adminWidgets = [
+			1 => ['control_panel', 'admin_welcome'],
+			2 => ['online_users', 'new_users', 'content_stats'],
+		];
+	
+		foreach ($adminWidgets as $column => $handlers) {
+			foreach ($handlers as $position => $handler) {
+				$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
+				if ($guid !== false) {
+					$widget = get_entity($guid);
+					/* @var \ElggWidget $widget */
+					$widget->move($column, $position);
+				}
 			}
 		}
-	}
-	
-	elgg_set_ignore_access($ia);
+	});
 }
 
 /**
  * Add the current site admins to the subscribers when making/removing an admin user
  *
- * @param string $hook         'get'
- * @param string $type         'subscribers'
- * @param array  $return_value current subscribers
- * @param array  $params       supplied params
+ * @param \Elgg\Hook $hook 'get', 'subscribers'
  *
  * @return void|array
  */
-function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_value, $params) {
+function _elgg_admin_get_admin_subscribers_admin_action(\Elgg\Hook $hook) {
 	
 	if (!_elgg_config()->security_notify_admins) {
 		return;
 	}
 	
-	$event = elgg_extract('event', $params);
+	$event = $hook->getParam('event');
 	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
@@ -829,6 +829,8 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 		'batch' => true,
 	]);
 	
+	$return_value = $hook->getValue();
+	
 	/* @var $admin \ElggUser */
 	foreach ($admin_batch as $admin) {
 		$return_value[$admin->guid] = ['email'];
@@ -840,23 +842,21 @@ function _elgg_admin_get_admin_subscribers_admin_action($hook, $type, $return_va
 /**
  * Prepare the notification content for site admins about making a site admin
  *
- * @param string                           $hook         'prepare'
- * @param string                           $type         'notification:make_admin:user:'
- * @param \Elgg\Notifications\Notification $return_value current notification content
- * @param array                            $params       supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'notification:make_admin:user:'
  *
  * @return void|\Elgg\Notifications\Notification
  */
-function _elgg_admin_prepare_admin_notification_make_admin($hook, $type, $return_value, $params) {
+function _elgg_admin_prepare_admin_notification_make_admin(\Elgg\Hook $hook) {
 	
-	if (!($return_value instanceof \Elgg\Notifications\Notification)) {
+	$return_value = $hook->getValue();
+	if (!$return_value instanceof \Elgg\Notifications\Notification) {
 		return;
 	}
 	
-	$recipient = elgg_extract('recipient', $params);
-	$object = elgg_extract('object', $params);
-	$actor = elgg_extract('sender', $params);
-	$language = elgg_extract('language', $params);
+	$recipient = $hook->getParam('recipient');
+	$object = $hook->getParam('object');
+	$actor = $hook->getParam('sender');
+	$language = $hook->getParam('language');
 	
 	if (!($recipient instanceof ElggUser) || !($object instanceof ElggUser) || !($actor instanceof ElggUser)) {
 		return;
@@ -887,23 +887,21 @@ function _elgg_admin_prepare_admin_notification_make_admin($hook, $type, $return
 /**
  * Prepare the notification content for site admins about removing a site admin
  *
- * @param string                           $hook         'prepare'
- * @param string                           $type         'notification:remove_admin:user:'
- * @param \Elgg\Notifications\Notification $return_value current notification content
- * @param array                            $params       supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'notification:remove_admin:user:user'
  *
  * @return void|\Elgg\Notifications\Notification
  */
-function _elgg_admin_prepare_admin_notification_remove_admin($hook, $type, $return_value, $params) {
+function _elgg_admin_prepare_admin_notification_remove_admin(\Elgg\Hook $hook) {
 	
-	if (!($return_value instanceof \Elgg\Notifications\Notification)) {
+	$return_value = $hook->getValue();
+	if (!$return_value instanceof \Elgg\Notifications\Notification) {
 		return;
 	}
 	
-	$recipient = elgg_extract('recipient', $params);
-	$object = elgg_extract('object', $params);
-	$actor = elgg_extract('sender', $params);
-	$language = elgg_extract('language', $params);
+	$recipient = $hook->getParam('recipient');
+	$object = $hook->getParam('object');
+	$actor = $hook->getParam('sender');
+	$language = $hook->getParam('language');
 	
 	if (!($recipient instanceof ElggUser) || !($object instanceof ElggUser) || !($actor instanceof ElggUser)) {
 		return;
@@ -934,20 +932,17 @@ function _elgg_admin_prepare_admin_notification_remove_admin($hook, $type, $retu
 /**
  * Add the user to the subscribers when making/removing the admin role
  *
- * @param string $hook         'get'
- * @param string $type         'subscribers'
- * @param array  $return_value current subscribers
- * @param array  $params       supplied params
+ * @param \Elgg\Hook $hook 'get', 'subscribers'
  *
  * @return void|array
  */
-function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_value, $params) {
+function _elgg_admin_get_user_subscriber_admin_action(\Elgg\Hook $hook) {
 	
 	if (!_elgg_config()->security_notify_user_admin) {
 		return;
 	}
 	
-	$event = elgg_extract('event', $params);
+	$event = $hook->getParam('event');
 	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
@@ -961,6 +956,8 @@ function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_valu
 		return;
 	}
 	
+	$return_value = $hook->getValue();
+	
 	$return_value[$user->guid] = ['email'];
 	
 	return $return_value;
@@ -969,29 +966,27 @@ function _elgg_admin_get_user_subscriber_admin_action($hook, $type, $return_valu
 /**
  * Prepare the notification content for the user being made as a site admins
  *
- * @param string                           $hook         'prepare'
- * @param string                           $type         'notification:make_admin:user:'
- * @param \Elgg\Notifications\Notification $return_value current notification content
- * @param array                            $params       supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'notification:make_admin:user:user'
  *
  * @return void|\Elgg\Notifications\Notification
  */
-function _elgg_admin_prepare_user_notification_make_admin($hook, $type, $return_value, $params) {
+function _elgg_admin_prepare_user_notification_make_admin(\Elgg\Hook $hook) {
 	
-	if (!($return_value instanceof \Elgg\Notifications\Notification)) {
+	$return_value = $hook->getValue();
+	if (!$return_value instanceof \Elgg\Notifications\Notification) {
 		return;
 	}
 	
-	$recipient = elgg_extract('recipient', $params);
-	$object = elgg_extract('object', $params);
-	$actor = elgg_extract('sender', $params);
-	$language = elgg_extract('language', $params);
+	$recipient = $hook->getParam('recipient');
+	$object = $hook->getParam('object');
+	$actor = $hook->getParam('sender');
+	$language = $hook->getParam('language');
 	
 	if (!($recipient instanceof ElggUser) || !($object instanceof ElggUser) || !($actor instanceof ElggUser)) {
 		return;
 	}
 	
-	if ($recipient->getGUID() !== $object->getGUID()) {
+	if ($recipient->guid !== $object->guid) {
 		// recipient is some other user, this is handled elsewhere
 		return;
 	}
@@ -1014,23 +1009,21 @@ function _elgg_admin_prepare_user_notification_make_admin($hook, $type, $return_
 /**
  * Prepare the notification content for the user being removed as a site admins
  *
- * @param string                           $hook         'prepare'
- * @param string                           $type         'notification:remove_admin:user:'
- * @param \Elgg\Notifications\Notification $return_value current notification content
- * @param array                            $params       supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'notification:remove_admin:user:user'
  *
  * @return void|\Elgg\Notifications\Notification
  */
-function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $return_value, $params) {
+function _elgg_admin_prepare_user_notification_remove_admin(\Elgg\Hook $hook) {
 	
-	if (!($return_value instanceof \Elgg\Notifications\Notification)) {
+	$return_value = $hook->getValue();
+	if (!$return_value instanceof \Elgg\Notifications\Notification) {
 		return;
 	}
 	
-	$recipient = elgg_extract('recipient', $params);
-	$object = elgg_extract('object', $params);
-	$actor = elgg_extract('sender', $params);
-	$language = elgg_extract('language', $params);
+	$recipient = $hook->getParam('recipient');
+	$object = $hook->getParam('object');
+	$actor = $hook->getParam('sender');
+	$language = $hook->getParam('language');
 	
 	if (!($recipient instanceof ElggUser) || !($object instanceof ElggUser) || !($actor instanceof ElggUser)) {
 		return;
@@ -1062,20 +1055,17 @@ function _elgg_admin_prepare_user_notification_remove_admin($hook, $type, $retur
  * @param \Elgg\Hook $hook 'register', 'menu:filter:admin/upgrades'
  *
  * @return MenuItems
- * @access private
+ * @internal
  */
 function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 	
 	$result = $hook->getValue();
-	
-	$selected = $hook->getParam('filter_value');
 	
 	$result[] = ElggMenuItem::factory([
 		'name' => 'pending',
 		'text' => elgg_echo('admin:upgrades:menu:pending'),
 		'href' => 'admin/upgrades',
 		'priority' => 100,
-		'selected' => $selected === 'pending',
 	]);
 	
 	$result[] = ElggMenuItem::factory([
@@ -1083,7 +1073,6 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 		'text' => elgg_echo('admin:upgrades:menu:completed'),
 		'href' => 'admin/upgrades/finished',
 		'priority' => 200,
-		'selected' => $selected === 'completed',
 	]);
 	
 	$result[] = ElggMenuItem::factory([
@@ -1091,7 +1080,6 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 		'text' => elgg_echo('admin:upgrades:menu:db'),
 		'href' => 'admin/upgrades/db',
 		'priority' => 300,
-		'selected' => $selected === 'db',
 	]);
 	
 	return $result;
@@ -1100,6 +1088,6 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_admin_init');
 };

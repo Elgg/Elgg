@@ -57,6 +57,27 @@ echo elgg_view('core.css');
 		margin-left: auto;
 	}
 }
+
+/* ***************************************
+	Admin informationals
+**************************************** */
+.elgg-admin-information-row {
+	> .elgg-image {
+		min-width: 1rem;
+		text-align: center;
+		
+		.elgg-icon-times {
+			color: $(state-danger-font-color);
+		}
+		.elgg-icon-exclamation-triangle {
+			color: $(state-warning-font-color);
+		}
+		.elgg-icon-checkmark {
+			color: $(state-success-font-color);
+		}
+	}
+}
+
 /* ***************************************
 	PLUGINS FILTER
 **************************************** */
@@ -307,36 +328,6 @@ echo elgg_view('core.css');
 
 .elgg-module-plugin-details .elgg-tabs a {
 	cursor: pointer;
-}
-
-.elgg-plugin-details-screenshots > ul {
-	text-align: center;
-}
-
-.elgg-plugin-details-screenshots > div {
-	text-align: center;
-}
-
-.elgg-plugin-details-screenshots > div > img {
-	max-height: 380px;
-	max-width: 480px;
-}
-
-.elgg-plugin-details-screenshots > div > img.elgg-state-selected {
-	display: inline-block;
-}
-
-.elgg-plugin-details-screenshots > ul .elgg-plugin-screenshot {
-	display: inline;
-}
-
-.elgg-plugin-details-screenshots > ul .elgg-plugin-screenshot img {
-	height: 50px;
-	border: 1px solid #ccc;
-}
-
-.elgg-plugin-details-screenshots > ul .elgg-plugin-screenshot.elgg-state-selected img {
-	border: 1px solid #999;
 }
 
 /****************************************

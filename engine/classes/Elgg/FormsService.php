@@ -9,7 +9,7 @@ use Psr\Log\LoggerInterface;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
+ * @internal
  * @since 2.3
  */
 class FormsService {

@@ -1,0 +1,122 @@
+From 3.0 to 3.1
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+PHP Version
+-----------
+
+PHP 7.0 has reached end of life in January 2019. To ensure that Elgg sites are secure, we now require PHP 7.1 for new installations.
+
+If upgrading from a previous Elgg installation make sure you have the correct PHP version installed.
+
+
+Plugin screenshots
+------------------
+
+Screenshots added to plugins are no longer supported and will no longer be shown in the plugin details.
+
+Loading external files
+----------------------
+
+The usage of ``elgg_register_js``, ``elgg_unregister_js`` and ``elgg_load_js`` is discouraged.
+Make sure your javascript is an AMD module and use ``elgg_require_js`` to include it.
+
+The usage of ``elgg_register_css``, ``elgg_unregister_css`` and ``elgg_load_css`` is discouraged.
+You can register and include css with the new ``elgg_require_css`` function.
+
+Setting page owner
+------------------
+
+Setting the page owner via the ``elgg_get_page_owner_guid`` function parameter is deprecated. Use ``elgg_set_page_owner_guid``.
+
+Simpletests
+-----------
+
+The core simpletests have been removed from the system. They are all replaced by PHP unit tests or integration tests.
+The simpletest cli command has been deprecated.
+
+Hook and event callbacks
+------------------------
+
+The legacy style hook and event callback arguments are deprecated. You should switch to the new style as soon as possible.
+
+.. code-block:: php
+	
+	// old style hook callback
+	function hook_callback($name, $type, $return_value, $params) {
+
+	}
+	
+	// new style hook callback
+	function hook_callback(\Elgg\Hook $hook) {
+		// now you can use a few new functions
+		$params = $hook->getParams();
+		$return = $hook->getValue();
+		
+		$specific_param = $hook->getParam('specific_param', 'default')
+		$entity = $hook->getEntityParam();
+		$user = $hook->getUserParam();
+	}
+	
+	// old style event callback
+	function event_callback($name, $type, $object) {
+
+	}
+	
+	// new style event callback
+	function event_callback(\Elgg\Event $event) {
+		// now you can use a few new functions
+		$object = $event->getObject();
+	}
+
+Deprecated Routes
+-----------------
+
+ * ``previous:object:thewire`` This route was not in use. It now has been marked as deprecated.
+
+Deprecated CSS libraries
+------------------------
+
+ * ``jquery.imgareaselect`` Do not use this external css file.
+ * ``jquery.treeview`` Do not use this external css file.
+ 
+Deprecated JS libraries
+-----------------------
+
+ * ``elgg.avatar_cropper`` Do not depend on this external javascript library.
+ * ``jquery.imgareaselect`` Do not depend on this external javascript library.
+ * ``jquery.treeview`` Do not depend on this external javascript library.
+
+Deprecated APIs
+---------------
+
+ * ``access_show_hidden_entities()`` Use ``elgg_call()`` with ``ELGG_SHOW_DISABLED_ENTITIES`` flag.
+ * ``autoregister_views()``
+ * ``count_messages()`` Use ``elgg()->system_messages->count()``.
+ * ``disable_user_entities()``
+ * ``elgg_enable_entity()`` Use ``ElggEntity::enable()``.
+ * ``elgg_get_file_list()`` Use a PHP directory iterator.
+ * ``elgg_instanceof()`` Use PHP instanceof type operator.
+ * ``elgg_is_admin_user()`` Use ``ElggUser::isAdmin()``.
+ * ``elgg_set_ignore_access()`` Use ``elgg_call()`` with ``ELGG_IGNORE_ACCESS`` flag.
+ * ``elgg_sort_3d_array_by_value()``
+ * ``get_access_list()`` Use ``get_access_array()``.
+ * ``get_language()`` Use ``get_current_language()``.
+ * ``get_number_users()`` Use ``elgg_count_entities()``.
+ * ``pages_register_navigation_tree()``
+ * ``ini_get_bool()``
+ * ``is_not_null()``
+ * ``update_access_collection()``
+
+Deprecated actions
+------------------
+
+ * ``admin/delete_admin_notice`` Replaced by generic entity/delete action.
+ * ``avatar/crop`` Handled in avatar/upload action.
+ * ``avatar/remove`` Handled in avatar/upload action.
+ * ``blog/delete`` Replaced by generic entity/delete action.
+ * ``messages/delete`` Replaced by generic entity/delete action.
+ * ``site_notifications/delete`` Replaced by generic entity/delete action.

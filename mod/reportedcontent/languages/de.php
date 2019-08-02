@@ -29,6 +29,6 @@ return array(
 	'reportedcontent:failed' => 'Entschuldigung, leider ist der Versuch, diesen Beitrag zu melden, gescheitert.',
 	'reportedcontent:notarchived' => 'Die Meldung konnte nicht archiviert werden.',
 	
-	'widgets:reportedcontent:name' => 'Reported content',
-	'widgets:reportedcontent:description' => 'Display reported content',
+	'widgets:reportedcontent:name' => 'Gemeldete Beiträge',
+	'widgets:reportedcontent:description' => 'Gemeldete Beiträge anzeigen.',
 );

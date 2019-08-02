@@ -1,5 +1,7 @@
 <?php
+
 namespace Elgg;
+
 /**
  * Wrap an object and display warnings whenever the object's variables are
  * accessed or a method is used. It can also be used to wrap a string.
@@ -18,7 +20,7 @@ namespace Elgg;
  *  session object in session lib
  *  config object in ElggPlugin::includeFile
  *
- * @access private
+ * @internal
  *
  * @package Elgg.Core
  */
@@ -208,4 +210,3 @@ class DeprecationWrapper implements \ArrayAccess {
 		}
 	}
 }
-

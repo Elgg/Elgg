@@ -3,16 +3,16 @@
 $type = elgg_extract('type', $vars);
 $params = elgg_extract('params', $vars, []);
 
+$title = elgg_echo('error:default:title');
+
 if (elgg_view_exists("errors/$type")) {
-	$title = elgg_echo("error:$type:title");
-	if ($title == "error:$type:title") {
-		// use default if there is no title for this error type
-		$title = elgg_echo("error:default:title");
+	if (elgg_language_key_exists("error:$type:title")) {
+		// use custom error title is available
+		$title = elgg_echo("error:$type:title");
 	}
 	
 	$content = elgg_view("errors/$type", $params);
 } else {
-	$title = elgg_echo("error:default:title");
 	$content = elgg_view("errors/default", $params);
 }
 

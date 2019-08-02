@@ -45,6 +45,8 @@ class SimpletestCommand extends Command {
 		if (!date_default_timezone_get()) {
 			date_default_timezone_set('America/Los_Angeles');
 		}
+		
+		elgg_deprecated_notice('The simpletest cli command is deprecated', '3.1');
 
 		error_reporting(E_ALL | E_STRICT);
 
@@ -101,7 +103,7 @@ class SimpletestCommand extends Command {
 
 		$suite = new TestSuite('Elgg Core Unit Tests');
 
-		$test_cases = _elgg_services()->hooks->trigger('unit_test', 'system', null, []);
+		$test_cases = _elgg_services()->hooks->triggerDeprecated('unit_test', 'system', null, [], 'Simpletest unit tests are deprecated. Please switch to PHP unit tests.');
 		foreach ($test_cases as $file) {
 			$filter = $this->option('filter');
 			if ($filter && !preg_match("/$filter/i", $file)) {

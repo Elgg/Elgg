@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 10:27+0200\n"
+"POT-Creation-Date: 2019-07-08 14:21+0200\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -32,6 +32,12 @@ msgid ""
 msgstr ""
 "Comprenez les standards et process d'Elgg pour que vos propositions de "
 "modification soient acceptées aussi vite que possible."
+
+#: ../../contribute/code.rst:8 ../../contribute/core/move_plugin.rst:6
+#: ../../contribute/core/releases.rst:12 ../../contribute/database.rst:8
+#: ../../contribute/docs.rst:8 ../../contribute/tests.rst:6
+msgid "Contents"
+msgstr ""
 
 #: ../../contribute/code.rst:11
 msgid "License agreement"
@@ -1122,14 +1128,10 @@ msgstr ""
 
 #: ../../contribute/code.rst:502
 msgid ""
-"Annotate classes, methods, properties, and functions with ``@access "
-"private`` unless they are intended for public use, are already of limited "
-"visibility, or are within a class already marked as private."
+"Annotate classes, methods, properties, and functions with ``@internal`` "
+"unless they are intended for public use, are already of limited visibility, "
+"or are within a class already marked as ``@internal``."
 msgstr ""
-"Annotez les classes, méthodes, propriétés et fonctions avec ``@access "
-"private``, à moins qu'elles ne soient prévues pour un usage public, n'aient "
-"déjà une visibilité limitée, ou soient déjà au sein d'une classe marquée "
-"comme privée."
 
 #: ../../contribute/code.rst:506
 msgid "Use ``//`` or ``/* */`` when commenting."
@@ -2994,8 +2996,8 @@ msgid "To add a new service object to Elgg:"
 msgstr "Pour ajouter un nouvel objet service à Elgg :"
 
 #: ../../contribute/services.rst:8
-msgid "Annotate your class as ``@access private``."
-msgstr "Annotez votre classe comme ``@access private``."
+msgid "Annotate your class as ``@internal``."
+msgstr ""
 
 #: ../../contribute/services.rst:9
 msgid "Open the class ``Elgg\\Di\\ServiceProvider``."

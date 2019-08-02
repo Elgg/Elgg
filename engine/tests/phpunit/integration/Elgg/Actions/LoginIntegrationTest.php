@@ -5,7 +5,8 @@ namespace Elgg\Actions;
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
-use Elgg\Values;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 
 /**
  * @group ActionsService
@@ -13,26 +14,42 @@ use Elgg\Values;
  */
 class LoginIntegrationTest extends ActionResponseTestCase {
 
+	/**
+	 * @var \ElggUser User during tests
+	 */
+	private $user;
+	
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\ActionResponseTestCase::up()
+	 */
 	public function up() {
 		parent::up();
 
 		self::createApplication(['isolate'=> true]);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\ActionResponseTestCase::down()
+	 */
 	public function down() {
+		
+		if ($this->user instanceof \ElggUser) {
+			$this->user->delete();
+		}
+		
 		parent::down();
 	}
 
 	public function testLoginWithUsernameAndPassword() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 			'language' => 'de',
 		]);
 
-		$user->save();
-
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -53,11 +70,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginWithEmailAndPassword() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->email,
@@ -74,11 +91,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithEmptyPassword() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -90,11 +107,11 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithIncorrectPassword() {
 
-		$user = $this->createOne('user', [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -118,13 +135,12 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testLoginFailsWithBannedUser() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 			'banned' => true,
 		]);
-		/* @var $user \ElggUser */
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -144,12 +160,12 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 		_elgg_services()->events->registerHandler('login:before', 'user', $handler);
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 			'language' => 'de',
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$response = $this->executeAction('login', [
 			'username' => $user->username,
@@ -167,17 +183,62 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testCanPersistLogin() {
 
-		// Test that the user can login with persistent cookie
-		$this->markTestIncomplete();
+		$user = $this->user = $this->createUser([], [
+			'password' => 123456,
+			'language' => 'de',
+		]);
+		
+		$user->setValidationStatus(true, 'login_test');
+		
+		$action_response = $this->executeAction('login', [
+			'username' => $user->username,
+			'password' => 123456,
+			'persistent' => true,
+		]);
+		
+		$this->assertInstanceOf(OkResponse::class, $action_response);
+		
+		$messages = _elgg_services()->systemMessages->dumpRegister();
+		$this->assertNotEmpty($messages['success']);
+		$this->assertEquals(elgg_echo('loginok', [], $user->language), array_shift($messages['success']));
+		
+		$this->assertEquals($user, _elgg_services()->session->getLoggedInUser());
+		
+		_elgg_services()->session->removeLoggedInUser();
+		
+		ob_start();
+		$response = _elgg_services()->responseFactory->respond($action_response);
+		ob_end_clean();
+		
+		$this->assertInstanceOf(Response::class, $response);
+		
+		$response_cookies = $response->headers->getCookies();
+		$this->assertNotEmpty($response_cookies);
+		$this->assertInternalType('array', $response_cookies);
+		
+		$persistent_cookie = false;
+		$persistent_cookie_name = elgg()->config->getCookieConfig()['remember_me']['name'];
+		/* @var $cookie \Symfony\Component\HttpFoundation\Cookie */
+		foreach ($response_cookies as $cookie) {
+			if ($cookie->getName() !== $persistent_cookie_name) {
+				continue;
+			}
+			
+			$persistent_cookie = $cookie;
+			break;
+		}
+		
+		$this->assertInstanceOf(Cookie::class, $persistent_cookie, 'No remember_me cookie found');
+		$this->assertNotEmpty($persistent_cookie->getValue());
 	}
 
 	public function testRespectsLastForwardFrom() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->user = $this->createUser([], [
 			'password' => 123456,
 		]);
 
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true, 'login_test');
 
 		$last_forward_form = elgg_normalize_site_url('where_i_came_from');
 		$forward_to = elgg_normalize_site_url('where_i_want_to_be');

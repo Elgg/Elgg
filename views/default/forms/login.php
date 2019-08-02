@@ -17,9 +17,10 @@ echo elgg_view_field([
 
 echo elgg_view_field([
 	'#type' => 'password',
+	'#label' => elgg_echo('password'),
 	'name' => 'password',
 	'required' => true,
-	'#label' => elgg_echo('password'),
+	'autocomplete' => 'current-password',
 ]);
 
 echo elgg_view('login/extend', $vars);

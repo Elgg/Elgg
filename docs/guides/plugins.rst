@@ -7,35 +7,6 @@ Plugins must provide a ``manifest.xml`` file in the plugin root in order to be r
    :local:
    :depth: 1
 
-start.php
-=========
-
-The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks.
-
-It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file.
-This allows for consistency in Application bootstrapping, especially for testing purposes.
-
-.. code-block:: php
-
-    function my_plugin_does_something_else() {
-        // Some procedural code that you want to run before any events are fired
-    }
-
-    function my_plugin_init() {
-        // Your plugin's initialization logic
-    }
-
-    function my_plugin_rewrite_hook() {
-        // Path rewrite hook
-    }
-
-    return function() {
-        my_plugin_do_something_else();
-        elgg_register_event_handler('init', 'system', 'my_plugin_init');
-        elgg_register_plugin_hook_handler('route:rewrite', 'proifle', 'my_plugin_rewrite_hook');
-    }
-
-
 elgg-plugin.php
 ===============
 
@@ -51,6 +22,8 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``user_settings`` - eliminates the need for setting default values on each call to ``elgg_get_plugin_user_setting()``
  * ``views`` - allows plugins to alias vendor assets to a path within the Elgg's view system
  * ``widgets`` - eliminates the need for calling ``elgg_register_widget_type()``
+ * ``events`` - eliminates the need for calling ``elgg_register_event_handler()``
+ * ``hooks`` - eliminates the need for calling ``elgg_register_plugin_hook_handler()``
 
 
 .. code-block:: php
@@ -123,15 +96,92 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			'user_setting_name' => 'user_setting_value',
 		],
 
-		// this is identical to using views.php in Elgg 2.x series
 		'views' => [
 			'default' => [
 				'cool_lib/' => __DIR__ . '/vendors/cool_lib/dist/',
 			],
 		],
+		
+		'hooks' => [
+			'register' => [
+				'menu:owner_block' => [
+					'blog_owner_block_menu' => [
+						'priority' => 700,
+					],
+				],
+			],
+			'likes:is_likable' => [
+				'object:blog' => [
+					'Elgg\Values::getTrue' => [],
+				],
+			],
+			'usersettings:save' => [
+				'user' => [
+					'_elgg_save_notification_user_settings' => ['unregister' => true],
+				],
+			],
+		],
+		
+		'events' => [
+			'delete' => [
+				'object' => [
+					'file_handle_object_delete' => [
+						'priority' => 999,
+					],
+				],
+			],
+			'create' => [
+				'relationship' => [
+					'_elgg_send_friend_notification' => [],
+				],
+			],
+			'log' => [
+				'systemlog' => [
+					'system_log_default_logger' => ['unregister' => true],
+				],
+			],
+		],
 	];
 
+Bootstrap class
+===============
 
+As of Elgg 3.0 the recommended way to bootstrap you plugin is to use a bootstrap class. This class must implement 
+the ``\Elgg\PluginBootstrapInterface`` interface. You can register you bootstrap class in the ``elgg-plugin.php``.
+
+The bootstrap interface defines several function to be implemented which are called during different events in the system booting process.
+
+.. seealso::
+
+	For more information about the different functions defined in the ``\Elgg\PluginBootstrapInterface`` please read  :doc:`plugins/bootstrap`
+
+start.php
+=========
+
+The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks.
+
+It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file.
+This allows for consistency in Application bootstrapping, especially for testing purposes.
+
+.. code-block:: php
+
+    function my_plugin_does_something_else() {
+        // Some procedural code that you want to run before any events are fired
+    }
+
+    function my_plugin_init() {
+        // Your plugin's initialization logic
+    }
+
+    function my_plugin_rewrite_hook() {
+        // Path rewrite hook
+    }
+
+    return function() {
+        my_plugin_do_something_else();
+        elgg_register_event_handler('init', 'system', 'my_plugin_init');
+        elgg_register_plugin_hook_handler('route:rewrite', 'proifle', 'my_plugin_rewrite_hook');
+    }
 
 elgg-services.php
 =================
@@ -169,14 +219,6 @@ Here's a trivial example configuring view locations via the ``views`` key:
 			],
 		],
 	];
-
-activate.php, deactivate.php
-============================
-
-The ``activate.php`` and ``deactivate.php`` files contain procedural code that will run
-upon plugin activation and deactivation. Use these files to perform one-time
-events such as registering a persistent admin notice, registering subtypes, or performing
-garbage collection when deactivated.
 
 manifest.xml
 ============
@@ -235,7 +277,6 @@ In addition to the require elements above, the follow elements are available to 
 * copyright - The plugin's copyright information.
 * license - The plugin's license information.
 * provides - Specifies that this plugin provides the same functionality as another Elgg plugin or a PHP extension.
-* screenshot - Screenshots of the plugin. There can be multiple entries. See the advanced example for syntax.
 * suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build 
   on the plugin.
 * website - A link to the website for the plugin.
@@ -256,7 +297,7 @@ This manifest file is the bare minimum a plugin must have.
 		<name>Example Manifest</name>
 		<author>Elgg</author>
 		<version>1.0</version>
-		<description>This is a simple example of a manifest file. In this example, there are not screenshots, dependencies, or additional information about the plugin.</description>
+		<description>This is a simple example of a manifest file. In this example, there are no dependencies, or additional information about the plugin.</description>
 
 		<requires>
 			<type>elgg_release</type>
@@ -277,7 +318,7 @@ This example uses all of the available elements:
 		<author>Brett Profitt</author>
 		<version>1.0</version>
 		<blurb>This is an example manifest file.</blurb>
-		<description>This is a simple example of a manifest file. In this example, there are many options used, including screenshots, dependencies, and additional information about the plugin.</description>
+		<description>This is a simple example of a manifest file. In this example, there are many options used, including dependencies, and additional information about the plugin.</description>
 		<website>http://www.elgg.org/</website>
 		<copyright>(C) Brett Profitt 2014</copyright>
 		<license>GNU Public License version 2</license>
@@ -288,12 +329,6 @@ This example uses all of the available elements:
 			<type>elgg_release</type>
 			<version>1.9.1</version>
 		</requires>
-
-		<!-- The path is relative to the plugin's root. -->
-		<screenshot>
-			<description>Elgg profile.</description>
-			<path>screenshots/profile.png</path>
-		</screenshot>
 
 		<provides>
 			<type>plugin</type>
@@ -371,6 +406,7 @@ Related
 
 	plugins/plugin-skeleton
 	plugins/dependencies
+	plugins/bootstrap
 
 .. _Composer: https://getcomposer.org/
 .. _Packagist: https://packagist.org/

@@ -7,7 +7,7 @@ use InvalidArgumentException;
 /**
  * HTTP response builder interface
  *
- * @access private
+ * @internal
  */
 interface ResponseBuilder {
 
@@ -52,7 +52,7 @@ interface ResponseBuilder {
 
 	/**
 	 * Returns redirect URL
-	 * @return string
+	 * @return string|int|null string the forward url, null when no url was set or the constant REFERER
 	 */
 	public function getForwardURL();
 

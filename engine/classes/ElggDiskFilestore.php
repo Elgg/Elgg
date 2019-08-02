@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A filestore that uses disk as storage.
  *
@@ -9,8 +10,9 @@
  * @subpackage FileStore.Disk
  */
 class ElggDiskFilestore extends \ElggFilestore {
+
 	/**
-	 * Directory root.
+	 * @var string Directory root
 	 */
 	protected $dir_root;
 
@@ -254,7 +256,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	 * Returns the size of all data stored under a directory in the disk store.
 	 *
 	 * @param string $prefix         The prefix to check under.
-	 * @param string $container_guid The guid of the entity whose data you want to check.
+	 * @param int    $container_guid The guid of the entity whose data you want to check.
 	 *
 	 * @return int|false
 	 */
@@ -262,9 +264,9 @@ class ElggDiskFilestore extends \ElggFilestore {
 		if ($container_guid) {
 			$dir = new \Elgg\EntityDirLocator($container_guid);
 			return get_dir_size($this->dir_root . $dir . $prefix);
-		} else {
-			return false;
 		}
+		
+		return false;
 	}
 
 	/**

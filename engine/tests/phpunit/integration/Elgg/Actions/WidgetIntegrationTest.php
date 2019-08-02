@@ -140,10 +140,10 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		$this->assertInstanceOf(ErrorResponse::class, $response);
 		$this->assertEquals(elgg_echo('widgets:remove:failure'), $response->getContent());
 		
-		$ia = elgg_set_ignore_access(true);
-		$widget->delete();
-		$other_user->delete();
-		elgg_set_ignore_access($ia);
+		elgg_call(ELGG_IGNORE_ACCESS, function() use ($widget, $other_user) {
+			$widget->delete();
+			$other_user->delete();
+		});
 	}
 
 	public function testWidgetDeleteSuccess() {

@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Config;
 
 use Elgg\Database;
@@ -6,7 +7,7 @@ use Elgg\Database;
 /**
  * Migrates DB values to settings.php
  *
- * @access private
+ * @internal
  */
 abstract class SettingsMigrator {
 

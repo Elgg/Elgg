@@ -24,7 +24,7 @@
  * @param string $forward_url
  * @param array  $params
  * @return void
- * @access private
+ * @internal
  * @deprecated 2.3
  */
 function ajax_forward_hook($hook, $type, $forward_url, $params) {
@@ -61,7 +61,7 @@ function ajax_forward_hook($hook, $type, $forward_url, $params) {
 /**
  * Buffer all output echo'd directly in the action for inclusion in the returned JSON.
  * @return void
- * @access private
+ * @internal
  * @deprecated 2.3
  */
 function ajax_action_hook() {
@@ -224,7 +224,7 @@ function get_image_resize_parameters($width, $height, array $params = []) {
  * @param int $posted Timestamp of last action
  *
  * @return int|false Timestamp or false on failure
- * @access private
+ * @internal
  * @deprecated 2.3
  */
 function update_entity_last_action($guid, $posted = null) {

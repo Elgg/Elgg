@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @access private
+ * @internal
  */
 class ThemeSandboxObject extends ElggObject {
 	

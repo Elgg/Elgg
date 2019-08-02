@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Application;
 
 use Elgg\Application;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 /**
  * Simplecache handler
  *
- * @access private
+ * @internal
  */
 class CacheHandler {
 	
@@ -274,7 +275,6 @@ class CacheHandler {
 	 * @param string $view The view name
 	 *
 	 * @return string|null
-	 * @access private
 	 */
 	public function getContentType($view) {
 		$extension = $this->getViewFileType($view);
@@ -296,7 +296,6 @@ class CacheHandler {
 	 *
 	 * @param string $view The view name
 	 * @return string
-	 * @access private
 	 */
 	public function getViewFileType($view) {
 		$extension = (new \SplFileInfo($view))->getExtension();
@@ -378,4 +377,3 @@ class CacheHandler {
 		return Response::create($msg, 403);
 	}
 }
-

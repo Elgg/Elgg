@@ -27,20 +27,17 @@ function embed_init() {
 /**
  * Add the embed menu item to the long text menu
  *
- * @param string         $hook  'register'
- * @param string         $type  'menu:longtext'
- * @param ElggMenuItem[] $items current return value
- * @param array          $vars  supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:longtext'
  *
  * @return void|ElggMenuItem[]
  */
-function embed_longtext_menu($hook, $type, $items, $vars) {
+function embed_longtext_menu(\Elgg\Hook $hook) {
 
 	if (elgg_get_context() == 'embed') {
 		return;
 	}
 	
-	$id = elgg_extract('textarea_id', $vars);
+	$id = $hook->getParam('textarea_id');
 	if ($id === null) {
 		return;
 	}
@@ -54,6 +51,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		]);
 	}
 
+	$items = $hook->getValue();
 	$items[] = ElggMenuItem::factory([
 		'name' => 'embed',
 		'href' => false,
@@ -73,16 +71,14 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 /**
  * Select the correct embed tab for display
  *
- * @param string     $hook  'register'
- * @param string     $type  'menu:embed'
- * @param Collection $items current return value
- * @param array      $vars  supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:embed'
  *
  * @return Collection
  */
-function embed_select_tab($hook, $type, $items, $vars) {
-	$tab_name = elgg_extract('tab', $vars);
+function embed_select_tab(\Elgg\Hook $hook) {
+	$tab_name = $hook->getParam('tab');
 	
+	$items = $hook->getValue();
 	foreach ($items as $item) {
 		if ($item->getName() == $tab_name) {
 			$item->setSelected();
@@ -155,20 +151,22 @@ function embed_get_list_options($options = []) {
  * Substitutes thumbnail's inline URL with a permanent URL
  * Registered with a very late priority of 1000 to ensure we replace all previous values
  *
- * @param string $hook   "entity:icon:url"
- * @param string $type   "object"
- * @param string $return URL
- * @param array  $params Hook params
+ * @param \Elgg\Hook $hook "entity:icon:url", "object"
+ *
  * @return string
  */
-function embed_set_thumbnail_url($hook, $type, $return, $params) {
+function embed_set_thumbnail_url(\Elgg\Hook $hook) {
 
 	if (!elgg_in_context('embed')) {
 		return;
 	}
 	
-	$entity = elgg_extract('entity', $params);
-	$size = elgg_extract('size', $params);
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof \ElggEntity) {
+		return;
+	}
+	
+	$size = $hook->getParam('size');
 
 	$thumbnail = $entity->getIcon($size);
 	if (!$thumbnail->exists()) {

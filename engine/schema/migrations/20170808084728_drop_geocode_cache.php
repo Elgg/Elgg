@@ -8,7 +8,7 @@ class DropGeocodeCache extends AbstractMigration {
 	 * Migrate Up.
 	 */
 	public function up() {
-		$this->dropTable('geocode_cache');
+		$this->table('geocode_cache')->drop()->save();
 	}
 
 	/**

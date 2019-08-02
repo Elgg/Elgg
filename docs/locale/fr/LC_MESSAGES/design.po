@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-05 10:27+0200\n"
+"POT-Creation-Date: 2019-07-08 14:21+0200\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -245,6 +245,11 @@ msgid "A thorough discussion of Elgg's data model design and motivation."
 msgstr ""
 "Une discussion solide sur le design du modèle de données Elgg et ses "
 "motivations."
+
+#: ../../design/database.rst:8 ../../design/events.rst:6
+#: ../../design/security.rst:12
+msgid "Contents"
+msgstr ""
 
 #: ../../design/database.rst:13
 msgid ""

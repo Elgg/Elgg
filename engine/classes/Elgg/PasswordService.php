@@ -1,11 +1,12 @@
 <?php
+
 namespace Elgg;
 
 /**
  * PRIVATE CLASS. API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @package Elgg.Core
- * @access  private
+ * @internal
  * @since   1.10.0
  */
 final class PasswordService {
@@ -28,7 +29,7 @@ final class PasswordService {
 	 *
 	 * @return boolean True if the password needs to be rehashed.
 	 */
-	function needsRehash($hash) {
+	public function needsRehash($hash) {
 		return password_needs_rehash($hash, PASSWORD_DEFAULT);
 	}
 
@@ -40,7 +41,7 @@ final class PasswordService {
 	 *
 	 * @return boolean If the password matches the hash
 	 */
-	function verify($password, $hash) {
+	public function verify($password, $hash) {
 		return password_verify($password, $hash);
 	}
 
@@ -51,7 +52,7 @@ final class PasswordService {
 	 *
 	 * @return string
 	 */
-	function generateHash($password) {
+	public function generateHash($password) {
 		return password_hash($password, PASSWORD_DEFAULT);
 	}
 
@@ -63,7 +64,7 @@ final class PasswordService {
 	 * @return false|array
 	 * @see notify_user()
 	 */
-	function sendNewPasswordRequest($user_guid) {
+	public function sendNewPasswordRequest($user_guid) {
 		$user_guid = (int) $user_guid;
 
 		$user = _elgg_services()->entityTable->get($user_guid);
@@ -85,10 +86,12 @@ final class PasswordService {
 
 		// generate email
 		$ip_address = _elgg_services()->request->getClientIp();
-		$message = _elgg_services()->translator->translate(
-			'email:changereq:body', [$user->name, $ip_address, $link], $user->language);
-		$subject = _elgg_services()->translator->translate(
-			'email:changereq:subject', [], $user->language);
+		$message = _elgg_services()->translator->translate('email:changereq:body', [
+			$user->name,
+			$ip_address,
+			$link,
+		], $user->language);
+		$subject = _elgg_services()->translator->translate('email:changereq:subject', [], $user->language);
 
 		$params = [
 			'action' => 'requestnewpassword',
@@ -110,7 +113,7 @@ final class PasswordService {
 	 *
 	 * @return bool
 	 */
-	function forcePasswordReset($user, $password) {
+	public function forcePasswordReset($user, $password) {
 		if (!$user instanceof \ElggUser) {
 			$user = _elgg_services()->entityTable->get($user, 'user');
 			if (!$user instanceof \ElggUser) {
@@ -136,7 +139,7 @@ final class PasswordService {
 	 *
 	 * @return bool True on success
 	 */
-	function executeNewPasswordReset($user_guid, $conf_code, $password = null) {
+	public function executeNewPasswordReset($user_guid, $conf_code, $password = null) {
 		$user_guid = (int) $user_guid;
 		$user = get_entity($user_guid);
 

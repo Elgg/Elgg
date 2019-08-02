@@ -42,16 +42,13 @@ function uservalidationbyemail_init() {
 /**
  * Disables a user upon registration
  *
- * @param string $hook   'register'
- * @param string $type   'user'
- * @param bool   $value  current return value
- * @param array  $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'user'
  *
  * @return void
  */
-function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
+function uservalidationbyemail_disable_new_user(\Elgg\Hook $hook) {
 	
-	$user = elgg_extract('user', $params);
+	$user = $hook->getUserParam();
 	// no clue what's going on, so don't react.
 	if (!$user instanceof ElggUser) {
 		return;
@@ -59,7 +56,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 
 	// another plugin is requesting that registration be terminated
 	// no need for uservalidationbyemail
-	if (!$value) {
+	if (!$hook->getValue()) {
 		return;
 	}
 
@@ -71,36 +68,33 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	// disable user to prevent showing up on the site
 	// set context so our canEdit() override works
 	elgg_push_context('uservalidationbyemail_new_user');
-	$hidden_entities = access_show_hidden_entities(true);
-
-	// Don't do a recursive disable.  Any entities owned by the user at this point
-	// are products of plugins that hook into create user and might need
-	// access to the entities.
-	// @todo That ^ sounds like a specific case...would be nice to track it down...
-	$user->disable('uservalidationbyemail_new_user', false);
-
-	// set user as unvalidated and send out validation email
-	$user->setValidationStatus(false);
-	uservalidationbyemail_request_validation($user->guid);
-
+	
+	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($user) {
+		// Don't do a recursive disable.  Any entities owned by the user at this point
+		// are products of plugins that hook into create user and might need
+		// access to the entities.
+		// @todo That ^ sounds like a specific case...would be nice to track it down...
+		$user->disable('uservalidationbyemail_new_user', false);
+	
+		// set user as unvalidated and send out validation email
+		$user->setValidationStatus(false);
+		uservalidationbyemail_request_validation($user->guid);
+	
+	});
+	
 	elgg_pop_context();
-	access_show_hidden_entities($hidden_entities);
 }
 
 /**
  * Override the URL to be forwarded after registration
  *
- * @param string                     $hook   'response'
- * @param string                     $type   'action:register'
- * @param \Elgg\Http\ResponseBuilder $value  Current response
- * @param array                      $params Additional params
+ * @param \Elgg\Hook $hook 'response', 'action:register'
  *
  * @return void|\Elgg\Http\ResponseBuilder
  */
-function uservalidationbyemail_after_registration_url($hook, $type, $value, $params) {
-	$session = elgg_get_session();
-	$email = $session->get('emailsent', '');
-	if ($email) {
+function uservalidationbyemail_after_registration_url(\Elgg\Hook $hook) {
+	if (elgg_get_session()->get('emailsent')) {
+		$value = $hook->getValue();
 		$value->setForwardURL(elgg_normalize_url('uservalidationbyemail/emailsent'));
 		return $value;
 	}
@@ -109,19 +103,15 @@ function uservalidationbyemail_after_registration_url($hook, $type, $value, $par
 /**
  * Override the canEdit() call for if we're in the context of registering a new user.
  *
- * @param string $hook   'permissions_check'
- * @param string $type   'user'
- * @param bool   $value  current return value
- * @param array  $params supplied params
+ * @param \Elgg\Hook $hook 'permissions_check', 'user'
  *
  * @return void|true
  */
-function uservalidationbyemail_allow_new_user_can_edit($hook, $type, $value, $params) {
+function uservalidationbyemail_allow_new_user_can_edit(\Elgg\Hook $hook) {
 	
 	// $params['user'] is the user to check permissions for.
 	// we want the entity to check, which is a user.
-	$user = elgg_extract('entity', $params);
-	if (!($user instanceof ElggUser)) {
+	if (!$hook->getEntityParam() instanceof ElggUser) {
 		return;
 	}
 
@@ -147,37 +137,34 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 	$username = $credentials['username'];
 
 	// See if the user exists and isn't validated
-	$access_status = access_show_hidden_entities(true);
-	
-	// check if logging in with email address
-	if (strpos($username, '@') !== false) {
-		$users = get_user_by_email($username);
-		if ($users) {
-			$username = $users[0]->username;
+	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username) {
+		// check if logging in with email address
+		if (strpos($username, '@') !== false) {
+			$users = get_user_by_email($username);
+			if (!empty($users)) {
+				$username = $users[0]->username;
+			}
 		}
-	}
+	
+		$user = get_user_by_username($username);
+		if ($user && isset($user->validated) && !$user->validated) {
+			// show an error and resend validation email
+			uservalidationbyemail_request_validation($user->guid);
 
-	$user = get_user_by_username($username);
-	if ($user && isset($user->validated) && !$user->validated) {
-		// show an error and resend validation email
-		uservalidationbyemail_request_validation($user->guid);
-		access_show_hidden_entities($access_status);
-		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
-	}
-
-	access_show_hidden_entities($access_status);
+			throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+		}
+	});
 }
 
 /**
  * Make sure any admin users are automatically validated
  *
- * @param string   $event 'make_admin'
- * @param string   $type  'user'
- * @param ElggUser $user  the user
+ * @param \Elgg\Event $event 'make_admin', 'user'
  *
  * @return void
  */
-function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
+function uservalidationbyemail_validate_new_admin_user(\Elgg\Event $event) {
+	$user = $event->getObject();
 	if ($user instanceof ElggUser && $user->isValidated() !== true) {
 		$user->setValidationStatus(true, 'admin_user');
 	}
@@ -186,36 +173,27 @@ function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
 /**
  * Prevent a manual code login with login()
  *
- * @param string   $event 'login:before'
- * @param string   $type  'user'
- * @param ElggUser $user  the user
+ * @param \Elgg\Event $event 'login:before', 'user'
  *
  * @return void
  *
  * @throws LoginException
  */
-function uservalidationbyemail_check_manual_login($event, $type, $user) {
-	
-	$access_status = access_show_hidden_entities(true);
-	
-	if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {
-		// send new validation email
-		uservalidationbyemail_request_validation($user->getGUID());
-		
-		// restore hidden entities settings
-		access_show_hidden_entities($access_status);
-		
-		// throw error so we get a nice error message
-		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
-	}
-
-	access_show_hidden_entities($access_status);
+function uservalidationbyemail_check_manual_login(\Elgg\Event $event) {
+	$user = $event->getObject();
+	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
+		if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {
+			// send new validation email
+			uservalidationbyemail_request_validation($user->guid);
+			
+			// throw error so we get a nice error message
+			throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+		}
+	});
 }
 
 /**
  * Add a menu item to an unvalidated user
- *
- * @elgg_plugin_hook register menu:user:unvalidated
  *
  * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated'
  *
@@ -252,8 +230,6 @@ function _uservalidationbyemail_user_unvalidated_menu(\Elgg\Hook $hook) {
 
 /**
  * Add a menu item to the buld actions for unvalidated users
- *
- * @elgg_plugin_hook register menu:user:unvalidated:bulk
  *
  * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated:bulk'
  *

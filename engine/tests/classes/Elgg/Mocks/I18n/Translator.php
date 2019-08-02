@@ -14,7 +14,6 @@ class Translator extends ElggTranslator {
 	 *
 	 * @param string $path Path to file
 	 * @return bool
-	 * @access private
 	 * @internal
 	 */
 	protected function includeLanguageFile($path) {

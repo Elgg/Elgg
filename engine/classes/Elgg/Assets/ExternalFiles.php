@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Assets;
 
 use ElggPriorityList;
@@ -6,7 +7,7 @@ use ElggPriorityList;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  * @since  1.10.0
  */
 class ExternalFiles {

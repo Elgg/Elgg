@@ -4,27 +4,26 @@
  */
 
 $user_guids = (array) get_input('user_guids');
-if (!$user_guids) {
+if (empty($user_guids)) {
 	return elgg_error_response(elgg_echo('uservalidationbyemail:errors:unknown_users'));
 }
 
-$error = false;
-$access = access_show_hidden_entities(true);
-
-foreach ($user_guids as $guid) {
-	$user = get_user($guid);
-	if (empty($user)) {
-		continue;
+$error = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($user_guids) {
+	$error = false;
+	foreach ($user_guids as $guid) {
+		$user = get_user($guid);
+		if (empty($user)) {
+			continue;
+		}
+	
+		// don't resend emails to validated users
+		if ($user->isValidated() !== false || !uservalidationbyemail_request_validation($guid)) {
+			$error = true;
+			continue;
+		}
 	}
-
-	// don't resend emails to validated users
-	if ($user->isValidated() !== false || !uservalidationbyemail_request_validation($guid)) {
-		$error = true;
-		continue;
-	}
-}
-
-access_show_hidden_entities($access);
+	return $error;
+});
 
 if (count($user_guids) == 1) {
 	$message_txt = elgg_echo('uservalidationbyemail:messages:resent_validation');

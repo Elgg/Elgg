@@ -38,16 +38,13 @@ function discussion_init() {
 /**
  * Add owner block link for groups
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:owner_block'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:owner_block'
  *
  * @return void|ElggMenuItem[]
  */
-function discussion_owner_block_menu($hook, $type, $return, $params) {
+function discussion_owner_block_menu(\Elgg\Hook $hook) {
 	
-	$entity = elgg_extract('entity', $params);
+	$entity = $hook->getEntityParam();
 	if (!$entity instanceof ElggGroup) {
 		return;
 	}
@@ -59,8 +56,9 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 	$url = elgg_generate_url('collection:object:discussion:group', [
 		'guid' => $entity->guid,
 	]);
-	$item = new ElggMenuItem('discussion', elgg_echo('collection:object:discussion:group'), $url);
-	$return[] = $item;
+	
+	$return = $hook->getValue();
+	$return[] = new ElggMenuItem('discussion', elgg_echo('collection:object:discussion:group'), $url);
 	
 	return $return;
 }
@@ -68,26 +66,23 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 /**
  * Prepare a notification message about a new discussion topic
  *
- * @param string                          $hook         Hook name
- * @param string                          $type         Hook type
- * @param Elgg\Notifications\Notification $notification The notification to prepare
- * @param array                           $params       Hook parameters
+ * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:discussion'
  *
  * @return Elgg\Notifications\Notification
  */
-function discussion_prepare_notification($hook, $type, $notification, $params) {
-	$entity = $params['event']->getObject();
-	$owner = $params['event']->getActor();
-	$language = $params['language'];
+function discussion_prepare_notification(\Elgg\Hook $hook) {
+	$entity = $hook->getParam('event')->getObject();
+	$owner = $hook->getParam('event')->getActor();
+	$language = $hook->getParam('language');
 
-	$descr = $entity->description;
 	$title = $entity->getDisplayName();
 
+	$notification = $hook->getValue();
 	$notification->subject = elgg_echo('discussion:topic:notify:subject', [$title], $language);
 	$notification->body = elgg_echo('discussion:topic:notify:body', [
 		$owner->getDisplayName(),
 		$title,
-		$descr,
+		$entity->description,
 		$entity->getURL()
 	], $language);
 	$notification->summary = elgg_echo('discussion:topic:notify:summary', [$title], $language);
@@ -99,16 +94,13 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
 /**
  * Prepare a notification message about a new comment on a discussion
  *
- * @param string                          $hook         Hook name
- * @param string                          $type         Hook type
- * @param Elgg\Notifications\Notification $notification The notification to prepare
- * @param array                           $params       Hook parameters
+ * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:comment'
  *
  * @return void|Elgg\Notifications\Notification
  */
-function discussion_prepare_comment_notification($hook, $type, $notification, $params) {
+function discussion_prepare_comment_notification(\Elgg\Hook $hook) {
 	
-	$event = elgg_extract('event', $params);
+	$event = $hook->getParam('event');
 	if (!$event instanceof Elgg\Notifications\NotificationEvent) {
 		return;
 	}
@@ -123,10 +115,11 @@ function discussion_prepare_comment_notification($hook, $type, $notification, $p
 		return;
 	}
 	
-	$language = elgg_extract('language', $params);
+	$language = $hook->getParam('language');
 	
 	$poster = $comment->getOwnerEntity();
 	
+	$notification = $hook->getValue();
 	$notification->subject = elgg_echo('discussion:comment:notify:subject', [$discussion->getDisplayName()], $language);
 	$notification->summary = elgg_echo('discussion:comment:notify:summary', [$discussion->getDisplayName()], $language);
 	$notification->body = elgg_echo('discussion:comment:notify:body', [
@@ -143,17 +136,13 @@ function discussion_prepare_comment_notification($hook, $type, $notification, $p
 /**
  * Add group members to the comment subscriber on a discussion
  *
- * @param string $hook          'get'
- * @param string $type          'subscriptions'
- * @param array  $subscriptions Array containing subscriptions in the form
- *                              <user guid> => array('email', 'site', etc.)
- * @param array  $params        Hook parameters
+ * @param \Elgg\Hook $hook 'get', 'subscriptions'
  *
  * @return void|array
  */
-function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
+function discussion_get_subscriptions(\Elgg\Hook $hook) {
 	
-	$event = elgg_extract('event', $params);
+	$event = $hook->getParam('event');
 	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
@@ -177,6 +166,7 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 		return;
 	}
 	
+	$subscriptions = $hook->getValue();
 	$group_subscriptions = elgg_get_subscriptions_for_container($container->guid);
 	
 	return ($subscriptions + $group_subscriptions);
@@ -185,16 +175,13 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 /**
  * Make sure that discussion comments can not be written to a discussion after it has been closed
  *
- * @param string $hook   'container_logic_check'
- * @param string $type   'object'
- * @param array  $return Allowed or not
- * @param array  $params Hook params
+ * @param \Elgg\Hook $hook 'container_logic_check', 'object'
  *
  * @return void|false
  */
-function discussion_comment_permissions($hook, $type, $return, $params) {
+function discussion_comment_permissions(\Elgg\Hook $hook) {
 	
-	$discussion = elgg_extract('entity', $params);
+	$discussion = $hook->getEntityParam();
 	if (!$discussion instanceof ElggDiscussion) {
 		return;
 	}
@@ -248,16 +235,12 @@ function discussion_prepare_form_vars($topic = null) {
 /**
  * Add latest discussions tab to /groups/all page
  *
- * @param string         $hook   "register"
- * @param string         $type   "menu:filter:groups/all"
- * @param ElggMenuItem[] $return Menu
- * @param array          $params Hook params
+ * @param \Elgg\Hook $hook "register", "menu:filter:groups/all"
+ *
  * @return ElggMenuItem[]
  */
-function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
-
-	$filter_value = elgg_extract('filter_value', $params);
-
+function discussion_setup_groups_filter_tabs(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
 	$return[] = ElggMenuItem::factory([
 		'name' => 'discussion',
 		'text' => elgg_echo('discussion:latest'),
@@ -265,7 +248,6 @@ function discussion_setup_groups_filter_tabs($hook, $type, $return, $params) {
 			'filter' => 'discussion',
 		]),
 		'priority' => 500,
-		'selected' => $filter_value == 'discussion',
 	]);
 
 	return $return;

@@ -13,7 +13,7 @@ class ErrorResponse extends OkResponse {
 	 * @param string $error       Error message
 	 * @param int    $status_code HTTP status code
 	 * @param string $forward_url Forward url
-	 * @access private
+	 *
 	 * @see elgg_error_response()
 	 */
 	public function __construct($error = '', $status_code = ELGG_HTTP_BAD_REQUEST, $forward_url = REFERRER) {

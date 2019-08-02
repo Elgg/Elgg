@@ -1,12 +1,12 @@
 <?php
+
 namespace Elgg\Filesystem;
 
 /**
  * Represents a file that may or may not actually exist.
  *
  * @since 1.10.0
- *
- * @access private
+ * @internal
  */
 class File {
 	

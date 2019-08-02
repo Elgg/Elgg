@@ -453,8 +453,27 @@ return array(
 	'admin:unknown_section' => 'Neplatná sekce správce.',
 
 	'admin' => "Správa",
+	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "Správcovský panel umožňuje řídit všechny součásti systému, od správy uživatelů k chování doplňků. Následují dostupné možnosti.",
 
+	'admin:performance' => 'Performance',
+	'admin:performance:label:generic' => 'Generic',
+	'admin:performance:generic:description' => 'Below is a list of performance suggestions / values which could help in tuning your website',
+	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache:settings:warning' => "It's recommended you configure the simplecache setting in the settings.php.
+Configuring simplecache in the settings.php file improves caching performance.
+It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
+	'admin:performance:systemcache' => 'Systemcache',
+	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'The mod_cache module provides HTTP-aware caching schemes. This means that the files will be cached according
+to an instruction specifying how long a page can be considered "fresh".',
+	'admin:performance:php:open_basedir' => 'PHP open_basedir',
+	'admin:performance:php:open_basedir:not_configured' => 'No limitations have been set',
+	'admin:performance:php:open_basedir:warning' => 'A small amount of open_basedir limitations are in effect, this could impact performance.',
+	'admin:performance:php:open_basedir:error' => 'A large amount of open_basedir limitations are in effect, this will probably impact performance.',
+	'admin:performance:php:open_basedir:generic' => 'With open_basedir every file access will be checked against the list of limitations. Since Elgg has a lot of
+file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
+	
 	'admin:statistics' => 'Statistiky',
 	'admin:server' => 'Server',
 	'admin:cron' => 'Cron',
@@ -477,6 +496,8 @@ return array(
 	'admin:users:online' => 'Právě přihlášeni',
 	'admin:users:newest' => 'Nejnovější',
 	'admin:users:admins' => 'Správci',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => 'Přidat nového uživatele',
 	'admin:users:description' => "Tento správcovský panel umožňuje měnit nastavení členů vašich stránek. Následují dostupné možnosti.",
 	'admin:users:adduser:label' => "Pro přidání nového uživatele klikněte sem...",
@@ -486,6 +507,8 @@ return array(
 	'admin:users:unvalidated' => 'Unvalidated',
 	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
 	'admin:users:unvalidated:registered' => 'Registered: %s',
+	'admin:users:unvalidated:change_email' => 'Change e-mail address',
+	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
 	'admin:configure_utilities:maintenance' => 'Maintenance mode',
 	'admin:upgrades' => 'Aktualizace',
@@ -510,6 +533,8 @@ return array(
 	'admin:settings' => 'Nastavení',
 	'admin:settings:basic' => 'Základní nastavení',
 	'admin:settings:advanced' => 'Rozšířená nastavení',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Tento správcovský panel umožňuje měnit celkové nastavení vašich stránek. Následují dostupné možnosti.",
 	'admin:site:opt:linktext' => "Nastavit stránky...",
 	'admin:settings:in_settings_file' => 'Toto nastavení je definováno v settings.php',
@@ -598,6 +623,27 @@ three sections:
 	'admin:options' => 'Volby správce',
 
 	'admin:security' => 'Security',
+	'admin:security:information' => 'Information',
+	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
+	'admin:security:information:https' => 'Is the website protected by HTTPS',
+	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
+(eg. passwords) from being sniffed over the internet connection.",
+	'admin:security:information:wwwroot' => 'Website main folder is writable',
+	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver.
+Malicious visitors could place unwanted code in your website.",
+	'admin:security:information:validate_input' => 'Input validation',
+	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to
+submit potentially harmfull content (eg. cross-site-scripting, etc)",
+	'admin:security:information:password_length' => 'Minimal password length',
+	'admin:security:information:password_length:warning' => "It's recommended to have a minimal password length of at least 6 characters.",
+	'admin:security:information:username_length' => 'Minimal username length',
+	'admin:security:information:username_length:warning' => "It's recommended to have a minimal username length of at least 4 characters.",
+	'admin:security:information:php:session_gc' => "PHP session cleanup",
+	'admin:security:information:php:session_gc:chance' => "Cleanup chance: %s%%",
+	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
+	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
+expired sessions from your database and not allow users to reuse old sessions.",
+	
 	'admin:security:settings' => 'Settings',
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
 	'admin:security:settings:label:hardening' => 'Hardening',
@@ -613,6 +659,9 @@ three sections:
 	'admin:security:settings:notify_user_ban' => 'Notify the user when their account gets (un)banned',
 	'admin:security:settings:notify_user_ban:help' => 'This will send a notification to the user that their account was (un)banned.',
 	
+	'admin:security:settings:notify_user_password' => 'Notify the user when they change their password',
+	'admin:security:settings:notify_user_password:help' => 'This will send a notification to the user when they change their password.',
+	
 	'admin:security:settings:protect_upgrade' => 'Protect upgrade.php',
 	'admin:security:settings:protect_upgrade:help' => 'This will protect upgrade.php so you require a valid token or you\'ll have to be an administrator.',
 	'admin:security:settings:protect_upgrade:token' => 'In order to be able to use the upgrade.php when logged out or as a non admin, the following URL needs to be used:',
@@ -627,6 +676,9 @@ three sections:
 	
 	'admin:security:settings:email_require_password' => 'Require password to change email address',
 	'admin:security:settings:email_require_password:help' => 'When the user wishes to change their email address, require that they provide their current password.',
+	
+	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
+	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
@@ -690,6 +742,17 @@ Your account on %s is no longer banned. You can use the site again.
 
 To go to the site, click here:
 %s',
+	
+	'user:notification:password_change:subject' => 'Your password has been changed!',
+	'user:notification:password_change:body' => "Hi %s,
+
+Your password on '%s' has been changed! If you made this change than you're all set.
+
+If you didn't make this change, please reset your password here:
+%s
+
+Or contact a site administrator:
+%s",
 	
 /**
  * Plugins
@@ -782,12 +845,14 @@ To go to the site, click here:
 	'admin:statistics:label:version:code' => "Code Version",
 
 	'admin:server:label:elgg' => 'Elgg',
+	'admin:server:label:requirements' => 'Requirements',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => 'Show PHPInfo',
 	'admin:server:label:web_server' => 'Webový server',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Umístění logu',
 	'admin:server:label:php_version' => 'Verze PHP',
+	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.1',
 	'admin:server:label:php_ini' => 'Umístění PHP ini souboru',
 	'admin:server:label:php_log' => 'PHP Log',
 	'admin:server:label:mem_avail' => 'Dostupná paměť',
@@ -813,6 +878,17 @@ To go to the site, click here:
 		OPcache is not available on this server or it has not yet been enabled.
 		For improved performance, it is recommended that you enable and configure OPcache.
 ',
+	
+	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
+	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
+	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
+	'admin:server:requirements:rewrite:fail' => "Check your .htaccess for the correct rewrite rules",
+	
+	'admin:server:requirements:database:server' => "Database server",
+	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
+	'admin:server:requirements:database:client' => "Database client",
+	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
 	
 	'admin:user:label:search' => "Hledat uživatele:",
 	'admin:user:label:searchbutton' => "Hledat",
@@ -919,6 +995,9 @@ These changes will only affect new users on the site.',
 	'icon:size:large' => "Velká",
 	'icon:size:master' => "Obrovská",
 	
+	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
+	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
+	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
 	'entity:edit:icon:file:label' => "Upload a new icon",
 	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
 	'entity:edit:icon:remove:label' => "Remove icon",
@@ -1010,7 +1089,8 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Aktivní',
 	'total' => 'Celkem',
-
+	'unvalidated' => 'Unvalidated',
+	
 	'ok' => 'OK',
 	'any' => 'Jakákoliv',
 	'error' => 'Chyba',
@@ -1046,6 +1126,9 @@ These changes will only affect new users on the site.',
 	'status:featured' => 'Zajímavé',
 	'status:open' => 'Otevřený',
 	'status:closed' => 'Zavřený',
+	'status:enabled' => 'Enabled',
+	'status:disabled' => 'Disabled',
+	'status:unavailable' => 'Unavailable',
 
 /**
  * Generic sorts
@@ -1076,6 +1159,12 @@ These changes will only affect new users on the site.',
 
 	'on' => 'Zapnuto',
 	'off' => 'Vypnuto',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1270,10 +1359,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'Systém',
 	'admin:legend:caching' => 'Vyrovnávací paměť',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => 'Přístup k obsahu',
 	'admin:legend:site_access' => 'Přístup ke stránkám',
 	'admin:legend:debug' => 'Ladění a výpisy',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
 	'config:remove_branding:help' => "Throughout the site there are various links and logo's that show this site is made using Elgg. If you remove the branding consider donating on https://elgg.org/about/supporters",
 	'config:disable_rss:label' => "Disable RSS feeds",
@@ -1341,6 +1433,7 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 
 	'email:settings' => "Nastavení e-mailu",
 	'email:address:label' => "E-mailová adresa",
+	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "Password",
 	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
@@ -1372,6 +1465,38 @@ Somebody (from the IP address %s) has requested a password change for this accou
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
+%s",
+	
+	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
+	'email:request:email:subject' => "Please confirm your e-mail address",
+	'email:request:email:body' => "Hi %s,
+
+You requested to change your e-mail address on '%s'.
+If you didn't request this change, please reset your password.
+
+In order to confirm the e-mail address change, please click this link:
+%s
+
+Please note this link is only valid for 1 hour.",
+	
+	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	
+	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on '%s'.
+
+If you didn't request this change, please contact a site administrator.
+%s",
+	
+	'email:confirm:email:new:subject' => "You're e-mail address was changed",
+	'email:confirm:email:new:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on this e-mail address.
+
+If you didn't request this change, please contact a site administrator.
 %s",
 
 /**
@@ -1659,4 +1784,7 @@ To view %s's profile, click here:
 	
 	"core:upgrade:2018061401:title" => "Migrate cron log entries",
 	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
+	
+	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
+	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );

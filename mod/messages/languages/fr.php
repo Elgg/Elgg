@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Un problème est survenu lors de l\'enregistrement de votre message. Veuillez réessayer.',
 
-	'item:object:messages' => 'Messages',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

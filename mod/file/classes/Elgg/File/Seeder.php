@@ -8,7 +8,7 @@ use Elgg\Project\Paths;
 /**
  * Add file seed
  *
- * @access private
+ * @internal
  */
 class Seeder extends Seed {
 
@@ -18,11 +18,10 @@ class Seeder extends Seed {
 	public function seed() {
 
 		$count_files = function () {
-			return elgg_get_entities([
+			return elgg_count_entities([
 				'types' => 'object',
 				'subtypes' => 'file',
 				'metadata_names' => '__faker',
-				'count' => true,
 			]);
 		};
 

@@ -318,7 +318,7 @@ $ipsum = elgg_view('developers/ipsum');
 			'name' => 'f7-with-value',
 			'id' => 'f7-withe-value',
 			'value' => true,
-			'#label' => 'File input with value .elgg-input-file):',
+			'#label' => 'File input with value (.elgg-input-file):',
 		]);
 
 		echo elgg_view_field([
@@ -339,10 +339,18 @@ $ipsum = elgg_view('developers/ipsum');
 
 		echo elgg_view_field([
 			'#type' => 'email',
-			'name' => 'f10',
-			'id' => 'f10',
+			'name' => 'f101-email',
+			'id' => 'f101-email',
 			'value' => 'noone@elgg.org',
 			'#label' => 'Email input (.elgg-input-email):',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'tel',
+			'name' => 'f102-tel',
+			'id' => 'f102-tel',
+			'value' => '123-12-123',
+			'#label' => 'Telephone input (.elgg-input-tel):',
 		]);
 
 		echo elgg_view_field([
@@ -428,6 +436,33 @@ $ipsum = elgg_view('developers/ipsum');
 			'#label' => 'Time input (.elgg-input-time) with custom options:',
 			'#help' => 'Select time between 8:00 and 20:00',
 			'timestamp' => true,
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'datetime-local',
+			'name' => 'f12-datetime-local',
+			'id' => 'f12-datetime-local',
+			'value' => '2012-12-31T11:59',
+			'#label' => 'DateTime input (.elgg-input-datetime-local):',
+			'#help' => 'Select date and time',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'month',
+			'name' => 'f12-month',
+			'id' => 'f12-month',
+			'value' => '2012-12',
+			'#label' => 'Month input (.elgg-input-month):',
+			'#help' => 'Select month',
+		]);
+
+		echo elgg_view_field([
+			'#type' => 'week',
+			'name' => 'f12-week',
+			'id' => 'f12-week',
+			'value' => '2012-W53',
+			'#label' => 'Week input (.elgg-input-week):',
+			'#help' => 'Select week',
 		]);
 
 		echo elgg_view_field([
@@ -538,8 +573,17 @@ $ipsum = elgg_view('developers/ipsum');
 		}
 
 		echo elgg_view_field([
+			'#type' => 'color',
+			'name' => 'f17',
+			'id' => 'f17',
+			'value' => '#0078ac',
+			'#label' => 'Color input (.elgg-input-color):',
+			'#help' => 'Select a color',
+		]);
+
+		echo elgg_view_field([
 			'#type' => 'fieldset',
-			'name' => 'f16',
+			'name' => 'f17',
 			'legend' => 'Fieldset with a legend',
 			'fields' => [
 				[

@@ -49,13 +49,12 @@ function system_log_init() {
 /**
  * Default system log handler, allows plugins to override, extend or disable logging.
  *
- * @param string   $event       Event name
- * @param string   $object_type Object type
- * @param Loggable $object      Object to log
+ * @param \Elgg\Event $event 'log', 'systemlog'
  *
  * @return true
  */
-function system_log_default_logger($event, $object_type, $object) {
+function system_log_default_logger(\Elgg\Event $event) {
+	$object = $event->getObject();
 	system_log($object['object'], $object['event']);
 
 	return true;
@@ -65,16 +64,14 @@ function system_log_default_logger($event, $object_type, $object) {
  * System log listener.
  * This function listens to all events in the system and logs anything appropriate.
  *
- * @param String   $event       Event name
- * @param String   $object_type Type of object
- * @param Loggable $object      Object to log
+ * @param \Elgg\Event $event 'all', 'all'
  *
  * @return true
- * @access private
+ * @internal
  */
-function system_log_listener($event, $object_type, $object) {
-	if (($object_type != 'systemlog') && ($event != 'log')) {
-		elgg_trigger_event('log', 'systemlog', ['object' => $object, 'event' => $event]);
+function system_log_listener(\Elgg\Event $event) {
+	if (($event->getType() != 'systemlog') && ($event->getName() != 'log')) {
+		elgg_trigger_event('log', 'systemlog', ['object' => $event->getObject(), 'event' => $event->getName()]);
 	}
 
 	return true;
@@ -83,20 +80,18 @@ function system_log_listener($event, $object_type, $object) {
 /**
  * Add to the user hover menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:user_hover'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:user_hover'
  *
  * @return void|ElggMenuItem[]
  */
-function system_log_user_hover_menu($hook, $type, $return, $params) {
+function system_log_user_hover_menu(\Elgg\Hook $hook) {
 
-	$user = elgg_extract('entity', $params);
+	$user = $hook->getEntityParam();
 	if (!$user instanceof ElggUser) {
 		return;
 	}
 
+	$return = $hook->getValue();
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'logbrowser',
 		'href' => "admin/administer_utilities/logbrowser?user_guid={$user->guid}",
@@ -111,18 +106,15 @@ function system_log_user_hover_menu($hook, $type, $return, $params) {
 /**
  * Trigger the log rotation
  *
- * @param string $hook        'cron'
- * @param string $type        interval
- * @param string $returnvalue current return value
- * @param array  $params      supplied params
+ * @param \Elgg\Hook $hook 'cron', 'all'
  *
  * @return void|string
  */
-function system_log_archive_cron($hook, $type, $returnvalue, $params) {
+function system_log_archive_cron(\Elgg\Hook $hook) {
 	$resulttext = elgg_echo("logrotate:logrotated");
 
 	$period = elgg_get_plugin_setting('period', 'system_log');
-	if ($period !== $type) {
+	if ($period !== $hook->getType()) {
 		return;
 	}
 	$offset = system_log_get_seconds_in_period($period);
@@ -131,20 +123,17 @@ function system_log_archive_cron($hook, $type, $returnvalue, $params) {
 		$resulttext = elgg_echo("logrotate:lognotrotated");
 	}
 
-	return $returnvalue . $resulttext;
+	return $hook->getValue() . $resulttext;
 }
 
 /**
  * Trigger the log deletion
  *
- * @param string $hook        'cron'
- * @param string $type        interval
- * @param string $returnvalue current return value
- * @param array  $params      supplied params
+ * @param \Elgg\Hook $hook 'cron', 'all'
  *
  * @return void|string
  */
-function system_log_delete_cron($hook, $type, $returnvalue, $params) {
+function system_log_delete_cron(\Elgg\Hook $hook) {
 	$resulttext = elgg_echo("logrotate:logdeleted");
 
 	$period = elgg_get_plugin_setting('delete', 'system_log');
@@ -152,7 +141,7 @@ function system_log_delete_cron($hook, $type, $returnvalue, $params) {
 		return;
 	}
 
-	if ($period !== $type) {
+	if ($period !== $hook->getType()) {
 		return;
 	}
 
@@ -162,7 +151,7 @@ function system_log_delete_cron($hook, $type, $returnvalue, $params) {
 		$resulttext = elgg_echo("logrotate:lognotdeleted");
 	}
 
-	return $returnvalue . $resulttext;
+	return $hook->getValue() . $resulttext;
 }
 
 return function() {

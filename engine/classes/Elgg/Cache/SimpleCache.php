@@ -5,12 +5,10 @@ namespace Elgg\Cache;
 use Elgg\Config;
 use Elgg\ViewsService;
 
-
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
- *
+ * @internal
  * @since  1.10.0
  */
 class SimpleCache {
@@ -86,8 +84,7 @@ class SimpleCache {
 	/**
 	 * Get the base url for simple cache requests
 	 *
-	 * @return string The simplecache root url for the current viewtype.
-	 * @access private
+	 * @return string The simplecache root url for the current viewtype
 	 */
 	public function getRoot() {
 		$viewtype = elgg_get_viewtype();
@@ -142,7 +139,7 @@ class SimpleCache {
 	 * @return string
 	 */
 	private function getPath() {
-		return $this->config->assetroot;
+		return (string) $this->config->assetroot;
 	}
 
 	/**
@@ -152,7 +149,7 @@ class SimpleCache {
 	 * @return bool
 	 */
 	public function invalidate() {
-		_elgg_rmdir($this->getPath(), true);
+		elgg_delete_directory($this->getPath());
 
 		$time = time();
 		$this->config->save("simplecache_lastupdate", $time);

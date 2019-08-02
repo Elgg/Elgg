@@ -2,10 +2,12 @@
 
 namespace Elgg\Security;
 
+use Elgg\HttpException;
+
 /**
  * Component for creating signed URLs
  *
- * @access private
+ * @internal
  */
 class UrlSigner {
 
@@ -59,7 +61,7 @@ class UrlSigner {
 	/**
 	 * Validates HMAC signature
 	 *
-	 * @param string $url URL to vlaidate
+	 * @param string $url URL to validate
 	 * @return bool
 	 */
 	public function isValid($url) {
@@ -92,6 +94,19 @@ class UrlSigner {
 		$url = elgg_http_build_url($parts, false);
 		
 		return elgg_build_hmac($url)->matchesToken($token);
-
+	}
+	
+	/**
+	 * Assert that an url is signed correctly
+	 *
+	 * @param string $url the url to check
+	 *
+	 * @return void
+	 * @throws HttpException
+	 */
+	public function assertValid($url) {
+		if (!$this->isValid($url)) {
+			throw new HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
+		}
 	}
 }

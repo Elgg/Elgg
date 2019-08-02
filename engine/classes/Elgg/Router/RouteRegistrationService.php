@@ -14,7 +14,6 @@ use Psr\Log\LoggerInterface;
 /**
  * Route registration service
  *
- * @access private
  * @internal
  */
 class RouteRegistrationService {
@@ -89,6 +88,8 @@ class RouteRegistrationService {
 		$handler = elgg_extract('handler', $params);
 		$middleware = elgg_extract('middleware', $params, []);
 		$protected = elgg_extract('walled', $params, true);
+		$deprecated = elgg_extract('deprecated', $params, '');
+		$required_plugins = elgg_extract('required_plugins', $params, []);
 
 		if (!$path || (!$controller && !$resource && !$handler && !$file)) {
 			throw new InvalidParameterException(
@@ -144,7 +145,9 @@ class RouteRegistrationService {
 		$defaults['_file'] = $file;
 		$defaults['_resource'] = $resource;
 		$defaults['_handler'] = $handler;
+		$defaults['_deprecated'] = $deprecated;
 		$defaults['_middleware'] = $middleware;
+		$defaults['_required_plugins'] = $required_plugins;
 
 		$route = new Route($path, $defaults, $requirements, [
 			'utf8' => true,
@@ -186,7 +189,7 @@ class RouteRegistrationService {
 	}
 
 	/**
-	 * Generate a relative URL for a named route
+	 * Generate a absolute URL for a named route
 	 *
 	 * @param string $name       Route name
 	 * @param array  $parameters Query parameters
@@ -195,7 +198,15 @@ class RouteRegistrationService {
 	 */
 	public function generateUrl($name, array $parameters = []) {
 		try {
-			return $this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_URL);
+			$route = $this->get($name);
+			if ($route instanceof Route) {
+				$deprecated = $route->getDefault('_deprecated');
+				if (!empty($deprecated)) {
+					elgg_deprecated_notice("The route \"{$name}\" has been deprecated.", $deprecated);
+				}
+			}
+			
+			return elgg_normalize_url($this->generator->generate($name, $parameters, UrlGenerator::ABSOLUTE_PATH));
 		} catch (Exception $exception) {
 			$this->logger->notice($exception->getMessage());
 		}
@@ -255,8 +266,8 @@ class RouteRegistrationService {
 	 * Register a function that gets called when the first part of a URL is
 	 * equal to the identifier.
 	 *
-	 * @param string $identifier The page type to handle
-	 * @param string $function   Your function name
+	 * @param string   $identifier The page type to handle
+	 * @param callable $function   Your function name
 	 *
 	 * @return bool Depending on success
 	 * @throws InvalidParameterException

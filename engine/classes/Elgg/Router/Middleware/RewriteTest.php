@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg\Router\Middleware;
+
 use Elgg\HttpException;
 use Elgg\Request;
 

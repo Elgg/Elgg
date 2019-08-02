@@ -33,22 +33,13 @@ if (isset($fields['description'])) {
 $output = '';
 
 foreach ($fields as $shortname => $valtype) {
-	$annotations = $user->getAnnotations([
-		'annotation_names' => "profile:$shortname",
-		'limit' => false,
-	]);
-	$values = array_map(function (ElggAnnotation $a) {
-		return $a->value;
-	}, $annotations);
-
-	if (!$values) {
+	$value = $user->getProfileData($shortname);
+	if (elgg_is_empty($value)) {
 		continue;
 	}
-	// emulate metadata API
-	$value = (count($values) === 1) ? $values[0] : $values;
-
+	
 	// validate urls
-	if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
+	if ($valtype === 'url' && is_string($value) && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
 	}
 
@@ -68,4 +59,3 @@ foreach ($fields as $shortname => $valtype) {
 if ($output) {
 	echo elgg_format_element('div', ['class' => 'elgg-profile-fields'], $output);
 }
-

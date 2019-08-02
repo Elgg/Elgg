@@ -81,15 +81,12 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$dir = (new \Elgg\EntityDirLocator($this->entity->guid))->getPath();
 		$this->entity_dir_path = _elgg_config()->dataroot . $dir;
-		if (is_dir($this->entity_dir_path)) {
-			_elgg_rmdir($this->entity_dir_path);
-		}
-
+		elgg_delete_directory($this->entity_dir_path);
+		
 		$dir = (new \Elgg\EntityDirLocator($this->entity->owner_guid))->getPath();
 		$this->owner_dir_path = _elgg_config()->dataroot . $dir;
-		if (is_dir($this->owner_dir_path)) {
-			_elgg_rmdir($this->owner_dir_path);
-		}
+		elgg_delete_directory($this->owner_dir_path);
+		
 		// Needed to test elgg_get_inline_url()
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
@@ -103,13 +100,9 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue(file_exists(_elgg_config()->dataroot . '1/1/300x600.jpg'));
 		$this->assertTrue(file_exists(_elgg_config()->dataroot . '1/1/400x300.gif'));
 		$this->assertTrue(file_exists(_elgg_config()->dataroot . '1/1/400x300.png'));
-		if (is_dir($this->entity_dir_path)) {
-			_elgg_rmdir($this->entity_dir_path);
-		}
-
-		if (is_dir($this->owner_dir_path)) {
-			_elgg_rmdir($this->owner_dir_path);
-		}
+		
+		elgg_delete_directory($this->entity_dir_path);
+		elgg_delete_directory($this->owner_dir_path);
 	}
 
 	protected function createService() {

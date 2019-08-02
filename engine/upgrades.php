@@ -13,4 +13,5 @@ return [
 	\Elgg\Upgrades\SetSecurityConfigDefaults::class,
 	\Elgg\Upgrades\MigrateFriendsACL::class,
 	\Elgg\Upgrades\MigrateCronLog::class,
+	\Elgg\Upgrades\SecurityEmailChangeConfirmation::class,
 ];

@@ -64,10 +64,3 @@ function elgg_get_metadata(array $options = []) {
 function elgg_delete_metadata(array $options) {
 	return _elgg_services()->metadataTable->deleteAll($options);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$hooks->registerHandler('unit_test', 'system', '_elgg_metadata_test');
-};

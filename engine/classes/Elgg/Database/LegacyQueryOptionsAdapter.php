@@ -1022,13 +1022,6 @@ trait LegacyQueryOptionsAdapter {
 
 		if (!empty($order_by)) {
 			if (is_string($order_by)) {
-				elgg_deprecated_notice("
-					Using literal MySQL statements in 'order_by' options parameter is deprecated.
-					Instead use an OrderByClause or array of them.
-					
-					{{ $order_by }}
-				", '3.0');
-
 				$orders = explode(',', $order_by);
 			} else if (is_array($order_by)) {
 				$orders = $order_by;
@@ -1139,7 +1132,7 @@ trait LegacyQueryOptionsAdapter {
 	 *
 	 * @param array $options An options array
 	 * @return array
-	 * @access private
+	 * @internal
 	 */
 	public static function normalizeMetastringOptions(array $options = []) {
 
@@ -1190,7 +1183,7 @@ trait LegacyQueryOptionsAdapter {
 	 * @param array $singulars A list of singular words to pluralize by adding 's'.
 	 *
 	 * @return array
-	 * @access private
+	 * @internal
 	 */
 	public static function normalizePluralOptions($options, $singulars) {
 		foreach ($singulars as $singular) {

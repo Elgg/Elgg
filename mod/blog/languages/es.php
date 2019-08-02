@@ -1,18 +1,18 @@
 <?php
 return array(
-	'item:object:blog' => 'Blogs',
+	'item:object:blog' => 'Blog',
 	'collection:object:blog' => 'Blogs',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
-	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
+	'collection:object:blog:all' => 'Todos los blogs',
+	'collection:object:blog:owner' => 'Blogs de %s',
+	'collection:object:blog:group' => 'Blogs de grupo',
+	'collection:object:blog:friends' => 'Blogs de amigos',
+	'add:object:blog' => 'Añadir una entrada al blog',
+	'edit:object:blog' => 'Editar entrada del blog',
 
 	'blog:revisions' => 'Revisiones',
 	'blog:archives' => 'Archivos',
 
-	'groups:tool:blog' => 'Enable group blog',
+	'groups:tool:blog' => 'Activar blog de grupo',
 	'blog:write' => 'Escribir una entrada',
 
 	// Editing
@@ -40,25 +40,25 @@ return array(
 	'blog:error:revision_not_found' => 'No se puede encontrar esta revisi&oacute;n.',
 
 	// river
-	'river:object:blog:create' => '%s published a blog post %s',
-	'river:object:blog:comment' => '%s commented on the blog %s',
+	'river:object:blog:create' => '%s Publico una entrada de blog %s',
+	'river:object:blog:comment' => '%s Comento en el blog %s',
 
 	// notifications
 	'blog:notify:summary' => 'Nueva entrada en el blog llamado: %s',
 	'blog:notify:subject' => 'Nuevo blog: %s',
 	'blog:notify:body' =>
 '
-%s published a new blog post: %s
+%s Publico una nueva entrada de blog: %s
 
 %s
 
-View and comment on the blog post:
+Ver y comentar en la entrada:
 %s
 ',
 
 	// widget
-	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:name' => 'Entradas del blog',
+	'widgets:blog:description' => 'Mostrar tus ultimas entradas del blog',
 	'blog:moreblogs' => 'M&aacute;s entradas',
 	'blog:numbertodisplay' => 'N&uacute;mero de entradas a mostrar',
 );

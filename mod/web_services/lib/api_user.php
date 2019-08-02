@@ -32,7 +32,7 @@ function create_api_user() {
  *
  * @param string $api_key The API Key
  *
- * @return mixed stdClass representing the database row or false.
+ * @return false|stdClass stdClass representing the database row or false.
  */
 function get_api_user($api_key) {
 	$dbprefix = elgg_get_config('dbprefix');
@@ -58,7 +58,7 @@ function get_api_user($api_key) {
 function remove_api_user($api_key) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$keypair = get_api_user($api_key);
-	if ($keypair) {
+	if (!empty($keypair)) {
 		return (bool) elgg()->db->deleteData("DELETE from {$dbprefix}api_users where id={$keypair->id}");
 	}
 

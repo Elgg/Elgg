@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Upgrade object for upgrades that need to be tracked
  * and listed in the admin area.
@@ -14,7 +13,7 @@ use Elgg\Upgrade\Batch;
  * Represents an upgrade that runs outside of the upgrade.php script.
  *
  * @package Elgg.Admin
- * @access private
+ * @internal
  *
  * @property      bool   $is_completed   Is the upgrade completed yet
  * @property      int    $processed      Number of items processed
@@ -36,10 +35,8 @@ class ElggUpgrade extends ElggObject {
 	];
 
 	/**
-	 * Do not use.
-	 *
-	 * @access private
 	 * @var callable
+	 * @internal Do not use. For testing purposes
 	 */
 	public $_callable_egefps = 'elgg_get_entities_from_private_settings';
 
@@ -222,18 +219,6 @@ class ElggUpgrade extends ElggObject {
 		
 		$private_setting = $this->getPrivateSetting($name);
 		return !is_null($private_setting);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see ElggEntity::__unset()
-	 */
-	public function __unset($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			parent::__unset($name);
-		}
-		
-		$this->removePrivateSetting($name);
 	}
 
 	/**

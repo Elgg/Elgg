@@ -11,76 +11,13 @@
  */
 
 /**
- * Allow disabled entities and metadata to be returned by getter functions
- *
- * @global bool $ENTITY_SHOW_HIDDEN_OVERRIDE
- * @access private
- * @deprecated 3.0
- */
-global $ENTITY_SHOW_HIDDEN_OVERRIDE;
-
-/**
- * Set if Elgg's access system should be ignored.
- *
- * The access system will not return entities in any getter functions if the
- * user doesn't have access. This removes this restriction.
- *
- * When the access system is being ignored, all checks for create, retrieve,
- * update, and delete should pass. This affects all the canEdit() and related
- * methods.
- *
- * @tip Use this to access entities in automated scripts
- * when no user is logged in.
- *
- * @warning This will not show disabled entities.
- * Use {@link access_show_hidden_entities()} to access disabled entities.
- *
- * @note Internal: The access override is checked in elgg_override_permissions(). It is
- * registered for the 'permissions_check' hooks to override the access system for
- * the canEdit() and canWriteToContainer() methods.
- *
- * @note Internal: This clears the access cache.
- *
- * @note Internal: For performance reasons this is done at the database access clause level.
- *
- * @param bool $ignore If true, disables all access checks.
- *
- * @return bool Previous ignore_access setting.
- * @since 1.7.0
- * @see elgg_get_ignore_access()
- */
-function elgg_set_ignore_access($ignore = true) {
-	return elgg()->session->setIgnoreAccess($ignore);
-}
-
-/**
  * Get current ignore access setting.
  *
  * @return bool
  * @since 1.7.0
- * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
 	return elgg()->session->getIgnoreAccess();
-}
-
-/**
- * Return a string of access_ids for $user_guid appropriate for inserting into an SQL IN clause.
- *
- * @uses get_access_array
- *
- * @see get_access_array()
- *
- * @param int  $user_guid User ID; defaults to currently logged in user
- * @param int  $ignored   Ignored parameter
- * @param bool $flush     If set to true, will refresh the access list from the
- *                        database rather than using this function's cache.
- *
- * @return string A list of access collections suitable for using in an SQL call
- * @access private
- */
-function get_access_list($user_guid = 0, $ignored = 0, $flush = false) {
-	return _elgg_services()->accessCollections->getAccessList($user_guid, $flush);
 }
 
 /**
@@ -145,16 +82,6 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
 		'input_params' => $input_params,
 	];
 	return _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
-}
-
-/**
- * Show or hide disabled entities.
- *
- * @param bool $show_hidden Show disabled entities.
- * @return bool
- */
-function access_show_hidden_entities($show_hidden) {
-	elgg()->session->setDisabledEntityVisibility($show_hidden);
 }
 
 /**
@@ -225,7 +152,7 @@ function get_write_access_array($user_guid = 0, $ignored = 0, $flush = false, ar
  * Use the plugin hook of 'access:collections:write', 'user' to change this.
  * @see get_write_access_array() for details on the hook.
  *
- * Respects access control disabling for admin users and {@link elgg_set_ignore_access()}
+ * Respects access control disabling for admin users and {@link elgg_call()}
  *
  * @see get_write_access_array()
  *
@@ -253,31 +180,10 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
  * @param string $subtype    The subtype indicates the usage of the acl
  *
  * @return int|false The collection ID if successful and false on failure.
- * @see update_access_collection()
  * @see delete_access_collection()
  */
 function create_access_collection($name, $owner_guid = 0, $subtype = null) {
 	return _elgg_services()->accessCollections->create($name, $owner_guid, $subtype);
-}
-
-/**
- * Updates the membership in an access collection.
- *
- * @warning Expects a full list of all members that should
- * be part of the access collection
- *
- * @note This will run all hooks associated with adding or removing
- * members to access collections.
- *
- * @param int   $collection_id The ID of the collection.
- * @param array $members       Array of member GUIDs
- *
- * @return bool
- * @see add_user_to_access_collection()
- * @see remove_user_from_access_collection()
- */
-function update_access_collection($collection_id, $members) {
-	return _elgg_services()->accessCollections->update($collection_id, $members);
 }
 
 /**
@@ -287,7 +193,6 @@ function update_access_collection($collection_id, $members) {
  *
  * @return bool
  * @see create_access_collection()
- * @see update_access_collection()
  */
 function delete_access_collection($collection_id) {
 	return _elgg_services()->accessCollections->delete($collection_id);
@@ -318,7 +223,6 @@ function get_access_collection($collection_id) {
  * @param int $collection_id The ID of the collection to add them to
  *
  * @return bool
- * @see update_access_collection()
  * @see remove_user_from_access_collection()
  */
 function add_user_to_access_collection($user_guid, $collection_id) {
@@ -334,7 +238,6 @@ function add_user_to_access_collection($user_guid, $collection_id) {
  * @param int $collection_id The access collection ID
  *
  * @return bool
- * @see update_access_collection()
  * @see remove_user_from_access_collection()
  */
 function remove_user_from_access_collection($user_guid, $collection_id) {
@@ -533,24 +436,6 @@ function access_friends_acl_get_name(\Elgg\Hook $hook) {
 }
 
 /**
- * Runs unit tests for the access library
- *
- * @param string $hook   'unit_test'
- * @param string $type   'system'
- * @param array  $value  current return value
- * @param array  $params supplied params
- *
- * @return array
- *
- * @access private
- * @codeCoverageIgnore
- */
-function access_test($hook, $type, $value, $params) {
-	$value[] = ElggCoreAccessCollectionsTest::class;
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
@@ -563,6 +448,4 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	$events->registerHandler('create', 'relationship', 'access_friends_acl_add_friend');
 	$events->registerHandler('delete', 'relationship', 'access_friends_acl_remove_friend');
 	$hooks->registerHandler('access_collection:name', 'access_collection', 'access_friends_acl_get_name');
-
-	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };

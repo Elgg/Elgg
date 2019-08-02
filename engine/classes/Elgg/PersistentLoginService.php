@@ -23,7 +23,7 @@ namespace Elgg;
  *
  * @package Elgg.Core
  *
- * @access private
+ * @internal
  */
 class PersistentLoginService {
 
@@ -160,7 +160,6 @@ class PersistentLoginService {
 			return null;
 		}
 
-		
 		$query = "SELECT guid
 			FROM {$this->table}
 			WHERE code = :hash";
@@ -170,9 +169,10 @@ class PersistentLoginService {
 		try {
 			$user_row = $this->db->getDataRow($query, null, $params);
 		} catch (\DatabaseException $e) {
-			return $this->handleDbException($e);
+			$this->handleDbException($e);
+			return null;
 		}
-		if (!$user_row) {
+		if (empty($user_row)) {
 			return null;
 		}
 
@@ -308,9 +308,9 @@ class PersistentLoginService {
 		if (false !== strpos($exception->getMessage(), "users_remember_me_cookies' doesn't exist")) {
 			// schema has not been updated so we swallow this exception
 			return $default;
-		} else {
-			throw $exception;
 		}
+		
+		throw $exception;
 	}
 
 	/**
@@ -439,21 +439,20 @@ class PersistentLoginService {
 	protected $time;
 
 	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_get_user = 'get_user';
 
 	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_elgg_set_cookie = 'elgg_set_cookie';
 
 	/**
-	 * DO NOT USE. For unit test mocking
-	 * @access private
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
 	 */
 	public $_callable_sleep = 'sleep';
 }
-

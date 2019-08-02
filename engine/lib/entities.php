@@ -53,7 +53,7 @@ function elgg_set_entity_class($type, $subtype, $class = "") {
  *
  * @return \stdClass|false
  * @see entity_row_to_elggstar()
- * @access private
+ * @internal
  */
 function get_entity_as_row($guid) {
 	return _elgg_services()->entityTable->getRow($guid);
@@ -69,7 +69,7 @@ function get_entity_as_row($guid) {
  * @return \ElggEntity|false
  * @see get_entity_as_row()
  * @see get_entity()
- * @access private
+ * @internal
  *
  * @throws ClassException|InstallationException
  */
@@ -106,19 +106,6 @@ function get_entity($guid) {
  */
 function elgg_entity_exists($guid) {
 	return _elgg_services()->entityTable->exists($guid);
-}
-
-/**
- * Enable an entity.
- *
- * @param int  $guid      GUID of entity to enable
- * @param bool $recursive Recursively enable all entities disabled with the entity?
- *
- * @return bool
- * @since 1.9.0
- */
-function elgg_enable_entity($guid, $recursive = true) {
-	return _elgg_services()->entityTable->enable($guid, $recursive);
 }
 
 /**
@@ -189,7 +176,7 @@ function elgg_get_site_entity() {
  * ------------------
  *
  * Filter entities by their access_id attribute. Note that this filter apply to entities that the user has access to.
- * You can ignore access system using {@link elgg_set_ignore_access()}
+ * You can ignore access system using {@link elgg_call()}
  *
  * @option int[] $access_id
  *
@@ -547,6 +534,19 @@ function elgg_get_entities(array $options = []) {
 }
 
 /**
+ * Returns a count of entities.
+ *
+ * @param array $options the same options as elgg_get_entities() but forces 'count' to true
+ *
+ * @return int
+ */
+function elgg_count_entities(array $options = []) {
+	$options['count'] = true;
+	
+	return (int) elgg_get_entities($options);
+}
+
+/**
  * Returns a string of rendered entities.
  *
  * Displays list of entities with formatting specified by the entity view.
@@ -661,7 +661,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 	}
 
 	$entities = _elgg_config()->registered_entities;
-	if (!$entities) {
+	if (empty($entities)) {
 		$entities = [];
 	}
 
@@ -702,7 +702,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
 	}
 
 	$entities = _elgg_config()->registered_entities;
-	if (!$entities) {
+	if (empty($entities)) {
 		return false;
 	}
 
@@ -735,7 +735,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
  */
 function get_registered_entity_types($type = null) {
 	$registered_entities = _elgg_config()->registered_entities;
-	if (!$registered_entities) {
+	if (empty($registered_entities)) {
 		return false;
 	}
 
@@ -764,8 +764,8 @@ function get_registered_entity_types($type = null) {
  */
 function is_registered_entity_type($type, $subtype = null) {
 	$registered_entities = _elgg_config()->registered_entities;
-	if (!$registered_entities) {
-		return true;
+	if (empty($registered_entities)) {
+		return false;
 	}
 
 	$type = strtolower($type);
@@ -780,34 +780,6 @@ function is_registered_entity_type($type, $subtype = null) {
 		return false;
 	}
 	return true;
-}
-
-/**
- * Checks if $entity is an \ElggEntity and optionally for type and subtype.
- *
- * @tip Use this function in actions and views to check that you are dealing
- * with the correct type of entity.
- *
- * @param mixed  $entity  Entity
- * @param string $type    Entity type
- * @param string $subtype Entity subtype
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_instanceof($entity, $type = null, $subtype = null) {
-	$return = ($entity instanceof \ElggEntity);
-
-	if ($type) {
-		/* @var \ElggEntity $entity */
-		$return = $return && ($entity->getType() == $type);
-	}
-
-	if ($subtype) {
-		$return = $return && ($entity->getSubtype() == $subtype);
-	}
-
-	return $return;
 }
 
 /**
@@ -837,43 +809,3 @@ function _elgg_check_unsupported_site_guid(array $options = []) {
 
 	_elgg_services()->logger->warning($warning);
 }
-
-/**
- * Runs unit tests for the entity objects.
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $value Array of tests
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_entities_test($hook, $type, $value) {
-	$value[] = ElggEntityUnitTest::class;
-	$value[] = ElggCoreGetEntitiesFromAnnotationsTest::class;
-	$value[] = ElggCoreGetEntitiesFromMetadataTest::class;
-	$value[] = ElggCoreGetEntitiesFromPrivateSettingsTest::class;
-	$value[] = ElggCoreGetEntitiesFromRelationshipTest::class;
-	$value[] = ElggEntityPreloaderIntegrationTest::class;
-	$value[] = ElggCoreObjectTest::class;
-	return $value;
-}
-
-/**
- * Entities init function; establishes the default entity page handler
- *
- * @return void
- * @elgg_event_handler init system
- * @access private
- */
-function _elgg_entities_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');
-}
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_entities_init');
-};

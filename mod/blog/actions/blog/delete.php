@@ -5,6 +5,8 @@
  * @package Blog
  */
 
+elgg_deprecated_notice("The action 'blog/delete' is deprecated. Use 'entity/delete'.", '3.1');
+
 $blog_guid = (int) get_input('guid');
 $blog = get_entity($blog_guid);
 

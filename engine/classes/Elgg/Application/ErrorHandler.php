@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg\Application;
+
 use Elgg\Application;
 use Elgg\Loggable;
 use Exception;
@@ -8,6 +9,8 @@ use Psr\Log\LogLevel;
 
 /**
  * Handle system and PHP errors
+ *
+ * @internal
  */
 class ErrorHandler {
 
@@ -34,7 +37,6 @@ class ErrorHandler {
 	 *
 	 * @return true
 	 * @throws Exception
-	 * @access private
 	 */
 	public function __invoke($errno, $errmsg, $filename, $linenum, $vars) {
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";

@@ -52,11 +52,11 @@ class DenormalizeMetastrings extends AbstractMigration {
 
 				// remove indexes
 				if ($table->hasIndex('name_id')) {
-					$table->removeIndexByName('name_id');
+					$table->removeIndexByName('name_id')->save();
 				}
 
 				if ($table->hasIndex('value_id')) {
-					$table->removeIndexByName('value_id');
+					$table->removeIndexByName('value_id')->save();
 				}
 				
 				// move in all metastrings
@@ -93,7 +93,7 @@ class DenormalizeMetastrings extends AbstractMigration {
 			$table->save();
 		}
 
-		$this->dropTable('metastrings');
+		$this->table('metastrings')->drop()->save();
 	}
 
 	/**
@@ -173,10 +173,10 @@ class DenormalizeMetastrings extends AbstractMigration {
 			");
 
 			foreach ($rows as $row) {
-				$this->insert('metastrings', [
+				$this->table('metastrings')->insert([
 					['string' => $row['name']],
 					['string' => $row['value']],
-				]);
+				])->saveData();
 			}
 
 			// move in all metastrings
@@ -189,11 +189,11 @@ class DenormalizeMetastrings extends AbstractMigration {
 			");
 
 			if ($table->hasIndex('name')) {
-				$table->removeIndexByName('name');
+				$table->removeIndexByName('name')->save();
 			}
 
 			if ($table->hasIndex('value')) {
-				$table->removeIndexByName('value');
+				$table->removeIndexByName('value')->save();
 			}
 
 			if ($table->hasColumn('name')) {

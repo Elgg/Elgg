@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Application;
 
 use DatabaseException;
@@ -25,7 +26,6 @@ class Database {
 	 * Constructor
 	 *
 	 * @param ElggDb $db The Elgg database
-	 * @access private
 	 */
 	public function __construct(ElggDb $db) {
 		$this->db = $db;
@@ -150,7 +150,7 @@ class Database {
 	 *
 	 * @return Connection
 	 * @throws DatabaseException
-	 * @access private
+	 * @internal
 	 */
 	public function getConnection($type) {
 		return $this->db->getConnection($type);
@@ -168,7 +168,7 @@ class Database {
 	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return boolean Whether registering was successful.
-	 * @access private
+	 * @internal
 	 */
 	public function registerDelayedQuery($query, $type, $callback = null, array $params = []) {
 		return $this->db->registerDelayedQuery($query, $type, $callback, $params);

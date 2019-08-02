@@ -1,14 +1,11 @@
 <?php
-/**
- *
- */
 
 namespace Elgg\Config;
 
 /**
  * Migrates site url database value to settings.php
  *
- * @access private
+ * @internal
  */
 class WwwrootSettingMigrator extends SettingsMigrator {
 

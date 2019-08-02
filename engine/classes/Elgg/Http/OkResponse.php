@@ -30,12 +30,17 @@ class OkResponse implements ResponseBuilder {
 	protected $headers;
 
 	/**
+	 * @var \Exception
+	 */
+	protected $exception;
+
+	/**
 	 * Constructor
 	 *
 	 * @param mixed  $content     Response data
 	 * @param int    $status_code HTTP status code
 	 * @param string $forward_url Forward URL
-	 * @access private
+	 *
 	 * @see elgg_ok_response()
 	 */
 	public function __construct($content = '', $status_code = ELGG_HTTP_OK, $forward_url = null) {
@@ -60,6 +65,23 @@ class OkResponse implements ResponseBuilder {
 	 */
 	public function getContent() {
 		return $this->content;
+	}
+
+	/**
+	 * @param \Exception $e Exception to store
+	 *
+	 * @return self
+	 */
+	public function setException(\Exception $e) {
+		$this->exception = $e;
+		return $this;
+	}
+
+	/**
+	 * @return \Exception|null
+	 */
+	public function getException() {
+		return $this->exception;
 	}
 
 	/**

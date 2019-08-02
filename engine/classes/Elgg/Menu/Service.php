@@ -2,7 +2,6 @@
 
 namespace Elgg\Menu;
 
-use Elgg\Collections\Collection;
 use Elgg\PluginHooksService;
 use Elgg\Config;
 use ElggMenuBuilder;
@@ -28,9 +27,6 @@ class Service {
 	 *
 	 * @param PluginHooksService $hooks  Plugin hooks
 	 * @param Config             $config Elgg config
-	 *
-	 * @access   private
-	 * @internal Do not use. Use `elgg()->menus`.
 	 */
 	public function __construct(PluginHooksService $hooks, Config $config) {
 		$this->hooks = $hooks;
@@ -60,13 +56,11 @@ class Service {
 	 * @return UnpreparedMenu
 	 */
 	public function getUnpreparedMenu($name, array $params = []) {
-		$menus = $this->config->menus;
-
 		$items = $this->prepareMenuItems(elgg_extract('items', $params, []));
 		unset($params['items']);
 
-		if ($menus && isset($menus[$name])) {
-			$registered_items = elgg_extract($name, $menus, []);
+		$registered_items = elgg_extract($name, $this->config->menus);
+		if (is_array($registered_items)) {
 			$items->merge($registered_items);
 		}
 
@@ -94,8 +88,11 @@ class Service {
 		$name = $menu->getName();
 		$params = $menu->getParams();
 		$sort_by = $menu->getSortBy();
-
+		$selected_menu_item_name = elgg_extract('selected_item_name', $params, '');
+		
 		$builder = new ElggMenuBuilder($menu->getItems());
+		$builder->setSelected($selected_menu_item_name);
+		
 		$params['menu'] = $builder->getMenu($sort_by);
 		$params['selected_item'] = $builder->getSelected();
 

@@ -7,7 +7,7 @@ use ElggCache;
 /**
  * In memory cache of known private settings values stored by entity.
  *
- * @access private
+ * @internal
  */
 class PrivateSettingsCache {
 

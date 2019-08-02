@@ -116,6 +116,8 @@ In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` an
    // Database server
    // (For most configurations, you can leave this as 'localhost')
    $CONFIG->dbhost = 'localhost';
+   // (For most configurations, you can leave this as 3306)
+   $CONFIG->dbport = 3306;
    
    // Database table prefix
    // If you're sharing a database with other applications, you will want to use this
@@ -138,6 +140,8 @@ We need to change these lines to match our new installation:
    // Database server
    // (For most configurations, you can leave this as 'localhost')
    $CONFIG->dbhost = 'localhost';
+   // (For most configurations, you can leave this as 3306)
+   $CONFIG->dbport = 3306;
    
    // Database table prefix
    // If you're sharing a database with other applications, you will want to use this

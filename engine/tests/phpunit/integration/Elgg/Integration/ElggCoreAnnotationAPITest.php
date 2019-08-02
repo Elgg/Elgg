@@ -95,10 +95,10 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$annotations = elgg_get_annotations($options);
 		$this->assertTrue(empty($annotations));
 
-		access_show_hidden_entities(true);
-		$annotations = elgg_get_annotations($options);
+		$annotations = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($options) {
+			return elgg_get_annotations($options);
+		});
 		$this->assertEquals(30, count($annotations));
-		access_show_hidden_entities(false);
 
 		$this->assertTrue($e->delete());
 	}
@@ -122,9 +122,9 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		// cannot see any annotations so returns null
 		$this->assertNull(elgg_enable_annotations($options));
 
-		access_show_hidden_entities(true);
-		$this->assertTrue(elgg_enable_annotations($options));
-		access_show_hidden_entities(false);
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($options) {
+			$this->assertTrue(elgg_enable_annotations($options));
+		});
 
 		$annotations = elgg_get_annotations($options);
 		$this->assertEquals(30, count($annotations));

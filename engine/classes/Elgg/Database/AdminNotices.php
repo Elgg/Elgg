@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 /**
@@ -6,13 +7,14 @@ namespace Elgg\Database;
  *
  * Controls all admin notices in the system.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Database
  * @since      1.10.0
  */
 class AdminNotices {
+	
 	/**
 	 * Write a persistent message to the admin view.
 	 * Useful to alert the admin to take a certain action.
@@ -26,7 +28,7 @@ class AdminNotices {
 	 * @param string $id      A unique ID that your plugin can remember
 	 * @param string $message Body of the message
 	 *
-	 * @return \ElggObject|bool
+	 * @return \ElggAdminNotice|bool
 	 */
 	public function add($id, $message) {
 		if (!$id || !$message) {
@@ -40,10 +42,7 @@ class AdminNotices {
 		// need to handle when no one is logged in
 		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
 
-		$admin_notice = new \ElggObject();
-		$admin_notice->subtype = 'admin_notice';
-		// admins can see ACCESS_PRIVATE but no one else can.
-		$admin_notice->access_id = ACCESS_PRIVATE;
+		$admin_notice = new \ElggAdminNotice();
 		$admin_notice->admin_notice_id = $id;
 		$admin_notice->description = $message;
 
@@ -114,11 +113,10 @@ class AdminNotices {
 	 */
 	public function exists($id) {
 		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
-		$notice = elgg_get_entities([
+		$notice = elgg_count_entities([
 			'type' => 'object',
 			'subtype' => 'admin_notice',
 			'metadata_name_value_pair' => ['name' => 'admin_notice_id', 'value' => $id],
-			'count' => true,
 		]);
 		_elgg_services()->session->setIgnoreAccess($old_ia);
 	

@@ -27,14 +27,12 @@ function dashboard_init() {
 /**
  * Register user dashboard with default widgets
  *
- * @param string $hook   'get_list',
- * @param string $type   'default_widgets'
- * @param array  $return current return value
- * @param mixed  $params supplied params
+ * @param \Elgg\Hook $hook 'get_list', 'default_widgets'
  *
  * @return array
  */
-function dashboard_default_widgets($hook, $type, $return, $params) {
+function dashboard_default_widgets(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
 	$return[] = [
 		'name' => elgg_echo('dashboard'),
 		'widget_context' => 'dashboard',

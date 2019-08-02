@@ -1,11 +1,11 @@
 <?php
-use Elgg\Database\Clauses\OrderByClause;
-
 /**
  * Elgg Message board: add message action
  *
  * @package ElggMessageBoard
  */
+
+use Elgg\Database\Clauses\OrderByClause;
 
 $message_content = get_input('message_content');
 $owner_guid = (int) get_input('owner_guid');
@@ -17,7 +17,7 @@ if (!$owner || empty($message_content)) {
 
 $result = messageboard_add(elgg_get_logged_in_user_entity(), $owner, $message_content, $owner->access_id);
 
-if (!$result) {
+if ($result === false) {
 	return elgg_error_response(elgg_echo('messageboard:failure'));
 }
 
@@ -33,4 +33,3 @@ $output = elgg_list_annotations([
 ]);
 
 return elgg_ok_response($output, elgg_echo('messageboard:posted'));
-	

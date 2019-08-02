@@ -87,6 +87,7 @@ use Elgg\I18n\LocaleService;
  * @property-read \Elgg\Database\MetadataTable                    $metadataTable
  * @property-read \Elgg\Database\Mutex                            $mutex
  * @property-read \Elgg\Notifications\NotificationsService        $notifications
+ * @property-read \Elgg\Page\PageOwnerService                     $pageOwner
  * @property-read \Elgg\PasswordService                           $passwords
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
@@ -128,7 +129,7 @@ use Elgg\I18n\LocaleService;
  * @property-read \Elgg\Cache\ViewCacher                          $viewCacher
  * @property-read \Elgg\WidgetsService                            $widgets
  *
- * @access private
+ * @internal
  */
 class ServiceProvider extends DiContainer {
 
@@ -173,7 +174,14 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('accounts', function(ServiceProvider $c) {
-			return new \Elgg\Users\Accounts($c->config, $c->translator, $c->passwords, $c->usersTable, $c->hooks);
+			return new \Elgg\Users\Accounts(
+				$c->config,
+				$c->translator,
+				$c->passwords,
+				$c->usersTable,
+				$c->hooks,
+				$c->emails
+			);
 		});
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
@@ -295,6 +303,7 @@ class ServiceProvider extends DiContainer {
 			unset($config->db);
 			unset($config->dbname);
 			unset($config->dbhost);
+			unset($config->dbport);
 			unset($config->dbuser);
 			unset($config->dbpass);
 
@@ -490,6 +499,18 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
 		});
 
+		$this->setFactory('pageOwner', function(ServiceProvider $c) {
+			return new \Elgg\Page\PageOwnerService(
+				$c->request,
+				$c->entityTable,
+				$c->hooks,
+				$c->usersTable,
+				$c->invoker
+			);
+		});
+		
+		$this->setClassName('passwords', \Elgg\PasswordService::class);
+		
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
 			$global_cookies_config = $c->config->getCookieConfig();
 			$cookie_config = $global_cookies_config['remember_me'];
@@ -498,9 +519,7 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\PersistentLoginService(
 				$c->db, $c->session, $c->crypto, $cookie_config, $cookie_token);
 		});
-
-		$this->setClassName('passwords', \Elgg\PasswordService::class);
-
+		
 		$this->setFactory('plugins', function(ServiceProvider $c) {
 			$cache = new CompositeCache('plugins', $c->config, ELGG_CACHE_RUNTIME);
 			$plugins = new \Elgg\Database\Plugins(
@@ -588,7 +607,8 @@ class ServiceProvider extends DiContainer {
 				$c->routeCollection,
 				$c->urlMatcher,
 				$c->handlers,
-				$c->responseFactory
+				$c->responseFactory,
+				$c->plugins
 			);
 			if ($c->config->enable_profiling) {
 				$router->setTimer($c->timer);
@@ -822,6 +842,7 @@ class ServiceProvider extends DiContainer {
 		unset($config->db);
 		unset($config->dbname);
 		unset($config->dbhost);
+		unset($config->dbport);
 		unset($config->dbuser);
 		unset($config->dbpass);
 

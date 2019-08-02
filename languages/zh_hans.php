@@ -453,8 +453,27 @@ return array(
 	'admin:unknown_section' => '无效的管理区段。',
 
 	'admin' => "管理",
+	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "管理面板允许你控制系统的各个方面，从用户管理到插件行为，从下面选择一个选项开始。",
 
+	'admin:performance' => 'Performance',
+	'admin:performance:label:generic' => 'Generic',
+	'admin:performance:generic:description' => 'Below is a list of performance suggestions / values which could help in tuning your website',
+	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache:settings:warning' => "It's recommended you configure the simplecache setting in the settings.php.
+Configuring simplecache in the settings.php file improves caching performance.
+It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
+	'admin:performance:systemcache' => 'Systemcache',
+	'admin:performance:apache:mod_cache' => 'Apache mod_cache',
+	'admin:performance:apache:mod_cache:warning' => 'The mod_cache module provides HTTP-aware caching schemes. This means that the files will be cached according
+to an instruction specifying how long a page can be considered "fresh".',
+	'admin:performance:php:open_basedir' => 'PHP open_basedir',
+	'admin:performance:php:open_basedir:not_configured' => 'No limitations have been set',
+	'admin:performance:php:open_basedir:warning' => 'A small amount of open_basedir limitations are in effect, this could impact performance.',
+	'admin:performance:php:open_basedir:error' => 'A large amount of open_basedir limitations are in effect, this will probably impact performance.',
+	'admin:performance:php:open_basedir:generic' => 'With open_basedir every file access will be checked against the list of limitations. Since Elgg has a lot of
+file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
+	
 	'admin:statistics' => '统计',
 	'admin:server' => '服务器信息',
 	'admin:cron' => '任务',
@@ -477,6 +496,8 @@ return array(
 	'admin:users:online' => '当前在线用户',
 	'admin:users:newest' => '最新用户',
 	'admin:users:admins' => '管理员',
+	'admin:users:searchuser' => 'Search user to make them admin',
+	'admin:users:existingadmins' => 'List of existing admins',
 	'admin:users:add' => '添加新用户',
 	'admin:users:description' => "管理面板允许你控制用户设置，从下面选择一个选项开始.",
 	'admin:users:adduser:label' => "点击此处添加新用户...",
@@ -486,6 +507,8 @@ return array(
 	'admin:users:unvalidated' => '未经验证的',
 	'admin:users:unvalidated:no_results' => '无',
 	'admin:users:unvalidated:registered' => '注册: %s',
+	'admin:users:unvalidated:change_email' => 'Change e-mail address',
+	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
 	'admin:configure_utilities:maintenance' => '维护模式',
 	'admin:upgrades' => '升级',
@@ -510,6 +533,8 @@ return array(
 	'admin:settings' => '设置',
 	'admin:settings:basic' => '基本设置',
 	'admin:settings:advanced' => '高级设置',
+	'admin:settings:users' => 'Users',
+	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "管理面板允许你控制全局设置，从下面选择一个选项开始.",
 	'admin:site:opt:linktext' => "配置网站...",
 	'admin:settings:in_settings_file' => '此设置在settings.php里面配置',
@@ -597,6 +622,27 @@ return array(
 	'admin:options' => '管理选项',
 
 	'admin:security' => '安全',
+	'admin:security:information' => 'Information',
+	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
+	'admin:security:information:https' => 'Is the website protected by HTTPS',
+	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
+(eg. passwords) from being sniffed over the internet connection.",
+	'admin:security:information:wwwroot' => 'Website main folder is writable',
+	'admin:security:information:wwwroot:error' => "It's recommended that you install Elgg in a folder which isn't writable by your webserver.
+Malicious visitors could place unwanted code in your website.",
+	'admin:security:information:validate_input' => 'Input validation',
+	'admin:security:information:validate_input:error' => "Some plugin has disabled the input validation on your website, this will allow users to
+submit potentially harmfull content (eg. cross-site-scripting, etc)",
+	'admin:security:information:password_length' => 'Minimal password length',
+	'admin:security:information:password_length:warning' => "It's recommended to have a minimal password length of at least 6 characters.",
+	'admin:security:information:username_length' => 'Minimal username length',
+	'admin:security:information:username_length:warning' => "It's recommended to have a minimal username length of at least 4 characters.",
+	'admin:security:information:php:session_gc' => "PHP session cleanup",
+	'admin:security:information:php:session_gc:chance' => "Cleanup chance: %s%%",
+	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
+	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
+expired sessions from your database and not allow users to reuse old sessions.",
+	
 	'admin:security:settings' => '设置',
 	'admin:security:settings:description' => '在这个页面上，您可以配置一些安全特性。请仔细阅读设置。',
 	'admin:security:settings:label:hardening' => '强化',
@@ -612,6 +658,9 @@ return array(
 	'admin:security:settings:notify_user_ban' => '当用户帐号被禁止时通知用户。',
 	'admin:security:settings:notify_user_ban:help' => '这将发送通知给用户，当他们的帐户被（解除）禁止。',
 	
+	'admin:security:settings:notify_user_password' => 'Notify the user when they change their password',
+	'admin:security:settings:notify_user_password:help' => 'This will send a notification to the user when they change their password.',
+	
 	'admin:security:settings:protect_upgrade' => '保护 upgrade.php',
 	'admin:security:settings:protect_upgrade:help' => '这将保护upgrade.php所以你需要一个有效的令牌或你必须是管理员。',
 	'admin:security:settings:protect_upgrade:token' => '为了能够使用upgrade.php当注销或作为一个非管理员，需要使用以下URL：',
@@ -626,6 +675,9 @@ return array(
 	
 	'admin:security:settings:email_require_password' => '更改电子邮件地址需要密码验证。',
 	'admin:security:settings:email_require_password:help' => '当用户希望更改其电子邮件地址时，要求他们提供当前密码。',
+	
+	'admin:security:settings:email_require_confirmation' => 'Require confirmation on email address change',
+	'admin:security:settings:email_require_confirmation:help' => 'The new e-mail address needs to be confirmed before the change is in effect. After a successfull change a notification is send to the old e-mail address.',
 
 	'admin:security:settings:session_bound_entity_icons' => 'Session bound entity icons',
 	'admin:security:settings:session_bound_entity_icons:help' => 'Entity icons can be session bound by default. This means the URLs generated also contain information about the current session.
@@ -689,6 +741,17 @@ Your account on %s is no longer banned. You can use the site again.
 
 To go to the site, click here:
 %s',
+	
+	'user:notification:password_change:subject' => 'Your password has been changed!',
+	'user:notification:password_change:body' => "Hi %s,
+
+Your password on '%s' has been changed! If you made this change than you're all set.
+
+If you didn't make this change, please reset your password here:
+%s
+
+Or contact a site administrator:
+%s",
 	
 /**
  * Plugins
@@ -781,12 +844,14 @@ To go to the site, click here:
 	'admin:statistics:label:version:code' => "代码版本",
 
 	'admin:server:label:elgg' => 'Elgg',
+	'admin:server:label:requirements' => 'Requirements',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => '显示 PHPInfo',
 	'admin:server:label:web_server' => '网络服务器',
 	'admin:server:label:server' => '服务器',
 	'admin:server:label:log_location' => '日志位置',
 	'admin:server:label:php_version' => 'PHP 版本',
+	'admin:server:label:php_version:required' => 'Elgg requires a minimal PHP version of 7.1',
 	'admin:server:label:php_ini' => 'PHP ini文件位置',
 	'admin:server:label:php_log' => 'PHP 日志',
 	'admin:server:label:mem_avail' => '可用储存',
@@ -812,6 +877,17 @@ To go to the site, click here:
 		OPcache is not available on this server or it has not yet been enabled.
 		For improved performance, it is recommended that you enable and configure OPcache.
 ',
+	
+	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
+	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
+	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
+	'admin:server:requirements:rewrite:fail' => "Check your .htaccess for the correct rewrite rules",
+	
+	'admin:server:requirements:database:server' => "Database server",
+	'admin:server:requirements:database:server:required' => "Elgg requires MySQL v5.5.3 or higher for its database",
+	'admin:server:requirements:database:client' => "Database client",
+	'admin:server:requirements:database:client:required' => "Elgg requires pdo_mysql to connect to the database server",
 	
 	'admin:user:label:search' => "查找用户:",
 	'admin:user:label:searchbutton' => "搜索",
@@ -916,6 +992,9 @@ To go to the site, click here:
 	'icon:size:large' => "大",
 	'icon:size:master' => "超大",
 	
+	'entity:edit:icon:crop_messages:generic' => "The selected image doesn't meet the recommended image dimensions. This could result in low quality icons.",
+	'entity:edit:icon:crop_messages:width' => "It's recommended to use an image with a minimal width of at least %dpx.",
+	'entity:edit:icon:crop_messages:height' => "It's recommended to use an image with a minimal height of at least %dpx.",
 	'entity:edit:icon:file:label' => "Upload a new icon",
 	'entity:edit:icon:file:help' => "Leave blank to keep current icon.",
 	'entity:edit:icon:remove:label' => "Remove icon",
@@ -1007,7 +1086,8 @@ To go to the site, click here:
 
 	'active' => '活跃',
 	'total' => '总计',
-
+	'unvalidated' => 'Unvalidated',
+	
 	'ok' => '好',
 	'any' => '任何',
 	'error' => '错误',
@@ -1043,6 +1123,9 @@ To go to the site, click here:
 	'status:featured' => '精选',
 	'status:open' => '打开',
 	'status:closed' => '关闭',
+	'status:enabled' => 'Enabled',
+	'status:disabled' => 'Disabled',
+	'status:unavailable' => 'Unavailable',
 
 /**
  * Generic sorts
@@ -1073,6 +1156,12 @@ To go to the site, click here:
 
 	'on' => '开',
 	'off' => '关',
+
+	'number_counter:separatorr' => ".",
+	'number_counter:view:thousand' => "%sK",
+	'number_counter:view:million' => "%sM",
+	'number_counter:view:billion' => "%sB",
+	'number_counter:view:trillion' => "%sT",
 
 /**
  * Entity actions
@@ -1269,10 +1358,13 @@ To go to the site, click here:
 
 	'admin:legend:system' => '系统',
 	'admin:legend:caching' => '缓存',
+	'admin:legend:content' => 'Content',
 	'admin:legend:content_access' => '内容访问',
 	'admin:legend:site_access' => '网站访问',
 	'admin:legend:debug' => '调试和纪录',
 	
+	'config:users:can_change_username' => "Allow users to change their username",
+	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "除去Elgg版权",
 	'config:remove_branding:help' => "整个网站有不同的链接和标志表明这个网站是使用Elgg创建。如果你有版权考虑请捐赠在https://elgg.org/supporter.php。",
 	'config:disable_rss:label' => "关闭 RSS 源",
@@ -1340,6 +1432,7 @@ To go to the site, click here:
 
 	'email:settings' => "Email设置",
 	'email:address:label' => "Email地址",
+	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
 	'email:address:password' => "密码",
 	'email:address:password:help' => "为了能够更改您的电子邮件地址，您需要提供您当前的密码。",
 
@@ -1375,6 +1468,38 @@ To go to the site, click here:
 
 %s
 ",
+	
+	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
+	'email:request:email:subject' => "Please confirm your e-mail address",
+	'email:request:email:body' => "Hi %s,
+
+You requested to change your e-mail address on '%s'.
+If you didn't request this change, please reset your password.
+
+In order to confirm the e-mail address change, please click this link:
+%s
+
+Please note this link is only valid for 1 hour.",
+	
+	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	
+	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on '%s'.
+
+If you didn't request this change, please contact a site administrator.
+%s",
+	
+	'email:confirm:email:new:subject' => "You're e-mail address was changed",
+	'email:confirm:email:new:body' => "Hi %s,
+
+Your e-mail address on '%s' was changed.
+From now on you'll receive notifications on this e-mail address.
+
+If you didn't request this change, please contact a site administrator.
+%s",
 
 /**
  * user default access
@@ -1661,4 +1786,7 @@ To view %s's profile, click here:
 	
 	"core:upgrade:2018061401:title" => "Migrate cron log entries",
 	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
+	
+	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
+	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );

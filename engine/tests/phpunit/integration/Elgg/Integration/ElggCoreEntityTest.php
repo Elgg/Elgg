@@ -316,10 +316,10 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 		]);
 
 		// can save with access ignore
-		$ia = elgg_set_ignore_access();
-		$this->assertTrue($this->entity->save());
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			$this->assertTrue($this->entity->save());
+		});
+		
 		$this->replaceSession($old_user);
 		$user->delete();
 	}
@@ -512,5 +512,92 @@ class ElggCoreEntityTest extends \Elgg\LegacyIntegrationTestCase {
 
 		_elgg_services()->hooks->restore();
 	}
-
+	
+	/**
+	 * @dataProvider entitiesFromCacheProvider
+	 */
+	public function testEntityGetReturnedFromCache($type, $subtype, $check_type, $check_subtype) {
+		$entity = $this->createOne($type, ['subtype' => $subtype]);
+		
+		$guid = $entity->guid;
+		$this->assertNotEmpty($guid);
+		
+		$entity->setVolatileData('temp_cache_data', true);
+		$this->assertNotEmpty($entity->getVolatileData('temp_cache_data'));
+		
+		// store in entity cache
+		$entity->cache();
+		
+		// entity should be returned from cache and contain the volatile data
+		$from_cache_entity = _elgg_services()->entityTable->get($guid, $check_type, $check_subtype);
+		$this->assertTrue($from_cache_entity->getVolatileData('temp_cache_data'));
+		
+		// flush cache and check if entity does not contain volatile data (thus came from db)
+		$entity->invalidateCache();
+		
+		$not_cached_entity = _elgg_services()->entityTable->get($guid, $check_type, $check_subtype);
+		$this->assertEmpty($not_cached_entity->getVolatileData('temp_cache_data'));
+		
+		if (!empty($check_type) || !empty($check_subtype)) {
+			if (!empty($check_type)) {
+				$not_cached_entity->type = "{$type}_alt";
+				$this->assertEquals("{$type}_alt", $not_cached_entity->type);
+			}
+			if (!empty($check_subtype)) {
+				$not_cached_entity->subtype = "{$subtype}_alt";
+				$this->assertEquals("{$subtype}_alt", $not_cached_entity->subtype);
+			}
+			
+			$not_cached_entity->setVolatileData('alt_types', true);
+			$not_cached_entity->cache();
+			$this->assertTrue($not_cached_entity->getVolatileData('alt_types'));
+			
+			// if cache type does not match requested type, return from database if type matches
+			$from_db_entity = _elgg_services()->entityTable->get($guid, $check_type, $check_subtype);
+			$this->assertEmpty($from_db_entity->getVolatileData('alt_types'));
+		}
+				
+		// cleanup
+		$entity->delete();
+	}
+	
+	public function entitiesFromCacheProvider() {
+		return [
+			['object', 'foo', null, null],
+			['object', 'foo', 'object', null],
+			['object', 'foo', 'object', 'foo'],
+			['object', 'foo', null, 'foo'],
+			['user', null, null, null],
+			['user', null, 'user', null],
+		];
+	}
+	
+	/**
+	 * @dataProvider entitiesNotTypesMatch
+	 */
+	public function testEntityGetNotReturnedIfTypesMismatch($type, $subtype, $check_type, $check_subtype) {
+		$entity = $this->createOne($type, ['subtype' => $subtype]);
+		
+		$guid = $entity->guid;
+		$this->assertNotEmpty($guid);
+		
+		// entity should not be returned from db or cache
+		$this->assertFalse(_elgg_services()->entityTable->get($guid, $check_type, $check_subtype));
+				
+		// cleanup
+		$entity->delete();
+	}
+	
+	public function entitiesNotTypesMatch() {
+		return [
+			['object', 'foo', 0, null],
+			['object', 'foo', 0, 0],
+			['object', 'foo', null, 0],
+			['object', 'foo', '', ''],
+			['object', 'foo', 'not_object', null],
+			['object', 'foo', 'not_object', 'foo'],
+			['object', 'foo', 'object', 'false'],
+			['object', 'foo', null, 'false'],
+		];
+	}
 }

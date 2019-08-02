@@ -1,13 +1,13 @@
 {
     "name": "elgg/elgg",
-    "version": "3.0.2",
+    "version": "3.1.0",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "type": "project",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "ext-pdo": "*",
         "ext-gd": "*",
         "ext-json": "*",
@@ -24,7 +24,7 @@
         "bower-asset/requirejs": "^2.1.18",
         "bower-asset/sprintf": "~1.0.3",
         "bower-asset/text": "^2.0.4",
-        "ckeditor/ckeditor": "~4.7.3",
+        "ckeditor/ckeditor": "~4.12.0",
         "css-crush/css-crush": "^2.4.0",
         "doctrine/cache": "^1.6",
         "doctrine/dbal": "~2.5",
@@ -36,15 +36,17 @@
         "michelf/php-markdown": "^1.5.0",
         "misd/linkify": "~1.1.2",
         "monolog/monolog": "^1.23",
-        "npm-asset/formdata-polyfill": "^3.0",
+        "npm-asset/cropperjs": "~1.4.3",
+        "npm-asset/jquery-cropper": "~1.0.0",
+        "npm-asset/formdata-polyfill": "3.0.15",
         "npm-asset/weakmap-polyfill": "^2.0",
         "peppeocchi/php-cron-scheduler": "2.*",
         "php-di/php-di": "^5.4",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
-        "robmorgan/phinx": "^0.8.1",
+        "robmorgan/phinx": "^0.10.1",
         "symfony/console": "~3.3",
-        "symfony/http-foundation": "~2.6",
+        "symfony/http-foundation": "~3.4",
         "symfony/polyfill-php71": "^1.7",
         "symfony/polyfill-php72": "^1.7",
         "symfony/routing": "^3.3",
@@ -56,7 +58,7 @@
     "config": {
         "process-timeout": 0,
         "platform": {
-            "php": "7.0"
+            "php": "7.1"
         },
         "fxp-asset": {
             "enabled": false
@@ -64,7 +66,7 @@
     },
     "scripts": {
         "lint": [
-            "phpcs --standard=vendor/elgg/sniffs/elgg.xml -sp --ignore=*/mod/login_as/*,*/mod/data_views/* engine/classes engine/lib actions mod views",
+            "phpcs --standard=vendor/elgg/sniffs/elgg.xml -sp --ignore=*/mod/login_as/* engine/classes engine/lib actions mod views",
             "composer validate"
         ],
         "lint-fixer": [
@@ -73,12 +75,12 @@
         "test": "phpunit",
         "travis:install": [
             "composer self-update",
-            "composer install --prefer-dist"
+            "composer install --prefer-dist --no-suggest"
         ],
         "travis:install-with-mysql": [
             "composer travis:install",
             "mysql -e 'create database elgg;'",
-            "echo \"USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;\" | mysql -u root",
+            "echo \"SET PASSWORD FOR 'root'@'localhost' = PASSWORD('password'); FLUSH PRIVILEGES;\" | mysql -u root",
             "php ./elgg-cli install --config ./install/cli/testing_app.php --verbose"
         ],
         "docs:build": [

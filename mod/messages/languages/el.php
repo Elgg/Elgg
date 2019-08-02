@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Παρουσιάστηκε πρόβλημα κατά την αποθήκευση του μηνύματος σας. Παρακαλούμε προσπαθήστε ξανά.',
 
-	'item:object:messages' => 'Μηνύματα',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

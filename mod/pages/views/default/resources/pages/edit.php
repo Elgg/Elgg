@@ -5,12 +5,9 @@
 
 $page_guid = (int) elgg_extract('guid', $vars);
 
-elgg_entity_gatekeeper($page_guid, 'object', 'page');
+elgg_entity_gatekeeper($page_guid, 'object', 'page', true);
 
 $page = get_entity($page_guid);
-if (!$page->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
-}
 
 $container = $page->getContainerEntity();
 if ($container) {
@@ -30,9 +27,6 @@ $body = elgg_view_layout('content', [
 	'filter' => '',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('pages/sidebar/navigation', [
-		'page' => $page,
-	]),
 ]);
 
 echo elgg_view_page($title, $body);

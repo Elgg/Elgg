@@ -4,6 +4,7 @@
  */
 
 use Elgg\DevelopersPlugin\Hooks;
+use Elgg\Project\Paths;
 
 /**
  * Developers init
@@ -57,10 +58,12 @@ function developers_process_settings() {
 
 			$handler->pushProcessor(new \Elgg\Logger\BacktraceProcessor());
 
-			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params)  use ($handler) {
+			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function(\Elgg\Hook $hook)  use ($handler) {
 				$handler->close();
-
+				
+				$vars = $hook->getValue();
 				$vars['body'] .= elgg_view('developers/log');
+				
 				return $vars;
 			});
 
@@ -124,7 +127,7 @@ function developers_process_settings() {
 		$handler = new \Monolog\Handler\RotatingFileHandler(
 			\Elgg\Project\Paths::sanitize(elgg_get_config('dataroot') . 'logs/html/errors.html', false),
 			elgg_extract('error_log_max_files', $settings, 60),
-			\Psr\Log\LogLevel::ERROR
+			\Monolog\Logger::ERROR
 		);
 
 		$formatter = new \Elgg\DevelopersPlugin\ErrorLogHtmlFormatter();
@@ -144,20 +147,19 @@ function developers_process_settings() {
 /**
  * Register menu items for the page menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:page'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
-function _developers_page_menu($hook, $type, $return, $params) {
+function _developers_page_menu(\Elgg\Hook $hook) {
 	if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
 		return;
 	}
+	
+	$return = $hook->getValue();
 	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'dev_settings',
@@ -257,56 +259,64 @@ function _developers_decorate_translations($language) {
  *
  * 1. Only process views served with the 'default' viewtype.
  * 2. Does not wrap views that are not HTML.
- * 4. Does not wrap input and output views (why?).
- * 5. Does not wrap html head or the primary page shells
+ * 3. Does not wrap input and output views.
+ * 4. Does not wrap html head or the primary page shells
  *
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
  *
- * @param string $hook   'view'
- * @param string $type   'all'
- * @param string $result current return value
- * @param mixed  $params supplied params
+ * @param \Elgg\Hook $hook 'view', 'all'
  *
  * @return void|string
  */
-function developers_wrap_views($hook, $type, $result, $params) {
-	if (elgg_get_viewtype() != "default") {
+function developers_wrap_views(\Elgg\Hook $hook) {
+	$result = $hook->getValue();
+	if (elgg_get_viewtype() !== 'default' || elgg_is_empty($result)) {
 		return;
 	}
 	
 	if (stristr(current_page_url(), elgg_normalize_url('cache/'))) {
 		return;
 	}
-
-	$excluded_bases = ['resources', 'input', 'output', 'embed', 'icon', 'json', 'xml'];
-
+	
 	$excluded_views = [
 		'page/default',
 		'page/admin',
 		'page/elements/head',
+		'page/elements/html',
 	];
 
-	$view = $params['view'];
-
-	$view_hierarchy = explode('/', $view);
-	if (in_array($view_hierarchy[0], $excluded_bases)) {
-		return;
-	}
-
+	$view = $hook->getParam('view');
 	if (in_array($view, $excluded_views)) {
 		return;
 	}
 	
-	if ((new \SplFileInfo($view))->getExtension()) {
+	$excluded_bases = [
+		'resources',
+		'input', // because of possible html encoding in views, which would result in debug cobe being shown to users
+		'output', // because of possible html encoding in views, which would result in debug cobe being shown to users
+		'embed',
+		'icon',
+		'json',
+		'xml',
+	];
+	
+	$view_hierarchy = explode('/', $view);
+	if (in_array($view_hierarchy[0], $excluded_bases)) {
 		return;
 	}
-
-	if ($result) {
-		$result = "<!-- developers:begin $view -->$result<!-- developers:end $view -->";
+	
+	if ((new \SplFileInfo($view))->getExtension()) {
+		// don't wrap views with extension
+		// for example: elements/buttons.css
+		return;
 	}
-
-	return $result;
+	
+	$view_location = _elgg_services()->views->findViewFile($view, 'default');
+	$project_path = str_replace('\\', '/', Paths::project()); // handle Windows paths
+	$view_location = str_ireplace($project_path, '', $view_location); // strip project path from view location
+	
+	return "<!-- developers:begin {$view} @ {$view_location} -->{$result}<!-- developers:end {$view} -->";
 }
 
 /**

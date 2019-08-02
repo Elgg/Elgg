@@ -77,36 +77,11 @@ if (empty($input)) {
 $user_default_access = get_default_access($owner);
 
 foreach ($input as $shortname => $value) {
-	$owner->deleteAnnotations("profile:$shortname");
-
-	// for BC, keep storing fields in MD, but we'll read annotations only
-	elgg_delete_metadata([
-		'guid' => $owner->guid,
-		'metadata_name' => $shortname,
-		'limit' => false
-	]);
+	// get field access
+	$access_id = (int) elgg_extract($shortname, $accesslevel, $user_default_access);
 	
-	if (!is_null($value) && ($value !== '')) {
-		// only create metadata for non empty values (0 is allowed) to prevent metadata records
-		// with empty string values #4858
-		
-		if (isset($accesslevel[$shortname])) {
-			$access_id = (int) $accesslevel[$shortname];
-		} else {
-			// this should never be executed since the access level should always be set
-			$access_id = $user_default_access;
-		}
-
-		if (!is_array($value)) {
-			$value = [$value];
-		}
-		foreach ($value as $interval) {
-			$owner->annotate("profile:$shortname", $interval, $access_id, $owner->guid, 'text');
-		}
-
-		// for BC, keep storing fields in MD, but we'll read annotations only
-		$owner->$shortname = $value;
-	}
+	// store data
+	$owner->setProfileData($shortname, $value, $access_id);
 }
 
 $owner->save();

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Outputs a field with a label
  *
@@ -43,10 +42,3 @@ echo elgg_format_element('div', [
 	'class' => $class,
 	'data-name' => elgg_extract('name', $vars),
 ], $icon . $label . $value);
-
-
-
-
-
-
-

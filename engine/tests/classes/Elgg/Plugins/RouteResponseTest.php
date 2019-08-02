@@ -14,7 +14,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 	use PluginTesting;
 
 	public function up() {
-		$this->startPlugin();
+		$this->startPlugin(null, true, false, true);
 		_elgg_services()->logger->disable();
 	}
 

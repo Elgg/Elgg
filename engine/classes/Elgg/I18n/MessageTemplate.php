@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\I18n;
 
 /**
@@ -14,10 +15,10 @@ namespace Elgg\I18n;
  *  - "%s spent %d nights camping in %s" (sprintf)
  *
  * @since 1.11
- *
- * @access private
+ * @internal
  */
 abstract class MessageTemplate {
+
 	/** @var string */
 	protected $template;
 	
@@ -37,7 +38,7 @@ abstract class MessageTemplate {
 	 *
 	 * @return string The rendered including all the interpolated inputs
 	 */
-	public abstract function format(array $args);
+	abstract public function format(array $args);
 	
 	/**
 	 * Get the string template this message uses for translation.

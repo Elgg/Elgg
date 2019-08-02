@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 use Elgg\Config;
@@ -6,8 +7,8 @@ use Elgg\Config;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
- * @since  1.9.0
+ * @internal
+ * @since 1.9.0
  */
 class DbConfig {
 
@@ -18,6 +19,7 @@ class DbConfig {
 	protected $db;
 	protected $dbprefix;
 	protected $dbhost;
+	protected $dbport;
 	protected $dbuser;
 	protected $dbpass;
 	protected $dbname;
@@ -30,6 +32,7 @@ class DbConfig {
 	 *  db
 	 *  dbprefix
 	 *  dbhost
+	 *  dbport
 	 *  dbuser
 	 *  dbpass
 	 *  dbname
@@ -126,6 +129,7 @@ class DbConfig {
 	protected function getGeneralConnectionConfig() {
 		return [
 			'host' => $this->dbhost,
+			'port' => $this->dbport,
 			'user' => $this->dbuser,
 			'password' => $this->dbpass,
 			'database' => $this->dbname,
@@ -143,6 +147,7 @@ class DbConfig {
 			// old style single connection (Elgg < 1.9)
 			$config = [
 				'host' => $this->db[$type]->dbhost,
+				'port' => $this->db[$type]->dbport,
 				'user' => $this->db[$type]->dbuser,
 				'password' => $this->db[$type]->dbpass,
 				'database' => $this->db[$type]->dbname,
@@ -151,6 +156,7 @@ class DbConfig {
 			// new style single connection
 			$config = [
 				'host' => $this->db[$type]['dbhost'],
+				'port' => $this->db[$type]['dbport'],
 				'user' => $this->db[$type]['dbuser'],
 				'password' => $this->db[$type]['dbpass'],
 				'database' => $this->db[$type]['dbname'],
@@ -160,6 +166,7 @@ class DbConfig {
 			$index = array_rand($this->db[$type]);
 			$config = [
 				'host' => $this->db[$type][$index]->dbhost,
+				'port' => $this->db[$type][$index]->dbport,
 				'user' => $this->db[$type][$index]->dbuser,
 				'password' => $this->db[$type][$index]->dbpass,
 				'database' => $this->db[$type][$index]->dbname,
@@ -169,6 +176,7 @@ class DbConfig {
 			$index = array_rand($this->db[$type]);
 			$config = [
 				'host' => $this->db[$type][$index]['dbhost'],
+				'port' => $this->db[$type][$index]['dbport'],
 				'user' => $this->db[$type][$index]['dbuser'],
 				'password' => $this->db[$type][$index]['dbpass'],
 				'database' => $this->db[$type][$index]['dbname'],
@@ -178,4 +186,3 @@ class DbConfig {
 		return $config;
 	}
 }
-

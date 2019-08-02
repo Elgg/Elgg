@@ -37,7 +37,7 @@ class Preloader {
 		$this->preloadCurrentUserLikes($guids);
 
 		$guids_remaining = $this->preloadCountsFromHook($this->getEntities($guids));
-		if ($guids_remaining) {
+		if (!empty($guids_remaining)) {
 			$this->preloadCountsFromQuery($guids_remaining);
 		}
 	}

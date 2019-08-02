@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Si è verificato un errore salvando il messaggio. Per favore riprova.',
 
-	'item:object:messages' => 'Messaggi',
+	'item:object:messages' => 'Message',
+	'collection:object:messages' => 'Messages',
 
 	/**
 	* Status messages

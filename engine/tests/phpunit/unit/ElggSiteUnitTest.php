@@ -35,6 +35,23 @@ class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($errors[0], $expected_error);
 	}
 
+	public function testUnsettingUrlHasNoEffect() {
+		$site = new \ElggSite();
+
+		$url = $site->url;
+
+		_elgg_services()->logger->disable();
+		unset($site->url);
+		$this->assertEquals($url, $site->url);
+
+		$errors = _elgg_services()->logger->enable();
+		$expected_error = [
+			'message' => 'ElggSite::url cannot be set',
+			'level' => 'warning',
+		];
+		$this->assertEquals($errors[0], $expected_error);
+	}
+
 	public function testNoreplyEmailAddressBasedOnUrl() {
 		$site = new \ElggSite();
 		$domain = $site->getDomain();

@@ -104,5 +104,4 @@ class ValidationResult {
 	public function getMessage() {
 		return $this->message;
 	}
-
 }

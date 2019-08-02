@@ -5,14 +5,16 @@
  * @uses $vars['entity']
  */
 
+elgg_deprecated_notice("The view 'forms/avatar/crop' is deprecated use 'forms/avatar/upload'", '3.1');
+
 $entity = elgg_extract('entity', $vars);
 if (!$entity instanceof \ElggUser) {
 	return;
 }
 
-elgg_load_js('jquery.imgareaselect');
-elgg_load_js('elgg.avatar_cropper');
-elgg_load_css('jquery.imgareaselect');
+elgg_load_external_file('js', 'jquery.imgareaselect');
+elgg_load_external_file('js', 'elgg.avatar_cropper');
+elgg_load_external_file('css', 'jquery.imgareaselect');
 
 echo elgg_view('output/img', [
 	'src' => $entity->getIconUrl('master'),

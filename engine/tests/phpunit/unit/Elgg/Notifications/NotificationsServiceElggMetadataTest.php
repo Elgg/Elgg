@@ -21,13 +21,13 @@ class NotificationsServiceElggMetadataTest extends NotificationsServiceUnitTestC
 		 * Given the plan is to remove access from metadata table, this may need to be
 		 * reimplmented once that is in.
 		 */
-		$this->ignore_access = elgg_set_ignore_access(true);
+		$this->ignore_access = elgg()->session->setIgnoreAccess(true);
 
 		parent::up();
 	}
 
 	public function down() {
-		elgg_set_ignore_access($this->ignore_access);
+		elgg()->session->setIgnoreAccess($this->ignore_access);
 		parent::down();
 	}
 

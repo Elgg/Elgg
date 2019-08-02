@@ -23,7 +23,8 @@ return array(
 
 	'messages:error' => 'Beim Speichern Deiner Nachricht ist ein Problem aufgetreten. Bitte versuche es noch einmal.',
 
-	'item:object:messages' => 'Nachrichten',
+	'item:object:messages' => 'Nachricht',
+	'collection:object:messages' => 'Nachrichten',
 
 	/**
 	* Status messages

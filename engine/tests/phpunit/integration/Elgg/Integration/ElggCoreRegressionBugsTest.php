@@ -15,11 +15,11 @@ use ElggXMLElement;
 class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 
 	public function up() {
-		$this->ia = elgg_set_ignore_access(true);
+		$this->ia = elgg()->session->setIgnoreAccess(true);
 	}
 
 	public function down() {
-		elgg_set_ignore_access($this->ia);
+		elgg()->session->setIgnoreAccess($this->ia);
 	}
 
 	/**
@@ -112,33 +112,31 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		$group->save();
 
 		// disable access overrides because we're admin.
-		$ia = elgg_set_ignore_access(false);
-
-		$this->assertFalse($object->canWriteToContainer($user->guid));
-
-		global $elgg_test_user;
-		$elgg_test_user = $user;
-
-		// register hook to allow access
-		$handler = /** @noinspection PhpInconsistentReturnPointsInspection */
-			function ($hook, $type, $value, $params) {
-				global $elgg_test_user;
-
-				if ($params['user']->getGUID() == $elgg_test_user->getGUID()) {
-					return true;
-				}
-			};
-
-		elgg_register_plugin_hook_handler('container_permissions_check', 'all', $handler, 600);
-		$this->assertTrue($object->canWriteToContainer($user->guid));
-		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', $handler);
-
-		$this->assertFalse($group->canWriteToContainer($user->guid));
-		$group->join($user);
-		$this->assertTrue($group->canWriteToContainer($user->guid));
-
-		elgg_set_ignore_access($ia);
-
+		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($user, $object, $group) {
+			$this->assertFalse($object->canWriteToContainer($user->guid));
+	
+			global $elgg_test_user;
+			$elgg_test_user = $user;
+	
+			// register hook to allow access
+			$handler = /** @noinspection PhpInconsistentReturnPointsInspection */
+				function ($hook, $type, $value, $params) {
+					global $elgg_test_user;
+	
+					if ($params['user']->getGUID() == $elgg_test_user->getGUID()) {
+						return true;
+					}
+				};
+	
+			elgg_register_plugin_hook_handler('container_permissions_check', 'all', $handler, 600);
+			$this->assertTrue($object->canWriteToContainer($user->guid));
+			elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', $handler);
+	
+			$this->assertFalse($group->canWriteToContainer($user->guid));
+			$group->join($user);
+			$this->assertTrue($group->canWriteToContainer($user->guid));
+		});
+		
 		$user->delete();
 		$object->delete();
 		$group->delete();
@@ -332,16 +330,13 @@ class ElggCoreRegressionBugsTest extends \Elgg\LegacyIntegrationTestCase {
 		}
 
 		//disable them
-		$show_hidden = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-		$options = [
-			'guid' => $group->guid,
-			'limit' => $total,
-			//using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
-		];
-		elgg_disable_annotations($options);
-		access_show_hidden_entities($show_hidden);
-
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($group, $total) {
+			elgg_disable_annotations([
+				'guid' => $group->guid,
+				'limit' => $total, //using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
+			]);
+		});
+		
 		//confirm all being disabled
 		$annotations = $group->getAnnotations([
 			'limit' => $total,

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Application;
+
 /**
  * @group Plugins
  * @group ElggPlugin
@@ -93,13 +95,21 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 					'path' => '/plugin/{foo?}',
 					'resource' => 'plugin/foo',
 				],
-			]
+			],
+			'settings' => [
+				'default1' => 'set1',
+			],
+			'user_settings' => [
+				'user_default1' => 'set1',
+			],
 		];
 
 		$this->assertEquals($config['entities'], $plugin->getStaticConfig('entities'));
 		$this->assertEquals($config['actions'], $plugin->getStaticConfig('actions'));
 		$this->assertEquals($config['widgets'], $plugin->getStaticConfig('widgets'));
 		$this->assertEquals($config['routes'], $plugin->getStaticConfig('routes'));
+		$this->assertEquals($config['settings'], $plugin->getStaticConfig('settings'));
+		$this->assertEquals($config['user_settings'], $plugin->getStaticConfig('user_settings'));
 
 		$plugin->delete();
 	}
@@ -209,6 +219,12 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	 */
 	public function testUsesBootstrapOnUpgrade() {
 
+		try {
+			Application::getMigrationSettings();
+		} catch (ConfigurationException $e) {
+			$this->markTestSkipped('Can only test with a settings.php present');
+		}
+		
 		$app = $this->createApplication();
 
 		// We don't need to run actual upgrades for this test

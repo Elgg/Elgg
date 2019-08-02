@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This requires elgg_get_logged_in_user_guid() in session.php, the access 
+ * This requires elgg_get_logged_in_user_guid() in session.php, the access
  * constants defined in entities.php, and elgg_normalize_url() in output.php
  *
  * @group ElggEntity
@@ -71,6 +71,14 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 	public function testGettingNonexistentMetadataNoDatabase() {
 		$this->assertNull($this->obj->foo);
 	}
+	
+	public function testAnnotationsNoDatabase() {
+		$this->obj->annotate('foo', 'bar');
+		$this->assertEquals(['bar'], $this->obj->getAnnotations(['annotation_name' => 'foo']));
+		
+		$this->obj->deleteAnnotations('foo');
+		$this->assertEmpty($this->obj->getAnnotations(['annotation_name' => 'foo']));
+	}
 
 	public function testSimpleGetters() {
 		$this->obj->subtype = 'subtype';
@@ -91,10 +99,45 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->obj->getTimeUpdated(), $this->obj->time_updated);
 	}
 
-	public function testUnsetAttribute() {
-		$this->obj->access_id = 2;
-		unset($this->obj->access_id);
-		$this->assertEquals('', $this->obj->access_id);
+	/**
+	 * @dataProvider unsetSuccessfullProvider
+	 */
+	public function testUnsetSuccessfullAttribute($attribute, $value) {
+		$this->obj->$attribute = $value;
+		$this->assertEquals($value, $this->obj->$attribute);
+		unset($this->obj->$attribute);
+		$this->assertEquals('', $this->obj->$attribute);
+	}
+	
+	public function unsetSuccessfullProvider() {
+		return [
+			['access_id', 2],
+
+			['type', 'foo'],
+			['subtype', 'foo'],
+	
+			['owner_guid', 1234],
+			['container_guid', 1234],
+ 			['enabled', 6],
+		];
+	}
+
+	/**
+	 * @dataProvider unsetUnsuccessfullProvider
+	 */
+	public function testUnsetUnsuccessfullAttribute($attribute, $value) {
+		$current_value = $this->obj->$attribute;
+		$this->obj->$attribute = $value;
+		unset($this->obj->$attribute);
+		$this->assertEquals($current_value, $this->obj->$attribute);
+	}
+	
+	public function unsetUnsuccessfullProvider() {
+		return [
+			['guid', 123456],
+			['last_action', 1234],
+			['time_updated', 1234],
+		];
 	}
 
 	public function testIsEnabled() {

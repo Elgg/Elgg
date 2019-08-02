@@ -16,9 +16,6 @@ define(function(require) {
 		$(document).on('click', '.elgg-plugins-toggle', toggleAllPlugins);
 
 		$(document).on('click', '.elgg-plugin-state-change', toggleSinglePlugin);
-
-		// plugin screenshots
-		$(document).on('mouseenter', '.elgg-plugin-details-screenshots .elgg-plugin-screenshot', showPluginScreenshot);
 	};
 
 	function freezePlugins() {
@@ -188,20 +185,6 @@ define(function(require) {
 		$(".elgg-plugin").hide();
 		$(".elgg-plugin-category-" + $(this).attr("rel")).show();
 		$(this).closest('li').addClass("elgg-state-selected");
-	};
-		
-	/**
-	 * Handles mouseenters to show plugin screenshots
-	 *
-	 * @return void
-	 */
-	function showPluginScreenshot () {
-		$(this).parent().find(".elgg-plugin-screenshot").removeClass("elgg-state-selected");
-		$(this).addClass("elgg-state-selected");
-
-		// must use .hide/show() to work with elgg-tabs
-		$(".elgg-plugin-details-screenshots > div > img").hide();
-		$(".elgg-plugin-details-screenshots > div > img[rel='" + $(this).attr("rel") + "']").show();
 	};
 
 	init();

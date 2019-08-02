@@ -19,6 +19,7 @@ echo elgg_view_field([
 echo elgg_view('entity/edit/icon', [
 	'entity' => $entity,
 	'name' => 'avatar',
+	'cropper_enabled' => true,
 ]);
 
 $footer = elgg_view_field([

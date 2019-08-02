@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Form field view
  *
@@ -10,6 +9,7 @@
  * @uses $vars['help'] HTML content of the help element
  * @uses $vars['view'] View to use to render the field
  */
+
 $input = elgg_extract('input', $vars);
 if (!$input) {
 	return;
@@ -35,5 +35,4 @@ $field = $label . $input . $help;
 
 echo elgg_format_element('div', [
 	'class' => $class,
-		], $field);
-
+], $field);

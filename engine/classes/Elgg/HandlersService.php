@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\Di\DiContainer;
@@ -14,16 +15,23 @@ use Elgg\HooksRegistrationService\Hook as HrsHook;
  * @copyright 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  *
- * @access private
+ * @internal
  */
 class HandlersService {
 
 	/**
+	 * Keeps track of already reported deprecated arguments callback messages
+	 *
+	 * @var array
+	 */
+	private $deprecated_args_msgs = [];
+	
+	/**
 	 * Call the handler with the hook/event object
 	 *
-	 * @param callable          $callable Callable
-	 * @param string|Hook|Event $object   Event object
-	 * @param array             $args     Arguments for legacy events/hooks
+	 * @param callable $callable Callable
+	 * @param mixed    $object   Event object
+	 * @param array    $args     Arguments for legacy events/hooks
 	 *
 	 * @return array [success, result, object]
 	 */
@@ -63,6 +71,17 @@ class HandlersService {
 			$result = call_user_func($callable, $object);
 		} else {
 			// legacy arguments
+			if ($this->getParamTypeForCallable($callable) !== null) {
+				$described_callback = $this->describeCallable($callable);
+				$msg = "Using legacy style hook and event callback arguments is deprecated. Used by: {$described_callback} for [{$args[0]}, {$args[1]}].";
+				
+				$msg_hash = md5($msg);
+				if (!in_array($msg_hash, $this->deprecated_args_msgs)) {
+					elgg_deprecated_notice($msg, "3.1");
+					$this->deprecated_args_msgs[] = $msg_hash;
+				}
+			}
+			
 			$result = call_user_func_array($callable, $args);
 		}
 

@@ -84,4 +84,26 @@ class ValuesUnitTest extends UnitTestCase {
 			['America/New_York'],
 		];
 	}
+	
+	/**
+	 * @dataProvider shortNumberProvider
+	 */
+	public function testCanShortenNumber($number, $precision, $expected) {
+		$this->assertEquals(Values::shortFormatOutput($number, $precision), $expected);
+	}
+	
+	public function shortNumberProvider() {
+		return [
+			['a', 1, 'a'],
+			[1, 1, 1],
+			[1000, 0, '1K'],
+			[1000, 1, '1K'],
+			[1201, 0, '1K'],
+			[1201, 2, '1.2K'],
+			[1230, 2, '1.23K'],
+			[1100000, 2, '1.1M'],
+			[1100000000, 2, '1.1B'],
+			[1100000000000, 2, '1.1T']
+		];
+	}
 }

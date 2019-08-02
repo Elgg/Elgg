@@ -1,10 +1,11 @@
 <?php
+
 namespace Elgg;
 
 /**
  * Base class for events and hooks
  *
- * @access private
+ * @internal
  */
 abstract class HooksRegistrationService {
 
@@ -71,7 +72,6 @@ abstract class HooksRegistrationService {
 	 *
 	 * @see elgg_unregister_plugin_hook_handler()
 	 * @see elgg_unregister_event_handler()
-	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {
 		if (empty($this->registrations[$name][$type])) {
@@ -107,7 +107,6 @@ abstract class HooksRegistrationService {
 	 * @return void
 	 *
 	 * @see elgg_clear_plugin_hook_handlers()
-	 * @access private
 	 */
 	public function clearHandlers($name, $type) {
 		unset($this->registrations[$name][$type]);
@@ -124,7 +123,6 @@ abstract class HooksRegistrationService {
 	 *     )
 	 * )
 	 *
-	 * @access private
 	 * @return array
 	 */
 	public function getAllHandlers() {
@@ -163,8 +161,6 @@ abstract class HooksRegistrationService {
 	 * @param string $type The type of the hook
 	 * @return callable[]
 	 * @see \Elgg\HooksRegistrationService::getAllHandlers()
-	 *
-	 * @access private
 	 */
 	public function getOrderedHandlers($name, $type) {
 		$registrations = [];
@@ -245,8 +241,6 @@ abstract class HooksRegistrationService {
 	 *
 	 * @return void
 	 * @see HooksRegistrationService::restore()
-	 * @access private
-	 * @internal
 	 */
 	public function backup() {
 		$this->backups[] = $this->registrations;
@@ -258,8 +252,6 @@ abstract class HooksRegistrationService {
 	 *
 	 * @return void
 	 * @see HooksRegistrationService::backup()
-	 * @access private
-	 * @internal
 	 */
 	public function restore() {
 		$backup = array_pop($this->backups);
@@ -290,8 +282,7 @@ abstract class HooksRegistrationService {
 		
 		_elgg_services()->deprecation->sendNotice(
 			$options[self::OPTION_DEPRECATION_MESSAGE],
-			$options[self::OPTION_DEPRECATION_VERSION],
-			4
+			$options[self::OPTION_DEPRECATION_VERSION]
 		);
 	}
 }

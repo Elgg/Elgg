@@ -56,7 +56,7 @@ elgg.site_notifications.auto_delete = function(event) {
 	
 	require(['elgg/Ajax'], function (Ajax) {
 		var ajax = new Ajax();
-		ajax.action('site_notifications/delete', {
+		ajax.action('entity/delete', {
 			data: {
 				guid: $link.data().guid,
 			},

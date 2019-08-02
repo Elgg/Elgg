@@ -69,11 +69,10 @@ class Invoker {
 
 		try {
 			$result = $this->dic->call($closure);
-		} catch (\Exception $e) {
+		} catch (\Throwable $e) {
 			$restore();
 			throw $e;
 		}
-
 		$restore();
 
 		return $result;

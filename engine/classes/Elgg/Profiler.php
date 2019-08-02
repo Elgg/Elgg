@@ -1,11 +1,13 @@
 <?php
+
 namespace Elgg;
+
 use Elgg\Project\Paths;
 
 /**
  * Analyzes duration of functions, queries, and processes
  *
- * @access private
+ * @internal
  */
 class Profiler {
 
@@ -88,14 +90,11 @@ class Profiler {
 	/**
 	 * Append a SCRIPT element to the page output
 	 *
-	 * @param string $hook   "output"
-	 * @param string $type   "page"
-	 * @param string $html   Full page HTML
-	 * @param array  $params Hook params
+	 * @param \Elgg\Hook $hook "output", "page"
 	 *
 	 * @return string
 	 */
-	public static function handlePageOutput($hook, $type, $html, $params) {
+	public static function handlePageOutput(\Elgg\Hook $hook) {
 		$profiler = new self();
 		$min_percentage = _elgg_config()->profiling_minimum_percentage;
 		if ($min_percentage !== null) {
@@ -119,7 +118,8 @@ class Profiler {
 		}, $list);
 
 		$data['list'] = $list;
-
+		
+		$html = $hook->getValue();
 		$html .= "<script>console.log(" . json_encode($data) . ");</script>";
 
 		return $html;
@@ -186,7 +186,7 @@ class Profiler {
 	 * Get the microtime start time
 	 *
 	 * @param array $times Time periods
-	 * @return string|false
+	 * @return float|false
 	 */
 	private function findBeginTime(array $times) {
 		if (isset($times[Timer::MARKER_BEGIN])) {
@@ -204,7 +204,7 @@ class Profiler {
 	 * Get the microtime end time
 	 *
 	 * @param array $times Time periods
-	 * @return string|false
+	 * @return float|false
 	 */
 	private function findEndTime(array $times) {
 		if (isset($times[Timer::MARKER_END])) {

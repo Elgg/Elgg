@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\SystemMessages\RegisterSet;
@@ -8,7 +9,7 @@ use Elgg\SystemMessages\RegisterSet;
  *
  * Use elgg()->system_messages
  *
- * @since      1.11.0
+ * @since 1.11.0
  */
 class SystemMessagesService {
 
@@ -25,8 +26,6 @@ class SystemMessagesService {
 	 * Constructor
 	 *
 	 * @param \ElggSession $session The Elgg session
-	 * @access private
-	 * @internal
 	 */
 	public function __construct(\ElggSession $session) {
 		$this->session = $session;
@@ -39,7 +38,6 @@ class SystemMessagesService {
 	 * @param string $register_name The register. Empty string for all.
 	 *
 	 * @return array The array of registers dumped
-	 * @access private
 	 * @internal
 	 */
 	public function dumpRegister($register_name = '') {
@@ -153,7 +151,7 @@ class SystemMessagesService {
 				continue;
 			}
 			$arr = array_filter($values, $filter);
-			if ($arr) {
+			if (!empty($arr)) {
 				$data[$prop] = array_values($arr);
 			}
 		}

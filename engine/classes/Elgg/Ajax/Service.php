@@ -3,7 +3,6 @@
 namespace Elgg\Ajax;
 
 use Elgg\Amd\Config;
-use Elgg\Http\Input;
 use Elgg\Http\Request;
 use Elgg\PluginHooksService;
 use Elgg\Services\AjaxResponse;
@@ -15,7 +14,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  * Models the Ajax API service
  *
  * @since 1.12.0
- * @access private
  * @internal
  */
 class Service {
@@ -201,7 +199,7 @@ class Service {
 			return new JsonResponse(['error' => "The response was cancelled"], 400);
 		}
 
-		$response = new JsonResponse($api_response->getData());
+		$response = _elgg_services()->responseFactory->prepareJsonResponse($api_response->getData());
 
 		$ttl = $api_response->getTtl();
 		if ($ttl > 0) {
@@ -227,16 +225,13 @@ class Service {
 	/**
 	 * Prepare the response with additional metadata, like system messages and required AMD modules
 	 *
-	 * @param string       $hook     "ajax_response"
-	 * @param string       $type     "all"
-	 * @param AjaxResponse $response Ajax response
-	 * @param array        $params   Hook params
+	 * @param \Elgg\Hook $hook "ajax_response", "all"
 	 *
 	 * @return AjaxResponse
-	 * @access private
 	 * @internal
 	 */
-	public function prepareResponse($hook, $type, $response, $params) {
+	public function prepareResponse(\Elgg\Hook $hook) {
+		$response = $hook->getValue();
 		if (!$response instanceof AjaxResponse) {
 			return;
 		}

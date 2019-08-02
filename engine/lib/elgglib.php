@@ -62,37 +62,6 @@ function elgg_set_http_header($header, $replace = true) {
 }
 
 /**
- * Register a JavaScript file for inclusion
- *
- * This function handles adding JavaScript to a web page. If multiple
- * calls are made to register the same JavaScript file based on the $id
- * variable, only the last file is included. This allows a plugin to add
- * JavaScript from a view that may be called more than once. It also handles
- * more than one plugin adding the same JavaScript.
- *
- * jQuery plugins often have filenames such as jquery.rating.js. A best practice
- * is to base $name on the filename: "jquery.rating". It is recommended to not
- * use version numbers in the name.
- *
- * The JavaScript files can be local to the server or remote (such as
- * Google's CDN).
- *
- * @note Since 2.0, scripts with location "head" will also be output in the footer, but before
- *       those with location "footer".
- *
- * @param string $name     An identifier for the JavaScript library
- * @param string $url      URL of the JavaScript file
- * @param string $location Page location: head or footer. (default: head)
- * @param int    $priority Priority of the JS file (lower numbers load earlier)
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_register_js($name, $url, $location = 'head', $priority = null) {
-	return elgg_register_external_file('js', $name, $url, $location, $priority);
-}
-
-/**
  * Defines a JS lib as an AMD module. This is useful for shimming
  * traditional JS or for setting the paths of AMD modules.
  *
@@ -106,7 +75,7 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
  * Instead, simply call elgg_require_js("module/name").
  *
  * @note The configuration is cached in simplecache, so logic should not depend on user-
- *       specific values like get_language().
+ *       specific values like get_current_language().
  *
  * @param string $name   The module name
  * @param array  $config An array like the following:
@@ -129,34 +98,6 @@ function elgg_define_js($name, $config) {
 		_elgg_services()->amdConfig->addShim($name, $config);
 	}
 }
-
-/**
- * Unregister a JavaScript file
- *
- * @param string $name The identifier for the JavaScript library
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_unregister_js($name) {
-	return elgg_unregister_external_file('js', $name);
-}
-
-/**
- * Load a JavaScript resource on this page
- *
- * This must be called before elgg_view_page(). It can be called before the
- * script is registered. If you do not want a script loaded, unregister it.
- *
- * @param string $name Identifier of the JavaScript resource
- *
- * @return void
- * @since 1.8.0
- */
-function elgg_load_js($name) {
-	elgg_load_external_file('js', $name);
-}
-
 
 /**
  * Request that Elgg load an AMD module onto the page.
@@ -195,44 +136,35 @@ function elgg_get_loaded_js($location = 'head') {
 }
 
 /**
- * Register a CSS file for inclusion in the HTML head
+ * Register a CSS view name to be included in the HTML head
  *
- * @param string $name     An identifier for the CSS file
- * @param string $url      URL of the CSS file
- * @param int    $priority Priority of the CSS file (lower numbers load earlier)
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_register_css($name, $url, $priority = null) {
-	return elgg_register_external_file('css', $name, $url, 'head', $priority);
-}
-
-/**
- * Unregister a CSS file
- *
- * @param string $name The identifier for the CSS file
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_unregister_css($name) {
-	return elgg_unregister_external_file('css', $name);
-}
-
-/**
- * Load a CSS file for this page
- *
- * This must be called before elgg_view_page(). It can be called before the
- * CSS file is registered. If you do not want a CSS file loaded, unregister it.
- *
- * @param string $name Identifier of the CSS file
+ * @param string $view The css view name
  *
  * @return void
- * @since 1.8.0
+ *
+ * @since 3.1
  */
-function elgg_load_css($name) {
-	elgg_load_external_file('css', $name);
+function elgg_require_css(string $view) {
+	$view_name = "{$view}.css";
+	if (!elgg_view_exists($view_name)) {
+		$view_name = $view;
+	}
+	
+	elgg_register_external_file('css', $view, elgg_get_simplecache_url($view_name));
+	elgg_load_external_file('css', $view);
+}
+
+/**
+ * Unregister a CSS view name to be included in the HTML head
+ *
+ * @param string $view The css view name
+ *
+ * @return void
+ *
+ * @since 3.1
+ */
+function elgg_unrequire_css(string $view) {
+	elgg_unregister_external_file('css', $view);
 }
 
 /**
@@ -251,13 +183,13 @@ function elgg_get_loaded_css() {
  * @param string $type     Type of external resource (js or css)
  * @param string $name     Identifier used as key
  * @param string $url      URL
- * @param string $location Location in the page to include the file
+ * @param string $location Location in the page to include the file (default = 'head')
  * @param int    $priority Loading priority of the file
  *
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_external_file($type, $name, $url, $location, $priority = 500) {
+function elgg_register_external_file($type, $name, $url, $location = 'head', $priority = 500) {
 	return _elgg_services()->externalFiles->register($type, $name, $url, $location, $priority);
 }
 
@@ -298,52 +230,6 @@ function elgg_load_external_file($type, $name) {
  */
 function elgg_get_loaded_external_files($type, $location) {
 	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
-}
-
-/**
- * Returns a list of files in $directory.
- *
- * Only returns files.  Does not recurse into subdirs.
- *
- * @param string $directory  Directory to look in
- * @param array  $exceptions Array of filenames to ignore
- * @param array  $list       Array of files to append to
- * @param mixed  $extensions Array of extensions to allow, null for all. Use a dot: array('.php').
- *
- * @return array Filenames in $directory, in the form $directory/filename.
- */
-function elgg_get_file_list($directory, $exceptions = [], $list = [], $extensions = null) {
-
-	$directory = \Elgg\Project\Paths::sanitize($directory);
-	if ($handle = opendir($directory)) {
-		while (($file = readdir($handle)) !== false) {
-			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
-				continue;
-			}
-
-			if (is_array($extensions)) {
-				if (in_array(strrchr($file, '.'), $extensions)) {
-					$list[] = $directory . $file;
-				}
-			} else {
-				$list[] = $directory . $file;
-			}
-		}
-		closedir($handle);
-	}
-
-	return $list;
-}
-
-/**
- * Counts the number of messages, either globally or in a particular register
- *
- * @param string $register Optionally, the register
- *
- * @return integer The number of messages
- */
-function count_messages($register = "") {
-	return elgg()->system_messages->count($register);
 }
 
 /**
@@ -436,10 +322,10 @@ function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * @param string $event       The event type
- * @param string $object_type The object type
- * @param string $callback    The handler callback
- * @param int    $priority    The priority - 0 is default, negative before, positive after
+ * @param string   $event       The event type
+ * @param string   $object_type The object type
+ * @param callable $callback    The handler callback
+ * @param int      $priority    The priority - 0 is default, negative before, positive after
  *
  * @return bool
  * @example documentation/events/basic.php
@@ -453,9 +339,9 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 /**
  * Unregisters a callback for an event.
  *
- * @param string $event       The event type
- * @param string $object_type The object type
- * @param string $callback    The callback. Since 1.11, static method callbacks will match dynamic methods
+ * @param string   $event       The event type
+ * @param string   $object_type The object type
+ * @param callable $callback    The callback. Since 1.11, static method callbacks will match dynamic methods
  *
  * @return bool true if a handler was found and removed
  * @since 1.7
@@ -828,19 +714,15 @@ function elgg_get_version($human_readable = false) {
 /**
  * Log a notice about deprecated use of a function, view, etc.
  *
- * @param string $msg             Message to log
- * @param string $dep_version     Human-readable *release* version: 1.7, 1.8, ...
- * @param int    $backtrace_level How many levels back to display the backtrace.
- *                                Useful if calling from functions that are called
- *                                from other places (like elgg_view()). Set to -1
- *                                for a full backtrace.
+ * @param string $msg         Message to log
+ * @param string $dep_version Human-readable *release* version: 1.7, 1.8, ...
+ * @param mixed  $ignored     No longer used argument
  *
  * @return bool
  * @since 1.7.0
  */
-function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
-	$backtrace_level += 1;
-	return _elgg_services()->deprecation->sendNotice($msg, $dep_version, $backtrace_level);
+function elgg_deprecated_notice($msg, $dep_version, $ignored = null) {
+	return _elgg_services()->deprecation->sendNotice($msg, $dep_version);
 }
 
 /**
@@ -1108,9 +990,7 @@ function elgg_signed_request_gatekeeper() {
 		return;
 	}
 
-	if (!elgg_http_validate_signed_url(current_page_url())) {
-		throw new \Elgg\HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
-	}
+	_elgg_services()->urlSigner->assertValid(current_page_url());
 }
 
 /**
@@ -1178,58 +1058,6 @@ function elgg_call(int $flags, Closure $closure) {
 }
 
 /**
- * Sorts a 3d array by specific element.
- *
- * @warning Will re-index numeric indexes.
- *
- * @note This operates the same as the built-in sort functions.
- * It sorts the array and returns a bool for success.
- *
- * Do this: elgg_sort_3d_array_by_value($my_array);
- * Not this: $my_array = elgg_sort_3d_array_by_value($my_array);
- *
- * @param array  $array      Array to sort
- * @param string $element    Element to sort by
- * @param int    $sort_order PHP sort order {@link http://us2.php.net/array_multisort}
- * @param int    $sort_type  PHP sort type {@link http://us2.php.net/sort}
- *
- * @return bool
- */
-function elgg_sort_3d_array_by_value(&$array, $element, $sort_order = SORT_ASC, $sort_type = SORT_LOCALE_STRING) {
-
-	$sort = [];
-
-	foreach ($array as $v) {
-		if (isset($v[$element])) {
-			$sort[] = strtolower($v[$element]);
-		} else {
-			$sort[] = null;
-		}
-	};
-
-	return array_multisort($sort, $sort_order, $sort_type, $array);
-}
-
-/**
- * Return the state of a php.ini setting as a bool
- *
- * @warning Using this on ini settings that are not boolean
- * will be inaccurate!
- *
- * @param string $ini_get_arg The INI setting
- *
- * @return bool Depending on whether it's on or off
- */
-function ini_get_bool($ini_get_arg) {
-	$temp = strtolower(ini_get($ini_get_arg));
-
-	if ($temp == '1' || $temp == 'on' || $temp == 'true') {
-		return true;
-	}
-	return false;
-}
-
-/**
  * Returns a PHP INI setting in bytes.
  *
  * @tip Use this for arithmetic when determining if a file can be uploaded.
@@ -1266,28 +1094,10 @@ function elgg_get_ini_setting_in_bytes($setting) {
 }
 
 /**
- * Returns true is string is not empty, false, or null.
- *
- * Function to be used in array_filter which returns true if $string is not null.
- *
- * @param string $string The string to test
- *
- * @return bool
- * @todo This is used once in metadata.php.  Use a lambda function instead.
- */
-function is_not_null($string) {
-	if (($string === '') || ($string === false) || ($string === null)) {
-		return false;
-	}
-
-	return true;
-}
-
-/**
  * Get the global service provider
  *
  * @return \Elgg\Di\ServiceProvider
- * @access private
+ * @internal
  */
 function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
@@ -1306,7 +1116,7 @@ function _elgg_services() {
  *
  * @see elgg_register_ajax_view()
  * @elgg_pagehandler ajax
- * @access private
+ * @internal
  */
 function _elgg_ajax_page_handler($segments) {
 	elgg_ajax_gatekeeper();
@@ -1394,11 +1204,12 @@ function _elgg_ajax_page_handler($segments) {
  *
  * @param array  $options Options array
  * @param string $type    Options type: metadata, annotation or river
+ *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_is_valid_options_for_batch_operation($options, $type) {
-	if (!$options || !is_array($options)) {
+	if (empty($options) || !is_array($options)) {
 		return false;
 	}
 
@@ -1466,14 +1277,14 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
  * @since 1.8.0
  * @elgg_event_handler init system
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_walled_garden_init() {
 	if (!_elgg_config()->walled_garden) {
 		return;
 	}
 
-	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
+	elgg_register_external_file('css', 'elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
 
 	elgg_register_plugin_hook_handler('register', 'menu:walled_garden', '_elgg_walled_garden_menu');
 
@@ -1495,20 +1306,19 @@ function _elgg_walled_garden_init() {
 /**
  * Adds home link to walled garden menu
  *
- * @param string $hook         'register'
- * @param string $type         'menu:walled_garden'
- * @param array  $return_value Current menu items
- * @param array  $params       Optional menu parameters
+ * @param \Elgg\Hook $hook 'register', 'menu:walled_garden'
  *
  * @return array
  *
- * @access private
+ * @internal
  */
-function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
+function _elgg_walled_garden_menu(\Elgg\Hook $hook) {
 	
 	if (current_page_url() === elgg_get_site_url()) {
 		return;
 	}
+	
+	$return_value = $hook->getValue();
 	
 	$return_value[] = \ElggMenuItem::factory([
 		'name' => 'home',
@@ -1523,19 +1333,38 @@ function _elgg_walled_garden_menu($hook, $type, $return_value, $params) {
 /**
  * Remove public access for walled gardens
  *
- * @param string $hook     'access:collections:write'
- * @param string $type     'all'
- * @param array  $accesses current return value
+ * @param \Elgg\Hook $hook 'access:collections:write', 'all'
  *
  * @return array
  *
- * @access private
+ * @internal
  */
-function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
+function _elgg_walled_garden_remove_public_access(\Elgg\Hook $hook) {
+	$accesses = $hook->getValue();
 	if (isset($accesses[ACCESS_PUBLIC])) {
 		unset($accesses[ACCESS_PUBLIC]);
 	}
 	return $accesses;
+}
+
+/**
+ * Adds the manifest.json to head links
+ *
+ * @param \Elgg\Hook $hook 'head', 'page'
+ *
+ * @return array
+ *
+ * @internal
+ * @since 3.1
+ */
+function _elgg_head_manifest(\Elgg\Hook $hook) {
+	$result = $hook->getValue();
+	$result['links']['manifest'] = [
+		'rel' => 'manifest',
+		'href' => elgg_get_simplecache_url('resources/manifest.json'),
+	];
+
+	return $result;
 }
 
 /**
@@ -1545,18 +1374,12 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
  *
  * @elgg_event_handler init system
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_init() {
+	elgg_register_simplecache_view('resources/manifest.json');
 	
-	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
-		$result['links']['manifest'] = [
-			'rel' => 'manifest',
-			'href' => elgg_normalize_url('/manifest.json'),
-		];
-
-		return $result;
-	});
+	elgg_register_plugin_hook_handler('head', 'page', '_elgg_head_manifest');
 
 	if (_elgg_config()->enable_profiling) {
 		/**
@@ -1576,7 +1399,7 @@ function _elgg_init() {
  * @param \Elgg\Hook $hook Hook
  *
  * @return \Elgg\Cli\Command[]
- * @access private
+ * @internal
  */
 function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 	$defaults = [
@@ -1637,32 +1460,9 @@ function _elgg_register_actions() {
 }
 
 /**
- * Adds unit tests for the general API.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param array  $value  array of test files
- * @param array  $params empty
- *
- * @elgg_plugin_hook unit_tests system
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_api_test($hook, $type, $value, $params) {
-	$value[] = ElggTravisInstallTest::class;
-	$value[] = ElggCoreHelpersTest::class;
-	$value[] = ElggCoreRegressionBugsTest::class;
-	$value[] = ElggBatchTest::class;
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
-
-	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 };

@@ -14,11 +14,12 @@ use React\Promise\Deferred;
 use React\Promise\Promise;
 use RuntimeException;
 use Throwable;
+use Elgg\Database\Clauses\EntitySortByClause;
 
 /**
  * Upgrade service for Elgg
  *
- * @access private
+ * @internal
  */
 class UpgradeService {
 
@@ -446,8 +447,6 @@ class UpgradeService {
 		$dbversion = (int) $this->config->version;
 
 		if ($this->upgradeCode($dbversion)) {
-			$this->system_messages->addSuccessMessage($this->translator->translate('upgrade:core'));
-
 			return true;
 		}
 
@@ -489,7 +488,7 @@ class UpgradeService {
 	}
 	
 	/**
-	 * Get completed (async) upgrades
+	 * Get completed (async) upgrades ordered by recently completed first
 	 *
 	 * @param bool $async Include async upgrades
 	 *
@@ -497,6 +496,11 @@ class UpgradeService {
 	 */
 	public function getCompletedUpgrades($async = true) {
 		$completed = [];
+		
+		$order_by_completed_time = new EntitySortByClause();
+		$order_by_completed_time->direction = 'DESC';
+		$order_by_completed_time->property = 'completed_time';
+		$order_by_completed_time->property_type = 'private_setting';
 		
 		$upgrades = elgg_get_entities([
 			'type' => 'object',
@@ -506,6 +510,7 @@ class UpgradeService {
 				'name' => 'is_completed',
 				'value' => true,
 			],
+			'order_by' => $order_by_completed_time,
 			'limit' => false,
 			'batch' => true,
 		]);

@@ -8,27 +8,6 @@
  */
 
 /**
- * Disables all of a user's entities
- *
- * @param int $owner_guid The owner GUID
- *
- * @return bool Depending on success
- */
-function disable_user_entities($owner_guid) {
-	try {
-		$entity = get_entity($owner_guid);
-		if (!$entity) {
-			return false;
-		}
-		return _elgg_services()->entityTable->disableEntities($entity);
-	} catch (DatabaseException $ex) {
-		elgg_log($ex, 'ERROR');
-
-		return false;
-	}
-}
-
-/**
  * Get a user object from a GUID.
  *
  * This function returns an \ElggUser from a given GUID.
@@ -283,19 +262,14 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 /**
  * Setup the default user hover menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:user_hover'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:user_hover'
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  */
-function elgg_user_hover_menu($hook, $type, $return, $params) {
-	$user = elgg_extract('entity', $params);
-	/* @var \ElggUser $user */
-
+function elgg_user_hover_menu(\Elgg\Hook $hook) {
+	$user = $hook->getEntityParam();
 	if (!$user instanceof \ElggUser) {
 		return;
 	}
@@ -304,6 +278,8 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		return;
 	}
 
+	$return = $hook->getValue();
+	
 	if ($user->canEdit()) {
 		$return[] = ElggMenuItem::factory([
 			'name' => 'avatar:edit',
@@ -400,7 +376,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_user_title_menu(\Elgg\Hook $hook) {
@@ -434,20 +410,16 @@ function _elgg_user_title_menu(\Elgg\Hook $hook) {
 /**
  * Register menu items for the page menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:page'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
-function _elgg_user_page_menu($hook, $type, $return, $params) {
+function _elgg_user_page_menu(\Elgg\Hook $hook) {
 
-	$owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
-
+	$owner = $hook->getParam('entity', elgg_get_page_owner_entity());
 	if (!$owner instanceof ElggUser) {
 		return;
 	}
@@ -460,6 +432,8 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 		return;
 	}
 
+	$return = $hook->getValue();
+	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'edit_avatar',
 		'href' => elgg_generate_entity_url($owner, 'edit', 'avatar'),
@@ -474,23 +448,22 @@ function _elgg_user_page_menu($hook, $type, $return, $params) {
 /**
  * Register menu items for the topbar menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:topbar'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:topbar'
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
-function _elgg_user_topbar_menu($hook, $type, $return, $params) {
+function _elgg_user_topbar_menu(\Elgg\Hook $hook) {
 
 	$viewer = elgg_get_logged_in_user_entity();
 	if (!$viewer) {
 		return;
 	}
-
+	
+	$return = $hook->getValue();
+	
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'account',
 		'text' => elgg_echo('account'),
@@ -544,16 +517,16 @@ function _elgg_user_topbar_menu($hook, $type, $return, $params) {
 /**
  * Set user icon file
  *
- * @param string    $hook   "entity:icon:file"
- * @param string    $type   "user"
- * @param \ElggIcon $icon   Icon file
- * @param array     $params Hook params
+ * @param \Elgg\Hook $hook "entity:icon:file", "user"
+ *
  * @return \ElggIcon
  */
-function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
+function _elgg_user_set_icon_file(\Elgg\Hook $hook) {
 
-	$entity = elgg_extract('entity', $params);
-	$size = elgg_extract('size', $params, 'medium');
+	$icon = $hook->getValue();
+	
+	$entity = $hook->getEntityParam();
+	$size = $hook->getParam('size', 'medium');
 
 	$icon->owner_guid = $entity->guid;
 	$icon->setFilename("profile/{$entity->guid}{$size}.jpg");
@@ -564,20 +537,17 @@ function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
 /**
  * Add the user to the subscribers when (un)banning the account
  *
- * @param string $hook         'get'
- * @param string $type         'subscribers'
- * @param array  $return_value current subscribers
- * @param array  $params       supplied params
+ * @param \Elgg\Hook $hook 'get', 'subscribers'
  *
  * @return void|array
  */
-function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $params) {
+function _elgg_user_get_subscriber_unban_action(\Elgg\Hook $hook) {
 
 	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
 
-	$event = elgg_extract('event', $params);
+	$event = $hook->getParam('event');
 	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
@@ -591,6 +561,8 @@ function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $pa
 		return;
 	}
 
+	$return_value = $hook->getValue();
+	
 	$return_value[$user->guid] = ['email'];
 
 	return $return_value;
@@ -601,19 +573,18 @@ function _elgg_user_get_subscriber_unban_action($hook, $type, $return_value, $pa
  *
  * Note: this can't be handled by the delayed notification system as it won't send notifications to banned users
  *
- * @param string    $event 'ban'
- * @param string    $type  'user'
- * @param \ElggUser $user  the user being banned
+ * @param \Elgg\Event $event 'ban', 'user'
  *
  * @return void
  */
-function _elgg_user_ban_notification($event, $type, $user) {
+function _elgg_user_ban_notification(\Elgg\Event $event) {
 
 	if (!_elgg_config()->security_notify_user_ban) {
 		return;
 	}
 
-	if (!($user instanceof \ElggUser)) {
+	$user = $event->getObject();
+	if (!$user instanceof \ElggUser) {
 		return;
 	}
 
@@ -638,22 +609,19 @@ function _elgg_user_ban_notification($event, $type, $user) {
 /**
  * Prepare the notification content for the user being unbanned
  *
- * @param string                           $hook         'prepare'
- * @param string                           $type         'notification:unban:user:'
- * @param \Elgg\Notifications\Notification $return_value current notification content
- * @param array                            $params       supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'notification:unban:user:'
  *
  * @return void|\Elgg\Notifications\Notification
  */
-function _elgg_user_prepare_unban_notification($hook, $type, $return_value, $params) {
-
-	if (!($return_value instanceof \Elgg\Notifications\Notification)) {
+function _elgg_user_prepare_unban_notification(\Elgg\Hook $hook) {
+	$return_value = $hook->getValue();
+	if (!$return_value instanceof \Elgg\Notifications\Notification) {
 		return;
 	}
 
-	$recipient = elgg_extract('recipient', $params);
-	$object = elgg_extract('object', $params);
-	$language = elgg_extract('language', $params);
+	$recipient = $hook->getParam('recipient');
+	$object = $hook->getParam('object');
+	$language = $hook->getParam('language');
 
 	if (!($recipient instanceof ElggUser) || !($object instanceof ElggUser)) {
 		return;
@@ -703,9 +671,19 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 	$return = $hook->getValue();
 	
 	$return[] = ElggMenuItem::factory([
+		'name' => 'change_email',
+		'text' => elgg_echo('admin:users:unvalidated:change_email'),
+		'href' => elgg_http_add_url_query_elements('ajax/form/admin/user/change_email', [
+			'user_guid' => $entity->guid,
+		]),
+		'link_class' => 'elgg-lightbox',
+		'priority' => 100,
+	]);
+	
+	$return[] = ElggMenuItem::factory([
 		'name' => 'validate',
 		'text' => elgg_echo('validate'),
-		'href' => elgg_http_add_url_query_elements('action/admin/user/validate', [
+		'href' => elgg_generate_action_url('admin/user/validate', [
 			'user_guid' => $entity->guid,
 		]),
 		'confirm' => true,
@@ -714,8 +692,10 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
 	
 	$return[] = ElggMenuItem::factory([
 		'name' => 'delete',
-		'text' => elgg_echo('delete'),
-		'href' => elgg_http_add_url_query_elements('action/admin/user/delete', [
+		'icon' => 'delete',
+		'text' => false,
+		'title' => elgg_echo('delete'),
+		'href' => elgg_generate_action_url('admin/user/delete', [
 			'guid' => $entity->guid,
 		]),
 		'confirm' => elgg_echo('deleteconfirm'),
@@ -729,7 +709,7 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
  * Users initialisation function, which establishes the page handler
  *
  * @return void
- * @access private
+ * @internal
  */
 function users_init() {
 
@@ -748,7 +728,6 @@ function users_init() {
 	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_unban_action');
 	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
 	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:user', '_elgg_user_prepare_unban_notification');
-
 }
 
 /**

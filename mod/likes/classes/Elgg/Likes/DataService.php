@@ -5,7 +5,7 @@ namespace Elgg\Likes;
 /**
  * Likes dataservice
  *
- * @access private
+ * @internal
  */
 class DataService {
 

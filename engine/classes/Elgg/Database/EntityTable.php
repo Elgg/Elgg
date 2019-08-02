@@ -29,7 +29,7 @@ use Elgg\Cache\PrivateSettingsCache;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access     private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -185,7 +185,6 @@ class EntityTable {
 	 *                       Builds an access query for a logged out user if 0
 	 *
 	 * @return stdClass|false
-	 * @access  private
 	 */
 	public function getRow($guid, $user_guid = null) {
 
@@ -274,8 +273,6 @@ class EntityTable {
 	 *
 	 * @see    get_entity_as_row()
 	 * @see    get_entity()
-	 *
-	 * @access private
 	 *
 	 * @param stdClass $row The row of the entry in the entities table.
 	 *
@@ -390,7 +387,11 @@ class EntityTable {
 		$guid = (int) $guid;
 
 		$entity = $this->getFromCache($guid);
-		if ($entity && elgg_instanceof($entity, $type, $subtype)) {
+		if (
+			$entity instanceof \ElggEntity &&
+			(!isset($type) || $entity->type === $type) &&
+			(!isset($subtype) || $entity->subtype === $subtype)
+		) {
 			return $entity;
 		}
 
@@ -399,11 +400,11 @@ class EntityTable {
 			return false;
 		}
 
-		if ($type && $row->type != $type) {
+		if (isset($type) && $row->type !== $type) {
 			return false;
 		}
 
-		if ($subtype && $row->subtype !== $subtype) {
+		if (isset($subtype) && $row->subtype !== $subtype) {
 			return false;
 		}
 
@@ -526,7 +527,6 @@ class EntityTable {
 	 * @param int        $posted Timestamp of last action
 	 *
 	 * @return int
-	 * @access  private
 	 */
 	public function updateLastAction(ElggEntity $entity, $posted = null) {
 
@@ -558,7 +558,6 @@ class EntityTable {
 	 * @return ElggUser|false
 	 * @throws ClassException
 	 * @throws InvalidParameterException
-	 * @access private
 	 */
 	public function getUserForPermissionsCheck($guid = 0) {
 		if (!$guid) {
@@ -726,7 +725,7 @@ class EntityTable {
 		
 		$dir = new \Elgg\EntityDirLocator($entity->guid);
 		$file_path = _elgg_config()->dataroot . $dir;
-		delete_directory($file_path);
+		elgg_delete_directory($file_path);
 
 	}
 }

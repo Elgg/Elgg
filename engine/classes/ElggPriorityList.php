@@ -115,10 +115,8 @@ class ElggPriorityList
 	 * @param array $elements An optional array of priorities => element
 	 */
 	public function __construct(array $elements = []) {
-		if ($elements) {
-			foreach ($elements as $priority => $element) {
-				$this->add($element, $priority);
-			}
+		foreach ($elements as $priority => $element) {
+			$this->add($element, $priority);
 		}
 	}
 
@@ -274,10 +272,13 @@ class ElggPriorityList
 	 *
 	 * @param mixed $element The element to check for.
 	 * @param bool  $strict  Use strict checking?
-	 * @return mixed False if the element doesn't exists, the priority if it does.
+	 *
+	 * @return false|int False if the element doesn't exists, the priority if it does.
 	 */
 	public function getPriority($element, $strict = false) {
-		return array_search($element, $this->elements, $strict);
+		$prio = array_search($element, $this->elements, $strict);
+		
+		return ($prio === false) ? false : (int) $prio;
 	}
 
 	/**

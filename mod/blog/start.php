@@ -46,32 +46,31 @@ function blog_init() {
 /**
  * Add a menu item to an ownerblock
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:owner_block'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:owner_block'
  *
  * @return ElggMenuItem[]
  */
-function blog_owner_block_menu($hook, $type, $return, $params) {
-	$entity = elgg_extract('entity', $params);
+function blog_owner_block_menu(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+	$return = $hook->getValue();
+	
 	if ($entity instanceof ElggUser) {
 		$return[] = ElggMenuItem::factory([
-					'name' => 'blog',
-					'text' => elgg_echo('collection:object:blog'),
-					'href' => elgg_generate_url('collection:object:blog:owner', [
-						'username' => $entity->username,
-					]),
+			'name' => 'blog',
+			'text' => elgg_echo('collection:object:blog'),
+			'href' => elgg_generate_url('collection:object:blog:owner', [
+				'username' => $entity->username,
+			]),
 		]);
 	} elseif ($entity instanceof ElggGroup) {
 		if ($entity->isToolEnabled('blog')) {
 			$return[] = ElggMenuItem::factory([
-						'name' => 'blog',
-						'text' => elgg_echo('collection:object:blog:group'),
-						'href' => elgg_generate_url('collection:object:blog:group', [
-							'guid' => $entity->guid,
-							'subpage' => 'all',
-						]),
+				'name' => 'blog',
+				'text' => elgg_echo('collection:object:blog:group'),
+				'href' => elgg_generate_url('collection:object:blog:group', [
+					'guid' => $entity->guid,
+					'subpage' => 'all',
+				]),
 			]);
 		}
 	}
@@ -82,17 +81,14 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 /**
  * Add menu items to the archive menu
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:blog_archive'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:blog_archive'
  *
  * @return void|ElggMenuItem[]
  */
-function blog_archive_menu_setup($hook, $type, $return, $params) {
+function blog_archive_menu_setup(\Elgg\Hook $hook) {
 
-	$page_owner = elgg_extract('entity', $params, elgg_get_page_owner_entity());
-	$page = elgg_extract('page', $params, 'all');
+	$page_owner = $hook->getParam('entity', elgg_get_page_owner_entity());
+	$page = $hook->getParam('page', 'all');
 	if (!in_array($page, ['all', 'owner', 'friends', 'group'])) {
 		// only generate archive menu for supported pages
 		return;
@@ -153,10 +149,12 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 		return $url_segment;
 	};
 	
+	$return = $hook->getValue();
+	
 	$years = [];
 	foreach ($dates as $date) {
-		$timestamplow = mktime(0, 0, 0, substr($date, 4, 2), 1, substr($date, 0, 4));
-		$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, substr($date, 0, 4));
+		$timestamplow = mktime(0, 0, 0, (int) substr($date, 4, 2), 1, (int) substr($date, 0, 4));
+		$timestamphigh = mktime(0, 0, 0, ((int) substr($date, 4, 2)) + 1, 1, (int) substr($date, 0, 4));
 
 		$year = substr($date, 0, 4);
 		if (!in_array($year, $years)) {
@@ -188,16 +186,15 @@ function blog_archive_menu_setup($hook, $type, $return, $params) {
 /**
  * Prepare a notification message about a published blog
  *
- * @param string                          $hook         Hook name
- * @param string                          $type         Hook type
- * @param Elgg\Notifications\Notification $notification The notification to prepare
- * @param array                           $params       Hook parameters
+ * @param \Elgg\Hook $hook 'prepare', 'notification:publish:object:blog'
+ *
  * @return Elgg\Notifications\Notification
  */
-function blog_prepare_notification($hook, $type, $notification, $params) {
-	$entity = $params['event']->getObject();
-	$owner = $params['event']->getActor();
-	$language = $params['language'];
+function blog_prepare_notification(\Elgg\Hook $hook) {
+	$notification = $hook->getValue();
+	$entity = $hook->getParam('event')->getObject();
+	$owner = $hook->getParam('event')->getActor();
+	$language = $hook->getParam('language');
 
 	$notification->subject = elgg_echo('blog:notify:subject', [$entity->getDisplayName()], $language);
 	$notification->body = elgg_echo('blog:notify:body', [
@@ -295,14 +292,13 @@ function blog_prepare_form_vars($post = null, $revision = null) {
 /**
  * Register blogs with ECML
  *
- * @param string $hook         'get_views'
- * @param string $type         'ecml'
- * @param array  $return_value current return value
- * @param array  $params       supplied params
+ * @param \Elgg\Hook $hook 'get_views', 'ecml'
  *
  * @return array
  */
-function blog_ecml_views_hook($hook, $type, $return_value, $params) {
+function blog_ecml_views_hook(\Elgg\Hook $hook) {
+	$return_value = $hook->getValue();
+	
 	$return_value['object/blog'] = elgg_echo('item:object:blog');
 
 	return $return_value;
@@ -311,13 +307,11 @@ function blog_ecml_views_hook($hook, $type, $return_value, $params) {
 /**
  * Register database seed
  *
- * @elgg_plugin_hook seeds database
+ * @param \Elgg\Hook $hook 'seeds', 'database'
  *
- * @param \Elgg\Hook $hook Hook
  * @return array
  */
 function blog_register_db_seeds(\Elgg\Hook $hook) {
-
 	$seeds = $hook->getValue();
 
 	$seeds[] = \Elgg\Blog\Seeder::class;

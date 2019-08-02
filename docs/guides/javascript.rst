@@ -168,15 +168,17 @@ Setting the URL of a module
 
 You may have an AMD script outside your views you wish to make available as a module.
 
-The best way to accomplish this is by configuring the path to the file using the
-``views.php`` file in the root of your plugin:
+The best way to accomplish this is by configuring the path to the file using the ``views`` section of the
+``elgg-plugin.php`` file in the root of your plugin:
 
 .. code-block:: php
 
-    <?php // views.php
+    <?php // elgg-plugin.php
     return [
-        'default' => [
-            'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+        'views' => [
+	        'default' => [
+	            'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+	        ],
         ],
     ];
 
@@ -185,10 +187,12 @@ you can use something like this instead:
 
 .. code-block:: php
 
-    <?php // views.php
+    <?php // elgg-plugin.php
     return [
-        'default' => [
-            'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+        'views' => [
+	        'default' => [
+	            'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+	        ],
         ],
     ];
 
@@ -226,7 +230,7 @@ Some things to note
 #. Return the value of the module instead of adding to a global variable.
 #. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
 #. The configuration is also cached in simplecache, and should not rely on user-specific values
-   like ``get_language()``.
+   like ``get_current_language()``.
 
 .. _guides/javascript#boot:
 
@@ -723,32 +727,12 @@ Inline tabs component fires an ``open`` event whenever a tabs is open and, in ca
 Traditional scripts
 ===================
 
-Although we highly recommend using AMD modules, you can register scripts with ``elgg_register_js``:
+Although we highly recommend using AMD modules, and there is no Elgg API for loading the scripts, 
+you can register scripts in a hook handler to add elements to the head links;
 
 .. code-block:: php
 
-   elgg_register_js('jquery', $cdnjs_url);
-
-This will override any URLs previously registered under this name.
-
-Load a library on the current page with ``elgg_load_js``:
-
-.. code-block:: php
-
-   elgg_load_js('jquery');
-
-This will load the library in the page footer. You must use the ``require()`` function to depend on
-modules like ``elgg`` and ``jquery``.
-
-.. warning::
-
-   Using inline scripts is NOT SUPPORTED because:
-    * They are not testable (maintainability)
-    * They are not cacheable (performance)
-    * They prevent use of Content-Security-Policy (security)
-    * They prevent scripts from being loaded with ``defer`` or ``async`` (performance)
-
-   Inline scripts in core or bundled plugins are considered legacy bugs.
+	elgg_register_plugin_hook_handler('head', 'page', $callback);
 
 Hooks
 =====

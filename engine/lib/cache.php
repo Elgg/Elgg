@@ -29,7 +29,8 @@ function elgg_reset_system_cache() {
  * Saves a system cache.
  *
  * @param string $type The type or identifier of the cache
- * @param string $data The data to be saved
+ * @param mixed  $data The data to be saved
+ *
  * @return bool
  */
 function elgg_save_system_cache($type, $data) {
@@ -40,7 +41,8 @@ function elgg_save_system_cache($type, $data) {
  * Retrieve the contents of a system cache.
  *
  * @param string $type The type of cache to load
- * @return string
+ *
+ * @return mixed null if key not found in cache
  */
 function elgg_load_system_cache($type) {
 	return _elgg_services()->systemCache->load($type);
@@ -175,44 +177,6 @@ function elgg_disable_simplecache() {
 }
 
 /**
- * Recursively deletes a directory, including all hidden files.
- *
- * TODO(ewinslow): Move to filesystem package
- *
- * @param string $dir   The directory
- * @param bool   $empty If true, we just empty the directory
- *
- * @return boolean Whether the dir was successfully deleted.
- * @access private
- */
-function _elgg_rmdir($dir, $empty = false) {
-	if (!$dir) {
-		// realpath can return false
-		_elgg_services()->logger->warning(__FUNCTION__ . ' called with empty $dir');
-		return true;
-	}
-	if (!is_dir($dir)) {
-		return true;
-	}
-
-	$files = array_diff(scandir($dir), ['.', '..']);
-	
-	foreach ($files as $file) {
-		if (is_dir("$dir/$file")) {
-			_elgg_rmdir("$dir/$file");
-		} else {
-			unlink("$dir/$file");
-		}
-	}
-
-	if ($empty) {
-		return true;
-	}
-	
-	return rmdir($dir);
-}
-
-/**
  * Deletes all cached views in the simplecache and sets the lastcache and
  * lastupdate time to 0 for every valid viewtype.
  *
@@ -230,6 +194,9 @@ function elgg_invalidate_simplecache() {
  * @since 1.11
  */
 function elgg_flush_caches() {
+	// this event sequence could take while, make sure there is no timeout
+	set_time_limit(0);
+	
 	_elgg_services()->events->triggerSequence('cache:flush', 'system');
 }
 
@@ -237,7 +204,7 @@ function elgg_flush_caches() {
  * Checks if /cache directory has been symlinked to views simplecache directory
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_is_cache_symlinked() {
 	$root_path = elgg_get_root_path();
@@ -255,7 +222,7 @@ function _elgg_is_cache_symlinked() {
  * Symlinks /cache directory to views simplecache directory
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_symlink_cache() {
 
@@ -297,8 +264,7 @@ function _elgg_symlink_cache() {
  * when appropriate.
  *
  * @return void
- *
- * @access private
+ * @internal
  */
 function _elgg_cache_init() {
 	_elgg_services()->systemCache->init();
@@ -309,7 +275,6 @@ function _elgg_cache_init() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_disable_caches() {
 	_elgg_services()->boot->getCache()->disable();
@@ -326,7 +291,6 @@ function _elgg_disable_caches() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_clear_caches() {
 	_elgg_services()->boot->invalidateCache();
@@ -344,7 +308,6 @@ function _elgg_clear_caches() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_reset_opcache() {
 	if (!function_exists('opcache_reset')) {
@@ -359,7 +322,6 @@ function _elgg_reset_opcache() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_enable_caches() {
 	_elgg_services()->boot->getCache()->enable();
@@ -376,7 +338,6 @@ function _elgg_enable_caches() {
  *
  * @return void
  * @internal
- * @access private
  */
 function _elgg_rebuild_public_container() {
 	$services = _elgg_services();

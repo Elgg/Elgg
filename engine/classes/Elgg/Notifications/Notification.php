@@ -63,15 +63,10 @@ class Notification {
 	 * @param string      $body     The body of the notification
 	 * @param string      $summary  Optional summary of the notification
 	 * @param array       $params   Optional array of parameters
+	 *
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(\ElggEntity $from, \ElggEntity $to, $language, $subject, $body, $summary = '', array $params = []) {
-		if (!$from) {
-			throw new \InvalidArgumentException('$from is not a valid \ElggEntity');
-		}
-		if (!$to) {
-			throw new \InvalidArgumentException('$to is not a valid \ElggEntity');
-		}
 		$this->from = $from;
 		$this->to = $to;
 		$this->language = $language;

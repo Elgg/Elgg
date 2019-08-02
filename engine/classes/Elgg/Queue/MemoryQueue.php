@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Queue;
 
 /**
@@ -6,7 +7,7 @@ namespace Elgg\Queue;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Queue
@@ -52,4 +53,3 @@ class MemoryQueue implements \Elgg\Queue\Queue {
 		return count($this->queue);
 	}
 }
-

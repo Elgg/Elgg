@@ -150,8 +150,11 @@ function pages_get_navigation_tree($container) {
  * @param ElggPage   $selected  Selected page
  *
  * @return void
+ *
+ * @deprecated
  */
 function pages_register_navigation_tree($container, $selected = null) {
+	elgg_deprecated_notice(__METHOD__ . ' is deprecated. Menu items for a page now come from a hook callback.', '3.1');
 	
 	$pages = pages_get_navigation_tree($container);
 	if (empty($pages)) {

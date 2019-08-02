@@ -85,22 +85,6 @@ function elgg_disable_query_cache() {
 }
 
 /**
- * Runs unit tests for the database
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $value Array of tests
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_db_test($hook, $type, $value) {
-	$value[] = ElggDataFunctionsTest::class;
-	return $value;
-}
-
-/**
  * Register database seeds
  *
  * @elgg_plugin_hook seeds database
@@ -123,10 +107,9 @@ function _elgg_db_register_seeds(\Elgg\Hook $hook) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_db_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_db_test');
 	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds');
 }
 

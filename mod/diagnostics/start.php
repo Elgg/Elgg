@@ -23,22 +23,17 @@ function diagnostics_init() {
 /**
  * Generate a basic report
  *
- * @param string $hook        'diagnostics:report'
- * @param string $type        'system'
- * @param string $returnvalue current return value
- * @param mixed  $params      supplied params
+ * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
  *
  * @return string
  */
-function diagnostics_basic_hook($hook, $type, $returnvalue, $params) {
+function diagnostics_basic_hook(\Elgg\Hook $hook) {
 
 	// Get version information
 	$version = elgg_get_version();
 	$release = elgg_get_version(true);
 
-	$returnvalue .= elgg_echo('diagnostics:report:basic', [$release, $version]);
-
-	return $returnvalue;
+	return $hook->getValue() . elgg_echo('diagnostics:report:basic', [$release, $version]);
 }
 
 /**
@@ -73,32 +68,24 @@ function diagnostics_md5_dir($dir) {
 /**
  * Get some information about the files installed on a system
  *
- * @param string $hook        'diagnostics:report'
- * @param string $type        'system'
- * @param string $returnvalue current return value
- * @param mixed  $params      supplied params
+ * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
  *
  * @return string
  */
-function diagnostics_sigs_hook($hook, $type, $returnvalue, $params) {
+function diagnostics_sigs_hook(\Elgg\Hook $hook) {
 
 	$base_dir = elgg_get_root_path();
-	$returnvalue .= elgg_echo('diagnostics:report:md5', [diagnostics_md5_dir($base_dir)]);
-
-	return $returnvalue;
+	return $hook->getValue() . elgg_echo('diagnostics:report:md5', [diagnostics_md5_dir($base_dir)]);
 }
 
 /**
  * Get some information about the php install
  *
- * @param string $hook        'diagnostics:report'
- * @param string $type        'system'
- * @param string $returnvalue current return value
- * @param mixed  $params      supplied params
+ * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
  *
  * @return string
  */
-function diagnostics_phpinfo_hook($hook, $type, $returnvalue, $params) {
+function diagnostics_phpinfo_hook(\Elgg\Hook $hook) {
 
 	ob_start();
 	phpinfo();
@@ -116,27 +103,20 @@ function diagnostics_phpinfo_hook($hook, $type, $returnvalue, $params) {
 		}
 	}
 
-	$returnvalue .= elgg_echo('diagnostics:report:php', [print_r($phpinfo, true)]);
-
-	return $returnvalue;
+	return $hook->getValue() . elgg_echo('diagnostics:report:php', [print_r($phpinfo, true)]);
 }
 
 /**
  * Get global variables
  *
- * @param string $hook        'diagnostics:report'
- * @param string $type        'system'
- * @param string $returnvalue current return value
- * @param mixed  $params      supplied params
+ * @param \Elgg\Hook $hook 'diagnostics:report', 'system'
  *
  * @return string
  */
-function diagnostics_globals_hook($hook, $type, $returnvalue, $params) {
+function diagnostics_globals_hook(\Elgg\Hook $hook) {
 
 	$output = str_replace(elgg_get_config('dbpass'), '<<DBPASS>>', print_r($GLOBALS, true));
-	$returnvalue .= elgg_echo('diagnostics:report:globals', [$output]);
-
-	return $returnvalue;
+	return $hook->getValue() . elgg_echo('diagnostics:report:globals', [$output]);
 }
 
 return function() {

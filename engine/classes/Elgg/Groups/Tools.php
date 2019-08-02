@@ -9,8 +9,7 @@ use ElggGroup;
 /**
  * Group tools service
  *
- * @access private
- * @internal
+ * NOTE: This is part of the public Elgg Service DI
  */
 class Tools {
 

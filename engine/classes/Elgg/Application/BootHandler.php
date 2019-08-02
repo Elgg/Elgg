@@ -8,7 +8,6 @@ use Elgg\Event;
 /**
  * Handles application boot sequence
  *
- * @access private
  * @internal
  */
 class BootHandler {
@@ -183,5 +182,6 @@ class BootHandler {
 		elgg_set_entity_class('object', 'widget', \ElggWidget::class);
 		elgg_set_entity_class('object', 'comment', \ElggComment::class);
 		elgg_set_entity_class('object', 'elgg_upgrade', \ElggUpgrade::class);
+		elgg_set_entity_class('object', 'admin_notice', \ElggAdminNotice::class);
 	}
 }

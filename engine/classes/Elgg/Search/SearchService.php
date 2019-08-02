@@ -24,7 +24,7 @@ use Elgg\Database\LegacyQueryOptionsAdapter;
  * @todo   Implement type/subtype normalization into types => subtypes pairs and add logic to search for multiple
  *         subtypes
  *
- * @access private
+ * @internal
  * @since  3.0
  */
 class SearchService {

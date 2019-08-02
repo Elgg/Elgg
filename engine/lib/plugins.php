@@ -12,7 +12,7 @@
  *
  * @return bool
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_generate_plugin_entities() {
 	return _elgg_services()->plugins->generateEntities();
@@ -49,7 +49,7 @@ function elgg_plugin_exists($id) {
  *
  * @return int
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function _elgg_get_max_plugin_priority() {
 	return _elgg_services()->plugins->getMaxPriority();
@@ -237,27 +237,10 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
 }
 
 /**
- * Runs unit tests for plugin API.
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_plugins_test($hook, $type, $value, $params) {
-	$value[] = ElggCorePluginsAPITest::class;
-	return $value;
-}
-
-/**
  * Initialize the plugin system
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_plugins_init() {
 
@@ -265,8 +248,6 @@ function _elgg_plugins_init() {
 		elgg_register_ajax_view('object/plugin/full');
 		elgg_register_ajax_view('object/plugin/details');
 	}
-
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_plugins_test');
 }
 
 /**

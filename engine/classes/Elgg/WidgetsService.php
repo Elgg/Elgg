@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\Database\EntityTable\UserFetchFailureException;
@@ -8,7 +9,7 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
  *
  * Use the elgg_* versions instead.
  *
- * @access private
+ * @internal
  *
  * @package    Elgg.Core
  * @subpackage Widgets
@@ -40,8 +41,6 @@ class WidgetsService {
 	 * @return \ElggWidget[] An 2D array of \ElggWidget objects
 	 *
 	 * @see elgg_get_widgets()
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function getWidgets($owner_guid, $context) {
 		$widget_cache_key = "$context-$owner_guid";
@@ -109,8 +108,6 @@ class WidgetsService {
 	 * @return int|false Widget GUID or false on failure
 	 *
 	 * @see elgg_create_widget()
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function createWidget($owner_guid, $handler, $context, $access_id = null) {
 		if (empty($owner_guid) || empty($handler)) {
@@ -150,8 +147,6 @@ class WidgetsService {
 	 * @return bool
 	 *
 	 * @see elgg_can_edit_widget_layout()
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function canEditLayout($context, $user_guid = 0) {
 		try {
@@ -185,16 +180,10 @@ class WidgetsService {
 	 * @return bool
 	 *
 	 * @see elgg_register_widget_type()
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function registerType(WidgetDefinition $definition) {
-		if (!($definition instanceof WidgetDefinition)) {
-			return false;
-		}
-		
 		$id = $definition->id;
-		if (!$id) {
+		if (empty($id)) {
 			return false;
 		}
 		
@@ -211,15 +200,14 @@ class WidgetsService {
 	 * @return bool
 	 *
 	 * @see elgg_unregister_widget_type()
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function unregisterType($id) {
-		if (isset($this->widgets[$id])) {
-			unset($this->widgets[$id]);
-			return true;
+		if (!isset($this->widgets[$id])) {
+			return false;
 		}
-		return false;
+		
+		unset($this->widgets[$id]);
+		return true;
 	}
 
 	/**
@@ -232,8 +220,6 @@ class WidgetsService {
 	 * @return bool
 	 *
 	 * @see elgg_is_widget_type()
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function validateType($id, $context = null, \ElggEntity $container = null) {
 		$types = $this->getTypes([
@@ -254,9 +240,6 @@ class WidgetsService {
 	 * Get all widgets
 	 *
 	 * @return \Elgg\WidgetDefinition[]
-	 *
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function getAllTypes() {
 		return $this->widgets;
@@ -271,7 +254,6 @@ class WidgetsService {
 	 *
 	 * @return string|boolean
 	 *
-	 * @access private
 	 * @since 2.2.0
 	 */
 	public function getNameById($id, $context = '', \ElggEntity $container = null) {
@@ -294,9 +276,6 @@ class WidgetsService {
 	 * )
 	 *
 	 * @return \Elgg\WidgetDefinition[]
-	 *
-	 * @access private
-	 * @since 1.9.0
 	 */
 	public function getTypes(array $params = []) {
 		$context = elgg_extract('context', $params, '');
@@ -331,4 +310,3 @@ class WidgetsService {
 		return $widgets;
 	}
 }
-

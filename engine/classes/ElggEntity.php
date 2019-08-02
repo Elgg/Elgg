@@ -154,7 +154,7 @@ abstract class ElggEntity extends \ElggData implements
 		parent::initializeAttributes();
 
 		$this->attributes['guid'] = null;
-		$this->attributes['type'] = null;
+		$this->attributes['type'] = $this->getType();
 		$this->attributes['subtype'] = null;
 
 		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
@@ -164,8 +164,6 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = "yes";
-
-		$this->attributes['type'] = $this->getType();
 	}
 
 	/**
@@ -350,24 +348,6 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Unset a property from metadata or attribute.
-	 *
-	 * @warning If you use this to unset an attribute, you must save the object!
-	 *
-	 * @param string $name The name of the attribute or metadata.
-	 *
-	 * @return void
-	 * @todo some attributes should be set to null or other default values
-	 */
-	public function __unset($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			$this->attributes[$name] = "";
-		} else {
-			$this->deleteMetadata($name);
-		}
-	}
-
-	/**
 	 * Set metadata on this entity.
 	 *
 	 * Plugin developers usually want to use the magic set method ($entity->name = 'value').
@@ -385,6 +365,10 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
+		if ($value === null) {
+			return $this->deleteMetadata($name);
+		}
+		
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
 		if (is_array($value)) {
@@ -603,6 +587,11 @@ abstract class ElggEntity extends \ElggData implements
 	 * @throws DatabaseException
 	 */
 	public function setPrivateSetting($name, $value) {
+		
+		if ($value === null) {
+			return $this->removePrivateSetting($name);
+		}
+		
 		if (is_bool($value)) {
 			$value = (int) $value;
 		}
@@ -709,15 +698,25 @@ abstract class ElggEntity extends \ElggData implements
 	 * @since 1.8
 	 */
 	public function deleteAnnotations($name = null) {
-		$options = [
-			'guid' => $this->guid,
-			'limit' => 0
-		];
-		if ($name) {
-			$options['annotation_name'] = $name;
+		if ($this->guid) {
+			$options = [
+				'guid' => $this->guid,
+				'limit' => 0
+			];
+			if ($name) {
+				$options['annotation_name'] = $name;
+			}
+	
+			return elgg_delete_annotations($options);
 		}
-
-		return elgg_delete_annotations($options);
+		
+		if ($name) {
+			unset($this->temp_annotations[$name]);
+		} else {
+			$this->temp_annotations = [];
+		}
+		
+		return true;
 	}
 
 	/**
@@ -765,8 +764,6 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Enables annotations for this entity, optionally based on name.
-	 *
-	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
 	 *
 	 * @param string $name An options name of annotations to enable.
 	 * @return bool
@@ -936,11 +933,10 @@ abstract class ElggEntity extends \ElggData implements
 			return $num;
 		}
 
-		return elgg_get_entities([
+		return elgg_count_entities([
 			'type' => 'object',
 			'subtype' => 'comment',
 			'container_guid' => $this->getGUID(),
-			'count' => true,
 			'distinct' => false,
 		]);
 	}
@@ -1005,11 +1001,10 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return int
 	 */
 	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
-		return elgg_get_entities([
+		return elgg_count_entities([
 			'relationship' => $relationship,
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => $inverse_relationship,
-			'count' => true
 		]);
 	}
 
@@ -1021,7 +1016,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param int $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool Whether this entity is editable by the given user.
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit($user_guid = 0) {
 		return _elgg_services()->userCapabilities->canEdit($this, $user_guid);
@@ -1036,7 +1030,6 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @return bool Whether this entity is deletable by the given user.
 	 * @since 1.11
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canDelete($user_guid = 0) {
 		return _elgg_services()->userCapabilities->canDelete($this, $user_guid);
@@ -1052,7 +1045,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 * @deprecated 3.0
 	 */
 	public function canEditMetadata($metadata = null, $user_guid = 0) {
@@ -1067,7 +1059,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param string $subtype   The subtype of the entity we're looking to write
 	 *
 	 * @return bool
-	 * @see elgg_set_ignore_access()
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
 		return _elgg_services()->userCapabilities->canWriteToContainer($this, $user_guid, $type, $subtype);
@@ -1081,7 +1072,8 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @param int  $user_guid User guid (default is logged in user)
 	 * @param bool $default   Default permission
-	 * @return bool
+	 *
+	 * @return bool|null
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		return _elgg_services()->userCapabilities->canComment($this, $user_guid, $default);
@@ -1588,14 +1580,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * into volatile data.
 	 *
 	 * @param stdClass $row DB row with new entity data
+	 *
 	 * @return bool
-	 * @access private
+	 * @internal
 	 */
 	public function refresh(stdClass $row) {
-		if ($row instanceof stdClass) {
-			return $this->load($row);
-		}
-		return false;
+		return $this->load($row);
 	}
 
 	/**
@@ -1606,8 +1596,6 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * Recursively disabling an entity will disable all entities
 	 * owned or contained by the parent entity.
-	 *
-	 * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
 	 *
 	 * @note Internal: Disabling an entity sets the 'enabled' column to 'no'.
 	 *
@@ -1707,9 +1695,6 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Enable the entity
-	 *
-	 * @warning Disabled entities can't be loaded unless
-	 * {@link access_show_hidden_entities(true)} has been called.
 	 *
 	 * @param bool $recursive Recursively enable all entities disabled with the entity?
 	 * @see access_show_hiden_entities()
@@ -1987,7 +1972,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$result = true;
 		foreach ($collections as $collection) {
-			$result = $result & $ac->removeUser($this->guid, $collection->id);
+			$result &= $ac->removeUser($this->guid, $collection->id);
 		}
 
 		return $result;
@@ -2026,7 +2011,7 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @param int $posted Timestamp of last action
 	 * @return int|false
-	 * @access private
+	 * @internal
 	 */
 	public function updateLastAction($posted = null) {
 		$posted = _elgg_services()->entityTable->updateLastAction($this, $posted);
@@ -2092,16 +2077,18 @@ abstract class ElggEntity extends \ElggData implements
 
 		_elgg_services()->entityCache->save($this);
 
-		if ($persist) {
-			$tmp = $this->volatile;
-
-			// don't store volatile data
-			$this->volatile = [];
-
-			_elgg_services()->dataCache->entities->save($this->guid, $this);
-
-			$this->volatile = $tmp;
+		if (!$persist) {
+			return;
 		}
+		
+		$tmp = $this->volatile;
+
+		// don't store volatile data
+		$this->volatile = [];
+
+		_elgg_services()->dataCache->entities->save($this->guid, $this);
+
+		$this->volatile = $tmp;
 	}
 
 	/**

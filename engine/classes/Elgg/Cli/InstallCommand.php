@@ -47,6 +47,7 @@ class InstallCommand extends BaseCommand {
 				 * Database parameters
 				 */
 				'dbhost' => $this->ask('Enter database host [localhost]: ', 'localhost'),
+				'dbport' => $this->ask('Enter database port: '),
 				'dbuser' => $this->ask('Enter database username: '),
 				'dbpassword' => $this->ask('Enter database password: ', null, true),
 				'dbname' => $this->ask('Enter database name: '),

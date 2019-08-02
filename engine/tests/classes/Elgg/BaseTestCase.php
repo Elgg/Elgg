@@ -62,6 +62,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpass' => getenv('ELGG_DB_PASS') ? : '',
 			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
 			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
 
 			'memcache' => (bool) getenv('ELGG_MEMCACHE'),
@@ -159,7 +160,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 		$app->_services->session->removeLoggedInUser();
 		$app->_services->session->setIgnoreAccess(false);
-		access_show_hidden_entities(false);
+		$app->_services->session->setDisabledEntityVisibility(false);
 
 		// Make sure the application has been bootstrapped correctly
 		$this->assertInstanceOf(ServiceProvider::class, $app->_services, __METHOD__ . ': ServiceProvider not bootstrapped');

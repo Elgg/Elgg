@@ -7,8 +7,6 @@
  * @subpackage River
  */
 
-use Elgg\Integration\ElggCoreRiverAPITest;
-
 /**
  * Adds an item to the river.
  *
@@ -115,9 +113,9 @@ function elgg_create_river_item(array $options = []) {
 		return $id;
 	}
 
-	$ia = elgg_set_ignore_access(true);
-	$item = elgg_get_river_item_from_id($id);
-	elgg_set_ignore_access($ia);
+	$item = elgg_call(ELGG_IGNORE_ACCESS, function () use ($id) {
+		return elgg_get_river_item_from_id($id);
+	});
 
 	if (!$item) {
 		return false;
@@ -305,32 +303,16 @@ function elgg_list_river(array $options = []) {
 }
 
 /**
- * Register river unit tests
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $value current return value
- *
- * @return array
- * @codeCoverageIgnore
- */
-function _elgg_river_test($hook, $type, $value) {
-	$value[] = ElggCoreRiverAPITest::class;
-	return $value;
-}
-
-/**
  * Updates the last action of the object of an river item
  *
- * @param string         $event 'create'
- * @param string         $type  'river'
- * @param \ElggRiverItem $item  The entity being disabled
+ * @param \Elgg\Event $event 'create', 'river'
  *
  * @return void
  *
- * @access private
+ * @internal
  */
-function _elgg_river_update_object_last_action($event, $type, $item) {
+function _elgg_river_update_object_last_action(\Elgg\Event $event) {
+	$item = $event->getObject();
 	if (!$item instanceof \ElggRiverItem) {
 		return;
 	}
@@ -346,16 +328,14 @@ function _elgg_river_update_object_last_action($event, $type, $item) {
 /**
  * Disable river entries that reference a disabled entity as subject/object/target
  *
- * @param string     $event  'disable'
- * @param string     $type   'all'
- * @param ElggEntity $entity The entity being disabled
+ * @param \Elgg\Event $event 'disable', 'all'
  *
  * @return void
  *
- * @access private
+ * @internal
  */
-function _elgg_river_disable($event, $type, $entity) {
-
+function _elgg_river_disable(\Elgg\Event $event) {
+	$entity = $event->getObject();
 	if (!$entity instanceof ElggEntity) {
 		return;
 	}
@@ -375,16 +355,14 @@ QUERY;
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
  *
- * @param string     $event  'enable'
- * @param string     $type   'all'
- * @param ElggEntity $entity The entity being enabled
+ * @param \Elgg\Event $event 'enable', 'all'
  *
  * @return void
  *
- * @access private
+ * @internal
  */
-function _elgg_river_enable($event, $type, $entity) {
-
+function _elgg_river_enable(\Elgg\Event $event) {
+	$entity = $event->getObject();
 	if (!$entity instanceof ElggEntity) {
 		return;
 	}
@@ -415,7 +393,7 @@ QUERY;
  *
  * @return void|ElggMenuItem[]
  *
- * @access private
+ * @internal
  */
 function _elgg_river_menu_setup(\Elgg\Hook $hook) {
 	if (!elgg_is_logged_in()) {
@@ -451,11 +429,9 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_river_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
-
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
 	
 	elgg_register_event_handler('created', 'river', '_elgg_river_update_object_last_action');
@@ -464,7 +440,7 @@ function _elgg_river_init() {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_river_init');
 	$events->registerHandler('disable:after', 'all', '_elgg_river_disable', 600);
 	$events->registerHandler('enable:after', 'all', '_elgg_river_enable', 600);

@@ -3,6 +3,8 @@
  * Avatar remove action
  */
 
+elgg_deprecated_notice("The action 'avatar/remove' has been deprecated, use 'avatar/upload'", '3.1');
+
 $user_guid = (int) get_input('guid');
 $user = get_user($user_guid);
 

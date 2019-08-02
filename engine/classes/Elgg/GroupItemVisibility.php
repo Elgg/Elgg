@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 /**
@@ -8,9 +9,8 @@ namespace Elgg;
  * @package    Elgg.Core
  * @subpackage Groups
  *
- * @access private
+ * @internal
  * @deprecated 3.0 Use ElggGroup::canAccessContent or Gatekeeper::assertAccessibleGroup
- *
  */
 class GroupItemVisibility {
 
@@ -47,7 +47,7 @@ class GroupItemVisibility {
 	 *
 	 * @deprecated 3.0 Use ElggGroup::canAccessContent
 	 */
-	static public function factory($container_guid, $use_cache = true) {
+	public static function factory($container_guid, $use_cache = true) {
 		// cache because this may be called repeatedly during river display, and
 		// due to need to check group visibility, cache will be disabled for some
 		// get_entity() calls
@@ -112,4 +112,3 @@ class GroupItemVisibility {
 		return $return;
 	}
 }
-

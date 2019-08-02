@@ -13,5 +13,4 @@ namespace Elgg\Export;
  */
 class AccessCollection extends Data {
 
-
 }

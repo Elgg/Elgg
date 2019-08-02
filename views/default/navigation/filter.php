@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Renders a filter menu
  *
@@ -13,7 +12,6 @@
  *                             If not provided, will be determined by current page's URL
  */
 
-$filter_value = elgg_extract('filter_value', $vars);
 $filter_tabs = (array) elgg_extract('filter', $vars, []);
 foreach ($filter_tabs as $name => $tab) {
 	if (!is_array($tab)) {
@@ -21,9 +19,6 @@ foreach ($filter_tabs as $name => $tab) {
 	}
 	if (!isset($tab['name'])) {
 		$tab['name'] = $name;
-	}
-	if (!isset($tab['selected']) && $filter_value) {
-		$tab['selected'] = $tab['name'] == $filter_value;
 	}
 	$filter_tabs[$name] = ElggMenuItem::factory($tab);
 }
@@ -35,5 +30,6 @@ $menu_params = $vars;
 $menu_params['items'] = $filter_tabs;
 $menu_params['sort_by'] = 'priority';
 $menu_params['class'] = 'elgg-menu-filter';
+$menu_params['selected_item_name'] = elgg_extract('selected_item_name', $vars, elgg_extract('filter_value', $vars)); // for BC
 
 echo elgg_view_menu($menu_name, $menu_params);

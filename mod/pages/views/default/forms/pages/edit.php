@@ -8,10 +8,13 @@ if (empty($fields)) {
 	return;
 }
 
-$user = elgg_get_logged_in_user_entity();
-
 $entity = elgg_extract('entity', $vars);
 $parent_guid = elgg_extract('parent_guid', $vars);
+
+$can_change_access = true;
+if ($entity instanceof ElggPage && $entity->getOwnerEntity()) {
+	$can_change_access = $entity->getOwnerEntity()->canEdit();
+}
 
 foreach ($fields as $name => $type) {
 	$field = [
@@ -28,7 +31,7 @@ foreach ($fields as $name => $type) {
 
 		case 'access_id' :
 		case 'write_access_id' :
-			if (!$user->canEdit()) {
+			if (!$can_change_access) {
 				// Only owner and admins can change access
 				continue(2);
 			}

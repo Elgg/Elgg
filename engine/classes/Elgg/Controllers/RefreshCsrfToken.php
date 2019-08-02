@@ -8,7 +8,6 @@ use Elgg\TimeUsing;
 /**
  * Handles requests to /refresh_token
  *
- * @access private
  * @internal
  */
 class RefreshCsrfToken {

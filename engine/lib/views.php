@@ -85,7 +85,7 @@ function elgg_get_viewtype() {
  * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
  *
  * @return bool
- * @access private
+ * @internal
  * @since 1.9
  */
 function _elgg_is_valid_viewtype($viewtype) {
@@ -262,7 +262,6 @@ function elgg_view($view, $vars = [], $viewtype = '') {
  * @return string The parsed view
  *
  * @see elgg_view()
- * @access private
  */
 function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
 	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
@@ -443,7 +442,7 @@ function elgg_view_resource($name, array $vars = []) {
  *
  * @param string $title Page title for <head>
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_views_prepare_head($title) {
 	$params = [
@@ -504,21 +503,21 @@ function _elgg_views_prepare_head($title) {
 /**
  * Add favicon link tags to HTML head
  *
- * @param string $hook        "head"
- * @param string $type        "page"
- * @param array  $head_params Head params
- *                            <code>
- *                               [
- *                                  'title' => '',
- *                                  'metas' => [],
- *                                  'links' => [],
- *                               ]
- *                            </code>
- * @param array  $params      Hook params
+ * @param \Elgg\Hook $hook "head", "page"
+ * returnvalue contains head params
+ *		<code>
+ *      	[
+ *				'title' => '',
+ *				'metas' => [],
+ *				'links' => [],
+ *			]
+ *		</code>
+ *
  * @return array
  */
-function _elgg_views_prepare_favicon_links($hook, $type, $head_params, $params) {
-
+function _elgg_views_prepare_favicon_links(\Elgg\Hook $hook) {
+	$head_params = $hook->getValue();
+	
 	$head_params['links']['apple-touch-icon'] = [
 		'rel' => 'apple-touch-icon',
 		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
@@ -672,7 +671,7 @@ function elgg_view_layout($layout_name, $vars = []) {
  *
  * @param array $vars Vars
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_normalize_content_layout_vars(array $vars = []) {
 
@@ -738,17 +737,16 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
  * @param array                      $vars An associative array of display options for the menu.
  *
- *                          Options include:
- *                              items => an array of unprepared menu items
- *                                       as ElggMenuItem or menu item factory options
- *                              sort_by => string or php callback
- *                                  string options: 'name', 'priority' (default), 'text'
- *                                  or a php callback (a compare function for usort)
- *                              handler: string the page handler to build action URLs
- *                              entity: \ElggEntity to use to build action URLs
- *                              class: string the class for the entire menu.
- *                              menu_view: name of the view to be used to render the menu
- *                              show_section_headers: bool show headers before menu sections.
+ *  Options include:
+ *    items                => (array) an array of unprepared menu items as ElggMenuItem or menu item factory options
+ *    sort_by              => (string) or php callback string options: 'name', 'priority' (default), 'text'
+ *                            or a php callback (a compare function for usort)
+ *    handler              => (string) the page handler to build action URLs
+ *    entity               => (\ElggEntity) entity to use to build action URLs
+ *    class                => (string) the class for the entire menu
+ *    menu_view            => (string) name of the view to be used to render the menu
+ *    show_section_headers => (bool) show headers before menu sections
+ *    selected_item_name   => (string) the menu item name to be selected
  *
  * @return string
  * @since 1.8.0
@@ -842,11 +840,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  */
 function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 
-	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof \ElggEntity)) {
-		return false;
-	}
-
 	$defaults = [
 		'full_view' => true,
 	];
@@ -903,11 +896,6 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
  * @return string HTML to display or false
  */
 function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []) {
-
-	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof \ElggEntity)) {
-		return false;
-	}
 
 	$vars['entity'] = $entity;
 	$vars['size'] = $size;
@@ -1052,7 +1040,7 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *      'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of annotations
- * @access private
+ * @internal
  */
 function elgg_view_annotation_list($annotations, array $vars = []) {
 	$defaults = [
@@ -1089,10 +1077,7 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  * @todo Change the hook name.
  */
 function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
-	if (!($entity instanceof \ElggEntity)) {
-		return false;
-	}
-
+	
 	$entity_type = $entity->getType();
 
 	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
@@ -1153,7 +1138,8 @@ function elgg_view_friendly_time($time) {
  * @return string|false Rendered comments or false on failure
  */
 function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
-	if (!($entity instanceof \ElggEntity)) {
+	
+	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
 
@@ -1164,9 +1150,9 @@ function elgg_view_comments($entity, $add_comment = true, array $vars = []) {
 	$output = elgg_trigger_plugin_hook('comments', $entity->getType(), $vars, false);
 	if ($output !== false) {
 		return $output;
-	} else {
-		return elgg_view('page/elements/comments', $vars);
 	}
+	
+	return elgg_view('page/elements/comments', $vars);
 }
 
 /**
@@ -1531,7 +1517,7 @@ function elgg_view_tagcloud(array $options = []) {
  *                                  list items that are not entity, annotation or river
  * @return false|string
  * @since 1.8.0
- * @access private
+ * @internal
  */
 function elgg_view_list_item($item, array $vars = []) {
 
@@ -1602,7 +1588,7 @@ function elgg_unregister_rss_link() {
  * Should the RSS view of this URL be linked to?
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_has_rss_link() {
 	if (_elgg_config()->disable_rss) {
@@ -1613,48 +1599,26 @@ function _elgg_has_rss_link() {
 }
 
 /**
- * Auto-registers views from a location.
- *
- * @note Views in plugin/views/ are automatically registered for active plugins.
- * Plugin authors would only need to call this if optionally including
- * an entire views structure.
- *
- * @param string $view_base Optional The base of the view name without the view type.
- * @param string $folder    Required The folder to begin looking in
- * @param string $ignored   This argument is ignored
- * @param string $viewtype  The type of view we're looking at (default, rss, etc)
- *
- * @return bool returns false if folder can't be read
- * @since 1.7.0
- * @see elgg_set_view_location()
- * @access private
- */
-function autoregister_views($view_base, $folder, $ignored, $viewtype) {
-	return _elgg_services()->views->autoregisterViews($view_base, $folder, $viewtype);
-}
-
-/**
  * Minifies simplecache CSS and JS views by handling the "simplecache:generate" hook
  *
- * @param string $hook    The name of the hook
- * @param string $type    View type (css, js, or unknown)
- * @param string $content Content of the view
- * @param array  $params  Array of parameters
+ * @param \Elgg\Hook $hook 'simplecache:generate', 'css'
  *
  * @return string|null View content minified (if css/js type)
- * @access private
+ * @internal
  */
-function _elgg_views_minify($hook, $type, $content, $params) {
-	if (preg_match('~[\.-]min\.~', $params['view'])) {
+function _elgg_views_minify(\Elgg\Hook $hook) {
+	if (preg_match('~[\.-]min\.~', $hook->getParam('view'))) {
 		// bypass minification
 		return;
 	}
 
-	if ($type == 'js') {
+	$content = $hook->getValue();
+	
+	if ($hook->getType() === 'js') {
 		if (_elgg_config()->simplecache_minify_js) {
 			return JSMin::minify($content);
 		}
-	} elseif ($type == 'css') {
+	} elseif ($hook->getType() === 'css') {
 		if (_elgg_config()->simplecache_minify_css) {
 			$cssmin = new CSSmin();
 			return $cssmin->run($content);
@@ -1665,33 +1629,27 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 /**
  * Preprocesses CSS views sent by /cache URLs
  *
- * @param string $hook    The name of the hook "simplecache:generate" or "cache:generate"
- * @param string $type    "css"
- * @param string $content Content of the view
- * @param array  $params  Array of parameters
+ * @param \Elgg\Hook $hook 'cache:generate' | 'simplecache:generate', 'css'
  *
  * @return string|null View content
- * @access private
+ * @internal
  */
-function _elgg_views_preprocess_css($hook, $type, $content, $params) {
-	$options = elgg_extract('compiler_options', $params, []);
-	return _elgg_services()->cssCompiler->compile($content, $options);
+function _elgg_views_preprocess_css(\Elgg\Hook $hook) {
+	$options = $hook->getParam('compiler_options', []);
+	return _elgg_services()->cssCompiler->compile($hook->getValue(), $options);
 }
 
 /**
  * Inserts module names into anonymous modules by handling the "simplecache:generate" and "cache:generate" hook.
  *
- * @param string $hook    The name of the hook
- * @param string $type    View type (css, js, or unknown)
- * @param string $content Content of the view
- * @param array  $params  Array of parameters
+ * @param \Elgg\Hook $hook 'cache:generate' | 'simplecache:generate', 'js'
  *
  * @return string|null View content minified (if css/js type)
- * @access private
+ * @internal
  */
-function _elgg_views_amd($hook, $type, $content, $params) {
+function _elgg_views_amd(\Elgg\Hook $hook) {
 	$filter = new \Elgg\Amd\ViewFilter();
-	return $filter->filter($params['view'], $content);
+	return $filter->filter($hook->getParam('view'), $hook->getValue());
 }
 
 /**
@@ -1699,7 +1657,7 @@ function _elgg_views_amd($hook, $type, $content, $params) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_views_send_header_x_frame_options() {
 	elgg_set_http_header('X-Frame-Options: SAMEORIGIN');
@@ -1730,7 +1688,7 @@ function _elgg_views_send_header_x_frame_options() {
  * @param string $path Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
  *
  * @return bool
- * @access private
+ * @internal
  */
 function _elgg_view_may_be_altered($view, $path) {
 	$views = _elgg_services()->views;
@@ -1760,51 +1718,61 @@ function _elgg_view_may_be_altered($view, $path) {
  * This ensures simplecache is cleared during upgrades. See #2252
  *
  * @return void
- * @access private
+ * @internal
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
 	_elgg_services()->viewCacher->registerCoreViews();
 
 	// jQuery and UI must come before require. See #9024
-	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
-	elgg_load_js('jquery');
+	elgg_register_external_file('js', 'jquery', elgg_get_simplecache_url('jquery.js'), 'head');
+	elgg_load_external_file('js', 'jquery');
 
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
-	elgg_load_js('jquery-ui');
+	elgg_register_external_file('js', 'jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
+	elgg_load_external_file('js', 'jquery-ui');
 
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
-	elgg_load_js('elgg.require_config');
+	elgg_register_external_file('js', 'elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
+	elgg_load_external_file('js', 'elgg.require_config');
 
-	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
-	elgg_load_js('require');
+	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'), 'head');
+	elgg_load_external_file('js', 'require');
 
-	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
-	elgg_load_js('elgg');
+	elgg_register_external_file('js', 'elgg', elgg_get_simplecache_url('elgg.js'), 'head');
+	elgg_load_external_file('js', 'elgg');
 
-	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
-	elgg_load_css('font-awesome');
+	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
+	elgg_load_external_file('css', 'font-awesome');
+	
+	elgg_define_js('cropperjs', [
+		'src' => elgg_get_simplecache_url('cropperjs/cropper.min.js'),
+	]);
+	elgg_define_js('jquery-cropper/jquery-cropper', [
+		'src' => elgg_get_simplecache_url('jquery-cropper/jquery-cropper.min.js'),
+	]);
 
-	elgg_register_css('elgg', elgg_get_simplecache_url('elgg.css'));
-	elgg_load_css('elgg');
+	elgg_require_css('elgg');
 
 	elgg_register_simplecache_view('elgg/init.js');
 
 	elgg_extend_view('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
+	elgg_extend_view('elgg.css', 'entity/edit/icon/crop.css');
 
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
 	]);
 
-	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
+	// @deprecated 3.1
+	elgg_register_external_file('js', 'elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
 
 	// @deprecated 2.2
-	elgg_register_js('elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
+	elgg_register_external_file('js', 'elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
 
-	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
-	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
+	// @deprecated 3.1 no longer use imageareaselect js and css
+	elgg_register_external_file('js', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
+	elgg_register_external_file('css', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
-	elgg_register_css('jquery.treeview', elgg_get_simplecache_url('jquery-treeview/jquery.treeview.css'));
+	// @deprecated 3.1 no longer use treeview js and css
+	elgg_register_external_file('css', 'jquery.treeview', elgg_get_simplecache_url('jquery-treeview/jquery.treeview.css'));
 	elgg_define_js('jquery.treeview', [
 		'src' => elgg_get_simplecache_url('jquery-treeview/jquery.treeview.js'),
 		'exports' => 'jQuery.fn.treeview',
@@ -1831,7 +1799,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
 
 	// set default icon sizes - can be overridden with plugin
-	if (!_elgg_config()->icon_sizes) {
+	if (!_elgg_config()->hasValue('icon_sizes')) {
 		$icon_sizes = [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
@@ -1853,7 +1821,7 @@ function elgg_views_boot() {
  * Unlike _elgg_get_js_page_data(), the keys returned are literal expressions.
  *
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_get_js_site_data() {
 	$language = _elgg_config()->language;
@@ -1877,7 +1845,7 @@ function _elgg_get_js_site_data() {
  * Get the initial contents of "elgg" client side. Will be extended by elgg.js.
  *
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_get_js_page_data() {
 	$data = elgg_trigger_plugin_hook('elgg.data', 'page', null, []);
@@ -1934,7 +1902,7 @@ function _elgg_get_js_page_data() {
  * @param string $viewtype Temporary viewtype ('' to leave current)
  *
  * @return mixed
- * @access private
+ * @internal
  */
 function _elgg_view_under_viewtype($view, $vars, $viewtype) {
 	$current_view_type = null;
@@ -1955,15 +1923,14 @@ function _elgg_view_under_viewtype($view, $vars, $viewtype) {
 /**
  * Set lightbox config
  *
- * @param string $hook   "elgg.data"
- * @param string $type   "site"
- * @param array  $return Data
- * @param array  $params Hook params
+ * @param \Elgg\Hook $hook "elgg.data", "site"
+ *
  * @return array
- * @access private
+ * @internal
  */
-function _elgg_set_lightbox_config($hook, $type, $return, $params) {
-
+function _elgg_set_lightbox_config(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
+	
 	$return['lightbox'] = [
 		'current' => elgg_echo('js:lightbox:current', ['{current}', '{total}']),
 		'previous' => elgg_view_icon('caret-left'),
@@ -1987,7 +1954,7 @@ function _elgg_set_lightbox_config($hook, $type, $return, $params) {
  * @param \Elgg\Hook $hook 'view_vars' 'elements/forms/help'
  *
  * @return void|array
- * @access private
+ * @internal
  */
 function _elgg_views_file_help_upload_limit(\Elgg\Hook $hook) {
 
@@ -2023,7 +1990,7 @@ function _elgg_views_file_help_upload_limit(\Elgg\Hook $hook) {
  * @param bool  $map_sprites Map legacy Elgg sprites
  *
  * @return array
- * @access private
+ * @internal
  */
 function _elgg_map_icon_glyph_class(array $classes, $map_sprites = true) {
 
@@ -2741,5 +2708,4 @@ function _elgg_map_icon_glyph_class(array $classes, $map_sprites = true) {
 	$classes = array_unique($classes);
 
 	return elgg_trigger_plugin_hook('classes', 'icon', null, $classes);
-
 }

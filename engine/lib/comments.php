@@ -13,7 +13,7 @@ use Elgg\Database\QueryBuilder;
  * Comments initialization function
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
@@ -73,7 +73,7 @@ function elgg_comments_per_page(ElggEntity $container = null) {
  * @param int $fallback_guid GUID of the containing entity
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$fail = function () {
@@ -108,11 +108,10 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
 	$condition = function(QueryBuilder $qb, $main_alias) use ($comment, $operator) {
 		return $qb->compare("{$main_alias}.guid", $operator, $comment->guid, ELGG_VALUE_GUID);
 	};
-	$count = elgg_get_entities([
+	$count = elgg_count_entities([
 		'type' => 'object',
 		'subtype' => 'comment',
 		'container_guid' => $container->guid,
-		'count' => true,
 		'wheres' => [$condition],
 	]);
 	$limit = (int) get_input('limit');
@@ -142,18 +141,15 @@ function _elgg_comment_redirect($comment_guid, $fallback_guid) {
  * Object being commented on is used as the container of the comment so
  * permission check must be overridden if user isn't the owner of the object.
  *
- * @param string  $hook   'container_permissions_check'
- * @param string  $type   'object'
- * @param boolean $return Can the current user write to this container?
- * @param array   $params Array of parameters (container, user, subtype)
+ * @param \Elgg\Hook $hook 'container_permissions_check', 'object'
  *
  * @return void|true
- * @access private
+ * @internal
  * @todo this doesn't seem to make a difference if a user can comment or not
  */
-function _elgg_comments_container_permissions_override($hook, $type, $return, $params) {
+function _elgg_comments_container_permissions_override(\Elgg\Hook $hook) {
 	// is someone trying to comment, if so override permissions check
-	if (elgg_extract('subtype', $params) === 'comment') {
+	if ($hook->getParam('subtype') === 'comment') {
 		return true;
 	}
 }
@@ -161,17 +157,14 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 /**
  * By default, only authors can edit their comments.
  *
- * @param string  $hook   'permissions_check'
- * @param string  $type   'object'
- * @param boolean $return Can the given user edit the given entity?
- * @param array   $params Array of parameters (entity, user)
+ * @param \Elgg\Hook $hook 'permissions_check', 'object'
  *
  * @return void|boolean Whether the given user is allowed to edit the given comment.
- * @access private
+ * @internal
  */
-function _elgg_comments_permissions_override($hook, $type, $return, $params) {
-	$entity = elgg_extract('entity', $params);
-	$user = elgg_extract('user', $params);
+function _elgg_comments_permissions_override(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+	$user = $hook->getUserParam();
 	
 	if ($entity instanceof ElggComment && $user instanceof ElggUser) {
 		return $entity->getOwnerGUID() === $user->getGUID();
@@ -187,14 +180,13 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
  * Group discussion replies extend ElggComment objects so this takes care
  * of their notifications also.
  *
- * @param string $hook        'email'
- * @param string $type        'system'
- * @param array  $returnvalue Current mail parameters
- * @param array  $params      Original mail parameters
+ * @param \Elgg\Hook $hook 'email', 'system'
+ *
  * @return array $returnvalue Modified mail parameters
- * @access private
+ * @internal
  */
-function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $params) {
+function _elgg_comments_notification_email_subject(\Elgg\Hook $hook) {
+	$returnvalue = $hook->getValue();
 	if (!is_array($returnvalue) || !is_array($returnvalue['params'])) {
 		// another hook handler returned a non-array, let's not override it
 		return;
@@ -223,39 +215,39 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 /**
  * Update comment access to match that of the container
  *
- * @param string     $event  'update:after'
- * @param string     $type   'all'
- * @param ElggEntity $entity The updated entity
+ * @param \Elgg\Event $event 'update:after', 'all'
+ *
  * @return bool
  *
- * @access private
+ * @internal
  */
-function _elgg_comments_access_sync($event, $type, $entity) {
-	if (!($entity instanceof \ElggEntity)) {
+function _elgg_comments_access_sync(\Elgg\Event $event) {
+	$entity = $event->getObject();
+	if (!$entity instanceof \ElggEntity) {
 		return true;
 	}
 	
 	// need to override access in case comments ended up with ACCESS_PRIVATE
 	// and to ensure write permissions
-	$ia = elgg_set_ignore_access(true);
-	$options = [
-		'type' => 'object',
-		'subtype' => 'comment',
-		'container_guid' => $entity->getGUID(),
-		'wheres' => [function(\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
-			return $qb->compare("{$main_alias}.access_id", '!=', $entity->access_id, ELGG_VALUE_INTEGER);
-		}],
-		'limit' => 0,
-	];
-
-	$batch = new \ElggBatch('elgg_get_entities', $options, null, 25, false);
-	foreach ($batch as $comment) {
-		// Update comment access_id
-		$comment->access_id = $entity->access_id;
-		$comment->save();
-	}
-		
-	elgg_set_ignore_access($ia);
+	elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity) {
+		$comments = elgg_get_entities([
+			'type' => 'object',
+			'subtype' => 'comment',
+			'container_guid' => $entity->guid,
+			'wheres' => [function(\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
+				return $qb->compare("{$main_alias}.access_id", '!=', $entity->access_id, ELGG_VALUE_INTEGER);
+			}],
+			'limit' => 0,
+			'batch' => true,
+			'batch_inc_offset' => false,
+		]);
+	
+		foreach ($comments as $comment) {
+			// Update comment access_id
+			$comment->access_id = $entity->access_id;
+			$comment->save();
+		}
+	});
 	
 	return true;
 }
@@ -263,18 +255,15 @@ function _elgg_comments_access_sync($event, $type, $entity) {
 /**
  * Add the owner of the content being commented on to the subscribers
  *
- * @param string $hook        'get'
- * @param string $type        'subscribers'
- * @param array  $returnvalue current subscribers
- * @param array  $params      supplied params
+ * @param \Elgg\Hook $hook 'get', 'subscribers'
  *
  * @return void|array
  *
- * @access private
+ * @internal
  */
-function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $returnvalue, $params) {
+function _elgg_comments_add_content_owner_to_subscriptions(\Elgg\Hook $hook) {
 	
-	$event = elgg_extract('event', $params);
+	$event = $hook->getParam('event');
 	if (!$event instanceof \Elgg\Notifications\SubscriptionNotificationEvent) {
 		return;
 	}
@@ -298,6 +287,8 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 		return;
 	}
 	
+	$returnvalue = $hook->getValue();
+	
 	$returnvalue[$content_owner->guid] = [];
 	foreach ($notification_settings as $method => $enabled) {
 		if (empty($enabled)) {
@@ -313,33 +304,32 @@ function _elgg_comments_add_content_owner_to_subscriptions($hook, $type, $return
 /**
  * Set the notification message for the owner of the content being commented on
  *
- * @param string                           $hook        'prepare'
- * @param string                           $type        'notification:create:object:comment'
- * @param \Elgg\Notifications\Notification $returnvalue current notification message
- * @param array                            $params      supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:comment'
  *
  * @return void|\Elgg\Notifications\Notification
  *
- * @access private
+ * @internal
  */
-function _elgg_comments_prepare_content_owner_notification($hook, $type, $returnvalue, $params) {
+function _elgg_comments_prepare_content_owner_notification(\Elgg\Hook $hook) {
 	
-	$comment = elgg_extract('object', $params);
+	$comment = $hook->getParam('object');
 	if (!$comment instanceof ElggComment) {
 		return;
 	}
 	
 	/* @var $content \ElggEntity */
 	$content = $comment->getContainerEntity();
-	$recipient = elgg_extract('recipient', $params);
+	$recipient = $hook->getParam('recipient');
 	if ($content->owner_guid !== $recipient->guid) {
 		// not the content owner
 		return;
 	}
 	
-	$language = elgg_extract('language', $params);
+	$language = $hook->getParam('language');
 	/* @var $commenter \ElggUser */
 	$commenter = $comment->getOwnerEntity();
+	
+	$returnvalue = $hook->getValue();
 	
 	$returnvalue->subject = elgg_echo('generic_comment:notification:owner:subject', [], $language);
 	$returnvalue->summary = elgg_echo('generic_comment:notification:owner:summary', [], $language);
@@ -358,33 +348,32 @@ function _elgg_comments_prepare_content_owner_notification($hook, $type, $return
 /**
  * Set the notification message for interested users
  *
- * @param string                           $hook        'prepare'
- * @param string                           $type        'notification:create:object:comment'
- * @param \Elgg\Notifications\Notification $returnvalue current notification message
- * @param array                            $params      supplied params
+ * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:comment'
  *
  * @return void|\Elgg\Notifications\Notification
  *
- * @access private
+ * @internal
  */
-function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params) {
+function _elgg_comments_prepare_notification(\Elgg\Hook $hook) {
 	
-	$comment = elgg_extract('object', $params);
+	$comment = $hook->getParam('object');
 	if (!$comment instanceof ElggComment) {
 		return;
 	}
 	
 	/* @var $content \ElggEntity */
 	$content = $comment->getContainerEntity();
-	$recipient = elgg_extract('recipient', $params);
+	$recipient = $hook->getParam('recipient');
 	if ($content->getOwnerGUID() === $recipient->getGUID()) {
 		// the content owner, this is handled in other hook
 		return;
 	}
 	
-	$language = elgg_extract('language', $params);
+	$language = $hook->getParam('language');
 	/* @var $commenter \ElggUser */
 	$commenter = $comment->getOwnerEntity();
+	
+	$returnvalue = $hook->getValue();
 	
 	$returnvalue->subject = elgg_echo('generic_comment:notification:user:subject', [$content->getDisplayName()], $language);
 	$returnvalue->summary = elgg_echo('generic_comment:notification:user:summary', [$content->getDisplayName()], $language);
@@ -409,7 +398,7 @@ function _elgg_comments_prepare_notification($hook, $type, $returnvalue, $params
  *
  * @return void|\ElggMenuItem[]
  *
- * @access private
+ * @internal
  * @since 3.0
  */
 function _elgg_comments_social_menu_setup(\Elgg\Hook $hook) {
@@ -447,26 +436,8 @@ function _elgg_comments_social_menu_setup(\Elgg\Hook $hook) {
 }
 
 /**
- * Runs unit tests for \ElggComment
- *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_comments_test($hook, $type, $value, $params) {
-	$value[] = ElggCoreCommentTest::class;
-	return $value;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_comments_init');
-	$hooks->registerHandler('unit_test', 'system', '_elgg_comments_test');
 };

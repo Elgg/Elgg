@@ -76,15 +76,12 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 /**
  * Add edit and delete links for forum replies
  *
- * @param string         $hook   'register'
- * @param string         $type   'menu:annotation'
- * @param ElggMenuItem[] $return current return value
- * @param array          $params supplied params
+ * @param \Elgg\Hook $hook 'register', 'menu:annotation'
  *
  * @return void|ElggMenuItem[]
  */
-function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
-	$annotation = elgg_extract('annotation', $params);
+function messageboard_annotation_menu_setup(\Elgg\Hook $hook) {
+	$annotation = $hook->getParam('annotation');
 	if (!$annotation instanceof ElggAnnotation) {
 		return;
 	}
@@ -97,6 +94,7 @@ function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
 		return;
 	}
 	
+	$return = $hook->getValue();
 	$return[] = ElggMenuItem::factory([
 		'name' => 'delete',
 		'href' => elgg_generate_action_url('messageboard/delete', [

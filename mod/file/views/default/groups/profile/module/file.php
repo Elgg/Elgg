@@ -3,4 +3,11 @@
  * Group file module
  */
 
-echo elgg_view('file/group_module', $vars);
+$params = [
+	'entity_type' => 'object',
+	'entity_subtype' => 'file',
+	'no_results' => elgg_echo('file:none'),
+];
+$params = $params + $vars;
+
+echo elgg_view('groups/profile/module', $params);

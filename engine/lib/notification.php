@@ -1,5 +1,24 @@
 <?php
 /**
+ * Notifications
+ * This file contains classes and functions which allow plugins to register and send notifications.
+ *
+ * There are notification methods which are provided out of the box
+ * (see notification_init() ). Each method is identified by a string, e.g. "email".
+ *
+ * To register an event use register_notification_handler() and pass the method name and a
+ * handler function.
+ *
+ * To send a notification call notify() passing it the method you wish to use combined with a
+ * number of method specific addressing parameters.
+ *
+ * Catch NotificationException to trap errors.
+ *
+ * @package Elgg.Core
+ * @subpackage Notifications
+ */
+
+/**
  * Adding a New Notification Event
  * ===============================
  * 1. Register the event with elgg_register_notification_event()
@@ -179,15 +198,14 @@ function elgg_get_subscriptions_for_container($container_guid) {
  *
  * This function triggers the 'enqueue', 'notification' hook.
  *
- * @param string    $action The name of the action
- * @param string    $type   The type of the object
- * @param \ElggData $object The object of the event
+ * @param \Elgg\Event $event 'all', 'all'
+ *
  * @return void
- * @access private
+ * @internal
  * @since 1.9
  */
-function _elgg_enqueue_notification_event($action, $type, $object) {
-	_elgg_services()->notifications->enqueueEvent($action, $type, $object);
+function _elgg_enqueue_notification_event(\Elgg\Event $event) {
+	_elgg_services()->notifications->enqueueEvent($event->getName(), $event->getType(), $event->getObject());
 }
 
 /**
@@ -195,7 +213,7 @@ function _elgg_enqueue_notification_event($action, $type, $object) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_notifications_cron() {
 	// calculate when we should stop
@@ -207,21 +225,19 @@ function _elgg_notifications_cron() {
 /**
  * Send an email notification
  *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param bool   $result Has anyone sent a message yet?
- * @param array  $params Hook parameters
+ * @param \Elgg\Hook $hook 'send', 'notification:email'
+ *
  * @return bool
- * @access private
+ * @internal
  */
-function _elgg_send_email_notification($hook, $type, $result, $params) {
+function _elgg_send_email_notification(\Elgg\Hook $hook) {
 	
-	if ($result === true) {
+	if ($hook->getValue() === true) {
 		// assume someone else already sent the message
 		return;
 	}
 
-	$message = $params['notification'];
+	$message = $hook->getParam('notification');
 	if (!$message instanceof \Elgg\Notifications\Notification) {
 		return false;
 	}
@@ -251,16 +267,15 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 /**
  * Adds default Message-ID header to all e-mails
  *
- * @param string      $hook  "prepare"
- * @param string      $type  "system:email"
- * @param \Elgg\Email $email Email instance
+ * @param \Elgg\Hook $hook "prepare", "system:email"
  *
  * @see    https://tools.ietf.org/html/rfc5322#section-3.6.4
  *
  * @return void|\Elgg\Email
- * @access private
+ * @internal
  */
-function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email) {
+function _elgg_notifications_smtp_default_message_id_header(\Elgg\Hook $hook) {
+	$email = $hook->getValue();
 	
 	if (!$email instanceof \Elgg\Email) {
 		return;
@@ -280,15 +295,13 @@ function _elgg_notifications_smtp_default_message_id_header($hook, $type, $email
  * Adds default thread SMTP headers to group messages correctly.
  * Note that it won't be sufficient for some email clients. Ie. Gmail is looking at message subject anyway.
  *
- * @param string      $hook  "prepare"
- * @param string      $type  "system:email"
- * @param \Elgg\Email $email Email instance
+ * @param \Elgg\Hook $hook "prepare", "system:email"
  *
  * @return void|\Elgg\Email
- * @access private
+ * @internal
  */
-function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {
-
+function _elgg_notifications_smtp_thread_headers(\Elgg\Hook $hook) {
+	$email = $hook->getValue();
 	if (!$email instanceof \Elgg\Email) {
 		return;
 	}
@@ -340,7 +353,7 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $email) {
  *
  * @return void
  *
- * @access private
+ * @internal
  */
 function _elgg_notifications_init() {
 	elgg_register_plugin_hook_handler('cron', 'minute', '_elgg_notifications_cron', 100);
@@ -370,7 +383,7 @@ function _elgg_notifications_init() {
  *                                 user's chosen delivery methods.
  *
  * @return array Compound array of each delivery user/delivery method's success or failure.
- * @access private
+ * @internal
  */
 function _elgg_notify_user($to, $from, $subject, $message, array $params = null, $methods_override = "") {
 
@@ -455,25 +468,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 
 	return $result;
 }
-
-/**
- * Notifications
- * This file contains classes and functions which allow plugins to register and send notifications.
- *
- * There are notification methods which are provided out of the box
- * (see notification_init() ). Each method is identified by a string, e.g. "email".
- *
- * To register an event use register_notification_handler() and pass the method name and a
- * handler function.
- *
- * To send a notification call notify() passing it the method you wish to use combined with a
- * number of method specific addressing parameters.
- *
- * Catch NotificationException to trap errors.
- *
- * @package Elgg.Core
- * @subpackage Notifications
- */
 
 /**
  * Notify a user via their preferences.
@@ -578,7 +572,7 @@ function elgg_set_email_transport(\Zend\Mail\Transport\TransportInterface $maile
  * Save personal notification settings - input comes from request
  *
  * @return void
- * @access private
+ * @internal
  */
 function _elgg_save_notification_user_settings() {
 
@@ -610,27 +604,8 @@ function _elgg_save_notification_user_settings() {
 }
 
 /**
- * Register unit tests
- *
- * @param string $hook  'unit_test'
- * @param string $type  'system'
- * @param array  $tests current return value
- *
- * @return array
- *
- * @access private
- * @codeCoverageIgnore
- */
-function _elgg_notifications_test($hook, $type, $tests) {
-	$tests[] = ElggCoreDatabaseQueueTest::class;
-	return $tests;
-}
-
-/**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_notifications_init');
-
-	$hooks->registerHandler('unit_test', 'system', '_elgg_notifications_test');
 };

@@ -15,6 +15,8 @@ use Elgg\Testing;
  * DO NOT WRITE ANY MORE TESTS EXTENDING THIS CLASS
  * USE PHPUNIT INTEGRATION TESTS INSTEAD
  * SIMPLETEST SUITE WILL PROBABLY GO AWAY AFTER ELGG 3.0
+ *
+ * @deprecated
  */
 abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\Testable {
 
@@ -33,8 +35,8 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 		_elgg_services()->session->setIgnoreAccess(false);
-		access_show_hidden_entities(false);
-
+		_elgg_services()->session->setDisabledEntityVisibility(false);
+		
 		$this->up();
 	}
 
