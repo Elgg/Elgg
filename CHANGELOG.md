@@ -1,3 +1,10 @@
+<a name="3.1.1"></a>
+### 3.1.1  (2019-08-02)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+
 <a name="3.1.0"></a>
 ## 3.1.0  (2019-07-25)
 
@@ -117,6 +124,20 @@
   * plugin screenshots are no longer supported ([0f7fe379](https://github.com/Elgg/Elgg/commit/0f7fe3796ca9a6563599fac734fdc5e1165f8007))
 * **tests:** the simpletest cli command is deprecated ([f17a8cd9](https://github.com/Elgg/Elgg/commit/f17a8cd9c6d02455716d9a27dd2606302606676a))
 * **thewire:** the route previous:object:thewire is now deprecated ([677d9129](https://github.com/Elgg/Elgg/commit/677d9129cf075405bd0da9394b129b837dcae051))
+
+
+<a name="3.0.7"></a>
+### 3.0.7  (2019-08-02)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **js:** improved elgg.normalize_url to handle more site cases ([57af9e2b](https://github.com/Elgg/Elgg/commit/57af9e2bc83091790172eb736477b5483dd0c4b2))
+* **routes:** use absolute url as base for route url generation ([244854af](https://github.com/Elgg/Elgg/commit/244854afea723dfbecea94af919e11e448942722))
 
 
 <a name="3.0.6"></a>
