@@ -15,15 +15,17 @@ if (empty($log_entries)) {
 ?>
 
 <table class="elgg-table">
-	<tr>
-		<th><?php echo elgg_echo('logbrowser:date'); ?></th>
-		<th><?php echo elgg_echo('logbrowser:ip_address'); ?></th>
-		<th><?php echo elgg_echo('logbrowser:user:name'); ?></th>
-		<th><?php echo elgg_echo('logbrowser:user:guid'); ?></th>
-		<th><?php echo elgg_echo('logbrowser:object'); ?></th>
-		<th><?php echo elgg_echo('logbrowser:object:guid'); ?></th>
-		<th><?php echo elgg_echo('logbrowser:action'); ?></th>
-	</tr>
+	<thead>
+		<tr>
+			<th><?php echo elgg_echo('logbrowser:date'); ?></th>
+			<th><?php echo elgg_echo('logbrowser:ip_address'); ?></th>
+			<th><?php echo elgg_echo('logbrowser:user:name'); ?></th>
+			<th><?php echo elgg_echo('logbrowser:user:guid'); ?></th>
+			<th><?php echo elgg_echo('logbrowser:object'); ?></th>
+			<th><?php echo elgg_echo('logbrowser:object:guid'); ?></th>
+			<th><?php echo elgg_echo('logbrowser:action'); ?></th>
+		</tr>
+	</thead>
 <?php
 	$alt = '';
 foreach ($log_entries as $entry) {

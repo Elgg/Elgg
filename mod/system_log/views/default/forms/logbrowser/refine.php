@@ -34,6 +34,14 @@ echo elgg_view_field([
 ]);
 
 echo elgg_view_field([
+	'#type' => 'number',
+	'min' => 0,
+	'#label' => elgg_echo('logbrowser:object:guid'),
+	'name' => 'object_id',
+	'value' => elgg_extract('object_id', $vars),
+]);
+
+echo elgg_view_field([
 	'#type' => 'text',
 	'#label' => elgg_echo('logbrowser:starttime'),
 	'name' => 'timelower',
