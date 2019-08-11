@@ -26,21 +26,23 @@ $view_module = function($icon, $title, $value = '', $subtext = '') {
 };
 
 // apache version
-if (apache_get_version() !== false) {
-	$icon =  $icon_warning;
-	$title = elgg_echo('admin:performance:apache:mod_cache');
-	$value = elgg_echo('status:unavailable');
-	$subtext = '';
+// Check if the Server is Apache before calling apache_get_version else it may error out in server like Nginx
+if (strpos($_SERVER['SERVER_SOFTWARE'],'Apache') !== false) {	
+	if (apache_get_version() !== false) {
+		$icon =  $icon_warning;
+		$title = elgg_echo('admin:performance:apache:mod_cache');
+		$value = elgg_echo('status:unavailable');
+		$subtext = '';
 	
-	if (in_array('mod_cache', apache_get_modules())) {
-		$value = elgg_echo('status:enabled');
-	} else {
-		$subtext = elgg_echo('admin:performance:apache:mod_cache:warning');
+		if (in_array('mod_cache', apache_get_modules())) {
+			$value = elgg_echo('status:enabled');
+		} else {
+			$subtext = elgg_echo('admin:performance:apache:mod_cache:warning');
+		}
+	
+		echo $view_module($icon, $title, $value, $subtext);
 	}
-	
-	echo $view_module($icon, $title, $value, $subtext);
 }
-
 // open_basedir
 $icon = $icon_ok;
 $title = elgg_echo('admin:performance:php:open_basedir');
