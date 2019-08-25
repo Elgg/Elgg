@@ -26,8 +26,8 @@ $view_module = function($icon, $title, $value = '', $subtext = '') {
 };
 
 // apache version
-// Check if the Server is Apache before calling apache_get_version else it may error out in server like Nginx
-if (strpos($_SERVER['SERVER_SOFTWARE'],'Apache') !== false) {	
+// Check if the function exists before callling it else it may fail in case of Nginx or other Non Apache servers
+if (function_exists('apache_get_version')) {	
 	if (apache_get_version() !== false) {
 		$icon =  $icon_warning;
 		$title = elgg_echo('admin:performance:apache:mod_cache');
