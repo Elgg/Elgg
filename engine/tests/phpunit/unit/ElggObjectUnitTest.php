@@ -16,33 +16,6 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->hooks->restore();
 	}
 
-	public function testCanCommentOnGroupContent() {
-
-		_elgg_groups_init();
-
-		$user = $this->createUser();
-		$user2 = $this->createUser();
-
-		_elgg_services()->session->setLoggedInUser($user);
-
-		$group = $this->createGroup([
-			'owner_guid' => $user2->guid,
-		]);
-
-		$object = $this->createObject([
-			'owner_guid' => $user2->guid,
-			'container_guid' => $group->guid,
-		]);
-
-		$this->assertFalse($object->canComment());
-
-		$this->assertTrue($group->join($user));
-
-		$this->assertTrue($object->canComment());
-
-		_elgg_services()->session->removeLoggedInUser();
-	}
-
 	public function testCanConstructWithoutArguments() {
 		$this->assertNotNull(new \ElggObject());
 	}

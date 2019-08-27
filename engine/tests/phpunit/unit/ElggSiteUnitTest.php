@@ -106,4 +106,20 @@ class ElggSiteUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($site->guid, $site->getSystemLogID());
 		$this->assertEquals($site, $site->getObjectFromID($site->guid));
 	}
+	
+	public function testCantComment() {
+		
+		$site = elgg_get_site_entity();
+		
+		$this->assertFalse($site->canComment());
+		
+		$user = $this->createUser();
+		$session = _elgg_services()->session;
+		
+		$session->setLoggedInUser($user);
+		
+		$this->assertFalse($site->canComment());
+		
+		$session->removeLoggedInUser();
+	}
 }

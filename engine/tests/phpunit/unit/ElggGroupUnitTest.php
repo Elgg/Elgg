@@ -60,4 +60,20 @@ class ElggGroupUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($group->guid, $group->getSystemLogID());
 		$this->assertEquals($group, $group->getObjectFromID($group->guid));
 	}
+	
+	public function testCantComment() {
+		
+		$group = $this->createGroup();
+		
+		$this->assertFalse($group->canComment());
+		
+		$user = $this->createUser();
+		$session = _elgg_services()->session;
+		
+		$session->setLoggedInUser($user);
+		
+		$this->assertFalse($group->canComment());
+		
+		$session->removeLoggedInUser();
+	}
 }
