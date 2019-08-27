@@ -11,6 +11,12 @@ if (!$plugin instanceof ElggPlugin) {
 	return;
 }
 
+$add_context = !elgg_in_context('admin');
+if ($add_context) {
+	// needed for expected plugin view rendering
+	elgg_push_context('admin');
+}
+
 $active = $plugin->isActive();
 $can_activate = $plugin->canActivate();
 
@@ -252,3 +258,7 @@ $body .= "</div>";
 $body .= "</div>";
 
 echo elgg_view_module("plugin-details", $plugin->getManifest()->getName(), $body);
+
+if ($add_context) {
+	elgg_pop_context();
+}
