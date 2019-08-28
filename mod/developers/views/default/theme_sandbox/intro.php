@@ -17,7 +17,7 @@ $system_cache = elgg_is_system_cache_enabled();
 if ($simple_cache || $system_cache) {
 	$advanced = elgg_view('output/url', [
 		'text' => 'Advanced Settings',
-		'href' => 'admin/settings/advanced',
+		'href' => 'admin/site_settings',
 		'is_trusted' => true
 	]);
 	$developers = elgg_view('output/url', [
