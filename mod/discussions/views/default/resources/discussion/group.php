@@ -20,8 +20,8 @@ $content = elgg_view('discussion/listing/group', [
 ]);
 
 $body = elgg_view_layout('default', [
-	'content' => $content,
 	'title' => $title,
+	'content' => $content,
 ]);
 
 echo elgg_view_page($title, $body);

@@ -15,10 +15,11 @@ $content = elgg_view_entity($topic, [
 
 $title = $topic->getDisplayName();
 
-$body = elgg_view_layout('content', [
-	'content' => $content,
+$body = elgg_view_layout('default', [
 	'title' => $title,
+	'content' => $content,
 	'entity' => $topic,
+	'filter_id' => 'discussion/view',
 ]);
 
 echo elgg_view_page($title, $body);
