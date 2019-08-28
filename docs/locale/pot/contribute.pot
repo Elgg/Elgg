@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-02 13:31+0200\n"
+"POT-Creation-Date: 2019-08-28 15:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1184,7 +1184,7 @@ msgid "This creates a ``release-1.12.5`` branch in your local repo."
 msgstr ""
 
 #: ../../contribute/core/releases.rst:90
-msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
+msgid "Next, manually browse to the ``/admin/site_settings`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
 msgstr ""
 
 #: ../../contribute/core/releases.rst:99
