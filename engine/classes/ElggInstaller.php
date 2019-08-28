@@ -638,7 +638,7 @@ class ElggInstaller {
 		$link = elgg_format_element([
 			'#tag_name' => 'a',
 			'#text' => elgg_echo('install:complete:admin_notice:link_text'),
-			'href' => elgg_normalize_url('admin/settings/basic'),
+			'href' => elgg_normalize_url('admin/site_settings'),
 		]);
 		$notice = elgg_echo('install:complete:admin_notice', [$link]);
 		elgg_add_admin_notice('fresh_install', $notice);

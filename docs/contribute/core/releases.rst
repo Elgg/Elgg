@@ -87,7 +87,7 @@ Run the ``release.php`` script. For example, to release 1.12.5:
 
 This creates a ``release-1.12.5`` branch in your local repo.
 
-Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may 
+Next, manually browse to the ``/admin/site_settings`` page and verify it loads. If it does not, a language file from Transifex may 
 have a PHP syntax error. Fix the error and amend your commit with the new file:
 
 .. code-block:: sh
