@@ -62,6 +62,41 @@ function _elgg_groups_container_override(\Elgg\Hook $hook) {
 }
 
 /**
+ * Don't allow users to comment on content in a group they aren't a member of
+ *
+ * @param \Elgg\Hook $hook 'permissions_check:comment', 'object'
+ *
+ * @return void|false
+ * @internal
+ * @since 3.1
+ */
+function _elgg_groups_comment_permissions_override(\Elgg\Hook $hook) {
+	
+	if ($hook->getValue() === false) {
+		// already not allowed, no need to check further
+		return;
+	}
+	
+	$entity = $hook->getEntityParam();
+	$user = $hook->getUserParam();
+	
+	if (!$entity instanceof ElggObject || !$user instanceof ElggUser) {
+		return;
+	}
+	
+	$container = $entity->getContainerEntity();
+	if (!$container instanceof ElggGroup) {
+		return;
+	}
+	
+	if ($container->isMember($user)) {
+		return;
+	}
+	
+	return false;
+}
+
+/**
  * init the groups library
  *
  * @return void
@@ -70,6 +105,7 @@ function _elgg_groups_container_override(\Elgg\Hook $hook) {
  */
 function _elgg_groups_init() {
 	elgg_register_plugin_hook_handler('container_permissions_check', 'all', '_elgg_groups_container_override');
+	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', '_elgg_groups_comment_permissions_override', 999);
 }
 
 /**
