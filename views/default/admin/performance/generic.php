@@ -26,19 +26,22 @@ $view_module = function($icon, $title, $value = '', $subtext = '') {
 };
 
 // apache version
-if (apache_get_version() !== false) {
-	$icon =  $icon_warning;
-	$title = elgg_echo('admin:performance:apache:mod_cache');
-	$value = elgg_echo('status:unavailable');
-	$subtext = '';
-	
-	if (in_array('mod_cache', apache_get_modules())) {
-		$value = elgg_echo('status:enabled');
-	} else {
-		$subtext = elgg_echo('admin:performance:apache:mod_cache:warning');
+// Check if the function exists before callling it else it may fail in case of Nginx or other Non Apache servers
+if (function_exists('apache_get_version')) {
+	if (apache_get_version() !== false) {
+		$icon =  $icon_warning;
+		$title = elgg_echo('admin:performance:apache:mod_cache');
+		$value = elgg_echo('status:unavailable');
+		$subtext = '';
+		
+		if (in_array('mod_cache', apache_get_modules())) {
+			$value = elgg_echo('status:enabled');
+		} else {
+			$subtext = elgg_echo('admin:performance:apache:mod_cache:warning');
+		}
+		
+		echo $view_module($icon, $title, $value, $subtext);
 	}
-	
-	echo $view_module($icon, $title, $value, $subtext);
 }
 
 // open_basedir
