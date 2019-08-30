@@ -39,4 +39,14 @@ return array(
 
 	'system.api.list' => "List all available API calls on the system.",
 	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",
+	
+	'admin:configure_utilities:webservices' => "Webservices",
+	'admin:configure_utilities:ws_list' => "List API methods",
+	
+	'webservices:requires_api_authentication' => "Requires API authentication",
+	'webservices:requires_user_authentication' => "Requires user authentication",
+	'webservices:function' => "Internal function:",
+	'webservices:parameters' => "Webservice parameters:",
+	'webservices:parameters:required' => "required",
+	'webservices:parameters:optional' => "optional",
 );
