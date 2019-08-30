@@ -126,4 +126,20 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 			['some random string'],
 		];
 	}
+	
+	public function testCantComment() {
+		
+		$user = $this->createUser();
+		
+		$this->assertFalse($user->canComment());
+		
+		$user2 = $this->createUser();
+		$session = _elgg_services()->session;
+		
+		$session->setLoggedInUser($user2);
+		
+		$this->assertFalse($user->canComment());
+		
+		$session->removeLoggedInUser();
+	}
 }

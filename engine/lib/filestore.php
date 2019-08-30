@@ -70,13 +70,14 @@ function elgg_save_resized_image($source, $destination = null, array $params = [
 /**
  * Delete a directory and all its contents
  *
- * @param string $directory Directory to delete
+ * @param string $directory            Directory to delete
+ * @param bool   $leave_base_directory Leave the base directory intact (default: false)
  *
  * @return bool
  *
  * @since 3.1
  */
-function elgg_delete_directory(string $directory) {
+function elgg_delete_directory(string $directory, bool $leave_base_directory = false) {
 
 	if (!file_exists($directory)) {
 		return true;
@@ -109,8 +110,14 @@ function elgg_delete_directory(string $directory) {
 		}
 	}
 
-	// remove empty directory
+	// close file handler
 	closedir($handle);
+	
+	if ($leave_base_directory) {
+		return true;
+	}
+	
+	// remove empty directory
 	return rmdir($directory);
 }
 

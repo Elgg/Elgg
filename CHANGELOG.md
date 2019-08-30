@@ -1,3 +1,21 @@
+<a name="3.1.2"></a>
+### 3.1.2  (2019-08-28)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+* Esha Upadhyay (1)
+
+#### Bug Fixes
+
+* **admin:** prevent fatal error on non Apache servers ([3da30342](https://github.com/Elgg/Elgg/commit/3da303427bdcc30f094d4142277fdfdb9130820d))
+* **cache:** invalidating simplecache could break symlinked cache ([c8a41062](https://github.com/Elgg/Elgg/commit/c8a41062705b3c0f3f58d8c44577f02746f6d418))
+* **comments:** block comments on group content for non members ([6482879a](https://github.com/Elgg/Elgg/commit/6482879af8a79eadd4be2acc36f191d04e1f5858))
+* **developers:** link to site settings section ([330676bb](https://github.com/Elgg/Elgg/commit/330676bbb9cb8cd5f4b613241a71454bbf80d59a))
+* **discussions:** no more filter menu on discussion detail page ([e8d60f6c](https://github.com/Elgg/Elgg/commit/e8d60f6c562bb2c56aa53e66eb47dda172cffe72))
+* **installer:** link to site settings section ([f0e3dbe5](https://github.com/Elgg/Elgg/commit/f0e3dbe5c5c8c18a4fa62adf1c443550f043893e))
+
+
 <a name="3.1.1"></a>
 ### 3.1.1  (2019-08-02)
 

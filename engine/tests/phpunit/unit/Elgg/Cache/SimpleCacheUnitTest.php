@@ -61,5 +61,31 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		_elgg_config()->save('simplecache_enabled', $is_enabled);
 
 	}
+	
+	public function testInvalidateSimplecacheSymlinked() {
+		
+		if (stripos(PHP_OS, 'WIN') !== false) {
+			$this->markTestSkipped('Unable to test symlinks on Windows');
+		}
+		
+		$is_enabled = _elgg_config()->simplecache_enabled;
+		_elgg_config()->save('simplecache_enabled', true);
+		
+		$this->assertTrue(_elgg_services()->simpleCache->isEnabled());
+		
+		// create symlink
+		$this->assertTrue(_elgg_symlink_cache());
+		
+		// invalidate cache
+		_elgg_services()->simpleCache->invalidate();
+		
+		// ensure symlink still works
+		$this->assertTrue(_elgg_is_cache_symlinked());
+		
+		_elgg_config()->save('simplecache_enabled', $is_enabled);
+		
+		// cleanup symlink
+		$this->assertTrue(unlink(elgg_get_root_path() . 'cache'));
+	}
 
 }
