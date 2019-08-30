@@ -1,5 +1,6 @@
 <?php
-return array(
+
+return [
 	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
 	'APIException:MissingParameterInMethod' => "Missing parameter %s in method %s",
 	'APIException:ParameterNotArray' => "%s does not appear to be an array.",
@@ -42,6 +43,12 @@ return array(
 	
 	'admin:configure_utilities:webservices' => "Webservices",
 	'admin:configure_utilities:ws_list' => "List API methods",
+	'admin:configure_utilities:ws_tokens' => "Manage API tokens",
+	'webservices:menu:entity:regenerate' => "Regenerate API keys",
+	
+	'add:object:api_key' => "Create a new API token",
+	'edit:object:api_key' => "Edit API token: %s",
+	'entity:delete:object:api_key:success' => "The API token %s was deleted",
 	
 	'webservices:requires_api_authentication' => "Requires API authentication",
 	'webservices:requires_user_authentication' => "Requires user authentication",
@@ -49,4 +56,11 @@ return array(
 	'webservices:parameters' => "Webservice parameters:",
 	'webservices:parameters:required' => "required",
 	'webservices:parameters:optional' => "optional",
-);
+	
+	'webservices:api_key:public' => "Public key:",
+	'webservices:api_key:secret' => "Secret key:",
+	'webservices:api_key:secret:show' => "Show secret key",
+	
+	'webservices:action:api_key:edit:success' => "API token saved successfully",
+	'webservices:action:api_key:regenerate:success' => "The API keys have been regenerated",
+];

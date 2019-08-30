@@ -42,6 +42,14 @@ class AdminPageMenu {
 			'section' => 'configure',
 		]);
 		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'ws_tokens',
+			'text' => elgg_echo('admin:configure_utilities:ws_tokens'),
+			'href' => '/admin/configure_utilities/ws_tokens',
+			'parent_name' => 'webservices',
+			'section' => 'configure',
+		]);
+		
 		return $return;
 	}
 }
