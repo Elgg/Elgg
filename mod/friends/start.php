@@ -6,6 +6,7 @@
  * @return void
  */
 function elgg_friends_plugin_init() {
+	elgg_register_plugin_hook_handler('access:collections:write:subtypes', 'user', '_elgg_friends_register_access_type');
 	elgg_register_plugin_hook_handler('filter_tabs', 'all', '_elgg_friends_filter_tabs', 1);
 
 	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
@@ -193,6 +194,22 @@ function _elgg_friends_page_menu(\Elgg\Hook $hook) {
 		'contexts' => ['friends'],
 	]);
 
+	return $return;
+}
+
+/**
+ * Register friends to the write access array
+ *
+ * @param \Elgg\Hook $hook 'access:collections:write:subtypes', 'user'
+ *
+ * @return array
+ *
+ * @internal
+ * @since 3.2
+ */
+function _elgg_friends_register_access_type(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
+	$return[] = 'friends';
 	return $return;
 }
 
