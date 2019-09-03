@@ -149,7 +149,7 @@ class SimpleCache {
 	 * @return bool
 	 */
 	public function invalidate() {
-		elgg_delete_directory($this->getPath());
+		elgg_delete_directory($this->getPath(), true);
 
 		$time = time();
 		$this->config->save("simplecache_lastupdate", $time);

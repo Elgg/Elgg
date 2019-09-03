@@ -1,3 +1,28 @@
+<a name="3.1.2"></a>
+### 3.1.2  (2019-08-28)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+* Esha Upadhyay (1)
+
+#### Bug Fixes
+
+* **admin:** prevent fatal error on non Apache servers ([3da30342](https://github.com/Elgg/Elgg/commit/3da303427bdcc30f094d4142277fdfdb9130820d))
+* **cache:** invalidating simplecache could break symlinked cache ([c8a41062](https://github.com/Elgg/Elgg/commit/c8a41062705b3c0f3f58d8c44577f02746f6d418))
+* **comments:** block comments on group content for non members ([6482879a](https://github.com/Elgg/Elgg/commit/6482879af8a79eadd4be2acc36f191d04e1f5858))
+* **developers:** link to site settings section ([330676bb](https://github.com/Elgg/Elgg/commit/330676bbb9cb8cd5f4b613241a71454bbf80d59a))
+* **discussions:** no more filter menu on discussion detail page ([e8d60f6c](https://github.com/Elgg/Elgg/commit/e8d60f6c562bb2c56aa53e66eb47dda172cffe72))
+* **installer:** link to site settings section ([f0e3dbe5](https://github.com/Elgg/Elgg/commit/f0e3dbe5c5c8c18a4fa62adf1c443550f043893e))
+
+
+<a name="3.1.1"></a>
+### 3.1.1  (2019-08-02)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+
 <a name="3.1.0"></a>
 ## 3.1.0  (2019-07-25)
 
@@ -117,6 +142,20 @@
   * plugin screenshots are no longer supported ([0f7fe379](https://github.com/Elgg/Elgg/commit/0f7fe3796ca9a6563599fac734fdc5e1165f8007))
 * **tests:** the simpletest cli command is deprecated ([f17a8cd9](https://github.com/Elgg/Elgg/commit/f17a8cd9c6d02455716d9a27dd2606302606676a))
 * **thewire:** the route previous:object:thewire is now deprecated ([677d9129](https://github.com/Elgg/Elgg/commit/677d9129cf075405bd0da9394b129b837dcae051))
+
+
+<a name="3.0.7"></a>
+### 3.0.7  (2019-08-02)
+
+#### Contributors
+
+* Jerôme Bakker (2)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **js:** improved elgg.normalize_url to handle more site cases ([57af9e2b](https://github.com/Elgg/Elgg/commit/57af9e2bc83091790172eb736477b5483dd0c4b2))
+* **routes:** use absolute url as base for route url generation ([244854af](https://github.com/Elgg/Elgg/commit/244854afea723dfbecea94af919e11e448942722))
 
 
 <a name="3.0.6"></a>

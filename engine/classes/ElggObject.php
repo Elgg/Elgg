@@ -72,14 +72,6 @@ class ElggObject extends \ElggEntity {
 			return false;
 		}
 
-		// must be member of group
-		$container = $this->getContainerEntity();
-		if ($container instanceof \ElggGroup) {
-			if (!$container->canWriteToContainer($user_guid)) {
-				return false;
-			}
-		}
-
 		// no checks on read access since a user cannot see entities outside his access
 		return true;
 	}
