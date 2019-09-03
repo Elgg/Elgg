@@ -380,7 +380,9 @@ class Translator {
 			$this->addTranslation(basename($path, '.php'), $result);
 			return true;
 		}
-
+		
+		_elgg_services()->logger->warning("Language file did not return an array: $path");
+		
 		return false;
 	}
 
