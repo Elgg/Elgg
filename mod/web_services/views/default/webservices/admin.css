@@ -1,0 +1,15 @@
+.webservices-service {
+	.webservices-service-imprint {
+		.elgg-icon {
+			margin-right: 5px;
+		}
+	}
+	
+	.webservices-service-more {
+		margin-top: 0.5rem;
+		
+		.elgg-output {
+			margin-top: 0;
+		}
+	}
+}
