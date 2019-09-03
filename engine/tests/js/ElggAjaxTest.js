@@ -311,6 +311,48 @@ define(function(require) {
 				done();
 			});
 		});
+		
+		it("can prevent output of server-sent messages and dependencies", function(done) {
+			var tmp_system_message = elgg.system_message;
+			var tmp_register_error = elgg.register_error;
+			var tmp_require = Ajax._require;
+			var captured = {};
+			
+			elgg.system_message = function (arg) {
+				captured.msg = arg;
+			};
+			elgg.register_error = function (arg) {
+				captured.error = arg;
+			};
+			Ajax._require = function (arg) {
+				captured.deps = arg;
+			};
+			
+			//$.mockjaxSettings.logging = true;
+			$.mockjax({
+				url: elgg.normalize_url("foo"),
+				responseText: {
+					value: 1,
+					_elgg_msgs: {
+						error: ['fail'],
+						success: ['yay']
+					},
+					_elgg_deps: ['foo']
+				}
+			});
+			
+			ajax.path('foo', {showErrorMessages: false, showSuccessMessages: false}).done(function () {
+				expect(captured).toEqual({
+					deps: ['foo']
+				});
+				
+				elgg.system_message = tmp_system_message;
+				elgg.register_error = tmp_register_error;
+				Ajax._require = tmp_require;
+				
+				done();
+			});
+		});
 
 		it("error handler still handles server-sent messages and dependencies", function (done) {
 			var tmp_system_message = elgg.system_message;
