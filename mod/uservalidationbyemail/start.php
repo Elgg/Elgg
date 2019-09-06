@@ -87,11 +87,14 @@ function uservalidationbyemail_disable_new_user(\Elgg\Hook $hook) {
  * @return void|\Elgg\Http\ResponseBuilder
  */
 function uservalidationbyemail_after_registration_url(\Elgg\Hook $hook) {
-	if (elgg_get_session()->get('emailsent')) {
-		$value = $hook->getValue();
-		$value->setForwardURL(elgg_normalize_url('uservalidationbyemail/emailsent'));
-		return $value;
+	if (!elgg_get_session()->get('emailsent')) {
+		return;
 	}
+	
+	$value = $hook->getValue();
+	$value->setForwardURL(elgg_generate_url('account:validation:email:sent'));
+	
+	return $value;
 }
 
 /**
@@ -126,14 +129,20 @@ function uservalidationbyemail_allow_new_user_can_edit(\Elgg\Hook $hook) {
  */
 function uservalidationbyemail_check_manual_login(\Elgg\Event $event) {
 	$user = $event->getObject();
+	if (!$user instanceof ElggUser) {
+		return;
+	}
+	
 	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
-		if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {
-			// send new validation email
-			uservalidationbyemail_request_validation($user->guid);
-			
-			// throw error so we get a nice error message
-			throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+		if ($user->isEnabled() && $user->isValidated() !== false) {
+			return;
 		}
+		
+		// send new validation email
+		uservalidationbyemail_request_validation($user->guid);
+		
+		// throw error so we get a nice error message
+		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	});
 }
 
@@ -163,7 +172,7 @@ function _uservalidationbyemail_user_unvalidated_menu(\Elgg\Hook $hook) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'uservalidationbyemail:resend',
 		'text' => elgg_echo('uservalidationbyemail:admin:resend_validation'),
-		'href' => elgg_http_add_url_query_elements('action/uservalidationbyemail/resend_validation', [
+		'href' => elgg_generate_action_url('uservalidationbyemail/resend_validation', [
 			'user_guids[]' => $entity->guid,
 		]),
 		'confirm' => elgg_echo('uservalidationbyemail:confirm_resend_validation', [$entity->getDisplayName()]),
