@@ -11,7 +11,7 @@ interface CollectionItemInterface {
 	 * Get unique item identifier within a collection
 	 * @return string|int
 	 */
-	public function getId();
+	public function getID();
 
 	/**
 	 * Get priority (weight) of the item within a collection
