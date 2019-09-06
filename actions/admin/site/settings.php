@@ -30,6 +30,18 @@ if (!$site->save()) {
 $allow_registration = ('on' === get_input('allow_registration', false));
 elgg_save_config('allow_registration', $allow_registration);
 
+// require admin validation for new users?
+$require_admin_validation = ('on' === get_input('require_admin_validation', false));
+elgg_save_config('require_admin_validation', $require_admin_validation);
+
+// notify admins about pending validation
+$admin_validation_notification = get_input('admin_validation_notification');
+if (empty($admin_validation_notification)) {
+	elgg_remove_config('admin_validation_notification');
+} else {
+	elgg_save_config('admin_validation_notification', $admin_validation_notification);
+}
+
 // setup walled garden
 $walled_garden = ('on' === get_input('walled_garden', false));
 elgg_save_config('walled_garden', $walled_garden);

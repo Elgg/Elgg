@@ -13,6 +13,7 @@ define(function(require) {
 		});
 
 		// disable simple cache compress settings if simple cache is off
+		$('[name=require_admin_validation]').click(adminValidationToggle);
 		$('[name=simplecache_enabled]').click(simplecacheToggle);
 	}
 
@@ -31,6 +32,14 @@ define(function(require) {
 					$input.parent().toggleClass('elgg-state-disabled');
 				}
 			}
+		}
+	}
+	
+	function adminValidationToggle() {
+		if ($(this).prop('checked')) {
+			$('.elgg-admin-users-admin-validation-notification').show();
+		} else {
+			$('.elgg-admin-users-admin-validation-notification').hide();
 		}
 	}
 

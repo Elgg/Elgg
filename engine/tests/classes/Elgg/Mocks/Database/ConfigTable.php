@@ -8,6 +8,7 @@ class ConfigTable extends \Elgg\Database\ConfigTable {
 		'__site_secret__' => "z1234567890123456789012345678901",
 		'admin_registered' => 1,
 		'allow_registration' => 1,
+		'require_admin_validation' => 0,
 		'allow_user_default_access' => 1,
 		'default_access' => 2,
 		'default_limit' => 10,

@@ -1458,6 +1458,7 @@ class ElggInstaller {
 			'language' => 'en',
 			'default_access' => $submissionVars['siteaccess'],
 			'allow_registration' => false,
+			'require_admin_validation' => false,
 			'walled_garden' => false,
 			'allow_user_default_access' => '',
 			'default_limit' => 10,

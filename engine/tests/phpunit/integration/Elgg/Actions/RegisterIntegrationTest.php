@@ -6,7 +6,6 @@ use Elgg\ActionResponseTestCase;
 use Elgg\Hook;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
-use Elgg\Values;
 
 /**
  * @group ActionsService
@@ -296,5 +295,35 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		$hook->assertNumberOfCalls(1);
 		$hook->unregister();
+	}
+	
+	public function testRegisterWithAdminValidation() {
+		
+		_elgg_config()->require_admin_validation = true;
+		
+		// re-register admin validation hooks
+		_elgg_services()->hooks->registerHandler('register', 'user', '_elgg_admin_check_admin_validation', 999);
+		
+		$username = $this->getRandomUsername();
+		
+		$response = $this->executeAction('register', [
+			'username' => $username,
+			'password' => '1111111111111',
+			'password2' => '1111111111111',
+			'email' => $this->getRandomEmail(),
+			'name' => 'Test User',
+		]);
+		
+		$this->assertInstanceOf(OkResponse::class, $response);
+		
+		/* @var $user \ElggUser */
+		$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
+			return get_user_by_username($username);
+		});
+		$this->assertInstanceOf(\ElggUser::class, $user);
+		$this->assertFalse($user->isValidated());
+		$this->assertFalse($user->isEnabled());
+		
+		$this->assertEmpty(elgg_get_logged_in_user_entity());
 	}
 }

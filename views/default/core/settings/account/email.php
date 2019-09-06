@@ -39,4 +39,21 @@ $content .= elgg_view_field([
 	'value' => $user->email,
 ]);
 
+if ($user->isAdmin()) {
+	// check is unvalidated e-mail notifications are sent
+	if ((bool) elgg_get_config('require_admin_validation') && !empty(elgg_get_config('admin_validation_notification'))) {
+		$user_setting = $user->getPrivateSetting('admin_validation_notification');
+		
+		$content .= elgg_view_field([
+			'#type' => 'checkbox',
+			'#label' => elgg_echo('account:email:admin:validation_notification'),
+			'#help' => elgg_echo('account:email:admin:validation_notification:help'),
+			'name' => 'admin_validation_notification',
+			'value' => 1,
+			'checked' => isset($user_setting) ? (bool) $user_setting : true,
+			'switch' => true,
+		]);
+	}
+}
+
 echo elgg_view_module('info', $title, $content);
