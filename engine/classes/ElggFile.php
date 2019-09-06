@@ -499,7 +499,9 @@ class ElggFile extends ElggObject {
 
 		$file_svc = new \Elgg\FileService\File();
 		$file_svc->setFile($this);
-		$file_svc->setExpires($expires);
+		if (!empty($expires)) {
+			$file_svc->setExpires($expires);
+		}
 		$file_svc->setDisposition('attachment');
 		$file_svc->bindSession($use_cookie);
 		$url = $file_svc->getURL();
