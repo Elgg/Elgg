@@ -8,6 +8,11 @@ $title = elgg_view_title(elgg_echo('embed:media'));
 $menu = elgg_view_menu('embed', $vars);
 
 $selected = elgg_get_config('embed_tab');
+if (empty($selected)) {
+	echo elgg_view('output/longtext', ['value' => elgg_echo('embed:no_support')]);
+	return;
+}
+
 if ($selected->getData('view')) {
 	$tab = elgg_view($selected->getData('view'), $vars);
 } else {
@@ -25,11 +30,4 @@ $container_info = elgg_view('input/hidden', [
 	'value' => elgg_get_page_owner_guid(),
 ]);
 
-echo <<<HTML
-<div class="embed-wrapper">
-	$title
-	$menu
-	$tab
-	$container_info
-</div>
-HTML;
+echo elgg_format_element('div', ['class' => 'embed-wrapper'], $title . $menu . $tab . $container_info);
