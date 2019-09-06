@@ -117,7 +117,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$request = Request::create("/$path", $method, $parameters);
 
 		$cookie_name = $this->config->getCookieConfig()['session']['name'];
-		$session_id = $this->session->getId();
+		$session_id = $this->session->getID();
 		$request->cookies->set($cookie_name, $session_id);
 
 		if ($xhr) {

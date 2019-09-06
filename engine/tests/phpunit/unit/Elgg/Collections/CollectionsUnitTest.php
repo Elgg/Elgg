@@ -198,7 +198,7 @@ class CollectionsUnitTest extends UnitTestCase {
 		$collection = new Collection([$d, $c, $b, $a]);
 
 		$sorted = $collection->sort(function($a, $b) {
-			return strnatcmp($a->getId(), $b->getId());
+			return strnatcmp($a->getID(), $b->getID());
 		});
 
 		$this->assertEquals([
@@ -309,7 +309,7 @@ class TestItem implements CollectionItemInterface {
 	 * Get unique item identifier within a collection
 	 * @return string|int
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->id;
 	}
 

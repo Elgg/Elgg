@@ -36,13 +36,13 @@ foreach ($menu as $section) {
 	}
 
 	$section_class = $class;
-	$section_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($section->getId()));
+	$section_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($section->getID()));
 	$section_class[] = "elgg-menu-{$name_class_selector}-{$section_class_selector}";
 	
 	$menu_view .= elgg_view('navigation/menu/elements/section', [
 		'items' => $section->all(),
 		'class' => $section_class,
-		'section' => $section->getId(),
+		'section' => $section->getID(),
 		'name' => $name,
 		'show_section_headers' => $show_section_headers,
 		'item_class' => $item_class,

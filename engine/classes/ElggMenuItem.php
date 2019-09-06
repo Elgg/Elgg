@@ -672,7 +672,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Get unique item identifier within a collection
 	 * @return string|int
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->getName();
 	}
 }

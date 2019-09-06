@@ -282,7 +282,7 @@ class MetadataTable {
 		}
 
 		if (!$allow_multiple) {
-			$id = $this->getIdsByName($metadata->entity_guid, $metadata->name);
+			$id = $this->getIDsByName($metadata->entity_guid, $metadata->name);
 
 			if (is_array($id)) {
 				throw new \LogicException("
@@ -470,7 +470,7 @@ class MetadataTable {
 	 *
 	 * @return int[]|int|null
 	 */
-	public function getIdsByName($entity_guid, $name) {
+	public function getIDsByName($entity_guid, $name) {
 		if ($this->metadata_cache->isLoaded($entity_guid)) {
 			$ids = $this->metadata_cache->getSingleId($entity_guid, $name);
 		} else {
