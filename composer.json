@@ -44,7 +44,7 @@
         "php-di/php-di": "^5.4",
         "react/promise": "^2.5",
         "roave/security-advisories": "dev-master",
-        "robmorgan/phinx": "^0.10.1",
+        "robmorgan/phinx": "^0.11.1",
         "symfony/console": "~3.3",
         "symfony/http-foundation": "~3.4",
         "symfony/polyfill-php71": "^1.7",
