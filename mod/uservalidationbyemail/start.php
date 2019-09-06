@@ -31,9 +31,6 @@ function uservalidationbyemail_init() {
 
 	// prevent the engine from logging in users via login()
 	elgg_register_event_handler('login:before', 'user', 'uservalidationbyemail_check_manual_login');
-
-	// make admin users always validated
-	elgg_register_event_handler('make_admin', 'user', 'uservalidationbyemail_validate_new_admin_user');
 }
 
 /**
@@ -115,20 +112,6 @@ function uservalidationbyemail_allow_new_user_can_edit(\Elgg\Hook $hook) {
 	$context = elgg_get_context();
 	if ($context == 'uservalidationbyemail_new_user' || $context == 'uservalidationbyemail_validate_user') {
 		return true;
-	}
-}
-
-/**
- * Make sure any admin users are automatically validated
- *
- * @param \Elgg\Event $event 'make_admin', 'user'
- *
- * @return void
- */
-function uservalidationbyemail_validate_new_admin_user(\Elgg\Event $event) {
-	$user = $event->getObject();
-	if ($user instanceof ElggUser && $user->isValidated() !== true) {
-		$user->setValidationStatus(true, 'admin_user');
 	}
 }
 
