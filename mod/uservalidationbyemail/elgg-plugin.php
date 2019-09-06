@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\UserValidationByEmail\Upgrades\TrackValidationStatus;
+
 return [
 	'actions' => [
 		'uservalidationbyemail/resend_validation' => [
@@ -23,5 +25,8 @@ return [
 				\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
 			],
 		],
+	],
+	'upgrades' => [
+		TrackValidationStatus::class,
 	],
 ];
