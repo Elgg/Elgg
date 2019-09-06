@@ -29,9 +29,6 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_uservalidationbyemail_user_unvalidated_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated:bulk', '_uservalidationbyemail_user_unvalidated_bulk_menu');
 
-	// prevent users from logging in if they aren't validated
-	register_pam_handler('uservalidationbyemail_check_auth_attempt', "required");
-
 	// prevent the engine from logging in users via login()
 	elgg_register_event_handler('login:before', 'user', 'uservalidationbyemail_check_manual_login');
 
@@ -119,41 +116,6 @@ function uservalidationbyemail_allow_new_user_can_edit(\Elgg\Hook $hook) {
 	if ($context == 'uservalidationbyemail_new_user' || $context == 'uservalidationbyemail_validate_user') {
 		return true;
 	}
-}
-
-/**
- * Checks if an account is validated
- *
- * @param array $credentials The username and password
- *
- * @return void
- */
-function uservalidationbyemail_check_auth_attempt($credentials) {
-
-	if (!isset($credentials['username'])) {
-		return;
-	}
-
-	$username = $credentials['username'];
-
-	// See if the user exists and isn't validated
-	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username) {
-		// check if logging in with email address
-		if (strpos($username, '@') !== false) {
-			$users = get_user_by_email($username);
-			if (!empty($users)) {
-				$username = $users[0]->username;
-			}
-		}
-	
-		$user = get_user_by_username($username);
-		if ($user && isset($user->validated) && !$user->validated) {
-			// show an error and resend validation email
-			uservalidationbyemail_request_validation($user->guid);
-
-			throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
-		}
-	});
 }
 
 /**
