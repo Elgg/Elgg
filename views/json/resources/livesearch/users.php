@@ -29,14 +29,8 @@ if (elgg_extract('friends_only', $vars, false)) {
 		throw new \Elgg\EntityPermissionsException();
 	}
 	
-	$options['wheres'][] = function(\Elgg\Database\QueryBuilder $qb, $main_alias) use ($target) {
-		$subquery = $qb->subquery('entity_relationships', 'er');
-		$subquery->select('er.guid_two')
-			->andWhere($qb->compare('er.relationship', '=', 'friend', ELGG_VALUE_STRING))
-			->andWhere($qb->compare('er.guid_one', '=', $target->guid, ELGG_VALUE_GUID));
-
-		return $qb->compare("{$main_alias}.guid", 'in', $subquery->getSQL());
-	};
+	$options['relationship'] = 'friend';
+	$options['relationship_guid'] = $target->guid;
 }
 
 // by default search in all users,
