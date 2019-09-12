@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\Database\QueryBuilder;
-
 elgg_gatekeeper();
 
 $limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'));
@@ -35,14 +33,9 @@ if (elgg_extract('match_owner', $vars, false)) {
 }
 
 if (elgg_extract('match_membership', $vars, false)) {
-	$options['wheres'][] = function (QueryBuilder $qb, $main_alias) use ($target) {
-		$rel = $qb->subquery('entity_relationships');
-		$rel->select('guid_two')
-			->where($qb->compare('relationship', '=', 'member', ELGG_VALUE_STRING))
-			->andWhere($qb->compare('guid_one', '=', $target->guid, ELGG_VALUE_GUID));
-		
-		return $qb->compare("{$main_alias}.guid", 'in', $rel->getSQL());
-	};
+	$options['relationship'] = 'member';
+	$options['relationship_guid'] = $target->guid;
+	$options['inverse_relationship'] = true;
 }
 
 $body = elgg_list_entities($options, 'elgg_search');
