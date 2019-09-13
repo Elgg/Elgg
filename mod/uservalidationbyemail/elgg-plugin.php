@@ -9,7 +9,7 @@ return [
 	'routes' => [
 		'account:validation:email:confirm' => [
 			'path' => '/uservalidationbyemail/confirm',
-			'resource' => 'uservalidationbyemail/confirm',
+			'controller' => \Elgg\UserValidationByEmail\ConfirmController::class,
 			'walled' => false,
 			'middleware' => [
 				\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
