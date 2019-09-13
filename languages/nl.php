@@ -1462,7 +1462,7 @@ Indien je dit zelf hebt aangevraagd, klik op onderstaande link. Anders negeer de
 	'email:request:email:body' => "Beste %s,
 
 Je hebt een verzoek ingediend om je e-mailadres te wijziging op '%s'.
-Indien je deze wijziging niet hebt aangevraagd, wijzig dan je wachtwoord.
+Indien je deze wijziging niet hebt aangevraagd kun je deze mail als niet verzonden beschouwen.
 
 Gebruik de volgende link om de wijziging te bevestigen:
 %s

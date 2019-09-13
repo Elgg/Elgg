@@ -1472,7 +1472,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'email:request:email:body' => "Hi %s,
 
 You requested to change your e-mail address on '%s'.
-If you didn't request this change, please reset your password.
+If you didn't request this change, you can ignore this email.
 
 In order to confirm the e-mail address change, please click this link:
 %s
