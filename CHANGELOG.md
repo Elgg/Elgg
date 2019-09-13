@@ -1,3 +1,23 @@
+<a name="3.1.3"></a>
+### 3.1.3  (2019-09-13)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (4)
+
+#### Features
+
+* **ajax:** added option to suppress messages from ajax calls ([2b728fe5](https://github.com/Elgg/Elgg/commit/2b728fe5d3769b188a266cb657b2279c64c570c2))
+
+
+#### Bug Fixes
+
+* **admin:** do not show ajax success message when removing admin notice ([75bf8cbd](https://github.com/Elgg/Elgg/commit/75bf8cbd5b82b0644b4fb10c402fc982ac0102f7))
+* **database:** updated Phinx to prevent Symfony conflicts ([58d778a6](https://github.com/Elgg/Elgg/commit/58d778a65f74552160bbe50be8cf8c02b98aaf61))
+* **uservalidationbyemail:** correct forwarding during email confirmation ([e3ccb067](https://github.com/Elgg/Elgg/commit/e3ccb0671fb0512a4448820deb1c6e026d78ffea))
+
+
 <a name="3.1.2"></a>
 ### 3.1.2  (2019-08-28)
 
