@@ -83,6 +83,7 @@ use Elgg\Project\Paths;
  * @property array         $redis_servers
  * @property string[]      $registered_entities
  * @property bool          $remove_branding Is Elgg branding disabled
+ * @property bool          $require_admin_validation
  * @property bool          $security_disable_password_autocomplete
  * @property bool          $security_email_require_password
  * @property bool          $security_notify_admins
