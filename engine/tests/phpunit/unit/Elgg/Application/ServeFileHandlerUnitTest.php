@@ -38,7 +38,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		$request = \Elgg\Http\Request::create("/$path");
 
 		$cookie_name = _elgg_config()->getCookieConfig()['session']['name'];
-		$session_id = _elgg_services()->session->getId();
+		$session_id = _elgg_services()->session->getID();
 		$request->cookies->set($cookie_name, $session_id);
 
 		return $request;
@@ -159,7 +159,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->session->invalidate();
 		$cookie_name = _elgg_config()->getCookieConfig()['session']['name'];
-		$session_id = _elgg_services()->session->getId();
+		$session_id = _elgg_services()->session->getID();
 		$request->cookies->set($cookie_name, $session_id);
 
 		$response = $this->handler->getResponse($request);

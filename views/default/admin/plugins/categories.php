@@ -21,7 +21,7 @@ foreach ($plugins as $id => $plugin) {
 			if ($disable_plugins) {
 				// force disable and warn
 				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-						elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getId()]));
+						elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getID()]));
 				$plugin->deactivate();
 			}
 		}

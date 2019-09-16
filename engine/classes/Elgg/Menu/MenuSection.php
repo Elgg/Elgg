@@ -38,7 +38,7 @@ class MenuSection
 	 * Get unique item identifier within a collection
 	 * @return string|int
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->id;
 	}
 

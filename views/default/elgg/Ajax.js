@@ -64,7 +64,7 @@ define(function (require) {
 						data.error = m.error;
 					}
 
-					if (data.error) {
+					if (data.error && options.showErrorMessages) {
 						elgg.register_error(data.error);
 						error_displayed = true;
 					}
@@ -75,7 +75,7 @@ define(function (require) {
 						data.status = 0;
 					}
 
-					m && m.success && elgg.system_message(m.success);
+					m && m.success && options.showSuccessMessages && elgg.system_message(m.success);
 					delete data._elgg_msgs;
 
 					var deps = data._elgg_deps;
@@ -108,6 +108,12 @@ define(function (require) {
 			// ease hook filtering by making these keys always available
 			if (options.data === undefined) {
 				options.data = {};
+			}
+			if (options.showSuccessMessages === undefined) {
+				options.showSuccessMessages = true;
+			}
+			if (options.showErrorMessages === undefined) {
+				options.showErrorMessages = true;
 			}
 			if ($.isPlainObject(options.data)) {
 				options.data = options.data || {};
@@ -174,7 +180,7 @@ define(function (require) {
 						}
 					}
 
-					if (!error_displayed) {
+					if (!error_displayed && options.showErrorMessages) {
 						elgg.register_error(elgg.echo('ajax:error'));
 					}
 				};
