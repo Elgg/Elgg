@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-24 16:46+0200\n"
+"POT-Creation-Date: 2019-08-28 15:59+0200\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -240,11 +240,11 @@ msgstr ""
 msgid "Available commands"
 msgstr "Commandes disponibles"
 
-#: ../../intro/elgg-cli.rst:80
+#: ../../intro/elgg-cli.rst:77
 msgid "Adding custom commands"
 msgstr "Ajouter des commandes personnalisées"
 
-#: ../../intro/elgg-cli.rst:82
+#: ../../intro/elgg-cli.rst:79
 msgid ""
 "Plugins can add their commands to the CLI application, by adding command "
 "class name via ``'commands','cli'`` hook. Command class must extend "
@@ -397,8 +397,8 @@ msgstr ""
 "MySQL 5.5.3+ (5.0.0+ si vous mettez à niveau une installation existante)"
 
 #: ../../intro/install.rst:14
-msgid "PHP 7.0+ with the following extensions:"
-msgstr "PHP 7.0+ avec les extensions suivantes :"
+msgid "PHP 7.1+ with the following extensions:"
+msgstr ""
 
 #: ../../intro/install.rst:16
 msgid "GD (for graphics processing)"

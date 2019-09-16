@@ -27,10 +27,10 @@ class ElggSessionUnitTest extends \Elgg\UnitTestCase {
 		$session = \ElggSession::getMock();
 		$session->start();
 		$session->set('foo', 5);
-		$id = $session->getId();
+		$id = $session->getID();
 		$this->assertTrue($session->invalidate());
 		$this->assertFalse($session->has('foo'));
-		$this->assertNotEquals($id, $session->getId());
+		$this->assertNotEquals($id, $session->getID());
 		$this->assertTrue($session->has('__elgg_session'));
 	}
 
@@ -38,10 +38,10 @@ class ElggSessionUnitTest extends \Elgg\UnitTestCase {
 		$session = \ElggSession::getMock();
 		$session->start();
 		$session->set('foo', 5);
-		$id = $session->getId();
+		$id = $session->getID();
 		$this->assertTrue($session->migrate());
 		$this->assertTrue($session->has('foo'));
-		$this->assertNotEquals($id, $session->getId());
+		$this->assertNotEquals($id, $session->getID());
 		$this->assertTrue($session->has('__elgg_session'));
 	}
 

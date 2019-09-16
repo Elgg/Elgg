@@ -82,7 +82,7 @@ class Collection implements CollectionInterface,
 	public function add($item) {
 		$this->assertValidItem($item);
 
-		$this->items[$item->getId()] = $item;
+		$this->items[$item->getID()] = $item;
 
 		return $this;
 	}
@@ -220,7 +220,7 @@ class Collection implements CollectionInterface,
 	public function offsetSet($offset, $value) {
 		$this->assertValidItem($value);
 
-		$key = $value->getId();
+		$key = $value->getID();
 		$this->items[$key] = $value;
 	}
 

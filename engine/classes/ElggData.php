@@ -243,7 +243,7 @@ abstract class ElggData implements CollectionItemInterface,
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->getSystemLogID();
 	}
 
