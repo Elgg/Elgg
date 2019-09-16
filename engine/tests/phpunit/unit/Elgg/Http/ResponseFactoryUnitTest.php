@@ -159,7 +159,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$content = json_encode(['foo' => 'bar']);
 		$status_code = ELGG_HTTP_NOT_FOUND;
 		$headers = [
-			'X-Elgg-Response' => true,
+			'X-Elgg-Response' => '1',
 			'X-Elgg-Override' => '2',
 		];
 
@@ -168,7 +168,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals($content, $response->getContent());
 		$this->assertEquals($status_code, $response->getStatusCode());
-		$this->assertTrue($response->headers->get('X-Elgg-Response'));
+		$this->assertEquals('1', $response->headers->get('X-Elgg-Response'));
 
 		$this->assertEquals('2', $response->headers->get('X-Elgg-Testing'));
 		$this->assertEquals('application/json;charset=utf-8', $response->headers->get('Content-Type'));
@@ -184,7 +184,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$url = 'http://localhost/foo';
 		$status_code = ELGG_HTTP_MOVED_PERMANENTLY;
 		$headers = [
-			'X-Elgg-Response' => true,
+			'X-Elgg-Response' => '1',
 			'X-Elgg-Override' => '2',
 		];
 
@@ -193,7 +193,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(RedirectResponse::class, $response);
 		$this->assertEquals($url, $response->getTargetURL());
 		$this->assertEquals($status_code, $response->getStatusCode());
-		$this->assertTrue($response->headers->get('X-Elgg-Response'));
+		$this->assertEquals('1', $response->headers->get('X-Elgg-Response'));
 
 		$this->assertEquals('2', $response->headers->get('X-Elgg-Testing'));
 		$this->assertEquals('2', $response->headers->get('X-Elgg-Override'));
