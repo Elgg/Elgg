@@ -2,6 +2,7 @@
 
 use Elgg\EntityIcon;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\Update;
 
 /**
  * The parent class for all Elgg Entities.
@@ -1630,13 +1631,10 @@ abstract class ElggEntity extends \ElggData implements
 			$this->disable_reason = $reason;
 		}
 
-		$dbprefix = _elgg_config()->dbprefix;
-
 		$guid = (int) $this->guid;
 
 		if ($recursive) {
-			$flags = ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES;
-			$callback = function () use ($guid, $reason) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function () use ($guid, $reason) {
 				$base_options = [
 					'wheres' => [
 						function(QueryBuilder $qb, $main_alias) use ($guid) {
@@ -1662,22 +1660,16 @@ abstract class ElggEntity extends \ElggData implements
 						$subentity->disable($reason);
 					}
 				}
-			};
-
-			elgg_call($flags, $callback);
+			});
 		}
 
 		$this->disableAnnotations();
 
-		$sql = "
-			UPDATE {$dbprefix}entities
-			SET enabled = 'no'
-			WHERE guid = :guid
-		";
-		$params = [
-			':guid' => $guid,
-		];
-		$disabled = $this->getDatabase()->updateData($sql, false, $params);
+		$qb = Update::table('entities');
+		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
+		
+		$disabled = $this->getDatabase()->updateData($qb);
 
 		if ($unban_after) {
 			$this->unban();
@@ -1714,14 +1706,10 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		$flags = ELGG_SHOW_DISABLED_ENTITIES;
-		$callback = function() use ($guid, $recursive) {
-			$db = $this->getDatabase();
-			$result = $db->updateData("
-				UPDATE {$db->prefix}entities
-				SET enabled = 'yes'
-				WHERE guid = $guid
-			");
+		elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid, $recursive) {
+			$qb = Update::table('entities');
+			$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
+				->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
 			$this->deleteMetadata('disable_reason');
 			$this->enableAnnotations();
@@ -1741,9 +1729,7 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			return $result;
-		};
-
-		$result = elgg_call($flags, $callback);
+		});
 
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';

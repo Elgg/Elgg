@@ -438,12 +438,13 @@ class EntityTable extends DbEntityTable {
 		// Disable
 		$sql = "
 			UPDATE {$dbprefix}entities
-			SET enabled = 'no'
+			SET enabled = :state
 			WHERE guid = :guid
 		";
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
+				':state' => 'no',
 				':guid' => $row->guid,
 			],
 			'results' => function () use ($row) {
@@ -463,12 +464,13 @@ class EntityTable extends DbEntityTable {
 		// Enable
 		$sql = "
 			UPDATE {$dbprefix}entities
-			SET enabled = 'yes'
+			SET enabled = :state
 			WHERE guid = :guid
 		";
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
+				':state' => 'yes',
 				':guid' => $row->guid,
 			],
 			'results' => function () use ($row) {

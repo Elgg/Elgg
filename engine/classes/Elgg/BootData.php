@@ -4,6 +4,7 @@ namespace Elgg;
 
 use Elgg\Database\EntityTable;
 use Elgg\Database\Plugins;
+use Elgg\Database\Select;
 
 /**
  * Serializable collection of data used to boot Elgg
@@ -78,16 +79,15 @@ class BootData {
 		// find plugin GUIDs with not too many settings
 		$limit = $config->bootdata_plugin_settings_limit;
 		if ($limit > 0) {
-			$set = implode(',', $guids);
-			$sql = "
-				SELECT entity_guid
-				FROM {$db->prefix}private_settings
-				WHERE entity_guid IN ($set)
-				  AND name NOT LIKE 'plugin:user_setting:%'
-				GROUP BY entity_guid
-				HAVING COUNT(*) > $limit
-			";
-			$unsuitable_guids = $db->getData($sql, function ($row) {
+			
+			$qb = Select::fromTable('private_settings');
+			$qb->select('entity_guid')
+				->where($qb->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID))
+				->andWhere($qb->compare('name', 'not like', 'plugin:user_setting:%', ELGG_VALUE_STRING))
+				->groupBy('entity_guid')
+				->having("count(*) > {$limit}");
+
+			$unsuitable_guids = $db->getData($qb, function ($row) {
 				return (int) $row->entity_guid;
 			});
 			$guids = array_values($guids);
@@ -96,14 +96,13 @@ class BootData {
 
 		if (!empty($guids)) {
 			// get the settings
-			$set = implode(',', $guids);
-			$rows = $db->getData("
-				SELECT entity_guid, `name`, `value`
-				FROM {$db->prefix}private_settings
-				WHERE entity_guid IN ($set)
-				  AND name NOT LIKE 'plugin:user_setting:%'
-				ORDER BY entity_guid
-			");
+			$qb = Select::fromTable('private_settings');
+			$qb->select('entity_guid', 'name', 'value')
+				->where($qb->compare('entity_guid', 'in', $guids, ELGG_VALUE_GUID))
+				->andWhere($qb->compare('name', 'not like', 'plugin:user_setting:%', ELGG_VALUE_STRING));
+
+			$rows = $db->getData($qb);
+
 			// make sure we show all entities as loaded
 			$this->plugin_settings = array_fill_keys($guids, []);
 			foreach ($rows as $row) {
