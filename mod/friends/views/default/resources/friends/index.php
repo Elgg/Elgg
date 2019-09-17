@@ -13,10 +13,9 @@ if (!$owner instanceof ElggUser) {
 
 $title = elgg_echo("friends:owned", [$owner->getDisplayName()]);
 
-$dbprefix = elgg_get_config('dbprefix');
-$options = [
+$content = elgg_list_entities([
 	'relationship' => 'friend',
-	'relationship_guid' => $owner->getGUID(),
+	'relationship_guid' => $owner->guid,
 	'inverse_relationship' => false,
 	'type' => 'user',
 	'order_by_metadata' => [
@@ -27,8 +26,7 @@ $options = [
 	],
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
-];
-$content = elgg_list_entities($options);
+]);
 
 $params = [
 	'content' => $content,
