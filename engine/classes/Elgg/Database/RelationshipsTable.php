@@ -64,27 +64,16 @@ class RelationshipsTable {
 	 * @return \ElggRelationship|false False if not found
 	 */
 	public function get($id) {
-		$row = $this->getRow($id);
-		if (!$row) {
-			return false;
-		}
-
-		return new \ElggRelationship($row);
-	}
-
-	/**
-	 * Get a database row from the relationship table
-	 *
-	 * @param int $id The relationship ID
-	 *
-	 * @return \stdClass|false False if no row found
-	 */
-	public function getRow($id) {
 		$select = Select::fromTable('entity_relationships');
 		$select->select('*')
 			->where($select->compare('id', '=', $id, ELGG_VALUE_ID));
 		
-		return $this->db->getDataRow($select);
+		$relationship = $this->db->getDataRow($select, [$this, 'rowToElggRelationship']);
+		if (!$relationship) {
+			return false;
+		}
+
+		return $relationship;
 	}
 
 	/**
@@ -97,6 +86,9 @@ class RelationshipsTable {
 	 */
 	public function delete($id, $call_event = true) {
 		$relationship = $this->get($id);
+		if (!$relationship instanceof \ElggRelationship) {
+			return false;
+		}
 
 		if ($call_event && !$this->events->trigger('delete', 'relationship', $relationship)) {
 			return false;
@@ -239,13 +231,15 @@ class RelationshipsTable {
 		}
 		
 		if (!empty($type)) {
-			if (!(bool) $inverse_relationship) {
-				$delete->joinEntitiesTable('', 'guid_two', 'inner', 'e');
-			} else {
-				$delete->joinEntitiesTable('', 'guid_one', 'inner', 'e');
-			}
+			$entity_sub = $delete->subquery('entities');
+			$entity_sub->select('guid')
+				->where($delete->compare('type', '=', $type, ELGG_VALUE_STRING));
 			
-			$delete->andWhere($delete->compare('e.type', '=', $type, ELGG_VALUE_STRING));
+			if (!(bool) $inverse_relationship) {
+				$delete->andWhere($delete->compare('guid_two', 'in', $entity_sub->getSQL()));
+			} else {
+				$delete->andWhere($delete->compare('guid_one', 'in', $entity_sub->getSQL()));
+			}
 		}
 		
 		$this->db->deleteData($delete);
