@@ -550,11 +550,12 @@ class EntityTable extends DbEntityTable {
 		// and not in the relationships table mock
 		// @todo: figure out a way to remove this from relationships table
 		foreach (['guid_one', 'guid_two'] as $column) {
-			$sql = "DELETE er FROM {$dbprefix}entity_relationships AS er
-				WHERE $column = $row->guid";
-
+			$delete = Delete::fromTable('entity_relationships');
+			$delete->where($delete->compare($column, '=', $row->guid, ELGG_VALUE_GUID));
+			
 			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
+				'sql' => $delete->getSQL(),
+				'params' => $delete->getParameters(),
 				'row_count' => 0,
 				'times' => 1,
 			]);
