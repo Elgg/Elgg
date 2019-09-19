@@ -37,7 +37,9 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		_elgg_services()->db->executeDelayedQueries();
 
-		$log = system_log_get_log('', $event);
+		$log = system_log_get_log([
+			'event' => $event,
+		]);
 
 		if (empty($log)) {
 			// We are seeing intermittent issues with tests on different systems
@@ -84,7 +86,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		_elgg_services()->db->executeDelayedQueries();
 
-		$log = system_log_get_log();
+		$log = system_log_get_log([]);
 
 		if (empty($log)) {
 			// We are seeing intermittent issues with tests on different systems
@@ -96,7 +98,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$this->assertTrue(system_log_archive_log());
 		$this->assertTrue(system_log_browser_delete_log(0));
 
-		$entries = system_log_get_log();
+		$entries = system_log_get_log([]);
 
 		$this->assertEmpty($entries);
 
