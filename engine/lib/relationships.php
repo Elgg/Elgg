@@ -6,6 +6,8 @@
  * @subpackage DataModel.Relationship
  */
 
+use Elgg\Database\Relationships;
+
 /**
  * Get a relationship by its ID
  *
@@ -130,4 +132,24 @@ function elgg_get_entities_from_relationship_count(array $options = []) {
  */
 function elgg_list_entities_from_relationship_count($options) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
+}
+
+/**
+ * Fetch relationships or perform a calculation on them
+ *
+ * Accepts all options supported by {@link elgg_get_entities()}
+ *
+ * The default 'order_by' is 'er.time_created, er.id' DESC
+ *
+ * @see   elgg_get_entities()
+ *
+ * @param array $options Options
+ *
+ * @return \ElggRelationship[]|mixed
+ *
+ * @see   elgg_get_entities()
+ * @since 3.2.0
+ */
+function elgg_get_relationships(array $options = []) {
+	return Relationships::find($options);
 }
