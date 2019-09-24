@@ -925,8 +925,6 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
  * If a view is not found for $annotation_name, the default annotation/default
  * will be used.
  *
- * @warning annotation/default is not currently defined in core.
- *
  * The annotation view is called with the following in $vars:
  *  - \ElggEntity 'annotation' The annotation being viewed.
  *
