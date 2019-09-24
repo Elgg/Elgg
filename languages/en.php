@@ -323,7 +323,11 @@ return array(
 	'river:subject:invalid_subject' => 'Invalid user',
 	'activity:owner' => 'Activity',
 
+/**
+ * Relationships
+ */
 	
+	'relationship:default' => "%s relates to %s",
 
 /**
  * Notifications

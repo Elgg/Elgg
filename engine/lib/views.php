@@ -1091,6 +1091,90 @@ function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
 }
 
 /**
+ * Returns a rendered list of relationships, plus pagination. This function
+ * should be called by wrapper functions.
+ *
+ * @param array $relationships Array of relationships
+ * @param array $vars          Display variables
+ *      'count'      The total number of relationships across all pages
+ *      'offset'     The current indexing offset
+ *      'limit'      The number of relationships to display per page
+ *      'full_view'  Display the full view of the relationships?
+ *      'list_class' CSS Class applied to the list
+ *      'item_view'  Alternative view to render list items
+ *      'offset_key' The url parameter key used for offset
+ *      'no_results' Message to display if no results (string|true|Closure)
+ *
+ * @return string The list of relationships
+ * @internal
+ */
+function elgg_view_relationship_list($relationships, array $vars = []) {
+	$defaults = [
+		'items' => $relationships,
+		'offset' => null,
+		'limit' => null,
+		'list_class' => 'elgg-list-relationship',
+		'full_view' => false,
+		'offset_key' => 'reloff',
+	];
+	
+	$vars = array_merge($defaults, $vars);
+	
+	if (!$vars['limit'] && !$vars['offset']) {
+		// no need for pagination if listing is unlimited
+		$vars['pagination'] = false;
+	}
+	
+	return elgg_view('page/components/list', $vars);
+}
+
+/**
+ * Returns a string of a rendered relationship.
+ *
+ * Relationship views are expected to be in relationship/$relationship_name.
+ * If a view is not found for $relationship_name, the default relationship/default
+ * will be used.
+ *
+ * The relationship view is called with the following in $vars:
+ *  - \ElggRelationship 'relationship' The relationship being viewed.
+ *
+ * @param \ElggRelationship $relationship The relationship to display
+ * @param array             $vars         Variable array for view.
+ *      'item_view'  Alternative view used to render a relationship
+ *
+ * @return string|false Rendered relationship
+ */
+function elgg_view_relationship(\ElggRelationship $relationship, array $vars = []) {
+	$defaults = [
+		'full_view' => true,
+	];
+	
+	$vars = array_merge($defaults, $vars);
+	$vars['relationship'] = $relationship;
+	
+	$name = $relationship->relationship;
+	if (empty($name)) {
+		return false;
+	}
+	
+	$relationship_views = [
+		elgg_extract('item_view', $vars, ''),
+		"relationship/$name",
+		"relationship/default",
+	];
+	
+	$contents = '';
+	foreach ($relationship_views as $view) {
+		if (elgg_view_exists($view)) {
+			$contents = elgg_view($view, $vars);
+			break;
+		}
+	}
+	
+	return $contents;
+}
+
+/**
  * Renders a title.
  *
  * This is a shortcut for {@elgg_view page/elements/title}.
@@ -1527,6 +1611,8 @@ function elgg_view_list_item($item, array $vars = []) {
 		return elgg_view_annotation($item, $vars);
 	} else if ($item instanceof \ElggRiverItem) {
 		return elgg_view_river_item($item, $vars);
+	} else if ($item instanceof ElggRelationship) {
+		return elgg_view_relationship($item, $vars);
 	}
 
 	$view = elgg_extract('item_view', $vars);
