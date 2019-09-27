@@ -365,13 +365,16 @@ function elgg_get_site_entity() {
  *
  * You can specify sorting options using ONE of the following options
  *
+ * NOTE: Some order by options only work when fetching entities and not from
+ * derived function (eg elgg_get_annotations, elgg_get_relationships)
+ *
  * Order by a calculation performed on annotation name value pairs
  * $option array annotation_sort_by_calculation e.g. avg, max, min, sum
  *
  * Order by value of a specific annotation
  * @option array $order_by_annotation
  *
- * Order by value of a speicifc metadata/attribute
+ * Order by value of a specific metadata/attribute
  * @option array $order_by_metadata
  *
  * Order by arbitrary clauses
