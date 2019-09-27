@@ -165,6 +165,11 @@ $CONFIG->dbencoding = 'utf8mb4';
  */
 //$CONFIG->redis = true;
 //
+//$CONFIG->redis_options = array (
+//	'database' => '', // The "database" option lets developers specific which specific database to use.
+//	'password' => '', // The "password" option is used for clusters which required authentication.
+//);
+//
 //$CONFIG->redis_servers = array (
 //	array('server1', 6379),
 //	array('server2', 6379)

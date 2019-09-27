@@ -80,6 +80,7 @@ use Elgg\Project\Paths;
  * @property bool          $profiling_sql
  * @property array         $processed_upgrades
  * @property bool          $redis
+ * @property array         $redis_options
  * @property array         $redis_servers
  * @property string[]      $registered_entities
  * @property bool          $remove_branding Is Elgg branding disabled
