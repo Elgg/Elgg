@@ -383,6 +383,9 @@ function _elgg_session_boot(ServiceProvider $services) {
 			// OMG user has been deleted.
 			$session->invalidate();
 			forward('');
+		} elseif ($user->isBanned()) {
+			logout();
+			forward('');
 		}
 	} else {
 		$user = $services->persistentLogin->bootSession();
