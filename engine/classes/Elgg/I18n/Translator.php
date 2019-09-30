@@ -235,12 +235,24 @@ class Translator {
 	public function detectLanguage() {
 		// detect from URL
 		$url_lang = _elgg_services()->request->getParam('hl');
+		$user = _elgg_services()->session->getLoggedInUser();
+		
 		if (!empty($url_lang)) {
+			// store language for logged out users
+			if (empty($user)) {
+				$cookie = new \ElggCookie('language');
+				$cookie->value = $url_lang;
+				elgg_set_cookie($cookie);
+			}
 			return $url_lang;
+		}
+		
+		$cookie = _elgg_services()->request->cookies->get('language');
+		if (!empty($cookie)) {
+			return $cookie;
 		}
 
 		// check logged in user
-		$user = _elgg_services()->session->getLoggedInUser();
 		if (!empty($user) && !empty($user->language)) {
 			return $user->language;
 		}
