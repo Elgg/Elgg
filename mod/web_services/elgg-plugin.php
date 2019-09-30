@@ -42,6 +42,7 @@ return [
 			'requirements' => [
 				'segments' => '.+',
 			],
+			'walled' => false,
 		],
 	],
 ];

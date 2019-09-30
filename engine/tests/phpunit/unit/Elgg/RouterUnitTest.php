@@ -1528,24 +1528,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	function publicPagesProvider() {
 		return [
-			['walled_garden/core/', true],
-			['action/default/action', true],
-			['login', true],
-			['register', true],
-			['forgotpassword', true],
-			['changepassword', true],
-			['refresh_token', true],
 			['ajax/view/languages.js', true],
-			['upgrade.php', true],
 			['css/stylesheet.css', true],
 			['js/javascript.js', true],
 			['cache/0/foo/bar', true],
 			['cache/foo/bar', false],
-			['cron/run', true],
-			['services/rest/json', true],
 			['serve-file/foo', true],
-			['/robots.txt', true], // need slash to properly normalize url
-			['/favicon.ico', true],
 			['custom', false],
 		];
 	}

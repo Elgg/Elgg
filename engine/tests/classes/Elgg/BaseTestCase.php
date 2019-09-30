@@ -134,7 +134,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 					'crop' => false,
 				],
 			],
-			'debug' => LogLevel::ERROR,
+			'debug' => LogLevel::NOTICE,
 		]);
 	}
 

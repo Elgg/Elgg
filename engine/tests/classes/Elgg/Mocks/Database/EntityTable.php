@@ -438,13 +438,14 @@ class EntityTable extends DbEntityTable {
 		// Disable
 		$sql = "
 			UPDATE {$dbprefix}entities
-			SET enabled = 'no'
-			WHERE guid = :guid
+			SET enabled = :qb1
+			WHERE guid = :qb2
 		";
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':guid' => $row->guid,
+				':qb1' => 'no',
+				':qb2' => $row->guid,
 			],
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
@@ -463,13 +464,14 @@ class EntityTable extends DbEntityTable {
 		// Enable
 		$sql = "
 			UPDATE {$dbprefix}entities
-			SET enabled = 'yes'
-			WHERE guid = :guid
+			SET enabled = :qb1
+			WHERE guid = :qb2
 		";
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':guid' => $row->guid,
+				':qb1' => 'yes',
+				':qb2' => $row->guid,
 			],
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {

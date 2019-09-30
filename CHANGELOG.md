@@ -1,3 +1,17 @@
+<a name="3.1.4"></a>
+### 3.1.4  (2019-09-27)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (2)
+
+#### Bug Fixes
+
+* **messageboard:** use the correct annotation_name for listings ([95429878](https://github.com/Elgg/Elgg/commit/95429878cfb6a34625c637feb1991a717f6b599a))
+* **tests:** correctly validate response headers ([2ccd1833](https://github.com/Elgg/Elgg/commit/2ccd1833d86a6920c168827f8fe9cd31b2711a5c))
+
+
 <a name="3.1.3"></a>
 ### 3.1.3  (2019-09-13)
 
