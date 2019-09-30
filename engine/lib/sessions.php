@@ -384,8 +384,6 @@ function _elgg_session_boot(ServiceProvider $services) {
 			$session->invalidate();
 			forward('');
 		}
-
-		$services->persistentLogin->replaceLegacyToken($user);
 	} else {
 		$user = $services->persistentLogin->bootSession();
 		if ($user) {
