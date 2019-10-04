@@ -3,6 +3,8 @@
  * Elgg add friend action
  */
 
+elgg_deprecated_notice("The action 'friends/add' has been moved to a controller. Check \Elgg\Friends\Actions\AddFriendController", '3.2');
+
 // Get the GUID of the user to friend
 $friend_guid = (int) get_input('friend');
 $friend = get_user($friend_guid);
