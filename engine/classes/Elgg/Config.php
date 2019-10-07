@@ -1,7 +1,6 @@
 <?php
 namespace Elgg;
 
-use Elgg\Collections\Collection;
 use Elgg\Config\DatarootSettingMigrator;
 use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Database\ConfigTable;
@@ -13,23 +12,25 @@ use Elgg\Project\Paths;
  *
  * @since 1.10.0
  *
- * @property int           $action_time_limit
+ * @property int           $action_time_limit						Maximum php execution time for actions (in seconds)
  * @property int           $action_token_timeout
- * @property bool          $allow_registration
- * @property string        $allow_user_default_access
- * @property string        $assetroot            Path of asset (views) simplecache with trailing "/"
- * @property bool          $auto_disable_plugins
- * @property int           $batch_run_time_in_secs
+ * @property bool          $allow_phpinfo							Allow access tot PHPInfo
+ * @property bool          $allow_registration						Is registration enabled
+ * @property string        $allow_user_default_access				Are users allowed to set their own default access level
+ * @property string        $assetroot            					Path of asset (views) simplecache with trailing "/"
+ * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
+ * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
+ * @property-read int      $bootdata_plugin_settings_limit			Max amount of plugin settings to determine if plugin will be cached
  * @property bool          $boot_complete
  * @property int           $boot_cache_ttl
  * @property array         $breadcrumbs
- * @property string        $cacheroot            Path of cache storage with trailing "/"
- * @property bool          $can_change_username
- * @property array         $css_compiler_options Options passed to CssCrush during CSS compilation
- * @property string        $dataroot             Path of data storage with trailing "/"
+ * @property string        $cacheroot            					Path of cache storage with trailing "/"
+ * @property bool          $can_change_username						Is user allowed to change the username
+ * @property array         $css_compiler_options 					Options passed to CssCrush during CSS compilation
+ * @property string        $dataroot             					Path of data storage with trailing "/"
  * @property bool          $data_dir_override
- * @property string        $date_format          Preferred PHP date format
- * @property string        $date_format_datepicker Preferred jQuery datepicker date format
+ * @property string        $date_format          					Preferred PHP date format
+ * @property string        $date_format_datepicker 					Preferred jQuery datepicker date format
  * @property array         $db
  * @property string        $dbencoding
  * @property string        $dbname
@@ -40,11 +41,11 @@ use Elgg\Project\Paths;
  * @property string        $dbprefix
  * @property bool          $db_disable_query_cache
  * @property string        $debug
- * @property int           $default_access
- * @property int           $default_limit
+ * @property int           $default_access							Default access
+ * @property int           $default_limit							The default "limit" used in listings and queries
  * @property array         $default_widget_info
- * @property bool          $disable_rss Is RSS disabled
- * @property bool          $elgg_config_locks The application will lock some settings (default true)
+ * @property bool          $disable_rss 							Is RSS disabled
+ * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
  * @property string[]      $elgg_cron_periods
  * @property array         $elgg_lazy_hover_menus
  * @property bool          $elgg_load_sync_code
@@ -53,17 +54,16 @@ use Elgg\Project\Paths;
  * @property bool          $elgg_config_set_secret
  * @property bool          $enable_profiling
  * @property mixed         $embed_tab
- * @property string        $exception_include
+ * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
  * @property string[]      $group
  * @property bool          $i18n_loaded_from_cache
  * @property array         $icon_sizes
  * @property string        $image_processor
- * @property string        $installed
+ * @property string        $installed 								Is the site fully installed?
  * @property bool          $installer_running
- * @property string        $language                   Site language code
- * @property string[]      $language_to_locale_mapping A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
- * @property int           $lastcache
- * @property array         $libraries
+ * @property string        $language                   				Site language code
+ * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
+ * @property int           $lastcache								The last cache timestamp
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers
@@ -71,9 +71,9 @@ use Elgg\Project\Paths;
  * @property int           $min_password_length
  * @property int           $minusername
  * @property string[]      $pages
- * @property-read string   $path         Path of composer install with trailing "/"
- * @property-read string   $pluginspath  Alias of plugins_path
- * @property-read string   $plugins_path Path of project "mod/" directory
+ * @property-read string   $path         							Path of composer install with trailing "/"
+ * @property-read string   $pluginspath  							Alias of plugins_path
+ * @property-read string   $plugins_path 							Path of project "mod/" directory where the plugins are stored
  * @property array         $profile_custom_fields
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
@@ -81,8 +81,8 @@ use Elgg\Project\Paths;
  * @property array         $processed_upgrades
  * @property bool          $redis
  * @property array         $redis_servers
- * @property string[]      $registered_entities
- * @property bool          $remove_branding Is Elgg branding disabled
+ * @property string[]      $registered_entities						A list of registered entities and subtypes. Used in search.
+ * @property bool          $remove_branding 						Is Elgg branding disabled
  * @property bool          $security_disable_password_autocomplete
  * @property bool          $security_email_require_password
  * @property bool          $security_notify_admins
@@ -90,25 +90,26 @@ use Elgg\Project\Paths;
  * @property bool          $security_notify_user_ban
  * @property bool          $security_protect_cron
  * @property bool          $security_protect_upgrade
- * @property string        $seeder_local_image_folder Path to a local folder containing images used for seeding
- * @property bool          $simplecache_enabled
+ * @property array		   $servicehandler							Holds the service handlers as registered by the webservice plugin
+ * @property string        $seeder_local_image_folder 				Path to a local folder containing images used for seeding
+ * @property bool          $simplecache_enabled						Is simplecache enabled?
  * @property int           $simplecache_lastupdate
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
- * @property \ElggSite     $site
- * @property string        $sitedescription
- * @property string        $sitename
+ * @property \ElggSite     $site 									The site entity
+ * @property string        $sitedescription							The site description
+ * @property string        $sitename 								The name of the site
  * @property string[]      $site_custom_menu_items
  * @property string[]      $site_featured_menu_names
- * @property-read int      $site_guid
- * @property bool          $system_cache_enabled
+ * @property-read int      $site_guid 								The guid of the site object
+ * @property bool          $system_cache_enabled					Is the system cache enabled?
  * @property bool          $system_cache_loaded
- * @property string        $time_format  Preferred PHP time format
- * @property string        $url          Alias of "wwwroot"
+ * @property string        $time_format  							Preferred PHP time format
+ * @property string        $url          							Alias of "wwwroot"
  * @property int           $version
- * @property string        $view         Default viewtype (usually not set)
- * @property bool          $walled_garden
- * @property string        $wwwroot      Site URL
+ * @property string        $view         							Default viewtype (usually not set)
+ * @property bool          $walled_garden							Is current site in walled garden mode?
+ * @property string        $wwwroot      							Site URL
  * @property string        $x_sendfile_type
  * @property string        $x_accel_mapping
  * @property bool          $_boot_cache_hit
