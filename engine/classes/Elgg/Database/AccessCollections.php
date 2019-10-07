@@ -531,9 +531,9 @@ class AccessCollections {
 			':id' => (int) $collection_id,
 		];
 
-		if ($this->db->insertData($query, $params)) {
+		if ($this->db->updateData($query, true, $params)) {
 			$this->access_cache->clear();
-			return (int) $collection_id;
+			return true;
 		}
 
 		return false;
