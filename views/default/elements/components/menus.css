@@ -369,13 +369,16 @@
 	}
 
 	> li {
-		> a:not(.elgg-state-active) {
-			color: inherit;
-		}
-
-		> a:hover {
-			color: #0078ac;
-			text-decoration: none;
+	
+		> a:not(.elgg-button) {
+			&:not(.elgg-state-active) {
+				color: inherit;
+			}
+			
+			&:hover {
+				color: #0078ac;
+				text-decoration: none;
+			}
 		}
 	}
 }
