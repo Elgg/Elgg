@@ -385,7 +385,7 @@
 		vertical-align: middle;
 	}
 
-	.elgg-menu-topbar .elgg-badge {
+	.elgg-menu-topbar > li > a .elgg-badge {
 		position: absolute;
 		top: 1rem;
 		right: 0;
