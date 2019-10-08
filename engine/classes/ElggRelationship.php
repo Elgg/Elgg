@@ -16,6 +16,16 @@ class ElggRelationship extends \ElggData {
 	const RELATIONSHIP_LIMIT = 50;
 
 	/**
+	 * @var string[] attributes that are integers
+	 */
+	protected static $integer_attr_names = [
+		'guid_one',
+		'guid_two',
+		'time_created',
+		'id',
+	];
+	
+	/**
 	 * Create a relationship object
 	 *
 	 * @param \stdClass $row Database row
@@ -25,10 +35,12 @@ class ElggRelationship extends \ElggData {
 		$this->initializeAttributes();
 
 		foreach ((array) $row as $key => $value) {
+			if (in_array($key, self::$integer_attr_names)) {
+				$value = (int) $value;
+			}
+			
 			$this->attributes[$key] = $value;
 		}
-
-		$this->attributes['id'] = (int) $this->attributes['id'];
 	}
 
 	/**
