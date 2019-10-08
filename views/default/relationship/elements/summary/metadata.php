@@ -15,6 +15,7 @@ $relationship = elgg_extract('relationship', $vars);
 if ($metadata === '' && $relationship instanceof ElggRelationship) {
 	$metadata = elgg_view_menu('relationship', [
 		'relationship' => $relationship,
+		'class' => 'elgg-menu-hz',
 	]);
 }
 
