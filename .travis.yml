@@ -44,6 +44,7 @@ matrix:
         - composer travis:install
       script:
         - yarn test
+        - yarn check
 
     # Build docs and check for errors
     # Flags used here, not in `make html`:
