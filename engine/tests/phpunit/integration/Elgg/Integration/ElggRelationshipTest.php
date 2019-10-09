@@ -116,8 +116,7 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 		$this->assertInstanceOf(\ElggRelationship::class, $r);
 		$old_id = $r->id;
 
-		// note - string because that's how it's returned when getting a new object
-		$r->guid_two = (string) $this->entity3->guid;
+		$r->guid_two = $this->entity3->guid;
 		$new_id = $r->save();
 		$this->assertInternalType('integer', $new_id);
 		$this->assertNotEqual($new_id, $old_id);

@@ -234,16 +234,6 @@ your new element (defaulting to the current user's container):
     $container = get_entity($container_guid);
     forward($container->getURL());
 
-Juggling users and groups
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In fact, ``[[Engine/DataModel/Entities/ElggGroup|ElggGroup]]`` simulates
-most of the methods of
-``[[Engine/DataModel/Entities/ElggUser|ElggUser]]``. You can grab the
-icon, name etc using the same calls, and if you ask for a group's
-friends, you'll get its members. This has been designed specifically for
-you to alternate between groups and users in your code easily.
-
 Ownership
 =========
 
