@@ -86,6 +86,7 @@ elgg.security.refreshToken = function () {
 
 				if (elgg.get_logged_in_user_guid() != data.user_guid) {
 					elgg.session.user = null;
+					clearInterval(elgg.security.tokenRefreshTimer);
 					if (data.user_guid) {
 						elgg.register_error(elgg.echo('session_changed_user'));
 					} else {
