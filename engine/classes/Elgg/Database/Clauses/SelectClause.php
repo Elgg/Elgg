@@ -9,7 +9,7 @@ use Elgg\Database\QueryBuilder;
 /**
  * Extends QueryBuilder with SELECT clauses
  */
-class SelectClause implements Clause {
+class SelectClause extends Clause {
 
 	/**
 	 * @var Closure|CompositeExpression|string
@@ -31,8 +31,8 @@ class SelectClause implements Clause {
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 		$select = $this->expr;
 
-		if ($this->expr instanceof Closure) {
-			$select = call_user_func($this->expr, $qb, $table_alias);
+		if ($this->isCallable($select)) {
+			$select = $this->call($this->expr, $qb, $table_alias);
 		}
 
 		if ($select instanceof CompositeExpression || is_string($select)) {

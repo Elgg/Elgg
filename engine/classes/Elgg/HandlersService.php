@@ -138,7 +138,7 @@ class HandlersService {
 	 *
 	 * @return callable|null
 	 */
-	private function resolveCallable($callable) {
+	public function resolveCallable($callable) {
 		if (is_callable($callable)) {
 			return $callable;
 		}

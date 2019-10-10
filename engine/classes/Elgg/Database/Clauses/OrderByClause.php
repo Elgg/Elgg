@@ -9,7 +9,7 @@ use Elgg\Database\QueryBuilder;
 /**
  * Extends QueryBuilder with ORDER BY clauses
  */
-class OrderByClause implements Clause {
+class OrderByClause extends Clause {
 
 	/**
 	 * @var Closure|CompositeExpression|null|string
@@ -38,8 +38,8 @@ class OrderByClause implements Clause {
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 		$order_by = $this->expr;
 
-		if ($this->expr instanceof Closure) {
-			$order_by = call_user_func($this->expr, $qb, $table_alias);
+		if ($this->isCallable($order_by)) {
+			$order_by = $this->call($this->expr, $qb, $table_alias);
 		}
 
 		if ($order_by instanceof CompositeExpression || is_string($order_by)) {

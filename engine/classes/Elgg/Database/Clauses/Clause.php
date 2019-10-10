@@ -7,8 +7,10 @@ use Elgg\Database\QueryBuilder;
 
 /**
  * Interface that allows resolving statements and/or extending query builder
+ *
+ * @internal
  */
-interface Clause {
+abstract class Clause {
 
 	/**
 	 * Build an expression and/or apply it to an instance of query builder
@@ -18,5 +20,65 @@ interface Clause {
 	 *
 	 * @return CompositeExpression|null|string
 	 */
-	public function prepare(QueryBuilder $qb, $table_alias = null);
+	abstract public function prepare(QueryBuilder $qb, $table_alias = null);
+	
+	/**
+	 * Check if a clause expression is callable
+	 *
+	 * @param mixed $callback the clause callable expression
+	 *
+	 * @return bool
+	 */
+	protected function isCallable($callback) {
+		return _elgg_services()->handlers->isCallable($callback);
+	}
+	
+	/**
+	 * Call the expression for the clause
+	 *
+	 * @param mixed        $callback    the clause callable expression
+	 * @param QueryBuilder $qb          the current query builder
+	 * @param string       $table_alias the main table alias
+	 *
+	 * @return false|mixed
+	 */
+	protected function call($callback, QueryBuilder $qb, $table_alias = null) {
+		$service = _elgg_services()->handlers;
+		
+		$callable = $service->resolveCallable($callback);
+		if (!is_callable($callable)) {
+			$description = static::class . ' (QueryBuilder, table_alias)';
+			$msg = "Handler for {$description} is not callable: " . $service->describeCallable($callback);
+			_elgg_services()->logger->warning($msg);
+			
+			return false;
+		}
+		
+		return call_user_func($callable, $qb, $table_alias);
+	}
+	
+	/**
+	 * Call the expression for a join clause
+	 *
+	 * @param mixed        $callback     the clause callable expression
+	 * @param QueryBuilder $qb           the current query builder
+	 * @param string       $joined_alias the joined table alias
+	 * @param string       $table_alias  the main table alias
+	 *
+	 * @return false|mixed
+	 */
+	protected function callJoin($callback, QueryBuilder $qb, $joined_alias, $table_alias = null) {
+		$service = _elgg_services()->handlers;
+		
+		$callable = $service->resolveCallable($callback);
+		if (!is_callable($callable)) {
+			$description = static::class . ' (QueryBuilder, joined_alias, table_alias)';
+			$msg = "Handler for {$description} is not callable: " . $service->describeCallable($callback);
+			_elgg_services()->logger->warning($msg);
+			
+			return false;
+		}
+		
+		return call_user_func($callable, $qb, $joined_alias, $table_alias);
+	}
 }
