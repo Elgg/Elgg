@@ -97,5 +97,16 @@ define(function (require) {
 
 	// Open selected tabs
 	// This will load any selected tabs that link to ajax views
-	$('.elgg-tabs-component .elgg-components-tab.elgg-state-selected > a').trigger('click');
+	$('.elgg-tabs-component').each(function() {
+		var $tabs = $(this).find('.elgg-components-tab');
+		if (!$tabs.length) {
+			return;
+		}
+		
+		if ($tabs.hasClass('elgg-state-selected')) {
+			$tabs.filter('.elgg-state-selected').eq(0).find(' > a').trigger('click');
+		} else {
+			$tabs.eq(0).find(' > a').trigger('click');
+		}
+	});
 });
