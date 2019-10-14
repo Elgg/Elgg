@@ -18,7 +18,8 @@ The following files for plugin ``example`` would go in ``/mod/example/``
             other_action.php
     classes/
         VendorNamespace/
-            ExampleClass.php
+            PluginNamespace/
+                ExampleClass.php
     languages/
         en.php
     vendors/
@@ -130,6 +131,8 @@ You're encouraged to follow the `PHP-FIG <http://www.php-fig.org/>`_ standards w
 .. note::
  
 	Files with a ".class.php" extension will **not** be recognized by Elgg.
+	
+When organizing you classes Elgg does not require a specific structure. Use what works best for your plugin but keep in mind that it should be easy to read, funtionality should be easy to find and having seperated functions into different classes will improve maintainability and testability.
 
 Vendors
 -------

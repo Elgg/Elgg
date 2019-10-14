@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-27 13:20+0200\n"
+"POT-Creation-Date: 2019-10-11 10:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,7 @@ msgstr ""
 #: ../../guides/themes.rst:14
 #: ../../guides/views.rst:6
 #: ../../guides/web-services.rst:24
+#: ../../guides/web-services/result.rst:6
 #: ../../guides/widgets.rst:8
 msgid "Contents"
 msgstr ""
@@ -2949,7 +2950,7 @@ msgid "Make the delete action accept ``action/<handler>/delete?guid=<guid>`` so 
 msgstr ""
 
 #: ../../guides/guidelines.rst:82
-#: ../../guides/plugins/plugin-skeleton.rst:80
+#: ../../guides/plugins/plugin-skeleton.rst:81
 msgid "Actions"
 msgstr ""
 
@@ -4390,7 +4391,7 @@ msgid "Filters ajax responses before they're sent back to the ``elgg/Ajax`` modu
 msgstr ""
 
 #: ../../guides/hooks-list.rst:648
-#: ../../guides/plugins/plugin-skeleton.rst:140
+#: ../../guides/plugins/plugin-skeleton.rst:143
 #: ../../guides/views.rst:2
 msgid "Views"
 msgstr ""
@@ -7209,131 +7210,135 @@ msgstr ""
 msgid "The following files for plugin ``example`` would go in ``/mod/example/``"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:68
+#: ../../guides/plugins/plugin-skeleton.rst:69
 msgid "Required Files"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:70
+#: ../../guides/plugins/plugin-skeleton.rst:71
 msgid "Plugins **must** provide a ``manifest.xml`` file in the plugin root in order to be recognized by Elgg."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:72
+#: ../../guides/plugins/plugin-skeleton.rst:73
 msgid "Therefore the following is the minimally compliant structure:"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:82
+#: ../../guides/plugins/plugin-skeleton.rst:83
 msgid "Plugins *should* place scripts for actions an ``actions/`` directory, and furthermore *should* use the name of the action to determine the location within that directory."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:84
+#: ../../guides/plugins/plugin-skeleton.rst:85
 msgid "For example, the action ``my/example/action`` would go in ``my_plugin/actions/my/example/action.php``. This makes it very obvious which script is associated with which action."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:86
+#: ../../guides/plugins/plugin-skeleton.rst:87
 msgid "Similarly, the body of the form that submits to this action should be located in ``forms/my/example/action.php``. Not only does this make the connection b/w action handler, form code, and action name obvious, but it allows you to use the ``elgg_view_form()`` function easily."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:89
+#: ../../guides/plugins/plugin-skeleton.rst:90
 msgid "Text Files"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:91
+#: ../../guides/plugins/plugin-skeleton.rst:92
 msgid "Plugins *may* provide various \\*.txt as additional documentation for the plugin. These files **must** be in Markdown syntax and will generate links on the plugin management sections."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:94
+#: ../../guides/plugins/plugin-skeleton.rst:95
 msgid "README.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:94
+#: ../../guides/plugins/plugin-skeleton.rst:95
 msgid "*should* provide additional information about the plugin of an unspecified nature"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:97
+#: ../../guides/plugins/plugin-skeleton.rst:98
 msgid "COPYRIGHT.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:97
+#: ../../guides/plugins/plugin-skeleton.rst:98
 msgid "If included, **must** provide an explanation of the plugin's copyright, besides what is included in ``manifest.xml``"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:100
+#: ../../guides/plugins/plugin-skeleton.rst:101
 msgid "LICENSE.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:100
+#: ../../guides/plugins/plugin-skeleton.rst:101
 msgid "If included, **must** provide the text of the license that the plugin is released under."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:103
+#: ../../guides/plugins/plugin-skeleton.rst:104
 msgid "INSTALL.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:103
+#: ../../guides/plugins/plugin-skeleton.rst:104
 msgid "If included, **must** provide additional instructions for installing the plugin if the process is sufficiently complicated (e.g. if it requires installing third party libraries on the host machine, or requires acquiring an API key from a third party)."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:106
+#: ../../guides/plugins/plugin-skeleton.rst:107
 msgid "CHANGES.txt"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:106
+#: ../../guides/plugins/plugin-skeleton.rst:107
 msgid "If included, **must** provide a list of changes for their plugin, grouped by version number, with the most recent version at the top."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:108
+#: ../../guides/plugins/plugin-skeleton.rst:109
 msgid "Plugins *may* include additional \\*.txt files besides these, but no interface is given for reading them."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:111
+#: ../../guides/plugins/plugin-skeleton.rst:112
 msgid "Pages"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:113
+#: ../../guides/plugins/plugin-skeleton.rst:114
 msgid "To render full pages, plugins should use **resource views** (which have names beginning with ``resources/``). This allows other plugins to easily replace functionality via the view system."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:118
+#: ../../guides/plugins/plugin-skeleton.rst:119
 msgid "The reason we encourage this structure is"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:120
+#: ../../guides/plugins/plugin-skeleton.rst:121
 msgid "To form a logical relationship between urls and scripts, so that people examining the code can have an idea of what it does just by examining the structure."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:121
+#: ../../guides/plugins/plugin-skeleton.rst:122
 msgid "To clean up the root plugin directory, which historically has quickly gotten cluttered with the page handling scripts."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:124
+#: ../../guides/plugins/plugin-skeleton.rst:125
 msgid "Classes"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:126
+#: ../../guides/plugins/plugin-skeleton.rst:127
 msgid "Elgg provides `PSR-0 <http://www.php-fig.org/psr/psr-0/>`_ autoloading out of every active plugin's ``classes/`` directory."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:128
+#: ../../guides/plugins/plugin-skeleton.rst:129
 msgid "You're encouraged to follow the `PHP-FIG <http://www.php-fig.org/>`_ standards when writing your classes."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:132
+#: ../../guides/plugins/plugin-skeleton.rst:133
 msgid "Files with a \".class.php\" extension will **not** be recognized by Elgg."
 msgstr ""
 
 #: ../../guides/plugins/plugin-skeleton.rst:135
+msgid "When organizing you classes Elgg does not require a specific structure. Use what works best for your plugin but keep in mind that it should be easy to read, funtionality should be easy to find and having seperated functions into different classes will improve maintainability and testability."
+msgstr ""
+
+#: ../../guides/plugins/plugin-skeleton.rst:138
 msgid "Vendors"
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:137
+#: ../../guides/plugins/plugin-skeleton.rst:140
 msgid "Included third-party libraries of any kind *should* be included in the ``vendors/`` folder in the plugin root. Though this folder has no special significance to the Elgg engine, this has historically been the location where Elgg core stores its third-party libraries, so we encourage the same format for the sake of consistency and familiarity."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:142
+#: ../../guides/plugins/plugin-skeleton.rst:145
 msgid "In order to override core views, a plugin's views can be placed in ``views/``, or an ``elgg-plugin.php`` config file can be used for more detailed file/path mapping. See :doc:`/guides/views`."
 msgstr ""
 
-#: ../../guides/plugins/plugin-skeleton.rst:144
+#: ../../guides/plugins/plugin-skeleton.rst:147
 msgid "Javascript and CSS will live in the views system. See :doc:`/guides/javascript`."
 msgstr ""
 
@@ -9567,6 +9572,78 @@ msgstr ""
 
 #: ../../guides/web-services/hmac.rst:32
 msgid "Elgg provides a sample API client that implements this HMAC signature: send_api_call(). It serves as a good reference on how to implement it."
+msgstr ""
+
+#: ../../guides/web-services/result.rst:2
+msgid "API results"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:9
+msgid "Success result structure"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:11
+msgid "A successful API result looks like this:"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:20
+msgid "Depending on the API call ``result`` can contain any type of content (string, number, array, object, etc.)."
+msgstr ""
+
+#: ../../guides/web-services/result.rst:22
+msgid "An example of a numberic result (for example a user count):"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:31
+msgid "An example of an object result (for example a user):"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:45
+msgid "Error result structure"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:47
+msgid "When an API call fails the result will look like this:"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:58
+msgid "Default status codes"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:60
+msgid "The ``status`` field always contains a number representing the result. Any value other than ``0`` is considered an error."
+msgstr ""
+
+#: ../../guides/web-services/result.rst:62
+msgid "``0``: This is a success result"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:63
+msgid "``-1``: This is a generic error result"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:64
+msgid "``-20``: The user authentication token is missing, is invalid or has expired"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:65
+msgid "``-30``: The api key has been disabled"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:66
+msgid "``-31``: The api key is inactive"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:67
+msgid "``-32``: The api key is invalid"
+msgstr ""
+
+#: ../../guides/web-services/result.rst:69
+msgid "Developers can implement their own status codes to represent different error states, so the request doesn't have to rely on the error message to know what went wrong."
+msgstr ""
+
+#: ../../guides/web-services/result.rst:74
+msgid "``result`` and ``message`` can contain messages in different languages. This is depending on the user language when using user authenticated API calls or the site langauge for other API calls. Keep in mind that the language can change, eighter by the user or by a site administrator for the site language."
 msgstr ""
 
 #: ../../guides/widgets.rst:2
