@@ -11,11 +11,19 @@ define(function (require) {
 	var Ajax = require('elgg/Ajax');
 	var ajax = new Ajax(false);
 
-	function changeTab($link_item) {
+	function changeTab($link_item, clearing_tab, trigger_open) {
+
+		clearing_tab = typeof clearing_tab == 'boolean' ? clearing_tab : false;
+		trigger_open = typeof trigger_open == 'boolean' ? trigger_open : true;
 
 		var $target = $link_item.data('target');
 		if (!$target || !$target.length) {
 			return false;
+		}
+		
+		// only change tab content if not already showing (or if clearing the tab)
+		if ($target.hasClass('elgg-state-active') && !clearing_tab) {
+			return true;
 		}
 
 		// find the tabs that have the selected state and remove that state
@@ -29,6 +37,10 @@ define(function (require) {
 		// trigger scroll to close potential open menus
 		// see elgg/popup.js open function
 		$(document).trigger('scroll');
+		
+		if (trigger_open) {
+			$link_item.trigger('open');
+		}
 		
 		return true;
 	};
@@ -56,14 +68,12 @@ define(function (require) {
 		if (href.indexOf('#') === 0) {
 			// Open inline tab
 			if (changeTab($tab)) {
-				$tab.trigger('open');
 				return;
 			}
 		} else {
 			// Load an ajax tab
 			if ($tab.data('loaded') && !$link.data('ajaxReload')) {
 				if (changeTab($tab)) {
-					$tab.trigger('open');
 					return;
 				}
 			}
@@ -71,7 +81,7 @@ define(function (require) {
 			ajax.path(href, {
 				data: $link.data('ajaxQuery') || {},
 				beforeSend: function () {
-					changeTab($tab);
+					changeTab($tab, true, false);
 					$target.html('');
 					$target.addClass('elgg-ajax-loader');
 				}
@@ -85,9 +95,7 @@ define(function (require) {
 					$target.html(output);
 				}
 
-				if (changeTab($tab)) {
-					$tab.trigger('open');
-				}
+				changeTab($tab, true);
 			});
 		}
 	};
