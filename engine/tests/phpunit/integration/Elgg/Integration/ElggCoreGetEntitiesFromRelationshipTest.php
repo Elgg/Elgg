@@ -289,5 +289,147 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$obj2->delete();
 		$obj3->delete();
 	}
-
+	
+	/**
+	 * Check that you can get entities by filtering them on relationship time created lower
+	 */
+	public function testGetEntitiesFromRelationshipFilterByTimeCreatedLower() {
+		
+		$object1 = $this->createObject();
+		$object2 = $this->createObject();
+		
+		// get a timestamp before creating the relationship
+		$dt = _elgg_services()->relationshipsTable->getCurrentTime();
+		$ts_lower = $dt->getTimestamp() - 1;
+		
+		add_entity_relationship($object1->guid, 'testGetEntitiesFromRelationship', $object2->guid);
+		
+		// get a timestamp after creating the relationship
+		$ts_upper = $dt->getTimestamp() + 1;
+		
+		// check that if ts_lower is before the relationship you get the just created entity
+		$options = [
+			'relationship' => 'testGetEntitiesFromRelationship',
+			'relationship_guid' => $object1->guid,
+			'relationship_created_time_lower' => $ts_lower,
+		];
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertInternalType('array', $es);
+		$this->assertCount(1, $es);
+		
+		foreach ($es as $e) {
+			$this->assertEquals($object2->guid, $e->guid);
+		}
+		
+		// check that if ts_lower is after the relationship you get no entities
+		$options = [
+			'relationship' => 'testGetEntitiesFromRelationship',
+			'relationship_guid' => $object1->guid,
+			'relationship_created_time_lower' => $ts_upper,
+		];
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertInternalType('array', $es);
+		$this->assertCount(0, $es);
+		
+		$object1->delete();
+		$object2->delete();
+	}
+	
+	/**
+	 * Check that you can get entities by filtering them on relationship time created upper
+	 */
+	public function testGetEntitiesFromRelationshipFilterByTimeCreatedUpper() {
+		
+		$object1 = $this->createObject();
+		$object2 = $this->createObject();
+		
+		// get a timestamp before creating the relationship
+		$dt = _elgg_services()->relationshipsTable->getCurrentTime();
+		$ts_lower = $dt->getTimestamp() - 1;
+		
+		add_entity_relationship($object1->guid, 'testGetEntitiesFromRelationship', $object2->guid);
+		
+		// get a timestamp after creating the relationship
+		$ts_upper = $dt->getTimestamp() + 1;
+		
+		// check that if ts_upper is after the relationship you get the just created entity
+		$options = [
+			'relationship' => 'testGetEntitiesFromRelationship',
+			'relationship_guid' => $object1->guid,
+			'relationship_created_time_upper' => $ts_upper,
+		];
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertInternalType('array', $es);
+		$this->assertCount(1, $es);
+		
+		foreach ($es as $e) {
+			$this->assertEquals($object2->guid, $e->guid);
+		}
+		
+		// check that if ts_upper is before the relationship you get no entities
+		$options = [
+			'relationship' => 'testGetEntitiesFromRelationship',
+			'relationship_guid' => $object1->guid,
+			'relationship_created_time_upper' => $ts_lower,
+		];
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertInternalType('array', $es);
+		$this->assertCount(0, $es);
+		
+		$object1->delete();
+		$object2->delete();
+	}
+	
+	/**
+	 * Check that you can get entities by filtering them on relationship time created lower and upper
+	 */
+	public function testGetEntitiesFromRelationshipFilterByTimeCreatedLowerAndUpper() {
+		
+		$object1 = $this->createObject();
+		$object2 = $this->createObject();
+		
+		// get a timestamp before creating the relationship
+		$dt = _elgg_services()->relationshipsTable->getCurrentTime();
+		$ts_lower = $dt->getTimestamp() - 1;
+		
+		add_entity_relationship($object1->guid, 'testGetEntitiesFromRelationship', $object2->guid);
+		
+		// get a timestamp after creating the relationship
+		$ts_upper = $dt->getTimestamp() + 1;
+		
+		// check that if relationship time created is between lower and upper you get the just created entity
+		$options = [
+			'relationship' => 'testGetEntitiesFromRelationship',
+			'relationship_guid' => $object1->guid,
+			'relationship_created_time_lower' => $ts_lower,
+			'relationship_created_time_upper' => $ts_upper,
+		];
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertInternalType('array', $es);
+		$this->assertCount(1, $es);
+		
+		foreach ($es as $e) {
+			$this->assertEquals($object2->guid, $e->guid);
+		}
+		
+		// check that if  ts_lower > ts_upper you get no entities
+		$options = [
+			'relationship' => 'testGetEntitiesFromRelationship',
+			'relationship_guid' => $object1->guid,
+			'relationship_created_time_lower' => $ts_upper,
+			'relationship_created_time_upper' => $ts_lower,
+		];
+		
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertInternalType('array', $es);
+		$this->assertCount(0, $es);
+		
+		$object1->delete();
+		$object2->delete();
+	}
 }

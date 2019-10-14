@@ -44,7 +44,7 @@ foreach (_elgg_get_js_site_data() as $expression => $value) {
 //<script>
 
 // page data overrides site data
-$.extend(elgg.data, elgg._data);
+elgg.data = $.extend(true, {}, elgg.data, elgg._data);
 delete elgg._data;
 
 // jQuery and UI must be loaded sync in 2.x but modules should depend on these AMD modules

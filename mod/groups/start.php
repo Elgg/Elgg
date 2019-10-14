@@ -27,7 +27,7 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
 
 	// group user hover menu
-	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'groups_user_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:relationship', 'groups_relationship_menu_setup');
 
 	// invitation request actions
 	elgg_register_plugin_hook_handler('register', 'menu:invitationrequest', 'groups_invitationrequest_menu_setup');
@@ -385,28 +385,29 @@ function groups_entity_menu_setup(\Elgg\Hook $hook) {
 }
 
 /**
- * Add a remove user link to user hover menu when the page owner is a group
+ * Add a remove user link to relationship menu if it's about a group membership relationship
  *
- * @param \Elgg\Hook $hook 'register', 'menu:user_hover'
+ * @param \Elgg\Hook $hook 'register', 'menu:relationship'
  *
  * @return void|ElggMenuItem[]
  */
-function groups_user_entity_menu_setup(\Elgg\Hook $hook) {
-	$group = elgg_get_page_owner_entity();
-
-	if (!$group instanceof \ElggGroup || !$group->canEdit()) {
+function groups_relationship_menu_setup(\Elgg\Hook $hook) {
+	
+	$relationship = $hook->getParam('relationship');
+	if (!$relationship instanceof ElggRelationship || $relationship->relationship !== 'member') {
 		return;
 	}
+	
+	$user = get_entity($relationship->guid_one);
+	$group = get_entity($relationship->guid_two);
 
-	$entity = $hook->getEntityParam();
-
-	// Make sure we have a user and that user is a member of the group
-	if (!$entity instanceof \ElggUser || !$group->isMember($entity)) {
+	// Make sure we have a user and a group
+	if (!$user instanceof \ElggUser || !$group instanceof ElggGroup) {
 		return;
 	}
 
 	// Check if we are looking at the group owner
-	if ($group->owner_guid === $entity->guid) {
+	if ($group->owner_guid === $user->guid) {
 		return;
 	}
 	
@@ -414,14 +415,12 @@ function groups_user_entity_menu_setup(\Elgg\Hook $hook) {
 	$return[] = ElggMenuItem::factory([
 		'name' => 'removeuser',
 		'href' => elgg_generate_action_url('groups/remove', [
-			'user_guid' => $entity->guid,
+			'user_guid' => $user->guid,
 			'group_guid' => $group->guid,
 		]),
 		'text' => elgg_echo('groups:removeuser'),
 		'icon' => 'user-times',
 		'confirm' => true,
-		'priority' => 999,
-		'section' => 'action',
 	]);
 
 	return $return;

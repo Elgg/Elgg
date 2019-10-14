@@ -9,7 +9,7 @@ use Elgg\Database\QueryBuilder;
 /**
  * Extends QueryBuilder with GROUP BY statements
  */
-class GroupByClause implements Clause {
+class GroupByClause extends Clause {
 
 	/**
 	 * @var Closure|CompositeExpression|string
@@ -31,8 +31,8 @@ class GroupByClause implements Clause {
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 		$group_by = $this->expr;
 
-		if ($this->expr instanceof Closure) {
-			$group_by = call_user_func($this->expr, $qb, $table_alias);
+		if ($this->isCallable($group_by)) {
+			$group_by = $this->call($group_by, $qb, $table_alias);
 		}
 
 		if ($group_by instanceof CompositeExpression || is_string($group_by)) {

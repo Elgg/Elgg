@@ -1,12 +1,9 @@
 <?php
 
-use Elgg\HooksRegistrationService\Hook;
-
 elgg_set_viewtype('default');
 
 $css = elgg_view('core.css', []);
-
-echo _elgg_views_preprocess_css(new Hook(elgg(), null, null, $css, []));
+echo _elgg_services()->cssCompiler->compile($css);
 
 elgg_set_viewtype('installation');
 
@@ -37,6 +34,7 @@ body {
 
 .elgg-layout-columns > .elgg-sidebar-alt {
 	padding: 2rem;
+	max-width: 20rem;
 }
 
 .elgg-layout-columns > .elgg-body {
@@ -48,9 +46,14 @@ body {
 	text-align: center;
 }
 
+.elgg-sidebar-alt .elgg-field {
+	padding-left: 2rem;
+}
+
 .elgg-sidebar-alt ol {
 	list-style: decimal;
 	padding-left: 2rem;
+	padding-bottom: 2rem;
 	font-size: 1rem;
 }
 

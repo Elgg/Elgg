@@ -11,12 +11,11 @@ if (!$owner instanceof ElggUser) {
 	throw new \Elgg\EntityNotFoundException;
 }
 
-$title = elgg_echo("friends:owned", [$owner->getDisplayName()]);
+$title = elgg_echo('friends:owned', [$owner->getDisplayName()]);
 
-$dbprefix = elgg_get_config('dbprefix');
-$options = [
+$content = elgg_list_entities([
 	'relationship' => 'friend',
-	'relationship_guid' => $owner->getGUID(),
+	'relationship_guid' => $owner->guid,
 	'inverse_relationship' => false,
 	'type' => 'user',
 	'order_by_metadata' => [
@@ -27,13 +26,13 @@ $options = [
 	],
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
-];
-$content = elgg_list_entities($options);
+]);
 
-$params = [
-	'content' => $content,
+$body = elgg_view_layout('default', [
 	'title' => $title,
-];
-$body = elgg_view_layout('one_sidebar', $params);
+	'content' => $content,
+	'filter_id' => 'friends',
+	'filter_value' => 'friends',
+]);
 
 echo elgg_view_page($title, $body);

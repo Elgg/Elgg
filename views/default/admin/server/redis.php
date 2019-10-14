@@ -9,7 +9,8 @@ if (!elgg_get_config('redis') || empty($servers) || !\Stash\Driver\Redis::isAvai
 	return;
 }
 
-$redis = new Redis();
+$options = elgg_get_config('redis_options') ?: [];
+$redis = new Redis($options);
 
 foreach ($servers as $server) {
 	$redis->connect($server[0], $server[1]);

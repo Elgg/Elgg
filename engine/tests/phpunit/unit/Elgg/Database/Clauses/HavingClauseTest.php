@@ -5,7 +5,10 @@ namespace Elgg\Integration;
 use Elgg\Database\Clauses\HavingClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
+use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
+
+require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableHaving.php';
 
 /**
  * @group QueryBuilder
@@ -60,6 +63,32 @@ class HavingClauseTest extends UnitTestCase {
 
 		$qb = Select::fromTable('entities', 'alias');
 		$query = new HavingClause($qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER));
+		$qb->addClause($query);
+
+		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
+		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
+	}
+	
+	public function testBuildHavingClauseFromInvokableClass() {
+
+		$expr = $this->qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER);
+		$this->qb->having($expr);
+
+		$qb = Select::fromTable('entities', 'alias');
+		$query = new HavingClause(\CallableHaving::class);
+		$qb->addClause($query);
+
+		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
+		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
+	}
+	
+	public function testBuildHavingClauseFromStaticClassFunction() {
+
+		$expr = $this->qb->compare('alias.guid', '=', 25, ELGG_VALUE_INTEGER);
+		$this->qb->having($expr);
+
+		$qb = Select::fromTable('entities', 'alias');
+		$query = new HavingClause('CallableHaving::callable');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

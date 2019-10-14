@@ -58,6 +58,8 @@ First new stable minor/major release
 
 Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release.
 
+Update the README.md file badges to point to the correct new release numbers.
+
 Prepare the release
 ======================
 

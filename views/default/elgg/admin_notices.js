@@ -18,7 +18,7 @@ define(function(require) {
 			$li.show();
 		}
 
-		ajax.action(this.href).done(function (output, statusText, jqXHR) {
+		ajax.action(this.href, {showSuccessMessages: false}).done(function (output, statusText, jqXHR) {
 			if (jqXHR.AjaxData.status == -1) {
 				restore();
 				return;

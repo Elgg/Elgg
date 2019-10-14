@@ -18,6 +18,10 @@ $(function() {
 			$(this).prev().attr('disabled', false);
 		}
 	});
+	
+	$('.elgg-install-language').change(function(index, elem) {
+		location.href = $(this).val();
+	});
 });
 
 elgg = {

@@ -22,11 +22,7 @@ echo elgg_list_river([
 	'limit' => $num,
 	'pagination' => false,
 	'wheres' => [
-		function (QueryBuilder $qb, $main_alias) use ($group) {
-			$group = new GroupRiverFilter($group);
-			
-			return $group($qb, $main_alias);
-		},
+		new GroupRiverFilter($group),
 	],
 	'no_results' => elgg_echo('widgets:group_activity:content:noactivity'),
 ]);

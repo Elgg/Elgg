@@ -12,6 +12,18 @@ if (!$entity instanceof ElggUpgrade) {
 
 $imprint = [];
 
+$started = $entity->getStartTime();
+if ($started > 0) {
+	// older upgrades don't have a start time
+	$imprint[] = [
+		'icon_name' => 'calendar-alt',
+		'content' => elgg_view('output/date', [
+			'value' => $started,
+			'format' => elgg_echo('friendlytime:date_format'),
+		]),
+	];
+}
+
 $imprint[] = [
 	'icon_name' => 'flag-checkered',
 	'content' => elgg_view('output/date', [

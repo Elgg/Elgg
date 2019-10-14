@@ -83,6 +83,7 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 			'/mod/plugin/file.php' => elgg_get_site_url() . 'mod/plugin/file.php',
 			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
 			'/rootfile.php' => elgg_get_site_url() . 'rootfile.php',
+			'/robots.txt' => elgg_get_site_url() . 'robots.txt',
 			'/rootfile.php?p=v&p2=v2' => elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
 		];
 

@@ -15,7 +15,7 @@ if (elgg_is_logged_in()) {
 $num_display = (int) $widget->num_display ?: 4;
 
 echo elgg_list_annotations([
-	'annotations_name' => 'messageboard',
+	'annotation_name' => 'messageboard',
 	'guid' => $owner->guid,
 	'limit' => $num_display,
 	'pagination' => false,

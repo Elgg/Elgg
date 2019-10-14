@@ -64,6 +64,14 @@ return [
 			\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
 		],
 	],
+	'account:validation:pending' => [
+		'path' => '/validation_pending',
+		'resource' => 'account/validation_pending',
+		'walled' => false,
+		'middleware' => [
+			\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
+		],
+	],
 	'ajax' => [
 		'path' => '/ajax/{segments}',
 		'handler' => '_elgg_ajax_page_handler',

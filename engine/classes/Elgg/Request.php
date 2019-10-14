@@ -179,4 +179,12 @@ class Request {
 		return $this->http_request->getMethod();
 	}
 
+	/**
+	 * Get the HttpRequest for this request
+	 *
+	 * @return \Elgg\Http\Request
+	 */
+	public function getHttpRequest() {
+		return $this->http_request;
+	}
 }

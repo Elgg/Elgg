@@ -232,57 +232,6 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
 		$this->assertNull($user);
 	}
-
-	function testBootSessionWithInvalidLegacyTokenCausesDelayAndFailure() {
-		$this->dbMock->expects($this->once())
-				->method('getDataRow')
-				->will($this->returnValue(array()));
-
-		$this->svc = $this->getSvcWithCookie(str_repeat('b', 32));
-
-		$user = $this->svc->bootSession();
-
-		$this->assertSame(1, $this->timeSlept);
-		$this->assertSame('', $this->lastCookieSet->value);
-		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
-		$this->assertNull($user);
-	}
-
-	function testReplaceLegacyTokenWithNoCookieDoesNothing() {
-		$this->svc = $this->getSvcWithCookie('');
-
-		$this->dbMock->expects($this->never())
-				->method('deleteData');
-
-		$this->svc->replaceLegacyToken($this->user123);
-
-		$this->assertNull($this->lastCookieSet);
-		$this->assertNull($this->session->get('code'));
-	}
-
-	function testModernTokenCookiesAreNotReplaced() {
-		$this->dbMock->expects($this->never())
-				->method('deleteData');
-
-		$this->svc->replaceLegacyToken($this->user123);
-
-		$this->assertNull($this->lastCookieSet);
-		$this->assertNull($this->session->get('code'));
-	}
-
-	function testLegacyCookiesAreReplacedInDbCookieAndSession() {
-		$this->svc = $this->getSvcWithCookie(str_repeat('a', 32));
-
-		$this->dbMock->expects($this->atLeastOnce())
-				->method('deleteData');
-		$this->dbMock->expects($this->once())
-				->method('insertData');
-
-		$this->svc->replaceLegacyToken($this->user123);
-
-		$this->assertSame($this->mockToken, $this->lastCookieSet->value);
-		$this->assertSame($this->mockToken, $this->session->get('code'));
-	}
 	
 	function testUpdateTokenUsageWithoutCookie() {
 		$this->assertNull($this->svc->updateTokenUsage($this->user123));

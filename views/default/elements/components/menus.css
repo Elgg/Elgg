@@ -340,6 +340,7 @@
 	ENTITY, SOCIAL, RIVER AND ANNOTATION
 *************************************** */
 .elgg-listing-summary-metadata > .elgg-menu-container,
+.elgg-relationship-metadata > .elgg-menu-container,
 .elgg-river-metadata > .elgg-menu-container,
 .elgg-menu-annotation-container {
 	float: right;
@@ -353,6 +354,7 @@
 }
 
 .elgg-menu-river,
+.elgg-menu-relationship,
 .elgg-menu-entity,
 .elgg-menu-social,
 .elgg-menu-annotation,
@@ -367,18 +369,22 @@
 	}
 
 	> li {
-		> a:not(.elgg-state-active) {
-			color: inherit;
-		}
-
-		> a:hover {
-			color: #0078ac;
-			text-decoration: none;
+	
+		> a:not(.elgg-button) {
+			&:not(.elgg-state-active) {
+				color: inherit;
+			}
+			
+			&:hover {
+				color: #0078ac;
+				text-decoration: none;
+			}
 		}
 	}
 }
 
 .elgg-menu-entity-default,
+.elgg-menu-relationship-default,
 .elgg-menu-river-default {
 	.elgg-menu-item-has-dropdown {
 		font-size: 100%;

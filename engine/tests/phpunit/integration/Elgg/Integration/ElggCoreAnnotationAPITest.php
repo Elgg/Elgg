@@ -208,7 +208,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 		$annotations = elgg_get_annotations([
 			'guid' => $entity->guid,
-			'annotations_names' => ['foo', 'bar'],
+			'annotation_names' => ['foo', 'bar'],
 		]);
 
 		foreach ($annotations as $annotation) {
@@ -216,7 +216,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		}
 
 		$this->assertEmpty($entity->getAnnotations([
-			'annotations_names' => ['foo', 'bar'],
+			'annotation_names' => ['foo', 'bar'],
 		]));
 	}
 

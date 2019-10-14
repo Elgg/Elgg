@@ -9,7 +9,7 @@ use Elgg\Database\QueryBuilder;
 /**
  * Extends QueryBuilder with JOIN clauses
  */
-class JoinClause implements Clause {
+class JoinClause extends Clause {
 
 	/**
 	 * @var string
@@ -56,8 +56,8 @@ class JoinClause implements Clause {
 		}
 
 		$condition = $this->condition;
-		if ($condition instanceof Closure) {
-			$condition = call_user_func($condition, $qb, $joined_alias, $table_alias);
+		if ($this->isCallable($condition)) {
+			$condition = $this->callJoin($condition, $qb, $joined_alias, $table_alias);
 		} else if ($condition === null) {
 			$condition = true;
 		}

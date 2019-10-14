@@ -22,6 +22,7 @@
 
 use Elgg\Menu\MenuItems;
 use Elgg\Database\QueryBuilder;
+use Elgg\Http\ResponseBuilder;
 
 /**
  * Get the admin users
@@ -184,6 +185,15 @@ function _elgg_admin_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:make_admin:user:user', '_elgg_admin_prepare_user_notification_make_admin');
 	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:user', '_elgg_admin_prepare_admin_notification_remove_admin');
 	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:user', '_elgg_admin_prepare_user_notification_remove_admin');
+	
+	// new users require admin validation
+	elgg_register_event_handler('login:before', 'user', '_elgg_admin_user_validation_login_attempt', 999); // allow others to throw exceptions earlier
+	elgg_register_event_handler('validate:after', 'user', '_elgg_admin_user_validation_notification');
+	elgg_register_plugin_hook_handler('cron', 'daily', '_elgg_admin_cron_pending_user_validation_notification');
+	elgg_register_plugin_hook_handler('cron', 'weekly', '_elgg_admin_cron_pending_user_validation_notification');
+	elgg_register_plugin_hook_handler('register', 'user', '_elgg_admin_check_admin_validation', 999); // allow others to also disable the user
+	elgg_register_plugin_hook_handler('response', 'action:register', '_elgg_admin_set_registration_forward_url', 999); // allow other to set forwar url first
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_admin_save_notification_setting');
 	
 	// Add notice about pending upgrades
 	elgg_register_event_handler('create', 'object', '_elgg_create_notice_of_pending_upgrade');
@@ -1083,6 +1093,226 @@ function _elgg_admin_upgrades_menu(\Elgg\Hook $hook) {
 	]);
 	
 	return $result;
+}
+
+/**
+ * Check if new users need to be validated by an administrator
+ *
+ * @param \Elgg\Hook $hook 'register', 'user'
+ *
+ * @return void
+ * @internal
+ * @since 3.2
+ */
+function _elgg_admin_check_admin_validation(\Elgg\Hook $hook) {
+	
+	if (!(bool) elgg_get_config('require_admin_validation')) {
+		return;
+	}
+	
+	$user = $hook->getUserParam();
+	if (!$user instanceof ElggUser) {
+		return;
+	}
+	
+	elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
+		
+		if ($user->isEnabled()) {
+			// disable the user until validation
+			$user->disable('admin_validation_required', false);
+		}
+		
+		// set validation status
+		$user->setValidationStatus(false);
+		
+		// store a flag in session so we can forward the user correctly
+		$session = elgg_get_session();
+		$session->set('admin_validation', true);
+		
+		if (elgg_get_config('admin_validation_notification') === 'direct') {
+			_elgg_admin_notify_admins_pending_user_validation();
+		}
+	});
+}
+
+/**
+ * Prevent unvalidated users from logging in
+ *
+ * @param \Elgg\Event $event 'login:before', 'user'
+ *
+ * @return void
+ * @throws LoginException
+ * @internal
+ * @since 3.2
+ */
+function _elgg_admin_user_validation_login_attempt(\Elgg\Event $event) {
+	
+	if (!(bool) elgg_get_config('require_admin_validation')) {
+		return;
+	}
+	
+	$user = $event->getObject();
+	if (!$user instanceof ElggUser) {
+		return;
+	}
+	
+	elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
+		if ($user->isEnabled() && $user->isValidated() !== false) {
+			return;
+		}
+		
+		throw new LoginException(elgg_echo('LoginException:AdminValidationPending'));
+	});
+}
+
+/**
+ * Send a notification to all admins that there are pending user validations
+ *
+ * @return void
+ * @internal
+ * @since 3.2
+ */
+function _elgg_admin_notify_admins_pending_user_validation() {
+	
+	if (empty(elgg_get_config('admin_validation_notification'))) {
+		return;
+	}
+	
+	$unvalidated_count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+		return elgg_count_entities([
+			'type' => 'user',
+			'metadata_name_value_pairs' => [
+				'validated' => 0,
+			],
+		]);
+	});
+	if (empty($unvalidated_count)) {
+		// shouldn't be able to get here because this function is triggered when a user is marked as unvalidated
+		return;
+	}
+	
+	$site = elgg_get_site_entity();
+	$admins = elgg_get_admins([
+		'limit' => false,
+		'batch' => true,
+	]);
+	
+	$url = elgg_normalize_url('admin/users/unvalidated');
+	
+	/* @var $admin ElggUser */
+	foreach ($admins as $admin) {
+		$user_setting = $admin->getPrivateSetting('admin_validation_notification');
+		if (isset($user_setting) && !(bool) $user_setting) {
+			continue;
+		}
+		
+		$subject = elgg_echo('admin:notification:unvalidated_users:subject', [$site->getDisplayName()], $admin->getLanguage());
+		$body = elgg_echo('admin:notification:unvalidated_users:body', [
+			$admin->getDisplayName(),
+			$unvalidated_count,
+			$site->getDisplayName(),
+			$url,
+		], $admin->getLanguage());
+		
+		$params = [
+			'action' => 'admin:unvalidated',
+			'object' => $admin,
+		];
+		notify_user($admin->guid, $site->guid, $subject, $body, $params, ['email']);
+	}
+}
+
+/**
+ * Save a setting related to admin approval of new users
+ *
+ * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+ *
+ * @return void
+ * @internal
+ * @since 3.2
+ */
+function _elgg_admin_save_notification_setting(\Elgg\Hook $hook) {
+	
+	$user = $hook->getUserParam();
+	if (!$user instanceof ElggUser || !$user->isAdmin()) {
+		return;
+	}
+	
+	$request = $hook->getParam('request');
+	if (!$request instanceof \Elgg\Request) {
+		return;
+	}
+	
+	$value = (bool) $request->getParam('admin_validation_notification', true);
+	$user->setPrivateSetting('admin_validation_notification', $value);
+}
+
+/**
+ * Set the correct forward url after user registration
+ *
+ * @param \Elgg\Hook $hook 'response', 'action:register'
+ *
+ * @return void
+ * @internal
+ * @since 3.2
+ */
+function _elgg_admin_set_registration_forward_url(\Elgg\Hook $hook) {
+	
+	$response = $hook->getValue();
+	if (!$response instanceof ResponseBuilder) {
+		return;
+	}
+	
+	$session = elgg_get_session();
+	if (!$session->get('admin_validation')) {
+		return;
+	}
+	
+	// if other plugins already have set forwarding, don't do anything
+	if (!empty($response->getForwardURL()) && $response->getForwardURL() !== REFERER) {
+		return;
+	}
+	
+	$response->setForwardURL(elgg_generate_url('account:validation:pending'));
+	
+	return $response;
+}
+
+/**
+ * Notify the user that their account is approved
+ *
+ * @param \Elgg\Event $event 'validate:after', 'user'
+ *
+ * @return void
+ * @internal
+ * @since 3.2
+ */
+function _elgg_admin_user_validation_notification(\Elgg\Event $event) {
+	
+	if (!(bool) elgg_get_config('require_admin_validation')) {
+		return;
+	}
+	
+	$user = $event->getObject();
+	if (!$user instanceof ElggUser) {
+		return;
+	}
+	
+	$site = elgg_get_site_entity();
+	
+	$subject = elgg_echo('account:notification:validation:subject', [$site->getDisplayName()], $user->getLanguage());
+	$body = elgg_echo('account:notification:validation:body', [
+		$user->getDisplayName(),
+		$site->getDisplayName(),
+		$site->getURL(),
+	], $user->getLanguage());
+	
+	$params = [
+		'action' => 'account:validated',
+		'object' => $user,
+	];
+	
+	notify_user($user->guid, $site->guid, $subject, $body, $params, ['email']);
 }
 
 /**

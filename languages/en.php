@@ -114,6 +114,7 @@ return array(
 	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
 	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
+	'LoginException:AdminValidationPending' => "Your account needs to be validated by a site administrator before you can use it. You'll be notified when your account is validated.",
 
 	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
@@ -322,7 +323,11 @@ return array(
 	'river:subject:invalid_subject' => 'Invalid user',
 	'activity:owner' => 'Activity',
 
+/**
+ * Relationships
+ */
 	
+	'relationship:default' => "%s relates to %s",
 
 /**
  * Notifications
@@ -754,6 +759,14 @@ If you didn't make this change, please reset your password here:
 Or contact a site administrator:
 %s",
 	
+	'admin:notification:unvalidated_users:subject' => "Users awaiting approval on %s",
+	'admin:notification:unvalidated_users:body' => "Hi %s,
+
+%d users of '%s' are awaiting approval by an administrator.
+
+See the full list of users here:
+%s",
+
 /**
  * Plugins
  */
@@ -1325,6 +1338,11 @@ Once you have logged in, we highly recommend that you change your password.',
 	// Walled Garden support
 	'installation:registration:description' => 'If enabled, visitors can create their own user accounts.',
 	'installation:registration:label' => 'Allow visitors to register',
+	'installation:adminvalidation:description' => 'If enabled, newly registered users require manual validation by an administrator before they can use the site.',
+	'installation:adminvalidation:label' => 'New users require manual validation by an administrator',
+	'installation:adminvalidation:notification:description' => 'When enabled, site administrators will get a notification that there are pending user validations. An administrator can disable the notification on their personal settings page.',
+	'installation:adminvalidation:notification:label' => 'Notify administrators of pending user validations',
+	'installation:adminvalidation:notification:direct' => 'Direct',
 	'installation:walled_garden:description' => 'If enabled, logged-out visitors can see only pages marked public (such as login and registration).',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
 
@@ -1497,6 +1515,20 @@ Your e-mail address on '%s' was changed.
 From now on you'll receive notifications on this e-mail address.
 
 If you didn't request this change, please contact a site administrator.
+%s",
+
+	'account:email:admin:validation_notification' => "Notify me when there are users requiring validation by an administrator",
+	'account:email:admin:validation_notification:help' => "Because of the site settings, newly registered users require manual validation by an administrator. With this setting you can disable notifications about pending validation requests.",
+	
+	'account:validation:pending:title' => "Account validation pending",
+	'account:validation:pending:content' => "Your account has been registered successfully! However before you can use you account a site administrator needs to validate you account. You'll receive an e-mail when you account is validated.",
+	
+	'account:notification:validation:subject' => "Your account on %s has been validated!",
+	'account:notification:validation:body' => "Hi %s,
+
+Your account on '%s' has been validated. You can now use your account.
+
+To go the the website, click here:
 %s",
 
 /**

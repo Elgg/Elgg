@@ -31,7 +31,7 @@ class ToolsUnitTest extends UnitTestCase {
 		$this->assertEquals(elgg_echo("groups:tool:my-tool"), $tool->label);
 		$this->assertEquals($tool->label, $tool->getLabel());
 		$this->assertEquals('my-tool', $tool->name);
-		$this->assertEquals($tool->name, $tool->getId());
+		$this->assertEquals($tool->name, $tool->getID());
 		$this->assertFalse($tool->default_on);
 		$this->assertFalse($tool->isEnabledByDefault());
 		$this->assertEquals('my-tool_enable', $tool->mapMetadataName());

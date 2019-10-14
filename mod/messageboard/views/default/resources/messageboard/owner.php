@@ -20,7 +20,7 @@ $history_user = get_user_by_username($history_username);
 elgg_push_breadcrumb($page_owner->getDisplayName(), $page_owner->getURL());
 
 $options = [
-	'annotations_name' => 'messageboard',
+	'annotation_name' => 'messageboard',
 	'guid' => $page_owner->guid,
 	'order_by' => [
 		new OrderByClause('n_table.time_created', 'DESC'),

@@ -1040,6 +1040,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '_elgg_setup_vertical_menu', 999);
 
 	elgg_register_plugin_hook_handler('prepare', 'menu:entity', '_elgg_menu_transform_to_dropdown');
+	elgg_register_plugin_hook_handler('prepare', 'menu:relationship', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('prepare', 'menu:river', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');

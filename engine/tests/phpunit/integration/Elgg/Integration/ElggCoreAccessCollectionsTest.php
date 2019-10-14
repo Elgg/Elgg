@@ -332,7 +332,7 @@ class ElggCoreAccessCollectionsTest extends LegacyIntegrationTestCase {
 		$this->assertEqual($loaded_acl->owner_guid, $this->user->guid);
 
 		$acl->name = 'test_collection_edited';
-		$acl->save();
+		$this->assertTrue($acl->save());
 
 		$loaded_acl = get_access_collection($id);
 

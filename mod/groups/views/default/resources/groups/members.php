@@ -1,6 +1,8 @@
 <?php
 
+use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Database\QueryBuilder;
 
 $guid = (int) elgg_extract('guid', $vars);
 
@@ -24,15 +26,21 @@ $options = [
 $sort = elgg_extract('sort', $vars);
 switch ($sort) {
 	case 'newest':
-		$options['order_by'] = [
-			new OrderByClause('r.time_created', 'DESC'),
-		];
 		break;
 	default:
-		$options['order_by_metadata'] = [
-			'name' => 'name',
-			'direction' => 'ASC',
+		$options['joins'] = [
+			new JoinClause('metadata', 'ens', function(QueryBuilder $qb, $join_alias, $main_alias) {
+				$compare = [
+					$qb->compare("{$join_alias}.entity_guid", '=', "{$main_alias}.guid_one"),
+					$qb->compare("{$join_alias}.name", '=', 'name', ELGG_VALUE_STRING),
+				];
+				return $qb->merge($compare);
+			}),
 		];
+		$options['order_by'] = [
+			new OrderByClause('ens.value', 'ASC'),
+		];
+		
 		break;
 }
 
@@ -43,7 +51,7 @@ $tabs = elgg_view_menu('groups_members', [
 	'class' => 'elgg-tabs'
 ]);
 
-$content = elgg_list_entities($options);
+$content = elgg_list_relationships($options);
 
 $params = [
 	'content' => $content,

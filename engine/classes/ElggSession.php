@@ -118,7 +118,7 @@ class ElggSession {
 	 * @return string
 	 * @since 1.9
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->storage->getId();
 	}
 

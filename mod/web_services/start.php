@@ -37,7 +37,11 @@ function ws_init() {
 		false,
 		false
 	);
+	
+	elgg_extend_view('admin.css', 'webservices/admin.css');
 
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '\Elgg\WebServices\EntityMenu');
+	elgg_register_plugin_hook_handler('register', 'menu:page', '\Elgg\WebServices\AdminPageMenu');
 	elgg_register_plugin_hook_handler('rest:output', 'system.api.list', 'ws_system_api_list_hook');
 }
 

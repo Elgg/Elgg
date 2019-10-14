@@ -22,7 +22,7 @@ if ($result === false) {
 }
 
 $output = elgg_list_annotations([
-	'annotations_name' => 'messageboard',
+	'annotation_name' => 'messageboard',
 	'guid' => $owner->guid,
 	'pagination' => false,
 	'order_by' => [

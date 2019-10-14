@@ -1,3 +1,58 @@
+<a name="3.1.5"></a>
+### 3.1.5  (2019-10-11)
+
+#### Contributors
+
+* Jeroen Dalsem (7)
+* Jerôme Bakker (2)
+
+#### Documentation
+
+* **plugins:** added some info about class structures in plugins ([03536970](https://github.com/Elgg/Elgg/commit/0353697086279b5c0caad23a8168cce0ac4a4e9a))
+* **webservices:** document the result structure of webservice calls ([9a6221a7](https://github.com/Elgg/Elgg/commit/9a6221a73c85c02786d927c034981f9a806a5903))
+
+
+#### Bug Fixes
+
+* **core:** allow passing only name or value into name/value pairs ([e2e26677](https://github.com/Elgg/Elgg/commit/e2e26677af1c1d3f4da6b97634748781f5c8ccf5))
+* **js:** stop refreshing tokens if session changed ([bb4a7894](https://github.com/Elgg/Elgg/commit/bb4a789479683402d4dfbe53facdfeb4a8c24d16))
+* **pages:** correctly validate write permissions ([a3fbc109](https://github.com/Elgg/Elgg/commit/a3fbc10971f4677de4f2a1f6c21a7f428f0e5e7f))
+
+
+<a name="3.1.4"></a>
+### 3.1.4  (2019-09-27)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (2)
+
+#### Bug Fixes
+
+* **messageboard:** use the correct annotation_name for listings ([95429878](https://github.com/Elgg/Elgg/commit/95429878cfb6a34625c637feb1991a717f6b599a))
+* **tests:** correctly validate response headers ([2ccd1833](https://github.com/Elgg/Elgg/commit/2ccd1833d86a6920c168827f8fe9cd31b2711a5c))
+
+
+<a name="3.1.3"></a>
+### 3.1.3  (2019-09-13)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (4)
+
+#### Features
+
+* **ajax:** added option to suppress messages from ajax calls ([2b728fe5](https://github.com/Elgg/Elgg/commit/2b728fe5d3769b188a266cb657b2279c64c570c2))
+
+
+#### Bug Fixes
+
+* **admin:** do not show ajax success message when removing admin notice ([75bf8cbd](https://github.com/Elgg/Elgg/commit/75bf8cbd5b82b0644b4fb10c402fc982ac0102f7))
+* **database:** updated Phinx to prevent Symfony conflicts ([58d778a6](https://github.com/Elgg/Elgg/commit/58d778a65f74552160bbe50be8cf8c02b98aaf61))
+* **uservalidationbyemail:** correct forwarding during email confirmation ([e3ccb067](https://github.com/Elgg/Elgg/commit/e3ccb0671fb0512a4448820deb1c6e026d78ffea))
+
+
 <a name="3.1.2"></a>
 ### 3.1.2  (2019-08-28)
 

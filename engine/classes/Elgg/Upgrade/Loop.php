@@ -102,6 +102,7 @@ class Loop {
 
 		$started = microtime(true);
 
+		$this->upgrade->setStartTime();
 		$progress = $this->progress->start($this->upgrade->getDisplayName(), $this->count);
 
 		while ($this->canContinue($started, $max_duration)) {

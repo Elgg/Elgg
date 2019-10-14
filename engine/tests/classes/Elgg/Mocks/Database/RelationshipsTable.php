@@ -4,6 +4,9 @@ namespace Elgg\Mocks\Database;
 
 use Elgg\Database\RelationshipsTable as DbRelationshipsTable;
 use stdClass;
+use Elgg\Database\Insert;
+use Elgg\Database\Select;
+use Elgg\Database\Delete;
 
 /**
  * This mock table is designed to simplify testing of DB-dependent services.
@@ -28,7 +31,7 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 	/**
 	 *
-	 * @var type@var array
+	 * @var array
 	 */
 	private $query_specs;
 
@@ -83,37 +86,29 @@ class RelationshipsTable extends DbRelationshipsTable {
 
 		$this->clearQuerySpecs($row->id);
 
-		$dbprefix = _elgg_config()->dbprefix;
-
 		// Insert a new relationship
-		$sql = "
-			INSERT INTO {$dbprefix}entity_relationships
-			       (guid_one, relationship, guid_two, time_created)
-			VALUES (:guid1, :relationship, :guid2, :time)
-		";
+		$insert = Insert::intoTable('entity_relationships');
+		$insert->values([
+			'guid_one' => $insert->param($row->guid_one, ELGG_VALUE_GUID),
+			'relationship' => $insert->param($row->relationship, ELGG_VALUE_STRING),
+			'guid_two' => $insert->param($row->guid_two, ELGG_VALUE_GUID),
+			'time_created' => $insert->param($row->time_created, ELGG_VALUE_TIMESTAMP),
+		]);
 
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':guid1' => $row->guid_one,
-				':guid2' => $row->guid_two,
-				':relationship' => $row->relationship,
-				':time' => $row->time_created
-			],
+			'sql' => $insert->getSQL(),
+			'params' => $insert->getParameters(),
 			'insert_id' => $row->id,
 		]);
 
 		// Get relationship by its ID
-		$sql = "
-			SELECT * FROM {$dbprefix}entity_relationships
-			WHERE id = :id
-		";
-
+		$select = Select::fromTable('entity_relationships');
+		$select->select('*')
+			->where($select->compare('id', '=', $row->id, ELGG_VALUE_ID));
+		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':id' => (int) $row->id,
-			],
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
 			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return [$this->rows[$row->id]];
@@ -123,16 +118,12 @@ class RelationshipsTable extends DbRelationshipsTable {
 		]);
 
 		// Delete relationship by its ID
-		$sql = "
-			DELETE FROM {$dbprefix}entity_relationships
-			WHERE id = :id
-		";
-
+		$delete = Delete::fromTable('entity_relationships');
+		$delete->where($delete->compare('id', '=', $row->id, ELGG_VALUE_ID));
+		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':id' => (int) $row->id,
-			],
+			'sql' => $delete->getSQL(),
+			'params' => $delete->getParameters(),
 			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					$this->clearQuerySpecs($row->id);
@@ -145,21 +136,16 @@ class RelationshipsTable extends DbRelationshipsTable {
 		]);
 
 		// Check relationship between two GUIDs
-		$sql = "
-			SELECT * FROM {$dbprefix}entity_relationships
-			WHERE guid_one = :guid1
-			  AND relationship = :relationship
-			  AND guid_two = :guid2
-			LIMIT 1
-		";
-
+		$select = Select::fromTable('entity_relationships');
+		$select->select('*')
+			->where($select->compare('guid_one', '=', $row->guid_one, ELGG_VALUE_GUID))
+			->andWhere($select->compare('relationship', '=', $row->relationship, ELGG_VALUE_STRING))
+			->andWhere($select->compare('guid_two', '=', $row->guid_two, ELGG_VALUE_GUID))
+			->setMaxResults(1);
+		
 		$this->query_specs[$row->id][] = $this->db->addQuerySpec([
-			'sql' => $sql,
-			'params' => [
-				':guid1' => (int) $row->guid_one,
-				':guid2' => (int) $row->guid_two,
-				':relationship' => $row->relationship,
-			],
+			'sql' => $select->getSQL(),
+			'params' => $select->getParameters(),
 			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return [$this->rows[$row->id]];

@@ -5,7 +5,10 @@ namespace Elgg\Integration;
 use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
+use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
+
+require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableJoin.php';
 
 /**
  * @group QueryBuilder
@@ -72,6 +75,30 @@ class JoinClauseTest extends UnitTestCase {
 		$expected = Select::fromTable('entities', 'alias');
 		$condition = $expected->compare("joined_alias.x", '=', "alias.x");
 		$join = new JoinClause('joined_table', 'joined_alias', $condition);
+		$expected->addClause($join);
+
+		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
+		$this->assertEquals($this->qb->getParameters(), $expected->getParameters());
+	}
+	
+	public function testBuildJoinClauseWithInvokableClassCondition() {
+
+		$this->qb->join('alias', 'joined_table', 'joined_alias', 'joined_alias.x = alias.x');
+
+		$expected = Select::fromTable('entities', 'alias');
+		$join = new JoinClause('joined_table', 'joined_alias', \CallableJoin::class);
+		$expected->addClause($join);
+
+		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
+		$this->assertEquals($this->qb->getParameters(), $expected->getParameters());
+	}
+	
+	public function testBuildJoinClauseWithStaticClassFunctionCondition() {
+
+		$this->qb->join('alias', 'joined_table', 'joined_alias', 'joined_alias.x = alias.x');
+
+		$expected = Select::fromTable('entities', 'alias');
+		$join = new JoinClause('joined_table', 'joined_alias', '\CallableJoin::callable');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());

@@ -116,7 +116,7 @@ class ElggAccessCollection extends ElggData {
 		if ($this->id > 0) {
 			return _elgg_services()->accessCollections->rename($this->id, $this->name);
 		} else {
-			return _elgg_services()->accessCollections->create($this->name, $this->owner_guid);
+			return (bool) _elgg_services()->accessCollections->create($this->name, $this->owner_guid);
 		}
 	}
 

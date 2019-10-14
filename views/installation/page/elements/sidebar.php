@@ -27,3 +27,17 @@ foreach ($steps as $index => $step) {
 	echo "<li class=\"$class\">$text</li>";
 }
 echo '</ol>';
+
+$options_values = [];
+foreach (get_installed_translations() as $key => $value) {
+	$options_values[elgg_http_add_url_query_elements(current_page_url(), ['hl' => $key])] = $value;
+}
+
+echo elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('install:change_language'),
+	'class' => 'elgg-install-language',
+	'name' => 'installer_language',
+	'value' => elgg_http_add_url_query_elements(current_page_url(), ['hl' => get_current_language()]),
+	'options_values' => $options_values,
+]);

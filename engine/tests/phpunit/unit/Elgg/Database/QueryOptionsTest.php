@@ -455,6 +455,34 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEquals(['draft'], $pair->values);
 	}
 
+	public function testNormalizesMetadataOptionsForPairsWithJustNameOrValue() {
+
+		$options = $this->options->normalizeOptions([
+			'metadata_name_value_pairs' => [
+				[
+					'name' => 'status',
+				],
+				[
+					'value' => 'draft',
+				],
+			],
+		]);
+
+		$this->assertEquals(2, count($options['metadata_name_value_pairs']));
+
+		$pair = array_shift($options['metadata_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['status'], $pair->names);
+		$this->assertEmpty($pair->values);
+		
+		$pair = array_shift($options['metadata_name_value_pairs']);
+
+		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
+		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEmpty($pair->names);
+	}
+
 	public function testNormalizesOrderByMetadataOption() {
 		$options = $this->options->normalizeOptions([
 			'order_by_metadata' => [
