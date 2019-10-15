@@ -7,6 +7,7 @@ define(function(require) {
 		toolbar: [['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'], ['NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
 		removeButtons: 'Subscript,Superscript', // To have Underline back
 		allowedContent: true,
+		entities: false,
 		baseHref: elgg.get_site_url(),
 		extraPlugins: 'blockimagepaste',
 		defaultLanguage: 'en',
