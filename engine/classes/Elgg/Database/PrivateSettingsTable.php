@@ -198,7 +198,7 @@ class PrivateSettingsTable {
 		$qb->where($qb->compare('name', '=', $name, ELGG_VALUE_STRING))
 			->andWhere($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
-		return $this->db->deleteData($qb);
+		return (bool) $this->db->deleteData($qb);
 	}
 
 	/**
@@ -215,7 +215,7 @@ class PrivateSettingsTable {
 		$qb = Delete::fromTable('private_settings');
 		$qb->where($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER));
 
-		return $this->db->deleteData($qb);
+		return (bool) $this->db->deleteData($qb);
 	}
 
 }
