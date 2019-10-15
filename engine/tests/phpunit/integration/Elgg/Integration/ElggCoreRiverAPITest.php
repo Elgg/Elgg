@@ -344,47 +344,4 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$bad_target['target_guid'] = -1;
 		$this->assertFalse(elgg_create_river_item($bad_target));
 	}
-
-	public function testElggRiverDisableEnable() {
-
-		$this->assertTrue(_elgg_services()->events->hasHandler('disable:after', 'all', '_elgg_river_disable'));
-
-		$user = $this->createOne('user');
-		$this->entity = $this->createOne('object');
-
-		$params = [
-			'view' => 'river/relationship/friend/create',
-			'action_type' => 'create',
-			'subject_guid' => $user->guid,
-			'object_guid' => $this->entity->guid,
-		];
-
-		$id = elgg_create_river_item($params);
-
-		$river = elgg_get_river(['ids' => [$id]]);
-
-		$this->assertSame($river[0]->enabled, 'yes');
-
-		elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
-			$this->assertTrue($user->disable());
-		});
-		
-		// should no longer be able to get the river
-		$river = elgg_get_river(['ids' => [$id]]);
-
-		$this->assertSame($river, []);
-
-		// renabling the user should re-enable the river
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($user) {
-			$user->enable();
-		});
-
-		$river = elgg_get_river(['ids' => [$id]]);
-
-		$this->assertSame($river[0]->enabled, 'yes');
-
-		$user->delete();
-		$this->entity->delete();
-	}
-
 }
