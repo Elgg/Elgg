@@ -15,6 +15,17 @@ elgg_set_page_owner_guid($guid);
 elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
+if ($group->canEdit()) {
+	elgg_register_menu_item('title', [
+		'name' => 'groups:invite',
+		'icon' => 'user-plus',
+		'href' => elgg_generate_entity_url($group, 'invite'),
+		'text' => elgg_echo('groups:invite'),
+		'link_class' => 'elgg-button elgg-button-action',
+	]);
+}
+
+// build page elements
 $options = [
 	'relationship' => 'member',
 	'relationship_guid' => $group->guid,
@@ -53,11 +64,12 @@ $tabs = elgg_view_menu('groups_members', [
 
 $content = elgg_list_relationships($options);
 
-$params = [
+// build page
+$body = elgg_view_layout('content', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => $tabs,
-];
-$body = elgg_view_layout('content', $params);
+]);
 
+// draw page
 echo elgg_view_page($title, $body);
