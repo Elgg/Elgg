@@ -107,6 +107,7 @@ return [
 			'resource' => 'groups/requests',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],

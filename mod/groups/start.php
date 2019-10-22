@@ -832,6 +832,15 @@ function groups_members_menu_setup(\Elgg\Hook $hook) {
 		]),
 		'priority' => 200
 	]);
+	
+	if ($entity->canEdit()) {
+		$menu[] = ElggMenuItem::factory([
+			'name' => 'membership_requests',
+			'text' => elgg_echo('groups:membershiprequests'),
+			'href' => elgg_generate_entity_url($entity, 'requests'),
+			'priority' => 300
+		]);
+	}
 
 	return $menu;
 }
