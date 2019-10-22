@@ -68,8 +68,12 @@ use Elgg\Project\Paths;
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers
  * @property array         $menus
- * @property int           $min_password_length
- * @property int           $minusername
+ * @property int           $min_password_length                     The minimal length of a password
+ * @property int           $min_password_lower                      The minimal number of lower case characters in a password
+ * @property int           $min_password_upper                      The minimal number of upper case characters in a password
+ * @property int           $min_password_number                     The minimal number of numbers in a password
+ * @property int           $min_password_special                    The minimal number of special characters in a password
+ * @property int           $minusername                             The minimal length of a username
  * @property string[]      $pages
  * @property-read string   $path         							Path of composer install with trailing "/"
  * @property-read string   $pluginspath  							Alias of plugins_path

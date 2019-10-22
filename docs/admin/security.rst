@@ -60,3 +60,19 @@ When the site administrator role is added to or removed from the account, send a
 -------
 
 When the account of a user gets banned or unbanned, let the affected user know about this action.
+
+Minimal username length
+=======================
+
+You can configure the minimal length the username should have upon registration of a user.
+
+Minimal password requirements
+=============================
+
+You can configure several requirements for new passwords of the users
+
+- **length**: the password should be at least x characters long
+- **lower case**: minimal number of lower case (a-z) characters in the password
+- **upper case**: minimal number of upper case (A-Z) characters in the password
+- **numbers**: minimal number of numbers (0-9) characters in the password
+- **specials**: minimal number of special (like !@#$%^&*(), etc.) characters in the password

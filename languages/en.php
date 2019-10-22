@@ -125,6 +125,9 @@ return array(
 	'BadRequestException' => 'Bad request',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
+	
+	'Security:InvalidPasswordCharacterRequirementsException' => "The provided password is doesn't meet the character requirements",
+	'Security:InvalidPasswordLengthException' => "The provided password doesn't meet the minimal length requirement of %s characters",
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -438,6 +441,19 @@ return array(
 	'walled_garden:home' => 'Home',
 
 /**
+ * Password requirements
+ */
+	'password:requirements:min_length' => "The password needs to be at least %s characters.",
+	'password:requirements:lower' => "The password needs to have at least %s lower case characters.",
+	'password:requirements:no_lower' => "The password shouldn't contain any lower case characters.",
+	'password:requirements:upper' => "The password needs to have at least %s upper case characters.",
+	'password:requirements:no_upper' => "The password shouldn't contain any upper case characters.",
+	'password:requirements:number' => "The password needs to have at least %s number characters.",
+	'password:requirements:no_number' => "The password shouldn't contain any number characters.",
+	'password:requirements:special' => "The password needs to have at least %s special characters.",
+	'password:requirements:no_special' => "The password shouldn't contain any special characters.",
+	
+/**
  * Administration
  */
 	'menu:page:header:administer' => 'Administer',
@@ -652,6 +668,7 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	'admin:security:settings' => 'Settings',
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
 	'admin:security:settings:label:hardening' => 'Hardening',
+	'admin:security:settings:label:account' => 'Account',
 	'admin:security:settings:label:notifications' => 'Notifications',
 	'admin:security:settings:label:site_secret' => 'Site secret',
 	
@@ -692,6 +709,24 @@ Having icons session bound makes icon urls not shareable between sessions. The s
 	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
 	'admin:security:settings:site_secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
+	
+	'admin:security:settings:minusername' => "Minimal username length",
+	'admin:security:settings:minusername:help' => "Minimal number of characters required in a username",
+	
+	'admin:security:settings:min_password_length' => "Minimal password length",
+	'admin:security:settings:min_password_length:help' => "Minimal number of characters required in a password",
+	
+	'admin:security:settings:min_password_lower' => "Minimal number of lower case characters in a password",
+	'admin:security:settings:min_password_lower:help' => "Configure the minimal number of lower case (a-z) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
+	
+	'admin:security:settings:min_password_upper' => "Minimal number of upper case characters in a password",
+	'admin:security:settings:min_password_upper:help' => "Configure the minimal number of upper case (A-Z) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
+	
+	'admin:security:settings:min_password_number' => "Minimal number of number characters in a password",
+	'admin:security:settings:min_password_number:help' => "Configure the minimal number of number (0-9) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
+	
+	'admin:security:settings:min_password_special' => "Minimal number of special characters in a password",
+	'admin:security:settings:min_password_special:help' => "Configure the minimal number of special (!@$%^&*()<>,.?/[]{}-=_+) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
 	
 	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
 	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",

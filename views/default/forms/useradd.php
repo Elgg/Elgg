@@ -63,6 +63,7 @@ echo elgg_view_field([
 	'value' => $password,
 	'required' => true,
 	'autocomplete' => 'new-password',
+	'add_security_requirements' => true,
 ]);
 
 echo elgg_view_field([
@@ -72,6 +73,7 @@ echo elgg_view_field([
 	'value' => $password2,
 	'required' => true,
 	'autocomplete' => 'new-password',
+	'add_security_requirements' => true,
 ]);
 
 echo elgg_view_field([

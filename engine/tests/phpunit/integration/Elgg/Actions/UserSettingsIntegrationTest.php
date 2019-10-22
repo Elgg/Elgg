@@ -33,6 +33,8 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_name');
 		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_username');
 		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_email');
+		
+		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 
 		_elgg_services()->systemMessages->dumpRegister();
 	}
@@ -80,7 +82,7 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 		$this->assertInstanceOf(OkResponse::class, $response);
 
-		$this->assertErrorMessageEmitted(elgg_echo('registration:passwordtooshort', [elgg()->config->min_password_length]));
+		$this->assertErrorMessageEmitted(elgg_echo('Security:InvalidPasswordLengthException', [elgg()->config->min_password_length]));
 
 		_elgg_services()->session->removeLoggedInUser();
 	}

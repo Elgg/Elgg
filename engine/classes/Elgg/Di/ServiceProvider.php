@@ -22,6 +22,7 @@ use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 use Elgg\I18n\LocaleService;
+use Elgg\Security\PasswordGeneratorService;
 
 /**
  * Provides common Elgg services.
@@ -89,6 +90,7 @@ use Elgg\I18n\LocaleService;
  * @property-read \Elgg\Notifications\NotificationsService        $notifications
  * @property-read \Elgg\Page\PageOwnerService                     $pageOwner
  * @property-read \Elgg\PasswordService                           $passwords
+ * @property-read \Elgg\Security\PasswordGeneratorService         $passwordGenerator
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
  * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
@@ -180,7 +182,8 @@ class ServiceProvider extends DiContainer {
 				$c->passwords,
 				$c->usersTable,
 				$c->hooks,
-				$c->emails
+				$c->emails,
+				$c->passwordGenerator
 			);
 		});
 
@@ -510,6 +513,14 @@ class ServiceProvider extends DiContainer {
 		});
 		
 		$this->setClassName('passwords', \Elgg\PasswordService::class);
+		
+		$this->setFactory('passwordGenerator', function(ServiceProvider $c) {
+			return new PasswordGeneratorService(
+				$c->config,
+				$c->translator,
+				$c->hooks
+			);
+		});
 		
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
 			$global_cookies_config = $c->config->getCookieConfig();

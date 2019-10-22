@@ -24,6 +24,8 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		_elgg_config()->allow_registration = true;
 
 		_elgg_services()->hooks->backup();
+		
+		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 	}
 
 	public function down() {
@@ -46,7 +48,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
-		$this->assertEquals(elgg_echo('registration:passwordtooshort', [3]), $response->getContent());
+		$this->assertEquals(elgg_echo('Security:InvalidPasswordLengthException', [3]), $response->getContent());
 
 		$this->assertFalse(get_user_by_username($username));
 	}
