@@ -116,7 +116,7 @@
 	}
 }
 
-.elgg-menu.elgg-menu-hz .elgg-menu-item-has-dropdown,
+.elgg-menu.elgg-menu-hz:not(.elgg-menu-relationship) .elgg-menu-item-has-dropdown,
 .elgg-menu.elgg-menu-filter .elgg-menu-item-has-dropdown {
 	.elgg-menu-closed:after,
 	.elgg-menu-opened:after {

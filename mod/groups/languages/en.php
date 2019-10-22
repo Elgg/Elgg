@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Delete group',
 	'groups:membershiprequests' => 'Manage join requests',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Group invitations',
 	'groups:invitations:pending' => 'Group invitations (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Group name',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Invite friends to this group',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'You have no friends to invite!',
 	'groups:group' => "Group",
