@@ -1,6 +1,6 @@
 <?php
 
-$guid = elgg_extract('guid', $vars);
+use Elgg\Database\Clauses\OrderByClause;
 
 $group = elgg_get_page_owner_entity();
 
@@ -10,16 +10,11 @@ elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 // build page elements
 $title = elgg_echo('groups:membershiprequests');
 
-$requests = elgg_get_entities([
-	'type' => 'user',
+$content = elgg_list_relationships([
 	'relationship' => 'membership_request',
-	'relationship_guid' => $guid,
+	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
-	'limit' => 0,
-]);
-$content = elgg_view('groups/membershiprequests', [
-	'requests' => $requests,
-	'entity' => $group,
+	'order_by' => new OrderByClause('er.time_created', 'ASC'),
 ]);
 
 $tabs = elgg_view_menu('groups_members', [

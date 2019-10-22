@@ -1,6 +1,6 @@
 <?php
 /**
- * Relationship view of a group membership invitation
+ * Relationship view of a group membership request
  *
  * @note To add or remove from the relationship menu, register handlers for the menu:relationship hook.
  *
@@ -12,8 +12,8 @@ if (!$relationship instanceof ElggRelationship) {
 	return;
 }
 
-$group = get_entity($relationship->guid_one);
-$user = get_entity($relationship->guid_two);
+$user = get_entity($relationship->guid_one);
+$group = get_entity($relationship->guid_two);
 if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
 	return;
 }
@@ -26,14 +26,6 @@ if ($page_owner->guid === $group->guid) {
 		'href' => $user->getURL(),
 		'is_trusted' => true,
 	]);
-} elseif ($page_owner->guid === $user->guid) {
-	$vars['icon_entity'] = $group;
-	$vars['title'] = elgg_view('output/url', [
-		'text' => $group->getDisplayName(),
-		'href' => $group->getURL(),
-		'is_trusted' => true,
-	]);
-	$vars['subtitle'] = $group->briefdescription;
 }
 
 echo elgg_view('relationship/elements/summary', $vars);

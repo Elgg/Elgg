@@ -64,6 +64,7 @@ return [
 			'resource' => 'groups/invitations',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'collection:group:group:search' => [

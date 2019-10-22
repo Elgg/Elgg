@@ -5,6 +5,8 @@
  * @uses $vars['invitations'] Optional. Array of ElggGroups
  */
 
+elgg_deprecated_notice("The view 'groups/invitationrequests' has been deprecated use elgg_list_relationships()", '3.2');
+
 if (isset($vars['invitations'])) {
 	$invitations = $vars['invitations'];
 	unset($vars['invitations']);

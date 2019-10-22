@@ -20,6 +20,7 @@ return array(
 	'groups:invitations:pending' => 'Group invitations (%s)',
 	
 	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Group name',
