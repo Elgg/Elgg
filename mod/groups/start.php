@@ -68,6 +68,7 @@ function groups_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu_group_profile');
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_groups_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:relationship', '_groups_relationship_invited_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_groups_title_menu');
 
 	elgg_register_plugin_hook_handler('gatekeeper', 'group:group', '_groups_gatekeeper_allow_profile_page');
@@ -114,7 +115,7 @@ function groups_fields_setup() {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
- * @return void|ElggMenuItem[]
+ * @return void|\Elgg\Menu\MenuItems
  *
  * @internal
  * @since 3.0
@@ -127,35 +128,45 @@ function _groups_page_menu_group_profile(\Elgg\Hook $hook) {
 	
 	// Get the page owner entity
 	$page_owner = elgg_get_page_owner_entity();
-	if (!($page_owner instanceof ElggGroup)) {
+	if (!$page_owner instanceof ElggGroup || !$page_owner->canEdit()) {
 		return;
 	}
 	
-	if (!$page_owner->canEdit() || $page_owner->isPublicMembership()) {
-		return;
-	}
-	
-	$count = elgg_count_entities([
-		'type' => 'user',
-		'relationship' => 'membership_request',
-		'relationship_guid' => $page_owner->guid,
-		'inverse_relationship' => true,
-	]);
-
-	$text = elgg_echo('groups:membershiprequests');
-	$title = $text;
-	if ($count) {
-		$title = elgg_echo('groups:membershiprequests:pending', [$count]);
-	}
-	
+	/* @var $return \Elgg\Menu\MenuItems */
 	$return = $hook->getValue();
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'membership_requests',
-		'text' => $text,
-		'badge' => $count ? $count : null,
-		'title' => $title,
-		'href' => elgg_generate_entity_url($page_owner, 'requests'),
-	]);
+	
+	if ($page_owner->isPublicMembership()) {
+		// show lint to invited users
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'membership_invites',
+			'text' => elgg_echo('groups:invitedmembers'),
+			'href' => elgg_generate_url('collection:user:user:group_invites', [
+				'guid' => $page_owner->guid,
+			]),
+		]);
+	} else {
+		// show link to mebership requests
+		$count = elgg_count_entities([
+			'type' => 'user',
+			'relationship' => 'membership_request',
+			'relationship_guid' => $page_owner->guid,
+			'inverse_relationship' => true,
+		]);
+	
+		$text = elgg_echo('groups:membershiprequests');
+		$title = $text;
+		if ($count) {
+			$title = elgg_echo('groups:membershiprequests:pending', [$count]);
+		}
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'membership_requests',
+			'text' => $text,
+			'badge' => $count ? $count : null,
+			'title' => $title,
+			'href' => elgg_generate_entity_url($page_owner, 'requests'),
+		]);
+	}
 	
 	return $return;
 }
@@ -840,6 +851,15 @@ function groups_members_menu_setup(\Elgg\Hook $hook) {
 			'href' => elgg_generate_entity_url($entity, 'requests'),
 			'priority' => 300
 		]);
+		
+		$menu[] = ElggMenuItem::factory([
+			'name' => 'membership_invites',
+			'text' => elgg_echo('groups:invitedmembers'),
+			'href' => elgg_generate_url('collection:user:user:group_invites', [
+				'guid' => $entity->guid,
+			]),
+			'priority' => 400,
+		]);
 	}
 
 	return $menu;
@@ -1187,6 +1207,49 @@ function _groups_gatekeeper_allow_profile_page(\Elgg\Hook $hook) {
 	if ($route === 'view:group' || $route === 'view:group:group') {
 		return true;
 	}
+}
+
+/**
+ * Add menu items to the invited relationship menu
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:relationship'
+ *
+ * @return void|\Elgg\Menu\MenuItems
+ * @internal
+ * @since 3.2
+ */
+function _groups_relationship_invited_menu(\Elgg\Hook $hook) {
+	
+	$relationship = $hook->getParam('relationship');
+	if (!$relationship instanceof ElggRelationship) {
+		return;
+	}
+	
+	$group = get_entity($relationship->guid_one);
+	$user = get_entity($relationship->guid_two);
+	if (!$group instanceof ElggGroup || !$user instanceof ElggUser) {
+		return;
+	}
+	
+	/* @var $result \Elgg\Menu\MenuItems */
+	$result = $hook->getValue();
+	
+	$page_owner = elgg_get_page_owner_entity();
+	if ($page_owner->guid === $group->guid && $group->canEdit()) {
+		$result[] = ElggMenuItem::factory([
+			'name' => 'delete',
+			'text' => elgg_echo('delete'),
+			'href' => elgg_generate_action_url('groups/killinvitation', [
+				'user_guid' => $user->guid,
+				'group_guid' => $group->guid,
+			]),
+			'confirm' => elgg_echo('groups:invite:remove:check'),
+			'link_class' => 'elgg-button elgg-button-delete',
+			'section' => 'actions',
+		]);
+	}
+	
+	return $result;
 }
 
 return function() {

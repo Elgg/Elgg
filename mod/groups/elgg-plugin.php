@@ -77,6 +77,14 @@ return [
 				'sort' => 'alpha',
 			],
 		],
+		'collection:user:user:group_invites' => [
+			'path' => '/groups/invites/{guid}',
+			'resource' => 'groups/invites',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
+			],
+		],
 		'add:group:group' => [
 			'path' => '/groups/add/{container_guid}',
 			'resource' => 'groups/add',
