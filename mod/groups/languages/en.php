@@ -61,6 +61,8 @@ return array(
 	'groups:invite:title' => 'Invite friends to this group',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'You have no friends to invite!',
 	'groups:group' => "Group",
