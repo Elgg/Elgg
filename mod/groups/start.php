@@ -70,6 +70,7 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('gatekeeper', 'group:group', '_groups_gatekeeper_allow_profile_page');
 	
 	elgg_register_plugin_hook_handler('search:fields', 'group', \Elgg\Search\GroupSearchProfileFieldsHandler::class);
+	elgg_register_plugin_hook_handler('default', 'access', '\Elgg\Groups\Access::getDefaultAccess');
 }
 
 /**
@@ -1073,7 +1074,8 @@ function groups_prepare_form_vars($group = null) {
 		'guid' => null,
 		'entity' => null,
 		'owner_guid' => elgg_get_logged_in_user_guid(),
-		'content_access_mode' => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED
+		'content_access_mode' => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		'content_default_access' => '',
 	];
 
 	// handle customizable profile fields
@@ -1103,7 +1105,7 @@ function groups_prepare_form_vars($group = null) {
 		// The content_access_mode was introduced in 1.9. This method must be
 		// used for backwards compatibility with groups created before 1.9.
 		$values['content_access_mode'] = $group->getContentAccessMode();
-
+		
 		$values['entity'] = $group;
 	}
 
