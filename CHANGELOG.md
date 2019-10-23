@@ -1,3 +1,25 @@
+<a name="3.1.6"></a>
+### 3.1.6  (2019-10-23)
+
+#### Contributors
+
+* Jeroen Dalsem (5)
+* Jerôme Bakker (1)
+
+#### Documentation
+
+* **database:** document innodb recommended settings ([7cfaf39a](https://github.com/Elgg/Elgg/commit/7cfaf39aa6fe7c9bdee59cc93764f0cd707482e0))
+
+
+#### Bug Fixes
+
+* **access:** do not add default access level if missing in input/access ([58efbbc1](https://github.com/Elgg/Elgg/commit/58efbbc121221ef6d45a1aefada66fc65361c21d))
+* **js:**
+  * only trigger open event when new content is loaded ([83f67a81](https://github.com/Elgg/Elgg/commit/83f67a812d11d748a778f6c5e7f7ec6cc0e986a6))
+  * if no tabs are selected click the first tab ([66c9e9ba](https://github.com/Elgg/Elgg/commit/66c9e9ba4c5d63cbdc4cb3751c65616aca6d9a8d))
+* **views:** only add a link in summary title if entity can provide one ([b9b70f7a](https://github.com/Elgg/Elgg/commit/b9b70f7ae2615c0c2f21c9892de0e6c4831060c2))
+
+
 <a name="3.1.5"></a>
 ### 3.1.5  (2019-10-11)
 
