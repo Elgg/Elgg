@@ -189,13 +189,72 @@ Route middleware can be used to prevent access to a certain route, or to perform
 the route is rendered. Middleware can be used, e.g. to implement a paywall, or to log analytics,
 or to set open graph metatags.
 
-Elgg core implements several middleware handlers, including:
+Elgg core implements several middleware handlers. The following middleware can be found in the namespace ``\Elgg\Router\Middleware``:
 
- * ``\Elgg\Router\Middleware\Gatekeeper`` - prevent access by non-authenticated users
- * ``\Elgg\Router\Middleware\AdminGatekeeper`` - prevent access by non-admin users
- * ``\Elgg\Router\Middleware\AjaxGatekeeper`` - prevent access with non-xhr requests
- * ``\Elgg\Router\Middleware\CsrfFirewall`` - prevent access without CSRF tokens
- * ``\Elgg\Router\Middleware\SignedRequestGatekeeper`` - prevent access if the url has been tampered with
+Gatekeeper
+~~~~~~~~~~
+
+This gatekeeper will prevent access by non-authenticated users.
+
+AdminGatekeeper
+~~~~~~~~~~~~~~~
+
+This gatekeeper will prevent access by non-admin users.
+
+LoggedOutGatekeeper
+~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper will prevent access by authenticated users.
+
+AjaxGatekeeper
+~~~~~~~~~~~~~~
+
+This gatekeeper will prevent access with non-xhr requests.
+
+PageOwnerCanEditGatekeeper
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper will prevent access if there is a pageowner detected and the pageowner can't be editted.
+
+GroupPageOwnerCanEditGatekeeper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper extends the ``PageOwnerCanEditGatekeeper`` but also requires the pageowner to be a ``ElggGroup`` entity.
+
+UserPageOwnerCanEditGatekeeper
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper extends the ``PageOwnerCanEditGatekeeper`` but also requires the pageowner to be an ``ElggUser`` entity.
+
+CsrfFirewall
+~~~~~~~~~~~~
+
+This middleware will prevent access without the correct CSRF tokens. This middleware will automatically be applied to actions.
+
+ActionMiddleware
+~~~~~~~~~~~~~~~~
+
+This middleware will provide action related logic. This middleware will automatically be applied to actions.
+
+SignedRequestGatekeeper
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This gatekeeper will prevent access if the url has been tampered with.
+A secure URL can be generated using the ``elgg_http_get_signed_url`` function.
+
+UpgradeGatekeeper
+~~~~~~~~~~~~~~~~~
+
+This gatekeeper will prevent access if the upgrade URL is secured and the URL is invalid.
+
+WalledGarden
+~~~~~~~~~~~~
+
+This middleware will prevent access to a route if the site is configured for authenticated users only and there is no authenticated user logged in.
+This middleware is automatically enabled for all routes. You can disable the walled garden gatekeeper with a :ref:`route config <guides/walled-garden#expose>` option.
+
+Custom Middleware
+~~~~~~~~~~~~~~~~~
 
 Middleware handlers can be set to any callable that receives an instance of ``\Elgg\Request``:
 The handler should throw an instance of ``HttpException`` to prevent route access.
