@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-11 10:19+0200\n"
+"POT-Creation-Date: 2019-10-23 14:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -982,166 +982,190 @@ msgstr ""
 msgid "The database contains a number of primary and secondary tables. You can follow schema changes in ``engine/schema/migrations/``"
 msgstr ""
 
-#: ../../design/database.rst:696
-msgid "Main tables"
+#: ../../design/database.rst:695
+msgid "The character set of the database should be ``utf8mb4``, this will provide full unicode character support when storing data."
 msgstr ""
 
 #: ../../design/database.rst:698
-msgid "This is a description of the main tables. Keep in mind that in a given Elgg installation, the tables will have a prefix (typically \"elgg\\_\")."
+msgid "InnoDB"
 msgstr ""
 
-#: ../../design/database.rst:702
-msgid "Table: entities"
+#: ../../design/database.rst:700
+msgid "As of Elgg 3.0 the database uses the InnoDB engine. In order for a correct installation or migration some settings may need to be adjusted in the database settings."
+msgstr ""
+
+#: ../../design/database.rst:703
+msgid "``innodb_large_prefix`` should be ``on``"
 msgstr ""
 
 #: ../../design/database.rst:704
-msgid "This is the main `Entities`_ table containing Elgg users, sites, objects and groups. When you first install Elgg this is automatically populated with your first site."
+msgid "``innodb_file_format`` should be ``Barracuda``"
+msgstr ""
+
+#: ../../design/database.rst:705
+msgid "``innodb_file_per_table`` should be ``1``"
 msgstr ""
 
 #: ../../design/database.rst:708
-msgid "It contains the following fields:"
+msgid "Main tables"
 msgstr ""
 
 #: ../../design/database.rst:710
-msgid "**guid** An auto-incrementing counter producing a GUID that uniquely identifies this entity in the system"
-msgstr ""
-
-#: ../../design/database.rst:711
-msgid "**type** The type of entity - object, user, group or site"
-msgstr ""
-
-#: ../../design/database.rst:712
-msgid "**subtype** A subtype of entity"
-msgstr ""
-
-#: ../../design/database.rst:713
-msgid "**owner\\_guid** The GUID of the owner's entity"
+msgid "This is a description of the main tables. Keep in mind that in a given Elgg installation, the tables will have a prefix (typically \"elgg\\_\")."
 msgstr ""
 
 #: ../../design/database.rst:714
-msgid "**container\\_guid** The GUID this entity is contained by - either a user or a group"
-msgstr ""
-
-#: ../../design/database.rst:715
-msgid "**access\\_id** Access controls on this entity"
+msgid "Table: entities"
 msgstr ""
 
 #: ../../design/database.rst:716
-msgid "**time\\_created** Unix timestamp of when the entity is created"
+msgid "This is the main `Entities`_ table containing Elgg users, sites, objects and groups. When you first install Elgg this is automatically populated with your first site."
 msgstr ""
 
-#: ../../design/database.rst:717
-msgid "**time\\_updated** Unix timestamp of when the entity was updated"
+#: ../../design/database.rst:720
+msgid "It contains the following fields:"
 msgstr ""
 
-#: ../../design/database.rst:718
-msgid "**enabled** If this is 'yes' an entity is accessible, if 'no' the entity has been disabled (Elgg treats it as if it were deleted without actually removing it from the database)"
+#: ../../design/database.rst:722
+msgid "**guid** An auto-incrementing counter producing a GUID that uniquely identifies this entity in the system"
 msgstr ""
 
 #: ../../design/database.rst:723
-msgid "Table: metadata"
+msgid "**type** The type of entity - object, user, group or site"
+msgstr ""
+
+#: ../../design/database.rst:724
+msgid "**subtype** A subtype of entity"
 msgstr ""
 
 #: ../../design/database.rst:725
-msgid "This table contains `Metadata`_, extra information attached to an entity."
+msgid "**owner\\_guid** The GUID of the owner's entity"
+msgstr ""
+
+#: ../../design/database.rst:726
+msgid "**container\\_guid** The GUID this entity is contained by - either a user or a group"
 msgstr ""
 
 #: ../../design/database.rst:727
-#: ../../design/database.rst:740
-#: ../../design/database.rst:767
-msgid "**id** A unique IDentifier"
+msgid "**access\\_id** Access controls on this entity"
 msgstr ""
 
 #: ../../design/database.rst:728
-#: ../../design/database.rst:741
-msgid "**entity\\_guid** The entity this is attached to"
+msgid "**time\\_created** Unix timestamp of when the entity is created"
 msgstr ""
 
 #: ../../design/database.rst:729
-#: ../../design/database.rst:742
-msgid "**name** The name string"
+msgid "**time\\_updated** Unix timestamp of when the entity was updated"
 msgstr ""
 
 #: ../../design/database.rst:730
-#: ../../design/database.rst:743
+msgid "**enabled** If this is 'yes' an entity is accessible, if 'no' the entity has been disabled (Elgg treats it as if it were deleted without actually removing it from the database)"
+msgstr ""
+
+#: ../../design/database.rst:735
+msgid "Table: metadata"
+msgstr ""
+
+#: ../../design/database.rst:737
+msgid "This table contains `Metadata`_, extra information attached to an entity."
+msgstr ""
+
+#: ../../design/database.rst:739
+#: ../../design/database.rst:752
+#: ../../design/database.rst:779
+msgid "**id** A unique IDentifier"
+msgstr ""
+
+#: ../../design/database.rst:740
+#: ../../design/database.rst:753
+msgid "**entity\\_guid** The entity this is attached to"
+msgstr ""
+
+#: ../../design/database.rst:741
+#: ../../design/database.rst:754
+msgid "**name** The name string"
+msgstr ""
+
+#: ../../design/database.rst:742
+#: ../../design/database.rst:755
 msgid "**value** The value string"
 msgstr ""
 
-#: ../../design/database.rst:731
-#: ../../design/database.rst:744
+#: ../../design/database.rst:743
+#: ../../design/database.rst:756
 msgid "**value\\_type** The value class, either text or an integer"
 msgstr ""
 
-#: ../../design/database.rst:732
+#: ../../design/database.rst:744
 msgid "**time\\_created** Unix timestamp of when the metadata is created"
 msgstr ""
 
-#: ../../design/database.rst:733
-#: ../../design/database.rst:748
+#: ../../design/database.rst:745
+#: ../../design/database.rst:760
 msgid "**enabled** If this is 'yes' an item is accessible, if 'no' the item has been disabled"
 msgstr ""
 
-#: ../../design/database.rst:736
+#: ../../design/database.rst:748
 msgid "Table: annotations"
 msgstr ""
 
-#: ../../design/database.rst:738
+#: ../../design/database.rst:750
 msgid "This table contains `Annotations`_, this is distinct from `Metadata`_."
 msgstr ""
 
-#: ../../design/database.rst:745
+#: ../../design/database.rst:757
 msgid "**owner\\_guid** The owner GUID of the owner who set this annotation"
 msgstr ""
 
-#: ../../design/database.rst:746
+#: ../../design/database.rst:758
 msgid "**access\\_id** An Access controls on this annotation"
 msgstr ""
 
-#: ../../design/database.rst:747
+#: ../../design/database.rst:759
 msgid "**time\\_created** Unix timestamp of when the annotation is created."
 msgstr ""
 
-#: ../../design/database.rst:751
+#: ../../design/database.rst:763
 msgid "Table: relationships"
 msgstr ""
 
-#: ../../design/database.rst:753
+#: ../../design/database.rst:765
 msgid "This table defines `Relationships`_, these link one entity with another."
 msgstr ""
 
-#: ../../design/database.rst:755
+#: ../../design/database.rst:767
 msgid "**guid\\_one** The GUID of the subject entity."
 msgstr ""
 
-#: ../../design/database.rst:756
+#: ../../design/database.rst:768
 msgid "**relationship** The type of the relationship."
 msgstr ""
 
-#: ../../design/database.rst:757
+#: ../../design/database.rst:769
 msgid "**guid\\_two** The GUID of the target entity."
 msgstr ""
 
-#: ../../design/database.rst:760
+#: ../../design/database.rst:772
 msgid "Secundairy tables"
 msgstr ""
 
-#: ../../design/database.rst:763
+#: ../../design/database.rst:775
 msgid "Table: access_collections"
 msgstr ""
 
-#: ../../design/database.rst:765
+#: ../../design/database.rst:777
 msgid "This table defines Access Collections, which grant users access to `Entities`_ or `Annotations`_."
 msgstr ""
 
-#: ../../design/database.rst:768
+#: ../../design/database.rst:780
 msgid "***name**  The name of the access collection"
 msgstr ""
 
-#: ../../design/database.rst:769
+#: ../../design/database.rst:781
 msgid "**owner_guid** The GUID of the owning entity (eg. a user or a group)"
 msgstr ""
 
-#: ../../design/database.rst:770
+#: ../../design/database.rst:782
 msgid "**subtype** the subtype of the access collection (eg. `friends` or `group_acl`)"
 msgstr ""
 
