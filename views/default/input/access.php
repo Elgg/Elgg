@@ -64,11 +64,15 @@ if (!$params['container_guid'] && $container) {
 }
 
 // don't call get_default_access() unless we need it
+$add_missing_value = true;
 if (!isset($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
 	if ($entity) {
 		$vars['value'] = $entity->access_id;
 	} else if (empty($vars['options_values']) || !is_array($vars['options_values'])) {
 		$vars['value'] = get_default_access(null, $params);
+		
+		// if default value is not present in the options we should not add it
+		$add_missing_value = false;
 	} else {
 		$options_values_ids = array_keys(elgg_extract('options_values', $vars));
 		$vars['value'] = $options_values_ids[0];
@@ -87,7 +91,7 @@ if (!isset($vars['disabled'])) {
 }
 
 // if access is set to a value not present in the available options, add the option
-if (!isset($vars['options_values'][$vars['value']])) {
+if ($add_missing_value && !isset($vars['options_values'][$vars['value']])) {
 	$vars['options_values'][$vars['value']] = get_readable_access_level($vars['value']);
 }
 
