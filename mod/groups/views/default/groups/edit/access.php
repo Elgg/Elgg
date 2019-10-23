@@ -15,6 +15,7 @@ $owner_guid = elgg_extract('owner_guid', $vars);
 $content_access_mode = elgg_extract('content_access_mode', $vars);
 $show_content_default_access = (bool) elgg_extract('show_content_default_access', $vars, true);
 $content_default_access = elgg_extract('content_default_access', $vars);
+$show_group_owner_transfer = (bool) elgg_extract('show_group_owner_transfer', $vars, true);
 
 // group membership
 echo elgg_view_field([
@@ -105,7 +106,7 @@ if ($show_content_default_access) {
 }
 
 // group owner transfer
-if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
+if ($show_group_owner_transfer && $entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
 	$owner_guid_options = [
 		'#type' => 'userpicker',
 		'#label' => elgg_echo('groups:owner'),
