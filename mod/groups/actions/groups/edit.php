@@ -179,6 +179,16 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	}
 }
 
+// group default content access
+$content_default_access = get_input('content_default_access');
+if (isset($content_default_access)) {
+	if (elgg_is_empty($content_default_access)) {
+		unset($group->content_default_access);
+	} else {
+		$group->content_default_access = (int) $content_default_access;
+	}
+}
+
 if (!$group->save()) {
 	return elgg_error_response(elgg_echo('groups:save_error'));
 }

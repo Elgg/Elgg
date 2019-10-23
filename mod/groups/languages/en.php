@@ -103,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "This group's content is accessible only by members.",
 	'groups:opengroup:membersonly:join' => 'To be a member, click the "Join group" menu link.',
 	'groups:visibility' => 'Who can see this group?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools
