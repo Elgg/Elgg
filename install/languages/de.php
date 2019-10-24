@@ -10,12 +10,18 @@ return array(
 
 	'install:next' => 'Weiter',
 	'install:refresh' => 'Neu laden',
+	'install:change_language' => 'Change language',
 
 	'install:welcome:instructions' => "Die Installation von Elgg besteht aus 6 einfachen Schritten und der erste Schritt davon ist das Lesen dieser Begrüßung!
 
 Wenn Du es nicht bereits getan hast, lies bitte die mitgelieferten Installations-Hinweise (oder rufe die Hinweise auf indem Du dem Link am Ende dieser Seite folgst).
 
 Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
+	
+	'install:footer:instructions' => "Installation instructions",
+	'install:footer:troubleshooting' => "Installation troubleshooting",
+	'install:footer:community' => "Elgg community forums",
+	
 	'install:requirements:instructions:success' => "Dein Server hat die Überprüfung der Systemvoraussetzungen bestanden.",
 	'install:requirements:instructions:failure' => "Dein Server erfüllt nicht alle notwendigen Systemvoraussetzungen. Nachdem Du die im folgenden aufgelisteten Probleme beseitigt hast, lade diese Seite erneut. Folge den Links am Ende der Seite, um weitere Informationen zu möglichen Problemlösungen zu erhalten.",
 	'install:requirements:instructions:warning' => "Dein Server hat die Überprüfung der Systemvoraussetzungen bestanden, aber es gab mindestens eine Warnmeldung. Wir empfehlen, dass Du die Hinweise zu Installationsproblemen liest, um mehr darüber zu erfahren.",

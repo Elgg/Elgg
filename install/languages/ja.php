@@ -10,12 +10,18 @@ return array(
 
 	'install:next' => '次',
 	'install:refresh' => 'リフレッシュ',
+	'install:change_language' => 'Change language',
 
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
 If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
 
 If you are ready to proceed, click the Next button.",
+	
+	'install:footer:instructions' => "Installation instructions",
+	'install:footer:troubleshooting' => "Installation troubleshooting",
+	'install:footer:community' => "Elgg community forums",
+	
 	'install:requirements:instructions:success' => "あなたのサーバは必要条件をみたしています。",
 	'install:requirements:instructions:failure' => "あなたのサーバは、必要な条件を満たしていませんでした。下記の問題点を修正したあと、このページをリフレッシュしてください。ページの下にある問題解決へのリンクをクリックしてくだされば、よい解決法が見つかるかもしれません。",
 	'install:requirements:instructions:warning' => "あなたのサーバーは必要条件を満たしていますが、警告が出ています。詳細を知るには、インストール時の問題解決のページをチェックすることをお勧めいたしたします。",

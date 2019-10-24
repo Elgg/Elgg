@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Διαγραφή ομάδας',
 	'groups:membershiprequests' => 'Διαχείριση αιτημάτων σύνδεσης',
 	'groups:membershiprequests:pending' => 'Διαχείριση αιτημάτων σύνδεσης (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Προσκλήσεις ομάδας',
 	'groups:invitations:pending' => 'Προσκλήσεις ομάδας (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Εικόνα ομάδας (αφήστε κενό για καμία αλλαγή)',
 	'groups:name' => 'Όνομα ομάδας',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Πρόσκληση φίλων σ\' αυτή την ομάδα',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Δεν έχετε φίλους για να προσκαλέσετε',
 	'groups:group' => "Ομάδα",
@@ -97,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "Το περιεχόμενο της ομάδας της είναι προσβάσιμο μόνο από τα μέλη.",
 	'groups:opengroup:membersonly:join' => 'Για να γίνετε μέλος, επιλέξτε "Συμμετοχή στην ομάδα" στο μενού.',
 	'groups:visibility' => 'Ποιος μπορεί να δει αυτή την ομάδα?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

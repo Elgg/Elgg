@@ -10,12 +10,18 @@ return array(
 
 	'install:next' => '下一步',
 	'install:refresh' => '重新整理',
+	'install:change_language' => 'Change language',
 
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
 If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
 
 If you are ready to proceed, click the Next button.",
+	
+	'install:footer:instructions' => "Installation instructions",
+	'install:footer:troubleshooting' => "Installation troubleshooting",
+	'install:footer:community' => "Elgg community forums",
+	
 	'install:requirements:instructions:success' => "伺服器通過了需求檢查。",
 	'install:requirements:instructions:failure' => "伺服器需求檢查失敗。在您修正了以下問題之後，請重新整理這個頁面。如果您需要進一步的協助，請看看位於這個頁面底部的疑難排解鏈結。",
 	'install:requirements:instructions:warning' => "伺服器通過了需求檢查，但是至少出現一個警告。我們建議您看看安裝疑難排解頁面以獲得更多細節。",

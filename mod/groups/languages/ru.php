@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Удалить группу',
 	'groups:membershiprequests' => 'Управление запросами приглашения',
 	'groups:membershiprequests:pending' => 'Управление запросами приглашений (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Приглашения группы',
 	'groups:invitations:pending' => 'Приглашения группы (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Иконка группы',
 	'groups:name' => 'Название группы',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Пригласить в группу',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Некого приглашать!',
 	'groups:group' => "Группа",
@@ -97,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "Содержание этой группы доступно только участникам.",
 	'groups:opengroup:membersonly:join' => 'Чтобы стать участником группы, нажмите "Вступить в группу"',
 	'groups:visibility' => 'Кто может просматривать группу?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools
