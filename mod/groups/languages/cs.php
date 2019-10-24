@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Smazat skupinu',
 	'groups:membershiprequests' => 'Spravovat žádosti o přidání',
 	'groups:membershiprequests:pending' => 'Spravovat žádosti o přidání (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Pozvání do skupin',
 	'groups:invitations:pending' => 'Pozvání do skupin (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Portrét skupiny (prázdné = žádné změny)',
 	'groups:name' => 'Jméno skupiny',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Pozvat přátele do této skupiny',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Nemáte žádné přátele, které byste mohl/a pozvat!',
 	'groups:group' => "Skupina",
@@ -97,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "Obsah této skupiny je dostupný pouze jejím členům.",
 	'groups:opengroup:membersonly:join' => 'Kliknutím na odkaz "Připojit se ke skupině" se stanete členem skupiny.',
 	'groups:visibility' => 'Kdo může vidět tuto skupinu?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

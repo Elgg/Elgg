@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Usuń grupę',
 	'groups:membershiprequests' => 'Zarządzaj prośbami o dołączenie',
 	'groups:membershiprequests:pending' => 'Zarządzaj prośbami o dołączenie (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Zaproszenia do grupy',
 	'groups:invitations:pending' => 'Zaproszenia do grupy (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Ikona grupy',
 	'groups:name' => 'Nazwa grupy',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Zaproś znajomych do tej grupy',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Nie masz znajomych, których mógłbyś zaprosić!',
 	'groups:group' => "Grupa",
@@ -97,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "Treść grupy jest dostępna tylko dla jej członków.",
 	'groups:opengroup:membersonly:join' => 'Aby zostać członkiem, kliknij link "Dołącz do grupy".',
 	'groups:visibility' => 'Kto może zobaczyć tą grupę?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

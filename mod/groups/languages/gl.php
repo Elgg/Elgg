@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Eliminar o grupo',
 	'groups:membershiprequests' => 'Xestionar as solicitudes de admisión',
 	'groups:membershiprequests:pending' => 'Xestionar as solicitudes de admisión (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Invitacións ao grupo',
 	'groups:invitations:pending' => 'Invitacións ao grupo (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Icona do grupo (deixe o cambio baleiro para mantela)',
 	'groups:name' => 'Nome',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Invitar contactos a unirse a este grupo.',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Non ten contactos que invitar.',
 	'groups:group' => "Grupo",
@@ -97,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "O contido do grupo só poden velo os membros do grupo.",
 	'groups:opengroup:membersonly:join' => 'Para facerse membro, prema «Unirse ao grupo».',
 	'groups:visibility' => 'Quen pode ver o grupo?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

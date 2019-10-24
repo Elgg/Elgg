@@ -29,5 +29,8 @@ Wenn Du nicht direkt auf den Link klicken kannst, kopiere ihn bitte von Hand in 
 	'uservalidationbyemail:errors:could_not_resend_validations' => 'Die Bestätigungs-Email konnte nicht an alle markierten Benutzeraccounts versendet werden.',
 
 	'uservalidationbyemail:messages:resent_validation' => 'Bestätigungs-Email gesendet.',
-	'uservalidationbyemail:messages:resent_validations' => 'Die Bestätigungs-Email wurde erneut an alle markierten Benutzeraccount gesendet.'
+	'uservalidationbyemail:messages:resent_validations' => 'Die Bestätigungs-Email wurde erneut an alle markierten Benutzeraccount gesendet.',
+	
+	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
+	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

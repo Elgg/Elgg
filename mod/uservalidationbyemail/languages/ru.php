@@ -29,5 +29,8 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:errors:could_not_resend_validations' => 'Не могу повторно отправить запрос на подтверждение отмеченным пользователям.',
 
 	'uservalidationbyemail:messages:resent_validation' => 'Запрос на подтверждение переслан.',
-	'uservalidationbyemail:messages:resent_validations' => 'Запрос отправлен всем отмеченным пользователям.'
+	'uservalidationbyemail:messages:resent_validations' => 'Запрос отправлен всем отмеченным пользователям.',
+	
+	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
+	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

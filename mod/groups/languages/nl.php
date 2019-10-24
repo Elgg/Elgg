@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Verwijder groep',
 	'groups:membershiprequests' => 'Beheer van lidmaatschapsaanvragen',
 	'groups:membershiprequests:pending' => 'Beheer van lidmaatschapsaanvragen (%s)',
+	'groups:invitedmembers' => "Beheer uitnodigingen",
 	'groups:invitations' => 'Groepsuitnodigingen',
 	'groups:invitations:pending' => 'Groepsuitnodigingen (%s)',
+	
+	'relationship:invited' => '%2$s is uitgenodigd om lid te worden van %1$s',
+	'relationship:membership_request' => '%s wil graag lid worden van %s',
 
 	'groups:icon' => 'Groepsicoon (laat leeg om het huidige icoon te behouden)',
 	'groups:name' => 'Groepsnaam',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Nodig vrienden uit in deze groep',
 	'groups:invite:friends:help' => 'Zoek naar een vriend op naam of gebruikersnaam en selecteer de vriend uit de lijst',
 	'groups:invite:resend' => 'Verstuur de uitnodigingen opnieuw voor de al uitgenodigde gebruikers',
+	'groups:invite:member' => 'Is al lid van deze groep',
+	'groups:invite:invited' => 'Is al uitgenodigd voor deze groep',
 
 	'groups:nofriendsatall' => 'Je hebt geen vrienden om uit te nodigen!',
 	'groups:group' => "Groep",
@@ -97,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "De inhoud van deze groep is alleen toegankelijk voor leden.",
 	'groups:opengroup:membersonly:join' => 'Om lid te worden klik je op de "Word lid" link in het menu.',
 	'groups:visibility' => 'Wie kan deze groep zien?',
+	'groups:content_default_access' => 'Standaard toegangsniveau voor content',
+	'groups:content_default_access:help' => 'Configureer hier het standaard toegangsniveau voor nieuwe content in deze groep. Deze instelling kan mogelijk beïnvloed worden door de beperking dat content alleen in een groep kan worden gedeeld.',
+	'groups:content_default_access:not_configured' => 'Geen groepsvoorkeur, laat het over aan de gebruiker',
 
 	/**
 	 * Group tools
