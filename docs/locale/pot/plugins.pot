@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-23 14:34+0200\n"
+"POT-Creation-Date: 2019-10-24 11:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,6 +180,22 @@ msgstr ""
 msgid "Using this, it should be possible to develop most types of embeddable viewers."
 msgstr ""
 
+#: ../../plugins/friends.rst:2
+msgid "Friends"
+msgstr ""
+
+#: ../../plugins/friends.rst:4
+msgid "Being a social network framework Elgg supports relationships between users."
+msgstr ""
+
+#: ../../plugins/friends.rst:6
+msgid "By default any user can befriend any other user, it's like following the activity of the other user."
+msgstr ""
+
+#: ../../plugins/friends.rst:8
+msgid "After enabling friendship requests as a feature of the Friends plugin, when user A wants to be friends with user B, user B has to approve the request. Upon approval user A will be friends with user B and user B will be friends with user A."
+msgstr ""
+
 #: ../../plugins/groups.rst:2
 msgid "Groups"
 msgstr ""
@@ -216,44 +232,40 @@ msgstr ""
 msgid "Elgg comes with a set of plugins. These provide the basic functionality for your social network."
 msgstr ""
 
-#: ../../plugins/index.rst:21
+#: ../../plugins/index.rst:22
 msgid "The following plugins are also bundled with Elgg, but are not (yet) documented"
 msgstr ""
 
-#: ../../plugins/index.rst:23
+#: ../../plugins/index.rst:24
 msgid "activity"
 msgstr ""
 
-#: ../../plugins/index.rst:24
+#: ../../plugins/index.rst:25
 msgid "bookmarks"
 msgstr ""
 
-#: ../../plugins/index.rst:25
+#: ../../plugins/index.rst:26
 msgid "ckeditor"
 msgstr ""
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "custom_index"
 msgstr ""
 
-#: ../../plugins/index.rst:27
+#: ../../plugins/index.rst:28
 msgid "developers"
 msgstr ""
 
-#: ../../plugins/index.rst:28
+#: ../../plugins/index.rst:29
 msgid "discussions"
 msgstr ""
 
-#: ../../plugins/index.rst:29
+#: ../../plugins/index.rst:30
 msgid "embed"
 msgstr ""
 
-#: ../../plugins/index.rst:30
-msgid "externalpages"
-msgstr ""
-
 #: ../../plugins/index.rst:31
-msgid "friends"
+msgid "externalpages"
 msgstr ""
 
 #: ../../plugins/index.rst:32

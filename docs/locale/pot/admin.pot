@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-23 14:34+0200\n"
+"POT-Creation-Date: 2019-10-24 11:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1787,6 +1787,42 @@ msgstr ""
 msgid "When the account of a user gets banned or unbanned, let the affected user know about this action."
 msgstr ""
 
+#: ../../admin/security.rst:65
+msgid "Minimal username length"
+msgstr ""
+
+#: ../../admin/security.rst:67
+msgid "You can configure the minimal length the username should have upon registration of a user."
+msgstr ""
+
+#: ../../admin/security.rst:70
+msgid "Minimal password requirements"
+msgstr ""
+
+#: ../../admin/security.rst:72
+msgid "You can configure several requirements for new passwords of the users"
+msgstr ""
+
+#: ../../admin/security.rst:74
+msgid "**length**: the password should be at least x characters long"
+msgstr ""
+
+#: ../../admin/security.rst:75
+msgid "**lower case**: minimal number of lower case (a-z) characters in the password"
+msgstr ""
+
+#: ../../admin/security.rst:76
+msgid "**upper case**: minimal number of upper case (A-Z) characters in the password"
+msgstr ""
+
+#: ../../admin/security.rst:77
+msgid "**numbers**: minimal number of numbers (0-9) characters in the password"
+msgstr ""
+
+#: ../../admin/security.rst:78
+msgid "**specials**: minimal number of special (like !@#$%^&*(), etc.) characters in the password"
+msgstr ""
+
 #: ../../admin/spam.rst:2
 msgid "Spam"
 msgstr ""
@@ -2082,5 +2118,21 @@ msgstr ""
 
 #: ../../admin/uservalidation.rst:20
 msgid "An example of this is the :doc:`/plugins/uservalidationbyemail` plugin which doesn't allow users onto the website until their e-mail address is validated."
+msgstr ""
+
+#: ../../admin/uservalidation.rst:24
+msgid "Require admin validation"
+msgstr ""
+
+#: ../../admin/uservalidation.rst:26
+msgid "In the Site settings under the Users section there is a setting which can be enabled to require admin validation of a new user account before the user can use their account. After registration the user gets notified that their account is awaiting validation by an administrator."
+msgstr ""
+
+#: ../../admin/uservalidation.rst:29
+msgid "Site administrators can receive an e-mail notification that there are users awaiting validation."
+msgstr ""
+
+#: ../../admin/uservalidation.rst:31
+msgid "After validation the user is notified that they can use their account."
 msgstr ""
 
