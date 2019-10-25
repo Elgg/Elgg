@@ -15,6 +15,7 @@ $content = elgg_list_relationships([
 	'relationship_guid' => $group->guid,
 	'inverse_relationship' => true,
 	'order_by' => new OrderByClause('er.time_created', 'ASC'),
+	'no_results' => elgg_echo('groups:requests:none'),
 ]);
 
 $tabs = elgg_view_menu('groups_members', [
