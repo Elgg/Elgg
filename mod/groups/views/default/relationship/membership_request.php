@@ -4,7 +4,7 @@
  *
  * @note To add or remove from the relationship menu, register handlers for the menu:relationship hook.
  *
- * @uses $vars['relationship'] the group invitation
+ * @uses $vars['relationship'] the group membership request
  */
 
 $relationship = elgg_extract('relationship', $vars);
