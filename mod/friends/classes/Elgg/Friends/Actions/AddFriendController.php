@@ -99,7 +99,7 @@ class AddFriendController {
 				$user->getDisplayName(),
 				$site->getDisplayName(),
 				elgg_generate_url('collection:relationship:friendrequest:pending', [
-					$friend->username,
+					'username' => $friend->username,
 				]),
 			], $friend->getLanguage());
 			
