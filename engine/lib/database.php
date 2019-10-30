@@ -110,7 +110,7 @@ function _elgg_db_register_seeds(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_db_init() {
-	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds');
+	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds', 1);
 }
 
 /**
