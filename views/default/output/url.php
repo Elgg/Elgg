@@ -30,7 +30,7 @@ if (!empty($vars['confirm']) && !isset($vars['is_action'])) {
 }
 
 if (!empty($vars['confirm'])) {
-	$vars['data-confirm'] = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
+	$vars['data-confirm'] = elgg_extract('confirm', $vars);
 	
 	// if (bool) true use defaults
 	if ($vars['data-confirm'] === true) {

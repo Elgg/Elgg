@@ -3,10 +3,11 @@
 /**
  * Renders a <button>
  *
- * @uses $vars['type']  Button type (submit|reset|image)
- * @uses $vars['class'] Additional CSS class
- * @uses $vars['text']  Text to include between <button> tags
- * @uses $vars['icon']  Optional icon name
+ * @uses $vars['type']    Button type (submit|reset|image)
+ * @uses $vars['class']   Additional CSS class
+ * @uses $vars['text']    Text to include between <button> tags
+ * @uses $vars['icon']    Optional icon name
+ * @uses $vars['confirm'] Confirmation dialog text | (bool) true
  */
 
 $vars['class'] = elgg_extract_class($vars, 'elgg-button');
@@ -14,6 +15,15 @@ $vars['class'] = elgg_extract_class($vars, 'elgg-button');
 if (!isset($vars['text']) && isset($vars['value'])) {
 	// Keeping this to ease the transition to 3.0
 	$vars['text'] = elgg_extract('value', $vars);
+}
+
+if (!empty($vars['confirm'])) {
+	$vars['data-confirm'] = elgg_extract('confirm', $vars);
+	
+	// if (bool) true use defaults
+	if ($vars['data-confirm'] === true) {
+		$vars['data-confirm'] = elgg_echo('question:areyousure');
+	}
 }
 
 $type = elgg_extract('type', $vars, 'button', false);
