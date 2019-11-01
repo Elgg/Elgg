@@ -35,6 +35,7 @@ if (function_exists('apache_get_version')) {
 		$subtext = '';
 		
 		if (in_array('mod_cache', apache_get_modules())) {
+			$icon = $icon_ok;
 			$value = elgg_echo('status:enabled');
 		} else {
 			$subtext = elgg_echo('admin:performance:apache:mod_cache:warning');
