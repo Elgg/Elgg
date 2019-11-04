@@ -305,7 +305,7 @@ function elgg_list_river(array $options = []) {
 /**
  * Updates the last action of the object of an river item
  *
- * @param \Elgg\Event $event 'create', 'river'
+ * @param \Elgg\Event $event 'created', 'river'
  *
  * @return void
  *
@@ -318,11 +318,14 @@ function _elgg_river_update_object_last_action(\Elgg\Event $event) {
 	}
 	
 	$object = $item->getObjectEntity();
-	if (!$object) {
-		return;
+	if ($object instanceof \ElggEntity) {
+		$object->updateLastAction($item->getTimePosted());
 	}
 	
-	$object->updateLastAction($item->getTimePosted());
+	$target = $item->getTargetEntity();
+	if ($target instanceof \ElggEntity) {
+		$target->updateLastAction($item->getTimePosted());
+	}
 }
 
 /**
