@@ -179,7 +179,7 @@ class RelationshipsTable {
 			->setMaxResults(1);
 		
 		$row = $this->db->getDataRow($select, [$this, 'rowToElggRelationship']);
-		if ($row) {
+		if ($row instanceof \ElggRelationship) {
 			return $row;
 		}
 
