@@ -65,7 +65,7 @@ class ConfigTable {
 			':name' => $name,
 		];
 		
-		$this->boot->invalidateCache();
+		$this->boot->clearCache();
 	
 		return $this->db->deleteData($query, $params) !== false;
 	}
@@ -108,7 +108,7 @@ class ConfigTable {
 				
 		$result = $this->db->insertData($sql, $params);
 
-		$this->boot->invalidateCache();
+		$this->boot->clearCache();
 	
 		return $result !== false;
 	}

@@ -137,6 +137,20 @@ abstract class ElggCache implements \ArrayAccess {
 	 * @return bool
 	 */
 	abstract public function clear();
+	
+	/**
+	 * Invalidate the contents of the cache.
+	 *
+	 * @return bool
+	 */
+	abstract public function invalidate();
+	
+	/**
+	 * Purge old/stale contents of the cache.
+	 *
+	 * @return bool
+	 */
+	abstract public function purge();
 
 	/**
 	 * Disable cache

@@ -79,6 +79,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		$config->boot_cache_ttl = 0;
 		$config->system_cache_enabled = false;
 		$config->simplecache_enabled = false;
+		$config->lastcache = time();
 
 		$services = new MockServiceProvider($config);
 

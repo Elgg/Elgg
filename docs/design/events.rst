@@ -211,6 +211,31 @@ Parameters:
 The function will return ``false`` if any of the selected handlers returned
 ``false`` and the event is stoppable, otherwise it will return ``true``.
 
+.. _design/events#event-sequence:
+
+Trigger an Elgg Event sequence
+------------------------------
+
+Instead of triggering the ``:before`` and ``:after`` event manually, it's possible to trigger an event sequence. This will trigger 
+the ``:before`` event, then the actual event and finally the ``:after`` event.
+
+.. code-block:: php
+
+	elgg()->events->triggerSequence($event, $type, $object, $callable);
+
+When called with for example ``'cache:clear', 'system'`` the following three events are triggered
+
+- ``'cache:clear:before', 'system'``
+- ``'cache:clear', 'system'``
+- ``'cache:clear:after', 'system'``
+	
+Parameters:
+
+- **$event** The event name.
+- **$object_type** The object type (e.g. "user" or "object").
+- **$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)
+- **$callable** Callable to run on successful event, before event:after
+
 .. _design/events#plugin-hooks:
 
 Plugin Hooks

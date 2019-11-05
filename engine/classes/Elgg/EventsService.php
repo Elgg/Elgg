@@ -115,6 +115,7 @@ class EventsService extends HooksRegistrationService {
 	 * @param string $event       The event type. The fired event type will be appended with ":before".
 	 * @param string $object_type The object type
 	 * @param mixed  $object      The object involved in the event
+	 * @param array  $options     (internal) options for triggering the event
 	 *
 	 * @return bool False if any handler returned false, otherwise true
 	 *
@@ -122,8 +123,8 @@ class EventsService extends HooksRegistrationService {
 	 * @see EventsService::triggerAfter()
 	 * @since 2.0.0
 	 */
-	public function triggerBefore($event, $object_type, $object = null) {
-		return $this->trigger("$event:before", $object_type, $object);
+	public function triggerBefore($event, $object_type, $object = null, array $options = []) {
+		return $this->trigger("$event:before", $object_type, $object, $options);
 	}
 
 	/**
@@ -136,6 +137,7 @@ class EventsService extends HooksRegistrationService {
 	 * @param string $event       The event type. The fired event type will be appended with ":after".
 	 * @param string $object_type The object type
 	 * @param mixed  $object      The object involved in the event
+	 * @param array  $options     (internal) options for triggering the event
 	 *
 	 * @return true
 	 *
@@ -143,10 +145,9 @@ class EventsService extends HooksRegistrationService {
 	 * @see EventsService::triggerBefore()
 	 * @since 2.0.0
 	 */
-	public function triggerAfter($event, $object_type, $object = null) {
-		$options = [
-			self::OPTION_STOPPABLE => false,
-		];
+	public function triggerAfter($event, $object_type, $object = null, array $options = []) {
+		$options[self::OPTION_STOPPABLE] = false;
+		
 		return $this->trigger("$event:after", $object_type, $object, $options);
 	}
 
@@ -160,14 +161,16 @@ class EventsService extends HooksRegistrationService {
 	 * @param string   $object_type The object type
 	 * @param mixed    $object      The object involved in the event
 	 * @param callable $callable    Callable to run on successful event, before event:after
+	 * @param array    $options     (internal) options for triggering the event
+	 *
 	 * @return mixed
 	 */
-	public function triggerSequence($event, $object_type, $object = null, callable $callable = null) {
-		if (!$this->triggerBefore($event, $object_type, $object)) {
+	public function triggerSequence($event, $object_type, $object = null, callable $callable = null, array $options = []) {
+		if (!$this->triggerBefore($event, $object_type, $object, $options)) {
 			return false;
 		}
 
-		$result = $this->trigger($event, $object_type, $object);
+		$result = $this->trigger($event, $object_type, $object, $options);
 		if (!$result) {
 			return false;
 		}
@@ -176,13 +179,13 @@ class EventsService extends HooksRegistrationService {
 			$result = call_user_func($callable, $object);
 		}
 
-		$this->triggerAfter($event, $object_type, $object);
+		$this->triggerAfter($event, $object_type, $object, $options);
 
 		return $result;
 	}
 
 	/**
-	 * Trigger an event normally, but send a notice about deprecated use if any handlers are registered.
+	 * Trigger an event sequence normally, but send a notice about deprecated use if any handlers are registered.
 	 *
 	 * @param string $event       The event type
 	 * @param string $object_type The object type
@@ -201,5 +204,27 @@ class EventsService extends HooksRegistrationService {
 			self::OPTION_DEPRECATION_VERSION => $version,
 		];
 		return $this->trigger($event, $object_type, $object, $options);
+	}
+	
+	/**
+	 * Trigger an event normally, but send a notice about deprecated use if any handlers are registered.
+	 *
+	 * @param string   $event       The event type
+	 * @param string   $object_type The object type
+	 * @param mixed    $object      The object involved in the event
+	 * @param callable $callable    Callable to run on successful event, before event:after
+	 * @param string   $message     The deprecation message
+	 * @param string   $version     Human-readable *release* version: 1.9, 1.10, ...
+	 *
+	 * @return bool
+	 *
+	 * @see EventsService::trigger()
+	 */
+	public function triggerDeprecatedSequence($event, $object_type, $object = null, callable $callable = null, string $message = null, string $version = null) {
+		$options = [
+			self::OPTION_DEPRECATION_MESSAGE => $message,
+			self::OPTION_DEPRECATION_VERSION => $version,
+		];
+		return $this->triggerSequence($event, $object_type, $object, $callable, $options);
 	}
 }

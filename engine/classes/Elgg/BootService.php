@@ -70,8 +70,13 @@ class BootService {
 		if ($config->system_cache_enabled === null) {
 			$config->system_cache_enabled = false;
 		}
-		if ($config->simplecache_lastupdate === null) {
-			$config->simplecache_lastupdate = 0;
+		// needs to be set before [init, system] for links in html head
+		if ($config->lastcache === null) {
+			$config->lastcache = 0;
+		}
+		if (!$config->hasValue('simplecache_lastupdate')) {
+			// @todo remove in Elgg 4.0
+			$config->simplecache_lastupdate = $config->lastcache;
 		}
 		if ($config->min_password_length === null) {
 			$config->min_password_length = 6;
@@ -90,9 +95,12 @@ class BootService {
 
 		// copy all table values into config
 		$config->mergeValues($services->configTable->getAll());
-
-		// needs to be set before [init, system] for links in html head
-		$config->lastcache = (int) $config->simplecache_lastupdate;
+		
+		if (empty($config->lastcache)) {
+			// for backwards compatibility
+			// @todo remove in Elgg 4.0
+			$config->lastcache = $config->simplecache_lastupdate;
+		}
 
 		if (!$config->elgg_config_set_secret) {
 			$site_secret = SiteSecret::fromConfig($config);
@@ -153,15 +161,24 @@ class BootService {
 	}
 
 	/**
-	 * Invalidate the cache item
+	 * Clear the cache item
 	 *
 	 * @return void
 	 */
-	public function invalidateCache() {
+	public function clearCache() {
 		$this->cache->clear();
 		_elgg_services()->plugins->setBootPlugins(null);
 		_elgg_config()->system_cache_loaded = false;
 		_elgg_config()->_boot_cache_hit = false;
+	}
+	
+	/**
+	 * Get the boot cache
+	 *
+	 * @return ElggCache
+	 */
+	public function getCache() {
+		return $this->cache;
 	}
 
 	/**

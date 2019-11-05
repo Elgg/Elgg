@@ -11,6 +11,7 @@ return [
 	'admin/plugins/set_priority' => ['access' => 'admin'],
 	'admin/security/settings' => ['access' => 'admin'],
 	'admin/security/regenerate_site_secret' => ['access' => 'admin'],
+	'admin/site/cache/invalidate' => ['access' => 'admin'],
 	'admin/site/flush_cache' => ['access' => 'admin'],
 	'admin/site/set_maintenance_mode' => ['access' => 'admin'],
 	'admin/site/set_robots' => ['access' => 'admin'],

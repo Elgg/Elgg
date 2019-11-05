@@ -1,0 +1,22 @@
+From 3.2 to 3.3
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Deprecated APIs
+---------------
+
+ * ``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``
+ * ``elgg_flush_caches()`` use ``elgg_clear_caches()``
+
+Deprecated Config values
+------------------------
+
+ * ``simplecache_lastupdate`` use ``lastcache``
+
+Deprecated CLI commands
+-----------------------
+
+ * ``elgg-cli flush`` use ``elgg-cli cache:clear``

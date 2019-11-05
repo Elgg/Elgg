@@ -5,9 +5,16 @@
 
 $items = [
 	[
+		'name' => 'invalidate',
+		'text' => elgg_echo('admin:cache:invalidate'),
+		'icon' => 'sync-alt',
+		'href' => elgg_generate_action_url('admin/site/cache/invalidate'),
+		'link_class' => 'elgg-button elgg-button-action',
+	],
+	[
 		'name' => 'flush',
 		'text' => elgg_echo('admin:cache:flush'),
-		'icon' => 'sync-alt',
+		'icon' => 'trash-alt',
 		'href' => elgg_generate_action_url('admin/site/flush_cache'),
 		'link_class' => 'elgg-button elgg-button-action',
 	],

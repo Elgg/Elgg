@@ -1453,7 +1453,7 @@ class ElggInstaller {
 			'system_cache_enabled' => 1,
 			'simplecache_minify_js' => true,
 			'simplecache_minify_css' => true,
-			'simplecache_lastupdate' => time(),
+			'lastcache' => time(),
 			'processed_upgrades' => [],
 			'language' => 'en',
 			'default_access' => $submissionVars['siteaccess'],
