@@ -254,7 +254,7 @@ function list_all_apis() {
  */
 function elgg_ws_register_service_handler($handler, $function) {
 	$servicehandler = _elgg_config()->servicehandler;
-	if (!$servicehandler) {
+	if (!is_array($servicehandler)) {
 		$servicehandler = [];
 	}
 	if (is_callable($function, true)) {
@@ -322,9 +322,9 @@ function ws_rest_handler() {
 		register_pam_handler('pam_auth_usertoken');
 
 		// simple API key check
-		register_pam_handler('api_auth_key', "sufficient", "api");
+		register_pam_handler('api_auth_key', 'sufficient', 'api');
 		// hmac
-		register_pam_handler('api_auth_hmac', "sufficient", "api");
+		register_pam_handler('api_auth_hmac', 'sufficient', 'api');
 	}
 
 	// Get parameter variables
@@ -335,13 +335,8 @@ function ws_rest_handler() {
 
 	$result = execute_method($method);
 
-
-	if (!($result instanceof GenericResult)) {
-		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
-	}
-
 	// Output the result
-	echo elgg_view_page($method, elgg_view("api/output", ["result" => $result]));
+	echo elgg_view_page($method, elgg_view('api/output', ['result' => $result]));
 }
 
 /**

@@ -55,10 +55,13 @@ class ElggRiverItem {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function __set(string $name, mixed $value) {
+	public function __set(string $name, $value) {
 		if ($name == 'enabled') {
 			elgg_deprecated_notice('The use of the enabled state for river items is deprecated.', '3.2');
+			return;
 		}
+		
+		$this->$name = $value;
 	}
 
 	/**
@@ -69,7 +72,7 @@ class ElggRiverItem {
 			case 'enabled':
 				elgg_deprecated_notice('The use of the enabled state for river items is deprecated.', '3.2');
 				return $this->enabled;
-				break;
+				
 			case 'type' :
 			case 'subtype' :
 				$object = get_entity($this->object_guid);

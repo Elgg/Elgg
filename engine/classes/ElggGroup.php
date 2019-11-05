@@ -63,7 +63,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function addObjectToGroup(\ElggObject $object) {
 		$object->container_guid = $this->guid;
-		return $object->save();
+		return (bool) $object->save();
 	}
 
 	/**
@@ -76,7 +76,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function removeObjectFromGroup(ElggObject $object) {
 		$object->container_guid = $object->owner_guid;
-		return $object->save();
+		return (bool) $object->save();
 	}
 
 	/**

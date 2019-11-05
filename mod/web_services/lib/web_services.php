@@ -722,7 +722,7 @@ function _php_api_exception_handler($exception) {
  * If no handler is found, this returns a 404 error
  *
  * @param string $handler Handler name
- * @param array  $request Request string
+ * @param string $request Request string
  *
  * @return void
  * @internal

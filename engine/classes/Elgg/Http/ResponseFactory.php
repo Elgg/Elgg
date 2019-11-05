@@ -263,7 +263,7 @@ class ResponseFactory {
 	 *
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
-	 * @return Response
+	 * @return false|Response
 	 * @throws \InvalidParameterException
 	 */
 	public function respond(ResponseBuilder $response) {
@@ -341,7 +341,7 @@ class ResponseFactory {
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 *
-	 * @return Response
+	 * @return false|Response
 	 * @throws \InvalidParameterException
 	 */
 	public function respondWithError(ResponseBuilder $response) {
@@ -498,7 +498,7 @@ class ResponseFactory {
 	 *
 	 * @param string $forward_url Redirection URL
 	 * @param mixed  $status_code HTTP status code or forward reason
-	 * @return SymfonyRedirectResponse
+	 * @return false|Response
 	 * @throws InvalidParameterException
 	 */
 	public function redirect($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
