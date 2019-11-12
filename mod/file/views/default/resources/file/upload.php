@@ -17,17 +17,13 @@ if (!$entity->canWriteToContainer(0, 'object', 'file')) {
 $title = elgg_echo('add:object:file');
 
 elgg_push_collection_breadcrumbs('object', 'file', $entity);
-elgg_push_breadcrumb($title);
 
 // create form
-$form_vars = ['enctype' => 'multipart/form-data'];
-$body_vars = file_prepare_form_vars();
-$content = elgg_view_form('file/upload', $form_vars, $body_vars);
+$content = elgg_view_form('file/upload', [], file_prepare_form_vars());
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 ]);
 
 echo elgg_view_page($title, $body);
