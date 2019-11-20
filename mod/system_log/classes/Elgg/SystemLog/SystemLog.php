@@ -212,9 +212,21 @@ class SystemLog {
 			return false;
 		}
 
-		// alter table to engine
-		if (!$this->db->updateData("ALTER TABLE {$dbprefix}system_log_{$now} ENGINE=ARCHIVE")) {
-			return false;
+		// alter table to archive engine (when available)
+		$available_engines = elgg()->db->getData('SHOW ENGINES');
+		$available_engines = array_filter($available_engines, function($row) {
+			// filter only enabled engines
+			return in_array($row->Support, ['YES', 'DEFAULT']);
+		});
+		array_walk($available_engines, function(&$row) {
+			// only need engine names
+			$row = $row->Engine;
+		});
+		
+		if (in_array('ARCHIVE', $available_engines)) {
+			if (!$this->db->updateData("ALTER TABLE {$dbprefix}system_log_{$now} ENGINE=ARCHIVE")) {
+				return false;
+			}
 		}
 
 		return true;
