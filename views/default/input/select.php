@@ -64,7 +64,7 @@ unset($vars['options_values']);
 
 $normalize_options = function($options) use (&$normalize_options) {
 	foreach ($options as $key => $option) {
-		if (is_string($option)) {
+		if (!is_array($option)) {
 			$option = [
 				'text' => $option,
 				'value' => $key,

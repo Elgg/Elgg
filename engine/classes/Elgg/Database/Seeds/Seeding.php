@@ -234,28 +234,30 @@ trait Seeding {
 			if (!isset($properties['owner_guid'])) {
 				$user = _elgg_services()->session->getLoggedInUser();
 				if (!$user) {
+					$user = $this->getRandomUser();
+				}
+				
+				if (!$user) {
 					$user = $this->createUser();
 				}
 
 				$properties['owner_guid'] = $user->guid;
 			}
+			
+			if (!elgg_entity_exists($properties['owner_guid'])) {
+				return false;
+			}
 
 			if (!isset($properties['container_guid'])) {
 				$properties['container_guid'] = $properties['owner_guid'];
 			}
+			
+			if (!elgg_entity_exists($properties['container_guid'])) {
+				return false;
+			}
 
 			if (empty($properties['subtype'])) {
 				$properties['subtype'] = 'group';
-			}
-
-			$owner = get_entity($properties['owner_guid']);
-			if (!$owner) {
-				return false;
-			}
-
-			$container = get_entity($properties['container_guid']);
-			if (!$container) {
-				return false;
 			}
 
 			$tool_options = elgg_extract('group_tools_options', $options, []);
@@ -294,9 +296,9 @@ trait Seeding {
 			elgg_create_river_item([
 				'view' => 'river/group/create',
 				'action_type' => 'create',
-				'subject_guid' => $owner->guid,
+				'subject_guid' => $properties['owner_guid'],
 				'object_guid' => $group->guid,
-				'target_guid' => $container->guid,
+				'target_guid' => $properties['container_guid'],
 			]);
 
 			$this->log("Created new group {$group->getDisplayName()} [guid: {$group->guid}]");
@@ -349,31 +351,28 @@ trait Seeding {
 				$properties['tags'] = $this->faker()->words(10);
 			}
 
-			if (!isset($properties['container_guid'])) {
-				if (isset($properties['owner_guid'])) {
-					$properties['container_guid'] = $properties['owner_guid'];
-				} else {
-					$container = _elgg_services()->session->getLoggedInUser();
-					if (!$container) {
-						$container = $this->createUser();
-					}
-
-					$properties['container_guid'] = $container->guid;
+			if (!isset($properties['owner_guid'])) {
+				$user = _elgg_services()->session->getLoggedInUser();
+				if (!$user) {
+					$user = $this->getRandomUser();
 				}
+				
+				if (!$user) {
+					$user = $this->createUser();
+				}
+				
+				$properties['owner_guid'] = $user->guid;
 			}
-
-			$container = get_entity($properties['container_guid']);
-			if (!$container) {
+			
+			if (!elgg_entity_exists($properties['owner_guid'])) {
 				return false;
 			}
-
-			if (!isset($properties['owner_guid'])) {
-				$owner = $container;
-				$properties['owner_guid'] = $owner->guid;
+			
+			if (!isset($properties['container_guid'])) {
+				$properties['container_guid'] = $properties['owner_guid'];
 			}
-
-			$owner = get_entity($properties['owner_guid']);
-			if (!$owner) {
+			
+			if (!elgg_entity_exists($properties['container_guid'])) {
 				return false;
 			}
 
@@ -448,8 +447,8 @@ trait Seeding {
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
 			'wheres' => [
-				function(QueryBuilder $qb) use ($exclude) {
-					return $qb->compare('e.guid', 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
+				function(QueryBuilder $qb, $main_alias) use ($exclude) {
+					return $qb->compare("{$main_alias}.guid", 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
 				}
 			],
 			'order_by' => new OrderByClause('RAND()', null),
@@ -474,8 +473,8 @@ trait Seeding {
 			'metadata_names' => ['__faker'],
 			'limit' => 1,
 			'wheres' => [
-				function(QueryBuilder $qb) use ($exclude) {
-					return $qb->compare('e.guid', 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
+				function(QueryBuilder $qb, $main_alias) use ($exclude) {
+					return $qb->compare("{$main_alias}.guid", 'NOT IN', $exclude, ELGG_VALUE_INTEGER);
 				}
 			],
 			'order_by' => new OrderByClause('RAND()', null),
@@ -500,9 +499,7 @@ trait Seeding {
 
 		$access_array = get_write_access_array($user->guid, null, null, $params);
 
-		$access_key = array_rand($access_array, 1);
-
-		return $access_array[$access_key];
+		return array_rand($access_array, 1);
 	}
 
 	/**
@@ -643,11 +640,7 @@ trait Seeding {
 
 		foreach ($metadata as $key => $value) {
 			if (array_key_exists($key, $fields) && $entity instanceof ElggUser) {
-				$entity->deleteAnnotations("profile:$key");
-				$value = (array) $value;
-				foreach ($value as $val) {
-					$entity->annotate("profile:$key", $val, $this->getRandomAccessId($entity), $entity->guid);
-				}
+				$entity->setProfileData($key, $value, $this->getRandomAccessId($entity));
 			} else {
 				$entity->$key = $value;
 			}
