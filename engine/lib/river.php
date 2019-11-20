@@ -326,67 +326,6 @@ function _elgg_river_update_object_last_action(\Elgg\Event $event) {
 }
 
 /**
- * Disable river entries that reference a disabled entity as subject/object/target
- *
- * @param \Elgg\Event $event 'disable', 'all'
- *
- * @return void
- *
- * @internal
- */
-function _elgg_river_disable(\Elgg\Event $event) {
-	$entity = $event->getObject();
-	if (!$entity instanceof ElggEntity) {
-		return;
-	}
-
-	$dbprefix = _elgg_config()->dbprefix;
-	$query = <<<QUERY
-	UPDATE {$dbprefix}river AS rv
-	SET rv.enabled = 'no'
-	WHERE (rv.subject_guid = {$entity->guid} OR rv.object_guid = {$entity->guid} OR rv.target_guid = {$entity->guid});
-QUERY;
-
-	elgg()->db->updateData($query);
-	return;
-}
-
-
-/**
- * Enable river entries that reference a re-enabled entity as subject/object/target
- *
- * @param \Elgg\Event $event 'enable', 'all'
- *
- * @return void
- *
- * @internal
- */
-function _elgg_river_enable(\Elgg\Event $event) {
-	$entity = $event->getObject();
-	if (!$entity instanceof ElggEntity) {
-		return;
-	}
-
-	$dbprefix = _elgg_config()->dbprefix;
-	$query = <<<QUERY
-	UPDATE {$dbprefix}river AS rv
-	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid
-	LEFT JOIN {$dbprefix}entities AS oe ON oe.guid = rv.object_guid
-	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
-	SET rv.enabled = 'yes'
-	WHERE (
-			(se.enabled = 'yes' OR se.guid IS NULL) AND
-			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
-			(te.enabled = 'yes' OR te.guid IS NULL)
-		)
-		AND (se.guid = {$entity->guid} OR oe.guid = {$entity->guid} OR te.guid = {$entity->guid});
-QUERY;
-
-	elgg()->db->updateData($query);
-	return;
-}
-
-/**
  * Add the delete to river actions menu
  *
  * @param \Elgg\Hook $hook 'register' 'menu:river'
@@ -442,6 +381,4 @@ function _elgg_river_init() {
  */
 return function(\Elgg\EventsService $events) {
 	$events->registerHandler('init', 'system', '_elgg_river_init');
-	$events->registerHandler('disable:after', 'all', '_elgg_river_disable', 600);
-	$events->registerHandler('enable:after', 'all', '_elgg_river_enable', 600);
 };

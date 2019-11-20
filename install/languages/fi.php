@@ -10,12 +10,18 @@ return array(
 
 	'install:next' => 'Seuraava',
 	'install:refresh' => 'Edellinen',
+	'install:change_language' => 'Change language',
 
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
 If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
 
 If you are ready to proceed, click the Next button.",
+	
+	'install:footer:instructions' => "Installation instructions",
+	'install:footer:troubleshooting' => "Installation troubleshooting",
+	'install:footer:community' => "Elgg community forums",
+	
 	'install:requirements:instructions:success' => "Palvelimesi läpäisi kaikki testit.",
 	'install:requirements:instructions:failure' => "Palvelimesi ei läpäissyt kaikkia testejä. Korjaa alla mainitut puutteet, ja päivitä sitten sivu. Sivun alalaidassa on linkkejä, joista voit saada apua ongelmien ratkomiseen.",
 	'install:requirements:instructions:warning' => "Palvelimesi läpäisi testit, mutta testit antoivat ainakin yhden varoituksen. On suositeltavaa, että etsit lisätietoja sivun alalaidasta löytyvän Ongelmanratkaisu-linkin kautta.",

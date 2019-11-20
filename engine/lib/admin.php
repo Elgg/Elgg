@@ -1252,7 +1252,7 @@ function _elgg_admin_save_notification_setting(\Elgg\Hook $hook) {
  *
  * @param \Elgg\Hook $hook 'response', 'action:register'
  *
- * @return void
+ * @return void|ResponseBuilder
  * @internal
  * @since 3.2
  */

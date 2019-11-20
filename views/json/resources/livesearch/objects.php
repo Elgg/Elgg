@@ -14,7 +14,7 @@ $options = [
 	'sort' => 'title',
 	'order' => 'ASC',
 	'fields' => ['metadata' => ['title']],
-	'item_view' => 'search/entity',
+	'item_view' => elgg_extract('item_view', $vars, 'search/entity'),
 	'input_name' => $input_name,
 ];
 

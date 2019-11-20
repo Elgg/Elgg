@@ -315,15 +315,6 @@ $CONFIG->db_disable_query_cache = false;
 $CONFIG->auto_disable_plugins = true;
 
 /**
- * Minimum password length
- *
- * This value is used when validating a user's password during registration.
- *
- * @global int $CONFIG->min_password_length
- */
-$CONFIG->min_password_length = 6;
-
-/**
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
  *

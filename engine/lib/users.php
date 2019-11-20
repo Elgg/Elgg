@@ -123,7 +123,7 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
  * @return string
  */
 function generate_random_cleartext_password() {
-	return _elgg_services()->crypto->getRandomString(12, \ElggCrypto::CHARS_PASSWORD);
+	return _elgg_services()->passwordGenerator->generatePassword();
 }
 
 /**
@@ -718,6 +718,7 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
+	elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 
 	// Register the user type
 	elgg_register_entity_type('user', 'user');

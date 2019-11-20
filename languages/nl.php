@@ -115,6 +115,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'LoginException:AccountLocked' => 'Je account is geblokkeerd wegens te veel mislukte aanmeldpogingen.',
 	'LoginException:ChangePasswordFailure' => 'Huidige wachtwoord incorrect.',
 	'LoginException:Unknown' => 'We konden je niet aanmelden vanwege een onbekende fout.',
+	'LoginException:AdminValidationPending' => "Je account moet nog worden gevalideerd door een beheerder van de site voordat je het kunt gebruiken. Je zult hier een notificatie van ontvangen zodra dit is gebeurd.",
 
 	'UserFetchFailureException' => 'Kan voor user_guid [%s] niet de rechten nakijken omdat de gebruiker niet bestaat.',
 
@@ -125,6 +126,9 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'BadRequestException' => 'Het verzoek is onjuist',
 	'ValidationException' => 'De opgestuurde data voldoet niet aan de vereisten, controleer de invoer',
 	'LogicException:InterfaceNotImplemented' => '%smoet %s implementeren',
+	
+	'Security:InvalidPasswordCharacterRequirementsException' => "Het opgegeven wachtwoord voldoet niet aan de minimale eisen",
+	'Security:InvalidPasswordLengthException' => "Het opgegeven wachtwoord voldoet niet aan de minimale lengte van %s",
 
 	'deprecatedfunction' => 'Waarschuwing: Deze code gebruikt de niet meer gebruikte functies \'%s\' en is niet compatibel met deze versie van Elgg. ',
 
@@ -323,7 +327,11 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'river:subject:invalid_subject' => 'Ongeldige gebruiker',
 	'activity:owner' => 'Bekijk activiteit',
 
+/**
+ * Relationships
+ */
 	
+	'relationship:default' => "%s is gerelateerd aan %s",
 
 /**
  * Notifications
@@ -434,6 +442,19 @@ De volgende karakters zijn niet toegestaan: %s',
 
 	'walled_garden:home' => 'Home',
 
+/**
+ * Password requirements
+ */
+	'password:requirements:min_length' => "Het wachtwoord moet minimaal %s karakters lang zijn.",
+	'password:requirements:lower' => "Het wachtwoord moet minimaal %s kleine letters bevatten.",
+	'password:requirements:no_lower' => "Het wachtwoord mag geen kleine letters bevatten",
+	'password:requirements:upper' => "Het wachtwoord moet minimaal %s hooofdletters bevatten.",
+	'password:requirements:no_upper' => "Het wachtwoord mag geen hoofdletters bevatten.",
+	'password:requirements:number' => "Het wachtwoord moet minimaal %s nummers bevatten.",
+	'password:requirements:no_number' => "Het wachtwoord mag geen nummers bevatten.",
+	'password:requirements:special' => "Het wachtwoord moet minimaal %s speciaal teken bevatten.",
+	'password:requirements:no_special' => "Het wachtwoord mag geen speciale tekens bevatten",
+	
 /**
  * Administration
  */
@@ -569,6 +590,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:widget:admin_welcome:intro' =>
 'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
 
+	'admin:widget:admin_welcome:registration' => "Registratie voor nieuwe gebruikers is op dit moment uitgeschakeld. Je kunt dit activeren op de %spagina.",
 	'admin:widget:admin_welcome:admin_overview' =>
 "Navigatie door het beheer gedeelte is mogelijk door het menu aan de rechterkant. Dit is georganiseerd in drie secties:
 	<dl>
@@ -642,6 +664,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:settings' => 'Instellingen',
 	'admin:security:settings:description' => 'Op deze pagina kun je enkele veiligheidskeuzes maken. Lees de instellingen zorgvuldig.',
 	'admin:security:settings:label:hardening' => 'Hardening',
+	'admin:security:settings:label:account' => 'Account',
 	'admin:security:settings:label:notifications' => 'Notificaties',
 	'admin:security:settings:label:site_secret' => 'Site Secret',
 	
@@ -681,6 +704,24 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:settings:site_secret:intro' => 'Elgg gebruikt een sleutel om tokens te genereren voor verschillende doeleinden.',
 	'admin:security:settings:site_secret:regenerate' => "Regenereer site secret",
 	'admin:security:settings:site_secret:regenerate:help' => "Let op: Het regenereren van het site secret kan ongemak met zich meebrengen voor sommige gebruikers. Denk hierbij aan het 'onthoud mij' cookie, email validatie verzoeken of uitnodigingscodes.",
+	
+	'admin:security:settings:minusername' => "Minimale lengte gebruikersnaam",
+	'admin:security:settings:minusername:help' => "Het minimale aantal van tekens voor een gebruikersnaam",
+	
+	'admin:security:settings:min_password_length' => "Minimale lengte wachtwoord",
+	'admin:security:settings:min_password_length:help' => "Het minimale aantal tekens voor een wachtwoord",
+	
+	'admin:security:settings:min_password_lower' => "Minimaal aantal kleine letters in een wachtwoord",
+	'admin:security:settings:min_password_lower:help' => "Configureer het minimaal aantal kleine letters (a-z) welke aanwezig moeten zijn in een wachtwoord. 0 betekent dat het er niet in mag zitten. Laat het leeg voor geen vereisten.",
+	
+	'admin:security:settings:min_password_upper' => "Minimaal aantal hoofdletters in een wachtwoord",
+	'admin:security:settings:min_password_upper:help' => "Configureer het minimaal aantal hoofdletters (A-Z) welke aanwezig moeten zijn in een wachtwoord. 0 betekent dat het er niet in mag zitten. Laat het leeg voor geen vereisten.",
+	
+	'admin:security:settings:min_password_number' => "Minimaal aantal nummers in een wachtwoord",
+	'admin:security:settings:min_password_number:help' => "Configureer het minimaal aantal nummers (0-9) welke aanwezig moeten zijn in een wachtwoord. 0 betekent dat het er niet in mag zitten. Laat het leeg voor geen vereisten.",
+	
+	'admin:security:settings:min_password_special' => "Minimaal aantal speciale tekens in een wachtwoord",
+	'admin:security:settings:min_password_special:help' => "Configureer het minimaal aantal speciale tekens (!@$%^&*()<>,.?/[]{}-=_+) welke aanwezig moeten zijn in een wachtwoord. 0 betekent dat het er niet in mag zitten. Laat het leeg voor geen vereisten.",
 	
 	'admin:site:secret:regenerated' => "Het site secret is geregenereerd",
 	'admin:site:secret:prevented' => "Het genereren van een nieuw sitegeheim code werd geblokeerd",
@@ -748,6 +789,14 @@ Heb je deze wijziging niet zelf aangevraagd, dan kun je je wachtwoord hier wijzi
 Of neem contact op met de beheerder van de site:
 %s",
 	
+	'admin:notification:unvalidated_users:subject' => "Gebruikers in afwachting van goedkeuring op %s",
+	'admin:notification:unvalidated_users:body' => "Beste %s,
+
+%d gebruikers van '%s' wachten op goedkeuring van een beheerder van de site.
+
+Bekijk hier de volledige lijst van gebruikers:
+%s",
+
 /**
  * Plugins
  */
@@ -1319,6 +1368,11 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	// Walled Garden support
 	'installation:registration:description' => 'Registratie is standaard ingeschakeld. Je kunt dit uitschakelen als je niet wilt dat gebruikers zichzelf kunnen registreren.',
 	'installation:registration:label' => 'Nieuwe gebruikers mogen zich registreren',
+	'installation:adminvalidation:description' => 'Indien ingeschakeld, moeten nieuwe gebruikers handmatig worden gevalideerd door een beheerder van de site voordat zij hun account kunnen gebruiken.',
+	'installation:adminvalidation:label' => 'Nieuwe gebruikers moeten door beheerder worden gevalideerd',
+	'installation:adminvalidation:notification:description' => 'Indien ingeschakeld krijgen beheerders van de site een melding dat er gebruikers moeten worden gevalideerd. Beheerders kunnen deze notificaties uitschakelen in hun instellingen.',
+	'installation:adminvalidation:notification:label' => 'Stuur beheerders een notificatie mbt gebruikers die wachten op validatie',
+	'installation:adminvalidation:notification:direct' => 'Direct',
 	'installation:walled_garden:description' => 'Maak van deze site een privénetwerk. Dit zorgt ervoor dat niet-aangemelde gebruikers niets kunnen zien van deze site, tenzij inhoud die geplaatst wordt specifiek publiekelijk is gedeeld.',
 	'installation:walled_garden:label' => 'Alleen aangemelde gebruikers mogen pagina\'s zien.',
 
@@ -1487,6 +1541,20 @@ Je e-mailadres op '%s' is gewijzigd.
 Vanaf nu ontvang je de e-mail notificaties op dit e-mailadres.
 
 Indien je deze wijziging niet hebt aangevraagd, neem dan contact op met een beheerder van de site.
+%s",
+
+	'account:email:admin:validation_notification' => "Stuur mij een notificatie indien gebruikers zich aanmelden en handmatig gevalideerd moeten worden",
+	'account:email:admin:validation_notification:help' => "Vanwege de instellingen op de site moeten nieuwe gebruikers handmatig gevalideerd worden. Middels deze instelling kun je de notificaties uitschakelen.",
+	
+	'account:validation:pending:title' => "Accounts wachtend op validatie",
+	'account:validation:pending:content' => "Je account is succesvol geregistreerd! Voordat je je account kunt gebruiken moet deze echter eerst nog worden gevalideerd door een beheerder van de site. Zodra dit gedaan is ontvang je daarvan een e-mail.",
+	
+	'account:notification:validation:subject' => "Je account op %s is gevalideerd!",
+	'account:notification:validation:body' => "Beste %s,
+
+Je account op '%s' is gevalideerd. Je kunt nu je account gebruiken.
+
+Klik hier om naar de website te gaan:
 %s",
 
 /**

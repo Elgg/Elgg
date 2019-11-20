@@ -6,6 +6,8 @@
  * @uses $vars['requests'] Array of ElggUsers
  */
 
+elgg_deprecated_notice("The view 'groups/membershiprequests' has been deprecated, elgg_list_relationships()", '3.2');
+
 $entity = elgg_extract('entity', $vars);
 $requests = elgg_extract('requests', $vars);
 if (empty($requests) || !is_array($requests)) {

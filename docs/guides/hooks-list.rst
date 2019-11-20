@@ -163,6 +163,8 @@ System hooks
 **languages, translations**
    Allows plugins to add/remove languages from the configurable languages in the system.
 
+**generate, password**
+	Allows plugins to generate new random cleartext passwords. 
 
 User hooks
 ==========

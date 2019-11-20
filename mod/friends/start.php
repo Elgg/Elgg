@@ -1,6 +1,7 @@
 <?php
 
 use Elgg\Friends\Notifications;
+use Elgg\Menu\MenuItems;
 
 /**
  * Friends init
@@ -30,7 +31,7 @@ function elgg_friends_plugin_init() {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:title'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  */
@@ -56,7 +57,7 @@ function _elgg_friends_setup_title_menu(\Elgg\Hook $hook) {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:user_hover'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  */
@@ -155,7 +156,7 @@ function _elgg_friends_get_add_friend_menu_items(\ElggUser $user, bool $make_but
  *
  * @param \Elgg\Hook $hook 'register', 'menu:topbar'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  * @since 3.0
@@ -204,7 +205,7 @@ function _elgg_friends_topbar_menu(\Elgg\Hook $hook) {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  * @since 3.0
@@ -296,7 +297,7 @@ function _elgg_send_friend_notification(\Elgg\Event $event) {
  *
  * @param \Elgg\Hook $hook "filter_tabs", "all"
  *
- * @return array
+ * @return void|ElggMenuItem[]
  * @internal
  */
 function _elgg_friends_filter_tabs(\Elgg\Hook $hook) {

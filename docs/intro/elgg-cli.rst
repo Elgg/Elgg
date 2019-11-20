@@ -92,3 +92,7 @@ Command class must extend ``\Elgg\CLI\Command``.
         return $return;
 
     });
+
+Custom commands are based on `Symfony Console Commands`_. Please refer to their documentation for more details.
+
+.. _Symfony Console Commands: https://symfony.com/doc/current/console.html

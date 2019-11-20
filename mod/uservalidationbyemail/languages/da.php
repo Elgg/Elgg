@@ -29,5 +29,8 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:errors:could_not_resend_validations' => 'Kunne ikke gensende alle anmodninger om validering til markerede brugere.',
 
 	'uservalidationbyemail:messages:resent_validation' => 'Anmodning om validering gensendt.',
-	'uservalidationbyemail:messages:resent_validations' => 'Anmodning om validering gensendt til alle markerede brugere.'
+	'uservalidationbyemail:messages:resent_validations' => 'Anmodning om validering gensendt til alle markerede brugere.',
+	
+	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
+	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

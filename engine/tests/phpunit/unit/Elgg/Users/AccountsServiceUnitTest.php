@@ -18,14 +18,7 @@ class AccountsServiceUnitTest extends UnitTestCase {
 
 	}
 
-	/**
-	 * @expectedException \RegistrationException
-	 */
-	public function testShortPasswordFailsValidation() {
-		$length = elgg()->config->min_password_length;
-		$password = str_repeat('a', $length - 1);
-		elgg()->accounts->assertValidPassword($password);
-	}
+	
 
 	/**
 	 * @expectedException \RegistrationException
@@ -65,7 +58,7 @@ class AccountsServiceUnitTest extends UnitTestCase {
 
 		$failures = $result->getFailures();
 
-		$this->assertCount(4, $failures);
+		$this->assertCount(3, $failures);
 	}
 
 	public function testCanRegister() {

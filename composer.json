@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "3.1.5",
+    "version": "3.2.0",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -29,6 +29,7 @@
         "doctrine/cache": "^1.6",
         "doctrine/dbal": "~2.5",
         "fzaninotto/faker": "^1.6",
+        "hackzilla/password-generator": "~1.4.1",
         "imagine/imagine": "^0.7.1",
         "league/flysystem": "~1.0",
         "league/flysystem-memory": "^1.0",

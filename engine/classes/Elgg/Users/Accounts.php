@@ -13,6 +13,7 @@ use RegistrationException;
 use Elgg\Email;
 use Elgg\Email\Address;
 use Elgg\EmailService;
+use Elgg\Security\PasswordGeneratorService;
 
 /**
  * User accounts service
@@ -48,16 +49,22 @@ class Accounts {
 	 * @var EmailService
 	 */
 	protected $email;
+	
+	/**
+	 * @var PasswordGeneratorService
+	 */
+	protected $password_generator;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Config             $config     Config
-	 * @param Translator         $translator Translator
-	 * @param PasswordService    $passwords  Passwords
-	 * @param UsersTable         $users      Users table
-	 * @param PluginHooksService $hooks      Plugin hooks service
-	 * @param EmailService       $email      Email server
+	 * @param Config                   $config             Config
+	 * @param Translator               $translator         Translator
+	 * @param PasswordService          $passwords          Passwords
+	 * @param UsersTable               $users              Users table
+	 * @param PluginHooksService       $hooks              Plugin hooks service
+	 * @param EmailService             $email              Email service
+	 * @param PasswordGeneratorService $password_generator Password generator service
 	 */
 	public function __construct(
 		Config $config,
@@ -65,7 +72,8 @@ class Accounts {
 		PasswordService $passwords,
 		UsersTable $users,
 		PluginHooksService $hooks,
-		EmailService $email
+		EmailService $email,
+		PasswordGeneratorService $password_generator
 	) {
 		$this->config = $config;
 		$this->translator = $translator;
@@ -73,6 +81,7 @@ class Accounts {
 		$this->users = $users;
 		$this->hooks = $hooks;
 		$this->email = $email;
+		$this->password_generator = $password_generator;
 	}
 
 	/**
@@ -310,12 +319,7 @@ class Accounts {
 				throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
 			}
 		}
-
-		if (strlen($password) < $this->config->min_password_length) {
-			$msg = $this->translator->translate('registration:passwordtooshort', [$this->config->min_password_length]);
-			throw new RegistrationException($msg);
-		}
-
+		
 		$result = $this->hooks->trigger(
 			'registeruser:validate:password',
 			'all',

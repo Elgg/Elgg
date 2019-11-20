@@ -15,8 +15,12 @@ return array(
 	'groups:delete' => 'Обриши групу',
 	'groups:membershiprequests' => 'Управљај захтевима за придруживање',
 	'groups:membershiprequests:pending' => 'Управљај захтевима за придруживање (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Позиви у групу',
 	'groups:invitations:pending' => 'Позиви у групу (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Икона групе (оставте празно ако не желите да мењате)',
 	'groups:name' => 'Име групе',
@@ -61,6 +65,8 @@ return array(
 	'groups:invite:title' => 'Позови пријатеље у ову групу',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Немате пријатеље да позовете!',
 	'groups:group' => "Група",
@@ -97,6 +103,9 @@ return array(
 	'groups:opengroup:membersonly' => "Садржај ове групе је доступан само члановима.",
 	'groups:opengroup:membersonly:join' => 'Да постанете члан кликните "Придружи се" мени линк.',
 	'groups:visibility' => 'Ко може да види ову групу?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

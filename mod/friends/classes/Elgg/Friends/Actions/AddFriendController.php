@@ -4,7 +4,7 @@ namespace Elgg\Friends\Actions;
 
 use Elgg\Http\ResponseBuilder;
 use Elgg\Friends\Notifications;
-use Elgg\Http\OkResponse;
+use Elgg\Http\ErrorResponse;
 
 /**
  * Controller for the add friend action
@@ -24,11 +24,11 @@ class AddFriendController {
 		
 		$friend_guid = (int) $request->getParam('friend');
 		$friend = get_user($friend_guid);
-		if (!$friend instanceof \ElggUser) {
+		$user = elgg_get_logged_in_user_entity();
+		if (!$friend instanceof \ElggUser || !$user instanceof \ElggUser) {
 			return elgg_error_response(elgg_echo('error:missing_data'));
 		}
 		
-		$user = elgg_get_logged_in_user_entity();
 		if ($user->isFriendsWith($friend->guid)) {
 			return elgg_ok_response('', elgg_echo('friends:add:duplicate', [$friend->getDisplayName()]));
 		}
@@ -70,7 +70,7 @@ class AddFriendController {
 			// the friend is already friends with the user, so accept the other way around automatically
 			$result = $this->addFriend($user, $friend);
 			
-			if ($result instanceof OkResponse) {
+			if (!$result instanceof ErrorResponse) {
 				Notifications::sendAddFriendNotification($friend, $user);
 			}
 			
@@ -82,7 +82,7 @@ class AddFriendController {
 			$friend->addFriend($user->guid, true);
 			$result = $this->addFriend($user, $friend);
 			
-			if ($result instanceof OkResponse) {
+			if (!$result instanceof ErrorResponse) {
 				Notifications::sendAcceptedFriendRequestNotification($friend, $user);
 			}
 			
@@ -99,7 +99,7 @@ class AddFriendController {
 				$user->getDisplayName(),
 				$site->getDisplayName(),
 				elgg_generate_url('collection:relationship:friendrequest:pending', [
-					$friend->username,
+					'username' => $friend->username,
 				]),
 			], $friend->getLanguage());
 			

@@ -64,6 +64,7 @@ return [
 			'resource' => 'groups/invitations',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'collection:group:group:search' => [
@@ -75,6 +76,14 @@ return [
 			'resource' => 'groups/members',
 			'default' => [
 				'sort' => 'alpha',
+			],
+		],
+		'collection:user:user:group_invites' => [
+			'path' => '/groups/invites/{guid}',
+			'resource' => 'groups/invites',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'add:group:group' => [
@@ -107,6 +116,7 @@ return [
 			'resource' => 'groups/requests',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],

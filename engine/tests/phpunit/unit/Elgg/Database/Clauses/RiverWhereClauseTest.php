@@ -33,7 +33,6 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$expected = null;
 
 		$query = new RiverWhereClause();
-		$query->use_enabled_clause = false;
 
 		$qb = Select::fromTable('river', 'alias');
 		$actual = $query->prepare($qb, 'alias');
@@ -50,7 +49,6 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new RiverWhereClause();
-		$query->use_enabled_clause = false;
 		$query->ids = 1;
 
 		$qb = Select::fromTable('river', 'alias');
@@ -68,7 +66,6 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new RiverWhereClause();
-		$query->use_enabled_clause = false;
 		$query->annotation_ids = 1;
 
 		$qb = Select::fromTable('river', 'alias');
@@ -86,7 +83,6 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new RiverWhereClause();
-		$query->use_enabled_clause = false;
 		$query->views = ['view1', 'dir/view2'];
 
 		$qb = Select::fromTable('river', 'alias');
@@ -104,7 +100,6 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new RiverWhereClause();
-		$query->use_enabled_clause = false;
 		$query->action_types = ['foo1', 'foo2'];
 
 		$qb = Select::fromTable('river', 'alias');
@@ -126,7 +121,6 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new RiverWhereClause();
-		$query->use_enabled_clause = false;
 		$query->subject_guids = [1, 2, 3];
 		$query->object_guids = [4, 5, 6];
 		$query->target_guids = [7, 8, 9];
@@ -155,7 +149,6 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$expected = $this->qb->merge($parts);
 
 		$query = new RiverWhereClause();
-		$query->use_enabled_clause = false;
 		$query->created_after = $after;
 		$query->created_before = $before;
 
@@ -166,24 +159,5 @@ class RiverWhereClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 
 	}
-
-	public function testBuildQueryFromEnabled() {
-
-		$parts = [];
-		$parts[] = $this->qb->expr()->eq('alias.enabled', ':qb1');
-		$this->qb->param('no', ELGG_VALUE_STRING);
-		$expected = $this->qb->merge($parts);
-
-		$query = new RiverWhereClause();
-		$query->enabled = 'no';
-
-		$qb = Select::fromTable('river', 'alias');
-		$actual = $query->prepare($qb, 'alias');
-
-		$this->assertEquals($expected, $actual);
-		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
-	}
-
-
 }
 

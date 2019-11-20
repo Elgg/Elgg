@@ -1,3 +1,86 @@
+<a name="3.2.0"></a>
+## 3.2.0  (2019-10-24)
+
+#### Contributors
+
+* Jerôme Bakker (40)
+* Jeroen Dalsem (18)
+
+#### Features
+
+* **admin:** added a site setting to require admin approval of accounts ([2882da61](https://github.com/Elgg/Elgg/commit/2882da617e57830193ef2e33b269417b9b961dc6))
+* **core:**
+  * added elgg_list_relationships ([9b54398c](https://github.com/Elgg/Elgg/commit/9b54398c732e0e191051deb75e31c777412f8890))
+  * added elgg_get_relationships function ([21d3c697](https://github.com/Elgg/Elgg/commit/21d3c697ed842f43108826f205de0da8f05bb6a9))
+* **database:** clauses support invokable classes ([75653f24](https://github.com/Elgg/Elgg/commit/75653f24f97029befc963cfd378f1cef28b1dba3))
+* **files:** download urls can be configured to not expire ([f61c5578](https://github.com/Elgg/Elgg/commit/f61c55780a9b763c2d51aea1d096cb93b0f84cc2))
+* **friends:** add plugin setting to enable the need for friend approval ([25b87858](https://github.com/Elgg/Elgg/commit/25b87858d9c3dc3196e5d399e51940db7944301d))
+* **groups:**
+  * added option to hide group owner tranfer ([4a072e88](https://github.com/Elgg/Elgg/commit/4a072e88b186772b2096d9e22b6be3b6782e0ea6))
+  * allow groups to set default content access ([9f701b77](https://github.com/Elgg/Elgg/commit/9f701b77e21be728ccd087fe80eb8425af2efbf8))
+  * membership requests and invitations use relationship views ([afff8d9f](https://github.com/Elgg/Elgg/commit/afff8d9f806dc81fad6473cf0e386ffb214f48f0))
+  * add invited users page for group owners ([82310d78](https://github.com/Elgg/Elgg/commit/82310d7845d0aa72d1f135ae9e361d01550b2378))
+  * added membership requests tab to group members listing ([019745f0](https://github.com/Elgg/Elgg/commit/019745f07294fc988dcb70b9243d95b54ce353d0))
+  * add invite button on group members page ([9e164221](https://github.com/Elgg/Elgg/commit/9e16422127301117cf9165f87174c959252a538a))
+  * show user already a member/invited for the group ([57d38cca](https://github.com/Elgg/Elgg/commit/57d38ccaf0cbaff83f4d14c2500b84946f11d43f))
+  * member listing now uses elgg_list_relationship ([783f22a6](https://github.com/Elgg/Elgg/commit/783f22a637d24ca634d3ab7bdebe1f185abaac4b))
+* **install:** allow user to change language during installation ([5f23eff1](https://github.com/Elgg/Elgg/commit/5f23eff1e5eb2be5409657bddbd31d5ad2414a7f))
+* **livesearch:** added ability to set custom item_view ([8c1df6e8](https://github.com/Elgg/Elgg/commit/8c1df6e8a7627c077cfb4172bfab6fc6d2093f94))
+* **middleware:** added page owner can edit middleware ([b81fc729](https://github.com/Elgg/Elgg/commit/b81fc7295a4c9b12791a85e382ae29576204e67d))
+* **redis:** added the ability to set redis database and password ([e0c9d953](https://github.com/Elgg/Elgg/commit/e0c9d95311ef661664fdd941781d761905ca2f65))
+* **request:** allow access to the http request ([7e86f576](https://github.com/Elgg/Elgg/commit/7e86f576dfac4734e806127704dbb3e3a9d67782))
+* **security:** allow password requirement to be configured ([ccca6897](https://github.com/Elgg/Elgg/commit/ccca689777eae2cfaff2546a7289418880acdaba))
+* **system_log:** allow logbrowser to filter on object id ([de0e6171](https://github.com/Elgg/Elgg/commit/de0e61713084386f1d1f3f11532453536f0e1d3d))
+* **upgrades:** track upgrade start time ([f37d03bc](https://github.com/Elgg/Elgg/commit/f37d03bc3440a6e49aa4a1c6d5f25a784ead786c))
+* **webservices:**
+  * added api token management ([b146d097](https://github.com/Elgg/Elgg/commit/b146d097460da0c32f580953f115f1e0a2140ba8))
+  * added webservices listing ([5d2026de](https://github.com/Elgg/Elgg/commit/5d2026ded20c695ea9c52dde08ddae2067ff7235))
+
+
+#### Documentation
+
+* **routing:** added some extra middleware documentation ([b1c123ca](https://github.com/Elgg/Elgg/commit/b1c123cac20c18429d68b452ebcd80bf892731a9))
+
+
+#### Bug Fixes
+
+* **access:** allow plugin to register write access array subtypes ([6db1d505](https://github.com/Elgg/Elgg/commit/6db1d505d679d3af74b4a8fd2bed28d8af0703dc))
+* **ckeditor:** do no convert html entities in the editor ([e977bf99](https://github.com/Elgg/Elgg/commit/e977bf9972f6fd5d96267921a0be82aa0d2086e1))
+* **core:**
+  * ElggRelationship int attributes are casted to ints ([d3604557](https://github.com/Elgg/Elgg/commit/d3604557dab4ead9e698f8a2888c5d829236c5ce))
+  * make accesscollection save and rename work like documented ([c3acbb1a](https://github.com/Elgg/Elgg/commit/c3acbb1afc4cfc74d7dab34750c4fa55edae7296))
+* **css:** buttons in some menus keep correct styling ([3eb49098](https://github.com/Elgg/Elgg/commit/3eb49098840ffe7705ef1058868ef55bcb61d307))
+* **embed:** no longer require a plugin with file_uploading provided ([3925c647](https://github.com/Elgg/Elgg/commit/3925c6477abfaf248f4cbceef9e3ce4cb2d993e7))
+* **js:** deep merge the elgg.data ([197bfb49](https://github.com/Elgg/Elgg/commit/197bfb49c24d249a844144f17ff5fe5e65d5592d))
+
+
+#### Deprecations
+
+* **river:** no longer use the enabled property of river items ([59ebfb3d](https://github.com/Elgg/Elgg/commit/59ebfb3d638e80f8f18fade846ffccd0e41ba846))
+
+
+<a name="3.1.6"></a>
+### 3.1.6  (2019-10-23)
+
+#### Contributors
+
+* Jeroen Dalsem (5)
+* Jerôme Bakker (1)
+
+#### Documentation
+
+* **database:** document innodb recommended settings ([7cfaf39a](https://github.com/Elgg/Elgg/commit/7cfaf39aa6fe7c9bdee59cc93764f0cd707482e0))
+
+
+#### Bug Fixes
+
+* **access:** do not add default access level if missing in input/access ([58efbbc1](https://github.com/Elgg/Elgg/commit/58efbbc121221ef6d45a1aefada66fc65361c21d))
+* **js:**
+  * only trigger open event when new content is loaded ([83f67a81](https://github.com/Elgg/Elgg/commit/83f67a812d11d748a778f6c5e7f7ec6cc0e986a6))
+  * if no tabs are selected click the first tab ([66c9e9ba](https://github.com/Elgg/Elgg/commit/66c9e9ba4c5d63cbdc4cb3751c65616aca6d9a8d))
+* **views:** only add a link in summary title if entity can provide one ([b9b70f7a](https://github.com/Elgg/Elgg/commit/b9b70f7ae2615c0c2f21c9892de0e6c4831060c2))
+
+
 <a name="3.1.5"></a>
 ### 3.1.5  (2019-10-11)
 

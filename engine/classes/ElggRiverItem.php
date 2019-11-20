@@ -29,7 +29,7 @@ class ElggRiverItem {
 	public $access_id;
 	public $view;
 	public $posted;
-	public $enabled;
+	protected $enabled;
 
 	/**
 	 * Construct a river item object given a database row.
@@ -51,12 +51,28 @@ class ElggRiverItem {
 			}
 		}
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __set(string $name, $value) {
+		if ($name == 'enabled') {
+			elgg_deprecated_notice('The use of the enabled state for river items is deprecated.', '3.2');
+			return;
+		}
+		
+		$this->$name = $value;
+	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function __get($name) {
 		switch ($name) {
+			case 'enabled':
+				elgg_deprecated_notice('The use of the enabled state for river items is deprecated.', '3.2');
+				return $this->enabled;
+				
 			case 'type' :
 			case 'subtype' :
 				$object = get_entity($this->object_guid);
@@ -197,7 +213,6 @@ class ElggRiverItem {
 		$object->read_access = $this->access_id;
 		$object->action = $this->action_type;
 		$object->time_posted = date('c', $this->getTimePosted());
-		$object->enabled = $this->enabled;
 		$params = ['item' => $this];
 		return _elgg_services()->hooks->trigger('to:object', 'river_item', $params, $object);
 	}

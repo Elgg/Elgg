@@ -5,6 +5,8 @@
  * @uses $vars['entity'] Group entity
  */
 
+elgg_deprecated_notice("The view 'group/format/invitationrequest' has been deprecated, use the 'relationship/invited' view", '3.2');
+
 $user = elgg_get_page_owner_entity();
 if (!$user instanceof \ElggUser || !$user->canEdit()) {
 	return;
