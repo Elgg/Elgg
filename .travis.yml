@@ -73,7 +73,6 @@ matrix:
       before_install:
         - phpenv config-rm xdebug.ini
         - phpenv config-add ./.scripts/travis/memcached.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       before_script:
         - php -f ./.scripts/is_memcached_enabled.php
       script:
@@ -93,7 +92,6 @@ matrix:
       before_install:
         - phpenv config-rm xdebug.ini
         - phpenv config-add ./.scripts/travis/redis.ini
-        - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
       before_script:
         - php -f ./.scripts/is_redis_enabled.php
       script:
@@ -137,7 +135,6 @@ before_install:
   - mysqld --version
   - mysql --version
   - phpenv config-rm xdebug.ini
-  - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 
 install:
   - composer travis:install-with-mysql
@@ -174,7 +171,6 @@ env:
     - ELGG_DB_USER=root
     - ELGG_DB_PASS=password
     - ELGG_WWWROOT=http://localhost:8888/
-  secure: "fdpCjdC0Qp/ZJqtrCHE4I/tHXWF1sORftm6khd6geqK7d4qWzIh6HzNN2BlF+2m4nyuyxo2wzPm/oGoqogVpBgrzpQ7SZl7h2/wzgs2C/k39sFGyDisLesTM5DhBDJWcomyqtcnQmKn340Z9KOxiHAt4FOj2FZVN5+tIO5j3Cks="
 
 ## Cache dependencies
 cache:
