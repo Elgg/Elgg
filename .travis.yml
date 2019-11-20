@@ -110,7 +110,6 @@ services:
 
 before_install:
   - phpenv config-rm xdebug.ini
-  - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
 
 install: composer travis:install-with-mysql
 
@@ -129,10 +128,6 @@ notifications:
      secure: elgg:qUNTV70bSXTkIdr7b4FjvFhm
      on_failure: always
      on_success: never
-
-env:
-  global:
-     secure: "fdpCjdC0Qp/ZJqtrCHE4I/tHXWF1sORftm6khd6geqK7d4qWzIh6HzNN2BlF+2m4nyuyxo2wzPm/oGoqogVpBgrzpQ7SZl7h2/wzgs2C/k39sFGyDisLesTM5DhBDJWcomyqtcnQmKn340Z9KOxiHAt4FOj2FZVN5+tIO5j3Cks="
 
 ## Cache dependencies
 cache:
