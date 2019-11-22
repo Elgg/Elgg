@@ -1407,7 +1407,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function invalidateCache() {
 		
-		_elgg_services()->boot->invalidateCache();
+		_elgg_services()->boot->clearCache();
 		_elgg_services()->plugins->invalidateCache($this->getID());
 
 		parent::invalidateCache();

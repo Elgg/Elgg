@@ -1403,14 +1403,17 @@ function _elgg_init() {
  */
 function _elgg_init_cli_commands(\Elgg\Hook $hook) {
 	$defaults = [
-		\Elgg\Cli\SimpletestCommand::class,
+		\Elgg\Cli\CacheClearCommand::class,
+		\Elgg\Cli\CacheInvalidateCommand::class,
+		\Elgg\Cli\CachePurgeCommand::class,
+		\Elgg\Cli\CronCommand::class,
 		\Elgg\Cli\DatabaseSeedCommand::class,
 		\Elgg\Cli\DatabaseUnseedCommand::class,
-		\Elgg\Cli\CronCommand::class,
 		\Elgg\Cli\FlushCommand::class,
 		\Elgg\Cli\PluginsListCommand::class,
 		\Elgg\Cli\PluginsActivateCommand::class,
 		\Elgg\Cli\PluginsDeactivateCommand::class,
+		\Elgg\Cli\SimpletestCommand::class,
 	];
 
 	return array_merge($defaults, (array) $hook->getValue());

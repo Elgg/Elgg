@@ -192,7 +192,17 @@ class Plugins {
 		$this->cache->clear();
 		$this->invalidateProvidesCache();
 	}
-
+	
+	/**
+	 * Invalidate plugin cache
+	 *
+	 * @return void
+	 */
+	public function invalidate() {
+		$this->cache->invalidate();
+		$this->invalidateProvidesCache();
+	}
+	
 	/**
 	 * Returns a list of plugin directory names from a base directory.
 	 *

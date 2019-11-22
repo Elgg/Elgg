@@ -87,6 +87,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'system_cache_enabled' => false,
 			'simplecache_enabled' => false,
 			'boot_cache_ttl' => 0,
+			'lastcache' => time(),
 
 			'profile_files' => [],
 			'group' => [],

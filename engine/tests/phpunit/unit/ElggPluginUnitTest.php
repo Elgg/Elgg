@@ -9,7 +9,7 @@ use Elgg\Application;
 class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
-		_elgg_services()->boot->invalidateCache();
+		_elgg_services()->boot->clearCache();
 	}
 
 	public function down() {

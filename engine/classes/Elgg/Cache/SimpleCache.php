@@ -143,18 +143,66 @@ class SimpleCache {
 	}
 
 	/**
-	 * Deletes all cached views in the simplecache and sets the lastcache and
-	 * lastupdate time to 0 for every valid viewtype.
+	 * Deletes all cached views in the simplecache
 	 *
+	 * @param bool $include_clear (internal) Also clear cache
+	 *
+	 * @todo rework function in Elgg 4.0 (remove param and config value)
 	 * @return bool
 	 */
-	public function invalidate() {
+	public function invalidate(bool $include_clear = null) {
+		$this->config->save('simplecache_lastupdate', time());
+		
+		if (!isset($include_clear)) {
+			elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use \Elgg\Cache\SimpleCache::clear()', '3.3');
+			
+			$include_clear = true;
+		}
+		
+		if (!$include_clear) {
+			return true;
+		}
+		
+		return $this->clear();
+	}
+	
+	/**
+	 * Deletes all cached views in the simplecache
+	 *
+	 * @return bool
+	 * @since 3.3
+	 */
+	public function clear() {
 		elgg_delete_directory($this->getPath(), true);
-
-		$time = time();
-		$this->config->save("simplecache_lastupdate", $time);
-		$this->config->lastcache = $time;
-
+		
 		return true;
+	}
+	
+	/**
+	 * Purge old/stale cache content
+	 *
+	 * @return void
+	 */
+	public function purge() {
+		$lastcache = (int) $this->config->lastcache;
+		
+		if (!is_dir($this->getPath())) {
+			return;
+		}
+		
+		$di = new \DirectoryIterator($this->getPath());
+		
+		/* @var $file_info \DirectoryIterator */
+		foreach ($di as $file_info) {
+			if (!$file_info->isDir() || $file_info->isDot()) {
+				continue;
+			}
+			
+			if ((int) $file_info->getBasename() === $lastcache) {
+				continue;
+			}
+			
+			elgg_delete_directory($file_info->getPathname());
+		}
 	}
 }

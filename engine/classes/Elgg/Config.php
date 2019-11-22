@@ -63,7 +63,7 @@ use Elgg\Project\Paths;
  * @property bool          $installer_running
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
- * @property int           $lastcache								The last cache timestamp
+ * @property int           $lastcache								The timestamp the cache was last invalidated
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers
@@ -99,7 +99,6 @@ use Elgg\Project\Paths;
  * @property array		   $servicehandler							Holds the service handlers as registered by the webservice plugin
  * @property string        $seeder_local_image_folder 				Path to a local folder containing images used for seeding
  * @property bool          $simplecache_enabled						Is simplecache enabled?
- * @property int           $simplecache_lastupdate
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
  * @property \ElggSite     $site 									The site entity
@@ -387,6 +386,9 @@ class Config {
 			case 'group_tool_options':
 				elgg_deprecated_notice("'$name' config option is no longer in use. Use elgg()->group_tools->all()", '3.0');
 				return elgg()->group_tools->all();
+			case 'simplecache_lastupdate':
+				elgg_deprecated_notice("'$name' config option is deprecated. Use 'lastcache'", '3.3');
+				break;
 		}
 
 		if (isset($this->values[$name])) {

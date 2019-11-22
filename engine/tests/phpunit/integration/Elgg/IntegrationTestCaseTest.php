@@ -16,7 +16,7 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 	private $entity;
 
 	public function up() {
-		_elgg_services()->boot->invalidateCache();
+		_elgg_services()->boot->clearCache();
 		
 		$this->entity = $this->createOne('object', [
 			'access_id' => ACCESS_PUBLIC,
