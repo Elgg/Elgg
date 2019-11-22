@@ -189,8 +189,8 @@ function _elgg_admin_init() {
 	// new users require admin validation
 	elgg_register_event_handler('login:before', 'user', '_elgg_admin_user_validation_login_attempt', 999); // allow others to throw exceptions earlier
 	elgg_register_event_handler('validate:after', 'user', '_elgg_admin_user_validation_notification');
-	elgg_register_plugin_hook_handler('cron', 'daily', '_elgg_admin_cron_pending_user_validation_notification');
-	elgg_register_plugin_hook_handler('cron', 'weekly', '_elgg_admin_cron_pending_user_validation_notification');
+	elgg_register_plugin_hook_handler('cron', 'daily', '_elgg_admin_notify_admins_pending_user_validation');
+	elgg_register_plugin_hook_handler('cron', 'weekly', '_elgg_admin_notify_admins_pending_user_validation');
 	elgg_register_plugin_hook_handler('register', 'user', '_elgg_admin_check_admin_validation', 999); // allow others to also disable the user
 	elgg_register_plugin_hook_handler('response', 'action:register', '_elgg_admin_set_registration_forward_url', 999); // allow other to set forwar url first
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_admin_save_notification_setting');
