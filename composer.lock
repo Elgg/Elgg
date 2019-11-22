@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22542af47ccdbaff804a1a3b8e3e40f4",
+    "content-hash": "f813b06304dc0511bf776b5d728ef716",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -312,6 +312,7 @@
                 "MIT"
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
+            "abandoned": "psr/container",
             "time": "2014-12-30T15:22:37+00:00"
         },
         {
