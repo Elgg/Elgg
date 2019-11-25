@@ -15,4 +15,4 @@ if (!$group->isToolEnabled('file')) {
 	return;
 }
 
-echo elgg_view('groups/profile/module/forum', $vars);
+echo elgg_view('groups/profile/module/file', $vars);

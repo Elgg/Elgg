@@ -16,6 +16,8 @@ if ($username) {
 
 elgg_entity_gatekeeper($guid);
 
+elgg_group_tool_gatekeeper('file', $guid);
+
 $owner = get_entity($guid);
 
 elgg_push_collection_breadcrumbs('object', 'file', $owner);
