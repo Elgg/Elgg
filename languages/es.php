@@ -610,6 +610,12 @@ tres secciones:
 
 	'admin:cache:flush' => 'Limpiar la cache',
 	'admin:cache:flushed' => "La cache del sitio ha sido limpiada",
+	'admin:cache:invalidate' => 'Invalidate the caches',
+	'admin:cache:invalidated' => "The site's caches have been invalidated",
+	'admin:cache:clear' => 'Clear the caches',
+	'admin:cache:cleared' => "The site's caches have been cleared",
+	'admin:cache:purge' => 'Purge the caches',
+	'admin:cache:purged' => "The site's caches have been purged",
 
 	'admin:footer:faq' => 'FAQs de Administraci&oacute;n',
 	'admin:footer:manual' => 'Manual de Administraci&oacute;n',
@@ -1679,7 +1685,14 @@ To view %s's profile, click here:
  * Miscellaneous
  */
 	'elgg:powered' => "Creado con Elgg",
-
+	
+/**
+ * Cli commands
+ */
+	'cli:cache:clear:description' => "Clear Elgg caches",
+	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
+	'cli:cache:purge:description' => "Purge Elgg caches",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

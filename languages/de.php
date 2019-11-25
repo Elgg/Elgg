@@ -529,7 +529,7 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:users:unvalidated:no_results' => 'Es gibt derzeit keine Benutzeraccounts, die noch nicht validiert sind.',
 	'admin:users:unvalidated:registered' => 'Registriert: %s',
 	'admin:users:unvalidated:change_email' => 'Change e-mail address',
-	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
+	'admin:users:unvalidated:change_email:user' => 'E-Mailadresse für %s ändern',
 	
 	'admin:configure_utilities:maintenance' => 'Wartungs-Modus',
 	'admin:upgrades' => 'Aktualisierungen',
@@ -610,6 +610,12 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:cache:flush' => 'Seitencaches zurücksetzen',
 	'admin:cache:flushed' => "Die Caches der Seite wurden zurückgesetzt.",
+	'admin:cache:invalidate' => 'Invalidate the caches',
+	'admin:cache:invalidated' => "The site's caches have been invalidated",
+	'admin:cache:clear' => 'Clear the caches',
+	'admin:cache:cleared' => "The site's caches have been cleared",
+	'admin:cache:purge' => 'Purge the caches',
+	'admin:cache:purged' => "The site's caches have been purged",
 
 	'admin:footer:faq' => 'Administrations-FAQs',
 	'admin:footer:manual' => 'Administrator-Handbuch',
@@ -1487,7 +1493,7 @@ Wenn Du genauere Installationsanweisungen benötigst, lese die  <a href="http://
 
 	'email:settings' => "Email",
 	'email:address:label' => "Email-Adresse",
-	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
+	'email:address:help:confirm' => "E-Mailadressänderungen nach '%s' steht aus. Bitte überprüfe Deinen Posteingang für mehr Informationen.",
 	'email:address:password' => "Passwort",
 	'email:address:password:help' => "Für die Änderung Deiner Email-Adresse ist die Eingabe Deines derzeitigen Passworts notwendig.",
 
@@ -1523,40 +1529,40 @@ Falls Du die Änderung des Passworts angefordert hast, klicke bitte auf den folg
 
 Andernfalls ignoriere bitte diese Email.",
 	
-	'account:email:request:success' => "Your new e-mail address will be saved after confirmation, please check the inbox of '%s' for more instructions.",
-	'email:request:email:subject' => "Please confirm your e-mail address",
-	'email:request:email:body' => "Hi %s,
+	'account:email:request:success' => "Deine neue E-Mailadresse muss zunächst bestätigt werden. Bitte überprüfe den Posteingang der Adresse '%s' für weitere Informationen.",
+	'email:request:email:subject' => "Bitte bestätige Deine E-Mailadress",
+	'email:request:email:body' => "Hallo %s,
 
-You requested to change your e-mail address on '%s'.
-If you didn't request this change, you can ignore this email.
+Du hast eine Änderung Deiner E-Mailadresse auf '%s' angefordert.
+Wenn Du diese Änderung nicht angefordert hast, kannst Du diese Mail ignorieren.
 
-In order to confirm the e-mail address change, please click this link:
+Um Deine E-Mailadressänderung zu bestätigen, klicke bitte auf diesen Link:
 %s
 
-Please note this link is only valid for 1 hour.",
+Dieser Link ist eine Stunde gültig.",
 	
-	'account:email:request:error:no_new_email' => "No e-mail address change pending",
+	'account:email:request:error:no_new_email' => "Keine ausstehenden E-Mailadressänderungen.",
 	
-	'email:confirm:email:old:subject' => "You're e-mail address was changed",
+	'email:confirm:email:old:subject' => "Deine E-Mailadresse wurde geändert.",
 	'email:confirm:email:old:body' => "Hi %s,
 
-Your e-mail address on '%s' was changed.
-From now on you'll receive notifications on '%s'.
+Deine E-Mailadresse für '%s' wurde geändert.
+Von nun an erhältst Du Benachrichtigungen an '%s'.
 
-If you didn't request this change, please contact a site administrator.
+Wenn Du das nicht angefordert hast, kontaktiere bitte Deinen Administrator.
 %s",
 	
-	'email:confirm:email:new:subject' => "You're e-mail address was changed",
-	'email:confirm:email:new:body' => "Hi %s,
+	'email:confirm:email:new:subject' => "Deine E-Mailadresse wurde geändert.",
+	'email:confirm:email:new:body' => "Hi ,
 
-Your e-mail address on '%s' was changed.
-From now on you'll receive notifications on this e-mail address.
+Deine E-Mailadresse für '%s' wurde geändert.
+Von nun an erhältst Du Benachrichtigungen an '%s'.
 
-If you didn't request this change, please contact a site administrator.
+Wenn Du das nicht angefordert hast, kontaktiere bitte Deinen Administrator.
 %s",
 
-	'account:email:admin:validation_notification' => "Notify me when there are users requiring validation by an administrator",
-	'account:email:admin:validation_notification:help' => "Because of the site settings, newly registered users require manual validation by an administrator. With this setting you can disable notifications about pending validation requests.",
+	'account:email:admin:validation_notification' => "Benachrichtige mich, wenn es Benutzer gibt, die durch einen Administrator überprüft werden müssen",
+	'account:email:admin:validation_notification:help' => "Aufgrund der Site-Einstellungen, müssen neuregistrierte Benutzer von einem Administrator manuell überprüft werden. Mit dieser Einstellung kannst Du Benachrichtigungen über ausstehende Überprüfungen abschalten.",
 	
 	'account:validation:pending:title' => "Account validation pending",
 	'account:validation:pending:content' => "Your account has been registered successfully! However before you can use you account a site administrator needs to validate you account. You'll receive an e-mail when you account is validated.",
@@ -1684,7 +1690,14 @@ Um das Profil von %s aufzurufen, folge diesem Link:
  * Miscellaneous
  */
 	'elgg:powered' => "Community-Seite erstellt mit Elgg",
-
+	
+/**
+ * Cli commands
+ */
+	'cli:cache:clear:description' => "Clear Elgg caches",
+	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
+	'cli:cache:purge:description' => "Purge Elgg caches",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
