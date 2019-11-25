@@ -609,6 +609,12 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 
 	'admin:cache:flush' => 'Wis de caches',
 	'admin:cache:flushed' => "De sitecache is gewist",
+	'admin:cache:invalidate' => 'Invalidate the caches',
+	'admin:cache:invalidated' => "The site's caches have been invalidated",
+	'admin:cache:clear' => 'Clear the caches',
+	'admin:cache:cleared' => "The site's caches have been cleared",
+	'admin:cache:purge' => 'Purge the caches',
+	'admin:cache:purged' => "The site's caches have been purged",
 
 	'admin:footer:faq' => 'Veelgestelde vragen voor beheerders',
 	'admin:footer:manual' => 'Beheerdershandleiding',
@@ -1668,7 +1674,14 @@ Om naar het profiel van te gaan, klik hier:
  * Miscellaneous
  */
 	'elgg:powered' => "Aangedreven door Elgg",
-
+	
+/**
+ * Cli commands
+ */
+	'cli:cache:clear:description' => "Clear Elgg caches",
+	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
+	'cli:cache:purge:description' => "Purge Elgg caches",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

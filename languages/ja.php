@@ -610,6 +610,12 @@ three sections:
 
 	'admin:cache:flush' => 'キャッシュをクリアする',
 	'admin:cache:flushed' => "サイトのキャシュをクリアしました",
+	'admin:cache:invalidate' => 'Invalidate the caches',
+	'admin:cache:invalidated' => "The site's caches have been invalidated",
+	'admin:cache:clear' => 'Clear the caches',
+	'admin:cache:cleared' => "The site's caches have been cleared",
+	'admin:cache:purge' => 'Purge the caches',
+	'admin:cache:purged' => "The site's caches have been purged",
 
 	'admin:footer:faq' => '管理FAQ',
 	'admin:footer:manual' => '管理マニュアル',
@@ -1678,7 +1684,14 @@ To view %s's profile, click here:
  * Miscellaneous
  */
 	'elgg:powered' => "Powered by Elgg",
-
+	
+/**
+ * Cli commands
+ */
+	'cli:cache:clear:description' => "Clear Elgg caches",
+	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
+	'cli:cache:purge:description' => "Purge Elgg caches",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
