@@ -1319,7 +1319,11 @@ abstract class ElggEntity extends \ElggData implements
 			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid !== false && !_elgg_services()->events->trigger('create', $this->type, $this)) {
+			if ($guid === false) {
+				return false;
+			}
+			
+			if (!_elgg_services()->events->trigger('create', $this->type, $this)) {
 				// plugins that return false to event don't need to override the access system
 				elgg_call(ELGG_IGNORE_ACCESS, function() {
 					return $this->delete();
@@ -1472,6 +1476,11 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			$this->temp_private_settings = [];
+		}
+		
+		if (isset($container) && !$container instanceof ElggUser) {
+			// users have their own logic for setting last action
+			$container->updateLastAction();
 		}
 
 		return $guid;
