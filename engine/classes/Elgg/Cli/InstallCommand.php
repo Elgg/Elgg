@@ -47,11 +47,11 @@ class InstallCommand extends BaseCommand {
 				 * Database parameters
 				 */
 				'dbhost' => $this->ask('Enter database host [localhost]: ', 'localhost'),
-				'dbport' => $this->ask('Enter database port: '),
+				'dbport' => $this->ask('Enter database port [3306]: ', '3306'),
 				'dbuser' => $this->ask('Enter database username: '),
 				'dbpassword' => $this->ask('Enter database password: ', null, true),
 				'dbname' => $this->ask('Enter database name: '),
-				'dbprefix' => $this->ask('Enter database prefix [elgg_]: ', 'elgg_'),
+				'dbprefix' => $this->ask('Enter database prefix (for example: elgg_): ', '', false, false),
 				/**
 				 * Site settings
 				 */

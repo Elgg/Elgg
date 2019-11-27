@@ -279,7 +279,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'dbprefix' => [
 				'type' => 'text',
 				'value' => 'elgg_',
-				'required' => true,
+				'required' => false,
 			],
 			'dataroot' => [
 				'type' => 'text',
@@ -334,6 +334,39 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
 			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ? : '',
+			'dbuser' => getenv('ELGG_DB_USER') ? : '',
+			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
+			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dataroot' => $dataroot,
+			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'timezone' => 'UTC',
+		]);
+
+		$this->getApp()->_services->setValue('request', $request);
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
+		$this->assertEquals(elgg_normalize_url('install.php?step=settings'), $response->getForwardURL());
+
+		elgg_delete_directory($dataroot);
+	}
+	
+	public function testDatabaseActionWithEmptyPrefix() {
+
+		$dataroot = dirname(Paths::elgg()) . '/_installer_testing_dataroot/';
+		elgg_delete_directory($dataroot);
+
+		mkdir($dataroot);
+
+		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
+			'dbprefix' => '',
 			'dbname' => getenv('ELGG_DB_NAME') ? : '',
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',

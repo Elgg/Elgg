@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f1dbd9cc506501afe576784e8416445",
+    "content-hash": "9bc4768b0158c7b40923480ba4390dad",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -56,7 +56,7 @@
             "version": "1.6.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jackmoore/colorbox.git",
+                "url": "git@github.com:jackmoore/colorbox.git",
                 "reference": "bac78120c6ca9e63370cc317ab6f400129cd6608"
             },
             "dist": {
@@ -96,7 +96,7 @@
             "version": "3.51",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery-form/form.git",
+                "url": "https://github.com/jquery-form/form.git",
                 "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
             },
             "dist": {
@@ -159,7 +159,7 @@
             "version": "1.11.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:components/jqueryui.git",
+                "url": "https://github.com/components/jqueryui.git",
                 "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
             },
             "dist": {
@@ -231,7 +231,7 @@
             "version": "1.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/alexei/sprintf.js.git",
+                "url": "git@github.com:alexei/sprintf.js.git",
                 "reference": "747b806c2dab5b64d5c9958c42884946a187c3b1"
             },
             "dist": {
@@ -258,7 +258,7 @@
             "version": "2.0.16",
             "source": {
                 "type": "git",
-                "url": "https://github.com/requirejs/text.git",
+                "url": "git@github.com:requirejs/text.git",
                 "reference": "3f9d4c19b3a1a3c6f35650c5788cbea1db93197a"
             },
             "dist": {
@@ -799,6 +799,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {

@@ -1,3 +1,39 @@
+<a name="3.2.1"></a>
+### 3.2.1  (2019-11-25)
+
+#### Contributors
+
+* Jerôme Bakker (13)
+* Jeroen Dalsem (6)
+* Dennis Ploeger (1)
+
+#### Features
+
+* **tests:** allow testing of tool protected group pages ([5b465453](https://github.com/Elgg/Elgg/commit/5b465453e7f94b2b62ec921c9d9dbae463235bdd))
+
+
+#### Documentation
+
+* **cli:** added link to symfony ([dbb3d32c](https://github.com/Elgg/Elgg/commit/dbb3d32c171de4aa89f90ef28fd11b48047f34c3))
+
+
+#### Bug Fixes
+
+* **admin:** use correct function for unvalidated users notifications ([bbce4ca0](https://github.com/Elgg/Elgg/commit/bbce4ca034cace244d471ca0fa0dd4ea33166e1d))
+* **file:**
+  * use correct submit label on upload/update of file ([07ef13d1](https://github.com/Elgg/Elgg/commit/07ef13d186dbf07998ce3df8d4d91f904e5468bc))
+  * use correct view in old group module ([56a46f94](https://github.com/Elgg/Elgg/commit/56a46f94ec2b57a1956af24875676bf30b5387b3))
+  * added group tool gatekeeper to owner resource ([4667d9fe](https://github.com/Elgg/Elgg/commit/4667d9fe089d55d6ce804ee1c5df3415fad9dac4))
+* **friends:** supply correct link for friend request notification ([21e231a0](https://github.com/Elgg/Elgg/commit/21e231a09aa994dd619e8fa78883935240dae2ae))
+* **groups:**
+  * set menu item classes the correct way ([dc161621](https://github.com/Elgg/Elgg/commit/dc1616218a69810bcad3426a260f70c351d9ff46))
+  * show a no result text on the group membership request page ([db601b71](https://github.com/Elgg/Elgg/commit/db601b71d954d36c0a5ea7aac5a00f2c1aac40b8))
+* **input:** select now supports passing int values to options_values ([4563eed4](https://github.com/Elgg/Elgg/commit/4563eed436aa0a6984b8f2be300cb74e55620a6a))
+* **installer:** allow empty database table prefix during installation ([622b47c0](https://github.com/Elgg/Elgg/commit/622b47c02513f054a05c546487ba2f29b938c4bd))
+* **seeder:** use available users during seeding ([716e02fb](https://github.com/Elgg/Elgg/commit/716e02fbfa80cbe2259a5011eab722215483b8c3))
+* **system_log:** check archive engine availability before changing ([99e3c928](https://github.com/Elgg/Elgg/commit/99e3c928a8d1326c973c4a816ad5adfff552f8c8))
+
+
 <a name="3.2.0"></a>
 ## 3.2.0  (2019-10-24)
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 11:02+0200\n"
+"POT-Creation-Date: 2019-11-25 14:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,6 +151,10 @@ msgstr ""
 
 #: ../../intro/elgg-cli.rst:79
 msgid "Plugins can add their commands to the CLI application, by adding command class name via ``'commands','cli'`` hook. Command class must extend ``\\Elgg\\CLI\\Command``."
+msgstr ""
+
+#: ../../intro/elgg-cli.rst:96
+msgid "Custom commands are based on `Symfony Console Commands`_. Please refer to their documentation for more details."
 msgstr ""
 
 #: ../../intro/index.rst:2

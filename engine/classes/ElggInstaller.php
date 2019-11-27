@@ -418,7 +418,7 @@ class ElggInstaller {
 			'dbprefix' => [
 				'type' => 'text',
 				'value' => 'elgg_',
-				'required' => true,
+				'required' => false,
 			],
 			'dataroot' => [
 				'type' => 'text',
@@ -1199,7 +1199,7 @@ class ElggInstaller {
 		// non-Latin letters) or an underscore (_). Subsequent characters in an
 		// identifier or key word can be letters, underscores, digits (0-9), or dollar signs ($).
 		// Refs #4994
-		if (!preg_match("/^[a-zA-Z_][\w]*$/", $submissionVars['dbprefix'])) {
+		if (!empty($submissionVars['dbprefix']) && !preg_match("/^[a-zA-Z_][\w]*$/", $submissionVars['dbprefix'])) {
 			$app->_services->systemMessages->addErrorMessage(elgg_echo('install:error:database_prefix'));
 
 			return false;

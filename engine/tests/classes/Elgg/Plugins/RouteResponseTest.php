@@ -398,9 +398,67 @@ abstract class RouteResponseTest extends UnitTestCase {
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 	}
 
+	/**
+	 * @expectedException \Elgg\Http\Exception\GroupToolGatekeeperException
+	 *
+	 * @dataProvider groupRoutesProtectedByToolOption
+	 */
+	public function testProtectedGroupRoutesThrowException($route_name, $tool_option) {
+		$group = $this->createGroup([
+			'access_id' => ACCESS_PUBLIC,
+			'membership' => ACCESS_PUBLIC,
+			'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		]);
+		
+		// make sure tool option is registerd
+		elgg()->group_tools->register($tool_option);
+		
+		$this->assertTrue($group->disableTool($tool_option));
+		
+		$url = elgg_generate_url($route_name, [
+			'guid' => $group->guid,
+		]);
+
+		$request = BaseTestCase::prepareHttpRequest($url);
+		_elgg_services()->setValue('request', $request);
+
+		_elgg_services()->router->route($request);
+	}
+
+	/**
+	 * @dataProvider groupRoutesProtectedByToolOption
+	 */
+	public function testProtectedGroupRoutesRespondOk($route_name, $tool_option) {
+		$group = $this->createGroup([
+			'access_id' => ACCESS_PUBLIC,
+			'membership' => ACCESS_PUBLIC,
+			'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		]);
+		
+		// make sure tool option is registerd
+		elgg()->group_tools->register($tool_option);
+		
+		$this->assertTrue($group->enableTool($tool_option));
+		
+		$url = elgg_generate_url($route_name, [
+			'guid' => $group->guid,
+		]);
+
+		$request = BaseTestCase::prepareHttpRequest($url);
+		_elgg_services()->setValue('request', $request);
+
+		ob_start();
+		_elgg_services()->router->route($request);
+		ob_get_clean();
+
+		$response = _elgg_services()->responseFactory->getSentResponse();
+
+		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+	}
+
 	public function collectionRoutes() {
 		self::createApplication();
-		return [
+		$result = [
 			[
 				'route' => "default:object:{$this->getSubtype()}",
 				'params' => [],
@@ -438,5 +496,28 @@ abstract class RouteResponseTest extends UnitTestCase {
 				},
 			],
 		];
+		
+		$protected_routes = $this->groupRoutesProtectedByToolOption();
+		
+		foreach ($result as $key => $route) {
+			$route_name = $route['route'];
+			foreach ($protected_routes as $protected_route) {
+				if ($protected_route['route'] === $route_name) {
+					unset($result[$key]);
+				}
+			}
+		}
+		
+		return $result;
+	}
+	
+	
+	/**
+	 * This function can be used by plugins to provide an array [['route' => 'routename', 'tool' => 'tooloption']] of group routes that are protected by a group tool option
+	 *
+	 * @return array
+	 */
+	public function groupRoutesProtectedByToolOption() {
+		return [];
 	}
 }

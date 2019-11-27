@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-23 14:34+0200\n"
+"POT-Creation-Date: 2019-10-24 11:02+0200\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "Plugins can load their own JS libs."
 msgstr "Les plugins peuvent charger leurs propres bibliothèques JS."
 
-#: ../../intro/development.rst:51 ../../intro/features.rst:11
+#: ../../intro/development.rst:51
 msgid "Internationalization"
 msgstr "Internationalisation"
 
@@ -253,123 +253,6 @@ msgstr ""
 "Les plugins peuvent ajouter leurs propres commandes à l'application CLI, en "
 "ajoutant le nom de classe de la commande via le hook ``'commands','cli'``. "
 "La classe de la commande doit étendre ``\\Elgg\\CLI\\Command``."
-
-#: ../../intro/features.rst:2
-msgid "Features"
-msgstr "Fonctionnalités"
-
-#: ../../intro/features.rst:4
-msgid "Showcases: https://elgg.org/showcase"
-msgstr "Présentation de sites : https://elgg.org/showcase"
-
-#: ../../intro/features.rst:7
-msgid "For developers"
-msgstr "Pour les développeurs"
-
-#: ../../intro/features.rst:9
-msgid "Permissive license"
-msgstr "License permissive"
-
-#: ../../intro/features.rst:10
-msgid "Theme framework"
-msgstr "Framework pour les thèmes"
-
-#: ../../intro/features.rst:12
-msgid "Templating engine"
-msgstr "Moteur de templates"
-
-#: ../../intro/features.rst:13
-msgid "Widgets framework"
-msgstr "Framework de widgets"
-
-#: ../../intro/features.rst:14
-msgid "Plugin APIs"
-msgstr "APIs pour les plugins"
-
-#: ../../intro/features.rst:15
-msgid "Social graph"
-msgstr "Graph social"
-
-#: ../../intro/features.rst:16
-msgid "Web services API"
-msgstr "API pour les services web"
-
-#: ../../intro/features.rst:17
-msgid "jQuery-based JS framework"
-msgstr "Framework JS basé sur jQuery"
-
-#: ../../intro/features.rst:18
-msgid "Session management"
-msgstr "Gestion des sessions"
-
-#: ../../intro/features.rst:19
-msgid "Custom URL routing"
-msgstr "Routage d'URL personnalisé"
-
-#: ../../intro/features.rst:22
-msgid "For admins"
-msgstr "Pour les administrateurs"
-
-#: ../../intro/features.rst:24
-msgid "User profiles and avatars"
-msgstr "Page et image du profil des membres"
-
-#: ../../intro/features.rst:25
-msgid "Fine-grained access control lists"
-msgstr "Listes de contrôle d'accès (ACL) très détaillées"
-
-#: ../../intro/features.rst:26
-msgid "Friends and friends lists (ala G+ circles)"
-msgstr "Contacts et listes de contacts (à la manière des cercles G+)"
-
-#: ../../intro/features.rst:27
-msgid "Responsive, mobile-friendly design"
-msgstr "Responsive, design compatible mobile"
-
-#: ../../intro/features.rst:28
-msgid "RSS support"
-msgstr "Support RSS"
-
-#: ../../intro/features.rst:29
-msgid "Activity stream"
-msgstr "Flux d'activité"
-
-#: ../../intro/features.rst:30
-msgid ""
-"Plugins for common content types like blogs, bookmarks, files, "
-"microblogging, private messages, documents, message boards, discussion"
-msgstr ""
-"Plugins pour les types de contenus courants tels que des blogs, signets, "
-"fichiers, du microblogging, des messages privés, documents, forums, "
-"discussions"
-
-#: ../../intro/features.rst:31
-msgid "User authentication and administration"
-msgstr "Authentification des utilisateurs et administration"
-
-#: ../../intro/features.rst:33
-msgid ""
-"If you need more functionality than what Elgg offers out-of-the-box there "
-"are a couple of options:"
-msgstr ""
-"Si vous avez besoin de plus de fonctionnalités que ce qu'Elgg propose "
-"d'emblée, voici quelques possibilités :"
-
-#: ../../intro/features.rst:35
-msgid ""
-"Add more by :doc:`installing plugins </admin/plugins>` - for example, blogs,"
-" forums, social bookmarks"
-msgstr ""
-"Ajoutez-en de nouvelles en :doc:`installant des plugins </admin/plugins>` - "
-"par exemple des blogs, des forums, des signets"
-
-#: ../../intro/features.rst:36
-msgid "Develop your own features via plugins"
-msgstr "Développez vos propres fonctionnalités via des plugins"
-
-#: ../../intro/features.rst:37
-msgid "Hire someone to do the above for you"
-msgstr "Engagez quelqu'un pour le faire pour vous"
 
 #: ../../intro/index.rst:2
 msgid "Getting Started"
