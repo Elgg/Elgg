@@ -493,6 +493,8 @@ class ElggPluginPackage {
 						
 						if ($type === 'priority') {
 							$text = "{$dep['priority']} {$dep['plugin']}";
+						} elseif ($type === 'elgg_release') {
+							$text = $dep['version'];
 						} else {
 							$text = $dep['name'];
 						}
