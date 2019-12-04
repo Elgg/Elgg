@@ -13,6 +13,4 @@ echo elgg_view('page/elements/owner_block', $vars);
 echo elgg_view('page/elements/page_menu', $vars);
 
 // optional 'sidebar' parameter
-if (isset($vars['sidebar'])) {
-	echo $vars['sidebar'];
-}
+echo elgg_extract('sidebar', $vars, '');

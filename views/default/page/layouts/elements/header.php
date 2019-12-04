@@ -27,7 +27,7 @@ if (!isset($header)) {
 	$header = $title . $buttons;
 }
 
-if (!$header) {
+if (empty($header)) {
 	return;
 }
 ?>
