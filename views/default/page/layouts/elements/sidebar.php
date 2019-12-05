@@ -7,7 +7,7 @@
  */
 
 $sidebar = elgg_extract('sidebar', $vars);
-if ($sidebar === false) {
+if (empty($sidebar)) {
 	return;
 }
 ?>
