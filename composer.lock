@@ -11,7 +11,7 @@
             "version": "5.11.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "url": "git@github.com:FortAwesome/Font-Awesome.git",
                 "reference": "1c1b102b2ba19518d77e60e97cf1b4ebf133bba0"
             },
             "dist": {
@@ -96,7 +96,7 @@
             "version": "3.51",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery-form/form.git",
+                "url": "git@github.com:jquery-form/form.git",
                 "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
             },
             "dist": {

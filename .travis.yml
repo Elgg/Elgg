@@ -126,6 +126,33 @@ matrix:
         - ./vendor/bin/phpunit --testsuite integration
         - ./vendor/bin/phpunit --testsuite plugins-integration
 
+    # MySql 8.0
+    # setup according to https://www.tekz.io/blog/travis-ci-running-tests-on-mysql-8-0-x-on-ubuntu-xenial
+    - php: 7.3
+      env: JOB_NAME=mysql80
+      dist: xenial
+      sudo: true
+      before_install:
+        - phpenv config-rm xdebug.ini
+        - wget https://repo.mysql.com/mysql-apt-config_0.8.10-1_all.deb
+        - sudo dpkg -i mysql-apt-config_0.8.10-1_all.deb
+        - sudo apt-get update -q
+        - sudo apt-get install -q -y --allow-unauthenticated -o Dpkg::Options::=--force-confnew mysql-server
+        - sudo systemctl restart mysql
+        - sudo mysql_upgrade
+        - mysqld --version
+        - mysql --version
+      install:
+        - composer travis:install-with-mysql8
+        - php -f ./.scripts/travis/enable_plugins.php
+        - php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv
+        - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
+        - sleep 3 # give Web server some time to bind to sockets, etc
+      script:
+        - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
+        - ./vendor/bin/phpunit --testsuite integration
+        - ./vendor/bin/phpunit --testsuite plugins-integration
+
     # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
