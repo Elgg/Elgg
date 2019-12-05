@@ -18,8 +18,6 @@ $message->readYet = true;
 elgg_set_page_owner_guid($message->getOwnerGUID());
 $page_owner = elgg_get_page_owner_entity();
 
-$title = $message->getDisplayName();
-
 elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
 
 $inbox = false;
@@ -28,7 +26,6 @@ if ($page_owner->getGUID() == $message->toId) {
 } else {
 	elgg_push_breadcrumb(elgg_echo('messages:sent'), 'messages/sent/' . $page_owner->username);
 }
-elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($message, ['full_view' => true]);
 if ($inbox) {
@@ -52,7 +49,7 @@ if ($inbox) {
 	}
 }
 
-echo elgg_view_page($title, [
+echo elgg_view_page($message->getDisplayName(), [
 	'content' => $content,
 	'show_owner_block_menu' => false,
 ]);

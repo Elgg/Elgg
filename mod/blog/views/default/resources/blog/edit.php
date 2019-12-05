@@ -8,7 +8,6 @@ $blog = get_entity($guid);
 $vars['entity'] = $blog;
 
 elgg_push_entity_breadcrumbs($blog);
-elgg_push_breadcrumb(elgg_echo('edit'));
 
 $revision = elgg_extract('revision', $vars);
 

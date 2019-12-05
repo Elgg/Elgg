@@ -41,10 +41,6 @@ if ($history_user) {
 
 elgg_push_breadcrumb(elgg_echo('messageboard:board'), $mb_url);
 
-if ($history_user) {
-	elgg_push_breadcrumb($history_user->getDisplayName());
-}
-
 echo elgg_view_page($title, [
 	'content' => elgg_list_annotations($options),
 ]);

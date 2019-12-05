@@ -11,7 +11,6 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 }
 
 elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
-elgg_push_breadcrumb(elgg_echo('messages:sent'));
 
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 

@@ -1,16 +1,12 @@
 <?php
 /**
  * Elgg messages inbox page
- *
- * @package ElggMessages
 */
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();
 }
-
-elgg_push_breadcrumb(elgg_echo('messages:inbox'));
 
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 

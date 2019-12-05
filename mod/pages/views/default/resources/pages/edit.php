@@ -16,7 +16,6 @@ if ($container) {
 
 pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
-elgg_push_breadcrumb(elgg_echo('edit'));
 
 $vars = pages_prepare_form_vars($page, $page->getParentGUID());
 

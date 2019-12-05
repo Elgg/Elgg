@@ -41,7 +41,6 @@ if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
 $username = elgg_extract('username', $vars);
 
 elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
-elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
 
 $form_vars = [];
 

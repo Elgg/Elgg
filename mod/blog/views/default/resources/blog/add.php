@@ -14,7 +14,6 @@ if (!$container->canWriteToContainer(0, 'object', 'blog')) {
 }
 
 elgg_push_collection_breadcrumbs('object', 'blog', $container);
-elgg_push_breadcrumb(elgg_echo('add:object:blog'));
 
 $content = elgg_view_form('blog/save', $vars, blog_prepare_form_vars());
 

@@ -1,11 +1,7 @@
 <?php
 /**
  * Add bookmark page
- *
- * @package Bookmarks
  */
-
-$title = elgg_echo('add:object:bookmarks');
 
 $guid = elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid);
@@ -17,12 +13,10 @@ if (!$page_owner->canWriteToContainer(0, 'object', 'bookmarks')) {
 }
 
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $page_owner);
-elgg_push_breadcrumb($title);
 
 $vars = bookmarks_prepare_form_vars();
-$content = elgg_view_form('bookmarks/save', [], $vars);
 
-echo elgg_view_page($title, [
+echo elgg_view_page(elgg_echo('add:object:bookmarks'), [
 	'filter_id' => 'bookmarks/edit',
-	'content' => $content,
+	'content' => elgg_view_form('bookmarks/save', [], $vars),
 ]);

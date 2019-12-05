@@ -20,12 +20,9 @@ if (!($target instanceof \ElggEntity)) {
 	forward(REFERER);
 }
 
-$title = elgg_echo('generic_comments:edit');
-
 elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());
-elgg_push_breadcrumb($title);
 
-echo elgg_view_page($title, [
+echo elgg_view_page(elgg_echo('generic_comments:edit'), [
 	'content' => elgg_view_form('comment/save', [], [
 		'entity' => $target,
 		'comment' => $comment,
