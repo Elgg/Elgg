@@ -114,11 +114,8 @@ This page will view the form you created in the above section.
     // set the title
     $title = "Create a new my_blog post";
 
-    // start building the main column of the page 
-    $content = elgg_view_title($title);
-
     // add the form to the main column
-    $content .= elgg_view_form("my_blog/save");
+    $content = elgg_view_form("my_blog/save");
 
     // optionally, add the content for the sidebar
     $sidebar = "";
