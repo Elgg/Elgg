@@ -10,11 +10,10 @@ if ($user) {
 	$sidebar = elgg_view('core/account/login_box');
 }
 
-$params = [
-		'title' => $title,
-		'content' => elgg_echo('index:content'),
-		'sidebar' => $sidebar,
-];
-$body = elgg_view_layout('one_sidebar', $params);
+$body = elgg_view_layout('default', [
+	'title' => $title,
+	'content' => elgg_echo('index:content'),
+	'sidebar' => $sidebar,
+]);
 
 echo elgg_view_page(null, $body);

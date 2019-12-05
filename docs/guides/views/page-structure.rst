@@ -19,17 +19,17 @@ are the main ones. You can access these with the function:
      'section' => $section
    ));
 
-The content sections are passed as an ``array`` in the second parameter. The array keys correspond to sections in the layout, the choice of layout will determine which sections to pass. The array values contain the html that should be displayed in those areas. Examples of two common layouts:
+The content sections are passed as an ``array`` in the second parameter. The array keys correspond to sections in the layout. The array values contain the html that should be displayed in those areas. Examples of two common layouts:
 
 .. code-block:: php
 
-   $canvas_area = elgg_view_layout('one_column', array(
+   $canvas_area = elgg_view_layout('default', array(
      'content' => $content
    ));
    
 .. code-block:: php
 
-   $canvas_area = elgg_view_layout('one_sidebar', array(
+   $canvas_area = elgg_view_layout('default', array(
      'content' => $content, 
      'sidebar' => $sidebar
    ));

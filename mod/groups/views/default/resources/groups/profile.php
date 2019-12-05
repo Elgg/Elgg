@@ -25,12 +25,11 @@ if ($group->canAccessContent()) {
 	$sidebar .= elgg_view('groups/sidebar/owner', ['entity' => $group]);
 }
 
-$params = [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'sidebar' => $sidebar,
 	'entity' => $group,
 	'title' => $group->getDisplayName(),
-];
-$body = elgg_view_layout('one_sidebar', $params);
+]);
 
 echo elgg_view_page($group->getDisplayName(), $body);

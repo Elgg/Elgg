@@ -19,7 +19,7 @@ $content = elgg_list_entities([
 	'no_results' => true,
 ], 'elgg_search');
 
-$body = elgg_view_layout('one_sidebar', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),

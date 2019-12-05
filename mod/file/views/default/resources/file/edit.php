@@ -22,15 +22,13 @@ $title = elgg_echo('edit:object:file');
 elgg_push_entity_breadcrumbs($file);
 elgg_push_breadcrumb($title);
 
-$form_vars = ['enctype' => 'multipart/form-data'];
 $body_vars = file_prepare_form_vars($file);
 
-$content = elgg_view_form('file/upload', $form_vars, $body_vars);
+$content = elgg_view_form('file/upload', [], $body_vars);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 ]);
 
 echo elgg_view_page($title, $body);

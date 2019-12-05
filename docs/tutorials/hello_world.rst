@@ -87,10 +87,9 @@ Create ``mod/hello/views/default/resources/hello.php`` with this content:
 
     <?php
 
-    $body = elgg_view_layout('content', [
+    $body = elgg_view_layout('default', [
     	'title' => 'Hello world!',
         'content' => 'My first page!',
-        'filter' => '',
     ]);
 
     echo elgg_view_page('Hello', $body);

@@ -35,10 +35,9 @@ if (empty($list)) {
 	$content = elgg_view_form("site_notifications/process", [], $body_vars);
 }
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 	'show_owner_block_menu' => false,
 ]);
 

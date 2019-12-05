@@ -17,10 +17,9 @@ $content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
 });
 
 // build page
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
-	'filter' => '',
 ]);
 
 // draw page

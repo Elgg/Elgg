@@ -65,7 +65,7 @@ $tabs = elgg_view_menu('groups_members', [
 $content = elgg_list_relationships($options);
 
 // build page
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'filter' => $tabs,

@@ -24,8 +24,7 @@ $content = elgg_list_entities([
 	'preload_owners' => true,
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter' => false,
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 ]);

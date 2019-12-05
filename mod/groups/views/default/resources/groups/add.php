@@ -13,10 +13,9 @@ if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admi
 	$content = elgg_echo('groups:cantcreate');
 }
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 ]);
 
 echo elgg_view_page($title, $body);

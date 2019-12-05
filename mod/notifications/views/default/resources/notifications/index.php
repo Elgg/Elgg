@@ -29,7 +29,7 @@ $content = elgg_view('notifications/personal', [
 	'user' => $user,
 ]);
 
-$layout = elgg_view_layout('one_sidebar', [
+$layout = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'show_owner_block_menu' => false,

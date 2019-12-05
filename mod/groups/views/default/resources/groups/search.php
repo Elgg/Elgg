@@ -18,10 +18,9 @@ $content = elgg_list_entities([
 $sidebar = elgg_view('groups/sidebar/find');
 $sidebar .= elgg_view('groups/sidebar/featured');
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'sidebar' => $sidebar,
-	'filter' => false,
 	'title' => $title,
 ]);
 

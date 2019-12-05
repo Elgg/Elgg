@@ -22,10 +22,9 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view('bookmarks/bookmarklet');
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => false
 ]);
 
 echo elgg_view_page($title, $body);

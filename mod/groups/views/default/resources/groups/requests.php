@@ -24,7 +24,7 @@ $tabs = elgg_view_menu('groups_members', [
 ]);
 
 // build page
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
 	'filter' => $tabs,

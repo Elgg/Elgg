@@ -33,10 +33,9 @@ if ($file->canDownload()) {
 	]);
 }
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 	'entity' => $file,
 ]);
 

@@ -16,10 +16,9 @@ elgg_push_breadcrumb($title);
 $params = messages_prepare_form_vars((int) get_input('send_to'));
 $content = elgg_view_form('messages/send', [], $params);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 	'show_owner_block_menu' => false,
 ]);
 

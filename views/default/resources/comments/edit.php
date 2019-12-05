@@ -28,12 +28,10 @@ $params = [
 	'entity' => $target,
 	'comment' => $comment,
 ];
-$content = elgg_view_form('comment/save', null, $params);
+$content = elgg_view_form('comment/save', [], $params);
 
-$params = [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
-];
-$body = elgg_view_layout('content', $params);
+]);
 echo elgg_view_page($title, $body);

@@ -13,8 +13,7 @@ if ($parent) {
 	$body = elgg_view_entity($parent);
 }
 
-$body = elgg_view_layout('content', [
-	'filter' => false,
+$body = elgg_view_layout('default', [
 	'content' => $body,
 	'title' => $title,
 ]);

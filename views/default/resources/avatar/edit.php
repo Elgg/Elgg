@@ -19,7 +19,7 @@ elgg_set_page_owner_guid($entity->guid);
 
 $content = elgg_view('core/avatar/upload', ['entity' => $entity]);
 
-$body = elgg_view_layout('one_sidebar', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
 	'show_owner_block_menu' => false,

@@ -44,10 +44,9 @@ if ($type != 'all') {
 $content = elgg_view('river/filter', ['selector' => $selector]);
 $content .= elgg_list_river($options);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 	'class' => 'elgg-river-layout',
 ]);
 

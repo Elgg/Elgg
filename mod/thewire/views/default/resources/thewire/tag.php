@@ -28,8 +28,7 @@ $content = elgg_list_entities([
 	],
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter' => false,
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 ]);

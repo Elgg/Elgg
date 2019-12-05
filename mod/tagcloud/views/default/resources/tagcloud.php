@@ -8,7 +8,7 @@ $content = elgg_view_tagcloud([
 	'tag_name' => 'tags',
 ]);
 
-$body = elgg_view_layout('one_sidebar', [
+$body = elgg_view_layout('default', [
 	'title' => $title,
 	'content' => $content,
 ]);

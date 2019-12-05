@@ -124,7 +124,7 @@ This page will view the form you created in the above section.
     $sidebar = "";
 
     // layout the page
-    $body = elgg_view_layout('one_sidebar', array(
+    $body = elgg_view_layout('default', array(
        'content' => $content,
        'sidebar' => $sidebar
     ));
@@ -329,13 +329,10 @@ Create the file ``/mod/my_blog/views/default/resources/my_blog/view.php``:
     // get the content of the post
     $content = elgg_view_entity($my_blog, array('full_view' => true));
 
-    $params = [
+    $body = elgg_view_layout('default', [
         'title' => $my_blog->getDisplayName(),
         'content' => $content,
-        'filter' => '',
-    ];
-
-    $body = elgg_view_layout('content', $params);
+    ]);
 
     echo elgg_view_page($my_blog->getDisplayName(), $body);
 
@@ -398,7 +395,10 @@ Create ``/mod/my_blog/views/default/resources/my_blog/all.php``:
         'subtype' => 'my_blog',
     ));
 
-    $body = elgg_view_title($pagetitle) . elgg_view_layout('one_column', array('content' => $body));
+    $body = elgg_view_layout('default', [
+    	'title' => $pagetitle,
+    	'content' => $body,
+    ]);
 
     echo elgg_view_page($titlebar, $body);
 

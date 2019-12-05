@@ -23,8 +23,7 @@ $title = elgg_echo('edit:object:page');
 $vars = pages_prepare_form_vars($page, $page->getParentGUID());
 $content = elgg_view_form('pages/edit', [], $vars);
 
-$body = elgg_view_layout('content', [
-	'filter' => '',
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 ]);

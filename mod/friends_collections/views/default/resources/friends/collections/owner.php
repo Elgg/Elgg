@@ -40,7 +40,7 @@ $content = elgg_view('collections/listing/owner', [
 	'entity' => $user,
 ]);
 
-$body = elgg_view_layout('one_sidebar', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'show_owner_block_menu' => false,

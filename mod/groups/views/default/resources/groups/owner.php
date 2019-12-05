@@ -26,11 +26,9 @@ $content = elgg_list_entities([
 	'no_results' => elgg_echo('groups:none'),
 ]);
 
-$params = [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
-];
-$body = elgg_view_layout('content', $params);
+]);
 
 echo elgg_view_page($title, $body);

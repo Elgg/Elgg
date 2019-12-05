@@ -30,11 +30,10 @@ $title = elgg_echo("usersettings:statistics");
 
 $content = elgg_view("core/settings/statistics");
 
-$params = [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 	'show_owner_block_menu' => false,
-];
-$body = elgg_view_layout('one_sidebar', $params);
+]);
 
 echo elgg_view_page($title, $body);

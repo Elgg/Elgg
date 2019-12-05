@@ -16,11 +16,9 @@ if ($group instanceof ElggGroup && $group->canEdit()) {
 	$content = elgg_echo('groups:noaccess');
 }
 
-$params = [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
-];
-$body = elgg_view_layout('content', $params);
+]);
 
 echo elgg_view_page($title, $body);

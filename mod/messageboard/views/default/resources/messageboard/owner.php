@@ -47,8 +47,7 @@ if ($history_user) {
 
 $content = elgg_list_annotations($options);
 
-$body = elgg_view_layout('content', [
-	'filter' => false,
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
 ]);

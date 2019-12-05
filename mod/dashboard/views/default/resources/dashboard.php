@@ -10,7 +10,7 @@ $content = elgg_view_layout('widgets', [
 	},
 ]);
 
-$body = elgg_view_layout('one_column', [
+$body = elgg_view_layout('default', [
 	'title' => false,
 	'content' => $content,
 	'header' => false,

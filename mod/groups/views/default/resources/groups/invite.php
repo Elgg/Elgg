@@ -21,10 +21,9 @@ $content = elgg_view_form('groups/invite', [
 	'entity' => $group,
 ]);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'content' => $content,
 	'title' => $title,
-	'filter' => '',
 ]);
 
 echo elgg_view_page($title, $body);
