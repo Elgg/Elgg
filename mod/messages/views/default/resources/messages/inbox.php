@@ -25,16 +25,11 @@ $list = elgg_list_entities([
 	'bulk_actions' => true,
 ]);
 
-$body_vars = [
-	'folder' => 'inbox',
-	'list' => $list,
-];
-$content = elgg_view_form('messages/process', [], $body_vars);
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('messages/process', [], [
+		'folder' => 'inbox',
+		'list' => $list,
+	]),
 	'title' => elgg_echo('messages:inbox'),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

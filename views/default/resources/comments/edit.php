@@ -21,17 +21,13 @@ if (!($target instanceof \ElggEntity)) {
 }
 
 $title = elgg_echo('generic_comments:edit');
+
 elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());
 elgg_push_breadcrumb($title);
 
-$params = [
-	'entity' => $target,
-	'comment' => $comment,
-];
-$content = elgg_view_form('comment/save', [], $params);
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('comment/save', [], [
+		'entity' => $target,
+		'comment' => $comment,
+	]),
 ]);
-echo elgg_view_page($title, $body);

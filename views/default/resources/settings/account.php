@@ -24,14 +24,9 @@ elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
 
 $title = elgg_echo('usersettings:user', [$user->getDisplayName()]);
 
-$content = elgg_view('core/settings/account', [
-	'entity' => $user,
-]);
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_view('core/settings/account', [
+		'entity' => $user,
+	]),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

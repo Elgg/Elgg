@@ -20,11 +20,6 @@ $title = elgg_echo('bookmarks:bookmarklet');
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $page_owner);
 elgg_push_breadcrumb($title);
 
-$content = elgg_view('bookmarks/bookmarklet');
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_view('bookmarks/bookmarklet'),
 ]);
-
-echo elgg_view_page($title, $body);

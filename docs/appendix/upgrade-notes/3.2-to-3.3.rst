@@ -5,6 +5,41 @@ From 3.2 to 3.3
    :local:
    :depth: 1
    
+Simpler use of 'default' layout
+-------------------------------
+
+Currently a common pattern is to do the following:
+
+.. code-block:: php
+
+	$title = 'All blogs';
+	
+	$content = elgg_list_entities([
+		'type' => 'object',
+		'subtype' => 'blog',
+	]);
+	
+	$layout = elgg_view_layout('default', [
+		'title' => $title,
+		'content' => $content,
+	]);
+	
+	echo elgg_view_page($title, $layout);
+
+We made this kind of pattern simpler. You can now pass an array of layout options to the second parameter of `elgg_view_page`.
+The `elgg_view_page` function will use this array to wrap it in the 'default' layout. It also adds the page title to the layout.
+
+The new way to do it is:
+
+.. code-block:: php
+
+	echo elgg_view_page('All blogs', [
+		'content' => elgg_list_entities([
+			'type' => 'object',
+			'subtype' => 'blog',
+		]),
+	]);
+
 Deprecated layout names
 -----------------------
 

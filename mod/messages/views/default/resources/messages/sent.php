@@ -27,16 +27,10 @@ $list = elgg_list_entities([
 	'bulk_actions' => true
 ]);
 
-$body_vars = [
-	'folder' => 'sent',
-	'list' => $list,
-];
-$content = elgg_view_form('messages/process', [], $body_vars);
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('messages/process', [], [
+		'folder' => 'sent',
+		'list' => $list,
+	]),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

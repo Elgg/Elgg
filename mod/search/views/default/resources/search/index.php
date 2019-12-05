@@ -35,12 +35,9 @@ $form = elgg_view_form('search', [
 
 if (elgg_is_empty($query)) {
 	// display a search form if there is no query
-	$layout = elgg_view_layout('default', [
-		'title' => elgg_echo('search'),
+	echo elgg_view_page(elgg_echo('search'), [
 		'content' => $form,
 	]);
-
-	echo elgg_view_page(elgg_echo('search'), $layout);
 
 	return;
 }
@@ -135,9 +132,7 @@ if (empty($results)) {
 	]);
 }
 
-$layout = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('search'), [
 	'title' => $title,
 	'content' => $form . $results,
 ]);
-
-echo elgg_view_page(elgg_echo('search'), $layout);

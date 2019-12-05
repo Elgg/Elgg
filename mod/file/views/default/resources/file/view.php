@@ -12,11 +12,7 @@ elgg_entity_gatekeeper($guid, 'object', 'file');
 /* @var $file \ElggFile */
 $file = get_entity($guid);
 
-$owner = elgg_get_page_owner_entity();
-
 elgg_push_entity_breadcrumbs($file, false);
-
-$title = $file->getDisplayName();
 
 $content = elgg_view_entity($file, [
 	'full_view' => true,
@@ -33,10 +29,7 @@ if ($file->canDownload()) {
 	]);
 }
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page($file->getDisplayName(), [
 	'content' => $content,
-	'title' => $title,
 	'entity' => $file,
 ]);
-
-echo elgg_view_page($title, $body);

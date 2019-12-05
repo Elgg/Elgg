@@ -26,9 +26,6 @@ $body_vars = file_prepare_form_vars($file);
 
 $content = elgg_view_form('file/upload', [], $body_vars);
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
 ]);
-
-echo elgg_view_page($title, $body);

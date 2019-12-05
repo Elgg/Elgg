@@ -14,12 +14,8 @@ elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->use
 elgg_push_breadcrumb($title);
 
 $params = messages_prepare_form_vars((int) get_input('send_to'));
-$content = elgg_view_form('messages/send', [], $params);
 
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('messages/send', [], $params),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

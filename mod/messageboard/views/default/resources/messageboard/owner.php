@@ -45,11 +45,6 @@ if ($history_user) {
 	elgg_push_breadcrumb($history_user->getDisplayName());
 }
 
-$content = elgg_list_annotations($options);
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_list_annotations($options),
 ]);
-
-echo elgg_view_page($title, $body);

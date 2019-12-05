@@ -20,8 +20,6 @@ if (elgg_get_config('allow_registration') == false) {
 $friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
-$title = elgg_echo('register');
-
 $form_params = [
 	'class' => 'elgg-form-account',
 	'ajax' => true,
@@ -37,9 +35,7 @@ $content .= elgg_view('help/register');
 
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('register'), [
 	'content' => $content,
-	'title' => $title,
 	'sidebar' => false,
-]);
-echo elgg_view_page($title, $body, $shell);
+], $shell);

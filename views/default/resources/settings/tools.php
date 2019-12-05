@@ -51,10 +51,7 @@ if (elgg_action_exists("{$plugin->getID()}/usersettings/save")) {
 
 $content = elgg_view_form('plugins/usersettings/save', $form_vars, ['entity' => $plugin]);
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

@@ -348,16 +348,22 @@ function elgg_prepend_css_urls($css, $path) {
  * For HTML pages, use the 'head', 'page' plugin hook for setting meta elements
  * and links.
  *
- * @param string $title      Title
- * @param string $body       Body
- * @param string $page_shell Optional page shell to use. See page/shells view directory
- * @param array  $vars       Optional vars array to pass to the page
- *                           shell. Automatically adds title, body, head, and sysmessages
+ * @param string       $title      Title
+ * @param string|array $body       Body as a string or as an array (which will be passed to elgg_view_layout('default', $body)
+ * @param string       $page_shell Optional page shell to use. See page/shells view directory
+ * @param array        $vars       Optional vars array to pass to the page
+ *                                 shell. Automatically adds title, body, head, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
+	
+	if (is_array($body)) {
+		$body['title'] = elgg_extract('title', $body, $title);
+		$body = elgg_view_layout('default', $body);
+	}
+	
 	$timer = _elgg_services()->timer;
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);

@@ -1,12 +1,7 @@
 <?php
 /**
  * Elgg user statistics.
- *
- * @package Elgg
- * @subpackage Core
  */
-
-elgg_gatekeeper();
 
 $username = elgg_extract('username', $vars);
 if (!$username) {
@@ -26,14 +21,7 @@ elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account'
 
 elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
 
-$title = elgg_echo("usersettings:statistics");
-
-$content = elgg_view("core/settings/statistics");
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page(elgg_echo('usersettings:statistics'), [
+	'content' => elgg_view('core/settings/statistics'),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

@@ -1,6 +1,6 @@
 <?php
 
-echo elgg_view_page("Ajax demo", elgg_view_layout('default', [
+echo elgg_view_page("Ajax demo", [
 	'title' => 'path demo',
 	'content' => '',
-]));
+]);

@@ -18,14 +18,8 @@ pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 elgg_push_breadcrumb(elgg_echo('edit'));
 
-$title = elgg_echo('edit:object:page');
-
 $vars = pages_prepare_form_vars($page, $page->getParentGUID());
-$content = elgg_view_form('pages/edit', [], $vars);
 
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page(elgg_echo('edit:object:page'), [
+	'content' => elgg_view_form('pages/edit', [], $vars),
 ]);
-
-echo elgg_view_page($title, $body);

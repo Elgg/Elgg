@@ -43,11 +43,7 @@ $title = elgg_echo('add:object:page');
 elgg_push_breadcrumb($title);
 
 $vars = pages_prepare_form_vars(null, $parent_guid);
-$content = elgg_view_form('pages/edit', [], $vars);
 
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('pages/edit', [], $vars),
 ]);
-
-echo elgg_view_page($title, $body);

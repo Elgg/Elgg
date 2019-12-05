@@ -31,9 +31,6 @@ $content = elgg_list_entities([
 	'no_results' => elgg_echo('friends:none'),
 ]);
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
 ]);
-
-echo elgg_view_page($title, $body);

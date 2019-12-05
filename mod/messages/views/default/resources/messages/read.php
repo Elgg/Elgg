@@ -52,10 +52,7 @@ if ($inbox) {
 	}
 }
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

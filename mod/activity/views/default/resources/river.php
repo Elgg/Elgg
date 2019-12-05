@@ -66,14 +66,9 @@ $activity = elgg_list_river($options);
 
 $content = elgg_view('river/filter', ['selector' => $selector]);
 
-$sidebar = elgg_view('river/sidebar');
-
-$body = elgg_view_layout('default', [
-	'title' => $title,
+echo elgg_view_page($title, [
 	'content' =>  $content . $activity,
-	'sidebar' => $sidebar ? : false,
+	'sidebar' => elgg_view('river/sidebar'),
 	'filter_value' => $page_filter,
 	'class' => 'elgg-river-layout',
 ]);
-
-echo elgg_view_page($title, $body);

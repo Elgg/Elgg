@@ -57,19 +57,11 @@ switch ($sort) {
 
 $title = elgg_echo('groups:members:title', [$group->getDisplayName()]);
 
-$tabs = elgg_view_menu('groups_members', [
-	'entity' => $group,
-	'class' => 'elgg-tabs'
-]);
-
-$content = elgg_list_relationships($options);
-
-// build page
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
-	'filter' => $tabs,
-]);
-
 // draw page
-echo elgg_view_page($title, $body);
+echo elgg_view_page($title, [
+	'content' => elgg_list_relationships($options),
+	'filter' => elgg_view_menu('groups_members', [
+		'entity' => $group,
+		'class' => 'elgg-tabs'
+	]),
+]);

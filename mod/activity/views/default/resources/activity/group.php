@@ -14,8 +14,6 @@ elgg_set_page_owner_guid($group->guid);
 
 elgg_group_tool_gatekeeper('activity');
 
-$title = elgg_echo('collection:river:group');
-
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
@@ -44,10 +42,7 @@ if ($type != 'all') {
 $content = elgg_view('river/filter', ['selector' => $selector]);
 $content .= elgg_list_river($options);
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('collection:river:group'), [
 	'content' => $content,
-	'title' => $title,
 	'class' => 'elgg-river-layout',
 ]);
-
-echo elgg_view_page($title, $body);

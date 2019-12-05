@@ -4,9 +4,6 @@ $user = elgg_get_page_owner_entity();
 
 elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
-// build page elements
-$title = elgg_echo('groups:invitations');
-
 $content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
 	return elgg_list_relationships([
 		'relationship' => 'invited',
@@ -16,11 +13,7 @@ $content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
 	]);
 });
 
-// build page
-$body = elgg_view_layout('default', [
-	'title' => $title,
+// draw page
+echo elgg_view_page(elgg_echo('groups:invitations'), [
 	'content' => $content,
 ]);
-
-// draw page
-echo elgg_view_page($title, $body);

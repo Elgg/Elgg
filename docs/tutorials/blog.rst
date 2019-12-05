@@ -123,14 +123,11 @@ This page will view the form you created in the above section.
     // optionally, add the content for the sidebar
     $sidebar = "";
 
-    // layout the page
-    $body = elgg_view_layout('default', array(
-       'content' => $content,
-       'sidebar' => $sidebar
-    ));
-
     // draw the page, including the HTML wrapper and basic page layout
-    echo elgg_view_page($title, $body);
+    echo elgg_view_page($title, [
+		'content' => $content,
+		'sidebar' => $sidebar
+    ]);
 
 The function ``elgg_view_form("my_blog/save")`` views the form that
 you created in the previous section. It also automatically wraps
@@ -329,12 +326,9 @@ Create the file ``/mod/my_blog/views/default/resources/my_blog/view.php``:
     // get the content of the post
     $content = elgg_view_entity($my_blog, array('full_view' => true));
 
-    $body = elgg_view_layout('default', [
-        'title' => $my_blog->getDisplayName(),
+    echo elgg_view_page($my_blog->getDisplayName(), [
         'content' => $content,
     ]);
-
-    echo elgg_view_page($my_blog->getDisplayName(), $body);
 
 This page has much in common with the ``add.php`` page. The biggest differences
 are that some information is extracted from the my_blog entity, and instead of
@@ -395,12 +389,10 @@ Create ``/mod/my_blog/views/default/resources/my_blog/all.php``:
         'subtype' => 'my_blog',
     ));
 
-    $body = elgg_view_layout('default', [
+    echo elgg_view_page($titlebar, [
     	'title' => $pagetitle,
     	'content' => $body,
     ]);
-
-    echo elgg_view_page($titlebar, $body);
 
 The ``elgg_list_entities`` function grabs the latest my_blog posts and
 passes them to the object view file.

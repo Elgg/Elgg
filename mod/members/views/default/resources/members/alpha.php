@@ -11,14 +11,9 @@ $content = elgg_list_entities([
 	],
 ]);
 
-$title = elgg_echo('members:title:alpha');
-
-$body = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('members:title:alpha'), [
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
-	'title' => $title,
 	'filter_id' => 'members',
 	'filter_value' => 'alpha',
 ]);
-
-echo elgg_view_page($title, $body);

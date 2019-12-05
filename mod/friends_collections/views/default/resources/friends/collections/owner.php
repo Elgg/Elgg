@@ -21,8 +21,6 @@ if (!$user instanceof ElggUser || !$user->canEdit()) {
 
 elgg_set_page_owner_guid($user->guid);
 
-$title = elgg_echo('friends:collections');
-
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
 elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
 
@@ -36,14 +34,9 @@ elgg_register_menu_item('title', [
 	'link_class' => 'elgg-button elgg-button-action',
 ]);
 
-$content = elgg_view('collections/listing/owner', [
-	'entity' => $user,
-]);
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page(elgg_echo('friends:collections'), [
+	'content' => elgg_view('collections/listing/owner', [
+		'entity' => $user,
+	]),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);
