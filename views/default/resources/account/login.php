@@ -8,14 +8,9 @@
  * If the user is logged in, this page will forward to the front page.
  */
 
-$title = elgg_echo('login');
-$content = elgg_view('core/account/login_box', ['title' => false]);
-
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';
 
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page(elgg_echo('login'), [
+	'content' => elgg_view('core/account/login_box', ['title' => false]),
 	'sidebar' => false,
-]);
-echo elgg_view_page($title, $body, $shell);
+], $shell);

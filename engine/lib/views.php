@@ -348,16 +348,22 @@ function elgg_prepend_css_urls($css, $path) {
  * For HTML pages, use the 'head', 'page' plugin hook for setting meta elements
  * and links.
  *
- * @param string $title      Title
- * @param string $body       Body
- * @param string $page_shell Optional page shell to use. See page/shells view directory
- * @param array  $vars       Optional vars array to pass to the page
- *                           shell. Automatically adds title, body, head, and sysmessages
+ * @param string       $title      Title
+ * @param string|array $body       Body as a string or as an array (which will be passed to elgg_view_layout('default', $body)
+ * @param string       $page_shell Optional page shell to use. See page/shells view directory
+ * @param array        $vars       Optional vars array to pass to the page
+ *                                 shell. Automatically adds title, body, head, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
+	
+	if (is_array($body)) {
+		$body['title'] = elgg_extract('title', $body, $title);
+		$body = elgg_view_layout('default', $body);
+	}
+	
 	$timer = _elgg_services()->timer;
 	if (!$timer->hasEnded(['build page'])) {
 		$timer->end(['build page']);
@@ -597,6 +603,14 @@ function elgg_view_layout($layout_name, $vars = []) {
 	}
 	$timer->begin([__FUNCTION__]);
 
+	if (in_array($layout_name, ['content', 'one_sidebar', 'one_column', 'two_sidebar'])) {
+		elgg_deprecated_notice("Using the '{$layout_name}' layout is deprecated. Please update your code to use the 'default' layout.", '3.3');
+	}
+	
+	if ($layout_name !== 'content' && isset($vars['filter_context'])) {
+		elgg_deprecated_notice("Using 'filter_context' to set the active menu item is not supported. Please update your code to use the 'filter_value' var.", '3.3');
+	}
+	
 	// Help plugins transition without breaking them
 	switch ($layout_name) {
 		case 'content' :

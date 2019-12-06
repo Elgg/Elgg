@@ -11,7 +11,6 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 }
 
 elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
-elgg_push_breadcrumb(elgg_echo('messages:sent'));
 
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 
@@ -27,17 +26,10 @@ $list = elgg_list_entities([
 	'bulk_actions' => true
 ]);
 
-$body_vars = [
-	'folder' => 'sent',
-	'list' => $list,
-];
-$content = elgg_view_form('messages/process', [], $body_vars);
-
-$body = elgg_view_layout('content', [
-	'content' => $content,
-	'title' => $title,
-	'filter' => '',
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('messages/process', [], [
+		'folder' => 'sent',
+		'list' => $list,
+	]),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

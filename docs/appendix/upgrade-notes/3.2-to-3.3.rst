@@ -4,6 +4,51 @@ From 3.2 to 3.3
 .. contents:: Contents
    :local:
    :depth: 1
+   
+Simpler use of 'default' layout
+-------------------------------
+
+Currently a common pattern is to do the following:
+
+.. code-block:: php
+
+	$title = 'All blogs';
+	
+	$content = elgg_list_entities([
+		'type' => 'object',
+		'subtype' => 'blog',
+	]);
+	
+	$layout = elgg_view_layout('default', [
+		'title' => $title,
+		'content' => $content,
+	]);
+	
+	echo elgg_view_page($title, $layout);
+
+We made this kind of pattern simpler. You can now pass an array of layout options to the second parameter of `elgg_view_page`.
+The `elgg_view_page` function will use this array to wrap it in the 'default' layout. It also adds the page title to the layout.
+
+The new way to do it is:
+
+.. code-block:: php
+
+	echo elgg_view_page('All blogs', [
+		'content' => elgg_list_entities([
+			'type' => 'object',
+			'subtype' => 'blog',
+		]),
+	]);
+
+Deprecated layout names
+-----------------------
+
+For an easy transition from Elgg 2.x to 3.x we kept some old layout names ('one_sidebar', 'one_column', 'two_sidebar' and 'content') intact
+when used in the `elgg_view_layout` function. As of Elgg 3.3 these layout names are deprecated and you should update your code to use the new 'default' layout.
+
+When changing the use of the 'content' layout name you should take into consideration that the the 'content' generates a filter menu. 
+This menu is slightly different from the regular 'filter' menu generated in the 'default' layout. It uses different hook names. 
+If you already disabled the filter in your layout you can change the layout without any issues.
 
 Deprecated APIs
 ---------------

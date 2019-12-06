@@ -11,17 +11,10 @@ if (!$container->canWriteToContainer(0, 'object', 'discussion')) {
 	throw new \Elgg\EntityPermissionsException();
 }
 
-$title = elgg_echo('add:object:discussion');
-
 elgg_push_collection_breadcrumbs('object', 'discussion', $container);
-elgg_push_breadcrumb($title);
 
 $body_vars = discussion_prepare_form_vars();
-$content = elgg_view_form('discussion/save', [], $body_vars);
 
-$body = elgg_view_layout('default', [
-	'title' => $title,
-	'content' => $content,
+echo elgg_view_page(elgg_echo('add:object:discussion'), [
+	'content' => elgg_view_form('discussion/save', [], $body_vars),
 ]);
-
-echo elgg_view_page($title, $body);

@@ -11,8 +11,6 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 
 elgg_load_external_file('js', 'elgg.site_notifications');
 
-$title = elgg_echo('site_notifications');
-
 $list = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'site_notification',
@@ -35,11 +33,7 @@ if (empty($list)) {
 	$content = elgg_view_form("site_notifications/process", [], $body_vars);
 }
 
-$body = elgg_view_layout('content', [
+echo elgg_view_page(elgg_echo('site_notifications'), [
 	'content' => $content,
-	'title' => $title,
-	'filter' => '',
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

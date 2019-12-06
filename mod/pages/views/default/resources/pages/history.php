@@ -21,7 +21,6 @@ elgg_push_collection_breadcrumbs('object', 'page', $container);
 pages_prepare_parent_breadcrumbs($page);
 
 elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
-elgg_push_breadcrumb(elgg_echo('pages:history'));
 
 $title = "{$page->getDisplayName()}: " . elgg_echo('pages:history');
 
@@ -36,9 +35,6 @@ $content = elgg_list_annotations([
 	'no_results' => elgg_echo('pages:none'),
 ]);
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
 ]);
-
-echo elgg_view_page($title, $body);

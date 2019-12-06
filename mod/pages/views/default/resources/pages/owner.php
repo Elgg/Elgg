@@ -10,21 +10,14 @@ if (!$owner instanceof ElggUser) {
 	throw new \Elgg\EntityNotFoundException();
 }
 
-$title = elgg_echo('collection:object:page');
-
 elgg_push_collection_breadcrumbs('object', 'page', $owner);
 
 elgg_register_title_button('pages', 'add', 'object', 'page');
 
-$content = elgg_view('pages/listing/owner', [
-	'entity' => $owner,
-]);
-
-$body = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('collection:object:page'), [
 	'filter_value' => $owner->guid == elgg_get_logged_in_user_guid() ? 'mine' : 'none',
-	'content' => $content,
-	'title' => $title,
+	'content' => elgg_view('pages/listing/owner', [
+		'entity' => $owner,
+	]),
 	'sidebar' => elgg_view('pages/sidebar', $vars),
 ]);
-
-echo elgg_view_page($title, $body);

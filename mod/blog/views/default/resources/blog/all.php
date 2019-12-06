@@ -17,11 +17,8 @@ $content = elgg_view('blog/listing/all', [
 	'created_before' => $upper,
 ]);
 
-$layout = elgg_view_layout('default', [
-	'title' => $title,
+echo elgg_view_page($title, [
 	'content' => $content,
 	'sidebar' => elgg_view('blog/sidebar', ['page' => 'all']),
 	'filter_value' => 'all',
 ]);
-
-echo elgg_view_page($title, $layout);

@@ -16,9 +16,6 @@ elgg_register_menu_item('title', [
 	'link_class' => 'elgg-button elgg-button-action',
 ]);
 
-// build page elements
-$title = elgg_echo('groups:invitedmembers');
-
 $content = elgg_list_relationships([
 	'relationship' => 'invited',
 	'relationship_guid' => $group->guid,
@@ -30,12 +27,8 @@ $tabs = elgg_view_menu('groups_members', [
 	'class' => 'elgg-tabs'
 ]);
 
-// build page
-$body = elgg_view_layout('default', [
-	'title' => $title,
+// draw page
+echo elgg_view_page(elgg_echo('groups:invitedmembers'), [
 	'content' => $content,
 	'filter' => $tabs,
 ]);
-
-// draw page
-echo elgg_view_page($title, $body);

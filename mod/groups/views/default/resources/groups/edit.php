@@ -5,7 +5,6 @@ elgg_require_js('elgg/groups/edit');
 elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
 $guid = elgg_extract('guid', $vars);
-$title = elgg_echo("groups:edit");
 $group = get_entity($guid);
 
 if ($group instanceof ElggGroup && $group->canEdit()) {
@@ -16,11 +15,6 @@ if ($group instanceof ElggGroup && $group->canEdit()) {
 	$content = elgg_echo('groups:noaccess');
 }
 
-$params = [
+echo elgg_view_page(elgg_echo('groups:edit'), [
 	'content' => $content,
-	'title' => $title,
-	'filter' => '',
-];
-$body = elgg_view_layout('content', $params);
-
-echo elgg_view_page($title, $body);
+]);

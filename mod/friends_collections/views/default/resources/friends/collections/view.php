@@ -18,21 +18,14 @@ if (!$user instanceof ElggUser) {
 
 elgg_set_page_owner_guid($user->guid);
 
-$title = $collection->getDisplayName();
-
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
 elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
 elgg_push_breadcrumb(elgg_echo('friends:collections'), "friends/collections/owner/{$user->username}");
 
-$content = elgg_view('collections/collection', [
-	'full_view' => true,
-	'item' => $collection,
-]);
-
-$body = elgg_view_layout('one_sidebar', [
-	'title' => $title,
-	'content' => $content,
+echo elgg_view_page($collection->getDisplayName(), [
+	'content' => elgg_view('collections/collection', [
+		'full_view' => true,
+		'item' => $collection,
+	]),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

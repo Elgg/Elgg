@@ -1,16 +1,12 @@
 <?php
 /**
  * Elgg messages inbox page
- *
- * @package ElggMessages
 */
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();
 }
-
-elgg_push_breadcrumb(elgg_echo('messages:inbox'));
 
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 
@@ -25,17 +21,11 @@ $list = elgg_list_entities([
 	'bulk_actions' => true,
 ]);
 
-$body_vars = [
-	'folder' => 'inbox',
-	'list' => $list,
-];
-$content = elgg_view_form('messages/process', [], $body_vars);
-
-$body = elgg_view_layout('content', [
-	'content' => $content,
+echo elgg_view_page($title, [
+	'content' => elgg_view_form('messages/process', [], [
+		'folder' => 'inbox',
+		'list' => $list,
+	]),
 	'title' => elgg_echo('messages:inbox'),
-	'filter' => '',
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

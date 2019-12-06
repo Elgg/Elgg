@@ -17,15 +17,8 @@ elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
 
 $vars['entity'] = $user;
 
-$content = elgg_view('bookmarks/listing/owner', $vars);
-
-$title = elgg_echo('collection:object:bookmarks');
-
-$body = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('collection:object:bookmarks'), [
 	'filter_value' => $user->guid == elgg_get_logged_in_user_guid() ? 'mine' : 'none',
-	'content' => $content,
-	'title' => $title,
+	'content' => elgg_view('bookmarks/listing/owner', $vars),
 	'sidebar' => elgg_view('bookmarks/sidebar', $vars),
 ]);
-
-echo elgg_view_page($title, $body);

@@ -15,17 +15,8 @@ if ($container instanceof ElggObject) {
 
 elgg_set_page_owner_guid($page_owner->getGUID());
 
-$title = elgg_echo('bookmarks:bookmarklet');
-
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $page_owner);
-elgg_push_breadcrumb($title);
 
-$content = elgg_view('bookmarks/bookmarklet');
-
-$body = elgg_view_layout('content', [
-	'content' => $content,
-	'title' => $title,
-	'filter' => false
+echo elgg_view_page(elgg_echo('bookmarks:bookmarklet'), [
+	'content' => elgg_view('bookmarks/bookmarklet'),
 ]);
-
-echo elgg_view_page($title, $body);
