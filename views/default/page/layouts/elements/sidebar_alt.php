@@ -7,7 +7,7 @@
  */
 
 $sidebar_alt = elgg_extract('sidebar_alt', $vars);
-if (!$sidebar_alt) {
+if (empty($sidebar_alt)) {
 	return;
 }
 ?>

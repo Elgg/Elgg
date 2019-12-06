@@ -6,7 +6,7 @@
  */
 
 $footer = elgg_extract('footer', $vars);
-if (!isset($footer) || empty($footer)) {
+if (empty($footer)) {
 	return;
 }
 ?>

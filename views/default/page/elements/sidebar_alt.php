@@ -7,6 +7,4 @@
  * @uses $vars['sidebar_alt] HTML content for the alternate sidebar
  */
 
-$sidebar = elgg_extract('sidebar_alt', $vars, '');
-
-echo $sidebar;
+echo elgg_extract('sidebar_alt', $vars, '');
