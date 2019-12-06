@@ -188,6 +188,7 @@ select:not([multiple]) {
 .elgg-fieldset-horizontal .elgg-field {
 	display: inline-block;
 	margin: 0 1rem 0 0;
+	vertical-align: top;
 }
 
 .elgg-fieldset-horizontal.elgg-justify-right .elgg-field {
