@@ -7,6 +7,8 @@ $guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'group');
 
+elgg_group_tool_gatekeeper('pages', $guid);
+
 $group = get_entity($guid);
 
 $title = elgg_echo('collection:object:page');
