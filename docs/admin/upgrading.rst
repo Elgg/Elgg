@@ -101,6 +101,11 @@ If you had your Elgg 2.3 project installed using composer, you can follow this s
 	vendor/bin/elgg-cli upgrade async -v
 
 
+.. note::
+
+	In some cases the command line upgrade will fail because some database schema changes need to be applied first.
+	In that case you need to execute the :ref:`Phinx migrations <contribute/database#execute-migration>` manually
+
 3b. Manual Upgrade (legacy approach)
 ------------------------------------
 
