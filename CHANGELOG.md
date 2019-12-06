@@ -1,3 +1,26 @@
+<a name="3.2.2"></a>
+### 3.2.2  (2019-12-06)
+
+#### Contributors
+
+* Jeroen Dalsem (8)
+* Jerôme Bakker (1)
+
+#### Documentation
+
+* **database:** document the need and usage of manual Phinx migrations ([3d8d5ac4](https://github.com/Elgg/Elgg/commit/3d8d5ac4ada0be58cdb2bb9a61669a5d9d475d02))
+
+
+#### Bug Fixes
+
+* **core:** plugin reports version of elgg_release ([f86e898a](https://github.com/Elgg/Elgg/commit/f86e898a5c6cc2f17684eee23f625cdf170614b7))
+* **css:** vertical align horizontal aligned fields in fieldset ([78bb72f3](https://github.com/Elgg/Elgg/commit/78bb72f3e1d4c7ccb8e72bdb939d112d24c3a329))
+* **groups:** added missing gatekeepers to content pages ([ecb9fb8f](https://github.com/Elgg/Elgg/commit/ecb9fb8f0c1e353c533f5a89b1843c79824967f9))
+* **input:** htmlawed will no longer check for duplicate ids ([cbad1c25](https://github.com/Elgg/Elgg/commit/cbad1c2568bbe74904047115889d9b6c61664c3e))
+* **tests:** moved integration test to correct suite ([8b4e0d40](https://github.com/Elgg/Elgg/commit/8b4e0d406e0803d74c008549c8660ed7ff5488df))
+* **theme_sandbox:** changed aside modules to info modules ([ba6bccf4](https://github.com/Elgg/Elgg/commit/ba6bccf45e2474299f3da1e55c9838016e6eb8b8))
+
+
 <a name="3.2.1"></a>
 ### 3.2.1  (2019-11-25)
 
