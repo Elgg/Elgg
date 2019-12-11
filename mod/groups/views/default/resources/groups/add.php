@@ -1,6 +1,6 @@
 <?php
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 elgg_require_js('elgg/groups/edit');
 

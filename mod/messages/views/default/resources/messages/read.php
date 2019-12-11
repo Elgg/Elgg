@@ -20,15 +20,14 @@ $page_owner = elgg_get_page_owner_entity();
 
 $title = $message->getDisplayName();
 
-elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
+elgg_push_collection_breadcrumbs('object', 'messages', $page_owner);
 
 $inbox = false;
 if ($page_owner->getGUID() == $message->toId) {
 	$inbox = true;
 } else {
-	elgg_push_breadcrumb(elgg_echo('messages:sent'), 'messages/sent/' . $page_owner->username);
+	elgg_push_breadcrumb(elgg_echo('messages:sent'), elgg_generate_url('collection:object:messages:sent', ['username' => $page_owner->username]));
 }
-elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($message, ['full_view' => true]);
 if ($inbox) {

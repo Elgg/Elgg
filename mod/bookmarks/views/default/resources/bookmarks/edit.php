@@ -13,7 +13,6 @@ $bookmark = get_entity($bookmark_guid);
 $title = elgg_echo('edit:object:bookmarks');
 
 elgg_push_entity_breadcrumbs($bookmark);
-elgg_push_breadcrumb($title);
 
 $vars = bookmarks_prepare_form_vars($bookmark);
 $content = elgg_view_form('bookmarks/save', [], $vars);

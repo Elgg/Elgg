@@ -9,7 +9,7 @@ if (!($group instanceof ElggGroup) || !$group->canEdit()) {
 
 elgg_set_page_owner_guid($guid);
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $title = elgg_echo('groups:invite:title');

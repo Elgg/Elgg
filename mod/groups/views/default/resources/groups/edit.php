@@ -2,7 +2,7 @@
 
 elgg_require_js('elgg/groups/edit');
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 $guid = elgg_extract('guid', $vars);
 $title = elgg_echo("groups:edit");

@@ -10,7 +10,7 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();
 }
 
-elgg_push_breadcrumb(elgg_echo('messages:inbox'));
+elgg_push_collection_breadcrumbs('object', 'messages', $page_owner);
 
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 

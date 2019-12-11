@@ -20,7 +20,6 @@ if (!$file->canEdit()) {
 $title = elgg_echo('edit:object:file');
 
 elgg_push_entity_breadcrumbs($file);
-elgg_push_breadcrumb($title);
 
 $form_vars = ['enctype' => 'multipart/form-data'];
 $body_vars = file_prepare_form_vars($file);

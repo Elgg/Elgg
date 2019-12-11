@@ -22,7 +22,6 @@ if (!($target instanceof \ElggEntity)) {
 
 $title = elgg_echo('generic_comments:edit');
 elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());
-elgg_push_breadcrumb($title);
 
 $params = [
 	'entity' => $target,

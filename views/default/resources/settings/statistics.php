@@ -24,8 +24,6 @@ elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account'
 	'username' => $user->username,
 ]));
 
-elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
-
 $title = elgg_echo("usersettings:statistics");
 
 $content = elgg_view("core/settings/statistics");
