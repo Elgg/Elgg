@@ -446,12 +446,6 @@ class ElggPluginPackage {
 
 		$check_types = ['requires', 'conflicts'];
 
-		if ($full_report) {
-			// Note: $suggests is not unused. It's called dynamically
-			$suggests = $this->getManifest()->getSuggests();
-			$check_types[] = 'suggests';
-		}
-
 		foreach ($check_types as $dep_type) {
 			$inverse = ($dep_type == 'conflicts') ? true : false;
 

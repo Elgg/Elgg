@@ -109,33 +109,6 @@ function elgg_format_bytes($size, $precision = 2) {
 }
 
 /**
- * Converts an associative array into a string of well-formed HTML/XML attributes
- * Returns a concatenated string of HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
- *
- * @param array $attrs Attributes
- *                     An array of attribute => value pairs
- *                     Attribute value can be a scalar value, an array of scalar values, or true
- *                     <code>
- *                     $attrs = array(
- *                         'class' => ['elgg-input', 'elgg-input-text'], // will be imploded with spaces
- *                         'style' => ['margin-left:10px;', 'color: #666;'], // will be imploded with spaces
- *                         'alt' => 'Alt text', // will be left as is
- *                         'disabled' => true, // will be converted to disabled="disabled"
- *                         'data-options' => json_encode(['foo' => 'bar']), // will be output as an escaped JSON string
- *                         'batch' => <\ElggBatch>, // will be ignored
- *                         'items' => [<\ElggObject>], // will be ignored
- *                     );
- *                     </code>
- *
- * @return string
- *
- * @see elgg_format_element()
- */
-function elgg_format_attributes(array $attrs = []) {
-	return _elgg_services()->html_formatter->formatAttributes($attrs);
-}
-
-/**
  * Format an HTML element
  *
  * @param string|array $tag_name   The element tagName. e.g. "div". This will not be validated.
@@ -143,7 +116,7 @@ function elgg_format_attributes(array $attrs = []) {
  *                                 as $attributes, except for the keys "#tag_name", "#text", and "#options", which
  *                                 will be extracted as the other arguments.
  *
- * @param array        $attributes The element attributes. This is passed to elgg_format_attributes().
+ * @param array        $attributes The element attributes.
  *
  * @param string       $text       The contents of the element. Assumed to be HTML unless encode_text is true.
  *
@@ -373,7 +346,6 @@ function elgg_get_friendly_upload_error($error_code) {
 
 	return elgg_echo("upload:error:$key");
 }
-
 
 /**
  * Strip tags and offer plugins the chance.

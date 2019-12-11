@@ -51,53 +51,54 @@ $handler = elgg_http_add_url_query_elements($handler, $params);
 
 $limit = (int) elgg_extract('limit', $vars, 0);
 
-$attrs = [
+$picker = elgg_format_element('input', [
+	'type' => 'text',
+	'class' => 'elgg-input-user-picker',
+	'size' => 30,
+]);
+
+$picker .= elgg_view('input/hidden', ['name' => $name]);
+	
+if ($show_friends) {
+	$picker .= elgg_view('input/checkbox', [
+		'name' => 'match_on',
+		'value' => 'friends',
+		'default' => elgg_extract('match_on', $vars, 'users', false),
+		'label' => elgg_echo('userpicker:only_friends'),
+	]);
+} elseif ($friends_only) {
+	$picker .= elgg_view('input/hidden', [
+		'name' => 'match_on',
+		'value' => 'friends',
+	]);
+} else {
+	$picker .= elgg_view('input/hidden', [
+		'name' => 'match_on',
+		'value' => elgg_extract('match_on', $vars, 'users', false),
+	]);
+}
+
+$items = '';
+foreach ($guids as $guid) {
+	$entity = get_entity($guid);
+	if ($entity) {
+		$items .= elgg_view('input/autocomplete/item', [
+			'entity' => $entity,
+			'input_name' => $name,
+		]);
+	}
+}
+
+$picker .= elgg_format_element('ul', ['class' => 'elgg-list elgg-user-picker-list'], $items);
+
+echo elgg_format_element('div', [
 	'class' => elgg_extract_class($vars, ['elgg-user-picker']),
 	'data-limit' => $limit,
 	'data-name' => $name,
 	'data-handler' => $handler,
-];
+], $picker);
 
 ?>
-<div <?= elgg_format_attributes($attrs) ?>>
-	<input type="text" class="elgg-input-user-picker" size="30" />
-	<?php
-	
-	echo elgg_view('input/hidden', ['name' => $name]);
-	
-	if ($show_friends) {
-		echo elgg_view('input/checkbox', [
-			'name' => 'match_on',
-			'value' => 'friends',
-			'default' => elgg_extract('match_on', $vars, 'users', false),
-			'label' => elgg_echo('userpicker:only_friends'),
-		]);
-	} elseif ($friends_only) {
-		echo elgg_view('input/hidden', [
-			'name' => 'match_on',
-			'value' => 'friends',
-		]);
-	} else {
-		echo elgg_view('input/hidden', [
-			'name' => 'match_on',
-			'value' => elgg_extract('match_on', $vars, 'users', false),
-		]);
-	}
-	?>
-	<ul class="elgg-list elgg-user-picker-list">
-		<?php
-		foreach ($guids as $guid) {
-			$entity = get_entity($guid);
-			if ($entity) {
-				echo elgg_view('input/autocomplete/item', [
-					'entity' => $entity,
-					'input_name' => $name,
-				]);
-			}
-		}
-		?>
-	</ul>
-</div>
 <script>
 	require(['elgg/UserPicker'], function (UserPicker) {
 		var name = <?= json_encode($name) ?>;

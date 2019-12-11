@@ -22,12 +22,4 @@ if (elgg_extract('hidden', $vars, true)) {
 	$attributes['class'][] = "hidden";
 }
 
-$attrs = elgg_format_attributes($attributes);
-
-$loader = <<< END
-
-<div $attrs></div>
-
-END;
-
-echo $loader;
+echo elgg_format_element('div', $attributes);

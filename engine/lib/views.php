@@ -80,19 +80,6 @@ function elgg_get_viewtype() {
 }
 
 /**
- * Checks if $viewtype is a string suitable for use as a viewtype name
- *
- * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
- *
- * @return bool
- * @internal
- * @since 1.9
- */
-function _elgg_is_valid_viewtype($viewtype) {
-	return _elgg_services()->views->isValidViewtype($viewtype);
-}
-
-/**
  * Register a viewtype to fall back to a default view if a view isn't
  * found for that viewtype.
  *
@@ -204,19 +191,6 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
  */
 function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 	return _elgg_services()->views->viewExists($view, $viewtype, $recurse);
-}
-
-/**
- * List all views in a viewtype
- *
- * @param string $viewtype Viewtype
- *
- * @return string[]
- *
- * @since 2.0
- */
-function elgg_list_views($viewtype = 'default') {
-	return _elgg_services()->views->listViews($viewtype);
 }
 
 /**

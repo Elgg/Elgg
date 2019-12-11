@@ -157,64 +157,6 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 }
 
 /**
- * Check if a menu item has been registered
- *
- * @param string $menu_name The name of the menu
- * @param string $item_name The unique identifier for this menu item
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_is_menu_item_registered($menu_name, $item_name) {
-	$menus = _elgg_config()->menus;
-	if (empty($menus)) {
-		return false;
-	}
-
-	if (!isset($menus[$menu_name])) {
-		return false;
-	}
-
-	foreach ($menus[$menu_name] as $menu_object) {
-		/* @var \ElggMenuItem $menu_object */
-		if ($menu_object->getName() == $item_name) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/**
- * Get a menu item registered for a menu
- *
- * @param string $menu_name The name of the menu
- * @param string $item_name The unique identifier for this menu item
- *
- * @return ElggMenuItem|null
- * @since 1.9.0
- */
-function elgg_get_menu_item($menu_name, $item_name) {
-	$menus = _elgg_config()->menus;
-	if (empty($menus)) {
-		return null;
-	}
-
-	if (!isset($menus[$menu_name])) {
-		return null;
-	}
-
-	foreach ($menus[$menu_name] as $index => $menu_object) {
-		/* @var \ElggMenuItem $menu_object */
-		if ($menu_object->getName() == $item_name) {
-			return $menus[$menu_name][$index];
-		}
-	}
-
-	return null;
-}
-
-/**
  * Convenience function for registering a button to the title menu
  *
  * The URL must be $handler/$name/$guid where $guid is the guid of the page owner.

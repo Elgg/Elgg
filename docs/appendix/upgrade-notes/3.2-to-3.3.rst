@@ -50,11 +50,29 @@ When changing the use of the 'content' layout name you should take into consider
 This menu is slightly different from the regular 'filter' menu generated in the 'default' layout. It uses different hook names. 
 If you already disabled the filter in your layout you can change the layout without any issues.
 
+Plugin Manifest changes
+-----------------------
+
+We are working towards the removal of the plugin manifest file. Some features of the manifest will be replaced and some will be dropped.
+To make this transition a bit easier we have already deprecated the following ``ElggPluginManifest`` api functions:
+
+* ``getCopyright()``
+* ``getDonationsPageURL()``
+* ``getSuggests()`` use suggestions in composer
+
 Deprecated APIs
 ---------------
 
- * ``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``
+ * ``elgg_disable_query_cache()``
+ * ``elgg_enable_query_cache()``
+ * ``elgg_format_attributes()`` use ``elgg_format_element()``
  * ``elgg_flush_caches()`` use ``elgg_clear_caches()``
+ * ``elgg_get_menu_item()``
+ * ``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``
+ * ``elgg_is_menu_item_registered()``
+ * ``execute_delayed_write_query()`` use ``elgg()->db->registerDelayedQuery()``
+ * ``execute_delayed_read_query()`` use ``elgg()->db->registerDelayedQuery()``		
+ * ``run_sql_script()``
 
 Deprecated Config values
 ------------------------

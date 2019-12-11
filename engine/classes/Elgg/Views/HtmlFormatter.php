@@ -238,7 +238,7 @@ class HtmlFormatter {
 	 *                                 as $attributes, except for the keys "#tag_name", "#text", and "#options", which
 	 *                                 will be extracted as the other arguments.
 	 *
-	 * @param array        $attributes The element attributes. This is passed to elgg_format_attributes().
+	 * @param array        $attributes The element attributes.
 	 *
 	 * @param string       $text       The contents of the element. Assumed to be HTML unless encode_text is true.
 	 *
