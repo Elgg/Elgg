@@ -24,7 +24,7 @@ elgg_set_page_owner_guid($user->guid);
 $title = elgg_echo('friends:collections');
 
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
-elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends'), elgg_generate_url('collection:friends:owner', ['username' => $user->username]));
 
 elgg_register_menu_item('title', [
 	'name' => 'add',

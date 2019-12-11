@@ -17,7 +17,6 @@ if (!$page_owner->canWriteToContainer(0, 'object', 'bookmarks')) {
 }
 
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $page_owner);
-elgg_push_breadcrumb($title);
 
 $vars = bookmarks_prepare_form_vars();
 $content = elgg_view_form('bookmarks/save', [], $vars);

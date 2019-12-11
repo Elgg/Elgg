@@ -23,7 +23,7 @@ elgg_set_context('settings');
 
 $title = elgg_echo('notifications:subscriptions:changesettings:groups');
 
-elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
 
 $content = elgg_view('notifications/groups', [
 	'user' => $user,

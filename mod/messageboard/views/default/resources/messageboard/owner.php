@@ -30,19 +30,12 @@ $options = [
 ];
 
 $title = elgg_echo('messageboard:owner', [$page_owner->getDisplayName()]);
-$mb_url = '';
 
 if ($history_user) {
 	$options['annotations_owner_guid'] = $history_user->getGUID();
 	$title = elgg_echo('messageboard:owner_history', [$history_user->getDisplayName(), $page_owner->getDisplayName()]);
 
-	$mb_url = "messageboard/owner/$page_owner->username";
-}
-
-elgg_push_breadcrumb(elgg_echo('messageboard:board'), $mb_url);
-
-if ($history_user) {
-	elgg_push_breadcrumb($history_user->getDisplayName());
+	elgg_push_breadcrumb(elgg_echo('messageboard:board'), elgg_generate_url('collection:annotation:messageboard:owner', ['username' => $page_owner->username]));
 }
 
 $content = elgg_list_annotations($options);

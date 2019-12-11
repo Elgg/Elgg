@@ -19,7 +19,6 @@ elgg_push_collection_breadcrumbs('object', 'page', $container);
 pages_prepare_parent_breadcrumbs($page);
 
 $title = $page->getDisplayName();
-elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($page, [
 	'show_responses' => true,

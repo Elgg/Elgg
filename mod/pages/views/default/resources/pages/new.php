@@ -40,7 +40,6 @@ if ($parent instanceof ElggPage) {
 }
 
 $title = elgg_echo('add:object:page');
-elgg_push_breadcrumb($title);
 
 $vars = pages_prepare_form_vars(null, $parent_guid);
 $content = elgg_view_form('pages/edit', [], $vars);

@@ -2,7 +2,7 @@
 
 $user = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 // build page elements
 $title = elgg_echo('groups:invitations');

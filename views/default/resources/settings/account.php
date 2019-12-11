@@ -20,7 +20,7 @@ if (!$user || !$user->canEdit()) {
 
 elgg_set_page_owner_guid($user->guid);
 
-elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
+elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
 
 $title = elgg_echo('usersettings:user', [$user->getDisplayName()]);
 
