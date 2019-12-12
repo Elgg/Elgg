@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-25 14:51+0100\n"
+"POT-Creation-Date: 2019-12-06 15:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1972,127 +1972,131 @@ msgid "If you had your Elgg 2.3 project installed using composer, you can follow
 msgstr ""
 
 #: ../../admin/upgrading.rst:91
-#: ../../admin/upgrading.rst:111
+#: ../../admin/upgrading.rst:116
 msgid "**Back up your database, data directory, and code**"
 msgstr ""
 
-#: ../../admin/upgrading.rst:105
+#: ../../admin/upgrading.rst:106
+msgid "In some cases the command line upgrade will fail because some database schema changes need to be applied first. In that case you need to execute the :ref:`Phinx migrations <contribute/database#execute-migration>` manually"
+msgstr ""
+
+#: ../../admin/upgrading.rst:110
 msgid "3b. Manual Upgrade (legacy approach)"
 msgstr ""
 
-#: ../../admin/upgrading.rst:107
+#: ../../admin/upgrading.rst:112
 msgid "Manual upgrades are a major undertaking for site admins. We discourage you from maintaining an Elgg installation using ZIP dist packages. Save yourself some time by learning how to use ``composer`` and version control systems, such as ``git``. This task will also be complicated if you have third-party plugins and/or have made any modifications to core files!"
 msgstr ""
 
-#: ../../admin/upgrading.rst:112
+#: ../../admin/upgrading.rst:117
 msgid "Log in as an admin to your site"
 msgstr ""
 
-#: ../../admin/upgrading.rst:113
+#: ../../admin/upgrading.rst:118
 msgid "Download the new version of Elgg from http://elgg.org"
 msgstr ""
 
-#: ../../admin/upgrading.rst:116
+#: ../../admin/upgrading.rst:121
 msgid "Update the files"
 msgstr ""
 
-#: ../../admin/upgrading.rst:115
+#: ../../admin/upgrading.rst:120
 msgid "If upgrading to a major version, you need to overwrite all core files and remove any files that were removed from Elgg core, as they may interfere with proper functioning of your site."
 msgstr ""
 
-#: ../../admin/upgrading.rst:117
+#: ../../admin/upgrading.rst:122
 msgid "If upgrading to a minor version or patching, you need to overwrite all core files."
 msgstr ""
 
-#: ../../admin/upgrading.rst:119
+#: ../../admin/upgrading.rst:124
 msgid "Merge any new changes to the rewrite rules"
 msgstr ""
 
-#: ../../admin/upgrading.rst:119
+#: ../../admin/upgrading.rst:124
 msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 
-#: ../../admin/upgrading.rst:120
+#: ../../admin/upgrading.rst:125
 msgid "For Nginx from ``install/config/nginx.dist`` into your server configuration (usually inside ``/etc/nginx/sites-enabled``)"
 msgstr ""
 
-#: ../../admin/upgrading.rst:121
+#: ../../admin/upgrading.rst:126
 msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr ""
 
-#: ../../admin/upgrading.rst:122
+#: ../../admin/upgrading.rst:127
 msgid "Execute asynchronous upgrades at http://your-elgg-site.com/admin/upgrades"
 msgstr ""
 
-#: ../../admin/upgrading.rst:126
+#: ../../admin/upgrading.rst:131
 msgid "Any modifications should have been written within plugins, so that they are not lost on overwriting. If this is not the case, take care to maintain your modifications."
 msgstr ""
 
-#: ../../admin/upgrading.rst:131
+#: ../../admin/upgrading.rst:136
 msgid "If you are unable to access ``upgrade.php`` script and receive an error, add ``$CONFIG->security_protect_upgrade = false;`` to your ``settings.php`` and remove it after you have completed all of the upgrade steps."
 msgstr ""
 
-#: ../../admin/upgrading.rst:136
+#: ../../admin/upgrading.rst:141
 msgid "If you encounter issues with plugins during the upgrade, add an empty file called ``disabled`` in your ``/mod/`` directory. This will disable the plugins, so that you can finish the core upgrade. You can then deal with issues on per-plugin basis."
 msgstr ""
 
-#: ../../admin/upgrading.rst:140
+#: ../../admin/upgrading.rst:145
 msgid "If you have installed Elgg using a dist package but would now like to switch to composer:"
 msgstr ""
 
-#: ../../admin/upgrading.rst:142
+#: ../../admin/upgrading.rst:147
 msgid "Upgrade your current installation using Manual Upgrade method"
 msgstr ""
 
-#: ../../admin/upgrading.rst:143
+#: ../../admin/upgrading.rst:148
 msgid "Move your codebase to a temporary location"
 msgstr ""
 
-#: ../../admin/upgrading.rst:144
+#: ../../admin/upgrading.rst:149
 msgid "Create a new composer project using Elgg's starter project following :doc:`installation instructions </intro/install>` in the root directory of your current installation"
 msgstr ""
 
-#: ../../admin/upgrading.rst:145
+#: ../../admin/upgrading.rst:150
 msgid "Copy third-party plugins from your old installation into ``/mod`` directory"
 msgstr ""
 
-#: ../../admin/upgrading.rst:146
+#: ../../admin/upgrading.rst:151
 msgid "Run Elgg's installer using your browser or ``elgg-cli`` tool"
 msgstr ""
 
-#: ../../admin/upgrading.rst:147
+#: ../../admin/upgrading.rst:152
 msgid "When you reach the database step, provide the same credentials you have used for manual installation, Elgg will understand that is's an existing installation and will not override any database values"
 msgstr ""
 
-#: ../../admin/upgrading.rst:148
+#: ../../admin/upgrading.rst:153
 msgid "Optionally commit your new project to version control"
 msgstr ""
 
-#: ../../admin/upgrading.rst:151
+#: ../../admin/upgrading.rst:156
 msgid "Applying a patch using Composer"
 msgstr ""
 
-#: ../../admin/upgrading.rst:153
+#: ../../admin/upgrading.rst:158
 msgid "The definition of a patch can be found in the :doc:`Release policy </appendix/releases>`."
 msgstr ""
 
-#: ../../admin/upgrading.rst:155
+#: ../../admin/upgrading.rst:160
 msgid "Your ``composer.json`` requirement for Elgg should be ``~3.y.0`` (where ``y`` is the minor version ``0``, ``1``, etc. you wish to have installed). This will make sure you can easily install patches without the risk of installing the next minor release."
 msgstr ""
 
-#: ../../admin/upgrading.rst:166
+#: ../../admin/upgrading.rst:171
 msgid "Just to be sure you can first verify what will be installed / upgraded by executing the folowing command"
 msgstr ""
 
-#: ../../admin/upgrading.rst:176
+#: ../../admin/upgrading.rst:181
 msgid "To upgrade Elgg simply execute"
 msgstr ""
 
-#: ../../admin/upgrading.rst:187
+#: ../../admin/upgrading.rst:192
 msgid "Earlier versions"
 msgstr ""
 
-#: ../../admin/upgrading.rst:189
+#: ../../admin/upgrading.rst:194
 msgid "Check Elgg documentation that corresponds to the Elgg version you want to upgrade to, by switching the documentation version in the lower left corner of :doc:`Upgrading docs <upgrading>`"
 msgstr ""
 

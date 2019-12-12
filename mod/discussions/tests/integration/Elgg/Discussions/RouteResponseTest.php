@@ -1,22 +1,22 @@
 <?php
 
-namespace Elgg\Pages;
+namespace Elgg\Discussions;
 
 /**
  * @group Router
- * @group PagesRoutes
+ * @group DiscussionsRoutes
  */
 class RouteResponseTest extends \Elgg\Plugins\RouteResponseTest {
 
 	public function getSubtype() {
-		return 'page';
+		return 'discussion';
 	}
 	
 	public function groupRoutesProtectedByToolOption() {
 		return [
 			[
 				'route' => "collection:object:{$this->getSubtype()}:group",
-				'tool' => 'pages',
+				'tool' => 'forum',
 			],
 		];
 	}

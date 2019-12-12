@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-25 14:51+0100\n"
+"POT-Creation-Date: 2019-12-06 15:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1396,15 +1396,15 @@ msgstr ""
 msgid "This will generate a timestamped skeleton migration in ``engine/schema/migrations/``. Follow Phinx documentation to call the necessary methods to modify the database tables."
 msgstr ""
 
-#: ../../contribute/database.rst:33
+#: ../../contribute/database.rst:34
 msgid "Executing a migration"
 msgstr ""
 
-#: ../../contribute/database.rst:35
+#: ../../contribute/database.rst:36
 msgid "Migrations are executed every time your run ``upgrade.php``. If you would like to execute migrations manually, you can do so via the command line:"
 msgstr ""
 
-#: ../../contribute/database.rst:42
+#: ../../contribute/database.rst:47
 msgid "Check Phinx documentation for additional flags that allow you to run a single migration or a set of migrations within a time range."
 msgstr ""
 

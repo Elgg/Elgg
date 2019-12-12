@@ -51,7 +51,7 @@ for ($den = 1; $den <= count($units); $den++) {
 
 ?>
 
-<div class="elgg-module elgg-module-aside theme-sandbox-grid-demo">
+<div class="elgg-module elgg-module-info theme-sandbox-grid-demo">
 	<div class="elgg-head">
 		<h3 class="theme-sandbox-section-heading">6 Column Grid</h3>
 	</div>
@@ -69,7 +69,7 @@ for ($den = 1; $den <= count($units); $den++) {
 	<?php endforeach; ?>
 </div>
 
-<div class="elgg-module elgg-module-aside theme-sandbox-grid-demo">
+<div class="elgg-module elgg-module-info theme-sandbox-grid-demo">
 	<div class="elgg-head">
 		<h3 class="theme-sandbox-section-heading">Nested Grids</h3>
 	</div>
