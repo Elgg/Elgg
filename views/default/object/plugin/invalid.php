@@ -5,32 +5,23 @@
  * An invalid plugin is a plugin whose isValid() method returns false.
  * This usually means there are required files missing, unreadable or in the
  * wrong format.
- *
- * @package Elgg.Core
- * @subpackage Plugins
  */
 /* @var ElggPlugin $plugin */
 $plugin = elgg_extract('entity', $vars);
 
-$plugin_id = $plugin->getID();
-
-$body = "<div class='elgg-plugin-title'>{$plugin_id}</div>";
-
 $error = elgg_echo('admin:plugins:warning:invalid', [$plugin->getError()]);
-$error .= elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath());
+$error .= ' ' . elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath());
 
-$message = elgg_format_element('p', [
-	'class' => 'elgg-text-help elgg-state-error',
-], $error);
-$message .= elgg_format_element('p', [
-	'class' => 'elgg-text-help',
-], elgg_echo('admin:plugins:warning:invalid:check_docs'));
+$body = elgg_view_message('error', $error, ['title' => false, 'class' => 'elgg-subtext']);
+$body .= elgg_view_message('notice', elgg_echo('admin:plugins:warning:invalid:check_docs'), ['title' => false, 'class' => 'elgg-subtext']);
 
-$body .= "<div>$message</div>";
-
-$result = elgg_view_image_block(elgg_echo('admin:plugins:cannot_activate'), $body);
-echo elgg_format_element('div', [
+echo elgg_view('object/elements/summary', [
+	'entity' => $plugin,
 	'class' => 'elgg-state-draggable elgg-plugin elgg-state-inactive elgg-state-cannot-activate',
-	'id' => preg_replace('/[^a-z0-9-]/i', '-', $plugin_id),
+	'id' => preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID()),
 	'data-guid' => $plugin->guid,
-], $result);
+	'icon' => elgg_echo('admin:plugins:cannot_activate'),
+	'title' => $plugin->getID(),
+	'subtitle' => false,
+	'content' => $body,
+]);

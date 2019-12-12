@@ -4,6 +4,8 @@
  * Contains functions for managing plugins
  */
 
+use Elgg\Menu\MenuItems;
+
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities
@@ -237,17 +239,100 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
 }
 
 /**
+ * Registers menu items for the entity menu of a plugin
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:entity'
+ *
+ * @return void|MenuItems
+ *
+ * @internal
+ */
+function _elgg_plugin_entity_menu_setup(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof \ElggPlugin || !$entity->canEdit()) {
+		return;
+	}
+	
+	/** @var $return MenuItems **/
+	$return = $hook->getValue();
+	$return->remove('delete');
+	
+	if (elgg_view_exists("plugins/{$entity->getID()}/settings")) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'settings',
+			'href' => "admin/plugin_settings/{$entity->getID()}",
+			'text' => elgg_echo('settings'),
+			'icon' => 'settings-alt',
+			'section' => 'admin'
+		]);
+	}
+	
+	$priority = $entity->getPriority();
+	
+	// top and up link only if not at top
+	if ($priority > 1) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'top',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => 'first',
+			]),
+			'text' => elgg_echo('top'),
+			'icon' => 'angle-double-up',
+			'priority' => 11,
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'up',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => '-1',
+			]),
+			'text' => elgg_echo('up'),
+			'icon' => 'angle-up',
+			'priority' => 12,
+		]);
+	}
+	
+	// down and bottom links only if not at bottom
+	if ($priority < _elgg_get_max_plugin_priority()) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'down',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => '+1',
+			]),
+			'text' => elgg_echo('down'),
+			'icon' => 'angle-down',
+			'priority' => 13,
+		]);
+
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'bottom',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => 'last',
+			]),
+			'text' => elgg_echo('bottom'),
+			'icon' => 'angle-double-down',
+			'priority' => 14,
+		]);
+	}
+	
+	return $return;
+}
+
+/**
  * Initialize the plugin system
  *
  * @return void
  * @internal
  */
 function _elgg_plugins_init() {
-
-	if (elgg_is_admin_logged_in()) {
-		elgg_register_ajax_view('object/plugin/full');
-		elgg_register_ajax_view('object/plugin/details');
-	}
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_plugin_entity_menu_setup');
+	
+	elgg_register_ajax_view('object/plugin/full');
+	elgg_register_ajax_view('object/plugin/details');
 }
 
 /**
