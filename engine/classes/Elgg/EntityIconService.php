@@ -553,16 +553,16 @@ class EntityIconService {
 
 		foreach ($exts as $ext) {
 			foreach ([$entity_subtype, 'default'] as $subtype) {
-				if ($ext == 'svg' && elgg_view_exists("$type/$entity_type/$subtype.svg")) {
+				if ($ext == 'svg' && elgg_view_exists("$type/$entity_type/$subtype.svg", 'default')) {
 					return elgg_get_simplecache_url("$type/$entity_type/$subtype.svg");
 				}
-				if (elgg_view_exists("$type/$entity_type/$subtype/$size.$ext")) {
+				if (elgg_view_exists("$type/$entity_type/$subtype/$size.$ext", 'default')) {
 					return elgg_get_simplecache_url("$type/$entity_type/$subtype/$size.$ext");
 				}
 			}
 		}
 
-		if (elgg_view_exists("$type/default/$size.png")) {
+		if (elgg_view_exists("$type/default/$size.png", 'default')) {
 			return elgg_get_simplecache_url("$type/default/$size.png");
 		}
 	}
