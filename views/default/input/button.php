@@ -45,6 +45,15 @@ if ($icon && !preg_match('/^</', $icon)) {
 	]);
 }
 
+$icon_alt = elgg_extract('icon_alt', $vars, '');
+unset($vars['icon_alt']);
+
+if ($icon_alt && !preg_match('/^</', $icon_alt)) {
+	$icon_alt = elgg_view_icon($icon_alt, [
+		'class' => 'elgg-button-icon-alt',
+	]);
+}
+
 switch ($type) {
 	case 'submit':
 		$vars['class'][] = 'elgg-button-submit';
@@ -55,4 +64,4 @@ switch ($type) {
 		break;
 }
 
-echo elgg_format_element('button', $vars, $icon . $text);
+echo elgg_format_element('button', $vars, $icon . $text . $icon_alt);

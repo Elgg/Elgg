@@ -135,6 +135,12 @@ button:focus {
 	border-radius: 3px;
 }
 
-.elgg-button-icon + .elgg-button-label {
-	margin-left: 0.5rem;
+.elgg-button {
+	* + .elgg-button-label {
+		margin-left: 0.5rem;
+	}
+	
+	.elgg-button-label + * {
+		margin-left: 0.5rem;
+	}
 }
