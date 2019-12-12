@@ -332,8 +332,11 @@ class ElggPluginManifest {
 	 * Returns the donations page
 	 *
 	 * @return string
+	 * @deprecated 3.3
 	 */
 	public function getDonationsPageURL() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '3.3');
+		
 		return (string) $this->parser->getAttribute('donations');
 	}
 
@@ -359,8 +362,11 @@ class ElggPluginManifest {
 	 * Return the copyright
 	 *
 	 * @return string
+	 * @deprecated 3.3
 	 */
 	public function getCopyright() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '3.3');
+		
 		return (string) $this->parser->getAttribute('copyright');
 	}
 
@@ -432,6 +438,7 @@ class ElggPluginManifest {
 	 * Return the screenshots listed.
 	 *
 	 * @return array
+	 * @deprecated 3.1
 	 */
 	public function getScreenshots() {
 		elgg_deprecated_notice('Using screenshots in plugins are deprecated an will no longer be shown in the plugin details.', '3.1');
@@ -528,8 +535,11 @@ class ElggPluginManifest {
 	 * Returns the suggests elements.
 	 *
 	 * @return array
+	 * @deprecated 3.3
 	 */
 	public function getSuggests() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use suggestions in composer', '3.3');
+		
 		$suggests = $this->parser->getAttribute('suggests');
 
 		if (!$suggests) {
