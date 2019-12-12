@@ -75,7 +75,7 @@
 <table class="elgg-table mtl">
 	<thead>
 		<tr>
-			<th>Input type="submit"</th>
+			<th>Input type="button"</th>
 			<th>Default</th>
 			<th>Default with icons</th>
 			<th>Disabled (.elgg-state-disabled)</th>
@@ -86,42 +86,42 @@
 		<tr>
 			<th>Base (.elgg-button)</th>
 			<td><?= $getButton() ?></td>
-			<td><?= $getButton(['icon' => 'plus']) ?></td>
-			<td><?= $getButton(['class' => 'elgg-state-disabled', 'icon' => 'plus']) ?>
-			<td><?= $getButton(['disabled' => true, 'icon' => 'plus']) ?>
+			<td><?= $getButton(['icon' => 'plus', 'icon_alt' => 'remove']) ?></td>
+			<td><?= $getButton(['class' => 'elgg-state-disabled', 'icon' => 'plus', 'icon_alt' => 'remove']) ?>
+			<td><?= $getButton(['disabled' => true, 'icon' => 'plus', 'icon_alt' => 'remove']) ?>
 		</tr>
 		<tr>
 			<th>Action (.elgg-button-action)</th>
 			<td><?= $getButton(['class' => 'elgg-button-action']) ?></td>
-			<td><?= $getButton(['class' => 'elgg-button-action', 'icon' => 'plus']) ?></td>
+			<td><?= $getButton(['class' => 'elgg-button-action', 'icon' => 'plus', 'icon_alt' => 'remove']) ?></td>
 			<td><?= $getButton(['class' => 'elgg-button-action elgg-state-disabled']) ?>
 			<td><?= $getButton(['class' => 'elgg-button-action', 'disabled' => true]) ?>
 		</tr>
 		<tr>
 			<th>Cancel (.elgg-button-cancel)</th>
 			<td><?= $getButton(['class' => 'elgg-button-cancel']) ?></td>
-			<td><?= $getButton(['class' => 'elgg-button-cancel', 'icon' => 'plus']) ?></td>
+			<td><?= $getButton(['class' => 'elgg-button-cancel', 'icon' => 'plus', 'icon_alt' => 'remove']) ?></td>
 			<td><?= $getButton(['class' => 'elgg-button-cancel elgg-state-disabled']) ?>
 			<td><?= $getButton(['class' => 'elgg-button-cancel', 'disabled' => true]) ?>
 		</tr>
 		<tr>
 			<th>Submit (.elgg-button-submit)</th>
 			<td><?= $getButton(['class' => 'elgg-button-submit']) ?></td>
-			<td><?= $getButton(['class' => 'elgg-button-submit', 'icon' => 'plus']) ?></td>
+			<td><?= $getButton(['class' => 'elgg-button-submit', 'icon' => 'plus', 'icon_alt' => 'remove']) ?></td>
 			<td><?= $getButton(['class' => 'elgg-button-submit elgg-state-disabled']) ?>
 			<td><?= $getButton(['class' => 'elgg-button-submit', 'disabled' => true]) ?>
 		</tr>
 		<tr>
 			<th>Special (.elgg-button-special)</th>
 			<td><?= $getButton(['class' => 'elgg-button-special']) ?></td>
-			<td><?= $getButton(['class' => 'elgg-button-special', 'icon' => 'plus']) ?></td>
+			<td><?= $getButton(['class' => 'elgg-button-special', 'icon' => 'plus', 'icon_alt' => 'remove']) ?></td>
 			<td><?= $getButton(['class' => 'elgg-button-special elgg-state-disabled']) ?>
 			<td><?= $getButton(['class' => 'elgg-button-special', 'disabled' => true]) ?>
 		</tr>
 		<tr>
 			<th>Delete (.elgg-button-delete)</th>
 			<td><?= $getButton(['class' => 'elgg-button-delete']) ?></td>
-			<td><?= $getButton(['class' => 'elgg-button-delete', 'icon' => 'plus']) ?></td>
+			<td><?= $getButton(['class' => 'elgg-button-delete', 'icon' => 'plus', 'icon_alt' => 'remove']) ?></td>
 			<td><?= $getButton(['class' => 'elgg-button-delete elgg-state-disabled']) ?>
 			<td><?= $getButton(['class' => 'elgg-button-delete', 'disabled' => true]) ?>
 		</tr>
