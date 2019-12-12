@@ -8,6 +8,8 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	throw new \Elgg\EntityPermissionsException();
 }
 
+elgg_push_collection_breadcrumbs('object', 'messages', $page_owner);
+
 elgg_register_title_button('messages', 'add', 'object', 'messages');
 
 $title = elgg_echo('messages:user', [$page_owner->getDisplayName()]);

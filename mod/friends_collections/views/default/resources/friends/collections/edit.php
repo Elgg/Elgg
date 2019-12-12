@@ -18,8 +18,8 @@ if (!$user instanceof ElggUser) {
 elgg_set_page_owner_guid($user->guid);
 
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
-elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
-elgg_push_breadcrumb(elgg_echo('friends:collections'), "friends/collections/owner/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends'), elgg_generate_url('collection:friends:owner', ['username' => $user->username]));
+elgg_push_breadcrumb(elgg_echo('friends:collections'), elgg_generate_url('collection:access_collection:friends:owner', ['username' => $user->username]));
 elgg_push_breadcrumb($collection->name, $collection->getURL());
 
 $form_name = 'friends/collections/edit';

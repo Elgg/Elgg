@@ -18,13 +18,13 @@ $message->readYet = true;
 elgg_set_page_owner_guid($message->getOwnerGUID());
 $page_owner = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $page_owner->username);
+elgg_push_collection_breadcrumbs('object', 'messages', $page_owner);
 
 $inbox = false;
 if ($page_owner->getGUID() == $message->toId) {
 	$inbox = true;
 } else {
-	elgg_push_breadcrumb(elgg_echo('messages:sent'), 'messages/sent/' . $page_owner->username);
+	elgg_push_breadcrumb(elgg_echo('messages:sent'), elgg_generate_url('collection:object:messages:sent', ['username' => $page_owner->username]));
 }
 
 $content = elgg_view_entity($message, ['full_view' => true]);

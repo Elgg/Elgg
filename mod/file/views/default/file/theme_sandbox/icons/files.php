@@ -19,31 +19,30 @@ $mapping = [
 ];
 
 $sizes = ['large', 'medium', 'small', 'tiny'];
-?>
-<table class="elgg-table">
-	<tr>
-		<th></th>
-		<?php
-		foreach ($sizes as $size) {
-			echo "<th>$size</th>";
-		}
-		?>
-	</tr>
-	<?php
-	foreach ($mapping as $mimetype => $icon) {
-		$file->mimetype = $mimetype;
-		?>
-		<tr>
-			<th><?php echo $icon ?></th>
-			<?php
-			foreach ($sizes as $size) {
-				echo '<td>';
-				echo elgg_view_entity_icon($file, $size, ['use_link' => false]);
-				echo '</td>';
-			}
-			?>
-		</tr>
-		<?php
+
+$table = '<table class="elgg-table">';
+$table .= '<tr>';
+$table .= '<th></th>';
+
+foreach ($sizes as $size) {
+	$table .= "<th>$size</th>";
+}
+
+$table .= '</tr>';
+foreach ($mapping as $mimetype => $icon) {
+	$file->mimetype = $mimetype;
+
+	$table .= '<tr>';
+	$table .= "<th>{$icon}</th>";
+	foreach ($sizes as $size) {
+		$table .= '<td>';
+		$table .= elgg_view_entity_icon($file, $size, ['use_link' => false]);
+		$table .= '</td>';
 	}
-	?>
-</table>
+	
+	$table .= '</tr>';
+}
+
+$table .= '</table>';
+
+echo elgg_view_module('info', 'Files', $table);

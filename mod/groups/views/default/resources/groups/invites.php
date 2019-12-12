@@ -5,7 +5,7 @@
 
 $group = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 elgg_register_menu_item('title', [

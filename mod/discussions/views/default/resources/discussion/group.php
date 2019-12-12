@@ -7,6 +7,8 @@ $guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'group');
 
+elgg_group_tool_gatekeeper('forum', $guid);
+
 $group = get_entity($guid);
 
 elgg_push_collection_breadcrumbs('object', 'discussion', $group);

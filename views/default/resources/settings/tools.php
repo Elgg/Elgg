@@ -40,7 +40,7 @@ if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
 
 $username = elgg_extract('username', $vars);
 
-elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
+elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
 
 $form_vars = [];
 

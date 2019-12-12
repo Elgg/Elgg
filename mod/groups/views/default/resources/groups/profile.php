@@ -11,7 +11,7 @@ $group = get_entity($guid);
 
 elgg_push_context('group_profile');
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 $sidebar = '';
 if ($group->canAccessContent()) {

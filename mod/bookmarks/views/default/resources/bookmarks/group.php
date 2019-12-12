@@ -4,6 +4,8 @@ $group_guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($group_guid, 'group');
 
+elgg_group_tool_gatekeeper('bookmarks', $group_guid);
+
 $group = get_entity($group_guid);
 
 elgg_register_title_button('bookmarks', 'add', 'object', 'bookmarks');
