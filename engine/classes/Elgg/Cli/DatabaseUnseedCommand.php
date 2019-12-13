@@ -12,7 +12,7 @@ class DatabaseUnseedCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('database:unseed')
-			->setDescription('Removes seeded fake entities from the database');
+			->setDescription(elgg_echo('cli:database:unseed:description'));
 	}
 
 	/**
@@ -21,7 +21,7 @@ class DatabaseUnseedCommand extends Command {
 	protected function command() {
 
 		if (!class_exists('\Faker\Generator')) {
-			elgg_log('This is a developer tool currently intended for testing purposes only. Please refrain from using it.', 'ERROR');
+			elgg_log(elgg_echo('cli:database:seed:log:error:faker'), 'ERROR');
 			return 1;
 		}
 

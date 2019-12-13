@@ -70,12 +70,12 @@ abstract class Command extends BaseCommand {
 		}
 		$user = get_user_by_username($username);
 		if (!$user) {
-			throw new RuntimeException("User with username $username not found");
+			throw new RuntimeException(elgg_echo('user:username:notfound', [$username]));
 		}
 		if (!login($user)) {
-			throw new RuntimeException("Unable to login as $username");
+			throw new RuntimeException(elgg_echo('cli:login:error:unknown', [$username]));
 		}
-		elgg_log("Logged in as $username [guid: $user->guid]");
+		elgg_log(elgg_echo('cli:login:success:log', [$username, $user->guid]));
 	}
 
 	/**

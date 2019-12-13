@@ -18,12 +18,12 @@ class PluginsActivateCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('plugins:activate')
-			->setDescription('Activate plugin(s)')
+			->setDescription(elgg_echo('cli:plugins:activate:description'))
 			->addOption('force', 'f', InputOption::VALUE_NONE,
-				'Resolve conflicts by deactivating conflicting plugins and enabling required ones'
+				elgg_echo('cli:plugins:activate:option:force')
 			)
 			->addArgument('plugins', InputArgument::REQUIRED | InputArgument::IS_ARRAY,
-				'Plugin IDs to be activated'
+				elgg_echo('cli:plugins:activate:argument:plugins')
 			);
 	}
 
@@ -37,7 +37,7 @@ class PluginsActivateCommand extends Command {
 
 		$helper = _elgg_services()->cli_progress;
 
-		$progress = $helper->start('Activating plugins', count($ids));
+		$progress = $helper->start(elgg_echo('cli:plugins:activate:progress:start'), count($ids));
 
 		foreach ($ids as $id) {
 			try {

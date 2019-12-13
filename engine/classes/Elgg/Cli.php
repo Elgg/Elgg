@@ -8,6 +8,7 @@ use Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Elgg\Cli\Command;
 
 /**
  * CLI bootstrap
@@ -91,9 +92,14 @@ class Cli {
 		if ($this->logger) {
 			$command->setLogger($this->logger);
 		}
+		
+		if (!is_subclass_of($command, Command::class)) {
+			$this->console->add($command);
+			return;
+		}
 
 		$command->addOption('as', 'u', InputOption::VALUE_OPTIONAL,
-			'Execute the command on behalf of a user with the given username'
+			elgg_echo('cli:option:as')
 		);
 
 		$this->console->add($command);

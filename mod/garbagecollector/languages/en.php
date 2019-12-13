@@ -10,4 +10,6 @@ return array(
 	'garbagecollector:start' => "Garbage collector initialized",
 	'garbagecollector:done' => "Garbage collector done",
 	'garbagecollector:optimize' => "Optimizing %s",
+	
+	'garbagecollector:cli:database:optimize:description' => "Optimize database tables",
 );
