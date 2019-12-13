@@ -448,6 +448,15 @@ class Application {
 
 				return $response;
 			}
+			
+			if ($request->getElggPath() === '/refresh_token') {
+				$config->_disable_session_save = true;
+				$token = new \Elgg\Controllers\RefreshCsrfToken();
+				$response = $token($request);
+				self::getResponseTransport()->send($response);
+
+				return $response;
+			}
 
 			if (0 === strpos($request->getElggPath(), '/serve-file/')) {
 				$response = $this->_services->serveFileHandler->getResponse($request);

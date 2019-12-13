@@ -341,7 +341,33 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 		$file->delete();
 	}
+	
+	function testHandlesRefreshTokenRequest() {
 
+		$request = $this->prepareHttpRequest('/refresh_token');
+
+		$app = $this->createMockApplication([
+			'request' => $request,
+		]);
+
+		ob_start();
+		$response = $app->index();
+		$output = ob_get_clean();
+		
+		$decoded = json_decode($output, true);
+		$this->assertArrayHasKey('token', $decoded);
+		$this->assertArrayHasKey('__elgg_ts', $decoded['token']);
+		$this->assertArrayHasKey('__elgg_token', $decoded['token']);
+		$this->assertArrayHasKey('logged_in', $decoded['token']);
+		
+		$this->assertArrayHasKey('valid_tokens', $decoded);
+		$this->assertArrayHasKey('session_token', $decoded);
+		$this->assertArrayHasKey('user_guid', $decoded);
+
+		$this->assertInstanceOf(Response::class, $response);
+		$this->assertEquals($output, $response->getContent());
+	}
+	
 	function testHandlesRequestToRegisteredRoute() {
 
 		$request = $this->prepareHttpRequest("/foo", 'GET', [
