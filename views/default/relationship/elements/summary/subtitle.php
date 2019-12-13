@@ -16,12 +16,16 @@ if ($subtitle === '' && $relationship instanceof ElggRelationship) {
 	$subtitle = elgg_view('object/elements/imprint/element', [
 		'icon_name' =>'history',
 		'content' => elgg_view_friendly_time($relationship->time_created),
-		'class' => 'elgg-relationship-time',
+		'class' => [
+			'elgg-listing-time',
+			'elgg-relationship-time', // @todo remove in 4.0
+		],
 	]);
 	$subtitle = elgg_format_element('div', ['class' => 'elgg-listing-imprint'], $subtitle);
 }
 
 echo elgg_format_element('div', ['class' => [
-	'elgg-relationship-subtitle',
+	'elgg-relationship-subtitle', // @todo remove in 4.0
+	'elgg-listing-summary-subtitle',
 	'elgg-subtext',
 ]], $subtitle);
