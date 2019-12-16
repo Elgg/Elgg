@@ -340,7 +340,6 @@
 	ENTITY, SOCIAL, RIVER AND ANNOTATION
 *************************************** */
 .elgg-listing-summary-metadata > .elgg-menu-container,
-.elgg-relationship-metadata > .elgg-menu-container,
 .elgg-river-metadata > .elgg-menu-container,
 .elgg-menu-annotation-container {
 	float: right;
