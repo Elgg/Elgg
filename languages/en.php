@@ -1695,6 +1695,7 @@ To view %s's profile, click here:
 	'cli:login:success:log' => "Logged in as %s [guid: %s]",
 	'cli:response:output' => "Response:",
 	'cli:option:as' => "Execute the command on behalf of a user with the given username",
+	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
 	
 	'cli:cache:clear:description' => "Clear Elgg caches",
 	'cli:cache:invalidate:description' => "Invalidate Elgg caches",

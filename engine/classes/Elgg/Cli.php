@@ -98,8 +98,14 @@ class Cli {
 			return;
 		}
 
+		// Execute command as a given user
 		$command->addOption('as', 'u', InputOption::VALUE_OPTIONAL,
 			elgg_echo('cli:option:as')
+		);
+		
+		// Change language
+		$command->addOption('language', null, InputOption::VALUE_OPTIONAL,
+			elgg_echo('cli:option:language')
 		);
 
 		$this->console->add($command);

@@ -22,6 +22,7 @@ abstract class Command extends BaseCommand {
 		$transport = new ResponseTransport($this);
 		_elgg_services()->responseFactory->setTransport($transport);
 
+		$this->setLanguage();
 		$this->login();
 
 		try {
@@ -86,5 +87,24 @@ abstract class Command extends BaseCommand {
 		if (elgg_is_logged_in()) {
 			logout();
 		}
+	}
+	
+	/**
+	 * Set the language for this cli command
+	 *
+	 * @return void
+	 * @since 3.3
+	 */
+	final protected function setLanguage() {
+		if (!$this->getDefinition()->hasOption('language')) {
+			return;
+		}
+		
+		$language = $this->option('language');
+		if (empty($language)) {
+			return;
+		}
+		
+		elgg()->translator->setCurrentLanguage($language);
 	}
 }
