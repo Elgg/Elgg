@@ -83,8 +83,8 @@ class ElggTempFileTest extends IntegrationTestCase {
 		
 		$this->assertEquals('testing', $temp_file->getFilename());
 		
-		$this->assertNotContains($initial_filename, $temp_file->getFilenameOnFilestore());
-		$this->assertContains('testing', $temp_file->getFilenameOnFilestore());
+		$this->assertStringNotContainsString($initial_filename, $temp_file->getFilenameOnFilestore());
+		$this->assertStringContainsString('testing', $temp_file->getFilenameOnFilestore());
 		
 		$this->assertTrue(is_resource($temp_file->open('write')));
 		$this->assertNotFalse($temp_file->write('1234'));
@@ -112,11 +112,8 @@ class ElggTempFileTest extends IntegrationTestCase {
 		$user->delete();
 	}
 	
-	/**
-	 * @expectedException \IOException
-	 */
 	public function testSaveThrowsException() {
-		
+		$this->expectException(\IOException::class);
 		$this->temp_file->save();
 	}
 	

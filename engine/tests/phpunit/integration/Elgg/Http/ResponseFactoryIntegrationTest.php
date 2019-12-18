@@ -46,7 +46,7 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		$this->assertNotEmpty($headers);
 		
 		$header_cookies = $headers->getCookies();
-		$this->assertInternalType('array', $header_cookies);
+		$this->assertIsArray($header_cookies);
 		$this->assertCount(1, $header_cookies);
 		
 		$this->assertEquals($cookie->name, $header_cookies[0]->getName());
@@ -59,7 +59,7 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertTrue($this->service->setCookie($cookie));
 		
-		$factory_cookies = $this->service->getHeaders()->getCookies();
+		$this->service->getHeaders()->getCookies();
 		
 		$response = $this->service->prepareResponse();
 		$this->assertInstanceOf(Response::class, $response);
@@ -76,7 +76,7 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertTrue($this->service->setCookie($cookie));
 		
-		$factory_cookies = $this->service->getHeaders()->getCookies();
+		$this->service->getHeaders()->getCookies();
 		
 		$response = $this->service->prepareRedirectResponse('foo/bar');
 		$this->assertInstanceOf(RedirectResponse::class, $response);
@@ -93,7 +93,7 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertTrue($this->service->setCookie($cookie));
 		
-		$factory_cookies = $this->service->getHeaders()->getCookies();
+		$this->service->getHeaders()->getCookies();
 		
 		$response = $this->service->prepareJsonResponse();
 		$this->assertInstanceOf(JsonResponse::class, $response);
@@ -128,8 +128,8 @@ class ResponseFactoryIntegrationTest extends IntegrationTestCase {
 		$this->assertEquals($status_code, $response->getStatusCode());
 		
 		$content = $response->getContent();
-		$this->assertContains(elgg_echo("error:{$elgg_echo_part}:title"), $content);
-		$this->assertContains(elgg_echo("error:{$elgg_echo_part}:content"), $content);
+		$this->assertStringContainsString(elgg_echo("error:{$elgg_echo_part}:title"), $content);
+		$this->assertStringContainsString(elgg_echo("error:{$elgg_echo_part}:content"), $content);
 	}
 	
 	public function respondWithErrorProvider() {

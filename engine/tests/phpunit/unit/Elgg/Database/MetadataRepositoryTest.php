@@ -370,10 +370,8 @@ class MetadataRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testThrowsOnInvalidCalculation() {
+		$this->expectException(\InvalidArgumentException::class);
 		Metadata::with([])->calculate('invalid', 'status', 'metadata');
 	}
 
@@ -403,10 +401,8 @@ class MetadataRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidAttributeCalculation() {
+		$this->expectException(\InvalidParameterException::class);
 		Metadata::with([])->calculate('max', 'invalid', 'attribute');
 	}
 
@@ -446,9 +442,6 @@ class MetadataRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnMetadataCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -465,12 +458,10 @@ class MetadataRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Metadata::find($options);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnAnnotationCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -487,6 +478,7 @@ class MetadataRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Metadata::find($options);
 	}
 
@@ -495,6 +487,8 @@ class MetadataRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$metadata = new MetadataWhereClause();
 		$metadata->names = ['foo1'];
 		$metadata->values = ['bar1'];
@@ -556,7 +550,9 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
-
+		
+		$wheres = [];
+		
 		$metadata = new MetadataWhereClause();
 		$metadata->names = ['foo1'];
 		$metadata->values = ['bar1'];
@@ -607,7 +603,9 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
@@ -659,7 +657,9 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
@@ -712,7 +712,9 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
@@ -764,7 +766,9 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
@@ -820,7 +824,9 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
@@ -879,7 +885,9 @@ class MetadataRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('metadata', 'n_table');
 		$select->select('DISTINCT n_table.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 

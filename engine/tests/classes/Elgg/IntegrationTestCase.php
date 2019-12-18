@@ -116,14 +116,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function setUpBeforeClass() {
-		parent::setUpBeforeClass();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function tearDownAfterClass() {
+	public static function tearDownAfterClass(): void {
 		foreach (_elgg_services()->logger->getHandlers() as $handler) {
 			if (is_callable([$handler, 'close'])) {
 				$handler->close();
@@ -135,7 +128,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	final protected function setUp() {
+	final protected function setUp(): void {
 
 		parent::setUp();
 
@@ -161,7 +154,7 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	final protected function tearDown() {
+	final protected function tearDown(): void {
 		$this->down();
 
 		/**

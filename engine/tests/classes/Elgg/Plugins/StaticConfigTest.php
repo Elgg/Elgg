@@ -41,7 +41,7 @@ class StaticConfigTest extends UnitTestCase {
 		$root_path = rtrim($this->getPath(), '/');
 
 		foreach ($actions as $action => $action_spec) {
-			$this->assertInternalType('array', $action_spec);
+			$this->assertIsArray($action_spec);
 
 			if (isset($action_spec['controller'])) {
 				$controller = elgg_extract('controller', $action_spec);

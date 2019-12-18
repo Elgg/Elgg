@@ -301,9 +301,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(REFERRER, $result->getForwardURL());
 	}
 
-	/**
-	 * @expectedException \Elgg\CsrfException
-	 */
 	public function testCanNotExecuteWithInvalidTokens() {
 		$dt = new \DateTime();
 
@@ -320,18 +317,17 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		set_input('output', 'output3');
 
+		$this->expectException(CsrfException::class);
 		_elgg_services()->router->getResponse($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\PageNotFoundException
-	 */
 	public function testCanNotExecuteUnregisteredAction() {
 
 		$request = $this->prepareHttpRequest('action/unregistered', 'POST', [], false);
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
+		$this->expectException(PageNotFoundException::class);
 		$result = _elgg_services()->router->getResponse($request);
 
 		$this->assertInstanceOf(ErrorResponse::class, $result);
@@ -340,9 +336,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(REFERRER, $result->getForwardURL());
 	}
 
-	/**
-	 * @expectedException \Elgg\GatekeeperException
-	 */
 	public function testCanNotExecuteLoggedInActionIfLoggedOut() {
 
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
@@ -351,12 +344,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(_elgg_services()->actions->register('output3', "$this->actionsDir/output3.php"));
 
+		$this->expectException(GatekeeperException::class);
 		_elgg_services()->router->getResponse($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\GatekeeperException
-	 */
 	public function testCanNotExecuteAdminActionIfNotAdmin() {
 
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
@@ -365,12 +356,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(_elgg_services()->actions->register('output3', "$this->actionsDir/output3.php", 'admin'));
 
+		$this->expectException(GatekeeperException::class);
 		_elgg_services()->router->getResponse($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\PageNotFoundException
-	 */
 	public function testCanNotExecuteIfActionFileIsMissing() {
 		$request = $this->prepareHttpRequest('action/no_file', 'POST', [], false);
 		$this->createService($request);
@@ -378,6 +367,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(_elgg_services()->actions->register('no_file', "$this->actionsDir/no_file.php", 'public'));
 
+		$this->expectException(PageNotFoundException::class);
 		_elgg_services()->router->getResponse($request);
 	}
 
@@ -402,9 +392,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('hello', $result->getContent());
 	}
 
-	/**
-	 * @expectedException \Elgg\ValidationException
-	 */
 	public function testValidateHookIsTriggered() {
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
 		$this->createService($request);
@@ -416,12 +403,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(_elgg_services()->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
 
+		$this->expectException(ValidationException::class);
 		_elgg_services()->router->route($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\PageNotFoundException
-	 */
 	public function testCanNotExecuteActionWithoutActionFile() {
 		$request = $this->prepareHttpRequest('action/no_file', 'POST', [], false);
 		$this->createService($request);
@@ -429,6 +414,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(_elgg_services()->actions->register('no_file', "$this->actionsDir/no_file.php", 'public'));
 
+		$this->expectException(PageNotFoundException::class);
 		_elgg_services()->router->getResponse($request);
 	}
 
@@ -486,8 +472,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsStringIgnoringCase('charset=utf-8', $response->headers->get('Content-Type'));
 		$output = json_encode([
 			'output' => 'output3',
 			'status' => 0,
@@ -524,9 +510,9 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		// Ajax API doesn't set charset
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([
 			'value' => 'output3',
@@ -570,13 +556,13 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$this->assertNotEmpty($date = $response->headers->get('Date'));
 		$this->assertNotEmpty($expires = $response->headers->get('Expires'));
 		$this->assertEquals(strtotime($date) + 1000, strtotime($expires));
-		$this->assertContains('max-age=1000', $response->headers->get('Cache-Control'));
-		$this->assertContains('private', $response->headers->get('Cache-Control'));
+		$this->assertStringContainsString('max-age=1000', $response->headers->get('Cache-Control'));
+		$this->assertStringContainsString('private', $response->headers->get('Cache-Control'));
 
 		$output = json_encode([
 			'value' => 'output3_modified',
@@ -615,7 +601,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'error' => 'The response was cancelled',
@@ -626,7 +612,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @group AjaxService
-	 * @expectedException \RuntimeException
 	 */
 	public function testThrowsExceptionForInvalidAjax2ResponseFilter() {
 
@@ -641,6 +626,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(_elgg_services()->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
 
+		$this->expectException(\RuntimeException::class);
 		$this->route($request);
 	}
 
@@ -683,8 +669,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'output' => 'output3',
 			'status' => -1,
@@ -718,8 +704,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'output3',
 			'current_url' => elgg_normalize_url('action/output3'),
@@ -815,8 +801,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'output' => ['foo', 'bar'],
 			'status' => 0,
@@ -849,8 +835,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'output' => 'error', // registered error message
 			'status' => -1,
@@ -882,8 +868,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'output' => '',
 			'status' => 0,
@@ -919,8 +905,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => ['foo', 'bar'],
 			'current_url' => elgg_normalize_url('action/output4'),
@@ -955,8 +941,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'error',
 			'current_url' => elgg_normalize_url('action/output4'),
@@ -991,8 +977,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'error' => 'error'
 		]);
@@ -1019,8 +1005,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => '',
 			'current_url' => elgg_normalize_url('action/output4'),
@@ -1064,8 +1050,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'output' => 'foo',
 			'status' => 0,
@@ -1100,8 +1086,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'value' => 'foo',
 			'current_url' => elgg_normalize_url('action/output5'),
@@ -1146,8 +1132,8 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		//$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		//$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
 			'error' => 'good bye',
 		]);

@@ -4,6 +4,7 @@ namespace Elgg\Application;
 
 /**
  * @group UnitTests
+ * @group FileService
  */
 class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 
@@ -76,9 +77,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		return $file;
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testSend400WhenUrlIsMalformmatted() {
 
 		$request = \Elgg\Http\Request::create('');
@@ -87,7 +85,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
 	 */
 	public function testSend403OnUrlExpiration($filename) {
@@ -108,7 +105,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
 	 */
 	public function testSends403OnFileModificationTimeMismatch($filename) {
@@ -140,7 +136,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
 	 */
 	public function testResponseCodesOnSessionRestartWithCookieEnabledForFileUrls($filename) {
@@ -170,7 +165,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
 	 */
 	public function testResponseHeadersMatchFileAttributesForInlineUrls($filename) {
@@ -190,7 +184,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		$filesize = filesize($test_file->getFilenameOnFilestore());
 		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
 
-		$this->assertContains('inline', $response->headers->get('Content-Disposition'));
+		$this->assertStringContainsString('inline', $response->headers->get('Content-Disposition'));
 
 		$this->assertEquals('"' . $test_file->getModifiedTime() . '"', $response->headers->get('Etag'));
 		
@@ -199,7 +193,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
 	 */
 	public function testResponseHeadersMatchFileAttributesForAttachmentUrls($filename) {
@@ -219,7 +212,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		$filesize = filesize($test_file->getFilenameOnFilestore());
 		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
 
-		$this->assertContains('attachment', $response->headers->get('Content-Disposition'));
+		$this->assertStringContainsString('attachment', $response->headers->get('Content-Disposition'));
 
 		$this->assertEquals('"' . $test_file->getModifiedTime() . '"', $response->headers->get('Etag'));
 		
@@ -228,9 +221,7 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testInvalidDisposition($filename) {
 		$test_file = $this->createFile($filename);
@@ -238,6 +229,8 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 		
 		$file = new \Elgg\FileService\File();
 		$file->setFile($test_file);
+		
+		$this->expectException(\InvalidArgumentException::class);
 		$file->setDisposition('foo');
 		
 		$this->assertTrue($test_file->delete());
@@ -245,7 +238,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
 	 */
 	public function testSends304WithIfNoneMatchHeadersIncluded($filename) {
@@ -266,7 +258,6 @@ class ServeFileHandlerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
 	 * @dataProvider fileProvider
 	 */
 	public function testSends304WithIfNoneMatchHeadersIncludedAndDeflationEnabled($filename) {

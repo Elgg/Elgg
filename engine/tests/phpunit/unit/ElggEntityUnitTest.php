@@ -41,8 +41,6 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testSettingAndGettingAttribute() {
-		// Note: before save() subtype returns string, int after
-		// see https://github.com/Elgg/Elgg/issues/5920#issuecomment-25246298
 		$this->obj->subtype = 'foo';
 		$this->assertEquals('foo', $this->obj->subtype);
 	}
@@ -167,7 +165,7 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 		sort($keys);
 
 		$object = $this->obj->toObject();
-		$object_keys = array_keys(get_object_vars($object));
+		$object_keys = array_keys($object->getArrayCopy());
 		sort($object_keys);
 
 		$this->assertEquals($keys, $object_keys);

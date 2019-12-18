@@ -30,10 +30,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// should only ever return one object because of group by
-		$this->assertIdentical(count($es), 1);
+		$this->assertCount(1, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), ['object']));
 		}
@@ -50,10 +50,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// should only ever return one object because of group by
-		$this->assertIdentical(count($es), 1);
+		$this->assertCount(1, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), ['object']));
 		}
@@ -68,10 +68,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// should only ever return one object because of group by
-		$this->assertIdentical(count($es), 1);
+		$this->assertCount(1, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $valid_types));
 		}
@@ -86,10 +86,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// one of object and one of group
-		$this->assertIdentical(count($es), count($valid_types));
+		$this->assertCount(count($valid_types), $es);
 
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $valid_types));
@@ -117,11 +117,11 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// should only ever return one object because of group by
-		$this->assertIdentical(count($es), 1);
-		$this->assertIdentical($es[0]->getType(), $valid);
+		$this->assertCount(1, $es);
+		$this->assertEquals($valid, $es[0]->getType());
 	}
 
 	public function testElggAPIGettersValidAndInvalidTypesPlural() {
@@ -145,10 +145,10 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// should only ever return one object because of group by
-		$this->assertIdentical(count($es), count($valid));
+		$this->assertCount(count($valid), $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $valid));
 		}
@@ -172,9 +172,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
-		$this->assertIdentical(count($es), 1);
+		$this->assertCount(1, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), [$entity->type]));
 			$this->assertTrue(in_array($e->getSubtype(), [$entity->getSubtype()]));
@@ -189,9 +189,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
-		$this->assertIdentical(count($es), 1);
+		$this->assertCount(1, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), [$entity->type]));
 			$this->assertTrue(in_array($e->getSubtype(), [$entity->getSubtype()]));
@@ -206,9 +206,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
-		$this->assertIdentical(count($es), 1);
+		$this->assertCount(1, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), [$entity->type]));
 			$this->assertTrue(in_array($e->getSubtype(), [$entity->getSubtype()]));
@@ -218,7 +218,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggAPIGettersValidSubtypeUsingPluralSubtypesSingularType() {
 		$subtype_num = 2;
 		$types = ['object'];
-		$type_num = count($types);
 		$entities = $this->createMany($types, $subtype_num);
 		$subtypes = array_map(function($e) {
 			return $e->getSubtype();
@@ -230,9 +229,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
-		$this->assertIdentical(count($es), $subtype_num);
+		$this->assertCount($subtype_num, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -265,11 +264,11 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// this will unset all invalid subtypes for each type that that only
 		// one entity exists of each.
-		$this->assertIdentical(count($es), $subtype_num * $type_num);
+		$this->assertCount($subtype_num * $type_num, $es);
 		foreach ($es as $e) {
 			// entities must at least be in the type.
 			$this->assertTrue(in_array($e->getType(), $types));
@@ -298,11 +297,11 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
 		// this will unset all invalid subtypes for each type that that only
 		// one entity exists of each.
-		$this->assertIdentical(count($es), $type_num);
+		$this->assertCount($type_num, $es);
 		foreach ($es as $e) {
 			// entities must at least be in the type.
 			$this->assertTrue(in_array($e->getType(), $types));
@@ -336,9 +335,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
-		$this->assertIdentical(count($es), $type_num);
+		$this->assertCount($type_num, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -351,7 +350,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggAPIGettersTSPValidTypeValidPluralSubtype() {
 		$subtype_num = 3;
 		$types = ['object'];
-		$type_num = count($types);
 		$entities = $this->createMany($types, $subtype_num);
 		$subtypes = array_map(function($e) {
 			return $e->getSubtype();
@@ -364,9 +362,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
-		$this->assertIdentical(count($es), $subtype_num);
+		$this->assertCount($subtype_num, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
@@ -379,7 +377,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggAPIGettersTSPValidTypeMixedPluralSubtype() {
 		$valid_subtype_num = 2;
 		$types = ['object'];
-		$type_num = count($types);
 		$entities = $this->createMany($types, $valid_subtype_num);
 		$valid = array_map(function($e) {
 			return $e->getSubtype();
@@ -396,9 +393,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		];
 
 		$es = elgg_get_entities($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 
-		$this->assertIdentical(count($es), $valid_subtype_num);
+		$this->assertCount($valid_subtype_num, $es);
 		foreach ($es as $e) {
 			$this->assertTrue(in_array($e->getType(), $types));
 			$this->assertTrue(in_array($e->getSubtype(), $valid));
@@ -541,7 +538,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggApiGettersTSPInvalidType() {
-		$type_num = 1;
 		$types = ['invalid_type1'];
 
 		$pair = [];
@@ -559,7 +555,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggApiGettersTSPInvalidTypes() {
-		$type_num = 2;
 		$types = ['invalid_type1', 'invalid_type2'];
 
 		$pair = [];
@@ -576,8 +571,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggApiGettersTSPValidTypeInvalidSubtype() {
-		$type_num = 1;
-		$subtype_num = 1;
 		$types = ['invlaid_type1'];
 		$subtypes = [$this->getRandomSubtype()];
 
@@ -592,8 +585,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggApiGettersTSPValidTypeInvalidSubtypes() {
-		$type_num = 1;
-		$subtype_num = 2;
 		$types = ['invlaid_type1'];
 		$subtypes = [$this->getRandomSubtype(), $this->getRandomSubtype()];
 
@@ -613,8 +604,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	}
 
 	public function testElggApiGettersTSPValidTypesInvalidSubtypes() {
-		$type_num = 2;
-		$subtype_num = 2;
 		$types = ['invlaid_type1', 'invalid_type2'];
 		$subtypes = [$this->getRandomSubtype(), $this->getRandomSubtype()];
 
@@ -734,6 +723,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggGetEntitiesWithoutPrivateSettingsPreloader() {
 		$entities = $this->createMany('object', 2);
 		
+		$guids = [];
 		foreach ($entities as $e) {
 			$guids[] = $e->guid;
 			$e->setPrivateSetting('foo', 'bar');
@@ -744,7 +734,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			'limit' => false,
 		];
 
-		$es = elgg_get_entities($options);
+		elgg_get_entities($options);
 				
 		$cache = _elgg_services()->privateSettingsCache;
 		// cache should not be loaded
@@ -760,6 +750,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	public function testElggGetEntitiesWithPrivateSettingsPreloader() {
 		$entities = $this->createMany('object', 2);
 		
+		$guids = [];
 		foreach ($entities as $e) {
 			$guids[] = $e->guid;
 			$e->setPrivateSetting('foo', 'bar');
@@ -771,7 +762,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			'preload_private_settings' => true,
 		];
 
-		$es = elgg_get_entities($options);
+		elgg_get_entities($options);
 				
 		$cache = _elgg_services()->privateSettingsCache;
 		// cache should be loaded

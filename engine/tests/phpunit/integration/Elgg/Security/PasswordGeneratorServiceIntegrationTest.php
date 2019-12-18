@@ -4,6 +4,8 @@ namespace Elgg\Security;
 
 use Elgg\IntegrationTestCase;
 use Hackzilla\PasswordGenerator\Generator\RequirementPasswordGenerator;
+use Elgg\Exceptions\Security\InvalidPasswordLengthException;
+use Elgg\Exceptions\Security\InvalidPasswordCharacterRequirementsException;
 
 class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 
@@ -39,16 +41,13 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertFalse(_elgg_services()->passwordGenerator->isValidPassword($password));
 	}
 	
-	/**
-	 * @expectedException \Elgg\Exceptions\Security\InvalidPasswordLengthException
-	 */
 	public function testAssertTooShortPassword() {
+		$this->expectException(InvalidPasswordLengthException::class);
 		_elgg_services()->passwordGenerator->assertValidPassword('a1');
 	}
 	
 	/**
 	 * @dataProvider invalidPasswordProvider
-	 * @expectedException \Elgg\Exceptions\Security\InvalidPasswordCharacterRequirementsException
 	 */
 	public function testAssertInvalidPasswordRequirements($min_length, $lower, $upper, $number, $special, $password) {
 		
@@ -67,6 +66,7 @@ class PasswordGeneratorServiceIntegrationTest extends IntegrationTestCase {
 			],
 		]);
 		
+		$this->expectException(InvalidPasswordCharacterRequirementsException::class);
 		_elgg_services()->passwordGenerator->assertValidPassword($password);
 	}
 	

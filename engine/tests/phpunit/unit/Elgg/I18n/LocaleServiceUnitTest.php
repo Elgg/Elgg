@@ -61,7 +61,7 @@ class LocaleServiceUnitTest extends UnitTestCase{
 	}
 	
 	public function testGetLanguageCodes() {
-		$this->assertInternalType('array', $this->service->getLanguageCodes());
+		$this->assertIsArray($this->service->getLanguageCodes());
 	}
 	
 	public function testGetLocaleForInvalidLanguage() {
@@ -86,7 +86,7 @@ class LocaleServiceUnitTest extends UnitTestCase{
 		$expected = (array) setlocale(LC_ALL, 0);
 		$actual = $this->service->getLocale(LC_ALL);
 		
-		$this->assertInternalType('array', $actual);
+		$this->assertIsArray($actual);
 		$this->assertEquals($expected, $actual);
 	}
 	

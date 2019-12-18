@@ -130,6 +130,5 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$cache = $app->_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
 		
 		$this->assertContains($dir, $cache['scannedDirs']);
-
 	}
 }

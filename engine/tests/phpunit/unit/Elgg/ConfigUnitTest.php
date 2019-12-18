@@ -46,20 +46,20 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 		
 		$cookie_config = $config->getCookieConfig();
 		
-		$this->assertInternalType('array', $cookie_config);
+		$this->assertIsArray($cookie_config);
 		$this->assertArrayHasKey('session', $cookie_config);
 		$this->assertArrayHasKey('remember_me', $cookie_config);
 		
 		// session
 		$session = $cookie_config['session'];
-		$this->assertInternalType('array', $session);
+		$this->assertIsArray($session);
 		
 		$this->assertArrayHasKey('name', $session);
 		$this->assertEquals('Elgg', $session['name']);
 		
 		// remember me
 		$remember_me = $cookie_config['remember_me'];
-		$this->assertInternalType('array', $remember_me);
+		$this->assertIsArray($remember_me);
 		
 		$this->assertArrayHasKey('name', $remember_me);
 		$this->assertEquals('elggperm', $remember_me['name']);
@@ -84,20 +84,20 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 		
 		$cookie_config = $config->getCookieConfig();
 		
-		$this->assertInternalType('array', $cookie_config);
+		$this->assertIsArray($cookie_config);
 		$this->assertArrayHasKey('session', $cookie_config);
 		$this->assertArrayHasKey('remember_me', $cookie_config);
 		
 		// session
 		$session = $cookie_config['session'];
-		$this->assertInternalType('array', $session);
+		$this->assertIsArray($session);
 		
 		$this->assertArrayHasKey('name', $session);
 		$this->assertEquals($custom['session']['name'], $session['name']);
 		
 		// remember me
 		$remember_me = $cookie_config['remember_me'];
-		$this->assertInternalType('array', $remember_me);
+		$this->assertIsArray($remember_me);
 		
 		$this->assertArrayHasKey('name', $remember_me);
 		$this->assertEquals($custom['remember_me']['name'], $remember_me['name']);

@@ -202,6 +202,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 
 		$es = $this->createMany('object', $num_entities);
 
+		$expected_values = [];
 		foreach ($es as $index => $e) {
 
 			$value = $numbers[$index][0];
@@ -234,16 +235,16 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 					break;
 			}
 
-			$values[$e->guid] = $calc_value;
+			$expected_values[$e->guid] = $calc_value;
 		}
 
-		arsort($values);
+		arsort($expected_values);
 
-		$expected_order = array_keys($values);
+		$expected_order = array_keys($expected_values);
 
 		$options = [
 			'type' => 'object',
-			'guids' => array_keys($values),
+			'guids' => array_keys($expected_values),
 			'annotation_name' => $name,
 			'calculation' => $type
 		];
@@ -258,7 +259,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 			$value = 0;
 			$as = $e->getAnnotations(['annotation_name' => $name]);
 			// should only ever be 2
-			$this->assertEqual(2, count($as));
+			$this->assertCount(2, $as);
 
 			$value = $as[0]->value;
 			$value2 = $as[1]->value;
@@ -287,15 +288,16 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 					break;
 			}
 
-			$this->assertEqual($values[$e->guid], $calc_value);
-			$this->assertEqual($calc_value, $e->getVolatileData('select:annotation_calculation'));
+			$this->assertEquals($expected_values[$e->guid], $calc_value);
+			// casting to float because of different precision between PHP and DB
+			$this->assertEquals($calc_value, (float) $e->getVolatileData('select:annotation_calculation'));
 		}
 
-		$this->assertEqual($expected_order, $actual_order);
+		$this->assertEquals($expected_order, $actual_order);
 
 		$options['count'] = true;
 		$es_count = elgg_get_entities_from_annotation_calculation($options);
-		$this->assertEqual($es_count, $num_entities);
+		$this->assertEquals($num_entities, $es_count);
 	}
 
 	public function calculationTypesProvider() {
@@ -399,7 +401,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 			]);
 
 			if (count($assertion_values)) {
-				$this->assertInternalType('array', $annotations);
+				$this->assertIsArray($annotations);
 				$this->assertEquals(count($assertion_values), count($annotations));
 			} else {
 				$this->assertFalse($annotations);

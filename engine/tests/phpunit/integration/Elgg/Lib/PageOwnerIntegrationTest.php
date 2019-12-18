@@ -78,10 +78,8 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 		];
 	}
 		
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testSettingNegativeOwner() {
+		$this->expectException(InvalidArgumentException::class);
 		_elgg_services()->pageOwner->setPageOwnerGuid(-1);
 	}
 	

@@ -1,5 +1,8 @@
 <?php
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Matcher;
+
 /**
  * @group UnitTests
  * @group Database
@@ -95,12 +98,11 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($uniques, count($prints));
 	}
 
-	/**
-	 * @expectedException \RuntimeException
-	 * @expectedExceptionMessage $callback must be a callable function. Given blorg!
-	 */
 	public function testInvalidCallbacksThrow() {
 		$db = $this->getDbMock();
+		
+		$this->expectException(RuntimeException::class);
+		$this->expectExceptionMessage('$callback must be a callable function. Given blorg!');
 		$db->getData("SELECT 1", 'blorg!');
 	}
 
@@ -109,11 +111,11 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @return \Elgg\Database|PHPUnit_Framework_MockObject_MockObject
+	 * @return \Elgg\Database|MockObject
 	 */
 	private function getDbMock() {
 		return $this->getMockBuilder(\Elgg\Database::class)
-			->setMethods(['updateData'])
+			->onlyMethods(['updateData'])
 			->setConstructorArgs([
 				new \Elgg\Database\DbConfig((object) ['dbprefix' => 'test_']),
 				_elgg_services()->queryCache
@@ -122,9 +124,9 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @param PHPUnit_Framework_MockObject_MockObject $db
-	 * @param int                                     $index
-	 * @param PHPUnit_Framework_MockObject_Matcher    $matcher
+	 * @param MockObject $db
+	 * @param int        $index
+	 * @param Matcher    $matcher
 	 */
 	private function expectExecutedStatement($db, $index, $matcher) {
 		$db->expects($this->at($index))->method('updateData')->with($matcher);

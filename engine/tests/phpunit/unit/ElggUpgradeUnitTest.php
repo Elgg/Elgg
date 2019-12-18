@@ -47,47 +47,43 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame(null, $this->obj->is_completed);
 	}
 
-	/**
-	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the class property.
-	 */
 	public function testThrowsOnSaveWithoutClass() {
 		$this->obj->description = 'Test';
 		$this->obj->id = 'test';
 		$this->obj->title = 'Test';
+		
+		$this->expectException(UnexpectedValueException::class);
+		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the class property.');
 		$this->obj->save();
 	}
 
-	/**
-	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the title property.
-	 */
 	public function testThrowsOnSaveWithoutTitle() {
 		$this->obj->setClass('test');
 		$this->obj->description = 'Test';
 		$this->obj->id = 'test';
+		
+		$this->expectException(UnexpectedValueException::class);
+		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the title property.');
 		$this->obj->save();
 	}
 
-	/**
-	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the description property.
-	 */
 	public function testThrowsOnSaveWithoutDesc() {
 		$this->obj->setClass('test');
 		$this->obj->id = 'test';
 		$this->obj->title = 'Test';
+		
+		$this->expectException(UnexpectedValueException::class);
+		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the description property.');
 		$this->obj->save();
 	}
 
-	/**
-	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the id property.
-	 */
 	public function testThrowsOnSaveWithoutId() {
 		$this->obj->setClass('test');
 		$this->obj->description = 'Test';
 		$this->obj->title = 'Test';
+		
+		$this->expectException(UnexpectedValueException::class);
+		$this->expectExceptionMessage('ElggUpgrade objects must have a value for the id property.');
 		$this->obj->save();
 	}
 

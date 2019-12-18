@@ -133,12 +133,13 @@ class ElggCoreObjectTest extends \Elgg\LegacyIntegrationTestCase {
 			'description',
 			'tags',
 		];
-
-		$object = $this->entity->toObject();
-		$object_keys = array_keys(get_object_vars($object));
 		sort($keys);
+		
+		$object = $this->entity->toObject();
+		$object_keys = array_keys($object->getArrayCopy());
 		sort($object_keys);
-		$this->assertIdentical($keys, $object_keys);
+		
+		$this->assertEquals($keys, $object_keys);
 	}
 
 	// see https://github.com/elgg/elgg/issues/1196

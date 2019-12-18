@@ -381,10 +381,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testThrowsOnInvalidCalculation() {
+		$this->expectException(\InvalidArgumentException::class);
 		Annotations::with([])->calculate('invalid', 'status', 'annotation');
 	}
 
@@ -416,10 +414,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidAttributeCalculation() {
+		$this->expectException(\InvalidParameterException::class);
 		Annotations::with([])->calculate('max', 'invalid', 'attribute');
 	}
 
@@ -462,9 +458,6 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnAnnotationsCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -481,12 +474,10 @@ class AnnotationRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Annotations::find($options);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnAnnotationCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -503,6 +494,7 @@ class AnnotationRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Annotations::find($options);
 	}
 
@@ -511,6 +503,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
@@ -576,6 +570,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
@@ -633,6 +629,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$annotation = new AnnotationWhereClause();
 		$annotation->names = ['foo1'];
 		$annotation->values = ['bar1'];
@@ -684,6 +682,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AnnotationWhereClause(), 'n_table');
 
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
@@ -738,6 +738,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AnnotationWhereClause(), 'n_table');
 
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
@@ -793,6 +795,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AnnotationWhereClause(), 'n_table');
 
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
@@ -847,6 +851,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AnnotationWhereClause(), 'n_table');
 
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
@@ -905,6 +911,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AnnotationWhereClause(), 'n_table');
 
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');
@@ -966,6 +974,8 @@ class AnnotationRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('annotations', 'n_table');
 		$select->select('DISTINCT n_table.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AnnotationWhereClause(), 'n_table');
 
 		$select->joinEntitiesTable('n_table', 'entity_guid', 'inner', 'e');

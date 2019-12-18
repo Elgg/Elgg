@@ -245,7 +245,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		
 		$response_cookies = $response->headers->getCookies();
 		$this->assertNotEmpty($response_cookies);
-		$this->assertInternalType('array', $response_cookies);
+		$this->assertIsArray($response_cookies);
 		
 		$persistent_cookie = false;
 		$persistent_cookie_name = elgg()->config->getCookieConfig()['remember_me']['name'];

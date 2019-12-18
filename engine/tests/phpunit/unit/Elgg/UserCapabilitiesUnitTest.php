@@ -7,10 +7,10 @@ use ElggEntity;
 use ElggMetadata;
 use ElggObject;
 use ElggUser;
-use InvalidArgumentException;
 
 /**
  * @group UnitTests
+ * @group UserCapabilities
  */
 class UserCapabilitiesUnitTest extends UnitTestCase {
 
@@ -34,9 +34,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse(elgg_get_ignore_access());
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testOwnerCanEditEntity() {
 		$owner = $this->createUser();
 		$viewer = $this->createUser();
@@ -56,9 +53,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testContainerCanEditEntity() {
 		$owner = $this->createUser();
 		$container = $this->createUser();
@@ -72,9 +66,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($entity->canEdit($container->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanUserEditSelf() {
 		$user = $this->createUser();
 		$viewer = $this->createUser();
@@ -91,9 +82,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideEditPermissionsWithAHook() {
 
 		$user = $this->createUser();
@@ -124,9 +112,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanDeleteWhenCanEdit() {
 		$owner = $this->createUser();
 		$container = $this->createUser();
@@ -145,9 +130,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertEquals($entity->canEdit($viewer->guid), $entity->canDelete($viewer->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideDeletePermissionsWithAHook() {
 
 		$owner = $this->createUser();
@@ -177,9 +159,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanWriteToContainerWhenCanEdit() {
 		$owner = $this->createUser();
 		$container = $this->createUser();
@@ -198,9 +177,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertEquals($entity->canEdit($viewer->guid), $entity->canDelete($viewer->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideContainerPermissionsWithAHook() {
 
 		$owner = $this->createUser();
@@ -236,18 +212,12 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanNotEditMetadataOfUnsavedEntity() {
 		$user = $this->createUser();
 		$entity = new ElggObject();
 		$this->assertFalse($entity->canEditMetadata(null, $user->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testOwnerCanEditUnownedMetadata() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -260,9 +230,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($entity->canEditMetadata($metadata, $owner->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testOwnerCanEditMetadataOwnedBySelf() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -278,9 +245,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($entity->canEditMetadata($metadata, $viewer->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanEditMetadataWhenCanEdit() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -290,9 +254,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($entity->canEditMetadata(null, $owner->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideMetadataPermissionsWithAHook() {
 
 		$owner = $this->createUser();
@@ -329,9 +290,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testOwnerCanEditUnownedAnnotationOnOwnedEntity() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -344,9 +302,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($annotation->canEdit($owner->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testOwnerCanEditAnnotationOwnedBySelfOnOwnedEntity() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -372,9 +327,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testOwnerCanEditAnnotationOwnedBySelfOnUnownedEntity() {
 		$owner = $this->createUser();
 		$entity = $this->createObject();
@@ -400,9 +352,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanEditAnnotationWhenCanEdit() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -416,9 +365,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($annotation->canEdit($owner->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideAnnotationPermissionsWithAHook() {
 
 		$owner = $this->createUser();
@@ -455,9 +401,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testDefaultCanCommentPermissions() {
 
 		$viewer = $this->createUser();
@@ -511,9 +454,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertFalse($comment->canComment($owner->guid));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideCommentingPermissionsWithAHook() {
 
 		$owner = $this->createUser();
@@ -545,63 +485,48 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToAnnotationInstance() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
 			'owner_guid' => $owner->guid,
 		]);
 
+		$this->expectException(\InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, new ElggAnnotation());
 	}
 
-	/**
-	 * @group UserCapabilities
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToArray() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
 			'owner_guid' => $owner->guid,
 		]);
 
+		$this->expectException(\InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, []);
 	}
 
-	/**
-	 * @group UserCapabilities
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToInteger() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
 			'owner_guid' => $owner->guid,
 		]);
 
+		$this->expectException(\InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, 5);
 	}
 
-	/**
-	 * @group UserCapabilities
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testCanAnnotateThrowsExceptionForNameArgumentSetToClosure() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
 			'owner_guid' => $owner->guid,
 		]);
 
+		$this->expectException(\InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, function() {
 			return 'annotation_name';
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanAnnotateByDefault() {
 
 		$viewer = $this->createUser();
@@ -624,9 +549,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($viewer->canAnnotate($viewer->guid, null)); //BC
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideAnnotationPermissionsWithAHookByAnnotationName() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -657,9 +579,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideAnnotationPermissionsWithAGenericHook() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -690,9 +609,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanAnnotateHookSequence() {
 		$owner = $this->createUser();
 		$entity = $this->createObject([
@@ -727,9 +643,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testCanOverrideContainerLogicWithAHook() {
 
 		$owner = $this->createUser();
@@ -758,9 +671,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		});
 	}
 
-	/**
-	 * @group UserCapabilities
-	 */
 	public function testContainerLogicOverridesAreRespectedWhenAccessIsIgnored() {
 
 		$owner = $this->createUser();
@@ -786,7 +696,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 	}
 
 	/**
-	 * @group UserCapabilities
 	 * @group FileService
 	 */
 	public function testCanDownloadFileByDefault() {
@@ -806,7 +715,6 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 	}
 
 	/**
-	 * @group UserCapabilities
 	 * @group FileService
 	 */
 	public function testCanAlterDownloadPermissions() {

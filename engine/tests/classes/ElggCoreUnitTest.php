@@ -26,7 +26,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 	/**
 	 * {@inheritdoc}
 	 */
-	final public function setUp() {
+	final public function setUp(): void {
 
 		// Make sure the application has been bootstrapped correctly
 		$this->assertIsA(elgg(), \DI\Container::class);
@@ -43,7 +43,7 @@ abstract class ElggCoreUnitTest extends UnitTestCase implements Seedable, \Elgg\
 	/**
 	 * {@inheritdoc}
 	 */
-	final public function tearDown() {
+	final public function tearDown(): void {
 		$this->down();
 
 		// We do not want overflowing ignored access

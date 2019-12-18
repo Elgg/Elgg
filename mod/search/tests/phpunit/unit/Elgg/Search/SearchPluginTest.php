@@ -114,8 +114,8 @@ class SearchPluginTest extends UnitTestCase {
 		$search->prepareEntity($entity);
 
 		$this->assertEquals($matched_lorem, $entity->getVolatileData('search_matched_title'));
-		$this->assertContains($matched_lorem, $entity->getVolatileData('search_matched_description'));
-		$this->assertContains($matched_lorem, $entity->getVolatileData('search_matched_extra'));
+		$this->assertStringContainsString($matched_lorem, $entity->getVolatileData('search_matched_description'));
+		$this->assertStringContainsString($matched_lorem, $entity->getVolatileData('search_matched_extra'));
 
 		$this->assertEquals($entity->time_created, $entity->getVolatileData('search_time'));
 		$this->assertEquals(elgg_view_entity_icon($entity, 'small'), $entity->getVolatileData('search_icon'));

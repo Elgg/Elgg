@@ -332,10 +332,11 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 	function mock_insertData($sql, $params) {
 		$pattern = '~INSERT INTO users_remember_me_cookies \(code, guid, timestamp\)\\s+VALUES \(:hash, :guid, :time\)~';
 		$this->assertRegExp($pattern, $sql);
-		$this->assertArraySubset([
-			':guid' => 123,
-			':hash' => $this->mockHash,
-		], $params);
+		
+		$this->assertArrayHasKey(':hash', $params);
+		$this->assertEquals($this->mockHash, $params[':hash']);
+		$this->assertArrayHasKey(':guid', $params);
+		$this->assertEquals(123, $params[':guid']);
 	}
 
 	function mock_deleteData($sql, $params) {
@@ -367,9 +368,10 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 	function mock_updateWrongUser($sql, $get_num_rows, $params) {
 		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
 		$this->assertRegExp($pattern, $sql);
-		$this->assertArraySubset([
-			':hash' => $this->mockHash,
-		], $params);
+		
+		$this->assertArrayHasKey(':hash', $params);
+		$this->assertEquals($this->mockHash, $params[':hash']);
+		
 		$this->assertNotContains($params, [
 			':guid' => 123,
 		]);
@@ -378,10 +380,11 @@ class PersistentLoginUnitTest extends \Elgg\UnitTestCase {
 	function mock_updateCorrectUser($sql, $get_num_rows, $params) {
 		$pattern = '~UPDATE users_remember_me_cookies\\s+SET timestamp = :time\\s+WHERE guid = :guid\\s+AND code = :hash~';
 		$this->assertRegExp($pattern, $sql);
-		$this->assertArraySubset([
-			':guid' => 123,
-			':hash' => $this->mockHash,
-		], $params);
+		
+		$this->assertArrayHasKey(':hash', $params);
+		$this->assertEquals($this->mockHash, $params[':hash']);
+		$this->assertArrayHasKey(':guid', $params);
+		$this->assertEquals(123, $params[':guid']);
 		
 		return 1;
 	}
