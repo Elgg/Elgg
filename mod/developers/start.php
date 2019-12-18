@@ -14,6 +14,7 @@ use Elgg\Project\Paths;
 function developers_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_developers_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_developers_entity_menu');
 		
 	elgg_extend_view('admin.css', 'developers/css');
 	elgg_extend_view('admin.css', 'admin/develop_tools/error_log.css');
@@ -142,6 +143,29 @@ function developers_process_settings() {
 
 		elgg()->logger->pushHandler($handler);
 	}
+}
+
+/**
+ * Register menu items for the entity menu
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:entity'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @internal
+ * @since 3.3
+ */
+function _developers_entity_menu(\Elgg\Hook $hook) {
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$hook->getValue()->add(\ElggMenuItem::factory([
+		'name' => 'entity_explorer',
+		'href' => "admin/develop_tools/entity_explorer?guid={$hook->getEntityParam()->guid}",
+		'text' => elgg_echo('developers:entity_explorer:inspect_entity'),
+		'icon' => 'search',
+	]));
 }
 
 /**
