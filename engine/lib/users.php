@@ -338,25 +338,33 @@ function elgg_user_hover_menu(\Elgg\Hook $hook) {
 		'section' => 'admin',
 	]);
 
-	if (!$user->isAdmin()) {
-		$return[] = ElggMenuItem::factory([
-			'name' => 'makeadmin',
-			'text' => elgg_echo('makeadmin'),
-			'icon' => 'level-up',
-			'href' => "action/admin/user/makeadmin?guid={$user->guid}",
-			'confirm' => true,
-			'section' => 'admin',
-		]);
-	} else {
-		$return[] = ElggMenuItem::factory([
-			'name' => 'removeadmin',
-			'text' => elgg_echo('removeadmin'),
-			'icon' => 'level-down',
-			'href' => "action/admin/user/removeadmin?guid={$user->guid}",
-			'confirm' => true,
-			'section' => 'admin',
-		]);
-	}
+	// Toggle admin role
+	$is_admin = $user->isAdmin();
+	$return[] = ElggMenuItem::factory([
+		'name' => 'makeadmin',
+		'text' => elgg_echo('makeadmin'),
+		'icon' => 'level-up',
+		'href' => elgg_generate_action_url('admin/user/makeadmin', [
+			'guid' => $user->guid,
+		]),
+		'confirm' => true,
+		'section' => 'admin',
+		'item_class' => $is_admin ? 'hidden' : null,
+		'data-toggle' => 'removeadmin',
+	]);
+	
+	$return[] = ElggMenuItem::factory([
+		'name' => 'removeadmin',
+		'text' => elgg_echo('removeadmin'),
+		'icon' => 'level-down',
+		'href' => elgg_generate_action_url('admin/user/removeadmin', [
+			'guid' => $user->guid,
+		]),
+		'confirm' => true,
+		'section' => 'admin',
+		'item_class' => $is_admin ? null : 'hidden',
+		'data-toggle' => 'makeadmin',
+	]);
 
 	$return[] = ElggMenuItem::factory([
 		'name' => 'settings:edit',

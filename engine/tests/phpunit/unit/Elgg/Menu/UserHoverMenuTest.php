@@ -106,7 +106,7 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertTrue($items->has('delete'));
 		$this->assertTrue($items->has('resetpassword'));
 		$this->assertTrue($items->has('makeadmin'));
-		$this->assertFalse($items->has('removeadmin'));
+		$this->assertTrue($items->has('removeadmin'));
 		$this->assertTrue($items->has('settings:edit'));
 
 		_elgg_services()->session->removeLoggedInUser();
@@ -133,7 +133,7 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertTrue($items->has('delete'));
 		$this->assertTrue($items->has('resetpassword'));
 		$this->assertTrue($items->has('makeadmin'));
-		$this->assertFalse($items->has('removeadmin'));
+		$this->assertTrue($items->has('removeadmin'));
 		$this->assertTrue($items->has('settings:edit'));
 
 		_elgg_services()->session->removeLoggedInUser();
@@ -159,7 +159,7 @@ class UserHoverMenuTest extends UnitTestCase {
 		$this->assertFalse($items->has('unban'));
 		$this->assertTrue($items->has('delete'));
 		$this->assertTrue($items->has('resetpassword'));
-		$this->assertFalse($items->has('makeadmin'));
+		$this->assertTrue($items->has('makeadmin'));
 		$this->assertTrue($items->has('removeadmin'));
 		$this->assertTrue($items->has('settings:edit'));
 
