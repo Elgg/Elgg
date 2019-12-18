@@ -19,15 +19,15 @@ class SimpletestCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('simpletest')
-			->setDescription('Run simpletest test suite')
+			->setDescription(elgg_echo('cli:simpletest:description'))
 			->addOption('config', 'c', InputOption::VALUE_OPTIONAL,
-				'Path to settings file that the Elgg Application should be bootstrapped with'
+				elgg_echo('cli:simpletest:option:config')
 			)
 			->addOption('plugins', 'p', InputOption::VALUE_IS_ARRAY | InputOption::VALUE_OPTIONAL,
-				'A list of plugins to enable for testing or "all" to enable all plugins'
+				elgg_echo('cli:simpletest:option:plugins')
 			)
 			->addOption('filter', 'f', InputOption::VALUE_OPTIONAL,
-				'Only run tests that match filter pattern'
+				elgg_echo('cli:simpletest:option:filter')
 			);
 	}
 
@@ -37,8 +37,8 @@ class SimpletestCommand extends Command {
 	protected function command() {
 
 		if (!class_exists('ElggCoreUnitTest')) {
-			elgg_log('You must install your Elgg application using "composer install --dev"', 'ERROR');
-
+			$this->error(elgg_echo('cli:simpletest:error:class', ['composer install --dev']));
+			
 			return 1;
 		}
 
@@ -116,7 +116,7 @@ class SimpletestCommand extends Command {
 				if (is_subclass_of($file, \UnitTestCase::class)) {
 					$suite->add($file);
 				} else {
-					elgg_log($file . ' is not a valid simpletest class');
+					$this->error(elgg_echo('cli:simpletest:error:file', [$file]));
 				}
 			}
 		}
@@ -138,10 +138,10 @@ class SimpletestCommand extends Command {
 		}
 
 		$formatter = new FormatterHelper();
-		$message = $formatter->formatBlock(sprintf("Time: %.2f seconds, Memory: %.2fMb\n",
+		$message = $formatter->formatBlock(elgg_echo('cli:simpletest:output:summary', [
 			microtime(true) - $start_time,
-			memory_get_peak_usage() / 1048576.0 // in megabytes
-		), 'info');
+			memory_get_peak_usage() / 1048576.0, // in megabytes
+		]), 'info');
 
 		$this->output->writeln($message);
 

@@ -45,6 +45,13 @@ abstract class BaseCommand extends \Symfony\Component\Console\Command\Command {
 		/* @var $helper QuestionHelper */
 		$helper = $this->getHelper('question');
 
+		$question = trim($question);
+		$question = rtrim($question, ':');
+		if (is_scalar($default) && !is_bool($default)) {
+			$question .= " [{$default}]";
+		}
+		$question .= ': ';
+		
 		$q = new Question($question, $default);
 
 		if ($hidden) {

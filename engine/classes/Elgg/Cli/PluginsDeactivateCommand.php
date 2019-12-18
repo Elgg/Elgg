@@ -18,12 +18,12 @@ class PluginsDeactivateCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('plugins:deactivate')
-			->setDescription('Deactivate plugin(s)')
+			->setDescription(elgg_echo('cli:plugins:deactivate:description'))
 			->addOption('force', 'f', InputOption::VALUE_NONE,
-				'Force deactivation of all dependent plugins'
+				elgg_echo('cli:plugins:deactivate:option:force')
 			)
 			->addArgument('plugins', InputArgument::REQUIRED | InputArgument::IS_ARRAY,
-				'Plugin IDs to be deactivated'
+				elgg_echo('cli:plugins:deactivate:argument:plugins')
 			);
 	}
 
@@ -37,7 +37,7 @@ class PluginsDeactivateCommand extends Command {
 
 		$helper = _elgg_services()->cli_progress;
 
-		$progress = $helper->start('Deactivating plugins', count($ids));
+		$progress = $helper->start(elgg_echo('cli:plugins:deactivate:progress:start'), count($ids));
 
 		foreach ($ids as $id) {
 			try {
