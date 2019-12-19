@@ -1,5 +1,6 @@
 <?php
-return array(
+
+return [
 
 	/**
 	 * Menu items and titles
@@ -15,6 +16,9 @@ return array(
 	'edit:object:page' => "Edit this page",
 
 	'groups:tool:pages' => 'Enable group pages',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Delete this page",
 	'pages:history' => "History",
@@ -96,4 +100,4 @@ View and comment on the page:
 	
 	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
 	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
-);
+];
