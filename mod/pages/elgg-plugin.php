@@ -11,7 +11,6 @@ return [
 	],
 	'actions' => [
 		'pages/edit' => [],
-		'annotations/page/delete' => [],
 	],
 	'routes' => [
 		'default:object:page' => [
