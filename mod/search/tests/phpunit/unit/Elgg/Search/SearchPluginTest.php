@@ -83,6 +83,9 @@ class SearchPluginTest extends UnitTestCase {
 
 			return $value;
 		});
+		
+		// make metadataname available in search results output
+		add_translation(get_current_language(), ['foo' => 'foo']);
 
 		$lorem = 'Lorem ipsum dolor sit amet consectetur adipiscing elit';
 		$lorem_long = 'Lorem ipsum dolor sit amet consectetur adipiscing elit. Aenean vel tempor purus. In dapibus diam ac enim accumsan blandit. Ut sit amet iaculis felis. Donec et porttitor nunc. Fusce tellus nisl, volutpat a maximus vel, tempus ac felis. Ut id lacus varius, faucibus nibh in, consectetur diam. Sed gravida est ac malesuada porta.
