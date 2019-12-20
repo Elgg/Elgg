@@ -1,6 +1,5 @@
 language: php
 php:
- - 7.1
  - 7.2
  - 7.3
 
@@ -60,7 +59,7 @@ matrix:
         - composer docs:build
 
     # Memcached enabled
-    - php: 7.1
+    - php: 7.2
       services:
         - memcached
         - mysql
@@ -80,7 +79,7 @@ matrix:
         - ./vendor/bin/phpunit
 
     # Redis enabled
-    - php: 7.1
+    - php: 7.2
       services:
         - redis-server
         - mysql
@@ -100,7 +99,7 @@ matrix:
 
     # Test upgrade path from 2.3
     # uses trusty dist to also test MySQL 5.6
-    - php: 7.1
+    - php: 7.2
       dist: trusty
       env: JOB_NAME=upgrade_from_Elgg2
       install:
