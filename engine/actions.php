@@ -29,6 +29,7 @@ return [
 	'admin/user/removeadmin' => ['access' => 'admin'],
 	'admin/user/unban' => ['access' => 'admin'],
 	'admin/user/validate' => ['access' => 'admin'],
+	'annotation/delete' => [],
 	'avatar/upload' => [],
 	'avatar/crop' => [],
 	'avatar/remove' => [],

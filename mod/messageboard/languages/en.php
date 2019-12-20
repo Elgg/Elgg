@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
 
 	/**
 	 * Menu items and titles
@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "You successfully posted on the message board.",
 	'messageboard:deleted' => "You successfully deleted the message.",
 
@@ -54,4 +57,4 @@ To view %s's profile, click here:
 
 	'widgets:messageboard:name' => "Message board",
 	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
-);
+];

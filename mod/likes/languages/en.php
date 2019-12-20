@@ -1,5 +1,9 @@
 <?php
-return array(
+
+return [
+	'annotation:delete:likes:fail' => "There was a problem removing your like",
+	'annotation:delete:likes:success' => "Your like has been removed",
+	
 	'likes:this' => 'liked this',
 	'likes:deleted' => 'Your like has been removed',
 	'likes:see' => 'See who liked this',
@@ -37,4 +41,4 @@ Thanks,
 	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
 	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-);
+];

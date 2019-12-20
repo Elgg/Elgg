@@ -1,9 +1,9 @@
 <?php
 /**
- * Output relationship subtitle
+ * Output annotation subtitle
  *
- * @uses $vars['relationship'] the relationship
- * @uses $vars['subtitle']     subtitle (false for no subtitle, '' for default subtitle)
+ * @uses $vars['annotation'] ElggAnnotation
+ * @uses $vars['subtitle']   Subtitle (false for no subtitle, '' for default subtitle)
  */
 
 $subtitle = elgg_extract('subtitle', $vars, '');
@@ -12,7 +12,7 @@ if ($subtitle === false) {
 }
 
 if ($subtitle === '') {
-	$subtitle = elgg_view('relationship/elements/imprint', $vars);
+	$subtitle = elgg_view('annotation/elements/imprint', $vars);
 }
 
 if (elgg_is_empty($subtitle)) {
@@ -20,7 +20,6 @@ if (elgg_is_empty($subtitle)) {
 }
 
 echo elgg_format_element('div', ['class' => [
-	'elgg-relationship-subtitle', // @todo remove in 4.0
 	'elgg-listing-summary-subtitle',
 	'elgg-subtext',
 ]], $subtitle);

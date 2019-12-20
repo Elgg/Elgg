@@ -10,4 +10,10 @@
  * @uses $vars['content']   HTML for the entity content (optional)
  */
 
-echo elgg_view('object/elements/summary', $vars);
+$params = [
+	'content' => elgg_view('user/elements/summary/content', $vars),
+	'subtitle' => elgg_view('user/elements/summary/subtitle', $vars),
+];
+$params = $params + $vars;
+
+echo elgg_view('object/elements/summary', $params);
