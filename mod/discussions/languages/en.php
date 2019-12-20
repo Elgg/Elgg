@@ -4,6 +4,9 @@ return array(
 	'add:object:discussion' => 'Add discussion topic',
 	'edit:object:discussion' => 'Edit topic',
 
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
+
 	'discussion:latest' => 'Latest discussions',
 	'collection:object:discussion:group' => 'Group discussions',
 	'discussion:none' => 'No discussions',

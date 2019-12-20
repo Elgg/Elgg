@@ -31,8 +31,12 @@ function discussion_init() {
 	// Add latest discussions tab to /groups/all page
 	elgg_register_plugin_hook_handler('register', 'menu:filter:groups/all', 'discussion_setup_groups_filter_tabs');
 
+	elgg_register_plugin_hook_handler('register', 'menu:site', 'Elgg\Discussions\Menus::registerSiteMenuItem');
+
 	// register database seed
 	elgg_register_plugin_hook_handler('seeds', 'database', 'discussion_register_db_seeds');
+
+	elgg_register_plugin_hook_handler('container_logic_check', 'object', 'Elgg\Discussions\Permissions::containerLogic');
 }
 
 /**
@@ -252,7 +256,6 @@ function discussion_setup_groups_filter_tabs(\Elgg\Hook $hook) {
 
 	return $return;
 }
-
 
 /**
  * Register database seed
