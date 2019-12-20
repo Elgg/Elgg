@@ -9,6 +9,9 @@ return [
 			'searchable' => true,
 		],
 	],
+	'settings' => [
+		'enable_global_discussions' => 0,
+	],
 	'actions' => [
 		'discussion/save' => [],
 	],
