@@ -1,3 +1,28 @@
+<a name="3.2.3"></a>
+### 3.2.3  (2019-12-20)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+* Jeroen Dalsem (3)
+
+#### Features
+
+* **groups:** add limited group creation middleware ([9ea474e1](https://github.com/Elgg/Elgg/commit/9ea474e1444accea7eaf425993fed73cb7507fa8))
+
+
+#### Documentation
+
+* **actions:** updated action documentation ([3e90769f](https://github.com/Elgg/Elgg/commit/3e90769f67b0c19ddf1296b7fdf6097642efe9f8))
+
+
+#### Bug Fixes
+
+* **icons:** always use default viewtype when using fallback icons ([b2c666b7](https://github.com/Elgg/Elgg/commit/b2c666b70a3f7dd2bc98def976510cb62d9f21bd))
+* **search:** search result extras are formatted correctly ([3fd1355d](https://github.com/Elgg/Elgg/commit/3fd1355d1fe999935919c7e81e6a84869536a807))
+* **views:** use correct summary classes in relationship elements ([30ef1c87](https://github.com/Elgg/Elgg/commit/30ef1c87d0660d93eb3737dc387378d3b2ca5f8d))
+
+
 <a name="3.2.2"></a>
 ### 3.2.2  (2019-12-06)
 
