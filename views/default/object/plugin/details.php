@@ -2,12 +2,8 @@
 
 $guid = (int) get_input('guid');
 
-if (empty($guid)) {
-	return;
-}
-
 $plugin = get_entity($guid);
-if (!$plugin instanceof ElggPlugin) {
+if (!$plugin instanceof ElggPlugin || !$plugin->canEdit()) {
 	return;
 }
 
