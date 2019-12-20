@@ -11,7 +11,7 @@ Requirements
 ============
 
 - MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)
-- PHP 7.1+ with the following extensions:
+- PHP 7.2+ with the following extensions:
 
    -  GD (for graphics processing)
    -  PDO (for database connection)
