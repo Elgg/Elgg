@@ -1285,6 +1285,9 @@ class ElggInstaller {
 				case 'dataroot':
 					$v = Paths::sanitize($v);
 					break;
+				case 'dbpassword':
+					$v = addslashes($v);
+					break;
 			}
 
 			$template = str_replace("{{" . $k . "}}", $v, $template);
