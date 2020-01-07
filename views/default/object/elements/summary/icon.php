@@ -23,7 +23,7 @@ if (isset($icon) && $icon !== true) {
 $icon_size = elgg_extract('icon_size', $vars, 'small');
 $icon_entity = elgg_extract('icon_entity', $vars);
 if ($icon_entity instanceof ElggEntity) {
-	echo elgg_view_entity_icon($icon_entity, $icon_size);
+	echo elgg_view_entity_icon($icon_entity, $icon_size, $vars);
 	return;
 }
 
@@ -37,7 +37,7 @@ if (!$entity instanceof ElggEntity) {
 }
 
 if ($entity->hasIcon($icon_size)) {
-	echo elgg_view_entity_icon($entity, $icon_size);
+	echo elgg_view_entity_icon($entity, $icon_size, $vars);
 	return;
 }
 
@@ -46,4 +46,4 @@ if (!$owner instanceof ElggEntity) {
 	return;
 }
 
-echo elgg_view_entity_icon($owner, $icon_size);
+echo elgg_view_entity_icon($owner, $icon_size, $vars);
