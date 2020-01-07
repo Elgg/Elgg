@@ -32,6 +32,7 @@ if ($no_results === true) {
 
 if (!$items && $no_results) {
 	echo elgg_view('page/components/no_results', $vars);
+	echo elgg_view('page/components/list/out_of_bounds', $vars);
 	return;
 }
 

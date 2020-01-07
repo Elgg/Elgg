@@ -1161,6 +1161,9 @@ These changes will only affect new users on the site.',
 	'content' => "content",
 	'content:latest' => 'Latest activity',
 	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
+	
+	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
+	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => 'view link',
 

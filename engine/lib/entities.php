@@ -607,7 +607,7 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 	$entities = call_user_func($getter, $options);
 	$options['count'] = is_array($entities) ? count($entities) : 0;
 	
-	if (!empty($entities)) {
+	if (!empty($entities) || !empty($options['offset'])) {
 		$count_needed = true;
 		if (!$options['pagination']) {
 			$count_needed = false;
