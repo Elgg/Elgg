@@ -1277,6 +1277,7 @@ Once you have logged in, we highly recommend that you change your password.',
 	'messages:title:warning' => 'Warning',
 	'messages:title:help' => 'Help',
 	'messages:title:notice' => 'Notice',
+	'messages:title:info' => 'Info',
 
 /**
  * Import / export
