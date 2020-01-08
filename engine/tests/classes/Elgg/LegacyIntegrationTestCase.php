@@ -63,12 +63,12 @@ abstract class LegacyIntegrationTestCase extends IntegrationTestCase {
 		TestCase::assertThat(new IdenticalEntityExpectation($first), $second, $message);
 	}
 
-	public static function assertTrue($condition, $message = '') {
+	public static function assertTrue($condition, $message = ''): void {
 		// PHPUnit expects an actual boolean
 		TestCase::assertTrue((bool) $condition, $message);
 	}
 
-	public static function assertFalse($condition, $message = '') {
+	public static function assertFalse($condition, $message = ''): void {
 		// PHPUnit expects an actual boolean
 		TestCase::assertFalse((bool) $condition, $message);
 	}

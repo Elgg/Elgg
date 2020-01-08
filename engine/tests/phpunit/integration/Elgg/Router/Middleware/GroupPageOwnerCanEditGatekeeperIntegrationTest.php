@@ -3,6 +3,7 @@
 namespace Elgg\Router\Middleware;
 
 use Elgg\IntegrationTestCase;
+use Elgg\EntityPermissionsException;
 
 class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 
@@ -60,7 +61,6 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	
 	/**
 	 * @dataProvider routeUserDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedOutCantAccessUserPage(string $route_name, array $route_params) {
 		
@@ -76,12 +76,12 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($http_request);
 	}
 	
 	/**
 	 * @dataProvider routeGroupDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedOutCantAccessGroupPage(string $route_name, array $route_params) {
 		
@@ -100,12 +100,12 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($http_request);
 	}
 	
 	/**
 	 * @dataProvider routeEntityDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedOutCantAccessEntityPage(string $route_name, array $route_params) {
 		
@@ -128,12 +128,12 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($http_request);
 	}
 	
 	/**
 	 * @dataProvider routeUserDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedInOtherCantAccessUserPage(string $route_name, array $route_params) {
 		
@@ -152,12 +152,12 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($http_request);
 	}
 	
 	/**
 	 * @dataProvider routeGroupDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedInOtherCantAccessGroupPage(string $route_name, array $route_params) {
 		
@@ -179,12 +179,12 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($http_request);
 	}
 	
 	/**
 	 * @dataProvider routeEntityDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedInOtherCantAccessEntityPage(string $route_name, array $route_params) {
 		
@@ -210,12 +210,12 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($http_request);
 	}
 	
 	/**
 	 * @dataProvider routeUserDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedInCantAccessUserPage(string $route_name, array $route_params) {
 		
@@ -232,6 +232,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		$response = _elgg_services()->router->route($http_request);
 		$this->assertTrue($response);
 	}
@@ -294,7 +295,6 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 	
 	/**
 	 * @dataProvider routeEntityDataProvider
-	 * @expectedException \Elgg\EntityPermissionsException
 	 */
 	public function testLoggedInCantAccessEntityPage(string $route_name, array $route_params) {
 		
@@ -315,6 +315,7 @@ class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase
 		
 		_elgg_services()->setValue('request', $http_request);
 		
+		$this->expectException(EntityPermissionsException::class);
 		$response = _elgg_services()->router->route($http_request);
 		$this->assertTrue($response);
 	}

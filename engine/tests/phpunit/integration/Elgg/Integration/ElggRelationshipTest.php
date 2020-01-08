@@ -118,14 +118,14 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 
 		$r->guid_two = $this->entity3->guid;
 		$new_id = $r->save();
-		$this->assertInternalType('integer', $new_id);
-		$this->assertNotEqual($new_id, $old_id);
+		$this->assertIsInt($new_id);
+		$this->assertNotEquals($old_id, $new_id);
 
 		$test_r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
 		$this->assertInstanceOf(\ElggRelationship::class, $test_r);
-		$this->assertIdentical($r->guid_one, $test_r->guid_one);
-		$this->assertIdentical($r->guid_two, $test_r->guid_two);
-		$this->assertIdentical($r->relationship, $test_r->relationship);
+		$this->assertEquals($r->guid_one, $test_r->guid_one);
+		$this->assertEquals($r->guid_two, $test_r->guid_two);
+		$this->assertEquals($r->relationship, $test_r->relationship);
 
 		// the original shouldn't exist anymore
 		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));

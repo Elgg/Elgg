@@ -315,7 +315,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 		
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
 		
 		foreach ($es as $e) {
@@ -330,7 +330,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 		
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
 		
 		$object1->delete();
@@ -362,7 +362,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 		
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
 		
 		foreach ($es as $e) {
@@ -377,7 +377,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 		
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
 		
 		$object1->delete();
@@ -410,7 +410,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 		
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
 		
 		foreach ($es as $e) {
@@ -426,7 +426,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 		
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertInternalType('array', $es);
+		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
 		
 		$object1->delete();

@@ -67,11 +67,11 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		$row4 = $row4[0];
 
 		$this->assertInstanceOf(\stdClass::class, $row1);
-		$this->assertSame($row1->type, $this->user->type);
-		$this->assertEqual($row1, $row2);
-		$this->assertEqual($row1, $row3);
-		$this->assertInternalType('array', $row4);
-		$this->assertEqual((array)$row1, $row4);
+		$this->assertSame($this->user->type, $row1->type);
+		$this->assertEquals($row1, $row2);
+		$this->assertEquals($row1, $row3);
+		$this->assertIsArray($row4);
+		$this->assertEquals((array)$row1, $row4);
 	}
 
 	public function testCanGetDataRow() {
@@ -96,9 +96,9 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		]);
 
 		$this->assertInstanceOf(\stdClass::class, $row1);
-		$this->assertEqual($row1->guid, $this->user->guid);
-		$this->assertEqual($row1, $row2);
-		$this->assertEqual($row1, $row3);
+		$this->assertEquals($this->user->guid, $row1->guid);
+		$this->assertEquals($row1, $row2);
+		$this->assertEquals($row1, $row3);
 	}
 
 	public function testCanInsert() {
@@ -131,10 +131,10 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 			ORDER BY id ASC
 		", null, [$this->user->guid, $this->user->guid, $time]);
 
-		$this->assertInternalType('integer', $id1);
-		$this->assertInternalType('integer', $id2);
-		$this->assertEqual($rows[0]->id, $id1);
-		$this->assertEqual($rows[1]->id, $id2);
+		$this->assertIsInt($id1);
+		$this->assertIsInt($id2);
+		$this->assertEquals($id1, $rows[0]->id);
+		$this->assertEquals($id2, $rows[1]->id);
 
 		remove_entity_relationship($this->user->guid, 'test_self1', $this->user->guid);
 		remove_entity_relationship($this->user->guid, 'test_self2', $this->user->guid);
@@ -151,8 +151,8 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		");
 		$rel = get_relationship($rel->id);
 
-		$this->assertIdentical($res, true);
-		$this->assertEqual($rel->relationship, 'test_self2');
+		$this->assertTrue($res);
+		$this->assertEquals('test_self2', $rel->relationship);
 
 		$num_rows = update_data("
 			UPDATE {$this->prefix}entity_relationships
@@ -161,8 +161,8 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		", [], true);
 		$rel = get_relationship($rel->id);
 
-		$this->assertIdentical($num_rows, 1);
-		$this->assertEqual($rel->relationship, 'test_self3');
+		$this->assertEquals(1, $num_rows);
+		$this->assertEquals('test_self3', $rel->relationship);
 
 		$num_rows = update_data("
 			UPDATE {$this->prefix}entity_relationships
@@ -174,8 +174,8 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		], true);
 		$rel = get_relationship($rel->id);
 
-		$this->assertIdentical($num_rows, 1);
-		$this->assertEqual($rel->relationship, 'test_self4');
+		$this->assertEquals(1, $num_rows);
+		$this->assertEquals('test_self4', $rel->relationship);
 
 		$rel->delete();
 	}
@@ -191,7 +191,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 			DELETE FROM {$this->prefix}entity_relationships
 			WHERE id = {$rel->id}
 		");
-		$this->assertIdentical($res, 1);
+		$this->assertEquals(1, $res);
 		$this->assertFalse(check_entity_relationship($this->user->guid, 'test_self1', $this->user->guid));
 
 		$rel = $new_rel();
@@ -201,7 +201,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		", [
 			':id' => $rel->id,
 		]);
-		$this->assertIdentical($res, 1);
+		$this->assertEquals(1, $res);
 		$this->assertFalse(check_entity_relationship($this->user->guid, 'test_self1', $this->user->guid));
 	}
 
@@ -214,15 +214,13 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 			"\r" => "\\r",
 		];
 		foreach ($data as $in => $out) {
-			$this->assertIdentical($out, sanitize_string($in));
+			$this->assertEquals(sanitize_string($in), $out);
 		}
 	}
 
-	/**
-	 * @expectedException \DatabaseException
-	 * @expectedExceptionMessage Elgg\Database::sanitizeString() and serialize_string() cannot accept arrays.
-	 */
 	public function testSanitizeRejectsArrays() {
+		$this->expectException(\DatabaseException::class);
+		$this->expectExceptionMessage('Elgg\Database::sanitizeString() and serialize_string() cannot accept arrays.');
 		sanitise_string(['foo']);
 	}
 
@@ -251,6 +249,6 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertInstanceOf(\Doctrine\DBAL\Driver\Statement::class, $captured);
 
 		$rows = $captured->fetchAll(\PDO::FETCH_OBJ);
-		$this->assertEqual($rows[0]->guid, $this->user->guid);
+		$this->assertEquals($this->user->guid, $rows[0]->guid);
 	}
 }

@@ -326,10 +326,8 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testThrowsOnInvalidCalculation() {
+		$this->expectException(\InvalidArgumentException::class);
 		Entities::with([])->calculate('invalid', 'guid', 'attribute');
 	}
 
@@ -381,10 +379,8 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidAttributeCalculation() {
+		$this->expectException(\InvalidParameterException::class);
 		Entities::with([])->calculate('max', 'invalid', 'attribute');
 	}
 
@@ -423,9 +419,6 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnMetadataCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -442,12 +435,10 @@ class EntitiesRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Entities::find($options);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnAnnotationCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -464,6 +455,7 @@ class EntitiesRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Entities::find($options);
 	}
 
@@ -472,6 +464,8 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$alias1 = $select->joinMetadataTable('e', 'guid', ['foo1']);
@@ -522,7 +516,9 @@ class EntitiesRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
-
+		
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$select->joinMetadataTable('e', 'guid', null, 'inner','n_table');
@@ -575,6 +571,8 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$alias1 = $select->joinAnnotationTable('e', 'guid', ['foo1']);
@@ -625,7 +623,9 @@ class EntitiesRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
-
+		
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$select->joinAnnotationTable('e', 'guid', null, 'inner','n_table');
@@ -678,6 +678,8 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$alias1 = $select->joinPrivateSettingsTable('e', 'guid', 'foo1');
@@ -728,7 +730,9 @@ class EntitiesRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
-
+		
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$select->joinPrivateSettingsTable('e', 'guid', null, 'inner','ps');
@@ -783,7 +787,9 @@ class EntitiesRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
-
+		
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$alias1 = $select->joinRelationshipTable('e', 'guid', ['foo1']);
@@ -842,6 +848,8 @@ class EntitiesRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('entities', 'e');
 		$select->select('DISTINCT e.*');
 
+		$wheres = [];
+		
 		$select->addClause(new AccessWhereClause());
 
 		$select->joinRelationshipTable('e', 'guid', null, false, 'inner','r');

@@ -13,6 +13,9 @@ PHP 7.1 has reached `end of life`_ in December 2019. To ensure that Elgg sites a
 
 If upgrading from a previous Elgg installation make sure you have the correct PHP version installed.
 
+In order to be able to test Elgg on PHP 7.4 we had to update the PHPUnit testsuite to version 8.5. This may require some rewrites of your
+own unit/integration tests.
+
 .. _end of life: https://www.php.net/eol.php
 
 Simpler use of 'default' layout

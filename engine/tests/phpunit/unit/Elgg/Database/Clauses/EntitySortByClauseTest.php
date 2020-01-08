@@ -160,9 +160,6 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 	
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidAttributeName() {
 
 		$query = new EntitySortByClause();
@@ -171,12 +168,11 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->property_type = 'attribute';
 
 		$qb = Select::fromTable('entities', 'alias');
+		
+		$this->expectException(\InvalidParameterException::class);
 		$qb->addClause($query);
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidPropertyType() {
 
 		$query = new EntitySortByClause();
@@ -185,6 +181,8 @@ class EntitySortByClauseTest extends UnitTestCase {
 		$query->property_type = 'invalid';
 
 		$qb = Select::fromTable('entities', 'alias');
+		
+		$this->expectException(\InvalidParameterException::class);
 		$qb->addClause($query);
 	}
 }

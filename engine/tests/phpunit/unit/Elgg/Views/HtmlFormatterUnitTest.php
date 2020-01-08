@@ -154,10 +154,8 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		$this->assertSame($expected, elgg_format_element($attrs), $message);
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testElggFormatElementThrows() {
+		$this->expectException(\InvalidArgumentException::class);
 		elgg_format_element(array());
 	}
 

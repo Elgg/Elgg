@@ -309,10 +309,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testThrowsOnInvalidCalculation() {
+		$this->expectException(\InvalidArgumentException::class);
 		Relationships::with([])->calculate('invalid', 'status', 'annotation');
 	}
 
@@ -342,10 +340,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidAttributeCalculation() {
+		$this->expectException(\InvalidParameterException::class);
 		Relationships::with([])->calculate('max', 'invalid', 'attribute');
 	}
 
@@ -388,9 +384,6 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnAnnotationsCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -407,12 +400,10 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Relationships::find($options);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnAnnotationCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -429,6 +420,7 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		Relationships::find($options);
 	}
 
@@ -437,6 +429,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
 
+		$wheres = [];
+		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$where = new EntityWhereClause();
 		$where->guids = [1, 2];
@@ -503,7 +497,9 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 		
@@ -556,7 +552,9 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
-
+		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
@@ -608,6 +606,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
+		
+		$wheres = [];
 		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
@@ -662,6 +662,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
 		
+		$wheres = [];
+		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
 
@@ -713,6 +715,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
+		
+		$wheres = [];
 		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
@@ -769,6 +773,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
+		
+		$wheres = [];
 		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');
@@ -827,6 +833,8 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('entity_relationships', 'er');
 		$select->select('DISTINCT er.*');
+		
+		$wheres = [];
 		
 		$select->joinEntitiesTable('er', 'guid_one', 'inner', 'e');
 		$select->addClause(new EntityWhereClause(), 'e');

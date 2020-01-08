@@ -44,22 +44,20 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2 = $this->createObject();
 		
 		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertInternalType('int', $id);
+		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
 		$object1->delete();
 		$object2->delete();
 	}
 	
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testAddTooLongRelationshipFailure() {
 		$object1 = $this->createObject();
 		$object2 = $this->createObject();
 		
 		$str = str_repeat('Foo', \ElggRelationship::RELATIONSHIP_LIMIT);
 		
+		$this->expectException(\InvalidArgumentException::class);
 		$this->service->add($object1->guid, $str, $object2->guid);
 		
 		$object1->delete();
@@ -106,7 +104,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2 = $this->createObject();
 		
 		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertInternalType('int', $id);
+		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
 		$relationship = $this->service->get($id);
@@ -126,7 +124,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2 = $this->createObject();
 		
 		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertInternalType('int', $id);
+		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
 		$success = $this->service->delete($id);
@@ -144,7 +142,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2 = $this->createObject();
 		
 		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertInternalType('int', $id);
+		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
 		elgg()->events->registerHandler('delete', 'relationship', function(\Elgg\Event $event) {
@@ -168,7 +166,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2 = $this->createObject();
 		
 		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertInternalType('int', $id);
+		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
 		elgg()->events->registerHandler('delete', 'relationship', function(\Elgg\Event $event) {
@@ -193,7 +191,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2 = $this->createObject();
 		
 		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertInternalType('int', $id);
+		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
 		$this->assertNotFalse($this->service->check($object1->guid, 'testRelationship', $object2->guid));
@@ -211,7 +209,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2 = $this->createObject();
 		
 		$id = $this->service->add($object1->guid, 'testRelationship', $object2->guid, true);
-		$this->assertInternalType('int', $id);
+		$this->assertIsInt($id);
 		$this->assertGreaterThan(0, $id);
 		
 		$this->assertFalse($this->service->remove($object2->guid, 'testRelationship', $object1->guid));

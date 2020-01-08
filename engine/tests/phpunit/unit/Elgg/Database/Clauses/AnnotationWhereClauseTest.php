@@ -284,9 +284,6 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidSortByCalculation() {
 
 		$query = new AnnotationWhereClause();
@@ -296,6 +293,8 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$query->sort_by_direction = 'desc';
 
 		$qb = Select::fromTable('entities', 'alias');
+		
+		$this->expectException(\InvalidParameterException::class);
 		$qb->addClause($query);
 	}
 
@@ -352,4 +351,3 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 }
-

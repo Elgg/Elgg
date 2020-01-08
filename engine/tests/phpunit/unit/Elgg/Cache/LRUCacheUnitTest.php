@@ -71,18 +71,14 @@ class LRUCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(2, $pool->size());
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testThrowExceptionOnNegativeSize() {
-		$pool = new LRUCache(-2);
+		$this->expectException(\InvalidArgumentException::class);
+		new LRUCache(-2);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testThrowExceptionOnNonIntSize() {
-		$pool = new LRUCache("abc");
+		$this->expectException(\InvalidArgumentException::class);
+		new LRUCache("abc");
 	}
 	
 	/**

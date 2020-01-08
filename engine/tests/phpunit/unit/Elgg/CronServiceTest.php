@@ -62,6 +62,7 @@ class CronServiceTest extends UnitTestCase {
 
 	public function testCanAddCronHandler() {
 
+		$calls = 0;
 		$handler = function() use (&$calls) {
 			$calls++;
 			echo 'Success';
@@ -88,7 +89,8 @@ class CronServiceTest extends UnitTestCase {
 		_elgg_cron_init();
 
 		_elgg_config()->security_protect_cron = false;
-
+		
+		$calls = 0;
 		$dt = new \DateTime('2017-1-1 0:00:00');
 
 		$handler = function(\Elgg\Hook $hook) use (&$calls, $dt) {
@@ -118,6 +120,7 @@ class CronServiceTest extends UnitTestCase {
 
 		_elgg_config()->security_protect_cron = false;
 
+		$calls = 0;
 		$dt = new \DateTime('2017-1-1 0:00:00');
 
 		$handler = function(\Elgg\Hook $hook) use (&$calls, $dt) {
@@ -142,12 +145,9 @@ class CronServiceTest extends UnitTestCase {
 		elgg_unregister_plugin_hook_handler('cron', 'yearly', $handler);
 	}
 
-	/**
-	 * @expectedException \CronException
-	 */
 	public function testThrowsOnInvalidInterval() {
+		$this->expectException(\CronException::class);
 		_elgg_services()->cron->run(['foo']);
 	}
-
 
 }

@@ -65,9 +65,6 @@ class CollectionsUnitTest extends UnitTestCase {
 
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testCanConstructCollectionWithInvalidItems() {
 
 		_elgg_services()->logger->disable();
@@ -75,6 +72,7 @@ class CollectionsUnitTest extends UnitTestCase {
 		$a = new TestItem('a', 100);
 		$b = new TestItem('b', 200);
 
+		$this->expectException(\InvalidParameterException::class);
 		$collection = new Collection(['c' => $a, 'd' => $b, null, false, new \stdClass()]);
 
 		$this->assertEquals([
@@ -289,10 +287,8 @@ class CollectionsUnitTest extends UnitTestCase {
 
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testConstructorThrowsWithInvalidClass() {
+		$this->expectException(\InvalidArgumentException::class);
 		new Collection([], MyClass::class);
 	}
 

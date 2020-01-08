@@ -28,7 +28,7 @@
         "css-crush/css-crush": "^2.4.0",
         "doctrine/cache": "^1.6",
         "doctrine/dbal": "~2.5",
-        "fzaninotto/faker": "^1.6",
+        "fzaninotto/faker": "^1.9",
         "hackzilla/password-generator": "~1.4.1",
         "imagine/imagine": "^0.7.1",
         "league/flysystem": "~1.0",
@@ -87,7 +87,7 @@
         "travis:install-with-mysql8": [
             "composer travis:install",
             "mysql -e 'create database elgg;'",
-            "echo \"ALTER USER 'root'@'localhost' IDENTIFIED BY 'password'; FLUSH PRIVILEGES;\" | mysql -u root",
+            "echo \"ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'password'; FLUSH PRIVILEGES;\" | mysql -u root",
             "php ./elgg-cli install --config ./install/cli/testing_app.php --verbose"
         ],
         "docs:build": [
@@ -120,7 +120,7 @@
         "squizlabs/php_codesniffer": "^2.8.1",
         "simpletest/simpletest": "~1.1",
         "phpdocumentor/reflection-docblock": "~2.0",
-        "phpunit/phpunit": "~6.4"
+        "phpunit/phpunit": "~8.5"
     },
     "repositories": [
         {

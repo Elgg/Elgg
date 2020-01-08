@@ -59,7 +59,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			'metadata_case_sensitive' => true
 		];
 		$case_true = elgg_get_entities_from_metadata($options);
-		$this->assertInternalType('array', $case_true);
+		$this->assertIsArray($case_true);
 
 		$options = [
 			'metadata_names' => 'metaUnitTest',
@@ -68,7 +68,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			'metadata_case_sensitive' => false
 		];
 		$case_false = elgg_get_entities_from_metadata($options);
-		$this->assertInternalType('array', $case_false);
+		$this->assertIsArray($case_false);
 
 		$this->assertEquals($case_true, $case_false);
 

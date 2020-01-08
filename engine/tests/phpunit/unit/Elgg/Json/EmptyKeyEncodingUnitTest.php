@@ -40,9 +40,9 @@ EOL;
 		$this->assertEquals('engine/classes/', $value->{$empty_key}[0]->autoload->{'psr-0'}->{$empty_key});
 
 		$json = $encoding->encode($value, JSON_UNESCAPED_SLASHES);
-		$this->assertContains('"":"engine/classes/"', $json);
-		$this->assertContains('"":[{"autoload"', $json);
-		$this->assertNotContains($empty_key, $json);
+		$this->assertStringContainsString('"":"engine/classes/"', $json);
+		$this->assertStringContainsString('"":[{"autoload"', $json);
+		$this->assertStringNotContainsString($empty_key, $json);
 	}
 
 	function testEncodeWithGivenKey() {

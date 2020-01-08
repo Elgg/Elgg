@@ -92,11 +92,10 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($amdConfig->hasModule('jquery'));
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnBadShim() {
 		$amdConfig = $this->amdConfig;
+		
+		$this->expectException(\InvalidParameterException::class);
 		$amdConfig->addShim('bad_shim', array('invalid' => 'config'));
 
 		$configArray = $amdConfig->getConfig();

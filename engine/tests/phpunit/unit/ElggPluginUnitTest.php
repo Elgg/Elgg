@@ -16,11 +16,9 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 * @expectedExceptionMessage Plugin ID must be set
-	 */
 	public function testConstructorThrowsWithEmptyId() {
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('Plugin ID must be set');
 		ElggPlugin::fromId('');
 	}
 
@@ -297,8 +295,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testUsesBootstrapOnShutdown() {
-		/* @todo Test that bootstrap handlers are called during the shutdown event */
-
+		// @todo Test that bootstrap handlers are called during the shutdown event
 		$this->markTestIncomplete();
 	}
 }

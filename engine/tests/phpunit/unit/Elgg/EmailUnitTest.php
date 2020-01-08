@@ -131,7 +131,7 @@ class EmailUnitTest extends UnitTestCase {
 			]
 		]);
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(1, $email->getAttachments());
 	}
 	
@@ -160,7 +160,7 @@ class EmailUnitTest extends UnitTestCase {
 			]
 		]);
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(2, $email->getAttachments());
 	}
 	
@@ -189,7 +189,7 @@ class EmailUnitTest extends UnitTestCase {
 			]
 		]);
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(2, $email->getAttachments());
 		
 		$new_attachment = [
@@ -200,7 +200,7 @@ class EmailUnitTest extends UnitTestCase {
 		
 		$email->addAttachment($new_attachment);
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(3, $email->getAttachments());
 	}
 	
@@ -214,7 +214,7 @@ class EmailUnitTest extends UnitTestCase {
 		
 		$email->addAttachment($part);
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(1, $email->getAttachments());
 		
 		$email_parts = $email->getAttachments();
@@ -238,7 +238,7 @@ class EmailUnitTest extends UnitTestCase {
 		
 		$email->addAttachment($file);
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(1, $email->getAttachments());
 		
 		$email_parts = $email->getAttachments();
@@ -262,7 +262,7 @@ class EmailUnitTest extends UnitTestCase {
 		
 		$email->addAttachment($attachment);
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(1, $email->getAttachments());
 		
 		$email_parts = $email->getAttachments();
@@ -288,7 +288,7 @@ class EmailUnitTest extends UnitTestCase {
 		
 		_elgg_services()->logger->enable();
 		
-		$this->assertInternalType('array', $email->getAttachments());
+		$this->assertIsArray($email->getAttachments());
 		$this->assertCount(0, $email->getAttachments());
 	}
 	

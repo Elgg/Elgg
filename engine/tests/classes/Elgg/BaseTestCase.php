@@ -142,7 +142,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function setUp() {
+	protected function setUp(): void {
 
 		Application::setInstance(null);
 
@@ -171,7 +171,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function tearDown() {
+	protected function tearDown(): void {
 
 		// We do not want overflowing ignored access
 		$this->assertFalse((bool) _elgg_services()->session->getIgnoreAccess(), __METHOD__ . ': ignored access not reset');
@@ -305,7 +305,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false): void {
 		if ($expected instanceof \ElggData) {
 			$expected = $expected->toObject();
 		}
