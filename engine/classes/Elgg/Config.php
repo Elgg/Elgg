@@ -47,7 +47,6 @@ use Elgg\Project\Paths;
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
  * @property string[]      $elgg_cron_periods
- * @property array         $elgg_lazy_hover_menus
  * @property bool          $elgg_load_sync_code
  * @property bool          $elgg_maintenance_mode
  * @property string        $elgg_settings_file

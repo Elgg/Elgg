@@ -95,17 +95,14 @@ elgg.ui.initHoverMenu = function(parent) {
 	function loadMenu(mac, callback) {
 		var $all_placeholders = $(".elgg-menu-hover[rel='" + mac + "']");
 		
-		// find the <ul> that contains data for this menu
-		var $ul = $all_placeholders.filter('[data-elgg-menu-data]');
-
-		if (!$ul.length) {
+		if (!$all_placeholders.length) {
 			return;
 		}
 		
 		require(['elgg/Ajax'], function(Ajax) {
 			var ajax = new Ajax();
 			ajax.view('navigation/menu/user_hover/contents', {
-				data: $ul.data('elggMenuData'),
+				data: $all_placeholders.eq(0).data('elggMenuData'),
 				success: function(data) {
 					if (data) {
 						// replace all existing placeholders with new menu
@@ -117,7 +114,7 @@ elgg.ui.initHoverMenu = function(parent) {
 					}
 				},
 				complete: function() {
-					$all_placeholders.removeAttr('data-menu-placeholder');
+					$all_placeholders.removeAttr('data-menu-placeholder data-elgg-menu-data');
 				}
 			});
 		});
