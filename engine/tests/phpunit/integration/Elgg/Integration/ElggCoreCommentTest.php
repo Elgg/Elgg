@@ -2,7 +2,7 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 use ElggComment;
 use ElggObject;
 
@@ -11,7 +11,7 @@ use ElggObject;
  *
  * @group IntegrationTests
  */
-class ElggCoreCommentTest extends LegacyIntegrationTestCase {
+class ElggCoreCommentTest extends IntegrationTestCase {
 	/**
 	 * @var ElggComment
 	 */
@@ -25,7 +25,8 @@ class ElggCoreCommentTest extends LegacyIntegrationTestCase {
 	public function up() {
 
 		$this->commenter = $this->createOne('user');
-
+		elgg()->session->setLoggedInUser($this->commenter);
+		
 		$this->container_owner = $this->createOne('user');
 		$this->container = $this->createOne('object', [
 			'owner_guid' => $this->container_owner->guid,
@@ -41,6 +42,8 @@ class ElggCoreCommentTest extends LegacyIntegrationTestCase {
 	public function down() {
 		$this->commenter->delete();
 		$this->container_owner->delete();
+		
+		elgg()->session->removeLoggedInUser();
 	}
 
 	public function testCommentAccessSync() {
@@ -50,7 +53,7 @@ class ElggCoreCommentTest extends LegacyIntegrationTestCase {
 		$this->comment->disableCaching();
 		$this->container->disableCaching();
 
-		$this->assertEqual($this->comment->access_id, $this->container->access_id);
+		$this->assertEquals($this->container->access_id, $this->comment->access_id);
 
 		// now change the access of the container
 		$this->container->access_id = ACCESS_LOGGED_IN;
@@ -59,7 +62,7 @@ class ElggCoreCommentTest extends LegacyIntegrationTestCase {
 		$updated_container = get_entity($this->container->guid);
 		$updated_comment = get_entity($this->comment->guid);
 
-		$this->assertEqual($updated_comment->access_id, $updated_container->access_id);
+		$this->assertEquals($updated_container->access_id, $updated_comment->access_id);
 	}
 
 }

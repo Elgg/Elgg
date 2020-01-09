@@ -2,11 +2,11 @@
 
 namespace Elgg\Integration;
 
-class ElggTravisInstallTest extends \Elgg\LegacyIntegrationTestCase {
+class ElggTravisInstallTest extends \Elgg\IntegrationTestCase {
 
 	public function up() {
 		if (!getenv('TRAVIS')) {
-			$this->skipIf(true, "Not Travis VM");
+			$this->markTestSkipped("Not Travis VM");
 		}
 	}
 

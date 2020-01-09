@@ -7,8 +7,11 @@ use ElggUser;
 /**
  * @group IntegrationTests
  */
-class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
+class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 
+	/**
+	 * @var string
+	 */
 	private $prefix;
 
 	/**
@@ -35,7 +38,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		$row1 = get_data("
 			SELECT *
 			FROM {$this->prefix}entities
-			WHERE guid = " . $this->user->guid . "
+			WHERE guid = {$this->user->guid}
 		");
 		$row1 = $row1[0];
 
@@ -78,7 +81,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		$row1 = get_data_row("
 			SELECT *
 			FROM {$this->prefix}entities
-			WHERE guid = " . $this->user->guid . "
+			WHERE guid = {$this->user->guid}
 		");
 
 		$row2 = get_data_row("
@@ -152,6 +155,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		$rel = get_relationship($rel->id);
 
 		$this->assertTrue($res);
+		$this->assertInstanceOf(\ElggRelationship::class, $rel);
 		$this->assertEquals('test_self2', $rel->relationship);
 
 		$num_rows = update_data("
@@ -162,6 +166,7 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		$rel = get_relationship($rel->id);
 
 		$this->assertEquals(1, $num_rows);
+		$this->assertInstanceOf(\ElggRelationship::class, $rel);
 		$this->assertEquals('test_self3', $rel->relationship);
 
 		$num_rows = update_data("
@@ -205,17 +210,21 @@ class ElggDataFunctionsTest extends \Elgg\LegacyIntegrationTestCase {
 		$this->assertFalse(check_entity_relationship($this->user->guid, 'test_self1', $this->user->guid));
 	}
 
-	public function testCanSanitize() {
-		$data = [
-			"'" => "\\'",
-			"\"" => "\\\"",
-			"\\" => "\\\\",
-			"\n" => "\\n",
-			"\r" => "\\r",
+	/**
+	 * @dataProvider canSanitizeProvider
+	 */
+	public function testCanSanitize($input, $expected) {
+		$this->assertEquals($expected, sanitize_string($input));
+	}
+	
+	public function canSanitizeProvider() {
+		return [
+			["'" , "\\'"],
+			["\"", "\\\""],
+			["\\", "\\\\"],
+			["\n", "\\n"],
+			["\r", "\\r"],
 		];
-		foreach ($data as $in => $out) {
-			$this->assertEquals(sanitize_string($in), $out);
-		}
 	}
 
 	public function testSanitizeRejectsArrays() {

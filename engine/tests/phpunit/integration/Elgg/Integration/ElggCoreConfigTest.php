@@ -2,14 +2,14 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 
 /**
  * Test configuration for site
  *
  * @group IntegrationTests
  */
-class ElggCoreConfigTest extends LegacyIntegrationTestCase {
+class ElggCoreConfigTest extends IntegrationTestCase {
 
 	public function up() {
 
@@ -35,7 +35,7 @@ class ElggCoreConfigTest extends LegacyIntegrationTestCase {
 		$name = 'foo' . rand(0, 1000);
 		$value = 'test';
 		$this->assertTrue(elgg_save_config($name, $value));
-		$this->assertEqual($value, elgg_get_config($name));
+		$this->assertEquals($value, elgg_get_config($name));
 		$this->assertTrue(elgg_remove_config($name));
 	}
 
@@ -44,7 +44,7 @@ class ElggCoreConfigTest extends LegacyIntegrationTestCase {
 		$value = 'test';
 		$this->assertTrue(elgg_save_config($name, 'not test'));
 		$this->assertTrue(elgg_save_config($name, $value));
-		$this->assertEqual($value, elgg_get_config($name));
+		$this->assertEquals($value, elgg_get_config($name));
 		$this->assertTrue(elgg_remove_config($name));
 	}
 
@@ -53,13 +53,13 @@ class ElggCoreConfigTest extends LegacyIntegrationTestCase {
 		$value = new \stdClass();
 		$value->test = true;
 		$this->assertTrue(elgg_save_config($name, $value));
-		$this->assertIdentical($value, elgg_get_config($name));
+		$this->assertEquals($value, elgg_get_config($name));
 		$this->assertTrue(elgg_remove_config($name));
 	}
 
 	public function testSetConfigWithNonexistentName() {
 		$name = 'foo' . rand(0, 1000);
-		$this->assertIdentical(null, elgg_get_config($name));
+		$this->assertNull(elgg_get_config($name));
 	}
 
 	public function testSetConfigWithCurrentSite() {
@@ -67,15 +67,15 @@ class ElggCoreConfigTest extends LegacyIntegrationTestCase {
 		$name = 'foo' . rand(0, 1000);
 		$value = 99;
 		$this->assertTrue(elgg_save_config($name, $value));
-		$this->assertIdentical($value, $CONFIG->$name);
-		$this->assertIdentical($value, elgg_get_config($name));
+		$this->assertEquals($value, $CONFIG->$name);
+		$this->assertEquals($value, elgg_get_config($name));
 		$this->assertTrue(elgg_remove_config($name));
 	}
 
 	public function testGetConfigAlreadyLoadedForCurrentSite() {
 		$CONFIG = _elgg_config();
 		$CONFIG->foo_unit_test = 35;
-		$this->assertIdentical(35, _elgg_config()->foo_unit_test);
+		$this->assertEquals(35, _elgg_config()->foo_unit_test);
 		unset($CONFIG->foo_unit_test);
 	}
 
@@ -86,8 +86,8 @@ class ElggCoreConfigTest extends LegacyIntegrationTestCase {
 	public function testUnsetConfigClearsGlobalForCurrentSite() {
 		$CONFIG = _elgg_config();
 		$CONFIG->foo_unit_test = 35;
-		$this->assertIdentical(true, elgg_remove_config('foo_unit_test'));
-		$this->assertTrue(!isset($CONFIG->foo_unit_test));
+		$this->assertTrue(elgg_remove_config('foo_unit_test'));
+		$this->assertNull($CONFIG->foo_unit_test);
 	}
 
 	public function testElggSaveConfigForCurrentSiteConfig() {
@@ -95,8 +95,8 @@ class ElggCoreConfigTest extends LegacyIntegrationTestCase {
 		$name = 'foo' . rand(0, 1000);
 		$value = 'test';
 		$this->assertTrue(elgg_save_config($name, $value));
-		$this->assertIdentical($value, elgg_get_config($name));
-		$this->assertIdentical($value, $CONFIG->$name);
+		$this->assertEquals($value, elgg_get_config($name));
+		$this->assertEquals($value, $CONFIG->$name);
 		$this->assertTrue(elgg_remove_config($name));
 	}
 }

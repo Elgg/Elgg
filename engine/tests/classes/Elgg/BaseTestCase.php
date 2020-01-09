@@ -11,6 +11,7 @@ use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Base test case abstraction
@@ -197,7 +198,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893
-	 * @return \Doctrine\DBAL\Platforms\AbstractPlatform|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \Doctrine\DBAL\Platforms\AbstractPlatform|MockObject
 	 */
 	public function getDatabasePlatformMock() {
 		$mock = $this->getAbstractMock(
@@ -222,7 +223,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893
-	 * @return \Doctrine\DBAL\Connection|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \Doctrine\DBAL\Connection|MockObject
 	 */
 	public function getConnectionMock() {
 		$mock = $this->getMockBuilder('Doctrine\DBAL\Connection')
@@ -261,7 +262,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893
-	 * @return \Doctrine\DBAL\Driver\Statement|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \Doctrine\DBAL\Driver\Statement|MockObject
 	 */
 	public function getStatementMock() {
 		$mock = $this->getAbstractMock(
@@ -287,7 +288,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 * @param string $class   The class name
 	 * @param array  $methods The available methods
 	 *
-	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
 	protected function getAbstractMock($class, array $methods) {
 		return $this->getMockForAbstractClass(
