@@ -19,6 +19,9 @@ from the root of your Elgg installation:
     php ./vendor/bin/elgg-cli list
     ./vendor/bin/elgg-cli list
 
+.. note::
+
+	Be advised that when using elgg-cli it might be needed to run the command as the same user as the webserver to prevent issues with rights related to files.
 
 Available commands
 ==================
