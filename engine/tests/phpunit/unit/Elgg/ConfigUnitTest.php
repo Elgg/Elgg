@@ -17,6 +17,16 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
+	public function testCanReadConfigDefaults() {
+		$config = new Config();
+		$this->assertTrue($config->comment_box_collapses);
+	}
+
+	public function testCanOverrideConfigDefaults() {
+		$config = new Config(['comment_box_collapses' => false]);
+		$this->assertFalse($config->comment_box_collapses);
+	}
+
 	public function testCanReadValuesFromConfig() {
 
 		$config = self::getTestingConfig();

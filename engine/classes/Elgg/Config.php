@@ -26,6 +26,7 @@ use Elgg\Project\Paths;
  * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
+ * @property bool          $comment_box_collapses					Determines if the comment box collapses after the first comment
  * @property array         $css_compiler_options 					Options passed to CssCrush during CSS compilation
  * @property string        $dataroot             					Path of data storage with trailing "/"
  * @property bool          $data_dir_override
@@ -163,6 +164,15 @@ class Config {
 	 * @var string
 	 */
 	private $settings_path;
+	
+	/**
+	 * Holds the set of default values
+	 *
+	 * @var array
+	 */
+	protected $config_defaults = [
+		'comment_box_collapses' => true,
+	];
 
 	/**
 	 * Constructor
@@ -170,6 +180,7 @@ class Config {
 	 * @param array $values Initial config values from Env/settings file
 	 */
 	public function __construct(array $values = []) {
+		$values = array_merge($this->config_defaults, $values);
 		$this->values = $values;
 
 		// Don't keep copies of these in case config gets dumped
