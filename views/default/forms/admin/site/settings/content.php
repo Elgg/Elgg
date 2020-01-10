@@ -40,4 +40,13 @@ $body .= elgg_view_field([
 	'step' => 1,
 ]);
 
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'label' => elgg_echo('config:content:comment_box_collapses'),
+	'name' => 'comment_box_collapses',
+	'checked' => (bool) elgg_get_config('comment_box_collapses'),
+	'switch' => true,
+	'value' => 1,
+]);
+
 echo elgg_view_module('info', elgg_echo('admin:legend:content'), $body);

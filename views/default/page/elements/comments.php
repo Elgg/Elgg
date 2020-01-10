@@ -65,7 +65,7 @@ $comments_list = elgg_list_entities($options);
 $content = '';
 if ($show_add_form && $entity->canComment()) {
 	$form_vars = [];
-	if ($comments_list) {
+	if ($comments_list && !elgg_get_config('comment_box_collapses')) {
 		$form_vars['class'] = 'hidden';
 		
 		$module_vars['menu'] = elgg_view_menu('comments', [

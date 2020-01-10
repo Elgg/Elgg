@@ -55,6 +55,8 @@ if ($default_limit < 1) {
 
 elgg_save_config('default_limit', $default_limit);
 
+elgg_save_config('comment_box_collapses', (bool) get_input('comment_box_collapses'));
+
 elgg_save_config('can_change_username', 'on' === get_input('can_change_username'));
 
 if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
