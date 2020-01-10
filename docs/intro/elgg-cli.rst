@@ -86,7 +86,7 @@ Available commands
 Adding custom commands
 ======================
 
-Plugins can add their commands to the CLI application, by adding command class name via ``'commands','cli'`` hook.
+Plugins can add their commands to the CLI application, by adding command class name via a configuration in ``elgg-plugin.php`` or via the ``'commands','cli'`` hook.
 Command class must extend ``\Elgg\CLI\Command``.
 
 .. code-block:: php
