@@ -2,7 +2,7 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 use ElggObject;
 
 /**
@@ -11,12 +11,20 @@ use ElggObject;
  * @group IntegrationTests
  * @group Helpers
  */
-class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
+class ElggCoreHelpersTest extends IntegrationTestCase {
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\BaseTestCase::up()
+	 */
 	public function up() {
 		_elgg_services()->externalFiles->reset();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\BaseTestCase::down()
+	 */
 	public function down() {
 
 	}
@@ -88,7 +96,7 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 		];
 
 		foreach ($conversions as $input => $output) {
-			$this->assertIdentical($output, elgg_normalize_url($input));
+			$this->assertEquals($output, elgg_normalize_url($input));
 		}
 	}
 
@@ -103,7 +111,7 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 		$item = _elgg_services()->externalFiles->getFile('js', 'key');
 		$this->assertNotNull($item);
 		$this->assertTrue($item->priority !== false);
-		$this->assertIdentical('http://test1.com', $item->url);
+		$this->assertEquals('http://test1.com', $item->url);
 
 		// send a bad url
 		$result = elgg_register_js('bad', null);
@@ -121,7 +129,7 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 		$item = _elgg_services()->externalFiles->getFile('css', 'key');
 		$this->assertNotNull($item);
 		$this->assertTrue($item->priority !== false);
-		$this->assertIdentical('http://test1.com', $item->url);
+		$this->assertEquals('http://test1.com', $item->url);
 	}
 
 	/**
@@ -180,7 +188,7 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 		$this->assertTrue((bool) $result);
 
 		$js_urls = elgg_get_loaded_js('footer');
-		$this->assertIdentical([500 => 'http://test1.com'], $js_urls);
+		$this->assertEquals([500 => 'http://test1.com'], $js_urls);
 	}
 
 	/**
@@ -192,7 +200,7 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 		$urls = [
 			'id1' => "$base/urla",
 			'id2' => "$base/urlb",
-			'id3' => "$base/urlc"
+			'id3' => "$base/urlc",
 		];
 
 		foreach ($urls as $id => $url) {
@@ -201,12 +209,13 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 		}
 
 		$js_urls = elgg_get_loaded_js('head');
+		$this->assertIsArray($js_urls);
 
-		$this->assertIdentical($js_urls[500], $urls['id1']);
-		$this->assertIdentical($js_urls[501], $urls['id2']);
-		$this->assertIdentical($js_urls[502], $urls['id3']);
+		$this->assertEquals($urls['id1'], $js_urls[500]);
+		$this->assertEquals($urls['id2'], $js_urls[501]);
+		$this->assertEquals($urls['id3'], $js_urls[502]);
 
 		$js_urls = elgg_get_loaded_js('footer');
-		$this->assertIdentical([], $js_urls);
+		$this->assertEquals([], $js_urls);
 	}
 }

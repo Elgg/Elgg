@@ -32,22 +32,21 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'test',
-			'relationship_guid' => $guids[0]
-		];
-
-		$es = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($es));
-		$this->assertIdentical(count($es), 1);
+			'relationship_guid' => $guids[0],
+		]);
+		$this->assertIsArray($es);
+		$this->assertCount(1, $es);
 
 		foreach ($es as $e) {
-			$this->assertEqual($guids[1], $e->guid);
+			$this->assertEquals($e->guid, $guids[1]);
 		}
 
 		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
 		}
 	}
 
@@ -66,22 +65,21 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0]
-		];
-
-		$es = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($es));
-		$this->assertIdentical(count($es), 1);
+		]);
+		$this->assertIsArray($es);
+		$this->assertCount(1, $es);
 
 		foreach ($es as $e) {
-			$this->assertEqual($guids[1], $e->guid);
+			$this->assertEquals($e->guid, $guids[1]);
 		}
 
 		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
 		}
 	}
 
@@ -102,24 +100,23 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0],
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
-		];
-
-		$es = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($es));
-		$this->assertIdentical(count($es), 1);
+		]);
+		$this->assertIsArray($es);
+		$this->assertCount(1, $es);
 
 		foreach ($es as $e) {
-			$this->assertEqual($guids[1], $e->guid);
+			$this->assertEquals($e->guid, $guids[1]);
 		}
 
 		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
 		}
 	}
 
@@ -140,20 +137,19 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0],
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'invalid',
-		];
+		]);
 
-		$es = elgg_get_entities_from_relationship($options);
-
-		$this->assertTrue(empty($es));
+		$this->assertEmpty($es);
 
 		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
 		}
 	}
 
@@ -183,28 +179,24 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 			$max--;
 		}
 
-		$options = [
+		$entities = elgg_get_entities_from_relationship_count([
 			'relationship' => $relationship_name,
-			'limit' => $count
-		];
-
-		$entities = elgg_get_entities_from_relationship_count($options);
+			'limit' => $count,
+		]);
 
 		foreach ($entities as $e) {
-			$options = [
+			$fan_entities = elgg_get_entities_from_relationship([
 				'relationship' => $relationship_name,
 				'limit' => 100,
 				'relationship_guid' => $e->guid,
-				'inverse_relationship' => true
-			];
+				'inverse_relationship' => true,
+			]);
 
-			$fan_entities = elgg_get_entities_from_relationship($options);
-
-			$this->assertEqual(count($fan_entities), count($relationships[$e->guid]));
+			$this->assertEquals(count($fan_entities), count($relationships[$e->guid]));
 
 			foreach ($fan_entities as $fan_entity) {
 				$this->assertTrue(in_array($fan_entity->guid, $relationships[$e->guid]));
-				$this->assertNotIdentical(false, check_entity_relationship($fan_entity->guid, $relationship_name, $e->guid));
+				$this->assertNotFalse(check_entity_relationship($fan_entity->guid, $relationship_name, $e->guid));
 			}
 		}
 	}
@@ -238,12 +230,12 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 
 		$count = elgg_get_entities_from_relationship($options);
-		$this->assertIdentical($count, 1);
+		$this->assertEquals(1, $count);
 
 		unset($options['count']);
 		$objects = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($objects));
-		$this->assertIdentical(count($objects), 1);
+		$this->assertIsArray($objects);
+		$this->assertCount(1, $objects);
 
 		$obj1->delete();
 		$obj2->delete();
@@ -254,7 +246,6 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 	 * Make sure changes related to #5775 do not affect inverse relationship queries
 	 */
 	public function testElggApiGettersEntityRelationshipDistinctResultInverse() {
-
 
 		$obj1 = new ElggObject();
 		$obj1->subtype = $this->getRandomSubtype();
@@ -278,12 +269,12 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		];
 
 		$count = elgg_get_entities_from_relationship($options);
-		$this->assertIdentical($count, 2);
+		$this->assertEquals(2, $count);
 
 		unset($options['count']);
 		$objects = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($objects));
-		$this->assertIdentical(count($objects), 2);
+		$this->assertIsArray($objects);
+		$this->assertCount(2, $objects);
 
 		$obj1->delete();
 		$obj2->delete();
@@ -308,13 +299,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$ts_upper = $dt->getTimestamp() + 1;
 		
 		// check that if ts_lower is before the relationship you get the just created entity
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_lower,
-		];
-		
-		$es = elgg_get_entities_from_relationship($options);
+		]);
 		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
 		
@@ -323,13 +312,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		}
 		
 		// check that if ts_lower is after the relationship you get no entities
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_upper,
-		];
-		
-		$es = elgg_get_entities_from_relationship($options);
+		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
 		
@@ -355,13 +342,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$ts_upper = $dt->getTimestamp() + 1;
 		
 		// check that if ts_upper is after the relationship you get the just created entity
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_upper' => $ts_upper,
-		];
-		
-		$es = elgg_get_entities_from_relationship($options);
+		]);
 		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
 		
@@ -370,13 +355,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		}
 		
 		// check that if ts_upper is before the relationship you get no entities
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_upper' => $ts_lower,
-		];
-		
-		$es = elgg_get_entities_from_relationship($options);
+		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
 		
@@ -402,14 +385,12 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$ts_upper = $dt->getTimestamp() + 1;
 		
 		// check that if relationship time created is between lower and upper you get the just created entity
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_lower,
 			'relationship_created_time_upper' => $ts_upper,
-		];
-		
-		$es = elgg_get_entities_from_relationship($options);
+		]);
 		$this->assertIsArray($es);
 		$this->assertCount(1, $es);
 		
@@ -418,14 +399,12 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		}
 		
 		// check that if  ts_lower > ts_upper you get no entities
-		$options = [
+		$es = elgg_get_entities_from_relationship([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_upper,
 			'relationship_created_time_upper' => $ts_lower,
-		];
-		
-		$es = elgg_get_entities_from_relationship($options);
+		]);
 		$this->assertIsArray($es);
 		$this->assertCount(0, $es);
 		
