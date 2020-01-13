@@ -518,7 +518,7 @@ class ElggPlugin extends ElggObject {
 
 		return true;
 	}
-
+	
 	/**
 	 * Returns if the plugin is complete, meaning has all required files
 	 * and Elgg can read them and they make sense.
