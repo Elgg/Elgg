@@ -4,6 +4,7 @@ namespace Elgg\Debug;
 use Elgg\Debug\Inspector\ViewComponent;
 use Elgg\Includer;
 use Elgg\Project\Paths;
+use Elgg\Menu\MenuItems;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -302,10 +303,13 @@ class Inspector {
 		$entity->title = 'test entity';
 		$entity->access_id = ACCESS_PUBLIC;
 
-		$user = new \ElggUser();
-		$user->guid = 999;
-		$user->name = "Test User";
-		$user->username = 'test_user';
+		$user = elgg_get_logged_in_user_entity();
+		if (!$user instanceof \ElggUser) {
+			$user = new \ElggUser();
+			$user->guid = 999;
+			$user->name = "Test User";
+			$user->username = 'test_user';
+		}
 
 		$widget = new \ElggWidget();
 		$widget->guid = 999;
@@ -329,7 +333,7 @@ class Inspector {
 				default:
 					break;
 			}
-			$menus[$type] = _elgg_services()->hooks->trigger('register', "menu:$type", $params, []);
+			$menus[$type] = _elgg_services()->hooks->trigger('register', "menu:$type", $params, new MenuItems());
 		}
 
 		// put the menus in tree form for inspection
