@@ -48,6 +48,8 @@ elgg_save_config('walled_garden', $walled_garden);
 
 elgg_save_config('language', get_input('language'));
 
+elgg_save_config('allowed_languages', implode(',', get_input('allowed_languages', [])));
+
 $default_limit = (int) get_input('default_limit');
 if ($default_limit < 1) {
 	return elgg_error_response(elgg_echo('admin:configuration:default_limit'));

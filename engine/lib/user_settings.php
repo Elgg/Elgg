@@ -233,6 +233,10 @@ function _elgg_set_user_language(\Elgg\Hook $hook) {
 	if ($language === $user->language) {
 		return null;
 	}
+	
+	if (!in_array($language, elgg()->translator->getAllowedLanguages())) {
+		return null;
+	}
 
 	$user->language = $language;
 

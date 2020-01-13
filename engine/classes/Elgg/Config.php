@@ -17,6 +17,7 @@ use Elgg\Project\Paths;
  * @property bool          $allow_phpinfo							Allow access tot PHPInfo
  * @property bool          $allow_registration						Is registration enabled
  * @property string        $allow_user_default_access				Are users allowed to set their own default access level
+ * @property string        $allowed_languages						Comma seperated string of admin allowed languages
  * @property string        $assetroot            					Path of asset (views) simplecache with trailing "/"
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
