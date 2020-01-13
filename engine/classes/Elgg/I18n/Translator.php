@@ -247,6 +247,7 @@ class Translator {
 			return $url_lang;
 		}
 		
+		// detect from cookie
 		$cookie = _elgg_services()->request->cookies->get('language');
 		if (!empty($cookie)) {
 			return $cookie;
@@ -257,6 +258,14 @@ class Translator {
 			return $user->language;
 		}
 
+		// detect from user agent if not logged in
+		$browserlangs = _elgg_services()->request->getLanguages();
+		if (!empty($browserlangs)) {
+			$browserlang = explode('_', $browserlangs[0]);
+			
+			return $browserlang[0];
+		}
+		
 		// get site setting
 		$site_language = $this->config->language;
 		if (!empty($site_language)) {
