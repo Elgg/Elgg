@@ -13,6 +13,7 @@ if (!$user instanceof ElggUser) {
 }
 
 $options = get_installed_translations(true);
+$options = array_intersect_key($options, array_flip(elgg()->translator->getAllowedLanguages()));
 
 if (count($options) < 2) {
 	echo elgg_view_field([

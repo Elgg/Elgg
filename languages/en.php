@@ -553,6 +553,7 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
+	'admin:settings:i18n' => 'Internationalization',
 	'admin:settings:advanced' => 'Advanced Settings',
 	'admin:settings:users' => 'Users',
 	'admin:site_settings' => "Site Settings",
@@ -1431,6 +1432,8 @@ Once you have logged in, we highly recommend that you change your password.',
 	'admin:legend:site_access' => 'Site Access',
 	'admin:legend:debug' => 'Debugging and Logging',
 	
+	'config:i18n:allowed_languages' => "Allowed languages",
+	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",

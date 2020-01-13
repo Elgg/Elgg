@@ -191,15 +191,15 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Dummy', $this->translator->translate('__elgg_php_unit:test_key', [], 'en'));
 		$this->assertEquals('__elgg_php_unit:test_key2', $this->translator->translate('__elgg_php_unit:test_key2', [], 'en'));
 
-		$this->assertEquals('Dummy', $this->translator->translate('__elgg_php_unit:test_key', [], 'new_lang_code'));
-		$this->assertEquals('__elgg_php_unit:test_key2', $this->translator->translate('__elgg_php_unit:test_key2', [], 'new_lang_code'));
+		$this->assertEquals('Dummy', $this->translator->translate('__elgg_php_unit:test_key', [], 'fr'));
+		$this->assertEquals('__elgg_php_unit:test_key2', $this->translator->translate('__elgg_php_unit:test_key2', [], 'fr'));
 
 		$this->translator->addTranslation('en', [
 			'__elgg_php_unit:test_key' => 'Not So Dummy',
 			'__elgg_php_unit:test_key2' => 'Still Dummy',
 		]);
 
-		$this->translator->addTranslation('new_lang_code', [
+		$this->translator->addTranslation('fr', [
 			'__elgg_php_unit:test_key' => 'Карамель',
 			'__elgg_php_unit:test_key2' => 'Карамель в шоколаде',
 		]);
@@ -207,8 +207,8 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Not So Dummy', $this->translator->translate('__elgg_php_unit:test_key', [], 'en'));
 		$this->assertEquals('Still Dummy', $this->translator->translate('__elgg_php_unit:test_key2', [], 'en'));
 
-		$this->assertEquals('Карамель', $this->translator->translate('__elgg_php_unit:test_key', [], 'new_lang_code'));
-		$this->assertEquals('Карамель в шоколаде', $this->translator->translate('__elgg_php_unit:test_key2', [], 'new_lang_code'));
+		$this->assertEquals('Карамель', $this->translator->translate('__elgg_php_unit:test_key', [], 'fr'));
+		$this->assertEquals('Карамель в шоколаде', $this->translator->translate('__elgg_php_unit:test_key2', [], 'fr'));
 
 		$this->assertFalse($this->translator->addTranslation('en', []));
 	}
@@ -243,5 +243,33 @@ class TranslatorUnitTest extends \Elgg\UnitTestCase {
 		$plugin->activate();
 
 		$this->assertEquals('Loaded', $app->_services->translator->translate('tests:languages:loaded'));
+	}
+	
+	public function testCanGetAllowedLanguages() {
+		$app = $this->createApplication();
+		$app->_services->config->language = 'fr';
+		$app->_services->config->allowed_languages = 'nl';
+		
+		$allowed = $app->_services->translator->getAllowedLanguages();
+		$this->assertTrue(in_array('en', $allowed));
+		$this->assertTrue(in_array('nl', $allowed));
+		$this->assertTrue(in_array('fr', $allowed));
+		$this->assertCount(3, $allowed);
+	}
+	
+	public function testCanNotTranslateUnallowedLanguages() {
+		$app = $this->createApplication();
+		$app->_services->config->language = 'fr';
+		$app->_services->config->allowed_languages = 'nl';
+		
+		$app->_services->translator->addTranslation('en', ["{$this->key}a" => 'Dummy EN']);
+		$app->_services->translator->addTranslation('nl', ["{$this->key}a" => 'Dummy NL']);
+		$app->_services->translator->addTranslation('fr', ["{$this->key}a" => 'Dummy FR']);
+		$app->_services->translator->addTranslation('de', ["{$this->key}a" => 'Dummy DE']); // not allowed
+		
+		$this->assertEquals('Dummy EN', $app->_services->translator->translate("{$this->key}a", [], 'en'));
+		$this->assertEquals('Dummy NL', $app->_services->translator->translate("{$this->key}a", [], 'nl'));
+		$this->assertEquals('Dummy FR', $app->_services->translator->translate("{$this->key}a", [], 'fr'));
+		$this->assertEquals('Dummy FR', $app->_services->translator->translate("{$this->key}a", [], 'de'));
 	}
 }
