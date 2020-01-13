@@ -2,6 +2,7 @@
 
 use Elgg\Application;
 use Elgg\Includer;
+use Elgg\Database\Delete;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -517,6 +518,39 @@ class ElggPlugin extends ElggObject {
 		}
 
 		return true;
+	}
+	
+	/**
+	 * Remove all user and plugin settings for this plugin
+	 *
+	 * @return bool
+	 * @since 3.3
+	 */
+	public function unsetAllUserAndPluginSettings() {
+		// remove all plugin settings
+		$result = $this->unsetAllSettings();
+		
+		// user plugin settings are stored with the user
+		$prefix = _elgg_services()->plugins->namespacePrivateSetting('user_setting', '', $this->getID());
+		
+		$delete = Delete::fromTable('private_settings');
+		$delete->andWhere($delete->compare('name', 'like', "{$prefix}%", ELGG_VALUE_STRING));
+		
+		try {
+			elgg()->db->deleteData($delete);
+			
+			$result &= true;
+		} catch (DatabaseException $e) {
+			elgg_log($e, 'ERROR');
+			
+			$result &= false;
+		}
+		
+		// trigger a hook, so plugin devs can also remove settings
+		$params = [
+			'entity' => $this,
+		];
+		return (bool) elgg()->hooks->trigger('remove:settings', 'plugin', $params, $result);
 	}
 	
 	/**

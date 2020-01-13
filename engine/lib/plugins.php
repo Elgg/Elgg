@@ -336,6 +336,17 @@ function _elgg_plugin_entity_menu_setup(\Elgg\Hook $hook) {
 		]);
 	}
 	
+	// remove all user and plugin settings
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'remove_settings',
+		'href' => elgg_generate_action_url('plugins/settings/remove', [
+			'plugin_id' => $entity->getID(),
+		]),
+		'text' => elgg_echo('plugins:settings:remove:menu:text'),
+		'icon' => 'trash-alt',
+		'confirm' => elgg_echo('plugins:settings:remove:menu:confirm'),
+	]);
+	
 	return $return;
 }
 

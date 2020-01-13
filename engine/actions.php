@@ -37,6 +37,7 @@ return [
 	'entity/delete' => [],
 	'login' => ['access' => 'public'],
 	'logout' => [],
+	'plugins/settings/remove' => ['access' => 'admin'],
 	'plugins/settings/save' => ['access' => 'admin'],
 	'plugins/usersettings/save' => [],
 	'register' => ['access' => 'public'],
