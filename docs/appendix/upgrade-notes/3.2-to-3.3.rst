@@ -86,6 +86,7 @@ Deprecated APIs
  * ``execute_delayed_write_query()`` use ``elgg()->db->registerDelayedQuery()``
  * ``execute_delayed_read_query()`` use ``elgg()->db->registerDelayedQuery()``		
  * ``run_sql_script()``
+ * ``elgg_unset_all_plugin_settings()`` use ``\ElggPlugin::unsetAllSettings()``
 
 Deprecated Config values
 ------------------------

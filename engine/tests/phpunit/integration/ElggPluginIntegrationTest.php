@@ -221,4 +221,63 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 		_elgg_services()->session->removeLoggedInUser();
 	}
+	
+	public function testUnsetAllUserAndPluginSettings() {
+		
+		$user = $this->createUser();
+		_elgg_services()->session->setLoggedInUser($user);
+		
+		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		$untouched_plugin = ElggPlugin::fromId('languages_plugin', $this->normalizeTestFilePath('mod/'));
+		
+		$plugin_setting_name = 'test_name';
+		$plugin_setting_value = rand();
+		
+		// test for some private settings values
+		$this->assertNotEmpty($plugin->getPriority());
+		
+		// feed some settings
+		$this->assertTrue($plugin->setSetting($plugin_setting_name, $plugin_setting_value));
+		$this->assertTrue($plugin->setUserSetting("{$plugin_setting_name}:user", $plugin_setting_value, $user->guid));
+		$this->assertTrue($untouched_plugin->setSetting($plugin_setting_name, $plugin_setting_value));
+		$this->assertTrue($untouched_plugin->setUserSetting("{$plugin_setting_name}:user", $plugin_setting_value, $user->guid));
+		
+		// check if set correctly
+		$this->assertEquals($plugin_setting_value, $plugin->getSetting($plugin_setting_name));
+		$this->assertEquals($plugin_setting_value, $plugin->getUserSetting("{$plugin_setting_name}:user", $user->guid));
+		$this->assertEquals($plugin_setting_value, $untouched_plugin->getSetting($plugin_setting_name));
+		$this->assertEquals($plugin_setting_value, $untouched_plugin->getUserSetting("{$plugin_setting_name}:user", $user->guid));
+		
+		// remove all settings
+		$this->assertTrue($plugin->unsetAllUserAndPluginSettings());
+		
+		// verify
+		$this->assertNull($plugin->getSetting($plugin_setting_name));
+		$this->assertNull($plugin->getUserSetting("{$plugin_setting_name}:user", $user->guid));
+		// verify just the one plugin settings where removed
+		$this->assertEquals($plugin_setting_value, $untouched_plugin->getSetting($plugin_setting_name));
+		$this->assertEquals($plugin_setting_value, $untouched_plugin->getUserSetting("{$plugin_setting_name}:user", $user->guid));
+		
+		// verify other private settings still exists
+		$this->assertNotEmpty($plugin->getPriority());
+		
+		_elgg_services()->session->removeLoggedInUser();
+	}
+	
+	public function testUnsetAllUserAndPluginSettingsHookCallback() {
+		
+		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		
+		$calls = 0;
+		$callback = function (\Elgg\Hook $hook) use (&$calls) {
+			$calls++;
+			
+			return false;
+		};
+		
+		elgg_register_plugin_hook_handler('remove:settings', 'plugin', $callback);
+		
+		$this->assertFalse($plugin->unsetAllUserAndPluginSettings());
+		$this->assertEquals(1, $calls);
+	}
 }

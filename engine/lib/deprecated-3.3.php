@@ -241,3 +241,22 @@ function elgg_list_views($viewtype = 'default') {
 	return _elgg_services()->views->listViews($viewtype);
 }
 
+/**
+ * Unsets all plugin settings for a plugin.
+ *
+ * @param string $plugin_id The plugin ID (Required)
+ *
+ * @return bool
+ * @since 1.8.0
+ * @deprecated 3.3 use \ElggPlugin::unsetAllSettings()
+ */
+function elgg_unset_all_plugin_settings($plugin_id) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated, use \ElggPlugin::unsetAllSettings()', '3.3');
+	
+	$plugin = _elgg_services()->plugins->get($plugin_id);
+	if (!$plugin) {
+		return false;
+	}
+	
+	return $plugin->unsetAllSettings();
+}
