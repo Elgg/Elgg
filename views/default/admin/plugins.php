@@ -10,6 +10,7 @@
 elgg_require_js('admin/plugins');
 
 $list_only = (bool) elgg_extract('list_only', $vars, false);
+$active_filter = strtolower(get_input('filter', 'active'));
 
 // @todo this should occur in the controller code
 _elgg_generate_plugin_entities();
@@ -25,6 +26,7 @@ $plugins_list = elgg_view_entity_list($installed_plugins, [
 	'list_type_toggle' => false,
 	'pagination' => false,
 	'display_reordering' => true,
+	'active_filter' => $active_filter,
 ]);
 
 $plugins_list .= "<div id='elgg-plugin-list-cover'></div>";
@@ -36,7 +38,10 @@ if ($list_only) {
 	return;
 }
 
-echo elgg_view('admin/plugins/categories', ['plugins' => $installed_plugins]);
+echo elgg_view('admin/plugins/categories', [
+	'plugins' => $installed_plugins,
+	'active_filter' => $active_filter,
+]);
 
 elgg_register_menu_item('title', [
 	'name' => 'activate-all',
