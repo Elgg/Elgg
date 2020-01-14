@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Bookmarks\GroupToolContainerLogicCheck;
+
 return [
 	'entities' => [
 		[
@@ -65,6 +67,13 @@ return [
 			'resource' => 'bookmarks/bookmarklet',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
+		],
+	],
+	'hooks' => [
+		'container_logic_check' => [
+			'object' => [
+				GroupToolContainerLogicCheck::class => [],
 			],
 		],
 	],

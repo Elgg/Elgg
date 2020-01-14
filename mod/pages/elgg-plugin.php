@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Pages\GroupToolContainerLogicCheck;
+
 return [
 	'entities' => [
 		[
@@ -64,6 +66,13 @@ return [
 		'revision:object:page' => [
 			'path' => '/pages/revision/{id}',
 			'resource' => 'pages/revision',
+		],
+	],
+	'hooks' => [
+		'container_logic_check' => [
+			'object' => [
+				GroupToolContainerLogicCheck::class => [],
+			],
 		],
 	],
 	'widgets' => [

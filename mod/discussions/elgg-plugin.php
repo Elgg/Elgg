@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Discussions\GroupToolContainerLogicCheck;
+
 return [
 	'entities' => [
 		[
@@ -52,6 +54,13 @@ return [
 		'view:object:discussion' => [
 			'path' => '/discussion/view/{guid}/{title?}',
 			'resource' => 'discussion/view',
+		],
+	],
+	'hooks' => [
+		'container_logic_check' => [
+			'object' => [
+				GroupToolContainerLogicCheck::class => [],
+			],
 		],
 	],
 	'upgrades' => [

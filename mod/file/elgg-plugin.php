@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\File\GroupToolContainerLogicCheck;
+
 return [
 	'entities' => [
 		[
@@ -55,6 +57,13 @@ return [
 		'view:object:file' => [
 			'path' => '/file/view/{guid}/{title?}',
 			'resource' => 'file/view',
+		],
+	],
+	'hooks' => [
+		'container_logic_check' => [
+			'object' => [
+				GroupToolContainerLogicCheck::class => [],
+			],
 		],
 	],
 	'widgets' => [
