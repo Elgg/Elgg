@@ -26,6 +26,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``hooks`` - eliminates the need for calling ``elgg_register_plugin_hook_handler()``
  * ``cli_commands`` - an array of ``Elgg/Cli/Command`` classes to extend the feature of ``elgg-cli``
  * ``view_extensions`` - eliminates the need for calling ``elgg_extend_view()`` or ``elgg_unextend_view()``
+ * ``theme`` - an array of theme variables
 
 
 .. code-block:: php
@@ -163,6 +164,10 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 					'unextend' => true,
 				],
 			],
+		],
+		
+		'theme' => [
+			'body-background-color' => '#000',
 		],
 	];
 
