@@ -45,7 +45,7 @@ class MigrateCronLog implements AsynchronousUpgrade {
 	 */
 	protected function getLogs() {
 		
-		$intervals = elgg_get_config('elgg_cron_periods');
+		$intervals = _elgg_services()->cron->getConfiguredIntervals(true);
 		if (empty($intervals)) {
 			return [];
 		}

@@ -27,6 +27,9 @@ System hooks
 **cron, <period>**
 	Triggered by cron for each period.
 
+**cron:intervals, system**
+	Allow the configuration of custom cron intervals
+
 **validate, input**
 	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
 
