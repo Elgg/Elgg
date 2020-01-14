@@ -874,6 +874,7 @@ class ElggPlugin extends ElggObject {
 		$this->registerWidgets();
 		$this->registerHooks();
 		$this->registerEvents();
+		$this->registerViewExtensions();
 
 		$this->getBootstrap()->init();
 	}
@@ -1237,6 +1238,35 @@ class ElggPlugin extends ElggObject {
 			
 						$events->registerHandler($name, $type, $callback, $priority);
 					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's view extensions provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerViewExtensions() {
+		$views = _elgg_services()->views;
+		
+		$spec = (array) $this->getStaticConfig('view_extensions', []);
+
+		foreach ($spec as $src_view => $extensions) {
+			foreach ($extensions as $extention => $extention_spec) {
+				if (!is_array($extention_spec)) {
+					continue;
+				}
+				
+				$unextend = (bool) elgg_extract('unextend', $extention_spec, false);
+
+				if ($unextend) {
+					$views->unextendView($src_view, $extention);
+				} else {
+					$priority = (int) elgg_extract('priority', $extention_spec, 501);
+		
+					$views->extendView($src_view, $extention, $priority);
 				}
 			}
 		}
