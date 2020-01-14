@@ -38,6 +38,42 @@ class Plugins {
 	use Profilable;
 	use Cacheable;
 	use Loggable;
+	
+	const BUNDLED_PLUGINS = [
+		'activity',
+		'blog',
+		'bookmarks',
+		'ckeditor',
+		'custom_index',
+		'dashboard',
+		'developers',
+		'diagnostics',
+		'discussions',
+		'embed',
+		'externalpages',
+		'file',
+		'friends',
+		'friends_collections',
+		'garbagecollector',
+		'groups',
+		'invitefriends',
+		'likes',
+		'login_as',
+		'members',
+		'messageboard',
+		'messages',
+		'notifications',
+		'pages',
+		'profile',
+		'reportedcontent',
+		'search',
+		'site_notifications',
+		'system_log',
+		'tagcloud',
+		'thewire',
+		'uservalidationbyemail',
+		'web_services',
+	];
 
 	/**
 	 * @var ElggPlugin[]

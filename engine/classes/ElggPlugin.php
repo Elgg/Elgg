@@ -848,6 +848,10 @@ class ElggPlugin extends ElggObject {
 	public function boot() {
 		$result = null;
 		if ($this->canReadFile('start.php')) {
+			if (!in_array($this->getID(), \Elgg\Database\Plugins::BUNDLED_PLUGINS)) {
+				elgg_deprecated_notice("Using a start.php file in your plugin [{$this->getID()}] is deprecated. Use a elgg-plugin.php or PluginBootstrap class for your plugin.", '3.3');
+			}
+			
 			$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
 		}
 
