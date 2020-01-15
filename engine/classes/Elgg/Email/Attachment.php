@@ -2,7 +2,6 @@
 
 namespace Elgg\Email;
 
-use Elgg\Filesystem\MimeTypeDetector;
 use Zend\Mime\Part;
 use Zend\Mime\Mime;
 
@@ -79,7 +78,7 @@ class Attachment extends Part {
 			}
 			
 			if (!isset($options['type'])) {
-				$options['type'] = (new MimeTypeDetector())->tryStrategies($filepath);
+				$options['type'] = elgg()->mimetype->getMimeType($filepath);
 			}
 		}
 		

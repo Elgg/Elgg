@@ -87,6 +87,8 @@ Deprecated APIs
  * ``execute_delayed_read_query()`` use ``elgg()->db->registerDelayedQuery()``		
  * ``run_sql_script()``
  * ``elgg_unset_all_plugin_settings()`` use ``\ElggPlugin::unsetAllSettings()``
+ * ``elgg_get_file_simple_type()`` use ``elgg()->mimetype->getSimpleType()``
+ * ``ElggFile::detectMimeType()`` use ``elgg()->mimetype->getMimeType()``
 
 Deprecated Config values
 ------------------------
