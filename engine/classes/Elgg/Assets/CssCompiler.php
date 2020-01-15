@@ -55,7 +55,7 @@ class CssCompiler {
 
 		$options = array_merge($defaults, $config, $options);
 
-		$default_vars = $this->getDefaultVars();
+		$default_vars = array_merge($this->getCoreVars(), $this->getPluginVars());
 		$custom_vars = (array) elgg_extract('vars', $options, []);
 		$vars = array_merge($default_vars, $custom_vars);
 
@@ -68,8 +68,28 @@ class CssCompiler {
 	 * Default Elgg theme variables
 	 * @return array
 	 */
-	protected function getDefaultVars() {
+	protected function getCoreVars() {
 		$file = Paths::elgg() . 'engine/theme.php';
 		return Includer::includeFile($file);
+	}
+
+	/**
+	 * Plugin theme variables
+	 * @return array
+	 */
+	protected function getPluginVars() {
+		$return = [];
+		
+		$plugins = elgg_get_plugins('active');
+		foreach ($plugins as $plugin) {
+			$plugin_vars = $plugin->getStaticConfig('theme', []);
+			if (empty($plugin_vars)) {
+				continue;
+			}
+			
+			$return = array_merge($return, $plugin_vars);
+		}
+		
+		return $return;
 	}
 }

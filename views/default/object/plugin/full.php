@@ -76,6 +76,13 @@ if (!in_array('bundled', $categories)) {
 	$categories[] = 'nonbundled';
 }
 
+$categories = array_map('strtolower', $categories);
+
+$style = '';
+if (!in_array(elgg_extract('active_filter', $vars), $categories)) {
+	$style = 'display: none;';
+}
+
 foreach ($categories as $category) {
 	$css_class = preg_replace('/[^a-z0-9-]/i', '-', $category);
 	$classes[] = "elgg-plugin-category-{$css_class}";
@@ -99,6 +106,7 @@ if ($error) {
 echo elgg_view('object/elements/summary', [
 	'entity' => $plugin,
 	'class' => $classes,
+	'image_block_vars' => ['style' => $style],
 	'id' => preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID()),
 	'data-guid' => $plugin->guid,
 	'icon' => $action_button,

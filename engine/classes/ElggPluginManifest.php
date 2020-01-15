@@ -385,41 +385,7 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$bundled_plugins = [
-			'activity',
-			'blog',
-			'bookmarks',
-			'ckeditor',
-			'custom_index',
-			'dashboard',
-			'developers',
-			'diagnostics',
-			'discussions',
-			'embed',
-			'externalpages',
-			'file',
-			'friends',
-			'friends_collections',
-			'garbagecollector',
-			'groups',
-			'invitefriends',
-			'likes',
-			'login_as',
-			'members',
-			'messageboard',
-			'messages',
-			'notifications',
-			'pages',
-			'profile',
-			'reportedcontent',
-			'search',
-			'site_notifications',
-			'system_log',
-			'tagcloud',
-			'thewire',
-			'uservalidationbyemail',
-			'web_services',
-		];
+		$bundled_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
 
 		$cats = $this->parser->getAttribute('category');
 

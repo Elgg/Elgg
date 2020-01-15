@@ -25,6 +25,8 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``events`` - eliminates the need for calling ``elgg_register_event_handler()``
  * ``hooks`` - eliminates the need for calling ``elgg_register_plugin_hook_handler()``
  * ``cli_commands`` - an array of ``Elgg/Cli/Command`` classes to extend the feature of ``elgg-cli``
+ * ``view_extensions`` - eliminates the need for calling ``elgg_extend_view()`` or ``elgg_unextend_view()``
+ * ``theme`` - an array of theme variables
 
 
 .. code-block:: php
@@ -146,6 +148,26 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 		'cli_commands' => [
 			\My\Plugin\CliCommand::class,
 			'\My\Plugin\OtherCliCommand',
+		],
+		
+		'view_extensions' => [
+			'elgg.js' => [
+				'bookmarks.js' => [],
+			],
+			'page/components/list' => [
+				'list/extension' => [
+					'priority' => 600,
+				],
+			],
+			'forms/usersettings/save' => [
+				'core/settings/account/notifications' => [
+					'unextend' => true,
+				],
+			],
+		],
+		
+		'theme' => [
+			'body-background-color' => '#000',
 		],
 	];
 

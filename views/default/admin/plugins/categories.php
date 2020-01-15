@@ -56,7 +56,8 @@ $common_categories = [
 
 $categories = array_merge($common_categories, $categories);
 
-echo elgg_view("admin/plugins/filter", [
+echo elgg_view('admin/plugins/filter', [
 	'category' => "all",
-	'category_options' => $categories
+	'category_options' => $categories,
+	'active_filter' => elgg_extract('active_filter', $vars),
 ]);
