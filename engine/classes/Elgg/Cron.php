@@ -16,7 +16,10 @@ class Cron {
 	use Loggable;
 	use TimeUsing;
 
-	static $intervals = [
+	/**
+	 * @var array
+	 */
+	protected $default_intervals = [
 		'minute' => '* * * * *',
 		'fiveminute' => '*/5 * * * *',
 		'fifteenmin' => '*/15 * * * *',
@@ -63,19 +66,20 @@ class Cron {
 	public function run(array $intervals = null, $force = false) {
 
 		if (!isset($intervals)) {
-			$intervals = array_keys(self::$intervals);
+			$intervals = array_keys($this->default_intervals);
 		}
-
+		
+		$allowed_intervals = $this->getConfiguredIntervals();
+		
 		$scheduler = new Scheduler();
-
 		$time = $this->getCurrentTime();
 
 		foreach ($intervals as $interval) {
-			if (!array_key_exists($interval, self::$intervals)) {
+			if (!array_key_exists($interval, $allowed_intervals)) {
 				throw new \CronException("$interval is not a recognized cron interval");
 			}
 
-			$cron_interval = $force ? self::$intervals['minute'] : self::$intervals[$interval];
+			$cron_interval = $force ? $allowed_intervals['minute'] : $allowed_intervals[$interval];
 
 			$scheduler
 				->call(function () use ($interval, $time) {
@@ -224,5 +228,28 @@ class Cron {
 		}
 		
 		return $contents;
+	}
+	
+	/**
+	 * Get the cron interval configuration
+	 *
+	 * @param bool $only_names Only return the names of the intervals
+	 *
+	 * @return array
+	 * @since 3.2
+	 */
+	public function getConfiguredIntervals(bool $only_names = false) {
+		$result = $this->hooks->trigger('cron:intervals', 'system', [], $this->default_intervals);
+		if (!is_array($result)) {
+			$this->getLogger()->log(Logger::WARNING, "The plugin hook 'cron:intervals', 'system' should return an array, " . get_type($result) . ' given');
+			
+			$result = $this->default_intervals;
+		}
+		
+		if ($only_names) {
+			return array_keys($result);
+		}
+		
+		return $result;
 	}
 }
