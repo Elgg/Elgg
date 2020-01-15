@@ -165,4 +165,30 @@ class Locator {
 			return $upgrades ? $upgrades[0] : false;
 		});
 	}
+
+	/**
+	 * Check if there already is an ElggUpgrade for this upgrade class
+	 *
+	 * @param string $class_name name of the class used for the upgrade
+	 *
+	 * @return ElggUpgrade|false
+	 *
+	 * @since 3.3
+	 */
+	public function getUpgradeByClass(string $class_name) {
+		return elgg_call(ELGG_IGNORE_ACCESS, function () use ($class_name) {
+			$upgrades = \Elgg\Database\Entities::find([
+				'type' => 'object',
+				'subtype' => 'elgg_upgrade',
+				'private_setting_name_value_pairs' => [
+					[
+						'name' => 'class',
+						'value' => $class_name,
+					],
+				],
+			]);
+
+			return $upgrades ? $upgrades[0] : false;
+		});
+	}
 }
