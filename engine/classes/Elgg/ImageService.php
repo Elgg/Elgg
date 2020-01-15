@@ -7,7 +7,7 @@ use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Point;
 use Imagine\Filter\Basic\Autorotate;
-use Elgg\Filesystem\MimeTypeDetector;
+use Elgg\Filesystem\MimeTypeService;
 
 /**
  * Image manipulation service
@@ -29,16 +29,23 @@ class ImageService {
 	 * @var Config
 	 */
 	private $config;
+	
+	/**
+	 * @var MimeTypeService
+	 */
+	protected $mimetype;
 
 	/**
 	 * Constructor
 	 *
-	 * @param ImagineInterface $imagine Imagine interface
-	 * @param Config           $config  Elgg config
+	 * @param ImagineInterface $imagine  Imagine interface
+	 * @param Config           $config   Elgg config
+	 * @param MimeTypeService  $mimetype MimeType service
 	 */
-	public function __construct(ImagineInterface $imagine, Config $config) {
+	public function __construct(ImagineInterface $imagine, Config $config, MimeTypeService $mimetype) {
 		$this->imagine = $imagine;
 		$this->config = $config;
+		$this->mimetype = $mimetype;
 	}
 
 	/**
@@ -256,9 +263,10 @@ class ImageService {
 			return $format;
 		}
 		
-		$mime_detector = new MimeTypeDetector();
-		$mime = $mime_detector->getType($filename);
-		
-		return elgg_extract($mime, $accepted_formats);
+		try {
+			return elgg_extract($this->mimetype->getMimeType($filename), $accepted_formats);
+		} catch (\InvalidArgumentException $e) {
+			$this->getLogger()->warning($e);
+		}
 	}
 }

@@ -1179,7 +1179,12 @@ function _elgg_ajax_page_handler($segments) {
 				default :
 					if (_elgg_services()->views->isCacheableView($view)) {
 						$file = _elgg_services()->views->findViewFile($view, elgg_get_viewtype());
-						$content_type = (new \Elgg\Filesystem\MimeTypeDetector())->getType($file, 'text/html');
+						$content_type = 'text/html';
+						try {
+							$content_type = elgg()->mimetype->getMimeType($file, 'text/html');
+						} catch (InvalidArgumentException $e) {
+							// nothing for now
+						}
 					}
 					break;
 			}

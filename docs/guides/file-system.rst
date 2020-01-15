@@ -135,8 +135,7 @@ In order to implement an action that saves a single file uploaded by a user, you
 	// in your action
 	$uploaded_file = elgg_get_uploaded_file('upload');
 	if (!$uploaded_file) {
-		register_error("No file was uploaded");
-		forward(REFERER);
+		return elgg_error_response("No file was uploaded");
 	}
 
 	$supported_mimes = [
@@ -145,10 +144,9 @@ In order to implement an action that saves a single file uploaded by a user, you
 		'image/gif',
 	];
 
-	$mime_type = ElggFile::detectMimeType($uploaded_file->getPathname(), $uploaded_file->getClientMimeType());
+	$mime_type = elgg()->mimetype->getMimeType($uploaded_file->getPathname(), $uploaded_file->getClientMimeType());
 	if (!in_array($mime_type, $supported_mimes)) {
-		register_error("$mime_type is not supported");
-		forward(REFERER);
+		return elgg_error_response("{$mime_type} is not supported");
 	}
 
 	$file = new ElggFile();

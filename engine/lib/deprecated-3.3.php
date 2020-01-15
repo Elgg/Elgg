@@ -260,3 +260,18 @@ function elgg_unset_all_plugin_settings($plugin_id) {
 	
 	return $plugin->unsetAllSettings();
 }
+
+/**
+ * Returns the category of a file from its MIME type
+ *
+ * @param string $mime_type The MIME type
+ *
+ * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
+ * @since 1.10
+ * @deprecated 3.3 use elgg()->mimetype->getSimpleType()
+ */
+function elgg_get_file_simple_type($mime_type) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated, use elgg()->mimetype->getSimpleType()', '3.3');
+	
+	return elgg()->mimetype->getSimpleType($mime_type);
+}

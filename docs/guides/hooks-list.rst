@@ -758,9 +758,8 @@ Files
 	and with the default detected mimetype of ``$params['default']``.
 
 **simple_type, file**
-    In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']``
-    (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like
-    ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
+    The hook provides ``$params['mime_type']`` (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall 
+    category like ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
     ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
     ``ege*`` filters and menus.
 

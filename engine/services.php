@@ -18,6 +18,7 @@ use Elgg\Users\Accounts;
 use Elgg\Views\HtmlFormatter;
 use Elgg\Views\TableColumn\ColumnFactory;
 use Elgg\I18n\LocaleService;
+use Elgg\Filesystem\MimeTypeService;
 
 return [
 	'accounts' => new PhpDiResolver(Accounts::class, 'accounts'),
@@ -32,6 +33,7 @@ return [
 	'locale' => new PhpDiResolver(LocaleService::class, 'localeService'),
 	'logger' => new PhpDiResolver(Logger::class, 'logger'),
 	'menus' => new PhpDiResolver(MenuService::class, 'menus'),
+	'mimetype' => new PhpDiResolver(MimeTypeService::class, 'mimetype'),
 	'session' => new PhpDiResolver(ElggSession::class, 'session'),
 	'system_messages' => new PhpDiResolver(SystemMessagesService::class, 'systemMessages'),
 	'table_columns' => new PhpDiResolver(ColumnFactory::class, 'table_columns'),

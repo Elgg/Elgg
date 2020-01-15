@@ -3,7 +3,6 @@
 namespace Elgg;
 
 use Elgg\Database\EntityTable;
-use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Http\Request as HttpRequest;
 use ElggEntity;
 use ElggFile;
@@ -12,6 +11,7 @@ use InvalidParameterException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Elgg\Filesystem\MimeTypeService;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -55,6 +55,11 @@ class EntityIconService {
 	 * @var ImageService
 	 */
 	private $images;
+	
+	/**
+	 * @var MimeTypeService
+	 */
+	protected $mimetype;
 
 	/**
 	 * Constructor
@@ -66,6 +71,7 @@ class EntityIconService {
 	 * @param EntityTable        $entities Entity table
 	 * @param UploadService      $uploads  Upload service
 	 * @param ImageService       $images   Image service
+	 * @param MimeTypeService    $mimetype MimeType service
 	 */
 	public function __construct(
 		Config $config,
@@ -74,7 +80,8 @@ class EntityIconService {
 		LoggerInterface $logger,
 		EntityTable $entities,
 		UploadService $uploads,
-		ImageService $images
+		ImageService $images,
+		MimeTypeService $mimetype
 	) {
 		$this->config = $config;
 		$this->hooks = $hooks;
@@ -83,6 +90,7 @@ class EntityIconService {
 		$this->entities = $entities;
 		$this->uploads = $uploads;
 		$this->images = $images;
+		$this->mimetype = $mimetype;
 	}
 
 	/**
@@ -115,8 +123,8 @@ class EntityIconService {
 		
 		copy($input->getPathname(), $tmp->getFilenameOnFilestore());
 
-		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore(), $input->getClientMimeType());
-		$tmp->simpletype = elgg_get_file_simple_type($tmp->mimetype);
+		$tmp->mimetype = $this->mimetype->getMimeType($tmp->getFilenameOnFilestore(), $input->getClientMimeType());
+		$tmp->simpletype = $this->mimetype->getSimpleType($tmp->mimetype);
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);
 
@@ -147,8 +155,8 @@ class EntityIconService {
 		
 		copy($filename, $tmp->getFilenameOnFilestore());
 
-		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore());
-		$tmp->simpletype = elgg_get_file_simple_type($tmp->mimetype);
+		$tmp->mimetype = $this->mimetype->getMimeType($tmp->getFilenameOnFilestore());
+		$tmp->simpletype = $this->mimetype->getSimpleType($tmp->mimetype);
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);
 
@@ -179,8 +187,8 @@ class EntityIconService {
 		
 		copy($file->getFilenameOnFilestore(), $tmp->getFilenameOnFilestore());
 
-		$tmp->mimetype = (new MimeTypeDetector())->getType($tmp->getFilenameOnFilestore(), $file->getMimeType());
-		$tmp->simpletype = elgg_get_file_simple_type($tmp->mimetype);
+		$tmp->mimetype = $this->mimetype->getMimeType($tmp->getFilenameOnFilestore(), $file->getMimeType());
+		$tmp->simpletype = $this->mimetype->getSimpleType($tmp->mimetype);
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);
 
@@ -699,7 +707,7 @@ class EntityIconService {
 		}
 
 		$headers = [
-			'Content-Type' => (new MimeTypeDetector())->getType($filenameonfilestore),
+			'Content-Type' => $this->mimetype->getMimeType($filenameonfilestore),
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
 		$response->prepare($this->request);
