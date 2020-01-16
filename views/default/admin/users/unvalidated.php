@@ -10,10 +10,12 @@ echo elgg_view_form('admin/users/search', [
 	'method' => 'GET',
 	'action' => 'admin/users/unvalidated',
 	'class' => 'mbm',
+	'prevent_double_submit' => true,
 ]);
 
 $form = elgg_view_form('admin/users/unvalidated', [
 	'id' => 'admin-users-unvalidated-bulk',
+	'prevent_double_submit' => true,
 ]);
 
 if (empty($form)) {

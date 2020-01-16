@@ -642,3 +642,19 @@ $ipsum = elgg_view('developers/ipsum');
 		?>
 	</fieldset>
 </form>
+<?php
+
+$body = 'Form with submit button disabled on submit of form';
+$body .= elgg_view_field([
+	'#type' => 'text',
+]);
+$body .= elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('submit'),
+]);
+
+echo elgg_view('input/form', [
+	'body' => $body,
+	'action' => '#',
+	'prevent_double_submit' => true,
+]);

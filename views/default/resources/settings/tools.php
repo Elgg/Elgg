@@ -42,7 +42,9 @@ $username = elgg_extract('username', $vars);
 
 elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
 
-$form_vars = [];
+$form_vars = [
+	'prevent_double_submit' => true,
+];
 
 if (elgg_action_exists("{$plugin->getID()}/usersettings/save")) {
 	$form_vars['action'] = "action/{$plugin->getID()}/usersettings/save";

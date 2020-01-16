@@ -5,6 +5,7 @@
  */
 $title = elgg_echo('notifications:subscriptions:changesettings:groups');
 $body = elgg_view_form('notifications/subscriptions/groups', [
+	'prevent_double_submit' => true,
 	'action' => elgg_normalize_url('action/notifications/subscriptions'),
 ], $vars);
 

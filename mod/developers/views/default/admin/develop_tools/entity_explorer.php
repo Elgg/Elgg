@@ -6,6 +6,7 @@ echo elgg_view_form('developers/entity_explorer', [
 	'action' => 'admin/develop_tools/entity_explorer',
 	'method' => 'GET',
 	'disable_security' => true,
+	'prevent_double_submit' => true,
 ]);
 
 $guid = get_input('guid');

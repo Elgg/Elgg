@@ -42,5 +42,5 @@ if ($parent instanceof ElggPage) {
 $vars = pages_prepare_form_vars(null, $parent_guid);
 
 echo elgg_view_page(elgg_echo('add:object:page'), [
-	'content' => elgg_view_form('pages/edit', [], $vars),
+	'content' => elgg_view_form('pages/edit', ['prevent_double_submit' => true], $vars),
 ]);

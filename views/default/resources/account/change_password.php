@@ -17,6 +17,7 @@ if (!$user instanceof ElggUser) {
 
 $content = elgg_view_form('user/changepassword', [
 	'class' => 'elgg-form-account',
+	'prevent_double_submit' => true,
 ], [
 	'guid' => $user_guid,
 	'code' => get_input('c'),

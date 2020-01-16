@@ -33,6 +33,7 @@ if ($inbox) {
 		'id' => 'messages-reply-form',
 		'class' => 'hidden mtl',
 		'action' => 'action/messages/send',
+		'prevent_double_submit' => true,
 	];
 	$body_params = ['message' => $message];
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
