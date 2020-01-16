@@ -78,7 +78,7 @@ if (!in_array('bundled', $categories)) {
 
 $categories = array_map('strtolower', $categories);
 
-$style = '';
+$style = null;
 if (!in_array(elgg_extract('active_filter', $vars), $categories)) {
 	$style = 'display: none;';
 }
@@ -106,8 +106,10 @@ if ($error) {
 echo elgg_view('object/elements/summary', [
 	'entity' => $plugin,
 	'class' => $classes,
-	'image_block_vars' => ['style' => $style],
-	'id' => preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID()),
+	'image_block_vars' => [
+		'style' => $style,
+		'id' => preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID()),
+	],
 	'data-guid' => $plugin->guid,
 	'icon' => $action_button,
 	'title' => $title,
