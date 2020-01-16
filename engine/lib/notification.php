@@ -86,11 +86,15 @@ function elgg_register_notification_event($object_type, $object_subtype, array $
  *
  * @param string $object_type    'object', 'user', 'group', 'site'
  * @param string $object_subtype The type of the entity
+ * @param array  $actions        The notification action to unregister, leave empty for all actions
+ *                                Example ('create', 'delete', 'publish')
+ *
  * @return bool
  * @since 1.9
+ * @see elgg_register_notification_event()
  */
-function elgg_unregister_notification_event($object_type, $object_subtype) {
-	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype);
+function elgg_unregister_notification_event($object_type, $object_subtype, array $actions = []) {
+	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $actions);
 }
 
 /**

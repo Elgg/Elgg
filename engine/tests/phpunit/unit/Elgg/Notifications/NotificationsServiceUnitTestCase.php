@@ -208,6 +208,32 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->assertEquals($events, $this->notifications->getEvents());
 		$this->assertFalse($this->notifications->unregisterEvent($object->getType(), $object->getSubtype()));
 	}
+	
+	public function testUnregisterEventSpecificAction() {
+		$this->setupServices();
+
+		$object = $this->getTestObject();
+
+		$this->notifications->registerEvent($object->getType(), $object->getSubtype(), ['create', 'delete']);
+		
+		// unregister one action
+		$this->assertTrue($this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['create']));
+
+		$events = [
+			$object->getType() => [
+				$object->getSubtype() => ['delete'],
+			],
+		];
+		$this->assertEquals($events, $this->notifications->getEvents());
+		
+		// unregister last remaining action
+		$this->assertTrue($this->notifications->unregisterEvent($object->getType(), $object->getSubtype(), ['delete']));
+		
+		$events = [
+			$object->getType() => [],
+		];
+		$this->assertEquals($events, $this->notifications->getEvents());
+	}
 
 	public function testRegisterMethod() {
 		$this->setupServices();
