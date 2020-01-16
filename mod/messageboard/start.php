@@ -3,8 +3,6 @@
  * Elgg Message board
  * This plugin allows users and groups to attach a message board to their profile for other users
  * to post comments.
- *
- * @package MessageBoard
  */
 
 /**

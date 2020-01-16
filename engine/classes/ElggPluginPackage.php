@@ -10,12 +10,10 @@
  * right now because of conflicts with at least the constructor,
  * enable(), disable(), and private settings.
  *
- * Around 1.9 or so we should each plugin over to using
+ * @todo Around 1.9 or so we should each plugin over to using
  * \ElggPlugin and merge \ElggPluginPackage and \ElggPlugin.
  *
- * @package    Elgg.Core
- * @subpackage Plugins
- * @since      1.8
+ * @since 1.8
  */
 class ElggPluginPackage {
 

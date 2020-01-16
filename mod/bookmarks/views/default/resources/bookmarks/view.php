@@ -1,8 +1,6 @@
 <?php
 /**
  * View a bookmark
- *
- * @package ElggBookmarks
  */
 
 $guid = elgg_extract('guid', $vars);

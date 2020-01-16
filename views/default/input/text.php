@@ -3,9 +3,6 @@
  * Elgg text input
  * Displays a text input field
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['class'] Additional CSS class
  */
 

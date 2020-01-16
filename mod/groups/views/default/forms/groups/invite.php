@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg groups invite form
- *
- * @package ElggGroups
  */
 
 $group = elgg_extract('entity', $vars);

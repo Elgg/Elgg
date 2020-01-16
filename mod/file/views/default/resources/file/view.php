@@ -1,8 +1,6 @@
 <?php
 /**
  * View a file
- *
- * @package ElggFile
  */
 
 $guid = elgg_extract('guid', $vars);

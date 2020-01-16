@@ -2,9 +2,6 @@
 /**
  * Elgg system log.
  * Listens to events and writes crud events into the system log database.
- *
- * @package    Elgg.Core
- * @subpackage Logging
  */
 
 use Elgg\SystemLog\SystemLog;

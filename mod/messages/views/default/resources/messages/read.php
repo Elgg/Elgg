@@ -1,8 +1,6 @@
 <?php
 /**
 * Read a message page
-*
-* @package ElggMessages
 */
 
 $guid = elgg_extract('guid', $vars);

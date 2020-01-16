@@ -1,8 +1,6 @@
 <?php
 /**
  * Blog sidebar menu showing revisions
- *
- * @package Blog
  */
 
 use Elgg\Database\Clauses\OrderByClause;

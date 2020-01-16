@@ -1,8 +1,6 @@
 <?php
 /**
 * Elgg sent messages page
-*
-* @package ElggMessages
 */
 
 $page_owner = elgg_get_page_owner_entity();

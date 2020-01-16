@@ -1,8 +1,6 @@
 <?php
 /**
  * All files
- *
- * @package ElggFile
  */
 
 elgg_push_collection_breadcrumbs('object', 'file');

@@ -4,9 +4,6 @@
  *
  * @uses $vars['show_page_menu'] (bool) Show the page menu
  * @uses $vars['page_menu_params'] (array) An array of params to pass to page menu
- *
- * @package Elgg
- * @subpackage Core
  */
 
 if (!elgg_extract('show_page_menu', $vars, true)) {

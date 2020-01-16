@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Elgg add user form.
- *
- * @package Elgg
- * @subpackage Core
  *
  */
 elgg_require_js('forms/useradd');

@@ -1,9 +1,6 @@
 <?php
 /**
  * Shows a list of contributors for ElggPlugin in $vars['plugin'].
- *
- * @package Elgg.Core
- * @subpackage Admin.Plugins
  */
 
 $plugin = elgg_extract('plugin', $vars, false);

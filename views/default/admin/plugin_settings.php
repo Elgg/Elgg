@@ -4,9 +4,6 @@
  *
  * @uses ElggPlugin $vars['entity'] The plugin object to display settings for.
  * @uses ElggPlugin $vars['plugin'] Same as entity required for plugin settings backward compatibility
- *
- * @package Elgg.Core
- * @subpackage Plugins.Settings
  */
 
 $plugin = elgg_extract('entity', $vars);

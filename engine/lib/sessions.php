@@ -6,9 +6,6 @@ use Elgg\Di\ServiceProvider;
 /**
  * Elgg session management
  * Functions to manage logins
- *
- * @package    Elgg.Core
- * @subpackage Session
  */
 
 /**

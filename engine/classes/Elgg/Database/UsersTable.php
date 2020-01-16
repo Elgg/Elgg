@@ -5,9 +5,7 @@ namespace Elgg\Database;
 use Elgg\Config as Conf;
 use Elgg\Database;
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Validation\ValidationResults;
 use ElggUser;
-use Exception;
 use RegistrationException;
 
 /**
@@ -15,9 +13,7 @@ use RegistrationException;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
+ * @since 1.10.0
  */
 class UsersTable {
 

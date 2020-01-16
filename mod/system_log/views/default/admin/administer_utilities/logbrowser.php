@@ -1,10 +1,6 @@
 <?php
 /**
  * Elgg log browser admin page
- *
- * @note    The ElggObject this creates for each entry is temporary
- *
- * @package ElggLogBrowser
  */
 
 $limit = get_input('limit', 20);

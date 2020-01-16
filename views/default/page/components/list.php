@@ -1,9 +1,6 @@
 <?php
-
 /**
  * View a list of items
- *
- * @package Elgg
  *
  * @uses $vars['items']          Array of ElggEntity, ElggAnnotation or ElggRiverItem objects
  * @uses $vars['offset']         Index of the first list item in complete list

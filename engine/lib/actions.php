@@ -1,11 +1,6 @@
 <?php
 /**
  * Elgg Actions
- *
- * @see http://learn.elgg.org/en/stable/guides/actions.html
- *
- * @package Elgg.Core
- * @subpackage Actions
  */
 
 use Elgg\Database\SiteSecret;

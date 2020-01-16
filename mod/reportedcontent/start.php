@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg Reported content.
- *
- * @package ElggReportedContent
  */
 
 /**

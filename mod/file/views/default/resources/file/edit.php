@@ -1,8 +1,6 @@
 <?php
 /**
  * Edit a file
- *
- * @package ElggFile
  */
 
 $file_guid = (int) elgg_extract('guid', $vars);

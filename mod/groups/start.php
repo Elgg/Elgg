@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg groups plugin
- *
- * @package ElggGroups
  */
 
 /**

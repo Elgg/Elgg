@@ -3,8 +3,6 @@ use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * Elgg Message board index page
- *
- * @package MessageBoard
  */
 
 elgg_require_js('elgg/messageboard');

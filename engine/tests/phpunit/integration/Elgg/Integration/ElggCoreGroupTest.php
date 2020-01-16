@@ -10,7 +10,6 @@ use ElggGroup;
  * Elgg Test \ElggGroup
  *
  * @group IntegrationTests
- * @subpackage Test
  */
 class ElggCoreGroupTest extends IntegrationTestCase {
 	/**

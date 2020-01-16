@@ -3,9 +3,6 @@
  * Elgg database procedural code.
  *
  * Includes functions for reading data, writing data, and escaping queries.
- *
- * @package    Elgg.Core
- * @subpackage Database
  */
 
 /**

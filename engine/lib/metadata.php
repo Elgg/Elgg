@@ -2,9 +2,6 @@
 /**
  * Elgg metadata
  * Functions to manage entity metadata.
- *
- * @package Elgg.Core
- * @subpackage DataModel.Metadata
  */
 
 /**

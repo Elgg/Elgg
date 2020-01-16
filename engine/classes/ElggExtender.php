@@ -7,8 +7,6 @@
  *
  * Saving the extender data to database is handled by the child class.
  *
- * @package    Elgg.Core
- * @subpackage DataModel.Extender
  * @see        \ElggAnnotation
  * @see        \ElggMetadata
  *

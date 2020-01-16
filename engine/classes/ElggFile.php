@@ -18,9 +18,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * when you may want access to file data on datastores using the \ElggFile
  * interface without a need to persist information such as temporary files.
  *
- * @package    Elgg.Core
- * @subpackage DataModel.File
- *
  * @property      string $mimetype         MIME type of the file
  * @property      string $simpletype       Category of the file
  * @property      string $originalfilename Filename of the original upload

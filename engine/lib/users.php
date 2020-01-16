@@ -2,9 +2,6 @@
 /**
  * Elgg users
  * Functions to manage multiple or single users in an Elgg install
- *
- * @package Elgg.Core
- * @subpackage DataModel.User
  */
 
 /**

@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg embed CSS - standard across all themes
- *
- * @package embed
  */
 ?>
 .embed-wrapper {

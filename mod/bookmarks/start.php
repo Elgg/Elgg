@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg Bookmarks plugin
- *
- * @package ElggBookmarks
  */
 
 /**

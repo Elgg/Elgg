@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg Message board add form body
- *
- * @package ElggMessageBoard
  */
 
 

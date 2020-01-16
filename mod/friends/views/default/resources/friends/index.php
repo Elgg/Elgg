@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg friends page
- *
- * @package Elgg.Core
- * @subpackage Social.Friends
  */
 
 $owner = elgg_get_page_owner_entity();

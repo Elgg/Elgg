@@ -1,13 +1,9 @@
 <?php
-
 /**
  * A filestore that uses disk as storage.
  *
  * @warning This should be used by a wrapper class
  * like {@link \ElggFile}.
- *
- * @package    Elgg.Core
- * @subpackage FileStore.Disk
  */
 class ElggDiskFilestore extends \ElggFilestore {
 

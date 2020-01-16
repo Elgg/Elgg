@@ -66,9 +66,7 @@ use Elgg\BatchResult;
  * ]);
  * </code>
  *
- * @package    Elgg.Core
- * @subpackage DataModel
- * @since      1.8
+ * @since 1.8
  */
 class ElggBatch implements BatchResult {
 

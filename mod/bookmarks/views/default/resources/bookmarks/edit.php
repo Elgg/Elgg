@@ -1,8 +1,6 @@
 <?php
 /**
  * Add bookmark page
- *
- * @package ElggBookmarks
  */
 
 $bookmark_guid = elgg_extract('guid', $vars);

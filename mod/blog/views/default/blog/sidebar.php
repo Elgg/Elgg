@@ -1,8 +1,6 @@
 <?php
 /**
  * Blog sidebar
- *
- * @package Blog
  */
 
 $page = elgg_extract('page', $vars);

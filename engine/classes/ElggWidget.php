@@ -1,12 +1,8 @@
 <?php
-
 /**
  * \ElggWidget
  *
  * Stores metadata in private settings rather than as \ElggMetadata
- *
- * @package    Elgg.Core
- * @subpackage Widgets
  *
  * @property-read string $handler internal, do not use
  * @property-read string $column  internal, do not use

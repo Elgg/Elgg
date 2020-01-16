@@ -1,8 +1,6 @@
 <?php
 /**
  * Edit blog form
- *
- * @package Blog
  */
 
 elgg_require_js('elgg/blog/save_draft');

@@ -12,7 +12,6 @@ use Elgg\Upgrade\Batch;
 /**
  * Represents an upgrade that runs outside of the upgrade.php script.
  *
- * @package Elgg.Admin
  * @internal
  *
  * @property      bool   $is_completed   Is the upgrade completed yet

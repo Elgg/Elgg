@@ -7,9 +7,6 @@
  *
  * If the user is logged in, this page will forward to the network
  * front page.
- *
- * @package Elgg.Core
- * @subpackage Registration
  */
 
 // check new registration allowed

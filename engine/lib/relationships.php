@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg relationships.
- *
- * @package    Elgg.Core
- * @subpackage DataModel.Relationship
  */
 
 use Elgg\Database\Relationships;

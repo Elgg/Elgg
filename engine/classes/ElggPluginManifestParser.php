@@ -17,9 +17,7 @@
  * file or string.  Any normalization needs to be done in the
  * calling class / function.
  *
- * @package    Elgg.Core
- * @subpackage Plugins
- * @since      1.8
+ * @since 1.8
  */
 abstract class ElggPluginManifestParser {
 	/**

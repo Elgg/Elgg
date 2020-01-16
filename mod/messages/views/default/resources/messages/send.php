@@ -1,8 +1,6 @@
 <?php
 /**
 * Compose a message
-*
-* @package ElggMessages
 */
 
 $page_owner = elgg_get_logged_in_user_entity();

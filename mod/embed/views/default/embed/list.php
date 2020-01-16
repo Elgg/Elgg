@@ -3,8 +3,6 @@
 /**
  * View a list of embeddable items
  *
- * @package Elgg
- *
  * @uses $vars['items']       Array of ElggEntity objects
  * @uses $vars['offset']      Index of the first list item in complete list
  * @uses $vars['limit']       Number of items per page

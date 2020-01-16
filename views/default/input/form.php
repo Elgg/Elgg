@@ -3,9 +3,6 @@
  * Create a form for data submission.
  * Use this view for forms as it provides protection against CSRF attacks.
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['body'] The body of the form (made up of other input/xxx views and html
  * @uses $vars['action'] The action URL of the form
  * @uses $vars['action_name'] The name of the action (for targeting particular forms while extending)

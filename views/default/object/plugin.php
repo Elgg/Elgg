@@ -1,10 +1,6 @@
 <?php
 /**
  * Used to show plugin user settings.
- *
- * @package Elgg.Core
- * @subpackage Plugins
- *
  */
 
 $plugin = elgg_extract('entity', $vars);

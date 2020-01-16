@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg friends of page
- *
- * @package Elgg.Core
- * @subpackage Social.Friends
  */
 
 // needed for correct registration of menu items

@@ -4,9 +4,6 @@
  *
  * This is a distinct theme from the theme of the site. There are dependencies
  * on the HTML created by the views in Elgg core.
- *
- * @package Elgg.Core
- * @subpackage UI
  */
 
 echo elgg_view('core.css');

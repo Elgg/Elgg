@@ -2,9 +2,6 @@
 /**
  * Generic icon view.
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['entity']     The entity the icon represents - uses getIconURL() method
  * @uses $vars['size']       topbar, tiny, small, medium (default), large, master
  * @uses $vars['use_link']   Hyperlink the icon

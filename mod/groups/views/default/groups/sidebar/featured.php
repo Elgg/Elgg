@@ -1,8 +1,6 @@
 <?php
 /**
  * Featured groups
- *
- * @package ElggGroups
  */
 
 elgg_push_context('widgets');

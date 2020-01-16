@@ -1,8 +1,6 @@
 <?php
 /**
 * Elgg bookmarks plugin bookmarklet page
-*
-* @package Bookmarks
 */
 
 $container_guid = elgg_extract('guid', $vars, elgg_extract('container_guid', $vars));

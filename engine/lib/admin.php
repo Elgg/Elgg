@@ -14,10 +14,6 @@
  * and the admin area. There is a special presistent message for the admin area
  * called an admin notice. It should be used when a plugin requires an
  * administrator to take an action. @see elgg_add_admin_notice()
- *
- *
- * @package Elgg.Core
- * @subpackage Admin
  */
 
 use Elgg\Menu\MenuItems;

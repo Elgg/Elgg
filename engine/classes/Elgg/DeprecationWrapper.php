@@ -21,8 +21,6 @@ namespace Elgg;
  *  config object in ElggPlugin::includeFile
  *
  * @internal
- *
- * @package Elgg.Core
  */
 class DeprecationWrapper implements \ArrayAccess {
 	/** @var object */

@@ -14,11 +14,6 @@
  *
  * Catch NotificationException to trap errors.
  *
- * @package Elgg.Core
- * @subpackage Notifications
- */
-
-/**
  * Adding a New Notification Event
  * ===============================
  * 1. Register the event with elgg_register_notification_event()
@@ -53,10 +48,6 @@
  * Subscribing a User for Notifications
  * ====================================
  * Users subscribe to receive notifications based on container and delivery method.
- *
- *
- * @package Elgg.Core
- * @subpackage Notifications
  */
 
 /**

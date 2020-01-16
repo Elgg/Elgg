@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg ajax edit comment form
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $guid = get_input('guid');

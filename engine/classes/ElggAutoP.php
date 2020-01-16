@@ -7,9 +7,6 @@
  *
  * In DIV elements, Ps are only added when there would be at
  * least two of them.
- *
- * @package    Elgg.Core
- * @subpackage Output
  */
 class ElggAutoP {
 

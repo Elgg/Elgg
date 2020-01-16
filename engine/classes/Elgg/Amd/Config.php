@@ -5,9 +5,6 @@ namespace Elgg\Amd;
 /**
  * Control configuration of RequireJS
  *
- * @package    Elgg.Core
- * @subpackage JavaScript
- *
  * @internal
  */
 class Config {

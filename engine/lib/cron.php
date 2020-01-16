@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg cron library.
- *
- * @package    Elgg.Core
- * @subpackage Cron
  */
 
 /**

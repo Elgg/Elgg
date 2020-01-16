@@ -2,9 +2,6 @@
 /**
  * A single element of a menu.
  *
- * @package Elgg.Core
- * @subpackage Navigation
- *
  * @uses $vars['item']       ElggMenuItem
  * @uses $vars['item_class'] Additional CSS class for the menu item
  */

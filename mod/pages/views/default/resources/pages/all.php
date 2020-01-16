@@ -1,8 +1,6 @@
 <?php
 /**
  * List all pages
- *
- * @package ElggPages
  */
 
 elgg_push_collection_breadcrumbs('object', 'page');

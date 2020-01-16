@@ -2,9 +2,6 @@
 /**
  * Create a hidden data field
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['value'] The current value, if any
  */
 

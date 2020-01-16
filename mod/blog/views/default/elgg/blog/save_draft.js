@@ -1,7 +1,5 @@
 /**
  * Save draft through ajax
- *
- * @package Blog
  */
 define(function(require) {
 	var $ = require('jquery');

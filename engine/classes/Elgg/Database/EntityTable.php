@@ -31,9 +31,7 @@ use Elgg\Cache\PrivateSettingsCache;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
+ * @since 1.10.0
  */
 class EntityTable {
 

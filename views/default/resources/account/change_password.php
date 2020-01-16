@@ -1,9 +1,6 @@
 <?php
 /**
  * Page for resetting a forgotten password
- *
- * @package Elgg.Core
- * @subpackage Registration
  */
 
 $user_guid = get_input('u');

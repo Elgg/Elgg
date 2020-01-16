@@ -4,8 +4,6 @@
  *
  * If editing an existing group, only the "group_guid" must be submitted. All other form
  * elements may be omitted and the corresponding data will be left as is.
- *
- * @package ElggGroups
  */
 
 elgg_make_sticky_form('groups');

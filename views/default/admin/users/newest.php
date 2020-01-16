@@ -3,7 +3,7 @@
 elgg_require_css('admin/users/newest');
 
 echo elgg_view_form('admin/users/search', [
-	'method' => 'GET', 
+	'method' => 'GET',
 	'action' => 'admin/users/newest',
 	'prevent_double_submit' => true,
 ]);

@@ -8,8 +8,6 @@ namespace Elgg\Json;
  * This gets around PHP's limitation of not allowing empty string object property names.
  * https://bugs.php.net/bug.php?id=46600
  *
- * @package    Elgg.Core
- * @subpackage Json
  * @internal
  */
 class EmptyKeyEncoding {

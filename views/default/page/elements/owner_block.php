@@ -4,9 +4,6 @@
  * Displays page ownership information
  *
  * @uses $vars['show_owner_block_menu'] (bool) Show the owner_block menu for the current page owner (default: true)
- *
- * @package Elgg
- * @subpackage Core
  */
 
 // groups and other users get owner block

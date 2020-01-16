@@ -2,9 +2,6 @@
 /**
  * Elgg filestore.
  * This file contains functions for saving and retrieving data from files.
- *
- * @package Elgg.Core
- * @subpackage DataModel.FileStorage
  */
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;

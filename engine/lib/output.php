@@ -2,9 +2,6 @@
 /**
  * Output functions
  * Processing text for output such as pulling out URLs and extracting excerpts
- *
- * @package Elgg
- * @subpackage Core
  */
 
 /**

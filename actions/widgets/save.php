@@ -2,9 +2,6 @@
 /**
  * Elgg save widget settings action
  *
- * @package Elgg.Core
- * @subpackage Widgets.Management
- *
  * @uses int    $_REQUEST['guid']            The guid of the widget to save
  * @uses array  $_REQUEST['params']          An array of params to set on the widget.
  * @uses int    $_REQUEST['default_widgets'] Flag for if these settings are for default wigets.

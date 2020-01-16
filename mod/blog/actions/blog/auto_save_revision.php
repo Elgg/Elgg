@@ -1,8 +1,6 @@
 <?php
 /**
  * Action called by AJAX periodic auto saving when editing.
- *
- * @package Blog
  */
 
 $guid = (int) get_input('guid');

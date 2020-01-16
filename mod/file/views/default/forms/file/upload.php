@@ -1,10 +1,8 @@
 <?php
-
 /**
  * Elgg file upload/save form
- *
- * @package ElggFile
  */
+
 // once elgg_view stops throwing all sorts of junk into $vars, we can use
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');

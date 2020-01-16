@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg media embed plugin
- *
- * @package ElggEmbed
  */
 
 use Elgg\Collections\Collection;
