@@ -1701,56 +1701,6 @@ function _elgg_views_send_header_x_frame_options() {
 }
 
 /**
- * Is there a chance a plugin is altering this view?
- *
- * @note Must be called after the [init, system] event, ideally as late as possible.
- *
- * @note Always returns true if the view's location is set in /engine/views.php. Elgg does not keep
- *       track of the defaults for those locations.
- *
- * <code>
- * // check a view in core
- * if (_elgg_view_may_be_altered('foo/bar', 'foo/bar.php')) {
- *     // use the view for BC
- * }
- *
- * // check a view in a bundled plugin
- * $dir = __DIR__ . "/views/" . elgg_get_viewtype();
- * if (_elgg_view_may_be_altered('foo.css', "$dir/foo.css.php")) {
- *     // use the view for BC
- * }
- * </code>
- *
- * @param string $view View name. E.g. "elgg/init.js"
- * @param string $path Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
- *
- * @return bool
- * @internal
- */
-function _elgg_view_may_be_altered($view, $path) {
-	$views = _elgg_services()->views;
-
-	if ($views->viewIsExtended($view) || $views->viewHasHookHandlers($view)) {
-		return true;
-	}
-
-	$viewtype = elgg_get_viewtype();
-
-	// check location
-	if (0 === strpos($path, '/') || preg_match('~^([A-Za-z]\:)?\\\\~', $path)) {
-		// absolute path
-		$expected_path = $path;
-	} else {
-		// relative path
-		$expected_path = Paths::elgg() . "views/$viewtype/" . ltrim($path, '/\\');
-	}
-
-	$view_path = $views->findViewFile($view, $viewtype);
-
-	return realpath($view_path) !== realpath($expected_path);
-}
-
-/**
  * Initialize viewtypes on system boot event
  * This ensures simplecache is cleared during upgrades. See #2252
  *
