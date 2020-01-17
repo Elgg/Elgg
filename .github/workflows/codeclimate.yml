@@ -10,7 +10,7 @@ jobs:
 
     services:
       mysql:
-        options: --max_connections=2000
+        options: --max-connections=2000
         
     steps:
       - name: Checkout
