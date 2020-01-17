@@ -1007,10 +1007,6 @@ Other
 **is_member, group**
 	Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``.
 
-**entity:annotate, <entity_type>**
-	Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can
-	be used to add annotations to all full entity views.
-
 **usersetting, plugin**
 	Filter user settings for plugins. ``$params`` contains:
 

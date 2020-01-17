@@ -810,10 +810,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  * The entity view is called with the following in $vars:
  *  - \ElggEntity 'entity' The entity being viewed
  *
- * @tip This function can automatically appends annotations to entities if in full
- * view and a handler is registered for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
- * {@link elgg_view_entity_annotations()}.
- *
  * @param \ElggEntity $entity The entity to display
  * @param array       $vars   Array of variables to pass to the entity view.
  *      'full_view'           Whether to show a full or condensed view. (Default: true)
@@ -1043,34 +1039,6 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
 	}
 
 	return elgg_view('page/components/list', $vars);
-}
-
-/**
- * Display a plugin-specified rendered list of annotations for an entity.
- *
- * This displays the output of functions registered to the entity:annotation,
- * $entity_type plugin hook.
- *
- * This is called automatically by the framework from {@link elgg_view_entity()}
- *
- * @param \ElggEntity $entity    Entity
- * @param bool        $full_view Display full view?
- *
- * @return mixed string or false on failure
- * @todo Change the hook name.
- */
-function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
-	
-	$entity_type = $entity->getType();
-
-	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
-		[
-			'entity' => $entity,
-			'full_view' => $full_view,
-		]
-	);
-
-	return $annotations;
 }
 
 /**

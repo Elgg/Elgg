@@ -83,6 +83,7 @@ Deprecated APIs
  * ``elgg_get_menu_item()``
  * ``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``
  * ``elgg_is_menu_item_registered()``
+ * ``elgg_view_entity_annotations()``
  * ``execute_delayed_write_query()`` use ``elgg()->db->registerDelayedQuery()``
  * ``execute_delayed_read_query()`` use ``elgg()->db->registerDelayedQuery()``		
  * ``run_sql_script()``
@@ -99,3 +100,8 @@ Deprecated CLI commands
 -----------------------
 
  * ``elgg-cli flush`` use ``elgg-cli cache:clear``
+
+Deprecated Hooks
+----------------
+
+ * **entity:annotate, <entity_type>**

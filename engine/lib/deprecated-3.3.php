@@ -275,3 +275,32 @@ function elgg_get_file_simple_type($mime_type) {
 	
 	return elgg()->mimetype->getSimpleType($mime_type);
 }
+
+/**
+ * Display a plugin-specified rendered list of annotations for an entity.
+ *
+ * This displays the output of functions registered to the entity:annotation,
+ * $entity_type plugin hook.
+ *
+ * This is called automatically by the framework from {@link elgg_view_entity()}
+ *
+ * @param \ElggEntity $entity    Entity
+ * @param bool        $full_view Display full view?
+ *
+ * @return mixed string or false on failure
+ * @deprecated 3.3
+ */
+function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
+	
+	$entity_type = $entity->getType();
+	
+	return elgg_trigger_deprecated_plugin_hook('entity:annotate', $entity_type,
+		[
+			'entity' => $entity,
+			'full_view' => $full_view,
+		],
+		null,
+		'Using the "entity:annotate" hook to add annotations to the view of a full entity is deprecated.',
+		'3.3'
+	);
+}
