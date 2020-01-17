@@ -14,6 +14,7 @@ jobs:
       ELGG_DB_USER: root
       ELGG_DB_PASS: root
       ELGG_DB_NAME: elgg
+      ELGG_DB_PREFIX: elgg_
         
     steps:
       - name: Checkout
