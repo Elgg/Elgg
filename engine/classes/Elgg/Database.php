@@ -14,7 +14,7 @@ use Elgg\Cache\QueryCache;
 /**
  * The Elgg database
  *
- * @internal Use the public API functions in engine/lib/database.php
+ * @internal
  *
  * @property-read string $prefix Elgg table prefix (read only)
  */

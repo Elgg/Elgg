@@ -253,3 +253,39 @@ function elgg_error_response($error = '', $forward_url = REFERRER, $status_code 
 function elgg_redirect_response($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }
+
+/**
+ * /cron handler
+ *
+ * @param array $segments URL segments
+ *
+ * @return bool
+ * @internal
+ */
+function _elgg_cron_page_handler($segments) {
+	
+	if (_elgg_config()->security_protect_cron) {
+		elgg_signed_request_gatekeeper();
+	}
+	
+	$interval = strtolower(array_shift($segments));
+	
+	$intervals = null;
+	if ($interval !== 'run') {
+		$intervals = [$interval];
+	}
+	
+	$output = '';
+	try {
+		$force = (bool) get_input('force');
+		$jobs = _elgg_services()->cron->run($intervals, $force);
+		foreach ($jobs as $job) {
+			$output .= $job->getOutput() . PHP_EOL;
+		}
+	} catch (CronException $ex) {
+		$output .= "Exception: {$ex->getMessage()}";
+	}
+	
+	echo nl2br($output);
+	return true;
+}
