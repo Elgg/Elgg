@@ -8,6 +8,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        options: --max_connections=2000
+        
     steps:
       - name: Checkout
         uses: actions/checkout@master
@@ -17,7 +21,7 @@ jobs:
         with:
           php-version: '7.4'
       
-      - name: Install dependencies
+      - name: Install Elgg
         run: composer install
       
       - name: Test and publish code coverage
