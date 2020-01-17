@@ -10,6 +10,6 @@ jobs:
     steps:
     - name: Test & publish code coverage
       uses: shivammathur/setup-php@v1
-        with:
-          php-version: '7.4'
-          coverage: xdebug
+      with:
+        php-version: '7.4'
+        coverage: xdebug
