@@ -760,7 +760,7 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 
 	// append action tokens to the existing query
 	$query['__elgg_ts'] = time();
-	$query['__elgg_token'] = generate_action_token($query['__elgg_ts']);
+	$query['__elgg_token'] = elgg()->csrf->generateActionToken($query['__elgg_ts']);
 	$components['query'] = http_build_query($query);
 
 	// rebuild the full url

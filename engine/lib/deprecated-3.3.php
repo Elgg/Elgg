@@ -340,3 +340,28 @@ function elgg_get_ordered_event_handlers($event, $type) {
 	
 	return elgg()->events->getOrderedHandlers($event, $type);
 }
+
+/**
+ * Generate an action token.
+ *
+ * Action tokens are based on timestamps as returned by {@link time()}.
+ * They are valid for one hour.
+ *
+ * Action tokens should be passed to all actions name __elgg_ts and __elgg_token.
+ *
+ * @warning Action tokens are required for all actions.
+ *
+ * @param int $timestamp Unix timestamp
+ *
+ * @see @elgg_view input/securitytoken
+ * @see @elgg_view input/form
+ *
+ * @return string|false
+ * 
+ * @deprecated use elgg()->csrf->generateActionToken()
+ */
+function generate_action_token($timestamp) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg()->csrf->generateActionToken()', '3.3');
+	
+	return elgg()->csrf->generateActionToken($timestamp);
+}

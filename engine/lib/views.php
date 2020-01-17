@@ -1853,7 +1853,7 @@ function _elgg_get_js_page_data() {
 		'security' => [
 			'token' => [
 				'__elgg_ts' => $ts = time(),
-				'__elgg_token' => generate_action_token($ts),
+				'__elgg_token' => elgg()->csrf->generateActionToken($ts),
 			],
 		],
 		'session' => [
