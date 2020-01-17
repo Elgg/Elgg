@@ -9,20 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Prepare PHP
-        uses: shivammathur/setup-php@v1
+      - name: Checkout
+        uses: actions/checkout@master
+      
+      - name: Install PHP
+        uses: shivammathur/setup-php@1.7.3
         with:
           php-version: '7.4'
-          coverage: xdebug
-        
-      - uses: actions/checkout@master
-      - uses: actions/setup-node@master
-        with:
-          node-version: '12'
-
-      - name: Generate Coverage Report
-        uses: paambaati/codeclimate-action@v2.2.4
+      
+      - name: Install dependencies
+        run: composer install
+      
+      - name: Test and publish code coverage
+        uses: paambaati/codeclimate-action@v2.4.0
         env:
+          # Get it on https://codeclimate.com/repos/{repo id}/settings/test_reporter
           CC_TEST_REPORTER_ID: d76acdcc6ab2bf6d8f4a5af52ed410687510a0c3731d451a6884f75ee8b98117
         with:
-          coverageCommand: vendor/bin/phpunit --coverage-text --coverage-clover
+          # The report file must be there, otherwise Code Climate won't find it
+          coverageCommand: php vendor/bin/phpunit --coverage-text --coverage-clover ./clover.xml
+          debug: true
