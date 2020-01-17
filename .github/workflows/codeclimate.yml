@@ -7,10 +7,6 @@ jobs:
     name: Code Coverage
 
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        options: --max-connections=2000
         
     steps:
       - name: Checkout
@@ -23,6 +19,9 @@ jobs:
       
       - name: Install Elgg
         run: composer install
+      
+      - name: Increase max_connections for MySQL
+        run: mysql -u root -proot -e 'SET GLOBAL max_connections = 1000;'
       
       - name: Test and publish code coverage
         uses: paambaati/codeclimate-action@v2.4.0
