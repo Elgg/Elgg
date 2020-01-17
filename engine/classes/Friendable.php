@@ -1,9 +1,6 @@
 <?php
 /**
  * An interface for objects that behave as elements within a social network that have a profile.
- *
- * @package    Elgg.Core
- * @subpackage SocialModel.Friendable
  */
 interface Friendable {
 	/**

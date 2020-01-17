@@ -4,8 +4,6 @@ namespace Elgg\Simpletest;
 
 /**
  * Test for identity.
- * @package    SimpleTest
- * @subpackage UnitTester
  */
 class IdenticalEntityExpectation extends \EqualExpectation {
 

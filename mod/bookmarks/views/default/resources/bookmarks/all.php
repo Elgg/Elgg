@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg bookmarks plugin everyone page
- *
- * @package ElggBookmarks
  */
 
 elgg_push_collection_breadcrumbs('object', 'bookmarks');

@@ -10,7 +10,7 @@ if (elgg_in_context('search')) {
 	return;
 }
 
-$class = elgg_extract_class($vars, "elgg-search");
+$class = elgg_extract_class($vars, 'elgg-search');
 unset($vars['class']);
 
 echo elgg_view_form('search', [
@@ -18,4 +18,5 @@ echo elgg_view_form('search', [
 	'method' => 'get',
 	'disable_security' => true,
 	'class' => $class,
+	'prevent_double_submit' => true,
 ], $vars);

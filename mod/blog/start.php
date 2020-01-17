@@ -1,8 +1,6 @@
 <?php
 /**
  * Blogs
- *
- * @package Blog
  */
 
 /**

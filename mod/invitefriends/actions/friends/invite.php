@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg invite friends action
- *
- * @package ElggInviteFriends
  */
 
 use Elgg\Email;

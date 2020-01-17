@@ -1,8 +1,6 @@
 <?php
 /**
  * Leave a group action.
- *
- * @package ElggGroups
  */
 
 $user_guid = (int) get_input('user_guid', elgg_get_logged_in_user_guid());

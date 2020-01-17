@@ -2,9 +2,6 @@
 /**
  * Parameter input functions.
  * This file contains functions for getting input from get/post variables.
- *
- * @package Elgg.Core
- * @subpackage Input
  */
 
 /**

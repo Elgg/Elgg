@@ -2,9 +2,7 @@
 /**
  * \ElggComment
  *
- * @package    Elgg.Core
- * @subpackage Comments
- * @since      1.9.0
+ * @since 1.9.0
  */
 class ElggComment extends \ElggObject {
 

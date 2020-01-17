@@ -24,7 +24,11 @@ if ($revision) {
 }
 
 $body_vars = blog_prepare_form_vars($blog, $revision);
-$content = elgg_view_form('blog/save', $vars, $body_vars);
+
+$form_vars = $vars;
+$form_vars['prevent_double_submit'] = true;
+
+$content = elgg_view_form('blog/save', $form_vars, $body_vars);
 
 $sidebar = elgg_view('blog/sidebar/revisions', $vars);
 

@@ -1,8 +1,6 @@
 <?php
 /**
  * Revision view for history page
- *
- * @package ElggPages
  */
 
 $annotation = elgg_extract('annotation', $vars);

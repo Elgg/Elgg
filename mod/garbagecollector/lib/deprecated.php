@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg garbage collector.
- *
- * @package ElggGarbageCollector
  */
 
 /**

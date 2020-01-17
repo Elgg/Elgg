@@ -8,9 +8,6 @@ use Serializable;
 
 /**
  * Notification event interface
- *
- * @package    Elgg.Core
- * @subpackage Notifications
  */
 interface NotificationEvent extends Serializable {
 

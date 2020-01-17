@@ -5,9 +5,6 @@
  * Basic site settings are saved as metadata on the site object,
  * with the exception of the default language, which is saved in
  * the config table.
- *
- * @package Elgg.Core
- * @subpackage Administration.Site
  */
 
 $site = elgg_get_site_entity();

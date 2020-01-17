@@ -2,8 +2,6 @@
 /**
  * Elgg notifications plugin index
  *
- * @package ElggNotifications
- *
  * @uses $user ElggUser
  */
 

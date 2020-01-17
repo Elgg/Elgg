@@ -4,8 +4,6 @@
  *
  * This view contains everything related to group access.
  * eg: how can people join this group, who can see the group, etc
- *
- * @package ElggGroups
  */
 
 $entity = elgg_extract('entity', $vars, false);

@@ -1,8 +1,6 @@
 <?php
 /**
  * Friends Files
- *
- * @package ElggFile
  */
 
 $username = elgg_extract('username', $vars);

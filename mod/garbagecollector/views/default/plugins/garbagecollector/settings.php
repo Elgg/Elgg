@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg garbage collector plugin settings.
- *
- * @package ElggGarbageCollector
  */
 
 $plugin = elgg_extract('entity', $vars);

@@ -21,6 +21,6 @@ elgg_push_context('settings');
 elgg_push_context('profile_edit');
 
 echo elgg_view_page(elgg_echo('profile:edit'), [
-	'content' => elgg_view_form('profile/edit', [], ['entity' => $user]),
+	'content' => elgg_view_form('profile/edit', ['prevent_double_submit' => true], ['entity' => $user]),
 	'show_owner_block_menu' => false,
 ]);

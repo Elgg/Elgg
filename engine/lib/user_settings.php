@@ -2,9 +2,6 @@
 /**
  * Elgg user settings functions.
  * Functions for adding and manipulating options on the user settings panel.
- *
- * @package Elgg.Core
- * @subpackage Settings.User
  */
 
 use Elgg\Request;

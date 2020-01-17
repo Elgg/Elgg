@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg profile plugin
- *
- * @package ElggProfile
  */
 
 /**

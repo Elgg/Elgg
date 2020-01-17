@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg file uploader/edit action
- *
- * @package ElggFile
  */
 
 // Get variables

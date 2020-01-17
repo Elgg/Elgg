@@ -1,9 +1,6 @@
 <?php
 /**
  * Action for adding and editing comments
- *
- * @package Elgg.Core
- * @subpackage Comments
  */
 
 $entity_guid = (int) get_input('entity_guid', 0, false);

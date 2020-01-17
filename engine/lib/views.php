@@ -41,9 +41,6 @@
  *
  * @note Internal: The file that determines the output of the view is the last
  * registered by {@link elgg_set_view_location()}.
- *
- * @package Elgg.Core
- * @subpackage Views
  */
 
 use Elgg\Menu\Menu;

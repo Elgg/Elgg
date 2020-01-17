@@ -2,9 +2,6 @@
 /**
  * Elgg river.
  * Activity stream functions.
- *
- * @package    Elgg.Core
- * @subpackage River
  */
 
 /**

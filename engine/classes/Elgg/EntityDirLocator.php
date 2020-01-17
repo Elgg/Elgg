@@ -11,8 +11,6 @@ namespace Elgg;
  *       being used directly.
  *
  * @internal
- *
- * @package Elgg.Core
  */
 class EntityDirLocator {
 

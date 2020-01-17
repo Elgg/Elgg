@@ -2,7 +2,6 @@
 /**
  * Compose message form
  *
- * @package ElggMessages
  * @uses $vars['recipients']
  * @uses $vars['subject']
  * @uses $vars['body']

@@ -12,9 +12,7 @@
  * where XX is the version specified in the top-level <plugin_manifest>
  * tag's XML namespace.
  *
- * @package    Elgg.Core
- * @subpackage Plugins
- * @since      1.8
+ * @since 1.8
  */
 class ElggPluginManifest {
 

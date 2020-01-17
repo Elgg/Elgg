@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg Reported content admin page
- *
- * @package ElggReportedContent
  */
 
 elgg_require_js('elgg/reportedcontent');

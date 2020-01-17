@@ -1,18 +1,14 @@
 <?php
 /**
  * Elgg report content plugin form
- *
- * @package ElggReportContent
  */
 
 elgg_gatekeeper();
 
-$guid = 0;
 $title = get_input('title', "");
 $address = get_input('address', "");
 
-$description = "";
-$owner = elgg_get_logged_in_user_entity();
+$description = '';
 
 $fields = [
 	[

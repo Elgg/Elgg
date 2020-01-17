@@ -12,8 +12,13 @@ $post = get_entity($guid);
 elgg_push_entity_breadcrumbs($post, true);
 
 $content = elgg_view('thewire/reply', ['post' => $post]);
-$form_vars = ['class' => 'thewire-form'];
-$content .= elgg_view_form('thewire/add', $form_vars, ['post' => $post]);
+
+$content .= elgg_view_form('thewire/add', [
+	'class' => 'thewire-form',
+	'prevent_double_submit' => true,
+], [
+	'post' => $post,
+]);
 $content .= elgg_view('input/urlshortener');
 
 echo elgg_view_page(elgg_echo('reply'), [

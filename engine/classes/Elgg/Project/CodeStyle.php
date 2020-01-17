@@ -6,9 +6,6 @@ namespace Elgg\Project;
  * Internal component to detect and fix some whitespace issues
  *
  * @internal
- *
- * @package    Elgg.Core
- * @subpackage Project
  */
 class CodeStyle {
 

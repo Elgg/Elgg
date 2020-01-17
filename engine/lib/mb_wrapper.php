@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg UTF-8 string functions
- *
- * @package Elgg
- * @subpackage Core
  */
 
 /**

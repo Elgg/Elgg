@@ -2,9 +2,6 @@
 /**
  * Elgg tags
  * Functions for managing tags and tag clouds.
- *
- * @package Elgg.Core
- * @subpackage Tags
  */
 
 /**

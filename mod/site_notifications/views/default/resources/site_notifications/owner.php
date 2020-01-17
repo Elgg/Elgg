@@ -30,7 +30,7 @@ if (empty($list)) {
 		'list' => $list
 	];
 	
-	$content = elgg_view_form("site_notifications/process", [], $body_vars);
+	$content = elgg_view_form('site_notifications/process', ['prevent_double_submit' => true], $body_vars);
 }
 
 echo elgg_view_page(elgg_echo('site_notifications'), [

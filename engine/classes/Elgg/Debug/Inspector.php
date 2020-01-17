@@ -10,8 +10,7 @@ use Elgg\Project\Paths;
  *
  * @internal
  *
- * @package Elgg.Core
- * @since   1.11
+ * @since 1.11
  */
 class Inspector {
 

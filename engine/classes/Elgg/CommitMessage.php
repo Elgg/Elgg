@@ -7,8 +7,6 @@ use UnexpectedValueException;
 /**
  * Provides a structured format for parsing and examining our commit messages.
  *
- * @package Elgg.Core
- * @since   1.9
  * @internal
  */
 class CommitMessage {

@@ -19,9 +19,7 @@ use Elgg\Database\Plugins;
  *
  * Plugin devs should use elgg_register_route() to register a named route or define it in elgg-plugin.php
  *
- * @package    Elgg.Core
- * @subpackage Router
- * @since      1.9.0
+ * @since 1.9.0
  * @internal
  */
 class Router {

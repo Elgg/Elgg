@@ -7,8 +7,6 @@
  * non-published drafts.
  *
  * Drafts are saved with the access set to private.
- *
- * @package Blog
  */
 
 // start a new sticky form session in case of failure

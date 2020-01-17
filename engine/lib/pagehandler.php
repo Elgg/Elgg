@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg page handler functions
- *
- * @package    Elgg.Core
- * @subpackage Routing
  */
 
 /**

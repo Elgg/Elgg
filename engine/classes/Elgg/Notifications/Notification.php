@@ -4,9 +4,7 @@ namespace Elgg\Notifications;
 /**
  * Notification container
  *
- * @package    Elgg.Core
- * @subpackage Notifications
- * @since      1.10
+ * @since 1.10
  */
 class Notification {
 

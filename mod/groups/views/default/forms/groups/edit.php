@@ -1,8 +1,6 @@
 <?php
 /**
  * Group edit form
- *
- * @package ElggGroups
  */
 
 /* @var ElggGroup $entity */

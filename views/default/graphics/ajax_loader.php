@@ -2,9 +2,6 @@
 /**
  * Elgg AJAX loader
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['id']     CSS id
  * @uses $vars['class']  Optional additional CSS class
  * @uses $vars['hidden'] Begin hidden? (true)

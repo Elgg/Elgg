@@ -10,8 +10,6 @@
  * and then rename it to settings.php.
  *
  * @todo Turn this into something we handle more automatically.
- * @package    Elgg.Core
- * @subpackage Configuration
  */
 
 date_default_timezone_set('{{timezone}}');

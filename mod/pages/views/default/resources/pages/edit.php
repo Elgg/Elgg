@@ -20,5 +20,5 @@ elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 $vars = pages_prepare_form_vars($page, $page->getParentGUID());
 
 echo elgg_view_page(elgg_echo('edit:object:page'), [
-	'content' => elgg_view_form('pages/edit', [], $vars),
+	'content' => elgg_view_form('pages/edit', ['prevent_double_submit' => true], $vars),
 ]);

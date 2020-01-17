@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg Message board: add message action
- *
- * @package ElggMessageBoard
  */
 
 use Elgg\Database\Clauses\OrderByClause;

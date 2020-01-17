@@ -25,9 +25,6 @@ use Elgg\Database\Update;
  *
  * @tip Plugin authors will want to extend the \ElggObject class, not this class.
  *
- * @package    Elgg.Core
- * @subpackage DataModel.Entities
- *
  * @property       string $type           object, user, group, or site (read-only after save)
  * @property       string $subtype        Further clarifies the nature of the entity
  * @property-read  int    $guid           The unique identifier for this entity (read only)

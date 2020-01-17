@@ -3,9 +3,6 @@
  * CSRF security token view for use with secure forms.
  *
  * It is still recommended that you use input/form.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $ts = time();

@@ -1,8 +1,6 @@
 <?php
 /**
  * List most recent bookmarks on group profile page
- *
- * @package Bookmarks
  */
 
 $params = [

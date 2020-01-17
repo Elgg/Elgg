@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg user account settings.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 elgg_gatekeeper();

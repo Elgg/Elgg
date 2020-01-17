@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg file plugin
- *
- * @package ElggFile
  */
 
 /**

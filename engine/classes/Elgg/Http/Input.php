@@ -9,9 +9,7 @@ use Elgg\Context;
  *
  * Provides unified access to the $_GET and $_POST inputs.
  *
- * @package    Elgg.Core
- * @subpackage Http
- * @since      1.10.0
+ * @since 1.10.0
  * @internal
  */
 class Input {

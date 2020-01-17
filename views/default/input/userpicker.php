@@ -2,9 +2,6 @@
 /**
  * User Picker.  Sends an array of user guids.
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['values'] Array of user guids for already selected users or null
  * @uses $vars['limit'] Limit number of users (default 0 = no limit)
  * @uses $vars['name'] Name of the returned data array (default "members")

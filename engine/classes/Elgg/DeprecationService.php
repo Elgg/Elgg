@@ -11,9 +11,7 @@ use Psr\Log\LoggerInterface;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Deprecation
- * @since      1.11.0
+ * @since 1.11.0
  */
 class DeprecationService {
 

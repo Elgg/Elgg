@@ -45,10 +45,6 @@ Create a view tinymce/longtext and add the following code:
         /**
          * Elgg long text input with the tinymce text editor intacts
          * Displays a long text input field
-         * 
-         * @package ElggTinyMCE
-         * 
-         * 
          */
 
     ?>

@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg diagnostics
- *
- * @package ElggDiagnostics
  */
 
 /**

@@ -3,9 +3,6 @@
  * Elgg text output
  * Displays some text that was input using a standard text field
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['value'] The text to display
  */
 

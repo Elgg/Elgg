@@ -16,8 +16,6 @@ use Elgg\Security\HmacFactory;
  * File server handler
  *
  * @internal
- *
- * @package Elgg.Core
  */
 class ServeFileHandler {
 

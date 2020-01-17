@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg bookmarks plugin friends page
- *
- * @package ElggBookmarks
  */
 
 $username = elgg_extract('username', $vars);

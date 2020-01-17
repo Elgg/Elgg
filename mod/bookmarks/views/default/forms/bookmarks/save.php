@@ -1,8 +1,6 @@
 <?php
 /**
  * Edit / add a bookmark
- *
- * @package Bookmarks
  */
 
 $categories_vars = $vars;

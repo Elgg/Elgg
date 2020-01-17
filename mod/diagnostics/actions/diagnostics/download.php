@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg diagnostics
- *
- * @package ElggDiagnostics
  */
 
 $output = elgg_echo('diagnostics:header', [date('r'), elgg_get_logged_in_user_entity()->getDisplayName()]);

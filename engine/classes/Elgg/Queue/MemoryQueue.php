@@ -9,9 +9,7 @@ namespace Elgg\Queue;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Queue
- * @since      1.9.0
+ * @since 1.9.0
  */
 class MemoryQueue implements \Elgg\Queue\Queue {
 

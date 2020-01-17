@@ -3,9 +3,6 @@
 /**
  * Access collection class
  *
- * @package    Elgg.Core
- * @subpackage Core
- *
  * @property-read int    $id         The unique identifier (read-only)
  * @property      int    $owner_guid GUID of the owner
  * @property      string $name       Name of the collection

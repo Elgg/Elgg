@@ -2,8 +2,6 @@
 /**
  * Elgg comments library
  *
- * @package    Elgg.Core
- * @subpackage Comments
  * @since 1.9
  */
 

@@ -5,7 +5,6 @@ use Elgg\Http\ResponseBuilder;
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
- * @package Elgg.Core
  * @todo These functions can't be subpackaged because they cover a wide mix of
  * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
@@ -1190,7 +1189,7 @@ function _elgg_ajax_page_handler($segments) {
 			}
 		} else {
 			$action = implode('/', array_slice($segments, 1));
-			$output = elgg_view_form($action, [], $vars);
+			$output = elgg_view_form($action, ['prevent_double_submit' => true], $vars);
 		}
 
 		if ($content_type) {

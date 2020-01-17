@@ -1,8 +1,6 @@
 <?php
 /**
  * Individual's or group's files
- *
- * @package ElggFile
  */
 
 $username = elgg_extract('username', $vars);

@@ -1,11 +1,7 @@
 <?php
-
 /**
  * ElggHMACCache
  * Store cached data in a temporary database, only used by the HMAC stuff.
- *
- * @package    Elgg.Core
- * @subpackage HMAC
  */
 class ElggHMACCache extends ElggCache {
 	

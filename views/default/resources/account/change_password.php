@@ -1,9 +1,6 @@
 <?php
 /**
  * Page for resetting a forgotten password
- *
- * @package Elgg.Core
- * @subpackage Registration
  */
 
 $user_guid = get_input('u');
@@ -17,6 +14,7 @@ if (!$user instanceof ElggUser) {
 
 $content = elgg_view_form('user/changepassword', [
 	'class' => 'elgg-form-account',
+	'prevent_double_submit' => true,
 ], [
 	'guid' => $user_guid,
 	'code' => get_input('c'),

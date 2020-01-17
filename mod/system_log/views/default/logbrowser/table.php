@@ -1,8 +1,6 @@
 <?php
 /**
  * Log browser table
- *
- * @package ElggLogBrowser
  */
 
 $log_entries = elgg_extract('log_entries', $vars);

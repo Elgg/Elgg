@@ -41,9 +41,6 @@
  *     title       The buttons shown next to a content title.
  *     longtext    The links shown above the input/longtext view.
  *     login       Menu of links at bottom of login box
- *
- * @package    Elgg.Core
- * @subpackage Navigation
  */
 
 use Elgg\Menu\MenuItems;

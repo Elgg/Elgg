@@ -2,9 +2,6 @@
 /**
  * \ElggCache The elgg cache superclass.
  * This defines the interface for a cache (wherever that cache is stored).
- *
- * @package    Elgg.Core
- * @subpackage Cache
  */
 abstract class ElggCache implements \ArrayAccess {
 	/**

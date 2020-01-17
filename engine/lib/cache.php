@@ -2,9 +2,6 @@
 /**
  * Elgg cache
  * Cache file interface for caching data.
- *
- * @package    Elgg.Core
- * @subpackage Cache
  */
 
 /**

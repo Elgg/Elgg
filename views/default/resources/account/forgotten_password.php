@@ -9,7 +9,10 @@ if ($hash_missing_username) {
 	register_error(elgg_echo('user:password:hash_missing'));
 }
 
-$form_vars = ['class' => 'elgg-form-account'];
+$form_vars = [
+	'class' => 'elgg-form-account',
+	'prevent_double_submit' => true,
+];
 $body_vars = ['username' => $hash_missing_username];
 
 $shell = elgg_get_config('walled_garden') ? 'walled_garden' : 'default';

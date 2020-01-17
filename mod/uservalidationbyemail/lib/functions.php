@@ -1,9 +1,6 @@
 <?php
 /**
  * Helper functions
- *
- * @package Elgg.Core.Plugin
- * @subpackage UserValidationByEmail
  */
 
 /**

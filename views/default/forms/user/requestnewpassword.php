@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg forgotten password.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $username = elgg_extract('username', $vars, '');
