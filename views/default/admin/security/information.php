@@ -65,7 +65,7 @@ $title = elgg_echo('admin:security:information:validate_input');
 $value = elgg_echo('status:enabled');
 $subtext = '';
 
-if (!(bool) elgg_get_ordered_hook_handlers('validate', 'input')) {
+if (!(bool) elgg()->hooks->getOrderedHandlers('validate', 'input')) {
 	$icon = $icon_error;
 	$value = elgg_echo('status:disabled');
 	$subtext = elgg_echo('admin:security:information:validate_input:error');

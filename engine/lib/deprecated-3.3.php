@@ -304,3 +304,39 @@ function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
 		'3.3'
 	);
 }
+
+/**
+ * Returns an ordered array of hook handlers registered for $hook and $type.
+ *
+ * @param string $hook Hook name
+ * @param string $type Hook type
+ *
+ * @return array
+ *
+ * @since 2.0.0
+ * 
+ * @deprecated 3.3 Use elgg()->hooks->getOrderedHandlers()
+ */
+function elgg_get_ordered_hook_handlers($hook, $type) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg()->hooks->getOrderedHandlers()', '3.3');
+	
+	return elgg()->hooks->getOrderedHandlers($hook, $type);
+}
+
+/**
+ * Returns an ordered array of event handlers registered for $event and $type.
+ *
+ * @param string $event Event name
+ * @param string $type  Object type
+ *
+ * @return array
+ *
+ * @since 2.0.0
+ * 
+ * @deprecated 3.3 use elgg()->events->getOrderedHandlers()
+ */
+function elgg_get_ordered_event_handlers($event, $type) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg()->events->getOrderedHandlers()', '3.3');
+	
+	return elgg()->events->getOrderedHandlers($event, $type);
+}

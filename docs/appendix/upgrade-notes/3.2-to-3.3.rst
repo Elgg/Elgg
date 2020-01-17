@@ -81,6 +81,8 @@ Deprecated APIs
  * ``elgg_format_attributes()`` use ``elgg_format_element()``
  * ``elgg_flush_caches()`` use ``elgg_clear_caches()``
  * ``elgg_get_menu_item()``
+ * ``elgg_get_ordered_event_handlers()`` use ``elgg()->events->getOrderedHandlers()``
+ * ``elgg_get_ordered_hook_handlers()`` use ``elgg()->hooks->getOrderedHandlers()``
  * ``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``
  * ``elgg_is_menu_item_registered()``
  * ``elgg_view_entity_annotations()``

@@ -626,34 +626,6 @@ function elgg_trigger_deprecated_plugin_hook($hook, $type, $params = null, $retu
 }
 
 /**
- * Returns an ordered array of hook handlers registered for $hook and $type.
- *
- * @param string $hook Hook name
- * @param string $type Hook type
- *
- * @return array
- *
- * @since 2.0.0
- */
-function elgg_get_ordered_hook_handlers($hook, $type) {
-	return elgg()->hooks->getOrderedHandlers($hook, $type);
-}
-
-/**
- * Returns an ordered array of event handlers registered for $event and $type.
- *
- * @param string $event Event name
- * @param string $type  Object type
- *
- * @return array
- *
- * @since 2.0.0
- */
-function elgg_get_ordered_event_handlers($event, $type) {
-	return elgg()->events->getOrderedHandlers($event, $type);
-}
-
-/**
  * Log a message.
  *
  * If $level is >= to the debug setting in {@link $CONFIG->debug}, the
