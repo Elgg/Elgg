@@ -1762,6 +1762,11 @@ To view %s's profile, click here:
 	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
 	'cli:upgrade:batch:finished' => "Running upgrades finished",
 	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
+
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Completed upgrades",
+	'cli:upgrade:list:pending' => "Pending upgrades",
+	'cli:upgrade:list:notfound' => "No upgrades found",
 	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

@@ -14,4 +14,5 @@ return [
 	\Elgg\Cli\SimpletestCommand::class,
 	\Elgg\Cli\UpgradeBatchCommand::class,
 	\Elgg\Cli\UpgradeCommand::class,
+	\Elgg\Cli\UpgradeListCommand::class,
 ];
