@@ -443,7 +443,7 @@ class ElggFile extends ElggObject {
 			
 			try {
 				// try to detect mimetype
-				$mime_type = elgg()->mimetype->getMimeType($this->getFilenameOnFilestore(), $upload->getClientMimeType());
+				$mime_type = elgg()->mimetype->getMimeType($this->getFilenameOnFilestore());
 				$this->setMimeType($mime_type);
 				$this->simpletype = elgg()->mimetype->getSimpleType($mime_type);
 			} catch (InvalidArgumentException $e) {

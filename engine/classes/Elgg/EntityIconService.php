@@ -123,7 +123,7 @@ class EntityIconService {
 		
 		copy($input->getPathname(), $tmp->getFilenameOnFilestore());
 
-		$tmp->mimetype = $this->mimetype->getMimeType($tmp->getFilenameOnFilestore(), $input->getClientMimeType());
+		$tmp->mimetype = $this->mimetype->getMimeType($tmp->getFilenameOnFilestore());
 		$tmp->simpletype = $this->mimetype->getSimpleType($tmp->mimetype);
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);
@@ -708,6 +708,7 @@ class EntityIconService {
 
 		$headers = [
 			'Content-Type' => $this->mimetype->getMimeType($filenameonfilestore),
+			'X-Content-Type-Options' => 'nosniff',
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
 		$response->prepare($this->request);
