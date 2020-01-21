@@ -100,6 +100,8 @@ class CacheHandler {
 		} else {
 			$response->headers->set('Content-Type', $content_type, true);
 		}
+		
+		$response->headers->set('X-Content-Type-Options', 'nosniff', true);
 
 		if (!$this->simplecache_enabled) {
 			$app->bootCore();

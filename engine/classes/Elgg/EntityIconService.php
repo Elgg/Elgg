@@ -708,6 +708,7 @@ class EntityIconService {
 
 		$headers = [
 			'Content-Type' => $this->mimetype->getMimeType($filenameonfilestore),
+			'X-Content-Type-Options' => 'nosniff',
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
 		$response->prepare($this->request);

@@ -123,6 +123,7 @@ class ServeFileHandler {
 
 		$headers = [
 			'Content-Type' => $this->mimetype->getMimeType($filenameonfilestore),
+			'X-Content-Type-Options' => 'nosniff',
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
 		

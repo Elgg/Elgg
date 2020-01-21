@@ -18,7 +18,8 @@ class RefreshCsrfToken {
 	 * Send an updated CSRF token, provided the page's current tokens were not fake.
 	 *
 	 * @param \Elgg\Http\Request $request Request
-	 * @return Symfony\Component\HttpFoundation\Response
+	 *
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
 	public function __invoke(\Elgg\Http\Request $request) {
 
@@ -53,6 +54,7 @@ class RefreshCsrfToken {
 
 		$response = Response::create();
 		$response->headers->set('Content-Type', "application/json;charset=utf-8", true);
+		$response->headers->set('X-Content-Type-Options', 'nosniff', true);
 		
 		return $response->setContent(json_encode($data));
 	}
