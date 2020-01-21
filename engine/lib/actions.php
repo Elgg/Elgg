@@ -58,27 +58,6 @@ function elgg_build_hmac($data) {
 }
 
 /**
- * Generate an action token.
- *
- * Action tokens are based on timestamps as returned by {@link time()}.
- * They are valid for one hour.
- *
- * Action tokens should be passed to all actions name __elgg_ts and __elgg_token.
- *
- * @warning Action tokens are required for all actions.
- *
- * @param int $timestamp Unix timestamp
- *
- * @see @elgg_view input/securitytoken
- * @see @elgg_view input/form
- *
- * @return string|false
- */
-function generate_action_token($timestamp) {
-	return elgg()->csrf->generateActionToken($timestamp);
-}
-
-/**
  * Regenerate a new site key (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
  * @return mixed The site secret hash

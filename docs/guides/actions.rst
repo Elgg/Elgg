@@ -609,7 +609,7 @@ In rare cases, you may need to generate tokens manually:
 .. code-block:: php
 
    $__elgg_ts = time();
-   $__elgg_token = generate_action_token($__elgg_ts);
+   $__elgg_token = elgg()->csrf->generateActionToken($__elgg_ts);
 
 You can also access the tokens from javascript:
 

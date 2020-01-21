@@ -6,7 +6,7 @@
  */
 
 $ts = time();
-$token = generate_action_token($ts);
+$token = elgg()->csrf->generateActionToken($ts);
 
 echo elgg_view('input/hidden', ['name' => '__elgg_token', 'value' => $token]);
 echo elgg_view('input/hidden', ['name' => '__elgg_ts', 'value' => $ts]);

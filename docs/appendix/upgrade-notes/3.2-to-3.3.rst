@@ -81,14 +81,18 @@ Deprecated APIs
  * ``elgg_format_attributes()`` use ``elgg_format_element()``
  * ``elgg_flush_caches()`` use ``elgg_clear_caches()``
  * ``elgg_get_menu_item()``
+ * ``elgg_get_ordered_event_handlers()`` use ``elgg()->events->getOrderedHandlers()``
+ * ``elgg_get_ordered_hook_handlers()`` use ``elgg()->hooks->getOrderedHandlers()``
  * ``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``
  * ``elgg_is_menu_item_registered()``
+ * ``elgg_view_entity_annotations()``
  * ``execute_delayed_write_query()`` use ``elgg()->db->registerDelayedQuery()``
  * ``execute_delayed_read_query()`` use ``elgg()->db->registerDelayedQuery()``		
  * ``run_sql_script()``
  * ``elgg_unset_all_plugin_settings()`` use ``\ElggPlugin::unsetAllSettings()``
  * ``elgg_get_file_simple_type()`` use ``elgg()->mimetype->getSimpleType()``
  * ``ElggFile::detectMimeType()`` use ``elgg()->mimetype->getMimeType()``
+ * ``generate_action_token()`` use ``elgg()->csrf->generateActionToken()``
 
 Deprecated Config values
 ------------------------
@@ -99,3 +103,8 @@ Deprecated CLI commands
 -----------------------
 
  * ``elgg-cli flush`` use ``elgg-cli cache:clear``
+
+Deprecated Hooks
+----------------
+
+ * **entity:annotate, <entity_type>**

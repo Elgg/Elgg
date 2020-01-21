@@ -144,7 +144,7 @@ abstract class HooksRegistrationService {
 	 * Is a handler registered for this specific name and type? "all" handlers are not considered.
 	 *
 	 * If you need to consider "all" handlers, you must check them independently, or use
-	 * (bool)elgg_get_ordered_hook_handlers().
+	 * (bool) elgg()->hooks->getOrderedHandlers().
 	 *
 	 * @param string $name The name of the hook
 	 * @param string $type The type of the hook

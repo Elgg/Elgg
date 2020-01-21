@@ -180,8 +180,6 @@ class Csrf {
 	/**
 	 * Generate a token from a session token (specifying the user), the timestamp, and the site key.
 	 *
-	 * @see    generate_action_token()
-	 *
 	 * @param int    $timestamp     Unix timestamp
 	 * @param string $session_token Session-specific token
 	 *

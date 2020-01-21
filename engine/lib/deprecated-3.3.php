@@ -275,3 +275,93 @@ function elgg_get_file_simple_type($mime_type) {
 	
 	return elgg()->mimetype->getSimpleType($mime_type);
 }
+
+/**
+ * Display a plugin-specified rendered list of annotations for an entity.
+ *
+ * This displays the output of functions registered to the entity:annotation,
+ * $entity_type plugin hook.
+ *
+ * This is called automatically by the framework from {@link elgg_view_entity()}
+ *
+ * @param \ElggEntity $entity    Entity
+ * @param bool        $full_view Display full view?
+ *
+ * @return mixed string or false on failure
+ * @deprecated 3.3
+ */
+function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
+	
+	$entity_type = $entity->getType();
+	
+	return elgg_trigger_deprecated_plugin_hook('entity:annotate', $entity_type,
+		[
+			'entity' => $entity,
+			'full_view' => $full_view,
+		],
+		null,
+		'Using the "entity:annotate" hook to add annotations to the view of a full entity is deprecated.',
+		'3.3'
+	);
+}
+
+/**
+ * Returns an ordered array of hook handlers registered for $hook and $type.
+ *
+ * @param string $hook Hook name
+ * @param string $type Hook type
+ *
+ * @return array
+ *
+ * @since 2.0.0
+ * 
+ * @deprecated 3.3 Use elgg()->hooks->getOrderedHandlers()
+ */
+function elgg_get_ordered_hook_handlers($hook, $type) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg()->hooks->getOrderedHandlers()', '3.3');
+	
+	return elgg()->hooks->getOrderedHandlers($hook, $type);
+}
+
+/**
+ * Returns an ordered array of event handlers registered for $event and $type.
+ *
+ * @param string $event Event name
+ * @param string $type  Object type
+ *
+ * @return array
+ *
+ * @since 2.0.0
+ * 
+ * @deprecated 3.3 use elgg()->events->getOrderedHandlers()
+ */
+function elgg_get_ordered_event_handlers($event, $type) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg()->events->getOrderedHandlers()', '3.3');
+	
+	return elgg()->events->getOrderedHandlers($event, $type);
+}
+
+/**
+ * Generate an action token.
+ *
+ * Action tokens are based on timestamps as returned by {@link time()}.
+ * They are valid for one hour.
+ *
+ * Action tokens should be passed to all actions name __elgg_ts and __elgg_token.
+ *
+ * @warning Action tokens are required for all actions.
+ *
+ * @param int $timestamp Unix timestamp
+ *
+ * @see @elgg_view input/securitytoken
+ * @see @elgg_view input/form
+ *
+ * @return string|false
+ * 
+ * @deprecated use elgg()->csrf->generateActionToken()
+ */
+function generate_action_token($timestamp) {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg()->csrf->generateActionToken()', '3.3');
+	
+	return elgg()->csrf->generateActionToken($timestamp);
+}

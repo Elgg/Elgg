@@ -810,10 +810,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  * The entity view is called with the following in $vars:
  *  - \ElggEntity 'entity' The entity being viewed
  *
- * @tip This function can automatically appends annotations to entities if in full
- * view and a handler is registered for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
- * {@link elgg_view_entity_annotations()}.
- *
  * @param \ElggEntity $entity The entity to display
  * @param array       $vars   Array of variables to pass to the entity view.
  *      'full_view'           Whether to show a full or condensed view. (Default: true)
@@ -1043,34 +1039,6 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
 	}
 
 	return elgg_view('page/components/list', $vars);
-}
-
-/**
- * Display a plugin-specified rendered list of annotations for an entity.
- *
- * This displays the output of functions registered to the entity:annotation,
- * $entity_type plugin hook.
- *
- * This is called automatically by the framework from {@link elgg_view_entity()}
- *
- * @param \ElggEntity $entity    Entity
- * @param bool        $full_view Display full view?
- *
- * @return mixed string or false on failure
- * @todo Change the hook name.
- */
-function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
-	
-	$entity_type = $entity->getType();
-
-	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
-		[
-			'entity' => $entity,
-			'full_view' => $full_view,
-		]
-	);
-
-	return $annotations;
 }
 
 /**
@@ -1733,56 +1701,6 @@ function _elgg_views_send_header_x_frame_options() {
 }
 
 /**
- * Is there a chance a plugin is altering this view?
- *
- * @note Must be called after the [init, system] event, ideally as late as possible.
- *
- * @note Always returns true if the view's location is set in /engine/views.php. Elgg does not keep
- *       track of the defaults for those locations.
- *
- * <code>
- * // check a view in core
- * if (_elgg_view_may_be_altered('foo/bar', 'foo/bar.php')) {
- *     // use the view for BC
- * }
- *
- * // check a view in a bundled plugin
- * $dir = __DIR__ . "/views/" . elgg_get_viewtype();
- * if (_elgg_view_may_be_altered('foo.css', "$dir/foo.css.php")) {
- *     // use the view for BC
- * }
- * </code>
- *
- * @param string $view View name. E.g. "elgg/init.js"
- * @param string $path Absolute file path, or path relative to the viewtype directory. E.g. "elgg/init.js.php"
- *
- * @return bool
- * @internal
- */
-function _elgg_view_may_be_altered($view, $path) {
-	$views = _elgg_services()->views;
-
-	if ($views->viewIsExtended($view) || $views->viewHasHookHandlers($view)) {
-		return true;
-	}
-
-	$viewtype = elgg_get_viewtype();
-
-	// check location
-	if (0 === strpos($path, '/') || preg_match('~^([A-Za-z]\:)?\\\\~', $path)) {
-		// absolute path
-		$expected_path = $path;
-	} else {
-		// relative path
-		$expected_path = Paths::elgg() . "views/$viewtype/" . ltrim($path, '/\\');
-	}
-
-	$view_path = $views->findViewFile($view, $viewtype);
-
-	return realpath($view_path) !== realpath($expected_path);
-}
-
-/**
  * Initialize viewtypes on system boot event
  * This ensures simplecache is cleared during upgrades. See #2252
  *
@@ -1935,7 +1853,7 @@ function _elgg_get_js_page_data() {
 		'security' => [
 			'token' => [
 				'__elgg_ts' => $ts = time(),
-				'__elgg_token' => generate_action_token($ts),
+				'__elgg_token' => elgg()->csrf->generateActionToken($ts),
 			],
 		],
 		'session' => [
