@@ -56,5 +56,10 @@ if ($argv[1] === 'upgrade') {
 }
 
 // For other commands, we just boot an application
-$app->start();
-$cli->run();
+try {
+	$app->start();
+	$cli->run();
+} catch (\Throwable $throw) {
+	fwrite(STDERR, "An error occured during the execution of the command '{$argv[0]}': {$throw->getMessage()}" . PHP_EOL);
+	die(3);
+}
