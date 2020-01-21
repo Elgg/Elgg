@@ -12,4 +12,7 @@ return [
 	\Elgg\Cli\PluginsActivateCommand::class,
 	\Elgg\Cli\PluginsDeactivateCommand::class,
 	\Elgg\Cli\SimpletestCommand::class,
+	\Elgg\Cli\UpgradeBatchCommand::class,
+	\Elgg\Cli\UpgradeCommand::class,
+	\Elgg\Cli\UpgradeListCommand::class,
 ];

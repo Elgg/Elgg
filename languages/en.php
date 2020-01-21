@@ -1757,6 +1757,17 @@ To view %s's profile, click here:
 	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
 	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
 	
+	'cli:upgrade:batch:description' => "Executes one or more upgrades",
+	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
+	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
+	'cli:upgrade:batch:finished' => "Running upgrades finished",
+	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
+
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Completed upgrades",
+	'cli:upgrade:list:pending' => "Pending upgrades",
+	'cli:upgrade:list:notfound' => "No upgrades found",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
