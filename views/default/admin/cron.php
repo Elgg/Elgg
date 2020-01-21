@@ -3,8 +3,8 @@
  * Cron statistics
  */
 
-$periods = elgg_get_config('elgg_cron_periods');
 $cron_service = _elgg_services()->cron;
+$periods = $cron_service->getConfiguredIntervals(true);
 
 $table_content = '';
 foreach ($periods as $period) {

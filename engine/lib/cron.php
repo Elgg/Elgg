@@ -10,8 +10,6 @@
  * @internal
  */
 function _elgg_cron_init() {
-	elgg_set_config('elgg_cron_periods', array_keys(\Elgg\Cron::$intervals));
-
 	elgg_register_menu_item('page', [
 		'name' => 'cron',
 		'text' => elgg_echo('admin:cron'),
