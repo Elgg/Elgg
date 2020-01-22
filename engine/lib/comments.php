@@ -47,7 +47,7 @@ function elgg_comments_are_latest_first(ElggEntity $container = null) {
 	$params = [
 		'entity' => $container,
 	];
-	return (bool) elgg_trigger_plugin_hook('config', 'comments_latest_first', $params, true);
+	return (bool) elgg_trigger_plugin_hook('config', 'comments_latest_first', $params, (bool) _elgg_config()->comments_latest_first);
 }
 
 /**

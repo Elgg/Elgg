@@ -1449,6 +1449,7 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
 	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
 	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
+	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
 	
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
