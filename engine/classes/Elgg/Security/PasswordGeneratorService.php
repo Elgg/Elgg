@@ -360,7 +360,7 @@ class PasswordGeneratorService {
 	 * @return bool
 	 */
 	protected function validatePasswordLength(string $password) {
-		if (strlen($password) < $this->config->min_password_length) {
+		if (elgg_strlen($password) < $this->config->min_password_length) {
 			return false;
 		}
 		

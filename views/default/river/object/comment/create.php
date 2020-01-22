@@ -71,7 +71,7 @@ if ($key !== false) {
 }
 
 $message = elgg_get_excerpt($comment->description);
-if (substr($message, -3) === '...') {
+if (elgg_substr($message, -3) === '...') {
 	$message .= elgg_view('output/url', [
 		'text' => elgg_echo('read_more'),
 		'href' => $comment->getURL(),

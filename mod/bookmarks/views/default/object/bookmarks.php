@@ -68,7 +68,7 @@ if ($excerpt) {
 	$excerpt = " - $excerpt";
 }
 
-if (strlen($url) > 25) {
+if (elgg_strlen($url) > 25) {
 	$bits = parse_url($url);
 	if (isset($bits['host'])) {
 		$display_text = $bits['host'];

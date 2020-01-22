@@ -460,7 +460,7 @@ function _elgg_views_prepare_head($title) {
 	// RSS feed link
 	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
-		if (substr_count($url, '?')) {
+		if (elgg_substr_count($url, '?')) {
 			$url .= "&view=rss";
 		} else {
 			$url .= "?view=rss";

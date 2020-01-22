@@ -7,7 +7,7 @@ $site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 $forward_url = get_input('forward', '/admin', false);
 $forward_url = str_replace([$site_url, $site_host], '/', $forward_url);
 
-if (strpos($forward_url, '/') !== 0) {
+if (elgg_strpos($forward_url, '/') !== 0) {
 	$forward_url = '/' . $forward_url;
 }
 

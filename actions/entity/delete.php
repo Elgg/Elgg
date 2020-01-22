@@ -59,9 +59,9 @@ if (!$forward_url) {
 		return '';
 	};
 	
-	if ($referrer_url && 0 == strpos($referrer_url, $site_url)) {
+	if ($referrer_url && 0 == elgg_strpos($referrer_url, $site_url)) {
 		// referer is on current site
-		$referrer_path = substr($referrer_url, strlen($site_url));
+		$referrer_path = elgg_substr($referrer_url, elgg_strlen($site_url));
 		$segments = explode('/', $referrer_path);
 		
 		if (in_array($guid, $segments)) {

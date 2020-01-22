@@ -268,7 +268,7 @@ function _elgg_cron_page_handler($segments) {
 		elgg_signed_request_gatekeeper();
 	}
 	
-	$interval = strtolower(array_shift($segments));
+	$interval = elgg_strtolower(array_shift($segments));
 	
 	$intervals = null;
 	if ($interval !== 'run') {

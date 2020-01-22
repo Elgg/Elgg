@@ -60,7 +60,7 @@ $list_items = [];
 
 $params = $vars;
 foreach ($tags as $tag) {
-	if (is_scalar($tag) && strlen($tag) > 0) {
+	if (is_scalar($tag) && elgg_strlen($tag) > 0) {
 		$params['value'] = $tag;
 		$tag_view = elgg_view('output/tag', $params);
 		$list_items[] = elgg_format_element([
