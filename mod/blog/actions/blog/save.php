@@ -75,7 +75,7 @@ foreach ($values as $name => $default) {
 			// this can't be empty or saving the base entity fails
 			if (!empty($value)) {
 				$container = get_entity($value);
-				if ($container && $container->canWriteToContainer(0, 'object', 'blog')) {
+				if ($container && (!$new_post || $container->canWriteToContainer(0, 'object', 'blog'))) {
 					$values[$name] = $value;
 				} else {
 					return elgg_error_response(elgg_echo('blog:error:cannot_write_to_container'));
