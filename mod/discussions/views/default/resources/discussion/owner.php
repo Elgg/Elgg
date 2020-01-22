@@ -32,4 +32,5 @@ echo elgg_view_page(elgg_echo('collection:object:discussion'), [
 	'content' => elgg_view('discussion/listing/owner', [
 		'entity' => $target,
 	]),
+	'filter_value' => $target->guid === elgg_get_logged_in_user_guid() ? 'mine' : 'none',
 ]);
