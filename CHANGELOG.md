@@ -1,3 +1,20 @@
+<a name="3.2.4"></a>
+### 3.2.4  (2020-01-23)
+
+#### Contributors
+
+* Jeroen Dalsem (5)
+* Jerôme Bakker (2)
+
+#### Bug Fixes
+
+* **cron:** allow configuration for custom cron intervals ([8e969a67](https://github.com/Elgg/Elgg/commit/8e969a673086e7deed3eef8cc961c756ed9ce7ad))
+* **developers:** set correct default value for menu hooks ([d3bc28d6](https://github.com/Elgg/Elgg/commit/d3bc28d689b89caa95afef6d0438d2d5eef514f6))
+* **installer:** escape some special chars in db password ([9923e173](https://github.com/Elgg/Elgg/commit/9923e173b794fb2f9db9eccbcad60a815c6f6dc3))
+* **search:** do not try a search with invalid query ([28cd2ead](https://github.com/Elgg/Elgg/commit/28cd2eadf1620ca0a13c397d7948f1fc3a46ce54))
+* **user:** user hover menu uses local data array of request params ([6a0f28f2](https://github.com/Elgg/Elgg/commit/6a0f28f20f96402119037a5f241ecd6688ba38ec))
+
+
 <a name="3.2.3"></a>
 ### 3.2.3  (2019-12-20)
 
