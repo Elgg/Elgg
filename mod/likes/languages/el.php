@@ -1,5 +1,14 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
+	'annotation:delete:likes:fail' => "Σφάλμα κατά την διαδικασία διαγραφής από τα αγαπημένα σας",
+	'annotation:delete:likes:success' => "Δεν μου αρέσει πλέον",
+	
 	'likes:this' => 'μου αρέσει αυτό',
 	'likes:deleted' => 'Δεν μου αρέσει πλέον',
 	'likes:see' => 'Δείτε σε ποιους αρέσει',

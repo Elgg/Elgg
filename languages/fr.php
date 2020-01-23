@@ -1,4 +1,9 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 /**
@@ -480,7 +485,7 @@ return array(
 	'admin:performance' => 'Performance',
 	'admin:performance:label:generic' => 'Generic',
 	'admin:performance:generic:description' => 'Below is a list of performance suggestions / values which could help in tuning your website',
-	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache' => 'Cache simple (Simplecache)',
 	'admin:performance:simplecache:settings:warning' => "It's recommended you configure the simplecache setting in the settings.php.
 Configuring simplecache in the settings.php file improves caching performance.
 It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
@@ -537,7 +542,7 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:upgrades:db' => 'Database upgrades',
 	'admin:upgrades:db:name' => 'Upgrade name',
 	'admin:upgrades:db:start_time' => 'Start time',
-	'admin:upgrades:db:end_time' => 'End time',
+	'admin:upgrades:db:end_time' => 'Heure de fin',
 	'admin:upgrades:db:duration' => 'Duration',
 	'admin:upgrades:menu:pending' => 'Mises à niveau en attente',
 	'admin:upgrades:menu:completed' => 'Mises à niveau terminées',
@@ -553,8 +558,9 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:settings' => 'Configuration',
 	'admin:settings:basic' => 'Configuration de base',
+	'admin:settings:i18n' => 'Internationalisation',
 	'admin:settings:advanced' => 'Configuration avancée',
-	'admin:settings:users' => 'Users',
+	'admin:settings:users' => 'Membres',
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Ce menu vous permet de définir les paramètres globaux de votre site. Choisissez une option ci-dessous pour commencer.",
 	'admin:site:opt:linktext' => "Configurer le site...",
@@ -674,7 +680,7 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	'admin:security:settings' => 'Paramètres',
 	'admin:security:settings:description' => 'Sur cette page vous pouvez configurer quelques fonctionnalités de sécurité. Veuillez lire attentivement les paramètres.',
 	'admin:security:settings:label:hardening' => 'Sécurisation',
-	'admin:security:settings:label:account' => 'Account',
+	'admin:security:settings:label:account' => 'Compte',
 	'admin:security:settings:label:notifications' => 'Notifications',
 	'admin:security:settings:label:site_secret' => 'Secret du site',
 	
@@ -815,10 +821,16 @@ See the full list of users here:
 	'plugins:disabled' => 'Les Plugins ne sont pas chargés car un fichier nommé "disabled" (désactivé) est présent dans le répertoire mod.',
 	'plugins:settings:save:ok' => "Les paramètres du plugin %s ont bien été enregistrés.",
 	'plugins:settings:save:fail' => "Il y a eu un problème lors de l'enregistrement des paramètres du plugin %s.",
+	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
+	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
 	'plugins:usersettings:save:ok' => "Les paramètres utilisateur du plugin %s ont bien été enregistrés.",
 	'plugins:usersettings:save:fail' => "Il y a eu un problème lors de l'enregistrement des paramètres utilisateur du plugin %s.",
+	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',
+	
+	'plugins:settings:remove:menu:text' => "Remove all settings",
+	'plugins:settings:remove:menu:confirm' => "Are you sure you wish to remove all settings, including user settings from this plugin?",
 
 	'admin:plugins' => "Plugins",
 	'admin:plugins:activate_all' => 'Tout activer',
@@ -845,6 +857,7 @@ See the full list of users here:
 	'admin:plugins:label:moreinfo' => 'plus d\'informations',
 	'admin:plugins:label:version' => 'Version',
 	'admin:plugins:label:location' => 'Adresse',
+	'admin:plugins:label:priority' => 'Priorité',
 	'admin:plugins:label:contributors' => 'Contributeurs',
 	'admin:plugins:label:contributors:name' => 'Nom',
 	'admin:plugins:label:contributors:email' => 'Email',
@@ -899,7 +912,7 @@ See the full list of users here:
 	'admin:statistics:label:version:code' => "Version du code",
 
 	'admin:server:label:elgg' => 'Elgg',
-	'admin:server:label:requirements' => 'Requirements',
+	'admin:server:label:requirements' => 'Pré-requis',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => 'Montrer PHPInfo',
 	'admin:server:label:web_server' => 'Serveur web',
@@ -933,7 +946,7 @@ See the full list of users here:
 		Pour des performances améliorées, il est recommandé que vous activiez et configuriez OPcache.
 	',
 	
-	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension' => "Extension PHP : %s",
 	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
 	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
 	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
@@ -1143,7 +1156,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 
 	'active' => 'Activé',
 	'total' => 'Total',
-	'unvalidated' => 'Unvalidated',
+	'unvalidated' => 'Non validés',
 	
 	'ok' => 'OK',
 	'any' => 'N\'importe lequel',
@@ -1159,6 +1172,9 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'content' => "contenu",
 	'content:latest' => 'Dernière activité',
 	'content:latest:blurb' => 'Vous pouvez également cliquer ici pour voir les dernières publications sur le site.',
+	
+	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
+	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => 'voir le lien',
 
@@ -1183,6 +1199,8 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'status:enabled' => 'Enabled',
 	'status:disabled' => 'Disabled',
 	'status:unavailable' => 'Unavailable',
+	'status:active' => 'Activé',
+	'status:inactive' => 'Inactive',
 
 /**
  * Generic sorts
@@ -1271,6 +1289,7 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'messages:title:warning' => 'Avertissement',
 	'messages:title:help' => 'Aide',
 	'messages:title:notice' => 'Information',
+	'messages:title:info' => 'Information',
 
 /**
  * Import / export
@@ -1419,11 +1438,13 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 
 	'admin:legend:system' => 'Système',
 	'admin:legend:caching' => 'Mise en cache',
-	'admin:legend:content' => 'Content',
+	'admin:legend:content' => 'Contenu',
 	'admin:legend:content_access' => 'Niveau d\'accès (nouveaux contenus)',
 	'admin:legend:site_access' => 'Accès au site',
 	'admin:legend:debug' => 'Débogage et journalisation',
 	
+	'config:i18n:allowed_languages' => "Allowed languages",
+	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Retirer le logo Elgg",
@@ -1432,6 +1453,10 @@ Après connexion, nous vous recommandons de changer votre mot de passe.',
 	'config:disable_rss:help' => "Désactivez cette option pour ne plus proposer de flux RSS",
 	'config:friendly_time_number_of_days:label' => "Nombre de jours pendant lesquels la date relative est présentée",
 	'config:friendly_time_number_of_days:help' => "Vous pouvez définir pendant combien de jours la date relative sera affichée. Après le nombre de jours indiqué la date prendra la forme classique. Indiquez 0 pour ne pas utiliser de date relative.",
+	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
+	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
+	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
+	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
 	
 	'upgrading' => 'Mise à niveau en cours...',
 	'upgrade:core' => 'Votre installation d\'Elgg a été mise à niveau.',
@@ -1644,6 +1669,13 @@ Pour voir le profil de %s :
 	'entity:can_delete:invaliduser' => 'Impossible de vérifier ->canDelete() pour l\'utilisateur de user_guid [%s] car l\'utilisateur n\'existe pas.',
 
 /**
+ * Annotations
+ */
+	
+	'annotation:delete:fail' => "An error occured while removing the annotation",
+	'annotation:delete:success' => "The annotation was removed successfully",
+	
+/**
  * Action gatekeeper
  */
 
@@ -1682,9 +1714,61 @@ Pour voir le profil de %s :
 /**
  * Cli commands
  */
+	'cli:login:error:unknown' => "Unable to login as %s",
+	'cli:login:success:log' => "Logged in as %s [guid: %s]",
+	'cli:response:output' => "Response:",
+	'cli:option:as' => "Execute the command on behalf of a user with the given username",
+	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
+	
 	'cli:cache:clear:description' => "Clear Elgg caches",
 	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
 	'cli:cache:purge:description' => "Purge Elgg caches",
+	
+	'cli:cron:description' => "Execute cron handlers for all or specified interval",
+	'cli:cron:option:interval' => "Name of the interval (e.g. hourly)",
+	'cli:cron:option:force' => "Force cron commands to run even if they are not yet due",
+	'cli:cron:option:time' => "Time of the cron initialization",
+	
+	'cli:database:seed:description' => "Seeds the database with fake entities",
+	'cli:database:seed:option:limit' => "Number of entities to seed",
+	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
+	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
+	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+	
+	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
+	
+	'cli:plugins:activate:description' => "Activate plugin(s)",
+	'cli:plugins:activate:option:force' => "Resolve conflicts by deactivating conflicting plugins and enabling required ones",
+	'cli:plugins:activate:argument:plugins' => "Plugin IDs to be activated",
+	'cli:plugins:activate:progress:start' => "Activating plugins",
+	
+	'cli:plugins:deactivate:description' => "Deactivate plugin(s)",
+	'cli:plugins:deactivate:option:force' => "Force deactivation of all dependent plugins",
+	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs to be deactivated",
+	'cli:plugins:deactivate:progress:start' => "Deactivating plugins",
+	
+	'cli:plugins:list:description' => "List all plugins installed on the site",
+	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
+	
+	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
+	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
+	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
+	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
+	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
+	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
+	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
+	
+	'cli:upgrade:batch:description' => "Executes one or more upgrades",
+	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
+	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
+	'cli:upgrade:batch:finished' => "Running upgrades finished",
+	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
+
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Mises à niveau terminées",
+	'cli:upgrade:list:pending' => "Mises à niveau en attente",
+	'cli:upgrade:list:notfound' => "No upgrades found",
 	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

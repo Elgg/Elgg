@@ -1,4 +1,9 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 	'search:results' => 'Resultados para %s',
@@ -6,4 +11,5 @@ return array(
 
 	'search:comment_on' => 'Comentario en «%s»',
 	'search:unknown_entity' => 'Tipo de entidade descoñecido',
+	'search:empty_query' => 'Please provide a valid search query',
 );

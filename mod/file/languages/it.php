@@ -1,14 +1,20 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:file' => 'File',
-	'collection:object:file' => 'Files',
-	'collection:object:file:all' => "All site files",
-	'collection:object:file:owner' => "%s's files",
-	'collection:object:file:friends' => "Friends' files",
-	'collection:object:file:group' => "Group files",
-	'add:object:file' => "Upload a file",
-	'edit:object:file' => "Edit file",
+	'collection:object:file' => 'File',
+	'collection:object:file:all' => "Tutti i file",
+	'collection:object:file:owner' => "File di %s",
+	'collection:object:file:friends' => "File degli amici",
+	'collection:object:file:group' => "File del gruppo",
+	'add:object:file' => "Carica un file",
+	'edit:object:file' => "Modifica file",
 
 	'file:more' => "Più file",
 	'file:list' => "vista a elenco",
@@ -45,10 +51,10 @@ return array(
 	'file:friends:type:image' => "Immagini dei tuoi amici",
 	'file:friends:type:general' => "Tutti i file dei tuoi amici",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "File di widget",
+	'widgets:filerepo:description' => "Visualizza i tuoi file più recenti",
 
-	'groups:tool:file' => 'Enable group files',
+	'groups:tool:file' => 'Abilita file del gruppo',
 
 	'river:object:file:create' => '%s ha caricato il file %s',
 	'river:object:file:comment' => '%s ha commentato il file %s',

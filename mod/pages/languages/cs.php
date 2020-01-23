@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,6 +21,9 @@ return array(
 	'edit:object:page' => "Edit this page",
 
 	'groups:tool:pages' => 'Enable group pages',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Smazat tento článek",
 	'pages:history' => "Historie",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Článek byl uložen',
 	'pages:notsaved' => 'Článek není možné uložit',
 	'pages:error:no_title' => 'Musíte zadat název článku.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Článek byl úspěšně smazán.',
 	'pages:revision:delete:success' => 'Revize článku byla úspěšně smazána.',
 	'pages:revision:delete:failure' => 'Revizi článku není možné smazat.',
 
@@ -77,7 +86,7 @@ View and comment on the page:
 
 	'pages:num' => 'Počet zobrazených článků',
 	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:description' => "Toto je seznam vašich článků.",
 
 	/**
 	 * Submenu items

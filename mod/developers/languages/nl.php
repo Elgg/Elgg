@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	// menu
 	'admin:develop_tools' => 'Tools',
@@ -64,6 +70,7 @@ Dit kan potentieel non-HTML views niet laten functioneren. Bekijk de developers_
 	'developers:entity_explorer:info:owned_acls' => 'Eigen Access Collections',
 	'developers:entity_explorer:info:acl_memberships' => 'Access Collections lidmaatschappen',
 	'developers:entity_explorer:delete_entity' => 'Verwijder deze entiteit',
+	'developers:entity_explorer:inspect_entity' => 'Inspecteer deze entiteit',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecteer de configuratie van het Elgg framework.',

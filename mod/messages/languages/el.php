@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	/**
 	* Menu items and titles
@@ -23,8 +29,8 @@ return array(
 
 	'messages:error' => 'Παρουσιάστηκε πρόβλημα κατά την αποθήκευση του μηνύματος σας. Παρακαλούμε προσπαθήστε ξανά.',
 
-	'item:object:messages' => 'Message',
-	'collection:object:messages' => 'Messages',
+	'item:object:messages' => 'Μήνυμα',
+	'collection:object:messages' => 'Μηνύματα',
 
 	/**
 	* Status messages

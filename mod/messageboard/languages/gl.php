@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Publicouse a súa mensaxe no taboleiro.",
 	'messageboard:deleted' => "Eliminouse a mensaxe.",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Non foi posíbel engadir a mensaxe, produciuse un erro inesperado. Inténteo de novo.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Taboleiro de mensaxes",
+	'widgets:messageboard:description' => "Este é un taboleiro de mensaxes que podes poñer no teu perfil e no que outros usuarios poden deixar mensaxes.",
 );

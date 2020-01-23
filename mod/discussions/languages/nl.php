@@ -1,11 +1,23 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
+	'item:object:discussion' => "Discussies",
+	
 	'add:object:discussion' => 'Discussie toevoegen',
 	'edit:object:discussion' => 'Bewerk discussie',
+	'collection:object:discussion' => 'Discussies',
+	'collection:object:discussion:group' => 'Groepsdiscussies',
+	'collection:object:discussion:my_groups' => 'Discussies in mijn groepen',
+	
+	'discussion:settings:enable_global_discussions' => 'Schakel globale discussies in',
+	'discussion:settings:enable_global_discussions:help' => 'Discussies kunnen ook buiten groepen worden gestart',
 
 	'discussion:latest' => 'Laatste discussies',
-	'collection:object:discussion:group' => 'Groepsdiscussies',
 	'discussion:none' => 'Geen discussies',
 	'discussion:updated' => "Laatste reactie door %s: '%s'",
 
@@ -17,6 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Fout tijdens het opslaan van deze discussie',
 	'discussion:error:missing' => 'Zowel titel als bericht zijn verplichte velden',
 	'discussion:error:permissions' => 'Je hebt onvoldoende rechten om deze actie uit te mogen voeren',
+	'discussion:error:no_groups' => "Je hebt geen groepslidmaatschappen",
 
 	/**
 	 * River
@@ -48,9 +61,6 @@ Bekijk en reageer hier op de discussie:
 Bekijk en reageer hier op de discussie:
 %s
 ',
-
-	'item:object:discussion' => "Discussies",
-	'collection:object:discussion' => 'Discussies',
 
 	'groups:tool:forum' => 'Activeer groepsdiscussies',
 

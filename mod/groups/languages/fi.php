@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -43,8 +49,8 @@ return array(
 	'groups:owner' => "Omistaja",
 	'groups:owner:warning' => "Varoitus: Jos muutat tätä, luovut ryhmän omistajuudesta.",
 	'groups:widget:num_display' => 'Näytettävien ryhmien määrä',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Ryhmien jäsenyys',
+	'widgets:a_users_groups:description' => 'Näytä profiilissasi ryhmät, joiden jäsenenä olet',
 
 	'groups:noaccess' => 'Sinulla ei ole oikeuksia tämän ryhmän näkemiseen',
 	'groups:cantcreate' => 'Vain sivuston ylläpitäjät voivat luoda uusia ryhmiä.',
@@ -75,7 +81,7 @@ return array(
 	'groups:search:none' => "Ryhmiä ei löytynyt",
 	'groups:search_in_group' => "Etsi tästä ryhmästä",
 	'groups:acl' => "Ryhmä: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Ryhmän jäsenet',
 
 	'groups:notfound' => "Ryhmää ei löytynyt",
 	

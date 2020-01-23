@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'APIException:ApiResultUnknown' => "API resultaat is van een ongekend type, dit zou nooit moeten gebeuren.",
 	'APIException:MissingParameterInMethod' => "Ontbrekende parameter %s in de methode %s",
@@ -39,4 +45,27 @@ return array(
 
 	'system.api.list' => "Toont een lijst van alle beschikbare API calls in het systeem",
 	'auth.gettoken' => "Deze API call levert een user authenticatie token op waarmee men in de toekomst API calls kan authentiseren. Gebruik het dan als de auth_token parameter.",
+	
+	'admin:configure_utilities:webservices' => "Webservices",
+	'admin:configure_utilities:ws_list' => "Alle API methodes",
+	'admin:configure_utilities:ws_tokens' => "Beheer API tokens",
+	'webservices:menu:entity:regenerate' => "API sleutels vernieuwen",
+	
+	'add:object:api_key' => "Maak een nieuw API token",
+	'edit:object:api_key' => "Bewerk API token: %s",
+	'entity:delete:object:api_key:success' => "Het API token %s is verwijderd",
+	
+	'webservices:requires_api_authentication' => "Vereist API authenticatie",
+	'webservices:requires_user_authentication' => "Vereist gebruikers authenticatie",
+	'webservices:function' => "Interne functie:",
+	'webservices:parameters' => "Webservice parameters:",
+	'webservices:parameters:required' => "vereist",
+	'webservices:parameters:optional' => "optioneel",
+	
+	'webservices:api_key:public' => "Publieke sleutel:",
+	'webservices:api_key:secret' => "Geheime sleutel:",
+	'webservices:api_key:secret:show' => "Toon geheime sleutel",
+	
+	'webservices:action:api_key:edit:success' => "Het API token is succesvol opgeslagen",
+	'webservices:action:api_key:regenerate:success' => "De API sleutels zijn vernieuwd",
 );

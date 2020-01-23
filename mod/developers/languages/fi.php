@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	// menu
 	'admin:develop_tools' => 'Työkalut',
@@ -58,11 +64,12 @@ return array(
 	'developers:entity_explorer:info' => 'Entity Information',
 	'developers:entity_explorer:info:attributes' => 'Attributes',
 	'developers:entity_explorer:info:metadata' => 'Metadata',
-	'developers:entity_explorer:info:relationships' => 'Relationships',
+	'developers:entity_explorer:info:relationships' => 'Suhteet',
 	'developers:entity_explorer:info:private_settings' => 'Private Settings',
 	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
 	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
 	'developers:entity_explorer:delete_entity' => 'Remove this entity',
+	'developers:entity_explorer:inspect_entity' => 'Inspect this entity',
 	
 	// inspection
 	'developers:inspect:help' => 'Tarkastele sivuston teknistä rakennetta.',
@@ -87,11 +94,11 @@ return array(
 	'developers:inspect:resource' => 'Resource View',
 	'developers:inspect:handler' => 'Handler',
 	'developers:inspect:controller' => 'Controller',
-	'developers:inspect:file' => 'File',
-	'developers:inspect:middleware' => 'File',
+	'developers:inspect:file' => 'Tiedostot',
+	'developers:inspect:middleware' => 'Tiedostot',
 	'developers:inspect:handler_type' => 'Handled by',
 	'developers:inspect:services' => 'Services',
-	'developers:inspect:service:name' => 'Name',
+	'developers:inspect:service:name' => 'Nimi',
 	'developers:inspect:service:path' => 'Definition',
 	'developers:inspect:service:class' => 'Class',
 

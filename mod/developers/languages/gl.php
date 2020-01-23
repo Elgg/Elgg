@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	// menu
 	'admin:develop_tools' => 'Ferramentas',
@@ -57,12 +63,13 @@ return array(
 	'developers:entity_explorer:guid:label' => 'Enter the guid of the entity to inspect',
 	'developers:entity_explorer:info' => 'Entity Information',
 	'developers:entity_explorer:info:attributes' => 'Attributes',
-	'developers:entity_explorer:info:metadata' => 'Metadata',
-	'developers:entity_explorer:info:relationships' => 'Relationships',
+	'developers:entity_explorer:info:metadata' => 'Metadatos',
+	'developers:entity_explorer:info:relationships' => 'Relacións',
 	'developers:entity_explorer:info:private_settings' => 'Private Settings',
 	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
 	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
 	'developers:entity_explorer:delete_entity' => 'Remove this entity',
+	'developers:entity_explorer:inspect_entity' => 'Inspect this entity',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspeccione a configuración da infraestrutura Elgg',
@@ -87,11 +94,11 @@ return array(
 	'developers:inspect:resource' => 'Resource View',
 	'developers:inspect:handler' => 'Handler',
 	'developers:inspect:controller' => 'Controller',
-	'developers:inspect:file' => 'File',
-	'developers:inspect:middleware' => 'File',
+	'developers:inspect:file' => 'Ficheiros',
+	'developers:inspect:middleware' => 'Ficheiros',
 	'developers:inspect:handler_type' => 'Handled by',
 	'developers:inspect:services' => 'Services',
-	'developers:inspect:service:name' => 'Name',
+	'developers:inspect:service:name' => 'Nome',
 	'developers:inspect:service:path' => 'Definition',
 	'developers:inspect:service:class' => 'Class',
 

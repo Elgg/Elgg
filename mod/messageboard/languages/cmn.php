@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "您已成功在留言板上貼文。",
 	'messageboard:deleted' => "您已成功刪除留言。",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "加入您的留言時發生了非預期的錯誤。請再試一次。",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "留言板",
+	'widgets:messageboard:description' => "這是您可以放在您側寫上的留言板，其他的使用者可以在這裡評論。",
 );

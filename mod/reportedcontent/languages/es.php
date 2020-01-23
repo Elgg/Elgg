@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:reported_content' => 'Elementos reportados',
@@ -29,6 +35,6 @@ return array(
 	'reportedcontent:failed' => 'No se pudo enviar el reporte.',
 	'reportedcontent:notarchived' => 'No se pudo archivar el reporte',
 	
-	'widgets:reportedcontent:name' => 'Reported content',
-	'widgets:reportedcontent:description' => 'Display reported content',
+	'widgets:reportedcontent:name' => 'Contenido reportado',
+	'widgets:reportedcontent:description' => 'Mostrar contenido reportado',
 );

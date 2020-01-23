@@ -1,14 +1,20 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:file' => 'Pliki',
-	'collection:object:file' => 'Files',
-	'collection:object:file:all' => "All site files",
-	'collection:object:file:owner' => "%s's files",
-	'collection:object:file:friends' => "Friends' files",
-	'collection:object:file:group' => "Group files",
-	'add:object:file' => "Upload a file",
-	'edit:object:file' => "Edit file",
+	'collection:object:file' => 'Pliki',
+	'collection:object:file:all' => "Wszystkie pliki",
+	'collection:object:file:owner' => "Pliki użytkownika %s",
+	'collection:object:file:friends' => "Pliki znajomych",
+	'collection:object:file:group' => "Pliki w grupie",
+	'add:object:file' => "Wgraj plik",
+	'edit:object:file' => "Edytuj plik",
 
 	'file:more' => "Więcej plików",
 	'file:list' => "widok listy",
@@ -45,10 +51,10 @@ return array(
 	'file:friends:type:image' => "Zdjęcia twoich znajomych",
 	'file:friends:type:general' => "Ogólne pliki twoich znajomych",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "Gadżet plików",
+	'widgets:filerepo:description' => "Zaprezentuj swoje ostatnie pliki",
 
-	'groups:tool:file' => 'Enable group files',
+	'groups:tool:file' => 'Włącz pliki grupy',
 
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Стране',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Странe',
+	'collection:object:page:all' => "Све стране сајта",
+	'collection:object:page:owner' => "%s странe",
+	'collection:object:page:friends' => "Стране пријатеља",
+	'collection:object:page:group' => "Странице групе",
+	'add:object:page' => "Додај страну",
+	'edit:object:page' => "Уреди ову страну",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Омогући странице групе',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Обриши ову  страну",
 	'pages:history' => "Историја",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Страна сачувана',
 	'pages:notsaved' => 'Није било могуће сачувати ову страну',
 	'pages:error:no_title' => 'Морате да унесете наслов за ову стране.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Ова страна је успешно обрисана',
 	'pages:revision:delete:success' => 'Ревизија стране је успешно обрисана',
 	'pages:revision:delete:failure' => 'Ревизија стране није обрисана',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Број страна за приказ',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Странe',
+	'widgets:pages:description' => "Ово је листа ваших страна",
 
 	/**
 	 * Submenu items

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Páxinas',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Páxinas',
+	'collection:object:page:all' => "Páxinas do siti",
+	'collection:object:page:owner' => "Páxinas de %s",
+	'collection:object:page:friends' => "Páxinas dos contactos",
+	'collection:object:page:group' => "Páxinas de grupos",
+	'add:object:page' => "Engadir unha páxina",
+	'edit:object:page' => "Editar a páxina",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Activas as páxinas de grupos',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Eliminar a páxina",
 	'pages:history' => "Historia",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Gardouse a páxina.',
 	'pages:notsaved' => 'Non foi posíbel gardar a páxina.',
 	'pages:error:no_title' => 'Debe poñerlle título á páxina.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Eliminouse a páxina.',
 	'pages:revision:delete:success' => 'Eliminouse a revisión da páxina.',
 	'pages:revision:delete:failure' => 'Non foi posíbel eliminar a revisión da páxina',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Número de páxinas para mostrar',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Páxinas',
+	'widgets:pages:description' => "Lista das súas páxinas",
 
 	/**
 	 * Submenu items

@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we konden het bericht niet verwijderen.",
+	'annotation:delete:messageboard:success' => "Je bericht is succesvol verwijderd.",
+	
 	'messageboard:posted' => "Je bericht is succesvol geplaatst.",
 	'messageboard:deleted' => "Je bericht is succesvol verwijderd.",
 

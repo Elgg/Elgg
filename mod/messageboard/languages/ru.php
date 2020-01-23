@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Запись на стене размещена.",
 	'messageboard:deleted' => "Запись удалена.",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Простите, при размещении записи произошла ошибка. Попробуйте снова.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Доска",
+	'widgets:messageboard:description' => "Это стена, которую можно добавить в Ваш профиль и на которой смогут писать Ваши друзья.",
 );

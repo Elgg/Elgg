@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Du har skrevet på opslagstavlen.",
 	'messageboard:deleted' => "Du har slettet beskeden.",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "En uventet fejl skete under tilføjelsen af din besked. Prøv venligst igen.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Opslagstavle",
+	'widgets:messageboard:description' => "Dette er en opslagstavle, som du kan bruge på din profil, så andre brugere kan kommentere.",
 );
