@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77c523e0348b96c7c2ef9593483c1519",
+    "content-hash": "68ee05083d9c936bba4131e7f0d2000f",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -1671,6 +1671,7 @@
                 "cron",
                 "schedule"
             ],
+            "abandoned": "dragonmantank/cron-expression",
             "time": "2017-01-23T04:29:33+00:00"
         },
         {
@@ -3519,6 +3520,7 @@
                 "loader",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-loader",
             "time": "2019-09-04T19:38:14+00:00"
         },
         {
@@ -3581,6 +3583,7 @@
                 "mail",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mail",
             "time": "2018-06-07T13:37:07+00:00"
         },
         {
@@ -3631,6 +3634,7 @@
                 "mime",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-mime",
             "time": "2019-10-16T19:30:37+00:00"
         },
         {
@@ -3677,6 +3681,7 @@
                 "stdlib",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-stdlib",
             "time": "2018-08-28T21:34:05+00:00"
         },
         {
@@ -3750,6 +3755,7 @@
                 "validator",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-validator",
             "time": "2019-10-12T12:17:57+00:00"
         }
     ],
