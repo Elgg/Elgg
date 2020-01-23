@@ -15,7 +15,6 @@ After enabling friendship requests when user A wants to be friends with user B, 
 	'friends:owned' => "%s's friends",
 	'friend:add' => "Add friend",
 	'friend:remove' => "Remove friend",
-	'friends:menu:request:status:pending' => "Friendship request pending",
 
 	'friends:add:successful' => "You have successfully added %s as a friend.",
 	'friends:add:duplicate' => "You're already friends with %s",
