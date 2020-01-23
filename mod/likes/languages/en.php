@@ -1,6 +1,11 @@
 <?php
+/**
+ * English translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
 
-return [
+return array(
 	'annotation:delete:likes:fail' => "There was a problem removing your like",
 	'annotation:delete:likes:success' => "Your like has been removed",
 	
@@ -41,4 +46,4 @@ Thanks,
 	'likes:upgrade:2017120700:title' => "Public Likes Annotations",
 	'likes:upgrade:2017120700:description' => "This updates the access id of likes annotations to public",
 	
-];
+);

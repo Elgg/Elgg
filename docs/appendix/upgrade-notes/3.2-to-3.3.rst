@@ -93,6 +93,7 @@ Deprecated APIs
  * ``elgg_get_file_simple_type()`` use ``elgg()->mimetype->getSimpleType()``
  * ``ElggFile::detectMimeType()`` use ``elgg()->mimetype->getMimeType()``
  * ``generate_action_token()`` use ``elgg()->csrf->generateActionToken()``
+ * ``elgg_split()``
 
 Deprecated Config values
 ------------------------

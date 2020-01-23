@@ -1,6 +1,11 @@
 <?php
+/**
+ * English translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
 
-return [
+return array(
 	
 	'relationship:friendrequest' => "%s requested friendship with %s",
 	'relationship:friendrequest:pending' => "%s wants to be your friend",
@@ -68,4 +73,4 @@ To view the friendship request, click here:
 	
 	'friends:action:friendrequest:accept:fail' => "An error occured while accepting the friendship request, please try again",
 	'friends:action:friendrequest:accept:success' => "The friendship request has been accepted",
-];
+);

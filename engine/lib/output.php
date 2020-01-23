@@ -200,7 +200,7 @@ function elgg_normalize_url($url) {
  *
  * @param string $unsafe_url URL from untrusted input
  *
- * @return bool|string Normalized URL or false if given URL was not a path.
+ * @return false|string Normalized URL or false if given URL was not a path.
  *
  * @since 1.12.18
  */

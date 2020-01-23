@@ -314,7 +314,7 @@ function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
  * @return array
  *
  * @since 2.0.0
- * 
+ *
  * @deprecated 3.3 Use elgg()->hooks->getOrderedHandlers()
  */
 function elgg_get_ordered_hook_handlers($hook, $type) {
@@ -332,7 +332,7 @@ function elgg_get_ordered_hook_handlers($hook, $type) {
  * @return array
  *
  * @since 2.0.0
- * 
+ *
  * @deprecated 3.3 use elgg()->events->getOrderedHandlers()
  */
 function elgg_get_ordered_event_handlers($event, $type) {
@@ -357,11 +357,31 @@ function elgg_get_ordered_event_handlers($event, $type) {
  * @see @elgg_view input/form
  *
  * @return string|false
- * 
+ *
  * @deprecated use elgg()->csrf->generateActionToken()
  */
 function generate_action_token($timestamp) {
 	elgg_deprecated_notice(__METHOD__ . ' has been deprecated. Use elgg()->csrf->generateActionToken()', '3.3');
 	
 	return elgg()->csrf->generateActionToken($timestamp);
+}
+
+/**
+ * Wrapper function for mb_split(). Falls back to split() if
+ * mb_split() isn't available.  Parameters are passed to the
+ * wrapped function in the same order they are passed to this
+ * function.
+ *
+ * @return string
+ * @since 1.7.0
+ * @deprecated
+ */
+function elgg_split() {
+	elgg_deprecated_notice(__METHOD__ . ' has been deprecated', '3.3');
+	
+	$args = func_get_args();
+	if (is_callable('mb_split')) {
+		return call_user_func_array('mb_split', $args);
+	}
+	return call_user_func_array('split', $args);
 }
