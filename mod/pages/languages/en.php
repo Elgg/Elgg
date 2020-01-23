@@ -1,6 +1,11 @@
 <?php
+/**
+ * English translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
 
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -100,4 +105,4 @@ View and comment on the page:
 	
 	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
 	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
-];
+);

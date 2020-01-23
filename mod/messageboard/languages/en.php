@@ -1,6 +1,11 @@
 <?php
+/**
+ * English translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
 
-return [
+return array(
 
 	/**
 	 * Menu items and titles
@@ -57,4 +62,4 @@ To view %s's profile, click here:
 
 	'widgets:messageboard:name' => "Message board",
 	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
-];
+);
