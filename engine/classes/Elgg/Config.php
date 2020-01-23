@@ -54,6 +54,8 @@ use Elgg\Project\Paths;
  * @property string        $elgg_settings_file
  * @property bool          $elgg_config_set_secret
  * @property bool          $enable_profiling
+ * @property string        $emailer_transport                       This is an override for Elgg's default email handling transport (default sendmail)
+ * @property array         $emailer_smtp_settings                   This configures SMTP if $emailer_transport is set to "smtp"
  * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
  * @property string[]      $group
