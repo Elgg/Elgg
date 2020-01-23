@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Deine Nachricht wurde auf der Pinnwand hinzugefügt.",
 	'messageboard:deleted' => "Die Nachricht wurde gelöscht.",
 

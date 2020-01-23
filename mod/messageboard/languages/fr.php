@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Votre message a bien été publié dans le forum.",
 	'messageboard:deleted' => "Vous avez bien supprimé le message.",
 

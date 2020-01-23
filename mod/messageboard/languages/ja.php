@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "伝言を書き込みをしました。",
 	'messageboard:deleted' => "伝言を削除しました。",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "書き込みの際に何からのエラーが発生しました。もう一度お試しください。",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "伝言板",
+	'widgets:messageboard:description' => "「伝言板」を使うとプロフィールページ上でいろいろな人から書き込みをしてもらえます。",
 );

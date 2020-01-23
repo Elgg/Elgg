@@ -1,4 +1,9 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 /**
@@ -238,7 +243,7 @@ return array(
 	'widgets' => "组件",
 	'widget' => "组件",
 	'item:object:widget' => "组件",
-	'collection:object:widget' => 'Widgets',
+	'collection:object:widget' => '页面组件',
 	'widgets:save:success' => "该组件保存成功！",
 	'widgets:save:failure' => "无法保存该组件！",
 	'widgets:add:success' => "组件添加成功！",
@@ -553,8 +558,9 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:settings' => '设置',
 	'admin:settings:basic' => '基本设置',
+	'admin:settings:i18n' => 'Internationalization',
 	'admin:settings:advanced' => '高级设置',
-	'admin:settings:users' => 'Users',
+	'admin:settings:users' => '用户',
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "管理面板允许你控制全局设置，从下面选择一个选项开始.",
 	'admin:site:opt:linktext' => "配置网站...",
@@ -650,7 +656,7 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:options' => '管理选项',
 
 	'admin:security' => '安全',
-	'admin:security:information' => 'Information',
+	'admin:security:information' => '信息',
 	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
 	'admin:security:information:https' => 'Is the website protected by HTTPS',
 	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
@@ -674,7 +680,7 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	'admin:security:settings' => '设置',
 	'admin:security:settings:description' => '在这个页面上，您可以配置一些安全特性。请仔细阅读设置。',
 	'admin:security:settings:label:hardening' => '强化',
-	'admin:security:settings:label:account' => 'Account',
+	'admin:security:settings:label:account' => '账户',
 	'admin:security:settings:label:notifications' => '通知',
 	'admin:security:settings:label:site_secret' => '站点安全',
 	
@@ -815,10 +821,16 @@ See the full list of users here:
 	'plugins:disabled' => '插件不能装载,因为有一个名为“disabled”的文件存在于mod文件夹。',
 	'plugins:settings:save:ok' => "%s插件的设置保存成功。",
 	'plugins:settings:save:fail' => "保存 %s 插件设置时遇到问题。",
+	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
+	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
 	'plugins:usersettings:save:ok' => "%s插件的用户设置成功保存。",
 	'plugins:usersettings:save:fail' => "保存%s插件的用户设置时遇到问题。",
+	
 	'item:object:plugin' => '插件',
 	'collection:object:plugin' => '所有插件',
+	
+	'plugins:settings:remove:menu:text' => "Remove all settings",
+	'plugins:settings:remove:menu:confirm' => "Are you sure you wish to remove all settings, including user settings from this plugin?",
 
 	'admin:plugins' => "插件",
 	'admin:plugins:activate_all' => '激活全部',
@@ -845,6 +857,7 @@ See the full list of users here:
 	'admin:plugins:label:moreinfo' => '更多信息',
 	'admin:plugins:label:version' => '版本',
 	'admin:plugins:label:location' => '位置',
+	'admin:plugins:label:priority' => '优先级',
 	'admin:plugins:label:contributors' => '贡献者',
 	'admin:plugins:label:contributors:name' => '名字',
 	'admin:plugins:label:contributors:email' => 'E-mail',
@@ -933,7 +946,7 @@ See the full list of users here:
 		For improved performance, it is recommended that you enable and configure OPcache.
 ',
 	
-	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension' => "PHP 扩展: %s",
 	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
 	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
 	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
@@ -1141,7 +1154,7 @@ See the full list of users here:
 
 	'active' => '活跃',
 	'total' => '总计',
-	'unvalidated' => 'Unvalidated',
+	'unvalidated' => '未经验证的',
 	
 	'ok' => '好',
 	'any' => '任何',
@@ -1157,6 +1170,9 @@ See the full list of users here:
 	'content' => "内容",
 	'content:latest' => '最新动态',
 	'content:latest:blurb' => '另外, 点击此处查看所有最新内容。',
+	
+	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
+	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => '查看链接',
 
@@ -1181,6 +1197,8 @@ See the full list of users here:
 	'status:enabled' => 'Enabled',
 	'status:disabled' => 'Disabled',
 	'status:unavailable' => 'Unavailable',
+	'status:active' => '活跃',
+	'status:inactive' => 'Inactive',
 
 /**
  * Generic sorts
@@ -1270,6 +1288,7 @@ See the full list of users here:
 	'messages:title:warning' => '警告',
 	'messages:title:help' => '帮助',
 	'messages:title:notice' => '注意',
+	'messages:title:info' => '信息',
 
 /**
  * Import / export
@@ -1418,11 +1437,13 @@ See the full list of users here:
 
 	'admin:legend:system' => '系统',
 	'admin:legend:caching' => '缓存',
-	'admin:legend:content' => 'Content',
+	'admin:legend:content' => '内容',
 	'admin:legend:content_access' => '内容访问',
 	'admin:legend:site_access' => '网站访问',
 	'admin:legend:debug' => '调试和纪录',
 	
+	'config:i18n:allowed_languages' => "Allowed languages",
+	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "除去Elgg版权",
@@ -1431,6 +1452,10 @@ See the full list of users here:
 	'config:disable_rss:help' => "禁用此功能，不再使用RSS提供的可用性。",
 	'config:friendly_time_number_of_days:label' => "呈现人性化天数的时间",
 	'config:friendly_time_number_of_days:help' => "您可以配置使用人性化时间标记的天数。在设定的天数之后，人性化时间将更改为常规日期格式。将此设置为0将禁用人性化的时间格式。",
+	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
+	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
+	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
+	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
 	
 	'upgrading' => '升级',
 	'upgrade:core' => 'Elgg安装已经升级',
@@ -1652,6 +1677,13 @@ To view %s's profile, click here:
 	'entity:can_delete:invaliduser' => '不能核实 canDelete() 为用户 user_guid [%s] ，因为用户不存在。',
 
 /**
+ * Annotations
+ */
+	
+	'annotation:delete:fail' => "An error occured while removing the annotation",
+	'annotation:delete:success' => "The annotation was removed successfully",
+	
+/**
  * Action gatekeeper
  */
 
@@ -1690,9 +1722,61 @@ To view %s's profile, click here:
 /**
  * Cli commands
  */
+	'cli:login:error:unknown' => "Unable to login as %s",
+	'cli:login:success:log' => "Logged in as %s [guid: %s]",
+	'cli:response:output' => "Response:",
+	'cli:option:as' => "Execute the command on behalf of a user with the given username",
+	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
+	
 	'cli:cache:clear:description' => "Clear Elgg caches",
 	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
 	'cli:cache:purge:description' => "Purge Elgg caches",
+	
+	'cli:cron:description' => "Execute cron handlers for all or specified interval",
+	'cli:cron:option:interval' => "Name of the interval (e.g. hourly)",
+	'cli:cron:option:force' => "Force cron commands to run even if they are not yet due",
+	'cli:cron:option:time' => "Time of the cron initialization",
+	
+	'cli:database:seed:description' => "Seeds the database with fake entities",
+	'cli:database:seed:option:limit' => "Number of entities to seed",
+	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
+	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
+	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+	
+	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
+	
+	'cli:plugins:activate:description' => "Activate plugin(s)",
+	'cli:plugins:activate:option:force' => "Resolve conflicts by deactivating conflicting plugins and enabling required ones",
+	'cli:plugins:activate:argument:plugins' => "Plugin IDs to be activated",
+	'cli:plugins:activate:progress:start' => "Activating plugins",
+	
+	'cli:plugins:deactivate:description' => "Deactivate plugin(s)",
+	'cli:plugins:deactivate:option:force' => "Force deactivation of all dependent plugins",
+	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs to be deactivated",
+	'cli:plugins:deactivate:progress:start' => "Deactivating plugins",
+	
+	'cli:plugins:list:description' => "List all plugins installed on the site",
+	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
+	
+	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
+	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
+	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
+	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
+	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
+	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
+	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
+	
+	'cli:upgrade:batch:description' => "Executes one or more upgrades",
+	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
+	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
+	'cli:upgrade:batch:finished' => "Running upgrades finished",
+	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
+
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Completed upgrades",
+	'cli:upgrade:list:pending' => "Pending upgrades",
+	'cli:upgrade:list:notfound' => "No upgrades found",
 	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

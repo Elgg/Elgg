@@ -1,12 +1,17 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 /**
  * Sites
  */
 
-	'item:site:site' => 'Site',
-	'collection:site:site' => 'Sites',
+	'item:site:site' => 'サイト',
+	'collection:site:site' => 'サイト',
 	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
@@ -122,7 +127,7 @@ return array(
 	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
-	'BadRequestException' => 'Bad request',
+	'BadRequestException' => 'リクエストが変です',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
 	
@@ -208,7 +213,7 @@ return array(
 	'access:label:logged_in' => "Logged in users",
 	'access:label:public' => "Public",
 	'access:label:logged_out' => "Logged out users",
-	'access:label:friends' => "Friends",
+	'access:label:friends' => "友達",
 	'access' => "公開範囲",
 	'access:overridenotice' => "注意: グループポリシーですでに設定されているので、このコンテントはグループメンバーからのみしかアクセスすることができません。",
 	'access:limited:label' => "限定公開",
@@ -238,7 +243,7 @@ return array(
 	'widgets' => "ウィジェット",
 	'widget' => "ウィジェット",
 	'item:object:widget' => "ウィジェット",
-	'collection:object:widget' => 'Widgets',
+	'collection:object:widget' => 'Widgets（ウィジェット）',
 	'widgets:save:success' => "ウィジェットを保存しました。",
 	'widgets:save:failure' => "ウィジェットを保存できませんでした。",
 	'widgets:add:success' => "ウィジェットを追加しました。",
@@ -253,9 +258,9 @@ return array(
 
 	'group' => "グループ",
 	'item:group' => "グループ",
-	'collection:group' => 'Groups',
-	'item:group:group' => "Group",
-	'collection:group:group' => 'Groups',
+	'collection:group' => 'グループ',
+	'item:group:group' => "グループ",
+	'collection:group:group' => 'グループ',
 	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
@@ -264,9 +269,9 @@ return array(
 
 	'user' => "ユーザ",
 	'item:user' => "ユーザ",
-	'collection:user' => 'Users',
-	'item:user:user' => 'User',
-	'collection:user:user' => 'Users',
+	'collection:user' => 'ユーザ',
+	'item:user:user' => 'ユーザ',
+	'collection:user:user' => 'ユーザ',
 
 	'friends' => "友達",
 	'collection:friends' => 'Friends\' %s',
@@ -496,7 +501,7 @@ to an instruction specifying how long a page can be considered "fresh".',
 file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
 	
 	'admin:statistics' => '統計情報',
-	'admin:server' => 'Server',
+	'admin:server' => 'サーバ',
 	'admin:cron' => 'Cron',
 	'admin:cron:record' => '最後に行った Cron Jobs',
 	'admin:cron:period' => 'Cron の間隔',
@@ -525,13 +530,13 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:users:opt:linktext' => "ユーザ設定...",
 	'admin:users:opt:description' => "ユーザとアカウント情報の設定",
 	'admin:users:find' => '検索',
-	'admin:users:unvalidated' => 'Unvalidated',
-	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
+	'admin:users:unvalidated' => '未確認',
+	'admin:users:unvalidated:no_results' => '未確認のユーザは、いません。',
 	'admin:users:unvalidated:registered' => 'Registered: %s',
 	'admin:users:unvalidated:change_email' => 'Change e-mail address',
 	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
-	'admin:configure_utilities:maintenance' => 'Maintenance mode',
+	'admin:configure_utilities:maintenance' => 'メンテナンス・モード',
 	'admin:upgrades' => 'アップグレード',
 	'admin:upgrades:finished' => 'Completed',
 	'admin:upgrades:db' => 'Database upgrades',
@@ -553,8 +558,9 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:settings' => 'セッティング',
 	'admin:settings:basic' => '基本設定',
+	'admin:settings:i18n' => 'Internationalization',
 	'admin:settings:advanced' => '詳細設定',
-	'admin:settings:users' => 'Users',
+	'admin:settings:users' => 'ユーザ',
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "この管理パネルでは、インストールしたサイト全体に関わる設定をコントロールすることができます。はじめるには、以下のオプションを選択してください。",
 	'admin:site:opt:linktext' => "サイトの構築..",
@@ -672,11 +678,11 @@ submit potentially harmfull content (eg. cross-site-scripting, etc)",
 	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
 expired sessions from your database and not allow users to reuse old sessions.",
 	
-	'admin:security:settings' => 'Settings',
+	'admin:security:settings' => 'セッティング',
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
 	'admin:security:settings:label:hardening' => 'Hardening',
-	'admin:security:settings:label:account' => 'Account',
-	'admin:security:settings:label:notifications' => 'Notifications',
+	'admin:security:settings:label:account' => 'アカウント',
+	'admin:security:settings:label:notifications' => '通知',
 	'admin:security:settings:label:site_secret' => 'Site secret',
 	
 	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
@@ -816,10 +822,16 @@ See the full list of users here:
 	'plugins:disabled' => '「disabled」というファイルがmodディレクトリにありますので、プラグインらを読み込みこんでおりません。',
 	'plugins:settings:save:ok' => "プラグイン %s のセッティングを保存しました。",
 	'plugins:settings:save:fail' => "プラグイン %s のセッティングを保存する際に問題が発生しました",
+	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
+	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
 	'plugins:usersettings:save:ok' => "プラグイン %s のユーザセッティングを保存しました。",
 	'plugins:usersettings:save:fail' => "プラグイン %s のユーザセッティングを保存する際に問題が発生しました",
+	
 	'item:object:plugin' => 'プラグイン',
-	'collection:object:plugin' => 'Plugins',
+	'collection:object:plugin' => 'プラグイン管理',
+	
+	'plugins:settings:remove:menu:text' => "Remove all settings",
+	'plugins:settings:remove:menu:confirm' => "Are you sure you wish to remove all settings, including user settings from this plugin?",
 
 	'admin:plugins' => "プラグイン管理",
 	'admin:plugins:activate_all' => '全て起動する',
@@ -846,6 +858,7 @@ See the full list of users here:
 	'admin:plugins:label:moreinfo' => '詳細情報',
 	'admin:plugins:label:version' => 'バージョン',
 	'admin:plugins:label:location' => '場所',
+	'admin:plugins:label:priority' => '優先度',
 	'admin:plugins:label:contributors' => '寄与者',
 	'admin:plugins:label:contributors:name' => '名前',
 	'admin:plugins:label:contributors:email' => 'E-mail',
@@ -1113,7 +1126,7 @@ These changes will only affect new users on the site.',
 	'create' => '作成',
 	'remove' => '削除',
 	'revert' => '戻す',
-	'validate' => 'Validate',
+	'validate' => '確認済み',
 	'read_more' => 'Read more',
 
 	'site' => 'サイト',
@@ -1144,7 +1157,7 @@ These changes will only affect new users on the site.',
 
 	'active' => 'アクティブ',
 	'total' => '総数',
-	'unvalidated' => 'Unvalidated',
+	'unvalidated' => '未確認',
 	
 	'ok' => 'OK',
 	'any' => 'Any',
@@ -1160,6 +1173,9 @@ These changes will only affect new users on the site.',
 	'content' => "コンテント",
 	'content:latest' => '最新のアクティビティ',
 	'content:latest:blurb' => 'もしくは、ここをクリックしてサイト全体での新しい記事を見る',
+	
+	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
+	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => 'リンク一覧',
 
@@ -1184,6 +1200,8 @@ These changes will only affect new users on the site.',
 	'status:enabled' => 'Enabled',
 	'status:disabled' => 'Disabled',
 	'status:unavailable' => 'Unavailable',
+	'status:active' => 'アクティブ',
+	'status:inactive' => 'Inactive',
 
 /**
  * Generic sorts
@@ -1269,8 +1287,9 @@ Once you have logged in, we highly recommend that you change your password.',
 	'messages:title:success' => 'Success',
 	'messages:title:error' => 'Error',
 	'messages:title:warning' => 'Warning',
-	'messages:title:help' => 'Help',
+	'messages:title:help' => 'ヘルプ',
 	'messages:title:notice' => 'Notice',
+	'messages:title:info' => 'Info',
 
 /**
  * Import / export
@@ -1419,11 +1438,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'システム',
 	'admin:legend:caching' => 'キャシュ',
-	'admin:legend:content' => 'Content',
+	'admin:legend:content' => 'コンテント',
 	'admin:legend:content_access' => 'コンテント・アクセス',
 	'admin:legend:site_access' => 'サイト・アクセス',
 	'admin:legend:debug' => 'デバッグとログ',
 	
+	'config:i18n:allowed_languages' => "Allowed languages",
+	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
@@ -1432,6 +1453,10 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
 	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
 	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
+	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
+	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
+	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
 	
 	'upgrading' => 'アップグレード中...',
 	'upgrade:core' => 'Elggをアップグレードしました。',
@@ -1494,7 +1519,7 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 	'email:settings' => "Eメール設定",
 	'email:address:label' => "Eメールアドレス",
 	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
-	'email:address:password' => "Password",
+	'email:address:password' => "パスワード",
 	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
 	'email:save:success' => "新しいEメールアドレスを保存しました。アドレスが正しいかどうかの確認が求められています。",
@@ -1588,7 +1613,7 @@ To go the the website, click here:
 
 	'comments:count' => "%s さんのコメント",
 	'item:object:comment' => 'コメント',
-	'collection:object:comment' => 'Comments',
+	'collection:object:comment' => 'コメント',
 
 	'river:object:default:comment' => '%s commented on %s',
 
@@ -1599,7 +1624,7 @@ To go the the website, click here:
 	'generic_comments:latest' => "最新のコメント",
 	'generic_comment:posted' => "コメントを投稿しました。",
 	'generic_comment:updated' => "コメントを更新しました。",
-	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
+	'entity:delete:object:comment:success' => "コメントを削除しました。",
 	'generic_comment:blank' => "申し訳ありません。コメント内容が空欄のため保存できません。",
 	'generic_comment:notfound' => "申し訳ありません。お探しのコメントは見つかりませんでした。",
 	'generic_comment:notfound_fallback' => "申し訳ありません。お探しのコメントは見つかりませんでしたが、コメントされていたページへご案内しました。",
@@ -1650,6 +1675,13 @@ To view %s's profile, click here:
 	'entity:can_delete:invaliduser' => 'ユーザが存在しませんので、user_guid[%s] に対して canDelete() をチェックできません。 ',
 
 /**
+ * Annotations
+ */
+	
+	'annotation:delete:fail' => "An error occured while removing the annotation",
+	'annotation:delete:success' => "The annotation was removed successfully",
+	
+/**
  * Action gatekeeper
  */
 
@@ -1688,9 +1720,61 @@ To view %s's profile, click here:
 /**
  * Cli commands
  */
+	'cli:login:error:unknown' => "Unable to login as %s",
+	'cli:login:success:log' => "Logged in as %s [guid: %s]",
+	'cli:response:output' => "Response:",
+	'cli:option:as' => "Execute the command on behalf of a user with the given username",
+	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
+	
 	'cli:cache:clear:description' => "Clear Elgg caches",
 	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
 	'cli:cache:purge:description' => "Purge Elgg caches",
+	
+	'cli:cron:description' => "Execute cron handlers for all or specified interval",
+	'cli:cron:option:interval' => "Name of the interval (e.g. hourly)",
+	'cli:cron:option:force' => "Force cron commands to run even if they are not yet due",
+	'cli:cron:option:time' => "Time of the cron initialization",
+	
+	'cli:database:seed:description' => "Seeds the database with fake entities",
+	'cli:database:seed:option:limit' => "Number of entities to seed",
+	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
+	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
+	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+	
+	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
+	
+	'cli:plugins:activate:description' => "Activate plugin(s)",
+	'cli:plugins:activate:option:force' => "Resolve conflicts by deactivating conflicting plugins and enabling required ones",
+	'cli:plugins:activate:argument:plugins' => "Plugin IDs to be activated",
+	'cli:plugins:activate:progress:start' => "Activating plugins",
+	
+	'cli:plugins:deactivate:description' => "Deactivate plugin(s)",
+	'cli:plugins:deactivate:option:force' => "Force deactivation of all dependent plugins",
+	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs to be deactivated",
+	'cli:plugins:deactivate:progress:start' => "Deactivating plugins",
+	
+	'cli:plugins:list:description' => "List all plugins installed on the site",
+	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
+	
+	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
+	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
+	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
+	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
+	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
+	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
+	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
+	
+	'cli:upgrade:batch:description' => "Executes one or more upgrades",
+	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
+	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
+	'cli:upgrade:batch:finished' => "Running upgrades finished",
+	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
+
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Completed upgrades",
+	'cli:upgrade:list:pending' => "Pending upgrades",
+	'cli:upgrade:list:notfound' => "No upgrades found",
 	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

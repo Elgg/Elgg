@@ -1,5 +1,14 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
+	'annotation:delete:likes:fail' => "あなたの「like」を削除する際に問題が発生しました。",
+	'annotation:delete:likes:success' => "あなたの「like」を削除しました",
+	
 	'likes:this' => '「like」にしました',
 	'likes:deleted' => 'あなたの「like」を削除しました',
 	'likes:see' => '「like」を押した人',

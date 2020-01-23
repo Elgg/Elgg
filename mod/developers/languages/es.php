@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	// menu
 	'admin:develop_tools' => 'Herramientas',
@@ -63,6 +69,7 @@ return array(
 	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
 	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
 	'developers:entity_explorer:delete_entity' => 'Eliminar esta entidad',
+	'developers:entity_explorer:inspect_entity' => 'Inspect this entity',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspección de configuration del framework Elgg.',
@@ -87,11 +94,11 @@ return array(
 	'developers:inspect:resource' => 'Resource View',
 	'developers:inspect:handler' => 'Handler',
 	'developers:inspect:controller' => 'Controller',
-	'developers:inspect:file' => 'File',
-	'developers:inspect:middleware' => 'File',
+	'developers:inspect:file' => 'Archivo',
+	'developers:inspect:middleware' => 'Archivo',
 	'developers:inspect:handler_type' => 'Handled by',
 	'developers:inspect:services' => 'Services',
-	'developers:inspect:service:name' => 'Name',
+	'developers:inspect:service:name' => 'Nombre',
 	'developers:inspect:service:path' => 'Definition',
 	'developers:inspect:service:class' => 'Class',
 

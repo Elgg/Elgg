@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -43,8 +49,8 @@ return array(
 	'groups:owner' => "Vlastník",
 	'groups:owner:warning' => "Varování: pokud tuto hodnotu změníte, nebudete nadále vlastníkem této skupiny.",
 	'groups:widget:num_display' => 'Počet zobrazených skupin',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Členství ve skupině',
+	'widgets:a_users_groups:description' => 'Zobrazuje skupiny kterých jste členem',
 
 	'groups:noaccess' => 'K této skupině nemáte přístup',
 	'groups:cantcreate' => 'Nemůžete vytvořit skupinu, to mohou pouze správci.',
@@ -75,7 +81,7 @@ return array(
 	'groups:search:none' => "Hledání neodpovídá žádná skupina",
 	'groups:search_in_group' => "Hledat v této skupině",
 	'groups:acl' => "Skupina: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Počet členů',
 
 	'groups:notfound' => "Skupina nebyla nalezena",
 	

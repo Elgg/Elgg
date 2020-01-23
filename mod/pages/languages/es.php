@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'P&aacute;ginas',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'P&aacute;ginas',
+	'collection:object:page:all' => "Todas las p&aacute;ginas",
+	'collection:object:page:owner' => "P&aacute;ginas de %s",
+	'collection:object:page:friends' => "P&aacute;ginas de amigos",
+	'collection:object:page:group' => "P&aacute;ginas para grupos",
+	'add:object:page' => "Agregar una página",
+	'edit:object:page' => "Editar esta p&aacute;gina",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Habilitar p&aacute;ginas para grupos',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Borrar esta p&aacute;gina",
 	'pages:history' => "Historial",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'P&aacute;gina guardada',
 	'pages:notsaved' => 'La p&aacute;gina no pudo ser guardada',
 	'pages:error:no_title' => 'Debes especificar un t&iacute;tulo para esta p&aacute;gina.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'La p&aacute;gina ha sido borrada.',
 	'pages:revision:delete:success' => 'La revisión de la página se eliminó correctamente.',
 	'pages:revision:delete:failure' => 'No fue posible eliminar la revisión de la página.',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'N&uacute;mero de p&aacute;ginas a mostrar',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'P&aacute;ginas',
+	'widgets:pages:description' => "Esta es la lista de tus p&aacute;ginas.",
 
 	/**
 	 * Submenu items

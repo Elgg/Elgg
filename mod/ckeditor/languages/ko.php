@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'ckeditor:html' => "HTML 수정",
 	'ckeditor:visual' => "위지윅 편집기",

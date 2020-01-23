@@ -1,4 +1,9 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 	'profile' => 'Профиль',
@@ -29,7 +34,7 @@ and re-load this page to make sure they get migrated.',
 	'profile:field:tags' => 'Теги',
 	'profile:field:url' => 'Веб адрес',
 	'profile:field:email' => 'Электронная почта',
-	'profile:field:tel' => 'Telephone',
+	'profile:field:tel' => 'Телефон',
 	'profile:field:location' => 'Местоположение',
 	'profile:field:date' => 'Дата',
 	'profile:field:datetime-local' => 'Date Time',

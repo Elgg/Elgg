@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -8,9 +14,9 @@ return array(
 
 	'item:object:thewire' => "Messaggi",
 	'collection:object:thewire' => 'Wire posts',
-	'collection:object:thewire:all' => "All wire posts",
-	'collection:object:thewire:owner' => "%s's wire posts",
-	'collection:object:thewire:friends' => "Friends' wire posts",
+	'collection:object:thewire:all' => "Tutti gli Aggiornamenti di stato",
+	'collection:object:thewire:owner' => "Aggiornamenti di stato di %s",
+	'collection:object:thewire:friends' => "Aggiornamenti di stato dei tuoi amici",
 
 	'thewire:replying' => "Stai rispondendo a %s (@%s) che ha scritto",
 	'thewire:thread' => "Argomento",
@@ -34,7 +40,7 @@ return array(
 	 * Wire widget
 	 */
 	
-	'widgets:thewire:description' => 'Display your latest wire posts',
+	'widgets:thewire:description' => 'Visualizza i tuoi ultimi messaggi',
 	'thewire:num' => 'Numero di elementi da visualizzare',
 	'thewire:moreposts' => 'Più messaggi',
 

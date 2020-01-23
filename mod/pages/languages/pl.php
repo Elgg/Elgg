@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Strony',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Strony',
+	'collection:object:page:all' => "Wszystkie strony",
+	'collection:object:page:owner' => "Strony użytkownika %s",
+	'collection:object:page:friends' => "Strony znajomych",
+	'collection:object:page:group' => "Strony grupy",
+	'add:object:page' => "Dodaj stronę",
+	'edit:object:page' => "Edytuj tą stronę",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Włącz strony grupy',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Usuń tą stronę",
 	'pages:history' => "Historia strony",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Strona zapisana',
 	'pages:notsaved' => 'Strona nie mogła zostać zapisana',
 	'pages:error:no_title' => 'Musisz podać tytuł dla tej strony.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Twoja strona została pomyślnie usunięta.',
 	'pages:revision:delete:success' => 'Pomyślnie usunięto wersję strony.',
 	'pages:revision:delete:failure' => 'Usunięcie wersji strony nie powiodło się.',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Ilość stron do wyświetlenia',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Strony',
+	'widgets:pages:description' => "Oto lista twoich stron",
 
 	/**
 	 * Submenu items

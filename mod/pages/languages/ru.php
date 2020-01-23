@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Документы',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Документы',
+	'collection:object:page:all' => "Все документы сайта",
+	'collection:object:page:owner' => "Документы %s",
+	'collection:object:page:friends' => "Документы друзей",
+	'collection:object:page:group' => "Документы группы",
+	'add:object:page' => "Добавить документ",
+	'edit:object:page' => "Редактировать документы",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Включить документы группы',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Удалить документы",
 	'pages:history' => "Архив",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Документ сохранен.',
 	'pages:notsaved' => 'Документ не может быть сохранен.',
 	'pages:error:no_title' => 'Вы должны указать название документа.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Ваш документ успешно удален.',
 	'pages:revision:delete:success' => 'Версия документа была удалена.',
 	'pages:revision:delete:failure' => 'Версия документа не может быть удалена.',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Число отображаемых документов',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Документы',
+	'widgets:pages:description' => "Это список Ваших документов.",
 
 	/**
 	 * Submenu items

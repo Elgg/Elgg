@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'item:object:blog' => 'Blogaichean',
 	'collection:object:blog' => 'Blogs',
@@ -58,7 +64,7 @@ View and comment on the blog post:
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:description' => 'Seall na postaichean bloga as ùire agad',
 	'blog:moreblogs' => 'Barrachd postaichean bloga',
 	'blog:numbertodisplay' => 'An àireamh dhe phostaichean bloga ri an sealltainn',
 );

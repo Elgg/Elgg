@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'email:validate:subject' => "【登録確認メール】%s様、%sで登録されたメールアドレスにお送りしています",
 	'email:validate:body' => "Hi %s,

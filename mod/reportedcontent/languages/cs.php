@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:reported_content' => 'Nahlášené položky',
@@ -29,6 +35,6 @@ return array(
 	'reportedcontent:failed' => 'Pokus o nahlášení tohoto obsahu bohužel selhal.',
 	'reportedcontent:notarchived' => 'Nemůžeme archivovat toto hlášení',
 	
-	'widgets:reportedcontent:name' => 'Reported content',
-	'widgets:reportedcontent:description' => 'Display reported content',
+	'widgets:reportedcontent:name' => 'Nahlášený obsah',
+	'widgets:reportedcontent:description' => 'Zobrazuje nahlášený obsah',
 );

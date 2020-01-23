@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -43,8 +49,8 @@ return array(
 	'groups:owner' => "Administrador",
 	'groups:owner:warning' => "Aviso: se cambia o valor, deixará de ser o administrador do grupo.",
 	'groups:widget:num_display' => 'Número de grupos para mostrar',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Grupos aos que pertence',
+	'widgets:a_users_groups:description' => 'Mostrar os grupos aos que pertence no seu perfil.',
 
 	'groups:noaccess' => 'Non ten acceso ao grupo.',
 	'groups:cantcreate' => 'Só os administradores poden crear grupos.',
@@ -75,7 +81,7 @@ return array(
 	'groups:search:none' => "Non se atopou ningunha coincidencia.",
 	'groups:search_in_group' => "Buscar no grupo",
 	'groups:acl' => "Grupo: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Membros',
 
 	'groups:notfound' => "Non se atopou o grupo.",
 	

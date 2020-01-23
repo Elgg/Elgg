@@ -1,4 +1,9 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 /**
@@ -477,10 +482,10 @@ return array(
 	'admin:header:release' => "Elgg release: %s",
 	'admin:description' => "El panel de administraci&oacute;n le permite organizar todos los aspectos del sistema, desde la gesti&oacute;n de usuarios hasta el comportamiento de los plugins. Seleccione una opci&oacute;n debajo para comenzar",
 
-	'admin:performance' => 'Performance',
+	'admin:performance' => 'Rendimiento',
 	'admin:performance:label:generic' => 'Generic',
 	'admin:performance:generic:description' => 'Below is a list of performance suggestions / values which could help in tuning your website',
-	'admin:performance:simplecache' => 'Simplecache',
+	'admin:performance:simplecache' => 'Caché simple',
 	'admin:performance:simplecache:settings:warning' => "It's recommended you configure the simplecache setting in the settings.php.
 Configuring simplecache in the settings.php file improves caching performance.
 It allows Elgg to skip connecting to the database when serving cached JavaScript and CSS files",
@@ -553,8 +558,9 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:settings' => 'Configuraci&oacute;n',
 	'admin:settings:basic' => 'Configuraci&oacute;n B&aacute;sica',
+	'admin:settings:i18n' => 'Internacionalización',
 	'admin:settings:advanced' => 'Configuraci&oacute;n Avanzada',
-	'admin:settings:users' => 'Users',
+	'admin:settings:users' => 'Usuarios',
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Este panel de administraci&oacute;n le permite gestionar la configuraci&oacute;n global de la red. Selecciona una opci&oacute;n debajo para comenzar",
 	'admin:site:opt:linktext' => "Configurar sitio..",
@@ -651,7 +657,7 @@ tres secciones:
 	'admin:options' => 'Opciones de Admin',
 
 	'admin:security' => 'Seguridad',
-	'admin:security:information' => 'Information',
+	'admin:security:information' => 'Información',
 	'admin:security:information:description' => 'On this page you can find a list of security recommendations.',
 	'admin:security:information:https' => 'Is the website protected by HTTPS',
 	'admin:security:information:https:warning' => "It's recommended to protect your website using HTTPS, this helps protect data
@@ -675,7 +681,7 @@ expired sessions from your database and not allow users to reuse old sessions.",
 	'admin:security:settings' => 'Ajustes',
 	'admin:security:settings:description' => 'En esta página puede configurar algunas características de seguridad. Por favor, lea la configuración cuidadosamente.',
 	'admin:security:settings:label:hardening' => 'Hardening',
-	'admin:security:settings:label:account' => 'Account',
+	'admin:security:settings:label:account' => 'Cuenta',
 	'admin:security:settings:label:notifications' => 'Notificaciones',
 	'admin:security:settings:label:site_secret' => 'Secreto del sitio',
 	
@@ -816,10 +822,16 @@ See the full list of users here:
 	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
 	'plugins:settings:save:ok' => "Configuraci&oacute;n para el plugin %s guardada correctamente",
 	'plugins:settings:save:fail' => "Ocurri&oacute; un error al intentar guardar la configuraci&oacute;n para el plugin %s",
+	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
+	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
 	'plugins:usersettings:save:ok' => "Configuraci&oacute;n del usuario para el plugin %s guardada",
 	'plugins:usersettings:save:fail' => "Ocurri&oacute; un error al intentar guardar la configuraci&oacute;n del usuario para el plugin %s",
+	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',
+	
+	'plugins:settings:remove:menu:text' => "Remove all settings",
+	'plugins:settings:remove:menu:confirm' => "Are you sure you wish to remove all settings, including user settings from this plugin?",
 
 	'admin:plugins' => "Plugins",
 	'admin:plugins:activate_all' => 'Activar todos',
@@ -846,6 +858,7 @@ See the full list of users here:
 	'admin:plugins:label:moreinfo' => 'mas informaci&oacute;n',
 	'admin:plugins:label:version' => 'Versi&oacute;n',
 	'admin:plugins:label:location' => 'Ubicacion',
+	'admin:plugins:label:priority' => 'Prioridad',
 	'admin:plugins:label:contributors' => 'Colaboradores',
 	'admin:plugins:label:contributors:name' => 'Nombre',
 	'admin:plugins:label:contributors:email' => 'Correo Electrónico',
@@ -900,7 +913,7 @@ See the full list of users here:
 	'admin:statistics:label:version:code' => "Versión de Código",
 
 	'admin:server:label:elgg' => 'Elgg',
-	'admin:server:label:requirements' => 'Requirements',
+	'admin:server:label:requirements' => 'Requisitos',
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:phpinfo' => 'Mostrar PHPInfo',
 	'admin:server:label:web_server' => 'Servidor Web',
@@ -934,7 +947,7 @@ See the full list of users here:
 		For improved performance, it is recommended that you enable and configure OPcache.
 ',
 	
-	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension' => "Extensi&oacute;n PHP: %s",
 	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
 	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
 	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
@@ -1144,7 +1157,7 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Activo',
 	'total' => 'Total',
-	'unvalidated' => 'Unvalidated',
+	'unvalidated' => 'No validado',
 	
 	'ok' => 'OK',
 	'any' => 'Cualquiera',
@@ -1160,6 +1173,9 @@ These changes will only affect new users on the site.',
 	'content' => "contenido",
 	'content:latest' => '&uacute;ltima actividad',
 	'content:latest:blurb' => 'Alternativamente, click aqu&iacute; para ver el &uacute;ltimo contenido en toda la red',
+	
+	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
+	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => 'ver link',
 
@@ -1184,6 +1200,8 @@ These changes will only affect new users on the site.',
 	'status:enabled' => 'Enabled',
 	'status:disabled' => 'Disabled',
 	'status:unavailable' => 'Unavailable',
+	'status:active' => 'Activo',
+	'status:inactive' => 'Inactive',
 
 /**
  * Generic sorts
@@ -1271,6 +1289,7 @@ Once you have logged in, we highly recommend that you change your password.',
 	'messages:title:warning' => 'Advertencia',
 	'messages:title:help' => 'Ayuda',
 	'messages:title:notice' => 'Aviso',
+	'messages:title:info' => 'Información',
 
 /**
  * Import / export
@@ -1419,11 +1438,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caché',
-	'admin:legend:content' => 'Content',
+	'admin:legend:content' => 'Contenido',
 	'admin:legend:content_access' => 'Acceso del Contenido',
 	'admin:legend:site_access' => 'Acceso del Sitio',
 	'admin:legend:debug' => 'Depuración y registro',
 	
+	'config:i18n:allowed_languages' => "Allowed languages",
+	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Eliminar marca de Elgg",
@@ -1432,6 +1453,10 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
 	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
 	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
+	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
+	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
+	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
 	
 	'upgrading' => 'Actualizando..',
 	'upgrade:core' => 'La instalaci&oacute;n de Elgg ha sido actualizada',
@@ -1600,7 +1625,7 @@ To go the the website, click here:
 	'generic_comments:latest' => "&uacute;ltimos comentarios",
 	'generic_comment:posted' => "Se ha publicado su comentario",
 	'generic_comment:updated' => "El comentario fué cambiado éxitosamente.",
-	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
+	'entity:delete:object:comment:success' => "Se ha quitado su comentario",
 	'generic_comment:blank' => "Lo sentimos, debe ingresar alg&uacute;n comentario antes de poder guardarlo",
 	'generic_comment:notfound' => "Lo sentimos. No hemos encontrado el comentario especificado.",
 	'generic_comment:notfound_fallback' => "Lo sentimos. No hemos encontrado el comentario especificado, pero te hemos redirigido a la página donde se comentó.",
@@ -1651,6 +1676,13 @@ To view %s's profile, click here:
 	'entity:can_delete:invaliduser' => 'No se puede comprobar canDelete() para el user_guid [%s] porque el usuario no existe.',
 
 /**
+ * Annotations
+ */
+	
+	'annotation:delete:fail' => "An error occured while removing the annotation",
+	'annotation:delete:success' => "The annotation was removed successfully",
+	
+/**
  * Action gatekeeper
  */
 
@@ -1689,9 +1721,61 @@ To view %s's profile, click here:
 /**
  * Cli commands
  */
+	'cli:login:error:unknown' => "Unable to login as %s",
+	'cli:login:success:log' => "Logged in as %s [guid: %s]",
+	'cli:response:output' => "Response:",
+	'cli:option:as' => "Execute the command on behalf of a user with the given username",
+	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
+	
 	'cli:cache:clear:description' => "Clear Elgg caches",
 	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
 	'cli:cache:purge:description' => "Purge Elgg caches",
+	
+	'cli:cron:description' => "Execute cron handlers for all or specified interval",
+	'cli:cron:option:interval' => "Name of the interval (e.g. hourly)",
+	'cli:cron:option:force' => "Force cron commands to run even if they are not yet due",
+	'cli:cron:option:time' => "Time of the cron initialization",
+	
+	'cli:database:seed:description' => "Seeds the database with fake entities",
+	'cli:database:seed:option:limit' => "Number of entities to seed",
+	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
+	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
+	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+	
+	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
+	
+	'cli:plugins:activate:description' => "Activate plugin(s)",
+	'cli:plugins:activate:option:force' => "Resolve conflicts by deactivating conflicting plugins and enabling required ones",
+	'cli:plugins:activate:argument:plugins' => "Plugin IDs to be activated",
+	'cli:plugins:activate:progress:start' => "Activating plugins",
+	
+	'cli:plugins:deactivate:description' => "Deactivate plugin(s)",
+	'cli:plugins:deactivate:option:force' => "Force deactivation of all dependent plugins",
+	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs to be deactivated",
+	'cli:plugins:deactivate:progress:start' => "Deactivating plugins",
+	
+	'cli:plugins:list:description' => "List all plugins installed on the site",
+	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
+	
+	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
+	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
+	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
+	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
+	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
+	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
+	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
+	
+	'cli:upgrade:batch:description' => "Executes one or more upgrades",
+	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
+	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
+	'cli:upgrade:batch:finished' => "Running upgrades finished",
+	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
+
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Actualizaciones completadas",
+	'cli:upgrade:list:pending' => "Actualizaciones pendientes",
+	'cli:upgrade:list:notfound' => "No upgrades found",
 	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

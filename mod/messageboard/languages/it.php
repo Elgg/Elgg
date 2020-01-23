@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Messaggio privato inviato.",
 	'messageboard:deleted' => "Messaggio rimosso.",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Si è verificato un errore imprevisto aggiungendo il tuo messaggio. Per favore riprova.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Pannello messaggi",
+	'widgets:messageboard:description' => "Puoi aggiungere questo pannello messaggi al tuo profilo per permettere agli altri utenti di inviarti dei messaggi privati.",
 );

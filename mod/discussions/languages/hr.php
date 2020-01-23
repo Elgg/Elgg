@@ -1,11 +1,23 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
+	'item:object:discussion' => "Tema rasprave",
+	
 	'add:object:discussion' => 'Dodaj temu rasprave',
 	'edit:object:discussion' => 'Uredi temu',
+	'collection:object:discussion' => 'Teme rasprave',
+	'collection:object:discussion:group' => 'Grupna rasprava',
+	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
 
 	'discussion:latest' => 'Zadnja rasprava',
-	'collection:object:discussion:group' => 'Grupna rasprava',
 	'discussion:none' => 'Nema rasprava',
 	'discussion:updated' => "Zadnji komentar od %s %s",
 
@@ -17,6 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Nije moguće spremiti ovu temu',
 	'discussion:error:missing' => 'Naslov i sadržaj poruke su obavezna polja',
 	'discussion:error:permissions' => 'Nemate dovoljnu razinu ovlasti za izvršavanje ove akcije',
+	'discussion:error:no_groups' => "You're not a member of any groups.",
 
 	/**
 	 * River
@@ -46,9 +59,6 @@ Pogledaj i odgovori na temu rasprace:
 %s
 
 Pregledaj i komentiraj ovu raspravu:',
-
-	'item:object:discussion' => "Tema rasprave",
-	'collection:object:discussion' => 'Teme rasprave',
 
 	'groups:tool:forum' => 'Omogući grupnu raspravu',
 

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -7,14 +13,17 @@ return array(
 
 	'item:object:page' => 'ページ',
 	'collection:object:page' => 'ページ',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page:all' => "サイト内のページ",
+	'collection:object:page:owner' => "%sさんのページ",
+	'collection:object:page:friends' => "友達のページ",
+	'collection:object:page:group' => "グループページ",
+	'add:object:page' => "ページを追加",
+	'edit:object:page' => "このページを編集",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'グループページを使用する',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "このページを削除",
 	'pages:history' => "履歴",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'ページを保存しました。',
 	'pages:notsaved' => 'ページを保存できません。',
 	'pages:error:no_title' => 'このページにはタイトルが付けられていません。タイトルをつけてください。',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'ページを削除しました。',
 	'pages:revision:delete:success' => 'ページのリビジョンを削除しました。',
 	'pages:revision:delete:failure' => 'ページのリビジョンを削除できませんでした。',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => '表示数',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'ページ',
+	'widgets:pages:description' => "あなたのページを一覧表示します。",
 
 	/**
 	 * Submenu items
