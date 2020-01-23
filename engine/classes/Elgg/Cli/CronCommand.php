@@ -34,7 +34,7 @@ class CronCommand extends Command {
 		$intervals = null;
 		$interval = $this->option('interval');
 		if ($interval) {
-			$intervals = [strtolower($interval)];
+			$intervals = [elgg_strtolower($interval)];
 		}
 
 		$time = $this->option('time');

@@ -181,12 +181,12 @@ class Formatter {
 
 					if (is_array($property_values)) {
 						foreach ($property_values as $text) {
-							if (stristr($text, $query)) {
+							if (elgg_stristr($text, $query)) {
 								$matches[$property_type][$field][] = $this->highlighter->highlight($text, 1, 300);
 							}
 						}
 					} else {
-						if (stristr($property_values, $query)) {
+						if (elgg_stristr($property_values, $query)) {
 							$matches[$property_type][$field][] = $this->highlighter->highlight($property_values, 1, 300);
 						}
 					}

@@ -381,7 +381,7 @@ function api_auth_hmac() {
 
 	// get the query string
 	$query = _elgg_services()->request->server->get('REQUEST_URI');
-	$query = substr($query, strpos($query, '?') + 1);
+	$query = elgg_substr($query, elgg_strpos($query, '?') + 1);
 
 	// calculate expected HMAC
 	$hmac = calculate_hmac(	$api_header->hmac_algo,
@@ -503,7 +503,7 @@ function get_and_validate_api_headers() {
  * @internal
  */
 function map_api_hash($algo) {
-	$algo = strtolower(sanitise_string($algo));
+	$algo = strtolower($algo);
 	$supported_algos = [
 		"md5" => "md5",	// @todo Consider phasing this out
 		"sha" => "sha1", // alias for sha1

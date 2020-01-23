@@ -210,7 +210,7 @@ function elgg_normalize_site_url($unsafe_url) {
 	}
 
 	$unsafe_url = elgg_normalize_url($unsafe_url);
-	if (0 === strpos($unsafe_url, elgg_get_site_url())) {
+	if (0 === elgg_strpos($unsafe_url, elgg_get_site_url())) {
 		return $unsafe_url;
 	}
 

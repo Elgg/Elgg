@@ -677,8 +677,8 @@ function _elgg_admin_page_handler($page) {
 function _elgg_admin_maintenance_allow_url($current_url) {
 	$site_path = preg_replace('~^https?~', '', elgg_get_site_url());
 	$current_path = preg_replace('~^https?~', '', $current_url);
-	if (0 === strpos($current_path, $site_path)) {
-		$current_path = ($current_path === $site_path) ? '' : substr($current_path, strlen($site_path));
+	if (0 === elgg_strpos($current_path, $site_path)) {
+		$current_path = ($current_path === $site_path) ? '' : elgg_substr($current_path, elgg_strlen($site_path));
 	} else {
 		$current_path = false;
 	}

@@ -537,7 +537,7 @@ function _elgg_site_menu_setup(\Elgg\Hook $hook) {
 	if (!$has_selected) {
 		$is_selected = function (ElggMenuItem $item) {
 			$current_url = current_page_url();
-			if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
+			if (elgg_strpos($item->getHref(), elgg_get_site_url()) === 0) {
 				if ($item->getName() == elgg_get_context()) {
 					return true;
 				}

@@ -230,7 +230,7 @@ class Accounts {
 	 */
 	public function assertValidUsername($username, $assert_unregistered = false) {
 
-		if (strlen($username) < $this->config->minusername) {
+		if (elgg_strlen($username) < $this->config->minusername) {
 			$msg = $this->translator->translate('registration:usernametooshort', [$this->config->minusername]);
 			throw new RegistrationException($msg);
 		}
@@ -267,8 +267,8 @@ class Accounts {
 			$blacklist2
 		);
 
-		for ($n = 0; $n < strlen($blacklist2); $n++) {
-			if (strpos($username, $blacklist2[$n]) !== false) {
+		for ($n = 0; $n < elgg_strlen($blacklist2); $n++) {
+			if (elgg_strpos($username, $blacklist2[$n]) !== false) {
 				$msg = $this->translator->translate('registration:invalidchars', [$blacklist2[$n], $blacklist2]);
 				$msg = htmlspecialchars($msg, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 				throw new RegistrationException($msg);

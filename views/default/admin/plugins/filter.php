@@ -19,7 +19,7 @@ foreach ($categories as $key => $category) {
 		continue;
 	}
 
-	$key = preg_replace('/[^a-z0-9-]/i', '-', strtolower($key));
+	$key = preg_replace('/[^a-z0-9-]/i', '-', elgg_strtolower($key));
 	$link = elgg_view('output/url', [
 		'text' => $category,
 		'href' => '#',

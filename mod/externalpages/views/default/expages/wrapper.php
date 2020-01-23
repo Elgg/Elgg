@@ -8,7 +8,7 @@
 echo elgg_extract('content', $vars);
 
 $referer = elgg_extract('HTTP_REFERER', $_SERVER);
-if (strpos($referer, elgg_get_site_url()) !== 0) {
+if (elgg_strpos($referer, elgg_get_site_url()) !== 0) {
 	return;
 }
 

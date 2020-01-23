@@ -21,7 +21,7 @@ if (!$menu instanceof PreparedMenu) {
 // we want css classes to use dashes
 $name = elgg_extract('name', $vars, '');
 
-$name_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($name));
+$name_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', elgg_strtolower($name));
 		
 $show_section_headers = elgg_extract('show_section_headers', $vars, false);
 $item_class = elgg_extract('item_class', $vars, '');
@@ -36,7 +36,7 @@ foreach ($menu as $section) {
 	}
 
 	$section_class = $class;
-	$section_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', strtolower($section->getID()));
+	$section_class_selector = preg_replace('/[^a-z0-9\-]/i', '-', elgg_strtolower($section->getID()));
 	$section_class[] = "elgg-menu-{$name_class_selector}-{$section_class_selector}";
 	
 	$menu_view .= elgg_view('navigation/menu/elements/section', [
