@@ -100,7 +100,7 @@ abstract class Command extends BaseCommand {
 			return;
 		}
 		
-		$language = $this->option('language');
+		$language = (string) $this->option('language');
 		if (empty($language)) {
 			return;
 		}

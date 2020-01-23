@@ -1152,7 +1152,7 @@ function _elgg_ajax_page_handler($segments) {
 						$file = _elgg_services()->views->findViewFile($view, elgg_get_viewtype());
 						$content_type = 'text/html';
 						try {
-							$content_type = elgg()->mimetype->getMimeType($file, 'text/html');
+							$content_type = elgg()->mimetype->getMimeType($file, $content_type);
 						} catch (InvalidArgumentException $e) {
 							// nothing for now
 						}
