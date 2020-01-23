@@ -241,7 +241,7 @@ class Cron {
 	public function getConfiguredIntervals(bool $only_names = false) {
 		$result = $this->hooks->trigger('cron:intervals', 'system', [], $this->default_intervals);
 		if (!is_array($result)) {
-			$this->getLogger()->log(Logger::WARNING, "The plugin hook 'cron:intervals', 'system' should return an array, " . get_type($result) . ' given');
+			$this->getLogger()->log(Logger::WARNING, "The plugin hook 'cron:intervals', 'system' should return an array, " . gettype($result) . ' given');
 			
 			$result = $this->default_intervals;
 		}
