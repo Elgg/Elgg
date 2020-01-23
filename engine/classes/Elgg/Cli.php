@@ -72,7 +72,7 @@ class Cli {
 
 	/**
 	 * Returns the core cli commands
-	 * @return []
+	 * @return array
 	 */
 	protected function getCoreCommands() {
 		$conf = \Elgg\Project\Paths::elgg() . 'engine/cli_commands.php';
@@ -81,7 +81,7 @@ class Cli {
 
 	/**
 	 * Returns the cli commands registered in plugins
-	 * @return []
+	 * @return array
 	 */
 	protected function getPluginCommands() {
 		$return = [];

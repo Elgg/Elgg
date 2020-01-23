@@ -187,7 +187,7 @@ class EntityIconService {
 		
 		copy($file->getFilenameOnFilestore(), $tmp->getFilenameOnFilestore());
 
-		$tmp->mimetype = $this->mimetype->getMimeType($tmp->getFilenameOnFilestore(), $file->getMimeType());
+		$tmp->mimetype = $this->mimetype->getMimeType($tmp->getFilenameOnFilestore(), $file->getMimeType() ?: '');
 		$tmp->simpletype = $this->mimetype->getSimpleType($tmp->mimetype);
 
 		$result = $this->saveIcon($entity, $tmp, $type, $coords);

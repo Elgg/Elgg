@@ -157,7 +157,7 @@ class ElggFile extends ElggObject {
 			return $this->simpletype;
 		}
 		
-		return elgg()->mimetype->getSimpleType($this->getMimeType());
+		return elgg()->mimetype->getSimpleType($this->getMimeType() ?: '');
 	}
 
 	/**
