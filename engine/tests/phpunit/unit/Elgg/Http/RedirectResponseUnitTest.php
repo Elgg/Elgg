@@ -6,7 +6,7 @@ namespace Elgg\Http;
  * @group HttpService
  * @group UnitTests
  */
-class RedirectResponseTest extends OkResponseUnitTest {
+class RedirectResponseUnitTest extends ResponseUnitTest {
 
 	public function up() {
 		$this->class = RedirectResponse::class;
@@ -38,5 +38,5 @@ class RedirectResponseTest extends OkResponseUnitTest {
 		$this->assertEquals([], $response->getHeaders());
 	}
 
-	// Ramining tests are identical to OkResponseUnitTest
+	// Remaining tests are identical to ResponseUnitTest
 }

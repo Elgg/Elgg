@@ -203,7 +203,7 @@ function elgg_ajax_gatekeeper() {
  *
  * @return \Elgg\Http\OkResponse
  */
-function elgg_ok_response($content = '', $message = '', $forward_url = null, $status_code = ELGG_HTTP_OK) {
+function elgg_ok_response($content = '', $message = '', $forward_url = null, int $status_code = ELGG_HTTP_OK) {
 	if ($message) {
 		system_message($message);
 	}
@@ -226,9 +226,10 @@ function elgg_ok_response($content = '', $message = '', $forward_url = null, $st
  *                            this defaults to 200. Note that the Router and AJAX API will
  *                            treat these responses as error in spite of the HTTP code assigned
  *
+ * @todo change default status_code after AJAX rework
  * @return \Elgg\Http\ErrorResponse
  */
-function elgg_error_response($error = '', $forward_url = REFERRER, $status_code = ELGG_HTTP_OK) {
+function elgg_error_response($error = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_OK) {
 	if ($error) {
 		register_error($error);
 	}
@@ -250,7 +251,7 @@ function elgg_error_response($error = '', $forward_url = REFERRER, $status_code 
  * @return \Elgg\Http\RedirectResponse
  * @throws \InvalidArgumentException
  */
-function elgg_redirect_response($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
+function elgg_redirect_response($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND) {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }
 

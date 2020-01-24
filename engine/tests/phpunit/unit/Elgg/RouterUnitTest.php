@@ -1422,16 +1422,16 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 1);
 		$this->createService($request);
 
-		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function ($hook, $type, $response, $params) {
-			$this->assertEquals('response', $hook);
-			$this->assertEquals('form:query_view', $type);
-			$this->assertEquals($response, $params);
-			$this->assertInstanceOf(OkResponse::class, $response);
+		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function (\Elgg\Hook $hook) {
+			$this->assertEquals('response', $hook->getName());
+			$this->assertEquals('form:query_view', $hook->getType());
+			$this->assertEquals($hook->getValue(), $hook->getParams());
+			$this->assertInstanceOf(OkResponse::class, $hook->getValue());
 
 			return elgg_error_response('good bye', REFERRER, ELGG_HTTP_BAD_REQUEST);
 		});
 
-		elgg_register_ajax_view('form/query_view');
+		elgg_register_ajax_view('forms/query_view');
 
 		$this->route($request);
 
@@ -1487,16 +1487,16 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 2);
 		$this->createService($request);
 
-		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function ($hook, $type, $response, $params) {
-			$this->assertEquals('response', $hook);
-			$this->assertEquals('form:query_view', $type);
-			$this->assertEquals($response, $params);
-			$this->assertInstanceOf(OkResponse::class, $response);
+		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function (\Elgg\Hook $hook) {
+			$this->assertEquals('response', $hook->getName());
+			$this->assertEquals('form:query_view', $hook->getType());
+			$this->assertEquals($hook->getValue(), $hook->getParams());
+			$this->assertInstanceOf(OkResponse::class, $hook->getValue());
 
 			return elgg_error_response('good bye', REFERRER, ELGG_HTTP_BAD_REQUEST);
 		});
 
-		elgg_register_ajax_view('form/query_view');
+		elgg_register_ajax_view('forms/query_view');
 
 		$this->route($request);
 
