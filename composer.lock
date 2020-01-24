@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e3970e296dd61240d379701cc358b347",
+    "content-hash": "75875922ec6ce03ac06aade0f9bbcc54",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -32,7 +32,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/c0185ab7c75aab88762c5aae780b9d83b80eda72",
-                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
+                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72",
+                "shasum": ""
             },
             "type": "bower-asset-library",
             "extra": {
@@ -62,7 +63,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jackmoore/colorbox/zipball/bac78120c6ca9e63370cc317ab6f400129cd6608",
-                "reference": "bac78120c6ca9e63370cc317ab6f400129cd6608"
+                "reference": "bac78120c6ca9e63370cc317ab6f400129cd6608",
+                "shasum": ""
             },
             "require": {
                 "bower-asset/jquery": ">=1.3.2"
@@ -102,7 +104,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery-form/form/zipball/6bf24a5f6d8be65f4e5491863180c09356d9dadd",
-                "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
+                "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd",
+                "shasum": ""
             },
             "require": {
                 "bower-asset/jquery": ">=1.5"
@@ -129,7 +132,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
-                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "shasum": ""
             },
             "require": {
                 "bower-asset/jquery": ">=1.6"
@@ -186,7 +190,8 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/alexei/sprintf.js/zipball/747b806c2dab5b64d5c9958c42884946a187c3b1",
-                "reference": "747b806c2dab5b64d5c9958c42884946a187c3b1"
+                "reference": "747b806c2dab5b64d5c9958c42884946a187c3b1",
+                "shasum": ""
             },
             "type": "bower-asset-library",
             "extra": {
@@ -5028,78 +5033,6 @@
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
             "time": "2016-10-03T07:35:21+00:00"
-        },
-        {
-            "name": "simpletest/simpletest",
-            "version": "v1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/simpletest/simpletest.git",
-                "reference": "4fb6006517a1428785a0ea704fbedcc675421ec4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/simpletest/simpletest/zipball/4fb6006517a1428785a0ea704fbedcc675421ec4",
-                "reference": "4fb6006517a1428785a0ea704fbedcc675421ec4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "."
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Marcus Baker",
-                    "email": "marcus@lastcraft.com",
-                    "role": "Original project lead"
-                },
-                {
-                    "name": "Jason Sweat",
-                    "role": "Original developer"
-                },
-                {
-                    "name": "Travis Swicegood",
-                    "role": "Original developer"
-                },
-                {
-                    "name": "Perrick Penet",
-                    "role": "Original developer"
-                },
-                {
-                    "name": "Edward Z. Yang",
-                    "role": "Original developer"
-                },
-                {
-                    "name": "Lachlan Donald",
-                    "email": "lachlan@ljd.cc"
-                },
-                {
-                    "name": "Lars Vierbergen",
-                    "email": "vierbergenlars@gmail.com"
-                },
-                {
-                    "name": "Jens A. Koch"
-                }
-            ],
-            "description": "Unit testing, mock objects and web testing framework for PHP built around test cases.",
-            "homepage": "http://simpletest.org/",
-            "keywords": [
-                "SimpleTest",
-                "code-coverage",
-                "selenium",
-                "testing",
-                "unit-test"
-            ],
-            "time": "2019-09-17T15:08:22+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",

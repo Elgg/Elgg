@@ -12,7 +12,6 @@ use RuntimeException;
 
 /**
  * Testing trait that provides utility methods agnostic to testing framework
- * This trait can be shared e.g. between PHPUnit and Simpletest test cases
  */
 trait Testing {
 

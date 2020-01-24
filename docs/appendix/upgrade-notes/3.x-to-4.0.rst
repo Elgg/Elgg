@@ -45,3 +45,4 @@ Removed composer dependencies
 
 * ``bower-asset/jquery-treeview`` the related js and css are no longer available in the system
 * ``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system
+* ``simpletest/simpletest``

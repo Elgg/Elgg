@@ -108,15 +108,13 @@
             "": [
                 "engine/tests/classes/",
                 "engine/tests/phpunit/unit/",
-                "engine/tests/phpunit/integration/",
-                "engine/tests/simpletest/"
+                "engine/tests/phpunit/integration/"
             ]
         }
     },
     "require-dev": {
         "elgg/sniffs": "3.x-dev",
         "squizlabs/php_codesniffer": "^2.8.1",
-        "simpletest/simpletest": "~1.1",
         "phpdocumentor/reflection-docblock": "~2.0",
         "phpunit/phpunit": "~8.5"
     },

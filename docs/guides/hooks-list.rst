@@ -18,9 +18,6 @@ System hooks
 **gc, system**
 	Allows plugins to run garbage collection for ``$params['period']``.
 
-**unit_test, system**
-	Add a Simple Test test. (Deprecated.)
-
 **diagnostics:report, system**
 	Filter the output for the diagnostics report download.
 
