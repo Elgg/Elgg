@@ -5,9 +5,6 @@
  * Access is generally saved in the database as access_id.  This corresponds to
  * one of the ACCESS_* constants defined in {@link elgglib.php} or the ID of an
  * access collection.
- *
- * @package Elgg.Core
- * @subpackage Access
  */
 
 /**

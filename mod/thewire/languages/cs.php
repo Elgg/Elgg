@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -34,7 +40,7 @@ return array(
 	 * Wire widget
 	 */
 	
-	'widgets:thewire:description' => 'Display your latest wire posts',
+	'widgets:thewire:description' => 'Zobrazuje vaše nejnovější telegrafní zprávy',
 	'thewire:num' => 'Počet zobrazených zpráv',
 	'thewire:moreposts' => 'Více telegrafních zpráv',
 

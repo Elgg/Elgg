@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'item:object:blog' => 'Blogy',
 	'collection:object:blog' => 'Blogs',
@@ -58,7 +64,7 @@ View and comment on the blog post:
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:description' => 'Zobrazuje vaše nejnovější blogy',
 	'blog:moreblogs' => 'Více blogů',
 	'blog:numbertodisplay' => 'Počet zobrazených blogů',
 );

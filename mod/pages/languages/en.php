@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,6 +21,9 @@ return array(
 	'edit:object:page' => "Edit this page",
 
 	'groups:tool:pages' => 'Enable group pages',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Delete this page",
 	'pages:history' => "History",

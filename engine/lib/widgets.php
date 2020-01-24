@@ -2,9 +2,6 @@
 /**
  * Elgg widgets library.
  * Contains code for handling widgets.
- *
- * @package Elgg.Core
- * @subpackage Widgets
  */
 
 /**

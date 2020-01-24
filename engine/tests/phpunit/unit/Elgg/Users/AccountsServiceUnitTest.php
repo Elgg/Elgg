@@ -18,37 +18,29 @@ class AccountsServiceUnitTest extends UnitTestCase {
 
 	}
 
-	
-
-	/**
-	 * @expectedException \RegistrationException
-	 */
 	public function testShortUsernameFailsValidation() {
 		$length = elgg()->config->minusername;
 		$username = str_repeat('a', $length - 1);
+		
+		$this->expectException(\RegistrationException::class);
 		elgg()->accounts->assertValidUsername($username);
 	}
 
-	/**
-	 * @expectedException \RegistrationException
-	 */
 	public function testLongUsernameFailsValidation() {
 		$length = 128;
 		$username = str_repeat('a', $length + 1);
+		
+		$this->expectException(\RegistrationException::class);
 		elgg()->accounts->assertValidUsername($username);
 	}
 
-	/**
-	 * @expectedException \RegistrationException
-	 */
 	public function testUsernameWithInvalidCharsFailsValidation() {
+		$this->expectException(\RegistrationException::class);
 		elgg()->accounts->assertValidUsername('username#');
 	}
 
-	/**
-	 * @expectedException \RegistrationException
-	 */
 	public function testInvalidUsernameFailsValidation() {
+		$this->expectException(\RegistrationException::class);
 		elgg()->accounts->assertValidEmail('username@');
 	}
 
@@ -98,13 +90,11 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		$this->assertTrue(elgg()->accounts->requestNewEmailValidation($user, $new_email));
 	}
 	
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testEmailChangeRequestWithInvalidEmail() {
 		$user = $this->createUser();
 		$new_email = 'example.com';
 		
+		$this->expectException(\InvalidParameterException::class);
 		elgg()->accounts->requestNewEmailValidation($user, $new_email);
 	}
 }

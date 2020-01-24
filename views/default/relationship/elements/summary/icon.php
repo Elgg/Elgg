@@ -26,10 +26,6 @@ if ($icon_entity instanceof ElggEntity) {
 	return;
 }
 
-if ($icon !== '') {
-	return;
-}
-
 $relationship = elgg_extract('relationship', $vars);
 if (!$relationship instanceof ElggRelationship) {
 	return;

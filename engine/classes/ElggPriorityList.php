@@ -88,9 +88,6 @@
  *
  *	return true;
  * }
- *
- * @package    Elgg.Core
- * @subpackage Helpers
  */
 class ElggPriorityList
 	implements \Iterator, \Countable {

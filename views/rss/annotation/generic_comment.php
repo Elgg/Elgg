@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg RSS view for a generic_comment annotation
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $annotation = elgg_extract('annotation', $vars);

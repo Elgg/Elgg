@@ -22,9 +22,8 @@ $content .= elgg_view_layout('widgets', [
 	'owner_guid' => $user_guid,
 ]);
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page($user->getDisplayName(), [
 	'content' => $content,
-	'title' => $user->getDisplayName(),
 	'entity' => $user,
 	'sidebar_alt' => elgg_view('profile/owner_block', [
 		'entity' => $user,
@@ -32,5 +31,3 @@ $body = elgg_view_layout('default', [
 	'class' => 'profile',
 	'sidebar' => false,
 ]);
-
-echo elgg_view_page($user->getDisplayName(), $body);

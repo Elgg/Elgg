@@ -1,18 +1,24 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'item:object:blog' => 'ブログ',
 	'collection:object:blog' => 'ブログ',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog:all' => 'サイトの全ブログ',
+	'collection:object:blog:owner' => '%s さんのブログ',
 	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
+	'collection:object:blog:friends' => '友達のブログ',
+	'add:object:blog' => 'ブログ記事を追加',
+	'edit:object:blog' => 'ブログ記事を編集',
 
 	'blog:revisions' => '変更履歴',
 	'blog:archives' => '書庫',
 
-	'groups:tool:blog' => 'Enable group blog',
+	'groups:tool:blog' => 'グループブログを使えるようにする',
 	'blog:write' => 'ブログに投稿する',
 
 	// Editing
@@ -58,7 +64,7 @@ View and comment on the blog post:
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:description' => 'あなたの最近のブログ記事を表示',
 	'blog:moreblogs' => '別のブログ記事',
 	'blog:numbertodisplay' => 'ブログ記事の表示件数',
 );

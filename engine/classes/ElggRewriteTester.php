@@ -59,7 +59,7 @@ class ElggRewriteTester {
 		$serverString = strtolower($_SERVER['SERVER_SOFTWARE']);
 		$possibleServers = ['apache', 'nginx', 'lighttpd', 'iis'];
 		foreach ($possibleServers as $server) {
-			if (strpos($serverString, $server) !== false) {
+			if (elgg_strpos($serverString, $server) !== false) {
 				return $server;
 			}
 		}
@@ -163,13 +163,13 @@ class ElggRewriteTester {
 				return false;
 			}
 
-			if (strpos($data, 'Elgg') === false) {
+			if (elgg_strpos($data, 'Elgg') === false) {
 				$this->htaccessIssue = 'non_elgg_htaccess';
 				return false;
 			}
 
 			// check if this is an old Elgg htaccess
-			if (strpos($data, 'RewriteRule ^rewrite.php$ install.php') === false) {
+			if (elgg_strpos($data, 'RewriteRule ^rewrite.php$ install.php') === false) {
 				$this->htaccessIssue = 'old_elgg_htaccess';
 				return false;
 			}

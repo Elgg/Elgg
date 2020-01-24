@@ -23,8 +23,7 @@ namespace Elgg\Di;
  *
  * @internal
  *
- * @package Elgg.Core
- * @since   1.9
+ * @since 1.9
  */
 class DiContainer {
 

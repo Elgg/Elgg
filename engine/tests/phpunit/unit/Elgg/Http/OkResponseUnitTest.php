@@ -2,8 +2,6 @@
 
 namespace Elgg\Http;
 
-use ElggObject;
-use InvalidArgumentException;
 use stdClass;
 
 /**
@@ -72,13 +70,14 @@ class OkResponseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @expectedException InvalidArgumentException
 	 * @dataProvider invalidContentValuesProvider
 	 */
 	public function testThrowsExceptionForInvalidContent($value) {
 
 		$test_class = $this->class;
 		$response = new $test_class();
+		
+		$this->expectException(\InvalidArgumentException::class);
 		$response->setContent($value);
 	}
 
@@ -119,13 +118,14 @@ class OkResponseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @expectedException InvalidArgumentException
 	 * @dataProvider invalidStatusCodesProvider
 	 */
 	public function testThrowsExceptionForInvalidStatusCodes($value) {
 
 		$test_class = $this->class;
 		$response = new $test_class();
+		
+		$this->expectException(\InvalidArgumentException::class);
 		$response->setStatusCode($value);
 	}
 
@@ -172,13 +172,14 @@ class OkResponseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @expectedException InvalidArgumentException
 	 * @dataProvider invalidForwardURLsProvider
 	 */
 	public function testThrowsExceptionForInvalidForwardURLs($value) {
 
 		$test_class = $this->class;
 		$response = new $test_class();
+		
+		$this->expectException(\InvalidArgumentException::class);
 		$response->setForwardURL($value);
 	}
 

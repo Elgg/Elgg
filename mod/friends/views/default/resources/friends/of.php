@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg friends of page
- *
- * @package Elgg.Core
- * @subpackage Social.Friends
  */
 
 // needed for correct registration of menu items
@@ -31,10 +28,6 @@ $content = elgg_list_entities([
 	'no_results' => elgg_echo('friends:none'),
 ]);
 
-$params = [
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
-];
-$body = elgg_view_layout('one_sidebar', $params);
-
-echo elgg_view_page($title, $body);
+]);

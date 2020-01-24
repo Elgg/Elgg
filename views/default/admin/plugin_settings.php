@@ -4,9 +4,6 @@
  *
  * @uses ElggPlugin $vars['entity'] The plugin object to display settings for.
  * @uses ElggPlugin $vars['plugin'] Same as entity required for plugin settings backward compatibility
- *
- * @package Elgg.Core
- * @subpackage Plugins.Settings
  */
 
 $plugin = elgg_extract('entity', $vars);
@@ -19,6 +16,7 @@ if (!elgg_view_exists("plugins/{$plugin_id}/settings")) {
 $form_vars = [
 	'id' => "{$plugin_id}-settings",
 	'class' => 'elgg-form-settings',
+	'prevent_double_submit' => true,
 ];
 
 if (elgg_action_exists("{$plugin_id}/settings/save")) {

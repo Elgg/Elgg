@@ -102,7 +102,11 @@ class FormsService {
 
 		$form_vars['action_name'] = $action;
 		
+		// @todo change default of ignore_empty_body to true in Elgg 4.0
 		$form_vars['ignore_empty_body'] = (bool) elgg_extract('ignore_empty_body', $form_vars, false);
+		
+		// @todo change default of prevent_double_submit to true in Elgg 4.0
+		$form_vars['prevent_double_submit'] = (bool) elgg_extract('prevent_double_submit', $form_vars, false);
 		
 		if (!isset($form_vars['body'])) {
 			$this->rendering = true;

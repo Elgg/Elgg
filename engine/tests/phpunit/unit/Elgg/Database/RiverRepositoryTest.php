@@ -339,9 +339,6 @@ class RiverRepositoryTest extends UnitTestCase {
 		_elgg_services()->db->removeQuerySpec($spec);
 	}
 
-	/**
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsOnAnnotationCalculationWithMultipleAndPairs() {
 
 		$options = [
@@ -358,6 +355,7 @@ class RiverRepositoryTest extends UnitTestCase {
 			]
 		];
 
+		$this->expectException(\LogicException::class);
 		River::find($options);
 	}
 
@@ -378,6 +376,8 @@ class RiverRepositoryTest extends UnitTestCase {
 		$select = Select::fromTable('river', 'rv');
 		$select->select('DISTINCT rv.*');
 
+		$wheres = [];
+		
 		$select = $this->buildQuery($select, $options);
 
 		$alias1 = $select->getNextJoinAlias();
@@ -432,7 +432,9 @@ class RiverRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('river', 'rv');
 		$select->select('DISTINCT rv.*');
-
+		
+		$wheres = [];
+		
 		$select = $this->buildQuery($select, $options);
 
 		$select->join('rv', 'annotations', 'n_table', "n_table.id = rv.annotation_id");
@@ -494,7 +496,9 @@ class RiverRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('river', 'rv');
 		$select->select('DISTINCT rv.*');
-
+		
+		$wheres = [];
+		
 		$select = $this->buildQuery($select, $options);
 
 		$alias1 = $select->joinRelationshipTable('rv', 'subject_guid', ['foo1']);
@@ -544,7 +548,9 @@ class RiverRepositoryTest extends UnitTestCase {
 
 		$select = Select::fromTable('river', 'rv');
 		$select->select('DISTINCT rv.*');
-
+		
+		$wheres = [];
+		
 		$select = $this->buildQuery($select, $options);
 
 		$select->joinRelationshipTable('rv', 'subject_guid', null, false, 'inner', 'r');

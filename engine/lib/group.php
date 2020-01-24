@@ -3,9 +3,6 @@
  * Elgg Groups.
  * Groups contain other entities, or rather act as a placeholder for other entities to
  * mark any given container as their container.
- *
- * @package Elgg.Core
- * @subpackage DataModel.Group
  */
 
 /**

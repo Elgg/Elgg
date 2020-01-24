@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 11:02+0200\n"
+"POT-Creation-Date: 2020-01-23 16:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,155 +81,155 @@ msgstr ""
 msgid "Create the file ``/mod/my_blog/views/default/resources/my_blog/add.php``. This page will view the form you created in the above section."
 msgstr ""
 
-#: ../../tutorials/blog.rst:135
+#: ../../tutorials/blog.rst:129
 msgid "The function ``elgg_view_form(\"my_blog/save\")`` views the form that you created in the previous section. It also automatically wraps the form with a ``<form>`` tag and the necessary attributes as well as anti-csrf tokens."
 msgstr ""
 
-#: ../../tutorials/blog.rst:140
+#: ../../tutorials/blog.rst:134
 msgid "The form's action will be ``\"<?= elgg_get_site_url() ?>action/my_blog/save\"``."
 msgstr ""
 
-#: ../../tutorials/blog.rst:143
+#: ../../tutorials/blog.rst:137
 msgid "Create the action file for saving the blog post"
 msgstr ""
 
-#: ../../tutorials/blog.rst:145
+#: ../../tutorials/blog.rst:139
 msgid "The action file will save the my_blog post to the database. Create the file ``/mod/my_blog/actions/my_blog/save.php``:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:184
+#: ../../tutorials/blog.rst:178
 msgid "As you can see in the above code, Elgg objects have several fields built into them. The title of the my_blog post is stored in the ``title`` field while the body is stored in the ``description`` field. There is also a field for tags which are stored as metadata."
 msgstr ""
 
-#: ../../tutorials/blog.rst:190
+#: ../../tutorials/blog.rst:184
 msgid "Objects in Elgg are a subclass of something called an \"entity\". Users, sites, and groups are also subclasses of entity. An entity's subtype allows granular control for listing and displaying, which is why every entity should have a subtype. In this tutorial, the subtype \"``my_blog``\\ \" identifies a my\\_blog post, but any alphanumeric string can be a valid subtype. When picking subtypes, be sure to pick ones that make sense for your plugin."
 msgstr ""
 
-#: ../../tutorials/blog.rst:198
+#: ../../tutorials/blog.rst:192
 msgid "The ``getURL`` method fetches the URL of the new post. It is recommended that you override this method. The overriding will be done in the ``start.php`` file."
 msgstr ""
 
-#: ../../tutorials/blog.rst:203
+#: ../../tutorials/blog.rst:197
 msgid "Create elgg-plugin.php"
 msgstr ""
 
-#: ../../tutorials/blog.rst:205
+#: ../../tutorials/blog.rst:199
 msgid "The ``/mod/my_blog/elgg-plugin.php`` file is used to declare various functionalities of the plugin. It can, for example, be used to configure entities, actions, widgets and routes."
 msgstr ""
 
-#: ../../tutorials/blog.rst:244
+#: ../../tutorials/blog.rst:238
 msgid "Create start.php"
 msgstr ""
 
-#: ../../tutorials/blog.rst:246
+#: ../../tutorials/blog.rst:240
 msgid "The ``/mod/my_blog/start.php`` file needs to register a hook to override the URL generation."
 msgstr ""
 
-#: ../../tutorials/blog.rst:262
+#: ../../tutorials/blog.rst:256
 msgid "Registering the save action will make it available as ``/action/my_blog/save``. By default, all actions are available only to logged in users. If you want to make an action available to only admins or open it up to unauthenticated users, you can pass 'admin' or 'public' as the third parameter of ``elgg_register_action``."
 msgstr ""
 
-#: ../../tutorials/blog.rst:267
+#: ../../tutorials/blog.rst:261
 msgid "The URL overriding function will extract the ID of the given entity and use it to make a simple URL for the page that is supposed to view the entity. In this case the entity should of course be a my_blog post. Add this function to your ``start.php`` file:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:281
+#: ../../tutorials/blog.rst:275
 msgid "The page handler makes it possible to serve the page that generates the form and the page that views the post. The next section will show how to create the page that views the post. Add this function to your ``start.php`` file:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:302
+#: ../../tutorials/blog.rst:296
 msgid "The ``$segments`` variable contains the different parts of the URL as separated by /."
 msgstr ""
 
-#: ../../tutorials/blog.rst:304
+#: ../../tutorials/blog.rst:298
 msgid "Page handling functions need to return ``true`` or ``false``. ``true`` means the page exists and has been handled by the page handler. ``false`` means that the page does not exist and the user will be forwarded to the site's 404 page (requested page does not exist or not found). In this particular example, the URL must contain either ``/my_blog/add`` or ``/my_blog/view/id`` where id is a valid ID of an entity with the ``my_blog`` subtype. More information about page handling is at :doc:`Page handler</guides/routing>`."
 msgstr ""
 
-#: ../../tutorials/blog.rst:316
+#: ../../tutorials/blog.rst:310
 msgid "Create a page for viewing a blog post"
 msgstr ""
 
-#: ../../tutorials/blog.rst:318
+#: ../../tutorials/blog.rst:312
 msgid "To be able to view a my_blog post on its own page, you need to make a view page. Create the file ``/mod/my_blog/views/default/resources/my_blog/view.php``:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:342
+#: ../../tutorials/blog.rst:330
 msgid "This page has much in common with the ``add.php`` page. The biggest differences are that some information is extracted from the my_blog entity, and instead of viewing a form, the function ``elgg_view_entity`` is called. This function gives the information of the entity to something called the object view."
 msgstr ""
 
-#: ../../tutorials/blog.rst:348
+#: ../../tutorials/blog.rst:336
 msgid "Create the object view"
 msgstr ""
 
-#: ../../tutorials/blog.rst:350
+#: ../../tutorials/blog.rst:338
 msgid "When ``elgg_view_entity`` is called or when my_blogs are viewed in a list for example, the object view will generate the appropriate content. Create the file ``/mod/my_blog/views/default/object/my_blog.php``:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:361
+#: ../../tutorials/blog.rst:349
 msgid "As you can see in the previous section, each my\\_blog post is passed to the object view as ``$vars['entity']``. (``$vars`` is an array used in the views system to pass variables to a view.)"
 msgstr ""
 
-#: ../../tutorials/blog.rst:365
+#: ../../tutorials/blog.rst:353
 msgid "The last line takes the tags on the my\\_blog post and automatically displays them as a series of clickable links. Search is handled automatically."
 msgstr ""
 
-#: ../../tutorials/blog.rst:369
+#: ../../tutorials/blog.rst:357
 msgid "(If you're wondering about the \"``default``\" in ``/views/default/``, you can create alternative views. RSS, OpenDD, FOAF, mobile and others are all valid view types.)"
 msgstr ""
 
-#: ../../tutorials/blog.rst:374
+#: ../../tutorials/blog.rst:362
 msgid "Trying it out"
 msgstr ""
 
-#: ../../tutorials/blog.rst:376
+#: ../../tutorials/blog.rst:364
 msgid "Go to your Elgg site's administration page, list the plugins and activate the ``my_blog`` plugin."
 msgstr ""
 
-#: ../../tutorials/blog.rst:379
+#: ../../tutorials/blog.rst:367
 msgid "The page to create a new my\\_blog post should now be accessible at ``https://elgg.example.com/my_blog/add``, and after successfully saving the post, you should see it viewed on its own page."
 msgstr ""
 
-#: ../../tutorials/blog.rst:384
+#: ../../tutorials/blog.rst:372
 msgid "Displaying a list of blog posts"
 msgstr ""
 
-#: ../../tutorials/blog.rst:386
+#: ../../tutorials/blog.rst:374
 msgid "Let's also create a page that lists my\\_blog entries that have been created."
 msgstr ""
 
-#: ../../tutorials/blog.rst:388
+#: ../../tutorials/blog.rst:376
 msgid "Create ``/mod/my_blog/views/default/resources/my_blog/all.php``:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:405
+#: ../../tutorials/blog.rst:394
 msgid "The ``elgg_list_entities`` function grabs the latest my_blog posts and passes them to the object view file. Note that this function returns only the posts that the user can see, so access restrictions are handled transparently. The function (and its cousins) also transparently handles pagination and even creates an RSS feed for your my\\_blogs if you have defined that view."
 msgstr ""
 
-#: ../../tutorials/blog.rst:413
+#: ../../tutorials/blog.rst:402
 msgid "The list function can also limit the my_blog posts to those of a specified user. For example, the function ``elgg_get_logged_in_user_guid`` grabs the Global Unique IDentifier (GUID) of the logged in user, and by giving that to ``elgg_list_entities``, the list only displays the posts of the current user:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:426
+#: ../../tutorials/blog.rst:415
 msgid "Next, you will need to modify your my\\_blog page handler to grab the new page when the URL is set to ``/my_blog/all``. Change the ``my_blog_page_handler`` function in ``start.php`` to look like this:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:452
+#: ../../tutorials/blog.rst:441
 msgid "Now, if the URL contains ``/my_blog/all``, the user will see an \"All Site My_Blogs\" page. Because of the default case, the list of all my_blogs will also be shown if the URL is something invalid, like ``/my_blog`` or ``/my_blog/xyz``."
 msgstr ""
 
-#: ../../tutorials/blog.rst:457
+#: ../../tutorials/blog.rst:446
 msgid "You might also want to update the object view to handle different kinds of viewing, because otherwise the list of all my_blogs will also show the full content of all my_blogs. Change ``/mod/my_blog/views/default/object/my_blog.php`` to look like this:"
 msgstr ""
 
-#: ../../tutorials/blog.rst:483
+#: ../../tutorials/blog.rst:472
 msgid "Now, if ``full_view`` is ``true`` (as it was pre-emptively set to be in :ref:`this section <tutorials/blog#view>`), the object view will show the post's content and tags (the title is shown by ``view.php``). Otherwise the object view will render just the title and tags of the post."
 msgstr ""
 
-#: ../../tutorials/blog.rst:490
+#: ../../tutorials/blog.rst:479
 msgid "The end"
 msgstr ""
 
-#: ../../tutorials/blog.rst:492
+#: ../../tutorials/blog.rst:481
 msgid "There's much more that could be done, but hopefully this gives you a good idea of how to get started."
 msgstr ""
 
@@ -317,35 +317,35 @@ msgstr ""
 msgid "Create ``mod/hello/views/default/resources/hello.php`` with this content:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:99
+#: ../../tutorials/hello_world.rst:96
 msgid "The code creates an array of parameters to be given to the ``elgg_view_layout()`` function, including:"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:101
+#: ../../tutorials/hello_world.rst:98
 msgid "The title of the page"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:102
+#: ../../tutorials/hello_world.rst:99
 msgid "The contents of the page"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:103
+#: ../../tutorials/hello_world.rst:100
 msgid "Filter which is left empty because there's currently nothing to filter"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:105
+#: ../../tutorials/hello_world.rst:102
 msgid "This creates the basic layout for the page. The layout is then run through ``elgg_view_page()`` which assembles and outputs the full page."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:109
+#: ../../tutorials/hello_world.rst:106
 msgid "Last step"
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:111
+#: ../../tutorials/hello_world.rst:108
 msgid "Finally, activate the plugin through your Elgg administrator page: ``https://elgg.example.com/admin/plugins`` (the new plugin appears at the bottom)."
 msgstr ""
 
-#: ../../tutorials/hello_world.rst:113
+#: ../../tutorials/hello_world.rst:110
 msgid "You can now go to the address ``https://elgg.example.com/hello/`` and you should see your new page!"
 msgstr ""
 
@@ -517,11 +517,11 @@ msgstr ""
 msgid "We're going to do that by extending the input/longtext view and including some javascript. Create a view tinymce/longtext and add the following code:"
 msgstr ""
 
-#: ../../tutorials/wysiwyg.rst:74
+#: ../../tutorials/wysiwyg.rst:70
 msgid "Then, in your plugin's init function, extend the input/longtext view"
 msgstr ""
 
-#: ../../tutorials/wysiwyg.rst:82
+#: ../../tutorials/wysiwyg.rst:78
 msgid "That's it! Now every time someone uses input/longtext, TinyMCE will be loaded and applied to that textarea."
 msgstr ""
 

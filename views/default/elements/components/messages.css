@@ -24,6 +24,7 @@
 		@include elgg-message($(state-danger-font-color), $(state-danger-background-color), $(state-danger-border-color));
 	}
 	&.elgg-message-help,
+	&.elgg-message-info,
 	&.elgg-message-notice {
 		@include elgg-message($(state-notice-font-color), $(state-notice-background-color), $(state-notice-border-color));
 	}
@@ -56,6 +57,10 @@
 			
 			p {
 				margin: 0;
+			}
+			
+			a {
+				text-decoration: underline;
 			}
 		}
 	}

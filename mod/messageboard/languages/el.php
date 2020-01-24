@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Δημοσιεύσατε με επιτυχία στον πινάκα μηνυμάτων.",
 	'messageboard:deleted' => "Διαγράψατε με επιτυχία το μήνυμα.",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Παρουσιάστηκε μη αναμενόμενο σφάλμα κατά την προσθήκη του μηνύματος σας. Παρακαλούμε δοκιμάστε ξανά.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Πίνακας μηνυμάτων",
+	'widgets:messageboard:description' => "Αυτός είναι ένας πίνακας μηνυμάτων που μπορείτε να βάλετε στο προφίλ σας, όπου άλλοι χρήστες θα μπορούν να σχολιάσουν.",
 );

@@ -62,10 +62,10 @@ if ($show_guid && $limit) {
 
 $comments_list = elgg_list_entities($options);
 
-$content = '';
+$content = $comments_list;
 if ($show_add_form && $entity->canComment()) {
 	$form_vars = [];
-	if ($comments_list) {
+	if ($latest_first && $comments_list && elgg_get_config('comment_box_collapses')) {
 		$form_vars['class'] = 'hidden';
 		
 		$module_vars['menu'] = elgg_view_menu('comments', [
@@ -82,11 +82,14 @@ if ($show_add_form && $entity->canComment()) {
 			],
 		]);
 	}
-	
-	$content .= elgg_view_form('comment/save', $form_vars, $vars);
-}
 
-$content .= $comments_list;
+	$form = elgg_view_form('comment/save', $form_vars, $vars);
+	if ($latest_first) {
+		$content = $form . $content;
+	} else {
+		$content .= $form;
+	}
+}
 
 if (empty($content)) {
 	return;

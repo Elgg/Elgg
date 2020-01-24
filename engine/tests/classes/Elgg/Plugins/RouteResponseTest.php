@@ -5,6 +5,11 @@ namespace Elgg\Plugins;
 use Elgg\BaseTestCase;
 use Elgg\IntegrationTestCase;
 use Elgg\UnitTestCase;
+use Elgg\GatekeeperException;
+use Elgg\EntityPermissionsException;
+use Elgg\EntityNotFoundException;
+use Elgg\GroupGatekeeperException;
+use Elgg\Http\Exception\GroupToolGatekeeperException;
 
 /**
  * @group Router
@@ -28,9 +33,6 @@ abstract class RouteResponseTest extends UnitTestCase {
 	 */
 	abstract function getSubtype();
 
-	/**
-	 * @expectedException \Elgg\GatekeeperException
-	 */
 	public function testAddRouteRespondsWithErrorWithoutAuthenticatedUser() {
 
 		$user = $this->createUser();
@@ -42,12 +44,10 @@ abstract class RouteResponseTest extends UnitTestCase {
 		$request = BaseTestCase::prepareHttpRequest($url);
 		_elgg_services()->setValue('request', $request);
 
+		$this->expectException(GatekeeperException::class);
 		_elgg_services()->router->route($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\EntityPermissionsException
-	 */
 	public function testAddRouteRespondsWithErrorIfUserIsNotPermittedToWriteToContainer() {
 
 	    $ex = null;
@@ -80,9 +80,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
 
-		if ($ex) {
-			throw $ex;
-		}
+		$this->assertInstanceOf(EntityPermissionsException::class, $ex);
 	}
 
 	public function testAddRouteRespondsOk() {
@@ -117,9 +115,6 @@ abstract class RouteResponseTest extends UnitTestCase {
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
 	}
 
-	/**
-	 * @expectedException \Elgg\GatekeeperException
-	 */
 	public function testEditRouteRespondsWithErrorWithoutAuthenticatedUser() {
 
 		$user = $this->createUser();
@@ -135,12 +130,10 @@ abstract class RouteResponseTest extends UnitTestCase {
 		$request = BaseTestCase::prepareHttpRequest($url);
 		_elgg_services()->setValue('request', $request);
 
+		$this->expectException(GatekeeperException::class);
 		_elgg_services()->router->route($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\EntityPermissionsException
-	 */
 	public function testEditRouteRespondsWithErrorIfUserIsNotPermittedToWriteToContainer() {
 
 	    $ex = null;
@@ -176,9 +169,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
 
-		if ($ex) {
-			throw $ex;
-		}
+		$this->assertInstanceOf(EntityPermissionsException::class, $ex);
 	}
 
 	public function testEditRouteRespondsOk() {
@@ -218,41 +209,16 @@ abstract class RouteResponseTest extends UnitTestCase {
 		elgg_unregister_plugin_hook_handler('permissions_check', 'object', $handler);
 	}
 
-	/**
-	 * @expectedException \Elgg\EntityPermissionsException
-	 */
 	public function testViewRouteRespondsWithErrorIfEntityIsNotFound() {
 
-			$user = $this->createUser();
-			$object = $this->createObject([
-				'subtype' => $this->getSubtype(),
-				'owner_guid' => $user->guid,
-				'access_id' => ACCESS_PRIVATE,
-			]);
+		$user = $this->createUser();
+		$object = $this->createObject([
+			'subtype' => $this->getSubtype(),
+			'owner_guid' => $user->guid,
+			'access_id' => ACCESS_PRIVATE,
+		]);
 
-			$object->invalidateCache();
-
-			$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
-				'guid' => $object->guid,
-			]);
-
-			$request = BaseTestCase::prepareHttpRequest($url);
-			_elgg_services()->setValue('request', $request);
-
-			_elgg_services()->router->route($request);
-		}
-
-	/**
-	 * @expectedException \Elgg\EntityNotFoundException
-	 */
-	public function testViewRouteRespondsWithErrorIfEntityIsOfIncorrectSubtype() {
-
-			$user = $this->createUser();
-			$object = $this->createObject([
-				'subtype' => 'foo',
-				'owner_guid' => $user->guid,
-				'access_id' => ACCESS_PUBLIC,
-			]);
+		$object->invalidateCache();
 
 		$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
 			'guid' => $object->guid,
@@ -261,12 +227,30 @@ abstract class RouteResponseTest extends UnitTestCase {
 		$request = BaseTestCase::prepareHttpRequest($url);
 		_elgg_services()->setValue('request', $request);
 
+		$this->expectException(EntityPermissionsException::class);
 		_elgg_services()->router->route($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\GroupGatekeeperException
-	 */
+	public function testViewRouteRespondsWithErrorIfEntityIsOfIncorrectSubtype() {
+
+		$user = $this->createUser();
+		$object = $this->createObject([
+			'subtype' => 'foo',
+			'owner_guid' => $user->guid,
+			'access_id' => ACCESS_PUBLIC,
+		]);
+
+		$url = elgg_generate_url("view:object:{$this->getSubtype()}", [
+			'guid' => $object->guid,
+		]);
+
+		$request = BaseTestCase::prepareHttpRequest($url);
+		_elgg_services()->setValue('request', $request);
+
+		$this->expectException(EntityNotFoundException::class);
+		_elgg_services()->router->route($request);
+	}
+
 	public function testViewRouteRespondsWithErrorIfGroupPermissionsAreNotFulfilled() {
 
 		$user = $this->createUser();
@@ -304,14 +288,9 @@ abstract class RouteResponseTest extends UnitTestCase {
 		_elgg_services()->hooks->restore();
 		_elgg_services()->session->removeLoggedInUser();
 
-		if ($ex) {
-			throw $ex;
-		}
+		$this->assertInstanceOf(GroupGatekeeperException::class, $ex);
 	}
 
-	/**
-	 * @expectedException \Elgg\GroupGatekeeperException
-	 */
 	public function testGroupCollectionRouteRespondsWithErrorIfGroupPermissionsAreNotFulfilled() {
 
 		$user = $this->createUser();
@@ -344,9 +323,7 @@ abstract class RouteResponseTest extends UnitTestCase {
 		_elgg_services()->hooks->restore();
 		_elgg_services()->session->removeLoggedInUser();
 
-		if ($ex) {
-			throw $ex;
-		}
+		$this->assertInstanceOf(GroupGatekeeperException::class, $ex);
 	}
 
 	public function testViewRouteRespondsOk() {
@@ -398,9 +375,66 @@ abstract class RouteResponseTest extends UnitTestCase {
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 	}
 
+	/**
+	 * @dataProvider groupRoutesProtectedByToolOption
+	 */
+	public function testProtectedGroupRoutesThrowException($route_name, $tool_option) {
+		$group = $this->createGroup([
+			'access_id' => ACCESS_PUBLIC,
+			'membership' => ACCESS_PUBLIC,
+			'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		]);
+		
+		// make sure tool option is registerd
+		elgg()->group_tools->register($tool_option);
+		
+		$this->assertTrue($group->disableTool($tool_option));
+		
+		$url = elgg_generate_url($route_name, [
+			'guid' => $group->guid,
+		]);
+
+		$request = BaseTestCase::prepareHttpRequest($url);
+		_elgg_services()->setValue('request', $request);
+
+		$this->expectException(GroupToolGatekeeperException::class);
+		_elgg_services()->router->route($request);
+	}
+
+	/**
+	 * @dataProvider groupRoutesProtectedByToolOption
+	 */
+	public function testProtectedGroupRoutesRespondOk($route_name, $tool_option) {
+		$group = $this->createGroup([
+			'access_id' => ACCESS_PUBLIC,
+			'membership' => ACCESS_PUBLIC,
+			'content_access_mode'=> \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
+		]);
+		
+		// make sure tool option is registerd
+		elgg()->group_tools->register($tool_option);
+		
+		$this->assertTrue($group->enableTool($tool_option));
+		
+		$url = elgg_generate_url($route_name, [
+			'guid' => $group->guid,
+		]);
+
+		$request = BaseTestCase::prepareHttpRequest($url);
+		_elgg_services()->setValue('request', $request);
+
+		ob_start();
+		_elgg_services()->router->route($request);
+		ob_get_clean();
+
+		$response = _elgg_services()->responseFactory->getSentResponse();
+
+		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+	}
+
 	public function collectionRoutes() {
 		self::createApplication();
-		return [
+		$result = [
 			[
 				'route' => "default:object:{$this->getSubtype()}",
 				'params' => [],
@@ -438,5 +472,28 @@ abstract class RouteResponseTest extends UnitTestCase {
 				},
 			],
 		];
+		
+		$protected_routes = $this->groupRoutesProtectedByToolOption();
+		
+		foreach ($result as $key => $route) {
+			$route_name = $route['route'];
+			foreach ($protected_routes as $protected_route) {
+				if ($protected_route['route'] === $route_name) {
+					unset($result[$key]);
+				}
+			}
+		}
+		
+		return $result;
+	}
+	
+	
+	/**
+	 * This function can be used by plugins to provide an array [['route' => 'routename', 'tool' => 'tooloption']] of group routes that are protected by a group tool option
+	 *
+	 * @return array
+	 */
+	public function groupRoutesProtectedByToolOption() {
+		return [];
 	}
 }

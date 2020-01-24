@@ -3,9 +3,6 @@
  * Elgg URL input
  * Displays a URL input field
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['class'] Additional CSS class
  */
 

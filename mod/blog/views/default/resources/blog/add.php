@@ -14,15 +14,13 @@ if (!$container->canWriteToContainer(0, 'object', 'blog')) {
 }
 
 elgg_push_collection_breadcrumbs('object', 'blog', $container);
-elgg_push_breadcrumb(elgg_echo('add:object:blog'));
 
-$title = elgg_echo('add:object:blog');
-$content = elgg_view_form('blog/save', $vars, blog_prepare_form_vars());
+$form_vars = $vars;
+$form_vars['prevent_double_submit'] = true;
 
-$layout = elgg_view_layout('default', [
-	'title' => $title,
+$content = elgg_view_form('blog/save', $form_vars, blog_prepare_form_vars());
+
+echo elgg_view_page(elgg_echo('add:object:blog'), [
 	'content' => $content,
 	'filter_id' => 'blog/edit',
 ]);
-
-echo elgg_view_page($title, $layout);

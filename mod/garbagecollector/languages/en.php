@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
+
 return array(
 	'garbagecollector:period' => 'How often should the Elgg garbage collector run?',
 
@@ -10,4 +16,6 @@ return array(
 	'garbagecollector:start' => "Garbage collector initialized",
 	'garbagecollector:done' => "Garbage collector done",
 	'garbagecollector:optimize' => "Optimizing %s",
+	
+	'garbagecollector:cli:database:optimize:description' => "Optimize database tables",
 );

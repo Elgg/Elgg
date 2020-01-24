@@ -41,9 +41,6 @@
  *     title       The buttons shown next to a content title.
  *     longtext    The links shown above the input/longtext view.
  *     login       Menu of links at bottom of login box
- *
- * @package    Elgg.Core
- * @subpackage Navigation
  */
 
 use Elgg\Menu\MenuItems;
@@ -150,64 +147,6 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 			unset($menus[$menu_name][$index]);
 			elgg_set_config('menus', $menus);
 			return $item;
-		}
-	}
-
-	return null;
-}
-
-/**
- * Check if a menu item has been registered
- *
- * @param string $menu_name The name of the menu
- * @param string $item_name The unique identifier for this menu item
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_is_menu_item_registered($menu_name, $item_name) {
-	$menus = _elgg_config()->menus;
-	if (empty($menus)) {
-		return false;
-	}
-
-	if (!isset($menus[$menu_name])) {
-		return false;
-	}
-
-	foreach ($menus[$menu_name] as $menu_object) {
-		/* @var \ElggMenuItem $menu_object */
-		if ($menu_object->getName() == $item_name) {
-			return true;
-		}
-	}
-
-	return false;
-}
-
-/**
- * Get a menu item registered for a menu
- *
- * @param string $menu_name The name of the menu
- * @param string $item_name The unique identifier for this menu item
- *
- * @return ElggMenuItem|null
- * @since 1.9.0
- */
-function elgg_get_menu_item($menu_name, $item_name) {
-	$menus = _elgg_config()->menus;
-	if (empty($menus)) {
-		return null;
-	}
-
-	if (!isset($menus[$menu_name])) {
-		return null;
-	}
-
-	foreach ($menus[$menu_name] as $index => $menu_object) {
-		/* @var \ElggMenuItem $menu_object */
-		if ($menu_object->getName() == $item_name) {
-			return $menus[$menu_name][$index];
 		}
 	}
 
@@ -598,7 +537,7 @@ function _elgg_site_menu_setup(\Elgg\Hook $hook) {
 	if (!$has_selected) {
 		$is_selected = function (ElggMenuItem $item) {
 			$current_url = current_page_url();
-			if (strpos($item->getHref(), elgg_get_site_url()) === 0) {
+			if (elgg_strpos($item->getHref(), elgg_get_site_url()) === 0) {
 				if ($item->getName() == elgg_get_context()) {
 					return true;
 				}
@@ -1039,6 +978,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_setup_vertical_menu', 999);
 	elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '_elgg_setup_vertical_menu', 999);
 
+	elgg_register_plugin_hook_handler('prepare', 'menu:annotation', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('prepare', 'menu:entity', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('prepare', 'menu:relationship', '_elgg_menu_transform_to_dropdown');
 	elgg_register_plugin_hook_handler('prepare', 'menu:river', '_elgg_menu_transform_to_dropdown');

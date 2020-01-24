@@ -3,9 +3,6 @@
  * Elgg long text input
  * Displays a long text input field that can use WYSIWYG editor
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['value']    The current value, if any - will be html encoded
  * @uses $vars['disabled'] Is the input field disabled?
  * @uses $vars['class']    Additional CSS class

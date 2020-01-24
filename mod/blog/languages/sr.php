@@ -1,18 +1,24 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'item:object:blog' => 'Блогови',
-	'collection:object:blog' => 'Blogs',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog' => 'Блогови',
+	'collection:object:blog:all' => 'Сви блогови',
+	'collection:object:blog:owner' => '%s\'s блог',
 	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
+	'collection:object:blog:friends' => 'Блогови пријатеља',
+	'add:object:blog' => 'Додај блог чланак',
+	'edit:object:blog' => 'Уреди блог чланак',
 
 	'blog:revisions' => 'Ревизије',
 	'blog:archives' => 'Архива',
 
-	'groups:tool:blog' => 'Enable group blog',
+	'groups:tool:blog' => 'Укључи блог групе',
 	'blog:write' => 'Напиши блог чланак',
 
 	// Editing
@@ -58,7 +64,7 @@ View and comment on the blog post:
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:description' => 'Прикажи твоје најновије блог чланке',
 	'blog:moreblogs' => 'Више блог чланака',
 	'blog:numbertodisplay' => 'Број блог чланака за приказ',
 );

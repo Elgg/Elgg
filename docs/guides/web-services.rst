@@ -285,7 +285,7 @@ Let's write our wire posting function:
 
     function my_post_to_wire($text) {
         
-        $text = substr($text, 0, 140);
+        $text = elgg_substr($text, 0, 140);
 
         $access = ACCESS_PUBLIC;
        

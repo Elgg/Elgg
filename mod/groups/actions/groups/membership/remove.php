@@ -1,8 +1,6 @@
 <?php
 /**
  * Remove a user from a group
- *
- * @package ElggGroups
  */
 
 $user_guid = (int) get_input('user_guid');

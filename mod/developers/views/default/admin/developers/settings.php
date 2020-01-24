@@ -118,6 +118,7 @@ $data = [
 $form_vars = [
 	'id' => 'developer-settings-form',
 	'class' => 'elgg-form-settings',
+	'prevent_double_submit' => true,
 ];
 $body_vars = [
 	'data' => $data,

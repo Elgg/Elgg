@@ -420,7 +420,7 @@ class Request extends SymfonyRequest {
 
 		// Requests with other content types
 		$content = $this->getContent();
-		$post_body_length = is_string($content) ? strlen($content) : 0;
+		$post_body_length = is_string($content) ? elgg_strlen($content) : 0;
 
 		$file_count = count($this->files->all());
 		

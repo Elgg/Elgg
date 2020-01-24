@@ -55,29 +55,7 @@
     </testsuites>
 
     <filter>
-        <blacklist>
-            <directory suffix=".php">./elgg-config</directory>
-            <directory suffix=".php">./install</directory>
-            <directory suffix=".php">*/vendor/*</directory>
-            <directory suffix=".php">*/vendors/*</directory>
-            <directory suffix=".php">*/tests/*</directory>
-            <directory suffix=".php">*/bower_components/*</directory>
-            <directory suffix=".php">*/node_modules/*</directory>
-            <directory suffix=".php">*/docs/*</directory>
-            <directory suffix=".php">*/grunt/*</directory>
-            <directory suffix=".php">*/engine/schema/*</directory>
-            <directory suffix=".php">*/engine/lib/upgrades/create_upgrade.php</directory>
-            <directory suffix=".php">./languages</directory>
-            <directory suffix=".php">./views</directory>
-            <directory suffix=".php">./mod/*/languages</directory>
-            <directory suffix=".php">./mod/*/views</directory>
-            <file>./engine/lib/deprecated-2.3.php</file>
-            <file>./engine/lib/deprecated-3.0.php</file>
-            <file>./engine/lib/constants.php</file>
-
-        </blacklist>
-
-        <!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
+		<!-- Do not use processUncoveredFilesFromWhitelist="true" because action and view files can not be processed -->
         <whitelist addUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./actions</directory>
             <directory suffix=".php">./engine/classes</directory>
@@ -103,8 +81,7 @@
                 <directory suffix=".php">./views</directory>
                 <directory suffix=".php">./mod/*/languages</directory>
                 <directory suffix=".php">./mod/*/views</directory>
-                <file>./engine/lib/deprecated-2.3.php</file>
-                <file>./engine/lib/deprecated-3.0.php</file>
+                <file>./engine/lib/deprecated-*.php</file>
                 <file>./engine/lib/constants.php</file>
             </exclude>
         </whitelist>

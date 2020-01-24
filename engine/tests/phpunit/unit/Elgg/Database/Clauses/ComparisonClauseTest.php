@@ -504,11 +504,10 @@ class ComparisonClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
-	/**
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsOnInvalidComparison() {
 		$qb = Select::fromTable('entities', 'alias');
+		
+		$this->expectException(\InvalidParameterException::class);
 		$qb->where($qb->compare('x', 'INVALID'));
 	}
 

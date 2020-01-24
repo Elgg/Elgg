@@ -28,15 +28,9 @@ elgg_push_collection_breadcrumbs('object', 'discussion', $target);
 
 elgg_register_title_button('discussion', 'add', 'object', 'discussion');
 
-$title = elgg_echo('collection:object:discussion');
-
-$content = elgg_view('discussion/listing/owner', [
-	'entity' => $target,
+echo elgg_view_page(elgg_echo('collection:object:discussion'), [
+	'content' => elgg_view('discussion/listing/owner', [
+		'entity' => $target,
+	]),
+	'filter_value' => $target->guid === elgg_get_logged_in_user_guid() ? 'mine' : 'none',
 ]);
-
-$body = elgg_view_layout('default', [
-	'title' => $title,
-	'content' => $content,
-]);
-
-echo elgg_view_page($title, $body);

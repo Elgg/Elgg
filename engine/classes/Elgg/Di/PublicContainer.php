@@ -19,6 +19,7 @@ use Elgg\Views\HtmlFormatter;
 use Elgg\Views\TableColumn\ColumnFactory;
 use ElggSession;
 use Elgg\I18n\LocaleService;
+use Elgg\Filesystem\MimeTypeService;
 
 /**
  * Public service container
@@ -35,6 +36,7 @@ use Elgg\I18n\LocaleService;
  * @property-read LocaleService         $locale          LocaleService
  * @property-read Logger                $logger          Logger
  * @property-read Service               $menus           Menus
+ * @property-read MimeTypeService       $mimetype        MIME type detection
  * @property-read ElggSession           $session         Session
  * @property-read SystemMessagesService $system_messages System messages
  * @property-read ColumnFactory         $table_columns   Table columns

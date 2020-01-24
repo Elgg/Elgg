@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -43,8 +49,8 @@ return array(
 	'groups:owner' => "Ιδιοκτήτης",
 	'groups:owner:warning' => "Προσοχή: εάν αλλάξετε την τιμή αυτή, δεν θα είστε πλέον ο ιδιοκτήτης αυτής της ομάδας.",
 	'groups:widget:num_display' => 'Αριθμός ομάδων για εμφάνιση',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Συμμετοχή στην ομάδα',
+	'widgets:a_users_groups:description' => 'Εμφάνιση στο προφίλ σας των ομάδων που είστε μέλος ',
 
 	'groups:noaccess' => 'Δεν παρέχεται πρόσβαση στην ομάδα',
 	'groups:cantcreate' => 'Δεν μπορείτε να δημιουργήσετε ομάδα. Μόνο οι διαχειριστές μπορούν.',
@@ -75,7 +81,7 @@ return array(
 	'groups:search:none' => "Δεν βρέθηκαν ομάδες",
 	'groups:search_in_group' => "Αναζήτηση σ' αυτή την ομάδα",
 	'groups:acl' => "Ομάδα: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Μέλη ομάδας',
 
 	'groups:notfound' => "Η ομάδα δεν βρέθηκε",
 	

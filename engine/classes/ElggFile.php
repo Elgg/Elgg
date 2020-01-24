@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Filesystem\MimeTypeDetector;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -18,9 +17,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * entity is created in the database. This is because there are occasions
  * when you may want access to file data on datastores using the \ElggFile
  * interface without a need to persist information such as temporary files.
- *
- * @package    Elgg.Core
- * @subpackage DataModel.File
  *
  * @property      string $mimetype         MIME type of the file
  * @property      string $simpletype       Category of the file
@@ -104,7 +100,14 @@ class ElggFile extends ElggObject {
 		if ($this->mimetype) {
 			return $this->mimetype;
 		}
-		return $this->detectMimeType();
+		
+		try {
+			return elgg()->mimetype->getMimeType($this->getFilenameOnFilestore());
+		} catch (InvalidArgumentException $e) {
+			// the file has no file on the filesystem
+			// can happen in tests etc.
+		}
+		return false;
 	}
 
 	/**
@@ -121,16 +124,16 @@ class ElggFile extends ElggObject {
 	/**
 	 * Detects mime types based on filename or actual file.
 	 *
-	 * @note This method can be called both dynamically and statically
-	 *
 	 * @param mixed $file    The full path of the file to check. For uploaded files, use tmp_name.
 	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
 	 * @since 1.7.12
 	 *
 	 * @return mixed Detected type on success, false on failure.
-	 * @todo Move this out into a utility class
+	 * @deprecated 3.3 use elgg()->mimetype->getMimeType()
 	 */
 	public function detectMimeType($file = null, $default = null) {
+		elgg_deprecated_notice(__METHOD__ . ' has been deprecatd, use elgg()->mimetype->getMimeType()', '3.3');
+		
 		$class = __CLASS__;
 		if (!$file && isset($this) && $this instanceof $class) {
 			$file = $this->getFilenameOnFilestore();
@@ -140,26 +143,12 @@ class ElggFile extends ElggObject {
 			return false;
 		}
 
-		$mime = $default;
-
-		$detected = (new MimeTypeDetector())->tryStrategies($file);
-		if ($detected) {
-			$mime = $detected;
-		}
-
-		$original_filename = isset($this) && $this instanceof $class ? $this->originalfilename : basename($file);
-		$params = [
-			'filename' => $file,
-			'original_filename' => $original_filename, // @see file upload action
-			'default' => $default,
-		];
-		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);
+		return elgg()->mimetype->getMimeType($file, '') ?: $default;
 	}
 
 	/**
 	 * Get the simple type of the file.
 	 * Returns simpletype metadata value if set, otherwise parses it from mimetype
-	 * @see elgg_get_file_simple_type()
 	 *
 	 * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
 	 */
@@ -167,8 +156,8 @@ class ElggFile extends ElggObject {
 		if (isset($this->simpletype)) {
 			return $this->simpletype;
 		}
-		$mime_type = $this->getMimeType();
-		return elgg_get_file_simple_type($mime_type);
+		
+		return elgg()->mimetype->getSimpleType($this->getMimeType() ?: '');
 	}
 
 	/**
@@ -451,9 +440,16 @@ class ElggFile extends ElggObject {
 				// remove old file
 				unlink($old_filestorename);
 			}
-			$mime_type = $this->detectMimeType(null, $upload->getClientMimeType());
-			$this->setMimeType($mime_type);
-			$this->simpletype = elgg_get_file_simple_type($mime_type);
+			
+			try {
+				// try to detect mimetype
+				$mime_type = elgg()->mimetype->getMimeType($this->getFilenameOnFilestore());
+				$this->setMimeType($mime_type);
+				$this->simpletype = elgg()->mimetype->getSimpleType($mime_type);
+			} catch (InvalidArgumentException $e) {
+				// this can fail if the upload hooks returns true, but the file is not present on the filestore
+				// this happens in a unittest
+			}
 			_elgg_services()->events->triggerAfter('upload', 'file', $this);
 			return true;
 		}

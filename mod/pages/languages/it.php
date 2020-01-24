@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Pagine',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Pagine',
+	'collection:object:page:all' => "Tutte le pagine",
+	'collection:object:page:owner' => "Pagine di %s",
+	'collection:object:page:friends' => "Pagine degli amici",
+	'collection:object:page:group' => "Pagine del gruppo",
+	'add:object:page' => "Aggiungi pagina",
+	'edit:object:page' => "Modifica questa pagina",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Abilita pagine del gruppo',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Elimina questa pagina",
 	'pages:history' => "Cronologia",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Pagina salvata',
 	'pages:notsaved' => 'La pagina non può essare salvata',
 	'pages:error:no_title' => 'Devi specificare un titolo per questa pagina.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'La pagina è stata eliminata con successo.',
 	'pages:revision:delete:success' => 'La revisione della pagina è stata eliminata.',
 	'pages:revision:delete:failure' => 'La revisione della pagina non può essere eliminata.',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Numero di pagine da visualizzare',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Pagine',
+	'widgets:pages:description' => "Questo è un elenco delle tue pagine.",
 
 	/**
 	 * Submenu items

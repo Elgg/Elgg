@@ -279,6 +279,11 @@ class ResponseFactory {
 			return $this->send($this->prepareResponse('', ELGG_HTTP_NOT_MODIFIED));
 		}
 
+		// Prevent content type sniffing by the browser
+		$headers = $response->getHeaders();
+		$headers['X-Content-Type-Options'] = 'nosniff';
+		$response->setHeaders($headers);
+		
 		$is_xhr = $this->request->isXmlHttpRequest();
 
 		$is_action = false;

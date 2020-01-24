@@ -11,6 +11,7 @@ use Elgg\Plugins\PluginTesting;
 use Elgg\Project\Paths;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Base test case abstraction
@@ -87,6 +88,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'system_cache_enabled' => false,
 			'simplecache_enabled' => false,
 			'boot_cache_ttl' => 0,
+			'lastcache' => time(),
 
 			'profile_files' => [],
 			'group' => [],
@@ -141,7 +143,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function setUp() {
+	protected function setUp(): void {
 
 		Application::setInstance(null);
 
@@ -170,7 +172,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	/**
 	 * {@inheritdoc}
 	 */
-	protected function tearDown() {
+	protected function tearDown(): void {
 
 		// We do not want overflowing ignored access
 		$this->assertFalse((bool) _elgg_services()->session->getIgnoreAccess(), __METHOD__ . ': ignored access not reset');
@@ -196,7 +198,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893
-	 * @return \Doctrine\DBAL\Platforms\AbstractPlatform|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \Doctrine\DBAL\Platforms\AbstractPlatform|MockObject
 	 */
 	public function getDatabasePlatformMock() {
 		$mock = $this->getAbstractMock(
@@ -221,7 +223,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893
-	 * @return \Doctrine\DBAL\Connection|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \Doctrine\DBAL\Connection|MockObject
 	 */
 	public function getConnectionMock() {
 		$mock = $this->getMockBuilder('Doctrine\DBAL\Connection')
@@ -260,7 +262,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 
 	/**
 	 * @source https://gist.github.com/gnutix/7746893
-	 * @return \Doctrine\DBAL\Driver\Statement|\PHPUnit_Framework_MockObject_MockObject
+	 * @return \Doctrine\DBAL\Driver\Statement|MockObject
 	 */
 	public function getStatementMock() {
 		$mock = $this->getAbstractMock(
@@ -286,7 +288,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	 * @param string $class   The class name
 	 * @param array  $methods The available methods
 	 *
-	 * @return \PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
 	protected function getAbstractMock($class, array $methods) {
 		return $this->getMockForAbstractClass(
@@ -304,7 +306,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false) {
+	public static function assertEquals($expected, $actual, $message = '', $delta = 0.0, $maxDepth = 10, $canonicalize = false, $ignoreCase = false): void {
 		if ($expected instanceof \ElggData) {
 			$expected = $expected->toObject();
 		}

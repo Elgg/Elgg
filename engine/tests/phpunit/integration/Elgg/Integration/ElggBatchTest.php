@@ -3,14 +3,14 @@
 namespace Elgg\Integration;
 
 use Elgg\BatchResult;
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 use ElggBatch;
 use ElggObject;
 
 /**
  * @group IntegrationTests
  */
-class ElggBatchTest extends LegacyIntegrationTestCase {
+class ElggBatchTest extends IntegrationTestCase {
 
 	public function up() {
 
@@ -35,12 +35,12 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		$j = 0;
 		foreach ($batch as $e) {
 			$offset = floor($j / 5) * 5;
-			$this->assertEqual($offset, $e['offset']);
-			$this->assertEqual($j + 1, $e['index']);
+			$this->assertEquals($offset, $e['offset']);
+			$this->assertEquals($j + 1, $e['index']);
 			$j++;
 		}
 
-		$this->assertEqual(11, $j);
+		$this->assertEquals(11, $j);
 
 		// no increment, 0 start
 		ElggBatchTest::elgg_batch_callback_test([], true);
@@ -57,12 +57,12 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 
 		$j = 0;
 		foreach ($batch as $e) {
-			$this->assertEqual(0, $e['offset']);
+			$this->assertEquals(0, $e['offset']);
 			// should always be the same 5
-			$this->assertEqual($e['index'], $j + 1 - (floor($j / 5) * 5));
+			$this->assertEquals($e['index'], $j + 1 - (floor($j / 5) * 5));
 			$j++;
 		}
-		$this->assertEqual(11, $j);
+		$this->assertEquals(11, $j);
 
 		// no increment, 3 start
 		ElggBatchTest::elgg_batch_callback_test([], true);
@@ -79,13 +79,13 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 
 		$j = 0;
 		foreach ($batch as $e) {
-			$this->assertEqual(3, $e['offset']);
+			$this->assertEquals(3, $e['offset']);
 			// same 5 results
-			$this->assertEqual($e['index'], $j + 4 - (floor($j / 5) * 5));
+			$this->assertEquals($e['index'], $j + 4 - (floor($j / 5) * 5));
 			$j++;
 		}
 
-		$this->assertEqual(11, $j);
+		$this->assertEquals(11, $j);
 	}
 
 	public function testBatchCanCount() {
@@ -104,7 +104,7 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 		$count1 = count(new ElggBatch($getter, $options));
 		$count2 = $getter(array_merge($options, ['count' => true]));
 
-		$this->assertEqual($count1, $count2);
+		$this->assertEquals($count1, $count2);
 	}
 
 	public function testCanGetBatchFromAnEntityGetter() {
@@ -137,7 +137,7 @@ class ElggBatchTest extends LegacyIntegrationTestCase {
 			$guids2[] = $val;
 		}
 
-		$this->assertEqual($guids1, $guids2);
+		$this->assertEquals($guids1, $guids2);
 	}
 
 	public static function elgg_batch_callback_test($options, $reset = false) {

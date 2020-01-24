@@ -23,28 +23,26 @@ if ($container_guid && !is_array($container_guid)) {
 
 $query = elgg_extract('query', $params);
 
-$highlighted_query = $service->getHighlighter()->highlightWords($query);
-
-$title = elgg_echo('search:results', ["\"$highlighted_query\""]);
-
 $form = elgg_view_form('search', [
 	'action' => elgg_generate_url('default:search'),
 	'method' => 'get',
 	'disable_security' => true,
+	'prevent_double_submit' => true,
 ], $params);
 
-if (elgg_is_empty($query)) {
+if (!preg_match('/[\pL\pN]+/', $query)) {
+	$form .= elgg_view_message('warning', elgg_echo('search:empty_query'), ['title' => false]);
+	
 	// display a search form if there is no query
-	$layout = elgg_view_layout('content', [
-		'title' => elgg_echo('search'),
+	echo elgg_view_page(elgg_echo('search'), [
 		'content' => $form,
-		'filter' => '',
 	]);
-
-	echo elgg_view_page(elgg_echo('search'), $layout);
 
 	return;
 }
+
+$highlighted_query = $service->getHighlighter()->highlightWords($query);
+$title = elgg_echo('search:results', ["\"$highlighted_query\""]);
 
 $use_type = function ($search_type, $type = null, $subtype = null) use ($params) {
 
@@ -136,10 +134,7 @@ if (empty($results)) {
 	]);
 }
 
-$layout = elgg_view_layout('content', [
+echo elgg_view_page(elgg_echo('search'), [
 	'title' => $title,
 	'content' => $form . $results,
-	'filter' => '',
 ]);
-
-echo elgg_view_page(elgg_echo('search'), $layout);

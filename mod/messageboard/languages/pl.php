@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Twoja wiadomość została dodana pomyślnie.",
 	'messageboard:deleted' => "Twoja wiadomość została skasowana.",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Wystąpił nieoczekiwany błąd podczas dodawania wiadomości. Proszę spróbować ponownie.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Tablica ogłoszeń",
+	'widgets:messageboard:description' => "To jest tablica ogłoszeń, którą możesz umieścić w swoim profilu, aby inni użytkownicy mogli zostawić komentarz.",
 );

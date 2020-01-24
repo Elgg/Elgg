@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Sider',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Sider',
+	'collection:object:page:all' => "Alle sider",
+	'collection:object:page:owner' => "%s's sider",
+	'collection:object:page:friends' => "Venners sider",
+	'collection:object:page:group' => "Gruppe sider",
+	'add:object:page' => "Tilføj en side",
+	'edit:object:page' => "Rediger denne side",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Aktiver gruppe sider',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Slet denne side",
 	'pages:history' => "Sidehistorik",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Siden gemt',
 	'pages:notsaved' => 'Siden kunne ikke gemmes',
 	'pages:error:no_title' => 'Din side skal have en titel.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Din side er blevet slettet',
 	'pages:revision:delete:success' => 'Denne side revision blev hermed slettet.',
 	'pages:revision:delete:failure' => 'Denne side revision kunne ikke slettes.',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Antal sider, der skal vises',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Sider',
+	'widgets:pages:description' => "Dette er en liste med dine sider.",
 
 	/**
 	 * Submenu items

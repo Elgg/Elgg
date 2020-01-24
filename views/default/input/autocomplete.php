@@ -2,9 +2,6 @@
 /**
  * Displays an autocomplete text input.
  *
- * @package Elgg
- * @subpackage Core
- *
  * @todo This currently only works for ONE AUTOCOMPLETE TEXT FIELD on a page.
  *
  * @uses $vars['handler']      Data source URL, defaults to /livesearch handler

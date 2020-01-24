@@ -6,9 +6,6 @@ namespace Elgg;
  * Determines if otherwise visible items should be hidden from a user due to group
  * policy or visibility.
  *
- * @package    Elgg.Core
- * @subpackage Groups
- *
  * @internal
  * @deprecated 3.0 Use ElggGroup::canAccessContent or Gatekeeper::assertAccessibleGroup
  */

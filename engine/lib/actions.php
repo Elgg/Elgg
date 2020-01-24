@@ -1,11 +1,6 @@
 <?php
 /**
  * Elgg Actions
- *
- * @see http://learn.elgg.org/en/stable/guides/actions.html
- *
- * @package Elgg.Core
- * @subpackage Actions
  */
 
 use Elgg\Database\SiteSecret;
@@ -60,27 +55,6 @@ function elgg_unregister_action($action) {
  */
 function elgg_build_hmac($data) {
 	return _elgg_services()->hmac->getHmac($data);
-}
-
-/**
- * Generate an action token.
- *
- * Action tokens are based on timestamps as returned by {@link time()}.
- * They are valid for one hour.
- *
- * Action tokens should be passed to all actions name __elgg_ts and __elgg_token.
- *
- * @warning Action tokens are required for all actions.
- *
- * @param int $timestamp Unix timestamp
- *
- * @see @elgg_view input/securitytoken
- * @see @elgg_view input/form
- *
- * @return string|false
- */
-function generate_action_token($timestamp) {
-	return elgg()->csrf->generateActionToken($timestamp);
 }
 
 /**

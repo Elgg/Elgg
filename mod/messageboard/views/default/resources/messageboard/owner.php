@@ -3,8 +3,6 @@ use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * Elgg Message board index page
- *
- * @package MessageBoard
  */
 
 elgg_require_js('elgg/messageboard');
@@ -30,27 +28,14 @@ $options = [
 ];
 
 $title = elgg_echo('messageboard:owner', [$page_owner->getDisplayName()]);
-$mb_url = '';
 
 if ($history_user) {
 	$options['annotations_owner_guid'] = $history_user->getGUID();
 	$title = elgg_echo('messageboard:owner_history', [$history_user->getDisplayName(), $page_owner->getDisplayName()]);
 
-	$mb_url = "messageboard/owner/$page_owner->username";
+	elgg_push_breadcrumb(elgg_echo('messageboard:board'), elgg_generate_url('collection:annotation:messageboard:owner', ['username' => $page_owner->username]));
 }
 
-elgg_push_breadcrumb(elgg_echo('messageboard:board'), $mb_url);
-
-if ($history_user) {
-	elgg_push_breadcrumb($history_user->getDisplayName());
-}
-
-$content = elgg_list_annotations($options);
-
-$body = elgg_view_layout('content', [
-	'filter' => false,
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_list_annotations($options),
 ]);
-
-echo elgg_view_page($title, $body);

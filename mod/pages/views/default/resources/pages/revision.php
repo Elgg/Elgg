@@ -26,13 +26,8 @@ pages_prepare_parent_breadcrumbs($page);
 elgg_push_breadcrumb($page->getDisplayName(), $page->getURL());
 elgg_push_breadcrumb(elgg_echo('pages:history'), elgg_generate_url('history:object:page', ['guid' => $page->guid]));
 
-$content = elgg_view_entity($page, [
-	'revision' => $annotation,
+echo elgg_view_page($title, [
+	'content' => elgg_view_entity($page, [
+		'revision' => $annotation,
+	]),
 ]);
-
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
-]);
-
-echo elgg_view_page($title, $body);

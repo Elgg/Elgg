@@ -14,14 +14,9 @@ $content = elgg_view("groups/listing/$selected_tab", $vars);
 $sidebar = elgg_view('groups/sidebar/find');
 $sidebar .= elgg_view('groups/sidebar/featured');
 
-$title = elgg_echo('groups:all');
-
-$body = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('groups:all'), [
 	'content' => $content,
 	'sidebar' => $sidebar,
-	'title' => $title,
 	'filter_id' => 'groups/all',
 	'filter_value' => $selected_tab,
 ]);
-
-echo elgg_view_page($title, $body);

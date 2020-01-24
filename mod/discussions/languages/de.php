@@ -1,11 +1,23 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
+	'item:object:discussion' => "Diskussionen",
+	
 	'add:object:discussion' => 'Diskussion hinzufügen',
 	'edit:object:discussion' => 'Diskussion bearbeiten',
+	'collection:object:discussion' => 'Diskussionen',
+	'collection:object:discussion:group' => 'Gruppen-Diskussionen',
+	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
 
 	'discussion:latest' => 'Neueste Diskussionen',
-	'collection:object:discussion:group' => 'Gruppen-Diskussionen',
 	'discussion:none' => 'Es gibt noch keine Diskussionen.',
 	'discussion:updated' => "Letzte Antwort von %s %s",
 
@@ -17,6 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Die Diskussion konnte nicht gespeichert werden.',
 	'discussion:error:missing' => 'Es müssen sowohl der Titel als auch der Textinhalt der Diskussion ausgefüllt werden.',
 	'discussion:error:permissions' => 'Du hast keine Berechtigung für diese Aktion.',
+	'discussion:error:no_groups' => "You're not a member of any groups.",
 
 	/**
 	 * River
@@ -48,9 +61,6 @@ Schau Dir die neue Diskussion an und antworte darauf:
 Schau Dir die Diskussion an und antworte selbst darauf:
 %s
 ',
-
-	'item:object:discussion' => "Diskussionen",
-	'collection:object:discussion' => 'Diskussionen',
 
 	'groups:tool:forum' => 'Gruppen-Diskussionen aktivieren',
 

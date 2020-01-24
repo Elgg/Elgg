@@ -2,10 +2,10 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 use Elgg\HooksRegistrationService\Hook;
 
-class ElggHtmLawedTest extends LegacyIntegrationTestCase {
+class ElggHtmLawedTest extends IntegrationTestCase {
 
 	protected $configHooks = [];
 	protected $styleHooks = [];
@@ -21,7 +21,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		'teamspeak',
 		'gopher',
 		'mms',
-		'callto'
+		'callto',
 	];
 
 	protected $validStyles = [
@@ -45,7 +45,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		'margin-right',
 		'padding',
 		'float',
-		'text-decoration'
+		'text-decoration',
 	];
 
 	public function up() {
@@ -71,7 +71,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		$bad_schemes = [
 			'javascript',
 			'itmss',
-			'magnet'
+			'magnet',
 		];
 
 		// these should be denied
@@ -85,7 +85,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 
 		foreach ($tests as $input => $expected) {
 			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
-			$this->assertEqual($expected, $result);
+			$this->assertEquals($expected, $result);
 		}
 
 		$weird_schemes = [
@@ -96,7 +96,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 
 		foreach ($weird_schemes as $input => $expected) {
 			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
-			$this->assertEqual($expected, $result);
+			$this->assertEquals($expected, $result);
 		}
 
 		elgg_pop_context();
@@ -115,7 +115,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 
 		foreach ($tests as $input => $expected) {
 			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
-			$this->assertEqual($expected, $result);
+			$this->assertEquals($expected, $result);
 		}
 	}
 
@@ -141,7 +141,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 		$bad_styles = [
 			'height',
 			'width',
-			'z-index'
+			'z-index',
 		];
 
 		foreach ($bad_styles as $style) {
@@ -157,7 +157,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 
 		foreach ($tests as $input => $expected) {
 			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
-			$this->assertEqual($expected, $result);
+			$this->assertEquals($expected, $result);
 		}
 	}
 
@@ -187,7 +187,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 			'embed',
 			'iframe',
 			'object',
-			'script'
+			'script',
 		];
 
 		foreach ($unsafe as $tag) {
@@ -197,7 +197,7 @@ class ElggHtmLawedTest extends LegacyIntegrationTestCase {
 
 		foreach ($tests as $input => $expected) {
 			$result = _elgg_htmlawed_filter_tags(new Hook(elgg(), null, null, $input, []));
-			$this->assertEqual($expected, $result);
+			$this->assertEquals($expected, $result);
 		}
 	}
 

@@ -1,11 +1,8 @@
 <?php
-
 /**
  * Group edit form
  *
  * This view contains the group tool options provided by the different plugins
- *
- * @package ElggGroups
  */
 
 $entity = elgg_extract('entity', $vars);

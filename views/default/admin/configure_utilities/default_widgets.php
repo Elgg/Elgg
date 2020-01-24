@@ -1,9 +1,6 @@
 <?php
 /**
  * Default widgets landing page.
- *
- * @package Elgg.Core
- * @subpackage Administration.DefaultWidgets
  */
 
 elgg_push_context('default_widgets');

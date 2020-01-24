@@ -1,8 +1,6 @@
 <?php
 /**
  * Feature a group
- *
- * @package ElggGroups
  */
 
 $group_guid = (int) get_input('group_guid');

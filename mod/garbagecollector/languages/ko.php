@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'garbagecollector:period' => '엘그 찌꺼기 처리기를 얼마나 자주 실행할까요?',
 
@@ -10,4 +16,6 @@ return array(
 	'garbagecollector:start' => "청소기 시작됨",
 	'garbagecollector:done' => "청소 끝",
 	'garbagecollector:optimize' => "최적화중 %s ",
+	
+	'garbagecollector:cli:database:optimize:description' => "Optimize database tables",
 );

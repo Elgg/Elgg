@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Wikisivut',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Wikit',
+	'collection:object:page:all' => "Kaikki sivuston wikit",
+	'collection:object:page:owner' => "Käyttäjän %s wikit",
+	'collection:object:page:friends' => "Ystävien wikit",
+	'collection:object:page:group' => "Ryhmän wikit",
+	'add:object:page' => "Luo uusi wiki",
+	'edit:object:page' => "Muokkaa sivua",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Ota käyttöön ryhmän wikit',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Poista tämä sivu",
 	'pages:history' => "Historia",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Sivu tallennettu',
 	'pages:notsaved' => 'Sivun tallentaminen epäonnistui',
 	'pages:error:no_title' => 'Syötä sivulle otsikko.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Sivu poistettiin.',
 	'pages:revision:delete:success' => 'Versio poistettu.',
 	'pages:revision:delete:failure' => 'Version poistaminen epäonnistui.',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Näytettävien wikien määrä',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Wikit',
+	'widgets:pages:description' => "Näyttää listan omistamistasi wikeistä.",
 
 	/**
 	 * Submenu items

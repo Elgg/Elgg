@@ -6,6 +6,7 @@ use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Values;
+use Elgg\GatekeeperException;
 
 /**
  * @group ActionsService
@@ -24,10 +25,8 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 		parent::down();
 	}
 
-	/**
-	 * @expectedException \Elgg\GatekeeperException
-	 */
 	public function testLogoutFailsWithoutActiveSession() {
+		$this->expectException(GatekeeperException::class);
 		$this->executeAction('logout');
 	}
 

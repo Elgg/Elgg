@@ -81,7 +81,7 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 	public function testCanRenderViewWithEmptyVars($view, $viewtype) {
 		try {
 			$output = $this->view($view, [], $viewtype);
-			$this->assertInternalType('string', $output);
+			$this->assertIsString($output);
 		} catch (HttpException $e) {
 
 		}
@@ -93,7 +93,7 @@ abstract class ViewRenderingTestCase extends IntegratedUnitTestCase {
 	public function testCanRenderViewWithVars($view, $viewtype) {
 		try {
 			$output = $this->view($view, $this->getDefaultViewVars(), $viewtype);
-			$this->assertInternalType('string', $output);
+			$this->assertIsString($output);
 		} catch (HttpException $e) {
 
 		}

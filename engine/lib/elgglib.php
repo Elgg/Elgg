@@ -5,7 +5,6 @@ use Elgg\Http\ResponseBuilder;
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
- * @package Elgg.Core
  * @todo These functions can't be subpackaged because they cover a wide mix of
  * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
@@ -627,34 +626,6 @@ function elgg_trigger_deprecated_plugin_hook($hook, $type, $params = null, $retu
 }
 
 /**
- * Returns an ordered array of hook handlers registered for $hook and $type.
- *
- * @param string $hook Hook name
- * @param string $type Hook type
- *
- * @return array
- *
- * @since 2.0.0
- */
-function elgg_get_ordered_hook_handlers($hook, $type) {
-	return elgg()->hooks->getOrderedHandlers($hook, $type);
-}
-
-/**
- * Returns an ordered array of event handlers registered for $event and $type.
- *
- * @param string $event Event name
- * @param string $type  Object type
- *
- * @return array
- *
- * @since 2.0.0
- */
-function elgg_get_ordered_event_handlers($event, $type) {
-	return elgg()->events->getOrderedHandlers($event, $type);
-}
-
-/**
  * Log a message.
  *
  * If $level is >= to the debug setting in {@link $CONFIG->debug}, the
@@ -789,7 +760,7 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 
 	// append action tokens to the existing query
 	$query['__elgg_ts'] = time();
-	$query['__elgg_token'] = generate_action_token($query['__elgg_ts']);
+	$query['__elgg_token'] = elgg()->csrf->generateActionToken($query['__elgg_ts']);
 	$components['query'] = http_build_query($query);
 
 	// rebuild the full url
@@ -1179,13 +1150,18 @@ function _elgg_ajax_page_handler($segments) {
 				default :
 					if (_elgg_services()->views->isCacheableView($view)) {
 						$file = _elgg_services()->views->findViewFile($view, elgg_get_viewtype());
-						$content_type = (new \Elgg\Filesystem\MimeTypeDetector())->getType($file, 'text/html');
+						$content_type = 'text/html';
+						try {
+							$content_type = elgg()->mimetype->getMimeType($file, $content_type);
+						} catch (InvalidArgumentException $e) {
+							// nothing for now
+						}
 					}
 					break;
 			}
 		} else {
 			$action = implode('/', array_slice($segments, 1));
-			$output = elgg_view_form($action, [], $vars);
+			$output = elgg_view_form($action, ['prevent_double_submit' => true], $vars);
 		}
 
 		if ($content_type) {
@@ -1387,33 +1363,8 @@ function _elgg_init() {
 		 */
 		elgg_register_plugin_hook_handler('output', 'page', [\Elgg\Profiler::class, 'handlePageOutput'], 999);
 	}
-
-	elgg_register_plugin_hook_handler('commands', 'cli', '_elgg_init_cli_commands');
-}
-
-/**
- * Initialize Cli commands
- *
- * @elgg_plugin_hook commands cli
- *
- * @param \Elgg\Hook $hook Hook
- *
- * @return \Elgg\Cli\Command[]
- * @internal
- */
-function _elgg_init_cli_commands(\Elgg\Hook $hook) {
-	$defaults = [
-		\Elgg\Cli\SimpletestCommand::class,
-		\Elgg\Cli\DatabaseSeedCommand::class,
-		\Elgg\Cli\DatabaseUnseedCommand::class,
-		\Elgg\Cli\CronCommand::class,
-		\Elgg\Cli\FlushCommand::class,
-		\Elgg\Cli\PluginsListCommand::class,
-		\Elgg\Cli\PluginsActivateCommand::class,
-		\Elgg\Cli\PluginsDeactivateCommand::class,
-	];
-
-	return array_merge($defaults, (array) $hook->getValue());
+	
+	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds', 1);
 }
 
 /**
@@ -1457,6 +1408,24 @@ function _elgg_register_actions() {
 		
 		elgg_register_action($action, $handler, $access);
 	}
+}
+
+/**
+ * Register database seeds
+ *
+ * @elgg_plugin_hook seeds database
+ *
+ * @param \Elgg\Hook $hook Hook
+ * @return array
+ */
+function _elgg_db_register_seeds(\Elgg\Hook $hook) {
+	
+	$seeds = $hook->getValue();
+	
+	$seeds[] = \Elgg\Database\Seeds\Users::class;
+	$seeds[] = \Elgg\Database\Seeds\Groups::class;
+	
+	return $seeds;
 }
 
 /**

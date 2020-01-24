@@ -116,30 +116,21 @@ abstract class IntegrationTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	public static function setUpBeforeClass() {
-		parent::setUpBeforeClass();
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public static function tearDownAfterClass() {
+	public static function tearDownAfterClass(): void {
 		foreach (_elgg_services()->logger->getHandlers() as $handler) {
 			if (is_callable([$handler, 'close'])) {
 				$handler->close();
 			}
 		}
+		
 		parent::tearDownAfterClass();
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	final protected function setUp() {
-
+	final protected function setUp(): void {
 		parent::setUp();
-
-		$app = Application::getInstance();
 
 		$plugin_id = $this->getPluginID();
 		if (!empty($plugin_id)) {
@@ -149,32 +140,15 @@ abstract class IntegrationTestCase extends BaseTestCase {
 				$this->markTestSkipped("Plugin '{$plugin_id}' isn't active, skipped test");
 			}
 		}
-
-		// legacy support, need logged in user
-		if ($this instanceof LegacyIntegrationTestCase) {
-			$app->_services->session->setLoggedInUser($this->getAdmin());
-		}
-
+		
 		$this->up();
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
-	final protected function tearDown() {
+	final protected function tearDown(): void {
 		$this->down();
-
-		/**
-		 * @todo: This is bad because this overflows into other states
-		 *      But until there is a sane entity delete strategy this takes too long
-		 */
-		//$this->clearSeeds();
-
-		$app = Application::getInstance();
-
-		if ($this instanceof LegacyIntegrationTestCase) {
-			$app->_services->session->removeLoggedInUser();
-		}
 
 		parent::tearDown();
 	}

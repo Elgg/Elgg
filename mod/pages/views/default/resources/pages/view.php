@@ -18,13 +18,6 @@ if (!$container) {
 elgg_push_collection_breadcrumbs('object', 'page', $container);
 pages_prepare_parent_breadcrumbs($page);
 
-$title = $page->getDisplayName();
-elgg_push_breadcrumb($title);
-
-$content = elgg_view_entity($page, [
-	'show_responses' => true,
-]);
-
 // can add subpage if can edit this page and write to container (such as a group)
 if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
 	elgg_register_menu_item('title', [
@@ -37,15 +30,14 @@ if ($page->canEdit() && $container->canWriteToContainer(0, 'object', 'page')) {
 	]);
 }
 
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($page->getDisplayName(), [
+	'content' => elgg_view_entity($page, [
+		'show_responses' => true,
+	]),
 	'sidebar' => elgg_view('pages/sidebar/navigation', [
 		'page' => $page,
 	]),
 	'entity' => $page,
-]);
-
-echo elgg_view_page($title, $body, 'default', [
+], 'default', [
 	'entity' => $page,
 ]);

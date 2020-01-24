@@ -38,6 +38,42 @@ class Plugins {
 	use Profilable;
 	use Cacheable;
 	use Loggable;
+	
+	const BUNDLED_PLUGINS = [
+		'activity',
+		'blog',
+		'bookmarks',
+		'ckeditor',
+		'custom_index',
+		'dashboard',
+		'developers',
+		'diagnostics',
+		'discussions',
+		'embed',
+		'externalpages',
+		'file',
+		'friends',
+		'friends_collections',
+		'garbagecollector',
+		'groups',
+		'invitefriends',
+		'likes',
+		'login_as',
+		'members',
+		'messageboard',
+		'messages',
+		'notifications',
+		'pages',
+		'profile',
+		'reportedcontent',
+		'search',
+		'site_notifications',
+		'system_log',
+		'tagcloud',
+		'thewire',
+		'uservalidationbyemail',
+		'web_services',
+	];
 
 	/**
 	 * @var ElggPlugin[]
@@ -192,7 +228,17 @@ class Plugins {
 		$this->cache->clear();
 		$this->invalidateProvidesCache();
 	}
-
+	
+	/**
+	 * Invalidate plugin cache
+	 *
+	 * @return void
+	 */
+	public function invalidate() {
+		$this->cache->invalidate();
+		$this->invalidateProvidesCache();
+	}
+	
 	/**
 	 * Returns a list of plugin directory names from a base directory.
 	 *
@@ -1285,138 +1331,6 @@ class Plugins {
 		}
 
 		return $settings;
-	}
-
-	/**
-	 * Set a user specific setting for a plugin.
-	 *
-	 * @param string $name      The name. Note: cannot be "title".
-	 * @param mixed  $value     The value.
-	 * @param int    $user_guid The user GUID or 0 for the currently logged in user.
-	 * @param string $plugin_id The plugin ID (Required)
-	 *
-	 * @return bool
-	 * @see \ElggPlugin::setUserSetting()
-	 */
-	public function setUserSetting($name, $value, $user_guid = 0, $plugin_id = null) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
-		}
-
-		return $plugin->setUserSetting($name, $value, (int) $user_guid);
-	}
-
-	/**
-	 * Unsets a user-specific plugin setting
-	 *
-	 * @param string $name      Name of the setting
-	 * @param int    $user_guid The user GUID or 0 for the currently logged in user.
-	 * @param string $plugin_id The plugin ID (Required)
-	 *
-	 * @return bool
-	 * @see \ElggPlugin::unsetUserSetting()
-	 */
-	public function unsetUserSetting($name, $user_guid = 0, $plugin_id = null) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
-		}
-
-		return $plugin->unsetUserSetting($name, (int) $user_guid);
-	}
-
-	/**
-	 * Get a user specific setting for a plugin.
-	 *
-	 * @param string $name      The name of the setting.
-	 * @param int    $user_guid The user GUID or 0 for the currently logged in user.
-	 * @param string $plugin_id The plugin ID (Required)
-	 * @param mixed  $default   The default value to return if none is set
-	 *
-	 * @return mixed
-	 * @see \ElggPlugin::getUserSetting()
-	 */
-	public function getUserSetting($name, $user_guid = 0, $plugin_id = null, $default = null) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
-		}
-
-		return $plugin->getUserSetting($name, (int) $user_guid, $default);
-	}
-
-	/**
-	 * Set a setting for a plugin.
-	 *
-	 * @param string $name      The name of the setting - note, can't be "title".
-	 * @param mixed  $value     The value.
-	 * @param string $plugin_id The plugin ID (Required)
-	 *
-	 * @return bool
-	 * @see \ElggPlugin::setSetting()
-	 */
-	public function setSetting($name, $value, $plugin_id) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
-		}
-
-		return $plugin->setSetting($name, $value);
-	}
-
-	/**
-	 * Get setting for a plugin.
-	 *
-	 * @param string $name      The name of the setting.
-	 * @param string $plugin_id The plugin ID (Required)
-	 * @param mixed  $default   The default value to return if none is set
-	 *
-	 * @return mixed
-	 * @see \ElggPlugin::getSetting()
-	 */
-	public function getSetting($name, $plugin_id, $default = null) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
-		}
-
-		return $plugin->getSetting($name, $default);
-	}
-
-	/**
-	 * Unsets a plugin setting.
-	 *
-	 * @param string $name      The name of the setting.
-	 * @param string $plugin_id The plugin ID (Required)
-	 *
-	 * @return bool
-	 * @see \ElggPlugin::unsetSetting()
-	 */
-	public function unsetSetting($name, $plugin_id) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
-		}
-
-		return $plugin->unsetSetting($name);
-	}
-
-	/**
-	 * Unsets all plugin settings for a plugin.
-	 *
-	 * @param string $plugin_id The plugin ID (Required)
-	 *
-	 * @return bool
-	 * @see \ElggPlugin::unsetAllSettings()
-	 */
-	public function unsetAllSettings($plugin_id) {
-		$plugin = $this->get($plugin_id);
-		if (!$plugin) {
-			return false;
-		}
-
-		return $plugin->unsetAllSettings();
 	}
 
 	/**

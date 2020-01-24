@@ -14,6 +14,7 @@ use Elgg\Project\Paths;
 function developers_init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:page', '_developers_page_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_developers_entity_menu');
 		
 	elgg_extend_view('admin.css', 'developers/css');
 	elgg_extend_view('admin.css', 'admin/develop_tools/error_log.css');
@@ -39,7 +40,7 @@ function developers_process_settings() {
 
 	if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default')) {
 		// don't show in action/simplecache
-		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
+		$path = elgg_substr(current_page_url(), elgg_strlen(elgg_get_site_url()));
 		if (!preg_match('~^(cache|action)/~', $path)) {
 			// Write to JSON file to not take up memory See #11886
 			$uid = substr(hash('md5', uniqid('', true)), 0, 10);
@@ -142,6 +143,29 @@ function developers_process_settings() {
 
 		elgg()->logger->pushHandler($handler);
 	}
+}
+
+/**
+ * Register menu items for the entity menu
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:entity'
+ *
+ * @return void|ElggMenuItem[]
+ *
+ * @internal
+ * @since 3.3
+ */
+function _developers_entity_menu(\Elgg\Hook $hook) {
+	if (!elgg_is_admin_logged_in()) {
+		return;
+	}
+	
+	$hook->getValue()->add(\ElggMenuItem::factory([
+		'name' => 'entity_explorer',
+		'href' => "admin/develop_tools/entity_explorer?guid={$hook->getEntityParam()->guid}",
+		'text' => elgg_echo('developers:entity_explorer:inspect_entity'),
+		'icon' => 'search',
+	]));
 }
 
 /**
@@ -275,7 +299,7 @@ function developers_wrap_views(\Elgg\Hook $hook) {
 		return;
 	}
 	
-	if (stristr(current_page_url(), elgg_normalize_url('cache/'))) {
+	if (elgg_stristr(current_page_url(), elgg_normalize_url('cache/'))) {
 		return;
 	}
 	

@@ -7,16 +7,24 @@ For more information on how events work visit :doc:`/design/events`.
    :local:
    :depth: 1
 
+.. note::
+
+	Some events are marked with `(sequence)` this means those events also have a ``:before`` and ``:after`` event
+	Also see :ref:`Event sequence <design/events#event-sequence>`
+
 System events
 =============
 
-**plugins_boot, system**
+**plugins_load, system** `(sequence)`
+    Triggered before the plugins are loaded. Rarely used. init, system is used instead. Can be used to load additional libraries.
+
+**plugins_boot, system** `(sequence)`
     Triggered just after the plugins are loaded. Rarely used. init, system is used instead.
 
-**init, system**
+**init, system** `(sequence)`
     Plugins tend to use this event for initialization (extending views, registering callbacks, etc.)
 
-**ready, system**
+**ready, system** `(sequence)`
 	Triggered after the ``init, system`` event. All plugins are fully loaded and the engine is ready
 	to serve pages.
 
@@ -48,9 +56,8 @@ System events
 	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 
 	are not cleared.
 
-**upgrade:execute, system**
-	Triggered as a sequence (so including ``:before`` and ``:after``) when executing an ``ElggUpgrade``. 
-	The ``$object`` of the event is the ``ElggUpgrade``.
+**upgrade:execute, system** `(sequence)`
+	Triggered when executing an ``ElggUpgrade``. The ``$object`` of the event is the ``ElggUpgrade``.
 
 **activate, plugin**
     Return false to prevent activation of the plugin.
@@ -61,14 +68,23 @@ System events
 **init:cookie, <name>**
     Return false to override setting a cookie.
 
-**cache:flush, system**
-    Reset internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to reset others such as APC, OPCache, or WinCache.
+**cache:invalidate, system** `(sequence)`
+    Invalidate internal and external caches.
+    
+**cache:clear, system** `(sequence)`
+    Clear internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to 
+    reset others such as APC, OPCache, or WinCache.
+
+**cache:purge, system** `(sequence)`
+    Purge internal and external caches. This is meant to remove old/stale content from the caches.
 
 **send:before, http_response**
-    Triggered before an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` that is to be sent to the requester. Handlers can terminate the event and prevent the response from being sent by returning `false`.
+    Triggered before an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` 
+    that is to be sent to the requester. Handlers can terminate the event and prevent the response from being sent by returning `false`.
 
 **send:after, http_response**
-    Triggered after an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` that was sent to the requester.
+    Triggered after an HTTP response is sent. Handlers will receive an instance of `\Symfony\Component\HttpFoundation\Response` 
+    that was sent to the requester.
 
 **reload:after, translations**
     Triggered after the translations are (re)loaded.

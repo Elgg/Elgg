@@ -1,9 +1,6 @@
 <?php
 /**
  * Provide a way of setting your language prefs
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $user = elgg_get_page_owner_entity();
@@ -13,6 +10,7 @@ if (!$user instanceof ElggUser) {
 }
 
 $options = get_installed_translations(true);
+$options = array_intersect_key($options, array_flip(elgg()->translator->getAllowedLanguages()));
 
 if (count($options) < 2) {
 	echo elgg_view_field([

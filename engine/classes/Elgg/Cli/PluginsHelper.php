@@ -21,11 +21,11 @@ trait PluginsHelper {
 
 		$plugin = elgg_get_plugin_from_id($id);
 		if (!$plugin) {
-			throw new \InvalidParameterException("No plugin with '$id'' found");
+			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
 		if (!$plugin->getManifest()) {
-			throw new \InvalidParameterException("Plugin manifest for '$id' is invalid");
+			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
 		}
 
 		if (!$force) {
@@ -58,11 +58,11 @@ trait PluginsHelper {
 	public function deactivate($id, $force = false) {
 		$plugin = elgg_get_plugin_from_id($id);
 		if (!$plugin) {
-			throw new \InvalidParameterException("No plugin with '$id'' found");
+			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
 		if (!$plugin->getManifest()) {
-			throw new \InvalidParameterException("Plugin manifest for '$id' is invalid");
+			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
 		}
 
 		if (!$force) {

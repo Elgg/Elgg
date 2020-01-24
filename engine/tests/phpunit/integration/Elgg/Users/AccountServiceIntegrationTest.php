@@ -22,12 +22,11 @@ class AccountServiceIntegrationTest extends IntegrationTestCase {
 	
 	}
 	
-	/**
-	 * @expectedException \RegistrationException
-	 */
 	public function testShortPasswordFailsValidation() {
 		$length = elgg()->config->min_password_length;
 		$password = str_repeat('a', $length - 1);
+		
+		$this->expectException(\RegistrationException::class);
 		elgg()->accounts->assertValidPassword($password);
 	}
 	
@@ -40,4 +39,3 @@ class AccountServiceIntegrationTest extends IntegrationTestCase {
 		$this->assertCount(4, $failures);
 	}
 }
-

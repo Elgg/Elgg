@@ -2,9 +2,6 @@
 /**
  * Elgg cache
  * Cache file interface for caching data.
- *
- * @package    Elgg.Core
- * @subpackage Cache
  */
 
 /**
@@ -177,27 +174,46 @@ function elgg_disable_simplecache() {
 }
 
 /**
- * Deletes all cached views in the simplecache and sets the lastcache and
- * lastupdate time to 0 for every valid viewtype.
- *
- * @return bool
- * @since 1.7.4
- */
-function elgg_invalidate_simplecache() {
-	_elgg_services()->simpleCache->invalidate();
-}
-
-/**
- * Flush all the registered caches
+ * Invalidate all the registered caches
  *
  * @return void
- * @since 1.11
+ * @since 3.3
  */
-function elgg_flush_caches() {
+function elgg_invalidate_caches() {
 	// this event sequence could take while, make sure there is no timeout
 	set_time_limit(0);
 	
-	_elgg_services()->events->triggerSequence('cache:flush', 'system');
+	elgg()->config->save('lastcache', time());
+	
+	_elgg_services()->events->triggerSequence('cache:invalidate', 'system');
+}
+
+/**
+ * Clear all the registered caches
+ *
+ * @return void
+ * @since 3.3
+ */
+function elgg_clear_caches() {
+	// this event sequence could take while, make sure there is no timeout
+	set_time_limit(0);
+	
+	_elgg_services()->events->triggerSequence('cache:clear', 'system');
+}
+
+/**
+ * Purge all the registered caches
+ *
+ * This will remove all old/stale items from the caches
+ *
+ * @return void
+ * @since 3.3
+ */
+function elgg_purge_caches() {
+	// this event sequence could take while, make sure there is no timeout
+	set_time_limit(0);
+	
+	_elgg_services()->events->triggerSequence('cache:purge', 'system');
 }
 
 /**
@@ -260,8 +276,7 @@ function _elgg_symlink_cache() {
 }
 
 /**
- * Initializes the simplecache lastcache variable and creates system cache files
- * when appropriate.
+ * Initializes caches
  *
  * @return void
  * @internal
@@ -293,14 +308,46 @@ function _elgg_disable_caches() {
  * @internal
  */
 function _elgg_clear_caches() {
-	_elgg_services()->boot->invalidateCache();
+	_elgg_services()->boot->clearCache();
 	_elgg_services()->plugins->clear();
 	_elgg_services()->sessionCache->clear();
 	_elgg_services()->dataCache->clear();
 	_elgg_services()->dic_cache->flushAll();
-	_elgg_services()->simpleCache->invalidate();
+	_elgg_services()->simpleCache->clear();
 	_elgg_services()->autoloadManager->deleteCache();
 	_elgg_services()->fileCache->clear();
+}
+
+/**
+ * Invalidate all caches
+ *
+ * @return void
+ * @internal
+ */
+function _elgg_invalidate_caches() {
+	_elgg_services()->boot->getCache()->invalidate();
+	_elgg_services()->plugins->invalidate();
+	_elgg_services()->sessionCache->invalidate();
+	_elgg_services()->dataCache->invalidate();
+	_elgg_services()->dic_cache->getCache()->invalidate();
+	_elgg_services()->simpleCache->invalidate(false);
+	_elgg_services()->fileCache->invalidate();
+}
+
+/**
+ * Purge all caches
+ *
+ * @return void
+ * @internal
+ */
+function _elgg_purge_caches() {
+	_elgg_services()->boot->getCache()->purge();
+	_elgg_services()->plugins->getCache()->purge();
+	_elgg_services()->sessionCache->purge();
+	_elgg_services()->dataCache->purge();
+	_elgg_services()->dic_cache->getCache()->purge();
+	_elgg_services()->simpleCache->purge();
+	_elgg_services()->fileCache->purge();
 }
 
 /**
@@ -363,9 +410,11 @@ function _elgg_rebuild_public_container() {
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('ready', 'system', '_elgg_cache_init');
 
-	$events->registerHandler('cache:flush:before', 'system', '_elgg_disable_caches');
-	$events->registerHandler('cache:flush', 'system', '_elgg_clear_caches');
-	$events->registerHandler('cache:flush', 'system', '_elgg_reset_opcache');
-	$events->registerHandler('cache:flush:after', 'system', '_elgg_enable_caches');
-	$events->registerHandler('cache:flush:after', 'system', '_elgg_rebuild_public_container');
+	$events->registerHandler('cache:clear:before', 'system', '_elgg_disable_caches');
+	$events->registerHandler('cache:clear', 'system', '_elgg_clear_caches');
+	$events->registerHandler('cache:clear', 'system', '_elgg_reset_opcache');
+	$events->registerHandler('cache:clear:after', 'system', '_elgg_enable_caches');
+	$events->registerHandler('cache:clear:after', 'system', '_elgg_rebuild_public_container');
+	$events->registerHandler('cache:invalidate', 'system', '_elgg_invalidate_caches');
+	$events->registerHandler('cache:purge', 'system', '_elgg_purge_caches');
 };

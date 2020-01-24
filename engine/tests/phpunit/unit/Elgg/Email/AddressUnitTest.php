@@ -2,6 +2,8 @@
 
 namespace Elgg\Email;
 
+use Zend\Mail\Exception\InvalidArgumentException;
+
 /**
  * @group EmailService
  * @group UnitTests
@@ -36,20 +38,14 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Example <example@elgg.org>', $address->toString());
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testInvalidEmail() {
-		
-		$address = new Address('invalid_email');
+		$this->expectException(InvalidArgumentException::class);
+		new Address('invalid_email');
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testEmailInvalidName() {
-		
-		$address = new Address('example@elgg.org', []);
+		$this->expectException(InvalidArgumentException::class);
+		new Address('example@elgg.org', []);
 	}
 	
 	public function testChangeEmail() {
@@ -76,27 +72,23 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Example 2 <example@elgg.org>', $address->toString());
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testChangeInvalidEmail() {
 		
 		$address = $this->address;
 		
 		$this->assertEquals('example@elgg.org', $address->getEmail());
 		
+		$this->expectException(InvalidArgumentException::class);
 		$address->setEmail('invalid_email');
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testChangeInvalidName() {
 		
 		$address = $this->address;
 		
 		$this->assertEquals('Example', $address->getName());
 		
+		$this->expectException(InvalidArgumentException::class);
 		$address->setName([]);
 	}
 	
@@ -111,15 +103,13 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		$this->assertNull($address->getName());
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testInvalidUnsetName() {
 		
 		$address = $this->address;
 		
 		$this->assertEquals('Example', $address->getName());
 		
+		$this->expectException(InvalidArgumentException::class);
 		$address->setName(null);
 	}
 	
@@ -139,12 +129,9 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Example', $address->getName());
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testFromStringInvalidEmail() {
-		
-		$address = Address::fromString('invalid_email');
+		$this->expectException(InvalidArgumentException::class);
+		Address::fromString('invalid_email');
 	}
 	
 	public function testGetFormattedEmailAddressEmail() {
@@ -161,19 +148,13 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('Example <example@elgg.org>', $address_string);
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testGetFormattedEmailAddressInvalidEmail() {
-		
-		$address_string = Address::getFormattedEmailAddress('invalid_email');
+		$this->expectException(InvalidArgumentException::class);
+		Address::getFormattedEmailAddress('invalid_email');
 	}
 	
-	/**
-	 * @expectedException Zend\Mail\Exception\InvalidArgumentException
-	 */
 	public function testGetFormattedEmailAddressEmailInvalidName() {
-		
-		$address_string = Address::getFormattedEmailAddress('example@elgg.org', []);
+		$this->expectException(InvalidArgumentException::class);
+		Address::getFormattedEmailAddress('example@elgg.org', []);
 	}
 }

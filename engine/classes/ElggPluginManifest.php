@@ -12,9 +12,7 @@
  * where XX is the version specified in the top-level <plugin_manifest>
  * tag's XML namespace.
  *
- * @package    Elgg.Core
- * @subpackage Plugins
- * @since      1.8
+ * @since 1.8
  */
 class ElggPluginManifest {
 
@@ -332,8 +330,11 @@ class ElggPluginManifest {
 	 * Returns the donations page
 	 *
 	 * @return string
+	 * @deprecated 3.3
 	 */
 	public function getDonationsPageURL() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '3.3');
+		
 		return (string) $this->parser->getAttribute('donations');
 	}
 
@@ -359,8 +360,11 @@ class ElggPluginManifest {
 	 * Return the copyright
 	 *
 	 * @return string
+	 * @deprecated 3.3
 	 */
 	public function getCopyright() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '3.3');
+		
 		return (string) $this->parser->getAttribute('copyright');
 	}
 
@@ -379,41 +383,7 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$bundled_plugins = [
-			'activity',
-			'blog',
-			'bookmarks',
-			'ckeditor',
-			'custom_index',
-			'dashboard',
-			'developers',
-			'diagnostics',
-			'discussions',
-			'embed',
-			'externalpages',
-			'file',
-			'friends',
-			'friends_collections',
-			'garbagecollector',
-			'groups',
-			'invitefriends',
-			'likes',
-			'login_as',
-			'members',
-			'messageboard',
-			'messages',
-			'notifications',
-			'pages',
-			'profile',
-			'reportedcontent',
-			'search',
-			'site_notifications',
-			'system_log',
-			'tagcloud',
-			'thewire',
-			'uservalidationbyemail',
-			'web_services',
-		];
+		$bundled_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
 
 		$cats = $this->parser->getAttribute('category');
 
@@ -432,6 +402,7 @@ class ElggPluginManifest {
 	 * Return the screenshots listed.
 	 *
 	 * @return array
+	 * @deprecated 3.1
 	 */
 	public function getScreenshots() {
 		elgg_deprecated_notice('Using screenshots in plugins are deprecated an will no longer be shown in the plugin details.', '3.1');
@@ -528,8 +499,11 @@ class ElggPluginManifest {
 	 * Returns the suggests elements.
 	 *
 	 * @return array
+	 * @deprecated 3.3
 	 */
 	public function getSuggests() {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use suggestions in composer', '3.3');
+		
 		$suggests = $this->parser->getAttribute('suggests');
 
 		if (!$suggests) {

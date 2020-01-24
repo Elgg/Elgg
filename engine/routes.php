@@ -97,14 +97,6 @@ return [
 		'resource' => 'manifest.json',
 		'walled' => false,
 	],
-	'action:token' => [
-		'path' => '/refresh_token',
-		'controller' => \Elgg\Controllers\RefreshCsrfToken::class,
-		'walled' => false,
-		'middleware' => [
-			\Elgg\Router\Middleware\AjaxGatekeeper::class,
-		]
-	],
 	'admin' => [
 		'path' => '/admin/{segments?}',
 		'handler' => '_elgg_admin_page_handler',

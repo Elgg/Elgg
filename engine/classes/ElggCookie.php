@@ -2,8 +2,6 @@
 /**
  * A simple object model for an HTTP cookie
  *
- * @package    Elgg.Core
- * @subpackage Http
  * @see        elgg_set_cookie()
  * @see        http://php.net/manual/en/function.setcookie.php
  * @see        http://php.net/manual/en/function.session-set-cookie-params.php

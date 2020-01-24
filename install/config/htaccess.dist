@@ -1,5 +1,8 @@
 # Elgg htaccess directives
 
+# Don't allow MultiViews
+Options -MultiViews
+
 # Don't allow listing directories
 Options -Indexes
 

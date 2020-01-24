@@ -2,7 +2,7 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 use Elgg\Queue\DatabaseQueue;
 
 /**
@@ -10,7 +10,7 @@ use Elgg\Queue\DatabaseQueue;
  *
  * @group IntegrationTests
  */
-class ElggCoreDatabaseQueueTest extends LegacyIntegrationTestCase {
+class ElggCoreDatabaseQueueTest extends IntegrationTestCase {
 
 	public function up() {
 
@@ -30,15 +30,15 @@ class ElggCoreDatabaseQueueTest extends LegacyIntegrationTestCase {
 		$result = $queue->enqueue($second);
 		$this->assertTrue((bool) $result);
 
-		$this->assertIdentical(2, $queue->size());
+		$this->assertEquals(2, $queue->size());
 
 		$data = $queue->dequeue();
-		$this->assertIdentical($first, $data);
+		$this->assertEquals($first, $data);
 		$data = $queue->dequeue();
-		$this->assertIdentical($second, $data);
+		$this->assertEquals($second, $data);
 
 		$data = $queue->dequeue();
-		$this->assertIdentical(null, $data);
+		$this->assertNull($data);
 	}
 
 	public function testMultipleQueues() {
@@ -48,17 +48,17 @@ class ElggCoreDatabaseQueueTest extends LegacyIntegrationTestCase {
 		$second = array(4, 5, 6);
 
 		$result = $queue1->enqueue($first);
-		$this->assertTrue((bool) $result);
+		$this->assertTrue($result);
 		$result = $queue2->enqueue($second);
-		$this->assertTrue((bool) $result);
+		$this->assertTrue($result);
 
-		$this->assertIdentical(1, $queue1->size());
-		$this->assertIdentical(1, $queue2->size());
+		$this->assertEquals(1, $queue1->size());
+		$this->assertEquals(1, $queue2->size());
 
 		$data = $queue2->dequeue();
-		$this->assertIdentical($second, $data);
+		$this->assertEquals($second, $data);
 		$data = $queue1->dequeue();
-		$this->assertIdentical($first, $data);
+		$this->assertEquals($first, $data);
 	}
 
 	public function testClear() {
@@ -67,13 +67,13 @@ class ElggCoreDatabaseQueueTest extends LegacyIntegrationTestCase {
 		$second = array(4, 5, 6);
 
 		$result = $queue->enqueue($first);
-		$this->assertTrue((bool) $result);
+		$this->assertTrue($result);
 		$result = $queue->enqueue($second);
-		$this->assertTrue((bool) $result);
+		$this->assertTrue($result);
 
 		$queue->clear();
 		$data = $queue->dequeue();
-		$this->assertIdentical(null, $data);
-		$this->assertIdentical(0, $queue->size());
+		$this->assertNull($data);
+		$this->assertEquals(0, $queue->size());
 	}
 }

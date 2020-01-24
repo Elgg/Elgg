@@ -94,26 +94,26 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('no', $user->banned);
 		$this->assertEquals('no', $user->admin);
 		$this->assertNotEmpty($user->language);
-		$this->assertInternalType('string', $user->language);
+		$this->assertIsString($user->language);
 	}
 	
 	/**
 	 * @dataProvider incorrectAdminBannedValues
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testSetIncorrectBannedValue($value) {
 		$user = $this->createUser();
 		
+		$this->expectException(InvalidArgumentException::class);
 		$user->banned = $value;
 	}
 	
 	/**
 	 * @dataProvider incorrectAdminBannedValues
-	 * @expectedException \InvalidArgumentException
 	 */
 	public function testSetIncorrectAdminValue($value) {
 		$user = $this->createUser();
 		
+		$this->expectException(InvalidArgumentException::class);
 		$user->admin = $value;
 	}
 	

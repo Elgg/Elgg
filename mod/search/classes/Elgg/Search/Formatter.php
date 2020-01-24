@@ -102,9 +102,14 @@ class Formatter {
 
 		foreach ($matches as $property_type => $fields) {
 			foreach ($fields as $field => $match) {
+				$label = $this->getFieldLabel($property_type, $field);
+				if (elgg_is_empty($label)) {
+					continue;
+				}
+				
 				$label = elgg_format_element('strong', [
 					'class' => 'search-match-extra-label',
-				], $this->getFieldLabel($property_type, $field));
+				], $label);
 
 
 				$extra_row = elgg_format_element('p', [
@@ -176,12 +181,12 @@ class Formatter {
 
 					if (is_array($property_values)) {
 						foreach ($property_values as $text) {
-							if (stristr($text, $query)) {
+							if (elgg_stristr($text, $query)) {
 								$matches[$property_type][$field][] = $this->highlighter->highlight($text, 1, 300);
 							}
 						}
 					} else {
-						if (stristr($property_values, $query)) {
+						if (elgg_stristr($property_values, $query)) {
 							$matches[$property_type][$field][] = $this->highlighter->highlight($property_values, 1, 300);
 						}
 					}
@@ -201,7 +206,6 @@ class Formatter {
 	 * @return string
 	 */
 	protected function getFieldLabel($property_type, $property_name) {
-
 		$type = $this->entity->getType();
 		$subtype = $this->entity->getSubtype();
 
@@ -212,7 +216,7 @@ class Formatter {
 				$prefix = 'profile';
 				break;
 			case 'group' :
-				$prefix = 'group';
+				$prefix = 'groups';
 				break;
 			case 'object' :
 				$prefix = 'tag_names';
@@ -226,18 +230,17 @@ class Formatter {
 			"$type:$subtype:field:$property_name",
 			"$type:$property_name",
 			"$prefix:$property_name",
+			"$property_name",
+			"tag_names:{$property_name}",
 		];
-
-		$label = elgg_echo("tag_names:$property_name");
 
 		foreach ($keys as $key) {
 			if (elgg_language_key_exists($key)) {
-				$label = elgg_echo($key);
-				break;
+				return elgg_echo($key);
 			}
 		}
 
-		return $label;
+		return '';
 	}
 
 	/**

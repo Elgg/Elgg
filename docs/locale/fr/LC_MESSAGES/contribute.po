@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
+# Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-23 14:34+0200\n"
+"POT-Creation-Date: 2020-01-23 11:15+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
+"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +38,7 @@ msgstr ""
 #: ../../contribute/core/releases.rst:12 ../../contribute/database.rst:8
 #: ../../contribute/docs.rst:8 ../../contribute/tests.rst:6
 msgid "Contents"
-msgstr ""
+msgstr "Contenu"
 
 #: ../../contribute/code.rst:11
 msgid "License agreement"
@@ -2047,11 +2048,11 @@ msgstr ""
 "``engine/schema/migrations/``. Suivez la documentation de Phinx pour appeler"
 " les méthodes nécessaires pour modifier les tables de la base de données."
 
-#: ../../contribute/database.rst:33
+#: ../../contribute/database.rst:34
 msgid "Executing a migration"
 msgstr "Exécuter une migration"
 
-#: ../../contribute/database.rst:35
+#: ../../contribute/database.rst:36
 msgid ""
 "Migrations are executed every time your run ``upgrade.php``. If you would "
 "like to execute migrations manually, you can do so via the command line:"
@@ -2060,7 +2061,7 @@ msgstr ""
 "``upgrade.php``. Si vous préférez exécuter les migrations manuellement, vous"
 " pouvez le faire via la ligne de commande :"
 
-#: ../../contribute/database.rst:42
+#: ../../contribute/database.rst:47
 msgid ""
 "Check Phinx documentation for additional flags that allow you to run a "
 "single migration or a set of migrations within a time range."

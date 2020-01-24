@@ -16,8 +16,6 @@ namespace Elgg;
  *
  * @todo Rename the "code" DB column to "hash"
  *
- * @package Elgg.Core
- *
  * @internal
  */
 class PersistentLoginService {

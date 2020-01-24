@@ -15,9 +15,6 @@
  * http://www.freebsd.org/doc/en/articles/pam/index.html
  *
  * @see \ElggPAM
- *
- * @package Elgg.Core
- * @subpackage Authentication.PAM
  */
 
 /**

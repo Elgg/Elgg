@@ -17,6 +17,7 @@ use Elgg\Project\Paths;
  * @property bool          $allow_phpinfo							Allow access tot PHPInfo
  * @property bool          $allow_registration						Is registration enabled
  * @property string        $allow_user_default_access				Are users allowed to set their own default access level
+ * @property string        $allowed_languages						Comma seperated string of admin allowed languages
  * @property string        $assetroot            					Path of asset (views) simplecache with trailing "/"
  * @property bool          $auto_disable_plugins					Are unbootable plugins automatically disabled
  * @property int           $batch_run_time_in_secs					Max time for a single upgrade loop
@@ -26,6 +27,8 @@ use Elgg\Project\Paths;
  * @property array         $breadcrumbs
  * @property string        $cacheroot            					Path of cache storage with trailing "/"
  * @property bool          $can_change_username						Is user allowed to change the username
+ * @property bool          $comment_box_collapses					Determines if the comment box collapses after the first comment
+ * @property bool          $comments_latest_first					Determines if the default order of comments is latest first
  * @property array         $css_compiler_options 					Options passed to CssCrush during CSS compilation
  * @property string        $dataroot             					Path of data storage with trailing "/"
  * @property bool          $data_dir_override
@@ -46,13 +49,13 @@ use Elgg\Project\Paths;
  * @property array         $default_widget_info
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
- * @property string[]      $elgg_cron_periods
- * @property array         $elgg_lazy_hover_menus
  * @property bool          $elgg_load_sync_code
  * @property bool          $elgg_maintenance_mode
  * @property string        $elgg_settings_file
  * @property bool          $elgg_config_set_secret
  * @property bool          $enable_profiling
+ * @property string        $emailer_transport                       This is an override for Elgg's default email handling transport (default sendmail)
+ * @property array         $emailer_smtp_settings                   This configures SMTP if $emailer_transport is set to "smtp"
  * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
  * @property string[]      $group
@@ -63,7 +66,7 @@ use Elgg\Project\Paths;
  * @property bool          $installer_running
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
- * @property int           $lastcache								The last cache timestamp
+ * @property int           $lastcache								The timestamp the cache was last invalidated
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers
@@ -99,7 +102,6 @@ use Elgg\Project\Paths;
  * @property array		   $servicehandler							Holds the service handlers as registered by the webservice plugin
  * @property string        $seeder_local_image_folder 				Path to a local folder containing images used for seeding
  * @property bool          $simplecache_enabled						Is simplecache enabled?
- * @property int           $simplecache_lastupdate
  * @property bool          $simplecache_minify_css
  * @property bool          $simplecache_minify_js
  * @property \ElggSite     $site 									The site entity
@@ -164,6 +166,16 @@ class Config {
 	 * @var string
 	 */
 	private $settings_path;
+	
+	/**
+	 * Holds the set of default values
+	 *
+	 * @var array
+	 */
+	protected $config_defaults = [
+		'comment_box_collapses' => true,
+		'comments_latest_first' => true,
+	];
 
 	/**
 	 * Constructor
@@ -171,6 +183,7 @@ class Config {
 	 * @param array $values Initial config values from Env/settings file
 	 */
 	public function __construct(array $values = []) {
+		$values = array_merge($this->config_defaults, $values);
 		$this->values = $values;
 
 		// Don't keep copies of these in case config gets dumped
@@ -387,6 +400,9 @@ class Config {
 			case 'group_tool_options':
 				elgg_deprecated_notice("'$name' config option is no longer in use. Use elgg()->group_tools->all()", '3.0');
 				return elgg()->group_tools->all();
+			case 'simplecache_lastupdate':
+				elgg_deprecated_notice("'$name' config option is deprecated. Use 'lastcache'", '3.3');
+				break;
 		}
 
 		if (isset($this->values[$name])) {

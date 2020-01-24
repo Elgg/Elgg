@@ -16,24 +16,18 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	/**
-	 * @expectedException \DatabaseException
-	 */
 	public function testThrowsWithUnknownInsertSpec() {
+		$this->expectException(\DatabaseException::class);
 		insert_data('INSERT INTO B');
 	}
 
-	/**
-	 * @expectedException \DatabaseException
-	 */
 	public function testThrowsWithUnknownUpdateSpec() {
+		$this->expectException(\DatabaseException::class);
 		update_data('UPDATE B');
 	}
 
-	/**
-	 * @expectedException \DatabaseException
-	 */
 	public function testThrowsWithUnknownDeleteSpec() {
+		$this->expectException(\DatabaseException::class);
 		delete_data('DELETE FROM B');
 	}
 

@@ -14,9 +14,13 @@ class DatabaseSeedCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('database:seed')
-			->addOption('limit', 'l', InputOption::VALUE_OPTIONAL, 'Number of entities to seed')
-			->addOption('image_folder', null, InputOption::VALUE_OPTIONAL, 'Path to a local folder containing images for seeding')
-			->setDescription('Seeds the database with fake entities');
+			->setDescription(elgg_echo('cli:database:seed:description'))
+			->addOption('limit', 'l', InputOption::VALUE_OPTIONAL,
+				elgg_echo('cli:database:seed:option:limit')
+			)
+			->addOption('image_folder', null, InputOption::VALUE_OPTIONAL,
+				elgg_echo('cli:database:seed:option:image_folder')
+			);
 	}
 
 	/**
@@ -25,7 +29,7 @@ class DatabaseSeedCommand extends Command {
 	protected function command() {
 
 		if (!class_exists('\Faker\Generator')) {
-			elgg_log('This is a developer tool currently intended for testing purposes only. Please refrain from using it.', 'ERROR');
+			elgg_log(elgg_echo('cli:database:seed:log:error:faker'), 'ERROR');
 
 			return 1;
 		}
@@ -33,7 +37,7 @@ class DatabaseSeedCommand extends Command {
 		set_time_limit(0);
 
 		if (elgg_is_logged_in()) {
-			elgg_log("Seeds should not be run with a logged in user", 'ERROR');
+			elgg_log(elgg_echo('cli:database:seed:log:error:logged_in'), 'ERROR');
 
 			return 2;
 		}

@@ -14,10 +14,6 @@
  * and the admin area. There is a special presistent message for the admin area
  * called an admin notice. It should be used when a plugin requires an
  * administrator to take an action. @see elgg_add_admin_notice()
- *
- *
- * @package Elgg.Core
- * @subpackage Admin
  */
 
 use Elgg\Menu\MenuItems;
@@ -189,8 +185,8 @@ function _elgg_admin_init() {
 	// new users require admin validation
 	elgg_register_event_handler('login:before', 'user', '_elgg_admin_user_validation_login_attempt', 999); // allow others to throw exceptions earlier
 	elgg_register_event_handler('validate:after', 'user', '_elgg_admin_user_validation_notification');
-	elgg_register_plugin_hook_handler('cron', 'daily', '_elgg_admin_cron_pending_user_validation_notification');
-	elgg_register_plugin_hook_handler('cron', 'weekly', '_elgg_admin_cron_pending_user_validation_notification');
+	elgg_register_plugin_hook_handler('cron', 'daily', '_elgg_admin_notify_admins_pending_user_validation');
+	elgg_register_plugin_hook_handler('cron', 'weekly', '_elgg_admin_notify_admins_pending_user_validation');
 	elgg_register_plugin_hook_handler('register', 'user', '_elgg_admin_check_admin_validation', 999); // allow others to also disable the user
 	elgg_register_plugin_hook_handler('response', 'action:register', '_elgg_admin_set_registration_forward_url', 999); // allow other to set forwar url first
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_admin_save_notification_setting');
@@ -681,8 +677,8 @@ function _elgg_admin_page_handler($page) {
 function _elgg_admin_maintenance_allow_url($current_url) {
 	$site_path = preg_replace('~^https?~', '', elgg_get_site_url());
 	$current_path = preg_replace('~^https?~', '', $current_url);
-	if (0 === strpos($current_path, $site_path)) {
-		$current_path = ($current_path === $site_path) ? '' : substr($current_path, strlen($site_path));
+	if (0 === elgg_strpos($current_path, $site_path)) {
+		$current_path = ($current_path === $site_path) ? '' : elgg_substr($current_path, elgg_strlen($site_path));
 	} else {
 		$current_path = false;
 	}

@@ -2,12 +2,8 @@
 
 $guid = (int) get_input('guid');
 
-if (empty($guid)) {
-	return;
-}
-
 $plugin = get_entity($guid);
-if (!$plugin instanceof ElggPlugin) {
+if (!$plugin instanceof ElggPlugin || !$plugin->canEdit()) {
 	return;
 }
 
@@ -38,10 +34,6 @@ if (!empty($url)) {
 		'is_trusted' => true,
 	]);
 }
-
-$info[elgg_echo('admin:plugins:label:copyright')] = elgg_view('output/text', [
-	'value' => $plugin->getManifest()->getCopyright(),
-]);
 
 $info[elgg_echo('admin:plugins:label:licence')] = elgg_view('output/text', [
 	'value' => $plugin->getManifest()->getLicense(),
@@ -80,7 +72,6 @@ if ($extra_info !== ("admin:plugins:info:" . $plugin->getID())) {
 $resources = [
 	'repository' => $plugin->getManifest()->getRepositoryURL(),
 	'bugtracker' => $plugin->getManifest()->getBugTrackerURL(),
-	'donate' => $plugin->getManifest()->getDonationsPageURL(),
 ];
 
 $resources_html = '';

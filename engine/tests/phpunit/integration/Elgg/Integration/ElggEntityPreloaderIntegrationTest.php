@@ -2,17 +2,27 @@
 
 namespace Elgg\Integration;
 
+use Elgg\EntityPreloader;
+
 /**
  * @group IntegrationTests
  */
-class ElggEntityPreloaderIntegrationTest extends \Elgg\LegacyIntegrationTestCase {
+class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 
+	/**
+	 * @var EntityPreloader
+	 */
 	protected $realPreloader;
 
 	/**
 	 * @var MockEntityPreloader20140623
 	 */
 	protected $mockPreloader;
+	
+	/**
+	 * @var \ElggUser
+	 */
+	protected $user;
 
 	public function up() {
 		$this->realPreloader = _elgg_services()->entityPreloader;
@@ -20,10 +30,19 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\LegacyIntegrationTestCase
 		$this->mockPreloader = new MockEntityPreloader20140623(_elgg_services()->entityTable);
 
 		_elgg_services()->setValue('entityPreloader', $this->mockPreloader);
+		
+		$this->user = $this->createUser();
+		elgg()->session->setLoggedInUser($this->user);
 	}
 
 	public function down() {
 		_elgg_services()->setValue('entityPreloader', $this->realPreloader);
+		
+		if ($this->user) {
+			$this->user->delete();
+		}
+		
+		elgg()->session->removeLoggedInUser();
 	}
 
 	public function testCanPreloadEntityOwners() {
@@ -39,7 +58,7 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\LegacyIntegrationTestCase
 
 		$options['preload_owners'] = true;
 		elgg_get_entities($options);
-		$this->assertEqual(3, count($this->mockPreloader->preloaded));
+		$this->assertCount(3, $this->mockPreloader->preloaded);
 
 		foreach ($seeded as $object) {
 			$object->delete();
@@ -58,13 +77,13 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\LegacyIntegrationTestCase
 		];
 
 		$annotations = elgg_get_annotations($options);
-		$this->assertEquals(3, count($annotations));
+		$this->assertCount(3, $annotations);
 
 		$this->assertNull($this->mockPreloader->preloaded);
 
 		$options['preload_owners'] = true;
 		elgg_get_annotations($options);
-		$this->assertEqual(3, count($this->mockPreloader->preloaded));
+		$this->assertCount(3, $this->mockPreloader->preloaded);
 	}
 }
 

@@ -2,9 +2,6 @@
 /**
  * Email user validation plugin.
  * Non-admin accounts are invalid until their email address is confirmed.
- *
- * @package Elgg.Core.Plugin
- * @subpackage UserValidationByEmail
  */
 
 /**

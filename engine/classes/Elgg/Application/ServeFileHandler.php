@@ -3,9 +3,9 @@
 namespace Elgg\Application;
 
 use DateTime;
-use Elgg\Application;
 use Elgg\Config;
 use Elgg\Filesystem\MimeTypeDetector;
+use Elgg\Filesystem\MimeTypeService;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +16,6 @@ use Elgg\Security\HmacFactory;
  * File server handler
  *
  * @internal
- *
- * @package Elgg.Core
  */
 class ServeFileHandler {
 
@@ -30,16 +28,23 @@ class ServeFileHandler {
 	 * @var Config
 	 */
 	private $config;
+	
+	/**
+	 * @var MimeTypeService
+	 */
+	protected $mimetype;
 
 	/**
 	 * Constructor
 	 *
-	 * @param HmacFactory $hmac   HMAC service
-	 * @param Config      $config Config service
+	 * @param HmacFactory     $hmac     HMAC service
+	 * @param Config          $config   Config service
+	 * @param MimeTypeService $mimetype MimeType service
 	 */
-	public function __construct(HmacFactory $hmac, Config $config) {
+	public function __construct(HmacFactory $hmac, Config $config, MimeTypeService $mimetype) {
 		$this->hmac = $hmac;
 		$this->config = $config;
+		$this->mimetype = $mimetype;
 	}
 
 	/**
@@ -117,7 +122,8 @@ class ServeFileHandler {
 		$content_disposition = $disposition == 'i' ? 'inline' : 'attachment';
 
 		$headers = [
-			'Content-Type' => (new MimeTypeDetector())->getType($filenameonfilestore),
+			'Content-Type' => $this->mimetype->getMimeType($filenameonfilestore),
+			'X-Content-Type-Options' => 'nosniff',
 		];
 		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, $public, $content_disposition);
 		

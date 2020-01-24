@@ -2,9 +2,6 @@
 /**
  * Elgg login box
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['module'] The module name. Default: aside
  */
 

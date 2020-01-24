@@ -1,18 +1,24 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'item:object:blog' => 'Bloglar',
-	'collection:object:blog' => 'Blogs',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog' => 'Bloglar',
+	'collection:object:blog:all' => 'Tüm site blogları',
+	'collection:object:blog:owner' => '%s kullanıcısının blogları',
 	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
+	'collection:object:blog:friends' => 'Arkadaşların blogları',
+	'add:object:blog' => 'Blog gönderisi ekle',
+	'edit:object:blog' => 'Blog gönderisini düzenle',
 
 	'blog:revisions' => 'Düzeltmeler',
 	'blog:archives' => 'Arşivler',
 
-	'groups:tool:blog' => 'Enable group blog',
+	'groups:tool:blog' => 'Grup blogunu etkinleştir',
 	'blog:write' => 'Bir blog gönderisi yaz',
 
 	// Editing
@@ -58,7 +64,7 @@ View and comment on the blog post:
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:description' => 'Son blog gönderilerinizi göster',
 	'blog:moreblogs' => 'Daha fazla blog gönderisi',
 	'blog:numbertodisplay' => 'Gösterilecek blog gönderisi sayısı',
 );

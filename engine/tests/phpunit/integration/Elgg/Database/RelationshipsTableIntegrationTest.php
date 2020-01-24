@@ -252,7 +252,7 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->service->add($object2->guid, 'testRelationship4', $object1->guid);
 		
 		$relationships = $this->service->getAll($object1->guid);
-		$this->assertInternalType('array', $relationships);
+		$this->assertIsArray($relationships);
 		$this->assertCount(3, $relationships);
 		
 		$object1->delete();
@@ -272,7 +272,7 @@ class RelationshipsTableIntegrationTest extends IntegrationTestCase {
 		$this->service->add($object2->guid, 'testRelationship4', $object1->guid);
 		
 		$relationships = $this->service->getAll($object1->guid, true);
-		$this->assertInternalType('array', $relationships);
+		$this->assertIsArray($relationships);
 		$this->assertCount(4, $relationships);
 		
 		$object1->delete();

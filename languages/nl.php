@@ -1,4 +1,9 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 /**
@@ -553,6 +558,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 
 	'admin:settings' => 'Instellingen',
 	'admin:settings:basic' => 'Basisinstellingen',
+	'admin:settings:i18n' => 'Internationalisatie',
 	'admin:settings:advanced' => 'Geavanceerde instellingen',
 	'admin:settings:users' => 'Gebruikers',
 	'admin:site_settings' => "Instellingen",
@@ -609,6 +615,12 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 
 	'admin:cache:flush' => 'Wis de caches',
 	'admin:cache:flushed' => "De sitecache is gewist",
+	'admin:cache:invalidate' => 'Invalideer de caches',
+	'admin:cache:invalidated' => "De caches van de site zijn geïnvalideerd",
+	'admin:cache:clear' => 'Leeg de caches',
+	'admin:cache:cleared' => "De caches van de site zijn geleegd",
+	'admin:cache:purge' => 'Schoon de caches op',
+	'admin:cache:purged' => "De caches van de site zijn opgeschoond",
 
 	'admin:footer:faq' => 'Veelgestelde vragen voor beheerders',
 	'admin:footer:manual' => 'Beheerdershandleiding',
@@ -804,10 +816,16 @@ Bekijk hier de volledige lijst van gebruikers:
 	'plugins:disabled' => 'Plugins worden niet geladen, omdat een bestand genaamd "disabled" in de mod-directory gevonden is.',
 	'plugins:settings:save:ok' => "De instellingen voor de plugin '%s' zijn succesvol opgeslagen.",
 	'plugins:settings:save:fail' => "Er is een fout opgetreden tijdens het opslaan van de instellingen voor de plugin '%s'.",
+	'plugins:settings:remove:ok' => "Alle instellingen voor de %s plugin zijn verwijderd",
+	'plugins:settings:remove:fail' => "Er is een probleem  opgetreden tijdens het verwijderen van alle instellingen voor de %s plugin",
 	'plugins:usersettings:save:ok' => "Gebruikersinstellingen voor de plugin '%s' zijn succesvol opgeslagen.",
 	'plugins:usersettings:save:fail' => "Er is een fout opgetreden tijden het opslaan van de gebruikersinstellingen van de plugin '%s'.",
+	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',
+	
+	'plugins:settings:remove:menu:text' => "Verwijder alle instellingen",
+	'plugins:settings:remove:menu:confirm' => "Weet je zeker dat je alle instellingen (inclusief die van de gebruikers) wilt verwijderen voor deze plugin?",
 
 	'admin:plugins' => "Plugins",
 	'admin:plugins:activate_all' => 'Alles activeren',
@@ -834,6 +852,7 @@ Bekijk hier de volledige lijst van gebruikers:
 	'admin:plugins:label:moreinfo' => 'Meer informatie',
 	'admin:plugins:label:version' => 'Versie',
 	'admin:plugins:label:location' => 'Locatie',
+	'admin:plugins:label:priority' => 'Prioriteit',
 	'admin:plugins:label:contributors' => 'Bijdragers',
 	'admin:plugins:label:contributors:name' => 'Naam',
 	'admin:plugins:label:contributors:email' => 'E-mailadres',
@@ -1148,6 +1167,9 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'content' => "inhoud",
 	'content:latest' => 'Laatste activiteit',
 	'content:latest:blurb' => 'Of klik hier om de laatste inhoud van de hele site te bekijken',
+	
+	'list:out_of_bounds' => "Je bent op een deel van de lijst gekomen zonder content, echter is er wel content beschikbaar.",
+	'list:out_of_bounds:link' => "Ga terug naar de eerste pagina van deze lijst",
 
 	'link:text' => 'bekijk link',
 
@@ -1172,6 +1194,8 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'status:enabled' => 'Geactiveerd',
 	'status:disabled' => 'Gedeactiveerd',
 	'status:unavailable' => 'Niet beschikbaar',
+	'status:active' => 'Actief',
+	'status:inactive' => 'Inactief',
 
 /**
  * Generic sorts
@@ -1259,6 +1283,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'messages:title:warning' => 'Waarschuwing',
 	'messages:title:help' => 'Help',
 	'messages:title:notice' => 'Bericht',
+	'messages:title:info' => 'Informatie',
 
 /**
  * Import / export
@@ -1412,6 +1437,8 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'admin:legend:site_access' => 'Toegang tot de site',
 	'admin:legend:debug' => 'Debugging en loggen',
 	
+	'config:i18n:allowed_languages' => "Toegestane talen",
+	'config:i18n:allowed_languages:help' => "Enkel toegestane talen kunnen gebruikt worden door de gebruikers. Engels en de taal van de site zijn altijd toegestaan.",
 	'config:users:can_change_username' => "Sta gebruikers toe om hun wachtwoord te wijzigen",
 	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
@@ -1420,6 +1447,10 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'config:disable_rss:help' => "Schakel dit uit om de RSS feeds niet meer te promoten",
 	'config:friendly_time_number_of_days:label' => "Aantal dagen dat de relatieve tijdsweergave gebruikt mag worden",
 	'config:friendly_time_number_of_days:help' => "Je kunt het aantal dagen configureren dat de relatieve tijdsweergave gebruikt wordt. Na het opgegeven aantal dagen zal de relatieve tijdsweergave wijzigen in een normaal datum formaat. Indien dit wordt ingesteld op 0 zal de relatieve tijdsweergave niet gebruikt worden.",
+	'config:content:comment_box_collapses' => "Het reactieformulier klapt in na de eerste reactie op content",
+	'config:content:comment_box_collapses:help' => "Dit is enkel van toepassing indien de reactie lijst gesorteerd is op meest recente eerst",
+	'config:content:comments_latest_first' => "De reacties moeten worden getoond met de meest recente eerst",
+	'config:content:comments_latest_first:help' => "Dit bepaald de standaard sortering van de reacties bij de volledige weergave van content. Indien dit uitgeschakeld wordt, zal ook het reactie formulier onderaan de lijst worden getoond.",
 	
 	'upgrading' => 'Bijwerken',
 	'upgrade:core' => 'Je Elgg-installatie is bijgewerkt',
@@ -1430,10 +1461,10 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	'upgrade:unlock:success' => "Upgrade succesvol ontgrendeld",
 	'upgrade:unable_to_upgrade' => 'Upgrade niet mogelijk.',
 	'upgrade:unable_to_upgrade_info' => 'De installatie kan niet worden geüpgrade vanwege de aanwezigheid van legacy views in de Elgg core views map. Deze views zijn verouderd en dienen te worden verwijderd om Elgg correct te laten functioneren. 
-Indien je geen aanpassingen hebt gemaakt aan de Elgg core kun je de views map verwijderen en vervangen met de inhoud uit de laatste Elgg release welke te downloaden is op <a href="http://elgg.org">elgg.org</a>.<br /><br />
+Indien je geen aanpassingen hebt gemaakt aan de Elgg core kun je de views map verwijderen en vervangen met de inhoud uit de laatste Elgg release welke te downloaden is op <a href="https://elgg.org">elgg.org</a>.<br /><br />
 
 Indien je gedetailleerde informatie nodig hebt, bekijk de <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">Upgrading Elgg documentatie</a>.
-Indien de ondersteuning nodig hebt bezoek de <a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
+Indien de ondersteuning nodig hebt bezoek de <a href="https://elgg.org/discussion/all">Community Support Forums</a>.',
 
 	'update:oauth_api:deactivated' => 'OAuth API (voorheen OAuth Lib) is uitgeschakeld tijdens de upgrade. Activeer deze zelf weer als het nodig is.',
 	'upgrade:site_secret_warning:moderate' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
@@ -1490,7 +1521,7 @@ Indien de ondersteuning nodig hebt bezoek de <a href="http://community.elgg.org/
 
 Klik hier om naar het profile te gaan:
 
-%1",
+%s",
 
 	'email:changepassword:subject' => "Wachtwoord gewijzigd!",
 	'email:changepassword:body' => "Beste %s,
@@ -1614,7 +1645,7 @@ Om naar het profiel van %s te gaan, klik hier:
 Om te reageren of het originele item te bekijken, klik hier:
 %s
 
-Om naar het profiel van te gaan, klik hier:
+Om naar het profiel van %s te gaan, klik hier:
 %s",
 
 /**
@@ -1633,6 +1664,13 @@ Om naar het profiel van te gaan, klik hier:
 
 	'entity:can_delete:invaliduser' => 'Kan canDelete() voor user_guid [%s] niet nakijken omdat de gebruiker niet bestaat.',
 
+/**
+ * Annotations
+ */
+	
+	'annotation:delete:fail' => "Een fout is opgetreden tijdens het verwijderen van de annotatie",
+	'annotation:delete:success' => "De annotatie is succesvol verwijderd",
+	
 /**
  * Action gatekeeper
  */
@@ -1668,7 +1706,66 @@ Om naar het profiel van te gaan, klik hier:
  * Miscellaneous
  */
 	'elgg:powered' => "Aangedreven door Elgg",
+	
+/**
+ * Cli commands
+ */
+	'cli:login:error:unknown' => "Het is niet mogelijk om aan te melden als %s",
+	'cli:login:success:log' => "Aangemeld als %s [guid: %s]",
+	'cli:response:output' => "Antwoord:",
+	'cli:option:as' => "Voer het commando uit namens de gebruiker met de opgegeven gebruikersnaam",
+	'cli:option:language' => "Voer het commando uit met de opgegeven taal (bijvoorbeeld en, nl of de)",
+	
+	'cli:cache:clear:description' => "Leeg de caches",
+	'cli:cache:invalidate:description' => "Invalideer de caches",
+	'cli:cache:purge:description' => "Schoon de caches op",
+	
+	'cli:cron:description' => "Voer de cron commandos uit voor alle of voor een opgegeven interval",
+	'cli:cron:option:interval' => "Interval naam (bijvoorbeeld hourly)",
+	'cli:cron:option:force' => "Forceer de uitvoer van de cron interval ook al is deze niet van toepassing",
+	'cli:cron:option:time' => "Tijdstip van cron initialisatie",
+	
+	'cli:database:seed:description' => "Vul de database met nep entiteiten",
+	'cli:database:seed:option:limit' => "Aantal entiteiten om aan te maken",
+	'cli:database:seed:option:image_folder' => "Pad naar map waarin afbeeldingen staan die gebruikt kunnen worden tijdens het seeden",
+	'cli:database:seed:log:error:faker' => "Dit is een functionaliteit voor ontwikkelaars ten behoeve van testen. Gelieve dit niet voor andere doeleinden te gebruiken.",
+	'cli:database:seed:log:error:logged_in' => "Het seeden van de database behoort niet uitgevoerd te worden met een aangemelde gebruiker",
+	
+	'cli:database:unseed:description' => "Verwijder de nep entiteiten uit de database",
+	
+	'cli:plugins:activate:description' => "Activeer plugin(s)",
+	'cli:plugins:activate:option:force' => "Los automatisch conflicten op door plugins te (de)activeren",
+	'cli:plugins:activate:argument:plugins' => "Plugin IDs om te activeren",
+	'cli:plugins:activate:progress:start' => "Plugins activeren",
+	
+	'cli:plugins:deactivate:description' => "Plugins deactiveren",
+	'cli:plugins:deactivate:option:force' => "Forceer deactivatie van alle afhankelijke plugins",
+	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs om te deactiveren",
+	'cli:plugins:deactivate:progress:start' => "Plugins deactiveren",
+	
+	'cli:plugins:list:description' => "Toon alle geïnstalleerde plugins op de site",
+	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:error:status' => "%s is geen valide status. Toegestane opties zijn: %s",
+	
+	'cli:simpletest:description' => "Voer simpletest test suite uit (verouderd)",
+	'cli:simpletest:option:config' => "Pad naar settings bestand waarmee de Elgg Applicatie moet worden gestart",
+	'cli:simpletest:option:plugins' => "Een lijst van plugins die aan moeten staan voor de tests. Gebruik 'all' voor alle plugins",
+	'cli:simpletest:option:filter' => "Enkel tests uitvoeren die aan het filter voldoen",
+	'cli:simpletest:error:class' => "De Elgg applicatie moet geïnstalleerd worden met '%s'",
+	'cli:simpletest:error:file' => "%sis geen geldige simpletest class",
+	'cli:simpletest:output:summary' => "Duur: %.2fseconden, Geheugen: %.2fMb",
+	
+	'cli:upgrade:batch:description' => "Voer één of meerdere upgrades uit",
+	'cli:upgrade:batch:argument:upgrades' => "Een of meerdere upgrades (class namen) om uit te voeren",
+	'cli:upgrade:batch:option:force' => "Upgrade uitvoeren ook al is deze gemarkeerd als afgerond",
+	'cli:upgrade:batch:finished' => "Upgrades uitvoeren afgerond",
+	'cli:upgrade:batch:notfound' => "Geen upgrade class gevonden voor %s",
 
+	'cli:upgrade:list:description' => "Toont een lijst met alle upgrades in het systeem",
+	'cli:upgrade:list:completed' => "Afgeronde upgrades",
+	'cli:upgrade:list:pending' => "Nog uit te voeren upgrades",
+	'cli:upgrade:list:notfound' => "Geen upgrades gevonden",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

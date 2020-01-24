@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'widgets:tagcloud:name' => '꼬리표 모음',
 	'widgets:tagcloud:description' => '꼬리표 모음',

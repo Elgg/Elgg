@@ -5,9 +5,6 @@
  * This file contains a number of functions for obtaining statistics about the running system.
  * These statistics are mainly used by the administration pages, and is also where the basic
  * views for statistics are added.
- *
- * @package Elgg.Core
- * @subpackage Statistics
  */
 
 use Elgg\Database\Clauses\OrderByClause;

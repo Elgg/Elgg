@@ -12,7 +12,7 @@ if (!$entity instanceof \ElggFile) {
 }
 
 if ($full && !elgg_in_context('gallery')) {
-	$mime = $entity->getMimeType();
+	$mime = $entity->getMimeType() ?: '';
 	$base_type = substr($mime, 0, strpos($mime, '/'));
 
 	$extra = '';

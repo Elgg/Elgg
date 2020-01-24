@@ -495,42 +495,48 @@ class UpgradeService {
 	 * @return ElggUpgrade[]
 	 */
 	public function getCompletedUpgrades($async = true) {
-		$completed = [];
+		// make sure always to return all upgrade entities
+		return elgg_call(
+			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES,
+			function () use ($async) {
+				$completed = [];
+				
+				$order_by_completed_time = new EntitySortByClause();
+				$order_by_completed_time->direction = 'DESC';
+				$order_by_completed_time->property = 'completed_time';
+				$order_by_completed_time->property_type = 'private_setting';
+				
+				$upgrades = elgg_get_entities([
+					'type' => 'object',
+					'subtype' => 'elgg_upgrade',
+					'private_setting_name' => 'class', // filters old upgrades
+					'private_setting_name_value_pairs' => [
+						'name' => 'is_completed',
+						'value' => true,
+					],
+					'order_by' => $order_by_completed_time,
+					'limit' => false,
+					'batch' => true,
+				]);
+				/* @var $upgrade \ElggUpgrade */
+				foreach ($upgrades as $upgrade) {
+					$batch = $upgrade->getBatch();
+					if (!$batch) {
+						continue;
+					}
 		
-		$order_by_completed_time = new EntitySortByClause();
-		$order_by_completed_time->direction = 'DESC';
-		$order_by_completed_time->property = 'completed_time';
-		$order_by_completed_time->property_type = 'private_setting';
+					$completed[] = $upgrade;
+				}
 		
-		$upgrades = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'elgg_upgrade',
-			'private_setting_name' => 'class', // filters old upgrades
-			'private_setting_name_value_pairs' => [
-				'name' => 'is_completed',
-				'value' => true,
-			],
-			'order_by' => $order_by_completed_time,
-			'limit' => false,
-			'batch' => true,
-		]);
-		/* @var $upgrade \ElggUpgrade */
-		foreach ($upgrades as $upgrade) {
-			$batch = $upgrade->getBatch();
-			if (!$batch) {
-				continue;
+				if (!$async) {
+					$completed = array_filter($completed, function(ElggUpgrade $upgrade) {
+						return !$upgrade->isAsynchronous();
+					});
+				}
+		
+				return $completed;
 			}
-
-			$completed[] = $upgrade;
-		}
-
-		if (!$async) {
-			$completed = array_filter($completed, function(ElggUpgrade $upgrade) {
-				return !$upgrade->isAsynchronous();
-			});
-		}
-
-		return $completed;
+		);
 	}
 
 	/**

@@ -4,6 +4,7 @@ use Elgg\Application;
 use Elgg\Config;
 use Elgg\Mocks\Di\MockServiceProvider;
 use Elgg\Project\Paths;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group Installer
@@ -11,7 +12,7 @@ use Elgg\Project\Paths;
 class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject
+	 * @var MockObject
 	 */
 	private $mock;
 
@@ -32,7 +33,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		$_ENV['ELGG_SETTINGS_FILE'] = $this->normalizeTestFilePath('installer/settings.php');
 
 		$this->mock = $this->getMockBuilder(ElggInstaller::class)
-			->setMethods([
+			->onlyMethods([
 				'getApp',
 				'checkRewriteRules',
 				'createSessionFromFile',
@@ -79,6 +80,8 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		$config->boot_cache_ttl = 0;
 		$config->system_cache_enabled = false;
 		$config->simplecache_enabled = false;
+		$config->lastcache = time();
+		$config->wwwroot = getenv('ELGG_WWWROOT') ? : 'http://localhost/';
 
 		$services = new MockServiceProvider($config);
 
@@ -149,6 +152,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 
+		$vars = [];
 		$vars['next_step'] = 'requirements';
 
 		$title = elgg_echo("install:welcome");
@@ -171,8 +175,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			]
 		);
 
-		$this->assertEquals($output, $response->getContent());
-
+		$this->assertEquals($response->getContent(), $output);
 	}
 
 	public function testRequirements() {
@@ -186,6 +189,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 
+		$vars = [];
 		$vars['report'] = [
 			'php' => [
 				[
@@ -232,8 +236,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			]
 		);
 
-		$this->assertEquals($output, $response->getContent());
-
+		$this->assertEquals($response->getContent(), $output);
 	}
 
 	public function testDatabase() {
@@ -247,6 +250,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 
+		$vars = [];
 		$vars['variables'] = [
 			'dbuser' => [
 				'type' => 'text',
@@ -278,7 +282,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			'dbprefix' => [
 				'type' => 'text',
 				'value' => 'elgg_',
-				'required' => true,
+				'required' => false,
 			],
 			'dataroot' => [
 				'type' => 'text',
@@ -320,8 +324,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			]
 		);
 
-		$this->assertEquals($output, $response->getContent());
-
+		$this->assertEquals($response->getContent(), $output);
 	}
 
 	public function testDatabaseAction() {
@@ -333,6 +336,39 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
 			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbname' => getenv('ELGG_DB_NAME') ? : '',
+			'dbuser' => getenv('ELGG_DB_USER') ? : '',
+			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
+			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ? : 3306,
+			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dataroot' => $dataroot,
+			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
+			'timezone' => 'UTC',
+		]);
+
+		$this->getApp()->_services->setValue('request', $request);
+
+		$mock = $this->mock;
+		/* @var $mock ElggInstaller */
+
+		$response = $mock->run();
+
+		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
+		$this->assertEquals(elgg_normalize_url('install.php?step=settings'), $response->getForwardURL());
+
+		elgg_delete_directory($dataroot);
+	}
+	
+	public function testDatabaseActionWithEmptyPrefix() {
+
+		$dataroot = dirname(Paths::elgg()) . '/_installer_testing_dataroot/';
+		elgg_delete_directory($dataroot);
+
+		mkdir($dataroot);
+
+		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
+			'dbprefix' => '',
 			'dbname' => getenv('ELGG_DB_NAME') ? : '',
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
@@ -380,6 +416,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(\Elgg\Http\OkResponse::class, $response);
 
+		$vars = [];
 		$vars['variables'] = [
 			'sitename' => [
 				'type' => 'text',
@@ -420,8 +457,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			]
 		);
 
-		$this->assertEquals($output, $response->getContent());
-
+		$this->assertEquals($response->getContent(), $output);
 	}
 
 	public function testSettingsAction() {
@@ -455,7 +491,6 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(\Elgg\Http\RedirectResponse::class, $response);
 		$this->assertEquals(elgg_normalize_url('install.php?step=admin'), $response->getForwardURL());
-
 	}
 
 	public function testAdmin() {
@@ -535,7 +570,7 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 			]
 		);
 
-		$this->assertEquals($output, $response->getContent());
+		$this->assertEquals($response->getContent(), $output);
 	}
 
 	public function testAdminAction() {
@@ -616,7 +651,6 @@ class ElggInstallerTest extends \Elgg\UnitTestCase {
 		]);
 
 		$this->assertNull($this->getApp()->_services->config->installer_running);
-		$this->assertInternalType('integer', $this->getApp()->_services->config->installed);
-
+		$this->assertIsInt($this->getApp()->_services->config->installed);
 	}
 }

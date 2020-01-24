@@ -87,13 +87,10 @@ Create ``mod/hello/views/default/resources/hello.php`` with this content:
 
     <?php
 
-    $body = elgg_view_layout('content', [
+    echo elgg_view_page('Hello', [
     	'title' => 'Hello world!',
         'content' => 'My first page!',
-        'filter' => '',
     ]);
-
-    echo elgg_view_page('Hello', $body);
 
 
 The code creates an array of parameters to be given to the ``elgg_view_layout()`` function, including:

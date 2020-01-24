@@ -3,9 +3,6 @@
  * Helpers CSS
  *
  * Contains generic elements that can be used throughout the site.
- *
- * @package Elgg.Core
- * @subpackage UI
  */
 ?>
 /* <style> /**/

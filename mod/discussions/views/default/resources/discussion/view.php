@@ -13,13 +13,8 @@ $content = elgg_view_entity($topic, [
 	'show_responses' => true,
 ]);
 
-$title = $topic->getDisplayName();
-
-$body = elgg_view_layout('default', [
-	'title' => $title,
+echo elgg_view_page($topic->getDisplayName(), [
 	'content' => $content,
 	'entity' => $topic,
 	'filter_id' => 'discussion/view',
 ]);
-
-echo elgg_view_page($title, $body);

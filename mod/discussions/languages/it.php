@@ -1,22 +1,35 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
-	'add:object:discussion' => 'Add discussion topic',
-	'edit:object:discussion' => 'Edit topic',
+	'item:object:discussion' => "Argomenti di discussione",
+	
+	'add:object:discussion' => 'Aggiungi argomento',
+	'edit:object:discussion' => 'Modifica argomento',
+	'collection:object:discussion' => 'Discussion topics',
+	'collection:object:discussion:group' => 'Forum di gruppo',
+	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
 
 	'discussion:latest' => 'Ultimi argomenti',
-	'collection:object:discussion:group' => 'Group discussions',
 	'discussion:none' => 'Nessuna discussione',
 	'discussion:updated' => "Ultima risposta di %s %s",
 
 	'discussion:topic:created' => 'L\'argomento è stato creato.',
 	'discussion:topic:updated' => 'L\'argomento è stato aggiornato.',
-	'entity:delete:object:discussion:success' => 'Discussion topic has been deleted.',
+	'entity:delete:object:discussion:success' => 'L\'argomento è stato eliminato.',
 
 	'discussion:topic:notfound' => 'Argomento non trovato.',
 	'discussion:error:notsaved' => 'Impossibile salvare questo argomento',
 	'discussion:error:missing' => 'Sia il titolo sia il messaggio sono campi obbligatori',
 	'discussion:error:permissions' => 'Permessi insufficienti per completare questa azione',
+	'discussion:error:no_groups' => "You're not a member of any groups.",
 
 	/**
 	 * River
@@ -49,10 +62,7 @@ View and comment on the discussion:
 %s
 ',
 
-	'item:object:discussion' => "Argomenti di discussione",
-	'collection:object:discussion' => 'Discussion topics',
-
-	'groups:tool:forum' => 'Enable group discussions',
+	'groups:tool:forum' => 'Abilita discussioni di gruppo',
 
 	/**
 	 * Discussion status

@@ -1,10 +1,6 @@
 <?php
-
 /**
  * A parser for XML that uses SimpleXMLElement
- *
- * @package    Elgg.Core
- * @subpackage XML
  *
  * @see        \Elgg\Integration\ElggCoreRegressionBugsTest
  * @see        \Elgg\Integration\ElggCorePluginsAPITest

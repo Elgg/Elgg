@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg register form
- *
- * @package Elgg
- * @subpackage Core
  */
 
 if (elgg_is_sticky_form('register')) {

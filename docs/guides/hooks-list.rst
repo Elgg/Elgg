@@ -27,6 +27,9 @@ System hooks
 **cron, <period>**
 	Triggered by cron for each period.
 
+**cron:intervals, system**
+	Allow the configuration of custom cron intervals
+
 **validate, input**
 	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
 
@@ -758,9 +761,8 @@ Files
 	and with the default detected mimetype of ``$params['default']``.
 
 **simple_type, file**
-    In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']``
-    (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like
-    ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
+    The hook provides ``$params['mime_type']`` (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall 
+    category like ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
     ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
     ``ege*`` filters and menus.
 
@@ -1007,10 +1009,6 @@ Other
 
 **is_member, group**
 	Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``.
-
-**entity:annotate, <entity_type>**
-	Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can
-	be used to add annotations to all full entity views.
 
 **usersetting, plugin**
 	Filter user settings for plugins. ``$params`` contains:

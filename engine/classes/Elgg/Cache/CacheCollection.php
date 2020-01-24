@@ -70,6 +70,28 @@ abstract class CacheCollection {
 			$cache->clear();
 		}
 	}
+	
+	/**
+	 * Invalidate all caches
+	 *
+	 * @return void
+	 */
+	public function invalidate() {
+		foreach ($this->caches as $cache) {
+			$cache->invalidate();
+		}
+	}
+	
+	/**
+	 * Purge all caches
+	 *
+	 * @return void
+	 */
+	public function purge() {
+		foreach ($this->caches as $cache) {
+			$cache->purge();
+		}
+	}
 
 	/**
 	 * Disable all persistent caches

@@ -5,6 +5,7 @@ namespace Elgg;
 /**
  * @group EntityIconService
  * @group UnitTests
+ * @group IconService
  */
 class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
@@ -37,6 +38,11 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	 * @var \Elgg\ImageService
 	 */
 	private $images;
+	
+	/**
+	 * @var \Elgg\Filesystem\MimeTypeService
+	 */
+	private $mimetype;
 
 	/**
 	 * @var \ElggObject
@@ -72,6 +78,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->entities = _elgg_services()->entityTable;
 		$this->uploads = new \Elgg\UploadService($this->request);
 		$this->images = _elgg_services()->imageService;
+		$this->mimetype = _elgg_services()->mimetype;
 
 		$this->user = $this->createUser();
 		$this->entity = $this->createObject([
@@ -106,7 +113,16 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	protected function createService() {
-		return new \Elgg\EntityIconService(_elgg_config(), $this->hooks, $this->request, $this->logger, $this->entities, $this->uploads, $this->images);
+		return new \Elgg\EntityIconService(
+			_elgg_config(),
+			$this->hooks,
+			$this->request,
+			$this->logger,
+			$this->entities,
+			$this->uploads,
+			$this->images,
+			$this->mimetype
+		);
 	}
 	
 	public static function getDefaultIconSizes() {
@@ -160,9 +176,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		return array_merge($test_sizes, self::getDefaultIconSizes());
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testGetDefaultSizes() {
 		$service = $this->createService();
 
@@ -175,9 +188,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->logger->enable();
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanSetSizesForCustomIconType() {
 		$service = $this->createService();
 		$this->logger->disable();
@@ -189,26 +199,17 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(self::getCoverSizes(), $service->getSizes('object', 'foo', 'cover'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanFilterIconSizesForEntityTypeSubtypePair() {
 		$this->hooks->registerHandler('entity:icon:sizes', 'object', array($this, 'getIconSizesForSubtype'));
 		$service = $this->createService();
 		$this->assertEquals(self::getTestSizes(), $service->getSizes('object', 'foo', 'icon'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testHasNoDefaultIcon() {
 		$service = $this->createService();
 		$this->assertFalse($service->hasIcon($this->entity, 'small'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testGetDefaultIconFile() {
 		$service = $this->createService();
 
@@ -219,9 +220,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->entity_dir_path . 'icons/cover/small.jpg', $cover->getFilenameOnFilestore());
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanReplaceIconFile() {
 		$callback = function($hook, $type, $icon, $params) {
 			$size = elgg_extract('size', $params);
@@ -245,10 +243,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($this->owner_dir_path . 'foo/bar/cover/large.jpg', $cover->getFilenameOnFilestore());
 	}
 
-	/**
-	 * @group IconService
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsExceptionOnInvalidHookHandlerReturnForIconFile() {
 		$callback = function($hook, $type, $icon, $params) {
 			return '/path/to/foo.jpg';
@@ -257,21 +251,18 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->hooks->registerHandler('entity:icon:file', 'object', $callback);
 
 		$service = $this->createService();
+		
+		$this->expectException(\InvalidParameterException::class);
 		$service->getIcon($this->entity, 'small');
 	}
 
-	/**
-	 * @group IconService
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsExceptionOnSaveIconFromNonExistentElggFile() {
 		$service = $this->createService();
+		
+		$this->expectException(\InvalidParameterException::class);
 		$service->saveIconFromElggFile($this->entity, new \ElggFile());
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanSaveIconFromElggFile() {
 
 		$service = $this->createService();
@@ -291,9 +282,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanDeleteIcon() {
 
 		$service = $this->createService();
@@ -322,19 +310,14 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($service->hasIcon($this->entity, 'topbar'));
 	}
 
-	/**
-	 * @group IconService
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testThrowsExceptionIfLocalFileIsNotReadable() {
 		$service = $this->createService();
 		$local_file = _elgg_config()->dataroot . '_______empty';
+		
+		$this->expectException(\InvalidParameterException::class);
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanSaveIconFromLocalFile() {
 
 		$service = $this->createService();
@@ -350,9 +333,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanSaveIconFromUploadedFile() {
 
 		$service = $this->createService();
@@ -380,9 +360,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testIconLastChangedTime() {
 
 		$service = $this->createService();
@@ -400,9 +377,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(filemtime($icon->getFilenameOnFilestore()), $service->getIconLastChange($this->entity, 'small'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanResolveDefaultIconURL() {
 
 		$service = $this->createService();
@@ -416,9 +390,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(elgg_get_inline_url($icon), $service->getIconURL($this->entity, 'small'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanReplaceDefaultIconURL() {
 
 		$this->hooks->registerHandler('entity:icon:url', 'object', function() {
@@ -431,14 +402,11 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 
 		$this->assertTrue($service->hasIcon($this->entity, 'small'));
-		$icon = $service->getIcon($this->entity, 'small');
+		$service->getIcon($this->entity, 'small');
 
 		$this->assertEquals(elgg_normalize_url('/path/to/icon.png'), $service->getIconURL($this->entity, 'small'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	public function testCanSaveIconWithCroppingCoordinates() {
 
 		$service = $this->createService();
@@ -478,9 +446,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($service->hasIcon($this->entity, 'topbar'));
 	}
 
-	/**
-	 * @group IconService
-	 */
 	function testEmptySizeConfigSavesUnmodifiedVersion() {
 		$this->hooks->registerHandler('entity:cover:sizes', 'object', array($this, 'getCoverSizes'));
 
@@ -528,18 +493,15 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($source_bytes, $original_bytes);
 	}
 
-	/**
-	 * @group IconService
-	 * @expectedException \LogicException
-	 */
 	public function testThrowsExceptionOnElggIconSave() {
 		$service = $this->createService();
 		$icon = $service->getIcon($this->entity, 'small');
+		
+		$this->expectException(\LogicException::class);
 		$icon->save();
 	}
 
 	/**
-	 * @group IconService
 	 * @todo test _elgg_filestore_touch_icons() does it's job
 	 */
 	public function testIconURLInvalidatedOnAccessIdChange() {
@@ -895,7 +857,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$filesize = filesize($icon->getFilenameOnFilestore());
 		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
 
-		$this->assertContains('inline', $response->headers->get('Content-Disposition'));
+		$this->assertStringContainsString('inline', $response->headers->get('Content-Disposition'));
 
 		$this->assertEquals('"' . $icon->getModifiedTime() . '"', $response->headers->get('Etag'));
 
@@ -918,9 +880,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('max-age=86400, private', $response->headers->get('cache-control'));
 	}
 	
-	/**
-	 * @group IconService
-	 */
 	public function testDelayedCreationOfIcon() {
 		
 		$service = $this->createService();

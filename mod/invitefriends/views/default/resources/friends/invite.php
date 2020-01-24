@@ -12,12 +12,7 @@ if (!$page_owner instanceof ElggUser || $page_owner->guid !== elgg_get_logged_in
 	throw new EntityPermissionsException();
 }
 
-$title = elgg_echo('friends:invite');
-
-$body = elgg_view_layout('default', [
-	'content' => elgg_view_form('friends/invite'),
-	'title' => $title,
+echo elgg_view_page(elgg_echo('friends:invite'), [
+	'content' => elgg_view_form('friends/invite', ['prevent_double_submit' => true]),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

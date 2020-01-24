@@ -1,8 +1,14 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:file' => 'Soubory',
-	'collection:object:file' => 'Files',
+	'collection:object:file' => 'Soubory',
 	'collection:object:file:all' => "All site files",
 	'collection:object:file:owner' => "%s's files",
 	'collection:object:file:friends' => "Friends' files",
@@ -45,8 +51,8 @@ return array(
 	'file:friends:type:image' => "Obrázky přátel",
 	'file:friends:type:general' => "Obecné soubory přátel",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "Souborové udělátko",
+	'widgets:filerepo:description' => "Přehlídka vašich nejnovějších souborů",
 
 	'groups:tool:file' => 'Enable group files',
 

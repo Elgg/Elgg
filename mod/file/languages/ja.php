@@ -1,14 +1,20 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:file' => 'ファイル',
 	'collection:object:file' => 'ファイル',
-	'collection:object:file:all' => "All site files",
-	'collection:object:file:owner' => "%s's files",
-	'collection:object:file:friends' => "Friends' files",
-	'collection:object:file:group' => "Group files",
-	'add:object:file' => "Upload a file",
-	'edit:object:file' => "Edit file",
+	'collection:object:file:all' => "サイト全体のファイル",
+	'collection:object:file:owner' => "%s さんのファイル",
+	'collection:object:file:friends' => "友達のファイル",
+	'collection:object:file:group' => "グループファイル",
+	'add:object:file' => "ファイルをアップロード",
+	'edit:object:file' => "ファイル編集",
 
 	'file:more' => "もっとみる",
 	'file:list' => "リスト表示",
@@ -45,10 +51,10 @@ return array(
 	'file:friends:type:image' => "友達の画像",
 	'file:friends:type:general' => "友達のその他のファイル",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "ファイル・ウィジェット",
+	'widgets:filerepo:description' => "あなたのファイル一覧",
 
-	'groups:tool:file' => 'Enable group files',
+	'groups:tool:file' => 'グループファイルを使用する',
 
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',

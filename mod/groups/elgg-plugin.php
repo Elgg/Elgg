@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Groups\Middleware\LimitedGroupCreation;
+
 $membership = __DIR__ . '/actions/groups/membership/';
 
 return [
@@ -91,6 +93,7 @@ return [
 			'resource' => 'groups/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				LimitedGroupCreation::class,
 			],
 		],
 		'view:group:group' => [

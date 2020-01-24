@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "S'ha escrit el comentari",
 	'messageboard:deleted' => "S'ha esborrat el comentari",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Error xungo, el sistema no en té ni idea de què està passant. Torna-ho a provar o posa't en contacte amb els/les administradors/es.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Safata de comentaris",
+	'widgets:messageboard:description' => "Aquesta és la safata dels comentaris. Qualsevol, fins i tot tu, pot deixar un missatge al teu perfil.",
 );

@@ -68,7 +68,7 @@ abstract class UnitTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	final protected function setUp() {
+	final protected function setUp(): void {
 		parent::setUp();
 
 		elgg_set_entity_class('user', 'user', \ElggUser::class);
@@ -90,7 +90,7 @@ abstract class UnitTestCase extends BaseTestCase {
 	/**
 	 * {@inheritdoc}
 	 */
-	final protected function tearDown() {
+	final protected function tearDown(): void {
 		$this->down();
 
 		$app = Application::getInstance();

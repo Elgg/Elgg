@@ -1,14 +1,20 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:file' => 'Фајлови',
-	'collection:object:file' => 'Files',
-	'collection:object:file:all' => "All site files",
-	'collection:object:file:owner' => "%s's files",
-	'collection:object:file:friends' => "Friends' files",
-	'collection:object:file:group' => "Group files",
-	'add:object:file' => "Upload a file",
-	'edit:object:file' => "Edit file",
+	'collection:object:file' => 'Фајлови',
+	'collection:object:file:all' => "Сви фајлови сајта",
+	'collection:object:file:owner' => "%s's фајлови",
+	'collection:object:file:friends' => "Фајлови пријатеља",
+	'collection:object:file:group' => "Фајлови групе",
+	'add:object:file' => "Додај фајл",
+	'edit:object:file' => "Уреди фајл",
 
 	'file:more' => "Више фајлова",
 	'file:list' => "Листа - преглед",
@@ -45,10 +51,10 @@ return array(
 	'file:friends:type:image' => "Слике ваших пријатеља",
 	'file:friends:type:general' => "Општи фајлови ваших пријатеља",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "Виџет фајлова",
+	'widgets:filerepo:description' => "Прикажите ваше најновије фајлове",
 
-	'groups:tool:file' => 'Enable group files',
+	'groups:tool:file' => 'Омогући фајлове групе',
 
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',

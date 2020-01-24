@@ -2,8 +2,6 @@
 
 namespace Elgg\Integration;
 
-use Elgg\IntegrationTestCase;
-
 /**
  * Test elgg_get_entities_from_private_settings()
  *
@@ -11,15 +9,7 @@ use Elgg\IntegrationTestCase;
  * @group Entities
  * @group EntityPrivateSettings
  */
-class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
-
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
+class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBaseTest {
 
 	public function testElggApiGettersEntitiesFromPrivateSettings() {
 
@@ -61,11 +51,9 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
 		$this->assertEquals($setting_value2, $settings[$setting_name2]);
 
 		// simple test with name
-		$options = [
-			'private_setting_name' => $setting_name
-		];
-
-		$entities = elgg_get_entities_from_private_settings($options);
+		$entities = elgg_get_entities_from_private_settings([
+			'private_setting_name' => $setting_name,
+		]);
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->guid, $guids));
@@ -74,11 +62,9 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
 		}
 
 		// simple test with value
-		$options = [
-			'private_setting_value' => $setting_value
-		];
-
-		$entities = elgg_get_entities_from_private_settings($options);
+		$entities = elgg_get_entities_from_private_settings([
+			'private_setting_value' => $setting_value,
+		]);
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->guid, $guids));
@@ -87,23 +73,22 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
 		}
 
 		// test pairs
-		$options = [
+		$entities = elgg_get_entities_from_private_settings([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'private_setting_name_value_pairs' => [
 				[
 					'name' => $setting_name,
-					'value' => $setting_value
+					'value' => $setting_value,
 				],
 				[
 					'name' => $setting_name2,
-					'value' => $setting_value2
-				]
-			]
-		];
-
-		$entities = elgg_get_entities_from_private_settings($options);
+					'value' => $setting_value2,
+				],
+			],
+		]);
 		$this->assertEquals(2, count($entities));
+		
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->guid, $guids));
 		}
@@ -132,7 +117,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
 
 		$this->assertEquals((string) $value, $object->getPrivateSetting('private_setting'));
 
-		$options = [
+		$result = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $object->subtype,
 			'private_setting_name_value_pairs' => [
@@ -141,12 +126,10 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends IntegrationTestCase {
 					'value' => $query,
 					'operand' => '=',
 					'type' => $type,
-				]
+				],
 			],
 			'count' => true,
-		];
-
-		$result = elgg_get_entities($options);
+		]);
 
 		$this->assertEquals(1, $result);
 

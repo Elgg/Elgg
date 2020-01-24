@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg log rotator plugin settings.
- *
- * @package ElggLogRotate
  */
 
 $plugin = elgg_extract('entity', $vars);

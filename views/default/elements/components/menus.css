@@ -116,7 +116,7 @@
 	}
 }
 
-.elgg-menu.elgg-menu-hz:not(.elgg-menu-relationship) .elgg-menu-item-has-dropdown,
+.elgg-menu.elgg-menu-hz:not(.elgg-menu-relationship):not(.elgg-menu-annotation) .elgg-menu-item-has-dropdown,
 .elgg-menu.elgg-menu-filter .elgg-menu-item-has-dropdown {
 	.elgg-menu-closed:after,
 	.elgg-menu-opened:after {
@@ -340,7 +340,6 @@
 	ENTITY, SOCIAL, RIVER AND ANNOTATION
 *************************************** */
 .elgg-listing-summary-metadata > .elgg-menu-container,
-.elgg-relationship-metadata > .elgg-menu-container,
 .elgg-river-metadata > .elgg-menu-container,
 .elgg-menu-annotation-container {
 	float: right;

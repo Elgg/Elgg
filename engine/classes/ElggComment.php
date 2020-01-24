@@ -2,9 +2,7 @@
 /**
  * \ElggComment
  *
- * @package    Elgg.Core
- * @subpackage Comments
- * @since      1.9.0
+ * @since 1.9.0
  */
 class ElggComment extends \ElggObject {
 
@@ -40,7 +38,13 @@ class ElggComment extends \ElggObject {
 	 * @param bool $update_last_action Update the container entity's last_action field
 	 * @return bool|int
 	 */
-	public function save($update_last_action = true) {
+	public function save($update_last_action = null) {
+		if (isset($update_last_action)) {
+			elgg_deprecated_notice("Passing 'update_last_action' to " . __METHOD__ . " is deprecated.", '3.3');
+		} else {
+			$update_last_action = true;
+		}
+		
 		$result = parent::save();
 		if ($result && $update_last_action) {
 			$container = $this->getContainerEntity();

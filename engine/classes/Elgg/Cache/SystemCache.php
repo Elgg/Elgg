@@ -122,8 +122,7 @@ class SystemCache {
 	}
 	
 	/**
-	 * Initializes the simplecache lastcache variable and creates system cache files
-	 * when appropriate.
+	 * Initializes the system cache
 	 *
 	 * @return void
 	 */

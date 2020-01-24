@@ -11,9 +11,6 @@ namespace Elgg\Cache;
  * Based on https://github.com/cash/LRUCache
  *
  * @internal
- *
- * @package    Elgg.Core
- * @subpackage Cache
  */
 class LRUCache implements \ArrayAccess {
 	/** @var int */

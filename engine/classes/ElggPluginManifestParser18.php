@@ -2,9 +2,7 @@
 /**
  * Plugin manifest.xml parser for Elgg 1.8 and above.
  *
- * @package    Elgg.Core
- * @subpackage Plugins
- * @since      1.8
+ * @since 1.8
  */
 class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 	/**

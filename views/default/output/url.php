@@ -3,9 +3,6 @@
  * Elgg URL display
  * Displays a URL as a link
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses string $vars['text']        The HTML between the <a></a> tags.
  * @uses string $vars['href']        The raw, un-encoded URL.
  *                                   "" = current URL.

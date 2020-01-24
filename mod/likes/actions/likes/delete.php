@@ -9,6 +9,8 @@ $id = (int) get_input('id');
 
 $like = null;
 if ($id) {
+	elgg_deprecated_notice("Removing a likes annotation by ID in the action 'likes/delete' is deprecated use 'annotation/delete'", '3.3');
+	
 	$like = elgg_get_annotation_from_id($id);
 }
 

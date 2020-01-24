@@ -513,7 +513,7 @@ trait Seeding {
 
 		$make = function($name = null)  {
 			if (!$name) {
-				return strtolower($this->faker()->firstName . '.' . $this->faker()->lastName);
+				return elgg_strtolower($this->faker()->firstName . '.' . $this->faker()->lastName);
 			}
 
 			return implode('.', preg_split('/\W/', $name));

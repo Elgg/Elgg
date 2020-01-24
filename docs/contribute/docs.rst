@@ -22,6 +22,11 @@ seconds). You need `yarn`_ and `sphinx`_ installed to be able to use these scrip
 It's that easy! Grunt will continue running, watching the docs for changes and
 automatically rebuilding.
 
+.. note::
+	
+	You might need to install 'sphinxcontrib-phpdomain'. You can do this with the following command:
+	`pip install -U sphinxcontrib-phpdomain`
+
 .. _grunt: http://gruntjs.com/
 .. _yarn: https://yarnpkg.com/
 .. _sphinx: http://www.sphinx-doc.org/

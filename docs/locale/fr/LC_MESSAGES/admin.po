@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019
+# Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-23 14:34+0200\n"
+"POT-Creation-Date: 2020-01-23 11:15+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019\n"
+"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +32,7 @@ msgstr "Sauvegarde et Restauration"
 #: ../../admin/plugins.rst:8 ../../admin/security.rst:8
 #: ../../admin/upgrading.rst:11 ../../admin/uservalidation.rst:8
 msgid "Contents"
-msgstr ""
+msgstr "Contenu"
 
 #: ../../admin/backup-restore.rst:9 ../../admin/duplicate-installation.rst:9
 msgid "Introduction"
@@ -2988,6 +2989,51 @@ msgstr ""
 "Quand le compte d'un utilisateur est banni ou réintégré, permet à "
 "l'utilisateur affecté d'être informé de cette action."
 
+#: ../../admin/security.rst:65
+msgid "Minimal username length"
+msgstr ""
+
+#: ../../admin/security.rst:67
+msgid ""
+"You can configure the minimal length the username should have upon "
+"registration of a user."
+msgstr ""
+
+#: ../../admin/security.rst:70
+msgid "Minimal password requirements"
+msgstr ""
+
+#: ../../admin/security.rst:72
+msgid "You can configure several requirements for new passwords of the users"
+msgstr ""
+
+#: ../../admin/security.rst:74
+msgid "**length**: the password should be at least x characters long"
+msgstr ""
+
+#: ../../admin/security.rst:75
+msgid ""
+"**lower case**: minimal number of lower case (a-z) characters in the "
+"password"
+msgstr ""
+
+#: ../../admin/security.rst:76
+msgid ""
+"**upper case**: minimal number of upper case (A-Z) characters in the "
+"password"
+msgstr ""
+
+#: ../../admin/security.rst:77
+msgid ""
+"**numbers**: minimal number of numbers (0-9) characters in the password"
+msgstr ""
+
+#: ../../admin/security.rst:78
+msgid ""
+"**specials**: minimal number of special (like !@#$%^&*(), etc.) characters "
+"in the password"
+msgstr ""
+
 #: ../../admin/spam.rst:2
 msgid "Spam"
 msgstr ""
@@ -3202,17 +3248,24 @@ msgstr ""
 "Si vous aviez installé votre projet 2.3 avec composer, vous pouvez suivre la"
 " séquence suivante :"
 
-#: ../../admin/upgrading.rst:91 ../../admin/upgrading.rst:111
+#: ../../admin/upgrading.rst:91 ../../admin/upgrading.rst:116
 msgid "**Back up your database, data directory, and code**"
 msgstr ""
 "**Sauvegardez votre base de données, votre répertoire de données, et le "
 "code**"
 
-#: ../../admin/upgrading.rst:105
+#: ../../admin/upgrading.rst:106
+msgid ""
+"In some cases the command line upgrade will fail because some database "
+"schema changes need to be applied first. In that case you need to execute "
+"the :ref:`Phinx migrations <contribute/database#execute-migration>` manually"
+msgstr ""
+
+#: ../../admin/upgrading.rst:110
 msgid "3b. Manual Upgrade (legacy approach)"
 msgstr "3b. Mise à niveau manuelle (approche traditionnelle)"
 
-#: ../../admin/upgrading.rst:107
+#: ../../admin/upgrading.rst:112
 msgid ""
 "Manual upgrades are a major undertaking for site admins. We discourage you "
 "from maintaining an Elgg installation using ZIP dist packages. Save yourself"
@@ -3227,19 +3280,19 @@ msgstr ""
 "``git``. Cette tâche sera également plus complexe si vous utilisez des "
 "plugins tierce-partie et/ou si vous avez modifié les fichiers du noyau !"
 
-#: ../../admin/upgrading.rst:112
+#: ../../admin/upgrading.rst:117
 msgid "Log in as an admin to your site"
 msgstr "Identifiez-vous sur votre site en tant qu'administrateur"
 
-#: ../../admin/upgrading.rst:113
+#: ../../admin/upgrading.rst:118
 msgid "Download the new version of Elgg from http://elgg.org"
 msgstr "Téléchargez la nouvelle version de Elgg depuis http://elgg.org"
 
-#: ../../admin/upgrading.rst:116
+#: ../../admin/upgrading.rst:121
 msgid "Update the files"
 msgstr "Mettez à jour les fichiers"
 
-#: ../../admin/upgrading.rst:115
+#: ../../admin/upgrading.rst:120
 msgid ""
 "If upgrading to a major version, you need to overwrite all core files and "
 "remove any files that were removed from Elgg core, as they may interfere "
@@ -3250,7 +3303,7 @@ msgstr ""
 "noyau d'Elgg, car ils peuvent interférer avec le bon fonctionnement de votre"
 " site."
 
-#: ../../admin/upgrading.rst:117
+#: ../../admin/upgrading.rst:122
 msgid ""
 "If upgrading to a minor version or patching, you need to overwrite all core "
 "files."
@@ -3258,18 +3311,18 @@ msgstr ""
 "Si vous mettez à jour vers une version mineure ou un patch, vous devez "
 "remplacer tous les fichiers du code."
 
-#: ../../admin/upgrading.rst:119
+#: ../../admin/upgrading.rst:124
 msgid "Merge any new changes to the rewrite rules"
 msgstr ""
 "Fusionnez tous les nouveaux changements des règles de réécriture (rewrite "
 "rules)"
 
-#: ../../admin/upgrading.rst:119
+#: ../../admin/upgrading.rst:124
 msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 "Pour Apache depuis ``install/config/htaccess.dist`` vers ``.htaccess``"
 
-#: ../../admin/upgrading.rst:120
+#: ../../admin/upgrading.rst:125
 msgid ""
 "For Nginx from ``install/config/nginx.dist`` into your server configuration "
 "(usually inside ``/etc/nginx/sites-enabled``)"
@@ -3277,18 +3330,18 @@ msgstr ""
 "Pour Nginx depuis ``install/config/nginx.dist`` vers la configuration de "
 "votre serveur (habituellement dans ``/etc/nginx/sites-enabled``)"
 
-#: ../../admin/upgrading.rst:121
+#: ../../admin/upgrading.rst:126
 msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr "Visitez http://your-elgg-site.com/upgrade.php"
 
-#: ../../admin/upgrading.rst:122
+#: ../../admin/upgrading.rst:127
 msgid ""
 "Execute asynchronous upgrades at http://your-elgg-site.com/admin/upgrades"
 msgstr ""
 "Exécutez les mises à niveau asynchrones via http://your-elgg-"
 "site.com/admin/upgrades"
 
-#: ../../admin/upgrading.rst:126
+#: ../../admin/upgrading.rst:131
 msgid ""
 "Any modifications should have been written within plugins, so that they are "
 "not lost on overwriting. If this is not the case, take care to maintain your"
@@ -3298,7 +3351,7 @@ msgstr ""
 "qu'elles ne soient pas perdues lors de l'écrasement des fichiers. Si ce "
 "n'est pas le cas, prenez soin de maintenir vos modifications."
 
-#: ../../admin/upgrading.rst:131
+#: ../../admin/upgrading.rst:136
 msgid ""
 "If you are unable to access ``upgrade.php`` script and receive an error, add"
 " ``$CONFIG->security_protect_upgrade = false;`` to your ``settings.php`` and"
@@ -3309,7 +3362,7 @@ msgstr ""
 "ficher ``settings.php`` et supprimez-le après avoir terminé toutes les "
 "étapes de l'installation."
 
-#: ../../admin/upgrading.rst:136
+#: ../../admin/upgrading.rst:141
 msgid ""
 "If you encounter issues with plugins during the upgrade, add an empty file "
 "called ``disabled`` in your ``/mod/`` directory. This will disable the "
@@ -3322,7 +3375,7 @@ msgstr ""
 "mise à niveau du noyau. Vous pouvez ensuite gérer les mises à niveau de "
 "chacun des plugins l'un après l'autre."
 
-#: ../../admin/upgrading.rst:140
+#: ../../admin/upgrading.rst:145
 msgid ""
 "If you have installed Elgg using a dist package but would now like to switch"
 " to composer:"
@@ -3330,15 +3383,15 @@ msgstr ""
 "Si vous avez installé Elgg en utilisant une archive d'installation mais "
 "souhaitez maintenant basculer vers composer : "
 
-#: ../../admin/upgrading.rst:142
+#: ../../admin/upgrading.rst:147
 msgid "Upgrade your current installation using Manual Upgrade method"
 msgstr "Mettez à niveau votre installation en utilisant la Méthode manuelle"
 
-#: ../../admin/upgrading.rst:143
+#: ../../admin/upgrading.rst:148
 msgid "Move your codebase to a temporary location"
 msgstr "Déplacez votre code vers un emplacement provisoire"
 
-#: ../../admin/upgrading.rst:144
+#: ../../admin/upgrading.rst:149
 msgid ""
 "Create a new composer project using Elgg's starter project following "
 ":doc:`installation instructions </intro/install>` in the root directory of "
@@ -3348,20 +3401,20 @@ msgstr ""
 " suivant les  :doc:`instruction d'installation </intro/install>` dans le "
 "répertoire racine de votre installation actuelle"
 
-#: ../../admin/upgrading.rst:145
+#: ../../admin/upgrading.rst:150
 msgid ""
 "Copy third-party plugins from your old installation into ``/mod`` directory"
 msgstr ""
 "Copiez les plugins tierce-partie depuis votre ancienne installation vers le "
 "répertoire ``/mod``"
 
-#: ../../admin/upgrading.rst:146
+#: ../../admin/upgrading.rst:151
 msgid "Run Elgg's installer using your browser or ``elgg-cli`` tool"
 msgstr ""
 "Exécutez l'installateur de Elgg en utilisant votre navigateur ou l'outil "
 "``elgg-cli``"
 
-#: ../../admin/upgrading.rst:147
+#: ../../admin/upgrading.rst:152
 msgid ""
 "When you reach the database step, provide the same credentials you have used"
 " for manual installation, Elgg will understand that is's an existing "
@@ -3372,22 +3425,22 @@ msgstr ""
 "qu'il y a une installation existante et ne remplacera aucune valeur de la "
 "base de données"
 
-#: ../../admin/upgrading.rst:148
+#: ../../admin/upgrading.rst:153
 msgid "Optionally commit your new project to version control"
 msgstr ""
 "Facultativement, commitez votre nouveau projet vers un suivi de version"
 
-#: ../../admin/upgrading.rst:151
+#: ../../admin/upgrading.rst:156
 msgid "Applying a patch using Composer"
 msgstr ""
 
-#: ../../admin/upgrading.rst:153
+#: ../../admin/upgrading.rst:158
 msgid ""
 "The definition of a patch can be found in the :doc:`Release policy "
 "</appendix/releases>`."
 msgstr ""
 
-#: ../../admin/upgrading.rst:155
+#: ../../admin/upgrading.rst:160
 msgid ""
 "Your ``composer.json`` requirement for Elgg should be ``~3.y.0`` (where "
 "``y`` is the minor version ``0``, ``1``, etc. you wish to have installed). "
@@ -3395,21 +3448,21 @@ msgid ""
 "installing the next minor release."
 msgstr ""
 
-#: ../../admin/upgrading.rst:166
+#: ../../admin/upgrading.rst:171
 msgid ""
 "Just to be sure you can first verify what will be installed / upgraded by "
 "executing the folowing command"
 msgstr ""
 
-#: ../../admin/upgrading.rst:176
+#: ../../admin/upgrading.rst:181
 msgid "To upgrade Elgg simply execute"
 msgstr ""
 
-#: ../../admin/upgrading.rst:187
+#: ../../admin/upgrading.rst:192
 msgid "Earlier versions"
 msgstr "Versions précédentes"
 
-#: ../../admin/upgrading.rst:189
+#: ../../admin/upgrading.rst:194
 msgid ""
 "Check Elgg documentation that corresponds to the Elgg version you want to "
 "upgrade to, by switching the documentation version in the lower left corner "
@@ -3457,3 +3510,25 @@ msgstr ""
 "Un exemple de ceci est le plugin :doc:`/plugins/uservalidationbyemail` qui "
 "ne permet pas aux utilisateurs de se connecter sur le site tant que leur "
 "adresse email n'est pas validée."
+
+#: ../../admin/uservalidation.rst:24
+msgid "Require admin validation"
+msgstr ""
+
+#: ../../admin/uservalidation.rst:26
+msgid ""
+"In the Site settings under the Users section there is a setting which can be"
+" enabled to require admin validation of a new user account before the user "
+"can use their account. After registration the user gets notified that their "
+"account is awaiting validation by an administrator."
+msgstr ""
+
+#: ../../admin/uservalidation.rst:29
+msgid ""
+"Site administrators can receive an e-mail notification that there are users "
+"awaiting validation."
+msgstr ""
+
+#: ../../admin/uservalidation.rst:31
+msgid "After validation the user is notified that they can use their account."
+msgstr ""

@@ -1,8 +1,6 @@
 <?php
 /**
  * Delete blog entity
- *
- * @package Blog
  */
 
 elgg_deprecated_notice("The action 'blog/delete' is deprecated. Use 'entity/delete'.", '3.1');

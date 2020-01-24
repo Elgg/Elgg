@@ -23,6 +23,9 @@ return array(
 	 * Status messages
 	 */
 
+	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
+	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	
 	'messageboard:posted' => "Úspěšně jste přidal/a vzkaz do vzkazníku.",
 	'messageboard:deleted' => "Úspěšně jste smazal/a vzkaz.",
 
@@ -52,6 +55,6 @@ To view %s's profile, click here:
 
 	'messageboard:failure' => "Při ukládání vzkazu nastala nečekaná chyba. Zkuste to prosím znovu.",
 
-	'widgets:messageboard:name' => "Message board",
-	'widgets:messageboard:description' => "This is a message board that you can put on your profile where other users can comment.",
+	'widgets:messageboard:name' => "Vzkazy",
+	'widgets:messageboard:description' => "Vzkazník, který si můžete přidat na svůj profil a mohou vám tam psát ostatní uživatelé.",
 );

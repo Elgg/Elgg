@@ -2,9 +2,6 @@
 /**
  * Elgg JSON output pageshell
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['body']
  */
 

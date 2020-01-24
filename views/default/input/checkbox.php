@@ -3,10 +3,6 @@
  * Elgg checkbox input
  * Displays a checkbox input tag
  *
- * @package Elgg
- * @subpackage Core
- *
- *
  * Pass input tag attributes as key value pairs. For a list of allowable
  * attributes, see http://www.w3schools.com/tags/tag_input.asp
  *

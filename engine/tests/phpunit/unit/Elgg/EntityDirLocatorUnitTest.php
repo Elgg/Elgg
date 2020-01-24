@@ -36,11 +36,11 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @dataProvider badGuidsProvider
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage GUIDs must be integers > 0.
 	 */
 	public function testConstructorThrowsWithBadGuid($guid) {
-		$dir = new \Elgg\EntityDirLocator($guid);
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('GUIDs must be integers > 0.');
+		new \Elgg\EntityDirLocator($guid);
 	}
 
 	public function badGuidsProvider() {
@@ -54,8 +54,6 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testGetPath() {
-		$size = \Elgg\EntityDirLocator::BUCKET_SIZE;
-
 		foreach ($this->guids as $guid) {
 			$test = new \Elgg\EntityDirLocator($guid);
 

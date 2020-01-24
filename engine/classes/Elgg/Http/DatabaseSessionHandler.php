@@ -6,9 +6,6 @@ namespace Elgg\Http;
  * Database session handler
  *
  * @internal
- *
- * @package    Elgg.Core
- * @subpackage Http
  */
 class DatabaseSessionHandler implements \SessionHandlerInterface {
 

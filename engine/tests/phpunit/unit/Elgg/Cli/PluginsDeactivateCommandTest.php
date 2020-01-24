@@ -2,10 +2,10 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Cli\CronCommand;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Exception\RuntimeException;
 
 /**
  * @group Cli
@@ -21,9 +21,6 @@ class PluginsDeactivateCommandTest extends UnitTestCase {
 		_elgg_services()->logger->enable();
 	}
 
-	/**
-	 * @expectedException \Symfony\Component\Console\Exception\RuntimeException
-	 */
 	public function testRequiresPluginIds() {
 		$application = new Application();
 
@@ -32,6 +29,8 @@ class PluginsDeactivateCommandTest extends UnitTestCase {
 
 		$command = $application->find('plugins:activate');
 		$commandTester = new CommandTester($command);
+		
+		$this->expectException(RuntimeException::class);
 		$commandTester->execute([
 			'command' => $command->getName(),
 		]);

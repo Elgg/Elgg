@@ -2,14 +2,14 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 use ElggEntity;
 use ElggObject;
 
 /**
  * @group IntegrationTests
  */
-class ElggRelationshipTest extends LegacyIntegrationTestCase {
+class ElggRelationshipTest extends IntegrationTestCase {
 
 	/**
 	 * @var ElggEntity
@@ -25,10 +25,18 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 	 * @var ElggEntity
 	 */
 	protected $entity3;
+	
+	/**
+	 * @var \ElggUser
+	 */
+	protected $user;
 
 	public function up() {
 		_elgg_services()->events->backup();
 
+		$this->user = $this->createUser();
+		elgg()->session->setLoggedInUser($this->user);
+		
 		$this->entity1 = new ElggObject();
 		$this->entity1->subtype = 'elgg_relationship_test';
 		$this->entity1->access_id = ACCESS_PUBLIC;
@@ -57,13 +65,16 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 		if ($this->entity3) {
 			$this->entity3->delete();
 		}
+		
+		if ($this->user) {
+			$this->user->delete();
+		}
+		
+		elgg()->session->removeLoggedInUser();
 
 		_elgg_services()->events->restore();
 	}
 
-	/**
-	 * Tests
-	 */
 	public function testAddRelationship() {
 		// test adding a relationship
 		$this->assertTrue(add_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));
@@ -118,14 +129,14 @@ class ElggRelationshipTest extends LegacyIntegrationTestCase {
 
 		$r->guid_two = $this->entity3->guid;
 		$new_id = $r->save();
-		$this->assertInternalType('integer', $new_id);
-		$this->assertNotEqual($new_id, $old_id);
+		$this->assertIsInt($new_id);
+		$this->assertNotEquals($old_id, $new_id);
 
 		$test_r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
 		$this->assertInstanceOf(\ElggRelationship::class, $test_r);
-		$this->assertIdentical($r->guid_one, $test_r->guid_one);
-		$this->assertIdentical($r->guid_two, $test_r->guid_two);
-		$this->assertIdentical($r->relationship, $test_r->relationship);
+		$this->assertEquals($r->guid_one, $test_r->guid_one);
+		$this->assertEquals($r->guid_two, $test_r->guid_two);
+		$this->assertEquals($r->relationship, $test_r->relationship);
 
 		// the original shouldn't exist anymore
 		$this->assertFalse(check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity2->guid));

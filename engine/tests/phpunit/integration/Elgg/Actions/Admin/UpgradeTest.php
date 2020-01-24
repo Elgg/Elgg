@@ -24,10 +24,8 @@ class UpgradeTest extends ActionResponseTestCase {
 		_elgg_services()->session->removeLoggedInUser();
 	}
 
-	/**
-	 * @expectedException \Elgg\EntityNotFoundException
-	 */
 	public function testUpgradeFailsWithInvalidUpgradeEntity() {
+		$this->expectException(EntityNotFoundException::class);
 		$this->executeAction('admin/upgrade', [
 			'guid' => -5,
 		]);

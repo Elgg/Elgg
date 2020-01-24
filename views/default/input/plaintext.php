@@ -3,9 +3,6 @@
  * Elgg long text input (plaintext)
  * Displays a long text input field that should not be overridden by wysiwyg editors.
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['value']    The current value, if any
  * @uses $vars['name']     The name of the input field
  * @uses $vars['class']    Additional CSS class

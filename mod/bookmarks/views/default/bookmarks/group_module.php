@@ -1,8 +1,6 @@
 <?php
 /**
  * List most recent bookmarks on group profile page
- *
- * @package Bookmarks
  */
 
 elgg_deprecated_notice("The view 'bookmarks/group_module' was deprecated,

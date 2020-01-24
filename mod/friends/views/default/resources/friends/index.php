@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg friends page
- *
- * @package Elgg.Core
- * @subpackage Social.Friends
  */
 
 $owner = elgg_get_page_owner_entity();
@@ -28,11 +25,8 @@ $content = elgg_list_entities([
 	'no_results' => elgg_echo('friends:none'),
 ]);
 
-$body = elgg_view_layout('default', [
-	'title' => $title,
+echo elgg_view_page($title, [
 	'content' => $content,
 	'filter_id' => 'friends',
 	'filter_value' => 'friends',
 ]);
-
-echo elgg_view_page($title, $body);

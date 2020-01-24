@@ -1,10 +1,6 @@
 <?php
-
 /**
  * River item class.
- *
- * @package    Elgg.Core
- * @subpackage Core
  *
  * @property-read int    $id            The unique identifier (read-only)
  * @property-read int    $subject_guid  The GUID of the actor

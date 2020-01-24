@@ -1,8 +1,6 @@
 <?php
 /**
  * CKEditor wysiwyg editor
- *
- * @package ElggCKEditor
  */
 
 /**

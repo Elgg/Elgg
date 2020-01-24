@@ -1,11 +1,16 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 /**
  * Sites
  */
 
-	'item:site:site' => 'Site',
+	'item:site:site' => 'سایت',
 	'collection:site:site' => 'Sites',
 	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
@@ -122,7 +127,7 @@ return array(
 	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
-	'BadRequestException' => 'Bad request',
+	'BadRequestException' => 'درخواست اشتباه',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
 	
@@ -208,7 +213,7 @@ return array(
 	'access:label:logged_in' => "Logged in users",
 	'access:label:public' => "Public",
 	'access:label:logged_out' => "Logged out users",
-	'access:label:friends' => "Friends",
+	'access:label:friends' => "دوستان",
 	'access' => "دسترسی",
 	'access:overridenotice' => "نکته: به خاطر قوانین گروه، این محتوا فقط در دسترس اعضای گروه است.",
 	'access:limited:label' => "محدود",
@@ -238,7 +243,7 @@ return array(
 	'widgets' => "ابزار ها",
 	'widget' => "ابزارک",
 	'item:object:widget' => "ابزار ها",
-	'collection:object:widget' => 'Widgets',
+	'collection:object:widget' => 'ابزار ها',
 	'widgets:save:success' => "ابزارک با موفقیت ذخیره شد",
 	'widgets:save:failure' => "امکان ذخیره سازی ابزارک نیست",
 	'widgets:add:success' => "ابزارک با موفقیت افزوده شد",
@@ -254,7 +259,7 @@ return array(
 	'group' => "گروه",
 	'item:group' => "گروهها",
 	'collection:group' => 'Groups',
-	'item:group:group' => "Group",
+	'item:group:group' => "گروهها",
 	'collection:group:group' => 'Groups',
 	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
@@ -264,9 +269,9 @@ return array(
 
 	'user' => "کاربر",
 	'item:user' => "کاربران",
-	'collection:user' => 'Users',
-	'item:user:user' => 'User',
-	'collection:user:user' => 'Users',
+	'collection:user' => 'کاربران',
+	'item:user:user' => 'کاربران',
+	'collection:user:user' => 'کاربران',
 
 	'friends' => "دوستان",
 	'collection:friends' => 'Friends\' %s',
@@ -496,7 +501,7 @@ to an instruction specifying how long a page can be considered "fresh".',
 file access this will negatively impact performance. Also PHPs opcache can no longer cache file paths in memory and has to resolve this upon every access.',
 	
 	'admin:statistics' => 'آمار',
-	'admin:server' => 'Server',
+	'admin:server' => 'سرور',
 	'admin:cron' => 'Cron',
 	'admin:cron:record' => 'آخرین cron job  ها',
 	'admin:cron:period' => 'دوره زمانی اجرای cron',
@@ -531,7 +536,7 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:users:unvalidated:change_email' => 'Change e-mail address',
 	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
-	'admin:configure_utilities:maintenance' => 'Maintenance mode',
+	'admin:configure_utilities:maintenance' => 'حالت نگهداری سایت',
 	'admin:upgrades' => 'ارتقاء ها',
 	'admin:upgrades:finished' => 'Completed',
 	'admin:upgrades:db' => 'Database upgrades',
@@ -553,8 +558,9 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:settings' => 'تنظیمات',
 	'admin:settings:basic' => 'تنظیمات اولیه',
+	'admin:settings:i18n' => 'Internationalization',
 	'admin:settings:advanced' => 'تنظیمات پیشرفته',
-	'admin:settings:users' => 'Users',
+	'admin:settings:users' => 'کاربران',
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "این قسمت مدیریت به شما اجازه کنترل تنظیمات عمومی سایتتان را میدهد. یکی از موارد زیر را جهت شروع انتخاب نمایید",
 	'admin:site:opt:linktext' => "تنظیمات سایت",
@@ -610,6 +616,12 @@ three sections:
 
 	'admin:cache:flush' => 'خالی کردن کش',
 	'admin:cache:flushed' => "کش سایت خالی شد",
+	'admin:cache:invalidate' => 'Invalidate the caches',
+	'admin:cache:invalidated' => "The site's caches have been invalidated",
+	'admin:cache:clear' => 'Clear the caches',
+	'admin:cache:cleared' => "The site's caches have been cleared",
+	'admin:cache:purge' => 'Purge the caches',
+	'admin:cache:purged' => "The site's caches have been purged",
 
 	'admin:footer:faq' => 'سوالات متداول مدیریت',
 	'admin:footer:manual' => 'راهنمای مدیریت',
@@ -666,10 +678,10 @@ submit potentially harmfull content (eg. cross-site-scripting, etc)",
 	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
 expired sessions from your database and not allow users to reuse old sessions.",
 	
-	'admin:security:settings' => 'Settings',
+	'admin:security:settings' => 'تنظیمات',
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
 	'admin:security:settings:label:hardening' => 'Hardening',
-	'admin:security:settings:label:account' => 'Account',
+	'admin:security:settings:label:account' => 'حساب کاربری',
 	'admin:security:settings:label:notifications' => 'Notifications',
 	'admin:security:settings:label:site_secret' => 'Site secret',
 	
@@ -810,10 +822,16 @@ See the full list of users here:
 	'plugins:disabled' => 'به خاطر اینکه فایلی با نام "disabled" در پوشه ماژول ها هست امکان بارگزاری پلاگین ها نیست.',
 	'plugins:settings:save:ok' => "تنظیمات برای پلاگین %s با موفقیت ذخیره شد",
 	'plugins:settings:save:fail' => "برای ذخیره تنظیمات پلاگین %s مشکلی به وجود آمد",
+	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
+	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
 	'plugins:usersettings:save:ok' => "تنظیمات کاربر برای پلاگین %s با موفقیت ذخیره شد",
 	'plugins:usersettings:save:fail' => "برای ذخیره تنظیمات کاربر برای پلاگین %s مشکلی به وجود آمده است.",
+	
 	'item:object:plugin' => 'پلاگین ها',
-	'collection:object:plugin' => 'Plugins',
+	'collection:object:plugin' => 'پلاگین ها',
+	
+	'plugins:settings:remove:menu:text' => "Remove all settings",
+	'plugins:settings:remove:menu:confirm' => "Are you sure you wish to remove all settings, including user settings from this plugin?",
 
 	'admin:plugins' => "پلاگین ها",
 	'admin:plugins:activate_all' => 'فعالسازی همه',
@@ -840,6 +858,7 @@ See the full list of users here:
 	'admin:plugins:label:moreinfo' => 'اطلاعات بیشتر',
 	'admin:plugins:label:version' => 'نسخه',
 	'admin:plugins:label:location' => 'مکانمکان',
+	'admin:plugins:label:priority' => 'اولویت',
 	'admin:plugins:label:contributors' => 'مولفان',
 	'admin:plugins:label:contributors:name' => 'نام',
 	'admin:plugins:label:contributors:email' => 'ایمیل',
@@ -928,7 +947,7 @@ See the full list of users here:
 		For improved performance, it is recommended that you enable and configure OPcache.
 ',
 	
-	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension' => "افزونه PHP : %s",
 	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
 	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
 	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
@@ -1154,6 +1173,9 @@ These changes will only affect new users on the site.',
 	'content' => "مختوا",
 	'content:latest' => 'آخرین فعالیت',
 	'content:latest:blurb' => 'یا، اینجا را کلیک کنید تا آخرین فعالیت ها در داخل سایت را مشاهده کنید',
+	
+	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
+	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => 'مشاهده لینک',
 
@@ -1178,6 +1200,8 @@ These changes will only affect new users on the site.',
 	'status:enabled' => 'Enabled',
 	'status:disabled' => 'Disabled',
 	'status:unavailable' => 'Unavailable',
+	'status:active' => 'فعالسازی',
+	'status:inactive' => 'Inactive',
 
 /**
  * Generic sorts
@@ -1261,10 +1285,11 @@ Once you have logged in, we highly recommend that you change your password.',
  * Messages
  */
 	'messages:title:success' => 'Success',
-	'messages:title:error' => 'Error',
+	'messages:title:error' => 'خطا',
 	'messages:title:warning' => 'Warning',
-	'messages:title:help' => 'Help',
+	'messages:title:help' => 'راهنما',
 	'messages:title:notice' => 'Notice',
+	'messages:title:info' => 'اطلاعات',
 
 /**
  * Import / export
@@ -1413,11 +1438,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'سیستم',
 	'admin:legend:caching' => 'کش',
-	'admin:legend:content' => 'Content',
+	'admin:legend:content' => 'محتوا',
 	'admin:legend:content_access' => 'دسترس محتوا',
 	'admin:legend:site_access' => 'دسترسی سایت',
 	'admin:legend:debug' => 'رفع خطا و لاگ',
 	
+	'config:i18n:allowed_languages' => "Allowed languages",
+	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
@@ -1426,6 +1453,10 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
 	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
 	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
+	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
+	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
+	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
 	
 	'upgrading' => 'ارتقاء..',
 	'upgrade:core' => 'نسخه Elgg شما ارتقاء یافت',
@@ -1488,7 +1519,7 @@ Upgrading Elgg documentation</a>. If you require assistance, please post to the
 	'email:settings' => "تنظیمات ایمیل",
 	'email:address:label' => "آدرس ایمیل",
 	'email:address:help:confirm' => "Pending e-mail address change to '%s', please check the inbox for instructions.",
-	'email:address:password' => "Password",
+	'email:address:password' => "کلمه عبور",
 	'email:address:password:help' => "In order to be able to change your email address you need to provide your current password.",
 
 	'email:save:success' => "آدرس ایمیل جدید ذخیره شد. درخواست تایید ارسال شد",
@@ -1582,7 +1613,7 @@ To go the the website, click here:
 
 	'comments:count' => "%sدیدگاه",
 	'item:object:comment' => 'نظر',
-	'collection:object:comment' => 'Comments',
+	'collection:object:comment' => 'نظر',
 
 	'river:object:default:comment' => '%s commented on %s',
 
@@ -1644,6 +1675,13 @@ To view %s's profile, click here:
 	'entity:can_delete:invaliduser' => 'امکان چک تابع canDelete برای کاربر user_guid [%s]  نیست. به خاطر اینکه کاربر موجود نیست.',
 
 /**
+ * Annotations
+ */
+	
+	'annotation:delete:fail' => "An error occured while removing the annotation",
+	'annotation:delete:success' => "The annotation was removed successfully",
+	
+/**
  * Action gatekeeper
  */
 
@@ -1678,7 +1716,66 @@ To view %s's profile, click here:
  * Miscellaneous
  */
 	'elgg:powered' => "نیروگرفته توسط Elgg",
+	
+/**
+ * Cli commands
+ */
+	'cli:login:error:unknown' => "Unable to login as %s",
+	'cli:login:success:log' => "Logged in as %s [guid: %s]",
+	'cli:response:output' => "Response:",
+	'cli:option:as' => "Execute the command on behalf of a user with the given username",
+	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
+	
+	'cli:cache:clear:description' => "Clear Elgg caches",
+	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
+	'cli:cache:purge:description' => "Purge Elgg caches",
+	
+	'cli:cron:description' => "Execute cron handlers for all or specified interval",
+	'cli:cron:option:interval' => "Name of the interval (e.g. hourly)",
+	'cli:cron:option:force' => "Force cron commands to run even if they are not yet due",
+	'cli:cron:option:time' => "Time of the cron initialization",
+	
+	'cli:database:seed:description' => "Seeds the database with fake entities",
+	'cli:database:seed:option:limit' => "Number of entities to seed",
+	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
+	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
+	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+	
+	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
+	
+	'cli:plugins:activate:description' => "Activate plugin(s)",
+	'cli:plugins:activate:option:force' => "Resolve conflicts by deactivating conflicting plugins and enabling required ones",
+	'cli:plugins:activate:argument:plugins' => "Plugin IDs to be activated",
+	'cli:plugins:activate:progress:start' => "Activating plugins",
+	
+	'cli:plugins:deactivate:description' => "Deactivate plugin(s)",
+	'cli:plugins:deactivate:option:force' => "Force deactivation of all dependent plugins",
+	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs to be deactivated",
+	'cli:plugins:deactivate:progress:start' => "Deactivating plugins",
+	
+	'cli:plugins:list:description' => "List all plugins installed on the site",
+	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
+	
+	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
+	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
+	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
+	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
+	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
+	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
+	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
+	
+	'cli:upgrade:batch:description' => "Executes one or more upgrades",
+	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
+	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
+	'cli:upgrade:batch:finished' => "Running upgrades finished",
+	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
 
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Completed upgrades",
+	'cli:upgrade:list:pending' => "Pending upgrades",
+	'cli:upgrade:list:notfound' => "No upgrades found",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

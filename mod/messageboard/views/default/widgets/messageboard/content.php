@@ -9,7 +9,10 @@ $widget = elgg_extract('entity', $vars);
 $owner = $widget->getOwnerEntity();
 
 if (elgg_is_logged_in()) {
-	echo elgg_view_form('messageboard/add', ['name' => 'elgg-messageboard']);
+	echo elgg_view_form('messageboard/add', [
+		'name' => 'elgg-messageboard',
+		'prevent_double_submit' => true,
+	]);
 }
 
 $num_display = (int) $widget->num_display ?: 4;

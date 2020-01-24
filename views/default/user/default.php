@@ -24,6 +24,7 @@ if (!$title) {
 	$title = elgg_view('output/url', [
 		'href' => $entity->getUrl(),
 		'text' => $entity->getDisplayName(),
+		'is_trusted' => true,
 	]);
 }
 
@@ -34,28 +35,6 @@ $params = [
 	'icon_size' => $size,
 	'tags' => false,
 ];
-
-if ($entity->isBanned()) {
-	$params['subtitle'] = elgg_echo('banned');
-} else {
-	$subtitle = '';
-	$location = $entity->getProfileData('location');
-	if (is_string($location) && $location !== '') {
-		$location = elgg_view_icon('map-marker') . ' ' . $location;
-		$subtitle .= elgg_format_element('div', [], $location);
-	}
-	
-	$briefdescription = $entity->getProfileData('briefdescription');
-	if (is_string($briefdescription) && $briefdescription !== '') {
-		$subtitle .= elgg_format_element('div', [], $briefdescription);
-	}
-	
-	$params['subtitle'] = $subtitle;
-	if (elgg_view_exists('user/status')) {
-		$params['content'] = elgg_view('user/status', ['entity' => $entity]);
-	}
-}
-
 $params = $params + $vars;
 
 echo elgg_view('user/elements/summary', $params);

@@ -24,12 +24,4 @@ $result .= elgg_view_field([
 	'class' => 'elgg-input-text',
 ]);
 
-$result .= elgg_view_field([
-	'#type' => 'select',
-	'name' => 'language',
-	'#label' => elgg_echo('installation:language'),
-	'value' => elgg_get_config('language'),
-	'options_values' => get_installed_translations(true),
-]);
-
 echo elgg_view_module('info', elgg_echo('admin:settings:basic'), $result);

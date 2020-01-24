@@ -10,8 +10,6 @@ use stdClass;
 /**
  * Subscription notification event
  *
- * @package    Elgg.Core
- * @subpackage Notifications
  * @todo remove this class in Elgg 4.0 in favour of SubscriptionNotificationEvent (see https://github.com/Elgg/Elgg/issues/11241)
  */
 class Event implements NotificationEvent {

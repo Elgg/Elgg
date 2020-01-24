@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -43,8 +49,8 @@ return array(
 	'groups:owner' => "Власник",
 	'groups:owner:warning' => "Упозорење: ако промените ову вредност, више нећете бити власник групе.",
 	'groups:widget:num_display' => 'Колико група приказати',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Чланство групе',
+	'widgets:a_users_groups:description' => 'Прикажи групе у којима сте члан на вашем профилу',
 
 	'groups:noaccess' => 'Немате приступ групи',
 	'groups:cantcreate' => 'Не можете да направите групу. Само админ може.',
@@ -75,7 +81,7 @@ return array(
 	'groups:search:none' => "Нису пронађене одговарајуће групе",
 	'groups:search_in_group' => "Претражи у овој групи",
 	'groups:acl' => "Група:  %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Чланови групе',
 
 	'groups:notfound' => "Група није пронађена",
 	

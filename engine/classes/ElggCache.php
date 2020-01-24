@@ -2,9 +2,6 @@
 /**
  * \ElggCache The elgg cache superclass.
  * This defines the interface for a cache (wherever that cache is stored).
- *
- * @package    Elgg.Core
- * @subpackage Cache
  */
 abstract class ElggCache implements \ArrayAccess {
 	/**
@@ -137,6 +134,20 @@ abstract class ElggCache implements \ArrayAccess {
 	 * @return bool
 	 */
 	abstract public function clear();
+	
+	/**
+	 * Invalidate the contents of the cache.
+	 *
+	 * @return bool
+	 */
+	abstract public function invalidate();
+	
+	/**
+	 * Purge old/stale contents of the cache.
+	 *
+	 * @return bool
+	 */
+	abstract public function purge();
 
 	/**
 	 * Disable cache

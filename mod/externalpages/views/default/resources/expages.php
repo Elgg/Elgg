@@ -13,9 +13,6 @@ if (elgg_is_admin_logged_in()) {
 	]);
 }
 
-// build page components
-$title = elgg_echo("expages:$type");
-
 $object = elgg_get_entities([
 	'type' => 'object',
 	'subtype' => $type,
@@ -25,21 +22,16 @@ $object = elgg_get_entities([
 $description = $object ? $object[0]->description : elgg_echo('expages:notset');
 $description = elgg_view('output/longtext', ['value' => $description]);
 
-$content = elgg_view('expages/wrapper', [
-	'content' => $description,
-]);
-
 // build page
 $shell = 'default';
 if (elgg_get_config('walled_garden') && !elgg_is_logged_in()) {
 	$shell = 'walled_garden';
 }
 
-$body = elgg_view_layout('default', [
-	'content' => $content,
-	'title' => $title,
-	'sidebar' => false,
-]);
-
 // draw page
-echo elgg_view_page($title, $body, $shell);
+echo elgg_view_page(elgg_echo("expages:{$type}"), [
+	'content' => elgg_view('expages/wrapper', [
+		'content' => $description,
+	]),
+	'sidebar' => false,
+], $shell);

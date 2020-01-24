@@ -10,9 +10,7 @@ use ElggSite;
  *
  * Support was added to Chrome 39 and is expected to come to Firefox soon.
  *
- * @package    Elgg.Core
- * @subpackage Http
- * @since      1.10
+ * @since 1.10
  *
  * @internal
  */

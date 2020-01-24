@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg reported content object view
- *
- * @package ElggReportContent
  */
 
 $report = $vars['entity'];

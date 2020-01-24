@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
+
 return array(
 	'email:validate:subject' => "%s please confirm your email address for %s!",
 	'email:validate:body' => "Hi %s,

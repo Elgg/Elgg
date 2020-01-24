@@ -1,14 +1,10 @@
 <?php
 /**
  * Elgg login form
- *
- * @package    Elgg
- * @subpackage Core
  */
 
 echo elgg_view_field([
 	'#type' => 'text',
-
 	'name' => 'username',
 	'autofocus' => true,
 	'required' => true,

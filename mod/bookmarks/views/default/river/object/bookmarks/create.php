@@ -1,8 +1,6 @@
 <?php
 /**
  * New bookmarks river entry
- *
- * @package Bookmarks
  */
 
 $item = elgg_extract('item', $vars);

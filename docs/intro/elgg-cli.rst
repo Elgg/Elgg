@@ -9,7 +9,8 @@ Elgg CLI
 elgg-cli command line tools
 ===========================
 
-Depending on how you installed Elgg and your server configuration you can access``elgg-cli`` binaries as one of the following from the root of your Elgg installation:
+Depending on how you installed Elgg and your server configuration you can access``elgg-cli`` binaries as one of the following 
+from the root of your Elgg installation:
 
 .. code-block:: sh
 
@@ -18,6 +19,9 @@ Depending on how you installed Elgg and your server configuration you can access
     php ./vendor/bin/elgg-cli list
     ./vendor/bin/elgg-cli list
 
+.. note::
+
+	Be advised that when using elgg-cli it might be needed to run the command as the same user as the webserver to prevent issues with rights related to files.
 
 Available commands
 ==================
@@ -48,8 +52,14 @@ Available commands
     # Run cron jobs
     vendor/bin/elgg-cli cron [-i|--interval INTERVAL] [-q|--quiet]
 
-    # Flush caches
-    vendor/bin/elgg-cli flush
+    # Clear caches
+    vendor/bin/elgg-cli cache:clear
+
+    # Invalidate caches
+    vendor/bin/elgg-cli cache:invalidate
+    
+    # Purge caches
+    vendor/bin/elgg-cli cache:purge
 
     # System upgrade
     # -v|-vv|-vvv control verbosity of the command (helpful for debugging upgrade scripts)
@@ -76,7 +86,7 @@ Available commands
 Adding custom commands
 ======================
 
-Plugins can add their commands to the CLI application, by adding command class name via ``'commands','cli'`` hook.
+Plugins can add their commands to the CLI application, by adding command class name via a configuration in ``elgg-plugin.php`` or via the ``'commands','cli'`` hook.
 Command class must extend ``\Elgg\CLI\Command``.
 
 .. code-block:: php

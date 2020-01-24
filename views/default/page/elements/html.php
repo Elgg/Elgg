@@ -23,11 +23,9 @@ $html_attrs = array_merge($default_html_attrs, $html_attrs);
 $body_attrs = elgg_extract('body_attrs', $vars, []);
 ?>
 <!DOCTYPE html>
-<html <?= elgg_format_attributes($html_attrs) ?>>
-	<head>
-		<?= elgg_extract('head', $vars, '') ?>
-	</head>
-	<body <?= elgg_format_attributes($body_attrs) ?>>
-		<?= elgg_extract('body', $vars, '') ?>
-	</body>
-</html>
+<?php
+
+$head = elgg_format_element('head', [], elgg_extract('head', $vars, ''));
+$body = elgg_format_element('body', $body_attrs, elgg_extract('body', $vars, ''));
+
+echo elgg_format_element('html', $html_attrs, $head . $body);

@@ -9,9 +9,7 @@ use Elgg\Database;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Notifications
- * @since      1.9.0
+ * @since 1.9.0
  */
 class SubscriptionsService {
 

@@ -3,9 +3,6 @@
  * Shows a table of plugin dependecies for ElggPlugin in $vars['plugin'].
  *
  * This uses a table because it's a table of data.
- *
- * @package Elgg.Core
- * @subpackage Admin.Plugins
  */
 
 $plugin = elgg_extract('plugin', $vars, false);

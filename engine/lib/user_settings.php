@@ -2,9 +2,6 @@
 /**
  * Elgg user settings functions.
  * Functions for adding and manipulating options on the user settings panel.
- *
- * @package Elgg.Core
- * @subpackage Settings.User
  */
 
 use Elgg\Request;
@@ -231,6 +228,10 @@ function _elgg_set_user_language(\Elgg\Hook $hook) {
 	}
 
 	if ($language === $user->language) {
+		return null;
+	}
+	
+	if (!in_array($language, elgg()->translator->getAllowedLanguages())) {
 		return null;
 	}
 

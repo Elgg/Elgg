@@ -1,11 +1,23 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
+	'item:object:discussion' => "Тема обсуждения",
+	
 	'add:object:discussion' => 'Добавить тему',
 	'edit:object:discussion' => 'Изменить тему',
+	'collection:object:discussion' => 'Темы обсуждения',
+	'collection:object:discussion:group' => 'Групповые обсуждения',
+	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
 
 	'discussion:latest' => 'Последние обсуждения',
-	'collection:object:discussion:group' => 'Групповые обсуждения',
 	'discussion:none' => 'Нет обсуждений',
 	'discussion:updated' => "Последний комментарий%s %s",
 
@@ -17,6 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Не могу сохранить эту тему',
 	'discussion:error:missing' => 'Оба поля заголовок и сообщение являются обязательными',
 	'discussion:error:permissions' => 'У Вас нет разрешений выполнять это действие',
+	'discussion:error:no_groups' => "You're not a member of any groups.",
 
 	/**
 	 * River
@@ -49,9 +62,6 @@ return array(
 %s
 ',
 
-	'item:object:discussion' => "Тема обсуждения",
-	'collection:object:discussion' => 'Темы обсуждения',
-
 	'groups:tool:forum' => 'Включить групповые обсуждения',
 
 	/**
@@ -67,5 +77,5 @@ return array(
 	'discussions:upgrade:2017112800:title' => "Перенести реплики обсуждения в комментарии",
 	'discussions:upgrade:2017112800:description' => "Реплики обсуждения, использовали свой подтип, это было переведено к одному типу в комментарии.",
 	'discussions:upgrade:2017112801:title' => "Перенести поток активности связанной с обсуждаемыми репликами",
-	'discussions:upgrade:2017112801:description' => "Discussion replies used to have their own subtype, this has been unified into comments.",
+	'discussions:upgrade:2017112801:description' => "Реплики обсуждения, использовали свой подтип, это было переведено к одному типу в комментарии.",
 );

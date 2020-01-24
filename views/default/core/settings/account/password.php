@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Provide a way of setting your password
- *
- * @package Elgg
- * @subpackage Core
  */
 $user = elgg_get_page_owner_entity();
 

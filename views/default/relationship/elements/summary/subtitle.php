@@ -11,17 +11,16 @@ if ($subtitle === false) {
 	return;
 }
 
-$relationship = elgg_extract('relationship', $vars);
-if ($subtitle === '' && $relationship instanceof ElggRelationship) {
-	$subtitle = elgg_view('object/elements/imprint/element', [
-		'icon_name' =>'history',
-		'content' => elgg_view_friendly_time($relationship->time_created),
-		'class' => 'elgg-relationship-time',
-	]);
-	$subtitle = elgg_format_element('div', ['class' => 'elgg-listing-imprint'], $subtitle);
+if ($subtitle === '') {
+	$subtitle = elgg_view('relationship/elements/imprint', $vars);
+}
+
+if (elgg_is_empty($subtitle)) {
+	return;
 }
 
 echo elgg_format_element('div', ['class' => [
-	'elgg-relationship-subtitle',
+	'elgg-relationship-subtitle', // @todo remove in 4.0
+	'elgg-listing-summary-subtitle',
 	'elgg-subtext',
 ]], $subtitle);

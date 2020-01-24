@@ -5,7 +5,7 @@
 
 $group = elgg_get_page_owner_entity();
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 elgg_register_menu_item('title', [
@@ -15,9 +15,6 @@ elgg_register_menu_item('title', [
 	'text' => elgg_echo('groups:invite'),
 	'link_class' => 'elgg-button elgg-button-action',
 ]);
-
-// build page elements
-$title = elgg_echo('groups:invitedmembers');
 
 $content = elgg_list_relationships([
 	'relationship' => 'invited',
@@ -30,12 +27,8 @@ $tabs = elgg_view_menu('groups_members', [
 	'class' => 'elgg-tabs'
 ]);
 
-// build page
-$body = elgg_view_layout('default', [
-	'title' => $title,
+// draw page
+echo elgg_view_page(elgg_echo('groups:invitedmembers'), [
 	'content' => $content,
 	'filter' => $tabs,
 ]);
-
-// draw page
-echo elgg_view_page($title, $body);

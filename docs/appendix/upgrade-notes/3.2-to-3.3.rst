@@ -1,0 +1,111 @@
+From 3.2 to 3.3
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+
+PHP Version
+-----------
+
+PHP 7.1 has reached `end of life`_ in December 2019. To ensure that Elgg sites are secure, we now require PHP 7.2 for new installations.
+
+If upgrading from a previous Elgg installation make sure you have the correct PHP version installed.
+
+In order to be able to test Elgg on PHP 7.4 we had to update the PHPUnit testsuite to version 8.5. This may require some rewrites of your
+own unit/integration tests.
+
+.. _end of life: https://www.php.net/eol.php
+
+Simpler use of 'default' layout
+-------------------------------
+
+Currently a common pattern is to do the following:
+
+.. code-block:: php
+
+	$title = 'All blogs';
+	
+	$content = elgg_list_entities([
+		'type' => 'object',
+		'subtype' => 'blog',
+	]);
+	
+	$layout = elgg_view_layout('default', [
+		'title' => $title,
+		'content' => $content,
+	]);
+	
+	echo elgg_view_page($title, $layout);
+
+We made this kind of pattern simpler. You can now pass an array of layout options to the second parameter of `elgg_view_page`.
+The `elgg_view_page` function will use this array to wrap it in the 'default' layout. It also adds the page title to the layout.
+
+The new way to do it is:
+
+.. code-block:: php
+
+	echo elgg_view_page('All blogs', [
+		'content' => elgg_list_entities([
+			'type' => 'object',
+			'subtype' => 'blog',
+		]),
+	]);
+
+Deprecated layout names
+-----------------------
+
+For an easy transition from Elgg 2.x to 3.x we kept some old layout names ('one_sidebar', 'one_column', 'two_sidebar' and 'content') intact
+when used in the `elgg_view_layout` function. As of Elgg 3.3 these layout names are deprecated and you should update your code to use the new 'default' layout.
+
+When changing the use of the 'content' layout name you should take into consideration that the the 'content' generates a filter menu. 
+This menu is slightly different from the regular 'filter' menu generated in the 'default' layout. It uses different hook names. 
+If you already disabled the filter in your layout you can change the layout without any issues.
+
+Plugin Manifest changes
+-----------------------
+
+We are working towards the removal of the plugin manifest file. Some features of the manifest will be replaced and some will be dropped.
+To make this transition a bit easier we have already deprecated the following ``ElggPluginManifest`` api functions:
+
+* ``getCopyright()``
+* ``getDonationsPageURL()``
+* ``getSuggests()`` use suggestions in composer
+
+Deprecated APIs
+---------------
+
+ * ``elgg_disable_query_cache()``
+ * ``elgg_enable_query_cache()``
+ * ``elgg_format_attributes()`` use ``elgg_format_element()``
+ * ``elgg_flush_caches()`` use ``elgg_clear_caches()``
+ * ``elgg_get_menu_item()``
+ * ``elgg_get_ordered_event_handlers()`` use ``elgg()->events->getOrderedHandlers()``
+ * ``elgg_get_ordered_hook_handlers()`` use ``elgg()->hooks->getOrderedHandlers()``
+ * ``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``
+ * ``elgg_is_menu_item_registered()``
+ * ``elgg_view_entity_annotations()``
+ * ``execute_delayed_write_query()`` use ``elgg()->db->registerDelayedQuery()``
+ * ``execute_delayed_read_query()`` use ``elgg()->db->registerDelayedQuery()``		
+ * ``run_sql_script()``
+ * ``elgg_unset_all_plugin_settings()`` use ``\ElggPlugin::unsetAllSettings()``
+ * ``elgg_get_file_simple_type()`` use ``elgg()->mimetype->getSimpleType()``
+ * ``ElggFile::detectMimeType()`` use ``elgg()->mimetype->getMimeType()``
+ * ``generate_action_token()`` use ``elgg()->csrf->generateActionToken()``
+ * ``elgg_split()``
+
+Deprecated Config values
+------------------------
+
+ * ``simplecache_lastupdate`` use ``lastcache``
+
+Deprecated CLI commands
+-----------------------
+
+ * ``elgg-cli flush`` use ``elgg-cli cache:clear``
+
+Deprecated Hooks
+----------------
+
+ * **entity:annotate, <entity_type>**

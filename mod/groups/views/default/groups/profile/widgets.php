@@ -1,8 +1,6 @@
 <?php
 /**
 * Profile widgets/tools
-*
-* @package ElggGroups
 */
 
 $modules = elgg_view('groups/profile/modules', $vars);

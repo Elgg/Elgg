@@ -1,9 +1,6 @@
 <?php
 /**
  * JSON group view
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $entity = elgg_extract('entity', $vars);

@@ -2,9 +2,6 @@
 /**
  * Elgg upgrade library.
  * Contains code for handling versioning and upgrades.
- *
- * @package    Elgg.Core
- * @subpackage Upgrade
  */
 
 use Elgg\Menu\MenuItems;

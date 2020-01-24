@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -8,9 +14,9 @@ return array(
 
 	'item:object:thewire' => "Wire indlæg",
 	'collection:object:thewire' => 'Wire posts',
-	'collection:object:thewire:all' => "All wire posts",
-	'collection:object:thewire:owner' => "%s's wire posts",
-	'collection:object:thewire:friends' => "Friends' wire posts",
+	'collection:object:thewire:all' => "Alle wire indlæg",
+	'collection:object:thewire:owner' => "%s's wire indlæg",
+	'collection:object:thewire:friends' => "Dine venner på the wire",
 
 	'thewire:replying' => "Svar til %s (@%s) som skrev",
 	'thewire:thread' => "Tråd",
@@ -34,7 +40,7 @@ return array(
 	 * Wire widget
 	 */
 	
-	'widgets:thewire:description' => 'Display your latest wire posts',
+	'widgets:thewire:description' => 'Vis dine seneste wire indlæg',
 	'thewire:num' => 'Antal indlæg der skal vises',
 	'thewire:moreposts' => 'Ikke flere wire indlæg',
 

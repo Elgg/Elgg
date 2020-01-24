@@ -4,7 +4,6 @@ namespace Elgg\GarbageCollector;
 
 use Elgg\Cli\Command;
 use Symfony\Component\Console\Helper\Table;
-use Symfony\Component\Console\Input\InputOption;
 
 /**
  * elgg-cli database:optimize
@@ -16,7 +15,7 @@ class OptimizeCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('database:optimize')
-			->setDescription('Optimize database tables');
+			->setDescription(elgg_echo('garbagecollector:cli:database:optimize:description'));
 	}
 
 	/**

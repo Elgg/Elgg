@@ -199,15 +199,13 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('2', $response->headers->get('X-Elgg-Override'));
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testCanNotPrepareRedirectResponseWithInvalidCode() {
 		$service = $this->createService();
 
 		$url = 'http://localhost/foo';
 		$status_code = ELGG_HTTP_OK;
 
+		$this->expectException(\InvalidArgumentException::class);
 		$service->prepareRedirectResponse($url, $status_code);
 	}
 

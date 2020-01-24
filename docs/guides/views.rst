@@ -399,7 +399,7 @@ Here we'll eliminate breadcrumbs that don't have at least one link.
 	    }
 	    
 	    // output nothing if the content doesn't have a single link
-	    if (false === strpos($returnvalue, '<a ')) {
+	    if (false === elgg_strpos($returnvalue, '<a ')) {
 	        return '';
 	    }
 	    

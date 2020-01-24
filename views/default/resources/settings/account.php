@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg user account settings.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 elgg_gatekeeper();
@@ -20,19 +17,13 @@ if (!$user || !$user->canEdit()) {
 
 elgg_set_page_owner_guid($user->guid);
 
-elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
+elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
 
 $title = elgg_echo('usersettings:user', [$user->getDisplayName()]);
 
-$content = elgg_view('core/settings/account', [
-	'entity' => $user,
-]);
-
-$params = [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page($title, [
+	'content' => elgg_view('core/settings/account', [
+		'entity' => $user,
+	]),
 	'show_owner_block_menu' => false,
-];
-$body = elgg_view_layout('one_sidebar', $params);
-
-echo elgg_view_page($title, $body);
+]);

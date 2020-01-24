@@ -2,9 +2,6 @@
 /**
  * Elgg page owner library
  * Contains functions for managing page ownership and context
- *
- * @package Elgg.Core
- * @subpackage PageOwner
  */
 
 /**

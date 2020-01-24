@@ -1,6 +1,11 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
 
-return [
+return array(
 	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
 	'APIException:MissingParameterInMethod' => "Missing parameter %s in method %s",
 	'APIException:ParameterNotArray' => "%s does not appear to be an array.",
@@ -63,4 +68,4 @@ return [
 	
 	'webservices:action:api_key:edit:success' => "API token saved successfully",
 	'webservices:action:api_key:regenerate:success' => "The API keys have been regenerated",
-];
+);

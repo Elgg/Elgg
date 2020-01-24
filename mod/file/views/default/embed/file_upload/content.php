@@ -4,8 +4,8 @@
  */
 
 $form_vars = [
-	'enctype' => 'multipart/form-data',
 	'class' => 'elgg-form-embed',
+	'prevent_double_submit' => true,
 ];
 $body_vars = ['container_guid' => elgg_get_page_owner_guid()];
 echo elgg_view_form('file/upload', $form_vars, $body_vars);

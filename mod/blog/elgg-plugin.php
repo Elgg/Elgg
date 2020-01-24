@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Blog\GroupToolContainerLogicCheck;
+
 return [
 	'entities' => [
 		[
@@ -89,6 +91,13 @@ return [
 		'default:object:blog' => [
 			'path' => '/blog',
 			'resource' => 'blog/all',
+		],
+	],
+	'hooks' => [
+		'container_logic_check' => [
+			'object' => [
+				GroupToolContainerLogicCheck::class => [],
+			],
 		],
 	],
 	'widgets' => [

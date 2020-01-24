@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg UTF-8 string functions
- *
- * @package Elgg
- * @subpackage Core
  */
 
 /**
@@ -27,29 +24,12 @@ function elgg_parse_str($str) {
 }
 
 /**
- * Wrapper function for mb_split(). Falls back to split() if
- * mb_split() isn't available.  Parameters are passed to the
- * wrapped function in the same order they are passed to this
- * function.
- *
- * @return string
- * @since 1.7.0
- */
-function elgg_split() {
-	$args = func_get_args();
-	if (is_callable('mb_split')) {
-		return call_user_func_array('mb_split', $args);
-	}
-	return call_user_func_array('split', $args);
-}
-
-/**
  * Wrapper function for mb_stristr(). Falls back to stristr() if
  * mb_stristr() isn't available.  Parameters are passed to the
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return string
+ * @return false|string
  * @since 1.7.0
  */
 function elgg_stristr() {
@@ -66,7 +46,7 @@ function elgg_stristr() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return string
+ * @return int
  * @since 1.7.0
  */
 function elgg_strlen() {
@@ -83,7 +63,7 @@ function elgg_strlen() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return string
+ * @return false|int
  * @since 1.7.0
  */
 function elgg_strpos() {
@@ -100,7 +80,7 @@ function elgg_strpos() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return string
+ * @return false|string
  * @since 1.7.0
  */
 function elgg_strrchr() {
@@ -117,7 +97,7 @@ function elgg_strrchr() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return int
+ * @return false|int
  * @since 1.7.0
  */
 function elgg_strripos() {
@@ -151,7 +131,7 @@ function elgg_strrpos() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return bool
+ * @return false|string
  * @since 1.7.0
  */
 function elgg_strstr() {
@@ -233,7 +213,7 @@ function elgg_substr_count() {
  * wrapped function in the same order they are passed to this
  * function.
  *
- * @return string
+ * @return false|string
  * @since 1.7.0
  */
 function elgg_substr() {

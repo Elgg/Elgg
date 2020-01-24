@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'admin:diagnostics' => 'Diagnotics système',
 	'diagnostics' => 'Diagnostics du système',

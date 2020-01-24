@@ -2,10 +2,7 @@
 /**
  * SecurityException
  * An Security Exception, throw when a Security Exception occurs. Subclass for
- * specific Security Execeptions (access problems etc)
- *
- * @package    Elgg.Core
- * @subpackage Exception
+ * specific Security Exceptions (access problems etc)
  */
 class SecurityException extends \Exception {
 }

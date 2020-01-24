@@ -2,9 +2,6 @@
 /**
  * Elgg language module
  * Functions to manage language and translations.
- *
- * @package Elgg.Core
- * @subpackage Languages
  */
 
 /**
