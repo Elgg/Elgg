@@ -1,0 +1,41 @@
+From 3.x to 4.0
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+Split OkResponse, ErrorResponse and RedirectResponse
+----------------------------------------------------
+
+The classes ``Elgg\Http\ErrorResponse`` and ``Elgg\Http\RedirectResponse`` were extensions of ``Elgg\Http\OkReponse`` this 
+complicated validating responses (for example in hooks). The classes have been split apart to allow for easier and clearer checks.
+
+All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``.
+
+Type hinted function
+--------------------
+
+The following functions now have their arguments type-hinted, this can cause ``TypeError`` errors.
+
+Class functions
+~~~~~~~~~~~~~~~
+
+* ``Elgg\Http\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``
+* ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
+* ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
+
+Lib function
+~~~~~~~~~~~~
+
+* ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
+* ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
+* ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
+
+Change in function parameters
+-----------------------------
+
+Class functions
+~~~~~~~~~~~~~~~
+
+* ``Elgg\Http\ResponseBuilder::setStatusCode()`` no longer has a default value
