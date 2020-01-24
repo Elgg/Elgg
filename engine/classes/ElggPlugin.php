@@ -678,11 +678,6 @@ class ElggPlugin extends ElggObject {
 
 				$this->getBootstrap()->activate();
 
-				if ($this->canReadFile('activate.php')) {
-					elgg_deprecated_notice("The usage of the activate.php for {$this->getDisplayName()} is deprecated. Use the Bootstrap->activate() function.", '3.1');
-					$return = $this->includeFile('activate.php');
-				}
-
 				$this->init();
 			} catch (PluginException $ex) {
 				elgg_log($ex, \Psr\Log\LogLevel::ERROR);
@@ -780,16 +775,6 @@ class ElggPlugin extends ElggObject {
 		}
 
 		$this->getBootstrap()->deactivate();
-
-		// run any deactivate code
-		if ($this->canReadFile('deactivate.php')) {
-			elgg_deprecated_notice("The usage of the deactivate.php for {$this->getDisplayName()} is deprecated. Use the Bootstrap->deactivate() function.", '3.1');
-			
-			// allows you to prevent disabling a plugin by returning false in a deactivate.php file
-			if ($this->includeFile('deactivate.php') === false) {
-				return false;
-			}
-		}
 
 		$this->deactivateEntities();
 
@@ -1004,16 +989,6 @@ class ElggPlugin extends ElggObject {
 		$views = _elgg_services()->views;
 
 		// Declared views first
-		$file = "{$this->getPath()}views.php";
-		if (is_file($file)) {
-			elgg_deprecated_notice("The usage of the views.php file for {$this->getDisplayName()} is deprecated. Use the elgg-plugin.php views section.", '3.1');
-			
-			$spec = Includer::includeFile($file);
-			if (is_array($spec)) {
-				$views->mergeViewsSpec($spec);
-			}
-		}
-
 		$spec = $this->getStaticConfig('views');
 		if ($spec) {
 			$views->mergeViewsSpec($spec);

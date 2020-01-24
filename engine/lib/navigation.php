@@ -304,20 +304,6 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	}
 	
 	foreach ($breadcrumbs as $key => $breadcrumb) {
-		$text = elgg_extract('text', $breadcrumb, elgg_extract('title', $breadcrumb));
-		if (isset($breadcrumb['link'])) {
-			elgg_deprecated_notice("Breadcrumb [{$text}] requires 'href' instead of 'link' set in the configuration", '3.0');
-			
-			$breadcrumbs[$key]['href'] = $breadcrumb['link'];
-			unset($breadcrumbs[$key]['link']);
-		}
-		if (isset($breadcrumb['title'])) {
-			elgg_deprecated_notice("Breadcrumb [{$text}] requires 'text' instead of 'title' set in the configuration", '3.0');
-			
-			$breadcrumbs[$key]['text'] = $breadcrumb['title'];
-			unset($breadcrumbs[$key]['title']);
-		}
-		
 		// adds name for usage in menu items
 		if (!isset($breadcrumb['name'])) {
 			$breadcrumbs[$key]['name'] = $key;
@@ -658,26 +644,10 @@ function _elgg_entity_menu_setup(\Elgg\Hook $hook) {
 		return;
 	}
 
-	$handler = $hook->getParam('handler', false);
-	if ($handler) {
-		elgg_deprecated_notice("Using 'handler' in entity menu parameters is deprecated. Use named routes instead.", '3.0');
-
-		$edit_url = "$handler/edit/{$entity->guid}";
-
-		if (elgg_action_exists("$handler/delete")) {
-			$action = "$handler/delete";
-		} else {
-			$action = "entity/delete";
-		}
-		$delete_url = elgg_generate_action_url($action, [
-			'guid' => $entity->guid,
-		]);
-	} else {
-		$edit_url = elgg_generate_entity_url($entity, 'edit');
-		$delete_url = elgg_generate_action_url('entity/delete', [
-			'guid' => $entity->guid,
-		]);
-	}
+	$edit_url = elgg_generate_entity_url($entity, 'edit');
+	$delete_url = elgg_generate_action_url('entity/delete', [
+		'guid' => $entity->guid,
+	]);
 
 	$return = $hook->getValue();
 	

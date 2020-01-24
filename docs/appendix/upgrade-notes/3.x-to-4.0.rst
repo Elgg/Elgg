@@ -13,6 +13,15 @@ complicated validating responses (for example in hooks). The classes have been s
 
 All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``.
 
+Plugin bootstrapping
+--------------------
+
+The following files are no longer included during bootstrapping of a plugin:
+
+* ``activate.php`` use ``PluginBootstrap->activate()``
+* ``deactivate.php`` use ``PluginBootstrap->deactivate()``
+* ``views.php`` use ``elgg-plugin.php``
+
 Type hinted function
 --------------------
 

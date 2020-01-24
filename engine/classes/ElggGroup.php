@@ -34,10 +34,6 @@ class ElggGroup extends \ElggEntity {
 	 * @see ElggEntity::getMetadata()
 	 */
 	public function getMetadata($name) {
-		if ($name === 'group_acl') {
-			elgg_deprecated_notice("Getting 'group_acl' metadata has been deprecated, use ElggGroup::getOwnedAccessCollection('group_acl')", '3.0');
-		}
-		
 		return parent::getMetadata($name);
 	}
 	
@@ -46,11 +42,6 @@ class ElggGroup extends \ElggEntity {
 	 * @see ElggEntity::setMetadata()
 	 */
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
-		if ($name === 'group_acl') {
-			elgg_deprecated_notice("Setting 'group_acl' metadata has been deprecated, use ElggGroup::getOwnedAccessCollection('group_acl')", '3.0');
-			return false;
-		}
-		
 		return parent::setMetadata($name, $value, $value_type, $multiple);
 	}
 
