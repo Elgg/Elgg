@@ -38,6 +38,6 @@ class ElggCacheUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue(is_dir($simplecache_path));
 		
 		// Test that we can flush caches with symlink
-		elgg_flush_caches();
+		elgg_clear_caches();
 	}
 }

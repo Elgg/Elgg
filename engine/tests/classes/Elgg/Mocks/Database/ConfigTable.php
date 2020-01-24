@@ -14,7 +14,6 @@ class ConfigTable extends \Elgg\Database\ConfigTable {
 		'default_limit' => 10,
 		'installed' => 1512981149,
 		'language' => 'en',
-		'processed_upgrades' => [],
 		'simplecache_enabled' => 0,
 		'system_cache_enabled' => 0,
 		'version' => 2017041200,

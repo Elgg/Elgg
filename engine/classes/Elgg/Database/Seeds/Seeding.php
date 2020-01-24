@@ -260,7 +260,7 @@ trait Seeding {
 				$properties['subtype'] = 'group';
 			}
 
-			$tool_options = elgg_extract('group_tools_options', $options, []);
+			$tool_options = elgg_extract('group_tool_options', $options, []);
 			/* @var $tool_options Collection|Tool[] */
 
 			foreach ($tool_options as $group_option) {

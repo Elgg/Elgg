@@ -120,10 +120,7 @@ class GarbageCollector {
 	 * @return bool|int
 	 * @throws \DatabaseException
 	 */
-	public function optimizeTable($table) {
-		$table = $this->db->sanitizeString($table);
-		
+	public function optimizeTable(string $table) {
 		return $this->db->updateData("OPTIMIZE TABLE $table");
 	}
-
 }

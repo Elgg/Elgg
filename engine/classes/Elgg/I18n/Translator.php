@@ -674,17 +674,6 @@ class Translator {
 	}
 
 	/**
-	 * Returns an array of language codes.
-	 *
-	 * @return array
-	 * @deprecated 3.0 please use elgg()->locale->getLanguageCodes()
-	 */
-	public static function getAllLanguageCodes() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg()->locale->getLanguageCodes()', '3.0');
-		return elgg()->locale->getLanguageCodes();
-	}
-
-	/**
 	 * Normalize a language code (e.g. from Transifex)
 	 *
 	 * @param string $code Language code

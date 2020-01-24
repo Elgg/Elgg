@@ -26,8 +26,6 @@ if ($plugin->setPriority($priority) === false) {
 	return elgg_error_response(elgg_echo($string, [$plugin->getDisplayName(), $msg]));
 }
 
-// don't regenerate the simplecache because the plugin won't be
-// loaded until next run.  Just invalidate and let it regnerate as needed
-elgg_flush_caches();
+elgg_invalidate_caches();
 
 return elgg_ok_response();

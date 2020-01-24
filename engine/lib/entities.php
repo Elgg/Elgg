@@ -644,8 +644,7 @@ function elgg_get_entity_dates(array $options = []) {
 }
 
 /**
- * Registers an entity type and subtype as a public-facing entity that should
- * be shown in search and by {@link elgg_list_registered_entities()}.
+ * Registers an entity type and subtype as a public-facing entity that should be shown in search
  *
  * @warning Entities that aren't registered here will not show up in search.
  *

@@ -108,9 +108,7 @@ This page will view the form you created in the above section.
 .. code-block:: php
 
     <?php
-    // make sure only logged in users can see this page 
-    gatekeeper();
-                    
+                   
     // set the title
     $title = "Create a new my_blog post";
 

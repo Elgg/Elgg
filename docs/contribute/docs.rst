@@ -111,11 +111,11 @@ Eliminate fluff
 
 Before:
 
-    If you want to use a third-party javascript library within the Elgg framework, you should take care to call the ``elgg_register_js`` function to register it.
+    If you want to use a third-party javascript library within the Elgg framework, you should take care to call the ``elgg_register_external_file`` function to register it.
 
 After:
 
-    To use a third-party javascript library, call ``elgg_register_js`` to register it.
+    To use a third-party javascript library, call ``elgg_register_external_file`` to register it.
 
 
 Prefer absolute dates over relative ones

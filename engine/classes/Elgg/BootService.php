@@ -74,10 +74,6 @@ class BootService {
 		if ($config->lastcache === null) {
 			$config->lastcache = 0;
 		}
-		if (!$config->hasValue('simplecache_lastupdate')) {
-			// @todo remove in Elgg 4.0
-			$config->simplecache_lastupdate = $config->lastcache;
-		}
 		if ($config->min_password_length === null) {
 			$config->min_password_length = 6;
 		}
@@ -95,12 +91,6 @@ class BootService {
 
 		// copy all table values into config
 		$config->mergeValues($services->configTable->getAll());
-		
-		if (empty($config->lastcache)) {
-			// for backwards compatibility
-			// @todo remove in Elgg 4.0
-			$config->lastcache = $config->simplecache_lastupdate;
-		}
 
 		if (!$config->elgg_config_set_secret) {
 			$site_secret = SiteSecret::fromConfig($config);

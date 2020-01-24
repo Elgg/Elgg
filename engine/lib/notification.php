@@ -389,7 +389,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 		$to = [(int) $to];
 	}
 	$from = (int) $from;
-	//$subject = sanitise_string($subject);
+
 	// Get notification methods
 	if (($methods_override) && (!is_array($methods_override))) {
 		$methods_override = [$methods_override];

@@ -3,7 +3,7 @@
 namespace Elgg\Integration;
 
 /**
- * Test elgg_get_entities_from_private_settings()
+ * Test elgg_get_entities() with private settings options
  *
  * @group IntegrationTests
  * @group Entities
@@ -51,7 +51,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$this->assertEquals($setting_value2, $settings[$setting_name2]);
 
 		// simple test with name
-		$entities = elgg_get_entities_from_private_settings([
+		$entities = elgg_get_entities([
 			'private_setting_name' => $setting_name,
 		]);
 
@@ -62,7 +62,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		}
 
 		// simple test with value
-		$entities = elgg_get_entities_from_private_settings([
+		$entities = elgg_get_entities([
 			'private_setting_value' => $setting_value,
 		]);
 
@@ -73,7 +73,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		}
 
 		// test pairs
-		$entities = elgg_get_entities_from_private_settings([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'private_setting_name_value_pairs' => [

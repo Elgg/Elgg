@@ -35,21 +35,21 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCanGetData() {
-		$row1 = get_data("
+		$row1 = elgg()->db->getData("
 			SELECT *
 			FROM {$this->prefix}entities
 			WHERE guid = {$this->user->guid}
 		");
 		$row1 = $row1[0];
 
-		$row2 = get_data("
+		$row2 = elgg()->db->getData("
 			SELECT *
 			FROM {$this->prefix}entities
 			WHERE guid = ?
 		", null, [$this->user->guid]);
 		$row2 = $row2[0];
 
-		$row3 = get_data("
+		$row3 = elgg()->db->getData("
 			SELECT *
 			FROM {$this->prefix}entities
 			WHERE guid = :guid
@@ -58,7 +58,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		]);
 		$row3 = $row3[0];
 
-		$row4 = get_data("
+		$row4 = elgg()->db->getData("
 			SELECT *
 			FROM {$this->prefix}entities
 			WHERE guid = :guid
@@ -78,19 +78,19 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCanGetDataRow() {
-		$row1 = get_data_row("
+		$row1 = elgg()->db->getDataRow("
 			SELECT *
 			FROM {$this->prefix}entities
 			WHERE guid = {$this->user->guid}
 		");
 
-		$row2 = get_data_row("
+		$row2 = elgg()->db->getDataRow("
 			SELECT *
 			FROM {$this->prefix}entities
 			WHERE guid = ?
 		", null, [$this->user->guid]);
 
-		$row3 = get_data_row("
+		$row3 = elgg()->db->getDataRow("
 			SELECT *
 			FROM {$this->prefix}entities
 			WHERE guid = :guid
@@ -107,13 +107,13 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 	public function testCanInsert() {
 		$time = time();
 
-		$id1 = insert_data("
+		$id1 = elgg()->db->insertData("
 			INSERT INTO {$this->prefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES ({$this->user->guid}, 'test_self1', {$this->user->guid}, $time)
 			ON DUPLICATE KEY UPDATE time_created = $time
 		");
-		$id2 = insert_data("
+		$id2 = elgg()->db->insertData("
 			INSERT INTO {$this->prefix}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES (:guid1,   :rel,         :guid2,   :time)
@@ -125,7 +125,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			':time' => $time,
 		]);
 
-		$rows = get_data("
+		$rows = elgg()->db->getData("
 			SELECT *
 			FROM {$this->prefix}entity_relationships
 			WHERE guid_one = ?
@@ -147,7 +147,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		add_entity_relationship($this->user->guid, 'test_self1', $this->user->guid);
 		$rel = check_entity_relationship($this->user->guid, 'test_self1', $this->user->guid);
 
-		$res = update_data("
+		$res = elgg()->db->updateData("
 			UPDATE {$this->prefix}entity_relationships
 			SET relationship = 'test_self2'
 			WHERE id = {$rel->id}
@@ -158,25 +158,25 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		$this->assertInstanceOf(\ElggRelationship::class, $rel);
 		$this->assertEquals('test_self2', $rel->relationship);
 
-		$num_rows = update_data("
+		$num_rows = elgg()->db->updateData("
 			UPDATE {$this->prefix}entity_relationships
 			SET relationship = 'test_self3'
 			WHERE id = {$rel->id}
-		", [], true);
+		", true);
 		$rel = get_relationship($rel->id);
 
 		$this->assertEquals(1, $num_rows);
 		$this->assertInstanceOf(\ElggRelationship::class, $rel);
 		$this->assertEquals('test_self3', $rel->relationship);
 
-		$num_rows = update_data("
+		$num_rows = elgg()->db->updateData("
 			UPDATE {$this->prefix}entity_relationships
 			SET relationship = :rel
 			WHERE id = :id
-		", [
+		", true, [
 			':rel' => 'test_self4',
 			':id' => $rel->id,
-		], true);
+		]);
 		$rel = get_relationship($rel->id);
 
 		$this->assertEquals(1, $num_rows);
@@ -192,7 +192,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		};
 
 		$rel = $new_rel();
-		$res = delete_data("
+		$res = elgg()->db->deleteData("
 			DELETE FROM {$this->prefix}entity_relationships
 			WHERE id = {$rel->id}
 		");
@@ -200,7 +200,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		$this->assertFalse(check_entity_relationship($this->user->guid, 'test_self1', $this->user->guid));
 
 		$rel = $new_rel();
-		$res = delete_data("
+		$res = elgg()->db->deleteData("
 			DELETE FROM {$this->prefix}entity_relationships
 			WHERE id = :id
 		", [
@@ -208,29 +208,6 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 		]);
 		$this->assertEquals(1, $res);
 		$this->assertFalse(check_entity_relationship($this->user->guid, 'test_self1', $this->user->guid));
-	}
-
-	/**
-	 * @dataProvider canSanitizeProvider
-	 */
-	public function testCanSanitize($input, $expected) {
-		$this->assertEquals($expected, sanitize_string($input));
-	}
-	
-	public function canSanitizeProvider() {
-		return [
-			["'" , "\\'"],
-			["\"", "\\\""],
-			["\\", "\\\\"],
-			["\n", "\\n"],
-			["\r", "\\r"],
-		];
-	}
-
-	public function testSanitizeRejectsArrays() {
-		$this->expectException(\DatabaseException::class);
-		$this->expectExceptionMessage('Elgg\Database::sanitizeString() and serialize_string() cannot accept arrays.');
-		sanitise_string(['foo']);
 	}
 
 	public function testCanDelayQuery() {
@@ -249,7 +226,7 @@ class ElggDataFunctionsTest extends \Elgg\IntegrationTestCase {
 			$captured = $stmt;
 			return $stmt;
 		};
-		execute_delayed_read_query($sql, $callback, $params);
+		_elgg_services()->db->registerDelayedQuery($sql, 'read', $callback, $params);
 
 		_elgg_services()->db->executeDelayedQueries();
 

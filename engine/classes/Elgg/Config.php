@@ -85,7 +85,6 @@ use Elgg\Project\Paths;
  * @property array         $profile_fields
  * @property string        $profiling_minimum_percentage
  * @property bool          $profiling_sql
- * @property array         $processed_upgrades
  * @property bool          $redis
  * @property array         $redis_options
  * @property array         $redis_servers
@@ -396,15 +395,6 @@ class Config {
 	 * @return mixed null if does not exist
 	 */
 	public function __get($name) {
-		switch ($name) {
-			case 'group_tool_options':
-				elgg_deprecated_notice("'$name' config option is no longer in use. Use elgg()->group_tools->all()", '3.0');
-				return elgg()->group_tools->all();
-			case 'simplecache_lastupdate':
-				elgg_deprecated_notice("'$name' config option is deprecated. Use 'lastcache'", '3.3');
-				break;
-		}
-
 		if (isset($this->values[$name])) {
 			return $this->values[$name];
 		}

@@ -159,7 +159,7 @@ class SubscriptionsService {
 		if (!$rels) {
 			return [];
 		}
-		array_walk($rels, [$this->db, 'sanitizeString']);
+		
 		$methods_string = "'" . implode("','", $rels) . "'";
 
 		$db_prefix = $this->db->prefix;

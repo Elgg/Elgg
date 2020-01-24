@@ -209,13 +209,6 @@ class Database extends DbDatabase {
 	}
 
 	/**
-	 * {@inheritdoc}
-	 */
-	public function sanitizeString($value) {
-		return addslashes($value);
-	}
-
-	/**
 	 * Attempt to normalize whitespace in a query
 	 *
 	 * @param string $query Query

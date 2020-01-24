@@ -304,8 +304,9 @@ function serialise_parameters($method, $parameters) {
 					// This is using sanitise_string() to escape characters to be inside a
 					// single-quoted string literal in PHP code. Not sure what we have to do
 					// to keep this safe in 3.0...
-					$k = sanitise_string($k);
-					$v = sanitise_string($v);
+					// @todo need a replacement for removed sanitise_string
+					$k = addslashes($k);
+					$v = addslashes($v);
 
 					$array .= "'$k'=>'$v',";
 				}

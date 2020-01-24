@@ -16,16 +16,10 @@ class ElggUpgradeUnitTest extends \Elgg\UnitTestCase {
 			->setMethods(null)
 			->getMock();
 
-		$this->obj->_callable_egefps = array($this, 'mock_egefps');
-
 	}
 
 	public function down() {
 
-	}
-
-	public function mock_egefps($options) {
-		return array();
 	}
 
 	public function mock_egefps_with_entities() {

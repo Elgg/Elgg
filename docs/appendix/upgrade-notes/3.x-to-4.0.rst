@@ -39,3 +39,9 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``Elgg\Http\ResponseBuilder::setStatusCode()`` no longer has a default value
+
+Removed composer dependencies
+-----------------------------
+
+* ``bower-asset/jquery-treeview`` the related js and css are no longer available in the system
+* ``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system

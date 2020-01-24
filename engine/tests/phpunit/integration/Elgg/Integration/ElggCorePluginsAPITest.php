@@ -223,14 +223,6 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals('https://github.com/elgg/elgg/issues', $this->manifest18->getBugTrackerURL());
 	}
 
-	public function testElggPluginManifestGetDonationsPage() {
-		$this->assertEquals('http://elgg.org/supporter.php', $this->manifest18->getDonationsPageURL());
-	}
-
-	public function testElggPluginManifestGetCopyright() {
-		$this->assertEquals('(C) Elgg Foundation 2011', $this->manifest18->getCopyright());
-	}
-
 	public function testElggPluginManifestGetLicense() {
 		$this->assertEquals('GNU General Public License version 2', $this->manifest18->getLicense());
 	}
@@ -293,19 +285,6 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals($requires, $this->package18->getManifest()->getRequires());
 	}
 
-	public function testElggPluginManifestGetSuggests() {
-		$suggests = [
-			[
-				'type' => 'plugin',
-				'name' => 'facebook_connect',
-				'version' => '1.0',
-				'comparison' => 'ge'
-			],
-		];
-
-		$this->assertEquals($suggests, $this->package18->getManifest()->getSuggests());
-	}
-
 	public function testElggPluginManifestGetDescription() {
 		$this->assertEquals('A longer, more interesting description.', $this->package18->getManifest()->getDescription());
 	}
@@ -317,21 +296,6 @@ class ElggCorePluginsAPITest extends \Elgg\IntegrationTestCase {
 		];
 
 		$this->assertEquals($categories, $this->package18->getManifest()->getCategories());
-	}
-
-	public function testElggPluginManifestGetScreenshots() {
-		$screenshots = [
-			[
-				'description' => 'Fun things to do 1',
-				'path' => 'graphics/plugin_ss1.png'
-			],
-			[
-				'description' => 'Fun things to do 2',
-				'path' => 'graphics/plugin_ss2.png'
-			],
-		];
-
-		$this->assertEquals($screenshots, $this->package18->getManifest()->getScreenshots());
 	}
 
 	public function testElggPluginManifestGetContributors() {

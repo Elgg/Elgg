@@ -13,10 +13,6 @@
  * Wildcard requirements for common named variables such as 'guid' and 'username'
  * will be set automatically.
  *
- * @warning If you are registering a route in the path of a route registered by
- *          deprecated {@link elgg_register_page_handler}, your registration must
- *          preceed the call to elgg_register_page_handler() in the boot sequence.
- *
  * @param string $name   Unique route name
  *                       This name can later be used to generate route URLs
  * @param array  $params Route parameters

@@ -578,7 +578,6 @@ class EntityTable {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller
 			// should cancel the check and return false
 			$message = $this->translator->translate('UserFetchFailureException', [$guid]);
-			// $this->logger->warn($message);
 
 			throw new UserFetchFailureException($message);
 		}
@@ -631,12 +630,6 @@ class EntityTable {
 		}
 
 		if (!_elgg_services()->events->triggerBefore('delete', $entity->type, $entity)) {
-			return false;
-		}
-
-		// now trigger an event to let others know this entity is about to be deleted
-		// so they can prevent it or take their own actions
-		if (!_elgg_services()->events->triggerDeprecated('delete', $entity->type, $entity)) {
 			return false;
 		}
 

@@ -26,16 +26,8 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->event->expects($this->any())
 			->method('getObject')
 			->will($this->returnValue($object));
-
+	
 		$this->db = $this->createMock('\Elgg\Database');
-
-		$this->db->expects($this->any())
-			->method('sanitizeString')
-			->will($this->returnArgument(0));
-
-		$this->db->expects($this->any())
-			->method('sanitizeInt')
-			->will($this->returnArgument(0));
 	}
 
 	public function down() {

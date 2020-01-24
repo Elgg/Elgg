@@ -2,8 +2,6 @@
 
 use Elgg\GarbageCollector\CronRunner;
 
-require_once(__DIR__ . '/lib/deprecated.php');
-
 return [
 	'settings' => [
 		'period' => 'monthly',

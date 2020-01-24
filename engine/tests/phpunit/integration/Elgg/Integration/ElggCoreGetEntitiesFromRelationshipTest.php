@@ -5,7 +5,7 @@ namespace Elgg\Integration;
 use ElggObject;
 
 /**
- * Test elgg_get_entities_from_relationship() and
+ * Test elgg_get_entities() with relationship options and
  * elgg_get_entities_from_relationship_count()
  *
  * @group IntegrationTests
@@ -32,7 +32,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0],
 		]);
@@ -65,7 +65,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0]
 		]);
@@ -100,7 +100,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0],
 			'metadata_name' => 'test_md',
@@ -137,7 +137,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 
 		add_entity_relationship($guids[0], 'test', $guids[1]);
 
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'test',
 			'relationship_guid' => $guids[0],
 			'metadata_name' => 'test_md',
@@ -185,7 +185,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		]);
 
 		foreach ($entities as $e) {
-			$fan_entities = elgg_get_entities_from_relationship([
+			$fan_entities = elgg_get_entities([
 				'relationship' => $relationship_name,
 				'limit' => 100,
 				'relationship_guid' => $e->guid,
@@ -202,7 +202,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 	}
 
 	/**
-	 * Make sure elgg_get_entities_from_relationship() returns distinct (unique) results when relationship_guid is not
+	 * Make sure elgg_get_entities() returns distinct (unique) results when relationship_guid is not
 	 * set See #5775
 	 */
 	public function testElggApiGettersEntityRelationshipDistinctResult() {
@@ -229,11 +229,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 			'count' => true,
 		];
 
-		$count = elgg_get_entities_from_relationship($options);
+		$count = elgg_get_entities($options);
 		$this->assertEquals(1, $count);
 
 		unset($options['count']);
-		$objects = elgg_get_entities_from_relationship($options);
+		$objects = elgg_get_entities($options);
 		$this->assertIsArray($objects);
 		$this->assertCount(1, $objects);
 
@@ -268,11 +268,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 			'count' => true,
 		];
 
-		$count = elgg_get_entities_from_relationship($options);
+		$count = elgg_get_entities($options);
 		$this->assertEquals(2, $count);
 
 		unset($options['count']);
-		$objects = elgg_get_entities_from_relationship($options);
+		$objects = elgg_get_entities($options);
 		$this->assertIsArray($objects);
 		$this->assertCount(2, $objects);
 
@@ -299,7 +299,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$ts_upper = $dt->getTimestamp() + 1;
 		
 		// check that if ts_lower is before the relationship you get the just created entity
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_lower,
@@ -312,7 +312,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		}
 		
 		// check that if ts_lower is after the relationship you get no entities
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_upper,
@@ -342,7 +342,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$ts_upper = $dt->getTimestamp() + 1;
 		
 		// check that if ts_upper is after the relationship you get the just created entity
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_upper' => $ts_upper,
@@ -355,7 +355,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		}
 		
 		// check that if ts_upper is before the relationship you get no entities
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_upper' => $ts_lower,
@@ -385,7 +385,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		$ts_upper = $dt->getTimestamp() + 1;
 		
 		// check that if relationship time created is between lower and upper you get the just created entity
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_lower,
@@ -399,7 +399,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 		}
 		
 		// check that if  ts_lower > ts_upper you get no entities
-		$es = elgg_get_entities_from_relationship([
+		$es = elgg_get_entities([
 			'relationship' => 'testGetEntitiesFromRelationship',
 			'relationship_guid' => $object1->guid,
 			'relationship_created_time_lower' => $ts_upper,

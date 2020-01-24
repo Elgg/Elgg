@@ -68,15 +68,6 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 			'params' => $qb->getParameters(),
 		]);
 
-		$delayed = $db->reflectDelayedQueries();
-		$this->assertEmpty($delayed);
-
-		execute_delayed_write_query($qb);
-
-		$delayed = $db->reflectDelayedQueries();
-
-		$this->assertCount(1, $delayed);
-
 		$shutdown = new ShutdownHandler($app);
 		$shutdown->shutdownDatabase();
 

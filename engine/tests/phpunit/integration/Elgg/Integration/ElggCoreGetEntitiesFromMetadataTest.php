@@ -5,7 +5,7 @@ namespace Elgg\Integration;
 use ElggObject;
 
 /**
- * Test elgg_get_entities_from_metadata()
+ * Test elgg_get_entities() with metadata queries
  *
  * @group IntegrationTests
  * @group Entities
@@ -26,7 +26,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->$md_name = $md_value;
 		$e->save();
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
@@ -69,7 +69,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_names' => $md_names,
@@ -97,7 +97,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$md_invalid_name = 'test_metadata_name_' . rand();
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_invalid_name,
@@ -123,7 +123,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_invalid_names[] = 'test_metadata_name_' . rand();
 		$md_invalid_names[] = 'test_metadata_name_' . rand();
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_names' => $md_invalid_names,
@@ -162,7 +162,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_names' => $md_names,
@@ -196,7 +196,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->$md_name = $md_value;
 		$e->save();
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_value' => $md_value,
@@ -239,7 +239,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_values' => $md_values,
@@ -267,7 +267,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$md_invalid_value = 'test_metadata_value_' . rand();
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_value' => $md_invalid_value,
@@ -293,7 +293,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_invalid_values[] = 'test_metadata_value_' . rand();
 		$md_invalid_values[] = 'test_metadata_value_' . rand();
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_values' => $md_invalid_values,
@@ -332,7 +332,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$e_guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_values' => $md_values,
@@ -382,7 +382,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -454,7 +454,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -527,7 +527,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -613,7 +613,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -681,7 +681,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -726,7 +726,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->save();
 		$guids[] = $e->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -789,7 +789,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$md_valid_values = "'$md_value', '$md_value2'";
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -868,7 +868,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			$md_value2,
 		];
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -930,7 +930,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->guid;
 		$valid_guids[] = $valid3->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'order_by_metadata' => [
@@ -986,7 +986,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->guid;
 		$valid_guids[] = $valid3->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
@@ -1050,7 +1050,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->guid;
 		$valid_guids[] = $valid3->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
@@ -1120,7 +1120,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			15,
 		];
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name' => $md_name,
@@ -1186,7 +1186,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			15,
 		];
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -1247,7 +1247,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->guid;
 		$valid_guids[] = $valid3->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
@@ -1303,7 +1303,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $valid->guid;
 		$valid_guids[] = $valid->guid;
 
-		$entities = elgg_get_entities_from_metadata([
+		$entities = elgg_get_entities([
 			'type' => 'object',
 			'subtype' => $subtype,
 			'metadata_name_value_pairs' => [
