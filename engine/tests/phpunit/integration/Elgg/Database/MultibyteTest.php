@@ -29,8 +29,6 @@ class MultibyteTest extends IntegrationTestCase {
 
 		$object->save();
 
-		elgg_flush_caches();
-
 		$object = get_entity($object->guid);
 
 		$this->assertRegExp('/\\x{1f600}/u', $object->title);
@@ -46,8 +44,6 @@ class MultibyteTest extends IntegrationTestCase {
 		$object->title = $title;
 
 		$object->save();
-
-		elgg_flush_caches();
 
 		$entities = elgg_get_entities([
 			'guids' => $object->guid,

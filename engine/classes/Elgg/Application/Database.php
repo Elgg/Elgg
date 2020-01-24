@@ -91,8 +91,6 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @note WARNING! update_data() has the 2nd and 3rd arguments reversed.
-	 *
 	 * @param string $query      The query to run.
 	 * @param bool   $getNumRows Return the number of rows affected (default: false).
 	 * @param array  $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
@@ -117,30 +115,6 @@ class Database {
 	 */
 	public function deleteData($query, array $params = []) {
 		return $this->db->deleteData($query, $params);
-	}
-
-	/**
-	 * Sanitizes an integer value for use in a query
-	 *
-	 * @param int  $value  Value to sanitize
-	 * @param bool $signed Whether negative values are allowed (default: true)
-	 * @return int
-	 * @deprecated Use query parameters where possible
-	 */
-	public function sanitizeInt($value, $signed = true) {
-		return $this->db->sanitizeInt($value, $signed);
-	}
-
-	/**
-	 * Sanitizes a string for use in a query
-	 *
-	 * @param string $value Value to escape
-	 * @return string
-	 * @throws DatabaseException
-	 * @deprecated Use query parameters where possible
-	 */
-	public function sanitizeString($value) {
-		return $this->db->sanitizeString($value);
 	}
 
 	/**

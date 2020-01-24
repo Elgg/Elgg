@@ -145,25 +145,12 @@ class SimpleCache {
 	/**
 	 * Deletes all cached views in the simplecache
 	 *
-	 * @param bool $include_clear (internal) Also clear cache
-	 *
-	 * @todo rework function in Elgg 4.0 (remove param and config value)
-	 * @return bool
+	 * @return true
 	 */
-	public function invalidate(bool $include_clear = null) {
-		$this->config->save('simplecache_lastupdate', time());
-		
-		if (!isset($include_clear)) {
-			elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use \Elgg\Cache\SimpleCache::clear()', '3.3');
-			
-			$include_clear = true;
-		}
-		
-		if (!$include_clear) {
-			return true;
-		}
-		
-		return $this->clear();
+	public function invalidate() {
+		// Simplecache doesn't have invalidation as an action.
+		// This is handled by generating new urls
+		return true;
 	}
 	
 	/**

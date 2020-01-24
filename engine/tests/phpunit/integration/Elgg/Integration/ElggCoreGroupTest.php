@@ -2,7 +2,6 @@
 
 namespace Elgg\Integration;
 
-use Elgg\GroupItemVisibility;
 use Elgg\IntegrationTestCase;
 use ElggGroup;
 
@@ -54,34 +53,5 @@ class ElggCoreGroupTest extends IntegrationTestCase {
 		$this->assertEquals($this->group->getContentAccessMode(), $unrestricted);
 		$this->group->setContentAccessMode($membersonly);
 		$this->assertEquals($this->group->getContentAccessMode(), $membersonly);
-	}
-
-	public function testGroupItemVisibility() {
-		elgg()->session->setLoggedInUser($this->user);
-		$group_guid = $this->group->guid;
-
-		// unrestricted: pass non-members
-		$this->group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED);
-		$vis = GroupItemVisibility::factory($group_guid, false);
-
-		$this->assertFalse($vis->shouldHideItems);
-
-		// membersonly: non-members fail
-		$this->group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
-		$vis = GroupItemVisibility::factory($group_guid, false);
-
-		$this->assertTrue($vis->shouldHideItems);
-
-		// members succeed
-		$this->group->join($this->user);
-		$vis = GroupItemVisibility::factory($group_guid, false);
-
-		$this->assertFalse($vis->shouldHideItems);
-
-		// non-member admins succeed - assumes admin logged in
-		elgg()->session->setLoggedInUser($this->getAdmin());
-		$vis = GroupItemVisibility::factory($group_guid, false);
-
-		$this->assertFalse($vis->shouldHideItems);
 	}
 }

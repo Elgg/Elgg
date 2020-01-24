@@ -3,7 +3,6 @@
 return [
 	'actions' => [
 		'messageboard/add' => [],
-		'messageboard/delete' => [],
 	],
 	'routes' => [
 		'collection:annotation:messageboard:owner' => [

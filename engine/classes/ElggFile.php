@@ -122,31 +122,6 @@ class ElggFile extends ElggObject {
 	}
 
 	/**
-	 * Detects mime types based on filename or actual file.
-	 *
-	 * @param mixed $file    The full path of the file to check. For uploaded files, use tmp_name.
-	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
-	 * @since 1.7.12
-	 *
-	 * @return mixed Detected type on success, false on failure.
-	 * @deprecated 3.3 use elgg()->mimetype->getMimeType()
-	 */
-	public function detectMimeType($file = null, $default = null) {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecatd, use elgg()->mimetype->getMimeType()', '3.3');
-		
-		$class = __CLASS__;
-		if (!$file && isset($this) && $this instanceof $class) {
-			$file = $this->getFilenameOnFilestore();
-		}
-
-		if (!is_readable($file)) {
-			return false;
-		}
-
-		return elgg()->mimetype->getMimeType($file, '') ?: $default;
-	}
-
-	/**
 	 * Get the simple type of the file.
 	 * Returns simpletype metadata value if set, otherwise parses it from mimetype
 	 *

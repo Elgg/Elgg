@@ -51,17 +51,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($mimetype, $this->file->getMimeType());
 	}
 
-	public function testCanDetectMimeType() {
-		$mime = $this->file->detectMimeType(null, 'text/plain');
-
-		// mime should not be null if default is set
-		$this->assertNotNull($mime);
-
-		// mime of a file object should match mime of a file path that represents this file on filestore
-		$resource_mime = $this->file->detectMimeType($this->file->getFilenameOnFilestore(), 'text/plain');
-		$this->assertEquals($mime, $resource_mime);
-	}
-
 	/**
 	 * @dataProvider providerSimpleTypeMap
 	 */

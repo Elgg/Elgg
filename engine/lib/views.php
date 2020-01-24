@@ -850,14 +850,6 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 		}
 	}
 
-	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
-	if ($vars['full_view']) {
-		$annotations = elgg_view_entity_annotations($entity, $vars['full_view']);
-
-		if ($annotations) {
-			$contents .= $annotations;
-		}
-	}
 	return $contents;
 }
 
@@ -1748,24 +1740,6 @@ function elgg_views_boot() {
 
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
-	]);
-
-	// @deprecated 3.1
-	elgg_register_external_file('js', 'elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
-
-	// @deprecated 2.2
-	elgg_register_external_file('js', 'elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
-
-	// @deprecated 3.1 no longer use imageareaselect js and css
-	elgg_register_external_file('js', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
-	elgg_register_external_file('css', 'jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
-
-	// @deprecated 3.1 no longer use treeview js and css
-	elgg_register_external_file('css', 'jquery.treeview', elgg_get_simplecache_url('jquery-treeview/jquery.treeview.css'));
-	elgg_define_js('jquery.treeview', [
-		'src' => elgg_get_simplecache_url('jquery-treeview/jquery.treeview.js'),
-		'exports' => 'jQuery.fn.treeview',
-		'deps' => ['jquery'],
 	]);
 
 	elgg_register_ajax_view('languages.js');

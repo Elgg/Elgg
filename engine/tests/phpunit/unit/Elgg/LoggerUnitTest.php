@@ -65,12 +65,6 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 		$hooks = _elgg_services()->hooks;
 		$hooks->backup();
 
-		$num_processed = 0;
-		$hooks->registerHandler('debug', 'log', function () use (&$num_processed) {
-			$num_processed++;
-			return false;
-		});
-
 		$logger->disable();
 		$logger->error("Test1");
 
@@ -84,11 +78,6 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals([
 			['message' => 'Test1', 'level' => LogLevel::ERROR],
 				], $logger->enable());
-
-		$this->assertEquals(0, $num_processed);
-
-		$logger->error("Test3");
-		$this->assertEquals(1, $num_processed, "Last enable() did not enable processing");
 
 		$hooks->restore();
 	}

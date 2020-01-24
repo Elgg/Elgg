@@ -342,41 +342,7 @@ The internals of Elgg entity queries is a complex subject and it's recommended t
 Custom database functionality
 =============================
 
-It is strongly recommended to use entities wherever possible. However, Elgg
-supports custom SQL queries using the database API.
-
-Example: Run SQL script on plugin activation
---------------------------------------------
-
-This example shows how you can populate your database on plugin activation.
-
-.. code-block:: php
-
-    if (!elgg_get_plugin_setting('database_version', 'my_plugin') {
-        run_sql_script(__DIR__ . '/sql/activate.sql');
-        elgg_set_plugin_setting('database_version', 1, 'my_plugin');
-    }
-
-my_plugin/sql/activate.sql:
-
-.. code-block:: sql
-
-    -- Create some table
-    CREATE TABLE prefix_custom_table(
-        id INTEGER AUTO_INCREMENT,
-        name VARCHAR(32),
-        description VARCHAR(32),
-        PRIMARY KEY (id)
-    );
-
-    -- Insert initial values for table
-    INSERT INTO prefix_custom_table (name, description)
-    VALUES ('Peter', 'Some guy'), ('Lisa', 'Some girl');
-
-Note that Elgg execute statements through PHPs built-in functions and have
-limited support for comments. I.e. only single line comments are supported
-and must be prefixed by "-- " or "# ". A comment must start at the very beginning
-of a line.
+It is strongly recommended to use entities wherever possible. However, Elgg supports custom SQL queries using the database API.
 
 Systemlog
 =========

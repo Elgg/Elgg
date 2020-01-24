@@ -245,29 +245,6 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 }
 
 /**
- * Message URL override
- *
- * @param string $hook   'entity:url'
- * @param string $type   'object'
- * @param string $url    current return value
- * @param array  $params supplied params
- *
- * @return void|string|false
- * @deprecated 3.0 use ElggEntity::getURL()
- */
-function messages_set_url($hook, $type, $url, $params) {
-	
-	$entity = elgg_extract('entity', $params);
-	if (!$entity instanceof ElggObject || $entity->getSubtype() !== 'messages') {
-		return;
-	}
-	
-	elgg_deprecated_notice(__METHOD__ . ' is deprecated please use ElggEntity::getURL()', '3.0');
-	
-	return elgg_generate_entity_url($entity);
-}
-
-/**
  * Returns the unread messages in a user's inbox
  *
  * @param int  $user_guid GUID of user whose inbox we're counting (0 for logged in user)

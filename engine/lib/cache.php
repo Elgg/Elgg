@@ -330,7 +330,6 @@ function _elgg_invalidate_caches() {
 	_elgg_services()->sessionCache->invalidate();
 	_elgg_services()->dataCache->invalidate();
 	_elgg_services()->dic_cache->getCache()->invalidate();
-	_elgg_services()->simpleCache->invalidate(false);
 	_elgg_services()->fileCache->invalidate();
 }
 

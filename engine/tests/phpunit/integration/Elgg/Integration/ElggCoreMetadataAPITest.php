@@ -49,7 +49,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			'limit' => 10,
 			'metadata_case_sensitive' => true
 		];
-		$this->assertEquals([], elgg_get_entities_from_metadata($options));
+		$this->assertEquals([], elgg_get_entities($options));
 
 		// compare forced case with ignored case
 		$options = [
@@ -58,7 +58,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			'limit' => 10,
 			'metadata_case_sensitive' => true
 		];
-		$case_true = elgg_get_entities_from_metadata($options);
+		$case_true = elgg_get_entities($options);
 		$this->assertIsArray($case_true);
 
 		$options = [
@@ -67,7 +67,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			'limit' => 10,
 			'metadata_case_sensitive' => false
 		];
-		$case_false = elgg_get_entities_from_metadata($options);
+		$case_false = elgg_get_entities($options);
 		$this->assertIsArray($case_false);
 
 		$this->assertEquals($case_true, $case_false);
@@ -285,7 +285,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			$qb->where($qb->compare('entity_guid', '=', $entity->guid, ELGG_VALUE_INTEGER))
 				->andWhere($qb->compare('name', '=', 'test', ELGG_VALUE_STRING));
 	
-			$data = get_data($qb);
+			$data = elgg()->db->getData($qb);
 	
 			$this->assertEquals(count($md_values), count($data));
 			foreach ($data as $md_row) {
@@ -305,7 +305,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	
 			$entity->test = $md_values2;
 	
-			$data = get_data($qb);
+			$data = elgg()->db->getData($qb);
 	
 			$this->assertEquals(count($md_values2), count($data));
 			foreach ($data as $md_row) {
@@ -347,7 +347,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 			]);
 	
 			foreach ($mds as $md) {
-				update_data("
+				elgg()->db->updateData("
 					UPDATE {$prefix}metadata
 					SET time_created = " . ($time) . "
 					WHERE id = {$md->id}

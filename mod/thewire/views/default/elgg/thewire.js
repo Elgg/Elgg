@@ -82,10 +82,4 @@ define(function (require) {
 	};
 
 	elgg.register_hook_handler('init', 'system', TW.init);
-
-	/**
-	 * elgg.thewire object is deprecated. Do not call it directly.
-	 * @deprecated 2.3
-	 */
-	elgg.thewire = TW;
 });

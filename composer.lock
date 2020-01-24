@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d7e074c32212d101f55017672c516e4",
+    "content-hash": "e3970e296dd61240d379701cc358b347",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -119,42 +119,6 @@
             }
         },
         {
-            "name": "bower-asset/jquery-treeview",
-            "version": "1.4.2",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:jzaefferer/jquery-treeview.git",
-                "reference": "ea4fd39fe7bf25db75cdb6edeb73e502d9804924"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jzaefferer/jquery-treeview/zipball/ea4fd39fe7bf25db75cdb6edeb73e502d9804924",
-                "reference": "ea4fd39fe7bf25db75cdb6edeb73e502d9804924"
-            },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "jquery.treeview.css",
-                    "jquery.treeview.js"
-                ],
-                "bower-asset-ignore": [
-                    "**/.*",
-                    "node_modules",
-                    "bower_components",
-                    "test",
-                    "tests"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Lightweight and flexible transformation of an unordered list into an expandable and collapsable tree, great for unobtrusive navigation enhancements. Supports both location and cookie based persistence.",
-            "keywords": [
-                "jquery",
-                "treeview"
-            ]
-        },
-        {
             "name": "bower-asset/jquery-ui",
             "version": "1.11.4",
             "source": {
@@ -177,21 +141,6 @@
                 ],
                 "bower-asset-ignore": []
             }
-        },
-        {
-            "name": "bower-asset/jquery.imgareaselect",
-            "version": "v0.9.10",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:wong2/imgareaselect.git",
-                "reference": "446c7ff9efd10bfee2e673c19ca4d8759087dab4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/wong2/imgareaselect/zipball/446c7ff9efd10bfee2e673c19ca4d8759087dab4",
-                "reference": "446c7ff9efd10bfee2e673c19ca4d8759087dab4"
-            },
-            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/normalize-css",

@@ -108,7 +108,7 @@ class ElggGroup extends \ElggEntity {
 	}
 
 	/**
-	 * Return the content access mode used by group_gatekeeper()
+	 * Return the content access mode
 	 *
 	 * @return string One of CONTENT_ACCESS_MODE_* constants
 	 * @since 1.9.0
@@ -132,7 +132,7 @@ class ElggGroup extends \ElggEntity {
 	}
 
 	/**
-	 * Set the content access mode used by group_gatekeeper()
+	 * Set the content access mode
 	 *
 	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants. If empty string, mode will not be changed
 	 *
@@ -315,18 +315,6 @@ class ElggGroup extends \ElggEntity {
 		$this->$md_name = $md_value;
 
 		return true;
-	}
-
-	/**
-	 * Returns the registered tool configuration
-	 *
-	 * @param string $name Tool name
-	 *
-	 * @return Tool|null
-	 * @deprecated 3.0 Use ElggGroup::getTool
-	 */
-	protected function getToolConfig($name) {
-		return $this->getTool($name);
 	}
 
 	/**

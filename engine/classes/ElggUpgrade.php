@@ -35,12 +35,6 @@ class ElggUpgrade extends ElggObject {
 	];
 
 	/**
-	 * @var callable
-	 * @internal Do not use. For testing purposes
-	 */
-	public $_callable_egefps = 'elgg_get_entities_from_private_settings';
-
-	/**
 	 * Set subtype to upgrade
 	 *
 	 * @return null

@@ -7,7 +7,6 @@ return [
 	\Elgg\Cli\CronCommand::class,
 	\Elgg\Cli\DatabaseSeedCommand::class,
 	\Elgg\Cli\DatabaseUnseedCommand::class,
-	\Elgg\Cli\FlushCommand::class,
 	\Elgg\Cli\PluginsListCommand::class,
 	\Elgg\Cli\PluginsActivateCommand::class,
 	\Elgg\Cli\PluginsDeactivateCommand::class,

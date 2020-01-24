@@ -403,7 +403,7 @@ class Plugins {
 		} catch (\InvalidArgumentException $ex) {
 			// A plugin must have been deactivated due to missing folder
 			// without proper cleanup
-			elgg_flush_caches();
+			elgg_invalidate_caches();
 		}
 	}
 
@@ -1335,7 +1335,7 @@ class Plugins {
 
 	/**
 	 * Returns entities based upon plugin user settings.
-	 * Takes all the options for {@link elgg_get_entities_from_private_settings()}
+	 * Takes all the options for {@link elgg_get_entities()}
 	 * in addition to the ones below.
 	 *
 	 * @param array $options Array in the format:

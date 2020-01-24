@@ -224,8 +224,6 @@ class ViewsService {
 	 * @param string $viewtype  The type of view we're looking at (default, rss, etc)
 	 *
 	 * @return bool returns false if folder can't be read
-	 *
-	 * @see autoregister_views()
 	 */
 	public function autoregisterViews($view_base, $folder, $viewtype) {
 		$folder = rtrim($folder, '/\\');

@@ -243,18 +243,6 @@ class Logger extends \Monolog\Logger {
 			return true;
 		}
 
-		if ($this->hooks) {
-			$params = [
-				'level' => $level,
-				'msg' => $message,
-				'context' => $context,
-			];
-
-			if (!$this->hooks->triggerDeprecated('debug', 'log', $params, true)) {
-				return false;
-			}
-		}
-
 		return parent::log($level, $message, $context);
 	}
 
@@ -312,19 +300,6 @@ class Logger extends \Monolog\Logger {
 	 */
 	public function debug($message, array $context = []) {
 		return $this->log(LogLevel::DEBUG, $message, $context);
-	}
-
-	/**
-	 * Log message at the WARNING level
-	 *
-	 * @param string $message The message to log
-	 * @param array  $context Context
-	 *
-	 * @return bool
-	 * @deprecated 3.0 Use Logger::warning()
-	 */
-	public function warn($message, array $context = []) {
-		return $this->warning($message, $context);
 	}
 
 	/**

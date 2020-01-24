@@ -1,7 +1,6 @@
 <?php
 
 return [
-	'admin/delete_admin_notice' => ['access' => 'admin'],
 	'admin/delete_admin_notices' => ['access' => 'admin'],
 	'admin/menu/save' => ['access' => 'admin'],
 	'admin/plugins/activate' => ['access' => 'admin'],
@@ -31,8 +30,6 @@ return [
 	'admin/user/validate' => ['access' => 'admin'],
 	'annotation/delete' => [],
 	'avatar/upload' => [],
-	'avatar/crop' => [],
-	'avatar/remove' => [],
 	'comment/save' => [],
 	'entity/delete' => [],
 	'login' => ['access' => 'public'],

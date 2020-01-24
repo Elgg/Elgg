@@ -98,7 +98,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		];
 
 		foreach ($member_lists as $members) {
-			$result = update_access_collection($acl_id, $members);
+			$result = _elgg_services()->accessCollections->update($acl_id, $members);
 			$this->assertTrue($result);
 
 			if ($result) {

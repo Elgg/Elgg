@@ -34,8 +34,8 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 		$this->object->save();
 
 		$guid = $this->object->getGUID();
-		create_annotation($guid, 'tested', 'tested1', 'text', 0, ACCESS_PUBLIC);
-		create_annotation($guid, 'tested', 'tested2', 'text', 0, ACCESS_PUBLIC);
+		$this->object->annotate('tested', 'tested1', ACCESS_PUBLIC, 0, 'text');
+		$this->object->annotate('tested', 'tested2', ACCESS_PUBLIC, 0, 'text');
 
 		$count = (int) elgg_get_annotations([
 			'annotation_names' => ['tested'],

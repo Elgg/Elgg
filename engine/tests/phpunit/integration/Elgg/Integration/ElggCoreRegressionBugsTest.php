@@ -37,59 +37,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
-	 * get_resized_image_from_existing_file() fails asked for image larger than selection and not scaling an
-	 * image up Test get_image_resize_parameters().
-	 *
-	 * @see https://github.com/Elgg/Elgg/issues/2063
-	 */
-	public function testElggResizeImage() {
-		$orig_width = 100;
-		$orig_height = 150;
-
-		// test against selection > max
-		$options = [
-			'maxwidth' => 50,
-			'maxheight' => 50,
-			'square' => true,
-			'upscale' => false,
-
-			'x1' => 25,
-			'y1' => 75,
-			'x2' => 100,
-			'y2' => 150,
-		];
-
-		// should get back the same x/y offset == x1, y1 and an image of 50x50
-		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
-
-		$this->assertEquals($options['maxwidth'], $params['newwidth']);
-		$this->assertEquals($options['maxheight'], $params['newheight']);
-		$this->assertEquals($options['x1'], $params['xoffset']);
-		$this->assertEquals($options['y1'], $params['yoffset']);
-
-		// test against selection < max
-		$options = [
-			'maxwidth' => 50,
-			'maxheight' => 50,
-			'square' => true,
-			'upscale' => false,
-
-			'x1' => 75,
-			'y1' => 125,
-			'x2' => 100,
-			'y2' => 150,
-		];
-
-		// should get back the same x/y offset == x1, y1 and an image of 25x25 because no upscale
-		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
-
-		$this->assertEquals(25, $params['newwidth']);
-		$this->assertEquals(25, $params['newheight']);
-		$this->assertEquals($options['x1'], $params['xoffset']);
-		$this->assertEquals($options['y1'], $params['yoffset']);
-	}
-
-	/**
 	 * Check canEdit() works for contains regardless of groups
 	 *
 	 * @see https://github.com/Elgg/Elgg/issues/3722

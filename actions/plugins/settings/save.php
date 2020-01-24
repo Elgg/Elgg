@@ -31,7 +31,7 @@ foreach ($params as $k => $v) {
 }
 
 if ($flush_cache) {
-	elgg_flush_caches();
+	elgg_invalidate_caches();
 }
 
 return elgg_ok_response('', elgg_echo('plugins:settings:save:ok', [$plugin_name]));

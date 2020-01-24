@@ -327,18 +327,6 @@ class ElggPluginManifest {
 	}
 
 	/**
-	 * Returns the donations page
-	 *
-	 * @return string
-	 * @deprecated 3.3
-	 */
-	public function getDonationsPageURL() {
-		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '3.3');
-		
-		return (string) $this->parser->getAttribute('donations');
-	}
-
-	/**
 	 * Returns the version of the plugin.
 	 *
 	 * @return mixed
@@ -354,18 +342,6 @@ class ElggPluginManifest {
 	 */
 	public function getAuthor() {
 		return (string) $this->parser->getAttribute('author');
-	}
-
-	/**
-	 * Return the copyright
-	 *
-	 * @return string
-	 * @deprecated 3.3
-	 */
-	public function getCopyright() {
-		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '3.3');
-		
-		return (string) $this->parser->getAttribute('copyright');
 	}
 
 	/**
@@ -396,29 +372,6 @@ class ElggPluginManifest {
 		}
 
 		return $cats;
-	}
-
-	/**
-	 * Return the screenshots listed.
-	 *
-	 * @return array
-	 * @deprecated 3.1
-	 */
-	public function getScreenshots() {
-		elgg_deprecated_notice('Using screenshots in plugins are deprecated an will no longer be shown in the plugin details.', '3.1');
-		
-		$ss = $this->parser->getAttribute('screenshot');
-
-		if (!$ss) {
-			$ss = [];
-		}
-
-		$normalized = [];
-		foreach ($ss as $s) {
-			$normalized[] = $this->buildStruct($this->screenshotStruct, $s);
-		}
-
-		return $normalized;
 	}
 
 	/**
@@ -490,29 +443,6 @@ class ElggPluginManifest {
 		$normalized = [];
 		foreach ($reqs as $req) {
 			$normalized[] = $this->normalizeDep($req);
-		}
-
-		return $normalized;
-	}
-
-	/**
-	 * Returns the suggests elements.
-	 *
-	 * @return array
-	 * @deprecated 3.3
-	 */
-	public function getSuggests() {
-		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Use suggestions in composer', '3.3');
-		
-		$suggests = $this->parser->getAttribute('suggests');
-
-		if (!$suggests) {
-			$suggests = [];
-		}
-
-		$normalized = [];
-		foreach ($suggests as $suggest) {
-			$normalized[] = $this->normalizeDep($suggest);
 		}
 
 		return $normalized;

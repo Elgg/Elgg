@@ -19,11 +19,6 @@ return [
 		"text.js" => "vendor/bower-asset/text/text.js",
 		"sprintf.js" => "vendor/bower-asset/sprintf/src/sprintf.js",
 		
-		"jquery.imgareaselect.css" => "vendor/bower-asset/jquery.imgareaselect/distfiles/css/imgareaselect-deprecated.css",
-		"jquery.imgareaselect.js" => "vendor/bower-asset/jquery.imgareaselect/jquery.imgareaselect.dev.js",
-
-		"jquery-treeview/" => "vendor/bower-asset/jquery-treeview/",
-
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
 		"font-awesome/" => "vendor/bower-asset/fontawesome/",
 

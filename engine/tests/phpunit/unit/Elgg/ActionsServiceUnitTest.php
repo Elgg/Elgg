@@ -371,27 +371,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->router->getResponse($request);
 	}
 
-	public function testActionHookIsTriggered() {
-		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
-		$this->createService($request);
-		$this->addCsrfTokens($request);
-
-		_elgg_services()->hooks->registerHandler('action', 'output3', function ($hook, $type, $return, $params) {
-			echo 'hello';
-
-			return false;
-		});
-
-		$this->assertTrue(_elgg_services()->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
-
-		$result = _elgg_services()->router->getResponse($request);
-
-		$this->assertInstanceOf(OkResponse::class, $result);
-		$this->assertEquals(ELGG_HTTP_OK, $result->getStatusCode());
-		$this->assertEquals(REFERRER, $result->getForwardURL());
-		$this->assertEquals('hello', $result->getContent());
-	}
-
 	public function testValidateHookIsTriggered() {
 		$request = $this->prepareHttpRequest('action/output3', 'POST', [], false);
 		$this->createService($request);

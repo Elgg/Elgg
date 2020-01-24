@@ -370,7 +370,7 @@ class ResponseFactory {
 				'forward_url' => $forward_url,
 			];
 			// For BC, let plugins serve their own error page
-			// @see elgg_error_page_handler
+			// @todo can this hook be dropped
 			$forward_reason = (string) $status_code;
 
 			$this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
