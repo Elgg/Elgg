@@ -32,7 +32,12 @@ class EmailServiceUnitTest extends \Elgg\UnitTestCase {
 		$subject = "<p>You &amp;\r\nme &lt;\rshe.</p>\n\n";
 		$subject_expected = "You & me < she.";
 
-		elgg_send_email("Frōm <from@elgg.org>", "Tō <to@elgg.org>", $subject, $body);
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => "Frōm <from@elgg.org>",
+			'to' => "Tō <to@elgg.org>",
+			'subject' => $subject,
+			'body' => $body,
+		]));
 
 		$message = _elgg_services()->mailer->getLastMessage();
 		
@@ -56,7 +61,13 @@ class EmailServiceUnitTest extends \Elgg\UnitTestCase {
 
 		_elgg_services()->hooks->registerHandler('prepare', 'system:email', $handler);
 
-		elgg_send_email("from@elgg.org", "to@elgg.org", "Hello", "World", ['foo' => 1]);
+		elgg_send_email(\Elgg\Email::factory([
+			'from' => "from@elgg.org",
+			'to' => "to@elgg.org",
+			'subject' => "Hello",
+			'body' => "World",
+			'params' => ['foo' => 1],
+		]));
 
 		$this->assertEquals(1, $calls);
 
@@ -75,7 +86,13 @@ class EmailServiceUnitTest extends \Elgg\UnitTestCase {
 	function testElggSendEmailBypass() {
 		_elgg_services()->hooks->registerHandler('transport', 'system:email', [\Elgg\Values::class, 'getTrue']);
 
-		$this->assertTrue(elgg_send_email("from@elgg.org", "to@elgg.org", "Hello", "World", ['foo' => 1]));
+		$this->assertTrue(elgg_send_email(\Elgg\Email::factory([
+			'from' => "from@elgg.org",
+			'to' => "to@elgg.org",
+			'subject' => "Hello",
+			'body' => "World",
+			'params' => ['foo' => 1],
+		])));
 
 		$this->assertNull(_elgg_services()->mailer->getLastMessage());
 	}

@@ -528,23 +528,7 @@ function notify_user($to, $from = 0, $subject = '', $message = '', array $params
  * @return bool
  * @since 1.7.2
  */
-function elgg_send_email($email) {
-
-	if (!$email instanceof \Elgg\Email) {
-		elgg_deprecated_notice(__FUNCTION__ . '
-			 should be given a single instance of \Elgg\Email
-		', '3.0');
-
-		$args = func_get_args();
-		$email = \Elgg\Email::factory([
-			'from' => array_shift($args),
-			'to' => array_shift($args),
-			'subject' => array_shift($args),
-			'body' => array_shift($args),
-			'params' => array_shift($args) ? : [],
-		]);
-	}
-
+function elgg_send_email(\Elgg\Email $email) {
 	return _elgg_services()->emails->send($email);
 }
 
