@@ -318,10 +318,6 @@ Access hooks
 Action hooks
 ============
 
-**action, <action>**
-	Deprecated. Use ``'action:validate', <action>`` hook instead.
-	Triggered before executing action scripts. Return false to abort action.
-
 **action:validate, <action>**
 	Trigger before action script/controller is executed.
 	This hook should be used to validate/alter user input, before proceeding with the action.
