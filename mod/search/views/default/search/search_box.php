@@ -18,5 +18,4 @@ echo elgg_view_form('search', [
 	'method' => 'get',
 	'disable_security' => true,
 	'class' => $class,
-	'prevent_double_submit' => true,
 ], $vars);

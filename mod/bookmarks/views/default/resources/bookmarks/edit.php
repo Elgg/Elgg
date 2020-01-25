@@ -14,5 +14,5 @@ $vars = bookmarks_prepare_form_vars($bookmark);
 
 echo elgg_view_page(elgg_echo('edit:object:bookmarks'), [
 	'filter_id' => 'bookmarks/edit',
-	'content' => elgg_view_form('bookmarks/save', ['prevent_double_submit' => true], $vars),
+	'content' => elgg_view_form('bookmarks/save', [], $vars),
 ]);

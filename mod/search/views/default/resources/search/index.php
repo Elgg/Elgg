@@ -27,7 +27,6 @@ $form = elgg_view_form('search', [
 	'action' => elgg_generate_url('default:search'),
 	'method' => 'get',
 	'disable_security' => true,
-	'prevent_double_submit' => true,
 ], $params);
 
 if (!preg_match('/[\pL\pN]+/', $query)) {

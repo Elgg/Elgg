@@ -15,7 +15,6 @@ $content = elgg_view('thewire/reply', ['post' => $post]);
 
 $content .= elgg_view_form('thewire/add', [
 	'class' => 'thewire-form',
-	'prevent_double_submit' => true,
 ], [
 	'post' => $post,
 ]);

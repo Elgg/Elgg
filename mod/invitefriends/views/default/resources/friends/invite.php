@@ -13,6 +13,6 @@ if (!$page_owner instanceof ElggUser || $page_owner->guid !== elgg_get_logged_in
 }
 
 echo elgg_view_page(elgg_echo('friends:invite'), [
-	'content' => elgg_view_form('friends/invite', ['prevent_double_submit' => true]),
+	'content' => elgg_view_form('friends/invite'),
 	'show_owner_block_menu' => false,
 ]);

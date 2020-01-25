@@ -51,6 +51,11 @@ Class functions
 
 * ``Elgg\Http\ResponseBuilder::setStatusCode()`` no longer has a default value
 
+Miscellaneous API changes
+-------------------------
+
+* The defaults for ``ignore_empty_body`` and ``prevent_double_submit`` when using ``elgg_view_form`` have been changed to ``true``.
+
 Removed composer dependencies
 -----------------------------
 

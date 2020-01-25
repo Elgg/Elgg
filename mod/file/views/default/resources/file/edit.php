@@ -19,7 +19,7 @@ elgg_push_entity_breadcrumbs($file);
 
 $body_vars = file_prepare_form_vars($file);
 
-$content = elgg_view_form('file/upload', ['prevent_double_submit' => true], $body_vars);
+$content = elgg_view_form('file/upload', [], $body_vars);
 
 echo elgg_view_page(elgg_echo('edit:object:file'), [
 	'content' => $content,

@@ -23,9 +23,7 @@ if (!($target instanceof \ElggEntity)) {
 elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());
 
 echo elgg_view_page(elgg_echo('generic_comments:edit'), [
-	'content' => elgg_view_form('comment/save', [
-		'prevent_double_submit' => true,
-	], [
+	'content' => elgg_view_form('comment/save', [], [
 		'entity' => $target,
 		'comment' => $comment,
 	]),

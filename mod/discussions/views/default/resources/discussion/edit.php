@@ -11,5 +11,5 @@ elgg_push_entity_breadcrumbs($topic);
 $body_vars = discussion_prepare_form_vars($topic);
 
 echo elgg_view_page(elgg_echo('edit:object:discussion'), [
-	'content' => elgg_view_form('discussion/save', ['prevent_double_submit' => true], $body_vars),
+	'content' => elgg_view_form('discussion/save', [], $body_vars),
 ]);

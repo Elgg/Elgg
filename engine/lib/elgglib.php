@@ -1161,7 +1161,7 @@ function _elgg_ajax_page_handler($segments) {
 			}
 		} else {
 			$action = implode('/', array_slice($segments, 1));
-			$output = elgg_view_form($action, ['prevent_double_submit' => true], $vars);
+			$output = elgg_view_form($action, [], $vars);
 		}
 
 		if ($content_type) {

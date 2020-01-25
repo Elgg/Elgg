@@ -8,7 +8,6 @@
 $entity = elgg_extract('entity', $vars, null);
 
 $form_vars = [
-	'prevent_double_submit' => true,
 	'class' => 'elgg-form-alt',
 ];
 

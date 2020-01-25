@@ -11,7 +11,6 @@ $content = '';
 if (elgg_is_logged_in()) {
 	$content .= elgg_view_form('thewire/add', [
 		'class' => 'thewire-form',
-		'prevent_double_submit' => true,
 	]);
 	$content .= elgg_view('input/urlshortener');
 }

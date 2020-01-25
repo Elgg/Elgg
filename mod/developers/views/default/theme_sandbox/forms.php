@@ -646,5 +646,4 @@ $body .= elgg_view_field([
 echo elgg_view('input/form', [
 	'body' => $body,
 	'action' => '#',
-	'prevent_double_submit' => true,
 ]);

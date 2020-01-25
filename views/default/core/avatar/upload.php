@@ -14,4 +14,4 @@ echo elgg_view('output/longtext', [
 	'value' => elgg_echo('avatar:upload:instructions'),
 ]);
 
-echo elgg_view_form('avatar/upload', ['prevent_double_submit' => true], $vars);
+echo elgg_view_form('avatar/upload', [], $vars);

@@ -12,4 +12,4 @@ if (file_exists(elgg_get_root_path() . 'robots.txt')) {
 	echo elgg_view_message('warning', elgg_echo('admin:robots.txt:physical'));
 }
 
-echo elgg_view_form('admin/site/set_robots', ['prevent_double_submit' => true]);
+echo elgg_view_form('admin/site/set_robots');

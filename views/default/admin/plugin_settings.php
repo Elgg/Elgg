@@ -16,7 +16,6 @@ if (!elgg_view_exists("plugins/{$plugin_id}/settings")) {
 $form_vars = [
 	'id' => "{$plugin_id}-settings",
 	'class' => 'elgg-form-settings',
-	'prevent_double_submit' => true,
 ];
 
 if (elgg_action_exists("{$plugin_id}/settings/save")) {
