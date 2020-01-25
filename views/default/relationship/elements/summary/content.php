@@ -13,7 +13,6 @@ if (elgg_is_empty($content)) {
 echo elgg_format_element('div', [
 	'class' => [
 		'elgg-listing-summary-content',
-		'elgg-relationship-content', // @todo remove in 4.0
 		'elgg-content',
 	]
 ], $content);

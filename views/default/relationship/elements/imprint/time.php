@@ -38,6 +38,5 @@ echo elgg_view('object/elements/imprint/element', [
 	'content' => $content,
 	'class' => [
 		'elgg-listing-time',
-		'elgg-relationship-time', // @todo remove in 4.0
 	],
 ]);
