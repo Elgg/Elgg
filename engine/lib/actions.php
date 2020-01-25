@@ -100,7 +100,3 @@ function elgg_action_exists($action) {
 function elgg_is_xhr() {
 	return _elgg_services()->request->isXmlHttpRequest();
 }
-
-return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$hooks->registerHandler('action:validate', 'all', \Elgg\Entity\CropIcon::class);
-};

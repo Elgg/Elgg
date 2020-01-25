@@ -46,11 +46,11 @@ class ElggObjectIntegrationTest extends IntegrationTestCase {
 	}
 	
 	public function testCanCommentOnGroupContent() {
-		
-		_elgg_groups_init();
-		
 		$user = $this->createUser();
 		$user2 = $this->createUser();
+		
+		// make sure hook is registered
+		_elgg_services()->hooks->registerHandler('permissions_check:comment', 'object', '_elgg_groups_comment_permissions_override', 999);
 		
 		$session = elgg_get_session();
 		$session->setLoggedInUser($user);
