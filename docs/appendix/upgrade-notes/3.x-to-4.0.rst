@@ -34,8 +34,8 @@ Class functions
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
 
-Lib function
-~~~~~~~~~~~~
+Lib functions
+~~~~~~~~~~~~~
 
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
@@ -50,6 +50,11 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``Elgg\Http\ResponseBuilder::setStatusCode()`` no longer has a default value
+
+Lib functions
+~~~~~~~~~~~~~
+
+* ``elgg_get_page_owner_guid`` no longer accepts ``$guid`` as a parameter
 
 Miscellaneous API changes
 -------------------------

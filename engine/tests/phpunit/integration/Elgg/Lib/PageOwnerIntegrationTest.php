@@ -33,29 +33,6 @@ class PageOwnerIntegrationTest extends IntegrationTestCase {
 	}
 
 	/**
-	 * @dataProvider libGetSetterProvider
-	 */
-	public function testSetPageOwnerWithGetterLibFunction($initial_guid, $new_guid, $expected) {
-		
-		elgg_get_page_owner_guid($initial_guid);
-		$this->assertEquals($initial_guid, _elgg_services()->pageOwner->getPageOwnerGuid());
-		
-		elgg_get_page_owner_guid($new_guid);
-		
-		$this->assertEquals($expected, _elgg_services()->pageOwner->getPageOwnerGuid());
-	}
-	
-	public function libGetSetterProvider() {
-		return [
-			[999, 1, 1],
-			[999, 0, 999],
-			[999, -1, 0],
-			[999, false, 0],
-			[999, null, 0],
-		];
-	}
-
-	/**
 	 * @dataProvider libSetSetterProvider
 	 */
 	public function testSetPageOwnerWithSetterLibFunction($initial_guid, $new_guid, $expected) {
