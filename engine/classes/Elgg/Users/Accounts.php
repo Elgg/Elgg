@@ -273,7 +273,7 @@ class Accounts {
 		
 		$whitelist = '/^([A-Za-z_0-9]+)$/i';
 		if (!preg_match($whitelist, $username)) {
-		      throw new RegistrationException($this->translator->translate('registration:invalidchars'));
+		    throw new RegistrationException($this->translator->translate('registration:badchars'));
 		}
 		
 		$result = $this->hooks->trigger(
