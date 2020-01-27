@@ -23,7 +23,6 @@ namespace Elgg;
  * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  *
- * @package Elgg.Core
  * @author  Konsta Vesterinen <kvesteri@cc.hut.fi>
  * @author  Jonathan H. Wage <jonwage@gmail.com>
  * @author  Steve Clay <steve@mrclay.org>

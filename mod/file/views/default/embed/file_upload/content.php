@@ -4,7 +4,6 @@
  */
 
 $form_vars = [
-	'enctype' => 'multipart/form-data',
 	'class' => 'elgg-form-embed',
 ];
 $body_vars = ['container_guid' => elgg_get_page_owner_guid()];

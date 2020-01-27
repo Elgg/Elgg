@@ -40,22 +40,16 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		$this->assertEquals('blog/view', $route->getDefault('_resource'));
 	}
 	
-	/**
-	 * @expectedException InvalidParameterException
-	 */
 	public function testRegisterRouterWithoutPath() {
-		
-		$route = $this->service->register('view:object:blog', [
+		$this->expectException(\InvalidParameterException::class);
+		$this->service->register('view:object:blog', [
 			'resource' => 'blog/view',
 		]);
 	}
 	
-	/**
-	 * @expectedException InvalidParameterException
-	 */
 	public function testRegisterRouterWithoutControllerParam() {
-		
-		$route = $this->service->register('view:object:blog', [
+		$this->expectException(\InvalidParameterException::class);
+		$this->service->register('view:object:blog', [
 			'path' => '/blog/view/{guid}/{title?}',
 		]);
 	}
@@ -175,6 +169,6 @@ class RouteRegistrationServiceUnitTest extends UnitTestCase {
 		
 		$message_details = $logged[0];
 		
-		$this->assertContains('The route "view:foo:bar" has been deprecated.', $message_details['message']);
+		$this->assertStringContainsString('The route "view:foo:bar" has been deprecated.', $message_details['message']);
 	}
 }

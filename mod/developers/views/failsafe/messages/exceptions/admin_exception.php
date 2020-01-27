@@ -3,10 +3,7 @@
  * Elgg exception (failsafe mode)
  * Displays a single exception
  *
- * @package    Elgg
- * @subpackage Core
- *
- * @uses       $vars['object'] An exception
+ * @uses $vars['object'] An exception
  */
 
 $exception = elgg_extract('object', $vars);

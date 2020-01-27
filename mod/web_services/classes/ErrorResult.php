@@ -2,9 +2,6 @@
 /**
  * ErrorResult
  * The error result class.
- *
- * @package    Elgg.Core
- * @subpackage WebServicesAPI
  */
 class ErrorResult extends GenericResult {
 	// Fail with no specific code

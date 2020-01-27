@@ -2,9 +2,6 @@
 /**
  * Display a page in an embedded window
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['src'] Source URL of the page
  */
 

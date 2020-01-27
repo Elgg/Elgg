@@ -1,29 +1,19 @@
 <?php
 
-$username = elgg_extract('username', $vars);
-if ($username) {
-	$user = get_user_by_username($username);
-} else {
-	$user = elgg_get_logged_in_user_entity();
-}
+$user = elgg_get_page_owner_entity();
 
-if (!$user || !$user->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
-}
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
+$content = elgg_call(ELGG_IGNORE_ACCESS, function() use ($user) {
+	return elgg_list_relationships([
+		'relationship' => 'invited',
+		'relationship_guid' => $user->guid,
+		'inverse_relationship' => true,
+		'no_results' => elgg_echo('groups:invitations:none'),
+	]);
+});
 
-elgg_set_page_owner_guid($user->guid);
-
-$title = elgg_echo('groups:invitations');
-
-$content = elgg_view('groups/invitationrequests');
-
-$params = [
+// draw page
+echo elgg_view_page(elgg_echo('groups:invitations'), [
 	'content' => $content,
-	'title' => $title,
-	'filter' => '',
-];
-$body = elgg_view_layout('content', $params);
-
-echo elgg_view_page($title, $body);
+]);

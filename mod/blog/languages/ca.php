@@ -1,18 +1,24 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'item:object:blog' => 'Entrades del bloc',
-	'collection:object:blog' => 'Blogs',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog' => 'Blocs',
+	'collection:object:blog:all' => 'Tots els blocs',
+	'collection:object:blog:owner' => 'Bloc de %s',
 	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
+	'collection:object:blog:friends' => 'Blocs d\'amics',
+	'add:object:blog' => 'Afegir una entrada al bloc',
+	'edit:object:blog' => 'Editar entrada del bloc',
 
 	'blog:revisions' => 'Revisions',
 	'blog:archives' => 'Arxius',
 
-	'groups:tool:blog' => 'Enable group blog',
+	'groups:tool:blog' => 'Activar el bloc del grup',
 	'blog:write' => 'Afegir una entrada al bloc',
 
 	// Editing
@@ -58,7 +64,7 @@ View and comment on the blog post:
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:description' => 'Aquest giny mostra les darreres entrades al bloc.',
 	'blog:moreblogs' => 'Més entrades',
 	'blog:numbertodisplay' => 'Nombre d\'entrades del bloc a mostrar',
 );

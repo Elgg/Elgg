@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Διαγραφή ομάδας',
 	'groups:membershiprequests' => 'Διαχείριση αιτημάτων σύνδεσης',
 	'groups:membershiprequests:pending' => 'Διαχείριση αιτημάτων σύνδεσης (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Προσκλήσεις ομάδας',
 	'groups:invitations:pending' => 'Προσκλήσεις ομάδας (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Εικόνα ομάδας (αφήστε κενό για καμία αλλαγή)',
 	'groups:name' => 'Όνομα ομάδας',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "Ιδιοκτήτης",
 	'groups:owner:warning' => "Προσοχή: εάν αλλάξετε την τιμή αυτή, δεν θα είστε πλέον ο ιδιοκτήτης αυτής της ομάδας.",
 	'groups:widget:num_display' => 'Αριθμός ομάδων για εμφάνιση',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Συμμετοχή στην ομάδα',
+	'widgets:a_users_groups:description' => 'Εμφάνιση στο προφίλ σας των ομάδων που είστε μέλος ',
 
 	'groups:noaccess' => 'Δεν παρέχεται πρόσβαση στην ομάδα',
 	'groups:cantcreate' => 'Δεν μπορείτε να δημιουργήσετε ομάδα. Μόνο οι διαχειριστές μπορούν.',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Πρόσκληση φίλων σ\' αυτή την ομάδα',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Δεν έχετε φίλους για να προσκαλέσετε',
 	'groups:group' => "Ομάδα",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "Δεν βρέθηκαν ομάδες",
 	'groups:search_in_group' => "Αναζήτηση σ' αυτή την ομάδα",
 	'groups:acl' => "Ομάδα: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Μέλη ομάδας',
 
 	'groups:notfound' => "Η ομάδα δεν βρέθηκε",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Το περιεχόμενο της ομάδας της είναι προσβάσιμο μόνο από τα μέλη.",
 	'groups:opengroup:membersonly:join' => 'Για να γίνετε μέλος, επιλέξτε "Συμμετοχή στην ομάδα" στο μενού.',
 	'groups:visibility' => 'Ποιος μπορεί να δει αυτή την ομάδα?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
+
 return array(
 	'email:validate:subject' => "%s please confirm your email address for %s!",
 	'email:validate:body' => "Hi %s,
@@ -29,5 +35,8 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:errors:could_not_resend_validations' => 'Could not resend all validation requests to checked users.',
 
 	'uservalidationbyemail:messages:resent_validation' => 'Validation request resent.',
-	'uservalidationbyemail:messages:resent_validations' => 'Validation requests resent to all checked users.'
+	'uservalidationbyemail:messages:resent_validations' => 'Validation requests resent to all checked users.',
+	
+	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
+	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

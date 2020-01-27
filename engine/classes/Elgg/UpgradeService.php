@@ -127,27 +127,11 @@ class UpgradeService {
 				return $reject();
 			}
 
-			elgg_flush_caches();
+			elgg_clear_caches();
 
 			$this->mutex->unlock('upgrade');
 
 			$this->events->triggerAfter('upgrade', 'system', null);
-
-			return $resolve();
-		});
-	}
-
-	/**
-	 * Run legacy upgrade scripts
-	 * @return Promise
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function runLegacyUpgrades() {
-		return new Promise(function ($resolve, $reject) {
-			if ($this->getUnprocessedUpgrades()) {
-				$this->processUpgrades();
-			}
 
 			return $resolve();
 		});
@@ -220,7 +204,6 @@ class UpgradeService {
 		$this->up()->done(
 			function () use ($resolve, $reject, $upgrades) {
 				all([
-					$this->runLegacyUpgrades(),
 					$this->runUpgrades($upgrades),
 				])->done(
 					function () use ($resolve, $reject) {
@@ -238,219 +221,6 @@ class UpgradeService {
 		);
 
 		return $promise;
-	}
-
-	/**
-	 * Run any php upgrade scripts which are required
-	 *
-	 * @param int  $version Version upgrading from.
-	 * @param bool $quiet   Suppress errors.  Don't use this.
-	 *
-	 * @return bool
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function upgradeCode($version, $quiet = false) {
-		$version = (int) $version;
-		$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
-		$processed_upgrades = $this->getProcessedUpgrades();
-
-		$upgrade_files = $this->getUpgradeFiles($upgrade_path);
-
-		if ($upgrade_files === false) {
-			return false;
-		}
-
-		$upgrades = $this->getUnprocessedUpgrades($upgrade_files, $processed_upgrades);
-
-		// Sort and execute
-		sort($upgrades);
-
-		foreach ($upgrades as $upgrade) {
-			$upgrade_version = $this->getUpgradeFileVersion($upgrade);
-			$success = true;
-
-			if ($upgrade_version <= $version) {
-				// skip upgrade files from before the installation version of Elgg
-				// because the upgrade files from before the installation version aren't
-				// added to the database.
-				continue;
-			}
-
-			// hide all errors.
-			if ($quiet) {
-				// hide include errors as well as any exceptions that might happen
-				try {
-					if (!@Includer::includeFile("$upgrade_path/$upgrade")) {
-						$success = false;
-						$this->logger->error("Could not include $upgrade_path/$upgrade");
-					}
-				} catch (\Exception $e) {
-					$success = false;
-					$this->logger->error($e);
-				}
-			} else {
-				if (!Includer::includeFile("$upgrade_path/$upgrade")) {
-					$success = false;
-					$this->logger->error("Could not include $upgrade_path/$upgrade");
-				}
-			}
-
-			if ($success) {
-				// don't set the version to a lower number in instances where an upgrade
-				// has been merged from a lower version of Elgg
-				if ($upgrade_version > $version) {
-					$this->config->save('version', $upgrade_version);
-				}
-
-				// incrementally set upgrade so we know where to start if something fails.
-				$this->setProcessedUpgrade($upgrade);
-			} else {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Saves a processed upgrade to a dataset.
-	 *
-	 * @param string $upgrade Filename of the processed upgrade
-	 *                        (not the path, just the file)
-	 *
-	 * @return bool
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function setProcessedUpgrade($upgrade) {
-		$processed_upgrades = $this->getProcessedUpgrades();
-		$processed_upgrades[] = $upgrade;
-		$processed_upgrades = array_unique($processed_upgrades);
-
-		return $this->config->save('processed_upgrades', $processed_upgrades);
-	}
-
-	/**
-	 * Gets a list of processes upgrades
-	 *
-	 * @return mixed Array of processed upgrade filenames or false
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function getProcessedUpgrades() {
-		return $this->config->processed_upgrades;
-	}
-
-	/**
-	 * Returns the version of the upgrade filename.
-	 *
-	 * @param string $filename The upgrade filename. No full path.
-	 *
-	 * @return int|false
-	 * @since 1.8.0
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function getUpgradeFileVersion($filename) {
-		preg_match('/^([0-9]{10})([\.a-z0-9-_]+)?\.(php)$/i', $filename, $matches);
-
-		if (isset($matches[1])) {
-			return (int) $matches[1];
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns a list of upgrade files relative to the $upgrade_path dir.
-	 *
-	 * @param string $upgrade_path The up
-	 *
-	 * @return array|false
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function getUpgradeFiles($upgrade_path = null) {
-		if (!$upgrade_path) {
-			$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
-		}
-		$upgrade_path = \Elgg\Project\Paths::sanitize($upgrade_path);
-		
-		if (!is_dir($upgrade_path)) {
-			return false;
-		}
-		
-		$handle = opendir($upgrade_path);
-		if (!$handle) {
-			return false;
-		}
-
-		$upgrade_files = [];
-
-		while (($upgrade_file = readdir($handle)) !== false) {
-			// make sure this is a wellformed upgrade.
-			if (!is_file($upgrade_path . $upgrade_file)) {
-				continue;
-			}
-			$upgrade_version = $this->getUpgradeFileVersion($upgrade_file);
-			if (!$upgrade_version) {
-				continue;
-			}
-			$upgrade_files[] = $upgrade_file;
-		}
-
-		sort($upgrade_files);
-
-		return $upgrade_files;
-	}
-
-	/**
-	 * Checks if any upgrades need to be run.
-	 *
-	 * @param null|array $upgrade_files      Optional upgrade files
-	 * @param null|array $processed_upgrades Optional processed upgrades
-	 *
-	 * @return array
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function getUnprocessedUpgrades($upgrade_files = null, $processed_upgrades = null) {
-		if ($upgrade_files === null) {
-			$upgrade_files = $this->getUpgradeFiles();
-		}
-
-		if (empty($upgrade_files)) {
-			return [];
-		}
-		
-		if ($processed_upgrades === null) {
-			$processed_upgrades = $this->config->processed_upgrades;
-			if (!is_array($processed_upgrades)) {
-				$processed_upgrades = [];
-			}
-		}
-
-		$unprocessed = array_diff($upgrade_files, $processed_upgrades);
-
-		return $unprocessed;
-	}
-
-	/**
-	 * Upgrades Elgg Database and code
-	 *
-	 * @return bool
-	 * @deprecated 3.0
-	 * @codeCoverageIgnore
-	 */
-	protected function processUpgrades() {
-		$dbversion = (int) $this->config->version;
-
-		if ($this->upgradeCode($dbversion)) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -495,42 +265,48 @@ class UpgradeService {
 	 * @return ElggUpgrade[]
 	 */
 	public function getCompletedUpgrades($async = true) {
-		$completed = [];
+		// make sure always to return all upgrade entities
+		return elgg_call(
+			ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES,
+			function () use ($async) {
+				$completed = [];
+				
+				$order_by_completed_time = new EntitySortByClause();
+				$order_by_completed_time->direction = 'DESC';
+				$order_by_completed_time->property = 'completed_time';
+				$order_by_completed_time->property_type = 'private_setting';
+				
+				$upgrades = elgg_get_entities([
+					'type' => 'object',
+					'subtype' => 'elgg_upgrade',
+					'private_setting_name' => 'class', // filters old upgrades
+					'private_setting_name_value_pairs' => [
+						'name' => 'is_completed',
+						'value' => true,
+					],
+					'order_by' => $order_by_completed_time,
+					'limit' => false,
+					'batch' => true,
+				]);
+				/* @var $upgrade \ElggUpgrade */
+				foreach ($upgrades as $upgrade) {
+					$batch = $upgrade->getBatch();
+					if (!$batch) {
+						continue;
+					}
 		
-		$order_by_completed_time = new EntitySortByClause();
-		$order_by_completed_time->direction = 'DESC';
-		$order_by_completed_time->property = 'completed_time';
-		$order_by_completed_time->property_type = 'private_setting';
+					$completed[] = $upgrade;
+				}
 		
-		$upgrades = elgg_get_entities([
-			'type' => 'object',
-			'subtype' => 'elgg_upgrade',
-			'private_setting_name' => 'class', // filters old upgrades
-			'private_setting_name_value_pairs' => [
-				'name' => 'is_completed',
-				'value' => true,
-			],
-			'order_by' => $order_by_completed_time,
-			'limit' => false,
-			'batch' => true,
-		]);
-		/* @var $upgrade \ElggUpgrade */
-		foreach ($upgrades as $upgrade) {
-			$batch = $upgrade->getBatch();
-			if (!$batch) {
-				continue;
+				if (!$async) {
+					$completed = array_filter($completed, function(ElggUpgrade $upgrade) {
+						return !$upgrade->isAsynchronous();
+					});
+				}
+		
+				return $completed;
 			}
-
-			$completed[] = $upgrade;
-		}
-
-		if (!$async) {
-			$completed = array_filter($completed, function(ElggUpgrade $upgrade) {
-				return !$upgrade->isAsynchronous();
-			});
-		}
-
-		return $completed;
+		);
 	}
 
 	/**

@@ -10,7 +10,7 @@ if (elgg_in_context('search')) {
 	return;
 }
 
-$class = elgg_extract_class($vars, "elgg-search");
+$class = elgg_extract_class($vars, 'elgg-search');
 unset($vars['class']);
 
 echo elgg_view_form('search', [

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -6,15 +12,18 @@ return array(
 	 */
 
 	'item:object:page' => 'Σελίδες',
-	'collection:object:page' => 'Pages',
-	'collection:object:page:all' => "All site pages",
-	'collection:object:page:owner' => "%s's pages",
-	'collection:object:page:friends' => "Friends' pages",
-	'collection:object:page:group' => "Group pages",
-	'add:object:page' => "Add a page",
-	'edit:object:page' => "Edit this page",
+	'collection:object:page' => 'Σελίδες',
+	'collection:object:page:all' => "Όλες οι σελίδες",
+	'collection:object:page:owner' => "σελίδες του χρήστη %s",
+	'collection:object:page:friends' => "Σελίδες φίλων",
+	'collection:object:page:group' => "Σελίδες ομάδας",
+	'add:object:page' => "Προσθήκη Σελίδας",
+	'edit:object:page' => "Επεξεργασία σελίδας",
 
-	'groups:tool:pages' => 'Enable group pages',
+	'groups:tool:pages' => 'Ενεργοποίηση σελίδων ομάδας',
+	
+	'annotation:delete:page:success' => 'The page revision was successfully deleted',
+	'annotation:delete:page:fail' => 'The page revision could not be deleted',
 
 	'pages:delete' => "Διαγραφή σελίδας",
 	'pages:history' => "Ιστορικό",
@@ -62,7 +71,7 @@ View and comment on the page:
 	'pages:saved' => 'Η σελίδα αποθηκεύτηκε',
 	'pages:notsaved' => 'Η σελίδα δεν μπορεί να αποθηκευτεί',
 	'pages:error:no_title' => 'Πρέπει να καθορίσετε έναν τίτλο για αυτή τη σελίδα.',
-	'entity:delete:object:page:success' => 'The page was successfully deleted.',
+	'entity:delete:object:page:success' => 'Η σελίδα διαγράφτηκε επιτυχώς.',
 	'pages:revision:delete:success' => 'Η αναθεώρηση της σελίδας διαγράφτηκε επιτυχώς',
 	'pages:revision:delete:failure' => 'Δεν ήταν δυνατή η αναθεώρηση της σελίδας',
 
@@ -76,8 +85,8 @@ View and comment on the page:
 	 **/
 
 	'pages:num' => 'Αριθμός σελίδων για εμφάνιση',
-	'widgets:pages:name' => 'Pages',
-	'widgets:pages:description' => "This is a list of your pages.",
+	'widgets:pages:name' => 'Σελίδες',
+	'widgets:pages:description' => "Λίστα των σελίδων σας.",
 
 	/**
 	 * Submenu items

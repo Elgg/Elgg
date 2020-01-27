@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Обриши групу',
 	'groups:membershiprequests' => 'Управљај захтевима за придруживање',
 	'groups:membershiprequests:pending' => 'Управљај захтевима за придруживање (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Позиви у групу',
 	'groups:invitations:pending' => 'Позиви у групу (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Икона групе (оставте празно ако не желите да мењате)',
 	'groups:name' => 'Име групе',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "Власник",
 	'groups:owner:warning' => "Упозорење: ако промените ову вредност, више нећете бити власник групе.",
 	'groups:widget:num_display' => 'Колико група приказати',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Чланство групе',
+	'widgets:a_users_groups:description' => 'Прикажи групе у којима сте члан на вашем профилу',
 
 	'groups:noaccess' => 'Немате приступ групи',
 	'groups:cantcreate' => 'Не можете да направите групу. Само админ може.',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Позови пријатеље у ову групу',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Немате пријатеље да позовете!',
 	'groups:group' => "Група",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "Нису пронађене одговарајуће групе",
 	'groups:search_in_group' => "Претражи у овој групи",
 	'groups:acl' => "Група:  %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Чланови групе',
 
 	'groups:notfound' => "Група није пронађена",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Садржај ове групе је доступан само члановима.",
 	'groups:opengroup:membersonly:join' => 'Да постанете члан кликните "Придружи се" мени линк.',
 	'groups:visibility' => 'Ко може да види ову групу?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

@@ -144,9 +144,7 @@ Database query cache
 
 For the lifetime of a given page's execution, a cache of all ``SELECT`` queries is kept.
 This means that for a given page load a given select query will only ever go out to the database once,
-even if it is executed multiple times. Any write to the database will flush this cache,
-so it is advised that on complicated pages you postpone database writes until
-the end of the page or use the ``execute_delayed_*`` functionality.
+even if it is executed multiple times. Any write to the database will flush this cache.
 This cache will be automatically cleared at the end of a page load.
 
 You may experience memory problems if you use the Elgg framework as a library in a PHP CLI script.

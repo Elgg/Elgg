@@ -4,9 +4,6 @@
  * Special viewtype for rendering exceptions. Includes minimal code so as not to
  * create a "Exception thrown without a stack frame in Unknown on line 0" error
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['title'] The page title
  * @uses $vars['body'] The main content of the page
  */

@@ -7,6 +7,7 @@
 return [
 	// layout and shell
 	'body-background-color' => '#FFF',
+	'walled-garden-background-image' => 'graphics/walled_garden.jpg',
 	
 	// Typography
 	'font-size' => '16px', // global font size

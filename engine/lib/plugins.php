@@ -4,6 +4,8 @@
  * Contains functions for managing plugins
  */
 
+use Elgg\Menu\MenuItems;
+
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities
@@ -90,7 +92,7 @@ function elgg_get_plugins($status = 'active') {
  * @see   \ElggPlugin::getAllUserSettings()
  */
 function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $return_obj = false) {
-	$plugin = elgg_get_plugin_from_id($plugin_id);
+	$plugin = _elgg_services()->plugins->get($plugin_id);
 	if (!$plugin) {
 		return [];
 	}
@@ -113,7 +115,12 @@ function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $r
  * @see \ElggPlugin::setUserSetting()
  */
 function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id = null) {
-	return _elgg_services()->plugins->setUserSetting($name, $value, $user_guid, $plugin_id);
+	$plugin = _elgg_services()->plugins->get($plugin_id);
+	if (!$plugin) {
+		return false;
+	}
+	
+	return $plugin->setUserSetting($name, $value, (int) $user_guid);
 }
 
 /**
@@ -128,7 +135,12 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id 
  * @see \ElggPlugin::unsetUserSetting()
  */
 function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) {
-	return _elgg_services()->plugins->unsetUserSetting($name, $user_guid, $plugin_id);
+	$plugin = _elgg_services()->plugins->get($plugin_id);
+	if (!$plugin) {
+		return false;
+	}
+	
+	return $plugin->unsetUserSetting($name, (int) $user_guid);
 }
 
 /**
@@ -144,7 +156,12 @@ function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null
  * @see \ElggPlugin::getUserSetting()
  */
 function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null, $default = null) {
-	return _elgg_services()->plugins->getUserSetting($name, $user_guid, $plugin_id, $default);
+	$plugin = _elgg_services()->plugins->get($plugin_id);
+	if (!$plugin) {
+		return false;
+	}
+	
+	return $plugin->getUserSetting($name, (int) $user_guid, $default);
 }
 
 /**
@@ -159,7 +176,12 @@ function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null, 
  * @see \ElggPlugin::setSetting()
  */
 function elgg_set_plugin_setting($name, $value, $plugin_id) {
-	return _elgg_services()->plugins->setSetting($name, $value, $plugin_id);
+	$plugin = _elgg_services()->plugins->get($plugin_id);
+	if (!$plugin) {
+		return false;
+	}
+	
+	return $plugin->setSetting($name, $value);
 }
 
 /**
@@ -174,7 +196,12 @@ function elgg_set_plugin_setting($name, $value, $plugin_id) {
  * @see \ElggPlugin::getSetting()
  */
 function elgg_get_plugin_setting($name, $plugin_id, $default = null) {
-	return _elgg_services()->plugins->getSetting($name, $plugin_id, $default);
+	$plugin = _elgg_services()->plugins->get($plugin_id);
+	if (!$plugin) {
+		return false;
+	}
+	
+	return $plugin->getSetting($name, $default);
 }
 
 /**
@@ -188,25 +215,17 @@ function elgg_get_plugin_setting($name, $plugin_id, $default = null) {
  * @see \ElggPlugin::unsetSetting()
  */
 function elgg_unset_plugin_setting($name, $plugin_id) {
-	return _elgg_services()->plugins->unsetSetting($name, $plugin_id);
-}
-
-/**
- * Unsets all plugin settings for a plugin.
- *
- * @param string $plugin_id The plugin ID (Required)
- *
- * @return bool
- * @since 1.8.0
- * @see \ElggPlugin::unsetAllSettings()
- */
-function elgg_unset_all_plugin_settings($plugin_id) {
-	return _elgg_services()->plugins->unsetAllSettings($plugin_id);
+	$plugin = _elgg_services()->plugins->get($plugin_id);
+	if (!$plugin) {
+		return false;
+	}
+	
+	return $plugin->unsetSetting($name);
 }
 
 /**
  * Returns entities based upon plugin user settings.
- * Takes all the options for {@link elgg_get_entities_from_private_settings()}
+ * Takes all the options for {@link elgg_get_entities()}
  * in addition to the ones below.
  *
  * @param array $options Array in the format:
@@ -237,17 +256,111 @@ function elgg_get_entities_from_plugin_user_settings(array $options = []) {
 }
 
 /**
+ * Registers menu items for the entity menu of a plugin
+ *
+ * @param \Elgg\Hook $hook 'register', 'menu:entity'
+ *
+ * @return void|MenuItems
+ *
+ * @internal
+ */
+function _elgg_plugin_entity_menu_setup(\Elgg\Hook $hook) {
+	$entity = $hook->getEntityParam();
+	if (!$entity instanceof \ElggPlugin || !$entity->canEdit()) {
+		return;
+	}
+	
+	/** @var $return MenuItems **/
+	$return = $hook->getValue();
+	$return->remove('delete');
+	
+	if (elgg_view_exists("plugins/{$entity->getID()}/settings")) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'settings',
+			'href' => "admin/plugin_settings/{$entity->getID()}",
+			'text' => elgg_echo('settings'),
+			'icon' => 'settings-alt',
+			'section' => 'admin'
+		]);
+	}
+	
+	$priority = $entity->getPriority();
+	
+	// top and up link only if not at top
+	if ($priority > 1) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'top',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => 'first',
+			]),
+			'text' => elgg_echo('top'),
+			'icon' => 'angle-double-up',
+			'priority' => 11,
+		]);
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'up',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => '-1',
+			]),
+			'text' => elgg_echo('up'),
+			'icon' => 'angle-up',
+			'priority' => 12,
+		]);
+	}
+	
+	// down and bottom links only if not at bottom
+	if ($priority < _elgg_get_max_plugin_priority()) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'down',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => '+1',
+			]),
+			'text' => elgg_echo('down'),
+			'icon' => 'angle-down',
+			'priority' => 13,
+		]);
+
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'bottom',
+			'href' => elgg_generate_action_url('admin/plugins/set_priority', [
+				'plugin_guid' => $entity->guid,
+				'priority' => 'last',
+			]),
+			'text' => elgg_echo('bottom'),
+			'icon' => 'angle-double-down',
+			'priority' => 14,
+		]);
+	}
+	
+	// remove all user and plugin settings
+	$return[] = \ElggMenuItem::factory([
+		'name' => 'remove_settings',
+		'href' => elgg_generate_action_url('plugins/settings/remove', [
+			'plugin_id' => $entity->getID(),
+		]),
+		'text' => elgg_echo('plugins:settings:remove:menu:text'),
+		'icon' => 'trash-alt',
+		'confirm' => elgg_echo('plugins:settings:remove:menu:confirm'),
+	]);
+	
+	return $return;
+}
+
+/**
  * Initialize the plugin system
  *
  * @return void
  * @internal
  */
 function _elgg_plugins_init() {
-
-	if (elgg_is_admin_logged_in()) {
-		elgg_register_ajax_view('object/plugin/full');
-		elgg_register_ajax_view('object/plugin/details');
-	}
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_plugin_entity_menu_setup');
+	
+	elgg_register_ajax_view('object/plugin/full');
+	elgg_register_ajax_view('object/plugin/details');
 }
 
 /**

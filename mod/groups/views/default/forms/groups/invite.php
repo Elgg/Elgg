@@ -1,12 +1,10 @@
 <?php
 /**
  * Elgg groups invite form
- *
- * @package ElggGroups
  */
 
 $group = elgg_extract('entity', $vars);
-if (!($group instanceof \ElggGroup)) {
+if (!$group instanceof \ElggGroup) {
 	return;
 }
 
@@ -32,6 +30,10 @@ echo elgg_view_field([
 	'#type' => 'friendspicker',
 	'#help' => elgg_echo('groups:invite:friends:help'),
 	'name' => 'user_guid',
+	'options' => [
+		'item_view' => 'livesearch/user/group_invite',
+		'group_guid' => $group->guid,
+	],
 ]);
 
 echo elgg_view_field([

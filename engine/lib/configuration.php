@@ -103,11 +103,6 @@ function elgg_get_engine_path() {
  * @since 1.8.0
  */
 function elgg_get_config($name, $default = null) {
-	if ($name == 'icon_sizes') {
-		$msg = 'The config value "icon_sizes" is deprecated. Use elgg_get_icon_sizes()';
-		elgg_deprecated_notice($msg, '2.2');
-	}
-
 	if (!_elgg_config()->hasValue($name)) {
 		elgg_log("Config value for '$name' is not set'", 'INFO');
 		return $default;

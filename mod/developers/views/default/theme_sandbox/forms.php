@@ -130,16 +130,6 @@ $ipsum = elgg_view('developers/ipsum');
 			'#help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox (label and #label)',
 		]);
 
-		echo elgg_view_input('checkbox', [
-			'name' => 'f4s3',
-			'id' => 'f4s3',
-			'value' => 1,
-			'default' => false,
-			'required' => true,
-			'label' => 'a (.elgg-input-checkbox)',
-			'help' => 'Single checkbox .elgg-input-checkbox wrapped in .elgg-input-single-checkbox using elgg_view_input',
-		]);
-
 		echo elgg_view_field([
 			'#type' => 'checkboxes',
 			'name' => 'f4',
@@ -642,3 +632,18 @@ $ipsum = elgg_view('developers/ipsum');
 		?>
 	</fieldset>
 </form>
+<?php
+
+$body = 'Form with submit button disabled on submit of form';
+$body .= elgg_view_field([
+	'#type' => 'text',
+]);
+$body .= elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('submit'),
+]);
+
+echo elgg_view('input/form', [
+	'body' => $body,
+	'action' => '#',
+]);

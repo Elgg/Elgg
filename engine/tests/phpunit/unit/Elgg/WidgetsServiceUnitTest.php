@@ -197,7 +197,7 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 			foreach ($items as $id => $item) {
 				$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
 				$this->assertNotEmpty($id);
-				$this->assertInternalType('string', $id);
+				$this->assertIsString($id);
 				$this->assertArrayHasKey($id, $resps);
 				$this->assertSame($resps[$id], $item->multiple);
 			}
@@ -226,7 +226,7 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 			foreach ($items as $id => $item) {
 				$this->assertInstanceOf('\Elgg\WidgetDefinition', $item);
 				$this->assertNotEmpty($id);
-				$this->assertInternalType('string', $id);
+				$this->assertIsString($id);
 				$this->assertArrayHasKey($id, $resps);
 				list($name, $desc) = $resps[$id];
 				$this->assertSame($name, $item->name);

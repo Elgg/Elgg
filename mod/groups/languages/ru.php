@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Удалить группу',
 	'groups:membershiprequests' => 'Управление запросами приглашения',
 	'groups:membershiprequests:pending' => 'Управление запросами приглашений (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Приглашения группы',
 	'groups:invitations:pending' => 'Приглашения группы (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Иконка группы',
 	'groups:name' => 'Название группы',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "Владелец",
 	'groups:owner:warning' => "Внимание: если вы измените это значение, вы больше не будете владельцем группы.",
 	'groups:widget:num_display' => 'Число отображаемых групп',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Членство',
+	'widgets:a_users_groups:description' => 'Число отображаемых групп',
 
 	'groups:noaccess' => 'Нет доступа к группе',
 	'groups:cantcreate' => 'Вы не можете создать группу. Только админы могут.',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Пригласить в группу',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Некого приглашать!',
 	'groups:group' => "Группа",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "Ничего не найдено!",
 	'groups:search_in_group' => "Поиск в этой группе",
 	'groups:acl' => "Группа: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Участники',
 
 	'groups:notfound' => "Группа не найдена",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Содержание этой группы доступно только участникам.",
 	'groups:opengroup:membersonly:join' => 'Чтобы стать участником группы, нажмите "Вступить в группу"',
 	'groups:visibility' => 'Кто может просматривать группу?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

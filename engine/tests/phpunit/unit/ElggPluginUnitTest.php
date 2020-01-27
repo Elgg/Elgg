@@ -9,18 +9,16 @@ use Elgg\Application;
 class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
-		_elgg_services()->boot->invalidateCache();
+		_elgg_services()->boot->clearCache();
 	}
 
 	public function down() {
 
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 * @expectedExceptionMessage Plugin ID must be set
-	 */
 	public function testConstructorThrowsWithEmptyId() {
+		$this->expectException(InvalidArgumentException::class);
+		$this->expectExceptionMessage('Plugin ID must be set');
 		ElggPlugin::fromId('');
 	}
 
@@ -297,8 +295,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testUsesBootstrapOnShutdown() {
-		/* @todo Test that bootstrap handlers are called during the shutdown event */
-
+		// @todo Test that bootstrap handlers are called during the shutdown event
 		$this->markTestIncomplete();
 	}
 }

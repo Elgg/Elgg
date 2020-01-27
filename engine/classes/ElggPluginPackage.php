@@ -10,12 +10,10 @@
  * right now because of conflicts with at least the constructor,
  * enable(), disable(), and private settings.
  *
- * Around 1.9 or so we should each plugin over to using
+ * @todo Around 1.9 or so we should each plugin over to using
  * \ElggPlugin and merge \ElggPluginPackage and \ElggPlugin.
  *
- * @package    Elgg.Core
- * @subpackage Plugins
- * @since      1.8
+ * @since 1.8
  */
 class ElggPluginPackage {
 
@@ -113,7 +111,7 @@ class ElggPluginPackage {
 	public function __construct($plugin, $validate = true) {
 		$plugin_path = elgg_get_plugins_path();
 		// want to avoid another is_dir() call here.
-		if (strpos($plugin, $plugin_path) === 0 || is_dir($plugin)) {
+		if (elgg_strpos($plugin, $plugin_path) === 0 || is_dir($plugin)) {
 			// this is a path
 			$path = \Elgg\Project\Paths::sanitize($plugin);
 
@@ -446,12 +444,6 @@ class ElggPluginPackage {
 
 		$check_types = ['requires', 'conflicts'];
 
-		if ($full_report) {
-			// Note: $suggests is not unused. It's called dynamically
-			$suggests = $this->getManifest()->getSuggests();
-			$check_types[] = 'suggests';
-		}
-
 		foreach ($check_types as $dep_type) {
 			$inverse = ($dep_type == 'conflicts') ? true : false;
 
@@ -493,6 +485,8 @@ class ElggPluginPackage {
 						
 						if ($type === 'priority') {
 							$text = "{$dep['priority']} {$dep['plugin']}";
+						} elseif ($type === 'elgg_release') {
+							$text = $dep['version'];
 						} else {
 							$text = $dep['name'];
 						}

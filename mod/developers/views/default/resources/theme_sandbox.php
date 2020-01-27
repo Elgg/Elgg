@@ -37,10 +37,8 @@ $menu = elgg_view_menu('theme_sandbox', [
 	'class' => 'elgg-menu-page',
 ]);
 
-$layout = elgg_view_layout('default', [
+echo elgg_view_page("Theme Sandbox : $title", [
 	'title' => $title,
 	'content' => $body,
 	'sidebar' => $menu,
 ]);
-
-echo elgg_view_page("Theme Sandbox : $title", $layout);

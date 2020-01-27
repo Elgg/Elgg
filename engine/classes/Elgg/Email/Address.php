@@ -89,7 +89,7 @@ class Address extends ZendAddress {
 	public static function fromString($contact, $ignored = null) {
 		$containsName = preg_match('/<(.*)>/', $contact, $matches) == 1;
 		if ($containsName) {
-			$name = trim(substr($contact, 0, strpos($contact, '<')));
+			$name = trim(elgg_substr($contact, 0, elgg_strpos($contact, '<')));
 			return new self($matches[1], $name);
 		} else {
 			return new self(trim($contact));

@@ -1,8 +1,6 @@
 <?php
 /**
 * Elgg bookmarks save action
-*
-* @package Bookmarks
 */
 
 $title = elgg_get_title_input();

@@ -1,61 +1,70 @@
 Page structure best practice
 ============================
 
-Elgg pages have an overall pageshell and a main content area. In Elgg 1.0+, we've marked out a space \"the canvas\" for items to write to the page. This means the user always has a very consistent experience, while giving maximum flexibility to plugin authors for laying out their functionality.
+Elgg pages have an overall pageshell, a main layout and several page elements. It's recommended to always use the ``default`` layout as 
+all page elements can be controlled using that layout. 
 
-Think of the canvas area as a big rectangle that you can do what you like in. We've created a couple of standard canvases for you: 
+.. note::
 
-- one column
-- two column
-- content
-- widgets
+	Several of the older (deprecated) layouts are automatically rewritten to the ``default`` layout:
+	
+	- one_column
+	- one_sidebar
+	- two_sidebar
+	- content
 
-are the main ones. You can access these with the function:
+If you're not using the ``default`` layout you can call
+ 
+.. code-block:: php
+
+	$layout_area = elgg_view_layout($layout_name, [
+		'content' => $content,
+		'section' => $section,
+	]);
+
+The different page elements are passed as an ``array`` in the second parameter. The array keys correspond to elements in the layout. 
+The array values contain the html that should be displayed in those areas:
 
 .. code-block:: php
 
-   $canvas_area = elgg_view_layout($canvas_name, array(
-     'content' => $content,
-     'section' => $section
-   ));
-
-The content sections are passed as an ``array`` in the second parameter. The array keys correspond to sections in the layout, the choice of layout will determine which sections to pass. The array values contain the html that should be displayed in those areas. Examples of two common layouts:
-
-.. code-block:: php
-
-   $canvas_area = elgg_view_layout('one_column', array(
-     'content' => $content
-   ));
+	$layout_area = elgg_view_layout('default', [
+		'content' => $content,
+	]);
    
 .. code-block:: php
 
-   $canvas_area = elgg_view_layout('one_sidebar', array(
-     'content' => $content, 
-     'sidebar' => $sidebar
-   ));
+	$layout_area = elgg_view_layout('default', [
+		'content' => $content, 
+		'sidebar' => $sidebar,
+	]);
 
 You can then, ultimately, pass this into the ``elgg_view_page`` function:
 
 .. code-block:: php
 
-   echo elgg_view_page($title, $canvas_area);
+	echo elgg_view_page($title, $layout_area);
 
-You may also have noticed that we've started including a standard title area at the top of each plugin page (or at least, most plugin pages). This is created using the following wrapper function, and should usually be included at the top of the plugin content:
-
-.. code-block:: php
-
-   $start_of_plugin_content = elgg_view_title($title_text);
-
-This will also display any submenu items that exist (unless you set the second, optional parameter to false). So how do you add submenu items?
-
-In your plugin_init function, include the following call:
+If you're using the ``default`` layout you can also pass the array with page elements directly to ``elgg_view_page``:
 
 .. code-block:: php
 
-   if (elgg_get_context() == "your_plugin") {
-      // add a site navigation item
-      $item = new ElggMenuItem('identifier', elgg_echo('your_plugin:link'), $url);
-      elgg_register_menu_item('page', $item);
-   }
+	echo elgg_view_page($title, [
+   		'content' => $content,
+   		'sidebar' => $sidebar,
+	]);
 
-The submenu will then automatically display when your page is rendered. The 'identifier' is a machine name for the link, it should be unique per menu.
+You can control many of the page elements:
+
+.. code-block:: php
+
+	echo elgg_view_page('This is the browser title', [
+		'title' => 'This is the page title',
+		'content' => $content,
+		'sidebar' => false, // no default sidebar
+		'sidebar_alt' => $sidebar_alt, // show an alternate sidebar
+	]);
+
+.. seealso::
+
+	Have a look at the ``page/layouts/default`` view to find out more information about the supported page elements
+ 

@@ -264,47 +264,4 @@ class RouteRegistrationService {
 
 		return $parameters;
 	}
-
-	/**
-	 * Register a function that gets called when the first part of a URL is
-	 * equal to the identifier.
-	 *
-	 * @param string   $identifier The page type to handle
-	 * @param callable $function   Your function name
-	 *
-	 * @return bool Depending on success
-	 * @throws InvalidParameterException
-	 * @deprecated 3.0
-	 */
-	public function registerPageHandler($identifier, $function) {
-		if (!is_callable($function, true)) {
-			return false;
-		}
-
-		$this->register($identifier, [
-			'path' => "/$identifier/{segments}",
-			'handler' => $function,
-			'defaults' => [
-				'segments' => '',
-			],
-			'requirements' => [
-				'segments' => '.+',
-			],
-		]);
-
-		return true;
-	}
-
-	/**
-	 * Unregister a page handler for an identifier
-	 *
-	 * @param string $identifier The page type identifier
-	 *
-	 * @return void
-	 * @deprecated 3.0
-	 */
-	public function unregisterPageHandler($identifier) {
-		$this->unregister($identifier);
-	}
-
 }

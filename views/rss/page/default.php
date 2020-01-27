@@ -2,8 +2,6 @@
 /**
  * Elgg RSS output pageshell
  *
- * @package Elgg.Core
- *
  * @uses $vars['title']      The title of the RSS feed
  * @uses $vars['body']       The items for the RSS feed as a string
  * @uses $vars['descrption'] The description for the RSS feed

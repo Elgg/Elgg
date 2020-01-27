@@ -2,8 +2,6 @@
 /**
  * Elgg notifications plugin group index
  *
- * @package ElggNotifications
- *
  * @uses $user ElggUser
  */
 
@@ -21,18 +19,11 @@ elgg_set_page_owner_guid($user->guid);
 // Set the context to settings
 elgg_set_context('settings');
 
-$title = elgg_echo('notifications:subscriptions:changesettings:groups');
+elgg_push_breadcrumb(elgg_echo('settings'), elgg_generate_url('settings:account', ['username' => $user->username]));
 
-elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/{$user->username}");
-
-$content = elgg_view('notifications/groups', [
-	'user' => $user,
-]);
-
-$layout = elgg_view_layout('one_sidebar', [
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page(elgg_echo('notifications:subscriptions:changesettings:groups'), [
+	'content' => elgg_view('notifications/groups', [
+		'user' => $user,
+	]),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $layout);

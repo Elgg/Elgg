@@ -8,7 +8,6 @@ $blog = get_entity($guid);
 $vars['entity'] = $blog;
 
 elgg_push_entity_breadcrumbs($blog);
-elgg_push_breadcrumb(elgg_echo('edit'));
 
 $revision = elgg_extract('revision', $vars);
 
@@ -25,15 +24,13 @@ if ($revision) {
 }
 
 $body_vars = blog_prepare_form_vars($blog, $revision);
+
 $content = elgg_view_form('blog/save', $vars, $body_vars);
 
 $sidebar = elgg_view('blog/sidebar/revisions', $vars);
 
-$body = elgg_view_layout('default', [
-	'title' => $title,
+echo elgg_view_page($title, [
 	'content' => $content,
 	'sidebar' => $sidebar,
 	'filter_id' => 'blog/edit',
 ]);
-
-echo elgg_view_page($title, $body);

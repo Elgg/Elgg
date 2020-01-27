@@ -5,7 +5,6 @@ namespace Elgg\Cli;
 use Elgg\Cli\CronCommand;
 use Elgg\IntegrationTestCase;
 use Elgg\UnitTestCase;
-use hypeJunction\Twig\App;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 

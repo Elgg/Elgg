@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\UserValidationByEmail\Upgrades\TrackValidationStatus;
+
 return [
 	'actions' => [
 		'uservalidationbyemail/resend_validation' => [
@@ -9,7 +11,7 @@ return [
 	'routes' => [
 		'account:validation:email:confirm' => [
 			'path' => '/uservalidationbyemail/confirm',
-			'resource' => 'uservalidationbyemail/confirm',
+			'controller' => \Elgg\UserValidationByEmail\ConfirmController::class,
 			'walled' => false,
 			'middleware' => [
 				\Elgg\Router\Middleware\SignedRequestGatekeeper::class,
@@ -23,5 +25,8 @@ return [
 				\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
 			],
 		],
+	],
+	'upgrades' => [
+		TrackValidationStatus::class,
 	],
 ];

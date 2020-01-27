@@ -2,9 +2,6 @@
 /**
  * Elgg widgets library.
  * Contains code for handling widgets.
- *
- * @package Elgg.Core
- * @subpackage Widgets
  */
 
 /**
@@ -166,16 +163,6 @@ function _elgg_widgets_widget_urls(\Elgg\Hook $hook) {
 }
 
 /**
- * Function to initialize widgets functionality
- *
- * @return void
- * @internal
- */
-function _elgg_widgets_init() {
-	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_widgets_widget_urls');
-}
-
-/**
  * Gets a list of events to create default widgets for and
  * register menu items for default widgets with the admin section.
  *
@@ -330,6 +317,5 @@ function _elgg_default_widgets_permissions_override(\Elgg\Hook $hook) {
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
 return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_widgets_init');
 	$events->registerHandler('ready', 'system', '_elgg_default_widgets_init');
 };

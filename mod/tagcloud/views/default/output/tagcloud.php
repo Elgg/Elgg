@@ -3,9 +3,6 @@
  * Elgg tagcloud
  * Displays a tagcloud. Accepts all output/tag options
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['tagcloud'] An array of stdClass objects with two elements: 'tag' (the text of the tag) and 'total' (the number of elements with this tag)
  * @uses $vars['value'] Sames as tagcloud
  */

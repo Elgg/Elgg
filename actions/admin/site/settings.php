@@ -5,9 +5,6 @@
  * Basic site settings are saved as metadata on the site object,
  * with the exception of the default language, which is saved in
  * the config table.
- *
- * @package Elgg.Core
- * @subpackage Administration.Site
  */
 
 $site = elgg_get_site_entity();
@@ -30,11 +27,25 @@ if (!$site->save()) {
 $allow_registration = ('on' === get_input('allow_registration', false));
 elgg_save_config('allow_registration', $allow_registration);
 
+// require admin validation for new users?
+$require_admin_validation = ('on' === get_input('require_admin_validation', false));
+elgg_save_config('require_admin_validation', $require_admin_validation);
+
+// notify admins about pending validation
+$admin_validation_notification = get_input('admin_validation_notification');
+if (empty($admin_validation_notification)) {
+	elgg_remove_config('admin_validation_notification');
+} else {
+	elgg_save_config('admin_validation_notification', $admin_validation_notification);
+}
+
 // setup walled garden
 $walled_garden = ('on' === get_input('walled_garden', false));
 elgg_save_config('walled_garden', $walled_garden);
 
 elgg_save_config('language', get_input('language'));
+
+elgg_save_config('allowed_languages', implode(',', get_input('allowed_languages', [])));
 
 $default_limit = (int) get_input('default_limit');
 if ($default_limit < 1) {
@@ -42,6 +53,9 @@ if ($default_limit < 1) {
 }
 
 elgg_save_config('default_limit', $default_limit);
+
+elgg_save_config('comment_box_collapses', (bool) get_input('comment_box_collapses'));
+elgg_save_config('comments_latest_first', (bool) get_input('comments_latest_first'));
 
 elgg_save_config('can_change_username', 'on' === get_input('can_change_username'));
 

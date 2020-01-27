@@ -438,13 +438,14 @@ class EntityTable extends DbEntityTable {
 		// Disable
 		$sql = "
 			UPDATE {$dbprefix}entities
-			SET enabled = 'no'
-			WHERE guid = :guid
+			SET enabled = :qb1
+			WHERE guid = :qb2
 		";
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':guid' => $row->guid,
+				':qb1' => 'no',
+				':qb2' => $row->guid,
 			],
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
@@ -463,13 +464,14 @@ class EntityTable extends DbEntityTable {
 		// Enable
 		$sql = "
 			UPDATE {$dbprefix}entities
-			SET enabled = 'yes'
-			WHERE guid = :guid
+			SET enabled = :qb1
+			WHERE guid = :qb2
 		";
 		$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
 			'sql' => $sql,
 			'params' => [
-				':guid' => $row->guid,
+				':qb1' => 'yes',
+				':qb2' => $row->guid,
 			],
 			'results' => function () use ($row) {
 				if (isset($this->rows[$row->guid])) {
@@ -550,11 +552,12 @@ class EntityTable extends DbEntityTable {
 		// and not in the relationships table mock
 		// @todo: figure out a way to remove this from relationships table
 		foreach (['guid_one', 'guid_two'] as $column) {
-			$sql = "DELETE er FROM {$dbprefix}entity_relationships AS er
-				WHERE $column = $row->guid";
-
+			$delete = Delete::fromTable('entity_relationships');
+			$delete->where($delete->compare($column, '=', $row->guid, ELGG_VALUE_GUID));
+			
 			$this->query_specs[$row->guid][] = $this->db->addQuerySpec([
-				'sql' => $sql,
+				'sql' => $delete->getSQL(),
+				'params' => $delete->getParameters(),
 				'row_count' => 0,
 				'times' => 1,
 			]);

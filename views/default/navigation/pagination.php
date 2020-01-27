@@ -2,9 +2,6 @@
 /**
  * Elgg pagination
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses int    $vars['offset']       The offset in the list
  * @uses int    $vars['limit']        Number of items per page
  * @uses int    $vars['count']        Number of items in list

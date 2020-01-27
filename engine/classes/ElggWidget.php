@@ -1,12 +1,8 @@
 <?php
-
 /**
  * \ElggWidget
  *
  * Stores metadata in private settings rather than as \ElggMetadata
- *
- * @package    Elgg.Core
- * @subpackage Widgets
  *
  * @property-read string $handler internal, do not use
  * @property-read string $column  internal, do not use
@@ -119,18 +115,6 @@ class ElggWidget extends \ElggObject {
 	 */
 	public function getContext() {
 		return (string) $this->context;
-	}
-
-	/**
-	 * Get the title of the widget
-	 *
-	 * @return string
-	 * @since 1.8.0
-	 * @deprecated 3.0 use \ElggWidget::getDisplayName()
-	 */
-	public function getTitle() {
-		_elgg_services()->deprecation->sendNotice(__METHOD__ . ' is deprecated. Use \ElggWidget::getDisplayName() instead', '3.0');
-		return $this->getDisplayName();
 	}
 	
 	/**

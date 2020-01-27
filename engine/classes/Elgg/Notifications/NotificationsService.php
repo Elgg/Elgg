@@ -22,9 +22,7 @@ use RuntimeException;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Notifications
- * @since      1.9.0
+ * @since 1.9.0
  */
 class NotificationsService {
 
@@ -126,18 +124,31 @@ class NotificationsService {
 	 *
 	 * @param string $type    'object', 'user', 'group', 'site'
 	 * @param string $subtype The type of the entity
+	 * @param array  $actions The notification action to unregister, leave empty for all actions
 	 *
 	 * @return bool
 	 *
 	 * @see elgg_unregister_notification_event()
 	 */
-	public function unregisterEvent($type, $subtype) {
+	public function unregisterEvent($type, $subtype, array $actions = []) {
 
 		if (!isset($this->events[$type]) || !isset($this->events[$type][$subtype])) {
 			return false;
 		}
 
-		unset($this->events[$type][$subtype]);
+		if (empty($actions)) {
+			// unregister all actions
+			unset($this->events[$type][$subtype]);
+		} else {
+			// unregister specific action(s)
+			$remaining = array_diff($this->events[$type][$subtype], $actions);
+			if (empty($remaining)) {
+				// nothing remains
+				unset($this->events[$type][$subtype]);
+			} else {
+				$this->events[$type][$subtype] = array_values($remaining);
+			}
+		}
 
 		return true;
 	}

@@ -9,13 +9,15 @@ $widget = elgg_extract('entity', $vars);
 $owner = $widget->getOwnerEntity();
 
 if (elgg_is_logged_in()) {
-	echo elgg_view_form('messageboard/add', ['name' => 'elgg-messageboard']);
+	echo elgg_view_form('messageboard/add', [
+		'name' => 'elgg-messageboard',
+	]);
 }
 
 $num_display = (int) $widget->num_display ?: 4;
 
 echo elgg_list_annotations([
-	'annotations_name' => 'messageboard',
+	'annotation_name' => 'messageboard',
 	'guid' => $owner->guid,
 	'limit' => $num_display,
 	'pagination' => false,

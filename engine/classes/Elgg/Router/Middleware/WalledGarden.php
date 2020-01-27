@@ -71,23 +71,11 @@ class WalledGarden {
 
 		// default public pages
 		$defaults = [
-			'walled_garden/.*',
-			'action/.*',
-			'login',
-			'register',
-			'forgotpassword',
-			'changepassword',
-			'refresh_token',
 			'ajax/view/languages.js',
-			'upgrade\.php',
 			'css/.*',
 			'js/.*',
 			'cache/[0-9]+/\w+/.*',
-			'cron/.*',
-			'services/.*',
 			'serve-file/.*',
-			'robots.txt',
-			'favicon.ico',
 		];
 
 		$params = [

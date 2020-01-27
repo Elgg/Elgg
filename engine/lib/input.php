@@ -2,9 +2,6 @@
 /**
  * Parameter input functions.
  * This file contains functions for getting input from get/post variables.
- *
- * @package Elgg.Core
- * @subpackage Input
  */
 
 /**
@@ -230,6 +227,10 @@ function _elgg_htmlawed_filter_tags(\Elgg\Hook $hook) {
 		// remove comments/CDATA instead of converting to text
 		'comment' => 1,
 		'cdata' => 1,
+		
+		// do not check for unique ids as the full input stack could be checked multiple times
+		// @see https://github.com/Elgg/Elgg/issues/12934
+		'unique_ids' => 0,
 
 		'deny_attribute' => 'class, on*, formaction',
 		'hook_tag' => '_elgg_htmlawed_tag_post_processor',
@@ -361,6 +362,7 @@ function _elgg_input_init() {
 	elgg_register_plugin_hook_handler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
 	
 	elgg_register_plugin_hook_handler('view_vars', 'input/password', '_elgg_disable_password_autocomplete');
+	elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
 }
 
 /**

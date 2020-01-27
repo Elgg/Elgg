@@ -118,7 +118,7 @@ class ElggSession {
 	 * @return string
 	 * @since 1.9
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->storage->getId();
 	}
 
@@ -297,11 +297,6 @@ class ElggSession {
 	 * @return bool
 	 */
 	public function getDisabledEntityVisibility() {
-		global $ENTITY_SHOW_HIDDEN_OVERRIDE;
-		if (isset($ENTITY_SHOW_HIDDEN_OVERRIDE)) {
-			return $ENTITY_SHOW_HIDDEN_OVERRIDE;
-		}
-
 		return $this->show_disabled_entities;
 	}
 
@@ -313,9 +308,6 @@ class ElggSession {
 	 * @return bool Previous setting
 	 */
 	public function setDisabledEntityVisibility($show = true) {
-		global $ENTITY_SHOW_HIDDEN_OVERRIDE;
-		$ENTITY_SHOW_HIDDEN_OVERRIDE = $show;
-
 		$prev = $this->show_disabled_entities;
 		$this->show_disabled_entities = $show;
 

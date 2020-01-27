@@ -15,7 +15,7 @@ if (empty($username) || empty($password)) {
 }
 
 // check if logging in with email address
-if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
+if (elgg_strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
 	$username = $users[0]->username;
 }
 

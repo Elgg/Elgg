@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg page handler functions
- *
- * @package    Elgg.Core
- * @subpackage Routing
  */
 
 /**
@@ -15,10 +12,6 @@
  *
  * Wildcard requirements for common named variables such as 'guid' and 'username'
  * will be set automatically.
- *
- * @warning If you are registering a route in the path of a route registered by
- *          deprecated {@link elgg_register_page_handler}, your registration must
- *          preceed the call to elgg_register_page_handler() in the boot sequence.
  *
  * @param string $name   Unique route name
  *                       This name can later be used to generate route URLs
@@ -206,7 +199,7 @@ function elgg_ajax_gatekeeper() {
  *
  * @return \Elgg\Http\OkResponse
  */
-function elgg_ok_response($content = '', $message = '', $forward_url = null, $status_code = ELGG_HTTP_OK) {
+function elgg_ok_response($content = '', $message = '', $forward_url = null, int $status_code = ELGG_HTTP_OK) {
 	if ($message) {
 		system_message($message);
 	}
@@ -229,9 +222,10 @@ function elgg_ok_response($content = '', $message = '', $forward_url = null, $st
  *                            this defaults to 200. Note that the Router and AJAX API will
  *                            treat these responses as error in spite of the HTTP code assigned
  *
+ * @todo change default status_code after AJAX rework
  * @return \Elgg\Http\ErrorResponse
  */
-function elgg_error_response($error = '', $forward_url = REFERRER, $status_code = ELGG_HTTP_OK) {
+function elgg_error_response($error = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_OK) {
 	if ($error) {
 		register_error($error);
 	}
@@ -253,6 +247,42 @@ function elgg_error_response($error = '', $forward_url = REFERRER, $status_code 
  * @return \Elgg\Http\RedirectResponse
  * @throws \InvalidArgumentException
  */
-function elgg_redirect_response($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
+function elgg_redirect_response($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND) {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
+}
+
+/**
+ * /cron handler
+ *
+ * @param array $segments URL segments
+ *
+ * @return bool
+ * @internal
+ */
+function _elgg_cron_page_handler($segments) {
+	
+	if (_elgg_config()->security_protect_cron) {
+		elgg_signed_request_gatekeeper();
+	}
+	
+	$interval = elgg_strtolower(array_shift($segments));
+	
+	$intervals = null;
+	if ($interval !== 'run') {
+		$intervals = [$interval];
+	}
+	
+	$output = '';
+	try {
+		$force = (bool) get_input('force');
+		$jobs = _elgg_services()->cron->run($intervals, $force);
+		foreach ($jobs as $job) {
+			$output .= $job->getOutput() . PHP_EOL;
+		}
+	} catch (CronException $ex) {
+		$output .= "Exception: {$ex->getMessage()}";
+	}
+	
+	echo nl2br($output);
+	return true;
 }

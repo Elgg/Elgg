@@ -1,7 +1,6 @@
 <?php
 
-elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
-elgg_push_breadcrumb(elgg_echo('search'));
+elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 
 $tag = get_input('tag');
 $display_query = _elgg_get_display_query($tag);
@@ -18,11 +17,7 @@ $content = elgg_list_entities([
 $sidebar = elgg_view('groups/sidebar/find');
 $sidebar .= elgg_view('groups/sidebar/featured');
 
-$body = elgg_view_layout('content', [
+echo elgg_view_page($title, [
 	'content' => $content,
 	'sidebar' => $sidebar,
-	'filter' => false,
-	'title' => $title,
 ]);
-
-echo elgg_view_page($title, $body);

@@ -1,11 +1,8 @@
 <?php
-
 /**
  * Group edit form
  *
  * This view contains the group profile field configuration
- *
- * @package ElggGroups
  */
 
 $name = elgg_extract('name', $vars);

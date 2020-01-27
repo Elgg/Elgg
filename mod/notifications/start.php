@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg notifications plugin
- *
- * @package ElggNotifications
  */
 
 /**

@@ -52,11 +52,6 @@ class LocatorUnitTest extends \Elgg\UnitTestCase {
 		});
 	}
 
-	public function testCanGetExistingUpgrade() {
-		// Can be implemented once PluginsSettingsTable::getEntities() is mocked
-		$this->markTestIncomplete();
-	}
-
 	public function testIgnoresNonRequiredUpgrade() {
 		$class = NonRequiredTestBatch::class;
 

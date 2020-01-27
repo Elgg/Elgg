@@ -6,7 +6,7 @@
 $username = get_input('username');
 
 // allow email addresses
-if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
+if (elgg_strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
 	$username = $users[0]->username;
 }
 

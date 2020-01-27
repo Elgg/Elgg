@@ -5,15 +5,16 @@
 # 
 # Translators:
 # Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019
+# Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-24 16:46+0200\n"
+"POT-Creation-Date: 2020-01-23 11:15+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019\n"
+"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -31,7 +32,7 @@ msgstr "Sauvegarde et Restauration"
 #: ../../admin/plugins.rst:8 ../../admin/security.rst:8
 #: ../../admin/upgrading.rst:11 ../../admin/uservalidation.rst:8
 msgid "Contents"
-msgstr ""
+msgstr "Contenu"
 
 #: ../../admin/backup-restore.rst:9 ../../admin/duplicate-installation.rst:9
 msgid "Introduction"
@@ -663,7 +664,7 @@ msgstr ""
 " pour reproduire les informations de la base de données que vous venez de "
 "créer."
 
-#: ../../admin/backup-restore.rst:228
+#: ../../admin/backup-restore.rst:231
 msgid ""
 "Upload the ``settings.php`` file back to the new host - overwriting the "
 "existing file."
@@ -671,7 +672,7 @@ msgstr ""
 "Chargez à nouveau le fichier ``settings.php`` vers le nouvel hôte - en "
 "remplaçant le fichier existant."
 
-#: ../../admin/backup-restore.rst:230
+#: ../../admin/backup-restore.rst:233
 msgid ""
 "Open the phpMyAdmin tool on the new host from the CPanel. Select the "
 "``usery_elgg`` database on the left and click the SQL tab on the top of the "
@@ -682,25 +683,25 @@ msgstr ""
 " haut de la page. Exécutez les requêtes SQL suivantes sur la base de données"
 " ``usery_elgg`` :"
 
-#: ../../admin/backup-restore.rst:232
-#: ../../admin/duplicate-installation.rst:171
+#: ../../admin/backup-restore.rst:235
+#: ../../admin/duplicate-installation.rst:175
 msgid "Change the installation path"
 msgstr "Modifiez le chemin d'installation"
 
-#: ../../admin/backup-restore.rst:238
-#: ../../admin/duplicate-installation.rst:178
+#: ../../admin/backup-restore.rst:241
+#: ../../admin/duplicate-installation.rst:182
 msgid "Change the data directory"
 msgstr "Modifiez le répertoire de données"
 
-#: ../../admin/backup-restore.rst:244
+#: ../../admin/backup-restore.rst:247
 msgid "Change the filestore data directory"
 msgstr "Modifiez le répertoire de données de stockage des fichiers"
 
-#: ../../admin/backup-restore.rst:251
+#: ../../admin/backup-restore.rst:254
 msgid "Finalizing the new installation"
 msgstr "Finaliser la nouvelle installation"
 
-#: ../../admin/backup-restore.rst:253
+#: ../../admin/backup-restore.rst:256
 msgid ""
 "Run the upgrade script by visiting the following URL: "
 "``http://mynewdomain.com/upgrade.php`` . Do this step twice - back to back."
@@ -709,7 +710,7 @@ msgstr ""
 "``http://mynewdomain.com/upgrade.php`` . Effectuez cette étape deux fois - "
 "depuis le début."
 
-#: ../../admin/backup-restore.rst:255
+#: ../../admin/backup-restore.rst:258
 msgid ""
 "Update your DNS records so that your host name resolves to the new host's IP"
 " address if this is a permanent move."
@@ -718,11 +719,11 @@ msgstr ""
 "résolve toujours vers l'adresse IP du nouvel hôte si c'est un déplacement "
 "permanent."
 
-#: ../../admin/backup-restore.rst:258
+#: ../../admin/backup-restore.rst:261
 msgid "Congratulations!"
 msgstr "Félicitations !"
 
-#: ../../admin/backup-restore.rst:260
+#: ../../admin/backup-restore.rst:263
 msgid ""
 "If you followed the steps outlined here you should now have a fully "
 "functional copy of your primary Elgg installation."
@@ -730,8 +731,8 @@ msgstr ""
 "Si vous avez suivi les étapes soulignées ici vous devriez maintenant avoir "
 "une copie totalement fonctionnelle de votre installation Elgg d'origine."
 
-#: ../../admin/backup-restore.rst:263
-#: ../../admin/duplicate-installation.rst:227
+#: ../../admin/backup-restore.rst:266
+#: ../../admin/duplicate-installation.rst:231
 msgid "Related"
 msgstr "Connexe"
 
@@ -1231,24 +1232,24 @@ msgstr ""
 "regarder dans ``/var/www/elgg_test/elgg-config/settings.php`` et trouver les"
 " lignes qui ressemblent à ceci :"
 
-#: ../../admin/duplicate-installation.rst:125
+#: ../../admin/duplicate-installation.rst:127
 msgid "We need to change these lines to match our new installation:"
 msgstr ""
 "Nous devons modifier ces lignes pour qu'elles correspondent à notre nouvelle"
 " installation :"
 
-#: ../../admin/duplicate-installation.rst:151
+#: ../../admin/duplicate-installation.rst:155
 msgid ""
 "Notice the ``$CONFIG->dbname`` has changed to reflect our new database."
 msgstr ""
 "Notez que ``$CONFIG->dbname`` a changé pour correspondre à notre nouvelle "
 "base de données."
 
-#: ../../admin/duplicate-installation.rst:154
+#: ../../admin/duplicate-installation.rst:158
 msgid "Copy Elgg Database"
 msgstr "Copier la base de données d'Elgg"
 
-#: ../../admin/duplicate-installation.rst:156
+#: ../../admin/duplicate-installation.rst:160
 msgid ""
 "Now the database must be copied from ``elgg_production`` to ``elgg_test``. "
 "See your favorite MySQL manager's documentation for how to make a duplicate "
@@ -1263,7 +1264,7 @@ msgstr ""
 "fichier, créer la nouvelle base de données, puis importer les tables que "
 "vous avez précédemment exportées."
 
-#: ../../admin/duplicate-installation.rst:160
+#: ../../admin/duplicate-installation.rst:164
 msgid ""
 "You have two options on updating the values in the database. You could "
 "change the values in the export file or you could import the file and change"
@@ -1282,11 +1283,11 @@ msgstr ""
 " pages avec le plugin bookmarks, les marque-pages vont pointer vers l'ancien"
 " site tant que vous n'aurez pas mis à jour leurs URLs."
 
-#: ../../admin/duplicate-installation.rst:166
+#: ../../admin/duplicate-installation.rst:170
 msgid "Database Entries"
 msgstr "Entrées de la base de données"
 
-#: ../../admin/duplicate-installation.rst:168
+#: ../../admin/duplicate-installation.rst:172
 msgid ""
 "We must now change 4 entries in the database. This is easily accomplished "
 "with 4 simple SQL commands:"
@@ -1294,11 +1295,11 @@ msgstr ""
 "Nous devons maintenant modifier 4 entrées dans la base de données. Ceci peut"
 " être fait aisément en exécutant 4 commandes SQL simples :"
 
-#: ../../admin/duplicate-installation.rst:185
+#: ../../admin/duplicate-installation.rst:189
 msgid "Check .htaccess"
 msgstr "Vérifier le fichier .htaccess"
 
-#: ../../admin/duplicate-installation.rst:187
+#: ../../admin/duplicate-installation.rst:191
 msgid ""
 "If you have made changes to .htaccess that modify any paths, make sure you "
 "update them in the test installation."
@@ -1307,11 +1308,11 @@ msgstr ""
 "des chemins, assurez-vous que vous les mettez à jour dans l'installation de "
 "test."
 
-#: ../../admin/duplicate-installation.rst:190
+#: ../../admin/duplicate-installation.rst:194
 msgid "Update Webserver Config"
 msgstr "Mettez à jour la configuration du serveur web"
 
-#: ../../admin/duplicate-installation.rst:192
+#: ../../admin/duplicate-installation.rst:196
 msgid ""
 "For this example, you must edit the Apache config to enable a subdomain with"
 " a document root of ``/var/www/elgg_test/``. If you plan to install into a "
@@ -1322,7 +1323,7 @@ msgstr ""
 "``/var/www/elgg_test/``. Si vous prévoyez d'installer dans un sous-"
 "répertoire de votre racine des documents, cette étape n'est pas nécessaire."
 
-#: ../../admin/duplicate-installation.rst:195
+#: ../../admin/duplicate-installation.rst:199
 msgid ""
 "If you're using Nginx, you need to update server config to match new paths "
 "based on ``install/config/nginx.dist``."
@@ -1331,11 +1332,11 @@ msgstr ""
 "serveur pour correspondre aux nouveaux chemins basés sur "
 "``install/config/nginx.dist``."
 
-#: ../../admin/duplicate-installation.rst:198
+#: ../../admin/duplicate-installation.rst:202
 msgid "Run upgrade.php"
 msgstr "Exécutez upgrade.php"
 
-#: ../../admin/duplicate-installation.rst:200
+#: ../../admin/duplicate-installation.rst:204
 msgid ""
 "To regenerate cached data, make sure to run "
 "``http://test.myelgg.org/upgrade.php``"
@@ -1343,11 +1344,11 @@ msgstr ""
 "Pour régénérer les données mises en cache, assurez-vous d'exécuter "
 "``http://test.myelgg.org/upgrade.php``"
 
-#: ../../admin/duplicate-installation.rst:203
+#: ../../admin/duplicate-installation.rst:207
 msgid "Tips"
 msgstr "Astuces"
 
-#: ../../admin/duplicate-installation.rst:205
+#: ../../admin/duplicate-installation.rst:209
 msgid ""
 "It is a good idea to keep a test server around to experiment with installing"
 " new mods and doing development work. If you automate restorations to the "
@@ -1362,7 +1363,7 @@ msgstr ""
 " du fichier ``elgg_test/elgg-config/settings.php`` va permettre de réécrire "
 "sans couture les entrées de la base de données MySQL."
 
-#: ../../admin/duplicate-installation.rst:231
+#: ../../admin/duplicate-installation.rst:235
 msgid ":doc:`backup-restore`"
 msgstr ":doc:`backup-restore`"
 
@@ -2924,10 +2925,22 @@ msgstr ""
 " il doit également donner son mot de passe actuel."
 
 #: ../../admin/security.rst:35
-msgid "Session bound icons"
+msgid "Email address change requires confirmation"
 msgstr ""
 
 #: ../../admin/security.rst:37
+msgid ""
+"When a user wishes to change their email address associated with their "
+"account, they need to confirm the new email address. This is done by sending"
+" an email to the new address with a validation link. After clicking this "
+"link the new email address will be used."
+msgstr ""
+
+#: ../../admin/security.rst:41
+msgid "Session bound icons"
+msgstr ""
+
+#: ../../admin/security.rst:43
 msgid ""
 "Entity icons can be session bound by default. This means the URLs generated "
 "also contain information about the current session. Having icons session "
@@ -2935,11 +2948,11 @@ msgid ""
 "that caching of these urls will only help the active session."
 msgstr ""
 
-#: ../../admin/security.rst:41
+#: ../../admin/security.rst:47
 msgid "Notification to site administrators"
 msgstr "Notification aux administrateurs du site"
 
-#: ../../admin/security.rst:43
+#: ../../admin/security.rst:49
 msgid ""
 "When a new site administrator is added or when a site administrator is "
 "removed all the site administrators get a notification about this action."
@@ -2948,15 +2961,15 @@ msgstr ""
 " du site est retiré tous les administrateurs du site reçoivent une "
 "notification à ce sujet."
 
-#: ../../admin/security.rst:46
+#: ../../admin/security.rst:52
 msgid "Notifications to user"
 msgstr "Notifications à l'utilisateur"
 
-#: ../../admin/security.rst:49
+#: ../../admin/security.rst:55
 msgid "Site administrator"
 msgstr "Administrateur du site"
 
-#: ../../admin/security.rst:51
+#: ../../admin/security.rst:57
 msgid ""
 "When the site administrator role is added to or removed from the account, "
 "send a notification to the user whos account this is affecting."
@@ -2964,17 +2977,118 @@ msgstr ""
 "Quand le rôle d'administrateur du site est ajouté ou retiré à un compte, "
 "envoie une notification à l'utilisateur dont le compte est affecté."
 
-#: ../../admin/security.rst:54
+#: ../../admin/security.rst:60
 msgid "(Un)ban"
 msgstr "Bannir/Réintégrer"
 
-#: ../../admin/security.rst:56
+#: ../../admin/security.rst:62
 msgid ""
 "When the account of a user gets banned or unbanned, let the affected user "
 "know about this action."
 msgstr ""
 "Quand le compte d'un utilisateur est banni ou réintégré, permet à "
 "l'utilisateur affecté d'être informé de cette action."
+
+#: ../../admin/security.rst:65
+msgid "Minimal username length"
+msgstr ""
+
+#: ../../admin/security.rst:67
+msgid ""
+"You can configure the minimal length the username should have upon "
+"registration of a user."
+msgstr ""
+
+#: ../../admin/security.rst:70
+msgid "Minimal password requirements"
+msgstr ""
+
+#: ../../admin/security.rst:72
+msgid "You can configure several requirements for new passwords of the users"
+msgstr ""
+
+#: ../../admin/security.rst:74
+msgid "**length**: the password should be at least x characters long"
+msgstr ""
+
+#: ../../admin/security.rst:75
+msgid ""
+"**lower case**: minimal number of lower case (a-z) characters in the "
+"password"
+msgstr ""
+
+#: ../../admin/security.rst:76
+msgid ""
+"**upper case**: minimal number of upper case (A-Z) characters in the "
+"password"
+msgstr ""
+
+#: ../../admin/security.rst:77
+msgid ""
+"**numbers**: minimal number of numbers (0-9) characters in the password"
+msgstr ""
+
+#: ../../admin/security.rst:78
+msgid ""
+"**specials**: minimal number of special (like !@#$%^&*(), etc.) characters "
+"in the password"
+msgstr ""
+
+#: ../../admin/spam.rst:2
+msgid "Spam"
+msgstr ""
+
+#: ../../admin/spam.rst:4
+msgid "Keep spam under control."
+msgstr ""
+
+#: ../../admin/spam.rst:6
+msgid ""
+"Spam is a very common problem that admins need to deal with and which we aim"
+" to improve in core, but there are some actions site admins can take to "
+"mitigate the problem."
+msgstr ""
+
+#: ../../admin/spam.rst:10
+msgid "Install an anti-spam plugin"
+msgstr ""
+
+#: ../../admin/spam.rst:11
+msgid "There are several available on the community"
+msgstr ""
+
+#: ../../admin/spam.rst:13
+msgid "http://community.elgg.org/plugins/search?f[c][]=spam&sb=Search"
+msgstr ""
+
+#: ../../admin/spam.rst:16
+msgid "Change the registration url"
+msgstr ""
+
+#: ../../admin/spam.rst:17
+msgid ""
+"Some have said they have good success changing the registration URL, since "
+"the spammers are naive bots and can no longer find where to create the fake "
+"accounts."
+msgstr ""
+
+#: ../../admin/spam.rst:22
+msgid "Disable open registration"
+msgstr ""
+
+#: ../../admin/spam.rst:23
+msgid ""
+"If the flow of registrations is low enough, you can vet all users that come "
+"in to keep the quality of interaction high."
+msgstr ""
+
+#: ../../admin/spam.rst:27
+msgid "Contribute to anti-spam measures in core"
+msgstr ""
+
+#: ../../admin/spam.rst:29
+msgid "https://github.com/Elgg/Elgg/issues?labels=spam&state=open"
+msgstr ""
 
 #: ../../admin/upgrading.rst:2
 msgid "Upgrading Elgg"
@@ -3134,17 +3248,24 @@ msgstr ""
 "Si vous aviez installé votre projet 2.3 avec composer, vous pouvez suivre la"
 " séquence suivante :"
 
-#: ../../admin/upgrading.rst:91 ../../admin/upgrading.rst:111
+#: ../../admin/upgrading.rst:91 ../../admin/upgrading.rst:116
 msgid "**Back up your database, data directory, and code**"
 msgstr ""
 "**Sauvegardez votre base de données, votre répertoire de données, et le "
 "code**"
 
-#: ../../admin/upgrading.rst:105
+#: ../../admin/upgrading.rst:106
+msgid ""
+"In some cases the command line upgrade will fail because some database "
+"schema changes need to be applied first. In that case you need to execute "
+"the :ref:`Phinx migrations <contribute/database#execute-migration>` manually"
+msgstr ""
+
+#: ../../admin/upgrading.rst:110
 msgid "3b. Manual Upgrade (legacy approach)"
 msgstr "3b. Mise à niveau manuelle (approche traditionnelle)"
 
-#: ../../admin/upgrading.rst:107
+#: ../../admin/upgrading.rst:112
 msgid ""
 "Manual upgrades are a major undertaking for site admins. We discourage you "
 "from maintaining an Elgg installation using ZIP dist packages. Save yourself"
@@ -3159,19 +3280,19 @@ msgstr ""
 "``git``. Cette tâche sera également plus complexe si vous utilisez des "
 "plugins tierce-partie et/ou si vous avez modifié les fichiers du noyau !"
 
-#: ../../admin/upgrading.rst:112
+#: ../../admin/upgrading.rst:117
 msgid "Log in as an admin to your site"
 msgstr "Identifiez-vous sur votre site en tant qu'administrateur"
 
-#: ../../admin/upgrading.rst:113
+#: ../../admin/upgrading.rst:118
 msgid "Download the new version of Elgg from http://elgg.org"
 msgstr "Téléchargez la nouvelle version de Elgg depuis http://elgg.org"
 
-#: ../../admin/upgrading.rst:116
+#: ../../admin/upgrading.rst:121
 msgid "Update the files"
 msgstr "Mettez à jour les fichiers"
 
-#: ../../admin/upgrading.rst:115
+#: ../../admin/upgrading.rst:120
 msgid ""
 "If upgrading to a major version, you need to overwrite all core files and "
 "remove any files that were removed from Elgg core, as they may interfere "
@@ -3182,7 +3303,7 @@ msgstr ""
 "noyau d'Elgg, car ils peuvent interférer avec le bon fonctionnement de votre"
 " site."
 
-#: ../../admin/upgrading.rst:117
+#: ../../admin/upgrading.rst:122
 msgid ""
 "If upgrading to a minor version or patching, you need to overwrite all core "
 "files."
@@ -3190,18 +3311,18 @@ msgstr ""
 "Si vous mettez à jour vers une version mineure ou un patch, vous devez "
 "remplacer tous les fichiers du code."
 
-#: ../../admin/upgrading.rst:119
+#: ../../admin/upgrading.rst:124
 msgid "Merge any new changes to the rewrite rules"
 msgstr ""
 "Fusionnez tous les nouveaux changements des règles de réécriture (rewrite "
 "rules)"
 
-#: ../../admin/upgrading.rst:119
+#: ../../admin/upgrading.rst:124
 msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 "Pour Apache depuis ``install/config/htaccess.dist`` vers ``.htaccess``"
 
-#: ../../admin/upgrading.rst:120
+#: ../../admin/upgrading.rst:125
 msgid ""
 "For Nginx from ``install/config/nginx.dist`` into your server configuration "
 "(usually inside ``/etc/nginx/sites-enabled``)"
@@ -3209,18 +3330,18 @@ msgstr ""
 "Pour Nginx depuis ``install/config/nginx.dist`` vers la configuration de "
 "votre serveur (habituellement dans ``/etc/nginx/sites-enabled``)"
 
-#: ../../admin/upgrading.rst:121
+#: ../../admin/upgrading.rst:126
 msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr "Visitez http://your-elgg-site.com/upgrade.php"
 
-#: ../../admin/upgrading.rst:122
+#: ../../admin/upgrading.rst:127
 msgid ""
 "Execute asynchronous upgrades at http://your-elgg-site.com/admin/upgrades"
 msgstr ""
 "Exécutez les mises à niveau asynchrones via http://your-elgg-"
 "site.com/admin/upgrades"
 
-#: ../../admin/upgrading.rst:126
+#: ../../admin/upgrading.rst:131
 msgid ""
 "Any modifications should have been written within plugins, so that they are "
 "not lost on overwriting. If this is not the case, take care to maintain your"
@@ -3230,7 +3351,7 @@ msgstr ""
 "qu'elles ne soient pas perdues lors de l'écrasement des fichiers. Si ce "
 "n'est pas le cas, prenez soin de maintenir vos modifications."
 
-#: ../../admin/upgrading.rst:131
+#: ../../admin/upgrading.rst:136
 msgid ""
 "If you are unable to access ``upgrade.php`` script and receive an error, add"
 " ``$CONFIG->security_protect_upgrade = false;`` to your ``settings.php`` and"
@@ -3241,7 +3362,7 @@ msgstr ""
 "ficher ``settings.php`` et supprimez-le après avoir terminé toutes les "
 "étapes de l'installation."
 
-#: ../../admin/upgrading.rst:136
+#: ../../admin/upgrading.rst:141
 msgid ""
 "If you encounter issues with plugins during the upgrade, add an empty file "
 "called ``disabled`` in your ``/mod/`` directory. This will disable the "
@@ -3254,7 +3375,7 @@ msgstr ""
 "mise à niveau du noyau. Vous pouvez ensuite gérer les mises à niveau de "
 "chacun des plugins l'un après l'autre."
 
-#: ../../admin/upgrading.rst:140
+#: ../../admin/upgrading.rst:145
 msgid ""
 "If you have installed Elgg using a dist package but would now like to switch"
 " to composer:"
@@ -3262,15 +3383,15 @@ msgstr ""
 "Si vous avez installé Elgg en utilisant une archive d'installation mais "
 "souhaitez maintenant basculer vers composer : "
 
-#: ../../admin/upgrading.rst:142
+#: ../../admin/upgrading.rst:147
 msgid "Upgrade your current installation using Manual Upgrade method"
 msgstr "Mettez à niveau votre installation en utilisant la Méthode manuelle"
 
-#: ../../admin/upgrading.rst:143
+#: ../../admin/upgrading.rst:148
 msgid "Move your codebase to a temporary location"
 msgstr "Déplacez votre code vers un emplacement provisoire"
 
-#: ../../admin/upgrading.rst:144
+#: ../../admin/upgrading.rst:149
 msgid ""
 "Create a new composer project using Elgg's starter project following "
 ":doc:`installation instructions </intro/install>` in the root directory of "
@@ -3280,20 +3401,20 @@ msgstr ""
 " suivant les  :doc:`instruction d'installation </intro/install>` dans le "
 "répertoire racine de votre installation actuelle"
 
-#: ../../admin/upgrading.rst:145
+#: ../../admin/upgrading.rst:150
 msgid ""
 "Copy third-party plugins from your old installation into ``/mod`` directory"
 msgstr ""
 "Copiez les plugins tierce-partie depuis votre ancienne installation vers le "
 "répertoire ``/mod``"
 
-#: ../../admin/upgrading.rst:146
+#: ../../admin/upgrading.rst:151
 msgid "Run Elgg's installer using your browser or ``elgg-cli`` tool"
 msgstr ""
 "Exécutez l'installateur de Elgg en utilisant votre navigateur ou l'outil "
 "``elgg-cli``"
 
-#: ../../admin/upgrading.rst:147
+#: ../../admin/upgrading.rst:152
 msgid ""
 "When you reach the database step, provide the same credentials you have used"
 " for manual installation, Elgg will understand that is's an existing "
@@ -3304,22 +3425,22 @@ msgstr ""
 "qu'il y a une installation existante et ne remplacera aucune valeur de la "
 "base de données"
 
-#: ../../admin/upgrading.rst:148
+#: ../../admin/upgrading.rst:153
 msgid "Optionally commit your new project to version control"
 msgstr ""
 "Facultativement, commitez votre nouveau projet vers un suivi de version"
 
-#: ../../admin/upgrading.rst:151
+#: ../../admin/upgrading.rst:156
 msgid "Applying a patch using Composer"
 msgstr ""
 
-#: ../../admin/upgrading.rst:153
+#: ../../admin/upgrading.rst:158
 msgid ""
 "The definition of a patch can be found in the :doc:`Release policy "
 "</appendix/releases>`."
 msgstr ""
 
-#: ../../admin/upgrading.rst:155
+#: ../../admin/upgrading.rst:160
 msgid ""
 "Your ``composer.json`` requirement for Elgg should be ``~3.y.0`` (where "
 "``y`` is the minor version ``0``, ``1``, etc. you wish to have installed). "
@@ -3327,21 +3448,21 @@ msgid ""
 "installing the next minor release."
 msgstr ""
 
-#: ../../admin/upgrading.rst:166
+#: ../../admin/upgrading.rst:171
 msgid ""
 "Just to be sure you can first verify what will be installed / upgraded by "
 "executing the folowing command"
 msgstr ""
 
-#: ../../admin/upgrading.rst:176
+#: ../../admin/upgrading.rst:181
 msgid "To upgrade Elgg simply execute"
 msgstr ""
 
-#: ../../admin/upgrading.rst:187
+#: ../../admin/upgrading.rst:192
 msgid "Earlier versions"
 msgstr "Versions précédentes"
 
-#: ../../admin/upgrading.rst:189
+#: ../../admin/upgrading.rst:194
 msgid ""
 "Check Elgg documentation that corresponds to the Elgg version you want to "
 "upgrade to, by switching the documentation version in the lower left corner "
@@ -3389,3 +3510,25 @@ msgstr ""
 "Un exemple de ceci est le plugin :doc:`/plugins/uservalidationbyemail` qui "
 "ne permet pas aux utilisateurs de se connecter sur le site tant que leur "
 "adresse email n'est pas validée."
+
+#: ../../admin/uservalidation.rst:24
+msgid "Require admin validation"
+msgstr ""
+
+#: ../../admin/uservalidation.rst:26
+msgid ""
+"In the Site settings under the Users section there is a setting which can be"
+" enabled to require admin validation of a new user account before the user "
+"can use their account. After registration the user gets notified that their "
+"account is awaiting validation by an administrator."
+msgstr ""
+
+#: ../../admin/uservalidation.rst:29
+msgid ""
+"Site administrators can receive an e-mail notification that there are users "
+"awaiting validation."
+msgstr ""
+
+#: ../../admin/uservalidation.rst:31
+msgid "After validation the user is notified that they can use their account."
+msgstr ""

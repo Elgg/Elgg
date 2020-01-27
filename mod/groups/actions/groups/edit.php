@@ -4,8 +4,6 @@
  *
  * If editing an existing group, only the "group_guid" must be submitted. All other form
  * elements may be omitted and the corresponding data will be left as is.
- *
- * @package ElggGroups
  */
 
 elgg_make_sticky_form('groups');
@@ -176,6 +174,16 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 		}
 
 		$group->access_id = $visibility;
+	}
+}
+
+// group default content access
+$content_default_access = get_input('content_default_access');
+if (isset($content_default_access)) {
+	if (elgg_is_empty($content_default_access)) {
+		unset($group->content_default_access);
+	} else {
+		$group->content_default_access = (int) $content_default_access;
 	}
 }
 

@@ -9,8 +9,9 @@ $title = elgg_echo('collection:object:thewire:all');
 
 $content = '';
 if (elgg_is_logged_in()) {
-	$form_vars = ['class' => 'thewire-form'];
-	$content .= elgg_view_form('thewire/add', $form_vars);
+	$content .= elgg_view_form('thewire/add', [
+		'class' => 'thewire-form',
+	]);
 	$content .= elgg_view('input/urlshortener');
 }
 

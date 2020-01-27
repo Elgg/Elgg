@@ -2,10 +2,6 @@
 /**
  * Elgg API default output
  * This outputs the api in a human readable way.
- *
- * @package Elgg
- * @subpackage Core
- *
  */
 
 $result = $vars['result'];

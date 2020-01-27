@@ -14,11 +14,6 @@
  *
  * Catch NotificationException to trap errors.
  *
- * @package Elgg.Core
- * @subpackage Notifications
- */
-
-/**
  * Adding a New Notification Event
  * ===============================
  * 1. Register the event with elgg_register_notification_event()
@@ -53,10 +48,6 @@
  * Subscribing a User for Notifications
  * ====================================
  * Users subscribe to receive notifications based on container and delivery method.
- *
- *
- * @package Elgg.Core
- * @subpackage Notifications
  */
 
 /**
@@ -86,11 +77,15 @@ function elgg_register_notification_event($object_type, $object_subtype, array $
  *
  * @param string $object_type    'object', 'user', 'group', 'site'
  * @param string $object_subtype The type of the entity
+ * @param array  $actions        The notification action to unregister, leave empty for all actions
+ *                                Example ('create', 'delete', 'publish')
+ *
  * @return bool
  * @since 1.9
+ * @see elgg_register_notification_event()
  */
-function elgg_unregister_notification_event($object_type, $object_subtype) {
-	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype);
+function elgg_unregister_notification_event($object_type, $object_subtype, array $actions = []) {
+	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype, $actions);
 }
 
 /**
@@ -394,7 +389,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 		$to = [(int) $to];
 	}
 	$from = (int) $from;
-	//$subject = sanitise_string($subject);
+
 	// Get notification methods
 	if (($methods_override) && (!is_array($methods_override))) {
 		$methods_override = [$methods_override];
@@ -533,23 +528,7 @@ function notify_user($to, $from = 0, $subject = '', $message = '', array $params
  * @return bool
  * @since 1.7.2
  */
-function elgg_send_email($email) {
-
-	if (!$email instanceof \Elgg\Email) {
-		elgg_deprecated_notice(__FUNCTION__ . '
-			 should be given a single instance of \Elgg\Email
-		', '3.0');
-
-		$args = func_get_args();
-		$email = \Elgg\Email::factory([
-			'from' => array_shift($args),
-			'to' => array_shift($args),
-			'subject' => array_shift($args),
-			'body' => array_shift($args),
-			'params' => array_shift($args) ? : [],
-		]);
-	}
-
+function elgg_send_email(\Elgg\Email $email) {
 	return _elgg_services()->emails->send($email);
 }
 

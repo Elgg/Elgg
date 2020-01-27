@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-28 15:59+0200\n"
+"POT-Creation-Date: 2020-01-23 16:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,8 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:6
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:6
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:6
+#: ../../appendix/upgrade-notes/3.1-to-3.2.rst:6
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:7
 msgid "Contents"
 msgstr ""
 
@@ -1604,11 +1606,32 @@ msgstr ""
 msgid "3.1"
 msgstr ""
 
+#: ../../appendix/support.rst:65
 #: ../../appendix/support.rst:67
-msgid "4.0"
+msgid "October 2019"
 msgstr ""
 
 #: ../../appendix/support.rst:67
+msgid "3.2"
+msgstr ""
+
+#: ../../appendix/support.rst:67
+msgid "January 2020"
+msgstr ""
+
+#: ../../appendix/support.rst:69
+msgid "3.3"
+msgstr ""
+
+#: ../../appendix/support.rst:69
+msgid "January 2019"
+msgstr ""
+
+#: ../../appendix/support.rst:71
+msgid "4.0"
+msgstr ""
+
+#: ../../appendix/support.rst:71
 msgid "TBD"
 msgstr ""
 
@@ -3254,6 +3277,7 @@ msgstr ""
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:18
 #: ../../appendix/upgrade-notes/2.x-to-3.0.rst:294
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:94
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:77
 msgid "Deprecated APIs"
 msgstr ""
 
@@ -3502,6 +3526,7 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/2.2-to-2.3.rst:9
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:9
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:10
 msgid "PHP Version"
 msgstr ""
 
@@ -6641,6 +6666,7 @@ msgid "PHP 7.0 has reached end of life in January 2019. To ensure that Elgg site
 msgstr ""
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:13
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:14
 msgid "If upgrading from a previous Elgg installation make sure you have the correct PHP version installed."
 msgstr ""
 
@@ -6818,5 +6844,181 @@ msgstr ""
 
 #: ../../appendix/upgrade-notes/3.0-to-3.1.rst:122
 msgid "``site_notifications/delete`` Replaced by generic entity/delete action."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.1-to-3.2.rst:2
+msgid "From 3.1 to 3.2"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.1-to-3.2.rst:9
+msgid "User write access"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.1-to-3.2.rst:11
+msgid "To fix an issue where user owned access collections like `Friends` or `Friend Collections` would still show in the access drop down when creating content, even if related plugins are disabled, we needed to change some internal logic. If you want to have an access collection subtype available in the write access you now need to register the subtype with a plugin hook. See :ref:`the plugin hook reference for 'access:collections:write:subtypes' <guides/hooks-list#access-hooks>` for more details."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.1-to-3.2.rst:18
+msgid "River items enabled state"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.1-to-3.2.rst:20
+msgid "The `enabled` state of river items has been deprecated. You should no longer use this property when working with river items."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:2
+msgid "From 3.2 to 3.3"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:12
+msgid "PHP 7.1 has reached `end of life`_ in December 2019. To ensure that Elgg sites are secure, we now require PHP 7.2 for new installations."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:16
+msgid "In order to be able to test Elgg on PHP 7.4 we had to update the PHPUnit testsuite to version 8.5. This may require some rewrites of your own unit/integration tests."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:22
+msgid "Simpler use of 'default' layout"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:24
+msgid "Currently a common pattern is to do the following:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:42
+msgid "We made this kind of pattern simpler. You can now pass an array of layout options to the second parameter of `elgg_view_page`. The `elgg_view_page` function will use this array to wrap it in the 'default' layout. It also adds the page title to the layout."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:45
+msgid "The new way to do it is:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:57
+msgid "Deprecated layout names"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:59
+msgid "For an easy transition from Elgg 2.x to 3.x we kept some old layout names ('one_sidebar', 'one_column', 'two_sidebar' and 'content') intact when used in the `elgg_view_layout` function. As of Elgg 3.3 these layout names are deprecated and you should update your code to use the new 'default' layout."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:62
+msgid "When changing the use of the 'content' layout name you should take into consideration that the the 'content' generates a filter menu. This menu is slightly different from the regular 'filter' menu generated in the 'default' layout. It uses different hook names. If you already disabled the filter in your layout you can change the layout without any issues."
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:67
+msgid "Plugin Manifest changes"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:69
+msgid "We are working towards the removal of the plugin manifest file. Some features of the manifest will be replaced and some will be dropped. To make this transition a bit easier we have already deprecated the following ``ElggPluginManifest`` api functions:"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:72
+msgid "``getCopyright()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:73
+msgid "``getDonationsPageURL()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:74
+msgid "``getSuggests()`` use suggestions in composer"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:79
+msgid "``elgg_disable_query_cache()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:80
+msgid "``elgg_enable_query_cache()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:81
+msgid "``elgg_format_attributes()`` use ``elgg_format_element()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:82
+msgid "``elgg_flush_caches()`` use ``elgg_clear_caches()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:83
+msgid "``elgg_get_menu_item()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:84
+msgid "``elgg_get_ordered_event_handlers()`` use ``elgg()->events->getOrderedHandlers()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:85
+msgid "``elgg_get_ordered_hook_handlers()`` use ``elgg()->hooks->getOrderedHandlers()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:86
+msgid "``elgg_invalidate_simplecache()`` use ``elgg_clear_caches()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:87
+msgid "``elgg_is_menu_item_registered()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:88
+msgid "``elgg_view_entity_annotations()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:89
+msgid "``execute_delayed_write_query()`` use ``elgg()->db->registerDelayedQuery()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:90
+msgid "``execute_delayed_read_query()`` use ``elgg()->db->registerDelayedQuery()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:91
+msgid "``run_sql_script()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:92
+msgid "``elgg_unset_all_plugin_settings()`` use ``\\ElggPlugin::unsetAllSettings()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:93
+msgid "``elgg_get_file_simple_type()`` use ``elgg()->mimetype->getSimpleType()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:94
+msgid "``ElggFile::detectMimeType()`` use ``elgg()->mimetype->getMimeType()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:95
+msgid "``generate_action_token()`` use ``elgg()->csrf->generateActionToken()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:96
+msgid "``elgg_split()``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:99
+msgid "Deprecated Config values"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:101
+msgid "``simplecache_lastupdate`` use ``lastcache``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:104
+msgid "Deprecated CLI commands"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:106
+msgid "``elgg-cli flush`` use ``elgg-cli cache:clear``"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:109
+msgid "Deprecated Hooks"
+msgstr ""
+
+#: ../../appendix/upgrade-notes/3.2-to-3.3.rst:111
+msgid "**entity:annotate, <entity_type>**"
 msgstr ""
 

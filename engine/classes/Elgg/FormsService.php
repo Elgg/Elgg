@@ -102,7 +102,9 @@ class FormsService {
 
 		$form_vars['action_name'] = $action;
 		
-		$form_vars['ignore_empty_body'] = (bool) elgg_extract('ignore_empty_body', $form_vars, false);
+		$form_vars['ignore_empty_body'] = (bool) elgg_extract('ignore_empty_body', $form_vars, true);
+		
+		$form_vars['prevent_double_submit'] = (bool) elgg_extract('prevent_double_submit', $form_vars, true);
 		
 		if (!isset($form_vars['body'])) {
 			$this->rendering = true;

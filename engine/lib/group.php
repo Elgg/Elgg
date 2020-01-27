@@ -3,9 +3,6 @@
  * Elgg Groups.
  * Groups contain other entities, or rather act as a placeholder for other entities to
  * mark any given container as their container.
- *
- * @package Elgg.Core
- * @subpackage DataModel.Group
  */
 
 /**
@@ -95,22 +92,3 @@ function _elgg_groups_comment_permissions_override(\Elgg\Hook $hook) {
 	
 	return false;
 }
-
-/**
- * init the groups library
- *
- * @return void
- *
- * @internal
- */
-function _elgg_groups_init() {
-	elgg_register_plugin_hook_handler('container_permissions_check', 'all', '_elgg_groups_container_override');
-	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', '_elgg_groups_comment_permissions_override', 999);
-}
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_groups_init');
-};

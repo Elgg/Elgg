@@ -2,7 +2,7 @@
 /**
  * View a item to use in a list
  *
- * @uses $vars['item']       ElggEntity, ElggAnnotation or ElggRiverItem object
+ * @uses $vars['item']       ElggEntity, ElggAnnotation, ElggRiverItem or ElggRelationship object
  * @uses $vars['item_class'] Additional CSS class for the <li> elements
  * @uses $vars['content']    Content of the list item
  */
@@ -36,6 +36,15 @@ if ($item instanceof \ElggEntity) {
 	if ($object instanceof \ElggEntity) {
 		$li_attrs['class'][] = "elgg-item-{$type}-{$object->getType()}-{$object->getSubtype()}-{$item->action_type}";
 	}
+} elseif ($item instanceof ElggRelationship) {
+	$type = $item->getType();
+	$relationship = $item->getSubtype();
+	$id = $item->id;
+	
+	$li_attrs['id'] = "elgg-{$type}-{$id}";
+	
+	$li_attrs['class'][] = "elgg-item-{$type}";
+	$li_attrs['class'][] = "elgg-item-{$type}-{$relationship}";
 } elseif (is_callable([$item, 'getType'])) {
 	$type = $item->getType();
 

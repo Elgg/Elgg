@@ -9,6 +9,7 @@ use Elgg\Friends\Collections\DeleteRelationshipHandler;
 use Elgg\Friends\Collections\EntityMenuHandler;
 use Elgg\Friends\Collections\PageMenuHandler;
 use Elgg\Friends\Collections\UrlHandler;
+use Elgg\Friends\Collections\WriteAccess;
 
 /**
  * Friend collection init
@@ -27,6 +28,8 @@ function friends_collections_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:friends:collection', CollectionMenuHandler::class);
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', EntityMenuHandler::class);
+	
+	elgg_register_plugin_hook_handler('access:collections:write:subtypes', 'user', WriteAccess::class);
 
 	// Remove users from access collections when friendship is revoked
 	elgg_register_event_handler('delete', 'relationship', DeleteRelationshipHandler::class);

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Izbriši grupu',
 	'groups:membershiprequests' => 'Manage join requests',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Group invitations',
 	'groups:invitations:pending' => 'Group invitations (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Naziv grupe',
@@ -40,7 +50,7 @@ return array(
 	'groups:owner:warning' => "Upozorenje: ako promijenite ovu vrijednost nećete više biti vlasnik grupe",
 	'groups:widget:num_display' => 'Broj grupa za prikaz',
 	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:description' => 'Na profilu prikaži grupe u kojima sam član',
 
 	'groups:noaccess' => 'No access to group',
 	'groups:cantcreate' => 'Ne možete izraditi grupu. To mogu samo administratori. ',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Pozovi prijatelje u ovu grupu',
 	'groups:invite:friends:help' => 'Pretraži prijatelja po imenu ili korisničkom imenu i odaberi ga s popisa',
 	'groups:invite:resend' => 'Ponovno pošalji poziv već pozvanim korisnicima',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Nije moguće pozvati još prijatelja!',
 	'groups:group' => "Grupa",
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Sadržaju grupe mogu pristpiti samo njezini članovi. ",
 	'groups:opengroup:membersonly:join' => 'To be a member, click the "Join group" menu link.',
 	'groups:visibility' => 'Who can see this group?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

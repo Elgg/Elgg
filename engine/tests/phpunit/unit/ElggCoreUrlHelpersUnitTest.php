@@ -2,7 +2,6 @@
 
 /**
  * @see \ElggCoreHelpersTest
- * @todo migrate similar simpletest tests to this class
  *
  * @group UnitTests
  */

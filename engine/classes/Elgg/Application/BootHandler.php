@@ -122,6 +122,7 @@ class BootHandler {
 
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_actions');
+		$events->registerHandler('plugins_boot', 'system', '_elgg_register_hooks');
 
 		// Setup all boot sequence handlers for active plugins
 		$this->app->_services->plugins->build();

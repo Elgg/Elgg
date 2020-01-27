@@ -6,6 +6,7 @@ use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Values;
+use Elgg\GatekeeperException;
 
 /**
  * @group ActionsService
@@ -24,23 +25,19 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 		parent::down();
 	}
 
-	/**
-	 * @expectedException \Elgg\GatekeeperException
-	 */
 	public function testLogoutFailsWithoutActiveSession() {
+		$this->expectException(GatekeeperException::class);
 		$this->executeAction('logout');
 	}
 
 	public function testLogout() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->createUser([], [
 			'password' => 123456,
 			'language' => 'de',
 		]);
 
-		$user->save();
-
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true);
 
 		login($user);
 
@@ -56,14 +53,12 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 	}
 
 	public function testCanUseLogoutActionWithoutTokens() {
-		$user = $this->createOne('user', [], [
+		$user = $this->createUser([], [
 			'password' => 123456,
 			'language' => 'de',
 		]);
 
-		$user->save();
-
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true);
 
 		login($user);
 
@@ -80,14 +75,12 @@ class LogoutIntegrationTest extends ActionResponseTestCase {
 
 	public function testCanPreventLogoutWithAHook() {
 
-		$user = $this->createOne('user', [], [
+		$user = $this->createUser([], [
 			'password' => 123456,
 			'language' => 'de',
 		]);
 
-		$user->save();
-
-		elgg_set_user_validation_status($user->guid, true);
+		$user->setValidationStatus(true);
 
 		login($user);
 

@@ -2,7 +2,7 @@
 /**
  * Elgg message element
  *
- * @uses $vars['type']      The type of message (error, success, warning, help, notice)
+ * @uses $vars['type']      The type of message (error, success, warning, help, notice, info)
  * @uses $vars['title']     Optional title text, will default to the type
  * @uses $vars['icon_name'] Optional iconname to override default icon
  * @uses $vars['body']      Content of the body
@@ -29,6 +29,7 @@ $default_icons = [
 	'error' => 'exclamation-circle',
 	'help' => 'question-circle',
 	'notice' => 'info-circle',
+	'info' => 'info-circle',
 	'warning' => 'exclamation-triangle',
 	'success' => 'check-circle',
 ];

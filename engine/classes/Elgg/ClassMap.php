@@ -6,9 +6,6 @@ namespace Elgg;
  * A map of class names to absolute file paths
  *
  * @internal
- *
- * @package    Elgg.Core
- * @subpackage Autoloader
  */
 class ClassMap {
 

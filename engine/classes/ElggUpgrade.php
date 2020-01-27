@@ -12,7 +12,6 @@ use Elgg\Upgrade\Batch;
 /**
  * Represents an upgrade that runs outside of the upgrade.php script.
  *
- * @package Elgg.Admin
  * @internal
  *
  * @property      bool   $is_completed   Is the upgrade completed yet
@@ -20,6 +19,7 @@ use Elgg\Upgrade\Batch;
  * @property      int    $offset         Offset for batch
  * @property      int    $has_errors     Number of errors
  * @property      int    $completed_time Time when the upgrade finished
+ * @property      int    $start_time     Time when the upgrade started
  * @property-read string $id             The ID of the upgrade
  * @property-read string $class          The class which will handle the upgrade
  */
@@ -33,12 +33,6 @@ class ElggUpgrade extends ElggObject {
 		'description',
 		'class',
 	];
-
-	/**
-	 * @var callable
-	 * @internal Do not use. For testing purposes
-	 */
-	public $_callable_egefps = 'elgg_get_entities_from_private_settings';
 
 	/**
 	 * Set subtype to upgrade
@@ -58,9 +52,10 @@ class ElggUpgrade extends ElggObject {
 	/**
 	 * Mark this upgrade as completed
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function setCompleted() {
+		$this->setStartTime(); // to make sure a start time is present
 		$this->setCompletedTime();
 		$this->is_completed = true;
 
@@ -154,6 +149,48 @@ class ElggUpgrade extends ElggObject {
 	 */
 	public function getCompletedTime() {
 		return $this->completed_time;
+	}
+	
+	/**
+	 * Resets the update in order to be able to run it again
+	 *
+	 * @return void
+	 */
+	public function reset() {
+		unset($this->is_completed);
+		unset($this->completed_time);
+		unset($this->processed);
+		unset($this->offset);
+		unset($this->start_time);
+	}
+	
+	/**
+	 * Sets the timestamp for when the upgrade started.
+	 * Once set it can't be altered unless the upgrade gets reset
+	 *
+	 * @param int $time Timestamp when upgrade started. Defaults to now
+	 *
+	 * @return int
+	 */
+	public function setStartTime($time = null) {
+		if (!is_int($time)) {
+			$time = $this->getCurrentTime()->getTimestamp();
+		}
+		
+		if (isset($this->start_time)) {
+			return $this->start_time;
+		}
+		
+		return $this->start_time = $time;
+	}
+	
+	/**
+	 * Gets the time when the upgrade completed.
+	 *
+	 * @return int
+	 */
+	public function getStartTime() {
+		return (int) $this->start_time;
 	}
 
 	/**

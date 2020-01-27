@@ -5,9 +5,7 @@ namespace Elgg\Forms;
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @package    Elgg.Core
- * @subpackage Forms
- * @since      1.10.0
+ * @since 1.10.0
  *
  * @internal
  */

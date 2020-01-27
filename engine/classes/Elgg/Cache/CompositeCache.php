@@ -3,8 +3,10 @@
 namespace Elgg\Cache;
 
 use DateTime;
-use Elgg\Config;
 use ElggCache;
+use Elgg\Config;
+use Elgg\Values;
+use Stash\Pool;
 use Stash\Driver\Apc;
 use Stash\Driver\BlackHole;
 use Stash\Driver\Composite;
@@ -12,7 +14,6 @@ use Stash\Driver\Ephemeral;
 use Stash\Driver\FileSystem;
 use Stash\Driver\Memcache;
 use Stash\Driver\Redis;
-use Stash\Pool;
 
 /**
  * Composite cache pool
@@ -45,23 +46,30 @@ class CompositeCache extends ElggCache {
 	 * @var string
 	 */
 	protected $namespace;
+	
+	/**
+	 * @var bool
+	 */
+	protected $validate_lastcache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param string $namespace Cache namespace
-	 * @param Config $config    Elgg config
-	 * @param int    $flags     Start flags
+	 * @param string $namespace          Cache namespace
+	 * @param Config $config             Elgg config
+	 * @param int    $flags              Start flags
+	 * @param bool   $validate_lastcache During load validate ElggConfig::lastcache
 	 *
 	 * @throws \ConfigurationException
 	 */
-	public function __construct($namespace, Config $config, $flags) {
+	public function __construct($namespace, Config $config, $flags, bool $validate_lastcache = true) {
 		parent::__construct();
 
 		$this->namespace = $namespace;
 		$this->config = $config;
 		$this->flags = $flags;
 		$this->pool = $this->createPool();
+		$this->validate_lastcache = $validate_lastcache;
 	}
 
 	/**
@@ -126,6 +134,17 @@ class CompositeCache extends ElggCache {
 				return null;
 			}
 			
+			if ($this->validate_lastcache && $this->config->lastcache) {
+				$expiration_date = Values::normalizeTime($this->config->lastcache);
+				$creation = $item->getCreation();
+				if ($creation instanceof \DateTime) {
+					if ($creation->getTimestamp() < $expiration_date->getTimestamp()) {
+						$this->delete($key);
+						return null;
+					}
+				}
+			}
+			
 			return $item->get();
 		} catch (\Error $e) {
 			// catching parsing errors in file driver, because of potential race conditions during write
@@ -140,11 +159,8 @@ class CompositeCache extends ElggCache {
 	}
 
 	/**
-	 * Invalidate a key
-	 *
-	 * @param string $key Name
-	 *
-	 * @return bool
+	 * {@inheritDoc}
+	 * @see ElggCache::delete()
 	 */
 	public function delete($key) {
 		if ($this->disabled) {
@@ -161,14 +177,31 @@ class CompositeCache extends ElggCache {
 	}
 
 	/**
-	 * Clear out all the contents of the cache.
-	 *
-	 * @return bool
+	 * {@inheritDoc}
+	 * @see ElggCache::clear()
 	 */
 	public function clear() {
 		$this->pool->deleteItems([$this->namespaceKey('')]);
 
 		return true;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggCache::invalidate()
+	 */
+	public function invalidate() {
+		// Stash doesn't have invalidation as an action.
+		// This is handled during load
+		return true;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see ElggCache::purge()
+	 */
+	public function purge() {
+		return $this->pool->purge();
 	}
 
 	/**
@@ -262,10 +295,11 @@ class CompositeCache extends ElggCache {
 		if (!$this->config->redis || empty($this->config->redis_servers)) {
 			return null;
 		}
-
-		return new Redis([
-			'servers' => $this->config->redis_servers,
-		]);
+		
+		$options = $this->config->redis_options ?: [];
+		$options['servers'] = $this->config->redis_servers;
+		
+		return new Redis($options);
 	}
 
 	/**
@@ -307,6 +341,10 @@ class CompositeCache extends ElggCache {
 		if (!$path) {
 			return null;
 		}
+		
+		// make a sepatate folder for Stash caches
+		// because Stash assumes all files/folders are made by Stash
+		$path .= 'stash' . DIRECTORY_SEPARATOR;
 
 		return new FileSystem([
 			'path' => $path,

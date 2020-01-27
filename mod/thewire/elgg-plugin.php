@@ -57,11 +57,6 @@ return [
 				Gatekeeper::class,
 			],
 		],
-		'previous:object:thewire' => [
-			'path' => '/thewire/previous/{guid}',
-			'resource' => 'thewire/previous',
-			'deprecated' => '3.1',
-		],
 	],
 	'widgets' => [
 		'thewire' => [

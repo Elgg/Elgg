@@ -1,9 +1,6 @@
 <?php
 /**
  * Helper functions
- *
- * @package Elgg.Core.Plugin
- * @subpackage UserValidationByEmail
  */
 
 /**
@@ -19,6 +16,12 @@ function uservalidationbyemail_request_validation($user_guid) {
 	$user = get_user($user_guid);
 	if (!$user instanceof ElggUser) {
 		return false;
+	}
+	
+	$validated = elgg_get_plugin_user_setting('email_validated', $user->guid, 'uservalidationbyemail');
+	if (!isset($validated) || (bool) $validated) {
+		// email address already validated, or not required by this plugin
+		return true;
 	}
 	
 	$site = elgg_get_site_entity();

@@ -2,6 +2,7 @@
 
 use Elgg\Application;
 use Elgg\Includer;
+use Elgg\Database\Delete;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -518,7 +519,40 @@ class ElggPlugin extends ElggObject {
 
 		return true;
 	}
-
+	
+	/**
+	 * Remove all user and plugin settings for this plugin
+	 *
+	 * @return bool
+	 * @since 3.3
+	 */
+	public function unsetAllUserAndPluginSettings() {
+		// remove all plugin settings
+		$result = $this->unsetAllSettings();
+		
+		// user plugin settings are stored with the user
+		$prefix = _elgg_services()->plugins->namespacePrivateSetting('user_setting', '', $this->getID());
+		
+		$delete = Delete::fromTable('private_settings');
+		$delete->andWhere($delete->compare('name', 'like', "{$prefix}%", ELGG_VALUE_STRING));
+		
+		try {
+			elgg()->db->deleteData($delete);
+			
+			$result &= true;
+		} catch (DatabaseException $e) {
+			elgg_log($e, 'ERROR');
+			
+			$result &= false;
+		}
+		
+		// trigger a hook, so plugin devs can also remove settings
+		$params = [
+			'entity' => $this,
+		];
+		return (bool) elgg()->hooks->trigger('remove:settings', 'plugin', $params, $result);
+	}
+	
 	/**
 	 * Returns if the plugin is complete, meaning has all required files
 	 * and Elgg can read them and they make sense.
@@ -644,11 +678,6 @@ class ElggPlugin extends ElggObject {
 
 				$this->getBootstrap()->activate();
 
-				if ($this->canReadFile('activate.php')) {
-					elgg_deprecated_notice("The usage of the activate.php for {$this->getDisplayName()} is deprecated. Use the Bootstrap->activate() function.", '3.1');
-					$return = $this->includeFile('activate.php');
-				}
-
 				$this->init();
 			} catch (PluginException $ex) {
 				elgg_log($ex, \Psr\Log\LogLevel::ERROR);
@@ -747,16 +776,6 @@ class ElggPlugin extends ElggObject {
 
 		$this->getBootstrap()->deactivate();
 
-		// run any deactivate code
-		if ($this->canReadFile('deactivate.php')) {
-			elgg_deprecated_notice("The usage of the deactivate.php for {$this->getDisplayName()} is deprecated. Use the Bootstrap->deactivate() function.", '3.1');
-			
-			// allows you to prevent disabling a plugin by returning false in a deactivate.php file
-			if ($this->includeFile('deactivate.php') === false) {
-				return false;
-			}
-		}
-
 		$this->deactivateEntities();
 
 		_elgg_services()->events->trigger('cache:flush', 'system');
@@ -848,6 +867,10 @@ class ElggPlugin extends ElggObject {
 	public function boot() {
 		$result = null;
 		if ($this->canReadFile('start.php')) {
+			if (!in_array($this->getID(), \Elgg\Database\Plugins::BUNDLED_PLUGINS)) {
+				elgg_deprecated_notice("Using a start.php file in your plugin [{$this->getID()}] is deprecated. Use a elgg-plugin.php or PluginBootstrap class for your plugin.", '3.3');
+			}
+			
 			$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
 		}
 
@@ -870,6 +893,7 @@ class ElggPlugin extends ElggObject {
 		$this->registerWidgets();
 		$this->registerHooks();
 		$this->registerEvents();
+		$this->registerViewExtensions();
 
 		$this->getBootstrap()->init();
 	}
@@ -965,16 +989,6 @@ class ElggPlugin extends ElggObject {
 		$views = _elgg_services()->views;
 
 		// Declared views first
-		$file = "{$this->getPath()}views.php";
-		if (is_file($file)) {
-			elgg_deprecated_notice("The usage of the views.php file for {$this->getDisplayName()} is deprecated. Use the elgg-plugin.php views section.", '3.1');
-			
-			$spec = Includer::includeFile($file);
-			if (is_array($spec)) {
-				$views->mergeViewsSpec($spec);
-			}
-		}
-
 		$spec = $this->getStaticConfig('views');
 		if ($spec) {
 			$views->mergeViewsSpec($spec);
@@ -1237,6 +1251,35 @@ class ElggPlugin extends ElggObject {
 			}
 		}
 	}
+	
+	/**
+	 * Registers the plugin's view extensions provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerViewExtensions() {
+		$views = _elgg_services()->views;
+		
+		$spec = (array) $this->getStaticConfig('view_extensions', []);
+
+		foreach ($spec as $src_view => $extensions) {
+			foreach ($extensions as $extention => $extention_spec) {
+				if (!is_array($extention_spec)) {
+					continue;
+				}
+				
+				$unextend = (bool) elgg_extract('unextend', $extention_spec, false);
+
+				if ($unextend) {
+					$views->unextendView($src_view, $extention);
+				} else {
+					$priority = (int) elgg_extract('priority', $extention_spec, 501);
+		
+					$views->extendView($src_view, $extention, $priority);
+				}
+			}
+		}
+	}
 
 	/**
 	 * Get an attribute, metadata or private setting value
@@ -1407,7 +1450,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function invalidateCache() {
 		
-		_elgg_services()->boot->invalidateCache();
+		_elgg_services()->boot->clearCache();
 		_elgg_services()->plugins->invalidateCache($this->getID());
 
 		parent::invalidateCache();

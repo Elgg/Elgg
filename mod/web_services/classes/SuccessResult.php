@@ -2,9 +2,6 @@
 /**
  * SuccessResult
  * Generic success result class, extend if you want to do something special.
- *
- * @package    Elgg.Core
- * @subpackage WebServicesAPI
  */
 class SuccessResult extends GenericResult {
 	// Do not change this from 0

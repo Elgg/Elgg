@@ -5,9 +5,7 @@ namespace Elgg\Database;
 use Elgg\Config as Conf;
 use Elgg\Database;
 use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Validation\ValidationResults;
 use ElggUser;
-use Exception;
 use RegistrationException;
 
 /**
@@ -15,9 +13,7 @@ use RegistrationException;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
+ * @since 1.10.0
  */
 class UsersTable {
 
@@ -165,25 +161,6 @@ class UsersTable {
 			},
 			'order_by' => new OrderByClause('e.last_action', 'DESC'),
 		]);
-	}
-
-	/**
-	 * Registers a user, returning false if the username already exists
-	 *
-	 * @param string $username              The username of the new user
-	 * @param string $password              The password
-	 * @param string $name                  The user's display name
-	 * @param string $email                 The user's email address
-	 * @param bool   $allow_multiple_emails Allow the same email address to be
-	 *                                      registered multiple times?
-	 * @param string $subtype               Subtype of the user entity
-	 *
-	 * @return int|false The new user's GUID; false on failure
-	 * @throws RegistrationException
-	 * @deprecated 3.0 Use elgg()->accounts->register()
-	 */
-	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
-		_elgg_services()->accounts->register($username, $password, $name, $email, $allow_multiple_emails, $subtype);
 	}
 
 	/**

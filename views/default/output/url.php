@@ -3,9 +3,6 @@
  * Elgg URL display
  * Displays a URL as a link
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses string $vars['text']        The HTML between the <a></a> tags.
  * @uses string $vars['href']        The raw, un-encoded URL.
  *                                   "" = current URL.
@@ -30,7 +27,7 @@ if (!empty($vars['confirm']) && !isset($vars['is_action'])) {
 }
 
 if (!empty($vars['confirm'])) {
-	$vars['data-confirm'] = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
+	$vars['data-confirm'] = elgg_extract('confirm', $vars);
 	
 	// if (bool) true use defaults
 	if ($vars['data-confirm'] === true) {

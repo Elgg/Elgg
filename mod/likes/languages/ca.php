@@ -1,5 +1,14 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
+	'annotation:delete:likes:fail' => "Hi ha algun problema eliminant el teu \"m'agrada\"",
+	'annotation:delete:likes:success' => "El teu \"m'agrada\" s'ha eliminat",
+	
 	'likes:this' => 'li agrada això',
 	'likes:deleted' => 'El teu "m\'agrada" s\'ha eliminat',
 	'likes:see' => 'Mira a qui li agrada',

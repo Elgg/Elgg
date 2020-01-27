@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Discussions\GroupToolContainerLogicCheck;
+
 return [
 	'entities' => [
 		[
@@ -8,6 +10,9 @@ return [
 			'class' => 'ElggDiscussion',
 			'searchable' => true,
 		],
+	],
+	'settings' => [
+		'enable_global_discussions' => 0,
 	],
 	'actions' => [
 		'discussion/save' => [],
@@ -24,6 +29,14 @@ return [
 		'collection:object:discussion:owner' => [
 			'path' => '/discussion/owner/{username}',
 			'resource' => 'discussion/owner',
+		],
+		'collection:object:discussion:my_groups' => [
+			'path' => '/discussion/my_groups/{username}',
+			'resource' => 'discussion/my_groups',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
+			],
 		],
 		'collection:object:discussion:group' => [
 			'path' => '/discussion/group/{guid}',
@@ -49,6 +62,18 @@ return [
 		'view:object:discussion' => [
 			'path' => '/discussion/view/{guid}/{title?}',
 			'resource' => 'discussion/view',
+		],
+	],
+	'hooks' => [
+		'container_logic_check' => [
+			'object' => [
+				GroupToolContainerLogicCheck::class => [],
+			],
+		],
+		'filter_tabs' => [
+			'discussion' => [
+				'\Elgg\Discussions\Menus::filterTabs' => [],
+			],
 		],
 	],
 	'upgrades' => [

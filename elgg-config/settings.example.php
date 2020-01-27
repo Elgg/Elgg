@@ -10,8 +10,6 @@
  * and then rename it to settings.php.
  *
  * @todo Turn this into something we handle more automatically.
- * @package    Elgg.Core
- * @subpackage Configuration
  */
 
 date_default_timezone_set('{{timezone}}');
@@ -165,6 +163,11 @@ $CONFIG->dbencoding = 'utf8mb4';
  */
 //$CONFIG->redis = true;
 //
+//$CONFIG->redis_options = array (
+//	'database' => '', // The "database" option lets developers specific which specific database to use.
+//	'password' => '', // The "password" option is used for clusters which required authentication.
+//);
+//
 //$CONFIG->redis_servers = array (
 //	array('server1', 6379),
 //	array('server2', 6379)
@@ -208,6 +211,16 @@ $CONFIG->dbencoding = 'utf8mb4';
  * Using this config value, you can change the default behavior
  */
 //$CONFIG->assetroot = "";
+
+/**
+ * Plugins with more than the configured number of plugin settings won't be loaded into
+ * bootdata cache. This is done to prevent memory issues.
+ *
+ * If set to < 1 all plugins will be loaded into the bootdata cache
+ *
+ * Default: 40
+ */
+//$CONFIG->bootdata_plugin_settings_limit = 0;
 
 /**
  * Enable SendFile file serving
@@ -300,15 +313,6 @@ $CONFIG->db_disable_query_cache = false;
 $CONFIG->auto_disable_plugins = true;
 
 /**
- * Minimum password length
- *
- * This value is used when validating a user's password during registration.
- *
- * @global int $CONFIG->min_password_length
- */
-$CONFIG->min_password_length = 6;
-
-/**
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
  *
@@ -372,6 +376,37 @@ $CONFIG->allow_phpinfo = false;
  * @global string $CONFIG->image_processor
  */
 //$CONFIG->image_processor = 'imagick';
+
+
+/**
+ * Configure emailer transport
+ * 
+ * This setting can be used to select a different emailer transport. By default the Zend Sendmail Transport is used.
+ * Currently only 'smtp' and 'sendmail' are supported as a different configuration.
+ * For 'smtp', the SMTP server's settings must be set, while 'sendmail' requires no configuration.
+ * 
+ * @global string $CONFIG->emailer_transport
+ */
+//$CONFIG->emailer_transport = 'sendmail';
+
+/**
+ * Configure emailer SMTP settings
+ * 
+ * This setting is only necessary if the above emailer transport is set to 'smtp'.
+ * Please refer to https://docs.zendframework.com/zend-mail/transport/smtp-authentication/#examples
+ */
+//$CONFIG->emailer_smtp_settings = array(
+//	'name'              => 'localhost.localdomain',
+//	'host'              => '127.0.0.1',
+//	'connection_class'  => 'login',
+//	'connection_config' => [
+//		'username' => 'user',
+//		'password' => 'pass',
+//		'ssl'      => '', // OPTIONAL (tls or ssl)
+//		'port'     => '', // OPTIONAL (Non-SSL default 25, SSL default 465, TLS default 587)
+//		'use_complete_quit' => '', // OPTIONAL
+//	],
+//);
 
 /**
  * Logging level

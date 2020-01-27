@@ -68,15 +68,6 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 			'params' => $qb->getParameters(),
 		]);
 
-		$delayed = $db->reflectDelayedQueries();
-		$this->assertEmpty($delayed);
-
-		execute_delayed_write_query($qb);
-
-		$delayed = $db->reflectDelayedQueries();
-
-		$this->assertCount(1, $delayed);
-
 		$shutdown = new ShutdownHandler($app);
 		$shutdown->shutdownDatabase();
 
@@ -130,6 +121,5 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$cache = $app->_services->autoloadManager->getCache()->load(AutoloadManager::FILENAME);
 		
 		$this->assertContains($dir, $cache['scannedDirs']);
-
 	}
 }

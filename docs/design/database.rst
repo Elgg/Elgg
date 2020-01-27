@@ -234,16 +234,6 @@ your new element (defaulting to the current user's container):
     $container = get_entity($container_guid);
     forward($container->getURL());
 
-Juggling users and groups
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In fact, ``[[Engine/DataModel/Entities/ElggGroup|ElggGroup]]`` simulates
-most of the methods of
-``[[Engine/DataModel/Entities/ElggUser|ElggUser]]``. You can grab the
-icon, name etc using the same calls, and if you ask for a group's
-friends, you'll get its members. This has been designed specifically for
-you to alternate between groups and users in your code easily.
-
 Ownership
 =========
 
@@ -691,6 +681,18 @@ Schema
 ======
 
 The database contains a number of primary and secondary tables. You can follow schema changes in ``engine/schema/migrations/``
+
+The character set of the database should be ``utf8mb4``, this will provide full unicode character support when storing data.
+
+InnoDB
+------
+
+As of Elgg 3.0 the database uses the InnoDB engine. In order for a correct installation or migration some settings may need to be adjusted
+in the database settings.
+
+- ``innodb_large_prefix`` should be ``on``
+- ``innodb_file_format`` should be ``Barracuda``
+- ``innodb_file_per_table`` should be ``1``
 
 Main tables
 -----------

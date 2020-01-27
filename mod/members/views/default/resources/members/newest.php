@@ -7,14 +7,9 @@ $content = elgg_list_entities([
 	'type' => 'user',
 ]);
 
-$title = elgg_echo('members:title:newest');
-
-$body = elgg_view_layout('default', [
+echo elgg_view_page(elgg_echo('members:title:newest'), [
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
-	'title' => $title,
 	'filter_id' => 'members',
 	'filter_value' => 'newest',
 ]);
-
-echo elgg_view_page($title, $body);

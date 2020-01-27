@@ -64,55 +64,46 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 		$this->assertSame($di, $foo->di);
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage $factory must appear callable
-	 */
 	public function testSetFactoryLooksUncallable() {
 		$di = new \Elgg\Di\DiContainer();
 
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('$factory must appear callable');
 		$di->setFactory('foo', new \stdClass());
 	}
 
-	/**
-	 * @expectedException \Elgg\Di\FactoryUncallableException
-	 * @expectedExceptionMessage  Factory for 'foo' was uncallable: 'not-a-real-callable'
-	 */
 	public function testGetFactoryUncallable() {
 		$di = new \Elgg\Di\DiContainer();
 		$di->setFactory('foo', 'not-a-real-callable');
 
+		$this->expectException(FactoryUncallableException::class);
+		$this->expectExceptionMessage("Factory for 'foo' was uncallable: 'not-a-real-callable'");
 		$di->foo;
 	}
 
-	/**
-	 * @expectedException \Elgg\Di\FactoryUncallableException
-	 * @expectedExceptionMessage Factory for 'foo' was uncallable: 'fakeClass::not-a-real-callable'
-	 */
 	public function testGetFactoryUncallableArray() {
 		$di = new \Elgg\Di\DiContainer();
 		$di->setFactory('foo', array('fakeClass', 'not-a-real-callable'));
 
+		$this->expectException(FactoryUncallableException::class);
+		$this->expectExceptionMessage("Factory for 'foo' was uncallable: 'fakeClass::not-a-real-callable'");
 		$di->foo;
 	}
 
-	/**
-	 * @expectedException \Elgg\Di\FactoryUncallableException
-	 * @expectedExceptionMessage Factory for 'foo' was uncallable: Elgg\Di\DiContainerUnitTest->not-a-real-callable
-	 */
 	public function testGetFactoryUncallableArrayObject() {
 		$di = new \Elgg\Di\DiContainer();
 		$di->setFactory('foo', array($this, 'not-a-real-callable'));
+		
+		$this->expectException(FactoryUncallableException::class);
+		$this->expectExceptionMessage("Factory for 'foo' was uncallable: Elgg\Di\DiContainerUnitTest->not-a-real-callable");
 		$di->foo;
 	}
 
-	/**
-	 * @expectedException \Elgg\Di\MissingValueException
-	 * @expectedExceptionMessage Value or factory was not set for: foo
-	 */
 	public function testGetMissingValue() {
 		$di = new \Elgg\Di\DiContainer();
 
+		$this->expectException(MissingValueException::class);
+		$this->expectExceptionMessage('Value or factory was not set for: foo');
 		$di->foo;
 	}
 
@@ -124,23 +115,17 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($di->has('foo'));
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Class names must be valid PHP class names
-	 */
 	public function testSetClassNames() {
 		$di = new \Elgg\Di\DiContainer();
 		$di->setClassName('foo', self::TEST_CLASS);
 
 		$this->assertInstanceOf(self::TEST_CLASS, $di->foo);
 
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('Class names must be valid PHP class names');
 		$di->setClassName('foo', array());
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 * @expectedExceptionMessage Class names must be valid PHP class names
-	 */
 	public function testSettingInvalidClassNameThrows() {
 		$di = new \Elgg\Di\DiContainer();
 
@@ -150,17 +135,17 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 		$di->setClassName('foo2', "\\Foo2{$euro}3");
 		$di->setClassName('foo3', "Foo2{$euro}3\\Foo2{$euro}3");
 
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage('Class names must be valid PHP class names');
 		$di->setClassName('foo', 'Not Valid');
 	}
 
-	/**
-	 * @expectedException \Elgg\Di\MissingValueException
-	 */
 	public function testAccessRemovedValue() {
 		$di = new \Elgg\Di\DiContainer();
 		$di->setValue('foo', 'Foo');
 		$di->remove('foo');
 
+		$this->expectException(MissingValueException::class);
 		$di->foo;
 	}
 

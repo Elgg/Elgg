@@ -7,9 +7,7 @@
  *
  */
 
-$body = elgg_view_layout('default', [
+echo elgg_view_page('', [
 	'content' => elgg_view('custom_index/content', $vars),
 	'sidebar' => false,
 ]);
-
-echo elgg_view_page('', $body);

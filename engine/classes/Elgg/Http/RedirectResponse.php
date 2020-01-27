@@ -5,7 +5,7 @@ namespace Elgg\Http;
 /**
  * Redirect response builder
  */
-class RedirectResponse extends OkResponse {
+class RedirectResponse extends Response {
 
 	/**
 	 * Constructor
@@ -15,7 +15,8 @@ class RedirectResponse extends OkResponse {
 	 *
 	 * @see elgg_redirect_response()
 	 */
-	public function __construct($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
-		parent::__construct('', $status_code, $forward_url);
+	public function __construct($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND) {
+		$this->setForwardURL($forward_url);
+		$this->setStatusCode($status_code);
 	}
 }

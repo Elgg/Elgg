@@ -9,7 +9,7 @@ use Elgg\Database\QueryBuilder;
 /**
  * Extends QueryBuilder with HAVING clauses
  */
-class HavingClause implements Clause {
+class HavingClause extends Clause {
 
 	/**
 	 * @var Closure|CompositeExpression|string
@@ -31,8 +31,8 @@ class HavingClause implements Clause {
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 		$having = $this->expr;
 
-		if ($this->expr instanceof Closure) {
-			$having = call_user_func($this->expr, $qb, $table_alias);
+		if ($this->isCallable($having)) {
+			$having = $this->call($having, $qb, $table_alias);
 		}
 
 		if ($having instanceof CompositeExpression || is_string($having)) {

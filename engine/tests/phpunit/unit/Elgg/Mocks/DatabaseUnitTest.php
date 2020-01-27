@@ -16,25 +16,19 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	/**
-	 * @expectedException \DatabaseException
-	 */
 	public function testThrowsWithUnknownInsertSpec() {
-		insert_data('INSERT INTO B');
+		$this->expectException(\DatabaseException::class);
+		elgg()->db->insertData('INSERT INTO B');
 	}
 
-	/**
-	 * @expectedException \DatabaseException
-	 */
 	public function testThrowsWithUnknownUpdateSpec() {
-		update_data('UPDATE B');
+		$this->expectException(\DatabaseException::class);
+		elgg()->db->updateData('UPDATE B');
 	}
 
-	/**
-	 * @expectedException \DatabaseException
-	 */
 	public function testThrowsWithUnknownDeleteSpec() {
-		delete_data('DELETE FROM B');
+		$this->expectException(\DatabaseException::class);
+		elgg()->db->deleteData('DELETE FROM B');
 	}
 
 	public function testCanInsertData() {
@@ -54,8 +48,8 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 			],
 		]);
 
-		$this->assertEquals(123, insert_data('INSERT INTO A WHERE b = :b', [':b' => 'b']));
-		$this->assertEquals(0, insert_data('INSERT INTO A WHERE c = :c', [':c' => 'c']));
+		$this->assertEquals(123, elgg()->db->insertData('INSERT INTO A WHERE b = :b', [':b' => 'b']));
+		$this->assertEquals(0, elgg()->db->insertData('INSERT INTO A WHERE c = :c', [':c' => 'c']));
 	}
 
 	public function testCanUpdateData() {
@@ -78,25 +72,25 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 			'row_count' => 0,
 		]);
 
-		$this->assertTrue(update_data('UPDATE A SET b = :b WHERE c = :c', [
+		$this->assertTrue(elgg()->db->updateData('UPDATE A SET b = :b WHERE c = :c', false, [
 			':b' => 'b',
 			':c' => 'c'
 		]));
 
-		$this->assertEquals(20, update_data('UPDATE A SET b = :b WHERE c = :c', [
+		$this->assertEquals(20, elgg()->db->updateData('UPDATE A SET b = :b WHERE c = :c', true, [
 			':b' => 'b',
 			':c' => 'c'
-		], true));
+		]));
 
-		$this->assertTrue(update_data('UPDATE A SET b = :b WHERE d = :d', [
+		$this->assertTrue(elgg()->db->updateData('UPDATE A SET b = :b WHERE d = :d', false, [
 			':b' => 'b',
 			':d' => 'd'
 		]));
 
-		$this->assertEquals(0, update_data('UPDATE A SET b = :b WHERE d = :d', [
+		$this->assertEquals(0, elgg()->db->updateData('UPDATE A SET b = :b WHERE d = :d', true, [
 			':b' => 'b',
 			':d' => 'd'
-		], true));
+		]));
 	}
 
 	public function testCanDeleteData() {
@@ -116,8 +110,8 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 			],
 		]);
 
-		$this->assertEquals(20, delete_data('DELETE FROM A WHERE b = :b', [':b' => 'b']));
-		$this->assertEquals(0, delete_data('DELETE FROM A WHERE c = :c', [':c' => 'c']));
+		$this->assertEquals(20, elgg()->db->deleteData('DELETE FROM A WHERE b = :b', [':b' => 'b']));
+		$this->assertEquals(0, elgg()->db->deleteData('DELETE FROM A WHERE c = :c', [':c' => 'c']));
 	}
 
 	public function testCanGetData() {
@@ -154,8 +148,8 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 		]);
 
 
-		$this->assertEquals([$data[0], $data[2]], get_data('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], [':foo' => 'bar1']));
-		$this->assertEquals($data[0], get_data_row('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], [':foo' => 'bar1']));
+		$this->assertEquals([$data[0], $data[2]], elgg()->db->getData('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], [':foo' => 'bar1']));
+		$this->assertEquals($data[0], elgg()->db->getDataRow('SELECT FROM A WHERE foo = :foo', [$this, 'rowToArray'], [':foo' => 'bar1']));
 		
 	}
 

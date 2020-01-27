@@ -14,18 +14,12 @@ elgg_set_page_owner_guid($group->guid);
 
 elgg_group_tool_gatekeeper('activity');
 
-$title = elgg_echo('collection:river:group');
-
 elgg_push_breadcrumb(elgg_echo('groups'), elgg_generate_url('collection:group:group:all'));
 elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 
 $options = [
 	'wheres' => [
-		function (QueryBuilder $qb, $main_alias) use ($group) {
-			$group = new GroupRiverFilter($group);
-			
-			return $group($qb, $main_alias);
-		},
+		new GroupRiverFilter($group),
 	],
 	'no_results' => elgg_echo('river:none'),
 ];
@@ -48,11 +42,7 @@ if ($type != 'all') {
 $content = elgg_view('river/filter', ['selector' => $selector]);
 $content .= elgg_list_river($options);
 
-$body = elgg_view_layout('content', [
+echo elgg_view_page(elgg_echo('collection:river:group'), [
 	'content' => $content,
-	'title' => $title,
-	'filter' => '',
 	'class' => 'elgg-river-layout',
 ]);
-
-echo elgg_view_page($title, $body);

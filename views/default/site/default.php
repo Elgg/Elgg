@@ -1,9 +1,6 @@
 <?php
 /**
  * ElggSite default view.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 // provide limited information

@@ -8,7 +8,6 @@
 $entity = elgg_extract('entity', $vars, null);
 
 $form_vars = [
-	'enctype' => 'multipart/form-data',
 	'class' => 'elgg-form-alt',
 ];
 

@@ -29,13 +29,13 @@ class ElggCoreGroupToolTest extends IntegrationTestCase {
 	}
 	
 	public function testToolRegistration() {
-		add_group_tool_option('test_option', 'test_label');
+		elgg()->group_tools->register('test_option');
 		
-		$this->assertArrayHasKey('test_option', elgg_get_group_tool_options());
+		$this->assertArrayHasKey('test_option', elgg()->group_tools->all());
 		
-		remove_group_tool_option('test_option');
+		elgg()->group_tools->unregister('test_option');
 		
-		$this->assertArrayNotHasKey('test_option', elgg_get_group_tool_options());
+		$this->assertArrayNotHasKey('test_option', elgg()->group_tools->all());
 	}
 	
 	public function testCanSaveGroupToolAvailability() {
@@ -43,7 +43,7 @@ class ElggCoreGroupToolTest extends IntegrationTestCase {
 		$this->assertFalse($this->group->enableTool('test_option'));
 		$this->assertFalse($this->group->disableTool('test_option'));
 		
-		add_group_tool_option('test_option', 'test_label');
+		elgg()->group_tools->register('test_option');
 		
 		$this->assertTrue($this->group->enableTool('test_option'));
 		$this->assertEquals('yes', $this->group->test_option_enable);
@@ -56,7 +56,7 @@ class ElggCoreGroupToolTest extends IntegrationTestCase {
 		$this->assertFalse($this->group->isToolEnabled(''));
 		$this->assertFalse($this->group->isToolEnabled('test_option2'));
 		
-		add_group_tool_option('test_option2', 'test_label');
+		elgg()->group_tools->register('test_option2');
 		$this->assertTrue($this->group->isToolEnabled('test_option2'));
 		
 		$this->assertTrue($this->group->disableTool('test_option2'));

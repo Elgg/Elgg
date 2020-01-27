@@ -7,8 +7,7 @@ namespace Elgg\Debug\Inspector;
  *
  * @internal
  *
- * @package Elgg.Core
- * @since   1.11
+ * @since 1.11
  */
 class ViewComponent {
 

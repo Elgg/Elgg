@@ -34,10 +34,6 @@ class ElggGroup extends \ElggEntity {
 	 * @see ElggEntity::getMetadata()
 	 */
 	public function getMetadata($name) {
-		if ($name === 'group_acl') {
-			elgg_deprecated_notice("Getting 'group_acl' metadata has been deprecated, use ElggGroup::getOwnedAccessCollection('group_acl')", '3.0');
-		}
-		
 		return parent::getMetadata($name);
 	}
 	
@@ -46,11 +42,6 @@ class ElggGroup extends \ElggEntity {
 	 * @see ElggEntity::setMetadata()
 	 */
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
-		if ($name === 'group_acl') {
-			elgg_deprecated_notice("Setting 'group_acl' metadata has been deprecated, use ElggGroup::getOwnedAccessCollection('group_acl')", '3.0');
-			return false;
-		}
-		
 		return parent::setMetadata($name, $value, $value_type, $multiple);
 	}
 
@@ -63,7 +54,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function addObjectToGroup(\ElggObject $object) {
 		$object->container_guid = $this->guid;
-		return $object->save();
+		return (bool) $object->save();
 	}
 
 	/**
@@ -76,7 +67,7 @@ class ElggGroup extends \ElggEntity {
 	 */
 	public function removeObjectFromGroup(ElggObject $object) {
 		$object->container_guid = $object->owner_guid;
-		return $object->save();
+		return (bool) $object->save();
 	}
 
 	/**
@@ -108,7 +99,7 @@ class ElggGroup extends \ElggEntity {
 	}
 
 	/**
-	 * Return the content access mode used by group_gatekeeper()
+	 * Return the content access mode
 	 *
 	 * @return string One of CONTENT_ACCESS_MODE_* constants
 	 * @since 1.9.0
@@ -132,7 +123,7 @@ class ElggGroup extends \ElggEntity {
 	}
 
 	/**
-	 * Set the content access mode used by group_gatekeeper()
+	 * Set the content access mode
 	 *
 	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants. If empty string, mode will not be changed
 	 *
@@ -315,18 +306,6 @@ class ElggGroup extends \ElggEntity {
 		$this->$md_name = $md_value;
 
 		return true;
-	}
-
-	/**
-	 * Returns the registered tool configuration
-	 *
-	 * @param string $name Tool name
-	 *
-	 * @return Tool|null
-	 * @deprecated 3.0 Use ElggGroup::getTool
-	 */
-	protected function getToolConfig($name) {
-		return $this->getTool($name);
 	}
 
 	/**

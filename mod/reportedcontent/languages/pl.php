@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:reported_content' => 'Zgłoszone elementy',
@@ -29,6 +35,6 @@ return array(
 	'reportedcontent:failed' => 'Przykro nam, próba zgłoszenia tej treści zakończyła się niepowodzeniem.',
 	'reportedcontent:notarchived' => 'Nie powiodła się archiwizacja tego zgłoszenia',
 	
-	'widgets:reportedcontent:name' => 'Reported content',
-	'widgets:reportedcontent:description' => 'Display reported content',
+	'widgets:reportedcontent:name' => 'Zgłoszona treść',
+	'widgets:reportedcontent:description' => 'Wyświetl zgłoszoną treść',
 );

@@ -2,6 +2,7 @@
 
 /**
  * @group UnitTests
+ * @group FileService
  */
 class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
@@ -36,18 +37,12 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		elgg_delete_directory($dataroot . '1/2/');
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanSetModifiedTime() {
 		$time = $this->file->getModifiedTime();
 		$this->file->setModifiedTime();
 		$this->assertNotEquals($time, $this->file->getModifiedTime());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanSetMimeType() {
 		unset($this->file->mimetype);
 
@@ -57,29 +52,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @group FileService
-	 */
-	public function testCanDetectMimeType() {
-		$mime = $this->file->detectMimeType(null, 'text/plain');
-
-		// mime should not be null if default is set
-		$this->assertNotNull($mime);
-
-		// mime of a file object should match mime of a file path that represents this file on filestore
-		$resource_mime = $this->file->detectMimeType($this->file->getFilenameOnFilestore(), 'text/plain');
-		$this->assertEquals($mime, $resource_mime);
-
-		// calling detectMimeType statically raises strict policy warning
-		// @todo: remove this once a new static method has been implemented
-		error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
-
-		// method output should not differ between a static and a concrete call if the file path is set
-		$resource_mime_static = \ElggFile::detectMimeType($this->file->getFilenameOnFilestore(), 'text/plain');
-		$this->assertEquals($resource_mime, $resource_mime_static);
-	}
-
-	/**
-	 * @group        FileService
 	 * @dataProvider providerSimpleTypeMap
 	 */
 	public function testCanParseSimpleType($mime_type, $simple_type) {
@@ -149,9 +121,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		];
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testFileExists() {
 		$this->assertTrue($this->file->exists());
 
@@ -159,28 +128,21 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($this->file->exists());
 	}
 
-	/**
-	 * @group FileService
-	 * @expectedException \IOException
-	 */
 	public function testExceptionThrownForMissingFilenameOnOpen() {
 		$file = new ElggFile();
+		
+		$this->expectException(IOException::class);
 		$file->open('read');
 	}
 
-	/**
-	 * @group FileService
-	 * @expectedException \InvalidParameterException
-	 */
 	public function testExceptionThrownForUnknownModeOnOpen() {
 		$file = new ElggFile();
 		$file->setFilename('foo.txt');
+		
+		$this->expectException(InvalidParameterException::class);
 		$file->open('foo');
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanReadFile() {
 		$this->assertNotEmpty($this->file->open('read'));
 		$contents = $this->file->grabFile();
@@ -192,9 +154,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($expected, $contents);
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanCreateEmptyFile() {
 		$file = new ElggFile();
 		$file->owner_guid = 2;
@@ -214,9 +173,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($file->exists());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanWriteToFile() {
 
 		$contents = 'Hello world!';
@@ -249,9 +205,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($file->exists());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanTellPosition() {
 
 		$size = $this->file->getSize();
@@ -271,9 +224,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($this->file->close());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanResolveFilenameOnFilestore() {
 
 		$filename = "foo/bar.txt";
@@ -291,9 +241,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals($filestorename, $file->getFilenameOnFilestore());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanCreateAndReadSymlinks() {
 
 		$symlink_name = "symlink.txt";
@@ -340,9 +287,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($symlink->exists());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanDeleteSymlinkAndKeepTarget() {
 
 		$to = new ElggFile();
@@ -366,9 +310,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($to->exists());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanDeleteSymlinkAndTarget() {
 
 		$to = new ElggFile();
@@ -392,9 +333,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($to->exists());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanDeleteSymlinkWithMissingTarget() {
 
 		$to = new ElggFile();
@@ -419,9 +357,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$this->assertFalse($to->exists());
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanTransferFile() {
 
 		$dataroot = _elgg_config()->dataroot;
@@ -457,9 +392,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		elgg_delete_directory("{$dataroot}1/4/");
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanGetDownloadUrl() {
 
 		_elgg_services()->hooks->backup();
@@ -487,9 +419,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$file->delete();
 	}
 
-	/**
-	 * @group FileService
-	 */
 	public function testCanGetInlineUrl() {
 
 		_elgg_services()->hooks->backup();
@@ -515,6 +444,5 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->hooks->restore();
 
 		$file->delete();
-
 	}
 }

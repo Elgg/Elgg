@@ -3,12 +3,9 @@
  * Elgg exception (failsafe mode)
  * Displays a single exception
  *
- * @tip        Enable "developers" to give admins a stacktrace view.
+ * @tip Enable "developers" to give admins a stacktrace view.
  *
- * @package    Elgg
- * @subpackage Core
- *
- * @uses       $vars['object'] An exception
+ * @uses $vars['object'] An exception
  */
 
 $exception = elgg_extract('object', $vars);

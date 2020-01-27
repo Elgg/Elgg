@@ -9,9 +9,7 @@ use Elgg\Database;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Notifications
- * @since      1.9.0
+ * @since 1.9.0
  */
 class SubscriptionsService {
 
@@ -161,7 +159,7 @@ class SubscriptionsService {
 		if (!$rels) {
 			return [];
 		}
-		array_walk($rels, [$this->db, 'sanitizeString']);
+		
 		$methods_string = "'" . implode("','", $rels) . "'";
 
 		$db_prefix = $this->db->prefix;

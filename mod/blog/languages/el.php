@@ -1,18 +1,24 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'item:object:blog' => 'Ιστολόγια',
-	'collection:object:blog' => 'Blogs',
-	'collection:object:blog:all' => 'All site blogs',
-	'collection:object:blog:owner' => '%s\'s blogs',
+	'collection:object:blog' => 'Ιστολόγια',
+	'collection:object:blog:all' => 'Όλα τα ιστολόγια',
+	'collection:object:blog:owner' => 'ιστολόγια του χρήστη %s',
 	'collection:object:blog:group' => 'Group blogs',
-	'collection:object:blog:friends' => 'Friends\' blogs',
-	'add:object:blog' => 'Add blog post',
-	'edit:object:blog' => 'Edit blog post',
+	'collection:object:blog:friends' => 'Ιστολόγια φίλων',
+	'add:object:blog' => 'Προσθέστε μία νέα ανάρτηση',
+	'edit:object:blog' => 'Επεξεργασία ανάρτησης',
 
 	'blog:revisions' => 'Αναθεωρήσεις',
 	'blog:archives' => 'Αρχεία',
 
-	'groups:tool:blog' => 'Enable group blog',
+	'groups:tool:blog' => 'Ενεργοποίηση ιστολογίου ομάδας',
 	'blog:write' => 'Γράψτε μία νέα ανάρτηση',
 
 	// Editing
@@ -58,7 +64,7 @@ View and comment on the blog post:
 
 	// widget
 	'widgets:blog:name' => 'Blog posts',
-	'widgets:blog:description' => 'Display your latest blog posts',
+	'widgets:blog:description' => 'Προβολή πρόσφατων αναρτήσεων σας',
 	'blog:moreblogs' => 'Περισσότερες αναρτήσεις',
 	'blog:numbertodisplay' => 'Αριθμός αναρτήσεων για εμφάνιση',
 );

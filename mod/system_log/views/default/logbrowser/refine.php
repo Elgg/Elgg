@@ -1,8 +1,6 @@
 <?php
 /**
  * Log browser search form
- *
- * @package ElggLogBrowser
  */
 
 $form_vars = [

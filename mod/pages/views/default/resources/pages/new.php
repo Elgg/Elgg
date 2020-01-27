@@ -39,16 +39,8 @@ if ($parent instanceof ElggPage) {
 	elgg_push_breadcrumb($parent->getDisplayName(), $parent->getURL());
 }
 
-$title = elgg_echo('add:object:page');
-elgg_push_breadcrumb($title);
-
 $vars = pages_prepare_form_vars(null, $parent_guid);
-$content = elgg_view_form('pages/edit', [], $vars);
 
-$body = elgg_view_layout('content', [
-	'filter' => '',
-	'content' => $content,
-	'title' => $title,
+echo elgg_view_page(elgg_echo('add:object:page'), [
+	'content' => elgg_view_form('pages/edit', [], $vars),
 ]);
-
-echo elgg_view_page($title, $body);

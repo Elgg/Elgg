@@ -16,13 +16,6 @@ namespace Elgg;
  *
  * @todo Rename the "code" DB column to "hash"
  *
- * Legacy notes: This feature used to be called "remember me"; confusingly, both the tokens and the
- * hashes were called "codes"; old tokens were hexadecimal and lower entropy; new tokens are
- * base64 URL and always begin with the letter "z"; the boot sequence replaces old tokens whenever
- * possible.
- *
- * @package Elgg.Core
- *
  * @internal
  */
 class PersistentLoginService {
@@ -111,7 +104,7 @@ class PersistentLoginService {
 	 */
 	public function bootSession() {
 		if (!$this->cookie_token) {
-			return null;
+			return;
 		}
 
 		// is this token good?
@@ -119,33 +112,11 @@ class PersistentLoginService {
 		$user = $this->getUserFromHash($cookie_hash);
 		if ($user) {
 			$this->setSessionToken($this->cookie_token);
-			// note: if the token is legacy, we don't both replacing it here because
-			// it will be replaced during the next request boot
+
 			return $user;
-		} else {
-			if ($this->isLegacyToken($this->cookie_token)) {
-				// may be attempt to brute force legacy low-entropy tokens
-				call_user_func($this->_callable_sleep, 1);
-			}
-			$this->setCookie('');
 		}
-	}
-
-	/**
-	 * Replace the user's token if it's a legacy hexadecimal token
-	 *
-	 * @param \ElggUser $logged_in_user The logged in user
-	 *
-	 * @return void
-	 */
-	public function replaceLegacyToken(\ElggUser $logged_in_user) {
-		if (!$this->cookie_token || !$this->isLegacyToken($this->cookie_token)) {
-			return;
-		}
-
-		// replace user's old weaker-entropy code with new one
-		$this->removeHash($this->hashToken($this->cookie_token));
-		$this->makeLoginPersistent($logged_in_user);
+		
+		$this->setCookie('');
 	}
 
 	/**
@@ -390,17 +361,6 @@ class PersistentLoginService {
 	 */
 	protected function generateToken() {
 		return 'z' . $this->crypto->getRandomString(31);
-	}
-
-	/**
-	 * Is the given token a legacy MD5 hash?
-	 *
-	 * @param string $token The token to analyze
-	 *
-	 * @return bool
-	 */
-	protected function isLegacyToken($token) {
-		return (isset($token[0]) && $token[0] !== 'z');
 	}
 
 	/**

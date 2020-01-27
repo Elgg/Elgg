@@ -40,6 +40,11 @@ class Translator {
 	private $current_language = null;
 
 	/**
+	 * @var array
+	 */
+	protected $allowed_languages = null;
+
+	/**
 	 * Paths to scan for autoloading languages.
 	 *
 	 * Languages are automatically loaded for the site or
@@ -109,8 +114,6 @@ class Translator {
 			$language = $this->getCurrentLanguage();
 		}
 
-		$this->ensureTranslationsLoaded($language);
-
 		// build language array for different trys
 		// avoid dupes without overhead of array_unique
 		$langs = [
@@ -120,18 +123,20 @@ class Translator {
 		// load site language
 		$site_language = $this->config->language;
 		if (!empty($site_language)) {
-			$this->ensureTranslationsLoaded($site_language);
-
 			$langs[$site_language] = true;
 		}
 
 		// ultimate language fallback
 		$langs['en'] = true;
+		
+		$langs = array_intersect_key($langs, array_flip($this->getAllowedLanguages()));
 
 		// try to translate
 		$logger = _elgg_services()->logger;
 		$string = $message_key;
 		foreach (array_keys($langs) as $try_lang) {
+			$this->ensureTranslationsLoaded($try_lang);
+			
 			if (isset($this->translations[$try_lang][$message_key])) {
 				$string = $this->translations[$try_lang][$message_key];
 
@@ -235,16 +240,37 @@ class Translator {
 	public function detectLanguage() {
 		// detect from URL
 		$url_lang = _elgg_services()->request->getParam('hl');
+		$user = _elgg_services()->session->getLoggedInUser();
+		
 		if (!empty($url_lang)) {
+			// store language for logged out users
+			if (empty($user)) {
+				$cookie = new \ElggCookie('language');
+				$cookie->value = $url_lang;
+				elgg_set_cookie($cookie);
+			}
 			return $url_lang;
+		}
+		
+		// detect from cookie
+		$cookie = _elgg_services()->request->cookies->get('language');
+		if (!empty($cookie)) {
+			return $cookie;
 		}
 
 		// check logged in user
-		$user = _elgg_services()->session->getLoggedInUser();
 		if (!empty($user) && !empty($user->language)) {
 			return $user->language;
 		}
 
+		// detect from user agent if not logged in
+		$browserlangs = _elgg_services()->request->getLanguages();
+		if (!empty($browserlangs)) {
+			$browserlang = explode('_', $browserlangs[0]);
+			
+			return $browserlang[0];
+		}
+		
 		// get site setting
 		$site_language = $this->config->language;
 		if (!empty($site_language)) {
@@ -380,7 +406,9 @@ class Translator {
 			$this->addTranslation(basename($path, '.php'), $result);
 			return true;
 		}
-
+		
+		_elgg_services()->logger->warning("Language file did not return an array: $path");
+		
 		return false;
 	}
 
@@ -574,6 +602,38 @@ class Translator {
 	}
 	
 	/**
+	 * Returns an array of allowed languages as configured by the site admin
+	 *
+	 * @return string[]
+	 * @since 3.3
+	 */
+	public function getAllowedLanguages() {
+		if (isset($this->allowed_languages)) {
+			return $this->allowed_languages;
+		}
+		
+		$allowed_languages = $this->config->allowed_languages;
+		if (!empty($allowed_languages)) {
+			$allowed_languages = explode(',', $this->config->allowed_languages);
+		} else {
+			$allowed_languages = $this->getAvailableLanguages();
+		}
+		
+		if (!in_array($this->config->language, $allowed_languages)) {
+			// site language is always allowed
+			$allowed_languages[] = $this->config->language;
+		}
+		if (!in_array('en', $allowed_languages)) {
+			// 'en' language is always allowed
+			$allowed_languages[] = 'en';
+		}
+		
+		$this->allowed_languages = $allowed_languages;
+		
+		return $allowed_languages;
+	}
+	
+	/**
 	 * Registers a path for potential translation files
 	 *
 	 * @param string $path path to a folder that contains translation files
@@ -611,17 +671,6 @@ class Translator {
 		// we're sending a notification and the recipient is using a different
 		// language than the logged in user.)
 		$this->loadTranslations($language);
-	}
-
-	/**
-	 * Returns an array of language codes.
-	 *
-	 * @return array
-	 * @deprecated 3.0 please use elgg()->locale->getLanguageCodes()
-	 */
-	public static function getAllLanguageCodes() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated use elgg()->locale->getLanguageCodes()', '3.0');
-		return elgg()->locale->getLanguageCodes();
 	}
 
 	/**

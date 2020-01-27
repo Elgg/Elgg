@@ -418,7 +418,7 @@ class ElggInstaller {
 			'dbprefix' => [
 				'type' => 'text',
 				'value' => 'elgg_',
-				'required' => true,
+				'required' => false,
 			],
 			'dataroot' => [
 				'type' => 'text',
@@ -1199,7 +1199,7 @@ class ElggInstaller {
 		// non-Latin letters) or an underscore (_). Subsequent characters in an
 		// identifier or key word can be letters, underscores, digits (0-9), or dollar signs ($).
 		// Refs #4994
-		if (!preg_match("/^[a-zA-Z_][\w]*$/", $submissionVars['dbprefix'])) {
+		if (!empty($submissionVars['dbprefix']) && !preg_match("/^[a-zA-Z_][\w]*$/", $submissionVars['dbprefix'])) {
 			$app->_services->systemMessages->addErrorMessage(elgg_echo('install:error:database_prefix'));
 
 			return false;
@@ -1284,6 +1284,9 @@ class ElggInstaller {
 			switch ($k) {
 				case 'dataroot':
 					$v = Paths::sanitize($v);
+					break;
+				case 'dbpassword':
+					$v = addslashes($v);
 					break;
 			}
 
@@ -1453,11 +1456,11 @@ class ElggInstaller {
 			'system_cache_enabled' => 1,
 			'simplecache_minify_js' => true,
 			'simplecache_minify_css' => true,
-			'simplecache_lastupdate' => time(),
-			'processed_upgrades' => [],
+			'lastcache' => time(),
 			'language' => 'en',
 			'default_access' => $submissionVars['siteaccess'],
 			'allow_registration' => false,
+			'require_admin_validation' => false,
 			'walled_garden' => false,
 			'allow_user_default_access' => '',
 			'default_limit' => 10,

@@ -26,6 +26,7 @@ class ElggSite extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function initializeAttributes() {
+		// Using ElggData for testing purposes
 		ElggData::initializeAttributes();
 
 		$this->attributes['guid'] = null;
@@ -194,5 +195,13 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function canComment($user_guid = 0, $default = null) {
 		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public function updateLastAction($posted = null) {
+		// setting last action on ElggSite makes no sense... just returning current value to be compliant
+		return $this->last_action;
 	}
 }

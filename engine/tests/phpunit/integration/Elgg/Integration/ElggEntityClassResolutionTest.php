@@ -29,8 +29,9 @@ class ElggEntityClassResolutionTest extends IntegrationTestCase {
 		$entity->invalidateCache();
 
 		$entity = get_entity($entity->guid);
-
-		$this->assertTrue(elgg_instanceof($entity, $type, $subtype));
+		
+		$this->assertEquals($type, $entity->getType());
+		$this->assertEquals($subtype, $entity->getSubtype());
 		$this->assertInstanceOf($class, $entity);
 	}
 

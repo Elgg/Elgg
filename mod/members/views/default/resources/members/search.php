@@ -19,12 +19,9 @@ $content = elgg_list_entities([
 	'no_results' => true,
 ], 'elgg_search');
 
-$body = elgg_view_layout('one_sidebar', [
-	'title' => $title,
+echo elgg_view_page($title, [
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
 	'filter_id' => 'members',
 	'filter_value' => 'search',
 ]);
-
-echo elgg_view_page($title, $body);

@@ -40,4 +40,24 @@ $body .= elgg_view_field([
 	'step' => 1,
 ]);
 
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('config:content:comment_box_collapses'),
+	'#help' => elgg_echo('config:content:comment_box_collapses:help'),
+	'name' => 'comment_box_collapses',
+	'checked' => (bool) elgg_get_config('comment_box_collapses'),
+	'switch' => true,
+	'value' => 1,
+]);
+
+$body .= elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('config:content:comments_latest_first'),
+	'#help' => elgg_echo('config:content:comments_latest_first:help'),
+	'name' => 'comments_latest_first',
+	'checked' => (bool) elgg_get_config('comments_latest_first'),
+	'switch' => true,
+	'value' => 1,
+]);
+
 echo elgg_view_module('info', elgg_echo('admin:legend:content'), $body);

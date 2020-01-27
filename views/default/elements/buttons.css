@@ -116,7 +116,7 @@ button:focus {
 .elgg-button.elgg-state-disabled {
 	background: $(background-color-mild);
 	color: $(text-color-mild);
-	cursor: default;
+	cursor: not-allowed;
 }
 
 /* Use .elgg-size-small or .elgg-size-large for additional sizes */
@@ -135,6 +135,12 @@ button:focus {
 	border-radius: 3px;
 }
 
-.elgg-button-icon + .elgg-button-label {
-	margin-left: 0.5rem;
+.elgg-button {
+	* + .elgg-button-label {
+		margin-left: 0.5rem;
+	}
+	
+	.elgg-button-label + * {
+		margin-left: 0.5rem;
+	}
 }

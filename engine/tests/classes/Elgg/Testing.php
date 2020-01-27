@@ -12,7 +12,6 @@ use RuntimeException;
 
 /**
  * Testing trait that provides utility methods agnostic to testing framework
- * This trait can be shared e.g. between PHPUnit and Simpletest test cases
  */
 trait Testing {
 
@@ -58,7 +57,7 @@ trait Testing {
 		$request = Request::create($path, $method, $parameters);
 
 		$cookie_name = _elgg_config()->getCookieConfig()['session']['name'];
-		$session_id = _elgg_services()->session->getId();
+		$session_id = _elgg_services()->session->getID();
 		$request->cookies->set($cookie_name, $session_id);
 
 		$request->headers->set('Referer', elgg_normalize_url('phpunit'));

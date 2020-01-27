@@ -26,7 +26,7 @@ class ResponseTransport implements \Elgg\Http\ResponseTransport {
 	public function send(Response $response) {
 		$content = $response->getContent();
 		$json = @json_decode($content);
-		$this->command->write("Response: " . PHP_EOL);
+		$this->command->write(elgg_echo('cli:response:output') . PHP_EOL);
 		$this->command->dump($json ? $json : $content);
 
 		return true;

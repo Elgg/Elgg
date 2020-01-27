@@ -2,17 +2,12 @@
 
 namespace Elgg;
 
-use Elgg\Ajax\Service;
-use Elgg\Http\Input;
+use stdClass;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
-use Elgg\Http\ResponseFactory;
 use Elgg\I18n\Translator;
 use Elgg\Router\Middleware\WalledGarden;
 use Elgg\Router\RouteRegistrationService;
-use ElggSession;
-use Flintstone\Exception;
-use stdClass;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -126,43 +121,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		return true;
 	}
 
-	function testCanRegisterFunctionsAsPageHandlers() {
-		$registered = _elgg_services()->routes->registerPageHandler('hello', [$this, 'hello_page_handler']);
-
-		$this->assertTrue($registered);
-
-		$path = "hello/1/%E2%82%AC"; // euro sign
-
-		ob_start();
-		$handled = _elgg_services()->router->route($this->prepareHttpRequest($path));
-		ob_end_clean();
-		$this->assertTrue($handled);
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-
-		$this->assertEquals($path, $response->getContent());
-	}
-
-	function testFailToRegisterInvalidCallback() {
-		$registered = _elgg_services()->routes->registerPageHandler('hello', new stdClass());
-
-		$this->assertFalse($registered);
-	}
-
-	/**
-	 * @expectedException \Elgg\PageNotFoundException
-	 */
-	function testCanUnregisterPageHandlers() {
-		$request = $this->prepareHttpRequest('hello');
-		$this->createService($request);
-
-		_elgg_services()->routes->registerPageHandler('hello', [$this, 'hello_page_handler']);
-		_elgg_services()->routes->unregisterPageHandler('hello');
-
-		_elgg_services()->router->route($request);
-	}
-
 	/**
 	 * 1. Register a page handler for `/foo`
 	 * 2. Register a plugin hook that uses the "handler" result param
@@ -212,7 +170,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo');
 		$this->createService($request);
 
-		_elgg_services()->routes->registerPageHandler('foo', [$this, 'foo_page_handler']);
+		_elgg_services()->routes->register('foo', [
+			'path' => '/foo',
+			'handler' => [$this, 'foo_page_handler'],
+		]);
 		_elgg_services()->hooks->registerHandler('route', 'foo', [$this, 'bar_route_override']);
 
 		ob_start();
@@ -338,11 +299,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			return elgg_error_response('', REFERRER, ELGG_HTTP_BAD_REQUEST);
 		});
 
-		elgg_register_page_handler('foo', function () {
-			echo 'hello';
-
-			return true;
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function () {
+				echo 'hello';
+	
+				return true;
+			},
+		]);
 
 		$this->route($request);
 
@@ -357,12 +321,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_ok_response('hello');
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_ok_response('hello');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -377,12 +344,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -400,12 +370,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_redirect_response('foo2/bar2/baz2');
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_redirect_response('foo2/bar2/baz2');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -420,11 +393,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json']);
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			$output = elgg_view('response');
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function ($segments, $identifier) {
+				$output = elgg_view('response');
 
-			return elgg_ok_response($output);
-		});
+				return elgg_ok_response($output);
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -432,8 +408,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertEquals(elgg_view('response', [], 'json'), $response->getContent());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
 	public function testCanRespondToNonAjaxRequestForPageThatForwards() {
@@ -441,11 +417,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			_elgg_services()->responseFactory->redirect('index');
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function ($segments, $identifier) {
+				_elgg_services()->responseFactory->redirect('index');
 
-			return elgg_ok_response('foo');
-		});
+				return elgg_ok_response('foo');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -458,11 +437,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET');
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function ($segments, $identifier) {
+				_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
 
-			return elgg_ok_response('foo');
-		});
+				return elgg_ok_response('foo');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -489,12 +471,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_INTERNAL_SERVER_ERROR);
 		});
 
-		elgg_register_page_handler('phpunit', function () {
-			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function ($segments, $identifier) {
+				_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
 
-			return elgg_ok_response('foo');
-		});
-
+				return elgg_ok_response('foo');
+			},
+		]);
+		
 		$this->assertTrue($this->route($request));
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
@@ -528,8 +513,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('text/html', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		// no forward call, so API outputs content
 		$this->assertEquals('good bye', $response->getContent());
@@ -554,8 +539,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([
 			'output' => '',
@@ -579,21 +564,24 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_ok_response('hello');
-		});
-
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_ok_response('hello');
+			},
+		]);
+		
 		$this->assertTrue($this->route($request));
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('text/html', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		// no forward call, so API outputs content
 		$this->assertEquals('hello', $response->getContent());
@@ -604,12 +592,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -617,8 +608,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_NOT_FOUND, $response->getStatusCode());
 
-		$this->assertContains('text/html', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		// no forward, so API outputs html
 		$this->assertEquals('', $response->getContent());
@@ -629,12 +620,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_redirect_response('foo2/bar2/baz2');
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_redirect_response('foo2/bar2/baz2');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -642,8 +636,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([
 			'output' => '',
@@ -667,11 +661,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json'], 1);
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			$output = elgg_view('response');
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function () {
+				$output = elgg_view('response');
 
-			return elgg_ok_response($output);
-		});
+				return elgg_ok_response($output);
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -679,8 +676,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		// no forward, so API outputs view contents
 		$this->assertEquals(elgg_view('response', [], 'json'), $response->getContent());
@@ -691,11 +688,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET', [], 1);
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			_elgg_services()->responseFactory->redirect('index');
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function () {
+				_elgg_services()->responseFactory->redirect('index');
 
-			return elgg_ok_response('foo');
-		});
+				return elgg_ok_response('foo');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -703,8 +703,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([
 			'output' => '',
@@ -727,11 +727,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET', [], 1);
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function () {
+				_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
 
-			return elgg_ok_response('foo');
-		});
+				return elgg_ok_response('foo');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -739,8 +742,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([
 			'output' => '',
@@ -778,7 +781,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => 'good bye',
@@ -810,7 +813,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => '',
@@ -834,12 +837,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_ok_response('hello');
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_ok_response('hello');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -847,7 +853,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => 'hello',
@@ -865,12 +871,15 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_error_response('', 'phpunit', ELGG_HTTP_NOT_FOUND);
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -878,7 +887,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_NOT_FOUND, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'error' => '',
@@ -892,20 +901,23 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
 		$this->createService($request);
 
-		elgg_register_page_handler('foo', function ($segments, $identifier) {
-			$this->assertEquals(['bar', 'baz'], $segments);
-			$this->assertEquals('foo', $identifier);
-
-			return elgg_redirect_response('foo2/bar2/baz2');
-		});
-
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'handler' => function ($segments, $identifier) {
+				$this->assertEquals(['bar', 'baz'], $segments);
+				$this->assertEquals('foo', $identifier);
+	
+				return elgg_redirect_response('foo2/bar2/baz2');
+			},
+		]);
+		
 		$this->assertTrue($this->route($request));
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => '',
@@ -926,11 +938,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET', ['view' => 'json'], 2);
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			$output = elgg_view('response');
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function () {
+				$output = elgg_view('response');
 
-			return elgg_ok_response($output);
-		});
+				return elgg_ok_response($output);
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -938,7 +953,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => [
@@ -960,11 +975,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET', [], 2);
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			_elgg_services()->responseFactory->redirect('index');
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function () {
+				_elgg_services()->responseFactory->redirect('index');
 
-			return elgg_ok_response('foo');
-		});
+				return elgg_ok_response('foo');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -972,7 +990,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => '',
@@ -992,11 +1010,14 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('phpunit', 'GET', [], 2);
 		$this->createService($request);
 
-		elgg_register_page_handler('phpunit', function () {
-			_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
+		elgg_register_route('phpunit', [
+			'path' => '/phpunit',
+			'handler' => function () {
+				_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
 
-			return elgg_ok_response('foo');
-		});
+				return elgg_ok_response('foo');
+			},
+		]);
 
 		$this->assertTrue($this->route($request));
 
@@ -1004,7 +1025,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_NOT_FOUND, $response->getStatusCode());
 
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'error' => ''
@@ -1017,25 +1038,23 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * See #9796
-	 * @expectedException \Elgg\PageNotFoundException
+	 * @see https://github.com/Elgg/Elgg/issues/9796
 	 */
 	public function testCanRespondToUnregisteredRoute() {
 
 		$request = $this->prepareHttpRequest('unknown', 'GET');
 		$this->createService($request);
 
+		$this->expectException(PageNotFoundException::class);
 		$this->route($request);
 	}
 
-	/**
-	 * @expectedException \Elgg\BadRequestException
-	 */
 	public function testRespondsWithErrorToNonAjaxRequestForAjaxView() {
 
 		$request = $this->prepareHttpRequest('ajax/view/unallowed', 'GET');
 		$this->createService($request);
 
+		$this->expectException(BadRequestException::class);
 		$this->route($request);
 	}
 
@@ -1065,7 +1084,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertEquals(file_get_contents($this->viewsDir . '/default/cacheable.xml'), $response->getContent());
-		$this->assertContains('/xml', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('/xml', $response->headers->get('Content-Type'));
 	}
 
 	public function testCanRespondToAjaxViewRequestForCSS() {
@@ -1079,8 +1098,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertEquals(file_get_contents($this->viewsDir . '/default/styles.css'), $response->getContent());
-		$this->assertContains('text/css', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/css', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
 	public function testCanRespondToAjaxViewRequestForJS() {
@@ -1094,8 +1113,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertEquals(file_get_contents($this->viewsDir . '/default/javascript.js'), $response->getContent());
-		$this->assertContains('text/javascript', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/javascript', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
 	public function testCanRespondToAjaxViewRequestForARegisteredView() {
@@ -1115,8 +1134,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertEquals('hello', $response->getContent());
-		$this->assertContains('text/html', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
 	public function testCanFilterResponseToAjaxViewRequestForARegisteredView() {
@@ -1144,8 +1163,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
 		$this->assertEquals('good bye', $response->getContent());
-		$this->assertContains('text/html', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
 	public function testCanRespondToAjaxViewRequestForARegisteredViewWhichForwards() {
@@ -1167,8 +1186,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
 		$output = json_encode([
 			'output' => 'hello',
@@ -1210,7 +1229,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @group AjaxService
-	 * @see   #9797
+	 *
+	 * @see https://github.com/Elgg/Elgg/issues/9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForCacheableView() {
 
@@ -1224,7 +1244,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/cacheable.xml'),
@@ -1239,7 +1259,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @group AjaxService
-	 * @see   #9797
+	 *
+	 * @see https://github.com/Elgg/Elgg/issues/9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForCSS() {
 
@@ -1251,7 +1272,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/styles.css'),
@@ -1266,7 +1287,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @group AjaxService
-	 * @see   #9797
+	 *
+	 * @see https://github.com/Elgg/Elgg/issues/9797
 	 */
 	public function testCanRespondToAjax2ViewRequestForJS() {
 
@@ -1278,7 +1300,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => file_get_contents($this->viewsDir . '/default/javascript.js'),
@@ -1310,7 +1332,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => 'hello',
@@ -1352,7 +1374,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'error' => 'good bye',
@@ -1383,7 +1405,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		/**
 		 * @todo: decide what the output should be
@@ -1416,8 +1438,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertEquals(elgg_view_form('query_view', [], $vars), $response->getContent());
-		$this->assertContains('text/html', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
 	public function testCanFilterResponseToAjaxViewRequestForARegisteredFormView() {
@@ -1428,16 +1450,16 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 1);
 		$this->createService($request);
 
-		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function ($hook, $type, $response, $params) {
-			$this->assertEquals('response', $hook);
-			$this->assertEquals('form:query_view', $type);
-			$this->assertEquals($response, $params);
-			$this->assertInstanceOf(OkResponse::class, $response);
+		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function (\Elgg\Hook $hook) {
+			$this->assertEquals('response', $hook->getName());
+			$this->assertEquals('form:query_view', $hook->getType());
+			$this->assertEquals($hook->getValue(), $hook->getParams());
+			$this->assertInstanceOf(OkResponse::class, $hook->getValue());
 
 			return elgg_error_response('good bye', REFERRER, ELGG_HTTP_BAD_REQUEST);
 		});
 
-		elgg_register_ajax_view('form/query_view');
+		elgg_register_ajax_view('forms/query_view');
 
 		$this->route($request);
 
@@ -1445,8 +1467,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
 		$this->assertEquals('good bye', $response->getContent());
-		$this->assertContains('text/html', $response->headers->get('Content-Type'));
-		$this->assertContains('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 	}
 
 	/**
@@ -1468,7 +1490,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'value' => elgg_view_form('query_view', [], $vars),
@@ -1493,23 +1515,23 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('ajax/form/query_view', 'GET', $vars, 2);
 		$this->createService($request);
 
-		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function ($hook, $type, $response, $params) {
-			$this->assertEquals('response', $hook);
-			$this->assertEquals('form:query_view', $type);
-			$this->assertEquals($response, $params);
-			$this->assertInstanceOf(OkResponse::class, $response);
+		_elgg_services()->hooks->registerHandler('response', 'form:query_view', function (\Elgg\Hook $hook) {
+			$this->assertEquals('response', $hook->getName());
+			$this->assertEquals('form:query_view', $hook->getType());
+			$this->assertEquals($hook->getValue(), $hook->getParams());
+			$this->assertInstanceOf(OkResponse::class, $hook->getValue());
 
 			return elgg_error_response('good bye', REFERRER, ELGG_HTTP_BAD_REQUEST);
 		});
 
-		elgg_register_ajax_view('form/query_view');
+		elgg_register_ajax_view('forms/query_view');
 
 		$this->route($request);
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
 		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
-		$this->assertContains('application/json', $response->headers->get('Content-Type'));
+		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 
 		$output = json_encode([
 			'error' => 'good bye',
@@ -1528,24 +1550,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	function publicPagesProvider() {
 		return [
-			['walled_garden/core/', true],
-			['action/default/action', true],
-			['login', true],
-			['register', true],
-			['forgotpassword', true],
-			['changepassword', true],
-			['refresh_token', true],
 			['ajax/view/languages.js', true],
-			['upgrade.php', true],
 			['css/stylesheet.css', true],
 			['js/javascript.js', true],
 			['cache/0/foo/bar', true],
 			['cache/foo/bar', false],
-			['cron/run', true],
-			['services/rest/json', true],
 			['serve-file/foo', true],
-			['/robots.txt', true], // need slash to properly normalize url
-			['/favicon.ico', true],
 			['custom', false],
 		];
 	}
@@ -1603,7 +1613,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @group WalledGarden
-	 * @expectedException \Elgg\WalledGardenException
 	 */
 	public function testCanRouteNonPublicPageInWalledGardenMode() {
 		$request = $this->prepareHttpRequest('bar/foo');
@@ -1629,8 +1638,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		}
 
 		_elgg_services()->hooks->restore();
-
-		throw $ex;
+		
+		$this->assertInstanceOf(WalledGardenException::class, $ex);
 	}
 
 	/**
@@ -1706,10 +1715,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(1, $calls);
 	}
 	
-	/**
-	 * @expectedException \Elgg\PageNotFoundException
-	 */
-	function testCheckRequiredPluginsWhenRouting() {
+	public function testCheckRequiredPluginsWhenRouting() {
 		$request = $this->prepareHttpRequest('hello');
 		$this->createService($request);
 
@@ -1719,6 +1725,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'required_plugins' => ['foo'],
 		]);
 
+		$this->expectException(PageNotFoundException::class);
 		_elgg_services()->router->route($request);
 	}
 
@@ -1729,8 +1736,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		]);
 
 		$this->createService($request);
-
-		$calls = 0;
 
 		elgg_register_route('foo', [
 			'path' => '/bar/foo/{baz}',

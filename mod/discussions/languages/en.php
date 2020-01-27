@@ -1,11 +1,23 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
 
 return array(
+	'item:object:discussion' => "Discussion topic",
+	
 	'add:object:discussion' => 'Add discussion topic',
 	'edit:object:discussion' => 'Edit topic',
+	'collection:object:discussion' => 'Discussion topics',
+	'collection:object:discussion:group' => 'Group discussions',
+	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
 
 	'discussion:latest' => 'Latest discussions',
-	'collection:object:discussion:group' => 'Group discussions',
 	'discussion:none' => 'No discussions',
 	'discussion:updated' => "Last comment by %s %s",
 
@@ -17,6 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Unable to save this topic',
 	'discussion:error:missing' => 'Both title and message are required fields',
 	'discussion:error:permissions' => 'You do not have permissions to perform this action',
+	'discussion:error:no_groups' => "You're not a member of any groups.",
 
 	/**
 	 * River
@@ -48,9 +61,6 @@ View and reply to the discussion topic:
 View and comment on the discussion:
 %s
 ',
-
-	'item:object:discussion' => "Discussion topic",
-	'collection:object:discussion' => 'Discussion topics',
 
 	'groups:tool:forum' => 'Enable group discussions',
 

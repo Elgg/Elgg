@@ -38,5 +38,9 @@ define(function (require) {
 
 		e.preventDefault();
 	});
+	
+	$(document).on('submit', '.elgg-form-prevent-double-submit', function (e) {
+		$(this).find('button[type="submit"]').prop('disabled', true);
+	});
 });
 

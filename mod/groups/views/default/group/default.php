@@ -1,8 +1,6 @@
 <?php
 /**
  * Group entity view
- *
- * @package ElggGroups
  */
 
 $entity = elgg_extract('entity', $vars);

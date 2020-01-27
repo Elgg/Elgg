@@ -2,9 +2,6 @@
 /**
  * Elgg filestore.
  * This file contains functions for saving and retrieving data from files.
- *
- * @package Elgg.Core
- * @subpackage DataModel.FileStorage
  */
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -122,31 +119,12 @@ function elgg_delete_directory(string $directory, bool $leave_base_directory = f
 }
 
 /**
- * Returns the category of a file from its MIME type
- *
- * @param string $mime_type The MIME type
- *
- * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
- * @since 1.10
- */
-function elgg_get_file_simple_type($mime_type) {
-	$params = ['mime_type' => $mime_type];
-	return elgg_trigger_plugin_hook('simple_type', 'file', $params, 'general');
-}
-
-/**
  * Register file-related handlers on "init, system" event
  *
  * @return void
  * @internal
  */
 function _elgg_filestore_init() {
-
-	// Fix MIME type detection for Microsoft zipped formats
-	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
-
-	// Parse category of file from MIME type
-	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
 
 	// Touch entity icons if entity access id has changed
 	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
@@ -155,52 +133,6 @@ function _elgg_filestore_init() {
 	// Move entity icons if entity owner has changed
 	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_move_icons');
 	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_move_icons');
-}
-
-/**
- * Fix MIME type detection for Microsoft zipped formats
- *
- * @param \Elgg\Hook $hook "mime_type", "file"
- *
- * @return string The MIME type
- * @internal
- */
-function _elgg_filestore_detect_mimetype(\Elgg\Hook $hook) {
-	$mime_type = $hook->getValue();
-	$original_filename = $hook->getParam('original_filename');
-	$ext = pathinfo($original_filename, PATHINFO_EXTENSION);
-
-	return (new \Elgg\Filesystem\MimeTypeDetector())->fixDetectionErrors($mime_type, $ext);
-}
-
-/**
- * Parse a file category of file from a MIME type
- *
- * @param \Elgg\Hook $hook "simple_type", "file"
- *
- * @return void|string 'document', 'audio', 'video', or 'general' if the MIME type is unrecognized
- * @internal
- */
-function _elgg_filestore_parse_simpletype(\Elgg\Hook $hook) {
-
-	$mime_type = $hook->getParam('mime_type');
-
-	switch ($mime_type) {
-		case "application/msword":
-		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-		case "application/pdf":
-			return "document";
-
-		case "application/ogg":
-			return "audio";
-	}
-
-	if (preg_match('~^(audio|image|video)/~', $mime_type, $m)) {
-		return $m[1];
-	}
-	if (0 === strpos($mime_type, 'text/') || false !== strpos($mime_type, 'opendocument')) {
-		return "document";
-	}
 }
 
 /**

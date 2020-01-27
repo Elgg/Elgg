@@ -2,8 +2,6 @@
 /**
  * Form for adding and editing comments
  *
- * @package Elgg
- *
  * @uses ElggEntity  $vars['entity']  The entity being commented
  * @uses ElggComment $vars['comment'] The comment being edited
  * @uses bool        $vars['inline']  Show a single line version of the form?

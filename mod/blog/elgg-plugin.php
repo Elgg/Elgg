@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Blog\GroupToolContainerLogicCheck;
+
 return [
 	'entities' => [
 		[
@@ -12,7 +14,6 @@ return [
 	'actions' => [
 		'blog/save' => [],
 		'blog/auto_save_revision' => [],
-		'blog/delete' => [],
 	],
 	'routes' => [
 		'collection:object:blog:owner' => [
@@ -89,6 +90,13 @@ return [
 		'default:object:blog' => [
 			'path' => '/blog',
 			'resource' => 'blog/all',
+		],
+	],
+	'hooks' => [
+		'container_logic_check' => [
+			'object' => [
+				GroupToolContainerLogicCheck::class => [],
+			],
 		],
 	],
 	'widgets' => [

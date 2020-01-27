@@ -4,9 +4,6 @@
  *
  * This is a distinct theme from the theme of the site. There are dependencies
  * on the HTML created by the views in Elgg core.
- *
- * @package Elgg.Core
- * @subpackage UI
  */
 
 echo elgg_view('core.css');
@@ -119,81 +116,72 @@ echo elgg_view('core.css');
 }
 
 .elgg-plugin {
-	border: 1px solid #CCC;
+	border: 1px solid $(border-color-mild);
 	padding: 0.5rem;
 	border-radius: 3px;
 	position: relative;
-}
+	
+	&:hover {
+		border-color: $(border-color-highlight);
+	}
 
-.elgg-plugin > .elgg-image-block {
-	align-items: center;
-}
+	&.elgg-state-active {
+		background: #fff;
+	}
+	
+	&.elgg-state-inactive {
+		background: #eee;
+		
+		.elgg-listing-summary-title a {
+			color: #666;
+		}
+	}
+	
+	&.elgg-state-cannot-activate {
+		background: #f7f0d4;
+	}
+	
+	&.elgg-state-draggable > .elgg-image-block .elgg-head {
+		cursor: move;
+	}
+	
+	> .elgg-image {
+		margin-right: .5rem;
+		min-width: 9rem;
+		text-align: center;
+		
+		.elgg-button {
+			display: block;
+			margin: 0;
+		}
+	}
+	
+	.ui-sortable-handle {
+		cursor: move;
+	}
+	
+	.elgg-state-error {
+		background: $(state-danger-background-color);
+		color: $(state-danger-font-color);
+		border-color: $(state-danger-border-color);
+	}
+	
+	.elgg-state-warning {
+		background: $(state-warning-background-color);
+		color: $(state-warning-font-color);
+		border-color: $(state-warning-border-color);
+	}
+	
+	.elgg-state-error,
+	.elgg-state-warning {
+		padding: 3px 6px;
+		margin: 3px 0;
+		width: auto;
 
-.elgg-plugin .elgg-output {
-	margin: 0;
-}
-
-.elgg-plugin:hover {
-	border-color: #999;
-}
-
-.elgg-plugin .elgg-head {
-	white-space: nowrap;
-	overflow: hidden;
-	max-width: 100%;
-}
-
-.elgg-plugin.elgg-state-draggable > .elgg-image-block .elgg-head {
-	cursor: move;
-}
-
-.elgg-plugin > .elgg-image-block > .elgg-image {
-	margin-right: 0;
-	min-width: 9em;
-	text-align: center;
-}
-
-.elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
-	display: block;
-	margin: 0;
-}
-
-.elgg-plugin > .elgg-image-block > .elgg-body {
-	padding: 3px 10px;
-}
-
-.elgg-plugin p {
-	margin: 0;
-}
-
-.elgg-plugin h3 {
-	color: black;
-	padding-bottom: 10px;
-}
-
-.elgg-plugin .ui-sortable-handle {
-	cursor: move;
-}
-
-.elgg-plugin-list-description {
-	display: inline-block;
-	margin-left: 0.5rem;
-	font-size: 0.85rem;
-}
-
-.elgg-plugin.elgg-state-active,
-.elgg-state-active .elgg-plugin-list-reordering {
-	background: #fff;
-}
-
-.elgg-plugin.elgg-state-inactive,
-.elgg-state-inactive .elgg-plugin-list-reordering {
-	background: #eee;
-}
-
-.elgg-plugin.elgg-state-cannot-activate,
-.elgg-plugin.elgg-state-cannot-activate .elgg-plugin-list-reordering {
-	background: #f7f0d4;
+		a {
+			text-decoration: underline;
+		}
+	}
 }
 
 .elgg-state-cannot-activate .elgg-image a[disabled],
@@ -207,24 +195,6 @@ echo elgg_view('core.css');
 	border: 1px dashed $(border-color-highlight) !important;
 }
 
-.elgg-plugin-list-reordering {
-	display: none;
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 0.25rem;
-	font-size: 0.75rem;
-}
-
-.elgg-plugin:hover .elgg-plugin-list-reordering {
-	display: block;
-}
-
-.elgg-plugin-list-reordering li {
-	float: left;
-	margin-left: 5px;
-}
-
 #elgg-plugin-list-cover {
 	display: none;
 	position: absolute;
@@ -234,12 +204,6 @@ echo elgg_view('core.css');
 	right: 0;
 	background: white;
 	opacity: 0.5;
-}
-
-.elgg-plugin-settings {
-	font-weight: normal;
-	font-size: 0.9em;
-	margin-left: 5px;
 }
 
 .elgg-plugin-contributors {
@@ -273,24 +237,6 @@ echo elgg_view('core.css');
 	content: '';
 }
 
-.elgg-plugin .elgg-state-error {
-	background: #fbe3e4;
-	color: #8a1f11;
-	border-color: #fbc2c4;
-	padding: 3px 6px;
-	margin: 3px 0;
-	width: auto;
-}
-
-.elgg-plugin .elgg-state-warning {
-	background: #f4f4f4;
-	color: #000000;
-	border-color: #fbe58b;
-	padding: 3px 6px;
-	margin: 3px 0;
-	width: auto;
-}
-
 #elgg-plugin-list {
 	position: relative;
 	
@@ -299,20 +245,6 @@ echo elgg_view('core.css');
 			display: inline-block;
 		}
 	}
-}
-
-.elgg-plugin .elgg-state-error a,
-.elgg-plugin .elgg-state-warning a,
-.elgg-plugin .elgg-text-help a {
-	text-decoration: underline;
-}
-
-.elgg-plugin-title {
-	font-weight: 500;
-}
-
-.elgg-state-inactive .elgg-plugin-title {
-	color: #666;
 }
 
 .elgg-module-plugin-details .elgg-plugin {

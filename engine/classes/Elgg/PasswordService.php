@@ -5,9 +5,8 @@ namespace Elgg;
 /**
  * PRIVATE CLASS. API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @package Elgg.Core
  * @internal
- * @since   1.10.0
+ * @since 1.10.0
  */
 final class PasswordService {
 

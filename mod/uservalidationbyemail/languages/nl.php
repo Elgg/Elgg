@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'email:validate:subject' => "%s, bevestig alsjeblieft je e-mailadres voor %s!",
 	'email:validate:body' => "Beste %s,
@@ -29,5 +35,8 @@ Indien je niet op de link kunt klikken, kopieer en plak deze handmatig in je bro
 	'uservalidationbyemail:errors:could_not_resend_validations' => 'Kon de validatie-e-mail niet versturen aan de geselecteerde gebruikers.',
 
 	'uservalidationbyemail:messages:resent_validation' => 'Validatie opnieuw verzonden',
-	'uservalidationbyemail:messages:resent_validations' => 'Validatie opnieuw verzonden aan alle geselecteerde gebruikers.'
+	'uservalidationbyemail:messages:resent_validations' => 'Validatie opnieuw verzonden aan alle geselecteerde gebruikers.',
+	
+	'uservalidationbyemail:upgrade:2019090600:title' => 'Bijhouden gebruikers e-mail validatie status',
+	'uservalidationbyemail:upgrade:2019090600:description' => 'De e-mail validatie status wordt op een nieuwe manier bijgehouden. Deze upgrade zorgt er voor dat de huidige gebruikers die nog e-mail validatie nodig hebben dit op de nieuwe manier bijhouden.',
 );

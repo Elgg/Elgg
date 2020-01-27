@@ -11,9 +11,7 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Widgets
- * @since      1.9.0
+ * @since 1.9.0
  */
 class WidgetsService {
 

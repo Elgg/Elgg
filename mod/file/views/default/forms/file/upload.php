@@ -1,10 +1,8 @@
 <?php
-
 /**
  * Elgg file upload/save form
- *
- * @package ElggFile
  */
+
 // once elgg_view stops throwing all sorts of junk into $vars, we can use
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
@@ -82,6 +80,6 @@ foreach ($fields as $field) {
 
 $footer = elgg_view_field([
 	'#type' => 'submit',
-	'value' => elgg_echo('save'),
+	'value' => $submit_label,
 ]);
 elgg_set_form_footer($footer);

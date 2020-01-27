@@ -1,9 +1,6 @@
 <?php
 /**
  * User settings for notifications.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $page_owner = elgg_get_page_owner_entity();

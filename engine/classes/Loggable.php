@@ -8,9 +8,6 @@
  * actually be logged.
  *
  * To have events involving your object to be logged simply implement this interface.
- *
- * @package    Elgg.Core
- * @subpackage DataModel.Loggable
  */
 interface Loggable {
 	/**

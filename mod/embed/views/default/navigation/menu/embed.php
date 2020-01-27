@@ -5,8 +5,20 @@
  * @uses $vars['menu']['default']
  */
 
+use Elgg\Collections\Collection;
+
 $tabs = [];
-foreach ($vars['menu']['default'] as $menu_item) {
+
+$menu = elgg_extract('menu', $vars);
+if (!$menu instanceof Collection) {
+	return;
+}
+
+if (empty($menu->count())) {
+	return;
+}
+
+foreach ($menu['default'] as $menu_item) {
 	$tabs[] = [
 		'text' => $menu_item->getText(),
 		'href' => 'embed/' . $menu_item->getName(),

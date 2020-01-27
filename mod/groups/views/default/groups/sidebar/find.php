@@ -1,8 +1,6 @@
 <?php
 /**
  * Group search
- *
- * @package ElggGroups
  */
 
 $body = elgg_view_form('groups/find', [

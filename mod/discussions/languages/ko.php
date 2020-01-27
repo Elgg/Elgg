@@ -1,11 +1,23 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
+	'item:object:discussion' => "토론 주제",
+	
 	'add:object:discussion' => '토론 주제 추가',
 	'edit:object:discussion' => '주제 수정',
+	'collection:object:discussion' => '토론 주제들',
+	'collection:object:discussion:group' => '모둠 토론',
+	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
 
 	'discussion:latest' => '최근의 토론',
-	'collection:object:discussion:group' => '모둠 토론',
 	'discussion:none' => '토론 없슴',
 	'discussion:updated' => "%s%s의 마지막 댓글",
 
@@ -17,6 +29,7 @@ return array(
 	'discussion:error:notsaved' => '토론 주제를 저장할 수 없습니다.',
 	'discussion:error:missing' => '제목과 내용이 모두 필요합니다.',
 	'discussion:error:permissions' => '이 작업을 할 권한이 없습니다.',
+	'discussion:error:no_groups' => "You're not a member of any groups.",
 
 	/**
 	 * River
@@ -48,9 +61,6 @@ View and reply to the discussion topic:
 View and comment on the discussion:
 %s
 ',
-
-	'item:object:discussion' => "토론 주제",
-	'collection:object:discussion' => '토론 주제들',
 
 	'groups:tool:forum' => '모둠 토론 허용',
 

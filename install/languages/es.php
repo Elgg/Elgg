@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'install:title' => 'Instalación de Elgg',
 	'install:welcome' => 'Bienvenido!',
@@ -10,12 +16,18 @@ return array(
 
 	'install:next' => 'Siguiente',
 	'install:refresh' => 'Actualizar',
+	'install:change_language' => 'Change language',
 
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
 If you haven't already, read through the installation instructions included with Elgg (or click the instructions link at the bottom of the page).
 
 If you are ready to proceed, click the Next button.",
+	
+	'install:footer:instructions' => "Installation instructions",
+	'install:footer:troubleshooting' => "Installation troubleshooting",
+	'install:footer:community' => "Elgg community forums",
+	
 	'install:requirements:instructions:success' => "Su servidor pasó la verificación de requerimientos.",
 	'install:requirements:instructions:failure' => "Su servidor falló la verificación de requerimientos. Luego de solucionar los items enumerados debajo refresque esta página. Si necesita mas ayuda verifique los enlaces de solución de problemas al final de esta página.",
 	'install:requirements:instructions:warning' => "Su servidor pasó la verificación de requerimientos, pero hay al menos una advertencia. Le recomendamos que verifique la página de solución de problemas para mas información.",

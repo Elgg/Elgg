@@ -14,7 +14,7 @@ use Elgg\Cache\QueryCache;
 /**
  * The Elgg database
  *
- * @internal Use the public API functions in engine/lib/database.php
+ * @internal
  *
  * @property-read string $prefix Elgg table prefix (read only)
  */
@@ -246,8 +246,6 @@ class Database {
 	 * Update the database.
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
-	 *
-	 * @note WARNING! update_data() has the 2nd and 3rd arguments reversed.
 	 *
 	 * @param QueryBuilder|string $query        The query to run.
 	 * @param bool                $get_num_rows Return the number of rows affected (default: false).
@@ -650,45 +648,6 @@ class Database {
 	 */
 	public function getQueryCount() {
 		return $this->query_count;
-	}
-
-	/**
-	 * Sanitizes an integer value for use in a query
-	 *
-	 * @param int  $value  Value to sanitize
-	 * @param bool $signed Whether negative values are allowed (default: true)
-	 * @return int
-	 * @deprecated Use query parameters where possible
-	 */
-	public function sanitizeInt($value, $signed = true) {
-		$value = (int) $value;
-
-		if ($signed === false) {
-			if ($value < 0) {
-				$value = 0;
-			}
-		}
-
-		return $value;
-	}
-
-	/**
-	 * Sanitizes a string for use in a query
-	 *
-	 * @param string $value Value to escape
-	 * @return string
-	 * @throws \DatabaseException
-	 * @deprecated Use query parameters where possible
-	 */
-	public function sanitizeString($value) {
-		if (is_array($value)) {
-			throw new \DatabaseException(__METHOD__ . '() and serialize_string() cannot accept arrays.');
-		}
-		$quoted = $this->getConnection('read')->quote($value);
-		if ($quoted[0] !== "'" || substr($quoted, -1) !== "'") {
-			throw new \DatabaseException("PDO::quote did not return surrounding single quotes.");
-		}
-		return substr($quoted, 1, -1);
 	}
 
 	/**

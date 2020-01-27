@@ -1,14 +1,20 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	'item:object:file' => 'Tiedostot',
-	'collection:object:file' => 'Files',
-	'collection:object:file:all' => "All site files",
-	'collection:object:file:owner' => "%s's files",
-	'collection:object:file:friends' => "Friends' files",
-	'collection:object:file:group' => "Group files",
-	'add:object:file' => "Upload a file",
-	'edit:object:file' => "Edit file",
+	'collection:object:file' => 'Tiedostot',
+	'collection:object:file:all' => "Kaikki sivuston tiedostot",
+	'collection:object:file:owner' => "Käyttäjän %s tiedostot",
+	'collection:object:file:friends' => "Ystävien tiedostot",
+	'collection:object:file:group' => "Ryhmän tiedostot",
+	'add:object:file' => "Lisää uusi tiedosto",
+	'edit:object:file' => "Muokkaa tiedostoa",
 
 	'file:more' => "Lisää tiedostoja",
 	'file:list' => "listanäkymä",
@@ -45,10 +51,10 @@ return array(
 	'file:friends:type:image' => "Ystäviesi kuvat",
 	'file:friends:type:general' => "Ystäviesi muut tiedostot",
 
-	'widgets:filerepo:name' => "File widget",
-	'widgets:filerepo:description' => "Showcase your latest files",
+	'widgets:filerepo:name' => "Tiedostovimpain",
+	'widgets:filerepo:description' => "Näytä viimeisimmät tiedostosi",
 
-	'groups:tool:file' => 'Enable group files',
+	'groups:tool:file' => 'Ota käyttöön ryhmän tiedostot',
 
 	'river:object:file:create' => '%s uploaded the file %s',
 	'river:object:file:comment' => '%s commented on the file %s',

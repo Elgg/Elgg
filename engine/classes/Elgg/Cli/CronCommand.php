@@ -14,15 +14,15 @@ class CronCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('cron')
-			->setDescription('Execute cron handlers for all or specified interval')
+			->setDescription(elgg_echo('cli:cron:description'))
 			->addOption('interval', 'i', InputOption::VALUE_OPTIONAL,
-				'Name of the interval (e.g. hourly)'
+				elgg_echo('cli:cron:option:interval')
 			)
 			->addOption('force', 'f', InputOption::VALUE_NONE,
-				'Force cron commands to run even if they are not yet due'
+				elgg_echo('cli:cron:option:force')
 			)
 			->addOption('time', 't', InputOption::VALUE_OPTIONAL,
-				'Time of the cron initialization'
+				elgg_echo('cli:cron:option:time')
 			);
 	}
 
@@ -34,7 +34,7 @@ class CronCommand extends Command {
 		$intervals = null;
 		$interval = $this->option('interval');
 		if ($interval) {
-			$intervals = [strtolower($interval)];
+			$intervals = [elgg_strtolower($interval)];
 		}
 
 		$time = $this->option('time');

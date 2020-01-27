@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Poista ryhmä',
 	'groups:membershiprequests' => 'Hallinnoi liittymispyyntöjä',
 	'groups:membershiprequests:pending' => 'Hallinnoi liittymispyyntöjä (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Ryhmäkutsut',
 	'groups:invitations:pending' => 'Ryhmäkutsut (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Ryhmän kuvake (jätä tyhjäksi, jos et halua vaihtaa)',
 	'groups:name' => 'Ryhmän nimi',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "Omistaja",
 	'groups:owner:warning' => "Varoitus: Jos muutat tätä, luovut ryhmän omistajuudesta.",
 	'groups:widget:num_display' => 'Näytettävien ryhmien määrä',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Ryhmien jäsenyys',
+	'widgets:a_users_groups:description' => 'Näytä profiilissasi ryhmät, joiden jäsenenä olet',
 
 	'groups:noaccess' => 'Sinulla ei ole oikeuksia tämän ryhmän näkemiseen',
 	'groups:cantcreate' => 'Vain sivuston ylläpitäjät voivat luoda uusia ryhmiä.',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Kutsu ystäviä ryhmään',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Sinulla ei vielä ole ystäviä, joita kutsua!',
 	'groups:group' => "Ryhmä",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "Ryhmiä ei löytynyt",
 	'groups:search_in_group' => "Etsi tästä ryhmästä",
 	'groups:acl' => "Ryhmä: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Ryhmän jäsenet',
 
 	'groups:notfound' => "Ryhmää ei löytynyt",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Vain jäsenillä on pääsy tämän ryhmän sisältöihin.",
 	'groups:opengroup:membersonly:join' => 'Klikkaa "Liity ryhmään" päästäksesi ryhmän jäseneksi.',
 	'groups:visibility' => 'Kuka voi nähdä tämän ryhmän?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

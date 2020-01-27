@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Slet gruppe',
 	'groups:membershiprequests' => 'Administrer anmodning om deltagelse',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Gruppe invitationer',
 	'groups:invitations:pending' => 'Group invitations (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Gruppe ikon (efterlad blank for at beholde det uændret)',
 	'groups:name' => 'Gruppe navn',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "Ejer",
 	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
 	'groups:widget:num_display' => 'Antal af grupper der skal vises',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Grupper',
+	'widgets:a_users_groups:description' => 'Vis de grupper, som du er medlem af, på din profil',
 
 	'groups:noaccess' => 'Ikke adgang til gruppen',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Inviter venner til gruppen',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Du har ingen venner at invitere!',
 	'groups:group' => "Gruppe",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "Ingen match blev fundet",
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Gruppens medlemmer',
 
 	'groups:notfound' => "Gruppe ikke fundet",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Denne gruppe's indhold er kun tilladt for gruppens medlemmer.",
 	'groups:opengroup:membersonly:join' => 'For at blive medlem, klik "Tilmeld gruppe" menu linket',
 	'groups:visibility' => 'Hvem kan se denne gruppe?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

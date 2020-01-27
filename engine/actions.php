@@ -1,7 +1,6 @@
 <?php
 
 return [
-	'admin/delete_admin_notice' => ['access' => 'admin'],
 	'admin/delete_admin_notices' => ['access' => 'admin'],
 	'admin/menu/save' => ['access' => 'admin'],
 	'admin/plugins/activate' => ['access' => 'admin'],
@@ -11,6 +10,7 @@ return [
 	'admin/plugins/set_priority' => ['access' => 'admin'],
 	'admin/security/settings' => ['access' => 'admin'],
 	'admin/security/regenerate_site_secret' => ['access' => 'admin'],
+	'admin/site/cache/invalidate' => ['access' => 'admin'],
 	'admin/site/flush_cache' => ['access' => 'admin'],
 	'admin/site/set_maintenance_mode' => ['access' => 'admin'],
 	'admin/site/set_robots' => ['access' => 'admin'],
@@ -28,13 +28,13 @@ return [
 	'admin/user/removeadmin' => ['access' => 'admin'],
 	'admin/user/unban' => ['access' => 'admin'],
 	'admin/user/validate' => ['access' => 'admin'],
+	'annotation/delete' => [],
 	'avatar/upload' => [],
-	'avatar/crop' => [],
-	'avatar/remove' => [],
 	'comment/save' => [],
 	'entity/delete' => [],
 	'login' => ['access' => 'public'],
 	'logout' => [],
+	'plugins/settings/remove' => ['access' => 'admin'],
 	'plugins/settings/save' => ['access' => 'admin'],
 	'plugins/usersettings/save' => [],
 	'register' => ['access' => 'public'],

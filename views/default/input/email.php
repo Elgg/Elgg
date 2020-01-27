@@ -3,9 +3,6 @@
  * Elgg email input
  * Displays an email input field
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['class'] Additional CSS class
  */
 
@@ -15,7 +12,7 @@ $defaults = [
 	'disabled' => false,
 	'autocapitalize' => 'off',
 	'autocorrect' => 'off',
-	'type' => 'email'
+	'type' => 'email',
 ];
 
 $vars = array_merge($defaults, $vars);

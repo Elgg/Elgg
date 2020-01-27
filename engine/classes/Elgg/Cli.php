@@ -8,6 +8,7 @@ use Exception;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Elgg\Cli\Command;
 
 /**
  * CLI bootstrap
@@ -61,11 +62,41 @@ class Cli {
 	 * @return void
 	 */
 	protected function bootstrap() {
-		$commands = $this->hooks->trigger('commands', 'cli', null, []);
+		$commands = array_merge($this->getCoreCommands(), $this->getPluginCommands());
+		$commands = $this->hooks->trigger('commands', 'cli', null, $commands);
 
 		foreach ($commands as $command) {
 			$this->add($command);
 		}
+	}
+
+	/**
+	 * Returns the core cli commands
+	 * @return array
+	 */
+	protected function getCoreCommands() {
+		$conf = \Elgg\Project\Paths::elgg() . 'engine/cli_commands.php';
+		return \Elgg\Includer::includeFile($conf);
+	}
+
+	/**
+	 * Returns the cli commands registered in plugins
+	 * @return array
+	 */
+	protected function getPluginCommands() {
+		$return = [];
+		
+		$plugins = elgg_get_plugins('active');
+		foreach ($plugins as $plugin) {
+			$plugin_commands = $plugin->getStaticConfig('cli_commands', []);
+			if (empty($plugin_commands)) {
+				continue;
+			}
+			
+			$return = array_merge($return, $plugin_commands);
+		}
+		
+		return $return;
 	}
 
 	/**
@@ -91,9 +122,20 @@ class Cli {
 		if ($this->logger) {
 			$command->setLogger($this->logger);
 		}
+		
+		if (!is_subclass_of($command, Command::class)) {
+			$this->console->add($command);
+			return;
+		}
 
+		// Execute command as a given user
 		$command->addOption('as', 'u', InputOption::VALUE_OPTIONAL,
-			'Execute the command on behalf of a user with the given username'
+			elgg_echo('cli:option:as')
+		);
+		
+		// Change language
+		$command->addOption('language', null, InputOption::VALUE_OPTIONAL,
+			elgg_echo('cli:option:language')
 		);
 
 		$this->console->add($command);
@@ -102,11 +144,15 @@ class Cli {
 	/**
 	 * Bootstrap and run console application
 	 *
+	 * @param bool $bootstrap Is bootstrap needed?
+	 *
 	 * @return void
 	 * @throws Exception
 	 */
-	public function run() {
-		$this->bootstrap();
+	public function run(bool $bootstrap = true) {
+		if ($bootstrap) {
+			$this->bootstrap();
+		}
 		$this->console->run($this->input, $this->output);
 	}
 

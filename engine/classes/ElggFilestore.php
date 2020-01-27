@@ -1,10 +1,6 @@
 <?php
 /**
  * This class defines the interface for all elgg data repositories.
- *
- * @package    Elgg.Core
- * @subpackage DataStorage
- * @class   \ElggFilestore
  */
 abstract class ElggFilestore {
 	/**

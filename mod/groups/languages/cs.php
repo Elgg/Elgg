@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Smazat skupinu',
 	'groups:membershiprequests' => 'Spravovat žádosti o přidání',
 	'groups:membershiprequests:pending' => 'Spravovat žádosti o přidání (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Pozvání do skupin',
 	'groups:invitations:pending' => 'Pozvání do skupin (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Portrét skupiny (prázdné = žádné změny)',
 	'groups:name' => 'Jméno skupiny',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "Vlastník",
 	'groups:owner:warning' => "Varování: pokud tuto hodnotu změníte, nebudete nadále vlastníkem této skupiny.",
 	'groups:widget:num_display' => 'Počet zobrazených skupin',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Členství ve skupině',
+	'widgets:a_users_groups:description' => 'Zobrazuje skupiny kterých jste členem',
 
 	'groups:noaccess' => 'K této skupině nemáte přístup',
 	'groups:cantcreate' => 'Nemůžete vytvořit skupinu, to mohou pouze správci.',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Pozvat přátele do této skupiny',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Nemáte žádné přátele, které byste mohl/a pozvat!',
 	'groups:group' => "Skupina",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "Hledání neodpovídá žádná skupina",
 	'groups:search_in_group' => "Hledat v této skupině",
 	'groups:acl' => "Skupina: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Počet členů',
 
 	'groups:notfound' => "Skupina nebyla nalezena",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Obsah této skupiny je dostupný pouze jejím členům.",
 	'groups:opengroup:membersonly:join' => 'Kliknutím na odkaz "Připojit se ke skupině" se stanete členem skupiny.',
 	'groups:visibility' => 'Kdo může vidět tuto skupinu?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

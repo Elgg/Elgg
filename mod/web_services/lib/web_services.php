@@ -304,8 +304,9 @@ function serialise_parameters($method, $parameters) {
 					// This is using sanitise_string() to escape characters to be inside a
 					// single-quoted string literal in PHP code. Not sure what we have to do
 					// to keep this safe in 3.0...
-					$k = sanitise_string($k);
-					$v = sanitise_string($v);
+					// @todo need a replacement for removed sanitise_string
+					$k = addslashes($k);
+					$v = addslashes($v);
 
 					$array .= "'$k'=>'$v',";
 				}
@@ -381,7 +382,7 @@ function api_auth_hmac() {
 
 	// get the query string
 	$query = _elgg_services()->request->server->get('REQUEST_URI');
-	$query = substr($query, strpos($query, '?') + 1);
+	$query = elgg_substr($query, elgg_strpos($query, '?') + 1);
 
 	// calculate expected HMAC
 	$hmac = calculate_hmac(	$api_header->hmac_algo,
@@ -503,7 +504,7 @@ function get_and_validate_api_headers() {
  * @internal
  */
 function map_api_hash($algo) {
-	$algo = strtolower(sanitise_string($algo));
+	$algo = strtolower($algo);
 	$supported_algos = [
 		"md5" => "md5",	// @todo Consider phasing this out
 		"sha" => "sha1", // alias for sha1
@@ -722,7 +723,7 @@ function _php_api_exception_handler($exception) {
  * If no handler is found, this returns a 404 error
  *
  * @param string $handler Handler name
- * @param array  $request Request string
+ * @param string $request Request string
  *
  * @return void
  * @internal

@@ -1,0 +1,20 @@
+From 3.1 to 3.2
+===============
+
+.. contents:: Contents
+   :local:
+   :depth: 1
+
+User write access
+-----------------
+
+To fix an issue where user owned access collections like `Friends` or `Friend Collections` would still show in the access drop down
+when creating content, even if related plugins are disabled, we needed to change some internal logic. 
+If you want to have an access collection subtype available in the write access you now need to register the subtype with a plugin hook. 
+See
+:ref:`the plugin hook reference for 'access:collections:write:subtypes' <guides/hooks-list#access-hooks>` for more details. 
+
+River items enabled state
+-------------------------
+
+The `enabled` state of river items has been deprecated. You should no longer use this property when working with river items.

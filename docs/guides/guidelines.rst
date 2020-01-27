@@ -51,7 +51,7 @@ Use standardized page handlers and scripts
 - Example: Bookmarks plugin
 - Store page functionality in ``mod/<plugin>/views/default/resources/<page_handler>/<page_name>.php``
 - Use ``elgg_view_resource('<page_handler>/<page_name>')`` to render that.
-- Use the content page layout in page handler scripts: ``$content = elgg_view_layout('content', $options);``
+- Use the default page layout in page handler scripts: ``$content = elgg_view_layout('default', $options);``
 - Page handler scripts should not contain HTML
 - Call ``elgg_push_breadcrumb()`` in the page handler scripts.
 - No need to worry about setting the page owner if the URLs are in the standardized format

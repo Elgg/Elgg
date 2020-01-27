@@ -5,9 +5,6 @@
  *
  * @warning Values of FALSE or NULL will match '' (empty string) but not 0.
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses $vars['value']          The current value or an array of current values if multiple is true
  * @uses $vars['options']        An array of strings or arrays representing the options
  *                               for the dropdown field. If an array is passed,
@@ -64,7 +61,7 @@ unset($vars['options_values']);
 
 $normalize_options = function($options) use (&$normalize_options) {
 	foreach ($options as $key => $option) {
-		if (is_string($option)) {
+		if (!is_array($option)) {
 			$option = [
 				'text' => $option,
 				'value' => $key,

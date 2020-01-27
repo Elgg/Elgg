@@ -53,10 +53,10 @@ class RedirectService {
 			return;
 		}
 
-		if (0 !== strpos($this->current_url, $this->site_url)) {
+		if (0 !== elgg_strpos($this->current_url, $this->site_url)) {
 			return;
 		}
-		$path = substr($this->current_url, strlen($this->site_url));
+		$path = elgg_substr($this->current_url, elgg_strlen($this->site_url));
 
 		$patterns = [
 			'~^action/~',

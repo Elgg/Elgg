@@ -22,6 +22,7 @@ use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
 use Zend\Mail\Transport\TransportInterface as Mailer;
 use Elgg\I18n\LocaleService;
+use Elgg\Security\PasswordGeneratorService;
 
 /**
  * Provides common Elgg services.
@@ -85,10 +86,12 @@ use Elgg\I18n\LocaleService;
  * @property-read \Elgg\Menu\Service                              $menus
  * @property-read \Elgg\Cache\MetadataCache                       $metadataCache
  * @property-read \Elgg\Database\MetadataTable                    $metadataTable
+ * @property-read \Elgg\Filesystem\MimeTypeService                $mimetype
  * @property-read \Elgg\Database\Mutex                            $mutex
  * @property-read \Elgg\Notifications\NotificationsService        $notifications
  * @property-read \Elgg\Page\PageOwnerService                     $pageOwner
  * @property-read \Elgg\PasswordService                           $passwords
+ * @property-read \Elgg\Security\PasswordGeneratorService         $passwordGenerator
  * @property-read \Elgg\PersistentLoginService                    $persistentLogin
  * @property-read \Elgg\Database\Plugins                          $plugins
  * @property-read \Elgg\Cache\PrivateSettingsCache                $privateSettingsCache
@@ -180,7 +183,8 @@ class ServiceProvider extends DiContainer {
 				$c->passwords,
 				$c->usersTable,
 				$c->hooks,
-				$c->emails
+				$c->emails,
+				$c->passwordGenerator
 			);
 		});
 
@@ -432,7 +436,16 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('iconService', function(ServiceProvider $c) {
-			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger, $c->entityTable, $c->uploads, $c->imageService);
+			return new \Elgg\EntityIconService(
+				$c->config,
+				$c->hooks,
+				$c->request,
+				$c->logger,
+				$c->entityTable,
+				$c->uploads,
+				$c->imageService,
+				$c->mimetype
+			);
 		});
 
 		$this->setFactory('imageService', function(ServiceProvider $c) {
@@ -448,7 +461,7 @@ class ServiceProvider extends DiContainer {
 					break;
 			}
 
-			return new \Elgg\ImageService($imagine, $c->config);
+			return new \Elgg\ImageService($imagine, $c->config, $c->mimetype);
 		});
 
 		$this->setFactory('invoker', function(ServiceProvider $c) {
@@ -468,7 +481,19 @@ class ServiceProvider extends DiContainer {
 			return $logger;
 		});
 
-		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
+		$this->setFactory('mailer', function(ServiceProvider $c) {
+			switch ($c->config->emailer_transport) {
+				case 'smtp':
+					$transport = new \Zend\Mail\Transport\Smtp();
+					$transportOptions = new \Zend\Mail\Transport\SmtpOptions(
+						$c->config->emailer_smtp_settings
+					);
+					$transport->setOptions($transportOptions);
+					return $transport;
+				default:
+					return new \Zend\Mail\Transport\Sendmail();
+			}
+		});
 
 		$this->setFactory('menus', function(ServiceProvider $c) {
 			return new \Elgg\Menu\Service($c->hooks, $c->config);
@@ -484,6 +509,12 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Database\MetadataTable($c->metadataCache, $c->db, $c->events);
 		});
 
+		$this->setFactory('mimetype', function(ServiceProvider $c) {
+			return new \Elgg\Filesystem\MimeTypeService(
+				$c->hooks
+			);
+		});
+		
 		$this->setFactory('mutex', function(ServiceProvider $c) {
 			return new \Elgg\Database\Mutex(
 				$c->db,
@@ -510,6 +541,14 @@ class ServiceProvider extends DiContainer {
 		});
 		
 		$this->setClassName('passwords', \Elgg\PasswordService::class);
+		
+		$this->setFactory('passwordGenerator', function(ServiceProvider $c) {
+			return new PasswordGeneratorService(
+				$c->config,
+				$c->translator,
+				$c->hooks
+			);
+		});
 		
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
 			$global_cookies_config = $c->config->getCookieConfig();
@@ -626,7 +665,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
-			return new \Elgg\Application\ServeFileHandler($c->hmac, $c->config);
+			return new \Elgg\Application\ServeFileHandler($c->hmac, $c->config, $c->mimetype);
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {

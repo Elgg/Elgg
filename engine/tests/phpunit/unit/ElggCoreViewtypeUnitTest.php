@@ -51,14 +51,14 @@ class ElggCoreViewtypeUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testElggIsValidViewtype() {
-		$this->assertTrue(_elgg_is_valid_viewtype('valid'));
-		$this->assertTrue(_elgg_is_valid_viewtype('valid_viewtype'));
-		$this->assertTrue(_elgg_is_valid_viewtype('0'));
+		$this->assertTrue(_elgg_services()->views->isValidViewtype('valid'));
+		$this->assertTrue(_elgg_services()->views->isValidViewtype('valid_viewtype'));
+		$this->assertTrue(_elgg_services()->views->isValidViewtype('0'));
 
-		$this->assertFalse(_elgg_is_valid_viewtype('a;b'));
-		$this->assertFalse(_elgg_is_valid_viewtype('invalid-viewtype'));
-		$this->assertFalse(_elgg_is_valid_viewtype(123));
-		$this->assertFalse(_elgg_is_valid_viewtype(''));
+		$this->assertFalse(_elgg_services()->views->isValidViewtype('a;b'));
+		$this->assertFalse(_elgg_services()->views->isValidViewtype('invalid-viewtype'));
+		$this->assertFalse(_elgg_services()->views->isValidViewtype(123));
+		$this->assertFalse(_elgg_services()->views->isValidViewtype(''));
 	}
 
 }

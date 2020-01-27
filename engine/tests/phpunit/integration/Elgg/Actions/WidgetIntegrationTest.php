@@ -12,12 +12,12 @@ use Elgg\Http\OkResponse;
  */
 class WidgetsIntegrationTest extends ActionResponseTestCase {
 	/**
-	 * @var ElggWidget
+	 * @var \ElggWidget
 	 */
 	protected $widget;
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $user;
 	
@@ -206,7 +206,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		$this->assertEquals(elgg_echo('widgets:save:failure'), $response->getContent());
 
 		$response = $this->executeAction('widgets/save', [
-			'widget_guid' => $this->user->guid,
+			'guid' => $this->user->guid,
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -224,7 +224,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->session->setLoggedInUser($this->user);
 		
 		$response = $this->executeAction('widgets/save', [
-			'widget_guid' => $widget->guid,
+			'guid' => $widget->guid,
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
@@ -233,7 +233,7 @@ class WidgetsIntegrationTest extends ActionResponseTestCase {
 	
 	public function testWidgetSaveSuccess() {
 		$response = $this->executeAction('widgets/save', [
-			'widget_guid' => $this->widget->guid,
+			'guid' => $this->widget->guid,
 		]);
 
 		$this->assertInstanceOf(OkResponse::class, $response);

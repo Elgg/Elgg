@@ -1,14 +1,19 @@
 <?php
 
+use Elgg\Friends\Notifications;
+use Elgg\Menu\MenuItems;
+
 /**
  * Friends init
  *
  * @return void
  */
 function elgg_friends_plugin_init() {
+	elgg_register_plugin_hook_handler('access:collections:write:subtypes', 'user', '_elgg_friends_register_access_type');
 	elgg_register_plugin_hook_handler('filter_tabs', 'all', '_elgg_friends_filter_tabs', 1);
-
+	
 	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
+	elgg_register_event_handler('delete', 'relationship', '\Elgg\Friends\Relationships::deleteFriendRelationship');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_friends_widget_urls');
 	
@@ -16,6 +21,9 @@ function elgg_friends_plugin_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_friends_topbar_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:title', '_elgg_friends_setup_title_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:filter:friends', '\Elgg\Friends\FilterMenu::addFriendRequestTabs');
+	elgg_register_plugin_hook_handler('register', 'menu:relationship', '\Elgg\Friends\RelationshipMenu::addPendingFriendRequestItems');
+	elgg_register_plugin_hook_handler('register', 'menu:relationship', '\Elgg\Friends\RelationshipMenu::addSentFriendRequestItems');
 }
 
 /**
@@ -23,52 +31,24 @@ function elgg_friends_plugin_init() {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:title'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  */
 function _elgg_friends_setup_title_menu(\Elgg\Hook $hook) {
 	
 	$user = $hook->getEntityParam();
-	if (!$user instanceof ElggUser || !elgg_is_logged_in()) {
-		return;
-	}
-
-	if (elgg_get_logged_in_user_guid() === $user->guid) {
+	if (!$user instanceof ElggUser) {
 		return;
 	}
 	
-	$isFriend = $user->isFriend();
-
+	/* @var $return \Elgg\Menu\MenuItems */
 	$return = $hook->getValue();
 	
-	// Always emit both to make it super easy to toggle with ajax
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'remove_friend',
-		'href' => elgg_generate_action_url('friends/remove', [
-			'friend' => $user->guid,
-		]),
-		'text' => elgg_echo('friend:remove'),
-		'icon' => 'user-times',
-		'section' => 'action',
-		'link_class' => 'elgg-button-action elgg-button',
-		'item_class' => $isFriend ? '' : 'hidden',
-		'data-toggle' => 'add_friend',
-	]);
-
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'add_friend',
-		'href' => elgg_generate_action_url('friends/add', [
-			'friend' => $user->guid,
-		]),
-		'text' => elgg_echo('friend:add'),
-		'icon' => 'user-plus',
-		'section' => 'action',
-		'link_class' => 'elgg-button-action elgg-button',
-		'item_class' => $isFriend ? 'hidden' : '',
-		'data-toggle' => 'remove_friend',
-	]);
-
+	$menu_items = _elgg_friends_get_add_friend_menu_items($user, true);
+	
+	$return->merge($menu_items);
+	
 	return $return;
 }
 
@@ -77,50 +57,98 @@ function _elgg_friends_setup_title_menu(\Elgg\Hook $hook) {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:user_hover'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  */
 function _elgg_friends_setup_user_hover_menu(\Elgg\Hook $hook) {
 	
 	$user = $hook->getEntityParam();
-	if (!$user instanceof ElggUser || !elgg_is_logged_in()) {
-		return;
-	}
-
-	if (elgg_get_logged_in_user_guid() === $user->guid) {
+	if (!$user instanceof ElggUser) {
 		return;
 	}
 	
-	$isFriend = $user->isFriend();
+	/* @var $return \Elgg\Menu\MenuItems */
 	$return = $hook->getValue();
 	
+	$menu_items = _elgg_friends_get_add_friend_menu_items($user);
+	
+	$return->merge($menu_items);
+	
+	return $return;
+}
+
+/**
+ * Generate menu items to add the user as a friend
+ *
+ * @param \ElggUser $user        the potential friend
+ * @param bool      $make_button make the menu items buttons (default: false)
+ *
+ * @return ElggMenuItem[]
+ * @internal
+ * @since 3.2
+ */
+function _elgg_friends_get_add_friend_menu_items(\ElggUser $user, bool $make_button = false) {
+	
+	$current_user = elgg_get_logged_in_user_entity();
+	if (!$current_user instanceof \ElggUser || $user->guid === $current_user->guid) {
+		return [];
+	}
+	
+	$result = [];
+	$isFriend = $user->isFriendOf($current_user->guid);
+	
 	// Always emit both to make it super easy to toggle with ajax
-	$return[] = \ElggMenuItem::factory([
+	$result[] = \ElggMenuItem::factory([
 		'name' => 'remove_friend',
+		'icon' => 'user-times',
+		'text' => elgg_echo('friend:remove'),
 		'href' => elgg_generate_action_url('friends/remove', [
 			'friend' => $user->guid,
 		]),
-		'text' => elgg_echo('friend:remove'),
-		'icon' => 'user-times',
 		'section' => 'action',
+		'link_class' => $make_button ? 'elgg-button elgg-button-action' : null,
 		'item_class' => $isFriend ? '' : 'hidden',
 		'data-toggle' => 'add_friend',
 	]);
-
-	$return[] = \ElggMenuItem::factory([
+	
+	$add_toggle = 'remove_friend';
+	$pending_request = false;
+	if ((bool) elgg_get_plugin_setting('friend_request', 'friends')) {
+		$sent_request = (bool) check_entity_relationship($user->guid, 'friendrequest', $current_user->guid);
+		$pending_request = (bool) check_entity_relationship($current_user->guid, 'friendrequest', $user->guid);
+		if (!$isFriend && !$sent_request) {
+			// no current friend, and no pending request
+			$add_toggle = 'friend_requests';
+		}
+		
+		$result[] = \ElggMenuItem::factory([
+			'name' => 'friend_requests',
+			'icon' => 'user-plus',
+			'text' => elgg_echo('friends:menu:request:status:pending'),
+			'href' => elgg_generate_url('collection:relationship:friendrequest:sent', [
+				'username' => $current_user->username,
+			]),
+			'section' => 'action',
+			'link_class' => $make_button ? 'elgg-button elgg-button-action-done' : null,
+			'item_class' => $pending_request ? '' : 'hidden',
+		]);
+	}
+	
+	$result[] = \ElggMenuItem::factory([
 		'name' => 'add_friend',
+		'icon' => 'user-plus',
+		'text' => elgg_echo('friend:add'),
 		'href' => elgg_generate_action_url('friends/add', [
 			'friend' => $user->guid,
 		]),
-		'text' => elgg_echo('friend:add'),
-		'icon' => 'user-plus',
 		'section' => 'action',
-		'item_class' => $isFriend ? 'hidden' : '',
-		'data-toggle' => 'remove_friend',
+		'link_class' =>  $make_button ? 'elgg-button elgg-button-action' : null,
+		'item_class' => ($pending_request || $isFriend) ? 'hidden' : '',
+		'data-toggle' => $add_toggle,
 	]);
-
-	return $return;
+	
+	return $result;
 }
 
 /**
@@ -128,7 +156,7 @@ function _elgg_friends_setup_user_hover_menu(\Elgg\Hook $hook) {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:topbar'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  * @since 3.0
@@ -139,15 +167,30 @@ function _elgg_friends_topbar_menu(\Elgg\Hook $hook) {
 	if (!$viewer) {
 		return;
 	}
-		
+	
+	$badge = null;
+	if ((bool) elgg_get_plugin_setting('friend_request', 'friends')) {
+		$count = elgg_get_relationships([
+			'type' => 'user',
+			'relationship_guid' => $viewer,
+			'relationship' => 'friendrequest',
+			'inverse_relationship' => true,
+			'count' => true,
+		]);
+		if ($count > 0) {
+			$badge = $count;
+		}
+	}
+	
 	$return = $hook->getValue();
 	$return[] = \ElggMenuItem::factory([
 		'name' => 'friends',
+		'icon' => 'users',
+		'text' => elgg_echo('friends'),
 		'href' => elgg_generate_url('collection:friends:owner', [
 			'username' => $viewer->username,
 		]),
-		'text' => elgg_echo('friends'),
-		'icon' => 'users',
+		'badge' => $badge,
 		'title' => elgg_echo('friends'),
 		'priority' => 300,
 		'section' => 'alt',
@@ -162,7 +205,7 @@ function _elgg_friends_topbar_menu(\Elgg\Hook $hook) {
  *
  * @param \Elgg\Hook $hook 'register', 'menu:page'
  *
- * @return void|ElggMenuItem[]
+ * @return void|MenuItems
  *
  * @internal
  * @since 3.0
@@ -184,15 +227,33 @@ function _elgg_friends_page_menu(\Elgg\Hook $hook) {
 		'contexts' => ['friends'],
 	]);
 
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'friends:of',
-		'text' => elgg_echo('friends:of'),
-		'href' => elgg_generate_url('collection:friends_of:owner', [
-			'username' => $owner->username,
-		]),
-		'contexts' => ['friends'],
-	]);
+	if (!(bool) elgg_get_plugin_setting('friend_request', 'friends')) {
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'friends:of',
+			'text' => elgg_echo('friends:of'),
+			'href' => elgg_generate_url('collection:friends_of:owner', [
+				'username' => $owner->username,
+			]),
+			'contexts' => ['friends'],
+		]);
+	}
 
+	return $return;
+}
+
+/**
+ * Register friends to the write access array
+ *
+ * @param \Elgg\Hook $hook 'access:collections:write:subtypes', 'user'
+ *
+ * @return array
+ *
+ * @internal
+ * @since 3.2
+ */
+function _elgg_friends_register_access_type(\Elgg\Hook $hook) {
+	$return = $hook->getValue();
+	$return[] = 'friends';
 	return $return;
 }
 
@@ -205,41 +266,30 @@ function _elgg_friends_page_menu(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_send_friend_notification(\Elgg\Event $event) {
-	$object = $event->getObject();
-	if (!$object instanceof ElggRelationship) {
+	
+	if ((bool) elgg_get_plugin_setting('friend_request', 'friends')) {
+		// no generic notification while friend request is active
+		// notifications are sent by actions
 		return;
 	}
 	
-	if ($object->relationship !== 'friend') {
+	$object = $event->getObject();
+	if (!$object instanceof ElggRelationship || $object->relationship !== 'friend') {
 		return;
 	}
 
-	$user_one = get_entity($object->guid_one);
-	$user_two = get_entity($object->guid_two);
+	if ($object->guid_two === elgg_get_logged_in_user_guid()) {
+		// don't send notification to yourself
+		return;
+	}
+	
+	$user_one = get_user($object->guid_one);
+	$user_two = get_user($object->guid_two);
 	if (!$user_one instanceof ElggUser || !$user_two instanceof ElggUser) {
 		return;
 	}
 
-	// Notification subject
-	$subject = elgg_echo('friend:newfriend:subject', [
-		$user_one->getDisplayName(),
-	], $user_two->language);
-
-	// Notification body
-	$body = elgg_echo("friend:newfriend:body", [
-		$user_one->getDisplayName(),
-		$user_one->getURL()
-	], $user_two->language);
-
-	// Notification params
-	$params = [
-		'action' => 'add_friend',
-		'object' => $user_one,
-		'friend' => $user_two,
-		'url' => $user_two->getURL(),
-	];
-
-	notify_user($user_two->guid, $object->guid_one, $subject, $body, $params);
+	Notifications::sendAddFriendNotification($user_two, $user_one);
 }
 
 /**
@@ -247,7 +297,7 @@ function _elgg_send_friend_notification(\Elgg\Event $event) {
  *
  * @param \Elgg\Hook $hook "filter_tabs", "all"
  *
- * @return array
+ * @return void|ElggMenuItem[]
  * @internal
  */
 function _elgg_friends_filter_tabs(\Elgg\Hook $hook) {

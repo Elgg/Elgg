@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg;
+
 use Psr\Log\LogLevel;
 
 /**
@@ -21,15 +22,13 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	/**
-	 * @expectedException \InvalidArgumentException
-	 */
 	public function testTriggerCallsRegisteredHandlers() {
 		$this->hooks->registerHandler('foo', 'bar', [
 			PluginHooksServiceUnitTest::class,
 			'throwInvalidArg'
 		]);
 
+		$this->expectException(\InvalidArgumentException::class);
 		$this->hooks->trigger('foo', 'bar');
 	}
 

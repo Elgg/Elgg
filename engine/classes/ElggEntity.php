@@ -2,6 +2,7 @@
 
 use Elgg\EntityIcon;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\Update;
 
 /**
  * The parent class for all Elgg Entities.
@@ -23,9 +24,6 @@ use Elgg\Database\QueryBuilder;
  * Core supports 4 types of entities: \ElggObject, \ElggUser, \ElggGroup, and \ElggSite.
  *
  * @tip Plugin authors will want to extend the \ElggObject class, not this class.
- *
- * @package    Elgg.Core
- * @subpackage DataModel.Entities
  *
  * @property       string $type           object, user, group, or site (read-only after save)
  * @property       string $subtype        Further clarifies the nature of the entity
@@ -1318,7 +1316,11 @@ abstract class ElggEntity extends \ElggData implements
 			$guid = $this->update();
 		} else {
 			$guid = $this->create();
-			if ($guid !== false && !_elgg_services()->events->trigger('create', $this->type, $this)) {
+			if ($guid === false) {
+				return false;
+			}
+			
+			if (!_elgg_services()->events->trigger('create', $this->type, $this)) {
 				// plugins that return false to event don't need to override the access system
 				elgg_call(ELGG_IGNORE_ACCESS, function() {
 					return $this->delete();
@@ -1471,6 +1473,11 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			$this->temp_private_settings = [];
+		}
+		
+		if (isset($container) && !$container instanceof ElggUser) {
+			// users have their own logic for setting last action
+			$container->updateLastAction();
 		}
 
 		return $guid;
@@ -1630,13 +1637,10 @@ abstract class ElggEntity extends \ElggData implements
 			$this->disable_reason = $reason;
 		}
 
-		$dbprefix = _elgg_config()->dbprefix;
-
 		$guid = (int) $this->guid;
 
 		if ($recursive) {
-			$flags = ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES;
-			$callback = function () use ($guid, $reason) {
+			elgg_call(ELGG_IGNORE_ACCESS | ELGG_HIDE_DISABLED_ENTITIES, function () use ($guid, $reason) {
 				$base_options = [
 					'wheres' => [
 						function(QueryBuilder $qb, $main_alias) use ($guid) {
@@ -1644,14 +1648,15 @@ abstract class ElggEntity extends \ElggData implements
 						},
 					],
 					'limit' => false,
+					'batch' => true,
+					'batch_inc_offset' => false,
 				];
 
 				foreach (['owner_guid', 'container_guid'] as $db_column) {
 					$options = $base_options;
 					$options[$db_column] = $guid;
 
-					$subentities = new \ElggBatch('elgg_get_entities', $options);
-					$subentities->setIncrementOffset(false);
+					$subentities = elgg_get_entities($options);
 
 					foreach ($subentities as $subentity) {
 						/* @var $subentity \ElggEntity */
@@ -1659,25 +1664,19 @@ abstract class ElggEntity extends \ElggData implements
 							continue;
 						}
 						add_entity_relationship($subentity->guid, 'disabled_with', $guid);
-						$subentity->disable($reason);
+						$subentity->disable($reason, true);
 					}
 				}
-			};
-
-			elgg_call($flags, $callback);
+			});
 		}
 
 		$this->disableAnnotations();
 
-		$sql = "
-			UPDATE {$dbprefix}entities
-			SET enabled = 'no'
-			WHERE guid = :guid
-		";
-		$params = [
-			':guid' => $guid,
-		];
-		$disabled = $this->getDatabase()->updateData($sql, false, $params);
+		$qb = Update::table('entities');
+		$qb->set('enabled', $qb->param('no', ELGG_VALUE_STRING))
+			->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
+		
+		$disabled = $this->getDatabase()->updateData($qb);
 
 		if ($unban_after) {
 			$this->unban();
@@ -1714,15 +1713,13 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		$flags = ELGG_SHOW_DISABLED_ENTITIES;
-		$callback = function() use ($guid, $recursive) {
-			$db = $this->getDatabase();
-			$result = $db->updateData("
-				UPDATE {$db->prefix}entities
-				SET enabled = 'yes'
-				WHERE guid = $guid
-			");
+		$result = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid, $recursive) {
+			$qb = Update::table('entities');
+			$qb->set('enabled', $qb->param('yes', ELGG_VALUE_STRING))
+				->where($qb->compare('guid', '=', $guid, ELGG_VALUE_GUID));
 
+			$result = $this->getDatabase()->updateData($qb);
+				
 			$this->deleteMetadata('disable_reason');
 			$this->enableAnnotations();
 
@@ -1731,19 +1728,19 @@ abstract class ElggEntity extends \ElggData implements
 					'relationship' => 'disabled_with',
 					'relationship_guid' => $guid,
 					'inverse_relationship' => true,
-					'limit' => 0,
+					'limit' => false,
+					'batch' => true,
+					'batch_inc_offset' => false,
 				]);
 
 				foreach ($disabled_with_it as $e) {
-					$e->enable();
+					$e->enable($recursive);
 					remove_entity_relationship($e->guid, 'disabled_with', $guid);
 				}
 			}
 
 			return $result;
-		};
-
-		$result = elgg_call($flags, $callback);
+		});
 
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';

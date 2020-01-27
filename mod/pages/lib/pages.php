@@ -142,32 +142,3 @@ function pages_get_navigation_tree($container) {
 
 	return $tree;
 }
-
-/**
- * Register the navigation menu
- *
- * @param ElggEntity $container Container entity for the pages
- * @param ElggPage   $selected  Selected page
- *
- * @return void
- *
- * @deprecated
- */
-function pages_register_navigation_tree($container, $selected = null) {
-	elgg_deprecated_notice(__METHOD__ . ' is deprecated. Menu items for a page now come from a hook callback.', '3.1');
-	
-	$pages = pages_get_navigation_tree($container);
-	if (empty($pages)) {
-		return;
-	}
-
-	foreach ($pages as $page) {
-		elgg_register_menu_item('pages_nav', [
-			'name' => $page['guid'],
-			'text' => $page['title'],
-			'href' => $page['url'],
-			'parent_name' => elgg_extract('parent_guid', $page),
-			'selected' => $selected instanceof ElggPage && $selected->guid === $page['guid'],
-		]);
-	}
-}

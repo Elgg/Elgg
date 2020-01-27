@@ -5,8 +5,6 @@
  * @warning This should be used by a wrapper class
  * like {@link \ElggFile}.
  *
- * @package    Elgg.Core
- * @subpackage FileStore.Disk
  * @since 3.0
  */
 class ElggTempDiskFilestore extends \ElggDiskFilestore {

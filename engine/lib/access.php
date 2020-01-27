@@ -5,9 +5,6 @@
  * Access is generally saved in the database as access_id.  This corresponds to
  * one of the ACCESS_* constants defined in {@link elgglib.php} or the ID of an
  * access collection.
- *
- * @package Elgg.Core
- * @subpackage Access
  */
 
 /**
@@ -438,7 +435,7 @@ function access_friends_acl_get_name(\Elgg\Hook $hook) {
 /**
  * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
  */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function(\Elgg\EventsService $events) {
 	// Tell the access functions the system has booted, plugins are loaded,
 	// and the user is logged in so it can start caching
 	$events->registerHandler('ready', 'system', 'access_init');
@@ -447,5 +444,4 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	$events->registerHandler('create', 'user', 'access_friends_acl_create');
 	$events->registerHandler('create', 'relationship', 'access_friends_acl_add_friend');
 	$events->registerHandler('delete', 'relationship', 'access_friends_acl_remove_friend');
-	$hooks->registerHandler('access_collection:name', 'access_collection', 'access_friends_acl_get_name');
 };

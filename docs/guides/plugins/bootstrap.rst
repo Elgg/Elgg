@@ -66,12 +66,12 @@ Allows the plugin to implement logic during shutdown.
 ->activate()
 ------------
 
-Executed when plugin is activated, after ``activate``, ``plugin`` event and before ``activate.php`` is included.
+Executed when plugin is activated, after ``activate``, ``plugin`` event.
 
 ->deactivate()
 --------------
 
-Executed when plugin is deactivated, after ``deactivate``, ``plugin`` event and before ``deactivate.php`` is included.
+Executed when plugin is deactivated, after ``deactivate``, ``plugin`` event.
 
 ->upgrade()
 -----------

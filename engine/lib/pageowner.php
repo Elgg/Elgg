@@ -2,33 +2,16 @@
 /**
  * Elgg page owner library
  * Contains functions for managing page ownership and context
- *
- * @package Elgg.Core
- * @subpackage PageOwner
  */
 
 /**
  * Gets the guid of the entity that owns the current page.
  *
- * @see default_page_owner_handler() Used to guess the page owner if it's not been set.
- *
- * @param int $guid Optional parameter used by elgg_set_page_owner_guid().
- *
  * @return int The current page owner guid (0 if none).
  * @since 1.8.0
  */
-function elgg_get_page_owner_guid($guid = 0) {
-	$page_owner = _elgg_services()->pageOwner;
-	if ($guid === 0) {
-		return $page_owner->getPageOwnerGuid();
-	}
-	
-	elgg_deprecated_notice(__METHOD__ . ' should not be used to set the page owner. Use elgg_set_page_owner_guid().', '3.1');
-	
-	// calling function for BC
-	elgg_set_page_owner_guid($guid);
-	
-	return $page_owner->getPageOwnerGuid();
+function elgg_get_page_owner_guid() {
+	return _elgg_services()->pageOwner->getPageOwnerGuid();
 }
 
 /**

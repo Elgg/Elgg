@@ -9,8 +9,6 @@ elgg_entity_gatekeeper($thread_id, 'object', 'thewire');
 /* @var $original_post ElggWire */
 $original_post = get_entity($thread_id);
 
-$title = elgg_echo('thewire:thread');
-
 elgg_push_entity_breadcrumbs($original_post);
 
 $content = elgg_list_entities([
@@ -24,10 +22,6 @@ $content = elgg_list_entities([
 	'preload_owners' => true,
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter' => false,
+echo elgg_view_page(elgg_echo('thewire:thread'), [
 	'content' => $content,
-	'title' => $title,
 ]);
-
-echo elgg_view_page($title, $body);

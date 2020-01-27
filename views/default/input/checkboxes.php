@@ -12,9 +12,6 @@
  * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
  * the labels must be character codes: 1 would be &#0049;
  *
- * @package Elgg
- * @subpackage Core
- *
  * @uses string $vars['name']           The name of the input fields
  *                                      (Forced to an array by appending [])
  * @uses array  $vars['options']        An array of strings representing the

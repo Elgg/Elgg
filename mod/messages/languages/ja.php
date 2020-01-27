@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	/**
 	* Menu items and titles
@@ -23,8 +29,8 @@ return array(
 
 	'messages:error' => 'メッセージの保存の際に問題が発生しました。もう一度やり直してください。',
 
-	'item:object:messages' => 'Message',
-	'collection:object:messages' => 'Messages',
+	'item:object:messages' => 'メッセージ',
+	'collection:object:messages' => 'メッセージ',
 
 	/**
 	* Status messages

@@ -22,40 +22,7 @@ class PostInstall {
 		self::copyFromElggToRoot("install.php", "install.php");
 		self::copyFromElggToRoot("upgrade.php", "upgrade.php");
 
-		$managed_plugins = [
-			'activity',
-			'blog',
-			'bookmarks',
-			'ckeditor',
-			'custom_index',
-			'dashboard',
-			'developers',
-			'diagnostics',
-			'discussions',
-			'embed',
-			'externalpages',
-			'file',
-			'friends',
-			'friends_collections',
-			'garbagecollector',
-			'groups',
-			'invitefriends',
-			'likes',
-			'members',
-			'messageboard',
-			'messages',
-			'notifications',
-			'pages',
-			'profile',
-			'reportedcontent',
-			'search',
-			'site_notifications',
-			'system_log',
-			'tagcloud',
-			'thewire',
-			'uservalidationbyemail',
-			'web_services',
-		];
+		$managed_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
 
 		foreach ($managed_plugins as $plugin) {
 			self::symlinkPluginFromRootToElgg($plugin);
@@ -91,9 +58,9 @@ class PostInstall {
 	 * @return bool Whether the symlink succeeded.
 	 */
 	private static function symlinkPluginFromRootToElgg($plugin) {
-		$from = Directory\Local::projectRoot()->getPath("mod/$plugin");
-		$to = Elgg\Application::elggDir()->getPath("mod/$plugin");
+		$link = Directory\Local::projectRoot()->getPath("mod/$plugin");
+		$target = Elgg\Application::elggDir()->getPath("mod/$plugin");
 
-		return !file_exists($from) && symlink($to, $from);
+		return is_dir($target) && !file_exists($link) && symlink($target, $link);
 	}
 }

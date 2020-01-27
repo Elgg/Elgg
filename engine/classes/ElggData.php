@@ -5,9 +5,6 @@ use Elgg\Collections\CollectionItemInterface;
 /**
  * A generic class that contains shared code among
  * \ElggExtender, \ElggEntity, and \ElggRelationship
- *
- * @package    Elgg.Core
- * @subpackage DataModel
  */
 abstract class ElggData implements CollectionItemInterface,
 								   Serializable,
@@ -243,7 +240,7 @@ abstract class ElggData implements CollectionItemInterface,
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->getSystemLogID();
 	}
 

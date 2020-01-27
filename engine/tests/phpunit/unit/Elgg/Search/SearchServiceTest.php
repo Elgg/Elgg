@@ -85,9 +85,6 @@ class SearchServiceTest extends UnitTestCase {
 		$this->assertEquals('entities', $options['search_type']);
 	}
 
-	/**
-	 * @expectedException
-	 */
 	public function testThrowsOnInvalidEntityType() {
 
 		$handler = function (\Elgg\Hook $hook) {
@@ -99,14 +96,36 @@ class SearchServiceTest extends UnitTestCase {
 			];
 		};
 
-		elgg_register_plugin_hook_handler('search:fields', 'object', $handler);
+		elgg_register_plugin_hook_handler('search:fields', 'foo', $handler);
 
 		$options = [
 			'type' => 'foo',
 			'query' => 'bar',
 		];
 
-		elgg_search($options);
+		$this->expectException(\InvalidParameterException::class);
+		_elgg_services()->search->search($options);
+	}
+	
+	public function testFalseInvalidEntityType() {
+
+		$handler = function (\Elgg\Hook $hook) {
+			return [
+				'metadata' => ['allowed1', 'allowed2'],
+				'annotations' => ['allowed3', 'allowed4'],
+				'attributes' => false,
+				'private_settings' => null,
+			];
+		};
+
+		elgg_register_plugin_hook_handler('search:fields', 'foo', $handler);
+
+		$options = [
+			'type' => 'foo',
+			'query' => 'bar',
+		];
+
+		$this->assertFalse(elgg_search($options));
 	}
 
 	public function testCanFilterParamsWithAHook() {

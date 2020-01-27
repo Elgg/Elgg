@@ -1,7 +1,4 @@
 <?php
-
-use Elgg\Collections\Collection;
-
 /**
  * Elgg Menu Item
  *
@@ -11,9 +8,7 @@ use Elgg\Collections\Collection;
  * to give a menu item a "target" attribute, set $item->target, or include a "target" key in
  * the options array for factory().
  *
- * @package    Elgg.Core
- * @subpackage Navigation
- * @since      1.8.0
+ * @since 1.8.0
  */
 class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 
@@ -672,7 +667,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 * Get unique item identifier within a collection
 	 * @return string|int
 	 */
-	public function getId() {
+	public function getID() {
 		return $this->getName();
 	}
 }

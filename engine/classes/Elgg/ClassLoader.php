@@ -43,8 +43,6 @@ namespace Elgg;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Autoloader
  * @author     Fabien Potencier <fabien@symfony.com>
  */
 class ClassLoader {

@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 	'email:validate:subject' => "%s veuillez SVP confirmer votre adresse email pour %s !",
 	'email:validate:body' => "Bonjour %s,
@@ -31,5 +37,8 @@ Si vous ne recevez rien, veuillez vérifier votre dossier Spam ou Courrier Indé
 	'uservalidationbyemail:errors:could_not_resend_validations' => 'Impossible de renvoyer toutes les demandes de confirmation aux utilisateurs sélectionnés.',
 
 	'uservalidationbyemail:messages:resent_validation' => 'La demande de confirmation a bien été renvoyée.',
-	'uservalidationbyemail:messages:resent_validations' => 'Les demandes de confirmation ont bien été renvoyées aux utilisateurs sélectionnés.'
+	'uservalidationbyemail:messages:resent_validations' => 'Les demandes de confirmation ont bien été renvoyées aux utilisateurs sélectionnés.',
+	
+	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
+	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
 );

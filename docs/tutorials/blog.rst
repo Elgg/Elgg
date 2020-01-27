@@ -108,29 +108,21 @@ This page will view the form you created in the above section.
 .. code-block:: php
 
     <?php
-    // make sure only logged in users can see this page 
-    gatekeeper();
-                    
+                   
     // set the title
     $title = "Create a new my_blog post";
 
-    // start building the main column of the page 
-    $content = elgg_view_title($title);
-
     // add the form to the main column
-    $content .= elgg_view_form("my_blog/save");
+    $content = elgg_view_form("my_blog/save");
 
     // optionally, add the content for the sidebar
     $sidebar = "";
 
-    // layout the page
-    $body = elgg_view_layout('one_sidebar', array(
-       'content' => $content,
-       'sidebar' => $sidebar
-    ));
-
     // draw the page, including the HTML wrapper and basic page layout
-    echo elgg_view_page($title, $body);
+    echo elgg_view_page($title, [
+		'content' => $content,
+		'sidebar' => $sidebar
+    ]);
 
 The function ``elgg_view_form("my_blog/save")`` views the form that
 you created in the previous section. It also automatically wraps
@@ -329,15 +321,9 @@ Create the file ``/mod/my_blog/views/default/resources/my_blog/view.php``:
     // get the content of the post
     $content = elgg_view_entity($my_blog, array('full_view' => true));
 
-    $params = [
-        'title' => $my_blog->getDisplayName(),
+    echo elgg_view_page($my_blog->getDisplayName(), [
         'content' => $content,
-        'filter' => '',
-    ];
-
-    $body = elgg_view_layout('content', $params);
-
-    echo elgg_view_page($my_blog->getDisplayName(), $body);
+    ]);
 
 This page has much in common with the ``add.php`` page. The biggest differences
 are that some information is extracted from the my_blog entity, and instead of
@@ -398,9 +384,10 @@ Create ``/mod/my_blog/views/default/resources/my_blog/all.php``:
         'subtype' => 'my_blog',
     ));
 
-    $body = elgg_view_title($pagetitle) . elgg_view_layout('one_column', array('content' => $body));
-
-    echo elgg_view_page($titlebar, $body);
+    echo elgg_view_page($titlebar, [
+    	'title' => $pagetitle,
+    	'content' => $body,
+    ]);
 
 The ``elgg_list_entities`` function grabs the latest my_blog posts and
 passes them to the object view file.

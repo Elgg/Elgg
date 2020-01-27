@@ -2,6 +2,8 @@
 
 namespace Elgg\Database;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * @group Database
  * @group EntityTable
@@ -40,11 +42,10 @@ class EntityTableUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->session->removeLoggedInUser();
 	}
 
-	/**
-	 * @expectedException \Elgg\Database\EntityTable\UserFetchFailureException
-	 */
 	public function testThrowsWhenGettingUserForPermissionsCheckWithNonUserGuid() {
 		$object = $this->createObject();
+		
+		$this->expectException(UserFetchFailureException::class);
 		_elgg_services()->entityTable->getUserForPermissionsCheck($object->guid);
 	}
 

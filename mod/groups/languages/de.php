@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Gruppe löschen',
 	'groups:membershiprequests' => 'Verwalte Beitritts-Anfragen',
 	'groups:membershiprequests:pending' => 'Verwalte Beitritts-Anfragen (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Einladungen zum Gruppenbeitritt',
 	'groups:invitations:pending' => 'Einladungen zum Gruppenbeitritt (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Gruppen-Icon (leer lassen, um nicht zu ändern)',
 	'groups:name' => 'Gruppenname',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Lade Deine Freunde ein, dieser Gruppe beizutreten',
 	'groups:invite:friends:help' => 'Suche mit Name oder Benutzername nach einem Freund und wähle den Freund aus der Liste aus',
 	'groups:invite:resend' => 'Einladungen an bereits eingeladene Mitglieder erneut senden',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'Du hast leider noch keine Freunde, die Du einladen könntest!',
 	'groups:group' => "Gruppe",
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Der Inhalt dieser Gruppe ist nur für Gruppenmitglieder zugännglich.",
 	'groups:opengroup:membersonly:join' => 'Um dieser Gruppe beizutreten, wähle bitte den Menueintrag "Gruppe beitreten".',
 	'groups:visibility' => 'Wer kann diese Gruppe sehen?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

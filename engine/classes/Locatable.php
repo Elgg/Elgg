@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Define an interface for geo-tagging entities.
- *
- * @package    Elgg.Core
- * @subpackage SocialModel.Locatable
  */
 interface Locatable {
 	/**

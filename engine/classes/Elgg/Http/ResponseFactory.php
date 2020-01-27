@@ -263,7 +263,7 @@ class ResponseFactory {
 	 *
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
-	 * @return Response
+	 * @return false|Response
 	 * @throws \InvalidParameterException
 	 */
 	public function respond(ResponseBuilder $response) {
@@ -279,6 +279,11 @@ class ResponseFactory {
 			return $this->send($this->prepareResponse('', ELGG_HTTP_NOT_MODIFIED));
 		}
 
+		// Prevent content type sniffing by the browser
+		$headers = $response->getHeaders();
+		$headers['X-Content-Type-Options'] = 'nosniff';
+		$response->setHeaders($headers);
+		
 		$is_xhr = $this->request->isXmlHttpRequest();
 
 		$is_action = false;
@@ -341,7 +346,7 @@ class ResponseFactory {
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 *
-	 * @return Response
+	 * @return false|Response
 	 * @throws \InvalidParameterException
 	 */
 	public function respondWithError(ResponseBuilder $response) {
@@ -365,7 +370,7 @@ class ResponseFactory {
 				'forward_url' => $forward_url,
 			];
 			// For BC, let plugins serve their own error page
-			// @see elgg_error_page_handler
+			// @todo can this hook be dropped
 			$forward_reason = (string) $status_code;
 
 			$this->hooks->trigger('forward', $forward_reason, $params, $forward_url);
@@ -498,7 +503,7 @@ class ResponseFactory {
 	 *
 	 * @param string $forward_url Redirection URL
 	 * @param mixed  $status_code HTTP status code or forward reason
-	 * @return SymfonyRedirectResponse
+	 * @return false|Response
 	 * @throws InvalidParameterException
 	 */
 	public function redirect($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {

@@ -1,8 +1,6 @@
 <?php
 /**
  * Individual's or group's files
- *
- * @package ElggFile
  */
 
 $username = elgg_extract('username', $vars);
@@ -15,6 +13,8 @@ if ($username) {
 }
 
 elgg_entity_gatekeeper($guid);
+
+elgg_group_tool_gatekeeper('file', $guid);
 
 $owner = get_entity($guid);
 

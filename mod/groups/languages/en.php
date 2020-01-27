@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Delete group',
 	'groups:membershiprequests' => 'Manage join requests',
 	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Group invitations',
 	'groups:invitations:pending' => 'Group invitations (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Group name',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Invite friends to this group',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'You have no friends to invite!',
 	'groups:group' => "Group",
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "This group's content is accessible only by members.",
 	'groups:opengroup:membersonly:join' => 'To be a member, click the "Join group" menu link.',
 	'groups:visibility' => 'Who can see this group?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

@@ -7,9 +7,6 @@
  *
  * In DIV elements, Ps are only added when there would be at
  * least two of them.
- *
- * @package    Elgg.Core
- * @subpackage Output
  */
 class ElggAutoP {
 
@@ -198,9 +195,9 @@ class ElggAutoP {
 		$html = $this->_doc->saveHTML();
 
 		// trim to the contents of BODY
-		$bodyStart = strpos($html, '<body>');
-		$bodyEnd = strpos($html, '</body>', $bodyStart + 6);
-		$html = substr($html, $bodyStart + 6, $bodyEnd - $bodyStart - 6);
+		$bodyStart = elgg_strpos($html, '<body>');
+		$bodyEnd = elgg_strpos($html, '</body>', $bodyStart + 6);
+		$html = elgg_substr($html, $bodyStart + 6, $bodyEnd - $bodyStart - 6);
 		
 		// strip AUTOPs that should be removed
 		$html = preg_replace('@<autop r="1">(.*?)</autop>@', '\\1', $html);
@@ -280,7 +277,7 @@ class ElggAutoP {
 						}
 						if ($isFollowingBr && preg_match('@^[ \\t]*\\n[ \\t]*@', $nodeText, $m)) {
 							// if a user ends a line with <br>, don't add a second BR
-							$nodeText = substr($nodeText, strlen($m[0]));
+							$nodeText = elgg_substr($nodeText, elgg_strlen($m[0]));
 						}
 						if ($isLastInline) {
 							// we're at the end of a sequence of text/inline elements
@@ -310,7 +307,7 @@ class ElggAutoP {
 				if ($alterInline) {
 					if (! $isBlock) {
 						$tmpNode = $node;
-						if ($isElement && false !== strpos($tmpNode->textContent, "\n")) {
+						if ($isElement && false !== elgg_strpos($tmpNode->textContent, "\n")) {
 							$inlinesToProcess[] = $tmpNode;
 						}
 						$node = $node->nextSibling;
@@ -333,7 +330,7 @@ class ElggAutoP {
 						$ignoreLeadingNewline = true;
 					} else {
 						$ignoreLeadingNewline = false;
-						if (false !== strpos($node->textContent, "\n")) {
+						if (false !== elgg_strpos($node->textContent, "\n")) {
 							$inlinesToProcess[] = $node;
 						}
 					}

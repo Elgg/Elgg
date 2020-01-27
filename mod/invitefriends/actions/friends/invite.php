@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg invite friends action
- *
- * @package ElggInviteFriends
  */
 
 use Elgg\Email;
@@ -21,7 +19,7 @@ $emails = get_input('emails');
 $emailmessage = get_input('emailmessage');
 
 $emails = trim($emails);
-if (strlen($emails) > 0) {
+if (elgg_strlen($emails) > 0) {
 	$emails = preg_split('/\\s+/', $emails, -1, PREG_SPLIT_NO_EMPTY);
 }
 

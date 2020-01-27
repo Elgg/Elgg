@@ -46,7 +46,8 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		for ($i = 0; $i < $max; $i++) {
 			$name = 'test_annotation_name' . rand();
 			$value = 'test_annotation_value' . rand();
-			$id = create_annotation($this->object->guid, $name, $value);
+			
+			$id = $this->object->annotate($name, $value);
 			$annotations[] = $id;
 		}
 
@@ -77,11 +78,18 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 			$id = ${$type}[0];
 			$table = $db_prefix . $this->metastringTables[$type];
 			$q = "SELECT * FROM $table WHERE id = $id";
-			$test = get_data($q);
+			$test = elgg()->db->getData($q);
 
 			$this->assertEquals($id, $test[0]->id);
-			$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
-			$this->assertEquals([], get_data($q));
+			
+			if ($type === 'annotation') {
+				$item = elgg_get_annotation_from_id($id);
+			} elseif ($type === 'metadata') {
+				$item = elgg_get_metadata_from_id($id);
+			}
+			
+			$this->assertTrue($item->delete());
+			$this->assertEquals([], elgg()->db->getData($q));
 		}
 	}
 
@@ -89,20 +97,20 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		$annotations = $this->createAnnotations(1);
 		$id = array_shift($annotations);
 
-		$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
+		$test = elgg_get_annotation_from_id($id);
 
 		$this->assertEquals($id, $test->id);
-		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, 'annotation'));
+		$this->assertTrue($test->delete());
 	}
 
 	public function testGetMetadataObjectFromID() {
 		$metadata = $this->createMetadata(1);
 		$id = array_shift($metadata);
 
-		$test = _elgg_get_metastring_based_object_from_id($id, 'metadata');
+		$test = elgg_get_metadata_from_id($id);
 
 		$this->assertEquals($id, $test->id);
-		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, 'metadata'));
+		$this->assertTrue($test->delete());
 	}
 
 	public function testGetMetastringObjectFromIDWithDisabledAnnotation() {
@@ -110,7 +118,7 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		$name = 'test_annotation_name' . rand();
 		$value = 'test_annotation_value' . rand();
 
-		$id = create_annotation($this->object->guid, $name, $value);
+		$id = $this->object->annotate($name, $value);
 
 		$this->assertTrue((bool) $id);
 
@@ -120,12 +128,12 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 			$this->assertInstanceOf(ElggAnnotation::class, $annotation);
 	
 			$this->assertTrue($annotation->disable());
-	
-			$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
-			$this->assertFalse($test);
+
+			$this->assertFalse(elgg_get_annotation_from_id($id));
 	
 			$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id) {
-				return _elgg_delete_metastring_based_object_by_id($id, 'annotation');
+				$annotation = elgg_get_annotation_from_id($id);
+				return $annotation->delete();
 			});
 			
 			$this->assertTrue($result);
@@ -135,7 +143,7 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 	public function testGetMetastringBasedObjectWithDisabledAnnotation() {
 		$name = 'test_annotation_name' . rand();
 		$value = 'test_annotation_value' . rand();
-		$id = create_annotation($this->object->guid, $name, $value);
+		$id = $this->object->annotate($name, $value);
 
 		$annotation = elgg_get_annotation_from_id($id);
 		$this->assertTrue($annotation->disable());
@@ -146,39 +154,39 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		$this->assertEquals([], $test);
 
 		$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id) {
-			return _elgg_delete_metastring_based_object_by_id($id, 'annotation');
+			$annotation = elgg_get_annotation_from_id($id);
+			return $annotation->delete();
 		});
 		$this->assertTrue($result);
 	}
 
 	public function testEnableDisableByID() {
-		$db_prefix = _elgg_config()->dbprefix;
-		$annotation = $this->createAnnotations(1);
+		$annotations = $this->createAnnotations(1);
+		$annotation_id = $annotations[0];
+		$annotation = elgg_get_annotation_from_id($annotation_id);
 
-		$type = 'annotation';
-
-		$id = ${$type}[0];
-		$table = $db_prefix . $this->metastringTables[$type];
-		$q = "SELECT * FROM $table WHERE id = $id";
-		$test = get_data($q);
+		$table = _elgg_config()->dbprefix . $this->metastringTables['annotation'];
+		
+		$q = "SELECT * FROM {$table} WHERE id = {$annotation_id}";
+		$test = elgg()->db->getData($q);
 
 		// disable
 		$this->assertEquals('yes', $test[0]->enabled);
-		$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'no', $type));
+		$this->assertTrue($annotation->disable());
 
-		$test = get_data($q);
+		$test = elgg()->db->getData($q);
 		$this->assertEquals('no', $test[0]->enabled);
 
 		// enable
-		$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($id, $type) {
-			return _elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type);
+		$result = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($annotation) {
+			return $annotation->enable();
 		});
 		$this->assertTrue($result);
 
-		$test = get_data($q);
+		$test = elgg()->db->getData($q);
 		$this->assertEquals('yes', $test[0]->enabled);
 
-		$this->assertTrue(_elgg_delete_metastring_based_object_by_id($id, $type));
+		$this->assertTrue($annotation->delete());
 	}
 
 	public function testKeepMeFromDeletingEverything() {

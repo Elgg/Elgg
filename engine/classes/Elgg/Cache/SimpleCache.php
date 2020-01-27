@@ -143,18 +143,53 @@ class SimpleCache {
 	}
 
 	/**
-	 * Deletes all cached views in the simplecache and sets the lastcache and
-	 * lastupdate time to 0 for every valid viewtype.
+	 * Deletes all cached views in the simplecache
 	 *
-	 * @return bool
+	 * @return true
 	 */
 	public function invalidate() {
-		elgg_delete_directory($this->getPath(), true);
-
-		$time = time();
-		$this->config->save("simplecache_lastupdate", $time);
-		$this->config->lastcache = $time;
-
+		// Simplecache doesn't have invalidation as an action.
+		// This is handled by generating new urls
 		return true;
+	}
+	
+	/**
+	 * Deletes all cached views in the simplecache
+	 *
+	 * @return bool
+	 * @since 3.3
+	 */
+	public function clear() {
+		elgg_delete_directory($this->getPath(), true);
+		
+		return true;
+	}
+	
+	/**
+	 * Purge old/stale cache content
+	 *
+	 * @return void
+	 */
+	public function purge() {
+		$lastcache = (int) $this->config->lastcache;
+		
+		if (!is_dir($this->getPath())) {
+			return;
+		}
+		
+		$di = new \DirectoryIterator($this->getPath());
+		
+		/* @var $file_info \DirectoryIterator */
+		foreach ($di as $file_info) {
+			if (!$file_info->isDir() || $file_info->isDot()) {
+				continue;
+			}
+			
+			if ((int) $file_info->getBasename() === $lastcache) {
+				continue;
+			}
+			
+			elgg_delete_directory($file_info->getPathname());
+		}
 	}
 }

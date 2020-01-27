@@ -33,7 +33,7 @@ interface ResponseBuilder {
 	 * @return self
 	 * @throws InvalidArgumentException
 	 */
-	public function setStatusCode($status_code = ELGG_HTTP_OK);
+	public function setStatusCode(int $status_code);
 
 	/**
 	 * Returns status code

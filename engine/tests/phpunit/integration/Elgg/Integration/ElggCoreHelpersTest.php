@@ -2,7 +2,7 @@
 
 namespace Elgg\Integration;
 
-use Elgg\LegacyIntegrationTestCase;
+use Elgg\IntegrationTestCase;
 use ElggObject;
 
 /**
@@ -11,37 +11,22 @@ use ElggObject;
  * @group IntegrationTests
  * @group Helpers
  */
-class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
+class ElggCoreHelpersTest extends IntegrationTestCase {
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\BaseTestCase::up()
+	 */
 	public function up() {
 		_elgg_services()->externalFiles->reset();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see \Elgg\BaseTestCase::down()
+	 */
 	public function down() {
 
-	}
-
-	/**
-	 * Test elgg_instanceof()
-	 */
-	public function testElggInstanceOf() {
-		$entity = new ElggObject();
-		$entity->subtype = 'test_subtype';
-		$entity->save();
-
-		$this->assertTrue(elgg_instanceof($entity));
-		$this->assertTrue(elgg_instanceof($entity, 'object'));
-		$this->assertTrue(elgg_instanceof($entity, 'object', 'test_subtype'));
-
-		$this->assertFalse(elgg_instanceof($entity, 'object', 'invalid_subtype'));
-		$this->assertFalse(elgg_instanceof($entity, 'user', 'test_subtype'));
-
-		$entity->delete();
-
-		$bad_entity = false;
-		$this->assertFalse(elgg_instanceof($bad_entity));
-		$this->assertFalse(elgg_instanceof($bad_entity, 'object'));
-		$this->assertFalse(elgg_instanceof($bad_entity, 'object', 'test_subtype'));
 	}
 
 	/**
@@ -83,103 +68,13 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 			'/mod/plugin/file.php' => elgg_get_site_url() . 'mod/plugin/file.php',
 			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
 			'/rootfile.php' => elgg_get_site_url() . 'rootfile.php',
+			'/robots.txt' => elgg_get_site_url() . 'robots.txt',
 			'/rootfile.php?p=v&p2=v2' => elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
 		];
 
 		foreach ($conversions as $input => $output) {
-			$this->assertIdentical($output, elgg_normalize_url($input));
+			$this->assertEquals($output, elgg_normalize_url($input));
 		}
-	}
-
-	/**
-	 * Test elgg_register_js()
-	 */
-	public function testElggRegisterJS() {
-		// specify name
-		$result = elgg_register_js('key', 'http://test1.com', 'footer');
-		$this->assertTrue((bool) $result);
-
-		$item = _elgg_services()->externalFiles->getFile('js', 'key');
-		$this->assertNotNull($item);
-		$this->assertTrue($item->priority !== false);
-		$this->assertIdentical('http://test1.com', $item->url);
-
-		// send a bad url
-		$result = elgg_register_js('bad', null);
-		$this->assertFalse($result);
-	}
-
-	/**
-	 * Test elgg_register_css()
-	 */
-	public function testElggRegisterCSS() {
-		// specify name
-		$result = elgg_register_css('key', 'http://test1.com');
-		$this->assertTrue((bool) $result);
-
-		$item = _elgg_services()->externalFiles->getFile('css', 'key');
-		$this->assertNotNull($item);
-		$this->assertTrue($item->priority !== false);
-		$this->assertIdentical('http://test1.com', $item->url);
-	}
-
-	/**
-	 * Test elgg_unregister_js()
-	 */
-	public function testElggUnregisterJS() {
-		$api = _elgg_services()->externalFiles;
-
-		$base = trim(elgg_get_site_url(), "/");
-		$urls = [
-			'id1' => "$base/urla",
-			'id2' => "$base/urlb",
-			'id3' => "$base/urlc",
-		];
-
-		foreach ($urls as $id => $url) {
-			elgg_register_js($id, $url);
-		}
-
-		$result = elgg_unregister_js('id1');
-		$this->assertTrue((bool) $result);
-		$this->assertNull($api->getFile('js', 'id1'));
-
-		$elements = $api->getRegisteredFiles('js', 'head');
-
-		foreach ($elements as $element) {
-			if (isset($element->name)) {
-				$this->assertFalse($element->name == 'id1');
-			}
-		}
-
-		$this->assertFalse(elgg_unregister_js('id1'));
-
-		$this->assertFalse(elgg_unregister_js('does_not_exist'));
-
-		elgg_unregister_js('id2');
-
-		$elements = $api->getRegisteredFiles('js', 'head');
-		foreach ($elements as $element) {
-			if (isset($element->name)) {
-				$this->assertFalse($element->name == 'id2');
-			}
-		}
-
-		$priority = $api->getFile('js', 'id3')->priority;
-		$this->assertTrue($priority !== false);
-	}
-
-	/**
-	 * Test elgg_load_js()
-	 */
-	public function testElggLoadJS() {
-		// load before register
-		elgg_load_js('key');
-		$result = elgg_register_js('key', 'http://test1.com', 'footer');
-		$this->assertTrue((bool) $result);
-
-		$js_urls = elgg_get_loaded_js('footer');
-		$this->assertIdentical([500 => 'http://test1.com'], $js_urls);
 	}
 
 	/**
@@ -191,21 +86,22 @@ class ElggCoreHelpersTest extends LegacyIntegrationTestCase {
 		$urls = [
 			'id1' => "$base/urla",
 			'id2' => "$base/urlb",
-			'id3' => "$base/urlc"
+			'id3' => "$base/urlc",
 		];
 
 		foreach ($urls as $id => $url) {
-			elgg_register_js($id, $url);
-			elgg_load_js($id);
+			elgg_register_external_file('js', $id, $url);
+			elgg_load_external_file('js', $id);
 		}
 
 		$js_urls = elgg_get_loaded_js('head');
+		$this->assertIsArray($js_urls);
 
-		$this->assertIdentical($js_urls[500], $urls['id1']);
-		$this->assertIdentical($js_urls[501], $urls['id2']);
-		$this->assertIdentical($js_urls[502], $urls['id3']);
+		$this->assertEquals($urls['id1'], $js_urls[500]);
+		$this->assertEquals($urls['id2'], $js_urls[501]);
+		$this->assertEquals($urls['id3'], $js_urls[502]);
 
 		$js_urls = elgg_get_loaded_js('footer');
-		$this->assertIdentical([], $js_urls);
+		$this->assertEquals([], $js_urls);
 	}
 }

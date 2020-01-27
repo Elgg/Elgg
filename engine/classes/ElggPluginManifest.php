@@ -12,9 +12,7 @@
  * where XX is the version specified in the top-level <plugin_manifest>
  * tag's XML namespace.
  *
- * @package    Elgg.Core
- * @subpackage Plugins
- * @since      1.8
+ * @since 1.8
  */
 class ElggPluginManifest {
 
@@ -105,14 +103,6 @@ class ElggPluginManifest {
 		'type' => '',
 		'name' => '',
 		'version' => ''
-	];
-
-	/**
-	 * The expected structure of a screenshot element
-	 */
-	private $screenshotStruct = [
-		'description' => '',
-		'path' => ''
 	];
 
 	/**
@@ -329,15 +319,6 @@ class ElggPluginManifest {
 	}
 
 	/**
-	 * Returns the donations page
-	 *
-	 * @return string
-	 */
-	public function getDonationsPageURL() {
-		return (string) $this->parser->getAttribute('donations');
-	}
-
-	/**
 	 * Returns the version of the plugin.
 	 *
 	 * @return mixed
@@ -356,15 +337,6 @@ class ElggPluginManifest {
 	}
 
 	/**
-	 * Return the copyright
-	 *
-	 * @return string
-	 */
-	public function getCopyright() {
-		return (string) $this->parser->getAttribute('copyright');
-	}
-
-	/**
 	 * Return the website
 	 *
 	 * @return string
@@ -379,41 +351,7 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$bundled_plugins = [
-			'activity',
-			'blog',
-			'bookmarks',
-			'ckeditor',
-			'custom_index',
-			'dashboard',
-			'developers',
-			'diagnostics',
-			'discussions',
-			'embed',
-			'externalpages',
-			'file',
-			'friends',
-			'friends_collections',
-			'garbagecollector',
-			'groups',
-			'invitefriends',
-			'likes',
-			'login_as',
-			'members',
-			'messageboard',
-			'messages',
-			'notifications',
-			'pages',
-			'profile',
-			'reportedcontent',
-			'search',
-			'site_notifications',
-			'system_log',
-			'tagcloud',
-			'thewire',
-			'uservalidationbyemail',
-			'web_services',
-		];
+		$bundled_plugins = \Elgg\Database\Plugins::BUNDLED_PLUGINS;
 
 		$cats = $this->parser->getAttribute('category');
 
@@ -426,28 +364,6 @@ class ElggPluginManifest {
 		}
 
 		return $cats;
-	}
-
-	/**
-	 * Return the screenshots listed.
-	 *
-	 * @return array
-	 */
-	public function getScreenshots() {
-		elgg_deprecated_notice('Using screenshots in plugins are deprecated an will no longer be shown in the plugin details.', '3.1');
-		
-		$ss = $this->parser->getAttribute('screenshot');
-
-		if (!$ss) {
-			$ss = [];
-		}
-
-		$normalized = [];
-		foreach ($ss as $s) {
-			$normalized[] = $this->buildStruct($this->screenshotStruct, $s);
-		}
-
-		return $normalized;
 	}
 
 	/**
@@ -519,26 +435,6 @@ class ElggPluginManifest {
 		$normalized = [];
 		foreach ($reqs as $req) {
 			$normalized[] = $this->normalizeDep($req);
-		}
-
-		return $normalized;
-	}
-
-	/**
-	 * Returns the suggests elements.
-	 *
-	 * @return array
-	 */
-	public function getSuggests() {
-		$suggests = $this->parser->getAttribute('suggests');
-
-		if (!$suggests) {
-			$suggests = [];
-		}
-
-		$normalized = [];
-		foreach ($suggests as $suggest) {
-			$normalized[] = $this->normalizeDep($suggest);
 		}
 
 		return $normalized;

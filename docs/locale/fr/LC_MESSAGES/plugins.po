@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 14:21+0200\n"
+"POT-Creation-Date: 2020-01-23 11:15+0100\n"
 "PO-Revision-Date: 2018-01-19 10:19+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -292,6 +292,29 @@ msgstr ""
 "En utilisant cela, il devrait être possible de développer la plupart des "
 "types de visionnneuses embarquables."
 
+#: ../../plugins/friends.rst:2
+msgid "Friends"
+msgstr "Contacts"
+
+#: ../../plugins/friends.rst:4
+msgid ""
+"Being a social network framework Elgg supports relationships between users."
+msgstr ""
+
+#: ../../plugins/friends.rst:6
+msgid ""
+"By default any user can befriend any other user, it's like following the "
+"activity of the other user."
+msgstr ""
+
+#: ../../plugins/friends.rst:8
+msgid ""
+"After enabling friendship requests as a feature of the Friends plugin, when "
+"user A wants to be friends with user B, user B has to approve the request. "
+"Upon approval user A will be friends with user B and user B will be friends "
+"with user A."
+msgstr ""
+
 #: ../../plugins/groups.rst:2
 msgid "Groups"
 msgstr "Groupes"
@@ -355,7 +378,7 @@ msgstr ""
 "Elgg est livré avec un jeu de plugins. Ils fournissent les fonctionnalités "
 "fondamentales pour votre réseau social"
 
-#: ../../plugins/index.rst:21
+#: ../../plugins/index.rst:22
 msgid ""
 "The following plugins are also bundled with Elgg, but are not (yet) "
 "documented"
@@ -363,41 +386,37 @@ msgstr ""
 "Les plugins suivants sont également livrés avec Elgg, mais ne sont pas "
 "(encore) documentés"
 
-#: ../../plugins/index.rst:23
+#: ../../plugins/index.rst:24
 msgid "activity"
 msgstr "activity (activité)"
 
-#: ../../plugins/index.rst:24
+#: ../../plugins/index.rst:25
 msgid "bookmarks"
 msgstr "signets"
 
-#: ../../plugins/index.rst:25
+#: ../../plugins/index.rst:26
 msgid "ckeditor"
 msgstr "ckeditor"
 
-#: ../../plugins/index.rst:26
+#: ../../plugins/index.rst:27
 msgid "custom_index"
 msgstr "custom_index (index personnalisé)"
 
-#: ../../plugins/index.rst:27
+#: ../../plugins/index.rst:28
 msgid "developers"
 msgstr "developers (développeurs)"
 
-#: ../../plugins/index.rst:28
+#: ../../plugins/index.rst:29
 msgid "discussions"
 msgstr "discussions"
 
-#: ../../plugins/index.rst:29
+#: ../../plugins/index.rst:30
 msgid "embed"
 msgstr "embed"
 
-#: ../../plugins/index.rst:30
+#: ../../plugins/index.rst:31
 msgid "externalpages"
 msgstr "externalpages"
-
-#: ../../plugins/index.rst:31
-msgid "friends"
-msgstr "friends (contacts)"
 
 #: ../../plugins/index.rst:32
 msgid "friends_collections"

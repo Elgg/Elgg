@@ -18,14 +18,14 @@ System hooks
 **gc, system**
 	Allows plugins to run garbage collection for ``$params['period']``.
 
-**unit_test, system**
-	Add a Simple Test test. (Deprecated.)
-
 **diagnostics:report, system**
 	Filter the output for the diagnostics report download.
 
 **cron, <period>**
 	Triggered by cron for each period.
+
+**cron:intervals, system**
+	Allow the configuration of custom cron intervals
 
 **validate, input**
 	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
@@ -163,6 +163,8 @@ System hooks
 **languages, translations**
    Allows plugins to add/remove languages from the configurable languages in the system.
 
+**generate, password**
+	Allows plugins to generate new random cleartext passwords. 
 
 User hooks
 ==========
@@ -241,6 +243,9 @@ Object hooks
 **likes:count, <entity_type>**
 	Return the number of likes for ``$params['entity']``.
 
+
+.. _guides/hooks-list#access-hooks:
+
 Access hooks
 ============
 
@@ -273,6 +278,9 @@ Access hooks
 
 	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
 
+**access:collections:write:subtypes, user**
+	Returns an array of access collection subtypes to be used when retrieving access collections owned by a user as part of the ``get_write_access_array()`` function.
+	
 **access:collections:addcollection, collection**
 	Triggered after an access collection ``$params['collection_id']`` is created.
 
@@ -309,10 +317,6 @@ Access hooks
 
 Action hooks
 ============
-
-**action, <action>**
-	Deprecated. Use ``'action:validate', <action>`` hook instead.
-	Triggered before executing action scripts. Return false to abort action.
 
 **action:validate, <action>**
 	Trigger before action script/controller is executed.
@@ -750,9 +754,8 @@ Files
 	and with the default detected mimetype of ``$params['default']``.
 
 **simple_type, file**
-    In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']``
-    (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like
-    ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
+    The hook provides ``$params['mime_type']`` (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall 
+    category like ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
     ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
     ``ege*`` filters and menus.
 
@@ -999,10 +1002,6 @@ Other
 
 **is_member, group**
 	Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``.
-
-**entity:annotate, <entity_type>**
-	Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can
-	be used to add annotations to all full entity views.
 
 **usersetting, plugin**
 	Filter user settings for plugins. ``$params`` contains:

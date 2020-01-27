@@ -1,12 +1,17 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
 /**
  * Sites
  */
 
-	'item:site:site' => 'Site',
-	'collection:site:site' => 'Sites',
+	'item:site:site' => 'Sito',
+	'collection:site:site' => 'Sito',
 	'index:content' => '<p>Welcome to your Elgg site.</p><p><strong>Tip:</strong> Many sites use the <code>activity</code> plugin to place a site activity stream on this page.</p>',
 
 /**
@@ -114,6 +119,7 @@ return array(
 	'LoginException:AccountLocked' => 'Il tuo account è stato bloccato per numero tentativi di accesso troppo elevato.',
 	'LoginException:ChangePasswordFailure' => 'Verifica della password attuale fallita.',
 	'LoginException:Unknown' => 'Impossibile accedere a causa di un errore non identificato.',
+	'LoginException:AdminValidationPending' => "Your account needs to be validated by a site administrator before you can use it. You'll be notified when your account is validated.",
 
 	'UserFetchFailureException' => 'Impossibile verificare i permessi per user_guid [%s] perchè l\'utente non esiste.',
 
@@ -121,9 +127,12 @@ return array(
 	'EntityNotFoundException' => 'The content you were trying to access has been removed or you do not have permissions to access it.',
 	'EntityPermissionsException' => 'You do not have sufficient permissions for this action.',
 	'GatekeeperException' => 'You do not have permissions to view the page you are trying to access',
-	'BadRequestException' => 'Bad request',
+	'BadRequestException' => 'Richiesta non valida',
 	'ValidationException' => 'Submitted data did not meet the requirements, please check your input.',
 	'LogicException:InterfaceNotImplemented' => '%s must implement %s',
+	
+	'Security:InvalidPasswordCharacterRequirementsException' => "The provided password is doesn't meet the character requirements",
+	'Security:InvalidPasswordLengthException' => "The provided password doesn't meet the minimal length requirement of %s characters",
 
 	'deprecatedfunction' => 'Attenzione: questo codice usa la funzione non più approvata \'%s\' e non compatibile con questa versione di Elgg.',
 
@@ -204,7 +213,7 @@ return array(
 	'access:label:logged_in' => "Logged in users",
 	'access:label:public' => "Public",
 	'access:label:logged_out' => "Logged out users",
-	'access:label:friends' => "Friends",
+	'access:label:friends' => "Amici",
 	'access' => "Accesso",
 	'access:overridenotice' => "Nota: per decisione del gruppo, questi contenuti saranno accessibili solo ai membri del gruppo.",
 	'access:limited:label' => "Limitato",
@@ -234,7 +243,7 @@ return array(
 	'widgets' => "Widget",
 	'widget' => "Widget",
 	'item:object:widget' => "Widget",
-	'collection:object:widget' => 'Widgets',
+	'collection:object:widget' => 'Widget',
 	'widgets:save:success' => "Il Widget è stato salvato.",
 	'widgets:save:failure' => "Impossibile salvare il tuo widget.",
 	'widgets:add:success' => "Il widget è stato aggiunto.",
@@ -249,9 +258,9 @@ return array(
 
 	'group' => "Gruppo",
 	'item:group' => "Gruppi",
-	'collection:group' => 'Groups',
-	'item:group:group' => "Group",
-	'collection:group:group' => 'Groups',
+	'collection:group' => 'Gruppi',
+	'item:group:group' => "Gruppi",
+	'collection:group:group' => 'Gruppi',
 	'groups:tool_gatekeeper' => "The requested functionality is currently not enabled in this group",
 
 /**
@@ -260,9 +269,9 @@ return array(
 
 	'user' => "Utente",
 	'item:user' => "Utenti",
-	'collection:user' => 'Users',
-	'item:user:user' => 'User',
-	'collection:user:user' => 'Users',
+	'collection:user' => 'Utenti',
+	'item:user:user' => 'Utente',
+	'collection:user:user' => 'Utenti',
 
 	'friends' => "Amici",
 	'collection:friends' => 'Friends\' %s',
@@ -322,7 +331,11 @@ return array(
 	'river:subject:invalid_subject' => 'Utente non valido',
 	'activity:owner' => 'Visualizza attività',
 
+/**
+ * Relationships
+ */
 	
+	'relationship:default' => "%s relates to %s",
 
 /**
  * Notifications
@@ -433,6 +446,19 @@ return array(
 	'walled_garden:home' => 'Home',
 
 /**
+ * Password requirements
+ */
+	'password:requirements:min_length' => "The password needs to be at least %s characters.",
+	'password:requirements:lower' => "The password needs to have at least %s lower case characters.",
+	'password:requirements:no_lower' => "The password shouldn't contain any lower case characters.",
+	'password:requirements:upper' => "The password needs to have at least %s upper case characters.",
+	'password:requirements:no_upper' => "The password shouldn't contain any upper case characters.",
+	'password:requirements:number' => "The password needs to have at least %s number characters.",
+	'password:requirements:no_number' => "The password shouldn't contain any number characters.",
+	'password:requirements:special' => "The password needs to have at least %s special characters.",
+	'password:requirements:no_special' => "The password shouldn't contain any special characters.",
+	
+/**
  * Administration
  */
 	'menu:page:header:administer' => 'Amministrazione',
@@ -504,13 +530,13 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:users:opt:linktext' => "Configura utenti...",
 	'admin:users:opt:description' => "Configura utenti e informazioni dei profili",
 	'admin:users:find' => 'Trova',
-	'admin:users:unvalidated' => 'Unvalidated',
-	'admin:users:unvalidated:no_results' => 'No unvalidated users.',
+	'admin:users:unvalidated' => 'Utenti non ancora validati',
+	'admin:users:unvalidated:no_results' => 'Nessun utente non ancora validato',
 	'admin:users:unvalidated:registered' => 'Registered: %s',
 	'admin:users:unvalidated:change_email' => 'Change e-mail address',
 	'admin:users:unvalidated:change_email:user' => 'Change e-mail address for: %s',
 	
-	'admin:configure_utilities:maintenance' => 'Maintenance mode',
+	'admin:configure_utilities:maintenance' => 'Modalità di manutenzione',
 	'admin:upgrades' => 'Aggiornamenti',
 	'admin:upgrades:finished' => 'Completed',
 	'admin:upgrades:db' => 'Database upgrades',
@@ -532,8 +558,9 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 
 	'admin:settings' => 'Impostazioni',
 	'admin:settings:basic' => 'Impostazioni di base',
+	'admin:settings:i18n' => 'Internationalization',
 	'admin:settings:advanced' => 'Impostazioni avanzate',
-	'admin:settings:users' => 'Users',
+	'admin:settings:users' => 'Utenti',
 	'admin:site_settings' => "Site Settings",
 	'admin:site:description' => "Questo pannello di amministrazione permette di gestire le impostazioni globali del sito. Selezionare un'opzione qui sotto per iniziare.",
 	'admin:site:opt:linktext' => "Configura sito...",
@@ -569,6 +596,7 @@ file access this will negatively impact performance. Also PHPs opcache can no lo
 	'admin:widget:admin_welcome:intro' =>
 'Benvenuti in Elgg! In questo momento siete di fronte al pannello di controllo che viene utilizzato per tenere sotto controllo quello che sta succedendo nel sito.',
 
+	'admin:widget:admin_welcome:registration' => "Registration for new users is currently disabled! You can enabled this on the %s page.",
 	'admin:widget:admin_welcome:admin_overview' =>
 "Navigation for the administration area is provided by the menu to the right. It is organized into
 three sections:
@@ -588,6 +616,12 @@ three sections:
 
 	'admin:cache:flush' => 'Rinfresca la cache',
 	'admin:cache:flushed' => "La cache del sito è stata rinfrescata",
+	'admin:cache:invalidate' => 'Invalidate the caches',
+	'admin:cache:invalidated' => "The site's caches have been invalidated",
+	'admin:cache:clear' => 'Clear the caches',
+	'admin:cache:cleared' => "The site's caches have been cleared",
+	'admin:cache:purge' => 'Purge the caches',
+	'admin:cache:purged' => "The site's caches have been purged",
 
 	'admin:footer:faq' => 'FAQ amministrative',
 	'admin:footer:manual' => 'Manuale dell\'amministratore',
@@ -644,10 +678,11 @@ submit potentially harmfull content (eg. cross-site-scripting, etc)",
 	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
 expired sessions from your database and not allow users to reuse old sessions.",
 	
-	'admin:security:settings' => 'Settings',
+	'admin:security:settings' => 'Impostazioni',
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',
 	'admin:security:settings:label:hardening' => 'Hardening',
-	'admin:security:settings:label:notifications' => 'Notifications',
+	'admin:security:settings:label:account' => 'Profilo',
+	'admin:security:settings:label:notifications' => 'Notifiche',
 	'admin:security:settings:label:site_secret' => 'Site secret',
 	
 	'admin:security:settings:notify_admins' => 'Notify all site administrators when an admin is added or removed',
@@ -687,6 +722,24 @@ Having icons session bound makes icon urls not shareable between sessions. The s
 	'admin:security:settings:site_secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:security:settings:site_secret:regenerate' => "Regenerate site secret",
 	'admin:security:settings:site_secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
+	
+	'admin:security:settings:minusername' => "Minimal username length",
+	'admin:security:settings:minusername:help' => "Minimal number of characters required in a username",
+	
+	'admin:security:settings:min_password_length' => "Minimal password length",
+	'admin:security:settings:min_password_length:help' => "Minimal number of characters required in a password",
+	
+	'admin:security:settings:min_password_lower' => "Minimal number of lower case characters in a password",
+	'admin:security:settings:min_password_lower:help' => "Configure the minimal number of lower case (a-z) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
+	
+	'admin:security:settings:min_password_upper' => "Minimal number of upper case characters in a password",
+	'admin:security:settings:min_password_upper:help' => "Configure the minimal number of upper case (A-Z) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
+	
+	'admin:security:settings:min_password_number' => "Minimal number of number characters in a password",
+	'admin:security:settings:min_password_number:help' => "Configure the minimal number of number (0-9) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
+	
+	'admin:security:settings:min_password_special' => "Minimal number of special characters in a password",
+	'admin:security:settings:min_password_special:help' => "Configure the minimal number of special (!@$%^&*()<>,.?/[]{}-=_+) characters that should be present in a password. 0 for not present at all, empty for no requirements.",
 	
 	'admin:site:secret:regenerated' => "Your site secret has been regenerated",
 	'admin:site:secret:prevented' => "The regeneration of the site secret was prevented",
@@ -754,6 +807,14 @@ If you didn't make this change, please reset your password here:
 Or contact a site administrator:
 %s",
 	
+	'admin:notification:unvalidated_users:subject' => "Users awaiting approval on %s",
+	'admin:notification:unvalidated_users:body' => "Hi %s,
+
+%d users of '%s' are awaiting approval by an administrator.
+
+See the full list of users here:
+%s",
+
 /**
  * Plugins
  */
@@ -761,10 +822,16 @@ Or contact a site administrator:
 	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
 	'plugins:settings:save:ok' => "Impostazioni per il plugin %s salvate con successo.",
 	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
+	'plugins:settings:remove:ok' => "All settings for the %s plugin have been removed",
+	'plugins:settings:remove:fail' => "An error occured while removing all settings for the plugin %s",
 	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
 	'plugins:usersettings:save:fail' => "There was a problem saving user settings for the %s plugin.",
+	
 	'item:object:plugin' => 'Plugins',
 	'collection:object:plugin' => 'Plugins',
+	
+	'plugins:settings:remove:menu:text' => "Remove all settings",
+	'plugins:settings:remove:menu:confirm' => "Are you sure you wish to remove all settings, including user settings from this plugin?",
 
 	'admin:plugins' => "Plugins",
 	'admin:plugins:activate_all' => 'Activate All',
@@ -791,6 +858,7 @@ Or contact a site administrator:
 	'admin:plugins:label:moreinfo' => 'ulteriori informazioni',
 	'admin:plugins:label:version' => 'Versione',
 	'admin:plugins:label:location' => 'Ubicazione',
+	'admin:plugins:label:priority' => 'Priorità',
 	'admin:plugins:label:contributors' => 'Contributori',
 	'admin:plugins:label:contributors:name' => 'Nome',
 	'admin:plugins:label:contributors:email' => 'Email',
@@ -879,7 +947,7 @@ Or contact a site administrator:
 		For improved performance, it is recommended that you enable and configure OPcache.
 ',
 	
-	'admin:server:requirements:php_extension' => "PHP extension: %s",
+	'admin:server:requirements:php_extension' => "Estensione PHP: %s",
 	'admin:server:requirements:php_extension:required' => "This PHP extension is required for the correct operation of Elgg",
 	'admin:server:requirements:php_extension:recommended' => "This PHP extension is recommended for the optimal operation of Elgg",
 	'admin:server:requirements:rewrite' => ".htaccess rewrite rules",
@@ -1058,7 +1126,7 @@ These changes will only affect new users on the site.',
 	'create' => 'Crea',
 	'remove' => 'Rimuovi',
 	'revert' => 'Ripristina',
-	'validate' => 'Validate',
+	'validate' => 'Valida',
 	'read_more' => 'Read more',
 
 	'site' => 'Sito',
@@ -1089,7 +1157,7 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Attivi',
 	'total' => 'Totale',
-	'unvalidated' => 'Unvalidated',
+	'unvalidated' => 'Utenti non ancora validati',
 	
 	'ok' => 'OK',
 	'any' => 'Qualsiasi',
@@ -1105,6 +1173,9 @@ These changes will only affect new users on the site.',
 	'content' => "contenuti",
 	'content:latest' => 'Ultime attività',
 	'content:latest:blurb' => 'In alternativa clicca qui per visualizzare i contenuti recenti dell\'intero sito.',
+	
+	'list:out_of_bounds' => "You have reached a part of the list without any content, however there is content available.",
+	'list:out_of_bounds:link' => "Go back to the first page of this listing.",
 
 	'link:text' => 'visualizza collegamento',
 
@@ -1129,6 +1200,8 @@ These changes will only affect new users on the site.',
 	'status:enabled' => 'Enabled',
 	'status:disabled' => 'Disabled',
 	'status:unavailable' => 'Unavailable',
+	'status:active' => 'Attivi',
+	'status:inactive' => 'Inactive',
 
 /**
  * Generic sorts
@@ -1212,10 +1285,11 @@ Once you have logged in, we highly recommend that you change your password.',
  * Messages
  */
 	'messages:title:success' => 'Success',
-	'messages:title:error' => 'Error',
+	'messages:title:error' => 'Errore',
 	'messages:title:warning' => 'Warning',
-	'messages:title:help' => 'Help',
-	'messages:title:notice' => 'Notice',
+	'messages:title:help' => 'Aiuto',
+	'messages:title:notice' => 'Notifica',
+	'messages:title:info' => 'Info',
 
 /**
  * Import / export
@@ -1325,6 +1399,11 @@ Once you have logged in, we highly recommend that you change your password.',
 	// Walled Garden support
 	'installation:registration:description' => 'La registrazione degli utenti è abilitata in modo predefinito. Disabilitare questa opzione per impedire che gli utenti possano registrarsi in modo autonomo.',
 	'installation:registration:label' => 'Permetti ai nuovi utenti di registrarsi',
+	'installation:adminvalidation:description' => 'If enabled, newly registered users require manual validation by an administrator before they can use the site.',
+	'installation:adminvalidation:label' => 'New users require manual validation by an administrator',
+	'installation:adminvalidation:notification:description' => 'When enabled, site administrators will get a notification that there are pending user validations. An administrator can disable the notification on their personal settings page.',
+	'installation:adminvalidation:notification:label' => 'Notify administrators of pending user validations',
+	'installation:adminvalidation:notification:direct' => 'Direct',
 	'installation:walled_garden:description' => 'Abilitare questa opzione per impedire agli utenti non registrati di visualizzare i contenuti del sito ad eccezione delle pagine pubbliche (come ad esempio login e registrazione)',
 	'installation:walled_garden:label' => 'Limita le pagine agli utenti registrati',
 
@@ -1359,11 +1438,13 @@ Once you have logged in, we highly recommend that you change your password.',
 
 	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caching',
-	'admin:legend:content' => 'Content',
+	'admin:legend:content' => 'Contenuti',
 	'admin:legend:content_access' => 'Accesso ai contenuti',
 	'admin:legend:site_access' => 'Accesso al sito',
 	'admin:legend:debug' => 'Debug e Log',
 	
+	'config:i18n:allowed_languages' => "Allowed languages",
+	'config:i18n:allowed_languages:help' => "Only allowed languages can be used by users. English and the site language are always allowed.",
 	'config:users:can_change_username' => "Allow users to change their username",
 	'config:users:can_change_username:help' => "If not allowed only admins can change a users username",
 	'config:remove_branding:label' => "Remove Elgg branding",
@@ -1372,6 +1453,10 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:disable_rss:help' => "Disable this to no longer promote the availability of RSS feeds",
 	'config:friendly_time_number_of_days:label' => "Number of days friendly time is presented",
 	'config:friendly_time_number_of_days:help' => "You can configure how many days the friendly time notation is used. After the set amount of days the friendly time will change into a regular date format. Setting this to 0 will disable the friendly time format.",
+	'config:content:comment_box_collapses' => "The comment box collapses after the first comment on content",
+	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
+	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
+	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
 	
 	'upgrading' => 'Aggiornamento in corso...',
 	'upgrade:core' => 'L\'installazione di Elgg è stata aggiornata.',
@@ -1472,7 +1557,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'email:request:email:body' => "Hi %s,
 
 You requested to change your e-mail address on '%s'.
-If you didn't request this change, please reset your password.
+If you didn't request this change, you can ignore this email.
 
 In order to confirm the e-mail address change, please click this link:
 %s
@@ -1499,6 +1584,20 @@ From now on you'll receive notifications on this e-mail address.
 If you didn't request this change, please contact a site administrator.
 %s",
 
+	'account:email:admin:validation_notification' => "Notify me when there are users requiring validation by an administrator",
+	'account:email:admin:validation_notification:help' => "Because of the site settings, newly registered users require manual validation by an administrator. With this setting you can disable notifications about pending validation requests.",
+	
+	'account:validation:pending:title' => "Account validation pending",
+	'account:validation:pending:content' => "Your account has been registered successfully! However before you can use you account a site administrator needs to validate you account. You'll receive an e-mail when you account is validated.",
+	
+	'account:notification:validation:subject' => "Your account on %s has been validated!",
+	'account:notification:validation:body' => "Hi %s,
+
+Your account on '%s' has been validated. You can now use your account.
+
+To go the the website, click here:
+%s",
+
 /**
  * user default access
  */
@@ -1514,7 +1613,7 @@ If you didn't request this change, please contact a site administrator.
 
 	'comments:count' => "%s commenti",
 	'item:object:comment' => 'Commenti',
-	'collection:object:comment' => 'Comments',
+	'collection:object:comment' => 'Commenti',
 
 	'river:object:default:comment' => '%s commented on %s',
 
@@ -1525,7 +1624,7 @@ If you didn't request this change, please contact a site administrator.
 	'generic_comments:latest' => "Ultimi commenti",
 	'generic_comment:posted' => "Il tuo commento è stato inviato.",
 	'generic_comment:updated' => "Il commento è stato aggiornato.",
-	'entity:delete:object:comment:success' => "The comment was successfully deleted.",
+	'entity:delete:object:comment:success' => "Commento eliminato con successo.",
 	'generic_comment:blank' => "Spiacenti, devi scrivere qualcosa nel commento per poterlo salvare.",
 	'generic_comment:notfound' => "Spiacenti, impossibile trovare il commento specificato.",
 	'generic_comment:notfound_fallback' => "Spiacenti, impossibile trovare il commento specificato, ma ti abbiamo indirizzato alla pagina a cui era stato aggiunto.",
@@ -1576,6 +1675,13 @@ To view %s's profile, click here:
 	'entity:can_delete:invaliduser' => 'Non è possibile verificare canDelete per l\'utente _guid [%s] perché l\'utente non esiste.',
 
 /**
+ * Annotations
+ */
+	
+	'annotation:delete:fail' => "An error occured while removing the annotation",
+	'annotation:delete:success' => "The annotation was removed successfully",
+	
+/**
  * Action gatekeeper
  */
 
@@ -1610,7 +1716,66 @@ To view %s's profile, click here:
  * Miscellaneous
  */
 	'elgg:powered' => "Generato da Elgg",
+	
+/**
+ * Cli commands
+ */
+	'cli:login:error:unknown' => "Unable to login as %s",
+	'cli:login:success:log' => "Logged in as %s [guid: %s]",
+	'cli:response:output' => "Response:",
+	'cli:option:as' => "Execute the command on behalf of a user with the given username",
+	'cli:option:language' => "Execute the command in the given language (eg. en, nl or de)",
+	
+	'cli:cache:clear:description' => "Clear Elgg caches",
+	'cli:cache:invalidate:description' => "Invalidate Elgg caches",
+	'cli:cache:purge:description' => "Purge Elgg caches",
+	
+	'cli:cron:description' => "Execute cron handlers for all or specified interval",
+	'cli:cron:option:interval' => "Name of the interval (e.g. hourly)",
+	'cli:cron:option:force' => "Force cron commands to run even if they are not yet due",
+	'cli:cron:option:time' => "Time of the cron initialization",
+	
+	'cli:database:seed:description' => "Seeds the database with fake entities",
+	'cli:database:seed:option:limit' => "Number of entities to seed",
+	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
+	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
+	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
+	
+	'cli:database:unseed:description' => "Removes seeded fake entities from the database",
+	
+	'cli:plugins:activate:description' => "Activate plugin(s)",
+	'cli:plugins:activate:option:force' => "Resolve conflicts by deactivating conflicting plugins and enabling required ones",
+	'cli:plugins:activate:argument:plugins' => "Plugin IDs to be activated",
+	'cli:plugins:activate:progress:start' => "Activating plugins",
+	
+	'cli:plugins:deactivate:description' => "Deactivate plugin(s)",
+	'cli:plugins:deactivate:option:force' => "Force deactivation of all dependent plugins",
+	'cli:plugins:deactivate:argument:plugins' => "Plugin IDs to be deactivated",
+	'cli:plugins:deactivate:progress:start' => "Deactivating plugins",
+	
+	'cli:plugins:list:description' => "List all plugins installed on the site",
+	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
+	
+	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
+	'cli:simpletest:option:config' => "Path to settings file that the Elgg Application should be bootstrapped with",
+	'cli:simpletest:option:plugins' => "A list of plugins to enable for testing or 'all' to enable all plugins",
+	'cli:simpletest:option:filter' => "Only run tests that match filter pattern",
+	'cli:simpletest:error:class' => "You must install your Elgg application using '%s'",
+	'cli:simpletest:error:file' => "%s is not a valid simpletest class",
+	'cli:simpletest:output:summary' => "Time: %.2f seconds, Memory: %.2fMb",
+	
+	'cli:upgrade:batch:description' => "Executes one or more upgrades",
+	'cli:upgrade:batch:argument:upgrades' => "One or more upgrades (class names) to be executed",
+	'cli:upgrade:batch:option:force' => "Run upgrade even if it has been completed before",
+	'cli:upgrade:batch:finished' => "Running upgrades finished",
+	'cli:upgrade:batch:notfound' => "No upgrade class found for %s",
 
+	'cli:upgrade:list:description' => "Lists all upgrades in the system",
+	'cli:upgrade:list:completed' => "Completed upgrades",
+	'cli:upgrade:list:pending' => "Pending upgrades",
+	'cli:upgrade:list:notfound' => "No upgrades found",
+	
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

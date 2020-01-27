@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-28 15:59+0200\n"
+"POT-Creation-Date: 2020-01-23 16:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -81,7 +81,6 @@ msgid "Plugins can load their own JS libs."
 msgstr ""
 
 #: ../../intro/development.rst:51
-#: ../../intro/features.rst:11
 msgid "Internationalization"
 msgstr ""
 
@@ -142,120 +141,24 @@ msgstr ""
 msgid "Depending on how you installed Elgg and your server configuration you can access``elgg-cli`` binaries as one of the following from the root of your Elgg installation:"
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:23
+#: ../../intro/elgg-cli.rst:24
+msgid "Be advised that when using elgg-cli it might be needed to run the command as the same user as the webserver to prevent issues with rights related to files."
+msgstr ""
+
+#: ../../intro/elgg-cli.rst:27
 msgid "Available commands"
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:77
+#: ../../intro/elgg-cli.rst:87
 msgid "Adding custom commands"
 msgstr ""
 
-#: ../../intro/elgg-cli.rst:79
-msgid "Plugins can add their commands to the CLI application, by adding command class name via ``'commands','cli'`` hook. Command class must extend ``\\Elgg\\CLI\\Command``."
+#: ../../intro/elgg-cli.rst:89
+msgid "Plugins can add their commands to the CLI application, by adding command class name via a configuration in ``elgg-plugin.php`` or via the ``'commands','cli'`` hook. Command class must extend ``\\Elgg\\CLI\\Command``."
 msgstr ""
 
-#: ../../intro/features.rst:2
-msgid "Features"
-msgstr ""
-
-#: ../../intro/features.rst:4
-msgid "Showcases: https://elgg.org/showcase"
-msgstr ""
-
-#: ../../intro/features.rst:7
-msgid "For developers"
-msgstr ""
-
-#: ../../intro/features.rst:9
-msgid "Permissive license"
-msgstr ""
-
-#: ../../intro/features.rst:10
-msgid "Theme framework"
-msgstr ""
-
-#: ../../intro/features.rst:12
-msgid "Templating engine"
-msgstr ""
-
-#: ../../intro/features.rst:13
-msgid "Widgets framework"
-msgstr ""
-
-#: ../../intro/features.rst:14
-msgid "Plugin APIs"
-msgstr ""
-
-#: ../../intro/features.rst:15
-msgid "Social graph"
-msgstr ""
-
-#: ../../intro/features.rst:16
-msgid "Web services API"
-msgstr ""
-
-#: ../../intro/features.rst:17
-msgid "jQuery-based JS framework"
-msgstr ""
-
-#: ../../intro/features.rst:18
-msgid "Session management"
-msgstr ""
-
-#: ../../intro/features.rst:19
-msgid "Custom URL routing"
-msgstr ""
-
-#: ../../intro/features.rst:22
-msgid "For admins"
-msgstr ""
-
-#: ../../intro/features.rst:24
-msgid "User profiles and avatars"
-msgstr ""
-
-#: ../../intro/features.rst:25
-msgid "Fine-grained access control lists"
-msgstr ""
-
-#: ../../intro/features.rst:26
-msgid "Friends and friends lists (ala G+ circles)"
-msgstr ""
-
-#: ../../intro/features.rst:27
-msgid "Responsive, mobile-friendly design"
-msgstr ""
-
-#: ../../intro/features.rst:28
-msgid "RSS support"
-msgstr ""
-
-#: ../../intro/features.rst:29
-msgid "Activity stream"
-msgstr ""
-
-#: ../../intro/features.rst:30
-msgid "Plugins for common content types like blogs, bookmarks, files, microblogging, private messages, documents, message boards, discussion"
-msgstr ""
-
-#: ../../intro/features.rst:31
-msgid "User authentication and administration"
-msgstr ""
-
-#: ../../intro/features.rst:33
-msgid "If you need more functionality than what Elgg offers out-of-the-box there are a couple of options:"
-msgstr ""
-
-#: ../../intro/features.rst:35
-msgid "Add more by :doc:`installing plugins </admin/plugins>` - for example, blogs, forums, social bookmarks"
-msgstr ""
-
-#: ../../intro/features.rst:36
-msgid "Develop your own features via plugins"
-msgstr ""
-
-#: ../../intro/features.rst:37
-msgid "Hire someone to do the above for you"
+#: ../../intro/elgg-cli.rst:106
+msgid "Custom commands are based on `Symfony Console Commands`_. Please refer to their documentation for more details."
 msgstr ""
 
 #: ../../intro/index.rst:2
@@ -283,7 +186,7 @@ msgid "MySQL 5.5.3+ (5.0.0+ if upgrading an existing installation)"
 msgstr ""
 
 #: ../../intro/install.rst:14
-msgid "PHP 7.1+ with the following extensions:"
+msgid "PHP 7.2+ with the following extensions:"
 msgstr ""
 
 #: ../../intro/install.rst:16

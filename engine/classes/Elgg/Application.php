@@ -448,6 +448,15 @@ class Application {
 
 				return $response;
 			}
+			
+			if ($request->getElggPath() === '/refresh_token') {
+				$config->_disable_session_save = true;
+				$token = new \Elgg\Controllers\RefreshCsrfToken();
+				$response = $token($request);
+				self::getResponseTransport()->send($response);
+
+				return $response;
+			}
 
 			if (0 === strpos($request->getElggPath(), '/serve-file/')) {
 				$response = $this->_services->serveFileHandler->getResponse($request);
@@ -771,10 +780,6 @@ class Application {
 			'configuration.php',
 			'constants.php',
 			'cron.php',
-			'database.php',
-			'deprecated-2.3.php',
-			'deprecated-3.0.php',
-			'deprecated-3.1.php',
 			'entities.php',
 			'filestore.php',
 			'group.php',
@@ -791,7 +796,6 @@ class Application {
 			'plugins.php',
 			'relationships.php',
 			'river.php',
-			'search.php',
 			'sessions.php',
 			'statistics.php',
 			'tags.php',

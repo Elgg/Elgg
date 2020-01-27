@@ -1,11 +1,23 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
 
 return array(
+	'item:object:discussion' => "Sujets de discussion",
+	
 	'add:object:discussion' => 'Ajouter un sujet de discussion',
 	'edit:object:discussion' => 'Modifier le sujet',
+	'collection:object:discussion' => 'Sujets de discussion',
+	'collection:object:discussion:group' => 'Discussions du groupe',
+	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	
+	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
+	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
 
 	'discussion:latest' => 'Dernières discussions',
-	'collection:object:discussion:group' => 'Discussions du groupe',
 	'discussion:none' => 'Pas de discussion',
 	'discussion:updated' => "Derniere réponse de %s %s",
 
@@ -17,6 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Impossible d\'enregistrer ce sujet',
 	'discussion:error:missing' => 'Les deux champs "titre" et "message" sont obligatoires',
 	'discussion:error:permissions' => 'Vous n\'avez pas les droits pour effectuer cette action',
+	'discussion:error:no_groups' => "You're not a member of any groups.",
 
 	/**
 	 * River
@@ -48,9 +61,6 @@ Voir le sujet de discussion et y répondre :
 Voir la discussion et y répondre :
 %s
 ',
-
-	'item:object:discussion' => "Sujets de discussion",
-	'collection:object:discussion' => 'Sujets de discussion',
 
 	'groups:tool:forum' => 'Activer les discussions du groupe',
 

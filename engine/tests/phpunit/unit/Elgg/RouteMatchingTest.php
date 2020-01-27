@@ -21,22 +21,31 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 
 	}
 
-	public function testCanRegisterSpecificRouteWithGlobalPagehandler() {
+	public function testMostSpecificRouteWins() {
 
-		$route_calls = 0;
-		$page_handler_calls = 0;
+		$specific_calls = 0;
+		$non_specific_calls = 0;
 
 		elgg_register_route('foo:bar', [
 			'path' => '/foo/{bar}',
 			'requirements' => ['bar' => '\w+'],
-			'handler' => function () use (&$route_calls) {
-				$route_calls++;
+			'handler' => function () use (&$specific_calls) {
+				$specific_calls++;
 			}
 		]);
 
-		elgg_register_page_handler('foo', function () use (&$page_handler_calls) {
-			$page_handler_calls++;
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/{segments}',
+			'defaults' => [
+				'segments' => '',
+			],
+			'requirements' => [
+				'segments' => '.+',
+			],
+			'handler' => function () use (&$non_specific_calls) {
+				$non_specific_calls++;
+			}
+		]);
 
 		$request = $this->prepareHttpRequest('foo');
 		_elgg_services()->router->route($request);
@@ -47,11 +56,11 @@ class RouteMatchingTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('foo/baz/bar');
 		_elgg_services()->router->route($request);
 
-		$this->assertEquals(1, $route_calls);
-		$this->assertEquals(2, $page_handler_calls);
+		$this->assertEquals(1, $specific_calls);
+		$this->assertEquals(2, $non_specific_calls);
 
 		elgg_unregister_route('foo:bar');
-		elgg_unregister_page_handler('foo');
+		elgg_unregister_route('foo');
 	}
 
 	/**

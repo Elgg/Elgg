@@ -25,18 +25,6 @@ class PluginHooksService extends HooksRegistrationService {
 	}
 
 	/**
-	 * Get the events API
-	 *
-	 * @return EventsService
-	 * @deprecated 3.0
-	 */
-	public function getEvents() {
-		_elgg_services()->deprecation->sendNotice(__METHOD__ . " has been deprecated, please use elgg()->events", '3.0');
-		
-		return $this->events;
-	}
-
-	/**
 	 * Triggers a plugin hook
 	 *
 	 * @param string $name    The name of the plugin hook

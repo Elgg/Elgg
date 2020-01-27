@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'Borrar grupo',
 	'groups:membershiprequests' => 'Administrar solicitudes de uni&oacute;n a grupos',
 	'groups:membershiprequests:pending' => 'Administrar solicitudes de uni&oacute;n (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'Invitaciones de grupo',
 	'groups:invitations:pending' => 'Invitaciones de grupo (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'Icono de grupo (dejar en blanco para no hacer cambios)',
 	'groups:name' => 'Nombre del grupo',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "Propietario",
 	'groups:owner:warning' => "Advertencia: si cambia este valor, usted ya no será el dueño de este grupo.",
 	'groups:widget:num_display' => 'N&uacute;mero de miembros a mostrar',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => 'Miembros del grupo',
+	'widgets:a_users_groups:description' => 'Muestra los grupos en dond eeres miembro',
 
 	'groups:noaccess' => 'No hay acceso al grupo',
 	'groups:cantcreate' => 'No se puede crear un grupo. Sólo los administradores pueden.',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'Invitar amigos a este grupo',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => 'No hay amigos para invitar',
 	'groups:group' => "Grupo",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "No se encontraron grupos que coincidan",
 	'groups:search_in_group' => "Buscar en este grupo",
 	'groups:acl' => "Group: '%s'",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'Miembros del grupo',
 
 	'groups:notfound' => "No se encontr&oacute; el grupo",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "El contenido de este grupo solo es accesible por sus miembros.",
 	'groups:opengroup:membersonly:join' => 'Para ser un miembro, de click sobre el link de "Unirse al grupo".',
 	'groups:visibility' => '&iquest;Quienes pueden ver este grupo?',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

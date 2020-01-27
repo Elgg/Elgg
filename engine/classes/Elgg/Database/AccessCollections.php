@@ -18,9 +18,7 @@ use ElggUser;
  *
  * @internal
  *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
+ * @since 1.10.0
  */
 class AccessCollections {
 
@@ -335,13 +333,8 @@ class AccessCollections {
 				ACCESS_PUBLIC => $this->getReadableAccessLevel(ACCESS_PUBLIC)
 			];
 
-			$collections = $this->getEntityCollections(['owner_guid' => $user_guid]);
-			if (!empty($collections)) {
-				foreach ($collections as $collection) {
-					$access_array[$collection->id] = $collection->getDisplayName();
-				}
-			}
-
+			$access_array += $this->getCollectionsForWriteAccess($user_guid);
+			
 			if ($this->init_complete) {
 				$cache[$hash] = $access_array;
 			}
@@ -367,6 +360,48 @@ class AccessCollections {
 		
 		
 		return $access_array;
+	}
+	
+	/**
+	 * Returns an array of access collections to be used in the write access array
+	 *
+	 * @param int $owner_guid owner of the collections
+	 *
+	 * @return array
+	 *
+	 * @since 3.2
+	 */
+	protected function getCollectionsForWriteAccess(int $owner_guid) {
+		
+		$callback = [$this, 'rowToElggAccessCollection'];
+
+		$subtypes =  $this->hooks->trigger('access:collections:write:subtypes', 'user', ['owner_guid' => $owner_guid], []);
+		
+		$qb = Select::fromTable($this->table);
+		
+		$ors = [
+			$qb->compare('subtype', 'is null'),
+		];
+		if (!empty($subtypes)) {
+			$ors[] = $qb->compare('subtype', 'in', $subtypes, ELGG_VALUE_STRING);
+		}
+		
+		$qb->select('*');
+		$qb->where($qb->compare('owner_guid', '=', $owner_guid, ELGG_VALUE_GUID));
+		$qb->andWhere($qb->merge($ors, 'OR'));
+		$qb->orderBy('name', 'ASC');
+		
+		$collections = $this->db->getData($qb, $callback);
+		if (empty($collections)) {
+			return [];
+		}
+		
+		$result = [];
+		foreach ($collections as $collection) {
+			$result[$collection->id] = $collection->getDisplayName();
+		}
+		
+		return $result;
 	}
 
 	/**
@@ -494,9 +529,9 @@ class AccessCollections {
 			':id' => (int) $collection_id,
 		];
 
-		if ($this->db->insertData($query, $params)) {
+		if ($this->db->updateData($query, true, $params)) {
 			$this->access_cache->clear();
-			return (int) $collection_id;
+			return true;
 		}
 
 		return false;

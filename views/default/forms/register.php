@@ -1,9 +1,6 @@
 <?php
 /**
  * Elgg register form
- *
- * @package Elgg
- * @subpackage Core
  */
 
 if (elgg_is_sticky_form('register')) {
@@ -64,6 +61,7 @@ $fields = [
 		'value' => $password,
 		'required' => true,
 		'autocomplete' => 'new-password',
+		'add_security_requirements' => true,
 	],
 	[
 		'#type' => 'password',
@@ -72,6 +70,7 @@ $fields = [
 		'value' => $password2,
 		'required' => true,
 		'autocomplete' => 'new-password',
+		'add_security_requirements' => true,
 	],
 ];
 

@@ -8,7 +8,7 @@ use Elgg\Values;
 /**
  * Utility class for building composite comparison expression
  */
-class ComparisonClause implements Clause {
+class ComparisonClause extends Clause {
 
 	/**
 	 * @var string
@@ -84,11 +84,6 @@ class ComparisonClause implements Clause {
 			$y = array_shift($y);
 		}
 
-		$match_expr = null;
-
-		$comparison = strtolower($this->comparison);
-
-
 		$compare_with = function ($func, $boolean = 'OR') use ($x, $y, $type, $case_sensitive, $qb) {
 			if (!isset($y)) {
 				return;
@@ -106,7 +101,9 @@ class ComparisonClause implements Clause {
 			return $qb->merge($parts, $boolean);
 		};
 
-		switch (strtolower($this->comparison)) {
+		$match_expr = null;
+		$comparison = strtolower($this->comparison);
+		switch ($comparison) {
 			case '=' :
 			case 'eq' :
 			case 'in' :

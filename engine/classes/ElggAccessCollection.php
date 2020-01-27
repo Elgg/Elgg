@@ -3,9 +3,6 @@
 /**
  * Access collection class
  *
- * @package    Elgg.Core
- * @subpackage Core
- *
  * @property-read int    $id         The unique identifier (read-only)
  * @property      int    $owner_guid GUID of the owner
  * @property      string $name       Name of the collection
@@ -116,7 +113,7 @@ class ElggAccessCollection extends ElggData {
 		if ($this->id > 0) {
 			return _elgg_services()->accessCollections->rename($this->id, $this->name);
 		} else {
-			return _elgg_services()->accessCollections->create($this->name, $this->owner_guid);
+			return (bool) _elgg_services()->accessCollections->create($this->name, $this->owner_guid);
 		}
 	}
 

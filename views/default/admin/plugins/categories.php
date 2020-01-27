@@ -21,7 +21,7 @@ foreach ($plugins as $id => $plugin) {
 			if ($disable_plugins) {
 				// force disable and warn
 				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-						elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getId()]));
+						elgg_echo('ElggPlugin:InvalidAndDeactivated', [$plugin->getID()]));
 				$plugin->deactivate();
 			}
 		}
@@ -56,7 +56,8 @@ $common_categories = [
 
 $categories = array_merge($common_categories, $categories);
 
-echo elgg_view("admin/plugins/filter", [
+echo elgg_view('admin/plugins/filter', [
 	'category' => "all",
-	'category_options' => $categories
+	'category_options' => $categories,
+	'active_filter' => elgg_extract('active_filter', $vars),
 ]);

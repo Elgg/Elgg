@@ -65,7 +65,7 @@ class ConfigTable {
 			':name' => $name,
 		];
 		
-		$this->boot->invalidateCache();
+		$this->boot->clearCache();
 	
 		return $this->db->deleteData($query, $params) !== false;
 	}
@@ -89,7 +89,7 @@ class ConfigTable {
 	 */
 	public function set($name, $value) {
 		// cannot store anything longer than 255 characters in db, so catch before we set
-		if (elgg_strlen($name) > 255) {
+		if (strlen($name) > 255) {
 			$this->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
@@ -108,7 +108,7 @@ class ConfigTable {
 				
 		$result = $this->db->insertData($sql, $params);
 
-		$this->boot->invalidateCache();
+		$this->boot->clearCache();
 	
 		return $result !== false;
 	}

@@ -65,7 +65,7 @@ class DbConfig {
 	 * @return string
 	 */
 	public function getTablePrefix() {
-		return $this->dbprefix;
+		return (string) $this->dbprefix;
 	}
 
 	/**

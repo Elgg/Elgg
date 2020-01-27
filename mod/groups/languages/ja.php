@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ */
+
 return array(
 
 	/**
@@ -15,8 +21,12 @@ return array(
 	'groups:delete' => 'グループの削除',
 	'groups:membershiprequests' => '参加リクエストの管理',
 	'groups:membershiprequests:pending' => '参加リクエストの管理 (%s)',
+	'groups:invitedmembers' => "Manage invitations",
 	'groups:invitations' => 'グループへの招待',
 	'groups:invitations:pending' => 'グループへの招待 (%s)',
+	
+	'relationship:invited' => '%2$s was invited to join %1$s',
+	'relationship:membership_request' => '%s requested to join %s',
 
 	'groups:icon' => 'グループアイコン(変更なしなら空欄のまま)',
 	'groups:name' => 'グループ名',
@@ -39,8 +49,8 @@ return array(
 	'groups:owner' => "班長",
 	'groups:owner:warning' => "警告: この値を変更しますと、あなたはこのグループの班長ではなくなってしまいますが、よろしいでしょうか。",
 	'groups:widget:num_display' => '一覧表示数',
-	'widgets:a_users_groups:name' => 'Group membership',
-	'widgets:a_users_groups:description' => 'Display the groups you are a member of on your profile',
+	'widgets:a_users_groups:name' => '参加グループ',
+	'widgets:a_users_groups:description' => '所属するグループをプロフィールに表示する',
 
 	'groups:noaccess' => 'グループへのアクセスを許可しない',
 	'groups:cantcreate' => 'あなたは、グループを作成することができません。管理者のみ作成できます。',
@@ -61,6 +71,8 @@ return array(
 	'groups:invite:title' => 'このグループに友達を招待する',
 	'groups:invite:friends:help' => 'Search for a friend by name or username and select the friend from the list',
 	'groups:invite:resend' => 'Resend the invitations to already invited users',
+	'groups:invite:member' => 'Already a member of this group',
+	'groups:invite:invited' => 'Already invited to this group',
 
 	'groups:nofriendsatall' => '招待する友達がいません',
 	'groups:group' => "グループ",
@@ -69,7 +81,7 @@ return array(
 	'groups:search:none' => "検索に引っかかったグループはありませんでした",
 	'groups:search_in_group' => "このグループ内を検索",
 	'groups:acl' => "グループ: %s",
-	'groups:acl:in_context' => 'Group members',
+	'groups:acl:in_context' => 'グループメンバ',
 
 	'groups:notfound' => "グループが見つかりません。",
 	
@@ -97,6 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "このグループのコンテントにはグループ参加者のみアクセスできます。",
 	'groups:opengroup:membersonly:join' => 'グループに参加するには、「参加」メニューリンクをクリックしてください。',
 	'groups:visibility' => 'このグループのコンテンツをみることができる人',
+	'groups:content_default_access' => 'Default group content access',
+	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
+	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
 
 	/**
 	 * Group tools

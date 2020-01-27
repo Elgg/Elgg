@@ -14,8 +14,9 @@ elgg_push_collection_breadcrumbs('object', 'thewire', $owner, true);
 
 $content = '';
 if (elgg_get_logged_in_user_guid() == $owner->guid) {
-	$form_vars = ['class' => 'thewire-form'];
-	$content .= elgg_view_form('thewire/add', $form_vars);
+	$content .= elgg_view_form('thewire/add', [
+		'class' => 'thewire-form',
+	]);
 	$content .= elgg_view('input/urlshortener');
 }
 

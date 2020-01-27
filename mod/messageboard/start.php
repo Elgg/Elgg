@@ -3,19 +3,7 @@
  * Elgg Message board
  * This plugin allows users and groups to attach a message board to their profile for other users
  * to post comments.
- *
- * @package MessageBoard
  */
-
-/**
- * MessageBoard initialisation
- *
- * @return void
- */
-function messageboard_init() {
-	// delete annotations for posts
-	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'messageboard_annotation_menu_setup');
-}
 
 /**
  * Add messageboard post
@@ -72,42 +60,3 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 
 	return $result_id;
 }
-
-/**
- * Add edit and delete links for forum replies
- *
- * @param \Elgg\Hook $hook 'register', 'menu:annotation'
- *
- * @return void|ElggMenuItem[]
- */
-function messageboard_annotation_menu_setup(\Elgg\Hook $hook) {
-	$annotation = $hook->getParam('annotation');
-	if (!$annotation instanceof ElggAnnotation) {
-		return;
-	}
-	
-	if ($annotation->name !== 'messageboard') {
-		return;
-	}
-
-	if (!$annotation->canEdit()) {
-		return;
-	}
-	
-	$return = $hook->getValue();
-	$return[] = ElggMenuItem::factory([
-		'name' => 'delete',
-		'href' => elgg_generate_action_url('messageboard/delete', [
-			'annotation_id' => $annotation->id,
-		]),
-		'text' => elgg_view_icon('delete'),
-		'confirm' => elgg_echo('deleteconfirm'),
-		'encode_text' => false,
-	]);
-	
-	return $return;
-}
-
-return function() {
-	elgg_register_event_handler('init', 'system', 'messageboard_init');
-};

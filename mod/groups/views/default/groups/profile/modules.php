@@ -19,12 +19,3 @@ foreach ($tools as $tool) {
 		echo elgg_view("groups/profile/module/{$tool->name}", $params);
 	}
 }
-
-$legacy = elgg_view("groups/tool_latest", $vars);
-if ($legacy) {
-	elgg_deprecated_notice(
-		"Extending 'groups/tool_latest' to render group profile modules is deprecated. " .
-		"Instead add a view corresponding to your group tool name in 'groups/profile/module/<tool_name>'",
-		'3.0'
-	);
-}

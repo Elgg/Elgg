@@ -1,4 +1,10 @@
 <?php
+/**
+ * Translation file
+ *
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
+ */
+
 return array(
 	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
 	'APIException:MissingParameterInMethod' => "Missing parameter %s in method %s",
@@ -39,4 +45,27 @@ return array(
 
 	'system.api.list' => "List all available API calls on the system.",
 	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",
+	
+	'admin:configure_utilities:webservices' => "Webservices",
+	'admin:configure_utilities:ws_list' => "List API methods",
+	'admin:configure_utilities:ws_tokens' => "Manage API tokens",
+	'webservices:menu:entity:regenerate' => "Regenerate API keys",
+	
+	'add:object:api_key' => "Create a new API token",
+	'edit:object:api_key' => "Edit API token: %s",
+	'entity:delete:object:api_key:success' => "The API token %s was deleted",
+	
+	'webservices:requires_api_authentication' => "Requires API authentication",
+	'webservices:requires_user_authentication' => "Requires user authentication",
+	'webservices:function' => "Internal function:",
+	'webservices:parameters' => "Webservice parameters:",
+	'webservices:parameters:required' => "required",
+	'webservices:parameters:optional' => "optional",
+	
+	'webservices:api_key:public' => "Public key:",
+	'webservices:api_key:secret' => "Secret key:",
+	'webservices:api_key:secret:show' => "Show secret key",
+	
+	'webservices:action:api_key:edit:success' => "API token saved successfully",
+	'webservices:action:api_key:regenerate:success' => "The API keys have been regenerated",
 );

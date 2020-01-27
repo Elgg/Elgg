@@ -1,9 +1,6 @@
 <?php
-
 /**
  * View a list of items
- *
- * @package Elgg
  *
  * @uses $vars['items']          Array of ElggEntity, ElggAnnotation or ElggRiverItem objects
  * @uses $vars['offset']         Index of the first list item in complete list
@@ -32,6 +29,7 @@ if ($no_results === true) {
 
 if (!$items && $no_results) {
 	echo elgg_view('page/components/no_results', $vars);
+	echo elgg_view('page/components/list/out_of_bounds', $vars);
 	return;
 }
 

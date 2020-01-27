@@ -15,9 +15,9 @@ class PluginsListCommand extends Command {
 	 */
 	protected function configure() {
 		$this->setName('plugins:list')
-			->setDescription('List all plugins installed on the site')
+			->setDescription(elgg_echo('cli:plugins:list:description'))
 			->addOption('status', 's', InputOption::VALUE_OPTIONAL,
-				'Plugin status ( all | active | inactive )'
+				elgg_echo('cli:plugins:list:option:status', ['all | active | inactive'])
 			);
 	}
 
@@ -28,12 +28,18 @@ class PluginsListCommand extends Command {
 
 		$status = $this->option('status') ? : 'all';
 		if (!in_array($status, ['all', 'active', 'inactive'])) {
-			$this->error("$status is not a valid status. Use 'all', 'active' or 'inactive'");
+			$this->error(elgg_echo('cli:plugins:list:error:status', [$status, 'all | active | inactive']));
 			return 1;
 		}
 
 		$table = new Table($this->output);
-		$table->setHeaders(['GUID', 'ID', 'Version', 'Status', 'Priority']);
+		$table->setHeaders([
+			'GUID',
+			elgg_echo('admin:plugins:label:id'),
+			elgg_echo('admin:plugins:label:version'),
+			elgg_echo('status'),
+			elgg_echo('admin:plugins:label:priority'),
+		]);
 
 		try {
 			$plugins = elgg_get_plugins($status);
@@ -45,7 +51,7 @@ class PluginsListCommand extends Command {
 					$plugin->guid,
 					$plugin->getID(),
 					$manifest ? $manifest->getVersion() : 'INVALID PACKAGE',
-					$plugin->isActive() ? 'active' : 'inactive',
+					$plugin->isActive() ? elgg_echo('status:active') : elgg_echo('status:inactive'),
 					$plugin->getPriority(),
 				]);
 			}

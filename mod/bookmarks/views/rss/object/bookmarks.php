@@ -1,8 +1,6 @@
 <?php
 /**
  * Bookmark RSS object view
- *
- * @package ElggBookmarks
  */
 
 $title = $vars['entity']->getDisplayName();

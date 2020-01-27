@@ -6,9 +6,7 @@ use Elgg\Menu\PreparedMenu;
 /**
  * Elgg Menu Builder
  *
- * @package    Elgg.Core
- * @subpackage Navigation
- * @since      1.8.0
+ * @since 1.8.0
  */
 class ElggMenuBuilder {
 
@@ -243,7 +241,7 @@ class ElggMenuBuilder {
 	protected function sort(PreparedMenu $menu, $sort_by) {
 
 		$menu->sort(function (\Elgg\Menu\MenuSection $s1, \Elgg\Menu\MenuSection $s2) {
-			return strnatcmp($s1->getId(), $s2->getId());
+			return strnatcmp($s1->getID(), $s2->getID());
 		});
 
 		$sorter = $this->getSortCallback($sort_by);
@@ -256,7 +254,7 @@ class ElggMenuBuilder {
 			$indices = array_keys($section->all());
 
 			$section->walk(function (\ElggMenuItem $item) use ($indices, $sorter) {
-				$item->setData('original_order', array_search($item->getId(), $indices));
+				$item->setData('original_order', array_search($item->getID(), $indices));
 				$item->sortChildren($sorter);
 			});
 

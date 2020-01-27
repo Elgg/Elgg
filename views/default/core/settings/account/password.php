@@ -1,10 +1,6 @@
 <?php
-
 /**
  * Provide a way of setting your password
- *
- * @package Elgg
- * @subpackage Core
  */
 $user = elgg_get_page_owner_entity();
 
@@ -28,6 +24,7 @@ $content .= elgg_view_field([
 	'#label' => elgg_echo('user:password:label'),
 	'name' => 'password',
 	'autocomplete' => 'new-password',
+	'add_security_requirements' => true,
 ]);
 
 $content .= elgg_view_field([
@@ -35,6 +32,7 @@ $content .= elgg_view_field([
 	'#label' => elgg_echo('user:password2:label'),
 	'name' => 'password2',
 	'autocomplete' => 'new-password',
+	'add_security_requirements' => true,
 ]);
 
 echo elgg_view_module('info', elgg_echo('user:set:password'), $content);

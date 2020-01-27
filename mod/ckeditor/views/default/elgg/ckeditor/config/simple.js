@@ -7,6 +7,7 @@ define(function(require) {
 		toolbar: [['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat']],
 		removeButtons: 'Subscript,Superscript', // To have Underline back
 		allowedContent: true,
+		entities: false,
 		baseHref: elgg.get_site_url(),
 		removePlugins: 'elementspath', // no need to see elementspath
 		extraPlugins: 'blockimagepaste',

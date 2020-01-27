@@ -11,7 +11,6 @@ return [
 	],
 	'actions' => [
 		'messages/send' => [],
-		'messages/delete' => [],
 		'messages/process' => [],
 	],
 	'routes' => [
@@ -30,7 +29,7 @@ return [
 			],
 		],
 		'add:object:messages' => [
-			'path' => '/messages/add/{container_guid?}',
+			'path' => '/messages/add/{guid?}',
 			'resource' => 'messages/send',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,

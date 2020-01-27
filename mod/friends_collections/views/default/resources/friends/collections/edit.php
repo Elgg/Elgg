@@ -17,11 +17,9 @@ if (!$user instanceof ElggUser) {
 
 elgg_set_page_owner_guid($user->guid);
 
-$title = elgg_echo('friends:collections:edit');
-
 elgg_push_breadcrumb($user->getDisplayName(), $user->getURL());
-elgg_push_breadcrumb(elgg_echo('friends'), "friends/{$user->username}");
-elgg_push_breadcrumb(elgg_echo('friends:collections'), "friends/collections/owner/{$user->username}");
+elgg_push_breadcrumb(elgg_echo('friends'), elgg_generate_url('collection:friends:owner', ['username' => $user->username]));
+elgg_push_breadcrumb(elgg_echo('friends:collections'), elgg_generate_url('collection:access_collection:friends:owner', ['username' => $user->username]));
 elgg_push_breadcrumb($collection->name, $collection->getURL());
 
 $form_name = 'friends/collections/edit';
@@ -35,12 +33,7 @@ if (elgg_is_sticky_form($form_name)) {
 	elgg_clear_sticky_form($form_name);
 }
 
-$content = elgg_view_form($form_name, [], $form_vars);
-
-$body = elgg_view_layout('one_sidebar', [
-	'title' => $title,
-	'content' => $content,
+echo elgg_view_page(elgg_echo('friends:collections:edit'), [
+	'content' => elgg_view_form($form_name, [], $form_vars),
 	'show_owner_block_menu' => false,
 ]);
-
-echo elgg_view_page($title, $body);

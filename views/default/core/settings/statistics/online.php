@@ -1,9 +1,6 @@
 <?php
 /**
  * Statistics about this user.
- *
- * @package Elgg
- * @subpackage Core
  */
 
 $user = elgg_get_page_owner_entity();

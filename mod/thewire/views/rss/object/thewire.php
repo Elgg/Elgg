@@ -1,8 +1,6 @@
 <?php
 /**
  * Elgg thewire rss view
- *
- * @package ElggTheWire
  */
 
 $owner = $vars['entity']->getOwnerEntity();

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Groups\Middleware\LimitedGroupCreation;
+
 $membership = __DIR__ . '/actions/groups/membership/';
 
 return [
@@ -64,6 +66,7 @@ return [
 			'resource' => 'groups/invitations',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\UserPageOwnerCanEditGatekeeper::class,
 			],
 		],
 		'collection:group:group:search' => [
@@ -77,11 +80,20 @@ return [
 				'sort' => 'alpha',
 			],
 		],
+		'collection:user:user:group_invites' => [
+			'path' => '/groups/invites/{guid}',
+			'resource' => 'groups/invites',
+			'middleware' => [
+				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
+			],
+		],
 		'add:group:group' => [
 			'path' => '/groups/add/{container_guid}',
 			'resource' => 'groups/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				LimitedGroupCreation::class,
 			],
 		],
 		'view:group:group' => [
@@ -107,6 +119,7 @@ return [
 			'resource' => 'groups/requests',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
 		],
 	],

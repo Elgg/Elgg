@@ -1,9 +1,6 @@
 <?php
 /**
  * GenericResult Result superclass.
- *
- * @package    Elgg.Core
- * @subpackage WebServicesAPI
  */
 abstract class GenericResult {
 	/**

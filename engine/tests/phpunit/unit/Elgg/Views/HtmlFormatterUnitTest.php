@@ -36,7 +36,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 
 	public function htmlBlockProvider() {
 
-		$attrs = elgg_format_attributes([
+		$attrs = _elgg_services()->html_formatter->formatAttributes([
 			'foo' => 'http://example.com',
 			'bar' => 'me@example.com',
 			'href' => 'http://example.com',
@@ -154,10 +154,8 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		$this->assertSame($expected, elgg_format_element($attrs), $message);
 	}
 
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
 	public function testElggFormatElementThrows() {
+		$this->expectException(\InvalidArgumentException::class);
 		elgg_format_element(array());
 	}
 
@@ -251,7 +249,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		];
 		$expected = 'a="Hello &amp; &amp; &lt; &lt;" c="c" e="&amp; &amp; &lt; &lt;" g="bar 1 1.5 2"';
 
-		$this->assertEquals($expected, elgg_format_attributes($attrs));
+		$this->assertEquals($expected, _elgg_services()->html_formatter->formatAttributes($attrs));
 	}
 
 	public function testFiltersUnderscoreKeysExceptDataAttributes() {
@@ -261,7 +259,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		];
 		$expected = 'data-foo_bar="b"';
 
-		$this->assertEquals($expected, elgg_format_attributes($attrs));
+		$this->assertEquals($expected, _elgg_services()->html_formatter->formatAttributes($attrs));
 	}
 
 	public function testLowercasesAllAttributes() {
@@ -271,6 +269,6 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 		];
 		$expected = 'a-b="a-b" c-d="C-D"';
 
-		$this->assertEquals($expected, elgg_format_attributes($attrs));
+		$this->assertEquals($expected, _elgg_services()->html_formatter->formatAttributes($attrs));
 	}
 }
