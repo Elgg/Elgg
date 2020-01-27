@@ -256,10 +256,6 @@ class Accounts {
 			throw new RegistrationException($this->translator->translate('registration:invalidchars'));
 		}
 
-		// Belts and braces
-		// @todo Tidy into main unicode
-		$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=,:';
-
 		$blacklist2 = $this->hooks->trigger(
 			'username:character_blacklist',
 			'user',
@@ -274,7 +270,12 @@ class Accounts {
 				throw new RegistrationException($msg);
 			}
 		}
-
+		
+		$whitelist = '/^([A-Za-z_0-9]+)$/i';
+		if (!preg_match($whitelist, $username)) {
+		      throw new RegistrationException($this->translator->translate('registration:invalidchars'));
+		}
+		
 		$result = $this->hooks->trigger(
 			'registeruser:validate:username',
 			'all',
