@@ -12,7 +12,7 @@ use Elgg\UnitTestCase;
 class HtmlFormatterUnitTest extends UnitTestCase {
 
 	public function up() {
-		_elgg_input_init();
+		elgg_register_plugin_hook_handler('validate', 'input', '_elgg_htmlawed_filter_tags');
 	}
 
 	public function down() {

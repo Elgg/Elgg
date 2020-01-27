@@ -351,18 +351,11 @@ function _elgg_notifications_smtp_thread_headers(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_notifications_init() {
-	elgg_register_plugin_hook_handler('cron', 'minute', '_elgg_notifications_cron', 100);
-	elgg_register_event_handler('all', 'all', '_elgg_enqueue_notification_event', 700);
-
 	// add email notifications
 	elgg_register_notification_method('email');
-	elgg_register_plugin_hook_handler('send', 'notification:email', '_elgg_send_email_notification');
-	elgg_register_plugin_hook_handler('prepare', 'system:email', '_elgg_notifications_smtp_default_message_id_header', 1);
-	elgg_register_plugin_hook_handler('prepare', 'system:email', '_elgg_notifications_smtp_thread_headers');
-
+	
 	// add ability to set personal notification method
 	elgg_extend_view('forms/usersettings/save', 'core/settings/account/notifications');
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
 }
 
 /**
@@ -581,10 +574,3 @@ function _elgg_save_notification_user_settings() {
 		system_message(elgg_echo('notifications:usersettings:save:ok'));
 	}
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_notifications_init');
-};

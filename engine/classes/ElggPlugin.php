@@ -1,6 +1,5 @@
 <?php
 
-use Elgg\Application;
 use Elgg\Includer;
 use Elgg\Database\Delete;
 
@@ -664,7 +663,7 @@ class ElggPlugin extends ElggObject {
 		// Note: this will not run re-run the init hooks!
 		if ($return) {
 			try {
-				_elgg_services()->events->trigger('cache:flush', 'system');
+				elgg_clear_caches();
 
 				$this->register();
 				
@@ -778,7 +777,7 @@ class ElggPlugin extends ElggObject {
 
 		$this->deactivateEntities();
 
-		_elgg_services()->events->trigger('cache:flush', 'system');
+		elgg_clear_caches();
 
 		_elgg_services()->logger->notice("Plugin {$this->getID()} has been deactivated");
 
@@ -826,7 +825,7 @@ class ElggPlugin extends ElggObject {
 			return;
 		}
 		
-		$autoloader = Application::requireSetupFileOnce("{$this->getPath()}{$autoload_file}");
+		$autoloader = Includer::requireFileOnce("{$this->getPath()}{$autoload_file}");
 		
 		if (!$autoloader instanceof \Composer\Autoload\ClassLoader) {
 			return;
@@ -871,7 +870,7 @@ class ElggPlugin extends ElggObject {
 				elgg_deprecated_notice("Using a start.php file in your plugin [{$this->getID()}] is deprecated. Use a elgg-plugin.php or PluginBootstrap class for your plugin.", '3.3');
 			}
 			
-			$result = Application::requireSetupFileOnce("{$this->getPath()}start.php");
+			$result = Includer::requireFileOnce("{$this->getPath()}start.php");
 		}
 
 		$this->getBootstrap()->boot();
@@ -919,7 +918,7 @@ class ElggPlugin extends ElggObject {
 		}
 
 		try {
-			$ret = Application::requireSetupFileOnce($filepath);
+			$ret = Includer::requireFile($filepath);
 		} catch (Exception $e) {
 			$msg = elgg_echo(
 				'ElggPlugin:Exception:IncludeFileThrew',

@@ -402,10 +402,3 @@ function _elgg_session_boot(ServiceProvider $services) {
 	$services->timer->end([__FUNCTION__]);
 	return true;
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function() {
-	register_pam_handler('pam_auth_userpass');
-};

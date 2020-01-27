@@ -357,15 +357,6 @@ function _elgg_plugin_entity_menu_setup(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_plugins_init() {
-	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_plugin_entity_menu_setup');
-	
 	elgg_register_ajax_view('object/plugin/full');
 	elgg_register_ajax_view('object/plugin/details');
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_plugins_init');
-};

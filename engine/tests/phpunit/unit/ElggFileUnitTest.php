@@ -12,8 +12,6 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 	protected $file;
 
 	public function up() {
-		_elgg_filestore_init();
-
 		$session = \ElggSession::getMock();
 		_elgg_services()->setValue('session', $session);
 		_elgg_services()->session->start();

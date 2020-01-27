@@ -312,10 +312,3 @@ function _elgg_default_widgets_permissions_override(\Elgg\Hook $hook) {
 		return elgg_in_context('create_default_widgets') ? true : null;
 	}
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('ready', 'system', '_elgg_default_widgets_init');
-};

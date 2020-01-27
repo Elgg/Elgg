@@ -717,28 +717,12 @@ function _elgg_user_unvalidated_menu(\Elgg\Hook $hook) {
  * @internal
  */
 function users_init() {
-
-	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:title', '_elgg_user_title_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_page_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:topbar', '_elgg_user_topbar_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
-	elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
-
+	register_pam_handler('pam_auth_userpass');
+	
 	// Register the user type
 	elgg_register_entity_type('user', 'user');
-
-	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
-
+	
 	elgg_register_notification_event('user', 'user', ['unban']);
-	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_user_get_subscriber_unban_action');
-	elgg_register_event_handler('ban', 'user', '_elgg_user_ban_notification');
-	elgg_register_plugin_hook_handler('prepare', 'notification:unban:user:user', '_elgg_user_prepare_unban_notification');
+	
+	elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', 'users_init', 0);
-};

@@ -18,10 +18,3 @@ function _elgg_cron_init() {
 		'context' => 'admin',
 	]);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_cron_init');
-};

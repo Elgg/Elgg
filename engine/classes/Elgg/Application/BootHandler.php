@@ -66,16 +66,7 @@ class BootHandler {
 		}
 
 		// in case not loaded already
-		$setups = $this->app->loadCore();
-
-		$hooks = $this->app->_services->hooks;
-		$events = $this->app->_services->events;
-
-		foreach ($setups as $setup) {
-			if ($setup instanceof \Closure) {
-				$setup($events, $hooks);
-			}
-		}
+		$this->app->loadCore();
 
 		if (!$this->app->_services->db) {
 			// no database boot!
@@ -94,6 +85,11 @@ class BootHandler {
 		}
 
 		$this->setEntityClasses();
+		
+		// need to be registered as part of services, because partial boots do at least include the services
+		// the system relies on the existence of some of the event/hooks
+		_elgg_register_hooks();
+		_elgg_register_events();
 
 		// Connect to database, load language files, load configuration, init session
 		$this->app->_services->boot->boot($this->app->_services);
@@ -122,7 +118,6 @@ class BootHandler {
 
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_routes');
 		$events->registerHandler('plugins_boot', 'system', '_elgg_register_actions');
-		$events->registerHandler('plugins_boot', 'system', '_elgg_register_hooks');
 
 		// Setup all boot sequence handlers for active plugins
 		$this->app->_services->plugins->build();

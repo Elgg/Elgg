@@ -306,6 +306,9 @@ function get_readable_access_level($entity_access_id) {
  * @return void
  */
 function access_init() {
+	
+	// Tell the access functions the system has booted, plugins are loaded,
+	// and the user is logged in so it can start caching
 	_elgg_services()->accessCollections->markInitComplete();
 }
 
@@ -431,17 +434,3 @@ function access_friends_acl_get_name(\Elgg\Hook $hook) {
 	
 	return elgg_echo('access:label:friends');
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	// Tell the access functions the system has booted, plugins are loaded,
-	// and the user is logged in so it can start caching
-	$events->registerHandler('ready', 'system', 'access_init');
-	
-	// friends ACL events
-	$events->registerHandler('create', 'user', 'access_friends_acl_create');
-	$events->registerHandler('create', 'relationship', 'access_friends_acl_add_friend');
-	$events->registerHandler('delete', 'relationship', 'access_friends_acl_remove_friend');
-};

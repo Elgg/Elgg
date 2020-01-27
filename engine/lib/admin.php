@@ -135,13 +135,6 @@ function _elgg_admin_init() {
 	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
 	
 	elgg_register_ajax_view('forms/admin/user/change_email');
-		
-	elgg_register_plugin_hook_handler('register', 'menu:admin_header', '_elgg_admin_header_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:admin_footer', '_elgg_admin_footer_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:filter:admin/upgrades', '_elgg_admin_upgrades_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu');
-	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_admin_page_menu_plugin_settings');
-	elgg_register_plugin_hook_handler('register', 'menu:user:unvalidated:bulk', '_elgg_admin_user_unvalidated_bulk_menu');
 
 	// maintenance mode
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
@@ -170,29 +163,8 @@ function _elgg_admin_init() {
 				['admin']
 		);
 	}
-
-	// automatic adding of widgets for admin
-	elgg_register_event_handler('make_admin', 'user', '_elgg_add_admin_widgets');
 	
 	elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
-	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_admin_get_admin_subscribers_admin_action');
-	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_admin_get_user_subscriber_admin_action');
-	elgg_register_plugin_hook_handler('prepare', 'notification:make_admin:user:user', '_elgg_admin_prepare_admin_notification_make_admin');
-	elgg_register_plugin_hook_handler('prepare', 'notification:make_admin:user:user', '_elgg_admin_prepare_user_notification_make_admin');
-	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:user', '_elgg_admin_prepare_admin_notification_remove_admin');
-	elgg_register_plugin_hook_handler('prepare', 'notification:remove_admin:user:user', '_elgg_admin_prepare_user_notification_remove_admin');
-	
-	// new users require admin validation
-	elgg_register_event_handler('login:before', 'user', '_elgg_admin_user_validation_login_attempt', 999); // allow others to throw exceptions earlier
-	elgg_register_event_handler('validate:after', 'user', '_elgg_admin_user_validation_notification');
-	elgg_register_plugin_hook_handler('cron', 'daily', '_elgg_admin_notify_admins_pending_user_validation');
-	elgg_register_plugin_hook_handler('cron', 'weekly', '_elgg_admin_notify_admins_pending_user_validation');
-	elgg_register_plugin_hook_handler('register', 'user', '_elgg_admin_check_admin_validation', 999); // allow others to also disable the user
-	elgg_register_plugin_hook_handler('response', 'action:register', '_elgg_admin_set_registration_forward_url', 999); // allow other to set forwar url first
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_admin_save_notification_setting');
-	
-	// Add notice about pending upgrades
-	elgg_register_event_handler('create', 'object', '_elgg_create_notice_of_pending_upgrade');
 }
 
 /**
@@ -1310,10 +1282,3 @@ function _elgg_admin_user_validation_notification(\Elgg\Event $event) {
 	
 	notify_user($user->guid, $site->guid, $subject, $body, $params, ['email']);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_admin_init');
-};

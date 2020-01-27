@@ -940,26 +940,6 @@ function _elgg_rss_menu_setup(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_nav_init() {
-	elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
-
-	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup', 999);
-	elgg_register_plugin_hook_handler('register', 'menu:site', '_elgg_site_menu_init');
-
-	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_setup_vertical_menu', 999);
-	elgg_register_plugin_hook_handler('prepare', 'menu:owner_block', '_elgg_setup_vertical_menu', 999);
-
-	elgg_register_plugin_hook_handler('prepare', 'menu:annotation', '_elgg_menu_transform_to_dropdown');
-	elgg_register_plugin_hook_handler('prepare', 'menu:entity', '_elgg_menu_transform_to_dropdown');
-	elgg_register_plugin_hook_handler('prepare', 'menu:relationship', '_elgg_menu_transform_to_dropdown');
-	elgg_register_plugin_hook_handler('prepare', 'menu:river', '_elgg_menu_transform_to_dropdown');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:footer', '_elgg_rss_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:entity_navigation', '_elgg_entity_navigation_menu_setup');
-
-	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
-
 	if (!_elgg_config()->remove_branding) {
 		elgg_register_menu_item('footer', \ElggMenuItem::factory([
 			'name' => 'powered',
@@ -994,10 +974,3 @@ function _elgg_nav_public_pages(\Elgg\Hook $hook) {
 	
 	return $return_value;
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_nav_init');
-};

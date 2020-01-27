@@ -36,8 +36,6 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->hooks->backup();
 		_elgg_services()->events->backup();
 
-		_elgg_filestore_init(); // we will need simpletype hook to work
-
 		// Events service is trying to connect to the DB
 		_elgg_services()->events->unregisterHandler('all', 'all', 'system_log_listener');
 		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');

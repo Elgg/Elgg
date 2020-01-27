@@ -11,7 +11,10 @@ use Zend\Mail\Message;
 class MessagesPluginTest extends IntegrationTestCase {
 
 	public function up() {
-		self::createApplication(['isolate'=> true]);
+		self::createApplication(['isolate' => true]);
+		
+		elgg_register_plugin_hook_handler('permissions_check', 'object', 'messages_can_edit');
+		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
 	}
 
 	public function down() {

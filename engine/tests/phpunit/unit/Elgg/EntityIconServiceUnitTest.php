@@ -68,9 +68,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->hooks = new PluginHooksService(_elgg_services()->events);
 		
-		// we will need simpletype hook to work
-		_elgg_filestore_init();
-		
 		$this->request = \Elgg\Http\Request::create("/action/upload");
 		$this->logger = _elgg_services()->logger;
 		$this->logger->setHooks($this->hooks);

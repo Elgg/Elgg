@@ -1365,6 +1365,11 @@ function _elgg_init() {
 	}
 	
 	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds', 1);
+	
+	// if mb functions are available, set internal encoding to UTF8
+	if (is_callable('mb_internal_encoding')) {
+		mb_internal_encoding("UTF-8");
+	}
 }
 
 /**
@@ -1444,6 +1449,39 @@ function _elgg_register_hooks() {
 }
 
 /**
+ * Register core events
+ * @return void
+ * @internal
+ * @since 4.0
+ */
+function _elgg_register_events() {
+	$conf = \Elgg\Project\Paths::elgg() . 'engine/events.php';
+	$spec = \Elgg\Includer::includeFile($conf);
+	
+	$events = _elgg_services()->events;
+	
+	foreach ($spec as $name => $types) {
+		foreach ($types as $type => $callbacks) {
+			foreach ($callbacks as $callback => $hook_spec) {
+				if (!is_array($hook_spec)) {
+					continue;
+				}
+				
+				$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+				
+				if ($unregister) {
+					$events->unregisterHandler($name, $type, $callback);
+				} else {
+					$priority = (int) elgg_extract('priority', $hook_spec, 500);
+					
+					$events->registerHandler($name, $type, $callback, $priority);
+				}
+			}
+		}
+	}
+}
+
+/**
  * Register database seeds
  *
  * @elgg_plugin_hook seeds database
@@ -1460,11 +1498,3 @@ function _elgg_db_register_seeds(\Elgg\Hook $hook) {
 	
 	return $seeds;
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_init');
-	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
-};

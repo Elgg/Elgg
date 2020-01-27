@@ -118,7 +118,9 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 
 	function testCanLoadCore() {
 		$app = $this->createMockApplication();
-		$this->assertIsArray($app->loadCore());
+		
+		// will fail if this throws an exception
+		$app->loadCore();
 	}
 
 	function testCanBootCore() {

@@ -474,17 +474,6 @@ function _elgg_user_settings_menu_prepare(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_user_settings_init() {
-
-	elgg_register_plugin_hook_handler('register', 'menu:page', '_elgg_user_settings_menu_register');
-	elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_user_settings_menu_prepare');
-
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_language');
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_password'); // this needs to be before email change, for security reasons
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_default_access');
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_name');
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_username');
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_email');
-
 	// extend the account settings form
 	elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
 	elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
@@ -493,10 +482,3 @@ function _elgg_user_settings_init() {
 	elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
 	elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_user_settings_init');
-};

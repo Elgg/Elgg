@@ -62,11 +62,6 @@ class Application {
 	public $_services;
 
 	/**
-	 * @var Closure[]
-	 */
-	private static $_setups = [];
-
-	/**
 	 * Reference to the loaded Application
 	 *
 	 * @internal Do not use this
@@ -117,45 +112,22 @@ class Application {
 	 * This includes all the .php files in engine/lib (not upgrades). If a script returns a function,
 	 * it is queued and executed at the end.
 	 *
-	 * @return array
+	 * @return void
 	 *
 	 * @internal
 	 * @throws InstallationException
 	 */
 	public static function loadCore() {
-		$setups = [];
-
 		$path = Paths::elgg() . 'engine/lib';
 
 		// include library files, capturing setup functions
 		foreach (self::getEngineLibs() as $file) {
 			try {
-				$setups[] = self::requireSetupFileOnce("$path/$file");
+				Includer::requireFileOnce("$path/$file");
 			} catch (\Error $e) {
 				throw new \InstallationException("Elgg lib file failed include: $path/$file");
 			}
 		}
-
-		return $setups;
-	}
-
-	/**
-	 * Require a library/plugin file once and capture returned anonymous functions
-	 *
-	 * @param string $file File to require
-	 *
-	 * @return mixed
-	 * @internal
-	 */
-	public static function requireSetupFileOnce($file) {
-		if (isset(self::$_setups[$file])) {
-			return self::$_setups[$file];
-		}
-
-		$return = Includer::requireFileOnce($file);
-		self::$_setups[$file] = $return;
-
-		return $return;
 	}
 
 	/**
@@ -608,7 +580,7 @@ class Application {
 	public static function migrate() {
 		
 		$constants = self::elggDir()->getPath('engine/lib/constants.php');
-		self::requireSetupFileOnce($constants);
+		Includer::requireFileOnce($constants);
 		
 		$conf = self::elggDir()->getPath('engine/conf/migrations.php');
 		if (!$conf) {

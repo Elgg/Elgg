@@ -119,23 +119,6 @@ function elgg_delete_directory(string $directory, bool $leave_base_directory = f
 }
 
 /**
- * Register file-related handlers on "init, system" event
- *
- * @return void
- * @internal
- */
-function _elgg_filestore_init() {
-
-	// Touch entity icons if entity access id has changed
-	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_touch_icons');
-	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_touch_icons');
-
-	// Move entity icons if entity owner has changed
-	elgg_register_event_handler('update:after', 'object', '_elgg_filestore_move_icons');
-	elgg_register_event_handler('update:after', 'group', '_elgg_filestore_move_icons');
-}
-
-/**
  * Returns file's download URL
  *
  * @note This does not work for files with custom filestores.
@@ -320,10 +303,3 @@ function elgg_get_uploaded_file($input_name, $check_for_validity = true) {
 function elgg_get_temp_file() {
 	return new ElggTempFile();
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
-};
