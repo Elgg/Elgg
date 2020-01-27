@@ -11,7 +11,6 @@ if ($hash_missing_username) {
 
 $form_vars = [
 	'class' => 'elgg-form-account',
-	'prevent_double_submit' => true,
 ];
 $body_vars = ['username' => $hash_missing_username];
 

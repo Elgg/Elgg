@@ -644,6 +644,40 @@ function elgg_get_entity_dates(array $options = []) {
 }
 
 /**
+ * Returns search results as an array of entities, as a batch, or a count,
+ * depending on parameters given.
+ *
+ * @param array $options Search parameters
+ *                       Accepts all options supported by {@link elgg_get_entities()}
+ *
+ * @option string $query         Search query
+ * @option string $type          Entity type. Required if no search type is set
+ * @option string $search_type   Custom search type. Required if no type is set
+ * @option array  $fields        An array of fields to search in, supported keys are
+ * 		[
+ * 			'attributes' => ['some attribute', 'some other attribute'],
+ *	 		'metadata' => ['some metadata name', 'some other metadata name'],
+ * 			'annotations' => ['some annotation name', 'some other annotation name'],
+ * 			'private_settings' => ['some private_setting name', 'some other private_setting name'],
+ * 		]
+ * @option string $sort          An array containing 'property', 'property_type', 'direction' and 'signed'
+ * @option bool   $partial_match Allow partial matches, e.g. find 'elgg' when search for 'el'
+ * @option bool   $tokenize      Break down search query into tokens,
+ *                               e.g. find 'elgg has been released' when searching for 'elgg released'
+ *
+ * @return ElggBatch|ElggEntity[]|int|false
+ *
+ * @see elgg_get_entities()
+ */
+function elgg_search(array $options = []) {
+	try {
+		return _elgg_services()->search->search($options);
+	} catch (InvalidParameterException $e) {
+		return false;
+	}
+}
+
+/**
  * Registers an entity type and subtype as a public-facing entity that should be shown in search
  *
  * @warning Entities that aren't registered here will not show up in search.

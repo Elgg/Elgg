@@ -49,6 +49,5 @@ if ($title === '' && $relationship instanceof ElggRelationship) {
 }
 
 echo elgg_format_element('div', ['class' => [
-	'elgg-relationship-title', // @todo remove in 4.0
 	'elgg-listing-summary-title',
 ]], $title);

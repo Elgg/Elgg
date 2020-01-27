@@ -67,8 +67,6 @@ function _elgg_upgrade_entity_menu(\Elgg\Hook $hook) {
 	return $result;
 }
 
-return function (\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+return function (\Elgg\EventsService $events) {
 	$events->registerHandler('complete', 'upgrade', '_elgg_upgrade_completed');
-	
-	$hooks->registerHandler('register', 'menu:entity', '_elgg_upgrade_entity_menu', 501);
 };

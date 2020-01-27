@@ -106,14 +106,6 @@ class ElggPluginManifest {
 	];
 
 	/**
-	 * The expected structure of a screenshot element
-	 */
-	private $screenshotStruct = [
-		'description' => '',
-		'path' => ''
-	];
-
-	/**
 	 * The expected structure of a contributor element
 	 */
 	private $contributorStruct = [

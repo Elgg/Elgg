@@ -14,7 +14,7 @@ Custom page owner handlers
 
 Plugin developers can create page owner handlers, which could be necessary in certain cases, for example when integrating third party functionality. The handler will be a function which will need to get registered with ``elgg_register_plugin_hook_handler('page_owner', 'system', 'your_page_owner_function_name');`` . The handler will only need to return a value (an integer GUID) when it knows for certain who the page owner is.
 
-By default, the system uses ``default_page_owner_handler()`` to determine the page_owner from the following elements:
+By default, the system autodetects the page_owner from the following elements:
 
 - The ``username`` URL parameter
 - The ``owner_guid`` URL parameter

@@ -18,9 +18,6 @@ System hooks
 **gc, system**
 	Allows plugins to run garbage collection for ``$params['period']``.
 
-**unit_test, system**
-	Add a Simple Test test. (Deprecated.)
-
 **diagnostics:report, system**
 	Filter the output for the diagnostics report download.
 
@@ -320,10 +317,6 @@ Access hooks
 
 Action hooks
 ============
-
-**action, <action>**
-	Deprecated. Use ``'action:validate', <action>`` hook instead.
-	Triggered before executing action scripts. Return false to abort action.
 
 **action:validate, <action>**
 	Trigger before action script/controller is executed.

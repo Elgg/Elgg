@@ -64,7 +64,7 @@ class BootstrapPluginTestBootstrap extends \Elgg\PluginBootstrap {
 	}
 
 	/**
-	 * Executed when plugin is activated, after 'activate', 'plugin' event and before activate.php is included
+	 * Executed when plugin is activated, after 'activate', 'plugin' event
 	 *
 	 * @return void
 	 */
@@ -74,7 +74,7 @@ class BootstrapPluginTestBootstrap extends \Elgg\PluginBootstrap {
 	}
 
 	/**
-	 * Executed when plugin is deactivated, after 'deactivate', 'plugin' event and before deactivate.php is included
+	 * Executed when plugin is deactivated, after 'deactivate', 'plugin' event
 	 *
 	 * @return void
 	 */
@@ -94,5 +94,4 @@ class BootstrapPluginTestBootstrap extends \Elgg\PluginBootstrap {
 		$prop = __METHOD__ . '_calls';
 		$this->plugin->$prop++;
 	}
-
 }

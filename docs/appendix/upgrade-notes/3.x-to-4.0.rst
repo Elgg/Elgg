@@ -13,6 +13,15 @@ complicated validating responses (for example in hooks). The classes have been s
 
 All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``.
 
+Plugin bootstrapping
+--------------------
+
+The following files are no longer included during bootstrapping of a plugin:
+
+* ``activate.php`` use ``PluginBootstrap->activate()``
+* ``deactivate.php`` use ``PluginBootstrap->deactivate()``
+* ``views.php`` use ``elgg-plugin.php``
+
 Type hinted function
 --------------------
 
@@ -25,12 +34,14 @@ Class functions
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
 
-Lib function
-~~~~~~~~~~~~
+Lib functions
+~~~~~~~~~~~~~
 
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
+* ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
+* ``system_log_get_log()`` now requires an ``array`` for ``$options``
 
 Change in function parameters
 -----------------------------
@@ -40,8 +51,19 @@ Class functions
 
 * ``Elgg\Http\ResponseBuilder::setStatusCode()`` no longer has a default value
 
+Lib functions
+~~~~~~~~~~~~~
+
+* ``elgg_get_page_owner_guid`` no longer accepts ``$guid`` as a parameter
+
+Miscellaneous API changes
+-------------------------
+
+* The defaults for ``ignore_empty_body`` and ``prevent_double_submit`` when using ``elgg_view_form`` have been changed to ``true``.
+
 Removed composer dependencies
 -----------------------------
 
 * ``bower-asset/jquery-treeview`` the related js and css are no longer available in the system
 * ``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system
+* ``simpletest/simpletest``

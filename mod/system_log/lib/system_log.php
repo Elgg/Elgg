@@ -27,33 +27,7 @@ use Elgg\SystemLog\SystemLogEntry;
  *
  * @return int|SystemLogEntry[]
  */
-function system_log_get_log($options = null) {
-
-	if (!is_array($options)) {
-		elgg_deprecated_notice(__FUNCTION__ . ' accepts a single argument as an array of options', '3.0');
-
-		$options = [];
-
-		$arguments = func_get_args();
-		$arguments = array_pad($arguments, 12, null);
-
-		$options['performed_by_guid'] = $arguments[0];
-		$options['event'] = $arguments[1];
-		$options['object_class'] = $arguments[2];
-		$options['object_type'] = $arguments[3];
-		$options['object_subtype'] = $arguments[4];
-		$options['limit'] = $arguments[5];
-		$options['offset'] = $arguments[6];
-		$options['count'] = $arguments[7];
-		$options['created_before'] = $arguments[8];
-		$options['created_after'] = $arguments[9];
-		if ($arguments[10]) {
-			// legacy usage of function uses 0 to signify all
-			$options['object_id'] = $arguments[10];
-		}
-		$options['ip_address'] = $arguments[11];
-	}
-
+function system_log_get_log(array $options = []) {
 	return SystemLog::instance()->getAll($options);
 }
 

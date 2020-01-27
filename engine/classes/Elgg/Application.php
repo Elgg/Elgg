@@ -796,7 +796,6 @@ class Application {
 			'plugins.php',
 			'relationships.php',
 			'river.php',
-			'search.php',
 			'sessions.php',
 			'statistics.php',
 			'tags.php',

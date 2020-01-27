@@ -57,14 +57,14 @@ interface PluginBootstrapInterface {
 	public function shutdown();
 
 	/**
-	 * Executed when plugin is activated, after 'activate', 'plugin' event and before activate.php is included
+	 * Executed when plugin is activated, after 'activate', 'plugin' event
 	 *
 	 * @return void
 	 */
 	public function activate();
 
 	/**
-	 * Executed when plugin is deactivated, after 'deactivate', 'plugin' event and before deactivate.php is included
+	 * Executed when plugin is deactivated, after 'deactivate', 'plugin' event
 	 *
 	 * @return void
 	 */

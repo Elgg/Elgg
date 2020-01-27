@@ -20,7 +20,6 @@ if (elgg_is_empty($subtitle)) {
 }
 
 echo elgg_format_element('div', ['class' => [
-	'elgg-relationship-subtitle', // @todo remove in 4.0
 	'elgg-listing-summary-subtitle',
 	'elgg-subtext',
 ]], $subtitle);

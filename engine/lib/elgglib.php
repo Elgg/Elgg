@@ -1161,7 +1161,7 @@ function _elgg_ajax_page_handler($segments) {
 			}
 		} else {
 			$action = implode('/', array_slice($segments, 1));
-			$output = elgg_view_form($action, ['prevent_double_submit' => true], $vars);
+			$output = elgg_view_form($action, [], $vars);
 		}
 
 		if ($content_type) {
@@ -1407,6 +1407,39 @@ function _elgg_register_actions() {
 		}
 		
 		elgg_register_action($action, $handler, $access);
+	}
+}
+
+/**
+ * Register core hooks
+ * @return void
+ * @internal
+ * @since 4.0
+ */
+function _elgg_register_hooks() {
+	$conf = \Elgg\Project\Paths::elgg() . 'engine/hooks.php';
+	$spec = \Elgg\Includer::includeFile($conf);
+	
+	$hooks = _elgg_services()->hooks;
+	
+	foreach ($spec as $name => $types) {
+		foreach ($types as $type => $callbacks) {
+			foreach ($callbacks as $callback => $hook_spec) {
+				if (!is_array($hook_spec)) {
+					continue;
+				}
+				
+				$unregister = (bool) elgg_extract('unregister', $hook_spec, false);
+				
+				if ($unregister) {
+					$hooks->unregisterHandler($name, $type, $callback);
+				} else {
+					$priority = (int) elgg_extract('priority', $hook_spec, 500);
+					
+					$hooks->registerHandler($name, $type, $callback, $priority);
+				}
+			}
+		}
 	}
 }
 

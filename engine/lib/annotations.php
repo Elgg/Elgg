@@ -168,22 +168,3 @@ function _elgg_annotations_default_menu_items(\Elgg\Hook $hook) {
 	
 	return $result;
 }
-
-/**
- * Init annotations
- *
- * @return void
- * @internal
- * @since 3.3
- */
-function _elgg_annotations_init() {
-	
-	elgg_register_plugin_hook_handler('register', 'menu:annotation', '_elgg_annotations_default_menu_items');
-}
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_annotations_init');
-};

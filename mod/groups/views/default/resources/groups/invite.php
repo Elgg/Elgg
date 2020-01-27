@@ -15,7 +15,6 @@ elgg_push_breadcrumb($group->getDisplayName(), $group->getURL());
 $content = elgg_view_form('groups/invite', [
 	'id' => 'invite_to_group',
 	'class' => 'elgg-form-alt mtm',
-	'prevent_double_submit' => true,
 ], [
 	'entity' => $group,
 ]);

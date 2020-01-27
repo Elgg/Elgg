@@ -25,5 +25,4 @@ if (elgg_is_empty($metadata)) {
 
 echo elgg_format_element('div', ['class' => [
 	'elgg-listing-summary-metadata',
-	'elgg-relationship-metadata', // @todo remove in 4.0
 ]], $metadata);
