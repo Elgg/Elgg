@@ -690,7 +690,7 @@ class ElggPlugin extends ElggObject {
 		} else {
 			elgg_delete_admin_notice("cannot_start {$this->getID()}");
 
-			_elgg_services()->events->trigger('cache:flush', 'system');
+			elgg_clear_caches();
 			_elgg_services()->logger->notice("Plugin {$this->getID()} has been activated");
 		}
 
