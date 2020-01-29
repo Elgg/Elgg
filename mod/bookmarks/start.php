@@ -31,9 +31,6 @@ function bookmarks_init() {
 	// Register bookmarks view for ecml parsing
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'bookmarks_ecml_views_hook');
 
-	// Groups
-	elgg()->group_tools->register('bookmarks');
-
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'object:bookmarks', 'Elgg\Values::getTrue');
 

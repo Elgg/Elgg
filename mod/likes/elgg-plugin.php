@@ -8,4 +8,7 @@ return [
 	'upgrades' => [
 		'\Elgg\Likes\Upgrades\PublicLikesAnnotations'
 	],
+	'view_options' => [
+		'likes/popup' => ['ajax' => true],
+	],
 ];

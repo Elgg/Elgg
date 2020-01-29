@@ -25,9 +25,6 @@ function blog_init() {
 	// add blog link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
-	// Add group option
-	elgg()->group_tools->register('blog');
-
 	// archive menu
 	elgg_register_plugin_hook_handler('register', 'menu:blog_archive', 'blog_archive_menu_setup');
 

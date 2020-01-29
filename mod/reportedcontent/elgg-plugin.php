@@ -24,4 +24,7 @@ return [
 			'context' => ['admin'],
 		],
 	],
+	'view_options' => [
+		'forms/reportedcontent/add' => ['ajax' => true],
+	],
 ];
