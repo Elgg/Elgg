@@ -167,20 +167,6 @@ function elgg_get_embed_url(\ElggEntity $entity, $size) {
 }
 
 /**
- * Handler for /serve-icon resources
- * /serve-icon/<entity_guid>/<size>
- *
- * @return void
- * @internal
- * @since 2.2
- */
-function _elgg_filestore_serve_icon_handler() {
-	$response = _elgg_services()->iconService->handleServeIconRequest();
-	$response->send();
-	exit;
-}
-
-/**
  * Reset icon URLs if access_id has changed
  *
  * @param \Elgg\Event $event "update:after", "object"|"group"

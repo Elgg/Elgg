@@ -113,7 +113,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		return new \Elgg\EntityIconService(
 			_elgg_config(),
 			$this->hooks,
-			$this->request,
 			$this->logger,
 			$this->entities,
 			$this->uploads,
@@ -784,97 +783,6 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			[75, 125, 'topbar', 16, 16, true],
 			[75, 125, 'large', 200, 200, true, 200, 200],
 		];
-	}
-
-	/**
-	 * @group IconService
-	 */
-	public function testServeIconSends400ForMalformattedRequest() {
-
-		$this->request = \Elgg\Http\Request::create("/serve-icon/x/large");
-
-		$service = $this->createService();
-		$service->setCurrentTime();
-
-		$response = $service->handleServeIconRequest(false);
-
-		$this->assertEquals(400, $response->getStatusCode());
-
-		// We can't compare two DateTime objects here, because Symfony parses the date from string, where as our TimeUsing trait
-		// uses DateTime constructor, which in 7.1 adds microseconds
-		// http://php.net/manual/en/migration71.incompatible.php#migration71.incompatible.datetime-microseconds
-		$this->assertEquals($service->getCurrentTime('-1 day')->format('U'), $response->getExpires()->format('U'));
-	}
-
-	/**
-	 * @group IconService
-	 */
-	public function testServeIconSends404ForNonExistentGuid() {
-
-		$this->request = \Elgg\Http\Request::create("/serve-icon/55/small");
-
-		$service = $this->createService();
-		$service->setCurrentTime();
-
-		$response = $service->handleServeIconRequest(false);
-
-		$this->assertEquals(404, $response->getStatusCode());
-
-		// We can't compare two DateTime objects here, because Symfony parses the date from string, where as our TimeUsing trait
-		// uses DateTime constructor, which in 7.1 adds microseconds
-		// http://php.net/manual/en/migration71.incompatible.php#migration71.incompatible.datetime-microseconds
-		$this->assertEquals($service->getCurrentTime('-1 day')->format('U'), $response->getExpires()->format('U'));
-	}
-
-	/**
-	 * @group IconService
-	 */
-	public function testCanHandleServeIconRequest() {
-
-		$file = new \ElggFile();
-		$file->owner_guid = 1;
-		$file->setFilename('600x300.jpg');
-
-		$this->request = \Elgg\Http\Request::create("/serve-icon/{$this->entity->guid}/small");
-
-		$service = $this->createService();
-		$service->setCurrentTime();
-
-		$service->saveIconFromElggFile($this->entity, $file);
-
-		$response = $service->handleServeIconRequest(false);
-
-		$icon = $service->getIcon($this->entity, 'small');
-
-		$this->assertInstanceOf(\Symfony\Component\HttpFoundation\BinaryFileResponse::class, $response);
-		$this->assertEquals(200, $response->getStatusCode());
-
-		$this->assertEquals('image/jpeg', $response->headers->get('Content-Type'));
-
-		$filesize = filesize($icon->getFilenameOnFilestore());
-		$this->assertEquals($filesize, $response->headers->get('Content-Length'));
-
-		$this->assertStringContainsString('inline', $response->headers->get('Content-Disposition'));
-
-		$this->assertEquals('"' . $icon->getModifiedTime() . '"', $response->headers->get('Etag'));
-
-		// We can't compare two DateTime objects he	re, because Symfony parses the date from string, where as our TimeUsing trait
-		// uses DateTime constructor, which in 7.1 adds microseconds
-		// http://php.net/manual/en/migration71.incompatible.php#migration71.incompatible.datetime-microseconds
-		$this->assertEquals($service->getCurrentTime('+1 day')->format('U'), $response->getExpires()->format('U'));
-
-		$this->assertEquals('max-age=86400, private', $response->headers->get('cache-control'));
-
-		// now try conditional request
-
-		$this->request->headers->set('if-none-match', '"' . $icon->getModifiedTime() . '"');
-		$response = $service->handleServeIconRequest(false);
-
-		$this->assertEquals(304, $response->getStatusCode());
-
-		$this->assertEquals($service->getCurrentTime('+1 day')->format('U'), $response->getExpires()->format('U'));
-
-		$this->assertEquals('max-age=86400, private', $response->headers->get('cache-control'));
 	}
 	
 	public function testDelayedCreationOfIcon() {

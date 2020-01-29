@@ -9,8 +9,6 @@ use ElggFile;
 use ElggIcon;
 use InvalidParameterException;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Elgg\Filesystem\MimeTypeService;
 
 /**
@@ -66,7 +64,6 @@ class EntityIconService {
 	 *
 	 * @param Config             $config   Config
 	 * @param PluginHooksService $hooks    Hook registration service
-	 * @param HttpRequest        $request  Http request
 	 * @param LoggerInterface    $logger   Logger
 	 * @param EntityTable        $entities Entity table
 	 * @param UploadService      $uploads  Upload service
@@ -76,7 +73,6 @@ class EntityIconService {
 	public function __construct(
 		Config $config,
 		PluginHooksService $hooks,
-		HttpRequest $request,
 		LoggerInterface $logger,
 		EntityTable $entities,
 		UploadService $uploads,
@@ -85,7 +81,6 @@ class EntityIconService {
 	) {
 		$this->config = $config;
 		$this->hooks = $hooks;
-		$this->request = $request;
 		$this->logger = $logger;
 		$this->entities = $entities;
 		$this->uploads = $uploads;
@@ -649,76 +644,6 @@ class EntityIconService {
 		}
 		
 		return $sizes;
-	}
-
-	/**
-	 * Handle request to /serve-icon handler
-	 *
-	 * @param bool $allow_removing_headers Alter PHP's global headers to allow caching
-	 * @return BinaryFileResponse
-	 */
-	public function handleServeIconRequest($allow_removing_headers = true) {
-
-		$response = new Response();
-		$response->setExpires($this->getCurrentTime('-1 day'));
-		$response->prepare($this->request);
-
-		if ($allow_removing_headers) {
-			// clear cache-boosting headers set by PHP session
-			header_remove('Cache-Control');
-			header_remove('Pragma');
-			header_remove('Expires');
-		}
-
-		$path = implode('/', $this->request->getUrlSegments());
-		if (!preg_match('~serve-icon/(\d+)/(.*+)$~', $path, $m)) {
-			return $response->setStatusCode(400)->setContent('Malformatted request URL');
-		}
-
-		list(, $guid, $size) = $m;
-
-		$entity = $this->entities->get($guid);
-		if (!$entity instanceof \ElggEntity) {
-			return $response->setStatusCode(404)->setContent('Item does not exist');
-		}
-
-		$thumbnail = $entity->getIcon($size);
-		if (!$thumbnail->exists()) {
-			return $response->setStatusCode(404)->setContent('Icon does not exist');
-		}
-
-		$if_none_match = $this->request->headers->get('if_none_match');
-		if (!empty($if_none_match)) {
-			// strip mod_deflate suffixes
-			$this->request->headers->set('if_none_match', str_replace('-gzip', '', $if_none_match));
-		}
-
-		$filenameonfilestore = $thumbnail->getFilenameOnFilestore();
-		$last_updated = filemtime($filenameonfilestore);
-		$etag = '"' . $last_updated . '"';
-
-		$response->setPrivate()
-			->setEtag($etag)
-			->setExpires($this->getCurrentTime('+1 day'))
-			->setMaxAge(86400);
-
-		if ($response->isNotModified($this->request)) {
-			return $response;
-		}
-
-		$headers = [
-			'Content-Type' => $this->mimetype->getMimeType($filenameonfilestore),
-			'X-Content-Type-Options' => 'nosniff',
-		];
-		$response = new BinaryFileResponse($filenameonfilestore, 200, $headers, false, 'inline');
-		$response->prepare($this->request);
-
-		$response->setPrivate()
-			->setEtag($etag)
-			->setExpires($this->getCurrentTime('+1 day'))
-			->setMaxAge(86400);
-
-		return $response;
 	}
 	
 	/**

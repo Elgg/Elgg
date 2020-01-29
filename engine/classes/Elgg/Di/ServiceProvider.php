@@ -439,7 +439,6 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\EntityIconService(
 				$c->config,
 				$c->hooks,
-				$c->request,
 				$c->logger,
 				$c->entityTable,
 				$c->uploads,
