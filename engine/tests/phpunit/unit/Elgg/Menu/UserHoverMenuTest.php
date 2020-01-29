@@ -12,7 +12,8 @@ class UserHoverMenuTest extends UnitTestCase {
 	public function up() {
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:user_hover', 'elgg_user_hover_menu');
+		_elgg_services()->hooks->registerHandler('register', 'menu:user_hover', 'Elgg\Menus\UserHover::registerAvatarEdit');
+		_elgg_services()->hooks->registerHandler('register', 'menu:user_hover', 'Elgg\Menus\UserHover::registerAdminActions');
 	}
 	
 	public function down() {

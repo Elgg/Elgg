@@ -1262,8 +1262,6 @@ function _elgg_walled_garden_init() {
 
 	elgg_register_external_file('css', 'elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
 
-	elgg_register_plugin_hook_handler('register', 'menu:walled_garden', '_elgg_walled_garden_menu');
-
 	if (_elgg_config()->default_access == ACCESS_PUBLIC) {
 		elgg_set_config('default_access', ACCESS_LOGGED_IN);
 	}
@@ -1277,33 +1275,6 @@ function _elgg_walled_garden_init() {
 			'resource' => 'walled_garden',
 		]);
 	}
-}
-
-/**
- * Adds home link to walled garden menu
- *
- * @param \Elgg\Hook $hook 'register', 'menu:walled_garden'
- *
- * @return array
- *
- * @internal
- */
-function _elgg_walled_garden_menu(\Elgg\Hook $hook) {
-	
-	if (current_page_url() === elgg_get_site_url()) {
-		return;
-	}
-	
-	$return_value = $hook->getValue();
-	
-	$return_value[] = \ElggMenuItem::factory([
-		'name' => 'home',
-		'href' => '/',
-		'text' => elgg_echo('walled_garden:home'),
-		'priority' => 10,
-	]);
-
-	return $return_value;
 }
 
 /**

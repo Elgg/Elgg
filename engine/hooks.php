@@ -89,7 +89,7 @@ return [
 			'_elgg_setup_vertical_menu' => [
 				'priority' => 999,
 			],
-			'_elgg_user_settings_menu_prepare' => [],
+			'Elgg\Menus\Page::cleanupUserSettingsPlugins' => [],
 		],
 		'menu:relationship' => [
 			'_elgg_menu_transform_to_dropdown' => [],
@@ -98,7 +98,7 @@ return [
 			'_elgg_menu_transform_to_dropdown' => [],
 		],
 		'menu:site' => [
-			'_elgg_site_menu_setup' => [
+			'Elgg\Menus\Site::reorderItems' => [
 				'priority' => 999,
 			],
 		],
@@ -131,63 +131,76 @@ return [
 	],
 	'register' => [
 		'menu:admin_header' => [
-			'_elgg_admin_header_menu' => [],
+			'Elgg\Menus\AdminHeader::register' => [],
+			'Elgg\Menus\AdminHeader::registerMaintenance' => [],
 		],
 		'menu:admin_footer' => [
-			'_elgg_admin_footer_menu' => [],
+			'Elgg\Menus\AdminFooter::registerHelpResources' => [],
 		],
 		'menu:annotation' => [
-			'_elgg_annotations_default_menu_items' => [],
+			'Elgg\Menus\Annotation::registerDelete' => [],
 		],
 		'menu:entity' => [
-			'_elgg_entity_menu_setup' => [],
-			'_elgg_plugin_entity_menu_setup' => [],
-			'_elgg_upgrade_entity_menu' => ['priority' => 501],
+			'Elgg\Menus\Entity::registerDelete' => [],
+			'Elgg\Menus\Entity::registerEdit' => [],
+			'Elgg\Menus\Entity::registerPlugin' => [],
+			'Elgg\Menus\Entity::registerUpgrade' => ['priority' => 501],
 		],
 		'menu:entity_navigation' => [
-			'_elgg_entity_navigation_menu_setup' => [],
+			'Elgg\Menus\EntityNavigation::registerPreviousNext' => [],
 		],
 		'menu:filter:admin/upgrades' => [
-			'_elgg_admin_upgrades_menu' => [],
+			'Elgg\Menus\Filter::registerAdminUpgrades' => [],
 		],
 		'menu:footer' => [
-			'_elgg_rss_menu_setup' => [],
+			'Elgg\Menus\Footer::registerRSS' => [],
+			'Elgg\Menus\Footer::registerElggBranding' => [],
 		],
 		'menu:login' => [
-			'_elgg_login_menu_setup' => [],
+			'Elgg\Menus\Login::registerRegistration' => [],
+			'Elgg\Menus\Login::registerResetPassword' => [],
 		],
 		'menu:page' => [
-			'_elgg_admin_page_menu' => [],
-			'_elgg_admin_page_menu_plugin_settings' => [],
-			'_elgg_user_page_menu' => [],
-			'_elgg_user_settings_menu_register' => [],
+			'Elgg\Menus\Page::registerAdminAdminister' => [],
+			'Elgg\Menus\Page::registerAdminConfigure' => [],
+			'Elgg\Menus\Page::registerAdminInformation' => [],
+			'Elgg\Menus\Page::registerAdminPluginSettings' => [],
+			'Elgg\Menus\Page::registerAvatarEdit' => [],
+			'Elgg\Menus\Page::registerUserSettings' => [],
+			'Elgg\Menus\Page::registerUserSettingsPlugins' => [],
 		],
 		'menu:river' => [
-			'_elgg_river_menu_setup' => [],
+			'Elgg\Menus\River::registerDelete' => [],
 		],
 		'menu:site' => [
-			'_elgg_site_menu_init' => [],
+			'Elgg\Menus\Site::registerAdminConfiguredItems' => [],
 		],
 		'menu:social' => [
-			'_elgg_comments_social_menu_setup' => [],
+			'Elgg\Menus\Social::registerComments' => [],
 		],
 		'menu:title' => [
-			'_elgg_user_title_menu' => [],
+			'Elgg\Menus\Title::registerAvatarEdit' => [],
 		],
 		'menu:topbar' => [
-			'_elgg_user_topbar_menu' => [],
+			'Elgg\Menus\Topbar::registerUserLinks' => [],
+			'Elgg\Menus\Topbar::registerMaintenance' => [],
 		],
 		'menu:user:unvalidated' => [
-			'_elgg_user_unvalidated_menu' => [],
+			'Elgg\Menus\UserUnvalidated::register' => [],
 		],
 		'menu:user:unvalidated:bulk' => [
-			'_elgg_admin_user_unvalidated_bulk_menu' => [],
+			'Elgg\Menus\UserUnvalidatedBulk::registerActions' => [],
 		],
 		'menu:user_hover' => [
-			'elgg_user_hover_menu' => [],
+			'Elgg\Menus\UserHover::registerAvatarEdit' => [],
+			'Elgg\Menus\UserHover::registerAdminActions' => [],
+		],
+		'menu:walled_garden' => [
+			'Elgg\Menus\WalledGarden::registerHome' => [],
 		],
 		'menu:widget' => [
-			'_elgg_widget_menu_setup' => [],
+			'Elgg\Menus\Widget::registerDelete' => [],
+			'Elgg\Menus\Widget::registerEdit' => [],
 		],
 		'user' => [
 			'_elgg_admin_check_admin_validation' => [

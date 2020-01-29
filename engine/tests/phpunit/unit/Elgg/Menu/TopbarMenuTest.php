@@ -12,7 +12,7 @@ class TopbarMenuTest extends UnitTestCase {
 	public function up() {
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:topbar', '_elgg_user_topbar_menu');
+		_elgg_services()->hooks->registerHandler('register', 'menu:topbar', 'Elgg\Menus\Topbar::registerUserLinks');
 	}
 	
 	public function down() {

@@ -98,8 +98,6 @@ class CronServiceTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteCronFromPageHandler() {
-		_elgg_cron_init();
-
 		_elgg_config()->security_protect_cron = false;
 		
 		$calls = 0;
@@ -129,8 +127,6 @@ class CronServiceTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteCronFromPageHandlerForInterval() {
-		_elgg_cron_init();
-
 		_elgg_config()->security_protect_cron = false;
 
 		$calls = 0;

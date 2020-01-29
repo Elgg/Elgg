@@ -12,14 +12,7 @@ class PageMenuTest extends UnitTestCase {
 	public function up() {
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:page', '_elgg_user_page_menu');
-
-		// @todo: test other menu hooks
-		//_elgg_services()->hooks->registerHandler('register', 'menu:page', '_elgg_admin_page_menu');
-		//_elgg_services()->hooks->registerHandler('register', 'menu:page', '_elgg_admin_page_menu_plugin_settings');
-		//_elgg_services()->hooks->registerHandler('prepare', 'menu:page', '_elgg_setup_vertical_menu', 999);
-		//_elgg_services()->hooks->registerHandler('register', 'menu:page', '_elgg_user_settings_menu_register');
-		//_elgg_services()->hooks->registerHandler('prepare', 'menu:page', '_elgg_user_settings_menu_prepare');
+		_elgg_services()->hooks->registerHandler('register', 'menu:page', 'Elgg\Menus\Page::registerAvatarEdit');
 	}
 	
 	public function down() {

@@ -454,129 +454,6 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 }
 
 /**
- * Init site menu
- *
- * Registers custom menu items
- *
- * @param \Elgg\Hook $hook 'register', 'menu:site'
- *
- * @return MenuItems
- *
- * @internal
- */
-function _elgg_site_menu_init(\Elgg\Hook $hook) {
-	$custom_menu_items = elgg_get_config('site_custom_menu_items');
-	if (empty($custom_menu_items)) {
-		return;
-	}
-	
-	$return = $hook->getValue();
-	
-	// add custom menu items
-	$n = 1;
-	foreach ($custom_menu_items as $title => $url) {
-		$item = new ElggMenuItem("custom$n", $title, $url);
-		$return[] = $item;
-		$n++;
-	}
-
-	return $return;
-}
-
-/**
- * Set up the site menu
- *
- * Handles default, featured, and custom menu items
- *
- * @param \Elgg\Hook $hook 'prepare', 'menu:site'
- *
- * @return PreparedMenu
- *
- * @internal
- */
-function _elgg_site_menu_setup(\Elgg\Hook $hook) {
-
-	$menu = $hook->getValue();
-	$featured_menu_names = array_values((array) elgg_get_config('site_featured_menu_names'));
-
-	$registered = $menu->getItems('default');
-	if (empty($registered)) {
-		return;
-	}
-	
-	$has_selected = false;
-	$priority = 500;
-
-	foreach ($registered as $item) {
-		if (in_array($item->getName(), $featured_menu_names)) {
-			$featured_index = array_search($item->getName(), $featured_menu_names);
-			$item->setPriority($featured_index);
-		} else {
-			$item->setPriority($priority);
-			$priority++;
-		}
-		if ($item->getSelected()) {
-			$has_selected = true;
-		}
-	}
-
-	if (!$has_selected) {
-		$is_selected = function (ElggMenuItem $item) {
-			$current_url = current_page_url();
-			if (elgg_strpos($item->getHref(), elgg_get_site_url()) === 0) {
-				if ($item->getName() == elgg_get_context()) {
-					return true;
-				}
-				if ($item->getHref() == $current_url) {
-					return true;
-				}
-			}
-
-			return false;
-		};
-
-		foreach ($registered as $item) {
-			if ($is_selected($item)) {
-				$item->setSelected(true);
-				break;
-			}
-		}
-	}
-
-	usort($registered, [\ElggMenuBuilder::class, 'compareByPriority']);
-
-	$max_display_items = 5;
-
-	$num_menu_items = count($registered);
-
-	$more = [];
-	if ($max_display_items && $num_menu_items > ($max_display_items + 1)) {
-		$more = array_splice($registered, $max_display_items);
-	}
-
-	if (!empty($more)) {
-		$dropdown = ElggMenuItem::factory([
-			'name' => 'more',
-			'href' => false,
-			'text' => elgg_echo('more'),
-			'icon_alt' => 'angle-down',
-			'priority' => 999,
-		]);
-
-		foreach ($more as &$item) {
-			$item->setParentName('more');
-		}
-
-		$dropdown->setChildren($more);
-
-		$registered[] = $dropdown;
-	}
-
-	$menu->getSection('default')->fill($registered);
-
-}
-
-/**
  * Prepare vertically stacked menu
  *
  * Sets the display child menu option to "toggle" if not set
@@ -590,6 +467,7 @@ function _elgg_site_menu_setup(\Elgg\Hook $hook) {
  * @return PreparedMenu
  *
  * @internal
+ * @see https://github.com/Elgg/Elgg/issues/12958
  */
 function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 	$menu = $hook->getValue();
@@ -629,55 +507,6 @@ function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 }
 
 /**
- * Entity menu is list of links and info on any entity
- *
- * @param \Elgg\Hook $hook 'register', 'menu:entity'
- *
- * @return MenuItems
- *
- * @internal
- */
-function _elgg_entity_menu_setup(\Elgg\Hook $hook) {
-	$entity = $hook->getEntityParam();
-	if (!($entity instanceof \ElggEntity) || $entity instanceof \ElggUser) {
-		// users mostly use the hover menu for their actions
-		return;
-	}
-
-	$edit_url = elgg_generate_entity_url($entity, 'edit');
-	$delete_url = elgg_generate_action_url('entity/delete', [
-		'guid' => $entity->guid,
-	]);
-
-	$return = $hook->getValue();
-	
-	if ($entity->canEdit() && $edit_url) {
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'edit',
-			'icon' => 'edit',
-			'text' => elgg_echo('edit'),
-			'title' => elgg_echo('edit:this'),
-			'href' => $edit_url,
-			'priority' => 900,
-		]);
-	}
-
-	if ($entity->canDelete() && $delete_url) {
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'delete',
-			'icon' => 'delete',
-			'text' => elgg_echo('delete'),
-			'title' => elgg_echo('delete:this'),
-			'href' => $delete_url,
-			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 950,
-		]);
-	}
-
-	return $return;
-}
-
-/**
  * Moves default menu items into a dropdown
  *
  * @tip    Pass 'dropdown' => false to entity menu options to render the menu inline without a dropdown
@@ -690,6 +519,7 @@ function _elgg_entity_menu_setup(\Elgg\Hook $hook) {
  * @return void
  *
  * @internal
+ * @see https://github.com/Elgg/Elgg/issues/12958
  */
 function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 	$menu = $hook->getValue();
@@ -726,213 +556,6 @@ function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 }
 
 /**
- * Entity navigation menu is previous/next link for an entity
- *
- * @elgg_plugin_hook register menu:entity_navigation
- *
- * @param \Elgg\Hook $hook Hook
- *
- * @return MenuItems
- *
- * @internal
- */
-function _elgg_entity_navigation_menu_setup(\Elgg\Hook $hook) {
-	$entity = $hook->getEntityParam();
-	if (!$entity) {
-		return;
-	}
-
-	$return = $hook->getValue();
-	/* @var $return MenuItems */
-
-	$options = [
-		'type' => $entity->getType(),
-		'subtype' => $entity->getSubtype(),
-		'container_guid' => $entity->container_guid,
-		'limit' => 1,
-	];
-
-	$previous_options = $options;
-	$previous_options['wheres'] = [
-		function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
-			return $qb->merge([
-				$qb->compare("{$main_alias}.time_created", '<', $entity->time_created, ELGG_VALUE_INTEGER),
-				$qb->merge([
-					$qb->compare("{$main_alias}.time_created", '=', $entity->time_created, ELGG_VALUE_INTEGER),
-					$qb->compare("{$main_alias}.guid", '<', $entity->guid, ELGG_VALUE_GUID),
-				], 'AND'),
-			], 'OR');
-		},
-	];
-	$previous_options['order_by'] = [
-		new \Elgg\Database\Clauses\OrderByClause('time_created', 'DESC'),
-		new \Elgg\Database\Clauses\OrderByClause('guid', 'DESC'),
-	];
-
-	$previous = elgg_get_entities($previous_options);
-	if ($previous) {
-		$previous = $previous[0];
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'previous',
-			'text' => elgg_echo('previous'),
-			'entity' => $previous,
-			'href' => $previous->getUrl(),
-			'title' => $previous->getDisplayName(),
-			'icon' => 'angle-double-left',
-			'link_class' => 'elgg-button elgg-button-outline',
-			'priority' => 100,
-		]);
-	}
-	
-	$next_options = $options;
-	$next_options['wheres'] = [
-		function (\Elgg\Database\QueryBuilder $qb, $main_alias) use ($entity) {
-			return $qb->merge([
-				$qb->compare("{$main_alias}.time_created", '>', $entity->time_created, ELGG_VALUE_INTEGER),
-				$qb->merge([
-					$qb->compare("{$main_alias}.time_created", '=', $entity->time_created, ELGG_VALUE_INTEGER),
-					$qb->compare("{$main_alias}.guid", '>', $entity->guid, ELGG_VALUE_GUID),
-				], 'AND'),
-			], 'OR');
-		},
-	];
-	$next_options['order_by'] = [
-		new \Elgg\Database\Clauses\OrderByClause('time_created', 'ASC'),
-		new \Elgg\Database\Clauses\OrderByClause('guid', 'ASC'),
-	];
-	
-	$next = elgg_get_entities($next_options);
-	if ($next) {
-		$next = $next[0];
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'next',
-			'text' => elgg_echo('next'),
-			'entity' => $next,
-			'href' => $next->getUrl(),
-			'title' => $next->getDisplayName(),
-			'icon_alt' => 'angle-double-right',
-			'link_class' => 'elgg-button elgg-button-outline',
-			'priority' => 800,
-		]);
-	}
-	
-	return $return;
-}
-
-/**
- * Widget menu is a set of widget controls
- *
- * @param \Elgg\Hook $hook 'register', 'menu:widget'
- *
- * @return MenuItems
- *
- * @internal
- */
-function _elgg_widget_menu_setup(\Elgg\Hook $hook) {
-
-	$widget = $hook->getEntityParam();
-	if (!($widget instanceof \ElggWidget)) {
-		return;
-	}
-	
-	$return = $hook->getValue();
-	
-	if ($widget->canDelete()) {
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'delete',
-			'text' => elgg_view_icon('delete-alt'),
-			'title' => elgg_echo('widget:delete', [$widget->getDisplayName()]),
-			'href' => "action/widgets/delete?widget_guid=$widget->guid",
-			'is_action' => true,
-			'link_class' => 'elgg-widget-delete-button',
-			'id' => "elgg-widget-delete-button-$widget->guid",
-			'data-elgg-widget-type' => $widget->handler,
-			'priority' => 900,
-		]);
-	}
-	
-	$show_edit = $hook->getParam('show_edit', $widget->canEdit());
-	if ($show_edit) {
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'settings',
-			'text' => elgg_view_icon('settings-alt'),
-			'title' => elgg_echo('widget:edit'),
-			'href' => "#widget-edit-$widget->guid",
-			'link_class' => "elgg-widget-edit-button",
-			'rel' => 'toggle',
-			'priority' => 800,
-		]);
-	}
-
-	return $return;
-}
-
-/**
- * Add the register and forgot password links to login menu
- *
- * @param \Elgg\Hook $hook 'register', 'menu:login'
- *
- * @return MenuItems
- *
- * @internal
- */
-function _elgg_login_menu_setup(\Elgg\Hook $hook) {
-	$return = $hook->getValue();
-	
-	if (_elgg_config()->allow_registration) {
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'register',
-			'href' => elgg_get_registration_url(),
-			'text' => elgg_echo('register'),
-			'link_class' => 'registration_link',
-		]);
-	}
-
-	$return[] = \ElggMenuItem::factory([
-		'name' => 'forgotpassword',
-		'href' => elgg_generate_url('account:password:reset'),
-		'text' => elgg_echo('user:password:lost'),
-		'link_class' => 'forgot_link',
-	]);
-
-	return $return;
-}
-
-/**
- * Add the RSS link to the menu
- *
- * @param \Elgg\Hook $hook 'register', 'menu:footer'
- *
- * @return MenuItems
- *
- * @internal
- */
-function _elgg_rss_menu_setup(\Elgg\Hook $hook) {
-
-	if (!elgg_is_logged_in()) {
-		return;
-	}
-	
-	if (!_elgg_has_rss_link()) {
-		return;
-	}
-	
-	$return = $hook->getValue();
-
-	$return[] = ElggMenuItem::factory([
-		'name' => 'rss',
-		'text' => elgg_echo('feed:rss'),
-		'icon' => 'rss',
-		'href' => elgg_http_add_url_query_elements(current_page_url(), [
-			'view' => 'rss',
-		]),
-		'title' => elgg_echo('feed:rss:title'),
-	]);
-
-	return $return;
-}
-
-/**
  * Navigation initialization
  *
  * @return void
@@ -940,17 +563,6 @@ function _elgg_rss_menu_setup(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_nav_init() {
-	if (!_elgg_config()->remove_branding) {
-		elgg_register_menu_item('footer', \ElggMenuItem::factory([
-			'name' => 'powered',
-			'text' => elgg_echo("elgg:powered"),
-			'href' => 'http://elgg.org',
-			'title' => 'Elgg ' . elgg_get_version(true),
-			'section' => 'meta',
-			'priority' => 600,
-		]));
-	}
-	
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');
 
 	// Using a view extension to ensure that themes that have replaced the item view

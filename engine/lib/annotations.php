@@ -134,37 +134,3 @@ function elgg_annotation_exists($entity_guid, $name, $owner_guid = null) {
 
 	return _elgg_services()->annotationsTable->exists($entity_guid, $name, $owner_guid);
 }
-
-/**
- * Register default menu items for an annotation
- *
- * @param \Elgg\Hook $hook 'register', 'menu:annotation'
- *
- * @return void|MenuItems
- * @internal
- * @since 3.3
- */
-function _elgg_annotations_default_menu_items(\Elgg\Hook $hook) {
-	
-	$annotation = $hook->getParam('annotation');
-	if (!$annotation instanceof ElggAnnotation) {
-		return;
-	}
-	
-	/* @var $result MenuItems */
-	$result = $hook->getValue();
-	
-	if ($annotation->canEdit()) {
-		$result[] = ElggMenuItem::factory([
-			'name' => 'delete',
-			'icon' => 'delete',
-			'text' => elgg_echo('delete'),
-			'href' => elgg_generate_action_url('annotation/delete', [
-				'id' => $annotation->id,
-			]),
-			'confirm' => elgg_echo('deleteconfirm'),
-		]);
-	}
-	
-	return $result;
-}
