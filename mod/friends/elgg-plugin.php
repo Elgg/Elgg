@@ -7,6 +7,8 @@ use Elgg\Friends\Actions\RevokeFriendRequestController;
 use Elgg\Friends\Actions\DeclineFriendRequestController;
 use Elgg\Friends\Actions\AcceptFriendRequestController;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
 	'actions' => [
 		'friends/add' => [
@@ -26,7 +28,13 @@ return [
 	'events' => [
 		'create' => [
 			'relationship' => [
-				'\Elgg\Friends\Relationships::createFriendRelationship' => [],
+				'Elgg\Friends\Relationships::createFriendRelationship' => [],
+				'Elgg\Friends\Notifications::sendFriendNotification' => [],
+			],
+		],
+		'delete' => [
+			'relationship' => [
+				'Elgg\Friends\Relationships::deleteFriendRelationship' => [],
 			],
 		],
 	],
@@ -62,6 +70,44 @@ return [
 	'widgets' => [
 		'friends' => [
 			'context' => ['profile', 'dashboard'],
+		],
+	],
+	'hooks' => [
+		'access:collections:write:subtypes' => [
+			'user' => [
+				'Elgg\Friends\Access::registerAccessCollectionType' => [],
+			],
+		],
+		'entity:url' => [
+			'object' => [
+				'Elgg\Friends\Widgets::setWidgetUrl' => [],
+			],
+		],
+		'filter_tabs' => [
+			'all' => [
+				'Elgg\Friends\Menus\Filter::registerFilterTabs' => ['priority' => 1],
+			],
+		],
+		'register' => [
+			'menu:filter:friends' => [
+				'Elgg\Friends\Menus\Filter::addFriendRequestTabs' => [],
+			],
+			'menu:page' => [
+				'Elgg\Friends\Menus\Page::register' => [],
+			],
+			'menu:relationship' => [
+				'\Elgg\Friends\Menus\Relationship::addPendingFriendRequestItems' => [],
+				'\Elgg\Friends\Menus\Relationship::addSentFriendRequestItems' => [],
+			],
+			'menu:title' => [
+				'Elgg\Friends\Menus\Title::register' => [],
+			],
+			'menu:topbar' => [
+				'Elgg\Friends\Menus\Topbar::register' => [],
+			],
+			'menu:user_hover' => [
+				'Elgg\Friends\Menus\UserHover::register' => [],
+			],
 		],
 	],
 ];

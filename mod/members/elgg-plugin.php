@@ -27,4 +27,17 @@ return [
 			'resource' => 'members/search',
 		],
 	],
+	'hooks' => [
+		'register' => [
+			'menu:filter:members' => [
+				'Elgg\Members\Menus\Members::register' => [],
+			],
+			'menu:site' => [
+				'Elgg\Members\Menus\Site::register' => [],
+			],
+			'menu:title' => [
+				'Elgg\Members\Menus\Title::register' => [],
+			],
+		],
+	],
 ];

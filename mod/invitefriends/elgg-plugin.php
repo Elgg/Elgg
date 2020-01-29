@@ -13,4 +13,14 @@ return [
 			],
 		],
 	],
+	'hooks' => [
+		'register' => [
+			'menu:page' => [
+				'Elgg\InviteFriends\Menus\Page::register' => [],
+			],
+			'user' => [
+				'Elgg\InviteFriends\Users::addFriendsOnRegister' => [],
+			],
+		],
+	]
 ];

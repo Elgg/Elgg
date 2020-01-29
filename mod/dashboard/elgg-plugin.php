@@ -10,4 +10,16 @@ return [
 			],
 		],
 	],
+	'hooks' => [
+		'get_list' => [
+			'default_widgets' => [
+				'Elgg\Dashboard\Widgets::extendDefaultWidgetsList' => [],
+			],
+		],
+		'register' => [
+			'menu:topbar' => [
+				'Elgg\Dashboard\Menus\Topbar::register' => [],
+			],
+		],
+	],
 ];

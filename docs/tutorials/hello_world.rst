@@ -36,24 +36,6 @@ This is the minimum amount of information in a manifest file:
 - ``<requires>`` must include which version of Elgg your plugin requires
 - ``<author>``, ``<version>`` and ``<description>`` should have some appropriate values but can be filled freely
 
-Initializer
-===========
-
-Next, create ``start.php`` in the ``mod/hello/`` directory and copy this code into it:
-
-.. code-block:: php
-
-    <?php
-
-    elgg_register_event_handler('init', 'system', 'hello_world_init');
-    
-    function hello_world_init() {
-    
-    }
-
-The above code tells Elgg that it should call the function
-``hello_world_init()`` once the Elgg core system is initiated.
-
 Registering a route
 ===================
 

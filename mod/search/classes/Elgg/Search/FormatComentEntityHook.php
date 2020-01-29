@@ -7,17 +7,13 @@ use ElggEntity;
 
 /**
  * Populates comment's volatile data for search listing rendering
- *
- * @elgg_plugin_hook search:format entity
  */
 class FormatComentEntityHook {
 
 	/**
 	 * Format comment entity in search results
 	 *
-	 * @elgg_plugin_hook search:format entity
-	 *
-	 * @param Hook $hook Hook
+	 * @param Hook $hook 'search:format' 'entity'
 	 *
 	 * @return ElggEntity
 	 */

@@ -2,7 +2,10 @@
 
 use Elgg\Pages\GroupToolContainerLogicCheck;
 
+require_once(__DIR__ . '/lib/pages.php');
+
 return [
+	'bootstrap' => \Elgg\Pages\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -69,9 +72,77 @@ return [
 		],
 	],
 	'hooks' => [
+		'access:collections:write' => [
+			'user' => [
+				'Elgg\Pages\Views::removeAccessPublic' => [],
+			],
+		],
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],
+			],
+		],
+		'container_permissions_check' => [
+			'object' => [
+				'Elgg\Pages\Permissions::allowContainerWriteAccess' => [],
+			],
+		],
+		'entity:icon:url' => [
+			'object' => [
+				'Elgg\Pages\Icons::getIconUrl' => [],
+			],
+		],
+		'extender:url' => [
+			'annotation' => [
+				'Elgg\Pages\Extender::setRevisionUrl' => [],
+			],
+		],
+		'get_views' => [
+			'ecml' => [
+				'Elgg\Pages\ECML::getViews' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'object:page' => [
+				'Elgg\Values::getTrue' => [],
+			],
+		],
+		'permissions_check' => [
+			'object' => [
+				'Elgg\Pages\Permissions::allowWriteAccess' => [],
+			],
+		],
+		'prepare' => [
+			'menu:pages_nav' => [
+				'_elgg_setup_vertical_menu' => ['priority' => 999],
+			],
+			'notification:create:object:page' => [
+				'Elgg\Pages\Notifications::preparePageCreateNotification' => [],
+			],
+		],
+		'register' => [
+			'menu:entity' => [
+				'Elgg\Pages\Menus\Entity::register' => [],
+			],
+			'menu:owner_block' => [
+				'Elgg\Pages\Menus\OwnerBlock::registerUserItem' => [],
+				'Elgg\Pages\Menus\OwnerBlock::registerGroupItem' => [],
+			],
+			'menu:pages_nav' => [
+				'Elgg\Pages\Menus\PagesNav::register' => [],
+			],
+			'menu:site' => [
+				'Elgg\Pages\Menus\Site::register' => [],
+			],
+		],
+		'seeds' => [
+			'database' => [
+				'Elgg\Pages\Database::registerSeeds' => [],
+			],
+		],
+		'view_vars' => [
+			'input/access' => [
+				'Elgg\Pages\Views::preventAccessPublic' => [],
 			],
 		],
 	],

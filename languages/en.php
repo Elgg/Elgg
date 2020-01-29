@@ -63,6 +63,7 @@ return array(
 	'PluginException:NullInstantiated' => 'ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.',
 	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
 	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
+	'ElggPlugin:StartFound' => 'For plugin ID %s a start.php was found. This could indicate a unsupported plugin version.',
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'The required file "%s" is missing.',
 	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'This plugin\'s directory must be renamed to "%s" to match the ID in its manifest.',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',

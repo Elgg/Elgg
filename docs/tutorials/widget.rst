@@ -40,24 +40,20 @@ Registering your widget
 
 Elgg needs to be told explicitly that the plugin contains a widget
 so that it will scan the widget views directory.
-This is done by calling the elgg\_register\_widget\_type() function.
-Edit ``/start.php``. In it add these lines:
+This is done by registering the widget in your ``elgg-plugin.php``:
 
 .. code-block:: php
 
     <?php
-    
-    function hello_init() {        
-        elgg_register_widget_type([
-            'id' => 'helloworld', 
-            'name' => 'Hello, world!', 
-            'description' => 'The "Hello, world!" widget',
-        ]);
-    }
+    	return [
+		    'widgets' => [
+				'helloworld' => [
+					'name' => 'Hello, world!',
+					'description' => 'The "Hello, world!" widget',
+				],
+			],
+		];
 
-    return function() {
-        elgg_register_event_handler('init', 'system', 'hello_init');
-    }
 
 Now go to your profile page using a web browser and add the “hello, world” widget.
 It should display “Hello, world!”.

@@ -326,7 +326,7 @@ You can prepend views by passing a value to the 3rd parameter that is less than 
 	// prepends 'hello/greeting' to every occurrence of 'hello/world'
 	elgg_extend_view('hello/world', 'hello/greeting', 450);
 
-All view extensions should be registered in your plugin's ``init,system`` event handler in ``start.php``.
+All view extensions should be registered in your plugin's ``elgg-plugin.php``.
 
 .. _guides/views#altering-view-input:
 

@@ -70,23 +70,24 @@ Pluggable Authentication Modules
 
 Elgg has support for pluggable authentication modules (PAM), which enables you to write your own authentication handlers. Whenever a request needs to get authenticated the system will call ``elgg_authenticate()`` which probes the registered PAM handlers until one returns success.
 
-The preferred approach is to create a separate Elgg plugin which will have one simple task: to process an authentication request. This involves setting up an authentication handler in the plugin's :doc:`start.php <plugins>` file, and to register it with the PAM module so it will get processed whenever the system needs to authenticate a request.
+The preferred approach is to create a separate Elgg plugin which will have one simple task: to process an authentication request. This involves setting up an authentication handler in the plugin's :doc:`Bootstrap <plugins>` class, and to register it with the PAM module so it will get processed whenever the system needs to authenticate a request.
 
 The authentication handler is a function and takes a single parameter. Registering the handler is being done by ``register_pam_handler()`` which takes the name of the authentication handler, the importance and the policy as parameters. It is advised to register the handler in the plugin's init function, for example:
 
 .. code-block:: php
 
-   function your_plugin_init() {
+   // classes/Your/Plugin/Bootstrap.php
+   
+   function init() {
       // Register the authentication handler
       register_pam_handler('your_plugin_auth_handler');
    }
    
+   // your_plugin/lib/functions.php
+ 
    function your_plugin_auth_handler($credentials) {
       // do things ...
    }
-   
-   // Add the plugin's init function to the system's init event
-   elgg_register_elgg_event_handler('init', 'system', 'your_plugin_init');
 
 Importance
 ----------

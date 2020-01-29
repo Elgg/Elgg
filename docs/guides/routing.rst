@@ -329,8 +329,7 @@ Here we rewrite requests for ``news/*`` to ``blog/*``:
 
 .. warning::
 
-	The hook must be registered directly in your plugin ``start.php`` (the ``[init, system]`` event
-	is too late).
+	The hook must be registered directly in your plugin Bootstrap ``boot`` function. The ``init`` function is too late.
 
 Routing overview
 ================

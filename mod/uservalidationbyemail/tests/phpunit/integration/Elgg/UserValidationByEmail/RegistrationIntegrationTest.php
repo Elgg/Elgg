@@ -20,7 +20,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		_elgg_config()->minusername = 4;
 		_elgg_config()->allow_registration = true;
 		
-		elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');
+		elgg_register_plugin_hook_handler('register', 'user', 'Elgg\UserValidationByEmail\User::disableUserOnRegistration');
 	}
 	
 	public function down() {

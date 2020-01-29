@@ -30,7 +30,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		$event = 'SystemLogApiTest' . rand();
 
-		system_log_default_logger(new Event(elgg(), 'log', 'systemlog', [
+		\Elgg\SystemLog\Logger::log(new Event(elgg(), 'log', 'systemlog', [
 			'object' => $object,
 			'event' => $event,
 		]));
@@ -79,7 +79,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		$event = 'SystemLogApiTest' . rand();
 
-		system_log_default_logger(new Event(elgg(), 'log', 'systemlog', [
+		\Elgg\SystemLog\Logger::log(new Event(elgg(), 'log', 'systemlog', [
 			'object' => $object,
 			'event' => $event,
 		]));
@@ -95,9 +95,18 @@ class SystemLogApiTest extends IntegrationTestCase {
 			$this->markTestSkipped();
 		}
 
-		$this->assertTrue(system_log_archive_log());
-		$this->assertTrue(system_log_browser_delete_log(0));
+		$cron_class = new \Elgg\SystemLog\Cron();
+		$reflector = new \ReflectionClass(\Elgg\SystemLog\Cron::class);
+		$method = $reflector->getMethod('archiveLog');
+		$method->setAccessible(true);
+		
+		$this->assertTrue($method->invokeArgs($cron_class, []));
 
+		$method = $reflector->getMethod('deleteLog');
+		$method->setAccessible(true);
+		
+		$this->assertTrue($method->invokeArgs($cron_class, [0]));
+		
 		$entries = system_log_get_log([]);
 
 		$this->assertEmpty($entries);

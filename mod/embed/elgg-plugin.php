@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
 	'routes' => [
 		'default:embed' => [
@@ -11,6 +13,29 @@ return [
 			'middleware' => [
 				\Elgg\Router\Middleware\AjaxGatekeeper::class,
 			],
+		],
+	],
+	'hooks' => [
+		'entity:icon:url' => [
+			'object' => [
+				'Elgg\Embed\Icons::setThumbnailUrl' => ['priority' => 1000],
+			],
+		],
+		'register' => [
+			'menu:embed' => [
+				'Elgg\Embed\Menus\Embed::selectCorrectTab' => ['priority' => 1000],
+			],
+			'menu:longtext' => [
+				'Elgg\Embed\Menus\LongText::register' => [],
+			],
+		],
+	],
+	'view_extensions' => [
+		'admin.css' => [
+			'embed/css' => [],
+		],
+		'elgg.css' => [
+			'embed/css' => [],
 		],
 	],
 ];

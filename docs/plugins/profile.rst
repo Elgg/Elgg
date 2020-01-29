@@ -14,7 +14,7 @@ It provides a number of pieces of functionality which many consider fundamental 
 User details
 ------------
 
-This provides information about a user, which is configurable from within the plugin's start.php file. You can change the available profile fields form the admin panel.
+This provides information about a user, which is configurable with the ``profile:fields, profile`` hook. You can change the available profile fields from the admin panel.
 Each profile field has its own access restriction, so users can choose exactly who can see each individual element. Some of the fields contain tags (for example *skills*) limiting access to a field will also limit who can find you by that tag.
 
 User avatar

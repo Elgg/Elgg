@@ -34,7 +34,49 @@ return [
 			],
 		],
 	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'profile/profile.css' => [],
+		],
+	],
 	'view_options' => [
 		'forms/profile/fields/add' => ['ajax' => true],
+	],
+	'hooks' => [
+		'get_views' => [
+			'ecml' => [
+				'Elgg\Profile\ECML::getViews' => [],
+			],
+		],
+		'get_list' => [
+			'default_widgets' => [
+				'Elgg\Profile\Widgets::getDefaultWidgetsList' => [],
+			],
+		],
+		'init' => [
+			'system' => [
+				'Elgg\Profile\ProfileFields::setup' => ['priority' => 10000],
+			],
+		],
+		'register' => [
+			'menu:page' => [
+				'Elgg\Profile\Menus\Page::registerAdminProfileFields' => [],
+				'Elgg\Profile\Menus\Page::registerProfileEdit' => [],
+			],
+			'menu:title' => [
+				'Elgg\Profile\Menus\Title::register' => [],
+			],
+			'menu:topbar' => [
+				'Elgg\Profile\Menus\Topbar::register' => [],
+			],
+			'menu:user_hover' => [
+				'Elgg\Profile\Menus\UserHover::register' => [],
+			],
+		],
+		'search:fields' => [
+			'user' => [
+				\Elgg\Search\UserSearchProfileFieldsHandler::class => [],
+			],
+		],
 	],
 ];

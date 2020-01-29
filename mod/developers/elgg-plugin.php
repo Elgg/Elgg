@@ -1,6 +1,9 @@
 <?php
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
+	'bootstrap' => \Elgg\Developers\Bootstrap::class,
 	'actions' => [
 		'developers/settings' => [
 			'access' => 'admin',
@@ -25,11 +28,30 @@ return [
 			'resource' => 'developers/ajax_demo',
 		],
 	],
-	
+	'hooks' => [
+		'register' => [
+			'menu:entity' => [
+				'Elgg\Developers\Menus\Entity::registerEntityExplorer' => [],
+			],
+			'menu:page' => [
+				'Elgg\Developers\Menus\Page::register' => [],
+			],
+		],
+	],
 	'view_options' => [
 		'developers/ajax' => ['ajax' => true],
 		'developers/ajax_demo.html' => ['ajax' => true],
 		'forms/developers/ajax_demo' => ['ajax' => true],
 		'theme_sandbox/components/tabs/ajax' => ['ajax' => true],
+	],
+	'view_extensions' => [
+		'admin.css' => [
+			'admin/develop_tools/error_log.css' => [],
+			'developers/css' => [],
+		],
+		'elgg.css' => [
+			'admin/develop_tools/error_log.css' => [],
+			'developers/css' => [],
+		],
 	],
 ];

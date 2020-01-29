@@ -123,11 +123,8 @@ trait PluginTesting {
 		}
 
 		$plugin->register();
-		$setup = $plugin->boot();
-		if ($setup instanceof \Closure) {
-			$setup();
-		}
-
+		$plugin->boot();
+		
 		_elgg_rebuild_public_container();
 
 		$plugin->init();
