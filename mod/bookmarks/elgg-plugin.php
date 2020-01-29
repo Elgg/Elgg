@@ -82,4 +82,7 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 	],
+	'group_tools' => [
+		'bookmarks' => [],
+	],
 ];

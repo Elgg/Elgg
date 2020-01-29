@@ -16,9 +16,6 @@ function discussion_init() {
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
-	// add the forum tool option
-	elgg()->group_tools->register('forum');
-
 	// notifications
 	elgg_register_plugin_hook_handler('get', 'subscriptions', 'discussion_get_subscriptions');
 	elgg_register_notification_event('object', 'discussion');

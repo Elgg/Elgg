@@ -51,8 +51,6 @@ function elgg_activity_init() {
 		'href' => elgg_generate_url('default:river'),
 	]);
 	
-	elgg()->group_tools->register('activity');
-	
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', '_elgg_activity_owner_block_menu');
 }
 

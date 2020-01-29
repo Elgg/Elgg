@@ -71,4 +71,7 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 	],
+	'group_tools' => [
+		'file' => [],
+	],
 ];

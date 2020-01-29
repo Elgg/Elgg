@@ -28,9 +28,6 @@ function pages_init() {
 	// Register for notifications
 	elgg_register_notification_event('object', 'page');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page', 'pages_prepare_notification');
-
-	// add to groups
-	elgg()->group_tools->register('pages');
 	
 	// Language short codes must be of the form "pages:key"
 	// where key is the array key below

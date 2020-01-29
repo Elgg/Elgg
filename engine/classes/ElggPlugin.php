@@ -893,6 +893,7 @@ class ElggPlugin extends ElggObject {
 		$this->registerHooks();
 		$this->registerEvents();
 		$this->registerViewExtensions();
+		$this->registerGroupTools();
 
 		$this->getBootstrap()->init();
 	}
@@ -1276,6 +1277,31 @@ class ElggPlugin extends ElggObject {
 		
 					$views->extendView($src_view, $extention, $priority);
 				}
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's group tools provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerGroupTools() {
+		$tools = _elgg_services()->group_tools;
+		
+		$spec = (array) $this->getStaticConfig('group_tools', []);
+
+		foreach ($spec as $tool_name => $tool_options) {
+			if (!is_array($tool_options)) {
+				continue;
+			}
+			
+			$unregister = (bool) elgg_extract('unregister', $tool_options, false);
+
+			if ($unregister) {
+				$tools->unregister($tool_name);
+			} else {
+				$tools->register($tool_name, $tool_options);
 			}
 		}
 	}

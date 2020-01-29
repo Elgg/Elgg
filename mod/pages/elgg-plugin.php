@@ -83,4 +83,7 @@ return [
 	'upgrades' => [
 		'\Elgg\Pages\Upgrades\MigratePageTop',
 	],
+	'group_tools' => [
+		'pages' => [],
+	],
 ];

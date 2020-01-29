@@ -27,6 +27,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``cli_commands`` - an array of ``Elgg/Cli/Command`` classes to extend the feature of ``elgg-cli``
  * ``view_extensions`` - eliminates the need for calling ``elgg_extend_view()`` or ``elgg_unextend_view()``
  * ``theme`` - an array of theme variables
+ * ``group_tools`` - an array of available group tool options
 
 
 .. code-block:: php
@@ -168,6 +169,16 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 		
 		'theme' => [
 			'body-background-color' => '#000',
+		],
+		
+		'group_tools' => [
+			'activity' => [], // just use default behaviour
+			'blog', [
+				'default_on' => false,
+			],
+			'forum' => [
+				'unregister' => true, // unregisters the group tool option
+			],
 		],
 	];
 
