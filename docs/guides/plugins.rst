@@ -28,6 +28,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
  * ``view_extensions`` - eliminates the need for calling ``elgg_extend_view()`` or ``elgg_unextend_view()``
  * ``theme`` - an array of theme variables
  * ``group_tools`` - an array of available group tool options
+ * ``view_options`` - an array of views with extra options
 
 
 .. code-block:: php
@@ -178,6 +179,18 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			],
 			'forum' => [
 				'unregister' => true, // unregisters the group tool option
+			],
+		],
+		
+		'view_options' => [
+			'likes/popup' => [
+				'ajax' => true, // registers the view available via ajax
+			],
+			'likes/popup' => [
+				'ajax' => false, // unregisters the view available via ajax
+			],
+			'manifest.json' => [
+				'simplecache' => true, // register view as usable in the simplecache
 			],
 		],
 	];

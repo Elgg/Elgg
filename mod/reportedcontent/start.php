@@ -13,8 +13,6 @@ function reportedcontent_init() {
 	// Extend CSS
 	elgg_extend_view('admin.css', 'reportedcontent/admin_css');
 
-	elgg_register_ajax_view('forms/reportedcontent/add');
-
 	if (elgg_is_logged_in()) {
 		// Extend footer with report content link
 		elgg_register_menu_item('footer', [

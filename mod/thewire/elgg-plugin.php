@@ -63,4 +63,7 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 	],
+	'view_options' => [
+		'thewire/previous' => ['ajax' => true],
+	],
 ];

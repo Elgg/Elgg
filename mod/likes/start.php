@@ -34,8 +34,6 @@ function likes_init() {
 
 	// pass config to elgg/likes module
 	elgg_register_plugin_hook_handler('elgg.data', 'site', JsConfigHandler::class);
-		
-	elgg_register_ajax_view('likes/popup');
 }
 
 /**

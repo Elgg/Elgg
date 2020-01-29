@@ -10,8 +10,6 @@
  */
 function profile_init() {
 	elgg_extend_view('elgg.css', 'profile/profile.css');
-	
-	elgg_register_ajax_view('forms/profile/fields/add');
 
 	// allow ECML in parts of the profile
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');

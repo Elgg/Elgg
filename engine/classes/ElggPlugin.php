@@ -894,6 +894,7 @@ class ElggPlugin extends ElggObject {
 		$this->registerEvents();
 		$this->registerViewExtensions();
 		$this->registerGroupTools();
+		$this->registerViewOptions();
 
 		$this->getBootstrap()->init();
 	}
@@ -1302,6 +1303,33 @@ class ElggPlugin extends ElggObject {
 				$tools->unregister($tool_name);
 			} else {
 				$tools->register($tool_name, $tool_options);
+			}
+		}
+	}
+	
+	/**
+	 * Registers the plugin's view options provided in the plugin config file
+	 *
+	 * @return void
+	 */
+	protected function registerViewOptions() {
+		$spec = (array) $this->getStaticConfig('view_options', []);
+
+		foreach ($spec as $view_name => $options) {
+			if (!is_array($options)) {
+				continue;
+			}
+			
+			if (isset($options['ajax'])) {
+				if ($options['ajax'] === true) {
+					_elgg_services()->ajax->registerView($view_name);
+				} else {
+					_elgg_services()->ajax->unregisterView($view_name);
+				}
+			}
+			
+			if (isset($options['simplecache']) && $options['simplecache'] === true) {
+				_elgg_services()->views->registerCacheableView($view_name);
 			}
 		}
 	}

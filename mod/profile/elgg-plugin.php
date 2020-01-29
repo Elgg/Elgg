@@ -33,5 +33,8 @@ return [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 			],
 		],
-	]
+	],
+	'view_options' => [
+		'forms/profile/fields/add' => ['ajax' => true],
+	],
 ];

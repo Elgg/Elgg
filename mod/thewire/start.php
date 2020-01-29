@@ -20,9 +20,6 @@ use Elgg\Collections\Collection;
  * @return void
  */
 function thewire_init() {
-
-	elgg_register_ajax_view('thewire/previous');
-
 	// add a site navigation item
 	elgg_register_menu_item('site', [
 		'name' => 'thewire',

@@ -25,4 +25,11 @@ return [
 			'resource' => 'developers/ajax_demo',
 		],
 	],
+	
+	'view_options' => [
+		'developers/ajax' => ['ajax' => true],
+		'developers/ajax_demo.html' => ['ajax' => true],
+		'forms/developers/ajax_demo' => ['ajax' => true],
+		'theme_sandbox/components/tabs/ajax' => ['ajax' => true],
+	],
 ];

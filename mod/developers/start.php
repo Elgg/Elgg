@@ -20,12 +20,6 @@ function developers_init() {
 	elgg_extend_view('admin.css', 'admin/develop_tools/error_log.css');
 	elgg_extend_view('elgg.css', 'developers/css');
 	elgg_extend_view('elgg.css', 'admin/develop_tools/error_log.css');
-
-	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
-	elgg_register_ajax_view('developers/ajax_demo.html');
-
-	elgg_register_ajax_view('forms/developers/ajax_demo');
-	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax');
 }
 
 /**
