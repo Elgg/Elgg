@@ -4,7 +4,6 @@ namespace Elgg\Database;
 
 use Closure;
 use DatabaseException;
-use Elgg\Application;
 use Elgg\Cacheable;
 use Elgg\Config;
 use Elgg\Context;
@@ -647,7 +646,7 @@ class Plugins {
 		// This is root directory start.php
 		$root_start = Paths::project() . "start.php";
 		if (is_file($root_start)) {
-			$setup = Application::requireSetupFileOnce($root_start);
+			$setup = Includer::requireFileOnce($root_start);
 			if ($setup instanceof \Closure) {
 				$setup();
 			}

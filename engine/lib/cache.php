@@ -402,18 +402,3 @@ function _elgg_rebuild_public_container() {
 	_elgg_services()->setValue('dic_builder', $dic_builder);
 	_elgg_services()->setValue('dic', $dic);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('ready', 'system', '_elgg_cache_init');
-
-	$events->registerHandler('cache:clear:before', 'system', '_elgg_disable_caches');
-	$events->registerHandler('cache:clear', 'system', '_elgg_clear_caches');
-	$events->registerHandler('cache:clear', 'system', '_elgg_reset_opcache');
-	$events->registerHandler('cache:clear:after', 'system', '_elgg_enable_caches');
-	$events->registerHandler('cache:clear:after', 'system', '_elgg_rebuild_public_container');
-	$events->registerHandler('cache:invalidate', 'system', '_elgg_invalidate_caches');
-	$events->registerHandler('cache:purge', 'system', '_elgg_purge_caches');
-};

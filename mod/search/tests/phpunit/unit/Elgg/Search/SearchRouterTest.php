@@ -27,7 +27,7 @@ class SearchRouterTest extends UnitTestCase {
 
 	}
 
-	public function testPageHanlder() {
+	public function testPageHandler() {
 		$params = [
 			'q' => 'lorem ipsum',
 		];

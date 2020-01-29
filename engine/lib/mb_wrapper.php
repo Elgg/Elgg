@@ -223,13 +223,3 @@ function elgg_substr() {
 	}
 	return call_user_func_array('substr', $args);
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	// if mb functions are available, set internal encoding to UTF8
-	if (is_callable('mb_internal_encoding')) {
-		mb_internal_encoding("UTF-8");
-	}
-};

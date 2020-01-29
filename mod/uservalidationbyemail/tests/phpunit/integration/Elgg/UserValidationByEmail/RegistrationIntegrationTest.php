@@ -19,6 +19,8 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		_elgg_config()->min_password_length = 3;
 		_elgg_config()->minusername = 4;
 		_elgg_config()->allow_registration = true;
+		
+		elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');
 	}
 	
 	public function down() {

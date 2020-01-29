@@ -362,23 +362,3 @@ function _elgg_river_menu_setup(\Elgg\Hook $hook) {
 
 	return $return;
 }
-
-/**
- * Initialize river library
- *
- * @return void
- *
- * @internal
- */
-function _elgg_river_init() {
-	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
-	
-	elgg_register_event_handler('created', 'river', '_elgg_river_update_object_last_action');
-}
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_river_init');
-};

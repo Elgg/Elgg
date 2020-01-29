@@ -16,24 +16,11 @@ use Elgg\Database\QueryBuilder;
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
 
-	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
-	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
-	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
-	
-	elgg_register_plugin_hook_handler('register', 'menu:social', '_elgg_comments_social_menu_setup');
-	
-	elgg_register_event_handler('update:after', 'all', '_elgg_comments_access_sync', 600);
-
 	elgg_register_ajax_view('core/ajax/edit_comment');
 	elgg_register_ajax_view('page/elements/comments');
 	elgg_register_ajax_view('river/elements/responses');
 
-	elgg_register_plugin_hook_handler('likes:is_likable', 'object:comment', 'Elgg\Values::getTrue');
-	
 	elgg_register_notification_event('object', 'comment', ['create']);
-	elgg_register_plugin_hook_handler('get', 'subscriptions', '_elgg_comments_add_content_owner_to_subscriptions');
-	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:comment', '_elgg_comments_prepare_content_owner_notification');
-	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:comment', '_elgg_comments_prepare_notification');
 }
 
 /**
@@ -432,10 +419,3 @@ function _elgg_comments_social_menu_setup(\Elgg\Hook $hook) {
 	
 	return $return;
 }
-
-/**
- * @see \Elgg\Application::loadCore Do not do work here. Just register for events.
- */
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_comments_init');
-};

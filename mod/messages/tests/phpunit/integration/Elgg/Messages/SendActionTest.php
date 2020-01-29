@@ -17,6 +17,9 @@ class SendActionTest extends ActionResponseTestCase {
 		self::createApplication(['isolate'=> true]);
 		$this->startPlugin();
 		
+		elgg_register_plugin_hook_handler('permissions_check', 'object', 'messages_can_edit');
+		elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
+		
 		parent::up();
 	}
 
