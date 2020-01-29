@@ -9,7 +9,7 @@ and to streamline onboarding of new team members.
 
 .. contents:: Contents
    :local:
-   :depth: 1
+   :depth: 2
 
 Requirements
 ============
@@ -53,15 +53,50 @@ Make a PR for the branch and wait for automated tests and approval by other dev(
 
 Once merged, we would repeat the process to merge 2.0 commits into 2.1.
 
-First new stable minor/major release
-====================================
+Preparation for first new stable minor/major release
+====================================================
 
-Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release.
+* Update the :doc:`/appendix/support` to include the new minor/major release date and fill in the blanks for the previous release.
+* Update the README.md file badges to point to the correct new release numbers.
 
-Update the README.md file badges to point to the correct new release numbers.
+Preparation for a new major release
+-----------------------------------
+
+* Change the Transifex configuration to push translations to a different project
 
 Prepare the release
-======================
+===================
+
+Make a PR with translation updates
+----------------------------------
+
+Install the prerequisites:
+
+.. code-block:: sh
+
+    easy_install transifex-client
+
+.. note:: On Windows you need to run these command in a console with admin privileges
+
+Run the ``languages.php`` script. For example, to pull translations:
+
+.. code-block:: sh
+
+    php .scripts/languages.php 3.x
+
+Make a pull request with the new translations and have it merged before the next step.
+
+Next, manually browse to the ``/admin/site_settings`` page and verify it loads. If it does not, a language file from Transifex may 
+have a PHP syntax error. Fix the error and amend your commit with the new file:
+
+.. code-block:: sh
+
+    # only necessary if you fixed a language file
+    git add .
+    git commit --amend
+
+Make the release PR
+-------------------
 
 Bring your local git clone up to date.
 
@@ -76,8 +111,7 @@ Install the prerequisites:
     yarn install elgg-conventional-changelog
     easy_install sphinx
     easy_install sphinx-intl
-    easy_install transifex-client
-
+    
 .. note:: On Windows you need to run these command in a console with admin privileges
 
 Run the ``release.php`` script. For example, to release 1.12.5:
@@ -89,16 +123,7 @@ Run the ``release.php`` script. For example, to release 1.12.5:
 
 This creates a ``release-1.12.5`` branch in your local repo.
 
-Next, manually browse to the ``/admin/site_settings`` page and verify it loads. If it does not, a language file from Transifex may 
-have a PHP syntax error. Fix the error and amend your commit with the new file:
-
-.. code-block:: sh
-
-    # only necessary if you fixed a language file
-    git add .
-    git commit --amend
-
-Next, submit a PR via GitHub for automated testing and approval by another developer:
+Next, submit a pull request via GitHub for automated testing and approval by another developer:
 
 .. code-block:: sh
 
@@ -129,6 +154,21 @@ Some final administration
 * Mark GitHub release milestones as completed
 * Move unresolved tickets in released milestones to later milestones
 
+Additional actions for the first new minor / major
+--------------------------------------------------
+
+* Make a new branch on GitHub (for example 3.3)
+* Set the new branch as the default branch (optional, but suggested for stable releases)
+* Configure Read The Docs to build the new branch (not the new tag)
+* Check the Elgg starter project for potential requirement / config changes in the ``composer.json``
+* Add the new minor / major version to the ``Elgg/community_plugins`` repository so developers can upload plugins for the new release
+
+Additional action for the first new major
+-----------------------------------------
+
+* On GitHub add a branch protection rule (for example ``4.*``) 
+* Configure Scrutinizer to track the new major branches (for example ``4.*``)
+
 Update the website
 ==================
 
@@ -158,19 +198,6 @@ Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Ru
 * Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the expected version.
 * If not, make sure GitHub has the release tag, and that the starter project has a compatible ``elgg/elgg``
   item in the composer requires list.
-
-Building 1.x zip packages
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage.
-
-.. code-block:: sh
-
-    # regular release
-    ./build.sh 1.12.5 1.12.5 /var/www/www.elgg.org/download/
-
-    # MIT release
-    ./build.sh 1.12.5 1.12.5-mit /var/www/www.elgg.org/download/
 
 Update elgg.org download page
 -----------------------------
