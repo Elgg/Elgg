@@ -69,7 +69,6 @@ return [
 		'system' => [
 			'_elgg_admin_init' => [],
 			'_elgg_comments_init' => [],
-			'_elgg_cron_init' => [],
 			'_elgg_init' => [],
 			'_elgg_input_init' => [],
 			'_elgg_nav_init' => [],

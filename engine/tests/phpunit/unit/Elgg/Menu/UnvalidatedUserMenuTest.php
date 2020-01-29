@@ -12,7 +12,7 @@ class UnvalidatedUserMenuTest extends UnitTestCase {
 	public function up() {
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:user:unvalidated', '_elgg_user_unvalidated_menu');
+		_elgg_services()->hooks->registerHandler('register', 'menu:user:unvalidated', 'Elgg\Menus\UserUnvalidated::register');
 	}
 	
 	public function down() {

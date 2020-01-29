@@ -12,7 +12,7 @@ class TitleMenuTest extends UnitTestCase {
 	public function up() {
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('register', 'menu:title', '_elgg_user_title_menu');
+		_elgg_services()->hooks->registerHandler('register', 'menu:title', 'Elgg\Menus\Title::registerAvatarEdit');
 	}
 	
 	public function down() {

@@ -751,7 +751,6 @@ class Application {
 			'comments.php',
 			'configuration.php',
 			'constants.php',
-			'cron.php',
 			'entities.php',
 			'filestore.php',
 			'group.php',

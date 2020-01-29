@@ -56,6 +56,39 @@ Lib functions
 
 * ``elgg_get_page_owner_guid`` no longer accepts ``$guid`` as a parameter
 
+Renamed hook/event handler callbacks
+------------------------------------
+
+Core
+~~~~
+
+* ``_elgg_admin_header_menu()`` changed to ``Elgg\Menus\AdminHeader::register()`` and ``Elgg\Menus\AdminHeader::registerMaintenance()``
+* ``_elgg_admin_footer_menu()`` changed to ``Elgg\Menus\AdminFooter::registerHelpResources()``
+* ``_elgg_admin_page_menu()`` changed to ``Elgg\Menus\Page::registerAdminAdminister()`` and ``Elgg\Menus\Page::registerAdminConfigure()`` and ``Elgg\Menus\Page::registerAdminInformation()``
+* ``_elgg_admin_page_menu_plugin_settings()`` changed to ``Elgg\Menus\Page::registerAdminPluginSettings()``
+* ``_elgg_admin_user_unvalidated_bulk_menu()`` changed to ``Elgg\Menus\UserUnvalidatedBulk::registerActions()``
+* ``_elgg_admin_upgrades_menu()`` changed to ``Elgg\Menus\Filter::registerAdminUpgrades()``
+* ``_elgg_annotations_default_menu_items()`` changed to ``Elgg\Menus\Annotation::registerDelete()``
+* ``_elgg_walled_garden_menu()`` changed to ``Elgg\Menus\WalledGarden::registerHome()``
+* ``_elgg_site_menu_init()`` changed to ``Elgg\Menus\Site::registerAdminConfiguredItems()``
+* ``_elgg_site_menu_setup()`` changed to ``Elgg\Menus\Site::reorderItems()``
+* ``_elgg_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerEdit()`` and ``Elgg\Menus\Entity::registerDelete()``
+* ``_elgg_entity_navigation_menu_setup()`` changed to ``Elgg\Menus\EntityNavigation::registerPreviousNext()``
+* ``_elgg_widget_menu_setup()`` changed to ``Elgg\Menus\Widget::registerEdit()`` and ``Elgg\Menus\Widget::registerDelete()``
+* ``_elgg_login_menu_setup()`` changed to ``Elgg\Menus\Login::registerRegistration()`` and ``Elgg\Menus\Widget::registerResetPassword()``
+* ``_elgg_rss_menu_setup()`` changed to ``Elgg\Menus\Footer::registerRSS()``
+* ``_elgg_plugin_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerPlugin()``
+* ``_elgg_river_menu_setup()`` changed to ``Elgg\Menus\River::registerDelete()``
+* ``_elgg_upgrade_entity_menu()`` changed to ``Elgg\Menus\Entity::registerUpgrade()``
+* ``_elgg_user_settings_menu_register()`` changed to ``Elgg\Menus\Page::registerUserSettings()`` and ``Elgg\Menus\Page::registerUserSettingsPlugins()``
+* ``_elgg_user_settings_menu_prepare()`` changed to ``Elgg\Menus\Page::cleanupUserSettingsPlugins()``
+* ``elgg_user_hover_menu()`` changed to ``Elgg\Menus\UserHover::registerAvatarEdit()`` and ``Elgg\Menus\UserHover::registerAdminActions()``
+* ``_elgg_user_title_menu()`` changed to ``Elgg\Menus\Title::registerAvatarEdit()``
+* ``_elgg_user_page_menu()`` changed to ``Elgg\Menus\Page::registerAvatarEdit()``
+* ``_elgg_user_topbar_menu()`` changed to ``Elgg\Menus\Topbar::registerUserLinks()``
+* ``_elgg_user_unvalidated_menu()`` changed to ``Elgg\Menus\UserUnvalidated::register()``
+* ``_elgg_comments_social_menu_setup()`` changed to ``Elgg\Menus\Social::registerComments()``
+
 Miscellaneous API changes
 -------------------------
 
