@@ -54,34 +54,12 @@ class BootService {
 		$db = $services->db;
 		$config = $services->config;
 
-		// set cookie values for session and remember me
-		$config->getCookieConfig();
-
 		// defaults in case these aren't in config table
 		if ($config->boot_cache_ttl === null) {
 			$config->boot_cache_ttl = self::DEFAULT_BOOT_CACHE_TTL;
 		}
 		if ($config->bootdata_plugin_settings_limit === null) {
 			$config->bootdata_plugin_settings_limit = self::DEFAULT_BOOTDATA_PLUGIN_SETTINGS_LIMIT;
-		}
-		if ($config->simplecache_enabled === null) {
-			$config->simplecache_enabled = false;
-		}
-		if ($config->system_cache_enabled === null) {
-			$config->system_cache_enabled = false;
-		}
-		// needs to be set before [init, system] for links in html head
-		if ($config->lastcache === null) {
-			$config->lastcache = 0;
-		}
-		if ($config->min_password_length === null) {
-			$config->min_password_length = 6;
-		}
-		if ($config->minusername === null) {
-			$config->minusername = 4;
-		}
-		if ($config->batch_run_time_in_secs === null) {
-			$config->batch_run_time_in_secs = 4;
 		}
 
 		// we were using NOTICE temporarily so we can't just check for null
@@ -205,5 +183,4 @@ class BootService {
 
 		return $data;
 	}
-
 }
