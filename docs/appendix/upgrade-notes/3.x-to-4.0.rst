@@ -22,6 +22,11 @@ The following files are no longer included during bootstrapping of a plugin:
 * ``deactivate.php`` use ``PluginBootstrap->deactivate()``
 * ``views.php`` use ``elgg-plugin.php``
 
+Datamodel / Schema changes
+--------------------------
+
+* The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed
+
 Type hinted function
 --------------------
 

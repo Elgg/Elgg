@@ -1,11 +1,6 @@
 <?php
 
-use ElggPlugin\Profile\AnnotationMigration;
-
 return [
-	'upgrades' => [
-		AnnotationMigration::class,
-	],
 	'actions' => [
 		'profile/edit' => [],
 		'profile/fields/reset' => [
