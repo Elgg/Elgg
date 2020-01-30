@@ -23,15 +23,15 @@
 	tr:hover th {
 		background-color: $(background-color-soft);
 	}
-	
-	tbody td {
-	       word-break: normal;
-        }
 
 	thead th {
 		font-weight: bold;
 		border-width: 0 0 2px;
 	}
+	
+	tbody td {
+               word-break: normal;
+        }
 
 	tfoot th {
 		border-width: 2px 0 0;
