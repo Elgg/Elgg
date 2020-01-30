@@ -354,8 +354,9 @@ function _elgg_notifications_init() {
 	// add email notifications
 	elgg_register_notification_method('email');
 	
-	// add ability to set personal notification method
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/notifications');
+	elgg_register_notification_event('object', 'comment', ['create']);
+	elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
+	elgg_register_notification_event('user', 'user', ['unban']);
 }
 
 /**

@@ -75,8 +75,6 @@ class BootHandler {
 			$this->app->_services->translator->bootTranslations();
 
 			_elgg_init();
-			_elgg_input_init();
-			_elgg_nav_init();
 
 			$config->boot_complete = true;
 			$config->lock('boot_complete');

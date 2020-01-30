@@ -64,14 +64,3 @@ function get_online_users(array $options = []) {
 
 	return elgg_list_entities($options, 'find_active_users');
 }
-
-/**
- * Initialise the statistics admin page.
- *
- * @return void
- * @internal
- */
-function statistics_init() {
-	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/online');
-	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
-}

@@ -350,13 +350,3 @@ function _elgg_disable_password_autocomplete(\Elgg\Hook $hook) {
 	
 	return $return_value;
 }
-
-/**
- * Initialize the input library
- *
- * @return void
- * @internal
- */
-function _elgg_input_init() {
-	elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
-}

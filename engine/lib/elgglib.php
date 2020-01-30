@@ -1324,9 +1324,11 @@ function _elgg_head_manifest(\Elgg\Hook $hook) {
  * @internal
  */
 function _elgg_init() {
-	elgg_register_simplecache_view('resources/manifest.json');
 	
-	elgg_register_plugin_hook_handler('head', 'page', '_elgg_head_manifest');
+	elgg_register_entity_type('object', 'comment');
+	elgg_register_entity_type('user', 'user');
+	
+	elgg_register_tag_metadata_name('tags');
 
 	if (_elgg_config()->enable_profiling) {
 		/**
@@ -1334,8 +1336,6 @@ function _elgg_init() {
 		 */
 		elgg_register_plugin_hook_handler('output', 'page', [\Elgg\Profiler::class, 'handlePageOutput'], 999);
 	}
-	
-	elgg_register_plugin_hook_handler('seeds', 'database', '_elgg_db_register_seeds', 1);
 	
 	// if mb functions are available, set internal encoding to UTF8
 	if (is_callable('mb_internal_encoding')) {

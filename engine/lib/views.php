@@ -2672,3 +2672,48 @@ function _elgg_map_icon_glyph_class(array $classes, $map_sprites = true) {
 
 	return elgg_trigger_plugin_hook('classes', 'icon', null, $classes);
 }
+
+/**
+ * Initializes views
+ *
+ * @return void
+ */
+function _elgg_views_init() {
+	
+	elgg_register_ajax_view('core/ajax/edit_comment');
+	elgg_register_ajax_view('page/elements/comments');
+	elgg_register_ajax_view('river/elements/responses');
+	elgg_register_ajax_view('forms/admin/user/change_email');
+	elgg_register_ajax_view('navigation/menu/user_hover/contents');
+	elgg_register_ajax_view('object/plugin/full');
+	elgg_register_ajax_view('object/plugin/details');
+	
+	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
+	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/online');
+	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
+	elgg_extend_view('forms/usersettings/save', 'core/settings/account/notifications');
+	
+	elgg_register_simplecache_view('admin.css');
+	elgg_register_simplecache_view('resources/manifest.json');
+	
+	elgg_register_external_file('css', 'elgg.admin', elgg_get_simplecache_url('admin.css'));
+	elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
+	
+	elgg_define_js('admin/users/unvalidated', [
+		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
+	]);
+	
+	elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
+
+	// Using a view extension to ensure that themes that have replaced the item view
+	// still load the required AMD modules
+	// @todo can this be removed?
+	elgg_extend_view('navigation/menu/elements/item', 'navigation/menu/elements/item_deps');
+	
+}

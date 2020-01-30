@@ -55,6 +55,11 @@ return [
 			'_elgg_user_get_subscriber_unban_action' => [],
 		],
 	],
+	'head' => [
+		'page' => [
+			'_elgg_head_manifest' => [],
+		],
+	],
 	'likes:is_likable' => [
 		'object:comment' => [
 			'Elgg\Values::getTrue' => [],
@@ -227,6 +232,11 @@ return [
 		'user' => [
 			\Elgg\Search\UserSearchFieldsHandler::class => [],
 			\Elgg\Search\TagsSearchFieldsHandler::class => [],
+		],
+	],
+	'seeds' => [
+		'database' => [
+			'_elgg_db_register_seeds' => ['priority' => 1],
 		],
 	],
 	'send' => [
