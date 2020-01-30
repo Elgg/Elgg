@@ -26,6 +26,7 @@ Datamodel / Schema changes
 --------------------------
 
 * The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed
+* The ``enabled`` column in the ``river`` table has been removed
 
 Type hinted function
 --------------------
