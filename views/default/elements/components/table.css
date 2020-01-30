@@ -23,6 +23,10 @@
 	tr:hover th {
 		background-color: $(background-color-soft);
 	}
+	
+	tbody td {
+	       word-break: normal;
+        }
 
 	thead th {
 		font-weight: bold;
