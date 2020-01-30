@@ -55,17 +55,7 @@ class Search {
 	 * @return array
 	 */
 	public function getTypeSubtypePairs() {
-		$type_subtype_pairs = get_registered_entity_types();
-
-		if (_elgg_services()->hooks->hasHandler('search_types', 'get_queries')) {
-			elgg_deprecated_notice("
-			'search_types','get_queries' hook has been deprecated.
-			Use 'search:config','type_subtype_pairs' hook.
-			", '3.0');
-			$type_subtype_pairs = elgg_trigger_plugin_hook('search_types', 'get_queries', $this->params, $type_subtype_pairs);
-		}
-
-		return elgg_trigger_plugin_hook('search:config', 'type_subtype_pairs', $this->params, $type_subtype_pairs);
+		return elgg_trigger_plugin_hook('search:config', 'type_subtype_pairs', $this->params, get_registered_entity_types());
 	}
 
 	/**
@@ -74,17 +64,7 @@ class Search {
 	 * @return array
 	 */
 	public function getSearchTypes() {
-		$search_types = [];
-
-		if (_elgg_services()->hooks->hasHandler('search_types', 'get_types')) {
-			elgg_deprecated_notice("
-			'search_types','get_types' hook has been deprecated.
-			Use 'search:config','search_types' hook.
-			", '3.0');
-			$search_types = elgg_trigger_plugin_hook('search_types', 'get_types', $this->params, $search_types);
-		}
-
-		return elgg_trigger_plugin_hook('search:config', 'search_types', $this->params, $search_types);
+		return elgg_trigger_plugin_hook('search:config', 'search_types', $this->params, []);
 	}
 
 	/**
@@ -119,46 +99,22 @@ class Search {
 		
 		// normalizing current search params so the listing has better awareness
 		$current_params = _elgg_services()->search->normalizeOptions($current_params);
-
-		switch ($search_type) {
-			case 'entities' :
-				if ($subtype && _elgg_services()->hooks->hasHandler('search', "$type:$subtype")) {
-					$hook_type = "$type:$subtype";
-				} else {
-					$hook_type = $type;
-				}
-				break;
-
-			default :
-				$hook_type = $search_type;
-				break;
+		
+		$current_params['count'] = true;
+		$search_count = (int) elgg_search($current_params);
+		
+		if ($count) {
+			return $search_count;
 		}
-
+		
 		$results = [
 			'entities' => [],
-			'count' => 0,
+			'count' => $search_count,
 		];
 
-		if (_elgg_services()->hooks->hasHandler('search', $hook_type)) {
-			elgg_deprecated_notice("
-			'search','$hook_type' plugin hook has been deprecated and may be removed.
-			Please consult the documentation for the new core search API
-			and update your use of search hooks.
-		", '3.0');
-			$results = elgg_trigger_plugin_hook('search', $hook_type, $current_params, $results);
-			if ($count) {
-				return (int) $results['count'];
-			}
-		} else {
-			$current_params['count'] = true;
-			$results['count'] = (int) elgg_search($current_params);
-			if ($count) {
-				return $results['count'];
-			}
-			if (!empty($results['count'])) {
-				unset($current_params['count']);
-				$results['entities'] = elgg_search($current_params);
-			}
+		if (!empty($results['count'])) {
+			unset($current_params['count']);
+			$results['entities'] = elgg_search($current_params);
 		}
 
 		if (empty($results['entities'])) {
@@ -169,7 +125,6 @@ class Search {
 			'results' => $results,
 			'params' => $current_params,
 		]);
-
 	}
 
 	/**
@@ -221,19 +176,9 @@ class Search {
 
 		// $search_type == all || entities || trigger plugin hook
 		$search_type = get_input('search_type', 'all');
-		if ($search_type == 'tags') {
-			elgg_deprecated_notice('"tags" search type has been deprecated. By default, "entities" search performs search within registered tags.', '3.0');
-			$search_type = 'entities';
-			$partial_match = false;
-			$fields = get_input('tag_names');
-			if (!$fields) {
-				$fields = (array) elgg_get_registered_tag_metadata_names();
-			}
-		} else {
-			$partial_match = true;
-			$fields = get_input('fields');
-		}
-
+		$partial_match = true;
+		$fields = get_input('fields');
+		
 		$query = get_input('q', get_input('tag', ''));
 
 		if (preg_match('/\"(.*)\"/i', $query)) {

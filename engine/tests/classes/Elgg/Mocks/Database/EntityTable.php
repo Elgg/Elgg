@@ -351,10 +351,8 @@ class EntityTable extends DbEntityTable {
 			return true;
 		}
 
-		$access_list = _elgg_services()->accessCollections->getAccessList($user->guid);
-		if (in_array($row->access_id, $access_list)) {
-			return true;
-		}
+		$access_array = _elgg_services()->accessCollections->getAccessArray($user->guid);
+		return in_array($row->access_id, $access_array);;
 	}
 
 	/**

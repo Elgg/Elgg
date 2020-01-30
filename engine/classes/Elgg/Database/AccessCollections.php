@@ -121,29 +121,6 @@ class AccessCollections {
 	}
 
 	/**
-	 * Returns a string of access_ids for $user_guid appropriate for inserting into an SQL IN clause.
-	 *
-	 * @see get_access_array()
-	 *
-	 * @param int  $user_guid User ID; defaults to currently logged in user
-	 * @param bool $flush     If set to true, will refresh the access list from the
-	 *                        database rather than using this function's cache.
-	 *
-	 * @return string A concatenated string of access collections suitable for using in an SQL IN clause
-	 */
-	public function getAccessList($user_guid = 0, $flush = false) {
-		$access_array = $this->getAccessArray($user_guid, $flush);
-		$access_ids = implode(',', $access_array);
-		$list = "($access_ids)";
-
-		// for BC, populate the cache
-		$hash = $user_guid . 'get_access_list';
-		$this->access_cache->add($hash, $list);
-
-		return $list;
-	}
-
-	/**
 	 * Returns an array of access IDs a user is permitted to see.
 	 *
 	 * Can be overridden with the 'access:collections:read', 'user' plugin hook.
