@@ -8,22 +8,6 @@
 use Elgg\Database\QueryBuilder;
 
 /**
- * Comments initialization function
- *
- * @return void
- * @internal
- */
-function _elgg_comments_init() {
-	elgg_register_entity_type('object', 'comment');
-
-	elgg_register_ajax_view('core/ajax/edit_comment');
-	elgg_register_ajax_view('page/elements/comments');
-	elgg_register_ajax_view('river/elements/responses');
-
-	elgg_register_notification_event('object', 'comment', ['create']);
-}
-
-/**
  * Are comments displayed with latest first?
  *
  * @param ElggEntity $container Entity containing comments

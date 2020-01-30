@@ -124,18 +124,6 @@ function _elgg_create_notice_of_pending_upgrade(\Elgg\Event $event) {
  * @internal
  */
 function _elgg_admin_init() {
-
-	elgg_register_external_file('css', 'elgg.admin', elgg_get_simplecache_url('admin.css'));
-	elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
-
-	elgg_define_js('admin/users/unvalidated', [
-		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
-	]);
-	
-	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
-	
-	elgg_register_ajax_view('forms/admin/user/change_email');
-
 	// maintenance mode
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
 		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler', 600);
@@ -143,8 +131,6 @@ function _elgg_admin_init() {
 		elgg_register_external_file('css', 'maintenance', elgg_get_simplecache_url('maintenance.css'));
 	}
 
-	elgg_register_simplecache_view('admin.css');
-	
 	// widgets
 	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
 	foreach ($widgets as $widget) {
@@ -155,8 +141,6 @@ function _elgg_admin_init() {
 				['admin']
 		);
 	}
-	
-	elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
 }
 
 /**

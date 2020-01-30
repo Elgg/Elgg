@@ -354,19 +354,3 @@ function _elgg_set_user_default_access(\Elgg\Hook $hook) {
 		$request->validation()->fail('default_access', $default_access, elgg_echo(elgg_echo('user:default_access:failure')));
 	}
 }
-
-/**
- * Initialize the user settings library
- *
- * @return void
- * @internal
- */
-function _elgg_user_settings_init() {
-	// extend the account settings form
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
-}

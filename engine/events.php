@@ -68,18 +68,12 @@ return [
 	'init' => [
 		'system' => [
 			'_elgg_admin_init' => [],
-			'_elgg_comments_init' => [],
 			'_elgg_init' => [],
-			'_elgg_input_init' => [],
-			'_elgg_nav_init' => [],
 			'_elgg_notifications_init' => [],
-			'_elgg_plugins_init' => [],
-			'_elgg_tags_init' => [],
-			'_elgg_user_settings_init' => [],
+			'_elgg_views_init' => [],
 			'_elgg_walled_garden_init' => [
 				'priority' => 1000,
 			],
-			'statistics_init' => [],
 			'users_init' => [
 				'priority' => 0,
 			],

@@ -556,21 +556,6 @@ function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
 }
 
 /**
- * Navigation initialization
- *
- * @return void
- *
- * @internal
- */
-function _elgg_nav_init() {
-	elgg_register_ajax_view('navigation/menu/user_hover/contents');
-
-	// Using a view extension to ensure that themes that have replaced the item view
-	// still load the required AMD modules
-	elgg_extend_view('navigation/menu/elements/item', 'navigation/menu/elements/item_deps');
-}
-
-/**
  * Extend public pages
  *
  * @param \Elgg\Hook $hook "public_pages", "walled_garden"

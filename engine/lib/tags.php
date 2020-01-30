@@ -95,15 +95,3 @@ function elgg_unregister_tag_metadata_name($name) {
 function elgg_get_registered_tag_metadata_names() {
 	return _elgg_services()->metadataTable->getTagNames();
 }
-
-/**
- * Tags init
- *
- * @return void
- *
- * @internal
- */
-function _elgg_tags_init() {
-	// register the standard tags metadata name
-	elgg_register_tag_metadata_name('tags');
-}

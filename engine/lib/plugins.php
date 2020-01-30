@@ -254,14 +254,3 @@ function elgg_unset_plugin_setting($name, $plugin_id) {
 function elgg_get_entities_from_plugin_user_settings(array $options = []) {
 	return _elgg_services()->plugins->getEntitiesFromUserSettings($options);
 }
-
-/**
- * Initialize the plugin system
- *
- * @return void
- * @internal
- */
-function _elgg_plugins_init() {
-	elgg_register_ajax_view('object/plugin/full');
-	elgg_register_ajax_view('object/plugin/details');
-}

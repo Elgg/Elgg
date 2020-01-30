@@ -172,8 +172,14 @@ class Config {
 	 * @var array
 	 */
 	protected $config_defaults = [
+		'batch_run_time_in_secs' => 4,
 		'comment_box_collapses' => true,
 		'comments_latest_first' => true,
+		'lastcache' => 0,
+		'min_password_length' => 6,
+		'minusername' => 4,
+		'simplecache_enabled' => false,
+		'system_cache_enabled' => false,
 	];
 
 	/**
@@ -200,6 +206,9 @@ class Config {
 			unset($values[$name]);
 		}
 		$this->initial_values = $values;
+		
+		// set cookie values for session and remember me
+		$this->getCookieConfig();
 	}
 
 	/**
