@@ -93,6 +93,7 @@ Miscellaneous API changes
 -------------------------
 
 * The defaults for ``ignore_empty_body`` and ``prevent_double_submit`` when using ``elgg_view_form`` have been changed to ``true``.
+* The plugin settings forms (``plugins/{$plugin_id}/settings``) no longer receive ``$vars['plugin']`` use ``$vars['entity']``
 
 Removed composer dependencies
 -----------------------------

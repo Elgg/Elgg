@@ -74,7 +74,7 @@ return [
 	],
 	'ajax' => [
 		'path' => '/ajax/{segments}',
-		'handler' => '_elgg_ajax_page_handler',
+		'controller' => \Elgg\Ajax\Controller::class,
 		'requirements' => [
 			'segments' => '.+',
 		],
@@ -97,9 +97,17 @@ return [
 		'resource' => 'manifest.json',
 		'walled' => false,
 	],
+	'admin:plugin_settings' => [
+		// needs to be registered before global admin route
+		'path' => '/admin/plugin_settings/{plugin_id}',
+		'resource' => 'admin/plugin_settings',
+		'middleware' => [
+			\Elgg\Router\Middleware\AdminGatekeeper::class,
+		],
+	],
 	'admin' => [
 		'path' => '/admin/{segments?}',
-		'handler' => '_elgg_admin_page_handler',
+		'resource' => 'admin',
 		'requirements' => [
 			'segments' => '.+',
 		],
@@ -109,9 +117,10 @@ return [
 	],
 	'admin_plugins_refresh' => [
 		'path' => '/admin_plugins_refresh',
-		'handler' => '_elgg_ajax_plugins_update',
+		'controller' => \Elgg\Controllers\AdminPluginsRefresh::class,
 		'middleware' => [
 			\Elgg\Router\Middleware\AdminGatekeeper::class,
+			\Elgg\Router\Middleware\AjaxGatekeeper::class,
 		],
 	],
 	'admin_plugin_text_file' => [
@@ -130,7 +139,7 @@ return [
 	],
 	'cron' => [
 		'path' => '/cron/{segments}',
-		'handler' => '_elgg_cron_page_handler',
+		'controller' => \Elgg\Controllers\Cron::class,
 		'requirements' => [
 			'segments' => '.+',
 		],
@@ -138,10 +147,7 @@ return [
 	],
 	'serve-icon' => [
 		'path' => '/serve-icon/{guid}/{size}',
-		'handler' => '_elgg_filestore_serve_icon_handler',
-		'requirements' => [
-			'segments' => '.+',
-		],
+		'controller' => \Elgg\Controllers\ServeIcon::class,
 		'walled' => false,
 	],
 	'livesearch' => [
