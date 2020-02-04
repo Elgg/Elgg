@@ -295,7 +295,6 @@ class Router {
 	 *
 	 * @return ResponseBuilder|null
 	 * @throws Exception
-	 * @deprecated 3.0
 	 */
 	protected function getResponseFromHandler($handler, \Elgg\Request $request) {
 		if (!is_callable($handler)) {
@@ -333,7 +332,6 @@ class Router {
 	 *
 	 * @return ResponseBuilder|null
 	 * @throws PageNotFoundException
-	 * @deprecated 3.0
 	 */
 	protected function getResponseFromFile($file, \Elgg\Request $request) {
 		if (!is_file($file) || !is_readable($file)) {
