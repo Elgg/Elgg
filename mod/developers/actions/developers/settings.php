@@ -44,6 +44,6 @@ foreach ($simple_settings as $setting) {
 	elgg_set_plugin_setting($setting, get_input($setting), 'developers');
 }
 
-elgg_flush_caches();
+elgg_clear_caches();
 
 return elgg_ok_response('', elgg_echo('developers:settings:success'));
