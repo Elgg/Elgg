@@ -194,7 +194,7 @@ return [
 	],
 	'view:object:comment' => [
 		'path' => '/comment/view/{guid}/{container_guid?}',
-		'resource' => 'comments/view',
+		'controller' => \Elgg\Controllers\CommentEntityRedirector::class,
 	],
 	'edit:object:comment' => [
 		'path' => '/comment/edit/{guid}',
