@@ -72,7 +72,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->logger->enable();
 	}
 
-	function createService(Request $request) {
+	protected function createService(Request $request) {
 
 		$app = self::createApplication([
 			'request' => $request,
@@ -93,7 +93,7 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 	}
 
-	function route(Request $request) {
+	protected function route(Request $request) {
 		$ex = false;
 
 		ob_start();
@@ -113,102 +113,10 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		return $ret;
 	}
 
-	function hello_page_handler($segments, $identifier) {
+	public function hello_page_handler($segments, $identifier) {
 		include "{$this->pages}/hello.php";
 
 		return true;
-	}
-
-	/**
-	 * 1. Register a page handler for `/foo`
-	 * 2. Register a plugin hook that uses the "handler" result param
-	 *    to route all `/bar/*` requests to the `/foo` handler.
-	 * 3. Route a request for a `/bar` page.
-	 * 4. Check that the `/foo` handler was called.
-	 */
-	function testRouteSupportsSettingHandlerInHookResultForBackwardsCompatibility() {
-		$request = $this->prepareHttpRequest('bar/baz');
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'bar', [$this, 'bar_route_handler']);
-
-		ob_start();
-		_elgg_services()->router->route($request);
-		ob_end_clean();
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		/* @var $response RedirectResponse */
-		$this->assertInstanceOf(RedirectResponse::class, $response);
-		$this->assertEquals(elgg_normalize_url('foo/baz'), $response->getTargetUrl());
-	}
-
-	/**
-	 * 1. Register a page handler for `/foo`
-	 * 2. Register a plugin hook that uses the "handler" result param
-	 *    to route all `/bar/*` requests to the `/foo` handler.
-	 * 3. Route a request for a `/bar` page.
-	 * 4. Check that the `/foo` handler was called.
-	 */
-	function testRouteSupportsSettingIdentifierInHookResultForBackwardsCompatibility() {
-		$request = $this->prepareHttpRequest('bar/baz');
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'bar', [$this, 'bar_route_identifier']);
-
-		ob_start();
-		_elgg_services()->router->route($request);
-		ob_end_clean();
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(RedirectResponse::class, $response);
-		$this->assertEquals(elgg_normalize_url('foo/baz'), $response->getTargetUrl());
-	}
-
-	function testRouteOverridenFromHook() {
-		$request = $this->prepareHttpRequest('foo');
-		$this->createService($request);
-
-		_elgg_services()->routes->register('foo', [
-			'path' => '/foo',
-			'handler' => [$this, 'foo_page_handler'],
-		]);
-		_elgg_services()->hooks->registerHandler('route', 'foo', [$this, 'bar_route_override']);
-
-		ob_start();
-		_elgg_services()->router->route($request);
-		$result = ob_get_clean();
-
-		$this->assertEquals("Page handler override from hook", $result);
-		$this->assertEquals(0, $this->fooHandlerCalls);
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-
-		$this->assertEquals("Page handler override from hook", $response->getContent());
-	}
-
-	function foo_page_handler() {
-		$this->fooHandlerCalls++;
-
-		return true;
-	}
-
-	function bar_route_handler($hook, $type, $value, $params) {
-		$value['handler'] = 'foo';
-
-		return $value;
-	}
-
-	function bar_route_identifier($hook, $type, $value, $params) {
-		$value['identifier'] = 'foo';
-
-		return $value;
-	}
-
-	function bar_route_override($hook, $type, $value, $params) {
-		echo "Page handler override from hook";
-
-		return false;
 	}
 
 	public function testCanAllowRewrite() {
@@ -240,48 +148,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$identifier = array_shift($segments);
 		$this->assertEquals('foo2', $identifier);
 		$this->assertEquals(['bar2', 'baz2'], $segments);
-	}
-
-	public function testCanRespondToNonAjaxRequestThroughRouteHook() {
-		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
-			$this->assertEquals($return, $params);
-			$this->assertEquals('foo', $return['identifier']);
-			$this->assertEquals(['bar', 'baz'], $return['segments']);
-			echo 'good bye';
-
-			return false;
-		});
-
-		$this->route($request);
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-		$this->assertEquals('good bye', $response->getContent());
-	}
-
-	public function testCanRedirectNonAjaxRequestFromRouteHook() {
-		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET');
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
-			$this->assertEquals($return, $params);
-			$this->assertEquals('foo', $return['identifier']);
-			$this->assertEquals(['bar', 'baz'], $return['segments']);
-			_elgg_services()->responseFactory->redirect('foo2/bar2/baz2');
-
-			return false;
-		});
-
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(RedirectResponse::class, $response);
-		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
-		$this->assertEquals(elgg_normalize_url('foo2/bar2/baz2'), $response->getTargetUrl());
 	}
 
 	public function testCanFilterResponse() {
@@ -492,71 +358,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($this->fooHandlerCalls > 0);
 	}
 
-	public function testCanRespondToAjaxRequestThroughRouteHook() {
-		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
-			$this->assertEquals($return, $params);
-			$this->assertEquals('foo', $return['identifier']);
-			$this->assertEquals(['bar', 'baz'], $return['segments']);
-			echo 'good bye';
-
-			return false;
-		});
-
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-
-		$this->assertStringContainsString('text/html', $response->headers->get('Content-Type'));
-		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
-
-		// no forward call, so API outputs content
-		$this->assertEquals('good bye', $response->getContent());
-	}
-
-	public function testCanRedirectAjaxRequestFromRouteHook() {
-		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
-			$this->assertEquals($return, $params);
-			$this->assertEquals('foo', $return['identifier']);
-			$this->assertEquals(['bar', 'baz'], $return['segments']);
-			_elgg_services()->responseFactory->redirect('foo2/bar2/baz2');
-
-			return false;
-		});
-
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-
-		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
-		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
-
-		$output = json_encode([
-			'output' => '',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => []
-			],
-			'current_url' => current_page_url(),
-			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
-		], ELGG_JSON_ENCODING);
-
-		$this->assertEquals($output, $response->getContent());
-
-		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
-		ob_start();
-	}
-
 	public function testCanRespondToAjaxRequestFromOkResponseBuilder() {
 
 		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 1);
@@ -752,73 +553,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			],
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('error'),
-		], ELGG_JSON_ENCODING);
-
-		$this->assertEquals($output, $response->getContent());
-
-		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
-		ob_start();
-	}
-
-	public function testCanRespondToAjax2RequestThroughRouteHook() {
-		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
-			$this->assertEquals($return, $params);
-			$this->assertEquals('foo', $return['identifier']);
-			$this->assertEquals(['bar', 'baz'], $return['segments']);
-			echo 'good bye';
-
-			return false;
-		});
-
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-
-		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
-
-		$output = json_encode([
-			'value' => 'good bye',
-			'current_url' => elgg_normalize_url('foo/bar/baz'),
-			'forward_url' => elgg_normalize_url(''),
-			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
-		], ELGG_JSON_ENCODING);
-
-		$this->assertEquals($output, $response->getContent());
-	}
-
-	public function testCanRedirectAjax2RequestFromRouteHook() {
-		$request = $this->prepareHttpRequest('foo/bar/baz', 'GET', [], 2);
-		$this->createService($request);
-
-		_elgg_services()->hooks->registerHandler('route', 'foo', function ($hook, $type, $return, $params) {
-			$this->assertEquals($return, $params);
-			$this->assertEquals('foo', $return['identifier']);
-			$this->assertEquals(['bar', 'baz'], $return['segments']);
-			_elgg_services()->responseFactory->redirect('foo2/bar2/baz2');
-
-			return false;
-		});
-
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-
-		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
-
-		$output = json_encode([
-			'value' => '',
-			'current_url' => elgg_normalize_url('foo/bar/baz'),
-			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
-			'_elgg_msgs' => (object) [],
-			'_elgg_deps' => [],
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());

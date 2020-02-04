@@ -101,11 +101,12 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 		$request = $this->prepareHttpRequest('foo/bar');
 		$this->createService($request);
 		
-		_elgg_services()->hooks->registerHandler('route', 'foo', function () {
-			echo 'foo';
-			
-			return false;
-		});
+		elgg_register_route('foo', [
+			'path' => '/foo/bar',
+			'handler' => function() {
+				return elgg_ok_response('foo');
+			},
+		]);
 		
 		_elgg_services()->hooks->registerHandler('public_pages', 'walled_garden', function (\Elgg\Hook $hook) {
 			$return = $hook->getValue();
@@ -131,7 +132,7 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 		elgg_register_route('foo', [
 			'path' => '/bar/foo',
 			'handler' => function () {
-				//		echo 'hello';
+				return elgg_ok_response('hello');
 			},
 		]);
 		
@@ -148,11 +149,12 @@ class WalledGardenIntegrationTest extends IntegrationTestCase {
 		$user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($user);
 		
-		_elgg_services()->hooks->registerHandler('route', 'bar', function () {
-			echo 'bar';
-			
-			return false;
-		});
+		elgg_register_route('foo', [
+			'path' => '/bar/foo',
+			'handler' => function() {
+				return elgg_ok_response('foo');
+			},
+		]);
 		
 		elgg_set_config('walled_garden', true);
 		
