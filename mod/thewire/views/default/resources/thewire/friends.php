@@ -29,7 +29,7 @@ $content .= elgg_list_entities([
 	'relationship_join_on' => 'container_guid',
 ]);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'filter_context' => 'friends',
 	'content' => $content,
 	'title' => $title,

@@ -20,7 +20,7 @@ $params = $vars;
 $params['entity'] = $owner;
 $content = elgg_view('file/listing/friends', $params);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'filter_context' => 'friends',
 	'content' => $content,
 	'title' => $title,

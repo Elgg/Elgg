@@ -31,7 +31,7 @@ $content .= elgg_list_entities([
 	'limit' => get_input('limit', 15),
 ]);
 
-$body = elgg_view_layout('content', [
+$body = elgg_view_layout('default', [
 	'filter_context' => $context,
 	'content' => $content,
 	'title' => $title,
