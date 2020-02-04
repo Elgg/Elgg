@@ -5,8 +5,6 @@
  * @since 1.9
  */
 
-use Elgg\Database\QueryBuilder;
-
 /**
  * Are comments displayed with latest first?
  *
@@ -33,75 +31,6 @@ function elgg_comments_per_page(ElggEntity $container = null) {
 		'entity' => $container,
 	];
 	return (int) elgg_trigger_plugin_hook('config', 'comments_per_page', $params, 25);
-}
-
-/**
- * Redirect to the comment in context of the containing page
- *
- * @param int $comment_guid  GUID of the comment
- * @param int $fallback_guid GUID of the containing entity
- *
- * @return void
- * @internal
- */
-function _elgg_comment_redirect($comment_guid, $fallback_guid) {
-	$fail = function () {
-		register_error(elgg_echo('generic_comment:notfound'));
-		forward(REFERER);
-	};
-
-	$comment = get_entity($comment_guid);
-	if (!$comment) {
-		// try fallback if given
-		$fallback = get_entity($fallback_guid);
-		if (!$fallback) {
-			$fail();
-		}
-
-		register_error(elgg_echo('generic_comment:notfound_fallback'));
-		forward($fallback->getURL());
-	}
-
-	if (!$comment instanceof ElggComment) {
-		$fail();
-	}
-
-	$container = $comment->getContainerEntity();
-	if (!$container) {
-		$fail();
-	}
-
-	$operator = elgg_comments_are_latest_first($container) ? '>' : '<';
-
-	// this won't work with threaded comments, but core doesn't support that yet
-	$condition = function(QueryBuilder $qb, $main_alias) use ($comment, $operator) {
-		return $qb->compare("{$main_alias}.guid", $operator, $comment->guid, ELGG_VALUE_GUID);
-	};
-	$count = elgg_count_entities([
-		'type' => 'object',
-		'subtype' => 'comment',
-		'container_guid' => $container->guid,
-		'wheres' => [$condition],
-	]);
-	$limit = (int) get_input('limit');
-	if (!$limit) {
-		$limit = elgg_comments_per_page($container);
-	}
-	$offset = floor($count / $limit) * $limit;
-	if (!$offset) {
-		$offset = null;
-	}
-
-	$url = elgg_http_add_url_query_elements($container->getURL(), [
-		'offset' => $offset,
-	]);
-	
-	// make sure there's only one fragment (#)
-	$parts = parse_url($url);
-	$parts['fragment'] = "elgg-object-{$comment->guid}";
-	$url = elgg_http_build_url($parts, false);
-	
-	forward($url);
 }
 
 /**
