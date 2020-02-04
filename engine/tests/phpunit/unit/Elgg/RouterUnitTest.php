@@ -2,11 +2,9 @@
 
 namespace Elgg;
 
-use stdClass;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Elgg\I18n\Translator;
-use Elgg\Router\Middleware\WalledGarden;
 use Elgg\Router\RouteRegistrationService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -1538,138 +1536,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		], ELGG_JSON_ENCODING);
 
 		$this->assertEquals($output, $response->getContent());
-	}
-
-	/**
-	 * @dataProvider publicPagesProvider
-	 * @group        WalledGarden
-	 */
-	public function testCanDetectPublicPage($path, $expected) {
-		$this->assertEquals($expected, WalledGarden::isPublicPage(elgg_normalize_url($path)));
-	}
-
-	function publicPagesProvider() {
-		return [
-			['ajax/view/languages.js', true],
-			['css/stylesheet.css', true],
-			['js/javascript.js', true],
-			['cache/0/foo/bar', true],
-			['cache/foo/bar', false],
-			['serve-file/foo', true],
-			['custom', false],
-		];
-	}
-
-	/**
-	 * @group WalledGarden
-	 */
-	public function testCanFilterPublicPages() {
-
-		_elgg_services()->hooks->backup();
-
-		_elgg_services()->hooks->registerHandler('public_pages', 'walled_garden', function ($hook, $type, $return) {
-			$return[] = 'allowed/.*';
-
-			return $return;
-		});
-
-		$this->assertTrue(WalledGarden::isPublicPage(elgg_normalize_url('allowed/foo/bar')));
-
-		_elgg_services()->hooks->restore();
-	}
-
-	/**
-	 * @group WalledGarden
-	 */
-	public function testCanRoutePublicPageInWalledGardenMode() {
-
-		$request = $this->prepareHttpRequest('foo/bar');
-		$this->createService($request);
-
-		_elgg_services()->hooks->backup();
-
-		_elgg_services()->hooks->registerHandler('route', 'foo', function () {
-			echo 'foo';
-
-			return false;
-		});
-
-		_elgg_services()->hooks->registerHandler('public_pages', 'walled_garden', function ($hook, $type, $return) {
-			$return[] = 'foo/.*';
-
-			return $return;
-		});
-
-		elgg_set_config('walled_garden', true);
-
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-
-		_elgg_services()->hooks->restore();
-	}
-
-	/**
-	 * @group WalledGarden
-	 */
-	public function testCanRouteNonPublicPageInWalledGardenMode() {
-		$request = $this->prepareHttpRequest('bar/foo');
-		$this->createService($request);
-
-		elgg_register_route('foo', [
-			'path' => '/bar/foo',
-			'handler' => function () {
-				//		echo 'hello';
-			}
-		]);
-
-		elgg_set_config('walled_garden', true);
-
-		_elgg_services()->hooks->backup();
-
-		$ex = new \Exception();
-
-		try {
-			$this->route($request);
-		} catch (\Exception $ex) {
-
-		}
-
-		_elgg_services()->hooks->restore();
-		
-		$this->assertInstanceOf(WalledGardenException::class, $ex);
-	}
-
-	/**
-	 * @group WalledGarden
-	 */
-	public function testIgnoresWalledGardenRulesWhenLoggedIn() {
-		$request = $this->prepareHttpRequest('bar/foo');
-		$this->createService($request);
-
-		$user = $this->createUser();
-		_elgg_services()->session->setLoggedInUser($user);
-
-		_elgg_services()->hooks->backup();
-		_elgg_services()->hooks->registerHandler('route', 'bar', function () {
-			echo 'bar';
-
-			return false;
-		});
-
-		elgg_set_config('walled_garden', true);
-
-		$this->assertTrue($this->route($request));
-
-		$response = _elgg_services()->responseFactory->getSentResponse();
-		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
-
-		_elgg_services()->hooks->restore();
-
-		_elgg_services()->session->removeLoggedInUser($user);
 	}
 
 	/**

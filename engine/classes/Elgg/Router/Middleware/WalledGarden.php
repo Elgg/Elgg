@@ -48,10 +48,9 @@ class WalledGarden {
 	 * @param string $url Defaults to the current URL
 	 *
 	 * @return bool
-	 * @deprecated 3.0
 	 * @internal
 	 */
-	public static function isPublicPage($url = '') {
+	protected function isPublicPage($url = '') {
 		if (empty($url)) {
 			$url = current_page_url();
 		}
