@@ -672,6 +672,15 @@ class ElggPlugin extends ElggObject {
 
 				$this->register();
 				
+				$services = $this->getPath() . 'elgg-services.php';
+				if (is_file($services) && is_readable($services)) {
+					// reset dic so new services can be detected
+					_elgg_services()->reset('dic_cache');
+					_elgg_services()->reset('dic_loader');
+					_elgg_services()->reset('dic_builder');
+					_elgg_services()->reset('dic');
+				}
+				
 				// directly load languages to have them available during runtime
 				$this->loadLanguages();
 				
