@@ -2,16 +2,16 @@
 
 namespace Elgg\Database;
 
-use ClassException;
-use DatabaseException;
 use Elgg\Cache\EntityCache;
 use Elgg\Cache\MetadataCache;
 use Elgg\Config;
 use Elgg\Database;
 use Elgg\Database\Clauses\EntityWhereClause;
-use Elgg\Database\EntityTable\UserFetchFailureException;
+use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\EntityPreloader;
 use Elgg\EventsService;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\ClassException;
 use Elgg\I18n\Translator;
 use Elgg\Logger;
 use ElggBatch;
@@ -21,7 +21,6 @@ use ElggObject;
 use ElggSession;
 use ElggSite;
 use ElggUser;
-use InvalidParameterException;
 use Psr\Log\LoggerInterface;
 use stdClass;
 use Elgg\Cache\PrivateSettingsCache;
@@ -371,8 +370,6 @@ class EntityTable {
 	 *                        will not be returned unless its subtype matches
 	 *
 	 * @return ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
-	 * @throws ClassException
-	 * @throws InvalidParameterException
 	 */
 	public function get($guid, $type = null, $subtype = null) {
 		// We could also use: if (!(int) $guid) { return false },
@@ -480,7 +477,6 @@ class EntityTable {
 	 * @param array        $options Options
 	 *
 	 * @return ElggEntity[]
-	 * @throws DatabaseException
 	 */
 	public function fetch(QueryBuilder $query, array $options = []) {
 		$results = $this->db->getData($query, $options['callback']);
@@ -554,8 +550,7 @@ class EntityTable {
 	 * @param int $guid User GUID. Default is logged in user
 	 *
 	 * @return ElggUser|false
-	 * @throws ClassException
-	 * @throws InvalidParameterException
+	 * @throws UserFetchFailureException
 	 */
 	public function getUserForPermissionsCheck($guid = 0) {
 		if (!$guid) {
@@ -591,7 +586,6 @@ class EntityTable {
 	 * @param ElggEntity $entity Owner/container entity
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	public function disableEntities(ElggEntity $entity) {
 		if (!$entity->canEdit()) {
@@ -621,7 +615,6 @@ class EntityTable {
 	 * @param bool       $recursive Delete all owned and contained entities
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	public function delete(\ElggEntity $entity, $recursive = true) {
 		$guid = $entity->guid;
@@ -660,7 +653,6 @@ class EntityTable {
 	 * @param ElggEntity $entity Entity
 	 *
 	 * @return void
-	 * @throws DatabaseException
 	 */
 	protected function deleteRelatedEntities(ElggEntity $entity) {
 		// Temporarily overriding access controls

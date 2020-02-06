@@ -2,12 +2,13 @@
 
 namespace Elgg\Page;
 
-use Elgg\Http\Request;
 use Elgg\Database\EntityTable;
-use Elgg\Router\Route;
-use Elgg\PluginHooksService;
 use Elgg\Database\UsersTable;
+use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Http\Request;
 use Elgg\Invoker;
+use Elgg\PluginHooksService;
+use Elgg\Router\Route;
 
 /**
  * Holds page owner related functions
@@ -195,13 +196,13 @@ class PageOwnerService {
 	 *
 	 * @param int $guid the new page owner
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 *
 	 * @return void
 	 */
 	public function setPageOwnerGuid(int $guid = 0) {
 		if ($guid < 0) {
-			throw new \InvalidArgumentException(__METHOD__ . ' requires a positive integer.');
+			throw new InvalidArgumentException(__METHOD__ . ' requires a positive integer.');
 		}
 		$this->page_owner_guid = $guid;
 	}

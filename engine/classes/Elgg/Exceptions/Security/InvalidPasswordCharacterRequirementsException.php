@@ -2,12 +2,14 @@
 
 namespace Elgg\Exceptions\Security;
 
+use Elgg\Exceptions\SecurityException;
+
 /**
  * Indicate a password string doesn't meet the character requirements
  *
  * @since 3.2
  */
-class InvalidPasswordCharacterRequirementsException extends \Exception {
+class InvalidPasswordCharacterRequirementsException extends SecurityException {
 
 	/**
 	 * {@inheritdoc}

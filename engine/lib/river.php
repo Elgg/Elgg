@@ -23,7 +23,6 @@
  *
  * @return int|ElggRiverItem|bool River ID/item or false on failure
  * @since  1.9
- * @throws DatabaseException
  */
 function elgg_create_river_item(array $options = []) {
 

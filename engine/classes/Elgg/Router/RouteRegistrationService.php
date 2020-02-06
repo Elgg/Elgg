@@ -2,13 +2,10 @@
 
 namespace Elgg\Router;
 
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Loggable;
-use Elgg\Logger;
 use Elgg\PluginHooksService;
 use Elgg\Router\Middleware\WalledGarden;
-use ElggEntity;
-use Exception;
-use InvalidParameterException;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -210,7 +207,7 @@ class RouteRegistrationService {
 
 			// make sure the url is always normalized so it is also usable in CLI
 			return elgg_normalize_url($url);
-		} catch (Exception $exception) {
+		} catch (\Exception $exception) {
 			$this->logger->notice($exception->getMessage());
 		}
 		
@@ -220,13 +217,13 @@ class RouteRegistrationService {
 	/**
 	 * Populates route parameters from entity properties
 	 *
-	 * @param string          $name       Route name
-	 * @param ElggEntity|null $entity     Entity
-	 * @param array           $parameters Preset parameters
+	 * @param string           $name       Route name
+	 * @param \ElggEntity|null $entity     Entity
+	 * @param array            $parameters Preset parameters
 	 *
 	 * @return array|false
 	 */
-	public function resolveRouteParameters($name, ElggEntity $entity = null, array $parameters = []) {
+	public function resolveRouteParameters($name, \ElggEntity $entity = null, array $parameters = []) {
 		$route = $this->routes->get($name);
 		if (!$route) {
 			return false;

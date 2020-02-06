@@ -3,6 +3,8 @@
  * Library for managing user tokens
  */
 
+use Elgg\Exceptions\SecurityException;
+
 /**
  * Obtain a token for a user.
  *

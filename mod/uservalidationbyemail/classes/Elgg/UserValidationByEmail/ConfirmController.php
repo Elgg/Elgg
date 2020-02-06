@@ -2,6 +2,7 @@
 
 namespace Elgg\UserValidationByEmail;
 
+use Elgg\Exceptions\LoginException;
 use Elgg\Http\ResponseBuilder;
 
 /**
@@ -40,7 +41,7 @@ class ConfirmController {
 			
 			try {
 				login($user);
-			} catch (\LoginException $e) {
+			} catch (LoginException $e) {
 				return elgg_error_response($e->getMessage());
 			}
 			

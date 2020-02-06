@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * @group UnitTests
  */
@@ -38,7 +40,7 @@ class EntityDirLocatorUnitTest extends \Elgg\UnitTestCase {
 	 * @dataProvider badGuidsProvider
 	 */
 	public function testConstructorThrowsWithBadGuid($guid) {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('GUIDs must be integers > 0.');
 		new \Elgg\EntityDirLocator($guid);
 	}

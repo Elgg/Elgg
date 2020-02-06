@@ -2,9 +2,9 @@
 
 namespace Elgg\Database;
 
-use Elgg\Config as ElggConfig;
-use Elgg\Database;
 use ElggCrypto;
+use Elgg\Config as ElggConfig;
+use Elgg\Exceptions\Configuration\InstallationException;
 
 /**
  * Manages a site-specific secret key, encoded as a 32 byte string "secret"
@@ -120,12 +120,12 @@ class SiteSecret {
 	 * @param ConfigTable $table Config table
 	 *
 	 * @return SiteSecret
-	 * @throws \InstallationException
+	 * @throws InstallationException
 	 */
 	public static function fromDatabase(ConfigTable $table) {
 		$key = $table->get(self::CONFIG_KEY);
 		if (!$key) {
-			throw new \InstallationException('Site secret is not in the config table.');
+			throw new InstallationException('Site secret is not in the config table.');
 		}
 
 		return new self($key);

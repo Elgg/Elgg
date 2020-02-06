@@ -45,7 +45,6 @@ class SystemLog {
 	 * @param int $id ID
 	 *
 	 * @return SystemLogEntry|false
-	 * @throws \DatabaseException
 	 */
 	public function get($id) {
 		$qb = Select::fromTable('system_log');
@@ -185,7 +184,6 @@ class SystemLog {
 	 * @param DateTime $created_before Date of last creation
 	 *
 	 * @return bool
-	 * @throws \DatabaseException
 	 */
 	public function archive(DateTime $created_before) {
 
@@ -238,7 +236,6 @@ class SystemLog {
 	 * @param DateTime $archived_before Date of last archival
 	 *
 	 * @return bool
-	 * @throws \DatabaseException
 	 */
 	public function deleteArchive(DateTime $archived_before) {
 

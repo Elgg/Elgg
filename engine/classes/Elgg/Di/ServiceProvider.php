@@ -2,7 +2,6 @@
 
 namespace Elgg\Di;
 
-use ConfigurationException;
 use DI\ContainerBuilder;
 use Elgg\Application;
 use Elgg\Assets\CssCompiler;
@@ -14,6 +13,7 @@ use Elgg\Config;
 use Elgg\Cron;
 use Elgg\Database\DbConfig;
 use Elgg\Database\SiteSecret;
+use Elgg\Exceptions\ConfigurationException;
 use Elgg\Groups\Tools;
 use Elgg\Invoker;
 use Elgg\Logger;
@@ -140,7 +140,6 @@ class ServiceProvider extends DiContainer {
 	 * Constructor
 	 *
 	 * @param Config $config Elgg Config service
-	 * @throws ConfigurationException
 	 */
 	public function __construct(Config $config) {
 

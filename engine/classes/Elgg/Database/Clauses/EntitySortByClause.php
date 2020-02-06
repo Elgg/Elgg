@@ -3,6 +3,7 @@
 namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
+use Elgg\Exceptions\InvalidParameterException;
 use ElggEntity;
 
 /**
@@ -56,7 +57,7 @@ class EntitySortByClause extends OrderByClause {
 
 			case 'attribute' :
 				if (!in_array($this->property, ElggEntity::$primary_attr_names)) {
-					throw new \InvalidParameterException("'$this->property' is not a valid entity attribute");
+					throw new InvalidParameterException("'$this->property' is not a valid entity attribute");
 				}
 				$column = "$table_alias.$this->property";
 				break;
@@ -72,7 +73,7 @@ class EntitySortByClause extends OrderByClause {
 				break;
 
 			default :
-				throw new \InvalidParameterException("'$this->property_type' is not a valid entity property type");
+				throw new InvalidParameterException("'$this->property_type' is not a valid entity property type");
 		}
 
 		if ($this->signed) {

@@ -52,7 +52,6 @@ class GarbageCollector {
 	 * Optimize the database
 	 *
 	 * @return \stdClass[]
-	 * @throws \DatabaseException
 	 */
 	public function optimize() {
 		$output = [];
@@ -85,7 +84,6 @@ class GarbageCollector {
 	 * Get a list of DB tables
 	 *
 	 * @return array
-	 * @throws \DatabaseException
 	 */
 	public function tables() {
 
@@ -118,7 +116,6 @@ class GarbageCollector {
 	 * @param string $table Table
 	 *
 	 * @return bool|int
-	 * @throws \DatabaseException
 	 */
 	public function optimizeTable(string $table) {
 		return $this->db->updateData("OPTIMIZE TABLE $table");

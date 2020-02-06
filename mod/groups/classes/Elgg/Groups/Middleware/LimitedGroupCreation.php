@@ -2,8 +2,8 @@
 
 namespace Elgg\Groups\Middleware;
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\Request;
-use Elgg\EntityPermissionsException;
 
 /**
  * Middleware to protect group creation page when only admins can create groups

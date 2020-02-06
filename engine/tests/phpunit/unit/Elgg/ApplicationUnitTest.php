@@ -5,6 +5,7 @@ namespace Elgg;
 use DI\Container;
 use Elgg\Application\Database;
 use Elgg\Database\Select;
+use Elgg\Exceptions\HttpException;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\RedirectResponse;

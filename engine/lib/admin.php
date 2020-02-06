@@ -15,8 +15,8 @@
  * administrator to take an action. @see elgg_add_admin_notice()
  */
 
-use Elgg\Menu\MenuItems;
 use Elgg\Database\QueryBuilder;
+use Elgg\Exceptions\LoginException;
 use Elgg\Http\ResponseBuilder;
 
 /**

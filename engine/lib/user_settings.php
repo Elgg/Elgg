@@ -4,8 +4,10 @@
  * Functions for adding and manipulating options on the user settings panel.
  */
 
-use Elgg\Request;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Http\ResponseBuilder;
+use Elgg\Request;
 
 /**
  * Set a user's password
@@ -329,9 +331,9 @@ function _elgg_set_user_email(\Elgg\Hook $hook) {
  * @param \Elgg\Hook $hook Hook
  *
  * @return bool|null
+ *
  * @since 1.8.0
  * @internal
- * @throws DatabaseException
  */
 function _elgg_set_user_default_access(\Elgg\Hook $hook) {
 

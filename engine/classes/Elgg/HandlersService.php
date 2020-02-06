@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Di\DiContainer;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\HooksRegistrationService\Event as HrsEvent;
 use Elgg\HooksRegistrationService\Hook as HrsHook;
 
@@ -128,7 +129,7 @@ class HandlersService {
 			return new \ReflectionMethod($callable, '__invoke');
 		}
 
-		throw new \InvalidArgumentException('invalid $callable');
+		throw new InvalidArgumentException('invalid $callable');
 	}
 
 	/**

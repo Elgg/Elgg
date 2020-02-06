@@ -2,12 +2,15 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\Http\BadRequestException ;
+use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;
 use Elgg\I18n\Translator;
 use Elgg\Router\RouteRegistrationService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
 
 /**
  * @group HttpService
@@ -786,7 +789,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 		$request = $this->prepareHttpRequest('ajax/view/unallowed', 'GET');
 		$this->createService($request);
 
-		$this->expectException(BadRequestException::class);
+		$this->expectException(AjaxGatekeeperException::class);
+		$this->expectExceptionCode(ELGG_HTTP_BAD_REQUEST);
 		$this->route($request);
 	}
 

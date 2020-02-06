@@ -3,6 +3,7 @@
 namespace Elgg\Upgrade;
 
 use Elgg\Database\Plugins;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Includer;
 use Elgg\Loggable;
 use Elgg\Project\Paths;
@@ -129,14 +130,15 @@ class Locator {
 	 * @param string $class The fully qualified class name
 	 *
 	 * @return Batch
+	 * @throws InvalidArgumentException
 	 */
 	public function getBatch($class) {
 		if (!class_exists($class)) {
-			throw new \InvalidArgumentException("Upgrade class $class was not found");
+			throw new InvalidArgumentException("Upgrade class $class was not found");
 		}
 
 		if (!is_subclass_of($class, Batch::class)) {
-			throw new \InvalidArgumentException("Upgrade class $class should implement " . Batch::class);
+			throw new InvalidArgumentException("Upgrade class $class should implement " . Batch::class);
 		}
 
 		return new $class;

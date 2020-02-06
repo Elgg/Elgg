@@ -6,6 +6,7 @@
  * @todo Expand for all upgrades to be \ElggUpgrade subclasses.
  */
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\TimeUsing;
 use Elgg\Upgrade\Batch;
 

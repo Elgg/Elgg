@@ -9,12 +9,12 @@ use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\AttributeWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
+use Elgg\Database\LegacyQueryOptionsAdapter;
 use Elgg\Database\QueryBuilder;
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\PluginHooksService;
 use ElggBatch;
 use ElggEntity;
-use InvalidParameterException;
-use Elgg\Database\LegacyQueryOptionsAdapter;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -333,7 +333,6 @@ class SearchService {
 	 * @param bool         $partial_match Allow partial matches
 	 *
 	 * @return CompositeExpression|string
-	 * @throws InvalidParameterException
 	 */
 	public function buildSearchWhereQuery(QueryBuilder $qb, $alias, $fields, $query_parts, $partial_match = true) {
 

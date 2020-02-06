@@ -1,10 +1,11 @@
 <?php
+
 namespace Elgg;
 
 use Elgg\Config\DatarootSettingMigrator;
 use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Database\ConfigTable;
-use ConfigurationException;
+use Elgg\Exceptions\ConfigurationException;
 use Elgg\Project\Paths;
 
 /**
@@ -233,8 +234,7 @@ class Config {
 		$config = self::fromFile($settings_path, $reason1);
 
 		if (!$config) {
-			$msg = __METHOD__ . ": Reading configs failed: $reason1";
-			throw new ConfigurationException($msg);
+			throw new ConfigurationException(__METHOD__ . ": Reading configs failed: $reason1");
 		}
 
 		$config->settings_path = $settings_path;

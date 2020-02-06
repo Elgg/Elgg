@@ -2,7 +2,8 @@
 
 namespace Elgg\Filesystem;
 
-use Elgg\Structs\Collection;
+use Elgg\Exceptions\InvalidArgumentException;
+
 
 /**
  * A simple directory abstraction.
@@ -19,7 +20,7 @@ interface Directory {
 	 *
 	 * @return Directory A new directory instance.
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function chroot($path);
 
@@ -30,7 +31,7 @@ interface Directory {
 	 *
 	 * @return string Empty string if the file doesn't exist.
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getContents($path);
 	
@@ -43,7 +44,7 @@ interface Directory {
 	 *
 	 * @return File
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getFile($path);
 	
@@ -55,7 +56,7 @@ interface Directory {
 	 *
 	 * @return Collection<File>
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getFiles($path = '', $recursive = true);
 
@@ -67,7 +68,7 @@ interface Directory {
 	 *
 	 * @return Collection<Directory>
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getDirectories($path = '', $recursive = true);
 
@@ -78,7 +79,7 @@ interface Directory {
 	 *
 	 * @return string
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function getPath($path = '');
 	
@@ -92,7 +93,7 @@ interface Directory {
 	 *
 	 * @return mixed
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function includeFile($path);
 	
@@ -103,7 +104,7 @@ interface Directory {
 	 *
 	 * @return boolean
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function isFile($path);
 	
@@ -115,7 +116,7 @@ interface Directory {
 	 *
 	 * @return void
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function putContents($path, $content);
 }

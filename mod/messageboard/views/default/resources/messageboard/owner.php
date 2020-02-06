@@ -1,15 +1,16 @@
 <?php
-use Elgg\Database\Clauses\OrderByClause;
-
 /**
  * Elgg Message board index page
  */
+
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Exceptions\Http\EntityNotFoundException;
 
 elgg_require_js('elgg/messageboard');
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner instanceof ElggUser) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 $history_username = elgg_extract('history_username', $vars);

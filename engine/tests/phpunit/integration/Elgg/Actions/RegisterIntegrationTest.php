@@ -3,6 +3,7 @@
 namespace Elgg\Actions;
 
 use Elgg\ActionResponseTestCase;
+use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Hook;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
@@ -276,7 +277,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	public function testRegistrationSucceedsButExceptionThrownFromHook() {
 
 		$hook = $this->registerTestingHook('register', 'user', function () {
-			throw new \RegistrationException('Hello');
+			throw new RegistrationException('Hello');
 		});
 
 		$username = $this->getRandomUsername();

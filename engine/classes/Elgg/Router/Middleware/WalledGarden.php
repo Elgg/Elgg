@@ -2,8 +2,8 @@
 
 namespace Elgg\Router\Middleware;
 
+use Elgg\Exceptions\Http\Gatekeeper\WalledGardenException;
 use Elgg\Request;
-use Elgg\WalledGardenException;
 
 /**
  * Protects a route from non-authenticated users in a walled garden mode

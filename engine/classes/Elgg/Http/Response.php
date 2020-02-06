@@ -2,7 +2,7 @@
 
 namespace Elgg\Http;
 
-use InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * Response builder

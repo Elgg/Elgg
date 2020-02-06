@@ -5,13 +5,15 @@
  * @uses $user ElggUser
  */
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 $user = elgg_get_page_owner_entity();
 if (!$user instanceof ElggUser) {
 	$user = elgg_get_logged_in_user_entity();
 }
 
 if (!$user instanceof ElggUser || !$user->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new EntityPermissionsException();
 }
 
 elgg_set_page_owner_guid($user->guid);

@@ -1,7 +1,10 @@
 <?php
 
+use Elgg\Exceptions\InvalidParameterException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * This class represents a physical file.

@@ -14,7 +14,6 @@ class LogEventCache extends CompositeCache {
 
 	/**
 	 * Constructor
-	 * @throws \ConfigurationException
 	 */
 	public function __construct() {
 		$flags = ELGG_CACHE_RUNTIME;

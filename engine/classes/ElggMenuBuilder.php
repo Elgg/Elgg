@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Menu\MenuItems;
 use Elgg\Menu\PreparedMenu;
 

@@ -196,20 +196,20 @@ User hooks
 
 **registeruser:validate:username, all**
 	Return boolean for if the string in ``$params['username']`` is valid for a username.
-	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
+	Hook handler can throw ``\Elgg\Exceptions\Configuration\RegistrationException`` with an error message to be shown to the user.
 
 **registeruser:validate:password, all**
 	Return boolean for if the string in ``$params['password']`` is valid for a password.
-	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
+	Hook handler can throw ``\Elgg\Exceptions\Configuration\RegistrationException`` with an error message to be shown to the user.
 
 **registeruser:validate:email, all**
 	Return boolean for if the string in ``$params['email']`` is valid for an email address.
-	Hook handler can throw ``\RegistrationException`` with an error message to be shown to the user.
+	Hook handler can throw ``\Elgg\Exceptions\Configuration\RegistrationException`` with an error message to be shown to the user.
 
 **register, user**
 	Triggered by the ``register`` action after the user registers. Return ``false`` to delete the user.
 	Note the function ``register_user`` does *not* trigger this hook.
-	Hook handlers can throw ``\RegistrationException`` with an error message to be displayed to the user.
+	Hook handlers can throw ``\Elgg\Exceptions\Configuration\RegistrationException`` with an error message to be displayed to the user.
 
 	The ``$params`` array will contain:
 
@@ -321,7 +321,7 @@ Action hooks
 **action:validate, <action>**
 	Trigger before action script/controller is executed.
 	This hook should be used to validate/alter user input, before proceeding with the action.
-	The hook handler can throw an instance of ``\Elgg\ValidationException`` or return ``false``
+	The hook handler can throw an instance of ``\Elgg\Exceptions\Http\ValidationException`` or return ``false``
 	to terminate further execution.
 
     ``$params`` array includes:
@@ -337,7 +337,7 @@ Action hooks
 
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
-	In certain cases, the ``params`` array will contain an instance of ``HttpException`` that triggered the error.
+	In certain cases, the ``params`` array will contain an instance of ``\Elgg\Exceptions\HttpException`` that triggered the error.
 
 **response, action:<action>**
     Filter an instance of ``\Elgg\Http\ResponseBuilder`` before it is sent to the client.
@@ -453,7 +453,7 @@ Permission hooks
 
 **gatekeeper, <entity_type>:<entity_subtype>**
     Filters the result of ``elgg_entity_gatekeeper()`` to prevent or allow access to an entity that user would otherwise have or not have access to.
-    A handler can return ``false`` or an instance of ``HttpException`` to prevent access to an entity.
+    A handler can return ``false`` or an instance of ``\Elgg\Exceptions\HttpException`` to prevent access to an entity.
     A handler can return ``true`` to override the result of the gatekeeper.
     **Important** that the entity received by this hook is fetched with ignored access and including disabled entities,
     so you have to be careful to not bypass the access system.

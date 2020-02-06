@@ -16,10 +16,9 @@
  * @param string $content_type The content type
  *
  * @return string
+ * @throws APIException
  */
-function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '',
-$content_type = 'application/octet-stream') {
-
+function send_api_call(array $keys, $url, array $call, $method = 'GET', $post_data = '', $content_type = 'application/octet-stream') {
 	$headers = [];
 	$encoded_params = [];
 
@@ -29,8 +28,7 @@ $content_type = 'application/octet-stream') {
 		case 'POST' :
 			break;
 		default:
-			$msg = elgg_echo('NotImplementedException:CallMethodNotImplemented', [$method]);
-			throw new NotImplementedException($msg);
+			throw new APIException(elgg_echo('NotImplementedException:CallMethodNotImplemented', [$method]));
 	}
 
 	// Time

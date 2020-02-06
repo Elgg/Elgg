@@ -7,10 +7,9 @@ use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
+use Elgg\Exceptions\InvalidArgumentException;
 use ElggEntity;
 use ElggRiverItem;
-use InvalidArgumentException;
-use InvalidParameterException;
 
 /**
  * River repository contains methods for fetching/counting river items
@@ -96,7 +95,6 @@ class River extends Repository {
 	 * @param string $property_type 'annotation'
 	 *
 	 * @return int|float
-	 * @throws InvalidParameterException
 	 */
 	public function calculate($function, $property, $property_type = 'annotation') {
 
@@ -137,7 +135,6 @@ class River extends Repository {
 	 * @param callable $callback Custom callback
 	 *
 	 * @return ElggEntity[]
-	 * @throws \DatabaseException
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
 

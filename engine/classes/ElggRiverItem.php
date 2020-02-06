@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Exceptions\InvalidParameterException;
+
 /**
  * River item class.
  *
@@ -29,10 +32,12 @@ class ElggRiverItem {
 	 * Construct a river item object given a database row.
 	 *
 	 * @param \stdClass $object Object obtained from database
+	 *
+	 * @throws InvalidParameterException
 	 */
 	public function __construct($object) {
-		if (!($object instanceof \stdClass)) {
-			throw new \InvalidParameterException("Invalid input to \ElggRiverItem constructor");
+		if (!$object instanceof \stdClass) {
+			throw new InvalidParameterException("Invalid input to \ElggRiverItem constructor");
 		}
 
 		// the casting is to support typed serialization like json

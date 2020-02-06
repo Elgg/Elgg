@@ -2,11 +2,10 @@
 
 namespace Elgg\Controllers;
 
-use Elgg\Request;
-use Elgg\Http\ResponseBuilder;
-use Elgg\HttpException;
-use Elgg\EntityNotFoundException;
 use Elgg\Database\QueryBuilder;
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Http\ResponseBuilder;
+use Elgg\Request;
 
 /**
  * Redirect a comment url to the full view of the entity
@@ -22,7 +21,7 @@ class CommentEntityRedirector {
 	 * @param Request $request the Elgg request
 	 *
 	 * @return ResponseBuilder
-	 * @throws HttpException
+	 * @throws EntityNotFoundException
 	 */
 	public function __invoke(Request $request) {
 		

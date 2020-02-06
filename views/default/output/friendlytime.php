@@ -7,6 +7,7 @@
  * @uses int    $vars['number_of_days'] (optional) number of days before friendly time switches to a date format
  */
 
+use Elgg\Exceptions\DataFormatException;
 use Elgg\Values;
 
 $timestamp = elgg_extract('time', $vars);

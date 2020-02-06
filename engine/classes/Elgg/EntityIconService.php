@@ -3,13 +3,12 @@
 namespace Elgg;
 
 use Elgg\Database\EntityTable;
-use Elgg\Http\Request as HttpRequest;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Filesystem\MimeTypeService;
 use ElggEntity;
 use ElggFile;
 use ElggIcon;
-use InvalidParameterException;
 use Psr\Log\LoggerInterface;
-use Elgg\Filesystem\MimeTypeService;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -33,11 +32,6 @@ class EntityIconService {
 	 * @var PluginHooksService
 	 */
 	private $hooks;
-
-	/**
-	 * @var \Elgg\Http\Request
-	 */
-	private $request;
 
 	/**
 	 * @var EntityTable

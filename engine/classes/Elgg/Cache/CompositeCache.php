@@ -5,6 +5,8 @@ namespace Elgg\Cache;
 use DateTime;
 use ElggCache;
 use Elgg\Config;
+use Elgg\Exceptions\ConfigurationException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Values;
 use Stash\Pool;
 use Stash\Driver\Apc;
@@ -59,8 +61,6 @@ class CompositeCache extends ElggCache {
 	 * @param Config $config             Elgg config
 	 * @param int    $flags              Start flags
 	 * @param bool   $validate_lastcache During load validate ElggConfig::lastcache
-	 *
-	 * @throws \ConfigurationException
 	 */
 	public function __construct($namespace, Config $config, $flags, bool $validate_lastcache = true) {
 		parent::__construct();
@@ -95,7 +95,7 @@ class CompositeCache extends ElggCache {
 		}
 
 		if (!is_string($key) && !is_int($key)) {
-			throw new \InvalidArgumentException('key must be string or integer');
+			throw new InvalidArgumentException('key must be string or integer');
 		}
 
 		$item = $this->pool->getItem($this->namespaceKey($key));
@@ -120,7 +120,7 @@ class CompositeCache extends ElggCache {
 		}
 
 		if (!is_string($key) && !is_int($key)) {
-			throw new \InvalidArgumentException('key must be string or integer');
+			throw new InvalidArgumentException('key must be string or integer');
 		}
 
 		$item = $this->pool->getItem($this->namespaceKey($key));
@@ -168,7 +168,7 @@ class CompositeCache extends ElggCache {
 		}
 
 		if (!is_string($key) && !is_int($key)) {
-			throw new \InvalidArgumentException('key must be string or integer');
+			throw new InvalidArgumentException('key must be string or integer');
 		}
 
 		$this->pool->deleteItem($this->namespaceKey($key));
@@ -240,7 +240,7 @@ class CompositeCache extends ElggCache {
 	/**
 	 * Create a new composite stash pool
 	 * @return Pool
-	 * @throws \ConfigurationException
+	 * @throws ConfigurationException
 	 */
 	protected function createPool() {
 		$drivers = [];
@@ -253,7 +253,7 @@ class CompositeCache extends ElggCache {
 		$drivers = array_filter($drivers);
 
 		if (empty($drivers)) {
-			throw new \ConfigurationException("Unable to initialize composite cache without drivers");
+			throw new ConfigurationException("Unable to initialize composite cache without drivers");
 		}
 
 		if (count($drivers) > 1) {

@@ -2,6 +2,7 @@
 
 namespace Elgg\Users;
 
+use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\IntegrationTestCase;
 
 class AccountServiceIntegrationTest extends IntegrationTestCase {
@@ -26,7 +27,7 @@ class AccountServiceIntegrationTest extends IntegrationTestCase {
 		$length = elgg()->config->min_password_length;
 		$password = str_repeat('a', $length - 1);
 		
-		$this->expectException(\RegistrationException::class);
+		$this->expectException(RegistrationException::class);
 		elgg()->accounts->assertValidPassword($password);
 	}
 	

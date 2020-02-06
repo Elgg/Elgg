@@ -2,14 +2,13 @@
 
 namespace Elgg\Controllers;
 
-use Elgg\Request;
-use Elgg\EntityNotFoundException;
-use Elgg\HttpException;
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Http\OkResponse;
 use Elgg\Http\ResponseBuilder;
+use Elgg\Request;
 use Elgg\TimeUsing;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Elgg\Http\OkResponse;
 
 /**
  * Controller to handle /serve-icon requests
@@ -27,7 +26,7 @@ class ServeIcon {
 	 * @param Request $request the HTTP request
 	 *
 	 * @return ResponseBuilder
-	 * @throws HttpException
+	 * @throws EntityNotFoundException
 	 */
 	public function __invoke(Request $request) {
 		

@@ -43,9 +43,10 @@
  * registered by {@link elgg_set_view_location()}.
  */
 
+use Elgg\Exceptions\Http\PageNotFoundException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
-use Elgg\Project\Paths;
 
 /**
  * Manually set the viewtype.
@@ -395,7 +396,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = []) {
  * @param array  $vars Arguments passed to the view
  *
  * @return string
- * @throws \Elgg\PageNotFoundException
+ * @throws PageNotFoundException
  */
 function elgg_view_resource($name, array $vars = []) {
 	$view = "resources/$name";
@@ -411,7 +412,7 @@ function elgg_view_resource($name, array $vars = []) {
 	_elgg_services()->logger->error("The view $view is missing.");
 
 	// only works for default viewtype
-	throw new \Elgg\PageNotFoundException();
+	throw new PageNotFoundException();
 }
 
 /**
@@ -719,7 +720,7 @@ function elgg_view_menu($menu, array $vars = []) {
 	}
 
 	if (!$menu instanceof Menu) {
-		throw new \InvalidArgumentException('$menu must be a menu name, a Menu, or UnpreparedMenu');
+		throw new InvalidArgumentException('$menu must be a menu name, a Menu, or UnpreparedMenu');
 	}
 
 	$name = $menu->getName();
@@ -1546,7 +1547,7 @@ function elgg_view_list_item($item, array $vars = []) {
  *                     or an array of variables (array('class' => 'float')) to pass to the icon view.
  *
  * @return string The html for displaying an icon
- * @throws InvalidArgumentException
+ * @throws \Elgg\Exceptions\InvalidArgumentException
  */
 function elgg_view_icon($name, $vars = []) {
 	if (empty($vars)) {
@@ -1558,7 +1559,7 @@ function elgg_view_icon($name, $vars = []) {
 	}
 
 	if (!is_array($vars)) {
-		throw new \InvalidArgumentException('$vars needs to be a string or an array');
+		throw new InvalidArgumentException('$vars needs to be a string or an array');
 	}
 
 	$vars['class'] = elgg_extract_class($vars, "elgg-icon-$name");

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $guid = elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid, 'object', 'blog', true);
 
@@ -19,7 +21,7 @@ if ($revision) {
 	$title .= ' ' . elgg_echo('blog:edit_revision_notice');
 
 	if (!$revision || !($revision->entity_guid == $guid)) {
-		throw new \Elgg\EntityNotFoundException(elgg_echo('blog:error:revision_not_found'));
+		throw new EntityNotFoundException(elgg_echo('blog:error:revision_not_found'));
 	}
 }
 

@@ -527,7 +527,6 @@ abstract class QueryBuilder extends DbalQueryBuilder {
 	 * @param string $joined_alias Joined table alias
 	 *
 	 * @return string
-	 * @throws \InvalidParameterException
 	 */
 	public function joinRelationshipTable($from_alias = '', $from_column = 'guid', $name = null, $inverse = false, $join_type = 'inner', $joined_alias = null) {
 		if (in_array($joined_alias, $this->joins)) {

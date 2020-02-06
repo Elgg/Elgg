@@ -1,5 +1,8 @@
 <?php
 
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\Filesystem\IOException;
+
 /**
  * @group UnitTests
  * @group FileService

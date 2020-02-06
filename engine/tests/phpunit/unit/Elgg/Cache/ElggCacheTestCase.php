@@ -3,6 +3,7 @@
 namespace Elgg\Cache;
 
 use Elgg\UnitTestCase;
+use Elgg\Exceptions\ConfigurationException;
 
 abstract class ElggCacheTestCase extends UnitTestCase {
 
@@ -14,7 +15,7 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 	public function up() {
 		try {
 			$this->cache = $this->createCache();
-		} catch (\ConfigurationException $ex) {
+		} catch (ConfigurationException $ex) {
 			$this->markTestSkipped("Can not test " . __FUNCTION__ . " with the current configuration");
 		}
 
@@ -27,7 +28,7 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 
 	/**
 	 * @return CompositeCache
-	 * @throws \ConfigurationException
+	 * @throws ConfigurationException
 	 */
 	abstract function createCache();
 
@@ -107,6 +108,4 @@ abstract class ElggCacheTestCase extends UnitTestCase {
 
 		$this->cache->setVariable('foo', null);
 	}
-
-
 }

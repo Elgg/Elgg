@@ -3,8 +3,8 @@
 namespace Elgg\Controllers;
 
 use Elgg\IntegrationTestCase;
-use Elgg\Http\Exception\AdminGatekeeperException;
-use Elgg\Http\Exception\AjaxGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
 use Elgg\Http\Request;
 
 class AdminPluginsRefreshIntegrationTest extends IntegrationTestCase {

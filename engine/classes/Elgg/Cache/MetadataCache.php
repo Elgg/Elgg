@@ -1,11 +1,13 @@
 <?php
+
 namespace Elgg\Cache;
 
-use Elgg\Database\Clauses\OrderByClause;
-use Elgg\Values;
 use ElggCache;
-use ElggMetadata;
 use Elgg\Database\Clauses\GroupByClause;
+use Elgg\Database\Clauses\OrderByClause;
+use Elgg\Exceptions\DataFormatException;
+use Elgg\Values;
+use ElggMetadata;
 
 /**
  * In memory cache of known metadata values stored by entity.
@@ -229,7 +231,7 @@ class MetadataCache {
 	public function populateFromEntities(...$guids) {
 		try {
 			$guids = Values::normalizeGuids($guids);
-		} catch (\DataFormatException $e) {
+		} catch (DataFormatException $e) {
 			return null;
 		}
 

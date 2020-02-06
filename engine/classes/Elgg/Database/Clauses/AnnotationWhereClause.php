@@ -4,6 +4,7 @@ namespace Elgg\Database\Clauses;
 
 use DateTime;
 use Elgg\Database\QueryBuilder;
+use Elgg\Exceptions\InvalidParameterException;
 
 /**
  * Builds queries for matching annotations against their properties
@@ -97,6 +98,7 @@ class AnnotationWhereClause extends WhereClause {
 
 	/**
 	 * {@inheritdoc}
+	 * @throws InvalidParameterException
 	 */
 	public function prepare(QueryBuilder $qb, $table_alias = null) {
 		$alias = function ($column) use ($table_alias) {
@@ -124,7 +126,7 @@ class AnnotationWhereClause extends WhereClause {
 
 		if ($this->sort_by_calculation) {
 			if (!in_array(strtolower($this->sort_by_calculation), QueryBuilder::$calculations)) {
-				throw new \InvalidParameterException("'$this->sort_by_calculation' is not a valid numeric calculation formula");
+				throw new InvalidParameterException("'$this->sort_by_calculation' is not a valid numeric calculation formula");
 			}
 
 			$calculation = "{$this->sort_by_calculation}(CAST({$alias('value')} AS DECIMAL(10, 2)))";

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 $guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid);
@@ -8,7 +10,7 @@ $container = get_entity($guid);
 
 // Make sure user has permissions to add a topic to container
 if (!$container->canWriteToContainer(0, 'object', 'discussion')) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new EntityPermissionsException();
 }
 
 elgg_push_collection_breadcrumbs('object', 'discussion', $container);

@@ -1,12 +1,12 @@
 <?php
-
-use Elgg\SystemMessagesService;
-use Elgg\Di\ServiceProvider;
-
 /**
  * Elgg session management
  * Functions to manage logins
  */
+
+use Elgg\Di\ServiceProvider;
+use Elgg\Exceptions\LoginException;
+use Elgg\SystemMessagesService;
 
 /**
  * Gets Elgg's session object
@@ -100,7 +100,7 @@ function pam_auth_userpass(array $credentials = []) {
 
 	$user = get_user_by_username($credentials['username']);
 	if (!$user) {
-		throw new \LoginException(_elgg_services()->translator->translate('LoginException:UsernameFailure'));
+		throw new LoginException(_elgg_services()->translator->translate('LoginException:UsernameFailure'));
 	}
 
 	$password_svc = _elgg_services()->passwords;
@@ -108,12 +108,12 @@ function pam_auth_userpass(array $credentials = []) {
 	$hash = $user->password_hash;
 
 	if (check_rate_limit_exceeded($user->guid)) {
-		throw new \LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
+		throw new LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
 	}
 
 	if (!$password_svc->verify($password, $hash)) {
 		log_login_failure($user->guid);
-		throw new \LoginException(_elgg_services()->translator->translate('LoginException:PasswordFailure'));
+		throw new LoginException(_elgg_services()->translator->translate('LoginException:PasswordFailure'));
 	}
 
 	if ($password_svc->needsRehash($hash)) {
@@ -237,7 +237,7 @@ function elgg_set_cookie(\ElggCookie $cookie) {
  * Logs in a specified \ElggUser. For standard registration, use in conjunction
  * with elgg_authenticate.
  *
- * @see elgg_authenticate
+ * @see elgg_authenticate()
  *
  * @param \ElggUser $user       A valid Elgg user object
  * @param boolean   $persistent Should this be a persistent login?
@@ -247,14 +247,14 @@ function elgg_set_cookie(\ElggCookie $cookie) {
  */
 function login(\ElggUser $user, $persistent = false) {
 	if ($user->isBanned()) {
-		throw new \LoginException(elgg_echo('LoginException:BannedUser'));
+		throw new LoginException(elgg_echo('LoginException:BannedUser'));
 	}
 
 	$session = elgg()->session;
 
 	// give plugins a chance to reject the login of this user (no user in session!)
 	if (!elgg_trigger_before_event('login', 'user', $user)) {
-		throw new \LoginException(elgg_echo('LoginException:Unknown'));
+		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
 	// #5933: set logged in user early so code in login event will be able to
@@ -362,8 +362,9 @@ function _elgg_session_cleanup_persistent_login(\Elgg\Hook $hook) {
  * Initializes the session and checks for the remember me cookie
  *
  * @param ServiceProvider $services Services
+ *
  * @return bool
- * @throws SecurityException
+ *
  * @internal
  */
 function _elgg_session_boot(ServiceProvider $services) {

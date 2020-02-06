@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * Locate the relative path of an entity's data dir.
  *
@@ -29,14 +31,14 @@ class EntityDirLocator {
 	 *
 	 * @param int $guid GUID of the entity.
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($guid) {
 		$guid = (int) $guid;
 
 		if (!$guid || $guid < 1) {
 			// Don't throw a ClassException to keep this class completely atomic.
-			throw new \InvalidArgumentException("GUIDs must be integers > 0.");
+			throw new InvalidArgumentException("GUIDs must be integers > 0.");
 		}
 
 		$this->guid = $guid;

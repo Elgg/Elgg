@@ -5,6 +5,8 @@
  *
  */
 
+use Elgg\Exceptions\SecurityException;
+
 /**
  * Check that the method call has the proper API and user authentication
  *
@@ -51,7 +53,7 @@ function authenticate_method($method) {
  * @param string $method Method, e.g. "foo.bar"
  *
  * @return GenericResult The result of the execution.
- * @throws APIException|CallException
+ * @throws APIException
  * @internal
  */
 function execute_method($method) {
@@ -72,9 +74,11 @@ function execute_method($method) {
 
 	// check http call method
 	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
-		$msg = elgg_echo('CallException:InvalidCallMethod', [$method,
-		$API_METHODS[$method]["call_method"]]);
-		throw new CallException($msg);
+		$msg = elgg_echo('APIException:InvalidCallMethod', [
+			$method,
+			$API_METHODS[$method]["call_method"],
+		]);
+		throw new APIException($msg);
 	}
 
 	$parameters = get_parameters_for_method($method);
@@ -239,7 +243,7 @@ function _elgg_ws_get_parameter_names($method) {
  *
  * A leading comma needs to be removed from the output.
  *
- * @see \ElggCoreWebServicesApiTest::testSerialiseParametersCasting
+ * @see \Elgg\WebServices\ApiTest::testSerialiseParametersCasting()
  *
  * @param string $method     API method name
  * @param array  $parameters Array of parameters

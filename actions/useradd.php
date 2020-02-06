@@ -1,7 +1,9 @@
 <?php
 /**
- * Elgg add action
+ * Elgg user add action
  */
+
+use Elgg\Exceptions\Configuration\RegistrationException;
 
 elgg_make_sticky_form('useradd');
 

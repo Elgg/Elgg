@@ -4,7 +4,7 @@ namespace Elgg\Notifications;
 
 use ElggData;
 use ElggEntity;
-use InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException;
 use stdClass;
 
 /**

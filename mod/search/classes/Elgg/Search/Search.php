@@ -2,9 +2,6 @@
 
 namespace Elgg\Search;
 
-use ElggEntity;
-use InvalidParameterException;
-
 /**
  * Search plugin
  */
@@ -70,11 +67,11 @@ class Search {
 	/**
 	 * Populate search-related volatile data
 	 *
-	 * @param ElggEntity $entity Found entity
+	 * @param \ElggEntity $entity Found entity
 	 *
 	 * @return void
 	 */
-	public function prepareEntity(ElggEntity $entity) {
+	public function prepareEntity(\ElggEntity $entity) {
 		$formatter = new Formatter($entity, $this);
 		$formatter->format();
 	}
@@ -88,7 +85,6 @@ class Search {
 	 * @param bool   $count       Count
 	 *
 	 * @return int|string
-	 * @throws InvalidParameterException
 	 */
 	public function listResults($search_type, $type = null, $subtype = null, $count = false) {
 		$current_params = $this->params;

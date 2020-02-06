@@ -2,7 +2,7 @@
 
 namespace Elgg\Router\Middleware;
 
-use Elgg\CsrfException;
+use Elgg\Exceptions\Http\CsrfException;
 use Elgg\Request;
 
 /**

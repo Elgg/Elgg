@@ -5,8 +5,6 @@ namespace Elgg\Database;
 use Elgg\Config as Conf;
 use Elgg\Database;
 use Elgg\Database\Clauses\OrderByClause;
-use ElggUser;
-use RegistrationException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -52,7 +50,7 @@ class UsersTable {
 	 *
 	 * @param string $username The user's username
 	 *
-	 * @return ElggUser|false Depending on success
+	 * @return \ElggUser|false Depending on success
 	 */
 	public function getByUsername($username) {
 
@@ -66,7 +64,7 @@ class UsersTable {
 		}
 
 		$entity =_elgg_services()->dataCache->usernames->load($username);
-		if ($entity instanceof ElggUser) {
+		if ($entity instanceof \ElggUser) {
 			return $entity;
 		}
 
@@ -169,7 +167,7 @@ class UsersTable {
 	 * @param string $username The username of the user sending the invitation
 	 *
 	 * @return string Invite code
-	 * @see validateInviteCode
+	 * @see self::validateInviteCode()
 	 */
 	public function generateInviteCode($username) {
 		$time = $this->getCurrentTime()->getTimestamp();
@@ -183,7 +181,7 @@ class UsersTable {
 	 * @param string $code     The invite code
 	 *
 	 * @return bool
-	 * @see generateInviteCode
+	 * @see self::generateInviteCode()
 	 */
 	public function validateInviteCode($username, $code) {
 		// validate the format of the token created by ->generateInviteCode()

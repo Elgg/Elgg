@@ -2,7 +2,7 @@
 
 namespace Elgg\Router\Middleware;
 
-use Elgg\HttpException;
+use Elgg\Exceptions\HttpException;
 use Elgg\Request;
 
 /**

@@ -2,6 +2,8 @@
 
 namespace Elgg\Cache;
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * @group UnitTests
  */
@@ -72,15 +74,10 @@ class LRUCacheUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testThrowExceptionOnNegativeSize() {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		new LRUCache(-2);
 	}
 
-	public function testThrowExceptionOnNonIntSize() {
-		$this->expectException(\InvalidArgumentException::class);
-		new LRUCache("abc");
-	}
-	
 	/**
 	 * @dataProvider setGetRemoveProvider
 	 */

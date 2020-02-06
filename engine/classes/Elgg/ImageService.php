@@ -3,11 +3,12 @@
 namespace Elgg;
 
 use Exception;
+use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Filesystem\MimeTypeService;
 use Imagine\Image\Box;
 use Imagine\Image\ImagineInterface;
 use Imagine\Image\Point;
 use Imagine\Filter\Basic\Autorotate;
-use Elgg\Filesystem\MimeTypeService;
 
 /**
  * Image manipulation service
@@ -265,7 +266,7 @@ class ImageService {
 		
 		try {
 			return elgg_extract($this->mimetype->getMimeType($filename), $accepted_formats);
-		} catch (\InvalidArgumentException $e) {
+		} catch (InvalidArgumentException $e) {
 			$this->getLogger()->warning($e);
 		}
 	}

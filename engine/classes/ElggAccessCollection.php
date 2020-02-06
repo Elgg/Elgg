@@ -13,7 +13,6 @@ class ElggAccessCollection extends ElggData {
 	 * Create an access collection object
 	 *
 	 * @param stdClass $row Database row
-	 * @throws InvalidArgumentException
 	 */
 	public function __construct(stdClass $row = null) {
 		$this->initializeAttributes();

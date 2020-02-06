@@ -2,7 +2,8 @@
 
 namespace Elgg\Security;
 
-use Elgg\HttpException;
+use Elgg\Exceptions\HttpException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * @group Security
@@ -42,7 +43,7 @@ class SignedUrlTest extends \Elgg\UnitTestCase {
 	public function testCanNotDoubleSignUrl() {
 		$signed_url = $this->service->sign($this->url);
 		
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->service->sign($signed_url);
 	}
 

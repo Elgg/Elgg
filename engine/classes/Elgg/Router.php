@@ -2,17 +2,16 @@
 
 namespace Elgg;
 
+use Elgg\Database\Plugins;
+use Elgg\Exceptions\Http\BadRequestException ;
+use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\Http\ResponseBuilder;
 use Elgg\Http\ResponseFactory;
 use Elgg\Router\RouteCollection;
 use Elgg\Router\UrlMatcher;
-use Exception;
-use InvalidParameterException;
-use RuntimeException;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Elgg\Database\Plugins;
 
 /**
  * Delegates requests to controllers based on the registered configuration.
@@ -91,8 +90,6 @@ class Router {
 	 * @param \Elgg\Http\Request $request The request to handle.
 	 *
 	 * @return boolean Whether the request was routed successfully.
-	 * @throws InvalidParameterException
-	 * @throws Exception
 	 */
 	public function route(HttpRequest $request) {
 		if ($this->timer) {
@@ -118,7 +115,6 @@ class Router {
 	 * @param \Elgg\Http\Request $request Request
 	 *
 	 * @return ResponseBuilder
-	 * @throws Exception
 	 * @throws PageNotFoundException
 	 */
 	public function getResponse(HttpRequest $request) {
@@ -143,7 +139,7 @@ class Router {
 	 * @param \Elgg\Http\Request $request Request
 	 *
 	 * @return ResponseBuilder|null
-	 * @throws Exception
+	 * @throws BadRequestException
 	 * @throws PageNotFoundException
 	 */
 	protected function prepareResponse(HttpRequest $request) {
@@ -226,7 +222,6 @@ class Router {
 	 * @param \Elgg\Request $request Request envelope
 	 *
 	 * @return ResponseBuilder|null
-	 * @throws Exception
 	 */
 	protected function getResponseFromHandler($handler, \Elgg\Request $request) {
 		if (!is_callable($handler)) {
@@ -240,7 +235,7 @@ class Router {
 		ob_start();
 		try {
 			$response = call_user_func($handler, $segments, $identifier, $request);
-		} catch (Exception $ex) {
+		} catch (\Exception $ex) {
 			ob_end_clean();
 			throw $ex;
 		}
@@ -295,6 +290,7 @@ class Router {
 	 * @param \Elgg\Http\Request $request Elgg request
 	 *
 	 * @return \Elgg\Http\Request
+	 * @throws \RuntimeException
 	 */
 	public function allowRewrite(HttpRequest $request) {
 		$segments = $request->getUrlSegments();
@@ -319,7 +315,7 @@ class Router {
 			!is_string($new['identifier']) ||
 			!is_array($new['segments'])
 		) {
-			throw new RuntimeException('rewrite_path handler returned invalid route data.');
+			throw new \RuntimeException('rewrite_path handler returned invalid route data.');
 		}
 
 		// rewrite request

@@ -1,5 +1,8 @@
 <?php
+
 namespace Elgg;
+
+use Elgg\Exceptions\InvalidParameterException;
 
 /**
  * WidgetDefinition
@@ -43,10 +46,11 @@ class WidgetDefinition {
 	 * WidgetDefinition constructor
 	 *
 	 * @param string $id Identifier of the widget
+	 * @throws InvalidParameterException
 	 */
 	public function __construct($id) {
 		if (empty($id)) {
-			throw new \InvalidParameterException('Id missing for WidgetDefinition');
+			throw new InvalidParameterException('Id missing for WidgetDefinition');
 		}
 		
 		$this->id = $id;
@@ -63,7 +67,6 @@ class WidgetDefinition {
 	 *    context => ARRAY contexts in which the widget is available
 	 *    multiple => BOOL can the widget be added multiple times
 	 *
-	 * @throws \InvalidParameterException
 	 * @return \Elgg\WidgetDefinition
 	 */
 	public static function factory(array $options) {

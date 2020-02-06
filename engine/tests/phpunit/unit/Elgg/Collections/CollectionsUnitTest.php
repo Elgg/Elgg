@@ -2,6 +2,8 @@
 
 namespace Elgg\Collections;
 
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
 
 /**
@@ -72,7 +74,7 @@ class CollectionsUnitTest extends UnitTestCase {
 		$a = new TestItem('a', 100);
 		$b = new TestItem('b', 200);
 
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$collection = new Collection(['c' => $a, 'd' => $b, null, false, new \stdClass()]);
 
 		$this->assertEquals([
@@ -288,7 +290,7 @@ class CollectionsUnitTest extends UnitTestCase {
 	}
 
 	public function testConstructorThrowsWithInvalidClass() {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		new Collection([], MyClass::class);
 	}
 

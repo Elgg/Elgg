@@ -2,16 +2,18 @@
 
 namespace Elgg;
 
-use ClassException;
-use Closure;
-use ConfigurationException;
-use DatabaseException;
 use Elgg\Application\BootHandler;
 use Elgg\Application\ErrorHandler;
 use Elgg\Application\ExceptionHandler;
 use Elgg\Application\ShutdownHandler;
 use Elgg\Database\DbConfig;
 use Elgg\Di\ServiceProvider;
+use Elgg\Exceptions\ConfigurationException;
+use Elgg\Exceptions\Configuration\InstallationException;
+use Elgg\Exceptions\HttpException;
+use Elgg\Exceptions\Http\GatekeeperException;
+use Elgg\Exceptions\Http\PageNotFoundException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory\Local;
 use Elgg\Http\ErrorResponse;
@@ -24,10 +26,6 @@ use Elgg\Project\Paths;
 use Elgg\Security\UrlSigner;
 use ElggInstaller;
 use Exception;
-use InstallationException;
-use InvalidArgumentException;
-use InvalidParameterException;
-use SecurityException;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -73,7 +71,6 @@ class Application {
 	 * Get the global Application instance. If not set, it's auto-created and wired to $CONFIG.
 	 *
 	 * @return Application|null
-	 * @throws ConfigurationException
 	 */
 	public static function getInstance() {
 		if (self::$_instance === null) {
@@ -125,7 +122,7 @@ class Application {
 			try {
 				Includer::requireFileOnce("$path/$file");
 			} catch (\Error $e) {
-				throw new \InstallationException("Elgg lib file failed include: $path/$file");
+				throw new InstallationException("Elgg lib file failed include: $path/$file");
 			}
 		}
 	}
@@ -134,12 +131,6 @@ class Application {
 	 * Start and boot the core
 	 *
 	 * @return self
-	 * @throws ClassException
-	 * @throws ConfigurationException
-	 * @throws DatabaseException
-	 * @throws InstallationException
-	 * @throws InvalidParameterException
-	 * @throws SecurityException
 	 */
 	public static function start() {
 		$app = self::getInstance();
@@ -173,12 +164,6 @@ class Application {
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
 	 * @return void
-	 *
-	 * @throws InstallationException
-	 * @throws InvalidParameterException
-	 * @throws SecurityException
-	 * @throws ClassException
-	 * @throws DatabaseException
 	 *
 	 * @internal
 	 */
@@ -234,7 +219,6 @@ class Application {
 	 * @param array $spec Specification for initial call.
 	 *
 	 * @return self
-	 * @throws ConfigurationException
 	 * @throws InvalidArgumentException
 	 */
 	public static function factory(array $spec = []) {
@@ -298,11 +282,6 @@ class Application {
 	 * @param HttpRequest $request Request
 	 *
 	 * @return Response|false
-	 * @throws ClassException
-	 * @throws DatabaseException
-	 * @throws InstallationException
-	 * @throws InvalidParameterException
-	 * @throws SecurityException
 	 */
 	public static function route(HttpRequest $request) {
 		self::loadCore();
@@ -340,7 +319,6 @@ class Application {
 	 * @param ResponseBuilder $builder Response builder
 	 *
 	 * @return Response|false Sent response
-	 * @throws InvalidParameterException
 	 */
 	public static function respond(ResponseBuilder $builder) {
 		if (self::$_instance) {
@@ -377,11 +355,6 @@ class Application {
 	 * Elgg's front controller. Handles basically all incoming URL requests.
 	 *
 	 * @return Response|false True if Elgg will handle the request, false if the server should (PHP-CLI server)
-	 * @throws ClassException
-	 * @throws DatabaseException
-	 * @throws InstallationException
-	 * @throws InvalidParameterException
-	 * @throws SecurityException
 	 */
 	public static function index() {
 		return self::route(self::getRequest());
@@ -391,11 +364,7 @@ class Application {
 	 * Routes the request, booting core if not yet booted
 	 *
 	 * @return Response|false False if Elgg wants the PHP CLI server to handle the request
-	 * @throws ClassException
-	 * @throws DatabaseException
-	 * @throws InstallationException
-	 * @throws InvalidParameterException
-	 * @throws SecurityException
+	 * @throws PageNotFoundException
 	 */
 	public function run() {
 		$config = $this->_services->config;
@@ -501,7 +470,6 @@ class Application {
 	 * Renders a web UI for installing Elgg.
 	 *
 	 * @return Response|false
-	 * @throws InvalidParameterException
 	 */
 	public static function install() {
 		ini_set('display_errors', 1);
@@ -529,12 +497,6 @@ class Application {
 	 * to a relative URL.
 	 *
 	 * @return Response|false
-	 * @throws ClassException
-	 * @throws ConfigurationException
-	 * @throws DatabaseException
-	 * @throws InstallationException
-	 * @throws InvalidParameterException
-	 * @throws SecurityException
 	 */
 	public static function upgrade() {
 
@@ -551,7 +513,7 @@ class Application {
 			// We need to resign the URL because the path is different
 			$mac = elgg_extract(UrlSigner::KEY_MAC, $query);
 			if (isset($mac) && !$signer->isValid($url)) {
-				throw new \Elgg\HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
+				throw new HttpException(elgg_echo('invalid_request_signature'), ELGG_HTTP_FORBIDDEN);
 			}
 
 			unset($query[UrlSigner::KEY_MAC]);

@@ -2,8 +2,9 @@
 
 namespace Elgg\Integration;
 
-use ElggTempFile;
+use Elgg\Exceptions\Filesystem\IOException;
 use Elgg\IntegrationTestCase;
+use ElggTempFile;
 
 /**
  * Elgg Test Skeleton
@@ -113,7 +114,7 @@ class ElggTempFileTest extends IntegrationTestCase {
 	}
 	
 	public function testSaveThrowsException() {
-		$this->expectException(\IOException::class);
+		$this->expectException(IOException::class);
 		$this->temp_file->save();
 	}
 	

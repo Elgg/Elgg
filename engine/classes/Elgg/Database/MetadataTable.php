@@ -5,10 +5,10 @@ namespace Elgg\Database;
 use Elgg\Cache\MetadataCache;
 use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
+use Elgg\Database\Clauses\OrderByClause;
 use Elgg\EventsService as Events;
 use Elgg\TimeUsing;
 use ElggMetadata;
-use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * This class interfaces with the database to perform CRUD operations on metadata
@@ -119,7 +119,6 @@ class MetadataTable {
 	 * @option string[] $tag_names Names of registered tag names to include in search
 	 *
 	 * @return \stdClass[]|false
-	 * @throws \DatabaseException
 	 */
 	public function getTags(array $options = []) {
 		$defaults = [
@@ -201,7 +200,6 @@ class MetadataTable {
 	 * @param int $id The id of the metadata object being retrieved.
 	 *
 	 * @return ElggMetadata|false  false if not found
-	 * @throws \DatabaseException
 	 */
 	public function get($id) {
 		$qb = Select::fromTable('metadata');
@@ -225,7 +223,6 @@ class MetadataTable {
 	 * @param ElggMetadata $metadata Metadata
 	 *
 	 * @return bool
-	 * @throws \DatabaseException
 	 */
 	public function delete(ElggMetadata $metadata) {
 		if (!$metadata->id) {
@@ -258,7 +255,7 @@ class MetadataTable {
 	 * @param bool         $allow_multiple Allow multiple values for one key. Default is false
 	 *
 	 * @return int|false id of metadata or false if failure
-	 * @throws \DatabaseException
+	 * @throws \LogicException
 	 */
 	public function create(ElggMetadata $metadata, $allow_multiple = false) {
 		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
@@ -343,7 +340,6 @@ class MetadataTable {
 	 * @param ElggMetadata $metadata Updated metadata
 	 *
 	 * @return bool
-	 * @throws \DatabaseException
 	 */
 	public function update(ElggMetadata $metadata) {
 

@@ -65,7 +65,6 @@ class ActionsService {
 	 * @return bool
 	 *
 	 * @see    elgg_register_action()
-	 * @throws \InvalidParameterException
 	 */
 	public function register($action, $handler = "", $access = 'logged_in') {
 		// plugins are encouraged to call actions with a trailing / to prevent 301

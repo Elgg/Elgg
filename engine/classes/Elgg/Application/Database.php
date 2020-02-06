@@ -2,7 +2,6 @@
 
 namespace Elgg\Application;
 
-use DatabaseException;
 use Doctrine\DBAL\Connection;
 use Elgg\Database as ElggDb;
 
@@ -46,7 +45,6 @@ class Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
-	 * @throws DatabaseException
 	 */
 	public function getData($query, $callback = '', array $params = []) {
 		return $this->db->getData($query, $callback, $params);
@@ -64,7 +62,6 @@ class Database {
 	 * @param array    $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
-	 * @throws DatabaseException
 	 */
 	public function getDataRow($query, $callback = '', array $params = []) {
 		return $this->db->getDataRow($query, $callback, $params);
@@ -80,7 +77,6 @@ class Database {
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
-	 * @throws DatabaseException
 	 */
 	public function insertData($query, array $params = []) {
 		return $this->db->insertData($query, $params);
@@ -96,7 +92,6 @@ class Database {
 	 * @param array  $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return bool|int
-	 * @throws DatabaseException
 	 */
 	public function updateData($query, $getNumRows = false, array $params = []) {
 		return $this->db->updateData($query, $getNumRows, $params);
@@ -111,7 +106,6 @@ class Database {
 	 * @param array  $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return int The number of affected rows
-	 * @throws DatabaseException
 	 */
 	public function deleteData($query, array $params = []) {
 		return $this->db->deleteData($query, $params);
@@ -123,7 +117,6 @@ class Database {
 	 * @param string $type The type of link we want: "read", "write" or "readwrite".
 	 *
 	 * @return Connection
-	 * @throws DatabaseException
 	 * @internal
 	 */
 	public function getConnection($type) {

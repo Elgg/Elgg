@@ -1,6 +1,8 @@
 <?php
 
 use Elgg\Application;
+use Elgg\Exceptions\ConfigurationException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * @group Plugins

@@ -2,6 +2,10 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\Http\CsrfException;
+use Elgg\Exceptions\Http\GatekeeperException;
+use Elgg\Exceptions\Http\PageNotFoundException;
+use Elgg\Exceptions\Http\ValidationException;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\Request;

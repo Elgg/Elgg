@@ -4,10 +4,9 @@ namespace Elgg\Http;
 
 use Elgg\Ajax\Service as AjaxService;
 use Elgg\EventsService;
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\PluginHooksService;
 use ElggEntity;
-use InvalidArgumentException;
-use InvalidParameterException;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -148,7 +147,6 @@ class ResponseFactory {
 	 * @param array   $headers An array of response headers
 	 *
 	 * @return Response
-	 * @throws InvalidArgumentException
 	 */
 	public function prepareResponse($content = '', $status = 200, array $headers = []) {
 		$header_bag = $this->getHeaders();
@@ -169,7 +167,6 @@ class ResponseFactory {
 	 * @param array   $headers An array of response headers (Location is always set to the given URL)
 	 *
 	 * @return SymfonyRedirectResponse
-	 * @throws InvalidArgumentException
 	 */
 	public function prepareRedirectResponse($url, $status = 302, array $headers = []) {
 		$header_bag = $this->getHeaders();
@@ -190,7 +187,6 @@ class ResponseFactory {
 	 * @param array   $headers An array of response headers
 	 *
 	 * @return JsonResponse
-	 * @throws InvalidArgumentException
 	 */
 	public function prepareJsonResponse($content = '', $status = 200, array $headers = []) {
 		$header_bag = $this->getHeaders();
@@ -264,7 +260,7 @@ class ResponseFactory {
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 * @return false|Response
-	 * @throws \InvalidParameterException
+	 * @throws InvalidParameterException
 	 */
 	public function respond(ResponseBuilder $response) {
 
@@ -347,7 +343,6 @@ class ResponseFactory {
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 *
 	 * @return false|Response
-	 * @throws \InvalidParameterException
 	 */
 	public function respondWithError(ResponseBuilder $response) {
 		$error = $this->stringify($response->getContent());

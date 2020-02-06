@@ -2,8 +2,7 @@
 
 namespace Elgg\Http;
 
-use stdClass;
-
+use Elgg\Exceptions\InvalidArgumentException;
 /**
  * @group HttpService
  * @group UnitTests
@@ -50,7 +49,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 		$test_class = $this->class;
 		$response = new $test_class();
 		
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$response->setContent($value);
 	}
 
@@ -58,7 +57,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 		self::createApplication();
 
 		return [
-			[new stdClass()],
+			[new \stdClass()],
 			[(object) ['foo' => 'bar']],
 			[
 				function () {
@@ -97,7 +96,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 		$test_class = $this->class;
 		$response = new $test_class();
 		
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$response->setStatusCode($value);
 	}
 
@@ -129,7 +128,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 		return [
 			['foo'],
 			[[200]],
-			[new stdClass()],
+			[new \stdClass()],
 			[(object) 200],
 		];
 	}
@@ -168,7 +167,7 @@ abstract class ResponseUnitTest extends \Elgg\UnitTestCase {
 		$test_class = $this->class;
 		$response = new $test_class();
 		
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$response->setForwardURL($value);
 	}
 

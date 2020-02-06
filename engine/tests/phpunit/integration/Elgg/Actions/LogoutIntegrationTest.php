@@ -3,10 +3,10 @@
 namespace Elgg\Actions;
 
 use Elgg\ActionResponseTestCase;
+use Elgg\Exceptions\Http\GatekeeperException;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Values;
-use Elgg\GatekeeperException;
 
 /**
  * @group ActionsService

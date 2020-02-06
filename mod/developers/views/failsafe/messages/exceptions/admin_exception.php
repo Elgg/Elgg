@@ -6,6 +6,8 @@
  * @uses $vars['object'] An exception
  */
 
+use Elgg\Exceptions\DatabaseException;
+
 $exception = elgg_extract('object', $vars);
 if (!$exception instanceof Throwable) {
 	return;
@@ -21,7 +23,7 @@ if (!$exception instanceof Throwable) {
 </div>
 <br/>
 <?php
-if ($exception instanceof \DatabaseException) {
+if ($exception instanceof DatabaseException) {
 	?>
 	<div class="elgg-messages-exception">
 		<pre><?= $exception->getQuery() ?></pre>

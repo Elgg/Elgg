@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * @group User
  * @group UnitTests

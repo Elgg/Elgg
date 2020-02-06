@@ -4,6 +4,10 @@
  * Functions to manage multiple or single users in an Elgg install
  */
 
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\ClassException;
+use Elgg\Exceptions\Configuration\RegistrationException;
+
 /**
  * Get a user object from a GUID.
  *

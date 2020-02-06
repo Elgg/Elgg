@@ -2,7 +2,7 @@
 
 namespace Elgg;
 
-use Elgg\Database\EntityTable\UserFetchFailureException;
+use Elgg\Exceptions\Database\UserFetchFailureException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.

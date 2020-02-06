@@ -1,8 +1,10 @@
 <?php
+
 namespace Elgg\Cache;
 
-use Elgg\Values;
 use ElggCache;
+use Elgg\Exceptions\DataFormatException;
+use Elgg\Values;
 
 /**
  * In memory cache of known private settings values stored by entity.
@@ -58,7 +60,7 @@ class PrivateSettingsCache {
 	public function populateFromEntities(...$guids) {
 		try {
 			$guids = Values::normalizeGuids($guids);
-		} catch (\DataFormatException $e) {
+		} catch (DataFormatException $e) {
 			return null;
 		}
 

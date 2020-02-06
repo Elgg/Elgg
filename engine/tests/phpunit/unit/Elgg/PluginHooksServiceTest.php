@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Psr\Log\LogLevel;
 
 /**
@@ -28,7 +29,7 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 			'throwInvalidArg'
 		]);
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->hooks->trigger('foo', 'bar');
 	}
 
@@ -151,7 +152,7 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public static function throwInvalidArg() {
-		throw new \InvalidArgumentException();
+		throw new InvalidArgumentException();
 	}
 }
 

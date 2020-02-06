@@ -2,6 +2,9 @@
 
 use Elgg\Includer;
 use Elgg\Database\Delete;
+use Elgg\Exceptions\DatabaseException;
+use Elgg\Exceptions\Http\PluginException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -60,7 +63,7 @@ class ElggPlugin extends ElggObject {
 	 * @param string $path      Path, defaults to /mod
 	 *
 	 * @return ElggPlugin
-	 * @throws PluginException
+	 * @throws InvalidArgumentException
 	 */
 	public static function fromId($plugin_id, $path = null) {
 		if (empty($plugin_id)) {
@@ -257,7 +260,6 @@ class ElggPlugin extends ElggObject {
 	 *                        and set their priorities +1
 	 *
 	 * @return int|false
-	 * @throws DatabaseException
 	 */
 	public function setPriority($priority) {
 		$priority = $this->normalizePriority($priority);
@@ -405,7 +407,6 @@ class ElggPlugin extends ElggObject {
 	 * @param mixed  $default   The default value to return if none is set
 	 *
 	 * @return mixed The setting string value, the default value or false if there is no user
-	 * @throws DatabaseException
 	 */
 	public function getUserSetting($name, $user_guid = 0, $default = null) {
 		$values = $this->getAllUserSettings($user_guid);
@@ -424,7 +425,6 @@ class ElggPlugin extends ElggObject {
 	 * @param int $user_guid The user GUID. Defaults to logged in.
 	 *
 	 * @return array An array of key/value pairs
-	 * @throws DatabaseException
 	 */
 	public function getAllUserSettings($user_guid = 0) {
 
@@ -500,7 +500,6 @@ class ElggPlugin extends ElggObject {
 	 * @param int $user_guid The user GUID to remove user settings.
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	public function unsetAllUserSettings($user_guid = 0) {
 		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
@@ -632,8 +631,6 @@ class ElggPlugin extends ElggObject {
 	 * Actives the plugin for the current site.
 	 *
 	 * @return bool
-	 * @throws InvalidParameterException
-	 * @throws PluginException
 	 */
 	public function activate() {
 		if ($this->isActive()) {
@@ -762,7 +759,6 @@ class ElggPlugin extends ElggObject {
 	 * Deactivates the plugin.
 	 *
 	 * @return bool
-	 * @throws PluginException
 	 */
 	public function deactivate() {
 		if (!$this->isActive()) {
@@ -825,7 +821,6 @@ class ElggPlugin extends ElggObject {
 	 * Register plugin classes and require composer autoloader
 	 *
 	 * @return void
-	 * @throws PluginException
 	 * @internal
 	 */
 	public function autoload() {
@@ -854,7 +849,6 @@ class ElggPlugin extends ElggObject {
 	 * Register languages and views
 	 *
 	 * @return void
-	 * @throws PluginException
 	 * @internal
 	 */
 	public function register() {
@@ -870,7 +864,6 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Boot the plugin
 	 *
-	 * @throws PluginException
 	 * @return void
 	 * @internal
 	 */
@@ -880,9 +873,8 @@ class ElggPlugin extends ElggObject {
 
 	/**
 	 * Init the plugin
+	 *
 	 * @return void
-	 * @throws InvalidParameterException
-	 * @throws PluginException
 	 * @internal
 	 */
 	public function init() {
@@ -904,8 +896,8 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @param string $filename The name of the file
 	 *
-	 * @throws PluginException
 	 * @return mixed The return value of the included file (or 1 if there is none)
+	 * @throws PluginException
 	 */
 	protected function includeFile($filename) {
 		$filepath = "{$this->getPath()}{$filename}";
@@ -950,7 +942,6 @@ class ElggPlugin extends ElggObject {
 	 * If a static config file is present, is it a serializable array?
 	 *
 	 * @return bool
-	 * @throws PluginException
 	 */
 	private function isStaticConfigValid() {
 		if (!$this->canReadFile(ElggPluginPackage::STATIC_CONFIG_FILENAME)) {
@@ -979,8 +970,8 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Registers the plugin's views
 	 *
-	 * @throws PluginException
 	 * @return void
+	 * @throws PluginException
 	 */
 	protected function registerViews() {
 		if (_elgg_config()->system_cache_loaded) {
@@ -1070,7 +1061,6 @@ class ElggPlugin extends ElggObject {
 	 * Registers the plugin's routes provided in the plugin config file
 	 *
 	 * @return void
-	 * @throws InvalidParameterException
 	 */
 	protected function registerRoutes() {
 		$routes = _elgg_services()->routes;
@@ -1090,7 +1080,6 @@ class ElggPlugin extends ElggObject {
 	 * Registers the plugin's widgets provided in the plugin config file
 	 *
 	 * @return void
-	 * @throws \InvalidParameterException
 	 */
 	protected function registerWidgets() {
 		$widgets = _elgg_services()->widgets;
@@ -1340,7 +1329,6 @@ class ElggPlugin extends ElggObject {
 	 * @param string $name Name of the attribute or private setting
 	 *
 	 * @return mixed
-	 * @throws DatabaseException
 	 */
 	public function __get($name) {
 		// See if its in our base attribute

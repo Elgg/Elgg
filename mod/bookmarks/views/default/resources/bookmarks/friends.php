@@ -3,11 +3,13 @@
  * Elgg bookmarks plugin friends page
  */
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $username = elgg_extract('username', $vars);
 
 $user = get_user_by_username($username);
 if (!$user) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 elgg_push_collection_breadcrumbs('object', 'bookmarks', $user, true);

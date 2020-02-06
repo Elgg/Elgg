@@ -3,6 +3,7 @@
 namespace phpunit\unit\Elgg;
 
 use Elgg\Cron;
+use Elgg\Exceptions\CronException;
 use Elgg\UnitTestCase;
 
 /**
@@ -156,7 +157,7 @@ class CronServiceTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnInvalidInterval() {
-		$this->expectException(\CronException::class);
+		$this->expectException(CronException::class);
 		$this->service->run(['foo']);
 	}
 	

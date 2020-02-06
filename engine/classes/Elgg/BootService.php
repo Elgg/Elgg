@@ -44,11 +44,7 @@ class BootService {
 	 * @param ServiceProvider $services Services
 	 *
 	 * @return void
-	 * @throws \ClassException
-	 * @throws \DatabaseException
-	 * @throws \InstallationException
-	 * @throws \InvalidParameterException
-	 * @throws \SecurityException
+	 * @throws \RuntimeException
 	 */
 	public function boot(ServiceProvider $services) {
 		$db = $services->db;
@@ -157,11 +153,6 @@ class BootService {
 	 * @param bool     $installed Is the site installed?
 	 *
 	 * @return BootData
-	 *
-	 * @throws \ClassException
-	 * @throws \DatabaseException
-	 * @throws \InstallationException
-	 * @throws \InvalidParameterException
 	 */
 	private function getBootData(Config $config, Database $db, $installed) {
 		$config->_boot_cache_hit = false;

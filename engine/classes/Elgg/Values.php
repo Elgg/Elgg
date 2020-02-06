@@ -2,9 +2,9 @@
 
 namespace Elgg;
 
-use Elgg\I18n\DateTime as ElggDateTime;
-use DataFormatException;
 use DateTime as PHPDateTime;
+use Elgg\I18n\DateTime as ElggDateTime;
+use Elgg\Exceptions\DataFormatException;
 use Exception;
 
 

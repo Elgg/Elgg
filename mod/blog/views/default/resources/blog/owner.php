@@ -1,12 +1,14 @@
 <?php
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $username = elgg_extract('username', $vars);
 $lower = elgg_extract('lower', $vars);
 $upper = elgg_extract('upper', $vars);
 
 $user = get_user_by_username($username);
 if (!$user) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 elgg_register_title_button('blog', 'add', 'object', 'blog');

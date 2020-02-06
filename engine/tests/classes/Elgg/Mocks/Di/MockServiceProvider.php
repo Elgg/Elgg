@@ -25,8 +25,6 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 	 * Constructor
 	 *
 	 * @param \Elgg\Config $config Config
-	 *
-	 * @throws \ConfigurationException
 	 */
 	public function __construct(\Elgg\Config $config) {
 

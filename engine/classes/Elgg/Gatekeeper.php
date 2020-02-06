@@ -4,6 +4,15 @@ namespace Elgg;
 
 use Elgg\Database\AccessCollections;
 use Elgg\Database\EntityTable;
+use Elgg\Exceptions\HttpException;
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
+use Elgg\Exceptions\Http\GatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException;
 use Elgg\Http\Request as HttpRequest;
 use Elgg\I18n\Translator;
 use ElggEntity;
@@ -11,10 +20,6 @@ use ElggGroup;
 use ElggSession;
 use ElggUser;
 use Exception;
-use Elgg\Http\Exception\AdminGatekeeperException;
-use Elgg\Http\Exception\LoggedInGatekeeperException;
-use Elgg\Http\Exception\LoggedOutGatekeeperException;
-use Elgg\Http\Exception\AjaxGatekeeperException;
 
 /**
  * Gatekeeper

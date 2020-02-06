@@ -31,11 +31,6 @@ class BootHandler {
 	 * Boots services, plugins and trigger init/ready events
 	 *
 	 * @return void
-	 * @throws \ClassException
-	 * @throws \DatabaseException
-	 * @throws \InstallationException
-	 * @throws \InvalidParameterException
-	 * @throws \SecurityException
 	 */
 	public function __invoke() {
 		$config = $this->app->_services->config;
@@ -51,12 +46,8 @@ class BootHandler {
 
 	/**
 	 * Boot core services
+	 *
 	 * @return void
-	 * @throws \ClassException
-	 * @throws \DatabaseException
-	 * @throws \InstallationException
-	 * @throws \InvalidParameterException
-	 * @throws \SecurityException
 	 */
 	public function bootServices() {
 		$config = $this->app->_services->config;

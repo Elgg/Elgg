@@ -3,11 +3,13 @@
  * List a user's or group's pages
  */
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $username = elgg_extract('username', $vars);
 $owner = get_user_by_username($username);
 
 if (!$owner instanceof ElggUser) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 elgg_push_collection_breadcrumbs('object', 'page', $owner);

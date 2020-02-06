@@ -2,6 +2,10 @@
 
 namespace Elgg\Di;
 
+use Elgg\Exceptions\Di\FactoryUncallableException;
+use Elgg\Exceptions\Di\MissingValueException;
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * @group UnitTests
  */
@@ -67,7 +71,7 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 	public function testSetFactoryLooksUncallable() {
 		$di = new \Elgg\Di\DiContainer();
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('$factory must appear callable');
 		$di->setFactory('foo', new \stdClass());
 	}
@@ -121,7 +125,7 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertInstanceOf(self::TEST_CLASS, $di->foo);
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('Class names must be valid PHP class names');
 		$di->setClassName('foo', array());
 	}
@@ -135,7 +139,7 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 		$di->setClassName('foo2', "\\Foo2{$euro}3");
 		$di->setClassName('foo3', "Foo2{$euro}3\\Foo2{$euro}3");
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->expectExceptionMessage('Class names must be valid PHP class names');
 		$di->setClassName('foo', 'Not Valid');
 	}
@@ -155,7 +159,7 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 		try {
 			$di->setValue('foo_', 'foo');
 			$this->fail('setValue did not throw');
-		} catch (\InvalidArgumentException $e) {
+		} catch (InvalidArgumentException $e) {
 
 		}
 
@@ -166,14 +170,14 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 
 			});
 			$this->fail('setFactory did not throw');
-		} catch (\InvalidArgumentException $e) {
+		} catch (InvalidArgumentException $e) {
 
 		}
 
 		try {
 			$di->remove('foo_');
 			$this->fail('remove did not throw');
-		} catch (\InvalidArgumentException $e) {
+		} catch (InvalidArgumentException $e) {
 
 		}
 

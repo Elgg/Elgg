@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Exceptions\Filesystem\IOException;
+
 /**
  * Relationship class.
  *
@@ -26,7 +29,6 @@ class ElggRelationship extends \ElggData {
 	 * Create a relationship object
 	 *
 	 * @param \stdClass $row Database row
-	 * @throws InvalidArgumentException
 	 */
 	public function __construct(\stdClass $row) {
 		$this->initializeAttributes();
@@ -99,7 +101,7 @@ class ElggRelationship extends \ElggData {
 			true
 		);
 		if ($id === false) {
-			throw new \IOException("Unable to save new " . get_class());
+			throw new IOException("Unable to save new " . get_class());
 		}
 		
 		$this->id = $id;

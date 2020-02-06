@@ -2,8 +2,8 @@
 
 namespace Elgg\Router\Middleware;
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\Router\Route;
-use Elgg\EntityPermissionsException;
 
 /**
  * Check if the current route page owner can be edited (by the current logged in user)

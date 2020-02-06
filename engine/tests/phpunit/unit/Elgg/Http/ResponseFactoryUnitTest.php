@@ -6,6 +6,8 @@ use Elgg\Ajax\Service;
 use Elgg\Amd\Config;
 use Elgg\Config as Config2;
 use Elgg\EventsService;
+use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\HandlersService;
 use Elgg\PluginHooksService;
 use Elgg\SystemMessagesService;
 use ElggSession;
@@ -13,7 +15,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Elgg\HandlersService;
 
 /**
  * @group HttpService

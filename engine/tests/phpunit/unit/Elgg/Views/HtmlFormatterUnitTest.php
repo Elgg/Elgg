@@ -1,6 +1,8 @@
 <?php
 
 namespace Elgg\Views;
+
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Hook;
 use Elgg\UnitTestCase;
 
@@ -155,7 +157,7 @@ class HtmlFormatterUnitTest extends UnitTestCase {
 	}
 
 	public function testElggFormatElementThrows() {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		elgg_format_element(array());
 	}
 

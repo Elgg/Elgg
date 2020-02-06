@@ -1,8 +1,10 @@
 <?php
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $page = elgg_extract('page', $vars);
 if (!elgg_view_exists("theme_sandbox/{$page}")) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 elgg_load_external_file('css', 'dev.theme_sandbox');

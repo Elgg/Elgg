@@ -170,7 +170,6 @@ class EmailService {
 	 * @param Email $email Email
 	 *
 	 * @return \Zend\Mime\Message
-	 * @throws \Zend\Mime\Exception\InvalidArgumentException
 	 */
 	protected function buildMessageBody(Email $email) {
 		// create body

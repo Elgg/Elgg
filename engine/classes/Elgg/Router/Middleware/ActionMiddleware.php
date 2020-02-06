@@ -2,8 +2,8 @@
 
 namespace Elgg\Router\Middleware;
 
+use Elgg\Exceptions\Http\ValidationException;
 use Elgg\Http\ResponseBuilder;
-use Elgg\ValidationException;
 
 /**
  * Some logic implemented before action is executed

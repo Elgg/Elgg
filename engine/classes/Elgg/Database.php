@@ -7,9 +7,10 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
-use Elgg\Database\DbConfig;
-use Psr\Log\LogLevel;
 use Elgg\Cache\QueryCache;
+use Elgg\Database\DbConfig;
+use Elgg\Exceptions\DatabaseException;
+use Psr\Log\LogLevel;
 
 /**
  * The Elgg database
@@ -97,7 +98,6 @@ class Database {
 	 * @param string $type The type of link we want: "read", "write" or "readwrite".
 	 *
 	 * @return Connection
-	 * @throws \DatabaseException
 	 */
 	public function getConnection($type) {
 		if (isset($this->connections[$type])) {
@@ -117,7 +117,6 @@ class Database {
 	 * links up separately; otherwise just create the one database link.
 	 *
 	 * @return void
-	 * @throws \DatabaseException
 	 */
 	public function setupConnections() {
 		if ($this->config->isDatabaseSplit()) {
@@ -136,7 +135,7 @@ class Database {
 	 * @param string $type The type of database connection. "read", "write", or "readwrite".
 	 *
 	 * @return void
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function connect($type = "readwrite") {
 		$conf = $this->config->getConnectionConfig($type);
@@ -168,7 +167,7 @@ class Database {
 			} else {
 				$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			}
-			throw new \DatabaseException($msg);
+			throw new DatabaseException($msg);
 		}
 	}
 
@@ -187,7 +186,6 @@ class Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
-	 * @throws \DatabaseException
 	 */
 	public function getData($query, $callback = null, array $params = []) {
 		return $this->getResults($query, $callback, false, $params);
@@ -205,7 +203,6 @@ class Database {
 	 * @param array               $params   Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
-	 * @throws \DatabaseException
 	 */
 	public function getDataRow($query, $callback = null, array $params = []) {
 		return $this->getResults($query, $callback, true, $params);
@@ -221,7 +218,6 @@ class Database {
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
-	 * @throws \DatabaseException
 	 */
 	public function insertData($query, array $params = []) {
 
@@ -252,7 +248,6 @@ class Database {
 	 * @param array               $params       Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return bool|int
-	 * @throws \DatabaseException
 	 */
 	public function updateData($query, $get_num_rows = false, array $params = []) {
 
@@ -284,7 +279,6 @@ class Database {
 	 * @param array               $params Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return int The number of affected rows
-	 * @throws \DatabaseException
 	 */
 	public function deleteData($query, array $params = []) {
 
@@ -344,7 +338,7 @@ class Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
-	 * @throws \DatabaseException
+	 * @throws \RuntimeException
 	 */
 	protected function getResults($query, $callback = null, $single = false, array $params = []) {
 
@@ -416,11 +410,11 @@ class Database {
 	 * @param array               $params     Query params. E.g. [1, 'steve'] or [':id' => 1, ':name' => 'steve']
 	 *
 	 * @return Statement|int The result of the query
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	protected function executeQuery($query, Connection $connection, array $params = []) {
 		if ($query == null) {
-			throw new \DatabaseException("Query cannot be null");
+			throw new DatabaseException("Query cannot be null");
 		}
 
 		$sql = $query;
@@ -443,7 +437,7 @@ class Database {
 				}
 			});
 		} catch (\Exception $e) {
-			$ex = new \DatabaseException($e->getMessage());
+			$ex = new DatabaseException($e->getMessage());
 			$ex->setParameters($params);
 			$ex->setQuery($sql);
 
@@ -519,7 +513,7 @@ class Database {
 	 * @param string $scriptlocation The full path to the script
 	 *
 	 * @return void
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
 	public function runSqlScript($scriptlocation) {
 		$script = file_get_contents($scriptlocation);
@@ -538,7 +532,7 @@ class Database {
 				if (!empty($statement)) {
 					try {
 						$this->updateData($statement);
-					} catch (\DatabaseException $e) {
+					} catch (DatabaseException $e) {
 						$errors[] = $e->getMessage();
 					}
 				}
@@ -549,12 +543,10 @@ class Database {
 					$errortxt .= " {$error};";
 				}
 
-				$msg = "There were a number of issues: " . $errortxt;
-				throw new \DatabaseException($msg);
+				throw new DatabaseException("There were a number of issues: " . $errortxt);
 			}
 		} else {
-			$msg = "Elgg couldn't find the requested database script at " . $scriptlocation . ".";
-			throw new \DatabaseException($msg);
+			throw new DatabaseException("Elgg couldn't find the requested database script at " . $scriptlocation . ".");
 		}
 	}
 

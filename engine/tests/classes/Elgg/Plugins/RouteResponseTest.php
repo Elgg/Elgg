@@ -3,13 +3,12 @@
 namespace Elgg\Plugins;
 
 use Elgg\BaseTestCase;
-use Elgg\IntegrationTestCase;
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
+use Elgg\Exceptions\Http\GatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
 use Elgg\UnitTestCase;
-use Elgg\GatekeeperException;
-use Elgg\EntityPermissionsException;
-use Elgg\EntityNotFoundException;
-use Elgg\GroupGatekeeperException;
-use Elgg\Http\Exception\GroupToolGatekeeperException;
 
 /**
  * @group Router
