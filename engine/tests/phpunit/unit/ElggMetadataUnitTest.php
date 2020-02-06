@@ -89,29 +89,6 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		_elgg_services()->hooks->restore();
 	}
-	
-	public function testCanEditMetadata() {
-
-		$owner = $this->createUser();
-		$other = $this->createUser();
-
-		$object = $this->createObject([
-			'owner_guid' => $owner->guid,
-		]);
-
-		$metadata = new ElggMetadata();
-		$metadata->entity_guid = $object->guid;
-		$metadata->name = 'test_metadata_' . rand();
-		$metadata->value = 'test_value_' . rand();
-		$id = $metadata->save();
-
-		$metadata = elgg_get_metadata_from_id($id);
-
-		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
-		
-		// Default access level is private
-		$this->assertTrue($metadata->canEdit($other->guid));
-	}
 
 	public function testCanSaveMetadata() {
 

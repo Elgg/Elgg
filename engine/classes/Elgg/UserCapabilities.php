@@ -194,58 +194,6 @@ class UserCapabilities {
 	}
 
 	/**
-	 * Can a user edit metadata on this entity?
-	 *
-	 * If no specific metadata is passed, it returns whether the user can
-	 * edit any metadata on the entity.
-	 *
-	 * Since 3.0, metadata is not owned and can in principle be updated by any user,
-	 * who has access to the entity. You can still use the hook to prevent the metadata from being
-	 * written to the database, however it may propagate in ElggEntity properties.
-	 * Use ElggEntity::canEdit() before setting metadata, if you want to ensure that only
-	 * owners/admins can update metadata.
-	 *
-	 * @param ElggEntity   $entity    Object entity
-	 * @param int          $user_guid The user GUID, optionally (default: logged in user)
-	 * @param ElggMetadata $metadata  The piece of metadata to specifically check or null for any metadata
-	 *
-	 * @return bool
-	 * @deprecated 3.0
-	 */
-	public function canEditMetadata(ElggEntity $entity, $user_guid = 0, ElggMetadata $metadata = null) {
-		elgg_deprecated_notice(__METHOD__ . ' is deprecated. Metadata no longer has it\'s own access system', '3.0', 3);
-		
-		if (!$entity->guid) {
-			// @todo cannot edit metadata on unsaved entity?
-			return false;
-		}
-
-		if ($this->canBypassPermissionsCheck($user_guid)) {
-			return true;
-		}
-
-		try {
-			$user = $this->entities->getUserForPermissionsCheck($user_guid);
-		} catch (UserFetchFailureException $e) {
-			return false;
-		}
-
-		// metadata and user may be null
-		$params = [
-			'entity' => $entity,
-			'user' => $user,
-			'metadata' => $metadata
-		];
-
-		$default = $metadata ? true : $entity->canEdit($user->guid);
-
-		return $this->hooks->triggerDeprecated('permissions_check:metadata', $entity->getType(), $params, $default,
-			'Metadata no longer has it\'s own access system. You should not rely on this hook preventing metadata permissions.',
-			'3.0'
-		);
-	}
-
-	/**
 	 * Determines whether or not the user can edit this annotation
 	 *
 	 * @param Elggentity     $entity     Object entity

@@ -1034,22 +1034,6 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
-	 * Can a user edit metadata on this entity?
-	 *
-	 * If no specific metadata is passed, it returns whether the user can
-	 * edit any metadata on the entity.
-	 *
-	 * @param \ElggMetadata $metadata  The piece of metadata to specifically check or null for any metadata
-	 * @param int           $user_guid The user GUID, optionally (default: logged in user)
-	 *
-	 * @return bool
-	 * @deprecated 3.0
-	 */
-	public function canEditMetadata($metadata = null, $user_guid = 0) {
-		return _elgg_services()->userCapabilities->canEditMetadata($this, $user_guid, $metadata);
-	}
-
-	/**
 	 * Can a user add an entity to this container
 	 *
 	 * @param int    $user_guid The GUID of the user creating the entity (0 for logged in user).

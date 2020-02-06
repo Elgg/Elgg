@@ -13,7 +13,6 @@
  * @property-read string $view          The view for displaying this river item
  * @property-read int    $access_id     The visibility of the river item
  * @property-read int    $posted        UNIX timestamp when the action occurred
- * @property-read string $enabled       Is the river item enabled yes|no
  */
 class ElggRiverItem {
 	public $id;
@@ -25,7 +24,6 @@ class ElggRiverItem {
 	public $access_id;
 	public $view;
 	public $posted;
-	protected $enabled;
 
 	/**
 	 * Construct a river item object given a database row.
@@ -52,11 +50,6 @@ class ElggRiverItem {
 	 * {@inheritdoc}
 	 */
 	public function __set(string $name, $value) {
-		if ($name == 'enabled') {
-			elgg_deprecated_notice('The use of the enabled state for river items is deprecated.', '3.2');
-			return;
-		}
-		
 		$this->$name = $value;
 	}
 
@@ -65,10 +58,6 @@ class ElggRiverItem {
 	 */
 	public function __get($name) {
 		switch ($name) {
-			case 'enabled':
-				elgg_deprecated_notice('The use of the enabled state for river items is deprecated.', '3.2');
-				return $this->enabled;
-				
 			case 'type' :
 			case 'subtype' :
 				$object = get_entity($this->object_guid);
