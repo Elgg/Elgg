@@ -2,7 +2,10 @@
 
 use Elgg\Bookmarks\GroupToolContainerLogicCheck;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
+	'bootstrap' => \Elgg\Bookmarks\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -76,6 +79,41 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
+		'get_views' => [
+			'ecml' => [
+				'Elgg\Bookmarks\ECML::getViews' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'object:bookmarks' => [
+				'Elgg\Values::getTrue' => [],
+			],
+		],
+		'prepare' => [
+			'notification:create:object:bookmarks' => [
+				'Elgg\Bookmarks\Notifications::prepareCreateBookmark' => [],
+			],
+		],
+		'register' => [
+			'menu:footer' => [
+				'Elgg\Bookmarks\Menus\Footer::register' => [],
+			],
+			'menu:owner_block' => [
+				'Elgg\Bookmarks\Menus\OwnerBlock::registerUserItem' => [],
+				'Elgg\Bookmarks\Menus\OwnerBlock::registerGroupItem' => [],
+			],
+			'menu:page' => [
+				'Elgg\Bookmarks\Menus\Page::register' => [],
+			],
+			'menu:site' => [
+				'Elgg\Bookmarks\Menus\Site::register' => [],
+			],
+		],
+		'seeds' => [
+			'database' => [
+				'Elgg\Bookmarks\Database::registerSeeds' => [],
+			],
+		],
 	],
 	'widgets' => [
 		'bookmarks' => [
@@ -84,5 +122,10 @@ return [
 	],
 	'group_tools' => [
 		'bookmarks' => [],
+	],
+	'view_extensions' => [
+		'elgg.js' => [
+			'bookmarks.js' => [],
+		],
 	],
 ];

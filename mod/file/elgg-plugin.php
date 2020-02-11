@@ -2,6 +2,8 @@
 
 use Elgg\File\GroupToolContainerLogicCheck;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
 	'entities' => [
 		[
@@ -65,6 +67,56 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
+		'entity:icon:file' => [
+			'object' => [
+				'Elgg\File\Icons::setIconFile' => [],
+			],
+		],
+		'entity:icon:sizes' => [
+			'object' => [
+				'Elgg\File\Icons::setIconSizes' => [],
+			],
+		],
+		'entity:icon:url' => [
+			'object' => [
+				'Elgg\File\Icons::setIconUrl' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'object:file' => [
+				'Elgg\Values::getTrue' => [],
+			],
+		],
+		'prepare' => [
+			'notification:create:object:file' => [
+				'Elgg\File\Notifications::prepareCreateFile' => [],
+			],
+		],
+		'register' => [
+			'menu:embed' => [
+				'Elgg\File\Menus\Embed::registerFile' => [],
+				'Elgg\File\Menus\Embed::registerFileUpload' => [],
+			],
+			'menu:owner_block' => [
+				'Elgg\File\Menus\OwnerBlock::registerUserItem' => [],
+				'Elgg\File\Menus\OwnerBlock::registerGroupItem' => [],
+			],
+			'menu:site' => [
+				'Elgg\File\Menus\Site::register' => [],
+			],
+		],
+		'seeds' => [
+			'database' => [
+				'Elgg\File\Database::registerSeeds' => [],
+			],
+		],
+	],
+	'events' => [
+		'delete' => [
+			'object' => [
+				'Elgg\File\Icons::deleteIconOnElggFileDelete' => ['priority' => 999],
+			],
+		],
 	],
 	'widgets' => [
 		'filerepo' => [
@@ -73,5 +125,16 @@ return [
 	],
 	'group_tools' => [
 		'file' => [],
+	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'file/file.css' => [],
+		],
+		'extensions/item' => [
+			'file/enclosure' => [],
+		],
+		'theme_sandbox/icons' => [
+			'file/theme_sandbox/icons/files' => [],
+		],
 	],
 ];

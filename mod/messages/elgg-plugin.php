@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
 	'entities' => [
 		[
@@ -40,6 +42,52 @@ return [
 			'resource' => 'messages/read',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
+		],
+	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'messages/css' => [],
+		],
+		'elgg.js' => [
+			'messages/js' => [],
+		],
+	],
+	'hooks' => [
+		'container_permissions_check' => [
+			'object' => [
+				'Elgg\Messages\Permissions::canEditContainer' => [],
+			],
+		],
+		'get_views' => [
+			'ecml' => [
+				'Elgg\Messages\ECML::getViews' => [],
+			],
+		],
+		'permissions_check' => [
+			'object' => [
+				'Elgg\Messages\Permissions::canEdit' => [],
+			],
+		],
+		'register' => [
+			'menu:page' => [
+				'Elgg\Messages\Menus\Page::register' => [],
+			],
+			'menu:title' => [
+				'Elgg\Messages\Menus\Title::register' => [],
+			],
+			'menu:topbar' => [
+				'Elgg\Messages\Menus\Topbar::register' => [],
+			],
+			'menu:user_hover' => [
+				'Elgg\Messages\Menus\UserHover::register' => [],
+			],
+		],
+	],
+	'events' => [
+		'delete' => [
+			'user' => [
+				'Elgg\Messages\User::purgeMessages' => [],
 			],
 		],
 	],

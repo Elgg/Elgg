@@ -7,6 +7,7 @@ $type = strtolower($type);
 if (elgg_is_admin_logged_in()) {
 	elgg_register_menu_item('title', [
 		'name' => 'edit',
+		'icon' => 'edit',
 		'text' => elgg_echo('edit'),
 		'href' => "admin/configure_utilities/expages?type=$type",
 		'link_class' => 'elgg-button elgg-button-action',

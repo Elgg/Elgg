@@ -2,6 +2,8 @@
 
 use Elgg\UserValidationByEmail\Upgrades\TrackValidationStatus;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
 	'actions' => [
 		'uservalidationbyemail/resend_validation' => [
@@ -28,5 +30,30 @@ return [
 	],
 	'upgrades' => [
 		TrackValidationStatus::class,
+	],
+	'events' => [
+		'login:before' => [
+			'user' => [
+				'Elgg\UserValidationByEmail\User::preventLogin' => [],
+			],
+		],
+	],
+	'hooks' => [
+		'register' => [
+			'menu:user:unvalidated' => [
+				'Elgg\UserValidationByEmail\Menus\UserUnvalidated::register' => [],
+			],
+			'menu:user:unvalidated:bulk' => [
+				'Elgg\UserValidationByEmail\Menus\UserUnvalidatedBulk::register' => [],
+			],
+			'user' => [
+				'Elgg\UserValidationByEmail\User::disableUserOnRegistration' => [],
+			],
+		],
+		'response' => [
+			'action:register' => [
+				'Elgg\UserValidationByEmail\Response::redirectToEmailSent' => [],
+			],
+		],
 	],
 ];

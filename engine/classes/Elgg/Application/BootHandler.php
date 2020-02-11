@@ -126,7 +126,6 @@ class BootHandler {
 		$events->triggerSequence('plugins_load', 'system');
 
 		// Boot plugin, setup languages and views
-		// Include start.php
 		// Call PluginBootstrap::boot()
 		$events->triggerSequence('plugins_boot', 'system');
 

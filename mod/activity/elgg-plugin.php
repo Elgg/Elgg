@@ -42,4 +42,20 @@ return [
 	'group_tools' => [
 		'activity' => [],
 	],
+	'view_extensions' => [
+		'css/elgg' => [
+			'river/filter.css' => [],
+		],
+	],
+	'hooks' => [
+		'register' => [
+			'menu:site' => [
+				'Elgg\Activity\Menus\Site::register' => [],
+			],
+			'menu:owner_block' => [
+				'Elgg\Activity\Menus\OwnerBlock::registerUserItem' => [],
+				'Elgg\Activity\Menus\OwnerBlock::registerGroupItem' => [],
+			],
+		],
+	],
 ];

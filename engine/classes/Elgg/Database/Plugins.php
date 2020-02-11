@@ -589,10 +589,7 @@ class Plugins {
 
 		foreach ($plugins as $plugin) {
 			try {
-				$setup = $plugin->boot();
-				if ($setup instanceof Closure) {
-					$setup();
-				}
+				$plugin->boot();
 			} catch (Exception $ex) {
 				$this->disable($plugin, $ex);
 			}

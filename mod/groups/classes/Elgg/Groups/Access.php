@@ -78,4 +78,141 @@ class Access {
 		
 		return false;
 	}
+	
+	/**
+	 * Return the write access for the current group if the user has write access to it
+	 *
+	 * @param \Elgg\Hook $hook 'access:collection:write' 'all'
+	 * @return void|array
+	 */
+	public static function getWriteAccess(\Elgg\Hook $hook) {
+	
+		$user_guid = $hook->getParam('user_id');
+		$user = get_user($user_guid);
+		if (!$user) {
+			return;
+		}
+	
+		$page_owner = elgg_get_page_owner_entity();
+		if (!$page_owner instanceof \ElggGroup) {
+			return;
+		}
+	
+		if (!$page_owner->canWriteToContainer($user_guid)) {
+			return;
+		}
+	
+		$allowed_access = [ACCESS_PRIVATE];
+		$acl = _groups_get_group_acl($page_owner);
+		if ($acl) {
+			$allowed_access[] = $acl->id;
+		}
+	
+		if ($page_owner->getContentAccessMode() !== \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+			// don't allow content sharing with higher levels than group access level
+			// see https://github.com/Elgg/Elgg/issues/10285
+			if (in_array($page_owner->access_id, [ACCESS_PUBLIC, ACCESS_LOGGED_IN])) {
+				// at least logged in is allowed
+				$allowed_access[] = ACCESS_LOGGED_IN;
+				
+				if ($page_owner->access_id === ACCESS_PUBLIC && !elgg_get_config('walled_garden')) {
+					// public access is allowed
+					$allowed_access[] = ACCESS_PUBLIC;
+				}
+			}
+		}
+	
+		$write_acls = $hook->getValue();
+	
+		// add write access to the group
+		if ($acl) {
+			$write_acls[$acl->id] = $acl->getDisplayName();
+		}
+	
+		// remove all but the allowed access levels
+		foreach (array_keys($write_acls) as $access_id) {
+			if (!in_array($access_id, $allowed_access)) {
+				unset($write_acls[$access_id]);
+			}
+		}
+	
+		return $write_acls;
+	}
+	
+	/**
+	 * Return the write access for the current group if the user has write access to it
+	 *
+	 * @param \Elgg\Hook $hook 'access_collection:display_name' 'access_collection'
+	 * @return void|string
+	 */
+	public static function getAccessCollectionName(\Elgg\Hook $hook) {
+	
+		$access_collection = $hook->getParam('access_collection');
+		if (!$access_collection instanceof \ElggAccessCollection) {
+			return;
+		}
+	
+		$owner = $access_collection->getOwnerEntity();
+		if (!$owner instanceof \ElggGroup) {
+			return;
+		}
+		
+		$page_owner = elgg_get_page_owner_entity();
+	
+		if ($page_owner && $page_owner->guid == $owner->guid) {
+			return elgg_echo('groups:acl:in_context');
+		}
+	
+		if ($owner->canWriteToContainer()) {
+			return elgg_echo('groups:acl', [$owner->getDisplayName()]);
+		}
+	}
+	
+
+	/**
+	 * Allow users to visit the group profile page even if group content access mode is set to group members only
+	 *
+	 * @param \Elgg\Hook $hook 'gatekeeper' 'group:group'
+	 *
+	 * @return void|true
+	 */
+	public static function allowProfilePage(\Elgg\Hook $hook) {
+	
+		$entity = $hook->getEntityParam();
+		if (!has_access_to_entity($entity)) {
+			return;
+		}
+	
+		$route = $hook->getParam('route');
+		if ($route === 'view:group' || $route === 'view:group:group') {
+			return true;
+		}
+	}
+	
+	/**
+	 * The default access for members only content is this group only. This makes
+	 * for better display of access (can tell it is group only), but does not change
+	 * access to the content.
+	 *
+	 * @param \Elgg\Hook $hook 'default', 'access'
+	 *
+	 * @return int|void
+	 */
+	public static function overrideDefaultAccess(\Elgg\Hook $hook) {
+		$page_owner = elgg_get_page_owner_entity();
+		if (!$page_owner instanceof \ElggGroup) {
+			return;
+		}
+				
+		if ($page_owner->getContentAccessMode() !== \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+			return;
+		}
+		
+		$acl = _groups_get_group_acl($page_owner);
+		if (empty($acl)) {
+			return;
+		}
+		
+		return $acl->id;
+	}
 }

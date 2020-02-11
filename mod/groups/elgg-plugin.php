@@ -2,6 +2,8 @@
 
 use Elgg\Groups\Middleware\LimitedGroupCreation;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 $membership = __DIR__ . '/actions/groups/membership/';
 
 return [
@@ -126,6 +128,116 @@ return [
 	'widgets' => [
 		'a_users_groups' => [
 			'context' => ['profile', 'dashboard'],
+		],
+	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'groups/groups.css' => [],
+		],
+	],
+	'events' => [
+		'create' => [
+			'group' => [
+				'Elgg\Groups\Group::createAccessCollection' => [],
+			],
+		],
+		'init' => [
+			'system' => [
+				'Elgg\Groups\Group::setupProfileFields' => ['priority' => 10000],
+			],
+		],
+		'join' => [
+			'group' => [
+				'Elgg\Groups\Group::joinGroup' => [],
+			],
+		],
+		'leave' => [
+			'group' => [
+				'Elgg\Groups\Group::leaveGroup' => [],
+			],
+		],
+		'update:after' => [
+			'group' => [
+				'Elgg\Groups\Group::updateGroup' => [],
+			],
+		],
+	],
+	'hooks' => [
+		'access:collections:write' => [
+			'all' => [
+				'Elgg\Groups\Access::getWriteAccess' => ['priority' => 600],
+			],
+		],
+		'access_collection:name' => [
+			'access_collection' => [
+				'Elgg\Groups\Access::getAccessCollectionName' => [],
+			],
+		],
+		'default' => [
+			'access' => [
+				'Elgg\Groups\Access::getDefaultAccess' => [],
+				'Elgg\Groups\Access::overrideDefaultAccess' => [],
+			],
+		],
+		'entity:url' => [
+			'group' => [
+				'Elgg\Groups\Group::getEntityUrl' => [],
+			],
+		],
+		'gatekeeper' => [
+			'group:group' => [
+				'Elgg\Groups\Access::allowProfilePage' => [],
+			],
+		],
+		'get_views' => [
+			'ecml' => [
+				'Elgg\Groups\ECML::getViews' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'group:' => [
+				'Elgg\Values::getTrue' => [],
+			],
+		],
+		'page_owner' => [
+			'system' => [
+				'Elgg\Groups\PageOwner::detectPageOwner' => ['priority' => 400],
+			],
+		],
+		'register' => [
+			'menu:entity' => [
+				'Elgg\Groups\Menus\Entity::register' => [],
+				'Elgg\Groups\Menus\Entity::registerFeature' => [],
+			],
+			'menu:filter:groups/all' => [
+				'Elgg\Groups\Menus\Filter::registerGroupsAll' => [],
+			],
+			'menu:groups_members' => [
+				'Elgg\Groups\Menus\GroupsMembers::register' => [],
+			],
+			'menu:page' => [
+				'Elgg\Groups\Menus\Page::register' => [],
+				'Elgg\Groups\Menus\Page::registerGroupProfile' => [],
+			],
+			'menu:relationship' => [
+				'Elgg\Groups\Menus\Relationship::registerInvitedItems' => [],
+				'Elgg\Groups\Menus\Relationship::registerMembershipRequestItems' => [],
+				'Elgg\Groups\Menus\Relationship::registerRemoveUser' => [],
+			],
+			'menu:site' => [
+				'Elgg\Groups\Menus\Site::register' => [],
+			],
+			'menu:title' => [
+				'Elgg\Groups\Menus\Title::register' => [],
+			],
+			'menu:topbar' => [
+				'Elgg\Groups\Menus\Topbar::register' => [],
+			],
+		],
+		'search:fields' => [
+			'group' => [
+				'Elgg\Search\GroupSearchProfileFieldsHandler' => [],
+			],
 		],
 	],
 ];

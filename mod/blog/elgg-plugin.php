@@ -2,7 +2,10 @@
 
 use Elgg\Blog\GroupToolContainerLogicCheck;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
+	'bootstrap' => \Elgg\Blog\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -96,6 +99,38 @@ return [
 		'container_logic_check' => [
 			'object' => [
 				GroupToolContainerLogicCheck::class => [],
+			],
+		],
+		'get_views' => [
+			'ecml' => [
+				'Elgg\Blog\ECML::getViews' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'object:blog' => [
+				'Elgg\Values::getTrue' => [],
+			],
+		],
+		'prepare' => [
+			'notification:publish:object:blog' => [
+				'Elgg\Blog\Notifications::preparePublishBlog' => [],
+			],
+		],
+		'register' => [
+			'menu:blog_archive' => [
+				'Elgg\Blog\Menus\BlogArchive::register' => [],
+			],
+			'menu:owner_block' => [
+				'Elgg\Blog\Menus\OwnerBlock::registerUserItem' => [],
+				'Elgg\Blog\Menus\OwnerBlock::registerGroupItem' => [],
+			],
+			'menu:site' => [
+				'Elgg\Blog\Menus\Site::register' => [],
+			],
+		],
+		'seeds' => [
+			'database' => [
+				'Elgg\Blog\Database::registerSeeds' => [],
 			],
 		],
 	],

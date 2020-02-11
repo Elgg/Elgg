@@ -6,7 +6,6 @@ $tag = get_input('tag');
 $display_query = _elgg_get_display_query($tag);
 $title = elgg_echo('groups:search:title', [$display_query]);
 
-// groups plugin saves tags as "interests" - see groups_fields_setup() in start.php
 $content = elgg_list_entities([
 	'query' => $tag,
 	'type' => 'group',

@@ -1,4 +1,10 @@
 <?php
+use Elgg\Friends\Collections\CollectionMenuHandler;
+use Elgg\Friends\Collections\DeleteRelationshipHandler;
+use Elgg\Friends\Collections\EntityMenuHandler;
+use Elgg\Friends\Collections\PageMenuHandler;
+use Elgg\Friends\Collections\UrlHandler;
+use Elgg\Friends\Collections\WriteAccess;
 
 return [
 	'actions' => [
@@ -39,6 +45,41 @@ return [
 			'resource' => 'friends/collections/owner',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
+			],
+		],
+	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'collections/collections.css' => [],
+		],
+	],
+	'events' => [
+		'delete' => [
+			'relationship' => [
+				DeleteRelationshipHandler::class => [],
+			],
+		],
+	],
+	'hooks' => [
+		'access_collection:url' => [
+			'access_collection' => [
+				UrlHandler::class => [],
+			],
+		],
+		'access:collections:write:subtypes' => [
+			'user' => [
+				WriteAccess::class => [],
+			],
+		],
+		'register' => [
+			'menu:entity' => [
+				EntityMenuHandler::class => [],
+			],
+			'menu:friends:collection' => [
+				CollectionMenuHandler::class => [],
+			],
+			'menu:page' => [
+				PageMenuHandler::class => [],
 			],
 		],
 	],

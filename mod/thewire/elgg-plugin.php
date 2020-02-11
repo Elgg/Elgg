@@ -2,7 +2,10 @@
 
 use Elgg\Router\Middleware\Gatekeeper;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
+	'bootstrap' => \Elgg\TheWire\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -63,7 +66,40 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'thewire/css' => [],
+		],
+	],
 	'view_options' => [
 		'thewire/previous' => ['ajax' => true],
+	],
+	'hooks' => [
+		'get' => [
+			'subscriptions' => [
+				'Elgg\TheWire\Notifications::addOriginalPoster' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'object:thewire' => [
+				'Elgg\Values::getTrue' => [],
+			],
+		],
+		'prepare' => [
+			'notification:create:object:thewire' => [
+				'Elgg\TheWire\Notifications::prepareCreateTheWireNotification' => [],
+			],
+		],
+		'register' => [
+			'menu:entity' => [
+				'Elgg\TheWire\Menus\Entity::register' => [],
+			],
+			'menu:owner_block' => [
+				'Elgg\TheWire\Menus\OwnerBlock::register' => [],
+			],
+			'menu:site' => [
+				'Elgg\TheWire\Menus\Site::register' => [],
+			],
+		],
 	],
 ];

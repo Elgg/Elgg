@@ -12,4 +12,12 @@ return [
 			'context' => ['profile', 'dashboard'],
 		],
 	],
+	'view_extensions' => [
+		'elgg.css' => [
+			'elgg/tagcloud.css' => [],
+		],
+		'theme_sandbox/components' => [
+			'tagcloud/theme_sandbox/component' => [],
+		],
+	],
 ];

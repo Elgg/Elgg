@@ -2,7 +2,10 @@
 
 use Elgg\Discussions\GroupToolContainerLogicCheck;
 
+require_once(__DIR__ . '/lib/functions.php');
+
 return [
+	'bootstrap' => \Elgg\Discussions\Bootstrap::class,
 	'entities' => [
 		[
 			'type' => 'object',
@@ -67,12 +70,52 @@ return [
 	'hooks' => [
 		'container_logic_check' => [
 			'object' => [
+				'Elgg\Discussions\Permissions::containerLogic' => [],
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
 		'filter_tabs' => [
 			'discussion' => [
-				'\Elgg\Discussions\Menus::filterTabs' => [],
+				'Elgg\Discussions\Menus\Filter::filterTabsForDiscussions' => [],
+			],
+		],
+		'get' => [
+			'subscriptions' => [
+				'Elgg\Discussions\Notifications::addGroupSubscribersToCommentOnDiscussionSubscriptions' => [],
+			],
+		],
+		'likes:is_likable' => [
+			'object:discussion' => [
+				'Elgg\Values::getTrue' => [],
+			],
+		],
+		'permissions_check:comment' => [
+			'object' => [
+				'Elgg\Discussions\Permissions::preventCommentOnClosedDiscussion' => [],
+			],
+		],
+		'prepare' => [
+			'notification:create:object:comment' => [
+				'Elgg\Discussions\Notifications::prepareCommentOnDiscussionNotification' => [],
+			],
+			'notification:create:object:discussion' => [
+				'Elgg\Discussions\Notifications::prepareDiscussionCreateNotification' => [],
+			],
+		],
+		'register' => [
+			'menu:filter:groups/all' => [
+				'Elgg\Discussions\Menus\Filter::registerGroupsAll' => [],
+			],
+			'menu:owner_block' => [
+				'Elgg\Discussions\Menus\OwnerBlock::registerGroupItem' => [],
+			],
+			'menu:site' => [
+				'Elgg\Discussions\Menus\Site::register' => [],
+			],
+		],
+		'seeds' => [
+			'database' => [
+				'Elgg\Discussions\Database::registerSeeds' => [],
 			],
 		],
 	],

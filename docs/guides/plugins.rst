@@ -207,34 +207,6 @@ The bootstrap interface defines several function to be implemented which are cal
 
 	For more information about the different functions defined in the ``\Elgg\PluginBootstrapInterface`` please read  :doc:`plugins/bootstrap`
 
-start.php
-=========
-
-The ``start.php`` file bootstraps plugin by registering event listeners and plugin hooks.
-
-It is advised that plugins return an instance of Closure from the ``start.php`` instead of placing registrations in the root of the file.
-This allows for consistency in Application bootstrapping, especially for testing purposes.
-
-.. code-block:: php
-
-    function my_plugin_does_something_else() {
-        // Some procedural code that you want to run before any events are fired
-    }
-
-    function my_plugin_init() {
-        // Your plugin's initialization logic
-    }
-
-    function my_plugin_rewrite_hook() {
-        // Path rewrite hook
-    }
-
-    return function() {
-        my_plugin_do_something_else();
-        elgg_register_event_handler('init', 'system', 'my_plugin_init');
-        elgg_register_plugin_hook_handler('route:rewrite', 'proifle', 'my_plugin_rewrite_hook');
-    }
-
 elgg-services.php
 =================
 
@@ -256,21 +228,6 @@ Plugins can then use PHP-DI API to autowire and call the service:
    $service = elgg()->get(PluginService::class);
 
 See `PHP-DI documentation <http://php-di.org>`_ for a comprehensive list of definition and invokation possibilities.
-
-Syntax
-------
-
-Here's a trivial example configuring view locations via the ``views`` key:
-
-.. code-block:: php
-
-	return [
-		'views' => [
-			'default' => [
-				'file/icon/' => __DIR__ . '/graphics/icons',
-			],
-		],
-	];
 
 manifest.xml
 ============

@@ -579,6 +579,11 @@ class ElggPlugin extends ElggObject {
 
 			return false;
 		}
+		
+		if (file_exists($this->getPath() . 'start.php')) {
+			$this->errorMsg = elgg_echo('ElggPlugin:StartFound', [$this->getID()]);
+			return false;
+		}
 
 		return true;
 	}
@@ -667,14 +672,20 @@ class ElggPlugin extends ElggObject {
 
 				$this->register();
 				
+				$services = $this->getPath() . 'elgg-services.php';
+				if (is_file($services) && is_readable($services)) {
+					// reset dic so new services can be detected
+					_elgg_services()->reset('dic_cache');
+					_elgg_services()->reset('dic_loader');
+					_elgg_services()->reset('dic_builder');
+					_elgg_services()->reset('dic');
+				}
+				
 				// directly load languages to have them available during runtime
 				$this->loadLanguages();
 				
-				$setup = $this->boot();
-				if ($setup instanceof Closure) {
-					$setup();
-				}
-
+				$this->boot();
+				
 				$this->getBootstrap()->activate();
 
 				$this->init();
@@ -860,22 +871,11 @@ class ElggPlugin extends ElggObject {
 	 * Boot the plugin
 	 *
 	 * @throws PluginException
-	 * @return \Closure|null
+	 * @return void
 	 * @internal
 	 */
 	public function boot() {
-		$result = null;
-		if ($this->canReadFile('start.php')) {
-			if (!in_array($this->getID(), \Elgg\Database\Plugins::BUNDLED_PLUGINS)) {
-				elgg_deprecated_notice("Using a start.php file in your plugin [{$this->getID()}] is deprecated. Use a elgg-plugin.php or PluginBootstrap class for your plugin.", '3.3');
-			}
-			
-			$result = Includer::requireFileOnce("{$this->getPath()}start.php");
-		}
-
 		$this->getBootstrap()->boot();
-
-		return $result;
 	}
 
 	/**

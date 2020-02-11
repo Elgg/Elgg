@@ -19,8 +19,6 @@ class SearchRouterTest extends UnitTestCase {
 
 		elgg_register_entity_type('object', 'custom');
 		_elgg_services()->views->registerPluginViews($this->getPath());
-
-		search_init();
 	}
 
 	public function down() {
