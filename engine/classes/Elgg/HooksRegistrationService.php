@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Psr\Log\LogLevel;
+
 /**
  * Base class for events and hooks
  *
@@ -50,6 +52,13 @@ abstract class HooksRegistrationService {
 			return false;
 		}
 		
+		$services = _elgg_services();
+		if (in_array($services->logger->getLevel(false), [LogLevel::WARNING, LogLevel::NOTICE, LogLevel::INFO, LogLevel::DEBUG])) {
+			if (!$services->handlers->isCallable($callback)) {
+				$services->logger->warning('Handler: ' . $services->handlers->describeCallable($callback) . ' is not callable');
+			}
+		}
+				
 		$this->registrations[$name][$type][] = [
 			self::REG_KEY_PRIORITY => $priority,
 			self::REG_KEY_INDEX => $this->next_index,

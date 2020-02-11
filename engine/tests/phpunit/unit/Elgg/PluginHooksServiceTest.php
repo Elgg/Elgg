@@ -67,12 +67,13 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testUncallableHandlersAreLogged() {
-		_elgg_services()->logger->disable();
-
 		$this->hooks->registerHandler('foo', 'bar', array(
 			new \stdClass(),
 			'uncallableMethod'
 		));
+		
+		_elgg_services()->logger->disable();
+
 		$this->hooks->trigger('foo', 'bar');
 
 		$logged = _elgg_services()->logger->enable();
