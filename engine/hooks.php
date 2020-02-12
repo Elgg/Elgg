@@ -32,6 +32,14 @@ return [
 			'_elgg_admin_notify_admins_pending_user_validation' => [],
 		],
 	],
+	'diagnostics:report' => [
+		'system' => [
+			'Elgg\Diagnostics\Reports::getBasic' => ['priority' => 0],
+			'Elgg\Diagnostics\Reports::getSigs' => ['priority' => 1],
+			'Elgg\Diagnostics\Reports::getGlobals' => [],
+			'Elgg\Diagnostics\Reports::getPHPInfo' => [],
+		],
+	],
 	'email' => [
 		'system' => [
 			'_elgg_comments_notification_email_subject' => [],

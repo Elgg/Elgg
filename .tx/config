@@ -43,12 +43,6 @@ source_file = mod/developers/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
-[elgg-core-3.diagnostics]
-file_filter = mod/diagnostics/languages/<lang>.php
-source_file = mod/diagnostics/languages/en.php
-source_lang = en
-type = PHP_ARRAY
-
 [elgg-core-3.discussions]
 file_filter = mod/discussions/languages/<lang>.php
 source_file = mod/discussions/languages/en.php

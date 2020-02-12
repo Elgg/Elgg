@@ -6,8 +6,7 @@
  * Plugins no not need to provide their own page handler to add a page to the
  * admin area. A view placed at admin/<section>/<subsection> can be access
  * at http://example.org/admin/<section>/<subsection>. The title of the page
- * will be elgg_echo('admin:<section>:<subsection>'). For an example of how to
- * add a page to the admin area, see the diagnostics plugin.
+ * will be elgg_echo('admin:<section>:<subsection>').
  *
  * Admin notices
  * System messages (success and error messages) are used in both the main site

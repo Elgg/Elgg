@@ -46,7 +46,6 @@ class Plugins {
 		'custom_index',
 		'dashboard',
 		'developers',
-		'diagnostics',
 		'discussions',
 		'embed',
 		'externalpages',

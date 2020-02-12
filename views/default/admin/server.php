@@ -31,6 +31,14 @@ if (elgg_get_config('allow_phpinfo') === true) {
 	];
 }
 
+elgg_register_menu_item('title', [
+	'name' => 'diagnostics',
+	'text' => elgg_echo('diagnostics:report'),
+	'icon' => 'download',
+	'href' => elgg_generate_action_url('diagnostics/download'),
+	'class' => 'elgg-button elgg-button-action',
+]);
+
 echo elgg_view('page/components/tabs', [
 	'tabs' => $tabs,
 ]);
