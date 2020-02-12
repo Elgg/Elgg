@@ -9,24 +9,6 @@ namespace Elgg\Groups;
  * @internal
  */
 class Group {
-
-	/**
-	 * Populates the ->getUrl() method for group objects
-	 *
-	 * @param \Elgg\Hook $hook 'entity:url', 'group'
-	 *
-	 * @return void|string
-	 */
-	public static function getEntityUrl(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getEntityParam();
-		if (!$entity instanceof \ElggGroup) {
-			return;
-		}
-		
-		$title = elgg_get_friendly_title($entity->getDisplayName());
-		return "groups/profile/{$entity->guid}/$title";
-	}
 	
 	/**
 	 * This function loads a set of default fields into the profile, then triggers

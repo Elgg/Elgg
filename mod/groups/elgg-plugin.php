@@ -176,11 +176,6 @@ return [
 				'Elgg\Groups\Access::overrideDefaultAccess' => [],
 			],
 		],
-		'entity:url' => [
-			'group' => [
-				'Elgg\Groups\Group::getEntityUrl' => [],
-			],
-		],
 		'gatekeeper' => [
 			'group:group' => [
 				'Elgg\Groups\Access::allowProfilePage' => [],
