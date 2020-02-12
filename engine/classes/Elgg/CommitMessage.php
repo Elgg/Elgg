@@ -89,7 +89,11 @@ class CommitMessage {
 		'performance',
 		'security',
 		'deprecate',
-		'deprecates'
+		'deprecates',
+		'deprecated',
+		'break',
+		'breaks',
+		'removed',
 	];
 
 	/**
