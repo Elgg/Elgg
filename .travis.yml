@@ -148,8 +148,6 @@ matrix:
         - ./vendor/bin/phpunit --testsuite integration
         - ./vendor/bin/phpunit --testsuite plugins-integration
 
-    # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
-
 services:
   - mysql
 
