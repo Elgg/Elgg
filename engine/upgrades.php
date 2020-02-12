@@ -7,11 +7,5 @@
  */
 
 return [
-	\Elgg\Upgrades\DeleteOldPlugins::class,
-	\Elgg\Upgrades\ActivateNewPlugins::class,
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
-	\Elgg\Upgrades\SetSecurityConfigDefaults::class,
-	\Elgg\Upgrades\MigrateFriendsACL::class,
-	\Elgg\Upgrades\MigrateCronLog::class,
-	\Elgg\Upgrades\SecurityEmailChangeConfirmation::class,
 ];

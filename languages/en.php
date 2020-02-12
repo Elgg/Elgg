@@ -1935,22 +1935,4 @@ To view %s's profile, click here:
 
 	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
 	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
-
-	"core:upgrade:2017080950:title" => "Update default security parameters",
-	"core:upgrade:2017080950:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the defaults. You can later update these parameters in your site settings.",
-
-	"core:upgrade:2017121200:title" => "Create friends access collections",
-	"core:upgrade:2017121200:description" => "Migrates the friends access collection to an actual access collection",
-
-	"core:upgrade:2018041800:title" => "Activate new plugins",
-	"core:upgrade:2018041800:description" => "Certain core features have been extracted into plugins. This upgrade activates these plugins to maintain compatibility with third-party plugins that maybe dependant on these features",
-
-	"core:upgrade:2018041801:title" => "Delete old plugin entities",
-	"core:upgrade:2018041801:description" => "Deletes entities associated with plugins removed in Elgg 3.0",
-	
-	"core:upgrade:2018061401:title" => "Migrate cron log entries",
-	"core:upgrade:2018061401:description" => "Migrate the cron log entries in the database to the new location.",
-	
-	"core:upgrade:2019071901:title" => "Update default security parameter: Email change confirmation",
-	"core:upgrade:2019071901:description" => "Installed Elgg version introduces additional security parameters. It is recommended that your run this upgrade to configure the default. You can later update this parameter in the site security settings.",
 );

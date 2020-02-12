@@ -1464,11 +1464,6 @@ class ElggInstaller {
 			'walled_garden' => false,
 			'allow_user_default_access' => '',
 			'default_limit' => 10,
-			'security_protect_upgrade' => true,
-			'security_notify_admins' => true,
-			'security_notify_user_password' => true,
-			'security_email_require_password' => true,
-			'security_email_require_confirmation' => true,
 		];
 
 		foreach ($sets as $key => $value) {

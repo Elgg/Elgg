@@ -119,10 +119,6 @@ return [
 			],
 		],
 	],
-	'upgrades' => [
-		'\Elgg\Discussions\Upgrades\MigrateDiscussionReply',
-		'\Elgg\Discussions\Upgrades\MigrateDiscussionReplyRiver',
-	],
 	'group_tools' => [
 		'forum' => [],
 	],

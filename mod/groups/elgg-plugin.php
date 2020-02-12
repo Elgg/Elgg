@@ -14,9 +14,6 @@ return [
 			'searchable' => true,
 		],
 	],
-	'upgrades' => [
-		\Elgg\Groups\Upgrades\GroupIconTransfer::class,
-	],
 	'actions' => [
 		'groups/edit' => [],
 		'groups/featured' => [
