@@ -184,11 +184,6 @@ or click below to view the group's join requests:
 	'groups:add:alreadymember' => "%s is already a member of this group",
 
 	/**
-	 * ecml
-	 */
-	'groups:ecml:groupprofile' => 'Group profiles',
-
-	/**
 	 * Upgrades
 	 */
 	'groups:upgrade:2016101900:title' => 'Transfer group icons to a new location',

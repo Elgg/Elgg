@@ -97,11 +97,6 @@ return [
 				'Elgg\Pages\Extender::setRevisionUrl' => [],
 			],
 		],
-		'get_views' => [
-			'ecml' => [
-				'Elgg\Pages\ECML::getViews' => [],
-			],
-		],
 		'likes:is_likable' => [
 			'object:page' => [
 				'Elgg\Values::getTrue' => [],

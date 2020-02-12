@@ -189,11 +189,6 @@ return [
 				'Elgg\Groups\Access::allowProfilePage' => [],
 			],
 		],
-		'get_views' => [
-			'ecml' => [
-				'Elgg\Groups\ECML::getViews' => [],
-			],
-		],
 		'likes:is_likable' => [
 			'group:' => [
 				'Elgg\Values::getTrue' => [],
