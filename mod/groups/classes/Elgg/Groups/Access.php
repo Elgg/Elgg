@@ -28,7 +28,7 @@ class Access {
 			return;
 		}
 		
-		$acl = _groups_get_group_acl($group);
+		$acl = $group->getOwnedAccessCollection('group_acl');
 		
 		$access = (int) $group->content_default_access;
 		if ($access === ACCESS_PRIVATE) {
@@ -103,8 +103,8 @@ class Access {
 		}
 	
 		$allowed_access = [ACCESS_PRIVATE];
-		$acl = _groups_get_group_acl($page_owner);
-		if ($acl) {
+		$acl = $page_owner->getOwnedAccessCollection('group_acl');
+		if ($acl instanceof \ElggAccessCollection) {
 			$allowed_access[] = $acl->id;
 		}
 	
@@ -208,8 +208,8 @@ class Access {
 			return;
 		}
 		
-		$acl = _groups_get_group_acl($page_owner);
-		if (empty($acl)) {
+		$acl = $page_owner->getOwnedAccessCollection('group_acl');
+		if (!$acl instanceof \ElggAccessCollection) {
 			return;
 		}
 		
