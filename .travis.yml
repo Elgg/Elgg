@@ -6,10 +6,6 @@ php:
 
 dist: xenial
 
-# This helps builds go quicker on Travis since it enables caching of dependencies
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
 # Do not limit history to latest commits. Merge commits will need older commits.
 # Limiting depth caused issues with /.scripts/travis/check_commit_msgs.sh
 #git:
@@ -131,7 +127,6 @@ matrix:
     # setup according to https://www.tekz.io/blog/travis-ci-running-tests-on-mysql-8-0-x-on-ubuntu-xenial
     - php: 7.4
       env: JOB_NAME=mysql80
-      sudo: true
       before_install:
         - phpenv config-rm xdebug.ini
         - wget https://repo.mysql.com/mysql-apt-config_0.8.10-1_all.deb
