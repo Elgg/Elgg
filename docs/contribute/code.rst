@@ -88,7 +88,9 @@ follow these steps:
    * **perf** - the primary purpose is to improve performance
    * **fix** - this fixes a bug
    * **deprecate** - the change deprecates any part of the API
+   * **break** - the change breaks any part of the API
    * **feature** - this adds a new user-facing or developer feature
+   * **removed** - this removes a user-facing or developer feature
    * **security** - the change affects a security issue in any way. *Please do not push this commit to any public repo.* Instead contact security@elgg.org.
 
    E.g. if your commit refactors to fix a bug, it's still a "fix". If that bug is security-related, however, the type

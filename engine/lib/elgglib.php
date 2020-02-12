@@ -564,9 +564,9 @@ function elgg_clear_plugin_hook_handlers($hook, $type) {
  * Handlers that return null (or with no explicit return or return value) will
  * not change the value of $returnvalue.
  *
- * $hook is usually a verb: import, get_views, output.
+ * $hook is usually a verb: import, register, output.
  *
- * $type is usually a noun: user, ecml, page.
+ * $type is usually a noun: user, menu:site, page.
  *
  * @tip Like Elgg Events, $hook and $type can use the special keyword 'all'.
  * Handler callbacks registered with $hook = all will be called for all hooks

@@ -19,8 +19,10 @@ changelog({
 		fixed: 'Bug Fixes',
 		deprecate: 'Deprecations',
 		deprecates: 'Deprecations',
+		deprecated: 'Deprecations',
 		break: 'Breaking Changes',
-		breaks: 'Breaking Changes'
+		breaks: 'Breaking Changes',
+		removed: 'Removed'
 	}
 }, function (err, log) {
 	if (err)

@@ -79,11 +79,6 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
-		'get_views' => [
-			'ecml' => [
-				'Elgg\Bookmarks\ECML::getViews' => [],
-			],
-		],
 		'likes:is_likable' => [
 			'object:bookmarks' => [
 				'Elgg\Values::getTrue' => [],

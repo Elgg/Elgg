@@ -105,11 +105,9 @@ Plugins
 * ``_developers_page_menu`` changed to ``Elgg\Developers\Menus\Page::register``
 * ``_elgg_activity_owner_block_menu`` changed to ``Elgg\Activity\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Activity\Menus\OwnerBlock::registerGroupItem``
 * ``blog_archive_menu_setup`` changed to ``Elgg\Blog\Menus\BlogArchive::register``
-* ``blog_ecml_views_hook`` changed to ``Elgg\Blog\ECML::getViews``
 * ``blog_owner_block_menu`` changed to ``Elgg\Blog\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Blog\Menus\OwnerBlock::registerGroupItem``
 * ``blog_prepare_notification`` changed to ``Elgg\Blog\Notifications::preparePublishBlog``
 * ``blog_register_db_seeds`` changed to ``Elgg\Blog\Database::registerSeeds``
-* ``bookmarks_ecml_views_hook`` changed to ``Elgg\Bookmarks\ECML::getViews``
 * ``bookmarks_footer_menu`` changed to ``Elgg\Bookmarks\Menus\Footer::register``
 * ``bookmarks_owner_block_menu`` changed to ``Elgg\Bookmarks\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Bookmarks\Menus\OwnerBlock::registerGroupItem``
 * ``bookmarks_page_menu`` changed to ``Elgg\Bookmarks\Menus\Page::register``
@@ -157,7 +155,6 @@ Plugins
 * ``Elgg\Friends\RelationshipMenu::addPendingFriendRequestItems`` changed to ``Elgg\Friends\Menus\Relationship::addPendingFriendRequestItems``
 * ``Elgg\Friends\RelationshipMenu::addPendingFriendRequestItems`` changed to ``Elgg\Friends\Menus\Relationship::addPendingFriendRequestItems``
 
-* ``groupprofile_ecml_views_hook`` changed to ``Elgg\Groups\ECML::getViews``
 * ``_groups_gatekeeper_allow_profile_page`` changed to ``Elgg\Groups\Access::allowProfilePage``
 * ``_groups_page_menu`` changed to ``Elgg\Groups\Menus\Page::register``
 * ``_groups_page_menu_group_profile`` changed to ``Elgg\Groups\Menus\Page::registerGroupProfile``
@@ -191,7 +188,6 @@ Plugins
 
 * ``messages_can_edit`` changed to ``Elgg\Messages\Permissions::canEdit``
 * ``messages_can_edit_container`` changed to ``Elgg\Messages\Permissions::canEditContainer``
-* ``messages_ecml_views_hook`` changed to ``Elgg\Messages\ECML::getViews``
 * ``messages_purge`` changed to ``Elgg\Messages\User::purgeMessages``
 * ``messages_register_topbar`` changed to ``Elgg\Messages\Menus\Topbar::register``
 * ``messages_user_hover_menu`` changed to ``Elgg\Messages\Menus\UserHover::register`` and ``Elgg\Messages\Menus\Title::register``
@@ -203,7 +199,6 @@ Plugins
 * ``_notification_groups_title_menu`` changed to ``Elgg\Notifications\Menus\Title::register`` 
 
 * ``pages_container_permission_check`` changed to ``Elgg\Pages\Permissions::allowContainerWriteAccess``
-* ``pages_ecml_views_hook`` changed to ``Elgg\Pages\ECML::getViews``
 * ``pages_entity_menu_setup`` changed to ``Elgg\Pages\Menus\Entity::register``
 * ``pages_icon_url_override`` changed to ``Elgg\Pages\Icons::getIconUrl``
 * ``pages_owner_block_menu`` changed to ``Elgg\Pages\Menus\OwnerBlock::registerUserItem`` and ``Elgg\Pages\Menus\OwnerBlock::registerGroupItem``
@@ -221,7 +216,6 @@ Plugins
 * ``_profile_topbar_menu`` changed to ``Elgg\Profile\Menus\Topbar::register``
 * ``_profile_user_hover_menu`` changed to ``Elgg\Profile\Menus\UserHover::register``
 * ``_profile_user_page_menu`` changed to ``Elgg\Profile\Menus\Page::registerProfileEdit``
-* ``profile_ecml_views_hook`` changed to ``Elgg\Profile\ECML::getViews``
 * ``profile_default_widgets_hook`` changed to ``Elgg\Profile\Widgets::getDefaultWidgetsList``
 
 * ``reportedcontent_user_hover_menu`` changed to ``Elgg\ReportedContent\Menus\UserHover::register``

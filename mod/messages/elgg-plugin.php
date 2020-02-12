@@ -59,11 +59,6 @@ return [
 				'Elgg\Messages\Permissions::canEditContainer' => [],
 			],
 		],
-		'get_views' => [
-			'ecml' => [
-				'Elgg\Messages\ECML::getViews' => [],
-			],
-		],
 		'permissions_check' => [
 			'object' => [
 				'Elgg\Messages\Permissions::canEdit' => [],

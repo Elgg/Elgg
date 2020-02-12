@@ -38,11 +38,6 @@ return [
 		'forms/profile/fields/add' => ['ajax' => true],
 	],
 	'hooks' => [
-		'get_views' => [
-			'ecml' => [
-				'Elgg\Profile\ECML::getViews' => [],
-			],
-		],
 		'get_list' => [
 			'default_widgets' => [
 				'Elgg\Profile\Widgets::getDefaultWidgetsList' => [],

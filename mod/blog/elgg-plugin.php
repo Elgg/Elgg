@@ -101,11 +101,6 @@ return [
 				GroupToolContainerLogicCheck::class => [],
 			],
 		],
-		'get_views' => [
-			'ecml' => [
-				'Elgg\Blog\ECML::getViews' => [],
-			],
-		],
 		'likes:is_likable' => [
 			'object:blog' => [
 				'Elgg\Values::getTrue' => [],
