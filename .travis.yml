@@ -6,10 +6,6 @@ php:
 
 dist: xenial
 
-# This helps builds go quicker on Travis since it enables caching of dependencies
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
 # Do not limit history to latest commits. Merge commits will need older commits.
 # Limiting depth caused issues with /.scripts/travis/check_commit_msgs.sh
 #git:
@@ -105,14 +101,22 @@ matrix:
       dist: trusty
       env: JOB_NAME=upgrade_from_Elgg2
       install:
+        # Install elgg 2.3
         - git fetch origin 2.3
         - git checkout FETCH_HEAD
         - composer travis:install-with-mysql
         - php -f ./.scripts/travis/enable_plugins.php
         - php -f ./.scripts/seeder/seed.php # can't use elgg-cli because it's a 2.3 install
-        - git checkout -
+        # Start upgrade to Elgg 3.3
+        - git fetch origin 3.3
+        - git checkout FETCH_HEAD
+        - composer travis:install
+        - php ./elgg-cli upgrade async --verbose
+        # Start upgrade to current
+        - git checkout @{-2} # using -2 because of the previous 2 checkouts
         - composer update --prefer-dist --no-suggest # using composer update to make sure we have latest dependencies like in the starter project (zip)
         - php ./elgg-cli upgrade async --verbose
+        # Start webserver for tests
         - php -S localhost:8888 -c ./.scripts/travis/local_php_server.ini index.php &
         - sleep 3 # give Web server some time to bind to sockets, etc
       script:
@@ -123,7 +127,6 @@ matrix:
     # setup according to https://www.tekz.io/blog/travis-ci-running-tests-on-mysql-8-0-x-on-ubuntu-xenial
     - php: 7.4
       env: JOB_NAME=mysql80
-      sudo: true
       before_install:
         - phpenv config-rm xdebug.ini
         - wget https://repo.mysql.com/mysql-apt-config_0.8.10-1_all.deb
@@ -144,8 +147,6 @@ matrix:
         - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
         - ./vendor/bin/phpunit --testsuite integration
         - ./vendor/bin/phpunit --testsuite plugins-integration
-
-    # HHVM not officially supported https://github.com/Elgg/Elgg/issues/11185
 
 services:
   - mysql
