@@ -96,13 +96,4 @@ View and comment on the page:
 	'pages:label:history' => "Page history",
 
 	'pages:newchild' => "Create a sub-page",
-	
-	/**
-	 * Upgrades
-	 */
-	'pages:upgrade:2017110700:title' => "Migrate page_top to page entities",
-	'pages:upgrade:2017110700:description' => "Changes the subtype of all top pages to 'page' and sets metadata to ensure correct listing.",
-	
-	'pages:upgrade:2017110701:title' => "Migrate page_top river entries",
-	'pages:upgrade:2017110701:description' => "Changes the subtype of all river items for top pages to 'page'.",
 );

@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\UserValidationByEmail\Upgrades\TrackValidationStatus;
-
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
@@ -27,9 +25,6 @@ return [
 				\Elgg\Router\Middleware\LoggedOutGatekeeper::class,
 			],
 		],
-	],
-	'upgrades' => [
-		TrackValidationStatus::class,
 	],
 	'events' => [
 		'login:before' => [

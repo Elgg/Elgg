@@ -72,10 +72,4 @@ View and comment on the discussion:
 	'discussion:topic:closed:desc' => 'This discussion is closed and is not accepting new comments.',
 
 	'discussion:topic:description' => 'Topic message',
-
-	// upgrades
-	'discussions:upgrade:2017112800:title' => "Migrate discussion replies to comments",
-	'discussions:upgrade:2017112800:description' => "Discussion replies used to have their own subtype, this has been unified into comments.",
-	'discussions:upgrade:2017112801:title' => "Migrate river activity related to discussion replies",
-	'discussions:upgrade:2017112801:description' => "Discussion replies used to have their own subtype, this has been unified into comments.",
 );

@@ -182,11 +182,4 @@ or click below to view the group's join requests:
 	'groups:joinrequestkilled' => 'The join request has been deleted.',
 	'groups:error:addedtogroup' => "Could not add %s to the group",
 	'groups:add:alreadymember' => "%s is already a member of this group",
-
-	/**
-	 * Upgrades
-	 */
-	'groups:upgrade:2016101900:title' => 'Transfer group icons to a new location',
-	'groups:upgrade:2016101900:description' => 'New entity icon API stores icons in a predictable location on the filestore
-relative to the entity\'s filestore directory. This upgrade will align the group plugin with the requirements of the new API.',
 );
