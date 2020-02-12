@@ -31,6 +31,7 @@ return [
 	'annotation/delete' => [],
 	'avatar/upload' => [],
 	'comment/save' => [],
+	'diagnostics/download' => ['access' => 'admin'],
 	'entity/delete' => [],
 	'login' => ['access' => 'public'],
 	'logout' => [],

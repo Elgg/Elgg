@@ -3,6 +3,9 @@
  * Elgg diagnostics
  */
 
+// generating report could take some time
+set_time_limit(0);
+
 $output = elgg_echo('diagnostics:header', [date('r'), elgg_get_logged_in_user_entity()->getDisplayName()]);
 $output = elgg_trigger_plugin_hook('diagnostics:report', 'system', null, $output);
 
@@ -13,4 +16,4 @@ header("Content-Type: text/plain");
 header('Content-Length: ' . strlen($output));
 
 echo $output;
-exit;
+exit();

@@ -18,7 +18,6 @@ $ordered_plugins = [
 	'ckeditor',
 	'dashboard',
 	'developers',
-	'diagnostics',
 	'discussions',
 	'externalpages',
 	'file',

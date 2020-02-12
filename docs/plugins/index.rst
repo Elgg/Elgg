@@ -8,7 +8,6 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    
    blog
    dashboard
-   diagnostics
    file
    friends
    groups

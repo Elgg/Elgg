@@ -5,6 +5,11 @@ From 3.x to 4.0
    :local:
    :depth: 1
 
+Diagnostics Plugin
+------------------
+
+This plugin has been removed, but the action to generate a report is still available. You can find it on the ``Information/Server`` admin page.
+
 Split OkResponse, ErrorResponse and RedirectResponse
 ----------------------------------------------------
 

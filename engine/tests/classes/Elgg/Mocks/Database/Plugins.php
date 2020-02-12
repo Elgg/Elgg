@@ -23,7 +23,6 @@ class Plugins extends DbPlugins {
 		'ckeditor',
 		'dashboard',
 		'developers',
-		'diagnostics',
 		'discussions',
 		'externalpages',
 		'file',
