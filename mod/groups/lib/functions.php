@@ -114,20 +114,6 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 }
 
 /**
- * Get the access collection for a given group
- *
- * @param \ElggGroup $group the group
- *
- * @return \ElggAccessCollection|false
- *
- * @internal
- * @since 3.0
- */
-function _groups_get_group_acl(\ElggGroup $group) {
-	return $group->getOwnedAccessCollection('group_acl');
-}
-
-/**
  * Prepares variables for the group edit form view.
  *
  * @param mixed $group ElggGroup or null. If a group, uses values from the group.

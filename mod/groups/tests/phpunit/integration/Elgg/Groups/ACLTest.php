@@ -39,9 +39,9 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testCreateDeleteGroupACL() {
-		$acl = _groups_get_group_acl($this->group);
+		$acl = $this->group->getOwnedAccessCollection('group_acl');
 
-		$this->assertNotEmpty($acl);
+		$this->assertInstanceof(\ElggAccessCollection::class, $acl);
 		
 		$acl_id = $acl->id;
 
@@ -71,9 +71,9 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 			$this->assertTrue($result);
 	
 			if ($result) {
-				$acl = _groups_get_group_acl($group);
+				$acl = $group->getOwnedAccessCollection('group_acl');
 				$can_edit = true;
-				if ($acl) {
+				if ($acl instanceof \ElggAccessCollection) {
 					$can_edit = can_edit_access_collection($acl->id, $this->user->guid);
 				}
 				$this->assertFalse($can_edit);
@@ -103,8 +103,8 @@ class ACLTest extends \Elgg\IntegrationTestCase {
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($new_user, $membersonly, $unrestricted) {
 			// User is not a member of the group
 			// Member-only group
-			$acl = _groups_get_group_acl($this->group);
-			$this->assertNotEmpty($acl);
+			$acl = $this->group->getOwnedAccessCollection('group_acl');
+			$this->assertInstanceOf(\ElggAccessCollection::class, $acl);
 			
 			$acl_id = $acl->id;
 			

@@ -9,24 +9,6 @@ namespace Elgg\Groups;
  * @internal
  */
 class Group {
-
-	/**
-	 * Populates the ->getUrl() method for group objects
-	 *
-	 * @param \Elgg\Hook $hook 'entity:url', 'group'
-	 *
-	 * @return void|string
-	 */
-	public static function getEntityUrl(\Elgg\Hook $hook) {
-		
-		$entity = $hook->getEntityParam();
-		if (!$entity instanceof \ElggGroup) {
-			return;
-		}
-		
-		$title = elgg_get_friendly_title($entity->getDisplayName());
-		return "groups/profile/{$entity->guid}/$title";
-	}
 	
 	/**
 	 * This function loads a set of default fields into the profile, then triggers
@@ -123,8 +105,8 @@ class Group {
 			// update access collection name if group name changes
 			$group_name = html_entity_decode($group->getDisplayName(), ENT_QUOTES, 'UTF-8');
 			$ac_name = elgg_echo('groups:group') . ": " . $group_name;
-			$acl = _groups_get_group_acl($group);
-			if ($acl) {
+			$acl = $group->getOwnedAccessCollection('group_acl');
+			if ($acl instanceof \ElggAccessCollection) {
 				$acl->name = $ac_name;
 				$acl->save();
 			}
@@ -159,8 +141,8 @@ class Group {
 		}
 		
 		// add a user to the group's access control
-		$collection = _groups_get_group_acl($group);
-		if (!empty($collection)) {
+		$collection = $group->getOwnedAccessCollection('group_acl');
+		if ($collection instanceof \ElggAccessCollection) {
 			$collection->addMember($user->guid);
 		}
 	}
@@ -185,8 +167,8 @@ class Group {
 		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
 		
 		// Removes a user from the group's access control
-		$collection = _groups_get_group_acl($group);
-		if (!empty($collection)) {
+		$collection = $group->getOwnedAccessCollection('group_acl');
+		if ($collection instanceof \ElggAccessCollection) {
 			$collection->removeMember($user->guid);
 		}
 	}

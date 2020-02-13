@@ -164,8 +164,8 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 			// Make this group visible only to group members. We need to use
 			// ACCESS_PRIVATE on the form and convert it to group_acl here
 			// because new groups do not have acl until they have been saved once.
-			$acl = _groups_get_group_acl($group);
-			if ($acl) {
+			$acl = $group->getOwnedAccessCollection('group_acl');
+			if ($acl instanceof ElggAccessCollection) {
 				$visibility = $acl->id;
 			}
 			
