@@ -2,8 +2,6 @@
 
 $guid = elgg_extract('guid', $vars);
 
-elgg_gatekeeper();
-
 if (!$guid) {
 	register_error(elgg_echo('generic_comment:notfound'));
 	forward(REFERER);
