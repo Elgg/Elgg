@@ -13,6 +13,9 @@
  * @see _elgg_set_user_email
  */
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 /* @var $request \Elgg\Request */
 
 $guid = $request->getParam('guid');
@@ -23,11 +26,11 @@ if (isset($guid)) {
 }
 
 if (!$user instanceof ElggUser) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 if (!$user->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new EntityPermissionsException();
 }
 
 elgg_make_sticky_form('usersettings');

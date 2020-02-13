@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * Cryptographic services
  *
@@ -38,7 +40,7 @@ class ElggCrypto {
 	 */
 	public function getRandomString($length, $chars = null) {
 		if ($length < 1) {
-			throw new \InvalidArgumentException('Length should be >= 1');
+			throw new InvalidArgumentException('Length should be >= 1');
 		}
 
 		if (empty($chars)) {

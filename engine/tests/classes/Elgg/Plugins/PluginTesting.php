@@ -66,8 +66,6 @@ trait PluginTesting {
 	 * @return \ElggPlugin|null
 	 *
 	 * @return \ElggPlugin|null|void
-	 * @throws \InvalidParameterException
-	 * @throws \PluginException
 	 */
 	public function startPlugin($plugin_id = null, $activate_requires = true, $activate_suggests = false, $activate_route_requirements = false) {
 		if (!isset($plugin_id)) {

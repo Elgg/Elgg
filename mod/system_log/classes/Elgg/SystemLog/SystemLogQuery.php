@@ -6,6 +6,7 @@ use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Repository;
 use Elgg\Database\Select;
+use Elgg\Exceptions\Exception;
 use Elgg\Values;
 
 /**
@@ -120,9 +121,10 @@ class SystemLogQuery extends Repository {
 	 * @param string $property_type Property type
 	 *
 	 * @return int|float
+	 * @throws Exception
 	 */
 	public function calculate($function, $property, $property_type = null) {
-		throw new \LogicException(__METHOD__ . ' not implemented');
+		throw new Exception(__METHOD__ . ' not implemented');
 	}
 
 	/**

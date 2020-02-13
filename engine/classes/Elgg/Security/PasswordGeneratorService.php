@@ -5,6 +5,7 @@ namespace Elgg\Security;
 use Elgg\Config;
 use Elgg\PluginHooksService;
 use Elgg\Values;
+use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\Security\InvalidPasswordLengthException;
 use Elgg\Exceptions\Security\InvalidPasswordCharacterRequirementsException;
 use Elgg\I18n\Translator;
@@ -258,7 +259,7 @@ class PasswordGeneratorService {
 	 * @param \Elgg\Hook $hook 'registeruser:validate:password', 'all'
 	 *
 	 * @return void
-	 * @throws \RegistrationException
+	 * @throws RegistrationException
 	 */
 	public function registerUserPasswordValidation(\Elgg\Hook $hook) {
 		
@@ -270,7 +271,7 @@ class PasswordGeneratorService {
 		try {
 			$this->assertValidPassword($password);
 		} catch (\Exception $e) {
-			throw new \RegistrationException($e->getMessage(), $e->getCode(), $e);
+			throw new RegistrationException($e->getMessage(), $e->getCode(), $e);
 		}
 	}
 	

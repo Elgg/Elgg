@@ -4,16 +4,17 @@ namespace Elgg\Users;
 
 use Elgg\Config;
 use Elgg\Database\UsersTable;
-use Elgg\I18n\Translator;
-use Elgg\PasswordService;
-use Elgg\PluginHooksService;
-use Elgg\Validation\ValidationResults;
-use ElggUser;
-use RegistrationException;
 use Elgg\Email;
 use Elgg\Email\Address;
 use Elgg\EmailService;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\I18n\Translator;
+use Elgg\PasswordService;
+use Elgg\PluginHooksService;
 use Elgg\Security\PasswordGeneratorService;
+use Elgg\Validation\ValidationResults;
+use ElggUser;
 
 /**
  * User accounts service
@@ -174,7 +175,6 @@ class Accounts {
 	 * @param string $subtype               Subtype of the user entity
 	 *
 	 * @return int|false The new user's GUID; false on failure
-	 * @throws RegistrationException
 	 */
 	public function register($username, $password, $name, $email, $allow_multiple_emails = false, $subtype = null) {
 
@@ -401,11 +401,11 @@ class Accounts {
 	 * @param string    $email E-mail address
 	 *
 	 * @return bool
-	 * @throws \InvalidParameterException
+	 * @throws InvalidParameterException
 	 */
 	public function requestNewEmailValidation(\ElggUser $user, $email) {
 		if (!$this->isValidEmail($email)) {
-			throw new \InvalidParameterException($this->translator->translate('registration:notemail'));
+			throw new InvalidParameterException($this->translator->translate('registration:notemail'));
 		}
 		
 		$site = elgg_get_site_entity();

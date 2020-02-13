@@ -132,7 +132,7 @@ function elgg_format_bytes($size, $precision = 2) {
  *   is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
  *
  * @return string
- * @throws InvalidArgumentException
+ * @throws \Elgg\Exceptions\InvalidArgumentException
  * @since 1.9.0
  */
 function elgg_format_element($tag_name, array $attributes = [], $text = '', array $options = []) {
@@ -428,7 +428,7 @@ function _elgg_sane_validate_url($url) {
 		return $res;
 	}
 
-	// Replace wide chars by “X”.
+	// Replace wide chars by X
 	$s = '';
 	for ($i = 0; $i < $l; ++$i) {
 		$ch = elgg_substr($url, $i, 1);

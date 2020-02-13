@@ -4,7 +4,7 @@ namespace Elgg\Database;
 
 use Elgg\Config;
 use Elgg\Database;
-use Elgg\Database\EntityTable\UserFetchFailureException;
+use Elgg\Exceptions\Database\UserFetchFailureException;
 use Elgg\I18n\Translator;
 use Elgg\PluginHooksService;
 use Elgg\UserCapabilities;

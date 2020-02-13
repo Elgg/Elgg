@@ -610,11 +610,11 @@ Good:
 
 	/**
 	* @return void
-	* @throw InvalidArgumentException
+	* @throws \Elgg\Exceptions\InvalidArgumentException
 	*/
 	function validate_email($email) {
 		if (empty($email)) {
-			throw new InvalidArgumentException('Email is empty');
+			throw new \Elgg\Exceptions\InvalidArgumentException('Email is empty');
 		}
 
 		// validate and throw if invalid

@@ -2,6 +2,8 @@
 
 namespace Elgg\Database;
 
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * @group UnitTests
  */
@@ -57,7 +59,7 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		
 		$str = str_repeat('Foo', \ElggRelationship::RELATIONSHIP_LIMIT);
 		
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$this->service->add($object1->guid, $str, $object2->guid);
 		
 		$object1->delete();

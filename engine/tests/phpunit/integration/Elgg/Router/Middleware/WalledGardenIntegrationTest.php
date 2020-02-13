@@ -2,10 +2,10 @@
 
 namespace Elgg\Router\Middleware;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Exceptions\Http\Gatekeeper\WalledGardenException;
 use Elgg\Http\Request;
+use Elgg\IntegrationTestCase;
 use Symfony\Component\HttpFoundation\Response;
-use Elgg\WalledGardenException;
 
 class WalledGardenIntegrationTest extends IntegrationTestCase {
 

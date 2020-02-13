@@ -3,14 +3,14 @@
 namespace Elgg;
 
 use Elgg\Database\EntityTable;
-use Elgg\Database\EntityTable\UserFetchFailureException;
+use Elgg\Exceptions\Database\UserFetchFailureException;
+use Elgg\Exceptions\InvalidArgumentException;
 use ElggAnnotation;
 use ElggEntity;
 use ElggFile;
 use ElggRiverItem;
 use ElggMetadata;
 use ElggSession;
-use InvalidArgumentException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.

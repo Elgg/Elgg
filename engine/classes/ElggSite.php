@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Exceptions\SecurityException;
+
 /**
  * A Site entity.
  *
@@ -85,7 +88,7 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function delete($recursive = true) {
 		if ($this->guid == 1) {
-			throw new \SecurityException('You cannot delete the current site');
+			throw new SecurityException('You cannot delete the current site');
 		}
 
 		return parent::delete($recursive);
@@ -104,7 +107,7 @@ class ElggSite extends \ElggEntity {
 	 */
 	public function disable($reason = "", $recursive = true) {
 		if ($this->guid == 1) {
-			throw new \SecurityException('You cannot disable the current site');
+			throw new SecurityException('You cannot disable the current site');
 		}
 
 		return parent::disable($reason, $recursive);

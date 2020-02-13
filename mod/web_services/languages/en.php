@@ -30,6 +30,8 @@ return array(
 	'APIException:MissingPOSTHash' => "Missing X-Elgg-posthash header",
 	'APIException:MissingPOSTAlgo' => "Missing X-Elgg-posthash_algo header",
 	'APIException:MissingContentType' => "Missing content type for post data",
+	'APIException:InvalidCallMethod' => "%s must be called using '%s'",
+	'APIException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
 	'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
 	'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
 	'SecurityException:authenticationfailed' => "User could not be authenticated",
@@ -40,9 +42,7 @@ return array(
 	'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
 	'SecurityException:DupePacket' => "Packet signature already seen.",
 	'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
-	'NotImplementedException:CallMethodNotImplemented' => "Call method '%s' is currently not supported.",
-	'CallException:InvalidCallMethod' => "%s must be called using '%s'",
-
+	
 	'system.api.list' => "List all available API calls on the system.",
 	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",
 	

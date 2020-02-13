@@ -3,10 +3,12 @@
  * View a user's site notifications
  */
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	// must have access to view
-	throw new \Elgg\EntityPermissionsException(elgg_echo('site_notifications:no_access'));
+	throw new EntityPermissionsException(elgg_echo('site_notifications:no_access'));
 }
 
 elgg_load_external_file('js', 'elgg.site_notifications');

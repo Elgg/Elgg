@@ -3,6 +3,8 @@
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
  */
 
+use Elgg\Exceptions\InvalidParameterException;
+
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
  *
@@ -70,8 +72,6 @@ function get_entity_as_row($guid) {
  * @see get_entity_as_row()
  * @see get_entity()
  * @internal
- *
- * @throws ClassException|InstallationException
  */
 function entity_row_to_elggstar($row) {
 	return _elgg_services()->entityTable->rowToElggStar($row);

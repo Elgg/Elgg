@@ -9,10 +9,10 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use ElggAnnotation;
 use ElggEntity;
-use InvalidArgumentException;
-use InvalidParameterException;
 
 /**
  * Annotation repository contains methods for fetching annotations from database or performing

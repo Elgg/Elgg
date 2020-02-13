@@ -2,9 +2,9 @@
 
 namespace Elgg\Controllers;
 
-use Elgg\IntegrationTestCase;
+use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Http\Request;
-use Elgg\EntityNotFoundException;
+use Elgg\IntegrationTestCase;
 
 class ServeIconIntegrationTest extends IntegrationTestCase {
 

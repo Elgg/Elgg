@@ -1,6 +1,9 @@
 <?php
 
 use Elgg\Entity\ProfileData;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * A user entity

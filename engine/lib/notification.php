@@ -12,8 +12,6 @@
  * To send a notification call notify() passing it the method you wish to use combined with a
  * number of method specific addressing parameters.
  *
- * Catch NotificationException to trap errors.
- *
  * Adding a New Notification Event
  * ===============================
  * 1. Register the event with elgg_register_notification_event()
@@ -485,7 +483,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  *                                 user's chosen delivery methods.
  *
  * @return array Compound array of each delivery user/delivery method's success or failure.
- * @throws NotificationException
  */
 function notify_user($to, $from = 0, $subject = '', $message = '', array $params = [], $methods_override = null) {
 

@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Exceptions\Http\PluginException;
+
 /**
  * Plugin manifest.xml parser for Elgg 1.8 and above.
  *

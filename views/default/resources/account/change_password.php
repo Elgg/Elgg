@@ -3,13 +3,15 @@
  * Page for resetting a forgotten password
  */
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $user_guid = get_input('u');
 
 $user = get_user($user_guid);
 
 // don't check code here to avoid automated attacks
 if (!$user instanceof ElggUser) {
-	throw new \Elgg\EntityNotFoundException(elgg_echo('user:changepassword:unknown_user'));
+	throw new EntityNotFoundException(elgg_echo('user:changepassword:unknown_user'));
 }
 
 $content = elgg_view_form('user/changepassword', [

@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\Http\PageNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

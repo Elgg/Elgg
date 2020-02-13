@@ -2,6 +2,7 @@
 
 namespace Elgg\WebServices;
 
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\IntegrationTestCase;
 
 /**
@@ -29,31 +30,31 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 	}
 
 	public function testExposeFunctionNoMethod() {
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$this->expectExceptionMessage('Method or function not set in call in expose_method()');
 		elgg_ws_expose_function('', 'test');
 	}
 
 	public function testExposeFunctionNoFunction() {
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$this->expectExceptionMessage('Method or function not set in call in expose_method()');
 		elgg_ws_expose_function('test', '');
 	}
 
 	public function testExposeFunctionBadParameters() {
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$this->expectExceptionMessage("Parameters array structure is incorrect for call to expose method 'test'");
 		elgg_ws_expose_function('test', 'test', 'BAD');
 	}
 
 	public function testExposeFunctionParametersBadArray() {
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$this->expectExceptionMessage("Parameters array structure is incorrect for call to expose method 'test'");
 		elgg_ws_expose_function('test', 'test', ['param1' => 'string']);
 	}
 
 	public function testExposeFunctionBadHttpMethod() {
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$this->expectExceptionMessage("Unrecognised http method BAD for api method 'test'");
 		elgg_ws_expose_function('test', 'test', null, '', 'BAD');
 	}
@@ -159,7 +160,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		$this->registerFunction();
 
 		// GET when it should be a POST
-		$this->expectException(\CallException::class);
+		$this->expectException(\APIException::class);
 		$this->expectExceptionMessage("test must be called using 'POST'");
 		execute_method('test');
 	}

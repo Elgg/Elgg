@@ -9,6 +9,8 @@ use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
 
 /**
@@ -310,7 +312,7 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnInvalidCalculation() {
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		Relationships::with([])->calculate('invalid', 'status', 'annotation');
 	}
 
@@ -341,7 +343,7 @@ class RelationshipsRepositoryTest extends UnitTestCase {
 	}
 
 	public function testThrowsOnInvalidAttributeCalculation() {
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		Relationships::with([])->calculate('max', 'invalid', 'attribute');
 	}
 

@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 elgg_gatekeeper();
 
 $limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'));
@@ -26,7 +28,7 @@ if (elgg_extract('friends_only', $vars, false)) {
 	}
 	
 	if (!$target || !$target->canEdit()) {
-		throw new \Elgg\EntityPermissionsException();
+		throw new EntityPermissionsException();
 	}
 	
 	$options['relationship'] = 'friend';

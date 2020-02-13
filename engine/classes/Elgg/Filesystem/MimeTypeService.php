@@ -2,6 +2,7 @@
 
 namespace Elgg\Filesystem;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\PluginHooksService;
 
 /**
@@ -28,12 +29,12 @@ class MimeTypeService {
 	 * @param string $filename Filename to check
 	 * @param string $default  Default mimetype if not detected (default: application/octet-stream)
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 * @return string
 	 */
 	public function getMimeType(string $filename, string $default = MimeTypeDetector::DEFAULT_TYPE): string {
 		if (!is_file($filename) || !is_readable($filename)) {
-			throw new \InvalidArgumentException("The file '{$filename}' is not a valid file or is not readable");
+			throw new InvalidArgumentException("The file '{$filename}' is not a valid file or is not readable");
 		}
 		
 		$detector = new MimeTypeDetector();

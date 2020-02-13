@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\Http\PluginException;
+
 /**
  * Parses Elgg manifest.xml files.
  *

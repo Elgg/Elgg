@@ -2,6 +2,8 @@
 
 namespace Elgg\Mocks;
 
+use Elgg\Exceptions\DatabaseException;
+
 /**
  * @group Mocks
  * @group UnitTests
@@ -17,17 +19,17 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testThrowsWithUnknownInsertSpec() {
-		$this->expectException(\DatabaseException::class);
+		$this->expectException(DatabaseException::class);
 		elgg()->db->insertData('INSERT INTO B');
 	}
 
 	public function testThrowsWithUnknownUpdateSpec() {
-		$this->expectException(\DatabaseException::class);
+		$this->expectException(DatabaseException::class);
 		elgg()->db->updateData('UPDATE B');
 	}
 
 	public function testThrowsWithUnknownDeleteSpec() {
-		$this->expectException(\DatabaseException::class);
+		$this->expectException(DatabaseException::class);
 		elgg()->db->deleteData('DELETE FROM B');
 	}
 

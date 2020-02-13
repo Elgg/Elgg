@@ -3,7 +3,7 @@
 namespace Elgg\Security;
 
 use Elgg\Config;
-use Elgg\CsrfException;
+use Elgg\Exceptions\Http\CsrfException;
 use Elgg\Request;
 use Elgg\TimeUsing;
 use ElggCrypto;

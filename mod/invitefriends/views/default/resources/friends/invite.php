@@ -1,7 +1,7 @@
 <?php
 
-use Elgg\EntityPermissionsException;
-use Elgg\GatekeeperException;
+use Elgg\Exceptions\Http\GatekeeperException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
 if (!elgg_get_config('allow_registration')) {
 	throw new GatekeeperException(elgg_echo('invitefriends:registration_disabled'));

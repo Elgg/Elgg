@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\InvalidParameterException;
+
 /**
  * @group EntityIconService
  * @group UnitTests
@@ -248,14 +250,14 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$service = $this->createService();
 		
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$service->getIcon($this->entity, 'small');
 	}
 
 	public function testThrowsExceptionOnSaveIconFromNonExistentElggFile() {
 		$service = $this->createService();
 		
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$service->saveIconFromElggFile($this->entity, new \ElggFile());
 	}
 
@@ -310,7 +312,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$service = $this->createService();
 		$local_file = _elgg_config()->dataroot . '_______empty';
 		
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$service->saveIconFromLocalFile($this->entity, $local_file);
 	}
 

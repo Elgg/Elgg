@@ -3,6 +3,9 @@
  * Helper functions
  */
 
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\SecurityException;
+
 /**
  * Handle a web service request
  *

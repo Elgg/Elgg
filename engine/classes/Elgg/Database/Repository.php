@@ -8,6 +8,7 @@ use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\Database\Clauses\WhereClause;
+use Elgg\Exceptions\DataFormatException;
 
 /**
  * Abstract methods for interfacing with the database
@@ -85,7 +86,7 @@ abstract class Repository implements QueryExecuting {
 	public static function find(array $options = []) {
 		try {
 			return static::with($options)->execute();
-		} catch (\DataFormatException $e) {
+		} catch (DataFormatException $e) {
 			return elgg_extract('count', $options) ? 0 : false;
 		}
 	}

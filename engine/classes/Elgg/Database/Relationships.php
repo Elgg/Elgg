@@ -8,6 +8,8 @@ use Elgg\Database\Clauses\EntityWhereClause;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\Clauses\RelationshipWhereClause;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * Relationships repository contains methods for fetching relationships from database or performing
@@ -20,12 +22,12 @@ class Relationships extends Repository {
 
 	/**
 	 * {@inheritDoc}
-	 * @see \Elgg\Database\QueryExecuting::calculate()
+	 * @throws InvalidParameterException;
 	 */
 	public function calculate($function, $property, $property_type = null) {
 		
 		if (!in_array(strtolower($function), QueryBuilder::$calculations)) {
-			throw new \InvalidArgumentException("'$function' is not a valid numeric function");
+			throw new InvalidArgumentException("'$function' is not a valid numeric function");
 		}
 		
 		if (!isset($property_type)) {
@@ -43,7 +45,7 @@ class Relationships extends Repository {
 		switch ($property_type) {
 			case 'attribute':
 				if (!in_array($property, \ElggEntity::$primary_attr_names)) {
-					throw new \InvalidParameterException("'$property' is not a valid attribute");
+					throw new InvalidParameterException("'$property' is not a valid attribute");
 				}
 				
 				$alias = $select->joinEntitiesTable('er', $join_column, 'inner', 'e');
@@ -101,7 +103,6 @@ class Relationships extends Repository {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see \Elgg\Database\QueryExecuting::execute()
 	 */
 	public function execute() {
 		
@@ -134,7 +135,6 @@ class Relationships extends Repository {
 	
 	/**
 	 * {@inheritDoc}
-	 * @see \Elgg\Database\QueryExecuting::get()
 	 */
 	public function get($limit = null, $offset = null, $callback = null) {
 		$select = Select::fromTable('entity_relationships', 'er');

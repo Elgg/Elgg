@@ -2,6 +2,8 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Exceptions\InvalidParameterException;
+
 /**
  * Trait shared by CLI commands to simplify plugin management
  */
@@ -14,18 +16,17 @@ trait PluginsHelper {
 	 * @param bool   $force Resolve conflicts
 	 *
 	 * @return bool
-	 * @throws \InvalidParameterException
-	 * @throws \PluginException
+	 * @throws InvalidParameterException
 	 */
 	public function activate($id, $force = false) {
 
 		$plugin = elgg_get_plugin_from_id($id);
 		if (!$plugin) {
-			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
+			throw new InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
 		if (!$plugin->getManifest()) {
-			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
+			throw new InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
 		}
 
 		if (!$force) {
@@ -52,17 +53,16 @@ trait PluginsHelper {
 	 * @param bool   $force Also deactivate dependents
 	 *
 	 * @return bool
-	 * @throws \InvalidParameterException
-	 * @throws \PluginException
+	 * @throws InvalidParameterException
 	 */
 	public function deactivate($id, $force = false) {
 		$plugin = elgg_get_plugin_from_id($id);
 		if (!$plugin) {
-			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
+			throw new InvalidParameterException(elgg_echo('PluginException:InvalidID', [$id]));
 		}
 
 		if (!$plugin->getManifest()) {
-			throw new \InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
+			throw new InvalidParameterException(elgg_echo('PluginException:InvalidManifest', [$id]));
 		}
 
 		if (!$force) {

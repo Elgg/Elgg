@@ -2,6 +2,8 @@
 
 namespace Elgg\Config;
 
+use Elgg\Exceptions\DatabaseException;
+
 /**
  * Migrates site url database value to settings.php
  *
@@ -54,7 +56,7 @@ class WwwrootSettingMigrator extends SettingsMigrator {
 			} else {
 				error_log("The DB table {$this->db->prefix}metadata did not have an 'url' for the site.");
 			}
-		} catch (\DatabaseException $ex) {
+		} catch (DatabaseException $ex) {
 			error_log($ex->getMessage());
 		}
 	}

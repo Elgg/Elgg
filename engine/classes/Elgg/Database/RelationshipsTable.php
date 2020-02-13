@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg\Database;
 
 use Elgg\Database;
@@ -6,6 +7,8 @@ use Elgg\Database\Clauses\GroupByClause;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\Clauses\SelectClause;
 use Elgg\EventsService;
+use Elgg\Exceptions\DatabaseException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 /**
@@ -110,12 +113,12 @@ class RelationshipsTable {
 	 * @param bool   $return_id    Return the ID instead of bool?
 	 *
 	 * @return bool|int
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
 		if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
 			$msg = "relationship name cannot be longer than " . \ElggRelationship::RELATIONSHIP_LIMIT;
-			throw new \InvalidArgumentException($msg);
+			throw new InvalidArgumentException($msg);
 		}
 
 		// Check for duplicates
@@ -137,7 +140,7 @@ class RelationshipsTable {
 			if (!$id) {
 				return false;
 			}
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$prev = $e->getPrevious();
 			if ($prev instanceof UniqueConstraintViolationException) {
 				// duplicate key error see https://github.com/Elgg/Elgg/issues/9179

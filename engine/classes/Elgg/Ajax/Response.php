@@ -1,5 +1,8 @@
 <?php
+
 namespace Elgg\Ajax;
+
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * JSON endpoint response
@@ -33,7 +36,7 @@ class Response implements \Elgg\Services\AjaxResponse {
 	 */
 	public function setData(\stdClass $data) {
 		if (!property_exists($data, 'value')) {
-			throw new \InvalidArgumentException('$data must have a property "value"');
+			throw new InvalidArgumentException('$data must have a property "value"');
 		}
 		$this->data = $data;
 		return $this;

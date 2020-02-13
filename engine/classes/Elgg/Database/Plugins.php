@@ -3,14 +3,16 @@
 namespace Elgg\Database;
 
 use Closure;
-use DatabaseException;
 use Elgg\Cacheable;
+use Elgg\Cache\PrivateSettingsCache;
 use Elgg\Config;
 use Elgg\Context;
 use Elgg\Database;
+use Elgg\EventsService;
+use Elgg\Exceptions\Http\PluginException;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\I18n\Translator;
 use Elgg\Includer;
-use Elgg\EventsService;
 use Elgg\Loggable;
 use Elgg\Profilable;
 use Elgg\Project\Paths;
@@ -22,7 +24,6 @@ use ElggSession;
 use ElggUser;
 use Exception;
 use Psr\Log\LogLevel;
-use Elgg\Cache\PrivateSettingsCache;
 
 /**
  * Persistent, installation-wide key-value storage.
@@ -279,8 +280,6 @@ class Plugins {
 	 * The \ElggPlugin object holds config data, so don't delete.
 	 *
 	 * @return bool
-	 * @throws DatabaseException
-	 * @throws \PluginException
 	 */
 	public function generateEntities() {
 
@@ -398,7 +397,7 @@ class Plugins {
 		try {
 			$this->cache->delete($plugin_id);
 			$this->invalidateProvidesCache();
-		} catch (\InvalidArgumentException $ex) {
+		} catch (InvalidArgumentException $ex) {
 			// A plugin must have been deactivated due to missing folder
 			// without proper cleanup
 			elgg_invalidate_caches();
@@ -466,7 +465,6 @@ class Plugins {
 	 * Returns the highest priority of the plugins
 	 *
 	 * @return int
-	 * @throws DatabaseException
 	 */
 	public function getMaxPriority() {
 		$priority = $this->namespacePrivateSetting('internal', 'priority');
@@ -799,7 +797,7 @@ class Plugins {
 			);
 
 			elgg_add_admin_notice("cannot_start $id", $msg);
-		} catch (\PluginException $ex) {
+		} catch (PluginException $ex) {
 			$this->getLogger()->log(LogLevel::ERROR, $ex, [
 				'context' => [
 					'plugin' => $plugin,
@@ -995,12 +993,13 @@ class Plugins {
 	 * @param string $id   The plugin's ID to namespace with.  Required for user_setting.
 	 *
 	 * @return string
+	 * @throws InvalidArgumentException
 	 */
 	public function namespacePrivateSetting($type, $name, $id = null) {
 		switch ($type) {
 			case 'user_setting':
 				if (!$id) {
-					throw new \InvalidArgumentException("You must pass the plugin id for user settings");
+					throw new InvalidArgumentException("You must pass the plugin id for user settings");
 				}
 				$name = ELGG_PLUGIN_USER_SETTING_PREFIX . "$id:$name";
 				break;
@@ -1252,7 +1251,6 @@ class Plugins {
 	 * @param \ElggPlugin $plugin Plugin
 	 *
 	 * @return string[]
-	 * @throws DatabaseException
 	 */
 	public function getAllSettings(ElggPlugin $plugin) {
 		if (!$plugin->guid) {
@@ -1296,7 +1294,6 @@ class Plugins {
 	 *
 	 * @return array
 	 * @see  ElggPlugin::getAllUserSettings()
-	 * @throws DatabaseException
 	 */
 	public function getAllUserSettings(ElggPlugin $plugin, ElggUser $user = null) {
 
@@ -1401,7 +1398,6 @@ class Plugins {
 	 * @param int        $priority New priority
 	 *
 	 * @return int|false
-	 * @throws DatabaseException
 	 */
 	public function setPriority(ElggPlugin $plugin, $priority) {
 

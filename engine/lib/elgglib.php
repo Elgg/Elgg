@@ -1,13 +1,12 @@
 <?php
-
-use Elgg\Http\ResponseBuilder;
-
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
  * @todo These functions can't be subpackaged because they cover a wide mix of
  * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
+
+use Elgg\Exceptions\SecurityException;
 
 /**
  * Get a reference to the global Application object
@@ -31,11 +30,11 @@ function elgg() {
  *                         'system'.
  *
  * @return void
- * @throws SecurityException|InvalidParameterException
+ * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
 	if (headers_sent($file, $line)) {
-		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
+		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
 			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
 	}
 
@@ -953,7 +952,7 @@ function elgg_http_validate_signed_url($url) {
  * Issues 403 response if signature is invalid
  *
  * @return void
- * @throws \Elgg\HttpException
+ * @throws \Elgg\Exceptions\HttpException
  */
 function elgg_signed_request_gatekeeper() {
 

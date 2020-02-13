@@ -5,6 +5,8 @@ namespace Elgg\Database\Seeds;
 use Elgg\Collections\Collection;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
+use Elgg\Database\Seeds\Providers\LocalImage;
+use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Groups\Tool;
 use ElggEntity;
 use ElggGroup;
@@ -13,7 +15,6 @@ use ElggUser;
 use Exception;
 use Faker\Factory;
 use Psr\Log\LogLevel;
-use Elgg\Database\Seeds\Providers\LocalImage;
 
 /**
  * Seeding trait
@@ -165,7 +166,7 @@ trait Seeding {
 				$this->log("Created new user {$user->getDisplayName()} [guid: {$user->guid}]");
 
 				return $user;
-			} catch (\RegistrationException $e) {
+			} catch (RegistrationException $e) {
 				if ($user && $user->guid) {
 					$user->delete();
 				}
@@ -523,7 +524,7 @@ trait Seeding {
 			try {
 				elgg()->accounts->assertValidUsername($username, true);
 				return true;
-			} catch (\RegistrationException $e) {
+			} catch (RegistrationException $e) {
 				return false;
 			}
 		};
@@ -553,7 +554,7 @@ trait Seeding {
 			try {
 				elgg()->accounts->assertValidEmail($email, true);
 				return true;
-			} catch (\RegistrationException $e) {
+			} catch (RegistrationException $e) {
 				return false;
 			}
 		};

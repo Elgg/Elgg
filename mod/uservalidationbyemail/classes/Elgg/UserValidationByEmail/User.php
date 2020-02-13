@@ -2,6 +2,8 @@
 
 namespace Elgg\UserValidationByEmail;
 
+use Elgg\Exceptions\LoginException;
+
 /**
  * Hook callbacks for users
  *
@@ -86,7 +88,7 @@ class User {
 			uservalidationbyemail_request_validation($user->guid);
 			
 			// throw error so we get a nice error message
-			throw new \LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+			throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 		});
 	}
 }

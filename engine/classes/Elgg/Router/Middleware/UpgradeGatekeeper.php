@@ -3,7 +3,7 @@
 namespace Elgg\Router\Middleware;
 
 use Elgg\Http\ResponseBuilder;
-use Elgg\Http\Exception\UpgradeGatekeeperException;
+use Elgg\Exceptions\Http\Gatekeeper\UpgradeGatekeeperException;
 
 /**
  * Protect upgrade.php from unauthorized execution

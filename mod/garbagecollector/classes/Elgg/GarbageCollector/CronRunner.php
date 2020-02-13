@@ -15,7 +15,6 @@ class CronRunner {
 	 * @param Hook $hook Hook
 	 *
 	 * @return void
-	 * @throws \DatabaseException
 	 */
 	public function __invoke(Hook $hook) {
 

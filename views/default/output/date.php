@@ -6,6 +6,8 @@
  * @uses $vars['format'] Date format
  */
 
+use Elgg\Exceptions\DataFormatException;
+
 $format = elgg_extract('format', $vars, elgg_get_config('date_format', elgg_echo('input:date_format')), false);
 
 $value = elgg_extract('value', $vars);

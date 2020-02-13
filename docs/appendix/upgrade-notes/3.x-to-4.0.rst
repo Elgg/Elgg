@@ -278,6 +278,57 @@ Removed views / resources
 
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 
+Reworked exceptions
+-------------------
+
+All exceptions in the Elgg system now extend the ``Elgg\Exceptions\Exception`` and are in the namespace ``Elgg\Exceptions``
+
+Moved exceptions
+~~~~~~~~~~~~~~~~
+
+* ``ClassException`` use ``Elgg\Exceptions\ClassException``
+* ``ConfigurationException`` use ``Elgg\Exceptions\ConfigurationException``
+* ``CronException`` use ``Elgg\Exceptions\CronException``
+* ``DatabaseException`` use ``Elgg\Exceptions\DatabaseException``
+* ``DataFormatException`` use ``Elgg\Exceptions\DataFormatException``
+* ``InstallationException`` use ``Elgg\Exceptions\Configuration\InstallationException``
+* ``InvalidParameterException`` use ``Elgg\Exceptions\InvalidParameterException``
+* ``IOException`` use ``Elgg\Exceptions\FileSystem\IOException``
+* ``LoginException`` use ``Elgg\Exceptions\LoginException``
+* ``PluginException`` use ``Elgg\Exceptions\Http\PluginException``
+* ``RegistrationException`` use ``Elgg\Exceptions\Configuration\RegistrationException``
+* ``SecurityException`` use ``Elgg\Exceptions\SecurityException``
+* ``Elgg\Database\EntityTable\UserFetchFailureException`` use ``Elgg\Exceptions\Database\UserFetchFailureException``
+* ``Elgg\Di\FactoryUncallableException`` use ``Elgg\Exceptions\Di\FactoryUncallableException``
+* ``Elgg\Di\MissingValueException`` use ``Elgg\Exceptions\Di\MissingValueException``
+* ``Elgg\Http\Exception\AdminGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException``
+* ``Elgg\Http\Exception\AjaxGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException``
+* ``Elgg\Http\Exception\GroupToolGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException``
+* ``Elgg\Http\Exception\LoggedInGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException``
+* ``Elgg\Http\Exception\LoggedOutGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\LoggedOutGatekeeperException``
+* ``Elgg\Http\Exception\UpgradeGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\UpgradeGatekeeperException``
+* ``Elgg\I18n\InvalidLocaleException`` use ``Elgg\Exceptions\I18n\InvalidLocaleException``
+* ``Elgg\BadRequestException`` use ``Elgg\Exceptions\Http\BadRequestException``
+* ``Elgg\CsrfException`` use ``Elgg\Exceptions\Http\CsrfException``
+* ``Elgg\EntityNotFoundException`` use ``Elgg\Exceptions\Http\EntityNotFoundException``
+* ``Elgg\EntityPermissionsException`` use ``Elgg\Exceptions\Http\EntityPermissionsException``
+* ``Elgg\GatekeeperException`` use ``Elgg\Exceptions\Http\GatekeeperException``
+* ``Elgg\GroupGatekeeperException`` use ``Elgg\Exceptions\Http\Gatekeeper\GroupGatekeeperException``
+* ``Elgg\HttpException`` use ``Elgg\Exceptions\HttpException``
+* ``Elgg\PageNotFoundException`` use ``Elgg\Exceptions\Http\PageNotFoundException``
+* ``Elgg\ValidationException`` use ``Elgg\Exceptions\Http\ValidationException``
+* ``Elgg\WalledGardenException`` use ``Elgg\Exceptions\Http\Gatekeeper\WalledGardenException``
+
+Removed exceptions
+~~~~~~~~~~~~~~~~~~
+
+* ``CallException``
+* ``ClassNotFoundException``
+* ``IncompleteEntityException``
+* ``InvalidClassException``
+* ``NotificationException``
+* ``NotImplementedException`` from the Web Services plugin
+
 Removed composer dependencies
 -----------------------------
 

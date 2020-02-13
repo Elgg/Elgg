@@ -13,6 +13,9 @@
  * @uses $vars['min']       Min available time in seconds (e.g. 2*60*60 for 2am)
  * @uses $vars['max']       Max available time in seconds (e.g. 23*60*60 for 11pm)
  */
+
+use Elgg\Exceptions\DataFormatException;
+
 $vars['class'] = elgg_extract_class($vars, 'elgg-input-time');
 
 $defaults = [

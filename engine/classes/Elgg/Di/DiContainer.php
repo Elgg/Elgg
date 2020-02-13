@@ -2,6 +2,10 @@
 
 namespace Elgg\Di;
 
+use Elgg\Exceptions\Di\FactoryUncallableException;
+use Elgg\Exceptions\Di\MissingValueException;
+use Elgg\Exceptions\InvalidArgumentException;
+
 /**
  * Container holding values which can be resolved upon reading and optionally stored and shared
  * across reads.
@@ -39,11 +43,11 @@ class DiContainer {
 	 *
 	 * @param string $name The name of the value to fetch
 	 * @return mixed
-	 * @throws \Elgg\Di\MissingValueException
+	 * @throws MissingValueException
 	 */
 	public function __get($name) {
 		if (!isset($this->factories_[$name])) {
-			throw new \Elgg\Di\MissingValueException("Value or factory was not set for: $name");
+			throw new MissingValueException("Value or factory was not set for: $name");
 		}
 		$value = $this->build($this->factories_[$name]['callable'], $name);
 
@@ -61,7 +65,7 @@ class DiContainer {
 	 * @param mixed  $factory The factory for the value
 	 * @param string $name    The name of the value
 	 * @return mixed
-	 * @throws \Elgg\Di\FactoryUncallableException
+	 * @throws FactoryUncallableException
 	 */
 	private function build($factory, $name) {
 		if (is_callable($factory)) {
@@ -77,7 +81,7 @@ class DiContainer {
 				$msg .= ": " . get_class($factory[0]) . "->{$factory[1]}";
 			}
 		}
-		throw new \Elgg\Di\FactoryUncallableException($msg);
+		throw new FactoryUncallableException($msg);
 	}
 
 	/**
@@ -86,11 +90,11 @@ class DiContainer {
 	 * @param string $name  The name of the value
 	 * @param mixed  $value The value
 	 * @return \Elgg\Di\DiContainer
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function setValue($name, $value) {
 		if (substr($name, -1) === '_') {
-			throw new \InvalidArgumentException('$name cannot end with "_"');
+			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
 		$this->{$name} = $value;
 		return $this;
@@ -114,14 +118,14 @@ class DiContainer {
 	 * @param callable $callable Factory for the value
 	 * @param bool     $shared   Whether the same value should be returned for every request
 	 * @return \Elgg\Di\DiContainer
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function setFactory($name, $callable, $shared = true) {
 		if (substr($name, -1) === '_') {
-			throw new \InvalidArgumentException('$name cannot end with "_"');
+			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
 		if (!is_callable($callable, true)) {
-			throw new \InvalidArgumentException('$factory must appear callable');
+			throw new InvalidArgumentException('$factory must appear callable');
 		}
 		$this->remove($name);
 		$this->factories_[$name] = [
@@ -138,15 +142,15 @@ class DiContainer {
 	 * @param string $class_name Class name to be instantiated
 	 * @param bool   $shared     Whether the same value should be returned for every request
 	 * @return \Elgg\Di\DiContainer
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	public function setClassName($name, $class_name, $shared = true) {
 		if (substr($name, -1) === '_') {
-			throw new \InvalidArgumentException('$name cannot end with "_"');
+			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
 		$classname_pattern = self::CLASS_NAME_PATTERN_53;
 		if (!is_string($class_name) || !preg_match($classname_pattern, $class_name)) {
-			throw new \InvalidArgumentException('Class names must be valid PHP class names');
+			throw new InvalidArgumentException('Class names must be valid PHP class names');
 		}
 		$func = function () use ($class_name) {
 			return new $class_name();
@@ -162,7 +166,7 @@ class DiContainer {
 	 */
 	public function remove($name) {
 		if (substr($name, -1) === '_') {
-			throw new \InvalidArgumentException('$name cannot end with "_"');
+			throw new InvalidArgumentException('$name cannot end with "_"');
 		}
 		unset($this->{$name});
 		unset($this->factories_[$name]);

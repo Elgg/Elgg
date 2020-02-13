@@ -6,8 +6,9 @@
  * @uses $vars['object'] An exception
  */
 
-$exception = elgg_extract('object', $vars);
+use Elgg\Exceptions\DatabaseException;
 
+$exception = elgg_extract('object', $vars);
 if (!$exception instanceof Throwable) {
 	return;
 }

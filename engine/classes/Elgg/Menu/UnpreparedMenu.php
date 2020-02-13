@@ -2,8 +2,8 @@
 
 namespace Elgg\Menu;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use ElggMenuItem;
-use InvalidArgumentException;
 
 /**
  * Linear set of menu items collected from configuration and the "register" hook.
@@ -45,7 +45,7 @@ class UnpreparedMenu {
 	/**
 	 * Set how this menu should be sorted
 	 *
-	 * @see ElggMenuBuilder::sort
+	 * @see \ElggMenuBuilder::sort()
 	 *
 	 * @param string|callable $sort_by Sort strategy "text", "name", "priority", or callback
 	 *
@@ -58,8 +58,8 @@ class UnpreparedMenu {
 	/**
 	 * Get the designated (or default) sort strategy
 	 *
-	 * @see setSortBy
-	 * @see ElggMenuBuilder::sort
+	 * @see self::setSortBy()
+	 * @see \ElggMenuBuilder::sort()
 	 *
 	 * @return string|callable
 	 */

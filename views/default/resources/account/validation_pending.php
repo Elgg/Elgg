@@ -3,7 +3,7 @@
  * Show a page after registration that account validation is pending
  */
 
-use Elgg\ValidationException;
+use Elgg\Exceptions\Http\ValidationException;
 
 $session = elgg_get_session();
 if (!$session->get('admin_validation')) {

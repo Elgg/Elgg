@@ -3,6 +3,8 @@
  * Elgg login action
  */
 
+use Elgg\Exceptions\LoginException;
+
 /* @var $request \Elgg\Request */
 
 $username = get_input('username');

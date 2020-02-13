@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Exceptions\DatabaseException;
+
 /**
  * \Elgg\PersistentLoginService
  *
@@ -19,7 +21,60 @@ namespace Elgg;
  * @internal
  */
 class PersistentLoginService {
-
+	
+	/**
+	 * @var Database
+	 */
+	protected $db;
+	
+	/**
+	 * @var string
+	 */
+	protected $table;
+	
+	/**
+	 * @var array
+	 */
+	protected $cookie_config;
+	
+	/**
+	 * @var string
+	 */
+	protected $cookie_token;
+	
+	/**
+	 * @var \ElggSession
+	 */
+	protected $session;
+	
+	/**
+	 * @var \ElggCrypto
+	 */
+	protected $crypto;
+	
+	/**
+	 * @var int
+	 */
+	protected $time;
+	
+	/**
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
+	 */
+	public $_callable_get_user = 'get_user';
+	
+	/**
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
+	 */
+	public $_callable_elgg_set_cookie = 'elgg_set_cookie';
+	
+	/**
+	 * @var callable
+	 * @internal DO NOT USE. For unit test mocking
+	 */
+	public $_callable_sleep = 'sleep';
+	
 	/**
 	 * Constructor
 	 *
@@ -139,7 +194,7 @@ class PersistentLoginService {
 		];
 		try {
 			$user_row = $this->db->getDataRow($query, null, $params);
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 			return null;
 		}
@@ -180,7 +235,7 @@ class PersistentLoginService {
 				$this->setCookie($this->cookie_token);
 			}
 			return $res;
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
 		
@@ -212,7 +267,7 @@ class PersistentLoginService {
 		];
 		try {
 			return (bool) $this->db->deleteData($query, $params);
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
 		
@@ -241,7 +296,7 @@ class PersistentLoginService {
 		];
 		try {
 			$this->db->insertData($query, $params);
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
 	}
@@ -260,7 +315,7 @@ class PersistentLoginService {
 		];
 		try {
 			$this->db->deleteData($query, $params);
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
 	}
@@ -268,14 +323,14 @@ class PersistentLoginService {
 	/**
 	 * Swallow a schema not upgraded exception, otherwise rethrow it
 	 *
-	 * @param \DatabaseException $exception The exception to handle
-	 * @param string             $default   The value to return if the table doesn't exist yet
+	 * @param DatabaseException $exception The exception to handle
+	 * @param string            $default   The value to return if the table doesn't exist yet
 	 *
 	 * @return mixed
 	 *
-	 * @throws \DatabaseException
+	 * @throws DatabaseException
 	 */
-	protected function handleDbException(\DatabaseException $exception, $default = null) {
+	protected function handleDbException(DatabaseException $exception, $default = null) {
 		if (false !== strpos($exception->getMessage(), "users_remember_me_cookies' doesn't exist")) {
 			// schema has not been updated so we swallow this exception
 			return $default;
@@ -299,7 +354,7 @@ class PersistentLoginService {
 		];
 		try {
 			$this->db->deleteData($query, $params);
-		} catch (\DatabaseException $e) {
+		} catch (DatabaseException $e) {
 			$this->handleDbException($e);
 		}
 	}
@@ -362,57 +417,4 @@ class PersistentLoginService {
 	protected function generateToken() {
 		return 'z' . $this->crypto->getRandomString(31);
 	}
-
-	/**
-	 * @var Database
-	 */
-	protected $db;
-
-	/**
-	 * @var string
-	 */
-	protected $table;
-
-	/**
-	 * @var array
-	 */
-	protected $cookie_config;
-
-	/**
-	 * @var string
-	 */
-	protected $cookie_token;
-
-	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
-	 * @var \ElggCrypto
-	 */
-	protected $crypto;
-
-	/**
-	 * @var int
-	 */
-	protected $time;
-
-	/**
-	 * @var callable
-	 * @internal DO NOT USE. For unit test mocking
-	 */
-	public $_callable_get_user = 'get_user';
-
-	/**
-	 * @var callable
-	 * @internal DO NOT USE. For unit test mocking
-	 */
-	public $_callable_elgg_set_cookie = 'elgg_set_cookie';
-
-	/**
-	 * @var callable
-	 * @internal DO NOT USE. For unit test mocking
-	 */
-	public $_callable_sleep = 'sleep';
 }

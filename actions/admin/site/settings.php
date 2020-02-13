@@ -7,6 +7,8 @@
  * the config table.
  */
 
+use Elgg\Exceptions\Configuration\InstallationException;
+
 $site = elgg_get_site_entity();
 if (!$site) {
 	throw new InstallationException("The system is missing an ElggSite entity!");

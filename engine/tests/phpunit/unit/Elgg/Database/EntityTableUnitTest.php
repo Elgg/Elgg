@@ -2,7 +2,7 @@
 
 namespace Elgg\Database;
 
-use Elgg\Database\EntityTable\UserFetchFailureException;
+use Elgg\Exceptions\Database\UserFetchFailureException;
 
 /**
  * @group Database

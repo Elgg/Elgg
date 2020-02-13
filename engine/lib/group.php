@@ -5,6 +5,8 @@
  * mark any given container as their container.
  */
 
+use Elgg\Exceptions\Http\Gatekeeper\GroupToolGatekeeperException;
+
 /**
  * Checks if a group has a specific tool enabled.
  * Forward to the group if the tool is disabled.
@@ -14,7 +16,7 @@
  *                           will be pulled from elgg_get_page_owner_guid().
  *
  * @return void
- * @throws \Elgg\Http\Exception\GroupToolGatekeeperException
+ * @throws GroupToolGatekeeperException
  * @since 3.0.0
  */
 function elgg_group_tool_gatekeeper($option, $group_guid = null) {
@@ -29,7 +31,7 @@ function elgg_group_tool_gatekeeper($option, $group_guid = null) {
 		return;
 	}
 
-	$ex = new \Elgg\Http\Exception\GroupToolGatekeeperException();
+	$ex = new GroupToolGatekeeperException();
 	$ex->setRedirectUrl($group->getURL());
 	$ex->setParams([
 		'entity' => $group,

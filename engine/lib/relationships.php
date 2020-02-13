@@ -39,7 +39,7 @@ function delete_relationship($id) {
  * @param int    $guid_two     GUID of the target entity of the relationship
  *
  * @return bool
- * @throws InvalidArgumentException
+ * @throws \Elgg\Exceptions\InvalidArgumentException
  */
 function add_entity_relationship($guid_one, $relationship, $guid_two) {
 	return _elgg_services()->relationshipsTable->add($guid_one, $relationship, $guid_two);

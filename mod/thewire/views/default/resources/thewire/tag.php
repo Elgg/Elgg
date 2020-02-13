@@ -3,7 +3,7 @@
  * Wire posts tagged with <tag>
  */
 
-use Elgg\BadRequestException;
+use Elgg\Exceptions\Http\BadRequestException;
 
 $tag = elgg_extract('tag', $vars);
 if (!$tag) {

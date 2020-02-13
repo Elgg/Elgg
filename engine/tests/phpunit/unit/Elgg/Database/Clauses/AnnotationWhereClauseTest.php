@@ -6,6 +6,7 @@ use Elgg\Database\Clauses\AccessWhereClause;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\UnitTestCase;
 
 /**
@@ -294,7 +295,7 @@ class AnnotationWhereClauseTest extends UnitTestCase {
 
 		$qb = Select::fromTable('entities', 'alias');
 		
-		$this->expectException(\InvalidParameterException::class);
+		$this->expectException(InvalidParameterException::class);
 		$qb->addClause($query);
 	}
 

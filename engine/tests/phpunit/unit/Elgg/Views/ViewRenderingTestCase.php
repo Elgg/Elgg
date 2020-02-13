@@ -2,7 +2,7 @@
 
 namespace Elgg\Views;
 
-use Elgg\HttpException;
+use Elgg\Exceptions\HttpException;
 use Elgg\IntegratedUnitTestCase;
 use Elgg\Plugins\PluginTesting;
 

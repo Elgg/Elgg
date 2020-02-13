@@ -4,8 +4,8 @@ namespace Elgg\Collections;
 
 use ArrayAccess;
 use Countable;
-use InvalidArgumentException;
-use InvalidParameterException;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\InvalidArgumentException;
 use SeekableIterator;
 
 /**

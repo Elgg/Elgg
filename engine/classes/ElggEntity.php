@@ -3,6 +3,9 @@
 use Elgg\EntityIcon;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Update;
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\DatabaseException;
+use Elgg\Exceptions\Filesystem\IOException;
 
 /**
  * The parent class for all Elgg Entities.
@@ -137,7 +140,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($row && !$this->load($row)) {
 			$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
-			throw new \IOException($msg);
+			throw new IOException($msg);
 		}
 	}
 
@@ -359,7 +362,6 @@ abstract class ElggEntity extends \ElggData implements
 	 *                           Does not support associative arrays.
 	 *
 	 * @return bool
-	 * @throws InvalidArgumentException
 	 */
 	public function setMetadata($name, $value, $value_type = '', $multiple = false) {
 
@@ -582,7 +584,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param mixed  $value Value of private setting
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	public function setPrivateSetting($name, $value) {
 		
@@ -618,7 +619,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param string $name Name of the private setting
 	 *
 	 * @return string|null
-	 * @throws DatabaseException
 	 */
 	public function getPrivateSetting($name) {
 		if (!$this->guid) {
@@ -632,7 +632,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Returns all private settings
 	 *
 	 * @return array
-	 * @throws DatabaseException
 	 */
 	public function getAllPrivateSettings() {
 		if (!$this->guid) {
@@ -648,7 +647,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param string $name Name of the private setting
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	public function removePrivateSetting($name) {
 		if (!$this->guid) {
@@ -663,7 +661,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Removes all private settings
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	public function removeAllPrivateSettings() {
 		if (!$this->guid) {
@@ -1334,13 +1331,13 @@ abstract class ElggEntity extends \ElggData implements
 
 		$type = $this->attributes['type'];
 		if (!in_array($type, \Elgg\Config::getEntityTypes())) {
-			throw new \InvalidParameterException('Entity type must be one of the allowed types: '
+			throw new InvalidParameterException('Entity type must be one of the allowed types: '
 					. implode(', ', \Elgg\Config::getEntityTypes()));
 		}
 
 		$subtype = $this->attributes['subtype'];
 		if (!$subtype) {
-			throw new \InvalidParameterException("All entities must have a subtype");
+			throw new InvalidParameterException("All entities must have a subtype");
 		}
 
 		$owner_guid = (int) $this->attributes['owner_guid'];
@@ -1356,11 +1353,11 @@ abstract class ElggEntity extends \ElggData implements
 		$container_guid = (int) $container_guid;
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
+			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
 		
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			throw new InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
@@ -1412,7 +1409,7 @@ abstract class ElggEntity extends \ElggData implements
 		], $this->attributes);
 
 		if (!$guid) {
-			throw new \IOException("Unable to save new object's base entity information!");
+			throw new IOException("Unable to save new object's base entity information!");
 		}
 
 		$this->attributes['subtype'] = $subtype;
@@ -1496,11 +1493,11 @@ abstract class ElggEntity extends \ElggData implements
 		$time = $this->getCurrentTime()->getTimestamp();
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
+			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in constants.php');
 		}
 	
 		if ($access_id == ACCESS_FRIENDS) {
-			throw new \InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
+			throw new InvalidParameterException('ACCESS_FRIENDS is not a valid access level. See its documentation in constants.php');
 		}
 
 		// Update primary table

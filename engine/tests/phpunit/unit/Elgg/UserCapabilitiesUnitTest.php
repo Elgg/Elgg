@@ -7,6 +7,7 @@ use ElggEntity;
 use ElggMetadata;
 use ElggObject;
 use ElggUser;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * @group UnitTests
@@ -413,7 +414,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, new ElggAnnotation());
 	}
 
@@ -423,7 +424,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, []);
 	}
 
@@ -433,7 +434,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, 5);
 	}
 
@@ -443,7 +444,7 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 			'owner_guid' => $owner->guid,
 		]);
 
-		$this->expectException(\InvalidArgumentException::class);
+		$this->expectException(InvalidArgumentException::class);
 		$entity->canAnnotate($owner->guid, function() {
 			return 'annotation_name';
 		});

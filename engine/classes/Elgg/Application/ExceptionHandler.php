@@ -3,6 +3,7 @@
 namespace Elgg\Application;
 
 use Elgg\Application;
+use Elgg\Exceptions\Configuration\InstallationException;
 use Elgg\Http\Request;
 use Elgg\Loggable;
 use Exception;
@@ -51,7 +52,7 @@ class ExceptionHandler {
 			'Expires' => 'Fri, 05 Feb 1982 00:00:00 -0500',
 		];
 
-		if ($exception instanceof \InstallationException) {
+		if ($exception instanceof InstallationException) {
 			$response = RedirectResponse::create('/install.php', 307, $headers);
 			$response->prepare($request);
 

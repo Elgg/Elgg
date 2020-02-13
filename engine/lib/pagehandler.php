@@ -23,7 +23,6 @@
  *                       - methods : HTTP methods
  *
  * @return \Elgg\Router\Route
- * @throws InvalidParameterException
  */
 function elgg_register_route($name, array $params = []) {
 	return _elgg_services()->routes->register($name, $params);
@@ -129,7 +128,7 @@ function elgg_generate_action_url($action, array $query = [], $add_csrf_tokens =
  * Used at the top of a page to mark it as logged in users only.
  *
  * @return void
- * @throws \Elgg\Http\Exception\LoggedInGatekeeperException
+ * @throws \Elgg\Exceptions\Http\Gatekeeper\LoggedInGatekeeperException
  * @since 1.9.0
  */
 function elgg_gatekeeper() {
@@ -140,7 +139,7 @@ function elgg_gatekeeper() {
  * Used at the top of a page to mark it as admin only.
  *
  * @return void
- * @throws \Elgg\Http\Exception\AdminGatekeeperException
+ * @throws \Elgg\Exceptions\Http\Gatekeeper\AdminGatekeeperException
  * @since 1.9.0
  */
 function elgg_admin_gatekeeper() {
@@ -162,9 +161,9 @@ function elgg_admin_gatekeeper() {
  * @return void
  *
  * @throws Exception
- * @throws \Elgg\EntityNotFoundException
- * @throws \Elgg\EntityPermissionsException
- * @throws \Elgg\HttpException
+ * @throws \Elgg\Exceptions\Http\EntityNotFoundException
+ * @throws \Elgg\Exceptions\Http\EntityPermissionsException
+ * @throws \Elgg\Exceptions\HttpException
  * @since 1.9.0
  */
 function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $validate_can_edit = false) {
@@ -177,7 +176,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $validate_
  * will end and a 400 response page will be sent.
  *
  * @return void
- * @throws \Elgg\Http\Exception\AjaxGatekeeperException
+ * @throws \Elgg\Exceptions\Http\Gatekeeper\AjaxGatekeeperException
  * @since 1.12.0
  */
 function elgg_ajax_gatekeeper() {
@@ -245,7 +244,6 @@ function elgg_error_response($error = '', $forward_url = REFERRER, int $status_c
  *                            Note that non-redirection HTTP codes will throw an exception
  *
  * @return \Elgg\Http\RedirectResponse
- * @throws \InvalidArgumentException
  */
 function elgg_redirect_response($forward_url = REFERRER, int $status_code = ELGG_HTTP_FOUND) {
 	return new Elgg\Http\RedirectResponse($forward_url, $status_code);

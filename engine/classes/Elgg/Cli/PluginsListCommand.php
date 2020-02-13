@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Exceptions\Http\PluginException;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -57,7 +58,7 @@ class PluginsListCommand extends Command {
 			}
 
 			$table->render();
-		} catch (\PluginException $ex) {
+		} catch (PluginException $ex) {
 			return 2;
 		}
 

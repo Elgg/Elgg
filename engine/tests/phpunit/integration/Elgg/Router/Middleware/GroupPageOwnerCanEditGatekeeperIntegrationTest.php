@@ -2,8 +2,8 @@
 
 namespace Elgg\Router\Middleware;
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
 use Elgg\IntegrationTestCase;
-use Elgg\EntityPermissionsException;
 
 class GroupPageOwnerCanEditGatekeeperIntegrationTest extends IntegrationTestCase {
 

@@ -5,8 +5,8 @@
  * @since 4.0
  */
 
-use Elgg\EntityNotFoundException;
-use Elgg\PageNotFoundException;
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\PageNotFoundException;
 
 // Make sure the 'site' css isn't loaded
 elgg_unregister_external_file('css', 'elgg');

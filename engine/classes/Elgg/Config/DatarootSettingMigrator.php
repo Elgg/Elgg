@@ -2,6 +2,8 @@
 
 namespace Elgg\Config;
 
+use Elgg\Exceptions\DatabaseException;
+
 /**
  * Migrates dataroot database value to settings.php
  *
@@ -41,7 +43,7 @@ class DatarootSettingMigrator extends SettingsMigrator {
 			$this->append($bytes);
 
 			return $value;
-		} catch (\DatabaseException $ex) {
+		} catch (DatabaseException $ex) {
 			error_log($ex->getMessage());
 		}
 	}

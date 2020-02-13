@@ -9,9 +9,11 @@
  * front page.
  */
 
+use Elgg\Exceptions\Http\GatekeeperException;
+
 // check new registration allowed
 if (elgg_get_config('allow_registration') == false) {
-	throw new \Elgg\GatekeeperException(elgg_echo('registerdisabled'));
+	throw new GatekeeperException(elgg_echo('registerdisabled'));
 }
 
 $friend_guid = (int) get_input('friend_guid', 0);

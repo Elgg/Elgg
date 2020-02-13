@@ -2,9 +2,8 @@
 
 namespace Elgg\Http;
 
-use Elgg\BadRequestException;
 use Elgg\Context;
-use Elgg\HttpException;
+use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Router\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
@@ -409,7 +408,7 @@ class Request extends SymfonyRequest {
 	 * Validate the request
 	 *
 	 * @return void
-	 * @throws HttpException
+	 * @throws BadRequestException
 	 */
 	public function validate() {
 

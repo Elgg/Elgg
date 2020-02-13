@@ -3,6 +3,9 @@
  * Action to reset a password, send success email, and log the user in.
  */
 
+use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\LoginException;
+
 $password = get_input('password1');
 $password_repeat = get_input('password2');
 $user_guid = (int) get_input('u');

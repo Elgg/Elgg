@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use DateTime;
+use Elgg\Exceptions\CronException;
 use GO\Job;
 use GO\Scheduler;
 
@@ -61,7 +62,7 @@ class Cron {
 	 * @param bool  $force     Force cron jobs to run even they are not yet due
 	 *
 	 * @return Job[]
-	 * @throws \CronException
+	 * @throws CronException
 	 */
 	public function run(array $intervals = null, $force = false) {
 
@@ -76,7 +77,7 @@ class Cron {
 
 		foreach ($intervals as $interval) {
 			if (!array_key_exists($interval, $allowed_intervals)) {
-				throw new \CronException("$interval is not a recognized cron interval");
+				throw new CronException("$interval is not a recognized cron interval");
 			}
 
 			$cron_interval = $force ? $allowed_intervals['minute'] : $allowed_intervals[$interval];

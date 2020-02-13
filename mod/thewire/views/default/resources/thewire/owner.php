@@ -3,9 +3,11 @@
  * User's wire posts
  */
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $owner = elgg_get_page_owner_entity();
 if (!$owner instanceof ElggUser) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 $title = elgg_echo('collection:object:thewire:owner', [$owner->getDisplayName()]);

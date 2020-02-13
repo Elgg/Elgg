@@ -95,7 +95,6 @@ class Cron {
 	 * @param int $offset An offset in seconds that has passed since the time of log entry
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	protected static function archiveLog($offset = 0) {
 	
@@ -117,7 +116,6 @@ class Cron {
 	 * @param int $offset An offset in seconds that has passed since the time of archival
 	 *
 	 * @return bool
-	 * @throws DatabaseException
 	 */
 	protected static function deleteLog($offset) {
 	

@@ -2,6 +2,7 @@
 
 namespace Elgg\Views;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Loggable;
 use Elgg\PluginHooksService;
 use Elgg\ViewsService;
@@ -258,13 +259,14 @@ class HtmlFormatter {
 	 *
 	 * @return string
 	 * @since 1.9.0
+	 * @throws InvalidArgumentException
 	 */
 	public function formatElement($tag_name, array $attributes = [], $text = '', array $options = []) {
 		if (is_array($tag_name)) {
 			$args = $tag_name;
 
 			if ($attributes !== [] || $text !== '' || $options !== []) {
-				throw new \InvalidArgumentException('If $tag_name is an array, the other arguments must not be set');
+				throw new InvalidArgumentException('If $tag_name is an array, the other arguments must not be set');
 			}
 
 			if (isset($args['#tag_name'])) {
@@ -282,7 +284,7 @@ class HtmlFormatter {
 		}
 
 		if (!is_string($tag_name) || $tag_name === '') {
-			throw new \InvalidArgumentException('$tag_name is required');
+			throw new InvalidArgumentException('$tag_name is required');
 		}
 
 		if (isset($options['is_void'])) {

@@ -1,5 +1,8 @@
 <?php
+
 namespace Elgg\Security;
+
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * Component for creating HMAC tokens
@@ -38,7 +41,7 @@ class Hmac {
 		$this->key = $key;
 		$this->comparator = $comparator;
 		if (!$data) {
-			throw new \InvalidArgumentException('$data cannot be empty');
+			throw new InvalidArgumentException('$data cannot be empty');
 		}
 		if (!is_string($data)) {
 			$data = serialize($data);

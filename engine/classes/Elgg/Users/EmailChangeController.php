@@ -2,10 +2,11 @@
 
 namespace Elgg\Users;
 
-use Elgg\Request;
-use Elgg\Http\ResponseBuilder;
 use Elgg\Email;
 use Elgg\Email\Address;
+use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Http\ResponseBuilder;
+use Elgg\Request;
 
 /**
  * Controller to handle confirmation of a user e-mail address change
@@ -38,7 +39,7 @@ class EmailChangeController {
 		
 		try {
 			$request->elgg()->accounts->assertValidEmail($new_email, true);
-		} catch (\RegistrationException $e) {
+		} catch (RegistrationException $e) {
 			return elgg_error_response($e->getMessage());
 		}
 		

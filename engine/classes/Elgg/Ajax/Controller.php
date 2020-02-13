@@ -2,8 +2,9 @@
 
 namespace Elgg\Ajax;
 
-use Elgg\Request;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Http\ResponseBuilder;
+use Elgg\Request;
 
 /**
  * Controller to handle /ajax requests
@@ -89,7 +90,7 @@ class Controller {
 						$content_type = 'text/html';
 						try {
 							$content_type = elgg()->mimetype->getMimeType($file, $content_type);
-						} catch (\InvalidArgumentException $e) {
+						} catch (InvalidArgumentException $e) {
 							// nothing for now
 						}
 					}

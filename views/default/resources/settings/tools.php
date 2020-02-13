@@ -3,7 +3,8 @@
  * Elgg user tools settings
  */
 
-elgg_gatekeeper();
+use Elgg\Exceptions\Http\EntityPermissionsException;
+use Elgg\Exceptions\Http\PageNotFoundException;
 
 $username = elgg_extract('username', $vars);
 if (!$username) {
@@ -12,7 +13,7 @@ if (!$username) {
 
 $user = get_user_by_username($username);
 if (!$user || !$user->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new EntityPermissionsException();
 }
 
 elgg_set_page_owner_guid($user->guid);
@@ -20,13 +21,13 @@ elgg_set_page_owner_guid($user->guid);
 $plugin_id = elgg_extract("plugin_id", $vars);
 
 if (empty($plugin_id)) {
-	throw new \Elgg\PageNotFoundException(elgg_echo('ElggPlugin:MissingID'));
+	throw new PageNotFoundException(elgg_echo('ElggPlugin:MissingID'));
 }
 
 $plugin = elgg_get_plugin_from_id($plugin_id);
 
 if (!$plugin) {
-	throw new \Elgg\PageNotFoundException(elgg_echo('PluginException:InvalidID', [$plugin_id]));
+	throw new PageNotFoundException(elgg_echo('PluginException:InvalidID', [$plugin_id]));
 }
 
 if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {

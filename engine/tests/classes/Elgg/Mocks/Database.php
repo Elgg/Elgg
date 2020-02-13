@@ -5,8 +5,7 @@ namespace Elgg\Mocks;
 use Doctrine\DBAL\Query\Expression\ExpressionBuilder;
 use Elgg\BaseTestCase;
 use Elgg\Database as DbDatabase;
-use Elgg\Database\DbConfig;
-use Psr\Log\LoggerInterface;
+use Elgg\Exceptions\DatabaseException;
 
 class Database extends DbDatabase {
 
@@ -180,7 +179,7 @@ class Database extends DbDatabase {
 		if (!$match && strpos($sql, 'select') !== 0) {
 			// We need to make sure all UPDATE, INSERT and DELETE queries are
 			// mocked, otherwise we will be getting incorrect test results
-			throw new \DatabaseException(
+			throw new DatabaseException(
 				"No testing query spec was found:" . PHP_EOL .
 				"Query: " . $sql . PHP_EOL .
 				"Params: " . var_export($params, true)

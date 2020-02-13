@@ -5,6 +5,8 @@
  * @uses $vars['entity'] ElggDiscussion to show
  */
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 $full_view = (bool) elgg_extract('full_view', $vars, false);
 $entity = elgg_extract('entity', $vars, false);
 if (!$entity instanceof ElggDiscussion) {
@@ -16,7 +18,7 @@ if (!$poster instanceof ElggEntity) {
 	$msg = "User {$entity->owner_guid} could not be loaded, and is needed to display entity {$entity->guid}";
 	elgg_log($msg, 'WARNING');
 	if ($full_view) {
-		throw new \Elgg\EntityNotFoundException($msg);
+		throw new EntityNotFoundException($msg);
 	}
 	return;
 }

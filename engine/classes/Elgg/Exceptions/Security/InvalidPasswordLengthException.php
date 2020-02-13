@@ -2,12 +2,14 @@
 
 namespace Elgg\Exceptions\Security;
 
+use Elgg\Exceptions\SecurityException;
+
 /**
  * Indicate a password string doesn't meet the minimal length requirements
  *
  * @since 3.2
  */
-class InvalidPasswordLengthException extends \Exception {
+class InvalidPasswordLengthException extends SecurityException {
 
 	/**
 	 * {@inheritdoc}

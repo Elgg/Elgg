@@ -2,6 +2,7 @@
 
 namespace Elgg\Filesystem\Directory;
 
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\File;
 use Elgg\Structs\Collection;
@@ -17,13 +18,19 @@ use League\Flysystem\Memory\MemoryAdapter;
  */
 final class Fly implements Directory {
 
-	/** @var Filesystem */
+	/**
+	 * @var Filesystem
+	 */
 	private $fs;
 
-	/** @var string */
+	/**
+	 * @var string
+	 */
 	private $local_path;
 
-	/** @var string Path relative to the filesystem's root */
+	/**
+	 * @var string Path relative to the filesystem's root
+	 */
 	private $chroot;
 
 	/**
@@ -106,8 +113,6 @@ final class Fly implements Directory {
 	 * @param string[] $types     Entry types to return ('file' and/or 'dir')
 	 *
 	 * @return Collection<File|Directory>
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	protected function getEntries($path = '', $recursive = true, $types = ['file', 'dir']) {
 		$contents = $this->fs->listContents($this->getInternalPath($path), $recursive);
@@ -142,8 +147,6 @@ final class Fly implements Directory {
 	 * @param string $path The path relative to this directory.
 	 *
 	 * @return string
-	 *
-	 * @throws \InvalidArgumentException
 	 */
 	private function getInternalPath($path) {
 		$path = strtr($path, '\\', '//');
@@ -193,13 +196,13 @@ final class Fly implements Directory {
 	 *
 	 * @return string
 	 *
-	 * @throws \InvalidArgumentException
+	 * @throws InvalidArgumentException
 	 */
 	private function normalize($path) {
 
 		$test_path = "/$path/";
 		if (strpos($test_path, '/./') !== false || strpos($test_path, '/../') !== false) {
-			throw new \InvalidArgumentException('Paths cannot contain "." or ".."');
+			throw new InvalidArgumentException('Paths cannot contain "." or ".."');
 		}
 
 		return trim(strtr($path, '\\', '/'), "/");

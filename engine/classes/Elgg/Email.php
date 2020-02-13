@@ -4,9 +4,9 @@ namespace Elgg;
 
 use ElggEntity;
 use ElggUser;
-use InvalidParameterException;
 use Elgg\Email\Address;
 use Elgg\Email\Attachment;
+use Elgg\Exceptions\InvalidParameterException;
 use Zend\Mime\Part;
 
 /**

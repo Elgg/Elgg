@@ -1,12 +1,17 @@
 <?php
 
-use Elgg\Database;
 use Elgg\Application;
 use Elgg\Config;
+use Elgg\Database;
 use Elgg\Database\DbConfig;
-use Elgg\Project\Paths;
 use Elgg\Di\ServiceProvider;
+use Elgg\Exceptions\ConfigurationException;
+use Elgg\Exceptions\Configuration\InstallationException;
+use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\DatabaseException;
+use Elgg\Exceptions\LoginException;
 use Elgg\Http\Request;
+use Elgg\Project\Paths;
 
 /**
  * Elgg Installer.
@@ -63,7 +68,6 @@ class ElggInstaller {
 	 * Dispatches a request to one of the step controllers
 	 *
 	 * @return \Elgg\Http\ResponseBuilder
-	 * @throws InstallationException
 	 */
 	public function run() {
 		$app = $this->getApp();
@@ -331,7 +335,6 @@ class ElggInstaller {
 	 * @param array $vars Vars
 	 *
 	 * @return \Elgg\Http\ResponseBuilder
-	 * @throws InstallationException
 	 */
 	protected function runRequirements($vars) {
 
@@ -381,7 +384,6 @@ class ElggInstaller {
 	 * @param array $submissionVars Submitted form variables
 	 *
 	 * @return \Elgg\Http\ResponseBuilder
-	 * @throws ConfigurationException
 	 */
 	protected function runDatabase($submissionVars) {
 
@@ -555,7 +557,6 @@ class ElggInstaller {
 	 * @param array $submissionVars Submitted vars
 	 *
 	 * @return \Elgg\Http\ResponseBuilder
-	 * @throws InstallationException
 	 */
 	protected function runAdmin($submissionVars) {
 		$app = $this->getApp();
@@ -669,7 +670,6 @@ class ElggInstaller {
 	 * @param string $currentStep Current installation step
 	 *
 	 * @return \Elgg\Http\RedirectResponse
-	 * @throws InstallationException
 	 */
 	protected function continueToNextStep($currentStep) {
 		$this->is_action = false;
@@ -699,7 +699,6 @@ class ElggInstaller {
 	 * @param string $currentStep Current installation step
 	 *
 	 * @return string
-	 * @throws InstallationException
 	 */
 	protected function getNextStepUrl($currentStep) {
 		$app = $this->getApp();
@@ -844,7 +843,6 @@ class ElggInstaller {
 	 *                     boot strapping is different until the DB is populated.
 	 *
 	 * @return void
-	 * @throws InstallationException
 	 */
 	protected function finishBootstrapping($step) {
 
@@ -1084,7 +1082,6 @@ class ElggInstaller {
 	 * @param array $report The requirements report array
 	 *
 	 * @return void
-	 * @throws InstallationException
 	 */
 	protected function checkRewriteRules(&$report) {
 		$app = $this->getApp();
@@ -1130,7 +1127,6 @@ class ElggInstaller {
 	 * @param array $formVars       Vars in the form
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	protected function validateDatabaseVars($submissionVars, $formVars) {
 
@@ -1267,7 +1263,6 @@ class ElggInstaller {
 	 * @param array $params Array of inputted params from the user
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	protected function createSettingsFile($params) {
 		$app = $this->getApp();
@@ -1321,7 +1316,6 @@ class ElggInstaller {
 	 * Bootstrap database connection before entire engine is available
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	protected function connectToDatabase() {
 		try {
@@ -1426,7 +1420,6 @@ class ElggInstaller {
 	 * @param array $submissionVars Submitted vars
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	protected function saveSiteSettings($submissionVars) {
 		$app = $this->getApp();
@@ -1511,7 +1504,6 @@ class ElggInstaller {
 	 * @param array $formVars       Form vars
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	protected function validateAdminVars($submissionVars, $formVars) {
 
@@ -1563,7 +1555,6 @@ class ElggInstaller {
 	 * @param bool  $login          Login in the admin user?
 	 *
 	 * @return bool
-	 * @throws InstallationException
 	 */
 	protected function createAdminAccount($submissionVars, $login = false) {
 		$app = $this->getApp();
@@ -1629,7 +1620,6 @@ class ElggInstaller {
 	 * Setup session
 	 *
 	 * @return void
-	 * @throws InstallationException
 	 */
 	protected function createSessionFromFile() {
 		$app = $this->getApp();

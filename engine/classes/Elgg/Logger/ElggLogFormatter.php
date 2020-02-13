@@ -2,6 +2,7 @@
 
 namespace Elgg\Logger;
 
+use Elgg\Exceptions\DatabaseException;
 use Monolog\Formatter\LineFormatter;
 
 /**
@@ -28,7 +29,7 @@ class ElggLogFormatter extends LineFormatter {
 			$message = "Exception at time {$timestamp}:{$eol}{$exception}{$eol}";
 			$record['message'] = preg_replace('~\R~u', $eol, $message);
 
-			if ($exception instanceof \DatabaseException) {
+			if ($exception instanceof DatabaseException) {
 				$record['context']['sql'] = $exception->getQuery();
 				$record['context']['params'] = $exception->getParameters();
 			}

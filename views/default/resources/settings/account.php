@@ -3,7 +3,7 @@
  * Elgg user account settings.
  */
 
-elgg_gatekeeper();
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
 $username = elgg_extract('username', $vars);
 if (!$username) {
@@ -12,7 +12,7 @@ if (!$username) {
 
 $user = get_user_by_username($username);
 if (!$user || !$user->canEdit()) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new EntityPermissionsException();
 }
 
 elgg_set_page_owner_guid($user->guid);

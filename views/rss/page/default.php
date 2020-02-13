@@ -7,9 +7,11 @@
  * @uses $vars['descrption'] The description for the RSS feed
  */
 
+use Elgg\Exceptions\Http\PageNotFoundException;
+
 // Don't show RSS if disabled
 if (_elgg_config()->disable_rss) {
-	throw new \Elgg\PageNotFoundException();
+	throw new PageNotFoundException();
 }
 
 // Set title

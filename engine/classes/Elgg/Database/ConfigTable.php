@@ -146,7 +146,6 @@ class ConfigTable {
 	/**
 	 * Load all config values from the config table
 	 * @return array
-	 * @throws \DatabaseException
 	 */
 	public function getAll() {
 		$values = [];

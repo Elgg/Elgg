@@ -3,17 +3,20 @@
  * View a collection
  */
 
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 $collection_id = elgg_extract('collection_id', $vars);
 $collection = get_access_collection($collection_id);
 
 if (!$collection || !$collection->canEdit()) {
 	// We don't want to leak friendship/collection information
-	throw new \Elgg\EntityPermissionsException();
+	throw new EntityPermissionsException();
 }
 
 $user = $collection->getOwnerEntity();
 if (!$user instanceof ElggUser) {
-	throw new \Elgg\EntityNotFoundException();
+	throw new EntityNotFoundException();
 }
 
 elgg_set_page_owner_guid($user->guid);

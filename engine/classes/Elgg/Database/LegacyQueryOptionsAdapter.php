@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use DataFormatException;
 use Elgg\Config;
 use Elgg\Database\Clauses\AnnotationWhereClause;
 use Elgg\Database\Clauses\AttributeWhereClause;
@@ -179,7 +178,6 @@ trait LegacyQueryOptionsAdapter {
 	 * @param array $options Options
 	 *
 	 * @return array
-	 * @throws DataFormatException
 	 */
 	protected function normalizeTypeSubtypeOptions(array $options = []) {
 
@@ -989,7 +987,6 @@ trait LegacyQueryOptionsAdapter {
 	 * @param array $options Options
 	 *
 	 * @return array
-	 * @throws \InvalidParameterException
 	 */
 	protected function normalizeJoinClauses(array $options = []) {
 

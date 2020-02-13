@@ -3,6 +3,7 @@
 namespace Elgg\Database;
 
 use Elgg\Database;
+use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Loggable;
 use Psr\Log\LoggerInterface;
 
@@ -89,12 +90,12 @@ class Mutex {
 	 * Assert that the namespace contains only characters [A-Za-z]
 	 *
 	 * @param string $namespace Namespace to use for the database table
-	 * @throws \InvalidParameterException
+	 * @throws InvalidParameterException
 	 * @return void
 	 */
 	private function assertNamespace($namespace) {
 		if (!ctype_alpha($namespace)) {
-			throw new \InvalidParameterException("Mutex namespace can only have characters [A-Za-z].");
+			throw new InvalidParameterException("Mutex namespace can only have characters [A-Za-z].");
 		}
 	}
 }

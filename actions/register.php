@@ -3,6 +3,9 @@
  * Elgg registration action
  */
 
+use Elgg\Exceptions\Configuration\RegistrationException;
+use Elgg\Exceptions\LoginException;
+
 /* @var $request \Elgg\Request */
 
 elgg_make_sticky_form('register');

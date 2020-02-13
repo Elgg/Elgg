@@ -1,4 +1,8 @@
 <?php
+
+use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Exceptions\Filesystem\IOException;
+
 /**
  * A filestore that uses disk as storage.
  *
@@ -81,7 +85,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 				break;
 			default:
 				$msg = "Unrecognized file mode '" . $mode . "'";
-				throw new \InvalidParameterException($msg);
+				throw new InvalidParameterException($msg);
 		}
 
 		return fopen($fullname, $mode);
@@ -210,7 +214,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 		if (!$owner_guid) {
 			$msg = "File " . $file->getFilename() . " (file guid:" . $file->guid . ") is missing an owner!";
-			throw new \InvalidParameterException($msg);
+			throw new InvalidParameterException($msg);
 		}
 
 		$filename = $file->getFilename();
@@ -276,7 +280,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	protected function makeDirectoryRoot($dirroot) {
 		if (!file_exists($dirroot)) {
 			if (!@mkdir($dirroot, 0755, true)) {
-				throw new \IOException("Could not make " . $dirroot);
+				throw new IOException("Could not make " . $dirroot);
 			}
 		}
 

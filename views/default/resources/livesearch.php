@@ -5,6 +5,8 @@
  * /livesearch/<match_on>?q=<query>
  */
 
+use Elgg\Exceptions\Http\PageNotFoundException;
+
 /* @var $request \Elgg\Http\Request */
 $request = elgg_extract('request', $vars);
 
@@ -30,7 +32,7 @@ $match_on = elgg_extract('match_on', $vars);
 elgg_set_viewtype('json');
 
 if (!elgg_view_exists("resources/livesearch/$match_on")) {
-	throw new \Elgg\PageNotFoundException();
+	throw new PageNotFoundException();
 }
 
 echo elgg_view("resources/livesearch/$match_on", $vars);

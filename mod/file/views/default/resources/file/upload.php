@@ -3,13 +3,15 @@
  * Upload a new file
  */
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 $guid = elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($guid);
 
 $entity = get_entity($guid);
 
 if (!$entity->canWriteToContainer(0, 'object', 'file')) {
-	throw new \Elgg\EntityPermissionsException();
+	throw new EntityPermissionsException();
 }
 
 elgg_push_collection_breadcrumbs('object', 'file', $entity);

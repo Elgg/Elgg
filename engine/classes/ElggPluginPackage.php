@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Exceptions\Http\PluginException;
+
 /**
  * Manages plugin packages under mod.
  *
