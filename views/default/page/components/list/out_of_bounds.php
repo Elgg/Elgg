@@ -5,10 +5,7 @@
 
 $items = elgg_extract('items', $vars);
 $pagination = (bool) elgg_extract('pagination', $vars);
-
 $count = (int) elgg_extract('count', $vars);
-$offset = (int) elgg_extract('offset', $vars);
-$limit = (int) elgg_extract('limit', $vars);
 
 if (!empty($items) || !$pagination || empty($count)) {
 	return;

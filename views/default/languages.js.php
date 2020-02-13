@@ -9,6 +9,7 @@
 $language = elgg_extract('language', $vars, 'en');
 
 // requested language
+$combine_languages = [];
 $combine_languages[$language] = true;
 
 // add site language

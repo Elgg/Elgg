@@ -10,7 +10,7 @@ if (empty($plugins)) {
 // @todo this could be cached somewhere after have the manifest loaded
 $categories = [];
 
-foreach ($plugins as $id => $plugin) {
+foreach ($plugins as $plugin) {
 	if (!$plugin->isValid()) {
 		if ($plugin->isActive()) {
 			// @todo this needs to go somewhere else

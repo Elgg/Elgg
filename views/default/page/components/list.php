@@ -18,7 +18,6 @@
  * @uses $vars['no_results']     Message to display if no results (string|true|Closure)
  */
 $items = elgg_extract('items', $vars);
-$count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');

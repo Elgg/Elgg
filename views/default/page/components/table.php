@@ -24,11 +24,9 @@ use Elgg\Views\TableColumn;
  * @uses $vars['no_results']   Message to display if no results (string|Closure)
  */
 $items = elgg_extract('items', $vars);
-$count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
-$cell_views = elgg_extract('cell_views', $vars, ['page/components/table/cell/default']);
 
 $columns = elgg_extract('columns', $vars);
 /* @var TableColumn[] $columns */
@@ -75,10 +73,7 @@ foreach ($items as $item) {
 	];
 
 	$type = '';
-	$entity = null;
-
 	if ($item instanceof \ElggEntity) {
-		$entity = $item;
 		$guid = $item->guid;
 		$type = $item->type;
 		$subtype = $item->getSubtype();

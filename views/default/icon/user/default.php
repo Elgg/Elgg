@@ -28,7 +28,6 @@ if (!array_key_exists($size, $icon_sizes)) {
 }
 
 $name = htmlspecialchars($user->getDisplayName(), ENT_QUOTES, 'UTF-8', false);
-$username = $user->username;
 
 $wrapper_class = [
 	'elgg-avatar',
@@ -57,11 +56,6 @@ $show_menu = elgg_extract('use_hover', $vars, true) && (elgg_is_admin_logged_in(
 $content = '';
 
 if ($show_menu) {
-	$params = [
-		'entity' => $user,
-		'username' => $username,
-		'name' => $name,
-	];
 	$content .= elgg_view('navigation/menu/user_hover/placeholder', ['entity' => $user]);
 	
 	$wrapper_class[] = 'elgg-avatar-menu';
