@@ -38,6 +38,8 @@ class RiverRepositoryTest extends UnitTestCase {
 
 		$qb->addClause($where);
 
+		$ands = [];
+		
 		$qb->joinEntitiesTable('rv', 'subject_guid', 'inner', 'se');
 		$subject = new EntityWhereClause();
 		$subject->guids = elgg_extract('subject_guids', $options);

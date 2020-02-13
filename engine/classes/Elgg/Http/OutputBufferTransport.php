@@ -2,7 +2,6 @@
 
 namespace Elgg\Http;
 
-use Elgg\Http\ResponseTransport;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

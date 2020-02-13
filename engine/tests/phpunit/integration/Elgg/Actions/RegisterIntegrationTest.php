@@ -120,7 +120,6 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithInvalidUsername() {
 
-		$username = $this->getRandomUsername();
 		$email = $this->getRandomEmail();
 
 		$response = $this->executeAction('register', [
@@ -139,7 +138,6 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithInvalidUsernameContainingBlacklistChar() {
 
-		$username = $this->getRandomUsername();
 		$email = $this->getRandomEmail();
 
 		$response = $this->executeAction('register', [
@@ -158,7 +156,6 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 	public function testRegistrationFailsWithShortUsername() {
 
-		$username = $this->getRandomUsername();
 		$email = $this->getRandomEmail();
 
 		$response = $this->executeAction('register', [

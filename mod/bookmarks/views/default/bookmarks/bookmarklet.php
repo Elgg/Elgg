@@ -11,11 +11,7 @@ if ($page_owner instanceof ElggGroup) {
 	$title = elgg_echo("bookmarks:this");
 }
 
-$guid = $page_owner->getGUID();
-
-if (!$name && ($user = elgg_get_logged_in_user_entity())) {
-	$name = $user->username;
-}
+$guid = $page_owner->guid;
 
 $code = elgg_view('bookmarks/bookmarklet.js');
 

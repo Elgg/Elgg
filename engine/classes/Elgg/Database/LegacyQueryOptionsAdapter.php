@@ -1076,7 +1076,7 @@ trait LegacyQueryOptionsAdapter {
 			}
 		}
 
-		foreach ($options['sort_by'] as $key => $value) {
+		foreach ($options['sort_by'] as $value) {
 			$clause = new EntitySortByClause();
 			$clause->property = elgg_extract('property', $value);
 			$clause->property_type = elgg_extract('property_type', $value);

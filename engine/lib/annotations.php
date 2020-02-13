@@ -4,8 +4,6 @@
  * Functions to manage object annotations.
  */
 
-use Elgg\Menu\MenuItems;
-
 /**
  * Get a specific annotation by its id.
  * If you want multiple annotation objects, use

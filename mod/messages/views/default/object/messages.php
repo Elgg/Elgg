@@ -11,7 +11,6 @@ if (!$entity instanceof ElggMessage) {
 }
 
 $icon_entity = null;
-$icon = '';
 $byline = '';
 $user_link = elgg_echo('messages:deleted_sender');
 

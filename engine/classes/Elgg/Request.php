@@ -4,7 +4,6 @@ namespace Elgg;
 
 use Elgg\Di\PublicContainer;
 use Elgg\Http\Request as HttpRequest;
-use Elgg\Router\Route;
 use Elgg\Validation\ValidationResults;
 
 /**

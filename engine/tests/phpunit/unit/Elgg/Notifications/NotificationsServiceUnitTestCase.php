@@ -7,7 +7,6 @@ use Elgg\Logger;
 use Elgg\IntegratedUnitTestCase;
 use Elgg\PluginHooksService;
 use Elgg\Queue\MemoryQueue;
-use Elgg\UnitTestCase;
 use Elgg\Values;
 use ElggEntity;
 use ElggObject;

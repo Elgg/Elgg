@@ -436,9 +436,6 @@ class QueryOptionsTest extends UnitTestCase {
 
 	public function testNormalizesMetadataOptionsForSinglePairInRoot() {
 
-		$after = (new \DateTime())->modify('-1 day');
-		$before = (new \DateTime());
-
 		$options = $this->options->normalizeOptions([
 			'metadata_name_value_pairs' => [
 				'name' => 'status',

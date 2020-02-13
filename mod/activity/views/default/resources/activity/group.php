@@ -1,7 +1,6 @@
 <?php
 
 use Elgg\Activity\GroupRiverFilter;
-use Elgg\Database\QueryBuilder;
 
 $group_guid = elgg_extract('guid', $vars);
 

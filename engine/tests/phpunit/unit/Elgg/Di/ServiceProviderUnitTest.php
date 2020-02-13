@@ -112,7 +112,8 @@ class ServiceProviderUnitTest extends \Elgg\UnitTestCase {
 		$class = new \ReflectionClass(ServiceProvider::class);
 		$phpdoc = new DocBlock($class);
 		$readonly_props = $phpdoc->getTagsByName('property-read');
-
+		$sets = [];
+		
 		/* @var \phpDocumentor\Reflection\DocBlock\Tag\PropertyReadTag[] $readonly_props */
 		foreach ($readonly_props as $prop) {
 			$name = substr($prop->getVariableName(), 1);

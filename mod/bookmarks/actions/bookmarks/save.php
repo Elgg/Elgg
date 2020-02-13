@@ -9,7 +9,7 @@ $address = get_input('address');
 $access_id = get_input('access_id');
 $tags = get_input('tags');
 $guid = get_input('guid');
-$container_guid = get_input('container_guid', elgg_get_logged_in_user_guid());
+$container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 
 elgg_make_sticky_form('bookmarks');
 
@@ -29,7 +29,7 @@ if (!filter_var($address, FILTER_VALIDATE_URL)) {
 
 if ($guid == 0) {
 	$bookmark = new ElggBookmark;
-	$bookmark->container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
+	$bookmark->container_guid = $container_guid;
 	$new = true;
 } else {
 	$bookmark = get_entity($guid);

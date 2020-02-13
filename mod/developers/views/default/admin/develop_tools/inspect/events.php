@@ -24,7 +24,7 @@ echo "</tr>";
 
 $last_key = '';
 foreach ($data as $key => $arr) {
-	foreach ($arr as $subkey => $value) {
+	foreach ($arr as $value) {
 		list($priority, $desc) = explode(': ', $value, 2);
 		echo "<tr>";
 		if ($key !== $last_key) {

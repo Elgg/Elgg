@@ -4,7 +4,6 @@
  */
 
 use Elgg\Activity\GroupRiverFilter;
-use Elgg\Database\QueryBuilder;
 
 $widget = elgg_extract('entity', $vars);
 

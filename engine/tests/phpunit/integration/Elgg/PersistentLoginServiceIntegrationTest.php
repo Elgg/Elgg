@@ -91,7 +91,6 @@ class PersistentLoginServiceIntegrationTest extends IntegrationTestCase {
 	
 	public function testUpdateTokenUsage() {
 		$user = $this->user;
-		$service = $this->service;
 		
 		$this->assertEmpty($this->cookie);
 		

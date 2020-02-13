@@ -5,7 +5,6 @@ namespace Elgg\Integration;
 use Elgg\BatchResult;
 use Elgg\IntegrationTestCase;
 use ElggBatch;
-use ElggObject;
 
 /**
  * @group IntegrationTests

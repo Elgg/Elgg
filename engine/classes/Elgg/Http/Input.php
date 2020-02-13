@@ -2,8 +2,6 @@
 
 namespace Elgg\Http;
 
-use Elgg\Context;
-
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *

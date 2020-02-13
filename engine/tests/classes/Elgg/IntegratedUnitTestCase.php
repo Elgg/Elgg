@@ -2,10 +2,8 @@
 
 namespace Elgg;
 
-use Elgg\Mocks\Database\Plugins;
 use Elgg\Mocks\Di\MockServiceProvider;
 use Psr\Log\LogLevel;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Use this test case if the state of services is not important

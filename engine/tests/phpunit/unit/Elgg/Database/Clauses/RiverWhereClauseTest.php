@@ -2,7 +2,6 @@
 
 namespace Elgg\Integration;
 
-use Elgg\Database\Clauses\AccessWhereClause;
 use Elgg\Database\Clauses\RiverWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;

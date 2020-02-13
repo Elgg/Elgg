@@ -43,7 +43,6 @@
  *     login       Menu of links at bottom of login box
  */
 
-use Elgg\Menu\MenuItems;
 use Elgg\Menu\PreparedMenu;
 
 /**
@@ -485,7 +484,7 @@ function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
 		}
 	};
 
-	foreach ($menu as $section => $menu_items) {
+	foreach ($menu as $menu_items) {
 		foreach ($menu_items as $menu_item) {
 			if ($menu_item instanceof ElggMenuItem) {
 				$prepare($menu_item);

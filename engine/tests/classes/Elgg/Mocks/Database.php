@@ -92,8 +92,6 @@ class Database extends DbDatabase {
 	 * @return string ID of spec
 	 */
 	public function addQuerySpec(array $spec) {
-		static $id = 0;
-
 		$default = [
 			'params' => [],
 			'results' => null,

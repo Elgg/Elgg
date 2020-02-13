@@ -81,8 +81,6 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanClearMultipleHandlersAtOnce() {
-		$o = new HooksRegistrationServiceTest_invokable();
-
 		$this->mock->registerHandler('foo', 'bar', 'callback1');
 		$this->mock->registerHandler('foo', 'baz', 'callback1', 10);
 		$this->mock->registerHandler('foo', 'bar', 'callback2', 100);

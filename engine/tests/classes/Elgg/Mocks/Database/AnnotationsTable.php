@@ -43,7 +43,7 @@ class AnnotationsTable extends DbAnnotations {
 			return $annotation;
 		}
 
-		$user_guid = isset($user_guid) ? (int) $user_guid : elgg_get_logged_in_user_guid();
+		$user_guid = elgg_get_logged_in_user_guid();
 
 		if (_elgg_services()->userCapabilities->canBypassPermissionsCheck($user_guid)) {
 			return $annotation;
@@ -117,7 +117,7 @@ class AnnotationsTable extends DbAnnotations {
 		$guids = elgg_extract('guids', $options, (array) elgg_extract('guid', $options));
 
 		$rows = [];
-		foreach ($this->rows as $id => $row) {
+		foreach ($this->rows as $row) {
 			if (empty($guids) || in_array($row->entity_guid, $guids)) {
 				$rows[] = new ElggAnnotation($row);
 			}

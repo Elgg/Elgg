@@ -2,8 +2,6 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Cli\InstallCommand;
-use Elgg\IntegrationTestCase;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

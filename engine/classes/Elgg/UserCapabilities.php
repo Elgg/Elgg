@@ -9,7 +9,6 @@ use ElggAnnotation;
 use ElggEntity;
 use ElggFile;
 use ElggRiverItem;
-use ElggMetadata;
 use ElggSession;
 
 /**

@@ -71,6 +71,8 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 
 	public function testDeleteByID() {
 		$db_prefix = _elgg_config()->dbprefix;
+		
+		// the following variables are used dynamically
 		$annotation = $this->createAnnotations(1);
 		$metadata = $this->createMetadata(1);
 

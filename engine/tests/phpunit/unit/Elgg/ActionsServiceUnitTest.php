@@ -43,8 +43,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	private $translator;
 
 	public function up() {
-		$svc = _elgg_services();
-
 		$this->actionsDir = $this->normalizeTestFilePath('actions');
 
 		$request = $this->prepareHttpRequest();
@@ -272,7 +270,6 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	public function testCanNotValidateTokenAfterSessionExpiry() {
 		$dt = new \DateTime();
 		_elgg_services()->csrf->setCurrentTime($dt);
-		$timeout = _elgg_services()->csrf->getActionTokenTimeout();
 		$timestamp = $dt->getTimestamp();
 		$token = _elgg_services()->csrf->generateActionToken($timestamp);
 		_elgg_services()->session->invalidate();

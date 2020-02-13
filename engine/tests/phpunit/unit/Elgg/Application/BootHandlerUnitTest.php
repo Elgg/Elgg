@@ -137,7 +137,7 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$this->assertTrue($app->_services->config->boot_complete);
 
-		foreach ($calls as $event => $count) {
+		foreach ($calls as $count) {
 			$this->assertEquals(1, $count);
 		}
 	}
