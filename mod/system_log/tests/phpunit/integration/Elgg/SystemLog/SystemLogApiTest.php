@@ -37,7 +37,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		_elgg_services()->db->executeDelayedQueries();
 
-		$log = system_log_get_log([
+		$log = SystemLog::instance()->getAll([
 			'event' => $event,
 		]);
 
@@ -62,11 +62,11 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$this->assertRegExp('/\d+\.\d+\.\d+\.\d+/', $entry->ip_address);
 		$this->assertEquals(elgg()->system_log->getCurrentTime()->getTimestamp(), $entry->time_created);
 		
-		$loaded_entry = system_log_get_log_entry($entry->id);
+		$loaded_entry = SystemLog::instance()->get($entry->id);
 
 		$this->assertEquals($entry, $loaded_entry);
 
-		$loaded_object = system_log_get_object_from_log_entry($entry->id);
+		$loaded_object = $loaded_entry->getObject();
 
 		$this->assertEquals($object->guid, $loaded_object->guid);
 
@@ -86,7 +86,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 
 		_elgg_services()->db->executeDelayedQueries();
 
-		$log = system_log_get_log([]);
+		$log = SystemLog::instance()->getAll();
 
 		if (empty($log)) {
 			// We are seeing intermittent issues with tests on different systems
@@ -107,7 +107,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 		
 		$this->assertTrue($method->invokeArgs($cron_class, [0]));
 		
-		$entries = system_log_get_log([]);
+		$entries = SystemLog::instance()->getAll();
 
 		$this->assertEmpty($entries);
 

@@ -10,6 +10,11 @@ Diagnostics Plugin
 
 This plugin has been removed, but the action to generate a report is still available. You can find it on the ``Information/Server`` admin page.
 
+Discussions Plugin
+------------------
+
+This plugin no longer adds a tab to the filter menu on the groups pages.
+
 Split OkResponse, ErrorResponse and RedirectResponse
 ----------------------------------------------------
 
@@ -261,6 +266,9 @@ Removed functions
 * ``diagnostics_md5_dir``
 * ``group_access_options``
 * ``pages_is_page``
+* ``system_log_get_log``
+* ``system_log_get_log_entry``
+* ``system_log_get_object_from_log_entry``
 * ``system_log_get_seconds_in_period``
 * ``system_log_archive_log``
 * ``system_log_browser_delete_log``

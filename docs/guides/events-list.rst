@@ -50,7 +50,7 @@ System events
 
 **log, systemlog**
 	Called for all triggered events by ``system_log`` plugin.
-	Used internally by ``system_log_default_logger()`` to populate the ``system_log`` table.
+	Used internally by ``Elgg\SystemLog\Logger::log()`` to populate the ``system_log`` table.
 
 **upgrade, system**
 	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 

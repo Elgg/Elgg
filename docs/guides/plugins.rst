@@ -142,7 +142,7 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 			],
 			'log' => [
 				'systemlog' => [
-					'system_log_default_logger' => ['unregister' => true],
+					'Elgg\SystemLog\Logger::log' => ['unregister' => true],
 				],
 			],
 		],

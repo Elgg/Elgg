@@ -1,4 +1,6 @@
 <?php
+use Elgg\SystemLog\SystemLog;
+
 /**
  * Elgg log browser admin page
  */
@@ -59,10 +61,10 @@ $options = [
 	'ip_address' => $ip_address,
 	'object_id' => $object_id,
 ];
-$log = system_log_get_log($options);
+$log = SystemLog::instance()->getAll($options);
 
 $options['count'] = true;
-$count = system_log_get_log($options);
+$count = SystemLog::instance()->getAll($options);
 
 // if user does not exist, we have no results
 if ($search_username && is_null($user_guid)) {

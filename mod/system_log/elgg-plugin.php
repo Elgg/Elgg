@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__ . '/lib/system_log.php');
-
 return [
 	'settings' => [
 		'period' => 'never',
