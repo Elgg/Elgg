@@ -1,11 +1,13 @@
 <?php
 
+use Elgg\SystemLog\SystemLog;
+
 $user = elgg_get_page_owner_entity();
 if (!$user instanceof ElggUser) {
 	return;
 }
 
-$log = system_log_get_log([
+$log = SystemLog::instance()->getAll([
 	'performed_by_guid' => $user->guid,
 	'event' => 'login',
 	'object_type' => 'user',

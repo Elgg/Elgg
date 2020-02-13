@@ -25,7 +25,10 @@ if (empty($log_entries)) {
 		</tr>
 	</thead>
 <?php
-	$alt = '';
+
+$alt = '';
+
+/** @var $entry Elgg\SystemLog\SystemLogEntry */
 foreach ($log_entries as $entry) {
 	if ($entry->ip_address) {
 		$ip_address = $entry->ip_address;
@@ -49,7 +52,7 @@ foreach ($log_entries as $entry) {
 		$user_guid_link = $user_link = '&nbsp;';
 	}
 
-	$object = system_log_get_object_from_log_entry($entry);
+	$object = $entry->getObject();
 	if (is_callable([$object, 'getURL'])) {
 		$object_link = elgg_view('output/url', [
 			'href' => $object->getURL(),

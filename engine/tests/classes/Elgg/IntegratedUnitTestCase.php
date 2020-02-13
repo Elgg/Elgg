@@ -64,8 +64,8 @@ abstract class IntegratedUnitTestCase extends UnitTestCase {
 
 		$app->bootCore();
 
-		$app->_services->events->unregisterHandler('all', 'all', 'system_log_listener');
-		$app->_services->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		$app->_services->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
+		$app->_services->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 
 		self::$_testing_app = $app;
 

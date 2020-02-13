@@ -19,7 +19,7 @@ class Logger {
 	 */
 	public static function log(\Elgg\Event $event) {
 		$object = $event->getObject();
-		system_log($object['object'], $object['event']);
+		SystemLog::instance()->insert($object['object'], $object['event']);
 	
 		return true;
 	}

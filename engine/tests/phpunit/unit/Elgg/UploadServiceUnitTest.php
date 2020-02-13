@@ -37,8 +37,8 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->events->backup();
 
 		// Events service is trying to connect to the DB
-		_elgg_services()->events->unregisterHandler('all', 'all', 'system_log_listener');
-		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		_elgg_services()->events->unregisterHandler('all', 'all', 'Elgg\SystemLog\Logger::listen');
+		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'Elgg\SystemLog\Logger::log');
 
 		$request = $this->prepareHttpRequest();
 		_elgg_services()->setValue('request', $request);
