@@ -108,7 +108,9 @@ class Entity {
 				'name' => 'settings',
 				'icon' => 'settings-alt',
 				'text' => elgg_echo('settings'),
-				'href' => "admin/plugin_settings/{$entity->getID()}",
+				'href' => elgg_generate_url('admin:plugin_settings', [
+					'plugin_id' => $entity->getID(),
+				]),
 				'section' => 'admin'
 			]);
 		}
