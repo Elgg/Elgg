@@ -4,15 +4,6 @@ Page structure best practice
 Elgg pages have an overall pageshell, a main layout and several page elements. It's recommended to always use the ``default`` layout as 
 all page elements can be controlled using that layout. 
 
-.. note::
-
-	Several of the older (deprecated) layouts are automatically rewritten to the ``default`` layout:
-	
-	- one_column
-	- one_sidebar
-	- two_sidebar
-	- content
-
 If you're not using the ``default`` layout you can call
  
 .. code-block:: php

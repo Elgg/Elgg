@@ -574,7 +574,7 @@ function elgg_view_layout($layout_name, $vars = []) {
 	}
 	$timer->begin([__FUNCTION__]);
 
-	if (in_array($layout_name, ['content', 'one_sidebar', 'one_column', 'two_sidebar'])) {
+	if (in_array($layout_name, ['content'])) {
 		elgg_deprecated_notice("Using the '{$layout_name}' layout is deprecated. Please update your code to use the 'default' layout.", '3.3');
 	}
 	
@@ -589,40 +589,16 @@ function elgg_view_layout($layout_name, $vars = []) {
 			$vars = _elgg_normalize_content_layout_vars($vars);
 			break;
 
-		case 'one_sidebar' :
-			$layout_name = 'default';
-			$vars['sidebar'] = elgg_extract('sidebar', $vars, '', false);
-			$vars['sidebar_alt'] = false;
-			break;
-
-		case 'one_column' :
-			$layout_name = 'default';
-			$vars['sidebar'] = false;
-			$vars['sidebar_alt'] = false;
-			break;
-
-		case 'two_sidebar' :
-			$layout_name = 'default';
-			$vars['sidebar'] = elgg_extract('sidebar', $vars, '', false);
-			$vars['sidebar_alt'] = elgg_extract('sidebar_alt', $vars, '', false);
-			break;
-
 		case 'default' :
 			$filter_id = elgg_extract('filter_id', $vars, 'filter');
-			$filter_context = elgg_extract('filter_value', $vars);
-			if (isset($filter_context) && $filter_id === 'filter') {
+			$filter_value = elgg_extract('filter_value', $vars);
+			if (isset($filter_value) && $filter_id === 'filter') {
 				$context = elgg_extract('context', $vars, elgg_get_context());
-				$vars['filter'] = elgg_get_filter_tabs($context, $filter_context, null, $vars);
+				$vars['filter'] = elgg_get_filter_tabs($context, $filter_value, null, $vars);
 				$vars['filter_id'] = $filter_id;
-				$vars['filter_value'] = $filter_context;
+				$vars['filter_value'] = $filter_value;
 			}
 			break;
-	}
-
-	if (isset($vars['nav'])) {
-		// Temporary helper until all core views are updated
-		$vars['breadcrumbs'] = $vars['nav'];
-		unset($vars['nav']);
 	}
 
 	$vars['identifier'] = _elgg_services()->request->getFirstUrlSegment();
@@ -665,11 +641,6 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
 	$vars['title'] = elgg_extract('title', $vars, '');
 	if (!$vars['title'] && $vars['title'] !== false) {
 		$vars['title'] = elgg_echo($context);
-	}
-
-	// 1.8 supported 'filter_override'
-	if (isset($vars['filter_override'])) {
-		$vars['filter'] = $vars['filter_override'];
 	}
 
 	// register the default content filters
