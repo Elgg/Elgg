@@ -9,28 +9,6 @@ namespace Elgg\Discussions\Menus;
  * @internal
  */
 class Filter {
-
-	/**
-	 * Register item to menu
-	 *
-	 * @param \Elgg\Hook $hook 'register', 'menu:filter:groups/all'
-	 *
-	 * @return \Elgg\Menu\MenuItems
-	 */
-	public static function registerGroupsAll(\Elgg\Hook $hook) {
-		$return = $hook->getValue();
-		
-		$return[] = \ElggMenuItem::factory([
-			'name' => 'discussion',
-			'text' => elgg_echo('discussion:latest'),
-			'href' => elgg_generate_url('collection:group:group:all', [
-				'filter' => 'discussion',
-			]),
-			'priority' => 500,
-		]);
-	
-		return $return;
-	}
 	
 	/**
 	 * Add / remove tabs from the filter menu on the discussion pages

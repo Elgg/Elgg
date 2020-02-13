@@ -103,9 +103,6 @@ return [
 			],
 		],
 		'register' => [
-			'menu:filter:groups/all' => [
-				'Elgg\Discussions\Menus\Filter::registerGroupsAll' => [],
-			],
 			'menu:owner_block' => [
 				'Elgg\Discussions\Menus\OwnerBlock::registerGroupItem' => [],
 			],

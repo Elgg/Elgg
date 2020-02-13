@@ -10,6 +10,11 @@ Diagnostics Plugin
 
 This plugin has been removed, but the action to generate a report is still available. You can find it on the ``Information/Server`` admin page.
 
+Discussions Plugin
+------------------
+
+This plugin no longer adds a tab to the filter menu on the groups pages.
+
 Split OkResponse, ErrorResponse and RedirectResponse
 ----------------------------------------------------
 
