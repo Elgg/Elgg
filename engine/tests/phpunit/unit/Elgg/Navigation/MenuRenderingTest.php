@@ -3,7 +3,6 @@
 namespace Elgg\Navigation;
 
 use Elgg\IntegratedUnitTestCase;
-use Elgg\UnitTestCase;
 
 /**
  * The purpose of these tests is to catch validation problems

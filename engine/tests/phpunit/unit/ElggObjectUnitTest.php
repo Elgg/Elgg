@@ -65,8 +65,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$object->time_created = time();
 
 		$object->setCurrentTime(); // We should be able to match timestamps
-		$now = $object->getCurrentTime()->getTimestamp();
-
+		
 		$guid = $object->save();
 		$this->assertNotFalse($guid);
 

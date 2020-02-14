@@ -3,7 +3,6 @@
 namespace Elgg\Integration;
 
 use Elgg\IntegrationTestCase;
-use ElggObject;
 
 /**
  * Elgg Test helper functions

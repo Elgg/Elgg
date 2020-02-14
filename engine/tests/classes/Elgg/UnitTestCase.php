@@ -6,7 +6,6 @@ use Elgg\Mocks\Di\MockServiceProvider;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Tests\Output\TestOutput;
 
 /**
  * Unit test abstraction class

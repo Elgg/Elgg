@@ -15,7 +15,6 @@ if (!$blog->canEdit()) {
 	return;
 }
 
-$owner = $blog->getOwnerEntity();
 $revisions = [];
 
 $auto_save_annotations = $blog->getAnnotations([

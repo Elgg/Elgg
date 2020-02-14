@@ -3,8 +3,6 @@
  * Save the developer settings
  */
 
-$site = elgg_get_site_entity();
-
 if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
 	if (get_input('simple_cache')) {
 		elgg_enable_simplecache();

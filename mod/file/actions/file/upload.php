@@ -79,10 +79,10 @@ $forward = $file->getURL();
 // handle results differently for new files and file updates
 if ($new_file) {
 	$container = get_entity($container_guid);
-	if ($container instanceof ElggGroup) {
-		$forward_url = elgg_generate_url('collection:object:file:group', ['guid' => $container->guid]);
+	if ($container instanceof \ElggGroup) {
+		$forward = elgg_generate_url('collection:object:file:group', ['guid' => $container->guid]);
 	} else {
-		$forward_url = elgg_generate_url('collection:object:file:owner', ['username' => $container->username]);
+		$forward = elgg_generate_url('collection:object:file:owner', ['username' => $container->username]);
 	}
 	
 	elgg_create_river_item([

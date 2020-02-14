@@ -4,7 +4,6 @@ namespace Elgg\Application;
 
 use DateTime;
 use Elgg\Config;
-use Elgg\Filesystem\MimeTypeDetector;
 use Elgg\Filesystem\MimeTypeService;
 use Elgg\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;

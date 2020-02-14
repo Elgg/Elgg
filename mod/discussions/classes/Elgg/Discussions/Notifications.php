@@ -16,7 +16,7 @@ class Notifications {
 	 *
 	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:discussion'
 	 *
-	 * @return Elgg\Notifications\Notification
+	 * @return \Elgg\Notifications\Notification
 	 */
 	public static function prepareDiscussionCreateNotification(\Elgg\Hook $hook) {
 		$entity = $hook->getParam('event')->getObject();
@@ -44,22 +44,22 @@ class Notifications {
 	 *
 	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:comment'
 	 *
-	 * @return void|Elgg\Notifications\Notification
+	 * @return void|\Elgg\Notifications\Notification
 	 */
 	public static function prepareCommentOnDiscussionNotification(\Elgg\Hook $hook) {
 		
 		$event = $hook->getParam('event');
-		if (!$event instanceof Elgg\Notifications\NotificationEvent) {
+		if (!$event instanceof \Elgg\Notifications\NotificationEvent) {
 			return;
 		}
 		
 		$comment = $event->getObject();
-		if (!$comment instanceof ElggComment) {
+		if (!$comment instanceof \ElggComment) {
 			return;
 		}
 		
 		$discussion = $comment->getContainerEntity();
-		if (!$discussion instanceof ElggDiscussion) {
+		if (!$discussion instanceof \ElggDiscussion) {
 			return;
 		}
 		
@@ -100,17 +100,17 @@ class Notifications {
 		}
 		
 		$comment = $event->getObject();
-		if (!$comment instanceof ElggComment) {
+		if (!$comment instanceof \ElggComment) {
 			return;
 		}
 		
 		$discussion = $comment->getContainerEntity();
-		if (!$discussion instanceof ElggDiscussion) {
+		if (!$discussion instanceof \ElggDiscussion) {
 			return;
 		}
 		
 		$container = $discussion->getContainerEntity();
-		if (!$container instanceof ElggGroup) {
+		if (!$container instanceof \ElggGroup) {
 			return;
 		}
 		

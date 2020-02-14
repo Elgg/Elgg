@@ -4,8 +4,6 @@ namespace Elgg;
 
 use ElggAnnotation;
 use ElggEntity;
-use ElggMetadata;
-use ElggObject;
 use ElggUser;
 use Elgg\Exceptions\InvalidArgumentException;
 

@@ -16,7 +16,7 @@ class Notifications {
 	 *
 	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:file'
 	 *
-	 * @return Elgg\Notifications\Notification
+	 * @return \Elgg\Notifications\Notification
 	 */
 	public static function prepareCreateFile(\Elgg\Hook $hook) {
 		$entity = $hook->getParam('event')->getObject();

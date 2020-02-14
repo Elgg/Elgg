@@ -5,9 +5,6 @@
 
 namespace phpunit\unit\Elgg\I18n;
 
-
-use Elgg\Application;
-use Elgg\I18n\Translator;
 use Elgg\IntegratedUnitTestCase;
 
 class TranslationLoadingUnitTestCase extends IntegratedUnitTestCase {

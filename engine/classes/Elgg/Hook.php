@@ -1,7 +1,6 @@
 <?php
 namespace Elgg;
 
-use DI\Container;
 use Elgg\Di\PublicContainer;
 
 /**

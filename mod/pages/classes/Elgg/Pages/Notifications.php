@@ -15,7 +15,7 @@ class Notifications {
 	 *
 	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:page' | 'notification:create:object:page_top'
 	 *
-	 * @return void|Elgg\Notifications\Notification
+	 * @return void|\Elgg\Notifications\Notification
 	 */
 	public static function preparePageCreateNotification(\Elgg\Hook $hook) {
 		

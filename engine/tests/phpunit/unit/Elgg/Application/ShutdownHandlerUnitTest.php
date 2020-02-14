@@ -95,7 +95,7 @@ class ShutdownHandlerUnitTest extends UnitTestCase {
 		$shutdown = new ShutdownHandler($app);
 		$shutdown->shutdownApplication();
 
-		foreach ($calls as $event => $count) {
+		foreach ($calls as $count) {
 			$this->assertEquals(1, $count);
 		}
 	}

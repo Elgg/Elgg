@@ -27,7 +27,7 @@ class Permissions {
 		$write_permission = (int) $entity->write_access_id;
 		$user = $hook->getUserParam();
 	
-		if (empty($write_permission) || !$user instanceof E\lggUser) {
+		if (empty($write_permission) || !$user instanceof \ElggUser) {
 			return;
 		}
 		

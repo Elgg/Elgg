@@ -13,7 +13,8 @@ This plugin has been removed, but the action to generate a report is still avail
 Discussions Plugin
 ------------------
 
-This plugin no longer adds a tab to the filter menu on the groups pages.
+* This plugin no longer adds a tab to the filter menu on the groups pages
+* The ``discussions`` site menu item is now always present
 
 Split OkResponse, ErrorResponse and RedirectResponse
 ----------------------------------------------------

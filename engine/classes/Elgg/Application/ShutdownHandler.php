@@ -3,13 +3,9 @@
 namespace Elgg\Application;
 
 use Elgg\Application;
-use Elgg\Http\Request;
 use Elgg\Loggable;
 use Exception;
 use Psr\Log\LogLevel;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Shutdown handler

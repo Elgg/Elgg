@@ -1,6 +1,9 @@
 <?php
 
-$attrs['class'] = elgg_extract_class($vars);
+
+$attrs = [
+	'class' => elgg_extract_class($vars),
+];
 
 $table = "<thead>";
 $table .= "<tr><th>column 1</th><th>column 2</th></tr>";

@@ -2,8 +2,6 @@
 
 namespace Elgg\Likes;
 
-use Elgg\Services\AjaxResponse;
-
 /**
  * Ajax response handler
  */
@@ -12,7 +10,7 @@ class AjaxResponseHandler {
 	/**
 	 * Alter ajax response to send back likes count
 	 *
-	 * @param \Elgg\Hook $hook AjaxResponse::RESPONSE_HOOK, 'all'
+	 * @param \Elgg\Hook $hook \Elgg\Services\AjaxResponse::RESPONSE_HOOK, 'all'
 	 *
 	 * @return void|\Elgg\Services\AjaxResponse
 	 */

@@ -849,7 +849,6 @@ class ElggInstaller {
 		$app = $this->getApp();
 
 		$index_db = array_search('database', $this->getSteps());
-		$index_settings = array_search('settings', $this->getSteps());
 		$index_admin = array_search('admin', $this->getSteps());
 		$index_complete = array_search('complete', $this->getSteps());
 		$index_step = array_search($step, $this->getSteps());
@@ -1104,7 +1103,7 @@ class ElggInstaller {
 	 */
 	protected function countNumConditions($report, $condition) {
 		$count = 0;
-		foreach ($report as $category => $checks) {
+		foreach ($report as $checks) {
 			foreach ($checks as $check) {
 				if ($check['severity'] === $condition) {
 					$count++;

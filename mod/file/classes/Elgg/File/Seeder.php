@@ -3,7 +3,6 @@
 namespace Elgg\File;
 
 use Elgg\Database\Seeds\Seed;
-use Elgg\Project\Paths;
 
 /**
  * Add file seed

@@ -147,7 +147,7 @@ class UpgradeService {
 	protected function runUpgrades($upgrades) {
 		$promises = [];
 
-		foreach ($upgrades as $key => $upgrade) {
+		foreach ($upgrades as $upgrade) {
 			if (!$upgrade instanceof ElggUpgrade) {
 				continue;
 			}

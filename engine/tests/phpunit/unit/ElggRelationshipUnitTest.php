@@ -35,7 +35,7 @@ class ElggRelationshipUnitTest extends \Elgg\UnitTestCase {
 		$subject = $this->createUser();
 		$object = $this->createObject();
 
-		$id = add_entity_relationship($subject->guid, 'foo', $object->guid);
+		add_entity_relationship($subject->guid, 'foo', $object->guid);
 		return check_entity_relationship($subject->guid, 'foo', $object->guid);
 	}
 

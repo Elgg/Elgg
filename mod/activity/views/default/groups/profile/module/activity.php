@@ -4,7 +4,6 @@
  */
 
 use Elgg\Activity\GroupRiverFilter;
-use Elgg\Database\QueryBuilder;
 
 $group = elgg_extract('entity', $vars);
 if (!$group instanceof \ElggGroup) {

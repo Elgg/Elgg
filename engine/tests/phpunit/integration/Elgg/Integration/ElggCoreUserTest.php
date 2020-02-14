@@ -145,10 +145,8 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggUserMakeAdmin() {
-		$CONFIG = _elgg_config();
-
 		// need to save user to have a guid
-		$guid = $this->user->save();
+		$this->user->save();
 
 		$this->assertTrue($this->user->makeAdmin());
 
@@ -158,10 +156,8 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggUserRemoveAdmin() {
-		$CONFIG = _elgg_config();
-
 		// need to save user to have a guid
-		$guid = $this->user->save();
+		$this->user->save();
 
 		$this->assertTrue($this->user->makeAdmin());
 		
@@ -174,7 +170,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 	public function testElggUserIsAdmin() {
 		// need to grab a real user with a guid and everything.
-		$guid = $this->user->save();
+		$this->user->save();
 
 		$this->assertTrue($this->user->makeAdmin());
 
@@ -187,7 +183,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 	public function testElggUserIsNotAdmin() {
 		// need to grab a real user with a guid and everything.
-		$guid = $this->user->save();
+		$this->user->save();
 
 		$this->assertTrue($this->user->removeAdmin());
 

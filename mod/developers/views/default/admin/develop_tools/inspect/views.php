@@ -18,7 +18,6 @@ $make_id = function ($view) {
 	return "z" . md5($view);
 };
 
-$viewtype = elgg_extract("viewtype", $vars);
 $viewtypes = elgg_extract("viewtypes", $vars);
 
 foreach ($viewtypes as $type) {

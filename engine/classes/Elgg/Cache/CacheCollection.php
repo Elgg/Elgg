@@ -2,7 +2,6 @@
 
 namespace Elgg\Cache;
 
-use Elgg\Cacheable;
 use Elgg\Config;
 
 /**

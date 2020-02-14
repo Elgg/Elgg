@@ -3,7 +3,6 @@
 namespace Elgg\Actions\Admin;
 
 use Elgg\ActionResponseTestCase;
-use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 
 /**

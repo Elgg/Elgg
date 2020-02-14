@@ -15,7 +15,7 @@ class Notifications {
 	 *
 	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:thewire'
 	 *
-	 * @return Elgg\Notifications\Notification
+	 * @return \Elgg\Notifications\Notification
 	 */
 	public static function prepareCreateTheWireNotification(\Elgg\Hook $hook) {
 	
@@ -91,7 +91,7 @@ class Notifications {
 			return;
 		}
 		
-		/* @var $parent_owner ElggUser */
+		/* @var $parent_owner \ElggUser */
 		$parent_owner = $parent->getOwnerEntity();
 		$personal_methods = $parent_owner->getNotificationSettings();
 		$methods = [];

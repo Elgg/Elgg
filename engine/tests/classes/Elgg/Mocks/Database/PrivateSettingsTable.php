@@ -62,7 +62,7 @@ class PrivateSettingsTable extends DbPrivateSettingsTable {
 	 */
 	public function getAllForEntity(ElggEntity $entity) {
 		$rows = [];
-		foreach ($this->rows as $id => $row) {
+		foreach ($this->rows as $row) {
 			if ($row->entity_guid == $entity->guid) {
 				$rows[$row->name] = $row->value;
 			}

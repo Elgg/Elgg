@@ -2,7 +2,6 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Cli\CronCommand;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;

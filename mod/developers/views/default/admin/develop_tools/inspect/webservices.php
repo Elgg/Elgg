@@ -16,7 +16,7 @@ foreach ($data as $key => $arr) {
 	echo "<tr>";
 	echo "<td>$key</td>";
 	echo "<td><ul>";
-	foreach ($arr as $subkey => $value) {
+	foreach ($arr as $value) {
 		echo "<li>$value</li>";
 	}
 	echo "</ul></td>";

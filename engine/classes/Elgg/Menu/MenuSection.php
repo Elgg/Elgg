@@ -2,7 +2,6 @@
 
 namespace Elgg\Menu;
 
-use Elgg\Collections\Collection;
 use Elgg\Collections\CollectionItemInterface;
 use ElggMenuItem;
 

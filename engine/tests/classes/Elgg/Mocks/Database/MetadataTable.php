@@ -91,7 +91,7 @@ class MetadataTable extends DbMetadataTabe {
 		$guids = elgg_extract('guids', $options, (array) elgg_extract('guid', $options));
 		
 		$rows = [];
-		foreach ($this->rows as $id => $row) {
+		foreach ($this->rows as $row) {
 			if (empty($guids) || in_array($row->entity_guid, $guids)) {
 				$rows[] = $row;
 			}
@@ -106,7 +106,7 @@ class MetadataTable extends DbMetadataTabe {
 	public function getRowsForGuids(array $guids) {
 		
 		$rows = [];
-		foreach ($this->rows as $id => $row) {
+		foreach ($this->rows as $row) {
 			if (in_array($row->entity_guid, $guids)) {
 				$rows[] = $row;
 			}

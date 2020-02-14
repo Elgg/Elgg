@@ -4,8 +4,6 @@
  * Contains functions for managing plugins
  */
 
-use Elgg\Menu\MenuItems;
-
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities

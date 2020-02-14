@@ -15,8 +15,6 @@ elgg_make_sticky_form('blog');
 // save or preview
 $save = (bool) get_input('save');
 
-$user = elgg_get_logged_in_user_entity();
-
 // edit or create a new entity
 $guid = (int) get_input('guid');
 

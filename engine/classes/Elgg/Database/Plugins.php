@@ -2,7 +2,6 @@
 
 namespace Elgg\Database;
 
-use Closure;
 use Elgg\Cacheable;
 use Elgg\Cache\PrivateSettingsCache;
 use Elgg\Config;

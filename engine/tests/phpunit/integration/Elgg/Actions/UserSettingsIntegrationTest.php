@@ -4,8 +4,6 @@ namespace Elgg\Actions;
 
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\OkResponse;
-use Elgg\SystemMessagesService;
-
 
 /**
  * @group ActionsService

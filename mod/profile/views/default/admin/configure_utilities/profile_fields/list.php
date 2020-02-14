@@ -3,8 +3,6 @@
  * Profile fields list
  */
 
-$items = [];
-
 $fieldlist = elgg_get_config('profile_custom_fields');
 if (empty($fieldlist) && $fieldlist !== '0') {
 	return;
