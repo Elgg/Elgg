@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -596,7 +596,7 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:widget:admin_welcome:intro' =>
 'Welkom in Elgg! Op dit moment kijk je naar het beheerdersdashboard. Dit is makkelijk om te zien wat er op je site gebeurt.',
 
-	'admin:widget:admin_welcome:registration' => "Registratie voor nieuwe gebruikers is op dit moment uitgeschakeld. Je kunt dit activeren op de %spagina.",
+	'admin:widget:admin_welcome:registration' => "Registratie voor nieuwe gebruikers is op dit moment uitgeschakeld. Je kunt dit activeren op de %s pagina.",
 	'admin:widget:admin_welcome:admin_overview' =>
 "Navigatie door het beheer gedeelte is mogelijk door het menu aan de rechterkant. Dit is georganiseerd in drie secties:
 	<dl>
@@ -1439,7 +1439,7 @@ Nadat je bent aangemeld raden we je aan je wachtwoord te wijzigen.',
 	
 	'config:i18n:allowed_languages' => "Toegestane talen",
 	'config:i18n:allowed_languages:help' => "Enkel toegestane talen kunnen gebruikt worden door de gebruikers. Engels en de taal van de site zijn altijd toegestaan.",
-	'config:users:can_change_username' => "Sta gebruikers toe om hun wachtwoord te wijzigen",
+	'config:users:can_change_username' => "Sta gebruikers toe om hun gebruikersnaam te wijzigen",
 	'config:users:can_change_username:help' => "Indien het niet is toegestaan kan alleen een beheerder de gebruikersnaam van een gebruiker wijzigen",
 	'config:remove_branding:label' => "Verwijder Elgg uitingen",
 	'config:remove_branding:help' => "Overal op de website zijn er verschillende links en logo's welke aantonen dat de website is gemaakt middels Elgg. Als je de uitingen verwijderd overweeg om een donatie te doen op https://elgg.org/about/supporters",
