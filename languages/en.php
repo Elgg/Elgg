@@ -342,6 +342,7 @@ return array(
  * Notifications
  */
 	'notifications:usersettings' => "Notification settings",
+	'notifications:usersettings:description' => "How do you wish to be notified about activity on the site?",
 	'notification:method:email' => 'Email',
 
 	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",

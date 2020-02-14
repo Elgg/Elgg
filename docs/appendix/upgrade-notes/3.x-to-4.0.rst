@@ -264,15 +264,23 @@ Miscellaneous API changes
 Removed functions
 -----------------
 
-* ``diagnostics_md5_dir``
-* ``group_access_options``
-* ``pages_is_page``
-* ``system_log_get_log``
-* ``system_log_get_log_entry``
-* ``system_log_get_object_from_log_entry``
-* ``system_log_get_seconds_in_period``
-* ``system_log_archive_log``
-* ``system_log_browser_delete_log``
+Class functions
+~~~~~~~~~~~~~~~
+
+* ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
+
+Lib functions
+~~~~~~~~~~~~~
+
+* ``diagnostics_md5_dir()``
+* ``group_access_options()``
+* ``pages_is_page()``
+* ``system_log_get_log()``
+* ``system_log_get_log_entry()``
+* ``system_log_get_object_from_log_entry()``
+* ``system_log_get_seconds_in_period()``
+* ``system_log_archive_log()``
+* ``system_log_browser_delete_log()``
 
 Removed views / resources
 -------------------------

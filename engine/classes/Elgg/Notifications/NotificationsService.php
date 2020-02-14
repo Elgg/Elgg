@@ -675,20 +675,6 @@ class NotificationsService {
 	}
 
 	/**
-	 * Provides a way to incrementally wean Elgg's notifications code from the
-	 * global $NOTIFICATION_HANDLERS
-	 *
-	 * @return array
-	 */
-	public function getMethodsAsDeprecatedGlobal() {
-		$data = [];
-		foreach ($this->methods as $method) {
-			$data[$method] = 'empty';
-		}
-		return $data;
-	}
-
-	/**
 	 * Get the notification body using a pre-Elgg 1.9 plugin hook
 	 *
 	 * @param Notification      $notification Notification

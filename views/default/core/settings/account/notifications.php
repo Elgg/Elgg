@@ -8,36 +8,37 @@ if (!$page_owner instanceof ElggUser) {
 	return;
 }
 
-$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
+$methods = elgg_get_notification_methods();
+if (empty($methods)) {
+	return;
+}
+
 $notification_settings = $page_owner->getNotificationSettings();
 
 $title = elgg_echo('notifications:usersettings');
 
-$rows = '';
+$content = elgg_view('output/longtext', [
+	'value' => elgg_echo('notifications:usersettings:description'),
+]);
 
 // Loop through options
-foreach ($NOTIFICATION_HANDLERS as $k => $v) {
-	if ($notification_settings[$k]) {
-		$val = "yes";
-	} else {
-		$val = "no";
-	}
-
-	$radio = elgg_view('input/radio', [
-		'name' => "method[$k]",
-		'value' => $val,
-		'options' => [
-			elgg_echo('option:yes') => 'yes',
-			elgg_echo('option:no') => 'no'
-		],
-	]);
-
-	$cells = '<td class="prm pbl">' . elgg_echo("notification:method:$k") . ': </td>';
-	$cells .= "<td>$radio</td>";
-
-	$rows .= "<tr>$cells</tr>";
+$fields = [];
+foreach ($methods as $method) {
+	$fields[] = [
+		'#type' => 'checkbox',
+		'#label' => elgg_echo("notification:method:$method"),
+		'name' => "method[$method]",
+		'default' => 'no',
+		'value' => 'yes',
+		'checked' => (bool) elgg_extract($method, $notification_settings, false),
+		'switch' => true,
+	];
 }
 
-$content = "<table>$rows</table>";
+$content .= elgg_view_field([
+	'#type' => 'fieldset',
+	'fields' => $fields,
+	'align' => 'horizontal',
+]);
 
 echo elgg_view_module('info', $title, $content);
