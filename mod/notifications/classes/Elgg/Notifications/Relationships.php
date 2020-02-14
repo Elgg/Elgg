@@ -20,8 +20,6 @@ class Relationships {
 	 * @return void
 	 */
 	public static function updateUserNotificationsPreferencesOnACLChange(\Elgg\Hook $hook) {
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-	
 		// only update notifications for user owned collections
 		$collection_id = $hook->getParam('collection_id');
 		$collection = get_access_collection($collection_id);
@@ -39,7 +37,8 @@ class Relationships {
 		}
 	
 		// loop through all notification types
-		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+		$methods = elgg_get_notification_methods();
+		foreach ($methods as $method) {
 			$metaname = 'collections_notifications_preferences_' . $method;
 			$collections_preferences = $user->$metaname;
 			if (!$collections_preferences) {
@@ -83,7 +82,7 @@ class Relationships {
 			return;
 		}
 		
-		$methods = array_keys(_elgg_services()->notifications->getMethodsAsDeprecatedGlobal());
+		$methods = elgg_get_notification_methods();
 		foreach ($methods as $method) {
 			elgg_remove_subscription($relationship->guid_one, $method, $relationship->guid_two);
 		}
@@ -108,15 +107,14 @@ class Relationships {
 			return;
 		}
 	
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-	
 		$user_guid = $relationship->guid_one;
 		$friend_guid = $relationship->guid_two;
 	
 		$user = get_entity($user_guid);
 	
 		// loop through all notification types
-		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
+		$methods = elgg_get_notification_methods();
+		foreach ($methods as $method) {
 			$metaname = 'collections_notifications_preferences_' . $method;
 			$collections_preferences = $user->$metaname;
 			if ($collections_preferences) {

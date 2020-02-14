@@ -5,6 +5,11 @@ From 3.x to 4.0
    :local:
    :depth: 1
 
+Notifications
+-------------
+
+Pre Elgg 1.9 notification handling has been removed. Related functions and hooks no longer exist.
+
 Diagnostics Plugin
 ------------------
 
@@ -264,15 +269,26 @@ Miscellaneous API changes
 Removed functions
 -----------------
 
-* ``diagnostics_md5_dir``
-* ``group_access_options``
-* ``pages_is_page``
-* ``system_log_get_log``
-* ``system_log_get_log_entry``
-* ``system_log_get_object_from_log_entry``
-* ``system_log_get_seconds_in_period``
-* ``system_log_archive_log``
-* ``system_log_browser_delete_log``
+Class functions
+~~~~~~~~~~~~~~~
+
+* ``Elgg\Notifications\NotificationsService::getDeprecatedHandler()``
+* ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
+* ``Elgg\Notifications\NotificationsService::registerDeprecatedHandler()``
+* ``Elgg\Notifications\NotificationsService::setDeprecatedNotificationSubject()``
+
+Lib functions
+~~~~~~~~~~~~~
+
+* ``diagnostics_md5_dir()``
+* ``group_access_options()``
+* ``pages_is_page()``
+* ``system_log_get_log()``
+* ``system_log_get_log_entry()``
+* ``system_log_get_object_from_log_entry()``
+* ``system_log_get_seconds_in_period()``
+* ``system_log_archive_log()``
+* ``system_log_browser_delete_log()``
 
 Removed views / resources
 -------------------------
