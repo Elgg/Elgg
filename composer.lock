@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75875922ec6ce03ac06aade0f9bbcc54",
+    "content-hash": "8347e09f7e6e5acb184d1abe17862f1a",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
             "version": "5.12.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "url": "git@github.com:FortAwesome/Font-Awesome.git",
                 "reference": "d8db3d032d22e7a5e21f3b40905b7867be19bb02"
             },
             "dist": {
@@ -26,30 +26,17 @@
             "version": "2.2.4",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
+                "url": "https://github.com/jquery/jquery-dist.git",
                 "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/c0185ab7c75aab88762c5aae780b9d83b80eda72",
-                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72",
-                "shasum": ""
+                "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "dist/jquery.js",
-                "bower-asset-ignore": [
-                    "package.json"
-                ]
-            },
+            "type": "bower-asset",
             "license": [
                 "MIT"
-            ],
-            "keywords": [
-                "browser",
-                "javascript",
-                "jquery",
-                "library"
             ]
         },
         {
@@ -63,35 +50,12 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jackmoore/colorbox/zipball/bac78120c6ca9e63370cc317ab6f400129cd6608",
-                "reference": "bac78120c6ca9e63370cc317ab6f400129cd6608",
-                "shasum": ""
+                "reference": "bac78120c6ca9e63370cc317ab6f400129cd6608"
             },
             "require": {
                 "bower-asset/jquery": ">=1.3.2"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "jquery.colorbox.js",
-                "bower-asset-ignore": [
-                    "colorbox.jquery.json",
-                    "colorbox.ai",
-                    "content",
-                    "example1/index.html",
-                    "example2/index.html",
-                    "example3/index.html",
-                    "example4/index.html",
-                    "example5/index.html"
-                ]
-            },
-            "description": "jQuery lightbox and modal window plugin",
-            "keywords": [
-                "gallery",
-                "jquery-plugin",
-                "lightbox",
-                "modal",
-                "popup",
-                "ui"
-            ]
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/jquery-form",
@@ -104,47 +68,30 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/jquery-form/form/zipball/6bf24a5f6d8be65f4e5491863180c09356d9dadd",
-                "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd",
-                "shasum": ""
+                "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
             },
             "require": {
                 "bower-asset/jquery": ">=1.5"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "jquery.form.js",
-                "bower-asset-ignore": [
-                    "README.md",
-                    "composer.json",
-                    "form.jquery.json",
-                    "package.json"
-                ]
-            }
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/jquery-ui",
             "version": "1.11.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/components/jqueryui.git",
+                "url": "git@github.com:components/jqueryui.git",
                 "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
-                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
-                "shasum": ""
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
             },
             "require": {
                 "bower-asset/jquery": ">=1.6"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "jquery-ui.js"
-                ],
-                "bower-asset-ignore": []
-            }
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/normalize-css",
@@ -190,21 +137,11 @@
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/alexei/sprintf.js/zipball/747b806c2dab5b64d5c9958c42884946a187c3b1",
-                "reference": "747b806c2dab5b64d5c9958c42884946a187c3b1",
-                "shasum": ""
+                "reference": "747b806c2dab5b64d5c9958c42884946a187c3b1"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "src/sprintf.js"
-            },
+            "type": "bower-asset",
             "license": [
                 "BSD-3-Clause-Clear"
-            ],
-            "description": "JavaScript sprintf implementation",
-            "keywords": [
-                "formatting",
-                "sprintf",
-                "string"
             ]
         },
         {

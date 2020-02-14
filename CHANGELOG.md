@@ -1,3 +1,24 @@
+<a name="3.3.1"></a>
+### 3.3.1  (2020-02-14)
+
+#### Contributors
+
+* Jeroen Dalsem (6)
+* Jerôme Bakker (5)
+
+#### Bug Fixes
+
+* **blog:** double submit protection prevented correct saving ([2460d178](https://github.com/Elgg/Elgg/commit/2460d178f0f1c845a0b9489de482def1d101ffde))
+* **file:** correctly set forward url ([10f48139](https://github.com/Elgg/Elgg/commit/10f48139914697e69dea27c5c2af9ddbd34925be))
+* **likes:** likes popup will show recent likes first ([9b0bf45d](https://github.com/Elgg/Elgg/commit/9b0bf45d42c70fc374a7381bd632cee1e3a532e3))
+* **plugins:**
+  * reindex plugins if there is a gap in the priority ([ce2d4bfb](https://github.com/Elgg/Elgg/commit/ce2d4bfb81dedc3fd6414a4190aa07c0066d3b69))
+  * default all plugins are listed ([5888aa89](https://github.com/Elgg/Elgg/commit/5888aa89d3d1aab2c29a71074754ed5c8f27199f))
+  * correctly flush caches after plugin (de)activation ([7a6465b5](https://github.com/Elgg/Elgg/commit/7a6465b52366e02abab3216772e8f96e523b9dd6))
+* **route:** correctly handle route generation for unicode usernames ([58766e37](https://github.com/Elgg/Elgg/commit/58766e37fa252ba3398823963d4cfa98358948a4))
+* **views:** input/autocomplete correctly passes match_target ([1fe233d2](https://github.com/Elgg/Elgg/commit/1fe233d2adb18f27f522680037f151394bed6cc3))
+
+
 <a name="3.3.0"></a>
 ## 3.3.0  (2020-01-23)
 

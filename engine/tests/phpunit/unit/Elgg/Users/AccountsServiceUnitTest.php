@@ -2,9 +2,9 @@
 
 namespace Elgg\Users;
 
+use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\UnitTestCase;
-use Elgg\Exceptions\Configuration\RegistrationException;
 
 /**
  * @group Accounts
@@ -20,32 +20,52 @@ class AccountsServiceUnitTest extends UnitTestCase {
 
 	}
 
-	public function testShortUsernameFailsValidation() {
-		$length = elgg()->config->minusername;
-		$username = str_repeat('a', $length - 1);
-		
+	/**
+	 * @dataProvider invalidUsernameProvider
+	 */
+	public function testInvalidUsernameFailsValidation($username) {
 		$this->expectException(RegistrationException::class);
 		elgg()->accounts->assertValidUsername($username);
 	}
-
-	public function testLongUsernameFailsValidation() {
-		$length = 128;
-		$username = str_repeat('a', $length + 1);
-		
-		$this->expectException(RegistrationException::class);
-		elgg()->accounts->assertValidUsername($username);
+	
+	public function invalidUsernameProvider() {
+		$min_length = 6;
+		elgg()->config->minusername = $min_length;
+		return [
+			[str_repeat('a', $min_length - 1)], // too short
+			[str_repeat('a', 129)], // too long, this is hard coded
+			['username#'],
+			['username@'],
+		];
 	}
 
-	public function testUsernameWithInvalidCharsFailsValidation() {
-		$this->expectException(RegistrationException::class);
-		elgg()->accounts->assertValidUsername('username#');
-	}
-
-	public function testInvalidUsernameFailsValidation() {
+	public function testInvalidEmailFailsValidation() {
 		$this->expectException(RegistrationException::class);
 		elgg()->accounts->assertValidEmail('username@');
 	}
-
+	
+	/**
+	 * @dataProvider validUsernameProvider
+	 */
+	public function testValidUsername($username) {
+		elgg()->config->minusername = 6;
+		
+		elgg()->accounts->assertValidUsername($username);
+	}
+	
+	public function validUsernameProvider() {
+		return [
+			['username'],
+			['úsernâmé'],
+			['user1234'],
+			['123456789'],
+			['user-name'],
+			['user.name'],
+			['user_name'],
+			['देवनागरी'], // https://github.com/Elgg/Elgg/issues/12518 and https://github.com/Elgg/Elgg/issues/13067
+		];
+	}
+	
 	public function testAccountDataValidationFails() {
 
 		$result = elgg()->accounts->validateAccountData('username#', '1', '', 'username@');

@@ -16,7 +16,7 @@ $result .= elgg_view_field([
 	'#label' => elgg_echo('config:i18n:allowed_languages'),
 	'#help' => elgg_echo('config:i18n:allowed_languages:help'),
 	'name' => 'allowed_languages',
-	'value' => elgg()->translator->getAllowedLanguages() ?: array_keys($installed_languages),
+	'value' => elgg()->translator->getAllowedLanguages(),
 	'options_values' => get_installed_translations(),
 	'align' => 'horizontal',
 ]);
