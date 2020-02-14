@@ -52,12 +52,6 @@ class NotificationsService {
 	/** @var array Registered notification methods */
 	protected $methods = [];
 
-	/** @var array Deprecated notification handlers */
-	protected $deprHandlers = [];
-
-	/** @var array Deprecated message subjects */
-	protected $deprSubjects = [];
-
 	/**
 	 * Constructor
 	 *
@@ -441,6 +435,11 @@ class NotificationsService {
 	 */
 	protected function sendNotification(NotificationEvent $event, $guid, $method, array $params = []) {
 
+		if (!$this->hooks->hasHandler('send', "notification:$method")) {
+			// no way to deliver given the current method, so quitting early
+			return false;
+		}
+
 		$actor = $event->getActor();
 		$object = $event->getObject();
 
@@ -497,14 +496,9 @@ class NotificationsService {
 		}
 
 		$type = 'notification:' . $event->getDescription();
-		if ($this->hooks->hasHandler('prepare', $type)) {
-			$notification = $this->hooks->trigger('prepare', $type, $params, $notification);
-			if (!$notification instanceof Notification) {
-				throw new RuntimeException("'prepare','$type' hook must return an instance of " . Notification::class);
-			}
-		} else {
-			// pre Elgg 1.9 notification message generation
-			$notification = $this->getDeprecatedNotificationBody($notification, $event, $method);
+		$notification = $this->hooks->trigger('prepare', $type, $params, $notification);
+		if (!$notification instanceof Notification) {
+			throw new RuntimeException("'prepare','$type' hook must return an instance of " . Notification::class);
 		}
 
 		$notification = $this->hooks->trigger('format', "notification:$method", [], $notification);
@@ -512,32 +506,23 @@ class NotificationsService {
 			throw new RuntimeException("'format','notification:$method' hook must return an instance of " . Notification::class);
 		}
 
-		if ($this->hooks->hasHandler('send', "notification:$method")) {
-			// return true to indicate the notification has been sent
-			$params = [
-				'notification' => $notification,
-				'event' => $event,
-			];
+		// return true to indicate the notification has been sent
+		$params = [
+			'notification' => $notification,
+			'event' => $event,
+		];
 
-			$result = $this->hooks->trigger('send', "notification:$method", $params, false);
-			if ($this->logger->isLoggable(LogLevel::INFO)) {
-				$logger_data = print_r((array) $notification->toObject(), true);
-				if ($result) {
-					$this->logger->info("Notification sent: " . $logger_data);
-				} else {
-					$this->logger->info("Notification was not sent: " . $logger_data);
-				}
+		$result = $this->hooks->trigger('send', "notification:$method", $params, false);
+		if ($this->logger->isLoggable(LogLevel::INFO)) {
+			$logger_data = print_r((array) $notification->toObject(), true);
+			if ($result) {
+				$this->logger->info("Notification sent: " . $logger_data);
+			} else {
+				$this->logger->info("Notification was not sent: " . $logger_data);
 			}
-			return $result;
-		} else {
-			// pre Elgg 1.9 notification handler
-			$userGuid = $notification->getRecipientGUID();
-			$senderGuid = $notification->getSenderGUID();
-			$subject = $notification->subject;
-			$body = $notification->body;
-			$params = $notification->params;
-			return (bool) _elgg_notify_user($userGuid, $senderGuid, $subject, $body, $params, [$method]);
 		}
+		
+		return $result;
 	}
 
 	/**
@@ -647,109 +632,5 @@ class NotificationsService {
 
 		// Fall back to default body
 		return $this->translator->translate('notification:body', [$object->getURL()], $language);
-	}
-
-	/**
-	 * Register a deprecated notification handler
-	 *
-	 * @param string $method  Method name
-	 * @param string $handler Handler callback
-	 * @return void
-	 */
-	public function registerDeprecatedHandler($method, $handler) {
-		$this->deprHandlers[$method] = $handler;
-	}
-
-	/**
-	 * Get a deprecated notification handler callback
-	 *
-	 * @param string $method Method name
-	 * @return callback|null
-	 */
-	public function getDeprecatedHandler($method) {
-		if (isset($this->deprHandlers[$method])) {
-			return $this->deprHandlers[$method];
-		} else {
-			return null;
-		}
-	}
-
-	/**
-	 * Get the notification body using a pre-Elgg 1.9 plugin hook
-	 *
-	 * @param Notification      $notification Notification
-	 * @param NotificationEvent $event        Event
-	 * @param string            $method       Method
-	 * @return Notification
-	 */
-	protected function getDeprecatedNotificationBody(Notification $notification, NotificationEvent $event, $method) {
-		$entity = $event->getObject();
-		if (!$entity) {
-			return $notification;
-		}
-		$params = [
-			'entity' => $entity,
-			'to_entity' => $notification->getRecipient(),
-			'method' => $method,
-		];
-		$subject = $this->getDeprecatedNotificationSubject($entity->getType(), $entity->getSubtype());
-		$string = $subject . ": " . $entity->getURL();
-		$body = $this->hooks->trigger('notify:entity:message', $entity->getType(), $params, $string);
-
-		if ($subject) {
-			$notification->subject = $subject;
-			$notification->body = $body;
-		}
-
-		return $notification;
-	}
-
-	/**
-	 * Set message subject for deprecated notification code
-	 *
-	 * @param string $type    Entity type
-	 * @param string $subtype Entity subtype
-	 * @param string $subject Subject line
-	 * @return void
-	 */
-	public function setDeprecatedNotificationSubject($type, $subtype, $subject) {
-		if ($type == '') {
-			$type = '__BLANK__';
-		}
-		if ($subtype == '') {
-			$subtype = '__BLANK__';
-		}
-
-		if (!isset($this->deprSubjects[$type])) {
-			$this->deprSubjects[$type] = [];
-		}
-
-		$this->deprSubjects[$type][$subtype] = $subject;
-	}
-
-	/**
-	 * Get the deprecated subject
-	 *
-	 * @param string $type    Entity type
-	 * @param string $subtype Entity subtype
-	 * @return string
-	 */
-	protected function getDeprecatedNotificationSubject($type, $subtype) {
-		if ($type == '') {
-			$type = '__BLANK__';
-		}
-		if ($subtype == '') {
-			$subtype = '__BLANK__';
-		}
-
-		if (!isset($this->deprSubjects[$type])) {
-			return '';
-		}
-
-		if (!isset($this->deprSubjects[$type][$subtype])) {
-			return '';
-		}
-
-		return $this->deprSubjects[$type][$subtype];
 	}
 }
