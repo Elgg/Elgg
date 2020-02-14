@@ -10,7 +10,7 @@
 elgg_require_js('admin/plugins');
 
 $list_only = (bool) elgg_extract('list_only', $vars, false);
-$active_filter = elgg_strtolower(get_input('filter', 'active'));
+$active_filter = elgg_strtolower(get_input('filter', 'all'));
 
 // @todo this should occur in the controller code
 _elgg_generate_plugin_entities();
