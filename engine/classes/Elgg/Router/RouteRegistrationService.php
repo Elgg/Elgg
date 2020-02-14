@@ -103,7 +103,7 @@ class RouteRegistrationService {
 			'group_guid' => '\d+',
 			'container_guid' => '\d+',
 			'owner_guid' => '\d+',
-			'username' => '[\p{L}\p{Nd}._-]+',
+			'username' => '[\p{L}\p{M}\p{Nd}._-]+',
 		];
 
 		$path = trim($path, '/');

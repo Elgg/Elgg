@@ -295,8 +295,12 @@ class Plugins {
 			$known_plugins = [];
 		}
 
+		// keeps track if reindexing is needed
+		$reindex = false;
+		
 		// map paths to indexes
 		$id_map = [];
+		$latest_priority = null;
 		foreach ($known_plugins as $i => $plugin) {
 			// if the ID is wrong, delete the plugin because we can never load it.
 			$id = $plugin->getID();
@@ -307,6 +311,15 @@ class Plugins {
 			}
 			$id_map[$plugin->getID()] = $i;
 			$plugin->cache();
+			
+			$current_priority = $plugin->getPriority();
+			if (isset($latest_priority)) {
+				if (($current_priority - $latest_priority) > 1) {
+					$reindex = true;
+				}
+			}
+			
+			$latest_priority = $current_priority;
 		}
 
 		$physical_plugins = $this->getDirsInDir($mod_dir);
@@ -343,7 +356,6 @@ class Plugins {
 		// everything remaining in $known_plugins needs to be disabled
 		// because they are entities, but their dirs were removed.
 		// don't delete the entities because they hold settings.
-		$reindex = false;
 		foreach ($known_plugins as $plugin) {
 			if (!$plugin->isEnabled()) {
 				continue;

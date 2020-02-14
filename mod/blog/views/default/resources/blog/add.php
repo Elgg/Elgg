@@ -17,7 +17,10 @@ if (!$container->canWriteToContainer(0, 'object', 'blog')) {
 
 elgg_push_collection_breadcrumbs('object', 'blog', $container);
 
-$content = elgg_view_form('blog/save', $vars, blog_prepare_form_vars());
+$form_vars = $vars;
+$form_vars['prevent_double_submit'] = false; // action is using the submit buttons to determine type of submission, disabled buttons are not submitted
+
+$content = elgg_view_form('blog/save', $form_vars, blog_prepare_form_vars());
 
 echo elgg_view_page(elgg_echo('add:object:blog'), [
 	'content' => $content,
