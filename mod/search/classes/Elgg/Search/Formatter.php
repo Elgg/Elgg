@@ -231,7 +231,6 @@ class Formatter {
 			"$type:$property_name",
 			"$prefix:$property_name",
 			"$property_name",
-			"tag_names:{$property_name}",
 		];
 
 		foreach ($keys as $key) {

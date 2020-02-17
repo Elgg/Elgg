@@ -53,14 +53,5 @@ class ProfileFields {
 		
 		$profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', null, $profile_defaults);
 		elgg_set_config('profile_fields', $profile_fields);
-	
-		// register any tag metadata names
-		foreach ($profile_fields as $name => $type) {
-			if ($type == 'tags' || $type == 'location' || $type == 'tag') {
-				elgg_register_tag_metadata_name($name);
-				// register a tag name translation
-				add_translation(get_current_language(), ["tag_names:$name" => elgg_echo("profile:$name")]);
-			}
-		}
 	}
 }

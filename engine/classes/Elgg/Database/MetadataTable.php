@@ -36,11 +36,6 @@ class MetadataTable {
 	 */
 	protected $events;
 
-	/**
-	 * @var string[]
-	 */
-	protected $tag_names = [];
-
 	const MYSQL_TEXT_BYTE_LIMIT = 65535;
 
 	/**
@@ -61,48 +56,6 @@ class MetadataTable {
 	}
 
 	/**
-	 * Registers a metadata name as containing tags for an entity.
-	 *
-	 * @param string $name Tag name
-	 *
-	 * @return bool
-	 */
-	public function registerTagName($name) {
-		if (!in_array($name, $this->tag_names)) {
-			$this->tag_names[] = $name;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Unregisters a metadata tag name
-	 *
-	 * @param string $name Tag name
-	 *
-	 * @return bool
-	 */
-	public function unregisterTagName($name) {
-		$index = array_search($name, $this->tag_names);
-		if ($index >= 0) {
-			unset($this->tag_names[$index]);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Returns an array of valid metadata names for tags.
-	 *
-	 * @return string[]
-	 */
-	public function getTagNames() {
-		return $this->tag_names;
-	}
-
-	/**
 	 * Get popular tags and their frequencies
 	 *
 	 * Accepts all options supported by {@see elgg_get_metadata()}
@@ -116,7 +69,7 @@ class MetadataTable {
 	 * @param array $options Options
 	 *
 	 * @option int      $threshold Minimum number of tag occurrences
-	 * @option string[] $tag_names Names of registered tag names to include in search
+	 * @option string[] $tag_names tag names to include in search
 	 *
 	 * @return \stdClass[]|false
 	 */
@@ -131,10 +84,7 @@ class MetadataTable {
 		$singulars = ['tag_name'];
 		$options = LegacyQueryOptionsAdapter::normalizePluralOptions($options, $singulars);
 
-		$tag_names = elgg_extract('tag_names', $options);
-		if (empty($tag_names)) {
-			$tag_names = elgg_get_registered_tag_metadata_names();
-		}
+		$tag_names = elgg_extract('tag_names', $options, ['tags']);
 
 		$threshold = elgg_extract('threshold', $options, 1, false);
 

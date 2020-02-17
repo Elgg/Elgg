@@ -1228,8 +1228,6 @@ function _elgg_init() {
 	
 	elgg_register_entity_type('object', 'comment');
 	elgg_register_entity_type('user', 'user');
-	
-	elgg_register_tag_metadata_name('tags');
 
 	if (_elgg_config()->enable_profiling) {
 		/**

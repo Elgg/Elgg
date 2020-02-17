@@ -21,6 +21,21 @@ Discussions Plugin
 * This plugin no longer adds a tab to the filter menu on the groups pages
 * The ``discussions`` site menu item is now always present
 
+Registering tag metadatanames
+-----------------------------
+
+Because of various limitations of this implementation it has been removed from the system. The following related API functions have been removed:
+
+* ``elgg_get_registered_tag_metadata_names()``
+* ``elgg_register_tag_metadata_name()``
+* ``elgg_unregister_tag_metadata_name()``
+
+If you need specific fields to be searchable you need to register them with the related ``search:fields`` hooks.
+The related ``tagnames:xxx`` tag language keys are no longer registered in the system.
+
+The function ``ElggEntity::getTags()`` will now return only tag metadata with the name ``tags`` by default. If you want to check extra fields containing tags,
+you need to request this specifically.
+
 Split OkResponse, ErrorResponse and RedirectResponse
 ----------------------------------------------------
 

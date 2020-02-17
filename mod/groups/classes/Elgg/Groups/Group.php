@@ -31,17 +31,6 @@ class Group {
 		$profile_defaults = elgg_trigger_plugin_hook('profile:fields', 'group', null, $profile_defaults);
 	
 		elgg_set_config('group', $profile_defaults);
-	
-		// register any tag metadata names
-		foreach ($profile_defaults as $name => $type) {
-			if ($type == 'tags') {
-				elgg_register_tag_metadata_name($name);
-	
-				// only shows up in search but why not just set this in en.php as doing it here
-				// means you cannot override it in a plugin
-				add_translation(get_current_language(), ["tag_names:$name" => elgg_echo("groups:$name")]);
-			}
-		}
 	}
 	
 	/**
