@@ -59,15 +59,15 @@ trait PluginTesting {
 	 * Calling this method should only be required in unit test cases
 	 *
 	 * @param string $plugin_id                   Start a plugin
-	 * @param bool   $activate_requires           Activate required plugins
-	 * @param bool   $activate_suggests           Activate suggested plugins
+	 * @param bool   $activate_dependencies       Activate required plugins
+	 * @param bool   $unused                      Unused
 	 * @param bool   $activate_route_requirements Activate plugins required in route config
 	 *
 	 * @return \ElggPlugin|null
 	 *
 	 * @return \ElggPlugin|null|void
 	 */
-	public function startPlugin($plugin_id = null, $activate_requires = true, $activate_suggests = false, $activate_route_requirements = false) {
+	public function startPlugin($plugin_id = null, $activate_dependencies = true, $unused = false, $activate_route_requirements = false) {
 		if (!isset($plugin_id)) {
 			$plugin_id = $this->getPluginID();
 		}
@@ -94,20 +94,11 @@ trait PluginTesting {
 			$svc->addTestingPlugin($plugin);
 		}
 		
-		if ($activate_requires) {
-			$requires = $plugin->getManifest()->getRequires();
-			foreach ($requires as $require) {
-				if ($require['type'] === 'plugin') {
-					$this->startPlugin($require['name'], $activate_requires, $activate_suggests);
-				}
-			}
-		}
-
-		if ($activate_suggests) {
-			$suggests = $plugin->getManifest()->getSuggests();
-			foreach ($suggests as $suggest) {
-				if ($suggest['type'] === 'plugin') {
-					$this->startPlugin($suggest['name'], $activate_requires, $activate_suggests);
+		if ($activate_dependencies) {
+			$dependencies = $plugin->getDependencies();
+			foreach ($dependencies as $required_plugin_id => $plugin_config) {
+				if (elgg_extract('must_be_active', $plugin_config, true)) {
+					$this->startPlugin($required_plugin_id, $activate_dependencies);
 				}
 			}
 		}
@@ -115,7 +106,7 @@ trait PluginTesting {
 		if ($activate_route_requirements) {
 			foreach($plugin->getStaticConfig('routes', []) as $route_config) {
 				foreach (elgg_extract('required_plugins', $route_config, []) as $required_plugin) {
-					$this->startPlugin($required_plugin, $activate_requires, $activate_suggests);
+					$this->startPlugin($required_plugin, $activate_dependencies);
 				}
 			}
 		}

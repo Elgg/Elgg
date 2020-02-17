@@ -3,6 +3,10 @@
 use Elgg\GarbageCollector\CronRunner;
 
 return [
+	'plugin' => [
+		'name' => 'Garbage Collector',
+		'activate_on_install' => true,
+	],
 	'settings' => [
 		'period' => 'monthly',
 	],

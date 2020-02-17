@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Activity Pages',
+		'activate_on_install' => true,
+	],
 	'routes' => [
 		'collection:river:owner' => [
 			'path' => '/activity/owner/{username}',

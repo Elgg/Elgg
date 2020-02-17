@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Site Pages',
+	],
 	'entities' => [
 		[
 			'type' => 'object',

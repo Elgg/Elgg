@@ -67,7 +67,7 @@ if ($active) {
 $action_button = elgg_trigger_plugin_hook('action_button', 'plugin', ['entity' => $plugin], elgg_view('output/url', $options));
 
 // Display categories and make category classes
-$categories = $plugin->getManifest()->getCategories();
+$categories = array_keys($plugin->getCategories());
 
 $categories[] = 'all';
 $categories[] = $active ? 'active' : 'inactive';
@@ -89,7 +89,7 @@ foreach ($categories as $category) {
 }
 
 $title = elgg_view('output/url', [
-	'href' => "ajax/view/object/plugin/details?guid={$plugin->getGUID()}",
+	'href' => "ajax/view/object/plugin/details?guid={$plugin->guid}",
 	'text' => $plugin->getDisplayName(),
 	'class' => 'elgg-lightbox',
 ]);
@@ -114,7 +114,7 @@ echo elgg_view('object/elements/summary', [
 	'icon' => $action_button,
 	'title' => $title,
 	'subtitle' => elgg_view('output/longtext', [
-		'value' => $plugin->getManifest()->getDescription(),
+		'value' => $plugin->getDescription(),
 	]),
 	'content' => $content,
 	'display_reordering' => $reordering,

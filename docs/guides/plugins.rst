@@ -1,7 +1,7 @@
 Plugins
 #######
 
-Plugins must provide a ``manifest.xml`` file in the plugin root in order to be recognized by Elgg.
+Plugins must provide a ``composer.json`` file in the plugin root in order to be recognized by Elgg.
 
 .. contents:: Contents
    :local:
@@ -14,6 +14,7 @@ elgg-plugin.php
 and must return an array if present. It should not be included by plugins and is not guaranteed to run at any particular time.
 Besides magic constants like ``__DIR__``, its return value should not change. The currently supported sections are:
 
+ * ``plugin`` - defines plugin information and dependencies
  * ``bootstrap`` - defines a class used to bootstrap the plugin
  * ``entities`` - defines entity types and classes, and optionally registers them for search
  * ``actions`` - eliminates the need for calling ``elgg_register_action()``
@@ -34,6 +35,24 @@ Besides magic constants like ``__DIR__``, its return value should not change. Th
 .. code-block:: php
 
 	return [
+		'plugin' => [
+			'name' => 'Plugin Name', // readable plugin name
+			'activate_on_install' => true, // only used on a fresh install
+			'version' => '1.3.1', // version of the plugin
+			'dependencies' => [
+				// optional list op plugin dependencies
+				'blog' => [],
+				'activity' => [
+					'position' => 'after',
+					'must_be_active' => false,
+				],
+				'file' => [
+					'position' => 'before',
+					'version' => '>2', // semver notation of required version
+				],
+			],
+		],
+	
 		// Bootstrap must implement \Elgg\PluginBootstrapInterface
 		'bootstrap' => MyPluginBootstrap::class,
 

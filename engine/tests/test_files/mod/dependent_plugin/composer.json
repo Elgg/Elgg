@@ -1,0 +1,24 @@
+{
+	"name": "elgg/dependent_plugin",
+	"type": "elgg-plugin",
+	"description": "Adds capabilities to Elgg",
+	"license": "GPL-2.0-only",
+	"keywords": ["content", "widget"],
+	"homepage": "https://elgg.org",
+	"authors": [
+		{
+			"name": "Elgg Core Team",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://github.com/elgg/elgg",
+		"issues": "https://github.com/elgg/elgg/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<1.9"
+	}
+}

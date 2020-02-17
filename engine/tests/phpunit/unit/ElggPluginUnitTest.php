@@ -114,31 +114,6 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$plugin->delete();
 	}
 
-	public function testCanGetTextFiles() {
-		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
-
-		$files = $plugin->getAvailableTextFiles();
-
-		$this->assertEquals([
-			'CHANGES.txt' => $this->normalizeTestFilePath('mod/test_plugin/CHANGES.txt'),
-			'README' => $this->normalizeTestFilePath('mod/test_plugin/README'),
-		], $files);
-
-		$plugin->delete();
-	}
-
-	public function testCanReadManifest() {
-
-		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
-
-		$manifest = $plugin->getManifest();
-		$this->assertInstanceOf(ElggPluginManifest::class, $manifest);
-
-		$this->assertEquals('Test Plugin', $plugin->getDisplayName());
-
-		$plugin->delete();
-	}
-
 	public function testUsesBootstrapOnActivate() {
 
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));

@@ -3,6 +3,10 @@
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'Message Board',
+		'activate_on_install' => true,
+	],
 	'actions' => [
 		'messageboard/add' => [],
 	],

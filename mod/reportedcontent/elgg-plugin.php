@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Reported Content',
+		'activate_on_install' => true,
+	],
 	'entities' => [
 		[
 			'type' => 'object',

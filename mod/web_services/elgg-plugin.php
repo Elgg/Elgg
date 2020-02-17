@@ -12,6 +12,9 @@ require_once(__DIR__ . '/lib/pam_handlers.php');
 require_once(__DIR__ . '/lib/web_services.php');
 
 return [
+	'plugin' => [
+		'name' => 'Web Services',
+	],
 	'bootstrap' => \Elgg\WebServices\Bootstrap::class,
 	'settings' => [
 		'auth_allow_key' => 1,

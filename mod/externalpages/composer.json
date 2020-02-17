@@ -1,0 +1,24 @@
+{
+	"name": "elgg/externalpages",
+	"type": "elgg-plugin",
+	"description": "Create simple web pages for about, contact, privacy, and terms",
+	"license": "GPL-2.0-only",
+	"keywords": ["content"],
+	"homepage": "https://elgg.org",
+	"authors": [
+		{
+			"name": "Elgg Core Team",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://github.com/elgg/elgg",
+		"issues": "https://github.com/elgg/elgg/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"conflict": {
+		"elgg/elgg": "<3.3"
+	}
+}

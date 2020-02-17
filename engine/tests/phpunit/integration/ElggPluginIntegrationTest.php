@@ -95,7 +95,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 		$site = elgg_get_site_entity();
 		$this->assertEquals('test_plugin', $plugin->getID());
-		$this->assertEquals('test_plugin', $plugin->getDisplayName());
+		$this->assertEquals('Test Plugin', $plugin->getDisplayName()); // should come from fallback logic, not from static config
 		$this->assertEquals($site->guid, $plugin->owner_guid);
 		$this->assertEquals($site->guid, $plugin->container_guid);
 		$this->assertEquals(ACCESS_PUBLIC, $plugin->access_id);
@@ -141,7 +141,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
 
-		$plugin->activate();
+		$this->assertTrue($plugin->activate());
 
 		$this->assertTrue($plugin->setSetting('foo1', 'bar1'));
 		$this->assertFalse($plugin->setSetting('foo2', ['bar1', 'bar2']));

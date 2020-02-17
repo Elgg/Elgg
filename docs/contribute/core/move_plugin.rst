@@ -86,7 +86,7 @@ Tag a release
 -------------
 
 In order for Composer to be able to cache the plugin for faster installation, a release has to be made on the repository. 
-Probably the first version that needs to be tagged is the same version as mentioned in the ``manifest.xml``. 
+Probably the first version that needs to be tagged is the same version as mentioned in the ``elgg-plugin.php`` or ``composer.json``. 
 After this development can begin, following the `Semver`_ versioning scheme.
 
 Translations

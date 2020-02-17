@@ -3,6 +3,10 @@
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'User Validation by Email',
+		'activate_on_install' => true,
+	],
 	'actions' => [
 		'uservalidationbyemail/resend_validation' => [
 			'access' => 'admin',

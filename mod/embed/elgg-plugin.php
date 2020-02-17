@@ -3,6 +3,10 @@
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'Embed',
+		'activate_on_install' => true,
+	],
 	'routes' => [
 		'default:embed' => [
 			'path' => '/embed/{tab?}',

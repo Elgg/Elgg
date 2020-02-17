@@ -7,6 +7,10 @@ require_once(__DIR__ . '/lib/functions.php');
 $membership = __DIR__ . '/actions/groups/membership/';
 
 return [
+	'plugin' => [
+		'name' => 'Groups',
+		'activate_on_install' => true,
+	],
 	'entities' => [
 		[
 			'type' => 'group',

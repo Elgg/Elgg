@@ -1,6 +1,10 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'CKEditor',
+		'activate_on_install' => true,
+	],
 	'bootstrap' => Elgg\CKEditor\Bootstrap::class,
 	'views' => [
 		'default' => [

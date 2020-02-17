@@ -5,6 +5,10 @@ use Elgg\Router\Middleware\Gatekeeper;
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'The Wire',
+		'activate_on_install' => true,
+	],
 	'bootstrap' => \Elgg\TheWire\Bootstrap::class,
 	'entities' => [
 		[

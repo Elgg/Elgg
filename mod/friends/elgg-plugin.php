@@ -10,6 +10,10 @@ use Elgg\Friends\Actions\AcceptFriendRequestController;
 require_once(__DIR__ . '/lib/functions.php');
 
 return [
+	'plugin' => [
+		'name' => 'Friends',
+		'activate_on_install' => true,
+	],
 	'actions' => [
 		'friends/add' => [
 			'controller' => AddFriendController::class,

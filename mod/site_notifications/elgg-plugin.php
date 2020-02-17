@@ -1,6 +1,9 @@
 <?php
 
 return [
+	'plugin' => [
+		'name' => 'Site Notifications',
+	],
 	'bootstrap' => \Elgg\SiteNotifications\Bootstrap::class,
 	'entities' => [
 		[

@@ -79,11 +79,6 @@ class Plugins {
 	protected $boot_plugins;
 
 	/**
-	 * @var array|null
-	 */
-	protected $provides_cache;
-
-	/**
 	 * @var Database
 	 */
 	protected $db;
@@ -224,7 +219,6 @@ class Plugins {
 	 */
 	public function clear() {
 		$this->cache->clear();
-		$this->invalidateProvidesCache();
 	}
 	
 	/**
@@ -234,7 +228,6 @@ class Plugins {
 	 */
 	public function invalidate() {
 		$this->cache->invalidate();
-		$this->invalidateProvidesCache();
 	}
 	
 	/**
@@ -410,7 +403,6 @@ class Plugins {
 	public function invalidateCache($plugin_id) {
 		try {
 			$this->cache->delete($plugin_id);
-			$this->invalidateProvidesCache();
 		} catch (InvalidArgumentException $ex) {
 			// A plugin must have been deactivated due to missing folder
 			// without proper cleanup
@@ -1036,239 +1028,6 @@ class Plugins {
 		return $name;
 	}
 
-
-	/**
-	 * Returns an array of all provides from all active plugins.
-	 *
-	 * Array in the form array(
-	 *    'provide_type' => array(
-	 *        'provided_name' => array(
-	 *            'version' => '1.8',
-	 *            'provided_by' => 'provider_plugin_id'
-	 *    )
-	 *  )
-	 * )
-	 *
-	 * @param string $type The type of provides to return
-	 * @param string $name A specific provided name to return. Requires $provide_type.
-	 *
-	 * @return array|false
-	 */
-	public function getProvides($type = null, $name = null) {
-		if ($this->provides_cache === null) {
-			$active_plugins = $this->find('active');
-
-			$provides = [];
-
-			foreach ($active_plugins as $plugin) {
-				$plugin_provides = [];
-				$manifest = $plugin->getManifest();
-				if ($manifest instanceof \ElggPluginManifest) {
-					$plugin_provides = $plugin->getManifest()->getProvides();
-				}
-				if ($plugin_provides) {
-					foreach ($plugin_provides as $provided) {
-						$provides[$provided['type']][$provided['name']] = [
-							'version' => $provided['version'],
-							'provided_by' => $plugin->getID()
-						];
-					}
-				}
-			}
-
-			$this->provides_cache = $provides;
-		}
-
-		if ($type && $name) {
-			if (isset($this->provides_cache[$type][$name])) {
-				return $this->provides_cache[$type][$name];
-			} else {
-				return false;
-			}
-		} else if ($type) {
-			if (isset($this->provides_cache[$type])) {
-				return $this->provides_cache[$type];
-			} else {
-				return false;
-			}
-		}
-
-		return $this->provides_cache;
-	}
-
-	/**
-	 * Deletes all cached data on plugins being provided.
-	 *
-	 * @return boolean
-	 */
-	public function invalidateProvidesCache() {
-		$this->provides_cache = null;
-
-		return true;
-	}
-
-	/**
-	 * Checks if a plugin is currently providing $type and $name, and optionally
-	 * checking a version.
-	 *
-	 * @param string $type       The type of the provide
-	 * @param string $name       The name of the provide
-	 * @param string $version    A version to check against
-	 * @param string $comparison The comparison operator to use in version_compare()
-	 *
-	 * @return array An array in the form array(
-	 *    'status' => bool Does the provide exist?,
-	 *    'value' => string The version provided
-	 * )
-	 */
-	public function checkProvides($type, $name, $version = null, $comparison = 'ge') {
-		$provided = $this->getProvides($type, $name);
-		if (!$provided) {
-			return [
-				'status' => false,
-				'value' => ''
-			];
-		}
-
-		if ($version) {
-			$status = version_compare($provided['version'], $version, $comparison);
-		} else {
-			$status = true;
-		}
-
-		return [
-			'status' => $status,
-			'value' => $provided['version']
-		];
-	}
-
-	/**
-	 * Returns an array of parsed strings for a dependency in the
-	 * format: array(
-	 *    'type'            =>    requires, conflicts, or provides.
-	 *    'name'            =>    The name of the requirement / conflict
-	 *    'value'            =>    A string representing the expected value: <1, >=3, !=enabled
-	 *    'local_value'    =>    The current value, ("Not installed")
-	 *    'comment'        =>    Free form text to help resovle the problem ("Enable / Search for plugin <link>")
-	 * )
-	 *
-	 * @param array $dep An \ElggPluginPackage dependency array
-	 *
-	 * @return false|array
-	 */
-	public function getDependencyStrings($dep) {
-		$translator = $this->translator;
-		$dep_system = elgg_extract('type', $dep);
-		$info = elgg_extract('dep', $dep);
-		$type = elgg_extract('type', $info);
-
-		if (!$dep_system || !$info || !$type) {
-			return false;
-		}
-
-		// rewrite some of these to be more readable
-		$comparison = elgg_extract('comparison', $info);
-		switch ($comparison) {
-			case 'lt':
-				$comparison = '<';
-				break;
-			case 'gt':
-				$comparison = '>';
-				break;
-			case 'ge':
-				$comparison = '>=';
-				break;
-			case 'le':
-				$comparison = '<=';
-				break;
-			default:
-				//keep $comparison value intact
-				break;
-		}
-
-		/*
-		'requires'	'plugin oauth_lib'	<1.3	1.3		'downgrade'
-		'requires'	'php setting bob'	>3		3		'change it'
-		'conflicts'	'php setting'		>3		4		'change it'
-		'conflicted''plugin profile'	any		1.8		'disable profile'
-		'provides'	'plugin oauth_lib'	1.3		--		--
-		'priority'	'before blog'		--		after	'move it'
-		*/
-		$strings = [];
-		$strings['type'] = $translator->translate('ElggPlugin:Dependencies:' . ucwords($dep_system));
-
-		switch ($type) {
-			case 'elgg_release':
-				// 'Elgg Version'
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Elgg');
-				$strings['expected_value'] = "$comparison {$info['version']}";
-				$strings['local_value'] = $dep['value'];
-				$strings['comment'] = '';
-				break;
-
-			case 'php_version':
-				// 'PHP version'
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpVersion');
-				$strings['expected_value'] = "$comparison {$info['version']}";
-				$strings['local_value'] = $dep['value'];
-				$strings['comment'] = '';
-				break;
-
-			case 'php_extension':
-				// PHP Extension %s [version]
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpExtension', [$info['name']]);
-				if ($info['version']) {
-					$strings['expected_value'] = "$comparison {$info['version']}";
-					$strings['local_value'] = $dep['value'];
-				} else {
-					$strings['expected_value'] = '';
-					$strings['local_value'] = '';
-				}
-				$strings['comment'] = '';
-				break;
-
-			case 'php_ini':
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpIni', [$info['name']]);
-				$strings['expected_value'] = "$comparison {$info['value']}";
-				$strings['local_value'] = $dep['value'];
-				$strings['comment'] = '';
-				break;
-
-			case 'plugin':
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Plugin', [$info['name']]);
-				$expected = $info['version'] ? "$comparison {$info['version']}" : $translator->translate('any');
-				$strings['expected_value'] = $expected;
-				$strings['local_value'] = $dep['value'] ? $dep['value'] : '--';
-				$strings['comment'] = '';
-				break;
-
-			case 'priority':
-				$expected_priority = ucwords($info['priority']);
-				$real_priority = ucwords($dep['value']);
-				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Priority');
-				$strings['expected_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$expected_priority", [$info['plugin']]);
-				$strings['local_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$real_priority", [$info['plugin']]);
-				$strings['comment'] = '';
-				break;
-		}
-
-		if ($dep['type'] == 'suggests') {
-			if ($dep['status']) {
-				$strings['comment'] = $translator->translate('ok');
-			} else {
-				$strings['comment'] = $translator->translate('ElggPlugin:Dependencies:Suggests:Unsatisfied');
-			}
-		} else {
-			if ($dep['status']) {
-				$strings['comment'] = $translator->translate('ok');
-			} else {
-				$strings['comment'] = $translator->translate('error');
-			}
-		}
-
-		return $strings;
-	}
-
 	/**
 	 * Get all settings (excluding user settings) for a plugin
 	 *
@@ -1334,16 +1093,14 @@ class Plugins {
 		}
 
 		$rows = $this->db->getData($qb);
+		if (empty($rows)) {
+			return [];
+		}
 
 		$settings = [];
-
-		if (!empty($rows)) {
-			foreach ($rows as $rows) {
-				$name = substr($rows->name, strlen($prefix));
-				$value = $rows->value;
-
-				$settings[$name] = $value;
-			}
+		foreach ($rows as $row) {
+			$name = substr($row->name, strlen($prefix));
+			$settings[$name] = $row->value;
 		}
 
 		return $settings;
