@@ -948,22 +948,6 @@ function elgg_http_validate_signed_url($url) {
 }
 
 /**
- * Validates if the HMAC signature of the current request is valid
- * Issues 403 response if signature is invalid
- *
- * @return void
- * @throws \Elgg\Exceptions\HttpException
- */
-function elgg_signed_request_gatekeeper() {
-
-	if (\Elgg\Application::isCli()) {
-		return;
-	}
-
-	_elgg_services()->urlSigner->assertValid(current_page_url());
-}
-
-/**
  * Checks for $array[$key] and returns its value if it exists, else
  * returns $default.
  *

@@ -715,6 +715,7 @@ class Application {
 			'constants.php',
 			'entities.php',
 			'filestore.php',
+			'gatekeepers.php',
 			'group.php',
 			'input.php',
 			'languages.php',
