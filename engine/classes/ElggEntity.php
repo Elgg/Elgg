@@ -1892,33 +1892,32 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Returns tags for this entity.
 	 *
-	 * @warning Tags must be registered by {@link elgg_register_tag_metadata_name()}.
-	 *
-	 * @param array $tag_names Optionally restrict by tag metadata names.
+	 * @param array $tag_names Optionally restrict by tag metadata names. Defaults to metadata with the name 'tags'.
 	 *
 	 * @return array
 	 */
 	public function getTags($tag_names = null) {
+		if (!isset($tag_names)) {
+			$tag_names = ['tags'];
+		}
+		
 		if ($tag_names && !is_array($tag_names)) {
 			$tag_names = [$tag_names];
 		}
 
-		$valid_tags = elgg_get_registered_tag_metadata_names();
 		$entity_tags = [];
-
-		foreach ($valid_tags as $tag_name) {
-			if (is_array($tag_names) && !in_array($tag_name, $tag_names)) {
+		foreach ($tag_names as $tag_name) {
+			$tags = $this->$tag_name;
+			if (elgg_is_empty($tags)) {
 				continue;
 			}
-
-			if ($tags = $this->$tag_name) {
-				// if a single tag, metadata returns a string.
-				// if multiple tags, metadata returns an array.
-				if (is_array($tags)) {
-					$entity_tags = array_merge($entity_tags, $tags);
-				} else {
-					$entity_tags[] = $tags;
-				}
+			
+			// if a single tag, metadata returns a string.
+			// if multiple tags, metadata returns an array.
+			if (is_array($tags)) {
+				$entity_tags = array_merge($entity_tags, $tags);
+			} else {
+				$entity_tags[] = $tags;
 			}
 		}
 

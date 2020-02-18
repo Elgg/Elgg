@@ -350,3 +350,32 @@ function _elgg_disable_password_autocomplete(\Elgg\Hook $hook) {
 	
 	return $return_value;
 }
+
+/**
+ * Takes in a comma-separated string and returns an array of tags
+ * which have been trimmed
+ *
+ * @param string $string Comma-separated tag string
+ *
+ * @return mixed An array of strings or the original data if input was not a string
+ */
+function string_to_tag_array($string) {
+	if (!is_string($string)) {
+		return $string;
+	}
+	
+	$ar = explode(',', $string);
+	$ar = array_map('trim', $ar);
+	
+	$ar = array_filter($ar, function($string) {
+		if (($string === '') || ($string === false) || ($string === null)) {
+			return false;
+		}
+		
+		return true;
+	});
+		
+	$ar = array_map('strip_tags', $ar);
+	$ar = array_unique($ar);
+	return $ar;
+}

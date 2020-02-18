@@ -1701,12 +1701,6 @@ To view %s's profile, click here:
 	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
 
 /**
- * Tag labels
- */
-
-	'tag_names:tags' => 'Tags',
-
-/**
  * Javascript
  */
 

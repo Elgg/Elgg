@@ -274,10 +274,6 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 			'subtype' => $subtype,
 		]);
 
-		elgg_register_tag_metadata_name('foo1');
-		elgg_register_tag_metadata_name('foo2');
-		elgg_register_tag_metadata_name('foo3');
-
 		$objects[0]->foo1 = 'one';
 		$objects[0]->foo2 = 'two';
 		$objects[0]->foo4 = 'four';
@@ -314,10 +310,6 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		]);
 
 		$this->assertEquals($expected, $actual);
-
-		elgg_unregister_tag_metadata_name('foo1');
-		elgg_unregister_tag_metadata_name('foo2');
-		elgg_unregister_tag_metadata_name('foo3');
 
 		foreach ($objects as $object) {
 			$object->delete();
