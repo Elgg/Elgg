@@ -16,6 +16,7 @@ namespace Elgg\Mocks\Di;
  * @property-read \Elgg\Mocks\Database\UsersTable           $usersTable              Users table
  * @property-read \Elgg\Notifications\NotificationsService  $notifications           Notification service (with memory queue)
  * @property-read \Elgg\Mocks\Database\Mutex                $mutex                   Mutex
+ * @property-read \Elgg\Mocks\Database\HMACCacheTable       $hmacCacheTable          HMAC Cache table
  *
  * @since 2.3
  */
@@ -134,6 +135,22 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 
 		$this->setFactory('mutex', function(MockServiceProvider $sp) {
 			return new \Elgg\Mocks\Database\Mutex($sp->db, $sp->logger);
+		});
+		
+		$this->setFactory('hmacCacheTable', function(MockServiceProvider $sp) {
+			$hmac = new \Elgg\Mocks\Database\HMACCacheTable($sp->db);
+			// HMAC lifetime is 25 hours (this should be related to the time drift allowed in header validation)
+			$hmac->setTTL(90000);
+			
+			return $hmac;
+		});
+		
+		$this->setFactory('apiUsersTable', function(MockServiceProvider $sp) {
+			return new \Elgg\Mocks\Database\ApiUsersTable($sp->db, $sp->crypto);
+		});
+		
+		$this->setFactory('usersApiSessionsTable', function(MockServiceProvider $sp) {
+			return new \Elgg\Mocks\Database\UsersApiSessionsTable($sp->db, $sp->crypto);
 		});
 	}
 }

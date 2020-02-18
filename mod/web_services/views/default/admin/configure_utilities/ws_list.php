@@ -1,6 +1,11 @@
 <?php
+/**
+ * List all registered API endpoints (methods)
+ */
 
-$services = list_all_apis();
+use Elgg\WebServices\Di\ApiRegistrationService;
+
+$services = ApiRegistrationService::instance()->getAllApiMethods();
 if (empty($services)) {
 	echo elgg_echo('notfound');
 	return;
@@ -8,10 +13,9 @@ if (empty($services)) {
 
 $lis = [];
 
-foreach ($services as $service => $params) {
+foreach ($services as $service) {
 	$lis[] = elgg_view('webservices/service', [
 		'service' => $service,
-		'params' => $params,
 	]);
 }
 

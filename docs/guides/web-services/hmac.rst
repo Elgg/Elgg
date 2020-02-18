@@ -1,7 +1,9 @@
 HMAC Authentication
 ===================
 
-Elgg's RESTful API framework provides functions to support a `HMAC`_ signature scheme for API authentication. The client must send the HMAC signature together with a set of special HTTP headers when making a call that requires API authentication. This ensures that the API call is being made from the stated client and that the data has not been tampered with.
+Elgg's RESTful API framework provides functions to support a `HMAC`_ signature scheme for API authentication. The client must send 
+the HMAC signature together with a set of special HTTP headers when making a call that requires API authentication. This ensures 
+that the API call is being made from the stated client and that the data has not been tampered with.
 
 .. _HMAC: http://en.wikipedia.org/wiki/HMAC
 
@@ -29,4 +31,5 @@ If you are sending POST data you must also send:
 - **Content-type** - The content type of the data you are sending (if in doubt use application/octet-stream)
 - **Content-Length** - The length in bytes of your POST data
 
-Elgg provides a sample API client that implements this HMAC signature: send_api_call(). It serves as a good reference on how to implement it.
+Elgg provides a sample API client that implements this HMAC signature: ``\Elgg\WebServices\ElggApiClient``. It serves as a good 
+reference on how to implement it.

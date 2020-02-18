@@ -64,7 +64,7 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 		$this->assertNotEquals($keys->api_key, $entity->getPublicKey());
 		$this->assertNotEquals($keys->secret, $entity->getSecretKey());
 		
-		$this->assertFalse(get_api_user($keys->api_key));
+		$this->assertFalse(_elgg_services()->apiUsersTable->getApiUser($keys->api_key));
 	}
 	
 	public function testDelete() {
@@ -85,7 +85,7 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 		
 		$this->assertTrue($entity->delete());
 		
-		$this->assertFalse(get_api_user($keys->api_key));
+		$this->assertFalse(_elgg_services()->apiUsersTable->getApiUser($keys->api_key));
 		
 		$session->removeLoggedInUser();
 	}

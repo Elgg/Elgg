@@ -35,6 +35,8 @@ return array(
 	'SecurityException:APIAccessDenied' => "Sorry, API access has been disabled by the administrator.",
 	'SecurityException:NoAuthMethods' => "No authentication methods were found that could authenticate this API request.",
 	'SecurityException:authenticationfailed' => "User could not be authenticated",
+	'SecurityException:DuplicateEmailUser' => "No unique user found for the given e-mail address. Unable to get token.",
+	'SecurityException:BannedUser' => "This user account is banned, no token can be provided.",
 	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Method or function not set in call in expose_method()",
 	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
 	'InvalidParameterException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",
@@ -42,6 +44,8 @@ return array(
 	'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
 	'SecurityException:DupePacket' => "Packet signature already seen.",
 	'SecurityException:InvalidAPIKey' => "Invalid or missing API Key.",
+	'BadRequestException:MissingOutputViewInViewtype' => "Missing view 'api/output' in viewtype '%s'.",
+	'BadRequestException:MissingOutputViewInViewtype:DataViewsPlugin' => "Enable the 'data_views' plugin to add this view.",
 	
 	'system.api.list' => "List all available API calls on the system.",
 	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",

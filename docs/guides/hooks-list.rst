@@ -449,7 +449,7 @@ Permission hooks
 	is passed as ``$params``.
 
 **api_key, use**
-	Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated.
+	Triggered by ``elgg_ws_pam_auth_api_key()``. Returning false prevents the key from being authenticated.
 
 **gatekeeper, <entity_type>:<entity_subtype>**
     Filters the result of ``elgg_entity_gatekeeper()`` to prevent or allow access to an entity that user would otherwise have or not have access to.

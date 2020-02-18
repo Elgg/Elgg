@@ -1,39 +1,15 @@
 <?php
 
 use Elgg\Router\Middleware\AdminGatekeeper;
-
-/**
- * A global array holding API methods.
- * The structure of this is
- * 	$API_METHODS = array (
- * 		$method => array (
- * 			"description" => "Some human readable description"
- * 			"function" = 'my_function_callback'
- * 			"parameters" = array (
- * 				"variable" = array ( // the order should be the same as the function callback
- * 					type => 'int' | 'bool' | 'float' | 'string'
- * 					required => true (default) | false
- *					default => value // optional
- * 				)
- * 			)
- * 			"call_method" = 'GET' | 'POST'
- * 			"require_api_auth" => true | false (default)
- * 			"require_user_auth" => true | false (default)
- * 		)
- *  )
- */
-global $API_METHODS;
-$API_METHODS = [];
-
-/** Define a global array of errors */
-global $ERRORS;
-$ERRORS = [];
+use Elgg\WebServices\Middleware\ApiContextMiddleware;
+use Elgg\WebServices\Middleware\RestApiErrorHandlingMiddleware;
+use Elgg\WebServices\Middleware\RestApiOutputMiddleware;
+use Elgg\WebServices\Middleware\ViewtypeMiddleware;
+use Elgg\WebServices\RestServiceController;
 
 require_once(__DIR__ . '/lib/functions.php');
+require_once(__DIR__ . '/lib/pam_handlers.php');
 require_once(__DIR__ . '/lib/web_services.php');
-require_once(__DIR__ . '/lib/api_user.php');
-require_once(__DIR__ . '/lib/client.php');
-require_once(__DIR__ . '/lib/tokens.php');
 
 return [
 	'bootstrap' => \Elgg\WebServices\Bootstrap::class,
@@ -67,11 +43,17 @@ return [
 				AdminGatekeeper::class,
 			],
 		],
-		'default:services' => [
-			'path' => '/services/{segments}',
-			'handler' => 'ws_page_handler',
+		'default:services:rest' => [
+			'path' => '/services/api/rest/{view}/{segments?}',
+			'controller' => RestServiceController::class,
 			'defaults' => [
-				'segments' => '',
+				'view' => 'json',
+			],
+			'middleware' => [
+				ApiContextMiddleware::class,
+				ViewtypeMiddleware::class,
+				RestApiOutputMiddleware::class,
+				RestApiErrorHandlingMiddleware::class,
 			],
 			'requirements' => [
 				'segments' => '.+',
@@ -91,11 +73,6 @@ return [
 			],
 			'menu:page' => [
 				'\Elgg\WebServices\AdminPageMenu' => [],
-			],
-		],
-		'rest:output' => [
-			'system.api.list' => [
-				'ws_system_api_list_hook' => [],
 			],
 		],
 	],

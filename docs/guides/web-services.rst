@@ -352,19 +352,14 @@ use:
 
     function rest_plugin_setup_pams() {
         // user token can also be used for user authentication
-        register_pam_handler('pam_auth_usertoken');
+        register_pam_handler('elgg_ws_pam_auth_usertoken');
 
         // simple API key check
-        register_pam_handler('api_auth_key', "sufficient", "api");
+        register_pam_handler('elgg_ws_pam_auth_api_key', "sufficient", "api");
         
         // override the default pams
         return true;
     }
-
-When testing, you may find it useful to register the
-``pam_auth_session`` PAM so that you can easily test your methods from
-the browser. Be careful not to use this PAM on a production site because
-it could open up your users to a `CSRF attack`_.
 
 .. _pluggable authentication module (PAM): http://en.wikipedia.org/wiki/Pluggable_Authentication_Modules
 .. _CSRF attack: http://en.wikipedia.org/wiki/Csrf
