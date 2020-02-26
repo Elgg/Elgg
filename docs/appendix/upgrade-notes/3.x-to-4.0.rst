@@ -309,6 +309,19 @@ Removed views / resources
 -------------------------
 
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
+* ``reportedcontent/admin_css``
+
+Removed hooks / events
+----------------------
+
+* Hook ``reportedcontent:add`` has been removed. Use the``create, object`` event to prevent creation.
+* Hook ``reportedcontent:archive`` has been removed. Use the``permissions_check, object`` hook.
+* Hook ``reportedcontent:delete`` has been removed. Use the``delete, object`` event to prevent deletion.
+
+Removed actions
+---------------
+
+* The action ``reportedcontent/delete`` has been replaced with a generic entity delete action
 
 Reworked exceptions
 -------------------

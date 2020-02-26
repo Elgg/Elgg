@@ -60,12 +60,11 @@ class WidgetDefinition {
 	 * Create an WidgetDefinition from an associative array. Required key is id.
 	 *
 	 * @param array $options Option array of key value pairs
-	 *
-	 *    id => STR Widget identifier (required)
-	 *    name => STR Name of the widget
-	 *    description => STR Description of the widget
-	 *    context => ARRAY contexts in which the widget is available
-	 *    multiple => BOOL can the widget be added multiple times
+	 *                       - id => STR Widget identifier (required)
+	 *                       - name => STR Name of the widget
+	 *                       - description => STR Description of the widget
+	 *                       - context => ARRAY contexts in which the widget is available
+	 *                       - multiple => BOOL can the widget be added multiple times
 	 *
 	 * @return \Elgg\WidgetDefinition
 	 */

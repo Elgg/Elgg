@@ -266,12 +266,15 @@ class WidgetsService {
 	}
 
 	/**
-	 * @param array $params Associative array of params used to determine what to return
+	 * Returns the registered widget types.
 	 *
-	 * array (
+	 * Use params to limit the result:
+	 * [
 	 *     'context' => string (defaults to elgg_get_context()),
 	 *     'container' => \ElggEntity (defaults to null)
-	 * )
+	 * ]
+	 *
+	 * @param array $params Associative array of params used to determine what to return
 	 *
 	 * @return \Elgg\WidgetDefinition[]
 	 */

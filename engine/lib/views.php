@@ -210,8 +210,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  *
  * @param string $view     The name and location of the view to use
  * @param array  $vars     Variables to pass to the view.
- * @param string $viewtype If set, forces the viewtype for the elgg_view call to be
- *                          this value (default: standard detection)
+ * @param string $viewtype If set, forces the viewtype for the elgg_view call to be this value (default: standard detection)
  *
  * @return string The parsed view
  */
@@ -477,19 +476,10 @@ function _elgg_views_prepare_head($title) {
 	return $params;
 }
 
-
 /**
  * Add favicon link tags to HTML head
  *
- * @param \Elgg\Hook $hook "head", "page"
- * returnvalue contains head params
- *		<code>
- *      	[
- *				'title' => '',
- *				'metas' => [],
- *				'links' => [],
- *			]
- *		</code>
+ * @param \Elgg\Hook $hook 'head', 'page'
  *
  * @return array
  */
@@ -691,10 +681,7 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  *
  * elgg_view_menu() uses views in navigation/menu
  *
- * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
- * @param array                      $vars An associative array of display options for the menu.
- *
- *  Options include:
+ * Commonly used menu vars:
  *    items                => (array) an array of unprepared menu items as ElggMenuItem or menu item factory options
  *    sort_by              => (string) or php callback string options: 'name', 'priority' (default), 'text'
  *                            or a php callback (a compare function for usort)
@@ -704,6 +691,9 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  *    menu_view            => (string) name of the view to be used to render the menu
  *    show_section_headers => (bool) show headers before menu sections
  *    selected_item_name   => (string) the menu item name to be selected
+ *
+ * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
+ * @param array                      $vars An associative array of display options for the menu.
  *
  * @return string
  * @since 1.8.0
@@ -784,9 +774,9 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  *
  * @param \ElggEntity $entity The entity to display
  * @param array       $vars   Array of variables to pass to the entity view.
- *      'full_view'           Whether to show a full or condensed view. (Default: true)
- *      'item_view'           Alternative view used to render this entity
- *      'register_rss_link'   Register the rss link availability (default: depending on full_view)
+ *                            'full_view'         Whether to show a full or condensed view. (Default: true)
+ *                            'item_view'         Alternative view used to render this entity
+ *                            'register_rss_link' Register the rss link availability (default: depending on full_view)
  *
  * @return false|string HTML to display or false
  * @todo The annotation hook might be better as a generic plugin hook to append content.
@@ -875,7 +865,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = []
  *
  * @param \ElggAnnotation $annotation The annotation to display
  * @param array           $vars       Variable array for view.
- *      'item_view'  Alternative view used to render an annotation
+ *                                    'item_view' Alternative view used to render an annotation
  *
  * @return string|false Rendered annotation
  */
@@ -917,21 +907,21 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = []) {
  *
  * @param array $entities Array of entities
  * @param array $vars     Display variables
- *      'count'            The total number of entities across all pages
- *      'offset'           The current indexing offset
- *      'limit'            The number of entities to display per page (default from settings)
- *      'full_view'        Display the full view of the entities?
- *      'list_class'       CSS class applied to the list
- *      'item_class'       CSS class applied to the list items
- *      'item_view'        Alternative view to render list items content
- *      'list_item_view'   Alternative view to render list items
- *      'pagination'       Display pagination?
- *      'base_url'         Base URL of list (optional)
- *      'url_fragment'     URL fragment to add to links if not present in base_url (optional)
- *      'position'         Position of the pagination: before, after, or both
- *      'list_type'        List type: 'list' (default), 'gallery'
- *      'list_type_toggle' Display the list type toggle?
- *      'no_results'       Message to display if no results (string|true|Closure)
+ *                        'count'            The total number of entities across all pages
+ *                        'offset'           The current indexing offset
+ *                        'limit'            The number of entities to display per page (default from settings)
+ *                        'full_view'        Display the full view of the entities?
+ *                        'list_class'       CSS class applied to the list
+ *                        'item_class'       CSS class applied to the list items
+ *                        'item_view'        Alternative view to render list items content
+ *                        'list_item_view'   Alternative view to render list items
+ *                        'pagination'       Display pagination?
+ *                        'base_url'         Base URL of list (optional)
+ *                        'url_fragment'     URL fragment to add to links if not present in base_url (optional)
+ *                        'position'         Position of the pagination: before, after, or both
+ *                        'list_type'        List type: 'list' (default), 'gallery'
+ *                        'list_type_toggle' Display the list type toggle?
+ *                        'no_results'       Message to display if no results (string|true|Closure)
  *
  * @return string The rendered list of entities
  */
@@ -973,14 +963,14 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *
  * @param array $annotations Array of annotations
  * @param array $vars        Display variables
- *      'count'      The total number of annotations across all pages
- *      'offset'     The current indexing offset
- *      'limit'      The number of annotations to display per page
- *      'full_view'  Display the full view of the annotation?
- *      'list_class' CSS Class applied to the list
- *      'item_view'  Alternative view to render list items
- *      'offset_key' The url parameter key used for offset
- *      'no_results' Message to display if no results (string|true|Closure)
+ *                           'count'      The total number of annotations across all pages
+ *                           'offset'     The current indexing offset
+ *                           'limit'      The number of annotations to display per page
+ *                           'full_view'  Display the full view of the annotation?
+ *                           'list_class' CSS Class applied to the list
+ *                           'item_view'  Alternative view to render list items
+ *                           'offset_key' The url parameter key used for offset
+ *                           'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of annotations
  * @internal
@@ -1011,14 +1001,14 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  *
  * @param array $relationships Array of relationships
  * @param array $vars          Display variables
- *      'count'      The total number of relationships across all pages
- *      'offset'     The current indexing offset
- *      'limit'      The number of relationships to display per page
- *      'full_view'  Display the full view of the relationships?
- *      'list_class' CSS Class applied to the list
- *      'item_view'  Alternative view to render list items
- *      'offset_key' The url parameter key used for offset
- *      'no_results' Message to display if no results (string|true|Closure)
+ *                             'count'      The total number of relationships across all pages
+ *                             'offset'     The current indexing offset
+ *                             'limit'      The number of relationships to display per page
+ *                             'full_view'  Display the full view of the relationships?
+ *                             'list_class' CSS Class applied to the list
+ *                             'item_view'  Alternative view to render list items
+ *                             'offset_key' The url parameter key used for offset
+ *                             'no_results' Message to display if no results (string|true|Closure)
  *
  * @return string The list of relationships
  * @internal
@@ -1055,7 +1045,7 @@ function elgg_view_relationship_list($relationships, array $vars = []) {
  *
  * @param \ElggRelationship $relationship The relationship to display
  * @param array             $vars         Variable array for view.
- *      'item_view'  Alternative view used to render a relationship
+ *                                        'item_view'  Alternative view used to render a relationship
  *
  * @return string|false Rendered relationship
  */
@@ -1225,8 +1215,8 @@ function elgg_view_message($type, $body, array $vars = []) {
  *
  * @param \ElggRiverItem $item A river item object
  * @param array          $vars An array of variables for the view
- *      'item_view'         Alternative view to render the item
- *      'register_rss_link' Register the rss link availability (default: false)
+ *                             'item_view'         Alternative view to render the item
+ *                             'register_rss_link' Register the rss link availability (default: false)
  * @return string returns empty string if could not be rendered
  */
 function elgg_view_river_item($item, array $vars = []) {
@@ -1308,7 +1298,7 @@ function elgg_view_river_item($item, array $vars = []) {
  * @param string $action    The name of the action. An action name does not include
  *                          the leading "action/". For example, "login" is an action name.
  * @param array  $form_vars $vars environment passed to the "input/form" view
- *                           - 'ajax' bool If true, the form will be submitted with an Ajax request
+ *                          - 'ajax' bool If true, the form will be submitted with an Ajax request
  * @param array  $body_vars $vars environment passed to the "forms/$action" view
  *
  * @return string The complete form
@@ -1377,12 +1367,12 @@ function _elgg_split_vars(array $vars = [], array $prefixes = null) {
  * @param array $params Field parameters and variables for the input view.
  *                      Keys not prefixed with hash (#) are passed to the input view as $vars.
  *                      Keys prefixed with a hash specify the field wrapper (.elgg-view-field) output.
- *                       - #type: specifies input view. E.g. "text" uses the view "input/text".
- *                       - #label: field label HTML
- *                       - #help: field help HTML
- *                       - #class: field class name
- *                       - #view: custom view to use to render the field
- *                       - #html: can be used to render custom HTML instead of in put field, helpful when you need to add a help paragraph or similar
+ *                      - #type: specifies input view. E.g. "text" uses the view "input/text".
+ *                      - #label: field label HTML
+ *                      - #help: field help HTML
+ *                      - #class: field class name
+ *                      - #view: custom view to use to render the field
+ *                      - #html: can be used to render custom HTML instead of in put field, helpful when you need to add a help paragraph or similar
  *                      Note: Both #label and #help are printed unescaped within their wrapper element.
  *                      Note: Some fields (like input/checkbox) need special attention because #label and label serve different purposes
  *                      "#label" will be used as a label in the field wrapper but "label" will be used in the input view
@@ -1476,12 +1466,9 @@ function elgg_view_field(array $params = []) {
 /**
  * Create a tagcloud for viewing
  *
- *
  * @param array $options Any elgg_get_tags() options except:
- *
- * 	type => must be single entity type
- *
- * 	subtype => must be single entity subtype
+ *                       - type => must be single entity type
+ *                       - subtype => must be single entity subtype
  *
  * @return string
  *
@@ -1511,9 +1498,8 @@ function elgg_view_tagcloud(array $options = []) {
  *
  * @param mixed $item Entity, annotation, river item, or other data
  * @param array $vars Additional parameters for the rendering
- *                    'item_view' - Alternative view used to render list items
- *                                  This parameter is required if rendering
- *                                  list items that are not entity, annotation or river
+ *                    'item_view' - Alternative view used to render list items (required if rendering list items that are not entity, annotation, relationship or river)
+ *
  * @return false|string
  * @since 1.8.0
  * @internal

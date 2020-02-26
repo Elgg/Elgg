@@ -88,8 +88,9 @@ class Config {
 	 *
 	 * @param string $name   Module name
 	 * @param array  $config Configuration for the module
-	 *                           deps:     array  Dependencies
-	 *                           exports:  string Name of the shimmed module to export
+	 *                       - deps:     array  Dependencies
+	 *                       - exports:  string Name of the shimmed module to export
+	 *
 	 * @return void
 	 * @throws InvalidParameterException
 	 */
@@ -176,9 +177,9 @@ class Config {
 	 *
 	 * @param string $name   The name of the module
 	 * @param array  $config Configuration for the module
-	 *                           url:      string The full URL for the module if not resolvable from baseUrl
-	 *                           deps:     array  Shimmed module's dependencies
-	 *                           exports:  string Name of the shimmed module to export
+	 *                       - url:      string The full URL for the module if not resolvable from baseUrl
+	 *                       - deps:     array  Shimmed module's dependencies
+	 *                       - exports:  string Name of the shimmed module to export
 	 *
 	 * @return void
 	 */

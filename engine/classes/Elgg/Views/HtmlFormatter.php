@@ -158,20 +158,21 @@ class HtmlFormatter {
 	 * Converts an associative array into a string of well-formed HTML/XML attributes
 	 * Returns a concatenated string of HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
 	 *
-	 * @param array $attrs Attributes
-	 *                     An array of attribute => value pairs
-	 *                     Attribute value can be a scalar value, an array of scalar values, or true
-	 *                     <code>
-	 *                     $attrs = array(
-	 *                         'class' => ['elgg-input', 'elgg-input-text'], // will be imploded with spaces
-	 *                         'style' => ['margin-left:10px;', 'color: #666;'], // will be imploded with spaces
-	 *                         'alt' => 'Alt text', // will be left as is
-	 *                         'disabled' => true, // will be converted to disabled="disabled"
-	 *                         'data-options' => json_encode(['foo' => 'bar']), // will be output as an escaped JSON string
-	 *                         'batch' => <\ElggBatch>, // will be ignored
-	 *                         'items' => [<\ElggObject>], // will be ignored
-	 *                     );
-	 *                     </code>
+	 * An example of the attributes:
+	 * Attribute value can be a scalar value, an array of scalar values, or true
+	 * <code>
+	 *     $attrs = [
+	 *         'class' => ['elgg-input', 'elgg-input-text'], // will be imploded with spaces
+	 *         'style' => ['margin-left:10px;', 'color: #666;'], // will be imploded with spaces
+	 *         'alt' => 'Alt text', // will be left as is
+	 *         'disabled' => true, // will be converted to disabled="disabled"
+	 *         'data-options' => json_encode(['foo' => 'bar']), // will be output as an escaped JSON string
+	 *         'batch' => <\ElggBatch>, // will be ignored
+	 *         'items' => [<\ElggObject>], // will be ignored
+	 *     ];
+	 * </code>
+	 *
+	 * @param array $attrs An array of attribute => value pairs
 	 *
 	 * @return string
 	 *
@@ -245,17 +246,17 @@ class HtmlFormatter {
 	 *
 	 * @param array        $options    Options array with keys:
 	 *
-	 *   encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
-	 *                    will not be double-escaped.
+	 *                                 - encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
+	 *                                 will not be double-escaped.
 	 *
-	 *   double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double
-	 *                    encode HTML entities: '&times;' will become '&amp;times;'
+	 *                                 - double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double
+	 *                                 encode HTML entities: '&times;' will become '&amp;times;'
 	 *
-	 *   is_void       => (bool) If given, this determines whether the function will return just the open tag.
-	 *                    Otherwise this will be determined by the tag name according to this list:
-	 *                    http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
+	 *                                 - is_void       => (bool) If given, this determines whether the function will return just the open tag.
+	 *                                 Otherwise this will be determined by the tag name according to this list:
+	 *                                 http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
 	 *
-	 *   is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
+	 *                                 - is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
 	 *
 	 * @return string
 	 * @since 1.9.0

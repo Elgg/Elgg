@@ -29,14 +29,14 @@ class DbConfig {
 	 * Constructor
 	 *
 	 * @param \stdClass $config Object with keys:
-	 *  db
-	 *  dbprefix
-	 *  dbhost
-	 *  dbport
-	 *  dbuser
-	 *  dbpass
-	 *  dbname
-	 *  dbencoding
+	 *                          - db
+	 *                          - dbprefix
+	 *                          - dbhost
+	 *                          - dbport
+	 *                          - dbuser
+	 *                          - dbpass
+	 *                          - dbname
+	 *                          - dbencoding
 	 */
 	public function __construct(\stdClass $config) {
 		foreach (array_keys(get_class_vars(__CLASS__)) as $prop) {

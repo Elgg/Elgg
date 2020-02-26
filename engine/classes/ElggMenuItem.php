@@ -95,8 +95,7 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	/**
 	 * Create an ElggMenuItem from an associative array. Required keys are name, text, and href.
 	 *
-	 * @param array $options Option array of key value pairs
-	 *
+	 * Commonly used params:
 	 *    name        => STR  Menu item identifier (required)
 	 *    text        => STR  Menu item display text as HTML (required)
 	 *    href        => STR  Menu item URL (required)
@@ -121,6 +120,8 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *    deps        => ARR  AMD modules required by this menu item
 	 *    child_menu  => ARR  Options for the child menu
 	 *    data        => ARR  Custom attributes stored in the menu item.
+	 *
+	 * @param array $options Option array of key value pairs
 	 *
 	 * @return ElggMenuItem|null null on error
 	 */

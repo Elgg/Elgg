@@ -32,13 +32,13 @@ class Attachment extends Part {
 	 * Create an attachment
 	 *
 	 * @param mixed $options an array or an ElggFile, supported array keys are:
-	 * 		content:     (string) the file contents of the attachment
-	 *		filepath:    (string) if content isn't provided, a filepath can be given to fetch the content from
-	 *		filename:    (string) the name of the attachment
-	 *		type:        (string) the mimetype
-	 *		encoding:    (string) the content encoding
-	 *		disposition: (string) the attachment disposition (default: attachment)
-	 *		charset:     (string) the charset
+	 * 		                 - content:     (string) the file contents of the attachment
+	 *		                 - filepath:    (string) if content isn't provided, a filepath can be given to fetch the content from
+	 *		                 - filename:    (string) the name of the attachment
+	 *		                 - type:        (string) the mimetype
+	 *		                 - encoding:    (string) the content encoding
+	 *		                 - disposition: (string) the attachment disposition (default: attachment)
+	 *		                 - charset:     (string) the charset
 	 *
 	 * @see \Zend\Mime\Part
 	 *

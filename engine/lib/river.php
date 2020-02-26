@@ -125,9 +125,7 @@ function elgg_create_river_item(array $options = []) {
 /**
  * Get river items
  *
- * @note If using types and subtypes in a query, they are joined with an AND.
- *
- * @param array $options Parameters:
+ * Supports passing the following options
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
@@ -143,6 +141,8 @@ function elgg_create_river_item(array $options = []) {
  *   subtypes             => STR|ARR Entity subtype string(s)
  *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
  *                                   can be an array of subtype strings
+ *
+ *   @note If using types and subtypes in a query, they are joined with an AND.
  *
  *   Additionally accepts all "relationship_*" options supported by {@link elgg_get_entities()}
  *   relationship         => STR     Relationship identifier
@@ -171,6 +171,8 @@ function elgg_create_river_item(array $options = []) {
  *
  *   batch_size           => INT     If "batch" is used, this is the number of entities/rows to pull
  *                                   in before requesting more. (25)
+ *
+ * @param array $options parameters
  *
  * @return \ElggRiverItem[]|\Elgg\BatchResult|array|int
  * @since 1.8.0
@@ -245,9 +247,9 @@ function elgg_delete_river(array $options = []) {
  * List river items
  *
  * @param array $options Any options from elgg_get_river() plus:
- *   item_view  => STR         Alternative view to render list items
- *   pagination => BOOL        Display pagination links (true)
- *   no_results => STR|true|Closure Message to display if no items
+ *                       - item_view  => STR         Alternative view to render list items
+ *                       - pagination => BOOL        Display pagination links (true)
+ *                       - no_results => STR|true|Closure Message to display if no items
  *
  * @return string
  * @since 1.8.0

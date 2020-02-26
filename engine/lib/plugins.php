@@ -227,24 +227,15 @@ function elgg_unset_plugin_setting($name, $plugin_id) {
  * in addition to the ones below.
  *
  * @param array $options Array in the format:
+ *                       - plugin_id => STR The plugin id. Required.
+ *                       - plugin_user_setting_names => null|ARR private setting names
+ *                       - plugin_user_setting_values => null|ARR metadata values
  *
- * 	plugin_id => STR The plugin id. Required.
+ *                       - plugin_user_setting_name_value_pairs => null|ARR (name => 'name', value => 'value', 'operand' => '=')
+ *                       Currently if multiple values are sent via an array (value => array('value1', 'value2')) the pair's operand will be forced to "IN".
  *
- * 	plugin_user_setting_names => null|ARR private setting names
- *
- * 	plugin_user_setting_values => null|ARR metadata values
- *
- * 	plugin_user_setting_name_value_pairs => null|ARR (
- *                                         name => 'name',
- *                                         value => 'value',
- *                                         'operand' => '=',
- *                                        )
- * 	                             Currently if multiple values are sent via
- *                               an array (value => array('value1', 'value2')
- *                               the pair's operand will be forced to "IN".
- *
- * 	plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
- *                                        (name = value) OPERATOR (name = value); default AND
+ * 	                     - plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
+ *                       (name = value) OPERATOR (name = value); default AND
  *
  * @return mixed int If count, int. If not count, array. false on errors.
  * @since 1.8.0

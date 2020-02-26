@@ -52,8 +52,7 @@ function get_entity_statistics($owner_guid = 0) {
  * @tip This also support options from elgg_list_entities().
  *
  * @param array $options Options array with keys:
- *
- *    seconds (int) => Number of seconds (default 600 = 10min)
+ *                       seconds (int) => Number of seconds (default 600 = 10min)
  *
  * @return string
  */

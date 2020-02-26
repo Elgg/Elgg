@@ -1341,8 +1341,7 @@ class Plugins {
 	 * Takes all the options for {@link elgg_get_entities()}
 	 * in addition to the ones below.
 	 *
-	 * @param array $options Array in the format:
-	 *
+	 * Commonly used options:
 	 *    plugin_id => STR The plugin id. Required.
 	 *
 	 *    plugin_user_setting_names => null|ARR private setting names
@@ -1360,6 +1359,8 @@ class Plugins {
 	 *
 	 *    plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
 	 *                                        (name = value) OPERATOR (name = value); default AND
+	 *
+	 * @param array $options array of options
 	 *
 	 * @return mixed int If count, int. If not count, array. false on errors.
 	 */
