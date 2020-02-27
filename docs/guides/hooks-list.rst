@@ -1144,19 +1144,6 @@ Members
     This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
     for the members pages.
 
-Reported Content
-----------------
-
-**reportedcontent:add, system**
-	Triggered after adding the reported content object ``$params['report']``. Return false to delete report.
-
-**reportedcontent:archive, system**
-	Triggered before archiving the reported content object ``$params['report']``. Return false to prevent archiving.
-
-**reportedcontent:delete, system**
-	Triggered before deleting the reported content object ``$params['report']``. Return false to prevent deleting.
-
-
 Web Services
 ------------
 
