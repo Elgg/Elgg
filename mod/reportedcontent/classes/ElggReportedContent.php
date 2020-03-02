@@ -14,6 +14,7 @@ class ElggReportedContent extends ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "reported_content";
+		$this->attributes['subtype'] = 'reported_content';
+		$this->attributes['access_id'] = ACCESS_PRIVATE;
 	}
 }

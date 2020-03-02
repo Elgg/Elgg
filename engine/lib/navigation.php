@@ -61,33 +61,35 @@ use Elgg\Menu\PreparedMenu;
  * @see ElggMenuItem::factory() is used to turn an array value of $menu_item into an
  * ElggMenuItem object.
  *
- * @param string $menu_name The name of the menu: site, page, userhover,
- *                          userprofile, groupprofile, or any custom menu
- * @param mixed  $menu_item A \ElggMenuItem object or an array of options in format:
- *                          name        => STR  Menu item identifier (required)
- *                          text        => STR  Menu item display text as HTML (required)
- *                          href        => STR  Menu item URL (required)
- *                                              false = do not create a link.
- *                                              null = current URL.
- *                                              "" = current URL.
- *                                              "/" = site home page.
- *                                              @warning If href is false, the <a> tag will
- *                                              not appear, so the link_class will not apply. If you
- *                                              put <a> tags in manually through the 'text' option
- *                                              the default CSS selector .elgg-menu-$menu > li > a
- *                                              may affect formatting. Wrap in a <span> if it does.)
- *                          contexts    => ARR  Page context strings
- *                          section     => STR  Menu section identifier
- *                          title       => STR  Menu item tooltip
- *                          selected    => BOOL Is this menu item currently selected
- *                          parent_name => STR  Identifier of the parent menu item
- *                          link_class  => STR  A class or classes for the <a> tag
- *                          item_class  => STR  A class or classes for the <li> tag
- *                          deps     => STR  One or more AMD modules to require
+ * The \ElggMenuItem constructor and factory support the following array of menu item options:
+ *  name        => STR  Menu item identifier (required)
+ *  text        => STR  Menu item display text as HTML (required)
+ *  href        => STR  Menu item URL (required)
+ *                      false = do not create a link.
+ *                      null = current URL.
+ *                      "" = current URL.
+ *                      "/" = site home page.
+ *                      @warning If href is false, the <a> tag will
+ *                      not appear, so the link_class will not apply. If you
+ *                      put <a> tags in manually through the 'text' option
+ *                      the default CSS selector .elgg-menu-$menu > li > a
+ *                      may affect formatting. Wrap in a <span> if it does.)
  *
- *                          Additional options that the view output/url takes can be
- *							passed in the array. Custom options can be added by using
- *							the 'data' key with the	value being an associative array.
+ *  contexts    => ARR  Page context strings
+ *  section     => STR  Menu section identifier
+ *  title       => STR  Menu item tooltip
+ *  selected    => BOOL Is this menu item currently selected
+ *  parent_name => STR  Identifier of the parent menu item
+ *  link_class  => STR  A class or classes for the <a> tag
+ *  item_class  => STR  A class or classes for the <li> tag
+ *  deps     => STR  One or more AMD modules to require
+ *
+ *  Additional options that the view output/url takes can be
+ *	passed in the array. Custom options can be added by using
+ *	the 'data' key with the	value being an associative array.
+ *
+ * @param string $menu_name The name of the menu: site, page, userhover, userprofile, groupprofile, or any custom menu
+ * @param mixed  $menu_item A \ElggMenuItem object or an array of options
  *
  * @return bool False if the item could not be added
  * @since 1.8.0

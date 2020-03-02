@@ -11,10 +11,6 @@ return [
 	],
 	'actions' => [
 		'reportedcontent/add' => [],
-
-		'reportedcontent/delete' => [
-			'access' => 'admin',
-		],
 		'reportedcontent/archive' => [
 			'access' => 'admin',
 		],
@@ -24,16 +20,14 @@ return [
 			'context' => ['admin'],
 		],
 	],
-	'view_extensions' => [
-		'admin.css' => [
-			'reportedcontent/admin_css' => [],
-		],
-	],
 	'view_options' => [
 		'forms/reportedcontent/add' => ['ajax' => true],
 	],
 	'hooks' => [
 		'register' => [
+			'menu:entity' => [
+				'Elgg\ReportedContent\Menus\Entity::register' => [],
+			],
 			'menu:footer' => [
 				'Elgg\ReportedContent\Menus\Footer::register' => [],
 			],

@@ -113,8 +113,7 @@
         }
     },
     "require-dev": {
-        "elgg/sniffs": "3.x-dev",
-        "squizlabs/php_codesniffer": "^2.8.1",
+    	"elgg/sniffs": "4.x-dev",
         "phpdocumentor/reflection-docblock": "~2.0",
         "phpunit/phpunit": "~8.5"
     },

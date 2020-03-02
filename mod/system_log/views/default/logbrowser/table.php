@@ -62,33 +62,34 @@ foreach ($log_entries as $entry) {
 	} else {
 		$object_link = $entry->object_class;
 	}
-?>
-<tr <?php echo $alt; ?>>
-<td class="log-entry-time">
-	<?php echo date('r', $entry->time_created); ?>
-</td>
-<td class="log-entry-ip-address">
-	<?php echo $ip_address; ?>
-</td>
-<td class="log-entry-user">
-	<?php echo $user_link; ?>
-</td>
-<td class="log-entry-guid">
-	<?php echo $user_guid_link; ?>
-</td>
-<td class="log-entry-object">
-	<?php echo $object_link; ?>
-</td>
-<td class="log-entry-guid">
-	<?php echo $entry->object_id; ?>
-</td>
-<td class="log-entry-action">
-	<?php echo $entry->event; ?>
-</td>
-</tr>
-<?php
-
-$alt = $alt ? '' : 'class="alt"';
+	
+	?>
+	<tr <?php echo $alt; ?>>
+	<td class="log-entry-time">
+		<?php echo date('r', $entry->time_created); ?>
+	</td>
+	<td class="log-entry-ip-address">
+		<?php echo $ip_address; ?>
+	</td>
+	<td class="log-entry-user">
+		<?php echo $user_link; ?>
+	</td>
+	<td class="log-entry-guid">
+		<?php echo $user_guid_link; ?>
+	</td>
+	<td class="log-entry-object">
+		<?php echo $object_link; ?>
+	</td>
+	<td class="log-entry-guid">
+		<?php echo $entry->object_id; ?>
+	</td>
+	<td class="log-entry-action">
+		<?php echo $entry->event; ?>
+	</td>
+	</tr>
+	<?php
+	
+	$alt = $alt ? '' : 'class="alt"';
 }
 ?>
 </table>

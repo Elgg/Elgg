@@ -104,8 +104,7 @@ function access_get_show_hidden_status() {
  * and whether the user has access to the entity.
  *
  * @param \ElggEntity $entity The entity to check access for.
- * @param \ElggUser   $user   Optionally user to check access for. Defaults to
- *                           logged in user (which is a useless default).
+ * @param \ElggUser   $user   Optionally user to check access for. Defaults to logged in user (which is a useless default).
  *
  * @return bool
  */

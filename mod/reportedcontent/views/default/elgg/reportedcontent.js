@@ -47,41 +47,4 @@ define(function (require) {
 		}
 		return false;
 	});
-
-	$(document).on('click', '.elgg-item-object-reported_content', function (e) {
-		var $clicked = $(e.target),
-			$li = $(this);
-
-		if (!$clicked.is('button[data-elgg-action]')) {
-			return;
-		}
-
-		var action = $clicked.data('elggAction');
-		elgg.action(action.name, {
-			beforeSend: spinner.start,
-			complete: spinner.stop,
-			data: action.data,
-			success: function (data) {
-				if (data.status == -1) {
-					return;
-				}
-
-				if (action.name === 'reportedcontent/delete') {
-					$li.slideUp();
-				} else {
-					$clicked.fadeOut();
-					$li.find('.reported-content-active')
-						.removeClass('reported-content-active')
-						.addClass('reported-content-archived');
-				}
-
-				if (!$('.reported-content-refresh').length) {
-					$li.parent().after('<p class="reported-content-refresh mtm ptm elgg-divide-top center">' +
-						'<a href="">' + elgg.echo('reportedcontent:refresh') + '</a></p>');
-				}
-			}
-		});
-		return false;
-	})
 });
-

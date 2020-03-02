@@ -1,25 +1,25 @@
 <?php
 
-	$getAnchor = function(array $options = []) {
-		
-		$vars = [
-			'class' => elgg_extract_class($options, ['elgg-button']),
-			'href' => '#',
-			'text' => 'anchor',
-		];
-		unset($options['class']);
-		
-		return elgg_view('output/url', array_merge($vars, $options));
-	};
+$getAnchor = function(array $options = []) {
+	
+	$vars = [
+		'class' => elgg_extract_class($options, ['elgg-button']),
+		'href' => '#',
+		'text' => 'anchor',
+	];
+	unset($options['class']);
+	
+	return elgg_view('output/url', array_merge($vars, $options));
+};
 
-	$getButton = function(array $options = []) {
-		
-		$vars = [
-			'value' => elgg_echo('submit'),
-		];
-		
-		return elgg_view('input/button', array_merge($vars, $options));
-	};
+$getButton = function(array $options = []) {
+	
+	$vars = [
+		'value' => elgg_echo('submit'),
+	];
+	
+	return elgg_view('input/button', array_merge($vars, $options));
+};
 
 ?>
 <table class="elgg-table">

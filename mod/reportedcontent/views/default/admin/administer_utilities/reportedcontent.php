@@ -3,8 +3,6 @@
  * Elgg Reported content admin page
  */
 
-elgg_require_js('elgg/reportedcontent');
-
 echo elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'reported_content',

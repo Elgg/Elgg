@@ -118,12 +118,13 @@ define(function (require) {
 							$('.embed-throbber').hide();
 							$('.embed-wrapper .elgg-form-file-upload').show();
 						}
-					} // ie 7 and 8 have a null response because of the use of an iFrame
-					// so just show the list after upload.
-					// http://jquery.malsup.com/form/#file-upload claims you can wrap JSON
-					// in a textarea, but a quick test didn't work, and that is fairly
-					// intrusive to the rest of the ajax system.
-					else if (response === undefined && $.browser.msie) {
+					} else if (response === undefined && $.browser.msie) {
+						// ie 7 and 8 have a null response because of the use of an iFrame
+						// so just show the list after upload.
+						// http://jquery.malsup.com/form/#file-upload claims you can wrap JSON
+						// in a textarea, but a quick test didn't work, and that is fairly
+						// intrusive to the rest of the ajax system.
+						
 						var forward = $('input[name=embed_forward]').val();
 						var url = elgg.normalize_url('embed/' + forward);
 						url = embed.addContainerGUID(url);

@@ -68,11 +68,10 @@ function get_user_by_email($email) {
  * Return users (or the number of them) who have been active within a recent period.
  *
  * @param array $options Array of options with keys:
- *
- *   seconds (int)  => Length of period (default 600 = 10min)
- *   limit   (int)  => Limit (default from settings)
- *   offset  (int)  => Offset (default 0)
- *   count   (bool) => Return a count instead of users? (default false)
+ *                       seconds (int)  => Length of period (default 600 = 10min)
+ *                       limit   (int)  => Limit (default from settings)
+ *                       offset  (int)  => Offset (default 0)
+ *                       count   (bool) => Return a count instead of users? (default false)
  *
  * @return \ElggUser[]|int
  */

@@ -118,18 +118,14 @@ function elgg_format_bytes($size, $precision = 2) {
  * @param string       $text       The contents of the element. Assumed to be HTML unless encode_text is true.
  *
  * @param array        $options    Options array with keys:
+ *                                 - encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities will not be double-escaped.
+ *                                 - double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double encode HTML entities: '&times;' will become '&amp;times;'
  *
- *   encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
- *                    will not be double-escaped.
+ *                                 - is_void       => (bool) If given, this determines whether the function will return just the open tag.
+ *                                 Otherwise this will be determined by the tag name according to this list:
+ *                                 http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
  *
- *   double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double
- *                    encode HTML entities: '&times;' will become '&amp;times;'
- *
- *   is_void       => (bool) If given, this determines whether the function will return just the open tag.
- *                    Otherwise this will be determined by the tag name according to this list:
- *                    http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
- *
- *   is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
+ *                                 - is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
  *
  * @return string
  * @throws \Elgg\Exceptions\InvalidArgumentException

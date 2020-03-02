@@ -60,9 +60,9 @@
  * @param string $object_type    'object', 'user', 'group', 'site'
  * @param string $object_subtype The subtype or name of the entity
  * @param array  $actions        Array of actions or empty array for the action event.
- *                                An event is usually described by the first string passed
- *                                to elgg_trigger_event(). Examples include
- *                                'create', 'update', and 'publish'. The default is 'create'.
+ *                               An event is usually described by the first string passed
+ *                               to elgg_trigger_event(). Examples include
+ *                               'create', 'update', and 'publish'. The default is 'create'.
  * @return void
  * @since 1.9
  */
@@ -75,8 +75,7 @@ function elgg_register_notification_event($object_type, $object_subtype, array $
  *
  * @param string $object_type    'object', 'user', 'group', 'site'
  * @param string $object_subtype The type of the entity
- * @param array  $actions        The notification action to unregister, leave empty for all actions
- *                                Example ('create', 'delete', 'publish')
+ * @param array  $actions        The notification action to unregister, leave empty for all actions. Example ('create', 'delete', 'publish')
  *
  * @return bool
  * @since 1.9
@@ -369,15 +368,11 @@ function _elgg_notifications_init() {
  *                                 By default Elgg core supports three parameters, which give
  *                                 notification plugins more control over the notifications:
  *
- *                                 object => null|\ElggEntity|\ElggAnnotation The object that
- *                                           is triggering the notification.
+ *                                 object => null|\ElggEntity|\ElggAnnotation The object that is triggering the notification.
  *
- *                                 action => null|string Word that describes the action that
- *                                           is triggering the notification (e.g. "create"
- *                                           or "update").
+ *                                 action => null|string Word that describes the action that is triggering the notification (e.g. "create" or "update").
  *
- *                                 summary => null|string Summary that notification plugins
- *                                            can use alongside the notification title and body.
+ *                                 summary => null|string Summary that notification plugins can use alongside the notification title and body.
  *
  * @param mixed  $methods_override A string, or an array of strings specifying the delivery
  *                                 methods to use - or leave blank for delivery using the

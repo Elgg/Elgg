@@ -47,6 +47,13 @@ function ws_page_handler($segments) {
  * It also cannot handle arrays of bools or arrays of arrays.
  * Also, input will be filtered to protect against XSS attacks through the web services.
  *
+ * The list of parameters should be in the format:
+ *     "variable" = array (
+ *         type => 'int' | 'bool' | 'float' | 'string' | 'array'
+ *         required => true (default) | false
+ *         default => value (optional)
+ *     )
+ *
  * @param string   $method            The api name to expose - for example "myapi.dosomething"
  * @param callable $function          Callable to handle API call
  * @param array    $parameters        (optional) List of parameters in the same order as in
@@ -56,12 +63,6 @@ function ws_page_handler($segments) {
  *                                    parameters. If an optional parameter is not set and has no default,
  *                                    the API callable will receive null.
  *
- *                                    This array should be in the format
- *                                      "variable" = array (
- *                                          type => 'int' | 'bool' | 'float' | 'string' | 'array'
- *                                          required => true (default) | false
- *                                  	    default => value (optional)
- *                                  	 )
  * @param string   $description       (optional) human readable description of the function.
  * @param string   $call_method       (optional) Define what http method must be used for
  *                                    this function. Default: GET
