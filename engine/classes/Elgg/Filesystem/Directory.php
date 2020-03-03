@@ -54,7 +54,7 @@ interface Directory {
 	 * @param string $path      The subdirectory path within this directory
 	 * @param bool   $recursive Find files recursively
 	 *
-	 * @return Collection<File>
+	 * @return \Elgg\Collections\Collection<File>
 	 *
 	 * @throws InvalidArgumentException
 	 */
@@ -66,7 +66,7 @@ interface Directory {
 	 * @param string $path      The subdirectory path within this directory
 	 * @param bool   $recursive Find directories recursively
 	 *
-	 * @return Collection<Directory>
+	 * @return \Elgg\Collections\Collection<Directory>
 	 *
 	 * @throws InvalidArgumentException
 	 */

@@ -6,7 +6,7 @@
  * @todo Expand for all upgrades to be \ElggUpgrade subclasses.
  */
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\TimeUsing;
 use Elgg\Upgrade\Batch;
 
@@ -108,7 +108,7 @@ class ElggUpgrade extends ElggObject {
 	public function getBatch() {
 		try {
 			$batch = _elgg_services()->upgradeLocator->getBatch($this->class);
-		} catch (InvalidArgumentException $ex) {
+		} catch (ElggInvalidArgumentException $ex) {
 			// only report error if the upgrade still needs to run
 			$loglevel = $this->isCompleted() ? 'INFO' : 'ERROR';
 			elgg_log($ex->getMessage(), $loglevel);

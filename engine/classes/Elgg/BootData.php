@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Database\EntityTable;
 use Elgg\Database\Plugins;
 use Elgg\Database\Select;
+use Elgg\Exceptions\Configuration\InstallationException;
 
 /**
  * Serializable collection of data used to boot Elgg
@@ -44,14 +45,14 @@ class BootData {
 	 * @param bool        $installed Is the site installed?
 	 *
 	 * @return void
-	 * @throws \InstallationException
+	 * @throws InstallationException
 	 */
 	public function populate(Config $config, Database $db, EntityTable $entities, Plugins $plugins, $installed) {
 
 		// get site entity
 		$this->site = $entities->get(1, 'site');
 		if (!$this->site && $installed) {
-			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
+			throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
 		// get plugins

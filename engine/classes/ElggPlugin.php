@@ -4,7 +4,7 @@ use Elgg\Includer;
 use Elgg\Database\Delete;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Http\PluginException;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 
 /**
  * Stores site-side plugin settings as private data.
@@ -63,11 +63,11 @@ class ElggPlugin extends ElggObject {
 	 * @param string $path      Path, defaults to /mod
 	 *
 	 * @return ElggPlugin
-	 * @throws InvalidArgumentException
+	 * @throws ElggInvalidArgumentException
 	 */
 	public static function fromId($plugin_id, $path = null) {
 		if (empty($plugin_id)) {
-			throw new InvalidArgumentException('Plugin ID must be set');
+			throw new ElggInvalidArgumentException('Plugin ID must be set');
 		}
 
 		$plugin = elgg_get_plugin_from_id($plugin_id);

@@ -54,7 +54,7 @@ class Cron {
 	
 		$offset = self::getSecondsInPeriod($period);
 	
-		if (!deleteLog($offset)) {
+		if (!self::deleteLog($offset)) {
 			$resulttext = elgg_echo('logrotate:lognotdeleted');
 		}
 	

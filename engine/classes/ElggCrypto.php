@@ -1,6 +1,6 @@
 <?php
 
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 
 /**
  * Cryptographic services
@@ -31,7 +31,7 @@ class ElggCrypto {
 	 *
 	 * @return string The random string
 	 *
-	 * @throws InvalidArgumentException
+	 * @throws ElggInvalidArgumentException
 	 *
 	 * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
 	 * @license   http://framework.zend.com/license/new-bsd New BSD License
@@ -40,7 +40,7 @@ class ElggCrypto {
 	 */
 	public function getRandomString($length, $chars = null) {
 		if ($length < 1) {
-			throw new InvalidArgumentException('Length should be >= 1');
+			throw new ElggInvalidArgumentException('Length should be >= 1');
 		}
 
 		if (empty($chars)) {

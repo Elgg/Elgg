@@ -2,8 +2,9 @@
 
 namespace Elgg\Controllers;
 
-use Elgg\Request;
+use Elgg\Exceptions\CronException;
 use Elgg\Http\ResponseBuilder;
+use Elgg\Request;
 
 /**
  * Controller to handle /cron requests
@@ -42,7 +43,7 @@ class Cron {
 			foreach ($jobs as $job) {
 				$output .= $job->getOutput() . PHP_EOL;
 			}
-		} catch (\CronException $ex) {
+		} catch (CronException $ex) {
 			$output .= "Exception: {$ex->getMessage()}";
 		}
 		
