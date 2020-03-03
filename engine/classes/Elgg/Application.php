@@ -732,7 +732,6 @@ class Application {
 			'river.php',
 			'sessions.php',
 			'statistics.php',
-			'upgrade.php',
 			'user_settings.php',
 			'users.php',
 			'views.php',

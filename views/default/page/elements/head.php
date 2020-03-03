@@ -20,7 +20,7 @@ foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 
-$stylesheets = elgg_get_loaded_css();
+$stylesheets = elgg_get_loaded_external_files('css', 'head');
 
 foreach ($stylesheets as $url) {
 	echo elgg_format_element('link', ['rel' => 'stylesheet', 'href' => $url]);

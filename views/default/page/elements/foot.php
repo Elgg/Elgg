@@ -5,12 +5,12 @@ echo "<script>$elgg_init</script>";
 
 // TODO(evan): "head" JS and "footer" JS distinction doesn't make sense anymore
 // TODO(evan): Introduce new "async" location for scripts allowed in head?
-$js = elgg_get_loaded_js('head');
+$js = elgg_get_loaded_external_files('js', 'head');
 foreach ($js as $url) {
 	echo elgg_format_element('script', ['src' => $url]);
 }
 
-$js = elgg_get_loaded_js('footer');
+$js = elgg_get_loaded_external_files('js', 'footer');
 foreach ($js as $url) {
 	echo elgg_format_element('script', ['src' => $url]);
 }

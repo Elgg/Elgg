@@ -296,7 +296,12 @@ Class functions
 Lib functions
 ~~~~~~~~~~~~~
 
+* ``access_get_show_hidden_status()`` use ``elgg()->session->getDisabledEntityVisibility()``
 * ``diagnostics_md5_dir()``
+* ``elgg_get_loaded_css()`` use ``elgg_get_loaded_external_files('css', 'head')``
+* ``elgg_get_loaded_js()`` use ``elgg_get_loaded_external_files('js', $location)``
+* ``elgg_get_system_messages()`` use ``elgg()->system_messages->loadRegisters()``
+* ``elgg_set_system_messages()`` use ``elgg()->system_messages->saveRegisters()``
 * ``group_access_options()``
 * ``pages_is_page()``
 * ``system_log_get_log()``
