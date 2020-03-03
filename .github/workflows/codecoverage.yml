@@ -1,6 +1,6 @@
-name: CodeClimate
+name: Code Coverage
 
-on: [push]
+on: push
 
 jobs:
   code-coverage:
@@ -9,8 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      # Get it on https://codeclimate.com/repos/{repo id}/settings/test_reporter
-      CC_TEST_REPORTER_ID: d76acdcc6ab2bf6d8f4a5af52ed410687510a0c3731d451a6884f75ee8b98117
       ELGG_DB_USER: root
       ELGG_DB_PASS: root
       ELGG_DB_NAME: elgg
@@ -33,8 +31,7 @@ jobs:
           php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
       
       - name: Test and publish code coverage
-        uses: paambaati/codeclimate-action@v2.4.0
-        with:
-          # The report file must be there, otherwise Code Climate won't find it
-          coverageCommand: php vendor/bin/phpunit --coverage-text --coverage-clover ./clover.xml
-          debug: true
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          vendor/bin/phpunit --coverage-clover=coverage.clover
+          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
