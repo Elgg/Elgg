@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Exceptions\Configuration\InstallationException;
 use Phinx\Db\Adapter\MysqlAdapter;
 use Phinx\Migration\AbstractMigration;
 

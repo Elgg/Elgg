@@ -1,10 +1,10 @@
 <?php
 
+use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Elgg\Exceptions\Filesystem\IOException;
-use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * This class represents a physical file.
@@ -106,7 +106,7 @@ class ElggFile extends ElggObject {
 		
 		try {
 			return elgg()->mimetype->getMimeType($this->getFilenameOnFilestore());
-		} catch (InvalidArgumentException $e) {
+		} catch (ElggInvalidArgumentException $e) {
 			// the file has no file on the filesystem
 			// can happen in tests etc.
 		}
@@ -424,7 +424,7 @@ class ElggFile extends ElggObject {
 				$mime_type = elgg()->mimetype->getMimeType($this->getFilenameOnFilestore());
 				$this->setMimeType($mime_type);
 				$this->simpletype = elgg()->mimetype->getSimpleType($mime_type);
-			} catch (InvalidArgumentException $e) {
+			} catch (ElggInvalidArgumentException $e) {
 				// this can fail if the upload hooks returns true, but the file is not present on the filestore
 				// this happens in a unittest
 			}

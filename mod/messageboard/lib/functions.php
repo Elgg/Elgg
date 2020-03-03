@@ -13,13 +13,11 @@
  *
  * @return false|int
  */
-function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
+function messageboard_add(\ElggUser $poster, \ElggUser $owner, string $message, int $access_id = ACCESS_PUBLIC) {
 	
-	if (!$poster instanceof \ElggUser || !$owner instanceof \ElggUser || empty($message)) {
+	if (empty($message)) {
 		return false;
 	}
-	
-	$access_id = (int) $access_id;
 	
 	$result_id = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
 	if (!is_int($result_id)) {

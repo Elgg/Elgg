@@ -3,7 +3,7 @@
 use Elgg\Entity\ProfileData;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 
 /**
  * A user entity
@@ -101,7 +101,7 @@ class ElggUser extends \ElggEntity
 			case 'admin':
 			case 'banned':
 				if (!in_array($value, ['yes', 'no'], true)) {
-					throw new InvalidArgumentException("{$name} only supports 'yes' or 'no' value");
+					throw new ElggInvalidArgumentException("{$name} only supports 'yes' or 'no' value");
 				}
 				break;
 		}

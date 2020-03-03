@@ -1,5 +1,6 @@
 <?php
 
+use Elgg\Exceptions\Configuration\InstallationException;
 use Phinx\Migration\AbstractMigration;
 
 class DenormalizeEntitySubtypes extends AbstractMigration {

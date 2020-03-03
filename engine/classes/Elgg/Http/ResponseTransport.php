@@ -2,7 +2,7 @@
 
 namespace Elgg\Http;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 /**
  * HTTP response transport interface
@@ -15,9 +15,9 @@ interface ResponseTransport {
 	/**
 	 * Sends HTTP response to the requester
 	 *
-	 * @param Response $response Symfony Response
+	 * @param SymfonyResponse $response Symfony Response
 	 * @return bool
 	 */
-	public function send(Response $response);
+	public function send(SymfonyResponse $response);
 
 }

@@ -44,7 +44,7 @@
  */
 
 use Elgg\Exceptions\Http\PageNotFoundException;
-use Elgg\Exceptions\InvalidArgumentException;
+use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 use Elgg\Menu\Menu;
 use Elgg\Menu\UnpreparedMenu;
 
@@ -710,7 +710,7 @@ function elgg_view_menu($menu, array $vars = []) {
 	}
 
 	if (!$menu instanceof Menu) {
-		throw new InvalidArgumentException('$menu must be a menu name, a Menu, or UnpreparedMenu');
+		throw new ElggInvalidArgumentException('$menu must be a menu name, a Menu, or UnpreparedMenu');
 	}
 
 	$name = $menu->getName();
@@ -1545,7 +1545,7 @@ function elgg_view_icon($name, $vars = []) {
 	}
 
 	if (!is_array($vars)) {
-		throw new InvalidArgumentException('$vars needs to be a string or an array');
+		throw new ElggInvalidArgumentException('$vars needs to be a string or an array');
 	}
 
 	$vars['class'] = elgg_extract_class($vars, "elgg-icon-$name");

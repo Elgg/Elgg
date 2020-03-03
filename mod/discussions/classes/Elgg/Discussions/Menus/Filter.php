@@ -2,6 +2,8 @@
 
 namespace Elgg\Discussions\Menus;
 
+use Elgg\Menu\MenuItems;
+
 /**
  * Hook callbacks for menus
  *
@@ -15,11 +17,11 @@ class Filter {
 	 *
 	 * @param \Elgg\Hook $hook 'filter_tabs', 'discussion'
 	 *
-	 * @return \Elgg\Menu\MenuItems
+	 * @return MenuItems
 	 */
 	public static function filterTabsForDiscussions(\Elgg\Hook $hook) {
 		
-		/* @var $items \ElggMenuItem[] */
+		/* @var $items MenuItems */
 		$items = $hook->getValue();
 		
 		// remove friends

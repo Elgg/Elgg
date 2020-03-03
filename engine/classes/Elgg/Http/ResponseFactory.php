@@ -9,7 +9,7 @@ use Elgg\PluginHooksService;
 use ElggEntity;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse as SymfonyRedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -42,7 +42,7 @@ class ResponseFactory {
 	private $transport;
 
 	/**
-	 * @var Response|false
+	 * @var SymfonyResponse|false
 	 */
 	private $response_sent = false;
 
@@ -146,13 +146,13 @@ class ResponseFactory {
 	 * @param integer $status  The response status code
 	 * @param array   $headers An array of response headers
 	 *
-	 * @return Response
+	 * @return SymfonyResponse
 	 */
 	public function prepareResponse($content = '', $status = 200, array $headers = []) {
 		$header_bag = $this->getHeaders();
 		$header_bag->add($headers);
 		
-		$response = new Response($content, $status, $header_bag->all());
+		$response = new SymfonyResponse($content, $status, $header_bag->all());
 		
 		$response->prepare($this->request);
 		
@@ -210,10 +210,10 @@ class ResponseFactory {
 	/**
 	 * Send a response
 	 *
-	 * @param Response $response Response object
+	 * @param SymfonyResponse $response Response object
 	 * @return Response|false
 	 */
-	public function send(Response $response) {
+	public function send(SymfonyResponse $response) {
 
 		if ($this->response_sent) {
 			if ($this->response_sent !== $response) {
@@ -248,7 +248,7 @@ class ResponseFactory {
 	/**
 	 * Returns a response that was sent to the client
 	 *
-	 * @return Response|false
+	 * @return SymfonyResponse|false
 	 */
 	public function getSentResponse() {
 		return $this->response_sent;
@@ -259,7 +259,7 @@ class ResponseFactory {
 	 *
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
-	 * @return false|Response
+	 * @return false|SymfonyResponse
 	 * @throws InvalidParameterException
 	 */
 	public function respond(ResponseBuilder $response) {
@@ -342,7 +342,7 @@ class ResponseFactory {
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 *
-	 * @return false|Response
+	 * @return false|SymfonyResponse
 	 */
 	public function respondWithError(ResponseBuilder $response) {
 		$error = $this->stringify($response->getContent());
@@ -399,7 +399,7 @@ class ResponseFactory {
 	 * @param ResponseBuilder $response ResponseBuilder instance
 	 *                                  An instance of an ErrorResponse, OkResponse or RedirectResponse
 	 *
-	 * @return Response|false
+	 * @return SymfonyResponse|false
 	 */
 	public function respondFromContent(ResponseBuilder $response) {
 		$content = $this->stringify($response->getContent());
@@ -498,7 +498,7 @@ class ResponseFactory {
 	 *
 	 * @param string $forward_url Redirection URL
 	 * @param mixed  $status_code HTTP status code or forward reason
-	 * @return false|Response
+	 * @return false|SymfonyResponse
 	 * @throws InvalidParameterException
 	 */
 	public function redirect($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
