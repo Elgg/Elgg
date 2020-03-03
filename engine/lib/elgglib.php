@@ -122,18 +122,6 @@ function elgg_unrequire_js($name) {
 }
 
 /**
- * Get the JavaScript URLs that are loaded
- *
- * @param string $location 'head' or 'footer'
- *
- * @return array
- * @since 1.8.0
- */
-function elgg_get_loaded_js($location = 'head') {
-	return elgg_get_loaded_external_files('js', $location);
-}
-
-/**
  * Register a CSS view name to be included in the HTML head
  *
  * @param string $view The css view name
@@ -163,16 +151,6 @@ function elgg_require_css(string $view) {
  */
 function elgg_unrequire_css(string $view) {
 	elgg_unregister_external_file('css', $view);
-}
-
-/**
- * Get the loaded CSS URLs
- *
- * @return array
- * @since 1.8.0
- */
-function elgg_get_loaded_css() {
-	return elgg_get_loaded_external_files('css', 'head');
 }
 
 /**
@@ -252,27 +230,6 @@ function system_message($message) {
 function register_error($error) {
 	elgg()->system_messages->addErrorMessage($error);
 	return true;
-}
-
-/**
- * Get a copy of the current system messages.
- *
- * @return \Elgg\SystemMessages\RegisterSet
- * @since 2.1
- */
-function elgg_get_system_messages() {
-	return elgg()->system_messages->loadRegisters();
-}
-
-/**
- * Set the system messages. This will overwrite the state of all messages and errors!
- *
- * @param \Elgg\SystemMessages\RegisterSet $set Set of messages
- * @return void
- * @since 2.1
- */
-function elgg_set_system_messages(\Elgg\SystemMessages\RegisterSet $set) {
-	elgg()->system_messages->saveRegisters($set);
 }
 
 /**

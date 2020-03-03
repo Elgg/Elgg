@@ -82,15 +82,6 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
 }
 
 /**
- * Return current status of showing disabled entities.
- *
- * @return bool
- */
-function access_get_show_hidden_status() {
-	return elgg()->session->getDisabledEntityVisibility();
-}
-
-/**
  * Can a user access an entity.
  *
  * @warning If a logged in user doesn't have access to an entity, the

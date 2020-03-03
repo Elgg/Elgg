@@ -38,8 +38,6 @@ trait LegacyQueryOptionsAdapter {
 
 		$options = array_merge($this->getDefaults(), $options);
 
-		_elgg_check_unsupported_site_guid($options);
-
 		$options = $this->normalizeGuidOptions($options);
 		$options = $this->normalizeTimeOptions($options);
 
