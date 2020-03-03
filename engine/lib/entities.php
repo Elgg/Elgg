@@ -817,31 +817,3 @@ function is_registered_entity_type($type, $subtype = null) {
 	}
 	return true;
 }
-
-/**
- * Checks options for the existing of site_guid or site_guids contents and reports a warning if found
- *
- * @param array $options array of options to check
- *
- * @return void
- */
-function _elgg_check_unsupported_site_guid(array $options = []) {
-	$site_guid = elgg_extract('site_guid', $options, elgg_extract('site_guids', $options));
-	if ($site_guid === null) {
-		return;
-	}
-	
-	$backtrace = debug_backtrace();
-	// never show this call.
-	array_shift($backtrace);
-
-	if (!empty($backtrace[0]['class'])) {
-		$warning = "Passing site_guid or site_guids to the method {$backtrace[0]['class']}::{$backtrace[0]['file']} is not supported.";
-		$warning .= "Please update your usage of the method.";
-	} else {
-		$warning = "Passing site_guid or site_guids to the function {$backtrace[0]['function']} in {$backtrace[0]['file']} is not supported.";
-		$warning .= "Please update your usage of the function.";
-	}
-
-	_elgg_services()->logger->warning($warning);
-}
