@@ -71,6 +71,7 @@ Class functions
 * ``Elgg\Http\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
+* ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
 
 Lib functions
 ~~~~~~~~~~~~~
@@ -283,6 +284,7 @@ Miscellaneous API changes
 * The plugin settings forms (``plugins/{$plugin_id}/settings``) no longer receive ``$vars['plugin']`` use ``$vars['entity']``
 * ``Elgg\Router\Middleware\WalledGarden::isPublicPage()`` can no longer be called statically
 * An ``\ElggBatch`` no longer implements the interface ``Elgg\BatchResult`` but still has the same features
+* An ``\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features
 
 Removed functions
 -----------------
@@ -294,6 +296,8 @@ Class functions
 * ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
 * ``Elgg\Notifications\NotificationsService::registerDeprecatedHandler()``
 * ``Elgg\Notifications\NotificationsService::setDeprecatedNotificationSubject()``
+* ``Elgg\Entity::getLocation()`` use ``$entity->location``
+* ``Elgg\Entity::setLocation()`` use ``$entity->location = $location``
 
 Lib functions
 ~~~~~~~~~~~~~

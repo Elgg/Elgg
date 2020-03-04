@@ -170,17 +170,26 @@ class ElggEntityUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertEquals($keys, $object_keys);
 	}
-
-	public function testLatLong() {
-
-		// Coordinates for Elgg, Switzerland
-		$lat = 47.483333;
-		$long = 8.866667;
-
+	
+	/**
+	 * @dataProvider latLongProvider
+	 */
+	public function testSetLatLong($lat, $long) {
 		$this->obj->setLatLong($lat, $long);
-
-		$this->assertEquals($this->obj->getLatitude(), $lat);
-		$this->assertEquals($this->obj->getLongitude(), $long);
+		
+		$this->assertEquals($lat, $this->obj->{"geo:lat"});
+		$this->assertEquals($long, $this->obj->{"geo:long"});
+		
+		$this->assertEquals($lat, $this->obj->getLatitude());
+		$this->assertEquals($long, $this->obj->getLongitude());
 	}
-
+	
+	public function latLongProvider() {
+		return [
+			[1, 2],
+			[1.13, 222.132],
+			[-1.13, -0.132],
+			[47.483333, 8.866667], // Coordinates for Elgg, Switzerland
+		];
+	}
 }

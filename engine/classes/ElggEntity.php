@@ -42,10 +42,7 @@ use Elgg\Exceptions\Filesystem\IOException;
  * Metadata (the above are attributes)
  * @property       string $location       A location of the entity
  */
-abstract class ElggEntity extends \ElggData implements
-	Locatable, // Geocoding interface
-	EntityIcon // Icon interface
-{
+abstract class ElggEntity extends \ElggData implements EntityIcon {
 
 	public static $primary_attr_names = [
 		'guid',
@@ -1806,30 +1803,6 @@ abstract class ElggEntity extends \ElggData implements
 		return $object;
 	}
 
-	/*
-	 * LOCATABLE INTERFACE
-	 */
-
-	/**
-	 * Gets the 'location' metadata for the entity
-	 *
-	 * @return string The location
-	 */
-	public function getLocation() {
-		return $this->location;
-	}
-
-	/**
-	 * Sets the 'location' metadata for the entity
-	 *
-	 * @param string $location String representation of the location
-	 *
-	 * @return void
-	 */
-	public function setLocation($location) {
-		$this->location = $location;
-	}
-
 	/**
 	 * Set latitude and longitude metadata tags for a given entity.
 	 *
@@ -1837,9 +1810,8 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param float $long Longitude
 	 *
 	 * @return void
-	 * @todo Unimplemented
 	 */
-	public function setLatLong($lat, $long) {
+	public function setLatLong(float $lat, float $long) {
 		$this->{"geo:lat"} = $lat;
 		$this->{"geo:long"} = $long;
 	}
@@ -1848,7 +1820,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Return the entity's latitude.
 	 *
 	 * @return float
-	 * @todo Unimplemented
 	 */
 	public function getLatitude() {
 		return (float) $this->{"geo:lat"};
@@ -1858,7 +1829,6 @@ abstract class ElggEntity extends \ElggData implements
 	 * Return the entity's longitude
 	 *
 	 * @return float
-	 * @todo Unimplemented
 	 */
 	public function getLongitude() {
 		return (float) $this->{"geo:long"};
