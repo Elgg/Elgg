@@ -2,7 +2,6 @@
 
 namespace Elgg\Integration;
 
-use Elgg\BatchResult;
 use Elgg\IntegrationTestCase;
 use ElggBatch;
 
@@ -128,7 +127,7 @@ class ElggBatchTest extends IntegrationTestCase {
 
 		$batch = elgg_get_entities(array_merge($options, ['batch' => true]));
 
-		$this->assertInstanceOf(BatchResult::class, $batch);
+		$this->assertInstanceOf(\ElggBatch::class, $batch);
 		/* @var ElggBatch $batch */
 
 		$guids2 = [];

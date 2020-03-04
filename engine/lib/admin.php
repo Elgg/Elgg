@@ -310,7 +310,7 @@ function _elgg_admin_get_admin_subscribers_admin_action(\Elgg\Hook $hook) {
 		return;
 	}
 	
-	/* @var $admin_batch \Elgg\BatchResult */
+	/* @var $admin_batch \ElggBatch */
 	$admin_batch = elgg_get_admins([
 		'limit' => false,
 		'wheres' => [

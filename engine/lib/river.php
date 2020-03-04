@@ -162,7 +162,7 @@ function elgg_create_river_item(array $options = []) {
  *                                   option without a full understanding of the
  *                                   underlying SQL query Elgg creates. (true)
  *
- *   batch                => BOOL    If set to true, an Elgg\BatchResult object will be returned
+ *   batch                => BOOL    If set to true, an \ElggBatch object will be returned
  *                                   instead of an array. (false) Since 2.3.
  *
  *   batch_inc_offset     => BOOL    If "batch" is used, this tells the batch to increment the offset
@@ -174,7 +174,7 @@ function elgg_create_river_item(array $options = []) {
  *
  * @param array $options parameters
  *
- * @return \ElggRiverItem[]|\Elgg\BatchResult|array|int
+ * @return \ElggRiverItem[]|\ElggBatch|array|int
  * @since 1.8.0
  */
 function elgg_get_river(array $options = []) {

@@ -1,7 +1,4 @@
 <?php
-
-use Elgg\BatchResult;
-
 /**
  * A lazy-loading proxy for a result array from a fetching function
  *
@@ -68,7 +65,7 @@ use Elgg\BatchResult;
  *
  * @since 1.8
  */
-class ElggBatch implements BatchResult {
+class ElggBatch implements \Countable, \Iterator {
 
 	/**
 	 * The objects to iterate over.
