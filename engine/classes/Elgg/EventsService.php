@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Debug\Profilable;
+
 /**
  * Events service
  *

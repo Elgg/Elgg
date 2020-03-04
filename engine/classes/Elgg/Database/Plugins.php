@@ -13,7 +13,7 @@ use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\I18n\Translator;
 use Elgg\Includer;
 use Elgg\Loggable;
-use Elgg\Profilable;
+use Elgg\Debug\Profilable;
 use Elgg\Project\Paths;
 use Elgg\SystemMessagesService;
 use Elgg\ViewsService;

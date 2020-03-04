@@ -1169,13 +1169,6 @@ function _elgg_init() {
 	
 	elgg_register_entity_type('object', 'comment');
 	elgg_register_entity_type('user', 'user');
-
-	if (_elgg_config()->enable_profiling) {
-		/**
-		 * @see \Elgg\Profiler::handlePageOutput
-		 */
-		elgg_register_plugin_hook_handler('output', 'page', [\Elgg\Profiler::class, 'handlePageOutput'], 999);
-	}
 	
 	// if mb functions are available, set internal encoding to UTF8
 	if (is_callable('mb_internal_encoding')) {

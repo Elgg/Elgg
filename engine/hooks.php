@@ -73,6 +73,11 @@ return [
 			'Elgg\Values::getTrue' => [],
 		],
 	],
+	'output' => [
+		'page' => [
+			\Elgg\Debug\Profiler::class => ['priority' => 999],
+		],
+	],
 	'permissions_check' => [
 		'object' => [
 			'_elgg_comments_permissions_override' => [],

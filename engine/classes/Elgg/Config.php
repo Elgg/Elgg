@@ -206,7 +206,6 @@ class Config {
 			'dbuser',
 			'dbpass',
 			'dbname',
-			'profiler_secret_get_var'
 		];
 		foreach ($sensitive_props as $name) {
 			unset($values[$name]);

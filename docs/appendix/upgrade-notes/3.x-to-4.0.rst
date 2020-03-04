@@ -129,6 +129,7 @@ Core
 * ``_elgg_user_topbar_menu()`` changed to ``Elgg\Menus\Topbar::registerUserLinks()``
 * ``_elgg_user_unvalidated_menu()`` changed to ``Elgg\Menus\UserUnvalidated::register()``
 * ``_elgg_comments_social_menu_setup()`` changed to ``Elgg\Menus\Social::registerComments()``
+* ``Elgg\Profiler::handleOutput`` changed to ``Elgg\Debug\Profiler::class``
 
 Plugins
 ~~~~~~~

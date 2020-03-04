@@ -9,6 +9,7 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Elgg\Cache\QueryCache;
 use Elgg\Database\DbConfig;
+use Elgg\Debug\Profilable;
 use Elgg\Exceptions\DatabaseException;
 use Psr\Log\LogLevel;
 

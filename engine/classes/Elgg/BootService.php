@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Database\SiteSecret;
+use Elgg\Debug\Profilable;
 use Elgg\Di\ServiceProvider;
 use ElggCache;
 
