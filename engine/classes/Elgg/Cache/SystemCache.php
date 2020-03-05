@@ -3,7 +3,7 @@ namespace Elgg\Cache;
 
 use Elgg\Cacheable;
 use Elgg\Config;
-use Elgg\Profilable;
+use Elgg\Debug\Profilable;
 use ElggCache;
 
 /**

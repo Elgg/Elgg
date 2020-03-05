@@ -1,6 +1,8 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\Debug;
+
+use Elgg\Timer;
 
 /**
  * Make an object accept a timer.

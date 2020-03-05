@@ -176,3 +176,31 @@ function _elgg_config() {
 function elgg_get_icon_sizes($entity_type = null, $entity_subtype = null, $type = 'icon') {
 	return _elgg_services()->iconService->getSizes($entity_type, $entity_subtype, $type);
 }
+
+/**
+ * Are comments displayed with latest first?
+ *
+ * @param ElggEntity $container Entity containing comments
+ * @return bool False means oldest first.
+ * @since 3.0
+ */
+function elgg_comments_are_latest_first(ElggEntity $container = null) {
+	$params = [
+		'entity' => $container,
+	];
+	return (bool) elgg_trigger_plugin_hook('config', 'comments_latest_first', $params, (bool) _elgg_config()->comments_latest_first);
+}
+
+/**
+ * How many comments appear per page.
+ *
+ * @param ElggEntity $container Entity containing comments
+ * @return int
+ * @since 3.0
+ */
+function elgg_comments_per_page(ElggEntity $container = null) {
+	$params = [
+		'entity' => $container,
+	];
+	return (int) elgg_trigger_plugin_hook('config', 'comments_per_page', $params, 25);
+}

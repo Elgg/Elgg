@@ -71,6 +71,7 @@ Class functions
 * ``Elgg\Http\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
+* ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
 
 Lib functions
 ~~~~~~~~~~~~~
@@ -109,12 +110,21 @@ Core
 * ``_elgg_admin_page_menu_plugin_settings()`` changed to ``Elgg\Menus\Page::registerAdminPluginSettings()``
 * ``_elgg_admin_user_unvalidated_bulk_menu()`` changed to ``Elgg\Menus\UserUnvalidatedBulk::registerActions()``
 * ``_elgg_admin_upgrades_menu()`` changed to ``Elgg\Menus\Filter::registerAdminUpgrades()``
+* ``_elgg_comments_access_sync()`` changed to ``Elgg\Comments\SyncContainerAccessHandler::class``
+* ``_elgg_comments_add_content_owner_to_subscriptions()`` changed to ``Elgg\Comments\CreateNotification::addOwnerToSubscribers()``
+* ``_elgg_comments_container_permissions_override()`` changed to ``Elgg\Comments\ContainerPermissionsHandler::class``
+* ``_elgg_comments_notification_email_subject()`` changed to ``Elgg\Comments\EmailSubjectHandler::class``
+* ``_elgg_comments_permissions_override()`` changed to ``Elgg\Comments\EditPermissionsHandler::class``
+* ``_elgg_comments_prepare_content_owner_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareContentOwnerNotification()``
+* ``_elgg_comments_prepare_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareNotification()``
 * ``_elgg_annotations_default_menu_items()`` changed to ``Elgg\Menus\Annotation::registerDelete()``
 * ``_elgg_walled_garden_menu()`` changed to ``Elgg\Menus\WalledGarden::registerHome()``
 * ``_elgg_site_menu_init()`` changed to ``Elgg\Menus\Site::registerAdminConfiguredItems()``
 * ``_elgg_site_menu_setup()`` changed to ``Elgg\Menus\Site::reorderItems()``
 * ``_elgg_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerEdit()`` and ``Elgg\Menus\Entity::registerDelete()``
 * ``_elgg_entity_navigation_menu_setup()`` changed to ``Elgg\Menus\EntityNavigation::registerPreviousNext()``
+* ``_elgg_groups_container_override()`` changed to ``Elgg\Groups\MemberPermissionsHandler::class``
+* ``_elgg_groups_comment_permissions_override()`` changed to ``Elgg\Comments\GroupMemberPermissionsHandler::class``
 * ``_elgg_widget_menu_setup()`` changed to ``Elgg\Menus\Widget::registerEdit()`` and ``Elgg\Menus\Widget::registerDelete()``
 * ``_elgg_login_menu_setup()`` changed to ``Elgg\Menus\Login::registerRegistration()`` and ``Elgg\Menus\Widget::registerResetPassword()``
 * ``_elgg_rss_menu_setup()`` changed to ``Elgg\Menus\Footer::registerRSS()``
@@ -129,6 +139,7 @@ Core
 * ``_elgg_user_topbar_menu()`` changed to ``Elgg\Menus\Topbar::registerUserLinks()``
 * ``_elgg_user_unvalidated_menu()`` changed to ``Elgg\Menus\UserUnvalidated::register()``
 * ``_elgg_comments_social_menu_setup()`` changed to ``Elgg\Menus\Social::registerComments()``
+* ``Elgg\Profiler::handleOutput`` changed to ``Elgg\Debug\Profiler::class``
 
 Plugins
 ~~~~~~~
@@ -281,6 +292,9 @@ Miscellaneous API changes
 * The defaults for ``ignore_empty_body`` and ``prevent_double_submit`` when using ``elgg_view_form`` have been changed to ``true``.
 * The plugin settings forms (``plugins/{$plugin_id}/settings``) no longer receive ``$vars['plugin']`` use ``$vars['entity']``
 * ``Elgg\Router\Middleware\WalledGarden::isPublicPage()`` can no longer be called statically
+* An ``\ElggBatch`` no longer implements the interface ``Elgg\BatchResult`` but still has the same features
+* An ``\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features
+* An ``\Elgg\Event`` no longer implements the interfaces ``\Elgg\ObjectEvent`` and ``\Elgg\UserEvent`` but still has the same features
 
 Removed functions
 -----------------
@@ -292,6 +306,8 @@ Class functions
 * ``Elgg\Notifications\NotificationsService::getMethodsAsDeprecatedGlobal()`` use ``elgg_get_notification_methods()``
 * ``Elgg\Notifications\NotificationsService::registerDeprecatedHandler()``
 * ``Elgg\Notifications\NotificationsService::setDeprecatedNotificationSubject()``
+* ``Elgg\Entity::getLocation()`` use ``$entity->location``
+* ``Elgg\Entity::setLocation()`` use ``$entity->location = $location``
 
 Lib functions
 ~~~~~~~~~~~~~

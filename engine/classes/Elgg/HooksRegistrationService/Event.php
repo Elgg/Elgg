@@ -10,9 +10,7 @@ use Elgg\Di\PublicContainer;
  * @internal
  */
 class Event implements
-	\Elgg\Event,
-	\Elgg\ObjectEvent,
-	\Elgg\UserEvent {
+	\Elgg\Event {
 
 	const EVENT_TYPE = 'event';
 
@@ -62,12 +60,5 @@ class Event implements
 	 */
 	public function elgg() {
 		return $this->dic;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function toLegacyArgs() {
-		return [$this->name, $this->type, $this->object];
 	}
 }

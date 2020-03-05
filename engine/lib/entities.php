@@ -513,7 +513,7 @@ function elgg_get_site_entity() {
  *                                        all the private settings of the returned entities resulting in better
  *                                        performance when displaying entities where private settings are often used, such as widgets
  *                                        Default: false
- * @option bool $batch                    If set to true, an Elgg\BatchResult object will be returned instead of an array.
+ * @option bool $batch                    If set to true, an \ElggBatch object will be returned instead of an array.
  *                                        Default: false
  * @option bool $batch_inc_offset         If "batch" is used, this tells the batch to increment the offset
  *                                        on each fetch. This must be set to false if you delete the batched results.
@@ -528,7 +528,7 @@ function elgg_get_site_entity() {
  *
  * @param array $options Options
  *
- * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an Elgg\BatchResult. false on errors.
+ * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an \ElggBatch. false on errors.
  *
  * @since 1.7.0
  */

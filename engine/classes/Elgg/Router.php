@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Database\Plugins;
+use Elgg\Debug\Profilable;
 use Elgg\Exceptions\Http\BadRequestException ;
 use Elgg\Exceptions\Http\PageNotFoundException;
 use Elgg\Http\Request as HttpRequest;

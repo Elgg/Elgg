@@ -78,7 +78,7 @@ backwards compatibility.
 Elgg Event Handlers
 -------------------
 
-Elgg event handlers are callables with one of the following prototypes:
+Elgg event handlers are callables:
 
 .. code-block:: php
 
@@ -89,28 +89,15 @@ Elgg event handlers are callables with one of the following prototypes:
      *
      * @return bool if false, the handler is requesting to cancel the event
      */
-    function event_handler1(\Elgg\Event $event) {
+    function event_handler(\Elgg\Event $event) {
         ...
     }
 
-    /**
-     * @param string $event       The name of the event
-     * @param string $object_type The type of $object (e.g. "user", "group")
-     * @param mixed  $object      The object of the event
-     *
-     * @return bool if false, the handler is requesting to cancel the event
-     */
-    function event_handler2($event, $object_type, $object) {
-        ...
-    }
+In ``event_handler``, the ``Event`` object has various methods for getting the name, object type,
+and object of the event. See the ``Elgg\Event`` class for details.
 
-In ``event_handler1``, the ``Event`` object has various methods for getting the name, object type,
-and object of the event. See the ``Elgg\Event`` interface for details.
-
-In both cases, if a handler returns ``false``, the event is cancelled, preventing execution of the
+If a handler returns ``false``, the event is cancelled, preventing execution of the
 other handlers. All other return values are ignored.
-
-.. note:: If the event type is "object" or "user", use type hint ``\Elgg\ObjectEvent`` or ``\Elgg\UserEvent`` instead, which clarify the return type of the ``getObject()`` method.
 
 Register to handle an Elgg Event
 --------------------------------
@@ -162,7 +149,7 @@ You may use a class with an ``__invoke()`` method as a handler. Just register th
     namespace MyPlugin;
 
     class UpdateObjectHandler {
-        public function __invoke(\Elgg\ObjectEvent $event) {
+        public function __invoke(\Elgg\Event $event) {
 
         }
     }

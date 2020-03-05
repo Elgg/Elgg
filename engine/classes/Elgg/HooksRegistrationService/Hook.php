@@ -115,11 +115,4 @@ class Hook implements \Elgg\Hook {
 	public function elgg() {
 		return $this->dic;
 	}
-
-	/**
-	 * @return array
-	 */
-	public function toLegacyArgs() {
-		return [$this->name, $this->type, $this->value, $this->params];
-	}
 }

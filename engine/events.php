@@ -100,7 +100,7 @@ return [
 	],
 	'update:after' => [
 		'all' => [
-			'_elgg_comments_access_sync' => [
+			\Elgg\Comments\SyncContainerAccessHandler::class => [
 				'priority' => 600,
 			],
 		],

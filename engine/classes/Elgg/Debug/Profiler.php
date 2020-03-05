@@ -1,8 +1,9 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\Debug;
 
 use Elgg\Project\Paths;
+use Elgg\Timer;
 
 /**
  * Analyzes duration of functions, queries, and processes
@@ -11,22 +12,65 @@ use Elgg\Project\Paths;
  */
 class Profiler {
 
-	public $percentage_format = "%01.2f";
-	public $duration_format = "%01.6f";
-	public $minimum_percentage = 0.2;
+	protected $percentage_format = "%01.2f";
+	protected $duration_format = "%01.6f";
+	protected $minimum_percentage = 0.2;
 
 	/**
 	 * @var float Total time
 	 */
-	private $total;
-
+	protected $total;
+	
+	/**
+	 * Append a SCRIPT element to the page output
+	 *
+	 * @param \Elgg\Hook $hook 'output', 'page'
+	 *
+	 * @return string
+	 */
+	public function __invoke(\Elgg\Hook $hook) {
+		
+		if (!_elgg_config()->enable_profiling) {
+			return;
+		}
+		
+		$profiler = new self();
+		$min_percentage = _elgg_config()->profiling_minimum_percentage;
+		if ($min_percentage !== null) {
+			$profiler->minimum_percentage = $min_percentage;
+		}
+		
+		$tree = $profiler->buildTree(_elgg_services()->timer);
+		$tree = $profiler->formatTree($tree);
+		$data = [
+			'tree' => $tree,
+			'total' => $tree['duration'] . " seconds",
+		];
+		
+		$list = [];
+		$profiler->flattenTree($list, $tree);
+		
+		$root = Paths::project();
+		$list = array_map(function ($period) use ($root) {
+			$period['name'] = str_replace("Closure $root", "Closure ", $period['name']);
+			return "{$period['percentage']}% ({$period['duration']}) {$period['name']}";
+		}, $list);
+			
+			$data['list'] = $list;
+			
+			$html = $hook->getValue();
+			$html .= "<script>console.log(" . json_encode($data) . ");</script>";
+			
+			return $html;
+	}
+	
 	/**
 	 * Return a tree of time periods from a Timer
 	 *
 	 * @param Timer $timer Timer object
 	 * @return false|array
 	 */
-	public function buildTree(Timer $timer) {
+	protected function buildTree(Timer $timer) {
 		$times = $timer->getTimes();
 
 		if (!isset($times[Timer::MARKER_END])) {
@@ -48,7 +92,7 @@ class Profiler {
 	 * @param string $prefix Prefix of period string. Leave empty.
 	 * @return void
 	 */
-	public function flattenTree(array &$list = [], array $tree = [], $prefix = '') {
+	protected function flattenTree(array &$list = [], array $tree = [], $prefix = '') {
 		$is_root = empty($list);
 
 		if (isset($tree['periods'])) {
@@ -76,7 +120,7 @@ class Profiler {
 	 * @param array $tree Result of buildTree()
 	 * @return array
 	 */
-	public function formatTree(array $tree) {
+	protected function formatTree(array $tree) {
 		$tree['duration'] = sprintf($this->duration_format, $tree['duration']);
 		if (isset($tree['percentage'])) {
 			$tree['percentage'] = sprintf($this->percentage_format, $tree['percentage']);
@@ -88,44 +132,6 @@ class Profiler {
 	}
 
 	/**
-	 * Append a SCRIPT element to the page output
-	 *
-	 * @param \Elgg\Hook $hook "output", "page"
-	 *
-	 * @return string
-	 */
-	public static function handlePageOutput(\Elgg\Hook $hook) {
-		$profiler = new self();
-		$min_percentage = _elgg_config()->profiling_minimum_percentage;
-		if ($min_percentage !== null) {
-			$profiler->minimum_percentage = $min_percentage;
-		}
-
-		$tree = $profiler->buildTree(_elgg_services()->timer);
-		$tree = $profiler->formatTree($tree);
-		$data = [
-			'tree' => $tree,
-			'total' => $tree['duration'] . " seconds",
-		];
-
-		$list = [];
-		$profiler->flattenTree($list, $tree);
-
-		$root = Paths::project();
-		$list = array_map(function ($period) use ($root) {
-			$period['name'] = str_replace("Closure $root", "Closure ", $period['name']);
-			return "{$period['percentage']}% ({$period['duration']}) {$period['name']}";
-		}, $list);
-
-		$data['list'] = $list;
-		
-		$html = $hook->getValue();
-		$html .= "<script>console.log(" . json_encode($data) . ");</script>";
-
-		return $html;
-	}
-
-	/**
 	 * Analyze a time period
 	 *
 	 * @param string $name  Period name
@@ -133,7 +139,7 @@ class Profiler {
 	 *
 	 * @return false|array False if missing begin/end time
 	 */
-	private function analyzePeriod($name, array $times) {
+	protected function analyzePeriod($name, array $times) {
 		$begin = $this->findBeginTime($times);
 		$end = $this->findEndTime($times);
 		if ($begin === false || $end === false) {
@@ -188,7 +194,7 @@ class Profiler {
 	 * @param array $times Time periods
 	 * @return float|false
 	 */
-	private function findBeginTime(array $times) {
+	protected function findBeginTime(array $times) {
 		if (isset($times[Timer::MARKER_BEGIN])) {
 			return $times[Timer::MARKER_BEGIN];
 		}
@@ -204,9 +210,10 @@ class Profiler {
 	 * Get the microtime end time
 	 *
 	 * @param array $times Time periods
+	 *
 	 * @return float|false
 	 */
-	private function findEndTime(array $times) {
+	protected function findEndTime(array $times) {
 		if (isset($times[Timer::MARKER_END])) {
 			return $times[Timer::MARKER_END];
 		}
@@ -226,7 +233,7 @@ class Profiler {
 	 *
 	 * @return float difference in seconds, calculated with minimum precision loss
 	 */
-	private function diffMicrotime($start, $end) {
+	protected function diffMicrotime($start, $end) {
 		return (float) $end - $start;
 	}
 }

@@ -7,9 +7,14 @@
  * @uses $vars['entity']
  */
 
-$longitude = elgg_extract('entity', $vars)->getLongitude();
-$latitude = elgg_extract('entity', $vars)->getLatitude();
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
 
-if ($vars['entity'] instanceof Locatable && $longitude && $latitude) {
+$longitude = $entity->getLongitude();
+$latitude = $entity->getLatitude();
+
+if ($longitude && $latitude) {
 	echo "<georss:point>$latitude $longitude</georss:point>";
 }
