@@ -709,6 +709,7 @@ class Application {
 			'actions.php',
 			'admin.php',
 			'annotations.php',
+			'breadcrumbs.php',
 			'cache.php',
 			'configuration.php',
 			'constants.php',
