@@ -12,10 +12,10 @@ return [
 	],
 	'container_permissions_check' => [
 		'all' => [
-			'_elgg_groups_container_override' => [],
+			\Elgg\Groups\MemberPermissionsHandler::class => [],
 		],
 		'object' => [
-			'_elgg_comments_container_permissions_override' => [],
+			\Elgg\Comments\ContainerPermissionsHandler::class => [],
 		],
 	],
 	'cron' => [
@@ -42,7 +42,7 @@ return [
 	],
 	'email' => [
 		'system' => [
-			'_elgg_comments_notification_email_subject' => [],
+			\Elgg\Comments\EmailSubjectHandler::class => [],
 		],
 	],
 	'entity:icon:file' => [
@@ -59,7 +59,7 @@ return [
 		'subscriptions' => [
 			'_elgg_admin_get_admin_subscribers_admin_action' => [],
 			'_elgg_admin_get_user_subscriber_admin_action' => [],
-			'_elgg_comments_add_content_owner_to_subscriptions' => [],
+			'\Elgg\Comments\CreateNotification::addOwnerToSubscribers' => [],
 			'_elgg_user_get_subscriber_unban_action' => [],
 		],
 	],
@@ -80,12 +80,12 @@ return [
 	],
 	'permissions_check' => [
 		'object' => [
-			'_elgg_comments_permissions_override' => [],
+			\Elgg\Comments\EditPermissionsHandler::class => [],
 		],
 	],
 	'permissions_check:comment' => [
 		'object' => [
-			'_elgg_groups_comment_permissions_override' => ['priority' => 999],
+			\Elgg\Comments\GroupMemberPermissionsHandler::class => ['priority' => 999],
 		],
 	],
 	'prepare' => [
@@ -121,8 +121,8 @@ return [
 			],
 		],
 		'notification:create:object:comment' => [
-			'_elgg_comments_prepare_content_owner_notification' => [],
-			'_elgg_comments_prepare_notification' => [],
+			'Elgg\Comments\CreateNotification::prepareContentOwnerNotification' => [],
+			'Elgg\Comments\CreateNotification::prepareNotification' => [],
 		],
 		'notification:make_admin:user:user' => [
 			'_elgg_admin_prepare_admin_notification_make_admin' => [],

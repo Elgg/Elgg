@@ -110,12 +110,21 @@ Core
 * ``_elgg_admin_page_menu_plugin_settings()`` changed to ``Elgg\Menus\Page::registerAdminPluginSettings()``
 * ``_elgg_admin_user_unvalidated_bulk_menu()`` changed to ``Elgg\Menus\UserUnvalidatedBulk::registerActions()``
 * ``_elgg_admin_upgrades_menu()`` changed to ``Elgg\Menus\Filter::registerAdminUpgrades()``
+* ``_elgg_comments_access_sync()`` changed to ``Elgg\Comments\SyncContainerAccessHandler::class``
+* ``_elgg_comments_add_content_owner_to_subscriptions()`` changed to ``Elgg\Comments\CreateNotification::addOwnerToSubscribers()``
+* ``_elgg_comments_container_permissions_override()`` changed to ``Elgg\Comments\ContainerPermissionsHandler::class``
+* ``_elgg_comments_notification_email_subject()`` changed to ``Elgg\Comments\EmailSubjectHandler::class``
+* ``_elgg_comments_permissions_override()`` changed to ``Elgg\Comments\EditPermissionsHandler::class``
+* ``_elgg_comments_prepare_content_owner_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareContentOwnerNotification()``
+* ``_elgg_comments_prepare_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareNotification()``
 * ``_elgg_annotations_default_menu_items()`` changed to ``Elgg\Menus\Annotation::registerDelete()``
 * ``_elgg_walled_garden_menu()`` changed to ``Elgg\Menus\WalledGarden::registerHome()``
 * ``_elgg_site_menu_init()`` changed to ``Elgg\Menus\Site::registerAdminConfiguredItems()``
 * ``_elgg_site_menu_setup()`` changed to ``Elgg\Menus\Site::reorderItems()``
 * ``_elgg_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerEdit()`` and ``Elgg\Menus\Entity::registerDelete()``
 * ``_elgg_entity_navigation_menu_setup()`` changed to ``Elgg\Menus\EntityNavigation::registerPreviousNext()``
+* ``_elgg_groups_container_override()`` changed to ``Elgg\Groups\MemberPermissionsHandler::class``
+* ``_elgg_groups_comment_permissions_override()`` changed to ``Elgg\Comments\GroupMemberPermissionsHandler::class``
 * ``_elgg_widget_menu_setup()`` changed to ``Elgg\Menus\Widget::registerEdit()`` and ``Elgg\Menus\Widget::registerDelete()``
 * ``_elgg_login_menu_setup()`` changed to ``Elgg\Menus\Login::registerRegistration()`` and ``Elgg\Menus\Widget::registerResetPassword()``
 * ``_elgg_rss_menu_setup()`` changed to ``Elgg\Menus\Footer::registerRSS()``
