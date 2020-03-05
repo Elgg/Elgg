@@ -63,11 +63,4 @@ class Event implements
 	public function elgg() {
 		return $this->dic;
 	}
-
-	/**
-	 * @return array
-	 */
-	public function toLegacyArgs() {
-		return [$this->name, $this->type, $this->object];
-	}
 }
