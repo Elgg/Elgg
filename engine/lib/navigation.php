@@ -43,8 +43,6 @@
  *     login       Menu of links at bottom of login box
  */
 
-use Elgg\Menu\PreparedMenu;
-
 /**
  * Register an item for an Elgg menu
  *
@@ -452,108 +450,6 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 	$items = _elgg_services()->hooks->trigger('filter_tabs', $context, $params, $items);
 
 	return $items;
-}
-
-/**
- * Prepare vertically stacked menu
- *
- * Sets the display child menu option to "toggle" if not set
- * Recursively marks parents of the selected item as selected (expanded)
- *
- * @elgg_plugin_hook prepare menu:page
- * @elgg_plugin_hook prepare menu:owner_block
- *
- * @param \Elgg\Hook $hook Hook
- *
- * @return PreparedMenu
- *
- * @internal
- * @see https://github.com/Elgg/Elgg/issues/12958
- */
-function _elgg_setup_vertical_menu(\Elgg\Hook $hook) {
-	$menu = $hook->getValue();
-	/* @var $menu PreparedMenu */
-
-	$prepare = function(ElggMenuItem $menu_item) use (&$prepare) {
-		$child_menu_vars = $menu_item->getChildMenuOptions();
-		if (empty($child_menu_vars['display'])) {
-			$child_menu_vars['display'] = 'toggle';
-		}
-		$menu_item->setChildMenuOptions($child_menu_vars);
-
-		foreach ($menu_item->getChildren() as $child_menu_item) {
-			$prepare($child_menu_item);
-		}
-	};
-
-	foreach ($menu as $menu_items) {
-		foreach ($menu_items as $menu_item) {
-			if ($menu_item instanceof ElggMenuItem) {
-				$prepare($menu_item);
-			}
-		}
-	}
-
-	$selected_item = $hook->getParam('selected_item');
-	if ($selected_item instanceof \ElggMenuItem) {
-		$parent = $selected_item->getParent();
-		while ($parent instanceof \ElggMenuItem) {
-			$parent->setSelected();
-			$parent->addItemClass('elgg-has-selected-child');
-			$parent = $parent->getParent();
-		}
-	}
-
-	return $menu;
-}
-
-/**
- * Moves default menu items into a dropdown
- *
- * @tip    Pass 'dropdown' => false to entity menu options to render the menu inline without a dropdown
- *
- * @elgg_plugin_hook prepare menu:entity
- * @elgg_plugin_hook prepare menu:river
- *
- * @param \Elgg\Hook $hook Hook
- *
- * @return void
- *
- * @internal
- * @see https://github.com/Elgg/Elgg/issues/12958
- */
-function _elgg_menu_transform_to_dropdown(\Elgg\Hook $hook) {
-	$menu = $hook->getValue();
-	/* @var $menu PreparedMenu */
-
-	$is_dropdown = $hook->getParam('dropdown', true);
-	if ($is_dropdown === false) {
-		return;
-	}
-
-	$items = $menu->getItems('default');
-	if (empty($items)) {
-		return;
-	}
-
-	$menu->getSection('default')->fill([
-		\ElggMenuItem::factory([
-			'name' => 'entity-menu-toggle',
-			'icon' => 'ellipsis-v',
-			'href' => false,
-			'text' => '',
-			'child_menu' => [
-				'display' => 'dropdown',
-				'data-position' => json_encode([
-					'at' => 'right bottom',
-					'my' => 'right top',
-					'collision' => 'fit fit',
-				]),
-				'class' => "elgg-{$hook->getParam('name')}-dropdown-menu",
-			],
-			'children' => $items,
-		]),
-	]);
 }
 
 /**

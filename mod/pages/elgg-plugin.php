@@ -108,9 +108,6 @@ return [
 			],
 		],
 		'prepare' => [
-			'menu:pages_nav' => [
-				'_elgg_setup_vertical_menu' => ['priority' => 999],
-			],
 			'notification:create:object:page' => [
 				'Elgg\Pages\Notifications::preparePageCreateNotification' => [],
 			],

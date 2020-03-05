@@ -36,4 +36,5 @@ foreach (['cogs', 'support', 'question', 'info'] as $index => $icon) {
 
 echo elgg_view_menu('page', [
 	'items' => $items,
+	'prepare_vertical' => true,
 ]);

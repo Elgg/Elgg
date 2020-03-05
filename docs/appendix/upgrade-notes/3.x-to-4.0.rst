@@ -21,6 +21,15 @@ Discussions Plugin
 * This plugin no longer adds a tab to the filter menu on the groups pages
 * The ``discussions`` site menu item is now always present
 
+Menus
+-----
+
+Instead of registering the ``_elgg_setup_vertical_menu`` and ``_elgg_menu_transform_to_dropdown`` for menus,
+this is replaced by using the menu vars ``prepare_vertical`` and ``prepare_dropdown``.
+Setting them to ``true`` will give you the same effect. This allows for individual control in views when this is required.
+
+The automatic marking as 'selected' of parent menu items of the selected menu item will now always happen for every menu.
+
 Registering tag metadatanames
 -----------------------------
 
@@ -60,8 +69,8 @@ Datamodel / Schema changes
 * The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed
 * The ``enabled`` column in the ``river`` table has been removed
 
-Type hinted function
---------------------
+Type hinted functions
+---------------------
 
 The following functions now have their arguments type-hinted, this can cause ``TypeError`` errors.
 

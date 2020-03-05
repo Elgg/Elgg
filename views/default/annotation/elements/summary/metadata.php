@@ -16,6 +16,7 @@ if ($metadata === '' && $annotation instanceof ElggAnnotation) {
 	$metadata = elgg_view_menu('annotation', [
 		'annotation' => $annotation,
 		'class' => 'elgg-menu-hz',
+		'prepare_dropdown' => true,
 	]);
 }
 

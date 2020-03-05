@@ -92,28 +92,8 @@ return [
 		'breadcrumbs' => [
 			'elgg_prepare_breadcrumbs' => [],
 		],
-		'menu:annotation' => [
-			'_elgg_menu_transform_to_dropdown' => [],
-		],
-		'menu:entity' => [
-			'_elgg_menu_transform_to_dropdown' => [],
-		],
-		'menu:owner_block' => [
-			'_elgg_setup_vertical_menu' => [
-				'priority' => 999,
-			],
-		],
 		'menu:page' => [
-			'_elgg_setup_vertical_menu' => [
-				'priority' => 999,
-			],
 			'Elgg\Menus\Page::cleanupUserSettingsPlugins' => [],
-		],
-		'menu:relationship' => [
-			'_elgg_menu_transform_to_dropdown' => [],
-		],
-		'menu:river' => [
-			'_elgg_menu_transform_to_dropdown' => [],
 		],
 		'menu:site' => [
 			'Elgg\Menus\Site::reorderItems' => [

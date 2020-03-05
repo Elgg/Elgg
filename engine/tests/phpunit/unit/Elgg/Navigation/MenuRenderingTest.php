@@ -145,6 +145,7 @@ class MenuRenderingTest extends IntegratedUnitTestCase {
 
 		$menu = elgg_view_menu('river', [
 			'item' => $item,
+			'prepare_dropdown' => true,
 		]);
 
 		$this->assertNotEmpty($menu);
