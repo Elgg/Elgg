@@ -285,6 +285,7 @@ Miscellaneous API changes
 * ``Elgg\Router\Middleware\WalledGarden::isPublicPage()`` can no longer be called statically
 * An ``\ElggBatch`` no longer implements the interface ``Elgg\BatchResult`` but still has the same features
 * An ``\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features
+* An ``\Elgg\Event`` no longer implements the interfaces ``\Elgg\ObjectEvent`` and ``\Elgg\UserEvent`` but still has the same features
 
 Removed functions
 -----------------
