@@ -97,8 +97,113 @@ class Service {
 		$params['selected_item'] = $builder->getSelected();
 
 		$params['menu'] = $this->hooks->trigger('prepare', "menu:$name", $params, $params['menu']);
-
+		
+		$params['menu'] = $this->prepareVerticalMenu($params['menu'], $params);
+		$params['menu'] = $this->prepareDropdownMenu($params['menu'], $params);
+		$params['menu'] = $this->prepareSelectedParents($params['menu'], $params);
+		
 		return new Menu($params);
+	}
+	
+	/**
+	 * Prepares a vertical menu by setting the display child menu option to "toggle" if not set
+	 *
+	 * @param PreparedMenu $menu   the current prepared menu
+	 * @param array        $params the menu params
+	 *
+	 * @return \Elgg\Menu\PreparedMenu
+	 */
+	protected function prepareVerticalMenu(PreparedMenu $menu, array $params) {
+		if (elgg_extract('prepare_vertical', $params) !== true) {
+			return $menu;
+		}
+		
+		$prepare = function(\ElggMenuItem $menu_item) use (&$prepare) {
+			$child_menu_vars = $menu_item->getChildMenuOptions();
+			if (empty($child_menu_vars['display'])) {
+				$child_menu_vars['display'] = 'toggle';
+			}
+			$menu_item->setChildMenuOptions($child_menu_vars);
+			
+			foreach ($menu_item->getChildren() as $child_menu_item) {
+				$prepare($child_menu_item);
+			}
+		};
+		
+		foreach ($menu as $menu_items) {
+			foreach ($menu_items as $menu_item) {
+				if ($menu_item instanceof \ElggMenuItem) {
+					$prepare($menu_item);
+				}
+			}
+		}
+		
+		return $menu;
+	}
+
+	/**
+	 * Marks parents of selected items also as selected
+	 *
+	 * @param PreparedMenu $menu   the current prepared menu
+	 * @param array        $params the menu params
+	 *
+	 * @return \Elgg\Menu\PreparedMenu
+	 */
+	protected function prepareSelectedParents(PreparedMenu $menu, array $params) {
+		$selected_item = elgg_extract('selected_item', $params);
+		if (!$selected_item instanceof \ElggMenuItem) {
+			return $menu;
+		}
+		
+		$parent = $selected_item->getParent();
+		while ($parent instanceof \ElggMenuItem) {
+			$parent->setSelected();
+			$parent->addItemClass('elgg-has-selected-child');
+			$parent = $parent->getParent();
+		}
+	
+		return $menu;
+	}
+
+	/**
+	 * Prepares a dropdown menu
+	 *
+	 * @param PreparedMenu $menu   the current prepared menu
+	 * @param array        $params the menu params
+	 *
+	 * @return \Elgg\Menu\PreparedMenu
+	 */
+	protected function prepareDropdownMenu(PreparedMenu $menu, array $params) {
+		if (elgg_extract('prepare_dropdown', $params) !== true) {
+			return $menu;
+		}
+		
+		$items = $menu->getItems('default');
+		if (empty($items)) {
+			return $menu;
+		}
+		
+		$menu_name = elgg_extract('name', $params);
+		$menu->getSection('default')->fill([
+			\ElggMenuItem::factory([
+				'name' => 'entity-menu-toggle',
+				'icon' => 'ellipsis-v',
+				'href' => false,
+				'text' => '',
+				'child_menu' => [
+					'display' => 'dropdown',
+					'data-position' => json_encode([
+						'at' => 'right bottom',
+						'my' => 'right top',
+						'collision' => 'fit fit',
+					]),
+					'class' => "elgg-{$menu_name}-dropdown-menu",
+				],
+				'children' => $items,
+			]),
+		]);
+		
+		return $menu;
 	}
 
 	/**

@@ -34,4 +34,5 @@ foreach (['bell', 'bank', 'coffee', 'trash'] as $icon) {
 
 echo elgg_view_menu('owner_block', [
 	'items' => $items,
+	'prepare_vertical' => true,
 ]);

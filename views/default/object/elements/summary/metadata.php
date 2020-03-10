@@ -18,6 +18,7 @@ if (!isset($metadata)) {
 		$metadata .= elgg_view_menu('entity', [
 			'entity' => elgg_extract('entity', $vars),
 			'handler' => elgg_extract('handler', $vars),
+			'prepare_dropdown' => true,
 		]);
 	}
 	

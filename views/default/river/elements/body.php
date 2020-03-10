@@ -19,6 +19,7 @@ $metadata = elgg_extract('metadata', $vars);
 if (!isset($metadata)) {
 	$metadata = elgg_view_menu('river', [
 		'item' => $item,
+		'prepare_dropdown' => true,
 	]);
 	
 	$object = $item->getObjectEntity();

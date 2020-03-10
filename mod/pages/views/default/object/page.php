@@ -53,6 +53,7 @@ if ($revision) {
 	$metadata = elgg_view_menu('annotation', [
 		'annotation' => $annotation,
 		'class' => 'elgg-menu-hz float-alt',
+		'prepare_dropdown' => true,
 	]);
 }
 

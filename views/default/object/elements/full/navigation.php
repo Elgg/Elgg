@@ -6,7 +6,7 @@
  */
 
 $entity = elgg_extract('entity', $vars);
-if (!($entity instanceof \ElggEntity)) {
+if (!$entity instanceof \ElggEntity) {
 	return;
 }
 

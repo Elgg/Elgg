@@ -52,6 +52,7 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $user->guid) 
 $content_menu = elgg_view_menu('owner_block', [
 	'entity' => elgg_get_page_owner_entity(),
 	'class' => 'profile-content-menu',
+	'prepare_vertical' => true,
 ]);
 
 echo <<<HTML

@@ -9,6 +9,7 @@ elgg_push_context('developers_gear');
 $menu = elgg_view_menu('page', [
 	'show_section_headers' => true,
 	'class' => 'elgg-developers-gear',
+	'prepare_vertical' => true,
 ]);
 
 $settings_form = elgg_view('admin/developers/settings');

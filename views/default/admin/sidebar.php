@@ -5,6 +5,7 @@
 
 $menu = elgg_view_menu('page', [
 	'show_section_headers' => true,
+	'prepare_vertical' => true,
 ]);
 
 echo elgg_format_element('div', [

@@ -691,6 +691,8 @@ function _elgg_normalize_content_layout_vars(array $vars = []) {
  *    menu_view            => (string) name of the view to be used to render the menu
  *    show_section_headers => (bool) show headers before menu sections
  *    selected_item_name   => (string) the menu item name to be selected
+ *    prepare_vertical     => (bool) prepares the menu items for vertical display (default false)
+ *    prepare_dropdown     => (bool) will put all menu items (section=default) behind a dropdown (default false)
  *
  * @param string|Menu|UnpreparedMenu $menu Menu name (or object)
  * @param array                      $vars An associative array of display options for the menu.

@@ -8,6 +8,7 @@
 $content = elgg_view_menu('pages_nav', [
 	'class' => ['pages-nav', 'elgg-menu-page'],
 	'entity' => elgg_extract('page', $vars),
+	'prepare_vertical' => true,
 ]);
 
 if (empty($content)) {

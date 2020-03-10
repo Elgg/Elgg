@@ -33,6 +33,7 @@ foreach (['star', 'trash'] as $icon) {
 $metadata = elgg_view_menu('entity', [
 	'items' => $items,
 	'entity' => $entity,
+	'prepare_dropdown' => true,
 ]);
 
 echo elgg_view('object/elements/summary', [
