@@ -137,32 +137,6 @@ function elgg_get_widget_types($context = "") {
 }
 
 /**
- * Returns widget URLS used in widget titles
- *
- * @param \Elgg\Hook $hook 'entity:url', 'object'
- *
- * @return string|null
- * @internal
- */
-function _elgg_widgets_widget_urls(\Elgg\Hook $hook) {
-	$widget = $hook->getEntityParam();
-	if (!$widget instanceof \ElggWidget) {
-		return;
-	}
-	
-	switch ($widget->handler) {
-		case 'content_stats':
-			return 'admin/statistics';
-		case 'cron_status':
-			return 'admin/cron';
-		case 'new_users':
-			return 'admin/users/newest';
-		case 'online_users':
-			return 'admin/users/online';
-	}
-}
-
-/**
  * Gets a list of events to create default widgets for and
  * register menu items for default widgets with the admin section.
  *
@@ -205,9 +179,6 @@ function _elgg_default_widgets_init() {
 		'context' => 'admin',
 	]);
 
-	// override permissions for creating widget on logged out / just created entities
-	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_default_widgets_permissions_override');
-
 	// only register the callback once per event
 	$events = [];
 	foreach ($default_widgets as $info) {
@@ -220,95 +191,8 @@ function _elgg_default_widgets_init() {
 			continue;
 		}
 		if (!isset($events[$event][$entity_type])) {
-			elgg_register_event_handler($event, $entity_type, '_elgg_create_default_widgets');
+			elgg_register_event_handler($event, $entity_type, 'Elgg\Widgets\CreateDefaultWidgetsHandler');
 			$events[$event][$entity_type] = true;
 		}
-	}
-}
-
-/**
- * Creates default widgets
- *
- * This plugin hook handler is registered for events based on what kinds of
- * default widgets have been registered. See elgg_default_widgets_init() for
- * information on registering new default widget contexts.
- *
- * @param \Elgg\Event $event <event>, <entity_type>
- *
- * @return void
- * @internal
- */
-function _elgg_create_default_widgets(\Elgg\Event $event) {
-	$default_widget_info = _elgg_config()->default_widget_info;
-	$entity = $event->getObject();
-	
-	if (empty($default_widget_info) || !$entity instanceof \ElggEntity) {
-		return;
-	}
-
-	$type = $entity->getType();
-	$subtype = $entity->getSubtype();
-
-	// event is already guaranteed by the hook registration.
-	// need to check subtype and type.
-	foreach ($default_widget_info as $info) {
-		if (elgg_extract('entity_type', $info) !== $type) {
-			continue;
-		}
-
-		$entity_subtype = elgg_extract('entity_subtype', $info);
-		if ($entity_subtype !== ELGG_ENTITIES_ANY_VALUE && $entity_subtype !== $subtype) {
-			continue;
-		}
-
-		// need to be able to access everything
-		elgg_push_context('create_default_widgets');
-
-		elgg_call(ELGG_IGNORE_ACCESS, function () use ($entity, $info) {
-			// pull in by widget context with widget owners as the site
-			// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
-			$widgets = elgg_get_entities([
-				'type' => 'object',
-				'subtype' => 'widget',
-				'owner_guid' => elgg_get_site_entity()->guid,
-				'private_setting_name' => 'context',
-				'private_setting_value' => elgg_extract('widget_context', $info),
-				'limit' => 0,
-				'batch' => true,
-			]);
-			/* @var \ElggWidget[] $widgets */
-	
-			foreach ($widgets as $widget) {
-				// change the container and owner
-				$new_widget = clone $widget;
-				$new_widget->container_guid = $entity->guid;
-				$new_widget->owner_guid = $entity->guid;
-	
-				// pull in settings
-				$settings = $widget->getAllPrivateSettings();
-	
-				foreach ($settings as $name => $value) {
-					$new_widget->$name = $value;
-				}
-	
-				$new_widget->save();
-			}
-		});
-		
-		elgg_pop_context();
-	}
-}
-
-/**
- * Overrides permissions checks when creating widgets for logged out users.
- *
- * @param \Elgg\Hook $hook 'container_permissions_check', 'object'
- *
- * @return true|void
- * @internal
- */
-function _elgg_default_widgets_permissions_override(\Elgg\Hook $hook) {
-	if ($hook->getType() === 'object' && $hook->getParam('subtype') === 'widget') {
-		return elgg_in_context('create_default_widgets') ? true : null;
 	}
 }

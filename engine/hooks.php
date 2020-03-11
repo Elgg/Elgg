@@ -16,6 +16,7 @@ return [
 		],
 		'object' => [
 			\Elgg\Comments\ContainerPermissionsHandler::class => [],
+			\Elgg\Widgets\DefaultWidgetsContainerPermissionsHandler::class => [],
 		],
 	],
 	'cron' => [
@@ -24,9 +25,7 @@ return [
 			'_elgg_session_cleanup_persistent_login' => [],
 		],
 		'minute' => [
-			'_elgg_notifications_cron' => [
-				'priority' => 100,
-			],
+			\Elgg\Notifications\ProcessQueueCronHandler::class => ['priority' => 100],
 		],
 		'weekly' => [
 			'_elgg_admin_notify_admins_pending_user_validation' => [],
@@ -52,7 +51,7 @@ return [
 	],
 	'entity:url' => [
 		'object' => [
-			'_elgg_widgets_widget_urls' => [],
+			\Elgg\Widgets\EntityUrlHandler::class => [],
 		],
 	],
 	'get' => [
@@ -116,10 +115,8 @@ return [
 			'_elgg_user_prepare_unban_notification' => [],
 		],
 		'system:email' => [
-			'_elgg_notifications_smtp_default_message_id_header' => [
-				'priority' => 1,
-			],
-			'_elgg_notifications_smtp_thread_headers' => [],
+			\Elgg\Email\DefaultMessageIdHeaderHandler::class => ['priority' => 1],
+			\Elgg\Email\ThreadHeadersHandler::class => [],
 		],
 	],
 	'public_pages' => [
@@ -234,13 +231,13 @@ return [
 	],
 	'send' => [
 		'notification:email' => [
-			'_elgg_send_email_notification' => [],
+			\Elgg\Notifications\SendEmailHandler::class => [],
 		],
 	],
 	'usersettings:save' => [
 		'user' => [
 			'_elgg_admin_save_notification_setting' => [],
-			'_elgg_save_notification_user_settings' => [],
+			\Elgg\Notifications\SaveUserSettingsHandler::class => [],
 			'_elgg_set_user_default_access' => [],
 			'_elgg_set_user_email' => [],
 			'_elgg_set_user_language' => [],

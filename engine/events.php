@@ -2,7 +2,7 @@
 return [
 	'all' => [
 		'all' => [
-			'_elgg_enqueue_notification_event' => [
+			\Elgg\Notifications\EnqueueEventHandler::class => [
 				'priority' => 700,
 			],
 		],
@@ -57,7 +57,7 @@ return [
 	],
 	'created' => [
 		'river' => [
-			'_elgg_river_update_object_last_action' => [],
+			\Elgg\River\UpdateLastActionHandler::class => [],
 		],
 	],
 	'delete' => [
@@ -69,7 +69,6 @@ return [
 		'system' => [
 			'_elgg_admin_init' => [],
 			'_elgg_init' => [],
-			'_elgg_notifications_init' => [],
 			'_elgg_views_init' => [],
 			'_elgg_walled_garden_init' => [
 				'priority' => 1000,
