@@ -12,7 +12,7 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "elgg/login_as": "~2.0.0",
+        "elgg/login_as": "~2.1.0",
         "bower-asset/fontawesome": "~5.6",
         "bower-asset/jquery": "^2.1.4",
         "bower-asset/jquery-colorbox": "^1.5.14",
