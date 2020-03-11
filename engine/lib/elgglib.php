@@ -1159,8 +1159,6 @@ function _elgg_head_manifest(\Elgg\Hook $hook) {
 /**
  * Elgg's main init.
  *
- * Handles core actions, the JS pagehandler, and the shutdown function.
- *
  * @elgg_event_handler init system
  * @return void
  * @internal
@@ -1169,6 +1167,12 @@ function _elgg_init() {
 	
 	elgg_register_entity_type('object', 'comment');
 	elgg_register_entity_type('user', 'user');
+	
+	elgg_register_notification_method('email');
+	
+	elgg_register_notification_event('object', 'comment', ['create']);
+	elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
+	elgg_register_notification_event('user', 'user', ['unban']);
 	
 	// if mb functions are available, set internal encoding to UTF8
 	if (is_callable('mb_internal_encoding')) {

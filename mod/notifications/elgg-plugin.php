@@ -54,7 +54,7 @@ return [
 		],
 		'usersettings:save' => [
 			'user' => [
-				'_elgg_save_notification_user_settings' => ['unregister' => true],
+				'Elgg\Notifications\SaveUserSettingsHandler' => ['unregister' => true],
 			],
 		],
 	],

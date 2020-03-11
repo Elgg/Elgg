@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Config\DatarootSettingMigrator;
-use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Database\ConfigTable;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Project\Paths;
@@ -47,7 +45,6 @@ use Elgg\Project\Paths;
  * @property string        $debug
  * @property int           $default_access							Default access
  * @property int           $default_limit							The default "limit" used in listings and queries
- * @property array         $default_widget_info
  * @property bool          $disable_rss 							Is RSS disabled
  * @property bool          $elgg_config_locks 						The application will lock some settings (default true)
  * @property bool          $elgg_load_sync_code
@@ -78,6 +75,7 @@ use Elgg\Project\Paths;
  * @property int           $min_password_number                     The minimal number of numbers in a password
  * @property int           $min_password_special                    The minimal number of special characters in a password
  * @property int           $minusername                             The minimal length of a username
+ * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
  * @property string[]      $pages
  * @property-read string   $path         							Path of composer install with trailing "/"
  * @property-read string   $pluginspath  							Alias of plugins_path
@@ -179,6 +177,7 @@ class Config {
 		'lastcache' => 0,
 		'min_password_length' => 6,
 		'minusername' => 4,
+		'notifications_max_runtime' => 45,
 		'security_email_require_confirmation' => true,
 		'security_email_require_password' => true,
 		'security_notify_admins' => true,
@@ -280,21 +279,13 @@ class Config {
 		};
 
 		if (empty($GLOBALS['CONFIG']->dataroot)) {
-			$dataroot = (new DatarootSettingMigrator($get_db(), $path))->migrate();
-			if (!isset($dataroot)) {
-				$reason = 'The Elgg settings file is missing $CONFIG->dataroot.';
-				return false;
-			}
+			$reason = 'The Elgg settings file is missing $CONFIG->dataroot.';
+			return false;
+		}
 
-			$GLOBALS['CONFIG']->dataroot = $dataroot;
-
-			// just try this one time to migrate wwwroot
-			if (!isset($GLOBALS['CONFIG']->wwwroot)) {
-				$wwwroot = (new WwwrootSettingMigrator($get_db(), $path))->migrate();
-				if (isset($wwwroot)) {
-					$GLOBALS['CONFIG']->wwwroot = $wwwroot;
-				}
-			}
+		if (empty($GLOBALS['CONFIG']->wwwroot)) {
+			$reason = 'The Elgg settings file is missing $CONFIG->wwwroot.';
+			return false;
 		}
 
 		$config = new self(get_object_vars($GLOBALS['CONFIG']));

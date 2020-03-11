@@ -713,6 +713,7 @@ class Application {
 			'cache.php',
 			'configuration.php',
 			'constants.php',
+			'context.php',
 			'entities.php',
 			'filestore.php',
 			'gatekeepers.php',

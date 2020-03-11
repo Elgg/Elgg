@@ -53,6 +53,12 @@ complicated validating responses (for example in hooks). The classes have been s
 
 All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``.
 
+Default widgets
+---------------
+
+The magic handling the creation of default widgets has been reduced. You now need to register the ``Elgg\Widgets\CreateDefaultWidgetsHandler`` callback to the event when you want default widgets to be created.
+The configuration ``default_widget_info`` is no longer present in the system. Use the ``get_list``, ``default_widgets`` hook to get the value.
+
 Plugin bootstrapping
 --------------------
 
@@ -126,19 +132,28 @@ Core
 * ``_elgg_comments_permissions_override()`` changed to ``Elgg\Comments\EditPermissionsHandler::class``
 * ``_elgg_comments_prepare_content_owner_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareContentOwnerNotification()``
 * ``_elgg_comments_prepare_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareNotification()``
+* ``_elgg_create_default_widgets()`` changed to ``Elgg\Widgets\CreateDefaultWidgetsHandler::class``
+* ``_elgg_default_widgets_permissions_override()`` changed to ``Elgg\Widgets\DefaultWidgetsContainerPermissionsHandler::class``
 * ``_elgg_annotations_default_menu_items()`` changed to ``Elgg\Menus\Annotation::registerDelete()``
 * ``_elgg_walled_garden_menu()`` changed to ``Elgg\Menus\WalledGarden::registerHome()``
 * ``_elgg_site_menu_init()`` changed to ``Elgg\Menus\Site::registerAdminConfiguredItems()``
 * ``_elgg_site_menu_setup()`` changed to ``Elgg\Menus\Site::reorderItems()``
 * ``_elgg_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerEdit()`` and ``Elgg\Menus\Entity::registerDelete()``
 * ``_elgg_entity_navigation_menu_setup()`` changed to ``Elgg\Menus\EntityNavigation::registerPreviousNext()``
+* ``_elgg_enqueue_notification_event()`` changed to ``Elgg\Notifications\EnqueueEventHandler::class``
 * ``_elgg_groups_container_override()`` changed to ``Elgg\Groups\MemberPermissionsHandler::class``
 * ``_elgg_groups_comment_permissions_override()`` changed to ``Elgg\Comments\GroupMemberPermissionsHandler::class``
 * ``_elgg_widget_menu_setup()`` changed to ``Elgg\Menus\Widget::registerEdit()`` and ``Elgg\Menus\Widget::registerDelete()``
 * ``_elgg_login_menu_setup()`` changed to ``Elgg\Menus\Login::registerRegistration()`` and ``Elgg\Menus\Widget::registerResetPassword()``
+* ``_elgg_notifications_cron()`` changed to ``Elgg\Notifications\ProcessQueueCronHandler::class``
+* ``_elgg_notifications_smtp_default_message_id_header()`` changed to ``Elgg\Email\DefaultMessageIdHeaderHandler::class``
+* ``_elgg_notifications_smtp_thread_headers()`` changed to ``Elgg\Email\ThreadHeadersHandler::class``
+* ``_elgg_river_update_object_last_action()`` changed to ``Elgg\River\UpdateLastActionHandler::class``
 * ``_elgg_rss_menu_setup()`` changed to ``Elgg\Menus\Footer::registerRSS()``
 * ``_elgg_plugin_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerPlugin()``
 * ``_elgg_river_menu_setup()`` changed to ``Elgg\Menus\River::registerDelete()``
+* ``_elgg_save_notification_user_settings()`` changed to ``Elgg\Notifications\SaveUserSettingsHandler::class``
+* ``_elgg_send_email_notification()`` changed to ``Elgg\Notifications\SendEmailHandler::class``
 * ``_elgg_upgrade_entity_menu()`` changed to ``Elgg\Menus\Entity::registerUpgrade()``
 * ``_elgg_user_settings_menu_register()`` changed to ``Elgg\Menus\Page::registerUserSettings()`` and ``Elgg\Menus\Page::registerUserSettingsPlugins()``
 * ``_elgg_user_settings_menu_prepare()`` changed to ``Elgg\Menus\Page::cleanupUserSettingsPlugins()``
@@ -148,6 +163,7 @@ Core
 * ``_elgg_user_topbar_menu()`` changed to ``Elgg\Menus\Topbar::registerUserLinks()``
 * ``_elgg_user_unvalidated_menu()`` changed to ``Elgg\Menus\UserUnvalidated::register()``
 * ``_elgg_comments_social_menu_setup()`` changed to ``Elgg\Menus\Social::registerComments()``
+* ``_elgg_widgets_widget_urls()`` changed to ``Elgg\Widgets\EntityUrlHandler::class``
 * ``Elgg\Profiler::handleOutput`` changed to ``Elgg\Debug\Profiler::class``
 
 Plugins
