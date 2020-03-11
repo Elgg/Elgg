@@ -90,8 +90,8 @@ class Bootstrap extends DefaultPluginBootstrap {
 		}
 	
 		if (!empty($settings['log_events'])) {
-			$events->registerHandler('all', 'all', 'developers_log_events', 1);
-			$hooks->registerHandler('all', 'all', 'developers_log_events', 1);
+			$events->registerHandler('all', 'all', __NAMESPACE__ . '\HandlerLogger::trackEvent', 1);
+			$hooks->registerHandler('all', 'all', __NAMESPACE__ . '\HandlerLogger::trackHook', 1);
 		}
 	
 		if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {

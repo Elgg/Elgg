@@ -168,6 +168,7 @@ Plugins
 * ``ckeditor_longtext_id`` changed to ``Elgg\CKEditor\Views::setInputLongTextIDViewVar``
 * ``ckeditor_longtext_menu`` changed to ``Elgg\CKEditor\Menus\LongText::registerToggler``
 * ``dashboard_default_widgets`` changed to ``Elgg\Dashboard\Widgets::extendDefaultWidgetsList``
+* ``developers_log_events`` changed to ``Elgg\Developers\HandlerLogger::trackEvent`` and ``Elgg\Developers\HandlerLogger::trackHook``
 * ``diagnostics_basic_hook`` changed to ``Elgg\Diagnostics\Reports::getBasic``
 * ``diagnostics_globals_hook`` changed to ``Elgg\Diagnostics\Reports::getGlobals``
 * ``diagnostics_phpinfo_hook`` changed to ``Elgg\Diagnostics\Reports::getPHPInfo``
