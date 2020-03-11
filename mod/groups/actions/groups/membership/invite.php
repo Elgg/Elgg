@@ -11,13 +11,13 @@ if (!is_array($user_guids)) {
 }
 
 if (empty($user_guids)) {
-	return elgg_error_response();
+	return elgg_error_response(elgg_echo('error:missing_data'));
 }
 
 $group_guid = (int) get_input('group_guid');
 $group = get_entity($group_guid);
-if (!($group instanceof \ElggGroup) || !$group->canEdit()) {
-	return elgg_error_response();
+if (!$group instanceof \ElggGroup || !$group->canEdit()) {
+	return elgg_error_response(elgg_echo('actionunauthorized'));
 }
 
 $resend_invitation = (bool) get_input('resend');
@@ -47,19 +47,21 @@ foreach ($user_guids as $guid) {
 		add_entity_relationship($group->guid, 'invited', $user->guid);
 	}
 
-	$url = elgg_normalize_url("groups/invitations/{$user->username}");
-
+	$url = elgg_generate_url('collection:group:group:invitations', [
+		'username' => $user->username,
+	]);
+	
 	$subject = elgg_echo('groups:invite:subject', [
 		$user->getDisplayName(),
 		$group->getDisplayName()
-	], $user->language);
+	], $user->getLanguage());
 
 	$body = elgg_echo('groups:invite:body', [
 		$user->getDisplayName(),
 		$logged_in_user->getDisplayName(),
 		$group->getDisplayName(),
 		$url,
-	], $user->language);
+	], $user->getLanguage());
 	
 	$params = [
 		'action' => 'invite',
@@ -68,7 +70,7 @@ foreach ($user_guids as $guid) {
 	];
 
 	// Send notification
-	$result = notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
+	$result = notify_user($user->guid, $group->owner_guid, $subject, $body, $params);
 
 	if ($result) {
 		system_message(elgg_echo('groups:userinvited'));
