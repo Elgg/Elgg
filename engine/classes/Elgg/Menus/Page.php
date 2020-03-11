@@ -177,6 +177,36 @@ class Page {
 	}
 	
 	/**
+	 * Register menu items for default widgets
+	 *
+	 * @param \Elgg\Hook $hook 'register', 'menu:page'
+	 *
+	 * @return void|MenuItems
+	 */
+	public static function registerAdminDefaultWidgets(\Elgg\Hook $hook) {
+		if (!elgg_in_context('admin') || !elgg_is_admin_logged_in()) {
+			return;
+		}
+		
+		if (empty(elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []))) {
+			return;
+		}
+		
+		/* @var $return MenuItems */
+		$return = $hook->getValue();
+		
+		$return[] = \ElggMenuItem::factory([
+			'name' => 'default_widgets',
+			'text' => elgg_echo('admin:configure_utilities:default_widgets'),
+			'href' => 'admin/configure_utilities/default_widgets',
+			'section' => 'configure',
+			'parent_name' => 'configure_utilities',
+		]);
+
+		return $return;
+	}
+	
+	/**
 	 * Add the information section to the admin page menu
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:page'
@@ -333,6 +363,8 @@ class Page {
 			]),
 			'section' => 'configure',
 		]);
+		
+		return $return;
 	}
 	
 	/**

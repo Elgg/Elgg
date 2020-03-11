@@ -19,10 +19,21 @@ class CreateDefaultWidgetsHandler {
 	 * @return void
 	 */
 	public function __invoke(\Elgg\Event $event) {
-		$default_widget_info = _elgg_config()->default_widget_info;
-		$entity = $event->getObject();
+		static $processed_events = [];
 		
-		if (empty($default_widget_info) || !$entity instanceof \ElggEntity) {
+		if (isset($processed_events["{$event->getName()}.{$event->getType()}"])) {
+			return;
+		}
+		// only create default widgets once per event
+		$processed_events["{$event->getName()}.{$event->getType()}"] = true;
+		
+		$entity = $event->getObject();
+		if (!$entity instanceof \ElggEntity) {
+			return;
+		}
+		
+		$default_widget_info = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
+		if (empty($default_widget_info)) {
 			return;
 		}
 	
@@ -53,11 +64,11 @@ class CreateDefaultWidgetsHandler {
 					'owner_guid' => elgg_get_site_entity()->guid,
 					'private_setting_name' => 'context',
 					'private_setting_value' => elgg_extract('widget_context', $info),
-					'limit' => 0,
+					'limit' => false,
 					'batch' => true,
 				]);
+				
 				/* @var \ElggWidget[] $widgets */
-		
 				foreach ($widgets as $widget) {
 					// change the container and owner
 					$new_widget = clone $widget;

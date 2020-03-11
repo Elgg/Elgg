@@ -17,7 +17,7 @@ class DefaultWidgetsContainerPermissionsHandler {
 	 * @return void|true
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
-		if ($hook->getType() !== 'object' || $hook->getParam('subtype') !== 'widget') {
+		if ($hook->getParam('subtype') !== 'widget') {
 			return;
 		}
 		

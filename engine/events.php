@@ -93,7 +93,6 @@ return [
 	'ready' => [
 		'system' => [
 			'_elgg_cache_init' => [],
-			'_elgg_default_widgets_init' => [],
 			'access_init' => [],
 		],
 	],

@@ -10,6 +10,13 @@ return [
 			],
 		],
 	],
+	'events' => [
+		'create' => [
+			'user' => [
+				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
+			],
+		],
+	],
 	'hooks' => [
 		'get_list' => [
 			'default_widgets' => [

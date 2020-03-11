@@ -53,6 +53,12 @@ complicated validating responses (for example in hooks). The classes have been s
 
 All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``.
 
+Default widgets
+---------------
+
+The magic handling the creation of default widgets has been reduced. You now need to register the ``Elgg\Widgets\CreateDefaultWidgetsHandler`` callback to the event when you want default widgets to be created.
+The configuration ``default_widget_info`` is no longer present in the system. Use the ``get_list``, ``default_widgets`` hook to get the value.
+
 Plugin bootstrapping
 --------------------
 

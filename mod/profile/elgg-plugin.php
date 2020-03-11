@@ -37,6 +37,13 @@ return [
 	'view_options' => [
 		'forms/profile/fields/add' => ['ajax' => true],
 	],
+	'events' => [
+		'create' => [
+			'user' => [
+				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
+			],
+		],
+	],
 	'hooks' => [
 		'get_list' => [
 			'default_widgets' => [

@@ -158,6 +158,7 @@ return [
 		'menu:page' => [
 			'Elgg\Menus\Page::registerAdminAdminister' => [],
 			'Elgg\Menus\Page::registerAdminConfigure' => [],
+			'Elgg\Menus\Page::registerAdminDefaultWidgets' => [],
 			'Elgg\Menus\Page::registerAdminInformation' => [],
 			'Elgg\Menus\Page::registerAdminPluginSettings' => [],
 			'Elgg\Menus\Page::registerAvatarEdit' => [],
