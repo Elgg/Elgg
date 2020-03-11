@@ -75,6 +75,7 @@ use Elgg\Project\Paths;
  * @property int           $min_password_number                     The minimal number of numbers in a password
  * @property int           $min_password_special                    The minimal number of special characters in a password
  * @property int           $minusername                             The minimal length of a username
+ * @property int           $notifications_max_runtime               The max runtime for the notification queue processing in seconds since the start of the cron interval
  * @property string[]      $pages
  * @property-read string   $path         							Path of composer install with trailing "/"
  * @property-read string   $pluginspath  							Alias of plugins_path
@@ -176,6 +177,7 @@ class Config {
 		'lastcache' => 0,
 		'min_password_length' => 6,
 		'minusername' => 4,
+		'notifications_max_runtime' => 45,
 		'security_email_require_confirmation' => true,
 		'security_email_require_password' => true,
 		'security_notify_admins' => true,

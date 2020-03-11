@@ -18,8 +18,7 @@ class ProcessQueueCronHandler {
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
 		// calculate when we should stop
-		// @todo make configurable?
-		$stop_time = time() + 45;
+		$stop_time = $hook->getParam('time') + (int) elgg_get_config('notifications_max_runtime', 45);
 		_elgg_services()->notifications->processQueue($stop_time);
 	}
 }
