@@ -172,6 +172,8 @@ class Router {
 			$required_plugins = (array) elgg_extract('_required_plugins', $parameters, []);
 			unset($parameters['_required_plugins']);
 			
+			unset($parameters['_detect_page_owner']);
+			
 			foreach ($required_plugins as $plugin_id) {
 				if (!$this->plugins->isActive($plugin_id)) {
 					throw new PageNotFoundException();
