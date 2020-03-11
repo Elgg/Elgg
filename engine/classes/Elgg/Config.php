@@ -2,8 +2,6 @@
 
 namespace Elgg;
 
-use Elgg\Config\DatarootSettingMigrator;
-use Elgg\Config\WwwrootSettingMigrator;
 use Elgg\Database\ConfigTable;
 use Elgg\Exceptions\ConfigurationException;
 use Elgg\Project\Paths;
@@ -279,21 +277,13 @@ class Config {
 		};
 
 		if (empty($GLOBALS['CONFIG']->dataroot)) {
-			$dataroot = (new DatarootSettingMigrator($get_db(), $path))->migrate();
-			if (!isset($dataroot)) {
-				$reason = 'The Elgg settings file is missing $CONFIG->dataroot.';
-				return false;
-			}
+			$reason = 'The Elgg settings file is missing $CONFIG->dataroot.';
+			return false;
+		}
 
-			$GLOBALS['CONFIG']->dataroot = $dataroot;
-
-			// just try this one time to migrate wwwroot
-			if (!isset($GLOBALS['CONFIG']->wwwroot)) {
-				$wwwroot = (new WwwrootSettingMigrator($get_db(), $path))->migrate();
-				if (isset($wwwroot)) {
-					$GLOBALS['CONFIG']->wwwroot = $wwwroot;
-				}
-			}
+		if (empty($GLOBALS['CONFIG']->wwwroot)) {
+			$reason = 'The Elgg settings file is missing $CONFIG->wwwroot.';
+			return false;
 		}
 
 		$config = new self(get_object_vars($GLOBALS['CONFIG']));
