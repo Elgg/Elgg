@@ -8,7 +8,7 @@ $result = elgg_view_field([
 	'name' => 'language',
 	'#label' => elgg_echo('installation:language'),
 	'value' => elgg_get_config('language'),
-	'options_values' => get_installed_translations(true),
+	'options_values' => elgg()->translator->getInstalledTranslations(true),
 ]);
 
 $result .= elgg_view_field([
@@ -17,7 +17,7 @@ $result .= elgg_view_field([
 	'#help' => elgg_echo('config:i18n:allowed_languages:help'),
 	'name' => 'allowed_languages',
 	'value' => elgg()->translator->getAllowedLanguages(),
-	'options_values' => get_installed_translations(),
+	'options_values' => elgg()->translator->getInstalledTranslations(),
 	'align' => 'horizontal',
 ]);
 

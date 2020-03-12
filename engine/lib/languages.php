@@ -46,29 +46,6 @@ function get_current_language() {
 }
 
 /**
- * Return an array of installed translations as an associative
- * array "two letter code" => "native language name".
- *
- * @param boolean $calculate_completeness Set to true if you want a completeness postfix added to the language text
- *
- * @return array
- */
-function get_installed_translations($calculate_completeness = false) {
-	return elgg()->translator->getInstalledTranslations($calculate_completeness);
-}
-
-/**
- * Return the level of completeness for a given language code (compared to english)
- *
- * @param string $language Language
- *
- * @return int
- */
-function get_language_completeness($language) {
-	return elgg()->translator->getLanguageCompleteness($language);
-}
-
-/**
  * Check if a given language key exists.
  *
  * @note Translators should, whenever creating a "dynamically" named language key, always create an
@@ -83,14 +60,4 @@ function get_language_completeness($language) {
  */
 function elgg_language_key_exists($key, $language = 'en') {
 	return elgg()->translator->languageKeyExists($key, $language);
-}
-
-/**
- * Returns an array of available languages
- *
- * @return array
- * @since 3.0
- */
-function elgg_get_available_languages() {
-	return elgg()->translator->getAvailableLanguages();
 }

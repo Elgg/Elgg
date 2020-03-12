@@ -79,7 +79,7 @@ abstract class TranslatorUnitTest extends \Elgg\UnitTestCase {
 
 		$this->translator->registerTranslations($this->getPath() . 'languages/', false, $language);
 
-		$completeness = get_language_completeness($language);
+		$completeness = $this->translator->getLanguageCompleteness($language);
 
 		$translations = $this->translator->getLoadedTranslations();
 

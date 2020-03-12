@@ -66,7 +66,7 @@ class TranslationLoadingUnitTestCase extends IntegratedUnitTestCase {
 
 		_elgg_services()->translator->loadTranslations($language);
 
-		$completeness = get_language_completeness($language);
+		$completeness = _elgg_services()->translator->getLanguageCompleteness($language);
 
 		$translations = _elgg_services()->translator->getLoadedTranslations();
 

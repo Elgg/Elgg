@@ -447,7 +447,7 @@ class Translator {
 	 *
 	 * @return array
 	 */
-	public function getInstalledTranslations($calculate_completeness = false) {
+	public function getInstalledTranslations(bool $calculate_completeness = false) {
 		if ($calculate_completeness) {
 			// Ensure that all possible translations are loaded
 			$this->reloadAllTranslations();
