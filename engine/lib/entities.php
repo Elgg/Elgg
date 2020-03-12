@@ -4,6 +4,7 @@
  */
 
 use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Database\Clauses\OrderByClause;
 
 /**
  * Return the class name registered as a constructor for an entity of a given type and subtype
@@ -675,6 +676,43 @@ function elgg_search(array $options = []) {
 	} catch (InvalidParameterException $e) {
 		return false;
 	}
+}
+
+/**
+ * Return an array reporting the number of various entities in the system.
+ *
+ * @param int $owner_guid Optional owner of the statistics
+ *
+ * @return array
+ */
+function get_entity_statistics($owner_guid = 0) {
+
+	$owner_guid = (int) $owner_guid;
+	$entity_stats = [];
+
+	$grouped_entities = elgg_get_entities([
+		'selects' => ['COUNT(*) as cnt'],
+		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
+		'group_by' => ['e.type', 'e.subtype'],
+		'limit' => 0,
+		'order_by' => new OrderByClause('cnt', 'DESC'),
+	]);
+	
+	if (!empty($grouped_entities)) {
+		foreach ($grouped_entities as $entity) {
+			$type = $entity->getType();
+			if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {
+				$entity_stats[$type] = [];
+			}
+			$subtype = $entity->getSubtype();
+			if (!$subtype) {
+				$subtype = '__base__';
+			}
+			$entity_stats[$type][$subtype] = $entity->getVolatileData('select:cnt');
+		}
+	}
+
+	return $entity_stats;
 }
 
 /**

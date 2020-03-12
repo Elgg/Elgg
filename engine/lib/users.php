@@ -80,6 +80,24 @@ function find_active_users(array $options = []) {
 }
 
 /**
+ * Render a list of currently online users
+ *
+ * @tip This also support options from elgg_list_entities().
+ *
+ * @param array $options Options array with keys:
+ *                       seconds (int) => Number of seconds (default 600 = 10min)
+ *
+ * @return string
+ */
+function get_online_users(array $options = []) {
+	$options = array_merge([
+		'seconds' => 600,
+	], $options);
+
+	return elgg_list_entities($options, 'find_active_users');
+}
+
+/**
  * Generate and send a password request email to a given user's registered email address.
  *
  * @param int $user_guid User GUID
