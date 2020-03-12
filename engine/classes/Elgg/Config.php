@@ -270,13 +270,6 @@ class Config {
 
 		Includer::requireFile($path);
 
-		$get_db = function() {
-			// try to migrate settings to the file
-			$db_conf = new \Elgg\Database\DbConfig($GLOBALS['CONFIG']);
-			$cache = new \Elgg\Cache\QueryCache(50, true);
-			return new Database($db_conf, $cache);
-		};
-
 		if (empty($GLOBALS['CONFIG']->dataroot)) {
 			$reason = 'The Elgg settings file is missing $CONFIG->dataroot.';
 			return false;
