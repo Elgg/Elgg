@@ -1,4 +1,6 @@
 <?php
+use Elgg\WebServices\Di\RestApiErrorHandler;
+
 /**
  * GenericResult Result superclass.
  */
@@ -93,7 +95,7 @@ abstract class GenericResult {
 	 * @return stdClass Object containing the serialised result.
 	 */
 	public function export() {
-		global $ERRORS, $_PAM_HANDLERS_MSG;
+		global $_PAM_HANDLERS_MSG;
 		
 		$result = new stdClass;
 
@@ -108,8 +110,9 @@ abstract class GenericResult {
 		}
 
 		if (elgg_get_config('debug')) {
-			if (!empty($ERRORS)) {
-				$result->runtime_errors = $ERRORS;
+			$errors = RestApiErrorHandler::instance()->getErrors();
+			if (!empty($errors)) {
+				$result->runtime_errors = $errors;
 			}
 
 			if (!empty($_PAM_HANDLERS_MSG)) {

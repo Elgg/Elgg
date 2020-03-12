@@ -5,6 +5,42 @@ From 3.x to 4.0
    :local:
    :depth: 1
 
+Web services
+------------
+
+The Web Services plugin received a complete rewrite, this is mostly related to the internals of the plugin.
+
+Removed classes
+~~~~~~~~~~~~~~~
+
+* ``ElggHMACCache`` has been replaced by ``_elgg_services()->hmacCacheTable`` (for internal use only)
+
+Removed functions
+~~~~~~~~~~~~~~~~~
+
+* ``create_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->createApiUser()``
+* ``create_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->createToken()``
+* ``get_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->getApiUser()``
+* ``get_standard_api_key_array()`` use ``\Elgg\WebServices\ElggApiClient::setApiKeys()``
+* ``get_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->getUserTokens()``
+* ``pam_auth_session()``
+* ``remove_api_user()`` has been replaced by ``_elgg_services()->apiUsersTable->removeApiUser()``
+* ``remove_expired_user_tokens()`` has been replaced by ``_elgg_services()->usersApiSessions->removeExpiresTokens()``
+* ``remove_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->removeToken()``
+* ``send_api_call()`` use ``\Elgg\WebServices\ElggApiClient``
+* ``send_api_get_call()`` use ``\Elgg\WebServices\ElggApiClient``
+* ``send_api_post_call()`` use ``\Elgg\WebServices\ElggApiClient``
+* ``service_handler()``
+* ``validate_user_token()`` has been replaced by ``_elgg_services()->usersApiSessions->validateToken()``
+* ``ws_page_handler()``
+* ``ws_rest_handler()`` has been replaced by ``\Elgg\WebServices\RestServiceController``
+
+Miscellaneous changes
+~~~~~~~~~~~~~~~~~~~~~
+
+* The config value for ``servicehandler`` has been removed
+* In certain edge cases the default value of an API parameter will not be applied
+
 Notifications
 -------------
 
@@ -356,6 +392,7 @@ Lib functions
 Removed views / resources
 -------------------------
 
+* ``admin/develop_tools/inspect/webservices``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
 

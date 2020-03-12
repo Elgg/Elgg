@@ -39,6 +39,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Ajax\Service                              $ajax
  * @property-read \Elgg\Amd\Config                                $amdConfig
  * @property-read \Elgg\Database\AnnotationsTable                 $annotationsTable
+ * @property-read \Elgg\Database\ApiUsersTable                    $apiUsersTable
  * @property-read \ElggAutoP                                      $autoP
  * @property-read \Elgg\AutoloadManager                           $autoloadManager
  * @property-read \Elgg\BootService                               $boot
@@ -75,6 +76,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Groups\Tools                              $group_tools
  * @property-read \Elgg\HandlersService                           $handlers
  * @property-read \Elgg\Security\HmacFactory                      $hmac
+ * @property-read \Elgg\Database\HMACCacheTable                   $hmacCacheTable
  * @property-read \Elgg\Views\HtmlFormatter                       $html_formatter
  * @property-read \Elgg\PluginHooksService                        $hooks
  * @property-read \Elgg\EntityIconService                         $iconService
@@ -127,6 +129,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Router\UrlMatcher                         $urlMatcher
  * @property-read \Elgg\UploadService                             $uploads
  * @property-read \Elgg\UserCapabilities                          $userCapabilities
+ * @property-read \Elgg\Database\UsersApiSessionsTable            $usersApiSessionsTable
  * @property-read \Elgg\Database\UsersTable                       $usersTable
  * @property-read \Elgg\ViewsService                              $views
  * @property-read \Elgg\Cache\ViewCacher                          $viewCacher
@@ -203,6 +206,10 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Database\AnnotationsTable($c->db, $c->events);
 		});
 
+		$this->setFactory('apiUsersTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\ApiUsersTable($c->db, $c->crypto);
+		});
+		
 		$this->setClassName('autoP', \ElggAutoP::class);
 
 		$this->setFactory('boot', function (ServiceProvider $c) {
@@ -419,6 +426,14 @@ class ServiceProvider extends DiContainer {
 
 		$this->setFactory('hmac', function(ServiceProvider $c) {
 			return new \Elgg\Security\HmacFactory($c->siteSecret, $c->crypto);
+		});
+		
+		$this->setFactory('hmacCacheTable', function(ServiceProvider $c) {
+			$hmac = new \Elgg\Database\HMACCacheTable($c->db);
+			// HMAC lifetime is 25 hours (this should be related to the time drift allowed in header validation)
+			$hmac->setTTL(90000);
+			
+			return $hmac;
 		});
 
 		$this->setFactory('html_formatter', function(ServiceProvider $c) {
@@ -741,6 +756,10 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\UserCapabilities($c->hooks, $c->entityTable, $c->session);
 		});
 
+		$this->setFactory('usersApiSessionsTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\UsersApiSessionsTable($c->db, $c->crypto);
+		});
+		
 		$this->setFactory('usersTable', function(ServiceProvider $c) {
 			return new \Elgg\Database\UsersTable(
 				$c->config,

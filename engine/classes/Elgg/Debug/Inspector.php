@@ -250,34 +250,6 @@ class Inspector {
 	}
 
 	/**
-	 * Get Elgg web services API methods
-	 *
-	 * @return array [method] => array(function, parameters, call_method, api auth, user auth)
-	 */
-	public function getWebServices() {
-		global $API_METHODS;
-
-		$tree = [];
-		foreach ($API_METHODS as $method => $info) {
-			$params = implode(', ', array_keys(elgg_extract('parameters', $info, [])));
-			if (!$params) {
-				$params = 'none';
-			}
-			$tree[$method] = [
-				$info['function'],
-				"params: $params",
-				$info['call_method'],
-				($info['require_api_auth']) ? 'API authentication required' : 'No API authentication required',
-				($info['require_user_auth']) ? 'User authentication required' : 'No user authentication required',
-			];
-		}
-
-		ksort($tree);
-
-		return $tree;
-	}
-
-	/**
 	 * Get information about registered menus
 	 *
 	 * @return array [menu name] => array(item name => array(text, href, section, parent))

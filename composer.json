@@ -27,6 +27,7 @@
         "doctrine/cache": "^1.6",
         "doctrine/dbal": "~2.5",
         "fzaninotto/faker": "^1.9",
+        "guzzlehttp/guzzle": "~6.5.2",
         "hackzilla/password-generator": "~1.4.1",
         "imagine/imagine": "^0.7.1",
         "league/flysystem": "~1.0",

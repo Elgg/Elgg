@@ -85,7 +85,6 @@ return array(
 	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(filtered by plugin hook: %s)",
 	'developers:inspect:widgets' => 'Widgets',
-	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functions',
 	'developers:inspect:file_location' => 'File path from Elgg root or controller',

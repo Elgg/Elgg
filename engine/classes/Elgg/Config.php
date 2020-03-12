@@ -97,7 +97,6 @@ use Elgg\Project\Paths;
  * @property bool          $security_notify_user_ban
  * @property bool          $security_protect_cron
  * @property bool          $security_protect_upgrade
- * @property array		   $servicehandler							Holds the service handlers as registered by the webservice plugin
  * @property string        $seeder_local_image_folder 				Path to a local folder containing images used for seeding
  * @property bool          $simplecache_enabled						Is simplecache enabled?
  * @property bool          $simplecache_minify_css

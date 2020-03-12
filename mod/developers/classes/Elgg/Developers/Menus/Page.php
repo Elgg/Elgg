@@ -103,10 +103,6 @@ class Page {
 			'Widgets' => elgg_echo('developers:inspect:widgets'),
 		];
 		
-		if (elgg_is_active_plugin('web_services')) {
-			$options['Web Services'] = elgg_echo('developers:inspect:webservices');
-		}
-		
 		ksort($options);
 		
 		return $options;
