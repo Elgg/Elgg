@@ -25,12 +25,12 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 		_elgg_services()->hooks->backup();
 		_elgg_services()->events->backup();
 
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_language');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_password');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_default_access');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_name');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_username');
-		elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_email');
+		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setLanguage');
+		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setPassword');
+		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setDefaultAccess');
+		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setName');
+		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setUsername');
+		elgg_register_plugin_hook_handler('usersettings:save', 'user', 'Elgg\Users\Settings::setEmail');
 		
 		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 

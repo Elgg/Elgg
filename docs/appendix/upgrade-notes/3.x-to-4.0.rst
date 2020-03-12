@@ -190,6 +190,12 @@ Core
 * ``_elgg_plugin_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerPlugin()``
 * ``_elgg_river_menu_setup()`` changed to ``Elgg\Menus\River::registerDelete()``
 * ``_elgg_save_notification_user_settings()`` changed to ``Elgg\Notifications\SaveUserSettingsHandler::class``
+* ``_elgg_set_user_default_access()`` changed to ``Elgg\Users\Settings::setDefaultAccess()``
+* ``_elgg_set_user_email()`` changed to ``Elgg\Users\Settings::setEmail()``
+* ``_elgg_set_user_password()`` changed to ``Elgg\Users\Settings::setPassword()``
+* ``_elgg_set_user_language()`` changed to ``Elgg\Users\Settings::setLanguage()``
+* ``_elgg_set_user_name()`` changed to ``Elgg\Users\Settings::setName()``
+* ``_elgg_set_user_username()`` changed to ``Elgg\Users\Settings::setUsername()``
 * ``_elgg_send_email_notification()`` changed to ``Elgg\Notifications\SendEmailHandler::class``
 * ``_elgg_upgrade_entity_menu()`` changed to ``Elgg\Menus\Entity::registerUpgrade()``
 * ``_elgg_user_settings_menu_register()`` changed to ``Elgg\Menus\Page::registerUserSettings()`` and ``Elgg\Menus\Page::registerUserSettingsPlugins()``

@@ -731,7 +731,6 @@ class Application {
 			'relationships.php',
 			'river.php',
 			'sessions.php',
-			'user_settings.php',
 			'users.php',
 			'views.php',
 			'widgets.php',
