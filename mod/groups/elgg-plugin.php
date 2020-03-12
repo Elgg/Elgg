@@ -112,6 +112,7 @@ return [
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 			],
+			'detect_page_owner' => true,
 		],
 		'requests:group:group' => [
 			'path' => '/groups/requests/{guid}',
@@ -120,6 +121,7 @@ return [
 				\Elgg\Router\Middleware\Gatekeeper::class,
 				\Elgg\Router\Middleware\GroupPageOwnerCanEditGatekeeper::class,
 			],
+			'detect_page_owner' => true,
 		],
 	],
 	'widgets' => [
@@ -184,11 +186,6 @@ return [
 		'likes:is_likable' => [
 			'group:' => [
 				'Elgg\Values::getTrue' => [],
-			],
-		],
-		'page_owner' => [
-			'system' => [
-				'Elgg\Groups\PageOwner::detectPageOwner' => ['priority' => 400],
 			],
 		],
 		'register' => [

@@ -96,7 +96,30 @@ class Route extends \Symfony\Component\Routing\Route {
 					return $from_guid($container_guid);
 				}
 				break;
+				
+			default:
+				// route name doesn't support auto detection of page_owner
+				// but there is information in the route which could support it
+				// and the developer requests that detection is tried
+				if (!(bool) $this->getDefault('_detect_page_owner')) {
+					break;
+				}
+				
+				$username = elgg_extract('username', $params);
+				if ($username) {
+					return get_user_by_username($username) ?: null;
+				}
+				
+				$guid = elgg_extract('guid', $params);
+				if ($guid) {
+					return $from_guid($guid);
+				}
+				
+				$container_guid = elgg_extract('container_guid', $params);
+				if ($container_guid) {
+					return $from_guid($container_guid);
+				}
+				break;
 		}
-
 	}
 }
