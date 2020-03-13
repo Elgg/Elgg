@@ -2,7 +2,7 @@
 return [
 	'access_collection:name' => [
 		'access_collection' => [
-			'access_friends_acl_get_name' => [],
+			\Elgg\Friends\AclNameHandler::class => [],
 		],
 	],
 	'action:validate' => [

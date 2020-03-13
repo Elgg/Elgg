@@ -156,6 +156,10 @@ Special attention is required if you unregister the callbacks in your plugins as
 Core
 ~~~~
 
+* ``access_friends_acl_get_name()`` changed to ``Elgg\Friends\AclNameHandler::class``
+* ``access_friends_acl_add_friend()`` changed to ``Elgg\Friends\AddToAclHandler::class``
+* ``access_friends_acl_create()`` changed to ``Elgg\Friends\CreateAclHandler::class``
+* ``access_friends_acl_remove_friend()`` changed to ``Elgg\Friends\RemoveFromAclHandler::class``
 * ``_elgg_admin_header_menu()`` changed to ``Elgg\Menus\AdminHeader::register()`` and ``Elgg\Menus\AdminHeader::registerMaintenance()``
 * ``_elgg_admin_footer_menu()`` changed to ``Elgg\Menus\AdminFooter::registerHelpResources()``
 * ``_elgg_admin_page_menu()`` changed to ``Elgg\Menus\Page::registerAdminAdminister()`` and ``Elgg\Menus\Page::registerAdminConfigure()`` and ``Elgg\Menus\Page::registerAdminInformation()``
