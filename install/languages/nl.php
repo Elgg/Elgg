@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -123,7 +123,7 @@ Als je klaar bent on verder te gaan, klik op de Volgende knop.",
 
 	'install:complete:instructions' => 'Jouw Elgg site is nu klaar om gebruikt te worden. Klik op de knop hier onder om naar jouw site te gaan.',
 	'install:complete:gotosite' => 'Ga naar de site',
-	'install:complete:admin_notice' => 'Welkom op je ELgg website! Voor meer opties zie de %s.',
+	'install:complete:admin_notice' => 'Welkom op je Elgg website! Voor meer opties zie de %s.',
 	'install:complete:admin_notice:link_text' => 'instellingen pagina\'s',
 
 	'InstallationException:UnknownStep' => '%s is een onbekende installatie stap.',
