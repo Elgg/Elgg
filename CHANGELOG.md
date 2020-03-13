@@ -1,3 +1,17 @@
+<a name="3.3.2"></a>
+### 3.3.2  (2020-03-13)
+
+#### Contributors
+
+* Jeroen Dalsem (6)
+* Jerôme Bakker (4)
+
+#### Bug Fixes
+
+* **notifications:** listing of settings now contain a link to the item ([4a2ae1de](https://github.com/Elgg/Elgg/commit/4a2ae1dee0539fabc20a1ad9ebb6b3bff8133021))
+* **webservices:** use correct query string for hmac authorisation ([1dc4cae9](https://github.com/Elgg/Elgg/commit/1dc4cae94c8fb0dc43a1930e1995d4c51c186420))
+
+
 <a name="3.3.1"></a>
 ### 3.3.1  (2020-02-14)
 
