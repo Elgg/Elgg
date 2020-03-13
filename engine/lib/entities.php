@@ -685,31 +685,26 @@ function elgg_search(array $options = []) {
  *
  * @return array
  */
-function get_entity_statistics($owner_guid = 0) {
-
-	$owner_guid = (int) $owner_guid;
-	$entity_stats = [];
+function get_entity_statistics(int $owner_guid = 0) {
 
 	$grouped_entities = elgg_get_entities([
-		'selects' => ['COUNT(*) as cnt'],
+		'selects' => ['COUNT(*) as total'],
 		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
 		'group_by' => ['e.type', 'e.subtype'],
-		'limit' => 0,
-		'order_by' => new OrderByClause('cnt', 'DESC'),
+		'limit' => false,
+		'callback' => false,
+		'order_by' => new OrderByClause('total', 'DESC'),
 	]);
+		
+	$entity_stats = [];
 	
-	if (!empty($grouped_entities)) {
-		foreach ($grouped_entities as $entity) {
-			$type = $entity->getType();
-			if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {
-				$entity_stats[$type] = [];
-			}
-			$subtype = $entity->getSubtype();
-			if (!$subtype) {
-				$subtype = '__base__';
-			}
-			$entity_stats[$type][$subtype] = $entity->getVolatileData('select:cnt');
+	foreach ($grouped_entities as $row) {
+		$type = $row->type;
+		if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {
+			$entity_stats[$type] = [];
 		}
+				
+		$entity_stats[$type][$row->subtype] = $row->total;
 	}
 
 	return $entity_stats;

@@ -132,6 +132,7 @@ Lib functions
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
+* ``get_entity_statistics()`` now requires an ``int`` for ``$owner_guid``
 * ``system_log_get_log()`` now requires an ``array`` for ``$options``
 * ``messageboard_add()`` now requires an ``ElggUser``, ``ElggUser``, ``string`` and an ``int``
 
