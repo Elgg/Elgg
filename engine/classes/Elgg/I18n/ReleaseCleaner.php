@@ -83,7 +83,7 @@ class ReleaseCleaner {
 
 			$code = basename($entry, '.php');
 			if (!in_array($code, $this->codes)) {
-				$code = Translator::normalizeLanguageCode($code);
+				$code = $this->normalizeLanguageCode($code);
 
 				if (in_array($code, $this->codes)) {
 					// rename file to lowercase
@@ -96,5 +96,20 @@ class ReleaseCleaner {
 				$this->log[] = "Removed $path";
 			}
 		}
+	}
+	
+	/**
+	 * Normalize a language code (e.g. from Transifex)
+	 *
+	 * @param string $code Language code
+	 *
+	 * @return string
+	 *
+	 * @internal
+	 */
+	protected function normalizeLanguageCode(string $code) {
+		$code = strtolower($code);
+		$code = preg_replace('~[^a-z0-9]~', '_', $code);
+		return $code;
 	}
 }

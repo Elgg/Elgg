@@ -479,7 +479,7 @@ class NotificationsService {
 			$params['origin'] = Notification::ORIGIN_SUBSCRIPTIONS;
 		}
 
-		$language = $recipient->language;
+		$language = $recipient->getLanguage();
 		$params['event'] = $event;
 		$params['method'] = $method;
 		$params['sender'] = $actor;
@@ -543,7 +543,7 @@ class NotificationsService {
 		$actor = $event->getActor();
 		$object = $event->getObject();
 		
-		$language = $recipient->language;
+		$language = $recipient->getLanguage();
 
 		// Check custom notification subject for the action/type/subtype combination
 		$subject_key = "notification:{$event->getDescription()}:subject";
@@ -603,7 +603,7 @@ class NotificationsService {
 		$actor = $event->getActor();
 		$object = $event->getObject();
 		/* @var \ElggObject $object */
-		$language = $recipient->language;
+		$language = $recipient->getLanguage();
 
 		// Check custom notification body for the action/type/subtype combination
 		$body_key = "notification:{$event->getDescription()}:body";
