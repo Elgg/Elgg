@@ -103,12 +103,12 @@ return [
 			],
 		],
 		'group' => [
-			'_elgg_filestore_move_icons' => [],
-			'_elgg_filestore_touch_icons' => [],
+			\Elgg\Icons\MoveIconsOnOwnerChangeHandler::class => [],
+			\Elgg\Icons\TouchIconsOnAccessChangeHandler::class => [],
 		],
 		'object' => [
-			'_elgg_filestore_move_icons' => [],
-			'_elgg_filestore_touch_icons' => [],
+			\Elgg\Icons\MoveIconsOnOwnerChangeHandler::class => [],
+			\Elgg\Icons\TouchIconsOnAccessChangeHandler::class => [],
 		],
 	],
 	'validate:after' => [
