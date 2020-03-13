@@ -30,6 +30,7 @@
         "guzzlehttp/guzzle": "~6.5.2",
         "hackzilla/password-generator": "~1.4.1",
         "imagine/imagine": "^0.7.1",
+        "laminas/laminas-mail": "~2.4",
         "league/flysystem": "~1.0",
         "league/flysystem-memory": "^1.0",
         "mrclay/minify": "~2.0",
@@ -52,8 +53,7 @@
         "symfony/routing": "^3.3",
         "symfony/var-dumper": "~3.3",
         "tedivm/stash": "~0.15.0",
-        "vanilla/htmlawed": "~2.2.0",
-        "zendframework/zend-mail": "~2.4"
+        "vanilla/htmlawed": "~2.2.0"
     },
     "config": {
         "process-timeout": 0,

@@ -95,7 +95,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('mailer', function (MockServiceProvider $sp) {
-			return new \Zend\Mail\Transport\InMemory();
+			return new \Laminas\Mail\Transport\InMemory();
 		});
 
 		$this->setFactory('plugins', function (MockServiceProvider $sp) {

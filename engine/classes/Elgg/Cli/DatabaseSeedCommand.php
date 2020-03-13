@@ -42,7 +42,7 @@ class DatabaseSeedCommand extends Command {
 			return 2;
 		}
 
-		_elgg_services()->setValue('mailer', new \Zend\Mail\Transport\InMemory());
+		_elgg_services()->setValue('mailer', new \Laminas\Mail\Transport\InMemory());
 
 		$limit = $this->option('limit') ? : 20;
 		$image_folder = $this->option('image_folder');

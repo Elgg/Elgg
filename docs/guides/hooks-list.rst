@@ -612,7 +612,7 @@ Emails
 **zend:message, system:email**
 	Triggered by the default email transport handler (Elgg uses ``zendframework/zend-mail``).
 	Applies to all outgoing system and notification emails that were not transported using the **transport, system:email** hook.
-	This hook allows you to alter an instance of ``\Zend\Mail\Message`` before it is passed to the Zend email transport.
+	This hook allows you to alter an instance of ``\Laminas\Mail\Message`` before it is passed to the Zend email transport.
 
 	``$params`` contains:
 

@@ -5,6 +5,13 @@ From 3.x to 4.0
    :local:
    :depth: 1
 
+Zend\Mail replaced by Laminas\Mail
+----------------------------------
+
+Because of the `deprecation`_ of the ``Zend\Mail`` library and it's replacement by the ``Laminas\Mail`` all references have been updated.
+
+.. _deprecation: https://www.zend.com/blog/evolution-zend-framework-laminas-project
+
 Web services
 ------------
 

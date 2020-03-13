@@ -2,8 +2,8 @@
 
 namespace Elgg\Email;
 
-use Zend\Mail\Address as ZendAddress;
-use Zend\Mail\Exception\InvalidArgumentException;
+use Laminas\Mail\Address as ZendAddress;
+use Laminas\Mail\Exception\InvalidArgumentException;
 use Zend\Validator\EmailAddress as EmailAddressValidator;
 use Zend\Validator\Hostname;
 
@@ -20,7 +20,7 @@ class Address extends ZendAddress {
 	 * @param string $email the new email address
 	 *
 	 * @return void
-	 * @throws \Zend\Mail\Exception\InvalidArgumentException
+	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
 	 * @since 3.0
 	 */
 	public function setEmail($email) {
@@ -48,7 +48,7 @@ class Address extends ZendAddress {
 	 * @param string $name the new name
 	 *
 	 * @return void
-	 * @throws \Zend\Mail\Exception\InvalidArgumentException
+	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
 	 * @since 3.0
 	 */
 	public function setName($name) {
@@ -83,7 +83,7 @@ class Address extends ZendAddress {
 	 * @param string $ignored Ignored
 	 *
 	 * @return \Elgg\Email\Address
-	 * @throws \Zend\Mail\Exception\InvalidArgumentException
+	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
 	 * @since 3.0
 	 */
 	public static function fromString($contact, $ignored = null) {
@@ -105,7 +105,7 @@ class Address extends ZendAddress {
 	 * @param string $name  the name
 	 *
 	 * @return string
-	 * @throws \Zend\Mail\Exception\InvalidArgumentException
+	 * @throws \Laminas\Mail\Exception\InvalidArgumentException
 	 * @since 3.0
 	 */
 	public static function getFormattedEmailAddress($email, $name = null) {
