@@ -5,6 +5,11 @@ return [
 			\Elgg\Friends\AclNameHandler::class => [],
 		],
 	],
+	'access:collections:write' => [
+		'all' => [
+			\Elgg\WalledGarden\RemovePublicAccessHandler::class => ['priority' => 9999],
+		],
+	],
 	'action:validate' => [
 		'all' => [
 			\Elgg\Entity\CropIcon::class => [],
@@ -46,7 +51,7 @@ return [
 	],
 	'entity:icon:file' => [
 		'user' => [
-			'_elgg_user_set_icon_file' => [],
+			\Elgg\Icons\SetUserIconFileHandler::class => [],
 		],
 	],
 	'entity:url' => [
@@ -121,7 +126,7 @@ return [
 	],
 	'public_pages' => [
 		'walled_garden' => [
-			'_elgg_nav_public_pages' => [],
+			\Elgg\WalledGarden\ExtendPublicPagesHandler::class => [],
 		],
 	],
 	'register' => [

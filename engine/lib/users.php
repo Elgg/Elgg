@@ -278,26 +278,6 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
 }
 
 /**
- * Set user icon file
- *
- * @param \Elgg\Hook $hook "entity:icon:file", "user"
- *
- * @return \ElggIcon
- */
-function _elgg_user_set_icon_file(\Elgg\Hook $hook) {
-
-	$icon = $hook->getValue();
-	
-	$entity = $hook->getEntityParam();
-	$size = $hook->getParam('size', 'medium');
-
-	$icon->owner_guid = $entity->guid;
-	$icon->setFilename("profile/{$entity->guid}{$size}.jpg");
-
-	return $icon;
-}
-
-/**
  * Add the user to the subscribers when (un)banning the account
  *
  * @param \Elgg\Hook $hook 'get', 'subscribers'

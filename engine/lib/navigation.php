@@ -261,20 +261,3 @@ function elgg_get_filter_tabs($context = null, $selected = null, ElggUser $user 
 
 	return $items;
 }
-
-/**
- * Extend public pages
- *
- * @param \Elgg\Hook $hook "public_pages", "walled_garden"
- *
- * @return string[]
- * @internal
- * @since 1.11.0
- */
-function _elgg_nav_public_pages(\Elgg\Hook $hook) {
-	$return_value = $hook->getValue();
-	
-	$return_value[] = 'navigation/menu/user_hover/contents';
-	
-	return $return_value;
-}

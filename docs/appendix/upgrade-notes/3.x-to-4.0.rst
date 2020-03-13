@@ -189,6 +189,7 @@ Core
 * ``_elgg_groups_comment_permissions_override()`` changed to ``Elgg\Comments\GroupMemberPermissionsHandler::class``
 * ``_elgg_widget_menu_setup()`` changed to ``Elgg\Menus\Widget::registerEdit()`` and ``Elgg\Menus\Widget::registerDelete()``
 * ``_elgg_login_menu_setup()`` changed to ``Elgg\Menus\Login::registerRegistration()`` and ``Elgg\Menus\Widget::registerResetPassword()``
+* ``_elgg_nav_public_pages()`` changed to ``Elgg\WalledGarden\ExtendPublicPagesHandler::class``
 * ``_elgg_notifications_cron()`` changed to ``Elgg\Notifications\ProcessQueueCronHandler::class``
 * ``_elgg_notifications_smtp_default_message_id_header()`` changed to ``Elgg\Email\DefaultMessageIdHeaderHandler::class``
 * ``_elgg_notifications_smtp_thread_headers()`` changed to ``Elgg\Email\ThreadHeadersHandler::class``
@@ -208,11 +209,13 @@ Core
 * ``_elgg_user_settings_menu_register()`` changed to ``Elgg\Menus\Page::registerUserSettings()`` and ``Elgg\Menus\Page::registerUserSettingsPlugins()``
 * ``_elgg_user_settings_menu_prepare()`` changed to ``Elgg\Menus\Page::cleanupUserSettingsPlugins()``
 * ``elgg_user_hover_menu()`` changed to ``Elgg\Menus\UserHover::registerAvatarEdit()`` and ``Elgg\Menus\UserHover::registerAdminActions()``
+* ``_elgg_user_set_icon_file()`` changed to ``Elgg\Icons\SetUserIconFileHandler::class``
 * ``_elgg_user_title_menu()`` changed to ``Elgg\Menus\Title::registerAvatarEdit()``
 * ``_elgg_user_page_menu()`` changed to ``Elgg\Menus\Page::registerAvatarEdit()``
 * ``_elgg_user_topbar_menu()`` changed to ``Elgg\Menus\Topbar::registerUserLinks()``
 * ``_elgg_user_unvalidated_menu()`` changed to ``Elgg\Menus\UserUnvalidated::register()``
 * ``_elgg_comments_social_menu_setup()`` changed to ``Elgg\Menus\Social::registerComments()``
+* ``_elgg_walled_garden_remove_public_access()`` changed to ``Elgg\WalledGarden\RemovePublicAccessHandler::class``
 * ``_elgg_widgets_widget_urls()`` changed to ``Elgg\Widgets\EntityUrlHandler::class``
 * ``Elgg\Profiler::handleOutput`` changed to ``Elgg\Debug\Profiler::class``
 
