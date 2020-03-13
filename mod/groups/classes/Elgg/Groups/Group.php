@@ -55,14 +55,12 @@ class Group {
 	/**
 	 * Listen to group ownership changes and update group icon ownership
 	 * This will only move the source file, the actual icons are moved by
-	 * _elgg_filestore_move_icons()
+	 * \Elgg\Icons\MoveIconsOnOwnerChangeHandler::class
 	 *
 	 * This operation is performed in an event listener to ensure that icons
 	 * are moved when ownership changes outside of the groups/edit action flow.
 	 *
-	 * @see _elgg_filestore_move_icons()
-	 *
-	 * @param \Elgg\Event $event "update:after", "group"
+	 * @param \Elgg\Event $event 'update:after', 'group'
 	 *
 	 * @return void
 	 */

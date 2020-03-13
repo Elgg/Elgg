@@ -500,7 +500,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	/**
-	 * @todo test _elgg_filestore_touch_icons() does it's job
+	 * @todo test \Elgg\Icons\TouchIconsOnAccessChangeHandler does it's job
 	 */
 	public function testIconURLInvalidatedOnAccessIdChange() {
 		$this->markTestIncomplete();

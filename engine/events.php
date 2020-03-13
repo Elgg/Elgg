@@ -49,10 +49,10 @@ return [
 			'_elgg_create_notice_of_pending_upgrade' => [],
 		],
 		'relationship' => [
-			'access_friends_acl_add_friend' => [],
+			\Elgg\Friends\AddToAclHandler::class => [],
 		],
 		'user' => [
-			'access_friends_acl_create' => [],
+			\Elgg\Friends\CreateAclHandler::class => [],
 		],
 	],
 	'created' => [
@@ -62,7 +62,7 @@ return [
 	],
 	'delete' => [
 		'relationship' => [
-			'access_friends_acl_remove_friend' => [],
+			\Elgg\Friends\RemoveFromAclHandler::class => [],
 		],
 	],
 	'init' => [
@@ -103,12 +103,12 @@ return [
 			],
 		],
 		'group' => [
-			'_elgg_filestore_move_icons' => [],
-			'_elgg_filestore_touch_icons' => [],
+			\Elgg\Icons\MoveIconsOnOwnerChangeHandler::class => [],
+			\Elgg\Icons\TouchIconsOnAccessChangeHandler::class => [],
 		],
 		'object' => [
-			'_elgg_filestore_move_icons' => [],
-			'_elgg_filestore_touch_icons' => [],
+			\Elgg\Icons\MoveIconsOnOwnerChangeHandler::class => [],
+			\Elgg\Icons\TouchIconsOnAccessChangeHandler::class => [],
 		],
 	],
 	'validate:after' => [

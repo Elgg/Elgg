@@ -2,7 +2,7 @@
 return [
 	'access_collection:name' => [
 		'access_collection' => [
-			'access_friends_acl_get_name' => [],
+			\Elgg\Friends\AclNameHandler::class => [],
 		],
 	],
 	'action:validate' => [
@@ -239,14 +239,14 @@ return [
 		'user' => [
 			'_elgg_admin_save_notification_setting' => [],
 			\Elgg\Notifications\SaveUserSettingsHandler::class => [],
-			'_elgg_set_user_default_access' => [],
-			'_elgg_set_user_email' => [],
-			'_elgg_set_user_language' => [],
-			'_elgg_set_user_name' => [],
-			'_elgg_set_user_password' => [
+			'Elgg\Users\Settings::setDefaultAccess' => [],
+			'Elgg\Users\Settings::setEmail' => [],
+			'Elgg\Users\Settings::setLanguage' => [],
+			'Elgg\Users\Settings::setName' => [],
+			'Elgg\Users\Settings::setPassword' => [
 				'priority' => 100, // this needs to be before email change, for security reasons
 			],
-			'_elgg_set_user_username' => [],
+			'Elgg\Users\Settings::setUsername' => [],
 		],
 	],
 	'validate' => [

@@ -291,136 +291,13 @@ function get_readable_access_level($entity_access_id) {
 /**
  * A quick and dirty way to make sure the access permissions have been correctly set up
  *
- * @elgg_event_handler init system
+ * @param \Elgg\Event $event 'ready', 'system'
  *
  * @return void
  */
-function access_init() {
+function access_init(\Elgg\Event $event) {
 	
 	// Tell the access functions the system has booted, plugins are loaded,
 	// and the user is logged in so it can start caching
 	_elgg_services()->accessCollections->markInitComplete();
-}
-
-/**
- * Creates a Friends ACL for a user
- *
- * @elgg_event 'create', 'user'
- *
- * @param \Elgg\Event $event event
- *
- * @return void
- *
- * @since 3.0.0
- *
- * @internal
- */
-function access_friends_acl_create(\Elgg\Event $event) {
-	$user = $event->getObject();
-	if (!($user instanceof \ElggUser)) {
-		return;
-	}
-	
-	create_access_collection('friends', $user->guid, 'friends');
-}
-
-/**
- * Adds the friend to the user friend ACL
- *
- * @elgg_event 'create', 'relationship'
- *
- * @param \Elgg\Event $event event
- *
- * @return void
- *
- * @since 3.0.0
- *
- * @internal
- */
-function access_friends_acl_add_friend(\Elgg\Event $event) {
-	$relationship_object = $event->getObject();
-	if (!($relationship_object instanceof \ElggRelationship)) {
-		return;
-	}
-	
-	if ($relationship_object->relationship !== 'friend') {
-		return;
-	}
-	
-	$user = get_user($relationship_object->guid_one);
-	$friend = get_user($relationship_object->guid_two);
-	
-	if (!$user || !$friend) {
-		return;
-	}
-	
-	$acl = $user->getOwnedAccessCollection('friends');
-	if (empty($acl)) {
-		return;
-	}
-	$acl->addMember($friend->guid);
-}
-
-/**
- * Add the friend to the user friends ACL
- *
- * @elgg_event 'delete', 'relationship'
- *
- * @param \Elgg\Event $event event
- *
- * @return void
- *
- * @since 3.0.0
- *
- * @internal
- */
-function access_friends_acl_remove_friend(\Elgg\Event $event) {
-	$relationship_object = $event->getObject();
-	if (!($relationship_object instanceof \ElggRelationship)) {
-		return;
-	}
-	
-	if ($relationship_object->relationship !== 'friend') {
-		return;
-	}
-	
-	$user = get_user($relationship_object->guid_one);
-	$friend = get_user($relationship_object->guid_two);
-	
-	if (!$user || !$friend) {
-		return;
-	}
-	
-	$acl = $user->getOwnedAccessCollection('friends');
-	if (empty($acl)) {
-		return;
-	}
-	
-	$acl->removeMember($friend->guid);
-}
-
-/**
- * Return the name of a friends ACL
- *
- * @elgg_event 'access_collection:name', 'access_collection'
- *
- * @param \Elgg\Hook $hook hook
- *
- * @return string|void
- *
- * @since 3.0.0
- *
- * @internal
- */
-function access_friends_acl_get_name(\Elgg\Hook $hook) {
-	$access_collection = $hook->getParam('access_collection');
-	if (!($access_collection instanceof ElggAccessCollection)) {
-		return;
-	}
-	
-	if ($access_collection->getSubtype() !== 'friends') {
-		return;
-	}
-	
-	return elgg_echo('access:label:friends');
 }
