@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -31,7 +31,7 @@ return array(
 	'likes:notifications:body' =>
 '안녕하세요 %1$s,
 
-%2$s 가 당신의 글 "%3$s" %4$s 을 공감합니다. 
+%2$s 가 당신의 글 "%3$s" %4$s 을 공감합니다.
 
 원문은 아래에서 볼 수 있습니다:
 

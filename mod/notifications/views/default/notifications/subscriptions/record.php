@@ -25,7 +25,11 @@ $icon = elgg_view('output/img', [
 	'alt' => $entity->getDisplayName(),
 ]);
 
-$name = $entity->getDisplayName();
+$name = elgg_view('output/url', [
+	'text' => $entity->getDisplayName(),
+	'href' => $entity->getURL(),
+	'is_trusted' => true,
+]);
 
 $preferred_methods = [];
 

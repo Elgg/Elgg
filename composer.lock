@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3c5e84bce312eb0f934c7e82e4d25dc1",
+    "content-hash": "be50c837ef43c8d2c8c1e4e028e988c3",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -1006,16 +1006,16 @@
         },
         {
             "name": "elgg/login_as",
-            "version": "2.0.0",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elgg/login_as.git",
-                "reference": "5ae8c4f1a347eb3c9c8913fbb7afad254c2c2c3a"
+                "reference": "127e59f312493cc017875547abdf816442d7e217"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elgg/login_as/zipball/5ae8c4f1a347eb3c9c8913fbb7afad254c2c2c3a",
-                "reference": "5ae8c4f1a347eb3c9c8913fbb7afad254c2c2c3a",
+                "url": "https://api.github.com/repos/Elgg/login_as/zipball/127e59f312493cc017875547abdf816442d7e217",
+                "reference": "127e59f312493cc017875547abdf816442d7e217",
                 "shasum": ""
             },
             "require": {
@@ -1027,7 +1027,7 @@
             "type": "elgg-plugin",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0"
+                "GPL-2.0-only"
             ],
             "authors": [
                 {
@@ -1040,7 +1040,7 @@
                 "elgg",
                 "plugin"
             ],
-            "time": "2017-12-21T16:35:04+00:00"
+            "time": "2020-03-11T08:47:15+00:00"
         },
         {
             "name": "fzaninotto/faker",
@@ -5401,5 +5401,6 @@
     "platform-dev": [],
     "platform-overrides": {
         "php": "7.2"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }

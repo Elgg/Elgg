@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-23 11:15+0100\n"
+"POT-Creation-Date: 2020-02-14 12:31+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
 "Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -962,20 +962,20 @@ msgstr ""
 "Les bons commentaires décrivent le \"pourquoi.\"  Le bon code décrit le "
 "\"comment.\" Par ex. :"
 
-#: ../../contribute/code.rst:416 ../../contribute/code.rst:553
-#: ../../contribute/code.rst:589 ../../contribute/code.rst:627
-#: ../../contribute/code.rst:670 ../../contribute/code.rst:690
-#: ../../contribute/code.rst:709 ../../contribute/code.rst:727
-#: ../../contribute/code.rst:749 ../../contribute/code.rst:773
+#: ../../contribute/code.rst:416 ../../contribute/code.rst:552
+#: ../../contribute/code.rst:588 ../../contribute/code.rst:626
+#: ../../contribute/code.rst:669 ../../contribute/code.rst:689
+#: ../../contribute/code.rst:708 ../../contribute/code.rst:726
+#: ../../contribute/code.rst:748 ../../contribute/code.rst:772
 msgid "Bad:"
 msgstr "Mauvais :"
 
 #: ../../contribute/code.rst:427 ../../contribute/code.rst:539
-#: ../../contribute/code.rst:569 ../../contribute/code.rst:606
-#: ../../contribute/code.rst:644 ../../contribute/code.rst:680
-#: ../../contribute/code.rst:696 ../../contribute/code.rst:715
-#: ../../contribute/code.rst:735 ../../contribute/code.rst:758
-#: ../../contribute/code.rst:781
+#: ../../contribute/code.rst:568 ../../contribute/code.rst:605
+#: ../../contribute/code.rst:643 ../../contribute/code.rst:679
+#: ../../contribute/code.rst:695 ../../contribute/code.rst:714
+#: ../../contribute/code.rst:734 ../../contribute/code.rst:757
+#: ../../contribute/code.rst:780
 msgid "Good:"
 msgstr "Bon :"
 
@@ -1196,20 +1196,14 @@ msgid "Bad (hard to read, misuse of quotes and {}s):"
 msgstr "Mauvais (difficile à lire, mauvais usage des guillemets et des {}):"
 
 #: ../../contribute/code.rst:545
-msgid ""
-"Remove trailing whitespace at the end of lines. An easy way to do this "
-"before you commit is to run ``php .scripts/fix_style.php`` from the "
-"installation root."
+msgid "Remove trailing whitespace at the end of lines."
 msgstr ""
-"Supprimez les espaces de fin de ligne. Un moyen simple de faire cela avant "
-"votre commit est d'exécuter ``php .scripts/fix_style.php`` à partir de la "
-"racine de l'installation."
 
-#: ../../contribute/code.rst:549
+#: ../../contribute/code.rst:548
 msgid "Value validation"
 msgstr "Validation de la valeur"
 
-#: ../../contribute/code.rst:551
+#: ../../contribute/code.rst:550
 msgid ""
 "When working with user input prepare the input outside of the validation "
 "method."
@@ -1217,11 +1211,11 @@ msgstr ""
 "Quand vous travaillez avec des saisies utilisateur, préparez les saisies en "
 "dehors de la méthode de validation."
 
-#: ../../contribute/code.rst:585
+#: ../../contribute/code.rst:584
 msgid "Use exceptions"
 msgstr "Utilisez les exceptions"
 
-#: ../../contribute/code.rst:587
+#: ../../contribute/code.rst:586
 msgid ""
 "Do not be afraid to use exceptions. They are easier to deal with than mixed "
 "function output:"
@@ -1229,99 +1223,99 @@ msgstr ""
 "N'ayez pas peur d'utiliser les exceptions. Elles sont plus faciles à gérer "
 "que des sorties de fonction mixtes : "
 
-#: ../../contribute/code.rst:623
+#: ../../contribute/code.rst:622
 msgid "Documenting return values"
 msgstr "Documenter les valeurs de retour"
 
-#: ../../contribute/code.rst:625
+#: ../../contribute/code.rst:624
 msgid "Do not use ``@return void`` on methods that return a value or null."
 msgstr ""
 "N'utilisez pas ``@return void`` sur des méthodes qui renvoient une valeur ou"
 " null."
 
-#: ../../contribute/code.rst:663
+#: ../../contribute/code.rst:662
 msgid "CSS guidelines"
 msgstr "Recommandations CSS"
 
-#: ../../contribute/code.rst:665
+#: ../../contribute/code.rst:664
 msgid "Save the css in files with a ``.css`` extension."
 msgstr ""
 
-#: ../../contribute/code.rst:668
+#: ../../contribute/code.rst:667
 msgid "Use shorthand where possible"
 msgstr "Utilisez des abréviations quand c'est possible"
 
-#: ../../contribute/code.rst:688
+#: ../../contribute/code.rst:687
 msgid "Use hyphens, not underscores"
 msgstr "Utilisez les traits d'union \"-\", pas les underscores \"_\""
 
-#: ../../contribute/code.rst:704
+#: ../../contribute/code.rst:703
 msgid ""
 "You should prefix your ids and classnames with text that identifies your "
 "plugin."
 msgstr ""
 
-#: ../../contribute/code.rst:707
+#: ../../contribute/code.rst:706
 msgid "One property per line"
 msgstr "Une propriété par ligne"
 
-#: ../../contribute/code.rst:723
+#: ../../contribute/code.rst:722
 msgid "Property declarations"
 msgstr "Déclarations des propriétés"
 
-#: ../../contribute/code.rst:725
+#: ../../contribute/code.rst:724
 msgid "These should be spaced like so: ``property: value;``"
 msgstr "Celles-ci devraient être espacées comme ceci : ``propriété: valeur;``"
 
-#: ../../contribute/code.rst:742
+#: ../../contribute/code.rst:741
 msgid "Vendor prefixes"
 msgstr "Préfixes fournisseurs (vendor)"
 
-#: ../../contribute/code.rst:744
+#: ../../contribute/code.rst:743
 msgid "Group vendor-prefixes for the same property together"
 msgstr "Regroupez les préfixes fournisseurs pour la même propriété"
 
-#: ../../contribute/code.rst:745
+#: ../../contribute/code.rst:744
 msgid "Longest vendor-prefixed version first"
 msgstr "La version la plus longue des préfixes fournisseurs en premier"
 
-#: ../../contribute/code.rst:746
+#: ../../contribute/code.rst:745
 msgid "Always include non-vendor-prefixed version"
 msgstr "Incluez toujours la version sans préfixe fournisseur"
 
-#: ../../contribute/code.rst:747
+#: ../../contribute/code.rst:746
 msgid ""
 "Put an extra newline between vendor-prefixed groups and other properties"
 msgstr ""
 "Ajoutez une ligne supplémentaire entre les groupes  avec préfixes "
 "fournisseurs et les autres propriétés "
 
-#: ../../contribute/code.rst:771
+#: ../../contribute/code.rst:770
 msgid "Group subproperties"
 msgstr "Regroupez les sous-propriétés"
 
-#: ../../contribute/code.rst:792
+#: ../../contribute/code.rst:791
 msgid "Javascript guidelines"
 msgstr "Recommandations JavaScript"
 
-#: ../../contribute/code.rst:794
+#: ../../contribute/code.rst:793
 msgid "Same formatting standards as PHP apply."
 msgstr "Les mêmes standards de formatage que PHP s'appliquent."
 
-#: ../../contribute/code.rst:796
+#: ../../contribute/code.rst:795
 msgid "All functions should be in the ``elgg`` namespace."
 msgstr "Toutes les fonctions devraient être dans l'espace de nom ``elgg``."
 
-#: ../../contribute/code.rst:798
+#: ../../contribute/code.rst:797
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 "Les expressions d'une fonction devraient se terminer par un point-virgule."
 
-#: ../../contribute/code.rst:809
+#: ../../contribute/code.rst:808
 msgid "Deprecating APIs"
 msgstr "APIs obsolètes"
 
-#: ../../contribute/code.rst:811
+#: ../../contribute/code.rst:810
 msgid ""
 "Occasionally functions and classes must be deprecated in favor of newer "
 "replacements. Since 3rd party plugin authors rely on a consistent API, "
@@ -1338,7 +1332,7 @@ msgstr ""
 " maintenir la compatibilité ascendante, les API obsolètes vont suivre les "
 "recommandations suivantes :"
 
-#: ../../contribute/code.rst:818
+#: ../../contribute/code.rst:817
 msgid ""
 "Minor version (1.x) that deprecates an API must include a wrapper "
 "function/class (or otherwise appropriate means) to maintain backward "
@@ -1353,7 +1347,7 @@ msgstr ""
 "``elgg_deprecated_notice('...', '1.11')`` pour journaliser le fait que cette"
 " fonction est obsolète."
 
-#: ../../contribute/code.rst:824
+#: ../../contribute/code.rst:823
 msgid ""
 "The next major revision (2.0) removes the compatibility layer. Any use of "
 "the deprecated API should be corrected before this."
@@ -1721,8 +1715,8 @@ msgstr ""
 "les commits de la 2.0 dans la 2.1."
 
 #: ../../contribute/core/releases.rst:57
-msgid "First new stable minor/major release"
-msgstr "Première nouvelle version mineure/majeure stable"
+msgid "Preparation for first new stable minor/major release"
+msgstr ""
 
 #: ../../contribute/core/releases.rst:59
 msgid ""
@@ -1732,27 +1726,75 @@ msgstr ""
 "Mettez à jour :doc:`/appendix/support` pour inclure la date de la nouvelle "
 "version mineure/majeure et complétez les vides de la version précédente."
 
-#: ../../contribute/core/releases.rst:61
+#: ../../contribute/core/releases.rst:60
 msgid ""
 "Update the README.md file badges to point to the correct new release "
 "numbers."
 msgstr ""
 
-#: ../../contribute/core/releases.rst:64
+#: ../../contribute/core/releases.rst:63
+msgid "Preparation for a new major release"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:65
+msgid ""
+"Change the Transifex configuration to push translations to a different "
+"project"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:68
 msgid "Prepare the release"
 msgstr "Préparer la sortie"
 
-#: ../../contribute/core/releases.rst:66
+#: ../../contribute/core/releases.rst:71
+msgid "Make a PR with translation updates"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:73
+#: ../../contribute/core/releases.rst:107
+msgid "Install the prerequisites:"
+msgstr "Installez les pré-requis :"
+
+#: ../../contribute/core/releases.rst:79
+#: ../../contribute/core/releases.rst:115
+msgid ""
+"On Windows you need to run these command in a console with admin privileges"
+msgstr ""
+"Sur Windows, vous devrez exécuter ces commandes dans une console avec des "
+"privilèges admin"
+
+#: ../../contribute/core/releases.rst:81
+msgid "Run the ``languages.php`` script. For example, to pull translations:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:87
+msgid ""
+"Make a pull request with the new translations and have it merged before the "
+"next step."
+msgstr ""
+
+#: ../../contribute/core/releases.rst:89
+msgid ""
+"Next, manually browse to the ``/admin/site_settings`` page and verify it "
+"loads. If it does not, a language file from Transifex may have a PHP syntax "
+"error. Fix the error and amend your commit with the new file:"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:99
+msgid "Make the release PR"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:101
 msgid "Bring your local git clone up to date."
 msgstr "Mettez à jour votre clone git local."
 
-#: ../../contribute/core/releases.rst:68
+#: ../../contribute/core/releases.rst:103
 msgid "Merge latest commits up from lowest supported branch."
 msgstr ""
 "Fusionnez les derniers commits vers le haut en commençant par la branche "
 "supportée la plus basse."
 
-#: ../../contribute/core/releases.rst:70
+#: ../../contribute/core/releases.rst:105
 msgid ""
 "Visit ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` and submit the "
 "PR if there is anything that needs to be merged up."
@@ -1760,66 +1802,46 @@ msgstr ""
 "Visitez ``https://github.com/Elgg/Elgg/compare/<new>...<old>`` et soumettez "
 "le PR si quoi que ce soit a besoin d'être fusionné plus haut."
 
-#: ../../contribute/core/releases.rst:72
-msgid "Install the prerequisites:"
-msgstr "Installez les pré-requis :"
-
-#: ../../contribute/core/releases.rst:81
-msgid ""
-"On Windows you need to run these command in a console with admin privileges"
-msgstr ""
-"Sur Windows, vous devrez exécuter ces commandes dans une console avec des "
-"privilèges admin"
-
-#: ../../contribute/core/releases.rst:83
+#: ../../contribute/core/releases.rst:117
 msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
 msgstr ""
 "Exécutez le script ``release.php``. Par exemple, pour publier 1.12.5 :"
 
-#: ../../contribute/core/releases.rst:90
+#: ../../contribute/core/releases.rst:124
 msgid "This creates a ``release-1.12.5`` branch in your local repo."
 msgstr "Ceci crée une branche ``release-1.12.5`` dans votre repo local."
 
-#: ../../contribute/core/releases.rst:92
+#: ../../contribute/core/releases.rst:126
 msgid ""
-"Next, manually browse to the ``/admin/site_settings`` page and verify it "
-"loads. If it does not, a language file from Transifex may have a PHP syntax "
-"error. Fix the error and amend your commit with the new file:"
+"Next, submit a pull request via GitHub for automated testing and approval by"
+" another developer:"
 msgstr ""
 
-#: ../../contribute/core/releases.rst:101
-msgid ""
-"Next, submit a PR via GitHub for automated testing and approval by another "
-"developer:"
-msgstr ""
-"Ensuite, soumettez un PR via Github pour les tests automatisés et "
-"l'approbation par un autre développeur :"
-
-#: ../../contribute/core/releases.rst:108
+#: ../../contribute/core/releases.rst:133
 msgid "Tag the release"
 msgstr "Tagguez la release"
 
-#: ../../contribute/core/releases.rst:110
+#: ../../contribute/core/releases.rst:135
 msgid "Once approved and merged, tag the release:"
 msgstr "Une fois approuvée et fusionnée, tagguez les release :"
 
-#: ../../contribute/core/releases.rst:118
+#: ../../contribute/core/releases.rst:143
 msgid "Or create a release on GitHub"
 msgstr "Ou créez une release sur Github"
 
-#: ../../contribute/core/releases.rst:120
+#: ../../contribute/core/releases.rst:145
 msgid "Goto releases"
 msgstr "Allez sur les releases"
 
-#: ../../contribute/core/releases.rst:121
+#: ../../contribute/core/releases.rst:146
 msgid "Click 'Draft a new release'"
 msgstr "Cliquez sur 'Create a new release'"
 
-#: ../../contribute/core/releases.rst:122
+#: ../../contribute/core/releases.rst:147
 msgid "Enter the version"
 msgstr "Saisissez la version"
 
-#: ../../contribute/core/releases.rst:123
+#: ../../contribute/core/releases.rst:148
 msgid ""
 "Select the correct branch (eg 1.12 for a 1.12.x release, 2.3 for a 2.3.x "
 "release, etc)"
@@ -1827,47 +1849,90 @@ msgstr ""
 "Sélectionnez la bonne branche (par ex. 1.12 pour une release 1.12.x, 2.3 "
 "pour une release 2.3.x, etc.)"
 
-#: ../../contribute/core/releases.rst:124
+#: ../../contribute/core/releases.rst:149
 msgid "Set the release title as 'Elgg {version}'"
 msgstr "Définissez le titre de la release tel que 'Elgg {version}'"
 
-#: ../../contribute/core/releases.rst:125
+#: ../../contribute/core/releases.rst:150
 msgid "Paste the CHANGELOG.md part related to this release in the description"
 msgstr ""
 "Collez la partie de CHANGELOG.md relative à cette release dans la "
 "description"
 
-#: ../../contribute/core/releases.rst:127
+#: ../../contribute/core/releases.rst:152
 msgid "Some final administration"
 msgstr "Un peu d'administration pour finir"
 
-#: ../../contribute/core/releases.rst:129
+#: ../../contribute/core/releases.rst:154
 msgid "Mark GitHub release milestones as completed"
 msgstr "Marquez les jalons de release Github comme terminés"
 
-#: ../../contribute/core/releases.rst:130
+#: ../../contribute/core/releases.rst:155
 msgid "Move unresolved tickets in released milestones to later milestones"
 msgstr ""
 "Déplacez les tickets non résolus des jalons publiés vers des jalons "
 "ultérieurs"
 
-#: ../../contribute/core/releases.rst:133
+#: ../../contribute/core/releases.rst:158
+msgid "Additional actions for the first new minor / major"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:160
+msgid "Make a new branch on GitHub (for example 3.3)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:161
+msgid ""
+"Set the new branch as the default branch (optional, but suggested for stable"
+" releases)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:162
+msgid "Configure Read The Docs to build the new branch (not the new tag)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:163
+msgid ""
+"Check the Elgg starter project for potential requirement / config changes in"
+" the ``composer.json``"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:164
+msgid ""
+"Add the new minor / major version to the ``Elgg/community_plugins`` "
+"repository so developers can upload plugins for the new release"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:167
+msgid "Additional action for the first new major"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:169
+msgid "On GitHub add a branch protection rule (for example ``4.*``)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:170
+msgid ""
+"Configure Scrutinizer to track the new major branches (for example ``4.*``)"
+msgstr ""
+
+#: ../../contribute/core/releases.rst:173
 msgid "Update the website"
 msgstr "Mettez à jour le site web"
 
-#: ../../contribute/core/releases.rst:135
+#: ../../contribute/core/releases.rst:175
 msgid "ssh to elgg.org"
 msgstr "ssh vers elgg.org"
 
-#: ../../contribute/core/releases.rst:136
+#: ../../contribute/core/releases.rst:176
 msgid "Clone https://github.com/Elgg/elgg-scripts"
 msgstr "Clonez https://github.com/Elgg/elgg-scripts"
 
-#: ../../contribute/core/releases.rst:139
+#: ../../contribute/core/releases.rst:179
 msgid "Build zip package"
 msgstr "Construisez le package zip"
 
-#: ../../contribute/core/releases.rst:141
+#: ../../contribute/core/releases.rst:181
 msgid ""
 "Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip "
 "file. Run without arguments to see usage."
@@ -1875,7 +1940,7 @@ msgstr ""
 "Utilisez ``elgg-scripts/build/elgg-starter-project.sh`` pour générer le "
 "fichier .zip. Exécutez sans argument pour voir son utilisation."
 
-#: ../../contribute/core/releases.rst:156
+#: ../../contribute/core/releases.rst:196
 msgid ""
 "For Elgg 2.x releases use the ``2.x`` branch of the starter-project (eg. "
 "``./elgg-starter-project.sh 2.x 2.0.4 /var/www/www.elgg.org/download/``)"
@@ -1884,7 +1949,7 @@ msgstr ""
 "(par ex. ``./elgg-starter-project.sh 2.x 2.0.4 "
 "/var/www/www.elgg.org/download/``)"
 
-#: ../../contribute/core/releases.rst:158
+#: ../../contribute/core/releases.rst:198
 msgid ""
 "Verify that ``vendor/elgg/elgg/composer.json`` in the zip file has the "
 "expected version."
@@ -1892,7 +1957,7 @@ msgstr ""
 "Vérifiez que ``vendor/elgg/elgg/composer.json`` dans le fichier zip a bien "
 "la version attendue."
 
-#: ../../contribute/core/releases.rst:159
+#: ../../contribute/core/releases.rst:199
 msgid ""
 "If not, make sure GitHub has the release tag, and that the starter project "
 "has a compatible ``elgg/elgg`` item in the composer requires list."
@@ -1901,84 +1966,72 @@ msgstr ""
 " que le projet de démarrage a un élément compatible ``elgg/elgg`` dans la "
 "liste \"requires\" de composer."
 
-#: ../../contribute/core/releases.rst:163
-msgid "Building 1.x zip packages"
-msgstr "Construire les packages zip 1.x"
-
-#: ../../contribute/core/releases.rst:165
-msgid ""
-"Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without "
-"arguments to see usage."
-msgstr ""
-"Utilisez ``elgg-scripts/build/build.sh`` pour générer le fichier .zip. "
-"Exécutez sans argument pour voir L'utilisation."
-
-#: ../../contribute/core/releases.rst:176
+#: ../../contribute/core/releases.rst:203
 msgid "Update elgg.org download page"
 msgstr "Mettez à jour la page de téléchargement de elgg.org"
 
-#: ../../contribute/core/releases.rst:178
+#: ../../contribute/core/releases.rst:205
 msgid "Clone https://github.com/Elgg/community"
 msgstr "Clonez https://github.com/Elgg/community"
 
-#: ../../contribute/core/releases.rst:179
+#: ../../contribute/core/releases.rst:206
 msgid "Add the new version to ``classes/Elgg/Releases.php``"
 msgstr "Ajoutez la nouvelle version dans ``classes/Elgg/Releases.php``"
 
-#: ../../contribute/core/releases.rst:180
-#: ../../contribute/core/releases.rst:198
+#: ../../contribute/core/releases.rst:207
+#: ../../contribute/core/releases.rst:225
 msgid "Commit and push the changes"
 msgstr "Committez et poussez les modifications (push)"
 
-#: ../../contribute/core/releases.rst:181
+#: ../../contribute/core/releases.rst:208
 msgid "Update the plugin on www.elgg.org"
 msgstr "Mettez à jour le plugin sur www.elgg.org"
 
-#: ../../contribute/core/releases.rst:188
+#: ../../contribute/core/releases.rst:215
 msgid "Update elgg.org"
 msgstr "Mettre à jour elgg.org"
 
-#: ../../contribute/core/releases.rst:190
+#: ../../contribute/core/releases.rst:217
 msgid "Clone https://github.com/Elgg/www.elgg.org"
 msgstr "Cloner https://github.com/Elgg/www.elgg.org"
 
-#: ../../contribute/core/releases.rst:191
+#: ../../contribute/core/releases.rst:218
 msgid "Change the required Elgg version in ``composer.json``"
 msgstr "Modifiez la version d'Elgg requise dans ``composer.json``"
 
-#: ../../contribute/core/releases.rst:192
+#: ../../contribute/core/releases.rst:219
 msgid "Update vendors"
 msgstr "Mettre à jours vendors"
 
-#: ../../contribute/core/releases.rst:199
+#: ../../contribute/core/releases.rst:226
 msgid "Pull to live site"
 msgstr "Faites un pull vers le site en activité"
 
-#: ../../contribute/core/releases.rst:205
+#: ../../contribute/core/releases.rst:232
 msgid "Update dependencies"
 msgstr "Mettez à jour les dépendances"
 
-#: ../../contribute/core/releases.rst:213
+#: ../../contribute/core/releases.rst:240
 msgid "Go to community admin panel"
 msgstr "Allez sur la panneau admin de la communauté"
 
-#: ../../contribute/core/releases.rst:212
+#: ../../contribute/core/releases.rst:239
 msgid "Flush APC cache"
 msgstr "Vider le cache APC"
 
-#: ../../contribute/core/releases.rst:213
+#: ../../contribute/core/releases.rst:240
 msgid "Run upgrade"
 msgstr "Exécuter la mise à niveau"
 
-#: ../../contribute/core/releases.rst:216
+#: ../../contribute/core/releases.rst:243
 msgid "Make the announcement"
 msgstr "Faites l'annonce"
 
-#: ../../contribute/core/releases.rst:218
+#: ../../contribute/core/releases.rst:245
 msgid "This should be the very last thing you do."
 msgstr "Ce devrait être la toute dernière chose à faire."
 
-#: ../../contribute/core/releases.rst:220
+#: ../../contribute/core/releases.rst:247
 msgid ""
 "Open ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` and copy the "
 "contents for that version"
@@ -1986,13 +2039,13 @@ msgstr ""
 "Ouvrez ``https://github.com/Elgg/Elgg/blob/<tag>/CHANGELOG.md`` et copiez le"
 " contenu pour cette version"
 
-#: ../../contribute/core/releases.rst:221
+#: ../../contribute/core/releases.rst:248
 msgid "Sign in at https://elgg.org/blog and compose a new blog with a summary"
 msgstr ""
 "Connectez-vous sur https://elgg.org/blog et rédigez un nouvel article de "
 "blog avec un sommaire"
 
-#: ../../contribute/core/releases.rst:222
+#: ../../contribute/core/releases.rst:249
 msgid ""
 "Copy in the CHANGELOG contents, clear formatting, and manually remove the "
 "SVG anchors"
@@ -2000,7 +2053,7 @@ msgstr ""
 "Copiez le contenu dans le CHANGELOG, supprimez le formattage, et supprimez "
 "manuellement les balises SVG"
 
-#: ../../contribute/core/releases.rst:223
+#: ../../contribute/core/releases.rst:250
 msgid ""
 "Add tags ``release`` and ``elgg2.x`` where x is whatever branch is being "
 "released"
@@ -2008,7 +2061,7 @@ msgstr ""
 "Ajoutez les tags ``release`` et ``elgg2.x`` où x est le nom de la branche en"
 " train d'être publiée"
 
-#: ../../contribute/core/releases.rst:224
+#: ../../contribute/core/releases.rst:251
 msgid "Tweet from the elgg `Twitter account`_"
 msgstr "Tweetez depuis le `compte Twitter account`_ d'Elgg"
 
@@ -2105,11 +2158,17 @@ msgstr ""
 "C'est aussi simple que cela ! Grunt va continuer à s'exécuter, à vérifier "
 "les docs pour des modifications, et à reconstruire automatiquement."
 
-#: ../../contribute/docs.rst:30
+#: ../../contribute/docs.rst:27
+msgid ""
+"You might need to install 'sphinxcontrib-phpdomain'. You can do this with "
+"the following command: `pip install -U sphinxcontrib-phpdomain`"
+msgstr ""
+
+#: ../../contribute/docs.rst:35
 msgid "Follow the existing document organization"
 msgstr "Suivez l'organisation du document existant"
 
-#: ../../contribute/docs.rst:31
+#: ../../contribute/docs.rst:36
 msgid ""
 "The current breakdown is not necessarily the One True Way to organize docs, "
 "but consistency is better than randomness."
@@ -2117,11 +2176,11 @@ msgstr ""
 "L'organisation actuelle n'est pas nécessairement La Bonne Manière "
 "d'organiser les documentations, mais la cohérence est mieux que l'aléatoire."
 
-#: ../../contribute/docs.rst:36
+#: ../../contribute/docs.rst:41
 msgid "intro/*"
 msgstr "intro/*"
 
-#: ../../contribute/docs.rst:37
+#: ../../contribute/docs.rst:42
 msgid ""
 "This is everything that brand new users need to know (installation, "
 "features, license, etc.)"
@@ -2129,19 +2188,19 @@ msgstr ""
 "C'est tout ce que les tout nouveaux utilisateurs ont besoin de savoir "
 "(installation, fonctionnalités, licence, etc.)"
 
-#: ../../contribute/docs.rst:40
+#: ../../contribute/docs.rst:45
 msgid "admin/*"
 msgstr "admin/*"
 
-#: ../../contribute/docs.rst:41
+#: ../../contribute/docs.rst:46
 msgid "Guides for administrators. Task-oriented."
 msgstr "Guides pour les administrateurs. Orienté tâches."
 
-#: ../../contribute/docs.rst:44
+#: ../../contribute/docs.rst:49
 msgid "guides/*"
 msgstr "guides/*"
 
-#: ../../contribute/docs.rst:45
+#: ../../contribute/docs.rst:50
 msgid ""
 "API guides for plugin developers. Cookbook-style. Example heavy. Code "
 "snippet heavy. Broken down by services (actions, i18n, routing, db, etc.). "
@@ -2153,11 +2212,11 @@ msgstr ""
 "i18n, routage, bd, etc.). Ceci devrait discuter seulement de l'API publique "
 "et de son comportement, pas des détails d'implémentation ou du raisonnement."
 
-#: ../../contribute/docs.rst:50
+#: ../../contribute/docs.rst:55
 msgid "design/*"
 msgstr "design/*"
 
-#: ../../contribute/docs.rst:51
+#: ../../contribute/docs.rst:56
 msgid ""
 "Design docs for people who want to get a better understanding of how/why "
 "core is built the way it is. This should discuss internal implementation "
@@ -2173,11 +2232,11 @@ msgstr ""
 "qui veulent contribuer ou pour la communication entre les développeurs du "
 "noyau."
 
-#: ../../contribute/docs.rst:57
+#: ../../contribute/docs.rst:62
 msgid "contribute/*"
 msgstr "contribute/*"
 
-#: ../../contribute/docs.rst:58
+#: ../../contribute/docs.rst:63
 msgid ""
 "Contributors guides for the various ways people can participate in the "
 "project."
@@ -2185,11 +2244,11 @@ msgstr ""
 "Guides de contributeurs pour les diverses manières dont des personnes "
 "peuvent participer au sein du projet."
 
-#: ../../contribute/docs.rst:61
+#: ../../contribute/docs.rst:66
 msgid "appendix/*"
 msgstr "appendix/*"
 
-#: ../../contribute/docs.rst:62
+#: ../../contribute/docs.rst:67
 msgid ""
 "More detailed/meta/background information about the project (history, "
 "roadmap, etc.)"
@@ -2197,11 +2256,11 @@ msgstr ""
 "Des informations plus détaillées/méta/de contexte à propos du projet "
 "(historique, feuille de route, etc.)"
 
-#: ../../contribute/docs.rst:66
+#: ../../contribute/docs.rst:71
 msgid "Use \"Elgg\" in a grammatically correct way"
 msgstr "Utilisez \"Elgg\" d'une manière grammaticalement correcte"
 
-#: ../../contribute/docs.rst:67
+#: ../../contribute/docs.rst:72
 msgid ""
 "Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is "
 "incorrect. Please don't do this."
@@ -2209,7 +2268,7 @@ msgstr ""
 "Elgg n'est pas un acronyme, l'écrire en majuscules (ELGG ou E-LGG) est "
 "incorrect. Veuillez ne pas le faire."
 
-#: ../../contribute/docs.rst:71
+#: ../../contribute/docs.rst:76
 msgid ""
 "In English, Elgg does not take an article when used as a noun. Here are some"
 " examples to emulate:"
@@ -2217,15 +2276,15 @@ msgstr ""
 "En Français, Elgg ne prend pas d'article quand il est utilisé comme un nom. "
 "Voici quelques exemples à imiter :"
 
-#: ../../contribute/docs.rst:70
+#: ../../contribute/docs.rst:75
 msgid "\"I'm using Elgg to run my website\""
 msgstr "“J'utilise Elgg pour mon site web”"
 
-#: ../../contribute/docs.rst:71
+#: ../../contribute/docs.rst:76
 msgid "\"Install Elgg to get your community online\""
 msgstr "“Installez Elgg pour mettre votre communauté en ligne”"
 
-#: ../../contribute/docs.rst:75
+#: ../../contribute/docs.rst:80
 msgid ""
 "When used as an adjective, the article applies to the main noun, so you "
 "should use one. For example:"
@@ -2233,24 +2292,24 @@ msgstr ""
 "Quand il est utilisé comme adjectif, l'article s'applique au nom principal, "
 "aussi vous devriez en utiliser un. Par exemple :"
 
-#: ../../contribute/docs.rst:74
+#: ../../contribute/docs.rst:79
 msgid "\"Go to the Elgg community website to get help.\""
 msgstr "\"Allez sur le site de la communauté Elgg pour trouver de l'aide.\""
 
-#: ../../contribute/docs.rst:75
+#: ../../contribute/docs.rst:80
 msgid "\"I built an Elgg-based network yesterday\""
 msgstr "\"J'ai construis un réseau avec Elgg hier\""
 
-#: ../../contribute/docs.rst:77
+#: ../../contribute/docs.rst:82
 msgid "This advice may not apply in languages other than English."
 msgstr ""
 "Ce conseil peut ne pas être valable pour d'autres langues que l'anglais."
 
-#: ../../contribute/docs.rst:81
+#: ../../contribute/docs.rst:86
 msgid "Avoid first person pronouns"
 msgstr "Évitez les pronoms à la première personne"
 
-#: ../../contribute/docs.rst:82
+#: ../../contribute/docs.rst:87
 msgid ""
 "Refer to the reader as \"you\". Do not include yourself in the normal "
 "narrative."
@@ -2258,29 +2317,29 @@ msgstr ""
 "Faites référence au lecteur comme \"vous\". Ne vous incluez pas dans la "
 "narration habituelle."
 
-#: ../../contribute/docs.rst:84 ../../contribute/docs.rst:95
-#: ../../contribute/docs.rst:107 ../../contribute/docs.rst:121
+#: ../../contribute/docs.rst:89 ../../contribute/docs.rst:100
+#: ../../contribute/docs.rst:112 ../../contribute/docs.rst:126
 msgid "Before:"
 msgstr "Avant :"
 
-#: ../../contribute/docs.rst:86
+#: ../../contribute/docs.rst:91
 msgid "When we're done installing Elgg, we'll look for some plugins!"
 msgstr ""
 "Quand nous aurons terminé l'installation d'Elgg, nous irons rechercher "
 "quelques plugins !"
 
-#: ../../contribute/docs.rst:88 ../../contribute/docs.rst:99
-#: ../../contribute/docs.rst:111 ../../contribute/docs.rst:125
+#: ../../contribute/docs.rst:93 ../../contribute/docs.rst:104
+#: ../../contribute/docs.rst:116 ../../contribute/docs.rst:130
 msgid "After:"
 msgstr "Après :"
 
-#: ../../contribute/docs.rst:90
+#: ../../contribute/docs.rst:95
 msgid "When you're done installing Elgg, look for some plugins!"
 msgstr ""
 "Quand vous aurez terminé l'installation d'Elgg, recherchez quelques plugins "
 "!"
 
-#: ../../contribute/docs.rst:92
+#: ../../contribute/docs.rst:97
 msgid ""
 "To refer to yourself (avoid this if possible), use your name and write in "
 "the third person. This clarifies to future readers/editors whose opinions "
@@ -2290,19 +2349,19 @@ msgstr ""
 "et écrivez à la troisième personne. Ceci permet aux futurs lecteurs/éditeurs"
 " de savoir de qui les opinions sont exprimées."
 
-#: ../../contribute/docs.rst:97
+#: ../../contribute/docs.rst:102
 msgid "I think the best way to do X is to use Y."
 msgstr "Je pense que le meilleur moyen pour faire X est d'utiliser Y."
 
-#: ../../contribute/docs.rst:101
+#: ../../contribute/docs.rst:106
 msgid "Evan thinks the best way to do X is to use Y."
 msgstr "Evan pense que le meilleur moyen pour faire X est d'utiliser Y."
 
-#: ../../contribute/docs.rst:105
+#: ../../contribute/docs.rst:110
 msgid "Eliminate fluff"
 msgstr "Supprimer le délayage"
 
-#: ../../contribute/docs.rst:109
+#: ../../contribute/docs.rst:114
 msgid ""
 "If you want to use a third-party javascript library within the Elgg "
 "framework, you should take care to call the ``elgg_register_js`` function to"
@@ -2312,7 +2371,7 @@ msgstr ""
 " du framework Elgg, vous devriez prendre soin d'appeler la fonction "
 "``elgg_register_js`` pour l'enregistrer."
 
-#: ../../contribute/docs.rst:113
+#: ../../contribute/docs.rst:118
 msgid ""
 "To use a third-party javascript library, call ``elgg_register_js`` to "
 "register it."
@@ -2320,11 +2379,11 @@ msgstr ""
 "Pour utiliser une bibliothèque javascript tierce-partie, appelez "
 "``elgg_register_js`` pour l'enregistrer."
 
-#: ../../contribute/docs.rst:117
+#: ../../contribute/docs.rst:122
 msgid "Prefer absolute dates over relative ones"
 msgstr "Préférez les dates absolues aux dates relatives"
 
-#: ../../contribute/docs.rst:118
+#: ../../contribute/docs.rst:123
 msgid ""
 "It is not easy to tell when a particular sentence or paragraph was written, "
 "so relative dates quickly become meaningless. Absolute dates also give the "
@@ -2336,11 +2395,11 @@ msgstr ""
 " dates absolues donnent également au lecteur une bonne indication de si un "
 "projet a été abandonné, ou si un conseil est toujours d'actualité."
 
-#: ../../contribute/docs.rst:123
+#: ../../contribute/docs.rst:128
 msgid "Recently the foo was barred. Soon, the baz will be barred too."
 msgstr "Récemment le truc a été machin. Bientôt, la chose sera machin aussi."
 
-#: ../../contribute/docs.rst:127
+#: ../../contribute/docs.rst:132
 msgid ""
 "Recently (as of September 2013), the foo was barred. The baz is expected to "
 "be barred by October 2013."
@@ -2348,11 +2407,11 @@ msgstr ""
 "Récemment (à partir de septembre 2013), le truc a été machin. Il est prévu "
 "que la chose soit également machin d'ici octobre 2013."
 
-#: ../../contribute/docs.rst:131
+#: ../../contribute/docs.rst:136
 msgid "Do not remind the reader to contribute"
 msgstr "Ne rappelez pas au lecteur de contribuer"
 
-#: ../../contribute/docs.rst:132
+#: ../../contribute/docs.rst:137
 msgid ""
 "Focus on addressing only the topic at hand. Constant solicitation for free "
 "work is annoying and makes the project look needy. If people want to "
@@ -2363,11 +2422,11 @@ msgstr ""
 "que le projet est dans le besoin. Si des personnes souhaitent contribuer au "
 "projet, elles peuvent visiter le guide du contributeur."
 
-#: ../../contribute/docs.rst:138
+#: ../../contribute/docs.rst:143
 msgid "Internationalizing documentation"
 msgstr "Internationaliser la documentation"
 
-#: ../../contribute/docs.rst:140
+#: ../../contribute/docs.rst:145
 msgid ""
 "When you change documentation, remember to update the documentation "
 "translation templates before you commit:"
@@ -2375,7 +2434,7 @@ msgstr ""
 "Quand vous modifiez la documentation, pensez à mettre à jour les modèles de "
 "traduction de la documentation avant de faire un commit :"
 
-#: ../../contribute/docs.rst:148
+#: ../../contribute/docs.rst:153
 msgid ""
 "For more information, see http://www.sphinx-doc.org/en/stable/intl.html"
 "#translating-with-sphinx-intl"
@@ -2383,11 +2442,11 @@ msgstr ""
 "Pour plus d'information, voyez http://www.sphinx-doc.org/en/stable/intl.html"
 "#translating-with-sphinx-intl"
 
-#: ../../contribute/docs.rst:152
+#: ../../contribute/docs.rst:157
 msgid "Special attention"
 msgstr "Points d'attention spécifiques"
 
-#: ../../contribute/docs.rst:154
+#: ../../contribute/docs.rst:159
 msgid ""
 "When translating the documentation be aware of special syntax in the "
 "documentation files."
@@ -2395,11 +2454,11 @@ msgstr ""
 "Quand vous traduisez la documentation soyez conscients de la syntaxe "
 "spécifique dans les fichiers de documentation."
 
-#: ../../contribute/docs.rst:157
+#: ../../contribute/docs.rst:162
 msgid "Translating links"
 msgstr "Liens de traduction"
 
-#: ../../contribute/docs.rst:159
+#: ../../contribute/docs.rst:164
 msgid ""
 "Translate text in anonymous links (e.g., ```pronunciation`__``), but "
 "maintain the order of all anonymous links in a single block. If there are "
@@ -2411,7 +2470,7 @@ msgstr ""
 " y a deux liens anonymes à traduire dans un seul bloc de traduction, il ne "
 "doivent pas être inversés l'un par rapport à l'autre."
 
-#: ../../contribute/docs.rst:160
+#: ../../contribute/docs.rst:165
 msgid ""
 "Translate the text of named links (e.g., ```demo site`_``) but only if you "
 "maintain the name using the correct rST syntax. In this case that would be "
@@ -2421,18 +2480,18 @@ msgstr ""
 "seulement si vous maintenez le noms en utilisant la bonne syntaxe rST. Dans "
 "ce cas ce devrait être ```traduction de \"site de démo\" <demo site_>`_``."
 
-#: ../../contribute/docs.rst:163
+#: ../../contribute/docs.rst:168
 msgid "Do NOT translate"
 msgstr "NE traduisez PAS"
 
-#: ../../contribute/docs.rst:165
+#: ../../contribute/docs.rst:170
 msgid ""
 "Anything between pipe characters should not be translated (e.g., |version|)."
 msgstr ""
 "Tout ce qui se situe entre des caractères trait vertical ne devrait pas être"
 " traduit (par ex., |version|)."
 
-#: ../../contribute/docs.rst:166
+#: ../../contribute/docs.rst:171
 msgid "Code, unless it's a comment in the code."
 msgstr "Le code, à moins que ce ne soit un commentaire dans le code."
 
