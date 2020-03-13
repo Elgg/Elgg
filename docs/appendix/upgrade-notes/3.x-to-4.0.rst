@@ -128,11 +128,23 @@ Class functions
 Lib functions
 ~~~~~~~~~~~~~
 
+* ``add_user_to_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``
+* ``can_edit_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``$user_guid``
+* ``create_access_collection()`` now requires an ``string`` for ``$name`` and ``int`` for ``$owner_guid``
+* ``delete_access_collection()`` now requires an ``int`` for ``$collection_id``
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
+* ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
+* ``get_access_array()`` now requires an ``int`` for ``$user_guid``
+* ``get_access_collection()`` now requires an ``int`` for ``$collection_id``
 * ``get_entity_statistics()`` now requires an ``int`` for ``$owner_guid``
+* ``get_members_of_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``bool`` for ``$guids_only``
+* ``get_readable_access_level()`` now requires an ``int`` for ``$entity_access_id``
+* ``get_write_access_array()`` now requires an ``int`` for ``$user_guid`` and ``bool`` for ``$flush``
+* ``has_access_to_entity()`` now requires an ``ElggEntity`` for ``$entity`` and ``ElggUser`` for ``$user``
+* ``remove_user_from_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``
 * ``system_log_get_log()`` now requires an ``array`` for ``$options``
 * ``messageboard_add()`` now requires an ``ElggUser``, ``ElggUser``, ``string`` and an ``int``
 
@@ -147,7 +159,8 @@ Class functions
 Lib functions
 ~~~~~~~~~~~~~
 
-* ``elgg_get_page_owner_guid`` no longer accepts ``$guid`` as a parameter
+* ``elgg_get_page_owner_guid()`` no longer accepts ``$guid`` as a parameter
+* ``get_access_array()`` no longer accepts ``$flush`` as a parameter
 
 Renamed hook/event handler callbacks
 ------------------------------------

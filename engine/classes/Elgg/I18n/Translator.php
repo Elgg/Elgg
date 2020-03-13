@@ -338,7 +338,7 @@ class Translator {
 	 *
 	 * @internal
 	 */
-	public function registerTranslations(string $path, bool $load_all = false, $language = null) {
+	public function registerTranslations(string $path, bool $load_all = false, string $language = null) {
 		$path = \Elgg\Project\Paths::sanitize($path);
 		
 		// don't need to register translations as the folder is missing
