@@ -2,7 +2,7 @@
 
 namespace Elgg\Email;
 
-use Zend\Mail\Exception\InvalidArgumentException;
+use Laminas\Mail\Exception\InvalidArgumentException;
 
 /**
  * @group EmailService

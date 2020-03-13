@@ -3,7 +3,7 @@
 namespace Elgg\Messages;
 
 use Elgg\IntegrationTestCase;
-use Zend\Mail\Message;
+use Laminas\Mail\Message;
 
 /**
  * @group MessagesPlugin
@@ -61,7 +61,7 @@ class MessagesPluginTest extends IntegrationTestCase {
 		$this->assertFalse(has_access_to_entity($message, $sender));
 
 		$notification = _elgg_services()->mailer->getLastMessage();
-		/* @var $notification \Zend\Mail\Message */
+		/* @var $notification \Laminas\Mail\Message */
 
 		$this->assertInstanceOf(Message::class, $notification);
 

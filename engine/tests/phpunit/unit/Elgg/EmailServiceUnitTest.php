@@ -2,7 +2,7 @@
 
 namespace Elgg\Mail;
 
-use Zend\Mail\Transport\InMemory as InMemoryTransport;
+use Laminas\Mail\Transport\InMemory as InMemoryTransport;
 
 /**
  * @group EmailService

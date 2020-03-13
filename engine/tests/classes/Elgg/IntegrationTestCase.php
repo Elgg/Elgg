@@ -8,7 +8,7 @@ use ElggSession;
 use Psr\Log\LogLevel;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zend\Mail\Transport\InMemory;
+use Laminas\Mail\Transport\InMemory;
 
 /**
  * Integration test abstraction

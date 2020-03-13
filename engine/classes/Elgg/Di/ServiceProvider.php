@@ -20,7 +20,7 @@ use Elgg\Logger;
 use Elgg\Project\Paths;
 use Elgg\Router\RouteRegistrationService;
 use Elgg\Security\Csrf;
-use Zend\Mail\Transport\TransportInterface as Mailer;
+use Laminas\Mail\Transport\TransportInterface as Mailer;
 use Elgg\I18n\LocaleService;
 use Elgg\Security\PasswordGeneratorService;
 
@@ -497,14 +497,14 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('mailer', function(ServiceProvider $c) {
 			switch ($c->config->emailer_transport) {
 				case 'smtp':
-					$transport = new \Zend\Mail\Transport\Smtp();
-					$transportOptions = new \Zend\Mail\Transport\SmtpOptions(
+					$transport = new \Laminas\Mail\Transport\Smtp();
+					$transportOptions = new \Laminas\Mail\Transport\SmtpOptions(
 						$c->config->emailer_smtp_settings
 					);
 					$transport->setOptions($transportOptions);
 					return $transport;
 				default:
-					return new \Zend\Mail\Transport\Sendmail();
+					return new \Laminas\Mail\Transport\Sendmail();
 			}
 		});
 

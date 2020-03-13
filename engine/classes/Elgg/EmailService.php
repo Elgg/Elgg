@@ -4,9 +4,9 @@ namespace Elgg;
 
 use Psr\Log\LoggerInterface;
 use RuntimeException;
-use Zend\Mail\Header\ContentType;
-use Zend\Mail\Message as MailMessage;
-use Zend\Mail\Transport\TransportInterface;
+use Laminas\Mail\Header\ContentType;
+use Laminas\Mail\Message as MailMessage;
+use Laminas\Mail\Transport\TransportInterface;
 use Zend\Mime\Mime;
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part;

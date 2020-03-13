@@ -5,7 +5,7 @@ namespace Elgg\Messages;
 use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
-use Zend\Mail\Message;
+use Laminas\Mail\Message;
 
 /**
  * @group Actions
@@ -169,7 +169,7 @@ class SendActionTest extends ActionResponseTestCase {
 		});
 		
 		$notification = _elgg_services()->mailer->getLastMessage();
-		/* @var $notification \Zend\Mail\Message */
+		/* @var $notification \Laminas\Mail\Message */
 
 		$this->assertInstanceOf(Message::class, $notification);
 

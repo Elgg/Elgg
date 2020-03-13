@@ -5,7 +5,7 @@ namespace Elgg\Di;
 use Elgg\Config;
 use Elgg\Database\SiteSecret;
 use phpDocumentor\Reflection\DocBlock;
-use Zend\Mail\Transport\InMemory;
+use Laminas\Mail\Transport\InMemory;
 
 /**
  * @group Application

@@ -253,9 +253,9 @@ function elgg_send_email(\Elgg\Email $email) {
  * may be expensive to fetch these settings. Instead, configure the transport
  * via elgg-config/settings.php or use site config DB storage.
  *
- * @param \Zend\Mail\Transport\TransportInterface $mailer Transport
+ * @param \Laminas\Mail\Transport\TransportInterface $mailer Transport
  * @return void
  */
-function elgg_set_email_transport(\Zend\Mail\Transport\TransportInterface $mailer) {
+function elgg_set_email_transport(\Laminas\Mail\Transport\TransportInterface $mailer) {
 	_elgg_services()->setValue('mailer', $mailer);
 }
