@@ -43,7 +43,10 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	 */
 	function testCanWriteToContainer() {
 		$user = $this->createUser();
-		$object = $this->createObject();
+		$owner = $this->createUser();
+		$object = $this->createObject([
+			'owner_guid' => $owner->guid, // make sure this is a different user
+		]);
 		$group = $this->createGroup();
 
 		// disable access overrides because we're admin.
@@ -68,6 +71,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		});
 		
 		$user->delete();
+		$owner->delete();
 		$object->delete();
 		$group->delete();
 	}
