@@ -7,7 +7,8 @@
 
 return array(
 
-	'item:object:reported_content' => 'Reported items',
+	'item:object:reported_content' => 'Reported item',
+	'collection:object:reported_content' => 'Reported items',
 	'admin:administer_utilities:reportedcontent' => 'Reported content',
 	'reportedcontent' => 'Reported content',
 	'reportedcontent:this' => 'Report this',
