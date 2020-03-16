@@ -10,6 +10,11 @@ return [
 			\Elgg\WalledGarden\RemovePublicAccessHandler::class => ['priority' => 9999],
 		],
 	],
+	'action' => [
+		'all' => [
+			'Elgg\Maintenance\Routing::preventAction' => ['priority' => 600],
+		],
+	],
 	'action:validate' => [
 		'all' => [
 			\Elgg\Entity\CropIcon::class => [],
@@ -26,14 +31,14 @@ return [
 	],
 	'cron' => [
 		'daily' => [
-			'_elgg_admin_notify_admins_pending_user_validation' => [],
+			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 			'_elgg_session_cleanup_persistent_login' => [],
 		],
 		'minute' => [
 			\Elgg\Notifications\ProcessQueueCronHandler::class => ['priority' => 100],
 		],
 		'weekly' => [
-			'_elgg_admin_notify_admins_pending_user_validation' => [],
+			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
 		],
 	],
 	'diagnostics:report' => [
@@ -61,9 +66,9 @@ return [
 	],
 	'get' => [
 		'subscriptions' => [
-			'_elgg_admin_get_admin_subscribers_admin_action' => [],
-			'_elgg_admin_get_user_subscriber_admin_action' => [],
-			'\Elgg\Comments\CreateNotification::addOwnerToSubscribers' => [],
+			'Elgg\Notifications\ChangeAdminNotification::addSiteAdminSubscribers' => [],
+			'Elgg\Notifications\ChangeAdminNotification::addUserSubscriber' => [],
+			'Elgg\Comments\CreateNotification::addOwnerToSubscribers' => [],
 			'_elgg_user_get_subscriber_unban_action' => [],
 		],
 	],
@@ -109,12 +114,12 @@ return [
 			'Elgg\Comments\CreateNotification::prepareNotification' => [],
 		],
 		'notification:make_admin:user:user' => [
-			'_elgg_admin_prepare_admin_notification_make_admin' => [],
-			'_elgg_admin_prepare_user_notification_make_admin' => [],
+			'Elgg\Notifications\ChangeAdminNotification::prepareMakeAdminNotificationToAdmin' => [],
+			'Elgg\Notifications\ChangeAdminNotification::prepareMakeAdminNotificationToUser' => [],
 		],
 		'notification:remove_admin:user:user' => [
-			'_elgg_admin_prepare_admin_notification_remove_admin' => [],
-			'_elgg_admin_prepare_user_notification_remove_admin' => [],
+			'Elgg\Notifications\ChangeAdminNotification::prepareRemoveAdminNotificationToAdmin' => [],
+			'Elgg\Notifications\ChangeAdminNotification::prepareRemoveAdminNotificationToUser' => [],
 		],
 		'notification:unban:user:user' => [
 			'_elgg_user_prepare_unban_notification' => [],
@@ -204,16 +209,21 @@ return [
 			'Elgg\Menus\Widget::registerEdit' => [],
 		],
 		'user' => [
-			'_elgg_admin_check_admin_validation' => [
+			'Elgg\Users\Validation::checkAdminValidation' => [
 				'priority' => 999, // allow others to also disable the user
 			],
 		],
 	],
 	'response' => [
 		'action:register' => [
-			'_elgg_admin_set_registration_forward_url' => [
+			'Elgg\Users\Validation::setRegistrationForwardUrl' => [
 				'priority' => 999, // allow other to set forwar url first
 			],
+		],
+	],
+	'route' => [
+		'all' => [
+			'Elgg\Maintenance\Routing::redirectRoute' => ['priority' => 600],
 		],
 	],
 	'search:fields' => [
@@ -242,7 +252,7 @@ return [
 	],
 	'usersettings:save' => [
 		'user' => [
-			'_elgg_admin_save_notification_setting' => [],
+			'Elgg\Users\Settings::setAdminValidationNotification' => [],
 			\Elgg\Notifications\SaveUserSettingsHandler::class => [],
 			'Elgg\Users\Settings::setDefaultAccess' => [],
 			'Elgg\Users\Settings::setEmail' => [],

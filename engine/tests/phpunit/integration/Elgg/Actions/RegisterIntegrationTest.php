@@ -302,7 +302,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 		_elgg_config()->require_admin_validation = true;
 		
 		// re-register admin validation hooks
-		_elgg_services()->hooks->registerHandler('register', 'user', '_elgg_admin_check_admin_validation', 999);
+		_elgg_services()->hooks->registerHandler('register', 'user', 'Elgg\Users\Validation::checkAdminValidation', 999);
 		
 		$username = $this->getRandomUsername();
 		

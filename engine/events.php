@@ -41,12 +41,12 @@ return [
 	],
 	'complete' => [
 		'upgrade' => [
-			'_elgg_upgrade_completed' => [],
+			\Elgg\Upgrade\UpgradeCompletedAdminNoticeHandler::class => [],
 		],
 	],
 	'create' => [
 		'object' => [
-			'_elgg_create_notice_of_pending_upgrade' => [],
+			\Elgg\Upgrade\CreateAdminNoticeHandler::class => [],
 		],
 		'relationship' => [
 			\Elgg\Friends\AddToAclHandler::class => [],
@@ -67,7 +67,6 @@ return [
 	],
 	'init' => [
 		'system' => [
-			'_elgg_admin_init' => [],
 			'_elgg_init' => [],
 			'_elgg_views_init' => [],
 			'_elgg_walled_garden_init' => [
@@ -80,14 +79,14 @@ return [
 	],
 	'login:before' => [
 		'user' => [
-			'_elgg_admin_user_validation_login_attempt' => [
+			'Elgg\Users\Validation::preventUserLogin' => [
 				'priority' => 999, // allow others to throw exceptions earlier
 			],
 		],
 	],
 	'make_admin' => [
 		'user' => [
-			'_elgg_add_admin_widgets' => [],
+			\Elgg\Widgets\CreateAdminWidgetsHandler::class => [],
 		],
 	],
 	'ready' => [
@@ -113,7 +112,7 @@ return [
 	],
 	'validate:after' => [
 		'user' => [
-			'_elgg_admin_user_validation_notification' => [],
+			'Elgg\Users\Validation::notifyUserAfterValidation' => [],
 		],
 	],
 ];
