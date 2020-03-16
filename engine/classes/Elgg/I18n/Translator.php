@@ -310,10 +310,7 @@ class Translator {
 	 *
 	 * @internal
 	 */
-	public function loadTranslations($language) {
-		if (!is_string($language)) {
-			return;
-		}
+	public function loadTranslations(string $language) {
 		
 		$data = elgg_load_system_cache("{$language}.lang");
 		if (is_array($data)) {
@@ -341,7 +338,7 @@ class Translator {
 	 *
 	 * @internal
 	 */
-	public function registerTranslations($path, $load_all = false, $language = null) {
+	public function registerTranslations(string $path, bool $load_all = false, string $language = null) {
 		$path = \Elgg\Project\Paths::sanitize($path);
 		
 		// don't need to register translations as the folder is missing
@@ -399,7 +396,7 @@ class Translator {
 	 *
 	 * @internal
 	 */
-	protected function includeLanguageFile($path) {
+	protected function includeLanguageFile(string $path) {
 		$result = Includer::includeFile($path);
 		
 		if (is_array($result)) {
@@ -516,7 +513,7 @@ class Translator {
 	 *
 	 * @internal
 	 */
-	public function getMissingLanguageKeys($language) {
+	public function getMissingLanguageKeys(string $language) {
 
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
@@ -614,7 +611,7 @@ class Translator {
 		
 		$allowed_languages = $this->config->allowed_languages;
 		if (!empty($allowed_languages)) {
-			$allowed_languages = explode(',', $this->config->allowed_languages);
+			$allowed_languages = explode(',', $allowed_languages);
 		} else {
 			$allowed_languages = $this->getAvailableLanguages();
 		}
@@ -659,9 +656,10 @@ class Translator {
 	 * Make sure translations are loaded
 	 *
 	 * @param string $language Language
+	 *
 	 * @return void
 	 */
-	private function ensureTranslationsLoaded($language) {
+	protected function ensureTranslationsLoaded(string $language) {
 		if (isset($this->translations[$language])) {
 			return;
 		}
@@ -671,20 +669,5 @@ class Translator {
 		// we're sending a notification and the recipient is using a different
 		// language than the logged in user.)
 		$this->loadTranslations($language);
-	}
-
-	/**
-	 * Normalize a language code (e.g. from Transifex)
-	 *
-	 * @param string $code Language code
-	 *
-	 * @return string
-	 *
-	 * @internal
-	 */
-	public static function normalizeLanguageCode($code) {
-		$code = strtolower($code);
-		$code = preg_replace('~[^a-z0-9]~', '_', $code);
-		return $code;
 	}
 }

@@ -29,21 +29,14 @@ function elgg_get_ignore_access() {
  * to plus public and logged in access levels. If the user is an admin, it includes
  * the private access level.
  *
- * @note Internal: this is only used in core for creating the SQL where clause when
- * retrieving content from the database. The friends access level is handled by
- * {@link \Elgg\Database\Clauses\AccessWhereClause}
- *
  * @see get_write_access_array() for the access levels that a user can write to.
  *
- * @param int  $user_guid User ID; defaults to currently logged in user
- * @param int  $ignored   Ignored parameter
- * @param bool $flush     If set to true, will refresh the access ids from the
- *                        database rather than using this function's cache.
+ * @param int $user_guid User ID; defaults to currently logged in user
  *
  * @return array An array of access collections ids
  */
-function get_access_array($user_guid = 0, $ignored = 0, $flush = false) {
-	return _elgg_services()->accessCollections->getAccessArray($user_guid, $flush);
+function get_access_array(int $user_guid = 0) {
+	return _elgg_services()->accessCollections->getAccessArray($user_guid);
 }
 
 /**
@@ -99,7 +92,7 @@ function get_default_access(ElggUser $user = null, array $input_params = []) {
  *
  * @return bool
  */
-function has_access_to_entity($entity, $user = null) {
+function has_access_to_entity(\ElggEntity $entity, \ElggUser $user = null) {
 	return _elgg_services()->accessCollections->hasAccessToEntity($entity, $user);
 }
 
@@ -129,7 +122,7 @@ function has_access_to_entity($entity, $user = null) {
  *
  * @return array List of access permissions
  */
-function get_write_access_array($user_guid = 0, $ignored = 0, $flush = false, array $input_params = []) {
+function get_write_access_array(int $user_guid = 0, $ignored = 0, bool $flush = false, array $input_params = []) {
 	return _elgg_services()->accessCollections->getWriteAccessArray($user_guid, $flush, $input_params);
 }
 
@@ -147,7 +140,7 @@ function get_write_access_array($user_guid = 0, $ignored = 0, $flush = false, ar
  * @param mixed $user_guid     The user GUID to check for. Defaults to logged in user.
  * @return bool
  */
-function can_edit_access_collection($collection_id, $user_guid = null) {
+function can_edit_access_collection(int $collection_id, int $user_guid = null) {
 	return _elgg_services()->accessCollections->canEdit($collection_id, $user_guid);
 }
 
@@ -169,7 +162,7 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
  * @return int|false The collection ID if successful and false on failure.
  * @see delete_access_collection()
  */
-function create_access_collection($name, $owner_guid = 0, $subtype = null) {
+function create_access_collection(string $name, int $owner_guid = 0, $subtype = null) {
 	return _elgg_services()->accessCollections->create($name, $owner_guid, $subtype);
 }
 
@@ -181,7 +174,7 @@ function create_access_collection($name, $owner_guid = 0, $subtype = null) {
  * @return bool
  * @see create_access_collection()
  */
-function delete_access_collection($collection_id) {
+function delete_access_collection(int $collection_id) {
 	return _elgg_services()->accessCollections->delete($collection_id);
 }
 
@@ -197,7 +190,7 @@ function delete_access_collection($collection_id) {
  *
  * @return ElggAccessCollection|false
  */
-function get_access_collection($collection_id) {
+function get_access_collection(int $collection_id) {
 	return _elgg_services()->accessCollections->get($collection_id);
 }
 
@@ -210,9 +203,8 @@ function get_access_collection($collection_id) {
  * @param int $collection_id The ID of the collection to add them to
  *
  * @return bool
- * @see remove_user_from_access_collection()
  */
-function add_user_to_access_collection($user_guid, $collection_id) {
+function add_user_to_access_collection(int $user_guid, int $collection_id) {
 	return _elgg_services()->accessCollections->addUser($user_guid, $collection_id);
 }
 
@@ -225,9 +217,8 @@ function add_user_to_access_collection($user_guid, $collection_id) {
  * @param int $collection_id The access collection ID
  *
  * @return bool
- * @see remove_user_from_access_collection()
  */
-function remove_user_from_access_collection($user_guid, $collection_id) {
+function remove_user_from_access_collection(int $user_guid, int $collection_id) {
 	return _elgg_services()->accessCollections->removeUser($user_guid, $collection_id);
 }
 
@@ -235,9 +226,10 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
  * Returns access collections
  *
  * @param array $options array of options to get access collections by
+ *
  * @return \ElggAccessCollection[]
  */
-function elgg_get_access_collections($options = []) {
+function elgg_get_access_collections(array $options = []) {
 	return _elgg_services()->accessCollections->getEntityCollections($options);
 }
 
@@ -249,25 +241,23 @@ function elgg_get_access_collections($options = []) {
  * @param array $options       ege* options
  *
  * @return \ElggData[]|int|int[]|mixed guids or entities if successful, false if not
- * @see add_user_to_access_collection()
  */
-function get_members_of_access_collection($collection_id, $guids_only = false, array $options = []) {
+function get_members_of_access_collection(int $collection_id, bool $guids_only = false, array $options = []) {
 	if (!isset($options['limit'])) {
-		$options['limit'] = 0;
+		$options['limit'] = false;
 	}
 
 	if (!$guids_only) {
 		return _elgg_services()->accessCollections->getMembers($collection_id, $options);
 	}
 
-	$guids = [];
-	$options['callback'] = false;
-	$rows = _elgg_services()->accessCollections->getMembers($collection_id, $options);
-	foreach ($rows as $row) {
-		$guids[] = (int) $row->guid;
-	}
-	return $guids;
+	$options['callback'] = function($row) {
+		return (int) $row->guid;
+	};
+	
+	return _elgg_services()->accessCollections->getMembers($collection_id, $options);
 }
+
 /**
  * Return the name of an ACCESS_* constant or an access collection,
  * but only if the logged in user has write access to it.
@@ -281,10 +271,11 @@ function get_members_of_access_collection($collection_id, $guids_only = false, a
  * or 'Limited' if the user access is restricted to read-only, e.g. a friends collection the user was added to
  *
  * @param int $entity_access_id The entity's access id
+ *
  * @return string
  * @since 1.7.0
  */
-function get_readable_access_level($entity_access_id) {
+function get_readable_access_level(int $entity_access_id) {
 	return _elgg_services()->accessCollections->getReadableAccessLevel($entity_access_id);
 }
 

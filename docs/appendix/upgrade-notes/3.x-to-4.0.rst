@@ -135,11 +135,23 @@ Class functions
 Lib functions
 ~~~~~~~~~~~~~
 
+* ``add_user_to_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``
+* ``can_edit_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``$user_guid``
+* ``create_access_collection()`` now requires an ``string`` for ``$name`` and ``int`` for ``$owner_guid``
+* ``delete_access_collection()`` now requires an ``int`` for ``$collection_id``
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
+* ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
+* ``get_access_array()`` now requires an ``int`` for ``$user_guid``
+* ``get_access_collection()`` now requires an ``int`` for ``$collection_id``
 * ``get_entity_statistics()`` now requires an ``int`` for ``$owner_guid``
+* ``get_members_of_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``bool`` for ``$guids_only``
+* ``get_readable_access_level()`` now requires an ``int`` for ``$entity_access_id``
+* ``get_write_access_array()`` now requires an ``int`` for ``$user_guid`` and ``bool`` for ``$flush``
+* ``has_access_to_entity()`` now requires an ``ElggEntity`` for ``$entity`` and ``ElggUser`` for ``$user``
+* ``remove_user_from_access_collection()`` now requires an ``int`` for ``$user_guid`` and ``$collection_id``
 * ``system_log_get_log()`` now requires an ``array`` for ``$options``
 * ``messageboard_add()`` now requires an ``ElggUser``, ``ElggUser``, ``string`` and an ``int``
 
@@ -154,7 +166,8 @@ Class functions
 Lib functions
 ~~~~~~~~~~~~~
 
-* ``elgg_get_page_owner_guid`` no longer accepts ``$guid`` as a parameter
+* ``elgg_get_page_owner_guid()`` no longer accepts ``$guid`` as a parameter
+* ``get_access_array()`` no longer accepts ``$flush`` as a parameter
 
 Renamed hook/event handler callbacks
 ------------------------------------
@@ -196,6 +209,7 @@ Core
 * ``_elgg_groups_comment_permissions_override()`` changed to ``Elgg\Comments\GroupMemberPermissionsHandler::class``
 * ``_elgg_widget_menu_setup()`` changed to ``Elgg\Menus\Widget::registerEdit()`` and ``Elgg\Menus\Widget::registerDelete()``
 * ``_elgg_login_menu_setup()`` changed to ``Elgg\Menus\Login::registerRegistration()`` and ``Elgg\Menus\Widget::registerResetPassword()``
+* ``_elgg_nav_public_pages()`` changed to ``Elgg\WalledGarden\ExtendPublicPagesHandler::class``
 * ``_elgg_notifications_cron()`` changed to ``Elgg\Notifications\ProcessQueueCronHandler::class``
 * ``_elgg_notifications_smtp_default_message_id_header()`` changed to ``Elgg\Email\DefaultMessageIdHeaderHandler::class``
 * ``_elgg_notifications_smtp_thread_headers()`` changed to ``Elgg\Email\ThreadHeadersHandler::class``
@@ -215,11 +229,13 @@ Core
 * ``_elgg_user_settings_menu_register()`` changed to ``Elgg\Menus\Page::registerUserSettings()`` and ``Elgg\Menus\Page::registerUserSettingsPlugins()``
 * ``_elgg_user_settings_menu_prepare()`` changed to ``Elgg\Menus\Page::cleanupUserSettingsPlugins()``
 * ``elgg_user_hover_menu()`` changed to ``Elgg\Menus\UserHover::registerAvatarEdit()`` and ``Elgg\Menus\UserHover::registerAdminActions()``
+* ``_elgg_user_set_icon_file()`` changed to ``Elgg\Icons\SetUserIconFileHandler::class``
 * ``_elgg_user_title_menu()`` changed to ``Elgg\Menus\Title::registerAvatarEdit()``
 * ``_elgg_user_page_menu()`` changed to ``Elgg\Menus\Page::registerAvatarEdit()``
 * ``_elgg_user_topbar_menu()`` changed to ``Elgg\Menus\Topbar::registerUserLinks()``
 * ``_elgg_user_unvalidated_menu()`` changed to ``Elgg\Menus\UserUnvalidated::register()``
 * ``_elgg_comments_social_menu_setup()`` changed to ``Elgg\Menus\Social::registerComments()``
+* ``_elgg_walled_garden_remove_public_access()`` changed to ``Elgg\WalledGarden\RemovePublicAccessHandler::class``
 * ``_elgg_widgets_widget_urls()`` changed to ``Elgg\Widgets\EntityUrlHandler::class``
 * ``Elgg\Profiler::handleOutput`` changed to ``Elgg\Debug\Profiler::class``
 

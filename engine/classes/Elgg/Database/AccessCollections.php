@@ -144,7 +144,7 @@ class AccessCollections {
 	 *
 	 * @return array An array of access collections ids
 	 */
-	public function getAccessArray($user_guid = 0, $flush = false) {
+	public function getAccessArray(int $user_guid = 0, bool $flush = false) {
 		$cache = $this->access_cache;
 
 		if ($flush) {
@@ -154,8 +154,6 @@ class AccessCollections {
 		if ($user_guid == 0) {
 			$user_guid = $this->session->getLoggedInUserGuid();
 		}
-
-		$user_guid = (int) $user_guid;
 
 		$hash = $user_guid . 'get_access_array';
 
@@ -229,10 +227,7 @@ class AccessCollections {
 	 *
 	 * @return bool
 	 */
-	public function hasAccessToEntity($entity, $user = null) {
-		if (!$entity instanceof \ElggEntity) {
-			return false;
-		}
+	public function hasAccessToEntity(\ElggEntity $entity, \ElggUser $user = null) {
 
 		if ($entity->access_id == ACCESS_PUBLIC) {
 			// Public entities are always accessible
@@ -391,20 +386,23 @@ class AccessCollections {
 	 *
 	 * @see get_write_access_array()
 	 *
-	 * @param int   $collection_id The collection id
-	 * @param mixed $user_guid     The user GUID to check for. Defaults to logged in user.
+	 * @param int $collection_id The collection id
+	 * @param int $user_guid     The user GUID to check for. Defaults to logged in user.
 	 * @return bool
 	 */
-	public function canEdit($collection_id, $user_guid = null) {
+	public function canEdit(int $collection_id, int $user_guid = null) {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
 			return false;
 		}
 
+		if (!$user instanceof \ElggUser) {
+			return false;
+		}
+		
 		$collection = $this->get($collection_id);
-
-		if (!$user instanceof \ElggUser || !$collection instanceof \ElggAccessCollection) {
+		if (!$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
 
@@ -433,7 +431,7 @@ class AccessCollections {
 	 *
 	 * @return int|false The collection ID if successful and false on failure.
 	 */
-	public function create($name, $owner_guid = 0, $subtype = null) {
+	public function create(string $name, int $owner_guid = 0, $subtype = null) {
 		$name = trim($name);
 		if (empty($name)) {
 			return false;
@@ -461,7 +459,7 @@ class AccessCollections {
 		$params = [
 			':name' => $name,
 			':subtype' => $subtype,
-			':owner_guid' => (int) $owner_guid,
+			':owner_guid' => $owner_guid,
 		];
 
 		$id = $this->db->insertData($query, $params);
@@ -582,9 +580,7 @@ class AccessCollections {
 	 * @param int $collection_id ID of the collection
 	 * @return bool
 	 */
-	public function delete($collection_id) {
-		$collection_id = (int) $collection_id;
-
+	public function delete(int $collection_id) {
 		$params = [
 			'collection_id' => $collection_id,
 		];
@@ -636,7 +632,7 @@ class AccessCollections {
 	 * @param int $collection_id The collection ID
 	 * @return \ElggAccessCollection|false
 	 */
-	public function get($collection_id) {
+	public function get(int $collection_id) {
 
 		$callback = [$this, 'rowToElggAccessCollection'];
 
@@ -646,7 +642,7 @@ class AccessCollections {
 		";
 
 		$result = $this->db->getDataRow($query, $callback, [
-			':id' => (int) $collection_id,
+			':id' => $collection_id,
 		]);
 
 		if (empty($result)) {
@@ -678,12 +674,12 @@ class AccessCollections {
 	 *
 	 * @param int $user_guid     GUID of the user to add
 	 * @param int $collection_id ID of the collection to add them to
+	 *
 	 * @return bool
 	 */
-	public function addUser($user_guid, $collection_id) {
+	public function addUser(int $user_guid, int $collection_id) {
 
 		$collection = $this->get($collection_id);
-
 		if (!$collection instanceof \ElggAccessCollection) {
 			return false;
 		}
@@ -694,7 +690,7 @@ class AccessCollections {
 
 		$hook_params = [
 			'collection_id' => $collection->id,
-			'user_guid' => (int) $user_guid
+			'user_guid' => $user_guid
 		];
 
 		$result = $this->hooks->trigger('access:collections:add_user', 'collection', $hook_params, true);
@@ -711,8 +707,8 @@ class AccessCollections {
 		";
 
 		$result = $this->db->insertData($query, [
-			':access_collection_id' => (int) $collection->id,
-			':user_guid' => (int) $user_guid,
+			':access_collection_id' => $collection->id,
+			':user_guid' => $user_guid,
 		]);
 
 		$this->access_cache->clear();
@@ -727,13 +723,14 @@ class AccessCollections {
 	 *
 	 * @param int $user_guid     GUID of the user
 	 * @param int $collection_id ID of the collection
+	 *
 	 * @return bool
 	 */
-	public function removeUser($user_guid, $collection_id) {
+	public function removeUser(int $user_guid, int $collection_id) {
 
 		$params = [
-			'collection_id' => (int) $collection_id,
-			'user_guid' => (int) $user_guid,
+			'collection_id' => $collection_id,
+			'user_guid' => $user_guid,
 		];
 
 		if (!$this->hooks->trigger('access:collections:remove_user', 'collection', $params, true)) {
@@ -749,8 +746,8 @@ class AccessCollections {
 		$this->access_cache->clear();
 
 		return (bool) $this->db->deleteData($query, [
-			':access_collection_id' => (int) $collection_id,
-			':user_guid' => (int) $user_guid,
+			':access_collection_id' => $collection_id,
+			':user_guid' => $user_guid,
 		]);
 	}
 
@@ -761,7 +758,7 @@ class AccessCollections {
 	 *                       Supported are 'owner_guid', 'subtype'
 	 * @return \ElggAccessCollection[]
 	 */
-	public function getEntityCollections($options = []) {
+	public function getEntityCollections(array $options = []) {
 
 		$callback = [$this, 'rowToElggAccessCollection'];
 
@@ -792,9 +789,10 @@ class AccessCollections {
 	 *
 	 * @param int   $collection_id The collection's ID
 	 * @param array $options       Ege* options
+	 *
 	 * @return \ElggData[]|int|mixed
 	 */
-	public function getMembers($collection_id, array $options = []) {
+	public function getMembers(int $collection_id, array $options = []) {
 		$options['wheres'][] = function(QueryBuilder $qb, $table_alias) use ($collection_id) {
 			$qb->join($table_alias, 'access_collection_membership', 'acm', $qb->compare('acm.user_guid', '=', "$table_alias.guid"));
 			return $qb->compare('acm.access_collection_id', '=', $collection_id, ELGG_VALUE_INTEGER);
@@ -844,9 +842,7 @@ class AccessCollections {
 	 * @return string
 	 * @since 1.11
 	 */
-	public function getReadableAccessLevel($entity_access_id) {
-		$access = (int) $entity_access_id;
-
+	public function getReadableAccessLevel(int $entity_access_id) {
 		$translator = $this->translator;
 
 		// Check if entity access id is a defined global constant
@@ -857,14 +853,14 @@ class AccessCollections {
 			ACCESS_PUBLIC => $translator->translate('access:label:public'),
 		];
 
-		if (array_key_exists($access, $access_array)) {
-			return $access_array[$access];
+		if (array_key_exists($entity_access_id, $access_array)) {
+			return $access_array[$entity_access_id];
 		}
 
 		// Entity access id is probably a custom access collection
 		// Check if the user has write access to it and can see it's label
 		// Admins should always be able to see the readable version
-		$collection = $this->get($access);
+		$collection = $this->get($entity_access_id);
 
 		if (!$collection instanceof \ElggAccessCollection || !$collection->canEdit()) {
 			// return 'Limited' if the collection can not be loaded or it can not be edited

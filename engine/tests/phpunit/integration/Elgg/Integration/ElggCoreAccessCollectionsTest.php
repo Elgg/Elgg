@@ -263,7 +263,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 			$expected[] = $owned_collection_id;
 			$expected[] = $joined_collection_id;
 	
-			$actual = get_access_array($this->user->guid, null, true);
+			$actual = _elgg_services()->accessCollections->getAccessArray($this->user->guid, true);
 	
 			sort($expected);
 			sort($actual);
@@ -275,7 +275,7 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($expected) {
 			$expected[] = ACCESS_PRIVATE;
-			$actual = get_access_array($this->user->guid, null, true);
+			$actual = _elgg_services()->accessCollections->getAccessArray($this->user->guid, true);
 	
 			sort($expected);
 			sort($actual);

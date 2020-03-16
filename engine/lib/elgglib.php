@@ -1108,8 +1108,6 @@ function _elgg_walled_garden_init() {
 		elgg_set_config('default_access', ACCESS_LOGGED_IN);
 	}
 
-	elgg_register_plugin_hook_handler('access:collections:write', 'all', '_elgg_walled_garden_remove_public_access', 9999);
-
 	if (!elgg_is_logged_in()) {
 		// override the front page
 		elgg_register_route('index', [
@@ -1117,23 +1115,6 @@ function _elgg_walled_garden_init() {
 			'resource' => 'walled_garden',
 		]);
 	}
-}
-
-/**
- * Remove public access for walled gardens
- *
- * @param \Elgg\Hook $hook 'access:collections:write', 'all'
- *
- * @return array
- *
- * @internal
- */
-function _elgg_walled_garden_remove_public_access(\Elgg\Hook $hook) {
-	$accesses = $hook->getValue();
-	if (isset($accesses[ACCESS_PUBLIC])) {
-		unset($accesses[ACCESS_PUBLIC]);
-	}
-	return $accesses;
 }
 
 /**
