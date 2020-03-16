@@ -1269,21 +1269,3 @@ function _elgg_register_events() {
 		}
 	}
 }
-
-/**
- * Register database seeds
- *
- * @elgg_plugin_hook seeds database
- *
- * @param \Elgg\Hook $hook Hook
- * @return array
- */
-function _elgg_db_register_seeds(\Elgg\Hook $hook) {
-	
-	$seeds = $hook->getValue();
-	
-	$seeds[] = \Elgg\Database\Seeds\Users::class;
-	$seeds[] = \Elgg\Database\Seeds\Groups::class;
-	
-	return $seeds;
-}

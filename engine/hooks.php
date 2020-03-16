@@ -242,7 +242,7 @@ return [
 	],
 	'seeds' => [
 		'database' => [
-			'_elgg_db_register_seeds' => ['priority' => 1],
+			\Elgg\Database\RegisterSeedsHandler::class => ['priority' => 1],
 		],
 	],
 	'send' => [

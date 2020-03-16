@@ -214,6 +214,7 @@ Core
 * ``_elgg_comments_prepare_notification()`` changed to ``Elgg\Comments\CreateNotification::prepareNotification()``
 * ``_elgg_create_default_widgets()`` changed to ``Elgg\Widgets\CreateDefaultWidgetsHandler::class``
 * ``_elgg_create_notice_of_pending_upgrade()`` changed to ``Elgg\Upgrade\CreateAdminNoticeHandler::class``
+* ``_elgg_db_register_seeds()`` changed to ``Elgg\Database\RegisterSeedsHandler::class``
 * ``_elgg_default_widgets_permissions_override()`` changed to ``Elgg\Widgets\DefaultWidgetsContainerPermissionsHandler::class``
 * ``_elgg_filestore_move_icons()`` changed to ``Elgg\Icons\MoveIconsOnOwnerChangeHandler::class``
 * ``_elgg_filestore_touch_icons()`` changed to ``Elgg\Icons\TouchIconsOnAccessChangeHandler::class``
