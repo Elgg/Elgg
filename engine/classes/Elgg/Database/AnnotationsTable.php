@@ -47,7 +47,7 @@ class AnnotationsTable {
 	 *
 	 * @return ElggAnnotation|false
 	 */
-	public function get($id) {
+	public function get(int $id) {
 		$qb = Select::fromTable('annotations');
 		$qb->select('*');
 
@@ -401,7 +401,7 @@ class AnnotationsTable {
 	 *
 	 * @return bool
 	 */
-	public function exists($entity_guid, $name, $owner_guid) {
+	public function exists(int $entity_guid, string $name, int $owner_guid) {
 		if (!$owner_guid) {
 			return false;
 		}

@@ -66,7 +66,7 @@ class ActionsService {
 	 *
 	 * @see    elgg_register_action()
 	 */
-	public function register($action, $handler = "", $access = 'logged_in') {
+	public function register(string $action, $handler = '', string $access = 'logged_in') {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
 		// redirects but we store the actions without it
 		$action = trim($action, '/');
@@ -124,7 +124,7 @@ class ActionsService {
 	 *
 	 * @see elgg_unregister_action()
 	 */
-	public function unregister($action) {
+	public function unregister(string $action) {
 		$action = trim($action, '/');
 
 		$route = $this->routes->get("action:$action");
@@ -145,7 +145,7 @@ class ActionsService {
 	 *
 	 * @see elgg_action_exists()
 	 */
-	public function exists($action) {
+	public function exists(string $action) {
 		$action = trim($action, '/');
 		$route = $this->routes->get("action:$action");
 		if (!$route) {

@@ -28,7 +28,7 @@ class AdminNotices {
 	 *
 	 * @return \ElggAdminNotice|bool
 	 */
-	public function add($id, $message) {
+	public function add(string $id, string $message) {
 		if (!$id || !$message) {
 			return false;
 		}
@@ -62,7 +62,7 @@ class AdminNotices {
 	 *
 	 * @return bool
 	 */
-	public function delete($id = '') {
+	public function delete(string $id = '') {
 		$result = true;
 		
 		$notices = $this->find([
@@ -109,7 +109,7 @@ class AdminNotices {
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	public function exists($id) {
+	public function exists(string $id) {
 		$old_ia = _elgg_services()->session->setIgnoreAccess(true);
 		$notice = elgg_count_entities([
 			'type' => 'object',

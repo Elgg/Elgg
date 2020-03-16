@@ -2664,6 +2664,7 @@ function _elgg_views_init() {
 	
 	elgg_register_external_file('css', 'elgg.admin', elgg_get_simplecache_url('admin.css'));
 	elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
+	elgg_register_external_file('css', 'maintenance', elgg_get_simplecache_url('maintenance.css'));
 	
 	elgg_define_js('admin/users/unvalidated', [
 		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
@@ -2671,6 +2672,16 @@ function _elgg_views_init() {
 	
 	elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
 
+	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
+	foreach ($widgets as $widget) {
+		elgg_register_widget_type(
+				$widget,
+				elgg_echo("admin:widget:$widget"),
+				elgg_echo("admin:widget:$widget:help"),
+				['admin']
+		);
+	}
+	
 	// Using a view extension to ensure that themes that have replaced the item view
 	// still load the required AMD modules
 	// @todo can this be removed?

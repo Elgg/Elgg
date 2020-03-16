@@ -333,4 +333,27 @@ class Settings {
 		
 		$request->validation()->pass('default_access', $default_access, elgg_echo('user:default_access:success'));
 	}
+	
+	/**
+	 * Save a setting related to admin approval of new users
+	 *
+	 * @param \Elgg\Hook $hook 'usersettings:save', 'user'
+	 *
+	 * @return void
+	 */
+	public static function setAdminValidationNotification(\Elgg\Hook $hook) {
+		
+		$user = $hook->getUserParam();
+		if (!$user instanceof \ElggUser || !$user->isAdmin()) {
+			return;
+		}
+		
+		$request = $hook->getParam('request');
+		if (!$request instanceof \Elgg\Request) {
+			return;
+		}
+		
+		$value = (bool) $request->getParam('admin_validation_notification', true);
+		$user->setPrivateSetting('admin_validation_notification', $value);
+	}
 }
