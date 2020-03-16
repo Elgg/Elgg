@@ -135,9 +135,13 @@ Lib functions
 * ``elgg_action_exists()`` now requires a ``string`` for ``$action``
 * ``elgg_add_admin_notice()`` now requires a ``string`` for ``$id`` and ``$message``
 * ``elgg_admin_notice_exists()`` now requires a ``string`` for ``$id``
+* ``elgg_annotation_exists()`` now requires a ``int`` for ``$entity_guid``, a ``string`` for ``$name`` and ``int`` for ``$owner_guid``
 * ``elgg_delete_admin_notice()`` now requires a ``string`` for ``$id``
+* ``elgg_delete_annotation_by_id()`` now requires a ``int`` for ``$id``
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
+* ``elgg_get_annotation_from_id()`` now requires an ``int`` for ``$id``
+* ``elgg_list_annotations()`` now requires an ``array`` for ``$options``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_register_action()`` now requires a ``string`` for ``$action`` and ``$access``
