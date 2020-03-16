@@ -21,6 +21,7 @@ Removed classes
 ~~~~~~~~~~~~~~~
 
 * ``ElggHMACCache`` has been replaced by ``_elgg_services()->hmacCacheTable`` (for internal use only)
+* ``Elgg\Notifications\Event`` has been replaced by ``Elgg\Notifications\SubscriptionNotificationEvent``
 
 Removed functions
 ~~~~~~~~~~~~~~~~~
@@ -126,11 +127,11 @@ The following functions now have their arguments type-hinted, this can cause ``T
 Class functions
 ~~~~~~~~~~~~~~~
 
+* ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
 * ``Elgg\Http\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
-* ``Elgg\I18n\Translator::getInstalledTranslations()`` now requires an ``bool`` for ``$calculate_completeness``
-* ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
+* ``Elgg\I18n\Translator::getInstalledTranslations()`` now requires a ``bool`` for ``$calculate_completeness``
 
 Lib functions
 ~~~~~~~~~~~~~
