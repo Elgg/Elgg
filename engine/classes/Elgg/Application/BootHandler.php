@@ -145,6 +145,10 @@ class BootHandler {
 		$config->boot_complete = true;
 		$config->lock('boot_complete');
 
+		// Tell the access functions the system has booted, plugins are loaded,
+		// and the user is logged in so it can start caching
+		$this->app->_services->accessCollections->markInitComplete();
+		
 		// System loaded and ready
 		$events->triggerSequence('ready', 'system');
 

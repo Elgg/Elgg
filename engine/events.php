@@ -92,7 +92,6 @@ return [
 	'ready' => [
 		'system' => [
 			'_elgg_cache_init' => [],
-			'access_init' => [],
 		],
 	],
 	'update:after' => [

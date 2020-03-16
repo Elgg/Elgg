@@ -278,17 +278,3 @@ function get_members_of_access_collection(int $collection_id, bool $guids_only =
 function get_readable_access_level(int $entity_access_id) {
 	return _elgg_services()->accessCollections->getReadableAccessLevel($entity_access_id);
 }
-
-/**
- * A quick and dirty way to make sure the access permissions have been correctly set up
- *
- * @param \Elgg\Event $event 'ready', 'system'
- *
- * @return void
- */
-function access_init(\Elgg\Event $event) {
-	
-	// Tell the access functions the system has booted, plugins are loaded,
-	// and the user is logged in so it can start caching
-	_elgg_services()->accessCollections->markInitComplete();
-}
