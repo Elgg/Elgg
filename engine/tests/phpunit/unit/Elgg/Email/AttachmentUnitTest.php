@@ -3,7 +3,7 @@
 namespace Elgg\Email;
 
 use Elgg\UnitTestCase;
-use Zend\Mime\Mime;
+use Laminas\Mime\Mime;
 
 /**
  * @group EmailService

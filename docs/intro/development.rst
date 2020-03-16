@@ -61,7 +61,7 @@ Elgg uses two caches to improve performance: a system cache and SimpleCache.
 ===================
 
 The use of 3rd party libraries in Elgg is managed by using `Composer`_ dependencies. Examples of 3rd party libraries are
-jQuery, RequireJs or Zend mail.
+jQuery, RequireJs or Laminas mail.
 
 To get a list of all the Elgg dependencies check out the `Packagist`_ page for Elgg.
 

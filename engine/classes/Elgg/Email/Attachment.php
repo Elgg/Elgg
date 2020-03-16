@@ -2,8 +2,8 @@
 
 namespace Elgg\Email;
 
-use Zend\Mime\Part;
-use Zend\Mime\Mime;
+use Laminas\Mime\Part;
+use Laminas\Mime\Mime;
 
 /**
  * Email attachment
@@ -17,7 +17,7 @@ class Attachment extends Part {
 	 *
 	 * @param mixed $content String or Stream containing the content
 	 *
-	 * @throws \Zend\Mime\Exception\InvalidArgumentException
+	 * @throws \Laminas\Mime\Exception\InvalidArgumentException
 	 *
 	 * @see Part::__construct()
 	 */
@@ -40,7 +40,7 @@ class Attachment extends Part {
 	 *		                 - disposition: (string) the attachment disposition (default: attachment)
 	 *		                 - charset:     (string) the charset
 	 *
-	 * @see \Zend\Mime\Part
+	 * @see \Laminas\Mime\Part
 	 *
 	 * @return false|\Elgg\Email\Attachment return the attachment or false on error
 	 */

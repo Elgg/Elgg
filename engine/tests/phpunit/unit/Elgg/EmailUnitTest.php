@@ -3,7 +3,7 @@
 namespace Elgg;
 
 use Elgg\Email\Address;
-use Zend\Mime\Mime;
+use Laminas\Mime\Mime;
 
 /**
  * @group EmailService
@@ -208,7 +208,7 @@ class EmailUnitTest extends UnitTestCase {
 		
 		$email = new Email();
 		
-		$part = new \Zend\Mime\Part('Test file content');
+		$part = new \Laminas\Mime\Part('Test file content');
 		$part->type = 'text/plain';
 		$part->disposition = 'attachment';
 		

@@ -7,10 +7,10 @@ use RuntimeException;
 use Laminas\Mail\Header\ContentType;
 use Laminas\Mail\Message as MailMessage;
 use Laminas\Mail\Transport\TransportInterface;
-use Zend\Mime\Mime;
-use Zend\Mime\Message as MimeMessage;
-use Zend\Mime\Part;
-use Zend\Mime\Exception\InvalidArgumentException;
+use Laminas\Mime\Mime;
+use Laminas\Mime\Message as MimeMessage;
+use Laminas\Mime\Part;
+use Laminas\Mime\Exception\InvalidArgumentException;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -169,7 +169,7 @@ class EmailService {
 	 *
 	 * @param Email $email Email
 	 *
-	 * @return \Zend\Mime\Message
+	 * @return \Laminas\Mime\Message
 	 */
 	protected function buildMessageBody(Email $email) {
 		// create body

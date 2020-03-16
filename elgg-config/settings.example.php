@@ -380,20 +380,20 @@ $CONFIG->allow_phpinfo = false;
 
 /**
  * Configure emailer transport
- * 
- * This setting can be used to select a different emailer transport. By default the Zend Sendmail Transport is used.
+ *
+ * This setting can be used to select a different emailer transport. By default the Laminas Sendmail Transport is used.
  * Currently only 'smtp' and 'sendmail' are supported as a different configuration.
  * For 'smtp', the SMTP server's settings must be set, while 'sendmail' requires no configuration.
- * 
+ *
  * @global string $CONFIG->emailer_transport
  */
 //$CONFIG->emailer_transport = 'sendmail';
 
 /**
  * Configure emailer SMTP settings
- * 
+ *
  * This setting is only necessary if the above emailer transport is set to 'smtp'.
- * Please refer to https://docs.zendframework.com/zend-mail/transport/smtp-authentication/#examples
+ * Please refer to https://docs.laminas.dev/laminas-mail/transport/smtp-authentication/#examples
  */
 //$CONFIG->emailer_smtp_settings = array(
 //	'name'              => 'localhost.localdomain',
