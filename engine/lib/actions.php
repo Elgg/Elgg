@@ -31,7 +31,7 @@ use Elgg\Database\SiteSecret;
  *
  * @return bool
  */
-function elgg_register_action($action, $filename = "", $access = 'logged_in') {
+function elgg_register_action(string $action, $filename = '', string $access = 'logged_in') {
 	return _elgg_services()->actions->register($action, $filename, $access);
 }
 
@@ -42,7 +42,7 @@ function elgg_register_action($action, $filename = "", $access = 'logged_in') {
  * @return bool
  * @since 1.8.1
  */
-function elgg_unregister_action($action) {
+function elgg_unregister_action(string $action) {
 	return _elgg_services()->actions->unregister($action);
 }
 
@@ -87,7 +87,7 @@ function _elgg_get_site_secret_strength() {
  * @return bool
  * @since 1.8.0
  */
-function elgg_action_exists($action) {
+function elgg_action_exists(string $action) {
 	return _elgg_services()->actions->exists($action);
 }
 

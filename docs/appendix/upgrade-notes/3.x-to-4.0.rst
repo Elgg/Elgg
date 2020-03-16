@@ -132,11 +132,14 @@ Lib functions
 * ``can_edit_access_collection()`` now requires an ``int`` for ``$collection_id`` and ``$user_guid``
 * ``create_access_collection()`` now requires an ``string`` for ``$name`` and ``int`` for ``$owner_guid``
 * ``delete_access_collection()`` now requires an ``int`` for ``$collection_id``
+* ``elgg_action_exists()`` now requires a ``string`` for ``$action``
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
+* ``elgg_register_action()`` now requires a ``string`` for ``$action`` and ``$access``
 * ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
+* ``elgg_unregister_action()`` now requires a ``string`` for ``$action``
 * ``get_access_array()`` now requires an ``int`` for ``$user_guid``
 * ``get_access_collection()`` now requires an ``int`` for ``$collection_id``
 * ``get_entity_statistics()`` now requires an ``int`` for ``$owner_guid``
