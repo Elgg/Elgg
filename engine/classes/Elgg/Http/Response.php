@@ -56,9 +56,7 @@ abstract class Response implements ResponseBuilder {
 	}
 
 	/**
-	 * @param \Exception $e Exception to store
-	 *
-	 * @return self
+	 * {@inheritDoc}
 	 */
 	public function setException(\Exception $e) {
 		$this->exception = $e;
@@ -66,7 +64,7 @@ abstract class Response implements ResponseBuilder {
 	}
 
 	/**
-	 * @return \Exception|null
+	 * {@inheritDoc}
 	 */
 	public function getException() {
 		return $this->exception;
