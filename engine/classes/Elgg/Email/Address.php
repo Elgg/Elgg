@@ -4,8 +4,8 @@ namespace Elgg\Email;
 
 use Laminas\Mail\Address as ZendAddress;
 use Laminas\Mail\Exception\InvalidArgumentException;
-use Zend\Validator\EmailAddress as EmailAddressValidator;
-use Zend\Validator\Hostname;
+use Laminas\Validator\EmailAddress as EmailAddressValidator;
+use Laminas\Validator\Hostname;
 
 /**
  * Email address

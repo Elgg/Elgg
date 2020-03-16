@@ -31,7 +31,7 @@ Under the hood:
  * NGINX or Apache compatible
  * Symfony2 HTTP Foundation handles requests and responses
  * RequireJS handles AMD
- * Zend Mail handles outgoing email
+ * Laminas Mail handles outgoing email
  * htmLawed XSS filters
  * DBAL
  * Phinx database migrations

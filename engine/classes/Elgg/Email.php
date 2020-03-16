@@ -7,7 +7,7 @@ use ElggUser;
 use Elgg\Email\Address;
 use Elgg\Email\Attachment;
 use Elgg\Exceptions\InvalidParameterException;
-use Zend\Mime\Part;
+use Laminas\Mime\Part;
 
 /**
  * Email message
@@ -267,7 +267,7 @@ final class Email {
 	/**
 	 * Add an attachment
 	 *
-	 * @param mixed $attachment \Zend\Mime\Part or \Elgg\Email\Attachment or \ElggFile or an array
+	 * @param mixed $attachment \Laminas\Mime\Part or \Elgg\Email\Attachment or \ElggFile or an array
 	 *
 	 * @see \Elgg\Email\Attachment::factory()
 	 *
@@ -296,14 +296,14 @@ final class Email {
 	/**
 	 * Get all attachments
 	 *
-	 * @return \Zend\Mime\Part[]
+	 * @return \Laminas\Mime\Part[]
 	 */
 	public function getAttachments() {
 		return $this->attachments;
 	}
 
 	/**
-	 * Converts mixed input to an instance of Zend addres
+	 * Converts mixed input to an instance of Laminas addres
 	 *
 	 * @param mixed $from From input
 	 * @return Address
@@ -335,7 +335,7 @@ final class Email {
 	}
 
 	/**
-	 * Converts mixed input to an instance of Zend addres
+	 * Converts mixed input to an instance of Laminas addres
 	 *
 	 * @param mixed $to To input
 	 * @return Address

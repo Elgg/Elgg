@@ -610,9 +610,9 @@ Emails
 	 * ``email`` - An instance of ``\Elgg\Email``
 
 **zend:message, system:email**
-	Triggered by the default email transport handler (Elgg uses ``zendframework/zend-mail``).
+	Triggered by the default email transport handler (Elgg uses ``laminas/laminas-mail``).
 	Applies to all outgoing system and notification emails that were not transported using the **transport, system:email** hook.
-	This hook allows you to alter an instance of ``\Laminas\Mail\Message`` before it is passed to the Zend email transport.
+	This hook allows you to alter an instance of ``\Laminas\Mail\Message`` before it is passed to the Laminas email transport.
 
 	``$params`` contains:
 
