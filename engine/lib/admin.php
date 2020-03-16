@@ -48,7 +48,7 @@ function elgg_get_admins(array $options = []) {
  * @return ElggAdminNotice|bool
  * @since 1.8.0
  */
-function elgg_add_admin_notice($id, $message) {
+function elgg_add_admin_notice(string $id, string $message) {
 	return _elgg_services()->adminNotices->add($id, $message);
 }
 
@@ -60,7 +60,7 @@ function elgg_add_admin_notice($id, $message) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_delete_admin_notice($id) {
+function elgg_delete_admin_notice(string $id) {
 	return _elgg_services()->adminNotices->delete($id);
 }
 
@@ -84,6 +84,6 @@ function elgg_get_admin_notices(array $options = []) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_admin_notice_exists($id) {
+function elgg_admin_notice_exists(string $id) {
 	return _elgg_services()->adminNotices->exists($id);
 }
