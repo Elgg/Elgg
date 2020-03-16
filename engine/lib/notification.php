@@ -22,7 +22,7 @@
  *    would be named 'publish:object:blog'.
  *
  *    The parameter array for the plugin hook has the keys 'event', 'method',
- *    'recipient', and 'language'. The event is an \Elgg\Notifications\Event
+ *    'recipient', and 'language'. The event is an \Elgg\Notifications\SubscriptionNotificationEvent
  *    object and can provide access to the original object of the event through
  *    the method getObject() and the original actor through getActor().
  *

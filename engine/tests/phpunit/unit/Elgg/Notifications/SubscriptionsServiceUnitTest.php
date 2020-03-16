@@ -21,7 +21,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			->will($this->returnValue($this->containerGuid));
 
 		// mock event that holds the mock object
-		$this->event = $this->createMock('\Elgg\Notifications\Event');
+		$this->event = $this->createMock('\Elgg\Notifications\SubscriptionNotificationEvent');
 
 		$this->event->expects($this->any())
 			->method('getObject')
@@ -41,7 +41,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testGetSubscriptionsWithBadObject() {
 		$this->event = $this->createMock(
-			'\Elgg\Notifications\Event', ['getObject'], [], '', false);
+			'\Elgg\Notifications\SubscriptionNotificationEvent', ['getObject'], [], '', false);
 		$this->event->expects($this->any())
 			->method('getObject')
 			->will($this->returnValue(null));

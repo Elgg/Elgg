@@ -8,6 +8,8 @@ use Serializable;
 
 /**
  * Notification event interface
+ *
+ * @internal
  */
 interface NotificationEvent extends Serializable {
 
