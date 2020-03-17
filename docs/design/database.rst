@@ -214,25 +214,25 @@ your new element (defaulting to the current user's container):
 .. code-block:: php
 
     $user = elgg_get_logged_in_user_entity();
-    $container_guid = (int)get_input('container_guid');
+    $container_guid = (int) get_input('container_guid');
     
     if ($container_guid) {
     	$container = get_entity($container_guid);
     	
-        if (!$container->canWriteToContainer($user->guid)) {
-            // register error and forward
+        if (!$container instanceof \ElggEntity || !$container->canWriteToContainer($user->guid)) {
+            return elgg_error_response(elgg_echo('actionunauthorized'));
         }
     } else {
         $container_guid = elgg_get_logged_in_user_guid();
     }
 
-    $object = new ElggObject;
+    $object = new ElggObject();
     $object->container_guid = $container_guid;
 
     ...
 
-    $container = get_entity($container_guid);
-    forward($container->getURL());
+    // redirect to the created object
+    return elgg_ok_response('', $object->getURL());
 
 Ownership
 =========

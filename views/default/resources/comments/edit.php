@@ -1,21 +1,18 @@
 <?php
 
-$guid = elgg_extract('guid', $vars);
+use Elgg\Exceptions\Http\EntityNotFoundException;
+use Elgg\Exceptions\Http\EntityPermissionsException;
 
-if (!$guid) {
-	register_error(elgg_echo('generic_comment:notfound'));
-	forward(REFERER);
-}
+$guid = (int) elgg_extract('guid', $vars);
+
 $comment = get_entity($guid);
-if (!($comment instanceof \ElggComment) || !$comment->canEdit()) {
-	register_error(elgg_echo('generic_comment:notfound'));
-	forward(REFERER);
+if (!$comment instanceof \ElggComment || !$comment->canEdit()) {
+	throw new EntityPermissionsException(elgg_echo('generic_comment:notfound'));
 }
 
 $target = $comment->getContainerEntity();
-if (!($target instanceof \ElggEntity)) {
-	register_error(elgg_echo('generic_comment:notfound'));
-	forward(REFERER);
+if (!$target instanceof \ElggEntity) {
+	throw new EntityNotFoundException(elgg_echo('generic_comment:notfound'));
 }
 
 elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());

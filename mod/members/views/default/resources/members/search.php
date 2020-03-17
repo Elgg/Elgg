@@ -3,10 +3,13 @@
  * Members search page
  */
 
-$query = get_input('member_query');
+use Elgg\Exceptions\Http\BadRequestException;
 
+$query = get_input('member_query');
 if (empty($query)) {
-	forward('members');
+	$e = new BadRequestException(elgg_echo('error:missing_data'));
+	$e->setRedirectUrl(elgg_generate_url('collection:user:user'));
+	throw $e;
 }
 
 $display_query = _elgg_get_display_query($query);

@@ -1,7 +1,9 @@
 <?php
 
 if (elgg_is_logged_in()) {
-	forward(elgg_generate_url('default:river'));
+	// logged in users see a different output
+	echo elgg_view_resource('river', $vars);
+	return;
 }
 
 $content = elgg_list_river([

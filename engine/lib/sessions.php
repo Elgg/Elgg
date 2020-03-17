@@ -375,21 +375,21 @@ function _elgg_session_boot(ServiceProvider $services) {
 
 	// test whether we have a user session
 	if ($session->has('guid')) {
-		/** @var ElggUser $user */
 		$user = $services->entityTable->get($session->get('guid'), 'user');
-		if (!$user) {
+		if (!$user instanceof ElggUser) {
 			// OMG user has been deleted.
 			$session->invalidate();
-			forward('');
+			// redirect to homepage
+			$services->responseFactory->redirect('');
 		}
 	} else {
 		$user = $services->persistentLogin->bootSession();
-		if ($user) {
+		if ($user instanceof ElggUser) {
 			$services->persistentLogin->updateTokenUsage($user);
 		}
 	}
 
-	if ($user) {
+	if ($user instanceof ElggUser) {
 		$session->setLoggedInUser($user);
 		$user->setLastAction();
 

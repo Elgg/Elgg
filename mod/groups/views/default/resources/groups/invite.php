@@ -1,10 +1,11 @@
 <?php
 
+use Elgg\Exceptions\Http\EntityPermissionsException;
+
 $guid = elgg_extract('guid', $vars);
 $group = get_entity($guid);
-if (!($group instanceof ElggGroup) || !$group->canEdit()) {
-	register_error(elgg_echo('groups:noaccess'));
-	forward(REFERER);
+if (!$group instanceof ElggGroup || !$group->canEdit()) {
+	throw new EntityPermissionsException(elgg_echo('groups:noaccess'));
 }
 
 elgg_set_page_owner_guid($guid);

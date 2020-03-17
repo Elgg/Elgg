@@ -1,4 +1,6 @@
 <?php
+use Elgg\Exceptions\Http\EntityNotFoundException;
+
 /**
  * Main activity stream list page
  */
@@ -39,8 +41,7 @@ switch ($request->getRoute()) {
 			$subject_username = elgg_extract('username', $vars, '');
 			$subject = get_user_by_username($subject_username);
 			if (!$subject) {
-				register_error(elgg_echo('river:subject:invalid_subject'));
-				forward();
+				throw new EntityNotFoundException(elgg_echo('river:subject:invalid_subject'));
 			}
 			elgg_set_page_owner_guid($subject->guid);
 			$title = elgg_echo('river:owner', [htmlspecialchars($subject->getDisplayName(), ENT_QUOTES, 'UTF-8', false)]);

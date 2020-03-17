@@ -424,6 +424,11 @@ Miscellaneous API changes
 * An ``\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features
 * An ``\Elgg\Event`` no longer implements the interfaces ``\Elgg\ObjectEvent`` and ``\Elgg\UserEvent`` but still has the same features
 
+Deprecated APIs
+---------------
+
+* ``forward()`` use ``Elgg\Exceptions\HttpException`` instances or ``elgg_redirect_response()``
+
 Removed functions
 -----------------
 
