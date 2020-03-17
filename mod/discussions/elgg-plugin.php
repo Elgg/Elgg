@@ -112,7 +112,7 @@ return [
 		],
 		'seeds' => [
 			'database' => [
-				'Elgg\Discussions\Database::registerSeeds' => [],
+				'Elgg\Discussions\Seeder::register' => [],
 			],
 		],
 	],
