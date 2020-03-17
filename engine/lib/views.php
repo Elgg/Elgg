@@ -1584,19 +1584,6 @@ function elgg_views_boot() {
 	]);
 
 	elgg_register_ajax_view('languages.js');
-
-	// set default icon sizes - can be overridden with plugin
-	if (!_elgg_config()->hasValue('icon_sizes')) {
-		$icon_sizes = [
-			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
-			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],
-			'small' => ['w' => 40, 'h' => 40, 'square' => true, 'upscale' => true],
-			'medium' => ['w' => 100, 'h' => 100, 'square' => true, 'upscale' => true],
-			'large' => ['w' => 200, 'h' => 200, 'square' => true, 'upscale' => true],
-			'master' => ['w' => 10240, 'h' => 10240, 'square' => false, 'upscale' => false, 'crop' => false],
-		];
-		elgg_set_config('icon_sizes', $icon_sizes);
-	}
 }
 
 /**
