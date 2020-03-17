@@ -261,7 +261,8 @@ return [
 	],
 	'seeds' => [
 		'database' => [
-			\Elgg\Database\RegisterSeedsHandler::class => ['priority' => 1],
+			'\Elgg\Database\Seeds\Users::register' => ['priority' => 1],
+			'\Elgg\Database\Seeds\Groups::register' => ['priority' => 2],
 		],
 	],
 	'send' => [

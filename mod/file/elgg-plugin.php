@@ -107,7 +107,7 @@ return [
 		],
 		'seeds' => [
 			'database' => [
-				'Elgg\File\Database::registerSeeds' => [],
+				'Elgg\File\Seeder::register' => [],
 			],
 		],
 	],

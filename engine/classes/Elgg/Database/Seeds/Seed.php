@@ -25,6 +25,21 @@ abstract class Seed implements Seedable {
 			$this->limit = $limit;
 		}
 	}
+	
+	/**
+	 * Register this class for seeding
+	 *
+	 * @param \Elgg\Hook $hook 'seeds', 'database'
+	 *
+	 * @return array
+	 */
+	final public static function register(\Elgg\Hook $hook) {
+		$seeds = $hook->getValue();
+		
+		$seeds[] = static::class;
+		
+		return $seeds;
+	}
 
 	/**
 	 * Populate database
