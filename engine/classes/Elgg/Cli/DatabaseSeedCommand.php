@@ -44,7 +44,7 @@ class DatabaseSeedCommand extends Command {
 
 		_elgg_services()->setValue('mailer', new \Laminas\Mail\Transport\InMemory());
 
-		$limit = $this->option('limit') ? : 20;
+		$limit = (int) $this->option('limit') ? : 20;
 		$image_folder = $this->option('image_folder');
 		if (!empty($image_folder)) {
 			elgg_set_config('seeder_local_image_folder', $image_folder);
