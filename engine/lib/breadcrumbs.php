@@ -66,7 +66,7 @@ function elgg_pop_breadcrumb() {
  *                           If set, will override breadcrumbs in the stack
  * @return array
  * @since 1.8.0
- * @see elgg_prepare_breadcrumbs()
+ * @see \Elgg\Page\PrepareBreadcrumbsHandler::class
  */
 function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	if (!isset($breadcrumbs)) {
@@ -95,31 +95,6 @@ function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 		}
 	}
 
-	return $breadcrumbs;
-}
-
-/**
- * Prepare breadcrumbs before display. This turns titles into 100-character excerpts, and also
- * removes the last crumb if it's not a link.
- *
- * @param \Elgg\Hook $hook "prepare", "breadcrumbs"
- *
- * @return array
- * @since 1.11
- */
-function elgg_prepare_breadcrumbs(\Elgg\Hook $hook) {
-	$breadcrumbs = $hook->getValue();
-	
-	// remove last crumb if not a link
-	$last_crumb = end($breadcrumbs);
-	if (empty($last_crumb['href'])) {
-		array_pop($breadcrumbs);
-	}
-
-	// apply excerpt to text
-	foreach (array_keys($breadcrumbs) as $i) {
-		$breadcrumbs[$i]['text'] = elgg_get_excerpt($breadcrumbs[$i]['text'], 100);
-	}
 	return $breadcrumbs;
 }
 

@@ -45,7 +45,7 @@ class CssCompiler {
 	 */
 	public function compile($css, array $options = []) {
 		$defaults = [
-			'minify' => false, // minify handled by _elgg_views_minify
+			'minify' => false, // minify handled by \Elgg\Views\MinifyHandler::class
 			'formatter' => 'single-line', // shows lowest byte size
 			'versioning' => false, // versioning done by Elgg
 			'rewrite_import_urls' => false,

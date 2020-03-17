@@ -1092,26 +1092,6 @@ function _elgg_walled_garden_init() {
 }
 
 /**
- * Adds the manifest.json to head links
- *
- * @param \Elgg\Hook $hook 'head', 'page'
- *
- * @return array
- *
- * @internal
- * @since 3.1
- */
-function _elgg_head_manifest(\Elgg\Hook $hook) {
-	$result = $hook->getValue();
-	$result['links']['manifest'] = [
-		'rel' => 'manifest',
-		'href' => elgg_get_simplecache_url('resources/manifest.json'),
-	];
-
-	return $result;
-}
-
-/**
  * Elgg's main init.
  *
  * @elgg_event_handler init system
