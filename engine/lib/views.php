@@ -477,60 +477,6 @@ function _elgg_views_prepare_head($title) {
 }
 
 /**
- * Add favicon link tags to HTML head
- *
- * @param \Elgg\Hook $hook 'head', 'page'
- *
- * @return array
- */
-function _elgg_views_prepare_favicon_links(\Elgg\Hook $hook) {
-	$head_params = $hook->getValue();
-	
-	$head_params['links']['apple-touch-icon'] = [
-		'rel' => 'apple-touch-icon',
-		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
-	];
-
-	// favicons
-	$head_params['links']['icon-ico'] = [
-		'rel' => 'icon',
-		'href' => elgg_get_simplecache_url('graphics/favicon.ico'),
-	];
-	$head_params['links']['icon-vector'] = [
-		'rel' => 'icon',
-		'sizes' => '16x16 32x32 48x48 64x64 128x128',
-		'type' => 'image/svg+xml',
-		'href' => elgg_get_simplecache_url('graphics/favicon.svg'),
-	];
-	$head_params['links']['icon-16'] = [
-		'rel' => 'icon',
-		'sizes' => '16x16',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('graphics/favicon-16.png'),
-	];
-	$head_params['links']['icon-32'] = [
-		'rel' => 'icon',
-		'sizes' => '32x32',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('graphics/favicon-32.png'),
-	];
-	$head_params['links']['icon-64'] = [
-		'rel' => 'icon',
-		'sizes' => '64x64',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('graphics/favicon-64.png'),
-	];
-	$head_params['links']['icon-128'] = [
-		'rel' => 'icon',
-		'sizes' => '128x128',
-		'type' => 'image/png',
-		'href' => elgg_get_simplecache_url('graphics/favicon-128.png'),
-	];
-
-	return $head_params;
-}
-
-/**
  * Displays a layout with optional parameters.
  *
  * Layouts are templates provide consistency by organizing blocks of content on the page.
@@ -1588,71 +1534,6 @@ function _elgg_has_rss_link() {
 }
 
 /**
- * Minifies simplecache CSS and JS views by handling the "simplecache:generate" hook
- *
- * @param \Elgg\Hook $hook 'simplecache:generate', 'css'
- *
- * @return string|null View content minified (if css/js type)
- * @internal
- */
-function _elgg_views_minify(\Elgg\Hook $hook) {
-	if (preg_match('~[\.-]min\.~', $hook->getParam('view'))) {
-		// bypass minification
-		return;
-	}
-
-	$content = $hook->getValue();
-	
-	if ($hook->getType() === 'js') {
-		if (_elgg_config()->simplecache_minify_js) {
-			return JSMin::minify($content);
-		}
-	} elseif ($hook->getType() === 'css') {
-		if (_elgg_config()->simplecache_minify_css) {
-			$cssmin = new CSSmin();
-			return $cssmin->run($content);
-		}
-	}
-}
-
-/**
- * Preprocesses CSS views sent by /cache URLs
- *
- * @param \Elgg\Hook $hook 'cache:generate' | 'simplecache:generate', 'css'
- *
- * @return string|null View content
- * @internal
- */
-function _elgg_views_preprocess_css(\Elgg\Hook $hook) {
-	$options = $hook->getParam('compiler_options', []);
-	return _elgg_services()->cssCompiler->compile($hook->getValue(), $options);
-}
-
-/**
- * Inserts module names into anonymous modules by handling the "simplecache:generate" and "cache:generate" hook.
- *
- * @param \Elgg\Hook $hook 'cache:generate' | 'simplecache:generate', 'js'
- *
- * @return string|null View content minified (if css/js type)
- * @internal
- */
-function _elgg_views_amd(\Elgg\Hook $hook) {
-	$filter = new \Elgg\Amd\ViewFilter();
-	return $filter->filter($hook->getParam('view'), $hook->getValue());
-}
-
-/**
- * Sends X-Frame-Options header on page requests
- *
- * @return void
- *
- * @internal
- */
-function _elgg_views_send_header_x_frame_options() {
-	elgg_set_http_header('X-Frame-Options: SAMEORIGIN');
-}
-
-/**
  * Initialize viewtypes on system boot event
  * This ensures simplecache is cleared during upgrades. See #2252
  *
@@ -1704,23 +1585,6 @@ function elgg_views_boot() {
 
 	elgg_register_ajax_view('languages.js');
 
-	// pre-process CSS regardless of simplecache
-	elgg_register_plugin_hook_handler('cache:generate', 'css', '_elgg_views_preprocess_css');
-	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_preprocess_css');
-
-	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
-	elgg_register_plugin_hook_handler('cache:generate', 'js', '_elgg_views_amd');
-	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
-	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
-
-	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
-
-	elgg_register_plugin_hook_handler('view_vars', 'elements/forms/help', '_elgg_views_file_help_upload_limit');
-
-	// registered with high priority for BC
-	// prior to 2.2 registration used to take place in _elgg_views_prepare_head() before the hook was triggered
-	elgg_register_plugin_hook_handler('head', 'page', '_elgg_views_prepare_favicon_links', 1);
-
 	// set default icon sizes - can be overridden with plugin
 	if (!_elgg_config()->hasValue('icon_sizes')) {
 		$icon_sizes = [
@@ -1733,9 +1597,6 @@ function elgg_views_boot() {
 		];
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}
-
-	// Configure lightbox
-	elgg_register_plugin_hook_handler('elgg.data', 'site', '_elgg_set_lightbox_config');
 }
 
 /**
@@ -1841,69 +1702,6 @@ function _elgg_view_under_viewtype($view, $vars, $viewtype) {
 	}
 
 	return $ret;
-}
-
-/**
- * Set lightbox config
- *
- * @param \Elgg\Hook $hook "elgg.data", "site"
- *
- * @return array
- * @internal
- */
-function _elgg_set_lightbox_config(\Elgg\Hook $hook) {
-	$return = $hook->getValue();
-	
-	$return['lightbox'] = [
-		'current' => elgg_echo('js:lightbox:current', ['{current}', '{total}']),
-		'previous' => elgg_view_icon('caret-left'),
-		'next' => elgg_view_icon('caret-right'),
-		'close' => elgg_view_icon('times'),
-		'opacity' => 0.5,
-		'maxWidth' => '990px',
-		'maxHeight' => '990px',
-		'initialWidth' => '300px',
-		'initialHeight' => '300px',
-	];
-
-	return $return;
-}
-
-/**
- * Add a help text to input/file about upload limit
- *
- * In order to not show the help text supply 'show_upload_limit' => false to elgg_view_field()
- *
- * @param \Elgg\Hook $hook 'view_vars' 'elements/forms/help'
- *
- * @return void|array
- * @internal
- */
-function _elgg_views_file_help_upload_limit(\Elgg\Hook $hook) {
-
-	$return = $hook->getValue();
-	if (elgg_extract('input_type', $return) !== 'file') {
-		return;
-	}
-
-	if (!elgg_extract('show_upload_limit', $return, true)) {
-		return;
-	}
-
-	$help = elgg_extract('help', $return, '');
-
-	// Get post_max_size and upload_max_filesize
-	$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
-	$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
-
-	// Determine the correct value
-	$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
-
-	$help .= ' ' . elgg_echo('input:file:upload_limit', [elgg_format_bytes($max_upload)]);
-
-	$return['help'] = trim($help);
-
-	return $return;
 }
 
 /**
@@ -2670,6 +2468,7 @@ function _elgg_views_init() {
 		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
 	]);
 	
+	elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 	elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
 
 	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
@@ -2686,5 +2485,4 @@ function _elgg_views_init() {
 	// still load the required AMD modules
 	// @todo can this be removed?
 	elgg_extend_view('navigation/menu/elements/item', 'navigation/menu/elements/item_deps');
-	
 }

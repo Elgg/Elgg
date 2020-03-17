@@ -396,6 +396,4 @@ function _elgg_user_prepare_unban_notification(\Elgg\Hook $hook) {
  */
 function users_init() {
 	register_pam_handler('pam_auth_userpass');
-		
-	elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 }

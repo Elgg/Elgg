@@ -20,6 +20,14 @@ return [
 			\Elgg\Entity\CropIcon::class => [],
 		],
 	],
+	'cache:generate' => [
+		'css' => [
+			\Elgg\Views\PreProcessCssHandler::class => [],
+		],
+		'js' => [
+			\Elgg\Views\AddAmdModuleNameHandler::class => [],
+		],
+	],
 	'container_permissions_check' => [
 		'all' => [
 			\Elgg\Groups\MemberPermissionsHandler::class => [],
@@ -32,7 +40,7 @@ return [
 	'cron' => [
 		'daily' => [
 			'Elgg\Users\Validation::notifyAdminsAboutPendingUsers' => [],
-			'_elgg_session_cleanup_persistent_login' => [],
+			\Elgg\Users\CleanupPersistentLoginHandler::class => [],
 		],
 		'minute' => [
 			\Elgg\Notifications\ProcessQueueCronHandler::class => ['priority' => 100],
@@ -47,6 +55,11 @@ return [
 			'Elgg\Diagnostics\Reports::getSigs' => ['priority' => 1],
 			'Elgg\Diagnostics\Reports::getGlobals' => [],
 			'Elgg\Diagnostics\Reports::getPHPInfo' => [],
+		],
+	],
+	'elgg.data' => [
+		'site' => [
+			\Elgg\Javascript\SetLightboxConfigHandler::class => [],
 		],
 	],
 	'email' => [
@@ -74,7 +87,8 @@ return [
 	],
 	'head' => [
 		'page' => [
-			'_elgg_head_manifest' => [],
+			\Elgg\Page\AddFaviconLinksHandler::class => [],
+			\Elgg\Page\AddManifestLinkHandler::class => [],
 		],
 	],
 	'likes:is_likable' => [
@@ -85,6 +99,11 @@ return [
 	'output' => [
 		'page' => [
 			\Elgg\Debug\Profiler::class => ['priority' => 999],
+		],
+	],
+	'output:before' => [
+		'page' => [
+			\Elgg\Page\SetXFrameOptionsHeaderHandler::class => [],
 		],
 	],
 	'permissions_check' => [
@@ -99,7 +118,7 @@ return [
 	],
 	'prepare' => [
 		'breadcrumbs' => [
-			'elgg_prepare_breadcrumbs' => [],
+			\Elgg\Page\PrepareBreadcrumbsHandler::class => [],
 		],
 		'menu:page' => [
 			'Elgg\Menus\Page::cleanupUserSettingsPlugins' => [],
@@ -250,6 +269,16 @@ return [
 			\Elgg\Notifications\SendEmailHandler::class => [],
 		],
 	],
+	'simplecache:generate' => [
+		'css' => [
+			\Elgg\Views\PreProcessCssHandler::class => [],
+			\Elgg\Views\MinifyHandler::class => [],
+		],
+		'js' => [
+			\Elgg\Views\AddAmdModuleNameHandler::class => [],
+			\Elgg\Views\MinifyHandler::class => [],
+		],
+	],
 	'usersettings:save' => [
 		'user' => [
 			'Elgg\Users\Settings::setAdminValidationNotification' => [],
@@ -266,14 +295,17 @@ return [
 	],
 	'validate' => [
 		'input' => [
-			'_elgg_htmlawed_filter_tags' => [
+			\Elgg\Input\ValidateInputHandler::class => [
 				'priority' => 1,
 			],
 		],
 	],
 	'view_vars' => [
+		'elements/forms/help' => [
+			\Elgg\Input\AddFileHelpTextHandler::class => [],
+		],
 		'input/password' => [
-			'_elgg_disable_password_autocomplete' => [],
+			\Elgg\Input\DisablePasswordAutocompleteHandler::class => [],
 		],
 	],
 ];

@@ -344,21 +344,6 @@ function _elgg_get_login_forward_url(\Elgg\Request $request, \ElggUser $user) {
 }
 
 /**
- * Cleanup expired persistent login tokens from the database
- *
- * @param \Elgg\Hook $hook 'cron', 'daily'
- *
- * @return void
- * @since 3.0
- * @internal
- */
-function _elgg_session_cleanup_persistent_login(\Elgg\Hook $hook) {
-	
-	$time = (int) $hook->getParam('time', time());
-	_elgg_services()->persistentLogin->removeExpiredTokens($time);
-}
-
-/**
  * Initializes the session and checks for the remember me cookie
  *
  * @param ServiceProvider $services Services
