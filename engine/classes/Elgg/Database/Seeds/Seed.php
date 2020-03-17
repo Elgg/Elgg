@@ -26,7 +26,7 @@ abstract class Seed implements Seedable {
 	 * @param int $limit Number of item to seed
 	 */
 	public function __construct(int $limit = null) {
-		if (isset($limit)) {
+		if ($limit > 0) {
 			$this->limit = $limit;
 		}
 	}

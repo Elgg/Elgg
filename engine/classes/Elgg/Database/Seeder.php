@@ -42,14 +42,18 @@ class Seeder {
 	/**
 	 * Load seed scripts
 	 *
-	 * @param int $limit the max number of entities to seed
+	 * @param array $options option for seeding
+	 *                       - limit: the max number of entities to seed
+	 *                       - image_folder: a global (local) image folder to use for image seeding (user/group profile icon, etc)
 	 *
 	 * @return void
 	 */
-	public function seed(int $limit = null) {
-		if (!isset($limit)) {
-			$limit = max(elgg_get_config('default_limit'), 20);
-		}
+	public function seed(array $options = []) {
+		$defaults = [
+			'limit' => max(elgg_get_config('default_limit'), 20),
+			'image_folder' => elgg_get_config('seeder_local_image_folder'),
+		];
+		$options = array_merge($defaults, $options);
 
 		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
@@ -57,6 +61,12 @@ class Seeder {
 		_elgg_services()->session->setDisabledEntityVisibility(true);
 
 		$seeds = $this->hooks->trigger('seeds', 'database', null, []);
+
+		// set global configuration
+		if ($options['image_folder'] !== $defaults['image_folder']) {
+			elgg_set_config('seeder_local_image_folder', $options['image_folder']);
+		}
+		$limit = $options['limit'];
 
 		foreach ($seeds as $seed) {
 			if (!class_exists($seed)) {
@@ -68,8 +78,8 @@ class Seeder {
 				continue;
 			}
 
-			$seeder = new $seed($limit);
 			/* @var $seeder Seed */
+			$seeder = new $seed($limit);
 
 			$progress_bar = $this->progress->start($seed, $limit);
 
@@ -106,8 +116,9 @@ class Seeder {
 				elgg_log("Seeding class $seed does not extend " . Seed::class, 'ERROR');
 				continue;
 			}
-			$seeder = new $seed();
+
 			/* @var $seeder Seed */
+			$seeder = new $seed();
 
 			$progress_bar = $this->progress->start($seed);
 
