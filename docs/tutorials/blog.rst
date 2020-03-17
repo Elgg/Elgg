@@ -141,7 +141,7 @@ Create the file ``/mod/my_blog/actions/my_blog/save.php``:
 
     <?php
     // get the form inputs
-    $title = get_input('title');
+    $title = elgg_get_title_input('title');
     $body = get_input('body');
     $tags = string_to_tag_array(get_input('tags'));
 
@@ -166,11 +166,9 @@ Create the file ``/mod/my_blog/actions/my_blog/save.php``:
     // if the my_blog was saved, we want to display the new post
     // otherwise, we want to register an error and forward back to the form
     if ($blog_guid) {
-       system_message("Your blog post was saved.");
-       forward($blog->getURL());
+       return elgg_ok_response('', "Your blog post was saved.", $blog->getURL());
     } else {
-       register_error("The blog post could not be saved.");
-       forward(REFERER); // REFERER is a global variable that defines the previous page
+       return elgg_error_response("The blog post could not be saved.");
     }
 
 As you can see in the above code, Elgg objects have several fields built

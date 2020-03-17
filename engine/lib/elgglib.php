@@ -6,8 +6,6 @@
  * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
 
-use Elgg\Exceptions\SecurityException;
-
 /**
  * Get a reference to the global Application object
  *
@@ -16,30 +14,6 @@ use Elgg\Exceptions\SecurityException;
  */
 function elgg() {
 	return _elgg_services()->dic;
-}
-
-/**
- * Forward to $location.
- *
- * Sends a 'Location: $location' header and exits.  If headers have already been sent, throws an exception.
- *
- * @param string $location URL to forward to browser to. This can be a path
- *                         relative to the network's URL.
- * @param string $reason   Short explanation for why we're forwarding. Set to
- *                         '404' to forward to error page. Default message is
- *                         'system'.
- *
- * @return void
- * @throws SecurityException
- */
-function forward($location = "", $reason = 'system') {
-	if (headers_sent($file, $line)) {
-		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
-	}
-
-	_elgg_services()->responseFactory->redirect($location, $reason);
-	exit;
 }
 
 /**

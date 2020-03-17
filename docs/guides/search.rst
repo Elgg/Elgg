@@ -225,7 +225,7 @@ You can add custom search types, by adding a corresponding resource view:
     $hmac = elgg_build_hmac($data);
     if (!$hmac->matchesToken(get_input('mac'))) {
          // request does not originate from our input view
-         forward('', '403');
+         throw new \Elgg\Exceptions\Http\EntityPermissionsException(); 
     }
 
     elgg_set_http_header("Content-Type: application/json;charset=utf-8");

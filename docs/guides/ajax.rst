@@ -89,7 +89,6 @@ Notes for actions:
 * CSRF tokens are added to the request data.
 * The default method is ``POST``.
 * An absolute action URL can be given in place of the action name.
-* Using ``forward()`` in an action simply sends the response. The URL given in not returned to the client.
 
 .. note:: When setting ``data``, use ``ajax.objectify($form)`` instead of ``$form.serialize()``. Doing so allows the
           ``ajax_request_data`` plugin hook to fire and other plugins to alter/piggyback on the request.

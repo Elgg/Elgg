@@ -443,9 +443,8 @@ developers looking at the code should be discouraged from refactoring in a way t
 .. code-block:: php
 
     // Can't use empty()/boolean: "0" is a valid value
-    if ($str === '') {
-        register_error(elgg_echo('foo:string_cannot_be_empty'));
-        forward(REFERER);
+    if (elgg_is_empty($str)) {
+        throw new \Elgg\Exceptions\Http\BadRequestException(elgg_echo('foo:string_cannot_be_empty'));
     }
 
 Commit effectively
