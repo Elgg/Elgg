@@ -25,11 +25,6 @@ use Psr\Log\LogLevel;
 trait Seeding {
 
 	/**
-	 * @var int Max number of items to be created by the seed
-	 */
-	protected $limit = 20;
-
-	/**
 	 * @var \Faker\Generator
 	 */
 	protected $faker;

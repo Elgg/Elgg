@@ -14,13 +14,18 @@ abstract class Seed implements Seedable {
 
 	use Seeding;
 	use Progressing;
+	
+	/**
+	 * @var int Max number of items to be created by the seed
+	 */
+	protected $limit = 20;
 
 	/**
 	 * Seed constructor.
 	 *
 	 * @param int $limit Number of item to seed
 	 */
-	public function __construct($limit = null) {
+	public function __construct(int $limit = null) {
 		if (isset($limit)) {
 			$this->limit = $limit;
 		}

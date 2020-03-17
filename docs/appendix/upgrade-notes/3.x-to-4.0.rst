@@ -128,6 +128,7 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``ElggEntity::setLatLong()`` now requires a ``float`` for ``$lat`` and ``$long``
+* ``Elgg\Database\Seeds\Seed::__construct()`` now requires an ``int`` for ``$limit``
 * ``Elgg\Http\ErrorResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
