@@ -1,9 +1,11 @@
 <?php
 
+use Elgg\Exceptions\Http\BadRequestException;
+
 $session = elgg_get_session();
 $email = $session->get('emailsent', '');
-if (!$email) {
-	forward();
+if (!is_email_address($email)) {
+	throw new BadRequestException();
 }
 
 $session->remove('emailsent');
