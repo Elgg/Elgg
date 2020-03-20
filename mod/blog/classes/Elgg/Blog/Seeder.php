@@ -113,6 +113,13 @@ class Seeder extends Seed {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'blog';
+	}
+
+	/**
 	 * Returns random blog status
 	 * @return string
 	 */

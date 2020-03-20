@@ -13,6 +13,12 @@ class DatabaseSeedCommand extends Command {
 	 * {@inheritdoc}
 	 */
 	protected function configure() {
+		$seeders = _elgg_services()->seeder->getSeederClasses();
+		$types = [];
+		foreach ($seeders as $seed) {
+			$types[] = $seed::getType();
+		}
+		
 		$this->setName('database:seed')
 			->setDescription(elgg_echo('cli:database:seed:description'))
 			->addOption('limit', 'l', InputOption::VALUE_OPTIONAL,
@@ -20,6 +26,9 @@ class DatabaseSeedCommand extends Command {
 			)
 			->addOption('image_folder', null, InputOption::VALUE_OPTIONAL,
 				elgg_echo('cli:database:seed:option:image_folder')
+			)
+			->addOption('type', 't', InputOption::VALUE_OPTIONAL,
+				elgg_echo('cli:database:seed:option:type', [implode('|', $types)])
 			);
 	}
 
@@ -47,6 +56,7 @@ class DatabaseSeedCommand extends Command {
 		$options = [
 			'limit' => (int) $this->option('limit') ? : 20,
 			'image_folder' => $this->option('image_folder'),
+			'type' => $this->option('type'),
 		];
 		
 		try {

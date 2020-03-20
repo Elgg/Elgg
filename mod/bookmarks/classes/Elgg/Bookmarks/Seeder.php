@@ -83,4 +83,11 @@ class Seeder extends Seed {
 			$this->advance();
 		}
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'bookmarks';
+	}
 }

@@ -60,4 +60,10 @@ abstract class Seed implements Seedable {
 	 */
 	abstract public function unseed();
 
+	/**
+	 * Get the (un)seeding type of this handler
+	 *
+	 * @return string
+	 */
+	abstract public static function getType() : string;
 }

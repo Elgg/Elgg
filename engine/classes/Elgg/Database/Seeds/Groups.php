@@ -158,6 +158,13 @@ class Groups extends Seed {
 	}
 
 	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'group';
+	}
+
+	/**
 	 * Returns random visibility value
 	 * @return int
 	 */
