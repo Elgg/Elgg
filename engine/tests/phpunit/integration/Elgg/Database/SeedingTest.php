@@ -19,9 +19,9 @@ class SeedingTest extends IntegrationTestCase {
 	}
 
 	public function testCanGetRandomUser() {
-		$user = $this->createUser();
+		$user = $this->getRandomUser();
 
-		$this->assertInstanceOf(\ElggUser::class, $this->getRandomUser());
+		$this->assertInstanceOf(\ElggUser::class, $user);
 
 		$user->delete();
 	}

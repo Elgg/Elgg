@@ -20,8 +20,13 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$created = 0;
+		
+		$count_discussions = function () use (&$created) {
+			if ($this->create) {
+				return $created;
+			}
 
-		$count_discussions = function () {
 			return elgg_count_entities([
 				'types' => 'object',
 				'subtypes' => 'discussion',
@@ -43,10 +48,11 @@ class Seeder extends Seed {
 			];
 
 			$discussion = $this->createObject($attributes, $metadata);
-
 			if (!$discussion) {
 				continue;
 			}
+
+			$created++;
 
 			$this->createComments($discussion);
 			$this->createLikes($discussion);
@@ -57,8 +63,6 @@ class Seeder extends Seed {
 				'object_guid' => $discussion->guid,
 				'target_guid' => $discussion->container_guid,
 			]);
-
-			elgg_trigger_event('publish', 'object', $discussion);
 
 			$this->advance();
 		}

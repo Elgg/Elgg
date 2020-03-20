@@ -46,6 +46,7 @@ class Seeder {
 	 *                       - limit: the max number of entities to seed
 	 *                       - image_folder: a global (local) image folder to use for image seeding (user/group profile icon, etc)
 	 *                       - type: only seed this content type
+	 *                       - create: create new entities (default: false)
 	 *
 	 * @return void
 	 */
@@ -54,6 +55,7 @@ class Seeder {
 			'limit' => max(elgg_get_config('default_limit'), 20),
 			'image_folder' => elgg_get_config('seeder_local_image_folder'),
 			'type' => '',
+			'create' => false,
 		];
 		$options = array_merge($defaults, $options);
 
@@ -76,7 +78,10 @@ class Seeder {
 			}
 
 			/* @var $seeder Seed */
-			$seeder = new $seed($options['limit']);
+			$seeder = new $seed([
+				'limit' => $options['limit'],
+				'create' => $options['create'],
+			]);
 
 			$progress_bar = $this->progress->start($seed, $options['limit']);
 

@@ -12,7 +12,6 @@ use Elgg\Database\Seeds\Seed;
 class Seeder extends Seed {
 
 	private $status = [
-		'unsaved_draft',
 		'draft',
 		'published',
 	];
@@ -21,8 +20,13 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$created = 0;
 
-		$count_blogs = function () {
+		$count_blogs = function () use (&$created) {
+			if ($this->create) {
+				return $created;
+			};
+
 			return elgg_count_entities([
 				'types' => 'object',
 				'subtypes' => 'blog',
@@ -32,6 +36,10 @@ class Seeder extends Seed {
 
 		$this->advance($count_blogs());
 
+		$attributes = [
+			'subtype' => 'blog',
+		];
+
 		while ($count_blogs() < $this->limit) {
 			$metadata = [
 				'status' => $this->getRandomStatus(),
@@ -39,25 +47,22 @@ class Seeder extends Seed {
 				'excerpt' => $this->faker()->sentence(),
 			];
 
-			$attributes = [
-				'subtype' => 'blog',
-			];
-
 			$blog = $this->createObject($attributes, $metadata);
-
 			if (!$blog) {
 				continue;
 			}
 
+			$created++;
+
 			$this->createComments($blog);
 			$this->createLikes($blog);
 
-			if ($blog->status == 'unsaved_draft' || $blog->status == 'draft') {
+			if ($blog->status === 'draft') {
 				$blog->future_access = $blog->access_id;
 				$blog->access_id = ACCESS_PRIVATE;
 			}
 
-			if ($blog->status == 'published') {
+			if ($blog->status === 'published') {
 				elgg_create_river_item([
 					'view' => 'river/object/blog/create',
 					'action_type' => 'create',
@@ -73,7 +78,7 @@ class Seeder extends Seed {
 				$blog->annotate('blog_auto_save', $this->faker()->text(500), ACCESS_PRIVATE, $blog->owner_guid);
 			}
 
-			if ($this->faker()->boolean() && $blog->status != 'unsaved_draft') {
+			if ($this->faker()->boolean()) {
 				$blog->annotate('blog_revision', $blog->description, ACCESS_PRIVATE, $blog->owner_guid);
 				$blog->description = $this->faker()->text(500);
 			}

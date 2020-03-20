@@ -3,6 +3,7 @@
 namespace Elgg\Cli;
 
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 /**
  * elgg-cli database:seed [--limit]
@@ -29,6 +30,9 @@ class DatabaseSeedCommand extends Command {
 			)
 			->addOption('type', 't', InputOption::VALUE_OPTIONAL,
 				elgg_echo('cli:database:seed:option:type', [implode('|', $types)])
+			)
+			->addArgument('create', InputArgument::OPTIONAL,
+				elgg_echo('cli:database:seed:argument:create')
 			);
 	}
 
@@ -57,6 +61,7 @@ class DatabaseSeedCommand extends Command {
 			'limit' => (int) $this->option('limit') ? : 20,
 			'image_folder' => $this->option('image_folder'),
 			'type' => $this->option('type'),
+			'create' => (bool) $this->argument('create'),
 		];
 		
 		try {
