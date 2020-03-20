@@ -40,10 +40,10 @@ Available commands
     vendor/bin/elgg-cli install [-c|--config CONFIG]
 
     # Seed the database with fake entities
-    vendor/bin/elgg-cli database:seed [-l|--limit LIMIT]
+    vendor/bin/elgg-cli database:seed [-l|--limit LIMIT] [-t|--type TYPE]
 
     # Remove seeded faked entities
-    vendor/bin/elgg-cli database:unseed
+    vendor/bin/elgg-cli database:unseed [-t|--type TYPE]
 
     # Optimize database tables
     # Request garbagecollector plugin

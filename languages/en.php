@@ -1764,6 +1764,7 @@ Global variables:
 	'cli:database:seed:description' => "Seeds the database with fake entities",
 	'cli:database:seed:option:limit' => "Number of entities to seed",
 	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
+	'cli:database:seed:option:type' => "Type of entities to (un)seed (%s)",
 	'cli:database:seed:log:error:faker' => "This is a developer tool currently intended for testing purposes only. Please refrain from using it.",
 	'cli:database:seed:log:error:logged_in' => "Database seeding should not be run with a logged in user",
 	

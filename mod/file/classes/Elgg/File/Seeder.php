@@ -95,4 +95,10 @@ class Seeder extends Seed {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'file';
+	}
 }

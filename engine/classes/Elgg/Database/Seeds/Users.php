@@ -102,9 +102,9 @@ class Users extends Seed {
 		]);
 
 		/* @var $users \ElggBatch */
-
 		$users->setIncrementOffset(false);
 
+		/* @var $user \ElggUser */
 		foreach ($users as $user) {
 			if ($user->delete()) {
 				$this->log("Deleted user $user->guid");
@@ -116,4 +116,10 @@ class Users extends Seed {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'user';
+	}
 }
