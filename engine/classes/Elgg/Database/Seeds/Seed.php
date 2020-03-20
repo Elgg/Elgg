@@ -21,14 +21,24 @@ abstract class Seed implements Seedable {
 	protected $limit = 20;
 
 	/**
+	 * @var bool Create new entities
+	 */
+	protected $create = false;
+	
+	/**
 	 * Seed constructor.
 	 *
-	 * @param int $limit Number of item to seed
+	 * @param array $options seeding options
+	 *                       - limit: Number of item to seed
+	 *                       - create: create new entities (default: false)
 	 */
-	public function __construct(int $limit = null) {
+	public function __construct(array $options = []) {
+		$limit = (int) elgg_extract('limit', $options);
 		if ($limit > 0) {
 			$this->limit = $limit;
 		}
+		
+		$this->create = (bool) elgg_extract('create', $options, $this->create);
 	}
 	
 	/**

@@ -15,8 +15,13 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$created = 0;
 
-		$count_pages = function () {
+		$count_pages = function () use (&$created) {
+			if ($this->create) {
+				return $created;
+			}
+
 			return elgg_count_entities([
 				'types' => 'object',
 				'subtypes' => 'page',
@@ -26,7 +31,7 @@ class Seeder extends Seed {
 
 		$this->advance($count_pages());
 
-		$create_page = function () {
+		$create_page = function () use (&$created) {
 			$metadata = [
 				'write_access_id' => ACCESS_LOGGED_IN,
 			];
@@ -36,11 +41,12 @@ class Seeder extends Seed {
 			];
 
 			$page = $this->createObject($attributes, $metadata);
-
 			if (!$page) {
 				return;
 			}
 
+			$created++;
+			
 			$this->createComments($page);
 			$this->createLikes($page);
 
@@ -59,13 +65,16 @@ class Seeder extends Seed {
 
 		while ($count_pages() < $this->limit) {
 			$page = $create_page();
-			if ($page instanceof \ElggPage) {
-				for ($i = 0; $i < 3; $i++) {
-					$subpage = $create_page();
-					if ($subpage instanceof \ElggPage) {
-						$subpage->setParentEntity($page);
-						$subpage->save();
-					}
+			if (!$page instanceof \ElggPage) {
+				continue;
+			}
+
+			$sub_page_limit = $this->faker->numberBetween(0, 5);
+			for ($i = 0; $i < $sub_page_limit; $i++) {
+				$subpage = $create_page();
+				if ($subpage instanceof \ElggPage) {
+					$subpage->setParentEntity($page);
+					$subpage->save();
 				}
 			}
 		}

@@ -1762,6 +1762,7 @@ Global variables:
 	'cli:cron:option:time' => "Time of the cron initialization",
 	
 	'cli:database:seed:description' => "Seeds the database with fake entities",
+	'cli:database:seed:argument:create' => "Always create new entities during seeding",
 	'cli:database:seed:option:limit' => "Number of entities to seed",
 	'cli:database:seed:option:image_folder' => "Path to a local folder containing images for seeding",
 	'cli:database:seed:option:type' => "Type of entities to (un)seed (%s)",

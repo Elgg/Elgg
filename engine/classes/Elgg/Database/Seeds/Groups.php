@@ -9,28 +9,17 @@ namespace Elgg\Database\Seeds;
  */
 class Groups extends Seed {
 
-	private $visibility = [
-		ACCESS_PUBLIC,
-		ACCESS_LOGGED_IN,
-		ACCESS_PRIVATE,
-	];
-
-	private $content_access_modes = [
-		\ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY,
-		\ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED,
-	];
-
-	private $membership = [
-		ACCESS_PUBLIC,
-		ACCESS_PRIVATE,
-	];
-
 	/**
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$created = 0;
 
-		$count_groups = function () {
+		$count_groups = function () use (&$created) {
+			if ($this->create) {
+				return $created;
+			}
+
 			return elgg_count_entities([
 				'types' => 'group',
 				'metadata_names' => '__faker',
@@ -52,21 +41,25 @@ class Groups extends Seed {
 		$exclude = [];
 
 		while ($count_groups() < $this->limit) {
-			$group = $this->getRandomGroup($exclude);
-			if (!$group) {
+			if ($this->create) {
 				$group = $this->createGroup([
-					'access_id' => $this->getRandomVisibility(),
+					'access_id' => $this->getRandomGroupVisibility(),
 				], [
-					'content_access_mode' => $this->getRandomContentAccessMode(),
-					'membership' => $this->getRandomMembership(),
+					'content_access_mode' => $this->getRandomGroupContentAccessMode(),
+					'membership' => $this->getRandomGroupMembership(),
 				], [
 					'profile_fields' => (array) elgg_get_config('group'),
 					'group_tool_options' => elgg()->group_tools->all(),
 				]);
-				if (!$group) {
-					continue;
-				}
+			} else {
+				$group = $this->getRandomGroup($exclude);
 			}
+			
+			if (!$group) {
+				continue;
+			}
+
+			$created++;
 
 			$this->createIcon($group);
 
@@ -84,10 +77,7 @@ class Groups extends Seed {
 			while ($count_members($group) - 1 < $members_limit) {
 				$member = $this->getRandomUser($members_exclude);
 				if (!$member) {
-					$member = $this->createUser();
-					if (!$member) {
-						continue;
-					}
+					continue;
 				}
 
 				$members_exclude[] = $member->guid;
@@ -98,9 +88,6 @@ class Groups extends Seed {
 
 				if (!$group->isPublicMembership()) {
 					$invitee = $this->getRandomUser($members_exclude);
-					if (!$invitee) {
-						$invitee = $this->createUser();
-					}
 					if ($invitee) {
 						$members_exclude[] = $invitee->guid;
 						if (!check_entity_relationship($invitee->guid, 'member', $group->guid)) {
@@ -110,9 +97,6 @@ class Groups extends Seed {
 					}
 
 					$requestor = $this->getRandomUser($members_exclude);
-					if (!$requestor) {
-						$requestor = $this->createUser();
-					}
 					if ($requestor) {
 						$members_exclude[] = $requestor->guid;
 						if (!check_entity_relationship($group->guid, 'invited', $requestor->guid)
@@ -162,35 +146,5 @@ class Groups extends Seed {
 	 */
 	public static function getType() : string {
 		return 'group';
-	}
-
-	/**
-	 * Returns random visibility value
-	 * @return int
-	 */
-	public function getRandomVisibility() {
-		$key = array_rand($this->visibility, 1);
-
-		return $this->visibility[$key];
-	}
-
-	/**
-	 * Returns random content access mode value
-	 * @return string
-	 */
-	public function getRandomContentAccessMode() {
-		$key = array_rand($this->content_access_modes, 1);
-
-		return $this->content_access_modes[$key];
-	}
-
-	/**
-	 * Returns random membership mode
-	 * @return mixed
-	 */
-	public function getRandomMembership() {
-		$key = array_rand($this->membership, 1);
-
-		return $this->membership[$key];
 	}
 }

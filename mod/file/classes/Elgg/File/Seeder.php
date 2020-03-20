@@ -15,8 +15,13 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$created = 0;
 
-		$count_files = function () {
+		$count_files = function () use (&$created) {
+			if ($this->create) {
+				return $created;
+			}
+
 			return elgg_count_entities([
 				'types' => 'object',
 				'subtypes' => 'file',
@@ -24,21 +29,21 @@ class Seeder extends Seed {
 			]);
 		};
 
+		$attributes = [
+			'subtype' => 'file',
+		];
+
 		while ($count_files() < $this->limit) {
 			$path = $this->faker()->image();
 
 			$filename = pathinfo($path, PATHINFO_FILENAME);
 
-			$attributes = [
-				'subtype' => 'file',
-			];
-
 			$file = $this->createObject($attributes, [], ['save' => false]);
-			/* @var $file \ElggFile */
-
-			if (!$file) {
+			if (!$file instanceof \ElggFile) {
 				continue;
 			}
+
+			$created++;
 
 			$file->setFilename("file/$filename");
 			$file->open('write');
