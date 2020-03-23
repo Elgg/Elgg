@@ -14,12 +14,11 @@ class ProfileFields {
 	 * This function loads a set of default fields into the profile, then triggers a hook letting other plugins to edit
 	 * add and delete fields.
 	 *
-	 * Note: This is a secondary system:init call and is run at a super low priority to guarantee that it is called after all
-	 * other plugins have initialised.
+	 * @param \Elgg\Event $event 'ready', 'system'
 	 *
 	 * @return void
 	 */
-	public static function setup() {
+	public static function setup(\Elgg\Event $event) {
 		$profile_defaults =  [
 			'description' => 'longtext',
 			'briefdescription' => 'text',

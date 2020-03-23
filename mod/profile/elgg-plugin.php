@@ -43,16 +43,16 @@ return [
 				\Elgg\Widgets\CreateDefaultWidgetsHandler::class => [],
 			],
 		],
+		'ready' => [
+			'system' => [
+				'Elgg\Profile\ProfileFields::setup' => ['priority' => 1],
+			],
+		],
 	],
 	'hooks' => [
 		'get_list' => [
 			'default_widgets' => [
 				'Elgg\Profile\Widgets::getDefaultWidgetsList' => [],
-			],
-		],
-		'init' => [
-			'system' => [
-				'Elgg\Profile\ProfileFields::setup' => ['priority' => 10000],
 			],
 		],
 		'register' => [
