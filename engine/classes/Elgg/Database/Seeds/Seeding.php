@@ -7,6 +7,7 @@ use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
 use Elgg\Database\Seeds\Seeding\GroupHelpers;
+use Elgg\Database\Seeds\Seeding\TimeHelpers;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Groups\Tool;
 use Faker\Factory;
@@ -21,6 +22,7 @@ use Psr\Log\LogLevel;
 trait Seeding {
 
 	use GroupHelpers;
+	use TimeHelpers;
 	
 	/**
 	 * @var \Faker\Generator
@@ -123,6 +125,13 @@ trait Seeding {
 					throw new \Exception("Unable to create new user with attributes: " . print_r($attributes, true));
 				}
 
+				if (!isset($attributes['time_created'])) {
+					$attributes['time_created'] = $this->getRandomCreationTimestamp();
+				}
+				if (!empty($attributes['time_created'])) {
+					$user->time_created = $attributes['time_created'];
+				}
+				
 				if (isset($metadata['admin'])) {
 					if ($metadata['admin']) {
 						$user->makeAdmin();
@@ -204,6 +213,10 @@ trait Seeding {
 			$properties = array_merge($metadata, $attributes);
 
 			$properties['__faker'] = true;
+
+			if (!isset($properties['time_created'])) {
+				$properties['time_created'] = $this->getRandomCreationTimestamp();
+			}
 
 			if (!isset($properties['access_id'])) {
 				$properties['access_id'] = ACCESS_PUBLIC;
@@ -293,6 +306,7 @@ trait Seeding {
 				'subject_guid' => $properties['owner_guid'],
 				'object_guid' => $group->guid,
 				'target_guid' => $properties['container_guid'],
+				'posted' => $group->time_created,
 			]);
 
 			$this->log("Created new group {$group->getDisplayName()} [guid: {$group->guid}]");
@@ -328,6 +342,10 @@ trait Seeding {
 			$properties = array_merge($metadata, $attributes);
 
 			$properties['__faker'] = true;
+
+			if (!isset($properties['time_created'])) {
+				$properties['time_created'] = $this->getRandomCreationTimestamp();
+			}
 
 			if (empty($properties['title'])) {
 				$properties['title'] = $this->faker()->sentence();
@@ -688,12 +706,18 @@ trait Seeding {
 		$result = $entity->saveIconFromLocalFile($icon_location);
 
 		if ($result && $entity instanceof \ElggUser) {
+			$since = $this->create_since;
+			$this->setCreateSince($entity->time_created);
+			
 			elgg_create_river_item([
 				'view' => 'river/user/default/profileiconupdate',
 				'action_type' => 'update',
 				'subject_guid' => $entity->guid,
 				'object_guid' => $entity->guid,
+				'posted' => $this->getRandomCreationTimestamp(),
 			]);
+			
+			$this->create_since = $since;
 		}
 
 		return $result;
@@ -718,11 +742,15 @@ trait Seeding {
 			$limit = $this->faker()->numberBetween(1, 20);
 		}
 
+		$since = $this->create_since;
+		$this->setCreateSince($entity->time_created);
+		
 		while ($tries < $limit) {
 			$comment = new \ElggComment();
 			$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;
 			$comment->container_guid = $entity->guid;
 			$comment->description = $this->faker()->paragraph;
+			$comment->time_created = $this->getRandomCreationTimestamp();
 
 			$tries++;
 			if ($comment->save()) {
@@ -730,6 +758,8 @@ trait Seeding {
 			}
 		}
 
+		$this->create_since = $since;
+		
 		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $success;

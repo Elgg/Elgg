@@ -53,6 +53,7 @@ class Seeder extends Seed {
 					'subject_guid' => $blog->owner_guid,
 					'object_guid' => $blog->guid,
 					'target_guid' => $blog->container_guid,
+					'posted' => $blog->time_created,
 				]);
 
 				elgg_trigger_event('publish', 'object', $blog);

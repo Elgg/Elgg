@@ -42,6 +42,7 @@ class Seeder extends Seed {
 			elgg_create_river_item([
 				'action_type' => 'create',
 				'object_guid' => $page->guid,
+				'posted' => $page->time_created,
 			]);
 
 			$this->advance();

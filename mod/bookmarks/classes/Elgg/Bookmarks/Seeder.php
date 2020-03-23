@@ -40,6 +40,7 @@ class Seeder extends Seed {
 				'subject_guid' => $bookmark->owner_guid,
 				'object_guid' => $bookmark->guid,
 				'target_guid' => $bookmark->container_guid,
+				'posted' => $bookmark->time_created,
 			]);
 
 			$this->advance();

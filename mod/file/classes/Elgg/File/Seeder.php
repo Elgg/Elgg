@@ -52,6 +52,7 @@ class Seeder extends Seed {
 				'subject_guid' => $file->owner_guid,
 				'object_guid' => $file->guid,
 				'target_guid' => $file->container_guid,
+				'posted' => $file->time_created,
 			]);
 
 			$this->advance();

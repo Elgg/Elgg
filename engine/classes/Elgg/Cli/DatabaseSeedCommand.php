@@ -31,6 +31,12 @@ class DatabaseSeedCommand extends Command {
 			->addOption('type', 't', InputOption::VALUE_OPTIONAL,
 				elgg_echo('cli:database:seed:option:type', [implode('|', $types)])
 			)
+			->addOption('create_since', null, InputOption::VALUE_OPTIONAL,
+				elgg_echo('cli:database:seed:option:create_since'), 'now'
+			)
+			->addOption('create_until', null, InputOption::VALUE_OPTIONAL,
+				elgg_echo('cli:database:seed:option:create_until'), 'now'
+			)
 			->addArgument('create', InputArgument::OPTIONAL,
 				elgg_echo('cli:database:seed:argument:create')
 			);
@@ -61,6 +67,8 @@ class DatabaseSeedCommand extends Command {
 			'limit' => (int) $this->option('limit') ? : 20,
 			'image_folder' => $this->option('image_folder'),
 			'type' => $this->option('type'),
+			'create_since' => $this->option('create_since'),
+			'create_until' => $this->option('create_until'),
 			'create' => (bool) $this->argument('create'),
 		];
 		

@@ -46,6 +46,7 @@ class Seeder extends Seed {
 				'subject_guid' => $discussion->owner_guid,
 				'object_guid' => $discussion->guid,
 				'target_guid' => $discussion->container_guid,
+				'posted' => $discussion->time_created,
 			]);
 
 			$this->advance();

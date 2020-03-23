@@ -38,6 +38,8 @@ abstract class Seed implements Seedable {
 	 * @param array $options seeding options
 	 *                       - limit: Number of item to seed
 	 *                       - create: create new entities (default: false)
+	 *                       - create_since: lower bound creation time (default: now)
+	 *                       - create_until: upper bound creation time (default: now)
 	 */
 	public function __construct(array $options = []) {
 		$limit = (int) elgg_extract('limit', $options);
@@ -46,6 +48,8 @@ abstract class Seed implements Seedable {
 		}
 		
 		$this->create = (bool) elgg_extract('create', $options, $this->create);
+		$this->setCreateSince(elgg_extract('create_since', $options, 'now'));
+		$this->setCreateUntil(elgg_extract('create_until', $options, 'now'));
 	}
 	
 	/**
