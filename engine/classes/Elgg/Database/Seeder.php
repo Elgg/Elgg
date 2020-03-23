@@ -47,6 +47,8 @@ class Seeder {
 	 *                       - image_folder: a global (local) image folder to use for image seeding (user/group profile icon, etc)
 	 *                       - type: only seed this content type
 	 *                       - create: create new entities (default: false)
+	 *                       - create_since: lower bound creation time (default: now)
+	 *                       - create_until: upper bound creation time (default: now)
 	 *
 	 * @return void
 	 */
@@ -56,6 +58,8 @@ class Seeder {
 			'image_folder' => elgg_get_config('seeder_local_image_folder'),
 			'type' => '',
 			'create' => false,
+			'create_since' => 'now',
+			'create_until' => 'now',
 		];
 		$options = array_merge($defaults, $options);
 
@@ -70,6 +74,7 @@ class Seeder {
 		if ($options['image_folder'] !== $defaults['image_folder']) {
 			elgg_set_config('seeder_local_image_folder', $options['image_folder']);
 		}
+		unset($options['image_folder']);
 
 		foreach ($seeds as $seed) {
 			// check for type limitation
@@ -78,10 +83,7 @@ class Seeder {
 			}
 
 			/* @var $seeder Seed */
-			$seeder = new $seed([
-				'limit' => $options['limit'],
-				'create' => $options['create'],
-			]);
+			$seeder = new $seed($options);
 
 			$progress_bar = $this->progress->start($seed, $options['limit']);
 

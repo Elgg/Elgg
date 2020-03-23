@@ -2,6 +2,8 @@
 
 namespace Elgg\Database\Seeds;
 
+use Elgg\Database\Update;
+
 /**
  * Seed users
  *
@@ -46,7 +48,6 @@ class Users extends Seed {
 
 			// Friend the user other members
 			// Create a friend access collection and add some random friends to it
-
 			if ($count_friends($user)) {
 				continue;
 			}
@@ -64,16 +65,39 @@ class Users extends Seed {
 				if (!$friend) {
 					continue;
 				}
-				
+
 				$this->createIcon($friend);
 
 				$friends_exclude[] = $friend->guid;
 
 				if ($user->addFriend($friend->guid, true)) {
 					$this->log("User {$user->getDisplayName()} [guid: {$user->guid}] friended user {$friend->getDisplayName()} [guid: {$friend->guid}]");
+
 					if ($this->faker()->boolean() && $collection_id > 0) {
 						add_user_to_access_collection($friend->guid, $collection_id);
 					}
+					
+					// randomize the river activity
+					$since = $this->create_since;
+					$this->setCreateSince(max($user->time_created, $friend->time_created));
+					
+					// fix river item
+					$river = elgg_get_river([
+						'view' => 'river/relationship/friend/create',
+						'action_type' => 'friend',
+						'subject_guid' => $user->guid,
+						'object_guid' => $friend->guid,
+					]);
+					/* @var $item \ElggRiverItem */
+					foreach ($river as $item) {
+						$update = Update::table('river');
+						$update->set('posted', $update->param($this->getRandomCreationTimestamp(), ELGG_VALUE_TIMESTAMP))
+							->where($update->compare('id', '=', $item->id, ELGG_VALUE_ID));
+						
+						elgg()->db->updateData($update);
+					}
+					
+					$this->create_since = $since;
 				}
 			}
 

@@ -3,6 +3,7 @@
 namespace Elgg\TheWire;
 
 use Elgg\Database\Seeds\Seed;
+use Elgg\Database\Update;
 
 /**
  * Add the wire seed
@@ -23,6 +24,38 @@ class Seeder extends Seed {
 			$max_chars = 500;
 		}
 		
+		$fix_post = function(int $guid) {
+			$entity = get_entity($guid);
+			if (!$entity instanceof \ElggWire) {
+				return false;
+			}
+			
+			// change time created
+			$entity->time_created = $this->getRandomCreationTimestamp();
+			$entity->save();
+			
+			// add faker metadata
+			$entity->__faker = true;
+			
+			// fix river item
+			$river = elgg_get_river([
+				'view' => 'river/object/thewire/create',
+				'action_type' => 'create',
+				'subject_guid' => $entity->owner_guid,
+				'object_guid' => $entity->guid,
+			]);
+			/* @var $item \ElggRiverItem */
+			foreach ($river as $item) {
+				$update = Update::table('river');
+				$update->set('posted', $update->param($entity->time_created, ELGG_VALUE_TIMESTAMP))
+					->where($update->compare('id', '=', $item->id, ELGG_VALUE_ID));
+				
+				elgg()->db->updateData($update);
+			}
+			
+			return $entity;
+		};
+		
 		while ($this->getCount() < $this->limit) {
 			$owner = $this->getRandomUser();
 
@@ -32,8 +65,7 @@ class Seeder extends Seed {
 			}
 			
 			/* @var $post \ElggWire */
-			$post = get_entity($wire_guid);
-			$post->__faker = true;
+			$post = $fix_post($wire_guid);
 
 			$this->createLikes($post);
 
@@ -50,9 +82,7 @@ class Seeder extends Seed {
 					continue;
 				}
 				
-				/* @var $post \ElggWire */
-				$reply = get_entity($reply_guid);
-				$reply->__faker = true;
+				$fix_post($reply_guid);
 				
 				$this->advance();
 			}
