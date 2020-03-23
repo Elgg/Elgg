@@ -20,27 +20,13 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
-		$created = 0;
-
-		$count_blogs = function () use (&$created) {
-			if ($this->create) {
-				return $created;
-			};
-
-			return elgg_count_entities([
-				'types' => 'object',
-				'subtypes' => 'blog',
-				'metadata_names' => '__faker',
-			]);
-		};
-
-		$this->advance($count_blogs());
+		$this->advance($this->getCount());
 
 		$attributes = [
 			'subtype' => 'blog',
 		];
 
-		while ($count_blogs() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			$metadata = [
 				'status' => $this->getRandomStatus(),
 				'comments_on' => $this->faker()->boolean() ? 'On' : 'Off',
@@ -51,8 +37,6 @@ class Seeder extends Seed {
 			if (!$blog) {
 				continue;
 			}
-
-			$created++;
 
 			$this->createComments($blog);
 			$this->createLikes($blog);
@@ -132,5 +116,15 @@ class Seeder extends Seed {
 		$key = array_rand($this->status, 1);
 
 		return $this->status[$key];
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'blog',
+		];
 	}
 }

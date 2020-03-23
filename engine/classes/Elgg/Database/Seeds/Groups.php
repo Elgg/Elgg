@@ -13,20 +13,7 @@ class Groups extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
-		$created = 0;
-
-		$count_groups = function () use (&$created) {
-			if ($this->create) {
-				return $created;
-			}
-
-			return elgg_count_entities([
-				'types' => 'group',
-				'metadata_names' => '__faker',
-			]);
-		};
-
-		$this->advance($count_groups());
+		$this->advance($this->getCount());
 
 		$count_members = function ($group) {
 			return elgg_count_entities([
@@ -40,7 +27,7 @@ class Groups extends Seed {
 
 		$exclude = [];
 
-		while ($count_groups() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			if ($this->create) {
 				$group = $this->createGroup([
 					'access_id' => $this->getRandomGroupVisibility(),
@@ -58,8 +45,6 @@ class Groups extends Seed {
 			if (!$group) {
 				continue;
 			}
-
-			$created++;
 
 			$this->createIcon($group);
 
@@ -146,5 +131,14 @@ class Groups extends Seed {
 	 */
 	public static function getType() : string {
 		return 'group';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'group',
+		];
 	}
 }
