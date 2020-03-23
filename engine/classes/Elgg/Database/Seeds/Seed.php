@@ -13,7 +13,9 @@ use Elgg\Cli\Progressing;
 abstract class Seed implements Seedable {
 
 	use Seeding;
-	use Progressing;
+	use Progressing {
+		advance as private progressAdvance;
+	}
 	
 	/**
 	 * @var int Max number of items to be created by the seed
@@ -24,6 +26,11 @@ abstract class Seed implements Seedable {
 	 * @var bool Create new entities
 	 */
 	protected $create = false;
+	
+	/**
+	 * @var int Number of seeded entities
+	 */
+	protected $seeded_counter = 0;
 	
 	/**
 	 * Seed constructor.
@@ -55,6 +62,36 @@ abstract class Seed implements Seedable {
 		
 		return $seeds;
 	}
+	
+	/**
+	 * Get the count of the seeded entities
+	 *
+	 * @return int
+	 */
+	final public function getCount() : int {
+		if ($this->create) {
+			return $this->seeded_counter;
+		}
+		
+		$defaults = [
+			'metadata_names' => '__faker',
+		];
+		$options = array_merge($defaults, $this->getCountOptions());
+		
+		return elgg_count_entities($options);
+	}
+	
+	/**
+	 * Advance progressbar
+	 *
+	 * @param int $step Step
+	 * @return void
+	 */
+	public function advance(int $step = 1) {
+		$this->seeded_counter += $step;
+		
+		return $this->progressAdvance($step);
+	}
 
 	/**
 	 * Populate database
@@ -76,4 +113,12 @@ abstract class Seed implements Seedable {
 	 * @return string
 	 */
 	abstract public static function getType() : string;
+	
+	/**
+	 * Get options for elgg_count_entities()
+	 *
+	 * @return array
+	 * @see self::getCount()
+	 */
+	abstract protected function getCountOptions() : array;
 }

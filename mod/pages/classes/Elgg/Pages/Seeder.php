@@ -15,23 +15,9 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
-		$created = 0;
+		$this->advance($this->getCount());
 
-		$count_pages = function () use (&$created) {
-			if ($this->create) {
-				return $created;
-			}
-
-			return elgg_count_entities([
-				'types' => 'object',
-				'subtypes' => 'page',
-				'metadata_names' => '__faker',
-			]);
-		};
-
-		$this->advance($count_pages());
-
-		$create_page = function () use (&$created) {
+		$create_page = function () {
 			$metadata = [
 				'write_access_id' => ACCESS_LOGGED_IN,
 			];
@@ -45,8 +31,6 @@ class Seeder extends Seed {
 				return;
 			}
 
-			$created++;
-			
 			$this->createComments($page);
 			$this->createLikes($page);
 
@@ -61,9 +45,11 @@ class Seeder extends Seed {
 			]);
 
 			$this->advance();
+			
+			return $page;
 		};
 
-		while ($count_pages() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			$page = $create_page();
 			if (!$page instanceof \ElggPage) {
 				continue;
@@ -113,5 +99,15 @@ class Seeder extends Seed {
 	 */
 	public static function getType() : string {
 		return 'page';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'page',
+		];
 	}
 }

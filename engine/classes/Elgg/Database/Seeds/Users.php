@@ -13,19 +13,6 @@ class Users extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
-		$created = 0;
-
-		$count_users = function () use (&$created) {
-			if ($this->create) {
-				return $created;
-			}
-
-			return elgg_count_entities([
-				'types' => 'user',
-				'metadata_names' => '__faker',
-			]);
-		};
-
 		$count_friends = function ($user) {
 			return elgg_count_entities([
 				'types' => 'user',
@@ -38,9 +25,9 @@ class Users extends Seed {
 
 		$exclude = [];
 
-		$this->advance($count_users());
+		$this->advance($this->getCount());
 
-		while ($count_users() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			if ($this->create) {
 				$user = $this->createUser([], [], [
 					'profile_fields' => (array) elgg_get_config('profile_fields'),
@@ -52,8 +39,6 @@ class Users extends Seed {
 			if (!$user) {
 				continue;
 			}
-
-			$created++;
 
 			$this->createIcon($user);
 
@@ -129,5 +114,14 @@ class Users extends Seed {
 	 */
 	public static function getType() : string {
 		return 'user';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'user',
+		];
 	}
 }

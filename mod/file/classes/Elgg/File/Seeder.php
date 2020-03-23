@@ -15,25 +15,13 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
-		$created = 0;
-
-		$count_files = function () use (&$created) {
-			if ($this->create) {
-				return $created;
-			}
-
-			return elgg_count_entities([
-				'types' => 'object',
-				'subtypes' => 'file',
-				'metadata_names' => '__faker',
-			]);
-		};
-
+		$this->advance($this->getCount());
+		
 		$attributes = [
 			'subtype' => 'file',
 		];
 
-		while ($count_files() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			$path = $this->faker()->image();
 
 			$filename = pathinfo($path, PATHINFO_FILENAME);
@@ -42,8 +30,6 @@ class Seeder extends Seed {
 			if (!$file instanceof \ElggFile) {
 				continue;
 			}
-
-			$created++;
 
 			$file->setFilename("file/$filename");
 			$file->open('write');
@@ -105,5 +91,15 @@ class Seeder extends Seed {
 	 */
 	public static function getType() : string {
 		return 'file';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'file',
+		];
 	}
 }

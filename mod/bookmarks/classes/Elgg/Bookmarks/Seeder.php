@@ -15,27 +15,13 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
-		$created = 0;
-
-		$count_bookmarks = function () use (&$created) {
-			if ($this->create) {
-				return $created;
-			}
-
-			return elgg_count_entities([
-				'types' => 'object',
-				'subtypes' => 'bookmarks',
-				'metadata_names' => '__faker',
-			]);
-		};
-
-		$this->advance($count_bookmarks());
+		$this->advance($this->getCount());
 
 		$attributes = [
 			'subtype' => 'bookmarks',
 		];
 
-		while ($count_bookmarks() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			$metadata = [
 				'address' => $this->faker()->url,
 			];
@@ -44,8 +30,6 @@ class Seeder extends Seed {
 			if (!$bookmark) {
 				continue;
 			}
-
-			$created++;
 
 			$this->createComments($bookmark);
 			$this->createLikes($bookmark);
@@ -95,5 +79,15 @@ class Seeder extends Seed {
 	 */
 	public static function getType() : string {
 		return 'bookmarks';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'bookmarks',
+		];
 	}
 }

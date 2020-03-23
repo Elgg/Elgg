@@ -97,4 +97,14 @@ class CliSeeder extends Seed {
 	public static function getType() : string {
 		return 'testing';
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'dummy',
+		];
+	}
 }

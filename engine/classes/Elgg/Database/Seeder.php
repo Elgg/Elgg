@@ -126,7 +126,7 @@ class Seeder {
 			/* @var $seeder Seed */
 			$seeder = new $seed();
 
-			$progress_bar = $this->progress->start($seed);
+			$progress_bar = $this->progress->start($seed, $seeder->getCount());
 
 			$seeder->setProgressBar($progress_bar);
 
