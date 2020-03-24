@@ -44,7 +44,7 @@ class Topbar {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'usersettings',
-			'icon' => 'sliders',
+			'icon' => 'sliders-h',
 			'text' => elgg_echo('settings'),
 			'href' => elgg_generate_url('settings:account', [
 				'username' => $user->username,
@@ -68,7 +68,7 @@ class Topbar {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'logout',
-			'icon' => 'sign-out',
+			'icon' => 'sign-out-alt',
 			'text' => elgg_echo('logout'),
 			'href' => elgg_generate_action_url('logout'),
 			'priority' => 900,

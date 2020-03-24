@@ -2,7 +2,7 @@
 
 $items = [];
 
-foreach (['heart-o', 'star-o', 'bell-o'] as $icon) {
+foreach (['heart-regular', 'star-regular', 'bell-regular'] as $icon) {
 	$items[] = [
 		'name' => $icon,
 		'icon' => $icon,

@@ -435,6 +435,7 @@ Miscellaneous API changes
 * An ``\ElggBatch`` no longer implements the interface ``Elgg\BatchResult`` but still has the same features
 * An ``\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features
 * An ``\Elgg\Event`` no longer implements the interfaces ``\Elgg\ObjectEvent`` and ``\Elgg\UserEvent`` but still has the same features
+* The view ``output/icon`` no longer uses the ``convert`` view var
 
 Deprecated APIs
 ---------------

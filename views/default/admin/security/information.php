@@ -14,7 +14,7 @@ echo elgg_view('output/longtext', [
 	'value' => elgg_echo('admin:security:information:description'),
 ]);
 
-$icon_ok = elgg_view_icon('checkmark');
+$icon_ok = elgg_view_icon('check');
 $icon_warning = elgg_view_icon('exclamation-triangle');
 $icon_error = elgg_view_icon('times');
 

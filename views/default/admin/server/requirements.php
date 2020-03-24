@@ -8,7 +8,7 @@
 
 use Elgg\Http\Request;
 
-$icon_ok = elgg_view_icon('checkmark');
+$icon_ok = elgg_view_icon('check');
 $icon_warning = elgg_view_icon('exclamation-triangle');
 $icon_error = elgg_view_icon('times');
 

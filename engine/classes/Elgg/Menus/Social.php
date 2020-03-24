@@ -35,7 +35,7 @@ class Social {
 			
 			$options = [
 				'name' => 'comment',
-				'icon' => 'speech-bubble',
+				'icon' => 'comment',
 				'badge' => $comment_count ?: null,
 				'text' => $text,
 				'title' => $text,

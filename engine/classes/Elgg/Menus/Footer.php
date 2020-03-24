@@ -30,7 +30,7 @@ class Footer {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'rss',
-			'icon' => 'rss',
+			'icon' => 'rss-square',
 			'text' => elgg_echo('feed:rss'),
 			'title' => elgg_echo('feed:rss:title'),
 			'href' => elgg_http_add_url_query_elements(current_page_url(), [
