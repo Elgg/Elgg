@@ -64,23 +64,22 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $files \ElggBatch */
 		$files = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'file',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'file',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $files \ElggBatch */
-
-		$files->setIncrementOffset(false);
-
+		/* @var $file \ElggFile */
 		foreach ($files as $file) {
 			if ($file->delete()) {
-				$this->log("Deleted file $file->guid");
+				$this->log("Deleted file {$file->guid}");
 			} else {
-				$this->log("Failed to delete file $file->guid");
+				$this->log("Failed to delete file {$file->guid}");
 			}
 
 			$this->advance();

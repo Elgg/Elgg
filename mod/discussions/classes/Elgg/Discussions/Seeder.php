@@ -58,23 +58,22 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $discussions \ElggBatch */
 		$discussions = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'discussion',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'discussion',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $discussions \ElggBatch */
-
-		$discussions->setIncrementOffset(false);
-
+		/* @var $discussion \ElggDiscussion */
 		foreach ($discussions as $discussion) {
 			if ($discussion->delete()) {
-				$this->log("Deleted discussion $discussion->guid");
+				$this->log("Deleted discussion {$discussion->guid}");
 			} else {
-				$this->log("Failed to delete discussion $discussion->guid");
+				$this->log("Failed to delete discussion {$discussion->guid}");
 			}
 
 			$this->advance();

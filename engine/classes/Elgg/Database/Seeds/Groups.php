@@ -104,22 +104,21 @@ class Groups extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $groups \ElggBatch */
 		$groups = elgg_get_entities([
-			'types' => 'group',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'group',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $groups \ElggBatch */
-
-		$groups->setIncrementOffset(false);
-
+		/* @var $group \ElggGroup */
 		foreach ($groups as $group) {
 			if ($group->delete()) {
-				$this->log("Deleted group $group->guid");
+				$this->log("Deleted group {$group->guid}");
 			} else {
-				$this->log("Failed to delete group $group->guid");
+				$this->log("Failed to delete group {$group->guid}");
 			}
 
 			$this->advance();

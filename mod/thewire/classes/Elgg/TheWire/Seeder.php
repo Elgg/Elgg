@@ -95,16 +95,18 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function unseed() {
+
 		/* @var $entities \ElggBatch */
 		$entities = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'thewire',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'thewire',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
 			'batch_inc_offset' => false,
 		]);
 
+		/* @var $entity \ElggWire */
 		foreach ($entities as $entity) {
 			if ($entity->delete()) {
 				$this->log("Deleted wire post {$entity->guid}");

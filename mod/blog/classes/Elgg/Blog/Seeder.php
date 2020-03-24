@@ -79,23 +79,22 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $blogs \ElggBatch */
 		$blogs = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'blog',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'blog',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $blogs \ElggBatch */
-
-		$blogs->setIncrementOffset(false);
-
+		/* @var $blog \ElggBlog */
 		foreach ($blogs as $blog) {
 			if ($blog->delete()) {
-				$this->log("Deleted blog $blog->guid");
+				$this->log("Deleted blog {$blog->guid}");
 			} else {
-				$this->log("Failed to delete blog $blog->guid");
+				$this->log("Failed to delete blog {$blog->guid}");
 			}
 
 			$this->advance();

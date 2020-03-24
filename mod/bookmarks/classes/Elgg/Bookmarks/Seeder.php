@@ -52,23 +52,22 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $bookmarks \ElggBatch */
 		$bookmarks = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'bookmarks',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'bookmarks',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $bookmarks \ElggBatch */
-
-		$bookmarks->setIncrementOffset(false);
-
+		/* @var $boolmark \ElggBookmark */
 		foreach ($bookmarks as $bookmark) {
 			if ($bookmark->delete()) {
-				$this->log("Deleted bookmark $bookmark->guid");
+				$this->log("Deleted bookmark {$bookmark->guid}");
 			} else {
-				$this->log("Failed to delete bookmark $bookmark->guid");
+				$this->log("Failed to delete bookmark {$bookmark->guid}");
 			}
 
 			$this->advance();
