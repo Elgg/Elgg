@@ -21,7 +21,7 @@ $code = str_replace('BASEURL', $base_url_str, $code);
 
 $bookmarklet = elgg_view('output/url', [
 	'text' => $title,
-	'icon' => 'push-pin-alt',
+	'icon' => 'thumbtack',
 	'href' => "javascript:$code",
 	'onclick' => 'return false',
 	'class' => 'elgg-button elgg-button-action',

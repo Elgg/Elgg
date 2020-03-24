@@ -36,7 +36,7 @@ class Relationship {
 		
 		$result[] = \ElggMenuItem::factory([
 			'name' => 'accept',
-			'icon' => 'checkmark',
+			'icon' => 'check',
 			'text' => elgg_echo('accept'),
 			'href' => elgg_generate_action_url('friends/request/accept', [
 				'id' => $relationship->id,

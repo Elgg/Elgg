@@ -28,7 +28,7 @@ class Footer {
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'bookmark',
 			'text' => elgg_echo('bookmarks:this'),
-			'icon' => 'push-pin-alt',
+			'icon' => 'thumbtack',
 			'href' => elgg_generate_url('add:object:bookmarks', [
 				'guid' => elgg_get_logged_in_user_guid(),
 				'address' => current_page_url(),

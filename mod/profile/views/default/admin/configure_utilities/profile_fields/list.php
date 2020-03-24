@@ -28,7 +28,7 @@ foreach ($fieldlistarray as $name) {
 		'confirm' => elgg_echo('deleteconfirm'),
 	]);
 	$type = elgg_echo("profile:field:$type");
-	$drag_arrow = elgg_view_icon("drag-arrow", "elgg-state-draggable");
+	$drag_arrow = elgg_view_icon('arrows-alt', 'elgg-state-draggable');
 	
 	$text = "<b>{$title}</b> [$type] $url";
 	$item_list .= elgg_format_element('li', [
