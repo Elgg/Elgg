@@ -72,23 +72,22 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $pages \ElggBatch */
 		$pages = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'page',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'page',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $pages \ElggBatch */
-
-		$pages->setIncrementOffset(false);
-
+		/* @var $page \ElggPage */
 		foreach ($pages as $page) {
 			if ($page->delete()) {
-				$this->log("Deleted page $page->guid");
+				$this->log("Deleted page {$page->guid}");
 			} else {
-				$this->log("Failed to delete page $page->guid");
+				$this->log("Failed to delete page {$page->guid}");
 			}
 
 			$this->advance();

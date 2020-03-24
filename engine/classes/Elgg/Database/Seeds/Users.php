@@ -111,22 +111,21 @@ class Users extends Seed {
 	 */
 	public function unseed() {
 
-		$users = elgg_get_entities([
-			'types' => 'user',
-			'metadata_names' => '__faker',
-			'limit' => 0,
-			'batch' => true,
-		]);
-
 		/* @var $users \ElggBatch */
-		$users->setIncrementOffset(false);
+		$users = elgg_get_entities([
+			'type' => 'user',
+			'metadata_name' => '__faker',
+			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
+		]);
 
 		/* @var $user \ElggUser */
 		foreach ($users as $user) {
 			if ($user->delete()) {
-				$this->log("Deleted user $user->guid");
+				$this->log("Deleted user {$user->guid}");
 			} else {
-				$this->log("Failed to delete user $user->guid");
+				$this->log("Failed to delete user {$user->guid}");
 			}
 
 			$this->advance();
