@@ -54,7 +54,8 @@
         "symfony/var-dumper": "~3.3",
         "tedivm/stash": "~0.15.0",
         "vanilla/htmlawed": "~2.2.0",
-        "zendframework/zend-mail": "~2.4"
+        "zendframework/zend-mail": "~2.4",
+        "zendframework/zend-servicemanager": "^3.3.1"
     },
     "config": {
         "process-timeout": 0,
