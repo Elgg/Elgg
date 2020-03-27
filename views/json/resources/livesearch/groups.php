@@ -37,7 +37,6 @@ if (elgg_extract('match_owner', $vars, false)) {
 if (elgg_extract('match_membership', $vars, false)) {
 	$options['relationship'] = 'member';
 	$options['relationship_guid'] = $target->guid;
-	$options['inverse_relationship'] = true;
 }
 
 $body = elgg_list_entities($options, 'elgg_search');

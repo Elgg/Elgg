@@ -4,14 +4,14 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bcfc6ed8a1b0f5cf34ccfe89723c5f40",
+    "content-hash": "6508bfae0fa9e285f9c5c299e5a5de91",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
             "version": "5.12.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:FortAwesome/Font-Awesome.git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
                 "reference": "0d1f27efb836eb2ab994ba37221849ed64a73e5c"
             },
             "dist": {
@@ -34,21 +34,9 @@
                 "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/c0185ab7c75aab88762c5aae780b9d83b80eda72",
                 "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "dist/jquery.js",
-                "bower-asset-ignore": [
-                    "package.json"
-                ]
-            },
+            "type": "bower-asset",
             "license": [
                 "MIT"
-            ],
-            "keywords": [
-                "browser",
-                "javascript",
-                "jquery",
-                "library"
             ]
         },
         {
@@ -67,29 +55,7 @@
             "require": {
                 "bower-asset/jquery": ">=1.3.2"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "jquery.colorbox.js",
-                "bower-asset-ignore": [
-                    "colorbox.jquery.json",
-                    "colorbox.ai",
-                    "content",
-                    "example1/index.html",
-                    "example2/index.html",
-                    "example3/index.html",
-                    "example4/index.html",
-                    "example5/index.html"
-                ]
-            },
-            "description": "jQuery lightbox and modal window plugin",
-            "keywords": [
-                "gallery",
-                "jquery-plugin",
-                "lightbox",
-                "modal",
-                "popup",
-                "ui"
-            ]
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/jquery-form",
@@ -107,16 +73,7 @@
             "require": {
                 "bower-asset/jquery": ">=1.5"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "jquery.form.js",
-                "bower-asset-ignore": [
-                    "README.md",
-                    "composer.json",
-                    "form.jquery.json",
-                    "package.json"
-                ]
-            }
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/jquery-ui",
@@ -134,13 +91,7 @@
             "require": {
                 "bower-asset/jquery": ">=1.6"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "jquery-ui.js"
-                ],
-                "bower-asset-ignore": []
-            }
+            "type": "bower-asset"
         },
         {
             "name": "bower-asset/normalize-css",
@@ -188,18 +139,9 @@
                 "url": "https://api.github.com/repos/alexei/sprintf.js/zipball/747b806c2dab5b64d5c9958c42884946a187c3b1",
                 "reference": "747b806c2dab5b64d5c9958c42884946a187c3b1"
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "src/sprintf.js"
-            },
+            "type": "bower-asset",
             "license": [
                 "BSD-3-Clause-Clear"
-            ],
-            "description": "JavaScript sprintf implementation",
-            "keywords": [
-                "formatting",
-                "sprintf",
-                "string"
             ]
         },
         {
@@ -1605,6 +1547,78 @@
                 "mime"
             ],
             "time": "2020-03-06T08:38:03+00:00"
+        },
+        {
+            "name": "laminas/laminas-servicemanager",
+            "version": "3.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-servicemanager.git",
+                "reference": "044cb8e380682563fb277ed5f6de4f690e4e6239"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-servicemanager/zipball/044cb8e380682563fb277ed5f6de4f690e4e6239",
+                "reference": "044cb8e380682563fb277ed5f6de4f690e4e6239",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "^1.2",
+                "laminas/laminas-stdlib": "^3.2.1",
+                "laminas/laminas-zendframework-bridge": "^1.0",
+                "php": "^5.6 || ^7.0",
+                "psr/container": "^1.0"
+            },
+            "provide": {
+                "container-interop/container-interop-implementation": "^1.2",
+                "psr/container-implementation": "^1.0"
+            },
+            "replace": {
+                "zendframework/zend-servicemanager": "self.version"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~1.0.0",
+                "mikey179/vfsstream": "^1.6.5",
+                "ocramius/proxy-manager": "^1.0 || ^2.0",
+                "phpbench/phpbench": "^0.13.0",
+                "phpunit/phpunit": "^5.7.25 || ^6.4.4"
+            },
+            "suggest": {
+                "laminas/laminas-stdlib": "laminas-stdlib ^2.5 if you wish to use the MergeReplaceKey or MergeRemoveKey features in Config instances",
+                "ocramius/proxy-manager": "ProxyManager 1.* to handle lazy initialization of services"
+            },
+            "bin": [
+                "bin/generate-deps-for-config-factory",
+                "bin/generate-factory-for-class"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.3-dev",
+                    "dev-develop": "4.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\ServiceManager\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Factory-Driven Dependency Injection Container",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "PSR-11",
+                "dependency-injection",
+                "di",
+                "dic",
+                "laminas",
+                "service-manager",
+                "servicemanager"
+            ],
+            "time": "2019-12-31T17:44:47+00:00"
         },
         {
             "name": "laminas/laminas-stdlib",
