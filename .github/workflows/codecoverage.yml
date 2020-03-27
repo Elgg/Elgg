@@ -30,6 +30,7 @@ jobs:
       - name: Install Elgg
         run: |
           composer install
+          sudo systemctl start mysql
           mysql -u root -proot -e 'SET GLOBAL max_connections = 1000;'
           mysql -u root -proot -e 'create database elgg;'
           php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
