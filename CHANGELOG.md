@@ -1,3 +1,17 @@
+<a name="3.3.3"></a>
+### 3.3.3  (2020-03-27)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Jeroen Dalsem (2)
+
+#### Bug Fixes
+
+* **livesearch:** use correct relationship options to find groups ([dc82fd9e](https://github.com/Elgg/Elgg/commit/dc82fd9e92a141b27b97a0149d8289764eb45fd8))
+* **mail:** additional library for SMTP e-mail support ([d69b90df](https://github.com/Elgg/Elgg/commit/d69b90dfba56e166ddbb255ac2f3a9e9ce433772))
+
+
 <a name="3.3.2"></a>
 ### 3.3.2  (2020-03-13)
 
