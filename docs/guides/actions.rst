@@ -608,7 +608,7 @@ In rare cases, you may need to generate tokens manually:
 
 .. code-block:: php
 
-   $__elgg_ts = time();
+   $__elgg_ts = elgg()->csrf->getCurrentTime()->getTimestamp();
    $__elgg_token = elgg()->csrf->generateActionToken($__elgg_ts);
 
 You can also access the tokens from javascript:
