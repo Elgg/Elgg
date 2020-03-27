@@ -15,28 +15,18 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$this->advance($this->getCount());
 
-		$count_bookmarks = function () {
-			return elgg_count_entities([
-				'types' => 'object',
-				'subtypes' => 'bookmarks',
-				'metadata_names' => '__faker',
-			]);
-		};
+		$attributes = [
+			'subtype' => 'bookmarks',
+		];
 
-		$this->advance($count_bookmarks());
-
-		while ($count_bookmarks() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			$metadata = [
 				'address' => $this->faker()->url,
 			];
 
-			$attributes = [
-				'subtype' => 'bookmarks',
-			];
-
 			$bookmark = $this->createObject($attributes, $metadata);
-
 			if (!$bookmark) {
 				continue;
 			}
@@ -50,6 +40,7 @@ class Seeder extends Seed {
 				'subject_guid' => $bookmark->owner_guid,
 				'object_guid' => $bookmark->guid,
 				'target_guid' => $bookmark->container_guid,
+				'posted' => $bookmark->time_created,
 			]);
 
 			$this->advance();
@@ -61,26 +52,42 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $bookmarks \ElggBatch */
 		$bookmarks = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'bookmarks',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'bookmarks',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $bookmarks \ElggBatch */
-
-		$bookmarks->setIncrementOffset(false);
-
+		/* @var $boolmark \ElggBookmark */
 		foreach ($bookmarks as $bookmark) {
 			if ($bookmark->delete()) {
-				$this->log("Deleted bookmark $bookmark->guid");
+				$this->log("Deleted bookmark {$bookmark->guid}");
 			} else {
-				$this->log("Failed to delete bookmark $bookmark->guid");
+				$this->log("Failed to delete bookmark {$bookmark->guid}");
 			}
 
 			$this->advance();
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'bookmarks';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'bookmarks',
+		];
 	}
 }

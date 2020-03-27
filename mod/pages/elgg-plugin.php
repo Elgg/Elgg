@@ -129,7 +129,7 @@ return [
 		],
 		'seeds' => [
 			'database' => [
-				'Elgg\Pages\Database::registerSeeds' => [],
+				'Elgg\Pages\Seeder::register' => [],
 			],
 		],
 		'view_vars' => [

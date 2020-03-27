@@ -101,5 +101,10 @@ return [
 				'Elgg\TheWire\Menus\Site::register' => [],
 			],
 		],
+		'seeds' => [
+			'database' => [
+				'Elgg\TheWire\Seeder::register' => [],
+			],
+		],
 	],
 ];

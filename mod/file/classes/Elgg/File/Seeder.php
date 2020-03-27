@@ -15,28 +15,19 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$this->advance($this->getCount());
+		
+		$attributes = [
+			'subtype' => 'file',
+		];
 
-		$count_files = function () {
-			return elgg_count_entities([
-				'types' => 'object',
-				'subtypes' => 'file',
-				'metadata_names' => '__faker',
-			]);
-		};
-
-		while ($count_files() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			$path = $this->faker()->image();
 
 			$filename = pathinfo($path, PATHINFO_FILENAME);
 
-			$attributes = [
-				'subtype' => 'file',
-			];
-
 			$file = $this->createObject($attributes, [], ['save' => false]);
-			/* @var $file \ElggFile */
-
-			if (!$file) {
+			if (!$file instanceof \ElggFile) {
 				continue;
 			}
 
@@ -61,6 +52,7 @@ class Seeder extends Seed {
 				'subject_guid' => $file->owner_guid,
 				'object_guid' => $file->guid,
 				'target_guid' => $file->container_guid,
+				'posted' => $file->time_created,
 			]);
 
 			$this->advance();
@@ -72,27 +64,42 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $files \ElggBatch */
 		$files = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'file',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'file',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $files \ElggBatch */
-
-		$files->setIncrementOffset(false);
-
+		/* @var $file \ElggFile */
 		foreach ($files as $file) {
 			if ($file->delete()) {
-				$this->log("Deleted file $file->guid");
+				$this->log("Deleted file {$file->guid}");
 			} else {
-				$this->log("Failed to delete file $file->guid");
+				$this->log("Failed to delete file {$file->guid}");
 			}
 
 			$this->advance();
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'file';
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'file',
+		];
+	}
 }

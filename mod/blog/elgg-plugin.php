@@ -125,7 +125,7 @@ return [
 		],
 		'seeds' => [
 			'database' => [
-				'Elgg\Blog\Database::registerSeeds' => [],
+				'Elgg\Blog\Seeder::register' => [],
 			],
 		],
 	],

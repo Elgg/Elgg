@@ -6,13 +6,10 @@ use Elgg\Collections\Collection;
 use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Seeds\Providers\LocalImage;
+use Elgg\Database\Seeds\Seeding\GroupHelpers;
+use Elgg\Database\Seeds\Seeding\TimeHelpers;
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Groups\Tool;
-use ElggEntity;
-use ElggGroup;
-use ElggObject;
-use ElggUser;
-use Exception;
 use Faker\Factory;
 use Psr\Log\LogLevel;
 
@@ -24,11 +21,9 @@ use Psr\Log\LogLevel;
  */
 trait Seeding {
 
-	/**
-	 * @var int Max number of items to be created by the seed
-	 */
-	protected $limit = 20;
-
+	use GroupHelpers;
+	use TimeHelpers;
+	
 	/**
 	 * @var \Faker\Generator
 	 */
@@ -93,7 +88,7 @@ trait Seeding {
 	 * @param array $metadata   User entity metadata
 	 * @param array $options    Seeding options
 	 *
-	 * @return ElggUser
+	 * @return \ElggUser
 	 */
 	public function createUser(array $attributes = [], array $metadata = [], array $options = []) {
 
@@ -127,9 +122,16 @@ trait Seeding {
 
 				$user = get_user($guid);
 				if (!$user) {
-					throw new Exception("Unable to create new user with attributes: " . print_r($attributes, true));
+					throw new \Exception("Unable to create new user with attributes: " . print_r($attributes, true));
 				}
 
+				if (!isset($attributes['time_created'])) {
+					$attributes['time_created'] = $this->getRandomCreationTimestamp();
+				}
+				if (!empty($attributes['time_created'])) {
+					$user->time_created = $attributes['time_created'];
+				}
+				
 				if (isset($metadata['admin'])) {
 					if ($metadata['admin']) {
 						$user->makeAdmin();
@@ -184,7 +186,7 @@ trait Seeding {
 		while (!$user instanceof \ElggUser) {
 			try {
 				$user = $create();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				// try again
 			}
 		}
@@ -202,7 +204,7 @@ trait Seeding {
 	 * @param array $metadata   Group entity metadata
 	 * @param array $options    Additional options
 	 *
-	 * @return ElggGroup
+	 * @return \ElggGroup
 	 */
 	public function createGroup(array $attributes = [], array $metadata = [], array $options = []) {
 
@@ -212,12 +214,16 @@ trait Seeding {
 
 			$properties['__faker'] = true;
 
+			if (!isset($properties['time_created'])) {
+				$properties['time_created'] = $this->getRandomCreationTimestamp();
+			}
+
 			if (!isset($properties['access_id'])) {
 				$properties['access_id'] = ACCESS_PUBLIC;
 			}
 
 			if (!isset($properties['content_access_mode'])) {
-				$properties['content_access_mode'] = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
+				$properties['content_access_mode'] = \ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
 			}
 
 			if (!isset($properties['membership'])) {
@@ -239,7 +245,7 @@ trait Seeding {
 				}
 				
 				if (!$user) {
-					$user = $this->createUser();
+					return false;
 				}
 
 				$properties['owner_guid'] = $user->guid;
@@ -274,7 +280,7 @@ trait Seeding {
 				$properties['featured_group'] = 'yes';
 			}
 
-			$group = new ElggGroup();
+			$group = new \ElggGroup();
 			foreach ($properties as $name => $value) {
 				$group->$name = $value;
 			}
@@ -300,6 +306,7 @@ trait Seeding {
 				'subject_guid' => $properties['owner_guid'],
 				'object_guid' => $group->guid,
 				'target_guid' => $properties['container_guid'],
+				'posted' => $group->time_created,
 			]);
 
 			$this->log("Created new group {$group->getDisplayName()} [guid: {$group->guid}]");
@@ -326,7 +333,7 @@ trait Seeding {
 	 * @param array $metadata   Object entity metadata
 	 * @param array $options    Additional options
 	 *
-	 * @return ElggObject
+	 * @return \ElggObject
 	 */
 	public function createObject(array $attributes = [], array $metadata = [], array $options = []) {
 
@@ -335,6 +342,10 @@ trait Seeding {
 			$properties = array_merge($metadata, $attributes);
 
 			$properties['__faker'] = true;
+
+			if (!isset($properties['time_created'])) {
+				$properties['time_created'] = $this->getRandomCreationTimestamp();
+			}
 
 			if (empty($properties['title'])) {
 				$properties['title'] = $this->faker()->sentence();
@@ -359,7 +370,7 @@ trait Seeding {
 				}
 				
 				if (!$user) {
-					$user = $this->createUser();
+					return false;
 				}
 				
 				$properties['owner_guid'] = $user->guid;
@@ -385,7 +396,7 @@ trait Seeding {
 			if ($class && class_exists($class)) {
 				$object = new $class();
 			} else {
-				$object = new ElggObject();
+				$object = new \ElggObject();
 			}
 
 			foreach ($properties as $name => $value) {
@@ -435,11 +446,12 @@ trait Seeding {
 	/**
 	 * Returns random fake user
 	 *
-	 * @param int[] $exclude GUIDs to exclude
+	 * @param int[] $exclude      GUIDs to exclude
+	 * @param bool  $allow_create If no existing random user could be found create a new user (default: true)
 	 *
-	 * @return ElggUser|false
+	 * @return \ElggUser|false
 	 */
-	public function getRandomUser(array $exclude = []) {
+	public function getRandomUser(array $exclude = [], bool $allow_create = true) {
 
 		$exclude[] = 0;
 
@@ -455,17 +467,28 @@ trait Seeding {
 			'order_by' => new OrderByClause('RAND()', null),
 		]);
 
-		return $users ? $users[0] : false;
+		if (!empty($users)) {
+			return $users[0];
+		}
+
+		if ($allow_create) {
+			return $this->createUser([], [], [
+				'profile_fields' => (array) elgg_get_config('profile_fields'),
+			]);
+		}
+
+		return false;
 	}
 
 	/**
 	 * Returns random fake group
 	 *
-	 * @param int[] $exclude GUIDs to exclude
+	 * @param int[] $exclude      GUIDs to exclude
+	 * @param bool  $allow_create If no existing random group could be found create a new group (default: true)
 	 *
-	 * @return ElggGroup|false
+	 * @return \ElggGroup|false
 	 */
-	public function getRandomGroup(array $exclude = []) {
+	public function getRandomGroup(array $exclude = [], bool $allow_create = true) {
 
 		$exclude[] = 0;
 
@@ -480,25 +503,41 @@ trait Seeding {
 			],
 			'order_by' => new OrderByClause('RAND()', null),
 		]);
+		
+		if (!empty($groups)) {
+			return $groups[0];
+		}
 
-		return $groups ? $groups[0] : false;
+		if ($allow_create) {
+			return $this->createGroup([
+				'access_id' => $this->getRandomGroupVisibility(),
+			], [
+				'content_access_mode' => $this->getRandomGroupContentAccessMode(),
+				'membership' => $this->getRandomGroupMembership(),
+			], [
+				'profile_fields' => (array) elgg_get_config('group'),
+				'group_tool_options' => elgg()->group_tools->all(),
+			]);
+		}
+		
+		return false;
 	}
 
 	/**
 	 * Get random access id
 	 *
-	 * @param ElggUser   $user      User
-	 * @param ElggEntity $container Container
+	 * @param \ElggUser   $user      User
+	 * @param \ElggEntity $container Container
 	 *
 	 * @return int
 	 */
-	public function getRandomAccessId(\ElggUser $user = null, ElggEntity $container = null) {
+	public function getRandomAccessId(\ElggUser $user = null, \ElggEntity $container = null) {
 
 		$params = [
 			'container_guid' => $container ? $container->guid : null,
 		];
 
-		$access_array = get_write_access_array($user->guid, null, null, $params);
+		$access_array = get_write_access_array($user->guid, null, false, $params);
 
 		return array_rand($access_array, 1);
 	}
@@ -570,13 +609,13 @@ trait Seeding {
 	/**
 	 * Set random metadata
 	 *
-	 * @param ElggEntity $entity   Entity
-	 * @param array      $fields   An array of profile fields in $name => $input_type format
-	 * @param array      $metadata Other metadata $name => $value pairs to set
+	 * @param \ElggEntity $entity   Entity
+	 * @param array       $fields   An array of profile fields in $name => $input_type format
+	 * @param array       $metadata Other metadata $name => $value pairs to set
 	 *
-	 * @return ElggEntity
+	 * @return \ElggEntity
 	 */
-	public function populateMetadata(ElggEntity $entity, array $fields = [], array $metadata = []) {
+	public function populateMetadata(\ElggEntity $entity, array $fields = [], array $metadata = []) {
 
 		foreach ($fields as $name => $type) {
 			if (isset($metadata[$name])) {
@@ -640,7 +679,7 @@ trait Seeding {
 		}
 
 		foreach ($metadata as $key => $value) {
-			if (array_key_exists($key, $fields) && $entity instanceof ElggUser) {
+			if (array_key_exists($key, $fields) && $entity instanceof \ElggUser) {
 				$entity->setProfileData($key, $value, $this->getRandomAccessId($entity));
 			} else {
 				$entity->$key = $value;
@@ -653,11 +692,11 @@ trait Seeding {
 	/**
 	 * Create an icon for an entity
 	 *
-	 * @param ElggEntity $entity Entity
+	 * @param \ElggEntity $entity Entity
 	 *
 	 * @return bool
 	 */
-	public function createIcon(ElggEntity $entity) {
+	public function createIcon(\ElggEntity $entity) {
 
 		$icon_location = $this->faker()->image();
 		if (empty($icon_location)) {
@@ -666,13 +705,19 @@ trait Seeding {
 
 		$result = $entity->saveIconFromLocalFile($icon_location);
 
-		if ($result && $entity instanceof ElggUser) {
+		if ($result && $entity instanceof \ElggUser) {
+			$since = $this->create_since;
+			$this->setCreateSince($entity->time_created);
+			
 			elgg_create_river_item([
 				'view' => 'river/user/default/profileiconupdate',
 				'action_type' => 'update',
 				'subject_guid' => $entity->guid,
 				'object_guid' => $entity->guid,
+				'posted' => $this->getRandomCreationTimestamp(),
 			]);
+			
+			$this->create_since = $since;
 		}
 
 		return $result;
@@ -681,12 +726,12 @@ trait Seeding {
 	/**
 	 * Create comments/replies
 	 *
-	 * @param ElggEntity $entity Entity to comment on
-	 * @param int        $limit  Number of comments to create
+	 * @param \ElggEntity $entity Entity to comment on
+	 * @param int         $limit  Number of comments to create
 	 *
 	 * @return int Number of generated comments
 	 */
-	public function createComments(ElggEntity $entity, $limit = null) {
+	public function createComments(\ElggEntity $entity, $limit = null) {
 
 		$ia = _elgg_services()->session->setIgnoreAccess(true);
 
@@ -697,11 +742,15 @@ trait Seeding {
 			$limit = $this->faker()->numberBetween(1, 20);
 		}
 
+		$since = $this->create_since;
+		$this->setCreateSince($entity->time_created);
+		
 		while ($tries < $limit) {
 			$comment = new \ElggComment();
 			$comment->owner_guid = $this->getRandomUser()->guid ? : $entity->owner_guid;
 			$comment->container_guid = $entity->guid;
 			$comment->description = $this->faker()->paragraph;
+			$comment->time_created = $this->getRandomCreationTimestamp();
 
 			$tries++;
 			if ($comment->save()) {
@@ -709,6 +758,8 @@ trait Seeding {
 			}
 		}
 
+		$this->create_since = $since;
+		
 		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $success;
@@ -718,12 +769,12 @@ trait Seeding {
 	/**
 	 * Create likes
 	 *
-	 * @param ElggEntity $entity Entity to like
-	 * @param int        $limit  Number of likes to create
+	 * @param \ElggEntity $entity Entity to like
+	 * @param int         $limit  Number of likes to create
 	 *
 	 * @return int
 	 */
-	public function createLikes(ElggEntity $entity, $limit = null) {
+	public function createLikes(\ElggEntity $entity, $limit = null) {
 
 		$ia = _elgg_services()->session->setIgnoreAccess(true);
 

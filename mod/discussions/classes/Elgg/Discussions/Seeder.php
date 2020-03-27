@@ -20,18 +20,9 @@ class Seeder extends Seed {
 	 * {@inheritdoc}
 	 */
 	public function seed() {
+		$this->advance($this->getCount());
 
-		$count_discussions = function () {
-			return elgg_count_entities([
-				'types' => 'object',
-				'subtypes' => 'discussion',
-				'metadata_names' => '__faker',
-			]);
-		};
-
-		$this->advance($count_discussions());
-
-		while ($count_discussions() < $this->limit) {
+		while ($this->getCount() < $this->limit) {
 			$metadata = [
 				'status' => $this->getRandomStatus(),
 				'excerpt' => $this->faker()->sentence(),
@@ -43,7 +34,6 @@ class Seeder extends Seed {
 			];
 
 			$discussion = $this->createObject($attributes, $metadata);
-
 			if (!$discussion) {
 				continue;
 			}
@@ -56,9 +46,8 @@ class Seeder extends Seed {
 				'subject_guid' => $discussion->owner_guid,
 				'object_guid' => $discussion->guid,
 				'target_guid' => $discussion->container_guid,
+				'posted' => $discussion->time_created,
 			]);
-
-			elgg_trigger_event('publish', 'object', $discussion);
 
 			$this->advance();
 		}
@@ -69,27 +58,33 @@ class Seeder extends Seed {
 	 */
 	public function unseed() {
 
+		/* @var $discussions \ElggBatch */
 		$discussions = elgg_get_entities([
-			'types' => 'object',
-			'subtypes' => 'discussion',
-			'metadata_names' => '__faker',
-			'limit' => 0,
+			'type' => 'object',
+			'subtype' => 'discussion',
+			'metadata_name' => '__faker',
+			'limit' => false,
 			'batch' => true,
+			'batch_inc_offset' => false,
 		]);
 
-		/* @var $discussions \ElggBatch */
-
-		$discussions->setIncrementOffset(false);
-
+		/* @var $discussion \ElggDiscussion */
 		foreach ($discussions as $discussion) {
 			if ($discussion->delete()) {
-				$this->log("Deleted discussion $discussion->guid");
+				$this->log("Deleted discussion {$discussion->guid}");
 			} else {
-				$this->log("Failed to delete discussion $discussion->guid");
+				$this->log("Failed to delete discussion {$discussion->guid}");
 			}
 
 			$this->advance();
 		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public static function getType() : string {
+		return 'discussion';
 	}
 
 	/**
@@ -100,5 +95,15 @@ class Seeder extends Seed {
 		$key = array_rand($this->status, 1);
 
 		return $this->status[$key];
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	protected function getCountOptions() : array {
+		return [
+			'type' => 'object',
+			'subtype' => 'discussion',
+		];
 	}
 }
