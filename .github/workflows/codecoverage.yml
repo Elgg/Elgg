@@ -15,6 +15,10 @@ jobs:
       ELGG_DB_PREFIX: elgg_
         
     steps:
+      - name: Check if run on the Elgg repo
+        if: github.repository != 'Elgg/Elgg'
+        run: exit 1
+        
       - name: Checkout
         uses: actions/checkout@master
       
