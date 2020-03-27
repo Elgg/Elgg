@@ -1852,7 +1852,7 @@ function _elgg_get_js_page_data() {
 		],
 		'security' => [
 			'token' => [
-				'__elgg_ts' => $ts = time(),
+				'__elgg_ts' => $ts = elgg()->csrf->getCurrentTime()->getTimestamp(),
 				'__elgg_token' => elgg()->csrf->generateActionToken($ts),
 			],
 		],

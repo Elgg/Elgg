@@ -2,7 +2,6 @@
 
 namespace Elgg\Controllers;
 
-use Elgg\TimeUsing;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -11,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
  * @internal
  */
 class RefreshCsrfToken {
-
-	use TimeUsing;
 
 	/**
 	 * Send an updated CSRF token, provided the page's current tokens were not fake.
@@ -38,7 +35,7 @@ class RefreshCsrfToken {
 			}
 		}
 
-		$ts = $this->getCurrentTime()->getTimestamp();
+		$ts = _elgg_services()->csrf->getCurrentTime()->getTimestamp();
 		$token = _elgg_services()->csrf->generateActionToken($ts);
 		
 		$data = [
