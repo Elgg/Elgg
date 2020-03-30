@@ -195,19 +195,17 @@ class ElggUpgrade extends ElggObject {
 	}
 
 	/**
-	 * Require an upgrade page.
-	 *
-	 * @return mixed
+	 * {@inheritDoc}
 	 * @throws UnexpectedValueException
 	 */
-	public function save() {
+	public function save() : bool {
 		if (!isset($this->is_completed)) {
 			$this->is_completed = false;
 		}
 
 		foreach ($this->requiredProperties as $prop) {
 			if (!$this->$prop) {
-				throw new UnexpectedValueException("ElggUpgrade objects must have a value for the $prop property.");
+				throw new UnexpectedValueException("ElggUpgrade objects must have a value for the {$prop} property.");
 			}
 		}
 

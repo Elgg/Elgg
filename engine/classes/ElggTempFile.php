@@ -68,8 +68,10 @@ class ElggTempFile extends ElggFile {
 	
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @throws \Elgg\Exceptions\Filesystem\IOException
 	 */
-	public function save() {
+	public function save() : bool {
 		throw new IOException("Temp files can't be saved to the database");
 	}
 

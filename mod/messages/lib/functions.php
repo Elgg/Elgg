@@ -65,7 +65,9 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	$message_sent->hiddenTo = 0; // this is used when a user deletes a message in their inbox
 
 	// Save the copy of the message that goes to the recipient
-	$success = $message_to->save();
+	if (!$message_to->save()) {
+		return false;
+	}
 
 	// Save the copy of the message that goes to the sender
 	if ($add_to_sent) {
@@ -82,7 +84,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 
 	// if the new message is a reply then create a relationship link between the new message
 	// and the message it is in reply to
-	if ($original_msg_guid && $success) {
+	if ($original_msg_guid) {
 		add_entity_relationship($message_sent->guid, "reply", $original_msg_guid);
 	}
 
@@ -115,7 +117,8 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	}
 
 	$messagesendflag = 0;
-	return $success;
+	
+	return $message_to->guid;
 }
 
 /**

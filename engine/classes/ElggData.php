@@ -83,7 +83,7 @@ abstract class ElggData implements CollectionItemInterface,
 	 *
 	 * @return bool
 	 */
-	abstract public function save();
+	abstract public function save() : bool;
 
 	/**
 	 * Delete this data.

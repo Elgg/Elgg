@@ -36,9 +36,9 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->entity_guid = $object->guid;
 		$metadata->name = $name;
 		$metadata->value = 'test_value_' . rand();
-		$id = $metadata->save();
+		$this->assertTrue($metadata->save());
 
-		$metadata = elgg_get_metadata_from_id($id);
+		$metadata = elgg_get_metadata_from_id($metadata->id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
@@ -70,9 +70,9 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->entity_guid = $object->guid;
 		$metadata->name = $name;
 		$metadata->value = 'test_value_' . rand();
-		$id = $metadata->save();
-
-		$metadata = elgg_get_metadata_from_id($id);
+		$this->assertTrue($metadata->save());
+		
+		$metadata = elgg_get_metadata_from_id($metadata->id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
@@ -125,7 +125,8 @@ class ElggMetadataUnitTest extends UnitTestCase {
 			'insert_id' => $id,
 		]);
 
-		$this->assertEquals($id, $metadata->save());
+		$this->assertTrue($metadata->save());
+		$this->assertEquals($id, $metadata->id);
 		
 		_elgg_services()->session->removeLoggedInUser();
 	}
@@ -143,9 +144,9 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$metadata->entity_guid = $object->guid;
 		$metadata->name = 'test_metadata_' . rand();
 		$metadata->value = 'test_value_' . rand();
-		$id = $metadata->save();
-
-		$metadata = elgg_get_metadata_from_id($id);
+		$this->assertTrue($metadata->save());
+		
+		$metadata = elgg_get_metadata_from_id($metadata->id);
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
@@ -153,7 +154,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		_elgg_services()->db->addQuerySpec([
 			'sql' => "DELETE FROM {$dbprefix}metadata WHERE id = :id",
 			'params' => [
-				':id' => $id,
+				':id' => $metadata->id,
 			],
 			'row_count' => 1,
 			'times' => 1,

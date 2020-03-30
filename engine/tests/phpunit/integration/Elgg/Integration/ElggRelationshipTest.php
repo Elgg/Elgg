@@ -128,9 +128,9 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		$old_id = $r->id;
 
 		$r->guid_two = $this->entity3->guid;
-		$new_id = $r->save();
-		$this->assertIsInt($new_id);
-		$this->assertNotEquals($old_id, $new_id);
+		$this->assertTrue($r->save());
+		$this->assertGreaterThan(0, $r->id);
+		$this->assertNotEquals($old_id, $r->id);
 
 		$test_r = check_entity_relationship($this->entity1->guid, 'test_relationship', $this->entity3->guid);
 		$this->assertInstanceOf(\ElggRelationship::class, $test_r);

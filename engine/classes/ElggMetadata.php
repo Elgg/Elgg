@@ -49,13 +49,11 @@ class ElggMetadata extends ElggExtender {
 	/**
 	 * Save metadata object
 	 *
-	 * Returns metadata on success, false on failure
-	 *
-	 * @return int|false
+	 * @return bool
 	 */
-	public function save() {
+	public function save() : bool {
 		if (!$this->id) {
-			return _elgg_services()->metadataTable->create($this);
+			return (bool) _elgg_services()->metadataTable->create($this);
 		}
 
 		return _elgg_services()->metadataTable->update($this);

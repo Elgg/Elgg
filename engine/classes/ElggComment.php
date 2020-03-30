@@ -36,9 +36,9 @@ class ElggComment extends \ElggObject {
 	 * Update container entity last action on successful save.
 	 *
 	 * @param bool $update_last_action Update the container entity's last_action field
-	 * @return bool|int
+	 * @return bool
 	 */
-	public function save($update_last_action = null) {
+	public function save($update_last_action = null) : bool {
 		if (isset($update_last_action)) {
 			elgg_deprecated_notice("Passing 'update_last_action' to " . __METHOD__ . " is deprecated.", '3.3');
 		} else {

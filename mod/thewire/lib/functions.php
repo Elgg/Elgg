@@ -77,8 +77,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		$post->reply = true;
 	}
 
-	$guid = $post->save();
-	if ($guid === false) {
+	if (!$post->save()) {
 		return false;
 	}
 
@@ -91,7 +90,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		$post->wire_thread = $parent_post->wire_thread;
 	} else {
 		// first post in this thread
-		$post->wire_thread = $guid;
+		$post->wire_thread = $post->guid;
 	}
 
 	elgg_create_river_item([
@@ -111,7 +110,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	];
 	elgg_trigger_plugin_hook('status', 'user', $params);
 	
-	return $guid;
+	return $post->guid;
 }
 
 /**

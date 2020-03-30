@@ -811,22 +811,28 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @return bool|int Returns int if an annotation is saved
 	 */
 	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $value_type = "") {
-		if ($this->guid) {
-			if (!$owner_guid) {
-				$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
-			}
-			$annotation = new ElggAnnotation();
-			$annotation->entity_guid = $this->guid;
-			$annotation->name = $name;
-			$annotation->value_type = $value_type;
-			$annotation->value = $value;
-			$annotation->owner_guid = $owner_guid;
-			$annotation->access_id = $access_id;
-			return $annotation->save();
-		} else {
+		if (!$this->guid) {
 			$this->temp_annotations[$name] = $value;
+			return true;
 		}
-		return true;
+		
+		if (!$owner_guid) {
+			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+		}
+		
+		$annotation = new ElggAnnotation();
+		$annotation->entity_guid = $this->guid;
+		$annotation->name = $name;
+		$annotation->value_type = $value_type;
+		$annotation->value = $value;
+		$annotation->owner_guid = $owner_guid;
+		$annotation->access_id = $access_id;
+		
+		if ($annotation->save()) {
+			return $annotation->id;
+		}
+		
+		return false;
 	}
 
 	/**
@@ -1284,14 +1290,13 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	}
 
 	/**
-	 * Save an entity.
-	 *
-	 * @return bool|int
+	 * {@inheritDoc}
 	 */
-	public function save() {
-		$guid = $this->guid;
-		if ($guid > 0) {
-			$guid = $this->update();
+	public function save() : bool {
+		$result = false;
+		
+		if ($this->guid > 0) {
+			$result = $this->update();
 		} else {
 			$guid = $this->create();
 			if ($guid === false) {
@@ -1305,13 +1310,15 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 				});
 				return false;
 			}
+			
+			$result = true;
 		}
 
-		if ($guid) {
+		if ($result) {
 			$this->cache();
 		}
 
-		return $guid;
+		return $result;
 	}
 
 	/**

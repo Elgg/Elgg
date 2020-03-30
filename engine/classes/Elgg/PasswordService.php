@@ -123,7 +123,7 @@ final class PasswordService {
 		$user->setPassword($password);
 
 		$ia = _elgg_services()->session->setIgnoreAccess(true);
-		$result = (bool) $user->save();
+		$result = $user->save();
 		_elgg_services()->session->setIgnoreAccess($ia);
 
 		return $result;

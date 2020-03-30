@@ -437,6 +437,7 @@ Miscellaneous API changes
 * An ``\ElggEntity`` no longer implements the interface ``Locatable`` but still has the same features
 * An ``\Elgg\Event`` no longer implements the interfaces ``\Elgg\ObjectEvent`` and ``\Elgg\UserEvent`` but still has the same features
 * The view ``output/icon`` no longer uses the ``convert`` view var
+* ``ElggData::save()`` now always returns a ``bool`` as documented. All extending classes have been updated (eg. ``ElggEntity``, ``ElggMetadata``, ``ElggRelationship``, etc.)
 
 Deprecated APIs
 ---------------

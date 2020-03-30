@@ -160,12 +160,10 @@ Create the file ``/mod/my_blog/actions/my_blog/save.php``:
     // owner is logged in user
     $blog->owner_guid = elgg_get_logged_in_user_guid();
 
-    // save to database and get id of the new my_blog
-    $blog_guid = $blog->save();
-
+    // save to database
     // if the my_blog was saved, we want to display the new post
     // otherwise, we want to register an error and forward back to the form
-    if ($blog_guid) {
+    if ($blog->save()) {
        return elgg_ok_response('', "Your blog post was saved.", $blog->getURL());
     } else {
        return elgg_error_response("The blog post could not be saved.");

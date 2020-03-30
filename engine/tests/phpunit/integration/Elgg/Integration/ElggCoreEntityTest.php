@@ -309,7 +309,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		// If container_guid attribute is not updated with owner_guid attribute
 		// ElggEntity::getContainerEntity() would return false
 		// thus terminating save()
-		$this->assertIsInt($object->save());
+		$this->assertTrue($object->save());
 
 		$this->assertEquals($user->guid, $object->getContainerGUID());
 	}

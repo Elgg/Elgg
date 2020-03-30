@@ -72,16 +72,16 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 	public function testElggObjectSave() {
 		// new object
 		$this->assertEquals(0, $this->entity->guid);
-		$guid = $this->entity->save();
-		$this->assertGreaterThan(0, $guid);
+		$this->assertTrue($this->entity->save());
+		$this->assertGreaterThan(0, $this->entity->guid);
 
-		$entity_row = $this->get_entity_row($guid);
+		$entity_row = $this->get_entity_row($this->entity->guid);
 		$this->assertInstanceOf(\stdClass::class, $entity_row);
 
 		// update existing object
 		$this->entity->title = 'testing';
 		$this->entity->description = '\ElggObject';
-		$this->assertEquals($guid, $this->entity->save());
+		$this->assertTrue($this->entity->save());
 	}
 
 	public function testElggObjectClone() {
@@ -105,9 +105,9 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals('testing', $object->title);
 		$this->assertEquals('\ElggObject', $object->description);
 
-		$guid = $object->save();
-		$this->assertGreaterThan(0, $guid);
-		$this->assertNotEquals($this->entity->guid, $guid);
+		$this->assertTrue($object->save());
+		$this->assertGreaterThan(0, $object->guid);
+		$this->assertNotEquals($this->entity->guid, $object->guid);
 
 		// test that metadata was transfered
 		$this->assertEquals($this->entity->var1, $object->var1);
@@ -124,7 +124,8 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 
 		// create and save to group
 		$group = new \ElggGroup();
-		$guid = $group->save();
+		$this->assertTrue($group->save());
+		$guid = $group->guid;
 		$this->assertIsInt($this->entity->setContainerGUID($guid));
 
 		// check container
