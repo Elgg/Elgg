@@ -113,7 +113,7 @@ class UserHover {
 		$is_admin = $user->isAdmin();
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'makeadmin',
-			'icon' => 'level-up',
+			'icon' => 'level-up-alt',
 			'text' => elgg_echo('makeadmin'),
 			'href' => elgg_generate_action_url('admin/user/makeadmin', [
 				'guid' => $user->guid,
@@ -126,7 +126,7 @@ class UserHover {
 		
 		$return[] = \ElggMenuItem::factory([
 			'name' => 'removeadmin',
-			'icon' => 'level-down',
+			'icon' => 'level-down-alt',
 			'text' => elgg_echo('removeadmin'),
 			'href' => elgg_generate_action_url('admin/user/removeadmin', [
 				'guid' => $user->guid,
