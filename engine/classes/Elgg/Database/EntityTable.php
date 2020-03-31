@@ -622,7 +622,7 @@ class EntityTable {
 			return false;
 		}
 
-		if (!_elgg_services()->events->triggerBefore('delete', $entity->type, $entity)) {
+		if (!$this->events->triggerBefore('delete', $entity->type, $entity)) {
 			return false;
 		}
 
@@ -642,7 +642,7 @@ class EntityTable {
 
 		$this->db->deleteData($qb);
 
-		_elgg_services()->events->triggerAfter('delete', $entity->type, $entity);
+		$this->events->triggerAfter('delete', $entity->type, $entity);
 
 		return true;
 	}
