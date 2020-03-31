@@ -700,7 +700,10 @@ class EntityTable {
 			$entity->removeAllPrivateSettings();
 			$entity->deleteOwnedAccessCollections();
 			$entity->deleteAccessCollectionMemberships();
-			$entity->deleteRelationships();
+			// remove relationships without events
+			// can't use DI provided service because of circular reference
+			_elgg_services()->relationshipsTable->removeAll($entity->guid, '', false, '', false);
+			_elgg_services()->relationshipsTable->removeAll($entity->guid, '', true, '', false);
 			$entity->deleteOwnedAnnotations();
 			$entity->deleteAnnotations();
 			$entity->deleteMetadata();
@@ -709,6 +712,5 @@ class EntityTable {
 		$dir = new \Elgg\EntityDirLocator($entity->guid);
 		$file_path = _elgg_config()->dataroot . $dir;
 		elgg_delete_directory($file_path);
-
 	}
 }
