@@ -215,10 +215,33 @@ class RelationshipsTable {
 	 * @param bool   $inverse_relationship Is $guid the target of the deleted relationships? By default, $guid is the
 	 *                                     subject of the relationships.
 	 * @param string $type                 The type of entity related to $guid (defaults to all)
+	 * @param bool   $trigger_events       Trigger the delete event for each relationship (default: true)
 	 *
 	 * @return true
 	 */
-	public function removeAll($guid, $relationship = "", $inverse_relationship = false, $type = '') {
+	public function removeAll($guid, $relationship = '', $inverse_relationship = false, $type = '', bool $trigger_events = true) {
+		
+		if ($trigger_events) {
+			return $this->removeAllWithEvents($guid, $relationship, $inverse_relationship, $type);
+		}
+		
+		return $this->removeAllWithoutEvents($guid, $relationship, $inverse_relationship, $type);
+	}
+	
+	/**
+	 * Removes all relationships originating from a particular entity
+	 *
+	 * This doesn't trigger the delete event for each relationship
+	 *
+	 * @param int    $guid                 GUID of the subject or target entity (see $inverse)
+	 * @param string $relationship         Type of the relationship (optional, default is all relationships)
+	 * @param bool   $inverse_relationship Is $guid the target of the deleted relationships? By default, $guid is the
+	 *                                     subject of the relationships.
+	 * @param string $type                 The type of entity related to $guid (defaults to all)
+	 *
+	 * @return true
+	 */
+	protected function removeAllWithoutEvents($guid, $relationship = '', $inverse_relationship = false, $type = '') {
 		$delete = Delete::fromTable('entity_relationships');
 		
 		if ((bool) $inverse_relationship) {
@@ -234,7 +257,7 @@ class RelationshipsTable {
 		if (!empty($type)) {
 			$entity_sub = $delete->subquery('entities');
 			$entity_sub->select('guid')
-				->where($delete->compare('type', '=', $type, ELGG_VALUE_STRING));
+			->where($delete->compare('type', '=', $type, ELGG_VALUE_STRING));
 			
 			if (!(bool) $inverse_relationship) {
 				$delete->andWhere($delete->compare('guid_two', 'in', $entity_sub->getSQL()));
@@ -244,7 +267,75 @@ class RelationshipsTable {
 		}
 		
 		$this->db->deleteData($delete);
-
+		
+		return true;
+	}
+	
+	/**
+	 * Removes all relationships originating from a particular entity
+	 *
+	 * The does trigger the delete event for each relationship
+	 *
+	 * @param int    $guid                 GUID of the subject or target entity (see $inverse)
+	 * @param string $relationship         Type of the relationship (optional, default is all relationships)
+	 * @param bool   $inverse_relationship Is $guid the target of the deleted relationships? By default, $guid is the
+	 *                                     subject of the relationships.
+	 * @param string $type                 The type of entity related to $guid (defaults to all)
+	 *
+	 * @return true
+	 */
+	protected function removeAllWithEvents($guid, $relationship = '', $inverse_relationship = false, $type = '') {
+		$select = Select::fromTable('entity_relationships');
+		$select->select('*');
+		
+		if ((bool) $inverse_relationship) {
+			$select->where($select->compare('guid_two', '=', $guid, ELGG_VALUE_GUID));
+		} else {
+			$select->where($select->compare('guid_one', '=', $guid, ELGG_VALUE_GUID));
+		}
+		
+		if (!empty($relationship)) {
+			$select->andWhere($select->compare('relationship', '=', $relationship, ELGG_VALUE_STRING));
+		}
+		
+		if (!empty($type)) {
+			$entity_sub = $select->subquery('entities');
+			$entity_sub->select('guid')
+			->where($select->compare('type', '=', $type, ELGG_VALUE_STRING));
+			
+			if (!(bool) $inverse_relationship) {
+				$select->andWhere($select->compare('guid_two', 'in', $entity_sub->getSQL()));
+			} else {
+				$select->andWhere($select->compare('guid_one', 'in', $entity_sub->getSQL()));
+			}
+		}
+		
+		$remove_ids = [];
+		
+		$relationships = $this->db->getData($select, [$this, 'rowToElggRelationship']);
+		
+		/* @var $rel \ElggRelationship */
+		foreach ($relationships as $rel) {
+			if (!$this->events->trigger('delete', 'relationship', $rel)) {
+				continue;
+			}
+			
+			$remove_ids[] = $rel->id;
+		}
+		
+		// to prevent MySQL query length issues
+		$chunks = array_chunk($remove_ids, 250);
+		foreach ($chunks as $chunk) {
+			if (empty($chunk)) {
+				continue;
+			}
+			
+			$delete = Delete::fromTable('entity_relationships');
+			$delete->where($delete->compare('id', 'in', $chunk));
+			
+			$this->db->deleteData($delete);
+		}
+		
 		return true;
 	}
 

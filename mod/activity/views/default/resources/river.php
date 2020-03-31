@@ -1,9 +1,9 @@
 <?php
-use Elgg\Exceptions\Http\EntityNotFoundException;
-
 /**
  * Main activity stream list page
  */
+
+use Elgg\Exceptions\Http\EntityNotFoundException;
 
 $options = [
 	'distinct' => false,
@@ -60,6 +60,10 @@ switch ($request->getRoute()) {
 	default:
 		$title = elgg_echo('river:all');
 		$page_filter = 'all';
+		
+		if ($type === 'all') {
+			$options['responses'] = false;
+		}
 		break;
 }
 

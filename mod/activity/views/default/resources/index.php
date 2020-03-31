@@ -1,8 +1,12 @@
 <?php
 
 if (elgg_is_logged_in()) {
+	elgg_push_context('activity');
+	
 	// logged in users see a different output
 	echo elgg_view_resource('river', $vars);
+	
+	elgg_pop_context();
 	return;
 }
 

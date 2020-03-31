@@ -138,8 +138,6 @@ function elgg_list_entities_from_relationship_count($options) {
  *
  * The default 'order_by' is 'er.time_created, er.id' DESC
  *
- * @see   elgg_get_entities()
- *
  * @param array $options Options
  *
  * @return \ElggRelationship[]|mixed
