@@ -42,9 +42,8 @@ if ($comment_guid) {
 	$comment->owner_guid = $user->getGUID();
 	$comment->container_guid = $entity->getGUID();
 	$comment->access_id = $entity->access_id;
-	$guid = $comment->save();
-
-	if (!$guid) {
+	
+	if (!$comment->save()) {
 		return elgg_error_response(elgg_echo('generic_comment:failure'));
 	}
 
@@ -52,7 +51,7 @@ if ($comment_guid) {
 	elgg_create_river_item([
 		'view' => 'river/object/comment/create',
 		'action_type' => 'comment',
-		'object_guid' => $guid,
+		'object_guid' => $comment->guid,
 		'target_guid' => $entity_guid,
 	]);
 

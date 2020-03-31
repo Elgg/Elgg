@@ -108,7 +108,7 @@ class ElggAccessCollection extends ElggData {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save() {
+	public function save() : bool {
 		if ($this->id > 0) {
 			return _elgg_services()->accessCollections->rename($this->id, $this->name);
 		} else {

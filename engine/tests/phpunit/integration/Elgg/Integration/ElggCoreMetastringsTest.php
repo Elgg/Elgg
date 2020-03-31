@@ -47,8 +47,7 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 			$name = 'test_annotation_name' . rand();
 			$value = 'test_annotation_value' . rand();
 			
-			$id = $this->object->annotate($name, $value);
-			$annotations[] = $id;
+			$annotations[] = $this->object->annotate($name, $value);
 		}
 
 		return $annotations;
@@ -63,7 +62,10 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 			$md->entity_guid = $this->object->guid;
 			$md->name = $name;
 			$md->value = $value;
-			$metadata[] = $md->save();
+			
+			if ($md->save()) {
+				$metadata[] = $md->id;
+			}
 		}
 
 		return $metadata;

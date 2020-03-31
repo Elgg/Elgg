@@ -509,7 +509,7 @@ class ElggUser extends \ElggEntity
 	 */
 	public function setNotificationSetting($method, $enabled = true) {
 		$this->{"notification:method:$method"} = (int) $enabled;
-		return (bool) $this->save();
+		return $this->save();
 	}
 
 	/**

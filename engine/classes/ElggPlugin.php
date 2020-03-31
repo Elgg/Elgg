@@ -94,7 +94,7 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * {@inheritdoc}
 	 */
-	public function save() {
+	public function save() : bool {
 
 		$site = elgg_get_site_entity();
 

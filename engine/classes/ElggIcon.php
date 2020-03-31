@@ -16,8 +16,10 @@ class ElggIcon extends ElggFile {
 
 	/**
 	 * {@inheritdoc}
+	 *
+	 * @throws \LogicException
 	 */
-	public function save() {
+	public function save() : bool {
 		throw new \LogicException(__CLASS__ . ' instances exist as placeholders and can not be upgraded to entities');
 	}
 }

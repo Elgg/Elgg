@@ -84,12 +84,9 @@ class ElggRelationship extends \ElggData {
 	}
 
 	/**
-	 * Save the relationship
-	 *
-	 * @return int the relationship ID
-	 * @throws IOException
+	 * {@inheritDoc}
 	 */
-	public function save() {
+	public function save() : bool {
 		if ($this->id > 0) {
 			delete_relationship($this->id);
 		}
@@ -100,13 +97,14 @@ class ElggRelationship extends \ElggData {
 			$this->guid_two,
 			true
 		);
+		
 		if ($id === false) {
-			throw new IOException("Unable to save new " . get_class());
+			return false;
 		}
 		
 		$this->id = $id;
 
-		return $this->id;
+		return true;
 	}
 
 	/**

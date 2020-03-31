@@ -204,7 +204,7 @@ class Accounts {
 		$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
 		$user->language = $this->translator->getCurrentLanguage();
 
-		if ($user->save() === false) {
+		if (!$user->save()) {
 			return false;
 		}
 
