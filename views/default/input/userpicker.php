@@ -44,9 +44,13 @@ if (!empty($params)) {
 
 $handler = elgg_extract('handler', $vars, 'livesearch');
 $params['view'] = 'json'; // force json viewtype
-$handler = elgg_http_add_url_query_elements($handler, $params);
 
-$limit = (int) elgg_extract('limit', $vars, 0);
+$wrapper_options = [
+	'class' => elgg_extract_class($vars, ['elgg-user-picker']),
+	'data-limit' => (int) elgg_extract('limit', $vars, 0),
+	'data-name' => $name,
+	'data-handler' => elgg_http_add_url_query_elements($handler, $params),
+];
 
 $picker = elgg_format_element('input', [
 	'type' => 'text',
@@ -64,15 +68,9 @@ if ($show_friends) {
 		'label' => elgg_echo('userpicker:only_friends'),
 	]);
 } elseif ($friends_only) {
-	$picker .= elgg_view('input/hidden', [
-		'name' => 'match_on',
-		'value' => 'friends',
-	]);
+	$wrapper_options['data-match-on'] = 'friends';
 } else {
-	$picker .= elgg_view('input/hidden', [
-		'name' => 'match_on',
-		'value' => elgg_extract('match_on', $vars, 'users', false),
-	]);
+	$wrapper_options['data-match-on'] = elgg_extract('match_on', $vars, 'users', false);
 }
 
 $items = '';
@@ -88,12 +86,7 @@ foreach ($guids as $guid) {
 
 $picker .= elgg_format_element('ul', ['class' => 'elgg-list elgg-user-picker-list'], $items);
 
-echo elgg_format_element('div', [
-	'class' => elgg_extract_class($vars, ['elgg-user-picker']),
-	'data-limit' => $limit,
-	'data-name' => $name,
-	'data-handler' => $handler,
-], $picker);
+echo elgg_format_element('div', $wrapper_options, $picker);
 
 ?>
 <script>

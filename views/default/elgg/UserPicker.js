@@ -22,6 +22,7 @@ define(function(require) {
 			data = this.$wrapper.data();
 
 		this.name = data.name || 'members';
+		this.matchOn = data.matchOn || 'users';
 		this.handler = data.handler || 'livesearch';
 		this.limit = data.limit || 0;
 		this.minLength = data.minLength || 2;
@@ -142,16 +143,11 @@ define(function(require) {
 		 * Get search type
 		 */
 		getSearchType: function() {
-			var defaultType = 'users';
-			if (this.$wrapper.has('[type="hidden"][name="match_on"]').length) {
-				defaultType = $('[type="hidden"][name="match_on"]', this.$wrapper).val();
-			}
-			
 			if (this.$wrapper.has('[type="checkbox"][name="match_on"]:checked').length) {
 				return $('[type="checkbox"][name=match_on]:checked', this.$wrapper).val();
 			}
 			
-			return defaultType;
+			return this.matchOn;
 		}
 	};
 
