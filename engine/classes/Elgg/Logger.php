@@ -144,6 +144,10 @@ class Logger extends \Monolog\Logger {
 
 		if (array_key_exists($level, self::$legacy_levels)) {
 			$level = self::$legacy_levels[$level];
+			if ($level === false) {
+				// can't array_key_exists for false
+				return 0;
+			}
 		}
 
 		if (array_key_exists($level, self::$elgg_levels)) {
