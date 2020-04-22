@@ -202,5 +202,5 @@ function elgg_comments_per_page(ElggEntity $container = null) {
 	$params = [
 		'entity' => $container,
 	];
-	return (int) elgg_trigger_plugin_hook('config', 'comments_per_page', $params, 25);
+	return (int) elgg_trigger_plugin_hook('config', 'comments_per_page', $params, _elgg_config()->comments_per_page);
 }

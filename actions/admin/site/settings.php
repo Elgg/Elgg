@@ -58,6 +58,7 @@ elgg_save_config('default_limit', $default_limit);
 
 elgg_save_config('comment_box_collapses', (bool) get_input('comment_box_collapses'));
 elgg_save_config('comments_latest_first', (bool) get_input('comments_latest_first'));
+elgg_save_config('comments_per_page', (int) get_input('comments_per_page'));
 
 elgg_save_config('can_change_username', 'on' === get_input('can_change_username'));
 

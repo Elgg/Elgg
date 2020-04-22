@@ -832,7 +832,7 @@ Other
 
 **config, comments_per_page**
 	Filters the number of comments displayed per page. Default is 25. ``$params['entity']`` will hold
-	the containing entity or null if not provided.
+	the containing entity or null if not provided. Use ``elgg_comments_per_page()`` to get the value.
 
 **config, comments_latest_first**
 	Filters the order of comments. Default is ``true`` for latest first. ``$params['entity']`` will hold
