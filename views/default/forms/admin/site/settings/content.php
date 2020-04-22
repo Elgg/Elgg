@@ -60,4 +60,13 @@ $body .= elgg_view_field([
 	'value' => 1,
 ]);
 
+$body .= elgg_view_field([
+	'#type' => 'number',
+	'#label' => elgg_echo('config:content:comments_per_page'),
+	'name' => 'comments_per_page',
+	'value' => elgg_get_config('comments_per_page'),
+	'min' => 1,
+	'step' => 1,
+]);
+
 echo elgg_view_module('info', elgg_echo('admin:legend:content'), $body);

@@ -28,6 +28,7 @@ use Elgg\Project\Paths;
  * @property bool          $can_change_username						Is user allowed to change the username
  * @property bool          $comment_box_collapses					Determines if the comment box collapses after the first comment
  * @property bool          $comments_latest_first					Determines if the default order of comments is latest first
+ * @property int           $comments_per_page						Number of comments per page
  * @property array         $css_compiler_options 					Options passed to CssCrush during CSS compilation
  * @property string        $dataroot             					Path of data storage with trailing "/"
  * @property bool          $data_dir_override
@@ -173,6 +174,7 @@ class Config {
 		'batch_run_time_in_secs' => 4,
 		'comment_box_collapses' => true,
 		'comments_latest_first' => true,
+		'comments_per_page' => 25,
 		'icon_sizes' => [
 			'topbar' => ['w' => 16, 'h' => 16, 'square' => true, 'upscale' => true],
 			'tiny' => ['w' => 25, 'h' => 25, 'square' => true, 'upscale' => true],

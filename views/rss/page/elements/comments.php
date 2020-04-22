@@ -13,7 +13,7 @@ if (!$entity instanceof ElggEntity) {
 
 $limit = elgg_extract('limit', $vars, get_input('limit', 0));
 if (!$limit) {
-	$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
+	$limit = elgg_comments_per_page($entity);
 }
 
 echo elgg_list_entities([

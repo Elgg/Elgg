@@ -1459,6 +1459,7 @@ Once you have logged in, we highly recommend that you change your password.',
 	'config:content:comment_box_collapses:help' => "This only applies if the comments list is sorted latest first",
 	'config:content:comments_latest_first' => "The comments should be listed with the latest comment first",
 	'config:content:comments_latest_first:help' => "This controls the default behaviour of the listing of comments on a content detail page. If disabled this will also move the comment box to the end of the comments list",
+	'config:content:comments_per_page' => "The number of comments per page",
 	
 	'upgrading' => 'Upgrading...',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
