@@ -50,7 +50,7 @@ trait Testing {
 		$path = '/' . ltrim(substr(elgg_normalize_url($uri), strlen($site_url)), '/');
 
 		if ($add_csrf_tokens) {
-			$ts = time();
+			$ts = _elgg_services()->csrf->getCurrentTime()->getTimestamp();
 			$parameters['__elgg_ts'] = $ts;
 			$parameters['__elgg_token'] = _elgg_services()->csrf->generateActionToken($ts);
 		}

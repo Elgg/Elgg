@@ -72,7 +72,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	function addCsrfTokens(Request $request) {
-		$ts = time();
+		$ts = _elgg_services()->csrf->getCurrentTime()->getTimestamp();
 		$request->query->set('__elgg_ts', $ts);
 		$request->query->set('__elgg_token', _elgg_services()->csrf->generateActionToken($ts));
 	}

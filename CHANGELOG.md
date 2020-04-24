@@ -1,3 +1,20 @@
+<a name="3.3.4"></a>
+### 3.3.4  (2020-04-24)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **core:**
+  * use correct input for password reset ([5ceaed52](https://github.com/Elgg/Elgg/commit/5ceaed5210b2270f234c74c44a30df824162eba1))
+  * log exceptions by default ([3d085449](https://github.com/Elgg/Elgg/commit/3d0854490bd7e1a20e6a1ab72dc04bf5822ae692))
+* **developers:** remove entity button in explorer now works ([fed4809a](https://github.com/Elgg/Elgg/commit/fed4809ac389eab149bf4dc3f2ed2bde052367d6))
+* **logger:** correctly support legacy value 'OFF' ([df80433c](https://github.com/Elgg/Elgg/commit/df80433c6a6f64066ad7dcb5b4b002bdf3be7fc0))
+
+
 <a name="3.3.3"></a>
 ### 3.3.3  (2020-03-27)
 

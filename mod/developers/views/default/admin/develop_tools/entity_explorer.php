@@ -38,12 +38,16 @@ echo elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($guid) {
 	// ACL membership
 	$result .= elgg_view('admin/develop_tools/entity_explorer/acl_memberships', ['entity' => $entity]);
 	
+	$result .= elgg_view('output/url', [
+		'text' => elgg_echo('developers:entity_explorer:delete_entity'),
+		'href' => elgg_generate_action_url('developers/entity_explorer_delete', [
+			'guid' => $guid,
+			'type' => 'entity',
+			'key' => $guid,
+		]),
+		'confirm' => elgg_echo('deleteconfirm'),
+		'class' => 'elgg-button elgg-button-delete',
+	]);
+	
 	return $result;
 });
-
-echo elgg_view('output/url', [
-	'text' => elgg_echo('developers:entity_explorer:delete_entity'),
-	'href' => 'action/developers/entity_explorer_delete?guid=' . $entity->guid . '&type=entity&key=' . $entity->guid,
-	'confirm' => true,
-	'class' => 'elgg-button elgg-button-submit',
-]);
