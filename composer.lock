@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36c7da493cb7f390b6bd246b44c0bed0",
+    "content-hash": "f4bd735dcba31a2a0779f0a3d1759e1c",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
