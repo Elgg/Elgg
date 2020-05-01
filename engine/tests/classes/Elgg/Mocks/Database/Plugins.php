@@ -53,6 +53,8 @@ class Plugins extends DbPlugins {
 		'embed',
 	];
 
+	private $_testFilePath = '';
+
 	public function get($plugin_id) {
 		$plugin = parent::get($plugin_id);
 		if ($plugin) {
@@ -73,14 +75,20 @@ class Plugins extends DbPlugins {
 		return $this->_plugins;
 	}
 
-	public function addTestingPlugin(ElggPlugin $plugin) {
+    public function generateEntities()
+    {
+        $this->addTestingPlugin(ElggPlugin::fromId('test_plugin', $this->_testFilePath));
+        return true;
+    }
+
+    public function addTestingPlugin(ElggPlugin $plugin) {
 		$this->_plugins[$plugin->getID()] = $plugin;
 	}
 
 	public function isActive($plugin_id) {
 		return array_key_exists($plugin_id, $this->_plugins);
 	}
-	
+
 	public function setPriority(ElggPlugin $plugin, $priority) {
 
 		$old_priority = $plugin->getPriority();
@@ -104,5 +112,11 @@ class Plugins extends DbPlugins {
 
 		return $priority;
 	}
+
+    public function getPath()
+    {
+        return __DIR__ . '/../../../../mod/';
+    }
+
 
 }

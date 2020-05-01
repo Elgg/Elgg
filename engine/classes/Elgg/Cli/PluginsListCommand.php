@@ -18,7 +18,10 @@ class PluginsListCommand extends Command {
 			->setDescription(elgg_echo('cli:plugins:list:description'))
 			->addOption('status', 's', InputOption::VALUE_OPTIONAL,
 				elgg_echo('cli:plugins:list:option:status', ['all | active | inactive'])
-			);
+			)
+            ->addOption('refresh', 'r', InputOption::VALUE_NONE,
+                elgg_echo('cli:plugins:list:option:refresh')
+            );
 	}
 
 	/**
@@ -31,6 +34,10 @@ class PluginsListCommand extends Command {
 			$this->error(elgg_echo('cli:plugins:list:error:status', [$status, 'all | active | inactive']));
 			return 1;
 		}
+
+		if ($this->option('refresh') !== false) {
+		    _elgg_generate_plugin_entities();
+        }
 
 		$table = new Table($this->output);
 		$table->setHeaders([
