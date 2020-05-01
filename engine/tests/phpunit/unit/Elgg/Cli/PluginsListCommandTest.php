@@ -72,4 +72,27 @@ class PluginsListCommandTest extends UnitTestCase {
 		$this->assertRegExp('/active/im', $commandTester->getDisplay());
 	}
 
+	public function testRefreshOption() {
+		$application = new Application();
+
+		$command = new PluginsListCommand();
+		$application->add($command);
+
+		$command = $application->find('plugins:list');
+		$commandTester = new CommandTester($command);
+		$commandTester->execute([
+			'command' => $command->getName(),
+		]);
+
+		$this->assertNotRegExp('/test_plugin/im', $commandTester->getDisplay());
+
+		$commandTester = new CommandTester($command);
+		$commandTester->execute([
+			'command' => $command->getName(),
+			'--refresh' => true,
+		]);
+
+		$this->assertRegExp('/test_plugin/im', $commandTester->getDisplay());
+	}
+
 }
