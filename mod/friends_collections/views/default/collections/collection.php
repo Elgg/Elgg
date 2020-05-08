@@ -57,16 +57,15 @@ if ($full_view) {
 
 $params = [
 	'collection' => $collection,
-	'metadata' => $menu,
+	'metadata' => false,
 	'title' => $title,
 	'subtitle' => $subtitle,
 	'content' => $content,
 ];
 
-echo elgg_view('object/elements/summary/metadata', $params);
 echo elgg_view('object/elements/summary/title', $params);
 echo elgg_view('object/elements/summary/subtitle', $params);
 
 echo elgg_format_element('div', [
 	'class' => 'elgg-body clearfix',
-		], $content);
+], $content);
