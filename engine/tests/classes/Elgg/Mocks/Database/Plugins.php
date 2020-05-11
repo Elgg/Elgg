@@ -73,13 +73,12 @@ class Plugins extends DbPlugins {
 		return $this->_plugins;
 	}
 
-    public function generateEntities()
-    {
-        $this->addTestingPlugin(ElggPlugin::fromId('test_plugin', ''));
-        return true;
-    }
+	public function generateEntities() {
+		$this->addTestingPlugin(ElggPlugin::fromId('test_plugin', ''));
+		return true;
+	}
 
-    public function addTestingPlugin(ElggPlugin $plugin) {
+	public function addTestingPlugin(ElggPlugin $plugin) {
 		$this->_plugins[$plugin->getID()] = $plugin;
 	}
 
