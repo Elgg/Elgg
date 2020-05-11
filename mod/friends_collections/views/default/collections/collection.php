@@ -57,12 +57,13 @@ if ($full_view) {
 
 $params = [
 	'collection' => $collection,
-	'metadata' => false,
+	'metadata' => $full_view ? false : $menu,
 	'title' => $title,
 	'subtitle' => $subtitle,
 	'content' => $content,
 ];
 
+echo elgg_view('object/elements/summary/metadata', $params);
 echo elgg_view('object/elements/summary/title', $params);
 echo elgg_view('object/elements/summary/subtitle', $params);
 
