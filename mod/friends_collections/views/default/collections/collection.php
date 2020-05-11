@@ -27,10 +27,10 @@ if ($full_view) {
 		'collection' => $collection,
 	]);
 
-	$menu = elgg()->menus->getMenu('friends:collection', [
+	$collection_menu = elgg()->menus->getMenu('friends:collection', [
 		'collection' => $collection,
 	]);
-	$items = $menu->getSection('default');
+	$items = $collection_menu->getSection('default');
 	foreach ($items as $item) {
 		if ($item->getName() == 'delete') {
 			$item->addLinkClass('elgg-button elgg-button-delete');
@@ -57,7 +57,7 @@ if ($full_view) {
 
 $params = [
 	'collection' => $collection,
-	'metadata' => $full_view ? false : $menu,
+	'metadata' => $menu,
 	'title' => $title,
 	'subtitle' => $subtitle,
 	'content' => $content,
