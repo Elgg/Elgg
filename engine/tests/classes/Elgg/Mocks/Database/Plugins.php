@@ -74,6 +74,7 @@ class Plugins extends DbPlugins {
 	}
 
 	public function generateEntities() {
+		parent::generateEntities();
 		$this->addTestingPlugin(ElggPlugin::fromId('test_plugin', ''));
 		return true;
 	}
