@@ -128,6 +128,7 @@ class UsersTable {
 		$options = array_merge([
 			'seconds' => 600,
 			'limit' => $this->config->default_limit,
+			'offset' => 0,
 		], $options);
 
 		// cast options we're sending to hook
