@@ -26,6 +26,10 @@ if ($uploaded_file && !$uploaded_file->isValid()) {
 $new_file = empty($guid);
 
 if ($new_file) {
+	if (empty($uploaded_file)) {
+		return elgg_error_response(elgg_echo('file:uploadfailed'));
+	}
+	
 	$file = new ElggFile();
 } else {
 	// load original file object
