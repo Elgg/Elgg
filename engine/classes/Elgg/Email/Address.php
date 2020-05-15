@@ -15,6 +15,17 @@ use Laminas\Validator\Hostname;
 class Address extends ZendAddress {
 	
 	/**
+	 * {@inheritdoc}
+	 */
+	public function __construct($email, $name = null, $comment = null) {
+		if (isset($name) && is_string($name)) {
+			$name = html_entity_decode($name, ENT_QUOTES | ENT_XHTML, 'UTF-8');
+		}
+		
+		parent::__construct($email, $name, $comment);
+	}
+	
+	/**
 	 * Set the email address
 	 *
 	 * @param string $email the new email address
@@ -61,7 +72,7 @@ class Address extends ZendAddress {
 			throw new InvalidArgumentException('CRLF injection detected');
 		}
 		
-		$this->name = $name;
+		$this->name = html_entity_decode($name, ENT_QUOTES | ENT_XHTML, 'UTF-8');
 	}
 	
 	/**
