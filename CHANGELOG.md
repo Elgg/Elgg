@@ -1,3 +1,30 @@
+<a name="3.3.5"></a>
+### 3.3.5  (2020-05-15)
+
+#### Contributors
+
+* Jerôme Bakker (6)
+* RiverVanRain (2)
+* Dennis Ploeger (1)
+* Jeroen Dalsem (1)
+
+#### Features
+
+* **cli:** Adds a --refresh option to the list command (#13201) ([eed99bfa](https://github.com/Elgg/Elgg/commit/eed99bfa660b03875de21fe4780a2a1e688beabf))
+
+
+#### Bug Fixes
+
+* **file:**
+  * validate uploaded file for new files ([a3f4ed52](https://github.com/Elgg/Elgg/commit/a3f4ed52b8305d9e7ad40cd1d282333354a67b32))
+  * correctly remove icons when updating a file ([d215defa](https://github.com/Elgg/Elgg/commit/d215defaface1cb4748209b69cd09c6ccee92b5b))
+* **friends_collection:** display menu items correctly in full view ([b170b1f4](https://github.com/Elgg/Elgg/commit/b170b1f48928059884defc4ced71b9bc525cfac4))
+* **input:** no longer use double submit prevention on widget edit forms ([ced827d5](https://github.com/Elgg/Elgg/commit/ced827d51126918126bd26a0214b7e28c5531d17))
+* **mail:** improved handling of email recipients name formatting ([ff8a425a](https://github.com/Elgg/Elgg/commit/ff8a425ac5d3ddb6942d9d8026d0a8f294c4f89a))
+* **plugins:** disabled plugins should not get a priority ([b856c449](https://github.com/Elgg/Elgg/commit/b856c4496f3d72b5b3f3cd9be20fe6764a5235ba))
+* **views:** prevent PHP notice during registering views ([6b1bf6e4](https://github.com/Elgg/Elgg/commit/6b1bf6e4242bd150669116eeaaa675e94fa8aaaa))
+
+
 <a name="3.3.4"></a>
 ### 3.3.4  (2020-04-24)
 

@@ -300,7 +300,7 @@ class Plugins {
 		
 		// map paths to indexes
 		$id_map = [];
-		$latest_priority = null;
+		$latest_priority = -1;
 		foreach ($known_plugins as $i => $plugin) {
 			// if the ID is wrong, delete the plugin because we can never load it.
 			$id = $plugin->getID();
@@ -312,11 +312,14 @@ class Plugins {
 			$id_map[$plugin->getID()] = $i;
 			$plugin->cache();
 			
+			// disabled plugins should have no priority, so no need to check if the priority is incorrect
+			if (!$plugin->isEnabled()) {
+				continue;
+			}
+			
 			$current_priority = $plugin->getPriority();
-			if (isset($latest_priority)) {
-				if (($current_priority - $latest_priority) > 1) {
-					$reindex = true;
-				}
+			if (($current_priority - $latest_priority) > 1) {
+				$reindex = true;
 			}
 			
 			$latest_priority = $current_priority;
@@ -953,6 +956,16 @@ class Plugins {
 
 		$priority = 0;
 		foreach ($plugins as $plugin) {
+			if (!$plugin->isEnabled()) {
+				// disabled plugins should not have a priority
+				if ($plugin->getPriority() !== null) {
+					// remove the priority
+					$name = $this->namespacePrivateSetting('internal', 'priority');
+					$plugin->removePrivateSetting($name);
+				}
+				continue;
+			}
+			
 			$plugin_id = $plugin->getID();
 
 			if (!in_array($plugin_id, $order)) {

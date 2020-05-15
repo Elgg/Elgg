@@ -229,30 +229,40 @@ class ViewsService {
 		$folder = rtrim($folder, '/\\');
 		$view_base = rtrim($view_base, '/\\');
 
-		$handle = opendir($folder);
-		if (!$handle) {
+		if (!is_dir($folder) || !is_readable($folder)) {
+			$this->logger->notice("Unable to register views from the directory: {$folder}");
 			return false;
 		}
 
-		while ($entry = readdir($handle)) {
-			if ($entry[0] === '.') {
+		try {
+			$dir = new \DirectoryIterator($folder);
+		} catch (\Exception $e) {
+			$this->logger->error($e->getMessage());
+			return false;
+		}
+
+		$view_base_new = '';
+		if (!empty($view_base)) {
+			$view_base_new = $view_base . '/';
+		}
+
+		/* @var $fileinfo \SplFileInfo */
+		foreach ($dir as $fileinfo) {
+			if ($fileinfo->isDot()) {
 				continue;
 			}
 
-			$path = "$folder/$entry";
+			$path = $fileinfo->getPathname();
 
-			if (!empty($view_base)) {
-				$view_base_new = $view_base . "/";
-			} else {
-				$view_base_new = "";
+			if ($fileinfo->isDir()) {
+				// Found a directory so go deeper
+				$this->autoregisterViews($view_base_new . $fileinfo->getFilename(), $path, $viewtype);
+				continue;
 			}
 
-			if (is_dir($path)) {
-				$this->autoregisterViews($view_base_new . $entry, $path, $viewtype);
-			} else {
-				$view = $view_base_new . basename($entry, '.php');
-				$this->setViewLocation($view, $viewtype, $path);
-			}
+			// found a file add it to the views
+			$view = $view_base_new . $fileinfo->getBasename('.php');
+			$this->setViewLocation($view, $viewtype, $path);
 		}
 
 		return true;

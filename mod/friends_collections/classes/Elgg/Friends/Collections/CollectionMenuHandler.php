@@ -33,6 +33,7 @@ class CollectionMenuHandler {
 		
 		$return[] = ElggMenuItem::factory([
 			'name' => 'edit',
+			'icon' => 'edit',
 			'text' => elgg_echo('edit'),
 			'href' => elgg_generate_url('edit:access_collection:friends', [
 				'collection_id' => $collection->id,
@@ -42,6 +43,7 @@ class CollectionMenuHandler {
 
 		$return[] = ElggMenuItem::factory([
 			'name' => 'delete',
+			'icon' => 'delete',
 			'text' => elgg_echo('delete'),
 			'href' => elgg_generate_action_url('friends/collections/delete', [
 				'collection_id' => $collection->id,

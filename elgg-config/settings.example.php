@@ -276,18 +276,6 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cookies['remember_me']['secure'] = false;
 //$CONFIG->cookies['remember_me']['httponly'] = false;
 
-
-/**
- * Use non-standard headers for broken MTAs.
- *
- * The default header EOL for headers is \r\n.  This causes problems
- * on some broken MTAs.  Setting this to true will cause Elgg to use
- * \n, which will fix some problems sending email on broken MTAs.
- *
- * @global bool $CONFIG->broken_mta
- */
-$CONFIG->broken_mta = false;
-
 /**
  * Disable the database query cache
  *

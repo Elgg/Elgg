@@ -16,6 +16,7 @@ $form = elgg_view_form('widgets/save', [
 	'class' => [
 		$additional_class,
 	],
+	'prevent_double_submit' => false,
 ], $vars);
 
 if (!$form) {

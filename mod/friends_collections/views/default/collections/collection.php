@@ -1,11 +1,11 @@
 <?php
-
 /**
  * Renders a collection list item
  *
  * @uses $vars['item']       Access collection
  * @uses $vars['full_view']  Summary/full view flag
  */
+
 $collection = elgg_extract('item', $vars);
 if (!$collection instanceof ElggAccessCollection) {
 	return;
@@ -13,11 +13,7 @@ if (!$collection instanceof ElggAccessCollection) {
 
 $full_view = elgg_extract('full_view', $vars);
 
-$menu = elgg_view_menu('friends:collection', [
-	'collection' => $collection,
-	'class' => 'elgg-menu-hz',
-]);
-
+$metadata = false;
 $count = $collection->getMembers(['count' => true]);
 $subtitle = elgg_echo('friends:collection:member_count', [$count]);
 
@@ -27,10 +23,10 @@ if ($full_view) {
 		'collection' => $collection,
 	]);
 
-	$menu = elgg()->menus->getMenu('friends:collection', [
+	$collection_menu = elgg()->menus->getMenu('friends:collection', [
 		'collection' => $collection,
 	]);
-	$items = $menu->getSection('default');
+	$items = $collection_menu->getSection('default');
 	foreach ($items as $item) {
 		if ($item->getName() == 'delete') {
 			$item->addLinkClass('elgg-button elgg-button-delete');
@@ -53,11 +49,15 @@ if ($full_view) {
 		'gallery_class' => 'elgg-gallery-fluid elgg-gallery-users',
 		'pagination' => false,
 	]);
+	$metadata = elgg_view_menu('friends:collection', [
+		'collection' => $collection,
+		'class' => 'elgg-menu-hz',
+	]);
 }
 
 $params = [
 	'collection' => $collection,
-	'metadata' => $menu,
+	'metadata' => $metadata,
 	'title' => $title,
 	'subtitle' => $subtitle,
 	'content' => $content,
@@ -69,4 +69,4 @@ echo elgg_view('object/elements/summary/subtitle', $params);
 
 echo elgg_format_element('div', [
 	'class' => 'elgg-body clearfix',
-		], $content);
+], $content);
