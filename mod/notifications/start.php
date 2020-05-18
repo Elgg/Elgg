@@ -96,7 +96,7 @@ function _notification_groups_title_menu(\Elgg\Hook $hook) {
 	$items = $hook->getValue();
 	
 	$group = $hook->getEntityParam();
-	if (!($group instanceof \ElggGroup)) {
+	if (!$group instanceof \ElggGroup || !$group->isMember($user)) {
 		return;
 	}
 	
