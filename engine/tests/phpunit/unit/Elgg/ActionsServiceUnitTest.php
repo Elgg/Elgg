@@ -546,7 +546,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 			return $api_response;
 		});
 
-		$this->assertTrue(_elgg_services()->actions->register('output3', "$this->actionsDir/output3.php", 'public'));
+		$this->assertTrue(_elgg_services()->actions->register('output3', "{$this->actionsDir}/output3.php", 'public'));
 
 		set_input('output', 'output3');
 		set_input('system_message', 'success');
@@ -560,8 +560,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertNotEmpty($date = $response->headers->get('Date'));
 		$this->assertNotEmpty($expires = $response->headers->get('Expires'));
-		$this->assertEquals(strtotime($date) + 1000, strtotime($expires));
-		$this->assertStringContainsString('max-age=1000', $response->headers->get('Cache-Control'));
+		$max_age = strtotime($expires) - strtotime($date);
+		$this->assertGreaterThanOrEqual(999, $max_age); // allow for time drift of 1 sec
+		$this->assertLessThanOrEqual(1001, $max_age); // allow for time drift of 1 sec
+		$this->assertStringContainsString("max-age={$max_age}", $response->headers->get('Cache-Control'));
 		$this->assertStringContainsString('private', $response->headers->get('Cache-Control'));
 
 		$output = json_encode([
