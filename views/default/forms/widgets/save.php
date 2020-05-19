@@ -13,7 +13,7 @@ if (!$widget instanceof ElggWidget) {
 
 $show_access = elgg_extract('show_access', $vars, true);
 
-$custom_form_section = false;
+$custom_form_section = '';
 if (elgg_view_exists("widgets/{$widget->handler}/edit")) {
 	$custom_form_section = elgg_view("widgets/{$widget->handler}/edit", ['entity' => $widget]);
 }
