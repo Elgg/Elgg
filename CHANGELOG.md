@@ -1,3 +1,23 @@
+<a name="3.3.6"></a>
+### 3.3.6  (2020-05-29)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Jeroen Dalsem (3)
+
+#### Performance
+
+* **likes:** bulk delete likes annotations on entity delete ([0b1d536c](https://github.com/Elgg/Elgg/commit/0b1d536c12b07e9c5dc7976c01344415ebf9790d))
+
+
+#### Bug Fixes
+
+* **db:** default case_sensitive not applied for single pair in root ([1ecd214c](https://github.com/Elgg/Elgg/commit/1ecd214c7668459688223c00faa60c0c6e5a87c0))
+* **notifications:** only register group menu item if member of group ([a3a707ef](https://github.com/Elgg/Elgg/commit/a3a707efdcc2b77c63e7101090f3cdb89801025a))
+* **redis:** admin information page now works if authorized ([7db8bbd8](https://github.com/Elgg/Elgg/commit/7db8bbd8854cfc07c48cec74e296dbabf6fd8e91))
+
+
 <a name="3.3.5"></a>
 ### 3.3.5  (2020-05-15)
 
