@@ -20,6 +20,7 @@ Na het inschakelen van de vriendschapsverzoeken moet indien gebruiker A vriend w
 	'friends:owned' => "%s's vrienden",
 	'friend:add' => "Voeg toe als vriend",
 	'friend:remove' => "Verwijder vriend",
+	'friends:menu:request:status:pending' => "Vriendschapsverzoek in afwachting",
 
 	'friends:add:successful' => "%s is succesvol toegevoegd aan je vrienden",
 	'friends:add:duplicate' => "Je bent reeds vrienden met %s",
