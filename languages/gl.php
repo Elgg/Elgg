@@ -1757,6 +1757,7 @@ To view %s's profile, click here:
 	
 	'cli:plugins:list:description' => "List all plugins installed on the site",
 	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:option:refresh' => "Refresh plugin list with recently installed plugins",
 	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
 	
 	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",
