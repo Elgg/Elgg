@@ -434,13 +434,17 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertEquals([1], $pair->values);
 	}
 
-	public function testNormalizesMetadataOptionsForSinglePairInRoot() {
+	/**
+	 * @dataProvider singlePairProvider
+	 */
+	public function testNormalizesMetadataOptionsForSinglePairInRoot($case_sensitive, $expected) {
 
 		$options = $this->options->normalizeOptions([
 			'metadata_name_value_pairs' => [
 				'name' => 'status',
 				'value' => 'draft',
 			],
+			'metadata_case_sensitive' => $case_sensitive,
 		]);
 
 		$this->assertEquals(1, count($options['metadata_name_value_pairs']));
@@ -450,6 +454,15 @@ class QueryOptionsTest extends UnitTestCase {
 		$this->assertInstanceOf(MetadataWhereClause::class, $pair);
 		$this->assertEquals(['status'], $pair->names);
 		$this->assertEquals(['draft'], $pair->values);
+		$this->assertEquals($expected, $pair->case_sensitive);
+	}
+	
+	public function singlePairProvider() {
+		return [
+			[null, true],
+			[true, true],
+			[false, false],
+		];
 	}
 
 	public function testNormalizesMetadataOptionsForPairsWithJustNameOrValue() {

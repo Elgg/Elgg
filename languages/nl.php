@@ -1745,6 +1745,7 @@ Om naar het profiel van %s te gaan, klik hier:
 	
 	'cli:plugins:list:description' => "Toon alle geïnstalleerde plugins op de site",
 	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:option:refresh' => "Ververs de plugin lijst met recentelijk geïnstalleerde plugins",
 	'cli:plugins:list:error:status' => "%s is geen valide status. Toegestane opties zijn: %s",
 	
 	'cli:simpletest:description' => "Voer simpletest test suite uit (verouderd)",
