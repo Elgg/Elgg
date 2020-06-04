@@ -15,6 +15,11 @@ foreach ($servers as $server) {
 	$redis->connect($server[0], $server[1]);
 }
 
+$password = elgg_extract('password', elgg_get_config('redis_options'));
+if (!empty($password)) {
+	$redis->auth($password);
+}
+
 $stats = $redis->info();
 
 $rows = [];

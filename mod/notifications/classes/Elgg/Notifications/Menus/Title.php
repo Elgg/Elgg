@@ -30,7 +30,7 @@ class Title {
 		$items = $hook->getValue();
 		
 		$group = $hook->getEntityParam();
-		if (!$group instanceof \ElggGroup) {
+		if (!$group instanceof \ElggGroup || !$group->isMember($user)) {
 			return;
 		}
 		
