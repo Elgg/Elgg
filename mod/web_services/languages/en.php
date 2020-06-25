@@ -39,4 +39,14 @@ return array(
 
 	'system.api.list' => "List all available API calls on the system.",
 	'auth.gettoken' => "This API call lets a user obtain a user authentication token which can be used for authenticating future API calls. Pass it as the parameter auth_token",
+	
+	// plugin settings
+	'web_services:settings:authentication' => "Web API authentication settings",
+	'web_services:settings:authentication:description' => "Some API methods require that the external sources authenticate themselves. These external sources need to be provided with an API key pair (public and secret key).
+
+Please note that at least one API authentication method needs to be active in order to authenticate API requests.",
+	'web_services:settings:authentication:allow_key' => "Allow basic API public key authentication",
+	'web_services:settings:authentication:allow_key:help' => "The API public key can be passed as a parameter in the request.",
+	'web_services:settings:authentication:allow_hmac' => "Allow HMAC header API authentication",
+	'web_services:settings:authentication:allow_hmac:help' => "With HMAC authentication special headers need to be passed in a request to ensure authenticity of the request.",
 );
