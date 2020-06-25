@@ -46,7 +46,7 @@ function ws_init() {
 
 /**
  * Handle a web service request
- * 
+ *
  * Handles requests of format: http://site/services/api/handler/response_format/request
  * The first element after 'services/api/' is the service handler name as
  * registered by {@link register_service_handler()}.
@@ -57,7 +57,7 @@ function ws_init() {
  * function registered by {@link register_service_handler()}.
  *
  * If a service handler isn't found, a 404 header is sent.
- * 
+ *
  * @param array $segments URL segments
  * @return bool
  */
@@ -323,9 +323,13 @@ function ws_rest_handler() {
 		register_pam_handler('pam_auth_usertoken');
 
 		// simple API key check
-		register_pam_handler('api_auth_key', "sufficient", "api");
+		if (elgg_get_plugin_setting('auth_allow_key', 'web_services', 1)) {
+			register_pam_handler('api_auth_key', 'sufficient', 'api');
+		}
 		// hmac
-		register_pam_handler('api_auth_hmac', "sufficient", "api");
+		if (elgg_get_plugin_setting('auth_allow_hmac', 'web_services', 1)) {
+			register_pam_handler('api_auth_hmac', 'sufficient', 'api');
+		}
 	}
 
 	// Get parameter variables
@@ -366,7 +370,7 @@ function ws_unit_test($hook, $type, $value, $params) {
 
 /**
  * Filters system API list to remove PHP internal function names
- * 
+ *
  * @param string $hook   "rest:output"
  * @param string $type   "system.api.list"
  * @param array  $return API list
