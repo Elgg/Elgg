@@ -23,7 +23,7 @@
     "grunt-contrib-watch": "~0.6.1",
     "grunt-exec": "~0.4.6",
     "grunt-open": "~0.2.3",
-    "jquery-mockjax": "^2.1.1",
+    "jquery-mockjax": "^2.5.1",
     "karma": "^0.12.32",
     "karma-chrome-launcher": "^0.2.3",
     "karma-jasmine": "~0.2.0",
