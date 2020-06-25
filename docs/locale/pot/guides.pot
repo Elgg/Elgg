@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-29 13:42+0200\n"
+"POT-Creation-Date: 2020-06-25 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -9664,80 +9664,144 @@ msgstr ""
 msgid "Elgg's RESTful API framework provides functions to support a `HMAC`_ signature scheme for API authentication. The client must send the HMAC signature together with a set of special HTTP headers when making a call that requires API authentication. This ensures that the API call is being made from the stated client and that the data has not been tampered with."
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:8
+#: ../../guides/web-services/hmac.rst:10
 msgid "The HMAC must be constructed over the following data:"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:10
+#: ../../guides/web-services/hmac.rst:12
 msgid "The public API key identifying you to the Elgg api server as provided by the APIAdmin plugin"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:11
+#: ../../guides/web-services/hmac.rst:13
 msgid "The private API Key provided by Elgg (that is companion to the public key)"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:12
+#: ../../guides/web-services/hmac.rst:14
 msgid "The current unix time in seconds"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:13
+#: ../../guides/web-services/hmac.rst:15
 msgid "A nonce to guarantee two requests the same second have different signatures"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:14
+#: ../../guides/web-services/hmac.rst:16
 msgid "URL encoded string representation of any GET variable parameters, eg ``method=test.test&foo=bar``"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:15
+#: ../../guides/web-services/hmac.rst:17
 msgid "If you are sending post data, the hash of this data"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:17
+#: ../../guides/web-services/hmac.rst:19
 msgid "Some extra information must be added to the HTTP header in order for this data to be correctly processed:"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:19
+#: ../../guides/web-services/hmac.rst:21
 msgid "**X-Elgg-apikey** - The public API key"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:20
+#: ../../guides/web-services/hmac.rst:22
 msgid "**X-Elgg-time** - Unix time used in the HMAC calculation"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:21
-msgid "**X-Elgg-none** - a random string"
+#: ../../guides/web-services/hmac.rst:23
+msgid "**X-Elgg-nonce** - a random string"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:22
+#: ../../guides/web-services/hmac.rst:24
 msgid "**X-Elgg-hmac** - The HMAC as base64 encoded"
 msgstr ""
 
-#: ../../guides/web-services/hmac.rst:23
-msgid "**X-Elgg-hmac-algo** - The algorithm used in the HMAC calculation - eg, sha1, md5 etc."
-msgstr ""
-
 #: ../../guides/web-services/hmac.rst:25
-msgid "If you are sending POST data you must also send:"
+msgid "**X-Elgg-hmac-algo** - The algorithm used in the HMAC calculation"
 msgstr ""
 
 #: ../../guides/web-services/hmac.rst:27
-msgid "**X-Elgg-posthash** - The hash of the POST data"
-msgstr ""
-
-#: ../../guides/web-services/hmac.rst:28
-msgid "**X-Elgg-posthash-algo** - The algorithm used to produce the POST data hash - eg, md5"
+msgid "If you are sending POST data you must also send:"
 msgstr ""
 
 #: ../../guides/web-services/hmac.rst:29
-msgid "**Content-type** - The content type of the data you are sending (if in doubt use application/octet-stream)"
+msgid "**X-Elgg-posthash** - The hash of the POST data"
 msgstr ""
 
 #: ../../guides/web-services/hmac.rst:30
-msgid "**Content-Length** - The length in bytes of your POST data"
+msgid "**X-Elgg-posthash-algo** - The algorithm used to produce the POST data hash"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:31
+msgid "**Content-type** - The content type of the data you are sending (if in doubt use ``application/octet-stream``)"
 msgstr ""
 
 #: ../../guides/web-services/hmac.rst:32
+msgid "**Content-Length** - The length in bytes of your POST data"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:34
 msgid "Elgg provides a sample API client that implements this HMAC signature: send_api_call(). It serves as a good reference on how to implement it."
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:38
+msgid "Supported hashing algorithms"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:40
+msgid "``sha256``: recommended"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:41
+msgid "``sha1``: fast however less secure"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:42
+msgid "``md5``: weak and will be removed in the future"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:45
+msgid "Post hash calculation"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:47
+msgid "The post hash needs to be calculated over all the post data using one of the supported hashing algorithms. The result of the hashing needs to be reported in the ``X-Elgg-posthash`` header and the used hashing algorithm must be reported in the ``X-Elgg-posthash-algo`` header."
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:52
+msgid "HMAC hash calculation"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:54
+msgid "The overall HMAC needs to be calculated over the following data (in order) using the API secret as the HMAC secret and with one of the supported hashing algorithms:"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:57
+msgid "a UNIX timestamp, report this timestamp in the ``X-Elgg-time`` header"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:58
+msgid "a random string, report this string in the ``X-Elgg-nonce`` header"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:59
+msgid "the public API key, report this API key in the ``X-Elgg-apikey`` header"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:60
+msgid "the url query string (for example ``method=test.test&foo=bar``)"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:61
+msgid "when the request is a POST add the ``posthash`` as reported in the ``X-Elgg-posthash`` header"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:63
+msgid "The resulting string needs to be base64 encoded and then url encoded and be repoted in the ``X-Elgg-hmac`` header. The used hashing algorithm needs to be reported in the ``X-Elgg-hmac-algo``."
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:67
+msgid "Hashing cache"
+msgstr ""
+
+#: ../../guides/web-services/hmac.rst:69
+msgid "For security reasons each HMAC hash needs to be unique, all submitted hashes are stored for 25 hours to prevent reuse."
 msgstr ""
 
 #: ../../guides/web-services/result.rst:2
