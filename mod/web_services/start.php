@@ -322,9 +322,13 @@ function ws_rest_handler() {
 		register_pam_handler('pam_auth_usertoken');
 
 		// simple API key check
-		register_pam_handler('api_auth_key', 'sufficient', 'api');
+		if (elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
+			register_pam_handler('api_auth_key', 'sufficient', 'api');
+		}
 		// hmac
-		register_pam_handler('api_auth_hmac', 'sufficient', 'api');
+		if (elgg_get_plugin_setting('auth_allow_hmac', 'web_services')) {
+			register_pam_handler('api_auth_hmac', 'sufficient', 'api');
+		}
 	}
 
 	// Get parameter variables
