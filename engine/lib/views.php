@@ -1017,17 +1017,22 @@ function elgg_view_entity_list($entities, array $vars = []) {
  *      'item_view'  Alternative view to render list items
  *      'offset_key' The url parameter key used for offset
  *      'no_results' Message to display if no results (string|true|Closure)
+ *      'list_type'        List type: 'list' (default), 'gallery'
  *
  * @return string The list of annotations
  * @internal
  */
 function elgg_view_annotation_list($annotations, array $vars = []) {
+	// list type can be passed as request parameter
+	$list_type = get_input('list_type', 'list');
+
 	$defaults = [
 		'items' => $annotations,
 		'offset' => null,
 		'limit' => null,
 		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
 		'full_view' => true,
+		'list_type' => $list_type,
 		'offset_key' => 'annoff',
 	];
 
@@ -1038,7 +1043,12 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
 		$vars["pagination"] = false;
 	}
 
-	return elgg_view('page/components/list', $vars);
+	$view = "page/components/{$vars['list_type']}";
+	if (!elgg_view_exists($view)) {
+		$view = 'page/components/list';
+	}
+	
+	return elgg_view($view, $vars);
 }
 
 /**
@@ -1052,6 +1062,7 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  *      'limit'      The number of relationships to display per page
  *      'full_view'  Display the full view of the relationships?
  *      'list_class' CSS Class applied to the list
+ *      'list_type'  List type: 'list' (default), 'gallery'
  *      'item_view'  Alternative view to render list items
  *      'offset_key' The url parameter key used for offset
  *      'no_results' Message to display if no results (string|true|Closure)
@@ -1060,12 +1071,16 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
  * @internal
  */
 function elgg_view_relationship_list($relationships, array $vars = []) {
+	// list type can be passed as request parameter
+	$list_type = get_input('list_type', 'list');
+
 	$defaults = [
 		'items' => $relationships,
 		'offset' => null,
 		'limit' => null,
 		'list_class' => 'elgg-list-relationship',
 		'full_view' => false,
+		'list_type' => $list_type,
 		'offset_key' => 'reloff',
 	];
 	
@@ -1076,7 +1091,12 @@ function elgg_view_relationship_list($relationships, array $vars = []) {
 		$vars['pagination'] = false;
 	}
 	
-	return elgg_view('page/components/list', $vars);
+	$view = "page/components/{$vars['list_type']}";
+	if (!elgg_view_exists($view)) {
+		$view = 'page/components/list';
+	}
+	
+	return elgg_view($view, $vars);
 }
 
 /**
