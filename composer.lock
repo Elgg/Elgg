@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f813b06304dc0511bf776b5d728ef716",
+    "content-hash": "7c4d01690db8e5a7429f4472d1e8e04a",
     "packages": [
         {
             "name": "bower-asset/jquery",
@@ -1787,6 +1787,7 @@
                 "loader",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-loader",
             "time": "2015-06-03T14:05:47+00:00"
         },
         {
@@ -1847,6 +1848,7 @@
                 "mail",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-mail",
             "time": "2016-12-19T22:46:35+00:00"
         },
         {
@@ -1896,6 +1898,7 @@
                 "mime",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-mime",
             "time": "2017-01-16T16:43:38+00:00"
         },
         {
@@ -1941,6 +1944,7 @@
                 "stdlib",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-stdlib",
             "time": "2016-09-13T14:38:50+00:00"
         },
         {
@@ -2012,6 +2016,7 @@
                 "validator",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-validator",
             "time": "2017-01-29T17:24:24+00:00"
         }
     ],
@@ -3220,5 +3225,6 @@
         "ext-json": "*",
         "ext-xml": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
