@@ -1,6 +1,10 @@
 <?php
+
+use Elgg\Database\Delete;
+
 /**
  * ElggHMACCache
+ *
  * Store cached data in a temporary database, only used by the HMAC stuff.
  */
 class ElggHMACCache extends ElggCache {
@@ -15,13 +19,7 @@ class ElggHMACCache extends ElggCache {
 	}
 
 	/**
-	 * Save a key
-	 *
-	 * @param string $key          Name
-	 * @param string $data         Value
-	 * @param int    $expire_after Number of seconds to expire cache after
-	 *
-	 * @return bool
+	 * {@inheritDoc}
 	 */
 	public function save($key, $data, $expire_after = null) {
 		$dbprefix = elgg()->db->prefix;
@@ -33,17 +31,11 @@ class ElggHMACCache extends ElggCache {
 			':time' => time(),
 		];
 		
-		return (bool) elgg()->db->insertData($query, $params);
+		return elgg()->db->insertData($query, $params) !== false;
 	}
 
 	/**
-	 * Load a key
-	 *
-	 * @param string $key    Name
-	 * @param int    $offset Offset
-	 * @param int    $limit  Limit
-	 *
-	 * @return mixed|null The stored data or null if it's a miss
+	 * {@inheritDoc}
 	 */
 	public function load($key, $offset = 0, $limit = null) {
 		$dbprefix = elgg()->db->prefix;
@@ -64,11 +56,7 @@ class ElggHMACCache extends ElggCache {
 	}
 
 	/**
-	 * Invalidate a given key.
-	 *
-	 * @param string $key Name
-	 *
-	 * @return bool
+	 * {@inheritDoc}
 	 */
 	public function delete($key) {
 		$dbprefix = elgg()->db->prefix;
@@ -83,30 +71,43 @@ class ElggHMACCache extends ElggCache {
 	}
 
 	/**
-	 * Clear out all the contents of the cache.
-	 *
-	 * Not currently implemented in this cache type.
-	 *
-	 * @return true
+	 * {@inheritDoc}
 	 */
 	public function clear() {
+		$delete = Delete::fromTable('hmac_cache');
+		
+		elgg()->db->deleteData($delete);
+		
 		return true;
 	}
 
 	/**
-	 * Clean out old stuff.
+	 * {@inheritDoc}
+	 */
+	public function purge() {
+		$max_age = (int) $this->getVariable('max_age');
+		
+		$delete = Delete::fromTable('hmac_cache');
+		$delete->where($delete->compare('ts', '<', time() - $max_age, ELGG_VALUE_INTEGER));
+		
+		elgg()->db->deleteData($delete);
+		
+		return true;
+	}
+
+	/**
+	 * Currently not implemented in this cache type
 	 *
+	 * {@inheritDoc}
+	 */
+	public function invalidate() {
+		return true;
+	}
+
+	/**
+	 * Clean out old stuff
 	 */
 	public function __destruct() {
-		$dbprefix = elgg()->db->prefix;
-		$age = (int) $this->getVariable('max_age');
-
-		$query = "DELETE FROM {$dbprefix}hmac_cache
-			WHERE ts < :expires";
-		$params = [
-			':expires' => (time() - $age),
-		];
-
-		elgg()->db->deleteData($query, $params);
+		$this->purge();
 	}
 }
