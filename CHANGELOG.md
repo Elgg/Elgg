@@ -1,3 +1,27 @@
+<a name="3.3.7"></a>
+### 3.3.7  (2020-06-30)
+
+#### Contributors
+
+* Jeroen Dalsem (2)
+* Jerôme Bakker (2)
+* RiverVanRain (1)
+* Team Webgalli (1)
+
+#### Documentation
+
+* **webservices:** how to generate HMAC headers for authentication ([1a74457f](https://github.com/Elgg/Elgg/commit/1a74457fc5e6a2ef70cb2a563b2b2476b2c68d0e))
+
+
+#### Bug Fixes
+
+* **comments:**
+  * allow group owners to edit comments in their group ([835478f8](https://github.com/Elgg/Elgg/commit/835478f8d6e0ed4f00437bf6f1a9d5c885b2a473))
+  * use correct logic to apply default comments list length ([c556969e](https://github.com/Elgg/Elgg/commit/c556969e29f41977163a775a192f7bf939804740))
+* **css:** admin menu header ([01e72dd1](https://github.com/Elgg/Elgg/commit/01e72dd1cf49c4ba8eb3c57e126efa9be8d2253a))
+* **navigation:** allow configuration of max display items site menu ([cbede32e](https://github.com/Elgg/Elgg/commit/cbede32e168b9a309c133274b3d70de81a7afe78))
+
+
 <a name="3.3.6"></a>
 ### 3.3.6  (2020-05-29)
 
@@ -1844,6 +1868,13 @@ var `$DEFAULT_FILE_STORE`.
  ([618c79d3](https://github.com/Elgg/Elgg/commit/618c79d301eda1b265441b14f3bfbda2235ee3fd))
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
 
+
+<a name="2.3.15"></a>
+### 2.3.15  (2020-06-25)
+
+#### Contributors
+
+* Jerôme Bakker (2)
 
 <a name="2.3.14"></a>
 ### 2.3.14  (2019-07-24)

@@ -3,6 +3,10 @@
 use Elgg\Router\Middleware\AdminGatekeeper;
 
 return [
+	'settings' => [
+		'auth_allow_key' => 1,
+		'auth_allow_hmac' => 1,
+	],
 	'entities' => [
 		[
 			'type' => 'object',

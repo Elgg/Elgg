@@ -55,6 +55,14 @@ echo elgg_view('core.css');
 	}
 }
 
+@media only $(media-desktop-down) {
+	.elgg-page-admin {
+		.elgg-page-topbar .elgg-menu-container {
+			margin-left: 0;
+		}
+	}
+}
+
 /* ***************************************
 	Admin informationals
 **************************************** */
