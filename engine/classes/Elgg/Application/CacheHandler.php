@@ -18,6 +18,7 @@ class CacheHandler {
 	public static $extensions = [
 		'bmp' => "image/bmp",
 		'css' => "text/css",
+		'eot' => "application/vnd.ms-fontobject",
 		'gif' => "image/gif",
 		'html' => "text/html",
 		'ico' => "image/x-icon",
@@ -25,17 +26,17 @@ class CacheHandler {
 		'jpg' => "image/jpeg",
 		'js' => "application/javascript",
 		'json' => "application/json",
+		'map' => "application/json",
+		'otf' => "application/font-otf",
 		'png' => "image/png",
 		'svg' => "image/svg+xml",
 		'swf' => "application/x-shockwave-flash",
 		'tiff' => "image/tiff",
-		'webp' => "image/webp",
-		'xml' => "text/xml",
-		'eot' => "application/vnd.ms-fontobject",
 		'ttf' => "application/font-ttf",
+		'webp' => "image/webp",
 		'woff' => "application/font-woff",
 		'woff2' => "application/font-woff2",
-		'otf' => "application/font-otf",
+		'xml' => "text/xml",
 	];
 
 	public static $utf8_content_types = [

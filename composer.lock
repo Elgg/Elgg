@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ffa12e4ba941b6a79959135d3508151",
+    "content-hash": "7fd14e3199905ba0c7d786f79f97701d",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -62,7 +62,7 @@
             "version": "3.51",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery-form/form.git",
+                "url": "https://github.com/jquery-form/form.git",
                 "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
             },
             "dist": {
@@ -113,12 +113,12 @@
             "version": "2.3.6",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jrburke/requirejs-bower.git",
+                "url": "https://github.com/requirejs/requirejs-bower.git",
                 "reference": "3596b04fa67953d2fb06456ecb92cf833b462b82"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jrburke/requirejs-bower/zipball/3596b04fa67953d2fb06456ecb92cf833b462b82",
+                "url": "https://api.github.com/repos/requirejs/requirejs-bower/zipball/3596b04fa67953d2fb06456ecb92cf833b462b82",
                 "reference": "3596b04fa67953d2fb06456ecb92cf833b462b82"
             },
             "type": "bower-asset",

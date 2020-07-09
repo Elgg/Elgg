@@ -105,7 +105,7 @@ class Site {
 		
 		usort($registered, [\ElggMenuBuilder::class, 'compareByPriority']);
 		
-		$max_display_items = 5;
+		$max_display_items = $hook->getParam('max_display_items', 5);
 		
 		$num_menu_items = count($registered);
 		
