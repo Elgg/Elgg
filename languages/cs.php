@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Nastavit položky hlavní nabídky',
-	'admin:menu_items:description' => 'Vyberte jaké položky chcete zobrazovat jako zajímavé odkazy. Nepoužité položky budou přidány jako "Další" na konci výpisu.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Odebrat odkazy z nabídky v liště s nástroji?',
 	'admin:menu_items:saved' => 'Položky nabídky byly uloženy.',
 	'admin:add_menu_item' => 'Přidat vlastní položku nabídky',

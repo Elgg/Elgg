@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configurar los elementos del men&uacute; principal',
-	'admin:menu_items:description' => 'Seleccione qu&eacute; elementos del men&uacute; desea mostrar como enlaces favoritos. Los items no utilizados se encontrar&aacute;n en el item "Mas" al final de la lista',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Quitar enlaces del men&uacute; de la barra de herramientas?',
 	'admin:menu_items:saved' => 'Elementos del men&uacute; guardados',
 	'admin:add_menu_item' => 'Agregar un elemento del men&uacute; personalizado',
