@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Konfiguruj główne elementy menu',
-	'admin:menu_items:description' => 'Wybierz, które elementy menu chcesz uwydatnić. Nieużywane elementy będą dodane do sekcji "Więcej", na końcu listy.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Usunąć linki z menu paska narzędzi?',
 	'admin:menu_items:saved' => 'Elementy menu zapisane.',
 	'admin:add_menu_item' => 'Dodaj własny element menu',
