@@ -1,3 +1,18 @@
+<a name="3.3.8"></a>
+### 3.3.8  (2020-07-10)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* iionly (1)
+
+#### Bug Fixes
+
+* **cache:** support javascript source map files ([5ec82f20](https://github.com/Elgg/Elgg/commit/5ec82f204e9a9830655dd337d77d355171605633))
+* **uservalidationbyemail:** corrected error in EN language file ([5e5adca4](https://github.com/Elgg/Elgg/commit/5e5adca4fa63c94da6dad2c9f403a1cae3ae6c77))
+* **webservices:** implement missing cache functions ([deba4203](https://github.com/Elgg/Elgg/commit/deba42037777a4c6d34a62bb882012e7a98fdc2c))
+
+
 <a name="3.3.7"></a>
 ### 3.3.7  (2020-06-30)
 

@@ -9,7 +9,7 @@ return array(
 	'email:validate:subject' => "%s proszę potwierdź swój adres e-mail!",
 	'email:validate:body' => "Hi %s,
 
-Before you can start you using %s, you must confirm your email address.
+Before you can start using %s, you must confirm your email address.
 
 Please confirm your email address by clicking on the link below:
 

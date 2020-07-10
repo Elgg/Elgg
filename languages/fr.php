@@ -981,7 +981,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Éléments du menu',
 	'admin:menu_items:configure' => 'Configurer les éléments du menu principal',
-	'admin:menu_items:description' => 'Sélectionnez les éléments de menu que vous voulez afficher en liens directs. Les éléments de menu inutilisés seront ajoutés sous l\'entrée « Plus » à la fin du menu.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Supprimer les liens dans le menu des outils ?',
 	'admin:menu_items:saved' => 'Les éléments de menu ont bien été enregistrés.',
 	'admin:add_menu_item' => 'Ajouter un élément de menu personnalisé',

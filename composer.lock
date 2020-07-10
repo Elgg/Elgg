@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88f3fc574f67ce622846c9cc6a9a9bb7",
+    "content-hash": "ea6fbc90e966b616d418c720d8bac251",
     "packages": [
         {
             "name": "bower-asset/fontawesome",
@@ -26,7 +26,7 @@
             "version": "2.2.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "c0185ab7c75aab88762c5aae780b9d83b80eda72"
             },
             "dist": {
