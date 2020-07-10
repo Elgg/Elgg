@@ -20,8 +20,26 @@ class EditPermissionsHandler {
 		$entity = $hook->getEntityParam();
 		$user = $hook->getUserParam();
 		
-		if ($entity instanceof \ElggComment && $user instanceof \ElggUser) {
-			return $entity->getOwnerGUID() === $user->guid;
+		if (!$entity instanceof \ElggComment || !$user instanceof \ElggUser) {
+			return;
 		}
+		
+		$return = function () use ($entity, $user) {
+			return $entity->owner_guid === $user->guid;
+		};
+		
+		$content = $entity->getContainerEntity();
+		if (!$content instanceof \ElggEntity) {
+			return $return();
+		}
+		
+		$container = $content->getContainerEntity();
+		
+		// use default access for group editors to moderate comments
+		if ($container instanceof \ElggGroup && $container->canEdit($user->guid)) {
+			return;
+		}
+		
+		return $return();
 	}
 }

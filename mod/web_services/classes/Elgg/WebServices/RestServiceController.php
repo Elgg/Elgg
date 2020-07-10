@@ -27,9 +27,13 @@ class RestServiceController {
 			register_pam_handler('elgg_ws_pam_auth_usertoken');
 			
 			// simple API key check
-			register_pam_handler('elgg_ws_pam_auth_api_key', 'sufficient', 'api');
-			// hmac header authentication
-			register_pam_handler('elgg_ws_pam_auth_api_hmac', 'sufficient', 'api');
+			if (elgg_get_plugin_setting('auth_allow_key', 'web_services')) {
+				register_pam_handler('api_auth_key', 'sufficient', 'api');
+			}
+			// hmac
+			if (elgg_get_plugin_setting('auth_allow_hmac', 'web_services')) {
+				register_pam_handler('api_auth_hmac', 'sufficient', 'api');
+			}
 		}
 		
 		// Get parameter variables

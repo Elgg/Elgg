@@ -13,6 +13,10 @@ require_once(__DIR__ . '/lib/web_services.php');
 
 return [
 	'bootstrap' => \Elgg\WebServices\Bootstrap::class,
+	'settings' => [
+		'auth_allow_key' => 1,
+		'auth_allow_hmac' => 1,
+	],
 	'entities' => [
 		[
 			'type' => 'object',
