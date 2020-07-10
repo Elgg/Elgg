@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'メインメニュー項目の構築設定',
-	'admin:menu_items:description' => 'どのメニューアイテムをfeaturedリンクとして表示したいのかを選択してください。使用しない項目は、メニューリストの最後の"もっと"以下に追加されます。',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'ツールバーメニューからリンクを削除する。',
 	'admin:menu_items:saved' => 'メニュー項目を保存しました。',
 	'admin:add_menu_item' => 'カスタムメニュー項目を追加する',

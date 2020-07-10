@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configura le voci del menu principale',
-	'admin:menu_items:description' => 'Selezionare quali voci di menu si vogliono impostare come collegamenti sempre visibili. Le voci non utilizzate saranno aggiunte ad "Altro" al fondo dell\'elenco.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Sicuri di voler rimuovere i collegamenti dalla barra dei menu?',
 	'admin:menu_items:saved' => 'Voci di menu salvate.',
 	'admin:add_menu_item' => 'Aggiungi una voce di menu personalizzata',

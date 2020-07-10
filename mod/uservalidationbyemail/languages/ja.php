@@ -9,7 +9,7 @@ return array(
 	'email:validate:subject' => "【登録確認メール】%s様、%sで登録されたメールアドレスにお送りしています",
 	'email:validate:body' => "Hi %s,
 
-Before you can start you using %s, you must confirm your email address.
+Before you can start using %s, you must confirm your email address.
 
 Please confirm your email address by clicking on the link below:
 

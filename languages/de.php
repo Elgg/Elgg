@@ -988,7 +988,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menü-Einträge',
 	'admin:menu_items:configure' => 'Konfiguriere die Einträge im Hauptmenü.',
-	'admin:menu_items:description' => 'Wähle aus, welche Links Du als separate Menü-Einträge anzeigen lassen willst. Die restlichen Links werden unter "Mehr" am Ende der Liste zusammengefaßt.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Links aus dem Toolbar-Menü entfernen?',
 	'admin:menu_items:saved' => 'Die Menü-Einträge wurden gespeichert.',
 	'admin:add_menu_item' => 'Benutzerdefinierten Menü-Eintrag hinzufügen',
