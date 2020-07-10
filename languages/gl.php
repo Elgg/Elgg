@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Configurar os elementos do menú principal.',
-	'admin:menu_items:description' => 'Escolla os elementos de menú que quere mostrar como ligazóns destacadas. Os elementos que non use engadiranse a «Máis» ao final da lista.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Quere eliminar as ligazóns do menú da barra de ferramentas?',
 	'admin:menu_items:saved' => 'Gardáronse os elementos do menú.',
 	'admin:add_menu_item' => 'Engadir un elemento de menú personalizado',

@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'تنظیم موارد منوی اصلی',
-	'admin:menu_items:description' => 'انتخاب کنید که کدام منو به عنوان لینکهای برگزیده نمایش داده شود. موارد استفاده نشده به عنوان "بیشتر" آورده خواهند شد.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'آیا میخواهید این لینکها را از نوار ابزار حذف کنید؟',
 	'admin:menu_items:saved' => 'موارد منو ذخیره شد',
 	'admin:add_menu_item' => 'افزودن یک آیتم خصوصی سازی شده به منو',
