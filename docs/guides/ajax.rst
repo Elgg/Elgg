@@ -309,8 +309,11 @@ Let's say when the view ``foo`` is fetched, we want to also send the client some
 
     use Elgg\Services\AjaxResponse;
 
-    function myplugin_append_ajax($hook, $type, AjaxResponse $response, $params) {
+    function myplugin_append_ajax(\Elgg\Hook $hook) {
 
+        /* @var $response AjaxResponse */
+        $response = $hook->getValue();
+        
         // alter the value being returned
         $response->getData()->value .= " hello";
 

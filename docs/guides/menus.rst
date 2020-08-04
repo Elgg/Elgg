@@ -86,8 +86,8 @@ Examples
 	/**
 	 * Change the URL of the "Albums" menu item in the owner_block menu
 	 */
-	function my_owner_block_menu_handler($hook, $type, $items, $params) {
-		$owner = $params['entity'];
+	function my_owner_block_menu_handler(\Elgg\Hook $hook) {
+		$owner = $hook->getEntityParam();
 
 		// Owner can be either user or a group, so we
 		// need to take both URLs into consideration:
@@ -100,6 +100,7 @@ Examples
 				break;
 		}
 
+		$items = $hook->getValue();
 		if ($items->has('albums')) {
 			$items->get('albums')->setURL($url);
 		}
@@ -124,16 +125,18 @@ Examples
 	/**
 	 * Customize the entity menu for ElggBlog objects
 	 */
-	function my_entity_menu_handler($hook, $type, $items, $params) {
+	function my_entity_menu_handler(\Elgg\Hook $hook) {
 		// The entity can be found from the $params parameter
-		$entity = $params['entity'];
+		$entity = $hook->getEntityParam();
 
 		// We want to modify only the ElggBlog objects, so we
 		// return immediately if the entity is something else
 		if (!$entity instanceof ElggBlog) {
-			return $menu;
+			return;
 		}
 
+		$items = $hook->getValue();
+		
 		$items->remove('likes');
 
 		if ($items->has('edit')) {

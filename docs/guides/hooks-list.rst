@@ -909,22 +909,28 @@ Other
 
 	/**
 	 * Default to icon from gravatar for users without avatar.
+	 *
+	 * @param \Elgg\Hook $hook 'entity:icon:url', 'user'
+	 *
+	 * @return string
 	 */
-	function gravatar_icon_handler($hook, $type, $url, $params) {
+	function gravatar_icon_handler(\Elgg\Hook $hook) {
+		$entity = $hook->getEntityParam();
+		
 		// Allow users to upload avatars
-		if ($params['entity']->icontime) {
+		if ($entity->icontime) {
 			return $url;
 		}
 
 		// Generate gravatar hash for user email
-		$hash = md5(strtolower(trim($params['entity']->email)));
+		$hash = md5(strtolower(trim($entity->email)));
 
 		// Default icon size
 		$size = '150x150';
 
 		// Use configured size if possible
 		$config = elgg_get_icon_sizes('user');
-		$key = $params['size'];
+		$key = $hook->getParam('size');
 		if (isset($config[$key])) {
 			$size = $config[$key]['w'] . 'x' . $config[$key]['h'];
 		}

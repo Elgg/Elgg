@@ -320,8 +320,11 @@ Here we rewrite requests for ``news/*`` to ``blog/*``:
 
 .. code-block:: php
 
-    function myplugin_rewrite_handler($hook, $type, $value, $params) {
+    function myplugin_rewrite_handler(\Elgg\Hook $hook) {
+        $value = $hook->getValue();
+        
         $value['identifier'] = 'blog';
+        
         return $value;
     }
 

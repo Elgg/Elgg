@@ -96,19 +96,27 @@ Let's pass some data to a module:
 
     <?php
 
-    function myplugin_config_site($hook, $type, $value, $params) {
+    function myplugin_config_site(\Elgg\Hook $hook) {
+        $value = $hook->getValue();
+    	
         // this will be cached client-side
         $value['myplugin']['api'] = elgg_get_site_url() . 'myplugin-api';
         $value['myplugin']['key'] = 'none';
+        
         return $value;
     }
 
-    function myplugin_config_page($hook, $type, $value, $params) {
+    function myplugin_config_page(\Elgg\Hook $hook) {
         $user = elgg_get_logged_in_user_entity();
-        if ($user) {
-            $value['myplugin']['key'] = $user->myplugin_api_key;
-            return $value;
+        if (!$user) {
+        	return;
         }
+        
+        $value = $hook->getValue();
+        
+        $value['myplugin']['key'] = $user->myplugin_api_key;
+        
+        return $value;
     }
 
     elgg_register_plugin_hook_handler('elgg.data', 'site', 'myplugin_config_site');
