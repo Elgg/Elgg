@@ -49,6 +49,31 @@ Miscellaneous changes
 * The config value for ``servicehandler`` has been removed
 * In certain edge cases the default value of an API parameter will not be applied
 
+Plugin Manifest
+---------------
+
+The plugin manifest file is no longer used. Features of the manifest have been removed or moved to different locations.
+
+It is no longer possible to require a specific php ini setting.
+
+php version requirement -> composer require
+php extension requirement -> composer require
+plugin conflicts -> composer conflicts
+plugin requirement -> elgg-plugin
+plugin position requirement -> elgg-plugin
+
+plugin version -> elgg-plugin
+plugin activate on install -> elgg-plugin
+plugin name -> elgg-plugin
+plugin description -> composer.json
+plugin categories -> composer.json
+plugin name -> elgg-plugin
+plugin license -> composer.json
+plugin repo link -> composer.json
+plugin issues link -> composer.json
+plugin homepage link -> composer.json
+plugin authors/contributors -> composer.json
+
 Notifications
 -------------
 
