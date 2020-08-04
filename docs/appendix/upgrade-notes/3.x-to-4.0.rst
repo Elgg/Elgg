@@ -64,7 +64,7 @@ plugin position requirement -> elgg-plugin
 
 plugin version -> elgg-plugin
 plugin activate on install -> elgg-plugin
-plugin name -> activate on install
+plugin name -> elgg-plugin
 plugin description -> composer.json
 plugin categories -> composer.json
 plugin name -> elgg-plugin
