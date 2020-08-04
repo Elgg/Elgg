@@ -43,7 +43,7 @@ class LoggerUnitTest extends \Elgg\UnitTestCase {
 		$hooks->backup();
 
 		$num_processed = 0;
-		$hooks->registerHandler('debug', 'log', function () use (&$num_processed) {
+		$hooks->registerHandler('debug', 'log', function (\Elgg\Hook $hook) use (&$num_processed) {
 			$num_processed++;
 			return false;
 		});

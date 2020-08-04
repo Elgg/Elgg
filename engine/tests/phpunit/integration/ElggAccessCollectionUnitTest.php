@@ -34,9 +34,10 @@ class ElggAccessCollectionUnitTest extends \Elgg\IntegrationTestCase {
 
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('access_collection:url', 'access_collection', function ($hook, $type, $return, $params) use ($acl) {
-			$this->assertEquals($acl, $params['access_collection']);
-			if ($params['access_collection']->getSubtype() == 'foo') {
+		_elgg_services()->hooks->registerHandler('access_collection:url', 'access_collection', function (\Elgg\Hook $hook) use ($acl) {
+			$hook_acl = $hook->getParam('access_collection');
+			$this->assertEquals($acl, $hook_acl);
+			if ($hook_acl->getSubtype() === 'foo') {
 				return 'bar';
 			}
 		});

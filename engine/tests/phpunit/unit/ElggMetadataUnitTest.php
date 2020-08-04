@@ -78,9 +78,10 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function($hook, $type, $return, $params) use ($metadata, $name) {
-			$this->assertEquals($metadata, $params['extender']);
-			if ($params['extender']->getSubtype() == $name) {
+		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function(\Elgg\Hook $hook) use ($metadata, $name) {
+			$extender = $hook->getParam('extender');
+			$this->assertEquals($metadata, $extender);
+			if ($extender->getSubtype() == $name) {
 				return 'foo';
 			}
 		});

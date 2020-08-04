@@ -112,19 +112,18 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * Register a widget
 	 *
-	 * @param string $hook
-	 * @param string $type
-	 * @param array  $value
-	 * @param array $params
+	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
 	 *
 	 * @return \Elgg\WidgetDefinition[]
 	 */
-	public function registerWidgetsHookHandler($hook, $type, $value, $params) {
+	public function registerWidgetsHookHandler(\Elgg\Hook $hook) {
+		$value = $hook->getValue();
+		
 		$value[] = \Elgg\WidgetDefinition::factory([
-					'id' => 'hook_widget',
-					'name' => 'hook_widget name',
-					'description' => 'hook_widget description',
-					'context' => 'from_hook',
+			'id' => 'hook_widget',
+			'name' => 'hook_widget name',
+			'description' => 'hook_widget description',
+			'context' => 'from_hook',
 		]);
 
 		return $value;
@@ -133,14 +132,13 @@ class WidgetsServiceUnitTest extends \Elgg\UnitTestCase {
 	/**
 	 * Unregister a widget
 	 *
-	 * @param string $hook
-	 * @param string $type
-	 * @param array  $value
-	 * @param array $params
+	 * @param \Elgg\Hook $hook 'handlers', 'widgets'
 	 *
 	 * @return \Elgg\WidgetDefinition[]
 	 */
-	public function unregisterWidgetsHookHandler($hook, $type, $value, $params) {
+	public function unregisterWidgetsHookHandler(\Elgg\Hook $hook) {
+		$value = $hook->getValue();
+		
 		foreach ($value as $key => $widget_definition) {
 			if ($widget_definition->id === 'hook_widget') {
 				unset($value[$key]);
