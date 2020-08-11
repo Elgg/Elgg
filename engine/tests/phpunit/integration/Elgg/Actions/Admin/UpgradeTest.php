@@ -4,7 +4,6 @@ namespace Elgg\Actions\Admin;
 
 use Elgg\ActionResponseTestCase;
 use Elgg\EntityNotFoundException;
-use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
