@@ -223,9 +223,11 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		$logged_in_user = _elgg_services()->session->getLoggedInUser();
 		_elgg_services()->session->removeLoggedInUser();
 
-		$expected = [ACCESS_PUBLIC];
 		$actual = get_access_array();
-		$this->assertEquals($expected, $actual);
+
+		$this->assertTrue(in_array(ACCESS_PUBLIC, $actual)); // Public access needs to be allowed
+		$this->assertFalse(in_array(ACCESS_LOGGED_IN, $actual)); // Logged in access needs to be prohibited
+		$this->assertFalse(in_array(ACCESS_PRIVATE, $actual)); // Private access needs to be prohibited
 
 		if ($logged_in_user instanceof \ElggUser){
 			_elgg_services()->session->setLoggedInUser($logged_in_user);
@@ -287,11 +289,15 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		create_access_collection('test', $this->user->guid);
 
 		$expected = [
-			ACCESS_PUBLIC,
 			ACCESS_LOGGED_IN,
 			ACCESS_PRIVATE,
 		];
-		
+
+		// is the test site running in walled garden?
+		if (!elgg_get_config('walled_garden')) {
+			$expected[] = ACCESS_PUBLIC;
+		}
+
 		// get owned access collections
 		$collections = $this->user->getOwnedAccessCollections();
 		if (!empty($collections)) {
