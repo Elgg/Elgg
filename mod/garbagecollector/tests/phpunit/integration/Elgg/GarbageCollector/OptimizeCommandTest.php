@@ -31,7 +31,6 @@ class OptimizeCommandTest extends IntegrationTestCase {
 			'command' => $command->getName(),
 		]);
 
-		$this->assertRegExp('/Garbage collector done/im', $commandTester->getDisplay());
+		$this->assertStringContainsStringIgnoringCase(elgg_echo('garbagecollector:done'), $commandTester->getDisplay());
 	}
-
 }

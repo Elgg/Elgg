@@ -30,31 +30,31 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 
 	public function testExposeFunctionNoMethod() {
 		$this->expectException(\InvalidParameterException::class);
-		$this->expectExceptionMessage('Method or function not set in call in expose_method()');
+		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));
 		elgg_ws_expose_function('', 'test');
 	}
 
 	public function testExposeFunctionNoFunction() {
 		$this->expectException(\InvalidParameterException::class);
-		$this->expectExceptionMessage('Method or function not set in call in expose_method()');
+		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet'));
 		elgg_ws_expose_function('test', '');
 	}
 
 	public function testExposeFunctionBadParameters() {
 		$this->expectException(\InvalidParameterException::class);
-		$this->expectExceptionMessage("Parameters array structure is incorrect for call to expose method 'test'");
+		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:APIParametersArrayStructure', ['test']));
 		elgg_ws_expose_function('test', 'test', 'BAD');
 	}
 
 	public function testExposeFunctionParametersBadArray() {
 		$this->expectException(\InvalidParameterException::class);
-		$this->expectExceptionMessage("Parameters array structure is incorrect for call to expose method 'test'");
+		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:APIParametersArrayStructure', ['test']));
 		elgg_ws_expose_function('test', 'test', ['param1' => 'string']);
 	}
 
 	public function testExposeFunctionBadHttpMethod() {
 		$this->expectException(\InvalidParameterException::class);
-		$this->expectExceptionMessage("Unrecognised http method BAD for api method 'test'");
+		$this->expectExceptionMessage(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', ['BAD', 'test']));
 		elgg_ws_expose_function('test', 'test', null, '', 'BAD');
 	}
 
@@ -116,7 +116,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 
 	public function testAuthenticateMethodNotImplemented() {
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage("Method call 'BAD' has not been implemented.");
+		$this->expectExceptionMessage(elgg_echo('APIException:MethodCallNotImplemented', ['BAD']));
 		authenticate_method('BAD');
 	}
 
@@ -124,7 +124,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		$this->registerFunction(true);
 		
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage('Method call failed the API Authentication');
+		$this->expectExceptionMessage(elgg_echo('APIException:APIAuthenticationFailed', ['test']));
 		authenticate_method('test');
 	}
 
@@ -143,7 +143,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 
 	public function testExecuteMethodNotImplemented() {
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage("Method call 'BAD' has not been implemented.");
+		$this->expectExceptionMessage(elgg_echo('APIException:MethodCallNotImplemented', ['BAD']));
 		execute_method('BAD');
 	}
 
@@ -151,7 +151,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		elgg_ws_expose_function('test', 'foo');
 		
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage("Function for method 'test' is not callable");
+		$this->expectExceptionMessage(elgg_echo('APIException:FunctionDoesNotExist', ['test']));
 		execute_method('test');
 	}
 
@@ -160,7 +160,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 
 		// GET when it should be a POST
 		$this->expectException(\CallException::class);
-		$this->expectExceptionMessage("test must be called using 'POST'");
+		$this->expectExceptionMessage(elgg_echo('CallException:InvalidCallMethod', ['test', 'POST']));
 		execute_method('test');
 	}
 
@@ -169,7 +169,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		elgg_ws_expose_function('test', 'elgg_echo', $params);
 		
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage("Invalid parameter found for 'param1' in method 'test'.");
+		$this->expectExceptionMessage(elgg_echo('APIException:InvalidParameter', ['param1', 'test']));
 		verify_parameters('test', []);
 	}
 
@@ -183,7 +183,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		elgg_ws_expose_function('test', 'elgg_echo', $params);
 
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage('Missing parameter param1 in method test');
+		$this->expectExceptionMessage(elgg_echo('APIException:MissingParameterInMethod', ['param1', 'test']));
 		verify_parameters('test', []);
 	}
 
@@ -323,7 +323,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		$this->registerFunction(false, false, ['param1' => ['type' => 'bad']]);
 		$parameters = ['param1' => 'test'];
 		
-		$this->expectException('APIException');
+		$this->expectException(\APIException::class);
 		serialise_parameters('test', $parameters);
 	}
 
@@ -334,7 +334,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 
 	public function testApiAuthKeyNoKey() {
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage('Missing API key');
+		$this->expectExceptionMessage(elgg_echo('APIException:MissingAPIKey'));
 		api_auth_key();
 	}
 
@@ -342,7 +342,7 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		set_input('api_key', 'BAD');
 		
 		$this->expectException(\APIException::class);
-		$this->expectExceptionMessage('Bad API key');
+		$this->expectExceptionMessage(elgg_echo('APIException:BadAPIKey'));
 		api_auth_key();
 	}
 

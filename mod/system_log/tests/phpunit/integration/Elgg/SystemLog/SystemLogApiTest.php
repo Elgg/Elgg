@@ -95,7 +95,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 			$this->markTestSkipped();
 		}
 
-		$this->assertTrue(system_log_archive_log());
+		$this->assertTrue(system_log_archive_log(-1)); // using -1 to make sure all entries are archived
 		$this->assertTrue(system_log_browser_delete_log(0));
 
 		$entries = system_log_get_log([]);

@@ -2,9 +2,17 @@
 
 namespace Elgg\Integration;
 
-use Elgg\IntegrationTestCaseTest;
+use Elgg\IntegrationTestCase;
 
-class EntityIconServiceIntegrationTest extends IntegrationTestCaseTest {
+class EntityIconServiceIntegrationTest extends IntegrationTestCase {
+	
+	public function up() {
+		
+	}
+	
+	public function down() {
+		
+	}
 	
 	/**
 	 * @dataProvider detectCroppingCoordinatesDataProvider
