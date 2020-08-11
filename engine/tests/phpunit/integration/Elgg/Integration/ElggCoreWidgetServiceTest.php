@@ -48,15 +48,19 @@ class ElggCoreWidgetServiceTest extends IntegrationTestCase {
 			'context' => ['profile'],
 			'required_plugin' => 'profile',
 		]));
-				
+		
 		$test_plugin = \ElggPlugin::fromId('profile');
+		$should_deactivate = false;
 		if (!$test_plugin->isActive()) {
 			$this->assertTrue($test_plugin->activate());
+			$should_deactivate = true;
 		}
 		
 		$types = elgg_get_widget_types('profile');
-		$this->assertArrayNotHasKey($test_plugin->getID(), $types);
+		$this->assertArrayHasKey('test_required_widget', $types);
 		
-		$this->assertTrue($test_plugin->deactivate());
+		if ($should_deactivate) {
+			$this->assertTrue($test_plugin->deactivate());
+		}
 	}
 }
