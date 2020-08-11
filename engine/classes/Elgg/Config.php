@@ -112,6 +112,7 @@ use Elgg\Project\Paths;
  * @property-read int      $site_guid 								The guid of the site object
  * @property bool          $system_cache_enabled					Is the system cache enabled?
  * @property bool          $system_cache_loaded
+ * @property bool          $testing_mode  							Is the current application running (PHPUnit) tests
  * @property string        $time_format  							Preferred PHP time format
  * @property string        $url          							Alias of "wwwroot"
  * @property int           $version
@@ -175,6 +176,7 @@ class Config {
 	protected $config_defaults = [
 		'comment_box_collapses' => true,
 		'comments_latest_first' => true,
+		'testing_mode' => false,
 	];
 
 	/**
