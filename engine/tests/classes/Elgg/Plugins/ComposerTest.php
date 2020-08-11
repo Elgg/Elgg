@@ -2,7 +2,6 @@
 
 namespace Elgg\Plugins;
 
-use Elgg\Router\Route;
 use Elgg\UnitTestCase;
 
 class ComposerTest extends UnitTestCase {
