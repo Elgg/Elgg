@@ -86,12 +86,9 @@ To combine search results or filter how search results are presented in the sear
     elgg_register_plugin_hook_handler('search:config', 'type_subtype_pairs', 'my_plugin_place_search_config');
 
     // Add place review to search options as a subtype
-    function my_plugin_place_search_options($hook, $type, $value, $params) {
+    function my_plugin_place_search_options(\Elgg\Hook $hook) {
 
-        if (empty($params) || !is_array($params)) {
-            return;
-        }
-
+        $params = $hook->getParams();
         if (isset($params['subtypes'])) {
             $subtypes = (array) $params['subtypes'];
         } else {

@@ -192,19 +192,19 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$upload_event_calls = 0;
 		$upload_hook_calls = 0;
 
-		_elgg_services()->events->registerHandler('upload:after', 'file', function($event, $type, $object) use (&$upload_event_calls) {
-			$this->assertEquals('upload:after', $event);
-			$this->assertEquals('file', $type);
-			$this->assertInstanceOf(\ElggFile::class, $object);
+		_elgg_services()->events->registerHandler('upload:after', 'file', function(\Elgg\Event $event) use (&$upload_event_calls) {
+			$this->assertEquals('upload:after', $event->getName());
+			$this->assertEquals('file', $event->getType());
+			$this->assertInstanceOf(\ElggFile::class, $event->getObject());
 			$upload_event_calls++;
 		});
 
-		_elgg_services()->hooks->registerHandler('upload', 'file', function($hook, $type, $return, $params) use (&$upload_hook_calls) {
-			$this->assertNull($return);
-			$this->assertEquals('upload', $hook);
-			$this->assertEquals('file', $type);
-			$this->assertInstanceOf(\ElggFile::class, $params['file']);
-			$this->assertInstanceOf(UploadedFile::class, $params['upload']);
+		_elgg_services()->hooks->registerHandler('upload', 'file', function(\Elgg\Hook $hook) use (&$upload_hook_calls) {
+			$this->assertNull($hook->getValue());
+			$this->assertEquals('upload', $hook->getName());
+			$this->assertEquals('file', $hook->getType());
+			$this->assertInstanceOf(\ElggFile::class, $hook->getParam('file'));
+			$this->assertInstanceOf(UploadedFile::class, $hook->getParam('upload'));
 			$upload_hook_calls++;
 			return false;
 		});

@@ -38,7 +38,10 @@ This assumes the plugin has registered a :doc:`route </guides/routing>` for ``my
    // Legacy approach
    elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'my_plugin_walled_garden_public_pages');
    
-   function my_plugin_walled_garden_public_pages($hook, $type, $pages) {
+   function my_plugin_walled_garden_public_pages(\Elgg\Hook $hook) {
+      $pages = $hook->getValue();
+      
       $pages[] = 'my_plugin/public_page';
+      
       return $pages;
    }

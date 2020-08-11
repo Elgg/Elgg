@@ -138,19 +138,22 @@ the contents of the notification when a new objects of subtype 'photo' is create
 	/**
 	 * Prepare a notification message about a new photo
 	 *
-	 * @param string                          $hook         Hook name
-	 * @param string                          $type         Hook type
-	 * @param Elgg_Notifications_Notification $notification The notification to prepare
-	 * @param array                           $params       Hook parameters
-	 * @return Elgg_Notifications_Notification
+	 * @param \Elgg\Hook $hook 'prepare', 'notification:create:object:photo'
+	 
+	 * @return \Elgg\Notification\Notification
 	 */
-	function photos_prepare_notification($hook, $type, $notification, $params) {
-	    $entity = $params['event']->getObject();
-	    $owner = $params['event']->getActor();
-	    $recipient = $params['recipient'];
-	    $language = $params['language'];
-	    $method = $params['method'];
+	function photos_prepare_notification(\Elgg\Hook $hook) {
+	    $event = $hook->getParam('event');
+	    
+	    $entity = $event->getObject();
+	    $owner = $event->getActor();
+	    $recipient = $hook->getParam('recipient');
+	    $language = $hook->getParam('language');
+	    $method = $hook->getParam('method');
 
+	    /* @var $notification \Elgg\Notification\Notification */
+	    $notification = $hook->getValue();
+	    
 	    // Title for the notification
 	    $notification->subject = elgg_echo('photos:notify:subject', [$entity->getDisplayName()], $language);
 
@@ -222,16 +225,14 @@ Example:
 	/**
 	 * Send an SMS notification
 	 * 
-	 * @param string $hook   Hook name
-	 * @param string $type   Hook type
-	 * @param bool   $result Has anyone sent a message yet?
-	 * @param array  $params Hook parameters
+	 * @param \Elgg\Hook $hook 'send', 'notification:sms'
+	 *
 	 * @return bool
 	 * @internal
 	 */
-	function sms_notifications_send($hook, $type, $result, $params) {
-		/* @var Elgg_Notifications_Notification $message */
-		$message = $params['notification'];
+	function sms_notifications_send(\Elgg\Hook $hook) {
+		/* @var \Elgg\Notifications\Notification $message */
+		$message = $hook->getParam('notification');
 
 		$recipient = $message->getRecipient();
 
@@ -276,20 +277,19 @@ Example:
 	/**
 	 * Get subscriptions for group notifications
 	 *
-	 * @param string $hook          'get'
-	 * @param string $type          'subscriptions'
-	 * @param array  $subscriptions Array containing subscriptions in the form
-	 *                       <user guid> => array('email', 'site', etc.)
-	 * @param array  $params        Hook parameters
-	 * @return array
+	 * @param \Elgg\Hook $hook 'get', 'subscriptions'
+	 *
+	 * @return void|array
 	 */
-	function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
-		$reply = $params['event']->getObject();
+	function discussion_get_subscriptions(\Elgg\Hook $hook) {
+		$reply = $hook->getParam('event')->getObject();
 
 		if (!$reply instanceof \ElggDiscussionReply) {
-			return $subscriptions;
+			return;
 		}
 
+		$subscriptions = $hook->getValue();
+		
 		$group_guid = $reply->getContainerEntity()->container_guid;
 		$group_subscribers = elgg_get_subscriptions_for_container($group_guid);
 

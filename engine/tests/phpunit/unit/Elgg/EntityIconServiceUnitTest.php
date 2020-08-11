@@ -149,10 +149,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		return array_merge($cover_sizes, self::getDefaultIconSizes());
 	}
 
-	public static function getIconSizesForSubtype($hook, $type, $sizes, $params) {
-		$subtype = elgg_extract('entity_subtype', $params);
-		$icon_type = elgg_extract('type', $params);
-		if ($type == 'object' && $subtype == 'foo' && $icon_type == 'icon') {
+	public static function getIconSizesForSubtype(\Elgg\Hook $hook) {
+		$subtype = $hook->getParam('entity_subtype');
+		$icon_type = $hook->getParam('type');
+		if ($hook->getType() == 'object' && $subtype == 'foo' && $icon_type == 'icon') {
 			return self::getTestSizes();
 		}
 	}
@@ -219,10 +219,12 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanReplaceIconFile() {
-		$callback = function($hook, $type, $icon, $params) {
-			$size = elgg_extract('size', $params);
-			$type = elgg_extract('type', $params);
-			$entity = elgg_extract('entity', $params);
+		$callback = function(\Elgg\Hook $hook) {
+			$size = $hook->getParam('size');
+			$type = $hook->getParam('type');
+			$icon = $hook->getValue();
+			
+			$entity = $hook->getEntityParam();
 			if ($entity->getSubtype() == 'foo') {
 				$icon->owner_guid = $entity->owner_guid;
 				$icon->setFilename("foo/bar/$type/$size.jpg");
@@ -242,7 +244,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testThrowsExceptionOnInvalidHookHandlerReturnForIconFile() {
-		$callback = function($hook, $type, $icon, $params) {
+		$callback = function(\Elgg\Hook $hook) {
 			return '/path/to/foo.jpg';
 		};
 
@@ -390,7 +392,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanReplaceDefaultIconURL() {
 
-		$this->hooks->registerHandler('entity:icon:url', 'object', function() {
+		$this->hooks->registerHandler('entity:icon:url', 'object', function(\Elgg\Hook $hook) {
 			return '/path/to/icon.png';
 		});
 
@@ -530,9 +532,10 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		// make sure we have a wide master
 		$this->assertTrue($size[0] > $size[1]);
 
-		$this->hooks->registerHandler('entity:icon:prepare', 'object', function($hook, $type, $file, $params) {
+		$this->hooks->registerHandler('entity:icon:prepare', 'object', function(\Elgg\Hook $hook) {
 			// make sure we passed in documented params
-			if (!$params['entity'] instanceof \ElggEntity || !$params['file'] instanceof \ElggFile || !$file instanceof \ElggFile) {
+			$file = $hook->getValue();
+			if (!$hook->getEntityParam() instanceof \ElggEntity || !$hook->getParam('file') instanceof \ElggFile || !$file instanceof \ElggFile) {
 				return;
 			}
 			$new_source = new \ElggFile();
@@ -540,7 +543,7 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 			$new_source->setFilename('300x600.jpg');
 
 			// replace with tall image
-			$file->owner_guid = $params['entity']->guid;
+			$file->owner_guid = $hook->getEntityParam()->guid;
 			$file->setFilename('tmp/tmp.jpg');
 			$file->open('write');
 			$file->close();
@@ -577,17 +580,21 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$file->owner_guid = 1;
 		$file->setFilename('600x300.jpg');
 
-		$this->hooks->registerHandler('entity:icon:save', 'object', function($hook, $type, $return, $params) {
-			if ($return) {
+		$this->hooks->registerHandler('entity:icon:save', 'object', function(\Elgg\Hook $hook) {
+			if ($hook->getValue()) {
 				return;
 			}
 
 			// make sure we passed in documented params
-			if (!$params['entity'] instanceof \ElggEntity || !$params['file'] instanceof \ElggFile) {
+			if (!$hook->getEntityParam() instanceof \ElggEntity || !$hook->getParam('file') instanceof \ElggFile) {
 				return;
 			}
 
-			if (!isset($params['x1']) || !isset($params['y1']) || !isset($params['x2']) || !isset($params['y2'])) {
+			$x1 = $hook->getParam('x1');
+			$x2 = $hook->getParam('x2');
+			$y1 = $hook->getParam('y1');
+			$y2 = $hook->getParam('y2');
+			if (!isset($x1) || !isset($x2) || !isset($y1) || !isset($y2)) {
 				return;
 			}
 
@@ -621,13 +628,13 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$file->owner_guid = 1;
 		$file->setFilename('600x300.jpg');
 
-		$this->hooks->registerHandler('entity:icon:delete', 'object', function($hook, $type, $return, $params) {
-			if ($return === false) {
+		$this->hooks->registerHandler('entity:icon:delete', 'object', function(\Elgg\Hook $hook) {
+			if ($hook->getValue() === false) {
 				return;
 			}
 
 			// make sure we passed in documented params
-			if (!$params['entity'] instanceof \ElggEntity) {
+			if (!$hook->getEntityParam() instanceof \ElggEntity) {
 				return;
 			}
 
@@ -661,18 +668,22 @@ class EntityIconServiceUnitTest extends \Elgg\UnitTestCase {
 		$file->owner_guid = 1;
 		$file->setFilename('600x300.jpg');
 
-		$this->hooks->registerHandler('entity:icon:saved', 'object', function($hook, $type, $return, $params) {
+		$this->hooks->registerHandler('entity:icon:saved', 'object', function(\Elgg\Hook $hook) {
 
 			// make sure we passed in documented params
-			if (!$params['entity'] instanceof \ElggEntity) {
+			if (!$hook->getEntityParam() instanceof \ElggEntity) {
 				return;
 			}
 
-			if (!isset($params['x1']) || !isset($params['y1']) || !isset($params['x2']) || !isset($params['y2'])) {
+			$x1 = $hook->getParam('x1');
+			$x2 = $hook->getParam('x2');
+			$y1 = $hook->getParam('y1');
+			$y2 = $hook->getParam('y2');
+			if (!isset($x1) || !isset($x2) || !isset($y1) || !isset($y2)) {
 				return;
 			}
 
-			_elgg_services()->iconService->deleteIcon($params['entity']);
+			_elgg_services()->iconService->deleteIcon($hook->getEntityParam());
 		});
 
 		$this->assertTrue($this->hooks->hasHandler('entity:icon:saved', 'object'));

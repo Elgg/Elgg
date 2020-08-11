@@ -140,7 +140,8 @@ Example:
 Invokable classes as handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You may use a class with an ``__invoke()`` method as a handler. Just register the class name and it will be instantiated (with no arguments) for the lifetime of the event (or hook).
+You may use a class with an ``__invoke()`` method as a handler. Just register the class name and it will be instantiated (with no arguments) 
+for the lifetime of the event (or hook).
 
 .. code-block:: php
 
@@ -240,7 +241,7 @@ trigger.
 Plugin Hook Handlers
 --------------------
 
-Hook handlers are callables with one of the following prototypes:
+Hook handlers are callables with the following prototype:
 
 .. code-block:: php
 
@@ -251,28 +252,16 @@ Hook handlers are callables with one of the following prototypes:
      *
      * @return mixed if not null, this will be the new value of the plugin hook
      */
-    function plugin_hook_handler1(\Elgg\Hook $hook) {
+    function plugin_hook_handler(\Elgg\Hook $hook) {
         ...
     }
 
-    /**
-     * @param string $hook    The name of the plugin hook
-     * @param string $type    The type of the plugin hook
-     * @param mixed  $value   The current value of the plugin hook
-     * @param mixed  $params  Data passed from the trigger
-     *
-     * @return mixed if not null, this will be the new value of the plugin hook
-     */
-    function plugin_hook_handler2($hook, $type, $value, $params) {
-        ...
-    }
-
-In ``plugin_hook_handler1``, the ``Hook`` object has various methods for getting the name, type, value,
+In ``plugin_hook_handler``, the ``Hook`` object has various methods for getting the name, type, value,
 and parameters of the hook. See the ``Elgg\Hook`` interface for details.
 
-In both cases, if the handler returns no value (or ``null`` explicitly), the plugin hook value
+If the handler returns no value (or ``null`` explicitly), the plugin hook value
 is not altered. Otherwise the returned value becomes the new value of the plugin hook, and it
-will then be available as ``$hook->getValue()`` (or ``$value``) in the next handler.
+will then be available as ``$hook->getValue()`` in the next handler.
 
 Register to handle a Plugin Hook
 --------------------------------

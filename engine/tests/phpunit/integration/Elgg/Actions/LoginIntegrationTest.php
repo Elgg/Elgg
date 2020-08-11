@@ -185,7 +185,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testCanPreventLoginWithHook() {
 
-		$handler = function() {
+		$handler = function(\Elgg\Event $hook) {
 			return false;
 		};
 

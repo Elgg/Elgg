@@ -151,16 +151,17 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanAlterViewInput() {
-		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function ($h, $t, $v, $p) {
-			$v['in'] = 'out';
-			return $v;
+		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function (\Elgg\Hook $hook) {
+			$vars = $hook->getValue();
+			$vars['in'] = 'out';
+			return $vars;
 		});
 
 		$this->assertEquals("// PHPout", $this->views->renderView('js/interpreted.js'));
 	}
 
 	public function testCanAlterViewOutput() {
-		$this->hooks->registerHandler('view', 'js/interpreted.js', function ($h, $t, $v, $p) {
+		$this->hooks->registerHandler('view', 'js/interpreted.js', function (\Elgg\Hook $hook) {
 			return '// Hello';
 		});
 
@@ -168,11 +169,11 @@ class ViewsServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanReplaceViews() {
-		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function ($h, $t, $v, $p) {
+		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function (\Elgg\Hook $hook) {
 			return ['__view_output' => 123];
 		});
 
-		$this->hooks->registerHandler('view', 'js/interpreted.js', function ($h, $t, $v, $p) {
+		$this->hooks->registerHandler('view', 'js/interpreted.js', function (\Elgg\Hook $hook) {
 			$this->fail('view hook was called though __view_output was set.');
 		});
 

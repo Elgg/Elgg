@@ -52,10 +52,13 @@ class EmailServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$calls = 0;
 		$original_email = null;
-		$handler = function ($hook, $type, $email, $params) use (&$original_email, &$calls) {
+		$handler = function (\Elgg\Hook $hook) use (&$original_email, &$calls) {
+			$email = $hook->getValue();
+			
 			$calls++;
 			$original_email = clone $email;
 			$email->setBody("<p>&lt;Hello&gt;</p>");
+			
 			return $email;
 		};
 

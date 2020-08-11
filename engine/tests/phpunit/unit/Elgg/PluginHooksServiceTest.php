@@ -134,11 +134,11 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 		return 2;
 	}
 
-	public static function changeReturn($foo, $bar, $returnval, $params) {
-		$testCase = $params['testCase'];
+	public static function changeReturn(\Elgg\Hook $hook) {
+		$testCase = $hook->getParam('testCase');
 		/* @var PluginHooksServiceUnitTest $testCase */
 
-		$testCase->assertEquals(1, $returnval);
+		$testCase->assertEquals(1, $hook->getValue());
 
 		return 2;
 	}

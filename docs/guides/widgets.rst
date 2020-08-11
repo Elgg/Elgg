@@ -148,11 +148,13 @@ If, for example, you wish to conditionally register widgets you can also use a h
         elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_conditional_widgets_hook');
     }
 
-    function my_plugin_conditional_widgets_hook($hook, $type, $return, $params) {
+    function my_plugin_conditional_widgets_hook(\Elgg\Hook $hook) {
         if (!elgg_is_active_plugin('file')) {
             return;
         }
 
+        $return = $hook->getValue();
+		
         $return[] = \Elgg\WidgetDefinition::factory([
             'id' => 'filerepo',
         ]);
@@ -170,7 +172,9 @@ If, for example, you wish to change the allowed contexts of an already registere
         elgg_register_plugin_hook_handler('handlers', 'widgets', 'my_plugin_change_widget_definition_hook');
     }
 
-    function my_plugin_change_widget_definition_hook($hook, $type, $return, $params) {
+    function my_plugin_change_widget_definition_hook(\Elgg\Hook $hook) {
+        $return = $hook->getValue();
+    	
         foreach ($return as $key => $widget) {
             if ($widget->id === 'filerepo') {
                 $return[$key]->multiple = false;
@@ -191,7 +195,9 @@ To announce default widget support in your plugin, register for the ``get_list, 
 
     elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'my_plugin_default_widgets_hook');
     
-    function my_plugin_default_widgets_hook($hook, $type, $return, $params) {
+    function my_plugin_default_widgets_hook(\Elgg\Hook $hook) {
+    	$return = $hook->getValue();
+    	
         $return[] = [
             'name' => elgg_echo('my_plugin'),
             'widget_context' => 'my_plugin',

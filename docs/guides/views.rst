@@ -357,9 +357,12 @@ Here we'll alter the default pagination limit for the comments view:
 
 	elgg_register_plugin_hook_handler('view_vars', 'page/elements/comments', 'myplugin_alter_comments_limit');
 
-	function myplugin_alter_comments_limit($hook, $type, $vars, $params) {
+	function myplugin_alter_comments_limit(\Elgg\Hook $hook) {
+	    $vars = $hook->getValue();
+	    
 	    // only 10 comments per page
 	    $vars['limit'] = elgg_extract('limit', $vars, 10);
+	    
 	    return $vars;
 	}
 
@@ -416,7 +419,7 @@ string. View extensions will not be used and the ``view`` hook will not be trigg
 
     elgg_register_plugin_hook_handler('view_vars', 'navigation/breadcrumbs', 'myplugin_no_page_breadcrumbs');
 
-    function myplugin_no_page_breadcrumbs($hook, $type, $vars, $params) {
+    function myplugin_no_page_breadcrumbs(\Elgg\Hook $hook) {
         if (elgg_in_context('pages')) {
             return ['__view_output' => ""];
         }
