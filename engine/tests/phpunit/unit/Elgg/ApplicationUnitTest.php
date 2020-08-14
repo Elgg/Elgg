@@ -105,7 +105,7 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		Application::factory([
 			'handle_shutdown' => false,
 			'handle_exceptions' => false,
-			'config' => _elgg_config(),
+			'config' => _elgg_services()->config,
 		]);
 
 		$this->assertTrue(is_float($GLOBALS['START_MICROTIME']));

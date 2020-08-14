@@ -428,9 +428,9 @@ function _elgg_views_prepare_head($title) {
 	];
 
 	if (empty($title)) {
-		$params['title'] = _elgg_config()->sitename;
+		$params['title'] = _elgg_services()->config->sitename;
 	} else {
-		$params['title'] = $title . ' : ' . _elgg_config()->sitename;
+		$params['title'] = $title . ' : ' . _elgg_services()->config->sitename;
 	}
 
 	$params['metas']['content-type'] = [
@@ -440,7 +440,7 @@ function _elgg_views_prepare_head($title) {
 
 	$params['metas']['description'] = [
 		'name' => 'description',
-		'content' => _elgg_config()->sitedescription
+		'content' => _elgg_services()->config->sitedescription
 	];
 
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
@@ -1527,7 +1527,7 @@ function elgg_view_icon($name, $vars = []) {
  * @return void
  */
 function elgg_register_rss_link() {
-	_elgg_config()->_elgg_autofeed = true;
+	_elgg_services()->config->_elgg_autofeed = true;
 }
 
 /**
@@ -1536,7 +1536,7 @@ function elgg_register_rss_link() {
  * @return void
  */
 function elgg_unregister_rss_link() {
-	_elgg_config()->_elgg_autofeed = false;
+	_elgg_services()->config->_elgg_autofeed = false;
 }
 
 /**
@@ -1546,11 +1546,11 @@ function elgg_unregister_rss_link() {
  * @internal
  */
 function _elgg_has_rss_link() {
-	if (_elgg_config()->disable_rss) {
+	if (_elgg_services()->config->disable_rss) {
 		return false;
 	}
 
-	return (bool) _elgg_config()->_elgg_autofeed;
+	return (bool) _elgg_services()->config->_elgg_autofeed;
 }
 
 /**
@@ -1615,11 +1615,6 @@ function elgg_views_boot() {
  * @internal
  */
 function _elgg_get_js_site_data() {
-	$language = _elgg_config()->language;
-	if (!$language) {
-		$language = 'en';
-	}
-
 	return [
 		'elgg.data' => (object) elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
 		'elgg.version' => elgg_get_version(),
@@ -1628,7 +1623,7 @@ function _elgg_get_js_site_data() {
 
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 		'elgg.security.interval' => (int) elgg()->csrf->getActionTokenTimeout() * 333,
-		'elgg.config.language' => $language,
+		'elgg.config.language' => _elgg_services()->config->language ?: 'en',
 	];
 }
 
@@ -1647,7 +1642,7 @@ function _elgg_get_js_page_data() {
 
 	$elgg = [
 		'config' => [
-			'lastcache' => (int) _elgg_config()->lastcache,
+			'lastcache' => (int) _elgg_services()->config->lastcache,
 			'viewtype' => elgg_get_viewtype(),
 			'simplecache_enabled' => (int) elgg_is_simplecache_enabled(),
 			'current_language' => get_current_language(),
@@ -1665,7 +1660,7 @@ function _elgg_get_js_page_data() {
 		'_data' => (object) $data,
 	];
 
-	if (_elgg_config()->elgg_load_sync_code) {
+	if (_elgg_services()->config->elgg_load_sync_code) {
 		$elgg['config']['load_sync_code'] = true;
 	}
 

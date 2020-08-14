@@ -10,7 +10,7 @@
 use Elgg\Exceptions\Http\PageNotFoundException;
 
 // Don't show RSS if disabled
-if (_elgg_config()->disable_rss) {
+if (elgg()->config->disable_rss) {
 	throw new PageNotFoundException();
 }
 

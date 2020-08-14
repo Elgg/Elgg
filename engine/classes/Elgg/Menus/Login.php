@@ -21,7 +21,7 @@ class Login {
 	 */
 	public static function registerRegistration(\Elgg\Hook $hook) {
 		
-		if (!_elgg_config()->allow_registration || _elgg_config()->elgg_maintenance_mode) {
+		if (!_elgg_services()->config->allow_registration || _elgg_services()->config->elgg_maintenance_mode) {
 			return;
 		}
 		
@@ -47,7 +47,7 @@ class Login {
 	 */
 	public static function registerResetPassword(\Elgg\Hook $hook) {
 		
-		if (_elgg_config()->elgg_maintenance_mode) {
+		if (_elgg_services()->config->elgg_maintenance_mode) {
 			return;
 		}
 		

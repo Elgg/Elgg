@@ -79,7 +79,7 @@ class AccountsServiceUnitTest extends UnitTestCase {
 
 		elgg_set_entity_class('user', 'custom', CustomUser::class);
 
-		$pwd_length = _elgg_config()->min_password_length;
+		$pwd_length = _elgg_services()->config->min_password_length;
 
 		$username = 'username' . rand(100, 999);
 		$password = str_repeat('a', $pwd_length + 1);

@@ -17,7 +17,7 @@ class RemovePublicAccessHandler {
 	 * @return array|void
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
-		if (!_elgg_config()->walled_garden) {
+		if (!_elgg_services()->config->walled_garden) {
 			return;
 		}
 	

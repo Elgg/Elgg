@@ -23,7 +23,7 @@ class Cron {
 	 */
 	public function __invoke(Request $request) {
 		
-		if (_elgg_config()->security_protect_cron) {
+		if (_elgg_services()->config->security_protect_cron) {
 			elgg_signed_request_gatekeeper();
 		}
 		

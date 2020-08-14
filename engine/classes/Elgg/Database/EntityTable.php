@@ -710,7 +710,7 @@ class EntityTable {
 		});
 		
 		$dir = new \Elgg\EntityDirLocator($entity->guid);
-		$file_path = _elgg_config()->dataroot . $dir;
+		$file_path = _elgg_services()->config->dataroot . $dir;
 		elgg_delete_directory($file_path);
 	}
 }

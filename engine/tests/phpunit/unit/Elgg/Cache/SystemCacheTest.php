@@ -10,12 +10,12 @@ use Elgg\UnitTestCase;
 class SystemCacheTest extends UnitTestCase {
 
 	public function up() {
-		$this->is_enabled = _elgg_config()->system_cache_enabled;
-		_elgg_config()->system_cache_enabled = false;
+		$this->is_enabled = _elgg_services()->config->system_cache_enabled;
+		_elgg_services()->config->system_cache_enabled = false;
 	}
 
 	public function down() {
-		_elgg_config()->system_cache_enabled = $this->is_enabled;
+		_elgg_services()->config->system_cache_enabled = $this->is_enabled;
 	}
 
 	public function testCanEnableSystemCache() {

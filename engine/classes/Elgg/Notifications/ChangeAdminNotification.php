@@ -20,7 +20,7 @@ class ChangeAdminNotification {
 	 */
 	public static function addSiteAdminSubscribers(\Elgg\Hook $hook) {
 		
-		if (!_elgg_config()->security_notify_admins) {
+		if (!_elgg_services()->config->security_notify_admins) {
 			return;
 		}
 		
@@ -158,7 +158,7 @@ class ChangeAdminNotification {
 	 */
 	public static function addUserSubscriber(\Elgg\Hook $hook) {
 		
-		if (!_elgg_config()->security_notify_user_admin) {
+		if (!_elgg_services()->config->security_notify_user_admin) {
 			return;
 		}
 		

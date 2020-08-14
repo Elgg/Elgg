@@ -56,7 +56,7 @@ trait Testing {
 
 		$request = Request::create($path, $method, $parameters);
 
-		$cookie_name = _elgg_config()->getCookieConfig()['session']['name'];
+		$cookie_name = _elgg_services()->config->getCookieConfig()['session']['name'];
 		$session_id = _elgg_services()->session->getID();
 		$request->cookies->set($cookie_name, $session_id);
 

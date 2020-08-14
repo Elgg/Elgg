@@ -227,7 +227,7 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		$plugin = ElggPlugin::fromId('bootstrap_plugin', $this->normalizeTestFilePath('mod/'));
 		$plugin->activate();
 
-		$prefix = _elgg_config()->dbprefix;
+		$prefix = _elgg_services()->config->dbprefix;
 
 		_elgg_services()->db->addQuerySpec([
 			'sql' => "SHOW TABLES LIKE '{$prefix}upgrade_lock'",

@@ -99,7 +99,7 @@ class CronServiceTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteCronFromPageHandler() {
-		_elgg_config()->security_protect_cron = false;
+		_elgg_services()->config->security_protect_cron = false;
 		
 		$calls = 0;
 		$dt = new \DateTime('2017-1-1 0:00:00');
@@ -128,7 +128,7 @@ class CronServiceTest extends UnitTestCase {
 	}
 
 	public function testCanExecuteCronFromPageHandlerForInterval() {
-		_elgg_config()->security_protect_cron = false;
+		_elgg_services()->config->security_protect_cron = false;
 
 		$calls = 0;
 		$dt = new \DateTime('2017-1-1 0:00:00');

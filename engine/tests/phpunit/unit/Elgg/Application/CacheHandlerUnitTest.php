@@ -14,7 +14,7 @@ class CacheHandlerUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		$request = _elgg_services()->request;
-		$this->handler = new CacheHandler(_elgg_config(), $request, true);
+		$this->handler = new CacheHandler(_elgg_services()->config, $request, true);
 	}
 
 	public function down() {

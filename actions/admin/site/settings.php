@@ -62,7 +62,7 @@ elgg_save_config('comments_per_page', (int) get_input('comments_per_page'));
 
 elgg_save_config('can_change_username', 'on' === get_input('can_change_username'));
 
-if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
+if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
 	if ('on' === get_input('simplecache_enabled')) {
 		elgg_enable_simplecache();
 	} else {
@@ -90,7 +90,7 @@ elgg_save_config('default_access', (int) get_input('default_access', ACCESS_PRIV
 $user_default_access = ('on' === get_input('allow_user_default_access'));
 elgg_save_config('allow_user_default_access', $user_default_access);
 
-if (!_elgg_config()->hasInitialValue('debug')) {
+if (!elgg()->config->hasInitialValue('debug')) {
 	$debug = get_input('debug');
 	if ($debug) {
 		elgg_save_config('debug', $debug);

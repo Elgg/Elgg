@@ -87,7 +87,7 @@ class Topbar {
 	 * @return void|MenuItems
 	 */
 	public static function registerMaintenance(\Elgg\Hook $hook) {
-		if (!elgg_is_admin_logged_in() || !_elgg_config()->elgg_maintenance_mode) {
+		if (!elgg_is_admin_logged_in() || !_elgg_services()->config->elgg_maintenance_mode) {
 			return;
 		}
 		

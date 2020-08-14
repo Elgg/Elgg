@@ -103,13 +103,13 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 		return false;
 	}
 
-	$menus = _elgg_config()->menus;
+	$menus = _elgg_services()->config->menus;
 	if (empty($menus)) {
 		$menus = [];
 	}
 
 	$menus[$menu_name][] = $menu_item;
-	_elgg_config()->menus = $menus;
+	_elgg_services()->config->menus = $menus;
 
 	return true;
 }
@@ -124,7 +124,7 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  * @since 1.8.0
  */
 function elgg_unregister_menu_item($menu_name, $item_name) {
-	$menus = _elgg_config()->menus;
+	$menus = _elgg_services()->config->menus;
 	if (empty($menus)) {
 		return null;
 	}

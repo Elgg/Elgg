@@ -32,7 +32,7 @@ trait Cacheable {
 	 */
 	public function getCache() {
 		if (!isset($this->cache)) {
-			return new CompositeCache('void', _elgg_config(), ELGG_CACHE_BLACK_HOLE);
+			return new CompositeCache('void', _elgg_services()->config, ELGG_CACHE_BLACK_HOLE);
 		}
 
 		return $this->cache;

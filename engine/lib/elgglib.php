@@ -1072,13 +1072,13 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
  * @internal
  */
 function _elgg_walled_garden_init() {
-	if (!_elgg_config()->walled_garden) {
+	if (!_elgg_services()->config->walled_garden) {
 		return;
 	}
 
 	elgg_register_external_file('css', 'elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
 
-	if (_elgg_config()->default_access == ACCESS_PUBLIC) {
+	if (_elgg_services()->config->default_access == ACCESS_PUBLIC) {
 		elgg_set_config('default_access', ACCESS_LOGGED_IN);
 	}
 

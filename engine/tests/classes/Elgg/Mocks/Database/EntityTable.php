@@ -364,7 +364,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addInsertQuerySpecs(stdClass $row) {
 
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 
 		$sql = "
 			INSERT INTO {$dbprefix}entities
@@ -400,7 +400,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addUpdateQuerySpecs(stdClass $row) {
 
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 
 		$sql = "
 			UPDATE {$dbprefix}entities
@@ -523,7 +523,7 @@ class EntityTable extends DbEntityTable {
 	 */
 	public function addDeleteQuerySpecs(\stdClass $row) {
 
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 
 		$qb = Delete::fromTable('entities');
 		$qb->where($qb->compare('guid', '=', $row->guid, ELGG_VALUE_INTEGER));

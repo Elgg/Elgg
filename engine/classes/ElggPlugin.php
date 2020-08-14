@@ -974,7 +974,7 @@ class ElggPlugin extends ElggObject {
 	 * @throws PluginException
 	 */
 	protected function registerViews() {
-		if (_elgg_config()->system_cache_loaded) {
+		if (_elgg_services()->config->system_cache_loaded) {
 			return;
 		}
 

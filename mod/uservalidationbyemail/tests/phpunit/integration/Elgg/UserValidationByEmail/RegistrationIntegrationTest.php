@@ -16,9 +16,9 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 		parent::up();
 		
 		self::createApplication(['isolate' => true]);
-		_elgg_config()->min_password_length = 3;
-		_elgg_config()->minusername = 4;
-		_elgg_config()->allow_registration = true;
+		elgg()->config->min_password_length = 3;
+		elgg()->config->minusername = 4;
+		elgg()->config->allow_registration = true;
 		
 		elgg_register_plugin_hook_handler('register', 'user', 'Elgg\UserValidationByEmail\User::disableUserOnRegistration');
 	}
@@ -29,7 +29,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 	
 	public function testRegistrationWithoutAdminValidation() {
 		
-		_elgg_config()->require_admin_validation = false;
+		elgg()->config->require_admin_validation = false;
 		
 		// Register new user
 		$username = $this->getRandomUsername();
@@ -86,7 +86,7 @@ class RegistrationIntegrationTest extends ActionResponseTestCase {
 	
 	public function testRegistrationWithAdminValidation() {
 		
-		_elgg_config()->require_admin_validation = true;
+		elgg()->config->require_admin_validation = true;
 		
 		// Register new user
 		$username = $this->getRandomUsername();
