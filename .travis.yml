@@ -21,6 +21,8 @@ branches:
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - php: nightly
   include:
     # Commit message and lint
     - php: 7.4
@@ -147,6 +149,13 @@ matrix:
         - curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg Travis Site</title>"
         - ./vendor/bin/phpunit --testsuite integration
         - ./vendor/bin/phpunit --testsuite plugins-integration
+    
+    # Nightly build
+    - php: nightly
+      before_install:
+        - mysqld --version
+        - mysql --version
+
 
 services:
   - mysql
