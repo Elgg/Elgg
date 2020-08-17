@@ -1011,7 +1011,7 @@ trait LegacyQueryOptionsAdapter {
 				$condition = preg_replace('/\r|\n/', '', $parts[7]);
 
 				$dbprefix = elgg_get_config('dbprefix');
-				if (strpos($table, $dbprefix) === 0) {
+				if (!elgg_is_empty($dbprefix) && strpos($table, $dbprefix) === 0) {
 					$table = substr($table, strlen($dbprefix));
 				}
 

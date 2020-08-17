@@ -96,6 +96,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 			'minusername' => 10,
 			'profile_custom_fields' => [],
 			'elgg_maintenance_mode' => false,
+			'testing_mode' => true,
 
 			'icon_sizes' => [
 				'topbar' => [

@@ -49,11 +49,13 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 	];
 
 	public function up() {
-
+		// only use the Elgg core htmlAwed configuration
+		elgg()->hooks->backup();
+		elgg()->hooks->registerHandler('validate', 'input', '_elgg_htmlawed_filter_tags', 1);
 	}
 
 	public function down() {
-
+		elgg()->hooks->restore();
 	}
 
 	/**
@@ -167,43 +169,39 @@ class ElggHtmLawedTest extends IntegrationTestCase {
 
 	/**
 	 * Test other tags and attributes
+	 *
+	 * @dataProvider htmlawedFilterTagsProvider
 	 */
-	public function testHtmlawedFilterTags() {
-		// test input => expected
+	public function testHtmlawedFilterTags($input, $expected) {
+		$handler = new \Elgg\Input\ValidateInputHandler();
+		$result = $handler(new Hook(elgg(), null, null, $input, []));
+		
+		$this->assertEquals($expected, $result);
+	}
+	
+	public function htmlawedFilterTagsProvider() {
 		$tests = [
 			// duplicate closing tags, #311
-			'<ul><li>item</li></ul>' => '<ul><li>item</li></ul>',
-
+			['<ul><li>item</li></ul>', '<ul><li>item</li></ul>'],
+			
 			// 'deny_attribute' => 'class, on*',
-			'<div class="elgg-inner">Test</div>' => '<div>Test</div>',
-			'<button onclick="javascript:alert(\'test\')">Test</button>' => '<button>Test</button>',
-
+			['<div class="elgg-inner">Test</div>', '<div>Test</div>'],
+			['<button onclick="javascript:alert(\'test\')">Test</button>', '<button>Test</button>'],
+			
 			// naked span stripping
 			// https://github.com/vanilla/htmlawed/commit/995ef0ae4865d817a391ac62978f9d0e41d8a18b
-			'<span>Test</span>' => 'Test',
-			'<span id="test">Test</span>' => '<span id="test">Test</span>',
+			['<span>Test</span>', 'Test'],
+			['<span id="test">Test</span>', '<span id="test">Test</span>'],
+			
+			// test elements filtered by "safe" option
+			// http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s3.3
+			['<applet>Test</applet>', 'Test'],
+			['<embed>Test', 'Test'],
+			['<iframe></iframe>Test', 'Test'],
+			['<object>Test</object>', 'Test'],
+			['<script>Test</script>', 'Test'],
 		];
-
-		// test elements filtered by "safe" option
-		// http://www.bioinformatics.org/phplabware/internal_utilities/htmLawed/htmLawed_README.htm#s3.3
-		$unsafe = [
-			'applet',
-			'embed',
-			'iframe',
-			'object',
-			'script',
-		];
-
-		foreach ($unsafe as $tag) {
-			$input = "<$tag>Test</$tag>";
-			$tests[$input] = 'Test';
-		}
-
-		foreach ($tests as $input => $expected) {
-			$handler = new \Elgg\Input\ValidateInputHandler();
-			$result = $handler(new Hook(elgg(), null, null, $input, []));
-			$this->assertEquals($expected, $result);
-		}
+		
+		return $tests;
 	}
-
 }
