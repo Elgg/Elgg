@@ -23,12 +23,15 @@
  */
 abstract class ElggExtender extends \ElggData {
 
-	protected $int_columns = [
+	/**
+	 * @var string[] attributes that are integers
+	 */
+	protected const INTEGER_ATTR_NAMES = [
 		'id',
 		'entity_guid',
 		'owner_guid',
-		'time_created',
 		'access_id',
+		'time_created',
 	];
 
 	/**
@@ -56,7 +59,7 @@ abstract class ElggExtender extends \ElggData {
 		if ($name === 'access_id' && $this instanceof ElggMetadata) {
 			$value = ACCESS_PUBLIC;
 		}
-		if (isset($value) && in_array($name, $this->int_columns)) {
+		if (isset($value) && in_array($name, static::INTEGER_ATTR_NAMES)) {
 			$value = (int) $value;
 		}
 		$this->attributes[$name] = $value;

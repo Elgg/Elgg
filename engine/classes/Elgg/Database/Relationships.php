@@ -31,7 +31,7 @@ class Relationships extends Repository {
 		}
 		
 		if (!isset($property_type)) {
-			if (in_array($property, \ElggEntity::$primary_attr_names)) {
+			if (in_array($property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$property_type = 'attribute';
 			} else {
 				$property_type = 'metadata';
@@ -44,7 +44,7 @@ class Relationships extends Repository {
 		
 		switch ($property_type) {
 			case 'attribute':
-				if (!in_array($property, \ElggEntity::$primary_attr_names)) {
+				if (!in_array($property, \ElggEntity::PRIMARY_ATTR_NAMES)) {
 					throw new InvalidParameterException("'$property' is not a valid attribute");
 				}
 				

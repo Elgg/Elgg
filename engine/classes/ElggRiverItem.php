@@ -18,6 +18,20 @@ use Elgg\Exceptions\InvalidParameterException;
  * @property-read int    $posted        UNIX timestamp when the action occurred
  */
 class ElggRiverItem {
+	
+	/**
+	 * @var string[] attributes that are integers
+	 */
+	protected const INTEGER_ATTR_NAMES = [
+		'id',
+		'subject_guid',
+		'object_guid',
+		'target_guid',
+		'annotation_id',
+		'access_id',
+		'posted',
+	];
+	
 	public $id;
 	public $subject_guid;
 	public $object_guid;
@@ -40,10 +54,8 @@ class ElggRiverItem {
 			throw new InvalidParameterException("Invalid input to \ElggRiverItem constructor");
 		}
 
-		// the casting is to support typed serialization like json
-		$int_types = ['id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'access_id', 'posted'];
 		foreach ($object as $key => $value) {
-			if (in_array($key, $int_types)) {
+			if (in_array($key, static::INTEGER_ATTR_NAMES)) {
 				$this->$key = (int) $value;
 			} else {
 				$this->$key = $value;
