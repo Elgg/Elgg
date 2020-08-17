@@ -2,10 +2,18 @@
 
 namespace Elgg\Integration;
 
-use Elgg\IntegrationTestCaseTest;
+use Elgg\IntegrationTestCase;
 
-class RouterIntegrationTest extends IntegrationTestCaseTest {
+class RouterIntegrationTest extends IntegrationTestCase {
 
+	public function up() {
+		
+	}
+	
+	public function down() {
+		
+	}
+	
 	/**
 	 * @dataProvider urlProvider
 	 */
