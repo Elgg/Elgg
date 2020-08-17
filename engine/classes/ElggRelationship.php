@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\Exceptions\Filesystem\IOException;
-
 /**
  * Relationship class.
  *
@@ -18,7 +16,7 @@ class ElggRelationship extends \ElggData {
 	/**
 	 * @var string[] attributes that are integers
 	 */
-	protected static $integer_attr_names = [
+	protected const INTEGER_ATTR_NAMES = [
 		'guid_one',
 		'guid_two',
 		'time_created',
@@ -34,7 +32,7 @@ class ElggRelationship extends \ElggData {
 		$this->initializeAttributes();
 
 		foreach ((array) $row as $key => $value) {
-			if (in_array($key, self::$integer_attr_names)) {
+			if (in_array($key, static::INTEGER_ATTR_NAMES)) {
 				$value = (int) $value;
 			}
 			

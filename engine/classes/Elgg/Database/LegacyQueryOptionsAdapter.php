@@ -315,7 +315,7 @@ trait LegacyQueryOptionsAdapter {
 				}, explode(',', $pair['value']));
 			}
 
-			if (in_array($pair['name'], ElggEntity::$primary_attr_names)) {
+			if (in_array($pair['name'], ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
 			} else {
 				$clause = new MetadataWhereClause();
@@ -391,7 +391,7 @@ trait LegacyQueryOptionsAdapter {
 				}, explode(',', $pair['value']));
 			}
 
-			if (in_array($pair['name'], ElggEntity::$primary_attr_names)) {
+			if (in_array($pair['name'], ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$clause = new AttributeWhereClause();
 			} else {
 				$clause = new MetadataWhereClause();
