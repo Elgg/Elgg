@@ -1,3 +1,23 @@
+<a name="3.3.9"></a>
+### 3.3.9  (2020-08-17)
+
+#### Contributors
+
+* Jerôme Bakker (14)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **db:** handle empty dbprefix in join normalization ([fe3d1684](https://github.com/Elgg/Elgg/commit/fe3d1684f2f736fab22ccb034ac0cecef00b13e0))
+* **search:** allow only unique field names to be searched ([4e540518](https://github.com/Elgg/Elgg/commit/4e5405188ddb6422784490e381350b790e0c3832))
+* **tests:**
+  * set config value in correct location ([05c0ff6e](https://github.com/Elgg/Elgg/commit/05c0ff6eba27abca8b94d67c3e9d160f619ce21f))
+  * improved access array testing in walled garden mode ([c58a1543](https://github.com/Elgg/Elgg/commit/c58a15432cf42d667162c47c648c2352eb0e0b4e))
+  * validate correct widget id for active plugin ([7ddc7743](https://github.com/Elgg/Elgg/commit/7ddc77434c800dc9df33e2a36a74e1d7668a22d5))
+  * get correct plugin for deactivation testing ([f058db5d](https://github.com/Elgg/Elgg/commit/f058db5d6cbdff13b28efe74743349956a2a1331))
+  * use language keys to validate ([e16b0166](https://github.com/Elgg/Elgg/commit/e16b0166a8ffc83fe16e4cf57e08cf61c38c5221))
+
+
 <a name="3.3.8"></a>
 ### 3.3.8  (2020-07-10)
 

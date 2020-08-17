@@ -100,7 +100,7 @@ class SystemLogApiTest extends IntegrationTestCase {
 		$method = $reflector->getMethod('archiveLog');
 		$method->setAccessible(true);
 		
-		$this->assertTrue($method->invokeArgs($cron_class, []));
+		$this->assertTrue($method->invokeArgs($cron_class, [-1])); // using -1 to make sure all entries are archived
 
 		$method = $reflector->getMethod('deleteLog');
 		$method->setAccessible(true);

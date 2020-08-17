@@ -95,7 +95,7 @@ class ElggPageIntegrationTest extends \Elgg\IntegrationTestCase {
 		$this->assertEquals('page', $page->getSubtype());
 	}
 	
-public function testIsTopPage() {
+	public function testIsTopPage() {
 		
 		$top_page = $this->top_page;
 		

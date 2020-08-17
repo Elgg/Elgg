@@ -987,7 +987,7 @@ function elgg_get_ini_setting_in_bytes($setting) {
 function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
-	return Elgg\Application::$_instance->_services;
+	return \Elgg\Application::$_instance->_services;
 }
 
 /**

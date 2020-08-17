@@ -224,6 +224,8 @@ class SearchService {
 			foreach ($property_types as $property_type) {
 				if (empty($new_fields[$property_type])) {
 					$new_fields[$property_type] = [];
+				} else {
+					$new_fields[$property_type] = array_unique($new_fields[$property_type]);
 				}
 			}
 			

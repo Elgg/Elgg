@@ -2,9 +2,17 @@
 
 namespace Elgg\Integration;
 
-use Elgg\IntegrationTestCaseTest;
+use Elgg\IntegrationTestCase;
 
-class ResponsesIntegrationTest extends IntegrationTestCaseTest {
+class ResponsesIntegrationTest extends IntegrationTestCase {
+	
+	public function up() {
+		
+	}
+	
+	public function down() {
+		
+	}
 	
 	public function testErrorResponse() {
 		$result = elgg_error_response();
