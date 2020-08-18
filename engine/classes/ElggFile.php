@@ -89,7 +89,7 @@ class ElggFile extends ElggObject {
 		if (!$container_guid) {
 			$container_guid = $this->container_guid;
 		}
-		// @todo add getSize() to \ElggFilestore
+		
 		return (int) $this->getFilestore()->getSize($prefix, $container_guid);
 	}
 
@@ -253,7 +253,6 @@ class ElggFile extends ElggObject {
 	 * @return void
 	 */
 	public function seek($position) {
-		// @todo add seek() to \ElggFilestore
 		$this->getFilestore()->seek($this->handle, $position);
 	}
 

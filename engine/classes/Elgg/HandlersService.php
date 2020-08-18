@@ -123,7 +123,6 @@ class HandlersService {
 		if (is_string($callable)
 			&& preg_match(DiContainer::CLASS_NAME_PATTERN_53, $callable)
 			&& class_exists($callable)) {
-			// @todo Eventually a more advanced DIC could auto-inject dependencies
 			$callable = new $callable;
 		}
 

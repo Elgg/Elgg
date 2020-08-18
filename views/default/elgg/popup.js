@@ -168,7 +168,6 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
 					$trigger.removeClass('elgg-state-active');
 				}
 
-				// @todo: use css transitions instead of $.fadeOut()
 				$target.fadeOut().removeClass('elgg-state-active elgg-state-popped');
 
 				$target.trigger('close');

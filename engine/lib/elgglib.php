@@ -1,9 +1,6 @@
 <?php
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
- *
- * @todo These functions can't be subpackaged because they cover a wide mix of
- * purposes and subsystems.  Many of them should be moved to more relevant files.
  */
 
 /**

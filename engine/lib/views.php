@@ -711,7 +711,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = []) {
  *                            'register_rss_link' Register the rss link availability (default: depending on full_view)
  *
  * @return false|string HTML to display or false
- * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
 function elgg_view_entity(\ElggEntity $entity, array $vars = []) {
 
@@ -916,7 +915,7 @@ function elgg_view_annotation_list($annotations, array $vars = []) {
 		'items' => $annotations,
 		'offset' => null,
 		'limit' => null,
-		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
+		'list_class' => 'elgg-list-annotation',
 		'full_view' => true,
 		'list_type' => $list_type,
 		'offset_key' => 'annoff',
