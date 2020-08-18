@@ -1,8 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\JoinClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Project\Paths;
@@ -13,7 +12,7 @@ require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableJ
 /**
  * @group QueryBuilder
  */
-class JoinClauseTest extends UnitTestCase {
+class JoinClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

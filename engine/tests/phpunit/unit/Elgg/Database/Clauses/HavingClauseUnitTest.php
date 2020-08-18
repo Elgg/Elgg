@@ -1,8 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\HavingClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Project\Paths;
@@ -13,7 +12,7 @@ require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableH
 /**
  * @group QueryBuilder
  */
-class HavingClauseTest extends UnitTestCase {
+class HavingClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

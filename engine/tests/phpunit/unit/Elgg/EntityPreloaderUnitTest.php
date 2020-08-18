@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Cache\EntityCache;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @group UnitTests
@@ -10,7 +11,7 @@ use Elgg\Cache\EntityCache;
 class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 
 	/**
-	 * @var \PHPUnit_Framework_MockObject_MockObject
+	 * @var MockObject
 	 */
 	public $mock;
 

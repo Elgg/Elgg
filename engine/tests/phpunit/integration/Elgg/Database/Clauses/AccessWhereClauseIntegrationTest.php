@@ -7,7 +7,7 @@ use Elgg\IntegrationTestCase;
 /**
  * @group Access
  */
-class AccessWhereClauseTest extends IntegrationTestCase {
+class AccessWhereClauseIntegrationTest extends IntegrationTestCase {
 
 	public function up() {
 		$this->user = $this->createOne('user');

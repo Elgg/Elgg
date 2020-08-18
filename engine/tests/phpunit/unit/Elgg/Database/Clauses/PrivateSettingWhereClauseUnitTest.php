@@ -1,8 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\PrivateSettingWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -11,7 +10,7 @@ use Elgg\UnitTestCase;
  * @group QueryBuilder
  * @group QueryBuilderWhere
  */
-class PrivateSettingWhereClauseTest extends UnitTestCase {
+class PrivateSettingWhereClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

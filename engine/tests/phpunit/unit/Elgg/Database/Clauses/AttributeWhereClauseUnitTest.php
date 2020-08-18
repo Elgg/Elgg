@@ -1,8 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\AttributeWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -11,7 +10,7 @@ use Elgg\UnitTestCase;
  * @group QueryBuilder
  * @group QueryBuilderWhere
  */
-class AttributeWhereClauseTest extends UnitTestCase {
+class AttributeWhereClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

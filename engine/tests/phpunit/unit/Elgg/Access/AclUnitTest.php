@@ -1,9 +1,11 @@
 <?php
 
+namespace Elgg\Access;
+
 /**
  * @group UnitTests
  */
-class Elgg_Access_AclUnitTest extends \Elgg\UnitTestCase {
+class AclUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 

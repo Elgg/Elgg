@@ -1,10 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\AccessWhereClause;
-use Elgg\Database\Clauses\EntityWhereClause;
-use Elgg\Database\Clauses\RelationshipWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -13,7 +10,7 @@ use Elgg\UnitTestCase;
  * @group QueryBuilder
  * @group QueryBuilderWhere
  */
-class RelationshipWhereClauseTest extends UnitTestCase {
+class RelationshipWhereClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

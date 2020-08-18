@@ -1,8 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\AccessWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -12,7 +11,7 @@ use ElggUser;
  * @group QueryBuilder
  * @group QueryBuilderWhere
  */
-class AccessWhereClauseTest extends UnitTestCase {
+class AccessWhereClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var ElggUser

@@ -1,19 +1,18 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\GroupByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
 
-require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableGroupBy.php';
+require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableSelect.php';
 
 /**
  * @group QueryBuilder
  */
-class GroupByClauseTest extends UnitTestCase {
+class SelectClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder
@@ -28,11 +27,11 @@ class GroupByClauseTest extends UnitTestCase {
 
 	}
 
-	public function testBuildGroupByClauseFromString() {
+	public function testBuildSelectClauseFromString() {
 
-		$this->qb->groupBy('alias.guid');
+		$this->qb->select('alias.guid AS g');
 
-		$query = new GroupByClause('alias.guid');
+		$query = new SelectClause('alias.guid AS g');
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
@@ -40,12 +39,12 @@ class GroupByClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
-	public function testBuildGroupByClauseFromClosure() {
+	public function testBuildSelectClauseFromClosure() {
 
-		$this->qb->groupBy('alias.guid');
+		$this->qb->select('alias.guid AS g');
 
-		$query = new GroupByClause(function(QueryBuilder $qb) {
-			return 'alias.guid';
+		$query = new SelectClause(function(QueryBuilder $qb) {
+			return 'alias.guid AS g';
 		});
 
 		$qb = Select::fromTable('entities', 'alias');
@@ -55,11 +54,11 @@ class GroupByClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 	
-	public function testBuildGroupByClauseFromInvokableClass() {
+	public function testBuildSelectClauseFromInvokableClass() {
 
-		$this->qb->groupBy('alias.guid');
+		$this->qb->select('alias.guid AS g');
 
-		$query = new GroupByClause(\CallableGroupBy::class);
+		$query = new SelectClause(\CallableSelect::class);
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
@@ -68,11 +67,11 @@ class GroupByClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 	
-	public function testBuildGroupByClauseFromStaticClassFunction() {
+	public function testBuildSelectClauseFromStaticClassFunction() {
 
-		$this->qb->groupBy('alias.guid');
+		$this->qb->select('alias.guid AS g');
 
-		$query = new GroupByClause('\CallableGroupBy::callable');
+		$query = new SelectClause('\CallableSelect::callable');
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);

@@ -1,9 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\AccessWhereClause;
-use Elgg\Database\Clauses\RiverWhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -13,7 +11,7 @@ use Elgg\UnitTestCase;
  * @group QueryBuilderWhere
  * @group River
  */
-class RiverWhereClauseTest extends UnitTestCase {
+class RiverWhereClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

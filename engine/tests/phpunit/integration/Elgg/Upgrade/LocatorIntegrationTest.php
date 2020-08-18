@@ -1,9 +1,8 @@
 <?php
 
-namespace Elgg;
+namespace Elgg\Upgrade;
 
-use Elgg\Upgrade\AsynchronousUpgrade;
-use Elgg\Upgrade\Result;
+use Elgg\IntegrationTestCase;
 
 class LocatorIntegrationTest extends IntegrationTestCase {
 	

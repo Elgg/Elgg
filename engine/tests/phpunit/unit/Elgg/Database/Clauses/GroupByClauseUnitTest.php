@@ -1,19 +1,18 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\OrderByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Project\Paths;
 use Elgg\UnitTestCase;
 
-require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableOrderBy.php';
+require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableGroupBy.php';
 
 /**
  * @group QueryBuilder
  */
-class OrderByClauseTest extends UnitTestCase {
+class GroupByClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder
@@ -28,11 +27,11 @@ class OrderByClauseTest extends UnitTestCase {
 
 	}
 
-	public function testBuildOrderByClauseFromString() {
+	public function testBuildGroupByClauseFromString() {
 
-		$this->qb->orderBy('alias.guid', 'desc');
+		$this->qb->groupBy('alias.guid');
 
-		$query = new OrderByClause('alias.guid', 'desc');
+		$query = new GroupByClause('alias.guid');
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
 
@@ -40,13 +39,13 @@ class OrderByClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 
-	public function testBuildOrderByClauseFromClosure() {
+	public function testBuildGroupByClauseFromClosure() {
 
-		$this->qb->orderBy('alias.guid', 'asc');
+		$this->qb->groupBy('alias.guid');
 
-		$query = new OrderByClause(function(QueryBuilder $qb) {
+		$query = new GroupByClause(function(QueryBuilder $qb) {
 			return 'alias.guid';
-		}, 'asc');
+		});
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
@@ -55,11 +54,11 @@ class OrderByClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 	
-	public function testBuildOrderByClauseFromInvokableClass() {
+	public function testBuildGroupByClauseFromInvokableClass() {
 
-		$this->qb->orderBy('alias.guid', 'asc');
+		$this->qb->groupBy('alias.guid');
 
-		$query = new OrderByClause(\CallableOrderBy::class, 'asc');
+		$query = new GroupByClause(\CallableGroupBy::class);
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
@@ -68,11 +67,11 @@ class OrderByClauseTest extends UnitTestCase {
 		$this->assertEquals($this->qb->getParameters(), $qb->getParameters());
 	}
 	
-	public function testBuildOrderByClauseFromStaticClassFunction() {
+	public function testBuildGroupByClauseFromStaticClassFunction() {
 
-		$this->qb->orderBy('alias.guid', 'asc');
+		$this->qb->groupBy('alias.guid');
 
-		$query = new OrderByClause('\CallableOrderBy::callable', 'asc');
+		$query = new GroupByClause('\CallableGroupBy::callable');
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);

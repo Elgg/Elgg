@@ -1,8 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\WhereClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\Project\Paths;
@@ -14,7 +13,7 @@ require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableW
  * @group QueryBuilder
  * @group QueryBuilderWhere
  */
-class WhereClauseTest extends UnitTestCase {
+class WhereClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

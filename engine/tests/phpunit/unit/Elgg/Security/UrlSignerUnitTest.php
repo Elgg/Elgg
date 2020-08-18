@@ -8,7 +8,7 @@ use Elgg\HttpException;
  * @group Security
  * @group UnitTests
  */
-class SignedUrlTest extends \Elgg\UnitTestCase {
+class UrlSignerUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @var UrlSigner

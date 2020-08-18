@@ -12,12 +12,12 @@ use Elgg\Http\OkResponse;
  */
 class WidgetsIntegrationTest extends ActionResponseTestCase {
 	/**
-	 * @var ElggWidget
+	 * @var \ElggWidget
 	 */
 	protected $widget;
 
 	/**
-	 * @var ElggUser
+	 * @var \ElggUser
 	 */
 	protected $user;
 	

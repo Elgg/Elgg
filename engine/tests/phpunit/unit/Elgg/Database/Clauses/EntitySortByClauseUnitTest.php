@@ -1,9 +1,7 @@
 <?php
 
-namespace Elgg\Integration;
+namespace Elgg\Database\Clauses;
 
-use Elgg\Database\Clauses\EntitySortByClause;
-use Elgg\Database\Clauses\GroupByClause;
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
 use Elgg\UnitTestCase;
@@ -11,7 +9,7 @@ use Elgg\UnitTestCase;
 /**
  * @group QueryBuilder
  */
-class EntitySortByClauseTest extends UnitTestCase {
+class EntitySortByClauseUnitTest extends UnitTestCase {
 
 	/**
 	 * @var QueryBuilder

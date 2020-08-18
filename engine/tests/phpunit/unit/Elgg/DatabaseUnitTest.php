@@ -1,5 +1,7 @@
 <?php
 
+namespace Elgg;
+
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Matcher;
 
@@ -7,7 +9,7 @@ use PHPUnit\Framework\MockObject\Matcher;
  * @group UnitTests
  * @group Database
  */
-class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
+class DatabaseUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 
@@ -64,7 +66,7 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 	public function testFingerprintingOfCallbacks() {
 		$db = $this->getDbMock();
 		
-		$reflection_method = new ReflectionMethod($db, 'fingerprintCallback');
+		$reflection_method = new \ReflectionMethod($db, 'fingerprintCallback');
 		$reflection_method->setAccessible(true);
 		
 		$prints = [];
@@ -80,7 +82,7 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 		])] = true;
 		$uniques++;
 
-		$obj1 = new Elgg_DatabaseTestObj();
+		$obj1 = new DatabaseTestObj();
 		$prints[$reflection_method->invoke($db, [
 			$obj1,
 			'__invoke'
@@ -88,7 +90,7 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 		$prints[$reflection_method->invoke($db, $obj1)] = true;
 		$uniques++;
 
-		$obj2 = new Elgg_DatabaseTestObj();
+		$obj2 = new DatabaseTestObj();
 		$prints[$reflection_method->invoke($db, [
 			$obj2,
 			'__invoke'
@@ -101,7 +103,7 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 	public function testInvalidCallbacksThrow() {
 		$db = $this->getDbMock();
 		
-		$this->expectException(RuntimeException::class);
+		$this->expectException(\RuntimeException::class);
 		$this->expectExceptionMessage('$callback must be a callable function. Given blorg!');
 		$db->getData("SELECT 1", 'blorg!');
 	}
@@ -134,7 +136,7 @@ class Elgg_DatabaseUnitTest extends \Elgg\UnitTestCase {
 
 }
 
-class Elgg_DatabaseTestObj {
+class DatabaseTestObj {
 
 	public function __invoke() {
 

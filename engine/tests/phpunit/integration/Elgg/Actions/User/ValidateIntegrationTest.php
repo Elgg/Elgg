@@ -6,7 +6,7 @@ use Elgg\ActionResponseTestCase;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 
-class ValidationIntegrationTest extends ActionResponseTestCase {
+class ValidateIntegrationTest extends ActionResponseTestCase {
 	
 	public function up() {
 		

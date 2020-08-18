@@ -1,9 +1,11 @@
 <?php
 
+namespace Elgg;
+
 /**
  * @group UnitTests
  */
-class Elgg_TagsUnitTest extends \Elgg\UnitTestCase {
+class TagsUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 
