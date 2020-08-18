@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
  * @group Testing
  * @group UnitTests
  */
-class TestCaseTest extends TestCase {
+class TestCaseUnitTest extends TestCase {
 
 	/**
 	 * Test that legacy bootstrap has been autoloaded and

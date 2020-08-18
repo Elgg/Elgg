@@ -9,7 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 /**
  * @group Installer
  */
-class ElggInstallerTest extends \Elgg\UnitTestCase {
+class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 	/**
 	 * @var MockObject

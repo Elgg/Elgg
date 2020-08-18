@@ -2,12 +2,14 @@
 
 namespace Elgg\Di;
 
+use Elgg\Helpers\Di\DiContainerTestObject;
+
 /**
  * @group UnitTests
  */
 class DiContainerUnitTest extends \Elgg\UnitTestCase {
 
-	const TEST_CLASS = '\Elgg\Di\DiContainerTestObject';
+	const TEST_CLASS = '\Elgg\Helpers\Di\DiContainerTestObject';
 
 	public function up() {
 
@@ -18,7 +20,7 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function getFoo(\Elgg\Di\DiContainer $di) {
-		return new \Elgg\Di\DiContainerTestObject($di);
+		return new DiContainerTestObject($di);
 	}
 
 	public function testEmptyContainer() {
@@ -183,16 +185,6 @@ class DiContainerUnitTest extends \Elgg\UnitTestCase {
 		} catch (MissingValueException $e) {
 
 		}
-	}
-
-}
-
-class DiContainerTestObject {
-
-	public $di;
-
-	public function __construct($di = null) {
-		$this->di = $di;
 	}
 
 }

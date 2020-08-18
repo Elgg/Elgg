@@ -1,7 +1,8 @@
 <?php
 
+namespace Elgg;
+
 use Elgg\Project\Paths;
-use Elgg\Config;
 
 /**
  * @group Config

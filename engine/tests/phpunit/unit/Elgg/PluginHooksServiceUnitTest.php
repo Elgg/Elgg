@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Psr\Log\LogLevel;
+use Elgg\Helpers\TestHookHandler;
 
 /**
  * @group UnitTests
@@ -151,18 +152,5 @@ class PluginHooksServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public static function throwInvalidArg() {
 		throw new \InvalidArgumentException();
-	}
-}
-
-class TestHookHandler {
-
-	public static $invocations = [];
-
-	function __invoke(\Elgg\Hook $hook) {
-		self::$invocations[] = [
-			'this' => $this,
-			'args' => func_get_args(),
-		];
-		return $hook->getValue() + 1;
 	}
 }

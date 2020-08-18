@@ -2,6 +2,7 @@
 
 namespace Elgg;
 
+use Elgg\Helpers\TestEventHandler;
 use Elgg\HooksRegistrationService\Event;
 use Psr\Log\LogLevel;
 
@@ -135,18 +136,5 @@ class EventsServiceUnitTest extends \Elgg\UnitTestCase {
 	public function incrementCounter() {
 		$this->counter++;
 		return true;
-	}
-}
-
-class TestEventHandler {
-
-	public static $invocations = [];
-
-	function __invoke(\Elgg\Event $event) {
-		self::$invocations[] = [
-			'this' => $this,
-			'args' => func_get_args(),
-		];
-		return false;
 	}
 }

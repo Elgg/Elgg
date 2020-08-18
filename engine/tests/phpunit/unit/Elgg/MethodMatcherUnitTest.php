@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Helpers\MethodMatcherTestObject;
+
 /**
  * @group UnitTests
  */
@@ -37,11 +39,6 @@ class MethodMatcherUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue($matcher->matches([new \stdClass(), 'bar']));
 		$this->assertTrue($matcher->matches([new \stdClass(), 'BAR']));
-		$this->assertFalse($matcher->matches([new MethodMatcherTestObject, 'bar']));
+		$this->assertFalse($matcher->matches([new MethodMatcherTestObject(), 'bar']));
 	}
-
-}
-
-class MethodMatcherTestObject {
-
 }

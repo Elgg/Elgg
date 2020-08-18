@@ -1,14 +1,11 @@
 <?php
 
-namespace phpunit\unit\Elgg;
-
-use Elgg\Cron;
-use Elgg\UnitTestCase;
+namespace Elgg;
 
 /**
  * @group Cron
  */
-class CronServiceTest extends UnitTestCase {
+class CronServiceUnitTest extends UnitTestCase {
 
 	/**
 	 * @var Cron

@@ -3,7 +3,7 @@
 /**
  * @group Functions
  */
-class ElggCallTest extends \Elgg\UnitTestCase {
+class ElggCallUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 

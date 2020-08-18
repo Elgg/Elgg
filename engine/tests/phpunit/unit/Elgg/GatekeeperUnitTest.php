@@ -10,7 +10,7 @@ use Elgg\Http\Exception\AjaxGatekeeperException;
 /**
  * @group Gatekeeper
  */
-class GatekeeperTest extends UnitTestCase {
+class GatekeeperUnitTest extends UnitTestCase {
 
 	/**
 	 * @var Gatekeeper

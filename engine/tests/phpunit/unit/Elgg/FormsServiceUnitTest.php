@@ -1,13 +1,14 @@
 <?php
 
 namespace Elgg;
+
 use Psr\Log\LogLevel;
 
 /**
  * @group FormsService
  * @group UnitTests
  */
-class FormsServiceTest extends \Elgg\UnitTestCase {
+class FormsServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		$views_dir = $this->normalizeTestFilePath('views');

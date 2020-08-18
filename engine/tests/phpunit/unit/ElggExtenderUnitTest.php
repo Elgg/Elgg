@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Helpers\ElggExtenderTestObject;
+
 /**
  * @group UnitTests
  */
@@ -50,7 +52,7 @@ class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
 	public function testFloatsAndNumericsAndStringableObjectsAreTypedAsText() {
 		$this->assertSame('text', \ElggExtender::detectValueType(3.14));
 		$this->assertSame('text', \ElggExtender::detectValueType('3.14'));
-		$this->assertSame('text', \ElggExtender::detectValueType(new ElggExtenderTest_Object));
+		$this->assertSame('text', \ElggExtender::detectValueType(new ElggExtenderTestObject()));
 	}
 
 	public function testAcceptRecognizedTypes() {
@@ -59,12 +61,5 @@ class ElggExtenderUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertSame('integer', \ElggExtender::detectValueType('hello', 'integer'));
 		$this->assertSame('text', \ElggExtender::detectValueType('hello', 'invalid'));
-	}
-
-}
-
-class ElggExtenderTest_Object {
-	function __toString() {
-		return 'oh hey';
 	}
 }

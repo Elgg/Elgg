@@ -4,6 +4,7 @@ namespace Elgg;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Matcher;
+use Elgg\Helpers\Database\DatabaseTestObj;
 
 /**
  * @group UnitTests
@@ -132,14 +133,6 @@ class DatabaseUnitTest extends \Elgg\UnitTestCase {
 	 */
 	private function expectExecutedStatement($db, $index, $matcher) {
 		$db->expects($this->at($index))->method('updateData')->with($matcher);
-	}
-
-}
-
-class DatabaseTestObj {
-
-	public function __invoke() {
-
 	}
 
 }

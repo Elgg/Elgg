@@ -7,7 +7,7 @@ namespace Elgg;
  *
  * @group UnitTests
  */
-class TravisValidateCommitMsgTest extends CommitMessageGitHookUnitTest {
+class TravisValidateCommitMsgUnitTest extends CommitMessageGitHookUnitTest {
 
 	protected $travisScript;
 

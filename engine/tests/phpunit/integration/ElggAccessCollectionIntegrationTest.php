@@ -5,7 +5,7 @@
  * @group UnitTests
  * @group ElggData
  */
-class ElggAccessCollectionUnitTest extends \Elgg\IntegrationTestCase {
+class ElggAccessCollectionIntegrationTest extends \Elgg\IntegrationTestCase {
 
 	public function up() {
 

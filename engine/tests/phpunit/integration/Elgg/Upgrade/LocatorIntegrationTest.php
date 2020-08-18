@@ -2,6 +2,7 @@
 
 namespace Elgg\Upgrade;
 
+use Elgg\Helpers\Upgrade\UpgradeLocatorTestBatch;
 use Elgg\IntegrationTestCase;
 
 class LocatorIntegrationTest extends IntegrationTestCase {
@@ -43,34 +44,5 @@ class LocatorIntegrationTest extends IntegrationTestCase {
 		$found_entity = _elgg_services()->upgradeLocator->getUpgradeByClass(UpgradeLocatorTestBatch::class);
 		$this->assertInstanceOf(\ElggUpgrade::class, $found_entity);
 		$this->assertEquals($this->upgrade_entity->guid, $found_entity->guid);
-	}
-}
-
-class UpgradeLocatorTestBatch implements AsynchronousUpgrade {
-
-	protected $_version;
-
-	public function getVersion() {
-		if (!isset($this->_version)) {
-			$this->_version = date('Ymd') . rand(10, 99);
-		}
-
-		return $this->_version;
-	}
-
-	public function needsIncrementOffset() {
-		return true;
-	}
-
-	public function shouldBeSkipped() {
-		return false;
-	}
-
-	public function countItems() {
-		return 100;
-	}
-
-	public function run(Result $result, $offset) {
-		$result->addSuccesses(10);
 	}
 }

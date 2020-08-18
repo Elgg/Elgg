@@ -6,6 +6,7 @@ use Elgg\Application;
 use Elgg\Event;
 use Elgg\Mocks\Di\MockServiceProvider;
 use Elgg\UnitTestCase;
+use Elgg\Helpers\CustomUser;
 
 /**
  * @group Boot
@@ -164,9 +165,5 @@ class BootHandlerUnitTest extends UnitTestCase {
 
 		$app->_services->session->removeLoggedInUser();
 	}
-
-}
-
-class CustomUser extends \ElggUser {
 
 }

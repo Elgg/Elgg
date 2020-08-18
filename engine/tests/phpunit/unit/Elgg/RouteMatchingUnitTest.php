@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @group UnitTests
  * @group Routing
  */
-class RouteMatchingTest extends \Elgg\UnitTestCase {
+class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 
 
 	public function up() {

@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Cache\EntityCache;
+use Elgg\Helpers\PreloaderMock20140623;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -22,11 +23,11 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 
 	public function up() {
 		$this->obj = new EntityPreloader(_elgg_services()->entityTable);
-		$dependency = new PreloaderMock_20140623();
-		$this->obj->_callable_cache_checker = array($dependency, 'isCached');
-		$this->obj->_callable_entity_loader = array($dependency, 'load');
+		$dependency = new PreloaderMock20140623();
+		$this->obj->_callable_cache_checker = [$dependency, 'isCached'];
+		$this->obj->_callable_entity_loader = [$dependency, 'load'];
 
-		$this->mock = $this->createMock('Elgg\\PreloaderMock_20140623');
+		$this->mock = $this->createMock(PreloaderMock20140623::class);
 	}
 
 	public function down() {
@@ -34,68 +35,55 @@ class EntityPreloaderUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testAcceptsOnlyArraysOfObjects() {
-		$inputs = array(
+		$inputs = [
 			'foo',
-			array('0', array()),
-			array(
-				(object) array('foo' => 123),
-				array('bar' => 234),
-			),
-		);
-		$this->obj->_callable_cache_checker = array($this->mock, 'isCached');
+			['0', []],
+			[
+				(object) ['foo' => 123],
+				['bar' => 234],
+			],
+		];
+		$this->obj->_callable_cache_checker = [$this->mock, 'isCached'];
 		$this->mock->expects($this->once())->method('isCached')->with(123);
 		foreach ($inputs as $input) {
-			$this->obj->preload($input, array('foo', 'bar'));
+			$this->obj->preload($input, ['foo', 'bar']);
 		}
 	}
 
 	public function testOnlyLoadsIfNotCached() {
-		$this->obj->_callable_entity_loader = array($this->mock, 'load');
+		$this->obj->_callable_entity_loader = [$this->mock, 'load'];
 		$this->mock->expects($this->once())->method('load')->with([
-			'guids' => array(234, 345),
+			'guids' => [234, 345],
 			'limit' => EntityCache::MAX_SIZE,
 			'order_by' => false,
 		]);
-		$this->obj->preload(array(
-			(object) array('foo' => 23,),
-			(object) array('bar' => 234,),
-			(object) array('bar' => 345,),
-				), array('foo', 'bar'));
+		$this->obj->preload([
+			(object) ['foo' => 23],
+			(object) ['bar' => 234],
+			(object) ['bar' => 345],
+		], ['foo', 'bar']);
 	}
 
 	public function testOnlyLoadsIfMoreThanOne() {
-		$this->obj->_callable_entity_loader = array($this->mock, 'load');
+		$this->obj->_callable_entity_loader = [$this->mock, 'load'];
 		$this->mock->expects($this->never())->method('load');
-		$this->obj->preload(array(
-			(object) array('foo' => 23,),
-			(object) array('bar' => 234,),
-				), array('foo', 'bar'));
+		$this->obj->preload([
+			(object) ['foo' => 23],
+			(object) ['bar' => 234],
+		], ['foo', 'bar']);
 	}
 
 	public function testQuietlyIgnoresMissingProperty() {
-		$this->obj->_callable_entity_loader = array($this->mock, 'load');
+		$this->obj->_callable_entity_loader = [$this->mock, 'load'];
 		$this->mock->expects($this->once())->method('load')->with([
-			'guids' => array(234, 345),
+			'guids' => [234, 345],
 			'limit' => EntityCache::MAX_SIZE,
 			'order_by' => false,
 		]);
-		$this->obj->preload(array(
-			(object) array('foo' => 234),
-			(object) array(),
-			(object) array('bar' => 345)
-				), array('foo', 'bar'));
+		$this->obj->preload([
+			(object) ['foo' => 234],
+			(object) [],
+			(object) ['bar' => 345],
+		], ['foo', 'bar']);
 	}
-
-}
-
-class PreloaderMock_20140623 {
-
-	function isCached($guid) {
-		return $guid < 100;
-	}
-
-	function load($opts) {
-
-	}
-
 }

@@ -2,6 +2,8 @@
 
 namespace Elgg;
 
+use Elgg\Helpers\HooksRegistrationServiceTestInvokable;
+
 /**
  * @group UnitTests
  */
@@ -47,7 +49,7 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanUnregisterHandlers() {
-		$o = new HooksRegistrationServiceTest_invokable();
+		$o = new HooksRegistrationServiceTestInvokable();
 
 		$this->mock->registerHandler('foo', 'bar', 'callback1');
 		$this->mock->registerHandler('foo', 'bar', 'callback2', 100);
@@ -59,9 +61,9 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertTrue($this->mock->unregisterHandler(
 						'foo', 'bar', 'callback2'));
 		$this->assertTrue($this->mock->unregisterHandler(
-						'foo', 'bar', HooksRegistrationServiceTest_invokable::KLASS . '::__invoke'));
+						'foo', 'bar', HooksRegistrationServiceTestInvokable::KLASS . '::__invoke'));
 		$this->assertTrue($this->mock->unregisterHandler(
-						'foo', 'bar', [HooksRegistrationServiceTest_invokable::KLASS, '__invoke']));
+						'foo', 'bar', [HooksRegistrationServiceTestInvokable::KLASS, '__invoke']));
 		$this->assertTrue($this->mock->unregisterHandler(
 						'foo', 'bar', [$o, '__invoke']));
 
@@ -81,7 +83,7 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function testCanClearMultipleHandlersAtOnce() {
-		$o = new HooksRegistrationServiceTest_invokable();
+		$o = new HooksRegistrationServiceTestInvokable();
 
 		$this->mock->registerHandler('foo', 'bar', 'callback1');
 		$this->mock->registerHandler('foo', 'baz', 'callback1', 10);
@@ -158,15 +160,4 @@ class HooksRegistrationServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->mock->restore();
 		$this->assertEquals($handlers1, $this->mock->getAllHandlers());
 	}
-
-}
-
-class HooksRegistrationServiceTest_invokable {
-
-	const KLASS = __CLASS__;
-
-	function __invoke() {
-
-	}
-
 }
