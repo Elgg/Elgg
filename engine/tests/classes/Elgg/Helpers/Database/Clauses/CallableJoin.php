@@ -1,7 +1,12 @@
 <?php
 
+namespace Elgg\Helpers\Database\Clauses;
+
 use Elgg\Database\QueryBuilder;
 
+/**
+ * @see \Elgg\Database\Clauses\JoinClauseUnitTest
+ */
 class CallableJoin {
 	
 	/**

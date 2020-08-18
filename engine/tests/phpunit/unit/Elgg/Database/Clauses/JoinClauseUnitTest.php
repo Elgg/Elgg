@@ -4,10 +4,8 @@ namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
-use Elgg\Project\Paths;
+use Elgg\Helpers\Database\Clauses\CallableJoin;
 use Elgg\UnitTestCase;
-
-require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableJoin.php';
 
 /**
  * @group QueryBuilder
@@ -85,7 +83,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 		$this->qb->join('alias', 'joined_table', 'joined_alias', 'joined_alias.x = alias.x');
 
 		$expected = Select::fromTable('entities', 'alias');
-		$join = new JoinClause('joined_table', 'joined_alias', \CallableJoin::class);
+		$join = new JoinClause('joined_table', 'joined_alias', CallableJoin::class);
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());
@@ -97,7 +95,7 @@ class JoinClauseUnitTest extends UnitTestCase {
 		$this->qb->join('alias', 'joined_table', 'joined_alias', 'joined_alias.x = alias.x');
 
 		$expected = Select::fromTable('entities', 'alias');
-		$join = new JoinClause('joined_table', 'joined_alias', '\CallableJoin::callable');
+		$join = new JoinClause('joined_table', 'joined_alias', '\Elgg\Helpers\Database\Clauses\CallableJoin::callable');
 		$expected->addClause($join);
 
 		$this->assertEquals($this->qb->getSQL(), $expected->getSQL());

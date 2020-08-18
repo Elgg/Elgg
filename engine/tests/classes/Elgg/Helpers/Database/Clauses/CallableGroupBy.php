@@ -1,8 +1,13 @@
 <?php
 
+namespace Elgg\Helpers\Database\Clauses;
+
 use Elgg\Database\QueryBuilder;
 
-class CallableSelect {
+/**
+ * @see \Elgg\Database\Clauses\GroupByClauseUnitTest
+ */
+class CallableGroupBy {
 	
 	/**
 	 * Check if the callable can be an invokable class
@@ -13,7 +18,7 @@ class CallableSelect {
 	 * @return string
 	 */
 	public function __invoke(QueryBuilder $qb, $main_alias) {
-		return "{$main_alias}.guid AS g";
+		return "{$main_alias}.guid";
 	}
 	
 	/**
@@ -25,6 +30,6 @@ class CallableSelect {
 	 * @return string
 	 */
 	public static function callable(QueryBuilder $qb, $main_alias) {
-		return "{$main_alias}.guid AS g";
+		return "{$main_alias}.guid";
 	}
 }

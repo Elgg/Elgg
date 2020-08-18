@@ -4,10 +4,8 @@ namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
-use Elgg\Project\Paths;
+use Elgg\Helpers\Database\Clauses\CallableSelect;
 use Elgg\UnitTestCase;
-
-require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableSelect.php';
 
 /**
  * @group QueryBuilder
@@ -58,7 +56,7 @@ class SelectClauseUnitTest extends UnitTestCase {
 
 		$this->qb->select('alias.guid AS g');
 
-		$query = new SelectClause(\CallableSelect::class);
+		$query = new SelectClause(CallableSelect::class);
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
@@ -71,7 +69,7 @@ class SelectClauseUnitTest extends UnitTestCase {
 
 		$this->qb->select('alias.guid AS g');
 
-		$query = new SelectClause('\CallableSelect::callable');
+		$query = new SelectClause('\Elgg\Helpers\Database\Clauses\CallableSelect::callable');
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);

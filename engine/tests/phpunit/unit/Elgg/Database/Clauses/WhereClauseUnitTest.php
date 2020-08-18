@@ -4,10 +4,8 @@ namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
-use Elgg\Project\Paths;
+use Elgg\Helpers\Database\Clauses\CallableWhere;
 use Elgg\UnitTestCase;
-
-require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableWhere.php';
 
 /**
  * @group QueryBuilder
@@ -79,7 +77,7 @@ class WhereClauseUnitTest extends UnitTestCase {
 
 		$expected = $expr;
 
-		$query = new WhereClause(\CallableWhere::class);
+		$query = new WhereClause(CallableWhere::class);
 
 		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');
@@ -94,7 +92,7 @@ class WhereClauseUnitTest extends UnitTestCase {
 
 		$expected = $expr;
 
-		$query = new WhereClause('\CallableWhere::callable');
+		$query = new WhereClause('\Elgg\Helpers\Database\Clauses\CallableWhere::callable');
 
 		$qb = Select::fromTable('entities', 'alias');
 		$actual = $query->prepare($qb, 'alias');

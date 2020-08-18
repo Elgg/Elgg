@@ -4,10 +4,8 @@ namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
-use Elgg\Project\Paths;
+use Elgg\Helpers\Database\Clauses\CallableHaving;
 use Elgg\UnitTestCase;
-
-require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableHaving.php';
 
 /**
  * @group QueryBuilder
@@ -74,7 +72,7 @@ class HavingClauseUnitTest extends UnitTestCase {
 		$this->qb->having($expr);
 
 		$qb = Select::fromTable('entities', 'alias');
-		$query = new HavingClause(\CallableHaving::class);
+		$query = new HavingClause(CallableHaving::class);
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());
@@ -87,7 +85,7 @@ class HavingClauseUnitTest extends UnitTestCase {
 		$this->qb->having($expr);
 
 		$qb = Select::fromTable('entities', 'alias');
-		$query = new HavingClause('CallableHaving::callable');
+		$query = new HavingClause('\Elgg\Helpers\Database\Clauses\CallableHaving::callable');
 		$qb->addClause($query);
 
 		$this->assertEquals($this->qb->getSQL(), $qb->getSQL());

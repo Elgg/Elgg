@@ -4,10 +4,8 @@ namespace Elgg\Database\Clauses;
 
 use Elgg\Database\QueryBuilder;
 use Elgg\Database\Select;
-use Elgg\Project\Paths;
+use Elgg\Helpers\Database\Clauses\CallableGroupBy;
 use Elgg\UnitTestCase;
-
-require_once Paths::elgg() . 'engine/tests/test_files/database/clauses/CallableGroupBy.php';
 
 /**
  * @group QueryBuilder
@@ -58,7 +56,7 @@ class GroupByClauseUnitTest extends UnitTestCase {
 
 		$this->qb->groupBy('alias.guid');
 
-		$query = new GroupByClause(\CallableGroupBy::class);
+		$query = new GroupByClause(CallableGroupBy::class);
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);
@@ -71,7 +69,7 @@ class GroupByClauseUnitTest extends UnitTestCase {
 
 		$this->qb->groupBy('alias.guid');
 
-		$query = new GroupByClause('\CallableGroupBy::callable');
+		$query = new GroupByClause('\Elgg\Helpers\Database\Clauses\CallableGroupBy::callable');
 
 		$qb = Select::fromTable('entities', 'alias');
 		$qb->addClause($query);

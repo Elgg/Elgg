@@ -1,8 +1,13 @@
 <?php
 
+namespace Elgg\Helpers\Database\Clauses;
+
 use Elgg\Database\QueryBuilder;
 
-class CallableGroupBy {
+/**
+ * @see \Elgg\Database\Clauses\OrderByClauseUnitTest
+ */
+class CallableOrderBy {
 	
 	/**
 	 * Check if the callable can be an invokable class

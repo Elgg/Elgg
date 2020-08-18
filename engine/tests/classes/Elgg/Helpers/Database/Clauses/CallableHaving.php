@@ -1,8 +1,13 @@
 <?php
 
+namespace Elgg\Helpers\Database\Clauses;
+
 use Elgg\Database\QueryBuilder;
 
-class CallableOrderBy {
+/**
+ * @see \Elgg\Database\Clauses\HavingClauseUnitTest
+ */
+class CallableHaving {
 	
 	/**
 	 * Check if the callable can be an invokable class
@@ -13,7 +18,7 @@ class CallableOrderBy {
 	 * @return string
 	 */
 	public function __invoke(QueryBuilder $qb, $main_alias) {
-		return "{$main_alias}.guid";
+		return $qb->compare("{$main_alias}.guid", '=', 25, ELGG_VALUE_INTEGER);
 	}
 	
 	/**
@@ -25,6 +30,6 @@ class CallableOrderBy {
 	 * @return string
 	 */
 	public static function callable(QueryBuilder $qb, $main_alias) {
-		return "{$main_alias}.guid";
+		return $qb->compare("{$main_alias}.guid", '=', 25, ELGG_VALUE_INTEGER);
 	}
 }

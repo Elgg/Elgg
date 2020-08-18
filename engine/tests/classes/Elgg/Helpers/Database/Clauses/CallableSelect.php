@@ -1,8 +1,13 @@
 <?php
 
+namespace Elgg\Helpers\Database\Clauses;
+
 use Elgg\Database\QueryBuilder;
 
-class CallableHaving {
+/**
+ * @see \Elgg\Database\Clauses\SelectClauseUnitTest
+ */
+class CallableSelect {
 	
 	/**
 	 * Check if the callable can be an invokable class
@@ -13,7 +18,7 @@ class CallableHaving {
 	 * @return string
 	 */
 	public function __invoke(QueryBuilder $qb, $main_alias) {
-		return $qb->compare("{$main_alias}.guid", '=', 25, ELGG_VALUE_INTEGER);
+		return "{$main_alias}.guid AS g";
 	}
 	
 	/**
@@ -25,6 +30,6 @@ class CallableHaving {
 	 * @return string
 	 */
 	public static function callable(QueryBuilder $qb, $main_alias) {
-		return $qb->compare("{$main_alias}.guid", '=', 25, ELGG_VALUE_INTEGER);
+		return "{$main_alias}.guid AS g";
 	}
 }
