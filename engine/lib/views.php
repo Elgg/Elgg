@@ -223,22 +223,6 @@ function elgg_view($view, $vars = [], $viewtype = '') {
 }
 
 /**
- * Display a view with a deprecation notice. No missing view NOTICE is logged
- *
- * @param string $view       The name and location of the view to use
- * @param array  $vars       Variables to pass to the view
- * @param string $suggestion Suggestion with the deprecation message
- * @param string $version    Human-readable *release* version: 1.7, 1.8, ...
- *
- * @return string The parsed view
- *
- * @see elgg_view()
- */
-function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
-	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
-}
-
-/**
  * Extends a view with another view.
  *
  * The output of any view can be prepended or appended to any other view.
