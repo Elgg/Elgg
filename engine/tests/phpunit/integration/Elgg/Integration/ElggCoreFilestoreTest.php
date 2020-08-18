@@ -32,8 +32,6 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 	}
 
 	public function testFilenameOnFilestore() {
-		$CONFIG = _elgg_config();
-
 		// create a user to own the file
 		$user = $this->owner;
 		
@@ -49,7 +47,7 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 
 		// ensure filename and path is expected
 		$filename = $file->getFilenameOnFilestore();
-		$filepath = $CONFIG->dataroot . $dir . 'testing/filestore.txt';
+		$filepath = _elgg_services()->config->dataroot . $dir . 'testing/filestore.txt';
 		$this->assertEquals($filepath, $filename);
 		$this->assertFileExists($filepath);
 
@@ -60,8 +58,6 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 	}
 
 	function testElggFileDelete() {
-		$CONFIG = _elgg_config();
-
 		$user = $this->owner;
 		$dir = new EntityDirLocator($user->guid);
 
@@ -74,7 +70,7 @@ class ElggCoreFilestoreTest extends IntegrationTestCase {
 		$file->save();
 
 		$filename = $file->getFilenameOnFilestore();
-		$filepath = $CONFIG->dataroot . $dir . "testing/ElggFileDelete";
+		$filepath = _elgg_services()->config->dataroot . $dir . "testing/ElggFileDelete";
 		$this->assertEquals($filepath, $filename);
 		$this->assertFileExists($filepath);
 

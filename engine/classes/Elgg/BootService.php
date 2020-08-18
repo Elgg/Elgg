@@ -134,8 +134,8 @@ class BootService {
 	public function clearCache() {
 		$this->cache->clear();
 		_elgg_services()->plugins->setBootPlugins(null);
-		_elgg_config()->system_cache_loaded = false;
-		_elgg_config()->_boot_cache_hit = false;
+		_elgg_services()->config->system_cache_loaded = false;
+		_elgg_services()->config->_boot_cache_hit = false;
 	}
 	
 	/**

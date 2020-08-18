@@ -18,9 +18,9 @@ class UserSettingsIntegrationTest extends ActionResponseTestCase {
 
 		self::createApplication();
 
-		_elgg_config()->min_password_length = 3;
-		_elgg_config()->minusername = 4;
-		_elgg_config()->allow_registration = true;
+		_elgg_services()->config->min_password_length = 3;
+		_elgg_services()->config->minusername = 4;
+		_elgg_services()->config->allow_registration = true;
 
 		_elgg_services()->hooks->backup();
 		_elgg_services()->events->backup();

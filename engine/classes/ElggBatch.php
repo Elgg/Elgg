@@ -216,7 +216,7 @@ class ElggBatch implements \Countable, \Iterator {
 
 		// store these so we can compare later
 		$this->offset = elgg_extract('offset', $options, 0);
-		$this->limit = elgg_extract('limit', $options, _elgg_config()->default_limit);
+		$this->limit = elgg_extract('limit', $options, _elgg_services()->config->default_limit);
 
 		// if passed a callback, create a new \ElggBatch with the same options
 		// and pass each to the callback.

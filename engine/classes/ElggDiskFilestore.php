@@ -31,7 +31,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 		if ($directory_root) {
 			$this->dir_root = $directory_root;
 		} else {
-			$this->dir_root = _elgg_config()->dataroot;
+			$this->dir_root = _elgg_services()->config->dataroot;
 		}
 	}
 

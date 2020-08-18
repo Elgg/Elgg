@@ -30,12 +30,12 @@ class Profiler {
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
 		
-		if (!_elgg_config()->enable_profiling) {
+		if (!_elgg_services()->config->enable_profiling) {
 			return;
 		}
 		
 		$profiler = new self();
-		$min_percentage = _elgg_config()->profiling_minimum_percentage;
+		$min_percentage = _elgg_services()->config->profiling_minimum_percentage;
 		if ($min_percentage !== null) {
 			$profiler->minimum_percentage = $min_percentage;
 		}

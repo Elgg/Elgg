@@ -78,7 +78,7 @@ class ResponseFactoryUnitTest extends \Elgg\UnitTestCase {
 		$this->session = ElggSession::getMock();
 		$this->session->start();
 
-		$this->config = _elgg_config();
+		$this->config = _elgg_services()->config;
 		$this->events = new EventsService(new HandlersService());
 		$this->hooks = new PluginHooksService($this->events);
 		$this->request = $this->createRequest('', 'GET');

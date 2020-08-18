@@ -101,7 +101,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		$object->setCurrentTime();
 
 		// Update river
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 		$query = "
 			UPDATE {$dbprefix}river
 				SET access_id = :access_id

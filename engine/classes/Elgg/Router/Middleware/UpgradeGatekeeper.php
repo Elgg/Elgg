@@ -24,7 +24,7 @@ class UpgradeGatekeeper {
 			return null;
 		}
 
-		if (!_elgg_config()->security_protect_upgrade) {
+		if (!_elgg_services()->config->security_protect_upgrade) {
 			return null;
 		}
 

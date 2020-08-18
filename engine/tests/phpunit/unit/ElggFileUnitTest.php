@@ -25,14 +25,14 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 		$this->file = $file;
 
-		$dataroot = _elgg_config()->dataroot;
+		$dataroot = _elgg_services()->config->dataroot;
 		
 		// we use this for writing new files
 		elgg_delete_directory($dataroot . '1/2/');
 	}
 
 	public function down() {
-		$dataroot = _elgg_config()->dataroot;
+		$dataroot = _elgg_services()->config->dataroot;
 		
 		// we use this for writing new files
 		elgg_delete_directory($dataroot . '1/2/');
@@ -149,7 +149,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 		$contents = $this->file->grabFile();
 		$this->assertTrue($this->file->close());
 
-		$dataroot = _elgg_config()->dataroot;
+		$dataroot = _elgg_services()->config->dataroot;
 		$expected = file_get_contents("{$dataroot}1/1/foobar.txt");
 
 		$this->assertEquals($expected, $contents);
@@ -229,7 +229,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 		$filename = "foo/bar.txt";
 
-		$dataroot = _elgg_config()->dataroot;
+		$dataroot = _elgg_services()->config->dataroot;
 		$dir = new \Elgg\EntityDirLocator(123);
 
 		$file = new ElggFile();
@@ -246,7 +246,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 		$symlink_name = "symlink.txt";
 
-		$dataroot = _elgg_config()->dataroot;
+		$dataroot = _elgg_services()->config->dataroot;
 		$dir = new \Elgg\EntityDirLocator(2);
 
 		// Remove symlink in case it exists
@@ -360,7 +360,7 @@ class ElggFileUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanTransferFile() {
 
-		$dataroot = _elgg_config()->dataroot;
+		$dataroot = _elgg_services()->config->dataroot;
 
 		$file = new \ElggFile();
 		$file->owner_guid = 3;

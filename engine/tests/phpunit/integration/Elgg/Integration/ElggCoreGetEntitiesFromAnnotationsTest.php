@@ -55,7 +55,7 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 
 		$user1 = $this->createOne('user');
 
-		$prefix = _elgg_config()->dbprefix;
+		$prefix = _elgg_services()->config->dbprefix;
 
 		$annotation_name = 'test_annotation_name_' . rand();
 

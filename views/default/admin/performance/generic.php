@@ -152,7 +152,7 @@ if (elgg_is_simplecache_enabled()) {
 	$icon = $icon_ok;
 	$value = elgg_echo('status:enabled');
 	
-	if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
+	if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
 		$icon = $icon_warning;
 		$subtext = elgg_echo('admin:performance:simplecache:settings:warning');
 	}

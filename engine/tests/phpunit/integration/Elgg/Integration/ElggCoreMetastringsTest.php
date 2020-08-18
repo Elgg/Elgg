@@ -72,7 +72,7 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 	}
 
 	public function testDeleteByID() {
-		$db_prefix = _elgg_config()->dbprefix;
+		$db_prefix = _elgg_services()->config->dbprefix;
 		
 		// the following variables are used dynamically
 		$annotation = $this->createAnnotations(1);
@@ -169,7 +169,7 @@ class ElggCoreMetastringsTest extends IntegrationTestCase {
 		$annotation_id = $annotations[0];
 		$annotation = elgg_get_annotation_from_id($annotation_id);
 
-		$table = _elgg_config()->dbprefix . $this->metastringTables['annotation'];
+		$table = _elgg_services()->config->dbprefix . $this->metastringTables['annotation'];
 		
 		$q = "SELECT * FROM {$table} WHERE id = {$annotation_id}";
 		$test = elgg()->db->getData($q);

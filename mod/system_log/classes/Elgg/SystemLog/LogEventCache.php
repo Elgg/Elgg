@@ -16,12 +16,7 @@ class LogEventCache extends CompositeCache {
 	 * Constructor
 	 */
 	public function __construct() {
-		$flags = ELGG_CACHE_RUNTIME;
-
-		// not available in elgg()->dic. Maybe we should...
-		$config = _elgg_config();
-
-		parent::__construct('system_log', $config, $flags);
+		parent::__construct('system_log', elgg()->config, ELGG_CACHE_RUNTIME);
 	}
 
 	/**

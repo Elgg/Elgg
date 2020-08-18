@@ -21,7 +21,7 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->temp_dir = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 
 		$this->temp_source_image_location = tempnam($this->temp_dir, 'imageservice');
-		$source_image = _elgg_config()->dataroot . '1/1/300x300.jpg';
+		$source_image = _elgg_services()->config->dataroot . '1/1/300x300.jpg';
 		file_put_contents($this->temp_source_image_location, file_get_contents($source_image));
 
 		$this->temp_destination_image_location = $this->temp_dir . '200x200.jpg';
@@ -48,7 +48,7 @@ class ImageServiceUnitTest extends \Elgg\UnitTestCase {
 
 	public function testResizeFromImageExtension() {
 		
-		$source_image = _elgg_config()->dataroot . '1/1/300x300.jpg';
+		$source_image = _elgg_services()->config->dataroot . '1/1/300x300.jpg';
 		$destination_image = $this->temp_destination_image_location;
 		$params = $this->default_image_resize_params;
 		

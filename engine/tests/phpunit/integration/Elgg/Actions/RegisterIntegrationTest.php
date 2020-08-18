@@ -20,9 +20,9 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 
 		self::createApplication(['isolate' => true]);
 
-		_elgg_config()->min_password_length = 3;
-		_elgg_config()->minusername = 4;
-		_elgg_config()->allow_registration = true;
+		_elgg_services()->config->min_password_length = 3;
+		_elgg_services()->config->minusername = 4;
+		_elgg_services()->config->allow_registration = true;
 
 		_elgg_services()->hooks->backup();
 		
@@ -299,7 +299,7 @@ class RegisterIntegrationTest extends ActionResponseTestCase {
 	
 	public function testRegisterWithAdminValidation() {
 		
-		_elgg_config()->require_admin_validation = true;
+		_elgg_services()->config->require_admin_validation = true;
 		
 		// re-register admin validation hooks
 		_elgg_services()->hooks->registerHandler('register', 'user', 'Elgg\Users\Validation::checkAdminValidation', 999);

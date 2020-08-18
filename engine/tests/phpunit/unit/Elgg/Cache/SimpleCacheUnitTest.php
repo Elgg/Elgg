@@ -46,9 +46,9 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
 	public function testCanEnableSimplecache() {
 
-		$is_enabled = _elgg_config()->simplecache_enabled;
+		$is_enabled = _elgg_services()->config->simplecache_enabled;
 
-		_elgg_config()->save('simplecache_enabled', false);
+		_elgg_services()->config->save('simplecache_enabled', false);
 
 		elgg_disable_simplecache();
 
@@ -58,7 +58,7 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertTrue(elgg_is_simplecache_enabled());
 
-		_elgg_config()->save('simplecache_enabled', $is_enabled);
+		_elgg_services()->config->save('simplecache_enabled', $is_enabled);
 
 	}
 	
@@ -69,8 +69,8 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 			$this->markTestSkipped('Unable to test symlinks on Windows');
 		}
 		
-		$is_enabled = _elgg_config()->simplecache_enabled;
-		_elgg_config()->save('simplecache_enabled', true);
+		$is_enabled = _elgg_services()->config->simplecache_enabled;
+		_elgg_services()->config->save('simplecache_enabled', true);
 		
 		$this->assertTrue(_elgg_services()->simpleCache->isEnabled());
 		
@@ -89,7 +89,7 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		// ensure symlink still works
 		$this->assertTrue(_elgg_is_cache_symlinked());
 		
-		_elgg_config()->save('simplecache_enabled', $is_enabled);
+		_elgg_services()->config->save('simplecache_enabled', $is_enabled);
 		
 		// cleanup symlink
 		$this->assertTrue(unlink(elgg_get_root_path() . 'cache'));
@@ -101,8 +101,8 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 			$this->markTestSkipped('Unable to test symlinks on Windows');
 		}
 		
-		$is_enabled = _elgg_config()->simplecache_enabled;
-		_elgg_config()->save('simplecache_enabled', true);
+		$is_enabled = _elgg_services()->config->simplecache_enabled;
+		_elgg_services()->config->save('simplecache_enabled', true);
 		
 		$this->assertTrue(_elgg_services()->simpleCache->isEnabled());
 		
@@ -115,7 +115,7 @@ class SimpleCacheUnitTest extends \Elgg\UnitTestCase {
 		// ensure symlink still works
 		$this->assertTrue(_elgg_is_cache_symlinked());
 		
-		_elgg_config()->save('simplecache_enabled', $is_enabled);
+		_elgg_services()->config->save('simplecache_enabled', $is_enabled);
 		
 		// cleanup symlink
 		$this->assertTrue(unlink(elgg_get_root_path() . 'cache'));

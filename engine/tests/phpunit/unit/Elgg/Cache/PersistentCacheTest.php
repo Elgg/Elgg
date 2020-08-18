@@ -9,6 +9,6 @@ namespace Elgg\Cache;
 class PersistentCacheTest extends ElggCacheTestCase {
 
 	function createCache() {
-		return new CompositeCache('persistent_test', _elgg_config(), ELGG_CACHE_PERSISTENT);
+		return new CompositeCache('persistent_test', _elgg_services()->config, ELGG_CACHE_PERSISTENT);
 	}
 }

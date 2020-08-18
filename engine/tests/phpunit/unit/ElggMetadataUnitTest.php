@@ -109,7 +109,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$id = \Elgg\Mocks\Database\MetadataTable::$iterator + 1;
 
 		// Insert
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 		$sql = "INSERT INTO {$dbprefix}metadata
 				(entity_guid, name, value, value_type, time_created)
 				VALUES (:entity_guid, :name, :value, :value_type, :time_created)";
@@ -151,7 +151,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 		_elgg_services()->db->addQuerySpec([
 			'sql' => "DELETE FROM {$dbprefix}metadata WHERE id = :id",
 			'params' => [

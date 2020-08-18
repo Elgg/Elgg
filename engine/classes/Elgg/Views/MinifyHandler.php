@@ -24,13 +24,13 @@ class MinifyHandler {
 
 		switch ($hook->getType()) {
 			case 'js':
-				if (!_elgg_config()->simplecache_minify_js) {
+				if (!_elgg_services()->config->simplecache_minify_js) {
 					break;
 				}
 				
 				return \JSMin::minify($hook->getValue());
 			case 'css':
-				if (!_elgg_config()->simplecache_minify_css) {
+				if (!_elgg_services()->config->simplecache_minify_css) {
 					break;
 				}
 
