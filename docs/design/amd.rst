@@ -7,8 +7,8 @@ AMD
 Overview
 ========
 
-There are two JavaScript system in Elgg: the deprecated 1.8 system, and the newer `AMD (Asynchronous Module
-Definition) <http://requirejs.org/docs/whyamd.html>`_ compatible system introduced in 1.9.
+If you want to use JavaScript in Elgg: we use a `AMD (Asynchronous Module
+Definition) <http://requirejs.org/docs/whyamd.html>`_ compatible system.
 
 This discusses the benefits of using AMD in Elgg.
 

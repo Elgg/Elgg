@@ -19,13 +19,6 @@ use Elgg\HooksRegistrationService\Hook as HrsHook;
  * @internal
  */
 class HandlersService {
-
-	/**
-	 * Keeps track of already reported deprecated arguments callback messages
-	 *
-	 * @var array
-	 */
-	private $deprecated_args_msgs = [];
 	
 	/**
 	 * Call the handler with the hook/event object
