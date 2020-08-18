@@ -45,17 +45,6 @@ function elgg_plugin_exists($id) {
 }
 
 /**
- * Returns the highest priority of the plugins
- *
- * @return int
- * @since 1.8.0
- * @internal
- */
-function _elgg_get_max_plugin_priority() {
-	return _elgg_services()->plugins->getMaxPriority();
-}
-
-/**
  * Returns if a plugin is active for a current site.
  *
  * @param string $plugin_id The plugin ID
