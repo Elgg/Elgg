@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Helpers\Cli\TestingCommand;
 use Elgg\Logger;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Output\NullOutput;
@@ -86,22 +87,5 @@ class CommandTest extends UnitTestCase {
 		};
 
 		$this->assertRegExp('/Akuna matata/im', $this->executeCommand($handler));
-	}
-}
-
-class TestingCommand extends Command {
-
-	protected $handler;
-
-	public function setHandler(\Closure $handler) {
-		$this->handler = $handler;
-	}
-
-	public function configure() {
-		$this->setName('testing');
-	}
-
-	protected function command() {
-		return $this->handler;
 	}
 }
