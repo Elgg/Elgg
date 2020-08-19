@@ -177,13 +177,15 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	}
 
 	public function testAccessCaching() {
-		// @todo what is being tested here, makes no sense currently
-		// create a new user to check against
+		$access_cache = _elgg_services()->accessCache;
+		
 		$user = $this->createOne('user');
 
+		$hash = $user->guid . 'get_access_array';
+		
+		$this->assertEmpty($access_cache[$hash]);
+		
 		$id = create_access_collection('custom', $user->guid);
-
-		_elgg_services()->accessCache->clear();
 
 		$expected = [
 			ACCESS_PUBLIC,
@@ -191,10 +193,23 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 			$id,
 		];
 
-		$actual = get_access_array($user->getGUID());
-		
-		$this->assertEquals($expected, $actual);
+		$this->assertEquals($expected, get_access_array($user->guid));
 
+		// check if exists in cache
+		$this->assertEquals($expected, $access_cache[$hash]);
+		
+		$manipulated_access = $expected;
+		$manipulated_access[] = 'foo';
+		$access_cache[$hash] = $manipulated_access;
+		$this->assertEquals($manipulated_access, $access_cache[$hash]);
+		
+		$this->assertEquals($manipulated_access, get_access_array($user->guid));
+		
+		// check flush logic
+		$flushed_access = _elgg_services()->accessCollections->getAccessArray($user->guid, true);
+		$this->assertNotEquals($manipulated_access, $flushed_access);
+		$this->assertEquals($expected, $flushed_access);
+		
 		$user->delete();
 	}
 

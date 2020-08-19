@@ -1036,7 +1036,7 @@ function elgg_view_relationship(\ElggRelationship $relationship, array $vars = [
  * This is a shortcut for {@elgg_view page/elements/title}.
  *
  * @param string $title The page title
- * @param array  $vars  View variables (was submenu be displayed? (deprecated))
+ * @param array  $vars  View variables
  *
  * @return string The HTML (etc)
  */
@@ -2238,9 +2238,4 @@ function _elgg_views_init() {
 				['admin']
 		);
 	}
-	
-	// Using a view extension to ensure that themes that have replaced the item view
-	// still load the required AMD modules
-	// @todo can this be removed?
-	elgg_extend_view('navigation/menu/elements/item', 'navigation/menu/elements/item_deps');
 }
