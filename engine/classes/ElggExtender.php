@@ -166,7 +166,6 @@ abstract class ElggExtender extends \ElggData {
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
 
-		$params[$this->getSubtype()] = $this; // deprecated use
 		$params[$this->getType()] = $this;
 				
 		return _elgg_services()->hooks->trigger('to:object', $this->getType(), $params, $object);

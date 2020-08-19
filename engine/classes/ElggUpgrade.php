@@ -2,8 +2,6 @@
 /**
  * Upgrade object for upgrades that need to be tracked
  * and listed in the admin area.
- *
- * @todo Expand for all upgrades to be \ElggUpgrade subclasses.
  */
 
 use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;

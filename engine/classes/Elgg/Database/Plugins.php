@@ -930,10 +930,9 @@ class Plugins {
 	 * Reorder plugins to an order specified by the array.
 	 * Plugins not included in this array will be appended to the end.
 	 *
-	 * @note   This doesn't use the \ElggPlugin->setPriority() method because
+	 * @note This doesn't use the \ElggPlugin->setPriority() method because
 	 *       all plugins are being changed and we don't want it to automatically
 	 *       reorder plugins.
-	 * @todo   Can this be done in a single sql command?
 	 *
 	 * @param array $order An array of plugin ids in the order to set them
 	 *

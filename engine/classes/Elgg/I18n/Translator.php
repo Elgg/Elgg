@@ -414,8 +414,6 @@ class Translator {
 	 *
 	 * This is only called by functions which need to know all possible translations.
 	 *
-	 * @todo Better on demand loading based on language_paths array
-	 *
 	 * @return void
 	 *
 	 * @internal

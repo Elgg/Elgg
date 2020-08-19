@@ -584,7 +584,6 @@ class Database {
 	 * called by the system automatically on shutdown.
 	 *
 	 * @return void
-	 * @todo make protected once this class is part of public API
 	 */
 	public function executeDelayedQueries() {
 

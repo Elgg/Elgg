@@ -62,10 +62,6 @@ class MetadataTable {
 	 *
 	 * Returns an array of objects that include "tag" and "total" properties
 	 *
-	 * @todo   When updating this function for 3.0, I have noticed that docs explicitly mention
-	 *       that tags must be registered, but it was not really checked anywhere in code
-	 *       So, either update the docs or decide what the behavior should be
-	 *
 	 * @param array $options Options
 	 *
 	 * @option int      $threshold Minimum number of tag occurrences

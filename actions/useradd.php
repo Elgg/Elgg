@@ -51,7 +51,6 @@ try {
 	elgg_clear_sticky_form('useradd');
 
 	$new_user->admin_created = true;
-	// @todo ugh, saving a guid as metadata!
 	$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
 	// The user language is set also by register_user(), but it defaults to

@@ -19,13 +19,6 @@ use Elgg\HooksRegistrationService\Hook as HrsHook;
  * @internal
  */
 class HandlersService {
-
-	/**
-	 * Keeps track of already reported deprecated arguments callback messages
-	 *
-	 * @var array
-	 */
-	private $deprecated_args_msgs = [];
 	
 	/**
 	 * Call the handler with the hook/event object
@@ -130,7 +123,6 @@ class HandlersService {
 		if (is_string($callable)
 			&& preg_match(DiContainer::CLASS_NAME_PATTERN_53, $callable)
 			&& class_exists($callable)) {
-			// @todo Eventually a more advanced DIC could auto-inject dependencies
 			$callable = new $callable;
 		}
 

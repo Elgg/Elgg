@@ -21,9 +21,6 @@ use ElggEntity;
  *
  * Use elgg_search() instead.
  *
- * @todo   Implement type/subtype normalization into types => subtypes pairs and add logic to search for multiple
- *         subtypes
- *
  * @internal
  * @since  3.0
  */

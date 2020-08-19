@@ -142,20 +142,4 @@ class WidgetDefinition {
 		
 		return true;
 	}
-	
-	/**
-	 * Magic getter to return the deprecated attribute 'handler'
-	 *
-	 * @param string $name attribute to get
-	 *
-	 * @return mixed
-	 */
-	public function __get($name) {
-		if ($name === 'handler') {
-			// before Elgg 2.2 the widget definitions had the handler attribute as the id
-			return $this->id;
-		}
-		
-		return $this->$name;
-	}
 }

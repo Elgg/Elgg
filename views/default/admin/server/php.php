@@ -13,7 +13,6 @@ $upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
 
 $post_max_size_warning = '';
 if ($upload_max_filesize > $post_max_size) {
-	// @todo show a link to something like http://nigel.mcnie.name/blog/uploadmaxfilesizepostmaxsize-experimentation ?
 	$post_max_size_warning = elgg_echo('admin:server:warning:post_max_too_small');
 }
 
