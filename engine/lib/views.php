@@ -1036,7 +1036,7 @@ function elgg_view_relationship(\ElggRelationship $relationship, array $vars = [
  * This is a shortcut for {@elgg_view page/elements/title}.
  *
  * @param string $title The page title
- * @param array  $vars  View variables (was submenu be displayed? (deprecated))
+ * @param array  $vars  View variables
  *
  * @return string The HTML (etc)
  */
