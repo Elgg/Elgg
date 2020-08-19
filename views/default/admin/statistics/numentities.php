@@ -7,16 +7,9 @@ $other = [];
 
 foreach ($entity_stats as $type => $subtypes) {
 	foreach ($subtypes as $subtype => $value) {
-		$is_registered = false;
-		if ($subtype == '__base__') {
-			$is_registered = is_registered_entity_type($type);
-			$name = elgg_echo("collection:$type");
-		} else {
-			$is_registered = is_registered_entity_type($type, $subtype);
-			$name = elgg_echo("collection:$type:$subtype");
-		}
-		
-		if ($is_registered) {
+		$name = elgg_echo("collection:{$type}:{$subtype}");
+
+		if (is_registered_entity_type($type, $subtype)) {
 			$searchable[$name] = $value;
 		} else {
 			$other[$name] = $value;

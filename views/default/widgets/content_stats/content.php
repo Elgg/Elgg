@@ -18,17 +18,10 @@ if (empty($registered_entity_types)) {
 $stats = [];
 
 foreach ($registered_entity_types as $type => $subtypes) {
-	if (!empty($subtypes)) {
-		foreach ($subtypes as $subtype) {
-			$value = elgg_extract($subtype, elgg_extract($type, $entity_stats), false);
-			if ($value !== false) {
-				$stats[elgg_echo("collection:$type:$subtype")] = $value;
-			}
-		}
-	} else {
-		$value = elgg_extract('__base__', elgg_extract($type, $entity_stats), false);
+	foreach ($subtypes as $subtype) {
+		$value = elgg_extract($subtype, elgg_extract($type, $entity_stats), false);
 		if ($value !== false) {
-			$stats[elgg_echo("collection:$type")] = $value;
+			$stats[elgg_echo("collection:{$type}:{$subtype}")] = $value;
 		}
 	}
 }
