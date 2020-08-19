@@ -1,5 +1,7 @@
 <?php
 
+namespace Elgg\Lib;
+
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\IntegrationTestCase;
 use Elgg\Router\Route;

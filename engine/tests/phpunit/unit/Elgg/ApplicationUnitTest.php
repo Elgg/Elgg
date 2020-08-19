@@ -5,7 +5,9 @@ namespace Elgg;
 use DI\Container;
 use Elgg\Application\Database;
 use Elgg\Database\Select;
-use Elgg\Exceptions\HttpException;
+use Elgg\Helpers\Application\FooController;
+use Elgg\Helpers\Application\FooRedirectController;
+use Elgg\Helpers\Application\FooExceptionController;
 use Elgg\Http\ErrorResponse;
 use Elgg\Http\OkResponse;
 use Elgg\Http\RedirectResponse;
@@ -499,31 +501,5 @@ class ApplicationUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(ELGG_HTTP_FOUND, $response->getStatusCode());
 		$this->assertEquals($output, $response->getContent());
 		$this->assertEquals(elgg_normalize_site_url('/phpunit'), $response->getTargetUrl());
-	}
-}
-
-
-class FooController {
-	public function __invoke(Request $request) {
-		$response = new OkResponse($request->getParam('echo'));
-		return $response;
-	}
-}
-
-class FooExceptionController {
-	public function __invoke(Request $request) {
-		$msg = $request->getParam('msg');
-		$code = $request->getParam('code', ELGG_HTTP_INTERNAL_SERVER_ERROR);
-		throw new HttpException($msg, $code);
-	}
-}
-
-class FooRedirectController {
-	public function __invoke(Request $request) {
-		$msg = $request->getParam('msg');
-		$code = $request->getParam('code', ELGG_HTTP_TEMPORARY_REDIRECT);
-		$ex = new HttpException($msg, $code);
-		$ex->setRedirectUrl($request->getParam('forward_url'));
-		throw $ex;
 	}
 }

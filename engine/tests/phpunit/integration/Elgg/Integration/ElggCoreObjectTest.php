@@ -2,6 +2,8 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Helpers\ElggObjectWithExposableAttributes;
+
 /**
  * Elgg Test \ElggObject
  *
@@ -321,11 +323,5 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$CONFIG = _elgg_services()->config;
 
 		return elgg()->db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='{$guid}'");
-	}
-}
-
-class ElggObjectWithExposableAttributes extends \ElggObject {
-	public function expose_attributes() {
-		return $this->attributes;
 	}
 }

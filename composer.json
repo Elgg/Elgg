@@ -101,16 +101,24 @@
         "ext-mbstring": "*"
     },
     "autoload": {
-        "psr-0": {
-            "": "engine/classes/"
+        "classmap": [
+            "engine/classes/"
+        ],
+        "psr-4": {
+            "Elgg\\": "engine/classes/Elgg/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
-            "": [
-                "engine/tests/classes/",
-                "engine/tests/phpunit/unit/",
-                "engine/tests/phpunit/integration/"
+        "classmap": [
+            "engine/tests/classes/",
+            "engine/tests/phpunit/integration/",
+            "engine/tests/phpunit/unit/"
+        ],
+        "psr-4": {
+            "Elgg\\": [
+                "engine/tests/classes/Elgg/",
+                "engine/tests/phpunit/integration/Elgg/",
+                "engine/tests/phpunit/unit/Elgg/"
             ]
         }
     },

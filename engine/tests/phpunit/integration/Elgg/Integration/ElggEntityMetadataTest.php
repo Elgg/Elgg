@@ -1,4 +1,7 @@
 <?php
+
+namespace Elgg\Integration;
+
 /**
  * @group IntegrationTests
  * @group Metadata
@@ -7,24 +10,24 @@
 class ElggEntityMetadataTest extends \Elgg\IntegrationTestCase {
 
 	/**
-	 * @var ElggObject
+	 * @var \ElggObject
 	 */
 	protected $entity;
 
 	/**
-	 * @var ElggObject
+	 * @var \ElggObject
 	 */
 	protected $unsaved_entity;
 	
 	/**
-	 * @var ElggObject[]
+	 * @var \ElggObject[]
 	 */
 	protected $entities;
 
 	public function up() {
 		$this->entity = $this->createObject();
 		
-		$this->unsaved_entity = new ElggObject();
+		$this->unsaved_entity = new \ElggObject();
 		
 		$this->entities = [
 			$this->entity,

@@ -1,9 +1,6 @@
 <?php
-/**
- *
- */
 
-namespace phpunit\unit\Elgg\I18n;
+namespace Elgg\I18n;
 
 use Elgg\IntegratedUnitTestCase;
 

@@ -5,6 +5,7 @@ namespace Elgg\Collections;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\UnitTestCase;
+use Elgg\Helpers\Collections\TestItem;
 
 /**
  * @group Collections
@@ -292,30 +293,5 @@ class CollectionsUnitTest extends UnitTestCase {
 	public function testConstructorThrowsWithInvalidClass() {
 		$this->expectException(InvalidArgumentException::class);
 		new Collection([], MyClass::class);
-	}
-
-}
-
-class TestItem implements CollectionItemInterface {
-
-	public function __construct($id, $priority) {
-		$this->id = $id;
-		$this->priority = $priority;
-	}
-
-	/**
-	 * Get unique item identifier within a collection
-	 * @return string|int
-	 */
-	public function getID() {
-		return $this->id;
-	}
-
-	/**
-	 * Get priority (weight) of the item within a collection
-	 * @return int
-	 */
-	public function getPriority() {
-		return $this->priority;
 	}
 }

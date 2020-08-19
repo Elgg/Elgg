@@ -2,12 +2,12 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Database\Seeds\Seed;
+use Elgg\Helpers\Cli\CliSeeder;
 use Elgg\Hook;
+use Elgg\Logger;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Elgg\Logger;
 
 /**
  * @group Cli
@@ -73,38 +73,4 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 		$hook->unregister();
 	}
 
-}
-
-class CliSeeder extends Seed {
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function seed() {
-		system_message(__METHOD__);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public function unseed() {
-		system_message(__METHOD__);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public static function getType() : string {
-		return 'testing';
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	protected function getCountOptions() : array {
-		return [
-			'type' => 'object',
-			'subtype' => 'dummy',
-		];
-	}
 }

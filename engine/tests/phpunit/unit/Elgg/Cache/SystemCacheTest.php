@@ -1,6 +1,6 @@
 <?php
 
-namespace phpunit\unit\Elgg\Cache;
+namespace Elgg\Cache;
 
 use Elgg\UnitTestCase;
 
