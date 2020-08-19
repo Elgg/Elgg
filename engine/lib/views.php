@@ -2238,9 +2238,4 @@ function _elgg_views_init() {
 				['admin']
 		);
 	}
-	
-	// Using a view extension to ensure that themes that have replaced the item view
-	// still load the required AMD modules
-	// @todo can this be removed?
-	elgg_extend_view('navigation/menu/elements/item', 'navigation/menu/elements/item_deps');
 }
