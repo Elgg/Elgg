@@ -2,6 +2,7 @@
 
 namespace Elgg\Cli;
 
+use Elgg\Helpers\Cli\CliSimpletest;
 use Elgg\Hook;
 use Elgg\IntegrationTestCase;
 use Symfony\Component\Console\Application;
@@ -44,19 +45,4 @@ class SimpleTestCommandTest extends IntegrationTestCase {
 		$hook->unregister();
 	}
 
-}
-
-class CliSimpletest extends \ElggCoreUnitTest {
-
-	public function up() {
-
-	}
-
-	public function down() {
-
-	}
-
-	public function testMe() {
-		system_message(__METHOD__);
-	}
 }

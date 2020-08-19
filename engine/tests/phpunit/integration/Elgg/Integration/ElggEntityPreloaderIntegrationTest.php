@@ -3,6 +3,7 @@
 namespace Elgg\Integration;
 
 use Elgg\EntityPreloader;
+use Elgg\Helpers\MockEntityPreloader20140623;
 
 /**
  * @group IntegrationTests
@@ -84,13 +85,5 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 		$options['preload_owners'] = true;
 		elgg_get_annotations($options);
 		$this->assertCount(3, $this->mockPreloader->preloaded);
-	}
-}
-
-class MockEntityPreloader20140623 extends \Elgg\EntityPreloader {
-	public $preloaded;
-
-	public function preload($objects, array $guid_properties) {
-		$this->preloaded = $objects;
 	}
 }

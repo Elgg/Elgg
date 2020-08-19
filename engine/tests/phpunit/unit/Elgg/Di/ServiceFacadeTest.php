@@ -3,6 +3,7 @@
 namespace Elgg\Di;
 
 use Elgg\UnitTestCase;
+use Elgg\Helpers\Di\ServiceFacadeTestService;
 
 /**
  * @group DI
@@ -28,17 +29,5 @@ class ServiceFacadeTest extends UnitTestCase {
 		$this->assertSame(elgg()->foo, ServiceFacadeTestService::instance());
 		$this->assertEquals('Hi, John Doe', ServiceFacadeTestService::call('greet', 'John Doe'));
 		$this->assertEquals('Hi, John Doe', ServiceFacadeTestService::instance()->greet('John Doe'));
-	}
-}
-
-class ServiceFacadeTestService {
-	use ServiceFacade;
-
-	public static function name() {
-		return 'foo';
-	}
-
-	public function greet($name) {
-		return "Hi, $name";
 	}
 }
