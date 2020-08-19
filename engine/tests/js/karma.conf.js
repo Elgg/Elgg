@@ -15,7 +15,7 @@ module.exports = function(config) {
 		files: [
 			'engine/tests/js/prepare.js',
 
-			'vendor/bower-asset/jquery/dist/jquery.js',
+			'vendor/npm-asset/jquery/dist/jquery.js',
 			
 			// these libs get loaded directly
 			'views/default/core/js/elgglib.js',
@@ -32,17 +32,17 @@ module.exports = function(config) {
 			'views/default/core/js/security.js',
 			'views/default/core/js/session.js',
 			'views/default/core/js/ui.js',
+
+			'vendor/npm-asset/weakmap-polyfill/weakmap-polyfill.min.js',
+			'vendor/npm-asset/formdata-polyfill/formdata.min.js',
+
+			'engine/tests/js/requirejs.config.js',
 			
 			// these js files can all be loaded via requirejs
 			{pattern:'engine/tests/js/*Test.js',included:false},
 			{pattern:'views/default/**/*.js',included:false},
-			{pattern:'vendor/bower-asset/**/*.js',included:false},
-			{pattern:'node_modules/**/*.js',included:false},
-
-			'engine/tests/js/requirejs.config.js',
-
-			'vendor/npm-asset/weakmap-polyfill/weakmap-polyfill.min.js',
-			'vendor/npm-asset/formdata-polyfill/formdata.min.js'
+			{pattern:'vendor/npm-asset/**/*.js',included:false},
+			{pattern:'node_modules/**/*.js',included:false}
 		],
 
 

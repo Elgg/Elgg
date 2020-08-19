@@ -154,7 +154,7 @@ If you check your assets into source control, point to them like this:
             // viewtype
             'default' => [
                 // view => /path/from/filesystem/root
-                'js/jquery-ui.js' => __DIR__ . '/bower_components/jquery-ui/jquery-ui.min.js',
+                'js/jquery-ui.js' => __DIR__ . '/node_modules/components-jqueryui/jquery-ui.min.js',
             ],
         ],
     ];
@@ -168,7 +168,7 @@ To point to assets installed with composer, use install-root-relative paths by l
         'views' => [
             'default' => [
                 // view => path/from/install/root
-                'js/jquery-ui.js' => 'vendor/bower-asset/jquery-ui/jquery-ui.min.js',
+                'js/jquery-ui.js' => 'vendor/npm-asset/components-jqueryui/jquery-ui.min.js',
             ],
         ],
     ];
@@ -177,7 +177,7 @@ Elgg core uses this feature extensively, though the value is returned directly f
 
 .. note::
 
-    You don't have to use Bower, Composer Asset Plugin, or any other script for
+    You don't have to use NPM, Composer Asset Plugin or any other script for
     managing your plugin's assets, but we highly recommend using a package manager
     of some kind because it makes upgrading so much easier.
 

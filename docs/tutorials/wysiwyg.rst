@@ -22,7 +22,7 @@ since it is so much easier to upgrade and maintain that way::
 
 .. code-block:: sh
 
-    composer require bower-asset/tinymce
+    composer require npm-asset/tinymce
 
 Tell Elgg when and how to load TinyMCE
 --------------------------------------
