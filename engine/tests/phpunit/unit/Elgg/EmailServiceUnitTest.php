@@ -1,6 +1,6 @@
 <?php
 
-namespace Elgg\Mail;
+namespace Elgg;
 
 use Laminas\Mail\Transport\InMemory as InMemoryTransport;
 
