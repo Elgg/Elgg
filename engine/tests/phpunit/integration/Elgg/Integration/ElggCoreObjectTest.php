@@ -2,6 +2,8 @@
 
 namespace Elgg\Integration;
 
+use Elgg\Helpers\ElggObjectWithExposableAttributes;
+
 /**
  * Elgg Test \ElggObject
  *
@@ -191,7 +193,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		$this->assertEmpty(get_entity($guid1));
 		$this->assertEmpty(get_entity($guid2));
 
-		$db_prefix = _elgg_config()->dbprefix;
+		$db_prefix = _elgg_services()->config->dbprefix;
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
 		$r = elgg()->db->getDataRow($q);
 		$this->assertEquals('no', $r->enabled);
@@ -208,7 +210,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 
 	public function testElggRecursiveDelete() {
 		$types = ['group', 'object', 'user'];
-		$db_prefix = _elgg_config()->dbprefix;
+		$db_prefix = _elgg_services()->config->dbprefix;
 
 		foreach ($types as $type) {
 			$parent = $this->createOne($type);
@@ -318,14 +320,8 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 	}
 
 	protected function get_entity_row($guid) {
-		$CONFIG = _elgg_config();
+		$CONFIG = _elgg_services()->config;
 
 		return elgg()->db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid='{$guid}'");
-	}
-}
-
-class ElggObjectWithExposableAttributes extends \ElggObject {
-	public function expose_attributes() {
-		return $this->attributes;
 	}
 }

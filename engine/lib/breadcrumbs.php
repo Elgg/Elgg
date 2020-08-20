@@ -19,7 +19,7 @@
  * @see elgg_get_breadcrumbs()
  */
 function elgg_push_breadcrumb($text, $href = false) {
-	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
+	$breadcrumbs = (array) _elgg_services()->config->breadcrumbs;
 	
 	$breadcrumbs[] = [
 		'text' => $text,
@@ -36,7 +36,7 @@ function elgg_push_breadcrumb($text, $href = false) {
  * @since 1.8.0
  */
 function elgg_pop_breadcrumb() {
-	$breadcrumbs = (array) _elgg_config()->breadcrumbs;
+	$breadcrumbs = (array) _elgg_services()->config->breadcrumbs;
 
 	if (empty($breadcrumbs)) {
 		return [];
@@ -71,7 +71,7 @@ function elgg_pop_breadcrumb() {
 function elgg_get_breadcrumbs(array $breadcrumbs = null) {
 	if (!isset($breadcrumbs)) {
 		// if no crumbs set, still allow hook to populate it
-		$breadcrumbs = (array) _elgg_config()->breadcrumbs;
+		$breadcrumbs = (array) _elgg_services()->config->breadcrumbs;
 	}
 	
 	$params = [

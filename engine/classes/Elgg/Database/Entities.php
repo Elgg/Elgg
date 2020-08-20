@@ -19,10 +19,6 @@ use ElggEntity;
  *
  * API IN FLUX Do not access the methods directly, use elgg_get_entities() instead
  *
- * @todo   At a later stage, this class will contain additional shortcut methods to filter entities
- *         by relationship, metdataion, annotation, private settings etc. Until then, such filtering
- *         can be done via standard ege* options
- *
  * @todo   Resolve table alias collissions when querying for both annotationa and metadata name value pairs
  *         Currently, n_table is expected across core and plugins, we need to refactor that code
  *         and remove n_table joins here
@@ -68,7 +64,7 @@ class Entities extends Repository {
 		}
 
 		if (!isset($property_type)) {
-			if (in_array($property, ElggEntity::$primary_attr_names)) {
+			if (in_array($property, ElggEntity::PRIMARY_ATTR_NAMES)) {
 				$property_type = 'attribute';
 			} else {
 				$property_type = 'metadata';
@@ -79,7 +75,7 @@ class Entities extends Repository {
 
 		switch ($property_type) {
 			case 'attribute':
-				if (!in_array($property, ElggEntity::$primary_attr_names)) {
+				if (!in_array($property, ElggEntity::PRIMARY_ATTR_NAMES)) {
 					throw new InvalidParameterException("'$property' is not a valid attribute");
 				}
 

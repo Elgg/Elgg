@@ -177,13 +177,15 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 	}
 
 	public function testAccessCaching() {
-		// @todo what is being tested here, makes no sense currently
-		// create a new user to check against
+		$access_cache = _elgg_services()->accessCache;
+		
 		$user = $this->createOne('user');
 
+		$hash = $user->guid . 'get_access_array';
+		
+		$this->assertEmpty($access_cache[$hash]);
+		
 		$id = create_access_collection('custom', $user->guid);
-
-		_elgg_services()->accessCache->clear();
 
 		$expected = [
 			ACCESS_PUBLIC,
@@ -191,10 +193,23 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 			$id,
 		];
 
-		$actual = get_access_array($user->getGUID());
-		
-		$this->assertEquals($expected, $actual);
+		$this->assertEquals($expected, get_access_array($user->guid));
 
+		// check if exists in cache
+		$this->assertEquals($expected, $access_cache[$hash]);
+		
+		$manipulated_access = $expected;
+		$manipulated_access[] = 'foo';
+		$access_cache[$hash] = $manipulated_access;
+		$this->assertEquals($manipulated_access, $access_cache[$hash]);
+		
+		$this->assertEquals($manipulated_access, get_access_array($user->guid));
+		
+		// check flush logic
+		$flushed_access = _elgg_services()->accessCollections->getAccessArray($user->guid, true);
+		$this->assertNotEquals($manipulated_access, $flushed_access);
+		$this->assertEquals($expected, $flushed_access);
+		
 		$user->delete();
 	}
 
@@ -223,9 +238,11 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		$logged_in_user = _elgg_services()->session->getLoggedInUser();
 		_elgg_services()->session->removeLoggedInUser();
 
-		$expected = [ACCESS_PUBLIC];
 		$actual = get_access_array();
-		$this->assertEquals($expected, $actual);
+
+		$this->assertTrue(in_array(ACCESS_PUBLIC, $actual)); // Public access needs to be allowed
+		$this->assertFalse(in_array(ACCESS_LOGGED_IN, $actual)); // Logged in access needs to be prohibited
+		$this->assertFalse(in_array(ACCESS_PRIVATE, $actual)); // Private access needs to be prohibited
 
 		if ($logged_in_user instanceof \ElggUser){
 			_elgg_services()->session->setLoggedInUser($logged_in_user);
@@ -287,11 +304,15 @@ class ElggCoreAccessCollectionsTest extends IntegrationTestCase {
 		create_access_collection('test', $this->user->guid);
 
 		$expected = [
-			ACCESS_PUBLIC,
 			ACCESS_LOGGED_IN,
 			ACCESS_PRIVATE,
 		];
-		
+
+		// is the test site running in walled garden?
+		if (!elgg_get_config('walled_garden')) {
+			$expected[] = ACCESS_PUBLIC;
+		}
+
 		// get owned access collections
 		$collections = $this->user->getOwnedAccessCollections();
 		if (!empty($collections)) {

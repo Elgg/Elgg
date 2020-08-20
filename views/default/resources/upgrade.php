@@ -1,6 +1,6 @@
 <?php
 
-$site_url = _elgg_config()->url;
+$site_url = elgg_get_site_url();
 $site_host = parse_url($site_url, PHP_URL_HOST) . '/';
 
 // turn any full in-site URLs into absolute paths

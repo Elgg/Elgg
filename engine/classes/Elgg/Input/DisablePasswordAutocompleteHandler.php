@@ -17,7 +17,7 @@ class DisablePasswordAutocompleteHandler {
 	 * @return void|array
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
-		if (!_elgg_config()->security_disable_password_autocomplete) {
+		if (!_elgg_services()->config->security_disable_password_autocomplete) {
 			return;
 		}
 		

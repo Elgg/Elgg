@@ -9,7 +9,6 @@ if (!$user instanceof ElggUser) {
 }
 
 $entity_stats = get_entity_statistics($user->guid);
-
 if (empty($entity_stats)) {
 	return;
 }
@@ -18,17 +17,12 @@ $rows = '';
 
 foreach ($entity_stats as $k => $entry) {
 	foreach ($entry as $a => $b) {
-		if ($a == "__base__") {
-			$a = elgg_echo("collection:{$k}");
-			if (empty($a)) {
-				$a = $k;
-			}
-		} else {
+		if (elgg_language_key_exists("collection:{$k}:{$a}")) {
 			$a = elgg_echo("collection:{$k}:{$a}");
-			if (empty($a)) {
-				$a = "$k $a";
-			}
+		} else {
+			$a = "$k $a";
 		}
+	
 		$rows .= <<< END
 			<tr>
 				<td class="column-one"><b>{$a}:</b></td>
@@ -38,7 +32,6 @@ END;
 	}
 }
 
-$title = elgg_echo('usersettings:statistics:label:numentities');
 $content = "<table class=\"elgg-table-alt\">$rows</table>";
 
-echo elgg_view_module('info', $title, $content);
+echo elgg_view_module('info', elgg_echo('usersettings:statistics:label:numentities'), $content);

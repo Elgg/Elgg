@@ -257,7 +257,7 @@ function elgg_delete_river(array $options = []) {
 function elgg_list_river(array $options = []) {
 	$defaults = [
 		'offset'     => (int) max(get_input('offset', 0), 0),
-		'limit'      => (int) max(get_input('limit', max(20, _elgg_config()->default_limit)), 0),
+		'limit'      => (int) max(get_input('limit', max(20, _elgg_services()->config->default_limit)), 0),
 		'pagination' => true,
 		'list_class' => 'elgg-list-river',
 	];

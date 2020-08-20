@@ -4,6 +4,7 @@ namespace Elgg\Users;
 
 use Elgg\Exceptions\Configuration\RegistrationException;
 use Elgg\Exceptions\InvalidParameterException;
+use Elgg\Helpers\CustomUser;
 use Elgg\UnitTestCase;
 
 /**
@@ -12,12 +13,23 @@ use Elgg\UnitTestCase;
  */
 class AccountsServiceUnitTest extends UnitTestCase {
 
+	/**
+	 * @var int minimal username length during testing
+	 */
+	protected $minusername = 6;
+	
+	/**
+	 * @var int backup of the config setting for minimal username length
+	 */
+	protected $minusername_backup;
+	
 	public function up() {
-
+		$this->minusername_backup = elgg()->config->minusername;
+		elgg()->config->minusername = $this->minusername;
 	}
 
 	public function down() {
-
+		elgg()->config->minusername = $this->minusername_backup;
 	}
 
 	/**
@@ -29,10 +41,8 @@ class AccountsServiceUnitTest extends UnitTestCase {
 	}
 	
 	public function invalidUsernameProvider() {
-		$min_length = 6;
-		elgg()->config->minusername = $min_length;
 		return [
-			[str_repeat('a', $min_length - 1)], // too short
+			[str_repeat('a', $this->minusername - 1)], // too short
 			[str_repeat('a', 129)], // too long, this is hard coded
 			['username#'],
 			['username@'],
@@ -48,8 +58,6 @@ class AccountsServiceUnitTest extends UnitTestCase {
 	 * @dataProvider validUsernameProvider
 	 */
 	public function testValidUsername($username) {
-		elgg()->config->minusername = 6;
-		
 		elgg()->accounts->assertValidUsername($username);
 	}
 	
@@ -79,7 +87,7 @@ class AccountsServiceUnitTest extends UnitTestCase {
 
 		elgg_set_entity_class('user', 'custom', CustomUser::class);
 
-		$pwd_length = _elgg_config()->min_password_length;
+		$pwd_length = _elgg_services()->config->min_password_length;
 
 		$username = 'username' . rand(100, 999);
 		$password = str_repeat('a', $pwd_length + 1);
@@ -119,8 +127,4 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		$this->expectException(InvalidParameterException::class);
 		elgg()->accounts->requestNewEmailValidation($user, $new_email);
 	}
-}
-
-class CustomUser extends \ElggUser {
-
 }

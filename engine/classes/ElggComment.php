@@ -14,7 +14,7 @@ class ElggComment extends \ElggObject {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['subtype'] = "comment";
+		$this->attributes['subtype'] = 'comment';
 	}
 
 	/**
@@ -30,28 +30,5 @@ class ElggComment extends \ElggObject {
 	 */
 	public function canComment($user_guid = 0, $default = false) {
 		return false;
-	}
-
-	/**
-	 * Update container entity last action on successful save.
-	 *
-	 * @param bool $update_last_action Update the container entity's last_action field
-	 * @return bool
-	 */
-	public function save($update_last_action = null) : bool {
-		if (isset($update_last_action)) {
-			elgg_deprecated_notice("Passing 'update_last_action' to " . __METHOD__ . " is deprecated.", '3.3');
-		} else {
-			$update_last_action = true;
-		}
-		
-		$result = parent::save();
-		if ($result && $update_last_action) {
-			$container = $this->getContainerEntity();
-			if ($container) {
-				$container->updateLastAction($this->time_updated);
-			}
-		}
-		return $result;
 	}
 }

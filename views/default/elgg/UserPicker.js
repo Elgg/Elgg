@@ -10,8 +10,6 @@ define(function(require) {
 	 * @param {HTMLElement} wrapper outer div
 	 * @constructor
 	 * @alias module:elgg/UserPicker
-	 *
-	 * @todo move this to /js/classes ?
 	 */
 	function UserPicker(wrapper) {
 		this.$wrapper = $(wrapper);

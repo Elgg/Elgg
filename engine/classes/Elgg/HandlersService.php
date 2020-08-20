@@ -19,13 +19,6 @@ use Elgg\HooksRegistrationService\Hook as HrsHook;
  * @internal
  */
 class HandlersService {
-
-	/**
-	 * Keeps track of already reported deprecated arguments callback messages
-	 *
-	 * @var array
-	 */
-	private $deprecated_args_msgs = [];
 	
 	/**
 	 * Call the handler with the hook/event object
@@ -49,42 +42,25 @@ class HandlersService {
 			return [false, null, $object];
 		}
 
-		$use_object = $this->acceptsObject($callable);
-		if ($use_object) {
-			if (is_string($object)) {
-				switch ($object) {
-					case 'hook' :
-						$object = new HrsHook(elgg(), $args[0], $args[1], $args[2], $args[3]);
-						break;
+		if (is_string($object)) {
+			switch ($object) {
+				case 'hook' :
+					$object = new HrsHook(elgg(), $args[0], $args[1], $args[2], $args[3]);
+					break;
 
-					case 'event' :
-						$object = new HrsEvent(elgg(), $args[0], $args[1], $args[2]);
-						break;
+				case 'event' :
+					$object = new HrsEvent(elgg(), $args[0], $args[1], $args[2]);
+					break;
 
-					case 'middleware' :
-					case 'controller' :
-					case 'action' :
-						$object = new Request(elgg(), $args[0]);
-						break;
-				}
+				case 'middleware' :
+				case 'controller' :
+				case 'action' :
+					$object = new Request(elgg(), $args[0]);
+					break;
 			}
-
-			$result = call_user_func($callable, $object);
-		} else {
-			// legacy arguments
-			if ($this->getParamTypeForCallable($callable) !== null) {
-				$described_callback = $this->describeCallable($callable);
-				$msg = "Using legacy style hook and event callback arguments is deprecated. Used by: {$described_callback} for [{$args[0]}, {$args[1]}].";
-				
-				$msg_hash = md5($msg);
-				if (!in_array($msg_hash, $this->deprecated_args_msgs)) {
-					elgg_deprecated_notice($msg, "3.1");
-					$this->deprecated_args_msgs[] = $msg_hash;
-				}
-			}
-			
-			$result = call_user_func_array($callable, $args);
 		}
+
+		$result = call_user_func($callable, $object);
 
 		return [true, $result, $object];
 	}
@@ -147,29 +123,10 @@ class HandlersService {
 		if (is_string($callable)
 			&& preg_match(DiContainer::CLASS_NAME_PATTERN_53, $callable)
 			&& class_exists($callable)) {
-			// @todo Eventually a more advanced DIC could auto-inject dependencies
 			$callable = new $callable;
 		}
 
 		return is_callable($callable) ? $callable : null;
-	}
-
-	/**
-	 * Should we pass this callable a Hook/Event object instead of the 2.0 arguments?
-	 *
-	 * @param callable $callable Callable
-	 *
-	 * @return bool
-	 */
-	private function acceptsObject($callable) {
-		// note: caching string callables didn't help any
-		$type = (string) $this->getParamTypeForCallable($callable);
-		if (0 === strpos($type, 'Elgg\\')) {
-			// probably right. We can just assume and let PHP handle it
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

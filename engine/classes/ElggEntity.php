@@ -44,7 +44,7 @@ use Elgg\Exceptions\Filesystem\IOException;
  */
 abstract class ElggEntity extends \ElggData implements EntityIcon {
 
-	public static $primary_attr_names = [
+	public const PRIMARY_ATTR_NAMES = [
 		'guid',
 		'type',
 		'subtype',
@@ -57,7 +57,10 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		'enabled',
 	];
 
-	protected static $integer_attr_names = [
+	/**
+	 * @var string[] attributes that are integers
+	 */
+	protected const INTEGER_ATTR_NAMES = [
 		'guid',
 		'owner_guid',
 		'container_guid',
@@ -1539,19 +1542,19 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	protected function load(stdClass $row) {
 		$attributes = array_merge($this->attributes, (array) $row);
 
-		if (array_diff(self::$primary_attr_names, array_keys($attributes)) !== []) {
+		if (array_diff(self::PRIMARY_ATTR_NAMES, array_keys($attributes)) !== []) {
 			// Some primary attributes are missing
 			return false;
 		}
 
 		foreach ($attributes as $name => $value) {
-			if (!in_array($name, self::$primary_attr_names)) {
+			if (!in_array($name, self::PRIMARY_ATTR_NAMES)) {
 				$this->setVolatileData("select:$name", $value);
 				unset($attributes[$name]);
 				continue;
 			}
 
-			if (in_array($name, self::$integer_attr_names)) {
+			if (in_array($name, static::INTEGER_ATTR_NAMES)) {
 				$attributes[$name] = (int) $value;
 			}
 		}

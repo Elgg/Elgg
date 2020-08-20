@@ -119,7 +119,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
-		$this->assertEquals(elgg_echo('LoginException:UsernameFailure'), $response->getContent());
+		$this->assertEquals(elgg_echo('LoginException:PasswordFailure'), $response->getContent());
 	}
 	
 	public function testLoginFailsWithDisabledUser() {
@@ -185,7 +185,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 
 	public function testCanPreventLoginWithHook() {
 
-		$handler = function() {
+		$handler = function(\Elgg\Event $hook) {
 			return false;
 		};
 

@@ -3,7 +3,7 @@
  * Advanced site settings, debugging section.
  */
 
-$config = _elgg_config();
+$config = elgg()->config;
 $value = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
 
 $help = elgg_echo('installation:debug');

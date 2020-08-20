@@ -513,6 +513,7 @@ Removed views / resources
 * ``object/plugin/elements/contributors``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
+* ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
 
 Removed hooks / events
 ----------------------

@@ -63,9 +63,9 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		_elgg_services()->session->removeLoggedInUser();
 	}
 
-	public function allowDelete($hook, $type, $return, $params) {
+	public function allowDelete(\Elgg\Hook $hook) {
 		
-		$hook_user = elgg_extract('user', $params);
+		$hook_user = $hook->getUserParam();
 		if (!$hook_user) {
 			return;
 		}
@@ -104,11 +104,11 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		];
 
 		$captured = [];
-		$hook_handler = function ($hook, $type, $value, $params) use (&$captured) {
-			$captured['hook_value'] = $value;
+		$hook_handler = function (\Elgg\Hook $hook) use (&$captured) {
+			$captured['hook_value'] = $hook->getValue();
 		};
-		$event_handler = function ($event, $type, $object) use (&$captured) {
-			$captured['event_object'] = $object;
+		$event_handler = function (\Elgg\Event $event) use (&$captured) {
+			$captured['event_object'] = $event->getObject();
 		};
 
 		elgg_register_plugin_hook_handler('creating', 'river', $hook_handler);
@@ -195,8 +195,8 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$item = elgg_create_river_item($params);
 
 		$captured = null;
-		$event_handler = function ($event, $type, $object) use (&$captured) {
-			$captured = $object;
+		$event_handler = function (\Elgg\Event $event) use (&$captured) {
+			$captured = $event->getObject();
 		};
 
 		elgg_register_event_handler('delete:after', 'river', $event_handler);
@@ -220,8 +220,8 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		$this->assertTrue($item->canDelete());
 
 		$captured = null;
-		$handler = function () use (&$captured) {
-			$captured = func_get_args();
+		$handler = function (\Elgg\Hook $hook) use (&$captured) {
+			$captured = clone $hook; // need to clone to keep original starting values
 
 			return false;
 		};
@@ -229,9 +229,11 @@ class ElggCoreRiverAPITest extends \Elgg\IntegrationTestCase {
 		elgg_register_plugin_hook_handler('permissions_check:delete', 'river', $handler);
 
 		$this->assertFalse($item->canDelete());
-		$this->assertTrue($captured[2]);
-		$this->assertSame($captured[3]['item'], $item);
-		$this->assertSame($captured[3]['user'], elgg_get_logged_in_user_entity());
+		
+		$this->assertInstanceOf(\Elgg\Hook::class, $captured);
+		$this->assertTrue($captured->getValue());
+		$this->assertSame($captured->getParam('item'), $item);
+		$this->assertSame($captured->getUserParam(), elgg_get_logged_in_user_entity());
 
 		$this->assertFalse($item->delete());
 

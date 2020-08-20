@@ -39,7 +39,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 
 		$this->assertTrue($last->getPriority() > 0);
 
-		$max_priority = _elgg_get_max_plugin_priority();
+		$max_priority = _elgg_services()->plugins->getMaxPriority();
 		$last->setPriority($max_priority + 10);
 		$this->assertEquals($max_priority, $last->getPriority());
 
@@ -52,7 +52,7 @@ class ElggPluginIntegrationTest extends \Elgg\IntegrationTestCase {
 		$last->setPriority('-1');
 		$this->assertEquals(1, $last->getPriority());
 
-		$max_priority = _elgg_get_max_plugin_priority();
+		$max_priority = _elgg_services()->plugins->getMaxPriority();
 		$last->setPriority('last');
 		$this->assertEquals($max_priority, $last->getPriority());
 

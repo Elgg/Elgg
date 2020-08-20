@@ -22,14 +22,6 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	global $messagesendflag;
 	$messagesendflag = 1;
 
-	// @todo remove globals
-	global $messages_pm;
-	if ($notify) {
-		$messages_pm = 1;
-	} else {
-		$messages_pm = 0;
-	}
-
 	// If $sender_guid == 0, set to current user
 	if ($sender_guid == 0) {
 		$sender_guid = (int) elgg_get_logged_in_user_guid();

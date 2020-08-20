@@ -87,7 +87,7 @@ function entity_row_to_elggstar($row) {
  */
 function get_entity($guid) {
 	if ($guid == 1) {
-		return _elgg_config()->site;
+		return _elgg_services()->config->site;
 	}
 	return _elgg_services()->entityTable->get($guid);
 }
@@ -116,7 +116,7 @@ function elgg_entity_exists($guid) {
  * @since 1.8.0
  */
 function elgg_get_site_entity() {
-	return _elgg_config()->site;
+	return _elgg_services()->config->site;
 }
 
 /**
@@ -584,7 +584,7 @@ function elgg_list_entities(array $options = [], $getter = 'elgg_get_entities', 
 
 	$defaults = [
 		'offset' => (int) max(get_input($offset_key, 0), 0),
-		'limit' => (int) max(get_input('limit', _elgg_config()->default_limit), 0),
+		'limit' => (int) max(get_input('limit', _elgg_services()->config->default_limit), 0),
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => true,
@@ -729,7 +729,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 		return false;
 	}
 
-	$entities = _elgg_config()->registered_entities;
+	$entities = _elgg_services()->config->registered_entities;
 	if (empty($entities)) {
 		$entities = [];
 	}
@@ -747,7 +747,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 		$entities[$type][] = $subtype;
 	}
 
-	_elgg_config()->registered_entities = $entities;
+	_elgg_services()->config->registered_entities = $entities;
 
 	return true;
 }
@@ -770,7 +770,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
 		return false;
 	}
 
-	$entities = _elgg_config()->registered_entities;
+	$entities = _elgg_services()->config->registered_entities;
 	if (empty($entities)) {
 		return false;
 	}
@@ -790,7 +790,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
 		unset($entities[$type]);
 	}
 
-	_elgg_config()->registered_entities = $entities;
+	_elgg_services()->config->registered_entities = $entities;
 	return true;
 }
 
@@ -803,7 +803,7 @@ function elgg_unregister_entity_type($type, $subtype = null) {
  * @see elgg_register_entity_type()
  */
 function get_registered_entity_types($type = null) {
-	$registered_entities = _elgg_config()->registered_entities;
+	$registered_entities = _elgg_services()->config->registered_entities;
 	if (empty($registered_entities)) {
 		return false;
 	}
@@ -832,7 +832,7 @@ function get_registered_entity_types($type = null) {
  * @return bool Depending on whether or not the type has been registered
  */
 function is_registered_entity_type($type, $subtype = null) {
-	$registered_entities = _elgg_config()->registered_entities;
+	$registered_entities = _elgg_services()->config->registered_entities;
 	if (empty($registered_entities)) {
 		return false;
 	}

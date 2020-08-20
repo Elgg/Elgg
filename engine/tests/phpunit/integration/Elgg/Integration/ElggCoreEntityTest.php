@@ -189,7 +189,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggEntityDisableAndEnable() {
-		$CONFIG = _elgg_config();
+		$dbprefix = elgg()->db->prefix;
 
 		// add annotations and metadata to check if they're disabled.
 		$annotation_id = $this->entity->annotate('test_annotation_' . rand(), 'test_value_' . rand());
@@ -198,13 +198,13 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 		// ensure disabled by comparing directly with database
 		$entity = elgg()->db->getDataRow("SELECT *
-			FROM {$CONFIG->dbprefix}entities
+			FROM {$dbprefix}entities
 			WHERE guid = '{$this->entity->guid}'
 		");
 		$this->assertEquals('no', $entity->enabled);
 
 		$annotation = elgg()->db->getDataRow("SELECT *
-			FROM {$CONFIG->dbprefix}annotations
+			FROM {$dbprefix}annotations
 			WHERE id = '$annotation_id'
 		");
 		$this->assertEquals('no', $annotation->enabled);
@@ -215,13 +215,13 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		// check enabled
 		// check annotations and metadata enabled.
 		$entity = elgg()->db->getDataRow("SELECT *
-			FROM {$CONFIG->dbprefix}entities
+			FROM {$dbprefix}entities
 			WHERE guid = '{$this->entity->guid}'
 		");
 		$this->assertEquals('yes', $entity->enabled);
 
 		$annotation = elgg()->db->getDataRow("SELECT *
-			FROM {$CONFIG->dbprefix}annotations
+			FROM {$dbprefix}annotations
 			WHERE id = '$annotation_id'
 		");
 		$this->assertEquals('yes', $annotation->enabled);
@@ -231,7 +231,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	public function testElggEntityRecursiveDisableAndEnable() {
-		$CONFIG = _elgg_config();
+		$CONFIG = _elgg_services()->config;
 
 		$obj1 = new ElggObject();
 		$obj1->subtype = $this->getRandomSubtype();

@@ -72,10 +72,6 @@ class RiverWhereClause extends WhereClause {
 
 		$wheres = [];
 		$wheres[] = parent::prepare($qb, $table_alias);
-
-		if (isset($this->enabled)) {
-			elgg_deprecated_notice('The use of the enabled state for river items is deprecated.', '3.2');
-		}
 		
 		$types = new TypeSubtypeWhereClause();
 		$types->type_subtype_pairs = $this->type_subtype_pairs;

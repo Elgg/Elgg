@@ -8,8 +8,6 @@
  *
  * The Elgg installation attempts to populate this file with the correct settings
  * and then rename it to settings.php.
- *
- * @todo Turn this into something we handle more automatically.
  */
 
 date_default_timezone_set('{{timezone}}');

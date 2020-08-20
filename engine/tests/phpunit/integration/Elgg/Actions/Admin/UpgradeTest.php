@@ -7,6 +7,7 @@ use Elgg\Exceptions\Http\EntityNotFoundException;
 use Elgg\Http\OkResponse;
 use Elgg\Upgrade\AsynchronousUpgrade;
 use Elgg\Upgrade\Result;
+use Elgg\Helpers\Actions\Admin\UpgradeTestBatch;
 
 /**
  * @group UpgradeService
@@ -60,36 +61,8 @@ class UpgradeTest extends ActionResponseTestCase {
 		], $response->getContent());
 
 		$this->assertTrue($upgrade->isCompleted());
-		$this->assertEmpty(_elgg_services()->upgrades->getPendingUpgrades());
-		$this->assertFalse(elgg_admin_notice_exists('pending_upgrades'));
-	}
-}
-
-class UpgradeTestBatch implements AsynchronousUpgrade {
-
-	protected $_version;
-
-	public function getVersion() {
-		if (!isset($this->_version)) {
-			$this->_version = date('Ymd') . rand(10, 99);
+		if (!_elgg_services()->upgrades->getPendingUpgrades()) {
+			$this->assertFalse(elgg_admin_notice_exists('pending_upgrades'));
 		}
-
-		return $this->_version;
-	}
-
-	public function needsIncrementOffset() {
-		return true;
-	}
-
-	public function shouldBeSkipped() {
-		return false;
-	}
-
-	public function countItems() {
-		return 100;
-	}
-
-	public function run(Result $result, $offset) {
-		$result->addSuccesses(10);
 	}
 }

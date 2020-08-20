@@ -12,7 +12,6 @@ $categories = [];
 foreach ($plugins as $plugin) {
 	if (!$plugin->isValid()) {
 		if ($plugin->isActive()) {
-			// @todo this needs to go somewhere else
 			$disable_plugins = elgg_get_config('auto_disable_plugins');
 			if ($disable_plugins === null) {
 				$disable_plugins = true;

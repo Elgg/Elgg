@@ -96,19 +96,27 @@ Let's pass some data to a module:
 
     <?php
 
-    function myplugin_config_site($hook, $type, $value, $params) {
+    function myplugin_config_site(\Elgg\Hook $hook) {
+        $value = $hook->getValue();
+    	
         // this will be cached client-side
         $value['myplugin']['api'] = elgg_get_site_url() . 'myplugin-api';
         $value['myplugin']['key'] = 'none';
+        
         return $value;
     }
 
-    function myplugin_config_page($hook, $type, $value, $params) {
+    function myplugin_config_page(\Elgg\Hook $hook) {
         $user = elgg_get_logged_in_user_entity();
-        if ($user) {
-            $value['myplugin']['key'] = $user->myplugin_api_key;
-            return $value;
+        if (!$user) {
+        	return;
         }
+        
+        $value = $hook->getValue();
+        
+        $value['myplugin']['key'] = $user->myplugin_api_key;
+        
+        return $value;
     }
 
     elgg_register_plugin_hook_handler('elgg.data', 'site', 'myplugin_config_site');
@@ -177,7 +185,7 @@ The best way to accomplish this is by configuring the path to the file using the
     return [
         'views' => [
 	        'default' => [
-	            'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+	            'underscore.js' => 'vendor/npm-asset/underscore/underscore.min.js',
 	        ],
         ],
     ];
@@ -191,7 +199,7 @@ you can use something like this instead:
     return [
         'views' => [
 	        'default' => [
-	            'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+	            'underscore.js' => __DIR__ . '/node_modules/underscore/underscore.min.js',
 	        ],
         ],
     ];
@@ -824,7 +832,7 @@ Third-party assets
 ==================
 
 We recommend managing third-party scripts and styles with Composer.
-Elgg's composer.json is configured to install dependencies from the **Bower** or **Yarn** package repositories using
+Elgg's composer.json is configured to install dependencies from the **NPM** or **Yarn** package repositories using
 Composer command-line tool. Core configuration installs the assets from `Asset Packagist <https://asset-packagist.org>`_
 (a repository managed by the Yii community).
 
@@ -835,7 +843,7 @@ For example, to include jQuery, you could run the following Composer commands:
 
 .. code-block:: sh
 
-    composer require bower-asset/jquery:~2.0
+    composer require npm-asset/jquery:~2.0
 
 
 If you are using a starter-project, or pulling in Elgg as a composer dependency via a custom composer project,

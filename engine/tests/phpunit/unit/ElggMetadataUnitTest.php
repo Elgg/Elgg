@@ -78,9 +78,10 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		
 		_elgg_services()->hooks->backup();
 
-		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function($hook, $type, $return, $params) use ($metadata, $name) {
-			$this->assertEquals($metadata, $params['extender']);
-			if ($params['extender']->getSubtype() == $name) {
+		_elgg_services()->hooks->registerHandler('extender:url', 'metadata', function(\Elgg\Hook $hook) use ($metadata, $name) {
+			$extender = $hook->getParam('extender');
+			$this->assertEquals($metadata, $extender);
+			if ($extender->getSubtype() == $name) {
 				return 'foo';
 			}
 		});
@@ -108,7 +109,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		$id = \Elgg\Mocks\Database\MetadataTable::$iterator + 1;
 
 		// Insert
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 		$sql = "INSERT INTO {$dbprefix}metadata
 				(entity_guid, name, value, value_type, time_created)
 				VALUES (:entity_guid, :name, :value, :value_type, :time_created)";
@@ -150,7 +151,7 @@ class ElggMetadataUnitTest extends UnitTestCase {
 
 		$this->assertInstanceOf(\ElggMetadata::class, $metadata);
 		
-		$dbprefix = _elgg_config()->dbprefix;
+		$dbprefix = _elgg_services()->config->dbprefix;
 		_elgg_services()->db->addQuerySpec([
 			'sql' => "DELETE FROM {$dbprefix}metadata WHERE id = :id",
 			'params' => [

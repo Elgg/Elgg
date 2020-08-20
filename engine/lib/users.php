@@ -286,7 +286,7 @@ function elgg_get_login_url(array $query = [], $fragment = '') {
  */
 function _elgg_user_get_subscriber_unban_action(\Elgg\Hook $hook) {
 
-	if (!_elgg_config()->security_notify_user_ban) {
+	if (!_elgg_services()->config->security_notify_user_ban) {
 		return;
 	}
 
@@ -322,7 +322,7 @@ function _elgg_user_get_subscriber_unban_action(\Elgg\Hook $hook) {
  */
 function _elgg_user_ban_notification(\Elgg\Event $event) {
 
-	if (!_elgg_config()->security_notify_user_ban) {
+	if (!_elgg_services()->config->security_notify_user_ban) {
 		return;
 	}
 

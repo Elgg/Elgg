@@ -31,7 +31,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->owner_guid = $this->user->guid;
 
 		$dir = (new EntityDirLocator($this->owner_guid))->getPath();
-		$this->owner_dir_path = _elgg_config()->dataroot . $dir;
+		$this->owner_dir_path = _elgg_services()->config->dataroot . $dir;
 
 		_elgg_services()->hooks->backup();
 		_elgg_services()->events->backup();
@@ -67,7 +67,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$tmp->owner_guid = $this->owner_guid;
 		$tmp->setFilename('tmp.gif');
 		$tmp->open('write');
-		$tmp->write(file_get_contents(_elgg_config()->dataroot . '1/1/400x300.gif'));
+		$tmp->write(file_get_contents(_elgg_services()->config->dataroot . '1/1/400x300.gif'));
 		$tmp->close();
 
 		$tmp_file = $tmp->getFilenameOnFilestore();
@@ -91,7 +91,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$tmp->owner_guid = $this->owner_guid;
 		$tmp->setFilename('tmp.gif');
 		$tmp->open('write');
-		$tmp->write(file_get_contents(_elgg_config()->dataroot . '1/1/400x300.gif'));
+		$tmp->write(file_get_contents(_elgg_services()->config->dataroot . '1/1/400x300.gif'));
 		$tmp->close();
 
 		$tmp_gif = $tmp->getFilenameOnFilestore();
@@ -101,7 +101,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$tmp->owner_guid = $this->owner_guid;
 		$tmp->setFilename('tmp.png');
 		$tmp->open('write');
-		$tmp->write(file_get_contents(_elgg_config()->dataroot . '1/1/400x300.png'));
+		$tmp->write(file_get_contents(_elgg_services()->config->dataroot . '1/1/400x300.png'));
 		$tmp->close();
 
 		$tmp_png = $tmp->getFilenameOnFilestore();
@@ -138,7 +138,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$tmp->owner_guid = $this->owner_guid;
 		$tmp->setFilename('tmp.gif');
 		$tmp->open('write');
-		$tmp->write(file_get_contents(_elgg_config()->dataroot . '1/1/400x300.gif'));
+		$tmp->write(file_get_contents(_elgg_services()->config->dataroot . '1/1/400x300.gif'));
 		$tmp->close();
 
 		$tmp_file = $tmp->getFilenameOnFilestore();
@@ -172,7 +172,7 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$tmp->owner_guid = $this->owner_guid;
 		$tmp->setFilename('tmp.gif');
 		$tmp->open('write');
-		$tmp->write(file_get_contents(_elgg_config()->dataroot . '1/1/400x300.gif'));
+		$tmp->write(file_get_contents(_elgg_services()->config->dataroot . '1/1/400x300.gif'));
 		$tmp->close();
 
 		$tmp_file = $tmp->getFilenameOnFilestore();
@@ -192,19 +192,19 @@ class UploadServiceUnitTest extends \Elgg\UnitTestCase {
 		$upload_event_calls = 0;
 		$upload_hook_calls = 0;
 
-		_elgg_services()->events->registerHandler('upload:after', 'file', function($event, $type, $object) use (&$upload_event_calls) {
-			$this->assertEquals('upload:after', $event);
-			$this->assertEquals('file', $type);
-			$this->assertInstanceOf(\ElggFile::class, $object);
+		_elgg_services()->events->registerHandler('upload:after', 'file', function(\Elgg\Event $event) use (&$upload_event_calls) {
+			$this->assertEquals('upload:after', $event->getName());
+			$this->assertEquals('file', $event->getType());
+			$this->assertInstanceOf(\ElggFile::class, $event->getObject());
 			$upload_event_calls++;
 		});
 
-		_elgg_services()->hooks->registerHandler('upload', 'file', function($hook, $type, $return, $params) use (&$upload_hook_calls) {
-			$this->assertNull($return);
-			$this->assertEquals('upload', $hook);
-			$this->assertEquals('file', $type);
-			$this->assertInstanceOf(\ElggFile::class, $params['file']);
-			$this->assertInstanceOf(UploadedFile::class, $params['upload']);
+		_elgg_services()->hooks->registerHandler('upload', 'file', function(\Elgg\Hook $hook) use (&$upload_hook_calls) {
+			$this->assertNull($hook->getValue());
+			$this->assertEquals('upload', $hook->getName());
+			$this->assertEquals('file', $hook->getType());
+			$this->assertInstanceOf(\ElggFile::class, $hook->getParam('file'));
+			$this->assertInstanceOf(UploadedFile::class, $hook->getParam('upload'));
 			$upload_hook_calls++;
 			return false;
 		});

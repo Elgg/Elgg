@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\Exceptions\Filesystem\IOException;
-
 /**
  * Relationship class.
  *
@@ -18,7 +16,7 @@ class ElggRelationship extends \ElggData {
 	/**
 	 * @var string[] attributes that are integers
 	 */
-	protected static $integer_attr_names = [
+	protected const INTEGER_ATTR_NAMES = [
 		'guid_one',
 		'guid_two',
 		'time_created',
@@ -34,7 +32,7 @@ class ElggRelationship extends \ElggData {
 		$this->initializeAttributes();
 
 		foreach ((array) $row as $key => $value) {
-			if (in_array($key, self::$integer_attr_names)) {
+			if (in_array($key, static::INTEGER_ATTR_NAMES)) {
 				$value = (int) $value;
 			}
 			
@@ -125,33 +123,7 @@ class ElggRelationship extends \ElggData {
 	 * @return string
 	 */
 	public function getURL() {
-		$url = '';
-		// @todo remove when elgg_register_relationship_url_handler() has been removed
-		if ($this->id) {
-			$subtype = $this->getSubtype();
-
-			$function = "";
-			$handlers = _elgg_config()->relationship_url_handler;
-
-			if (isset($handlers[$subtype])) {
-				$function = $handlers[$subtype];
-			}
-			if (isset($handlers['all'])) {
-				$function = $handlers['all'];
-			}
-
-			if (is_callable($function)) {
-				$url = call_user_func($function, $this);
-			}
-
-			if ($url) {
-				$url = elgg_normalize_url($url);
-			}
-		}
-
-		$type = $this->getType();
-		$params = ['relationship' => $this];
-		$url = _elgg_services()->hooks->trigger('relationship:url', $type, $params, $url);
+		$url = _elgg_services()->hooks->trigger('relationship:url', $this->getType(), ['relationship' => $this], '');
 
 		return elgg_normalize_url($url);
 	}

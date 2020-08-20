@@ -127,8 +127,6 @@ define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
 
 /**
  * Internal settings prefix
- *
- * @todo This could be resolved by promoting \ElggPlugin to a 5th type.
  */
 define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
 

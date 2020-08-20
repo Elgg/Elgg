@@ -3,7 +3,7 @@
  * Developer settings
  */
 
-$config = _elgg_config();
+$config = elgg()->config;
 $debug_value = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
 
 $debug_help = elgg_echo('developers:help:debug_level');
@@ -15,8 +15,8 @@ $data = [
 	'simple_cache' => [
 		'#type' => 'checkbox',
 		'value' => 1,
-		'checked' => _elgg_config()->simplecache_enabled == 1,
-		'disabled' => _elgg_config()->hasInitialValue('simplecache_enabled'),
+		'checked' => $config->simplecache_enabled == 1,
+		'disabled' => $config->hasInitialValue('simplecache_enabled'),
 		'switch' => true,
 	],
 

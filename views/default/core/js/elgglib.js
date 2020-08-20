@@ -145,8 +145,6 @@ elgg.isNullOrUndefined = function(val) {
 
 /**
  * Throw an exception of the type doesn't match
- *
- * @todo Might be more appropriate for debug mode only?
  */
 elgg.assertTypeOf = function(type, val) {
 	if (typeof val !== type) {

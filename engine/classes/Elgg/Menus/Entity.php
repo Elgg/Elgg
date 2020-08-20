@@ -143,7 +143,7 @@ class Entity {
 		}
 		
 		// down and bottom links only if not at bottom
-		if ($priority < _elgg_get_max_plugin_priority()) {
+		if ($priority < _elgg_services()->plugins->getMaxPriority()) {
 			$return[] = \ElggMenuItem::factory([
 				'name' => 'down',
 				'icon' => 'angle-down',

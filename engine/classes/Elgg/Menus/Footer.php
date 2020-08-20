@@ -49,7 +49,7 @@ class Footer {
 	 * @return void|MenuItems
 	 */
 	public static function registerElggBranding(\Elgg\Hook $hook) {
-		if (_elgg_config()->remove_branding) {
+		if (_elgg_services()->config->remove_branding) {
 			return;
 		}
 		

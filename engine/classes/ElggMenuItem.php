@@ -252,7 +252,6 @@ class ElggMenuItem implements \Elgg\Collections\CollectionItemInterface {
 	 *
 	 * @param string $href URL or false if not a link
 	 * @return void
-	 * @todo this should probably normalize
 	 */
 	public function setHref($href) {
 		$this->href = $href;

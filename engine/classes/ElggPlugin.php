@@ -257,7 +257,7 @@ class ElggPlugin extends ElggObject {
 		// if no priority assume a priority of 1
 		$old_priority = $this->getPriority();
 		$old_priority = $old_priority ? : 1;
-		$max_priority = _elgg_get_max_plugin_priority() ? : 1;
+		$max_priority = _elgg_services()->plugins->getMaxPriority() ? : 1;
 
 		// can't use switch here because it's not strict and php evaluates +1 == 1
 		if ($priority === '+1') {
@@ -944,7 +944,7 @@ class ElggPlugin extends ElggObject {
 	 * @throws PluginException
 	 */
 	protected function registerViews() {
-		if (_elgg_config()->system_cache_loaded) {
+		if (_elgg_services()->config->system_cache_loaded) {
 			return;
 		}
 

@@ -3,7 +3,7 @@
  * Save the developer settings
  */
 
-if (!_elgg_config()->hasInitialValue('simplecache_enabled')) {
+if (!elgg()->config->hasInitialValue('simplecache_enabled')) {
 	if (get_input('simple_cache')) {
 		elgg_enable_simplecache();
 	} else {
@@ -17,7 +17,7 @@ if (get_input('system_cache')) {
 	elgg_disable_system_cache();
 }
 
-if (!_elgg_config()->hasInitialValue('debug')) {
+if (!elgg()->config->hasInitialValue('debug')) {
 	$debug = get_input('debug_level');
 	if ($debug) {
 		elgg_save_config('debug', $debug);

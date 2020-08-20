@@ -377,7 +377,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler('action:validate', 'output3', function ($hook, $type, $return, $params) {
+		_elgg_services()->hooks->registerHandler('action:validate', 'output3', function (\Elgg\Hook $hook) {
 			throw new ValidationException('Invalid');
 		});
 
@@ -518,8 +518,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function ($hook, $type, $api_response) {
+		_elgg_services()->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function (\Elgg\Hook $hook) {
 			/* @var $api_response Services\AjaxResponse */
+			$api_response = $hook->getValue();
+			
 			$api_response->setTtl(1000);
 			$api_response->setData((object) ['value' => 'output3_modified']);
 
@@ -568,8 +570,10 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function ($hook, $type, $api_response) {
+		_elgg_services()->hooks->registerHandler(Services\AjaxResponse::RESPONSE_HOOK, 'action:output3', function (\Elgg\Hook $hook) {
 			/* @var $api_response Services\AjaxResponse */
+			$api_response = $hook->getValue();
+			
 			return $api_response->cancel();
 		});
 
@@ -1090,10 +1094,12 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->createService($request);
 		$this->addCsrfTokens($request);
 
-		_elgg_services()->hooks->registerHandler('response', 'action:output4', function ($hook, $type, $response, $params) {
-			$this->assertEquals('response', $hook);
-			$this->assertEquals('action:output4', $type);
-			$this->assertEquals($response, $params);
+		_elgg_services()->hooks->registerHandler('response', 'action:output4', function (\Elgg\Hook $hook) {
+			$response = $hook->getValue();
+			
+			$this->assertEquals('response', $hook->getName());
+			$this->assertEquals('action:output4', $hook->getType());
+			$this->assertEquals($response, $hook->getParams());
 			$this->assertInstanceOf(OkResponse::class, $response);
 
 			$response->setContent('good bye');

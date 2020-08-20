@@ -102,7 +102,8 @@ Command class must extend ``\Elgg\CLI\Command``.
 
     }
 
-    elgg_register_plugin_hook_handler('commands', 'cli', function($hook, $type, $return) {
+    elgg_register_plugin_hook_handler('commands', 'cli', function(\Elgg\Hook $hook) {
+        $return = $hook->getValue();
 
         $return[] = MyCommand::class;
 

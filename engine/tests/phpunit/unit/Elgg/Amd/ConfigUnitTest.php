@@ -145,7 +145,7 @@ class ConfigUnitTest extends \Elgg\UnitTestCase {
 
 		$test_input = ['test' => 'test_' . time()];
 
-		$this->hooks->registerHandler('config', 'amd', function() use ($test_input) {
+		$this->hooks->registerHandler('config', 'amd', function(\Elgg\Hook $hook) use ($test_input) {
 			return $test_input;
 		});
 

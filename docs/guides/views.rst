@@ -154,7 +154,7 @@ If you check your assets into source control, point to them like this:
             // viewtype
             'default' => [
                 // view => /path/from/filesystem/root
-                'js/jquery-ui.js' => __DIR__ . '/bower_components/jquery-ui/jquery-ui.min.js',
+                'js/jquery-ui.js' => __DIR__ . '/node_modules/components-jqueryui/jquery-ui.min.js',
             ],
         ],
     ];
@@ -168,7 +168,7 @@ To point to assets installed with composer, use install-root-relative paths by l
         'views' => [
             'default' => [
                 // view => path/from/install/root
-                'js/jquery-ui.js' => 'vendor/bower-asset/jquery-ui/jquery-ui.min.js',
+                'js/jquery-ui.js' => 'vendor/npm-asset/components-jqueryui/jquery-ui.min.js',
             ],
         ],
     ];
@@ -177,7 +177,7 @@ Elgg core uses this feature extensively, though the value is returned directly f
 
 .. note::
 
-    You don't have to use Bower, Composer Asset Plugin, or any other script for
+    You don't have to use NPM, Composer Asset Plugin or any other script for
     managing your plugin's assets, but we highly recommend using a package manager
     of some kind because it makes upgrading so much easier.
 
@@ -357,9 +357,12 @@ Here we'll alter the default pagination limit for the comments view:
 
 	elgg_register_plugin_hook_handler('view_vars', 'page/elements/comments', 'myplugin_alter_comments_limit');
 
-	function myplugin_alter_comments_limit($hook, $type, $vars, $params) {
+	function myplugin_alter_comments_limit(\Elgg\Hook $hook) {
+	    $vars = $hook->getValue();
+	    
 	    // only 10 comments per page
 	    $vars['limit'] = elgg_extract('limit', $vars, 10);
+	    
 	    return $vars;
 	}
 
@@ -416,7 +419,7 @@ string. View extensions will not be used and the ``view`` hook will not be trigg
 
     elgg_register_plugin_hook_handler('view_vars', 'navigation/breadcrumbs', 'myplugin_no_page_breadcrumbs');
 
-    function myplugin_no_page_breadcrumbs($hook, $type, $vars, $params) {
+    function myplugin_no_page_breadcrumbs(\Elgg\Hook $hook) {
         if (elgg_in_context('pages')) {
             return ['__view_output' => ""];
         }

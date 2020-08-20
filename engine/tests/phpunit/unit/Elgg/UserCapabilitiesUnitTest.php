@@ -90,12 +90,12 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertTrue($entity->canEdit($user->guid));
 
-		$this->hooks->registerHandler('permissions_check', 'object', function($hook, $type, $return, $params) use ($entity, $user) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($user, $params['user']);
-			$this->assertTrue($return);
+		$this->hooks->registerHandler('permissions_check', 'object', function(\Elgg\Hook $hook) use ($entity, $user) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($user, $hook->getUserParam());
+			$this->assertTrue($hook->getValue());
 			return false;
 		});
 		$this->assertFalse($entity->canEdit($user->guid));
@@ -137,12 +137,12 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canDelete($owner->guid));
 
-		$this->hooks->registerHandler('permissions_check:delete', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertTrue($return);
+		$this->hooks->registerHandler('permissions_check:delete', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertTrue($hook->getValue());
 			return false;
 		});
 
@@ -186,13 +186,13 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
-		$this->hooks->registerHandler('container_permissions_check', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['container']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['container']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals('bar', $params['subtype']);
-			$this->assertTrue($return);
+		$this->hooks->registerHandler('container_permissions_check', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getParam('container'));
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getParam('container'));
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals('bar', $hook->getParam('subtype'));
+			$this->assertTrue($hook->getValue());
 			return false;
 		});
 
@@ -298,14 +298,14 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($annotation->canEdit($owner->guid));
 
-		$this->hooks->registerHandler('permissions_check', 'annotation', function($hook, $type, $return, $params) use ($entity, $owner, $annotation) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertInstanceOf(ElggAnnotation::class, $params['annotation']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals($annotation, $params['annotation']);
-			$this->assertTrue($return);
+		$this->hooks->registerHandler('permissions_check', 'annotation', function(\Elgg\Hook $hook) use ($entity, $owner, $annotation) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertInstanceOf(ElggAnnotation::class, $hook->getParam('annotation'));
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals($annotation, $hook->getParam('annotation'));
+			$this->assertTrue($hook->getValue());
 			return false;
 		});
 
@@ -384,13 +384,13 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		
 		$this->assertTrue($entity->canComment($owner->guid));
 
-		$this->hooks->registerHandler('permissions_check:comment', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals('object', $type);
-			$this->assertNull($return); // called from ElggObject, no default value
+		$this->hooks->registerHandler('permissions_check:comment', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals('object', $hook->getType());
+			$this->assertNull($hook->getValue()); // called from ElggObject, no default value
 			return false;
 		});
 
@@ -477,14 +477,14 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 
-		$this->hooks->registerHandler('permissions_check:annotate:baz', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals('baz', $params['annotation_name']);
-			$this->assertEquals('object', $type);
-			$this->assertTrue($return);
+		$this->hooks->registerHandler('permissions_check:annotate:baz', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals('baz', $hook->getParam('annotation_name'));
+			$this->assertEquals('object', $hook->getType());
+			$this->assertTrue($hook->getValue());
 			return false;
 		});
 
@@ -507,14 +507,14 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 
-		$this->hooks->registerHandler('permissions_check:annotate', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals('baz', $params['annotation_name']);
-			$this->assertEquals('object', $type);
-			$this->assertTrue($return);
+		$this->hooks->registerHandler('permissions_check:annotate', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals('baz', $hook->getParam('annotation_name'));
+			$this->assertEquals('object', $hook->getType());
+			$this->assertTrue($hook->getValue());
 			return false;
 		});
 
@@ -537,27 +537,26 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 		]);
 		$this->assertTrue($entity->canAnnotate($owner->guid, 'baz'));
 
-		$this->hooks->registerHandler('permissions_check:annotate:baz', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals('baz', $params['annotation_name']);
-			$this->assertEquals('object', $type);
-			$this->assertTrue($return);
+		$this->hooks->registerHandler('permissions_check:annotate:baz', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals('baz', $hook->getParam('annotation_name'));
+			$this->assertEquals('object', $hook->getType());
+			$this->assertTrue($hook->getValue());
 			return false;
 		});
 
 		$this->assertFalse($entity->canAnnotate($owner->guid, 'baz'));
 
-		$this->hooks->registerHandler('permissions_check:annotate', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['entity']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['entity']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals('baz', $params['annotation_name']);
-			$this->assertEquals('object', $type);
-			$this->assertFalse($return); // return from named hook
+		$this->hooks->registerHandler('permissions_check:annotate', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getEntityParam());
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getEntityParam());
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals('baz', $hook->getParam('annotation_name'));
+			$this->assertEquals('object', $hook->getType());// return from named hook
 			return true;
 		});
 
@@ -573,14 +572,14 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
-		$this->hooks->registerHandler('container_logic_check', 'object', function($hook, $type, $return, $params) use ($entity, $owner) {
-			$this->assertInstanceOf(ElggEntity::class, $params['container']);
-			$this->assertInstanceOf(ElggUser::class, $params['user']);
-			$this->assertEquals($entity, $params['container']);
-			$this->assertEquals($owner, $params['user']);
-			$this->assertEquals('object', $type);
-			$this->assertEquals('bar', $params['subtype']);
-			$this->assertNull($return);
+		$this->hooks->registerHandler('container_logic_check', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertInstanceOf(ElggEntity::class, $hook->getParam('container'));
+			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
+			$this->assertEquals($entity, $hook->getParam('container'));
+			$this->assertEquals($owner, $hook->getUserParam());
+			$this->assertEquals('object', $hook->getType());
+			$this->assertEquals('bar', $hook->getParam('subtype'));
+			$this->assertNull($hook->getValue());
 			return false;
 		});
 
