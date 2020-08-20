@@ -145,47 +145,6 @@ function generate_random_cleartext_password() {
 }
 
 /**
- * Simple function which ensures that a username contains only valid characters.
- *
- * This should only permit chars that are valid on the file system as well.
- *
- * @param string $username Username
- *
- * @return bool
- * @throws RegistrationException
- */
-function validate_username($username) {
-	elgg()->accounts->assertValidUsername($username);
-	return true;
-}
-
-/**
- * Simple validation of a password.
- *
- * @param string $password Clear text password
- *
- * @return bool
- * @throws RegistrationException
- */
-function validate_password($password) {
-	elgg()->accounts->assertValidPassword($password);
-	return true;
-}
-
-/**
- * Simple validation of a email.
- *
- * @param string $address Email address
- *
- * @return bool
- * @throws RegistrationException
- */
-function validate_email_address($address) {
-	elgg()->accounts->assertValidEmail($address);
-	return true;
-}
-
-/**
  * Registers a user, returning false if the username already exists
  *
  * @param string $username              The username of the new user
