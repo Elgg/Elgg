@@ -20,7 +20,7 @@ return [
 		"sprintf.js" => "vendor/npm-asset/sprintf-js/src/sprintf.js",
 		
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
-		"font-awesome/" => "vendor/fortawesome/fontawesome/",
+		"font-awesome/" => "vendor/fortawesome/font-awesome/",
 
 		// For datepicker. More info in the jquery-ui.js view
 		"jquery-ui/i18n/" => "vendor/npm-asset/components-jqueryui/ui/minified/i18n",
