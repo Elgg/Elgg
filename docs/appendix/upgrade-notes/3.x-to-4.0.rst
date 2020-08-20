@@ -67,7 +67,6 @@ plugin activate on install -> elgg-plugin
 plugin name -> elgg-plugin
 plugin description -> composer.json
 plugin categories -> composer.json
-plugin name -> elgg-plugin
 plugin license -> composer.json
 plugin repo link -> composer.json
 plugin issues link -> composer.json
