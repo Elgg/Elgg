@@ -279,21 +279,6 @@ function elgg_get_view_extensions($view) {
 }
 
 /**
- * In CSS content, prepend a path to relative URLs.
- *
- * This is useful to process a CSS view being used as an extension.
- *
- * @param string $css  CSS
- * @param string $path Path to prepend. E.g. "foo/bar/" or "../"
- *
- * @return string
- * @since 2.2
- */
-function elgg_prepend_css_urls($css, $path) {
-	return Minify_CSS_UriRewriter::prepend($css, $path);
-}
-
-/**
  * Assembles and outputs a full page.
  *
  * A "page" in Elgg is determined by the current view type and
