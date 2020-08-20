@@ -466,6 +466,7 @@ Lib functions
 * ``elgg_get_loaded_css()`` use ``elgg_get_loaded_external_files('css', 'head')``
 * ``elgg_get_loaded_js()`` use ``elgg_get_loaded_external_files('js', $location)``
 * ``elgg_get_system_messages()`` use ``elgg()->system_messages->loadRegisters()``
+* ``elgg_prepend_css_urls()``
 * ``elgg_set_system_messages()`` use ``elgg()->system_messages->saveRegisters()``
 * ``get_language_completeness()``  use ``elgg()->translator->getLanguageCompleteness()``
 * ``get_installed_translations()``  use ``elgg()->translator->getInstalledTranslations()``
