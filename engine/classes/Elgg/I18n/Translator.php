@@ -169,7 +169,17 @@ class Translator {
 			$language = $user->language;
 		}
 
-		if ((!$language) && (isset($this->CONFIG->language)) && ($this->CONFIG->language)) {
+		// detect from user agent if not logged in
+		if (!$language) {
+                        $browserlangs = _elgg_services()->request->getLanguages();
+                        if (!empty($browserlangs)) {
+                                $browserlang = explode('_', $browserlangs[0]);
+
+                                $language = $browserlang[0];
+                        }
+		}
+                
+                if ((!$language) && (isset($this->CONFIG->language)) && ($this->CONFIG->language)) {
 			$language = $this->CONFIG->language;
 		}
 
