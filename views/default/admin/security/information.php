@@ -1,10 +1,10 @@
 <?php
-use Elgg\Project\Paths;
-
 /**
  * Admin security information page
  * Lists general security recommendations
  */
+
+use Elgg\Project\Paths;
 
 $params = $vars;
 $params['selected'] = 'information';
@@ -138,6 +138,24 @@ if ($probability > 0 && $divisor > 0) {
 	$chance = $probability / $divisor;
 	$subtext = elgg_echo('admin:security:information:php:session_gc:chance', [$chance]);
 	$subtext .= ' ' . elgg_echo('admin:security:information:php:session_gc:lifetime', [$maxlifetime]);
+}
+
+echo $view_module($icon, $title, $value, $subtext);
+
+// Check for .htaccess hardening
+$icon = $icon_warning;
+$title = elgg_echo('admin:security:information:htaccess:hardening');
+$value = elgg_echo('status:disabled');
+$subtext = elgg_echo('admin:security:information:htaccess:hardening:help');
+
+$curl = curl_init(elgg_normalize_site_url('vendor/autoload.php'));
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_exec($curl);
+
+if (curl_getinfo($curl, CURLINFO_HTTP_CODE) === 403) {
+	// hardening enabled
+	$icon = $icon_ok;
+	$value = elgg_echo('status:enabled');
 }
 
 echo $view_module($icon, $title, $value, $subtext);

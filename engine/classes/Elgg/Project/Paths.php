@@ -76,9 +76,10 @@ class Paths {
 	public static function sanitize($path, $append_slash = true) {
 		// Convert to correct UNIX paths
 		$path = str_replace('\\', '/', $path);
-		$path = str_replace('../', '/', $path);
+		// replace ./ to / to prevent directory traversal
+		$path = preg_replace("/[.]+\//", '/', $path);
 		// replace // with / except when preceeded by :
-		$path = preg_replace("/([^:])\/\//", "$1/", $path);
+		$path = preg_replace("/([^:])[\/]{2,}/", "$1/", $path);
 
 		// Sort trailing slash
 		$path = trim($path);

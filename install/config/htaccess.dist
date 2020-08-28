@@ -128,6 +128,25 @@ RewriteRule "^.well-known/" - [L]
 # hide all dot files/dirs (.git)
 RewriteRule (^\.|/\.) - [F]
 
+# Optional hardering rules to block access to files in the following directories
+# The following coditions can be enabled, when enabling at least one the last three lines NEED to be enabled  
+#RewriteCond %{REQUEST_URI} ^/actions/ [OR]
+#RewriteCond %{REQUEST_URI} ^/bower_components/ [OR]
+#RewriteCond %{REQUEST_URI} ^/elgg_config/ [OR]
+#RewriteCond %{REQUEST_URI} ^/engine/ [OR]
+#RewriteCond %{REQUEST_URI} ^/grunt/ [OR]
+#RewriteCond %{REQUEST_URI} ^/install/ [OR]
+#RewriteCond %{REQUEST_URI} ^/languages/ [OR]
+#RewriteCond %{REQUEST_URI} ^/vendor/ [OR]
+#RewriteCond %{REQUEST_URI} ^/mod/(.*)/actions/ [OR]
+#RewriteCond %{REQUEST_URI} ^/mod/(.*)/languages/ [OR]
+#RewriteCond %{REQUEST_URI} ^/mod/(.*)/vendor/ [OR]
+#RewriteCond %{REQUEST_URI} ^/mod/(.*)/classes/ [OR]
+# The following condition is needed in order to easily enable (some of the) previous conditions
+#RewriteCond 1 2
+#RewriteCond %{REQUEST_FILENAME} -f
+#RewriteRule ^(.*)$ - [F,L]
+
 # Everything else that isn't a file gets routed through Elgg
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
