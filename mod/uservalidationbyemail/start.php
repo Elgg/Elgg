@@ -168,7 +168,7 @@ function _uservalidationbyemail_user_unvalidated_menu(\Elgg\Hook $hook) {
 }
 
 /**
- * Add a menu item to the buld actions for unvalidated users
+ * Add a menu item to the bulk actions for unvalidated users
  *
  * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated:bulk'
  *
