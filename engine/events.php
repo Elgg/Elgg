@@ -9,34 +9,33 @@ return [
 	],
 	'ban' => [
 		'user' => [
-			'_elgg_user_ban_notification' => [],
+			\Elgg\Users\BanUserNotificationHandler::class => [],
 		],
 	],
 	'cache:clear' => [
 		'system' => [
-			'_elgg_clear_caches' => [],
-			'_elgg_reset_opcache' => [],
+			'\Elgg\Cache\EventHandlers::clear' => [],
 		],
 	],
 	'cache:clear:after' => [
 		'system' => [
-			'_elgg_enable_caches' => [],
-			'_elgg_rebuild_public_container' => [],
+			'\Elgg\Cache\EventHandlers::enable' => [],
+			'\Elgg\Cache\EventHandlers::rebuildPublicContainer' => [],
 		],
 	],
 	'cache:clear:before' => [
 		'system' => [
-			'_elgg_disable_caches' => [],
+			'\Elgg\Cache\EventHandlers::disable' => [],
 		],
 	],
 	'cache:invalidate' => [
 		'system' => [
-			'_elgg_invalidate_caches' => [],
+			'\Elgg\Cache\EventHandlers::invalidate' => [],
 		],
 	],
 	'cache:purge' => [
 		'system' => [
-			'_elgg_purge_caches' => [],
+			'\Elgg\Cache\EventHandlers::purge' => [],
 		],
 	],
 	'complete' => [
@@ -67,14 +66,9 @@ return [
 	],
 	'init' => [
 		'system' => [
-			'_elgg_init' => [],
-			'_elgg_views_init' => [],
-			'_elgg_walled_garden_init' => [
-				'priority' => 1000,
-			],
-			'users_init' => [
-				'priority' => 0,
-			],
+			'Elgg\Application\SystemEventHandlers::initEarly' => ['priority' => 0],
+			'Elgg\Application\SystemEventHandlers::init' => [],
+			'Elgg\Application\SystemEventHandlers::initLate' => ['priority' => 1000],
 		],
 	],
 	'login:before' => [
@@ -91,7 +85,7 @@ return [
 	],
 	'ready' => [
 		'system' => [
-			'_elgg_cache_init' => [],
+			'\Elgg\Application\SystemEventHandlers::ready' => [],
 		],
 	],
 	'update:after' => [

@@ -1006,63 +1006,6 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
 }
 
 /**
- * Checks the status of the Walled Garden and forwards to a login page
- * if required.
- *
- * If the site is in Walled Garden mode, all page except those registered as
- * plugin pages by {@elgg_hook public_pages walled_garden} will redirect to
- * a login page.
- *
- * @since 1.8.0
- * @elgg_event_handler init system
- * @return void
- * @internal
- */
-function _elgg_walled_garden_init() {
-	if (!_elgg_services()->config->walled_garden) {
-		return;
-	}
-
-	elgg_register_external_file('css', 'elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
-
-	if (_elgg_services()->config->default_access == ACCESS_PUBLIC) {
-		elgg_set_config('default_access', ACCESS_LOGGED_IN);
-	}
-
-	if (!elgg_is_logged_in()) {
-		// override the front page
-		elgg_register_route('index', [
-			'path' => '/',
-			'resource' => 'walled_garden',
-		]);
-	}
-}
-
-/**
- * Elgg's main init.
- *
- * @elgg_event_handler init system
- * @return void
- * @internal
- */
-function _elgg_init() {
-	
-	elgg_register_entity_type('object', 'comment');
-	elgg_register_entity_type('user', 'user');
-	
-	elgg_register_notification_method('email');
-	
-	elgg_register_notification_event('object', 'comment', ['create']);
-	elgg_register_notification_event('user', 'user', ['make_admin', 'remove_admin']);
-	elgg_register_notification_event('user', 'user', ['unban']);
-	
-	// if mb functions are available, set internal encoding to UTF8
-	if (is_callable('mb_internal_encoding')) {
-		mb_internal_encoding("UTF-8");
-	}
-}
-
-/**
  * Register core routes
  * @return void
  * @internal

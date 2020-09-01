@@ -110,8 +110,8 @@ class UpgradeService {
 			}
 
 			// Clear system caches
-			_elgg_disable_caches();
-			_elgg_clear_caches();
+			\Elgg\Cache\EventHandlers::disable();
+			elgg_clear_caches();
 
 			return $resolve();
 		});
