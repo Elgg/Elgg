@@ -7,7 +7,7 @@
 
     <php>
         <!-- You can specify your own settings.php path -->
-        <!-- <env name="ELGG_SETTINGS_FILE" value="./path/to/settings.php"/> -->
+        <!-- <env name="ELGG_SETTINGS_FILE" value="path/to/settings.php"/> -->
 
         <!-- or configure individual settings via env-->
         <!--
