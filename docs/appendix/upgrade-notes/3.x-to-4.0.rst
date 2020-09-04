@@ -214,6 +214,8 @@ Core
 * ``_elgg_admin_user_validation_login_attempt()`` changed to ``Elgg\Users\Validation::preventUserLogin()``
 * ``_elgg_admin_user_validation_notification()`` changed to ``Elgg\Users\Validation::notifyUserAfterValidation()``
 * ``_elgg_admin_upgrades_menu()`` changed to ``Elgg\Menus\Filter::registerAdminUpgrades()``
+* ``_elgg_cache_init()`` actions combined in ``Elgg\Application\SystemEventHandlers::ready()``
+* ``_elgg_clear_caches()`` changed to ``Elgg\Cache\EventHandlers::clear()``
 * ``_elgg_comments_access_sync()`` changed to ``Elgg\Comments\SyncContainerAccessHandler::class``
 * ``_elgg_comments_add_content_owner_to_subscriptions()`` changed to ``Elgg\Comments\CreateNotification::addOwnerToSubscribers()``
 * ``_elgg_comments_container_permissions_override()`` changed to ``Elgg\Comments\ContainerPermissionsHandler::class``
@@ -225,8 +227,10 @@ Core
 * ``_elgg_create_default_widgets()`` changed to ``Elgg\Widgets\CreateDefaultWidgetsHandler::class``
 * ``_elgg_create_notice_of_pending_upgrade()`` changed to ``Elgg\Upgrade\CreateAdminNoticeHandler::class``
 * ``_elgg_db_register_seeds()`` changed to ``Elgg\Database\RegisterSeedsHandler::class``
+* ``_elgg_disable_caches()`` changed to ``Elgg\Cache\EventHandlers::disable()``
 * ``_elgg_default_widgets_permissions_override()`` changed to ``Elgg\Widgets\DefaultWidgetsContainerPermissionsHandler::class``
 * ``_elgg_disable_password_autocomplete()`` changed to ``Elgg\Input\DisablePasswordAutocompleteHandler::class``
+* ``_elgg_enable_caches()`` changed to ``Elgg\Cache\EventHandlers::enable()``
 * ``_elgg_filestore_move_icons()`` changed to ``Elgg\Icons\MoveIconsOnOwnerChangeHandler::class``
 * ``_elgg_filestore_touch_icons()`` changed to ``Elgg\Icons\TouchIconsOnAccessChangeHandler::class``
 * ``_elgg_head_manifest()`` changed to ``Elgg\Views\AddManifestLinkHandler::class``
@@ -240,15 +244,18 @@ Core
 * ``_elgg_groups_container_override()`` changed to ``Elgg\Groups\MemberPermissionsHandler::class``
 * ``_elgg_groups_comment_permissions_override()`` changed to ``Elgg\Comments\GroupMemberPermissionsHandler::class``
 * ``_elgg_htmlawed_filter_tags()`` changed to ``Elgg\Input\ValidateInputHandler::class``
+* ``_elgg_invalidate_caches()`` changed to ``Elgg\Cache\EventHandlers::invalidate()``
 * ``_elgg_widget_menu_setup()`` changed to ``Elgg\Menus\Widget::registerEdit()`` and ``Elgg\Menus\Widget::registerDelete()``
 * ``_elgg_login_menu_setup()`` changed to ``Elgg\Menus\Login::registerRegistration()`` and ``Elgg\Menus\Widget::registerResetPassword()``
 * ``_elgg_nav_public_pages()`` changed to ``Elgg\WalledGarden\ExtendPublicPagesHandler::class``
 * ``_elgg_notifications_cron()`` changed to ``Elgg\Notifications\ProcessQueueCronHandler::class``
 * ``_elgg_notifications_smtp_default_message_id_header()`` changed to ``Elgg\Email\DefaultMessageIdHeaderHandler::class``
 * ``_elgg_notifications_smtp_thread_headers()`` changed to ``Elgg\Email\ThreadHeadersHandler::class``
+* ``_elgg_rebuild_public_container()`` changed to ``Elgg\Cache\EventHandlers::rebuildPublicContainer()``
 * ``_elgg_river_update_object_last_action()`` changed to ``Elgg\River\UpdateLastActionHandler::class``
 * ``_elgg_rss_menu_setup()`` changed to ``Elgg\Menus\Footer::registerRSS()``
 * ``_elgg_plugin_entity_menu_setup()`` changed to ``Elgg\Menus\Entity::registerPlugin()``
+* ``_elgg_purge_caches()`` changed to ``Elgg\Cache\EventHandlers::purge()``
 * ``_elgg_river_menu_setup()`` changed to ``Elgg\Menus\River::registerDelete()``
 * ``_elgg_save_notification_user_settings()`` changed to ``Elgg\Notifications\SaveUserSettingsHandler::class``
 * ``_elgg_session_cleanup_persistent_login()`` changed to ``Elgg\Users\CleanupPersistentLoginHandler::class``
@@ -262,6 +269,9 @@ Core
 * ``_elgg_send_email_notification()`` changed to ``Elgg\Notifications\SendEmailHandler::class``
 * ``_elgg_upgrade_completed()`` changed to ``Elgg\Upgrade\UpgradeCompletedAdminNoticeHandler::class``
 * ``_elgg_upgrade_entity_menu()`` changed to ``Elgg\Menus\Entity::registerUpgrade()``
+* ``_elgg_user_ban_notification()`` changed to ``Elgg\Users\BanUserNotificationHandler::class``
+* ``_elgg_user_get_subscriber_unban_action()`` changed to ``Elgg\Notifications\UnbanUserNotification::getUnbanSubscribers()``
+* ``_elgg_user_prepare_unban_notification()`` changed to ``Elgg\Notifications\UnbanUserNotification::prepareUnbanNotification()``
 * ``_elgg_user_settings_menu_register()`` changed to ``Elgg\Menus\Page::registerUserSettings()`` and ``Elgg\Menus\Page::registerUserSettingsPlugins()``
 * ``_elgg_user_settings_menu_prepare()`` changed to ``Elgg\Menus\Page::cleanupUserSettingsPlugins()``
 * ``elgg_user_hover_menu()`` changed to ``Elgg\Menus\UserHover::registerAvatarEdit()`` and ``Elgg\Menus\UserHover::registerAdminActions()``
@@ -272,14 +282,17 @@ Core
 * ``_elgg_user_unvalidated_menu()`` changed to ``Elgg\Menus\UserUnvalidated::register()``
 * ``_elgg_views_amd()`` changed to ``Elgg\Views\AddAmdModuleNameHandler::class``
 * ``_elgg_views_file_help_upload_limit()`` changed to ``Elgg\Input\AddFileHelpTextHandler::class``
+* ``_elgg_views_init()`` combined into ``Elgg\Application\SystemEventHandlers::init()``
 * ``_elgg_views_minify()`` changed to ``Elgg\Views\MinifyHandler::class``
 * ``_elgg_views_prepare_favicon_links()`` changed to ``Elgg\Page\AddFaviconLinksHandler::class``
 * ``_elgg_views_preprocess_css()`` changed to ``Elgg\Views\PreProcessCssHandler::class``
 * ``_elgg_views_send_header_x_frame_options()`` changed to ``Elgg\Page\SetXFrameOptionsHeaderHandler::class``
+* ``_elgg_walled_garden_init()`` merged into ``Elgg\Application\SystemEventHandlers::initLate()``
 * ``_elgg_walled_garden_remove_public_access()`` changed to ``Elgg\WalledGarden\RemovePublicAccessHandler::class``
 * ``_elgg_widgets_widget_urls()`` changed to ``Elgg\Widgets\EntityUrlHandler::class``
 * ``elgg_prepare_breadcrumbs()`` changed to ``Elgg\Page\PrepareBreadcrumbsHandler::class``
 * ``Elgg\Profiler::handleOutput`` changed to ``Elgg\Debug\Profiler::class``
+* ``users_init`` combined into ``Elgg\Application\SystemEventHandlers::initLate()``
 
 Plugins
 ~~~~~~~
