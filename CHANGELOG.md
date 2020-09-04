@@ -1,3 +1,24 @@
+<a name="3.3.10"></a>
+### 3.3.10  (2020-09-04)
+
+#### Contributors
+
+* Jerôme Bakker (12)
+* Team Webgalli (1)
+
+#### Features
+
+* **htaccess:** added hardening rules to prevent file access ([08ea7f7a](https://github.com/Elgg/Elgg/commit/08ea7f7a8ec41c9a844187b5209822236c8aafe2))
+
+
+#### Bug Fixes
+
+* **comments:** validate canComment in comments save action ([883be474](https://github.com/Elgg/Elgg/commit/883be4742d33e79f8bf05d8df4b56e9218c84fca))
+* **composer:** define correct autoload namespace ([6f874ae2](https://github.com/Elgg/Elgg/commit/6f874ae2bf43b3f9751fe34d4e1d8eba509372c6))
+* **developers:** inspect annotations menu no longer crashes ([096118a7](https://github.com/Elgg/Elgg/commit/096118a7a57151715c01a3af30aa5c35fd15c05b))
+* **uservalidationbyemail:** show correct login error message ([db3cddd6](https://github.com/Elgg/Elgg/commit/db3cddd6c7a186ed661efbdd11e4364dc723a1c9))
+
+
 <a name="3.3.9"></a>
 ### 3.3.9  (2020-08-17)
 

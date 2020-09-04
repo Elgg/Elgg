@@ -34,6 +34,10 @@ if ($comment_guid) {
 	if (!$entity) {
 		return elgg_error_response(elgg_echo('generic_comment:notfound'));
 	}
+	
+	if (!$entity->canComment()) {
+		return elgg_error_response(elgg_echo('actionunauthorized'));
+	}
 
 	$user = elgg_get_logged_in_user_entity();
 

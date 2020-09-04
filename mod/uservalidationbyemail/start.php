@@ -111,9 +111,9 @@ function uservalidationbyemail_check_manual_login(\Elgg\Event $event) {
 		if ($user->isEnabled() && $user->isValidated() !== false) {
 			return;
 		}
-		
-		if (elgg_get_plugin_user_setting('email_validated', $user->guid, 'uservalidationbyemail')) {
-			// email address already validated
+
+		if ((bool) elgg_get_plugin_user_setting('email_validated', $user->guid, 'uservalidationbyemail', true)) {
+			// email address already validated, or account created before plugin was enabled
 			return;
 		}
 		
@@ -168,7 +168,7 @@ function _uservalidationbyemail_user_unvalidated_menu(\Elgg\Hook $hook) {
 }
 
 /**
- * Add a menu item to the buld actions for unvalidated users
+ * Add a menu item to the bulk actions for unvalidated users
  *
  * @param \Elgg\Hook $hook the plugin hook 'register' 'menu:user:unvalidated:bulk'
  *

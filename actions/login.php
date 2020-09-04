@@ -15,13 +15,23 @@ if (empty($username) || empty($password)) {
 }
 
 // check if logging in with email address
-if (elgg_strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
-	$username = $users[0]->username;
+if (elgg_strpos($username, '@') !== false) {
+	$users = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function() use ($username) {
+		return get_user_by_email($username);
+	});
+	
+	if (!empty($users)) {
+		$username = $users[0]->username;
+	}
 }
 
-$user = get_user_by_username($username);
+// fetch the user (even disabled)
+$user = elgg_call(ELGG_SHOW_DISABLED_ENTITIES, function () use ($username) {
+	return get_user_by_username($username);
+});
 
 try {
+	// try to authenticate
 	$result = elgg_authenticate($username, $password);
 	if ($result !== true) {
 		// was due to missing hash?

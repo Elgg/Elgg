@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 13:08+0200\n"
+"POT-Creation-Date: 2020-09-04 10:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1821,6 +1821,26 @@ msgstr ""
 
 #: ../../admin/security.rst:78
 msgid "**specials**: minimal number of special (like !@#$%^&*(), etc.) characters in the password"
+msgstr ""
+
+#: ../../admin/security.rst:81
+msgid ".htaccess file access hardening"
+msgstr ""
+
+#: ../../admin/security.rst:83
+msgid "In the .htaccess file a set of file access hardening rules have been added to prevent direct access to files in certain folders. Enabling these rules `shouldn't` cause any issues when all the plugins you use follow the Elgg coding guidelines."
+msgstr ""
+
+#: ../../admin/security.rst:86
+msgid "Examples of the rules are:"
+msgstr ""
+
+#: ../../admin/security.rst:88
+msgid "the ``vendor`` folder. This folder only contains helper libraries that Elgg uses and there is no need for direct access to this folder. All required dependecies are loaded from within Elgg"
+msgstr ""
+
+#: ../../admin/security.rst:89
+msgid "the ``languages`` folder. This folder contains the main Elgg language files. These files are loaded from within Elgg"
 msgstr ""
 
 #: ../../admin/spam.rst:2
