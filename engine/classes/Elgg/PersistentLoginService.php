@@ -326,8 +326,8 @@ class PersistentLoginService {
 	 */
 	protected function setCookie($token) {
 		$cookie = new \ElggCookie($this->cookie_config['name']);
-		foreach (['expire', 'path', 'domain', 'secure', 'httponly'] as $key) {
-			$cookie->$key = $this->cookie_config[$key];
+		foreach (['expire', 'path', 'domain', 'secure', 'httpOnly'] as $key) {
+			$cookie->$key = $this->cookie_config[strtolower($key)];
 		}
 		$cookie->value = $token;
 		if (!$token) {
