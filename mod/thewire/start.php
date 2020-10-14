@@ -326,7 +326,12 @@ function thewire_setup_entity_menu_items(\Elgg\Hook $hook) {
 	}
 	
 	$menu = $hook->getValue();
-	$menu->remove('edit');
+	
+	$enable_editing = (bool) elgg_get_plugin_setting('enable_editing', 'thewire');
+	
+	if(!$enable_editing) {
+		$menu->remove('edit');
+	}
 
 	if (elgg_is_logged_in()) {
 		$menu->add(ElggMenuItem::factory([
