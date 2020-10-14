@@ -5,9 +5,11 @@
 
 use Elgg\Exceptions\Http\EntityNotFoundException;
 
-$owner = elgg_get_page_owner_entity();
-if (!$owner instanceof ElggUser) {
-	throw new EntityNotFoundException();
+$username = elgg_extract('username', $vars);
+
+$owner = get_user_by_username($username);
+if (!$owner) {
+	throw new \Elgg\EntityNotFoundException();
 }
 
 $title = elgg_echo('collection:object:thewire:friends');
@@ -30,10 +32,7 @@ $content .= elgg_list_entities([
 	'relationship_join_on' => 'container_guid',
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter_context' => 'friends',
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
+	'filter_value' => $owner->guid === elgg_get_logged_in_user_guid() ? 'friends' : 'none',
 ]);
-
-echo elgg_view_page($title, $body);

@@ -21,11 +21,8 @@ $content .= elgg_list_entities([
 	'limit' => get_input('limit', 15),
 ]);
 
-$body = elgg_view_layout('content', [
-	'filter_context' => 'all',
+echo elgg_view_page($title, [
 	'content' => $content,
-	'title' => $title,
 	'sidebar' => elgg_view('thewire/sidebar'),
+	'filter_value' => 'all',
 ]);
-
-echo elgg_view_page($title, $body);

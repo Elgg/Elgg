@@ -16,6 +16,7 @@ return [
 	],
 	'settings' => [
 		'limit' => 140,
+		'enable_editing' => true,
 	],
 	'actions' => [
 		'thewire/add' => [],
@@ -56,6 +57,13 @@ return [
 		'reply:object:thewire' => [
 			'path' => '/thewire/reply/{guid}',
 			'resource' => 'thewire/reply',
+			'middleware' => [
+				Gatekeeper::class,
+			],
+		],
+		'edit:object:thewire' => [
+			'path' => '/thewire/edit/{guid}',
+			'resource' => 'thewire/edit',
 			'middleware' => [
 				Gatekeeper::class,
 			],

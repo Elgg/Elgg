@@ -17,3 +17,11 @@ echo elgg_view_field([
 		250 => '250',
 	],
 ]);
+
+echo elgg_view_field([
+	'#type' => 'checkbox',
+	'#label' => elgg_echo('thewire:settings:enable_editing'),
+	'name' => 'params[enable_editing]',
+	'checked' => (bool) $plugin->enable_editing,
+	'switch' => true,
+]);
