@@ -2,12 +2,12 @@
 
 namespace Elgg\Cli;
 
-use Elgg\Database\Seeds\Seed;
+use Elgg\Helpers\Cli\CliSeeder;
 use Elgg\Hook;
+use Elgg\Logger;
 use Elgg\UnitTestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
-use Elgg\Logger;
 
 /**
  * @group Cli
@@ -73,23 +73,4 @@ class DatabaseSeedCommandTest extends UnitTestCase {
 		$hook->unregister();
 	}
 
-}
-
-class CliSeeder extends Seed {
-
-	/**
-	 * Populate database
-	 * @return mixed
-	 */
-	function seed() {
-		system_message(__METHOD__);
-	}
-
-	/**
-	 * Removed seeded rows from database
-	 * @return mixed
-	 */
-	function unseed() {
-		system_message(__METHOD__);
-	}
 }

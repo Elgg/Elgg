@@ -2,6 +2,7 @@
 
 namespace Elgg\Users;
 
+use Elgg\Helpers\CustomUser;
 use Elgg\UnitTestCase;
 
 /**
@@ -10,40 +11,67 @@ use Elgg\UnitTestCase;
  */
 class AccountsServiceUnitTest extends UnitTestCase {
 
+	/**
+	 * @var int minimal username length during testing
+	 */
+	protected $minusername = 6;
+	
+	/**
+	 * @var int backup of the config setting for minimal username length
+	 */
+	protected $minusername_backup;
+	
 	public function up() {
-
+		$this->minusername_backup = elgg()->config->minusername;
+		elgg()->config->minusername = $this->minusername;
 	}
 
 	public function down() {
-
+		elgg()->config->minusername = $this->minusername_backup;
 	}
 
-	public function testShortUsernameFailsValidation() {
-		$length = elgg()->config->minusername;
-		$username = str_repeat('a', $length - 1);
-		
+	/**
+	 * @dataProvider invalidUsernameProvider
+	 */
+	public function testInvalidUsernameFailsValidation($username) {
 		$this->expectException(\RegistrationException::class);
 		elgg()->accounts->assertValidUsername($username);
 	}
-
-	public function testLongUsernameFailsValidation() {
-		$length = 128;
-		$username = str_repeat('a', $length + 1);
-		
-		$this->expectException(\RegistrationException::class);
-		elgg()->accounts->assertValidUsername($username);
+	
+	public function invalidUsernameProvider() {
+		return [
+			[str_repeat('a', $this->minusername - 1)], // too short
+			[str_repeat('a', 129)], // too long, this is hard coded
+			['username#'],
+			['username@'],
+		];
 	}
 
-	public function testUsernameWithInvalidCharsFailsValidation() {
-		$this->expectException(\RegistrationException::class);
-		elgg()->accounts->assertValidUsername('username#');
-	}
-
-	public function testInvalidUsernameFailsValidation() {
+	public function testInvalidEmailFailsValidation() {
 		$this->expectException(\RegistrationException::class);
 		elgg()->accounts->assertValidEmail('username@');
 	}
-
+	
+	/**
+	 * @dataProvider validUsernameProvider
+	 */
+	public function testValidUsername($username) {
+		elgg()->accounts->assertValidUsername($username);
+	}
+	
+	public function validUsernameProvider() {
+		return [
+			['username'],
+			['úsernâmé'],
+			['user1234'],
+			['123456789'],
+			['user-name'],
+			['user.name'],
+			['user_name'],
+			['देवनागरी'], // https://github.com/Elgg/Elgg/issues/12518 and https://github.com/Elgg/Elgg/issues/13067
+		];
+	}
+	
 	public function testAccountDataValidationFails() {
 
 		$result = elgg()->accounts->validateAccountData('username#', '1', '', 'username@');
@@ -97,8 +125,4 @@ class AccountsServiceUnitTest extends UnitTestCase {
 		$this->expectException(\InvalidParameterException::class);
 		elgg()->accounts->requestNewEmailValidation($user, $new_email);
 	}
-}
-
-class CustomUser extends \ElggUser {
-
 }

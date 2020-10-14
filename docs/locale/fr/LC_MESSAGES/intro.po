@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-23 11:15+0100\n"
+"POT-Creation-Date: 2020-08-17 13:08+0200\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
 "Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -236,25 +236,30 @@ msgstr ""
 "serveur vous pouvez accéder aux binaires de ``elgg-cli`` de l'une des "
 "manières suivantes depuis la racine de votre installation Elgg :"
 
-#: ../../intro/elgg-cli.rst:23
+#: ../../intro/elgg-cli.rst:24
+msgid ""
+"Be advised that when using elgg-cli it might be needed to run the command as"
+" the same user as the webserver to prevent issues with rights related to "
+"files."
+msgstr ""
+
+#: ../../intro/elgg-cli.rst:27
 msgid "Available commands"
 msgstr "Commandes disponibles"
 
-#: ../../intro/elgg-cli.rst:77
+#: ../../intro/elgg-cli.rst:87
 msgid "Adding custom commands"
 msgstr "Ajouter des commandes personnalisées"
 
-#: ../../intro/elgg-cli.rst:79
+#: ../../intro/elgg-cli.rst:89
 msgid ""
 "Plugins can add their commands to the CLI application, by adding command "
-"class name via ``'commands','cli'`` hook. Command class must extend "
+"class name via a configuration in ``elgg-plugin.php`` or via the "
+"``'commands','cli'`` hook. Command class must extend "
 "``\\Elgg\\CLI\\Command``."
 msgstr ""
-"Les plugins peuvent ajouter leurs propres commandes à l'application CLI, en "
-"ajoutant le nom de classe de la commande via le hook ``'commands','cli'``. "
-"La classe de la commande doit étendre ``\\Elgg\\CLI\\Command``."
 
-#: ../../intro/elgg-cli.rst:96
+#: ../../intro/elgg-cli.rst:106
 msgid ""
 "Custom commands are based on `Symfony Console Commands`_. Please refer to "
 "their documentation for more details."
@@ -286,7 +291,7 @@ msgstr ""
 "MySQL 5.5.3+ (5.0.0+ si vous mettez à niveau une installation existante)"
 
 #: ../../intro/install.rst:14
-msgid "PHP 7.1+ with the following extensions:"
+msgid "PHP 7.2+ with the following extensions:"
 msgstr ""
 
 #: ../../intro/install.rst:16

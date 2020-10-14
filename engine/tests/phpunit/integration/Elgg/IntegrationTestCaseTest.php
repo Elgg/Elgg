@@ -72,8 +72,18 @@ class IntegrationTestCaseTest extends IntegrationTestCase {
 			$this->markTestSkipped("Test requires at least one active plugin");
 		}
 
-		$plugin = $plugins[0];
-		/* @var $plugin \ElggPlugin */
+		$plugin = false;
+		/* @var $potential_plugin \ElggPlugin */
+		foreach ($plugins as $potential_plugin) {
+			// Find a plugin which can be deactivated (has no dependant plugins)
+			if (!$potential_plugin->canDeactivate()) {
+				continue;
+			}
+			$plugin = $potential_plugin;
+			break;
+		}
+		
+		$this->assertInstanceOf(\ElggPlugin::class, $plugin); // we need a plugin to test with
 
 		$inspector = new Inspector();
 		$hooks = $inspector->getPluginHooks();

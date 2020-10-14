@@ -119,16 +119,20 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
-		$this->assertEquals(elgg_echo('LoginException:UsernameFailure'), $response->getContent());
+		$this->assertEquals(elgg_echo('LoginException:PasswordFailure'), $response->getContent());
 	}
 	
 	public function testLoginFailsWithDisabledUser() {
+
+		elgg()->hooks->backup();
 
 		$username = $this->getRandomUsername();
 		$user = $this->user = $this->createUser([], [
 			'username' => $username,
 			'password' => 123456,
 		]);
+
+		elgg()->hooks->restore();
 
 		elgg_call(ELGG_IGNORE_ACCESS, function () use ($user) {
 			$user->setValidationStatus(true, 'login_test');
@@ -150,7 +154,7 @@ class LoginIntegrationTest extends ActionResponseTestCase {
 		]);
 
 		$this->assertInstanceOf(ErrorResponse::class, $response);
-		$this->assertEquals(elgg_echo('LoginException:UsernameFailure'), $response->getContent());
+		$this->assertEquals(elgg_echo('LoginException:DisabledUser'), $response->getContent());
 	}
 
 	public function testLoginFailsWithNonExistentUser() {

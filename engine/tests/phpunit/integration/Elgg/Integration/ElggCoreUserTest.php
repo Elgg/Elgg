@@ -1,7 +1,9 @@
 <?php
 
 namespace Elgg\Integration;
+
 use Elgg\Database\Select;
+use Elgg\Helpers\ElggUserWithExposableAttributes;
 
 /**
  * Elgg Test \ElggUser
@@ -337,11 +339,5 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 		$qb->where($qb->compare('e.guid', '=', $guid, ELGG_VALUE_INTEGER));
 
 		return _elgg_services()->db->getDataRow($qb);
-	}
-}
-
-class ElggUserWithExposableAttributes extends \ElggUser {
-	public function expose_attributes() {
-		return $this->attributes;
 	}
 }

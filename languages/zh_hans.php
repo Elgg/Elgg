@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -981,7 +981,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => '菜单项',
 	'admin:menu_items:configure' => '配置主菜单项',
-	'admin:menu_items:description' => '选择显示哪些菜单项作为固定连接，未选用项目将被添加到列表末端的“更多”按钮内。',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => '从工具栏菜单去除链接?',
 	'admin:menu_items:saved' => '菜单项已经保存。',
 	'admin:add_menu_item' => '添加自定义菜单项',
@@ -1757,6 +1757,7 @@ To view %s's profile, click here:
 	
 	'cli:plugins:list:description' => "List all plugins installed on the site",
 	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:option:refresh' => "Refresh plugin list with recently installed plugins",
 	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
 	
 	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",

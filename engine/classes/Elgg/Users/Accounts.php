@@ -241,18 +241,11 @@ class Accounts {
 			throw new RegistrationException($msg);
 		}
 
-		// Blacklist for bad characters (partially nicked from mediawiki)
-		$blacklist = '/[' .
-			'\x{0080}-\x{009f}' . // iso-8859-1 control chars
-			'\x{00a0}' .          // non-breaking space
-			'\x{2000}-\x{200f}' . // various whitespace
-			'\x{2028}-\x{202f}' . // breaks and control chars
-			'\x{3000}' .          // ideographic space
-			'\x{e000}-\x{f8ff}' . // private use
-			']/u';
-
-		if (preg_match($blacklist, $username)) {
-			// @todo error message needs work
+		// Whitelist all supported route characters
+		// @see Elgg\Router\RouteRegistrationService::register()
+		// @link https://github.com/Elgg/Elgg/issues/12518
+		$whitelist = '/[\p{L}\p{M}\p{Nd}._-]+/';
+		if (!preg_match_all($whitelist, $username)) {
 			throw new RegistrationException($this->translator->translate('registration:invalidchars'));
 		}
 

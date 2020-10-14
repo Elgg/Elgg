@@ -459,10 +459,15 @@ class Application {
 			}
 
 			if (0 === strpos($request->getElggPath(), '/serve-file/')) {
+				$config->_disable_session_save = true;
 				$response = $this->_services->serveFileHandler->getResponse($request);
 				self::getResponseTransport()->send($response);
 
 				return $response;
+			}
+			
+			if ($this->isCli()) {
+				$config->_disable_session_save = true;
 			}
 
 			$this->bootCore();

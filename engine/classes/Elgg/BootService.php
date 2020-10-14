@@ -5,6 +5,7 @@ namespace Elgg;
 use Elgg\Database\SiteSecret;
 use Elgg\Di\ServiceProvider;
 use ElggCache;
+use Psr\Log\LogLevel;
 
 /**
  * Boots Elgg and manages a cache of data needed during boot
@@ -145,7 +146,7 @@ class BootService {
 		$services->plugins->setBootPlugins($data->getActivePlugins(), false);
 
 		// use value in settings.php if available
-		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : $config->debug;
+		$debug = $config->hasInitialValue('debug') ? $config->getInitialValue('debug') : ($config->debug ?: LogLevel::CRITICAL);
 		$services->logger->setLevel($debug);
 
 		if ($config->system_cache_enabled) {

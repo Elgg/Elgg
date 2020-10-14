@@ -26,6 +26,10 @@ if ($uploaded_file && !$uploaded_file->isValid()) {
 $new_file = empty($guid);
 
 if ($new_file) {
+	if (empty($uploaded_file)) {
+		return elgg_error_response(elgg_echo('file:uploadfailed'));
+	}
+	
 	$file = new ElggFile();
 } else {
 	// load original file object
@@ -51,6 +55,20 @@ $file->tags = string_to_tag_array($tags);
 $file->save();
 
 if ($uploaded_file && $uploaded_file->isValid()) {
+	// remove old icons
+	$sizes = elgg_get_icon_sizes($file->getType(), $file->getSubtype());
+	$master_location = null;
+	foreach ($sizes as $size => $props) {
+		$icon = $file->getIcon($size);
+		if ($size === 'master') {
+			// needs to be kept in case upload fails
+			$master_location = $icon->getFilenameOnFilestore();
+			continue;
+		}
+		
+		$icon->delete();
+	}
+	
 	// save master file
 	if (!$file->acceptUploadedFile($uploaded_file)) {
 		return elgg_error_response(elgg_echo('file:uploadfailed'));
@@ -63,6 +81,12 @@ if ($uploaded_file && $uploaded_file->isValid()) {
 	// update icons
 	if ($file->getSimpleType() === 'image') {
 		$file->saveIconFromElggFile($file);
+	}
+	
+	// check if we need to remove the 'old' master icon
+	$master = $file->getIcon('master');
+	if ($master->getFilenameOnFilestore() !== $master_location) {
+		unlink($master_location);
 	}
 	
 	// remove legacy metadata
@@ -80,9 +104,9 @@ $forward = $file->getURL();
 if ($new_file) {
 	$container = get_entity($container_guid);
 	if ($container instanceof ElggGroup) {
-		$forward_url = elgg_generate_url('collection:object:file:group', ['guid' => $container->guid]);
+		$forward = elgg_generate_url('collection:object:file:group', ['guid' => $container->guid]);
 	} else {
-		$forward_url = elgg_generate_url('collection:object:file:owner', ['username' => $container->username]);
+		$forward = elgg_generate_url('collection:object:file:owner', ['username' => $container->username]);
 	}
 	
 	elgg_create_river_item([

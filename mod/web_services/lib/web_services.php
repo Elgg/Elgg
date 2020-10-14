@@ -376,20 +376,13 @@ function api_auth_hmac() {
 		ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
 	}
 
-	// Get the secret key
-	$secret_key = $api_user->secret;
-
-	// get the query string
-	$query = _elgg_services()->request->server->get('REQUEST_URI');
-	$query = elgg_substr($query, elgg_strpos($query, '?') + 1);
-
 	// calculate expected HMAC
 	$hmac = calculate_hmac(	$api_header->hmac_algo,
 							$api_header->time,
 							$api_header->nonce,
 							$api_header->api_key,
-							$secret_key,
-							$query,
+							$api_user->secret,
+							_elgg_services()->request->server->get('QUERY_STRING', ''),
 							$api_header->method == 'POST' ? $api_header->posthash : "");
 
 

@@ -106,10 +106,6 @@ function elgg_create_river_item(array $options = []) {
 		return false;
 	}
 
-	if (!$return_item) {
-		return $id;
-	}
-
 	$item = elgg_call(ELGG_IGNORE_ACCESS, function () use ($id) {
 		return elgg_get_river_item_from_id($id);
 	});
@@ -120,7 +116,7 @@ function elgg_create_river_item(array $options = []) {
 
 	elgg_trigger_event('created', 'river', $item);
 
-	return $item;
+	return $return_item ? $item : $id;
 }
 
 /**

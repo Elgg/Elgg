@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -988,7 +988,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menü-Einträge',
 	'admin:menu_items:configure' => 'Konfiguriere die Einträge im Hauptmenü.',
-	'admin:menu_items:description' => 'Wähle aus, welche Links Du als separate Menü-Einträge anzeigen lassen willst. Die restlichen Links werden unter "Mehr" am Ende der Liste zusammengefaßt.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Links aus dem Toolbar-Menü entfernen?',
 	'admin:menu_items:saved' => 'Die Menü-Einträge wurden gespeichert.',
 	'admin:add_menu_item' => 'Benutzerdefinierten Menü-Eintrag hinzufügen',
@@ -1761,6 +1761,7 @@ Um das Profil von %s aufzurufen, folge diesem Link:
 	
 	'cli:plugins:list:description' => "List all plugins installed on the site",
 	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:option:refresh' => "Refresh plugin list with recently installed plugins",
 	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
 	
 	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",

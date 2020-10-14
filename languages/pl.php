@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -982,7 +982,7 @@ See the full list of users here:
 
 	'admin:configure_utilities:menu_items' => 'Menu Items',
 	'admin:menu_items:configure' => 'Konfiguruj główne elementy menu',
-	'admin:menu_items:description' => 'Wybierz, które elementy menu chcesz uwydatnić. Nieużywane elementy będą dodane do sekcji "Więcej", na końcu listy.',
+	'admin:menu_items:description' => 'Select the order of site menu items. Unconfigured items will be added to the end of the list.',
 	'admin:menu_items:hide_toolbar_entries' => 'Usunąć linki z menu paska narzędzi?',
 	'admin:menu_items:saved' => 'Elementy menu zapisane.',
 	'admin:add_menu_item' => 'Dodaj własny element menu',
@@ -1755,6 +1755,7 @@ To view %s's profile, click here:
 	
 	'cli:plugins:list:description' => "List all plugins installed on the site",
 	'cli:plugins:list:option:status' => "Plugin status ( %s )",
+	'cli:plugins:list:option:refresh' => "Refresh plugin list with recently installed plugins",
 	'cli:plugins:list:error:status' => "%s is not a valid status. Allowed options are: %s",
 	
 	'cli:simpletest:description' => "Run simpletest test suite (deprecated)",

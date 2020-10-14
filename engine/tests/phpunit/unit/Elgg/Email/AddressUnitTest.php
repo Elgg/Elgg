@@ -157,4 +157,35 @@ class AddressUnitTest extends \Elgg\UnitTestCase {
 		$this->expectException(InvalidArgumentException::class);
 		Address::getFormattedEmailAddress('example@elgg.org', []);
 	}
+	
+	/**
+	 * @dataProvider nameHtmlDecodingProvider
+	 */
+	public function testConstructorNameHtmlDecoding($input_name, $expected_output) {
+		$address = new Address('john.doe@example.com', $input_name);
+		
+		$this->assertEquals($expected_output, $address->getName());
+	}
+	
+	/**
+	 * @dataProvider nameHtmlDecodingProvider
+	 */
+	public function testSetNameHtmlDecoding($input_name, $expected_output) {
+		$address = new Address('john.doe@example.com');
+		$address->setName($input_name);
+		
+		$this->assertEquals($expected_output, $address->getName());
+	}
+	
+	public function nameHtmlDecodingProvider() {
+		return [
+			['Doe, John', 'Doe, John'],
+			['John Doe', 'John Doe'],
+			['John & Jane Doe', 'John & Jane Doe'],
+			['John &amp; Jane Doe', 'John & Jane Doe'],
+			['J&ocirc;hn &amp; Jane Doe', 'Jôhn & Jane Doe'],
+			['John &quot;Doe&quot;', 'John "Doe"'],
+			['John O&apos;Doe', 'John O\'Doe'],
+		];
+	}
 }

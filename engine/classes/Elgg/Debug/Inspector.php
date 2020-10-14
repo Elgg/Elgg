@@ -295,6 +295,7 @@ class Inspector {
 		$annotation->id = 999;
 		$annotation->name = 'generic_comment';
 		$annotation->value = 'testvalue';
+		$annotation->entity_guid = elgg_get_logged_in_user_guid();
 
 		$entity = new \ElggObject();
 		$entity->guid = 999;

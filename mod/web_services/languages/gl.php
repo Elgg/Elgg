@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -68,4 +68,14 @@ return array(
 	
 	'webservices:action:api_key:edit:success' => "API token saved successfully",
 	'webservices:action:api_key:regenerate:success' => "The API keys have been regenerated",
+
+	// plugin settings
+	'web_services:settings:authentication' => "Web API authentication settings",
+	'web_services:settings:authentication:description' => "Some API methods require that the external sources authenticate themselves. These external sources need to be provided with an API key pair (public and secret key).
+
+Please note that at least one API authentication method needs to be active in order to authenticate API requests.",
+	'web_services:settings:authentication:allow_key' => "Allow basic API public key authentication",
+	'web_services:settings:authentication:allow_key:help' => "The API public key can be passed as a parameter in the request.",
+	'web_services:settings:authentication:allow_hmac' => "Allow HMAC header API authentication",
+	'web_services:settings:authentication:allow_hmac:help' => "With HMAC authentication special headers need to be passed in a request to ensure authenticity of the request.",
 );

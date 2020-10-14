@@ -759,7 +759,7 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 	}
 
 	// append action tokens to the existing query
-	$query['__elgg_ts'] = time();
+	$query['__elgg_ts'] = elgg()->csrf->getCurrentTime()->getTimestamp();
 	$query['__elgg_token'] = elgg()->csrf->generateActionToken($query['__elgg_ts']);
 	$components['query'] = http_build_query($query);
 
@@ -1073,7 +1073,7 @@ function elgg_get_ini_setting_in_bytes($setting) {
 function _elgg_services() {
 	// This yields a more shallow stack depth in recursive APIs like views. This aids in debugging and
 	// reduces false positives in xdebug's infinite recursion protection.
-	return Elgg\Application::$_instance->_services;
+	return \Elgg\Application::$_instance->_services;
 }
 
 /**

@@ -618,6 +618,8 @@ trait LegacyQueryOptionsAdapter {
 		if (!is_array($options["{$type}_name_value_pairs"])) {
 			$options["{$type}_name_value_pairs"] = [];
 		}
+		
+		$case_sensitive_default = elgg_extract("{$type}_case_sensitive", $options, true);
 
 		/**
 		 * transforming root pair to array
@@ -632,7 +634,7 @@ trait LegacyQueryOptionsAdapter {
 				'name' => $options["{$type}_name_value_pairs"]['name'],
 				'value' => elgg_extract('value', $options["{$type}_name_value_pairs"]),
 				'comparison' => elgg_extract('operand', $options["{$type}_name_value_pairs"], '='),
-				'case_sensitive' => elgg_extract('case_sensitive', $options["{$type}_name_value_pairs"], true)
+				'case_sensitive' => elgg_extract('case_sensitive', $options["{$type}_name_value_pairs"], $case_sensitive_default)
 			];
 			unset($options["{$type}_name_value_pairs"]['name']);
 			unset($options["{$type}_name_value_pairs"]['value']);
@@ -702,7 +704,7 @@ trait LegacyQueryOptionsAdapter {
 			}
 
 			if (!isset($value['case_sensitive'])) {
-				$value['case_sensitive'] = elgg_extract("{$type}_case_sensitive", $options, true);
+				$value['case_sensitive'] = $case_sensitive_default;
 			}
 			if (!isset($value['type'])) {
 				if (isset($value['value']) && is_bool($value['value'])) {
@@ -1014,7 +1016,7 @@ trait LegacyQueryOptionsAdapter {
 				$condition = preg_replace('/\r|\n/', '', $parts[7]);
 
 				$dbprefix = elgg_get_config('dbprefix');
-				if (strpos($table, $dbprefix) === 0) {
+				if (!elgg_is_empty($dbprefix) && strpos($table, $dbprefix) === 0) {
 					$table = substr($table, strlen($dbprefix));
 				}
 

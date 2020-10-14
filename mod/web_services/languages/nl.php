@@ -2,7 +2,7 @@
 /**
  * Translation file
  *
- * Note: don't change the return array to short notation because Transifex can handle those during `tx push -s`
+ * Note: don't change the return array to short notation because Transifex can't handle those during `tx push -s`
  */
 
 return array(
@@ -68,4 +68,14 @@ return array(
 	
 	'webservices:action:api_key:edit:success' => "Het API token is succesvol opgeslagen",
 	'webservices:action:api_key:regenerate:success' => "De API sleutels zijn vernieuwd",
+
+	// plugin settings
+	'web_services:settings:authentication' => "Web API authenticatie instellingen",
+	'web_services:settings:authentication:description' => "Sommige API methodes vereisen dat verzoeken zichzelf authenticeren. Er moet dan een API key pair (public en secrect key) worden aangeleverd.
+
+Let er op dat er minstens één API authenticatie methode actief moet zijn om de API verzoeken te autoriseren.",
+	'web_services:settings:authentication:allow_key' => "Sta basic API public key authenticatie toe",
+	'web_services:settings:authentication:allow_key:help' => "De API public key wordt aangeleverd als een parameter in het verzoek",
+	'web_services:settings:authentication:allow_hmac' => "Sta HMAC header API authenticatie toe",
+	'web_services:settings:authentication:allow_hmac:help' => "Voor HMAC authenticatie moeten speciale headers worden meegeleverd in het API verzoek om de authenticiteit te controleren.",
 );

@@ -3,8 +3,8 @@
  * Action to reset a password, send success email, and log the user in.
  */
 
-$password = get_input('password1');
-$password_repeat = get_input('password2');
+$password = get_input('password1', null, false);
+$password_repeat = get_input('password2', null, false);
 $user_guid = (int) get_input('u');
 $code = get_input('c');
 
@@ -14,7 +14,7 @@ try {
 	return elgg_error_response($e->getMessage());
 }
 
-if ($password != $password_repeat) {
+if ($password !== $password_repeat) {
 	return elgg_error_response(elgg_echo('RegistrationException:PasswordMismatch'));
 }
 
