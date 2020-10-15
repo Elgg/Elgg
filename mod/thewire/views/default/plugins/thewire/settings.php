@@ -24,4 +24,5 @@ echo elgg_view_field([
 	'name' => 'params[enable_editing]',
 	'checked' => (bool) $plugin->enable_editing,
 	'switch' => true,
+	'value' => 1,
 ]);

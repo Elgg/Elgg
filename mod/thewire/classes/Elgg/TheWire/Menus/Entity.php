@@ -28,9 +28,7 @@ class Entity {
 		
 		$menu = $hook->getValue();
 		
-		$enable_editing = (bool) elgg_get_plugin_setting('enable_editing', 'thewire');
-	
-		if(!$enable_editing) {
+		if(!(bool) elgg_get_plugin_setting('enable_editing', 'thewire')) {
 			$menu->remove('edit');
 		}
 	

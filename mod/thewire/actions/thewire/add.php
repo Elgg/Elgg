@@ -21,18 +21,16 @@ if ($guid && $enable_editing) {
 	$entity = get_entity($guid);
 	
 	if (!$entity instanceof ElggWire) {
-		throw new \Elgg\EntityNotFoundException();
+		return elgg_error_response(elgg_echo('thewire:noposts'));
 	}
 	
 	if (!$entity->canEdit()) {
-		throw new \Elgg\EntityPermissionsException();
+		return elgg_error_response(elgg_echo('EntityPermissionsException'));
 	}
 	
 	$entity->description = $body;
 	
-	$save = $entity->save();
-	
-	if (!$save) {
+	if (!$entity->save()) {
 		return elgg_error_response(elgg_echo('thewire:notsaved'));
 	}
 	

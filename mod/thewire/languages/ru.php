@@ -13,7 +13,7 @@ return array(
 	'thewire' => "Микроблог",
 
 	'item:object:thewire' => "Микроблог",
-	'collection:object:thewire' => 'Записи микроблога',
+	'collection:object:thewire' => 'Wire posts',
 	'collection:object:thewire:all' => "Все записи микроблога",
 	'collection:object:thewire:owner' => "Микроблог пользователя %s",
 	'collection:object:thewire:friends' => "Микроблоги друзей",
@@ -28,12 +28,12 @@ return array(
 	'thewire:previous:help' => "Посмотреть первый пост",
 	'thewire:hide:help' => "Скрыть первый пост",
 
-	'thewire:form:body:placeholder' => "Что происходит?",
+	'thewire:form:body:placeholder' => "What's happening?",
 	
 	/**
 	 * The wire river
 	 */
-	'river:object:thewire:create' => "%s опубликовал %s",
+	'river:object:thewire:create' => "%s posted to %s",
 	'thewire:wire' => 'микроблог',
 
 	/**
@@ -49,7 +49,7 @@ return array(
 	 */
 	'thewire:posted' => "Запись добавлена.",
 	'thewire:deleted' => "Запись удалена.",
-	'thewire:blank' => "Нужно добавить текст, чтобы опубликовать запись.",
+	'thewire:blank' => "Ну ты же ничего не ввел дружище.",
 	'thewire:notsaved' => "Не могу сохранить запись.",
 	'thewire:notdeleted' => "Не могу удалить запись.",
 
@@ -67,5 +67,4 @@ return array(
 	 */
 	'thewire:settings:limit' => "Максимальное количество символов сообщения:",
 	'thewire:settings:limit:none' => "Без ограничения",
-	'thewire:settings:enable_editing' => "Разрешить редактирование записей",
 );

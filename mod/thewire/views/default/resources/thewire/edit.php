@@ -4,10 +4,8 @@
  */
 
 use Elgg\Exceptions\Http\EntityPermissionsException;
-
-$enable_editing = (bool) elgg_get_plugin_setting('enable_editing', 'thewire');
 	
-if(!$enable_editing) {
+if(!(bool) elgg_get_plugin_setting('enable_editing', 'thewire')) {
 	throw new EntityPermissionsException();
 }
 
@@ -22,7 +20,7 @@ elgg_push_entity_breadcrumbs($post, true);
 $content = elgg_view_form('thewire/add', [
 	'class' => 'thewire-form',
 ], [
-	'guid' => $guid,
+	'entity' => $post,
 ]);
 $content .= elgg_view('input/urlshortener');
 

@@ -7,8 +7,7 @@
 
 elgg_require_js('elgg/thewire');
 
-$guid = (int) elgg_extract('guid', $vars);
-$entity = get_entity($guid);
+$entity = elgg_extract('entity', $vars);
 
 $post = elgg_extract('post', $vars);
 $char_limit = (int) elgg_get_plugin_setting('limit', 'thewire');
@@ -19,17 +18,9 @@ if ($post) {
 }
 $chars_left = elgg_echo('thewire:charleft');
 
-$guid_input = '';
-if ($guid) {
-	$guid_input = elgg_view('input/hidden', [
-		'name' => 'guid',
-		'value' => $guid,
-	]);
-}
-
 $parent_guid = 0;
 
-if ($guid) {
+if ($entity) {
 	$parent_guid = (int) $entity->wire_thread;
 }
 
@@ -54,8 +45,8 @@ echo elgg_view_field([
 	'rows' => $num_lines,
 	'data-max-length' => $char_limit,
 	'required' => true,
-	'placeholder' => $guid ? false : elgg_echo('thewire:form:body:placeholder'),
-	'value' => $guid ? $entity->description : '',
+	'placeholder' => $entity ? false : elgg_echo('thewire:form:body:placeholder'),
+	'value' => $entity ? $entity->description : '',
 ]);
 
 echo elgg_format_element('div', ['id' => 'thewire-characters-remaining'], $count_down);
@@ -69,7 +60,7 @@ $fields = [
 	[
 		'#type' => 'hidden',
 		'name' => 'guid',
-		'value' => $guid,
+		'value' => $entity ? $entity->guid : 0,
 	],
 ];
 

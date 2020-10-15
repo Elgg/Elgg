@@ -7,17 +7,17 @@ use Elgg\Exceptions\Http\EntityNotFoundException;
 
 $username = elgg_extract('username', $vars);
 
-$owner = get_user_by_username($username);
-if (!$owner) {
-	throw new \Elgg\EntityNotFoundException();
+$user = get_user_by_username($username);
+if (!$user) {
+	throw new EntityNotFoundException();
 }
 
 $title = elgg_echo('collection:object:thewire:friends');
 
-elgg_push_collection_breadcrumbs('object', 'thewire', $owner, true);
+elgg_push_collection_breadcrumbs('object', 'thewire', $user, true);
 
 $content = '';
-if (elgg_get_logged_in_user_guid() == $owner->guid) {
+if (elgg_get_logged_in_user_guid() == $user->guid) {
 	$content .= elgg_view_form('thewire/add', [
 		'class' => 'thewire-form',
 	]);
@@ -28,11 +28,11 @@ $content .= elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'relationship' => 'friend',
-	'relationship_guid' => $owner->guid,
+	'relationship_guid' => $user->guid,
 	'relationship_join_on' => 'container_guid',
 ]);
 
 echo elgg_view_page($title, [
 	'content' => $content,
-	'filter_value' => $owner->guid === elgg_get_logged_in_user_guid() ? 'friends' : 'none',
+	'filter_value' => $user->guid === elgg_get_logged_in_user_guid() ? 'friends' : 'none',
 ]);
