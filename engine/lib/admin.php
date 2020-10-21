@@ -657,8 +657,7 @@ function _elgg_admin_page_handler($page) {
 
 	// gets content and prevents direct access to 'components' views
 	if ($page[0] == 'components' || !($content = elgg_view($view, $vars))) {
-		$title = elgg_echo('admin:unknown_section');
-		$content = elgg_echo('admin:unknown_section');
+		throw new \Elgg\PageNotFoundException();
 	}
 
 	$body = elgg_view_layout('admin', ['content' => $content, 'title' => $title]);
