@@ -1,3 +1,19 @@
+<a name="3.3.11"></a>
+### 3.3.11  (2020-10-02)
+
+#### Contributors
+
+* Jeroen Dalsem (3)
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **core:** do not save session for serve-file and CLI requests ([cf8ee303](https://github.com/Elgg/Elgg/commit/cf8ee30333d99f3ede516bd54fca135094332fbc))
+* **database:** use compatible DBAL version ([c5ca05f1](https://github.com/Elgg/Elgg/commit/c5ca05f1bb3300b41dfaff181f531468cd606a30))
+* **likes:** comment listings are now correctly preloaded with likes info ([f348802a](https://github.com/Elgg/Elgg/commit/f348802a2452284d632d5ecfcbf6ffc21e3d8e35))
+* **session:** correctly set httponly flag for remember_me cookie ([91034947](https://github.com/Elgg/Elgg/commit/910349475b0c626c42156fcfeccb17ccec1f99b1))
+
+
 <a name="3.3.10"></a>
 ### 3.3.10  (2020-09-04)
 
