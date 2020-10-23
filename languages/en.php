@@ -89,24 +89,9 @@ return array(
 	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
 	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
 
-	'ElggPlugin:Dependencies:Requires' => 'Requires',
-	'ElggPlugin:Dependencies:Suggests' => 'Suggests',
-	'ElggPlugin:Dependencies:Conflicts' => 'Conflicts',
-	'ElggPlugin:Dependencies:Conflicted' => 'Conflicted',
-	'ElggPlugin:Dependencies:Provides' => 'Provides',
-	'ElggPlugin:Dependencies:Priority' => 'Priority',
-
-	'ElggPlugin:Dependencies:Elgg' => 'Elgg version',
-	'ElggPlugin:Dependencies:PhpVersion' => 'PHP version',
-	'ElggPlugin:Dependencies:PhpExtension' => 'PHP extension: %s',
-	'ElggPlugin:Dependencies:PhpIni' => 'PHP ini setting: %s',
-	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
-	'ElggPlugin:Dependencies:Priority:After' => 'After %s',
-	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
-	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
-	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
-
 	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
+	'ElggPlugin:Dependencies:MustBeActive' => 'Must be active',
+	'ElggPlugin:Dependencies:Position' => 'Position',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
 	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menu item [%s] found with a missing parent[%s]',
@@ -894,12 +879,6 @@ See the full list of users here:
 	'admin:plugins:version' => 'Version %s',
 	'admin:plugin_settings' => 'Plugin Settings',
 	'admin:plugins:warning:unmet_dependencies_active' => 'This plugin is active but has unmet dependencies. You may encounter problems. See "more info" below for details.',
-
-	'admin:plugins:dependencies:type' => 'Type',
-	'admin:plugins:dependencies:name' => 'Name',
-	'admin:plugins:dependencies:expected_value' => 'Expected Value',
-	'admin:plugins:dependencies:local_value' => 'Actual value',
-	'admin:plugins:dependencies:comment' => 'Comment',
 
 	'admin:statistics:description' => "This is an overview of statistics on your site. If you need more detailed statistics, a professional administration feature is available.",
 	'admin:statistics:opt:description' => "View statistical information about users and objects on your site.",

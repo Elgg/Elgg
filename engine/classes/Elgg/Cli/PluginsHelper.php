@@ -145,15 +145,9 @@ trait PluginsHelper {
 		$result = [];
 
 		$plugin = elgg_get_plugin_from_id($id);
-
-		$requires = $plugin->getManifest()->getRequires();
-
-		foreach ($requires as $require) {
-			if ($require['type'] === 'plugin') {
-				$name = $require['name'];
-				if (elgg_get_plugin_from_id($name)) {
-					$result[] = $name;
-				}
+		foreach ($plugin->getDependencies() as $plugin_id => $config) {
+			if (!elgg_extract('must_be_active', $config, true)) {
+				continue;
 			}
 		}
 

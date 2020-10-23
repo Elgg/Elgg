@@ -7,6 +7,13 @@ use Elgg\Friends\Collections\UrlHandler;
 use Elgg\Friends\Collections\WriteAccess;
 
 return [
+	'plugin' => [
+		'name' => 'Friend Collections',
+		'activate_on_install' => true,
+		'dependencies' => [
+			'friends' => [],
+		],
+	],
 	'actions' => [
 		'friends/collections/edit' => [],
 		'friends/collections/delete' => [],
