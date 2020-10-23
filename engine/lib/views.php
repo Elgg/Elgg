@@ -279,21 +279,6 @@ function elgg_get_view_extensions($view) {
 }
 
 /**
- * In CSS content, prepend a path to relative URLs.
- *
- * This is useful to process a CSS view being used as an extension.
- *
- * @param string $css  CSS
- * @param string $path Path to prepend. E.g. "foo/bar/" or "../"
- *
- * @return string
- * @since 2.2
- */
-function elgg_prepend_css_urls($css, $path) {
-	return Minify_CSS_UriRewriter::prepend($css, $path);
-}
-
-/**
  * Assembles and outputs a full page.
  *
  * A "page" in Elgg is determined by the current view type and
@@ -2187,55 +2172,4 @@ function _elgg_map_icon_glyph_class(array $classes) {
 	$classes = array_unique($classes);
 
 	return elgg_trigger_plugin_hook('classes', 'icon', null, $classes);
-}
-
-/**
- * Initializes views
- *
- * @return void
- */
-function _elgg_views_init() {
-	
-	elgg_register_ajax_view('core/ajax/edit_comment');
-	elgg_register_ajax_view('page/elements/comments');
-	elgg_register_ajax_view('river/elements/responses');
-	elgg_register_ajax_view('forms/admin/user/change_email');
-	elgg_register_ajax_view('navigation/menu/user_hover/contents');
-	elgg_register_ajax_view('object/plugin/full');
-	elgg_register_ajax_view('object/plugin/details');
-	
-	elgg_extend_view('admin.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
-	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/online');
-	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/username', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/name', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/password', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/email', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/language', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/default_access', 100);
-	elgg_extend_view('forms/usersettings/save', 'core/settings/account/notifications');
-	
-	elgg_register_simplecache_view('admin.css');
-	elgg_register_simplecache_view('resources/manifest.json');
-	
-	elgg_register_external_file('css', 'elgg.admin', elgg_get_simplecache_url('admin.css'));
-	elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
-	elgg_register_external_file('css', 'maintenance', elgg_get_simplecache_url('maintenance.css'));
-	
-	elgg_define_js('admin/users/unvalidated', [
-		'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
-	]);
-	
-	elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
-	elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
-
-	$widgets = ['online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel', 'cron_status'];
-	foreach ($widgets as $widget) {
-		elgg_register_widget_type(
-				$widget,
-				elgg_echo("admin:widget:$widget"),
-				elgg_echo("admin:widget:$widget:help"),
-				['admin']
-		);
-	}
 }

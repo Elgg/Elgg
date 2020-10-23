@@ -230,7 +230,7 @@ class RouteMatchingUnitTest extends \Elgg\UnitTestCase {
 		]);
 
 		$request = $this->prepareHttpRequest('foo/baz', 'GET', [
-			'_handler' => '_elgg_init',
+			'_handler' => 'elgg_echo',
 		]);
 
 		ob_start();

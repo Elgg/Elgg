@@ -76,3 +76,14 @@ You can configure several requirements for new passwords of the users
 - **upper case**: minimal number of upper case (A-Z) characters in the password
 - **numbers**: minimal number of numbers (0-9) characters in the password
 - **specials**: minimal number of special (like !@#$%^&*(), etc.) characters in the password
+
+.htaccess file access hardening
+===============================
+
+In the .htaccess file a set of file access hardening rules have been added to prevent direct access to files in certain folders.
+Enabling these rules `shouldn't` cause any issues when all the plugins you use follow the Elgg coding guidelines.
+
+Examples of the rules are:
+
+- the ``vendor`` folder. This folder only contains helper libraries that Elgg uses and there is no need for direct access to this folder. All required dependecies are loaded from within Elgg
+- the ``languages`` folder. This folder contains the main Elgg language files. These files are loaded from within Elgg 

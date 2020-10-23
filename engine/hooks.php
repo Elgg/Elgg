@@ -81,8 +81,8 @@ return [
 		'subscriptions' => [
 			'Elgg\Notifications\ChangeAdminNotification::addSiteAdminSubscribers' => [],
 			'Elgg\Notifications\ChangeAdminNotification::addUserSubscriber' => [],
+			'Elgg\Notifications\UnbanUserNotification::getUnbanSubscribers' => [],
 			'Elgg\Comments\CreateNotification::addOwnerToSubscribers' => [],
-			'_elgg_user_get_subscriber_unban_action' => [],
 		],
 	],
 	'head' => [
@@ -141,7 +141,7 @@ return [
 			'Elgg\Notifications\ChangeAdminNotification::prepareRemoveAdminNotificationToUser' => [],
 		],
 		'notification:unban:user:user' => [
-			'_elgg_user_prepare_unban_notification' => [],
+			'Elgg\Notifications\UnbanUserNotification::prepareUnbanNotification' => [],
 		],
 		'system:email' => [
 			\Elgg\Email\DefaultMessageIdHeaderHandler::class => ['priority' => 1],

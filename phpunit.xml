@@ -7,7 +7,7 @@
 
     <php>
         <!-- You can specify your own settings.php path -->
-        <!-- <env name="ELGG_SETTINGS_FILE" value="./path/to/settings.php"/> -->
+        <!-- <env name="ELGG_SETTINGS_FILE" value="path/to/settings.php"/> -->
 
         <!-- or configure individual settings via env-->
         <!--
@@ -74,7 +74,6 @@
                 <directory suffix=".php">*/bower_components/*</directory>
                 <directory suffix=".php">*/node_modules/*</directory>
                 <directory suffix=".php">*/docs/*</directory>
-                <directory suffix=".php">*/grunt/*</directory>
                 <directory suffix=".php">*/engine/schema/*</directory>
                 <directory suffix=".php">*/engine/lib/upgrades/*</directory>
                 <directory suffix=".php">./languages</directory>

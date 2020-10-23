@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "3.3.9",
+    "version": "3.3.11",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0-only",
     "minimum-stability": "dev",
@@ -17,7 +17,7 @@
         "composer/semver": "~1.5.0",
         "css-crush/css-crush": "^2.4.0",
         "doctrine/cache": "^1.6",
-        "doctrine/dbal": "~2.5",
+        "doctrine/dbal": "~2.10.0",
         "eloquent/composer-config-reader": "~2.1.0",
         "fortawesome/font-awesome": "~5.14",
         "fzaninotto/faker": "^1.9",

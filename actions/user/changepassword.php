@@ -12,7 +12,7 @@ $user_guid = (int) get_input('u');
 $code = get_input('c');
 
 try {
-	validate_password($password);
+	elgg()->accounts->assertValidPassword($password);
 } catch (RegistrationException $e) {
 	return elgg_error_response($e->getMessage());
 }

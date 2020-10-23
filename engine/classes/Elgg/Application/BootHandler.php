@@ -64,7 +64,7 @@ class BootHandler {
 			$this->app->_services->session->start();
 			$this->app->_services->translator->bootTranslations();
 
-			_elgg_init();
+			\Elgg\Application\SystemEventHandlers::init();
 
 			$config->boot_complete = true;
 			$config->lock('boot_complete');
@@ -88,6 +88,7 @@ class BootHandler {
 
 	/**
 	 * Boot plugins
+	 *
 	 * @return void
 	 */
 	public function bootPlugins() {
@@ -125,6 +126,7 @@ class BootHandler {
 
 	/**
 	 * Finish bootstrapping the application
+	 *
 	 * @return void
 	 */
 	public function bootApplication() {
@@ -158,6 +160,7 @@ class BootHandler {
 
 	/**
 	 * Set core entity classes
+	 *
 	 * @return void
 	 */
 	public function setEntityClasses() {

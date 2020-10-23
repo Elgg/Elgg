@@ -188,7 +188,7 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 		$object1 = $this->createObject();
 		$object1->foo = 'bar';
 
-		_elgg_disable_caches();
+		\Elgg\Cache\EventHandlers::disable();
 
 		$object = get_entity($object1->guid);
 		$this->assertInstanceOf(\ElggObject::class, $object);
@@ -196,7 +196,7 @@ class ElggCoreMetadataCacheTest extends IntegrationTestCase {
 
 		$this->assertEquals('bar', $object->foo);
 
-		_elgg_enable_caches();
+		\Elgg\Cache\EventHandlers::enable();
 
 		$object = get_entity($object1->guid);
 		$this->assertInstanceOf(\ElggObject::class, $object);

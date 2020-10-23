@@ -114,7 +114,7 @@ trait PluginTesting {
 		$plugin->register();
 		$plugin->boot();
 		
-		_elgg_rebuild_public_container();
+		\Elgg\Cache\EventHandlers::rebuildPublicContainer();
 
 		$plugin->init();
 

@@ -29,7 +29,8 @@ class SeedingTest extends IntegrationTestCase {
 
 		$user = $this->createUser();
 
-		$this->assertTrue(validate_email_address($user->email));
+		elgg()->accounts->assertValidEmail($user->email);
+		
 		$this->assertNotEmpty($user->name);
 		$this->assertNotEmpty($user->username);
 		$this->assertEquals(0, $user->owner_guid);
