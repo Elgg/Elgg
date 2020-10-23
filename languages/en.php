@@ -1965,4 +1965,7 @@ Global variables:
 
 	"core:upgrade:2017080900:title" => "Alter database encoding for multi-byte support",
 	"core:upgrade:2017080900:description" => "Alters database and table encoding to utf8mb4, in order to support multi-byte characters such as emoji",
+	
+	"core:upgrade:2020102301:title" => "Remove the diagnostics plugin",
+	"core:upgrade:2020102301:description" => "Deletes the entity associated with the Diagnostics plugin removed in Elgg 4.0",
 );

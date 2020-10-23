@@ -8,4 +8,5 @@
 
 return [
 	\Elgg\Upgrades\AlterDatabaseToMultiByteCharset::class,
+	\Elgg\Upgrades\DeleteDiagnosticsPlugin::class,
 ];
