@@ -3,7 +3,7 @@
 	"type": "elgg-plugin",
 	"description": "Adds test_pluginging capabilities to Elgg",
 	"license": "GPL-2.0-only",
-	"keywords": ["content", "widget"],
+	"keywords": ["plugin", "content", "widget"],
 	"homepage": "https://elgg.org",
 	"authors": [
 		{
