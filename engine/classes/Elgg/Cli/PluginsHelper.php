@@ -130,7 +130,7 @@ trait PluginsHelper {
 
 		$plugin = elgg_get_plugin_from_id($id);
 		foreach ($plugin->getDependencies() as $plugin_id => $config) {
-			if (!elgg_extract('must_be_activate', $config, true)) {
+			if (!elgg_extract('must_be_active', $config, true)) {
 				continue;
 			}
 			

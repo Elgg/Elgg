@@ -112,40 +112,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'jquery-ui/widgets/sortab
 				priority: ui.item.index() + 1
 			},
 			success: function() {
-				// update plugins with priority dependences
-				var priorityDep = new RegExp(elgg.echo('ElggPlugin:Dependencies:Priority'));
-				ui.item.siblings().addBack().each(function() {
-					if (priorityDep.test($(this).find('.elgg-dependency-requires').text())) {
-						updatePluginView($(this));
-					}
-				});
 				unfreezePlugins();
-			}
-		});
-	};
-
-	/**
-	 * Update the plugin view.
-	 *
-	 * @param {Object} pluginView Plugin view element to update
-	 * @return void
-	 */
-	function updatePluginView(pluginView) {
-		// get guid from id like elgg-object-<guid>
-		var pluginGuid = pluginView.attr('id');
-		pluginGuid = pluginGuid.replace('elgg-object-', '');
-
-		var ajax = new Ajax();
-		ajax.view('object/plugin/full', {
-			cache: false,
-			data: {
-				guid: pluginGuid,
-				display_reordering: true
-			},
-			success: function(htmlData) {
-				if (htmlData.length > 0) {
-					pluginView.html(htmlData);
-				}
 			}
 		});
 	};
