@@ -259,4 +259,10 @@ class ElggPluginUnitTest extends \Elgg\UnitTestCase {
 		// @todo Test that bootstrap handlers are called during the shutdown event
 		$this->markTestIncomplete();
 	}
+	
+	public function testGetVersion() {
+		$plugin = ElggPlugin::fromId('test_plugin', $this->normalizeTestFilePath('mod/'));
+		
+		$this->assertEquals('1.9', $plugin->getVersion());
+	}
 }
