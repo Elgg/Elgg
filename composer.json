@@ -76,7 +76,7 @@
         ],
         "test": "phpunit",
         "travis:install": [
-            "composer self-update",
+            "composer self-update --1",
             "composer install --prefer-dist --no-suggest"
         ],
         "travis:install-with-mysql": [
