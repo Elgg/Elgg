@@ -28,6 +28,10 @@ class UserHover {
 			return;
 		}
 		
+		if ((bool) elgg_get_plugin_setting('friends_only', 'messages') && !$user->isFriendOf(elgg_get_logged_in_user_guid())) {
+			return;
+		}
+		
 		$return = $hook->getValue();
 		
 		$return[] = \ElggMenuItem::factory([
