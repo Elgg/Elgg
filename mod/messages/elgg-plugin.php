@@ -86,4 +86,7 @@ return [
 			],
 		],
 	],
+	'settings' => [
+		'friends_only' => false,
+	],
 ];

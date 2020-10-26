@@ -24,6 +24,10 @@ if (!$user) {
 	return elgg_error_response(elgg_echo('messages:user:nonexist'), 'messages/add');
 }
 
+if((bool) elgg_get_plugin_setting('friends_only', 'messages') && !$user->isFriendOf(elgg_get_logged_in_user_guid())) {
+	return elgg_error_response(elgg_echo('messages:user:notfriend'), 'messages/add');
+}
+
 // Make sure the message field, send to field and title are not blank
 if (!$body || !$subject) {
 	return elgg_error_response(elgg_echo('messages:blank'), 'messages/add');
