@@ -5,8 +5,9 @@
 
 elgg_gatekeeper();
 
-$title = get_input('title', "");
-$address = get_input('address', "");
+$title = get_input('title', '');
+$address = get_input('address', '');
+$entity_guid = (int) get_input('entity_guid');
 
 $description = '';
 
@@ -31,6 +32,11 @@ $fields = [
 		'#label' => elgg_echo('reportedcontent:description'),
 		'name' => 'description',
 		'value' => $description,
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'entity_guid',
+		'value' => $entity_guid,
 	],
 ];
 
