@@ -1,3 +1,22 @@
+<a name="3.3.12"></a>
+### 3.3.12  (2020-10-30)
+
+#### Contributors
+
+* Jeroen Dalsem (4)
+* Jerôme Bakker (1)
+* Nikolai Shcherbin (1)
+* RiverVanRain (1)
+
+#### Bug Fixes
+
+* **admin:** invalid admin section should report 404 not found ([bd4eb40f](https://github.com/Elgg/Elgg/commit/bd4eb40f7c6c9de10c057ff8c2b60b7d36047cd9))
+* **developers:** do not log to screen in cli ([b1a06491](https://github.com/Elgg/Elgg/commit/b1a06491ff17e4246e781f0b49a43c62821b9570))
+* **github:** make sure we use composer v1 during codecoverage tests ([25022dfd](https://github.com/Elgg/Elgg/commit/25022dfda1b66eda9420191db314f2ffd9d02503))
+* **river:** "created", "river" event trigger regression ([718d79c8](https://github.com/Elgg/Elgg/commit/718d79c8d2f82e2333b48c461a71d6823bb65b26))
+* **widgets:** content widget shows correct owner content ([c3c663d3](https://github.com/Elgg/Elgg/commit/c3c663d3de152e8cc7607be5af2ba84730e83dda))
+
+
 <a name="3.3.11"></a>
 ### 3.3.11  (2020-10-02)
 
