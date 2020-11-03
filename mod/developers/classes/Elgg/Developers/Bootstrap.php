@@ -33,7 +33,7 @@ class Bootstrap extends DefaultPluginBootstrap {
 	
 		ini_set('display_errors', (int) !empty($settings['display_errors']));
 	
-		if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default')) {
+		if (!empty($settings['screen_log']) && (elgg_get_viewtype() === 'default') && !\Elgg\Application::isCli()) {
 			// don't show in action/simplecache
 			$path = elgg_substr(current_page_url(), elgg_strlen(elgg_get_site_url()));
 			if (!preg_match('~^(cache|action)/~', $path)) {

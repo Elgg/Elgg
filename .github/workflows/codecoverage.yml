@@ -29,6 +29,7 @@ jobs:
       
       - name: Install Elgg
         run: |
+          sudo composer self-update --1
           composer install
           sudo systemctl start mysql
           mysql -u root -proot -e 'SET GLOBAL max_connections = 1000;'
