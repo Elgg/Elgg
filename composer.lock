@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0223627ff777fb52332f9efa19c2932",
+    "content-hash": "909b8fde8a713bb3d488cf987f1acb01",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -1014,6 +1014,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -2277,62 +2278,12 @@
             "version": "2.0.0",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/weakmap-polyfill/-/weakmap-polyfill-2.0.0.tgz",
-                "shasum": "8f28f935e3853896ad40747e5258db578d9dc8de"
+                "url": "https://registry.npmjs.org/weakmap-polyfill/-/weakmap-polyfill-2.0.0.tgz"
             },
-            "require-dev": {
-                "npm-asset/es5-shim": ">=4.5.8,<5.0.0",
-                "npm-asset/karma": ">=0.13.22,<0.14.0",
-                "npm-asset/karma-chrome-launcher": ">=0.2.3,<0.3.0",
-                "npm-asset/karma-detect-browsers": ">=2.1.0,<3.0.0",
-                "npm-asset/karma-firefox-launcher": ">=0.1.7,<0.2.0",
-                "npm-asset/karma-ie-launcher": ">=0.2.0,<0.3.0",
-                "npm-asset/karma-mocha": ">=0.2.2,<0.3.0",
-                "npm-asset/karma-mocha-reporter": ">=2.0.2,<3.0.0",
-                "npm-asset/karma-safari-launcher": ">=0.1.1,<0.2.0",
-                "npm-asset/mocha": ">=2.4.5,<3.0.0",
-                "npm-asset/power-assert": ">=1.3.1,<2.0.0",
-                "npm-asset/uglify-js": ">=2.6.2,<3.0.0"
-            },
-            "type": "npm-asset-library",
-            "extra": {
-                "npm-asset-bugs": {
-                    "url": "https://github.com/polygonplanet/weakmap-polyfill/issues"
-                },
-                "npm-asset-main": "weakmap-polyfill.js",
-                "npm-asset-directories": {
-                    "test": "tests"
-                },
-                "npm-asset-repository": {
-                    "type": "git",
-                    "url": "git+https://github.com/polygonplanet/weakmap-polyfill.git"
-                },
-                "npm-asset-scripts": {
-                    "minify": "uglifyjs weakmap-polyfill.js -o weakmap-polyfill.min.js --keep-fnames --comments -m -b ascii-only=true,beautify=false",
-                    "test": "mocha tests/test-node && mocha tests/test-node-polyfill && karma start karma.conf.js",
-                    "travis": "mocha tests/test-node && mocha tests/test-node-polyfill && karma start karma.conf.js --single-run"
-                }
-            },
+            "type": "npm-asset",
             "license": [
                 "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "polygon planet"
-                }
-            ],
-            "description": "ECMAScript6 WeakMap polyfill",
-            "homepage": "https://github.com/polygonplanet/weakmap-polyfill",
-            "keywords": [
-                "ecmascript",
-                "es2015",
-                "es6",
-                "javascript",
-                "polyfill",
-                "shim",
-                "weakmap"
-            ],
-            "time": "2016-04-27T11:30:07+00:00"
+            ]
         },
         {
             "name": "paragonie/random_compat",
