@@ -9,7 +9,6 @@ namespace Elgg\Cache;
  * @property-read CompositeCache $entities
  * @property-read CompositeCache $metadata
  * @property-read CompositeCache $private_settings
- * @property-read CompositeCache $usernames
  */
 class DataCache extends CacheCollection {
 
