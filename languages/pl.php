@@ -120,6 +120,7 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Nie powiodła się weryfikacja obecnego hasła.',
 	'LoginException:Unknown' => 'Nie można się zalogować z powodu nieznanego błędu.',
 	'LoginException:AdminValidationPending' => "Your account needs to be validated by a site administrator before you can use it. You'll be notified when your account is validated.",
+	'LoginException:DisabledUser' => "Your account has been disabled. You're not allowed to login.",
 
 	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
@@ -677,6 +678,8 @@ submit potentially harmfull content (eg. cross-site-scripting, etc)",
 	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
 	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
 expired sessions from your database and not allow users to reuse old sessions.",
+	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
+	'admin:security:information:htaccess:hardening:help' => "In the .htaccess file access to certain files can be blocked to increase security on your site. For more information look in your .htaccess file.",
 	
 	'admin:security:settings' => 'Ustawienia',
 	'admin:security:settings:description' => 'On this page you can configure some security features. Please read the settings carefully.',

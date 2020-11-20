@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 13:08+0200\n"
+"POT-Creation-Date: 2020-10-30 12:26+0100\n"
 "PO-Revision-Date: 2018-01-19 10:19+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -129,7 +129,7 @@ msgstr "Cliquez sur 'Télécharger'"
 
 #: ../../plugins/diagnostics.rst:12
 msgid "System diagnostics dump file contents:"
-msgstr "Contenu du fichier de vidage des diagnostics système"
+msgstr "Contenu du fichier de vidage des diagnostics système :"
 
 #: ../../plugins/diagnostics.rst:14
 msgid "List of all Elgg files along with a hash for each file"
@@ -300,12 +300,16 @@ msgstr "Contacts"
 msgid ""
 "Being a social network framework Elgg supports relationships between users."
 msgstr ""
+"En tant que framework de réseau social, Elgg gère les relations entre "
+"membres."
 
 #: ../../plugins/friends.rst:6
 msgid ""
 "By default any user can befriend any other user, it's like following the "
 "activity of the other user."
 msgstr ""
+"Par défaut tout membre peut se mettre en contact avec n'importe quel autre "
+"membre : cela revient à suivre l'activité de l'autre membre."
 
 #: ../../plugins/friends.rst:8
 msgid ""
@@ -314,6 +318,11 @@ msgid ""
 "Upon approval user A will be friends with user B and user B will be friends "
 "with user A."
 msgstr ""
+"Après avoir activé les demandes de contact en tant que fonctionnalité du "
+"plugin Friends, lorsque l’utilisateur A veut être en contact avec "
+"l’utilisateur B, l’utilisateur B doit approuver la demande. Lors de "
+"l’approbation, l’utilisateur A sera en contact avec l’utilisateur B et "
+"l’utilisateur B sera en contact avec l’utilisateur A."
 
 #: ../../plugins/groups.rst:2
 msgid "Groups"
@@ -337,7 +346,7 @@ msgstr ""
 "structuré pour partager du contenu et discuter d'idées. C'est là "
 "qu'interviennent les puissantes fonctionnalités d'Elgg en terme de "
 "construction de groupes. Vous pouvez créer et modérer autant de groupes que "
-"vous le désirez. "
+"vous le désirez."
 
 #: ../../plugins/groups.rst:15
 msgid ""
@@ -376,7 +385,7 @@ msgid ""
 "your social network."
 msgstr ""
 "Elgg est livré avec un jeu de plugins. Ils fournissent les fonctionnalités "
-"fondamentales pour votre réseau social"
+"fondamentales pour votre réseau social."
 
 #: ../../plugins/index.rst:22
 msgid ""
