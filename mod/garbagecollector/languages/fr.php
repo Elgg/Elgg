@@ -17,5 +17,5 @@ return array(
 	'garbagecollector:done' => "Ramasse-miettes terminé",
 	'garbagecollector:optimize' => "Optimisation en cours %s",
 	
-	'garbagecollector:cli:database:optimize:description' => "Optimize database tables",
+	'garbagecollector:cli:database:optimize:description' => "Optimiser les tables de la base de données",
 );

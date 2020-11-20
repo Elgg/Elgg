@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
 # Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 13:08+0200\n"
+"POT-Creation-Date: 2020-10-30 12:26+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -96,7 +96,7 @@ msgstr "Demandes de correction de bug (bugfix PR) :"
 
 #: ../../contribute/code.rst:46
 msgid "Feature PRs:"
-msgstr "Demande de fonctionnalité (feature PR) : "
+msgstr "Demandes de fonctionnalité (feature PR) :"
 
 #: ../../contribute/code.rst:58
 msgid "Choosing a branch to submit to"
@@ -298,8 +298,7 @@ msgstr "correction de bug (vague)"
 
 #: ../../contribute/code.rst:110
 msgid "bar view no longer dies if 'foo' not set"
-msgstr ""
-"la vue du graphique en barres n'échoue plus si 'foo' n'est pas défini "
+msgstr "la vue du graphique en barres n'échoue plus si 'foo' n'est pas défini"
 
 #: ../../contribute/code.rst:110
 msgid ""
@@ -734,7 +733,7 @@ msgstr "Ouvrez les outils de développement de Chrome et l'onglet Console."
 
 #: ../../contribute/code.rst:316
 msgid "Reload the page."
-msgstr "Rechargez la page"
+msgstr "Rechargez la page."
 
 #: ../../contribute/code.rst:318
 msgid ""
@@ -918,6 +917,9 @@ msgid ""
 "entity_row_to_elggstar), which should not fail under normal conditions, "
 "should throw instead of returning false."
 msgstr ""
+"Les fonctions/méthodes particulièrement bas-niveau et sans API (par ex. "
+"entity_row_to_elggstar), qui ne devraient pas échouer dans des conditions "
+"normales, devraient renvoyer une exception au au lieu de retourner false."
 
 #: ../../contribute/code.rst:395
 msgid ""
@@ -936,7 +938,7 @@ msgstr "Syntaxe ternaire"
 msgid "Acceptable only for single-line, non-embedded statements."
 msgstr ""
 "Acceptable seulement pour des déclarations sur une seule ligne, non "
-"imbriquée"
+"imbriquées."
 
 #: ../../contribute/code.rst:404
 msgid "Minimize complexity"
@@ -1121,6 +1123,10 @@ msgid ""
 "unless they are intended for public use, are already of limited visibility, "
 "or are within a class already marked as ``@internal``."
 msgstr ""
+"Annoter les classes, les méthodes, les propriétés et les fonctions avec "
+"``@internal`` à moins qu’elles ne soient destinées au public, qu’elles ne "
+"soient déjà d’une visibilité limitée ou qu’elles ne soient dans une classe "
+"déjà marquée comme ``@internal``."
 
 #: ../../contribute/code.rst:504
 msgid "Use ``//`` or ``/* */`` when commenting."
@@ -1197,7 +1203,7 @@ msgstr "Mauvais (difficile à lire, mauvais usage des guillemets et des {}):"
 
 #: ../../contribute/code.rst:545
 msgid "Remove trailing whitespace at the end of lines."
-msgstr ""
+msgstr "Retirez l’espace blanc à la fin des lignes."
 
 #: ../../contribute/code.rst:548
 msgid "Value validation"
@@ -1221,7 +1227,7 @@ msgid ""
 "function output:"
 msgstr ""
 "N'ayez pas peur d'utiliser les exceptions. Elles sont plus faciles à gérer "
-"que des sorties de fonction mixtes : "
+"que des sorties de fonction mixtes :"
 
 #: ../../contribute/code.rst:622
 msgid "Documenting return values"
@@ -1239,7 +1245,7 @@ msgstr "Recommandations CSS"
 
 #: ../../contribute/code.rst:664
 msgid "Save the css in files with a ``.css`` extension."
-msgstr ""
+msgstr "Enregistrez le css dans les fichiers avec une extension ``.css``."
 
 #: ../../contribute/code.rst:667
 msgid "Use shorthand where possible"
@@ -1254,6 +1260,8 @@ msgid ""
 "You should prefix your ids and classnames with text that identifies your "
 "plugin."
 msgstr ""
+"Vous devriez préfixer vos identifiants et noms de classe avec un texte qui "
+"identifie votre plugin."
 
 #: ../../contribute/code.rst:706
 msgid "One property per line"
@@ -1287,8 +1295,8 @@ msgstr "Incluez toujours la version sans préfixe fournisseur"
 msgid ""
 "Put an extra newline between vendor-prefixed groups and other properties"
 msgstr ""
-"Ajoutez une ligne supplémentaire entre les groupes  avec préfixes "
-"fournisseurs et les autres propriétés "
+"Ajoutez une ligne supplémentaire entre les groupes avec préfixes "
+"fournisseurs et les autres propriétés"
 
 #: ../../contribute/code.rst:770
 msgid "Group subproperties"
@@ -1716,7 +1724,7 @@ msgstr ""
 
 #: ../../contribute/core/releases.rst:57
 msgid "Preparation for first new stable minor/major release"
-msgstr ""
+msgstr "Préparation pour la première nouvelle version stable mineure/majeure"
 
 #: ../../contribute/core/releases.rst:59
 msgid ""
@@ -1731,16 +1739,20 @@ msgid ""
 "Update the README.md file badges to point to the correct new release "
 "numbers."
 msgstr ""
+"Mettez à jour les badges du fichier README.md pour indiquer les nouveaux "
+"numéros de version corrects."
 
 #: ../../contribute/core/releases.rst:63
 msgid "Preparation for a new major release"
-msgstr ""
+msgstr "Préparation pour une nouvelle version majeure"
 
 #: ../../contribute/core/releases.rst:65
 msgid ""
 "Change the Transifex configuration to push translations to a different "
 "project"
 msgstr ""
+"Modifiez la configuration Transifex pour pousser les traductions vers un "
+"autre projet"
 
 #: ../../contribute/core/releases.rst:68
 msgid "Prepare the release"
@@ -1748,7 +1760,7 @@ msgstr "Préparer la sortie"
 
 #: ../../contribute/core/releases.rst:71
 msgid "Make a PR with translation updates"
-msgstr ""
+msgstr "Faites un PR avec des mises à jour de traduction"
 
 #: ../../contribute/core/releases.rst:73
 #: ../../contribute/core/releases.rst:107
@@ -1766,12 +1778,16 @@ msgstr ""
 #: ../../contribute/core/releases.rst:81
 msgid "Run the ``languages.php`` script. For example, to pull translations:"
 msgstr ""
+"Exécutez le script ``languages.php``. Par exemple, pour extraire les "
+"traductions :"
 
 #: ../../contribute/core/releases.rst:87
 msgid ""
 "Make a pull request with the new translations and have it merged before the "
 "next step."
 msgstr ""
+"Faites une demande de fusion (PR) avec les nouvelles traductions et faites-"
+"la fusionner avant l’étape suivante."
 
 #: ../../contribute/core/releases.rst:89
 msgid ""
@@ -1779,10 +1795,14 @@ msgid ""
 "loads. If it does not, a language file from Transifex may have a PHP syntax "
 "error. Fix the error and amend your commit with the new file:"
 msgstr ""
+"Ensuite, accédez manuellement à la page ``/admin/site_settings`` et vérifiez"
+" qu’elle se charge. Si ce n’est pas le cas, un fichier de langue de "
+"Transifex peut avoir une erreur de syntaxe PHP. Corrigez l’erreur et "
+"modifiez votre validation avec le nouveau fichier :"
 
 #: ../../contribute/core/releases.rst:99
 msgid "Make the release PR"
-msgstr ""
+msgstr "Faire le PR de la version"
 
 #: ../../contribute/core/releases.rst:101
 msgid "Bring your local git clone up to date."
@@ -1816,6 +1836,8 @@ msgid ""
 "Next, submit a pull request via GitHub for automated testing and approval by"
 " another developer:"
 msgstr ""
+"Ensuite, soumettez une demande de fusion (PR) via GitHub pour les tests "
+"automatisés et l’approbation par un autre développeur :"
 
 #: ../../contribute/core/releases.rst:133
 msgid "Tag the release"
@@ -1875,46 +1897,58 @@ msgstr ""
 
 #: ../../contribute/core/releases.rst:158
 msgid "Additional actions for the first new minor / major"
-msgstr ""
+msgstr "Actions supplémentaires pour la première nouvelle mineure / majeure"
 
 #: ../../contribute/core/releases.rst:160
 msgid "Make a new branch on GitHub (for example 3.3)"
-msgstr ""
+msgstr "Créez une nouvelle branche sur GitHub (par exemple 3.3)"
 
 #: ../../contribute/core/releases.rst:161
 msgid ""
 "Set the new branch as the default branch (optional, but suggested for stable"
 " releases)"
 msgstr ""
+"Définissez la nouvelle branche comme branche par défaut (facultatif, mais "
+"suggéré pour les versions stables)"
 
 #: ../../contribute/core/releases.rst:162
 msgid "Configure Read The Docs to build the new branch (not the new tag)"
 msgstr ""
+"Configurer Lire la documentation pour construire la nouvelle branche (et non"
+" la nouvelle balise)"
 
 #: ../../contribute/core/releases.rst:163
 msgid ""
 "Check the Elgg starter project for potential requirement / config changes in"
 " the ``composer.json``"
 msgstr ""
+"Vérifiez le projet de démarrage Elgg pour les besoins potentiels / "
+"modifications de configuration dans le ``composer.json``"
 
 #: ../../contribute/core/releases.rst:164
 msgid ""
 "Add the new minor / major version to the ``Elgg/community_plugins`` "
 "repository so developers can upload plugins for the new release"
 msgstr ""
+"Ajoutez la nouvelle version mineure/majeure au référentiel "
+"``Elgg/community_plugins`` afin que les développeurs puissent télécharger "
+"des plugins pour la nouvelle version"
 
 #: ../../contribute/core/releases.rst:167
 msgid "Additional action for the first new major"
-msgstr ""
+msgstr "Action supplémentaire pour la première nouvelle majeure"
 
 #: ../../contribute/core/releases.rst:169
 msgid "On GitHub add a branch protection rule (for example ``4.*``)"
 msgstr ""
+"Sur GitHub ajouter une règle de protection de branche (par exemple ``4.*``)"
 
 #: ../../contribute/core/releases.rst:170
 msgid ""
 "Configure Scrutinizer to track the new major branches (for example ``4.*``)"
 msgstr ""
+"Configurer Scrutinizer pour suivre les nouvelles branches principales (par "
+"exemple ``4.*``)"
 
 #: ../../contribute/core/releases.rst:173
 msgid "Update the website"
@@ -2163,6 +2197,8 @@ msgid ""
 "You might need to install 'sphinxcontrib-phpdomain'. You can do this with "
 "the following command: `pip install -U sphinxcontrib-phpdomain`"
 msgstr ""
+"Vous devrez peut-être installer 'sphinxcontrib-phpdomain'. Vous pouvez le "
+"faire avec la commande suivante : `pip install -U sphinxcontrib-phpdomain'"
 
 #: ../../contribute/docs.rst:35
 msgid "Follow the existing document organization"
@@ -3057,7 +3093,7 @@ msgstr "Pour ajouter un nouvel objet service à Elgg :"
 
 #: ../../contribute/services.rst:8
 msgid "Annotate your class as ``@internal``."
-msgstr ""
+msgstr "Annotez votre classe comme ``@internal``."
 
 #: ../../contribute/services.rst:9
 msgid "Open the class ``Elgg\\Di\\ServiceProvider``."
@@ -3292,6 +3328,8 @@ msgid ""
 "PHPUnit tests are located in ``/tests/phpunit`` -- these are split between "
 "unit tests and integration tests."
 msgstr ""
+"Les tests PHPUnit sont situés dans ``/tests/phpunit`` -- ceux-ci sont "
+"répartis entre les tests unitaires et les tests d’intégration."
 
 #: ../../contribute/tests.rst:26
 msgid ""
@@ -3333,7 +3371,7 @@ msgstr ""
 "filtrer et modifier Elgg et le comportement d'autres plugins, il est "
 "important de pouvoir exécuter des tests de bout en bout sur un serveur de "
 "pré-production avec votre configuration finale avant de déployer vers la "
-"production. "
+"production."
 
 #: ../../contribute/tests.rst:54
 msgid ""

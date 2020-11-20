@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
 # Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 13:08+0200\n"
+"POT-Creation-Date: 2020-10-30 12:26+0100\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
-"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -242,6 +242,9 @@ msgid ""
 " the same user as the webserver to prevent issues with rights related to "
 "files."
 msgstr ""
+"Soyez informé que lors de l’utilisation elgg-cli il peut être nécessaire "
+"d’exécuter la commande avec le même utilisateur que le serveur Web pour "
+"éviter les problèmes avec les droits des fichiers."
 
 #: ../../intro/elgg-cli.rst:27
 msgid "Available commands"
@@ -258,12 +261,18 @@ msgid ""
 "``'commands','cli'`` hook. Command class must extend "
 "``\\Elgg\\CLI\\Command``."
 msgstr ""
+"Les plugins peuvent ajouter leurs commandes à l’application CLI, en ajoutant"
+" le nom de la classe de commande via une configuration dans ``elgg-"
+"plugin.php`` ou via le hook ``'commands','cli'``. La classe de commande doit"
+" étendre ``\\Elgg\\CLI\\Command``."
 
 #: ../../intro/elgg-cli.rst:106
 msgid ""
 "Custom commands are based on `Symfony Console Commands`_. Please refer to "
 "their documentation for more details."
 msgstr ""
+"Les commandes personnalisées sont basées sur `Symfony Console Commands`_. "
+"Veuillez consulter leur documentation pour plus de détails."
 
 #: ../../intro/index.rst:2
 msgid "Getting Started"
@@ -292,7 +301,7 @@ msgstr ""
 
 #: ../../intro/install.rst:14
 msgid "PHP 7.2+ with the following extensions:"
-msgstr ""
+msgstr "PHP 7.2+ avec les extensions suivantes :"
 
 #: ../../intro/install.rst:16
 msgid "GD (for graphics processing)"

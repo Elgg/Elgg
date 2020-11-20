@@ -47,35 +47,35 @@ return array(
 	'auth.gettoken' => "Cet appel à l'API permet à un utilisateur d'obtenir un jeton d'authentification d'utilisateur qui peut être utilisé pour authentifier les futurs appels à l'API. Passez-le en tant que paramètre auth_token",
 	
 	'admin:configure_utilities:webservices' => "Services web",
-	'admin:configure_utilities:ws_list' => "List API methods",
-	'admin:configure_utilities:ws_tokens' => "Manage API tokens",
-	'webservices:menu:entity:regenerate' => "Regenerate API keys",
+	'admin:configure_utilities:ws_list' => "Lister les méthodes de l'API",
+	'admin:configure_utilities:ws_tokens' => "Gérer les jetons de l'API",
+	'webservices:menu:entity:regenerate' => "Régénérer les clefs d'API",
 	
-	'add:object:api_key' => "Create a new API token",
-	'edit:object:api_key' => "Edit API token: %s",
-	'entity:delete:object:api_key:success' => "The API token %s was deleted",
+	'add:object:api_key' => "Créer un nouveau jeton d'API",
+	'edit:object:api_key' => "Modifier le jeton d'API : %s",
+	'entity:delete:object:api_key:success' => "Le jeton d'api %s a été supprimé",
 	
-	'webservices:requires_api_authentication' => "Requires API authentication",
-	'webservices:requires_user_authentication' => "Requires user authentication",
-	'webservices:function' => "Internal function:",
-	'webservices:parameters' => "Webservice parameters:",
-	'webservices:parameters:required' => "required",
-	'webservices:parameters:optional' => "optional",
+	'webservices:requires_api_authentication' => "Nécessite une authentification auprès de l'API",
+	'webservices:requires_user_authentication' => "Nécessite l'authentification de l'utilisateur",
+	'webservices:function' => "Fonction interne :",
+	'webservices:parameters' => "Paramètres du webservice :",
+	'webservices:parameters:required' => "requis",
+	'webservices:parameters:optional' => "optionnel",
 	
-	'webservices:api_key:public' => "Public key:",
-	'webservices:api_key:secret' => "Secret key:",
-	'webservices:api_key:secret:show' => "Show secret key",
+	'webservices:api_key:public' => "Clef publique : ",
+	'webservices:api_key:secret' => "Clef secrète : ",
+	'webservices:api_key:secret:show' => "Afficher la clef secrète",
 	
-	'webservices:action:api_key:edit:success' => "API token saved successfully",
-	'webservices:action:api_key:regenerate:success' => "The API keys have been regenerated",
+	'webservices:action:api_key:edit:success' => "Le jeton d'API a bien été enregistré",
+	'webservices:action:api_key:regenerate:success' => "Les clefs d'API ont été régénérées",
 
 	// plugin settings
-	'web_services:settings:authentication' => "Web API authentication settings",
-	'web_services:settings:authentication:description' => "Some API methods require that the external sources authenticate themselves. These external sources need to be provided with an API key pair (public and secret key).
+	'web_services:settings:authentication' => "Paramètres d'authentification de l'API web",
+	'web_services:settings:authentication:description' => "Certaines méthodes d'API nécessitent que les sources externes s'authentifient elles-même. Ces ressources externes doivent être fournies avec une paire de clefs d'API (clef publique et secrète).
 
-Please note that at least one API authentication method needs to be active in order to authenticate API requests.",
-	'web_services:settings:authentication:allow_key' => "Allow basic API public key authentication",
-	'web_services:settings:authentication:allow_key:help' => "The API public key can be passed as a parameter in the request.",
-	'web_services:settings:authentication:allow_hmac' => "Allow HMAC header API authentication",
-	'web_services:settings:authentication:allow_hmac:help' => "With HMAC authentication special headers need to be passed in a request to ensure authenticity of the request.",
+Veuillez noter qu'au moins une des méthodes d'authentification doit être active afin d'authentifier les requêtes auprès de l'API.",
+	'web_services:settings:authentication:allow_key' => "Permettre une authentification basique par clef publique",
+	'web_services:settings:authentication:allow_key:help' => "La clef d'API publique peut être passée comme paramètre dans la requête.",
+	'web_services:settings:authentication:allow_hmac' => "Autoriser l'entête HMAC d'authentification auprès de l'API",
+	'web_services:settings:authentication:allow_hmac:help' => "Avec l'authentification HMAC des entêtes particuliers doivent être passés dans la requête pour assurer l'authenticité de la la requête.",
 );
