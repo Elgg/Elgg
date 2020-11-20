@@ -55,12 +55,10 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$user->cache();
 
 		$this->assertEquals($user, _elgg_services()->entityCache->load($user->guid));
-		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load($user->username));
 		
 		$user->invalidateCache();
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
-		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
 	}
 	
 	public function testCacheUserByUsernameCaseInsensitive() {
@@ -73,14 +71,10 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$user->cache();
 		
 		$this->assertEquals($user, _elgg_services()->entityCache->load($user->guid));
-		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load($user->username));
-		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load(strtolower($user->username)));
 		
 		$user->invalidateCache();
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
-		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
-		$this->assertNull(_elgg_services()->dataCache->usernames->load(strtolower($user->username)));
 		
 		$user->delete();
 	}
@@ -228,12 +222,10 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		/* @var $user \ElggUser */
 
 		$this->assertEquals($user, _elgg_services()->entityCache->load($user->guid));
-		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load($user->username));
 
 		$user->ban();
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
-		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
 
 		elgg_unregister_plugin_hook_handler('permissions_check', 'user', [Values::class, 'getTrue']);
 	}
@@ -248,12 +240,10 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$user = get_entity($user->guid);
 
 		$this->assertEquals($user, _elgg_services()->entityCache->load($user->guid));
-		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load($user->username));
 
 		$user->unban();
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
-		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
 
 		elgg_unregister_plugin_hook_handler('permissions_check', 'user', [Values::class, 'getTrue']);
 	}
@@ -265,12 +255,10 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		/* @var $user \ElggUser */
 
 		$this->assertEquals($user, _elgg_services()->entityCache->load($user->guid));
-		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load($user->username));
 
 		$user->makeAdmin();
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
-		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
 	}
 
 	public function testRemovesRemovedAdminUserFromCache() {
@@ -281,12 +269,10 @@ class EntityCacheUnitTest extends \Elgg\UnitTestCase {
 		$user = get_entity($user->guid);
 
 		$this->assertEquals($user, _elgg_services()->entityCache->load($user->guid));
-		$this->assertEquals($user, _elgg_services()->dataCache->usernames->load($user->username));
 
 		$user->removeAdmin();
 
 		$this->assertNull(_elgg_services()->entityCache->load($user->guid));
-		$this->assertNull(_elgg_services()->dataCache->usernames->load($user->username));
 	}
 	
 	

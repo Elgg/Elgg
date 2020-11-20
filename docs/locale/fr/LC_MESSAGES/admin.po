@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2019
 # Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 13:08+0200\n"
+"POT-Creation-Date: 2020-10-30 12:26+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1679,8 +1679,8 @@ msgid ""
 msgstr ""
 "De longs extraits de code rendent la lecture confuse dans le cadre d'un "
 "forum. Veuillez utiliser http://elgg.pastebin.com pour publier de longs "
-"extraits de code et donnez un lien Paste Bin au lieu de publier directement "
-"le code/"
+"extraits de code et donnez le lien PasteBin au lieu de publier directement "
+"le code."
 
 #: ../../admin/getting-help.rst:118
 msgid "Good Ideas"
@@ -1703,7 +1703,7 @@ msgstr ""
 "Est-ce que quelqu'un vous a aidé ? Assurez-vous de remercier cette personne "
 ": le site de la communauté est animé par des volontaires. Personne n'a la "
 "devoir de vous aider avec votre problème. Assurez-vous de montrer votre "
-"reconnaissance ! "
+"reconnaissance !"
 
 #: ../../admin/getting-help.rst:128
 msgid "Give back"
@@ -2219,6 +2219,12 @@ msgid ""
 "times. Any write to the database will flush this cache. This cache will be "
 "automatically cleared at the end of a page load."
 msgstr ""
+"Pour la durée de vie de l’exécution d’une page donnée, un cache de toutes "
+"les requêtes ``SELECT`` est conservé. Cela signifie que pour le chargement "
+"d'une page donnée, une requête sélectionnée donnée ne sortira dans la base "
+"de données qu’une seule fois, même si elle est exécutée plusieurs fois. "
+"Toute écriture dans la base de données videra ce cache. Ce cache sera "
+"automatiquement effacé à la fin du chargemetn d’une page."
 
 #: ../../admin/performance.rst:150
 msgid ""
@@ -2379,7 +2385,7 @@ msgstr ""
 
 #: ../../admin/performance.rst:229
 msgid "Composer Autoloader Optimization"
-msgstr ""
+msgstr "Optimisation de Composer Autoloader"
 
 #: ../../admin/performance.rst:231
 msgid ""
@@ -2388,12 +2394,20 @@ msgid ""
 "classname in the installed dependencies. While this is mostly a fast process"
 " it can be optimized."
 msgstr ""
+"Le chargeur automatique Composer est responsable du chargement des classes "
+"fournies par les dépendances d’Elgg. La façon dont le chargeur automatique "
+"fonctionne est qu’il recherche un nom de classe dans les dépendances "
+"installées. Bien qu’il s’agisse principalement d’un processus rapide, il "
+"peut être optimisé."
 
 #: ../../admin/performance.rst:234
 msgid ""
 "You can optimize the autoloader 2 different ways. The first is in the "
 "commandline, the other is in the ``composer.json`` of your project."
 msgstr ""
+"Vous pouvez optimiser l’autoloader de 2 façons différentes. La première est "
+"dans la ligne de commande, l’autre est dans le ``composer.json`` de votre "
+"projet."
 
 #: ../../admin/performance.rst:236
 msgid ""
@@ -2401,24 +2415,33 @@ msgid ""
 "flag. The disadvantage is you have to add the ``-o`` flag every time you run"
 " Composer."
 msgstr ""
+"Si vous souhaitez optimiser le chargeur automatique à l’aide de la ligne de "
+"commande, utilisez le drapeau ``-o``. L’inconvénient est que vous devez "
+"ajouter le drapeau ``-o`` à chaque fois que vous exécutez Composer."
 
 #: ../../admin/performance.rst:247
 msgid ""
 "The second option is to add the optimization to your ``composer.json`` file,"
 " that way you never forget it."
 msgstr ""
+"La deuxième option consiste à ajouter l’optimisation à votre fichier "
+"``composer.json``, de cette façon vous ne l’oubliez jamais."
 
 #: ../../admin/performance.rst:260
 msgid ""
 "Check out the `Autoloader Optimization`__ page for more information about "
 "how to optimize the Composer autoloader."
 msgstr ""
+"Consultez la page `Autoloader Optimization`__ pour plus d’informations sur "
+"l’optimisation du chargeur automatique Composer."
 
 #: ../../admin/performance.rst:266
 msgid ""
 "As of Elgg 3.0 all the `downloads`__ of Elgg from the website have the "
 "optimized autoloader."
 msgstr ""
+"À partir d’Elgg 3.0 tous les `téléchargements` d’Elgg à partir du site "
+"disposent du chargeur automatique optimisé."
 
 #: ../../admin/performance.rst:271
 msgid "Hosting"
@@ -2915,7 +2938,7 @@ msgstr ""
 
 #: ../../admin/security.rst:35
 msgid "Email address change requires confirmation"
-msgstr ""
+msgstr "Le changement d’adresse e-mail nécessite une confirmation"
 
 #: ../../admin/security.rst:37
 msgid ""
@@ -2924,10 +2947,14 @@ msgid ""
 " an email to the new address with a validation link. After clicking this "
 "link the new email address will be used."
 msgstr ""
+"Lorsqu’un utilisateur souhaite modifier l'adresse e-mail associée à son "
+"compte, il doit confirmer la nouvelle adresse e-mail. Cela se fait en "
+"envoyant un e-mail à la nouvelle adresse avec un lien de validation. Après "
+"avoir cliqué sur ce lien, la nouvelle adresse e-mail sera utilisée."
 
 #: ../../admin/security.rst:41
 msgid "Session bound icons"
-msgstr ""
+msgstr "Icônes liées à la session"
 
 #: ../../admin/security.rst:43
 msgid ""
@@ -2936,6 +2963,11 @@ msgid ""
 "bound makes icon urls not shareable between sessions. The side effect is "
 "that caching of these urls will only help the active session."
 msgstr ""
+"Les icônes d’entité peuvent être liées par défaut à une session. Cela "
+"signifie que les URL générées contiennent également des informations sur la "
+"session en cours. Le fait d’avoir des icônes liées à la session rend les URL"
+" des icônes non partageables entre les sessions. L’effet secondaire est que "
+"la mise en cache de ces URL ne bénéficiera qu'à la session active."
 
 #: ../../admin/security.rst:47
 msgid "Notification to site administrators"
@@ -2980,56 +3012,105 @@ msgstr ""
 
 #: ../../admin/security.rst:65
 msgid "Minimal username length"
-msgstr ""
+msgstr "Longueur minimale du nom d’utilisateur"
 
 #: ../../admin/security.rst:67
 msgid ""
 "You can configure the minimal length the username should have upon "
 "registration of a user."
 msgstr ""
+"Vous pouvez configurer la longueur minimale que le nom d’utilisateur doit "
+"avoir lors de l’inscription d’un utilisateur."
 
 #: ../../admin/security.rst:70
 msgid "Minimal password requirements"
-msgstr ""
+msgstr "Exigences minimales en matière de mot de passe"
 
 #: ../../admin/security.rst:72
 msgid "You can configure several requirements for new passwords of the users"
 msgstr ""
+"Vous pouvez configurer plusieurs exigences pour les nouveaux mots de passe "
+"des utilisateurs"
 
 #: ../../admin/security.rst:74
 msgid "**length**: the password should be at least x characters long"
-msgstr ""
+msgstr "**longueur** : le mot de passe doit comporter au moins x caractères"
 
 #: ../../admin/security.rst:75
 msgid ""
 "**lower case**: minimal number of lower case (a-z) characters in the "
 "password"
 msgstr ""
+"**minuscule** : nombre minimal de caractères minuscules (a-z) dans le mot de"
+" passe"
 
 #: ../../admin/security.rst:76
 msgid ""
 "**upper case**: minimal number of upper case (A-Z) characters in the "
 "password"
 msgstr ""
+"**majuscule** : nombre minimal de caractères majuscules (A-Z) dans le mot de"
+" passe"
 
 #: ../../admin/security.rst:77
 msgid ""
 "**numbers**: minimal number of numbers (0-9) characters in the password"
-msgstr ""
+msgstr "**nombres** : nombre minimal de nombres (0-9) dans le mot de passe"
 
 #: ../../admin/security.rst:78
 msgid ""
 "**specials**: minimal number of special (like !@#$%^&*(), etc.) characters "
 "in the password"
 msgstr ""
+"**specials** : nombre minimal de caractères spéciaux (comme !@##$%^*,* etc.)"
+" dans le mot de passe"
+
+#: ../../admin/security.rst:81
+msgid ".htaccess file access hardening"
+msgstr "Sécurisation de l’accès aux fichiers via .htaccess"
+
+#: ../../admin/security.rst:83
+msgid ""
+"In the .htaccess file a set of file access hardening rules have been added "
+"to prevent direct access to files in certain folders. Enabling these rules "
+"`shouldn't` cause any issues when all the plugins you use follow the Elgg "
+"coding guidelines."
+msgstr ""
+"Dans le fichier .htaccess, un ensemble de règles de durcissement de l’accès "
+"aux fichiers a été ajouté pour empêcher l’accès direct aux fichiers dans "
+"certains dossiers. L’activation de ces règles `ne devrait pas` causer des "
+"problèmes lorsque tous les plugins que vous utilisez suivent les directives "
+"de codage Elgg."
+
+#: ../../admin/security.rst:86
+msgid "Examples of the rules are:"
+msgstr "Voici quelques exemples de règles :"
+
+#: ../../admin/security.rst:88
+msgid ""
+"the ``vendor`` folder. This folder only contains helper libraries that Elgg "
+"uses and there is no need for direct access to this folder. All required "
+"dependecies are loaded from within Elgg"
+msgstr ""
+"le dossier ``vendor``. Ce dossier contient uniquement des bibliothèques "
+"qu’Elgg utilise et il n’est pas nécessaire d’accéder directement à ce "
+"dossier. Toutes les dépendances requises sont chargées à partir de Elgg"
+
+#: ../../admin/security.rst:89
+msgid ""
+"the ``languages`` folder. This folder contains the main Elgg language files."
+" These files are loaded from within Elgg"
+msgstr ""
+"le dossier ``languages``. Ce dossier contient les principaux fichiers "
+"linguistiques d'Elgg. Ces fichiers sont chargés à partir de Elgg"
 
 #: ../../admin/spam.rst:2
 msgid "Spam"
-msgstr ""
+msgstr "Spam"
 
 #: ../../admin/spam.rst:4
 msgid "Keep spam under control."
-msgstr ""
+msgstr "Gardez le spam sous contrôle."
 
 #: ../../admin/spam.rst:6
 msgid ""
@@ -3037,22 +3118,25 @@ msgid ""
 " to improve in core, but there are some actions site admins can take to "
 "mitigate the problem."
 msgstr ""
+"Le spam est un problème très commun que les administrateurs doivent traiter "
+"et que nous visons à améliorer dans le noyau, mais il y a quelques mesures "
+"que les administrateurs de site peuvent prendre pour atténuer le problème."
 
 #: ../../admin/spam.rst:10
 msgid "Install an anti-spam plugin"
-msgstr ""
+msgstr "Installez un plugin anti-spam"
 
 #: ../../admin/spam.rst:11
 msgid "There are several available on the community"
-msgstr ""
+msgstr "Il y en a plusieurs disponible dans la communauté"
 
 #: ../../admin/spam.rst:13
 msgid "http://community.elgg.org/plugins/search?f[c][]=spam&sb=Search"
-msgstr ""
+msgstr "http://community.elgg.org/plugins/search?f[c][]=spam&sb=Search"
 
 #: ../../admin/spam.rst:16
 msgid "Change the registration url"
-msgstr ""
+msgstr "Modifier l’url d’inscription"
 
 #: ../../admin/spam.rst:17
 msgid ""
@@ -3060,24 +3144,30 @@ msgid ""
 "the spammers are naive bots and can no longer find where to create the fake "
 "accounts."
 msgstr ""
+"Certaines personnes ont dit avoir obtenu de bons résultats en changeant "
+"l’URL d’inscription, puisque les spammeurs sont des bots naïfs qui ne "
+"peuvent plus trouver où créer les faux comptes."
 
 #: ../../admin/spam.rst:22
 msgid "Disable open registration"
-msgstr ""
+msgstr "Désactiver l’inscription libre"
 
 #: ../../admin/spam.rst:23
 msgid ""
 "If the flow of registrations is low enough, you can vet all users that come "
 "in to keep the quality of interaction high."
 msgstr ""
+"Si le flux d’inscriptions est assez faible, vous pouvez vérifier tous les "
+"utilisateurs qui s'inscrivent pour conserver une qualité d’interaction "
+"élevée."
 
 #: ../../admin/spam.rst:27
 msgid "Contribute to anti-spam measures in core"
-msgstr ""
+msgstr "Contribuer aux mesures anti-span dans le noyau"
 
 #: ../../admin/spam.rst:29
 msgid "https://github.com/Elgg/Elgg/issues?labels=spam&state=open"
-msgstr ""
+msgstr "https://github.com/Elgg/Elgg/issues?labels=spam&state=open"
 
 #: ../../admin/upgrading.rst:2
 msgid "Upgrading Elgg"
@@ -3249,6 +3339,10 @@ msgid ""
 "schema changes need to be applied first. In that case you need to execute "
 "the :ref:`Phinx migrations <contribute/database#execute-migration>` manually"
 msgstr ""
+"Dans certains cas, la mise à niveau via la ligne de commande échoue car "
+"certaines modifications de schéma de base de données doivent d’abord être "
+"appliquées. Dans ce cas, vous devez exécuter les migrations :ref:`Phinx "
+"migrations <contribute/database#execute-migration>` manuellement"
 
 #: ../../admin/upgrading.rst:110
 msgid "3b. Manual Upgrade (legacy approach)"
@@ -3370,7 +3464,7 @@ msgid ""
 " to composer:"
 msgstr ""
 "Si vous avez installé Elgg en utilisant une archive d'installation mais "
-"souhaitez maintenant basculer vers composer : "
+"souhaitez maintenant basculer vers composer :"
 
 #: ../../admin/upgrading.rst:147
 msgid "Upgrade your current installation using Manual Upgrade method"
@@ -3421,13 +3515,15 @@ msgstr ""
 
 #: ../../admin/upgrading.rst:156
 msgid "Applying a patch using Composer"
-msgstr ""
+msgstr "Application d’un correctif à l’aide de Composer"
 
 #: ../../admin/upgrading.rst:158
 msgid ""
 "The definition of a patch can be found in the :doc:`Release policy "
 "</appendix/releases>`."
 msgstr ""
+"La définition d’un correctif se trouve dans la documentation :doc:`Release "
+"policy </appendix/releases>`."
 
 #: ../../admin/upgrading.rst:160
 msgid ""
@@ -3436,16 +3532,22 @@ msgid ""
 "This will make sure you can easily install patches without the risk of "
 "installing the next minor release."
 msgstr ""
+"Les pré-requis de votre ``composer.json`` pour Elgg doivent être ``~3.y.0`` "
+"(où ``y`` est la version mineure ``0``, ``1``, etc. que vous souhaitez "
+"installer). Cela vous permettra d’installer facilement des correctifs sans "
+"risque d’installer la prochaine version mineure."
 
 #: ../../admin/upgrading.rst:171
 msgid ""
 "Just to be sure you can first verify what will be installed / upgraded by "
 "executing the folowing command"
 msgstr ""
+"Juste pour vous en assurer vous pouvez d’abord vérifier ce qui sera installé"
+" / mis à niveau en exécutant la commande suivante"
 
 #: ../../admin/upgrading.rst:181
 msgid "To upgrade Elgg simply execute"
-msgstr ""
+msgstr "Pour mettre à niveau Elgg, exécutez simplement"
 
 #: ../../admin/upgrading.rst:192
 msgid "Earlier versions"
@@ -3457,6 +3559,10 @@ msgid ""
 "upgrade to, by switching the documentation version in the lower left corner "
 "of :doc:`Upgrading docs <upgrading>`"
 msgstr ""
+"Vérifiez la documentation Elgg qui correspond à la version Elgg vers "
+"laquelle vous souhaitez mettre à niveau, en changeant la version de "
+"documentation dans le coin inférieur gauche de :doc:`Upgrading docs "
+"<upgrading>`"
 
 #: ../../admin/uservalidation.rst:2
 msgid "User validation"
@@ -3502,7 +3608,7 @@ msgstr ""
 
 #: ../../admin/uservalidation.rst:24
 msgid "Require admin validation"
-msgstr ""
+msgstr "Exiger la validation de l’administrateur"
 
 #: ../../admin/uservalidation.rst:26
 msgid ""
@@ -3511,13 +3617,21 @@ msgid ""
 "can use their account. After registration the user gets notified that their "
 "account is awaiting validation by an administrator."
 msgstr ""
+"Dans les paramètres du site sous la section Utilisateurs, il existe un "
+"paramètre qui peut être activé pour exiger la validation par "
+"l’administrateur d’un nouveau compte utilisateur avant que celui-ci puisse "
+"utiliser son compte. Après l’enregistrement, l’utilisateur est informé que "
+"son compte est en attente de validation par un administrateur."
 
 #: ../../admin/uservalidation.rst:29
 msgid ""
 "Site administrators can receive an e-mail notification that there are users "
 "awaiting validation."
 msgstr ""
+"Les administrateurs de site peuvent recevoir une notification par email "
+"indiquant qu’il y a des utilisateurs en attente de validation."
 
 #: ../../admin/uservalidation.rst:31
 msgid "After validation the user is notified that they can use their account."
 msgstr ""
+"Après validation, l’utilisateur est notifié qu'il peut utiliser son compte."

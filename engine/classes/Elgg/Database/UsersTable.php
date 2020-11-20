@@ -63,9 +63,9 @@ class UsersTable {
 			return false;
 		}
 
-		$entity =_elgg_services()->dataCache->usernames->load($username);
-		if ($entity instanceof \ElggUser) {
-			return $entity;
+		$logged_in_user = elgg_get_logged_in_user_entity();
+		if (!empty($logged_in_user) && ($logged_in_user->username === $username)) {
+			return $logged_in_user;
 		}
 
 		$users = elgg_get_entities([

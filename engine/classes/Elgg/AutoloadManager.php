@@ -106,13 +106,20 @@ class AutoloadManager {
 		}
 		
 		$map = $this->loader->getClassMap();
+		
 		if ($this->altered || $map->getAltered()) {
-			$spec = [
-				self::KEY_CLASSES => $map->getMap(),
-				self::KEY_SCANNED_DIRS => $this->scannedDirs,
-			];
+			$classes = $map->getMap();
+			$scanned_dirs = $this->scannedDirs;
 			
-			$this->cache->save(self::FILENAME, $spec);
+			if (empty($classes) && empty($scanned_dirs)) {
+				// if there is nothing to cache do not save it
+				return $this;
+			}
+			
+			$this->cache->save(self::FILENAME, [
+				self::KEY_CLASSES => $classes,
+				self::KEY_SCANNED_DIRS => $scanned_dirs,
+			]);
 		}
 		
 		return $this;

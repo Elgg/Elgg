@@ -39,6 +39,6 @@ Si vous ne recevez rien, veuillez vérifier votre dossier Spam ou Courrier Indé
 	'uservalidationbyemail:messages:resent_validation' => 'La demande de confirmation a bien été renvoyée.',
 	'uservalidationbyemail:messages:resent_validations' => 'Les demandes de confirmation ont bien été renvoyées aux utilisateurs sélectionnés.',
 	
-	'uservalidationbyemail:upgrade:2019090600:title' => 'Track user e-mail validation status',
-	'uservalidationbyemail:upgrade:2019090600:description' => 'The e-mail validation status is tracked in a new way. Make sure all pending users are updated to the new tracking in order to still require e-mail validation.',
+	'uservalidationbyemail:upgrade:2019090600:title' => 'Suivre le statut de validation des emails',
+	'uservalidationbyemail:upgrade:2019090600:description' => 'Le statut de validation des emails est suivi d\'une nouvelle manière. Assurez-vous que les utilisateurs en attente de validation sont mis à jour vers le nouveau système afin qu\'ils aient effectivement besoin de valider leur email.',
 );

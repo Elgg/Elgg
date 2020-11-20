@@ -16,7 +16,7 @@ return array(
 
 	'install:next' => 'Suivant',
 	'install:refresh' => 'Rafraîchir',
-	'install:change_language' => 'Change language',
+	'install:change_language' => 'Changer de langue',
 
 	'install:welcome:instructions' => "L'installation d'Elgg comporte 6 étapes simples et commence par la lecture de cette page de bienvenue !
 
@@ -24,9 +24,9 @@ Si vous ne l'avez pas déjà fait, lisez les instructions d'installation distrib
 
 Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	
-	'install:footer:instructions' => "Installation instructions",
-	'install:footer:troubleshooting' => "Installation troubleshooting",
-	'install:footer:community' => "Elgg community forums",
+	'install:footer:instructions' => "Instructions d'installation",
+	'install:footer:troubleshooting' => "Dépannage de l'installation",
+	'install:footer:community' => "Forums de la communauté Elgg",
 	
 	'install:requirements:instructions:success' => "Votre serveur a passé la vérification des pré-requis techniques.",
 	'install:requirements:instructions:failure' => "Votre serveur n'a pas passé la vérification des pré-requis techniques. Après avoir résolu les points ci-dessous , actualisez cette page. Consultez les liens de dépannage au bas de cette page si vous avez besoin d'aide supplémentaire.",
@@ -70,7 +70,7 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:database:label:dbpassword' => 'Mot de passe de la base de données',
 	'install:database:label:dbname' => 'Nom de la base de données',
 	'install:database:label:dbhost' => 'Nom du serveur de la base de données',
-	'install:database:label:dbport' => 'Database Port number',
+	'install:database:label:dbport' => 'Numéro de port de la base de données',
 	'install:database:label:dbprefix' => 'Préfixe des tables de la base de données',
 	'install:database:label:timezone' => "Fuseau horaire",
 
@@ -78,7 +78,7 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:database:help:dbpassword' => 'Mot de passe du compte de l\'utilisateur de la base de données ci-dessus',
 	'install:database:help:dbname' => 'Nom de la base de données d\'Elgg',
 	'install:database:help:dbhost' => 'Nom du serveur MySQL (habituellement localhost)',
-	'install:database:help:dbport' => 'Port number of the MySQL server (usually 3306)',
+	'install:database:help:dbport' => 'Le numéro de port du serveur MySQL (habituellement 3306)',
 	'install:database:help:dbprefix' => "Le préfixe donné à toutes les tables d'Elgg (habituellement elgg_)",
 	'install:database:help:timezone' => "Le fuseau horaire par défaut du site",
 
