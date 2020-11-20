@@ -1,3 +1,23 @@
+<a name="3.3.13"></a>
+### 3.3.13  (2020-11-20)
+
+#### Contributors
+
+* Jeroen Dalsem (3)
+* Jerôme Bakker (2)
+
+#### Performance
+
+* **users:** entities metadata preloader logic now works for users ([74bfd360](https://github.com/Elgg/Elgg/commit/74bfd3604fd5df474121936f93a16dc04fa89255))
+
+
+#### Bug Fixes
+
+* **tests:**
+  * compare objects that are both serialized and deserialized ([1af78826](https://github.com/Elgg/Elgg/commit/1af78826903c44daa2d351d240871eba37bd30e6))
+  * entity preloader is clean before tests ([35a96147](https://github.com/Elgg/Elgg/commit/35a961477417c0df4ccd195e9a579a2f9da0b1fa))
+
+
 <a name="3.3.12"></a>
 ### 3.3.12  (2020-10-30)
 
