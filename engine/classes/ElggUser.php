@@ -532,42 +532,6 @@ class ElggUser extends \ElggEntity
 		return $settings;
 	
 	}
-
-	/**
-	 * Cache the entity in a session and persisted caches
-	 *
-	 * @param bool $persist Store in persistent cache
-	 *
-	 * @return void
-	 */
-	public function cache($persist = true) {
-		if ($persist && $this->username) {
-			$tmp = $this->volatile;
-
-			// don't store volatile data
-			$this->volatile = [];
-
-			_elgg_services()->dataCache->usernames->save($this->username, $this);
-
-			$this->volatile = $tmp;
-		}
-
-		parent::cache($persist);
-	}
-
-	/**
-	 * Invalidate cache for entity
-	 *
-	 * @return void
-	 * @internal
-	 */
-	public function invalidateCache() {
-		if ($this->username) {
-			_elgg_services()->dataCache->usernames->delete($this->username);
-		}
-
-		parent::invalidateCache();
-	}
 	
 	/**
 	 * {@inheritDoc}

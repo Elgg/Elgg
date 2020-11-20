@@ -264,7 +264,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->notifications->enqueueEvent('create', $object->getType(), $object);
 
 		$event = new SubscriptionNotificationEvent($object, 'create');
-		$this->assertEquals($event, $this->queue->dequeue());
+		$this->assertEquals(unserialize(serialize($event)), $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
@@ -441,7 +441,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 		$this->hooks->registerHandler('send:before', 'notifications', function (\Elgg\Hook $hook) use (&$before_call_count, $event, $subscribers, $object) {
 			$before_call_count++;
-			$this->assertEquals($event, $hook->getParam('event'));
+			$this->assertEquals(unserialize(serialize($event)), $hook->getParam('event'));
 			$this->assertEquals($subscribers, $hook->getParam('subscriptions'));
 
 			return false;
@@ -449,7 +449,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 
 		$this->hooks->registerHandler('send:after', 'notifications', function (\Elgg\Hook $hook) use (&$after_call_count, $event, $subscribers, $object) {
 			$after_call_count++;
-			$this->assertEquals($event, $hook->getParam('event'));
+			$this->assertEquals(unserialize(serialize($event)), $hook->getParam('event'));
 			$this->assertEquals($subscribers, $hook->getParam('subscriptions'));
 			$this->assertEmpty($hook->getParam('deliveries'));
 		});
