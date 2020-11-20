@@ -12,10 +12,10 @@ return array(
 	'edit:object:discussion' => 'Modifier le sujet',
 	'collection:object:discussion' => 'Sujets de discussion',
 	'collection:object:discussion:group' => 'Discussions du groupe',
-	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	'collection:object:discussion:my_groups' => 'Discussions dans mes groupes',
 	
-	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
-	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
+	'discussion:settings:enable_global_discussions' => 'Activer les discussions globales',
+	'discussion:settings:enable_global_discussions:help' => 'Permettre de créer des discussions hors des groupes',
 
 	'discussion:latest' => 'Dernières discussions',
 	'discussion:none' => 'Pas de discussion',
@@ -29,7 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Impossible d\'enregistrer ce sujet',
 	'discussion:error:missing' => 'Les deux champs "titre" et "message" sont obligatoires',
 	'discussion:error:permissions' => 'Vous n\'avez pas les droits pour effectuer cette action',
-	'discussion:error:no_groups' => "You're not a member of any groups.",
+	'discussion:error:no_groups' => "Vous n'êtes membre d'aucun groupe.",
 
 	/**
 	 * River

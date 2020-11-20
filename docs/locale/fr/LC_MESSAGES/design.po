@@ -4,17 +4,17 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2018
 # Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 13:08+0200\n"
+"POT-Creation-Date: 2020-10-30 12:26+0100\n"
 "PO-Revision-Date: 2017-12-28 11:58+0000\n"
-"Last-Translator: Juho Jaakkola <juho.a.jaakkola@gmail.com>, 2020\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -258,7 +258,7 @@ msgid ""
 "data called entities."
 msgstr ""
 "Dans Elgg, tout fonctionne sur un modèle de données unifié construit sur des"
-" unités atomiques de données appelées entités"
+" unités atomiques de données appelées entités."
 
 #: ../../design/database.rst:16
 msgid ""
@@ -296,7 +296,7 @@ msgstr ""
 msgid "``Metadata``: This information describes the entity, it is usually"
 msgstr ""
 "``Metadata`` : Ces informations décrivent l'entité, elles sont "
-"habituellement "
+"habituellement"
 
 #: ../../design/database.rst:31
 msgid ""
@@ -315,7 +315,7 @@ msgid ""
 "``Annotations``: This information extends the entity with properties usually"
 msgstr ""
 "``Annotations`` : Ces informations étendent l'entité avec des propriétés, "
-"habituellement "
+"habituellement"
 
 #: ../../design/database.rst:36
 msgid ""
@@ -1119,7 +1119,8 @@ msgstr ""
 #: ../../design/database.rst:402
 msgid "As of Elgg 3.0, metadata's ``access_id`` property is ignored."
 msgstr ""
-"A partir de Elgg 3.0, la propriété ``access_id`` des métadonnées est ignorée"
+"A partir de Elgg 3.0, la propriété ``access_id`` des métadonnées est "
+"ignorée."
 
 #: ../../design/database.rst:405
 msgid "Reading metadata"
@@ -1157,7 +1158,7 @@ msgstr ""
 #: ../../design/database.rst:429
 msgid "To always get an array back, simply cast to an array;"
 msgstr ""
-"Pour récupérer toujours un tableau, castez simplement vers un tableau :"
+"Pour récupérer toujours un tableau, castez simplement vers un tableau ;"
 
 #: ../../design/database.rst:436
 msgid "Reading metadata as objects"
@@ -1598,10 +1599,13 @@ msgid ""
 "The character set of the database should be ``utf8mb4``, this will provide "
 "full unicode character support when storing data."
 msgstr ""
+"L’ensemble de caractères de la base de données doit être ``utf8mb4``, ce qui"
+" fournira une prise en charge complète des caractères unicode lors du "
+"stockage des données."
 
 #: ../../design/database.rst:688
 msgid "InnoDB"
-msgstr ""
+msgstr "InnoDB"
 
 #: ../../design/database.rst:690
 msgid ""
@@ -1609,18 +1613,21 @@ msgid ""
 "installation or migration some settings may need to be adjusted in the "
 "database settings."
 msgstr ""
+"À partir d’Elgg 3.0, la base de données utilise le moteur InnoDB. Pour une "
+"installation ou une migration correcte, certains paramètres peuvent devoir "
+"être ajustés dans les paramètres de la base de données."
 
 #: ../../design/database.rst:693
 msgid "``innodb_large_prefix`` should be ``on``"
-msgstr ""
+msgstr "``innodb_large_prefix`` devrait être ``on``"
 
 #: ../../design/database.rst:694
 msgid "``innodb_file_format`` should be ``Barracuda``"
-msgstr ""
+msgstr "``innodb_file_format`` devrait être ``Barracuda``"
 
 #: ../../design/database.rst:695
 msgid "``innodb_file_per_table`` should be ``1``"
-msgstr ""
+msgstr "``innodb_file_per_table`` devrait être ``1``"
 
 #: ../../design/database.rst:698
 msgid "Main tables"
@@ -2163,7 +2170,7 @@ msgstr ""
 
 #: ../../design/events.rst:217
 msgid "Trigger an Elgg Event sequence"
-msgstr ""
+msgstr "Déclenche une séquence Elgg Event"
 
 #: ../../design/events.rst:219
 msgid ""
@@ -2171,28 +2178,36 @@ msgid ""
 "possible to trigger an event sequence. This will trigger the ``:before`` "
 "event, then the actual event and finally the ``:after`` event."
 msgstr ""
+"Au lieu de déclencher manuellement l’événement ``:before`` et ``after``, il "
+"est possible de déclencher une séquence d’événements. Cela déclenchera "
+"l’événement ``:before``, puis l’événement réel et enfin l’événement "
+"``:after``."
 
 #: ../../design/events.rst:226
 msgid ""
 "When called with for example ``'cache:clear', 'system'`` the following three"
 " events are triggered"
 msgstr ""
+"When called with for example ``'cache:clear', 'system'`` the following three"
+" events are triggered"
 
 #: ../../design/events.rst:228
 msgid "``'cache:clear:before', 'system'``"
-msgstr ""
+msgstr "``'cache:clear:before', 'system'``"
 
 #: ../../design/events.rst:229
 msgid "``'cache:clear', 'system'``"
-msgstr ""
+msgstr "``'cache:clear', 'system'``"
 
 #: ../../design/events.rst:230
 msgid "``'cache:clear:after', 'system'``"
-msgstr ""
+msgstr "``'cache:clear:after', 'system'``"
 
 #: ../../design/events.rst:237
 msgid "**$callable** Callable to run on successful event, before event:after"
 msgstr ""
+"**$callable** Appelable pour exécuter sur l’événement réussi, avant "
+"event:after"
 
 #: ../../design/events.rst:242
 msgid "Plugin Hooks"

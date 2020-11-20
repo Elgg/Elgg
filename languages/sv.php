@@ -120,6 +120,7 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Misslyckades med nuvarande lösenordskontroll.',
 	'LoginException:Unknown' => 'Vi kunde inte logga in dig på grund av ett okänt fel.',
 	'LoginException:AdminValidationPending' => "Ditt konto måste godkännas av en administratör på den här webbplatsen, innan du kan använda det. Du kommer att få ett meddelande när ditt konto har validerats.",
+	'LoginException:DisabledUser' => "Your account has been disabled. You're not allowed to login.",
 
 	'UserFetchFailureException' => 'Kan inte kontrollera behörighet för user_guid [%s] eftersom användaren inte existerar.',
 
@@ -678,6 +679,8 @@ submit potentially harmfull content (eg. cross-site-scripting, etc)",
 	'admin:security:information:php:session_gc:lifetime' => "Session lifetime %s seconds",
 	'admin:security:information:php:session_gc:error' => "It's recommended to set 'session.gc_probability' and 'session.gc_divisor' in your PHP settings, this will cleanup
 expired sessions from your database and not allow users to reuse old sessions.",
+	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
+	'admin:security:information:htaccess:hardening:help' => "In the .htaccess file access to certain files can be blocked to increase security on your site. For more information look in your .htaccess file.",
 	
 	'admin:security:settings' => 'Inställningar',
 	'admin:security:settings:description' => 'På den här sidan kan du konfigurera några säkerhetsfunktioner. Vänligen läs om inställningarna försiktigt.',

@@ -121,6 +121,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'LoginException:ChangePasswordFailure' => 'Huidige wachtwoord incorrect.',
 	'LoginException:Unknown' => 'We konden je niet aanmelden vanwege een onbekende fout.',
 	'LoginException:AdminValidationPending' => "Je account moet nog worden gevalideerd door een beheerder van de site voordat je het kunt gebruiken. Je zult hier een notificatie van ontvangen zodra dit is gebeurd.",
+	'LoginException:DisabledUser' => "Your account has been disabled. You're not allowed to login.",
 
 	'UserFetchFailureException' => 'Kan voor user_guid [%s] niet de rechten nakijken omdat de gebruiker niet bestaat.',
 
@@ -672,6 +673,8 @@ Het zorgt er voor dat Elgg geen database verbinding hoeft op te zetten op het mo
 	'admin:security:information:php:session_gc:chance' => "Opschoningskans: %s%%",
 	'admin:security:information:php:session_gc:lifetime' => "Sessie levensduur %sseconden",
 	'admin:security:information:php:session_gc:error' => "Het is aanbevolen om de PHP instellingen  'session.gc_probability' en 'session.gc_divisor' in te stellen. Dit schoont verlopen sessies op in de database en zorgt er voor dat oude sessies niet opnieuw gebruikt kunnen worden.",
+	'admin:security:information:htaccess:hardening' => ".htaccess file access hardening",
+	'admin:security:information:htaccess:hardening:help' => "In the .htaccess file access to certain files can be blocked to increase security on your site. For more information look in your .htaccess file.",
 	
 	'admin:security:settings' => 'Instellingen',
 	'admin:security:settings:description' => 'Op deze pagina kun je enkele veiligheidskeuzes maken. Lees de instellingen zorgvuldig.',
