@@ -22,4 +22,9 @@ if (!$report->save()) {
 
 $report->state = 'active';
 
+$entity_guid = (int) get_input('entity_guid');
+if ($entity_guid) {
+	$report->addRelationship($entity_guid, 'reportedcontent');
+}
+
 return elgg_ok_response('', elgg_echo('reportedcontent:success'), $address);

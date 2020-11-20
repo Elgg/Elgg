@@ -11,15 +11,6 @@ if (!$item instanceof ElggMenuItem) {
 	return;
 }
 
-$deps = $item->getDeps();
-if (elgg_extract('data-toggle', $item->getValues())) {
-	$deps[] = 'navigation/menu/elements/item_toggle';
-}
-
-foreach ($deps as $module) {
-	elgg_require_js($module);
-}
-
 $item_vars = [];
 $child_menu_view = '';
 
@@ -53,6 +44,15 @@ if (!empty($children)) {
 	}
 
 	$child_menu_view = elgg_view('navigation/menu/elements/section', $child_menu_vars);
+}
+
+$deps = $item->getDeps();
+if (elgg_extract('data-toggle', $item->getValues())) {
+	$deps[] = 'navigation/menu/elements/item_toggle';
+}
+
+foreach ($deps as $module) {
+	elgg_require_js($module);
 }
 
 $item_vars['data-menu-item'] = $item->getName();

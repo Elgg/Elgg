@@ -26,7 +26,8 @@ return [
 	'hooks' => [
 		'register' => [
 			'menu:entity' => [
-				'Elgg\ReportedContent\Menus\Entity::register' => [],
+				'Elgg\ReportedContent\Menus\Entity::registerArchive' => [],
+				'Elgg\ReportedContent\Menus\Entity::registerEntityReporting' => [],
 			],
 			'menu:footer' => [
 				'Elgg\ReportedContent\Menus\Footer::register' => [],
