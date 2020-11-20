@@ -3,8 +3,13 @@
  * Elgg owner block
  * Displays page ownership information
  *
+ * @uses $vars['show_owner_block'] (bool) Display owner block (default: true)
  * @uses $vars['show_owner_block_menu'] (bool) Show the owner_block menu for the current page owner (default: true)
  */
+
+if (!elgg_extract('show_owner_block', $vars, true)) {
+	return;
+}
 
 // groups and other users get owner block
 $owner = elgg_get_page_owner_entity();
