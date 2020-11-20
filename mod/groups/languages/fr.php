@@ -21,12 +21,12 @@ return array(
 	'groups:delete' => 'Supprimer le groupe',
 	'groups:membershiprequests' => 'Gérer les demandes d\'adhésion au groupe',
 	'groups:membershiprequests:pending' => 'Gérer les demandes à rejoindre le groupe (%s)',
-	'groups:invitedmembers' => "Manage invitations",
+	'groups:invitedmembers' => "Gérer les invitations",
 	'groups:invitations' => 'Invitations du groupe',
 	'groups:invitations:pending' => 'Invitations du groupe (%s)',
 	
-	'relationship:invited' => '%2$s was invited to join %1$s',
-	'relationship:membership_request' => '%s requested to join %s',
+	'relationship:invited' => '%2$s a été invité à rejoindre %1$s',
+	'relationship:membership_request' => '%s a demandé à rejoindre %s',
 
 	'groups:icon' => 'Icône du groupe (ne rien sélectionner pour laisser inchangé)',
 	'groups:name' => 'Nom du groupe',
@@ -71,8 +71,8 @@ return array(
 	'groups:invite:title' => 'Invitez des contacts à rejoindre ce groupe',
 	'groups:invite:friends:help' => 'Rechercher un contact par nom ou nom d\'utilisateur et sélectionner le contact dans la liste',
 	'groups:invite:resend' => 'Renvoyer les invitations aux membres déjà invités',
-	'groups:invite:member' => 'Already a member of this group',
-	'groups:invite:invited' => 'Already invited to this group',
+	'groups:invite:member' => 'Déjà membre de ce groupe',
+	'groups:invite:invited' => 'Déjà invité dans ce groupe',
 
 	'groups:nofriendsatall' => 'Vous n\'avez pas de contact à inviter !',
 	'groups:group' => "Groupe",
@@ -109,9 +109,9 @@ return array(
 	'groups:opengroup:membersonly' => "Le contenu de ce groupe est accessible uniquement à ses membres.",
 	'groups:opengroup:membersonly:join' => 'Pour faire partie des membres, cliquez sur le lien du menu "Rejoindre le groupe".',
 	'groups:visibility' => 'Visibilité du groupe ?',
-	'groups:content_default_access' => 'Default group content access',
-	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
-	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
+	'groups:content_default_access' => 'Accès par défaut au contenu du groupe',
+	'groups:content_default_access:help' => 'Ici vous pouvez configurer le niveau d\'accès par défaut pour les nouveaux contenus publiés dans ce groupe. Le mode de gestion des contenus du groupe peut rendre l\'option choisie sans effet.',
+	'groups:content_default_access:not_configured' => 'Aucun accès par défaut, au choix du membre',
 
 	/**
 	 * Group tools

@@ -66,10 +66,10 @@ return array(
 	'developers:entity_explorer:info:metadata' => 'Métadonnées',
 	'developers:entity_explorer:info:relationships' => 'Relations',
 	'developers:entity_explorer:info:private_settings' => 'Paramètres privés',
-	'developers:entity_explorer:info:owned_acls' => 'Owned Access Collections',
-	'developers:entity_explorer:info:acl_memberships' => 'Access Collections Memberships',
+	'developers:entity_explorer:info:owned_acls' => 'Collections d\'accès possédées',
+	'developers:entity_explorer:info:acl_memberships' => 'Appartenance aux collections d\'accès',
 	'developers:entity_explorer:delete_entity' => 'Supprimer cette entité',
-	'developers:entity_explorer:inspect_entity' => 'Inspect this entity',
+	'developers:entity_explorer:inspect_entity' => 'Inspecter cette entité',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecter la configuration système du framework Elgg',

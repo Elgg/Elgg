@@ -28,8 +28,8 @@ return array(
 	 * Status messages
 	 */
 
-	'annotation:delete:messageboard:fail' => "Sorry, we could not delete this message",
-	'annotation:delete:messageboard:success' => "You successfully deleted the message",
+	'annotation:delete:messageboard:fail' => "Désolé, ce message n'a pas pu être supprimé",
+	'annotation:delete:messageboard:success' => "Ce message a bien été supprimé",
 	
 	'messageboard:posted' => "Votre message a bien été publié dans le forum.",
 	'messageboard:deleted' => "Vous avez bien supprimé le message.",

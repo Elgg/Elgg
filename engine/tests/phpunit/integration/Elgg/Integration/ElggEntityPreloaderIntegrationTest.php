@@ -26,14 +26,13 @@ class ElggEntityPreloaderIntegrationTest extends \Elgg\IntegrationTestCase {
 	protected $user;
 
 	public function up() {
-		$this->realPreloader = _elgg_services()->entityPreloader;
-
-		$this->mockPreloader = new MockEntityPreloader20140623(_elgg_services()->entityTable);
-
-		_elgg_services()->setValue('entityPreloader', $this->mockPreloader);
-		
 		$this->user = $this->createUser();
 		elgg()->session->setLoggedInUser($this->user);
+		
+		$this->realPreloader = _elgg_services()->entityPreloader;
+		$this->mockPreloader = new MockEntityPreloader20140623(_elgg_services()->entityTable);
+		
+		_elgg_services()->setValue('entityPreloader', $this->mockPreloader);
 	}
 
 	public function down() {

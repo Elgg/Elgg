@@ -22,8 +22,8 @@ return array(
 
 	'groups:tool:pages' => 'Activer les pages du groupe',
 	
-	'annotation:delete:page:success' => 'The page revision was successfully deleted',
-	'annotation:delete:page:fail' => 'The page revision could not be deleted',
+	'annotation:delete:page:success' => 'La version de la page a bien été supprimée.',
+	'annotation:delete:page:fail' => 'La version de la page n\'a pas pu être supprimée.',
 
 	'pages:delete' => "Supprimer cette page",
 	'pages:history' => "Historique",
