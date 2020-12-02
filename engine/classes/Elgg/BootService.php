@@ -152,7 +152,7 @@ class BootService {
 		if ($config->system_cache_enabled) {
 			$config->system_cache_loaded = false;
 
-			if ($services->views->configureFromCache($services->systemCache)) {
+			if ($services->views->configureFromCache($services->serverCache)) {
 				$config->system_cache_loaded = true;
 			}
 		}
