@@ -28,17 +28,6 @@ matrix:
     - php: hhvm
 
   include:
-    # Build and test javascript
-    - php: 5.6
-      env: VARIA=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-      install:
-       - npm install
-       - composer travis:install
-      script:
-       - npm test
-      
     # Build docs and check for errors
     # Flags used here, not in `make html`:
     #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
