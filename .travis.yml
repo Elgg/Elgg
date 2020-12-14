@@ -37,7 +37,6 @@ matrix:
        - phpenv rehash
        - composer travis:install
       script: 
-       - bash .scripts/travis/check_commit_msgs.sh
        - composer lint
        
     # Build and test javascript
