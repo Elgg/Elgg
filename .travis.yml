@@ -28,17 +28,6 @@ matrix:
     - php: hhvm
 
   include:
-    # Lint checks for PHP code and composer.json
-    - php: 5.6
-      env: VARIA=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-      install:
-       - phpenv rehash
-       - composer travis:install
-      script: 
-       - composer lint
-       
     # Build and test javascript
     - php: 5.6
       env: VARIA=true
