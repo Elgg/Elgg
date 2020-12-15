@@ -48,24 +48,6 @@ matrix:
       after_script:
        - php -f ./.scripts/seeder/unseed.php
 
-    # End to end tests
-    - php: 5.6
-      env: E2E=true
-      before_install:
-        - phpenv config-rm xdebug.ini
-      install:
-       - composer travis:install-with-mysql
-       - php -f ./.scripts/travis/enable_plugins.php
-       - php -f ./.scripts/seeder/seed.php
-       - php -S localhost:8888 index.php &
-       - sleep 3 # give Web server some time to bind to sockets, etc
-      script:
-       - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-       - ./vendor/bin/phpunit
-       - php -f ./engine/tests/suite.php
-      after_script:
-       - php -f ./.scripts/seeder/unseed.php
-
 services:
   - mysql
 

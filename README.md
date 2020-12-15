@@ -1,7 +1,7 @@
 Elgg 
 ====
 
-[![Build Status](https://secure.travis-ci.org/Elgg/Elgg.svg?branch=2.3)](https://travis-ci.org/Elgg/Elgg) 
+![Build status](https://github.com/Elgg/Elgg/workflows/Run%20PHPUnit%20test%20suites/badge.svg?branch=2.3) 
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=2.3)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=2.3) 
 [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=2.3)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=2.3) 
 [![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=2.3)](http://learn.elgg.org/en/2.3/)
