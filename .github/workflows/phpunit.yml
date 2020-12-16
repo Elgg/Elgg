@@ -1,0 +1,108 @@
+name: Run PHPUnit test suites
+on: [pull_request, push]
+env:
+  ELGG_DB_PREFIX: c_i_elgg_
+  ELGG_DB_HOST: 127.0.0.1
+  ELGG_DB_NAME: elgg
+  ELGG_DB_USER: root
+  ELGG_DB_PASS: password
+  ELGG_WWWROOT: http://localhost:8888/
+  ELGG_MEMCACHE_SERVER1_HOST: 127.0.0.1
+  ELGG_MEMCACHE_SERVER1_PORT: 11211
+  ELGG_MEMCACHE_NAMESPACE_PREFIX: elgg_
+  ELGG_REDIS_SERVER1_HOST: 127.0.0.1
+  ELGG_REDIS_SERVER1_PORT: 6379
+
+jobs:
+  phpunit:
+    name: PHP ${{ matrix.php-versions }} - MySQL ${{ matrix.mysql-versions }} ${{ matrix.extra-title }}
+    runs-on: ubuntu-20.04
+    services:
+      elggdb:
+        image: mysql:${{ matrix.mysql-versions }}
+        env:
+          MYSQL_DATABASE: elgg
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+      memcached:
+        image: memcached:1.6
+        ports:
+          - 11211:11211
+      redis:
+        image: redis:6
+        ports:
+          - 6379:6379
+          
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['7.2', '7.3', '7.4']
+        extra-title: ['']
+        memcache: [0]
+        mysql-versions: [5.7]
+        redis: [0]
+        include:
+          - php-versions: '7.2'
+            extra-title: '- Memcache'
+            memcache: 1
+            mysql-versions: 5.7
+            redis: 0
+          - php-versions: '7.2'
+            extra-title: '- Redis'
+            memcache: 0
+            mysql-versions: 5.7
+            redis: 1
+          - php-versions: '7.4'
+            extra-title: ''
+            memcache: 0
+            mysql-versions: 8.0
+            redis: 1
+    env:
+      ELGG_MEMCACHE: ${{ matrix.memcache }}
+      ELGG_REDIS: ${{ matrix.redis }}
+        
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: none
+          extensions: gd,pdo,xml,json,memcached,redis-4.3.0,mysqli,pdo_mysql,libxml,mbstring
+      
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+      
+      - name: Composer install
+        run: composer install
+      
+      - name: Install Elgg
+        run: php ./elgg-cli install --config ./install/cli/testing_app.php --verbose
+      
+      - name: Enable Elgg plugins
+        run: php -f ./.scripts/ci/enable_plugins.php
+      
+      - name: Seed Elgg database
+        run: php ./elgg-cli database:seed --limit=5 --image_folder=./.scripts/seeder/images/ -vv
+      
+      - name: Start Elgg webserver
+        run: |
+          php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
+          # give Web server some time to bind to sockets, etc
+          sleep 3
+          # check if the webserver is running
+          curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg CI Site</title>"
+      
+      - name: Run PHPUnit
+        run: |
+          ./vendor/bin/phpunit --testsuite unit
+          ./vendor/bin/phpunit --testsuite integration
+          ./vendor/bin/phpunit --testsuite plugins-unit
+          ./vendor/bin/phpunit --testsuite plugins-integration
+      
+      - name: Unseed Elgg database
+        if: ${{ always() }}
+        run: php ./elgg-cli database:unseed -vv

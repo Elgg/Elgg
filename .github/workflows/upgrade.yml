@@ -1,0 +1,86 @@
+name: Elgg upgrade
+on: [pull_request]
+env:
+  ELGG_DB_PREFIX: c_i_elgg_
+  ELGG_DB_HOST: 127.0.0.1
+  ELGG_DB_NAME: elgg
+  ELGG_DB_USER: root
+  ELGG_DB_PASS: password
+  ELGG_WWWROOT: http://localhost:8888/
+
+jobs:
+  upgrade:
+    name: Upgrade from 2.3
+    runs-on: ubuntu-20.04
+    services:
+      elggdb:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: elgg
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+          
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.2'
+          coverage: none
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+      
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout Elgg 2.3
+        uses: actions/checkout@v2
+        with:
+          repository: 'Elgg/Elgg'
+          ref: '2.3'
+      
+      - name: Composer install
+        run: |
+          composer global require fxp/composer-asset-plugin:^1.1.4 --prefer-dist
+          composer install
+      
+      - name: Install Elgg 2.3
+        run: |
+          mkdir ${HOME}/elgg_data
+          php -f ./install/cli/ci_installer.php
+      
+      - name: Enable Elgg 2.3 plugins
+        run: php -f ./.scripts/ci/enable_plugins.php
+      
+      - name: Seed Elgg 2.3 database
+        run: php -f ./.scripts/seeder/seed.php
+      
+      - name: Code checkout PR
+        uses: actions/checkout@v2
+        with:
+          clean: false
+      
+      - name: Composer update
+        # using composer update to make sure we have latest dependencies like in the starter project (zip)
+        run: composer update --prefer-dist --no-suggest
+      
+      - name: Elgg CLI upgrade
+        run: php ./elgg-cli upgrade async --verbose
+      
+      - name: Start Elgg webserver
+        run: |
+          php -S localhost:8888 -c ./.scripts/ci/local_php_server.ini index.php &
+          # give Web server some time to bind to sockets, etc
+          sleep 3
+          # check if the webserver is running
+          curl -s http://localhost:8888/ | tac | tac | grep -q "<title>Elgg CI Site</title>"
+      
+      - name: Run PHPUnit
+        run: |
+          ./vendor/bin/phpunit --testsuite unit
+          ./vendor/bin/phpunit --testsuite integration
+          ./vendor/bin/phpunit --testsuite plugins-unit
+          ./vendor/bin/phpunit --testsuite plugins-integration
+      
+      - name: Unseed Elgg database
+        if: ${{ always() }}
+        run: php ./elgg-cli database:unseed -vv

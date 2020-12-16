@@ -1,0 +1,30 @@
+name: Documentation
+on: [pull_request]
+jobs:
+  build_docs:
+    name: Build the sphinx documentation
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+        
+      - name: Build HTML documentation
+        uses: ammaraskar/sphinx-action@master
+        # Flags used here, not in `make html`:
+        #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
+        #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
+        with:
+          docs-folder: 'docs/'
+          build-command: 'sphinx-build -b html -nW . _build/html'
+      
+      - name: Build Latex documentation
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: 'docs/'
+          build-command: 'sphinx-build -b latex -nW . _build/latex'
+      
+      - name: Build custom (Spanish) language documentation
+        uses: ammaraskar/sphinx-action@master
+        with:
+          docs-folder: 'docs/'
+          build-command: 'sphinx-build -b html -D language=es -n . _build/html_es'
