@@ -1,0 +1,179 @@
+name: Run PHPUnit test suites
+on: [pull_request, push]
+jobs:
+  phpunit:
+    name: PHPUnit tests
+    runs-on: ubuntu-16.04
+    services:
+      elggdb:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: elgg
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+    strategy:
+      matrix:
+        php-versions: ['5.6', '7.0']
+        
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          # needed for StashWrapper unit test assert function
+          ini-values: zend.assertions=1
+          coverage: none
+          extensions: gd,pdo,xml,json
+      
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+      
+      - name: Composer install
+        run: |
+          composer global require fxp/composer-asset-plugin:^1.1.4 --prefer-dist
+          composer install
+      
+      - name: Install Elgg
+        run: |
+          mkdir ${HOME}/elgg_data
+          php -f ./install/cli/ci_installer.php
+      
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit
+      
+      - name: Run SimpleTests
+        run: php -f ./engine/tests/suite.php
+  end2end:
+    name: End-to-end tests
+    runs-on: ubuntu-16.04
+    services:
+      elggdb:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: elgg
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+       
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '5.6'
+          # needed for StashWrapper unit test assert function
+          ini-values: zend.assertions=1
+          coverage: none
+          extensions: gd,pdo,xml,json
+      
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+      
+      - name: Composer install
+        run: |
+          composer global require fxp/composer-asset-plugin:^1.1.4 --prefer-dist
+          composer install
+      
+      - name: Install Elgg
+        run: |
+          mkdir ${HOME}/elgg_data
+          php -f ./install/cli/ci_installer.php
+      
+      - name: Enable Elgg plugins
+        run: php -f ./.scripts/ci/enable_plugins.php
+      
+      - name: Seed Elgg database
+        run: php -f ./.scripts/seeder/seed.php
+      
+      - name: Start Elgg webserver
+        run: |
+          php -S localhost:8888 index.php &
+          # give Web server some time to bind to sockets, etc
+          sleep 3
+          # check if the webserver is running
+          curl -o - http://localhost:8888/ | grep "<title>Elgg CI Site</title>"
+      
+      - name: Run PHPUnit
+        run: ./vendor/bin/phpunit
+      
+      - name: Run SimpleTests
+        run: php -f ./engine/tests/suite.php
+      
+      - name: Unseed Elgg database
+        if: ${{ always() }}
+        run: php -f ./.scripts/seeder/unseed.php
+        
+  memcached:
+    name: Memcached tests
+    runs-on: ubuntu-16.04
+    services:
+      elggdb:
+        image: mysql:5.7
+        env:
+          MYSQL_DATABASE: elgg
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306:3306
+      memcached:
+        image: memcached:1.6
+        ports:
+          - 11211:11211
+       
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '5.6'
+          # needed for StashWrapper unit test assert function
+          ini-values: zend.assertions=1
+          coverage: none
+          extensions: gd,pdo,xml,json,memcached
+      
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+      
+      - name: Check if memcached is enabled
+        run: php -f ./.scripts/is_memcached_enabled.php
+      
+      - name: Composer install
+        run: |
+          composer global require fxp/composer-asset-plugin:^1.1.4 --prefer-dist
+          composer install
+      
+      - name: Install Elgg
+        run: |
+          mkdir ${HOME}/elgg_data
+          php -f ./install/cli/ci_installer.php
+      
+      - name: Enable Elgg plugins
+        run: php -f ./.scripts/ci/enable_plugins.php
+      
+      - name: Seed Elgg database
+        run: php -f ./.scripts/seeder/seed.php
+      
+      - name: Start Elgg webserver
+        run: |
+          php -S localhost:8888 index.php &
+          # give Web server some time to bind to sockets, etc
+          sleep 3
+          # check if the webserver is running
+          curl -o - http://localhost:8888/ | grep "<title>Elgg CI Site</title>"
+      
+      - name: Run PHPUnit with custom configuration
+        run: ./vendor/bin/phpunit --configuration ./.scripts/ci/phpunit-memcached.xml
+      
+      - name: Run SimpleTests with custom configuration
+        run: php -f ./engine/tests/suite.php --config ./.scripts/ci/elgg-config/simpletest_memcached.php
+      
+      - name: Unseed Elgg database
+        if: ${{ always() }}
+        run: php -f ./.scripts/seeder/unseed.php

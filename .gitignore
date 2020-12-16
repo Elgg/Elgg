@@ -69,6 +69,7 @@ startup.sh
 !/.mailmap
 !/.travis.yml
 !/.scrutinizer.yml
+!.github
 !.gitignore
 !.scripts
 !.tx

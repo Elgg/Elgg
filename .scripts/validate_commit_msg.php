@@ -14,6 +14,8 @@
  * To use as a git commit hook, make sure the PHP path is correct, then
  * copy or symlink to .git/hooks/commit-msg.
  *
+ * Will be removed in the future as these checks have been moved to GitHub actions
+ *
  */
  
  $rootDir = dirname(__DIR__);

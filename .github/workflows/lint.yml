@@ -1,0 +1,70 @@
+name: Lint checks
+on: [pull_request]
+jobs:
+  commit_message:
+    name: Validate the commit message
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v2
+        
+      - name: Check format
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^((Merge )|(Revert )|((\w*)\(([\w]+)\)\: ([^\n]*)(\n\n?(.*))?)$)'
+          flags: 'is'
+          error: 'Invalid commit message format'
+          excludeTitle: true
+          excludeDescription: true
+          checkAllCommitMessages: true
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Check line length
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^.{1,160}(\n|$)'
+          flags: ''
+          error: 'Maximun line length of 160 characters exceeded on the first line'
+          excludeTitle: true
+          excludeDescription: true
+          checkAllCommitMessages: true
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Check type
+        uses: gsactions/commit-message-checker@v1
+        with:
+          pattern: '^((Merge )|(Revert )|(feat(ure)?|fix(es|ed)?|doc(s)?|chore|perf(ormance)?|security|deprecate(s)?)?\()'
+          flags: 'is'
+          error: 'Invalid commit message type'
+          excludeTitle: true
+          excludeDescription: true
+          checkAllCommitMessages: true
+          accessToken: ${{ secrets.GITHUB_TOKEN }}
+          
+  php_lint:
+    name: Validate composer.json and PHP Coding style
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '5.6'
+          coverage: none
+          extensions: gd,pdo,xml,json
+          
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+        
+      - name: Composer validate
+        run: composer validate
+        
+      - name: Composer install
+        run: |
+          composer global require fxp/composer-asset-plugin:^1.1.4 --prefer-dist
+          composer install
+          
+      - name: PHP Code Style checks
+        run: vendor/bin/phpcs -v --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --tab-width=4 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
