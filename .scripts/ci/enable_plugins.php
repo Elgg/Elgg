@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Enables all core plugins
  */

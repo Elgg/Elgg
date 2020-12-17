@@ -353,8 +353,8 @@ class MetadataTable {
 		$qb->select('*')
 			->where($qb->compare('entity_guid', 'IN', $guids, ELGG_VALUE_GUID))
 			->orderBy('entity_guid', 'asc')
-			->orderBy('time_created', 'asc')
-			->orderBy('id', 'asc');
+			->addOrderBy('time_created', 'asc')
+			->addOrderBy('id', 'asc');
 		
 		return $qb->execute()->fetchAll();
 	}

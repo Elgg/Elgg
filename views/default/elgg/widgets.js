@@ -123,10 +123,17 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 				$widgetContent.html(json.output.content);
 				if (typeof (json.output.title) != "undefined") {
 					var $widgetTitle = $widgetContent.parent().parent().find('.elgg-widget-title');
-					$widgetTitle.html(json.title);
+					
+					var newWidgetTitle = json.output.title;
+					if (typeof (json.output.href) != "undefined") {
+						newWidgetTitle = "<a href='" + json.output.href + "' class='elgg-anchor'><span class='elgg-anchor-label'>" + newWidgetTitle + "</span></a>";
+					}
+					
+					$widgetTitle.html(newWidgetTitle);
 				}
 			}
 		});
+		
 		event.preventDefault();
 	};
 

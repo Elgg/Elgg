@@ -249,6 +249,7 @@ class CompositeCache extends ElggCache {
 		$drivers[] = $this->buildRedisDriver();
 		$drivers[] = $this->buildMemcachedDriver();
 		$drivers[] = $this->buildFileSystemDriver();
+		$drivers[] = $this->buildLocalFileSystemDriver();
 		$drivers[] = $this->buildBlackHoleDriver();
 		$drivers = array_filter($drivers);
 
@@ -345,6 +346,29 @@ class CompositeCache extends ElggCache {
 		// make a sepatate folder for Stash caches
 		// because Stash assumes all files/folders are made by Stash
 		$path .= 'stash' . DIRECTORY_SEPARATOR;
+
+		return new FileSystem([
+			'path' => $path,
+		]);
+	}
+	
+	/**
+	 * Builds local file system driver
+	 * @return null|FileSystem
+	 */
+	protected function buildLocalFileSystemDriver() {
+		if (!($this->flags & ELGG_CACHE_LOCALFILESYSTEM)) {
+			return null;
+		}
+
+		$path = $this->config->localcacheroot ? : ($this->config->cacheroot ? : $this->config->dataroot);
+		if (!$path) {
+			return null;
+		}
+
+		// make a sepatate folder for Stash caches
+		// because Stash assumes all files/folders are made by Stash
+		$path .= 'localstash' . DIRECTORY_SEPARATOR;
 
 		return new FileSystem([
 			'path' => $path,

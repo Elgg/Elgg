@@ -261,6 +261,7 @@ class Application {
 
 		if ($spec['request']) {
 			if ($spec['request'] instanceof HttpRequest) {
+				$spec['request']->initializeTrustedProxyConfiguration($spec['service_provider']->config);
 				$spec['service_provider']->setValue('request', $spec['request']);
 			} else {
 				throw new InvalidArgumentException("Given request is not a " . HttpRequest::class);

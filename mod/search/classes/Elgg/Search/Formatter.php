@@ -103,7 +103,7 @@ class Formatter {
 		foreach ($matches as $property_type => $fields) {
 			foreach ($fields as $field => $match) {
 				$label = $this->getFieldLabel($property_type, $field);
-				if (elgg_is_empty($label)) {
+				if (elgg_is_empty($label) || isset($extra[$label])) {
 					continue;
 				}
 				
@@ -116,7 +116,7 @@ class Formatter {
 					'class' => 'elgg-output search-match-extra',
 				], $label . ': ' . implode(', ', $match));
 
-				$extra[] = $extra_row;
+				$extra[$label] = $extra_row;
 			}
 		}
 
