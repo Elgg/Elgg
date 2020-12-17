@@ -614,7 +614,15 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
 		});
 
-		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
+		$this->setFactory('request', function(ServiceProvider $c) use ($config) {
+			$request = \Elgg\Http\Request::createFromGlobals();
+			
+			// not using ServiceProvider->config because of deadloop issues
+			// using (the same) $config as the ServiceProvider was constructed with)
+			$request->initializeTrustedProxyConfiguration($config);
+			
+			return $request;
+		});
 
 		$this->setFactory('requestContext', function(ServiceProvider $c) {
 			$context = new \Elgg\Router\RequestContext();
