@@ -7,6 +7,7 @@ use Elgg\Exceptions\Http\BadRequestException;
 use Elgg\Router\Route;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+use Elgg\Config;
 
 /**
  * Elgg HTTP request.
@@ -48,8 +49,27 @@ class Request extends SymfonyRequest {
 		parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
 
 		$this->initializeContext();
-
+		
 		$this->request_overrides = [];
+	}
+	
+	/**
+	 * Configure trusted proxy servers to allow access to more client information
+	 *
+	 * @return void
+	 */
+	public function initializeTrustedProxyConfiguration(Config $config) {
+		$trusted_proxies = $config->http_request_trusted_proxy_ips;
+		if (empty($trusted_proxies)) {
+			return;
+		}
+		
+		$allowed_headers = $config->http_request_trusted_proxy_headers;
+		if (empty($allowed_headers)) {
+			$allowed_headers = self::HEADER_X_FORWARDED_ALL;
+		}
+		
+		$this->setTrustedProxies($trusted_proxies, $allowed_headers);
 	}
 
 	/**

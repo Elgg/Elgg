@@ -1,8 +1,0 @@
-chore(test): A valid commit message.
-
-This is a commit message that is in a correct format.
-It has a correctly formatted type, component, and summary,
-and includes a body with references to issues in the last lines.
-
-Refs #123, #456
-Fixes #789 

@@ -84,7 +84,7 @@ follow these steps:
 1. Start with the ``type`` by selecting the *last category which applies* from this list:
 
    * **docs** - *only* docs are being updated
-   * **chore** - this include refactoring, code style changes, adding missing tests, Travis stuff, etc.
+   * **chore** - this include refactoring, code style changes, adding missing tests, CI stuff, etc.
    * **perf** - the primary purpose is to improve performance
    * **fix** - this fixes a bug
    * **deprecate** - the change deprecates any part of the API
@@ -154,15 +154,6 @@ Here is an example of a good commit message:
 
     Fixes #6204
 
-
-To validate commit messages locally, make sure ``.scripts/validate_commit_msg.php`` is executable, and make a copy
-or symlink to it in the directory ``.git/hooks/commit-msg``.
-
-.. code-block:: sh
-
-    chmod u+x .scripts/validate_commit_msg.php
-    ln -s .scripts/validate_commit_msg.php .git/hooks/commit-msg/validate_commit_msg.php
-
 Rewriting commit messages
 -------------------------
 If your PR does not conform to the standard commit message format, we'll ask you to rewrite it.
@@ -203,8 +194,6 @@ To automatically fix fixable violations, run:
 .. code-block:: sh
 
     phpcbf --standard=vendor/elgg/sniffs/elgg.xml path/to/dir/to/fix
-
-To check core directories, you can use shortcut ``composer lint`` and ``composer lint-fixer``.
 
 
 .. _contribute/code#testing:

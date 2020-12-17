@@ -1,36 +1,39 @@
 name: Code Coverage
-
-on: push
-
+on: [push]
+env:
+  ELGG_DB_USER: root
+  ELGG_DB_PASS: root
+  ELGG_DB_NAME: elgg
+  ELGG_DB_PREFIX: elgg_
+  
 jobs:
-  code-coverage:
-    name: Code Coverage
-
+  scrutinizer:
+    name: Scrutinizer
     runs-on: ubuntu-latest
-    
-    env:
-      ELGG_DB_USER: root
-      ELGG_DB_PASS: root
-      ELGG_DB_NAME: elgg
-      ELGG_DB_PREFIX: elgg_
         
     steps:
       - name: Check if run on the Elgg repo
         if: github.repository != 'Elgg/Elgg'
         run: exit 1
         
-      - name: Checkout
-        uses: actions/checkout@master
-      
       - name: Install PHP
-        uses: shivammathur/setup-php@1.7.3
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '7.4'
+          coverage: xdebug
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+      
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+      
+      - name: Composer install
+        run: composer install
       
       - name: Install Elgg
         run: |
-          sudo composer self-update --1
-          composer install
           sudo systemctl start mysql
           mysql -u root -proot -e 'SET GLOBAL max_connections = 1000;'
           mysql -u root -proot -e 'create database elgg;'
@@ -39,5 +42,5 @@ jobs:
       - name: Test and publish code coverage
         run: |
           wget https://scrutinizer-ci.com/ocular.phar
-          vendor/bin/phpunit --coverage-clover=coverage.clover
+          ./vendor/bin/phpunit --coverage-clover=coverage.clover
           php ocular.phar code-coverage:upload --format=php-clover coverage.clover
