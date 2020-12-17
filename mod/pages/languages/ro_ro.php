@@ -28,10 +28,13 @@ return array(
 	'pages:notify:summary' => 'O pagina noua numita: 1%s',
 	'pages:notify:subject' => "Pagina noua: 1%s",
 	'pages:notify:body' =>
-'1%s a adaugat o pagina noua: 1^s
-1%s
-Vezi si comenteaza pagina: 
-1%s',
+'%s a adăugat p pagină nouă: %s
+
+%s
+
+Vezi și comentează pe pagină:
+%s
+',
 	'item:object:page_top' => 'Pagini de nivel inalt',
 	'item:object:page' => 'Pagini',
 	'pages:nogroup' => 'Acest grup inca nu are pagini create',

@@ -1,0 +1,1883 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# 
+# Translators:
+# Emmanuel Simond <emmanuel.simond@gmail.com>, 2017
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2016,2018,2020
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg Core 2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-25 15:27+0200\n"
+"PO-Revision-Date: 2020-11-19 09:53+0000\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/elgg/elgg-core-2/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../../appendix/faqs.rst:2
+msgid "FAQs and Other Troubleshooting"
+msgstr "FAQs et autres Aides au dépannage"
+
+#: ../../appendix/faqs.rst:4
+msgid "Below are some commonly asked questions about Elgg."
+msgstr "Ci-dessous quelques questions fréquemment posées à propos de Elgg."
+
+#: ../../appendix/faqs.rst:8
+msgid "Contents"
+msgstr "Contenus"
+
+#: ../../appendix/faqs/general.rst:2 ../../appendix/faqs/general.rst:2
+msgid "General"
+msgstr "Autres types de fichiers"
+
+#: ../../appendix/faqs/general.rst:6 ../../appendix/faqs/general.rst:6
+msgid ":doc:`/admin/getting-help`"
+msgstr ":doc:`/admin/getting-help`"
+
+#: ../../appendix/faqs/general.rst:9 ../../appendix/faqs/general.rst:9
+msgid "\"Plugin cannot start and has been deactivated\" or \"This plugin is invalid\""
+msgstr "\"Le plugin ne peut pas démarrer et a été désactivé\" (\"Plugin cannot start and has been deactivated\") ou \"Ce plugin est invalide\" (\"This plugin is invalid\")"
+
+#: ../../appendix/faqs/general.rst:10 ../../appendix/faqs/general.rst:10
+msgid ""
+"This error is usually accompanied by more details explaining why the plugin "
+"is invalid. This is usually caused by an incorrectly installed plugin."
+msgstr "Cette erreur est habituellement accompagnée par plus de détails qui expliquent pourquoi le plugin est invalide. Ceci est généralement causé par un plugin mal installé."
+
+#: ../../appendix/faqs/general.rst:13 ../../appendix/faqs/general.rst:13
+msgid ""
+"If you are installing a plugin called \"test\", there will be a test "
+"directory under mod. In that test directory there needs to be a start.php "
+"file: ``/mod/test/start.php`` and a manifest.xml file "
+"``/mod/test/manifest.xml``."
+msgstr "Si vous installez un plugin appelé \"test\", il y aura un répertoire nommé test dans mod. Dans ce répertoire test, il doit y avoir un fichier start.php : ``mod/test/start.php`` et un fichier manifest.xml ``/mod/test/manifest.xml``."
+
+#: ../../appendix/faqs/general.rst:19 ../../appendix/faqs/general.rst:19
+msgid "If these files do not exist, it could be caused by:"
+msgstr "Si ces fichiers n'existent pas, cela peut être causé par :"
+
+#: ../../appendix/faqs/general.rst:16 ../../appendix/faqs/general.rst:16
+msgid "installing a plugin to the wrong directory"
+msgstr "l'installation d'un plugin dans le mauvais répertoire"
+
+#: ../../appendix/faqs/general.rst:17 ../../appendix/faqs/general.rst:17
+msgid "creating a directory under /mod that does not contain a plugin"
+msgstr "la création d'un répertoire dans /mod qui ne contient pas un plugin"
+
+#: ../../appendix/faqs/general.rst:18 ../../appendix/faqs/general.rst:18
+msgid "a bad ftp transfer"
+msgstr "un mauvais transfert FTP"
+
+#: ../../appendix/faqs/general.rst:19 ../../appendix/faqs/general.rst:19
+msgid ""
+"unzipping a plugin into an extra directory (myplugin.zip unzips to "
+"``myplugin/myplugin``)"
+msgstr "l'extraction d'un plugin dans un niveau de répertoire supplémentaire (myplugin.zip est extrait dans ``myplugin/myplugin``)"
+
+#: ../../appendix/faqs/general.rst:21 ../../appendix/faqs/general.rst:21
+msgid ""
+"If you are on a Unix-based host and the files exist in the correct "
+"directory, check the permissions. Elgg must have read access to the files "
+"and read + execute access on the directories."
+msgstr "Si vous utilisez un hôte de type Unix et que els fichiers existent dans le bon répertoire, vérifiez les permissions. Elgg doit avoir accès en lecture + eexécution sur els répertoires."
+
+#: ../../appendix/faqs/general.rst:24 ../../appendix/faqs/general.rst:24
+msgid "White Page (WSOD)"
+msgstr "Page Blanche (WSOD = White Screen Of Death, l'Ecran Blanc De la Mort)"
+
+#: ../../appendix/faqs/general.rst:29 ../../appendix/faqs/general.rst:29
+msgid ""
+"A blank, white page (often called a \"white screen of death\") means there "
+"is a PHP syntax error. There are a few possible causes of this:"
+msgstr "Une page vide, blanche (souvent appelé \"écran blanc de la mort\" - \"white screen of death\" ou WSOD) signifie qu'il y a une erreur de syntaxe PHP. Il y a un certain nombre de causes possibles à cela :"
+
+#: ../../appendix/faqs/general.rst:27 ../../appendix/faqs/general.rst:27
+msgid "corrupted file - try transfering the code again to your server"
+msgstr "fichier corrompu - essayez de transférer à nouveau le code vers votre serveur"
+
+#: ../../appendix/faqs/general.rst:28 ../../appendix/faqs/general.rst:28
+msgid ""
+"a call to a php module that was not loaded - this can happen after you "
+"install a plugin that requires a specific module."
+msgstr "un appel à un module php qui n'a pas été chargé - ceci peut se produire après que vous ayez installé un plugin qui requiert un module spécifique."
+
+#: ../../appendix/faqs/general.rst:29 ../../appendix/faqs/general.rst:29
+msgid ""
+"bad plugin - not all plugins have been written to the same quality so you "
+"should be careful which ones you install."
+msgstr "mauvais plugin - tous les plugins n'ont pas été écrits avec le même niveau de qualité aussi vous devriez faire attention à ceux que vous installez."
+
+#: ../../appendix/faqs/general.rst:31 ../../appendix/faqs/general.rst:31
+msgid ""
+"To find where the error is occurring, change the .htaccess file to display "
+"errors to the browser. Set display_errors to 1 and load the same page again."
+" You should see a PHP error in your browser. Change the setting back once "
+"you've resolved the problem."
+msgstr "Pour trouver l'origine de l'erreur, modifiez le fichier .htaccess pour afficher les erreurs dans le navigateur. Définissez display_errors à 1 et chargez la même page à nouveau. Vous devriez voir les erreurs PHP dans votre navigateur. Modifiez à nouveau ce paramètre une fois que vous avez résolu le problème."
+
+#: ../../appendix/faqs/general.rst:35 ../../appendix/faqs/general.rst:35
+msgid ""
+"If you are using the Developer's Tools plugin, go to its settings page and "
+"make sure you have \"Display fatal PHP errors\" enabled."
+msgstr "Si vous utilisez le plugin Developer's Tools, allez dans sa pag de configuration et assurez-vous que l'option \"Afficher les erreurs PHP fatales\" (\"Display fatal PHP errors\") est bien activé."
+
+#: ../../appendix/faqs/general.rst:37 ../../appendix/faqs/general.rst:37
+msgid ""
+"If the white screen is due to a bad plugin, remove the latest plugins that "
+"you have installed by deleting their directories and then reload the page."
+msgstr "Si l'écran blanc est dû à un mauvais plugin, retirer les derniers plugins que vous avez installé en supprimant leurs répertoires puis rechargez la page."
+
+#: ../../appendix/faqs/general.rst:41 ../../appendix/faqs/general.rst:41
+msgid ""
+"You can temporarily disable all plugins by creating an empty file at "
+"``mod/disabled``. You can then disable the offending module via the "
+"administrator tools panel."
+msgstr "Vous pouvez désactiver temporairement tous les plugins en créant un fichier vide dans mod ``mod/disabled``. Vous pouvez ensuite désactiver le plugin responsable via les outils du panneau d'administration."
+
+#: ../../appendix/faqs/general.rst:43 ../../appendix/faqs/general.rst:43
+msgid ""
+"If you are getting a WSOD when performing an action, like logging in or "
+"posting a blog, but there are no error messages, it's most likely caused by "
+"non-printable characters in plugin code. Check the plugin for white "
+"spaces/new lines characters after finishing php tag (``?>``) and remove "
+"them."
+msgstr "Si vous avez un WSOD quand vous effectuez une action, comme vous identifier ou publier un article de blog, mais qu'il n'y a pas de message d'erreur, le plus probable ets que ce soit causé par des caractères non-imprimables dans le code du plugin. Vérifiez le plugin et supprimez les espaces vides et nouvelles lignes situés après le tag de fin php (``?>``)."
+
+#: ../../appendix/faqs/general.rst:46 ../../appendix/faqs/general.rst:46
+msgid "Page not found"
+msgstr "Page non trouvée"
+
+#: ../../appendix/faqs/general.rst:48 ../../appendix/faqs/general.rst:48
+msgid ""
+"If you have recently installed your Elgg site, the most likely cause for a "
+"page not found error is that ``mod_rewrite`` is not setup correctly on your "
+"server. There is information in the :doc:`Install Troubleshooting "
+"</intro/install>` page on fixing this. The second most likely cause is that "
+"your site url in your database is incorrect."
+msgstr "Si vous avez récemment installé votre site Elgg, la cause la plus probable d’une erreur de page non trouvée est que ``mod_rewrite`` n’est pas configuré correctement sur votre serveur. Il y a des informations dans la page de dépannage :doc:`Install Troubleshooting </intro/install>` sur la manière de résoudre cela. La deuxième cause la plus probable est que l’URL de votre site dans votre base de données est incorrecte."
+
+#: ../../appendix/faqs/general.rst:50 ../../appendix/faqs/general.rst:50
+msgid ""
+"If you've been running your site for a while and suddenly start getting page"
+" not found errors, you need to ask yourself what has changed. Have you added"
+" any plugins? Did you change your server configuration?"
+msgstr "Si vous exécutez votre site depuis un certain temps et commencez soudainement à obtenir des erreurs de page non trouvées, vous devez vous demander ce qui a changé. Avez-vous ajouté des plugins ? Avez-vous modifié la configuration de votre serveur ?"
+
+#: ../../appendix/faqs/general.rst:52 ../../appendix/faqs/general.rst:52
+msgid "To debug a page not found error:"
+msgstr "Pour déboguer une erreur page non trouvée (\"page not found\") :"
+
+#: ../../appendix/faqs/general.rst:54 ../../appendix/faqs/general.rst:54
+msgid ""
+"Confirm that the link leading to the missing page is correct. If not, how is"
+" that link being generated?"
+msgstr "Confirmez que le lien qui a mené à la page manquante est correct. S'il ne l'est pas, comment ce lien a-t-il été généré ?"
+
+#: ../../appendix/faqs/general.rst:55 ../../appendix/faqs/general.rst:55
+msgid "Confirm that the ``.htaccess`` rewrite rules are being picked up."
+msgstr "Confirmez que les règles de réécriture du ``.htaccess`` sont bien prises en compte."
+
+#: ../../appendix/faqs/general.rst:58 ../../appendix/faqs/general.rst:58
+msgid "Login token mismatch"
+msgstr "Erreur de correspondance des jetons de connexion (\"login token mismatch\")"
+
+#: ../../appendix/faqs/general.rst:60 ../../appendix/faqs/general.rst:60
+msgid ""
+"If you have to log in twice to your site and the error message after the "
+"first attempt says there was a token mismatch error, the URL in Elgg's "
+"settings does not match the URL used to access it. The most common cause for"
+" this is adding or removing the \"www\" when accessing the site. For "
+"example, www.elgg.org vs elgg.org. This causes a problem with session "
+"handling because of the way that web browsers save cookies."
+msgstr "Si vous devez vous connecter deux fois à votre site et que le message d’erreur après la première tentative indique qu’il y a eu une erreur de décalage de jeton, l’URL dans les paramètres d’Elgg ne correspond pas à l’URL utilisée pour y accéder. La cause la plus fréquente est d’ajouter ou de supprimer le \"www\" lors de l’accès au site. Par exemple, www.elgg.org vs elgg.org. Cela pose un problème avec la gestion des sessions en raison de la façon dont les navigateurs Web enregistrent les cookies."
+
+#: ../../appendix/faqs/general.rst:62 ../../appendix/faqs/general.rst:62
+msgid ""
+"To fix this, you can add rewrite rules. To redirect from www.elgg.org to "
+"elgg.org in Apache, the rules might look like::"
+msgstr "Pour régler cela, vous pouvez ajouter des règles de réécriture (\"rewrite rules\"). Pour rediriger de www.elgg.org vers elgg.org dans Apache, les règles peuvent ressembler à ::"
+
+#: ../../appendix/faqs/general.rst:68 ../../appendix/faqs/general.rst:68
+msgid "Redirecting from non-www to www could look like this::"
+msgstr "Rediriger depuis une adresse non-www vers www peut ressembler à ::"
+
+#: ../../appendix/faqs/general.rst:73 ../../appendix/faqs/general.rst:73
+msgid ""
+"If you don't know how to configure rewrite rules, ask your host for more "
+"information."
+msgstr "Si vous ne savez pas comment configurer les règles de réécriture, demandez à votre hébergeur pour plus d'informations."
+
+#: ../../appendix/faqs/general.rst:76 ../../appendix/faqs/general.rst:76
+msgid "Form is missing __token or __ts fields"
+msgstr "Il manque les champs __token ou __ts dans le formulaire. Veuillez recharger la page pour continuer"
+
+#: ../../appendix/faqs/general.rst:78 ../../appendix/faqs/general.rst:78
+msgid ""
+"All Elgg actions require a security token, and this error occurs when that "
+"token is missing. This is either a problem with your server configuration or"
+" with a 3rd party plugin."
+msgstr "Toutes les actions Elgg requièrent un jeton de sécurité, et cette erreur se produit quand ce jeton est manquant. C'est soit un problème avec la configuration de votre serveur ou avec un plugin tierce-partie."
+
+#: ../../appendix/faqs/general.rst:80 ../../appendix/faqs/general.rst:80
+msgid ""
+"If you experience this on a new installation, make sure that your server is "
+"properly configured and your rewrite rules are correct. If you experience "
+"this on an upgrade, make sure you have updated your rewrite rules either in "
+".htaccess (Apache) or in the server configuration."
+msgstr "Si vous rencontrez ce cas lors d’une nouvelle installation, assurez-vous que votre serveur est correctement configuré et que vos règles de réécriture sont correctes. Si vous en faites l’expérience sur une mise à niveau, assurez-vous d’avoir mis à jour vos règles de réécriture dans .htaccess (Apache) ou dans la configuration du serveur."
+
+#: ../../appendix/faqs/general.rst:82 ../../appendix/faqs/general.rst:82
+msgid ""
+"If you are experiencing this, disable all 3rd party plugins and try again. "
+"Very old plugins for Elgg don't use security tokens. If the problem goes "
+"away when plugins are disabled, it's due to a plugin that should be updated "
+"by its author."
+msgstr "Si vous rencontrez ce cas, désactivez tous les plugins tiers et réessayez. Les très vieux plugins pour Elgg n’utilisent pas de jeton de sécurité. Si le problème disparaît lorsque les plugins sont désactivés, c’est dû à un plugin qui devrait être mis à jour par son auteur."
+
+#: ../../appendix/faqs/general.rst:85 ../../appendix/faqs/general.rst:85
+msgid "Maintenance mode"
+msgstr "Mode de maintenance"
+
+#: ../../appendix/faqs/general.rst:87 ../../appendix/faqs/general.rst:87
+msgid ""
+"To take your site temporarily offline, go to Administration -> Utilities -> "
+"Maintenance Mode. Complete the form and hit save to disable your site for "
+"everyone except admin users."
+msgstr "Pour mettre temporairement votre site hors-ligne, allez dans Administration -> Utilitaires (Utilities) -> Mode de Maintenance (Maintenance Mode). Complétez le formulaire et cliquez sur Enregistrer pour désactiver votre site pour tout le monde à l'exception des utilisateurs admin."
+
+#: ../../appendix/faqs/general.rst:90 ../../appendix/faqs/general.rst:90
+msgid "Missing email"
+msgstr "Email manquant"
+
+#: ../../appendix/faqs/general.rst:92 ../../appendix/faqs/general.rst:92
+msgid ""
+"If your users are reporting that validation emails are not showing up, have "
+"them check their spam folder. It is possible that the emails coming from "
+"your server are being marked as spam. This depends on many factors such as "
+"whether your hosting provider has a problem with spammers, how your PHP mail"
+" configuration is set up, what mail transport agent your server is using, or"
+" your host limiting the number of email that you can send in an hour."
+msgstr "Si vos utilisateurs signalent que les e-mails de validation ne s’affichent pas, demandez-leur de vérifier leur dossier de spam. Il est possible que les e-mails provenant de votre serveur sont marqués comme spam. Cela dépend de nombreux facteurs : si votre fournisseur d’hébergement a un problème avec les spammeurs, la façon dont votre configuration de messagerie PHP est configurée, quel agent de transport de messagerie votre serveur utilise, ou si votre hébergement limite le nombre de courriels que vous pouvez envoyer en une heure."
+
+#: ../../appendix/faqs/general.rst:94 ../../appendix/faqs/general.rst:94
+msgid ""
+"If no one gets email at all, it is quite likely your server is not "
+"configured properly for email. Your server needs a program to send email "
+"(called a Mail Transfer Agent - MTA) and PHP must be configured to use the "
+"MTA."
+msgstr "Si personne ne reçoit d'email du tout, il est très probable que votre serveur n’est pas configuré correctement pour le courrier électronique. Votre serveur a besoin d’un programme pour envoyer un e-mail (appelé agent de transfert de messagerie - MTA) et PHP doit être configuré pour utiliser le MTA."
+
+#: ../../appendix/faqs/general.rst:96 ../../appendix/faqs/general.rst:96
+msgid ""
+"To quickly check if PHP and an MTA are correctly configured, create a file "
+"on your server with the following content:"
+msgstr "Pour vérifier rapidement si PHP et un MTA (Mail Transfer Agent) sont correctement configurés, créez un fichier sur votre serveur avec le contenu suivant :"
+
+#: ../../appendix/faqs/general.rst:115 ../../appendix/faqs/general.rst:115
+msgid ""
+"Be sure to replace \"your_email@your_host.com\" with your actual email "
+"address.  Take care to keep quotes around it!  When you access this page "
+"through your web browser, it will attempt to send a test email.  This test "
+"will let you know that PHP and your MTA are correctly configured.  If it "
+"fails--either you get an error or you never receive the email--you will need"
+" to do more investigating and possibly contact your service provider."
+msgstr "Assurez-vous de remplacer \"votre_email@votre_hote.com » par votre adresse e-mail réelle.  Prenez soin de garder des guillemets autour d’elle !  Lorsque vous accédez à cette page via votre navigateur Web, il tentera d’envoyer un e-mail de test.  Ce test vous permettra de savoir si PHP et votre MTA sont correctement configurés.  Si elle échoue - soit vous obtenez une erreur, soit vous ne recevez jamais l’e-mail - vous aurez besoin de faire plus de recherches et éventuellement de contacter votre fournisseur de services."
+
+#: ../../appendix/faqs/general.rst:117 ../../appendix/faqs/general.rst:117
+msgid ""
+"Fully configuring an MTA and PHP's email functionality is beyond the scope "
+"of this FAQ and you should search the Internet for more resources on this. "
+"Some basic information on php parameters can be found on `PHP's site`__"
+msgstr "La configuration complète des fonctionnalités de messagerie d’un MTA et de PHP dépasse le cadre de cette FAQ, et vous devez rechercher plus de ressources sur Internet à ce sujet. Quelques informations de base sur les paramètres php peuvent être trouvées sur le `PHP's site`__"
+
+#: ../../appendix/faqs/general.rst:123 ../../appendix/faqs/general.rst:123
+msgid "Server logs"
+msgstr "Journaux du serveur"
+
+#: ../../appendix/faqs/general.rst:125 ../../appendix/faqs/general.rst:125
+msgid ""
+"Most likely you are using Apache as your web server. Warnings and errors are"
+" written to a log by the web server and can be useful for debugging "
+"problems. You will commonly see two types of log files: access logs and "
+"error logs. Information from PHP and Elgg is written to the server error "
+"log."
+msgstr "Très probablement vous utilisez Apache comme serveur Web. Les avertissements et les erreurs sont écrits dans un journal par le serveur Web et peuvent être utiles pour les problèmes de débogage. Vous verrez généralement deux types de fichiers journaux : les journaux d’accès et les journaux d’erreurs. Les informations de PHP et Elgg sont isncrites dans le journal des erreurs du serveur."
+
+#: ../../appendix/faqs/general.rst:127 ../../appendix/faqs/general.rst:127
+msgid ""
+"Linux -- The error log is probably in /var/log/httpd or /var/log/apache2."
+msgstr "Linux -- Le journal d'erreur est probablement dans /var/log/httpd ou /var/log/apache2."
+
+#: ../../appendix/faqs/general.rst:128 ../../appendix/faqs/general.rst:128
+msgid "Windows - It is probably inside your Apache directory."
+msgstr "Windows - Il est probablement dans votre répertoire Apache."
+
+#: ../../appendix/faqs/general.rst:129 ../../appendix/faqs/general.rst:129
+msgid "Mac OS - The error log is probably in /var/log/apache2/error_log"
+msgstr "Mac OS - Le journal d'erreur est probablement dans /var/log/apache2/error_log"
+
+#: ../../appendix/faqs/general.rst:131 ../../appendix/faqs/general.rst:131
+msgid ""
+"If you are using shared hosting without ssh access, your hosting provider "
+"may provide a mechanism for obtaining access to your server logs. You will "
+"need to ask them about this."
+msgstr "Si vous utilisez un hébergement partagé sans accès ssh, votre fournisseur d’hébergement peut fournir un mécanisme pour obtenir l’accès à vos journaux de serveur. Vous devrez leur poser des questions à ce sujet."
+
+#: ../../appendix/faqs/general.rst:134 ../../appendix/faqs/general.rst:134
+msgid "How does registration work?"
+msgstr "Comment fonctionne l'inscription ?"
+
+#: ../../appendix/faqs/general.rst:136 ../../appendix/faqs/general.rst:136
+msgid "With a default setup, this is how registration works:"
+msgstr "Avec une installation par défaut, voici comment fonctionne l'inscription :"
+
+#: ../../appendix/faqs/general.rst:138 ../../appendix/faqs/general.rst:138
+msgid "User fills out registration form and submits it"
+msgstr "L'utilisateur renseigne le formulaire d'inscription et l'envoie"
+
+#: ../../appendix/faqs/general.rst:139 ../../appendix/faqs/general.rst:139
+msgid "User account is created and disabled until validated"
+msgstr "Le compte utilisateur est créé et désactivé jusqu'à sa validation"
+
+#: ../../appendix/faqs/general.rst:140 ../../appendix/faqs/general.rst:140
+msgid "Email is sent to user with a link to validate the account"
+msgstr "Un email est envoyé à l'utilisateur afin de valider son compte"
+
+#: ../../appendix/faqs/general.rst:141 ../../appendix/faqs/general.rst:141
+msgid "When a user clicks on the link, the account is validated"
+msgstr "Quand l'utilisateur clique sur le lien, le compte est validé"
+
+#: ../../appendix/faqs/general.rst:142 ../../appendix/faqs/general.rst:142
+msgid "The user can now log in"
+msgstr "L'utilisateur peut maintenant s'identifier"
+
+#: ../../appendix/faqs/general.rst:144 ../../appendix/faqs/general.rst:144
+msgid ""
+"Failures during this process include the user entering an incorrect email "
+"address, the validation email being marked as spam, or a user never "
+"bothering to validate the account."
+msgstr "Les échecs durant ce processus comprennent l’utilisateur entrant une adresse e-mail incorrecte, l’e-mail de validation marqué comme spam, ou un utilisateur qui ne prend jamais la peine de valider le compte."
+
+#: ../../appendix/faqs/general.rst:147 ../../appendix/faqs/general.rst:147
+msgid "User validation"
+msgstr "Validation de l'utilisateur"
+
+#: ../../appendix/faqs/general.rst:149 ../../appendix/faqs/general.rst:149
+msgid ""
+"By default, all users who self-register must validate their accounts through"
+" email. If a user has problems validating an account, you can validate users"
+" manually by going to Administration -> Users -> Unvalidated."
+msgstr "Par défaut, tous les utilisateurs qui s’inscrivent doivent valider leur compte par e-mail. Si un utilisateur a des difficultés pour valider son compte, vous pouvez valider manuellement les utilisateurs en allant dans Administration -> Utilisateurs -> Non validé."
+
+#: ../../appendix/faqs/general.rst:152 ../../appendix/faqs/general.rst:152
+msgid ""
+"You can remove this requirement by deactivating the User Validation by Email"
+" plugin."
+msgstr "Vous pouvez supprimer cette exigence en désactivant le plugin User Validation by Email."
+
+#: ../../appendix/faqs/general.rst:156 ../../appendix/faqs/general.rst:156
+msgid ""
+"Removing validation has some consequences: There is no way to know that a "
+"user registered with a working email address, and it may leave you system "
+"open to spammers."
+msgstr "La suppression de la validation a certaines conséquences : il n’y a aucun moyen de savoir qu’un utilisateur inscrit à une adresse e-mail fonctionnelle, et cela peut ouvrir le système aux spammeurs."
+
+#: ../../appendix/faqs/general.rst:159 ../../appendix/faqs/general.rst:159
+msgid "Manually add user"
+msgstr "Ajouter manuellement un utilisateur"
+
+#: ../../appendix/faqs/general.rst:161 ../../appendix/faqs/general.rst:161
+msgid ""
+"To manually add a user, under the Administer controls go to Users. There you"
+" will see a link title \"Add new User\". After you fill out the information "
+"and submit the form, the new user will receive an email with username and "
+"password and a reminder to change the password."
+msgstr "Pour ajouter manuellement un utilisateur, dans la partie Administrer, accédez aux Utilisateurs. Là, vous verrez un titre intitulé \"Ajouter un nouvel utilisateur\". Après avoir rempli les informations et soumis le formulaire, le nouvel utilisateur recevra un e-mail avec son nom d’utilisateur et son mot de passe, et un rappel pour changer le mot de passe."
+
+#: ../../appendix/faqs/general.rst:165 ../../appendix/faqs/general.rst:165
+msgid "Elgg does not force the user to change the password."
+msgstr "Elgg ne force pas l'utilisateur à changer le mot de passe."
+
+#: ../../appendix/faqs/general.rst:168 ../../appendix/faqs/general.rst:168
+msgid ""
+"I'm making or just installed a new theme, but graphics or other elements "
+"aren't working"
+msgstr "Je suis en train de créer ou viens d'installer un nouveau thème, mais les images ou d'autres éléments ne fonctionnent pas"
+
+#: ../../appendix/faqs/general.rst:170 ../../appendix/faqs/general.rst:170
+msgid "Make sure the theme is at the bottom of the plugin list."
+msgstr "Assurez-vous que le thème est placé en tout dernier sur la liste des plugins."
+
+#: ../../appendix/faqs/general.rst:172 ../../appendix/faqs/general.rst:172
+msgid ""
+"Clear your browser cache and reload the page. To lighten the load on the "
+"server, Elgg instructs the browser to rarely load the CSS file. A new theme "
+"will completely change the CSS file and a refresh should cause the browser "
+"to request the CSS file again."
+msgstr "Effacez le cache de votre navigateur et rechargez la page. Pour alléger la charge sur le serveur, Elgg demande au navigateur de charger rarement le fichier CSS. Un nouveau thème modifiera complètement le fichier CSS et un rafraîchissement devrait inciter le navigateur à demander à nouveau le fichier CSS."
+
+#: ../../appendix/faqs/general.rst:174 ../../appendix/faqs/general.rst:174
+msgid ""
+"If you're building or modifying a theme, make sure you have disabled the "
+"simple and system caches. This can be done by enabling the Developer Tools "
+"plugin, then browsing to Administration -> Develop -> Settings. Once you're "
+"satisfied with the changes, enable the caches or performance will suffer."
+msgstr "Si vous créez ou modifiez un thème, assurez-vous d’avoir désactivé les caches simples et système. Cela peut être fait en activant le plugin Developer Tools, puis en naviguant vers Administration -> Outils de développement > Paramètres. Une fois que vous êtes satisfait des modifications, activez les caches ou les performances en souffriront."
+
+#: ../../appendix/faqs/general.rst:178 ../../appendix/faqs/general.rst:178
+msgid "Changing profile fields"
+msgstr "Modifier les champs du profil"
+
+#: ../../appendix/faqs/general.rst:180 ../../appendix/faqs/general.rst:180
+msgid ""
+"Within the Administration settings of Elgg is a page for replacing the "
+"default profile fields. Elgg by default gives the administrator two choices:"
+msgstr "Dans les paramètres d’administration d’Elgg se trouve une page pour remplacer les champs de profil par défaut. Elgg donne par défaut à l’administrateur deux choix :"
+
+#: ../../appendix/faqs/general.rst:182 ../../appendix/faqs/general.rst:182
+msgid "Use the default profile fields"
+msgstr "Utilisez les champs de profil par défaut"
+
+#: ../../appendix/faqs/general.rst:183 ../../appendix/faqs/general.rst:183
+msgid "Replace the default with a set of custom profile fields"
+msgstr "Remplacez les champs par défaut par un jeu de champs de profil personnalisés"
+
+#: ../../appendix/faqs/general.rst:185 ../../appendix/faqs/general.rst:185
+msgid ""
+"You cannot add new profile fields to the default ones. Adding a new profile "
+"field through the replace profile fields option clears the default ones. "
+"Before letting in users, it is best to determine what profile fields you "
+"want, what field types they should be, and the order they should appear. You"
+" cannot change the field type or order or delete fields after they have been"
+" created without wiping the entire profile blank."
+msgstr "Vous ne pouvez pas ajouter de nouveaux champs de profil aux champs par défaut. L’ajout d’un nouveau champ de profil via l’option remplacer les champs de profil efface ceux par défaut. Avant de laisser les utilisateurs s'inscrire, il est préférable de déterminer quels champs de profil vous voulez, quels types de champ ils devraient être, et l’ordre dans lequel ils devraient apparaître. Vous ne pouvez pas modifier le type de champ ou réordonner ou supprimer les champs après leur création sans effacer l’intégralité du profil."
+
+#: ../../appendix/faqs/general.rst:187 ../../appendix/faqs/general.rst:187
+msgid ""
+"More flexibility can be gained through plugins. There is at least two "
+"plugins on the community site that enable you to have more control over "
+"profile fields. The `Profile Manager`_ plugin has become quite popular in "
+"the Elgg community. It lets you add new profile fields whenever you want, "
+"change the order, group profile fields, and add them to registration."
+msgstr "Plus de flexibilité peut être obtenue grâce à des plugins. Il y a au moins deux plugins sur le site communautaire qui vous permettent d’avoir plus de contrôle sur les champs de profil. Le plugin `Profile Manager`_ est devenu très populaire dans la communauté Elgg. Il vous permet d’ajouter de nouveaux champs de profil quand vous le souhaitez, de modifier leur ordre, de regrouper les champs de profil et de les ajouter à l’inscription."
+
+#: ../../appendix/faqs/general.rst:192 ../../appendix/faqs/general.rst:192
+msgid "Changing registration"
+msgstr "Modifier l'inscription"
+
+#: ../../appendix/faqs/general.rst:194 ../../appendix/faqs/general.rst:194
+msgid ""
+"The registration process can be changed through a plugin. Everything about "
+"registration can be changed: the look and feel, different registration "
+"fields, additional validation of the fields, additional steps and so on. "
+"These types of changes require some basic knowledge of HTML, CSS, PHP."
+msgstr "Le processus d'inscription peut être modifié par un plugin. Tout ce qui concerne l'inscription peut être modifié : l'apparance du formulaire, des champs d'inscription différents, des validations additionnelles des champs, des étapes additionnelles et ainsi de suite. Ces types de changements demandent quelques connaissances de base en HTML, CSS, PHP."
+
+#: ../../appendix/faqs/general.rst:196 ../../appendix/faqs/general.rst:196
+msgid ""
+"Another option is to use the `Profile Manager`_ plugin that lets you add "
+"fields to both user profiles and the registration form."
+msgstr "Une autre option est d'utiliser le plugin Profile Manager`_ qui vous permet d'ajouter des champs à la fois aux profils des utilisateurs et au formulaire d'inscription."
+
+#: ../../appendix/faqs/general.rst:199 ../../appendix/faqs/development.rst:36
+#: ../../appendix/faqs/development.rst:36 ../../appendix/faqs/general.rst:199
+msgid "Create the plugin skeleton"
+msgstr "Créer le squelette du plugin"
+
+#: ../../appendix/faqs/general.rst:199 ../../appendix/faqs/development.rst:38
+#: ../../appendix/faqs/development.rst:38 ../../appendix/faqs/general.rst:199
+msgid ":doc:`/guides/plugins/plugin-skeleton`"
+msgstr ":doc:`/guides/plugins/plugin-skeleton`"
+
+#: ../../appendix/faqs/general.rst:202 ../../appendix/faqs/general.rst:202
+msgid "Changing registration display"
+msgstr "Modifer l'apparence de l'inscription"
+
+#: ../../appendix/faqs/general.rst:202 ../../appendix/faqs/general.rst:202
+msgid "Override the ``account/forms/register`` view"
+msgstr "Surchargez la vue ``account/forms/register``"
+
+#: ../../appendix/faqs/general.rst:205 ../../appendix/faqs/general.rst:205
+msgid "Changing the registration action handler"
+msgstr "Modifiez le gestionnaire de l'action d'inscription"
+
+#: ../../appendix/faqs/general.rst:205 ../../appendix/faqs/general.rst:205
+msgid "You can write your own action to create the user's account"
+msgstr "Vous pouvez écrire votre propre action pour créer le compte utilisateur"
+
+#: ../../appendix/faqs/general.rst:208 ../../appendix/faqs/general.rst:208
+msgid "How do I change PHP settings using .htaccess?"
+msgstr "Comment puis-je modifier les paramètres PHP en utilisant .htaccess ?"
+
+#: ../../appendix/faqs/general.rst:210 ../../appendix/faqs/general.rst:210
+msgid ""
+"You may want to change php settings in your ``.htaccess`` file. This is "
+"especially true if your hosting provider does not give you access to the "
+"server's ``php.ini`` file. The variables could be related to file upload "
+"size limits, security, session length, or any number of other php "
+"attributes. For examples of how to do this, see the `PHP documentation`_ on "
+"this."
+msgstr "Vous pouvez modifier les paramètres php dans votre fichier ``.htaccess``. Cela est particulièrement vrai si votre fournisseur d’hébergement ne vous donne pas accès au fichier ``php.ini`` du serveur. Les variables peuvent être liées aux limites de taille du téléchargement de fichiers, à la sécurité, à la longueur de la session ou à n’importe quel nombre d’autres attributs php. Pour des exemples sur comment faire cela, voyez la `documentation PHP`_ à ce sujet."
+
+#: ../../appendix/faqs/general.rst:215 ../../appendix/faqs/general.rst:215
+msgid "HTTPS login turned on accidently"
+msgstr "Connexion HTTPS activée par erreur"
+
+#: ../../appendix/faqs/general.rst:217 ../../appendix/faqs/general.rst:217
+msgid ""
+"If you have turned on HTTPS login but do not have SSL configured, you are "
+"now locked out of your Elgg install. To turn off this configuration "
+"parameter, you will need to edit your database. Use a tool like phpMyAdmin "
+"to view your database. Select the ``config`` table and delete the row that "
+"has the name ``https_login``."
+msgstr "Si vous avez activé la connexion HTTPS mais que vous n’avez pas configuré SSL, vous êtes maintenant bloqué hors de votre installation Elgg. Pour désactiver ce paramètre de configuration, vous devrez modifier votre base de données. Utilisez un outil comme phpMyAdmin pour afficher votre base de données. Sélectionnez la table ``config`` et supprimez la ligne qui a le nom ``https_login``."
+
+#: ../../appendix/faqs/general.rst:220 ../../appendix/faqs/general.rst:220
+msgid "Using a test site"
+msgstr "Utiliser un site de test"
+
+#: ../../appendix/faqs/general.rst:222 ../../appendix/faqs/general.rst:222
+msgid ""
+"It is recommended to always try out new releases or new plugins on a test "
+"site before running them on a production site (a site with actual users). "
+"The easiest way to do this is to maintain a separate install of Elgg with "
+"dummy accounts. When testing changes it is important to use dummy accounts "
+"that are not admins to test what your users will see."
+msgstr "Il est recommandé de toujours tester les nouvelles versions ou les nouveaux plugins sur un site de test avant de les exécuter sur un site de production (un site avec des utilisateurs réels). La façon la plus simple de le faire est de maintenir une installation séparée d’Elgg avec des comptes factices. Lors des tests, il est important d’utiliser des comptes factices qui ne sont pas des administrateurs pour tester ce que vos utilisateurs verront."
+
+#: ../../appendix/faqs/general.rst:224 ../../appendix/faqs/general.rst:224
+msgid ""
+"A more realistic test is to mirror the content from your production site to "
+"your test site. Following the instructions for :doc:`duplicating a site "
+"</admin/duplicate-installation>`. Then make sure you prevent emails from "
+"being sent to your users. You could write a small plugin that redirects all "
+"email to your own account (be aware of plugins that include their own custom"
+" email sending code so you'll have to modify those plugins). After this is "
+"done you can view all of the content to make sure the upgrade or new plugin "
+"is functioning as desired and is not breaking anything. If this process "
+"sounds overwhelming, please stick with running a simple test site."
+msgstr "Un test plus réaliste consiste à refléter le contenu de votre site de production sur votre site de test. Suivez les instructions pour :doc:`dupliquer un site </admin/duplicate-installation>`. Assurez-vous ensuite d’empêcher l’envoi d’e-mails à vos utilisateurs. Vous pouvez écrire un petit plugin qui redirige tous les e-mails vers votre propre compte (soyez conscient des plugins qui comprennent leur propre code d’envoi d'email personnalisé, car vous devrez modifier ces plugins). Une fois cela fait, vous pouvez afficher tout le contenu pour s’assurer que la mise à niveau ou le nouveau plugin fonctionne comme vous le souhaitez et ne casse rien. Si ce processus vous semble trop lourd, veuillez vous en tenir à l’exécution d’un site de test simple."
+
+#: ../../appendix/faqs/general.rst:227 ../../appendix/faqs/general.rst:227
+msgid "500 - Internal Server Error"
+msgstr "500 - Internal Server Error"
+
+#: ../../appendix/faqs/general.rst:230 ../../appendix/faqs/general.rst:230
+msgid "What is it?"
+msgstr "Qu'est-ce que c'est ?"
+
+#: ../../appendix/faqs/general.rst:232 ../../appendix/faqs/general.rst:232
+msgid ""
+"A **500 - Internal Server Error** means the web server experienced a problem"
+" serving a request."
+msgstr "Une erreur interne du serveur ou **500 - Internal Server Error** signifie que le serveur web a rencontré un problème en servant une requête."
+
+#: ../../appendix/faqs/general.rst:236 ../../appendix/faqs/general.rst:236
+msgid ""
+"`The Wikipedia page on HTTP status codes "
+"<https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error>`_"
+msgstr "`La page Wikipédia sur les codes de statut HTTP <https://fr.wikipedia.org/wiki/Liste_des_codes_HTTP#5xx_-_Erreur_du_serveur_/_du_serveur_d'application>`_"
+
+#: ../../appendix/faqs/general.rst:239 ../../appendix/faqs/general.rst:239
+msgid "Possible causes"
+msgstr "Causes possibles"
+
+#: ../../appendix/faqs/general.rst:242 ../../appendix/faqs/general.rst:242
+msgid "Web server configuration"
+msgstr "Configuraiton du serveur web"
+
+#: ../../appendix/faqs/general.rst:242 ../../appendix/faqs/general.rst:242
+msgid ""
+"The most common cause for this is an incorrectly configured server. If you "
+"edited the ``.htaccess`` file and added something incorrect, Apache will "
+"send a 500 error."
+msgstr "La cause la plus fréquente pour cela est un serveur mal configuré. Si vous avez modifié le fichier ``.htaccess`` et ajouté quelque chose d’incorrect, Apache renverra une erreur 500."
+
+#: ../../appendix/faqs/general.rst:245 ../../appendix/faqs/general.rst:245
+msgid "Permissions on files"
+msgstr "Permissions sur les fichiers"
+
+#: ../../appendix/faqs/general.rst:245 ../../appendix/faqs/general.rst:245
+msgid ""
+"It could also be a permissions problem on a file. Apache needs to be able to"
+" read Elgg's files. Using permissions 755 on directories and 644 on files "
+"will allow Apache to read the files."
+msgstr "Il peut également s’agir d’un problème de permissions sur un fichier. Apache doit pouvoir lire les fichiers d’Elgg. L’utilisation des autorisations 755 sur les répertoires et 644 sur les fichiers permettra à Apache de lire les fichiers."
+
+#: ../../appendix/faqs/general.rst:248 ../../appendix/faqs/general.rst:248
+msgid ""
+"When I upload a photo or change my profile picture I get a white screen"
+msgstr "Lorsque je télécharge une photo ou que je modifie ma photo de profil, j'obtiens un écran blanc"
+
+#: ../../appendix/faqs/general.rst:250 ../../appendix/faqs/general.rst:250
+msgid ""
+"Most likely you don't have the PHP GD library installed or configured "
+"properly. You may need assistance from the administrator of your server."
+msgstr "Il est fort probable que la bibliothèque PHP GD n’est pas installée ou configurée correctement. Vous pourriez avoir besoin de l’aide de l’administrateur de votre serveur."
+
+#: ../../appendix/faqs/general.rst:253 ../../appendix/faqs/general.rst:253
+msgid "CSS is missing"
+msgstr "CSS manquant"
+
+#: ../../appendix/faqs/general.rst:256 ../../appendix/faqs/general.rst:256
+msgid "Wrong URL"
+msgstr "Mauvaise URL"
+
+#: ../../appendix/faqs/general.rst:258 ../../appendix/faqs/general.rst:258
+msgid ""
+"Sometimes people install Elgg so that the base URL is ``localhost`` and then"
+" try to view the site using a hostname. In this case, the browser won't be "
+"able to load the CSS file. Try viewing the source of the web page and "
+"copying the link for the CSS file. Paste that into your browser. If you get "
+"a 404 error, it is likely this is your problem. You will need to change the "
+"base URL of your site."
+msgstr "Parfois, les gens installent Elgg de sorte que l’URL de base est ``localhost`` et essaient ensuite d’afficher le site à l’aide d’un nom d’hôte. Dans ce cas, le navigateur ne pourra pas charger le fichier CSS. Essayez d’afficher la source de la page Web et de copier le lien du fichier CSS. Collez-le dans votre navigateur. Si vous obtenez une erreur 404, il est probable que c’est votre problème. Vous devrez modifier l’URL de base de votre site."
+
+#: ../../appendix/faqs/general.rst:261 ../../appendix/faqs/general.rst:261
+msgid "Syntax error"
+msgstr "Erreur de syntaxe"
+
+#: ../../appendix/faqs/general.rst:263 ../../appendix/faqs/general.rst:263
+msgid ""
+"Elgg stores its CSS as PHP code to provide flexibility and power. If there "
+"is a syntax error, the CSS file served to the browser may be blank. "
+"Disabling non-bundled plugins is the recommended first step."
+msgstr "Elgg stocke ses CSS sous forme de code PHP pour fournir flexibilité et puissance. S’il y a une erreur de syntaxe, le fichier CSS servi au navigateur peut être vide. La désactivation des plugins non groupés est la première étape recommandée."
+
+#: ../../appendix/faqs/general.rst:266 ../../appendix/faqs/general.rst:266
+msgid "Rewrite rules errors"
+msgstr "Erreurs de règles de réécriture d'URL (Rewrite rules)"
+
+#: ../../appendix/faqs/general.rst:268 ../../appendix/faqs/general.rst:268
+msgid ""
+"A bad ``.htaccess`` file could also result in a 404 error when requesting "
+"the CSS file. This could happen when doing an upgrade and forgetting to also"
+" upgrade ``.htaccess``."
+msgstr "Un mauvais fichier ``.htaccess`` peut également entraîner une erreur 404 lors de la requête du fichier CSS. Cela pourrait se produire lors d’une mise à niveau si vous oubliez de mettre également à niveau le fichier ``.htaccess``."
+
+#: ../../appendix/faqs/general.rst:271 ../../appendix/faqs/general.rst:271
+msgid "Should I edit the database manually?"
+msgstr "Devrais-je modifier la base de données manuellement ?"
+
+#: ../../appendix/faqs/general.rst:275 ../../appendix/faqs/general.rst:275
+msgid "No, you should never manually edit the database!"
+msgstr "Non, vous ne devriez jamais modifier manuellement la base de données !"
+
+#: ../../appendix/faqs/general.rst:278 ../../appendix/faqs/general.rst:278
+msgid "Will editing the database manually break my site?"
+msgstr "Est-ce que modifier manuellement la base de données va casser mon site ?"
+
+#: ../../appendix/faqs/general.rst:280 ../../appendix/faqs/general.rst:280
+msgid "Yes."
+msgstr "Oui."
+
+#: ../../appendix/faqs/general.rst:283 ../../appendix/faqs/general.rst:283
+msgid "Can I add extra fields to tables in the database?"
+msgstr "Est-ce que je peux ajouter des champs supplémentaires aux tables dans la base de données ?"
+
+#: ../../appendix/faqs/general.rst:285 ../../appendix/faqs/general.rst:285
+msgid ""
+"(AKA: I don't understand the Elgg :doc:`data model </design/database>` so "
+"I'm going to add columns. Will you help?)"
+msgstr "(AKA : Je ne comprends pas le modèle de données de ELgg :doc:`data model </design/database>` donc je vais ajouter des colonnes. Est-ce que vous allez m'aider ?)"
+
+#: ../../appendix/faqs/general.rst:287 ../../appendix/faqs/general.rst:287
+msgid ""
+"No, this is a bad idea. Learn the :doc:`data model </design/database>` and "
+"you will see that unless it's a very specific and highly customized "
+"installation, you can do everything you need within Elgg's current data "
+"model."
+msgstr "Non, c'est une mauvaise idée. Etudiez le modèle de données :doc:`data model </design/database>` et vous verrez qu'à moins que ce soit une installation très spécifique et fortement personnalisée, vous pouvez faire tout ce dont vous avez besoin avec le modèle de données actuel d'Elgg."
+
+#: ../../appendix/faqs/general.rst:290 ../../appendix/faqs/general.rst:290
+msgid ""
+"I want to remove users. Can't I just delete them from the elgg_users_entity "
+"table?"
+msgstr "Je veux supprimer les utilisateurs. Ne puis-je pas simplement les supprimer de la table elgg_users_entity ?"
+
+#: ../../appendix/faqs/general.rst:292 ../../appendix/faqs/general.rst:292
+msgid "No, it will corrupt your database. Delete them through the site."
+msgstr "Non, cela va corrompre votre base de données. Supprimez-les via le site."
+
+#: ../../appendix/faqs/general.rst:295 ../../appendix/faqs/general.rst:295
+msgid ""
+"I want to remove spam. Can't I just search and delete it from the "
+"elgg_objects_entity table?"
+msgstr "Je veux supprimer le spam. Ne puis-je pas simplement rechercher et supprimer dans la table elgg_objects_entity ?"
+
+#: ../../appendix/faqs/general.rst:297 ../../appendix/faqs/general.rst:297
+msgid "No, it will corrupt your database. Delete it through the site."
+msgstr "Non, cela va corrompre votre base de données. Supprimez-le via le site."
+
+#: ../../appendix/faqs/general.rst:300 ../../appendix/faqs/general.rst:300
+msgid ""
+"Someone on the community site told me to edit the database manually. Should "
+"I?"
+msgstr "Quelqu'un sur le site communautaire m'a dit de modifier manuellement la base de données. Est-ce que je devrais le faire ?"
+
+#: ../../appendix/faqs/general.rst:302 ../../appendix/faqs/general.rst:302
+msgid ""
+"Who was it? Is it someone experienced with Elgg, like one of the core "
+"developers or a well-known plugin author? Did he or she give you clear and "
+"specific instructions on what to edit? If you don't know who it is, or if "
+"you can't understand or aren't comfortable following the instructions, do "
+"not edit the database manually."
+msgstr "Qui étais-ce ? Est-ce quelqu'un d'expérimenté avec Elgg, comme l'un des développeurs du noyau ou un auteur de plugins bien connu ? Est-ce qu'il ou elle vous a donné des instructions claires sur quoi modifier ? Si vous ne savez pas qui c'est, ou si vous ne comprenez pas ou n'êtes pas à l'aise avec ces instructions, ne modifiez pas la base de données manuellement."
+
+#: ../../appendix/faqs/general.rst:305 ../../appendix/faqs/general.rst:305
+msgid ""
+"I know PHP and MySQL and have a legitimate reason to edit the database. Is "
+"it okay to manually edit the database?"
+msgstr "Je connais PHP et MySQL et ai une raison légitime de modifier la base de données. Est-ce OK de modifier manuellement la base de données ?"
+
+#: ../../appendix/faqs/general.rst:307 ../../appendix/faqs/general.rst:307
+msgid ""
+"Make sure you understand Elgg's :doc:`data model </design/database>` and "
+"schema first. Make a backup, edit carefully, then test copiously."
+msgstr "Assurez-vous d'abord de bien comprendre le modèle de données d'Elgg :doc:`data model </design/database>` et le schéma. Faites un backup, modifiez avec soin, puis testez abondamment."
+
+#: ../../appendix/faqs/general.rst:310 ../../appendix/faqs/general.rst:310
+msgid "Internet Explorer (IE) login problem"
+msgstr "Problème de connexion d'Internet Explorer (IE)"
+
+#: ../../appendix/faqs/general.rst:313 ../../appendix/faqs/general.rst:313
+msgid "Canonical URL"
+msgstr "URL canonique"
+
+#: ../../appendix/faqs/general.rst:315 ../../appendix/faqs/general.rst:315
+msgid ""
+"IE does not like working with sites that use both http://example.org and "
+"http://www.example.org. It stores multiple cookies and this causes problems."
+" Best to only use one base URL. For details on how to do this see Login "
+"token mismatch error."
+msgstr "IE n’aime pas travailler avec des sites qui utilisent à la fois http://exemple.org et http://www.exemple.org. Il stocke plusieurs cookies et cela cause des problèmes. Il est préférable d’utiliser une seule URL de base. Pour plus d’informations sur la façon de le faire, voyez l'erreur \"Login token mismatch error\" (erreur de correspondance des jetons de connexion)."
+
+#: ../../appendix/faqs/general.rst:318 ../../appendix/faqs/general.rst:318
+msgid "Chrome Frame"
+msgstr "Cadre Chrome"
+
+#: ../../appendix/faqs/general.rst:320 ../../appendix/faqs/general.rst:320
+msgid "Using the chrome frame within IE can break the login process."
+msgstr "Utiliser le cadre Chrome au sein de IE peut rompre le processus d'authentification. "
+
+#: ../../appendix/faqs/general.rst:323 ../../appendix/faqs/general.rst:323
+msgid "Emails don't support non-Latin characters"
+msgstr "Les emails ne supportent pas les caractères non-latins"
+
+#: ../../appendix/faqs/general.rst:325 ../../appendix/faqs/general.rst:325
+msgid ""
+"In order to support non-Latin characters, (such as Cyrillic or Chinese) Elgg"
+" requires `multibyte string support`_ to be compiled into PHP."
+msgstr "Pour prendre en charge les caractères non-latins, (tels que les caractères cyrilliques ou chinois) Elgg a besoin que le support des chaînes de caractère multibyte (\"`multibyte string support`_\") soit compilé avec PHP."
+
+#: ../../appendix/faqs/general.rst:327 ../../appendix/faqs/general.rst:327
+msgid ""
+"On many installs (e.g. Debian & Ubuntu) this is turned on by default. If it "
+"is not, you need to turn it on (or recompile PHP to include it). To check "
+"whether your server supports multibyte strings, check `phpinfo`_."
+msgstr "Sur de nombreuses installations (par exemple Debian & Ubuntu), cela est activé par défaut. Si ce n’est pas le cas, vous devez l’activer (ou recompiler PHP pour l’inclure). Pour vérifier si votre serveur prend en charge les chaînes multioctets (multibyte), vérifiez `phpinfo`_."
+
+#: ../../appendix/faqs/general.rst:333 ../../appendix/faqs/general.rst:333
+msgid "Session length"
+msgstr "Durée de session"
+
+#: ../../appendix/faqs/general.rst:335 ../../appendix/faqs/general.rst:335
+msgid ""
+"Session length is controlled by your php configuration. You will first need "
+"to locate your ``php.ini`` file. In that file will be several session "
+"variables. A complete list and what they do can be found in the `php "
+"manual`_."
+msgstr "La durée de la session est contrôlée par votre configuration php. Vous devrez d’abord localiser votre fichier ``php.ini``. Dans ce fichier vous trouverez plusieurs variables de session. Une liste complète et ce qu’elles font peuvent être trouvés dans le `manuel de php`_."
+
+#: ../../appendix/faqs/general.rst:340 ../../appendix/faqs/general.rst:340
+msgid "File is missing an owner"
+msgstr "Un fichier n'a pas de propriétaire"
+
+#: ../../appendix/faqs/general.rst:342 ../../appendix/faqs/general.rst:342
+msgid ""
+"There are three causes for this error. You could have an entity in your "
+"database that has an ``owner_guid`` of ``0``. This should be extremely rare "
+"and may only occur if your database/server crashes during a write operation."
+msgstr "Il y a trois causes à cette erreur. Vous pourriez avoir une entité dans votre base de données qui a un ``owner_guid`` de ``0``. Cela devrait être extrêmement rare et ne peut se produire que si votre base de données/serveur plante lors d’une opération d’écriture."
+
+#: ../../appendix/faqs/general.rst:344 ../../appendix/faqs/general.rst:344
+msgid ""
+"The second cause would be an entity where the owner no longer exists. This "
+"could occur if a plugin is turned off that was involved in the creation of "
+"the entity and then the owner is deleted but the delete operation failed "
+"(because the plugin is turned off). If you can figure out entity is causing "
+"this, look in your ``entities`` table and change the ``owner_guid`` to your "
+"own and then you can delete the entity through Elgg."
+msgstr "La deuxième cause serait une entité où le propriétaire n’existe plus. Cela peut se produire si un plugin est désactivé qui a été impliqué dans la création de l’entité, puis le propriétaire est supprimé, mais l’opération de suppression a échoué (parce que le plugin est désactivé). Si vous pouvez comprendre quelle entité est à l’origine de cette situation, regardez dans votre table ``entities`` et modifiez le ``owner_guid`` pour le vôtre, puis vous pouvez supprimer l’entité via Elgg."
+
+#: ../../appendix/faqs/general.rst:348 ../../appendix/faqs/general.rst:348
+msgid ""
+"Reed the section \"Should I edit the database manually?\". Be very carefull "
+"when editing the database directly. It can break your site. **Always** make "
+"a backup before doing this."
+msgstr "Lisez la section \"Dois-je modifier la base de données manuellement ?\". Soyez très prudent lors de l’édition directe de la base de données. Cela peut briser votre site. Faites **toujours** une sauvegarde avant de faire cela."
+
+#: ../../appendix/faqs/general.rst:350 ../../appendix/faqs/general.rst:350
+msgid ""
+"The third cause is a user not having a username. This also indicates a "
+"database problem as this should not be possible. If it does occur, you could"
+" see this error when viewing a list of users (such as with the Members "
+"plugin). To fix, check your ``users_entity`` table for users without a "
+"username and if so, create a fake a username for that person. You should "
+"probably then delete the user through Elgg."
+msgstr "La troisième cause est qu’un utilisateur n’a pas de nom d’utilisateur. Cela indique également un problème de base de données car cela ne devrait pas être possible. Si cela se produit, vous pouvez voir cette erreur lors de l’affichage d’une liste d’utilisateurs (par exemple avec le plugin Members). Pour corriger, vérifiez votre table ``users_entity`` pour les utilisateurs sans nom d’utilisateur et, dans l’affirmative, créez un faux nom d’utilisateur pour cette personne. Après cela, vous devriez pouvoir supprimer l’utilisateur via Elgg."
+
+#: ../../appendix/faqs/general.rst:353 ../../appendix/faqs/general.rst:353
+msgid "Fixes"
+msgstr "Corrections"
+
+#: ../../appendix/faqs/general.rst:355 ../../appendix/faqs/general.rst:355
+msgid ""
+"`Database Validator`_ plugin will check your database for these causes and "
+"provide an option to fix them. Be sure to backup the database before you try"
+" the fix option."
+msgstr "Le plugin `Database Validator`_ vérifiera votre base de données pour ces causes et vous fournira une option pour les corriger. Assurez-vous de sauvegarder la base de données avant d’essayer l’option de correction."
+
+#: ../../appendix/faqs/general.rst:360 ../../appendix/faqs/general.rst:360
+msgid "No images"
+msgstr "Pas d'image"
+
+#: ../../appendix/faqs/general.rst:362 ../../appendix/faqs/general.rst:362
+msgid ""
+"If profile images, group images, or other files have stopped working on your"
+" site it is likely due to a misconfiguration, especially if you have "
+"migrated to a new server."
+msgstr "Si des images de profil, des images de groupe ou d’autres fichiers ont cessé de fonctionner sur votre site, il est probable qu’il s’agit d’une mauvaise configuration, surtout si vous avez migré vers un nouveau serveur."
+
+#: ../../appendix/faqs/general.rst:364 ../../appendix/faqs/general.rst:364
+msgid ""
+"These are the most common misconfigurations that cause images and other "
+"files to stop working."
+msgstr "Ce sont les erreurs de configuration les plus courantes qui font arrêter le fonctionnement des images et d’autres fichiers."
+
+#: ../../appendix/faqs/general.rst:367 ../../appendix/faqs/general.rst:367
+msgid "Wrong path for data directory"
+msgstr "Mauvais chemin pour le répertoire de données"
+
+#: ../../appendix/faqs/general.rst:369 ../../appendix/faqs/general.rst:369
+msgid ""
+"Make sure the data directory's path is correct in the Site Administration "
+"admin area. It should have a trailing slash."
+msgstr "Assurez-vous que le chemin d’accès du répertoire de données est correct dans la zone d’administration du site. Il devrait avoir un slash à la fin."
+
+#: ../../appendix/faqs/general.rst:372 ../../appendix/faqs/general.rst:372
+msgid "Wrong permissions on the data directory"
+msgstr "Mauvaises permissions sur le répertoire de données"
+
+#: ../../appendix/faqs/general.rst:374 ../../appendix/faqs/general.rst:374
+msgid ""
+"Check the permissions for the data directory. The data directory should be "
+"readable and writeable by the web server user."
+msgstr "Vérifiez les permissions du répertoire de données. Le répertoire de données doit être lisible et inscriptible par l’utilisateur du serveur web."
+
+#: ../../appendix/faqs/general.rst:377 ../../appendix/faqs/general.rst:377
+msgid "Different timezone"
+msgstr "Fuseau horaire différent"
+
+#: ../../appendix/faqs/general.rst:381 ../../appendix/faqs/general.rst:381
+msgid "This only applies to Elgg versions before 1.9"
+msgstr "Cela ne s’applique qu’aux versions Elgg avant 1.9"
+
+#: ../../appendix/faqs/general.rst:383 ../../appendix/faqs/general.rst:383
+msgid ""
+"If you migrated servers or upgraded PHP, check that PHP's timezone settings "
+"are the same between the old and the new. If you cannot or don't want to "
+"change the system-wide ``php.ini`` file, you can put the following at the "
+"top of ``settings.php``:"
+msgstr "Si vous avez migré des serveurs ou mis à niveau PHP, vérifiez que les paramètres de fuseau horaire de PHP sont les mêmes entre l’ancien et le nouveau. Si vous ne pouvez pas ou ne voulez pas modifier le fichier ``php.ini`` à l’échelle du système, vous pouvez placer ce qui suit au début de ``settings.php`` :"
+
+#: ../../appendix/faqs/general.rst:389 ../../appendix/faqs/general.rst:389
+msgid "Where ``MY_TIME_ZONE`` is a valid `PHP timezone`_."
+msgstr "Où ``MY_TIME_ZONE`` est une `PHP timezone`_ valide."
+
+#: ../../appendix/faqs/general.rst:394 ../../appendix/faqs/general.rst:394
+msgid "Migrated installation with new data directory location"
+msgstr "Installation migrée avec un nouvel emplacement du répertoire de données"
+
+#: ../../appendix/faqs/general.rst:396 ../../appendix/faqs/general.rst:396
+msgid ""
+"If you migrated an installation and need to change your data directory path,"
+" be sure to update the SQL for the filestore location as documented in the "
+":doc:`/admin/duplicate-installation` instructions."
+msgstr "Si vous avez migré une installation et que vous devez modifier votre chemin d’accès au répertoire de données, assurez-vous de mettre à jour le SQL pour l’emplacement des données tel que documenté dans les :doc:`/admin/duplicate-installation` instructions."
+
+#: ../../appendix/faqs/general.rst:399 ../../appendix/faqs/general.rst:399
+msgid "Deprecation warnings"
+msgstr "Avertissements d'obsolescence"
+
+#: ../../appendix/faqs/general.rst:401 ../../appendix/faqs/general.rst:401
+msgid "If you are seeing many deprecation warnings that say things like"
+msgstr "Si vous voyez de nombreux avertissements de dépréciation qui disent des choses comme"
+
+#: ../../appendix/faqs/general.rst:407 ../../appendix/faqs/general.rst:407
+msgid ""
+"then you are using a plugin that was written for an older version of Elgg. "
+"This means the plugin is using functions that are scheduled to be removed in"
+" a future version of Elgg. You can ask the plugin developer if the plugin "
+"will be updated or you can update the plugin yourself. If neither of those "
+"are likely to happen, you should not use that plugin."
+msgstr "alors vous utilisez un plugin qui a été écrit pour une ancienne version d’Elgg. Cela signifie que le plugin utilise des fonctions qui sont prévues pour être supprimés dans une future version d’Elgg. Vous pouvez demander au développeur de plugin si le plugin sera mis à jour ou vous pouvez mettre à jour le plugin vous-même. Si ni l’un ni l’autre de ceux-ci sont susceptibles de se produire, vous ne devriez pas utiliser ce plugin."
+
+#: ../../appendix/faqs/general.rst:410 ../../appendix/faqs/general.rst:410
+msgid "Javascript not working"
+msgstr "JavaScript ne fonctionne pas"
+
+#: ../../appendix/faqs/general.rst:412 ../../appendix/faqs/general.rst:412
+msgid ""
+"If the user hover menu stops working or you cannot dismiss system messages, "
+"that means JavaScript is broken on your site. This usually due to a plugin "
+"having bad JavaScript code. You should find the plugin causing the problem "
+"and disable it. You can do this be disabling non-bundled plugins one at a "
+"time until the problem goes away. Another approach is disabling all non-"
+"bundled plugins and then enabling them one by one until the problem occurs "
+"again."
+msgstr "Si le menu utilisateur qui appraît au survol cesse de fonctionner ou que vous ne pouvez pas supprimer les messages système, cela signifie que JavaScript est cassé sur votre site. Ceci est généralement dû à un plugin ayant un mauvais code JavaScript. Vous devriez trouver le plugin à l'origine du problème et le désactiver. Vous pouvez le faire en désactivant les plugins non groupés un par un jusqu’à ce que le problème disparaisse. Une autre approche consiste à désactiver tous les plugins non groupés, puis à les activer un par un jusqu’à-ce que le problème se reproduise."
+
+#: ../../appendix/faqs/general.rst:414 ../../appendix/faqs/general.rst:414
+msgid ""
+"Most web browsers will give you a hint as to what is breaking the JavaScript"
+" code. They often have a console for JavaScript errors or an advanced mode "
+"for displaying errors. Once you see the error message, you may have an "
+"easier time locating the problem."
+msgstr "La plupart des navigateurs Web vous donneront un indice quant à ce qui casse le code JavaScript. Ils disposent souvent d'une console pour les erreurs JavaScript ou un mode avancé pour afficher les erreurs. Une fois que vous voyez le message d’erreur, il est plus facile de localiser le problème."
+
+#: ../../appendix/faqs/security.rst:2 ../../appendix/faqs/security.rst:2
+msgid "Security"
+msgstr "Sécurité"
+
+#: ../../appendix/faqs/security.rst:5 ../../appendix/faqs/security.rst:5
+msgid "Is upgrade.php a security concern?"
+msgstr "Est-ce upgrade.php pose des soucis de sécurité ?"
+
+#: ../../appendix/faqs/security.rst:7 ../../appendix/faqs/security.rst:7
+msgid ""
+"Upgrade.php is a file used to run code and database upgrades. It is in the "
+"root of the directory and doesn't require a logged in account to access. On "
+"a fully upgraded site, running the file will only reset the caches and exit,"
+" so this is not a security concern."
+msgstr "Upgrade.php est un fichier utilisé pour exécuter des mises à niveau du code et de la base de données. Il est placé à la racine de l'installation et il n'y a pas besoin d'un compte identifié pour y accéder. Sur un site totalement mis à niveau, l'exécution du fichier va seulement réinitialiser les caches et quitter, de sorte que ceci ne constitue pas un problème de sécurité."
+
+#: ../../appendix/faqs/security.rst:9 ../../appendix/faqs/security.rst:9
+msgid ""
+"If you are still concerned, you can either delete, move, or change "
+"permissions on the file until you need to upgrade."
+msgstr "SI cela vous préoccupe tout de même, vous pouvez supprimer, déplacer ou modifier les permissions sur ce fichier jusqu'à-ce que vous ayez besoin d'effectuer une mise à niveau."
+
+#: ../../appendix/faqs/security.rst:12 ../../appendix/faqs/security.rst:12
+msgid "Should I delete install.php?"
+msgstr "Devrais-je supprimer install.php ?"
+
+#: ../../appendix/faqs/security.rst:14 ../../appendix/faqs/security.rst:14
+msgid ""
+"This file is used to install Elgg and doesn't need to be deleted. The file "
+"checks if Elgg is already installed and forwards the user to the front page "
+"if it is."
+msgstr "Ce fichier est utilisé pour installer Elgg et n’a pas besoin d’être supprimé. Le fichier vérifie si Elgg est déjà installé et redirige l’utilisateur vers la première page si c'est le cas."
+
+#: ../../appendix/faqs/security.rst:17 ../../appendix/faqs/security.rst:17
+msgid "Filtering"
+msgstr "Filtrage"
+
+#: ../../appendix/faqs/security.rst:19 ../../appendix/faqs/security.rst:19
+msgid ""
+"Filtering is used in Elgg to make `XSS`_ attacks more difficult. The purpose"
+" of the filtering is to remove Javascript and other dangerous input from "
+"users."
+msgstr "Le filtrage est utilisé dans Elgg pour rendre les `attaques XSS`_ plus difficiles. L'objectif du filtrage est de supprimer les JavaScript et autres entrées dangereuses envoyées par les utilisateurs."
+
+#: ../../appendix/faqs/security.rst:21 ../../appendix/faqs/security.rst:21
+msgid ""
+"Filtering is performed through the function ``filter_tags()``. This function"
+" takes in a string and returns a filtered string. It triggers a *validate*, "
+"*input* :ref:`plugin hook <design/events#plugin-hooks>`. By default Elgg "
+"comes with the htmLawed filtering code as a plugin. Developers can drop in "
+"any additional or replacement filtering code as a plugin."
+msgstr "Le filtrage est effectué par l’intermédiaire de la fonction ``filter_tags()``. Cette fonction prend une chaîne et renvoie une chaîne filtrée. Elle déclenche un :ref:hook plugin <design/events#plugin-hooks>` *validate*, *input*. Par défaut Elgg est fourni avec le code de filtrage htmLawed sous la forme d'un plugin. Les développeurs peuvent intégrer tout autre code de filtrage supplémentaire ou en remplacement sous forme de plugin."
+
+#: ../../appendix/faqs/security.rst:23 ../../appendix/faqs/security.rst:23
+msgid ""
+"The ``filter_tags()`` function is called on any user input as long as the "
+"input is obtained through a call to ``get_input()``. If for some reason a "
+"developer did not want to perform the default filtering on some user input, "
+"the ``get_input()`` function has a parameter for turning off filtering."
+msgstr "La fonction ``filter_tags()`` est appelée pour chaque saisie utilisateur dès lors que la saisie est obtenue à travers un appel à ``get_input()``. Si pour quelque raison un développeur souhaite ne pas appliquer le filtrage par défaut sur certaines saisies utilisateur, la fonction ``get_input()`` a un paramètre pour désactiver le filtrage."
+
+#: ../../appendix/faqs/development.rst:2 ../../appendix/faqs/development.rst:2
+msgid "Development"
+msgstr "Développement"
+
+#: ../../appendix/faqs/development.rst:5 ../../appendix/faqs/development.rst:5
+msgid "What should I use to edit php code?"
+msgstr "Que dois-je utiliser pour modifier le code php ?"
+
+#: ../../appendix/faqs/development.rst:7 ../../appendix/faqs/development.rst:7
+msgid ""
+"There are two main options: text editor or `integrated development "
+"environment`_ (IDE)."
+msgstr "Il existe deux options principales : l’éditeur de texte ou `environnement de développement intégré`_ (IDE)."
+
+#: ../../appendix/faqs/development.rst:10
+#: ../../appendix/faqs/development.rst:10
+msgid "Text Editor"
+msgstr "Éditeur de texte"
+
+#: ../../appendix/faqs/development.rst:12
+#: ../../appendix/faqs/development.rst:12
+msgid ""
+"If you are new to software development or do not have much experience with "
+"IDEs, using a text editor will get you up and running the quickest. At a "
+"minimum, you will want one that does syntax highlighting to make the code "
+"easier to read. If you think you might submit patches to the bug tracker, "
+"you will want to make sure that your text editor does not change line "
+"endings. If you are using Windows, `Notepad++`_ is a good choice. If you are"
+" on a Mac, TextWrangler_ is a popular choice. You could also give TextMate_ "
+"a try."
+msgstr "Si vous débutez dans le développement de logiciels ou n’avez pas beaucoup d’expérience avec les IDE, l’utilisation d’un éditeur de texte vous permettra d'être opérationnel le plus rapidement. Au minimum, vous voudrez un éditeur avec coloration syntaxique, qui rend le code plus facile à lire. Si vous pensez que vous pouvez soumettre des correctifs pour le suivi de bogues, vous voudrez vous assurer que votre éditeur de texte ne modifie pas les terminaisons de ligne. Si vous utilisez Windows, `Notepad++`_ est un bon choix. Si vous êtes sur un Mac, TextWrangler_ est un choix populaire. Vous pouvez également essayer TextMate_."
+
+#: ../../appendix/faqs/development.rst:15
+#: ../../appendix/faqs/development.rst:15
+msgid "Integrated Development Environment"
+msgstr "Environnement de développement intégré"
+
+#: ../../appendix/faqs/development.rst:17
+#: ../../appendix/faqs/development.rst:17
+msgid ""
+"An IDE does just what its name implies: it includes a set of tools that you "
+"would normally use separately. Most IDEs will include source code control "
+"which will allow you to directly commit and update your code from your cvs "
+"repository. It may have an FTP client built into it to make the transfer of "
+"files to a remote server easier. It will have syntax checking to catch "
+"errors before you try to execute the code on a server."
+msgstr "Un EDI (IDE en anglais) fait exactement ce que son nom implique : il comprend un ensemble d’outils que vous utiliseriez normalement séparément. La plupart des IDE incluront le contrôle de code source qui vous permettra de valider et de mettre à jour directement votre code à partir de votre référentiel cvs. Il peut avoir un client FTP intégré pour faciliter le transfert de fichiers sur un serveur distant. Il disposera d'une vérification de syntaxe pour attraper les erreurs avant que vous essayiez d’exécuter le code sur un serveur."
+
+#: ../../appendix/faqs/development.rst:19
+#: ../../appendix/faqs/development.rst:19
+msgid ""
+"The two most popular free IDEs for PHP developers are Eclipse_ and "
+"NetBeans_. Eclipse has two different plugins for working with PHP code: PDT_"
+" and PHPEclipse_."
+msgstr "Les deux IDE gratuites les plus populaires pour les développeurs PHP sont Eclipse_ et NetBeans_. Eclipse dispose de deux plugins différents pour travailler avec le code PHP : PDT_ et PHPEclipse_."
+
+#: ../../appendix/faqs/development.rst:31
+#: ../../appendix/faqs/development.rst:31
+msgid "I don't like the wording of something in Elgg. How do I change it?"
+msgstr "Je n’aime pas certaines traductions dans Elgg. Comment puis-je les changer ?"
+
+#: ../../appendix/faqs/development.rst:33
+#: ../../appendix/faqs/development.rst:33
+msgid "The best way to do this is with a plugin."
+msgstr "La meilleure façon de faire ceci est avec un plugin."
+
+#: ../../appendix/faqs/development.rst:41
+#: ../../appendix/faqs/development.rst:41
+msgid "Locate the string that you want to change"
+msgstr "Localisez la chaîne que vous voulez modifier"
+
+#: ../../appendix/faqs/development.rst:43
+#: ../../appendix/faqs/development.rst:43
+msgid ""
+"All the strings that a user sees should be in the ``/languages`` directory "
+"or in a plugin's languages directory (``/mod/<plugin name>/languages``). "
+"This is done so that it is easy to change what language Elgg uses. For more "
+"information on this see the developer documentation on :doc:`/guides/i18n` ."
+msgstr "Toutes les chaînes qu’un utilisateur voit doivent être dans le répertoire ``/languages`` ou dans le répertoire des langues d’un plugin (``/mod/<plugin name>/languages``). Ceci est fait de sorte qu’il soit facile de changer la langue utilisée par Elgg. Pour plus d’informations à ce sujet, consultez la documentation développeur sur :doc:`/guides/i18n` ."
+
+#: ../../appendix/faqs/development.rst:45
+#: ../../appendix/faqs/development.rst:45
+msgid ""
+"To find the string use ``grep`` or a text editor that provides searching "
+"through files to locate the string. (A good text editor for Windows is "
+"`Notepad++`_ ) Let's say we want to change the string \"Add friend\" to "
+"\"Make a new friend\". The ``grep`` command to find this string would be "
+"``grep -r \"Add friend\" *``. Using `Notepad++`_ , you would use the \"Find "
+"in files\" command. You would search for the string, set the filter to "
+"``*.php``, set the directory to the base directory of Elgg, and make sure it"
+" searches all subdirectories. You might want to set it to be case sensitive "
+"also."
+msgstr "Pour trouver la chaîne, utilisez ``grep`` ou un éditeur de texte qui fournit la recherche dans les fichiers pour localiser la chaîne. (Un bon éditeur de texte pour Windows est `Notepad++`_ ) Disons que nous voulons modifier la chaîne ``Ajouter un contact`` en ``Se faire un nouvel ami``. La commande ``grep`` qui pemet de trouver cette chaîne serait ``grep -r \"Add friend\" *``. Avec `Notepad++`_ , vous utiliseriez la commande \"Trouver dans les fichiers\". Vous recherchez la chaîne, définissez le filtre sur ``*.php``, définissez le répertoire de recherche sur le répertoire racine de Elgg, et vous assurez qu’il recherche dans tous les sous-répertoires. Vous voudrez peut-être aussi définir que la recherche soit sensible à la casse."
+
+#: ../../appendix/faqs/development.rst:47
+#: ../../appendix/faqs/development.rst:47
+msgid ""
+"You should locate the string \"Add friend\" in ``/languages/en.php``. You "
+"should see something like this in the file:"
+msgstr "Vous devriez placer la chaîne \"Ajouter un contact\" dans ``/languages/fr.php``. Vous devriez voir quelque chose comme ceci dans le fichier :"
+
+#: ../../appendix/faqs/development.rst:53
+#: ../../appendix/faqs/development.rst:53
+msgid ""
+"This means every time Elgg sees ``friend:add`` it replaces it with \"Add "
+"friend\". We want to change the definition of ``friend:add``."
+msgstr "Cela signifie que chaque fois qu’Elgg voit ``friend:add`` il le remplace par ``Ajouter un contact``. Nous voulons changer la définition de ``friend:add``."
+
+#: ../../appendix/faqs/development.rst:56
+#: ../../appendix/faqs/development.rst:56
+msgid "Override the string"
+msgstr "Remplacer la chaîne"
+
+#: ../../appendix/faqs/development.rst:58
+#: ../../appendix/faqs/development.rst:58
+msgid ""
+"To override this definition, we will add a languages file to the plugin that"
+" we built in the first step."
+msgstr "Pour remplacer cette définition, nous ajouterons un fichier de langues au plugin que nous avons construit dans la première étape."
+
+#: ../../appendix/faqs/development.rst:60
+#: ../../appendix/faqs/development.rst:60
+msgid "Create a new directory: ``/mod/<your plugin name>/languages``"
+msgstr "Créer un nouveau répertoire : ``/mod/<nom du plugin>/languages``"
+
+#: ../../appendix/faqs/development.rst:61
+#: ../../appendix/faqs/development.rst:61
+msgid "Create a file in that directory called ``en.php``"
+msgstr "Créer un fichier dans ce répertoire appelé ``fr.php``"
+
+#: ../../appendix/faqs/development.rst:62
+#: ../../appendix/faqs/development.rst:62
+msgid "Add these lines to that file"
+msgstr "Ajoutez ces lignes à ce fichier"
+
+#: ../../appendix/faqs/development.rst:72
+#: ../../appendix/faqs/development.rst:72
+msgid ""
+"Make sure that you do not have any spaces or newlines before the ``<?php``."
+msgstr "Assurez-vous que vous n’avez pas d’espaces ou de nouvelles lignes avant ``<?php``."
+
+#: ../../appendix/faqs/development.rst:74
+#: ../../appendix/faqs/development.rst:74
+msgid ""
+"You're done now and should be able to enable the plugin and see the change. "
+"If you are override the language of a plugin, make sure your plugin is "
+"loaded after the one you are trying to modify. The loading order is "
+"determined in the Tools Administration page of the admin section. As you "
+"find more things that you'd like to change, you can keep adding them to this"
+" plugin."
+msgstr "Vous avez terminé maintenant et devriez être en mesure d’activer le plugin et de voir le changement. Si vous remplacez la langue d’un plugin, assurez-vous que votre plugin est chargé après celui que vous essayez de modifier. L’ordre de chargement est déterminé dans la page Administration des outils de la section Administrateur. Au fur et à mesure que vous trouverez d'autres choses à changer, vous pouvez continuer à les ajouter à ce plugin."
+
+#: ../../appendix/faqs/development.rst:77
+#: ../../appendix/faqs/development.rst:77
+msgid "How do I find the code that does x?"
+msgstr "Comment puis-je trouver le code qui fait X ?"
+
+#: ../../appendix/faqs/development.rst:79
+#: ../../appendix/faqs/development.rst:79
+msgid ""
+"The best way to find the code that does something that you would like to "
+"change is to use ``grep`` or a similar search tool. If you do not have "
+"``grep`` as a part of your operating system, you will want to install a grep"
+" tool or use a text-editor/IDE that has good searching in files. "
+"`Notepad++`_ is a good choice for Windows users. `Eclipse`_ with PHP and "
+"`NetBeans`_ are good choices for any platform."
+msgstr "La meilleure façon de trouver le code qui fait quelque chose que vous souhaitez changer est d’utiliser ``grep`` ou un outil de recherche similaire. Si ``grep`` n'est pas intégré à votre système d’exploitation, vous voudrez installer un outil grep ou utiliser un éditeur de texte/IDE qui dispose d'un bonne recherche dans les fichiers. `Notepad++`_ est un bon choix pour les utilisateurs de Windows. `Eclipse`_ avec PHP et `NetBeans`_ sont de bons choix pour n’importe quelle plateforme."
+
+#: ../../appendix/faqs/development.rst:82
+#: ../../appendix/faqs/development.rst:82
+msgid "String Example"
+msgstr "Exemple de chaîne (String)"
+
+#: ../../appendix/faqs/development.rst:84
+#: ../../appendix/faqs/development.rst:84
+msgid ""
+"Let's say that you want to find where the *Log In* box code is located. A "
+"string from the *Log In* box that should be fairly unique is ``Remember "
+"me``. ``Grep`` for that string. You will find that it is only used in the "
+"``en.php`` file in the ``/languages`` directory. There it is used to define "
+"the :doc:`/guides/i18n` string ``user:persistent``. ``Grep`` for that string"
+" now. You will find it in two places: the same ``en.php`` language file and "
+"in ``/views/default/forms/login.php``. The latter defines the html code that"
+" makes up the *Log In* box."
+msgstr "Supposons que vous souhaitez trouver où se trouve le code de la boîte de *Connexion*. Une chaîne de la zone *Connexion* qui devrait être assez unique est ``Se souvenir de moi`` (\"Remember me\"). Faites un ``grep`` pour cette chaîne. Vous constaterez qu’elle n’est utilisée que dans le fichier ``fr.php`` (ou en.php pour la version d'origine) dans le répertoire ``/languages``. Là, il est utilisé pour définir la chaîne :doc:`/guides/i18n` ``user:persistent``. Faites maintenant un ``grep`` pour cette chaîne. Vous la trouverez en deux endroits : le même fichier linguistique ``fr.php`` et dans ``/views/default/forms/login.php``. Ce dernier emplacement définit le code html qui constitue la boîte *Connexion*."
+
+#: ../../appendix/faqs/development.rst:87
+#: ../../appendix/faqs/development.rst:87
+msgid "Action Example"
+msgstr "Exemple d'Action"
+
+#: ../../appendix/faqs/development.rst:89
+#: ../../appendix/faqs/development.rst:89
+msgid ""
+"Let's say that you want to find the code that is run when a user clicks on "
+"the *Save* button when arranging widgets on a profile page. View the Profile"
+" page for a test user. Use Firebug to drill down through the html of the "
+"page until you come to the action of the edit widgets form. You'll see the "
+"url from the base is ``action/widgets/move``."
+msgstr "Supposons que vous souhaitez trouver le code qui s’exécute lorsqu’un utilisateur clique sur le bouton *Enregistrer* après avoir agencé les widgets sur une page de profil. Consultez la page du Profil d’un utilisateur de test. Utilisez Firebug pour inspecter le html de la page jusqu’à ce que vous trouviez l’action du formulaire de widgets de modification. Vous verrez que l’URL depuis la racine est ``action/widgets/move``."
+
+#: ../../appendix/faqs/development.rst:91
+#: ../../appendix/faqs/development.rst:91
+msgid ""
+"``Grep`` on ``widgets/move`` and two files are returned. One is the "
+"JavaScript code for the widgets : ``/js/lib/ui.widgets.js``. The other one, "
+"``/engine/lib/widgets.php``, is where the action is registered using "
+"``elgg_register_action('widgets/reorder')``. You may not be familiar with "
+"that function in which case, you should look it up at the API reference. Do "
+"a search on the function and it returns the documentation on the function. "
+"This tells you that the action is in the default location since a file "
+"location was not specified. The default location for actions is ``/actions``"
+" so you will find the file at ``/actions/widgets/move.php``."
+msgstr "Faites un ``grep`` sur ``widgets/move`` et deux fichiers sont retournés. L’un est le code JavaScript pour les widgets : ``/js/lib/ui.widgets.js``. L’autre, ``/engine/lib/widgets.php``, est l’endroit où l’action est enregistrée à l’aide de ``elgg_register_action('widgets/reorder')``. Vous ne connaissez peut-être pas cette fonction : dans ce cas, vous devriez consulter sa page dans la référence de l'API. Effectuez une recherche sur la fonction et cela renverra la documentation de la fonction. Cela vous indique que l’action se trouve à l’emplacement par défaut puisqu’un emplacement de fichier n’a pas été spécifié. L’emplacement par défaut des actions est ``/actions`` de sorte que vous trouverez le fichier à ``/actions/widgets/move.php``."
+
+#: ../../appendix/faqs/development.rst:94
+#: ../../appendix/faqs/development.rst:94
+msgid "Debug mode"
+msgstr "Mode de débogage"
+
+#: ../../appendix/faqs/development.rst:96
+#: ../../appendix/faqs/development.rst:96
+msgid ""
+"During the installation process you might have noticed a checkbox that "
+"controlled whether debug mode was turned on or off. This setting can also be"
+" changed on the Site Administration page. Debug mode writes a lot of extra "
+"data to your php log. For example, when running in this mode every query to "
+"the database is written to your logs. It may be useful for debugging a "
+"problem though it can produce an overwhelming amount of data that may not be"
+" related to the problem at all. You may want to experiment with this mode to"
+" understand what it does, but make sure you run Elgg in normal mode on a "
+"production server."
+msgstr "Durant le processus d’installation, vous avez peut-être remarqué une case à cocher qui contrôlait si le mode débogage était activé ou désactivé. Ce paramètre peut également être modifié dans la page Administration du site. Le mode de débogage écrit beaucoup de données supplémentaires dans votre journal php. Par exemple, lorsque vous utilisez ce mode, chaque requête dans la base de données est écrite dans vos journaux. Cela peut être utile pour le débogage d’un problème, mais peut produire une quantité énorme de données qui peuvent ne pas être liées du tout au problème recherché. Vous pouvez expérimenter avec ce mode pour comprendre ce qu’il fait, mais assurez-vous d’exécuter Elgg en mode normal sur un serveur de production."
+
+#: ../../appendix/faqs/development.rst:100
+#: ../../appendix/faqs/development.rst:100
+msgid ""
+"Because of the amount of data being logged, don't enable this on a "
+"production server as it can fill up the log files really quick."
+msgstr "En raison de la quantité de données enregistrées, il est préférable de ne pas l'activer sur un serveur de production car cela peut remplir les fichiers journaux très rapidement."
+
+#: ../../appendix/faqs/development.rst:103
+#: ../../appendix/faqs/development.rst:103
+msgid "What goes into the log in debug mode?"
+msgstr "Que contient le journal en mode débogage ?"
+
+#: ../../appendix/faqs/development.rst:105
+#: ../../appendix/faqs/development.rst:105
+msgid "All database queries"
+msgstr "Toutes les requêtes de base de données"
+
+#: ../../appendix/faqs/development.rst:106
+#: ../../appendix/faqs/development.rst:106
+msgid "Database query profiling"
+msgstr "Profilage des requêtes de base de données"
+
+#: ../../appendix/faqs/development.rst:107
+#: ../../appendix/faqs/development.rst:107
+msgid "Page generation time"
+msgstr "Durée de génération de page"
+
+#: ../../appendix/faqs/development.rst:108
+#: ../../appendix/faqs/development.rst:108
+msgid "Number of queries per page"
+msgstr "Nombre de requêtes par page"
+
+#: ../../appendix/faqs/development.rst:109
+#: ../../appendix/faqs/development.rst:109
+msgid "List of plugin language files"
+msgstr "Liste des fichiers linguistiques du plugin"
+
+#: ../../appendix/faqs/development.rst:110
+#: ../../appendix/faqs/development.rst:110
+msgid ""
+"Additional errors/warnings compared to normal mode (it's very rare for these"
+" types of errors to be related to any problem that you might be having)"
+msgstr "Des erreurs/avertissements supplémentaires par rapport au mode normal (il est très rare que ces types d’erreurs soient liés à tout problème que vous pourriez avoir)"
+
+#: ../../appendix/faqs/development.rst:113
+#: ../../appendix/faqs/development.rst:113
+msgid "What does the data look like?"
+msgstr "À quoi ressemblent les données ?"
+
+#: ../../appendix/faqs/development.rst:145
+#: ../../appendix/faqs/development.rst:145
+msgid "What events are triggered on every page load?"
+msgstr "Quels événements sont déclenchés sur chaque chargement de page ?"
+
+#: ../../appendix/faqs/development.rst:147
+#: ../../appendix/faqs/development.rst:147
+msgid ""
+"There are 5 :doc:`Elgg events </design/events>` that are triggered on every "
+"page load:"
+msgstr "Il y a 5 :doc:`événements Elgg < /design /events>` qui sont déclenchés sur chaque chargement de page :"
+
+#: ../../appendix/faqs/development.rst:149
+#: ../../appendix/faqs/development.rst:149
+msgid "boot, system"
+msgstr "boot, system"
+
+#: ../../appendix/faqs/development.rst:150
+#: ../../appendix/faqs/development.rst:150
+msgid "plugins_boot, system"
+msgstr "plugins_boot, system"
+
+#: ../../appendix/faqs/development.rst:151
+#: ../../appendix/faqs/development.rst:151
+msgid "init, system"
+msgstr "init, system"
+
+#: ../../appendix/faqs/development.rst:152
+#: ../../appendix/faqs/development.rst:152
+msgid "pagesetup, system (deprecated)"
+msgstr "pagesetup, system (déprécié)"
+
+#: ../../appendix/faqs/development.rst:153
+#: ../../appendix/faqs/development.rst:153
+msgid "shutdown, system"
+msgstr "shutdown, system"
+
+#: ../../appendix/faqs/development.rst:155
+#: ../../appendix/faqs/development.rst:155
+msgid ""
+"The *boot*, *system* event is triggered before the plugins get loaded. There"
+" does not appear to be any difference between the timing of the next two "
+"events: *plugins_boot*, *system* and *init*, *system* so plugins tend to use"
+" *init*, *system*. This event is triggered in "
+"``Elgg\\Application::bootCore``. The *pagesetup*, *system* event is thrown "
+"the first time ``elgg_view()`` is called. Some pages like the default "
+"``index.php`` do not call ``elgg_view()`` so it is not triggered for them. "
+"The *shutdown*, *system* event is triggered after the page has been sent to "
+"the requester and is handled through the PHP function "
+"``register_shutdown_function()``."
+msgstr "L’événement *boot*, *system* est déclenché avant le chargement des plugins. Il ne semble pas y avoir de différence entre le moment des deux événements suivants : *plugins_boot*, *system* et *init*, *system* donc les plugins ont tendance à utiliser *init*, *system*. Cet événement est déclenché dans ``Elgg\\Application::bootCore``. L’événement *pagesetup*, *system* est lancé la première fois que ``elgg_view()`` est appelé. Certaines pages comme le ``index.php`` par défaut n’appellent pas ``elgg_view()``, de sorte qu’il n’est pas déclenché pour eux. L’événement *shutdown*, *system* est déclenché après que la page a été envoyée au demandeur, et est géré par la fonction PHP ``register_shutdown_function()``."
+
+#: ../../appendix/faqs/development.rst:157
+#: ../../appendix/faqs/development.rst:157
+msgid ""
+"There are :doc:`other events </guides/events-list>` that are triggered by "
+"the Elgg core but they happen occasionally (such as when a user logs in)."
+msgstr "Il y a :doc:`d'autres événements </guides/events-list>` qui sont déclenchés par le noyau Elgg mais qui se produisent occasionnellement (par exemple lorsqu’un utilisateur se connecte)."
+
+#: ../../appendix/faqs/development.rst:160
+#: ../../appendix/faqs/development.rst:160
+msgid "What variables are reserved by Elgg?"
+msgstr "Quelles variables sont réservées par Elgg ?"
+
+#: ../../appendix/faqs/development.rst:162
+#: ../../appendix/faqs/development.rst:162
+msgid "``$CONFIG``"
+msgstr "``$CONFIG``"
+
+#: ../../appendix/faqs/development.rst:163
+#: ../../appendix/faqs/development.rst:163
+msgid "``$vars``"
+msgstr "``$vars``"
+
+#: ../../appendix/faqs/development.rst:164
+#: ../../appendix/faqs/development.rst:164
+msgid "``$autofeed``"
+msgstr "``$autofeed``"
+
+#: ../../appendix/faqs/development.rst:165
+#: ../../appendix/faqs/development.rst:165
+msgid "``$_GET['action']`` / ``$_POST['action']``"
+msgstr "``$_GET['action']`` / ``$_POST['action']``"
+
+#: ../../appendix/faqs/development.rst:166
+#: ../../appendix/faqs/development.rst:166
+msgid "``$viewtype``"
+msgstr "``$viewtype``"
+
+#: ../../appendix/faqs/development.rst:169
+#: ../../appendix/faqs/development.rst:169
+msgid "Copy a plugin"
+msgstr "Copier un plugin"
+
+#: ../../appendix/faqs/development.rst:171
+#: ../../appendix/faqs/development.rst:171
+msgid ""
+"There are many questions asked about how to copy a plugin. Let's say you "
+"want to copy the ``blog`` plugin in order to run one plugin called ``blog`` "
+"and another called ``poetry``. This is not difficult but it does require a "
+"lot of work. You would need to"
+msgstr "Il y a beaucoup de questions posées sur la façon de copier un plugin. Disons que vous voulez copier le plugin ``blog`` afin d’exécuter un plugin appelé ``blog`` et un autre appelé ``poésie``. Ce n’est pas difficile, mais cela demande beaucoup de travail. Vous auriez besoin de"
+
+#: ../../appendix/faqs/development.rst:173
+#: ../../appendix/faqs/development.rst:173
+msgid "change the directory name"
+msgstr "modifier le nom du répertoire"
+
+#: ../../appendix/faqs/development.rst:174
+#: ../../appendix/faqs/development.rst:174
+msgid ""
+"change the names of every function (having two functions causes PHP to "
+"crash)"
+msgstr "modifier les noms de toutes les fonctions (avoir deux fonctions avec le même nom provoque un plantage de PHP)"
+
+#: ../../appendix/faqs/development.rst:175
+#: ../../appendix/faqs/development.rst:175
+msgid ""
+"change the name of every view (so as not to override the views on the "
+"original plugin)"
+msgstr "modifiez le nom de chaque vue (afin de ne pas remplacer les vues sur le plugin d’origine)"
+
+#: ../../appendix/faqs/development.rst:176
+#: ../../appendix/faqs/development.rst:176
+msgid "change any data model subtypes"
+msgstr "modifier tous les sous-types de modèles de données"
+
+#: ../../appendix/faqs/development.rst:177
+#: ../../appendix/faqs/development.rst:177
+msgid "change the language file"
+msgstr "modifier le fichier linguistique"
+
+#: ../../appendix/faqs/development.rst:178
+#: ../../appendix/faqs/development.rst:178
+msgid "change anything else that was specific to the original plugin"
+msgstr "changer tout le reste de ce qui était spécifique au plugin d’origine"
+
+#: ../../appendix/faqs/development.rst:182
+#: ../../appendix/faqs/development.rst:182
+msgid ""
+"If you are trying to clone the ``groups`` plugin, you will have the "
+"additional difficulty that the group plugin does not set a subtype."
+msgstr "Si vous essayez de cloner le plugin ``groupes``, vous aurez la difficulté supplémentaire que le plugin de groupe ne définit pas de sous-type."
+
+#: ../../appendix/history.rst:2
+msgid "History"
+msgstr "Historique"
+
+#: ../../appendix/history.rst:4
+msgid ""
+"The name comes from `a town in Switzerland`__. It also means \"elk\" or "
+"\"moose\" in Danish."
+msgstr "Le nom vient `d'une ville en Suisse`__. Cela signifie aussi \"élan\" ou \"orignal\" en Danois."
+
+#: ../../appendix/history.rst:8
+msgid ""
+"Elgg's initial funding was by a company called Curverider Ltd, which was "
+"started by David Tosh and Ben Werdmuller. In 2010, Curverider was acquired "
+"by Thematic Networks and control of the open-source project was turned over "
+"to `The Elgg Foundation`_. Today, Elgg is a community-driven open source "
+"project and has a variety of contributors and supporters."
+msgstr "Le financement initial d’Elgg a été initié par une société appelée Curverider Ltd, qui a été lancée par David Tosh et Ben Werdmuller. En 2010, Curverider a été acquise par Thematic Networks et le contrôle du projet open-source a été confié à `The Elgg Foundation`_. Aujourd’hui, Elgg est un projet open source communautaire avec une variété de contributeurs et de soutiens."
+
+#: ../../appendix/index.rst:2
+msgid "Appendix"
+msgstr "Annexes"
+
+#: ../../appendix/index.rst:4
+msgid "Miscellaneous information about the project."
+msgstr "Informations diverses sur le projet."
+
+#: ../../appendix/releases.rst:2
+msgid "Release Policy"
+msgstr "Politique de versions"
+
+#: ../../appendix/releases.rst:4
+msgid "What to expect when upgrading Elgg."
+msgstr "À quoi s’attendre lors de la mise à niveau de Elgg."
+
+#: ../../appendix/releases.rst:6
+msgid "We adhere to `semantic versioning`_."
+msgstr "Nous adhérons au 'semantic versioning'_."
+
+#: ../../appendix/releases.rst:10
+msgid "Follow the blog to `stay up to date on the latest releases`__."
+msgstr "Suivez le blog pour `rester à jour sur les dernières versions`__."
+
+#: ../../appendix/releases.rst:15
+msgid "Patch/Bugfix Releases (2.1.x)"
+msgstr "Sorties de correctifs/bugfix (2.1.x)"
+
+#: ../../appendix/releases.rst:16
+msgid "Every two weeks."
+msgstr "Toutes les deux semaines."
+
+#: ../../appendix/releases.rst:18
+msgid ""
+"Bugfix releases are made regularly to make sure Elgg stays stable, secure, "
+"and bug-free. The higher the third digit, the more tested and stable the "
+"release is."
+msgstr "Les versions de correctifs sont effectuées régulièrement pour s’assurer qu’Elgg reste stable, sécurisé et exempt de bogues. Plus le troisième chiffre est élevé, plus la version est testée et stable."
+
+#: ../../appendix/releases.rst:21
+msgid ""
+"Since bugfix release focus on fixing bugs and not making major changes, "
+"themes and plugins should work from bugfix release to bugfix release."
+msgstr "Dans al mesure où les versions correctives de bogues se concentrer sur la correction des bogues et évitent d'apporter des changements majeurs, les thèmes et les plugins doivent fonctionner de version corrective en versioncorrective."
+
+#: ../../appendix/releases.rst:26
+msgid "Minor/Feature Releases (2.x.0)"
+msgstr "Versions mineures/fonctionnalités (2.x.0)"
+
+#: ../../appendix/releases.rst:27
+msgid "Every three months."
+msgstr "Tous les trois mois."
+
+#: ../../appendix/releases.rst:29
+msgid ""
+"Whenever we introduce new features, we'll bump the middle version number. "
+"These releases aren't as mature as bugfix release, but are considered stable"
+" and useable."
+msgstr "Chaque fois que nous introduisons de nouvelles fonctionnalités, nous incrémentons le numéro de version du milieu. Ces versions ne sont pas aussi matures que les correctifs, mais sont considérées comme stables et utilisables."
+
+#: ../../appendix/releases.rst:32
+msgid ""
+"We make every effort to be backward compatible in these releases, so plugins"
+" should work from minor release to minor release."
+msgstr "Nous faisons tous les efforts possibles pour être rétrocompatible dans ces versions, de sorte que les plugins devraient fonctionner de version mineure en version mineure."
+
+#: ../../appendix/releases.rst:35
+msgid ""
+"However, plugins might need to be updated to make use of the new features."
+msgstr "Toutefois, les plugins pourraient devoir être mis à jour pour utiliser les nouvelles fonctionnalités."
+
+#: ../../appendix/releases.rst:39
+msgid "Major/Breaking Releases (x.0.0)"
+msgstr "Révisions Majeures (x.0.0)"
+
+#: ../../appendix/releases.rst:40
+msgid "Every year."
+msgstr "Chaque année."
+
+#: ../../appendix/releases.rst:42
+msgid ""
+"Inevitably, improving Elgg requires breaking changes and a new major release"
+" is made. These releases are opportunities for the core team to make "
+"strategic, breaking changes to the underlying platform. Themes and plugins "
+"from older versions are not expected to work without modification on "
+"different major releases."
+msgstr "Inévitablement, l’amélioration d’Elgg nécessite des changements non rétro-compatibles et une nouvelle version majeure est alors publiée. Ces versions sont des occasions pour l’équipe de base d’apporter des changements stratégiques et de rupture à la plateforme sous-jacente. Les thèmes et les plugins des anciennes versions ne sont pas censés fonctionner sans modification sur les différentes versions majeures."
+
+#: ../../appendix/releases.rst:46
+msgid ""
+"We may remove deprecated APIs, but we will not remove APIs without first "
+"deprecating them."
+msgstr "Nous pouvons supprimer des API obsolètes, mais nous ne supprimerons pas les API sans les avoir d'abord rendues obsolètes (deprecated)."
+
+#: ../../appendix/releases.rst:48
+msgid ""
+"Elgg's dependencies may be upgraded by their major version or removed "
+"entirely. We will not remove any dependences before a major release, but we "
+"do not \"deprecate\" dependencies or issue any warnings before removing "
+"them."
+msgstr "Les dépendances d’Elgg peuvent être mises à niveau par leur version majeure ou supprimées entièrement. Nous ne supprimerons pas de dépendance avant une version majeure, mais nous ne rendons pas obsolète (\"deprecate\") les dépendances ou ou n’émettons pas d'avertissement avant de les supprimer."
+
+#: ../../appendix/releases.rst:52
+msgid ""
+"Your package, plugin, or app should declare its own dependencies directly so"
+" that this does not cause a problem."
+msgstr "Votre package, plugin ou application doit déclarer ses propres dépendances directement afin que cela ne cause pas de problème."
+
+#: ../../appendix/releases.rst:56
+msgid "Alphas, Betas, and Release Candidates"
+msgstr "Versions Alphas, Betas, et Candidates (RC = Release Candidates)"
+
+#: ../../appendix/releases.rst:58
+msgid ""
+"Before major releases (and sometimes before feature releases), the core team"
+" will offer a pre-release version of Elgg to get some real-world testing and"
+" feedback on the release. These are meant for testing only and should not be"
+" used on a live site."
+msgstr "Avant les versions majeures (et parfois avant les versions de fonctionnalités), l’équipe de base offrira une version pré-version d’Elgg pour obtenir des tests et des commentaires dans le monde réel sur la version. Ceux-ci sont destinés à des tests seulement et ne doivent pas être utilisés sur un site en direct."
+
+#: ../../appendix/releases.rst:63
+msgid ""
+"SemVer 2.0 does not define a particular meaning for pre-releases, but we "
+"approach alpha, beta, and rc releases with these general guidelines:"
+msgstr "SemVer 2.0 ne définit pas de signification particulière pour les pré-versions, mais nous abordons les versions alpha, bêta et rc avec ces indications générales :"
+
+#: ../../appendix/releases.rst:66
+msgid ""
+"An ``-alpha.X`` pre-release means that there are still breaking changes "
+"planned, but the feature set of the release is frozen. No new features or "
+"breaking changes can be proposed for that release."
+msgstr "Une pré-version ``-alpha-X`` signifie qu’il y a encore des modifications de rupture prévues, mais l’ensemble des fonctionnalités de la version est gelé. Aucune nouvelle fonctionnalité ou modification de rupture ne peuvent être proposées pour cette version."
+
+#: ../../appendix/releases.rst:70
+msgid ""
+"A ``-beta.X`` pre-release means that there are no known breaking changes "
+"left to be included, but there are known regressions or critical bugs left "
+"to fix."
+msgstr "Une pré-version ``-beta.X`` signifie qu’il n’y a plus de modification de rupture connue à inclure, mais il reste des régressions connues ou des bogues critiques à corriger."
+
+#: ../../appendix/releases.rst:73
+msgid ""
+"An ``-rc.X`` pre-release means that there are no known regressions or "
+"critical bugs left to be fixed. This version could become the final stable "
+"version of Elgg if no new blockers are reported."
+msgstr "Une pré-version ``-rc.X`` signifie qu’il n’y a plus de régression connue ou de bogue critique à corriger. Cette version pourrait devenir la version stable finale d’Elgg si aucun nouveau bloquage n’est signalé."
+
+#: ../../appendix/roadmap.rst:2
+msgid "Roadmap"
+msgstr "Feuille de route"
+
+#: ../../appendix/roadmap.rst:4
+msgid ""
+"What direction is the project going? What exciting new features are coming "
+"soon?"
+msgstr "Dans quelle direction va le projet ? Quelles nouvelles fonctionnalités passionnantes sont à venir bientôt ?"
+
+#: ../../appendix/roadmap.rst:6
+msgid ""
+"We do not publish detailed roadmaps, but it’s possible to get a sense for "
+"our general direction by utilizing the following resources:"
+msgstr "Nous ne publions pas de feuilles de route détaillées, mais il est possible d’avoir une idée de notre orientation générale en utilisant les ressources suivantes :"
+
+#: ../../appendix/roadmap.rst:9
+msgid ""
+"Our `feedback and planning group`_ is used to host early discussion about "
+"what will be worked on next."
+msgstr "Notre `groupe de feedback et de planification` (`feedback and planning group`_) est utilisé pour accueillir des discussions préliminaires sur les travaux à venir."
+
+#: ../../appendix/roadmap.rst:10
+msgid ""
+"Our `Github milestones`_ represent a general direction for the future "
+"releases of Elgg. This is the closest thing to a traditional roadmap that we"
+" have."
+msgstr "Nos `jalons Github` (milestones) représentent une orientation générale pour les futures versions d’Elgg. C’est la chose la plus proche d’une feuille de route traditionnelle que nous avons."
+
+#: ../../appendix/roadmap.rst:12
+msgid ""
+"`Github pull requests`_ will give you a good idea of what’s currently being "
+"developed, but nothing is sure until the PR is actually checked in."
+msgstr "Les `pull requests sur Github'_ vous donneront une bonne idée de ce qui est en cours de développement, mais rien n’est sûr tant que la PR n'est pas effectivement enregistrée."
+
+#: ../../appendix/roadmap.rst:14
+msgid ""
+"We use the `developer blog`_ to post announcements of features that have "
+"recently been checked in to our development branch, which gives the surest "
+"indication of what features will be available in the next release."
+msgstr "Nous utilisons le `developer blog`_ pour publier les annonces de fonctionnalités qui ont récemment été ajoutées dans notre branche de développement, ce qui donne l’indication la plus sûre sur quelles fonctionnalités seront disponibles dans la prochaine version."
+
+#: ../../appendix/roadmap.rst:24
+msgid "Values"
+msgstr "Valeurs"
+
+#: ../../appendix/roadmap.rst:26
+msgid ""
+"We have several overarching goals/values that affect the direction of Elgg. "
+"Enhancements generally must promote these values in order to be accepted."
+msgstr "Nous avons plusieurs objectifs/valeurs généraux qui affectent les orientations prises par Elgg. Les améliorations doivent généralement promouvoir ces valeurs afin d’être acceptées."
+
+#: ../../appendix/roadmap.rst:30
+msgid "Accessibility"
+msgstr "Accessibilité"
+
+#: ../../appendix/roadmap.rst:32
+msgid ""
+"Elgg-based sites should be usable by anyone anywhere. That means we'll "
+"always strive to make Elgg:"
+msgstr "Les sites basés sur Elgg devraient être utilisables par n’importe qui n’importe où. Cela signifie que nous nous efforcerons toujours de rendre Elgg :"
+
+#: ../../appendix/roadmap.rst:34
+msgid "Device-agnostic -- mobile, tablet, desktop, etc. friendly"
+msgstr "Tous types d'appareils - compatible mobile, tablette, ordinateur de bureau, etc."
+
+#: ../../appendix/roadmap.rst:35
+msgid "Language-agnostic -- i18n, RTL, etc."
+msgstr "Multilingue -- i18n, RTL, etc."
+
+#: ../../appendix/roadmap.rst:36
+msgid "Capability-agnostic -- touch, keyboard, screen-reader friendly"
+msgstr "Capacité-agnostique -- compatible tactile, clavier, lecteur d’écran"
+
+#: ../../appendix/roadmap.rst:39
+msgid "Testability"
+msgstr "Testabilité"
+
+#: ../../appendix/roadmap.rst:41
+msgid ""
+"We want to **make manual testing unnecessary** for core developers, plugin "
+"authors, and site administrators by promoting and enabling fast, automated "
+"testing at every level of the Elgg stack."
+msgstr "Nous voulons **rendre les tests manuels inutiles** pour les développeurs du noyau, les auteurs de plugins, et les administrateurs de sites en faisant la promotion et en permettant des tests rapides et automatisés à tous les niveaux de la pile Elgg."
+
+#: ../../appendix/roadmap.rst:44
+msgid ""
+"We think APIs are broken if they require plugin authors to write untestable "
+"code. We know there are a lot of violations of this principle in core "
+"currently and are working to fix it."
+msgstr "Nous pensons que les API sont cassées si elles exigent des auteurs de plugins d’écrire du code non testable. Nous savons qu’il y a beaucoup de violations de ce principe dans le noyau actuellement et nous travaillons à les corriger."
+
+#: ../../appendix/roadmap.rst:47
+msgid ""
+"We look forward to a world where the core developers do not need to do any "
+"manual testing to verify the correctness of code contributed to Elgg. "
+"Similarly, we envision a world where site administrators can upgrade and "
+"install new plugins with confidence that everything works well together."
+msgstr "Nous avons hâte d'un monde dans lequel les développeurs du noyau n'ont pas besoin de faire de tests manuels pour vérifier la correction du code contribué à Elgg. De manière similaire, nous envisageons un monde dans lequel les administrateurs de site peuvent mettre à niveau et installer de nouveaux plugins avec la certitude que tout fonctionne bien ensemble."
+
+#: ../../appendix/roadmap.rst:51
+msgid "TODO: other goals/values?"
+msgstr "TODO : d’autres objectifs/valeurs ?"
+
+#: ../../appendix/roadmap.rst:54
+msgid "FAQ"
+msgstr "FAQ"
+
+#: ../../appendix/roadmap.rst:57
+msgid "When will feature X be implemented?"
+msgstr "Quand la fonctionnalité X sera-t-elle implémentée ?"
+
+#: ../../appendix/roadmap.rst:58
+msgid ""
+"We cannot promise when features will get implemented because new features "
+"are checked into Elgg only when someone is motivated enough to implement the"
+" feature and submit a pull request. The best we can do is tell you to look "
+"out for what features existing developers have expressed interest in working"
+" on."
+msgstr "Nous ne pouvons pas promettre quand les fonctionnalités seront mises en œuvre parce que les nouvelles fonctionnalités sont inscrites dans Elgg seulement lorsque quelqu’un est suffisamment motivé pour implémenter la fonctionnalité et soumettre une demande de fusion. Le mieux que nous puissions faire est de vous dire de regarder pour quelles fonctionnalités les développeurs existants ont exprimé leur intérêt pour travailler dessus."
+
+#: ../../appendix/roadmap.rst:64
+msgid ""
+"The best way to ensure a feature gets implemented is to discuss it with the "
+"core team and implement it yourself. See our :doc:`/contribute/index` guide "
+"if you're interested. We love new contributors!"
+msgstr "La meilleure façon de s’assurer qu’une fonctionnalité est implémentée est d’en discuter avec l’équipe du noyau et de la mettre en œuvre vous-même. Consultez notre guide :doc:`/contribute/index` si vous êtes intéressé. Nous adorons les nouveaux contributeurs !"
+
+#: ../../appendix/roadmap.rst:67
+msgid ""
+"Do not rely on future enhancements if you're on the fence as to whether to "
+"use Elgg. Evaluate it given the current feature set. Upcoming features will "
+"almost certainly not materialize within your timeline."
+msgstr "Ne comptez pas sur les améliorations futures si vous êtes hésitez à savoir s’il faut utiliser Elgg. Évaluez-le compte tenu de l’ensemble de fonctionnalités existantes. Les fonctionnalités à venir ne se réaliseront certainement pas à temps dans votre calendrier."
+
+#: ../../appendix/roadmap.rst:72
+msgid "When is version X.Y.Z going to be released?"
+msgstr "Quand la version X.Y.Z sortira-t-elle ?"
+
+#: ../../appendix/roadmap.rst:73
+msgid ""
+"The next version will be released when the core team feels it's ready and "
+"has time to cut the release. http://github.com/Elgg/Elgg/issues/milestones "
+"will give you some rough ideas of timeline."
+msgstr "La prochaine version sera publiée lorsque l’équipe du noyau se sentira prête et aura le temps de publier la version. http://github.com/Elgg/Elgg/issues/milestones vous donnera une idée générale de la chronologie."
+
+#: ../../appendix/support.rst:2
+msgid "Support policy"
+msgstr "Politique de suport"
+
+#: ../../appendix/support.rst:4
+msgid ""
+"As of Elgg 2.0, each minor release receives bug and security fixes only "
+"until the next minor release."
+msgstr "À partir d’Elgg 2.0, chaque version mineure reçoit des corrections de bogue et de sécurité jusqu’à la prochaine version mineure."
+
+#: ../../appendix/support.rst:7
+msgid "Long Term Support Releases"
+msgstr "Versions supportées sur le long terme (LTS)"
+
+#: ../../appendix/support.rst:9
+msgid ""
+"Within each major version, the last minor release is designated for long "
+"term support (\"LTS\") and will receive bug fixes until the 2nd following "
+"major version release, and security fixes until the 3rd following major "
+"version release."
+msgstr "Dans chaque version majeure, la dernière version mineure est conçue pour le support à long terme (\"LTS\") et recevra des corrections de bogues jusqu’à la 2ème version principale suivante, et des correctifs de sécurité jusqu’à la 3ème version principale suivante."
+
+#: ../../appendix/support.rst:13
+msgid ""
+"E.g. 1.12 is the last minor release within 1.x. It will receive bug fixes "
+"until 3.0 is released and security fixes until 4.0 is released."
+msgstr "Par exemple, 1.12 est la dernière version mineure dans les 1.x. Elle recevra des corrections de bogues jusqu’à ce que la version 3.0 soit publiée, et des correctifs de sécurité jusqu’à ce que la 4.0 soit publiée."
+
+#: ../../appendix/support.rst:16
+msgid ""
+"When bugs are found, a good faith effort will be made to patch the LTS "
+"release, but **not all fixes will be back-ported.** E.g. some fixes may "
+"depend on new APIs, break backwards compatibility, or require significant "
+"refactoring. If a fix risks stability of the LTS branch, it will not be "
+"included."
+msgstr "Lorsque des bogues sont trouvés, un effort de bonne foi sera fait pour corriger la version LTS, mais **tous les correctifs ne seront pas rétro-portés.** Par exemple, certains correctifs peuvent dépendre de nouvelles API, rompre la compatibilité en arrière, ou nécessitent une refactorisation significative. Si un correctif compromet la stabilité de la branche LTS, il ne sera pas inclus."
+
+#: ../../appendix/support.rst:23
+msgid ":doc:`releases`"
+msgstr ":doc:`releases`"
+
+#: ../../appendix/support.rst:25
+msgid ""
+"Below is a table outlining the specifics for each release (future dates are "
+"tentative):"
+msgstr "Vous trouverez ci-dessous un tableau décrivant les détails de chaque version (les dates futures sont provisoires) :"
+
+#: ../../appendix/support.rst:28
+msgid "Version"
+msgstr "Version"
+
+#: ../../appendix/support.rst:28
+msgid "First stable release"
+msgstr "Première révision stable"
+
+#: ../../appendix/support.rst:28
+msgid "Bug fixes through"
+msgstr "Corrections de bogues à travers"
+
+#: ../../appendix/support.rst:28
+msgid "Security fixes through"
+msgstr "Correctifs de sécurité à travers"
+
+#: ../../appendix/support.rst:30
+msgid "1.12 LTS"
+msgstr "1.12 LTS"
+
+#: ../../appendix/support.rst:30
+msgid "July 2015"
+msgstr "Juillet 2015"
+
+#: ../../appendix/support.rst:30
+msgid "**Until 3.0**"
+msgstr "**Jusqu’à la 3.0**"
+
+#: ../../appendix/support.rst:30 ../../appendix/support.rst:38
+msgid "**Until 4.0**"
+msgstr "**Jusqu'à la 4.0**"
+
+#: ../../appendix/support.rst:32
+msgid "2.0"
+msgstr "2.0"
+
+#: ../../appendix/support.rst:32
+msgid "December 2015"
+msgstr "Décembre 2015"
+
+#: ../../appendix/support.rst:32 ../../appendix/support.rst:34
+msgid "March 2016"
+msgstr "Mars 2016"
+
+#: ../../appendix/support.rst:34
+msgid "2.1"
+msgstr "2.1"
+
+#: ../../appendix/support.rst:34 ../../appendix/support.rst:36
+msgid "June 2016"
+msgstr "Juin 2016"
+
+#: ../../appendix/support.rst:36
+msgid "2.2"
+msgstr "2.2"
+
+#: ../../appendix/support.rst:36 ../../appendix/support.rst:38
+msgid "November 2016"
+msgstr "Novembre 2016"
+
+#: ../../appendix/support.rst:38
+msgid "2.3 LTS"
+msgstr "2.3 LTS"
+
+#: ../../appendix/support.rst:38
+msgid "**Until 5.0**"
+msgstr "**Jusqu’à la 5.0**"
+
+#: ../../appendix/support.rst:40
+msgid "3.0"
+msgstr "3.0"
+
+#: ../../appendix/support.rst:40
+msgid "December 2016"
+msgstr "Décembre 2016"
+
+#: ../../appendix/support.rst:42
+msgid "4.0"
+msgstr "4.0"
+
+#: ../../appendix/support.rst:42
+msgid "December 2017"
+msgstr "Décembre 2017"

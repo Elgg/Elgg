@@ -39,4 +39,14 @@ return array(
 
 	'system.api.list' => "Liste alle im System verfügbaren API-Aufrufe auf.",
 	'auth.gettoken' => "Dieser API-Aufruf ermöglicht es einem Benutzer ein Authentifizierungs-Token zu beziehen, das für die Authentifizierung nachfolgender API-Aufrufe verwendet werden kann. Übergebe es als Parameter auth_token.",
+	
+	// plugin settings
+	'web_services:settings:authentication' => "Authentifizierungs-Einstellungen der Web-API",
+	'web_services:settings:authentication:description' => "Einige API-Methoden benötigen eine Authentifizierung der externen Quellen. Diese externen Quellen benötigen dazu ein API-Schlüsselpaar (öffentlicher und privater Schlüssel).
+
+Bitte beachte, dass mindestens eine API-Authentifizierungsmethode aktiviert sein muss, damit die Authentifizierung von API-Anfragen funktionieren kann.",
+	'web_services:settings:authentication:allow_key' => "Erlaube die einfache API-Authentifizierung mit einem öffentlichen Schlüssel",
+	'web_services:settings:authentication:allow_key:help' => "Der öffentliche API-Schlüssel kann bei einer Anfrage als Parameter mit übergeben werden.",
+	'web_services:settings:authentication:allow_hmac' => "Erlaube die API-Authentifizierung mit HMAC-Header",
+	'web_services:settings:authentication:allow_hmac:help' => "Bei der HMAC-Authentifizierung müssen bei einer Anfrage spezifische Header verwendet werden, damit die Authentizität der Anfrage sicher gestellt werden kann.",
 );
