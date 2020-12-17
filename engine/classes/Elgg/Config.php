@@ -69,6 +69,7 @@ use Elgg\Project\Paths;
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
  * @property int           $lastcache								The timestamp the cache was last invalidated
+ * @property string        $localcacheroot            				Path of local cache storage with trailing "/"
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers

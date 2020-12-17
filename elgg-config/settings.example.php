@@ -203,6 +203,15 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cacheroot = "";
 
 /**
+ * Set local cache directory
+ *
+ * By default, Elgg uses the cache directory to store cache files, but this may
+ * be undesirable for sites with a cache location on a network share used by multiple webservers.
+ * You can specify a separate location for the local cache files here.
+ */
+//$CONFIG->localcacheroot = "";
+
+/**
  * Set views simplecache directory
  *
  * Elgg uses the asset directory to store cached asset files.
