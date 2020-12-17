@@ -9,7 +9,7 @@ return array(
 	'expages:edit:viewpage' => "Vizualizează pagina pe site",
 	'expages:about' => "Despre",
 	'expages:terms' => "Termeni",
-	'expages:privacy' => "Intimitate",
+	'expages:privacy' => "Confidențialitate",
 	'expages:contact' => "Contact",
 
 	'expages:notset' => "Această pagină nu a fost configurată încă.",

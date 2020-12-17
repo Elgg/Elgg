@@ -39,4 +39,14 @@ return array(
 
 	'system.api.list' => "Liste de tous les appels API disponibles sur le système.",
 	'auth.gettoken' => "Cet appel à l'API permet à un utilisateur d'obtenir un jeton d'authentification d'utilisateur qui peut être utilisé pour authentifier les futurs appels à l'API. Passez-le en tant que paramètre auth_token",
+	
+	// plugin settings
+	'web_services:settings:authentication' => "Paramètres de l'API d'authentification web",
+	'web_services:settings:authentication:description' => "Certaines méthodes d'API exigent que les sources externes s'authentifient elles-mêmes. Ces sources externes doivent être fournies avec une paire de clefs d'API (clef publique et secrète).
+
+Veuillez noter qu'au moins une méthode d'authentification d'API doit être active afin d'authentifier les requêtes auprès de l'API.",
+	'web_services:settings:authentication:allow_key' => "Permettre l'authentification basique par clef d'API publique",
+	'web_services:settings:authentication:allow_key:help' => "La clef d'API publique peut être passée comme paramètre dans la requête.",
+	'web_services:settings:authentication:allow_hmac' => "Permettre l'entête HMAC d'authentification API",
+	'web_services:settings:authentication:allow_hmac:help' => "Avec l'authentification HMAC des entêtes spéciaux doivent être passés dans la requête pour garantir l'authenticité de la requête.",
 );
