@@ -27,7 +27,7 @@ class ElggAutoPUnitTest extends \Elgg\UnitTestCase {
 		$doc = new DOMDocument();
 		libxml_use_internal_errors(true);
 		$doc->loadHTML("<html><meta http-equiv='content-type' content='text/html; charset=utf-8'><body>"
-				. $in . '</body></html>');
+				. $in . '</body></html>', LIBXML_NOBLANKS);
 		$serialized = $doc->saveHTML();
 		list(, $out) = explode('<body>', $serialized, 2);
 		list($out) = explode('</body>', $out, 2);

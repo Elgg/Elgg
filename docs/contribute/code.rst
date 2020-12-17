@@ -84,7 +84,7 @@ follow these steps:
 1. Start with the ``type`` by selecting the *last category which applies* from this list:
 
    * **docs** - *only* docs are being updated
-   * **chore** - this include refactoring, code style changes, adding missing tests, Travis stuff, etc.
+   * **chore** - this include refactoring, code style changes, adding missing tests, CI stuff, etc.
    * **perf** - the primary purpose is to improve performance
    * **fix** - this fixes a bug
    * **deprecate** - the change deprecates any part of the API

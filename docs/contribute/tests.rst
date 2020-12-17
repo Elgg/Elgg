@@ -83,18 +83,18 @@ Strategy
 We have several guiding principles that we think will be helpful in bringing our vision into reality.
 
 In short, we are advocating:
- * Continuous integration -- if Travis isn't happy, we're not happy
+ * Continuous integration -- if GitHub checks aren't happy, we're not happy
  * Dependency injection -- For creating highly testable, modular code
  * BDD -- Tests should verify features and provide documentation, not rehash the Class API
 
 Continuous Integration
 ----------------------
 
-We run all of our tests on Travis CI so that we can get real time feedback on the correctness of incoming pull requests and development as 
-it progresses. **If Travis isn't happy, we don't commit to the repo.** This empowers us to merge pull requests in at a rapid pace, so long as 
+We run all of our tests on GitHub Actions so that we can get real time feedback on the correctness of incoming pull requests and development as 
+it progresses. **If the GitHub checks aren't passing, we don't commit to the repo.** This empowers us to merge pull requests in at a rapid pace, so long as 
 they pass the tests. It also allows us to reject pull requests without detailed investigation if they do not pass the tests. We can get past 
 the "does it work or not" question and talk about the things that humans need to talk about: API design, usefulness to the project, whether it 
-belongs in core or a plugin, etc. We want as many features as possible provided by Elgg core to be verified automatically by tests running on Travis.
+belongs in core or a plugin, etc. We want as many features as possible provided by Elgg core to be verified automatically by tests running on GitHub Actions.
 
 Dependency Injection
 --------------------
