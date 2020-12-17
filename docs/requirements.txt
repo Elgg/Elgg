@@ -1,0 +1,2 @@
+sphinxcontrib.phpdomain
+sphinx-intl

@@ -7,6 +7,8 @@ use UnexpectedValueException;
 /**
  * Provides a structured format for parsing and examining our commit messages.
  *
+ * Will be removed in the future as these checks have been moved to GitHub actions
+ *
  * @internal
  */
 class CommitMessage {

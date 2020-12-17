@@ -81,6 +81,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\ImageService                              $imageService
  * @property-read \Elgg\Invoker                                   $invoker
  * @property-read \Elgg\I18n\LocaleService                        $localeService
+ * @property-read \ElggCache                                      $localFileCache
  * @property-read \Elgg\Logger                                    $logger
  * @property-read Mailer                                          $mailer
  * @property-read \Elgg\Menu\Service                              $menus
@@ -108,6 +109,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Router                                    $router
  * @property-read \Elgg\Database\Seeder                           $seeder
  * @property-read \Elgg\Application\ServeFileHandler              $serveFileHandler
+ * @property-read \Elgg\Cache\SystemCache                         $serverCache
  * @property-read \ElggSession                                    $session
  * @property-read \Elgg\Cache\SessionCache                        $sessionCache
  * @property-read \Elgg\Search\SearchService                      $search
@@ -148,7 +150,7 @@ class ServiceProvider extends DiContainer {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
 
 			if (!$c->config->AutoloaderManager_skip_storage) {
-				$manager->setCache($c->fileCache);
+				$manager->setCache($c->localFileCache);
 				$manager->loadCache();
 			}
 
@@ -471,6 +473,11 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('localeService', function(ServiceProvider $c) {
 			return new LocaleService($c->config);
 		});
+		
+		$this->setFactory('localFileCache', function(ServiceProvider $c) {
+			$flags = ELGG_CACHE_PERSISTENT | ELGG_CACHE_LOCALFILESYSTEM | ELGG_CACHE_RUNTIME;
+			return new CompositeCache('elgg_local_system_cache', $c->config, $flags);
+		});
 
 		$this->setFactory('logger', function (ServiceProvider $c) {
 			$logger = Logger::factory($c->cli_input, $c->cli_output);
@@ -614,7 +621,15 @@ class ServiceProvider extends DiContainer {
 			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
 		});
 
-		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
+		$this->setFactory('request', function(ServiceProvider $c) use ($config) {
+			$request = \Elgg\Http\Request::createFromGlobals();
+			
+			// not using ServiceProvider->config because of deadloop issues
+			// using (the same) $config as the ServiceProvider was constructed with)
+			$request->initializeTrustedProxyConfiguration($config);
+			
+			return $request;
+		});
 
 		$this->setFactory('requestContext', function(ServiceProvider $c) {
 			$context = new \Elgg\Router\RequestContext();
@@ -692,6 +707,14 @@ class ServiceProvider extends DiContainer {
 			return $cache;
 		});
 
+		$this->setFactory('serverCache', function (ServiceProvider $c) {
+			$cache = new \Elgg\Cache\SystemCache($c->localFileCache, $c->config);
+			if ($c->config->enable_profiling) {
+				$cache->setTimer($c->timer);
+			}
+			return $cache;
+		});
+		
 		$this->setFactory('systemMessages', function(ServiceProvider $c) {
 			return new \Elgg\SystemMessagesService($c->session);
 		});

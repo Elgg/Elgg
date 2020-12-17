@@ -122,7 +122,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		$template = Application::elggDir()->getContents("elgg-config/settings.example.php");
 
 		$params = [
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
 			'dbname' => getenv('ELGG_DB_NAME') ? : '',
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
@@ -335,7 +335,7 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 		mkdir($dataroot);
 
 		$request = $this->prepareHttpRequest('install.php?step=database', 'POST', [
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
 			'dbname' => getenv('ELGG_DB_NAME') ? : '',
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpassword' => getenv('ELGG_DB_PASS') ? : '',
@@ -628,21 +628,23 @@ class ElggInstallerUnitTest extends \Elgg\UnitTestCase {
 
 		$this->mock->batchInstall([
 			// database settings
-			'dbuser' => getenv('ELGG_DB_USER') ? : 't_i_elgg_dbuser',
-			'dbpassword' => getenv('ELGG_DB_PASS') ? : 't_i_elgg_dbpwd',
-			'dbname' => getenv('ELGG_DB_NAME') ? : 't_i_elgg_dbname',
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbuser' => getenv('ELGG_DB_USER') ? : 'c_i_elgg_dbuser',
+			'dbpassword' => getenv('ELGG_DB_PASS') ? : 'c_i_elgg_dbpwd',
+			'dbname' => getenv('ELGG_DB_NAME') ? : 'c_i_elgg_dbname',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
 			'dbencoding' => getenv('ELGG_DB_ENCODING') ? : 'utf8mb4',
+			'dbhost' => getenv('ELGG_DB_HOST') ? : 'localhost',
+			'dbport' => getenv('ELGG_DB_PORT') ? : '3306',
 
 			// site settings
-			'sitename' => 'Elgg Travis Site',
-			'siteemail' => 'no_reply@travis.elgg.org',
+			'sitename' => 'Elgg CI Site',
+			'siteemail' => 'no_reply@ci.elgg.org',
 			'wwwroot' => getenv('ELGG_WWWROOT') ? : 'http://localhost/',
 			'dataroot' => getenv('HOME') . '/engine/tests/test_files/dataroot/',
 
 			// admin account
 			'displayname' => 'Administrator',
-			'email' => 'admin@travis.elgg.org',
+			'email' => 'admin@ci.elgg.org',
 			'username' => 'admin',
 			'password' => 'fancypassword',
 

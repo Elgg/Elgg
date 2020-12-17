@@ -1,0 +1,34 @@
+name: Javascript test suite
+on: [pull_request]
+jobs:
+  karma:
+    name: Karma tests
+    runs-on: ubuntu-20.04
+    
+    steps:
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          coverage: none
+          extensions: gd,pdo,xml,json,mysqli,pdo_mysql,libxml,mbstring
+      
+      - name: Install NodeJS
+        uses: actions/setup-node@v2
+        with:
+          node-version: 8
+        
+      - name: Install Composer v1
+        run: composer self-update --1
+        
+      - name: Code checkout
+        uses: actions/checkout@v2
+      
+      - name: Composer install
+        run: composer install
+      
+      - name: Yarn install
+        run: yarn install
+        
+      - name: Run Karma tests
+        run: yarn test

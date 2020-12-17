@@ -203,6 +203,15 @@ $CONFIG->dbencoding = 'utf8mb4';
 //$CONFIG->cacheroot = "";
 
 /**
+ * Set local cache directory
+ *
+ * By default, Elgg uses the cache directory to store cache files, but this may
+ * be undesirable for sites with a cache location on a network share used by multiple webservers.
+ * You can specify a separate location for the local cache files here.
+ */
+//$CONFIG->localcacheroot = "";
+
+/**
  * Set views simplecache directory
  *
  * Elgg uses the asset directory to store cached asset files.
@@ -432,3 +441,24 @@ $CONFIG->allow_phpinfo = false;
  * @see https://secure.php.net/manual/en/function.setlocale.php
  */
 //$CONFIG->language_to_locale_mapping = [];
+
+/**
+ * When your webserver is behind a loadbalancer or reverse proxy server some client information (IP, protocol, etc) is
+ * stored in different headers. For Elgg to be able to access these headers you need to configure the IP addresses of
+ * the loadbalancer/reverse proxy.
+ *
+ * @see https://symfony.com/doc/3.3/deployment/proxies.html
+ */
+//$CONFIG->http_request_trusted_proxy_ips = [
+//	'ip-address-1',
+//	'ip-address-2',
+//];
+
+/**
+ * When your webserver is behind a loadbalancer or reverse proxy server some client information (IP, protocol, etc) is
+ * stored in different headers. For Elgg to be able to access these headers you need to configure the headers it's allowed to read.
+ * This is a bitwise flag of the allowed headers, if nothing is configured all commonly used headers are allowed.
+ *
+ * @see https://symfony.com/doc/3.3/deployment/proxies.html
+ */
+//$CONFIG->http_request_trusted_proxy_headers = '';

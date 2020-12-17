@@ -59,6 +59,8 @@ use Elgg\Project\Paths;
  * @property mixed         $embed_tab
  * @property string        $exception_include						This is an optional script used to override Elgg's default handling of uncaught exceptions.
  * @property string[]      $group
+ * @property string[]      $http_request_trusted_proxy_ips			When Elgg is behind a loadbalancer/proxy this can contain IP adresses to allow access to better client information
+ * @property int           $http_request_trusted_proxy_headers		When Elgg is behind a loadbalancer/proxy this can contain a bitwise string of allowed headers for better client information
  * @property bool          $i18n_loaded_from_cache
  * @property array         $icon_sizes
  * @property string        $image_processor
@@ -67,6 +69,7 @@ use Elgg\Project\Paths;
  * @property string        $language                   				Site language code
  * @property string[]      $language_to_locale_mapping 				A language to locale mapping (eg. 'en' => ['en_US'] or 'nl' => ['nl_NL'])
  * @property int           $lastcache								The timestamp the cache was last invalidated
+ * @property string        $localcacheroot            				Path of local cache storage with trailing "/"
  * @property bool          $memcache
  * @property string        $memcache_namespace_prefix
  * @property array         $memcache_servers

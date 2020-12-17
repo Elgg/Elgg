@@ -133,7 +133,7 @@ class SystemCache {
 
 		// cache system data if enabled and not loaded
 		if (!$this->config->system_cache_loaded) {
-			_elgg_services()->views->cacheConfiguration($this);
+			_elgg_services()->views->cacheConfiguration(_elgg_services()->serverCache);
 		}
 	}
 }

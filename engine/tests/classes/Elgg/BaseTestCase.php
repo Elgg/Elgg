@@ -58,7 +58,7 @@ abstract class BaseTestCase extends TestCase implements Seedable, Testable {
 		}
 
 		return new Config([
-			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 't_i_elgg_',
+			'dbprefix' => getenv('ELGG_DB_PREFIX') ? : 'c_i_elgg_',
 			'dbname' => getenv('ELGG_DB_NAME') ? : '',
 			'dbuser' => getenv('ELGG_DB_USER') ? : '',
 			'dbpass' => getenv('ELGG_DB_PASS') ? : '',

@@ -393,3 +393,15 @@ Javascript not working
 If the user hover menu stops working or you cannot dismiss system messages, that means JavaScript is broken on your site. This usually due to a plugin having bad JavaScript code. You should find the plugin causing the problem and disable it. You can do this be disabling non-bundled plugins one at a time until the problem goes away. Another approach is disabling all non-bundled plugins and then enabling them one by one until the problem occurs again.
 
 Most web browsers will give you a hint as to what is breaking the JavaScript code. They often have a console for JavaScript errors or an advanced mode for displaying errors. Once you see the error message, you may have an easier time locating the problem.
+
+IP addresses in the logs are wrong
+----------------------------------
+
+When your Elgg installation is behind a proxy server or loadbalancer the IP addresses logged in the System Log plugin can be wrong. It could show only
+the IP addresses for the proxy server.
+
+In order to solve this you can configure the IP addresses of the proxy server as a trusted IP address and with that allow the system access to the 
+correct IP address of your users.
+
+In the ``settings.php`` file you can configure settings for ``$CONFIG->http_request_trusted_proxy_ips`` and ``$CONFIG->http_request_trusted_proxy_headers``
+check the ``settings.php`` file for more information. 

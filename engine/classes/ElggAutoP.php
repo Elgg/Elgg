@@ -102,7 +102,7 @@ class ElggAutoP {
 
 		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' "
 				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
-				. "</html>")) {
+				. "</html>", LIBXML_NOBLANKS)) {
 			libxml_use_internal_errors($use_internal_errors);
 			libxml_disable_entity_loader($disable_load_entities);
 			return false;

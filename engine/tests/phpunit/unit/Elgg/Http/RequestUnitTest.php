@@ -12,7 +12,8 @@ class RequestUnitTest extends \Elgg\UnitTestCase {
 	}
 
 	public function down() {
-
+		unset(_elgg_config()->http_request_trusted_proxy_ips);
+		unset(_elgg_config()->http_request_trusted_proxy_headers);
 	}
 
 	public function testCanDetectElggPath() {
@@ -74,4 +75,25 @@ class RequestUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals('b', $request->getParam('bar'));
 	}
 
+	/**
+	 * @dataProvider trustedProxySettingsProvider
+	 */
+	public function testTrustedProxySettings($proxy_ips, $proxy_headers) {
+		_elgg_config()->http_request_trusted_proxy_ips = $proxy_ips;
+		_elgg_config()->http_request_trusted_proxy_headers = $proxy_headers;
+		
+		$request = Request::create('/foo');
+		$request->initializeTrustedProxyConfiguration(_elgg_config());
+		
+		$this->assertEquals($proxy_ips, $request->getTrustedProxies());
+		$this->assertEquals($proxy_headers, $request->getTrustedHeaderSet());
+	}
+	
+	public function trustedProxySettingsProvider() {
+		return [
+			[['192.168.0.1'], Request::HEADER_X_FORWARDED_ALL],
+			[['192.168.0.1', '192.168.0.2'], Request::HEADER_X_FORWARDED_AWS_ELB],
+			[['192.168.0.1'], Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST],
+		];
+	}
 }
