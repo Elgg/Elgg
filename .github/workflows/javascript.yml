@@ -26,9 +26,13 @@ jobs:
       
       - name: Composer install
         run: composer install
-      
+
       - name: Yarn install
         run: yarn install
-        
+      
+      - name: Yarn check
+        continue-on-error: true
+        run: yarn check
+                
       - name: Run Karma tests
         run: yarn test
