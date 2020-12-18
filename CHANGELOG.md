@@ -1,3 +1,20 @@
+<a name="3.3.14"></a>
+### 3.3.14  (2020-12-18)
+
+#### Contributors
+
+* Jeroen Dalsem (8)
+* Jerôme Bakker (3)
+
+#### Bug Fixes
+
+* **cache:** keep server cache in a local file storage ([0569862d](https://github.com/Elgg/Elgg/commit/0569862d9f07c4cd454fe0739bd19ff325ab2a81))
+* **database:** correctly order metadata ([32fe6955](https://github.com/Elgg/Elgg/commit/32fe6955a31173f64318151b0bbeb11fdad8cace))
+* **http:** allow access to client IP behind proxy server ([159e70ee](https://github.com/Elgg/Elgg/commit/159e70ee6e57b929bc5935f091a2bbb9280bc3f3))
+* **search:** prevent duplicate extras matches in search results ([1211ae4d](https://github.com/Elgg/Elgg/commit/1211ae4d60d453b9351a62b2dfd02935af3a3ec6))
+* **widgets:** correctly update widget title after widget update ([95535d24](https://github.com/Elgg/Elgg/commit/95535d2472bc4ba0d7b2a19e121dd1798c38692b))
+
+
 <a name="3.3.13"></a>
 ### 3.3.13  (2020-11-20)
 
@@ -1978,6 +1995,22 @@ keyword `all` no longer has any effect on calling order. ([1b0cc64d](https://git
 var `$DEFAULT_FILE_STORE`.
  ([618c79d3](https://github.com/Elgg/Elgg/commit/618c79d301eda1b265441b14f3bfbda2235ee3fd))
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
+
+
+<a name="2.3.16"></a>
+### 2.3.16  (2020-12-18)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+
+#### Bug Fixes
+
+* **ci:**
+  * move PHPUnit tests from Travis to GitHub actions ([55d6d893](https://github.com/Elgg/Elgg/commit/55d6d8933acde9bb240cb28224f86b984159e1b2))
+  * move documentation test build to GitHub action ([25f3f8a6](https://github.com/Elgg/Elgg/commit/25f3f8a638ec000c6e6632b4e19381aacd068af2))
+  * move coding style and composer checks to GitHub actions ([5b8956dc](https://github.com/Elgg/Elgg/commit/5b8956dcbe8dd2b2c9bde70bbbd5524d148f6e1e))
+  * move lint checks to GitHub actions ([eba126ec](https://github.com/Elgg/Elgg/commit/eba126ec0aa4095ed55621950973d21560d470af))
 
 
 <a name="2.3.15"></a>

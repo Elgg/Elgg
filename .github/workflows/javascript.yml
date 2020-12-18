@@ -23,12 +23,34 @@ jobs:
         
       - name: Code checkout
         uses: actions/checkout@v2
-      
+
+      - name: Restore NPM cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
+                
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        
+      - name: Restore Composer Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
       - name: Composer install
         run: composer install
-      
+
       - name: Yarn install
         run: yarn install
-        
+      
+      - name: Yarn check
+        continue-on-error: true
+        run: yarn check
+                
       - name: Run Karma tests
         run: yarn test

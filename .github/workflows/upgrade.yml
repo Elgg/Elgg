@@ -37,7 +37,18 @@ jobs:
         with:
           repository: 'Elgg/Elgg'
           ref: '2.3'
-      
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        
+      - name: Restore Composer Cache for 2.3
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+          
       - name: Composer install
         run: |
           composer global require fxp/composer-asset-plugin:^1.1.4 --prefer-dist
@@ -71,6 +82,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           clean: false
+      
+      - name: Restore Composer Cache for PR
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
       
       - name: Composer update
         # using composer update to make sure we have latest dependencies like in the starter project (zip)
