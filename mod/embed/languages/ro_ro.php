@@ -8,5 +8,5 @@
 return array(
 	'embed:embed' => 'Înglobează',
 	'embed:media' => 'Înglobează conținut',
-	'embed:no_support' => 'There is no embeddable content available',
+	'embed:no_support' => 'Nu există conținut de înglobat disponibil',
 );

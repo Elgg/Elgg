@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-30 12:26+0100\n"
+"POT-Creation-Date: 2020-11-20 14:22+0100\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
 "Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
@@ -1047,6 +1047,9 @@ msgid ""
 "Use ``elgg_is_sticky_form($name)`` and ``elgg_get_sticky_values($name)`` to "
 "get sticky values when rendering a form view."
 msgstr ""
+"Utilisez ``elgg_is_sticky_form($name)`` et ``elgg_get_sticky_values($name)``"
+" pour obtenir des valeurs persistantes lors du rendu d’une vue de "
+"formulaire."
 
 #: ../../guides/actions.rst:452
 msgid ""
@@ -1054,6 +1057,9 @@ msgid ""
 "successfully or after data has been loaded by "
 "``elgg_get_sticky_values($name)``."
 msgstr ""
+"Appelez ``elgg_clear_sticky_form($name)`` une fois l’action terminée avec "
+"succès ou après que les données ont été chargées par "
+"``elgg_get_sticky_values($name)``."
 
 #: ../../guides/actions.rst:455
 msgid "Example: User registration"
@@ -1064,6 +1070,9 @@ msgid ""
 "Simple sticky forms require little logic to determine the input values for "
 "the form. This logic is placed at the top of the form body view itself."
 msgstr ""
+"Les formulaires persistants simples nécessitent peu de logique pour "
+"déterminer les valeurs d’entrée du formulaire. Cette logique est placée en "
+"haut de la vue du corps de formulaire."
 
 #: ../../guides/actions.rst:460
 msgid ""
@@ -1071,12 +1080,18 @@ msgid ""
 " if there are sticky values. If so, it loads the sticky values before "
 "clearing the sticky form:"
 msgstr ""
+"L’affichage du formulaire d’inscription définit d’abord les valeurs par "
+"défaut pour les entrées, puis vérifie s’il y a des valeurs persistantes. Si "
+"c’est le cas, il charge les valeurs persistantes avant de supprimer le "
+"formulaire persistant :"
 
 #: ../../guides/actions.rst:476
 msgid ""
 "The registration action sets creates the sticky form and clears it once the "
 "action is completed:"
 msgstr ""
+"Les ensembles d’action d’inscription créent le formulaire persistant et "
+"l’effacent une fois l’action terminée :"
 
 #: ../../guides/actions.rst:493
 msgid "Example: Bookmarks"
@@ -1087,30 +1102,40 @@ msgid ""
 "The bundled plugin Bookmarks' save form and action is an example of a "
 "complex sticky form."
 msgstr ""
+"Le formulaire et l’action d’enregistrement du plugin Bookmarks (Signets) est"
+" un exemple de formulaire persistant complexe."
 
 #: ../../guides/actions.rst:497
 msgid ""
 "The form view for the save bookmark action uses ``elgg_extract()`` to pull "
 "values from the ``$vars`` array:"
 msgstr ""
+"La vue du formulaire pour l’action d'enregistrement d'un signet utilise "
+"``elgg_extract()`` pour extraire des valeurs du tableau ``$vars`` :"
 
 #: ../../guides/actions.rst:511
 msgid ""
 "The page handler scripts prepares the form variables and calls "
 "``elgg_view_form()`` passing the correct values:"
 msgstr ""
+"Les scripts du gestionnaire de page préparent les variables de formulaire et"
+" appellent ``elgg_view_form()`` en passant les valeurs correctes :"
 
 #: ../../guides/actions.rst:519
 msgid ""
 "Similarly, ``mod/bookmarks/pages/edit.php`` uses the same function, but "
 "passes the entity that is being edited as an argument:"
 msgstr ""
+"De même, ``mod/bookmarks/pages/edit.php`` utilise la même fonction, mais "
+"passe l’entité qui est en cours de modification comme argument :"
 
 #: ../../guides/actions.rst:531
 msgid ""
 "The library file defines ``bookmarks_prepare_form_vars()``. This function "
 "accepts an ``ElggEntity`` as an argument and does 3 things:"
 msgstr ""
+"Le fichier de bibliothèque définit ``bookmarks_prepare_form_vars()``. Cette "
+"fonction accepte une ``ElggEntity`` comme argument et fait 3 choses :"
 
 #: ../../guides/actions.rst:533
 msgid "Defines the input names and default values for form inputs."
@@ -1142,6 +1167,8 @@ msgid ""
 "See the :doc:`Ajax guide</guides/ajax>` for instructions on calling actions "
 "from JavaScript."
 msgstr ""
+"Voir le :doc:`guide Ajax</guides/ajax>` pour savoir comment appeler les "
+"actions depuis JavaScript."
 
 #: ../../guides/actions.rst:593 ../../guides/web-services.rst:27
 msgid "Security"
@@ -1153,6 +1180,9 @@ msgid ""
 "URLs that do not include security tokens will be ignored and a warning will "
 "be generated."
 msgstr ""
+"Pour une sécurité renforcée, toutes les actions nécessitent un jeton CSRF. "
+"Les appels aux URLs d’action qui n’incluent pas les jetons de sécurité "
+"seront ignorés et un avertissement sera généré."
 
 #: ../../guides/actions.rst:598
 msgid "A few views and functions automatically generate security tokens:"
@@ -1186,18 +1216,31 @@ msgid ""
 "our site, and were not tampered with. Note that even strong hash functions "
 "like SHA-2 should *not* be used without HMAC for these tasks."
 msgstr ""
+"À l’occasion, nous devons transmettre des données par l’intermédiaire d’une "
+"tierce partie non digne de confiance ou générer un ``jeton impossible à "
+"deviner`` basé sur certaines données. L’algorithme `HMAC "
+"<http://security.stackexchange.com/a/20301/4982>`_ est le bon outil pour "
+"cela. Il nous permet de vérifier que les données reçues ont été générées par"
+" notre site, et n’ont pas été trafiqués. Notez que même les fonctions de "
+"hachage fortes comme SHA-2 ne devraient *pas* être utilisés sans HMAC pour "
+"ces tâches."
 
 #: ../../guides/actions.rst:631
 msgid ""
 "Elgg provides ``elgg_build_hmac()`` to generate and validate HMAC message "
 "authentication codes that are unguessable without the site's private key."
 msgstr ""
+"Elgg fournit ``elgg_build_hmac()`` pour générer et valider des codes "
+"d’authentification des messages HMAC qui ne peuvent être pas devinés sans la"
+" clé privée du site."
 
 #: ../../guides/actions.rst:655
 msgid ""
 "Note: If you use a non-string as HMAC data, you must use types consistently."
 " Consider the following:"
 msgstr ""
+"Remarque : si vous utilisez une non-chaîne comme des données HMAC, vous "
+"devez utiliser les types de manière cohérente. Considérez ce qui suit :"
 
 #: ../../guides/actions.rst:668
 msgid "Signed URLs"
@@ -1211,18 +1254,27 @@ msgid ""
 "installation (using site secret) and that the URL query elements were not "
 "tampered with."
 msgstr ""
+"Les URL signées offrent un niveau de sécurité limité pour les situations où "
+"les jetons d’action ne conviennent pas, par exemple lors de l’envoi d’un "
+"lien de confirmation par e-mail. Les signatures de l'URL vérifient que l’URL"
+" a été générée par votre installation Elgg (en utilisant le secret du site) "
+"et que les éléments de requête URL n’ont pas été trafiqués."
 
 #: ../../guides/actions.rst:674
 msgid ""
 "URLs a signed with an unguessable SHA-256 HMAC key. See `Security Tokens`_ "
 "for more details."
 msgstr ""
+"URLs signées avec une clef SHA-256 HMAC impossible à deviner. Pour plus de "
+"détails, consultez `Jetons de Sécurité`_ ."
 
 #: ../../guides/actions.rst:688
 msgid ""
 "Signed URLs do not offer CSRF protection and should not be used instead of "
 "action tokens."
 msgstr ""
+"Les URL signées n’offrent pas de protection CSRF et ne doivent pas être "
+"utilisées à la place des jetons d’action."
 
 #: ../../guides/ajax.rst:4
 msgid ""
@@ -1231,12 +1283,18 @@ msgid ""
 "which allows plugins to collaborate on the request data, the server "
 "response, and the returned client-side data."
 msgstr ""
+"Le module AMD ``elgg/Ajax`` (introduit dans Elgg 2.1) fournit un ensemble de"
+" méthodes pour communiquer avec le serveur d’une manière concise et "
+"uniforme, ce qui permet aux plugins de collaborer sur les données de "
+"requête, la réponse du serveur et les données renvoyées côté client."
 
 #: ../../guides/ajax.rst:6
 msgid ""
 "Client and server code written for the legacy API should not need "
 "modification."
 msgstr ""
+"Le code client et serveur écrit pour l’API d'origine ne doit pas avoir "
+"besoin de modification."
 
 #: ../../guides/ajax.rst:15
 msgid "All the ajax methods perform the following:"
@@ -1247,16 +1305,22 @@ msgid ""
 "Client-side, the ``data`` option (if given as an object) is filtered by the "
 "hook ``ajax_request_data``."
 msgstr ""
+"Côté client, l’option ``data`` (si elle est donnée en tant qu’objet) est "
+"filtrée par le hook ``ajax_request_data``."
 
 #: ../../guides/ajax.rst:18
 msgid ""
 "The request is made to the server, either rendering a view or a form, "
 "calling an action, or loading a path."
 msgstr ""
+"La requête est faite au serveur, que ce soit en affichant une vue ou un "
+"formulaire, en appelant une action, ou en chargeant un chemin d’accès."
 
 #: ../../guides/ajax.rst:19
 msgid "The method returns a ``jqXHR`` object, which can be used as a Promise."
 msgstr ""
+"La méthode renvoie un objet ``jqXHR``, qui peut être utilisé comme promesse "
+"(Promise)."
 
 #: ../../guides/ajax.rst:20
 msgid ""
@@ -1264,25 +1328,32 @@ msgid ""
 "(``Elgg\\Services\\AjaxResponse``) containing a string (or a JSON-parsed "
 "value)."
 msgstr ""
+"Le contenu généré par le serveur est transformé en objet de réponse "
+"(``Elgg\\Services\\AjaxResponse``) contenant une chaîne (ou une valeur "
+"parsée en JSON)."
 
 #: ../../guides/ajax.rst:21
 msgid "The response object is filtered by the hook ``ajax_response``."
-msgstr ""
+msgstr "L’objet de réponse est filtré par le hook ``ajax_response``."
 
 #: ../../guides/ajax.rst:22
 msgid "The response object is used to create the HTTP response."
-msgstr ""
+msgstr "L’objet de réponse est utilisé pour créer la réponse HTTP."
 
 #: ../../guides/ajax.rst:23
 msgid ""
 "Client-side, the response data is filtered by the hook "
 "``ajax_response_data``."
 msgstr ""
+"Côté client, les données de réponse sont filtrées par le hook "
+"``ajax_response_data``."
 
 #: ../../guides/ajax.rst:24
 msgid ""
 "The ``jqXHR`` promise is resolved and any ``success`` callbacks are called."
 msgstr ""
+"La promesse (promise) ``jqXHR`` est résolue et toutes les fonctions de "
+"rappel ``success`` sont appelées."
 
 #: ../../guides/ajax.rst:26
 msgid "More notes:"
@@ -1292,48 +1363,65 @@ msgstr "Plus de notes :"
 msgid ""
 "All hooks have a type depending on the method and first argument. See below."
 msgstr ""
+"Tous les hooks ont un type en fonction de la méthode et du premier argument."
+" Voyez ci-dessous."
 
 #: ../../guides/ajax.rst:29
 msgid ""
 "By default the ``elgg/spinner`` module is automatically used during "
 "requests."
 msgstr ""
+"Par défaut, le module ``elgg/spinner`` est automatiquement utilisé lors des "
+"requêtes."
 
 #: ../../guides/ajax.rst:30
 msgid ""
 "User messages generated by ``system_message()`` and ``register_error()`` are"
 " collected and displayed on the client."
 msgstr ""
+"Les messages destinés à l'utilisateur générés par '``system_message()`` et "
+"``register_error()`` sont collectés et affichés sur le client."
 
 #: ../../guides/ajax.rst:31
 msgid ""
 "Elgg gives you a default error handler that shows a generic message if "
 "output fails."
 msgstr ""
+"Elgg intègre un gestionnaire d’erreurs par défaut qui affiche un message "
+"générique en cas d’échec de la sortie."
 
 #: ../../guides/ajax.rst:32
 msgid ""
 "PHP exceptions or denied resource return HTTP error codes, resulting in use "
 "of the client-side error handler."
 msgstr ""
+"Les exceptions PHP ou les codes d’erreur HTTP d'accès refusé, ce qui "
+"entraîne l’utilisation du gestionnaire d’erreurs côté client."
 
 #: ../../guides/ajax.rst:33
 msgid ""
 "The default HTTP method is ``POST`` for actions, otherwise ``GET``. You can "
 "set it via ``options.method``."
 msgstr ""
+"La méthode HTTP par défaut est ``POST`` pour les actions, sinon ``GET``. "
+"Vous pouvez changer cela via ``options.method``."
 
 #: ../../guides/ajax.rst:34
 msgid ""
 "If a non-empty ``options.data`` is given, the default method is always "
 "``POST``."
 msgstr ""
+"Si une valeur ``options.data`` non vide est donnée, la méthode par défaut "
+"est toujours ``POST``."
 
 #: ../../guides/ajax.rst:35
 msgid ""
 "For client caching, set ``options.method`` to ``\"GET\"`` and "
 "``options.data.elgg_response_ttl`` to the max-age you want in seconds."
 msgstr ""
+"Pour la mise en cache côté client, définissez la méthode ``options.method`` "
+"sur ``GET`` et ``options.data.elgg_response_ttl`` sur l’âge maximal que vous"
+" souhaitez en secondes."
 
 #: ../../guides/ajax.rst:36
 msgid ""
@@ -1341,18 +1429,28 @@ msgid ""
 "``options.data.elgg_fetch_messages = 0``. You may want to do this if you "
 "intent to redirect the user based on the response."
 msgstr ""
+"Pour enregistrer des messages système pour le chargement de la page "
+"suivante, définissez ``options.data.elgg_fetch_messages = 0``. Vous pourriez"
+" vouloir faire cela si vous avez l’intention de rediriger l’utilisateur en "
+"fonction de la réponse."
 
 #: ../../guides/ajax.rst:37
 msgid ""
 "To stop client-side API from requiring AMD modules required server-side with"
 " ``elgg_require_js()``, set ``options.data.elgg_fetch_deps = 0``."
 msgstr ""
+"Pour empêcher l’API côté client d’exiger des modules AMD requis côté serveur"
+" avec ``elgg_require_js()``, définissez ``options.data.elgg_fetch_deps = "
+"0``."
 
 #: ../../guides/ajax.rst:38
 msgid ""
 "All methods accept a query string in the first argument. This is passed on "
 "to the fetch URL, but does not appear in the hook types."
 msgstr ""
+"Toutes les méthodes acceptent une chaîne de requête dans le premier "
+"argument. Cette chaîne est transmise à l’URL de récupération, mais "
+"n’apparaît pas dans les types de hooks."
 
 #: ../../guides/ajax.rst:41
 msgid "Performing actions"
@@ -1364,7 +1462,7 @@ msgstr "Considérez cette action :"
 
 #: ../../guides/ajax.rst:62
 msgid "To execute it, use ``ajax.action('<action_name>', options)``:"
-msgstr ""
+msgstr "Pour l’exécuter, utilisez ``ajax.action('<action_name>', options)`` :"
 
 #: ../../guides/ajax.rst:83
 msgid "Notes for actions:"
@@ -1375,12 +1473,16 @@ msgid ""
 "All hooks have type ``action:<action_name>``. So in this case, three hooks "
 "will be triggered:"
 msgstr ""
+"Tous les hooks ont le type ``action:<action_name>``. Donc, dans ce cas, "
+"trois hooks seront déclenchés :"
 
 #: ../../guides/ajax.rst:86
 msgid ""
 "client-side ``\"ajax_request_data\", \"action:do_math\"`` to filter the "
 "request data (before it's sent)"
 msgstr ""
+"côté client ``\"ajax_request_data\", \"action:do_math\"`` pour filtrer les "
+"données de la requête (avant qu’elle soit envoyée)"
 
 #: ../../guides/ajax.rst:87
 msgid ""
@@ -1770,7 +1872,7 @@ msgstr ""
 
 #: ../../guides/ajax.rst:389
 msgid "Legacy elgg.action"
-msgstr "elgg.action historique"
+msgstr "elgg.action d'origine"
 
 #: ../../guides/ajax.rst:391
 msgid "Differences:"
@@ -3209,6 +3311,8 @@ msgid ""
 "In general, you shouldn't modify non-config files that come with third-party"
 " software like Elgg."
 msgstr ""
+"De manière générale, vous ne devriez pas modifier de fichier autre que ceux "
+"de configuration fournis avec des logiciels tiers comme Elgg."
 
 #: ../../guides/dont-modify-core.rst:8
 msgid ""
@@ -3217,6 +3321,11 @@ msgid ""
 "modifications specific to your application, and alter behavior through the "
 "rich Elgg plugin API."
 msgstr ""
+"La meilleure façon de personnaliser le comportement de Elgg est "
+"d':doc:`installer Elgg en tant que dépendance composer</intro/install>` et "
+"d’utiliser le répertoire racine pour stocker les modifications spécifiques à"
+" votre application, et modifier le comportement à travers la riche API "
+"plugin de Elgg."
 
 #: ../../guides/dont-modify-core.rst:12
 msgid ""
@@ -3224,10 +3333,14 @@ msgid ""
 "changes as a reusable package for the community, create a "
 ":doc:`plugin<plugins>` using the same plugin APIs and file structure."
 msgstr ""
+"Si vous souhaitez partager des personnalisations entre les sites ou même "
+"publier vos modifications en tant que package réutilisable pour la "
+"communauté, créez un :doc: `plugin<plugins>` qui utilise la même API de "
+"plugin et la même structure de fichiers."
 
 #: ../../guides/dont-modify-core.rst:17
 msgid "It makes it hard to get help"
-msgstr ""
+msgstr "Cela rend difficile d’obtenir de l’aide"
 
 #: ../../guides/dont-modify-core.rst:19
 msgid ""
@@ -3236,14 +3349,20 @@ msgid ""
 " to blame. This can frustrate those who offer help because it can add "
 "considerable noise to the support process."
 msgstr ""
+"Lorsque vous ne partagez pas la même base de code que tout le monde, il est "
+"impossible pour les autres de savoir ce qui se passe dans votre système et "
+"si vos modifications sont à blâmer. Cela peut frustrer ceux qui offrent de "
+"l’aide parce que cela complique considérablement le processus de soutien."
 
 #: ../../guides/dont-modify-core.rst:25
 msgid "It makes upgrading tricky and potentially disastrous"
-msgstr ""
+msgstr "Cela rend la mise à niveau délicate et potentiellement désastreuse"
 
 #: ../../guides/dont-modify-core.rst:27
 msgid "You will certainly want or need to upgrade Elgg to take advantage of"
 msgstr ""
+"Vous voudrez certainement ou aurez besoin de mettre à niveau Elgg pour "
+"profiter de"
 
 #: ../../guides/dont-modify-core.rst:29
 msgid "security patches"
@@ -3272,6 +3391,12 @@ msgid ""
 "new Elgg code. If your changes are lost or incompatible, then the upgrade "
 "may remove features you've added and even completely break your site."
 msgstr ""
+"Si vous avez modifié des fichiers du noyau, alors vous devez être très "
+"prudent lors de la mise à niveau que vos modifications ne sont pas "
+"remplacées et qu’elles sont compatibles avec le nouveau code de Elgg. Si vos"
+" modifications sont perdues ou incompatibles, la mise à niveau peut "
+"supprimer les fonctionnalités que vous avez ajoutées et même briser "
+"complètement votre site."
 
 #: ../../guides/dont-modify-core.rst:40
 msgid ""
@@ -3279,16 +3404,23 @@ msgid ""
 "upgrade process so complex that it's practically impossible. There are lots "
 "of sites stuck running old versions software due to taking this path."
 msgstr ""
+"Cela peut également être une pente glissante. Beaucoup de modifications "
+"peuvent vous conduire à un processus de mise à niveau si complexe qu’il en "
+"devient pratiquement impossible. Il existe beaucoup de sites coincés avec "
+"d'anciennes versions du logiciel à cause du choix de cette voie."
 
 #: ../../guides/dont-modify-core.rst:45
 msgid "It may break plugins"
-msgstr ""
+msgstr "Cela peut casser des plugins"
 
 #: ../../guides/dont-modify-core.rst:47
 msgid ""
 "You may not realize until much later that your \"quick fix\" broke seemingly"
 " unrelated functionality that plugins depended on."
 msgstr ""
+"Vous pourriez ne réaliser que beaucoup plus tard que votre \"solution "
+"rapide\" a cassé des fonctionnalités apparemment sans rapport dont les "
+"plugins dépendaient."
 
 #: ../../guides/dont-modify-core.rst:51 ../../guides/river.rst:54
 msgid "Summary"
@@ -3303,16 +3435,21 @@ msgid ""
 "Editing existing files is quick and easy, but doing so heavily risks the "
 "maintainability, security, and stability of your site."
 msgstr ""
+"L’édition des fichiers existants est rapide et facile, mais cela compromet "
+"fortement la maintenance, la sécurité et la stabilité de votre site."
 
 #: ../../guides/dont-modify-core.rst:56
 msgid ""
 "When receiving advice, consider if the person telling you to modify core "
 "will be around to rescue you if you run into trouble later!"
 msgstr ""
+"Lorsque vous recevez des conseils, considérez si la personne qui vous dit de"
+" modifier le noyau sera là pour vous sauver si vous rencontrez des ennuis "
+"plus tard !"
 
 #: ../../guides/dont-modify-core.rst:59
 msgid "Apply these principle to software in general."
-msgstr ""
+msgstr "Appliquez ces principes aux logiciels en général."
 
 #: ../../guides/dont-modify-core.rst:59
 msgid ""
@@ -3320,6 +3457,9 @@ msgid ""
 "reasons: Plugin authors release new versions, too, and you will want those "
 "updates."
 msgstr ""
+"Si vous pouvez l’éviter, ne modifiez pas non plus les plugins tiers, pour "
+"les mêmes raisons : les auteurs de plugin publient également de nouvelles "
+"versions, et vous voudrez pouvoir utiliser ces mises à jour."
 
 #: ../../guides/errors.rst:2
 msgid "Error Handling"
@@ -3330,18 +3470,24 @@ msgid ""
 "Under the hood, Elgg uses Monolog_ for logging errors to the server's error "
 "log (and stdout for CLI commands)."
 msgstr ""
+"Sous le capot, Elgg utilise Monolog_ pour enregistrer les erreurs dans le "
+"journal d’erreur du serveur (et le stdout pour les commandes CLI)."
 
 #: ../../guides/errors.rst:9
 msgid ""
 "Monolog_ comes with a number of tools that can help administrators keep "
 "track of errors and debugging information."
 msgstr ""
+"Monolog_ est livré avec un certain nombre d’outils qui peuvent aider les "
+"administrateurs à suivre les erreurs et le débogage des informations."
 
 #: ../../guides/errors.rst:11
 msgid ""
 "You can add custom handlers (see Monolog_ documentation for a full list of "
 "handlers):"
 msgstr ""
+"Vous pouvez ajouter des gestionnaires personnalisés (voir la documentation "
+"de Monolog_ pour une liste complète des gestionnaires) :"
 
 #: ../../guides/events-list.rst:2
 msgid "List of events in core"
@@ -3350,6 +3496,8 @@ msgstr "Liste des événements dans le cœur"
 #: ../../guides/events-list.rst:4
 msgid "For more information on how events work visit :doc:`/design/events`."
 msgstr ""
+"Pour plus d’informations sur le fonctionnement des événements, visitez "
+":doc:`/design/events`."
 
 #: ../../guides/events-list.rst:12
 msgid ""
@@ -3357,6 +3505,9 @@ msgid ""
 " ``:before`` and ``:after`` event Also see :ref:`Event sequence "
 "<design/events#event-sequence>`"
 msgstr ""
+"Certains événements sont marqués par `(séquence)` cela signifie que ces "
+"événements ont également un événement ``:before`` et ``:after``. Voyez "
+"également :ref:`Séquence d’événement <design/events#event-sequence>`"
 
 #: ../../guides/events-list.rst:16
 msgid "System events"
@@ -3364,43 +3515,52 @@ msgstr "Événements système"
 
 #: ../../guides/events-list.rst:19
 msgid "**plugins_load, system** `(sequence)`"
-msgstr ""
+msgstr "**plugins_load, system** `(séquence)`"
 
 #: ../../guides/events-list.rst:19
 msgid ""
 "Triggered before the plugins are loaded. Rarely used. init, system is used "
 "instead. Can be used to load additional libraries."
 msgstr ""
+"Déclenché avant que les plugins ne soient chargés. Rarement utilisé. init, "
+"system est utilisé à la place. Peut être utilisé pour charger des "
+"bibliothèques supplémentaires."
 
 #: ../../guides/events-list.rst:22
 msgid "**plugins_boot, system** `(sequence)`"
-msgstr ""
+msgstr "**plugins_boot, system** `(séquence)`"
 
 #: ../../guides/events-list.rst:22
 msgid ""
 "Triggered just after the plugins are loaded. Rarely used. init, system is "
 "used instead."
 msgstr ""
+"Déclenché juste après le chargement des plugins. Rarement utilisé. init, "
+"system est utilisé à la place."
 
 #: ../../guides/events-list.rst:25
 msgid "**init, system** `(sequence)`"
-msgstr ""
+msgstr "**init, system** `(séquence)`"
 
 #: ../../guides/events-list.rst:25
 msgid ""
 "Plugins tend to use this event for initialization (extending views, "
 "registering callbacks, etc.)"
 msgstr ""
+"Les plugins ont tendance à utiliser cet événement pour l’initialisation "
+"(extension des vues, enregistrement des rappels, etc.)"
 
 #: ../../guides/events-list.rst:29
 msgid "**ready, system** `(sequence)`"
-msgstr ""
+msgstr "**ready, system** `(séquence)`"
 
 #: ../../guides/events-list.rst:28
 msgid ""
 "Triggered after the ``init, system`` event. All plugins are fully loaded and"
 " the engine is ready to serve pages."
 msgstr ""
+"Déclenché après l’événement ``init, system``. Tous les plugins sont "
+"entièrement chargés et le moteur est prêt à servir les pages."
 
 #: ../../guides/events-list.rst:33
 msgid "**shutdown, system**"
@@ -3411,6 +3571,8 @@ msgid ""
 "Triggered after the page has been sent to the user. Expensive operations "
 "could be done here and not make the user wait."
 msgstr ""
+"Déclenché après l’envoi de la page à l’utilisateur. Des opérations coûteuses"
+" pourraient être faites ici sans que cela fasse attendre l’utilisateur."
 
 #: ../../guides/events-list.rst:35
 msgid ""
@@ -3418,6 +3580,9 @@ msgid ""
 "until after the process is completed. This means that any long-running "
 "processes will still delay the page load."
 msgstr ""
+"Selon la configuration de votre serveur, la sortie PHP peut ne pas être "
+"affichée avant la fin du processus. Cela signifie que tous les processus "
+"longs retarderont toujours le chargement de la page."
 
 #: ../../guides/events-list.rst:39
 msgid ""
@@ -3425,12 +3590,18 @@ msgid ""
 " not have access to all the Elgg services (eg. database) in the shutdown "
 "function but you will in the event."
 msgstr ""
+"Cet événement est préféré à l’utilisation de ``register_shutdown_function`` "
+"car vous n’avez peut-être pas accès à tous les services Elgg (par ex. la "
+"base de données) dans la fonction d’arrêt, alors que vous l'aurez dans "
+"l’événement."
 
 #: ../../guides/events-list.rst:42
 msgid ""
 "The Elgg session is already closed before this event. Manipulating session "
 "is not possible."
 msgstr ""
+"La session Elgg est déjà terminée avant cet événement. La manipulation de la"
+" session n’est plus possible."
 
 #: ../../guides/events-list.rst:46
 msgid "**regenerate_site_secret:before, system**"
@@ -3441,6 +3612,8 @@ msgid ""
 "Return false to cancel regenerating the site secret. You should also provide"
 " a message to the user."
 msgstr ""
+"Renvoyez false pour annuler la régénération du secret du site. Vous devez "
+"également fournir un message à l’utilisateur."
 
 #: ../../guides/events-list.rst:49
 msgid "**regenerate_site_secret:after, system**"
@@ -3448,7 +3621,7 @@ msgstr "**regenerate_site_secret:after, system**"
 
 #: ../../guides/events-list.rst:49
 msgid "Triggered after the site secret has been regenerated."
-msgstr ""
+msgstr "Déclenché après que le secret du site a été régénéré."
 
 #: ../../guides/events-list.rst:53
 msgid "**log, systemlog**"
@@ -3459,6 +3632,9 @@ msgid ""
 "Called for all triggered events by ``system_log`` plugin. Used internally by"
 " ``system_log_default_logger()`` to populate the ``system_log`` table."
 msgstr ""
+"Appelé pour tous les événements déclenchés par le plugin ``system_log``. "
+"Utilisé en interne par ``system_log_default_logger()`` pour remplir la table"
+" ``system_log``."
 
 #: ../../guides/events-list.rst:57
 msgid "**upgrade, system**"
@@ -3469,6 +3645,8 @@ msgid ""
 "Triggered after a system upgrade has finished. All upgrade scripts have run,"
 " but the caches are not cleared."
 msgstr ""
+"Déclenché une fois la mise à niveau du système terminée. Tous les scripts de"
+" mise à niveau sont exécutés, mais les caches ne sont pas effacés."
 
 #: ../../guides/events-list.rst:60
 msgid "**upgrade:execute, system** `(sequence)`"
@@ -3479,6 +3657,8 @@ msgid ""
 "Triggered when executing an ``ElggUpgrade``. The ``$object`` of the event is"
 " the ``ElggUpgrade``."
 msgstr ""
+"Déclenché lors de l’exécution d’un ``ElggUpgrade``. Le ``$object`` de "
+"l’événement est le ``ElggUpgrade``."
 
 #: ../../guides/events-list.rst:63
 msgid "**activate, plugin**"
@@ -3486,7 +3666,7 @@ msgstr "**activate, plugin**"
 
 #: ../../guides/events-list.rst:63
 msgid "Return false to prevent activation of the plugin."
-msgstr ""
+msgstr "Renvoyez false pour empêcher l’activation du plugin."
 
 #: ../../guides/events-list.rst:66
 msgid "**deactivate, plugin**"
@@ -3494,7 +3674,7 @@ msgstr "**deactivate, plugin**"
 
 #: ../../guides/events-list.rst:66
 msgid "Return false to prevent deactivation of the plugin."
-msgstr ""
+msgstr "Renvoyez false pour éviter la désactivation du plugin."
 
 #: ../../guides/events-list.rst:69
 msgid "**init:cookie, <name>**"
@@ -3502,7 +3682,7 @@ msgstr "**init:cookie, <name>**"
 
 #: ../../guides/events-list.rst:69
 msgid "Return false to override setting a cookie."
-msgstr ""
+msgstr "Renvoyez false pour remplacer la définition d’un cookie."
 
 #: ../../guides/events-list.rst:72
 msgid "**cache:invalidate, system** `(sequence)`"
@@ -3510,7 +3690,7 @@ msgstr "**cache:invalidate, system** `(séquence)`"
 
 #: ../../guides/events-list.rst:72
 msgid "Invalidate internal and external caches."
-msgstr ""
+msgstr "Invalide les caches internes et externes."
 
 #: ../../guides/events-list.rst:76
 msgid "**cache:clear, system** `(sequence)`"
@@ -3522,6 +3702,9 @@ msgid ""
 "simplecache, and memcache. One might use it to reset others such as APC, "
 "OPCache, or WinCache."
 msgstr ""
+"Effacer les caches internes et externes, par défaut, y compris system_cache,"
+" simplecache et memcache. Il est possible de l’utiliser pour réinitialiser "
+"d’autres caches comme APC, OPCache ou WinCache."
 
 #: ../../guides/events-list.rst:79
 msgid "**cache:purge, system** `(sequence)`"
@@ -3532,6 +3715,8 @@ msgid ""
 "Purge internal and external caches. This is meant to remove old/stale "
 "content from the caches."
 msgstr ""
+"Purge les caches internes et externes. Il s’agit de supprimer le contenu "
+"ancien/obsolète des caches."
 
 #: ../../guides/events-list.rst:83
 msgid "**send:before, http_response**"
@@ -3544,6 +3729,10 @@ msgid ""
 "the requester. Handlers can terminate the event and prevent the response "
 "from being sent by returning `false`."
 msgstr ""
+"Déclenché avant l’envoi d’une réponse HTTP. Les gestionnaires recevront une "
+"instance de ``\\Symfony\\Component\\HttpFoundation\\Response`` qui doit être"
+" envoyée au demandeur. Les gestionnaires peuvent mettre fin à l’événement et"
+" empêcher l’envoi de la réponse en renvoyant `false`."
 
 #: ../../guides/events-list.rst:87
 msgid "**send:after, http_response**"
@@ -3555,6 +3744,9 @@ msgid ""
 "of `\\Symfony\\Component\\HttpFoundation\\Response` that was sent to the "
 "requester."
 msgstr ""
+"Déclenché après l’envoi d’une réponse HTTP. Les gestionnaires recevront une "
+"instance de la réponse ``\\Symfony\\Component\\HttpFoundation\\Response`` "
+"qui a été envoyée au demandeur."
 
 #: ../../guides/events-list.rst:90
 msgid "**reload:after, translations**"
@@ -3709,6 +3901,8 @@ msgid ""
 "Triggered after a relationship has been created. Returning false deletes the"
 " relationship that was just created."
 msgstr ""
+"Déclenché après la création d’une relation. Renvoyez false pour supprimer la"
+" relation qui vient d’être créée."
 
 #: ../../guides/events-list.rst:145
 msgid "**delete, relationship**"
@@ -3719,6 +3913,8 @@ msgid ""
 "Triggered before a relationship is deleted. Return false to prevent it from "
 "being deleted."
 msgstr ""
+"Déclenché avant la suppression d’une relation. Renvoyez false pour éviter "
+"qu’elle soit supprimée."
 
 #: ../../guides/events-list.rst:148
 msgid "**join, group**"
@@ -3729,6 +3925,8 @@ msgid ""
 "Triggered after the user ``$params['user']`` has joined the group "
 "``$params['group']``."
 msgstr ""
+"Déclenché après que l’utilisateur ``$params['user']`` a rejoint le groupe "
+"``$params['group']``."
 
 #: ../../guides/events-list.rst:151
 msgid "**leave, group**"
@@ -3739,6 +3937,8 @@ msgid ""
 "Triggered before the user ``$params['user']`` has left the group "
 "``$params['group']``."
 msgstr ""
+"Déclenché avant que l’utilisateur ``$params['user']`` n'ait quitté le groupe"
+" ``$params['group']``."
 
 #: ../../guides/events-list.rst:154
 msgid "Entity events"
@@ -3753,6 +3953,8 @@ msgid ""
 "Triggered for user, group, object, and site entities after creation. Return "
 "false to delete entity."
 msgstr ""
+"Déclenché pour les entités user, group, object et site après la création. "
+"Renvoyez false pour supprimer l’entité."
 
 #: ../../guides/events-list.rst:162
 msgid "**update, <entity type>**"
@@ -3765,6 +3967,10 @@ msgid ""
 "``getOriginalAttributes()`` can be used to identify which attributes have "
 "changed since the entity was last saved."
 msgstr ""
+"Déclenché avant une mise à jour pour les entités user, group, object et "
+"site. Renvoyez false pour empêcher la mise à jour. La méthode d’entité "
+"``getOriginalAttributes()`` peut être utilisée pour identifier les attributs"
+" qui ont changé depuis la dernière fois que l’entité a été enregistrée."
 
 #: ../../guides/events-list.rst:167
 msgid "**update:after, <entity type>**"
@@ -3776,6 +3982,10 @@ msgid ""
 "The entity method ``getOriginalAttributes()`` can be used to identify which "
 "attributes have changed since the entity was last saved."
 msgstr ""
+"Déclenché après une mise à jour pour les entités user, group, object et "
+"site. La méthode d’entité ``getOriginalAttributes()`` peut être utilisée "
+"pour identifier les attributs qui ont changé depuis la dernière fois que "
+"l’entité a été enregistrée."
 
 #: ../../guides/events-list.rst:170
 msgid "**delete, <entity type>**"
@@ -4004,6 +4214,10 @@ msgid ""
 "instance of ``ElggFile`` the uploaded file was written to. The ``ElggFile`` "
 "may or may not be an entity with a GUID."
 msgstr ""
+"Appelé après qu’un fichier téléchargé a été écrit dans le répertoire de "
+"fichiers. Reçoit une instance du ``ElggFile`` dans lequel le fichier "
+"téléchargé a été écrit. Le ``ElggFile`` peut ou non être une entité avec un "
+"GUID."
 
 #: ../../guides/events-list.rst:249
 msgid "Notes"
@@ -4014,6 +4228,9 @@ msgid ""
 "Because of bugs in the Elgg core, some events may be thrown more than once "
 "on the same action. For example, ``update, object`` is thrown twice."
 msgstr ""
+"En raison des bogues dans le noyau de Elgg, certains événements peuvent être"
+" lancés plus d’une fois sur la même action. Par exemple, ``update, object`` "
+"est lancé deux fois."
 
 #: ../../guides/file-system.rst:2
 msgid "File System"
@@ -4033,6 +4250,9 @@ msgid ""
 "during installation, and can be modified via site settings in Admin "
 "interface."
 msgstr ""
+"Le répertoire de fichiers de Elgg est situé dans le ``dataroot`` du site, "
+"configuré pendant l’installation, et qui peut être modifié via les "
+"paramètres du site dans l’interface Admin."
 
 #: ../../guides/file-system.rst:19
 msgid "Directory Structure"
@@ -4046,6 +4266,12 @@ msgid ""
 "bucket directory (buckets are bound to 5000 guids). E.g. files owned by user"
 " with guid 7777 will be located in ``5000/7777/``."
 msgstr ""
+"La structure du répertoire de fichiers est liée à la propriété des fichiers "
+"par les entités Elgg. Chaque fois que le premier fichier appartenant à une "
+"entité est écrit dans le répertoire de fichiers, un répertoire correspondant"
+" au GUID de l’entité sera créé dans le répertoire bucket parent (les buckets"
+" sont de 5000 guids). Par exemple, les fichiers appartenant à l’utilisateur "
+"avec le guid 7777 seront situés dans ``5000/7777/``."
 
 #: ../../guides/file-system.rst:26
 msgid ""
@@ -4053,6 +4279,10 @@ msgid ""
 "referred to as `$prefix` throughout the code). For instance, avatars of the "
 "above user, can be found under ``5000/7777/profile/``."
 msgstr ""
+"Lorsque des fichiers sont créés, les noms de fichiers peuvent contenir des "
+"noms de sous-répertoires (souvent appelés ``$prefix`` dans le code). Par "
+"exemple, les avatars de l’utilisateur ci-dessus, peuvent être trouvés dans "
+"``5000/7777/profile/``."
 
 #: ../../guides/file-system.rst:32
 msgid "File Objects"
@@ -4069,6 +4299,10 @@ msgid ""
 "actual Elgg entity, that is not always necessary (e.g. when writing thumbs "
 "of an image)."
 msgstr ""
+"Pour écrire un fichier dans le répertoire de fichiers, vous utiliseriez une "
+"instance de ``ElggFile``. Même si ``ElggFile`` étend ``ElggObject`` et peut "
+"être stocké comme une entité Elgg réelle, ce n’est pas toujours nécessaire "
+"(par exemple pour la création des miniatures d’une image)."
 
 #: ../../guides/file-system.rst:56
 msgid "Reading Files"
@@ -4117,12 +4351,20 @@ msgid ""
 "browsers to cache the images and file service will send appropriate ``Not "
 "Modified`` headers on consecutive requests."
 msgstr ""
+"Vous pouvez utiliser les arguments ``use_cookie`` et ``expires`` comme moyen"
+" de contrôle d’accès. Par exemple, dans la plupart des cas, les avatars des "
+"utilisateurs ont un long délai d’expiration et n’ont pas besoin d’être "
+"limités à la session en cours - ce qui permettra aux navigateurs de mettre "
+"en cache les images. Le service de fichiers enverra les en-têtes ``Not "
+"Modified`` appropriés aux requêtes suivantes."
 
 #: ../../guides/file-system.rst:99
 msgid ""
 "The default behaviour of ``use_cookie`` can be controlled on the admin "
 "security settings page."
 msgstr ""
+"Le comportement par défaut de ``use_cookie`` peut être contrôlé sur la page "
+"des paramètres de sécurité de l’administrateur."
 
 #: ../../guides/file-system.rst:101
 msgid ""
@@ -4130,12 +4372,19 @@ msgid ""
 "cookies to ensure that access settings are respected and users do not share "
 "download URLs with somebody else."
 msgstr ""
+"Pour les entités qui utilisent le contrôle d’accès de Elgg, vous pouvez "
+"utiliser des cookies pour vous assurer que les paramètres d’accès sont "
+"respectés et que les utilisateurs ne partagent pas les URLs de "
+"téléchargement avec d'autres personnes."
 
 #: ../../guides/file-system.rst:104
 msgid ""
 "You can also invalidated all previously generated URLs by updating file's "
 "modified time, e.g. by using ``touch()``."
 msgstr ""
+"Vous pouvez également invalider toutes les URLs précédemment générées en "
+"mettant à jour l’heure de modification du fichier, par exemple à l’aide de "
+"``touch()``."
 
 #: ../../guides/file-system.rst:109
 msgid "Embedding Files"
@@ -4148,6 +4397,11 @@ msgid ""
 "download URLs are volatile (bound to user session and file modification "
 "time)."
 msgstr ""
+"Veuillez noter qu’en raison de leur nature, les URLs en ligne (inline) et de"
+" téléchargement ne sont pas adaptées à l’intégration (embed). Les URLs "
+"d’intégration doivent être permanentes, tandis que les URL en ligne et de "
+"téléchargement sont volatiles (liées à la session utilisateur et à l'heure "
+"de modification des fichiers)."
 
 #: ../../guides/file-system.rst:115
 msgid "To embed an entity icon, use ``elgg_get_embed_url()``."
@@ -4215,6 +4469,9 @@ msgid ""
 "available within a group. These tools are provided by other plugins like "
 "blog or file."
 msgstr ""
+"Les groupes Elgg permettent aux administrateurs de groupe "
+"d’activer/désactiver les différents outils disponibles au sein d’un groupe. "
+"Ces outils sont fournis par d’autres plugins comme blog ou file."
 
 #: ../../guides/group-tools.rst:7
 msgid "Plugins can access group tool register via ``elgg()->group_tools``."
@@ -4230,6 +4487,11 @@ msgid ""
 "``groups/profile/module/<tool_name>``. This view will only be called if the "
 "tool is enabled."
 msgstr ""
+"Un outil enregistré aura la possibilité d’être (dés)activé sur le formulaire"
+" de modification d'un groupe et peut avoir un module d’affichage de profil "
+"qui lui est associé. Pour ajouter un module de profil, il suffit d’ajouter "
+"une vue correspondante en tant que ``groups/profile/module/<tool_name>``. "
+"Cette vue ne sera appelée que si l’outil est activé."
 
 #: ../../guides/group-tools.rst:21
 msgid ""
@@ -4449,24 +4711,34 @@ msgid ""
 "handler should have a page handler script. (Example: ``bookmarks/all`` => "
 "``mod/bookmarks/views/default/resources/bookmarks/all.php``)"
 msgstr ""
+"Incluez les scripts du gestionnaire de page à partir du gestionnaire de "
+"page. Presque tous les gestionnaires de page doivent avoir un script de "
+"gestionnaire de page. (Par exemple : ``bookmarks/all`` => "
+"``mod/bookmarks/views/default/resources/bookmarks/all.php``)"
 
 #: ../../guides/guidelines.rst:43
 msgid ""
 "Pass arguments like entity guids to the resource view via ``$vars`` in "
 "``elgg_view_resource()``."
 msgstr ""
+"Passez des arguments tels que des guids d’entités à la vue de la ressource "
+"via ``$vars`` dans ``elgg_view_resource()``."
 
 #: ../../guides/guidelines.rst:44
 msgid ""
 "Call ``elgg_gatekeeper()`` and ``elgg_admin_gatekeeper()`` in the page "
 "handler function if required."
 msgstr ""
+"Appelez ``elgg_gatekeeper()`` et ``elgg_admin_gatekeeper()`` dans la "
+"fonction du gestionnaire de page si nécessaire."
 
 #: ../../guides/guidelines.rst:45
 msgid ""
 "The group URL should use views like ``resources/groups/*.php`` to render "
 "pages."
 msgstr ""
+"L’URL de groupe doit utiliser des vues telles que ``resources/groups/*.php``"
+" pour afficher des pages."
 
 #: ../../guides/guidelines.rst:46
 msgid "Page handlers should not contain HTML."
@@ -4496,6 +4768,8 @@ msgid ""
 "Use the default page layout in page handler scripts: ``$content = "
 "elgg_view_layout('default', $options);``"
 msgstr ""
+"Utilisez la disposition de page par défaut dans les scripts du gestionnaire "
+"de pages : ``$content = elgg_view_layout('default', $options);``"
 
 #: ../../guides/guidelines.rst:55
 msgid "Page handler scripts should not contain HTML"
@@ -4542,12 +4816,18 @@ msgid ""
 "make sure it’s the type entity you want. Return ``true`` to short circuit "
 "the view if the entity is missing or wrong."
 msgstr ""
+"Vérifiez l’objet dans ``$vars['entity']`` . Utilisez ``elgg_instance_of()`` "
+"pour vous assurer qu’il s’agit du type d'entité que vous souhaitez. Renvoyez"
+" ``true`` pour court-circuiter la vue si l’entité est manquante ou erronée."
 
 #: ../../guides/guidelines.rst:66
 msgid ""
 "Use the new list body and list metadata views to help format. You should use"
 " almost no markup in these views."
 msgstr ""
+"Utilisez les vues du nouveau corps de liste et des métadonnées de liste pour"
+" aider au formatage. Vous devriez n'utiliser quasiment aucun balisage dans "
+"ces vues."
 
 #: ../../guides/guidelines.rst:67
 msgid "Update action structure - Example: Bookmarks plugin."
@@ -4559,6 +4839,8 @@ msgid ""
 "Namespace action files and action names (example: "
 "``mod/blog/actions/blog/save.php`` => ``action/blog/save``)"
 msgstr ""
+"Fichiers d’action et noms d’action de l’espace de noms (exemple : "
+"``mod/blog/actions/blog/save.php`` => ``action/blog/save``)"
 
 #: ../../guides/guidelines.rst:77
 msgid "Use the following action URLs:"
@@ -4595,6 +4877,10 @@ msgid ""
 "database or sending a notification to a user. Used correctly, actions "
 "provide a level of access control and prevent against CSRF attacks."
 msgstr ""
+"Les actions sont des états transitoires pour effectuer une action telle que "
+"la mise à jour de la base de données ou l’envoi d’une notification à un "
+"utilisateur. Utilisées correctement, les actions fournissent un niveau de "
+"contrôle d’accès et de prévention contre les attaques CSRF."
 
 #: ../../guides/guidelines.rst:86
 msgid ""
@@ -4602,6 +4888,9 @@ msgid ""
 " are added automatically by elgg_view_form() and by using the ``is_action`` "
 "argument of the ``output/url`` view."
 msgstr ""
+"Les actions nécessitent que les jetons d’action (CSRF) soient soumis via "
+"GET/POST, mais ceux-ci sont ajoutés automatiquement par elgg_view_form(), et"
+" à l’aide de l’argument ``is_action`` de la vue ``output/url``."
 
 #: ../../guides/guidelines.rst:89
 msgid "Action best practices"
@@ -4613,6 +4902,10 @@ msgid ""
 "*not* regular scripts executable by users. Do not boot the Elgg core in your"
 " file and direct users to load it directly."
 msgstr ""
+"Les fichiers d’action sont inclus dans le système d’action de Elgg ; comme "
+"les vues, ce *ne sont pas* des scripts classiques exécutables par les "
+"utilisateurs. Ne démarrez pas le noyau de Elgg dans votre fichier et ne "
+"renvoyez pas les utilisateurs directement vers ce fichier."
 
 #: ../../guides/guidelines.rst:93
 msgid ""
@@ -4636,10 +4929,12 @@ msgid ""
 "Consider that actions may be submitted via XHR requests, not just links or "
 "form submissions."
 msgstr ""
+"Considérez que les actions peuvent être soumises par le biais de requêtes "
+"XHR, pas seulement par des liens ou des envois de formulaires."
 
 #: ../../guides/guidelines.rst:98
 msgid "Directly calling a file"
-msgstr ""
+msgstr "Appeler directement un fichier"
 
 #: ../../guides/guidelines.rst:100
 msgid ""
@@ -4647,6 +4942,9 @@ msgid ""
 "application integration, there is not a reason to directly call a file in "
 "mods directory."
 msgstr ""
+"C’est très simple : **Ne le faites pas**. À l’exception de l’intégration "
+"d'applications tierces, il n’y a pas de raison d’appeler directement un "
+"fichier dans le répertoire des plugins."
 
 #: ../../guides/guidelines.rst:103
 msgid "Recommended"
@@ -4658,15 +4956,21 @@ msgid ""
 "Following these suggestions will help to keep your plugin consistent with "
 "Elgg core."
 msgstr ""
+"Ces points sont de bonnes idées, mais ne sont pas encore dans les "
+"recommandations officielles. Suivre ces suggestions aidera à garder votre "
+"plugin compatible avec le noyau de Elgg."
 
 #: ../../guides/guidelines.rst:107
 msgid "Update the widget views (see the blog or file widgets)"
 msgstr ""
+"Mettez à jour les vues du widget (voir les widgets du blog ou des fichiers)"
 
 #: ../../guides/guidelines.rst:108
 msgid ""
 "Update the group profile “widget” using blog or file plugins as example"
 msgstr ""
+"Mettez à jour le “widget” du profil du groupe en prenant exemple sur les "
+"plugins blog ou file"
 
 #: ../../guides/guidelines.rst:112
 msgid "Update the forms"
@@ -4677,22 +4981,30 @@ msgid ""
 "Move form bodies to ``/forms/<handler>/<action>`` to use Evan’s new "
 "``elgg_view_form()``"
 msgstr ""
+"Déplacez le corps des formulaires vers ``/forms/<handler>/<action>`` pour "
+"utiliser le nouveau ``elgg_view_form()`` d’Evan"
 
 #: ../../guides/guidelines.rst:111
 msgid "Use input views in form bodies rather than html"
 msgstr ""
+"Utilisez les vues de saisie dans le corps des formulaires, plutôt que du "
+"html"
 
 #: ../../guides/guidelines.rst:112
 msgid ""
 "Add a function that prepares the form (see ``mod/file/lib/file.php`` for "
 "example)"
 msgstr ""
+"Ajoutez une fonction qui prépare le formulaire (voir "
+"``mod/file/lib/file.php`` pour un exemple)"
 
 #: ../../guides/guidelines.rst:113
 msgid ""
 "Integrate sticky forms (see the file plugin’s upload action and form prepare"
 " function)"
 msgstr ""
+"Intégrez des formulaires persistants (voir l’action de téléchargement du "
+"plugin de fichier et la fonction de préparation de formulaire)"
 
 #: ../../guides/guidelines.rst:114
 msgid "Clean up CSS/HTML"
@@ -4703,6 +5015,8 @@ msgid ""
 "Should be able to remove almost all CSS (look for patterns that can be moved"
 " into core if you need CSS)"
 msgstr ""
+"Devrait être en mesure de supprimer presque tous les CSS (recherchez des "
+"motifs qui peuvent être déplacés dans le noyau si vous avez besoin de CSS)"
 
 #: ../../guides/guidelines.rst:116
 msgid "Use hyphens rather than underscores in classes/ids"
@@ -5041,7 +5355,7 @@ msgstr "**cron:intervals, system**"
 
 #: ../../guides/hooks-list.rst:31
 msgid "Allow the configuration of custom cron intervals"
-msgstr ""
+msgstr "Permet la configuration d’intervalles de cron personnalisés"
 
 #: ../../guides/hooks-list.rst:34
 msgid "**validate, input**"
@@ -5156,6 +5470,9 @@ msgid ""
 "``$params['original_string']`` and an optional set of allowed tags is passed"
 " as ``$params['allowed_tags']``."
 msgstr ""
+"Filtre une chaîne pour supprimer les balises. La chaîne d’origine est passée"
+" sous le nom de ``$params['original_string']`` et un ensemble facultatif de "
+"balises autorisées est passé sous le nom de ``$params['allowed_tags']``."
 
 #: ../../guides/hooks-list.rst:72
 msgid "**output:before, page**"
@@ -5168,6 +5485,11 @@ msgid ""
 " header, unregister the handler "
 "``_elgg_views_send_header_x_frame_options()`` from this hook."
 msgstr ""
+"Dans ``elgg_view_page()``, ceci filtre ``$vars`` avant qu’il ne soit "
+"transmis à la vue d’affichage de la coquille de la page "
+"(``page/<page_shell>``). Pour supprimer l'envoi de l’entête X-Frame-Options,"
+" dé-enregistrez le gestionnaire "
+"``_elgg_views_send_header_x_frame_options()`` de ce hook."
 
 #: ../../guides/hooks-list.rst:75
 msgid "**output, page**"
@@ -5175,7 +5497,7 @@ msgstr "**output, page**"
 
 #: ../../guides/hooks-list.rst:75
 msgid "In ``elgg_view_page()``, this filters the output return value."
-msgstr ""
+msgstr "Dans ``elgg_view_page()``, ceci filtre la valeur de retour renvoyée."
 
 #: ../../guides/hooks-list.rst:84
 msgid "**parameters, menu:<menu_name>**"
@@ -5186,6 +5508,8 @@ msgid ""
 "Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort "
 "order) before rendering."
 msgstr ""
+"Déclenché par ``elgg_view_menu()``. Utilisé pour modifier les variables de "
+"menu (comme l’ordre de tri) avant le rendu."
 
 #: ../../guides/hooks-list.rst:80 ../../guides/hooks-list.rst:101
 #: ../../guides/hooks-list.rst:180 ../../guides/hooks-list.rst:190
@@ -5217,24 +5541,34 @@ msgid ""
 " menu has been split into sections. Triggered by ``elgg_view_menu()`` and "
 "``elgg()->menus->getMenu()``."
 msgstr ""
+"Filtre la liste initiale des éléments de menu issus de la configuration, "
+"avant que le menu n’ait été divisé en sections. Déclenché par "
+"``elgg_view_menu()`` et ``elgg()->menus->getMenu()``."
 
 #: ../../guides/hooks-list.rst:90
 msgid ""
 "The ``$params`` array will contain parameters returned by ``parameters, "
 "menu:<menu_name>`` hook."
 msgstr ""
+"Le tableau ``$params`` contient des paramètres renvoyés par le hook "
+"``parameters, menu:<menu_name>``."
 
 #: ../../guides/hooks-list.rst:92
 msgid ""
 "The return value is an instance of ``\\Elgg\\Collections\\Collection`` "
 "containing ``\\ElggMenuItem`` objects."
 msgstr ""
+"La valeur de retour est une instance d’objets "
+"``\\Elgg\\Collections\\Collection`` contenant des objets ``\\ElggMenuItem``."
 
 #: ../../guides/hooks-list.rst:94
 msgid ""
 "Hook handlers can add/remove items to the collection using the collection "
 "API, as well as array access operations."
 msgstr ""
+"Les gestionnaires de hooks peuvent ajouter/supprimer des éléments à une "
+"collection via l’API des collections, ainsi que des opérations sur le "
+"tableau des accès."
 
 #: ../../guides/hooks-list.rst:106
 msgid "**prepare, menu:<menu_name>**"
@@ -5247,6 +5581,11 @@ msgid ""
 " add, remove, and modify menu items. Triggered by ``elgg_view_menu()`` and "
 "``elgg()->menus->prepareMenu()``."
 msgstr ""
+"Filtre le tableau des sections de menu avant qu’elles ne soient affichées. "
+"Chaque section est une clef de chaîne qui correspond à une zone d’éléments "
+"de menu. Il s’agit d’un bon hook pour trier, ajouter, supprimer et modifier "
+"les éléments de menu. Déclenché par ``elgg_view_menu()`` et "
+"``elgg()->menus->prepareMenu()``."
 
 #: ../../guides/hooks-list.rst:103
 msgid "``selected_item`` - ``ElggMenuItem`` selected in the menu, if any"
@@ -5260,6 +5599,9 @@ msgid ""
 "prepared menu is a collection of ``\\Elgg\\Menu\\MenuSection``, which in "
 "turn are collections of ``\\ElggMenuItem`` objects."
 msgstr ""
+"La valeur de retour est une instance de ``\\Elgg\\Menu\\PreparedMenu``. Le "
+"menu préparé est une collection d’objets ``\\Elgg\\Menu\\MenuSection``, qui "
+"sont à leur tour des collections d’objets ``\\ElggMenuItem``."
 
 #: ../../guides/hooks-list.rst:110
 msgid "**register, menu:filter:<filter_id>**"
@@ -5271,6 +5613,10 @@ msgid ""
 "``<filter_id>`` parameter. Parameters and return values are same as in "
 "``register, menu:<menu_name>`` hook."
 msgstr ""
+"Permet aux plugins de modifier les onglets de filtre pour les dispositions "
+"(layouts) qui spécifient le paramètre ``<filter_id>``. Les paramètres et les"
+" valeurs de retour sont les mêmes que dans le hook ``register, "
+"menu:<menu_name>``."
 
 #: ../../guides/hooks-list.rst:118
 msgid "**filter_tabs, <context>**"
@@ -5281,6 +5627,8 @@ msgid ""
 "Filters the array of ``ElggMenuItem`` used to display the All/Mine/Friends "
 "tabs. The ``$params`` array includes:"
 msgstr ""
+"Filtre le tableau des ``ElggMenuItem`` utilisés pour afficher les onglets "
+"Tout/Moi/Contacts. Le tableau ``$params`` comprend :"
 
 #: ../../guides/hooks-list.rst:116
 msgid "``selected``: the selected menu item name"
@@ -5303,6 +5651,9 @@ msgid ""
 "The options for ``elgg_create_river_item`` are filtered through this hook. "
 "You may alter values or return ``false`` to cancel the item creation."
 msgstr ""
+"Les options pour ``elgg_create_river_item`` sont filtrées à travers ce hook."
+" Vous pouvez modifier des valeurs ou renvoyer ``false`` pour annuler la "
+"création de l’élément."
 
 #: ../../guides/hooks-list.rst:125
 msgid "**simplecache:generate, <view>**"
@@ -5312,6 +5663,8 @@ msgstr "**simplecache:generate, <view>**"
 msgid ""
 "Filters the view output for a ``/cache`` URL when simplecache is enabled."
 msgstr ""
+"Filtre la sortie de la vue pour une URL ``/cache`` quand simplecache est "
+"activé."
 
 #: ../../guides/hooks-list.rst:129
 msgid "**cache:generate, <view>**"
@@ -5323,6 +5676,9 @@ msgid ""
 "Note this will be fired for every ``/cache`` request--no Expires headers are"
 " used when simplecache is disabled."
 msgstr ""
+"Filtre la sortie de la vue pour une URL ``/cache`` quand simplecache est "
+"désactivé. Notez que cela sera déclenché pour chaque requête à ``/cache'' --"
+" aucun entête Expires n'est utilisé quand simplecache est désactivé."
 
 #: ../../guides/hooks-list.rst:138
 msgid "**prepare, breadcrumbs**"
@@ -5334,12 +5690,17 @@ msgid ""
 "before returning them, allowing a plugin to alter breadcrumb strategy site-"
 "wide. ``$params`` array includes:"
 msgstr ""
+"Dans ``elgg_get_breadcrumbs()``, ceci filtre le fil d'ariane enregistré "
+"avant de le renvoyer, ce qui permet à un plugin de modifier la stratégie de "
+"fil d'ariane à l’échelle du site. Le tableau ``$params`` comprend :"
 
 #: ../../guides/hooks-list.rst:136
 msgid ""
 "``breadcrumbs`` - an array of bredcrumbs, each with ``title`` and ``link`` "
 "keys"
 msgstr ""
+"``chapelure`` - un tableau des éléments du Fil d'Ariane, chacun avec les "
+"clefs  touches ``title`` et ``link``"
 
 #: ../../guides/hooks-list.rst:137
 msgid "``identifier`` - route identifier of the current page"
@@ -5362,6 +5723,8 @@ msgid ""
 "Filters cached configuration data to pass to the client. :ref:`More info "
 "<guides/javascript#config>`"
 msgstr ""
+"Filtre les données de configuration mises en cache pour les transmettre au "
+"client. :ref:`Plus d’informations <guides/javascript#config>`"
 
 #: ../../guides/hooks-list.rst:146
 msgid "**elgg.data, page**"
@@ -5372,6 +5735,9 @@ msgid ""
 "Filters uncached, page-specific configuration data to pass to the client. "
 ":ref:`More info <guides/javascript#config>`"
 msgstr ""
+"Filtre les données de configuration non mises en cache et spécifiques à la "
+"page à transmettre au client. :ref:`Plus d’informations "
+"<guides/javascript#config>`"
 
 #: ../../guides/hooks-list.rst:151
 msgid "**registration_url, site**"
@@ -5385,6 +5751,11 @@ msgid ""
 "invoking script. The hook must return an absolute URL to the registration "
 "page."
 msgstr ""
+"Filtre l’URL d’inscription sur le site. Peut être utilisé par les plugins "
+"pour ajouter des codes d’invitation, des codes de référence, etc. à l’URL "
+"d’inscription. Le tableau ``$params`` contient un tableau des éléments de la"
+" requête ajoutés à l’URL d’inscription par le script qui l'invoque. Le hook "
+"doit renvoyer une URL absolue de la page d’inscription."
 
 #: ../../guides/hooks-list.rst:156
 msgid "**login_url, site**"
@@ -5396,6 +5767,10 @@ msgid ""
 "elements added to the login URL by the invoking script. The hook must return"
 " an absolute URL of the login page."
 msgstr ""
+"Filtre l’URL de connexion du site. Le tableau ``$params`` contient un "
+"tableau des éléments de requête ajoutés à l’URL de connexion par le script "
+"qui l'invoque. Le hook doit renvoyer une URL absolue de la page de "
+"connexion."
 
 #: ../../guides/hooks-list.rst:160
 msgid "**commands, cli**"
@@ -5407,6 +5782,10 @@ msgid ""
 "binary. Handlers must return an array of command class names. Commands must "
 "extend ``\\Elgg\\Cli\\Command`` to be executable."
 msgstr ""
+"Permet aux plugins d’enregistrer leurs propres commandes exécutables via le "
+"binaire ``elgg-cli``. Les gestionnaires doivent renvoyer un tableau de noms "
+"de classes de commande. Les commandes doivent étendre "
+"``\\Elgg\\Cli\\Command`` pour être exécutables."
 
 #: ../../guides/hooks-list.rst:164
 msgid "**seeds, database**"
@@ -5419,6 +5798,11 @@ msgid ""
 "``\\Elgg\\Database\\Seeds\\Seed`` class to be executable via ``elgg-cli "
 "database:seed``."
 msgstr ""
+"Permet aux plugins d’enregistrer leurs propres semences de base de données. "
+"Les graines remplissent la base de données avec de fausses entités à des "
+"fins de test. Les graines doivent étendre la classe "
+"``\\Elgg\\Database\\Seeds\\Seed`` pour qu’elle soit exécutable via ``elgg-"
+"cli database:seed``."
 
 #: ../../guides/hooks-list.rst:167
 msgid "**languages, translations**"
@@ -5434,11 +5818,12 @@ msgstr ""
 
 #: ../../guides/hooks-list.rst:170
 msgid "**generate, password**"
-msgstr ""
+msgstr "**generate, password**"
 
 #: ../../guides/hooks-list.rst:170
 msgid "Allows plugins to generate new random cleartext passwords."
 msgstr ""
+"Permet aux plugins de générer de nouveaux mots de passe texte aléatoires."
 
 #: ../../guides/hooks-list.rst:173
 msgid "User hooks"
@@ -5456,6 +5841,12 @@ msgid ""
 "from your hook handler, as you will override other hooks' output, instead "
 "return ``null`` to indicate successful operation."
 msgstr ""
+"Déclenché dans l’action globale pour enregistrer les paramètres utilisateur."
+" Le gestionnaire de hook doit renvoyer ``false`` pour éviter que les "
+"formulaires persistants ne soient effacées (c.-à-d. pour indiquer que "
+"certaines valeurs n’ont pas été enregistrées). Ne renvoyez pas ``true`` dans"
+" votre gestionnaire de hook car vous remplaceriez la sortie d’autres hooks :"
+" renvoyez plutôt ``null`` pour indiquer une opération réussie."
 
 #: ../../guides/hooks-list.rst:182 ../../guides/hooks-list.rst:192
 msgid "``user`` - ``\\ElggUser``, whose settings are being saved"
@@ -5496,6 +5887,10 @@ msgid ""
 "is allowed to save content with. Permissions returned are of the form (id =>"
 " 'Human Readable Name')."
 msgstr ""
+"Filtre un tableau d'autorisations d’accès pour lesquelles l’utilisateur "
+"``$params['user_id']`` est autorisé à enregistrer du contenu. Les "
+"autorisations renvoyées sont de la forme (id => 'Nom lisible par un "
+"Humain')."
 
 #: ../../guides/hooks-list.rst:202
 msgid "**registeruser:validate:username, all**"
@@ -5507,6 +5902,10 @@ msgid ""
 "username. Hook handler can throw ``\\RegistrationException`` with an error "
 "message to be shown to the user."
 msgstr ""
+"Renvoyez un booléen si la chaîne dans ``$params['username']`` est un nom "
+"d’utilisateur valide. Le gestionnaire de hook peut lancer "
+"``\\RegistrationException`` avec un message d’erreur à montrer à "
+"l’utilisateur."
 
 #: ../../guides/hooks-list.rst:206
 msgid "**registeruser:validate:password, all**"
@@ -5518,6 +5917,10 @@ msgid ""
 "password. Hook handler can throw ``\\RegistrationException`` with an error "
 "message to be shown to the user."
 msgstr ""
+"Renvoyez un booléen si la chaîne dans ``$params['password']`` est un mot de "
+"passe valide. Le gestionnaire de hook peut lancer "
+"``\\RegistrationException`` avec un message d’erreur à montrer à "
+"l’utilisateur."
 
 #: ../../guides/hooks-list.rst:210
 msgid "**registeruser:validate:email, all**"
@@ -5529,6 +5932,10 @@ msgid ""
 "email address. Hook handler can throw ``\\RegistrationException`` with an "
 "error message to be shown to the user."
 msgstr ""
+"Renvoyez un booléen si la chaîne dans ``$params['email']`` est une adresse "
+"e-mail valide. Le gestionnaire de hook peut lancer "
+"``\\RegistrationException`` avec un message d’erreur à montrer à "
+"l’utilisateur."
 
 #: ../../guides/hooks-list.rst:220
 msgid "**register, user**"
@@ -5541,16 +5948,23 @@ msgid ""
 " trigger this hook. Hook handlers can throw ``\\RegistrationException`` with"
 " an error message to be displayed to the user."
 msgstr ""
+"Déclenché par l’action ``register`` après que l’utilisateur se soit inscrit."
+" Renvoyez ``false`` pour supprimer l’utilisateur. Notez que la fonction "
+"``register_user`` *ne déclenche pas* ce hook. Les gestionnaires de hooks "
+"peuvent lancer une exception ``\\RegistrationException`` avec un message "
+"d’erreur à afficher à l’utilisateur."
 
 #: ../../guides/hooks-list.rst:219
 msgid "``user`` - Newly registered user entity"
-msgstr ""
+msgstr "``user`` - L'entité utilisateur nouvellement enregistrée"
 
 #: ../../guides/hooks-list.rst:220
 msgid ""
 "All parameters sent with the request to the action (incl. ``password``, "
 "``friend_guid``, ``invitecode`` etc)"
 msgstr ""
+"Tous les paramètres envoyés avec la requête à l’action (comprend "
+"``password``, ``friend_guid``, ``invitecode``, etc.)"
 
 #: ../../guides/hooks-list.rst:223
 msgid "**login:forward, user**"
@@ -5559,6 +5973,7 @@ msgstr "**login:forward, user**"
 #: ../../guides/hooks-list.rst:223
 msgid "Filters the URL to which the user will be forwarded after login."
 msgstr ""
+"Filtre l’URL vers laquelle l’utilisateur sera dirigé après la connexion."
 
 #: ../../guides/hooks-list.rst:226
 msgid "**find_active_users, system**"
@@ -5566,7 +5981,7 @@ msgstr "**find_active_users, system**"
 
 #: ../../guides/hooks-list.rst:226
 msgid "Return the number of active users."
-msgstr ""
+msgstr "Renvoyez le nombre d’utilisateurs actifs."
 
 #: ../../guides/hooks-list.rst:229
 msgid "**status, user**"
@@ -5574,7 +5989,7 @@ msgstr "**status, user**"
 
 #: ../../guides/hooks-list.rst:229
 msgid "Triggered by The Wire when adding a post."
-msgstr ""
+msgstr "Déclenché par The Wire (le Fil) lors de l’ajout d’une publication."
 
 #: ../../guides/hooks-list.rst:234
 msgid "**username:character_blacklist, user**"
@@ -5587,6 +6002,10 @@ msgid ""
 "disallowed characters. The default string can be found from "
 "``$params['blacklist']``."
 msgstr ""
+"Filtre la chaîne et supprimer les caractères interdits pour valider le nom "
+"d’utilisateur lors de l’inscription. La valeur de retour doit être une "
+"chaîne composée des caractères refusés. La chaîne par défaut se trouve dans "
+"``$params['blacklist']``."
 
 #: ../../guides/hooks-list.rst:237
 msgid "Object hooks"
@@ -5601,6 +6020,8 @@ msgid ""
 "Triggered in ``elgg_view_comments()``. If returning content, this overrides "
 "the ``page/elements/comments`` view."
 msgstr ""
+"Déclenché dans ``elgg_view_comments()``. Si vous renvoyez du contenu, cela "
+"remplace la vue ``page/elements/comments``."
 
 #: ../../guides/hooks-list.rst:244
 msgid "**comments:count, <entity_type>**"
@@ -10971,7 +11392,7 @@ msgstr ""
 
 #: ../../guides/plugins/dependencies.rst:158
 msgid "**version** - The API or release version"
-msgstr "**version** - L'API ou la version de la release"
+msgstr "**version** - La version de l'API ou de Elgg"
 
 #: ../../guides/plugins/dependencies.rst:160
 #: ../../guides/plugins/dependencies.rst:219

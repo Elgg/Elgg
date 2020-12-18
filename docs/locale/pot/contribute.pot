@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-20 14:22+0100\n"
+"POT-Creation-Date: 2020-12-18 13:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgid "**docs** - *only* docs are being updated"
 msgstr ""
 
 #: ../../contribute/code.rst:87
-msgid "**chore** - this include refactoring, code style changes, adding missing tests, Travis stuff, etc."
+msgid "**chore** - this include refactoring, code style changes, adding missing tests, CI stuff, etc."
 msgstr ""
 
 #: ../../contribute/code.rst:88
@@ -2285,7 +2285,7 @@ msgid "In short, we are advocating:"
 msgstr ""
 
 #: ../../contribute/tests.rst:86
-msgid "Continuous integration -- if Travis isn't happy, we're not happy"
+msgid "Continuous integration -- if GitHub checks aren't happy, we're not happy"
 msgstr ""
 
 #: ../../contribute/tests.rst:87
@@ -2301,7 +2301,7 @@ msgid "Continuous Integration"
 msgstr ""
 
 #: ../../contribute/tests.rst:93
-msgid "We run all of our tests on Travis CI so that we can get real time feedback on the correctness of incoming pull requests and development as it progresses. **If Travis isn't happy, we don't commit to the repo.** This empowers us to merge pull requests in at a rapid pace, so long as they pass the tests. It also allows us to reject pull requests without detailed investigation if they do not pass the tests. We can get past the \"does it work or not\" question and talk about the things that humans need to talk about: API design, usefulness to the project, whether it belongs in core or a plugin, etc. We want as many features as possible provided by Elgg core to be verified automatically by tests running on Travis."
+msgid "We run all of our tests on GitHub Actions so that we can get real time feedback on the correctness of incoming pull requests and development as it progresses. **If the GitHub checks aren't passing, we don't commit to the repo.** This empowers us to merge pull requests in at a rapid pace, so long as they pass the tests. It also allows us to reject pull requests without detailed investigation if they do not pass the tests. We can get past the \"does it work or not\" question and talk about the things that humans need to talk about: API design, usefulness to the project, whether it belongs in core or a plugin, etc. We want as many features as possible provided by Elgg core to be verified automatically by tests running on GitHub Actions."
 msgstr ""
 
 #: ../../contribute/tests.rst:100

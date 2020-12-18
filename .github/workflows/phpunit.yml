@@ -17,6 +17,7 @@ jobs:
   phpunit:
     name: PHP ${{ matrix.php-versions }} - MySQL ${{ matrix.mysql-versions }} ${{ matrix.extra-title }}
     runs-on: ubuntu-20.04
+    continue-on-error: ${{ matrix.experimental }}
     services:
       elggdb:
         image: mysql:${{ matrix.mysql-versions }}
@@ -38,26 +39,36 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['7.2', '7.3', '7.4']
+        experimental: [false]
         extra-title: ['']
         memcache: [0]
         mysql-versions: [5.7]
         redis: [0]
         include:
           - php-versions: '7.2'
+            experimental: false
             extra-title: '- Memcache'
             memcache: 1
             mysql-versions: 5.7
             redis: 0
           - php-versions: '7.2'
+            experimental: false
             extra-title: '- Redis'
             memcache: 0
             mysql-versions: 5.7
             redis: 1
           - php-versions: '7.4'
+            experimental: false
             extra-title: ''
             memcache: 0
             mysql-versions: 8.0
             redis: 1
+          - php-versions: '8.0'
+            experimental: true
+            extra-title: ''
+            memcache: 0
+            mysql-versions: 5.7
+            redis: 0
     env:
       ELGG_MEMCACHE: ${{ matrix.memcache }}
       ELGG_REDIS: ${{ matrix.redis }}
@@ -76,6 +87,17 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v2
       
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        
+      - name: Restore Composer Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+          
       - name: Composer install
         run: composer install
       

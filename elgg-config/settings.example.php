@@ -388,11 +388,13 @@ $CONFIG->allow_phpinfo = false;
  * Configure emailer SMTP settings
  *
  * This setting is only necessary if the above emailer transport is set to 'smtp'.
- * Please refer to https://docs.laminas.dev/laminas-mail/transport/smtp-authentication/#examples
+ * Please refer to https://docs.laminas.dev/laminas-mail/transport/smtp-options/#configuration-options
+ * and https://docs.laminas.dev/laminas-mail/transport/smtp-authentication/#examples
  */
 //$CONFIG->emailer_smtp_settings = array(
 //	'name'              => 'localhost.localdomain',
 //	'host'              => '127.0.0.1',
+//	'port'              => 25,
 //	'connection_class'  => 'login',
 //	'connection_config' => [
 //		'username' => 'user',
