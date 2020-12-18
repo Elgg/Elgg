@@ -1,3 +1,20 @@
+<a name="3.3.14"></a>
+### 3.3.14  (2020-12-18)
+
+#### Contributors
+
+* Jeroen Dalsem (8)
+* Jerôme Bakker (3)
+
+#### Bug Fixes
+
+* **cache:** keep server cache in a local file storage ([0569862d](https://github.com/Elgg/Elgg/commit/0569862d9f07c4cd454fe0739bd19ff325ab2a81))
+* **database:** correctly order metadata ([32fe6955](https://github.com/Elgg/Elgg/commit/32fe6955a31173f64318151b0bbeb11fdad8cace))
+* **http:** allow access to client IP behind proxy server ([159e70ee](https://github.com/Elgg/Elgg/commit/159e70ee6e57b929bc5935f091a2bbb9280bc3f3))
+* **search:** prevent duplicate extras matches in search results ([1211ae4d](https://github.com/Elgg/Elgg/commit/1211ae4d60d453b9351a62b2dfd02935af3a3ec6))
+* **widgets:** correctly update widget title after widget update ([95535d24](https://github.com/Elgg/Elgg/commit/95535d2472bc4ba0d7b2a19e121dd1798c38692b))
+
+
 <a name="3.3.13"></a>
 ### 3.3.13  (2020-11-20)
 
