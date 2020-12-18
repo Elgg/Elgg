@@ -1980,6 +1980,22 @@ var `$DEFAULT_FILE_STORE`.
 * The `resources/file/download` view is no longer used. ([1e736aeb](https://github.com/Elgg/Elgg/commit/1e736aebb953051ec1b8a2c165ab3c9595e72b40))
 
 
+<a name="2.3.16"></a>
+### 2.3.16  (2020-12-18)
+
+#### Contributors
+
+* Jerôme Bakker (7)
+
+#### Bug Fixes
+
+* **ci:**
+  * move PHPUnit tests from Travis to GitHub actions ([55d6d893](https://github.com/Elgg/Elgg/commit/55d6d8933acde9bb240cb28224f86b984159e1b2))
+  * move documentation test build to GitHub action ([25f3f8a6](https://github.com/Elgg/Elgg/commit/25f3f8a638ec000c6e6632b4e19381aacd068af2))
+  * move coding style and composer checks to GitHub actions ([5b8956dc](https://github.com/Elgg/Elgg/commit/5b8956dcbe8dd2b2c9bde70bbbd5524d148f6e1e))
+  * move lint checks to GitHub actions ([eba126ec](https://github.com/Elgg/Elgg/commit/eba126ec0aa4095ed55621950973d21560d470af))
+
+
 <a name="2.3.15"></a>
 ### 2.3.15  (2020-06-25)
 
