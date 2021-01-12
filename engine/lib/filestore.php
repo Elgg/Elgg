@@ -207,21 +207,29 @@ function _elgg_filestore_serve_icon_handler() {
  */
 function _elgg_filestore_touch_icons(\Elgg\Event $event) {
 	$entity = $event->getObject();
+	if (!$entity instanceof \ElggEntity) {
+		return;
+	}
 	
 	$original_attributes = $entity->getOriginalAttributes();
 	if (!array_key_exists('access_id', $original_attributes)) {
 		return;
 	}
+	
 	if ($entity instanceof \ElggFile) {
 		// we touch the file to invalidate any previously generated download URLs
 		$entity->setModifiedTime();
 	}
+	
 	$sizes = array_keys(elgg_get_icon_sizes($entity->getType(), $entity->getSubtype()));
 	foreach ($sizes as $size) {
-		$icon = $entity->getIcon($size);
-		if ($icon->exists()) {
-			$icon->setModifiedTime();
+		// using the Icon Service because we don't want to auto generate the 'new' icon
+		$icon = _elgg_services()->iconService->getIcon($entity, $size, 'icon', false);
+		if (!$icon->exists()) {
+			continue;
 		}
+		
+		$icon->setModifiedTime();
 	}
 }
 
@@ -242,6 +250,9 @@ function _elgg_filestore_touch_icons(\Elgg\Event $event) {
  */
 function _elgg_filestore_move_icons(\Elgg\Event $event) {
 	$entity = $event->getObject();
+	if (!$entity instanceof \ElggEntity) {
+		return;
+	}
 	
 	$original_attributes = $entity->getOriginalAttributes();
 	if (empty($original_attributes['owner_guid'])) {
@@ -251,16 +262,16 @@ function _elgg_filestore_move_icons(\Elgg\Event $event) {
 	$previous_owner_guid = $original_attributes['owner_guid'];
 	$new_owner_guid = $entity->owner_guid;
 
-	$sizes = elgg_get_icon_sizes($entity->getType(), $entity->getSubtype());
-
-	foreach ($sizes as $size => $opts) {
-		$new_icon = $entity->getIcon($size);
-		if ($new_icon->owner_guid == $entity->guid) {
+	$sizes = array_keys(elgg_get_icon_sizes($entity->getType(), $entity->getSubtype()));
+	foreach ($sizes as $size) {
+		// using the Icon Service because we don't want to auto generate the 'new' icon
+		$new_icon = _elgg_services()->iconService->getIcon($entity, $size, 'icon', false);
+		if ($new_icon->owner_guid === $entity->guid) {
 			// we do not need to update icons that are owned by the entity itself
 			continue;
 		}
 
-		if ($new_icon->owner_guid != $new_owner_guid) {
+		if ($new_icon->owner_guid !== $new_owner_guid) {
 			// a plugin implements some custom logic
 			continue;
 		}
@@ -285,7 +296,7 @@ function _elgg_filestore_move_icons(\Elgg\Event $event) {
 
 		$old_icon->transfer($new_icon->owner_guid, $new_icon->getFilename());
 		elgg_log("Entity $entity->guid has been transferred to a new owner. "
-		. "Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.", 'NOTICE');
+			. "Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.", 'NOTICE');
 	}
 }
 
