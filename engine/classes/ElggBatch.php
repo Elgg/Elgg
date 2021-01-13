@@ -166,20 +166,6 @@ class ElggBatch implements \Countable, \Iterator {
 	private $incrementOffset = true;
 
 	/**
-	 * Entities that could not be instantiated during a fetch
-	 *
-	 * @var \stdClass[]
-	 */
-	private $incompleteEntities = [];
-
-	/**
-	 * Total number of incomplete entities fetched
-	 *
-	 * @var int
-	 */
-	private $totalIncompletes = 0;
-
-	/**
 	 * Batches operations on any elgg_get_*() or compatible function that supports
 	 * an options array.
 	 *
@@ -285,8 +271,6 @@ class ElggBatch implements \Countable, \Iterator {
 
 		if ($this->incrementOffset) {
 			$offset = $this->offset + $this->retrievedResults;
-		} else {
-			$offset = $this->offset + $this->totalIncompletes;
 		}
 
 		$current_options = [
@@ -297,34 +281,17 @@ class ElggBatch implements \Countable, \Iterator {
 
 		$options = array_merge($this->options, $current_options);
 
-		$this->incompleteEntities = [];
 		$this->results = call_user_func($this->getter, $options);
 
 		// batch result sets tend to be large; we don't want to cache these.
 		_elgg_services()->queryCache->disable();
 
 		$num_results = count($this->results);
-		$num_incomplete = count($this->incompleteEntities);
-
-		$this->totalIncompletes += $num_incomplete;
-
-		if (!empty($this->incompleteEntities)) {
-			// pad the front of the results with nulls representing the incompletes
-			array_splice($this->results, 0, 0, array_pad([], $num_incomplete, null));
-			// ...and skip past them
-			reset($this->results);
-			for ($i = 0; $i < $num_incomplete; $i++) {
-				next($this->results);
-			}
-		}
 
 		if ($this->results) {
 			$this->chunkIndex++;
 
-			// let the system know we've jumped past the nulls
-			$this->resultIndex = $num_incomplete;
-
-			$this->retrievedResults += ($num_results + $num_incomplete);
+			$this->retrievedResults += $num_results;
 			if ($num_results == 0) {
 				// This fetch was *all* incompletes! We need to fetch until we can either
 				// offer at least one row to iterate over, or give up.
