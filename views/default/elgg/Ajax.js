@@ -180,7 +180,7 @@ define(function (require) {
 						}
 					}
 
-					if (!error_displayed && options.showErrorMessages) {
+					if (error_displayed) {
 						elgg.register_error(elgg.echo('ajax:error'));
 					}
 				};
