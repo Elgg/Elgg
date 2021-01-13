@@ -164,6 +164,13 @@ class ElggBatch implements \Countable, \Iterator {
 	 * @var bool
 	 */
 	private $incrementOffset = true;
+	
+	/**
+	 * Number of reported failures during the batch run
+	 *
+	 * @var int
+	 */
+	private $reportedFailures = 0;
 
 	/**
 	 * Batches operations on any elgg_get_*() or compatible function that supports
@@ -187,7 +194,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 *                           callbacks that delete rows. You can set this after the
 	 *                           object is created with {@link \ElggBatch::setIncrementOffset()}.
 	 */
-	public function __construct(callable $getter, array $options, $callback = null, int $chunk_size = 25, int $inc_offset = true) {
+	public function __construct(callable $getter, array $options, $callback = null, int $chunk_size = 25, bool $inc_offset = true) {
 
 		$this->getter = $getter;
 		$this->options = $options;
@@ -270,6 +277,8 @@ class ElggBatch implements \Countable, \Iterator {
 
 		if ($this->incrementOffset) {
 			$offset = $this->offset + $this->retrievedResults;
+		} else {
+			$offset = $this->offset + $this->reportedFailures;
 		}
 
 		$current_options = [
@@ -289,19 +298,21 @@ class ElggBatch implements \Countable, \Iterator {
 
 		if ($this->results) {
 			$this->chunkIndex++;
+			$this->resultIndex = 0;
 
 			$this->retrievedResults += $num_results;
-			if ($num_results == 0) {
+			if ($num_results === 0) {
 				// This fetch was *all* incompletes! We need to fetch until we can either
 				// offer at least one row to iterate over, or give up.
 				return $this->getNextResultsChunk();
 			}
 			_elgg_services()->queryCache->enable();
 			return true;
-		} else {
-			_elgg_services()->queryCache->enable();
-			return false;
 		}
+		
+		// no result
+		_elgg_services()->queryCache->enable();
+		return false;
 	}
 
 	/**
@@ -323,6 +334,19 @@ class ElggBatch implements \Countable, \Iterator {
 	public function setChunkSize(int $size = 25) {
 		$this->chunkSize = $size;
 	}
+	
+	/**
+	 * Report a number of failures during the batch execution,
+	 * this will increase the internal offset by $num in case offsett increment is disabled
+	 *
+	 * @param int $num number of failures to report (default: 1)
+	 *
+	 * @return void
+	 */
+	public function reportFailure(int $num = 1) {
+		$this->reportedFailures += $num;
+	}
+	
 	/**
 	 * Implements Iterator
 	 */
@@ -334,6 +358,7 @@ class ElggBatch implements \Countable, \Iterator {
 		$this->resultIndex = 0;
 		$this->retrievedResults = 0;
 		$this->processedResults = 0;
+		$this->reportedFailures = 0;
 
 		// only grab results if we haven't yet or we're crossing chunks
 		if ($this->chunkIndex == 0 || $this->limit > $this->chunkSize) {

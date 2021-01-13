@@ -10,12 +10,29 @@ use ElggBatch;
  */
 class ElggBatchTest extends IntegrationTestCase {
 
+	/**
+	 * @var \ElggEntity[] entities created during the test
+	 */
+	protected $createdEntities = [];
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public function up() {
 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public function down() {
-
+		elgg_call(ELGG_IGNORE_ACCESS, function() {
+			foreach ($this->createdEntities as $entity) {
+				$entity->delete();
+			}
+		});
+		
+		elgg_get_session()->removeLoggedInUser();
 	}
 
 	// see https://github.com/elgg/elgg/issues/4288
@@ -23,7 +40,7 @@ class ElggBatchTest extends IntegrationTestCase {
 		// normal increment
 		$options = [
 			'offset' => 0,
-			'limit' => 11
+			'limit' => 11,
 		];
 		$batch = new ElggBatch([
 			ElggBatchTest::class,
@@ -32,7 +49,7 @@ class ElggBatchTest extends IntegrationTestCase {
 			null, 5);
 		$j = 0;
 		foreach ($batch as $e) {
-			$offset = floor($j / 5) * 5;
+			$offset = (int) floor($j / 5) * 5;
 			$this->assertEquals($offset, $e['offset']);
 			$this->assertEquals($j + 1, $e['index']);
 			$j++;
@@ -108,15 +125,15 @@ class ElggBatchTest extends IntegrationTestCase {
 	public function testCanGetBatchFromAnEntityGetter() {
 
 		$subtype ='testCanGetBatchFromAnEntityGetter';
-		for ($i = 1; $i <=5; $i++) {
-			$this->createOne('object', [
+		for ($i = 1; $i <= 5; $i++) {
+			$this->createdEntities[] = $this->createObject([
 				'subtype' => $subtype,
 			]);
 		}
 
 		$options = [
 			'type' => 'object',
-			'subtype' => 'testCanGetBatchFromAnEntityGetter',
+			'subtype' => $subtype,
 			'limit' => 5,
 			'callback' => function ($row) {
 				return $row->guid;
@@ -136,6 +153,55 @@ class ElggBatchTest extends IntegrationTestCase {
 		}
 
 		$this->assertEquals($guids1, $guids2);
+	}
+	
+	public function testReportFailure() {
+		$time = time();
+		$subtype = 'elggBatchReportFailureSubtype';
+		$owner = $this->getRandomUser();
+		elgg_get_session()->setLoggedInUser($owner);
+		
+		for ($i = 0; $i < 5; $i++) {
+			$this->createdEntities[] = $this->createObject([
+				'owner_guid' => $owner->guid,
+				'subtype' => $subtype,
+			]);
+		}
+		
+		$options = [
+			'type' => 'object',
+			'subtype' => $subtype,
+			'created_after' => $time, // needed if previous tests failed
+			'limit' => false,
+			'batch' => true,
+			'batch_inc_offset' => false,
+			'batch_size' => 2,
+		];
+		
+		$count = elgg_count_entities($options);
+		$this->assertEquals(5, $count);
+		
+		/* @var $batch \ElggBatch */
+		$batch = elgg_get_entities($options);
+		$this->assertInstanceOf('\ElggBatch', $batch);
+		
+		/* @var $entity \ElggObject */
+		foreach ($batch as $index => $entity) {
+			if ($index < 2) {
+				$batch->reportFailure();
+				continue;
+			}
+			
+			$entity->delete();
+			
+			if ($index > 10) {
+				// just in case
+				break;
+			}
+		}
+		
+		$count = elgg_count_entities($options);
+		$this->assertEquals(2, $count);
 	}
 
 	public static function elgg_batch_callback_test($options, $reset = false) {
