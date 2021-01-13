@@ -6,6 +6,7 @@ use Elgg\Cache\MetadataCache;
 use Elgg\Database;
 use Elgg\Database\Clauses\MetadataWhereClause;
 use Elgg\Database\Delete;
+use Elgg\Database\EntityTable;
 use Elgg\Database\Insert;
 use Elgg\Database\MetadataTable as DbMetadataTabe;
 use Elgg\Database\Select;
@@ -34,15 +35,30 @@ class MetadataTable extends DbMetadataTabe {
 	 */
 	static $iterator = 100;
 
-	public function __construct(MetadataCache $metadata_cache, Database $db, Events $events) {
+	public function __construct(MetadataCache $metadata_cache, Database $db, Events $events, EntityTable $entityTable) {
 		$this->setCurrentTime();
-		parent::__construct($metadata_cache, $db, $events);
+		parent::__construct($metadata_cache, $db, $events, $entityTable);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function create(ElggMetadata $metadata, $allow_multiple = false) {
+		if (!isset($metadata->value) || !isset($metadata->entity_guid)) {
+			elgg_log("Metadata must have a value and entity guid", 'ERROR');
+			return false;
+		}
+		
+		if (!$this->entityTable->exists($metadata->entity_guid)) {
+			elgg_log("Can't create metadata on a non-existing entity_guid", 'ERROR');
+			return false;
+		}
+		
+		if (!is_scalar($metadata->value)) {
+			elgg_log("To set multiple metadata values use ElggEntity::setMetadata", 'ERROR');
+			return false;
+		}
+		
 		static::$iterator++;
 		$id = static::$iterator;
 
@@ -67,6 +83,11 @@ class MetadataTable extends DbMetadataTabe {
 	 * {@inheritdoc}
 	 */
 	public function update(ElggMetadata $metadata) {
+		if (!$this->entityTable->exists($metadata->entity_guid)) {
+			elgg_log("Can't updated metadata to a non-existing entity_guid", 'ERROR');
+			return false;
+		}
+		
 		$id = $metadata->id;
 		if (!isset($this->rows[$id])) {
 			return false;
