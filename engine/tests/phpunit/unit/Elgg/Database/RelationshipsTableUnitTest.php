@@ -80,6 +80,23 @@ class RelationshipsTableUnitTest extends \Elgg\UnitTestCase {
 		$object2->delete();
 	}
 	
+	public function testAddNonExistingEntityRelationshipFailure() {
+		$object1 = $this->createObject();
+		$object2 = $this->createObject();
+		
+		$failure = $this->service->add($object1->guid, 'testRelationship', 123456789);
+		$this->assertFalse($failure);
+		
+		$failure = $this->service->add(123456789, 'testRelationship', $object2->guid);
+		$this->assertFalse($failure);
+		
+		$failure = $this->service->add(123456789, 'testRelationship', 987654321);
+		$this->assertFalse($failure);
+		
+		$object1->delete();
+		$object2->delete();
+	}
+	
 	public function testAddRelationshipPreventByEvent() {
 		
 		elgg()->events->backup();
