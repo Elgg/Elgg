@@ -187,8 +187,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 *                           callbacks that delete rows. You can set this after the
 	 *                           object is created with {@link \ElggBatch::setIncrementOffset()}.
 	 */
-	public function __construct(callable $getter, $options, $callback = null, $chunk_size = 25,
-			$inc_offset = true) {
+	public function __construct(callable $getter, array $options, $callback = null, int $chunk_size = 25, int $inc_offset = true) {
 
 		$this->getter = $getter;
 		$this->options = $options;
@@ -312,8 +311,8 @@ class ElggBatch implements \Countable, \Iterator {
 	 * @param bool $increment Set to false when deleting data
 	 * @return void
 	 */
-	public function setIncrementOffset($increment = true) {
-		$this->incrementOffset = (bool) $increment;
+	public function setIncrementOffset(bool $increment = true) {
+		$this->incrementOffset = $increment;
 	}
 
 	/**
@@ -321,7 +320,7 @@ class ElggBatch implements \Countable, \Iterator {
 	 * @param int $size Size
 	 * @return void
 	 */
-	public function setChunkSize($size = 25) {
+	public function setChunkSize(int $size = 25) {
 		$this->chunkSize = $size;
 	}
 	/**
