@@ -525,8 +525,7 @@ class ServiceProvider extends DiContainer {
 		});
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
-			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
-			return new \Elgg\Database\MetadataTable($c->metadataCache, $c->db, $c->events);
+			return new \Elgg\Database\MetadataTable($c->metadataCache, $c->db, $c->events, $c->entityTable);
 		});
 
 		$this->setFactory('mimetype', function(ServiceProvider $c) {

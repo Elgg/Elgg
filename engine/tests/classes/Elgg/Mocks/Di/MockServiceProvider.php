@@ -58,7 +58,7 @@ class MockServiceProvider extends \Elgg\Di\ServiceProvider {
 		});
 
 		$this->setFactory('metadataTable', function (MockServiceProvider $sp) {
-			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $sp->db, $sp->events);
+			return new \Elgg\Mocks\Database\MetadataTable($sp->metadataCache, $sp->db, $sp->events, $sp->entityTable);
 		});
 
 		$this->setFactory('annotationsTable', function (MockServiceProvider $sp) {

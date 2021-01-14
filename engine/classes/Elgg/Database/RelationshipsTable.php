@@ -117,13 +117,18 @@ class RelationshipsTable {
 	 */
 	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
 		if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
-			$msg = "relationship name cannot be longer than " . \ElggRelationship::RELATIONSHIP_LIMIT;
-			throw new InvalidArgumentException($msg);
+			throw new InvalidArgumentException('Relationship name cannot be longer than ' . \ElggRelationship::RELATIONSHIP_LIMIT);
 		}
 
 		// Check for duplicates
 		// note: escape $relationship after this call, we don't want to double-escape
 		if ($this->check($guid_one, $relationship, $guid_two)) {
+			return false;
+		}
+		
+		// Check if the related entities exist
+		if (!$this->entities->exists($guid_one) || !$this->entities->exists($guid_two)) {
+			// one or both of the guids doesn't exist
 			return false;
 		}
 		

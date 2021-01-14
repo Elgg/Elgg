@@ -88,7 +88,7 @@ return [
 			],
 		],
 		'add:group:group' => [
-			'path' => '/groups/add/{container_guid}',
+			'path' => '/groups/add/{guid}',
 			'resource' => 'groups/add',
 			'middleware' => [
 				\Elgg\Router\Middleware\Gatekeeper::class,

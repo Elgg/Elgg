@@ -39,8 +39,15 @@ class RelationshipsTable extends DbRelationshipsTable {
 	 * {@inheritdoc}
 	 */
 	public function add($guid_one, $relationship, $guid_two, $return_id = false) {
-		$rel = $this->check($guid_one, $relationship, $guid_two);
-		if ($rel) {
+		// Check for duplicates
+		// note: escape $relationship after this call, we don't want to double-escape
+		if ($this->check($guid_one, $relationship, $guid_two)) {
+			return false;
+		}
+		
+		// Check if the related entities exist
+		if (!$this->entities->exists($guid_one) || !$this->entities->exists($guid_two)) {
+			// one or both of the guids doesn't exist
 			return false;
 		}
 

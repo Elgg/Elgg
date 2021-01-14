@@ -35,6 +35,11 @@ class MetadataTable {
 	 * @var Events
 	 */
 	protected $events;
+	
+	/**
+	 * @var EntityTable
+	 */
+	protected $entityTable;
 
 	const MYSQL_TEXT_BYTE_LIMIT = 65535;
 
@@ -44,15 +49,18 @@ class MetadataTable {
 	 * @param MetadataCache $metadata_cache A cache for this table
 	 * @param Database      $db             The Elgg database
 	 * @param Events        $events         The events registry
+	 * @param EntityTable   $entityTable    The EntityTable database wrapper
 	 */
 	public function __construct(
 		MetadataCache $metadata_cache,
 		Database $db,
-		Events $events
+		Events $events,
+		EntityTable $entityTable
 	) {
 		$this->metadata_cache = $metadata_cache;
 		$this->db = $db;
 		$this->events = $events;
+		$this->entityTable = $entityTable;
 	}
 
 	/**
@@ -209,6 +217,11 @@ class MetadataTable {
 			return false;
 		}
 
+		if (!$this->entityTable->exists($metadata->entity_guid)) {
+			elgg_log("Can't create metadata on a non-existing entity_guid", 'ERROR');
+			return false;
+		}
+		
 		if (!is_scalar($metadata->value)) {
 			elgg_log("To set multiple metadata values use ElggEntity::setMetadata", 'ERROR');
 			return false;
@@ -289,6 +302,11 @@ class MetadataTable {
 	 */
 	public function update(ElggMetadata $metadata) {
 
+		if (!$this->entityTable->exists($metadata->entity_guid)) {
+			elgg_log("Can't update metadata to a non-existing entity_guid", 'ERROR');
+			return false;
+		}
+		
 		if (!$this->events->triggerBefore('update', 'metadata', $metadata)) {
 			return false;
 		}

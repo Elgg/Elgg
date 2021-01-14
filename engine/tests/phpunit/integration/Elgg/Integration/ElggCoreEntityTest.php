@@ -502,6 +502,8 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	}
 
 	/**
+	 * @see https://github.com/Elgg/Elgg/pull/11998
+	 *
 	 * @group AccessSQL
 	 * @group Access
 	 */
@@ -510,7 +512,10 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		_elgg_services()->hooks->backup();
 
 		$handler = function(Hook $hook) {
-
+			if ($hook->getParam('ignore_access')) {
+				return;
+			}
+			
 			$value = $hook->getValue();
 
 			$alias = $hook->getParam('table_alias');

@@ -131,6 +131,19 @@ class ElggMetadataUnitTest extends UnitTestCase {
 		
 		_elgg_services()->session->removeLoggedInUser();
 	}
+	
+	public function testCantSaveMetadataForNonExisingEntity() {
+		$metadata = new ElggMetadata();
+		$metadata->entity_guid = 123456789;
+		$metadata->name = 'foo';
+		$metadata->value = 'bar';
+		
+		_elgg_services()->logger->disable();
+		
+		$this->assertFalse($metadata->save());
+		
+		_elgg_services()->logger->enable();
+	}
 
 	public function testCanDeleteMetadata() {
 
