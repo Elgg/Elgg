@@ -1,3 +1,17 @@
+<a name="3.3.15"></a>
+### 3.3.15  (2021-01-15)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+
+#### Bug Fixes
+
+* **db:** pass previous database exception ([20e07d23](https://github.com/Elgg/Elgg/commit/20e07d238f110a6ae28a9fbaf488ebb3054dcedc))
+* **icon:** use different icon size to check in icon remove ([8c42bf4f](https://github.com/Elgg/Elgg/commit/8c42bf4f53a93ce50b817df5be711d903ca37791))
+* **icons:** prevent auto generation of icons during entity updates ([918a1193](https://github.com/Elgg/Elgg/commit/918a1193986ee0e689f8c823f0039100e92a8466))
+
+
 <a name="3.3.14"></a>
 ### 3.3.14  (2020-12-18)
 
