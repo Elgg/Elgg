@@ -25,6 +25,9 @@ class MoveIconsOnOwnerChangeHandler {
 	 */
 	public function __invoke(\Elgg\Event $event) {
 		$entity = $event->getObject();
+		if (!$entity instanceof \ElggEntity) {
+			return;
+		}
 		
 		$original_attributes = $entity->getOriginalAttributes();
 		if (empty($original_attributes['owner_guid'])) {
@@ -34,10 +37,10 @@ class MoveIconsOnOwnerChangeHandler {
 		$previous_owner_guid = $original_attributes['owner_guid'];
 		$new_owner_guid = $entity->owner_guid;
 	
-		$sizes = elgg_get_icon_sizes($entity->getType(), $entity->getSubtype());
-	
-		foreach ($sizes as $size => $opts) {
-			$new_icon = $entity->getIcon($size);
+		$sizes = array_keys(elgg_get_icon_sizes($entity->getType(), $entity->getSubtype()));
+		foreach ($sizes as $size) {
+			// using the Icon Service because we don't want to auto generate the 'new' icon
+			$new_icon = _elgg_services()->iconService->getIcon($entity, $size, 'icon', false);
 			if ($new_icon->owner_guid == $entity->guid) {
 				// we do not need to update icons that are owned by the entity itself
 				continue;
@@ -68,7 +71,7 @@ class MoveIconsOnOwnerChangeHandler {
 	
 			$old_icon->transfer($new_icon->owner_guid, $new_icon->getFilename());
 			elgg_log("Entity $entity->guid has been transferred to a new owner. "
-			. "Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.", 'NOTICE');
+				. "Icon was moved from {$old_icon->getFilenameOnFilestore()} to {$new_icon->getFilenameOnFilestore()}.", 'NOTICE');
 		}
 	}
 }

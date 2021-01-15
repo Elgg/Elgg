@@ -7,7 +7,6 @@
  * @uses $vars['name']        name of the input/file (default: icon)
  * @uses $vars['remove_name'] name of the remove icon toggle (default: $vars['name'] . '_remove')
  * @uses $vars['show_remove'] show the remove icon option (default: true)
- * @uses $vars['thumb_size']  the icon size to use as the thumb (default: medium)
  */
 
 if (elgg_extract('show_remove', $vars, true) === false) {
@@ -21,9 +20,7 @@ if (!$entity instanceof ElggEntity) {
 }
 
 $icon_type = elgg_extract('icon_type', $vars, 'icon');
-$size = elgg_extract('thumb_size', $vars, 'medium');
-
-if (!$entity->hasIcon($size, $icon_type)) {
+if (!$entity->hasIcon('master', $icon_type)) {
 	// no icon uploaded
 	return;
 }
