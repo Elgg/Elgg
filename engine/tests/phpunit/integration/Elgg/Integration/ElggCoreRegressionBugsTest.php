@@ -47,7 +47,9 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$object = $this->createObject([
 			'owner_guid' => $owner->guid, // make sure this is a different user
 		]);
-		$group = $this->createGroup();
+		$group = $this->createGroup([
+			'owner_guid' => $owner->guid, // make sure this is a different user
+		]);
 
 		// disable access overrides because we're admin.
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($user, $object, $group) {
