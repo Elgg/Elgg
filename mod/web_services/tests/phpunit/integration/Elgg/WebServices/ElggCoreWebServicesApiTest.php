@@ -61,6 +61,26 @@ class ElggCoreWebServicesApiTest extends IntegrationTestCase {
 		$this->expectExceptionMessage(elgg_echo('APIException:BadAPIKey'));
 		elgg_ws_pam_auth_api_key();
 	}
+	
+	public function testApiAuthKeyDisabled() {
+		/* @var $entity \ElggApiKey */
+		$entity = $this->createObject([
+			'subtype' => \ElggApiKey::SUBTYPE,
+		]);
+		
+		$this->assertInstanceOf(\ElggApiKey::class, $entity);
+		
+		set_input('api_key', $entity->getPublicKey());
+		
+		$this->assertTrue(elgg_ws_pam_auth_api_key());
+		
+		$this->assertTrue($entity->disableKeys());
+		$this->assertFalse($entity->hasActiveKeys());
+		
+		$this->expectException(\APIException::class);
+		$this->expectExceptionMessage(elgg_echo('APIException:BadAPIKey'));
+		elgg_ws_pam_auth_api_key();
+	}
 
 	public function methodCallback() {
 		return func_get_args();

@@ -44,6 +44,27 @@ class EntityMenu {
 				]),
 				'confirm' => true,
 			]);
+			
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'enable_keys',
+				'icon' => 'check',
+				'text' => elgg_echo('webservices:menu:entity:enable_keys'),
+				'href' => elgg_generate_action_url('webservices/api_key/toggle_active', [
+					'guid' => $entity->guid,
+				]),
+				'item_class' => $entity->hasActiveKeys() ? 'hidden' : '',
+				'data-toggle' => 'disable_keys',
+			]);
+			$return[] = \ElggMenuItem::factory([
+				'name' => 'disable_keys',
+				'icon' => 'ban',
+				'text' => elgg_echo('webservices:menu:entity:disable_keys'),
+				'href' => elgg_generate_action_url('webservices/api_key/toggle_active', [
+					'guid' => $entity->guid,
+				]),
+				'item_class' => $entity->hasActiveKeys() ? '' : 'hidden',
+				'data-toggle' => 'enable_keys',
+			]);
 		}
 		
 		return $return;

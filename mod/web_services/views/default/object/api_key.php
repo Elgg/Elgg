@@ -43,11 +43,27 @@ if (!empty($secret)) {
 	$content .= elgg_format_element('div', ['class' => ['hidden', 'webservices-secret-' . $entity->guid]], $secret);
 }
 
+// imprint
+$imprint = [];
+
+if ($entity->hasActiveKeys()) {
+	$imprint[] = [
+		'icon_name' => 'check',
+		'content' => elgg_echo('status:enabled'),
+	];
+} else {
+	$imprint[] = [
+		'icon_name' => 'ban',
+		'content' => elgg_echo('status:disabled'),
+	];
+}
+
 $params = [
 	'title' => $entity->getDisplayName(),
 	'byline' => false,
 	'access' => false,
 	'content' => $content,
+	'imprint' => $imprint,
 ];
 $params = $params + $vars;
 

@@ -89,4 +89,22 @@ class ElggApiKeyIntegrationTest extends IntegrationTestCase {
 		
 		$session->removeLoggedInUser();
 	}
+	
+	public function testEnableDisableKeys() {
+		
+		/* @var $entity \ElggApiKey */
+		$entity = $this->createObject([
+			'subtype' => \ElggApiKey::SUBTYPE,
+		]);
+		
+		$this->assertInstanceOf(\ElggApiKey::class, $entity);
+		
+		$this->assertTrue($entity->hasActiveKeys());
+		
+		$this->assertTrue($entity->disableKeys());
+		$this->assertFalse($entity->hasActiveKeys());
+		
+		$this->assertTrue($entity->enableKeys());
+		$this->assertTrue($entity->hasActiveKeys());
+	}
 }
