@@ -244,13 +244,13 @@ class UserCapabilities {
 	 * Can a user add an entity to this container
 	 *
 	 * @param ElggEntity $entity    Container entity
-	 * @param int        $user_guid The GUID of the user creating the entity (0 for logged in user).
 	 * @param string     $type      The type of entity we're looking to write
 	 * @param string     $subtype   The subtype of the entity we're looking to write
+	 * @param int        $user_guid The GUID of the user creating the entity (0 for logged in user).
 	 *
 	 * @return bool
 	 */
-	public function canWriteToContainer(ElggEntity $entity, $user_guid = 0, $type = 'all', $subtype = 'all') {
+	public function canWriteToContainer(ElggEntity $entity, string $type, string $subtype, int $user_guid = 0) {
 		try {
 			$user = $this->entities->getUserForPermissionsCheck($user_guid);
 		} catch (UserFetchFailureException $e) {
@@ -284,13 +284,8 @@ class UserCapabilities {
 			return true;
 		}
 
-		$return = false;
-		if ($entity) {
-			// If the user can edit the container, they can also write to it
-			if ($entity->canEdit($user_guid)) {
-				$return = true;
-			}
-		}
+		// If the user can edit the container, they can also write to it
+		$return = $entity->canEdit($user_guid);
 
 		// Container permissions can prevent users from writing to an entity.
 		// For instance, these permissions can prevent non-group members from writing

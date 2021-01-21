@@ -201,7 +201,7 @@ Adding content
 By passing along the group as ``container_guid`` via a hidden input field,
 you can use a single form and action to add both user and group content.
 
-Use ``ElggEntity->canWriteToContainer()`` to determine whether or not the current user has the right to
+Use ``ElggEntity->canWriteToContainer(0, $type, $subtype)`` to determine whether or not the current user has the right to
 add content to a group.
 
 Be aware that you will then need to pass the container GUID
@@ -219,7 +219,7 @@ your new element (defaulting to the current user's container):
     if ($container_guid) {
     	$container = get_entity($container_guid);
     	
-        if (!$container instanceof \ElggEntity || !$container->canWriteToContainer($user->guid)) {
+        if (!$container instanceof \ElggEntity || !$container->canWriteToContainer($user->guid, 'object', 'my_content_subtype')) {
             return elgg_error_response(elgg_echo('actionunauthorized'));
         }
     } else {

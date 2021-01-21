@@ -113,6 +113,12 @@ The following files are no longer included during bootstrapping of a plugin:
 * ``views.php`` use ``elgg-plugin.php``
 * ``start.php`` use ``elgg-plugin.php`` and/or ``PluginBootstrap``
 
+Container permissions
+---------------------
+
+The function parameters for ``ElggEntity::canWriteToContainer()`` now require a ``$type`` and ``$subtype`` to be passed. This is to give more
+information to the resulting hook in order to be able to determine if a user is allowed write access to the container.
+
 Datamodel / Schema changes
 --------------------------
 
@@ -174,6 +180,7 @@ Class functions
 ~~~~~~~~~~~~~~~
 
 * ``Elgg\Http\ResponseBuilder::setStatusCode()`` no longer has a default value
+* ``ElggEntity::canWriteToContainer()`` no longer has a default value for ``$type`` and ``$subtype`` but these are required
 
 Lib functions
 ~~~~~~~~~~~~~

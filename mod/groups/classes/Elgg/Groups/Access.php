@@ -98,7 +98,7 @@ class Access {
 			return;
 		}
 	
-		if (!$page_owner->canWriteToContainer($user_guid)) {
+		if (!$page_owner->isMember($user) && !$page_owner->canEdit($user_guid)) {
 			return;
 		}
 	
@@ -142,7 +142,7 @@ class Access {
 	/**
 	 * Return the write access for the current group if the user has write access to it
 	 *
-	 * @param \Elgg\Hook $hook 'access_collection:display_name' 'access_collection'
+	 * @param \Elgg\Hook $hook 'access_collection:name' 'access_collection'
 	 * @return void|string
 	 */
 	public static function getAccessCollectionName(\Elgg\Hook $hook) {
@@ -159,11 +159,16 @@ class Access {
 		
 		$page_owner = elgg_get_page_owner_entity();
 	
-		if ($page_owner && $page_owner->guid == $owner->guid) {
+		if ($page_owner && $page_owner->guid === $owner->guid) {
 			return elgg_echo('groups:acl:in_context');
 		}
 	
-		if ($owner->canWriteToContainer()) {
+		$user = elgg_get_logged_in_user_entity();
+		if (empty($user)) {
+			return;
+		}
+		
+		if ($owner->isMember($user) || $owner->canEdit($user->guid)) {
 			return elgg_echo('groups:acl', [$owner->getDisplayName()]);
 		}
 	}
