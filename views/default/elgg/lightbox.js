@@ -111,25 +111,9 @@ define(function (require) {
 						lightbox.open(currentOpts);
 						return;
 					}
-						
-					href = currentOpts.href;
-					currentOpts.href = false;
-					var data = currentOpts.data;
-					currentOpts.data = undefined;
 					
-					// open lightbox without a href so we get a loader
+					currentOpts.ajaxLoadWithDependencies = true;
 					lightbox.open(currentOpts);
-					
-					require(['elgg/Ajax'], function(Ajax) {
-						var ajax = new Ajax(false);
-						ajax.path(href, {data: data}).done(function(output) {
-							currentOpts.html = output;
-							lightbox.open(currentOpts);
-							
-							// clear data so next fetch will refresh contents
-							currentOpts.html = undefined;
-						});
-					});
 				});
 
 			$(window)
@@ -147,7 +131,34 @@ define(function (require) {
 		 * @return void
 		 */
 		open: function (opts) {
-			$.colorbox(lightbox.getOptions(opts));
+			var currentOpts = lightbox.getOptions(opts);
+			
+			if (!currentOpts.ajaxLoadWithDependencies) {
+				$.colorbox(currentOpts);
+				return;
+			}
+			
+			href = currentOpts.href;
+			currentOpts.href = false;
+			var data = currentOpts.data;
+			currentOpts.data = undefined;
+			
+			// open lightbox without a href so we get a loader
+			$.colorbox(currentOpts);
+			
+			require(['elgg/Ajax'], function(Ajax) {
+				// using elggAjax to also load JS dependencies that the href may require
+				var ajax = new Ajax(false);
+				ajax.path(href, {
+					data: data
+				}).done(function(output) {
+					currentOpts.html = output;
+					$.colorbox(currentOpts);
+					
+					// clear data so next fetch will refresh contents
+					currentOpts.html = undefined;
+				});
+			});
 		},
 
 		/**
