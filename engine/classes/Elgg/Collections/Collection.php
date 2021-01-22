@@ -25,6 +25,11 @@ class Collection implements CollectionInterface,
 	 * @var string
 	 */
 	protected $item_class;
+	
+	/**
+	 * @var int positition of the SeekableIterator
+	 */
+	protected $position;
 
 	/**
 	 * Constructor
@@ -201,6 +206,10 @@ class Collection implements CollectionInterface,
 	}
 
 	/**
+	 * ArrayAccess interface functions
+	 */
+	
+	/**
 	 * {@inheritdoc}
 	 */
 	public function offsetExists($offset) {
@@ -232,38 +241,48 @@ class Collection implements CollectionInterface,
 	}
 
 	/**
+	 * SeekableIterator interface functions
+	 */
+	
+	/**
 	 * {@inheritdoc}
 	 */
 	public function current() {
-		return current($this->items);
+		$keys = array_keys($this->items);
+		
+		return $this->get($keys[$this->position]);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function next() {
-		next($this->items);
+		$this->position++;
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function key() {
-		return key($this->items);
+		$keys = array_keys($this->items);
+		
+		return $keys[$this->position];
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function valid() {
-		return key($this->items) !== null;
+		$keys = array_keys($this->items);
+		
+		return isset($keys[$this->position]);
 	}
 
 	/**
 	 * {@inheritdoc}
 	 */
 	public function rewind() {
-		reset($this->items);
+		$this->position = 0;
 	}
 
 	/**
@@ -272,13 +291,10 @@ class Collection implements CollectionInterface,
 	public function seek($position) {
 		$keys = array_keys($this->items);
 
-		if (isset($keys[$position])) {
+		if (!isset($keys[$position])) {
 			throw new \OutOfBoundsException();
 		}
 
-		$key = $keys[$position];
-
-		return $this->items[$key];
+		$this->position = $position;
 	}
-
 }
