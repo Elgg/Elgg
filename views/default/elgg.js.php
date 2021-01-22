@@ -21,7 +21,6 @@ $core_js_views = [
 	'hooks.js',
 	'security.js',
 	'languages.js',
-	'ajax.js',
 	'session.js',
 	'pageowner.js',
 	'configuration.js',

@@ -10,14 +10,6 @@ if (!$entity instanceof \ElggWire) {
 	return;
 }
 
-elgg_require_js('elgg/thewire');
-
-// make compatible with posts created with original Curverider plugin
-$thread_id = $entity->wire_thread;
-if (!$thread_id) {
-	$entity->wire_thread = $entity->guid;
-}
-
 $params = [
 	'title' => false,
 	'tags' => false,
@@ -38,12 +30,3 @@ if (elgg_extract('full_view', $vars)) {
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);
 }
-
-if (!$entity->reply) {
-	return;
-}
-
-echo elgg_format_element('div', [
-	'class' => 'thewire-parent hidden',
-	'id' => "thewire-previous-{$entity->guid}",
-]);

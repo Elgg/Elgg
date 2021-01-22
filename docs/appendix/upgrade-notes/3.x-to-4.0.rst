@@ -95,13 +95,25 @@ Split OkResponse, ErrorResponse and RedirectResponse
 The classes ``Elgg\Http\ErrorResponse`` and ``Elgg\Http\RedirectResponse`` were extensions of ``Elgg\Http\OkReponse`` this 
 complicated validating responses (for example in hooks). The classes have been split apart to allow for easier and clearer checks.
 
-All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``.
+All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``. The default HTTP error code when using ``elgg_error_response()`` has been changed to return a 400 status. 
 
 Default widgets
 ---------------
 
 The magic handling the creation of default widgets has been reduced. You now need to register the ``Elgg\Widgets\CreateDefaultWidgetsHandler`` callback to the event when you want default widgets to be created.
 The configuration ``default_widget_info`` is no longer present in the system. Use the ``get_list``, ``default_widgets`` hook to get the value.
+
+Javascript
+----------
+
+The following Ajax helper functions have been removed in favor of their counterparts in asynchronous module ``elgg/Ajax``.
+* ``elgg.action()``
+* ``elgg.get()``
+* ``elgg.getJSON()``
+* ``elgg.post()``
+
+The ajax function ``elgg.api`` has been moved to the ``executeMethod`` function in the asynchronous module ``elgg/webservices`` in the webservices plugin. 
+Other ``elgg.ajax`` functions and attributes have been removed from the system. Also the legacy handling of ajax calls have been removed from the system.
 
 Plugin bootstrapping
 --------------------
@@ -509,13 +521,16 @@ Removed views / resources
 -------------------------
 
 * ``admin/develop_tools/inspect/webservices``
+* ``elgg/thewire.js``
+* ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
-* ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
+* ``thewire/previous``
 
 Removed hooks / events
 ----------------------
 
+* Hook ``output, ajax`` has been removed. Use the``ajax_response`` hook if you want to influence the results.
 * Hook ``reportedcontent:add`` has been removed. Use the``create, object`` event to prevent creation.
 * Hook ``reportedcontent:archive`` has been removed. Use the``permissions_check, object`` hook.
 * Hook ``reportedcontent:delete`` has been removed. Use the``delete, object`` event to prevent deletion.

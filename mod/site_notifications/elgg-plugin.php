@@ -21,11 +21,6 @@ return [
 			],
 		],
 	],
-	'view_extensions' => [
-		'elgg.css' => [
-			'site_notifications/css' => [],
-		],
-	],
 	'hooks' => [
 		'register' => [
 			'menu:entity' => [

@@ -1,10 +1,5 @@
 /** @module elgg/UserPicker */
-
-define(function(require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var spinner = require('elgg/spinner');
-	require('jquery.ui.autocomplete.html');
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery.ui.autocomplete.html'], function($, elgg, Ajax) {
 
 	/**
 	 * @param {HTMLElement} wrapper outer div
@@ -36,22 +31,21 @@ define(function(require) {
 					return;
 				}
 
-				elgg.get(UserPicker.handler, {
-					beforeSend: spinner.start,
-					complete: spinner.stop,
+				var ajax = new Ajax();
+				ajax.path(UserPicker.handler, {
 					data: {
 						term: Autocomplete.term,
 						match_on: UserPicker.getSearchType(),
 						name: UserPicker.name
 					},
-					dataType: 'json',
+					method: 'GET',
 					success: function(data) {
 						response(data);
 					}
 				});
 			},
 			minLength: UserPicker.minLength,
-			html: "html",
+			html: 'html',
 			select: function(event, ui) {
 				UserPicker.addUser(event, ui.item.guid, ui.item.html);
 			},

@@ -305,12 +305,7 @@ class ResponseFactory {
 		}
 
 		if ($is_xhr && ($is_action || $this->ajax->isAjax2Request())) {
-			if (!$this->ajax->isAjax2Request()) {
-				// xhr actions using legacy ajax API should return 200 with wrapped data
-				$response->setStatusCode(ELGG_HTTP_OK);
-			}
-
-			// Actions always respond with JSON on xhr calls
+			// Actions and calls from elgg/Ajax always respond with JSON on xhr calls
 			$headers = $response->getHeaders();
 			$headers['Content-Type'] = 'application/json; charset=UTF-8';
 			$response->setHeaders($headers);
@@ -421,10 +416,6 @@ class ResponseFactory {
 	 */
 	public function wrapAjaxResponse($content = '', $forward_url = null) {
 
-		if (!$this->ajax->isAjax2Request()) {
-			return $this->wrapLegacyAjaxResponse($content, $forward_url);
-		}
-
 		$content = $this->stringify($content);
 
 		if ($forward_url === REFERRER) {
@@ -438,57 +429,6 @@ class ResponseFactory {
 		];
 
 		$params['value'] = $this->ajax->decodeJson($content);
-
-		return $this->stringify($params);
-	}
-
-	/**
-	 * Wraps content for compability with legacy Elgg ajax calls
-	 *
-	 * @param string $content     Response content
-	 * @param string $forward_url Forward URL
-	 * @return string
-	 */
-	public function wrapLegacyAjaxResponse($content = '', $forward_url = REFERRER) {
-
-		$content = $this->stringify($content);
-
-		if ($forward_url === REFERRER) {
-			$forward_url = $this->getSiteRefererUrl();
-		}
-
-		// always pass the full structure to avoid boilerplate JS code.
-		$params = [
-			'output' => '',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => []
-			],
-			'current_url' => current_page_url(),
-			'forward_url' => elgg_normalize_url($forward_url),
-		];
-
-		$params['output'] = $this->ajax->decodeJson($content);
-
-		// Grab any system messages so we can inject them via ajax too
-		$system_messages = _elgg_services()->systemMessages->dumpRegister();
-
-		if (isset($system_messages['success'])) {
-			$params['system_messages']['success'] = $system_messages['success'];
-		}
-
-		if (isset($system_messages['error'])) {
-			$params['system_messages']['error'] = $system_messages['error'];
-			$params['status'] = -1;
-		}
-
-		$response_type = $this->parseContext();
-		list($service, $name) = explode(':', $response_type);
-		$context = [
-			$service => $name,
-		];
-		$params = $this->hooks->trigger('output', 'ajax', $context, $params);
 
 		return $this->stringify($params);
 	}
@@ -560,15 +500,11 @@ class ResponseFactory {
 				// Redirect responses should be converted to OK responses as this is an XHR request
 				$status_code = ELGG_HTTP_OK;
 			}
+			
 			$output = ob_get_clean();
-			if (!$this->isAction() && !$this->ajax->isAjax2Request()) {
-				// legacy ajax calls are always OK
-				// actions are wrapped by ResponseFactory::respond()
-				$status_code = ELGG_HTTP_OK;
-				$output = $this->wrapLegacyAjaxResponse($output, $forward_url);
-			}
 
-			$response = new OkResponse($output, $status_code, $forward_url);
+			$response = new RedirectResponse($forward_url, $status_code);
+			$response->setContent($output);
 			$headers = $response->getHeaders();
 			$headers['Content-Type'] = 'application/json; charset=UTF-8';
 			$response->setHeaders($headers);
@@ -582,7 +518,7 @@ class ResponseFactory {
 			}
 		}
 
-		$response = new OkResponse('', $status_code, $forward_url);
+		$response = new RedirectResponse($forward_url, $status_code);
 		if ($response->isRedirection()) {
 			return $this->send($this->prepareRedirectResponse($forward_url, $status_code));
 		}

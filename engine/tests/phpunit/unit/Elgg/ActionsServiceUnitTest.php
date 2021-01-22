@@ -455,14 +455,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsStringIgnoringCase('charset=utf-8', $response->headers->get('Content-Type'));
 		$output = json_encode([
-			'output' => 'output3',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => [
-					'success',
-				]
-			],
+			'value' => 'output3',
 			'current_url' => current_page_url(),
 			'forward_url' => $request->headers->get('Referer'),
 		]);
@@ -658,12 +651,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
-			'output' => 'output3',
-			'status' => -1,
-			'system_messages' => [
-				'error' => ['error'],
-				'success' => []
-			],
+			'value' => 'output3',
 			'current_url' => current_page_url(),
 			'forward_url' => $request->headers->get('Referer'),
 		]);
@@ -790,12 +778,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
-			'output' => ['foo', 'bar'],
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => ['success']
-			],
+			'value' => ['foo', 'bar'],
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('index'),
 		]);
@@ -820,21 +803,11 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
-		$output = json_encode([
-			'output' => 'error', // registered error message
-			'status' => -1,
-			'system_messages' => [
-				'error' => ['error'],
-				'success' => []
-			],
-			'current_url' => current_page_url(),
-			'forward_url' => elgg_normalize_url('index'),
-		]);
 
-		$this->assertEquals($output, $response->getContent());
+		$this->assertEquals('error', $response->getContent());
 	}
 
 	public function testCanRespondToAjaxRequestFromRedirectResponseBuilder() {
@@ -856,18 +829,17 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
+		
 		$output = json_encode([
-			'output' => '',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => []
-			],
+			'value' => '',
 			'current_url' => current_page_url(),
 			'forward_url' => elgg_normalize_url('index'),
 		]);
 
 		$this->assertEquals($output, $response->getContent());
+		
+		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
+		ob_start();
 	}
 
 	/**
@@ -1039,12 +1011,7 @@ class ActionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 		$output = json_encode([
-			'output' => 'foo',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => []
-			],
+			'value' => 'foo',
 			'current_url' => current_page_url(),
 			'forward_url' => $request->headers->get('Referer'),
 		]);

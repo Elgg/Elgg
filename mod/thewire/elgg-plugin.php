@@ -71,9 +71,6 @@ return [
 			'thewire/css' => [],
 		],
 	],
-	'view_options' => [
-		'thewire/previous' => ['ajax' => true],
-	],
 	'hooks' => [
 		'get' => [
 			'subscriptions' => [

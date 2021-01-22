@@ -11,8 +11,6 @@ if (!$page_owner instanceof ElggUser || !$page_owner->canEdit()) {
 	throw new EntityPermissionsException(elgg_echo('site_notifications:no_access'));
 }
 
-elgg_load_external_file('js', 'elgg.site_notifications');
-
 $list = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => 'site_notification',
@@ -28,11 +26,9 @@ if (empty($list)) {
 		'no_results' => elgg_echo('site_notifications:empty'),
 	]);
 } else {
-	$body_vars = [
+	$content = elgg_view_form('site_notifications/process', [], [
 		'list' => $list
-	];
-	
-	$content = elgg_view_form('site_notifications/process', [], $body_vars);
+	]);
 }
 
 echo elgg_view_page(elgg_echo('site_notifications'), [

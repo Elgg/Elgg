@@ -158,14 +158,11 @@ function elgg_ok_response($content = '', $message = '', $forward_url = null, int
  *                            Can be used by handlers to redirect the client on non-ajax requests
  * @param int    $status_code HTTP status code
  *                            Status code of the HTTP response
- *                            For BC reasons and due to the logic in the client-side AJAX API,
- *                            this defaults to 200. Note that the Router and AJAX API will
- *                            treat these responses as error in spite of the HTTP code assigned
  *
  * @todo change default status_code after AJAX rework
  * @return \Elgg\Http\ErrorResponse
  */
-function elgg_error_response($error = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_OK) {
+function elgg_error_response($error = '', $forward_url = REFERRER, int $status_code = ELGG_HTTP_BAD_REQUEST) {
 	if ($error) {
 		register_error($error);
 	}

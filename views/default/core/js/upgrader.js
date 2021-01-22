@@ -7,11 +7,7 @@
  *
  * @since 3.0.0
  */
-define(function(require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var spinner = require('elgg/spinner');
-	var popup = require('elgg/popup');
+define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup'], function($, elgg, Ajax, spinner, popup) {
 
 	var UNKNOWN_COUNT = -1;
 	var upgrades = $('.elgg-item-object-elgg_upgrade');
@@ -37,32 +33,12 @@ define(function(require) {
 	var fakeDone = 0;
 
 	/**
-	 * Initializes the upgrade page
-	 *
-	 * Makes the upgrade button visible and adds a progress bar
-	 * to each upgrade.
-	 */
-	function init() {
-		// Display the button only if there are pending upgrades
-		if ($('.elgg-item-object-elgg_upgrade').length) {
-			$('#elgg-upgrades-run').removeClass('hidden').click(run);
-		}
-		
-		$(document).on('click', '.elgg-menu-item-run-upgrade > a', runSingle);
-
-		upgrades.each(function(key, value) {
-			// Initialize progressbar
-			$(value).find('.elgg-progressbar').progressbar();
-		});
-	}
-
-	/**
 	 * Runs all individual upgrades one at a time
 	 *
-	 * @param {Object} e Event object
+	 * @param {Object} event Event object
 	 */
-	function run(e) {
-		e.preventDefault();
+	function run(event) {
+		event.preventDefault();
 
 		// Replace button with spinner when upgrade starts
 		$('#elgg-upgrades-run').addClass('hidden');
@@ -76,10 +52,8 @@ define(function(require) {
 	
 	/**
 	 * Run a single upgrade
-	 *
-	 * @param {Object} e Event object
 	 */
-	function runSingle(e) {
+	function runSingle() {
 		var guid = $(this).data().guid;
 		
 		if (!$('#elgg-object-' + guid).length) {
@@ -146,117 +120,115 @@ define(function(require) {
 		}
 		
 		var options = {
-			data: {guid: guid},
-			dataType: 'json'
-		};
-
-		options.data = elgg.security.addToken(options.data);
-
-		options.success = function(json) {
-			// Append possible errors after the progressbar
-			if (json.system_messages.error.length) {
-				// Display only the errors that haven't already been shown
-				$(json.system_messages.error).each(function(key, message) {
-					if ($.inArray(message, errorMessages) === -1) {
-						var msg = '<li>' + message + '</li>';
-						messageList.append(msg);
-						messages.push(message);
-					}
+			data: {
+				guid: guid
+			},
+			error: function(result) {
+				// Append possible errors after the progressbar
+				if (result.system_messages.error.length) {
+					// Display only the errors that haven't already been shown
+					$(result.error).each(function(key, message) {
+						if ($.inArray(message, errorMessages) === -1) {
+							var msg = '<li>' + message + '</li>';
+							messageList.append(msg);
+							messages.push(message);
+						}
+					});
+				}
+	
+				$(result.errors).each(function(key, message) {
+					var msg = '<li>' + message + '</li>';
+					messageList.append(msg);
+					messages.push(message);
 				});
-			}
+			},
+			success: function(result) {
 
-			$(json.output.errors).each(function(key, message) {
-				var msg = '<li>' + message + '</li>';
-				messageList.append(msg);
-				messages.push(message);
-			});
-
-			numSuccess = parseInt(json.output.numSuccess);
-			numError = parseInt(json.output.numErrors);
-
-			numProcessed += (numSuccess + numError);
-
-			// Increase success statistics
-			if (total == UNKNOWN_COUNT) {
-				counter.text(numProcessed + '/???');
-			} else {
-				counter.text(numProcessed + '/' + total);
-			}
-
-			// Increase the progress bar
-			if (total == UNKNOWN_COUNT) {
-				fakeDone = Math.round(FAKE_TOTAL - (FAKE_TOTAL - fakeDone) / 2);
-				progressbar.progressbar({value: fakeDone});
-			} else {
-				percentage = parseInt(numProcessed * 100 / total);
-				progressbar.progressbar({value: numProcessed});
-			}
-
-			if (numError > 0) {
-				errorCounter
-					.text(elgg.echo('upgrade:error_count', [messages.length]))
-					.css('color', 'red');
-			}
-
-			updateCounter();
-
-			var done;
-			if (total == UNKNOWN_COUNT) {
-				done = json.output.isComplete;
-			} else {
-				done = numProcessed >= total;
-			}
-
-			if (done) {
-				if (numError > 0) {
-					// Upgrade finished with errors. Give instructions on how to proceed.
-					elgg.register_error(elgg.echo('upgrade:finished_with_errors'));
-				}
-
+				numSuccess = parseInt(result.numSuccess);
+				numError = parseInt(result.numErrors);
+	
+				numProcessed += (numSuccess + numError);
+	
+				// Increase success statistics
 				if (total == UNKNOWN_COUNT) {
-					counter.text(numProcessed + '/' + numProcessed);
-					progressbar.progressbar({value: FAKE_TOTAL});
-				}
-
-				// Increase percentage
-				percent.html('100%');
-
-				// Reset all counters
-				numSuccess = numError = numProcessed = percentage = 0;
-				messages = [];
-
-				if (advanceToNextWhenDone) {
-					// Get next upgrade
-					upgrade = upgrade.next();
+					counter.text(numProcessed + '/???');
 				} else {
-					upgrade = '';
+					counter.text(numProcessed + '/' + total);
 				}
-
-				if (upgrade.length) {
-					// Continue to next upgrade
-					runUpgrade(advanceToNextWhenDone);
+	
+				// Increase the progress bar
+				if (total == UNKNOWN_COUNT) {
+					fakeDone = Math.round(FAKE_TOTAL - (FAKE_TOTAL - fakeDone) / 2);
+					progressbar.progressbar({value: fakeDone});
 				} else {
-					spinner.stop();
-					$('#upgrade-finished').removeClass('hidden');
+					percentage = parseInt(numProcessed * 100 / total);
+					progressbar.progressbar({value: numProcessed});
 				}
-				
-				return;
+	
+				if (numError > 0) {
+					errorCounter
+						.text(elgg.echo('upgrade:error_count', [messages.length]))
+						.css('color', 'red');
+				}
+	
+				updateCounter();
+	
+				var done;
+				if (total == UNKNOWN_COUNT) {
+					done = result.isComplete;
+				} else {
+					done = numProcessed >= total;
+				}
+	
+				if (done) {
+					if (numError > 0) {
+						// Upgrade finished with errors. Give instructions on how to proceed.
+						elgg.register_error(elgg.echo('upgrade:finished_with_errors'));
+					}
+	
+					if (total == UNKNOWN_COUNT) {
+						counter.text(numProcessed + '/' + numProcessed);
+						progressbar.progressbar({value: FAKE_TOTAL});
+					}
+	
+					// Increase percentage
+					percent.html('100%');
+	
+					// Reset all counters
+					numSuccess = numError = numProcessed = percentage = 0;
+					messages = [];
+	
+					if (advanceToNextWhenDone) {
+						// Get next upgrade
+						upgrade = upgrade.next();
+					} else {
+						upgrade = '';
+					}
+	
+					if (upgrade.length) {
+						// Continue to next upgrade
+						runUpgrade(advanceToNextWhenDone);
+					} else {
+						spinner.stop();
+					}
+					
+					return;
+				}
+	
+				// carry on...
+				if (total != UNKNOWN_COUNT) {
+					percentage = parseInt(numProcessed * 100 / total);
+					// Increase percentage
+					percent.html(percentage + '%');
+				}
+	
+				// Start next upgrade call
+				processBatch(advanceToNextWhenDone);
 			}
-
-			// carry on...
-			if (total != UNKNOWN_COUNT) {
-				percentage = parseInt(numProcessed * 100 / total);
-				// Increase percentage
-				percent.html(percentage + '%');
-			}
-
-			// Start next upgrade call
-			processBatch(advanceToNextWhenDone);
 		};
 
-		// We use post() instead of action() so we can catch error messages
-		// and display them manually underneath the upgrade view.
-		return elgg.post('action/admin/upgrade', options);
+		var ajax = new Ajax(false);
+		return ajax.action('admin/upgrade', options);
 	}
 
 	/**
@@ -319,5 +291,15 @@ define(function(require) {
 		return time;
 	}
 
-	init();
+	// Display the button only if there are pending upgrades
+	if ($('.elgg-item-object-elgg_upgrade').length) {
+		$('#elgg-upgrades-run').removeClass('hidden').click(run);
+	}
+	
+	$(document).on('click', '.elgg-menu-item-run-upgrade > a', runSingle);
+
+	upgrades.each(function(key, value) {
+		// Initialize progressbar
+		$(value).find('.elgg-progressbar').progressbar();
+	});
 });

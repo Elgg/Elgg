@@ -97,9 +97,7 @@ Client-side translations are loaded asynchronously. Ensure translations are avai
 
 .. code-block:: js
 
-	define(function(require) {
-		var elgg = require("elgg");
-
+	define(['elgg'], function(elgg) {
 		alert(elgg.echo('my_key'));
 	});
 

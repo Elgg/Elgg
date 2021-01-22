@@ -36,10 +36,7 @@ Here we define a basic module that alters the page, by passing a "definition fun
 
     // in views/default/myplugin/say_hello.js
 
-    define(function(require) {
-        var elgg = require("elgg");
-        var $ = require("jquery");
-
+    define(['jquery', 'elgg'], function($, elgg) {
         $('body').append(elgg.echo('hello_world'));
     });
 
@@ -60,9 +57,7 @@ the greeting:
 
     // in views/default/myplugin/hello.js
 
-    define(function(require) {
-        var elgg = require("elgg");
-
+    define(['elgg'], function(elgg) {
         return elgg.echo('hello_world');
     });
 
@@ -70,10 +65,7 @@ the greeting:
 
     // in views/default/myplugin/say_hello.js
 
-    define(function(require) {
-        var $ = require("jquery");
-        var hello = require("myplugin/hello");
-
+    define(['jquery', 'myplugin/hello'], function($, hello) {
         $('body').append(hello);
     });
 
@@ -124,9 +116,7 @@ Let's pass some data to a module:
 
 .. code-block:: js
 
-    define(function(require) {
-        var elgg = require("elgg");
-
+    define(['elgg'], function(elgg) {
         var api = elgg.data.myplugin.api;
         var key = elgg.data.myplugin.key; // "none" or a user's key
 
@@ -482,23 +472,17 @@ Require this module to make sure all plugins are ready.
 Module ``elgg/spinner``
 -----------------------
 
-The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixed to the top of the window.
+The ``elgg/spinner`` module can be used to create an loading indicator fixed to the top of the window. 
+This can be used to give users feedback that the system is performing a longer running task. Using ajax features from ``elgg/Ajax`` will do this by default.
+You can also use it in your own code.
 
 .. code-block:: js
 
-   define(function (require) {
-      var spinner = require('elgg/spinner');
-
-      elgg.action('friend/add', {
-          beforeSend: spinner.start,
-          complete: spinner.stop,
-          success: function (json) {
-              // ...
-          }
-      });
+   define(['elgg/spinner'], function (spinner) {
+       spinner.start();
+       // your code
+       spinner.stop();
    });
-
-.. note:: The ``elgg/Ajax`` module uses the spinner by default.
 
 Module ``elgg/popup``
 -----------------------
@@ -543,8 +527,7 @@ popup modules programmatically:
 
 .. code-block:: js
 
-   define(function(require) {
-      var $ = require('jquery');
+   define(['jquery', 'elgg/popup'], function($, popup) {
       $(document).on('click', '.elgg-button-popup', function(e) {
 
          e.preventDefault();
@@ -553,13 +536,11 @@ popup modules programmatically:
          var $target = $('#my-target');
          var $close = $target.find('.close');
 
-         require(['elgg/popup'], function(popup) {
-            popup.open($trigger, $target, {
-               'collision': 'fit none'
-            });
-
-            $close.on('click', popup.close);
+         popup.open($trigger, $target, {
+            'collision': 'fit none'
          });
+
+         $close.on('click', popup.close);
       });
    });
 
@@ -568,16 +549,14 @@ You can use jQuery ``open`` and ``close`` events to manipulate popup module afte
 
 .. code-block:: js
 
-   define(function(require) {
-
-      var elgg = require('elgg');
-      var $ = require('jquery');
+   define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 
       $('#my-target').on('open', function() {
          var $module = $(this);
          var $trigger = $module.data('trigger');
-
-         elgg.ajax('ajax/view/my_module', {
+         var ajax = new Ajax();
+         
+         ajax.view('my_module', {
             beforeSend: function() {
                $trigger.hide();
                $module.html('').addClass('elgg-ajax-loader');
@@ -641,10 +620,7 @@ Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.
 
 .. code-block:: js
 
-   define(function(require) {
-      var lightbox = require('elgg/lightbox');
-      var spinner = require('elgg/spinner');
-
+   define(['elgg/lightbox', 'elgg/spinner'], function(lightbox, spinner) {
       lightbox.open({
          html: '<p>Hello world!</p>',
          onClosed: function() {
@@ -674,9 +650,7 @@ You can also resize the lightbox programmatically if needed:
 
 .. code-block:: js
 
-   define(function(require) {
-      var lightbox = require('elgg/lightbox');
-     
+   define(['elgg/lightbox'], function(lightbox) {
       lightbox.resize({
          width: '300px'
       });
@@ -686,9 +660,7 @@ If you wish your content to be loaded by the ``elgg/Ajax`` AMD module, which aut
 
 .. code-block:: js
 
-   define(function(require) {
-      var lightbox = require('elgg/lightbox');
-
+   define(['elgg/lightbox'], function(lightbox) {
       lightbox.open({
          href: 'some/view/with/js/dependencies',
          ajaxLoadWithDependencies: true

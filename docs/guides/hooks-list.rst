@@ -364,12 +364,6 @@ Ajax
 	form()            form:<action_name>
 	================  ====================
 
-**output, ajax**
-	This filters the JSON output wrapper returned to the legacy ajax API (``elgg.ajax``, ``elgg.action``, etc.).
-	Plugins can alter the output, forward URL, system messages, and errors. For the ``elgg/Ajax`` AMD module,
-	use the ``ajax_response`` hook documented above.
-
-
 .. _guides/hooks-list#permission-hooks:
 
 Permission hooks

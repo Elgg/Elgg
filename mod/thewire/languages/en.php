@@ -25,8 +25,6 @@ return array(
 	'thewire:noposts' => "No wire posts yet",
 
 	'thewire:by' => 'Wire post by %s',
-	'thewire:previous:help' => "View previous post",
-	'thewire:hide:help' => "Hide previous post",
 
 	'thewire:form:body:placeholder' => "What's happening?",
 	

@@ -80,10 +80,12 @@ $success_keys = [
 ];
 
 $message = '';
-foreach ($success_keys as $success_key) {
-	if (elgg_language_key_exists($success_key)) {
-		$message = elgg_echo($success_key, [$display_name]);
-		break;
+if (get_input('show_success', true)) {
+	foreach ($success_keys as $success_key) {
+		if (elgg_language_key_exists($success_key)) {
+			$message = elgg_echo($success_key, [$display_name]);
+			break;
+		}
 	}
 }
 

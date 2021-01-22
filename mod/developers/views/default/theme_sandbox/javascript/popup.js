@@ -1,13 +1,11 @@
-define(function (require) {
-
-	var elgg = require('elgg');
-	var $ = require('jquery');
+define(['jquery', 'elgg/Ajax'], function ($, Ajax) {
 
 	$('#elgg-popup-test2').on('open', function () {
 		var $module = $(this);
 		var $trigger = $module.data('trigger');
 
-		elgg.ajax('ajax/view/developers/ajax', {
+		var ajax = new Ajax(false);
+		ajax.view('developers/ajax', {
 			beforeSend: function () {
 				$trigger.addClass('elgg-state-disabled').prop('disabled', true);
 				$module.html('').addClass('elgg-ajax-loader');
