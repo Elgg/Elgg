@@ -149,6 +149,7 @@ Lib functions
 * ``delete_access_collection()`` now requires an ``int`` for ``$collection_id``
 * ``elgg_action_exists()`` now requires a ``string`` for ``$action``
 * ``elgg_add_admin_notice()`` now requires a ``string`` for ``$id`` and ``$message``
+* ``elgg_add_subscription()`` now requires an ``int`` for ``$user_guid`` and ``$target_guid`` and a ``string`` for ``$method``
 * ``elgg_admin_notice_exists()`` now requires a ``string`` for ``$id``
 * ``elgg_annotation_exists()`` now requires a ``int`` for ``$entity_guid``, a ``string`` for ``$name`` and ``int`` for ``$owner_guid``
 * ``elgg_delete_admin_notice()`` now requires a ``string`` for ``$id``
@@ -156,10 +157,12 @@ Lib functions
 * ``elgg_error_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_get_access_collections()`` now requires an ``array`` for ``$options``
 * ``elgg_get_annotation_from_id()`` now requires an ``int`` for ``$id``
+* ``elgg_get_subscriptions_for_container()`` now requires an ``int`` for ``$container_guid``
 * ``elgg_list_annotations()`` now requires an ``array`` for ``$options``
 * ``elgg_ok_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_redirect_response()`` now requires an ``int`` for ``$status_code``
 * ``elgg_register_action()`` now requires a ``string`` for ``$action`` and ``$access``
+* ``elgg_remove_subscription()`` now requires an ``int`` for ``$user_guid`` and ``$target_guid`` and a ``string`` for ``$method``
 * ``elgg_send_email()`` now requires an ``\Elgg\Email`` for ``$email``
 * ``elgg_unregister_action()`` now requires a ``string`` for ``$action``
 * ``get_access_array()`` now requires an ``int`` for ``$user_guid``

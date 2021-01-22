@@ -135,14 +135,12 @@ function elgg_unregister_notification_method($name) {
  * @param int    $user_guid   The GUID of the user to subscribe to notifications
  * @param string $method      The delivery method of the notifications
  * @param int    $target_guid The entity to receive notifications about
+ *
  * @return bool
  * @since 1.9
  */
-function elgg_add_subscription($user_guid, $method, $target_guid) {
-	$methods = _elgg_services()->notifications->getMethods();
-	$db = _elgg_services()->db;
-	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
-	return $subs->addSubscription($user_guid, $method, $target_guid);
+function elgg_add_subscription(int $user_guid, string $method, int $target_guid) {
+	return _elgg_services()->subscriptions->addSubscription($user_guid, $method, $target_guid);
 }
 
 /**
@@ -151,14 +149,12 @@ function elgg_add_subscription($user_guid, $method, $target_guid) {
  * @param int    $user_guid   The GUID of the user to unsubscribe to notifications
  * @param string $method      The delivery method of the notifications to stop
  * @param int    $target_guid The entity to stop receiving notifications about
+ *
  * @return bool
  * @since 1.9
  */
-function elgg_remove_subscription($user_guid, $method, $target_guid) {
-	$methods = _elgg_services()->notifications->getMethods();
-	$db = _elgg_services()->db;
-	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
-	return $subs->removeSubscription($user_guid, $method, $target_guid);
+function elgg_remove_subscription(int $user_guid, string $method, int $target_guid) {
+	return _elgg_services()->subscriptions->removeSubscription($user_guid, $method, $target_guid);
 }
 
 /**
@@ -171,15 +167,15 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
  * );
  *
  * @param int $container_guid GUID of the entity acting as a container
+ *
  * @return array User GUIDs (keys) and their subscription types (values).
  * @since 1.9
  * @todo deprecate once new subscriptions system has been added
  */
-function elgg_get_subscriptions_for_container($container_guid) {
+function elgg_get_subscriptions_for_container(int $container_guid) {
 	$methods = _elgg_services()->notifications->getMethods();
-	$db = _elgg_services()->db;
-	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
-	return $subs->getSubscriptionsForContainer($container_guid);
+	
+	return _elgg_services()->subscriptions->getSubscriptionsForContainer($container_guid, $methods);
 }
 
 /**

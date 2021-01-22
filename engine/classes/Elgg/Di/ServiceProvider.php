@@ -118,6 +118,7 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\Cache\SimpleCache                         $simpleCache
  * @property-read \Elgg\Database\SiteSecret                       $siteSecret
  * @property-read \Elgg\Forms\StickyForms                         $stickyForms
+ * @property-read \Elgg\Notifications\SubscriptionsService        $subscriptions
  * @property-read \Elgg\Cache\SystemCache                         $systemCache
  * @property-read \Elgg\SystemMessagesService                     $systemMessages
  * @property-read \Elgg\Views\TableColumn\ColumnFactory           $table_columns
@@ -545,8 +546,8 @@ class ServiceProvider extends DiContainer {
 			// @todo move queue in service provider
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
-			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
+			
+			return new \Elgg\Notifications\NotificationsService($c->subscriptions, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable, $c->logger);
 		});
 
 		$this->setFactory('pageOwner', function(ServiceProvider $c) {
@@ -725,6 +726,10 @@ class ServiceProvider extends DiContainer {
 				$cache->setTimer($c->timer);
 			}
 			return $cache;
+		});
+		
+		$this->setFactory('subscriptions', function (ServiceProvider $c) {
+			return new \Elgg\Notifications\SubscriptionsService($c->db, $c->relationshipsTable, $c->hooks);
 		});
 		
 		$this->setFactory('systemMessages', function(ServiceProvider $c) {

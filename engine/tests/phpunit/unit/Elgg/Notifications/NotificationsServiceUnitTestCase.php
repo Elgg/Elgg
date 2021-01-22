@@ -81,7 +81,7 @@ abstract class NotificationsServiceUnitTestCase extends IntegratedUnitTestCase {
 		$this->entities = _elgg_services()->entityTable;
 		$this->time = $this->entities->getCurrentTime()->getTimestamp();
 
-		$this->subscriptions = new SubscriptionsService(_elgg_services()->db);
+		$this->subscriptions = _elgg_services()->subscriptions;
 
 		$this->session = _elgg_services()->session;
 
