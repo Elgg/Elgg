@@ -3,10 +3,7 @@
  *
  * @module elgg/menus/dropdown
  */
-define(function (require) {
-
-	var elgg = require('elgg');
-	var popup = require('elgg/popup');
+define(['jquery', 'elgg', 'elgg/popup'], function ($, elgg, popup) {
 
 	var dropdown = {
 

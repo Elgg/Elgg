@@ -3,12 +3,8 @@
  *
  * @module page/components/tabs
  */
-define(function (require) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/ready'], function ($, elgg, Ajax) {
 
-	var elgg = require('elgg');
-	require('elgg/ready');
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
 	var ajax = new Ajax(false);
 
 	function changeTab($link_item, clearing_tab, trigger_open) {

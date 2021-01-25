@@ -15,9 +15,7 @@ foreach (elgg_get_plugins() as $plugin) {
 
 ?>
 //<script>
-define(function (require) {
-	var Plugin = require('elgg/Plugin');
-	var elgg = require('elgg');
+define(['elgg', 'elgg/Plugin'], function (elgg, Plugin) {
 
 	var modules = [];
 	var i;

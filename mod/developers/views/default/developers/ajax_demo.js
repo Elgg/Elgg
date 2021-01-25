@@ -1,6 +1,4 @@
-define(function(require) {
-	var Ajax = require('elgg/Ajax');
-	var elgg = require('elgg');
+define(['elgg', 'elgg/Ajax'], function(elgg, Ajax) {
 
 	var ajax = new Ajax();
 	var log = console.log.bind(console);

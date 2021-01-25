@@ -1,9 +1,7 @@
 /**
  * Handle deleting admin notices
  */
-define(function(require) {
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
+define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 
 	var ajax = new Ajax();
 

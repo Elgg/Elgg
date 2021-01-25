@@ -1,9 +1,7 @@
 /**
  * JavaScript used on group creation/editing form
  */
-define(function(require) {
-	var elgg = require('elgg');
-	var $ = require('jquery');
+define(['jquery', 'elgg'], function($, elgg) {
 
 	/**
 	 * Toggle the availability of content access field
@@ -32,4 +30,3 @@ define(function(require) {
 		toggleContentAccessMode: toggleContentAccessMode
 	};
 });
-

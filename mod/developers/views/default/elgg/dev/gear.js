@@ -1,12 +1,7 @@
 /**
  * Note, depends on $.colorbox!
  */
-define(function (require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var spinner = require('elgg/spinner');
-	var gear_html = require('text!elgg/dev/gear.html');
-	var lightbox = require('elgg/lightbox');
+define(['jquery', 'elgg', 'elgg/spinner', 'text!elgg/dev/gear.html', 'elgg/lightbox'], function ($, elgg, spinner, gear_html, lightbox) {
 
 	$(gear_html)
 		.appendTo('body')

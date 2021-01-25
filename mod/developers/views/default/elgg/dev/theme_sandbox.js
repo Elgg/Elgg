@@ -1,7 +1,4 @@
-define(function (require) {
-	var spinner = require('elgg/spinner'),
-		$ = require('jquery'),
-		elgg = require('elgg');
+define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
 
 	$('.theme-sandbox-content-spinner a').on('click', function () {
 		spinner[ $(this).data('method') ]($(this).data('spinnerText'));

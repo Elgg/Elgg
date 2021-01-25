@@ -3,9 +3,8 @@
  *
  * @since 1.8
  */
-define(function(require) {
-	var $ = require('jquery');
-
+define(['jquery'], function($) {
+	
 	function init () {
 		// disable checkboxes (readonly does not work for them)
 		$(document).on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {

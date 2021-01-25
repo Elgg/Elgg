@@ -3,9 +3,7 @@
  *
  * @module elgg/menus/toggle
  */
-define(function (require) {
-
-	var elgg = require('elgg');
+define(['jquery', 'elgg'], function ($, elgg) {
 
 	var toggle = {
 

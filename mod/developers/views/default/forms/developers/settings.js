@@ -1,6 +1,4 @@
-define(function(require) {
-	
-	var $ = require('jquery');
+define(['jquery'], function($) {
 	
 	$(document).on('change', '.elgg-form-developers-settings select[name="block_email"]', function() {
 		if ($(this).val() === 'forward') {
