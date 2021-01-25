@@ -13,7 +13,6 @@ return [
 		"jquery.min.map" => "vendor/npm-asset/jquery/dist/jquery.min.map",
 		"jquery-ui.js" => "vendor/npm-asset/components-jqueryui/jquery-ui.min.js",
 
-		"jquery.form.js" => "vendor/npm-asset/jquery-form/jquery.form.js",
 		"jquery.colorbox.js" => "vendor/npm-asset/jquery-colorbox/jquery.colorbox-min.js",
 		"require.js" => "vendor/npm-asset/requirejs/require.js",
 		"text.js" => "vendor/npm-asset/requirejs-text/text.js",

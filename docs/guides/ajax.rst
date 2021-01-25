@@ -278,7 +278,7 @@ This data can be read server-side via ``get_input('bar');``.
 
 .. note:: If data was given as a string (e.g. ``$form.serialize()``), the request hooks are not triggered.
 
-.. note:: The form will be objectified as ``FormData``, and the request content type will be determined accordingly. Effectively this allows plugins to submit multipart form data without using ``jquery.form`` plugin and other ``iframe`` hacks.
+.. note:: The form will be objectified as ``FormData``, and the request content type will be determined accordingly.
 
 Piggybacking on an Ajax response
 --------------------------------

@@ -5,19 +5,14 @@
  *
  * @module elgg/embed
  */
-define(function (require) {
-
-	var elgg = require('elgg');
-	var $ = require('jquery');
-	var lightbox = require('elgg/lightbox');
-	require('jquery.form');
+define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax'], function ($, elgg, lightbox, Ajax) {
 
 	var embed = {
 		/**
 		 * Initializes the module
 		 * @return void
 		 */
-		init: function () {
+		init: function() {
 
 			// we only need to bind these events once
 			embed.init = elgg.nullFunction;
@@ -42,7 +37,7 @@ define(function (require) {
 		 * @param {Object} event
 		 * @return void
 		 */
-		insert: function (event) {
+		insert: function(event) {
 			var textAreaId = embed.textAreaId;
 			var textArea = $('#' + textAreaId);
 			// generalize this based on a css class attached to what should be inserted
@@ -96,50 +91,30 @@ define(function (require) {
 		 * @param {Object} event
 		 * @return bool
 		 */
-		submit: function (event) {
+		submit: function(event) {
+			// this was bubbling up the DOM causing a submission
+			event.preventDefault();
+			event.stopPropagation();
+			
 			$('.embed-wrapper .elgg-form-file-upload').hide();
 			$('.embed-throbber').show();
-			$(this).ajaxSubmit({
-				dataType: 'json',
-				data: {'X-Requested-With': 'XMLHttpRequest'},
-				success: function (response, status, xhr) {
-					if (response) {
-						if (response.system_messages) {
-							elgg.register_error(response.system_messages.error);
-							elgg.system_message(response.system_messages.success);
-						}
-						if (response.status >= 0) {
-							var forward = $('input[name=embed_forward]').val();
-							var url = elgg.normalize_url('embed/' + forward);
-							url = embed.addContainerGUID(url);
-							$('.embed-wrapper').parent().load(url);
-						} else {
-							// incorrect response, presumably an error has been displayed
-							$('.embed-throbber').hide();
-							$('.embed-wrapper .elgg-form-file-upload').show();
-						}
-					} else if (response === undefined && $.browser.msie) {
-						// ie 7 and 8 have a null response because of the use of an iFrame
-						// so just show the list after upload.
-						// http://jquery.malsup.com/form/#file-upload claims you can wrap JSON
-						// in a textarea, but a quick test didn't work, and that is fairly
-						// intrusive to the rest of the ajax system.
-						
-						var forward = $('input[name=embed_forward]').val();
-						var url = elgg.normalize_url('embed/' + forward);
-						url = embed.addContainerGUID(url);
-						$('.embed-wrapper').parent().load(url);
-					}
+			
+			var ajax = new Ajax(false);
+			
+			ajax.action($(this).attr('action'), {
+				data: ajax.objectify(this),
+				success: function() {
+					var forward = $('input[name=embed_forward]').val();
+					var url = elgg.normalize_url('embed/' + forward);
+					url = embed.addContainerGUID(url);
+					$('.embed-wrapper').parent().load(url);
 				},
-				error: function (xhr, status) {
+				error: function() {
 					elgg.register_error(elgg.echo('actiongatekeeper:uploadexceeded'));
 					$('.embed-throbber').hide();
 					$('.embed-wrapper .elgg-form-file-upload').show();
 				}
 			});
-			// this was bubbling up the DOM causing a submission
-			event.preventDefault();
-			event.stopPropagation();
 		},
 
 		/**
@@ -148,7 +123,7 @@ define(function (require) {
 		 * @param {Object} event
 		 * @return void
 		 */
-		forward: function (event) {
+		forward: function(event) {
 			// make sure container guid is passed
 			var url = $(this).attr('href');
 			url = embed.addContainerGUID(url);
@@ -164,7 +139,7 @@ define(function (require) {
 		 * @param {string} url
 		 * @return string
 		 */
-		addContainerGUID: function (url) {
+		addContainerGUID: function(url) {
 			if (url.indexOf('container_guid=') == -1) {
 				var guid = $('input[name=embed_container_guid]').val();
 				return url + '?container_guid=' + guid;
@@ -174,7 +149,7 @@ define(function (require) {
 		}
 	};
 
-	require(['elgg/init'], function () {
+	require(['elgg/init'], function() {
 		embed.init();
 	});
 

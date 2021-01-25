@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "54daeff72e68cdf52177b1995e162a31",
+    "content-hash": "5e862ed8fe57c37d1235bf8c773360a8",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -2200,24 +2200,6 @@
             "license": [
                 "MIT"
             ]
-        },
-        {
-            "name": "npm-asset/jquery-form",
-            "version": "3.51",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:jquery-form/form.git",
-                "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jquery-form/form/zipball/6bf24a5f6d8be65f4e5491863180c09356d9dadd",
-                "reference": "6bf24a5f6d8be65f4e5491863180c09356d9dadd"
-            },
-            "require": {
-                "npm-asset/jquery": ">=1.5"
-            },
-            "type": "npm-asset"
         },
         {
             "name": "npm-asset/normalize.css",
@@ -4771,7 +4753,6 @@
             "keywords": [
                 "tokenizer"
             ],
-            "abandoned": true,
             "time": "2019-09-17T06:23:10+00:00"
         },
         {

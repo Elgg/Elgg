@@ -596,4 +596,5 @@ Removed composer dependencies
 
 * ``bower-asset/jquery-treeview`` the related js and css are no longer available in the system
 * ``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system
+* ``npm-asset/jquery-form`` use native FormData functionality
 * ``simpletest/simpletest``
