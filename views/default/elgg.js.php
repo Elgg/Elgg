@@ -57,7 +57,7 @@ define('jquery-ui');
 // "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
 define('jquery-ui/datepicker', jQuery.datepicker);
 
-define('elgg', ['sprintf', 'jquery', 'languages/' + elgg.get_language(), 'weakmap-polyfill', 'formdata-polyfill'], function(vsprintf, $, translations) {
+define('elgg', ['sprintf', 'jquery', 'languages/' + elgg.get_language()], function(vsprintf, $, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 
 	return elgg;

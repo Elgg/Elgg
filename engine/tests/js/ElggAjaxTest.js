@@ -566,7 +566,7 @@ define(function(require) {
 				"<\/form>");
 
 			it("objectifies a form into a FormData object", function() {
-				var obj = ajax.objectify($form[0]);
+				var obj = ajax.objectify($form);
 
 				expect(obj instanceof FormData).toBeTruthy();
 
