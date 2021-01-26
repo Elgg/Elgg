@@ -522,6 +522,7 @@ Removed views / resources
 
 * ``admin/develop_tools/inspect/webservices``
 * ``elgg/thewire.js``
+* ``messages/js`` moved to ``forms/messages/process.js``
 * ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
