@@ -48,11 +48,6 @@ return [
 			],
 		],
 	],
-	'view_extensions' => [
-		'elgg.css' => [
-			'collections/collections.css' => [],
-		],
-	],
 	'events' => [
 		'delete' => [
 			'relationship' => [
