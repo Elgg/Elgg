@@ -1539,8 +1539,7 @@ function elgg_views_boot() {
 	elgg_register_external_file('js', 'jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
 	elgg_load_external_file('js', 'jquery-ui');
 
-	elgg_register_external_file('js', 'elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
-	elgg_load_external_file('js', 'elgg.require_config');
+	elgg_extend_view('require.js', 'elgg/require_config.js', 100);
 
 	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'), 'head');
 	elgg_load_external_file('js', 'require');
