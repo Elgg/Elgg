@@ -14,7 +14,6 @@ $core_js_views = [
 	// class definitions
 	'ElggEntity.js',
 	'ElggUser.js',
-	'ElggPriorityList.js',
 	
 	//libraries
 	'prototypes.js',

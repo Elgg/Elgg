@@ -23,7 +23,6 @@ module.exports = function(config) {
 
 			'views/default/core/js/configuration.js',
 			'views/default/core/js/ElggEntity.js',
-			'views/default/core/js/ElggPriorityList.js',
 			'views/default/core/js/ElggUser.js',
 			'views/default/core/js/languages.js',
 			'views/default/core/js/pageowner.js',
