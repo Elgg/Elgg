@@ -106,6 +106,9 @@ The configuration ``default_widget_info`` is no longer present in the system. Us
 Javascript
 ----------
 
+AJAX
+~~~~
+
 The following Ajax helper functions have been removed in favor of their counterparts in asynchronous module ``elgg/Ajax``.
 * ``elgg.action()``
 * ``elgg.get()``
@@ -114,6 +117,12 @@ The following Ajax helper functions have been removed in favor of their counterp
 
 The ajax function ``elgg.api`` has been moved to the ``executeMethod`` function in the asynchronous module ``elgg/webservices`` in the webservices plugin. 
 Other ``elgg.ajax`` functions and attributes have been removed from the system. Also the legacy handling of ajax calls have been removed from the system.
+
+Elgg/Plugin
+~~~~~~~~~~~
+
+The javascript logic for automatically booting some javascript for your plugin and registering hooks via the ``Elgg/Plugin`` class has been removed from the system.
+This functionality was never used by core and hardly seen in plugins. Use AMD loaded javascript or extend ``elgg.js`` for always loaded javascript.
 
 Plugin bootstrapping
 --------------------

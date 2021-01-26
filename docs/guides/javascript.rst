@@ -230,40 +230,6 @@ Some things to note
 #. The configuration is also cached in simplecache, and should not rely on user-specific values
    like ``get_current_language()``.
 
-.. _guides/javascript#boot:
-
-Booting your plugin
-===================
-
-To add functionality to each page, or make sure your hook handlers are registered early enough, you may create a boot module for your plugin, with the name ``boot/<plugin_id>``.
-
-.. code-block:: js
-
-    // in views/default/boot/example.js
-
-    define(function(require) {
-        var elgg = require("elgg");
-        var Plugin = require("elgg/Plugin");
-
-        // plugin logic
-        function my_init() { ... }
-
-        return new Plugin({
-            // executed in order of plugin priority
-            init: function () {
-                elgg.register_hook_handler("init", "system", my_init, 400);
-            }
-        });
-    });
-
-When your plugin is active, this module will automatically be loaded on each page. Other modules can depend on ``elgg/init`` to make sure all boot modules are loaded.
-
-Each boot module **must** return an instance of ``elgg/Plugin``. The constructor must receive an object with a function in the ``init`` key. The ``init`` function will be called in the order of the plugin in Elgg's admin area.
-
-.. note:: Though not strictly necessary, you may want to use the ``init, system`` event to control when your initialization code runs with respect to other modules.
-
-.. warning:: A boot module **cannot** depend on the modules ``elgg/init`` or ``elgg/ready``.
-
 Modules provided with Elgg
 ==========================
 
@@ -344,20 +310,7 @@ Get the GUID of the current page's owner.
 
 ``elgg.register_hook_handler()``
 
-Register a hook handler with the event system. For best results, do this in a plugin boot module.
-
-.. code-block:: js
-
-    // boot module: /views/default/boot/example.js
-    define(function (require) {
-        var elgg = require('elgg');
-        var Plugin = require('elgg/Plugin');
-
-        elgg.register_hook_handler('foo', 'bar', function () { ... });
-
-        return new Plugin();
-    });
-
+Register a hook handler with the event system.
 
 ``elgg.trigger_hook()``
 
@@ -456,11 +409,6 @@ Module ``elgg/init``
 ``elgg/init`` loads and initializes all boot modules in priority order and triggers the [init, system] hook.
 
 Require this module to make sure all plugins are ready.
-
-Module ``elgg/Plugin``
-----------------------
-
-Used to create a :ref:`boot module <guides/javascript#boot>`.
 
 Module ``elgg/ready``
 ---------------------
@@ -736,23 +684,6 @@ Registering hook handlers
 -------------------------
 
 Handler functions are registered using ``elgg.register_hook_handler()``. Multiple handlers can be registered for the same hook.
-
-The following example registers the ``handleFoo`` function for the ``foo, bar`` hook.
-
-.. code-block:: js
-
-    define(function (require) {
-        var elgg = require('elgg');
-        var Plugin = require('elgg/Plugin');
-
-        function handleFoo(hook, type, params, value) {
-            // do something
-        }
-
-        elgg.register_hook_handler('foo', 'bar', handleFoo);
-
-        return new Plugin();
-    });
 
 The handler function
 --------------------
