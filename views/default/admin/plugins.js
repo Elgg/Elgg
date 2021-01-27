@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax'], function($, elgg, spinner, Ajax) {
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($, elgg, spinner, Ajax) {
 
 	function freezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'block');

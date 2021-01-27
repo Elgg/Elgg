@@ -1,5 +1,5 @@
 /** @module elgg/UserPicker */
-define(['jquery', 'elgg', 'elgg/Ajax', 'jquery.ui.autocomplete.html'], function($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/autocomplete', 'jquery.ui.autocomplete.html'], function($, elgg, Ajax) {
 
 	/**
 	 * @param {HTMLElement} wrapper outer div

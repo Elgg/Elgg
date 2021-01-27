@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64f0008f41ee8a7e907cb4c1ca91449b",
+    "content-hash": "2f6f45eb0aac3683041611fef154bbe8",
     "packages": [
         {
             "name": "cakephp/cache",
@@ -2125,18 +2125,15 @@
         },
         {
             "name": "npm-asset/components-jqueryui",
-            "version": "1.11.4",
-            "source": {
-                "type": "git",
-                "url": "git@github.com:components/jqueryui.git",
-                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
-            },
+            "version": "1.12.1",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
-                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
+                "type": "tar",
+                "url": "https://registry.npmjs.org/components-jqueryui/-/components-jqueryui-1.12.1.tgz"
             },
-            "type": "npm-asset"
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "npm-asset/cropperjs",

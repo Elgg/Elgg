@@ -7,7 +7,7 @@
  *
  * @since 3.0.0
  */
-define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup'], function($, elgg, Ajax, spinner, popup) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/spinner', 'elgg/popup', 'jquery-ui/widgets/progressbar'], function($, elgg, Ajax, spinner, popup) {
 
 	var UNKNOWN_COUNT = -1;
 	var upgrades = $('.elgg-item-object-elgg_upgrade');

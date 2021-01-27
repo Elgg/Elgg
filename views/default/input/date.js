@@ -1,15 +1,11 @@
-define(function (require) {
-
-	var elgg = require('elgg');
-	var $ = require('jquery');
-	require('jquery-ui');
+define(['jquery', 'elgg', 'jquery-ui/widgets/datepicker'], function ($, elgg) {
 
 	// the language module may need loading
 	var i18n_ready = $.Deferred();
 	if (elgg.get_language() === 'en') {
 		i18n_ready.resolve();
 	} else {
-		require(['jquery-ui/i18n/datepicker-' + elgg.get_language() + '.min'], function () {
+		require(['jquery-ui/i18n/datepicker-' + elgg.get_language()], function () {
 			i18n_ready.resolve();
 		}, function () {
 			// if load fails (e.g. lang code mismatch), carry on with English

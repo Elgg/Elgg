@@ -126,6 +126,21 @@ This functionality was never used by core and hardly seen in plugins. Use AMD lo
 
 The ``ElggPriorityList`` javascript class has been removed from the system.
 
+jQuery UI
+~~~~~~~~~
+
+The jQuery UI library has been updated to v1.12.x. The library is no longer loaded in full by default.
+If you need to use features from the library you can require them in your own script. For example to be able to use the sortable functionality do the following:
+
+.. code-block:: js
+
+	require('jquery-ui/widgets/sortable');
+
+	// or in your own AMD script
+	define(['jquery-ui/widgets/sortable'], function() {
+		// use the sortable
+	});
+
 Plugin bootstrapping
 --------------------
 

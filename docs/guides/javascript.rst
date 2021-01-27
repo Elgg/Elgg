@@ -233,11 +233,6 @@ Some things to note
 Modules provided with Elgg
 ==========================
 
-Modules ``jquery`` and ``jquery-ui``
-------------------------------------
-
-You must depend on these modules to use ``$`` or ``$.ui`` methods. In the future Elgg may stop loading these by default.
-
 Module ``elgg``
 ---------------
 

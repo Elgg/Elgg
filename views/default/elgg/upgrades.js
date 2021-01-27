@@ -3,7 +3,7 @@
  *
  * @internal
  */
-define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/progressbar'], function($, elgg, Ajax) {
 
 	// The already displayed messages are saved here
 	var errorMessages = [];

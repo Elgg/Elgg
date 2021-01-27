@@ -1,7 +1,7 @@
 /**
  * Configure profile fields specific javascript functions
  */
-define(['jquery', 'elgg/Ajax'], function($, Ajax) {
+define(['jquery', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($, Ajax) {
 	
 	// draggable profile field reordering.
 	$('#elgg-profile-fields').sortable({

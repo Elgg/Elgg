@@ -5,7 +5,7 @@
  * @module elgg/popup
  * @since 2.2
  */
-define('elgg/popup', ['elgg', 'jquery', 'jquery-ui'], function (elgg, $) {
+define('elgg/popup', ['elgg', 'jquery', 'jquery-ui/position', 'jquery-ui/unique-id'], function (elgg, $) {
 
 	var popup = {
 		/**

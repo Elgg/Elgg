@@ -1,4 +1,4 @@
-define(['jquery', 'jquery.ui.autocomplete.html'], function ($) {
+define(['jquery', 'jquery-ui/widgets/autocomplete', 'jquery.ui.autocomplete.html'], function ($) {
 
 	return {
 		init: function () {
