@@ -114,7 +114,7 @@ define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'jquery-ui/widgets/sortab
 			success: function() {
 				// update plugins with priority dependences
 				var priorityDep = new RegExp(elgg.echo('ElggPlugin:Dependencies:Priority'));
-				ui.item.siblings().andSelf().each(function() {
+				ui.item.siblings().addBack().each(function() {
 					if (priorityDep.test($(this).find('.elgg-dependency-requires').text())) {
 						updatePluginView($(this));
 					}

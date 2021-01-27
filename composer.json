@@ -32,7 +32,7 @@
         "monolog/monolog": "^1.23",
         "npm-asset/components-jqueryui": "~1.12.1",
         "npm-asset/cropperjs": "~1.4.3",
-        "npm-asset/jquery": "^2.2.4",
+        "npm-asset/jquery": "~3.5.0",
         "npm-asset/jquery-cropper": "~1.0.0",
         "npm-asset/jquery-colorbox": "^1.6.4",
         "npm-asset/normalize.css": "~8.0.1",

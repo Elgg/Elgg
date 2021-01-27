@@ -21,7 +21,7 @@ define('elgg/popup', ['elgg', 'jquery', 'jquery-ui/position', 'jquery-ui/unique-
 				if (e.isDefaultPrevented()) {
 					return;
 				}
-				var $eventTargets = $(e.target).parents().andSelf();
+				var $eventTargets = $(e.target).parents().addBack();
 				if ($eventTargets.is('.elgg-state-popped')) {
 					return;
 				}

@@ -126,6 +126,12 @@ This functionality was never used by core and hardly seen in plugins. Use AMD lo
 
 The ``ElggPriorityList`` javascript class has been removed from the system.
 
+jQuery
+~~~~~~
+
+The jQuery library has been updated to the latest version (v3.5.x). This is a major update from the version used in Elgg 3.x. 
+For information about what is changed between these release you should take a look at the jQuery website.
+
 jQuery UI
 ~~~~~~~~~
 
