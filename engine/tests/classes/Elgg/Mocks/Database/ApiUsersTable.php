@@ -6,6 +6,7 @@ use Elgg\Database\ApiUsersTable as dbApiUsersTable;
 use Elgg\Database\Insert;
 use Elgg\Database\Select;
 use Elgg\Database\Delete;
+use Elgg\Database\Update;
 
 class ApiUsersTable extends dbApiUsersTable {
 
@@ -50,35 +51,21 @@ class ApiUsersTable extends dbApiUsersTable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getApiUser(string $public_api_key) {
+	public function getApiUser(string $public_api_key, bool $only_active = true) {
 		
 		foreach ($this->rows as $row) {
 			if ($row->api_key !== $public_api_key) {
 				continue;
 			}
 			
+			if ($only_active && !$row->active) {
+				return false;
+			}
+			
 			return $row;
 		}
 		
-		return parent::getApiUser($public_api_key);
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public function removeApiUser(string $public_api_key) {
-		$row = $this->getApiUser($public_api_key);
-		
-		parent::removeApiUser($public_api_key);
-		
-		if (!isset($this->rows[$row->id])) {
-			return false;
-		}
-		
-		$this->clearQuerySpecs($row);
-		unset($this->rows[$row->id]);
-		
-		return true;
+		return parent::getApiUser($public_api_key, $only_active);
 	}
 	
 	/**
@@ -92,6 +79,7 @@ class ApiUsersTable extends dbApiUsersTable {
 		
 		$this->clearQuerySpecs($row);
 		
+		// create
 		$insert = Insert::intoTable($this->table);
 		$insert->values([
 			'api_key' => $insert->param($row->api_key, ELGG_VALUE_STRING),
@@ -104,6 +92,7 @@ class ApiUsersTable extends dbApiUsersTable {
 			'insert_id' => $row->id,
 		]);
 		
+		// select (only active)
 		$select = Select::fromTable($this->table);
 		$select->select('*')
 			->where($select->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING))
@@ -112,7 +101,7 @@ class ApiUsersTable extends dbApiUsersTable {
 		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
 			'sql' => $select->getSQL(),
 			'params' => $select->getParameters(),
-			'result' => function() use ($row) {
+			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					return $this->rows[$row->id];
 				}
@@ -121,16 +110,73 @@ class ApiUsersTable extends dbApiUsersTable {
 			},
 		]);
 		
+		// select (all)
+		$select_all = Select::fromTable($this->table);
+		$select_all->select('*')
+			->where($select->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING));
+		
+		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
+			'sql' => $select_all->getSQL(),
+			'params' => $select_all->getParameters(),
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					return $this->rows[$row->id];
+				}
+				
+				return [];
+			},
+		]);
+		
+		// delete
 		$delete = Delete::fromTable($this->table);
 		$delete->where($delete->compare('id', '=', $row->id, ELGG_VALUE_ID));
 		
 		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
 			'sql' => $delete->getSQL(),
 			'params' => $delete->getParameters(),
-			'result' => function() use ($row) {
+			'results' => function() use ($row) {
 				if (isset($this->rows[$row->id])) {
 					unset($this->rows[$row->id]);
 					$this->clearQuerySpecs($row);
+					
+					return [$row->id];
+				}
+				
+				return [];
+			},
+		]);
+		
+		// enable
+		$enable = Update::table($this->table);
+		$enable = Update::table($this->table);
+		$enable->set('active', $enable->param(1, ELGG_VALUE_INTEGER))
+			->where($enable->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING));
+		
+		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
+			'sql' => $enable->getSQL(),
+			'params' => $enable->getParameters(),
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					$this->rows[$row->id]->active = 1;
+					
+					return [$row->id];
+				}
+				
+				return [];
+			},
+		]);
+		
+		// disable
+		$disable = Update::table($this->table);
+		$disable->set('active', $disable->param(0, ELGG_VALUE_INTEGER))
+			->where($disable->compare('api_key', '=', $row->api_key, ELGG_VALUE_STRING));
+		
+		$this->query_specs[$row->id][] = $this->database->addQuerySpec([
+			'sql' => $disable->getSQL(),
+			'params' => $disable->getParameters(),
+			'results' => function() use ($row) {
+				if (isset($this->rows[$row->id])) {
+					$this->rows[$row->id]->active = 0;
 					
 					return [$row->id];
 				}

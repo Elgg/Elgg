@@ -235,8 +235,6 @@ class NotificationsService {
 	 */
 	public function processQueue($stopTime, $matrix = false) {
 
-		$this->subscriptions->methods = $this->methods;
-
 		$delivery_matrix = [];
 
 		$count = 0;
@@ -260,7 +258,7 @@ class NotificationsService {
 				continue;
 			}
 
-			$subscriptions = $this->subscriptions->getSubscriptions($event);
+			$subscriptions = $this->subscriptions->getSubscriptions($event, $this->methods);
 			
 			// return false to stop the default notification sender
 			$params = [

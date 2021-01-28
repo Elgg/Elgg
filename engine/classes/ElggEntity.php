@@ -6,6 +6,7 @@ use Elgg\Database\Update;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\DatabaseException;
 use Elgg\Exceptions\Filesystem\IOException;
+use Elgg\Exceptions\InvalidArgumentException;
 
 /**
  * The parent class for all Elgg Entities.
@@ -1044,9 +1045,14 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 * @param string $subtype   The subtype of the entity we're looking to write
 	 *
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
-	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
-		return _elgg_services()->userCapabilities->canWriteToContainer($this, $user_guid, $type, $subtype);
+	public function canWriteToContainer($user_guid = 0, $type = '', $subtype = '') {
+		if (empty($type) || empty($subtype)) {
+			throw new InvalidArgumentException(__METHOD__ . ' requires $type and $subtype to be set');
+		}
+		
+		return _elgg_services()->userCapabilities->canWriteToContainer($this, $type, $subtype, $user_guid);
 	}
 
 	/**

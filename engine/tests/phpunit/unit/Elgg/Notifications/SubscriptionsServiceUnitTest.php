@@ -2,13 +2,29 @@
 
 namespace Elgg\Notifications;
 
+use Elgg\Database;
+use Elgg\Database\Select;
+
 /**
  * @group NotificationsService
  * @group UnitTests
  */
 class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 
-	private $containerGuid;
+	/**
+	 * @var int
+	 */
+	protected $containerGuid;
+	
+	/**
+	 * @var SubscriptionsService
+	 */
+	protected $service;
+	
+	/**
+	 * @var Database
+	 */
+	protected $db;
 
 	public function up() {
 		$this->containerGuid = 42;
@@ -26,17 +42,47 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->event->expects($this->any())
 			->method('getObject')
 			->will($this->returnValue($object));
-	
+
 		$this->db = $this->createMock('\Elgg\Database');
+		
+		$this->service = $this->setupService();
 	}
 
 	public function down() {
 
 	}
+	
+	/**
+	 * Create a SubscriptionService
+	 *
+	 * @return \Elgg\Notifications\SubscriptionsService
+	 */
+	protected function setupService() {
+		return new SubscriptionsService(
+			$this->db,
+			_elgg_services()->relationshipsTable,
+			_elgg_services()->hooks
+		);
+	}
+	
+	/**
+	 * Convert an array to an object
+	 *
+	 * @param array $data the array with data
+	 *
+	 * @return \stdClass
+	 */
+	protected function createObjectFromArray(array $data) {
+		$obj = new \stdClass();
+		foreach ($data as $key => $value) {
+			$obj->$key = $value;
+		}
+		
+		return $obj;
+	}
 
-	public function testGetSubscriptionsWithNoMethodsRegistered() {
-		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
-		$this->assertEquals([], $service->getSubscriptions($this->event));
+	public function testGetSubscriptionsWithNoMethodsProvided() {
+		$this->assertEquals([], $this->service->getSubscriptions($this->event, []));
 	}
 
 	public function testGetSubscriptionsWithBadObject() {
@@ -45,12 +91,12 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->event->expects($this->any())
 			->method('getObject')
 			->will($this->returnValue(null));
-		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
-		$service->methods = [
+		
+		$methods = [
 			'one',
 			'two'
 		];
-		$this->assertEquals([], $service->getSubscriptions($this->event));
+		$this->assertEquals([], $this->service->getSubscriptions($this->event, $methods));
 	}
 
 	public function testQueryGenerationForRetrievingSubscriptionRelationships() {
@@ -59,20 +105,18 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			'bananas'
 		];
 
-		$query = "SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
-			FROM {$this->db->prefix}entity_relationships
-			WHERE guid_two = $this->containerGuid AND
-					relationship IN ('notifyapples','notifybananas') GROUP BY guid_one";
-
+		$select = Select::fromTable('entity_relationships');
+		$select->select('guid_one AS guid')
+			->addSelect("GROUP_CONCAT(relationship SEPARATOR ',') AS methods")
+			->where($select->compare('guid_two', '=', $this->containerGuid, ELGG_VALUE_GUID))
+			->andWhere($select->compare('relationship', 'in', ['notifyapples', 'notifybananas'], ELGG_VALUE_STRING));
+		
 		$this->db->expects($this->once())
 			->method('getData')
-			->with($this->equalTo($query))
+			->with($this->equalTo($select))
 			->will($this->returnValue([]));
 
-		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
-
-		$service->methods = $methods;
-		$this->assertEquals([], $service->getSubscriptions($this->event));
+		$this->assertEquals([], $this->service->getSubscriptions($this->event, $methods));
 	}
 
 	public function testGetSubscriptionsWithProperInput() {
@@ -102,16 +146,13 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 			->method('getData')
 			->will($this->returnValue($queryResult));
 
-		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
-
-		$service->methods = $methods;
-		$this->assertEquals($subscriptions, $service->getSubscriptions($this->event));
+		$this->assertEquals($subscriptions, $this->service->getSubscriptions($this->event, $methods));
 	}
 
-	public function testGetSubscriptionsForContainerWithNoMethodsRegistered() {
+	public function testGetSubscriptionsForContainerWithNoMethodsProvided() {
 		$container_guid = 132;
-		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
-		$this->assertEquals([], $service->getSubscriptionsForContainer($container_guid));
+		
+		$this->assertEquals([], $this->service->getSubscriptionsForContainer($container_guid, []));
 	}
 
 	public function testGetSubscriptionsForContainerWithProperInput() {
@@ -141,19 +182,7 @@ class SubscriptionsServiceUnitTest extends \Elgg\UnitTestCase {
 		$this->db->expects($this->once())
 			->method('getData')
 			->will($this->returnValue($queryResult));
-		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
-
-		$service->methods = $methods;
-		$this->assertEquals($subscriptions, $service->getSubscriptionsForContainer($container_guid));
+		
+		$this->assertEquals($subscriptions, $this->service->getSubscriptionsForContainer($container_guid, $methods));
 	}
-
-	protected function createObjectFromArray(array $data) {
-		$obj = new \stdClass();
-		foreach ($data as $key => $value) {
-			$obj->$key = $value;
-		}
-
-		return $obj;
-	}
-
 }

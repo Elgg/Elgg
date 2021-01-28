@@ -54,6 +54,8 @@ return array(
 	'admin:configure_utilities:ws_list' => "List API methods",
 	'admin:configure_utilities:ws_tokens' => "Manage API tokens",
 	'webservices:menu:entity:regenerate' => "Regenerate API keys",
+	'webservices:menu:entity:enable_keys' => "Enable API keys",
+	'webservices:menu:entity:disable_keys' => "Disable API keys",
 	
 	'add:object:api_key' => "Create a new API token",
 	'edit:object:api_key' => "Edit API token: %s",
@@ -73,6 +75,11 @@ return array(
 	'webservices:action:api_key:edit:success' => "API token saved successfully",
 	'webservices:action:api_key:regenerate:success' => "The API keys have been regenerated",
 
+	'webservices:action:api_key:toggle_active:enable:success' => "The API keys were successfully enabled",
+	'webservices:action:api_key:toggle_active:enable:error' => "An error occurred while enabling the API keys",
+	'webservices:action:api_key:toggle_active:disable:success' => "The API keys were successfully disabled",
+	'webservices:action:api_key:toggle_active:disable:error' => "An error occurred while disabling the API keys",
+	
 	// plugin settings
 	'web_services:settings:authentication' => "Web API authentication settings",
 	'web_services:settings:authentication:description' => "Some API methods require that the external sources authenticate themselves. These external sources need to be provided with an API key pair (public and secret key).

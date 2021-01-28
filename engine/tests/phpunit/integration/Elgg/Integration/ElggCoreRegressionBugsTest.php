@@ -53,7 +53,7 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 
 		// disable access overrides because we're admin.
 		elgg_call(ELGG_ENFORCE_ACCESS, function() use ($user, $object, $group) {
-			$this->assertFalse($object->canWriteToContainer($user->guid));
+			$this->assertFalse($object->canWriteToContainer($user->guid, 'object', 'foo'));
 	
 			// register hook to allow access
 			$handler = function (\Elgg\Hook $hook) use ($user) {
@@ -63,13 +63,13 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 				}
 			};
 	
-			elgg_register_plugin_hook_handler('container_permissions_check', 'all', $handler, 600);
-			$this->assertTrue($object->canWriteToContainer($user->guid));
-			elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', $handler);
+			elgg_register_plugin_hook_handler('container_permissions_check', 'object', $handler, 600);
+			$this->assertTrue($object->canWriteToContainer($user->guid, 'object', 'foo'));
+			elgg_unregister_plugin_hook_handler('container_permissions_check', 'object', $handler);
 	
-			$this->assertFalse($group->canWriteToContainer($user->guid));
+			$this->assertFalse($group->canWriteToContainer($user->guid, $object->getType(), $object->getSubtype()));
 			$group->join($user);
-			$this->assertTrue($group->canWriteToContainer($user->guid));
+			$this->assertTrue($group->canWriteToContainer($user->guid, $object->getType(), $object->getSubtype()));
 		});
 		
 		$user->delete();

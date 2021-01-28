@@ -31,6 +31,9 @@ return [
 		'webservices/api_key/regenerate' => [
 			'access' => 'admin',
 		],
+		'webservices/api_key/toggle_active' => [
+			'access' => 'admin',
+		],
 	],
 	'routes' => [
 		'add:object:api_key' => [

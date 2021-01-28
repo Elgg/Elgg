@@ -49,4 +49,15 @@ class ApiUsersTableUnitTest extends UnitTestCase {
 		$this->assertNotEmpty($this->service->removeApiUser($this->api_user->api_key));
 		$this->assertEmpty($this->service->getApiUser($this->api_user->api_key));
 	}
+	
+	public function testDisableEnableApiUser() {
+		// disable
+		$this->assertTrue($this->service->disableAPIUser($this->api_user->api_key));
+		$this->assertFalse($this->service->getApiUser($this->api_user->api_key));
+		$this->assertNotEmpty($this->service->getApiUser($this->api_user->api_key, false));
+		
+		// (re)enable
+		$this->assertTrue($this->service->enableAPIUser($this->api_user->api_key));
+		$this->assertEquals($this->service->getApiUser($this->api_user->api_key), $this->api_user);
+	}
 }

@@ -682,6 +682,19 @@ You can also resize the lightbox programmatically if needed:
       });
    });
 
+If you wish your content to be loaded by the ``elgg/Ajax`` AMD module, which automaticly loads the JS dependencies, you can pass the option ``ajaxLoadWithDependencies``
+
+.. code-block:: js
+
+   define(function(require) {
+      var lightbox = require('elgg/lightbox');
+
+      lightbox.open({
+         href: 'some/view/with/js/dependencies',
+         ajaxLoadWithDependencies: true
+      });
+   });
+
 Module ``elgg/ckeditor``
 ------------------------
 

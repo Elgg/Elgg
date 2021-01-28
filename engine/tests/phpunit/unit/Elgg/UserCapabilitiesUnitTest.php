@@ -167,12 +167,12 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 			'container_guid' => $container->guid,
 		]);
 
-		$this->assertTrue($entity->canWriteToContainer($owner->guid));
-		$this->assertTrue($entity->canWriteToContainer($container->guid));
+		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'foo'));
+		$this->assertTrue($entity->canWriteToContainer($container->guid, 'object', 'foo'));
 		$this->assertEquals($entity->canEdit($owner->guid), $entity->canDelete($owner->guid));
 		$this->assertEquals($entity->canEdit($container->guid), $entity->canDelete($container->guid));
 
-		$this->assertFalse($entity->canWriteToContainer($viewer->guid));
+		$this->assertFalse($entity->canWriteToContainer($viewer->guid, 'object', 'foo'));
 		$this->assertEquals($entity->canEdit($viewer->guid), $entity->canDelete($viewer->guid));
 	}
 
@@ -186,26 +186,33 @@ class UserCapabilitiesUnitTest extends UnitTestCase {
 
 		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
+		// only prevent the write access for 'object', 'bar'
 		$this->hooks->registerHandler('container_permissions_check', 'object', function(\Elgg\Hook $hook) use ($entity, $owner) {
+			$this->assertNotEmpty($hook->getParam('subtype'));
+			if ($hook->getParam('subtype') !== 'bar') {
+				return;
+			}
+			
 			$this->assertInstanceOf(ElggEntity::class, $hook->getParam('container'));
 			$this->assertInstanceOf(ElggUser::class, $hook->getUserParam());
 			$this->assertEquals($entity, $hook->getParam('container'));
 			$this->assertEquals($owner, $hook->getUserParam());
-			$this->assertEquals('bar', $hook->getParam('subtype'));
 			$this->assertTrue($hook->getValue());
 			return false;
 		});
 
 		$this->assertFalse($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 
-		// Should still be able to write to container without particular entity type specified
-		$this->assertTrue($entity->canWriteToContainer($owner->guid));
+		// Should still be able to write to container with a different type/subtype
+		$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'foo'));
 
+		// Admins should always be allowed
 		$admin_user = $this->createUser([], [
 			'admin' => 'yes',
 		]);
 		$this->assertTrue($entity->canWriteToContainer($admin_user->guid, 'object', 'bar'));
 
+		// when access is ignored it should also be allowed
 		elgg_call(ELGG_IGNORE_ACCESS, function() use ($entity, $owner) {
 			$this->assertTrue($entity->canWriteToContainer($owner->guid, 'object', 'bar'));
 		});

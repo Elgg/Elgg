@@ -287,11 +287,48 @@ class CollectionsUnitTest extends UnitTestCase {
 			$this->assertEquals($steps[$i], [$id, $item]);
 			$i++;
 		}
-
 	}
 
 	public function testConstructorThrowsWithInvalidClass() {
 		$this->expectException(InvalidArgumentException::class);
 		new Collection([], MyClass::class);
+	}
+	
+	public function testSeekeableIteratorInterface() {
+		$items = [
+			new TestItem('a', 10),
+			new TestItem('b', 20),
+			new TestItem('c', 30),
+			new TestItem('d', 40),
+			new TestItem('e', 50),
+			new TestItem('f', 60),
+			new TestItem('g', 70),
+			new TestItem('h', 80),
+			new TestItem('i', 90),
+			new TestItem('j', 100),
+		];
+		$collection = new Collection($items);
+		
+		$this->assertCount(10, $collection);
+		
+		$collection->seek(3);
+		$this->assertEquals('d', $collection->key());
+		$this->assertEquals($items[3], $collection->current());
+		
+		$collection->next();
+		$this->assertEquals('e', $collection->key());
+		$this->assertEquals($items[4], $collection->current());
+		
+		$collection->rewind();
+		$this->assertEquals('a', $collection->key());
+		$this->assertEquals($items[0], $collection->current());
+		
+		$collection->seek(9); // move to last item
+		$this->assertTrue($collection->valid());
+		$collection->next(); // move out of the available items
+		$this->assertFalse($collection->valid());
+		
+		$this->expectException(\OutOfBoundsException::class);
+		$collection->seek(10);
 	}
 }

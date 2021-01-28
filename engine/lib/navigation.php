@@ -162,7 +162,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  * @return void
  * @since 1.8.0
  */
-function elgg_register_title_button($handler = null, $name = 'add', $entity_type = 'all', $entity_subtype = 'all') {
+function elgg_register_title_button($handler = null, $name = 'add', $entity_type = '', $entity_subtype = '') {
 
 	$owner = elgg_get_page_owner_entity();
 	if (!$owner) {
@@ -180,7 +180,7 @@ function elgg_register_title_button($handler = null, $name = 'add', $entity_type
 	}
 	
 	// do we have an owner and is the current user allowed to create content here
-	if (!$owner || !$owner->canWriteToContainer(0, $entity_type, $entity_subtype)) {
+	if (!$owner instanceof \ElggEntity || empty($entity_type) || empty($entity_subtype) || !$owner->canWriteToContainer(0, $entity_type, $entity_subtype)) {
 		return;
 	}
 	

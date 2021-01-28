@@ -44,4 +44,18 @@ class ApiUsersTableIntegrationTest extends IntegrationTestCase {
 		$this->assertNotEmpty($this->service->removeApiUser($api_user->api_key));
 		$this->assertEmpty($this->service->getApiUser($api_user->api_key));
 	}
+	
+	public function testDisableEnableApiUser() {
+		$api_user = $this->service->createApiUser();
+		$this->assertNotFalse($api_user);
+		
+		// disable
+		$this->assertTrue($this->service->disableAPIUser($api_user->api_key));
+		$this->assertFalse($this->service->getApiUser($api_user->api_key));
+		$this->assertNotEmpty($this->service->getApiUser($api_user->api_key, false));
+		
+		// (re)enable
+		$this->assertTrue($this->service->enableAPIUser($api_user->api_key));
+		$this->assertEquals($this->service->getApiUser($api_user->api_key), $api_user);
+	}
 }

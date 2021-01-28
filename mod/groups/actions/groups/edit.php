@@ -60,7 +60,7 @@ if ($group_guid) {
 	$container_guid = get_input('container_guid', $user->guid);
 	$container = get_entity($container_guid);
 	
-	if (!$container || !$container->canWriteToContainer($user->guid, 'group')) {
+	if (!$container || !$container->canWriteToContainer($user->guid, 'group', 'group')) {
 		$error = elgg_echo('groups:cantcreate');
 		return elgg_error_response($error);
 	}
