@@ -1,4 +1,4 @@
-define(['jquery', 'elgg', 'elgg/init'], function($, elgg) {
+define(['jquery', 'elgg'], function($, elgg) {
 
 	return elgg.trigger_hook('config', 'ckeditor', {'editor': 'simple'}, {
 		toolbar: [['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat']],

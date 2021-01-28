@@ -1,9 +1,7 @@
 /**
  * Tabbed module
- *
- * @module page/components/tabs
  */
-define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/ready'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax'], function ($, elgg, Ajax) {
 
 	var ajax = new Ajax(false);
 

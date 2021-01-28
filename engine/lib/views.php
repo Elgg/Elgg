@@ -1556,8 +1556,6 @@ function elgg_views_boot() {
 
 	elgg_require_css('elgg');
 
-	elgg_register_simplecache_view('elgg/init.js');
-
 	elgg_extend_view('initialize_elgg.js', 'elgg/prevent_clicks.js', 1);
 
 	elgg_extend_view('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');

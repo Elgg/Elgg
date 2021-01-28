@@ -20,10 +20,8 @@
  * -------------------------------------
  * In a plugin, override this view and override the registration for the
  * lightbox JavaScript and CSS (@see elgg_views_boot()).
- *
- * @module elgg/lightbox
  */
-define(['jquery', 'elgg', 'elgg/Ajax', 'elgg/init', 'jquery.colorbox'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery.colorbox'], function ($, elgg, Ajax) {
 
 	var lightbox = {
 

@@ -1,7 +1,4 @@
-/**
- * @module elgg/widgets
- */
-define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable', 'elgg/ready'], function ($, elgg, Ajax) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, elgg, Ajax) {
 
 	var widgets = {};
 

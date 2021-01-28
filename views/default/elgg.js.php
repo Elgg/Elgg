@@ -71,6 +71,6 @@ if (!window._require_queue) {
 	delete window._require_queue;
 }
 
-elgg.trigger_hook('boot', 'system');
+elgg.trigger_hook('init', 'system');
 
-require(['elgg/init', 'elgg/ready', 'elgg/lightbox']);
+require(['elgg/lightbox']);

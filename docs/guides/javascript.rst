@@ -309,19 +309,11 @@ Register a hook handler with the event system.
 
 ``elgg.trigger_hook()``
 
-Emit a hook event in the event system. For best results depend on the elgg/init module.
+Emit a hook event in the event system.
 
 .. code-block:: js
 
-    // old
     value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
-
-    define(function (require) {
-        require('elgg/init');
-        var elgg = require('elgg');
-
-        value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
-    });
 
 
 ``elgg.security.refreshToken()``
@@ -397,20 +389,6 @@ Module ``elgg/Ajax``
 --------------------
 
 See the :doc:`ajax` page for details.
-
-Module ``elgg/init``
---------------------
-
-``elgg/init`` loads and initializes all boot modules in priority order and triggers the [init, system] hook.
-
-Require this module to make sure all plugins are ready.
-
-Module ``elgg/ready``
----------------------
-
-``elgg/ready`` loads and initializes all plugin boot modules in priority order.
-
-Require this module to make sure all plugins are ready.
 
 Module ``elgg/spinner``
 -----------------------
@@ -557,7 +535,7 @@ You may apply colorbox options to an individual ``elgg-lightbox`` element by set
       ])
    ]);
 
-Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened. Note that the hook handler should depend on ``elgg/init`` AMD module.
+Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened.
 
 ``elgg/lightbox`` AMD module should be used to open and close the lightbox programmatically:
 
@@ -645,7 +623,7 @@ Inline tabs component fires an ``open`` event whenever a tabs is open and, in ca
 .. code-block:: js
 
 	// Add custom animation to tab content
-	require(['jquery', 'elgg/ready'], function($) {
+	require(['jquery'], function($) {
 		$(document).on('open', '.theme-sandbox-tab-callback', function() {
 			$(this).find('a').text('Clicked!');
 			$(this).data('target').hide().show('slide', {
@@ -699,23 +677,15 @@ Plugins can trigger their own hooks:
 
 .. code-block:: js
 
-    define(function(require) {
-        require('elgg/init');
-        var elgg = require('elgg');
-
+    define(['elgg'], function(elgg) {
         elgg.trigger_hook('name', 'type', {params}, "value");
     });
-
-.. note:: Be aware of timing. If you don't depend on elgg/init, other plugins may not have had a chance to register their handlers.
 
 Available hooks
 ---------------
 
 **init, system**
-    Plugins should register their init functions for this hook. It is fired after Elgg's JS is loaded and all plugin boot modules have been initialized. Depend on the ``elgg/init`` module to be sure this has completed.
-
-**ready, system**
-    This hook is fired when the system has fully booted (after init). Depend on the ``elgg/ready`` module to be sure this has completed.
+    Plugins should register their init functions for this hook. It is fired after Elgg's JS is loaded and all plugin boot modules have been initialized.
 
 **getOptions, ui.popup**
     This hook is fired for pop up displays (``"rel"="popup"``) and allows for customized placement options.

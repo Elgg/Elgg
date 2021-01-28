@@ -1,9 +1,5 @@
 /**
  * Embed module bootstraps the embed funtionality
- * Note that this module will initialize itself once elgg/ready module is loaded,
- * hence you do not need to call elgg/embed#init after requiring elgg/embed module.
- *
- * @module elgg/embed
  */
 define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax'], function ($, elgg, lightbox, Ajax) {
 
@@ -149,9 +145,7 @@ define(['jquery', 'elgg', 'elgg/lightbox', 'elgg/Ajax'], function ($, elgg, ligh
 		}
 	};
 
-	require(['elgg/init'], function() {
-		embed.init();
-	});
+	embed.init();
 
 	return embed;
 });

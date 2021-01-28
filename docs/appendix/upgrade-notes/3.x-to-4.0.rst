@@ -126,6 +126,13 @@ This functionality was never used by core and hardly seen in plugins. Use AMD lo
 
 The ``ElggPriorityList`` javascript class has been removed from the system.
 
+System Hooks
+~~~~~~~~~~~~
+
+The AMD modules for ``elgg/init`` and ``elgg/ready`` have been removed. 
+The ``init, system`` hook is still available but it only makes sense to rely on this hook from non-AMD loaded js libraries.
+The ``boot, system`` and ``ready, system`` triggers have been removed from the system. Replace with ``init, system`` for the same effect.
+
 jQuery
 ~~~~~~
 

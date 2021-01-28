@@ -1,4 +1,4 @@
-define(['jquery', 'elgg/lightbox', 'elgg/ready'], function($, lightbox) {
+define(['jquery', 'elgg/lightbox'], function($, lightbox) {
 	var opts = {
 		photo: true,
 		width: 600
