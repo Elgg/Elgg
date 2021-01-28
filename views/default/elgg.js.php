@@ -3,10 +3,6 @@
  * Core Elgg JavaScript file
  */
 
-// We use named AMD modules and inline them here in order to save HTTP requests,
-// as these modules will be required on each page
-echo elgg_view('elgg/popup.js');
-
 $core_js_views = [
 	// these must come first
 	'elgglib.js',
