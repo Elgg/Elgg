@@ -15,6 +15,8 @@ if (!$list) {
 	return true;
 }
 
+elgg_require_js('forms/messages/process');
+
 echo "<div class='messages-container'>{$list}</div>";
 
 $buttons = [];

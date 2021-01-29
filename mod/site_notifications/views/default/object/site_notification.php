@@ -8,26 +8,26 @@ if (!$entity instanceof SiteNotification) {
 	return;
 }
 
-$icon = '';
 $text = $entity->description;
 $actor = $entity->getActor();
-if ($actor) {
-	$icon = elgg_view_entity_icon($actor, 'small');
-}
+
+$icon = $actor ? elgg_view_entity_icon($actor, 'small') : '';
+
 $url = $entity->getURL();
 if ($url) {
 	$text = elgg_view('output/url', [
 		'text' => $text,
-		'href' => $url,
-		'is_trusted' => true,
-		'class' => 'site-notifications-link',
-		'data-guid' => $entity->guid,
+		'href' => elgg_generate_action_url('entity/delete', [
+			'guid' => $entity->guid,
+			'forward_url' => $url,
+			'show_success' => false,
+		]),
 	]);
 }
 
 $checkbox = elgg_view('input/checkbox', [
 	'name' => 'notification_id[]',
-	'value' => $entity->getGUID(),
+	'value' => $entity->guid,
 	'default' => false,
 ]);
 

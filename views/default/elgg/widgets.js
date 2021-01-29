@@ -1,7 +1,4 @@
-/**
- * @module elgg/widgets
- */
-define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function ($, elgg, Ajax) {
 
 	var widgets = {};
 
@@ -9,7 +6,6 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 	 * Widgets initialization
 	 *
 	 * @return void
-	 * @requires jqueryui.sortable
 	 */
 	widgets.init = function () {
 
@@ -51,8 +47,9 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 		// elgg-widget-col-<column>
 		var col = ui.item.parent().attr('id');
 		col = col.substr(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
-
-		elgg.action('widgets/move', {
+		
+		var ajax = new Ajax(false);
+		ajax.action('widgets/move', {
 			data: {
 				widget_guid: guidString,
 				column: col,
@@ -74,17 +71,17 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 	 * @return void
 	 */
 	widgets.remove = function (event) {
+		event.preventDefault();
+		
 		if (confirm(elgg.echo('deleteconfirm')) === false) {
-			event.preventDefault();
 			return;
 		}
 
 		$(this).closest('.elgg-module-widget').remove();
 
 		// delete the widget through ajax
-		elgg.action($(this).attr('href'));
-
-		event.preventDefault();
+		var ajax = new Ajax(false);
+		ajax.action($(this).attr('href'));
 	};
 
 	/**
@@ -94,9 +91,10 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 	 * @return void
 	 */
 	widgets.collapseToggle = function (event) {
+		event.preventDefault();
+		
 		$(this).toggleClass('elgg-widget-collapsed');
 		$(this).parent().parent().find('.elgg-body').slideToggle('medium');
-		event.preventDefault();
 	};
 
 	/**
@@ -108,6 +106,8 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 	 * @return void
 	 */
 	widgets.saveSettings = function (event) {
+		event.preventDefault();
+		
 		$(this).parent().slideToggle('medium');
 		var $widgetContent = $(this).parent().parent().children('.elgg-widget-content');
 
@@ -117,24 +117,23 @@ define(['elgg', 'jquery', 'elgg/ready'], function (elgg, $) {
 		$loader.removeClass('hidden');
 		$widgetContent.html($loader);
 
-		elgg.action('widgets/save', {
+		var ajax = new Ajax(false);
+		ajax.action('widgets/save', {
 			data: $(this).serialize(),
-			success: function (json) {
-				$widgetContent.html(json.output.content);
-				if (typeof (json.output.title) != "undefined") {
+			success: function (result) {
+				$widgetContent.html(result.content);
+				if (typeof (result.title) != "undefined") {
 					var $widgetTitle = $widgetContent.parent().parent().find('.elgg-widget-title');
 					
-					var newWidgetTitle = json.output.title;
-					if (typeof (json.output.href) != "undefined") {
-						newWidgetTitle = "<a href='" + json.output.href + "' class='elgg-anchor'><span class='elgg-anchor-label'>" + newWidgetTitle + "</span></a>";
+					var newWidgetTitle = result.title;
+					if (typeof (result.href) != "undefined") {
+						newWidgetTitle = "<a href='" + result.href + "' class='elgg-anchor'><span class='elgg-anchor-label'>" + newWidgetTitle + "</span></a>";
 					}
 					
 					$widgetTitle.html(newWidgetTitle);
 				}
 			}
 		});
-		
-		event.preventDefault();
 	};
 
 	return widgets;

@@ -1,8 +1,4 @@
-define(function(require) {
-	
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	require('jquery-cropper/jquery-cropper');
+define(['jquery', 'jquery-cropper/jquery-cropper'], function($) {
 	
 	function Cropper() {
 		var $field;

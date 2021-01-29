@@ -13,7 +13,7 @@ class Entity {
 	/**
 	 * Sets up the entity menu for thewire
 	 *
-	 * Adds reply, thread, and view previous links. Removes edit and access.
+	 * Adds reply and thread links. Removes edit and access.
 	 *
 	 * @param \Elgg\Hook $hook 'register', 'menu:entity'
 	 *

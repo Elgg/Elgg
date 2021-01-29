@@ -95,13 +95,64 @@ Split OkResponse, ErrorResponse and RedirectResponse
 The classes ``Elgg\Http\ErrorResponse`` and ``Elgg\Http\RedirectResponse`` were extensions of ``Elgg\Http\OkReponse`` this 
 complicated validating responses (for example in hooks). The classes have been split apart to allow for easier and clearer checks.
 
-All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``.
+All classes now extend ``Elgg\Http\Response`` and implement ``Elgg\Http\ReponseBuilder``. The default HTTP error code when using ``elgg_error_response()`` has been changed to return a 400 status. 
 
 Default widgets
 ---------------
 
 The magic handling the creation of default widgets has been reduced. You now need to register the ``Elgg\Widgets\CreateDefaultWidgetsHandler`` callback to the event when you want default widgets to be created.
 The configuration ``default_widget_info`` is no longer present in the system. Use the ``get_list``, ``default_widgets`` hook to get the value.
+
+Javascript
+----------
+
+AJAX
+~~~~
+
+The following Ajax helper functions have been removed in favor of their counterparts in asynchronous module ``elgg/Ajax``.
+* ``elgg.action()``
+* ``elgg.get()``
+* ``elgg.getJSON()``
+* ``elgg.post()``
+
+The ajax function ``elgg.api`` has been moved to the ``executeMethod`` function in the asynchronous module ``elgg/webservices`` in the webservices plugin. 
+Other ``elgg.ajax`` functions and attributes have been removed from the system. Also the legacy handling of ajax calls have been removed from the system.
+
+Classes
+~~~~~~~
+
+The javascript logic for automatically booting some javascript for your plugin and registering hooks via the ``Elgg/Plugin`` class has been removed from the system.
+This functionality was never used by core and hardly seen in plugins. Use AMD loaded javascript or extend ``elgg.js`` for always loaded javascript.
+
+The ``ElggPriorityList`` javascript class has been removed from the system.
+
+System Hooks
+~~~~~~~~~~~~
+
+The AMD modules for ``elgg/init`` and ``elgg/ready`` have been removed. 
+The ``init, system`` hook is still available but it only makes sense to rely on this hook from non-AMD loaded js libraries.
+The ``boot, system`` and ``ready, system`` triggers have been removed from the system. Replace with ``init, system`` for the same effect.
+
+jQuery
+~~~~~~
+
+The jQuery library has been updated to the latest version (v3.5.x). This is a major update from the version used in Elgg 3.x. 
+For information about what is changed between these release you should take a look at the jQuery website.
+
+jQuery UI
+~~~~~~~~~
+
+The jQuery UI library has been updated to v1.12.x. The library is no longer loaded in full by default.
+If you need to use features from the library you can require them in your own script. For example to be able to use the sortable functionality do the following:
+
+.. code-block:: js
+
+	require('jquery-ui/widgets/sortable');
+
+	// or in your own AMD script
+	define(['jquery-ui/widgets/sortable'], function() {
+		// use the sortable
+	});
 
 Plugin bootstrapping
 --------------------
@@ -509,13 +560,17 @@ Removed views / resources
 -------------------------
 
 * ``admin/develop_tools/inspect/webservices``
+* ``elgg/thewire.js``
+* ``messages/js`` moved to ``forms/messages/process.js``
+* ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
 * ``resources/comments/view`` use ``\Elgg\Controllers\CommentEntityRedirector``
 * ``reportedcontent/admin_css``
-* ``navigation/menu/elements/item_deps`` the functionality has been merged into ``navigation/menu/elements/item``
+* ``thewire/previous``
 
 Removed hooks / events
 ----------------------
 
+* Hook ``output, ajax`` has been removed. Use the``ajax_response`` hook if you want to influence the results.
 * Hook ``reportedcontent:add`` has been removed. Use the``create, object`` event to prevent creation.
 * Hook ``reportedcontent:archive`` has been removed. Use the``permissions_check, object`` hook.
 * Hook ``reportedcontent:delete`` has been removed. Use the``delete, object`` event to prevent deletion.
@@ -581,4 +636,7 @@ Removed composer dependencies
 
 * ``bower-asset/jquery-treeview`` the related js and css are no longer available in the system
 * ``bower-asset/jquery.imgareaselect`` the related js and css are no longer available in the system
+* ``npm-asset/formdata-polyfill`` all modern browser have support, no longer a need for a polyfill
+* ``npm-asset/jquery-form`` use native FormData functionality
+* ``npm-asset/weakmap-polyfill`` all modern browser have support, no longer a need for a polyfill
 * ``simpletest/simpletest``

@@ -2,7 +2,6 @@
 /**
  * The Wire CSS
  */
-
 ?>
 /********************************
 The Wire
@@ -29,10 +28,7 @@ The Wire
 .thewire-characters-remaining-warning {
 	color: #D40D12 !important;
 }
-.thewire-parent {
-	margin-left: 20px;
-	margin-top: 20px;
-}
+
 .thewire-post .elgg-content {
 	margin: 10px 5px;
 }

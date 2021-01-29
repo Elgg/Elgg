@@ -11,6 +11,7 @@ echo elgg_view('output/longtext', [
 
 echo elgg_view('output/url', [
 	'text' => elgg_echo('add'),
+	'icon' => 'plus',
 	'href' => 'ajax/form/profile/fields/add',
 	'class' => 'elgg-button elgg-button-action elgg-lightbox',
 ]);
@@ -19,6 +20,7 @@ echo elgg_view('admin/configure_utilities/profile_fields/list');
 
 echo elgg_view('output/url', [
 	'text' => elgg_echo('reset'),
+	'icon' => 'sync-alt',
 	'href' => 'action/profile/fields/reset',
 	'title' => elgg_echo('profile:resetdefault'),
 	'confirm' => elgg_echo('profile:resetdefault:confirm'),

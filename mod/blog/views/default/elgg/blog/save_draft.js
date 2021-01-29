@@ -1,10 +1,7 @@
 /**
  * Save draft through ajax
  */
-define(function(require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var Ajax = require('elgg/Ajax');
+define(['jquery', 'elgg', 'elgg/Ajax'], function($, elgg, Ajax) {
 	
 	var oldDescription = '';
 

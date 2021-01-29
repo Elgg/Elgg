@@ -1,7 +1,4 @@
-define(function(require) {
-	require('elgg/init');
-	var elgg = require('elgg');
-	var $ = require('jquery');
+define(['jquery', 'elgg'], function($, elgg) {
 
 	return elgg.trigger_hook('config', 'ckeditor', {'editor': 'simple'}, {
 		toolbar: [['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat']],
@@ -22,4 +19,3 @@ define(function(require) {
 		stylesSet: false, //no additional styles.js
 	});
 });
-

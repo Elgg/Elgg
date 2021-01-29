@@ -1,7 +1,4 @@
-define(function(require) {
-	require('elgg/ready');
-	
-	var lightbox = require('elgg/lightbox');
+define(['jquery', 'elgg/lightbox'], function($, lightbox) {
 	var opts = {
 		photo: true,
 		width: 600

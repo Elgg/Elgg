@@ -85,30 +85,4 @@ define(function(require) {
 			});
 		});
 	});
-
-	// note elgg/init and a fake boot module are defined in prepare.js
-	describe("elgg/ready", function() {
-		it("requires init (boots plugins and fires init) and fires ready", function(done) {
-			elgg._test_signals = [];
-
-			require(['elgg/ready'], function () {
-				expect(elgg._test_signals).toEqual([
-					'boot/example define',
-
-					// boot Plugin inits are called
-					'boot/example init',
-
-					// init, system fired
-					'boot/example init,system',
-
-					// ready, system fired
-					'boot/example ready,system'
-				]);
-
-				delete(elgg._test_signals);
-
-				done();
-			});
-		});
-	});
 });

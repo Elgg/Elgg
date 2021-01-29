@@ -1,7 +1,4 @@
-define(function(require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var spinner = require('elgg/spinner');
+define(['jquery', 'elgg/spinner'], function($, spinner) {
 	
 	var get_checkboxes = function () {
 		return $('#admin-users-unvalidated-bulk .elgg-input-checkbox[name="user_guids[]"]');
@@ -34,9 +31,7 @@ define(function(require) {
 		return false;
 	};
 	
-	elgg.register_hook_handler('init', 'system', function() {
-		$(document).on('change', '#admin-users-unvalidated-bulk-select', bulk_select_toggle);
-		$(document).on('click', '#admin-users-unvalidated-bulk-delete', bulk_submit);
-		$(document).on('click', '#admin-users-unvalidated-bulk-validate', bulk_submit);
-	});
+	$(document).on('change', '#admin-users-unvalidated-bulk-select', bulk_select_toggle);
+	$(document).on('click', '#admin-users-unvalidated-bulk-delete', bulk_submit);
+	$(document).on('click', '#admin-users-unvalidated-bulk-validate', bulk_submit);
 });

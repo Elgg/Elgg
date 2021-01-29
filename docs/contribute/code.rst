@@ -254,9 +254,7 @@ Test boilerplate
 
 .. code-block:: js
 
-	define(function(require) {
-		var elgg = require('elgg');
-
+	define(['elgg'], function(elgg) {
 		describe("This new test", function() {
 			it("fails automatically", function() {
 				expect(true).toBe(false);

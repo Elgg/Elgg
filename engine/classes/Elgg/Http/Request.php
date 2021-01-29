@@ -300,7 +300,6 @@ class Request extends SymfonyRequest {
 		return (strtolower($this->headers->get('X-Requested-With')) === 'xmlhttprequest'
 			|| $this->query->get('X-Requested-With') === 'XMLHttpRequest'
 			|| $this->request->get('X-Requested-With') === 'XMLHttpRequest');
-		// GET/POST check is necessary for jQuery.form and other iframe-based "ajax". #8735
 	}
 
 	/**

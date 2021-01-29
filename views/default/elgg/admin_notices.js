@@ -1,9 +1,7 @@
 /**
  * Handle deleting admin notices
  */
-define(function(require) {
-	var $ = require('jquery');
-	var Ajax = require('elgg/Ajax');
+define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 
 	var ajax = new Ajax();
 
@@ -18,12 +16,9 @@ define(function(require) {
 			$li.show();
 		}
 
-		ajax.action(this.href, {showSuccessMessages: false}).done(function (output, statusText, jqXHR) {
-			if (jqXHR.AjaxData.status == -1) {
-				restore();
-				return;
-			}
-
+		ajax.action(this.href, {
+			showSuccessMessages: false
+		}).done(function() {
 			// When none left, remove container so it doesn't take up space. A few CSS solutions were
 			// tried, but left jerky transitions at the end of the animations.
 			if (!$('.elgg-item-object-admin_notice:visible').length) {

@@ -19,7 +19,7 @@ unset($vars['items']);
 $headers = elgg_extract('show_section_headers', $vars, false);
 unset($vars['show_section_headers']);
 
-$item_class = elgg_extract('item_class', $vars, '');
+$item_class = elgg_extract_class($vars, [], 'item_class');
 unset($vars['item_class']);
 
 $name = elgg_extract('name', $vars);

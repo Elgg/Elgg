@@ -13,8 +13,6 @@ elgg.provide('elgg.config.triggered_hooks');
 	/**
 	 * Registers a hook handler with the event system.
 	 *
-	 * For best results, depend on the elgg/ready module, so plugins will have been booted.
-	 *
 	 * The special keyword "all" can be used for either the name or the type or both
 	 * and means to call that handler for all of those hooks.
 	 *

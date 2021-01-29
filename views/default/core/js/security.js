@@ -72,31 +72,32 @@ elgg.security.refreshToken = function () {
 		return key;
 	});
 
-	elgg.ajax('refresh_token', {
-		data: {
-			pairs: pairs,
-			session_token: elgg.session.token
-		},
-		dataType: 'json',
-		method: 'POST',
-		success: function (data) {
-			if (data) {
-				elgg.session.token = data.session_token;
-				elgg.security.setToken(data.token, data.valid_tokens);
+	require(['elgg/Ajax'], function(Ajax) {
+		var ajax = new Ajax(false);
+		ajax.path('refresh_token', {
+			data: {
+				pairs: pairs,
+				session_token: elgg.session.token
+			},
+			success: function (data) {
+				if (data) {
+					elgg.session.token = data.session_token;
+					elgg.security.setToken(data.token, data.valid_tokens);
 
-				if (elgg.get_logged_in_user_guid() != data.user_guid) {
-					elgg.session.user = null;
-					clearInterval(elgg.security.tokenRefreshTimer);
-					if (data.user_guid) {
-						elgg.register_error(elgg.echo('session_changed_user'));
-					} else {
-						elgg.register_error(elgg.echo('session_expired'));
+					if (elgg.get_logged_in_user_guid() != data.user_guid) {
+						elgg.session.user = null;
+						clearInterval(elgg.security.tokenRefreshTimer);
+						if (data.user_guid) {
+							elgg.register_error(elgg.echo('session_changed_user'));
+						} else {
+							elgg.register_error(elgg.echo('session_expired'));
+						}
 					}
 				}
+			},
+			error: function () {
 			}
-		},
-		error: function () {
-		}
+		});
 	});
 };
 

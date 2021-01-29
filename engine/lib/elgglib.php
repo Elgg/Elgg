@@ -82,8 +82,6 @@ function elgg_require_js($name) {
 /**
  * Cancel a request to load an AMD module onto the page.
  *
- * @note The elgg, jquery, and jquery-ui modules cannot be cancelled.
- *
  * @param string $name The AMD module name.
  * @return void
  * @since 2.1.0

@@ -1536,11 +1536,7 @@ function elgg_views_boot() {
 	elgg_register_external_file('js', 'jquery', elgg_get_simplecache_url('jquery.js'), 'head');
 	elgg_load_external_file('js', 'jquery');
 
-	elgg_register_external_file('js', 'jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
-	elgg_load_external_file('js', 'jquery-ui');
-
-	elgg_register_external_file('js', 'elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
-	elgg_load_external_file('js', 'elgg.require_config');
+	elgg_extend_view('require.js', 'elgg/require_config.js', 100);
 
 	elgg_register_external_file('js', 'require', elgg_get_simplecache_url('require.js'), 'head');
 	elgg_load_external_file('js', 'require');
@@ -1550,7 +1546,7 @@ function elgg_views_boot() {
 
 	elgg_register_external_file('css', 'font-awesome', elgg_get_simplecache_url('font-awesome/css/all.min.css'));
 	elgg_load_external_file('css', 'font-awesome');
-	
+
 	elgg_define_js('cropperjs', [
 		'src' => elgg_get_simplecache_url('cropperjs/cropper.min.js'),
 	]);
@@ -1560,15 +1556,13 @@ function elgg_views_boot() {
 
 	elgg_require_css('elgg');
 
-	elgg_register_simplecache_view('elgg/init.js');
-
 	elgg_extend_view('initialize_elgg.js', 'elgg/prevent_clicks.js', 1);
 
 	elgg_extend_view('elgg.css', 'lightbox/elgg-colorbox-theme/colorbox.css');
 	elgg_extend_view('elgg.css', 'entity/edit/icon/crop.css');
 
 	elgg_define_js('jquery.ui.autocomplete.html', [
-		'deps' => ['jquery-ui'],
+		'deps' => ['jquery-ui/widgets/autocomplete'],
 	]);
 
 	elgg_register_ajax_view('languages.js');

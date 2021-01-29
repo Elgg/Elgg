@@ -56,10 +56,6 @@ class SystemEventHandlers {
 		elgg_register_external_file('css', 'admin/users/unvalidated', elgg_get_simplecache_url('admin/users/unvalidated.css'));
 		elgg_register_external_file('css', 'maintenance', elgg_get_simplecache_url('maintenance.css'));
 		
-		elgg_define_js('admin/users/unvalidated', [
-			'src' => elgg_get_simplecache_url('admin/users/unvalidated.js'),
-		]);
-		
 		elgg_register_plugin_hook_handler('registeruser:validate:password', 'all', [_elgg_services()->passwordGenerator, 'registerUserPasswordValidation']);
 		elgg_register_plugin_hook_handler('view_vars', 'input/password', [_elgg_services()->passwordGenerator, 'addInputRequirements']);
 	

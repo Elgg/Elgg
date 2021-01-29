@@ -1,12 +1,10 @@
 <?php
 
-echo "<div class='site-notifications-container'>";
-echo elgg_extract('list', $vars);
-echo "</div>";
+elgg_require_js('forms/site_notifications/process');
 
-echo '<div class="elgg-foot site-notifications-buttonbank">';
+echo elgg_format_element('div', ['class' => 'site-notifications-container'], elgg_extract('list', $vars));
 
-echo elgg_view('input/submit', [
+$footer = elgg_view('input/submit', [
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
 	'class' => 'elgg-button-delete',
@@ -14,10 +12,10 @@ echo elgg_view('input/submit', [
 	'data-confirm' => elgg_echo('deleteconfirm:plural')
 ]);
 
-echo elgg_view('input/button', [
+$footer .= elgg_view('input/button', [
 	'value' => elgg_echo('site_notifications:toggle_all'),
 	'class' => 'elgg-button elgg-button-cancel',
 	'id' => 'site-notifications-toggle',
 ]);
 
-echo '</div>';
+elgg_set_form_footer($footer);

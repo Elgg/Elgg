@@ -2,8 +2,8 @@
  * Initiates page reload when river selector value changes
  * @module core/river/filter
  */
-define(function (require) {
-	var $ = require('jquery');
+define(['jquery'], function ($) {
+
 	$(document).on('change', '#elgg-river-selector', function () {
 		var url = window.location.href;
 		if (window.location.search.length) {

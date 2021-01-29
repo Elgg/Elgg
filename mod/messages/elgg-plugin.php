@@ -49,9 +49,6 @@ return [
 		'elgg.css' => [
 			'messages/css' => [],
 		],
-		'elgg.js' => [
-			'messages/js' => [],
-		],
 	],
 	'hooks' => [
 		'container_permissions_check' => [

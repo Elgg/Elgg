@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "elgg-conventional-changelog": "~0.1.2",
+    "formdata-polyfill": "~3.0.20",
     "grunt": "~1.0.1",
     "grunt-contrib-clean": "~0.6.0",
     "grunt-contrib-connect": "~0.9.0",

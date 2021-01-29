@@ -1,7 +1,4 @@
-define(function(require) {
-	require('elgg/init');
-	var elgg = require('elgg');
-	var $ = require('jquery');
+define(['jquery', 'elgg'], function($, elgg) {
 
 	return elgg.trigger_hook('config', 'ckeditor', {'editor': 'default'}, {
 		toolbar: [['Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat'], ['NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
@@ -21,4 +18,3 @@ define(function(require) {
 		stylesSet: false, //no additional styles.js
 	});
 });
-

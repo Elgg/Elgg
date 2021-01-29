@@ -36,10 +36,7 @@ Here we define a basic module that alters the page, by passing a "definition fun
 
     // in views/default/myplugin/say_hello.js
 
-    define(function(require) {
-        var elgg = require("elgg");
-        var $ = require("jquery");
-
+    define(['jquery', 'elgg'], function($, elgg) {
         $('body').append(elgg.echo('hello_world'));
     });
 
@@ -60,9 +57,7 @@ the greeting:
 
     // in views/default/myplugin/hello.js
 
-    define(function(require) {
-        var elgg = require("elgg");
-
+    define(['elgg'], function(elgg) {
         return elgg.echo('hello_world');
     });
 
@@ -70,10 +65,7 @@ the greeting:
 
     // in views/default/myplugin/say_hello.js
 
-    define(function(require) {
-        var $ = require("jquery");
-        var hello = require("myplugin/hello");
-
+    define(['jquery', 'myplugin/hello'], function($, hello) {
         $('body').append(hello);
     });
 
@@ -124,9 +116,7 @@ Let's pass some data to a module:
 
 .. code-block:: js
 
-    define(function(require) {
-        var elgg = require("elgg");
-
+    define(['elgg'], function(elgg) {
         var api = elgg.data.myplugin.api;
         var key = elgg.data.myplugin.key; // "none" or a user's key
 
@@ -240,47 +230,8 @@ Some things to note
 #. The configuration is also cached in simplecache, and should not rely on user-specific values
    like ``get_current_language()``.
 
-.. _guides/javascript#boot:
-
-Booting your plugin
-===================
-
-To add functionality to each page, or make sure your hook handlers are registered early enough, you may create a boot module for your plugin, with the name ``boot/<plugin_id>``.
-
-.. code-block:: js
-
-    // in views/default/boot/example.js
-
-    define(function(require) {
-        var elgg = require("elgg");
-        var Plugin = require("elgg/Plugin");
-
-        // plugin logic
-        function my_init() { ... }
-
-        return new Plugin({
-            // executed in order of plugin priority
-            init: function () {
-                elgg.register_hook_handler("init", "system", my_init, 400);
-            }
-        });
-    });
-
-When your plugin is active, this module will automatically be loaded on each page. Other modules can depend on ``elgg/init`` to make sure all boot modules are loaded.
-
-Each boot module **must** return an instance of ``elgg/Plugin``. The constructor must receive an object with a function in the ``init`` key. The ``init`` function will be called in the order of the plugin in Elgg's admin area.
-
-.. note:: Though not strictly necessary, you may want to use the ``init, system`` event to control when your initialization code runs with respect to other modules.
-
-.. warning:: A boot module **cannot** depend on the modules ``elgg/init`` or ``elgg/ready``.
-
 Modules provided with Elgg
 ==========================
-
-Modules ``jquery`` and ``jquery-ui``
-------------------------------------
-
-You must depend on these modules to use ``$`` or ``$.ui`` methods. In the future Elgg may stop loading these by default.
 
 Module ``elgg``
 ---------------
@@ -354,36 +305,15 @@ Get the GUID of the current page's owner.
 
 ``elgg.register_hook_handler()``
 
-Register a hook handler with the event system. For best results, do this in a plugin boot module.
-
-.. code-block:: js
-
-    // boot module: /views/default/boot/example.js
-    define(function (require) {
-        var elgg = require('elgg');
-        var Plugin = require('elgg/Plugin');
-
-        elgg.register_hook_handler('foo', 'bar', function () { ... });
-
-        return new Plugin();
-    });
-
+Register a hook handler with the event system.
 
 ``elgg.trigger_hook()``
 
-Emit a hook event in the event system. For best results depend on the elgg/init module.
+Emit a hook event in the event system.
 
 .. code-block:: js
 
-    // old
     value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
-
-    define(function (require) {
-        require('elgg/init');
-        var elgg = require('elgg');
-
-        value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
-    });
 
 
 ``elgg.security.refreshToken()``
@@ -460,45 +390,20 @@ Module ``elgg/Ajax``
 
 See the :doc:`ajax` page for details.
 
-Module ``elgg/init``
---------------------
-
-``elgg/init`` loads and initializes all boot modules in priority order and triggers the [init, system] hook.
-
-Require this module to make sure all plugins are ready.
-
-Module ``elgg/Plugin``
-----------------------
-
-Used to create a :ref:`boot module <guides/javascript#boot>`.
-
-Module ``elgg/ready``
----------------------
-
-``elgg/ready`` loads and initializes all plugin boot modules in priority order.
-
-Require this module to make sure all plugins are ready.
-
 Module ``elgg/spinner``
 -----------------------
 
-The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixed to the top of the window.
+The ``elgg/spinner`` module can be used to create an loading indicator fixed to the top of the window. 
+This can be used to give users feedback that the system is performing a longer running task. Using ajax features from ``elgg/Ajax`` will do this by default.
+You can also use it in your own code.
 
 .. code-block:: js
 
-   define(function (require) {
-      var spinner = require('elgg/spinner');
-
-      elgg.action('friend/add', {
-          beforeSend: spinner.start,
-          complete: spinner.stop,
-          success: function (json) {
-              // ...
-          }
-      });
+   define(['elgg/spinner'], function (spinner) {
+       spinner.start();
+       // your code
+       spinner.stop();
    });
-
-.. note:: The ``elgg/Ajax`` module uses the spinner by default.
 
 Module ``elgg/popup``
 -----------------------
@@ -543,8 +448,7 @@ popup modules programmatically:
 
 .. code-block:: js
 
-   define(function(require) {
-      var $ = require('jquery');
+   define(['jquery', 'elgg/popup'], function($, popup) {
       $(document).on('click', '.elgg-button-popup', function(e) {
 
          e.preventDefault();
@@ -553,13 +457,11 @@ popup modules programmatically:
          var $target = $('#my-target');
          var $close = $target.find('.close');
 
-         require(['elgg/popup'], function(popup) {
-            popup.open($trigger, $target, {
-               'collision': 'fit none'
-            });
-
-            $close.on('click', popup.close);
+         popup.open($trigger, $target, {
+            'collision': 'fit none'
          });
+
+         $close.on('click', popup.close);
       });
    });
 
@@ -568,16 +470,14 @@ You can use jQuery ``open`` and ``close`` events to manipulate popup module afte
 
 .. code-block:: js
 
-   define(function(require) {
-
-      var elgg = require('elgg');
-      var $ = require('jquery');
+   define(['jquery', 'elgg/Ajax'], function($, Ajax) {
 
       $('#my-target').on('open', function() {
          var $module = $(this);
          var $trigger = $module.data('trigger');
-
-         elgg.ajax('ajax/view/my_module', {
+         var ajax = new Ajax();
+         
+         ajax.view('my_module', {
             beforeSend: function() {
                $trigger.hide();
                $module.html('').addClass('elgg-ajax-loader');
@@ -635,16 +535,13 @@ You may apply colorbox options to an individual ``elgg-lightbox`` element by set
       ])
    ]);
 
-Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened. Note that the hook handler should depend on ``elgg/init`` AMD module.
+Use ``"getOptions", "ui.lightbox"`` plugin hook to filter options passed to ``$.colorbox()`` whenever a lightbox is opened.
 
 ``elgg/lightbox`` AMD module should be used to open and close the lightbox programmatically:
 
 .. code-block:: js
 
-   define(function(require) {
-      var lightbox = require('elgg/lightbox');
-      var spinner = require('elgg/spinner');
-
+   define(['elgg/lightbox', 'elgg/spinner'], function(lightbox, spinner) {
       lightbox.open({
          html: '<p>Hello world!</p>',
          onClosed: function() {
@@ -674,9 +571,7 @@ You can also resize the lightbox programmatically if needed:
 
 .. code-block:: js
 
-   define(function(require) {
-      var lightbox = require('elgg/lightbox');
-     
+   define(['elgg/lightbox'], function(lightbox) {
       lightbox.resize({
          width: '300px'
       });
@@ -686,9 +581,7 @@ If you wish your content to be loaded by the ``elgg/Ajax`` AMD module, which aut
 
 .. code-block:: js
 
-   define(function(require) {
-      var lightbox = require('elgg/lightbox');
-
+   define(['elgg/lightbox'], function(lightbox) {
       lightbox.open({
          href: 'some/view/with/js/dependencies',
          ajaxLoadWithDependencies: true
@@ -730,7 +623,7 @@ Inline tabs component fires an ``open`` event whenever a tabs is open and, in ca
 .. code-block:: js
 
 	// Add custom animation to tab content
-	require(['jquery', 'elgg/ready'], function($) {
+	require(['jquery'], function($) {
 		$(document).on('open', '.theme-sandbox-tab-callback', function() {
 			$(this).find('a').text('Clicked!');
 			$(this).data('target').hide().show('slide', {
@@ -765,23 +658,6 @@ Registering hook handlers
 
 Handler functions are registered using ``elgg.register_hook_handler()``. Multiple handlers can be registered for the same hook.
 
-The following example registers the ``handleFoo`` function for the ``foo, bar`` hook.
-
-.. code-block:: js
-
-    define(function (require) {
-        var elgg = require('elgg');
-        var Plugin = require('elgg/Plugin');
-
-        function handleFoo(hook, type, params, value) {
-            // do something
-        }
-
-        elgg.register_hook_handler('foo', 'bar', handleFoo);
-
-        return new Plugin();
-    });
-
 The handler function
 --------------------
 
@@ -801,23 +677,15 @@ Plugins can trigger their own hooks:
 
 .. code-block:: js
 
-    define(function(require) {
-        require('elgg/init');
-        var elgg = require('elgg');
-
+    define(['elgg'], function(elgg) {
         elgg.trigger_hook('name', 'type', {params}, "value");
     });
-
-.. note:: Be aware of timing. If you don't depend on elgg/init, other plugins may not have had a chance to register their handlers.
 
 Available hooks
 ---------------
 
 **init, system**
-    Plugins should register their init functions for this hook. It is fired after Elgg's JS is loaded and all plugin boot modules have been initialized. Depend on the ``elgg/init`` module to be sure this has completed.
-
-**ready, system**
-    This hook is fired when the system has fully booted (after init). Depend on the ``elgg/ready`` module to be sure this has completed.
+    Plugins should register their init functions for this hook. It is fired after Elgg's JS is loaded and all plugin boot modules have been initialized.
 
 **getOptions, ui.popup**
     This hook is fired for pop up displays (``"rel"="popup"``) and allows for customized placement options.

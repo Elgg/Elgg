@@ -1,8 +1,5 @@
-define(function (require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var spinner = require('elgg/spinner');
-
+define(['jquery', 'elgg', 'elgg/spinner'], function ($, elgg, spinner) {
+	
 	var site_url = elgg.get_site_url(),
 		action_base = site_url + 'action/',
 		fragment_pattern = /#.*$/,

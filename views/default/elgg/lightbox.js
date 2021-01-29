@@ -20,15 +20,8 @@
  * -------------------------------------
  * In a plugin, override this view and override the registration for the
  * lightbox JavaScript and CSS (@see elgg_views_boot()).
- *
- * @module elgg/lightbox
  */
-define(function (require) {
-
-	var elgg = require('elgg');
-	var $ = require('jquery');
-	require('elgg/init');
-	require('jquery.colorbox');
+define(['jquery', 'elgg', 'elgg/Ajax', 'jquery.colorbox'], function ($, elgg, Ajax) {
 
 	var lightbox = {
 
@@ -145,19 +138,16 @@ define(function (require) {
 			
 			// open lightbox without a href so we get a loader
 			$.colorbox(currentOpts);
-			
-			require(['elgg/Ajax'], function(Ajax) {
-				// using elggAjax to also load JS dependencies that the href may require
-				var ajax = new Ajax(false);
-				ajax.path(href, {
-					data: data
-				}).done(function(output) {
-					currentOpts.html = output;
-					$.colorbox(currentOpts);
-					
-					// clear data so next fetch will refresh contents
-					currentOpts.html = undefined;
-				});
+
+			var ajax = new Ajax(false);
+			ajax.path(href, {
+				data: data
+			}).done(function(output) {
+				currentOpts.html = output;
+				$.colorbox(currentOpts);
+				
+				// clear data so next fetch will refresh contents
+				currentOpts.html = undefined;
 			});
 		},
 

@@ -55,7 +55,7 @@ echo elgg_view('page/components/tabs', [
 
 ?>
 <script>
-	require(['jquery', 'elgg/ready'], function($) {
+	require(['jquery', 'jquery-ui/effects/effect-slide'], function($) {
 		$(document).on('open', '.theme-sandbox-tab-callback', function() {
 			$(this).find('a').text('Clicked!');
 			$(this).data('target').hide().show('slide', {

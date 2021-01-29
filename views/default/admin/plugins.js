@@ -1,22 +1,4 @@
-define(function(require) {
-	var $ = require('jquery');
-	var elgg = require('elgg');
-	var spinner = require('elgg/spinner');
-	var Ajax = require('elgg/Ajax');
-
-	var ajax = new Ajax();
-
-	function init () {
-
-		initPluginReordering();
-	
-		// plugin category filtering
-		$(document).on('click', '.elgg-admin-plugins-categories a', filterPluginCategory);
-		
-		$(document).on('click', '.elgg-plugins-toggle', toggleAllPlugins);
-
-		$(document).on('click', '.elgg-plugin-state-change', toggleSinglePlugin);
-	};
+define(['jquery', 'elgg', 'elgg/spinner', 'elgg/Ajax', 'jquery-ui/widgets/sortable'], function($, elgg, spinner, Ajax) {
 
 	function freezePlugins() {
 		$('#elgg-plugin-list-cover').css('display', 'block');
@@ -37,23 +19,19 @@ define(function(require) {
 		});
 	};
 
-	function toggleSinglePlugin(e) {
+	function toggleSinglePlugin(event) {
 		freezePlugins();
 
-		e.preventDefault();
+		event.preventDefault();
 
+		var ajax = new Ajax();
+		
 		ajax.action(this.href)
-			.done(function (output, statusText, jqXHR) {
-				if (jqXHR.AjaxData.status == -1) {
-					// don't know status :/
-					location.reload();
-					return;
-				}
-
+			.done(function() {
 				// second request because views list must be rebuilt and this can't be done
 				// within the first.
 				ajax.path('admin_plugins_refresh')
-					.done(function (output) {
+					.done(function(output) {
 
 						$('#elgg-plugin-list').html(output.list);
 						$('.elgg-sidebar').html(output.sidebar);
@@ -63,6 +41,8 @@ define(function(require) {
 						initPluginReordering();
 						unfreezePlugins();
 					});
+			}).fail(function() {
+				location.reload();
 			});
 	};
 
@@ -72,8 +52,8 @@ define(function(require) {
 	 * @param {Event} e click event
 	 * @return void
 	 */
-	function toggleAllPlugins(e) {
-		e.preventDefault();
+	function toggleAllPlugins(event) {
+		event.preventDefault();
 
 		if (!confirm(elgg.echo('question:areyousure'))) {
 			return;
@@ -117,14 +97,15 @@ define(function(require) {
 	 * @param {Object} ui jQueryUI object
 	 * @return void
 	 */
-	function movePlugin (e, ui) {
+	function movePlugin(e, ui) {
 		freezePlugins();
 
 		// get guid from id like elgg-object-<guid>
 		var pluginGuid = ui.item.attr('id');
 		pluginGuid = pluginGuid.replace('elgg-object-', '');
 
-		elgg.action('admin/plugins/set_priority', {
+		var ajax = new Ajax();
+		ajax.action('admin/plugins/set_priority', {
 			data: {
 				plugin_guid: pluginGuid,
 				// we start at priority 1
@@ -133,7 +114,7 @@ define(function(require) {
 			success: function() {
 				// update plugins with priority dependences
 				var priorityDep = new RegExp(elgg.echo('ElggPlugin:Dependencies:Priority'));
-				ui.item.siblings().andSelf().each(function() {
+				ui.item.siblings().addBack().each(function() {
 					if (priorityDep.test($(this).find('.elgg-dependency-requires').text())) {
 						updatePluginView($(this));
 					}
@@ -149,14 +130,13 @@ define(function(require) {
 	 * @param {Object} pluginView Plugin view element to update
 	 * @return void
 	 */
-	function updatePluginView (pluginView) {
+	function updatePluginView(pluginView) {
 		// get guid from id like elgg-object-<guid>
 		var pluginGuid = pluginView.attr('id');
 		pluginGuid = pluginGuid.replace('elgg-object-', '');
 
-		elgg.get({
-			url: elgg.config.wwwroot + "ajax/view/object/plugin/full",
-			dataType: "html",
+		var ajax = new Ajax();
+		ajax.view('object/plugin/full', {
 			cache: false,
 			data: {
 				guid: pluginGuid,
@@ -175,8 +155,8 @@ define(function(require) {
 	 *
 	 * @return void
 	 */
-	function filterPluginCategory (e) {
-		e.preventDefault();
+	function filterPluginCategory(event) {
+		event.preventDefault();
 		
 		// remove selected state from all buttons
 		$(".elgg-admin-plugins-categories > li").removeClass("elgg-state-selected");
@@ -187,5 +167,9 @@ define(function(require) {
 		$(this).closest('li').addClass("elgg-state-selected");
 	};
 
-	init();
+	initPluginReordering();
+	
+	$(document).on('click', '.elgg-admin-plugins-categories a', filterPluginCategory);
+	$(document).on('click', '.elgg-plugins-toggle', toggleAllPlugins);
+	$(document).on('click', '.elgg-plugin-state-change', toggleSinglePlugin);
 });

@@ -444,19 +444,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
-
-		$output = json_encode([
-			'output' => '',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => []
-			],
-			'current_url' => current_page_url(),
-			'forward_url' => elgg_normalize_url('foo2/bar2/baz2'),
-		], ELGG_JSON_ENCODING);
-
-		$this->assertEquals($output, $response->getContent());
+		
+		$this->assertEmpty($response->getContent());
 
 		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
 		ob_start();
@@ -498,8 +487,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'path' => '/phpunit',
 			'handler' => function () {
 				_elgg_services()->responseFactory->redirect('index');
-
-				return elgg_ok_response('foo');
 			},
 		]);
 
@@ -511,19 +498,8 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
-
-		$output = json_encode([
-			'output' => '',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => []
-			],
-			'current_url' => current_page_url(),
-			'forward_url' => elgg_normalize_url('index'),
-		], ELGG_JSON_ENCODING);
-
-		$this->assertEquals($output, $response->getContent());
+		
+		$this->assertEmpty($response->getContent());
 
 		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
 		ob_start();
@@ -537,8 +513,6 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 			'path' => '/phpunit',
 			'handler' => function () {
 				_elgg_services()->responseFactory->redirect('error', ELGG_HTTP_NOT_FOUND);
-
-				return elgg_ok_response('foo');
 			},
 		]);
 
@@ -546,23 +520,12 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+		$this->assertEquals(ELGG_HTTP_NOT_FOUND, $response->getStatusCode());
 
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
-		$output = json_encode([
-			'output' => '',
-			'status' => 0,
-			'system_messages' => [
-				'error' => [],
-				'success' => []
-			],
-			'current_url' => current_page_url(),
-			'forward_url' => elgg_normalize_url('error'),
-		], ELGG_JSON_ENCODING);
-
-		$this->assertEquals($output, $response->getContent());
+		$this->assertEmpty($response->getContent());
 
 		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
 		ob_start();
@@ -927,22 +890,11 @@ class RouterUnitTest extends \Elgg\UnitTestCase {
 
 		$response = _elgg_services()->responseFactory->getSentResponse();
 		$this->assertInstanceOf(Response::class, $response);
-		$this->assertEquals(ELGG_HTTP_OK, $response->getStatusCode());
+		$this->assertEquals(ELGG_HTTP_BAD_REQUEST, $response->getStatusCode());
 		$this->assertStringContainsString('application/json', $response->headers->get('Content-Type'));
 		$this->assertStringContainsString('charset=utf-8', strtolower($response->headers->get('Content-Type')));
 
-		$output = json_encode([
-			'output' => 'hello',
-			'status' => -1,
-			'system_messages' => [
-				'error' => ['error'],
-				'success' => []
-			],
-			'current_url' => current_page_url(),
-			'forward_url' => elgg_normalize_url('forwards'),
-		], ELGG_JSON_ENCODING);
-
-		$this->assertEquals($output, $response->getContent());
+		$this->assertEquals('hello', $response->getContent());
 
 		// compensate for fact that ResponseFactory::redirect closes a buffer it didn't open
 		ob_start();
