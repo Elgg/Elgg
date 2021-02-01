@@ -39,7 +39,7 @@ class Title {
 				'link_class' => 'elgg-button elgg-button-action',
 			]);
 			
-			if (elgg_is_active_plugin('invitefriends')) {
+			if (elgg_is_active_plugin('friends')) {
 				$result[] = \ElggMenuItem::factory([
 					'name' => 'groups:invite',
 					'icon' => 'user-plus',
