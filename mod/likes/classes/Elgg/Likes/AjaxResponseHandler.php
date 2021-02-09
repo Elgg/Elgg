@@ -2,8 +2,6 @@
 
 namespace Elgg\Likes;
 
-use Elgg\Services\AjaxResponse;
-
 /**
  * Ajax response handler
  */
@@ -18,10 +16,11 @@ class AjaxResponseHandler {
 	 */
 	public function __invoke(\Elgg\Hook $hook) {
 		$entity = get_entity(get_input('guid'));
-		if (!$entity) {
+		if (!$entity || elgg_get_viewtype() !== 'default') {
 			return;
 		}
 		
+		/* @var $response \Elgg\Services\AjaxResponse */
 		$response = $hook->getValue();
 		
 		$response->getData()->likes_status = [
