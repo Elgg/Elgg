@@ -347,14 +347,15 @@ class CompositeCache extends ElggCache {
 		// because Stash assumes all files/folders are made by Stash
 		$path .= 'stash' . DIRECTORY_SEPARATOR;
 
-		if (!is_writable($path)) {
-			elgg_log(__METHOD__ . " unable to write to cache path: {$path}", 'ERROR');
-			return null;
+		try {
+			return new FileSystem([
+				'path' => $path,
+			]);
+		} catch (\Exception $e) {
+			elgg_log(__METHOD__ . " {$e->getMessage()}: {$path}", 'ERROR');
 		}
 		
-		return new FileSystem([
-			'path' => $path,
-		]);
+		return null;
 	}
 	
 	/**
@@ -374,15 +375,16 @@ class CompositeCache extends ElggCache {
 		// make a sepatate folder for Stash caches
 		// because Stash assumes all files/folders are made by Stash
 		$path .= 'localstash' . DIRECTORY_SEPARATOR;
-
-		if (!is_writable($path)) {
-			elgg_log(__METHOD__ . " unable to write to cache path: {$path}", 'ERROR');
-			return null;
+		
+		try {
+			return new FileSystem([
+				'path' => $path,
+			]);
+		} catch (\Exception $e) {
+			elgg_log(__METHOD__ . " {$e->getMessage()}: {$path}", 'ERROR');
 		}
 		
-		return new FileSystem([
-			'path' => $path,
-		]);
+		return null;
 	}
 
 	/**
