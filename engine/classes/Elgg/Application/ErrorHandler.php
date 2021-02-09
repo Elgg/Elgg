@@ -33,12 +33,11 @@ class ErrorHandler {
 	 * @param string $errmsg   The error message
 	 * @param string $filename The filename the error was raised in
 	 * @param int    $linenum  The line number the error was raised at
-	 * @param array  $vars     An array that points to the active symbol table where error occurred
 	 *
 	 * @return true
 	 * @throws Exception
 	 */
-	public function __invoke($errno, $errmsg, $filename, $linenum, $vars) {
+	public function __invoke($errno, $errmsg, $filename = '', $linenum = 0) {
 		$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 		switch ($errno) {

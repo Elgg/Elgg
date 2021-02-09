@@ -38,13 +38,16 @@ class Title {
 				'text' => elgg_echo('groups:edit'),
 				'link_class' => 'elgg-button elgg-button-action',
 			]);
-			$result[] = \ElggMenuItem::factory([
-				'name' => 'groups:invite',
-				'icon' => 'user-plus',
-				'href' => elgg_generate_entity_url($group, 'invite'),
-				'text' => elgg_echo('groups:invite'),
-				'link_class' => 'elgg-button elgg-button-action',
-			]);
+			
+			if (elgg_is_active_plugin('friends')) {
+				$result[] = \ElggMenuItem::factory([
+					'name' => 'groups:invite',
+					'icon' => 'user-plus',
+					'href' => elgg_generate_entity_url($group, 'invite'),
+					'text' => elgg_echo('groups:invite'),
+					'link_class' => 'elgg-button elgg-button-action',
+				]);
+			}
 		}
 		
 		if ($group->isMember($user)) {
