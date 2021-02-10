@@ -17,12 +17,16 @@ class Cron {
 	 *
 	 * @param \Elgg\Hook $hook 'cron', 'fiveminute'
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public static function cleanupSiteNotificationsWithRemovedLinkedEntities(\Elgg\Hook $hook) {
 		set_time_limit(0);
 		
-		elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+		$result = $hook->getValue();
+		$result .= elgg_echo('site_notifications:cron:linked_cleanup:start') . PHP_EOL;
+		
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() {
+			$count = 0;
 			$max_runtime = 120; // 2 minutes
 			$start_time = microtime(true);
 			
@@ -49,14 +53,22 @@ class Cron {
 			foreach ($batch as $entity) {
 				if (!$entity->delete()) {
 					$batch->reportFailure();
+					continue;
 				}
+				
+				$count++;
 				
 				if (microtime(true) - $start_time > $max_runtime) {
 					// max runtime expired
 					break;
 				}
 			}
+			
+			return $count;
 		});
+		
+		$result .= elgg_echo('site_notifications:cron:linked_cleanup:end', [$count]) . PHP_EOL;
+		return $result;
 	}
 	
 	/**
@@ -64,7 +76,7 @@ class Cron {
 	 *
 	 * @param \Elgg\Hook $hook 'cron', 'daily'
 	 *
-	 * @return void
+	 * @return void|string
 	 */
 	public static function cleanupUnreadSiteNotifications(\Elgg\Hook $hook) {
 		set_time_limit(0);
@@ -74,7 +86,8 @@ class Cron {
 			return;
 		}
 		
-		echo elgg_echo('site_notifications:cron:unread_cleanup:start', [$days]) . PHP_EOL;
+		$result = $hook->getValue();
+		$result .= elgg_echo('site_notifications:cron:unread_cleanup:start', [$days]) . PHP_EOL;
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
 			$count = 0;
@@ -104,7 +117,8 @@ class Cron {
 			return $count;
 		});
 		
-		echo elgg_echo('site_notifications:cron:unread_cleanup:end', [$count]) . PHP_EOL;
+		$result .= elgg_echo('site_notifications:cron:unread_cleanup:end', [$count]) . PHP_EOL;
+		return $result;
 	}
 	
 	/**
@@ -112,7 +126,7 @@ class Cron {
 	 *
 	 * @param \Elgg\Hook $hook 'cron', 'daily'
 	 *
-	 * @return void
+	 * @return void|string
 	 */
 	public static function cleanupReadSiteNotifications(\Elgg\Hook $hook) {
 		set_time_limit(0);
@@ -122,7 +136,8 @@ class Cron {
 			return;
 		}
 		
-		echo elgg_echo('site_notifications:cron:read_cleanup:start', [$days]) . PHP_EOL;
+		$result = $hook->getValue();
+		$result .= elgg_echo('site_notifications:cron:read_cleanup:start', [$days]) . PHP_EOL;
 		
 		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
 			$count = 0;
@@ -153,6 +168,7 @@ class Cron {
 			return $count;
 		});
 		
-		echo elgg_echo('site_notifications:cron:read_cleanup:end', [$count]) . PHP_EOL;
+		$result .= elgg_echo('site_notifications:cron:read_cleanup:end', [$count]) . PHP_EOL;
+		return $result;
 	}
 }
