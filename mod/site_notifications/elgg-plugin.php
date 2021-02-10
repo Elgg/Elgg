@@ -22,6 +22,11 @@ return [
 		],
 	],
 	'hooks' => [
+		'cron' => [
+			'fiveminute' => [
+				'Elgg\SiteNotifications\Cron::cleanupSiteNotificationsWithRemovedLinkedEntities' => [],
+			],
+		],
 		'register' => [
 			'menu:entity' => [
 				'Elgg\SiteNotifications\Menus\Entity::register' => [],
