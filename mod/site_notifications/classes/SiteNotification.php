@@ -16,6 +16,7 @@ class SiteNotification extends ElggObject {
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
+		
 		$this->attributes['subtype'] = 'site_notification';
 	}
 
@@ -40,7 +41,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setActor($entity) {
+	public function setActor(\ElggEntity $entity) {
 		$this->addRelationship($entity->guid, self::HAS_ACTOR);
 	}
 
@@ -67,7 +68,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setURL($url) {
+	public function setURL(string $url) {
 		if ($url) {
 			$this->url = $url;
 		}
@@ -80,7 +81,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setRead($read) {
+	public function setRead(bool $read) {
 		$this->read = $read;
 	}
 

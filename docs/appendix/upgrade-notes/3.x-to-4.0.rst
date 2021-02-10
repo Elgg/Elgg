@@ -190,6 +190,9 @@ Class functions
 * ``Elgg\Http\OkResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\Http\RedirectResponse::__construct()`` now requires an ``int`` for ``$status_code``
 * ``Elgg\I18n\Translator::getInstalledTranslations()`` now requires a ``bool`` for ``$calculate_completeness``
+* ``SiteNotification::setActor()`` now requires an ``ElggEntity`` for ``$entity``
+* ``SiteNotification::setURL()`` now requires a ``string`` for ``$url``
+* ``SiteNotification::setRead()`` now requires a ``bool`` for ``$read``
 
 Lib functions
 ~~~~~~~~~~~~~
