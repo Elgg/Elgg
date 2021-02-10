@@ -2,6 +2,10 @@
 
 return [
 	'bootstrap' => \Elgg\SiteNotifications\Bootstrap::class,
+	'settings' => [
+		'unread_cleanup_days' => 365,
+		'read_cleanup_days' => 30,
+	],
 	'entities' => [
 		[
 			'type' => 'object',
@@ -35,6 +39,10 @@ return [
 	],
 	'hooks' => [
 		'cron' => [
+			'daily' => [
+				'Elgg\SiteNotifications\Cron::cleanupUnreadSiteNotifications' => [],
+				'Elgg\SiteNotifications\Cron::cleanupReadSiteNotifications' => [],
+			],
 			'fiveminute' => [
 				'Elgg\SiteNotifications\Cron::cleanupSiteNotificationsWithRemovedLinkedEntities' => [],
 			],

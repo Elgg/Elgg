@@ -58,4 +58,101 @@ class Cron {
 			}
 		});
 	}
+	
+	/**
+	 * Cleanup unread site notification
+	 *
+	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 *
+	 * @return void
+	 */
+	public static function cleanupUnreadSiteNotifications(\Elgg\Hook $hook) {
+		set_time_limit(0);
+		
+		$days = (int) elgg_get_plugin_setting('unread_cleanup_days', 'site_notifications');
+		if ($days < 1) {
+			return;
+		}
+		
+		echo elgg_echo('site_notifications:cron:unread_cleanup:start', [$days]) . PHP_EOL;
+		
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
+			$count = 0;
+			
+			/* @var $batch \ElggBatch */
+			$batch = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => 'site_notification',
+				'limit' => false,
+				'metadata_name_value_pairs' => [
+					'read' => false,
+				],
+				'created_before' => "-{$days} days",
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			
+			/* @var $entity \ElggEntity */
+			foreach ($batch as $entity) {
+				if (!$entity->delete()) {
+					$batch->reportFailure();
+					continue;
+				}
+				$count++;
+			}
+			
+			return $count;
+		});
+		
+		echo elgg_echo('site_notifications:cron:unread_cleanup:end', [$count]) . PHP_EOL;
+	}
+	
+	/**
+	 * Cleanup unread site notification
+	 *
+	 * @param \Elgg\Hook $hook 'cron', 'daily'
+	 *
+	 * @return void
+	 */
+	public static function cleanupReadSiteNotifications(\Elgg\Hook $hook) {
+		set_time_limit(0);
+		
+		$days = (int) elgg_get_plugin_setting('read_cleanup_days', 'site_notifications');
+		if ($days < 1) {
+			return;
+		}
+		
+		echo elgg_echo('site_notifications:cron:read_cleanup:start', [$days]) . PHP_EOL;
+		
+		$count = elgg_call(ELGG_IGNORE_ACCESS | ELGG_SHOW_DISABLED_ENTITIES, function() use ($days) {
+			$count = 0;
+			
+			/* @var $batch \ElggBatch */
+			$batch = elgg_get_entities([
+				'type' => 'object',
+				'subtype' => 'site_notification',
+				'limit' => false,
+				'metadata_name_value_pairs' => [
+					'read' => true,
+				],
+				'created_before' => "-{$days} days",
+				'batch' => true,
+				'batch_inc_offset' => false,
+			]);
+			
+			/* @var $entity \ElggEntity */
+			foreach ($batch as $entity) {
+				if (!$entity->delete()) {
+					$batch->reportFailure();
+					continue;
+				}
+				
+				$count++;
+			}
+			
+			return $count;
+		});
+		
+		echo elgg_echo('site_notifications:cron:read_cleanup:end', [$count]) . PHP_EOL;
+	}
 }

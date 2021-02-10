@@ -15,6 +15,11 @@ return array(
 	'site_notifications:unread' => 'Unread',
 	'site_notifications:read' => 'Read',
 	
+	'site_notifications:settings:unread_cleanup_days' => 'Cleanup unread notifications after x days',
+	'site_notifications:settings:unread_cleanup_days:help' => 'Unread notifications will be cleaned up after the given number of days. Leave empty to not cleanup notifications.',
+	'site_notifications:settings:read_cleanup_days' => 'Cleanup read notifications after x days',
+	'site_notifications:settings:read_cleanup_days:help' => 'Read notifications will be cleaned up after the given number of days. Leave empty to not cleanup notifications.',
+	
 	'site_notifications:empty' => 'No notifications',
 	'site_notifications:toggle_all' => 'Toggle all',
 	'site_notifications:mark_read' => 'Mark as read',
@@ -22,4 +27,9 @@ return array(
 	'site_notifications:error:notifications_not_selected' => 'No notifications selected',
 	'site_notifications:success:delete' => 'Notifications deleted',
 	'site_notifications:success:mark_read' => 'Notifications marked as read',
+	
+	'site_notifications:cron:unread_cleanup:start' => 'Site notifications cleaning up unread notifications older than %s days',
+	'site_notifications:cron:unread_cleanup:end' => 'Site notifications cleaned up %s unread notifications',
+	'site_notifications:cron:read_cleanup:start' => 'Site notifications cleaning up read notifications older than %s days',
+	'site_notifications:cron:read_cleanup:end' => 'Site notifications cleaned up %s read notifications',
 );
