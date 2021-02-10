@@ -15,6 +15,7 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    messages
    pages
    profile
+   site_notifications
    thewire
    uservalidationbyemail
 
@@ -36,7 +37,6 @@ The following plugins are also bundled with Elgg, but are not (yet) documented
 - notifications
 - reportedcontent
 - search
-- site_notifications
 - system_log
 - tagcloud
 - web_services
