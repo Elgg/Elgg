@@ -5,8 +5,8 @@ use Elgg\WebServices\Di\ApiRegistrationCollection;
 use Elgg\WebServices\Di\ApiRegistrationService;
 
 return [
-	ApiRegistrationCollection::name() => Di\object(ApiRegistrationCollection::class),
-	ApiRegistrationService::name() => Di\object(ApiRegistrationService::class)
+	ApiRegistrationCollection::name() => \Di\create(ApiRegistrationCollection::class),
+	ApiRegistrationService::name() => \Di\create(ApiRegistrationService::class)
 		->constructor(Di\get(ApiRegistrationCollection::name())),
-	RestApiErrorHandler::name() => Di\object(RestApiErrorHandler::class),
+	RestApiErrorHandler::name() => \Di\create(RestApiErrorHandler::class),
 ];

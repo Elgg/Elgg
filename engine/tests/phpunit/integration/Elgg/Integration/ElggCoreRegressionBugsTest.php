@@ -265,8 +265,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 	 * @group XML
 	 */
 	public function testElggXMLElementDoesNotLoadExternalEntities() {
-		$elLast = libxml_disable_entity_loader(false);
-
 		// build payload that should trigger loading of external entity
 		$payload = file_get_contents($this->normalizeTestFilePath('xxe/request.xml'));
 		$path = realpath($this->normalizeTestFilePath('xxe/external_entity.txt'));
@@ -281,8 +279,6 @@ class ElggCoreRegressionBugsTest extends \Elgg\IntegrationTestCase {
 		$chidren = $el->getChildren();
 		$content = $chidren[0]->getContent();
 		$this->assertNotRegExp('/secret/', $content);
-
-		libxml_disable_entity_loader($elLast);
 	}
 
 	/**

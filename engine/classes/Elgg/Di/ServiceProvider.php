@@ -61,7 +61,6 @@ use Elgg\Security\PasswordGeneratorService;
  * @property-read \Elgg\DeprecationService                        $deprecation
  * @property-read \Elgg\DI\PublicContainer                        $dic
  * @property-read \Di\ContainerBuilder                            $dic_builder
- * @property-read \Elgg\Di\DefinitionCache                        $dic_cache
  * @property-read \Elgg\Di\DefinitionLoader                       $dic_loader
  * @property-read \Elgg\EmailService                              $emails
  * @property-read \Elgg\Cache\EntityCache                         $entityCache
@@ -338,22 +337,8 @@ class ServiceProvider extends DiContainer {
 		$this->setFactory('dic_builder', function(ServiceProvider $c) {
 			$dic_builder = new ContainerBuilder(PublicContainer::class);
 			$dic_builder->useAnnotations(false);
-			$dic_builder->setDefinitionCache($c->dic_cache);
-
+			
 			return $dic_builder;
-		});
-
-		$this->setFactory('dic_cache', function (ServiceProvider $c) {
-			$cache = new CompositeCache(
-				'dic',
-				$c->config,
-				ELGG_CACHE_APC |
-				ELGG_CACHE_PERSISTENT |
-				ELGG_CACHE_FILESYSTEM |
-				ELGG_CACHE_RUNTIME
-			);
-
-			return new \Elgg\Di\DefinitionCache($cache);
 		});
 
 		$this->setFactory('dic_loader', function(ServiceProvider $c) {

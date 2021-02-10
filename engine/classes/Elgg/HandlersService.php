@@ -3,15 +3,11 @@
 namespace Elgg;
 
 use Elgg\Di\DiContainer;
-use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\HooksRegistrationService\Event as HrsEvent;
 use Elgg\HooksRegistrationService\Hook as HrsHook;
 
 /**
  * Helpers for providing callable-based APIs
- *
- * getType() uses code from Zend\Code\Reflection\ParameterReflection::detectType.
- * https://github.com/zendframework/zend-code/blob/master/src/Reflection/ParameterReflection.php
  *
  * @copyright 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
@@ -80,35 +76,6 @@ class HandlersService {
 	}
 
 	/**
-	 * Get the reflection interface for a callable
-	 *
-	 * @param callable $callable Callable
-	 *
-	 * @return \ReflectionFunctionAbstract
-	 */
-	public function getReflector($callable) {
-		if (is_string($callable)) {
-			if (false !== strpos($callable, '::')) {
-				$callable = explode('::', $callable);
-			} else {
-				// function
-				return new \ReflectionFunction($callable);
-			}
-		}
-		if (is_array($callable)) {
-			return new \ReflectionMethod($callable[0], $callable[1]);
-		}
-		if ($callable instanceof \Closure) {
-			return new \ReflectionFunction($callable);
-		}
-		if (is_object($callable)) {
-			return new \ReflectionMethod($callable, '__invoke');
-		}
-
-		throw new InvalidArgumentException('invalid $callable');
-	}
-
-	/**
 	 * Resolve a callable, possibly instantiating a class name
 	 *
 	 * @param callable|string $callable Callable or class name
@@ -127,60 +94,6 @@ class HandlersService {
 		}
 
 		return is_callable($callable) ? $callable : null;
-	}
-
-	/**
-	 * Get the type for a parameter of a callable
-	 *
-	 * @param callable $callable Callable
-	 * @param int      $index    Index of argument
-	 *
-	 * @return null|string Empty string = no type, null = no parameter
-	 */
-	public function getParamTypeForCallable($callable, $index = 0) {
-		$params = $this->getReflector($callable)->getParameters();
-		if (!isset($params[$index])) {
-			return null;
-		}
-
-		return $this->getType($params[$index]);
-	}
-
-	/**
-	 * Get the type of a parameter
-	 *
-	 * @param \ReflectionParameter $param Parameter
-	 *
-	 * @return string
-	 */
-	public function getType(\ReflectionParameter $param) {
-		// @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
-		// @license   http://framework.zend.com/license/new-bsd New BSD License
-
-		if (method_exists($param, 'getType')
-				&& ($type = $param->getType())
-				&& $type->isBuiltin()) {
-			return $type->getName();
-		}
-
-		// can be dropped when dropping PHP7 support:
-		if ($param->isArray()) {
-			return 'array';
-		}
-
-		// can be dropped when dropping PHP7 support:
-		if ($param->isCallable()) {
-			return 'callable';
-		}
-
-		// ReflectionParameter::__toString() doesn't require loading class
-		if (preg_match('~\[\s\<\w+?>\s([\S]+)~s', (string) $param, $m)) {
-			if ($m[1][0] !== '$') {
-				return $m[1];
-			}
-		}
-
-		return '';
 	}
 
 	/**

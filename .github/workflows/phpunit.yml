@@ -38,20 +38,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.4', '8.0']
         experimental: [false]
         extra-title: ['']
         memcache: [0]
         mysql-versions: [5.7]
         redis: [0]
         include:
-          - php-versions: '7.2'
+          - php-versions: '7.4'
             experimental: false
             extra-title: '- Memcache'
             memcache: 1
             mysql-versions: 5.7
             redis: 0
-          - php-versions: '7.2'
+          - php-versions: '7.4'
             experimental: false
             extra-title: '- Redis'
             memcache: 0
@@ -62,12 +62,6 @@ jobs:
             extra-title: ''
             memcache: 0
             mysql-versions: 8.0
-            redis: 1
-          - php-versions: '8.0'
-            experimental: true
-            extra-title: ''
-            memcache: 0
-            mysql-versions: 5.7
             redis: 0
     env:
       ELGG_MEMCACHE: ${{ matrix.memcache }}
