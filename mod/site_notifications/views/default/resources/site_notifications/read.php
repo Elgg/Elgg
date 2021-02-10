@@ -1,6 +1,6 @@
 <?php
 /**
- * View a user's (unread) site notifications
+ * View a user's read site notifications
  */
 
 $page_owner = elgg_get_page_owner_entity();
@@ -11,7 +11,7 @@ $list = elgg_list_entities([
 	'owner_guid' => $page_owner->guid,
 	'full_view' => false,
 	'metadata_name_value_pairs' => [
-		'read' => false,
+		'read' => true,
 	],
 ]);
 
@@ -21,7 +21,8 @@ if (empty($list)) {
 	]);
 } else {
 	$content = elgg_view_form('site_notifications/process', [], [
-		'list' => $list
+		'list' => $list,
+		'mark_read' => false,
 	]);
 }
 
@@ -29,5 +30,5 @@ echo elgg_view_page(elgg_echo('site_notifications'), [
 	'content' => $content,
 	'sidebar' => false,
 	'filter_id' => 'site_notifications',
-	'filter_value' => 'owner',
+	'filter_value' => 'read',
 ]);

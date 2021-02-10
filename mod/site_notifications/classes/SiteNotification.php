@@ -18,6 +18,8 @@ class SiteNotification extends ElggObject {
 		parent::initializeAttributes();
 		
 		$this->attributes['subtype'] = 'site_notification';
+		
+		$this->read = false;
 	}
 
 	/**
