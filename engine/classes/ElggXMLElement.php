@@ -20,12 +20,7 @@ class ElggXMLElement implements Serializable {
 		if ($xml instanceof SimpleXMLElement) {
 			$this->_element = $xml;
 		} else {
-			// do not load entities
-			$disable_load_entities = libxml_disable_entity_loader(true);
-
 			$this->_element = new SimpleXMLElement($xml);
-
-			libxml_disable_entity_loader($disable_load_entities);
 		}
 	}
 

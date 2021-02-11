@@ -98,10 +98,7 @@ class ElggTempFileTest extends IntegrationTestCase {
 		
 		$temp_file = $this->temp_file;
 		
-		$user = $this->createUser([
-			'admin' => 'yes',
-			'banned' => 'no',
-		]);
+		$user = $this->createUser();
 		_elgg_services()->session->setLoggedInUser($user);
 		
 		$this->assertFalse($temp_file->canDownload());

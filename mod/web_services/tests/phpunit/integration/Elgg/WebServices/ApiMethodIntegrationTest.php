@@ -325,6 +325,7 @@ class ApiMethodIntegrationTest extends IntegrationTestCase {
 		$request = new \Elgg\Request(_elgg_services()->dic, $http_request);
 		
 		$api = $this->getApiMethod();
+		$api->supply_associative = true;
 		$api->params = [
 			'username' => [
 				'type' => 'string',

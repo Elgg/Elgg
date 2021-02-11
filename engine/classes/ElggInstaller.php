@@ -145,7 +145,6 @@ class ElggInstaller {
 			$app->_services->boot->getCache()->disable();
 			$app->_services->plugins->getCache()->disable();
 			$app->_services->sessionCache->disable();
-			$app->_services->dic_cache->getCache()->disable();
 			$app->_services->dataCache->disable();
 			$app->_services->autoloadManager->getCache()->disable();
 

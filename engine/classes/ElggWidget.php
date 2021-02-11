@@ -157,7 +157,7 @@ class ElggWidget extends \ElggObject {
 		}
 
 		usort($widgets, function($a, $b) {
-			return (int) $a->order > (int) $b->order;
+			return ((int) $a->order > (int) $b->order) ? 1 : -1;
 		});
 
 		// remove widgets from inactive plugins

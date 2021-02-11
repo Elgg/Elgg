@@ -5,6 +5,17 @@ From 3.x to 4.0
    :local:
    :depth: 1
 
+PHP Requirements
+----------------
+
+To be compatible with PHP 8 we needed to increase the minimal PHP version to 7.4. PHP versions < 7.4 are already end-of-life.
+
+PHP-DI
+------
+
+This feature has been updated to use the latest version of PHP-DI. Most notable breaking change for Elgg is the need to change your plugin service definition
+to use ``\DI\create()`` instead of ``\DI\object()``. 
+
 Zend\Mail replaced by Laminas\Mail
 ----------------------------------
 
