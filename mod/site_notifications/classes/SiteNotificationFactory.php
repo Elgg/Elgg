@@ -23,20 +23,30 @@ abstract class SiteNotificationFactory {
 		$note->access_id = ACCESS_PRIVATE;
 		$note->description = $message;
 
-		if (!isset($url) && $object) {
-			// TODO Add support for setting an URL for a notification about a new relationship
+		if ($object instanceof ElggData) {
+			$entity = false;
 			switch ($object->getType()) {
 				case 'annotation':
+				case 'metadata':
 					// Annotations do not have an URL so we use the entity URL
-					$url = $object->getEntity()->getURL();
+					$entity = $object->getEntity();
+					break;
+				case 'relationship':
+					// TODO Add support for linking a notification with a relationship
 					break;
 				default:
-					$url = $object->getURL();
+					if ($object instanceof ElggEntity) {
+						$entity = $object;
+					}
 					break;
+			}
+			
+			if ($entity instanceof ElggEntity) {
+				$note->setLinkedEntity($entity);
 			}
 		}
 
-		if ($url && $url != elgg_get_site_url()) {
+		if (!empty($url) && $url !== elgg_get_site_url()) {
 			$note->setURL($url);
 		}
 		

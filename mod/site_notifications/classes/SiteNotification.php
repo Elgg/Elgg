@@ -3,19 +3,23 @@
 /**
  * Site notification class
  *
- * @property string $url  Url to the target of the notification
- * @property bool   $read Has this notification been read yet
+ * @property string $url                Url to the target of the notification
+ * @property bool   $read               Has this notification been read yet
+ * @property int    $linked_entity_guid Entity linked to this notification
  */
 class SiteNotification extends ElggObject {
 
-	const HAS_ACTOR = "hasActor";
+	const HAS_ACTOR = 'hasActor';
 
 	/**
 	 * {@inheritDoc}
 	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
+		
 		$this->attributes['subtype'] = 'site_notification';
+		
+		$this->read = false;
 	}
 
 	/**
@@ -39,7 +43,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setActor($entity) {
+	public function setActor(\ElggEntity $entity) {
 		$this->addRelationship($entity->guid, self::HAS_ACTOR);
 	}
 
@@ -47,7 +51,16 @@ class SiteNotification extends ElggObject {
 	 * {@inheritDoc}
 	 */
 	public function getURL() {
-		return (string) $this->url;
+		if (isset($this->url)) {
+			return (string) $this->url;
+		}
+		
+		$linked_entity = $this->getLinkedEntity();
+		if ($linked_entity instanceof ElggEntity) {
+			return $linked_entity->getURL();
+		}
+		
+		return '';
 	}
 
 	/**
@@ -57,7 +70,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setURL($url) {
+	public function setURL(string $url) {
 		if ($url) {
 			$this->url = $url;
 		}
@@ -70,7 +83,7 @@ class SiteNotification extends ElggObject {
 	 *
 	 * @return void
 	 */
-	public function setRead($read) {
+	public function setRead(bool $read) {
 		$this->read = $read;
 	}
 
@@ -81,5 +94,25 @@ class SiteNotification extends ElggObject {
 	 */
 	public function isRead() {
 		return (bool) $this->read;
+	}
+	
+	/**
+	 * Link a notification to an entity
+	 *
+	 * @param \ElggEntity $entity the entity linked to this notification
+	 *
+	 * @return void
+	 */
+	public function setLinkedEntity(\ElggEntity $entity) {
+		$this->linked_entity_guid = $entity->guid;
+	}
+	
+	/**
+	 * Get the linked entity for this notification
+	 *
+	 * @return \ElggEntity|false
+	 */
+	public function getLinkedEntity() {
+		return get_entity($this->linked_entity_guid);
 	}
 }

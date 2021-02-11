@@ -1,6 +1,6 @@
 <?php
 /**
- * Process a set of site notifications
+ * Process a set of site notifications to mark as read
  */
 
 $notification_guids = get_input('notification_id', []);
@@ -20,14 +20,12 @@ $batch = elgg_get_entities([
 ]);
 /* @var $entity \SiteNotification */
 foreach ($batch as $entity) {
-	if (!$entity->canDelete()) {
+	if (!$entity->canEdit()) {
 		$batch->reportFailure();
 		continue;
 	}
 	
-	if (!$entity->delete()) {
-		$batch->reportFailure();
-	}
+	$entity->read = true;
 }
 
-return elgg_ok_response('', elgg_echo('site_notifications:success:delete'));
+return elgg_ok_response('', elgg_echo('site_notifications:success:mark_read'));

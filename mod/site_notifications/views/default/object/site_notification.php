@@ -17,11 +17,7 @@ $url = $entity->getURL();
 if ($url) {
 	$text = elgg_view('output/url', [
 		'text' => $text,
-		'href' => elgg_generate_action_url('entity/delete', [
-			'guid' => $entity->guid,
-			'forward_url' => $url,
-			'show_success' => false,
-		]),
+		'href' => elgg_generate_entity_url($entity, 'redirect'),
 	]);
 }
 
