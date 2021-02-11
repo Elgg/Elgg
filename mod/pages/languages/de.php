@@ -22,8 +22,8 @@ return array(
 
 	'groups:tool:pages' => 'Gruppen-Coop-Seiten aktivieren',
 	
-	'annotation:delete:page:success' => 'The page revision was successfully deleted',
-	'annotation:delete:page:fail' => 'The page revision could not be deleted',
+	'annotation:delete:page:success' => 'Die Revision der Coop-Seite wurde gelöscht.',
+	'annotation:delete:page:fail' => 'Das Löschen der Revision der Coop-Seite ist fehlgeschlagen.',
 
 	'pages:delete' => "Coop-Seite löschen",
 	'pages:history' => "Bearbeitungsverlauf",
