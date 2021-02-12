@@ -16,7 +16,7 @@ return array(
 
 	'install:next' => 'Weiter',
 	'install:refresh' => 'Neu laden',
-	'install:change_language' => 'Change language',
+	'install:change_language' => 'Sprache auswählen',
 
 	'install:welcome:instructions' => "Die Installation von Elgg besteht aus 6 einfachen Schritten und der erste Schritt davon ist das Lesen dieser Begrüßung!
 
@@ -24,9 +24,9 @@ Wenn Du es nicht bereits getan hast, lies bitte die mitgelieferten Installations
 
 Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	
-	'install:footer:instructions' => "Installation instructions",
-	'install:footer:troubleshooting' => "Installation troubleshooting",
-	'install:footer:community' => "Elgg community forums",
+	'install:footer:instructions' => "Installationsanweisungen",
+	'install:footer:troubleshooting' => "Hilfe bei Installationsproblemen",
+	'install:footer:community' => "Elgg-Community-Foren",
 	
 	'install:requirements:instructions:success' => "Dein Server hat die Überprüfung der Systemvoraussetzungen bestanden.",
 	'install:requirements:instructions:failure' => "Dein Server erfüllt nicht alle notwendigen Systemvoraussetzungen. Nachdem Du die im folgenden aufgelisteten Probleme beseitigt hast, lade diese Seite erneut. Folge den Links am Ende der Seite, um weitere Informationen zu möglichen Problemlösungen zu erhalten.",
@@ -160,7 +160,7 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:rewrite:nginx' => 'Die Überprüfung Deines Servers hat ergeben, dass der Nginx-Webserver verwendet wird.',
 	'install:error:rewrite:lighttpd' => 'Die Überprüfung Deines Servers hat ergeben, dass der Lighttpd-Webserver verwendet wird.',
 	'install:error:rewrite:iis' => 'Die Überprüfung Deines Servers hat ergeben, dass der IIS-Webserver verwendet wird.',
-	'install:error:rewrite:allowoverride' => "Der Rewrite-Test ist fehlgeschlagen. Die wahrscheinlichste Ursache ist, dass für das Elgg-Installationsverzeichnis 'AllowOverride All' nicht gesetzt ist. Die verhindert, dass der Apache-Webserver die Einstellungen in der Datei .htaccess verarbeiten kann, in welcher die Rewrite-Regeln gesetzt werden.
+	'install:error:rewrite:allowoverride' => "Der Rewrite-Test ist fehlgeschlagen. Die wahrscheinlichste Ursache ist, dass für das Elgg-Installationsverzeichnis 'AllowOverride All' nicht gesetzt ist. Dies verhindert, dass der Apache-Webserver die Einstellungen in der Datei .htaccess verarbeiten kann, in welcher die Rewrite-Regeln gesetzt werden.
 		\n\nEine andere mögliche Ursache ist, dass in der Konfiguration des Apache-Webservers ein Alias für Dein Elgg-Installationsverzeichnis definiert ist. Dann mußt Du in der Datei .htaccess die richtige Einstellung für RewriteBase setzen. In der Datei .htaccess in Deinem Elgg-Installationsverzeichnis gibt es weitere Informationen darüber, was zu tun ist.",
 	'install:error:rewrite:htaccess:write_permission' => 'Dein Webserver hat nicht die notwendige Schreibberechtigung, um im Elgg-Installationsverzeichnis die Datei .htaccess automatisch zu erzeugen. Du mußt entweder (nur während der Installation!) die Zugriffsberechtigungen für das Elgg-Installationsverzeichnis ändern oder selbst die Datei .htaccess im Elgg-Installationsverzeichnis anlegen, indem Du sie aus der Datei install/config/htaccess.dist durch Kopieren und Umbenennen erzeugst.',
 	'install:error:rewrite:htaccess:read_permission' => 'Im Elgg-Installationsverzeichnis ist die Datei .htaccess vorhanden, aber Dein Webserver hat keine Leseberechtigung für diese Datei.',

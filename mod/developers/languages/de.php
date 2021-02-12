@@ -69,7 +69,7 @@ Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören
 	'developers:entity_explorer:info:owned_acls' => 'Im Besitz der Zugriffslevel-Collections',
 	'developers:entity_explorer:info:acl_memberships' => 'Mitglied der Zugriffslevel-Collections',
 	'developers:entity_explorer:delete_entity' => 'Entität löschen',
-	'developers:entity_explorer:inspect_entity' => 'Inspect this entity',
+	'developers:entity_explorer:inspect_entity' => 'Prüfe diese Entität',
 	
 	// inspection
 	'developers:inspect:help' => 'Konfiguration des Elgg-Frameworks prüfen.',

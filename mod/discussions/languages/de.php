@@ -12,10 +12,10 @@ return array(
 	'edit:object:discussion' => 'Diskussion bearbeiten',
 	'collection:object:discussion' => 'Diskussionen',
 	'collection:object:discussion:group' => 'Gruppen-Diskussionen',
-	'collection:object:discussion:my_groups' => 'Discussions in my groups',
+	'collection:object:discussion:my_groups' => 'Diskussionen in meinen Gruppen',
 	
-	'discussion:settings:enable_global_discussions' => 'Enable global discussions',
-	'discussion:settings:enable_global_discussions:help' => 'Allow discussions to be created outside of groups',
+	'discussion:settings:enable_global_discussions' => 'Diskussionen allgemein aktivieren',
+	'discussion:settings:enable_global_discussions:help' => 'Erlaube Diskussionen ausserhalb von Gruppen.',
 
 	'discussion:latest' => 'Neueste Diskussionen',
 	'discussion:none' => 'Es gibt noch keine Diskussionen.',
@@ -29,7 +29,7 @@ return array(
 	'discussion:error:notsaved' => 'Die Diskussion konnte nicht gespeichert werden.',
 	'discussion:error:missing' => 'Es müssen sowohl der Titel als auch der Textinhalt der Diskussion ausgefüllt werden.',
 	'discussion:error:permissions' => 'Du hast keine Berechtigung für diese Aktion.',
-	'discussion:error:no_groups' => "You're not a member of any groups.",
+	'discussion:error:no_groups' => "Du bist noch bei keiner Gruppe Mitglied.",
 
 	/**
 	 * River

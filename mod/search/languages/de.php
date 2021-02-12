@@ -11,5 +11,5 @@ return array(
 
 	'search:comment_on' => 'Kommentare zu "%s"',
 	'search:unknown_entity' => 'Der Typ der Entität ist unbekannt.',
-	'search:empty_query' => 'Please provide a valid search query',
+	'search:empty_query' => 'Bitte gebe eine sinnvolle Eingabe für Deine Suchanfrage ein.',
 );
