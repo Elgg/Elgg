@@ -1,3 +1,19 @@
+<a name="3.3.16"></a>
+### 3.3.16  (2021-02-12)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Jeroen Dalsem (1)
+* Nikolai Shcherbin (1)
+
+#### Bug Fixes
+
+* **cache:** disable filecache if path isn't writeable ([dc807d44](https://github.com/Elgg/Elgg/commit/dc807d44f971470bb29f00404a89c567d91f478f))
+* **likes:** don't provide likes data in non default type ajax requests ([07d63d43](https://github.com/Elgg/Elgg/commit/07d63d437ac4bcba1e5b2c2e49d8bbd7175abb22))
+* **menu:** don't show 'invite friends' menu item on the group profile when 'Friends' plugin is deactivated ([2783492a](https://github.com/Elgg/Elgg/commit/2783492aaa5b19a8f17e6dfec68a9903112cad16))
+
+
 <a name="3.3.15"></a>
 ### 3.3.15  (2021-01-15)
 
