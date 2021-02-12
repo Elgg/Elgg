@@ -33,7 +33,7 @@ jobs:
       - name: Check type
         uses: gsactions/commit-message-checker@v1
         with:
-          pattern: '^((Merge )|(Revert )|(feat(ure)?|fix(es|ed)?|doc(s)?|chore|perf(ormance)?|security|deprecate(s)?)?\()'
+          pattern: '^((Merge )|(Revert )|(feat(ure)?|fix(es|ed)?|doc(s)?|chore|perf(ormance)?|security|deprecate(s|d)?|break(s)?|removed)?\()'
           flags: 'is'
           error: 'Invalid commit message type'
           excludeTitle: true
