@@ -29,8 +29,8 @@ use Elgg\Exceptions\InvalidArgumentException;
  *
  * @tip Plugin authors will want to extend the \ElggObject class, not this class.
  *
- * @property       string $type           object, user, group, or site (read-only after save)
- * @property       string $subtype        Further clarifies the nature of the entity
+ * @property-read  string $type           object, user, group, or site (read-only after save)
+ * @property-read  string $subtype        Further clarifies the nature of the entity
  * @property-read  int    $guid           The unique identifier for this entity (read only)
  * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
  * @property       int    $container_guid The GUID of the entity containing this entity
@@ -38,7 +38,7 @@ use Elgg\Exceptions\InvalidArgumentException;
  * @property       int    $time_created   A UNIX timestamp of when the entity was created
  * @property-read  int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
  * @property-read  int    $last_action    A UNIX timestamp of when the entity was last acted upon
- * @property       string $enabled        Is this entity enabled ('yes' or 'no')
+ * @property-read  string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
  * @property       string $location       A location of the entity
@@ -225,7 +225,9 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	 *
 	 * @param string $name  Name of the attribute or metadata
 	 * @param mixed  $value The value to be set
+	 *
 	 * @return void
+	 * @throws \Elgg\Exceptions\InvalidArgumentException
 	 * @see \ElggEntity::setMetadata()
 	 */
 	public function __set($name, $value) {
@@ -250,9 +252,14 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 			// Certain properties should not be manually changed!
 			switch ($name) {
 				case 'guid':
-				case 'time_updated':
 				case 'last_action':
+				case 'time_updated':
+				case 'type':
 					return;
+				case 'subtype':
+					throw new InvalidArgumentException(elgg_echo('ElggEntity:Error:SetSubtype', ['setSubtype()']));
+				case 'enabled':
+					throw new InvalidArgumentException(elgg_echo('ElggEntity:Error:SetEnabled', ['enable() / disable()']));
 				case 'access_id':
 				case 'owner_guid':
 				case 'container_guid':
@@ -1114,6 +1121,23 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 	public function getType() {
 		// this is just for the PHPUnit mocking framework
 		return $this->type;
+	}
+
+	/**
+	 * Set the subtype of the entity
+	 *
+	 * @param string $subtype the new type
+	 *
+	 * @return void
+	 * @see self::initializeAttributes()
+	 */
+	public function setSubtype(string $subtype) : void {
+		// keep original values
+		if ($this->guid && !array_key_exists('subtype', $this->orig_attributes)) {
+			$this->orig_attributes['subtype'] = $this->attributes['subtype'];
+		}
+		
+		$this->attributes['subtype'] = $subtype;
 	}
 
 	/**

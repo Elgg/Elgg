@@ -36,7 +36,7 @@ building a simple forum. Therefore, the subtype will be *forum*:
 .. code-block:: php
 
     $object = new ElggObject();
-    $object->subtype = "forum";
+    $object->setSubtype('forum');
     $object->access_id = 2;
     $object->save();
     

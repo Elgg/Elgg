@@ -23,7 +23,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	public function up() {
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 		$this->object = new ElggObject();
-		$this->object->subtype = $this->getRandomSubtype();
+		$this->object->setSubtype($this->getRandomSubtype());
 	}
 
 	public function down() {
@@ -81,7 +81,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	 */
 	public function testElggGetEntitiesFromMetadataCaseSensitive($comparison, $value, $case_sensitive, $count) {
 
-		$this->object->subtype = $this->getRandomSubtype();
+		$this->object->setSubtype($this->getRandomSubtype());
 		$this->object->metadata = 'CaseSensitive';
 		$this->object->save();
 
@@ -163,7 +163,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 	 */
 	public function testElggGetEntitiesFromBooleanMetadata($value, $query, $type) {
 
-		$this->object->subtype = $this->getRandomSubtype();
+		$this->object->setSubtype($this->getRandomSubtype());
 		$this->object->metadata = $value;
 		$this->object->save();
 
@@ -221,7 +221,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 
 	public function testElggDeleteMetadata() {
 		$e = new ElggObject();
-		$e->subtype = $this->getRandomSubtype();
+		$e->setSubtype($this->getRandomSubtype());
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -258,7 +258,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		$user2 = $this->createOne('user');
 
 		$entity = new ElggObject();
-		$entity->subtype = $this->getRandomSubtype();
+		$entity->setSubtype($this->getRandomSubtype());
 		$entity->owner_guid = $user1->guid;
 		$entity->container_guid = $user1->guid;
 		$entity->access_id = ACCESS_PUBLIC;
@@ -328,7 +328,7 @@ class ElggCoreMetadataAPITest extends IntegrationTestCase {
 		
 		elgg_call(ELGG_IGNORE_ACCESS, function() use (&$obj, &$md_values) {
 			$obj = new ElggObject();
-			$obj->subtype = $this->getRandomSubtype();
+			$obj->setSubtype($this->getRandomSubtype());
 			$obj->owner_guid = elgg_get_site_entity()->guid;
 			$obj->container_guid = elgg_get_site_entity()->guid;
 			$obj->access_id = ACCESS_PUBLIC;

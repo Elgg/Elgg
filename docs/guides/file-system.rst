@@ -48,7 +48,6 @@ always necessary (e.g. when writing thumbs of an image).
 	$file->close();
 
 	// to uprade this file to an entity
-	$file->subtype = 'file';
 	$file->save();
 
 

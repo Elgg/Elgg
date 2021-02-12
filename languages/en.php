@@ -53,6 +53,9 @@ return array(
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
+	'ElggEntity:Error:SetSubtype' => 'Use %s instead of the magic setter for "subtype"',
+	'ElggEntity:Error:SetEnabled' => 'Use %s instead of the magic setter for "enabled"',
+
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",

@@ -35,7 +35,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		
 		$this->subtype = $this->getRandomSubtype();
 		$this->entity = new ElggObjectWithExposableAttributes();
-		$this->entity->subtype = $this->subtype;
+		$this->entity->setSubtype($this->subtype);
 	}
 
 	public function down() {
@@ -167,13 +167,13 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 	 */
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
 		$e1 = new \ElggObject();
-		$e1->subtype = $this->getRandomSubtype();
+		$e1->setSubtype($this->getRandomSubtype());
 		$e1->access_id = ACCESS_PUBLIC;
 		$e1->save();
 		$guid1 = $e1->guid;
 
 		$e2 = new \ElggObject();
-		$e2->subtype = $this->getRandomSubtype();
+		$e2->setSubtype($this->getRandomSubtype());
 		$e2->container_guid = $guid1;
 		$e2->access_id = ACCESS_PUBLIC;
 		$e2->owner_guid = 0;
@@ -254,7 +254,7 @@ class ElggCoreObjectTest extends \Elgg\IntegrationTestCase {
 		// object that owns itself
 		// can't check container_guid because of infinite loops in can_edit_entity()
 		$obj = new \ElggObject();
-		$obj->subtype = $this->getRandomSubtype();
+		$obj->setSubtype($this->getRandomSubtype());
 		$obj->save();
 		$obj->owner_guid = $obj->guid;
 		$obj->save();

@@ -271,7 +271,7 @@ class Inspector {
 
 		$entity = new \ElggObject();
 		$entity->guid = 999;
-		$entity->subtype = 'blog';
+		$entity->setSubtype('blog');
 		$entity->title = 'test entity';
 		$entity->access_id = ACCESS_PUBLIC;
 
