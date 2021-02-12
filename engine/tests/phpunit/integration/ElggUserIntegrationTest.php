@@ -31,7 +31,13 @@ class ElggUserIntegrationTest extends IntegrationTestCase {
 	public function testSetCorrectBannedValue($value, $boolean_value) {
 		$user = $this->createUser();
 		
-		$user->banned = $value;
+		elgg_call(ELGG_IGNORE_ACCESS, function () use ($user, $value) {
+			if ($value === 'yes') {
+				$user->ban();
+			} else {
+				$user->unban();
+			}
+		});
 		
 		$this->assertEquals($value, $user->banned);
 		$this->assertEquals($boolean_value, $user->isBanned());
@@ -43,7 +49,11 @@ class ElggUserIntegrationTest extends IntegrationTestCase {
 	public function testSetCorrectAdminValue($value, $boolean_value) {
 		$user = $this->createUser();
 		
-		$user->admin = $value;
+		if ($value === 'yes') {
+			$user->makeAdmin();
+		} else {
+			$user->removeAdmin();
+		}
 		
 		$this->assertEquals($value, $user->admin);
 		$this->assertEquals($boolean_value, $user->isAdmin());

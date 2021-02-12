@@ -1464,12 +1464,8 @@ abstract class ElggEntity extends \ElggData implements EntityIcon {
 		// Save any unsaved metadata
 		if (sizeof($this->temp_metadata) > 0) {
 			foreach ($this->temp_metadata as $name => $value) {
-				if (count($value) == 1) {
-					// temp metadata is always an array, but if there is only one value return just the value
-					$this->$name = $value[0];
-				} else {
-					$this->$name = $value;
-				}
+				// temp metadata is always an array, but if there is only one value return just the value
+				$this->setMetadata($name, $value, '', count($value) > 1);
 			}
 
 			$this->temp_metadata = [];
