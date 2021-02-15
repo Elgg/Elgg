@@ -152,7 +152,7 @@ Create the file ``/mod/my_blog/actions/my_blog/save.php``:
     $blog->tags = $tags;
 
     // the object can and should have a subtype
-    $blog->subtype = 'my_blog';
+    $blog->setSubtype('my_blog');
     
     // for now, make all my_blog posts public
     $blog->access_id = ACCESS_PUBLIC;

@@ -282,7 +282,16 @@ trait Seeding {
 
 			$group = new \ElggGroup();
 			foreach ($properties as $name => $value) {
-				$group->$name = $value;
+				switch ($name) {
+					case 'type':
+						break;
+					case 'subtype':
+						$group->setSubtype($value);
+						break;
+					default:
+						$group->$name = $value;
+						break;
+				}
 			}
 
 			$profile_fields = elgg_extract('profile_fields', $options, []);
@@ -400,7 +409,16 @@ trait Seeding {
 			}
 
 			foreach ($properties as $name => $value) {
-				$object->$name = $value;
+				switch ($name) {
+					case 'type':
+						break;
+					case 'subtype':
+						$object->setSubtype($value);
+						break;
+					default:
+						$object->$name = $value;
+						break;
+				}
 			}
 
 			$profile_fields = elgg_extract('profile_fields', $options, []);

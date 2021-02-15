@@ -14,7 +14,6 @@ use Elgg\PasswordService;
 use Elgg\PluginHooksService;
 use Elgg\Security\PasswordGeneratorService;
 use Elgg\Validation\ValidationResults;
-use ElggUser;
 
 /**
  * User accounts service
@@ -181,19 +180,19 @@ class Accounts {
 		$this->assertValidAccountData($username, $password, $name, $email, $allow_multiple_emails);
 
 		// Create user
-		$constructor = ElggUser::class;
+		$constructor = \ElggUser::class;
 		if (isset($subtype)) {
 			$class = elgg_get_entity_class('user', $subtype);
-			if ($class && class_exists($class) && is_subclass_of($class, ElggUser::class)) {
+			if ($class && class_exists($class) && is_subclass_of($class, \ElggUser::class)) {
 				$constructor = $class;
 			}
 		}
 
+		/* @var $user \ElggUser */
 		$user = new $constructor();
-		/* @var $user ElggUser */
-
+		
 		if (isset($subtype)) {
-			$user->subtype = $subtype;
+			$user->setSubtype($subtype);
 		}
 
 		$user->username = $username;
@@ -328,13 +327,13 @@ class Accounts {
 	/**
 	 * Assert that user can authenticate with the given password
 	 *
-	 * @param ElggUser $user     User entity
-	 * @param string   $password Password
+	 * @param \ElggUser $user     User entity
+	 * @param string    $password Password
 	 *
 	 * @return void
 	 * @throws RegistrationException
 	 */
-	public function assertCurrentPassword(ElggUser $user, $password) {
+	public function assertCurrentPassword(\ElggUser $user, $password) {
 		if (!$this->passwords->verify($password, $user->password_hash)) {
 			throw new RegistrationException($this->translator->translate('LoginException:PasswordFailure'));
 		}

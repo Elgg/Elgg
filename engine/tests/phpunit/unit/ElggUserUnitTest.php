@@ -100,32 +100,19 @@ class ElggUserUnitTest extends \Elgg\UnitTestCase {
 	}
 	
 	/**
-	 * @dataProvider incorrectAdminBannedValues
+	 * @dataProvider protectedValues
 	 */
-	public function testSetIncorrectBannedValue($value) {
+	public function testSetProtectedValuesThrowsException($name) {
 		$user = $this->createUser();
 		
 		$this->expectException(InvalidArgumentException::class);
-		$user->banned = $value;
+		$user->$name = 'foo';
 	}
 	
-	/**
-	 * @dataProvider incorrectAdminBannedValues
-	 */
-	public function testSetIncorrectAdminValue($value) {
-		$user = $this->createUser();
-		
-		$this->expectException(InvalidArgumentException::class);
-		$user->admin = $value;
-	}
-	
-	public function incorrectAdminBannedValues() {
+	public function protectedValues() {
 		return [
-			[1],
-			[0],
-			[true],
-			[false],
-			['some random string'],
+			['admin'],
+			['banned'],
 		];
 	}
 	

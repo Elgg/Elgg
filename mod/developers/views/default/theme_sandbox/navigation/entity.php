@@ -1,7 +1,7 @@
 <?php
 
 $entity = new ElggObject();
-$entity->subtype = 'custom';
+$entity->setSubtype('custom');
 $entity->title = 'Hello, world!';
 
 $items = [];

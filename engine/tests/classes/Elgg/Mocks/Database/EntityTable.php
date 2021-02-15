@@ -162,16 +162,29 @@ class EntityTable extends DbEntityTable {
 
 		$attrs = (object) $map;
 		foreach ($attrs as $name => $value) {
-			if ($name === 'subtype' || $name === 'password_hash') {
-				continue;
-			}
-
 			if (isset($entity->$name) && $entity->$name == $value) {
 				continue;
 			}
-
-			// not an attribute, so needs to be set again
-			$entity->$name = $value;
+			
+			switch ($name) {
+				case 'subtype':
+				case 'password_hash':
+					break;
+				case 'admin':
+					if ($entity instanceof \ElggUser && $value === 'yes') {
+						$entity->makeAdmin();
+					}
+					break;
+				case 'banned':
+					if ($entity instanceof \ElggUser && $value === 'yes') {
+						$entity->ban();
+					}
+					break;
+				default:
+					// not an attribute, so needs to be set again
+					$entity->$name = $value;
+					break;
+			}
 		}
 
 		//$entity->cache();

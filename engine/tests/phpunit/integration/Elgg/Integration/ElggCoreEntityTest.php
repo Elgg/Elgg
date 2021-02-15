@@ -29,7 +29,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		
 		// use \ElggObject since \ElggEntity is an abstract class
 		$this->entity = new ElggObject();
-		$this->entity->subtype = 'elgg_entity_test_subtype';
+		$this->entity->setSubtype('elgg_entity_test_subtype');
 
 		// Add temporary metadata, annotation and private settings
 		// to extend the scope of tests and catch issues with save operations
@@ -70,7 +70,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 
 	public function testUnsavedEntitiesDontRecordAttributeSets() {
 		$entity = new ElggObject();
-		$entity->subtype = 'elgg_entity_test_subtype';
+		$entity->setSubtype('elgg_entity_test_subtype');
 		$entity->title = 'Foo';
 		$entity->description = 'Bar';
 		$entity->container_guid = elgg_get_logged_in_user_guid();
@@ -234,11 +234,11 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$CONFIG = _elgg_services()->config;
 
 		$obj1 = new ElggObject();
-		$obj1->subtype = $this->getRandomSubtype();
+		$obj1->setSubtype($this->getRandomSubtype());
 		$obj1->container_guid = $this->entity->getGUID();
 		$obj1->save();
 		$obj2 = new ElggObject();
-		$obj2->subtype = $this->getRandomSubtype();
+		$obj2->setSubtype($this->getRandomSubtype());
 		$obj2->container_guid = $this->entity->getGUID();
 		$obj2->save();
 
@@ -283,7 +283,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		elgg_register_plugin_hook_handler('entity:icon:url', 'object', $handler, 99999);
 
 		$obj = new ElggObject();
-		$obj->subtype = $this->getRandomSubtype();
+		$obj->setSubtype($this->getRandomSubtype());
 		$obj->save();
 
 		// Test default size
@@ -302,7 +302,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$user = $this->owner;
 
 		$object = new ElggObject();
-		$object->subtype = $this->getRandomSubtype();
+		$object->setSubtype($this->getRandomSubtype());
 		$object->owner_guid = $user->guid;
 		$object->container_guid = 0;
 
@@ -367,7 +367,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	public function testNewObjectLoadedFromCacheDuringSaveOperations() {
 
 		$object = new ElggObject();
-		$object->subtype = 'elgg_entity_test_subtype';
+		$object->setSubtype('elgg_entity_test_subtype');
 
 		// Add temporary metadata, annotation and private settings
 		// to extend the scope of tests and catch issues with save operations
@@ -461,7 +461,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	public function testNewGroupLoadedFromCacheDuringSaveOperations() {
 
 		$group = new \ElggGroup();
-		$group->subtype = 'test_group_subtype';
+		$group->setSubtype('test_group_subtype');
 
 		// Add temporary metadata, annotation and private settings
 		// to extend the scope of tests and catch issues with save operations
@@ -592,7 +592,9 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 	 * @dataProvider entitiesFromCacheProvider
 	 */
 	public function testEntityGetReturnedFromCache($type, $subtype, $check_type, $check_subtype) {
-		$entity = $this->createOne($type, ['subtype' => $subtype]);
+		$entity = $this->createOne($type, [
+			'subtype' => $subtype,
+		]);
 		
 		$guid = $entity->guid;
 		$this->assertNotEmpty($guid);
@@ -613,15 +615,9 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 		$not_cached_entity = _elgg_services()->entityTable->get($guid, $check_type, $check_subtype);
 		$this->assertEmpty($not_cached_entity->getVolatileData('temp_cache_data'));
 		
-		if (!empty($check_type) || !empty($check_subtype)) {
-			if (!empty($check_type)) {
-				$not_cached_entity->type = "{$type}_alt";
-				$this->assertEquals("{$type}_alt", $not_cached_entity->type);
-			}
-			if (!empty($check_subtype)) {
-				$not_cached_entity->subtype = "{$subtype}_alt";
-				$this->assertEquals("{$subtype}_alt", $not_cached_entity->subtype);
-			}
+		if (!empty($check_subtype)) {
+			$not_cached_entity->setSubtype("{$subtype}_alt");
+			$this->assertEquals("{$subtype}_alt", $not_cached_entity->subtype);
 			
 			$not_cached_entity->setVolatileData('alt_types', true);
 			$not_cached_entity->cache();
@@ -629,6 +625,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 			
 			// if cache type does not match requested type, return from database if type matches
 			$from_db_entity = _elgg_services()->entityTable->get($guid, $check_type, $check_subtype);
+			$this->assertInstanceOf(\ElggEntity::class, $from_db_entity);
 			$this->assertEmpty($from_db_entity->getVolatileData('alt_types'));
 		}
 				
@@ -644,6 +641,7 @@ class ElggCoreEntityTest extends \Elgg\IntegrationTestCase {
 			['object', 'foo', null, 'foo'],
 			['user', null, null, null],
 			['user', null, 'user', null],
+			['user', 'foo', 'user', 'foo'],
 		];
 	}
 	

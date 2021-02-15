@@ -56,7 +56,7 @@ class ElggObjectUnitTest extends \Elgg\UnitTestCase {
 		_elgg_services()->session->setLoggedInUser($user);
 		
 		$object = new \ElggObject();
-		$object->subtype = $subtype;
+		$object->setSubtype($subtype);
 		$object->title = 'Foo';
 		$object->description = 'Bar';
 		$object->owner_guid = $user->guid;

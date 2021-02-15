@@ -23,7 +23,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 
 		$this->user = new ElggUserWithExposableAttributes();
 		$this->user->username = $this->getRandomUsername();
-		$this->user->subtype = $this->getRandomSubtype();
+		$this->user->setSubtype($this->getRandomSubtype());
 		$this->user->owner_guid = 0;
 		$this->user->container_guid = 0;
 	}
@@ -40,7 +40,7 @@ class ElggCoreUserTest extends \Elgg\IntegrationTestCase {
 	public function testElggUserLoad() {
 		// new object
 		$object = new \ElggObject();
-		$object->subtype = $this->getRandomSubtype();
+		$object->setSubtype($this->getRandomSubtype());
 		$this->assertEquals(0, $object->getGUID());
 		$this->assertTrue($object->save());
 		$this->assertGreaterThan(0, $object->guid);

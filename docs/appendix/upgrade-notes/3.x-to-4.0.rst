@@ -187,6 +187,65 @@ Datamodel / Schema changes
 * The ``access_id``, ``owner_guid`` and  ``enabled`` columns in the ``metadata`` table have been removed
 * The ``enabled`` column in the ``river`` table has been removed
 
+ElggEntity attributes
+---------------------
+
+Setting the ``type``, ``subtype`` and ``enabled`` attributes of an ``ElggEntity`` is no longer possible using the magic setter.
+Changing the ``type`` is no longer possible, use the correct base class for your entity (eg. ``ElggObject``, ``ElggGroup`` or ``ElggUser``).
+
+To change the ``subtype`` use the function ``setSubtype($subtype)``
+
+.. code-block:: php
+
+	// this no longer works and throws an \Elgg\Exceptions\InvalidArgumentException
+	$object = new ElggObject();
+	$object->subtype = 'my_subtype';
+	
+	// The correct use is
+	$object->setSubtype('my_subtype');
+
+To change the ``enabled`` state of an entity use the correct functions
+
+.. code-block:: php
+
+	// this no longer works and throws an \Elgg\Exceptions\InvalidArgumentException
+	$object = new ElggObject();
+	$object->enabled = 'no';
+	
+	// The correct use is
+	$object->enable(); // to enable
+	$object->disable(); // to disable
+
+ElggUser attributes
+-------------------
+
+Setting the ``admin`` and ``banned`` metadata of an ``ElggUser`` is no longer possible using the magic setter.
+
+To change the ``admin`` state use the functions ``makeAdmin()`` and ``removeAdmin()``
+
+.. code-block:: php
+
+	// this no longer works and throws an \Elgg\Exceptions\InvalidArgumentException
+	$user = new ElggUser()
+	$user->admin = 'yes';
+	
+	// The correct use is
+	$user->makeAdmin(); // to give the admin role
+	$user->removeAdmin(); // to remove the admin role
+
+To change the ``banned`` state use the functions ``ban()`` and ``unban()``
+
+.. code-block:: php
+
+	// this no longer works and throws an \Elgg\Exceptions\InvalidArgumentException
+	$user = new ElggUser()
+	$user->banned = 'yes';
+	
+	// The correct use is
+	$user->ban(); // to ban the user
+	$user->unban(); // to unban the user
+
+
 Type hinted functions
 ---------------------
 

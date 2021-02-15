@@ -5,7 +5,7 @@
 
 // Get input data and don't filter the content
 $contents = get_input('expagescontent', '', false);
-$type = get_input('content_type');
+$subtype = get_input('content_type');
 $guid = (int) get_input('guid');
 
 if ($guid) {
@@ -17,12 +17,12 @@ if ($guid) {
 } else {
 	// create
 	$expages = new \ElggObject();
-	$expages->subtype = $type;
+	$expages->setSubtype($subtype);
 }
 
 $expages->owner_guid = elgg_get_logged_in_user_guid();
 $expages->access_id = ACCESS_PUBLIC;
-$expages->title = $type;
+$expages->title = $subtype;
 $expages->description = $contents;
 
 if (!$expages->save()) {

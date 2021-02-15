@@ -1,9 +1,9 @@
 <?php
 
 use Elgg\Entity\ProfileData;
+use Elgg\Exceptions\InvalidArgumentException;
 use Elgg\Exceptions\InvalidParameterException;
 use Elgg\Exceptions\Configuration\RegistrationException;
-use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
 
 /**
  * A user entity
@@ -12,9 +12,9 @@ use Elgg\Exceptions\InvalidArgumentException as ElggInvalidArgumentException;
  * @property      string $username         The short, reference name for the user in the network
  * @property      string $email            The email address to which Elgg will send email notifications
  * @property      string $language         The language preference of the user (ISO 639-1 formatted)
- * @property      string $banned           'yes' if the user is banned from the network, 'no' otherwise
+ * @property-read string $banned           'yes' if the user is banned from the network, 'no' otherwise
  * @property      string $ban_reason       The reason why the user was banned
- * @property      string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property-read string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
  * @property      bool   $validated        User validation status
  * @property      string $validated_method User validation method
  * @property-read string $password_hash    The hashed password of the user
@@ -35,8 +35,8 @@ class ElggUser extends \ElggEntity
 		$this->attributes['subtype'] = 'user';
 		
 		// Before Elgg 3.0 this was handled by database logic
-		$this->banned = 'no';
-		$this->admin = 'no';
+		$this->setMetadata('banned', 'no');
+		$this->setMetadata('admin', 'no');
 		$this->language = elgg_get_config('language');
 		$this->prev_last_action = 0;
 		$this->last_login = 0;
@@ -84,14 +84,14 @@ class ElggUser extends \ElggEntity
 				try {
 					elgg()->accounts->assertValidEmail($value);
 				} catch (RegistrationException $ex) {
-					throw new InvalidParameterException($ex->getCode());
+					throw new InvalidParameterException($ex->getMessage(), $ex->getCode(), $ex);
 				}
 				break;
 			case 'username':
 				try {
 					elgg()->accounts->assertValidUsername($value);
 				} catch (RegistrationException $ex) {
-					throw new InvalidParameterException($ex->getCode());
+					throw new InvalidParameterException($ex->getMessage(), $ex->getCode(), $ex);
 				}
 				$existing_user = get_user_by_username($value);
 				if ($existing_user && ($existing_user->guid !== $this->guid)) {
@@ -99,11 +99,9 @@ class ElggUser extends \ElggEntity
 				}
 				break;
 			case 'admin':
+				throw new InvalidArgumentException(_elgg_services()->translator->translate('ElggUser:Error:SetAdmin', ['makeAdmin() / removeAdmin()']));
 			case 'banned':
-				if (!in_array($value, ['yes', 'no'], true)) {
-					throw new ElggInvalidArgumentException("{$name} only supports 'yes' or 'no' value");
-				}
-				break;
+				throw new InvalidArgumentException(_elgg_services()->translator->translate('ElggUser:Error:SetBanned', ['ban() / unban()']));
 		}
 		
 		parent::__set($name, $value);
@@ -140,8 +138,8 @@ class ElggUser extends \ElggEntity
 		}
 
 		$this->ban_reason = $reason;
-		$this->banned = 'yes';
-				
+		$this->setMetadata('banned', 'yes');
+
 		$this->invalidateCache();
 
 		return true;
@@ -163,8 +161,8 @@ class ElggUser extends \ElggEntity
 		}
 
 		unset($this->ban_reason);
-		$this->banned = 'no';
-				
+		$this->setMetadata('banned', 'no');
+
 		$this->invalidateCache();
 
 		return true;
@@ -207,7 +205,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 
-		$this->admin = 'yes';
+		$this->setMetadata('admin', 'yes');
 
 		$this->invalidateCache();
 		
@@ -229,7 +227,7 @@ class ElggUser extends \ElggEntity
 			return false;
 		}
 
-		$this->admin = 'no';
+		$this->setMetadata('admin', 'no');
 
 		$this->invalidateCache();
 		

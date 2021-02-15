@@ -38,17 +38,17 @@ class ElggRelationshipTest extends IntegrationTestCase {
 		elgg()->session->setLoggedInUser($this->user);
 		
 		$this->entity1 = new ElggObject();
-		$this->entity1->subtype = 'elgg_relationship_test';
+		$this->entity1->setSubtype('elgg_relationship_test');
 		$this->entity1->access_id = ACCESS_PUBLIC;
 		$this->entity1->save();
 
 		$this->entity2 = new ElggObject();
-		$this->entity2->subtype = 'elgg_relationship_test';
+		$this->entity2->setSubtype('elgg_relationship_test');
 		$this->entity2->access_id = ACCESS_PUBLIC;
 		$this->entity2->save();
 
 		$this->entity3 = new ElggObject();
-		$this->entity3->subtype = 'elgg_relationship_test';
+		$this->entity3->setSubtype('elgg_relationship_test');
 		$this->entity3->access_id = ACCESS_PUBLIC;
 		$this->entity3->save();
 	}

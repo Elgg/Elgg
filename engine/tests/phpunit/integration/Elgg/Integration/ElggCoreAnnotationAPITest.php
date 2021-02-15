@@ -13,12 +13,16 @@ use Elgg\IntegrationTestCase;
  */
 class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
+	/**
+	 * @var \ElggObject
+	 */
+	protected $object;
 
 	public function up() {
 		_elgg_services()->session->setLoggedInUser($this->getAdmin());
 
 		$this->object = new \ElggObject();
-		$this->object->subtype = $this->getRandomSubtype();
+		$this->object->setSubtype($this->getRandomSubtype());
 	}
 
 	public function down() {
@@ -50,7 +54,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 	public function testElggDeleteAnnotations() {
 		$e = new \ElggObject();
-		$e->subtype = $this->getRandomSubtype();
+		$e->setSubtype($this->getRandomSubtype());
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -78,7 +82,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 	public function testElggDisableAnnotations() {
 		$e = new \ElggObject();
-		$e->subtype = $this->getRandomSubtype();
+		$e->setSubtype($this->getRandomSubtype());
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -105,7 +109,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 	public function testElggEnableAnnotations() {
 		$e = new \ElggObject();
-		$e->subtype = $this->getRandomSubtype();
+		$e->setSubtype($this->getRandomSubtype());
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -134,7 +138,7 @@ class ElggCoreAnnotationAPITest extends IntegrationTestCase {
 
 	public function testElggAnnotationExists() {
 		$e = new \ElggObject();
-		$e->subtype = $this->getRandomSubtype();
+		$e->setSubtype($this->getRandomSubtype());
 		$e->save();
 		$guid = $e->getGUID();
 

@@ -25,7 +25,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 
 		// our targets
 		$valid = new \ElggObject();
-		$valid->subtype = $subtype;
+		$valid->setSubtype($subtype);
 		$valid->access_id = ACCESS_PUBLIC;
 		$valid->save();
 		$guids[] = $valid->guid;
@@ -38,7 +38,7 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$this->assertEquals($setting_value2, $settings[$setting_name2]);
 
 		$valid2 = new \ElggObject();
-		$valid2->subtype = $subtype;
+		$valid2->setSubtype($subtype);
 		$valid2->access_id = ACCESS_PUBLIC;
 		$valid2->save();
 		$guids[] = $valid2->guid;
