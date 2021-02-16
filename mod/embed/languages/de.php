@@ -8,5 +8,5 @@
 return array(
 	'embed:embed' => 'Einbetten',
 	'embed:media' => 'Inhalt einbetten',
-	'embed:no_support' => 'There is no embeddable content available',
+	'embed:no_support' => 'Es gibt keine Inhalte auf der Community-Seite, die eingebettet werden könnten.',
 );

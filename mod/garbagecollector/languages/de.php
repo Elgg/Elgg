@@ -17,5 +17,5 @@ return array(
 	'garbagecollector:done' => "Garbage collector beendet",
 	'garbagecollector:optimize' => "Optimiere %s",
 	
-	'garbagecollector:cli:database:optimize:description' => "Optimize database tables",
+	'garbagecollector:cli:database:optimize:description' => "Optimierung der Datenbanktabellen.",
 );
