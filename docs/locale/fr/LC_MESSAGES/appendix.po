@@ -4,16 +4,16 @@
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 # 
 # Translators:
-# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020
+# Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-20 14:22+0100\n"
+"POT-Creation-Date: 2021-01-15 10:58+0100\n"
 "PO-Revision-Date: 2017-12-28 11:59+0000\n"
-"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2020\n"
+"Last-Translator: Florian DANIEL aka Facyla <i.daniel.florian@gmail.com>, 2021\n"
 "Language-Team: French (https://www.transifex.com/elgg/teams/11337/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1284,6 +1284,43 @@ msgstr ""
 " le code JavaScript. Ils disposent souvent d'une console pour les erreurs "
 "JavaScript ou un mode avancé pour afficher les erreurs. Une fois que vous "
 "voyez le message d’erreur, il est plus facile de localiser le problème."
+
+#: ../../appendix/faqs/general.rst:398 ../../appendix/faqs/general.rst:398
+msgid "IP addresses in the logs are wrong"
+msgstr "Les adresses IP dans les journaux sont incorrectes"
+
+#: ../../appendix/faqs/general.rst:400 ../../appendix/faqs/general.rst:400
+msgid ""
+"When your Elgg installation is behind a proxy server or loadbalancer the IP "
+"addresses logged in the System Log plugin can be wrong. It could show only "
+"the IP addresses for the proxy server."
+msgstr ""
+"Si votre installation Elgg est derrière un serveur proxy ou un équlibreur de"
+" charge, les adresses IP enregistrées dans les journaux système (System Log)"
+" peuvent être erronées. Elles pourraient n'indiquer que les adresses IP du "
+"serveur proxy."
+
+#: ../../appendix/faqs/general.rst:403 ../../appendix/faqs/general.rst:403
+msgid ""
+"In order to solve this you can configure the IP addresses of the proxy "
+"server as a trusted IP address and with that allow the system access to the "
+"correct IP address of your users."
+msgstr ""
+"Afin de résoudre ceci, vous pouvez configurer les adresses IP du serveur "
+"proxy comme adresses IP de confiance, ce qui permettra au système d'accéder "
+"aux bonnes IP de vos utilisateurs."
+
+#: ../../appendix/faqs/general.rst:406 ../../appendix/faqs/general.rst:406
+msgid ""
+"In the ``settings.php`` file you can configure settings for "
+"``$CONFIG->http_request_trusted_proxy_ips`` and "
+"``$CONFIG->http_request_trusted_proxy_headers`` check the ``settings.php`` "
+"file for more information."
+msgstr ""
+"Dans le fichier ``settings.php``, vous pouvez configurer des paramètres pour"
+" ``$CONFIG->http_request_trusted_proxy_ips`` et "
+"``$CONFIG->http_request_trusted_proxy_headers``. Regardez dans le fichier "
+"``settings.php`` pour plus d'information."
 
 #: ../../appendix/faqs/security.rst:2 ../../appendix/faqs/security.rst:2
 msgid "Security"

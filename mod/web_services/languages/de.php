@@ -47,35 +47,35 @@ return array(
 	'auth.gettoken' => "Dieser API-Aufruf ermöglicht es einem Benutzer ein Authentifizierungs-Token zu beziehen, das für die Authentifizierung nachfolgender API-Aufrufe verwendet werden kann. Übergebe es als Parameter auth_token.",
 	
 	'admin:configure_utilities:webservices' => "Webservices",
-	'admin:configure_utilities:ws_list' => "List API methods",
-	'admin:configure_utilities:ws_tokens' => "Manage API tokens",
-	'webservices:menu:entity:regenerate' => "Regenerate API keys",
+	'admin:configure_utilities:ws_list' => "API-Methoden anzeigen",
+	'admin:configure_utilities:ws_tokens' => "API-Tokens verwalten",
+	'webservices:menu:entity:regenerate' => "API-Schlüssel neu erzeugen",
 	
-	'add:object:api_key' => "Create a new API token",
-	'edit:object:api_key' => "Edit API token: %s",
-	'entity:delete:object:api_key:success' => "The API token %s was deleted",
+	'add:object:api_key' => "Neuen API-Token erzeugen",
+	'edit:object:api_key' => "API-Token bearbeiten: %s",
+	'entity:delete:object:api_key:success' => "Der API-Token %s wurde gelöscht.",
 	
-	'webservices:requires_api_authentication' => "Requires API authentication",
-	'webservices:requires_user_authentication' => "Requires user authentication",
-	'webservices:function' => "Internal function:",
-	'webservices:parameters' => "Webservice parameters:",
-	'webservices:parameters:required' => "required",
+	'webservices:requires_api_authentication' => "API-Authentifizierung notwendig",
+	'webservices:requires_user_authentication' => "Benutzer-Authentifizierung notwendig",
+	'webservices:function' => "Interne Funktion:",
+	'webservices:parameters' => "Webservice-Parameter:",
+	'webservices:parameters:required' => "notwendig",
 	'webservices:parameters:optional' => "optional",
 	
-	'webservices:api_key:public' => "Public key:",
-	'webservices:api_key:secret' => "Secret key:",
-	'webservices:api_key:secret:show' => "Show secret key",
+	'webservices:api_key:public' => "Öffentlicher Schlüssel:",
+	'webservices:api_key:secret' => "Geheimer Schlüssel:",
+	'webservices:api_key:secret:show' => "Geheimen Schlüssel anzeigen",
 	
-	'webservices:action:api_key:edit:success' => "API token saved successfully",
-	'webservices:action:api_key:regenerate:success' => "The API keys have been regenerated",
+	'webservices:action:api_key:edit:success' => "Der API-Token wurde gespeichert.",
+	'webservices:action:api_key:regenerate:success' => "Die API-Schüssel wurden neu erzeugt.",
 
 	// plugin settings
-	'web_services:settings:authentication' => "Web API authentication settings",
-	'web_services:settings:authentication:description' => "Some API methods require that the external sources authenticate themselves. These external sources need to be provided with an API key pair (public and secret key).
+	'web_services:settings:authentication' => "Web API-Authentifizierungs-Einstellungen",
+	'web_services:settings:authentication:description' => "Für einige API-Methoden ist es notwendig, dass sich die externen Quellen authentifizieren. Dafür ist für diese externen Quellen ein Schlüsselpaar notwendig (öffentlicher und geheimer Schlüssel).
 
-Please note that at least one API authentication method needs to be active in order to authenticate API requests.",
-	'web_services:settings:authentication:allow_key' => "Allow basic API public key authentication",
-	'web_services:settings:authentication:allow_key:help' => "The API public key can be passed as a parameter in the request.",
-	'web_services:settings:authentication:allow_hmac' => "Allow HMAC header API authentication",
-	'web_services:settings:authentication:allow_hmac:help' => "With HMAC authentication special headers need to be passed in a request to ensure authenticity of the request.",
+Beachte bitte, dass mindestens eine API-Authentifizierungsmethode aktiviert sein muss, damit API-Anfragen authentifiziert werden können.",
+	'web_services:settings:authentication:allow_key' => "Einfache Authentifizierung mit öffentlichem Schlüssel erlauben",
+	'web_services:settings:authentication:allow_key:help' => "Der öffentliche Schlüssel kann als Parameter bei der Anfrage übergeben werden.",
+	'web_services:settings:authentication:allow_hmac' => "HMAC-Header API-Authentifizierung erlauben",
+	'web_services:settings:authentication:allow_hmac:help' => "Bei der HMAC-Authentifizierung ist es notwendig, dass ein spezieller Header mit der Anfrage übergeben wird, damit die Authenzität der Anfrage sichergestellt werden kann.",
 );

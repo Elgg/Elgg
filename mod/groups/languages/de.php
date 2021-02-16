@@ -21,12 +21,12 @@ return array(
 	'groups:delete' => 'Gruppe löschen',
 	'groups:membershiprequests' => 'Verwalte Beitritts-Anfragen',
 	'groups:membershiprequests:pending' => 'Verwalte Beitritts-Anfragen (%s)',
-	'groups:invitedmembers' => "Manage invitations",
+	'groups:invitedmembers' => "Beitritts-Anfragen verwalten",
 	'groups:invitations' => 'Einladungen zum Gruppenbeitritt',
 	'groups:invitations:pending' => 'Einladungen zum Gruppenbeitritt (%s)',
 	
-	'relationship:invited' => '%2$s was invited to join %1$s',
-	'relationship:membership_request' => '%s requested to join %s',
+	'relationship:invited' => '%2$s wurde eingeladen, %1$s beizutreten',
+	'relationship:membership_request' => '%s hat angefragt, %s beizutreten',
 
 	'groups:icon' => 'Gruppen-Icon (leer lassen, um nicht zu ändern)',
 	'groups:name' => 'Gruppenname',
@@ -71,8 +71,8 @@ return array(
 	'groups:invite:title' => 'Lade Deine Freunde ein, dieser Gruppe beizutreten',
 	'groups:invite:friends:help' => 'Suche mit Name oder Benutzername nach einem Freund und wähle den Freund aus der Liste aus',
 	'groups:invite:resend' => 'Einladungen an bereits eingeladene Mitglieder erneut senden',
-	'groups:invite:member' => 'Already a member of this group',
-	'groups:invite:invited' => 'Already invited to this group',
+	'groups:invite:member' => 'Bereits Mitglied dieser Gruppe',
+	'groups:invite:invited' => 'Bereits eingeladen, dieser Gruppe beizutreten',
 
 	'groups:nofriendsatall' => 'Du hast leider noch keine Freunde, die Du einladen könntest!',
 	'groups:group' => "Gruppe",
@@ -106,12 +106,12 @@ return array(
 	'groups:closedgroup' => "Diese Gruppe ist nicht-öffentlich.",
 	'groups:closedgroup:request' => 'Um dieser Gruppe beitreten zu dürfen, wähle bitte den Menueintrag "Gruppenbeitritt beantragen".',
 	'groups:closedgroup:membersonly' => "Diese Gruppe ist nicht-öffentlich und ihr Inhalt ist nur für Gruppenmitglieder zugänglich.",
-	'groups:opengroup:membersonly' => "Der Inhalt dieser Gruppe ist nur für Gruppenmitglieder zugännglich.",
+	'groups:opengroup:membersonly' => "Der Inhalt dieser Gruppe ist nur für Gruppenmitglieder zugänglich.",
 	'groups:opengroup:membersonly:join' => 'Um dieser Gruppe beizutreten, wähle bitte den Menueintrag "Gruppe beitreten".',
 	'groups:visibility' => 'Wer kann diese Gruppe sehen?',
-	'groups:content_default_access' => 'Default group content access',
-	'groups:content_default_access:help' => 'Here you can configure the default access for new content in this group. The group content mode can prevent the selected option from being in effect.',
-	'groups:content_default_access:not_configured' => 'No default access configured, leave to the user',
+	'groups:content_default_access' => 'Standardmäßiger Zugangslevel der Gruppe',
+	'groups:content_default_access:help' => 'Hier kannst Du den Zugangslevel festlegen, der für neue Inhalte dieser Gruppe standardmäßig verwendet werden soll. Allerdings setzt möglicherweise setzt der Zugangsmodus der Gruppe den gewählten Zugangslevel außer Kraft (falls der Zugriff auf Inhalte der Gruppe insgesamt beschränkt wurde).',
+	'groups:content_default_access:not_configured' => 'Keinen Standard-Zugangslevel festlegen, Einstellung dem Benutzer überlassen',
 
 	/**
 	 * Group tools
